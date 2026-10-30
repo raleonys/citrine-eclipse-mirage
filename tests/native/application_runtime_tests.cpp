@@ -271,7 +271,7 @@ int main(int argc,char** argv) try {
         require(native_recovered::is_bound(),"actual native callback owner published");
         require(GetModuleHandleW(L"fixture-extra.dll")!=nullptr,"actual main/worker extra-library source phases loaded module");
         const char* names[]={"connect","RegOpenKeyExA","RegOpenKeyExW","RegCloseKey","RegQueryValueExA","RegQueryValueExW","CreateProcessA","CreateProcessW","SHGetFolderPathA","SHGetFolderPathW","CryptQueryObject"};
-        const wchar_t* modules[]={L"ws2_32.dll",L"KernelBase.dll",L"advapi32.dll",L"kernel32.dll",L"shell32.dll",L"crypt32.dll"};
+        const wchar_t* modules[]={L"crypt32.dll",L"ws2_32.dll",L"kernel32.dll",L"shell32.dll",L"KernelBase.dll",L"advapi32.dll"};
         for(auto name:names) {
             bool enabled=false;
             for(auto module:modules)if(auto handle=GetModuleHandleW(module))if(auto target=GetProcAddress(handle,name))
