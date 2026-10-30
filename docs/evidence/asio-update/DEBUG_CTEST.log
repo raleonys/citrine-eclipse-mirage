@@ -1,0 +1,32 @@
+Test project /workspace/asio-vendor-update/source/build/runtime-debug
+      Start  1: application_runtime_contracts
+ 1/12 Test  #1: application_runtime_contracts ..............   Passed    2.37 sec
+      Start 19: socket_retirement_contracts
+ 2/12 Test #19: socket_retirement_contracts ................   Passed    0.31 sec
+      Start 20: socket_dll_retirement_contracts
+ 3/12 Test #20: socket_dll_retirement_contracts ............   Passed    6.09 sec
+      Start 21: application_shutdown_failure_contracts
+ 4/12 Test #21: application_shutdown_failure_contracts .....   Passed    4.48 sec
+      Start 23: timer_failure_contracts
+ 5/12 Test #23: timer_failure_contracts ....................   Passed    0.37 sec
+      Start 24: net_failure_contracts
+ 6/12 Test #24: net_failure_contracts ......................   Passed    0.41 sec
+      Start 25: net_failure_msvc_memory_replay_contracts
+ 7/12 Test #25: net_failure_msvc_memory_replay_contracts ...   Passed    0.37 sec
+      Start 26: extra_library_failure_contracts
+ 8/12 Test #26: extra_library_failure_contracts ............   Passed    0.36 sec
+      Start 29: session_flow_contracts
+ 9/12 Test #29: session_flow_contracts .....................   Passed    0.12 sec
+      Start 31: network_policy_contracts
+10/12 Test #31: network_policy_contracts ...................   Passed    3.48 sec
+      Start 33: handler_pool_contracts
+11/12 Test #33: handler_pool_contracts .....................   Passed    0.92 sec
+      Start 35: listener_port_contracts
+12/12 Test #35: listener_port_contracts ....................   Passed    0.56 sec
+
+100% tests passed out of 12
+
+Label Time Summary:
+production    =  19.85 sec*proc (12 tests)
+
+Total Test time (real) =  19.88 sec

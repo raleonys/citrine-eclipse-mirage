@@ -1,0 +1,23 @@
+{
+  "schema": "surge.asio-update-review.v1",
+  "classification": "NOT_RELEASE",
+  "authority": "OWNER_SUPPLIED_ARCHIVE_BYTES",
+  "old_archive_sha256": "1070a32d6c26ebf441d3de8b2fc89c5fc580f2fe0ca4aee8dfb5e818a5096af9",
+  "new_archive_sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",
+  "old_commit_comment": "026dce530a6c39a8aa6d98e5177482310c4a01e5",
+  "new_commit_comment": "bdf337ddb1a667c274372a602de5857ad3cb3ed0",
+  "reported_header_version_before": "1.38.2",
+  "reported_header_version_after": "1.38.2",
+  "old_member_count": 1607,
+  "new_member_count": 1629,
+  "added": 22,
+  "changed": 38,
+  "removed": 0,
+  "independent_upstream_git_identity_verified": false,
+  "vendor_patch": false,
+  "other_vendor_updates": false,
+  "first_party_runtime_changes": 0,
+  "documentation": "docs/ASIO_UPDATE.md",
+  "validation": "docs/evidence/asio-update/VALIDATION.json",
+  "status": "PASS_LOCAL_VALIDATION_NATIVE_MSVC_AND_GAME_PENDING"
+}

@@ -271,6 +271,23 @@
 # endif // !defined(ASIO_DISABLE_STD_CONCEPTS)
 #endif // !defined(ASIO_HAS_STD_CONCEPTS)
 
+// Standard library support for ranges.
+#if !defined(ASIO_HAS_STD_RANGES)
+# if !defined(ASIO_DISABLE_STD_RANGES)
+#  if defined(ASIO_HAS_STD_CONCEPTS)
+#   if (__cpp_lib_ranges >= 201911L)
+#    if defined(__clang__)
+#     if (__clang_major__ >= 16)
+#      define ASIO_HAS_STD_RANGES 1
+#     endif // (__clang_major__ >= 16)
+#    else // defined(__clang__)
+#     define ASIO_HAS_STD_RANGES 1
+#    endif // defined(__clang__)
+#   endif // (__cpp_lib_ranges >= 201911L)
+#  endif // defined(ASIO_HAS_STD_CONCEPTS)
+# endif // !defined(ASIO_DISABLE_STD_RANGES)
+#endif // !defined(ASIO_HAS_STD_RANGES)
+
 // Support template variables on compilers known to allow it.
 #if !defined(ASIO_HAS_VARIABLE_TEMPLATES)
 # if !defined(ASIO_DISABLE_VARIABLE_TEMPLATES)
@@ -538,52 +555,6 @@
 # define ASIO_VERSION_TAG_b
 #endif // defined(ASIO_HAS_VALGRIND)
 
-// Support for fibers implemented in assembly.
-#if !defined(ASIO_HAS_ASM_FIBER)
-# if !defined(ASIO_DISABLE_ASM_FIBER)
-#  if defined(__clang__) || defined(__GNUC__)
-#   if defined(__APPLE__) || defined(__linux__)
-#    if defined(__x86_64__) || defined(__aarch64__)
-#     if defined(__LP64__)
-#      define ASIO_HAS_ASM_FIBER 1
-#     endif // defined(__LP64__)
-#    endif // defined(__x86_64__) || defined(__aarch64__)
-#   endif // defined(__APPLE__) || defined(__linux__)
-#  endif // defined(__clang__) || defined(__GNUC__)
-# endif // !defined(ASIO_DISABLE_ASM_FIBER)
-#endif // !defined(ASIO_HAS_ASM_FIBER)
-#if defined(ASIO_HAS_ASM_FIBER)
-# define ASIO_VERSION_TAG_c c
-#else // defined(ASIO_HAS_ASM_FIBER)
-# define ASIO_VERSION_TAG_c
-#endif // defined(ASIO_HAS_ASM_FIBER)
-
-// Whether to use a page to detect stack overflow in fibers.
-#if !defined(ASIO_HAS_FIBER_GUARD_PAGE)
-# if defined(ASIO_ENABLE_FIBER_GUARD_PAGE)
-#  if defined(ASIO_HAS_ASM_FIBER)
-#   define ASIO_HAS_FIBER_GUARD_PAGE 1
-#  endif // defined(ASIO_HAS_ASM_FIBER)
-# endif // defined(ASIO_ENABLE_FIBER_GUARD_PAGE)
-#endif // !defined(ASIO_HAS_FIBER_GUARD_PAGE)
-#if defined(ASIO_HAS_FIBER_GUARD_PAGE)
-# define ASIO_VERSION_TAG_d d
-#else // defined(ASIO_HAS_FIBER_GUARD_PAGE)
-# define ASIO_VERSION_TAG_d
-#endif // defined(ASIO_HAS_FIBER_GUARD_PAGE)
-
-// The fiber stack size to use when not otherwise specified by the user.
-#if !defined(ASIO_DEFAULT_FIBER_STACK_SIZE)
-# if defined(ASIO_HAS_ADDRESS_SANITIZER) \
-  || defined(ASIO_HAS_THREAD_SANITIZER)
-#  define ASIO_DEFAULT_FIBER_STACK_SIZE (1024 * 1024)
-# else // defined(ASIO_HAS_ADDRESS_SANITIZER)
-       //   || defined(ASIO_HAS_THREAD_SANITIZER)
-#  define ASIO_DEFAULT_FIBER_STACK_SIZE (256 * 1024)
-# endif // defined(ASIO_HAS_ADDRESS_SANITIZER)
-        //   || defined(ASIO_HAS_THREAD_SANITIZER)
-#endif // !defined(ASIO_DEFAULT_FIBER_STACK_SIZE)
-
 // Boost support for the Context library's fibers.
 #if !defined(ASIO_HAS_BOOST_CONTEXT_FIBER)
 # if !defined(ASIO_DISABLE_BOOST_CONTEXT_FIBER)
@@ -606,11 +577,60 @@
 # endif // !defined(ASIO_DISABLE_BOOST_CONTEXT_FIBER)
 #endif // !defined(ASIO_HAS_BOOST_CONTEXT_FIBER)
 #if defined(ASIO_HAS_BOOST_CONTEXT_FIBER)
-# define ASIO_VERSION_TAG_e e
+# define ASIO_VERSION_TAG_c c
 #else // defined(ASIO_HAS_BOOST_CONTEXT_FIBER)
-# define ASIO_VERSION_TAG_e
+# define ASIO_VERSION_TAG_c
 #endif // defined(ASIO_HAS_BOOST_CONTEXT_FIBER)
 
+// Support for fibers implemented in assembly.
+#if !defined(ASIO_HAS_ASM_FIBER)
+# if !defined(ASIO_DISABLE_ASM_FIBER)
+#  if defined(ASIO_STANDALONE) \
+    || !defined(ASIO_HAS_BOOST_CONTEXT_FIBER)
+#   if defined(__clang__) || defined(__GNUC__)
+#    if defined(__APPLE__) || defined(__linux__)
+#     if defined(__x86_64__) || defined(__aarch64__)
+#      if defined(__LP64__)
+#       define ASIO_HAS_ASM_FIBER 1
+#      endif // defined(__LP64__)
+#     endif // defined(__x86_64__) || defined(__aarch64__)
+#    endif // defined(__APPLE__) || defined(__linux__)
+#   endif // defined(__clang__) || defined(__GNUC__)
+#  endif // defined(ASIO_STANDALONE)
+        //   || !defined(ASIO_HAS_BOOST_CONTEXT_FIBER)
+# endif // !defined(ASIO_DISABLE_ASM_FIBER)
+#endif // !defined(ASIO_HAS_ASM_FIBER)
+#if defined(ASIO_HAS_ASM_FIBER)
+# define ASIO_VERSION_TAG_d d
+#else // defined(ASIO_HAS_ASM_FIBER)
+# define ASIO_VERSION_TAG_d
+#endif // defined(ASIO_HAS_ASM_FIBER)
+
+// Whether to use a page to detect stack overflow in fibers.
+#if !defined(ASIO_HAS_FIBER_GUARD_PAGE)
+# if defined(ASIO_ENABLE_FIBER_GUARD_PAGE)
+#  if defined(ASIO_HAS_ASM_FIBER)
+#   define ASIO_HAS_FIBER_GUARD_PAGE 1
+#  endif // defined(ASIO_HAS_ASM_FIBER)
+# endif // defined(ASIO_ENABLE_FIBER_GUARD_PAGE)
+#endif // !defined(ASIO_HAS_FIBER_GUARD_PAGE)
+#if defined(ASIO_HAS_FIBER_GUARD_PAGE)
+# define ASIO_VERSION_TAG_e e
+#else // defined(ASIO_HAS_FIBER_GUARD_PAGE)
+# define ASIO_VERSION_TAG_e
+#endif // defined(ASIO_HAS_FIBER_GUARD_PAGE)
+
+// The fiber stack size to use when not otherwise specified by the user.
+#if !defined(ASIO_DEFAULT_FIBER_STACK_SIZE)
+# if defined(ASIO_HAS_ADDRESS_SANITIZER) \
+  || defined(ASIO_HAS_THREAD_SANITIZER)
+#  define ASIO_DEFAULT_FIBER_STACK_SIZE (1024 * 1024)
+# else // defined(ASIO_HAS_ADDRESS_SANITIZER)
+       //   || defined(ASIO_HAS_THREAD_SANITIZER)
+#  define ASIO_DEFAULT_FIBER_STACK_SIZE (256 * 1024)
+# endif // defined(ASIO_HAS_ADDRESS_SANITIZER)
+        //   || defined(ASIO_HAS_THREAD_SANITIZER)
+#endif // !defined(ASIO_DEFAULT_FIBER_STACK_SIZE)
 
 // Standard library support for std::string_view.
 #if !defined(ASIO_HAS_STD_STRING_VIEW)
@@ -1086,6 +1106,75 @@
 #else // defined(ASIO_HAS_FUTEX)
 # define ASIO_VERSION_TAG_p
 #endif // defined(ASIO_HAS_FUTEX)
+
+// Linux, FreeBSD, NetBSD, OpenBSD, AIX, QNX: sendmmsg and recvmmsg.
+// Mac OS X: sendmsg_x and recvmsg_x.
+#if !defined(ASIO_HAS_RECVMMSG_SENDMMSG)
+# if !defined(ASIO_DISABLE_RECVMMSG_SENDMMSG)
+#  if (defined(__MACH__) && defined(__APPLE__))
+#   define ASIO_HAS_RECVMMSG_SENDMMSG 1
+#   if !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#    include <limits.h>
+#    define ASIO_RECVMMSG_SENDMMSG_MAX_BATCH IOV_MAX
+#   endif // !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#  endif // (defined(__MACH__) && defined(__APPLE__))
+#  if defined(__linux__)
+#   if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 12)
+#    define ASIO_HAS_RECVMMSG_SENDMMSG 1
+#    if !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#     define ASIO_RECVMMSG_SENDMMSG_MAX_BATCH UIO_MAXIOV
+#    endif // !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#   endif // (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 12)
+#  endif // defined(__linux__)
+#  if defined(__FreeBSD__)
+#   include <sys/param.h>
+#   if defined(__FreeBSD_version) && (__FreeBSD_version >= 1100000)
+#    define ASIO_HAS_RECVMMSG_SENDMMSG 1
+#    if !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#     define ASIO_RECVMMSG_SENDMMSG_MAX_BATCH 1024
+#    endif // !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#   endif // defined(__FreeBSD_version) && (__FreeBSD_version >= 1100000)
+#  endif // defined(__FreeBSD__)
+#  if defined(__NetBSD__)
+#   include <sys/param.h>
+#   if defined(__NetBSD_Version__) && (__NetBSD_Version__ >= 700000000)
+#    define ASIO_HAS_RECVMMSG_SENDMMSG 1
+#    if !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#     define ASIO_RECVMMSG_SENDMMSG_MAX_BATCH 1024
+#    endif // !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#   endif // defined(__NetBSD_Version__) && (__NetBSD_Version__ >= 700000000)
+#  endif // defined(__NetBSD__)
+#  if defined(__OpenBSD__)
+#   include <sys/param.h>
+#   if defined(OpenBSD) && (OpenBSD >= 202210)
+#    define ASIO_HAS_RECVMMSG_SENDMMSG 1
+#    if !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#     define ASIO_RECVMMSG_SENDMMSG_MAX_BATCH 1024
+#    endif // !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#   endif // defined(OpenBSD) && (OpenBSD >= 202210)
+#  endif // defined(__OpenBSD__)
+#  if defined(_AIX)
+#   if defined(_AIX72)
+#    define ASIO_HAS_RECVMMSG_SENDMMSG 1
+#    if !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#     define ASIO_RECVMMSG_SENDMMSG_MAX_BATCH 1024
+#    endif // !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#   endif // defined(_AIX72)
+#  endif // defined(_AIX)
+#  if defined(__QNXNTO__)
+#   include <sys/neutrino.h>
+#   if defined(_NTO_VERSION) && (_NTO_VERSION >= 700)
+#    define ASIO_HAS_RECVMMSG_SENDMMSG 1
+#    if !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#     define ASIO_RECVMMSG_SENDMMSG_MAX_BATCH 1024
+#    endif // !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+#   endif // defined(_NTO_VERSION) && (_NTO_VERSION >= 700)
+#  endif // defined(__QNXNTO__)
+# endif // !defined(ASIO_DISABLE_RECVMMSG_SENDMMSG)
+#endif // !defined(ASIO_HAS_RECVMMSG_SENDMMSG)
+#if !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
+# define ASIO_RECVMMSG_SENDMMSG_MAX_BATCH 1
+#endif // !defined(ASIO_RECVMMSG_SENDMMSG_MAX_BATCH)
 
 // Mac OS X, FreeBSD, NetBSD, OpenBSD: kqueue.
 #if (defined(__MACH__) && defined(__APPLE__)) \
@@ -1598,13 +1687,30 @@
 # define ASIO_ALWAYS_INLINE inline
 #endif // !defined(ASIO_ALWAYS_INLINE)
 
+// Helper macro to apply the empty base class optimisation on MSVC.
+#if !defined(ASIO_EMPTY_BASES)
+# if defined(ASIO_MSVC) && defined(_MSVC_LANG)
+#  define ASIO_EMPTY_BASES __declspec(empty_bases)
+# else // defined(ASIO_MSVC) && defined(_MSVC_LANG)
+#  define ASIO_EMPTY_BASES
+# endif // defined(ASIO_MSVC) && defined(_MSVC_LANG)
+#endif // !defined(ASIO_EMPTY_BASES)
+
 // Helper macro to force the inlining of a particular call, where the function
 // is worth inlining at that call site but not at the others.
 #if !defined(ASIO_INVOKE_INLINE)
 # if !defined(ASIO_DISABLE_INVOKE_INLINE)
 #  if defined(__has_cpp_attribute)
 #   if __has_cpp_attribute(clang::always_inline)
-#    define ASIO_INVOKE_INLINE [[clang::always_inline]]
+#    if defined(__apple_build_version__)
+#     if (__clang_major__ >= 16)
+#      define ASIO_INVOKE_INLINE [[clang::always_inline]]
+#     endif // (__clang_major__ >= 16)
+#    elif defined(__clang_major__)
+#     if (__clang_major__ >= 17)
+#      define ASIO_INVOKE_INLINE [[clang::always_inline]]
+#     endif // (__clang_major__ >= 17)
+#    endif // defined(__apple_build_version__)
 #   endif // __has_cpp_attribute(clang::always_inline)
 #  endif // defined(__has_cpp_attribute)
 # endif // !defined(ASIO_DISABLE_INVOKE_INLINE)

@@ -1,16 +1,17 @@
 # Kullanıcının vendor arşivleri
 
-Kaynak yalnız kullanıcının `3RD PARTY` klasöründeki dört aktif ZIP’tir. Gulrak son kullanıcı talimatıyla çıkarılmıştır.
+Kaynak, kullanıcının sağladığı dört aktif ZIP’tir. Asio için sonradan yüklenen
+yeni arşiv, önceki girdinin yerini alır; diğer üç özgün arşiv korunur. Gulrak son kullanıcı talimatıyla çıkarılmıştır.
 Brownfield vendor kopyaları ve internetten başka sürüm kullanılmaz.
 
 | Vendor | Arşivde bildirilen sürüm | Yerleşim |
 |---|---|---|
-| Asio | 1.38.2 | `third_party/asio` |
+| Asio | 1.38.2; owner snapshot `bdf337ddb1a667c274372a602de5857ad3cb3ed0` | `third_party/asio` |
 | MinHook | README'de v1.3.4 | `third_party/minhook` |
 | PEGTL | 4.0.0 | `third_party/pegtl` |
 | TinyXML2 | 11.0.0 | `third_party/tinyxml2` |
 
-2813 dosya/link girdisi arşiv-member hash listeleriyle doğrulanır; lisanslar ve
+2835 dosya/link girdisi arşiv-member hash listeleriyle doğrulanır; lisanslar ve
 Asio'nun `asio/include → ../include`, `asio/src → ../src` mantıksal bağlantı
 hedefleri korunur. Windows'a taşınabilir kaynak ZIP'inde bu iki girdi, arşivdeki
 hedef metnini aynı baytlarla içeren normal dosyalardır; symlink yetkisi gerekmez.

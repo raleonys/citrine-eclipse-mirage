@@ -1,0 +1,41 @@
+{
+  "schema": "surge.asio-update-validation.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_LOCAL_VALIDATION_NATIVE_MSVC_AND_GAME_PENDING",
+  "new_archive_sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",
+  "member_count": 1629,
+  "runtime_source_changes": 0,
+  "other_vendor_changes": 0,
+  "native_msvc": "PENDING_GITHUB_CI",
+  "game_acceptance": "NOT_RUN",
+  "dist_promotion": false,
+  "publication": false,
+  "cross_release_build": "PASS",
+  "cross_release_tests": {
+    "passed": 206,
+    "total": 206,
+    "seconds": 125.88
+  },
+  "affected_cross_debug_build": "PASS",
+  "affected_cross_debug_tests": {
+    "passed": 12,
+    "total": 12,
+    "seconds": 19.88
+  },
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "groups": 17,
+    "vendor_regressions": 19,
+    "vendor_skips": 0
+  },
+  "installed_vendor_integrity": "PASS_ALL_FOUR",
+  "development_api_exports": {
+    "before": 3346,
+    "after": 3346,
+    "removed": 0,
+    "added": 0
+  },
+  "binary_contract_inspection": "BINARY_CONTRACT_INSPECTION.json",
+  "active_compile_dependency_proof": "ACTIVE_BUILD_PROOF.json",
+  "evidence_note": "Local cross-toolchain/Wine tests do not constitute native MSVC Golden or game acceptance. SOURCE_QA.json records the pre-freeze QA run; the final manifest/QA check is repeated after evidence registration."
+}

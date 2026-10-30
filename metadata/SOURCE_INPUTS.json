@@ -12,11 +12,12 @@
       "source_materialization": "INSTALLED_BYTE_EXACT"
     },
     "asio-master.zip": {
-      "sha256": "1070a32d6c26ebf441d3de8b2fc89c5fc580f2fe0ca4aee8dfb5e818a5096af9",
-      "bytes": 4192700,
+      "sha256": "d28dbc79b8c98b860ba6c06bd89de76bc352931560f9d169819e46280778975b",
+      "bytes": 4239595,
       "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
-      "path": "/workspace/project-input/3RD PARTY/asio-master.zip",
-      "source_materialization": "INSTALLED_BYTE_EXACT"
+      "path": "/workspace/attachments/62ce09d4-104d-4eab-900c-3f1a385be3ef/asio-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT",
+      "upstream_commit_from_archive_comment": "bdf337ddb1a667c274372a602de5857ad3cb3ed0"
     },
     "filesystem-master.zip": {
       "sha256": "5db08830a172ca4d8d2ecf98d6397041a3d0fa4d04584a0bcddb29778b68a251",
