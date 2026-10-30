@@ -40,6 +40,25 @@ def check_active_identifiers(root):
 
 
 
+def is_git_worktree_file(path):
+    """Allow only Git's real gitdir redirect file, not arbitrary root files."""
+    if path.name != '.git' or path.is_symlink() or not path.is_file():
+        return False
+    try:
+        if path.stat().st_size > 4096:
+            return False
+        text = path.read_text(encoding='utf-8')
+        if text.count('\n') > 1 or not text.startswith('gitdir: '):
+            return False
+        destination = text[len('gitdir: '):].rstrip('\r\n')
+        if not destination or '\x00' in destination:
+            return False
+        gitdir = (path.parent / destination).resolve()
+        return gitdir.is_dir() and (gitdir / 'HEAD').is_file()
+    except (OSError, UnicodeError, ValueError):
+        return False
+
+
 def check_root_file_ownership(root, allowed_root_files):
     """Reject unowned files at repository root independently of the source manifest."""
     if (not isinstance(allowed_root_files, list) or not allowed_root_files
@@ -51,7 +70,8 @@ def check_root_file_ownership(root, allowed_root_files):
     allowed = set(allowed_root_files)
     return ['Unowned root file: ' + path.name
             for path in sorted(Path(root).iterdir())
-            if (path.is_file() or path.is_symlink()) and path.name not in allowed]
+            if (path.is_file() or path.is_symlink()) and path.name not in allowed
+            and not is_git_worktree_file(path)]
 
 def check(root):
     root = Path(root)
