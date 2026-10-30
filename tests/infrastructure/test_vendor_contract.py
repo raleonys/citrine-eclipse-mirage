@@ -167,7 +167,8 @@ class VendorTests(unittest.TestCase):
             with self.assertRaises(ValueError) as error:
                 vendor_sync.validate_installed(root,'asio',record,expected,links)
             detail=str(error.exception)
-            self.assertIn('1607/1607',detail)
+            count=record['member_count']
+            self.assertIn(f'{count}/{count}',detail)
             self.assertIn('changed=2',detail)
             for rel in links:self.assertIn('changed: '+rel,detail)
 

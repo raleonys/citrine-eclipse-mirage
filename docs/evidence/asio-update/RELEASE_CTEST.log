@@ -1,0 +1,424 @@
+Test project /workspace/asio-vendor-update/source/build/llvm-mingw-x64-vendors
+        Start   1: application_runtime_contracts
+  1/206 Test   #1: application_runtime_contracts ..........................   Passed    4.36 sec
+        Start   2: configuration_platform_contracts
+  2/206 Test   #2: configuration_platform_contracts .......................   Passed    0.31 sec
+        Start   3: environment_dialog_contracts
+  3/206 Test   #3: environment_dialog_contracts ...........................   Passed    0.12 sec
+        Start   4: startup_publication_contracts
+  4/206 Test   #4: startup_publication_contracts ..........................   Passed    0.51 sec
+        Start   5: infrastructure_golden_pe
+  5/206 Test   #5: infrastructure_golden_pe ...............................   Passed    0.43 sec
+        Start   6: infrastructure_named_imports
+  6/206 Test   #6: infrastructure_named_imports ...........................   Passed    0.06 sec
+        Start   7: infrastructure_msvc_link
+  7/206 Test   #7: infrastructure_msvc_link ...............................   Passed    0.06 sec
+        Start   8: infrastructure_ownership_packaging
+  8/206 Test   #8: infrastructure_ownership_packaging .....................   Passed    0.92 sec
+        Start   9: infrastructure_target_requirements
+  9/206 Test   #9: infrastructure_target_requirements .....................   Passed    0.18 sec
+        Start  10: infrastructure_vendor_contract
+ 10/206 Test  #10: infrastructure_vendor_contract .........................   Passed    1.39 sec
+        Start  11: infrastructure_wine_runner
+ 11/206 Test  #11: infrastructure_wine_runner .............................   Passed    0.49 sec
+        Start  12: infrastructure_build_partition
+ 12/206 Test  #12: infrastructure_build_partition .........................   Passed    0.16 sec
+        Start  13: infrastructure_size_evidence
+ 13/206 Test  #13: infrastructure_size_evidence ...........................   Passed    0.15 sec
+        Start  14: vendor_api_smoke
+ 14/206 Test  #14: vendor_api_smoke .......................................   Passed    0.13 sec
+        Start  15: vendor_io_contracts
+ 15/206 Test  #15: vendor_io_contracts ....................................   Passed    0.11 sec
+        Start  16: vendor_source_integrity
+ 16/206 Test  #16: vendor_source_integrity ................................   Passed    0.38 sec
+        Start  17: vendor_pegtl_smoke
+ 17/206 Test  #17: vendor_pegtl_smoke .....................................   Passed    0.18 sec
+        Start  18: crt_runtime_smoke
+ 18/206 Test  #18: crt_runtime_smoke ......................................   Passed    0.10 sec
+        Start  19: socket_retirement_contracts
+ 19/206 Test  #19: socket_retirement_contracts ............................   Passed    0.42 sec
+        Start  20: socket_dll_retirement_contracts
+ 20/206 Test  #20: socket_dll_retirement_contracts ........................   Passed    5.74 sec
+        Start  21: application_shutdown_failure_contracts
+ 21/206 Test  #21: application_shutdown_failure_contracts .................   Passed    4.50 sec
+        Start  22: socket_close_semantics_contracts
+ 22/206 Test  #22: socket_close_semantics_contracts .......................   Passed    0.11 sec
+        Start  23: timer_failure_contracts
+ 23/206 Test  #23: timer_failure_contracts ................................   Passed    0.43 sec
+        Start  24: net_failure_contracts
+ 24/206 Test  #24: net_failure_contracts ..................................   Passed    0.34 sec
+        Start  25: net_failure_msvc_memory_replay_contracts
+ 25/206 Test  #25: net_failure_msvc_memory_replay_contracts ...............   Passed    0.47 sec
+        Start  26: extra_library_failure_contracts
+ 26/206 Test  #26: extra_library_failure_contracts ........................   Passed    0.33 sec
+        Start  27: production_callback_contracts
+ 27/206 Test  #27: production_callback_contracts ..........................   Passed    0.23 sec
+        Start  28: production_network_hook_contracts
+ 28/206 Test  #28: production_network_hook_contracts ......................   Passed    0.12 sec
+        Start  29: session_flow_contracts
+ 29/206 Test  #29: session_flow_contracts .................................   Passed    0.17 sec
+        Start  30: crypt_path_probe_contracts
+ 30/206 Test  #30: crypt_path_probe_contracts .............................   Passed    0.09 sec
+        Start  31: network_policy_contracts
+ 31/206 Test  #31: network_policy_contracts ...............................   Passed    3.62 sec
+        Start  32: atomic_persistence_contracts
+ 32/206 Test  #32: atomic_persistence_contracts ...........................   Passed    0.17 sec
+        Start  33: handler_pool_contracts
+ 33/206 Test  #33: handler_pool_contracts .................................   Passed    0.91 sec
+        Start  34: unload_guard_contracts
+ 34/206 Test  #34: unload_guard_contracts .................................   Passed    0.13 sec
+        Start  35: listener_port_contracts
+ 35/206 Test  #35: listener_port_contracts ................................   Passed    0.32 sec
+        Start  36: hook_freeze_contracts
+ 36/206 Test  #36: hook_freeze_contracts ..................................   Passed    0.12 sec
+        Start  37: hook_transaction_contracts
+ 37/206 Test  #37: hook_transaction_contracts .............................   Passed    0.12 sec
+        Start  38: cleanup_retry_contracts
+ 38/206 Test  #38: cleanup_retry_contracts ................................   Passed    0.63 sec
+        Start  39: file_copy_contracts
+ 39/206 Test  #39: file_copy_contracts ....................................   Passed    0.11 sec
+        Start  40: file_copy_windows_integration
+ 40/206 Test  #40: file_copy_windows_integration ..........................   Passed    0.09 sec
+        Start  41: bootstrap_contracts
+ 41/206 Test  #41: bootstrap_contracts ....................................   Passed    0.11 sec
+        Start  42: crt_thread_contracts
+ 42/206 Test  #42: crt_thread_contracts ...................................   Passed    0.13 sec
+        Start  43: host_init_contracts
+ 43/206 Test  #43: host_init_contracts ....................................   Passed    0.12 sec
+        Start  44: registry_contracts
+ 44/206 Test  #44: registry_contracts .....................................   Passed    0.11 sec
+        Start  45: native_callback_contracts
+ 45/206 Test  #45: native_callback_contracts ..............................   Passed    0.22 sec
+        Start  46: host_callback_contracts
+ 46/206 Test  #46: host_callback_contracts ................................   Passed    0.08 sec
+        Start  47: network_hook_contracts
+ 47/206 Test  #47: network_hook_contracts .................................   Passed    0.22 sec
+        Start  48: online_contracts
+ 48/206 Test  #48: online_contracts .......................................   Passed    0.12 sec
+        Start  49: configuration_contracts
+ 49/206 Test  #49: configuration_contracts ................................   Passed    0.12 sec
+        Start  50: execution_contracts
+ 50/206 Test  #50: execution_contracts ....................................   Passed    0.12 sec
+        Start  51: execution_concurrency_contracts
+ 51/206 Test  #51: execution_concurrency_contracts ........................   Passed    0.16 sec
+        Start  52: atomic_staging_contracts
+ 52/206 Test  #52: atomic_staging_contracts ...............................   Passed    0.12 sec
+        Start  53: libraries_contracts
+ 53/206 Test  #53: libraries_contracts ....................................   Passed    0.11 sec
+        Start  54: startup_contracts
+ 54/206 Test  #54: startup_contracts ......................................   Passed    0.12 sec
+        Start  55: parser_contracts
+ 55/206 Test  #55: parser_contracts .......................................   Passed    0.12 sec
+        Start  56: config_order_contracts
+ 56/206 Test  #56: config_order_contracts .................................   Passed    0.13 sec
+        Start  57: config_pipeline_contracts
+ 57/206 Test  #57: config_pipeline_contracts ..............................   Passed    0.21 sec
+        Start  58: config_hash_contracts
+ 58/206 Test  #58: config_hash_contracts ..................................   Passed    0.22 sec
+        Start  59: config_hash_model_differential_contracts
+ 59/206 Test  #59: config_hash_model_differential_contracts ...............   Passed    0.16 sec
+        Start  60: config_application_contracts
+ 60/206 Test  #60: config_application_contracts ...........................   Passed    0.15 sec
+        Start  61: config_startup_contracts
+ 61/206 Test  #61: config_startup_contracts ...............................   Passed    0.11 sec
+        Start  62: achievement_writer_contracts
+ 62/206 Test  #62: achievement_writer_contracts ...........................   Passed    0.08 sec
+        Start  63: achievement_storage_contracts
+ 63/206 Test  #63: achievement_storage_contracts ..........................   Passed    0.15 sec
+        Start  64: achievement_storage_startup_model_contracts
+ 64/206 Test  #64: achievement_storage_startup_model_contracts ............   Passed    0.11 sec
+        Start  65: calendar_contracts
+ 65/206 Test  #65: calendar_contracts .....................................   Passed    0.11 sec
+        Start  66: timestamp_contracts
+ 66/206 Test  #66: timestamp_contracts ....................................   Passed    0.11 sec
+        Start  67: utc_contracts
+ 67/206 Test  #67: utc_contracts ..........................................   Passed    0.09 sec
+        Start  68: achievement_runtime_contracts
+ 68/206 Test  #68: achievement_runtime_contracts ..........................   Passed    0.22 sec
+        Start  69: event_queue_contracts
+ 69/206 Test  #69: event_queue_contracts ..................................   Passed    0.08 sec
+        Start  70: event_queue_integration_contracts
+ 70/206 Test  #70: event_queue_integration_contracts ......................   Passed    0.17 sec
+        Start  71: session_handler_contracts
+ 71/206 Test  #71: session_handler_contracts ..............................   Passed    0.11 sec
+        Start  72: session_integration_contracts
+ 72/206 Test  #72: session_integration_contracts ..........................   Passed    0.13 sec
+        Start  73: socket_operations_contracts
+ 73/206 Test  #73: socket_operations_contracts ............................   Passed    0.07 sec
+        Start  74: socket_native_contracts
+ 74/206 Test  #74: socket_native_contracts ................................   Passed    0.13 sec
+        Start  75: socket_acceptor_contracts
+ 75/206 Test  #75: socket_acceptor_contracts ..............................   Passed    0.08 sec
+        Start  76: socket_acceptor_native_contracts
+ 76/206 Test  #76: socket_acceptor_native_contracts .......................   Passed    0.12 sec
+        Start  77: socket_lifecycle_contracts
+ 77/206 Test  #77: socket_lifecycle_contracts .............................   Passed    0.10 sec
+        Start  78: socket_lifecycle_native_contracts
+ 78/206 Test  #78: socket_lifecycle_native_contracts ......................   Passed    0.12 sec
+        Start  79: socket_close_contracts
+ 79/206 Test  #79: socket_close_contracts .................................   Passed    0.11 sec
+        Start  80: socket_closing_contracts
+ 80/206 Test  #80: socket_closing_contracts ...............................   Passed    0.11 sec
+        Start  81: socket_cancellation_contracts
+ 81/206 Test  #81: socket_cancellation_contracts ..........................   Passed    0.12 sec
+        Start  82: socket_cancellation_native_contracts
+ 82/206 Test  #82: socket_cancellation_native_contracts ...................   Passed    0.11 sec
+        Start  83: socket_recycle_contracts
+ 83/206 Test  #83: socket_recycle_contracts ...............................   Passed    0.12 sec
+        Start  84: socket_recycle_storage_contracts
+ 84/206 Test  #84: socket_recycle_storage_contracts .......................   Passed    0.11 sec
+        Start  85: socket_service_registry_contracts
+ 85/206 Test  #85: socket_service_registry_contracts ......................   Passed    0.13 sec
+        Start  86: socket_service_registry_integration_contracts
+ 86/206 Test  #86: socket_service_registry_integration_contracts ..........   Passed    0.11 sec
+        Start  87: socket_service_constructor_contracts
+ 87/206 Test  #87: socket_service_constructor_contracts ...................   Passed    0.12 sec
+        Start  88: socket_service_constructor_native_contracts
+ 88/206 Test  #88: socket_service_constructor_native_contracts ............   Passed    0.13 sec
+        Start  89: socket_scheduler_registry_contracts
+ 89/206 Test  #89: socket_scheduler_registry_contracts ....................   Passed    0.12 sec
+        Start  90: socket_scheduler_registry_integration_contracts
+ 90/206 Test  #90: socket_scheduler_registry_integration_contracts ........   Passed    0.12 sec
+        Start  91: socket_iocp_constructor_contracts
+ 91/206 Test  #91: socket_iocp_constructor_contracts ......................   Passed    0.12 sec
+        Start  92: socket_iocp_constructor_native_contracts
+ 92/206 Test  #92: socket_iocp_constructor_native_contracts ...............   Passed    0.13 sec
+        Start  93: socket_worker_startup_contracts
+ 93/206 Test  #93: socket_worker_startup_contracts ........................   Passed    0.18 sec
+        Start  94: socket_worker_startup_native_contracts
+ 94/206 Test  #94: socket_worker_startup_native_contracts .................   Passed    0.11 sec
+        Start  95: socket_worker_run_contracts
+ 95/206 Test  #95: socket_worker_run_contracts ............................   Passed    0.11 sec
+        Start  96: socket_worker_run_native_contracts
+ 96/206 Test  #96: socket_worker_run_native_contracts .....................   Passed    0.13 sec
+        Start  97: socket_completion_dispatcher_contracts
+ 97/206 Test  #97: socket_completion_dispatcher_contracts .................   Passed    0.17 sec
+        Start  98: socket_completion_dispatcher_native_contracts
+ 98/206 Test  #98: socket_completion_dispatcher_native_contracts ..........   Passed    0.14 sec
+        Start  99: socket_posted_operation_contracts
+ 99/206 Test  #99: socket_posted_operation_contracts ......................   Passed    0.23 sec
+        Start 100: socket_posted_operation_integration_contracts
+100/206 Test #100: socket_posted_operation_integration_contracts ..........   Passed    0.18 sec
+        Start 101: socket_io_completion_contracts
+101/206 Test #101: socket_io_completion_contracts .........................   Passed    0.12 sec
+        Start 102: socket_io_completion_integration_contracts
+102/206 Test #102: socket_io_completion_integration_contracts .............   Passed    0.67 sec
+        Start 103: socket_handler_dispatch_contracts
+103/206 Test #103: socket_handler_dispatch_contracts ......................   Passed    1.71 sec
+        Start 104: socket_handler_dispatch_integration_contracts
+104/206 Test #104: socket_handler_dispatch_integration_contracts ..........   Passed    2.34 sec
+        Start 105: socket_composed_write_contracts
+105/206 Test #105: socket_composed_write_contracts ........................   Passed    0.50 sec
+        Start 106: socket_composed_write_integration_contracts
+106/206 Test #106: socket_composed_write_integration_contracts ............   Passed    0.28 sec
+        Start 107: socket_environment_constructor_contracts
+107/206 Test #107: socket_environment_constructor_contracts ...............   Passed    0.25 sec
+        Start 108: socket_environment_constructor_integration_contracts
+108/206 Test #108: socket_environment_constructor_integration_contracts ...   Passed    0.77 sec
+        Start 109: socket_write_finish_contracts
+109/206 Test #109: socket_write_finish_contracts ..........................   Passed    0.12 sec
+        Start 110: socket_write_finish_integration_contracts
+110/206 Test #110: socket_write_finish_integration_contracts ..............   Passed    0.14 sec
+        Start 111: socket_queued_write_contracts
+111/206 Test #111: socket_queued_write_contracts ..........................   Passed    1.03 sec
+        Start 112: socket_queued_write_integration_contracts
+112/206 Test #112: socket_queued_write_integration_contracts ..............   Passed    0.22 sec
+        Start 113: socket_async_receive_contracts
+113/206 Test #113: socket_async_receive_contracts .........................   Passed    0.21 sec
+        Start 114: socket_async_receive_integration_contracts
+114/206 Test #114: socket_async_receive_integration_contracts .............   Passed    0.13 sec
+        Start 115: socket_receive_buffer_contracts
+115/206 Test #115: socket_receive_buffer_contracts ........................   Passed    0.44 sec
+        Start 116: socket_receive_buffer_integration_contracts
+116/206 Test #116: socket_receive_buffer_integration_contracts ............   Passed    0.09 sec
+        Start 117: socket_composed_read_contracts
+117/206 Test #117: socket_composed_read_contracts .........................   Passed    0.10 sec
+        Start 118: socket_composed_read_integration_contracts
+118/206 Test #118: socket_composed_read_integration_contracts .............   Passed    0.17 sec
+        Start 119: socket_frame_read_contracts
+119/206 Test #119: socket_frame_read_contracts ............................   Passed    0.22 sec
+        Start 120: socket_frame_read_integration_contracts
+120/206 Test #120: socket_frame_read_integration_contracts ................   Passed    0.67 sec
+        Start 121: socket_message_dispatch_contracts
+121/206 Test #121: socket_message_dispatch_contracts ......................   Passed    0.22 sec
+        Start 122: socket_message_dispatch_integration_contracts
+122/206 Test #122: socket_message_dispatch_integration_contracts ..........   Passed    0.92 sec
+        Start 123: socket_response_dispatch_contracts
+123/206 Test #123: socket_response_dispatch_contracts .....................   Passed    0.46 sec
+        Start 124: socket_response_dispatch_integration_contracts
+124/206 Test #124: socket_response_dispatch_integration_contracts .........   Passed    0.20 sec
+        Start 125: socket_owned_response_contracts
+125/206 Test #125: socket_owned_response_contracts ........................   Passed    0.15 sec
+        Start 126: socket_owned_response_integration_contracts
+126/206 Test #126: socket_owned_response_integration_contracts ............   Passed    0.59 sec
+        Start 127: socket_response_containers_contracts
+127/206 Test #127: socket_response_containers_contracts ...................   Passed    0.15 sec
+        Start 128: socket_response_containers_integration_contracts
+128/206 Test #128: socket_response_containers_integration_contracts .......   Passed    0.18 sec
+        Start 129: socket_message_core_bridge_contracts
+129/206 Test #129: socket_message_core_bridge_contracts ...................   Passed    0.15 sec
+        Start 130: socket_message_core_bridge_integration_contracts
+130/206 Test #130: socket_message_core_bridge_integration_contracts .......   Passed    0.26 sec
+        Start 131: socket_request_mutation_contracts
+131/206 Test #131: socket_request_mutation_contracts ......................   Passed    0.57 sec
+        Start 132: socket_request_mutation_integration_contracts
+132/206 Test #132: socket_request_mutation_integration_contracts ..........   Passed    0.13 sec
+        Start 133: socket_request_growth_contracts
+133/206 Test #133: socket_request_growth_contracts ........................   Passed    0.30 sec
+        Start 134: socket_request_growth_integration_contracts
+134/206 Test #134: socket_request_growth_integration_contracts ............   Passed    0.13 sec
+        Start 135: socket_response_hex_contracts
+135/206 Test #135: socket_response_hex_contracts ..........................   Passed    0.08 sec
+        Start 136: socket_response_hex_integration_contracts
+136/206 Test #136: socket_response_hex_integration_contracts ..............   Passed    1.08 sec
+        Start 137: socket_native_message_contracts
+137/206 Test #137: socket_native_message_contracts ........................   Passed    0.72 sec
+        Start 138: socket_native_message_integration_contracts
+138/206 Test #138: socket_native_message_integration_contracts ............   Passed    0.91 sec
+        Start 139: socket_append_growth_contracts
+139/206 Test #139: socket_append_growth_contracts .........................   Passed    0.12 sec
+        Start 140: socket_append_growth_integration_contracts
+140/206 Test #140: socket_append_growth_integration_contracts .............   Passed    0.87 sec
+        Start 141: socket_prefix_cipher_contracts
+141/206 Test #141: socket_prefix_cipher_contracts .........................   Passed    0.21 sec
+        Start 142: socket_prefix_cipher_integration_contracts
+142/206 Test #142: socket_prefix_cipher_integration_contracts .............   Passed    2.80 sec
+        Start 143: socket_cipher_session_contracts
+143/206 Test #143: socket_cipher_session_contracts ........................   Passed    0.48 sec
+        Start 144: socket_cipher_session_integration_contracts
+144/206 Test #144: socket_cipher_session_integration_contracts ............   Passed    4.91 sec
+        Start 145: socket_native_dispatch_contracts
+145/206 Test #145: socket_native_dispatch_contracts .......................   Passed    0.24 sec
+        Start 146: socket_native_dispatch_integration_contracts
+146/206 Test #146: socket_native_dispatch_integration_contracts ...........   Passed    4.07 sec
+        Start 147: socket_native_document_contracts
+147/206 Test #147: socket_native_document_contracts .......................   Passed    0.08 sec
+        Start 148: socket_native_document_integration_contracts
+148/206 Test #148: socket_native_document_integration_contracts ...........   Passed    3.89 sec
+        Start 149: socket_document_clear_contracts
+149/206 Test #149: socket_document_clear_contracts ........................   Passed    0.11 sec
+        Start 150: socket_document_clear_integration_contracts
+150/206 Test #150: socket_document_clear_integration_contracts ............   Passed    3.87 sec
+        Start 151: socket_node_delete_contracts
+151/206 Test #151: socket_node_delete_contracts ...........................   Passed    0.16 sec
+        Start 152: socket_node_delete_integration_contracts
+152/206 Test #152: socket_node_delete_integration_contracts ...............   Passed    6.55 sec
+        Start 153: socket_pool_release_contracts
+153/206 Test #153: socket_pool_release_contracts ..........................   Passed    0.10 sec
+        Start 154: socket_pool_release_integration_contracts
+154/206 Test #154: socket_pool_release_integration_contracts ..............   Passed   35.15 sec
+        Start 155: socket_pool_allocate_contracts
+155/206 Test #155: socket_pool_allocate_contracts .........................   Passed    0.11 sec
+        Start 156: socket_pool_allocate_integration_contracts
+156/206 Test #156: socket_pool_allocate_integration_contracts .............   Passed    0.13 sec
+        Start 157: socket_pool_append_contracts
+157/206 Test #157: socket_pool_append_contracts ...........................   Passed    0.12 sec
+        Start 158: socket_pool_append_integration_contracts
+158/206 Test #158: socket_pool_append_integration_contracts ...............   Passed    0.12 sec
+        Start 159: socket_pool_clear_contracts
+159/206 Test #159: socket_pool_clear_contracts ............................   Passed    0.15 sec
+        Start 160: socket_pool_clear_integration_contracts
+160/206 Test #160: socket_pool_clear_integration_contracts ................   Passed    0.11 sec
+        Start 161: socket_pool_destruct_contracts
+161/206 Test #161: socket_pool_destruct_contracts .........................   Passed    0.12 sec
+        Start 162: socket_pool_destruct_integration_contracts
+162/206 Test #162: socket_pool_destruct_integration_contracts .............   Passed    0.16 sec
+        Start 163: socket_node_base_contracts
+163/206 Test #163: socket_node_base_contracts .............................   Passed    0.12 sec
+        Start 164: socket_node_base_integration_contracts
+164/206 Test #164: socket_node_base_integration_contracts .................   Passed    0.11 sec
+        Start 165: socket_parse_entry_contracts
+165/206 Test #165: socket_parse_entry_contracts ...........................   Passed    0.12 sec
+        Start 166: socket_parse_entry_integration_contracts
+166/206 Test #166: socket_parse_entry_integration_contracts ...............   Passed    0.11 sec
+        Start 167: socket_document_error_contracts
+167/206 Test #167: socket_document_error_contracts ........................   Passed    0.11 sec
+        Start 168: socket_document_error_integration_contracts
+168/206 Test #168: socket_document_error_integration_contracts ............   Passed    0.08 sec
+        Start 169: socket_node_parse_contracts
+169/206 Test #169: socket_node_parse_contracts ............................   Passed    0.07 sec
+        Start 170: socket_node_parse_integration_contracts
+170/206 Test #170: socket_node_parse_integration_contracts ................   Passed    0.12 sec
+        Start 171: socket_node_identify_contracts
+171/206 Test #171: socket_node_identify_contracts .........................   Passed    0.08 sec
+        Start 172: socket_node_identify_integration_contracts
+172/206 Test #172: socket_node_identify_integration_contracts .............   Passed    0.11 sec
+        Start 173: socket_node_constructors_contracts
+173/206 Test #173: socket_node_constructors_contracts .....................   Passed    0.11 sec
+        Start 174: socket_node_constructors_integration_contracts
+174/206 Test #174: socket_node_constructors_integration_contracts .........   Passed    0.07 sec
+        Start 175: socket_node_insertion_contracts
+175/206 Test #175: socket_node_insertion_contracts ........................   Passed    0.10 sec
+        Start 176: socket_node_insertion_integration_contracts
+176/206 Test #176: socket_node_insertion_integration_contracts ............   Passed    0.11 sec
+        Start 177: socket_node_string_contracts
+177/206 Test #177: socket_node_string_contracts ...........................   Passed    0.11 sec
+        Start 178: socket_node_string_integration_contracts
+178/206 Test #178: socket_node_string_integration_contracts ...............   Passed    0.10 sec
+        Start 179: server_contracts
+179/206 Test #179: server_contracts .......................................   Passed    0.12 sec
+        Start 180: messages_contracts
+180/206 Test #180: messages_contracts .....................................   Passed    0.16 sec
+        Start 181: handlers_contracts
+181/206 Test #181: handlers_contracts .....................................   Passed    0.11 sec
+        Start 182: crypto_contracts
+182/206 Test #182: crypto_contracts .......................................   Passed    0.16 sec
+        Start 183: xml_printer_contracts
+183/206 Test #183: xml_printer_contracts ..................................   Passed    0.18 sec
+        Start 184: xml_reader_contracts
+184/206 Test #184: xml_reader_contracts ...................................   Passed    0.20 sec
+        Start 185: xml_reader_allocation_contracts
+185/206 Test #185: xml_reader_allocation_contracts ........................   Passed    0.09 sec
+        Start 186: xml_reader_corpus_contracts
+186/206 Test #186: xml_reader_corpus_contracts ............................   Passed    0.20 sec
+        Start 187: licensing_contracts
+187/206 Test #187: licensing_contracts ....................................   Passed    0.12 sec
+        Start 188: hash_contracts
+188/206 Test #188: hash_contracts .........................................   Passed    0.16 sec
+        Start 189: token_contracts
+189/206 Test #189: token_contracts ........................................   Passed    0.08 sec
+        Start 190: file_io_contracts
+190/206 Test #190: file_io_contracts ......................................   Passed    0.11 sec
+        Start 191: license_file_integration
+191/206 Test #191: license_file_integration ...............................   Passed    0.11 sec
+        Start 192: status_contracts
+192/206 Test #192: status_contracts .......................................   Passed    0.11 sec
+        Start 193: path_contracts
+193/206 Test #193: path_contracts .........................................   Passed    0.11 sec
+        Start 194: encoding_contracts
+194/206 Test #194: encoding_contracts .....................................   Passed    0.13 sec
+        Start 195: windows_effects_integration
+195/206 Test #195: windows_effects_integration ............................   Passed    0.08 sec
+        Start 196: content_handlers_contracts
+196/206 Test #196: content_handlers_contracts .............................   Passed    0.14 sec
+        Start 197: misc_handlers_contracts
+197/206 Test #197: misc_handlers_contracts ................................   Passed    0.12 sec
+        Start 198: dispatch_integration
+198/206 Test #198: dispatch_integration ...................................   Passed    0.11 sec
+        Start 199: hook_adapter_integration
+199/206 Test #199: hook_adapter_integration ...............................   Passed    0.13 sec
+        Start 200: vdf_parser_regressions
+200/206 Test #200: vdf_parser_regressions .................................   Passed    0.17 sec
+        Start 201: dll_source_smoke
+201/206 Test #201: dll_source_smoke .......................................   Passed    0.48 sec
+        Start 202: dll_public_lifecycle
+202/206 Test #202: dll_public_lifecycle ...................................   Passed    0.73 sec
+        Start 203: dll_public_c_consumer
+203/206 Test #203: dll_public_c_consumer ..................................   Passed    0.47 sec
+        Start 204: dll_public_export_contract
+204/206 Test #204: dll_public_export_contract .............................   Passed    0.10 sec
+        Start 205: dll_public_export_negatives
+205/206 Test #205: dll_public_export_negatives ............................   Passed    0.21 sec
+        Start 206: hook_engine_fixtures
+206/206 Test #206: hook_engine_fixtures ...................................   Passed    0.11 sec
+
+100% tests passed out of 206
+
+Label Time Summary:
+infrastructure       =   4.32 sec*proc (11 tests)
+production           =  31.77 sec*proc (74 tests)
+reference            =  89.02 sec*proc (119 tests)
+source-api           =   0.48 sec*proc (1 test)
+vendor-comparison    =   0.11 sec*proc (1 test)
+
+Total Test time (real) = 125.88 sec

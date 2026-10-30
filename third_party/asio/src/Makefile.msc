@@ -238,6 +238,7 @@ UNIT_TEST_EXES = \
 	tests\unit\local\seq_packet_protocol.exe \
 	tests\unit\local\stream_protocol.exe \
 	tests\unit\is_read_buffered.exe \
+	tests\unit\is_shallow_mutable_sequence.exe \
 	tests\unit\is_write_buffered.exe \
 	tests\unit\packaged_task.exe \
 	tests\unit\piping.exe \
@@ -270,6 +271,7 @@ UNIT_TEST_EXES = \
 	tests\unit\thread.exe \
 	tests\unit\thread_pool.exe \
 	tests\unit\time_traits.exe \
+	tests\unit\trampoline.exe \
 	tests\unit\ts\buffer.exe \
 	tests\unit\ts\executor.exe \
 	tests\unit\ts\internet.exe \
@@ -391,6 +393,9 @@ tests\unit\unit_test.obj: tests\unit\unit_test.cpp
 
 {tests\unit}.cpp{tests\unit}.exe:
 	cl -Fe$@ -Fo$(<:.cpp=.obj) $(CXXFLAGS) $(DEFINES) $< $(LIBS) -link -opt:ref
+
+tests\unit\trampoline.exe: tests\unit\trampoline.cpp
+	cl -Fe$@ -Fotests\unit\trampoline.obj $(CXXFLAGS) -bigobj $(DEFINES) tests\unit\trampoline.cpp $(LIBS) -link -opt:ref
 
 {tests\unit\execution}.cpp{tests\unit\execution}.exe:
 	cl -Fe$@ -Fo$(<:.cpp=.obj) $(CXXFLAGS) $(DEFINES) $< $(LIBS) -link -opt:ref

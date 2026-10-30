@@ -205,6 +205,11 @@
       "owner": "SURGE native fault-injection fixture",
       "role": "CURRENT_CONTRACT",
       "purpose": "Pinned Asio allocation routes, owner Windows log review and test-only failure injection correction"
+    },
+    "ASIO_UPDATE_REVIEW.json": {
+      "owner": "SURGE explicit owner dependency update",
+      "role": "CURRENT_CONTRACT",
+      "purpose": "Exact new Asio archive snapshot, delta and validation limits"
     }
   }
 }
