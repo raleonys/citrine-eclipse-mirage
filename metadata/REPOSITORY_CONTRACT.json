@@ -1,6 +1,7 @@
 {
   "schema": "surge.repository.v1",
   "source_directories": [
+    ".github",
     "cmake",
     "docs",
     "exports",
@@ -31,7 +32,11 @@
     "metadata/METADATA_OWNERSHIP.json",
     "metadata/HUMAN_ENTRYPOINT_REGISTRY.json",
     "resources/branding/surge.png",
-    "docs/IDENTIFIER_POLICY.md"
+    "docs/IDENTIFIER_POLICY.md",
+    ".gitattributes",
+    ".github/workflows/ci.yml",
+    ".github/pull_request_template.md",
+    "docs/GITHUB_WORKFLOW.md"
   ],
   "flat_source_package": true,
   "nested_reference_archives": false,

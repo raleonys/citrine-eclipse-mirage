@@ -1,0 +1,2 @@
+# Preserve manifest-pinned source/vendor bytes on every checkout platform.
+* -text

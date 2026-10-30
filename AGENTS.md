@@ -298,3 +298,10 @@ root and excludes unrelated reverse-engineering projects from the application.
   asset with the latest supplied208x208 PNG; preserve the separate original
   fallback and no-PNG-PE-resource policy. Do not switch to mandatory external
   avatars. See docs/AVATAR_UPDATE.md.
+
+- Latest owner collaboration instruction moves development to GitHub from the
+  exact archived source baseline. Work in a separate branch/worktree and open
+  a focused PR with scope and validation evidence. The owner reviews and merges;
+  do not merge, enable auto-merge, approve your own PR, bypass failed checks or
+  publish releases. Preserve all existing product/vendor/ABI policies and exact
+  source bytes. See docs/GITHUB_WORKFLOW.md.
