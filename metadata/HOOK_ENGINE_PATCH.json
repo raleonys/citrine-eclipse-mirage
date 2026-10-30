@@ -4,11 +4,11 @@
   "input_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
   "input_hook_sha256": "3060d3c42f03a2f11324cbee95d853071757ed0fe4b1bc9eb5f0d8fc9e346a37",
   "patch_script": "cmake/PatchHookFreeze.cmake",
-  "patch_script_sha256": "5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d",
-  "output_hook_sha256": "4d0fc88c91deed5eb97344e4daa9bd69d2fdca15d2fabefd911e08e27ef9fea3",
+  "patch_script_sha256": "bf8e6a11362e603ddc78ac1676b2402bb693df249f08f63d4ed10982b2836366",
+  "output_hook_sha256": "0b586a3aa53d3d0b08f148784219da111375bc3557d52a195dd040c9125a56d1",
   "vendor_tree_modified": false,
-  "scope": "NtGetNextThread freeze plus retained thread/heap ownership and cleanup retry; build copy only",
+  "scope": "NtGetNextThread freeze, retained thread/heap ownership, and correct single-hook disable IP relocation; build copy only",
   "provenance_document": "docs/HOOK_ENGINE_HARDENING.md",
   "donor_patch_script_sha256": "0c6a6f72d558b2114a02fccec6e25e0d360714a9ac9bf9a6a4f18e42af928fe2",
-  "supplement": "Preserve the second emergency handle when array allocation and both physical handle closes fail together"
+  "supplement": "Retain emergency handles on cleanup failures; single MH_DisableHook maps suspended trampoline IPs back to target before unpatching"
 }
