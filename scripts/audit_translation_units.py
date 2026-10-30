@@ -40,6 +40,13 @@ def object_path(root, build, target, source):
     return result
 
 
+def initializer_sections(section_headers):
+    """Keep nonempty COFF CRT/TLS and legacy .ctors constructor sections."""
+    pattern = r'^\s*\d+\s+(\.CRT\S*|\.tls\S*|\.ctors(?:\.\S+)?)\s+([0-9a-fA-F]+)(?=\s|$)'
+    return [match.group(1) for match in re.finditer(pattern, section_headers, re.M)
+            if int(match.group(2), 16)]
+
+
 def build_report(root, build, config, nm, objdump, readobj):
     policy = json.loads((root / 'metadata/BUILD_PARTITION_POLICY.json').read_text(encoding='utf-8'))
     targets = load_generated_graph(build, config)
@@ -53,7 +60,7 @@ def build_report(root, build, config, nm, objdump, readobj):
         path = object_path(root, build, target, source)
         defined, undefined = symbols(nm, path)
         sections = run(objdump, '-h', path)
-        startup = [m.group(1) for m in re.finditer(r'^\s*\d+\s+(\.CRT\S*|\.tls\S*)\s+([0-9a-fA-F]+)', sections, re.M) if int(m.group(2), 16)]
+        startup = initializer_sections(sections)
         records[source] = {'defined': sorted(defined), 'undefined': sorted(undefined),
                            'initializer_sections': startup,
                            'source_sha256': hashlib.sha256((root / source).read_bytes()).hexdigest()}

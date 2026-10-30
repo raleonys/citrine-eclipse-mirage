@@ -8,6 +8,7 @@ import unittest
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'scripts'))
 import check_build_partition as boundary
+import audit_translation_units as unit_audit
 
 POLICY = {
     'production_targets': ['preloader_l', 'preloader_l_core', 'preloader_l_objects', 'preloader_l_vdf_objects'],
@@ -91,6 +92,35 @@ class MapBoundaryTests(unittest.TestCase):
             path = Path(tmp) / 'link.map'
             path.write_text(MSVC_MAP, encoding='utf-16')
             self.assertEqual(boundary.map_errors(boundary.read_map(path), POLICY), ([], 'MSVC'))
+
+
+class InitializerInventoryTests(unittest.TestCase):
+    def test_compiler_coff_header_includes_ctors_and_retains_crt_tls(self):
+        # Captured section table shape from a compiled x64 COFF object; the .ctors
+        # section holds 23 pointer-sized constructor slots (0xB8 = 184 bytes).
+        output = (
+            'Sections:\nIdx Name          Size     VMA              Type\n'
+            '  0 .text         00000000 0000000000000000 TEXT\n'
+            '  1 .data         00000000 0000000000000000 DATA\n'
+            '  2 .bss          00000000 0000000000000000 BSS\n'
+            '  3 .ctors        000000b8 0000000000000000 DATA\n'
+            '  4 .CRT$XCU      00000008 0000000000000000 DATA\n'
+            '  5 .tls$         00000008 0000000000000000 DATA\n'
+        )
+        self.assertEqual(['.ctors', '.CRT$XCU', '.tls$'],
+                         unit_audit.initializer_sections(output))
+
+    def test_ctors_subsections_and_zero_sized_exclusions(self):
+        output = (
+            '  0 .ctors.65535 00000008 0000000000000000 DATA\n'
+            '  1 .ctors       00000000 0000000000000000 DATA\n'
+            '  2 .ctors_fake  00000008 0000000000000000 DATA\n'
+            '  3 .tls$        00000000 0000000000000000 DATA\n'
+            '  4 .CRT$XCU     00000000 0000000000000000 DATA\n'
+            '  5 .text        00000008 0000000000000000 TEXT\n'
+        )
+        self.assertEqual(['.ctors.65535'], unit_audit.initializer_sections(output))
+        self.assertEqual([], unit_audit.initializer_sections('unexpected/unsupported output'))
 
 
 class TargetBoundaryTests(unittest.TestCase):
