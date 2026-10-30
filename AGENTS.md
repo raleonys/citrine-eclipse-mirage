@@ -337,3 +337,13 @@ root and excludes unrelated reverse-engineering projects from the application.
   without injecting release labels into product metadata or source defaults.
   No new code/version identity, game acceptance, merge, or Library publication is
   implied. See docs/WEEKLY_RELEASE.md.
+
+- Latest owner branch instruction reuses one long-lived bugfix branch for routine
+  fixes and small maintenance changes. Do not open a fresh branch for every fix.
+  Review batches through PRs to main and retain bugfix after merge. Synchronize
+  it with current main before the next batch without force-pushing or rewriting
+  shared history. Audit work and independently scoped investigations can use
+  separate branches. Coordinate concurrent contributors on the shared branch.
+  This supersedes the earlier per-change branch recommendation, not owner-only
+  merge, English repository text, or README preview approval. See
+  docs/GITHUB_WORKFLOW.md.
