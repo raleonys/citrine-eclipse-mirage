@@ -13,7 +13,7 @@ def declared_sources(root, variable):
     match = re.search(r'\bset\(\s*' + re.escape(variable) + r'\b([^)]*)\)', text, re.S)
     if not match:
         raise ValueError('Missing CMake source list: ' + variable)
-    return re.findall(r'\bsrc/[A-Za-z0-9_/.-]+\.cpp\b', match.group(1))
+    return re.findall(r'\bsrc/[A-Za-z0-9_/.-]+\.cpp\b', match.group(1), re.I)
 
 
 def source_errors(root, policy):
@@ -32,7 +32,9 @@ def source_errors(root, policy):
     ref = set(reference)
     if prod & ref:
         errors.append('Production/reference source overlap: ' + ', '.join(sorted(prod & ref)))
-    actual = {p.relative_to(root).as_posix() for p in (root / 'src').rglob('*.cpp')}
+    actual = {p.relative_to(root).as_posix()
+              for p in (root / 'src').rglob('*')
+              if p.is_file() and p.suffix.lower() == '.cpp'}
     if actual != prod | ref:
         errors.append('Partition does not own every application/reference source')
     return errors
@@ -135,7 +137,8 @@ def codemodel_errors(targets, policy):
     for name, key in [('preloader_l_objects', 'production_object_sources'), ('preloader_l_vdf_objects', 'vdf_sources'), ('preloader_l', 'dll_entry_sources'), ('preloader_l_reference_objects', 'reference_sources')]:
         if name not in targets:
             continue
-        actual = {s['path'].replace('\\', '/') for s in targets[name].get('sources', []) if s['path'].endswith('.cpp') and not s.get('isGenerated')}
+        actual = {s['path'].replace('\\', '/') for s in targets[name].get('sources', [])
+                  if s['path'].lower().endswith('.cpp') and not s.get('isGenerated')}
         if actual != set(policy[key]):
             errors.append('Generated target source set differs: ' + name)
     if 'preloader_l_source_api' in targets and 'preloader_l_reference_objects' not in target_closure(targets, 'preloader_l_source_api'):

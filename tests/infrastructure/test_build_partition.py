@@ -97,6 +97,21 @@ class TargetBoundaryTests(unittest.TestCase):
     def test_reference_and_source_api_coexist_outside_production_closure(self):
         self.assertEqual(boundary.codemodel_errors(graph(), POLICY), [])
 
+    def test_case_insensitive_cpp_suffix_in_cmake_declaration(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'cmake').mkdir()
+            (root / 'cmake/Sources.cmake').write_text(
+                'set(PRELOADER_L_APPLICATION_SOURCES src/runtime/app.cpp src/runtime/unlisted.CPP)\n')
+            self.assertIn('src/runtime/unlisted.CPP',
+                          boundary.declared_sources(root, 'PRELOADER_L_APPLICATION_SOURCES'))
+
+    def test_uppercase_source_in_generated_target_is_not_ignored(self):
+        g = graph()
+        g['preloader_l_objects']['sources'].append({'path': 'src/runtime/unlisted.CPP'})
+        self.assertIn('Generated target source set differs: preloader_l_objects',
+                      boundary.codemodel_errors(g, POLICY))
+
     def test_indirect_reference_dependency_is_rejected(self):
         g = graph()
         g['preloader_l_core']['dependencies'].append({'id': 'preloader_l_reference_models'})
@@ -168,6 +183,8 @@ class TargetBoundaryTests(unittest.TestCase):
             for name in sum([POLICY[k] for k in ['production_object_sources', 'vdf_sources', 'dll_entry_sources', 'reference_sources']], []):
                 path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_text('// owned\n')
             self.assertEqual(boundary.source_errors(root, POLICY), [])
+            path = root / 'src/runtime/unlisted.CPP'; path.write_text('// unlisted uppercase\n')
+            self.assertTrue(boundary.source_errors(root, POLICY)); path.unlink()
             path = root / 'src/runtime/unowned.cpp'; path.write_text('// unowned\n')
             self.assertTrue(boundary.source_errors(root, POLICY)); path.unlink()
             altered = copy.deepcopy(POLICY); altered['production_object_sources'].append(POLICY['reference_sources'][0])
