@@ -16,6 +16,7 @@ import check_metadata_ownership as ownership
 import check_human_launcher_contract as launchers
 import project_files as inventory
 import package_source as packaging
+import extract_source as extraction
 import run_golden_pipeline as golden
 import ursynex_golden_finalizer as finalizer
 import verify_mustavex_golden_metadata as mustavex
@@ -127,6 +128,53 @@ class PackageTests(unittest.TestCase):
         for name in ['../escape', '/absolute', 'C:/drive', 'dir\\ambiguous', 'a//b', './a', 'a/../b']:
             with self.subTest(name=name), self.assertRaises(ValueError):
                 inventory.safe_member(name)
+
+
+    def test_windows_unsafe_component_names(self):
+        invalid = [
+            'dir/file.', 'dir/file ', 'dir/file:stream', 'dir/CON.txt',
+            'dir/con', 'dir/NUL.cfg', 'dir/COM9.log', 'dir/LPT3',
+            'dir/COM\u00b9.log', 'dir/LPT\u00b3.tmp', 'dir/CONIN$',
+            'dir/file<bad>.txt', 'dir/wild?.txt', 'dir/wild*.txt',
+            'dir/double"quote', 'dir/pipe|name',
+        ]
+        for name in invalid:
+            with self.subTest(member=name), self.assertRaisesRegex(ValueError, 'Unsafe Windows package path'):
+                inventory.safe_member(name)
+        valid = [
+            'docs/readme.md', 'src/value.cpp', 'dir/.gitignore',
+            'dir/COM10.txt', 'dir/auxiliary.txt', 'dir/file..name',
+            'dir/normal name.txt', 'dir/non-ascii-\u00e7.txt',
+        ]
+        for name in valid:
+            with self.subTest(member=name):
+                self.assertEqual(name, inventory.safe_member(name))
+
+    def test_manifest_consistent_windows_invalid_zip_is_not_published(self):
+        packaging.package(self.root, self.zip)
+        with zipfile.ZipFile(self.zip) as archive:
+            original = {name: archive.read(name) for name in archive.namelist()}
+        for index, unsafe in enumerate([
+                'docs/audit_portability/file:stream', 'docs/CON.txt', 'docs/trailing.']):
+            members = dict(original)
+            payload = b'cross-platform filename regression'
+            manifest = json.loads(members[inventory.MANIFEST])
+            manifest['files'][unsafe] = inventory.digest(payload)
+            members[unsafe] = payload
+            members[inventory.MANIFEST] = (json.dumps(manifest, sort_keys=True) + '\n').encode('utf-8')
+            mutant = self.base / f'windows-name-mutant-{index}.zip'
+            with zipfile.ZipFile(mutant, 'w') as archive:
+                for name, data in sorted(members.items()):
+                    info = zipfile.ZipInfo(name)
+                    info.create_system = 3
+                    info.external_attr = 0o100644 << 16
+                    info.compress_type = zipfile.ZIP_DEFLATED
+                    archive.writestr(info, data)
+            output = self.base / f'extracted-{index}'
+            with self.subTest(member=unsafe), self.assertRaisesRegex(ValueError, 'Unsafe Windows package path'):
+                extraction.extract(mutant, output)
+            self.assertFalse(output.exists())
+        self.assertFalse(any(p.name.startswith('.surge-extract-') for p in self.base.iterdir()))
 
     def test_casefold_collision(self):
         (self.root / 'src/VALUE.cpp').write_text('collision')
