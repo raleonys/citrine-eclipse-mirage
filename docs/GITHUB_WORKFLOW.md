@@ -54,7 +54,9 @@ release version/revision is introduced into product code or CI job names.
 The workflow runs on PRs, main pushes and manual dispatch. Official checkout,
 Python and artifact actions are pinned to verified commit SHAs. To reduce
 hosted-runner usage in the private repository, automatic runs perform only
-source QA and portable tests. Both Windows jobs require manual dispatch.
+source QA and portable tests. Both Windows jobs in this CI workflow require
+manual dispatch. The separate owner-authorized weekly draft workflow is described
+in [weekly draft releases](WEEKLY_RELEASE.md).
 
 - Linux executes source QA and portable CMake/CTest checks.
 - On manual dispatch, Windows executes the existing Native Acceptance Release profile, including
@@ -68,7 +70,7 @@ source QA and portable tests. Both Windows jobs require manual dispatch.
 To request Windows validation, open Actions, select **Source and Windows checks**,
 choose **Run workflow**, and select the branch to validate. The manual run first
 executes source QA/portable tests and then both Windows profiles. There is no
-schedule or automatic Windows build on PR updates or main pushes. The existing
+schedule in this CI workflow, or automatic Windows build on PR updates or main pushes. The existing
 local Windows build and acceptance scripts remain available unchanged.
 
 A skipped Windows job is not a passed Windows test. On an automatic run, a green
@@ -77,7 +79,7 @@ evidence for the exact source commit separately before treating it as accepted;
 do not inherit acceptance from a parent commit or from Wine tests. Local Windows
 receipts or an explicitly requested manual CI run can provide that evidence.
 
-No workflow releases, publishes, uploads to Library or merges code. A local
+This CI workflow does not create releases, publish, upload to Library or merge code. A local
 Golden candidate remains NOT_RELEASE. A green CI run is not real game acceptance.
 Debug/Compile/CRT-specific operator profiles and game checks remain available
 separately; this initial workflow does not claim to run every profile.

@@ -223,6 +223,11 @@
       "owner": "SURGE size evidence",
       "purpose": "Read-only existing DLL/MAP/current COFF object collection; no rebuild or promotion",
       "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/weekly_release.py": {
+      "owner": "SURGE draft release automation",
+      "purpose": "Exact-source candidate planning, native evidence binding, packaging and draft-only upload",
+      "role": "AUTOMATION"
     }
   }
 }

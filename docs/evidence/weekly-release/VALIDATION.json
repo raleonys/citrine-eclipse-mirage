@@ -1,0 +1,30 @@
+{
+  "schema": "surge.weekly-release-validation.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_LOCAL_INFRASTRUCTURE_VALIDATION",
+  "source_baseline_commit": "6c2c75273b4731d973420fd6b1000b4589ea9e36",
+  "source_qa_groups": 18,
+  "weekly_release_regressions": 35,
+  "portable_ctest": {
+    "passed": 22,
+    "total": 22
+  },
+  "actionlint": "PASS",
+  "readme_ci_paragraph": "OWNER_PREVIEW_APPROVED",
+  "schedule": {
+    "cron_utc": "30 13 * * 5",
+    "owner_timezone": "Europe/Istanbul",
+    "owner_local_time": "Friday 16:30"
+  },
+  "release_series_storage": "EXTERNAL_DISPATCH_INPUT_AND_DRAFT_TAGS_ONLY",
+  "application_source_changes": 0,
+  "vendor_changes": 0,
+  "pe_resource_export_changes": 0,
+  "test_fixtures_are_native_acceptance": false,
+  "native_msvc_candidate_workflow": "NOT_RUN; first default-branch dispatch required after owner merge",
+  "draft_created": false,
+  "release_published": false,
+  "game_acceptance": "NOT_RUN",
+  "validation_note": "Source QA/portable tests executed before this evidence document was added; the final source manifest is explicitly refreshed and rechecked. No fixture result is native Windows or game acceptance.",
+  "transport_compatibility": "gh API streamed pagination; no --slurp dependency"
+}

@@ -1,5 +1,13 @@
 # Güncel görev ve kaynak yetkisi
 
+Current owner release instruction: prepare draft candidates every Friday at
+16:30 Europe/Istanbul when new commits exist. The owner publishes manually.
+The weekly workflow runs the full source/portable/native MSVC/Production gates;
+this is the explicit scheduled exception to the manual-only Windows CI rule.
+Release series and revisions are external tag/package labels supplied through
+manual start_tag and continued from draft state, never product-code defaults.
+See [weekly draft releases](../docs/WEEKLY_RELEASE.md).
+
 Current owner CI decision: keep the repository private and reduce automatic
 hosted-runner use. Source QA and portable tests stay automatic on PRs/main;
 Windows Native and Production/Golden run only on manual workflow dispatch.

@@ -26,3 +26,7 @@ set_tests_properties(infrastructure_build_partition PROPERTIES TIMEOUT 30)
 add_test(NAME infrastructure_size_evidence
   COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_size_evidence.py")
 set_tests_properties(infrastructure_size_evidence PROPERTIES TIMEOUT 30)
+
+add_test(NAME infrastructure_weekly_release
+  COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_weekly_release.py")
+set_tests_properties(infrastructure_weekly_release PROPERTIES TIMEOUT 90)
