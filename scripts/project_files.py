@@ -11,6 +11,11 @@ TRANSIENT = {'build', 'dist', '.git'}
 ARCHIVES = ('.zip', '.7z', '.rar', '.tar', '.tgz', '.tar.gz', '.gz')
 BINARIES = {'.dll', '.exe', '.obj', '.o', '.a', '.lib', '.pyc', '.pyo', '.pdb'}
 
+# A source ZIP verified on another host must retain its exact path identity on Windows.
+_WINDOWS_FORBIDDEN = frozenset('<>:"|?*')
+_WINDOWS_DEVICES = frozenset(('CON', 'PRN', 'AUX', 'NUL', 'CONIN$', 'CONOUT$'))
+_WINDOWS_PORT = re.compile(r'(?:COM|LPT)[1-9\u00b9\u00b2\u00b3]', re.IGNORECASE)
+
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
@@ -22,6 +27,11 @@ def safe_member(name):
             or any(p in ('', '.', '..') for p in parts)
             or any(ord(c) < 32 or ord(c) == 127 for c in name)):
         raise ValueError('Unsafe package path: ' + repr(name))
+    for part in parts:
+        stem = part.split('.', 1)[0].rstrip(' ').upper()
+        if (part.endswith((' ', '.')) or any(c in _WINDOWS_FORBIDDEN for c in part)
+                or stem in _WINDOWS_DEVICES or _WINDOWS_PORT.fullmatch(stem)):
+            raise ValueError('Unsafe Windows package path: ' + repr(name))
     if str(PurePosixPath(name)) != name:
         raise ValueError('Noncanonical package path: ' + repr(name))
     return name

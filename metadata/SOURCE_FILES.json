@@ -1118,8 +1118,8 @@
       "sha256": "0f860de117e3786c4b58c5f74b3d5a34a1ba4e39bee1253ae563f917bd14a5a1"
     },
     "tests/infrastructure/test_build_partition.py": {
-      "bytes": 9748,
-      "sha256": "9fd0a94eda619341ba637b25856de5ab2beb519b6d7bef4a5f13ff810fbb8a3c"
+      "bytes": 10743,
+      "sha256": "d65c2c3028943941b6f5a34163427a00778eae055fdca7b6b6aa9e7f71cbbacb"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
       "bytes": 2043,
@@ -1130,8 +1130,8 @@
       "sha256": "301ff2e33a80d398c2ca51c6623046261e84043e11ee0f2d6afce6276d6ab1c0"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 26457,
-      "sha256": "fe526632be497297f127fca94c80f7bdab02fbf9ba9535a9ae5ea64a6d688531"
+      "bytes": 29006,
+      "sha256": "b847e1129732b227a574ea45e640da408dfc35a67226a90a7a9e33e36c00a144"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
       "bytes": 24328,

@@ -1,5 +1,65 @@
 # Yellowfield
 
+## Mandatory branch and integration rules
+
+These owner rules apply to every agent and contributor. They supersede older
+per-change branch advice below; all product and evidence contracts still apply.
+
+- Treat `main` as the accepted integration branch. Never edit, commit, push,
+  reset, delete or force-update `main` directly, locally or remotely. This also
+  prohibits file-content API writes targeting `main`. Reading, fetching and
+  testing main in a clean checkout is allowed. Only the owner merges reviewed
+  PRs into main; agents must not merge, enable auto-merge, approve their own PRs
+  or bypass failed checks.
+- Use the existing long-lived `bugfix` branch for routine fixes, dependency
+  updates, documentation, tests and small maintenance. A new task, commit or PR
+  is not a reason to create another branch. Review coherent batches through
+  focused PRs from bugfix to main, and retain bugfix after every merge.
+- Before writing, inspect the current branch, working tree, remote refs and
+  open PRs. Read the current AGENTS.md and governance/CURRENT_SCOPE.md from
+  fetched origin/main as well as the working branch, including when an existing
+  audit branch contains older instructions. Fetch current main and synchronize bugfix by fast-forward when
+  possible, otherwise by a normal merge. Never rewrite shared history or use
+  force-push, including force-with-lease. Preserve other contributors' changes;
+  coordinate overlapping edits and avoid mixing unrelated active work in a PR.
+- Dedicated branches are for explicitly scoped, sustained workstreams such as
+  an audit or a substantial project. Use a descriptive name, document its scope
+  in the PR and reuse it throughout that workstream. Do not create a special
+  branch merely to submit one or two small PRs. Preserve active audit branches.
+- Exceptional short-lived branches require an explicit owner instruction. After
+  the owner confirms their work is complete, delete them only when all required
+  work is merged or otherwise explicitly preserved and no open PR still needs
+  them. Record the branch name and tip SHA before deletion. Apply the same
+  completion checks to retired dedicated workstreams. Never delete main or
+  bugfix, and keep automatic head-branch deletion disabled.
+- If branch ownership, concurrent edits or merge status is unclear, preserve the
+  branch and changes and report the conflict before destructive action. Do not
+  change repository visibility, access or protection settings to work around
+  these rules. Written rules are not server-enforced branch protection on the
+  current private-repository plan.
+
+See [GitHub workflow](docs/GITHUB_WORKFLOW.md) for the review and cleanup process.
+
+## Mandatory source records and pre-push validation
+
+- Two independent records apply: metadata/SOURCE_FILES.json pins files under
+  src/, include/, tests/ and third_party/; metadata/ACTIVE_SOURCE_MANIFEST.json
+  pins the whole deliverable. Refreshing the latter never updates the former.
+- Review the exact diff first. For approved first-party additions/changes/deletions,
+  explicitly update only their SOURCE_FILES entries (raw-byte length and SHA256,
+  retaining any provenance fields). Do not regenerate vendor pins or accept
+  unrelated drift. Then verify sources, explicitly refresh the active manifest,
+  inspect both record diffs and run the entire local source QA successfully.
+- Before pushing or opening/updating a PR, commit the reviewed changes and records,
+  require a clean working tree, and validate that exact commit. A passing targeted
+  test or whole-source manifest alone is insufficient. Report checks actually run
+  and failures; do not push a known failing batch as ready for review.
+- Install the tracked .github/hooks/pre-push hook using the command in
+  docs/GITHUB_WORKFLOW.md. It runs read-only local source QA and rejects a dirty
+  checkout, direct main updates, bugfix deletion and pushes of untested commits.
+  Do not use --no-verify, disable the hook or treat hook installation as server
+  enforcement. Hooks require setup in every independent clone; CI remains active.
+
 The current owner instruction requires a Brownfield-style application project
 root and excludes unrelated reverse-engineering projects from the application.
 
@@ -342,8 +402,9 @@ root and excludes unrelated reverse-engineering projects from the application.
   fixes and small maintenance changes. Do not open a fresh branch for every fix.
   Review batches through PRs to main and retain bugfix after merge. Synchronize
   it with current main before the next batch without force-pushing or rewriting
-  shared history. Audit work and independently scoped investigations can use
-  separate branches. Coordinate concurrent contributors on the shared branch.
+  shared history. Dedicated branches are limited to sustained, explicitly scoped
+  audits/projects; use the mandatory rules at the start of this file for branch
+  selection, direct-main prohibitions, coordination and safe branch retirement.
   This supersedes the earlier per-change branch recommendation, not owner-only
   merge, English repository text, or README preview approval. See
   docs/GITHUB_WORKFLOW.md.

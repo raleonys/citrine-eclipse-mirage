@@ -1,10 +1,24 @@
 # Güncel görev ve kaynak yetkisi
 
-Current owner branch decision: reuse one long-lived bugfix branch for routine
-fixes and small maintenance, reviewing batches through PRs to main. Retain and
-synchronize that branch after merge. Audits and independently scoped reviews
-can use dedicated branches; avoid creating a new branch for every small fix.
-See the [GitHub workflow](../docs/GITHUB_WORKFLOW.md).
+Current owner source-validation correction: prevent repeated PR inventory errors.
+SOURCE_FILES and ACTIVE_SOURCE_MANIFEST are separate records; review and update
+only approved first-party entries before explicitly refreshing the whole-source
+manifest. Require complete local source QA on the committed source before push/PR,
+using the tracked read-only pre-push gate in every clone. Do not auto-refresh pins,
+bypass failures or add automatic Windows builds. The local hook is a contributor
+safeguard, not enforced server protection. See [workflow](../docs/GITHUB_WORKFLOW.md).
+
+Current owner branch decision: agents must never edit, commit, push or update
+main directly, including through file-content APIs. Only the owner merges
+reviewed PRs into main. Reuse the permanent bugfix branch for routine fixes,
+dependency updates, documentation, tests and small maintenance; retain and
+synchronize it after each merge without rewriting shared history. Dedicated
+descriptively named branches are for explicitly scoped, sustained audits/projects,
+not one or two small PRs. Temporary exceptions require an owner instruction.
+Retire completed branches only after owner confirmation, work-preservation and
+open-PR checks, recording their tip SHAs; never delete main/bugfix or active audit
+branches. See the mandatory rules at the start of [AGENTS.md](../AGENTS.md) and
+the [GitHub workflow](../docs/GITHUB_WORKFLOW.md).
 
 Current owner release instruction: prepare draft candidates every Friday at
 16:30 Europe/Istanbul when new commits exist. The owner publishes manually.

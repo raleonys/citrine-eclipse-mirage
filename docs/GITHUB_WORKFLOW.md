@@ -9,18 +9,62 @@ Previous ZIP deliveries remain independent backups, not recreated Git history.
 
 ## Change and merge policy
 
-Keep `main` as the accepted integration branch and reuse the long-lived `bugfix`
-branch for routine fixes and small maintenance changes. Do not create a new branch
-for every small fix. Open a focused PR from `bugfix` for each reviewable batch,
-stating the problem, scope, tests and remaining work. Keep the shared branch after
-merge and synchronize it with the latest main before starting the next batch.
-Use a fast-forward when possible; otherwise merge main without rewriting shared
-history. Prefer merge commits for these PRs to make later synchronization simple.
+The mandatory rules at the start of [AGENTS.md](../AGENTS.md) apply to all agents
+and contributors. Branch choice follows the workstream, not the number of tasks.
 
-Audit work and other independently scoped investigations can use dedicated
-branches. Coordinate contributors sharing `bugfix` so unrelated active work is
-not accidentally combined in one PR. Keep automatic head-branch deletion disabled
-for this shared-branch model; completed audit branches can be cleaned up separately.
+| Branch | Purpose | Lifetime |
+| --- | --- | --- |
+| `main` | Accepted integration; updated only by the owner's reviewed PR merges | Permanent |
+| `bugfix` | Routine fixes, dependency updates, documentation, tests and small maintenance | Permanent; reused across PR batches |
+| Descriptive audit/project branch | Explicitly scoped, sustained investigation or substantial project | Retained throughout the workstream; retired only after completion review |
+| Exceptional temporary branch | Work explicitly requested by the owner to be isolated temporarily | Deleted after the completion and preservation checks below |
+
+Never edit, commit, push, reset, delete or force-update main directly, locally or
+remotely. File-content API writes targeting main are also prohibited. Reading,
+fetching and testing it in a clean checkout is allowed. Agents prepare changes
+on the appropriate working branch and open PRs; only the owner merges into main.
+
+Before writing, inspect the working tree and current branch, fetch remote refs,
+and inspect open PRs for overlapping work. Read the current AGENTS.md and
+governance/CURRENT_SCOPE.md from fetched origin/main as well as the working branch;
+an older audit checkout does not exempt an agent from current owner rules.
+Synchronize bugfix with current main
+before the next batch: fast-forward when possible, otherwise merge main normally.
+Preserve others' uncommitted work. Never rebase published shared history or use
+force-push, including force-with-lease. Coordinate overlapping edits and do not
+combine unrelated active contributions merely because they share bugfix.
+
+Open a focused PR for each coherent reviewable batch, stating the problem, scope,
+tests and remaining work. Retain bugfix after merge. Prefer merge commits for
+these PRs to make later synchronization simple. A dependency update, documentation
+change, new task or new PR does not by itself justify a new branch.
+
+Dedicated audit/project branches need a descriptive name and an explicit scope
+recorded in the PR. Reuse each branch through the sustained workstream rather than
+opening another branch for each finding. Do not create a dedicated branch merely
+to submit one or two small PRs. Existing active audit branches remain protected
+from cleanup. Exceptional temporary branches require an explicit owner instruction.
+
+## Branch completion and cleanup
+
+Keep automatic head-branch deletion disabled. A merged PR alone does not retire
+a shared or ongoing workstream branch. Never delete main or bugfix.
+
+For a completed dedicated or exceptional temporary branch:
+
+1. Obtain the owner's confirmation that the workstream is complete. Check all its
+   open PRs and outstanding work; do not delete a branch still needed by either.
+2. Verify the tip is contained in current main. For squash/cherry-pick histories
+   where ancestry cannot prove preservation, review the actual changes and record
+   their preserved destination; do not infer safety from a closed PR or its title.
+   Unmerged work requires explicit owner instructions for preservation/disposal.
+3. Record the branch name and full tip SHA in the cleanup record before deleting
+   the remote branch. Do not remove local worktrees with uncommitted changes.
+4. Recheck the remote tip immediately before deletion. If it changed, or ownership
+   or preservation is uncertain, preserve the branch and report the issue.
+
+Written rules guide contributors but do not add technical server enforcement.
+Do not change repository visibility, access or protections to bypass the process.
 
 Existing owner decisions, AGENTS.md, current governance and product contracts
 continue to apply. A move to GitHub does not authorize new runtime behavior.
@@ -59,6 +103,48 @@ Do not replace them with directories or regenerate vendor files.
 Changes to tracked source require an explicit reviewed refresh of the whole-source
 manifest. Never refresh merely to hide drift. Build/dist remain untracked. No
 release version/revision is introduced into product code or CI job names.
+
+## Local validation before a push
+
+There are two independent source records. SOURCE_FILES.json lists files under
+src/, include/, tests/ and third_party/ with their byte lengths and SHA256 values.
+ACTIVE_SOURCE_MANIFEST.json records the entire deliverable. Updating the latter
+does not update SOURCE_FILES.json. New tests need entries, and edited tests need
+new hashes just as application files do; deleted files need their entries removed.
+
+Use this order for an authorized change:
+
+1. Review the actual code/test diff. Explicitly update only the approved first-party
+   SOURCE_FILES entries using raw bytes, retaining other entry/provenance fields.
+   Keep vendor pins immutable; a failed verification is not permission to bless drift.
+2. Run `python -B scripts/verify_sources.py`. Resolve every missing/unrecorded/hash
+   error, then run `python -B scripts/check_manifest.py --refresh` explicitly.
+3. Inspect both JSON diffs and run `python -B scripts/run_source_qa.py`. All groups
+   must pass; targeted tests alone do not cover the inventories.
+4. Commit the reviewed change and both applicable records. Push that exact commit
+   from a clean working tree, then inspect its CI result before requesting review.
+
+Install the repository's local gate once in each independent clone (Git Bash on
+Windows, or a POSIX shell):
+
+```sh
+git config --local core.hooksPath "$(git rev-parse --show-toplevel)/.github/hooks"
+git config --get core.hooksPath
+```
+
+The absolute path also keeps the hook available to older worktrees of that clone.
+Python must be available as `python`, as for the existing source QA command. The
+hook executes local source QA on the committed checkout before transferring refs;
+it performs no Windows build, automatic hash recording or hosted Actions run.
+It rejects direct main pushes, bugfix deletion, dirty checkouts and a pushed commit
+other than the checked-out HEAD. If HEAD/files change during QA, it rejects the push.
+Pure branch deletion does not run source QA; the owner-confirmed cleanup rules
+above still apply. Do not bypass the gate with --no-verify or disable it.
+
+Hooks do not install themselves in other clones and cannot prevent API/browser
+writes or a deliberate bypass. Every agent must configure its clone. Keep CI as
+the independent remote check; these local safeguards do not replace branch
+protection or establish native Windows/game acceptance.
 
 ## CI and acceptance evidence
 
