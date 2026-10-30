@@ -1,5 +1,11 @@
 # Güncel görev ve kaynak yetkisi
 
+Current owner branch decision: reuse one long-lived bugfix branch for routine
+fixes and small maintenance, reviewing batches through PRs to main. Retain and
+synchronize that branch after merge. Audits and independently scoped reviews
+can use dedicated branches; avoid creating a new branch for every small fix.
+See the [GitHub workflow](../docs/GITHUB_WORKFLOW.md).
+
 Current owner release instruction: prepare draft candidates every Friday at
 16:30 Europe/Istanbul when new commits exist. The owner publishes manually.
 The weekly workflow runs the full source/portable/native MSVC/Production gates;

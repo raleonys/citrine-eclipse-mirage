@@ -9,8 +9,19 @@ Previous ZIP deliveries remain independent backups, not recreated Git history.
 
 ## Change and merge policy
 
-Work starts from the current main branch in a separate branch/worktree. Every
-change gets a focused PR stating the problem, scope, tests and remaining work.
+Keep `main` as the accepted integration branch and reuse the long-lived `bugfix`
+branch for routine fixes and small maintenance changes. Do not create a new branch
+for every small fix. Open a focused PR from `bugfix` for each reviewable batch,
+stating the problem, scope, tests and remaining work. Keep the shared branch after
+merge and synchronize it with the latest main before starting the next batch.
+Use a fast-forward when possible; otherwise merge main without rewriting shared
+history. Prefer merge commits for these PRs to make later synchronization simple.
+
+Audit work and other independently scoped investigations can use dedicated
+branches. Coordinate contributors sharing `bugfix` so unrelated active work is
+not accidentally combined in one PR. Keep automatic head-branch deletion disabled
+for this shared-branch model; completed audit branches can be cleaned up separately.
+
 Existing owner decisions, AGENTS.md, current governance and product contracts
 continue to apply. A move to GitHub does not authorize new runtime behavior.
 
