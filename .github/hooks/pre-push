@@ -1,0 +1,43 @@
+#!/bin/sh
+# Local, read-only source gate. GitHub CI remains an independent check.
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+tested_head=$(git rev-parse HEAD)
+needs_qa=false
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+    case "$remote_ref" in
+        refs/heads/main)
+            echo 'PUSH BLOCKED: main is updated only by owner-reviewed PR merges.' >&2
+            exit 1 ;;
+    esac
+    case "$local_sha" in
+        0000000000000000000000000000000000000000)
+            if [ "$remote_ref" = refs/heads/bugfix ]; then
+                echo 'PUSH BLOCKED: the shared bugfix branch must be retained.' >&2
+                exit 1
+            fi
+            continue ;;
+    esac
+    pushed_commit=$(git rev-parse "$local_sha^{commit}")
+    if [ "$pushed_commit" != "$tested_head" ]; then
+        echo 'PUSH BLOCKED: check out the commit being pushed and validate it there.' >&2
+        exit 1
+    fi
+    needs_qa=true
+done
+
+[ "$needs_qa" = true ] || exit 0
+if [ -n "$(git status --porcelain --untracked-files=all)" ]; then
+    echo 'PUSH BLOCKED: commit the reviewed changes and both inventory records first.' >&2
+    exit 1
+fi
+
+echo 'Running local source QA; no Windows build or manifest refresh is performed.'
+python -B scripts/run_source_qa.py
+
+if [ "$(git rev-parse HEAD)" != "$tested_head" ] ||
+   [ -n "$(git status --porcelain --untracked-files=all)" ]; then
+    echo 'PUSH BLOCKED: source changed during validation; commit and validate again.' >&2
+    exit 1
+fi

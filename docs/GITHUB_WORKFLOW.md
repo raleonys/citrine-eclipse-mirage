@@ -104,6 +104,48 @@ Changes to tracked source require an explicit reviewed refresh of the whole-sour
 manifest. Never refresh merely to hide drift. Build/dist remain untracked. No
 release version/revision is introduced into product code or CI job names.
 
+## Local validation before a push
+
+There are two independent source records. SOURCE_FILES.json lists files under
+src/, include/, tests/ and third_party/ with their byte lengths and SHA256 values.
+ACTIVE_SOURCE_MANIFEST.json records the entire deliverable. Updating the latter
+does not update SOURCE_FILES.json. New tests need entries, and edited tests need
+new hashes just as application files do; deleted files need their entries removed.
+
+Use this order for an authorized change:
+
+1. Review the actual code/test diff. Explicitly update only the approved first-party
+   SOURCE_FILES entries using raw bytes, retaining other entry/provenance fields.
+   Keep vendor pins immutable; a failed verification is not permission to bless drift.
+2. Run `python -B scripts/verify_sources.py`. Resolve every missing/unrecorded/hash
+   error, then run `python -B scripts/check_manifest.py --refresh` explicitly.
+3. Inspect both JSON diffs and run `python -B scripts/run_source_qa.py`. All groups
+   must pass; targeted tests alone do not cover the inventories.
+4. Commit the reviewed change and both applicable records. Push that exact commit
+   from a clean working tree, then inspect its CI result before requesting review.
+
+Install the repository's local gate once in each independent clone (Git Bash on
+Windows, or a POSIX shell):
+
+```sh
+git config --local core.hooksPath "$(git rev-parse --show-toplevel)/.github/hooks"
+git config --get core.hooksPath
+```
+
+The absolute path also keeps the hook available to older worktrees of that clone.
+Python must be available as `python`, as for the existing source QA command. The
+hook executes local source QA on the committed checkout before transferring refs;
+it performs no Windows build, automatic hash recording or hosted Actions run.
+It rejects direct main pushes, bugfix deletion, dirty checkouts and a pushed commit
+other than the checked-out HEAD. If HEAD/files change during QA, it rejects the push.
+Pure branch deletion does not run source QA; the owner-confirmed cleanup rules
+above still apply. Do not bypass the gate with --no-verify or disable it.
+
+Hooks do not install themselves in other clones and cannot prevent API/browser
+writes or a deliberate bypass. Every agent must configure its clone. Keep CI as
+the independent remote check; these local safeguards do not replace branch
+protection or establish native Windows/game acceptance.
+
 ## CI and acceptance evidence
 
 The workflow runs on PRs, main pushes and manual dispatch. Official checkout,

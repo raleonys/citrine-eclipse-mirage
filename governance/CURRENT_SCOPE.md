@@ -1,5 +1,13 @@
 # Güncel görev ve kaynak yetkisi
 
+Current owner source-validation correction: prevent repeated PR inventory errors.
+SOURCE_FILES and ACTIVE_SOURCE_MANIFEST are separate records; review and update
+only approved first-party entries before explicitly refreshing the whole-source
+manifest. Require complete local source QA on the committed source before push/PR,
+using the tracked read-only pre-push gate in every clone. Do not auto-refresh pins,
+bypass failures or add automatic Windows builds. The local hook is a contributor
+safeguard, not enforced server protection. See [workflow](../docs/GITHUB_WORKFLOW.md).
+
 Current owner branch decision: agents must never edit, commit, push or update
 main directly, including through file-content APIs. Only the owner merges
 reviewed PRs into main. Reuse the permanent bugfix branch for routine fixes,
