@@ -1,8 +1,10 @@
 """Check source scope, native CMake source ownership and pinned SURGE resource."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
+import subprocess
 
 
 def load_active_name_policy(root):
@@ -39,10 +41,77 @@ def check_active_identifiers(root):
     return errors
 
 
+
+def is_git_worktree_file(path):
+    """Trust only a linked worktree registered in Git's own common directory."""
+    if path.name != '.git' or path.is_symlink() or not path.is_file():
+        return False
+    try:
+        if path.stat().st_size > 4096:
+            return False
+        match = re.fullmatch(r'gitdir: ([^\r\n]+)\r?\n?', path.read_text(encoding='utf-8'))
+        if not match or '\x00' in match.group(1):
+            return False
+        root = path.parent.resolve()
+        gitdir = (path.parent / match.group(1)).resolve(strict=True)
+        if not gitdir.is_dir() or not (gitdir / 'HEAD').is_file():
+            return False
+        # Worktree-local metadata must point back to this precise gitfile.
+        reverse = gitdir / 'gitdir'
+        common_ref = gitdir / 'commondir'
+        if not reverse.is_file() or not common_ref.is_file():
+            return False
+        backlink = reverse.read_text(encoding='utf-8').strip()
+        if not backlink or (gitdir / backlink).resolve(strict=True) != path.resolve(strict=True):
+            return False
+        common = common_ref.read_text(encoding='utf-8').strip()
+        if not common or not (gitdir / common).resolve(strict=True).is_dir():
+            return False
+        # A fabricated gitdir/HEAD and backlink alone are not a Git registration.
+        # Compare Git's actual selected root, gitdir and linked worktree registry.
+        env = {k: v for k, v in os.environ.items()
+               if not k.startswith('GIT_')}
+        def git(*args):
+            done = subprocess.run(['git', '-C', str(root), *args],
+                                  capture_output=True, text=True, timeout=8, env=env)
+            return done.stdout.strip() if done.returncode == 0 else None
+        if git('rev-parse', '--is-inside-work-tree') != 'true':
+            return False
+        top = git('rev-parse', '--show-toplevel')
+        selected_dir = git('rev-parse', '--absolute-git-dir')
+        if not top or not selected_dir:
+            return False
+        if Path(top).resolve(strict=True) != root or Path(selected_dir).resolve(strict=True) != gitdir:
+            return False
+        worktrees = git('worktree', 'list', '--porcelain')
+        if worktrees is None:
+            return False
+        return any(line.startswith('worktree ')
+                   and Path(line[len('worktree '):]).resolve(strict=True) == root
+                   for line in worktrees.splitlines())
+    except (OSError, UnicodeError, ValueError, subprocess.SubprocessError):
+        return False
+
+
+def check_root_file_ownership(root, allowed_root_files):
+    """Reject unowned files at repository root independently of the source manifest."""
+    if (not isinstance(allowed_root_files, list) or not allowed_root_files
+            or any(not isinstance(name, str) or not name
+                   or name in {'.', '..'} or '/' in name or '\\' in name
+                   for name in allowed_root_files)
+            or len(set(allowed_root_files)) != len(allowed_root_files)):
+        raise ValueError('Invalid allowed_root_files repository policy')
+    allowed = set(allowed_root_files)
+    return ['Unowned root file: ' + path.name
+            for path in sorted(Path(root).iterdir())
+            if (path.is_file() or path.is_symlink()) and path.name not in allowed
+            and not is_git_worktree_file(path)]
+
 def check(root):
     root = Path(root)
     errors = check_active_identifiers(root)
     contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text())
+    errors.extend(check_root_file_ownership(root, contract['allowed_root_files']))
     for name in contract['required_files']:
         if not (root / name).is_file():
             errors.append('Required project file missing: ' + name)

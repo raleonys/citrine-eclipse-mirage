@@ -25,6 +25,48 @@ function Resolve-BoundExecutable {
     return $cmd.Source
 }
 
+
+# Lexical confinement does not resolve existing Windows junction/symlink segments.
+# Reject them before constructing build output. This is not a handle-pinned
+# protection against a concurrent path swap by another local process.
+function Get-BuildPathComponentViolation {
+    param([string]$Root,[string]$Candidate)
+    $rootPath = [System.IO.Path]::GetFullPath($Root).TrimEnd([System.IO.Path]::DirectorySeparatorChar,[System.IO.Path]::AltDirectorySeparatorChar)
+    $candidatePath = [System.IO.Path]::GetFullPath($Candidate)
+    $prefix = $rootPath + [System.IO.Path]::DirectorySeparatorChar
+    if (-not $candidatePath.StartsWith($prefix,[System.StringComparison]::OrdinalIgnoreCase)) {
+        return 'Candidate is outside the repository root.'
+    }
+    $relative = $candidatePath.Substring($prefix.Length)
+    $parts = $relative.Split([char[]]@([System.IO.Path]::DirectorySeparatorChar,[System.IO.Path]::AltDirectorySeparatorChar),[System.StringSplitOptions]::RemoveEmptyEntries)
+    $current = $rootPath
+    try {
+        $rootItem = Get-Item -LiteralPath $current -Force -ErrorAction Stop
+        if (($rootItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+            return 'Repository root is a reparse point.'
+        }
+        foreach ($part in $parts) {
+            # Enumerating the parent also detects dangling junction/link directory
+            # entries that Test-Path can report as missing.
+            $matches = @(Get-ChildItem -LiteralPath $current -Force -ErrorAction Stop |
+                Where-Object { [string]::Equals($_.Name,$part,[System.StringComparison]::OrdinalIgnoreCase) })
+            if ($matches.Count -eq 0) { return $null }
+            if ($matches.Count -ne 1) { return 'Ambiguous build path component.' }
+            $item = $matches[0]
+            if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+                return 'Build path contains a junction or other reparse point: ' + $item.FullName
+            }
+            if (-not $item.PSIsContainer) {
+                return 'Build path component is not a directory: ' + $item.FullName
+            }
+            $current = Join-Path $current $part
+        }
+    } catch {
+        return 'Unable to verify build path components: ' + $_.Exception.Message
+    }
+    return $null
+}
+
 function Resolve-ConfinedBuildDirectory {
     param([string]$Root, [string]$RelativePath, [string]$Label)
     if ([string]::IsNullOrWhiteSpace($RelativePath)) { Fail-Build "$Label bos olamaz." 64 }
@@ -38,6 +80,8 @@ function Resolve-ConfinedBuildDirectory {
     if ($candidate.Equals($buildRoot,[System.StringComparison]::OrdinalIgnoreCase)) {
         Fail-Build "$Label build kokunun kendisi olamaz." 64
     }
+    $componentViolation = Get-BuildPathComponentViolation $Root $candidate
+    if ($componentViolation) { Fail-Build "$Label reparse path check failed: $componentViolation" 64 }
     return $candidate
 }
 

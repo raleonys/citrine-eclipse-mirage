@@ -1121,6 +1121,10 @@
       "bytes": 13841,
       "sha256": "2be3f7fccf5bfa61469fcedc036e2aeeb36ca5896b69160094343bb82cc1e35d"
     },
+    "tests/infrastructure/test_build_path_reparse.ps1": {
+      "bytes": 2043,
+      "sha256": "4560543f3e07b5d43bab2bec3070a621e1265f4fdb6605e8514a45a7b388f251"
+    },
     "tests/infrastructure/test_corvexon_mswsock_imports.py": {
       "bytes": 2450,
       "sha256": "301ff2e33a80d398c2ca51c6623046261e84043e11ee0f2d6afce6276d6ab1c0"
@@ -1141,6 +1145,10 @@
       "bytes": 4773,
       "sha256": "08e142432694ffd1b4488050bf232ad31cf4e0970873bf274fa103f082b8b6ba"
     },
+    "tests/infrastructure/test_root_ownership.py": {
+      "bytes": 5804,
+      "sha256": "3e42974d77b2d8800875ef2ac1ecb1416044e7255f13b56103b017c12ef8ceb7"
+    },
     "tests/infrastructure/test_size_evidence.py": {
       "bytes": 6823,
       "sha256": "5d24e7e6d3b3a706db5f26fadcdac81baba21edad53432cba4a03d2502b45362"
@@ -1154,8 +1162,8 @@
       "sha256": "6c15c49fd981fff2043902fd730e33a82987d543c3b4fce38949da3f890f67ff"
     },
     "tests/infrastructure/test_wine_runner.py": {
-      "bytes": 1695,
-      "sha256": "072efe6c3aa12e3e2cb84256eca76d2a0b56c93e05026abb54a445466b552ee5"
+      "bytes": 1599,
+      "sha256": "c6dec9dc5d91e567295a0d1b363a5d7dfa64847d9fe7ad3616ca4452ba91f49d"
     },
     "tests/native/application_runtime_tests.cpp": {
       "bytes": 22701,
@@ -11659,7 +11667,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
+    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },

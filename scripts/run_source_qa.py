@@ -13,6 +13,7 @@ CHECKS = [
     ('four active supplied vendor trees', ['scripts/vendor_sync.py','--root',str(ROOT),'--verify-installed']),
     ('vendor tamper and link packaging regressions', ['tests/infrastructure/test_vendor_contract.py']),
     ('repository and resource ownership', ['scripts/check_repository_contract.py']),
+    ('independent repository root allowlist regression', ['tests/infrastructure/test_root_ownership.py']),
     ('owner integration requirements', ['scripts/check_integration_requirements.py']),
     ('metadata ownership', ['scripts/check_metadata_ownership.py']),
     ('production/reference build boundary regressions', ['tests/infrastructure/test_build_partition.py']),
