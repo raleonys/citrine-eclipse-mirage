@@ -97,7 +97,9 @@ class CoffEvidenceTests(unittest.TestCase):
 
     def test_current_target_inputs_exclude_stale_objects_on_disk(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            # collect() canonicalizes its roots before invoking these helpers.
+            # Windows TEMP may contain an 8.3 alias for the same directory.
+            root = Path(directory).resolve()
             build = root / 'build'
             source = root / 'src/current.cpp'
             source.parent.mkdir()
@@ -114,7 +116,8 @@ class CoffEvidenceTests(unittest.TestCase):
 
     def test_vs_object_mapping_resolves_configuration_and_explicit_name(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            # Match collect()'s canonical input boundary, including 8.3 TEMP.
+            root = Path(directory).resolve()
             build = root / 'build'
             build.mkdir()
             source = root / 'src/entry.cpp'
