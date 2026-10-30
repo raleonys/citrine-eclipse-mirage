@@ -1142,12 +1142,12 @@
       "sha256": "a295f21ebd72fd7dbda21d0b21a347da56bd3c8f922d01fbaf8f21b7d061c4c9"
     },
     "tests/infrastructure/test_requirements.py": {
-      "bytes": 4773,
-      "sha256": "08e142432694ffd1b4488050bf232ad31cf4e0970873bf274fa103f082b8b6ba"
+      "bytes": 4777,
+      "sha256": "b40fa80b0b52ec725f2f58d7b57ae740541f6b2e24ba36fead9f9a5edc271d25"
     },
     "tests/infrastructure/test_root_ownership.py": {
-      "bytes": 5804,
-      "sha256": "3e42974d77b2d8800875ef2ac1ecb1416044e7255f13b56103b017c12ef8ceb7"
+      "bytes": 8213,
+      "sha256": "b27e2d5e0e51745bf36297c726546acc06a6b4d262f98ee10a5cf77e10b01622"
     },
     "tests/infrastructure/test_size_evidence.py": {
       "bytes": 6823,

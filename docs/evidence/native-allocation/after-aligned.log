@@ -1,7 +1,0 @@
-accept allocation backend: aligned-crt
-PASS: accept
-PASS: post
-PASS: stop-oom
-PASS: io-exception
-PASS: drain-retry
-WINE_PROGRAM_EXIT=0

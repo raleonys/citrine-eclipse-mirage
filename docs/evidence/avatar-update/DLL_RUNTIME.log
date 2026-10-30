@@ -1,3 +1,0 @@
-zero-timeout shutdown status: 2
-PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; single DllShutdown with bounded wait/retry; removed alias/ordinal absent
-WINE_PROGRAM_EXIT=0

@@ -38,7 +38,7 @@ fixture timestamp/linker değerleri ürün kuralı yapılmaz.
 [Golden ürün hedefleri](GOLDEN_PROTOCOLS.md).
 
 Bu turdaki test ve gerçek binary gözlemleri
-[GOLDEN_AVATAR_FIX.json](evidence/GOLDEN_AVATAR_FIX.json) içinde tutulur.
+[GOLDEN_AVATAR_FIX.json](../metadata/evidence/GOLDEN_AVATAR_FIX.json) içinde tutulur.
 LLVM/Wine testleri, gerçek Windows/MSVC/oyun kabulü yerine geçmez. Yeni
 kaynakla Native ve Golden profilleri Windows'ta yeniden çalıştırılmalıdır.
 Yeni kaynak ZIP'i yanında standart `hash  dosya-adı` formatında SHA256

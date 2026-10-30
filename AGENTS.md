@@ -42,7 +42,7 @@ See [GitHub workflow](docs/GITHUB_WORKFLOW.md) for the review and cleanup proces
 
 ## Evidence retention and repository size
 
-- Do not add new files anywhere under `docs/evidence/`, including generated build/test logs, test XML, intermediate JSON/CSV reports, copied contract snapshots, and before/after dumps. Existing tracked evidence is legacy, not permission to create more. Keep transient outputs in ignored `build/` or CI workflow artifacts; preserve non-reproducible acceptance/provenance evidence in an explicitly approved external archive with checksums and pointers. Active contracts belong in `metadata/`, with concise durable conclusions in `docs/`.
+- Do not add new files anywhere under `docs/evidence/`, including generated build/test logs, test XML, intermediate JSON/CSV reports, copied contract snapshots, and before/after dumps. Historical evidence was curated and relocated to locked `metadata/evidence/`; no new files may be added to either location. Keep transient outputs in ignored `build/` or CI workflow artifacts; preserve non-reproducible acceptance/provenance evidence in an explicitly approved external archive with checksums and pointers. Active contracts belong in `metadata/`, with concise durable conclusions in `docs/`.
 - Do not delete, rewrite, or silently replace existing historical evidence until the owner has reviewed its purpose, dependent documentation links, hash/acceptance records, and preservation destination. Removal requires a focused reviewed change and an explicit whole-source manifest refresh.
 - The `.gitignore` evidence rule discourages accidental additions, but does not prevent `git add -f` or API writes. Reject newly tracked `docs/evidence/` files in review unless the owner explicitly authorizes an exception.
 

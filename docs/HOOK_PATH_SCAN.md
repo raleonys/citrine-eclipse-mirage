@@ -42,7 +42,7 @@ the terminating read, inaccessible native pages, and the longest valid protected
 Windows read. A test-only global C++ allocation observer counts requests during
 inspection; input strings and fixture storage are prepared outside that scope.
 The native callback suite separately checks forwarding, output pointers, LastError
-and active-call lifetime. Current evidence: docs/evidence/HOOK_PATH_SCAN.json.
+and active-call lifetime. Current evidence: metadata/evidence/HOOK_PATH_SCAN.json.
 
 This adoption resolves the bounded-scan advantage identified in the hook11 source
 comparison. That comparison identified no further required hook11 transfer; it is

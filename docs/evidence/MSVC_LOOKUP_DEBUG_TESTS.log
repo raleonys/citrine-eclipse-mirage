@@ -1,9 +1,0 @@
-Test project /workspace/yellowfield/build/runtime-debug
-    Start 82: socket_async_receive_contracts
-1/2 Test #82: socket_async_receive_contracts ...............   Passed    0.30 sec
-    Start 83: socket_async_receive_integration_contracts
-2/2 Test #83: socket_async_receive_integration_contracts ...   Passed    0.12 sec
-
-100% tests passed out of 2
-
-Total Test time (real) =   0.43 sec

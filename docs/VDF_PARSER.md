@@ -67,6 +67,6 @@ Eski implementasyon ürün ağacına eklenmez. Baseline kontrolü aynı test har
 eski parser ve configuration kaynağıyla ayrı executable olarak derleyerek yapıldı.
 Normal CTest yeni PEGTL parser'ını bu sabit gözlemlere karşı sınar.
 Güncel ham kayıtlar ve sonuçlar
-[VDF_PARSER_STATUS.json](evidence/VDF_PARSER_STATUS.json) içindedir.
+[VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json) içindedir.
 
 Güncel runtime bağı: [RUNTIME_BINDING.md](RUNTIME_BINDING.md). Buradaki önceki vendor/parser test sayıları tarihsel snapshot kanıtıdır; yeni app testleri [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json) içindedir.

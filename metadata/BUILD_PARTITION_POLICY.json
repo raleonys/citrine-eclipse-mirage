@@ -376,7 +376,7 @@
   "native_msvc_golden": "PASS_USER_SUPPLIED_WINDOWS_LOGS_FOR_ACCEPTED_DLL",
   "game_retest": "OWNER_REPORTED_PASS_FOR_ACCEPTED_DLL",
   "documentation": "docs/BUILD_PARTITION.md",
-  "usage_matrix": "docs/evidence/TRANSLATION_UNIT_USAGE.json",
+  "usage_matrix": "metadata/evidence/TRANSLATION_UNIT_USAGE.json",
   "cross_debug_large_reference_tests": [
     "socket_native_dispatch_integration_contracts",
     "socket_native_document_integration_contracts",
@@ -385,5 +385,5 @@
     "socket_pool_release_integration_contracts"
   ],
   "cross_debug_reference_budget_seconds": 600,
-  "owner_acceptance": "docs/evidence/OWNER_NATIVE_ACCEPTANCE.json"
+  "owner_acceptance": "metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json"
 }

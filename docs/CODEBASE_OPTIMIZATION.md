@@ -42,13 +42,13 @@ uyarı düzeltilmiş veya güvenliği kanıtlanmış sayılmadı. Canlı thread 
 riske atacak şekilde exception yutma eklenmedi.
 
 Dosya başına güncel/eski hash ve kapsam:
-[FILE_MATRIX.csv](evidence/optimization/FILE_MATRIX.csv).
+[FILE_MATRIX.csv](../metadata/evidence/optimization/FILE_MATRIX.csv).
 Fonksiyon kayıtları ve saklama kararları:
-[FUNCTION_MATRIX.csv](evidence/optimization/FUNCTION_MATRIX.csv).
+[FUNCTION_MATRIX.csv](../metadata/evidence/optimization/FUNCTION_MATRIX.csv).
 Bütün uyarılar ve tek tek kararları:
-[STATIC_DIAGNOSTICS.csv](evidence/optimization/STATIC_DIAGNOSTICS.csv).
+[STATIC_DIAGNOSTICS.csv](../metadata/evidence/optimization/STATIC_DIAGNOSTICS.csv).
 Derleyici kapsamı ve sınırlar:
-[COMPILER_SCOPE.json](evidence/optimization/COMPILER_SCOPE.json).
+[COMPILER_SCOPE.json](../metadata/evidence/optimization/COMPILER_SCOPE.json).
 
 ## Uygulanan değişiklikler
 
@@ -85,7 +85,7 @@ Tahsis sayıları ve baytları allocator metadata'sını içermez. p50 ortancala
 iyileşti, ancak p95/p99 değerleri her senaryoda iyileşmedi; Wine zamanlaması
 dalgalanıyor. Örneğin çok düğümlü senaryoda p95 ortancası 255900→291900 ns oldu.
 Bu ölçümden native hız veya kuyruk gecikmesi kazanımı çıkarılmıyor. Tüm varyantlar
-ve tüm örnekler [XML_BENCHMARKS.json](evidence/optimization/XML_BENCHMARKS.json)
+ve tüm örnekler [XML_BENCHMARKS.json](../metadata/evidence/optimization/XML_BENCHMARKS.json)
 içinde tutuluyor.
 
 Yeni xml_reader_allocation_contracts testi önceki kodda ikinci input büyüklüğünde
@@ -103,7 +103,7 @@ bayt ve depth sınır girdisinde Linux ASAN+UBSAN altında karşılaştırıldı
 code/flag, tam ErrorStr, bütün element/attribute/text çıktıları bayt düzeyinde
 aynı, sanitizer hata çıktısı yok. Bu sonlu corpus tam program eşdeğerliği veya
 oyun kabulü iddiası değildir. Sonuç ve corpus/output hash'leri
-[XML_CORPUS_PARITY.json](evidence/optimization/XML_CORPUS_PARITY.json) içinde.
+[XML_CORPUS_PARITY.json](../metadata/evidence/optimization/XML_CORPUS_PARITY.json) içinde.
 
 Yerel son sonuç: Release 196/196, etkilenen Debug 21/21, kaynak QA 17/17
 grup başarılı. XML unit testinde 649 kontrol ve kalıcı corpus testinde 12087
@@ -112,7 +112,7 @@ kapalı üretim derlemesi ile üç gerçek yükle/başlat/profil/kapat/unload d�
 başarılı. Aynı LLVM Release çıktısı 1081856 → 1077760 bayt, yani 4 KiB küçüldü.
 
 Güncel derleme/test sonuçları, gerçek önce/sonra DLL bölüm boyutları ve native
-bekleyen işler [VALIDATION.json](evidence/optimization/VALIDATION.json) içinde.
+bekleyen işler [VALIDATION.json](../metadata/evidence/optimization/VALIDATION.json) içinde.
 LLVM çıktısındaki küçülme sahibin önceki MSVC DLL boyutuna oranlanmamalı; farklı
 toolchain çıktıları karşılaştırılarak kazanım iddiası yapılmıyor.
 

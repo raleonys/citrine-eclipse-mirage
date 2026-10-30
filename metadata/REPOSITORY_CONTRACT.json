@@ -29,6 +29,7 @@
     "metadata/INTEGRATION_REQUIREMENTS.json",
     "metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json",
     "metadata/METADATA_OWNERSHIP.json",
+    "metadata/EVIDENCE_RETENTION_POLICY.json",
     "metadata/HUMAN_ENTRYPOINT_REGISTRY.json",
     "resources/branding/surge.png",
     "docs/IDENTIFIER_POLICY.md",

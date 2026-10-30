@@ -25,4 +25,4 @@ bir derleme PASS'ı Golden PASS'ına çevrilmez.
 Yeni kaynak için Windows'ta Compile/Debug/Native/CRT profilleri tekrar çalıştırılmalıdır.
 Bu oturumdaki GCC, LLVM-MinGW/Wine ve kaynak QA kanıtı, düzeltilmiş kaynakların
 gerçek MSVC yeniden çalıştırması olarak sunulmaz. Girdi loglarının hash'leri ve
-güncel sonuçlar [MSVC_PROFILE_FIX.json](evidence/MSVC_PROFILE_FIX.json) içindedir.
+güncel sonuçlar [MSVC_PROFILE_FIX.json](../metadata/evidence/MSVC_PROFILE_FIX.json) içindedir.

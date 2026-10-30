@@ -1,2 +1,0 @@
-FAIL: incomplete hook cleanup must return failure for an explicit retry
-WINE_PROGRAM_EXIT=1

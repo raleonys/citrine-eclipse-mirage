@@ -14,6 +14,6 @@
       "role": "Preserve separate original fallback at0x180082710"
     }
   },
-  "recovery_reference_document": "docs/evidence/contracts/AVATAR_DATA_CONTRACT.json",
+  "recovery_reference_document": "metadata/evidence/contracts/AVATAR_DATA_CONTRACT.json",
   "latest_owner_asset_update": "Owner explicitly retains embedded C++ PNG bytes; latest supplied208x208 PNG replaces profile only"
 }

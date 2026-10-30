@@ -16,7 +16,7 @@ Sonraki kullanıcı Windows/Golden/native ve oyun kabulü ile DLL boyut ölçüm
 
 Son iki satır ilk üç satırın başka bir sınıflandırmasıdır; toplamı artırmaz. Include yolları, yorum/boşluk ve kaydedilmiş namespace dönüşümleri token karşılaştırmasında ayrılır. Bu, compiler AST veya özgün DLL ile davranış eşdeğerliği ölçümü değildir.
 
-[Dosya bazındaki CSV](evidence/BROAD_SOURCE_MATRIX.csv), [hash ve sembol bağlantıları içeren JSON](evidence/BROAD_SOURCE_INVENTORY.json) ve [doğrulama kaydı](evidence/BROAD_AUDIT_VALIDATION.json) birlikte okunmalıdır. JSON, gerçek138COFF nesnesi ve derlenmiş test/host nesnelerinin dış sembol bağlantılarını da içerir. Bir testin bir sembole bağlanması o fonksiyonun bütün dallarının çalıştığını göstermez. Inline, virtual, callback ve GetProcAddress yolları ayrıca değerlendirilmiştir; satır/dal kapsam yüzdesi uydurulmamıştır.
+[Dosya bazındaki CSV](../metadata/evidence/BROAD_SOURCE_MATRIX.csv), [hash ve sembol bağlantıları içeren JSON](../metadata/evidence/BROAD_SOURCE_INVENTORY.json) ve [doğrulama kaydı](../metadata/evidence/BROAD_AUDIT_VALIDATION.json) birlikte okunmalıdır. JSON, gerçek138COFF nesnesi ve derlenmiş test/host nesnelerinin dış sembol bağlantılarını da içerir. Bir testin bir sembole bağlanması o fonksiyonun bütün dallarının çalıştığını göstermez. Inline, virtual, callback ve GetProcAddress yolları ayrıca değerlendirilmiştir; satır/dal kapsam yüzdesi uydurulmamıştır.
 
 ## Bu tur düzeltilenler
 

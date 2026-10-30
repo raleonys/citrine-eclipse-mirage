@@ -3,7 +3,7 @@
   "classification": "NOT_RELEASE",
   "owner": "Explicit owner authorization for proven bug fixes, tests and comprehensive comparative closure audit",
   "documentation": "docs/DONOR_RECOVERY.md",
-  "validation": "docs/evidence/recovery/VALIDATION.json",
+  "validation": "metadata/evidence/recovery/VALIDATION.json",
   "parent_source_zip_sha256": "1f2a6581a08dbafa940031353c8723e1947e00f0a4681f3bceb1d9f65e3d509e",
   "parent_identity": "Exact previously delivered source ZIP; no accepted binary bundle or augmented working snapshot substituted",
   "changes": [

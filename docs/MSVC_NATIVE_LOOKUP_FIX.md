@@ -25,7 +25,7 @@ Benzer niteliksiz çağrı/deklarasyon içeren18 test dosyası, aynı global CRT
 bildirimi zorlanarak derleme kontrolünden geçirilir. Yardımcıyı kendi sınıf veya
 namespace'inde tanımlayan diğer dosyalarda çakışma gözlenmemiştir. Eski hatanın
 yeniden üretimi, düzeltme ve tarama sonucu ayrı kanıtlardır; gerçek MSVC tekrarının
-yerine geçmezler. Ham sonuçlar [MSVC_NATIVE_LOOKUP_FIX.json](evidence/MSVC_NATIVE_LOOKUP_FIX.json) içindedir.
+yerine geçmezler. Ham sonuçlar [MSVC_NATIVE_LOOKUP_FIX.json](../metadata/evidence/MSVC_NATIVE_LOOKUP_FIX.json) içindedir.
 
 Yeni kaynakta yalnız Native profilini tekrar çalıştırmak gerekir:
 `scripts/build_orchestration/build_native_acceptance.cmd`.

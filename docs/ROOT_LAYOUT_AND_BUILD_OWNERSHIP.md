@@ -44,5 +44,5 @@ alt klasörü yoktur. Eski `transport`, `session`, `hooks`, `hook_engine`,
 `windows`, `achievements`, `events`, `time`, `files`, `native` katmanları dosya
 adlarıyla ifade edilir. Taşıma öncesi kaynak paketi korunur. 177 dosya taşınmış;
 261 kaynak/header gövdesi include satırları dışında birebir doğrulanmıştır.
-[Tam yol eşlemesi](evidence/LAYOUT_MIGRATION.json).
+[Tam yol eşlemesi](../metadata/evidence/LAYOUT_MIGRATION.json).
 

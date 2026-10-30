@@ -32,7 +32,7 @@ taşır. MinHook trampoline/callback/cleanup ve RE selector davranışı korunur
 `CryptQueryObject` bizim DLL'nin export'u olmaz: import tablosunda
 `CRYPT32.dll -> CryptQueryObject` bulunur. Golden ve gerçek DLL incelemesi bunu
 zorunlu kılar; public export sayısı beş kalır, OLE32 dönmez. Referans hashleri
-ve native kullanıcı logu: [PRODUCTION_IMPORT_FIX.json](evidence/PRODUCTION_IMPORT_FIX.json).
+ve native kullanıcı logu: [PRODUCTION_IMPORT_FIX.json](../metadata/evidence/PRODUCTION_IMPORT_FIX.json).
 
 Son dosyanın dist'e yazılması da parent pakette eksikti. Altı Golden aşaması
 ve finalized **preloader_l.dll** kopyasıyla üç gerçek runtime çevrimi geçince

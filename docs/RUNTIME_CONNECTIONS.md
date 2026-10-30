@@ -18,4 +18,4 @@ Güncel arayüz görevi: `YF-PUBLIC-ABI-20261028`. Runtime/config/resource/layou
 | Brownfield iç modül düzeni | Gereksiz iç içe modül alt klasörleri | Tek modül katmanı;177 dosya taşındı | 261 gövde include dışında aynı; yeni build/runtime/QA kanıtları |
 | Uygulama C export arayüzü | Binlerce C++ kaynak exportu uygulama DLLiyle karışıktı. | Üç Brownfield C isim/ordinal; DllMain@1 SURGE@2 DllShutdown@3; yönetim exportları kaldırıldı; SURGE RE RET-only markerı; DllShutdown gerçek cleanup; kaynak APIleri ayrı DLL. | Gerçek PE export denetimi, 7 negatif mutasyon, C17 import tüketicisi, üç load/socket/shutdown/unload döngüsü; Wine kanıtı. |
 
-Güncel arayüz: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md). Ham sonuçlar: [PUBLIC_ABI_STATUS.json](evidence/PUBLIC_ABI_STATUS.json). Önceki runtime kanıtı: [RUNTIME_BINDING_STATUS.json](evidence/RUNTIME_BINDING_STATUS.json).
+Güncel arayüz: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md). Ham sonuçlar: [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json). Önceki runtime kanıtı: [RUNTIME_BINDING_STATUS.json](../metadata/evidence/RUNTIME_BINDING_STATUS.json).

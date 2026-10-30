@@ -23,7 +23,7 @@ düzeltme kapsamında otomatik kopyalanmadı.
 
 Önceki paketten oyun başlangıcının çalıştığını kullanıcı doğruladı; bu kayıt
 korunur. Güncel build ayarı için Wine/cross-build ve source QA sonuçları
-`docs/evidence/ASIO_WINDOWS_TARGET_FIX.json` içindedir. Yeni kaynakla gerçek MSVC
+`metadata/evidence/ASIO_WINDOWS_TARGET_FIX.json` içindedir. Yeni kaynakla gerçek MSVC
 production çıktısı bu ortamda çalıştırılmış sayılmaz.
 
 Bu düzeltme Windows IO/Gulrak kaldırma değişikliğiyle birlikte teslim edilir:

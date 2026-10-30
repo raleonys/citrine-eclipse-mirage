@@ -1,2 +1,0 @@
-VDF corpus: 23417 cases; 4724 accepted; 18693 rejected; full-state FNV64=ea70f5d56d33f404
-PASS: acceptance, error position, AST, assignment chronology and partial action state match RE-derived baseline

@@ -24,7 +24,8 @@ def check_active_identifiers(root):
     errors=[]
     for path in root.rglob('*'):
         rel=path.relative_to(root)
-        if rel.parts[0] in {'build','dist','.git','third_party'} or not path.is_file():
+        if (rel.parts[0] in {'build','dist','.git','third_party'} or
+                rel.parts[:2] == ('metadata', 'evidence') or not path.is_file()):
             continue
         name=rel.as_posix()
         if pattern.search(name):
@@ -107,9 +108,45 @@ def check_root_file_ownership(root, allowed_root_files):
             if (path.is_file() or path.is_symlink()) and path.name not in allowed
             and not is_git_worktree_file(path)]
 
+def check_archived_evidence(root):
+    """Fail closed on new evidence dumps and modifications to locked historical files."""
+    root = Path(root)
+    errors = []
+    if (root / 'docs/evidence').exists():
+        errors.append('Forbidden legacy evidence directory: docs/evidence')
+    archive = root / 'metadata/evidence'
+    policy = json.loads((root / 'metadata/EVIDENCE_RETENTION_POLICY.json').read_text(encoding='utf-8'))
+    retained = policy.get('retained_files')
+    if (policy.get('schema') != 'surge.evidence-retention.v1' or
+            not isinstance(retained, dict) or not retained or
+            policy.get('retained_count') != len(retained)):
+        return errors + ['Invalid historical evidence retention policy']
+    for name, digest in retained.items():
+        if (not isinstance(name, str) or not name or
+                not isinstance(digest, str) or not re.fullmatch(r'[a-f0-9]{64}', digest) or
+                name.startswith('/') or '\\' in name or
+                any(part in ('', '.', '..') for part in name.split('/'))):
+            return errors + ['Unsafe historical evidence entry']
+    actual = {p.relative_to(archive).as_posix()
+              for p in archive.rglob('*') if p.is_file() or p.is_symlink()} if archive.is_dir() else set()
+    expected = set(retained) | {'README.md'}
+    if actual != expected:
+        errors.append('Historical evidence file-set mismatch: missing='
+                      + str(sorted(expected - actual)) + ', unrecorded='
+                      + str(sorted(actual - expected)))
+    for name, digest in retained.items():
+        path = archive / name
+        if path.is_symlink() or not path.is_file():
+            continue
+        if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            errors.append('Historical evidence bytes differ: ' + name)
+    return errors
+
+
 def check(root):
     root = Path(root)
     errors = check_active_identifiers(root)
+    errors.extend(check_archived_evidence(root))
     contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text())
     errors.extend(check_root_file_ownership(root, contract['allowed_root_files']))
     for name in contract['required_files']:

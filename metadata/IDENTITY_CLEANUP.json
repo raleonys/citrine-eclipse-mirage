@@ -5,11 +5,11 @@
   "source_change": "Five source/header comment edits; all application tokens unchanged",
   "application_token_identical_files": 268,
   "archived_documents_byte_preserved": 321,
-  "documentary_index": "docs/evidence/INDEX.md",
+  "documentary_index": "metadata/evidence/INDEX.md",
   "identifier_policy": "docs/IDENTIFIER_POLICY.md",
   "schema_family": "surge.*",
   "current_contracts": "metadata",
-  "raw_prior_reports": "docs/evidence",
+  "raw_prior_reports": "metadata/evidence",
   "ABI_unchanged": true,
   "PE_required_values_unchanged": true,
   "vendor_bytes_and_pins_unchanged": true,
@@ -17,25 +17,25 @@
   "release_checks": {
     "passed": 18,
     "total": 18,
-    "report": "docs/evidence/IDENTITY_RELEASE_TESTS.xml"
+    "report": "metadata/evidence/IDENTITY_RELEASE_TESTS.xml"
   },
   "debug_checks": {
     "passed": 18,
     "total": 18,
-    "report": "docs/evidence/IDENTITY_DEBUG_TESTS.xml"
+    "report": "metadata/evidence/IDENTITY_DEBUG_TESTS.xml"
   },
   "runtime_evidence_class": "LLVM_MINGW_X64_WINE_AND_HOST_PE_CHECKS",
-  "source_body_proof": "docs/evidence/IDENTITY_SOURCE_BODY_PROOF.json",
+  "source_body_proof": "metadata/evidence/IDENTITY_SOURCE_BODY_PROOF.json",
   "infrastructure_regressions": {
     "passed": 32,
     "total": 32,
-    "report": "docs/evidence/IDENTITY_INFRASTRUCTURE_TESTS.log"
+    "report": "metadata/evidence/IDENTITY_INFRASTRUCTURE_TESTS.log"
   },
   "source_qa": {
     "result": "PASS_SOURCE_QA",
     "passed": 15,
     "total": 15,
-    "report": "docs/evidence/IDENTITY_SOURCE_QA.json"
+    "report": "metadata/evidence/IDENTITY_SOURCE_QA.json"
   },
   "native_msvc_golden": "NOT_RUN",
   "updated_game_retest": "NOT_RUN",

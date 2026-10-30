@@ -90,16 +90,16 @@ fixture dizinlerini çocuklar sonlandıktan sonra temizler.
 
 Aynı son harness kaynakları ve aynı eski core archive kullanılarak exact önceki
 kaynak ve düzeltme derlenir. 12 sözleşme senaryosu önce FAIL, sonra PASS.
-[Önce/sonra kayıtları](evidence/socket-retirement/PINNED_RESULTS.json) ve build
+[Önce/sonra kayıtları](../metadata/evidence/socket-retirement/PINNED_RESULTS.json) ve build
 receipt'leri source/harness/core archive hash'lerini taşır. Bunlar test sırasında
 kontrollü Win32 sınır hatalarıdır; gerçek Windows hata sıklığı veya native MSVC
 kabulü değildir.
 
 Yerel tam sonuç, Debug ve kaynak QA kayıtları
-[VALIDATION.json](evidence/socket-retirement/VALIDATION.json) içindedir.
+[VALIDATION.json](../metadata/evidence/socket-retirement/VALIDATION.json) içindedir.
 Public header bildirimi ve üretim C ABI'si değişmez: DllMain@1, SURGE@2,
 DllShutdown@3. Geliştirme DLL'inin otomatik compiler/helper sembol farkları
-[SOURCE_API_DELTA.json](evidence/socket-retirement/SOURCE_API_DELTA.json) içinde
+[SOURCE_API_DELTA.json](../metadata/evidence/socket-retirement/SOURCE_API_DELTA.json) içinde
 ayrı tutulur; private template emisyonu sabit C ABI değildir.
 
 Native Windows/Golden ve oyun kabulü değişen kaynakla yeniden yapılmalıdır.
@@ -110,4 +110,4 @@ kalan donor kaynak/test/araç incelemeleri açıktır. Manuel donor branch ledge
 Exact parent kaynak ZIP SHA256:
 `e0b6964082c4343359d824684b5c60e667867db54f089796862080a81f73d8ac`.
 Güncel değişen dosya pin'leri
-[REVIEWED_CHANGES.json](evidence/socket-retirement/REVIEWED_CHANGES.json) içindedir.
+[REVIEWED_CHANGES.json](../metadata/evidence/socket-retirement/REVIEWED_CHANGES.json) içindedir.
