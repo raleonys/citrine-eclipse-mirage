@@ -79,11 +79,13 @@ cmake --build build/portable --parallel 2
 ctest --test-dir build/portable --output-on-failure
 ```
 
-GitHub Actions runs source QA and portable tests automatically on pull requests
-and main pushes. Native Windows acceptance and Production/Golden builds run
-only when explicitly started with **Actions > Source and Windows checks >
-Run workflow**. Build receipts and test reports identify the source and
-toolchain used. Game acceptance is recorded separately from CI.
+The **Source and Windows checks** workflow runs source QA and portable tests
+automatically on pull requests and main pushes. Its Windows jobs run only when
+started with **Actions > Source and Windows checks > Run workflow**. The separate
+[weekly draft release workflow](docs/WEEKLY_RELEASE.md) also runs native Windows
+acceptance and Production/Golden for new release candidates. Build receipts and
+test reports identify the source and toolchain used. Game acceptance is recorded
+separately from CI.
 
 Source and vendor manifests verify exact file contents. Record intentional
 source changes explicitly before packaging. See

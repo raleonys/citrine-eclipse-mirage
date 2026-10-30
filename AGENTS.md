@@ -325,3 +325,15 @@ root and excludes unrelated reverse-engineering projects from the application.
   text. Keep user chat in the user's chosen language. The English README rewrite
   must be previewed and explicitly approved before pushing; this extra approval
   requirement applies to README changes, not all otherwise authorized work.
+
+- Latest owner release instruction explicitly authorizes a weekly draft-candidate
+  workflow on Friday at 16:30 Europe/Istanbul, plus manual dispatch. Validate the
+  same committed source with source QA, portable tests, native MSVC and the full
+  Production/Golden profile before attaching source/binary ZIPs and SHA256 files.
+  This is a scoped exception to manual-only Windows CI. Only drafts may be created
+  or retried; the owner publishes. Skip unchanged sources, retain retryable partial
+  drafts and never overwrite published releases/tags. Start or change the external
+  series only through explicit start_tag input; continue its R01-R99 revisions
+  without injecting release labels into product metadata or source defaults.
+  No new code/version identity, game acceptance, merge, or Library publication is
+  implied. See docs/WEEKLY_RELEASE.md.

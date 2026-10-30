@@ -17,6 +17,7 @@ CHECKS = [
     ('metadata ownership', ['scripts/check_metadata_ownership.py']),
     ('production/reference build boundary regressions', ['tests/infrastructure/test_build_partition.py']),
     ('native size evidence reader regressions', ['tests/infrastructure/test_size_evidence.py']),
+    ('weekly draft release regressions', ['tests/infrastructure/test_weekly_release.py']),
     ('operator entrypoints', ['scripts/check_human_launcher_contract.py']),
     ('whole-source identity', ['scripts/check_manifest.py']),
     ('FALCION source boundary', ['scripts/check_falcion_golden_cleaning.py']),
