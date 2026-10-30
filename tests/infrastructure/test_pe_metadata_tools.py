@@ -306,6 +306,7 @@ assert [module for module in fixture_import_policy['allowed_modules'] if module 
 source_link=(r/'CMakeLists.txt').read_text()
 assert '  crypt32 ws2_32 kernel32 user32 shell32)' in source_link
 assert 'target_link_libraries(preloader_l_asio INTERFACE ws2_32 mswsock)' in (r/'cmake/VendoredDependencies.cmake').read_text()
+assert 'const wchar_t* modules[]={L"crypt32.dll",L"ws2_32.dll",L"kernel32.dll",L"shell32.dll",L"KernelBase.dll",L"advapi32.dll"};' in (r/'tests/native/application_runtime_tests.cpp').read_text()
 
 with tempfile.TemporaryDirectory() as td:
     path=Path(td)/'normalized.dll'

@@ -1134,8 +1134,8 @@
       "sha256": "b847e1129732b227a574ea45e640da408dfc35a67226a90a7a9e33e36c00a144"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
-      "bytes": 25593,
-      "sha256": "bccb6bcfb4583d1f3a80190a828b995b6dc2b3ed92bcd1fbd1966d3c156ea73f"
+      "bytes": 25788,
+      "sha256": "5cc1416e275ffe0fb3dfc654064424b6671a648c9f056d71d0e05459763176db"
     },
     "tests/infrastructure/test_public_abi.py": {
       "bytes": 2087,
@@ -1167,7 +1167,7 @@
     },
     "tests/native/application_runtime_tests.cpp": {
       "bytes": 22701,
-      "sha256": "e42373336924737f0b43d562f674573e5c2191c9a041c1b15c3929bce387d84a"
+      "sha256": "052d73b5566a5b13b223939389d488b007e11892f2baf9c30defc6e8217c1267"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
       "bytes": 2674,
