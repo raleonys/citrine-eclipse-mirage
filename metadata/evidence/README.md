@@ -21,5 +21,5 @@ the exact source; active docs and metadata references to retained files have bee
 rebased to `metadata/evidence/`. This is an archival location, not a destination
 for new generated validation dumps.
 
-Retained records: 118. Retired-from-HEAD records: 493.
+Retained records: 119. Retired-from-HEAD records: 492.
 Git history is preserved, with no force push or release claim.

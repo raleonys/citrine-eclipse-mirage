@@ -50,7 +50,7 @@
     "docs/DLL_SIZE_AND_NATIVE_ACCEPTANCE.md": "5ea9549615c0d2d0297b69eac731540ca56e5389d9db0583d08b44be02a4e989",
     "docs/DONOR_RECOVERY.md": "09730ad0d8432c0c822b40d8133cb08447ec0eb39ba4bbf234028541a3d51499",
     "docs/FILESYSTEM_BACKEND_COMPARISON.md": "cc7f9dde183b9799294054ea7fb04c27cd90cfb756bee11464e1a2f1548d8282",
-    "docs/GITHUB_WORKFLOW.md": "0d7e4559ce8643f1e5605955dada93b8723eb8cd962c88719c0bc12e1809145f",
+    "docs/GITHUB_WORKFLOW.md": "331135a1581e3563cc68d83d7f1de62cf8669028f949251686c0734f268d5775",
     "docs/GOLDEN_AVATAR_FIX.md": "cf8e9e57c5de41529245c1bf609f087c9202cc3334955b8a7c3f6bcb22793f59",
     "docs/GOLDEN_PROTOCOLS.md": "5d7498f17384383613a9601c1c956502be8c7baab0a8c162175b1f5417dcf8d0",
     "docs/HOOK_ALIGNMENT.md": "e67a11ee0d3fc03886c6c835d8ac9f8d996e37c8043235c8ecf194c263b1c9a8",
@@ -3550,7 +3550,7 @@
     "tools/runtime_probe.hpp": "d6c138af00cfecd1c7fa4476ef88575e41ee1b8e3f281783e367b2e2122e62af",
     "tests/infrastructure/test_build_path_reparse.ps1": "4560543f3e07b5d43bab2bec3070a621e1265f4fdb6605e8514a45a7b388f251",
     "tests/infrastructure/test_root_ownership.py": "b27e2d5e0e51745bf36297c726546acc06a6b4d262f98ee10a5cf77e10b01622",
-    "metadata/EVIDENCE_RETENTION_POLICY.json": "b87a6b43ca2fb197b38403bf39796419c12a2c1c12011a0030eaff99c1aff9ae",
+    "metadata/EVIDENCE_RETENTION_POLICY.json": "6c84fea407ef02011cb15dbd81cf059125865334d4be40cb902701cb08807737",
     "metadata/evidence/ASIO_WINDOWS_TARGET_COMPILE_DEFINITIONS.json": "9cd0b95b07e8aad82f1a547bfde7fad10ee8ddfe73a1a8ade83dc9c1ed073fb0",
     "metadata/evidence/ASIO_WINDOWS_TARGET_FIX.json": "3ce7b41322244825f03fcf67a5010781f6a0547487044dd13966e60b0917a5bc",
     "metadata/evidence/AUTOMATIC_LISTENER.json": "80d097b7658a2e8b3d39ed6456e235a19dfd160b2b5ed91098d31365f72e40ef",
@@ -3592,7 +3592,7 @@
     "metadata/evidence/PRODUCTION_IMPORT_USER_GOLDEN_INPUT.log": "156dc94e71bd139d7a1d174ee7765fa37027abb6c3c75ea56312157f22add74f",
     "metadata/evidence/PRODUCT_IDENTITY_FIX.json": "a2cac72acd0501f772212bc4bf788bcae262dc25441c76fbc7084681537c7c7d",
     "metadata/evidence/PUBLIC_ABI_STATUS.json": "01ad3fdef635f5d2f9871c9b442919f7ecc01f2c68b8a1e49996f08a014f9ce5",
-    "metadata/evidence/README.md": "12e74c95f191f32115857a197ee737bc9fc04ad1052e25117f18fa9f13a6f440",
+    "metadata/evidence/README.md": "f2b98268c985cb2593b05ad79da7f2b893193d0cfdb9af4ad07a5b4ca4bb80da",
     "metadata/evidence/REFERENCE_METADATA_PE_PROBE.json": "0de1786aa1a493ce93e35a4f53558801837f27b933746f8b8b921c4ea0b411f6",
     "metadata/evidence/REFERENCE_METADATA_POLICY_AUDIT.json": "544d12c6d685ed7e864daf4f71c8179082c7fc12eb40571f9a2eb94b63582207",
     "metadata/evidence/RE_COPY_04895C_asm.txt": "4d538132e0841673ee600da34d14e8f102dd76a13a435fa59a9c3426d72efdcf",
@@ -3669,6 +3669,7 @@
     "metadata/evidence/socket-retirement/REVIEWED_CHANGES.json": "470699791d67990c78be8c34c3f3430fb4f8711080bf50bd8fec551c11bbc62a",
     "metadata/evidence/socket-retirement/SOURCE_API_DELTA.json": "2d1e2568aaf54e52e2c9a36bf881c2db1b9d8319eaf2b13a36b023995b73f88e",
     "metadata/evidence/socket-retirement/VALIDATION.json": "3314d3f9df7e5e9911707aa8d251ee65ac0065d5ee376db423044b8aa132ccaa",
-    "metadata/evidence/weekly-release/VALIDATION.json": "6db92bceb67957f8e779530c46ae7caf49e6ca5f9e23c8dfc3a7340b2417703c"
+    "metadata/evidence/weekly-release/VALIDATION.json": "6db92bceb67957f8e779530c46ae7caf49e6ca5f9e23c8dfc3a7340b2417703c",
+    "metadata/evidence/REFERENCE_METADATA_AVATAR.json": "1e00a1e0e81bc97f9364c03e67e7a94d6641e63b9f54438ae7dc1c209fb5de0c"
   }
 }

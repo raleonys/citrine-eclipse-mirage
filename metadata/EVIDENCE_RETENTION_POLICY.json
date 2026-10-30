@@ -5,8 +5,8 @@
   "original_history_commit": "aba8ee3b21d59da6262a3126df85a2d373de8485",
   "original_root": "docs/evidence/",
   "archive_root": "metadata/evidence/",
-  "retained_count": 118,
-  "retired_from_head_count": 493,
+  "retained_count": 119,
+  "retired_from_head_count": 492,
   "retained_files": {
     "ASIO_WINDOWS_TARGET_COMPILE_DEFINITIONS.json": "9cd0b95b07e8aad82f1a547bfde7fad10ee8ddfe73a1a8ade83dc9c1ed073fb0",
     "ASIO_WINDOWS_TARGET_FIX.json": "3ce7b41322244825f03fcf67a5010781f6a0547487044dd13966e60b0917a5bc",
@@ -88,6 +88,7 @@
     "recovery/REVIEWED_CHANGES.json": "e5bd21810d32373b1ada03e021006c8020678dfef9880864ff674ee974d2fa4e",
     "recovery/SOURCE_API_DELTA.json": "57881ce6eba055d5fee1e08877e9b22e76c47171324c548e30900105922dcf4c",
     "recovery/VALIDATION.json": "32820667e496c17d5cd555d9a5fced4d8848fb34d3c7fb613315dfba37102742",
+    "REFERENCE_METADATA_AVATAR.json": "1e00a1e0e81bc97f9364c03e67e7a94d6641e63b9f54438ae7dc1c209fb5de0c",
     "REFERENCE_METADATA_PE_PROBE.json": "0de1786aa1a493ce93e35a4f53558801837f27b933746f8b8b921c4ea0b411f6",
     "REFERENCE_METADATA_POLICY_AUDIT.json": "544d12c6d685ed7e864daf4f71c8179082c7fc12eb40571f9a2eb94b63582207",
     "RUNTIME_BINDING_STATUS.json": "c04c75964734260de5f966d21ff23078db83d65e6622b5f85438c315c82e33e3",
