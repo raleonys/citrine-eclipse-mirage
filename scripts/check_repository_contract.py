@@ -39,10 +39,25 @@ def check_active_identifiers(root):
     return errors
 
 
+
+def check_root_file_ownership(root, allowed_root_files):
+    """Reject unowned files at repository root independently of the source manifest."""
+    if (not isinstance(allowed_root_files, list) or not allowed_root_files
+            or any(not isinstance(name, str) or not name
+                   or name in {'.', '..'} or '/' in name or '\\' in name
+                   for name in allowed_root_files)
+            or len(set(allowed_root_files)) != len(allowed_root_files)):
+        raise ValueError('Invalid allowed_root_files repository policy')
+    allowed = set(allowed_root_files)
+    return ['Unowned root file: ' + path.name
+            for path in sorted(Path(root).iterdir())
+            if (path.is_file() or path.is_symlink()) and path.name not in allowed]
+
 def check(root):
     root = Path(root)
     errors = check_active_identifiers(root)
     contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text())
+    errors.extend(check_root_file_ownership(root, contract['allowed_root_files']))
     for name in contract['required_files']:
         if not (root / name).is_file():
             errors.append('Required project file missing: ' + name)
