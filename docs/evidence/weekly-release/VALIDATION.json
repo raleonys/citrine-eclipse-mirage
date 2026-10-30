@@ -4,7 +4,7 @@
   "result": "PASS_LOCAL_INFRASTRUCTURE_VALIDATION",
   "source_baseline_commit": "6c2c75273b4731d973420fd6b1000b4589ea9e36",
   "source_qa_groups": 18,
-  "weekly_release_regressions": 31,
+  "weekly_release_regressions": 35,
   "portable_ctest": {
     "passed": 22,
     "total": 22
@@ -25,5 +25,6 @@
   "draft_created": false,
   "release_published": false,
   "game_acceptance": "NOT_RUN",
-  "validation_note": "Source QA/portable tests executed before this evidence document was added; the final source manifest is explicitly refreshed and rechecked. No fixture result is native Windows or game acceptance."
+  "validation_note": "Source QA/portable tests executed before this evidence document was added; the final source manifest is explicitly refreshed and rechecked. No fixture result is native Windows or game acceptance.",
+  "transport_compatibility": "gh API streamed pagination; no --slurp dependency"
 }

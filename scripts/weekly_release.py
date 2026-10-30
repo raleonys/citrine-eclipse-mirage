@@ -255,12 +255,25 @@ class GitHub:
     def api(self, endpoint, data=None, paginate=False):
         args = ['gh', 'api', 'repos/' + self.repository + '/' + endpoint]
         if paginate:
-            args += ['--paginate', '--slurp']
+            args += ['--paginate']
         if data is not None:
             args += ['--method', 'POST', '--input', '-']
         cp = subprocess.run(args, input=json.dumps(data) if data is not None else None,
-                            text=True, capture_output=True, check=True, timeout=120)
-        return json.loads(cp.stdout)
+                            text=True, capture_output=True, timeout=120)
+        if cp.returncode:
+            raise RuntimeError('GitHub API request failed: ' + cp.stderr.strip())
+        if not paginate:
+            return json.loads(cp.stdout)
+        # Older supported gh versions stream JSON pages without --slurp.
+        pages, remaining = [], cp.stdout.lstrip()
+        decoder = json.JSONDecoder()
+        while remaining:
+            value, end = decoder.raw_decode(remaining)
+            if not isinstance(value, list):
+                raise ValueError('Expected a paginated GitHub list')
+            pages.append(value)
+            remaining = remaining[end:].lstrip()
+        return pages
 
     def releases(self):
         return [r for page in self.api('releases?per_page=100', paginate=True) for r in page]

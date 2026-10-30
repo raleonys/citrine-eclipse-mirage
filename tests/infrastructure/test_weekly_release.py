@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+import subprocess
 import unittest
 from unittest.mock import patch
 import zipfile
@@ -123,6 +124,31 @@ class PlannerTests(unittest.TestCase):
         r['body'] += '\n' + r['body']
         with self.assertRaisesRegex(ValueError, 'Ambiguous'):
             release.plan([r], SOURCE)
+
+
+class TransportTests(unittest.TestCase):
+    def test_streamed_pages_work_without_newer_gh_cli_flags(self):
+        cp = subprocess.CompletedProcess([], 0, '[{"id":1}]\n[{"id":2}]\n[]\n', '')
+        with patch.object(release.subprocess, 'run', return_value=cp) as run:
+            self.assertEqual([{'id': 1}, {'id': 2}], release.GitHub('owner/repository').releases())
+        self.assertIn('--paginate', run.call_args.args[0])
+        self.assertNotIn('--slurp', run.call_args.args[0])
+
+    def test_api_errors_remain_visible_and_do_not_become_an_empty_history(self):
+        cp = subprocess.CompletedProcess([], 1, '', 'HTTP 403: Resource not accessible')
+        with patch.object(release.subprocess, 'run', return_value=cp), self.assertRaisesRegex(RuntimeError, '403'):
+            release.GitHub('owner/repository').releases()
+
+    def test_invalid_page_shape_cannot_hide_a_revision_collision(self):
+        cp = subprocess.CompletedProcess([], 0, '{"error":"unexpected object"}', '')
+        with patch.object(release.subprocess, 'run', return_value=cp), self.assertRaises(ValueError):
+            release.GitHub('owner/repository').releases()
+
+    def test_draft_body_update_does_not_change_its_publication_state(self):
+        cp = subprocess.CompletedProcess([], 0, '{"draft":true}', '')
+        with patch.object(release.subprocess, 'run', return_value=cp) as run:
+            release.GitHub('owner/repository').update(1, 'complete draft')
+        self.assertEqual({'body': 'complete draft'}, json.loads(run.call_args.kwargs['input']))
 
 
 class PayloadTests(unittest.TestCase):
