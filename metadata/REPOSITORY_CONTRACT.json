@@ -17,7 +17,6 @@
   ],
   "required_files": [
     "AGENTS.md",
-    "CODEX_FIRST_PROMPT.md",
     "README.md",
     "CMakeLists.txt",
     "CMakePresets.json",
@@ -53,7 +52,6 @@
     "CHANGELOG.md",
     "CMakeLists.txt",
     "CMakePresets.json",
-    "CODEX_FIRST_PROMPT.md",
     "LICENSE",
     "README.md",
     "RELEASE_STATE.json",
