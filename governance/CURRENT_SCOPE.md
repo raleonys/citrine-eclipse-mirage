@@ -1,5 +1,10 @@
 # Güncel görev ve kaynak yetkisi
 
+Güncel sahip kararı: kaynak arşivi byte eşitliğiyle GitHub başlangıcına alındı.
+CI ve PR çalışma kuralları ayrı dal/PR olarak hazırlanır; birleştirme sahibine
+aittir. Bu iş runtime/vendor davranışını değiştirme yetkisi vermez.
+[Çalışma düzeni](../docs/GITHUB_WORKFLOW.md).
+
 Güncel sahip kararı: mevcut gömülü C++ avatar yöntemi korunacak; son sağlanan
 PNG yalnız profil avatarı yerine alınacak. Haricî dosya zorunluluğu, fallback,
 CFG önceliği ve dosya yazma davranışı değişmez. [Kapsam](../docs/AVATAR_UPDATE.md).
