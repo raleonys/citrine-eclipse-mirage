@@ -876,7 +876,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "6dbef7774437e93a3ff8f6f76bd49f7c95a8f4a4d633156d831ffc74b99d32a9",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "ff3551f494cec8ef609b66a120f373cf35987deeee120a1f21d68e1db23189e1",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "eab5f8920b1092ce59c24322d112b9115b42127a155d7596202d3ca70fdc161e",
-    "metadata/SOURCE_FILES.json": "de8b4761fab719985d48094b22f82aef22ca839c8f892802fcd54b0d1c6fd55f",
+    "metadata/SOURCE_FILES.json": "cd219390ce0943f8c23a004afd39af8595223df4b31f4042bf42451d20a95759",
     "metadata/SOURCE_INPUTS.json": "d5babddda25224d9ce8030bc63fd969b05f46f7d1960b09e1e26167f8a4ab73c",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "c413071a0a78fb8fbfc4eeabf1e970dfde51b31a870852f50bc175b4a2f4f765",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -911,7 +911,7 @@
     "scripts/check_metadata_ownership.py": "02fa9cd0c6ac6b6d66fdedad64deec117effeb42f63102d85f7aac684976a9fc",
     "scripts/check_msvc_build_evidence.py": "71556827fc97943a6e401ddf319431143018be789ff5dfe19ba5e15e672fd465",
     "scripts/check_msvc_shipping_link_command.py": "fca29b17ca5b8e91e9630dcf2a649b98c18ac0656e0cbca898224068765d298d",
-    "scripts/check_repository_contract.py": "ea7478f8e8b055a3da892948b276850007027e3b18b7272fe54e0b19e4639c70",
+    "scripts/check_repository_contract.py": "68f53adf1dc612c5afb0d268fa05a2bb20e0d63c102fdc617c6dffe5d685e7ce",
     "scripts/clear_tool_python_cache.py": "d4dbd28b6aac7fb5e0d7f93ae3903497112029b755e4e6a0dc443ab4ed27fa83",
     "scripts/collect_size_evidence.py": "a6884ab9b1b00b0f97479f9845af8f32e66bd0d8879c4a62e089466864878253",
     "scripts/extract_source.py": "4e6ff50a0c1fed2e724aed369a11972185bb9cc1a2e56890541aa8e36b08f68a",
@@ -4161,6 +4161,6 @@
     "tools/preloader_l_source_host/main.cpp": "462a9f3c83505abc96a42420a3e31a85502bafb097fa36d665703e10ae0051d6",
     "tools/runtime_probe.hpp": "d6c138af00cfecd1c7fa4476ef88575e41ee1b8e3f281783e367b2e2122e62af",
     "tests/infrastructure/test_build_path_reparse.ps1": "4560543f3e07b5d43bab2bec3070a621e1265f4fdb6605e8514a45a7b388f251",
-    "tests/infrastructure/test_root_ownership.py": "27fa400d5217f6c5c5bfec6a29d83f515ffdfa4ab6387879b1cf64655fcf9aec"
+    "tests/infrastructure/test_root_ownership.py": "3e42974d77b2d8800875ef2ac1ecb1416044e7255f13b56103b017c12ef8ceb7"
   }
 }
