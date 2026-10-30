@@ -11,33 +11,34 @@ std::uint16_t little_word(std::span<const std::byte> buffer, std::size_t offset)
         (std::to_integer<unsigned>(buffer[offset+1]) << 8));
 }
 }
-std::int32_t connect_00fd00(StateRefs state, Effects& effects, Socket socket,
-    std::span<const std::byte> address, std::int32_t supplied_length) {
-    if (!((supplied_length == state.ipv4_length_0a10d0 && little_word(address,0) == 2) ||
-          (supplied_length == state.ipv6_length_0a10d4 && little_word(address,0) == 23)))
-        return effects.original_connect_0a3838(socket,address,supplied_length);
-    const auto network_word = little_word(address,2);
+std::int32_t connect_00fd00_inspected(StateRefs state, Effects& effects, Socket socket,
+    std::span<const std::byte> caller_address, std::span<const std::byte> inspected_address,
+    std::int32_t supplied_length) {
+    if (!((supplied_length == state.ipv4_length_0a10d0 && little_word(inspected_address,0) == 2) ||
+          (supplied_length == state.ipv6_length_0a10d4 && little_word(inspected_address,0) == 23)))
+        return effects.original_connect_0a3838(socket,caller_address,supplied_length);
+    const auto network_word = little_word(inspected_address,2);
     const auto port = static_cast<std::uint16_t>((network_word >> 8) | (network_word << 8));
-    const bool ipv4 = little_word(address,0) == 2;
+    const bool ipv4 = little_word(inspected_address,0) == 2;
     const std::size_t size = ipv4 ? 16 : 28;
-    if(address.size()<size)
+    if(inspected_address.size()<size)
         throw OutOfEvidenceInput("Loopback policy requires a complete sockaddr");
     bool loopback;
     if(ipv4) {
-        loopback = address[4]==std::byte{127} && address[5]==std::byte{0} &&
-                   address[6]==std::byte{0} && address[7]==std::byte{1};
+        loopback = inspected_address[4]==std::byte{127} && inspected_address[5]==std::byte{0} &&
+                   inspected_address[6]==std::byte{0} && inspected_address[7]==std::byte{1};
     } else {
-        loopback = std::all_of(address.begin()+8,address.begin()+23,
+        loopback = std::all_of(inspected_address.begin()+8,inspected_address.begin()+23,
                               [](std::byte b){return b==std::byte{0};}) &&
-                   address[23]==std::byte{1};
+                   inspected_address[23]==std::byte{1};
     }
     if(!loopback || port!=3216)
-        return effects.original_connect_0a3838(socket,address,supplied_length);
+        return effects.original_connect_0a3838(socket,caller_address,supplied_length);
     effects.wait_steps_036880(-1);
     // No live listener means no valid replacement destination.
     const bool redirect = state.server_port_0a3c90!=0;
     std::array<std::byte,28> copy{};
-    if (redirect) std::copy_n(address.begin(),size,copy.begin());
+    if (redirect) std::copy_n(inspected_address.begin(),size,copy.begin());
     if (redirect) {
         effects.log_literal_006880("game connected on port ");
         effects.log_port_00ad70(port);
@@ -57,7 +58,11 @@ std::int32_t connect_00fd00(StateRefs state, Effects& effects, Socket socket,
         copy[3] = static_cast<std::byte>(replacement & 255);
     }
     // The original sees a complete live copy only for a redirected call.
-    return effects.original_connect_0a3838(socket,redirect ? std::span<const std::byte>{copy}.first(size) : address,supplied_length);
+    return effects.original_connect_0a3838(socket,redirect ? std::span<const std::byte>{copy}.first(size) : caller_address,supplied_length);
+}
+std::int32_t connect_00fd00(StateRefs state, Effects& effects, Socket socket,
+    std::span<const std::byte> address, std::int32_t supplied_length) {
+    return connect_00fd00_inspected(state,effects,socket,address,address,supplied_length);
 }
 void ExecutionEffects::wait_steps_036880(std::int32_t count) {execution_.wait_steps_036880(count);}
 void ExecutionEffects::log_literal_006880(std::string_view s) {remaining_.log_literal_006880(s);}

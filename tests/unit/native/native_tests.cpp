@@ -90,7 +90,15 @@ HRESULT WINAPI original_folder_a(HWND w,int id,HANDLE t,DWORD f,LPSTR p){++seen.
 HRESULT WINAPI original_folder_w(HWND w,int id,HANDLE t,DWORD f,LPWSTR p){++seen.folder_w;return folder(w,id,t,f,p);}
 int WSAAPI original_connect(SOCKET s,const sockaddr* p,int n){
     if(seen.connect_wait)seen.connect_wait(s);
-    {std::lock_guard lock(seen.mutex);++seen.connect;seen.socket=s;seen.address=p;seen.length=n;if(p&&n>=4)seen.connect_port=ntohs(reinterpret_cast<const sockaddr_in*>(p)->sin_port);}
+    {std::lock_guard lock(seen.mutex);
+     ++seen.connect;seen.socket=s;seen.address=p;seen.length=n;
+     if(p&&n>=4){
+         std::array<std::byte,4> prefix{};SIZE_T copied=0;
+         const auto incoming=GetLastError();
+         const bool readable=ReadProcessMemory(GetCurrentProcess(),p,prefix.data(),prefix.size(),&copied)&&copied==prefix.size();
+         SetLastError(incoming);
+         if(readable)seen.connect_port=static_cast<unsigned short>((std::to_integer<unsigned>(prefix[2])<<8)|std::to_integer<unsigned>(prefix[3]));
+     }}
     SetLastError(327);return -10035;
 }
 struct Effects final:OriginalEffects {
@@ -260,6 +268,10 @@ void test_process_folder_connect(){
     require(raw[2]==0x0c&&raw[3]==0x90&&f.attempts==1&&seen.address!=reinterpret_cast<const sockaddr*>(&socket_address)&&seen.connect_port==6099&&seen.length==16&&GetLastError()==327,"native connect redirects a complete copy, retains const caller bytes/error");
     require(std::memcmp(reinterpret_cast<const unsigned char*>(&old)+4,raw+4,sizeof(old)-4)==0,"connect preserves native IP and remaining structure bytes");
     require(connect(9,nullptr,-1)==-10035&&seen.address==nullptr&&seen.length==-1,"length bypass forwards null native socket pointer without access");
+    const auto before=seen.connect.load();SetLastError(778);
+    require(connect(9,nullptr,16)==-10035&&seen.connect==before+1&&seen.address==nullptr&&
+            seen.length==16&&GetLastError()==327&&f.attempts==1,
+            "recognized-length null pointer reaches original Winsock path without fail-fast");
 }
 void test_read_only_connect_address(){
     Fixture f;
@@ -276,6 +288,56 @@ void test_read_only_connect_address(){
         VirtualFree(page,0,MEM_RELEASE);
         require(result==-10035&&error==327&&original_port==3216&&seen.connect_port==6099,"IPv4/IPv6 read-only storage redirects safely and preserves Winsock error");
     }
+}
+void test_unreadable_connect_address(){
+    Fixture f;
+    constexpr SIZE_T page_size=4096;
+    auto* area=static_cast<std::byte*>(VirtualAlloc(nullptr,page_size*2,
+        MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE));
+    require(area!=nullptr,"allocate guarded sockaddr pages");
+    DWORD previous=0;
+    require(VirtualProtect(area+page_size,page_size,PAGE_NOACCESS,&previous)!=0,
+            "guard upper page from callback inspection");
+    for(auto* invalid:{area+page_size,area+page_size-8}){
+        const auto before=seen.connect.load();const auto errors=active_calls();
+        SetLastError(761);
+        const auto result=connect_entry(123,reinterpret_cast<const sockaddr*>(invalid),16);
+        require(result==-10035&&seen.connect==before+1&&seen.address==invalid&&
+                seen.length==16&&GetLastError()==327&&active_calls()==errors&&
+                f.attempts==0,
+                "unreadable and boundary-spanning pointers forward intact without hook dereference");
+    }
+    require(VirtualFree(area,0,MEM_RELEASE)!=0,"release guarded sockaddr pages");
+}
+void test_real_winsock_invalid_address_equivalence(){
+    // Genuine Windows-only comparison: the hook must delegate malformed caller
+    // addresses to the SDK trampoline without inventing a WSA error or terminating.
+    WSADATA startup{};
+    require(WSAStartup(MAKEWORD(2,2),&startup)==0,"initialize real Winsock error oracle");
+    SOCKET socket=::socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+    require(socket!=INVALID_SOCKET,"create real socket for native fault comparison");
+    Fixture f;
+    f.originals[0]=reinterpret_cast<std::uintptr_t>(&::connect);
+    auto* area=static_cast<std::byte*>(VirtualAlloc(nullptr,8192,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE));
+    require(area!=nullptr,"allocate real Winsock pointer-fault pages");
+    DWORD old=0;
+    require(VirtualProtect(area+4096,4096,PAGE_NOACCESS,&old)!=0,"protect real Winsock fault page");
+    for(auto* pointer:{static_cast<const sockaddr*>(nullptr),
+                       reinterpret_cast<const sockaddr*>(area+4096),
+                       reinterpret_cast<const sockaddr*>(area+4096-8)}){
+        WSASetLastError(2713);
+        const int expected=::connect(socket,pointer,16);
+        const int expected_error=WSAGetLastError();
+        WSASetLastError(2714);
+        const int observed=connect_entry(socket,pointer,16);
+        const int observed_error=WSAGetLastError();
+        require(expected==observed&&expected_error==observed_error&&
+                expected==SOCKET_ERROR&&f.attempts==0&&active_calls()==0,
+                "real SDK and hook must agree on invalid pointer/length errors");
+    }
+    require(VirtualFree(area,0,MEM_RELEASE)!=0,"free protected Winsock comparison pages");
+    require(closesocket(socket)==0,"release real Winsock comparison socket");
+    require(WSACleanup()==0,"leave real Winsock fixture balanced");
 }
 void test_binding_lifecycle(){
     Fixture f;try{Binding second(f.context,faults);require(false,"duplicate binding rejected");}catch(const Life& x){require(x.fault==LifecycleFault::AlreadyBound&&is_bound(),"duplicate bind leaves active context");}
@@ -462,6 +524,8 @@ int main(int argc,char** argv){try{
 #endif
     test_registry_startup_wait_allows_peer_callbacks();
     test_read_only_connect_address();
+    test_unreadable_connect_address();
+    test_real_winsock_invalid_address_equivalence();
     test_network_wait_allows_peer_callbacks(true);test_network_wait_allows_peer_callbacks(false);test_concurrent_attempts();
     test_hook_reference_common_guard_scope();
     std::cout<<"PASS: "<<checks<<" native callback/trampoline checks; synthetic originals, real LastError metadata only\n";
