@@ -104,6 +104,12 @@ Changes to tracked source require an explicit reviewed refresh of the whole-sour
 manifest. Never refresh merely to hide drift. Build/dist remain untracked. No
 release version/revision is introduced into product code or CI job names.
 
+## Evidence retention and repository hygiene
+
+No new `docs/evidence/` files are to be committed. This includes build/test logs, JUnit/XML output, transient JSON/CSV reports, before/after captures, duplicate contract snapshots, and bulk audit dumps. Use ignored `build/` for local outputs and CI run artifacts for temporary test evidence. Preserve non-reproducible provenance or owner-native acceptance evidence externally with a checksum and concise traceable reference; keep current contracts in `metadata/` and human-readable conclusions in `docs/`. The root `.gitignore` discourages accidental additions, but reviewers must also reject forced additions unless specifically authorized by the owner.
+
+Existing `docs/evidence/` files remain grandfathered pending item-by-item cleanup. Before deleting them, inspect references in documents, historical audit/acceptance claims and hash pins; explicitly update all affected links and the source manifest. Do not discard the only copy of a non-reproducible result.
+
 ## Local validation before a push
 
 There are two independent source records. SOURCE_FILES.json lists files under
