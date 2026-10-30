@@ -1,7 +1,6 @@
 """Check real exit propagation and inherited-output lifetime independently of Wine."""
 import subprocess
 import sys
-import time
 import unittest
 from pathlib import Path
 
@@ -19,11 +18,9 @@ class WineRunner(unittest.TestCase):
     def test_descendant_pipe_does_not_hold_runner(self):
         # The descendant inherits stdout but outlives the program. A communicate
         # pipe would wait for it even though the actual program already exited.
-        parent = "import subprocess,sys;subprocess.Popen([sys.executable,'-c','import time;time.sleep(3)']);print('parent done')"
-        start = time.monotonic()
-        result = subprocess.run([sys.executable, '-B', str(RUNNER), sys.executable, '-c', parent], capture_output=True, timeout=2)
+        parent = "import subprocess,sys;subprocess.Popen([sys.executable,'-c','import time;time.sleep(20)']);print('parent done')"
+        result = subprocess.run([sys.executable, '-B', str(RUNNER), sys.executable, '-c', parent], capture_output=True, timeout=10)
         self.assertEqual(result.returncode, 0)
-        self.assertLess(time.monotonic() - start, 2)
         self.assertIn(b'parent done', result.stdout)
 
     def test_hung_program_is_failure(self):

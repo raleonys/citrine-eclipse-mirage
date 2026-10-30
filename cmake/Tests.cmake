@@ -930,3 +930,17 @@ target_link_libraries(hook_adapter_integration PRIVATE preloader_l_reference_mod
 target_include_directories(hook_adapter_integration PRIVATE "${PROJECT_SOURCE_DIR}")
 add_test(NAME hook_adapter_integration COMMAND hook_adapter_integration )
 set_tests_properties(hook_adapter_integration PROPERTIES TIMEOUT 60)
+
+# Execute the actual Windows junction/reparse guard on the Native CTest path.
+# A missing PowerShell executable is a configuration error, not a silent skip.
+if(WIN32 AND MSVC)
+  find_program(PRELOADER_L_POWERSHELL_EXE NAMES powershell.exe)
+  if(NOT PRELOADER_L_POWERSHELL_EXE)
+    message(FATAL_ERROR "Windows build-path reparse regression requires powershell.exe")
+  endif()
+  add_test(NAME build_path_reparse_contracts
+    COMMAND "${PRELOADER_L_POWERSHELL_EXE}" -NoProfile -NonInteractive
+      -ExecutionPolicy Bypass -File
+      "${PROJECT_SOURCE_DIR}/tests/infrastructure/test_build_path_reparse.ps1")
+  set_tests_properties(build_path_reparse_contracts PROPERTIES TIMEOUT 60 RUN_SERIAL TRUE)
+endif()
