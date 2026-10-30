@@ -305,3 +305,10 @@ root and excludes unrelated reverse-engineering projects from the application.
   do not merge, enable auto-merge, approve your own PR, bypass failed checks or
   publish releases. Preserve all existing product/vendor/ABI policies and exact
   source bytes. See docs/GITHUB_WORKFLOW.md.
+
+- Latest owner CI quota instruction keeps this repository private. Automatic
+  PR/main runs retain source QA and portable tests; both Windows Native and
+  Production/Golden jobs run only on explicit workflow_dispatch. Preserve their
+  existing scripts, assertions and budgets. Skipped jobs are not native PASS;
+  review exact-source Windows/game evidence separately. This supersedes automatic
+  Windows execution, not the owner-only merge policy or local acceptance checks.

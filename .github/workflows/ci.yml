@@ -52,6 +52,7 @@ jobs:
 
   windows:
     name: Windows ${{ matrix.profile }}
+    if: github.event_name == 'workflow_dispatch'
     needs: source-qa
     runs-on: windows-2022
     timeout-minutes: 60

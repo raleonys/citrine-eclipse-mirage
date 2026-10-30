@@ -45,17 +45,31 @@ release version/revision is introduced into product code or CI job names.
 
 ## CI and acceptance evidence
 
-The proposed workflow runs on PRs, main pushes and manual dispatch. Official
-checkout, Python and artifact actions are pinned to verified commit SHAs.
+The workflow runs on PRs, main pushes and manual dispatch. Official checkout,
+Python and artifact actions are pinned to verified commit SHAs. To reduce
+hosted-runner usage in the private repository, automatic runs perform only
+source QA and portable tests. Both Windows jobs require manual dispatch.
 
 - Linux executes source QA and portable CMake/CTest checks.
-- Windows executes the existing Native Acceptance Release profile, including
+- On manual dispatch, Windows executes the existing Native Acceptance Release profile, including
   source API and native tests, without changing its assertions or budgets.
-- A separate Windows job executes the existing Production/Golden Release
+- A separate manually dispatched Windows job executes the existing Production/Golden Release
   profile, including its six gates and real final-name DLL lifecycle checks.
 - Evidence artifacts are retained for 14 days, including toolchain provenance,
   receipts, CTest results and Golden reports. The local Golden DLL, checksum
   and receipt are downloadable only after the production profile succeeds.
+
+To request Windows validation, open Actions, select **Source and Windows checks**,
+choose **Run workflow**, and select the branch to validate. The manual run first
+executes source QA/portable tests and then both Windows profiles. There is no
+schedule or automatic Windows build on PR updates or main pushes. The existing
+local Windows build and acceptance scripts remain available unchanged.
+
+A skipped Windows job is not a passed Windows test. On an automatic run, a green
+workflow badge records source/portable success only. Review native MSVC/Golden
+evidence for the exact source commit separately before treating it as accepted;
+do not inherit acceptance from a parent commit or from Wine tests. Local Windows
+receipts or an explicitly requested manual CI run can provide that evidence.
 
 No workflow releases, publishes, uploads to Library or merges code. A local
 Golden candidate remains NOT_RELEASE. A green CI run is not real game acceptance.

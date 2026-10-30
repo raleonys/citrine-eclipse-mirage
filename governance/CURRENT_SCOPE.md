@@ -1,5 +1,12 @@
 # Güncel görev ve kaynak yetkisi
 
+Current owner CI decision: keep the repository private and reduce automatic
+hosted-runner use. Source QA and portable tests stay automatic on PRs/main;
+Windows Native and Production/Golden run only on manual workflow dispatch.
+Local build/acceptance scripts and product/vendor contracts remain unchanged.
+Skipped Windows jobs do not count as native acceptance. See the
+[review workflow](../docs/GITHUB_WORKFLOW.md).
+
 Güncel sahip kararı: kaynak arşivi byte eşitliğiyle GitHub başlangıcına alındı.
 CI ve PR çalışma kuralları ayrı dal/PR olarak hazırlanır; birleştirme sahibine
 aittir. Bu iş runtime/vendor davranışını değiştirme yetkisi vermez.
