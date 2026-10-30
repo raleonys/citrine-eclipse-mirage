@@ -25,6 +25,13 @@ manually merge; requiring an independent formal approval needs a separate bot
 or reviewer account. No branch-protection rule or approval bypass is installed
 by these workflow files. Repository settings remain a separate owner decision.
 
+The owner explicitly chooses to keep the repository private on the current plan
+and continue with manual PR review/merge. Rulesets are not enforced on this
+private repository under the current plan. PR/CI checks remain visible, but
+GitHub does not technically block direct pushes or merging failed checks. The
+assistant must still follow the owner-only merge policy. No plan upgrade or
+organization transfer is part of this task.
+
 ## Exact source and vendor identity
 
 The root .gitattributes disables automatic text conversion. Checkouts must retain
