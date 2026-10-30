@@ -46,20 +46,20 @@
   },
   "import_policy": {
     "required_modules": [
-      "KERNEL32.DLL",
-      "MSWSOCK.DLL",
-      "SHELL32.DLL",
-      "USER32.DLL",
+      "CRYPT32.DLL",
       "WS2_32.DLL",
-      "CRYPT32.DLL"
+      "KERNEL32.DLL",
+      "USER32.DLL",
+      "SHELL32.DLL",
+      "MSWSOCK.DLL"
     ],
     "allowed_modules": [
-      "KERNEL32.DLL",
-      "MSWSOCK.DLL",
-      "SHELL32.DLL",
-      "USER32.DLL",
+      "CRYPT32.DLL",
       "WS2_32.DLL",
-      "CRYPT32.DLL"
+      "KERNEL32.DLL",
+      "USER32.DLL",
+      "SHELL32.DLL",
+      "MSWSOCK.DLL"
     ],
     "forbidden_module_prefixes": [
       "MSVCP",
@@ -69,12 +69,12 @@
       "API-MS-WIN-CRT-"
     ],
     "restricted_named_imports": {
+      "CRYPT32.DLL": [
+        "CryptQueryObject"
+      ],
       "MSWSOCK.DLL": [
         "AcceptEx",
         "GetAcceptExSockaddrs"
-      ],
-      "CRYPT32.DLL": [
-        "CryptQueryObject"
       ]
     },
     "gs_runtime_policy": {
