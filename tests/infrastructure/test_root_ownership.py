@@ -1,4 +1,6 @@
 """Regression tests for the independent repository root ownership gate."""
+import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -26,6 +28,43 @@ class RepositoryRootOwnership(unittest.TestCase):
             self.assertEqual(
                 ['Unowned root file: .unexpected', 'Unowned root file: UNOWNED_ROOT_SCRIPT.py'],
                 check_root_file_ownership(root, ['README.md']))
+
+    def test_real_git_worktree_gitfile_is_allowed(self):
+        if not shutil.which('git'):
+            self.skipTest('Git executable not available')
+        with tempfile.TemporaryDirectory() as tmp:
+            parent = Path(tmp) / 'parent'
+            child = Path(tmp) / 'worktree'
+            parent.mkdir()
+            def git(*args):
+                subprocess.run(['git', '-C', str(parent), *args],
+                               check=True, capture_output=True, text=True)
+            git('init')
+            git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                'commit', '--allow-empty', '-m', 'fixture')
+            git('worktree', 'add', '--detach', str(child), 'HEAD')
+            self.assertTrue((child / '.git').is_file())
+            self.assertEqual([], check_root_file_ownership(child, ['README.md']))
+            (child / 'UNOWNED_ROOT_SCRIPT.py').write_text('fixture\n')
+            self.assertEqual(['Unowned root file: UNOWNED_ROOT_SCRIPT.py'],
+                             check_root_file_ownership(child, ['README.md']))
+
+    def test_arbitrary_gitfile_and_git_symlink_are_not_exempt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / '.git').write_text('not a gitdir redirect\n')
+            self.assertEqual(['Unowned root file: .git'],
+                             check_root_file_ownership(root, ['README.md']))
+            (root / '.git').write_text('gitdir: nonexistent\n')
+            self.assertEqual(['Unowned root file: .git'],
+                             check_root_file_ownership(root, ['README.md']))
+            (root / '.git').unlink()
+            try:
+                (root / '.git').symlink_to(root / 'nowhere')
+            except (OSError, NotImplementedError):
+                return
+            self.assertEqual(['Unowned root file: .git'],
+                             check_root_file_ownership(root, ['README.md']))
 
     def test_invalid_or_duplicate_policy_fails_closed(self):
         with tempfile.TemporaryDirectory() as tmp:
