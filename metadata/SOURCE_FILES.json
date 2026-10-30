@@ -1134,8 +1134,8 @@
       "sha256": "b847e1129732b227a574ea45e640da408dfc35a67226a90a7a9e33e36c00a144"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
-      "bytes": 24328,
-      "sha256": "e1ebfbef66b43f3cc5f496568dd31b4745ab969a4085e5f12830defdecd53fdb"
+      "bytes": 25593,
+      "sha256": "bccb6bcfb4583d1f3a80190a828b995b6dc2b3ed92bcd1fbd1966d3c156ea73f"
     },
     "tests/infrastructure/test_public_abi.py": {
       "bytes": 2087,
@@ -1271,7 +1271,7 @@
     },
     "tests/support/golden/metadata/CORVEXON_GOLDEN_TRAIL.json": {
       "bytes": 3412,
-      "sha256": "465a3eeebc8250286e0a3a3aa6bea0131a91eaa7d2d2895b52d7bfac62c5b271"
+      "sha256": "fc26ccd5e8244d064e1304e9d53e0c7a61e9e7fd1a371a69bb05f35d716b8ee0"
     },
     "tests/support/golden/metadata/CRT_STATIC_CONTRACT.json": {
       "bytes": 90,

@@ -30,7 +30,7 @@ Kullanıcının eksik hedefleri tamamlama talimatıyla dört profil
 | URSYNEX | Brownfield’in açıkça seçilen timestamp0xCD268EB1, linker14.0 ve Rich-yok profilini kopyaya uygular, checksum’u yeniden hesaplar. Son kullanıcı talimatıyla import descriptor’ları da sabit DLL sırasına permüte eder; isim/thunk/IAT verileri korunur. |
 | ARYRA | MSVC altı section veya statik UCRT `.fptable` ile yedi section; sıralama, alignment, dosya sınırı ve çakışmama. `.fptable` tam virtual0x100/raw0x200, index4, characteristics0xC0000040 ve sıfır verili olmalıdır. Diğer section RVA/boyutları zorlanmaz. |
 | MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem6.0, linker14.0, timestamp0xCD268EB1, Rich yok; birebir Brownfield VERSIONINFO. PNG/RCDATA/manifest yok. COFF symbol/debug/certificate yok. Internal export adı `preloader.unsigned.dll`. |
-| CORVEXON | Üç tam C export/ordinal; CRT entrypoint exported DllMain'den ayrı ve executable `.text` içinde. KERNEL32/MSWSOCK/SHELL32/USER32/WS2_32 ve zorunlu CRYPT32 dışında statik import yok; MSWSOCK yalnız AcceptEx/GetAcceptExSockaddrs, CRYPT32 yalnız CryptQueryObject. `/MT`, writable image-backed `/GS` cookie, geçerli checksum. |
+| CORVEXON | Üç tam C export/ordinal; CRT entrypoint exported DllMain'den ayrı ve executable `.text` içinde. CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK dışında statik import yok; MSWSOCK yalnız AcceptEx/GetAcceptExSockaddrs, CRYPT32 yalnız CryptQueryObject. `/MT`, writable image-backed `/GS` cookie, geçerli checksum. |
 
 OLE32, önceki COM known-folder adaptöründen geliyordu; RE ortam değişkeni
 okumasına dönüşle kaldırıldı. Son kullanıcı düzeltmesiyle 11. hook için
