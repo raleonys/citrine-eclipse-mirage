@@ -9,18 +9,62 @@ Previous ZIP deliveries remain independent backups, not recreated Git history.
 
 ## Change and merge policy
 
-Keep `main` as the accepted integration branch and reuse the long-lived `bugfix`
-branch for routine fixes and small maintenance changes. Do not create a new branch
-for every small fix. Open a focused PR from `bugfix` for each reviewable batch,
-stating the problem, scope, tests and remaining work. Keep the shared branch after
-merge and synchronize it with the latest main before starting the next batch.
-Use a fast-forward when possible; otherwise merge main without rewriting shared
-history. Prefer merge commits for these PRs to make later synchronization simple.
+The mandatory rules at the start of [AGENTS.md](../AGENTS.md) apply to all agents
+and contributors. Branch choice follows the workstream, not the number of tasks.
 
-Audit work and other independently scoped investigations can use dedicated
-branches. Coordinate contributors sharing `bugfix` so unrelated active work is
-not accidentally combined in one PR. Keep automatic head-branch deletion disabled
-for this shared-branch model; completed audit branches can be cleaned up separately.
+| Branch | Purpose | Lifetime |
+| --- | --- | --- |
+| `main` | Accepted integration; updated only by the owner's reviewed PR merges | Permanent |
+| `bugfix` | Routine fixes, dependency updates, documentation, tests and small maintenance | Permanent; reused across PR batches |
+| Descriptive audit/project branch | Explicitly scoped, sustained investigation or substantial project | Retained throughout the workstream; retired only after completion review |
+| Exceptional temporary branch | Work explicitly requested by the owner to be isolated temporarily | Deleted after the completion and preservation checks below |
+
+Never edit, commit, push, reset, delete or force-update main directly, locally or
+remotely. File-content API writes targeting main are also prohibited. Reading,
+fetching and testing it in a clean checkout is allowed. Agents prepare changes
+on the appropriate working branch and open PRs; only the owner merges into main.
+
+Before writing, inspect the working tree and current branch, fetch remote refs,
+and inspect open PRs for overlapping work. Read the current AGENTS.md and
+governance/CURRENT_SCOPE.md from fetched origin/main as well as the working branch;
+an older audit checkout does not exempt an agent from current owner rules.
+Synchronize bugfix with current main
+before the next batch: fast-forward when possible, otherwise merge main normally.
+Preserve others' uncommitted work. Never rebase published shared history or use
+force-push, including force-with-lease. Coordinate overlapping edits and do not
+combine unrelated active contributions merely because they share bugfix.
+
+Open a focused PR for each coherent reviewable batch, stating the problem, scope,
+tests and remaining work. Retain bugfix after merge. Prefer merge commits for
+these PRs to make later synchronization simple. A dependency update, documentation
+change, new task or new PR does not by itself justify a new branch.
+
+Dedicated audit/project branches need a descriptive name and an explicit scope
+recorded in the PR. Reuse each branch through the sustained workstream rather than
+opening another branch for each finding. Do not create a dedicated branch merely
+to submit one or two small PRs. Existing active audit branches remain protected
+from cleanup. Exceptional temporary branches require an explicit owner instruction.
+
+## Branch completion and cleanup
+
+Keep automatic head-branch deletion disabled. A merged PR alone does not retire
+a shared or ongoing workstream branch. Never delete main or bugfix.
+
+For a completed dedicated or exceptional temporary branch:
+
+1. Obtain the owner's confirmation that the workstream is complete. Check all its
+   open PRs and outstanding work; do not delete a branch still needed by either.
+2. Verify the tip is contained in current main. For squash/cherry-pick histories
+   where ancestry cannot prove preservation, review the actual changes and record
+   their preserved destination; do not infer safety from a closed PR or its title.
+   Unmerged work requires explicit owner instructions for preservation/disposal.
+3. Record the branch name and full tip SHA in the cleanup record before deleting
+   the remote branch. Do not remove local worktrees with uncommitted changes.
+4. Recheck the remote tip immediately before deletion. If it changed, or ownership
+   or preservation is uncertain, preserve the branch and report the issue.
+
+Written rules guide contributors but do not add technical server enforcement.
+Do not change repository visibility, access or protections to bypass the process.
 
 Existing owner decisions, AGENTS.md, current governance and product contracts
 continue to apply. A move to GitHub does not authorize new runtime behavior.
