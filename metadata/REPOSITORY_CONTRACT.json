@@ -45,7 +45,7 @@
   "nested_reference_archives": false,
   "library_sync": false,
   "first_party_module_depth": 1,
-  "layout_migration": "docs/evidence/LAYOUT_MIGRATION.json",
+  "layout_migration": "metadata/evidence/LAYOUT_MIGRATION.json",
   "allowed_root_files": [
     ".gitattributes",
     ".gitignore",
