@@ -7,7 +7,7 @@
 | `scripts/build_orchestration/` | Beş kayıtlı insan komutu, otomasyona açık PowerShell profilleri |
 | `scripts/` | Golden araçları, kaynak QA, manifest ve paket kontrolü |
 | `tools/` | Uygulama C API yükleyicisi, ayrı source host, compiler CRT host'u, read-only PE/resource raporu |
-| `exports/` | Uygulamanın sabit altı isim/ordinal C export tablosu |
+| `exports/` | Uygulamanın sabit üç isim/ordinal C export tablosu |
 | `tests/unit/`, `tests/native/` | Mevcut Yellowfield kaynak/adapter testleri |
 | `tests/infrastructure/`, `tests/support/golden/` | Uyarlanmış altyapı testleri ve açıkça sentetik politikalar |
 | `resources/branding/` | Kullanıcının byte-pinned SURGE PNG'si; RCDATA 101 |
@@ -44,5 +44,5 @@ alt klasörü yoktur. Eski `transport`, `session`, `hooks`, `hook_engine`,
 `windows`, `achievements`, `events`, `time`, `files`, `native` katmanları dosya
 adlarıyla ifade edilir. Taşıma öncesi kaynak paketi korunur. 177 dosya taşınmış;
 261 kaynak/header gövdesi include satırları dışında birebir doğrulanmıştır.
-[Tam yol eşlemesi](evidence/LAYOUT_MIGRATION.json).
+[Tam yol eşlemesi](../metadata/evidence/LAYOUT_MIGRATION.json).
 

@@ -53,7 +53,7 @@ exit kodunu koruyan `scripts/run_wine_test.py` çalıştırıcısını seçer.
 Wine servislerinin miras aldığı çıktı descriptor'ları test başarısını veya zamanını belirlemez.
 
 Güncel uygulama C arayüzü ve kaynak DLL ayrımı: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
-Güncel doğrulama: [PUBLIC_ABI_STATUS.json](evidence/PUBLIC_ABI_STATUS.json).
+Güncel doğrulama: [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 
 Son kullanıcı native loglarında Compile/Debug/CRT PASS; kalan Native test
 derlemesi düzeltmesi: [MSVC_NATIVE_LOOKUP_FIX.md](MSVC_NATIVE_LOOKUP_FIX.md).

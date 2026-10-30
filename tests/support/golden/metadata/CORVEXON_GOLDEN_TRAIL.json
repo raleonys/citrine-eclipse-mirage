@@ -38,24 +38,24 @@
   "forbid_forwarded_exports": true,
   "import_policy": {
     "required_modules": [
-      "KERNEL32.DLL",
+      "CRYPT32.DLL",
       "WS2_32.DLL",
-      "CRYPT32.DLL"
+      "KERNEL32.DLL"
     ],
     "allowed_modules": [
+      "CRYPT32.DLL",
+      "WS2_32.DLL",
+      "KERNEL32.DLL",
+      "USER32.DLL",
+      "SHELL32.DLL",
+      "MSWSOCK.DLL",
       "ADVAPI32.DLL",
       "COMDLG32.DLL",
-      "CRYPT32.DLL",
       "GDI32.DLL",
-      "KERNEL32.DLL",
       "OLE32.DLL",
       "OLEAUT32.DLL",
-      "SHELL32.DLL",
-      "USER32.DLL",
       "UUID.DLL",
-      "WINSPOOL.DRV",
-      "MSWSOCK.DLL",
-      "WS2_32.DLL"
+      "WINSPOOL.DRV"
     ],
     "forbidden_module_prefixes": [
       "MSVCP",

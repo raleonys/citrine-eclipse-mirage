@@ -48,7 +48,7 @@ configuration effects. Storage/startup checks retain their phase/state assertion
 without testing the removed normalization feature. Session/message tests continue
 to cover existing negotiation separately.
 
-Current results: [SDK_NUMERIC_PIN.json](evidence/SDK_NUMERIC_PIN.json). The preceding
-full-string run remains historical evidence in [SDK_PIN.json](evidence/SDK_PIN.json).
+Current results: [SDK_NUMERIC_PIN.json](../metadata/evidence/SDK_NUMERIC_PIN.json). The preceding
+full-string run remains historical evidence in [SDK_PIN.json](../metadata/evidence/SDK_PIN.json).
 Cross-build/Wine evidence
 does not certify acceptance of the new identity by the actual consumer or game.

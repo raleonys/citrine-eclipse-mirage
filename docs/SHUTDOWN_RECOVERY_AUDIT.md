@@ -52,7 +52,7 @@ trampoline/owner üzerinde kör FreeLibrary yapılmaz. Önceki kaynak, teslim ed
 arşivin manifesti doğrulanmış temiz açılımından derlenir; değişen çalışma ağacı
 baseline yerine kullanılmaz. Build kayıtları harness ve application hash'lerini
 ve her iki varyantın kullandığı aynı eski core archive hash'ini tutar.
-[PINNED_RESULTS.json](evidence/shutdown/PINNED_RESULTS.json).
+[PINNED_RESULTS.json](../metadata/evidence/shutdown/PINNED_RESULTS.json).
 
 ## Timer hipotezinin sonucu: test edilen çağıranlar fail-closed
 
@@ -102,10 +102,10 @@ raw_socket_alive=1 listening=1 quiesced=1 failed=1
 Donor ve mevcut vendor snapshot'ı ikisi de1.38.2 bildirir ama dosyaları birebir
 aynı değildir. Bu nedenle yalnız mevcut vendor ile çalıştırılan ilk probe'a
 dayanılmadı: donor'un arşivden çıkarılmış kendi include ağacıyla yeniden derlendi
-ve aynı sonuç alındı. [Donor build kimliği](evidence/shutdown/DONOR_CLOSE_BUILD.json),
-[sonuç](evidence/shutdown/ACTUAL_DONOR_CLOSE_RESULT.log),
-[snapshot farkı](evidence/shutdown/ASIO_CLOSE_COMPARISON.json),
-[probe kaynağı](evidence/shutdown/listener_close_probe.cpp.txt).
+ve aynı sonuç alındı. [Donor build kimliği](../metadata/evidence/shutdown/DONOR_CLOSE_BUILD.json),
+[sonuç](../metadata/evidence/shutdown/ACTUAL_DONOR_CLOSE_RESULT.log),
+[snapshot farkı](../metadata/evidence/shutdown/ASIO_CLOSE_COMPARISON.json),
+[probe kaynağı](../metadata/evidence/shutdown/listener_close_probe.cpp.txt).
 
 Brownfield'in ayrı raw `SocketHandle` adaptörü başarısız close'da kendi numeric
 owner'ını korur. `test_socket_close_retry` bu adaptörü fake `SocketApi` ile sınar;
@@ -124,15 +124,15 @@ yapılmadı. Bu açık konu emekliliği engellemeye devam eder.
 
 9 donor dosyasında ek branch karşılaştırmasıyla manuel kayıt sayısı76 oldu;
 1729 first-party dosyada henüz manuel kayıt yok. 76 tam dosyanın bütün semantik
-kapanışı iddia edilmiyor. [Ledger](evidence/shutdown/MANUAL_REVIEW_LEDGER.json),
-[bütün açık dosyalar](evidence/shutdown/ALL_DONOR_FILES.csv).
+kapanışı iddia edilmiyor. [Ledger](../metadata/evidence/shutdown/MANUAL_REVIEW_LEDGER.json),
+[bütün açık dosyalar](../metadata/evidence/shutdown/ALL_DONOR_FILES.csv).
 
 Yerel Release201/201 ve etkilenen Debug13/13 geçti. Üretim C export'ları üç ve
 ordinal'ları aynı; geliştirme DLL'i3350→3350, eklenen/çıkarılan sembol yok.
 Public header, dört vendor, PE/resource/avatar, CFG/SDK/port ve Golden linker
 politikaları değişmedi. Üretim64 ve korunan referans74 CPP ayrımı korunur.
 Son source QA ve paket doğrulama kaydı
-[VALIDATION.json](evidence/shutdown/VALIDATION.json) içindedir.
+[VALIDATION.json](../metadata/evidence/shutdown/VALIDATION.json) içindedir.
 
 Bu sonuçlar LLVM-MinGW/Wine sınıfındadır; gerçek MSVC/Windows IOCP arızası,
 Golden veya oyun kabulü değildir. Native Windows/Golden ve oyun tekrarı bekliyor.
@@ -142,5 +142,5 @@ source/test/tool ailelerinin incelemesi sürmelidir. Donor'lar obsolete ilan edi
 
 Bu turun exact parent kaynak ZIP SHA256'sı:
 `ef4572d32076e0ace03039b17e0fb6103b084a395ccdd27fd59b76886f2d9d1c`.
-İncelenen dosya farkları [REVIEWED_CHANGES.json](evidence/shutdown/REVIEWED_CHANGES.json)
+İncelenen dosya farkları [REVIEWED_CHANGES.json](../metadata/evidence/shutdown/REVIEWED_CHANGES.json)
 içindedir; kabul edilmiş eski binary/log paketi parent yerine kullanılmaz.

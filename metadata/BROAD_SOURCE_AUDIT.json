@@ -3,9 +3,9 @@
   "classification": "NOT_RELEASE",
   "owner": "Explicit owner continuation: whole source and adapter review beyond the previous delta findings",
   "documentation": "docs/BROAD_SOURCE_AUDIT.md",
-  "file_inventory": "docs/evidence/BROAD_SOURCE_INVENTORY.json",
-  "file_matrix": "docs/evidence/BROAD_SOURCE_MATRIX.csv",
-  "validation": "docs/evidence/BROAD_AUDIT_VALIDATION.json",
+  "file_inventory": "metadata/evidence/BROAD_SOURCE_INVENTORY.json",
+  "file_matrix": "metadata/evidence/BROAD_SOURCE_MATRIX.csv",
+  "validation": "metadata/evidence/BROAD_AUDIT_VALIDATION.json",
   "scope": {
     "src_include_files": 277,
     "production_cpp": 64,
@@ -28,5 +28,5 @@
   ],
   "production_sources_deleted": false,
   "vendors_modified": false,
-  "owner_acceptance": "docs/evidence/OWNER_NATIVE_ACCEPTANCE.json"
+  "owner_acceptance": "metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json"
 }

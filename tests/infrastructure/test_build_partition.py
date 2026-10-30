@@ -142,6 +142,34 @@ class TargetBoundaryTests(unittest.TestCase):
         self.assertIn('Generated target source set differs: preloader_l_objects',
                       boundary.codemodel_errors(g, POLICY))
 
+    def test_dangling_reference_target_cannot_escape_production_gate(self):
+        g = graph()
+        # The generator can omit an imported/out-of-directory target record;
+        # the dependency name must still be rejected by the ownership gate.
+        del g['preloader_l_reference_models']
+        del g['reference_contract']
+        g['preloader_l_core']['dependencies'].append({'id': 'preloader_l_reference_models'})
+        errors = boundary.codemodel_errors(g, POLICY)
+        self.assertTrue(any('preloader_l_core -> preloader_l_reference_models' in e for e in errors), errors)
+
+    def test_dangling_source_api_target_cannot_escape_test_gate(self):
+        g = graph()
+        del g['preloader_l_source_api']
+        g['application_contract']['dependencies'].append({'id': 'preloader_l_source_api'})
+        errors = boundary.codemodel_errors(g, POLICY)
+        self.assertTrue(any('application_contract -> preloader_l_source_api' in e for e in errors), errors)
+
+    def test_unlisted_external_target_remains_allowed(self):
+        g = graph()
+        g['preloader_l_core']['dependencies'].append({'id': 'asio::asio'})
+        self.assertEqual([], boundary.codemodel_errors(g, POLICY))
+
+    def test_missing_model_still_fails_reference_test_positive_check(self):
+        g = graph()
+        del g['preloader_l_reference_models']
+        errors = boundary.codemodel_errors(g, POLICY)
+        self.assertIn('Reference test lost its model library: reference_contract', errors)
+
     def test_indirect_reference_dependency_is_rejected(self):
         g = graph()
         g['preloader_l_core']['dependencies'].append({'id': 'preloader_l_reference_models'})

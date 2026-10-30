@@ -24,7 +24,7 @@
     "three public exports"
   ],
   "source_api_change": "CryptQueryHost::inspect_path returns PathProbe; removed full-path string output",
-  "validation": "docs/evidence/HOOK_PATH_SCAN.json",
+  "validation": "metadata/evidence/HOOK_PATH_SCAN.json",
   "whole_project_no_further_issue_claimed": false,
   "vendor_changes": false
 }

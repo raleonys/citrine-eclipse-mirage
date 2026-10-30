@@ -66,7 +66,7 @@ SURGE/DllMain/DllShutdown açısından uyumlu; Yellowfield’in iki ek yönetim 
 kullanıcının önceki açık talimatıdır.
 
 Yeni kaynak için Windows/MSVC üretim turu ve gerçek oyun denemesi gereklidir.
-Durum/ham test kanıtları: `docs/evidence/STARTUP_BUILD_FIX_STATUS.json`.
+Durum/ham test kanıtları: `metadata/evidence/STARTUP_BUILD_FIX_STATUS.json`.
 
 Çapraz doğrulama: Release173/173, ilgili Debug8/8, altyapı29/29 ve config
 olmadan üç gerçek DLL runtime çevrimi geçti. Eski kilit testinin exit1 kaydı

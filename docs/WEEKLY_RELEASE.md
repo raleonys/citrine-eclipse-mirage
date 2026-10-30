@@ -81,5 +81,5 @@ Workflow artifacts and failure reports are retained for 14 days. Draft release
 assets form the candidate archive until the owner publishes or deletes them.
 The source archive is not rewritten merely to mark a draft as an official release.
 
-[Implementation validation](evidence/weekly-release/VALIDATION.json) distinguishes
+[Implementation validation](../metadata/evidence/weekly-release/VALIDATION.json) distinguishes
 local regressions from the first real scheduled/manual Windows candidate run.

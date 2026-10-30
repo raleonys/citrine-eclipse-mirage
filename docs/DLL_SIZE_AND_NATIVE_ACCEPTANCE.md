@@ -6,7 +6,7 @@ Kullanıcının sunduğu Compile, Production, Debug, Static CRT ve Native loglar
 
 Ayrıca yüklenen DLL üzerinde salt okunur final metadata incelemesi PASS: doğru timestamp, geçerli checksum, Rich/debug/COFF symbol/certificate yokluğu, üç doğru C export/ordinal, istenen import sırası, static CryptQueryObject import ve iki doğru read-only avatar doğrulanır. PE resource yalnız beklenen VERSIONINFO'dur.
 
-Oyun kabulü kullanıcının açık PASS beyanı olarak kaydedildi; oyun adı veya her senaryonun ayrı matrisi verilmedi ve burada oyun tekrar çalıştırılmadı. Önceki native/Golden/oyun bekleme kayıtları tarihsel kanıt olarak korunur; güncel durum [kabul kaydındadır](evidence/OWNER_NATIVE_ACCEPTANCE.json). Yeni DLL için önceki üç bekleyen kabul işi bu kanıt sınıflarıyla kapanmıştır. Bu, bütün özgün DLL fonksiyonları/ABI'si veya tüm OS/consumer senaryoları için sınırsız eşdeğerlik iddiası değildir.
+Oyun kabulü kullanıcının açık PASS beyanı olarak kaydedildi; oyun adı veya her senaryonun ayrı matrisi verilmedi ve burada oyun tekrar çalıştırılmadı. Önceki native/Golden/oyun bekleme kayıtları tarihsel kanıt olarak korunur; güncel durum [kabul kaydındadır](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json). Yeni DLL için önceki üç bekleyen kabul işi bu kanıt sınıflarıyla kapanmıştır. Bu, bütün özgün DLL fonksiyonları/ABI'si veya tüm OS/consumer senaryoları için sınırsız eşdeğerlik iddiası değildir.
 
 ## Ölçülen fark
 
@@ -36,4 +36,4 @@ Boyut farkı mevcut ek davranışlar ve farklı build bileşimi için makuldür;
 
 Native logda12compiler uyarısı vardır; verilen konumlar test/fixture kaynaklarına veya onların template instantiation zincirlerine aittir. Native test sonucu başarısız değildir. Compiler uyarısız kabul iddiası yapılmaz; bu tur boyut sorusu nedeniyle test kodu da değiştirilmedi.
 
-[Byte ve bölüm dökümü](evidence/OWNER_DLL_SIZE_COMPARISON.json) · [Final DLL incelemesi](evidence/OWNER_FINAL_DLL_INSPECTION.json) · [Ham log ve kabul özeti](evidence/OWNER_NATIVE_ACCEPTANCE.json)
+[Byte ve bölüm dökümü](../metadata/evidence/OWNER_DLL_SIZE_COMPARISON.json) · [Final DLL incelemesi](../metadata/evidence/OWNER_FINAL_DLL_INSPECTION.json) · [Ham log ve kabul özeti](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json)

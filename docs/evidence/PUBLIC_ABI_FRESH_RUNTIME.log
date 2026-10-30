@@ -1,3 +1,0 @@
-zero-timeout shutdown status: 2
-PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; bounded shutdown/retry and both shutdown APIs
-WINE_PROGRAM_EXIT=0

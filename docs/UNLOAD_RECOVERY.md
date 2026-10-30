@@ -56,4 +56,4 @@ frozen by fault injection. This is not a claim of native Windows kernel failure
 reproduction. Separate application/adapter/public lifecycle tests exercise real
 Windows API paths through Wine; native MSVC/game acceptance remains separate.
 
-Current evidence: [UNLOAD_RECOVERY.json](evidence/UNLOAD_RECOVERY.json).
+Current evidence: [UNLOAD_RECOVERY.json](../metadata/evidence/UNLOAD_RECOVERY.json).

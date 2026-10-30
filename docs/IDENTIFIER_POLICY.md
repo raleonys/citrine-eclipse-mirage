@@ -18,3 +18,8 @@ kontrolün kendisinde de korur.
 kontrolün dışındadır. Kök LICENSE/COPYING/NOTICE/AUTHORS lisans ve atıf belgeleri
 de korunur. Aktif dosya yolları da kontrol edilir. `build/`, `dist/`,
 `.git/` ve sabitlenen `third_party/` payload'u aktif first-party taramasına girmez.
+
+Tarihsel kanıtların yeni konumu `metadata/evidence/` altındaki salt okunur
+arşivdir. Bu dizin aktif metadata sözleşmesi sayılmaz; dosyalar tarihsel kimlik
+ve SHA-256 kayıtlarıyla doğrulanır. Yeni aktif kaynak veya metadata dosyaları
+için isimlendirme kontrolü değişmeden uygulanır.
