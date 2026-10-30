@@ -110,5 +110,14 @@
   "native_fixture_review": "metadata/NATIVE_FIXTURE_REVIEW.json",
   "owner_latest_windows_log_review": "docs/evidence/native-allocation/OWNER_LOG_REVIEW.json",
   "owner_parent_production_dll_sha256": "5d75523d82a575277e1c5e91395637d301f0f981913c8358deee02c3c3cc24fc",
-  "avatar_profile_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e"
+  "avatar_profile_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+  "provider_module_cleanup": {
+    "source": "src/runtime/application.cpp",
+    "failed_release": "REPORT_CLEANUP_FAILURE_AND_RETAIN_EXACT_MODULE_FOR_RETRY",
+    "partial_cleanup": "DESTROY_PROVIDER_OBJECT_ONCE_THEN_RETRY_ONLY_MODULE_RELEASE",
+    "regression": "extra_library_failure_contracts: provider-retry and provider-object",
+    "native_msvc_golden": "NOT_RUN_FOR_THIS_CHANGE",
+    "game_acceptance": "NOT_RUN_FOR_THIS_CHANGE",
+    "donor_retirement": "STILL_BLOCKED"
+  }
 }

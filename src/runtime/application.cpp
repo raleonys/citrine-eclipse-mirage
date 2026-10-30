@@ -65,7 +65,11 @@ public:
     const char* persona_virtual_18(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,3)(reinterpret_cast<void*>(o));}
     const char* user_id_virtual_20(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,4)(reinterpret_cast<void*>(o));}
     void destroy_virtual_00(std::uintptr_t o) override{method<void(*)(void*,unsigned)>(o,0)(reinterpret_cast<void*>(o),1);}
-    bool free_library(std::uintptr_t m) override{return FreeLibrary(reinterpret_cast<HMODULE>(m))!=FALSE;}
+    bool free_library(std::uintptr_t m) override {
+        if(!FreeLibrary(reinterpret_cast<HMODULE>(m)))
+            throw std::runtime_error("Online DLL cleanup incomplete");
+        return true;
+    }
     status_recovered::Status status_01ea20(const Path& p,std::uint32_t f) override{return env.status_01ea20(p,f);}
     [[noreturn]] void filesystem_error_018130(std::string_view op,std::uint32_t e,const Path& p) override{env.filesystem_error_018130(op,e,p);}
     std::string read_binary_03b3f0(const Path& p) override{return file_recovered::read_binary_03b3f0(p,files);}
