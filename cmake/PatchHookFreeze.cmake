@@ -477,4 +477,16 @@ string(REPLACE
 "static MH_STATUS EnableAllHooksLL(BOOL enable)\n{\n    MH_STATUS status = MH_OK;\n    if (!RetryRetainedThreadOwnership())\n        return MH_ERROR_MEMORY_PROTECT;"
 _mh "${_mh}")
 
+# Individual MH_DisableHook must map suspended peer IPs from trampoline back
+# to target. Stock MinHook incorrectly requested ACTION_ENABLE for both modes.
+# Replace only the proven single-hook call in the owned build copy.
+string(FIND "${_mh}" "status = Freeze(&threads, pos, ACTION_ENABLE);" _individual_action_pos)
+if(_individual_action_pos LESS 0)
+    message(FATAL_ERROR "MinHook single-hook action anchor not found")
+endif()
+string(REPLACE
+    "status = Freeze(&threads, pos, ACTION_ENABLE);"
+    "status = Freeze(&threads, pos, enable ? ACTION_ENABLE : ACTION_DISABLE);"
+    _mh "${_mh}")
+
 file(WRITE "${MINHOOK_HOOK_C}" "${_mh}")
