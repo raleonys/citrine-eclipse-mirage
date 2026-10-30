@@ -1,8 +1,10 @@
 """Check source scope, native CMake source ownership and pinned SURGE resource."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
+import subprocess
 
 
 def load_active_name_policy(root):
@@ -41,21 +43,53 @@ def check_active_identifiers(root):
 
 
 def is_git_worktree_file(path):
-    """Allow only Git's real gitdir redirect file, not arbitrary root files."""
+    """Trust only a linked worktree registered in Git's own common directory."""
     if path.name != '.git' or path.is_symlink() or not path.is_file():
         return False
     try:
         if path.stat().st_size > 4096:
             return False
-        text = path.read_text(encoding='utf-8')
-        if text.count('\n') > 1 or not text.startswith('gitdir: '):
+        match = re.fullmatch(r'gitdir: ([^\r\n]+)\r?\n?', path.read_text(encoding='utf-8'))
+        if not match or '\x00' in match.group(1):
             return False
-        destination = text[len('gitdir: '):].rstrip('\r\n')
-        if not destination or '\x00' in destination:
+        root = path.parent.resolve()
+        gitdir = (path.parent / match.group(1)).resolve(strict=True)
+        if not gitdir.is_dir() or not (gitdir / 'HEAD').is_file():
             return False
-        gitdir = (path.parent / destination).resolve()
-        return gitdir.is_dir() and (gitdir / 'HEAD').is_file()
-    except (OSError, UnicodeError, ValueError):
+        # Worktree-local metadata must point back to this precise gitfile.
+        reverse = gitdir / 'gitdir'
+        common_ref = gitdir / 'commondir'
+        if not reverse.is_file() or not common_ref.is_file():
+            return False
+        backlink = reverse.read_text(encoding='utf-8').strip()
+        if not backlink or (gitdir / backlink).resolve(strict=True) != path.resolve(strict=True):
+            return False
+        common = common_ref.read_text(encoding='utf-8').strip()
+        if not common or not (gitdir / common).resolve(strict=True).is_dir():
+            return False
+        # A fabricated gitdir/HEAD and backlink alone are not a Git registration.
+        # Compare Git's actual selected root, gitdir and linked worktree registry.
+        env = {k: v for k, v in os.environ.items()
+               if not k.startswith('GIT_')}
+        def git(*args):
+            done = subprocess.run(['git', '-C', str(root), *args],
+                                  capture_output=True, text=True, timeout=8, env=env)
+            return done.stdout.strip() if done.returncode == 0 else None
+        if git('rev-parse', '--is-inside-work-tree') != 'true':
+            return False
+        top = git('rev-parse', '--show-toplevel')
+        selected_dir = git('rev-parse', '--absolute-git-dir')
+        if not top or not selected_dir:
+            return False
+        if Path(top).resolve(strict=True) != root or Path(selected_dir).resolve(strict=True) != gitdir:
+            return False
+        worktrees = git('worktree', 'list', '--porcelain')
+        if worktrees is None:
+            return False
+        return any(line.startswith('worktree ')
+                   and Path(line[len('worktree '):]).resolve(strict=True) == root
+                   for line in worktrees.splitlines())
+    except (OSError, UnicodeError, ValueError, subprocess.SubprocessError):
         return False
 
 
