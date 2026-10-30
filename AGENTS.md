@@ -312,3 +312,10 @@ root and excludes unrelated reverse-engineering projects from the application.
   Preserve exact new vendor bytes and both portable alias descriptors. Keep
   MinHook/PEGTL/TinyXML2 pins, SDK/listener/transport policies and the public ABI
   unchanged. Develop in a separate PR; do not merge. See docs/ASIO_UPDATE.md.
+
+- Latest owner CI quota instruction keeps this repository private. Automatic
+  PR/main runs retain source QA and portable tests; both Windows Native and
+  Production/Golden jobs run only on explicit workflow_dispatch. Preserve their
+  existing scripts, assertions and budgets. Skipped jobs are not native PASS;
+  review exact-source Windows/game evidence separately. This supersedes automatic
+  Windows execution, not the owner-only merge policy or local acceptance checks.

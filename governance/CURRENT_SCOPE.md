@@ -1,5 +1,12 @@
 # Güncel görev ve kaynak yetkisi
 
+Current owner CI decision: keep the repository private and reduce automatic
+hosted-runner use. Source QA and portable tests stay automatic on PRs/main;
+Windows Native and Production/Golden run only on manual workflow dispatch.
+Local build/acceptance scripts and product/vendor contracts remain unchanged.
+Skipped Windows jobs do not count as native acceptance. See the
+[review workflow](../docs/GITHUB_WORKFLOW.md).
+
 Güncel sahip görevi: yeni yüklenen Asio kaynak arşivini byte eşitliğiyle vendorlamak.
 Başlık sürümü1.38.2 değişmiyor; snapshot ZIP hash ve commit yorumuyla sabitlenir.
 Diğer üç vendor ve ürün politikaları korunur. PR ayrı hazırlanır; birleştirme
