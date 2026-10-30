@@ -1,2 +1,0 @@
-FAIL: native close failure must block DLL cleanup success
-WINE_PROGRAM_EXIT=1

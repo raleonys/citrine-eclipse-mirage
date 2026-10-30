@@ -1,7 +1,7 @@
 # Güncel uygulama bağlantıları
 
 Güncel makine kaydı [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json),
-son doğrulama [native-allocation/VALIDATION.json](evidence/native-allocation/VALIDATION.json)
+son doğrulama [native-allocation/VALIDATION.json](../metadata/evidence/native-allocation/VALIDATION.json)
 içindedir. Eski kanıtlar kendi kaynak snapshot'larıyla tarihsel olarak korunur.
 
 Tek Application sahibi config, Asio hizmeti, handler/event/achievement depolama,

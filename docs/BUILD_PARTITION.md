@@ -25,11 +25,11 @@ and `xml/memory_printer.cpp` remain production inputs.
 
 The matrices and measurements below describe the historical first partition of
 74 sources. The current additional four-source review, split test coverage and
-fresh results are in [build-cleanup/VALIDATION.json](evidence/build-cleanup/VALIDATION.json).
+fresh results are in [build-cleanup/VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
 The historical 898-symbol count and development export count are not current
 totals and are not used as current acceptance gates.
 
-[The per-file JSON matrix](evidence/TRANSLATION_UNIT_USAGE.json) and
+[The per-file JSON matrix](../metadata/evidence/TRANSLATION_UNIT_USAGE.json) and
 [the CSV table](TRANSLATION_UNIT_USAGE.csv) record external COFF definitions,
 references, vtables, CRT/TLS sections, direct/transitive test references and source
 API exports for every retained TU. All 74 have transitive test references and
@@ -47,12 +47,12 @@ loading reference model symbols from the application DLL. The matrix includes
 those binding sites so future changes can be reviewed.
 
 The before/after validation and outstanding acceptance checks are recorded in
-[BUILD_PARTITION.json](evidence/BUILD_PARTITION.json). Native MSVC/Golden and real
+[BUILD_PARTITION.json](../metadata/evidence/BUILD_PARTITION.json). Native MSVC/Golden and real
 game acceptance remain separate required evidence. Passing Wine fixtures must
 not be reported as 100% proof of every game path.
 
-[The DLL comparison](evidence/BUILD_PARTITION_DLL_PARITY.json) uses the same
-[diagnostic probe](evidence/BUILD_PARTITION_DLL_PROBE.cpp.txt) against the preserved
+[The DLL comparison](../metadata/evidence/BUILD_PARTITION_DLL_PARITY.json) uses the same
+[diagnostic probe](../metadata/evidence/BUILD_PARTITION_DLL_PROBE.cpp.txt) against the preserved
 baseline, candidate and clean testing-disabled DLLs. Each runs three public-ABI
 load/start/request/shutdown/unload cycles. Full XML replies are transported as hex
 in the diagnostic output, decoded and compared; only validated wall-clock fields
@@ -61,7 +61,7 @@ files are compared too. This fixture covers nine cases per cycle, including
 malformed XML recovery and encrypted profile/event output. It does not load a
 real game or provider. Provider and broader runtime fixtures are separate tests.
 
-[Binary measurements](evidence/BUILD_PARTITION_BINARIES.json) describe raw
+[Binary measurements](../metadata/evidence/BUILD_PARTITION_BINARIES.json) describe raw
 diagnostic builds. The production `.text` section decreases from 578,726 to
 462,886 bytes (about 20%); development exports remain 3,336 with no removed or
 added names. Three diagnostic C++ runtime imports disappear with the excluded

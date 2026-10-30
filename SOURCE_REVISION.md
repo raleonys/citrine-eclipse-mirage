@@ -24,7 +24,7 @@ Vendoring, toolchain/API fixtures and final active production usage are distinct
 YF-BLUEFIELD-ALIGN-20261029 explicitly adopts Bluefield hook11 and required native
 lifecycle bodies/adapters, plus the complete supplied Brownfield declared metadata
 profile. Earlier comparison-only and preserve-compiler choices are superseded only
-within this scope. See docs/evidence/HOOK_ALIGNMENT_STATUS.json and
+within this scope. See metadata/evidence/HOOK_ALIGNMENT_STATUS.json and
 docs/REFERENCE_METADATA_AUDIT.md. All original archives and earlier ZIPs remain
 unchanged; this package is source-only, NOT_RELEASE.
 

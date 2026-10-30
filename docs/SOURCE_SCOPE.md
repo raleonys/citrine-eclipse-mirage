@@ -35,7 +35,7 @@ Güncel kapsam için
 [BROWNFIELD_ADAPTATION.md](INFRASTRUCTURE_ADAPTATION.md) ve aktarım matrisi geçerlidir.
 Final ürün Golden kabulü, eksik metadata/ABI sözleşmesi nedeniyle henüz yoktur.
 
-`docs/evidence/SOURCE_LAYOUT.json`, her taşınan dosyanın önceki yolunu ve hash'ini,
+`metadata/evidence/SOURCE_LAYOUT.json`, her taşınan dosyanın önceki yolunu ve hash'ini,
 uygulanan yol/namespace dönüşümlerini, seçilen ve dışarıda tutulan modülleri içerir.
 Bu, native orijinal davranış eşdeğerliği veya bağımsız kullanıcı imzası değildir.
 

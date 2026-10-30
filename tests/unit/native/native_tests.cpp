@@ -268,8 +268,8 @@ void test_process_folder_connect(){
     require(raw[2]==0x0c&&raw[3]==0x90&&f.attempts==1&&seen.address!=reinterpret_cast<const sockaddr*>(&socket_address)&&seen.connect_port==6099&&seen.length==16&&GetLastError()==327,"native connect redirects a complete copy, retains const caller bytes/error");
     require(std::memcmp(reinterpret_cast<const unsigned char*>(&old)+4,raw+4,sizeof(old)-4)==0,"connect preserves native IP and remaining structure bytes");
     require(connect(9,nullptr,-1)==-10035&&seen.address==nullptr&&seen.length==-1,"length bypass forwards null native socket pointer without access");
-    const auto before=seen.connect.load();SetLastError(778);
-    require(connect(9,nullptr,16)==-10035&&seen.connect==before+1&&seen.address==nullptr&&
+    const auto connect_before=seen.connect.load();SetLastError(778);
+    require(connect(9,nullptr,16)==-10035&&seen.connect==connect_before+1&&seen.address==nullptr&&
             seen.length==16&&GetLastError()==327&&f.attempts==1,
             "recognized-length null pointer reaches original Winsock path without fail-fast");
 }
@@ -302,7 +302,7 @@ void test_unreadable_connect_address(){
         const auto before=seen.connect.load();const auto errors=active_calls();
         SetLastError(761);
         const auto result=connect_entry(123,reinterpret_cast<const sockaddr*>(invalid),16);
-        require(result==-10035&&seen.connect==before+1&&seen.address==invalid&&
+        require(result==-10035&&seen.connect==before+1&&seen.address==reinterpret_cast<const sockaddr*>(invalid)&&
                 seen.length==16&&GetLastError()==327&&active_calls()==errors&&
                 f.attempts==0,
                 "unreadable and boundary-spanning pointers forward intact without hook dereference");

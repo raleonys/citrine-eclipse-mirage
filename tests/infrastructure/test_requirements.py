@@ -34,7 +34,7 @@ class RequirementsTests(unittest.TestCase):
         self.assertEqual([], check(self.root))
 
     def test_current_pointer_cannot_refer_to_historical_snapshot(self):
-        self.alter('RELEASE_STATE.json',lambda d:d.update(current_runtime_binding_status='docs/evidence/RUNTIME_BINDING_STATUS.json'))
+        self.alter('RELEASE_STATE.json',lambda d:d.update(current_runtime_binding_status='metadata/evidence/RUNTIME_BINDING_STATUS.json'))
         self.assertIn('CURRENT_RUNTIME_POINTER_STALE',check(self.root))
 
     def test_current_exports_match_authoritative_abi(self):

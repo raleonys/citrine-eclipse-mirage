@@ -73,7 +73,7 @@ target_include_directories(preloader_l_core PUBLIC include)
 target_compile_definitions(preloader_l_core PUBLIC NOMINMAX)
 target_link_libraries(preloader_l_core PUBLIC preloader_l_minhook preloader_l_tinyxml2
   preloader_l_asio
-  kernel32 user32 shell32 ws2_32 crypt32)
+  crypt32 ws2_32 kernel32 user32 shell32)
 
 # The application DLL has an explicit C export table. Source-level C++ APIs
 # belong to a separate development DLL and are never exported by this target.

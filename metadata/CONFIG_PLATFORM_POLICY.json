@@ -19,9 +19,9 @@
   "runtime_filesystem": "Compiler std::filesystem retained; no recovered private CRT provider imported",
   "review_document": "docs/SOURCE_REVIEW.md",
   "source_and_test_matrix": [
-    "docs/evidence/SOURCE_DELTA_REVIEW.csv",
-    "docs/evidence/SOURCE_TEST_ADOPTIONS.csv"
+    "metadata/evidence/SOURCE_DELTA_REVIEW.csv",
+    "metadata/evidence/SOURCE_TEST_ADOPTIONS.csv"
   ],
   "native_msvc_and_game_retest": "Windows profile/native193_OF193 logs PASS; game owner-reported PASS",
-  "owner_acceptance": "docs/evidence/OWNER_NATIVE_ACCEPTANCE.json"
+  "owner_acceptance": "metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json"
 }

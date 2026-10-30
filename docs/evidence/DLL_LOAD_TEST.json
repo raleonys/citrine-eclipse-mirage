@@ -1,9 +1,0 @@
-{
-  "exit": 0,
-  "stdout": "PASS: actual development DLL loaded; calendar, SHA-1 and config parser executed\n",
-  "stderr": "",
-  "runner": "Wine 10.0/Linux",
-  "test": "actual dynamic DLL load and source APIs; not game/Consumer acceptance",
-  "record_scope": "HISTORICAL_SOURCE_API_LOAD_SNAPSHOT",
-  "current_validation_status": "metadata/PUBLIC_ABI_STATUS.json"
-}

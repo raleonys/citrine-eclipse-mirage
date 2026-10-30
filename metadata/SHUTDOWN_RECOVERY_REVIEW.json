@@ -3,7 +3,7 @@
   "classification": "NOT_RELEASE",
   "owner": "Explicit owner continuation of proven corrections, regression tests and comparative closure audit",
   "documentation": "docs/SHUTDOWN_RECOVERY_AUDIT.md",
-  "validation": "docs/evidence/shutdown/VALIDATION.json",
+  "validation": "metadata/evidence/shutdown/VALIDATION.json",
   "parent_source_zip_sha256": "ef4572d32076e0ace03039b17e0fb6103b084a395ccdd27fd59b76886f2d9d1c",
   "production_change": {
     "source": "src/runtime/application.cpp",

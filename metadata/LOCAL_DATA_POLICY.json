@@ -18,6 +18,6 @@
   "config_grammar_evidence": "docs/VDF_PARSER.md",
   "implementation_status_record": "metadata/RUNTIME_CURRENT_STATUS.json",
   "existing_debug_log_in_release": "PRESERVE_UNCHANGED_NO_APPEND_NO_AUTOMATIC_DELETE",
-  "identity_status_record": "docs/evidence/PRODUCT_IDENTITY_FIX.json",
+  "identity_status_record": "metadata/evidence/PRODUCT_IDENTITY_FIX.json",
   "debug_payload_policy": "Preserve actual RE diagnostics; showLSX gate retained; Debug only"
 }

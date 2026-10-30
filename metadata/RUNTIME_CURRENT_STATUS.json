@@ -58,8 +58,8 @@
   },
   "resource_policy": "Owner-reference VERSIONINFO; owner profile and preserved fallback PNG in read-only C++ data, no PNG PE resource",
   "hook11": "Hook reference selector/protected reader/forwarding and lifetime; static SDK CRYPT32!CryptQueryObject import",
-  "historical_runtime_snapshot": "docs/evidence/RUNTIME_BINDING_STATUS.json",
-  "validation_status": "docs/evidence/asio-update/VALIDATION.json",
+  "historical_runtime_snapshot": "metadata/evidence/RUNTIME_BINDING_STATUS.json",
+  "validation_status": "metadata/evidence/asio-update/VALIDATION.json",
   "native_msvc_golden": "NOT_RUN_FOR_UPDATED_ASIO",
   "updated_game_retest": "NOT_RUN_FOR_UPDATED_ASIO",
   "parent_game_evidence": "Owner confirms game and Windows acceptance on the logged pre-update build",
@@ -76,19 +76,19 @@
   "production_first_party_tus": 60,
   "retained_reference_tus": 78,
   "retained_reference_sources_deleted": false,
-  "previous_validation_status": "docs/evidence/avatar-update/VALIDATION.json",
+  "previous_validation_status": "metadata/evidence/avatar-update/VALIDATION.json",
   "owner_pre_update_windows_golden": "USER_LOG_PASS",
   "owner_pre_update_game_acceptance": "OWNER_REPORTED_PASS",
   "updated_native_acceptance": "NOT_RUN_FOR_UPDATED_ASIO",
   "config_platform_policy": "metadata/CONFIG_PLATFORM_POLICY.json",
   "historical_validation_statuses": [
-    "docs/evidence/AVATAR_REFRESH.json",
-    "docs/evidence/SOURCE_REVIEW_VALIDATION.json",
-    "docs/evidence/optimization/VALIDATION.json",
-    "docs/evidence/recovery/VALIDATION.json",
-    "docs/evidence/shutdown/VALIDATION.json",
-    "docs/evidence/socket-retirement/VALIDATION.json",
-    "docs/evidence/build-cleanup/VALIDATION.json"
+    "metadata/evidence/AVATAR_REFRESH.json",
+    "metadata/evidence/SOURCE_REVIEW_VALIDATION.json",
+    "metadata/evidence/optimization/VALIDATION.json",
+    "metadata/evidence/recovery/VALIDATION.json",
+    "metadata/evidence/shutdown/VALIDATION.json",
+    "metadata/evidence/socket-retirement/VALIDATION.json",
+    "metadata/evidence/build-cleanup/VALIDATION.json"
   ],
   "broad_source_audit": "metadata/BROAD_SOURCE_AUDIT.json",
   "startup_publication": "Worker completion private; profile and accepting published before the final callback readiness gate",
@@ -108,7 +108,16 @@
   "socket_close_ownership_status": "FIRST_PARTY_HANDLES_GATED_WITH_DOCUMENTED_RETRY_AND_STICKY_UNCERTAIN_QUARANTINE",
   "build_cleanup_review": "metadata/BUILD_CLEANUP_REVIEW.json",
   "native_fixture_review": "metadata/NATIVE_FIXTURE_REVIEW.json",
-  "owner_latest_windows_log_review": "docs/evidence/native-allocation/OWNER_LOG_REVIEW.json",
+  "owner_latest_windows_log_review": "metadata/evidence/native-allocation/OWNER_LOG_REVIEW.json",
   "owner_parent_production_dll_sha256": "5d75523d82a575277e1c5e91395637d301f0f981913c8358deee02c3c3cc24fc",
-  "avatar_profile_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e"
+  "avatar_profile_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+  "provider_module_cleanup": {
+    "source": "src/runtime/application.cpp",
+    "failed_release": "REPORT_CLEANUP_FAILURE_AND_RETAIN_EXACT_MODULE_FOR_RETRY",
+    "partial_cleanup": "DESTROY_PROVIDER_OBJECT_ONCE_THEN_RETRY_ONLY_MODULE_RELEASE",
+    "regression": "extra_library_failure_contracts: provider-retry and provider-object",
+    "native_msvc_golden": "NOT_RUN_FOR_THIS_CHANGE",
+    "game_acceptance": "NOT_RUN_FOR_THIS_CHANGE",
+    "donor_retirement": "STILL_BLOCKED"
+  }
 }

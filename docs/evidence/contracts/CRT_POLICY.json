@@ -1,9 +1,0 @@
-{
-  "crt_interposition_hooks": "NOT_AUTHORIZED_BY_DEFAULT",
-  "custom_crt": "PROHIBITED_UNLESS_ORIGINAL_DONOR_SPECIFIC_EVIDENCE_AND_EXPLICIT_USER_APPROVAL",
-  "debug_and_release_test_coverage": "REQUIRED",
-  "native_binary_acceptance": "NOT_RUN",
-  "normal_crt": "STANDARD_COMPILER_SUPPLIED_CRT",
-  "runtime_linkage_choice": "REQUIRES_EXPLICIT_BUILD_PROFILE_DECISION",
-  "schema": "yellowfield.crt-policy.v1"
-}

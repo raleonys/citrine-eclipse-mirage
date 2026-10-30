@@ -34,7 +34,7 @@ başarısız olabilecek FreeLibrary rollback'ine ihtiyaç kalmaz.
 
 İki kalıcı test executable'ı sekiz ayrı hata senaryosu içerir. Aynı test kaynakları
 önceki ve düzeltilmiş üretim CPP'leri üzerinde derlendi: eski kodda sekiz senaryo
-FAIL, düzeltilmiş kodda sekizi PASS. [RED_GREEN.json](evidence/recovery/RED_GREEN.json)
+FAIL, düzeltilmiş kodda sekizi PASS. [RED_GREEN.json](../metadata/evidence/recovery/RED_GREEN.json)
 ve ham case logları saklanır. Testler hata injection'ını kendi executable'larıyla
 sınırlar; üretime allocator veya Win32 API override'ı eklenmedi.
 
@@ -42,16 +42,16 @@ sınırlar; üretime allocator veya Win32 API override'ı eklenmedi.
 IO thread socket'i kapatabilirken worker henüz hata sayacını artırmamış olabilir.
 Test artık hem kapanmayı hem asenkron hata kaydını süre sınırında gözler; oversized
 response kabulü veya hata beklentisi gevşetilmedi. İlk FAIL logu
-[DEBUG_INITIAL_TESTS.log](evidence/recovery/DEBUG_INITIAL_TESTS.log) olarak korunur.
+[DEBUG_INITIAL_TESTS.log](../metadata/evidence/recovery/DEBUG_INITIAL_TESTS.log) olarak korunur.
 Son koşular, tekrar sayıları ve kaynak QA sonucu
-[VALIDATION.json](evidence/recovery/VALIDATION.json) içindedir.
+[VALIDATION.json](../metadata/evidence/recovery/VALIDATION.json) içindedir.
 
 Üç üretim C export'u/ordinal'ı, dört vendor, TinyXML derinliği500, sabit SDK/port,
 connect kapsamı, PNG/VERSIONINFO ve Golden linker/metadata politikası korunur.
 Public header veya fonksiyon imzası değiştirilmedi. Geliştirme DLL'inin otomatik
 C++ symbol tablosu aynı compiler altında ayrıca karşılaştırıldı; compiler'ın
 implicit inline destructor emisyonu ve yeni iç metotlar farklıdır. Bu tablo sabit
-üretim C ABI'si değildir; ayrıntı [SOURCE_API_DELTA.json](evidence/recovery/SOURCE_API_DELTA.json).
+üretim C ABI'si değildir; ayrıntı [SOURCE_API_DELTA.json](../metadata/evidence/recovery/SOURCE_API_DELTA.json).
 
 LLVM-MinGW/Wine sonuçları native Windows/MSVC, Golden veya oyun kabulü sayılmaz.
 Eski kabul edilmiş DLL'in SHA256'sı
@@ -80,9 +80,9 @@ Lexical fonksiyon ve benzerlik indeksleri semantik eşdeğerlik kanıtı sayılm
 | IOCP backpressure | Donor testi 32MiB non-reading peer ve native-IOCP compile gate kullanır. Bizde actual AsioService slow greeting/response/deadline testleri var. | Var olan test karşılığı görülüyor; Wine'da çalıştırmak gerçek Windows IOCP kabulü sayılmıyor. Tam completion/cancellation/fault matrisi açık. |
 
 Dosya/hash/okunan branch kayıtları:
-[MANUAL_REVIEW_LEDGER.json](evidence/recovery/MANUAL_REVIEW_LEDGER.json),
-[ALL_DONOR_FILES.csv](evidence/recovery/ALL_DONOR_FILES.csv),
-[CANDIDATES.json](evidence/recovery/CANDIDATES.json).
+[MANUAL_REVIEW_LEDGER.json](../metadata/evidence/recovery/MANUAL_REVIEW_LEDGER.json),
+[ALL_DONOR_FILES.csv](../metadata/evidence/recovery/ALL_DONOR_FILES.csv),
+[CANDIDATES.json](../metadata/evidence/recovery/CANDIDATES.json).
 Bu aday listesi ilk bulguların tarihsel durumunu korur; bu turda DC01–DC03 için
 uygulanan düzeltmeler ve kalan işler yukarıdaki güncel kayıtla okunmalıdır.
 
@@ -102,4 +102,4 @@ Kaynak parent kimliği, bir önce teslim edilmiş kaynak ZIP'in birebir hash'idi
 `1f2a6581a08dbafa940031353c8723e1947e00f0a4681f3bceb1d9f65e3d509e`.
 Accepted binary/log ZIP'i veya sonradan kabul belgeleri eklenmiş çalışma kopyası
 bu parent yerine kullanılmaz. Review edilen değişen dosya listesi ve byte pin'leri
-[REVIEWED_CHANGES.json](evidence/recovery/REVIEWED_CHANGES.json) içinde kayıtlıdır.
+[REVIEWED_CHANGES.json](../metadata/evidence/recovery/REVIEWED_CHANGES.json) içinde kayıtlıdır.

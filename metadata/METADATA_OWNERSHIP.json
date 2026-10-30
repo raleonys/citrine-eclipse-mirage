@@ -210,6 +210,11 @@
       "owner": "SURGE explicit owner dependency update",
       "role": "CURRENT_CONTRACT",
       "purpose": "Exact new Asio archive snapshot, delta and validation limits"
+    },
+    "EVIDENCE_RETENTION_POLICY.json": {
+      "owner": "SURGE historical evidence archive",
+      "role": "CURRENT_CONTRACT",
+      "purpose": "Locked byte-exact retained evidence and explicit historic-source SHA-256 references"
     }
   }
 }

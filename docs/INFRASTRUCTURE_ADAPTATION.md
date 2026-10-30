@@ -2,7 +2,7 @@
 
 Kaynak: kullanıcı tarafından yüklenen HF20 full-source candidate ZIP'i;
 frozen Brownfield değiştirilmedi. Dosya düzeyinde input/output SHA kayıtları
-[TOOLING_PROVENANCE.json](evidence/TOOLING_PROVENANCE.json) içindedir.
+[TOOLING_PROVENANCE.json](../metadata/evidence/TOOLING_PROVENANCE.json) içindedir.
 
 Seçilen parçalar: beş build yardımcısının operatör UX akışı ve paylaşılan MSVC
 yardımcıları; dört gerçek PE Golden aracı; MSVC link policy denetleyicisi;

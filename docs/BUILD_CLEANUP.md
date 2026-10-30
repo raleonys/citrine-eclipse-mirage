@@ -40,7 +40,7 @@ TLS, ham DLL ve geliştirme export farkları son doğrulamada ayrı kaydedilir;
 cross-build farkı native MSVC kazancı olarak sunulmaz.
 
 Güncel makine sözleşmesi [BUILD_CLEANUP_REVIEW.json](../metadata/BUILD_CLEANUP_REVIEW.json),
-doğrulama [VALIDATION.json](evidence/build-cleanup/VALIDATION.json).
+doğrulama [VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
 Native Windows/MSVC/Golden ve oyun kabulü değişen kaynak için ayrıca gerekir;
 eski kabul bu değişikliğe aktarılmaz. Donor emekliliği incelemesi açık kalır.
 

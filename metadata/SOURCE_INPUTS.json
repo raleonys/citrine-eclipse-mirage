@@ -41,5 +41,5 @@
       "source_materialization": "INSTALLED_BYTE_EXACT"
     }
   },
-  "source_reference_document": "docs/evidence/contracts/SOURCE_INPUTS.json"
+  "source_reference_document": "metadata/evidence/contracts/SOURCE_INPUTS.json"
 }

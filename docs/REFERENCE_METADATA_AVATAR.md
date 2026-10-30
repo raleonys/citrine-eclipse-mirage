@@ -60,5 +60,5 @@ confirm the reported Windows port regression is resolved on the owner's machine.
 The owner also confirms Windows and game acceptance for the pre-update build.
 That report and the successful Golden log are retained separately from acceptance
 of the new metadata, avatar and exclusive-bind change. The combined metadata/native audit is retained in
-[REFERENCE_METADATA_AVATAR.json](evidence/REFERENCE_METADATA_AVATAR.json). Latest
-avatar verification is in [AVATAR_REFRESH.json](evidence/AVATAR_REFRESH.json).
+[REFERENCE_METADATA_AVATAR.json](../metadata/evidence/REFERENCE_METADATA_AVATAR.json). Latest
+avatar verification is in [AVATAR_REFRESH.json](../metadata/evidence/AVATAR_REFRESH.json).

@@ -7,7 +7,7 @@ ile ilk senaryoda durmuştur. Static CRT6/6 geçmiştir. Oyun kabulü bu loglard
 bildirilmemiştir. Üretim profillerinde warning yok; native test derlemesindeki12
 uyarı kaydı test fixture'larından gelir, bu dar düzeltmeyle giderilmiş sayılmaz.
 
-Özgün girdiler ve özet [OWNER_LOG_REVIEW.json](evidence/native-allocation/OWNER_LOG_REVIEW.json)
+Özgün girdiler ve özet [OWNER_LOG_REVIEW.json](../metadata/evidence/native-allocation/OWNER_LOG_REVIEW.json)
 içindedir. Production logunun bildirdiği son DLL SHA256:
 `5d75523d82a575277e1c5e91395637d301f0f981913c8358deee02c3c3cc24fc`.
 Bu DLL bu yüklemede verilmedi; hash logdan okunmuştur. Bunlar önceki kaynak
@@ -56,7 +56,7 @@ kaldırılmadı, test skip edilmedi, deadline/bütçe büyütülmedi ve producti
 bayrakları değiştirilmedi.
 
 MSVC Native Acceptance205 test olarak kalır; MinGW çapraz suite ek replay ile206
-testtir. Her ikisinin sayısı ve yürütme sınıfı [VALIDATION.json](evidence/native-allocation/VALIDATION.json)
+testtir. Her ikisinin sayısı ve yürütme sınıfı [VALIDATION.json](../metadata/evidence/native-allocation/VALIDATION.json)
 içinde ayrı tutulur. Önceki204/205 Windows sonucu düzeltilmiş test205/205 geçti
 diye yeniden etiketlenmez; native Windows tekrarına hâlâ ihtiyaç vardır.
 

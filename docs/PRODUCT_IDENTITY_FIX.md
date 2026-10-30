@@ -22,5 +22,5 @@ kimlikleri korunur. Bunlar ürünün kullandığı dosya adı veya görünen kim
 değildir. Test host'unda kaldırılmış YellowfieldShutdown export'unun yokluğu
 denetlenmeye devam eder. Önceki ZIP'ler ve vendor payload'ları değiştirilmez.
 
-Doğrulama sonuçları docs/evidence/PRODUCT_IDENTITY_FIX.json içindedir. Cross-build
+Doğrulama sonuçları metadata/evidence/PRODUCT_IDENTITY_FIX.json içindedir. Cross-build
 ve Wine sonuçları gerçek Windows/MSVC Golden veya oyun kabulü yerine geçmez.

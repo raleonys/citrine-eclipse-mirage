@@ -41,7 +41,7 @@
     "stop": "CANCEL_SOCKETS_DISCARD_QUEUED_JOIN_RUNNING_DRAIN_IO",
     "frame_and_output_byte_limits": "metadata/SESSION_TRANSPORT_POLICY.json"
   },
-  "validation": "docs/evidence/RUNTIME_RESILIENCE.json",
+  "validation": "metadata/evidence/RUNTIME_RESILIENCE.json",
   "public_abi": "UNCHANGED_THREE_EXPORTS",
   "vendor_changes": false,
   "later_transport_adoption": "metadata/SESSION_TRANSPORT_POLICY.json",

@@ -1,5 +1,7 @@
 """Regression tests for the independent repository root ownership gate."""
 import shutil
+import hashlib
+import json
 import subprocess
 import sys
 import tempfile
@@ -8,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from check_repository_contract import check_root_file_ownership
+from check_repository_contract import check_root_file_ownership, check_archived_evidence, check_active_identifiers
 
 
 class RepositoryRootOwnership(unittest.TestCase):
@@ -111,6 +113,45 @@ class RepositoryRootOwnership(unittest.TestCase):
                            ['a\\b'], ['.'], [123], 'README.md']:
                 with self.subTest(policy=policy), self.assertRaises(ValueError):
                     check_root_file_ownership(tmp, policy)
+
+    def test_historical_evidence_retained_bytes_and_file_set(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            archive = root / 'metadata/evidence'
+            archive.mkdir(parents=True)
+            data = b'original owner evidence'
+            (archive / 'original.json').write_bytes(data)
+            (archive / 'README.md').write_text('immutable historical records')
+            policy = {'schema': 'surge.evidence-retention.v1', 'retained_count': 1,
+                      'retained_files': {'original.json': hashlib.sha256(data).hexdigest()}}
+            (root / 'metadata/EVIDENCE_RETENTION_POLICY.json').write_text(json.dumps(policy))
+            self.assertEqual([], check_archived_evidence(root))
+            (archive / 'original.json').write_bytes(b'mutated evidence')
+            self.assertIn('Historical evidence bytes differ: original.json',
+                          check_archived_evidence(root))
+            (archive / 'original.json').write_bytes(data)
+            (archive / 'unexpected.log').write_text('new output')
+            self.assertTrue(any('file-set mismatch' in error
+                                for error in check_archived_evidence(root)))
+            (archive / 'unexpected.log').unlink()
+            (root / 'docs/evidence').mkdir(parents=True)
+            self.assertIn('Forbidden legacy evidence directory: docs/evidence',
+                          check_archived_evidence(root))
+
+    def test_archived_provenance_labels_do_not_exempt_active_metadata(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'docs').mkdir()
+            (root / 'docs/IDENTIFIER_POLICY.md').write_text(
+                '<!-- active-name-policy -->\n```json\n'
+                '{"reserved_reference_labels": ["obsolete-label"]}\n```\n')
+            (root / 'metadata/evidence').mkdir(parents=True)
+            (root / 'metadata/evidence/old.json').write_text('{"schema":"obsolete-label.old"}')
+            (root / 'metadata/ACTIVE.json').write_text('{"schema":"obsolete-label.active"}')
+            errors = check_active_identifiers(root)
+            self.assertTrue(any('metadata/ACTIVE.json' in error for error in errors))
+            self.assertFalse(any('metadata/evidence/' in error for error in errors))
+
 
 
 if __name__ == '__main__':
