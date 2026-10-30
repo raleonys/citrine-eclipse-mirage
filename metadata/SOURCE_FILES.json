@@ -1141,6 +1141,10 @@
       "bytes": 4773,
       "sha256": "08e142432694ffd1b4488050bf232ad31cf4e0970873bf274fa103f082b8b6ba"
     },
+    "tests/infrastructure/test_root_ownership.py": {
+      "bytes": 1661,
+      "sha256": "720bf48294fb21d804d8b7fc278add1b1990b4e923c13ec1a7e035629a33fcb4"
+    },
     "tests/infrastructure/test_size_evidence.py": {
       "bytes": 6823,
       "sha256": "5d24e7e6d3b3a706db5f26fadcdac81baba21edad53432cba4a03d2502b45362"
@@ -1154,8 +1158,8 @@
       "sha256": "6c15c49fd981fff2043902fd730e33a82987d543c3b4fce38949da3f890f67ff"
     },
     "tests/infrastructure/test_wine_runner.py": {
-      "bytes": 1695,
-      "sha256": "072efe6c3aa12e3e2cb84256eca76d2a0b56c93e05026abb54a445466b552ee5"
+      "bytes": 1599,
+      "sha256": "c6dec9dc5d91e567295a0d1b363a5d7dfa64847d9fe7ad3616ca4452ba91f49d"
     },
     "tests/native/application_runtime_tests.cpp": {
       "bytes": 22701,
