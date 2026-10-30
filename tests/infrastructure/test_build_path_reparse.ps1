@@ -4,6 +4,7 @@ $ErrorActionPreference = 'Stop'
 $base = Join-Path ([System.IO.Path]::GetTempPath()) ('surge-build-guard-' + [Guid]::NewGuid().ToString('N'))
 $root = Join-Path $base 'repo'
 $outside = Join-Path $base 'outside'
+$junction = $null
 try {
     New-Item -ItemType Directory -Path (Join-Path $root 'build') -Force | Out-Null
     New-Item -ItemType Directory -Path $outside -Force | Out-Null
@@ -22,9 +23,12 @@ try {
     if ($reason -notmatch 'outside') { throw 'External path accepted' }
     Write-Host 'BUILD_PATH_REPARSE_NEGATIVES: PASS (Windows fixture only)'
 } finally {
-    if (Test-Path -LiteralPath $junction) {
-        # Removing the junction must not traverse its target.
+    if ($null -ne $junction -and (Test-Path -LiteralPath $junction)) {
+        # Remove the junction itself, never recursively traverse its target.
         & cmd.exe /d /c ('rmdir "' + $junction + '"') | Out-Null
+        if ($LASTEXITCODE -ne 0 -or (Test-Path -LiteralPath $junction)) {
+            throw 'Fixture junction cleanup failed; refusing recursive deletion'
+        }
     }
     Remove-Item -LiteralPath $base -Force -Recurse -ErrorAction SilentlyContinue
 }
