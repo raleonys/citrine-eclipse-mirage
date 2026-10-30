@@ -889,7 +889,7 @@
     "resources/preloader_version.rc": "5c3a559664571cda90fa64a7c5266b6039d2506776013f5f717edb2ba66dffcc",
     "resources/surge.rc": "20d8a66cb5be145336bcc503cc86d1aced573977a2ba2f085bdf8f181a15c908",
     "scripts/audit_translation_units.py": "949176305f55f241907c2651f0e2346bd65b55297ef92af3f782d2e0a22b372d",
-    "scripts/build_orchestration/build_common.ps1": "38ab922a7d8d8f44060460aba425b637116d8b26533f0ffe0cc5792541cc2226",
+    "scripts/build_orchestration/build_common.ps1": "77e68dc0ce17037a6c90979413b9917fe806f21b74362fad779eb90734f9429f",
     "scripts/build_orchestration/build_crt_acceptance.cmd": "ad6078340a53ddc620c5045c56c784056ae0b03a676fd89fc3afcd5dcd934a86",
     "scripts/build_orchestration/build_crt_acceptance.ps1": "b789462717735c51321fdaefeed3e496729b06e0f9af5b2bb44c3ace698f73b9",
     "scripts/build_orchestration/build_debug.cmd": "53673aac62fe6c5d516a8a8e2c4b4d49f5ccfa6ded97be91ba3755834e4e45d4",
@@ -3710,7 +3710,7 @@
     "third_party/pegtl/src/test/extra_type_to_string.cpp": "ad7b78b47ca00ff88b23172d30d6f0b076347ec5fb435b927ddd9efa92af14c2",
     "third_party/pegtl/src/test/extra_unescape.cpp": "082eff38c952bdf4a56684bd41aacea76b2068f63b59f02f8985e7800cdc78a7",
     "third_party/pegtl/src/test/extra_unescape_to.cpp": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749",
-    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c",
+    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c",
     "third_party/pegtl/src/test/icu_utf16_base.cpp": "49da58e07465311642728619f2a57a990a17ad28438827bc92189ea3175ea063",
     "third_party/pegtl/src/test/icu_utf32_base.cpp": "5adaf877166d839ed70123dca614f2194f8a7058b0b2886ee06f87c4b3c0e9c5",
     "third_party/pegtl/src/test/icu_utf8_base.cpp": "be59703ff74dc818e0370e32a52124a31b95820d22fdd00950ff0fc9f1f6bed2",
@@ -4159,6 +4159,7 @@
     "tools/preloader_l_crt_host/main.cpp": "2b85fe434eecdeb685a9219d222eea5c9f8ca0a1b82b8dfccd59bb7a6fec27c6",
     "tools/preloader_l_runtime_host/main.cpp": "ff10529cd936d78fddf5f24c378e8ceabe0b2444e6ea225149d08e8fc8c18524",
     "tools/preloader_l_source_host/main.cpp": "462a9f3c83505abc96a42420a3e31a85502bafb097fa36d665703e10ae0051d6",
-    "tools/runtime_probe.hpp": "d6c138af00cfecd1c7fa4476ef88575e41ee1b8e3f281783e367b2e2122e62af"
+    "tools/runtime_probe.hpp": "d6c138af00cfecd1c7fa4476ef88575e41ee1b8e3f281783e367b2e2122e62af",
+    "tests/infrastructure/test_build_path_reparse.ps1": "1bf8eaee2b8de49fbcb7035220cb37872583da84a05d7eeafd18bf47c3631e88"
   }
 }
