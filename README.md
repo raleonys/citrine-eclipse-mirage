@@ -13,6 +13,8 @@ Güncel kaynak düzeltmeleri ve test katkıları: [kaynak incelemesi](docs/SOURC
 
 # SURGE
 
+[![Source and Windows checks](https://github.com/cyanoleon/yellowfield/actions/workflows/ci.yml/badge.svg)](https://github.com/cyanoleon/yellowfield/actions/workflows/ci.yml)
+
 Son gönderilen arşivdeki SURGE avatarı birebir güncellendi.
 [Avatar doğrulaması](docs/evidence/AVATAR_REFRESH.json).
 

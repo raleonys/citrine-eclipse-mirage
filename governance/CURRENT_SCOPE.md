@@ -7,6 +7,11 @@ Local build/acceptance scripts and product/vendor contracts remain unchanged.
 Skipped Windows jobs do not count as native acceptance. See the
 [review workflow](../docs/GITHUB_WORKFLOW.md).
 
+Güncel sahip görevi: yeni yüklenen Asio kaynak arşivini byte eşitliğiyle vendorlamak.
+Başlık sürümü1.38.2 değişmiyor; snapshot ZIP hash ve commit yorumuyla sabitlenir.
+Diğer üç vendor ve ürün politikaları korunur. PR ayrı hazırlanır; birleştirme
+sahibine aittir. [Kapsam](../docs/ASIO_UPDATE.md).
+
 Güncel sahip kararı: kaynak arşivi byte eşitliğiyle GitHub başlangıcına alındı.
 CI ve PR çalışma kuralları ayrı dal/PR olarak hazırlanır; birleştirme sahibine
 aittir. Bu iş runtime/vendor davranışını değiştirme yetkisi vermez.

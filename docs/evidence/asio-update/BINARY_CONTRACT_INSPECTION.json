@@ -1,0 +1,49 @@
+{
+  "schema": "surge.asio-update-binary-contract.v1",
+  "classification": "NOT_RELEASE",
+  "cross_toolchain": "LLVM-MinGW20251118 development build",
+  "application_exports": {
+    "DllMain": 1,
+    "DllShutdown": 3,
+    "SURGE": 2
+  },
+  "development_exports": 3346,
+  "development_export_names_added": 0,
+  "development_export_names_removed": 0,
+  "raw_import_modules": [
+    "MSWSOCK.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "WS2_32.DLL",
+    "CRYPT32.DLL",
+    "LIBC++.DLL",
+    "LIBUNWIND.DLL",
+    "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+    "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+    "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+    "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+    "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+  ],
+  "raw_import_modules_equal_parent_development_build": true,
+  "static_crypt_query_object": true,
+  "resource_paths": [
+    [
+      16,
+      1,
+      1033
+    ]
+  ],
+  "png_pe_resources": 0,
+  "both_avatar_payloads_preserved": true,
+  "raw_dll_bytes": 1069568,
+  "parent_raw_dll_bytes": 1069568,
+  "raw_dll_sha256": "fe3fda9dd608ef03c81ce1c050aa58e3dc6a63077fe59256d07cc5857732c637",
+  "source_api_dll_sha256": "3322104c550127fb93d90f1f5571b8e5cbd561bc3d8e0756a43f469b7538123f",
+  "native_msvc_golden": "NOT_RUN_FOR_UPDATED_ASIO; development imports are not shipping proof"
+}

@@ -2,7 +2,7 @@
   "schema": "surge.runtime-current.v1",
   "role": "CURRENT_RUNTIME_STATE",
   "classification": "NOT_RELEASE",
-  "task": "SURGE-AVATAR-REFRESH",
+  "task": "SURGE-ASIO-OWNER-SNAPSHOT",
   "owner": "application::Application",
   "dll_entry": "src/platform/dll_entry.cpp",
   "exports": {
@@ -18,7 +18,7 @@
   "compiler_crt": "STANDARD",
   "active_vendor_count": 4,
   "active_vendors": {
-    "asio": "1.38.2; actual owned IO/session service",
+    "asio": "1.38.2; owner snapshot bdf337ddb1a667c274372a602de5857ad3cb3ed0; active asynchronous transport",
     "minhook": "1.3.4 owner input; pinned NtGetNextThread SAFE-FREEZE build copy",
     "pegtl": "4; existing RE Config2/VDF grammar",
     "tinyxml2": "11; actual XML/router/persistence backend; default depth500 unchanged"
@@ -59,9 +59,9 @@
   "resource_policy": "Owner-reference VERSIONINFO; owner profile and preserved fallback PNG in read-only C++ data, no PNG PE resource",
   "hook11": "Hook reference selector/protected reader/forwarding and lifetime; static SDK CRYPT32!CryptQueryObject import",
   "historical_runtime_snapshot": "docs/evidence/RUNTIME_BINDING_STATUS.json",
-  "validation_status": "docs/evidence/avatar-update/VALIDATION.json",
-  "native_msvc_golden": "NOT_RUN_FOR_UPDATED_AVATAR; OWNER_PARENT_PASS_RETAINED_SEPARATELY",
-  "updated_game_retest": "NOT_RUN_FOR_UPDATED_AVATAR",
+  "validation_status": "docs/evidence/asio-update/VALIDATION.json",
+  "native_msvc_golden": "NOT_RUN_FOR_UPDATED_ASIO",
+  "updated_game_retest": "NOT_RUN_FOR_UPDATED_ASIO",
   "parent_game_evidence": "Owner confirms game and Windows acceptance on the logged pre-update build",
   "hook_lifecycle_contract": "docs/HOOK_ENGINE_HARDENING.md",
   "vendor_compiled_copy_patch": "metadata/HOOK_ENGINE_PATCH.json",
@@ -76,10 +76,10 @@
   "production_first_party_tus": 60,
   "retained_reference_tus": 78,
   "retained_reference_sources_deleted": false,
-  "previous_validation_status": "docs/evidence/native-allocation/VALIDATION.json",
+  "previous_validation_status": "docs/evidence/avatar-update/VALIDATION.json",
   "owner_pre_update_windows_golden": "USER_LOG_PASS",
   "owner_pre_update_game_acceptance": "OWNER_REPORTED_PASS",
-  "updated_native_acceptance": "NOT_RUN_FOR_UPDATED_AVATAR; CORRECTED_NATIVE_FIXTURE_STILL_REQUIRES_MSVC_REEXECUTION",
+  "updated_native_acceptance": "NOT_RUN_FOR_UPDATED_ASIO",
   "config_platform_policy": "metadata/CONFIG_PLATFORM_POLICY.json",
   "historical_validation_statuses": [
     "docs/evidence/AVATAR_REFRESH.json",

@@ -306,6 +306,13 @@ root and excludes unrelated reverse-engineering projects from the application.
   publish releases. Preserve all existing product/vendor/ABI policies and exact
   source bytes. See docs/GITHUB_WORKFLOW.md.
 
+- Latest owner dependency instruction replaces only Asio with the newly supplied
+  archive snapshot pinned in VENDOR_LOCK.json. Its header still reports1.38.2;
+  identify it by the archive SHA256 and commit comment, not a fabricated release.
+  Preserve exact new vendor bytes and both portable alias descriptors. Keep
+  MinHook/PEGTL/TinyXML2 pins, SDK/listener/transport policies and the public ABI
+  unchanged. Develop in a separate PR; do not merge. See docs/ASIO_UPDATE.md.
+
 - Latest owner CI quota instruction keeps this repository private. Automatic
   PR/main runs retain source QA and portable tests; both Windows Native and
   Production/Golden jobs run only on explicit workflow_dispatch. Preserve their
