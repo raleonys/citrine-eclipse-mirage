@@ -1,3 +1,0 @@
-accept allocation backend: scalar-new
-FAIL: failed accept leaves a stale pending flag
-WINE_PROGRAM_EXIT=1

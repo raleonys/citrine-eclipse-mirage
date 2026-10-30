@@ -59,7 +59,7 @@ content is not rewritten or accepted; read-only verification still rejects a
 CRLF build copy. The vendor input, patch script and output hash pins are unchanged.
 Mismatch diagnostics now identify missing, extra and changed member paths with
 expected/actual hashes. Reproduction and fresh checks are recorded in
-[HOOK_BUILD_COPY_PORTABILITY.json](evidence/HOOK_BUILD_COPY_PORTABILITY.json).
+[HOOK_BUILD_COPY_PORTABILITY.json](../metadata/evidence/HOOK_BUILD_COPY_PORTABILITY.json).
 
 ## Lifecycle contract
 

@@ -1,11 +1,11 @@
 # Güncel açık işler
 
 Güncel değişiklikler [CODEBASE_OPTIMIZATION.md](CODEBASE_OPTIMIZATION.md), yerel
-test sonuçları [doğrulama kaydı](evidence/optimization/VALIDATION.json) içindedir.
+test sonuçları [doğrulama kaydı](../metadata/evidence/optimization/VALIDATION.json) içindedir.
 
 Önceki yüklenen DLL için beş Windows profili ve Native193/193 PASS loglarla
 doğrulandı; oyun kabulünü kullanıcı bildirdi. Bu sonuçlar
-[sabit kabul kaydında](evidence/OWNER_NATIVE_ACCEPTANCE.json) korunuyor.
+[sabit kabul kaydında](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json) korunuyor.
 Önceki DLL'in kabulü yeni XML/Release kaynak değişikliklerini kapsamaz.
 
 | Açık iş | Sonraki işlem | Kanıt sınırı |
@@ -23,7 +23,7 @@ güncel yerel sonuç/kalan iş listesi yerine kullanılmamalıdır.
 
 Güncel not (YF-BLUEFIELD-ALIGN-20261029): Bluefield 11. hook/lifecycle ve tüm
 beyan edilmiş Brownfield metadata hedefleri kaynakta bağlıdır. Güncel doğrulama
-[BLUEFIELD_ALIGNMENT_STATUS.json](evidence/HOOK_ALIGNMENT_STATUS.json)
+[BLUEFIELD_ALIGNMENT_STATUS.json](../metadata/evidence/HOOK_ALIGNMENT_STATUS.json)
 içindedir. Yeni kaynakla gerçek Windows/MSVC Native/Production ve oyun kabulü
 hâlâ gereklidir. Aşağıdaki önceki kabul ayrıntıları tarihsel kayıttır.
 
@@ -36,7 +36,7 @@ Aşağıdaki liste önceki kabul durumunun tarihsel ayrıntılarını içerir.
 
 Bu liste uygulama kodu eksikliği ile çalıştırılmamış kabul testini ayırır.
 Güncel kaynak, sabit C arayüzü ve Wine doğrulaması
-[PUBLIC_ABI_STATUS.json](evidence/PUBLIC_ABI_STATUS.json) içindedir.
+[PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json) içindedir.
 
 | İş | Somut sonraki işlem | Mevcut sınır |
 |---|---|---|

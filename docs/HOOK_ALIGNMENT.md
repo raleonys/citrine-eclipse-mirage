@@ -28,7 +28,7 @@ Diğer uygulama modülleri Bluefield’den kopyalanmadı.
 Somut uygulama adapterı mevcut Hooks/NativeApi/Binding sınırlarını kullanır;
 Bluefield’in tüm application class’ı aynen kopyalanmış değildir. Protected reader
 ayrı host sınırına çıkarıldı, ömür temizliği mevcut worker’a bağlandı. Kaynak
-hashleri ve tam uyarlamalar `docs/evidence/HOOK_ALIGNMENT_STATUS.json` içindedir.
+hashleri ve tam uyarlamalar `metadata/evidence/HOOK_ALIGNMENT_STATUS.json` içindedir.
 SPDX GPL-3.0-only bildirimleri korunur.
 
 Doğrulama gerçek MinHook queue/apply, disable/uninitialize, original-call argümanları,

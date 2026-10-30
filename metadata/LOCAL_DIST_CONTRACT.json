@@ -27,7 +27,7 @@
     "filter_changed": false,
     "source": "src/platform/crypt_query.cpp",
     "current_checks": "Current ReleaseWine173/173 and affected Debug8/8 passed; no-config final-name development DLL host3cycles passed. Owner reports parent game no-start; updated native MSVC and actual game retest pending.",
-    "implementation_record": "docs/evidence/HOOK_ALIGNMENT_STATUS.json"
+    "implementation_record": "metadata/evidence/HOOK_ALIGNMENT_STATUS.json"
   },
   "parent_source_package": "surge-startup-build-fix-source.zip",
   "parent_sha256": "3b33807c5d01e7a0c8c94cb6d8493ac3855e0e0024ddba85b7a5256c85995801",
@@ -35,7 +35,7 @@
   "genuine_msvc_gate_bypassed": false,
   "python_bytecode": "All Golden children inherit PYTHONDONTWRITEBYTECODE=1; CORVEXON launches -B children; wrapper removes only generated caches for manifest-owned Python tools",
   "metadata_profile": "Owner-reference VERSIONINFO and timestamp0xA6FD7C8F; retained linker14.0, Rich absent, checksum recomputed, original compiler DLL preserved",
-  "latest_registry_wait_correction": "docs/evidence/STARTUP_BUILD_FIX_STATUS.json",
+  "latest_registry_wait_correction": "metadata/evidence/STARTUP_BUILD_FIX_STATUS.json",
   "public_exports": "DllMain@1 SURGE@2 DllShutdown@3 (same Infrastructure ordinals)",
   "final_import_descriptor_order": [
     "CRYPT32.DLL",

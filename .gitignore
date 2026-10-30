@@ -3,3 +3,6 @@
 __pycache__/
 *.pyc
 CMakeUserPresets.json
+
+# Keep newly generated audit and validation evidence out of the source tree.
+/docs/evidence/

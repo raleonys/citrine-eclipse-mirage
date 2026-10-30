@@ -80,14 +80,14 @@ Derleyici indirmesi vendor kaynağı değildir ve ürün ZIP'ine gömülmez.
 Doğrulanan araç arşivinin SHA-256'sı:
 `53a0c22caa46b501e1c089e1c31b24a7c0e0d5a86f8ad12b131aafd4cee01ef4`.
 Asıl vendor pinleri değişmez. Güncel sonuçlar ve araç kökeni
-[VENDORING_STATUS.json](evidence/VENDORING_STATUS.json) içindedir.
+[VENDORING_STATUS.json](../metadata/evidence/VENDORING_STATUS.json) içindedir.
 
 Yalnız eski/uyumsuz derleyiciyi teşhis etmek için ayrı build dizininde
 `-DPRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=OFF` kullanılabilir. Bu mod yalnız vendor teşhisi içindir. PEGTL testi **SKIPPED/UNAVAILABLE** kalır;
 gerçek VDF parser hedefi bu derleyicide yine derlenemez. Uyumluluk PASS sayılmaz.
 Derleyici tanısı yeni CMake'de `CMakeFiles/CMakeConfigureLog.yaml`, eski CMake'de
 `CMakeFiles/CMakeError.log` içinde bulunur. İlk Clang 23 hatası
-`docs/evidence/VENDOR_PEGTL_COMPILER_DIAGNOSTIC.log` içinde korunur.
+`metadata/evidence/VENDOR_PEGTL_COMPILER_DIAGNOSTIC.log` içinde korunur.
 
 `vendor_io_contracts`, Asio ile gerçek loopback TCP accept/connect/read/write,
 EOF ve iptal completion’larını; standart filesystem ile Unicode dizin/dosya,

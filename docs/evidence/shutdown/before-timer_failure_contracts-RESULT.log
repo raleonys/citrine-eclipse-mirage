@@ -1,2 +1,0 @@
-PASS: three timer exception paths close real sessions; internal cache hypothesis does not bypass caller containment
-WINE_PROGRAM_EXIT=0

@@ -3,7 +3,7 @@
   "classification": "NOT_RELEASE",
   "owner": "Explicit owner continuation of native socket ownership, safe retry and pending IO review",
   "documentation": "docs/SOCKET_RETIREMENT.md",
-  "validation": "docs/evidence/socket-retirement/VALIDATION.json",
+  "validation": "metadata/evidence/socket-retirement/VALIDATION.json",
   "parent_source_zip_sha256": "e0b6964082c4343359d824684b5c60e667867db54f089796862080a81f73d8ac",
   "source": "src/net/asio_service.cpp",
   "native_close": {

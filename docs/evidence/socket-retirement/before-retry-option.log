@@ -1,2 +1,0 @@
-FAIL: failed native close incorrectly acknowledges cleanup
-WINE_PROGRAM_EXIT=1

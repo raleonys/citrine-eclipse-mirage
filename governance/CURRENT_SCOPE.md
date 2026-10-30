@@ -79,7 +79,7 @@ regresyon testlerini eklemek ve Brownfield/Bluefield kapanış incelemesini
 sürdürmek. **Donor emekliliği onaylanmış değildir.** Seçilmiş branch incelemesi,
 tüm kaynakların semantik kapanışı sayılmaz. Güncel karar ve kanıtlar:
 [inceleme](../docs/DONOR_RECOVERY.md),
-[doğrulama](../docs/evidence/recovery/VALIDATION.json),
+[doğrulama](../metadata/evidence/recovery/VALIDATION.json),
 [makine kaydı](../metadata/RECOVERY_REVIEW.json).
 Aşağıdaki önceki görev açıklamaları tarihsel yetki kaydıdır; güncel durumu
 `RUNTIME_CURRENT_STATUS.json` belirler.
@@ -218,7 +218,7 @@ Diğer PE header/ABI kararları bu resource aktarımıyla otomatik seçilmez.
 Sonraki düzeltme: “src ve include icinde hala garip alt klasor altinda klasorler var.”
 Brownfield'in tek modül katmanlı düzeni uygulanır. 177 dosya taşınmış, 261 kaynak
 gövdesi include satırları dışında byte-identical doğrulanmıştır. Yollar ve
-kanıtlar [LAYOUT_MIGRATION.json](../docs/evidence/LAYOUT_MIGRATION.json) içindedir.
+kanıtlar [LAYOUT_MIGRATION.json](../metadata/evidence/LAYOUT_MIGRATION.json) içindedir.
 
 Önceki görev: **YF-COMPARE-20261028**. Kullanıcı Bluefield ve RE source için
 iki ayrı fark/eksik/sapma tablosu istedi ve “devam edelim” dedi. Bu tur

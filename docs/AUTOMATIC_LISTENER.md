@@ -65,4 +65,4 @@ files; the original partial-state failure test now injects a path-resolution
 failure rather than relying on removed numeric-port parsing.
 
 Execution results and platform limits are recorded in
-[AUTOMATIC_LISTENER.json](evidence/AUTOMATIC_LISTENER.json).
+[AUTOMATIC_LISTENER.json](../metadata/evidence/AUTOMATIC_LISTENER.json).

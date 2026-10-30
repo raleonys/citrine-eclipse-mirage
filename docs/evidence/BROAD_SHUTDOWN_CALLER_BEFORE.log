@@ -1,2 +1,0 @@
-failed shutdown return removes caller exclusion
-WINE_PROGRAM_EXIT=1

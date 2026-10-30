@@ -8,10 +8,10 @@ Yeni kullanıcı RE paketi incelemesindeki dört bulgu düzeltildi. Eklenen kar�
 
 Önceki arşive göre yeni12modülün33CPP/HPP dosyası ve değişen11öncekiCPP/HPP dosyası tek tek sınıflandırıldı. Paket içindeki24yeni testCPP için uygunluk/karşılık kaydı çıkarıldı. Ana pseudocode/assembly dökümleri öncekiyle byte-identical; kaynak bileşimi ilerlemesi yeni native fonksiyon gövdesi sayılmaz.
 
-- [44 kaynak/başlık için karşılık ve karar](evidence/SOURCE_DELTA_REVIEW.csv)
-- [24 yeni test dosyası için uyarlama kararı](evidence/SOURCE_TEST_ADOPTIONS.csv)
+- [44 kaynak/başlık için karşılık ve karar](../metadata/evidence/SOURCE_DELTA_REVIEW.csv)
+- [24 yeni test dosyası için uyarlama kararı](../metadata/evidence/SOURCE_TEST_ADOPTIONS.csv)
 - [Güncel politika](../metadata/CONFIG_PLATFORM_POLICY.json)
-- [Çalıştırılmış doğrulama](evidence/SOURCE_REVIEW_VALIDATION.json)
+- [Çalıştırılmış doğrulama](../metadata/evidence/SOURCE_REVIEW_VALIDATION.json)
 
 Tablodaki işlev adları kaynakta gezinmek içindir; çağrı adlarını da içeren bir metin envanteridir, compiler AST veya yürütülmüş satır kapsamı değildir. Uygulama sahibinden gerçek Windows adaptörüne giden ilgili çağrı aileleri ayrıca incelenmiştir. İlgisiz private CRT/domain yolları ürün kapsamına alınmamıştır.
 

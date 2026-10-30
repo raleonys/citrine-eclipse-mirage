@@ -3,7 +3,7 @@
   "classification": "NOT_RELEASE",
   "owner": "Explicit owner authorization to apply audited cleanup with diagnostic TLS gating",
   "documentation": "docs/BUILD_CLEANUP.md",
-  "validation": "docs/evidence/build-cleanup/VALIDATION.json",
+  "validation": "metadata/evidence/build-cleanup/VALIDATION.json",
   "parent_source_zip_sha256": "112a75990d5eee3fafc523bc15687372f64a7ce9b76141cd9a9f50a17de14536",
   "input_audit_zip_sha256": "5e72bf441f4bd32a131f33b2fb6e90e1335354da03e0b47bd71c3b2adc00c65f",
   "implemented_audit_ids": [

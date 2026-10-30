@@ -44,5 +44,5 @@ Testler: seçenek maskesi, bilinmeyen bit kombinasyonları, signed tarih uçlar�
 kimlik byte’larının tamamı,50/87 fallback ve diğer hata kodları, kısa devre ve
 fatal kapatma sıraları kontrollü testlerle; Unicode/binary dosyalar, skip/overwrite/
 update, aynı dosya, hard link ve gerçek metadata sorguları Windows test EXE’siyle
-sınanır. Sonuçlar docs/evidence/RE_COPY_RECOVERY.json içindedir. Wine/cross-build,
+sınanır. Sonuçlar metadata/evidence/RE_COPY_RECOVERY.json içindedir. Wine/cross-build,
 gerçek Windows/MSVC Golden ve kullanıcı oyunu kabulü ayrı kanıt sınıflarıdır.

@@ -18,6 +18,6 @@
   "other_vendor_updates": false,
   "first_party_runtime_changes": 0,
   "documentation": "docs/ASIO_UPDATE.md",
-  "validation": "docs/evidence/asio-update/VALIDATION.json",
+  "validation": "metadata/evidence/asio-update/VALIDATION.json",
   "status": "PASS_LOCAL_VALIDATION_NATIVE_MSVC_AND_GAME_PENDING"
 }

@@ -1,9 +1,0 @@
-Test project /workspace/yellowfield/build/runtime-debug
-    Start   1: application_runtime_contracts
-1/2 Test   #1: application_runtime_contracts ....   Passed    5.30 sec
-    Start 168: dll_source_smoke
-2/2 Test #168: dll_source_smoke .................   Passed    0.64 sec
-
-100% tests passed out of 2
-
-Total Test time (real) =   5.95 sec

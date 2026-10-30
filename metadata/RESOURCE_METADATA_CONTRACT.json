@@ -52,5 +52,5 @@
   "avatar_data_contract": "metadata/AVATAR_DATA_CONTRACT.json",
   "latest_task": "SURGE-REFERENCE-METADATA-AVATAR",
   "full_PE_metadata_contract": "metadata/MUSTAVEX_GOLDEN_METADATA.json; current owner-reference VERSIONINFO and timestamp with retained structural policy",
-  "previous_reference_provenance": "docs/evidence/contracts/RESOURCE_METADATA_CONTRACT.json"
+  "previous_reference_provenance": "metadata/evidence/contracts/RESOURCE_METADATA_CONTRACT.json"
 }

@@ -16,7 +16,7 @@ Yalnız görsel girdisi ve buna ait güncel kayıtlar yenilenir. Önceki TLS/tem
 ve tahsis-enjeksiyonu test düzeltmeleri korunur. VirusTotal Files Dropped
 farkının nedeni bu değişiklikle açıklanmış veya giderilmiş sayılmaz.
 
-[Doğrulama](evidence/avatar-update/VALIDATION.json) yerel çapraz derleme/Wine
+[Doğrulama](../metadata/evidence/avatar-update/VALIDATION.json) yerel çapraz derleme/Wine
 sonuçlarını kaydeder. Yeni görseli içeren binary için native Windows/MSVC, Golden
 ve oyun kabulü bu yerel testlerden çıkarılamaz. Derleme kaynak paketiyle yapılır;
 bu çalışma dist çıktısını güncellemez veya yayımlamaz.

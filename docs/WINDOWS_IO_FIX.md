@@ -44,7 +44,7 @@ göstermez. Entegrasyon regresyonu her iki build’de bu durumu denetler.
 
 Önceki startup-build-fix paketiyle oyun açılışı kullanıcı tarafından doğrulandı.
 Bu yeni IO/build ayarı için gerçek Windows/MSVC ve oyun tekrarı ayrı olarak
-gereklidir. Güncel sonuçlar `docs/evidence/WINDOWS_IO_FIX.json` içindedir.
+gereklidir. Güncel sonuçlar `metadata/evidence/WINDOWS_IO_FIX.json` içindedir.
 
 ## İstenen import DLL sırası
 

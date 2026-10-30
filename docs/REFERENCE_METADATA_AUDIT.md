@@ -5,7 +5,7 @@ etme talimatı uygulanır. Önceki compiler timestamp/linker/Rich değerlerini k
 kararı kaldırılmıştır. Kaynak, sağlanan Brownfield arşivindeki gerçek
 MUSTAVEX/ARYRA/URSYNEX politikalarıdır; parser fixture’ları değildir.
 
-`docs/evidence/REFERENCE_METADATA_POLICY_AUDIT.json` 19 beyan edilmiş politika
+`metadata/evidence/REFERENCE_METADATA_POLICY_AUDIT.json` 19 beyan edilmiş politika
 grubunun Brownfield ile birebir karşılaştırmasını kaydeder. PE’nin her byte’ını
 Brownfield DLL’iyle aynı yapma hedefi yoktur: kod, adresler, image boyutu ve
 üç açık kullanıcı istisnası farklıdır.
@@ -90,7 +90,7 @@ Ham DLL denetimi `--final` olmadan RAW_LINK_OUTPUT / NOT_FINALIZED farklarını 
 ## Kanıt sınırı
 
 Politika karşılaştırması ve negatif PE regresyonları doğrulandı.
-`docs/evidence/REFERENCE_METADATA_PE_PROBE.json`, gerçek LLVM development DLL’inden
+`metadata/evidence/REFERENCE_METADATA_PE_PROBE.json`, gerçek LLVM development DLL’inden
 üretilmiş açıkça işaretli **diagnostic fixture** üzerinde header/VERSIONINFO
 finalizasyonunu doğrular. Fixture hazırlığında yalnız test kopyasının development
 Debug Directory/COFF symbol pointer alanları sıfırlanmıştır; production finalizer
@@ -99,5 +99,5 @@ ve dist’e taşınmaz. Yeni kaynak için gerçek Windows/MSVC production turu g
 
 Son kullanıcı talimatıyla URSYNEX izinli kapsamına tam import descriptor
 permütasyonu eklendi. Brownfield header/VERSIONINFO/layout değerleri korunur.
-Güncel karşılaştırma docs/evidence/WINDOWS_IO_REFERENCE_POLICY_AUDIT.json içindedir;
+Güncel karşılaştırma metadata/evidence/WINDOWS_IO_REFERENCE_POLICY_AUDIT.json içindedir;
 önceki19-group raporu önceki görevin snapshot’ıdır. [Güncel değişiklik](WINDOWS_IO_FIX.md).

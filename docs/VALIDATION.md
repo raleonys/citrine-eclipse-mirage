@@ -22,16 +22,16 @@ ve SecurityCookie hatalarını reddeder. Yeni testler ayrıca yanlış/private m
 source drift, duplicate/unsafe ZIP yolu, nested archive, symlink, write failure,
 unowned metadata, kayıp komut argümanı/exit kodu ve Golden erken-durma yollarını sınar.
 
-Güncel VDF uygulama/derleyici sonucu [VDF_PARSER_STATUS.json](evidence/VDF_PARSER_STATUS.json),
+Güncel VDF uygulama/derleyici sonucu [VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json),
 uyarlama kapsamı [BROWNFIELD_TRANSFER_MATRIX_V2.json](../metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json).
 Önceki altyapı ve kaynak testlerinin ham kayıtları korunur; güncel raporlarla aynı iddia sayılmaz.
 
 Güncel runtime bağı: [RUNTIME_BINDING.md](RUNTIME_BINDING.md). Buradaki önceki vendor/parser test sayıları tarihsel snapshot kanıtıdır; yeni app testleri [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json) içindedir.
 
 Güncel uygulama C arayüzü ve kaynak DLL ayrımı: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
-Güncel doğrulama: [PUBLIC_ABI_STATUS.json](evidence/PUBLIC_ABI_STATUS.json).
+Güncel doğrulama: [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 
 Production/referans hedef ayrımı ve dosya başına kullanım denetimi:
 [BUILD_PARTITION.md](BUILD_PARTITION.md). En son karşılaştırmalı doğrulama
-[BUILD_PARTITION.json](evidence/BUILD_PARTITION.json) içindedir; önceki raporlar
+[BUILD_PARTITION.json](../metadata/evidence/BUILD_PARTITION.json) içindedir; önceki raporlar
 tarihsel sonuçlarını korur.
