@@ -19,6 +19,12 @@ approve its own PR, bypass failing checks or publish a release. The owner review
 the diff and test evidence and decides whether to merge. Additional fixes remain
 on the PR branch and invalidate earlier conclusions when relevant.
 
+Use English for future commit messages, PR titles/descriptions, and newly
+authored repository-facing text. User conversations can remain in the user's
+chosen language. Preview README changes locally and obtain explicit owner
+approval before pushing them; this additional approval requirement is specific
+to README changes and does not apply to all otherwise authorized work.
+
 The current GitHub connection acts as the owner's account. GitHub cannot record
 an independent approval from a PR's own author. The owner can still review and
 manually merge; requiring an independent formal approval needs a separate bot

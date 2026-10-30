@@ -319,3 +319,9 @@ root and excludes unrelated reverse-engineering projects from the application.
   existing scripts, assertions and budgets. Skipped jobs are not native PASS;
   review exact-source Windows/game evidence separately. This supersedes automatic
   Windows execution, not the owner-only merge policy or local acceptance checks.
+
+- Latest owner repository-language instruction requires English for all future
+  commit messages, PR titles/descriptions, and newly authored repository-facing
+  text. Keep user chat in the user's chosen language. The English README rewrite
+  must be previewed and explicitly approved before pushing; this extra approval
+  requirement applies to README changes, not all otherwise authorized work.
