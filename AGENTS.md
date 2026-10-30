@@ -40,6 +40,26 @@ per-change branch advice below; all product and evidence contracts still apply.
 
 See [GitHub workflow](docs/GITHUB_WORKFLOW.md) for the review and cleanup process.
 
+## Mandatory source records and pre-push validation
+
+- Two independent records apply: metadata/SOURCE_FILES.json pins files under
+  src/, include/, tests/ and third_party/; metadata/ACTIVE_SOURCE_MANIFEST.json
+  pins the whole deliverable. Refreshing the latter never updates the former.
+- Review the exact diff first. For approved first-party additions/changes/deletions,
+  explicitly update only their SOURCE_FILES entries (raw-byte length and SHA256,
+  retaining any provenance fields). Do not regenerate vendor pins or accept
+  unrelated drift. Then verify sources, explicitly refresh the active manifest,
+  inspect both record diffs and run the entire local source QA successfully.
+- Before pushing or opening/updating a PR, commit the reviewed changes and records,
+  require a clean working tree, and validate that exact commit. A passing targeted
+  test or whole-source manifest alone is insufficient. Report checks actually run
+  and failures; do not push a known failing batch as ready for review.
+- Install the tracked .github/hooks/pre-push hook using the command in
+  docs/GITHUB_WORKFLOW.md. It runs read-only local source QA and rejects a dirty
+  checkout, direct main updates, bugfix deletion and pushes of untested commits.
+  Do not use --no-verify, disable the hook or treat hook installation as server
+  enforcement. Hooks require setup in every independent clone; CI remains active.
+
 The current owner instruction requires a Brownfield-style application project
 root and excludes unrelated reverse-engineering projects from the application.
 

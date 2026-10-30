@@ -24,6 +24,13 @@ before retiring another branch.
 Record executed commands/results and relevant CI or artifact links. Distinguish
 source QA, portable tests, native MSVC/Golden checks and real game acceptance.
 
+- [ ] New/edited/deleted source and test files have reviewed SOURCE_FILES entries;
+      the separate ACTIVE_SOURCE_MANIFEST was refreshed only for approved changes.
+- [ ] Full local source QA passed on the committed source being pushed; include
+      the commit SHA and result. A targeted test or manifest-only PASS is insufficient.
+- [ ] The local pre-push hook is installed and was not bypassed; inspect CI for
+      this commit before requesting review.
+
 ## Remaining work
 
 Record failures, checks not run and unresolved risks. The owner reviews and
