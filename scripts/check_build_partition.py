@@ -124,10 +124,16 @@ def codemodel_errors(targets, policy):
     for name in policy['production_targets'] + policy['production_test_targets']:
         if name not in targets:
             continue  # BUILD_TESTING=OFF intentionally has no test targets.
-        overlap = target_closure(targets, name) & forbidden
+        closure = target_closure(targets, name)
+        # A generation-time CMake graph may omit imported or out-of-directory
+        # targets. Still reject a *named* forbidden dependency even when its
+        # target record is absent; do not confuse it with a harmless external.
+        referenced_ids = {edge['id'] for node in closure
+                          for edge in targets[node].get('dependencies', [])}
+        overlap = (closure | referenced_ids) & forbidden
         if overlap:
             errors.append('Production target depends on nonproduction target: ' + name + ' -> ' + ', '.join(sorted(overlap)))
-        for dependency in target_closure(targets, name):
+        for dependency in closure:
             for source in targets[dependency].get('sources', []):
                 path = source['path'].replace('\\', '/')
                 for reference in policy['reference_sources']:

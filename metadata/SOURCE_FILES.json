@@ -1118,8 +1118,8 @@
       "sha256": "0f860de117e3786c4b58c5f74b3d5a34a1ba4e39bee1253ae563f917bd14a5a1"
     },
     "tests/infrastructure/test_build_partition.py": {
-      "bytes": 12355,
-      "sha256": "22457c1686f82caf217aa0f8501ed2745e038b91aa7823fde00bfa791fc54e94"
+      "bytes": 13841,
+      "sha256": "2be3f7fccf5bfa61469fcedc036e2aeeb36ca5896b69160094343bb82cc1e35d"
     },
     "tests/infrastructure/test_corvexon_mswsock_imports.py": {
       "bytes": 2450,
