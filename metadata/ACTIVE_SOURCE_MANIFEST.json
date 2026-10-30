@@ -24,7 +24,7 @@
     "SOURCE_REVISION.md": "ec6d9984cccfeaec79a442749c64038ba248a1535abf71a87bf87273e1859d9d",
     "cmake/BuildPartition.cmake": "fd54174939f465f6f03de33c54d2f3e5382889d3bb32cd71823f6ad7623ef4fe",
     "cmake/InfrastructureChecks.cmake": "f897c17185622bc25ec92d4e2d9a7996393e72368c97861a43c14585202807be",
-    "cmake/PatchHookFreeze.cmake": "5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d",
+    "cmake/PatchHookFreeze.cmake": "bf8e6a11362e603ddc78ac1676b2402bb693df249f08f63d4ed10982b2836366",
     "cmake/PortableChecks.cmake": "8c63c8fd92cf42a7b240cb2cee34e0ee5da00218643717679049cb0d95c961e7",
     "cmake/Sources.cmake": "fcac98ad449937cefc289a343d5dd30fc377ef06438bce40343ef6fc1f9dcac1",
     "cmake/Tests.cmake": "314aa1ba42879ed1ca6a977ffc5b3c428aa87b0434fb6565c470f9f90c7fae6b",
@@ -851,7 +851,7 @@
     "metadata/CORVEXON_GOLDEN_TRAIL.json": "4da9cc869aa14747e4b04473b9a677a30dfd4537be7a443aa7c58ad24ce52c58",
     "metadata/CRT_POLICY.json": "3c959c822cd35ff50a03724ca16337380aa283b1eeb43b3f85f4c4b16f7377df",
     "metadata/CRT_STATIC_CONTRACT.json": "32b1443cd3ad84f0334ecc3875b5ae99fba909afa6593795865bbe0092d19a8b",
-    "metadata/HOOK_ENGINE_PATCH.json": "47cb8ea86dab263eb0f2070a34dd5d8b5099f6b1a7295370e31ab05b65bb799f",
+    "metadata/HOOK_ENGINE_PATCH.json": "d25f83bc1255d0f7a8cd4ec5c764dc3bf1101e5d451fe372b5ca96a7c0614d66",
     "metadata/HOOK_PATH_SCAN_POLICY.json": "5b03aeb02a62bec096851848bc40f7de0ef0ee3c4449aacfb19eabdfdc8846a6",
     "metadata/HUMAN_ENTRYPOINT_REGISTRY.json": "0f6308c0b6b21088d57bf0822cad34b35df2ff954e0fb6bbc31d6523f5223b3d",
     "metadata/IDENTITY_CLEANUP.json": "324e68e3526f3212a2582acebc56a9539137f306f2cfae526eec5e7885464f48",
@@ -876,7 +876,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "6dbef7774437e93a3ff8f6f76bd49f7c95a8f4a4d633156d831ffc74b99d32a9",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "ff3551f494cec8ef609b66a120f373cf35987deeee120a1f21d68e1db23189e1",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "eab5f8920b1092ce59c24322d112b9115b42127a155d7596202d3ca70fdc161e",
-    "metadata/SOURCE_FILES.json": "541e535d6474c6ba97c1e603429f940f182eebcc454feff09a05906168b46133",
+    "metadata/SOURCE_FILES.json": "b64445bef103598ccc4653c399e4b25754e6f02088449b3c865a8bcc965ccfa4",
     "metadata/SOURCE_INPUTS.json": "d5babddda25224d9ce8030bc63fd969b05f46f7d1960b09e1e26167f8a4ab73c",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "c413071a0a78fb8fbfc4eeabf1e970dfde51b31a870852f50bc175b4a2f4f765",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -924,7 +924,7 @@
     "scripts/project_files.py": "2b551a6ba1d3214f4da61a23c8c2c8e1f4643927004a86ad9596146a95239392",
     "scripts/restore_vendor_links.py": "08954a0fd415109416520ad1bfebf710551ae1a25fbe0f5f4a6cb6c7c2ef9784",
     "scripts/run_golden_pipeline.py": "8470d6672e0c42fcb34f4575761d6d2dcbd35ee27130c3c5187181a59dfff6eb",
-    "scripts/run_source_qa.py": "ac5dcea309cdce857f7549efd82f2030ba130398d8dbc0470345a17814fdf4a6",
+    "scripts/run_source_qa.py": "110d99d7e4bf49bc3463e8ef0ad5fa49e53c31e280996fa175bf620e4184dc20",
     "scripts/run_wine_test.py": "b0bce96dbd6089b558af6ae7b8bbdb0bf6fcecb5053a5db39da897bd942c2bfe",
     "scripts/ursynex_golden_finalizer.py": "bd44b401042ee5d2e35847154cdb48e687cf0f5bf960ac1312c6a4a73f7970ed",
     "scripts/vendor_sync.py": "00b4d50f380f054fc1f47e53d5ff43b99d75068db4298d81cdfcbde467023cea",
@@ -4161,6 +4161,7 @@
     "tools/preloader_l_source_host/main.cpp": "462a9f3c83505abc96a42420a3e31a85502bafb097fa36d665703e10ae0051d6",
     "tools/runtime_probe.hpp": "d6c138af00cfecd1c7fa4476ef88575e41ee1b8e3f281783e367b2e2122e62af",
     "tests/infrastructure/test_build_path_reparse.ps1": "4560543f3e07b5d43bab2bec3070a621e1265f4fdb6605e8514a45a7b388f251",
-    "tests/infrastructure/test_root_ownership.py": "3e42974d77b2d8800875ef2ac1ecb1416044e7255f13b56103b017c12ef8ceb7"
+    "tests/infrastructure/test_root_ownership.py": "3e42974d77b2d8800875ef2ac1ecb1416044e7255f13b56103b017c12ef8ceb7",
+    "tests/infrastructure/test_hook_disable_action.py": "97019cb14cf6e655a21d4c554c93200f6297ce464ea8ac891c4b3719e4cf058f"
   }
 }
