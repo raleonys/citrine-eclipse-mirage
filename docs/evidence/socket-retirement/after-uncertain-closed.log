@@ -1,0 +1,3 @@
+quarantine: native_closed=1 reuse_observed=0 retained_until_process_exit
+PASS: uncertain-closed
+WINE_PROGRAM_EXIT=0

@@ -1,0 +1,43 @@
+Test project /workspace/yellowfield/build/llvm-mingw-x64-vendors
+      Start   1: application_runtime_contracts
+      Start  11: vendor_source_integrity
+ 1/19 Test  #11: vendor_source_integrity ..........   Passed    0.38 sec
+      Start 169: dll_public_lifecycle
+ 2/19 Test #169: dll_public_lifecycle .............   Passed    1.14 sec
+      Start 170: dll_public_c_consumer
+ 3/19 Test #170: dll_public_c_consumer ............   Passed    0.27 sec
+      Start  30: config_application_contracts
+ 4/19 Test  #30: config_application_contracts .....   Passed    0.10 sec
+      Start  18: native_callback_contracts
+ 5/19 Test  #18: native_callback_contracts ........   Passed    0.10 sec
+      Start 172: dll_public_export_negatives
+ 6/19 Test #172: dll_public_export_negatives ......   Passed    0.15 sec
+      Start  10: vendor_io_contracts
+ 7/19 Test  #10: vendor_io_contracts ..............   Passed    0.17 sec
+      Start 166: hook_adapter_integration
+ 8/19 Test #166: hook_adapter_integration .........   Passed    0.13 sec
+      Start 173: hook_engine_fixtures
+ 9/19 Test   #1: application_runtime_contracts ....   Passed    2.46 sec
+      Start 168: dll_source_smoke
+10/19 Test #173: hook_engine_fixtures .............   Passed    0.17 sec
+      Start  12: vendor_pegtl_smoke
+11/19 Test  #12: vendor_pegtl_smoke ...............   Passed    0.17 sec
+      Start 159: status_contracts
+12/19 Test #168: dll_source_smoke .................   Passed    0.38 sec
+      Start 171: dll_public_export_contract
+13/19 Test #159: status_contracts .................   Passed    0.12 sec
+      Start  33: achievement_storage_contracts
+14/19 Test #171: dll_public_export_contract .......   Passed    0.09 sec
+      Start 158: license_file_integration
+15/19 Test  #33: achievement_storage_contracts ....   Passed    0.14 sec
+      Start  13: crt_runtime_smoke
+16/19 Test #158: license_file_integration .........   Passed    0.16 sec
+      Start 157: file_io_contracts
+17/19 Test  #13: crt_runtime_smoke ................   Passed    0.13 sec
+      Start   9: vendor_api_smoke
+18/19 Test #157: file_io_contracts ................   Passed    0.17 sec
+19/19 Test   #9: vendor_api_smoke .................   Passed    0.16 sec
+
+100% tests passed out of 19
+
+Total Test time (real) =   3.34 sec

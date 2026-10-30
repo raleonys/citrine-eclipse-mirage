@@ -1,0 +1,65 @@
+{
+  "schema": "surge.golden-target.v1",
+  "policy": "ARYRA Golden Layout",
+  "activation": "READY_LOCAL_TARGET",
+  "fixture_only": false,
+  "classification": "NOT_RELEASE",
+  "authority": "Latest owner correction: Infrastructure compiled DLL metadata was correct; check/adopt its full declared metadata profile, including Compilation Timestamp",
+  "native_acceptance": "REQUIRES_ACTUAL_MSVC_GOLDEN_RUN",
+  "implementation": "scripts/verify_aryra_golden_layout.py",
+  "infrastructure_policy_values_inherited": true,
+  "machine": "0x8664",
+  "pe_format_magic": "0x020B",
+  "section_count": 6,
+  "sections_in_order": [
+    ".text",
+    ".rdata",
+    ".data",
+    ".pdata",
+    ".rsrc",
+    ".reloc"
+  ],
+  "exact_rva_size_offset_parity": false,
+  "static_crt_fptable_profile": {
+    "profile": "HF12_MSVC_STATIC_UCRT_FPTABLE_EXACT",
+    "requires_shipping_runtime": "/MT (MultiThreaded)",
+    "section_count": 7,
+    "sections_in_order": [
+      ".text",
+      ".rdata",
+      ".data",
+      ".pdata",
+      ".fptable",
+      ".rsrc",
+      ".reloc"
+    ],
+    "fptable": {
+      "name": ".fptable",
+      "index": 4,
+      "virtual_size": "0x100",
+      "raw_size": "0x200",
+      "characteristics": "0xC0000040",
+      "require_zero_initialized_raw_bytes": true,
+      "require_nonexecutability": true,
+      "require_read_and_write": true
+    }
+  },
+  "notes": "Exact section RVA, virtual size, raw size, raw offset, image size and entrypoint parity is intentionally NOT enforced. Structural PE alignment, backing, non-overlap and ordering validity is fail-closed. HF12 /MT: an additional .fptable is allowed only in the exact seven-section MSVC static-UCRT profile; the .fptable size, permissions, placement, and zero-initialized raw bytes are enforced. The historical six-section profile remains otherwise unchanged.",
+  "pe_format_label": "PE32+",
+  "structural_validity": {
+    "file_alignment": "POWER_OF_TWO_0x200_TO_0x10000",
+    "section_alignment": "WINDOWS_PE_ALIGNMENT_RULES",
+    "section_virtual_address_alignment": true,
+    "section_raw_pointer_alignment": true,
+    "section_raw_size_alignment": true,
+    "raw_extent_within_file": true,
+    "virtual_extent_nonoverlap": true,
+    "raw_extent_nonoverlap": true,
+    "raw_data_order_follows_rva_order": true
+  },
+  "source_policy": {
+    "archive_sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",
+    "member": "metadata/ARYRA_GOLDEN_LAYOUT.json",
+    "member_sha256": "ed8a238401570703639df1890b38ce87a45bb4db4ffcb158095a7a6555814245"
+  }
+}

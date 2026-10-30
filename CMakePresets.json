@@ -1,0 +1,28 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "llvm-mingw-x64",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/llvm-mingw-x64",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/llvm-mingw-x64.cmake",
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_TESTING": "ON"
+      }
+    },
+    {
+      "name": "llvm-mingw-x64-vendors",
+      "inherits": "llvm-mingw-x64",
+      "binaryDir": "${sourceDir}/build/llvm-mingw-x64-vendors",
+      "cacheVariables": {
+        "PRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {"name": "dll", "configurePreset": "llvm-mingw-x64", "targets": ["preloader_l", "preloader_l_runtime_host", "preloader_l_source_host"]},
+    {"name": "tests", "configurePreset": "llvm-mingw-x64"},
+    {"name": "vendors", "configurePreset": "llvm-mingw-x64-vendors"}
+  ]
+}

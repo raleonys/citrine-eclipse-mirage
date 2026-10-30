@@ -1,0 +1,138 @@
+﻿module,status,source_files,mapped_yellowfield_files,reason
+anadius-achievement-runtime-source,SELECTED_APPLICATION,6,4,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-achievement-storage-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-achievement-writer-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-bootstrap-backend-source,EXPLICIT_SCOPE_EXCLUSION,7,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-bootstrap-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-bootstrap-owner-source,EXPLICIT_SCOPE_EXCLUSION,5,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-bootstrap-providers-source,EXPLICIT_SCOPE_EXCLUSION,7,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-bootstrap-runtime-source,EXPLICIT_SCOPE_EXCLUSION,7,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-calendar-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-config-application-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-config-hash-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-config-order-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-config-pipeline-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-config-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-config-startup-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-content-handlers-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-crt-argv-bridge-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-argv-parser-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-argv-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-atomic-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-byteclass-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-cache-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-conversion-api-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-conversion-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-conversion-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-counter-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-cpu-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-entry-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-environment-cleanup-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-environment-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-error-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-find-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-find-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-fls-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-glue-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-heap-native-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-heap-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-heap-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-initial-locale-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-initial-multibyte-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-initial-state-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-initializers-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-invalid-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-lcmap-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-lifecycle-callbacks-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-free-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-names-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-ref-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-resource-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-startup-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-thread-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-locale-update-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-lock-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-lock-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-lowio-lifecycle-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-module-path-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-multibyte-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-multibyte-builder-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-multibyte-control-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-multibyte-record-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-multibyte-support-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-multibyte-tables-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-nls-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-nls-dispatch-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-nls-dispatch-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-nls-dispatch-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-nls-native-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-nls-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-onexit-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-pair-bindings-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-pair-leaves-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-ptd-data-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-ptd-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-realloc-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-recalloc-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-recalloc-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-runtime-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-sort-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-startup-bridge-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-string-type-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-support-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-sync-bridge-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-termination-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-wildcard-search-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-wildcard-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crt-wildcard-storage-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-crypto-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-dispatch-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-encoding-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-event-queue-source,SELECTED_APPLICATION,6,4,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-execution-source,SELECTED_APPLICATION,5,4,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-file-source,SELECTED_APPLICATION,7,5,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-handlers-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-hash-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-host-callbacks-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-host-init-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-libraries-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-license-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-messages-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-misc-handlers-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-native-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-network-hook-source,SELECTED_APPLICATION,5,4,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-online-source,SELECTED_APPLICATION,5,4,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-parser-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-path-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-registry-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-server-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-session-source,SELECTED_APPLICATION,6,4,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-socket-source,SELECTED_APPLICATION,275,136,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-startup-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-status-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-thread-domain-source,EXPLICIT_SCOPE_EXCLUSION,9,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-thread-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-thread-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-timestamp-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-token-source,SELECTED_APPLICATION,4,3,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-type-recovery,ANALYSIS_EVIDENCE_NOT_APPLICATION_SOURCE,0,0,Analiz/kanıt envanteri; uygulama modülü olarak kopyalanmaz.
+anadius-vcrt-api-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-vcrt-bridge-source,EXPLICIT_SCOPE_EXCLUSION,4,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-vcrt-ptd-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+anadius-windows-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-xml-reader-source,SELECTED_APPLICATION,5,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+anadius-xml-source,SELECTED_APPLICATION,3,2,Seçili anadius uygulama modülü; üretime bağlı/native kabul oranı değildir.
+dll-integration-audit,ANALYSIS_EVIDENCE_NOT_APPLICATION_SOURCE,0,0,Analiz/kanıt envanteri; uygulama modülü olarak kopyalanmaz.
+hook-engine-source,SELECTED_HOOK_ENGINE,20,4,Seçili hook-engine; yabancı PreloaderEngine kapsamı alınmaz.
+host-compatibility,REFERENCE_WORKSPACE_NOT_PRODUCT,0,0,Çalışma alanı/host uyumluluk paketi; ayrı üretim modülü değildir.
+mac-symbol-comparison,ANALYSIS_EVIDENCE_NOT_APPLICATION_SOURCE,0,0,Analiz/kanıt envanteri; uygulama modülü olarak kopyalanmaz.
+preloader-analysis,ANALYSIS_EVIDENCE_NOT_APPLICATION_SOURCE,1,0,Analiz/kanıt envanteri; uygulama modülü olarak kopyalanmaz.
+preloader-native-source,EXPLICIT_SCOPE_EXCLUSION,3,0,SOURCE_LAYOUT.excluded_modules içinde açık kapsam dışı.
+preloader-source,HOOK11_ONLY_AUTHORIZED_EXCEPTION,3,0,Yalnız yetkili CryptQueryObject hook11 kanıtı; çevre preloader projesi kapsam dışı.
+reconstruction-inventory,ANALYSIS_EVIDENCE_NOT_APPLICATION_SOURCE,0,0,Analiz/kanıt envanteri; uygulama modülü olarak kopyalanmaz.
+source-workspace,REFERENCE_WORKSPACE_NOT_PRODUCT,0,0,Çalışma alanı/host uyumluluk paketi; ayrı üretim modülü değildir.
+version-build-verification,ANALYSIS_EVIDENCE_NOT_APPLICATION_SOURCE,0,0,Analiz/kanıt envanteri; uygulama modülü olarak kopyalanmaz.
+version-rebuild,FOREIGN_VERSION_REBUILD_NOT_PRODUCT,1,0,Farklı version wrapper/embedded machine-code rebuild; seçili uygulama kaynağı değildir.

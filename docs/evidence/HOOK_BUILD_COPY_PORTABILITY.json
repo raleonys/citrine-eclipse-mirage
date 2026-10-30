@@ -1,0 +1,193 @@
+{
+  "schema": "surge.hook-build-copy-portability.v1",
+  "classification": "NOT_RELEASE",
+  "status": "FIXED_REPRODUCED_AND_CHECKED",
+  "scope": "Generated hook.c serialization and hash-mismatch diagnostics; unchanged runtime and original vendor bytes",
+  "cause": "Windows CMake file(WRITE) emits CRLF while the existing output hash pins LF bytes",
+  "before": {
+    "windows_cmake_version": "4.1.0",
+    "environment": "Windows x64 CMake under Wine",
+    "bytes": 35401,
+    "crlf_count": 1163,
+    "sha256": "fb9754e18d452657048c4e667f8a2c6ce4a76d35733aa02b64a4859a38a9775f",
+    "verification": "FAIL_REPRODUCED"
+  },
+  "after": {
+    "bytes": 34238,
+    "crlf_count": 0,
+    "sha256": "4d0fc88c91deed5eb97344e4daa9bd69d2fdca15d2fabefd911e08e27ef9fea3",
+    "WindowsPython": "CPython3.13.0 x64 under Wine",
+    "WindowsCMake": "4.1.0 x64 under Wine",
+    "prepare": "PASS",
+    "read_only_verify": "PASS",
+    "repeat_prepare": "PASS"
+  },
+  "canonicalization_rule": "Only the freshly generated build-copy hook.c is rewritten, and only when CRLF-to-LF bytes exactly match the existing pinned output hash; unknown content remains unchanged and is rejected by full verification",
+  "verify_still_strict": true,
+  "member_count_verified": 61,
+  "patch_script_and_input_and_output_pins_changed": false,
+  "original_vendor_files_changed": 0,
+  "runtime_and_reference_cpp_or_header_changes": 0,
+  "vendor_regressions": {
+    "passed": 19,
+    "failed": 0,
+    "skipped": 0
+  },
+  "regressions": [
+    "Windows-style CMake output becomes exact LF bytes",
+    "read-only verification rejects CRLF alternatives",
+    "unknown/modified data is never rewritten into acceptance",
+    "bad generation preserves a previous verified output",
+    "mismatch reports include file paths and expected/actual hashes",
+    "unchanged repeat preparation preserves timestamps"
+  ],
+  "build_checks": {
+    "release": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "ed120a6c32ea77bbc34fe898d1ba620e6c22ea5bf773d57ea7359d947b0646f5",
+      "map_sha256": "7343d7b0d8a940a85ccbf213b8f3220d4557cc38f48d182afc24bde2549a414b"
+    },
+    "debug": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "9c18bb7ab42a09948cadae26857098fb64768d350c57cb81cac4ef54ec873c59",
+      "map_sha256": "a5a29c7ca216f0cb2b97b5079f1a52bef70c4d90110d8de2191998610c949f54"
+    },
+    "production_only": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "d243191f608d515c8cb3e22f08514f3c4fda5a23dfdd16986ef8a1d9b8bb2a79",
+      "map_sha256": "7343d7b0d8a940a85ccbf213b8f3220d4557cc38f48d182afc24bde2549a414b"
+    }
+  },
+  "focused_tests": {
+    "release": {
+      "passed": 9,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "seconds": 5.29607,
+          "result": "PASS"
+        },
+        {
+          "name": "production_callback_contracts",
+          "seconds": 0.280189,
+          "result": "PASS"
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "seconds": 0.217634,
+          "result": "PASS"
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "seconds": 0.376182,
+          "result": "PASS"
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "seconds": 0.736658,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "seconds": 0.646873,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "seconds": 0.531986,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_export_contract",
+          "seconds": 0.0909165,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "seconds": 0.229111,
+          "result": "PASS"
+        }
+      ]
+    },
+    "debug": {
+      "passed": 9,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "seconds": 2.07456,
+          "result": "PASS"
+        },
+        {
+          "name": "production_callback_contracts",
+          "seconds": 0.367403,
+          "result": "PASS"
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "seconds": 0.255309,
+          "result": "PASS"
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "seconds": 0.137491,
+          "result": "PASS"
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "seconds": 0.741185,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "seconds": 0.713306,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "seconds": 0.897571,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_export_contract",
+          "seconds": 0.218512,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "seconds": 2.27161,
+          "result": "PASS"
+        }
+      ]
+    }
+  },
+  "source_qa_command": "python -B scripts/run_source_qa.py",
+  "prior_full_runtime_audit": "docs/evidence/BUILD_PARTITION.json",
+  "native_msvc_golden": "NOT_RUN_AFTER_FIX",
+  "game_retest": "NOT_RUN",
+  "dist_promotion": "NOT_ATTEMPTED",
+  "library_sync": "NOT_REQUESTED",
+  "unchanged_runtime_vendor_pins_and_prior_evidence_files": 3439,
+  "implementation_sha256": {
+    "scripts/prepare_hook_engine.py": "d96edc11e5efefb3ca27cc24a81b212f9fd3e8b123f3a61f681d3d3d90926eb4",
+    "cmake/VendoredDependencies.cmake": "27d4fa21dcd755189ab2a78aceec21a560cd1554cc7691416e2ebb67a7b431d1",
+    "cmake/PatchHookFreeze.cmake": "5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d",
+    "metadata/HOOK_ENGINE_PATCH.json": "47cb8ea86dab263eb0f2070a34dd5d8b5099f6b1a7295370e31ab05b65bb799f"
+  }
+}

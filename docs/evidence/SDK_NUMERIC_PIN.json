@@ -1,0 +1,95 @@
+{
+  "schema": "surge.sdk-numeric-pin-evidence.v1",
+  "classification": "NOT_RELEASE",
+  "status": "IMPLEMENTED_AND_CROSS_TESTED",
+  "scope": "OWNER_REQUESTED_SDK_FORMAT_CORRECTION_ONLY",
+  "numeric_version": "10.6.2.31",
+  "wire_value": "10,6,2,31",
+  "configuration_override": "STILL_DISABLED",
+  "full_string_pin_report": "docs/evidence/SDK_PIN.json",
+  "runtime_validation": {
+    "release": {
+      "environment": "LLVM-MinGW 20251118 / Clang21.1.6 UCRT x64; Wine",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "dll_sha256": "3e52a529dfbc34d91b17da68a57044b77260be3abe44910b639c191fd11be846",
+      "build_label_absent_from_binary": true,
+      "tests": [
+        "application_runtime_contracts",
+        "configuration_contracts",
+        "config_application_contracts",
+        "session_handler_contracts",
+        "messages_contracts",
+        "dll_source_smoke",
+        "dll_public_lifecycle",
+        "dll_public_c_consumer",
+        "dll_public_export_contract"
+      ]
+    },
+    "debug": {
+      "environment": "LLVM-MinGW 20251118 / Clang21.1.6 UCRT x64; Wine",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "dll_sha256": "8a4459cb0b7a7cab5ccd0f6a7dfe19311c8816d88a825f15e89adfb45556ead4",
+      "build_label_absent_from_binary": true,
+      "tests": [
+        "application_runtime_contracts",
+        "configuration_contracts",
+        "config_application_contracts",
+        "session_handler_contracts",
+        "messages_contracts",
+        "dll_source_smoke",
+        "dll_public_lifecycle",
+        "dll_public_c_consumer",
+        "dll_public_export_contract"
+      ]
+    }
+  },
+  "testing_disabled": {
+    "application_dll_build": "PASS",
+    "actual_runtime_cycles": 3,
+    "runtime_result": "PASS_WINE",
+    "exact_three_exports": "PASS",
+    "dll_sha256": "e67301dcdbe39a0b6a935137eb6a6de4e86bd5e75efaa6a2895a142ca7314f71"
+  },
+  "preserved_source_sha256": {
+    "src/config/application.cpp": "44ab68cd068bea9d8013743be5802a7949e5dc751751447f7158fe09581a0b5e",
+    "src/config/configuration.cpp": "3393632b8d9c91b6153e5ef04c1d1253411ae2f335bf2b4ffb4dc603a251a3e4",
+    "src/runtime/application.cpp": "b2884d63520f5c7c5a666bfe55c322cc44b2821f2eadfd58b079b1f554b07367",
+    "src/runtime/application_defaults.cpp": "21c863442851915abae7eb1bef9e1f4659ca399dea97fec38a21753ef8e1714b",
+    "src/protocol/messages.cpp": "abe143ecf59be3111cc5d784d023285e0df209ad12799bf221bdcf3267060676",
+    "src/net/session_handler.cpp": "a58e3b8b336e36d0275a411940d3db4ed8ea145b34f4846e8663ffbd124c9376",
+    "src/platform/hook_connect.cpp": "f58bf72265f6c4f73aa0b6133821d7215d880a42ab907635ec03d98c143836cb",
+    "src/platform/hook_unload_guard.cpp": "870df4a9bd27371470bd67b45ba27fadd6492ad3a097408f795bc4ede0b7a2f5",
+    "src/net/asio_service.cpp": "020550ed26eb95c473c37066eb8dfe97324f58b40c30eed961fca266e8a15f50",
+    "cmake/PatchHookFreeze.cmake": "5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d",
+    "exports/preloader_l.def": "e170b6354a1fa32b2026e2a6ff45563d69af99ad22d83ae8153ce8b178ebf0e8",
+    "resources/preloader_version.rc": "454af99b76a4e1fc287c8af0f324c485744015e589736d1c267582651a5de693"
+  },
+  "source_changes": {
+    "changed": [
+      "AGENTS.md",
+      "CHANGELOG.md",
+      "RELEASE_STATE.json",
+      "docs/SDK_IDENTITY.md",
+      "include/preloader_l/core/protocol_identity.hpp",
+      "metadata/INTEGRATION_REQUIREMENTS.json",
+      "metadata/RUNTIME_CURRENT_STATUS.json",
+      "metadata/SDK_IDENTITY_POLICY.json",
+      "metadata/SOURCE_FILES.json",
+      "tests/native/application_runtime_tests.cpp"
+    ],
+    "added": [
+      "docs/evidence/SDK_NUMERIC_PIN.json"
+    ],
+    "removed": [],
+    "vendor_changes": 0
+  },
+  "source_qa": "15/15 PASS before packaging; fresh extracted source verified separately",
+  "native_msvc_golden": "NOT_RUN",
+  "actual_consumer_game_acceptance": "NOT_RUN",
+  "dist_promoted": false,
+  "library_publication": false
+}

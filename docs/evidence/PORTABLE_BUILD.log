@@ -1,0 +1,220 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: /workspace/yellowfield/build/portable
+[1/25] Building CXX object CMakeFiles/portable_calendar.dir/src/runtime/time/calendar.cpp.o
+[2/25] Building CXX object CMakeFiles/portable_calendar.dir/tests/unit/calendar/calendar_tests.cpp.o
+[3/25] Building CXX object CMakeFiles/portable_config.dir/src/config/configuration.cpp.o
+[4/25] Linking CXX static library libportable_config.a
+[5/25] Building CXX object CMakeFiles/portable_parser.dir/src/config/parser.cpp.o
+[6/25] Building CXX object CMakeFiles/portable_parser.dir/tests/unit/parser/parser_tests.cpp.o
+[7/25] Building CXX object CMakeFiles/portable_hash.dir/src/hash/hash.cpp.o
+[8/25] Building CXX object CMakeFiles/portable_hash.dir/tests/unit/hash/hash_tests.cpp.o
+[9/25] Building CXX object CMakeFiles/portable_config_order.dir/src/config/parser.cpp.o
+[10/25] Building CXX object CMakeFiles/portable_config_order.dir/src/config/order.cpp.o
+[11/25] Building CXX object CMakeFiles/portable_config_order.dir/tests/unit/config_order/order_tests.cpp.o
+FAILED: [code=1] CMakeFiles/portable_config_order.dir/tests/unit/config_order/order_tests.cpp.o 
+/usr/bin/c++  -I/workspace/yellowfield/include -I/workspace/yellowfield -O3 -DNDEBUG -std=c++20 -MD -MT CMakeFiles/portable_config_order.dir/tests/unit/config_order/order_tests.cpp.o -MF CMakeFiles/portable_config_order.dir/tests/unit/config_order/order_tests.cpp.o.d -o CMakeFiles/portable_config_order.dir/tests/unit/config_order/order_tests.cpp.o -c /workspace/yellowfield/tests/unit/config_order/order_tests.cpp
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:6:17: error: ‘anadius’ is not a namespace-name
+    6 | using namespace anadius;
+      |                 ^~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:16:1: error: ‘parser’ does not name a type
+   16 | parser::Node keys(const std::vector<std::string>& names) {
+      | ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In function ‘void {anonymous}::fixed_cases()’:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:22:13: error: ‘config_order’ has not been declared
+   22 |     require(config_order::fnv1a64("")==0xcbf29ce484222325ULL,"FNV empty seed");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:23:13: error: ‘config_order’ has not been declared
+   23 |     require(config_order::fnv1a64("a")==0xaf63dc4c8601ec8cULL,"FNV a");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:24:13: error: ‘config_order’ has not been declared
+   24 |     require(config_order::fnv1a64("foobar")==0x85944171f73967e8ULL,"FNV foobar");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:26:13: error: ‘config_order’ has not been declared
+   26 |     require(config_order::fnv1a64(binary)!=config_order::fnv1a64("a"),"FNV embedded NUL uses string length");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:26:44: error: ‘config_order’ has not been declared
+   26 |     require(config_order::fnv1a64(binary)!=config_order::fnv1a64("a"),"FNV embedded NUL uses string length");
+      |                                            ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:28:13: error: ‘config_order’ has not been declared
+   28 |     require(config_order::fnv1a64(high)==((0xcbf29ce484222325ULL^255ULL)*0x100000001b3ULL),"FNV bytes unsigned");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:29:21: error: ‘keys’ was not declared in this scope
+   29 |     const auto node=keys({"a","b","i","c","q","j","k","z"});
+      |                     ^~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:32:13: error: ‘config_order’ has not been declared
+   32 |     require(config_order::parsed_order(node)==parsed,"fresh bucket collision groups reverse insertion");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:33:13: error: ‘config_order’ has not been declared
+   33 |     require(config_order::copy_order(parsed)==copied,"copy rehash reverses collision groups again");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:34:13: error: ‘config_order’ has not been declared
+   34 |     require(config_order::SelectedCopyOrder().order_for(node,{})==copied,"selected root first copy");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:35:13: error: ‘config_order’ has not been declared
+   35 |     require(config_order::SelectedCopyOrder().order_for(node,{"nested","child"})==copied,"descendant one copy");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:36:13: error: ‘config_order’ has not been declared
+   36 |     require(config_order::parsed_order(keys({})).empty(),"empty parser container");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:37:13: error: ‘config_order’ has not been declared
+   37 |     require(config_order::copy_order({}).empty(),"empty copied container");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:38:12: error: ‘config_order’ was not declared in this scope; did you mean ‘preloader_l::config_order’?
+   38 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::parsed_order(keys({"0","1","2","3","4","5","6","7","8"}));},"ninth unique requires unsupported growth");
+      |            ^~~~~~~~~~~~
+      |            preloader_l::config_order
+In file included from /workspace/yellowfield/tests/unit/config_order/order_tests.cpp:1:
+/workspace/yellowfield/include/preloader_l/config/order.hpp:9:24: note: ‘preloader_l::config_order’ declared here
+    9 | namespace preloader_l::config_order {
+      |                        ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:38:5: error: parse error in template argument list
+   38 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::parsed_order(keys({"0","1","2","3","4","5","6","7","8"}));},"ninth unique requires unsupported growth");
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In lambda function:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:38:53: error: ‘config_order’ is not a class, namespace, or enumeration
+   38 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::parsed_order(keys({"0","1","2","3","4","5","6","7","8"}));},"ninth unique requires unsupported growth");
+      |                                                     ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:38:80: error: ‘keys’ is not captured
+   38 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::parsed_order(keys({"0","1","2","3","4","5","6","7","8"}));},"ninth unique requires unsupported growth");
+      |                                                                                ^~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:38:45: note: the lambda has no capture-default
+   38 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::parsed_order(keys({"0","1","2","3","4","5","6","7","8"}));},"ninth unique requires unsupported growth");
+      |                                             ^
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:29:21: note: ‘<typeprefixerror>keys’ declared here
+   29 |     const auto node=keys({"a","b","i","c","q","j","k","z"});
+      |                     ^~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In function ‘void {anonymous}::fixed_cases()’:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:38:43: error: no matching function for call to ‘throws<<expression error> >({anonymous}::fixed_cases()::<lambda()>, const char [41])’
+   38 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::parsed_order(keys({"0","1","2","3","4","5","6","7","8"}));},"ninth unique requires unsupported growth");
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:12:32: note: candidate: ‘template<class E, class F> void {anonymous}::throws(F, const char*)’
+   12 | template<class E,class F> void throws(F f,const char* label) {
+      |                                ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:12:32: note:   template argument deduction/substitution failed:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:38:43: error: template argument 1 is invalid
+   38 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::parsed_order(keys({"0","1","2","3","4","5","6","7","8"}));},"ninth unique requires unsupported growth");
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:39:5: error: parse error in template argument list
+   39 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::copy_order({"0","1","2","3","4","5","6","7","8"});},"copy above bound rejected");
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In lambda function:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:39:53: error: ‘config_order’ is not a class, namespace, or enumeration
+   39 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::copy_order({"0","1","2","3","4","5","6","7","8"});},"copy above bound rejected");
+      |                                                     ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In function ‘void {anonymous}::fixed_cases()’:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:39:43: error: no matching function for call to ‘throws<config_order>({anonymous}::fixed_cases()::<lambda()>, const char [26])’
+   39 |     throws<config_order::UnsupportedOrder>([]{(void)config_order::copy_order({"0","1","2","3","4","5","6","7","8"});},"copy above bound rejected");
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:12:32: note: candidate: ‘template<class E, class F> void {anonymous}::throws(F, const char*)’
+   12 | template<class E,class F> void throws(F f,const char* label) {
+      |                                ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:12:32: note:   template argument deduction/substitution failed:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In lambda function:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:40:44: error: ‘config_order’ is not a class, namespace, or enumeration
+   40 |     throws<std::invalid_argument>([]{(void)config_order::parsed_order(keys({"same","same"}));},"duplicate logical slots rejected");
+      |                                            ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:40:71: error: ‘keys’ is not captured
+   40 |     throws<std::invalid_argument>([]{(void)config_order::parsed_order(keys({"same","same"}));},"duplicate logical slots rejected");
+      |                                                                       ^~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:40:36: note: the lambda has no capture-default
+   40 |     throws<std::invalid_argument>([]{(void)config_order::parsed_order(keys({"same","same"}));},"duplicate logical slots rejected");
+      |                                    ^
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:29:21: note: ‘<typeprefixerror>keys’ declared here
+   29 |     const auto node=keys({"a","b","i","c","q","j","k","z"});
+      |                     ^~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In lambda function:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:41:44: error: ‘config_order’ is not a class, namespace, or enumeration
+   41 |     throws<std::invalid_argument>([]{(void)config_order::copy_order({"same","same"});},"duplicate native list input rejected");
+      |                                            ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In function ‘void {anonymous}::permutations()’:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:51:56: error: ‘config_order’ has not been declared
+   51 |             const auto bucket=static_cast<std::size_t>(config_order::fnv1a64(key)&7);
+      |                                                        ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:61:27: error: ‘config_order’ has not been declared
+   61 |         const auto actual=config_order::parsed_order(keys(names));
+      |                           ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:61:54: error: ‘keys’ was not declared in this scope
+   61 |         const auto actual=config_order::parsed_order(keys(names));
+      |                                                      ^~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:63:17: error: ‘config_order’ has not been declared
+   63 |         require(config_order::copy_order(actual)==copied,"permuted copy collision groups");
+      |                 ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:64:17: error: ‘config_order’ has not been declared
+   64 |         require(config_order::copy_order(copied)==parsed,"second fresh copy collision reversal");
+      |                 ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In function ‘void {anonymous}::parser_copy()’:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:68:5: error: ‘parser’ has not been declared
+   68 |     parser::State state;
+      |     ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:69:13: error: ‘parser’ has not been declared
+   69 |     require(parser::parse(R"("Config2" { "a" "first" "b" "middle" "i" "other" "a" { "q" "new" "a" "next" } })",state),"real parser synthetic bytes");
+      |             ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:69:112: error: ‘state’ was not declared in this scope; did you mean ‘static’?
+   69 |     require(parser::parse(R"("Config2" { "a" "first" "b" "middle" "i" "other" "a" { "q" "new" "a" "next" } })",state),"real parser synthetic bytes");
+      |                                                                                                                ^~~~~
+      |                                                                                                                static
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:73:13: error: ‘config_order’ has not been declared
+   73 |     require(config_order::parsed_order(*config)==std::vector<std::string>{"i","a","b"},"duplicate keeps original parent slot");
+      |             ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:74:5: error: ‘config_order’ has not been declared
+   74 |     config_order::SelectedCopyOrder order;
+      |     ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:75:25: error: ‘parser’ has not been declared
+   75 |     const auto document=parser::to_configuration_node(*config,order);
+      |                         ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:75:63: error: ‘order’ was not declared in this scope
+   75 |     const auto document=parser::to_configuration_node(*config,order);
+      |                                                               ^~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:81:5: error: ‘parser’ has not been declared
+   81 |     parser::State too_large;
+      |     ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:82:13: error: ‘parser’ has not been declared
+   82 |     require(parser::parse(R"("Config2" { "small" { "0" "x" "1" "x" "2" "x" "3" "x" "4" "x" "5" "x" "6" "x" "7" "x" "8" "x" } })",too_large),"large grammar still valid");
+      |             ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:82:130: error: ‘too_large’ was not declared in this scope
+   82 |     require(parser::parse(R"("Config2" { "small" { "0" "x" "1" "x" "2" "x" "3" "x" "4" "x" "5" "x" "6" "x" "7" "x" "8" "x" } })",too_large),"large grammar still valid");
+      |                                                                                                                                  ^~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:83:12: error: ‘config_order’ was not declared in this scope; did you mean ‘preloader_l::config_order’?
+   83 |     throws<config_order::UnsupportedOrder>([&]{(void)parser::to_configuration_node(*too_large.root.find("Config2"),order);},"descendant above order bound rejected");
+      |            ^~~~~~~~~~~~
+      |            preloader_l::config_order
+/workspace/yellowfield/include/preloader_l/config/order.hpp:9:24: note: ‘preloader_l::config_order’ declared here
+    9 | namespace preloader_l::config_order {
+      |                        ^~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:83:5: error: parse error in template argument list
+   83 |     throws<config_order::UnsupportedOrder>([&]{(void)parser::to_configuration_node(*too_large.root.find("Config2"),order);},"descendant above order bound rejected");
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In lambda function:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:83:54: error: ‘parser’ has not been declared
+   83 |     throws<config_order::UnsupportedOrder>([&]{(void)parser::to_configuration_node(*too_large.root.find("Config2"),order);},"descendant above order bound rejected");
+      |                                                      ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp: In function ‘void {anonymous}::parser_copy()’:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:83:43: error: no matching function for call to ‘throws<<expression error> >({anonymous}::parser_copy()::<lambda()>, const char [38])’
+   83 |     throws<config_order::UnsupportedOrder>([&]{(void)parser::to_configuration_node(*too_large.root.find("Config2"),order);},"descendant above order bound rejected");
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:12:32: note: candidate: ‘template<class E, class F> void {anonymous}::throws(F, const char*)’
+   12 | template<class E,class F> void throws(F f,const char* label) {
+      |                                ^~~~~~
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:12:32: note:   template argument deduction/substitution failed:
+/workspace/yellowfield/tests/unit/config_order/order_tests.cpp:83:43: error: template argument 1 is invalid
+   83 |     throws<config_order::UnsupportedOrder>([&]{(void)parser::to_configuration_node(*too_large.root.find("Config2"),order);},"descendant above order bound rejected");
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[12/25] Building CXX object CMakeFiles/portable_config_hash.dir/src/config/parser.cpp.o
+ninja: build stopped: subcommand failed.
+
+REBUILD: namespace declarations in retained source tests.
+[1/13] Building CXX object CMakeFiles/portable_config_hash.dir/src/config/order.cpp.o
+[2/13] Building CXX object CMakeFiles/portable_config_hash.dir/src/config/hash_table.cpp.o
+[3/13] Building CXX object CMakeFiles/portable_config_order.dir/tests/unit/config_order/order_tests.cpp.o
+[4/13] Building CXX object CMakeFiles/portable_host_hooks.dir/src/platform/hooks/setup.cpp.o
+[5/13] Building CXX object CMakeFiles/portable_host_hooks.dir/src/core/paths.cpp.o
+[6/13] Building CXX object CMakeFiles/portable_config_hash.dir/tests/unit/config_hash/hash_table_tests.cpp.o
+[7/13] Linking CXX executable portable_calendar
+[8/13] Linking CXX executable portable_parser
+[9/13] Linking CXX executable portable_hash
+[10/13] Linking CXX executable portable_config_order
+[11/13] Linking CXX executable portable_config_hash
+[12/13] Building CXX object CMakeFiles/portable_host_hooks.dir/tests/unit/host_init/host_init_tests.cpp.o
+[13/13] Linking CXX executable portable_host_hooks

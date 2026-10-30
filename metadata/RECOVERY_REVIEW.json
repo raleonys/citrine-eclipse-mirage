@@ -1,0 +1,51 @@
+{
+  "schema": "surge.recovery-review.v1",
+  "classification": "NOT_RELEASE",
+  "owner": "Explicit owner authorization for proven bug fixes, tests and comprehensive comparative closure audit",
+  "documentation": "docs/DONOR_RECOVERY.md",
+  "validation": "docs/evidence/recovery/VALIDATION.json",
+  "parent_source_zip_sha256": "1f2a6581a08dbafa940031353c8723e1947e00f0a4681f3bceb1d9f65e3d509e",
+  "parent_identity": "Exact previously delivered source ZIP; no accepted binary bundle or augmented working snapshot substituted",
+  "changes": [
+    {
+      "id": "ACCEPT_INITIATION",
+      "source": "src/net/asio_service.cpp",
+      "contract": "Failed async_accept initiation restores pending state before propagating the exception"
+    },
+    {
+      "id": "ALLOCATION_INDEPENDENT_TRANSPORT_STOP",
+      "source": "src/net/asio_service.cpp",
+      "contract": "Cleanup dispatch failure stops admission without a new queued allocation; one IO runner retires sockets before handler join; post-join cancellation drain is retryable",
+      "io_stop_observation_quantum_ms": 100
+    },
+    {
+      "id": "MODULE_LEASE_RETENTION",
+      "source": "src/runtime/application.cpp",
+      "contract": "Reserve ownership before native load; retain failed FreeLibrary leases; never free successful slots twice"
+    }
+  ],
+  "tests": [
+    "net_failure_contracts",
+    "extra_library_failure_contracts"
+  ],
+  "existing_oracle_correction": "network_policy_contracts waits for asynchronous exception reporting independently of socket closure",
+  "comparison_closure": "BLOCKED_NOT_RETIRED",
+  "reviewed_donor_file_entries": 67,
+  "whole_file_semantic_closures": 0,
+  "remaining_donor_file_entries_without_manual_review": 1738,
+  "open_topics": [
+    "Socket/listener close failure semantics and callback retirement",
+    "Timer initiation/cancel failure and cached deadline state",
+    "Hook quiesce liveness and retry ownership",
+    "Registry handle provenance under original close/reuse",
+    "Aggregate response/event/config memory budgets",
+    "Process console/environment ownership and startup failure stages",
+    "Remaining comparative source/test/tool review and actual native IOCP evidence"
+  ],
+  "native_msvc_golden": "PENDING_CHANGED_SOURCE_REEXECUTION",
+  "game_acceptance": "PENDING_CHANGED_SOURCE_REEXECUTION",
+  "prior_accepted_binary_is_current": false,
+  "production_exports_unchanged": true,
+  "immutable_vendors_unchanged": true,
+  "publication": false
+}

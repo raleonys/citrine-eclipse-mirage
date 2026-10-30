@@ -1,0 +1,365 @@
+============================================================
+ SURGE - DEBUG BUILD
+ Build the Debug DLL and run startup and shutdown checks
+============================================================
+
+Running: build_debug.ps1
+
+SURGE: DEBUG BUILD / Debug
+[1/3] Configure
+-- The C compiler identification is MSVC 19.51.36260.0
+-- The CXX compiler identification is MSVC 19.51.36260.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: C:/Users/Skysect/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
+-- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS
+-- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS - Success
+-- Configuring done (27.5s)
+-- Generating done (0.3s)
+-- Build files have been written to: C:/Users/Skysect/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/debug_msvc
+[2/3] Compile and link
+[  1%] Verify the four active owner-supplied vendor trees
+asio: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+[  1%] Built target preloader_l_verify_vendors
+[  2%] Building CXX object CMakeFiles/preloader_l_tinyxml2.dir/third_party/tinyxml2/tinyxml2.cpp.obj
+tinyxml2.cpp
+[  3%] Linking CXX static library preloader_l_tinyxml2.lib
+[  3%] Built target preloader_l_tinyxml2
+[  5%] Verify the pinned hook engine build copy
+HOOK_ENGINE_BUILD_COPY=PASS
+[  5%] Built target preloader_l_verify_hook_engine
+[  6%] Building C object CMakeFiles/preloader_l_minhook.dir/vendor_build/minhook/src/hook.c.obj
+hook.c
+[  7%] Building C object CMakeFiles/preloader_l_minhook.dir/vendor_build/minhook/src/buffer.c.obj
+buffer.c
+[  8%] Building C object CMakeFiles/preloader_l_minhook.dir/vendor_build/minhook/src/trampoline.c.obj
+trampoline.c
+[ 10%] Building C object CMakeFiles/preloader_l_minhook.dir/vendor_build/minhook/src/hde/hde64.c.obj
+hde64.c
+[ 11%] Linking C static library preloader_l_minhook.lib
+[ 11%] Built target preloader_l_minhook
+[ 12%] Building CXX object CMakeFiles/preloader_l_vdf_objects.dir/src/config/parser.cpp.obj
+parser.cpp
+[ 12%] Built target preloader_l_vdf_objects
+[ 13%] Generating generated/avatar_data.hpp
+[ 15%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/atomic_files.cpp.obj
+atomic_files.cpp
+[ 16%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/atomic_files_windows.cpp.obj
+atomic_files_windows.cpp
+[ 17%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_transaction.cpp.obj
+hook_transaction.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/file_copy.cpp.obj
+file_copy.cpp
+[ 20%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/file_copy_windows.cpp.obj
+file_copy_windows.cpp
+[ 21%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/codec/crypto.cpp.obj
+crypto.cpp
+[ 22%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/codec/encoding.cpp.obj
+encoding.cpp
+[ 23%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/application.cpp.obj
+application.cpp
+[ 25%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/configuration.cpp.obj
+configuration.cpp
+[ 26%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/hash_table.cpp.obj
+hash_table.cpp
+[ 27%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/order.cpp.obj
+order.cpp
+[ 28%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/startup.cpp.obj
+startup.cpp
+[ 30%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/binary_io.cpp.obj
+binary_io.cpp
+[ 31%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/license_files.cpp.obj
+license_files.cpp
+[ 32%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/license.cpp.obj
+license.cpp
+[ 33%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/paths.cpp.obj
+paths.cpp
+[ 35%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/token.cpp.obj
+token.cpp
+[ 36%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/content_handlers.cpp.obj
+content_handlers.cpp
+[ 37%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/handlers.cpp.obj
+handlers.cpp
+[ 38%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/misc_handlers.cpp.obj
+misc_handlers.cpp
+[ 40%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/hash/hash.cpp.obj
+hash.cpp
+[ 41%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/server.cpp.obj
+server.cpp
+[ 42%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/asio_service.cpp.obj
+asio_service.cpp
+[ 43%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/session_handler.cpp.obj
+session_handler.cpp
+[ 45%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/session_routing.cpp.obj
+session_routing.cpp
+[ 46%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/crypt_query.cpp.obj
+crypt_query.cpp
+[ 47%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/encoding_windows.cpp.obj
+encoding_windows.cpp
+[ 48%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/execution_windows.cpp.obj
+execution_windows.cpp
+[ 50%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/file_io_windows.cpp.obj
+file_io_windows.cpp
+[ 51%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_engine_api.cpp.obj
+hook_engine_api.cpp
+[ 52%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_connect.cpp.obj
+hook_connect.cpp
+[ 53%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_host_callbacks.cpp.obj
+hook_host_callbacks.cpp
+[ 55%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_native_callbacks.cpp.obj
+hook_native_callbacks.cpp
+[ 56%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_original_effects.cpp.obj
+hook_original_effects.cpp
+[ 57%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_setup.cpp.obj
+hook_setup.cpp
+[ 58%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_unload_guard.cpp.obj
+hook_unload_guard.cpp
+[ 60%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/library_system.cpp.obj
+library_system.cpp
+[ 61%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/registry.cpp.obj
+registry.cpp
+[ 62%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/startup_windows.cpp.obj
+startup_windows.cpp
+[ 63%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/status_windows.cpp.obj
+status_windows.cpp
+[ 65%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/windows_effects.cpp.obj
+windows_effects.cpp
+[ 66%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/protocol/messages.cpp.obj
+messages.cpp
+[ 67%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/router/router.cpp.obj
+router.cpp
+[ 68%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_runtime.cpp.obj
+achievement_runtime.cpp
+[ 70%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_storage.cpp.obj
+achievement_storage.cpp
+[ 71%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_utc.cpp.obj
+achievement_utc.cpp
+[ 72%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_writer.cpp.obj
+achievement_writer.cpp
+[ 73%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application.cpp.obj
+application.cpp
+[ 75%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application_defaults.cpp.obj
+application_defaults.cpp
+[ 76%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application_environment.cpp.obj
+application_environment.cpp
+[ 77%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/event_adapters.cpp.obj
+event_adapters.cpp
+[ 78%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/event_queue.cpp.obj
+event_queue.cpp
+[ 80%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/execution.cpp.obj
+execution.cpp
+[ 81%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/libraries.cpp.obj
+libraries.cpp
+[ 82%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/online.cpp.obj
+online.cpp
+[ 83%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/startup.cpp.obj
+startup.cpp
+[ 85%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/status.cpp.obj
+status.cpp
+[ 86%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/calendar.cpp.obj
+calendar.cpp
+[ 87%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/timestamp.cpp.obj
+timestamp.cpp
+[ 88%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/memory_printer.cpp.obj
+memory_printer.cpp
+[ 90%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/reader.cpp.obj
+reader.cpp
+[ 91%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/crypt_query_host.cpp.obj
+crypt_query_host.cpp
+[ 91%] Built target preloader_l_objects
+[ 92%] Linking CXX static library preloader_l_core.lib
+[ 92%] Built target preloader_l_core
+[ 93%] Building CXX object CMakeFiles/preloader_l.dir/src/platform/dll_entry.cpp.obj
+dll_entry.cpp
+[ 95%] Building RC object CMakeFiles/preloader_l.dir/resources/surge.rc.res
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+[ 96%] Linking CXX shared library preloader.unsigned.dll
+Verify production target closure and linked object boundary
+BUILD_PARTITION: PASS_PRODUCTION_BOUNDARY
+[ 96%] Built target preloader_l
+[ 97%] Building CXX object CMakeFiles/preloader_l_runtime_host.dir/tools/preloader_l_runtime_host/main.cpp.obj
+main.cpp
+[ 98%] Linking CXX executable preloader_l_runtime_host.exe
+[ 98%] Built target preloader_l_runtime_host
+[100%] Recheck production boundary on incremental builds
+BUILD_PARTITION: PASS_PRODUCTION_BOUNDARY
+[100%] Built target preloader_l_verify_partition
+[3/3] Validate selected profile
+{
+  "schema": "surge.public-abi-check.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "dll_sha256": "ec63df6c2c9b347e8983de07a98644986b932348191ed1e522a75f958e43c89b",
+  "export_count": 3,
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0xbb4a",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0xe7dc",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0xc7bb",
+      "forwarded": false
+    }
+  },
+  "errors": [],
+  "native_consumer_acceptance": "NOT_RUN"
+}
+{
+  "classification": "NOT_RELEASE",
+  "execution_level": "READ_ONLY_BINARY_INSPECTION",
+  "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+  "header_metadata": {
+    "timestamp": "0x6AE39D8C",
+    "linker_version": [
+      14,
+      51
+    ],
+    "rich_header": "PRESENT",
+    "os_version": [
+      6,
+      0
+    ],
+    "subsystem_version": [
+      6,
+      0
+    ],
+    "subsystem": 2,
+    "export_internal_name": "preloader.unsigned.dll",
+    "debug_directory": [
+      4400880,
+      56
+    ],
+    "security_directory": [
+      0,
+      0
+    ],
+    "coff_symbol_table": [
+      0,
+      0
+    ],
+    "pe_checksum": "0x00000000",
+    "checksum_valid": false
+  },
+  "infrastructure_metadata_validation": {
+    "stage": "RAW_LINK_OUTPUT",
+    "result": "NOT_FINALIZED",
+    "differences": [
+      "LinkerVersion: 14.51",
+      "TimeDateStamp: 0x6AE39D8C",
+      "debug directory not stripped: (4400880, 56)",
+      "Rich Header present"
+    ]
+  },
+  "dll_sha256": "ec63df6c2c9b347e8983de07a98644986b932348191ed1e522a75f958e43c89b",
+  "unchanged": true,
+  "machine": "0x8664",
+  "entrypoint_rva": "0x7c1b",
+  "sections": [
+    ".text",
+    ".rdata",
+    ".data",
+    ".pdata",
+    ".idata",
+    ".tls",
+    ".00cfg",
+    ".fptable",
+    ".rsrc",
+    ".reloc"
+  ],
+  "export_count": 3,
+  "imports": [
+    "MSWSOCK.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "WS2_32.DLL",
+    "CRYPT32.DLL"
+  ],
+  "resources": [
+    {
+      "path": [
+        16,
+        1,
+        1033
+      ],
+      "bytes": 572,
+      "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+    }
+  ],
+  "exact_owner_avatar": true,
+  "expected_import_module_order": [
+    "CRYPT32.DLL",
+    "WS2_32.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "MSWSOCK.DLL"
+  ],
+  "import_module_order_matches": false,
+  "crypt32_static_import": true,
+  "crypt32_named_imports": [
+    "CryptQueryObject"
+  ],
+  "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "avatar_data": {
+    "profile": {
+      "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    },
+    "fallback": {
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    }
+  },
+  "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+  "resource_metadata_errors": [],
+  "golden_shipping_acceptance": "NOT_RUN",
+  "game_acceptance": "NOT_RUN"
+}
+zero-timeout shutdown status: 2
+PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; single DllShutdown with bounded wait/retry; removed alias/ordinal absent
+DEBUG BUILD: PASS
+DLL: C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\build\debug_msvc\preloader.unsigned.dll
+SHA256: ec63df6c2c9b347e8983de07a98644986b932348191ed1e522a75f958e43c89b
+
+============================================================
+  DEBUG BUILD: PASS
+  Exit code: 0
+============================================================
+
+Press any key to close this operator window.

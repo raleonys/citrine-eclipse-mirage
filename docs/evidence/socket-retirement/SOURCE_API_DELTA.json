@@ -1,0 +1,37 @@
+{
+  "before_count": 3350,
+  "after_count": 3346,
+  "removed": [
+    "_ZN4asio6detail19win_iocp_io_context4pollEv",
+    "_ZNSt3__110unique_ptrIN4asio21basic_socket_acceptorINS1_2ip3tcpENS1_15any_io_executorEEENS_14default_deleteIS6_EEED2B8ne210106Ev",
+    "_ZNSt3__112construct_atB8ne210106IN11preloader_l3net11AsioService4Impl6ClientEJRS4_N4asio19basic_stream_socketINS7_2ip3tcpENS7_15any_io_executorEEEEPS5_EEPT_SF_DpOT0_",
+    "_ZNSt3__115allocate_sharedB8ne210106IN11preloader_l3net11AsioService4Impl6ClientENS_9allocatorIS5_EEJRS4_N4asio19basic_stream_socketINS9_2ip3tcpENS9_15any_io_executorEEEETnNS_9enable_ifIXntsr8is_arrayIT_EE5valueEiE4typeELi0EEENS_10shared_ptrISG_EERKT0_DpOT1_",
+    "_ZNSt3__16vectorINS_8weak_ptrIN11preloader_l3net11AsioService4Impl6ClientEEENS_9allocatorIS7_EEE20__throw_length_errorB8ne210106Ev",
+    "_ZNSt3__16vectorINS_8weak_ptrIN11preloader_l3net11AsioService4Impl6ClientEEENS_9allocatorIS7_EEE9push_backB8ne210106EOS7_",
+    "_ZNSt3__16vectorINS_8weak_ptrIN11preloader_l3net11AsioService4Impl6ClientEEENS_9allocatorIS7_EEED2B8ne210106Ev"
+  ],
+  "added": [
+    "_ZN11preloader_l3net11AsioService4Impl6Client12retire_countEv",
+    "_ZNSt3__16vectorINS_10shared_ptrIN11preloader_l3net11AsioService4Impl6ClientEEENS_9allocatorIS7_EEE20__throw_length_errorB8ne210106Ev",
+    "_ZNSt3__16vectorINS_10shared_ptrIN11preloader_l3net11AsioService4Impl6ClientEEENS_9allocatorIS7_EEED2B8ne210106Ev"
+  ],
+  "public_headers_changed": false,
+  "removed_symbol_scope": "Asio detail poll and compiler template instantiations for private implementation ownership types; no declared public source API function removed",
+  "production_exports": {
+    "DllMain": [
+      1,
+      405760,
+      false
+    ],
+    "DllShutdown": [
+      3,
+      405520,
+      false
+    ],
+    "SURGE": [
+      2,
+      405744,
+      false
+    ]
+  }
+}

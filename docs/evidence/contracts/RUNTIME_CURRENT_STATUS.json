@@ -1,0 +1,62 @@
+{
+  "schema": "yellowfield.runtime-current.v1",
+  "role": "CURRENT_RUNTIME_STATE",
+  "classification": "NOT_RELEASE",
+  "task": "SURGE-FIDELITY-FIX-20261029",
+  "owner": "application::Application",
+  "dll_entry": "src/platform/dll_entry.cpp",
+  "exports": {
+    "DllMain": 1,
+    "SURGE": 2,
+    "DllShutdown": 3
+  },
+  "management_api": [
+    "DllShutdown"
+  ],
+  "readiness_and_port": "Existing EALsxPort/LSX observation; no management test exports",
+  "bootstrap": "Owned Windows worker outside loader lock",
+  "compiler_crt": "STANDARD",
+  "active_vendor_count": 4,
+  "active_vendors": {
+    "asio": "1.38.2; actual owned IO/session service",
+    "minhook": "1.3.4; actual eleven-slot native hook engine",
+    "pegtl": "4; existing RE Config2/VDF grammar",
+    "tinyxml2": "11; actual XML/router/persistence backend; default depth500 unchanged"
+  },
+  "vendor_source_changes": false,
+  "windows_filesystem_backend": "STANDARD_COMPILER_FILESYSTEM_AND_FSTREAM",
+  "recovered_copy_helper": "Full048d20 plus04895c/0489f4; avatar uses mode2",
+  "application_code_origins": {
+    "primary": "SUPPLIED_RE_AND_EXPLICIT_OWNED_ADAPTERS",
+    "bluefield": "SCOPED_HOOK11_SELECTOR_NATIVE_LIFETIME_GUARD_PAUSE_AND_NARROW_ATTEMPTS_SYNCHRONIZATION",
+    "brownfield": "MANDATORY_INFRASTRUCTURE_ROOT_TOOLS_AND_METADATA; NO_BROAD_APPLICATION_IMPORT"
+  },
+  "native_callback_synchronization": {
+    "common_guard": "Bluefield scope: all callbacks except connect and CryptQueryObject",
+    "registry_startup_wait": "Pause callback lock while retaining binding lease and LastError",
+    "network_attempts": "Only ++counter and returned per-call value are synchronized; no lock across startup/original connect",
+    "event_mutex": "RE type2: same-thread second lock returns3 without changing count1; standard CRT storage"
+  },
+  "config_policy": {
+    "filenames": [
+      "surge.cfg",
+      "surge_override.cfg"
+    ],
+    "root": "PROCESS_EXECUTABLE_PARENT",
+    "missing": "OPTIONAL",
+    "precedence": "MAIN_THEN_OVERRIDE"
+  },
+  "data_root": "RE GetEnvironmentVariableW(LocalAppData)/SURGE",
+  "logging": {
+    "debug": "Actual request/response/event/error/path values; showLSX gate retained; pre-directory config records buffered",
+    "release_file_logging": "FORBIDDEN",
+    "existing_debug_log_in_release": "PRESERVE_UNCHANGED"
+  },
+  "resource_policy": "Exact Brownfield VERSIONINFO; profile and fallback PNG in read-only C++ data, no PNG PE resource",
+  "hook11": "Bluefield selector/protected reader/forwarding and lifetime; static SDK CRYPT32!CryptQueryObject import",
+  "historical_runtime_snapshot": "metadata/RUNTIME_BINDING_STATUS.json",
+  "validation_status": "metadata/FIDELITY_FIX.json",
+  "native_msvc_golden": "NOT_RUN",
+  "updated_game_retest": "NOT_RUN",
+  "parent_game_evidence": "Owner confirmed startup-build-fix package; not acceptance of this updated source"
+}

@@ -1,0 +1,76 @@
+{
+  "classification": "NOT_RELEASE",
+  "build_kind": "IMPLEMENTED_SOURCE_API_DEVELOPMENT_DLL",
+  "application_modules": 43,
+  "application_cpp": 127,
+  "first_party_origin": "anadius64 RE application only, plus explicitly approved isolated hook-11 behavior",
+  "brownfield_application_code_imported": false,
+  "bluefield_application_code_imported": false,
+  "toolchain": "LLVM-MinGW 20261006, Clang 23.1.3, x86_64 Windows UCRT",
+  "windows_x64_dll_build": "PASS",
+  "source_zip_clean_extracted_build": {
+    "result": "PASS",
+    "target": [
+      "preloader_l",
+      "preloader_l_source_host"
+    ],
+    "log": "PACKAGE_CLEAN_BUILD.log",
+    "external_reference_tree_required": false,
+    "source_manifest_sha256": "023f7d339dfaea74bb525c3b808b0c5be16b0516614e4a1ff41647066478e5af",
+    "built_dll_sha256": "076510535083edf7beb937c2630759bea2e77cab27f61ec9efb2cd6e4c2005a8"
+  },
+  "dynamic_dll_load": {
+    "result": "PASS",
+    "runner": "Wine 10.0 on Linux",
+    "calls": [
+      "calendar",
+      "SHA-1",
+      "config parser"
+    ],
+    "log": "PACKAGE_DLL_LOAD.log"
+  },
+  "windows_source_ctest": {
+    "result": "PASS",
+    "passed": 155,
+    "total": 155,
+    "runner": "Wine 10.0 on Linux",
+    "report": "WINDOWS_SOURCE_TESTS_FINAL.xml",
+    "initial_run_report": "WINDOWS_SOURCE_TESTS.xml"
+  },
+  "portable_ctest": {
+    "result": "PASS",
+    "passed": 6,
+    "total": 6,
+    "runner": "Linux native",
+    "report": "PORTABLE_TESTS.xml"
+  },
+  "initial_run_corrections": [
+    {
+      "test": "host_callback_contracts",
+      "cause": "integration test still expected ten hooks after authorized eleventh hook",
+      "change": "expect eleven, assert CryptQueryObject slot and trampoline; seven hooks when optional process/folder hooks disabled",
+      "production_code_changed": false
+    },
+    {
+      "test": "socket_worker_run_contracts",
+      "cause": "cold Wine services retained captured output pipe after test printed all 795 assertions passed; direct file-output process exited 0",
+      "change": "initialize Wine before full repeat; no assertions disabled and no test timeout increased",
+      "production_code_changed": false
+    }
+  ],
+  "source_layout_verification": {
+    "result": "PASS",
+    "files": 455,
+    "report": "SOURCE_VERIFICATION.json"
+  },
+  "msvc_native_build": "NOT_RUN",
+  "real_windows_hook_acceptance": "NOT_RUN",
+  "automatic_application_bootstrap": "NOT_IMPLEMENTED",
+  "consumer_SURGE_ABI": "NOT_IMPLEMENTED",
+  "game_consumer_acceptance": "NOT_RUN",
+  "release_acceptance": "NOT_RUN",
+  "scope_note": "Successful DLL compilation and Wine source tests do not demonstrate a runnable game integration or equivalence to Brownfield/Bluefield.",
+  "record_scope": "Historical baseline for its named task; current vendor build/test identity is in VENDORING_STATUS.json",
+  "current_infrastructure_status": "metadata/INFRASTRUCTURE_STATUS.json",
+  "current_vendoring_status": "metadata/VENDORING_STATUS.json"
+}

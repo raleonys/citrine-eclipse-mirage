@@ -1,0 +1,28 @@
+Test project /workspace/yellowfield/build/llvm-mingw-x64-vendors
+      Start   1: application_runtime_contracts
+ 1/10 Test   #1: application_runtime_contracts ....   Passed    3.61 sec
+      Start  49: execution_contracts
+ 2/10 Test  #49: execution_contracts ..............   Passed    0.17 sec
+      Start  55: config_order_contracts
+ 3/10 Test  #55: config_order_contracts ...........   Passed    0.19 sec
+      Start  57: config_hash_contracts
+ 4/10 Test  #57: config_hash_contracts ............   Passed    0.29 sec
+      Start  61: achievement_storage_contracts
+ 5/10 Test  #61: achievement_storage_contracts ....   Passed    0.13 sec
+      Start  63: timestamp_contracts
+ 6/10 Test  #63: timestamp_contracts ..............   Passed    0.14 sec
+      Start  69: session_integration_contracts
+ 7/10 Test  #69: session_integration_contracts ....   Passed    0.18 sec
+      Start 186: token_contracts
+ 8/10 Test #186: token_contracts ..................   Passed    0.12 sec
+      Start 190: path_contracts
+ 9/10 Test #190: path_contracts ...................   Passed    0.13 sec
+      Start 192: windows_effects_integration
+10/10 Test #192: windows_effects_integration ......   Passed    0.18 sec
+
+100% tests passed out of 10
+
+Label Time Summary:
+production    =   5.13 sec*proc (10 tests)
+
+Total Test time (real) =   5.15 sec

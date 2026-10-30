@@ -1,0 +1,443 @@
+{
+  "schema": "surge.optimization-diagnostics.v1",
+  "scope": "Baseline whole138TU compiler scan; line numbers are baseline coordinates; diagnostic count is not bug count",
+  "diagnostics": [
+    {
+      "source": "src/net/transport_acceptor.cpp",
+      "line": 101,
+      "check": "bugprone-narrowing-conversions",
+      "message": "narrowing conversion from 'std::uint16_t' (aka 'unsigned short') to signed type 'short' is implementation-defined",
+      "disposition": "RETAIN_PLATFORM_RE_CONVERSION",
+      "reason": "Existing Win32/RE integer-width and bit-pattern boundary. Changing signedness or domain semantics solely for a warning is outside proven dead-code optimization."
+    },
+    {
+      "source": "src/net/transport_acceptor.cpp",
+      "line": 105,
+      "check": "bugprone-narrowing-conversions",
+      "message": "narrowing conversion from 'std::uint16_t' (aka 'unsigned short') to signed type 'short' is implementation-defined",
+      "disposition": "RETAIN_PLATFORM_RE_CONVERSION",
+      "reason": "Existing Win32/RE integer-width and bit-pattern boundary. Changing signedness or domain semantics solely for a warning is outside proven dead-code optimization."
+    },
+    {
+      "source": "src/codec/crypto.cpp",
+      "line": 40,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "result of multiplication in type 'unsigned int' is used as a pointer offset after an implicit widening conversion to type 'size_t'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "AES expansion loop word is bounded to4..43; multiplication cannot overflow."
+    },
+    {
+      "source": "src/runtime/libraries.cpp",
+      "line": 33,
+      "check": "performance-unnecessary-copy-initialization",
+      "message": "local copy 'copy' of the variable 'path' is never modified; consider avoiding the copy",
+      "disposition": "DEFER_NO_PROFILED_GAIN",
+      "reason": "Cold startup/library or exception_ptr path; no measured benefit. Keep original exception/lifetime prefix rather than infer a hot-path regression."
+    },
+    {
+      "source": "src/platform/file_io_windows.cpp",
+      "line": 45,
+      "check": "bugprone-suspicious-stringview-data-usage",
+      "message": "result of a `data()` call may not be null terminated, provide size information to the callee to prevent potential issues",
+      "disposition": "RETAIN_COUNTED_API",
+      "reason": "Counted API: fstream::write supplies count(value.size()); utf8_no_flags supplies explicit input_count. No required terminator."
+    },
+    {
+      "source": "src/handlers/content_handlers.cpp",
+      "line": 59,
+      "check": "performance-inefficient-string-concatenation",
+      "message": "string concatenation results in allocation of unnecessary temporary strings; consider using 'operator+=' or 'string::append()' instead",
+      "disposition": "DEFER_NO_PROFILED_GAIN",
+      "reason": "Small achievement-name construction; no allocation profile establishes material gain. Preserve recovered operation ordering in this batch."
+    },
+    {
+      "source": "src/platform/hook_native_callbacks.cpp",
+      "line": 78,
+      "check": "bugprone-multi-level-implicit-pointer-conversion",
+      "message": "multilevel pointer conversion from 'HKEY *' (aka 'HKEY__ **') to 'void *', please use explicit cast",
+      "disposition": "RETAIN_TYPED_EFFECTS_BOUNDARY",
+      "reason": "Intentional typed address passed through void* platform/effects boundary (HKEY*, argv allocation or recovered pointer storage). No dereference through an incompatible pointer-to-pointer is introduced by this conversion."
+    },
+    {
+      "source": "src/platform/hook_native_callbacks.cpp",
+      "line": 82,
+      "check": "bugprone-multi-level-implicit-pointer-conversion",
+      "message": "multilevel pointer conversion from 'HKEY *' (aka 'HKEY__ **') to 'void *', please use explicit cast",
+      "disposition": "RETAIN_TYPED_EFFECTS_BOUNDARY",
+      "reason": "Intentional typed address passed through void* platform/effects boundary (HKEY*, argv allocation or recovered pointer storage). No dereference through an incompatible pointer-to-pointer is introduced by this conversion."
+    },
+    {
+      "source": "src/runtime/startup.cpp",
+      "line": 14,
+      "check": "bugprone-suspicious-stringview-data-usage",
+      "message": "result of a `data()` call may not be null terminated, provide size information to the callee to prevent potential issues",
+      "disposition": "RETAIN_COUNTED_API",
+      "reason": "Counted API: fstream::write supplies count(value.size()); utf8_no_flags supplies explicit input_count. No required terminator."
+    },
+    {
+      "source": "src/runtime/startup.cpp",
+      "line": 17,
+      "check": "bugprone-suspicious-stringview-data-usage",
+      "message": "result of a `data()` call may not be null terminated, provide size information to the callee to prevent potential issues",
+      "disposition": "RETAIN_COUNTED_API",
+      "reason": "Counted API: fstream::write supplies count(value.size()); utf8_no_flags supplies explicit input_count. No required terminator."
+    },
+    {
+      "source": "src/runtime/startup.cpp",
+      "line": 31,
+      "check": "bugprone-multi-level-implicit-pointer-conversion",
+      "message": "multilevel pointer conversion from 'wchar_t **' to 'void *', please use explicit cast",
+      "disposition": "RETAIN_TYPED_EFFECTS_BOUNDARY",
+      "reason": "Intentional typed address passed through void* platform/effects boundary (HKEY*, argv allocation or recovered pointer storage). No dereference through an incompatible pointer-to-pointer is introduced by this conversion."
+    },
+    {
+      "source": "src/runtime/startup.cpp",
+      "line": 34,
+      "check": "bugprone-multi-level-implicit-pointer-conversion",
+      "message": "multilevel pointer conversion from 'wchar_t **' to 'void *', please use explicit cast",
+      "disposition": "RETAIN_TYPED_EFFECTS_BOUNDARY",
+      "reason": "Intentional typed address passed through void* platform/effects boundary (HKEY*, argv allocation or recovered pointer storage). No dereference through an incompatible pointer-to-pointer is introduced by this conversion."
+    },
+    {
+      "source": "src/xml/pool_allocate.cpp",
+      "line": 32,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "performing an implicit widening conversion to type 'const std::uint64_t' (aka 'const unsigned long long') of a multiplication performed in type 'unsigned int'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "Retained byte-state model preserves original32-bit arithmetic before widening. Changing overflow semantics would change the reference projection; no production optimization is justified."
+    },
+    {
+      "source": "src/xml/pool_allocate.cpp",
+      "line": 59,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "performing an implicit widening conversion to type 'std::uintptr_t' (aka 'unsigned long long') of a multiplication performed in type 'unsigned int'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "Retained byte-state model preserves original32-bit arithmetic before widening. Changing overflow semantics would change the reference projection; no production optimization is justified."
+    },
+    {
+      "source": "src/xml/pool_allocate.cpp",
+      "line": 65,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "performing an implicit widening conversion to type 'std::uintptr_t' (aka 'unsigned long long') of a multiplication performed in type 'unsigned int'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "Retained byte-state model preserves original32-bit arithmetic before widening. Changing overflow semantics would change the reference projection; no production optimization is justified."
+    },
+    {
+      "source": "src/xml/pool_allocate.cpp",
+      "line": 65,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "performing an implicit widening conversion to type 'std::uintptr_t' (aka 'unsigned long long') of a multiplication performed in type 'unsigned int'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "Retained byte-state model preserves original32-bit arithmetic before widening. Changing overflow semantics would change the reference projection; no production optimization is justified."
+    },
+    {
+      "source": "src/xml/pool_allocate.cpp",
+      "line": 66,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "performing an implicit widening conversion to type 'std::uintptr_t' (aka 'unsigned long long') of a multiplication performed in type 'unsigned int'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "Retained byte-state model preserves original32-bit arithmetic before widening. Changing overflow semantics would change the reference projection; no production optimization is justified."
+    },
+    {
+      "source": "src/protocol/messages.cpp",
+      "line": 115,
+      "check": "readability-redundant-string-cstr",
+      "message": "redundant call to 'c_str'",
+      "disposition": "RETAIN_SEMANTIC_BOUNDARY",
+      "reason": "Preserve first-NUL C-string semantics. Passing the full string/view would change parsing/encryption bytes."
+    },
+    {
+      "source": "src/protocol/messages.cpp",
+      "line": 130,
+      "check": "readability-redundant-string-cstr",
+      "message": "redundant call to 'c_str'",
+      "disposition": "RETAIN_SEMANTIC_BOUNDARY",
+      "reason": "Preserve first-NUL C-string semantics. Passing the full string/view would change parsing/encryption bytes."
+    },
+    {
+      "source": "src/platform/atomic_files_windows.cpp",
+      "line": 47,
+      "check": "bugprone-empty-catch",
+      "message": "empty catch statements hide issues; to handle exceptions appropriately, consider re-throwing, handling, or avoiding catch altogether",
+      "disposition": "RETAIN_OWNED_FAILURE_BOUNDARY",
+      "reason": "Best-effort cleanup or diagnostic failure boundary. Atomic rollback retains failed backups; callback errors retain fail-fast/noexcept policy. Do not introduce throwing destructors or exceptions across native callbacks."
+    },
+    {
+      "source": "include/preloader_l/net/session_policy.hpp",
+      "line": 10,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "performing an implicit widening conversion to type 'std::size_t' (aka 'unsigned long long') of a multiplication performed in type 'int'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "Compile-time1MiB/8MiB constants fit int; widening is exact."
+    },
+    {
+      "source": "include/preloader_l/net/session_policy.hpp",
+      "line": 11,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "performing an implicit widening conversion to type 'std::size_t' (aka 'unsigned long long') of a multiplication performed in type 'int'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "Compile-time1MiB/8MiB constants fit int; widening is exact."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 53,
+      "check": "bugprone-exception-escape",
+      "message": "an exception may be thrown in function '~Impl' which should not throw exceptions",
+      "disposition": "FOLLOW_UP_EXCEPTIONAL_TEARDOWN",
+      "reason": "Destructor calls stop(), which may allocate/post/join and can throw on exceptional resource/system failures. Application explicit stop owns the normal path. Swallowing a failure could destroy live worker ownership. No safe size-only fix or native failure-injection proof in this batch; keep as an explicit follow-up."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 140,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_CHECKED_ERROR_CODE",
+      "reason": "Asio error_code overload: subsequent code checks error before proceeding, classifies unsupported IPv6 or fails/advances listener selection."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 141,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_CHECKED_ERROR_CODE",
+      "reason": "Asio error_code overload: subsequent code checks error before proceeding, classifies unsupported IPv6 or fails/advances listener selection."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 145,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_CHECKED_ERROR_CODE",
+      "reason": "Asio error_code overload: subsequent code checks error before proceeding, classifies unsupported IPv6 or fails/advances listener selection."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 147,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_CHECKED_ERROR_CODE",
+      "reason": "Asio error_code overload: subsequent code checks error before proceeding, classifies unsupported IPv6 or fails/advances listener selection."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 148,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_CHECKED_ERROR_CODE",
+      "reason": "Asio error_code overload: subsequent code checks error before proceeding, classifies unsupported IPv6 or fails/advances listener selection."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 149,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_CHECKED_ERROR_CODE",
+      "reason": "Asio error_code overload: subsequent code checks error before proceeding, classifies unsupported IPv6 or fails/advances listener selection."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 176,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 176,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 198,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 198,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 289,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 309,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 309,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 310,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 310,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 316,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/net/asio_service.cpp",
+      "line": 317,
+      "check": "bugprone-unused-return-value",
+      "message": "the value returned by this function should not be disregarded; neglecting it may lead to errors",
+      "disposition": "RETAIN_TEARDOWN_POLICY_LIMIT",
+      "reason": "Asio nonthrowing cancellation/close overload during teardown; best-effort error_code intentionally not raised, resource still has RAII owner. This is not proof all OS-close failure recovery is fault-tested."
+    },
+    {
+      "source": "src/core/atomic_files.cpp",
+      "line": 7,
+      "check": "bugprone-empty-catch",
+      "message": "empty catch statements hide issues; to handle exceptions appropriately, consider re-throwing, handling, or avoiding catch altogether",
+      "disposition": "RETAIN_OWNED_FAILURE_BOUNDARY",
+      "reason": "Best-effort cleanup or diagnostic failure boundary. Atomic rollback retains failed backups; callback errors retain fail-fast/noexcept policy. Do not introduce throwing destructors or exceptions across native callbacks."
+    },
+    {
+      "source": "src/core/atomic_files.cpp",
+      "line": 14,
+      "check": "bugprone-empty-catch",
+      "message": "empty catch statements hide issues; to handle exceptions appropriately, consider re-throwing, handling, or avoiding catch altogether",
+      "disposition": "RETAIN_OWNED_FAILURE_BOUNDARY",
+      "reason": "Best-effort cleanup or diagnostic failure boundary. Atomic rollback retains failed backups; callback errors retain fail-fast/noexcept policy. Do not introduce throwing destructors or exceptions across native callbacks."
+    },
+    {
+      "source": "src/runtime/application_environment.cpp",
+      "line": 54,
+      "check": "bugprone-narrowing-conversions",
+      "message": "narrowing conversion from 'DWORD' (aka 'unsigned long') to signed type 'int' is implementation-defined",
+      "disposition": "RETAIN_PLATFORM_RE_CONVERSION",
+      "reason": "Existing Win32/RE integer-width and bit-pattern boundary. Changing signedness or domain semantics solely for a warning is outside proven dead-code optimization."
+    },
+    {
+      "source": "src/runtime/application_environment.cpp",
+      "line": 152,
+      "check": "bugprone-narrowing-conversions",
+      "message": "narrowing conversion from 'std::uint32_t' (aka 'unsigned int') to signed type 'int' is implementation-defined",
+      "disposition": "RETAIN_PLATFORM_RE_CONVERSION",
+      "reason": "Existing Win32/RE integer-width and bit-pattern boundary. Changing signedness or domain semantics solely for a warning is outside proven dead-code optimization."
+    },
+    {
+      "source": "src/net/transport_response_containers.cpp",
+      "line": 73,
+      "check": "bugprone-multi-level-implicit-pointer-conversion",
+      "message": "multilevel pointer conversion from 'preloader_l::socket_recovered::WriteFinishString **' to 'void *', please use explicit cast",
+      "disposition": "RETAIN_TYPED_EFFECTS_BOUNDARY",
+      "reason": "Intentional typed address passed through void* platform/effects boundary (HKEY*, argv allocation or recovered pointer storage). No dereference through an incompatible pointer-to-pointer is introduced by this conversion."
+    },
+    {
+      "source": "src/net/transport_response_containers.cpp",
+      "line": 73,
+      "check": "bugprone-multi-level-implicit-pointer-conversion",
+      "message": "multilevel pointer conversion from 'preloader_l::socket_recovered::WriteFinishString **' to 'const void *', please use explicit cast",
+      "disposition": "RETAIN_TYPED_EFFECTS_BOUNDARY",
+      "reason": "Intentional typed address passed through void* platform/effects boundary (HKEY*, argv allocation or recovered pointer storage). No dereference through an incompatible pointer-to-pointer is introduced by this conversion."
+    },
+    {
+      "source": "src/xml/node_string.cpp",
+      "line": 49,
+      "check": "bugprone-implicit-widening-of-multiplication-result",
+      "message": "performing an implicit widening conversion to type 'std::uintptr_t' (aka 'unsigned long long') of a multiplication performed in type 'unsigned int'",
+      "disposition": "RETAIN_BOUNDED_OR_RE_ARITHMETIC",
+      "reason": "Retained byte-state model preserves original32-bit arithmetic before widening. Changing overflow semantics would change the reference projection; no production optimization is justified."
+    },
+    {
+      "source": "src/runtime/application.cpp",
+      "line": 114,
+      "check": "bugprone-narrowing-conversions",
+      "message": "narrowing conversion from 'std::uint32_t' (aka 'unsigned int') to signed type 'int' is implementation-defined",
+      "disposition": "RETAIN_PLATFORM_RE_CONVERSION",
+      "reason": "Existing Win32/RE integer-width and bit-pattern boundary. Changing signedness or domain semantics solely for a warning is outside proven dead-code optimization."
+    },
+    {
+      "source": "src/runtime/application.cpp",
+      "line": 151,
+      "check": "bugprone-empty-catch",
+      "message": "empty catch statements hide issues; to handle exceptions appropriately, consider re-throwing, handling, or avoiding catch altogether",
+      "disposition": "RETAIN_OWNED_FAILURE_BOUNDARY",
+      "reason": "Best-effort cleanup or diagnostic failure boundary. Atomic rollback retains failed backups; callback errors retain fail-fast/noexcept policy. Do not introduce throwing destructors or exceptions across native callbacks."
+    },
+    {
+      "source": "src/runtime/application.cpp",
+      "line": 306,
+      "check": "bugprone-empty-catch",
+      "message": "empty catch statements hide issues; to handle exceptions appropriately, consider re-throwing, handling, or avoiding catch altogether",
+      "disposition": "RETAIN_OWNED_FAILURE_BOUNDARY",
+      "reason": "Best-effort cleanup or diagnostic failure boundary. Atomic rollback retains failed backups; callback errors retain fail-fast/noexcept policy. Do not introduce throwing destructors or exceptions across native callbacks."
+    },
+    {
+      "source": "src/runtime/application.cpp",
+      "line": 373,
+      "check": "performance-unnecessary-copy-initialization",
+      "message": "the variable 'failure' is copy-constructed from a const reference but is only used as const reference; consider making it a const reference",
+      "disposition": "DEFER_NO_PROFILED_GAIN",
+      "reason": "Cold startup/library or exception_ptr path; no measured benefit. Keep original exception/lifetime prefix rather than infer a hot-path regression."
+    },
+    {
+      "source": "src/net/server.cpp",
+      "line": 96,
+      "check": "performance-unnecessary-value-param",
+      "message": "the parameter 'bytes' is copied for each invocation but only used as a const reference; consider making it a const reference",
+      "disposition": "DEFER_OWNERSHIP_API_CHANGE",
+      "reason": "Session ownership/public source API boundary; production callers already move strings. A const-reference signature edit changes API and may constrain asynchronous lifetime without a measured benefit."
+    },
+    {
+      "source": "src/net/server.cpp",
+      "line": 112,
+      "check": "performance-unnecessary-value-param",
+      "message": "the parameter 'message' is copied for each invocation but only used as a const reference; consider making it a const reference",
+      "disposition": "DEFER_OWNERSHIP_API_CHANGE",
+      "reason": "Session ownership/public source API boundary; production callers already move strings. A const-reference signature edit changes API and may constrain asynchronous lifetime without a measured benefit."
+    }
+  ],
+  "counts": {
+    "RETAIN_PLATFORM_RE_CONVERSION": 5,
+    "RETAIN_BOUNDED_OR_RE_ARITHMETIC": 9,
+    "DEFER_NO_PROFILED_GAIN": 3,
+    "RETAIN_COUNTED_API": 3,
+    "RETAIN_TYPED_EFFECTS_BOUNDARY": 6,
+    "RETAIN_SEMANTIC_BOUNDARY": 2,
+    "RETAIN_OWNED_FAILURE_BOUNDARY": 5,
+    "FOLLOW_UP_EXCEPTIONAL_TEARDOWN": 1,
+    "RETAIN_CHECKED_ERROR_CODE": 6,
+    "RETAIN_TEARDOWN_POLICY_LIMIT": 11,
+    "DEFER_OWNERSHIP_API_CHANGE": 2
+  }
+}

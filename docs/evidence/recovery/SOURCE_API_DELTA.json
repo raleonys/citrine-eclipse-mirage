@@ -1,0 +1,20 @@
+{
+  "scope": "Source API names; previous optimization evidence recorded no changes from this baseline to the exact parent source",
+  "before": 3347,
+  "after": 3350,
+  "removed": [
+    "_ZN11preloader_l9recovered9libraries5StateD2Ev"
+  ],
+  "added": [
+    "_ZN11preloader_l3net11AsioService4Impl15failed_dispatchESt13exception_ptr",
+    "_ZN11preloader_l3net11AsioService4Impl9retire_ioEv",
+    "_ZN4asio6detail19win_iocp_io_context8wait_oneEl",
+    "_ZNSt3__16vectorIyNS_9allocatorIyEEE9push_backB8ne210106EOy"
+  ],
+  "public_production_export_change": false,
+  "removed_category": "Compiler-generated implicit inline State base destructor emission; no declaration removed or changed",
+  "added_category": "Two private transport recovery methods plus Asio wait implementation and vector overload emission",
+  "declared_public_headers_changed": false,
+  "production_c_abi_changed": false,
+  "source_host_validation": "PASS_IN_FULL_RELEASE_CTEST"
+}

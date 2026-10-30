@@ -1,0 +1,20 @@
+[
+  {
+    "case": "clang23-strict-no-tests",
+    "exit_code": 1,
+    "expected_configure_success": false,
+    "result": "PASS"
+  },
+  {
+    "case": "clang23-diagnostic-no-tests",
+    "exit_code": 0,
+    "expected_configure_success": true,
+    "result": "PASS"
+  },
+  {
+    "case": "clang21-strict-no-tests",
+    "exit_code": 0,
+    "expected_configure_success": true,
+    "result": "PASS"
+  }
+]

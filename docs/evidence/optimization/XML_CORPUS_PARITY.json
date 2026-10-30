@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "cases": 12087,
+  "input_sha256": "0f860de117e3786c4b58c5f74b3d5a34a1ba4e39bee1253ae563f917bd14a5a1",
+  "matching_output_sha256": "d598f453b1f495f8f6aec57d00596895d0cdd557c74c21fe42b22ac7b6fcec57",
+  "comparison": "Exact error code, flag, complete ErrorStr, element/attribute/text serialization after caller buffer overwritten; random bounded slices/embedded NUL/depth/malformed UTF8 under ASAN+UBSAN",
+  "stderr_findings": []
+}

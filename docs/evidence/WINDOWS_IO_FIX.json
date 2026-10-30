@@ -1,0 +1,112 @@
+{
+  "schema": "yellowfield.windows-io-fix.v1",
+  "task": "YF-WINDOWS-IO-20261029",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_AFFECTED_RELEASE_DEBUG_VERIFIED_NATIVE_MSVC_PENDING",
+  "parent_source_package": "yellowfield-startup-build-fix-source.zip",
+  "parent_sha256": "3b33807c5d01e7a0c8c94cb6d8493ac3855e0e0024ddba85b7a5256c85995801",
+  "source_package": "yellowfield-windows-io-fix-source.zip",
+  "owner_authority": [
+    "o zaman bunu da d\u00fczeltmemiz gerekiyor",
+    "ghc::filesystem i ba\u015fka nerede kullan\u0131yoruz peki ? aktif kullan\u0131lan bir yer yoksa tamamen kald\u0131rmak daha mant\u0131kl\u0131 de\u011filmi ?"
+  ],
+  "correction": "Restore Windows std::filesystem/standard fstream; remove ghc vendor, target, include dependencies and ghc-specific test backend",
+  "removed_vendor_record": {
+    "active_build_link_proved": false,
+    "archive": "filesystem-master.zip",
+    "archive_folder": "filesystem-master/",
+    "bytes": 233550,
+    "intended_active_use": "single owned filesystem/path adapter (pending implementation)",
+    "license": "MIT (LICENSE)",
+    "license_source_retained": true,
+    "member_count": 38,
+    "member_manifest": "metadata/vendor_files/filesystem.sha256",
+    "member_manifest_sha256": "c8e0df471490be32fffbd8b9927218c0fabeae4d65458a0b95e44a19c3470260",
+    "reported_version": "1.5.17 (GHC_FILESYSTEM_VERSION 10517)",
+    "sha256": "5db08830a172ca4d8d2ecf98d6397041a3d0fa4d04584a0bcddb29778b68a251",
+    "source_install_path": "third_party/filesystem",
+    "symlinks": {},
+    "upstream_commit": "UNVERIFIED",
+    "installed_member_integrity": "PASS",
+    "production_role": "INTERFACE_TARGET_AND_API_FIXTURE_ONLY; final adapter pending",
+    "cmake_target": "preloader_l_filesystem"
+  },
+  "original_vendor_archive_preserved": "/workspace/project-input/3RD PARTY/filesystem-master.zip",
+  "remaining_vendors": [
+    "asio",
+    "minhook",
+    "pegtl",
+    "tinyxml2"
+  ],
+  "included_asio_build_fix": "metadata/ASIO_WINDOWS_TARGET_FIX.json",
+  "application_paths_changed": false,
+  "optional_config_changed": false,
+  "public_exports_changed": true,
+  "metadata_profile_changed": "Only explicit owner import-descriptor order normalization added; Brownfield header/VERSIONINFO/layout targets unchanged",
+  "parent_game_start": "OWNER_CONFIRMED_WORKING",
+  "updated_game_retest": "NOT_RUN",
+  "release_log_policy": "Debug-only writer unchanged; new regression checks Release leaves a pre-existing Debug log byte-identical",
+  "public_abi_clarification": "Owner explicitly restores Brownfield ordinals: DllMain@1 SURGE@2 DllShutdown@3; remove management functions/exports4/5 and adapt tool-side readiness to existing EALsxPort/LSX protocol",
+  "public_exports": {
+    "DllMain": 1,
+    "SURGE": 2,
+    "DllShutdown": 3
+  },
+  "removed_public_exports": [
+    "DllWaitReady",
+    "DllServerPort"
+  ],
+  "dll_import_descriptor_order": "Latest owner requests original Anadius module order; bounded descriptor permutation during final-copy URSYNEX stage, CORVEXON enforces exact order; names/thunks/IAT contents preserved",
+  "import_descriptor_order": [
+    "CRYPT32.DLL",
+    "WS2_32.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "MSWSOCK.DLL"
+  ],
+  "normalized_RE_native_factory_body_identical": true,
+  "verification": {
+    "release_affected": {
+      "passed": 19,
+      "total": 19,
+      "report": "metadata/WINDOWS_IO_RELEASE_TESTS.xml"
+    },
+    "debug_affected": {
+      "passed": 13,
+      "total": 13,
+      "report": "metadata/WINDOWS_IO_DEBUG_TESTS.xml"
+    },
+    "public_export_contract": {
+      "count": 3,
+      "report": "metadata/WINDOWS_IO_RELEASE_EXPORTS.json"
+    },
+    "old_debug_log": "Release unchanged / Debug appended; actual Application integration assertion in both profiles",
+    "infrastructure": {
+      "passed": 29,
+      "total": 29,
+      "report": "metadata/WINDOWS_IO_INFRASTRUCTURE.log"
+    },
+    "import_mutation_negative_and_idempotence": "metadata/WINDOWS_IO_IMPORT_ORDER_CHECKS.log",
+    "live_import_permutation": {
+      "report": "metadata/WINDOWS_IO_IMPORT_ORDER_DEVELOPMENT.json",
+      "runtime_report": "metadata/WINDOWS_IO_IMPORT_ORDER_RUNTIME.log",
+      "cycles": 3,
+      "evidence_class": "LLVM_DEVELOPMENT_DLL_NOT_MSVC_GOLDEN"
+    },
+    "brownfield_policy_audit": "metadata/WINDOWS_IO_BROWNFIELD_POLICY_AUDIT.json",
+    "source_qa": {
+      "result": "PASS_SOURCE_QA",
+      "checks": 15,
+      "report": "metadata/WINDOWS_IO_SOURCE_QA.json",
+      "final_check": "Same15 checks rerun after final manifest recording into build/qa; no further source edits"
+    }
+  },
+  "native_msvc_updated_source": "NOT_RUN",
+  "build_validation_scope": "Affected production/runtime/IO/source-host/ABI/vendor targets rebuilt and tested; entire173 test suite not rerun for this update",
+  "owner_followups": [
+    "surge.log only Debug; verify Production does not append",
+    "Remove test-management production exports; Brownfield ordinals remain identical",
+    "Owner requests original Anadius import DLL descriptor order"
+  ]
+}

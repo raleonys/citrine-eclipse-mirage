@@ -1,0 +1,112 @@
+{
+  "schema": "yellowfield.msvc-native-lookup-fix.v1",
+  "task": "YF-MSVC-LOOKUP-20261029",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_FULL_WINE_VALIDATION_PASSED_NATIVE_MSVC_RERUN_REQUIRED_NOT_RELEASE",
+  "parent_source_package": "yellowfield-msvc-profile-fix-source.zip",
+  "parent_sha256": "978286f32d9ffa9d15801d7ef20fae16eadc1676e16238d16bfa8585b90d54bb",
+  "user_native_log_observations": [
+    {
+      "profile": "Crt",
+      "evidence_class": "USER_NATIVE_LOG_OF_PARENT_SOURCE_NOT_LOCAL_REEXECUTION",
+      "file_id": "file_0000000091dc820a93a7731aa13bf7c2",
+      "bytes": 25253,
+      "sha256": "be918664c79ea43255a45a286faf95f167bccad6414f854c46094f871a66c510",
+      "terminal_result": "PASS",
+      "crt_tests": {
+        "passed": 6,
+        "total": 6
+      },
+      "runtime_observation": "SELECTED_CRT_AND_DLL_TESTS_PASS",
+      "dll_sha256_reported": "a10d201506a9637bf16e7bcdc2dfa4ce4138e2fdf40fc561deeb86e66be1b57e"
+    },
+    {
+      "profile": "Debug",
+      "evidence_class": "USER_NATIVE_LOG_OF_PARENT_SOURCE_NOT_LOCAL_REEXECUTION",
+      "file_id": "file_00000000b76c820a96f252adb6feeb4f",
+      "bytes": 22443,
+      "sha256": "c8331ffd03a5b40b76a4bb50a7e043c4bdcf8c65562e426d4a5e140792ed34f3",
+      "terminal_result": "PASS",
+      "crt_tests": null,
+      "runtime_observation": "3_DLL_LOAD_SOCKET_PROFILE_SHUTDOWN_UNLOAD_CYCLES_PASS",
+      "dll_sha256_reported": "fc2b876d58cb48adb19f1f258f6da220644a7292ec1f46e37e759a7a6ba3f473"
+    },
+    {
+      "profile": "Native",
+      "evidence_class": "USER_NATIVE_LOG_OF_PARENT_SOURCE_NOT_LOCAL_REEXECUTION",
+      "file_id": "file_00000000a454820ab87b011751207de4",
+      "bytes": 60383,
+      "sha256": "f7da58ea85c8e08fcd2e6e6624306b076138f67aa14f19449d3fbd6d59291584",
+      "terminal_result": "FAIL_BUILD_C2668",
+      "crt_tests": null,
+      "runtime_observation": "FULL_NATIVE_TESTS_NOT_REACHED",
+      "dll_sha256_reported": null
+    },
+    {
+      "profile": "Golden",
+      "evidence_class": "USER_NATIVE_LOG_OF_PARENT_SOURCE_NOT_LOCAL_REEXECUTION",
+      "file_id": "file_000000009e9481f49ad07eef3ac1417b",
+      "bytes": 23475,
+      "sha256": "46bd7779f3a0d5c1c872c318b54e9c3715b205d5f433cda6918fd2576a3ab52f",
+      "terminal_result": "BLOCKED",
+      "crt_tests": null,
+      "runtime_observation": "GOLDEN_POLICY_BLOCK_BEFORE_PIPELINE_STEPS",
+      "dll_sha256_reported": "789d1bf3b23aeb0cd1bf618f9c8f9375d62ea177d1d35c9905a6be2360dfe83b"
+    },
+    {
+      "profile": "Compile",
+      "evidence_class": "USER_NATIVE_LOG_OF_PARENT_SOURCE_NOT_LOCAL_REEXECUTION",
+      "file_id": "file_000000000418820a86872fb638af6ecb",
+      "bytes": 22437,
+      "sha256": "a7db2e9fd28db9abdc9f183e5d974f9d0c532a9793e6fc08c41a3073a16b4542",
+      "terminal_result": "PASS",
+      "crt_tests": null,
+      "runtime_observation": "3_DLL_LOAD_SOCKET_PROFILE_SHUTDOWN_UNLOAD_CYCLES_PASS",
+      "dll_sha256_reported": "e6d9520fb2d9d1ee0fdc42163c11752906d80053608d3152a0493cb1dea8b830"
+    }
+  ],
+  "root_cause": "Unqualified unexpected() imported via using namespace receive_test conflicts with MSVC eh.h global unexpected(void)",
+  "fix": "Qualify all12 fixture calls as receive_test::unexpected(); no behavior or test scenarios removed",
+  "regression": "Non-MSVC compilation declares the same global function without definition or use; the test must remain unambiguous. MSVC uses its actual CRT declaration. Test executable only, never part of DLL/export targets.",
+  "independent_reproduction": {
+    "before": "AMBIGUOUS_COMPILE_CALL_REPRODUCED",
+    "before_report": "metadata/MSVC_LOOKUP_BEFORE_REPRO.log",
+    "after": "COMPILE_PASS_WITH_SAME_GLOBAL_DECLARATION",
+    "after_report": "metadata/MSVC_LOOKUP_AFTER_REPRO.log"
+  },
+  "similar_name_audit": {
+    "total": 18,
+    "passed": 18,
+    "report": "metadata/MSVC_LOOKUP_AUDIT.json",
+    "evidence_class": "SYNTHETIC_MSVC_EH_GLOBAL_DECLARATION_ON_LLVM_MINGW_NOT_NATIVE_MSVC"
+  },
+  "changed_test": "tests/unit/socket/async_receive_integration_tests.cpp",
+  "qualified_calls": 12,
+  "application_header_vendor_resource_export_changes": false,
+  "native_msvc_updated_native_profile": "NOT_RERUN",
+  "golden_acceptance": "STILL_BLOCKED_INCOMPLETE_PRODUCT_TARGETS",
+  "source_package": "yellowfield-msvc-native-lookup-fix-source.zip",
+  "tests": {
+    "release_full_wine": {
+      "total": 173,
+      "passed": 173,
+      "failed": 0,
+      "report": "metadata/MSVC_LOOKUP_FULL_WINDOWS_TESTS.xml"
+    },
+    "debug_receive_wine": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "report": "metadata/MSVC_LOOKUP_DEBUG_TESTS.xml"
+    }
+  },
+  "before_sha256": "e53668ddfd0d54a8fa513f32259102a53e133aec7eff995cb25fa907ea191ccf",
+  "after_sha256": "5b43dad0864988e7216e3bb9df79a002780d113b4e4101ae797f66a9758e9ee1",
+  "test_body_preservation": "Exact parent file recovered by removing the compile-only regression declaration/comments and namespace qualifiers; no scenario or assertion changes",
+  "source_qa": {
+    "expected_checks": 15,
+    "completed_result": "PASS_SOURCE_QA",
+    "completed_report": "build/qa/MSVC_LOOKUP_SOURCE_QA_INITIAL.json",
+    "final_report": "build/qa/MSVC_LOOKUP_SOURCE_QA_FINAL.json"
+  }
+}

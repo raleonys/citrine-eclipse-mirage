@@ -1,0 +1,2 @@
+FAIL: all-phase callback escaped before handler factory/profile publication
+WINE_PROGRAM_EXIT=1

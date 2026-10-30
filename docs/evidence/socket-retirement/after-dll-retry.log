@@ -1,0 +1,2 @@
+PASS: actual DLL/Application native retirement case 1
+WINE_PROGRAM_EXIT=0

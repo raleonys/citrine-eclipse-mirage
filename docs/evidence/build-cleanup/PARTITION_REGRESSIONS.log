@@ -1,0 +1,25 @@
+test_current_model_members_cannot_hide_in_production_named_archives (__main__.MapBoundaryTests.test_current_model_members_cannot_hide_in_production_named_archives) ... ok
+test_empty_unknown_and_wrong_target_maps_are_rejected (__main__.MapBoundaryTests.test_empty_unknown_and_wrong_target_maps_are_rejected) ... ok
+test_reference_archive_rejected_even_without_known_member_name (__main__.MapBoundaryTests.test_reference_archive_rejected_even_without_known_member_name) ... ok
+test_runtime_startup_is_distinct_from_retained_config_startup (__main__.MapBoundaryTests.test_runtime_startup_is_distinct_from_retained_config_startup) ... ok
+test_stale_archive_member_cannot_return_reference_code (__main__.MapBoundaryTests.test_stale_archive_member_cannot_return_reference_code) ... ok
+test_supported_linker_maps (__main__.MapBoundaryTests.test_supported_linker_maps) ... ok
+test_utf16_msvc_map (__main__.MapBoundaryTests.test_utf16_msvc_map) ... ok
+test_actual_compiler_source_set_is_checked (__main__.TargetBoundaryTests.test_actual_compiler_source_set_is_checked) ... ok
+test_direct_test_reference_object_is_rejected (__main__.TargetBoundaryTests.test_direct_test_reference_object_is_rejected) ... ok
+test_direct_test_reference_source_is_rejected (__main__.TargetBoundaryTests.test_direct_test_reference_source_is_rejected) ... ok
+test_every_source_is_owned_and_overlap_is_rejected (__main__.TargetBoundaryTests.test_every_source_is_owned_and_overlap_is_rejected) ... ok
+test_first_build_generated_graph_does_not_require_file_api_reply (__main__.TargetBoundaryTests.test_first_build_generated_graph_does_not_require_file_api_reply) ... ok
+test_indirect_reference_dependency_is_rejected (__main__.TargetBoundaryTests.test_indirect_reference_dependency_is_rejected) ... ok
+test_new_test_cannot_silently_escape_scope_classification (__main__.TargetBoundaryTests.test_new_test_cannot_silently_escape_scope_classification) ... ok
+test_reference_and_source_api_coexist_outside_production_closure (__main__.TargetBoundaryTests.test_reference_and_source_api_coexist_outside_production_closure) ... ok
+test_reference_api_and_tests_must_keep_their_payloads (__main__.TargetBoundaryTests.test_reference_api_and_tests_must_keep_their_payloads) ... ok
+test_retained_reference_target_source_set_is_checked (__main__.TargetBoundaryTests.test_retained_reference_target_source_set_is_checked) ... ok
+test_source_api_cannot_mask_production_dependency (__main__.TargetBoundaryTests.test_source_api_cannot_mask_production_dependency) ... ok
+test_test_library_cannot_mask_production_integration_dependency (__main__.TargetBoundaryTests.test_test_library_cannot_mask_production_integration_dependency) ... ok
+test_testing_disabled_needs_no_reference_targets (__main__.TargetBoundaryTests.test_testing_disabled_needs_no_reference_targets) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.033s
+
+OK

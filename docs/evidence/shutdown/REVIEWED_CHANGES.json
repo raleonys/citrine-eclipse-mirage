@@ -1,0 +1,315 @@
+{
+  "schema": "surge.reviewed-shutdown-changes.v1",
+  "parent_source_zip_sha256": "ef4572d32076e0ace03039b17e0fb6103b084a395ccdd27fd59b76886f2d9d1c",
+  "scope": "Exact previous delivery source ZIP versus reviewed source; self and whole-source manifest excluded to avoid recursive hash",
+  "build_input_changes": [
+    {
+      "path": "cmake/Tests.cmake",
+      "change": "MODIFIED",
+      "before_sha256": "d41f47797b1556b0228b139fb9957c04aece1884537c469479a930bef0db8923",
+      "after_sha256": "55ec7dfaafa794bc607b7f87e87030fff502d8900722e7d4460038d9279f4d76"
+    },
+    {
+      "path": "src/runtime/application.cpp",
+      "change": "MODIFIED",
+      "before_sha256": "e876ced49cdb7a4b478892dcfcb926ad9aaaeec66f25b65de314076c4f1ee64c",
+      "after_sha256": "a503f6f2aef9951c40cff5275454868bde51c3472d349b21fa2a05119febc1e2"
+    },
+    {
+      "path": "tests/native/application_shutdown_failure_tests.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "9941780199910a3aa58c82bd0af32d815bbfc4f02a43addaf62dba03bc4aeb1a"
+    },
+    {
+      "path": "tests/native/socket_close_semantics_tests.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "27c50cf96d9a23d9eac82eef77236b59427d2114ebbbcf003e1faafbe7be3649"
+    },
+    {
+      "path": "tests/native/timer_failure_tests.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "d80a05ece0560f89cc449e835ce9d96f9fe4627d6de0898b189b56df3bb8cc04"
+    },
+    {
+      "path": "tests/support/runtime/application_shutdown_fixture.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "396463bef60e7a2583c186c8992552fe585147a46a710c62627e84557ca4f8a7"
+    }
+  ],
+  "all_other_changes": [
+    {
+      "path": "docs/CURRENT_RUNTIME.md",
+      "change": "MODIFIED",
+      "before_sha256": "d3bac44cf3ef686f838cb7bcfb77996427d3e46b03f358c332a5d24832470681",
+      "after_sha256": "9fd7c2a7501d4b4ff9a68cf2520b9630fc27797ddc8c2db85a01cf4d7483aa93"
+    },
+    {
+      "path": "docs/SHUTDOWN_RECOVERY_AUDIT.md",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "e5db4119e1d8b29df9c33a9cc7a6f0dcf215ffc9d73d2d2429104bf1b9b00b70"
+    },
+    {
+      "path": "docs/evidence/shutdown/ACTUAL_DONOR_CLOSE_RESULT.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "be8e2bd794a896b6dd340e6daeab85795fa6f5b83fcc7d5469c41b81f0d24a9d"
+    },
+    {
+      "path": "docs/evidence/shutdown/ALL_DONOR_FILES.csv",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "38402c509ed4621da120c6f424ae557ba130c1a3f3f2788f80f71bbbf20a3e0e"
+    },
+    {
+      "path": "docs/evidence/shutdown/ASIO_CLOSE_COMPARISON.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "8e78ac1e4c8c823ed877eee471d9a4730d4a298974fe9d43e649aaf29b8cc519"
+    },
+    {
+      "path": "docs/evidence/shutdown/ASIO_CLOSE_IMPLEMENTATION.diff",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "a18e82b548802ad4f7c7e560fcc17af01674f707f5fda66b0f071ba93277b423"
+    },
+    {
+      "path": "docs/evidence/shutdown/DEBUG_BUILD.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "d04bc1982390b982650a9a8178979a3f5c1c894022add33021ffab6cc1c9f651"
+    },
+    {
+      "path": "docs/evidence/shutdown/DEBUG_FIXTURE_REBUILD.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "9fc37a2b10b79b68d04ebeb79e8a7cc680d2a1ce159586e3a0d694d93e5306e7"
+    },
+    {
+      "path": "docs/evidence/shutdown/DEBUG_TESTS.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "28f7f24218d4e87b0dcc9e6e16b62b2c6c3fd5863d828a71868439662efb6a74"
+    },
+    {
+      "path": "docs/evidence/shutdown/DONOR_CLOSE_BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "d04ce3d8748b60653a19fd1f04bfad64ffe46b3fd3366e9f80cb646b0e4ccfd3"
+    },
+    {
+      "path": "docs/evidence/shutdown/MANUAL_REVIEW_LEDGER.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "8894e2d205fd53f44a94b596a88f745a95550ed024805a7a8baed024528d4f20"
+    },
+    {
+      "path": "docs/evidence/shutdown/PINNED_RESULTS.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "1a5efed4bc8ea24a5d5466fa8980d0d45c8ac95b6a25edbc82ebc3c695e2a6a0"
+    },
+    {
+      "path": "docs/evidence/shutdown/RAW_DLL.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "d0f2768792fe595be0863157c68432da6ffd0fc4d1f4472cf5817ef504eaab9f"
+    },
+    {
+      "path": "docs/evidence/shutdown/RELEASE_BUILD.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "6787989387b260ddf5ebb2c6d730592df3089f042ae190b4b0ed38079f8fa797"
+    },
+    {
+      "path": "docs/evidence/shutdown/RELEASE_FIXTURE_REBUILD.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "9fc37a2b10b79b68d04ebeb79e8a7cc680d2a1ce159586e3a0d694d93e5306e7"
+    },
+    {
+      "path": "docs/evidence/shutdown/RELEASE_TESTS.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "806b2e9f356478ff024b5b78a3caf309c6e00b61abf84f95cbeee216255c84d6"
+    },
+    {
+      "path": "docs/evidence/shutdown/SHUTDOWN_STAGE_SCOPE.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "5c92ed5b3f33cf74e1b119e9b27a4510b4bc494f6b308e969c06ebbd21dda817"
+    },
+    {
+      "path": "docs/evidence/shutdown/SOURCE_API_DELTA.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "e37afabf3740eed7aa06ee92b67ef6300243d6f2e71e49e24ef925c924f4c281"
+    },
+    {
+      "path": "docs/evidence/shutdown/SOURCE_QA.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "c184c76807a572af7038ae5658b1d356549e59a8623053deae5caad0dea3bf03"
+    },
+    {
+      "path": "docs/evidence/shutdown/VALIDATION.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "e3c9152b5fd53e276af99384b771a2eb236f1bfc72c8961a7b56f3859dca7486"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-application_shutdown_failure_contracts-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "724c7558ec993cd4d67ce585cb79c25f6418a17282e6645a9ec72d4ab6feb059"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-application_shutdown_fixture-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "6b7e71d29e417f3d668460e24735f716de8d2c7b8e8446f65735aa7bf465a562"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-hook-1.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "b2c4b976a05a97d0f6e610fd9e18609582a80962a2b849e35f0f4c1d6152a1b5"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-hook-2.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "643bb489221bb4a59fabe321ca74f0231f5cc37417d0bdfc10bdf29e06ad41f1"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-hook-3.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "cf640f05460c954f11c6d2f9d4447c6dd841e7ed01765bb1d87d91bd3b5b9923"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-hook-4.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "4b0e43e375cd837ed8d372f4852a855f2f11daa4d24fbf0db79689b516ef9c50"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-socket_close_semantics_contracts-RESULT.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "9eae06498b5313ef0fcf610174673daca64ea0ada75595d281ad3b9fb0a54d2c"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-timer_failure_contracts-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "5625206219b4d9ec7b2ee6af8462a2f88b7c7cd90244285523c33da1310f4ba7"
+    },
+    {
+      "path": "docs/evidence/shutdown/after-timer_failure_contracts-RESULT.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "0b52711e191c8f4bc2c02672bc51e09adc5c90df0dcec4370c78a2ec4206d0b9"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-application_shutdown_failure_contracts-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "9676f79f4e2a77a9a15c45a312fced39d38b3e1175dbe7c7239140eff5df4ea6"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-application_shutdown_fixture-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "2e4edd361b9e329d03d20a136ceb94e17e1935ce03e458c0a1dc66c24f9d3d17"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-hook-1.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "8342a5ae13878905b6ac4d6e010e452ee62b82d8a1040fa37b7147429c1c5e66"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-hook-2.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "8342a5ae13878905b6ac4d6e010e452ee62b82d8a1040fa37b7147429c1c5e66"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-hook-3.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "8342a5ae13878905b6ac4d6e010e452ee62b82d8a1040fa37b7147429c1c5e66"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-hook-4.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "8342a5ae13878905b6ac4d6e010e452ee62b82d8a1040fa37b7147429c1c5e66"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-socket_close_semantics_contracts-RESULT.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "9eae06498b5313ef0fcf610174673daca64ea0ada75595d281ad3b9fb0a54d2c"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-timer_failure_contracts-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "956d50d4b36d0e8f8e86bdc685ae85623260a7f4eaf0a075b1041c286e4ea1a2"
+    },
+    {
+      "path": "docs/evidence/shutdown/before-timer_failure_contracts-RESULT.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "0b52711e191c8f4bc2c02672bc51e09adc5c90df0dcec4370c78a2ec4206d0b9"
+    },
+    {
+      "path": "docs/evidence/shutdown/listener_close_probe.cpp.txt",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "926806f70c5f7cf15c125ccdb29a482d27baf9c90d6d9d2562ce05a1d9c3dd2d"
+    },
+    {
+      "path": "governance/CURRENT_SCOPE.md",
+      "change": "MODIFIED",
+      "before_sha256": "e8200de74dd7c879211245c447bc1b5b669baae0215bb9654606e80c2799340c",
+      "after_sha256": "2045e38ecb9ae2732bea50d12f03b7a4aadcb77d8f350ba60197ddf4aff65dde"
+    },
+    {
+      "path": "metadata/BUILD_PARTITION_POLICY.json",
+      "change": "MODIFIED",
+      "before_sha256": "ac315b98252a6335d38f31d6c32d25f6933bab85786a9396dc59fb048e1eb9d8",
+      "after_sha256": "c657595a4551c752cc7860b56ab39c8ff63f845a26f4d3d4fc9e01fddf9e7222"
+    },
+    {
+      "path": "metadata/METADATA_OWNERSHIP.json",
+      "change": "MODIFIED",
+      "before_sha256": "22e3df28c529ab98ba7a21646f4c00fd751c5b8c8cbac9efddd7bbb6aefbeee1",
+      "after_sha256": "6346aed20307b6495b30094ce5e9f85efa698ba47641c6cb479aeb54db61e7cc"
+    },
+    {
+      "path": "metadata/RUNTIME_CURRENT_STATUS.json",
+      "change": "MODIFIED",
+      "before_sha256": "474b72b07a133c81ae36a27086bc9d5ce99667fdb157d9d13900cc6742829868",
+      "after_sha256": "5f90e6ba3afb5ac0a15f89f93a5769cb846c3f41acf8c7b0731746bd12fd9591"
+    },
+    {
+      "path": "metadata/SHUTDOWN_RECOVERY_REVIEW.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "ff3551f494cec8ef609b66a120f373cf35987deeee120a1f21d68e1db23189e1"
+    },
+    {
+      "path": "metadata/SOURCE_FILES.json",
+      "change": "MODIFIED",
+      "before_sha256": "1c89c9524a6961aa8a22de619cbc2f6a1af9862cc99495f76929902acbaa53e5",
+      "after_sha256": "4f68f10f01f5383f5ceb80edae8949a01d40b7e47852955ea4515e71d85baa50"
+    }
+  ]
+}

@@ -1,0 +1,4671 @@
+{
+  "schema": "surge.build-partition-tests.v1",
+  "classification": "NOT_RELEASE",
+  "runs": {
+    "baseline/release-full": {
+      "passed": 185,
+      "failed": 0,
+      "skipped": 0,
+      "seconds_sum": 151.4632344,
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "result": "PASS",
+          "seconds": 3.47525,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_golden_pe",
+          "result": "PASS",
+          "seconds": 0.486471,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_named_imports",
+          "result": "PASS",
+          "seconds": 0.113417,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_msvc_link",
+          "result": "PASS",
+          "seconds": 0.0559219,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_ownership_packaging",
+          "result": "PASS",
+          "seconds": 1.20579,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_target_requirements",
+          "result": "PASS",
+          "seconds": 0.148971,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_vendor_contract",
+          "result": "PASS",
+          "seconds": 2.06358,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_wine_runner",
+          "result": "PASS",
+          "seconds": 0.581791,
+          "failure": null
+        },
+        {
+          "name": "vendor_api_smoke",
+          "result": "PASS",
+          "seconds": 0.188587,
+          "failure": null
+        },
+        {
+          "name": "vendor_io_contracts",
+          "result": "PASS",
+          "seconds": 0.182594,
+          "failure": null
+        },
+        {
+          "name": "vendor_source_integrity",
+          "result": "PASS",
+          "seconds": 0.448158,
+          "failure": null
+        },
+        {
+          "name": "vendor_pegtl_smoke",
+          "result": "PASS",
+          "seconds": 0.181224,
+          "failure": null
+        },
+        {
+          "name": "crt_runtime_smoke",
+          "result": "PASS",
+          "seconds": 0.167893,
+          "failure": null
+        },
+        {
+          "name": "session_flow_contracts",
+          "result": "PASS",
+          "seconds": 0.144472,
+          "failure": null
+        },
+        {
+          "name": "crypt_path_probe_contracts",
+          "result": "PASS",
+          "seconds": 0.171078,
+          "failure": null
+        },
+        {
+          "name": "network_policy_contracts",
+          "result": "PASS",
+          "seconds": 3.42253,
+          "failure": null
+        },
+        {
+          "name": "atomic_persistence_contracts",
+          "result": "PASS",
+          "seconds": 0.197012,
+          "failure": null
+        },
+        {
+          "name": "handler_pool_contracts",
+          "result": "PASS",
+          "seconds": 0.933946,
+          "failure": null
+        },
+        {
+          "name": "unload_guard_contracts",
+          "result": "PASS",
+          "seconds": 0.137481,
+          "failure": null
+        },
+        {
+          "name": "listener_port_contracts",
+          "result": "PASS",
+          "seconds": 0.167817,
+          "failure": null
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "result": "PASS",
+          "seconds": 0.161526,
+          "failure": null
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "result": "PASS",
+          "seconds": 0.0898476,
+          "failure": null
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "result": "PASS",
+          "seconds": 0.688119,
+          "failure": null
+        },
+        {
+          "name": "file_copy_contracts",
+          "result": "PASS",
+          "seconds": 0.113596,
+          "failure": null
+        },
+        {
+          "name": "file_copy_windows_integration",
+          "result": "PASS",
+          "seconds": 0.357024,
+          "failure": null
+        },
+        {
+          "name": "bootstrap_contracts",
+          "result": "PASS",
+          "seconds": 0.244607,
+          "failure": null
+        },
+        {
+          "name": "crt_thread_contracts",
+          "result": "PASS",
+          "seconds": 0.264983,
+          "failure": null
+        },
+        {
+          "name": "host_init_contracts",
+          "result": "PASS",
+          "seconds": 0.216387,
+          "failure": null
+        },
+        {
+          "name": "registry_contracts",
+          "result": "PASS",
+          "seconds": 0.265421,
+          "failure": null
+        },
+        {
+          "name": "native_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.363824,
+          "failure": null
+        },
+        {
+          "name": "host_callback_contracts",
+          "result": "PASS",
+          "seconds": 1.73466,
+          "failure": null
+        },
+        {
+          "name": "network_hook_contracts",
+          "result": "PASS",
+          "seconds": 0.492173,
+          "failure": null
+        },
+        {
+          "name": "online_contracts",
+          "result": "PASS",
+          "seconds": 0.533394,
+          "failure": null
+        },
+        {
+          "name": "configuration_contracts",
+          "result": "PASS",
+          "seconds": 0.78677,
+          "failure": null
+        },
+        {
+          "name": "execution_contracts",
+          "result": "PASS",
+          "seconds": 0.643126,
+          "failure": null
+        },
+        {
+          "name": "libraries_contracts",
+          "result": "PASS",
+          "seconds": 0.421907,
+          "failure": null
+        },
+        {
+          "name": "startup_contracts",
+          "result": "PASS",
+          "seconds": 0.27368,
+          "failure": null
+        },
+        {
+          "name": "parser_contracts",
+          "result": "PASS",
+          "seconds": 0.242701,
+          "failure": null
+        },
+        {
+          "name": "config_order_contracts",
+          "result": "PASS",
+          "seconds": 0.292193,
+          "failure": null
+        },
+        {
+          "name": "config_pipeline_contracts",
+          "result": "PASS",
+          "seconds": 0.243742,
+          "failure": null
+        },
+        {
+          "name": "config_hash_contracts",
+          "result": "PASS",
+          "seconds": 0.492292,
+          "failure": null
+        },
+        {
+          "name": "config_application_contracts",
+          "result": "PASS",
+          "seconds": 0.287651,
+          "failure": null
+        },
+        {
+          "name": "config_startup_contracts",
+          "result": "PASS",
+          "seconds": 0.244614,
+          "failure": null
+        },
+        {
+          "name": "achievement_writer_contracts",
+          "result": "PASS",
+          "seconds": 0.169906,
+          "failure": null
+        },
+        {
+          "name": "achievement_storage_contracts",
+          "result": "PASS",
+          "seconds": 0.190495,
+          "failure": null
+        },
+        {
+          "name": "calendar_contracts",
+          "result": "PASS",
+          "seconds": 0.350047,
+          "failure": null
+        },
+        {
+          "name": "timestamp_contracts",
+          "result": "PASS",
+          "seconds": 0.161064,
+          "failure": null
+        },
+        {
+          "name": "utc_contracts",
+          "result": "PASS",
+          "seconds": 0.32149,
+          "failure": null
+        },
+        {
+          "name": "achievement_runtime_contracts",
+          "result": "PASS",
+          "seconds": 0.350231,
+          "failure": null
+        },
+        {
+          "name": "event_queue_contracts",
+          "result": "PASS",
+          "seconds": 0.22143,
+          "failure": null
+        },
+        {
+          "name": "event_queue_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.1679,
+          "failure": null
+        },
+        {
+          "name": "session_handler_contracts",
+          "result": "PASS",
+          "seconds": 0.270854,
+          "failure": null
+        },
+        {
+          "name": "session_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.182838,
+          "failure": null
+        },
+        {
+          "name": "socket_operations_contracts",
+          "result": "PASS",
+          "seconds": 0.213658,
+          "failure": null
+        },
+        {
+          "name": "socket_native_contracts",
+          "result": "PASS",
+          "seconds": 0.192129,
+          "failure": null
+        },
+        {
+          "name": "socket_acceptor_contracts",
+          "result": "PASS",
+          "seconds": 0.19743,
+          "failure": null
+        },
+        {
+          "name": "socket_acceptor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.215935,
+          "failure": null
+        },
+        {
+          "name": "socket_lifecycle_contracts",
+          "result": "PASS",
+          "seconds": 0.101187,
+          "failure": null
+        },
+        {
+          "name": "socket_lifecycle_native_contracts",
+          "result": "PASS",
+          "seconds": 0.198409,
+          "failure": null
+        },
+        {
+          "name": "socket_close_contracts",
+          "result": "PASS",
+          "seconds": 0.311751,
+          "failure": null
+        },
+        {
+          "name": "socket_closing_contracts",
+          "result": "PASS",
+          "seconds": 0.318671,
+          "failure": null
+        },
+        {
+          "name": "socket_cancellation_contracts",
+          "result": "PASS",
+          "seconds": 0.177884,
+          "failure": null
+        },
+        {
+          "name": "socket_cancellation_native_contracts",
+          "result": "PASS",
+          "seconds": 0.177558,
+          "failure": null
+        },
+        {
+          "name": "socket_recycle_contracts",
+          "result": "PASS",
+          "seconds": 0.232482,
+          "failure": null
+        },
+        {
+          "name": "socket_recycle_storage_contracts",
+          "result": "PASS",
+          "seconds": 0.215571,
+          "failure": null
+        },
+        {
+          "name": "socket_service_registry_contracts",
+          "result": "PASS",
+          "seconds": 0.186181,
+          "failure": null
+        },
+        {
+          "name": "socket_service_registry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.183949,
+          "failure": null
+        },
+        {
+          "name": "socket_service_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.124936,
+          "failure": null
+        },
+        {
+          "name": "socket_service_constructor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.207139,
+          "failure": null
+        },
+        {
+          "name": "socket_scheduler_registry_contracts",
+          "result": "PASS",
+          "seconds": 0.137461,
+          "failure": null
+        },
+        {
+          "name": "socket_scheduler_registry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.097555,
+          "failure": null
+        },
+        {
+          "name": "socket_iocp_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.0988679,
+          "failure": null
+        },
+        {
+          "name": "socket_iocp_constructor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.18137,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_startup_contracts",
+          "result": "PASS",
+          "seconds": 0.290889,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_startup_native_contracts",
+          "result": "PASS",
+          "seconds": 0.194767,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_run_contracts",
+          "result": "PASS",
+          "seconds": 0.11418,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_run_native_contracts",
+          "result": "PASS",
+          "seconds": 0.100665,
+          "failure": null
+        },
+        {
+          "name": "socket_completion_dispatcher_contracts",
+          "result": "PASS",
+          "seconds": 0.147229,
+          "failure": null
+        },
+        {
+          "name": "socket_completion_dispatcher_native_contracts",
+          "result": "PASS",
+          "seconds": 0.178933,
+          "failure": null
+        },
+        {
+          "name": "socket_posted_operation_contracts",
+          "result": "PASS",
+          "seconds": 0.177984,
+          "failure": null
+        },
+        {
+          "name": "socket_posted_operation_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.178118,
+          "failure": null
+        },
+        {
+          "name": "socket_io_completion_contracts",
+          "result": "PASS",
+          "seconds": 0.0967585,
+          "failure": null
+        },
+        {
+          "name": "socket_io_completion_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.181846,
+          "failure": null
+        },
+        {
+          "name": "socket_handler_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.200405,
+          "failure": null
+        },
+        {
+          "name": "socket_handler_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.232324,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_write_contracts",
+          "result": "PASS",
+          "seconds": 0.186404,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_write_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.128217,
+          "failure": null
+        },
+        {
+          "name": "socket_environment_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.113718,
+          "failure": null
+        },
+        {
+          "name": "socket_environment_constructor_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.190335,
+          "failure": null
+        },
+        {
+          "name": "socket_write_finish_contracts",
+          "result": "PASS",
+          "seconds": 0.187703,
+          "failure": null
+        },
+        {
+          "name": "socket_write_finish_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.125253,
+          "failure": null
+        },
+        {
+          "name": "socket_queued_write_contracts",
+          "result": "PASS",
+          "seconds": 0.178463,
+          "failure": null
+        },
+        {
+          "name": "socket_queued_write_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.262277,
+          "failure": null
+        },
+        {
+          "name": "socket_async_receive_contracts",
+          "result": "PASS",
+          "seconds": 0.198525,
+          "failure": null
+        },
+        {
+          "name": "socket_async_receive_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.197187,
+          "failure": null
+        },
+        {
+          "name": "socket_receive_buffer_contracts",
+          "result": "PASS",
+          "seconds": 0.172258,
+          "failure": null
+        },
+        {
+          "name": "socket_receive_buffer_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.132639,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_read_contracts",
+          "result": "PASS",
+          "seconds": 0.0946235,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_read_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.170588,
+          "failure": null
+        },
+        {
+          "name": "socket_frame_read_contracts",
+          "result": "PASS",
+          "seconds": 0.184478,
+          "failure": null
+        },
+        {
+          "name": "socket_frame_read_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.76245,
+          "failure": null
+        },
+        {
+          "name": "socket_message_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.174083,
+          "failure": null
+        },
+        {
+          "name": "socket_message_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.828797,
+          "failure": null
+        },
+        {
+          "name": "socket_response_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.363484,
+          "failure": null
+        },
+        {
+          "name": "socket_response_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.610599,
+          "failure": null
+        },
+        {
+          "name": "socket_owned_response_contracts",
+          "result": "PASS",
+          "seconds": 0.987309,
+          "failure": null
+        },
+        {
+          "name": "socket_owned_response_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.352767,
+          "failure": null
+        },
+        {
+          "name": "socket_response_containers_contracts",
+          "result": "PASS",
+          "seconds": 0.469327,
+          "failure": null
+        },
+        {
+          "name": "socket_response_containers_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.193151,
+          "failure": null
+        },
+        {
+          "name": "socket_message_core_bridge_contracts",
+          "result": "PASS",
+          "seconds": 0.186946,
+          "failure": null
+        },
+        {
+          "name": "socket_message_core_bridge_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.211408,
+          "failure": null
+        },
+        {
+          "name": "socket_request_mutation_contracts",
+          "result": "PASS",
+          "seconds": 0.131523,
+          "failure": null
+        },
+        {
+          "name": "socket_request_mutation_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.162855,
+          "failure": null
+        },
+        {
+          "name": "socket_request_growth_contracts",
+          "result": "PASS",
+          "seconds": 0.151568,
+          "failure": null
+        },
+        {
+          "name": "socket_request_growth_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.349638,
+          "failure": null
+        },
+        {
+          "name": "socket_response_hex_contracts",
+          "result": "PASS",
+          "seconds": 0.592144,
+          "failure": null
+        },
+        {
+          "name": "socket_response_hex_integration_contracts",
+          "result": "PASS",
+          "seconds": 2.0244,
+          "failure": null
+        },
+        {
+          "name": "socket_native_message_contracts",
+          "result": "PASS",
+          "seconds": 1.59576,
+          "failure": null
+        },
+        {
+          "name": "socket_native_message_integration_contracts",
+          "result": "PASS",
+          "seconds": 1.30373,
+          "failure": null
+        },
+        {
+          "name": "socket_append_growth_contracts",
+          "result": "PASS",
+          "seconds": 0.344233,
+          "failure": null
+        },
+        {
+          "name": "socket_append_growth_integration_contracts",
+          "result": "PASS",
+          "seconds": 2.05078,
+          "failure": null
+        },
+        {
+          "name": "socket_prefix_cipher_contracts",
+          "result": "PASS",
+          "seconds": 0.617486,
+          "failure": null
+        },
+        {
+          "name": "socket_prefix_cipher_integration_contracts",
+          "result": "PASS",
+          "seconds": 4.14433,
+          "failure": null
+        },
+        {
+          "name": "socket_cipher_session_contracts",
+          "result": "PASS",
+          "seconds": 0.339135,
+          "failure": null
+        },
+        {
+          "name": "socket_cipher_session_integration_contracts",
+          "result": "PASS",
+          "seconds": 5.375,
+          "failure": null
+        },
+        {
+          "name": "socket_native_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.129266,
+          "failure": null
+        },
+        {
+          "name": "socket_native_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 4.64722,
+          "failure": null
+        },
+        {
+          "name": "socket_native_document_contracts",
+          "result": "PASS",
+          "seconds": 0.176421,
+          "failure": null
+        },
+        {
+          "name": "socket_native_document_integration_contracts",
+          "result": "PASS",
+          "seconds": 4.40993,
+          "failure": null
+        },
+        {
+          "name": "socket_document_clear_contracts",
+          "result": "PASS",
+          "seconds": 0.212044,
+          "failure": null
+        },
+        {
+          "name": "socket_document_clear_integration_contracts",
+          "result": "PASS",
+          "seconds": 5.46511,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_contracts",
+          "result": "PASS",
+          "seconds": 0.122731,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_integration_contracts",
+          "result": "PASS",
+          "seconds": 10.8362,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_contracts",
+          "result": "PASS",
+          "seconds": 0.175849,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_integration_contracts",
+          "result": "PASS",
+          "seconds": 55.574,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_allocate_contracts",
+          "result": "PASS",
+          "seconds": 0.209853,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_allocate_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.190865,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_append_contracts",
+          "result": "PASS",
+          "seconds": 0.192419,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_append_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.161206,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_clear_contracts",
+          "result": "PASS",
+          "seconds": 0.152591,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_clear_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.177571,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_destruct_contracts",
+          "result": "PASS",
+          "seconds": 0.130213,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_destruct_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.174648,
+          "failure": null
+        },
+        {
+          "name": "socket_node_base_contracts",
+          "result": "PASS",
+          "seconds": 0.182874,
+          "failure": null
+        },
+        {
+          "name": "socket_node_base_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.126065,
+          "failure": null
+        },
+        {
+          "name": "socket_parse_entry_contracts",
+          "result": "PASS",
+          "seconds": 0.113674,
+          "failure": null
+        },
+        {
+          "name": "socket_parse_entry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.248069,
+          "failure": null
+        },
+        {
+          "name": "socket_document_error_contracts",
+          "result": "PASS",
+          "seconds": 0.122033,
+          "failure": null
+        },
+        {
+          "name": "socket_document_error_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.106704,
+          "failure": null
+        },
+        {
+          "name": "socket_node_parse_contracts",
+          "result": "PASS",
+          "seconds": 0.182099,
+          "failure": null
+        },
+        {
+          "name": "socket_node_parse_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.375462,
+          "failure": null
+        },
+        {
+          "name": "socket_node_identify_contracts",
+          "result": "PASS",
+          "seconds": 0.26794,
+          "failure": null
+        },
+        {
+          "name": "socket_node_identify_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.128732,
+          "failure": null
+        },
+        {
+          "name": "socket_node_constructors_contracts",
+          "result": "PASS",
+          "seconds": 0.178622,
+          "failure": null
+        },
+        {
+          "name": "socket_node_constructors_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.182936,
+          "failure": null
+        },
+        {
+          "name": "socket_node_insertion_contracts",
+          "result": "PASS",
+          "seconds": 0.187187,
+          "failure": null
+        },
+        {
+          "name": "socket_node_insertion_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.137458,
+          "failure": null
+        },
+        {
+          "name": "socket_node_string_contracts",
+          "result": "PASS",
+          "seconds": 0.181979,
+          "failure": null
+        },
+        {
+          "name": "socket_node_string_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.175603,
+          "failure": null
+        },
+        {
+          "name": "server_contracts",
+          "result": "PASS",
+          "seconds": 0.188251,
+          "failure": null
+        },
+        {
+          "name": "messages_contracts",
+          "result": "PASS",
+          "seconds": 0.175319,
+          "failure": null
+        },
+        {
+          "name": "handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.129796,
+          "failure": null
+        },
+        {
+          "name": "crypto_contracts",
+          "result": "PASS",
+          "seconds": 0.184957,
+          "failure": null
+        },
+        {
+          "name": "xml_printer_contracts",
+          "result": "PASS",
+          "seconds": 0.303842,
+          "failure": null
+        },
+        {
+          "name": "xml_reader_contracts",
+          "result": "PASS",
+          "seconds": 0.231679,
+          "failure": null
+        },
+        {
+          "name": "licensing_contracts",
+          "result": "PASS",
+          "seconds": 0.305886,
+          "failure": null
+        },
+        {
+          "name": "hash_contracts",
+          "result": "PASS",
+          "seconds": 0.182712,
+          "failure": null
+        },
+        {
+          "name": "token_contracts",
+          "result": "PASS",
+          "seconds": 0.190908,
+          "failure": null
+        },
+        {
+          "name": "file_io_contracts",
+          "result": "PASS",
+          "seconds": 0.183087,
+          "failure": null
+        },
+        {
+          "name": "license_file_integration",
+          "result": "PASS",
+          "seconds": 0.190846,
+          "failure": null
+        },
+        {
+          "name": "status_contracts",
+          "result": "PASS",
+          "seconds": 0.150366,
+          "failure": null
+        },
+        {
+          "name": "path_contracts",
+          "result": "PASS",
+          "seconds": 0.17869,
+          "failure": null
+        },
+        {
+          "name": "encoding_contracts",
+          "result": "PASS",
+          "seconds": 0.119788,
+          "failure": null
+        },
+        {
+          "name": "windows_effects_integration",
+          "result": "PASS",
+          "seconds": 0.189177,
+          "failure": null
+        },
+        {
+          "name": "content_handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.175683,
+          "failure": null
+        },
+        {
+          "name": "misc_handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.174026,
+          "failure": null
+        },
+        {
+          "name": "dispatch_integration",
+          "result": "PASS",
+          "seconds": 0.183502,
+          "failure": null
+        },
+        {
+          "name": "hook_adapter_integration",
+          "result": "PASS",
+          "seconds": 0.257598,
+          "failure": null
+        },
+        {
+          "name": "vdf_parser_regressions",
+          "result": "PASS",
+          "seconds": 0.316801,
+          "failure": null
+        },
+        {
+          "name": "dll_source_smoke",
+          "result": "PASS",
+          "seconds": 0.551053,
+          "failure": null
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "result": "PASS",
+          "seconds": 0.75384,
+          "failure": null
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "result": "PASS",
+          "seconds": 0.447465,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_contract",
+          "result": "PASS",
+          "seconds": 0.141457,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "result": "PASS",
+          "seconds": 0.251611,
+          "failure": null
+        },
+        {
+          "name": "hook_engine_fixtures",
+          "result": "PASS",
+          "seconds": 0.24505,
+          "failure": null
+        }
+      ]
+    },
+    "release-full": {
+      "passed": 186,
+      "failed": 2,
+      "skipped": 0,
+      "seconds_sum": 184.6226655,
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "result": "PASS",
+          "seconds": 2.93878,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_golden_pe",
+          "result": "PASS",
+          "seconds": 0.441237,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_named_imports",
+          "result": "PASS",
+          "seconds": 0.0688672,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_msvc_link",
+          "result": "PASS",
+          "seconds": 0.0511043,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_ownership_packaging",
+          "result": "PASS",
+          "seconds": 1.03999,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_target_requirements",
+          "result": "PASS",
+          "seconds": 0.152132,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_vendor_contract",
+          "result": "PASS",
+          "seconds": 1.21729,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_wine_runner",
+          "result": "PASS",
+          "seconds": 0.539759,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_build_partition",
+          "result": "PASS",
+          "seconds": 0.173019,
+          "failure": null
+        },
+        {
+          "name": "vendor_api_smoke",
+          "result": "PASS",
+          "seconds": 0.136859,
+          "failure": null
+        },
+        {
+          "name": "vendor_io_contracts",
+          "result": "PASS",
+          "seconds": 0.16946,
+          "failure": null
+        },
+        {
+          "name": "vendor_source_integrity",
+          "result": "PASS",
+          "seconds": 0.384432,
+          "failure": null
+        },
+        {
+          "name": "vendor_pegtl_smoke",
+          "result": "PASS",
+          "seconds": 0.179668,
+          "failure": null
+        },
+        {
+          "name": "crt_runtime_smoke",
+          "result": "PASS",
+          "seconds": 0.122153,
+          "failure": null
+        },
+        {
+          "name": "production_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.273017,
+          "failure": null
+        },
+        {
+          "name": "production_network_hook_contracts",
+          "result": "PASS",
+          "seconds": 0.167327,
+          "failure": null
+        },
+        {
+          "name": "session_flow_contracts",
+          "result": "PASS",
+          "seconds": 0.0827961,
+          "failure": null
+        },
+        {
+          "name": "crypt_path_probe_contracts",
+          "result": "PASS",
+          "seconds": 0.110354,
+          "failure": null
+        },
+        {
+          "name": "network_policy_contracts",
+          "result": "FAIL",
+          "seconds": 5.22503,
+          "failure": "Failed"
+        },
+        {
+          "name": "atomic_persistence_contracts",
+          "result": "PASS",
+          "seconds": 0.175815,
+          "failure": null
+        },
+        {
+          "name": "handler_pool_contracts",
+          "result": "PASS",
+          "seconds": 0.730735,
+          "failure": null
+        },
+        {
+          "name": "unload_guard_contracts",
+          "result": "PASS",
+          "seconds": 0.0862345,
+          "failure": null
+        },
+        {
+          "name": "listener_port_contracts",
+          "result": "PASS",
+          "seconds": 0.219044,
+          "failure": null
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "result": "PASS",
+          "seconds": 0.170866,
+          "failure": null
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "result": "PASS",
+          "seconds": 0.130064,
+          "failure": null
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "result": "PASS",
+          "seconds": 0.663091,
+          "failure": null
+        },
+        {
+          "name": "file_copy_contracts",
+          "result": "PASS",
+          "seconds": 0.122893,
+          "failure": null
+        },
+        {
+          "name": "file_copy_windows_integration",
+          "result": "PASS",
+          "seconds": 0.179457,
+          "failure": null
+        },
+        {
+          "name": "bootstrap_contracts",
+          "result": "PASS",
+          "seconds": 0.125757,
+          "failure": null
+        },
+        {
+          "name": "crt_thread_contracts",
+          "result": "PASS",
+          "seconds": 0.119692,
+          "failure": null
+        },
+        {
+          "name": "host_init_contracts",
+          "result": "PASS",
+          "seconds": 0.163417,
+          "failure": null
+        },
+        {
+          "name": "registry_contracts",
+          "result": "PASS",
+          "seconds": 0.09453,
+          "failure": null
+        },
+        {
+          "name": "native_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.1936,
+          "failure": null
+        },
+        {
+          "name": "host_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.187118,
+          "failure": null
+        },
+        {
+          "name": "network_hook_contracts",
+          "result": "PASS",
+          "seconds": 0.117504,
+          "failure": null
+        },
+        {
+          "name": "online_contracts",
+          "result": "PASS",
+          "seconds": 0.0817581,
+          "failure": null
+        },
+        {
+          "name": "configuration_contracts",
+          "result": "PASS",
+          "seconds": 0.178604,
+          "failure": null
+        },
+        {
+          "name": "execution_contracts",
+          "result": "PASS",
+          "seconds": 0.172414,
+          "failure": null
+        },
+        {
+          "name": "libraries_contracts",
+          "result": "PASS",
+          "seconds": 0.0875948,
+          "failure": null
+        },
+        {
+          "name": "startup_contracts",
+          "result": "PASS",
+          "seconds": 0.0965723,
+          "failure": null
+        },
+        {
+          "name": "parser_contracts",
+          "result": "PASS",
+          "seconds": 0.11804,
+          "failure": null
+        },
+        {
+          "name": "config_order_contracts",
+          "result": "PASS",
+          "seconds": 0.17585,
+          "failure": null
+        },
+        {
+          "name": "config_pipeline_contracts",
+          "result": "PASS",
+          "seconds": 0.16762,
+          "failure": null
+        },
+        {
+          "name": "config_hash_contracts",
+          "result": "PASS",
+          "seconds": 0.228574,
+          "failure": null
+        },
+        {
+          "name": "config_application_contracts",
+          "result": "PASS",
+          "seconds": 0.231637,
+          "failure": null
+        },
+        {
+          "name": "config_startup_contracts",
+          "result": "PASS",
+          "seconds": 0.109314,
+          "failure": null
+        },
+        {
+          "name": "achievement_writer_contracts",
+          "result": "PASS",
+          "seconds": 0.168763,
+          "failure": null
+        },
+        {
+          "name": "achievement_storage_contracts",
+          "result": "PASS",
+          "seconds": 0.1769,
+          "failure": null
+        },
+        {
+          "name": "calendar_contracts",
+          "result": "PASS",
+          "seconds": 0.192844,
+          "failure": null
+        },
+        {
+          "name": "timestamp_contracts",
+          "result": "PASS",
+          "seconds": 0.229887,
+          "failure": null
+        },
+        {
+          "name": "utc_contracts",
+          "result": "PASS",
+          "seconds": 0.209491,
+          "failure": null
+        },
+        {
+          "name": "achievement_runtime_contracts",
+          "result": "PASS",
+          "seconds": 0.283209,
+          "failure": null
+        },
+        {
+          "name": "event_queue_contracts",
+          "result": "PASS",
+          "seconds": 0.127456,
+          "failure": null
+        },
+        {
+          "name": "event_queue_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.183129,
+          "failure": null
+        },
+        {
+          "name": "session_handler_contracts",
+          "result": "PASS",
+          "seconds": 0.123118,
+          "failure": null
+        },
+        {
+          "name": "session_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.172144,
+          "failure": null
+        },
+        {
+          "name": "socket_operations_contracts",
+          "result": "PASS",
+          "seconds": 0.163822,
+          "failure": null
+        },
+        {
+          "name": "socket_native_contracts",
+          "result": "PASS",
+          "seconds": 0.121219,
+          "failure": null
+        },
+        {
+          "name": "socket_acceptor_contracts",
+          "result": "PASS",
+          "seconds": 0.132528,
+          "failure": null
+        },
+        {
+          "name": "socket_acceptor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.125707,
+          "failure": null
+        },
+        {
+          "name": "socket_lifecycle_contracts",
+          "result": "PASS",
+          "seconds": 0.183852,
+          "failure": null
+        },
+        {
+          "name": "socket_lifecycle_native_contracts",
+          "result": "PASS",
+          "seconds": 0.102076,
+          "failure": null
+        },
+        {
+          "name": "socket_close_contracts",
+          "result": "PASS",
+          "seconds": 0.181983,
+          "failure": null
+        },
+        {
+          "name": "socket_closing_contracts",
+          "result": "PASS",
+          "seconds": 0.17255,
+          "failure": null
+        },
+        {
+          "name": "socket_cancellation_contracts",
+          "result": "PASS",
+          "seconds": 0.117969,
+          "failure": null
+        },
+        {
+          "name": "socket_cancellation_native_contracts",
+          "result": "PASS",
+          "seconds": 0.125805,
+          "failure": null
+        },
+        {
+          "name": "socket_recycle_contracts",
+          "result": "PASS",
+          "seconds": 0.168892,
+          "failure": null
+        },
+        {
+          "name": "socket_recycle_storage_contracts",
+          "result": "PASS",
+          "seconds": 0.176865,
+          "failure": null
+        },
+        {
+          "name": "socket_service_registry_contracts",
+          "result": "PASS",
+          "seconds": 0.120138,
+          "failure": null
+        },
+        {
+          "name": "socket_service_registry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0919236,
+          "failure": null
+        },
+        {
+          "name": "socket_service_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.165273,
+          "failure": null
+        },
+        {
+          "name": "socket_service_constructor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.120253,
+          "failure": null
+        },
+        {
+          "name": "socket_scheduler_registry_contracts",
+          "result": "PASS",
+          "seconds": 0.170739,
+          "failure": null
+        },
+        {
+          "name": "socket_scheduler_registry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.160627,
+          "failure": null
+        },
+        {
+          "name": "socket_iocp_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.125847,
+          "failure": null
+        },
+        {
+          "name": "socket_iocp_constructor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.12626,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_startup_contracts",
+          "result": "PASS",
+          "seconds": 0.165978,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_startup_native_contracts",
+          "result": "PASS",
+          "seconds": 0.164655,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_run_contracts",
+          "result": "PASS",
+          "seconds": 0.243555,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_run_native_contracts",
+          "result": "PASS",
+          "seconds": 0.197249,
+          "failure": null
+        },
+        {
+          "name": "socket_completion_dispatcher_contracts",
+          "result": "PASS",
+          "seconds": 0.195522,
+          "failure": null
+        },
+        {
+          "name": "socket_completion_dispatcher_native_contracts",
+          "result": "PASS",
+          "seconds": 0.181136,
+          "failure": null
+        },
+        {
+          "name": "socket_posted_operation_contracts",
+          "result": "PASS",
+          "seconds": 0.317573,
+          "failure": null
+        },
+        {
+          "name": "socket_posted_operation_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.288937,
+          "failure": null
+        },
+        {
+          "name": "socket_io_completion_contracts",
+          "result": "PASS",
+          "seconds": 0.137074,
+          "failure": null
+        },
+        {
+          "name": "socket_io_completion_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.17469,
+          "failure": null
+        },
+        {
+          "name": "socket_handler_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.126878,
+          "failure": null
+        },
+        {
+          "name": "socket_handler_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0835495,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_write_contracts",
+          "result": "PASS",
+          "seconds": 0.136199,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_write_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.081444,
+          "failure": null
+        },
+        {
+          "name": "socket_environment_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.114921,
+          "failure": null
+        },
+        {
+          "name": "socket_environment_constructor_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.124879,
+          "failure": null
+        },
+        {
+          "name": "socket_write_finish_contracts",
+          "result": "PASS",
+          "seconds": 0.146588,
+          "failure": null
+        },
+        {
+          "name": "socket_write_finish_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.114582,
+          "failure": null
+        },
+        {
+          "name": "socket_queued_write_contracts",
+          "result": "PASS",
+          "seconds": 0.18638,
+          "failure": null
+        },
+        {
+          "name": "socket_queued_write_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0892408,
+          "failure": null
+        },
+        {
+          "name": "socket_async_receive_contracts",
+          "result": "PASS",
+          "seconds": 0.139277,
+          "failure": null
+        },
+        {
+          "name": "socket_async_receive_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0869149,
+          "failure": null
+        },
+        {
+          "name": "socket_receive_buffer_contracts",
+          "result": "PASS",
+          "seconds": 0.185474,
+          "failure": null
+        },
+        {
+          "name": "socket_receive_buffer_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0858856,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_read_contracts",
+          "result": "PASS",
+          "seconds": 0.128807,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_read_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.081187,
+          "failure": null
+        },
+        {
+          "name": "socket_frame_read_contracts",
+          "result": "PASS",
+          "seconds": 0.187852,
+          "failure": null
+        },
+        {
+          "name": "socket_frame_read_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.123457,
+          "failure": null
+        },
+        {
+          "name": "socket_message_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.181062,
+          "failure": null
+        },
+        {
+          "name": "socket_message_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.170446,
+          "failure": null
+        },
+        {
+          "name": "socket_response_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.121254,
+          "failure": null
+        },
+        {
+          "name": "socket_response_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.130107,
+          "failure": null
+        },
+        {
+          "name": "socket_owned_response_contracts",
+          "result": "PASS",
+          "seconds": 0.122506,
+          "failure": null
+        },
+        {
+          "name": "socket_owned_response_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.160975,
+          "failure": null
+        },
+        {
+          "name": "socket_response_containers_contracts",
+          "result": "PASS",
+          "seconds": 0.174117,
+          "failure": null
+        },
+        {
+          "name": "socket_response_containers_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.145208,
+          "failure": null
+        },
+        {
+          "name": "socket_message_core_bridge_contracts",
+          "result": "PASS",
+          "seconds": 0.115231,
+          "failure": null
+        },
+        {
+          "name": "socket_message_core_bridge_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.166746,
+          "failure": null
+        },
+        {
+          "name": "socket_request_mutation_contracts",
+          "result": "PASS",
+          "seconds": 0.129993,
+          "failure": null
+        },
+        {
+          "name": "socket_request_mutation_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.168153,
+          "failure": null
+        },
+        {
+          "name": "socket_request_growth_contracts",
+          "result": "PASS",
+          "seconds": 0.178512,
+          "failure": null
+        },
+        {
+          "name": "socket_request_growth_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.188195,
+          "failure": null
+        },
+        {
+          "name": "socket_response_hex_contracts",
+          "result": "PASS",
+          "seconds": 0.17333,
+          "failure": null
+        },
+        {
+          "name": "socket_response_hex_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.519448,
+          "failure": null
+        },
+        {
+          "name": "socket_native_message_contracts",
+          "result": "PASS",
+          "seconds": 0.678847,
+          "failure": null
+        },
+        {
+          "name": "socket_native_message_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.985413,
+          "failure": null
+        },
+        {
+          "name": "socket_append_growth_contracts",
+          "result": "PASS",
+          "seconds": 0.185828,
+          "failure": null
+        },
+        {
+          "name": "socket_append_growth_integration_contracts",
+          "result": "PASS",
+          "seconds": 1.13724,
+          "failure": null
+        },
+        {
+          "name": "socket_prefix_cipher_contracts",
+          "result": "PASS",
+          "seconds": 0.996864,
+          "failure": null
+        },
+        {
+          "name": "socket_prefix_cipher_integration_contracts",
+          "result": "PASS",
+          "seconds": 4.78612,
+          "failure": null
+        },
+        {
+          "name": "socket_cipher_session_contracts",
+          "result": "PASS",
+          "seconds": 0.580917,
+          "failure": null
+        },
+        {
+          "name": "socket_cipher_session_integration_contracts",
+          "result": "PASS",
+          "seconds": 19.2509,
+          "failure": null
+        },
+        {
+          "name": "socket_native_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.452274,
+          "failure": null
+        },
+        {
+          "name": "socket_native_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 9.12379,
+          "failure": null
+        },
+        {
+          "name": "socket_native_document_contracts",
+          "result": "PASS",
+          "seconds": 1.57473,
+          "failure": null
+        },
+        {
+          "name": "socket_native_document_integration_contracts",
+          "result": "PASS",
+          "seconds": 15.092,
+          "failure": null
+        },
+        {
+          "name": "socket_document_clear_contracts",
+          "result": "PASS",
+          "seconds": 0.613506,
+          "failure": null
+        },
+        {
+          "name": "socket_document_clear_integration_contracts",
+          "result": "PASS",
+          "seconds": 7.71733,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_contracts",
+          "result": "PASS",
+          "seconds": 0.558815,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_integration_contracts",
+          "result": "PASS",
+          "seconds": 19.6901,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_contracts",
+          "result": "PASS",
+          "seconds": 0.392548,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_integration_contracts",
+          "result": "FAIL",
+          "seconds": 60.116,
+          "failure": "Timeout"
+        },
+        {
+          "name": "socket_pool_allocate_contracts",
+          "result": "PASS",
+          "seconds": 0.277534,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_allocate_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.217273,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_append_contracts",
+          "result": "PASS",
+          "seconds": 0.202859,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_append_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.445319,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_clear_contracts",
+          "result": "PASS",
+          "seconds": 0.257506,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_clear_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.22265,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_destruct_contracts",
+          "result": "PASS",
+          "seconds": 0.274564,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_destruct_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.221316,
+          "failure": null
+        },
+        {
+          "name": "socket_node_base_contracts",
+          "result": "PASS",
+          "seconds": 0.199181,
+          "failure": null
+        },
+        {
+          "name": "socket_node_base_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.198254,
+          "failure": null
+        },
+        {
+          "name": "socket_parse_entry_contracts",
+          "result": "PASS",
+          "seconds": 0.206751,
+          "failure": null
+        },
+        {
+          "name": "socket_parse_entry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.216399,
+          "failure": null
+        },
+        {
+          "name": "socket_document_error_contracts",
+          "result": "PASS",
+          "seconds": 0.189815,
+          "failure": null
+        },
+        {
+          "name": "socket_document_error_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.242788,
+          "failure": null
+        },
+        {
+          "name": "socket_node_parse_contracts",
+          "result": "PASS",
+          "seconds": 0.15396,
+          "failure": null
+        },
+        {
+          "name": "socket_node_parse_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.177382,
+          "failure": null
+        },
+        {
+          "name": "socket_node_identify_contracts",
+          "result": "PASS",
+          "seconds": 0.0754793,
+          "failure": null
+        },
+        {
+          "name": "socket_node_identify_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.121781,
+          "failure": null
+        },
+        {
+          "name": "socket_node_constructors_contracts",
+          "result": "PASS",
+          "seconds": 0.167425,
+          "failure": null
+        },
+        {
+          "name": "socket_node_constructors_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0928661,
+          "failure": null
+        },
+        {
+          "name": "socket_node_insertion_contracts",
+          "result": "PASS",
+          "seconds": 0.194644,
+          "failure": null
+        },
+        {
+          "name": "socket_node_insertion_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.108709,
+          "failure": null
+        },
+        {
+          "name": "socket_node_string_contracts",
+          "result": "PASS",
+          "seconds": 0.142504,
+          "failure": null
+        },
+        {
+          "name": "socket_node_string_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.133085,
+          "failure": null
+        },
+        {
+          "name": "server_contracts",
+          "result": "PASS",
+          "seconds": 0.248646,
+          "failure": null
+        },
+        {
+          "name": "messages_contracts",
+          "result": "PASS",
+          "seconds": 0.122672,
+          "failure": null
+        },
+        {
+          "name": "handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.135275,
+          "failure": null
+        },
+        {
+          "name": "crypto_contracts",
+          "result": "PASS",
+          "seconds": 0.181582,
+          "failure": null
+        },
+        {
+          "name": "xml_printer_contracts",
+          "result": "PASS",
+          "seconds": 0.132025,
+          "failure": null
+        },
+        {
+          "name": "xml_reader_contracts",
+          "result": "PASS",
+          "seconds": 0.300087,
+          "failure": null
+        },
+        {
+          "name": "licensing_contracts",
+          "result": "PASS",
+          "seconds": 0.202529,
+          "failure": null
+        },
+        {
+          "name": "hash_contracts",
+          "result": "PASS",
+          "seconds": 0.251848,
+          "failure": null
+        },
+        {
+          "name": "token_contracts",
+          "result": "PASS",
+          "seconds": 0.189724,
+          "failure": null
+        },
+        {
+          "name": "file_io_contracts",
+          "result": "PASS",
+          "seconds": 0.149747,
+          "failure": null
+        },
+        {
+          "name": "license_file_integration",
+          "result": "PASS",
+          "seconds": 0.15538,
+          "failure": null
+        },
+        {
+          "name": "status_contracts",
+          "result": "PASS",
+          "seconds": 0.275081,
+          "failure": null
+        },
+        {
+          "name": "path_contracts",
+          "result": "PASS",
+          "seconds": 0.128717,
+          "failure": null
+        },
+        {
+          "name": "encoding_contracts",
+          "result": "PASS",
+          "seconds": 0.0992134,
+          "failure": null
+        },
+        {
+          "name": "windows_effects_integration",
+          "result": "PASS",
+          "seconds": 0.195687,
+          "failure": null
+        },
+        {
+          "name": "content_handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.145035,
+          "failure": null
+        },
+        {
+          "name": "misc_handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.177746,
+          "failure": null
+        },
+        {
+          "name": "dispatch_integration",
+          "result": "PASS",
+          "seconds": 0.116409,
+          "failure": null
+        },
+        {
+          "name": "hook_adapter_integration",
+          "result": "PASS",
+          "seconds": 0.228879,
+          "failure": null
+        },
+        {
+          "name": "vdf_parser_regressions",
+          "result": "PASS",
+          "seconds": 0.235803,
+          "failure": null
+        },
+        {
+          "name": "dll_source_smoke",
+          "result": "PASS",
+          "seconds": 0.41277,
+          "failure": null
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "result": "PASS",
+          "seconds": 0.538112,
+          "failure": null
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "result": "PASS",
+          "seconds": 0.405726,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_contract",
+          "result": "PASS",
+          "seconds": 0.130434,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "result": "PASS",
+          "seconds": 0.153847,
+          "failure": null
+        },
+        {
+          "name": "hook_engine_fixtures",
+          "result": "PASS",
+          "seconds": 0.178917,
+          "failure": null
+        }
+      ]
+    },
+    "release-timing-recheck": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "seconds_sum": 29.074350000000003,
+      "tests": [
+        {
+          "name": "infrastructure_build_partition",
+          "result": "PASS",
+          "seconds": 0.17818,
+          "failure": null
+        },
+        {
+          "name": "network_policy_contracts",
+          "result": "PASS",
+          "seconds": 3.41657,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_integration_contracts",
+          "result": "PASS",
+          "seconds": 25.4796,
+          "failure": null
+        }
+      ]
+    },
+    "release-final": {
+      "passed": 188,
+      "failed": 0,
+      "skipped": 0,
+      "seconds_sum": 114.6067602,
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "result": "PASS",
+          "seconds": 1.89073,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_golden_pe",
+          "result": "PASS",
+          "seconds": 0.426648,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_named_imports",
+          "result": "PASS",
+          "seconds": 0.0892786,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_msvc_link",
+          "result": "PASS",
+          "seconds": 0.0490334,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_ownership_packaging",
+          "result": "PASS",
+          "seconds": 1.0771,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_target_requirements",
+          "result": "PASS",
+          "seconds": 0.176854,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_vendor_contract",
+          "result": "PASS",
+          "seconds": 1.49007,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_wine_runner",
+          "result": "PASS",
+          "seconds": 0.611915,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_build_partition",
+          "result": "PASS",
+          "seconds": 0.142988,
+          "failure": null
+        },
+        {
+          "name": "vendor_api_smoke",
+          "result": "PASS",
+          "seconds": 0.2786,
+          "failure": null
+        },
+        {
+          "name": "vendor_io_contracts",
+          "result": "PASS",
+          "seconds": 0.179271,
+          "failure": null
+        },
+        {
+          "name": "vendor_source_integrity",
+          "result": "PASS",
+          "seconds": 0.484253,
+          "failure": null
+        },
+        {
+          "name": "vendor_pegtl_smoke",
+          "result": "PASS",
+          "seconds": 0.209036,
+          "failure": null
+        },
+        {
+          "name": "crt_runtime_smoke",
+          "result": "PASS",
+          "seconds": 0.244225,
+          "failure": null
+        },
+        {
+          "name": "production_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.294852,
+          "failure": null
+        },
+        {
+          "name": "production_network_hook_contracts",
+          "result": "PASS",
+          "seconds": 0.17693,
+          "failure": null
+        },
+        {
+          "name": "session_flow_contracts",
+          "result": "PASS",
+          "seconds": 0.317696,
+          "failure": null
+        },
+        {
+          "name": "crypt_path_probe_contracts",
+          "result": "PASS",
+          "seconds": 0.123352,
+          "failure": null
+        },
+        {
+          "name": "network_policy_contracts",
+          "result": "PASS",
+          "seconds": 3.68008,
+          "failure": null
+        },
+        {
+          "name": "atomic_persistence_contracts",
+          "result": "PASS",
+          "seconds": 0.19138,
+          "failure": null
+        },
+        {
+          "name": "handler_pool_contracts",
+          "result": "PASS",
+          "seconds": 1.38765,
+          "failure": null
+        },
+        {
+          "name": "unload_guard_contracts",
+          "result": "PASS",
+          "seconds": 0.374857,
+          "failure": null
+        },
+        {
+          "name": "listener_port_contracts",
+          "result": "PASS",
+          "seconds": 0.217157,
+          "failure": null
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "result": "PASS",
+          "seconds": 0.166035,
+          "failure": null
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "result": "PASS",
+          "seconds": 0.175938,
+          "failure": null
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "result": "PASS",
+          "seconds": 0.622602,
+          "failure": null
+        },
+        {
+          "name": "file_copy_contracts",
+          "result": "PASS",
+          "seconds": 0.176846,
+          "failure": null
+        },
+        {
+          "name": "file_copy_windows_integration",
+          "result": "PASS",
+          "seconds": 0.401242,
+          "failure": null
+        },
+        {
+          "name": "bootstrap_contracts",
+          "result": "PASS",
+          "seconds": 0.258295,
+          "failure": null
+        },
+        {
+          "name": "crt_thread_contracts",
+          "result": "PASS",
+          "seconds": 0.202764,
+          "failure": null
+        },
+        {
+          "name": "host_init_contracts",
+          "result": "PASS",
+          "seconds": 0.261411,
+          "failure": null
+        },
+        {
+          "name": "registry_contracts",
+          "result": "PASS",
+          "seconds": 0.316787,
+          "failure": null
+        },
+        {
+          "name": "native_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.442612,
+          "failure": null
+        },
+        {
+          "name": "host_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.312865,
+          "failure": null
+        },
+        {
+          "name": "network_hook_contracts",
+          "result": "PASS",
+          "seconds": 0.281362,
+          "failure": null
+        },
+        {
+          "name": "online_contracts",
+          "result": "PASS",
+          "seconds": 0.091819,
+          "failure": null
+        },
+        {
+          "name": "configuration_contracts",
+          "result": "PASS",
+          "seconds": 0.170243,
+          "failure": null
+        },
+        {
+          "name": "execution_contracts",
+          "result": "PASS",
+          "seconds": 0.0949082,
+          "failure": null
+        },
+        {
+          "name": "libraries_contracts",
+          "result": "PASS",
+          "seconds": 0.27254,
+          "failure": null
+        },
+        {
+          "name": "startup_contracts",
+          "result": "PASS",
+          "seconds": 0.0909758,
+          "failure": null
+        },
+        {
+          "name": "parser_contracts",
+          "result": "PASS",
+          "seconds": 0.204137,
+          "failure": null
+        },
+        {
+          "name": "config_order_contracts",
+          "result": "PASS",
+          "seconds": 0.0925904,
+          "failure": null
+        },
+        {
+          "name": "config_pipeline_contracts",
+          "result": "PASS",
+          "seconds": 0.182419,
+          "failure": null
+        },
+        {
+          "name": "config_hash_contracts",
+          "result": "PASS",
+          "seconds": 0.25559,
+          "failure": null
+        },
+        {
+          "name": "config_application_contracts",
+          "result": "PASS",
+          "seconds": 0.170964,
+          "failure": null
+        },
+        {
+          "name": "config_startup_contracts",
+          "result": "PASS",
+          "seconds": 0.224687,
+          "failure": null
+        },
+        {
+          "name": "achievement_writer_contracts",
+          "result": "PASS",
+          "seconds": 0.180899,
+          "failure": null
+        },
+        {
+          "name": "achievement_storage_contracts",
+          "result": "PASS",
+          "seconds": 0.181664,
+          "failure": null
+        },
+        {
+          "name": "calendar_contracts",
+          "result": "PASS",
+          "seconds": 0.141124,
+          "failure": null
+        },
+        {
+          "name": "timestamp_contracts",
+          "result": "PASS",
+          "seconds": 0.114289,
+          "failure": null
+        },
+        {
+          "name": "utc_contracts",
+          "result": "PASS",
+          "seconds": 0.0838362,
+          "failure": null
+        },
+        {
+          "name": "achievement_runtime_contracts",
+          "result": "PASS",
+          "seconds": 0.230198,
+          "failure": null
+        },
+        {
+          "name": "event_queue_contracts",
+          "result": "PASS",
+          "seconds": 0.122631,
+          "failure": null
+        },
+        {
+          "name": "event_queue_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.129634,
+          "failure": null
+        },
+        {
+          "name": "session_handler_contracts",
+          "result": "PASS",
+          "seconds": 0.135985,
+          "failure": null
+        },
+        {
+          "name": "session_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.171267,
+          "failure": null
+        },
+        {
+          "name": "socket_operations_contracts",
+          "result": "PASS",
+          "seconds": 0.140717,
+          "failure": null
+        },
+        {
+          "name": "socket_native_contracts",
+          "result": "PASS",
+          "seconds": 0.167137,
+          "failure": null
+        },
+        {
+          "name": "socket_acceptor_contracts",
+          "result": "PASS",
+          "seconds": 0.130433,
+          "failure": null
+        },
+        {
+          "name": "socket_acceptor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.103418,
+          "failure": null
+        },
+        {
+          "name": "socket_lifecycle_contracts",
+          "result": "PASS",
+          "seconds": 0.106598,
+          "failure": null
+        },
+        {
+          "name": "socket_lifecycle_native_contracts",
+          "result": "PASS",
+          "seconds": 0.0954638,
+          "failure": null
+        },
+        {
+          "name": "socket_close_contracts",
+          "result": "PASS",
+          "seconds": 0.126983,
+          "failure": null
+        },
+        {
+          "name": "socket_closing_contracts",
+          "result": "PASS",
+          "seconds": 0.0975301,
+          "failure": null
+        },
+        {
+          "name": "socket_cancellation_contracts",
+          "result": "PASS",
+          "seconds": 0.118825,
+          "failure": null
+        },
+        {
+          "name": "socket_cancellation_native_contracts",
+          "result": "PASS",
+          "seconds": 0.172929,
+          "failure": null
+        },
+        {
+          "name": "socket_recycle_contracts",
+          "result": "PASS",
+          "seconds": 0.17157,
+          "failure": null
+        },
+        {
+          "name": "socket_recycle_storage_contracts",
+          "result": "PASS",
+          "seconds": 0.0992703,
+          "failure": null
+        },
+        {
+          "name": "socket_service_registry_contracts",
+          "result": "PASS",
+          "seconds": 0.264841,
+          "failure": null
+        },
+        {
+          "name": "socket_service_registry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.186851,
+          "failure": null
+        },
+        {
+          "name": "socket_service_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.126152,
+          "failure": null
+        },
+        {
+          "name": "socket_service_constructor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.142056,
+          "failure": null
+        },
+        {
+          "name": "socket_scheduler_registry_contracts",
+          "result": "PASS",
+          "seconds": 0.14709,
+          "failure": null
+        },
+        {
+          "name": "socket_scheduler_registry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.180974,
+          "failure": null
+        },
+        {
+          "name": "socket_iocp_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.130866,
+          "failure": null
+        },
+        {
+          "name": "socket_iocp_constructor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.121072,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_startup_contracts",
+          "result": "PASS",
+          "seconds": 0.139743,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_startup_native_contracts",
+          "result": "PASS",
+          "seconds": 0.134107,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_run_contracts",
+          "result": "PASS",
+          "seconds": 0.138276,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_run_native_contracts",
+          "result": "PASS",
+          "seconds": 0.116532,
+          "failure": null
+        },
+        {
+          "name": "socket_completion_dispatcher_contracts",
+          "result": "PASS",
+          "seconds": 0.137147,
+          "failure": null
+        },
+        {
+          "name": "socket_completion_dispatcher_native_contracts",
+          "result": "PASS",
+          "seconds": 0.189826,
+          "failure": null
+        },
+        {
+          "name": "socket_posted_operation_contracts",
+          "result": "PASS",
+          "seconds": 0.127579,
+          "failure": null
+        },
+        {
+          "name": "socket_posted_operation_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.165519,
+          "failure": null
+        },
+        {
+          "name": "socket_io_completion_contracts",
+          "result": "PASS",
+          "seconds": 0.130143,
+          "failure": null
+        },
+        {
+          "name": "socket_io_completion_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.114677,
+          "failure": null
+        },
+        {
+          "name": "socket_handler_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.121846,
+          "failure": null
+        },
+        {
+          "name": "socket_handler_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.128517,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_write_contracts",
+          "result": "PASS",
+          "seconds": 0.107348,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_write_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.147599,
+          "failure": null
+        },
+        {
+          "name": "socket_environment_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.142765,
+          "failure": null
+        },
+        {
+          "name": "socket_environment_constructor_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.170371,
+          "failure": null
+        },
+        {
+          "name": "socket_write_finish_contracts",
+          "result": "PASS",
+          "seconds": 0.183371,
+          "failure": null
+        },
+        {
+          "name": "socket_write_finish_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.120843,
+          "failure": null
+        },
+        {
+          "name": "socket_queued_write_contracts",
+          "result": "PASS",
+          "seconds": 0.0948576,
+          "failure": null
+        },
+        {
+          "name": "socket_queued_write_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.095679,
+          "failure": null
+        },
+        {
+          "name": "socket_async_receive_contracts",
+          "result": "PASS",
+          "seconds": 0.105331,
+          "failure": null
+        },
+        {
+          "name": "socket_async_receive_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.179925,
+          "failure": null
+        },
+        {
+          "name": "socket_receive_buffer_contracts",
+          "result": "PASS",
+          "seconds": 0.161355,
+          "failure": null
+        },
+        {
+          "name": "socket_receive_buffer_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.16651,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_read_contracts",
+          "result": "PASS",
+          "seconds": 0.180854,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_read_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0990547,
+          "failure": null
+        },
+        {
+          "name": "socket_frame_read_contracts",
+          "result": "PASS",
+          "seconds": 0.204345,
+          "failure": null
+        },
+        {
+          "name": "socket_frame_read_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.169703,
+          "failure": null
+        },
+        {
+          "name": "socket_message_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.123709,
+          "failure": null
+        },
+        {
+          "name": "socket_message_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.119731,
+          "failure": null
+        },
+        {
+          "name": "socket_response_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.0952428,
+          "failure": null
+        },
+        {
+          "name": "socket_response_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.110773,
+          "failure": null
+        },
+        {
+          "name": "socket_owned_response_contracts",
+          "result": "PASS",
+          "seconds": 0.168811,
+          "failure": null
+        },
+        {
+          "name": "socket_owned_response_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.178475,
+          "failure": null
+        },
+        {
+          "name": "socket_response_containers_contracts",
+          "result": "PASS",
+          "seconds": 0.175163,
+          "failure": null
+        },
+        {
+          "name": "socket_response_containers_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.124371,
+          "failure": null
+        },
+        {
+          "name": "socket_message_core_bridge_contracts",
+          "result": "PASS",
+          "seconds": 0.0955097,
+          "failure": null
+        },
+        {
+          "name": "socket_message_core_bridge_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.167292,
+          "failure": null
+        },
+        {
+          "name": "socket_request_mutation_contracts",
+          "result": "PASS",
+          "seconds": 0.165841,
+          "failure": null
+        },
+        {
+          "name": "socket_request_mutation_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.176874,
+          "failure": null
+        },
+        {
+          "name": "socket_request_growth_contracts",
+          "result": "PASS",
+          "seconds": 0.225982,
+          "failure": null
+        },
+        {
+          "name": "socket_request_growth_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.17738,
+          "failure": null
+        },
+        {
+          "name": "socket_response_hex_contracts",
+          "result": "PASS",
+          "seconds": 0.172432,
+          "failure": null
+        },
+        {
+          "name": "socket_response_hex_integration_contracts",
+          "result": "PASS",
+          "seconds": 1.20818,
+          "failure": null
+        },
+        {
+          "name": "socket_native_message_contracts",
+          "result": "PASS",
+          "seconds": 0.68491,
+          "failure": null
+        },
+        {
+          "name": "socket_native_message_integration_contracts",
+          "result": "PASS",
+          "seconds": 1.63627,
+          "failure": null
+        },
+        {
+          "name": "socket_append_growth_contracts",
+          "result": "PASS",
+          "seconds": 0.282278,
+          "failure": null
+        },
+        {
+          "name": "socket_append_growth_integration_contracts",
+          "result": "PASS",
+          "seconds": 1.10854,
+          "failure": null
+        },
+        {
+          "name": "socket_prefix_cipher_contracts",
+          "result": "PASS",
+          "seconds": 4.10646,
+          "failure": null
+        },
+        {
+          "name": "socket_prefix_cipher_integration_contracts",
+          "result": "PASS",
+          "seconds": 6.0544,
+          "failure": null
+        },
+        {
+          "name": "socket_cipher_session_contracts",
+          "result": "PASS",
+          "seconds": 0.223243,
+          "failure": null
+        },
+        {
+          "name": "socket_cipher_session_integration_contracts",
+          "result": "PASS",
+          "seconds": 5.36537,
+          "failure": null
+        },
+        {
+          "name": "socket_native_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.197639,
+          "failure": null
+        },
+        {
+          "name": "socket_native_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 4.0206,
+          "failure": null
+        },
+        {
+          "name": "socket_native_document_contracts",
+          "result": "PASS",
+          "seconds": 0.16984,
+          "failure": null
+        },
+        {
+          "name": "socket_native_document_integration_contracts",
+          "result": "PASS",
+          "seconds": 3.97905,
+          "failure": null
+        },
+        {
+          "name": "socket_document_clear_contracts",
+          "result": "PASS",
+          "seconds": 0.152883,
+          "failure": null
+        },
+        {
+          "name": "socket_document_clear_integration_contracts",
+          "result": "PASS",
+          "seconds": 4.1956,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_contracts",
+          "result": "PASS",
+          "seconds": 0.188844,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_integration_contracts",
+          "result": "PASS",
+          "seconds": 11.1081,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_contracts",
+          "result": "PASS",
+          "seconds": 0.338629,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_integration_contracts",
+          "result": "PASS",
+          "seconds": 31.0332,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_allocate_contracts",
+          "result": "PASS",
+          "seconds": 0.114614,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_allocate_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.194275,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_append_contracts",
+          "result": "PASS",
+          "seconds": 0.168797,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_append_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.125142,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_clear_contracts",
+          "result": "PASS",
+          "seconds": 0.115269,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_clear_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.118055,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_destruct_contracts",
+          "result": "PASS",
+          "seconds": 0.174075,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_destruct_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0923357,
+          "failure": null
+        },
+        {
+          "name": "socket_node_base_contracts",
+          "result": "PASS",
+          "seconds": 0.109498,
+          "failure": null
+        },
+        {
+          "name": "socket_node_base_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0839564,
+          "failure": null
+        },
+        {
+          "name": "socket_parse_entry_contracts",
+          "result": "PASS",
+          "seconds": 0.0878659,
+          "failure": null
+        },
+        {
+          "name": "socket_parse_entry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.0933571,
+          "failure": null
+        },
+        {
+          "name": "socket_document_error_contracts",
+          "result": "PASS",
+          "seconds": 0.165032,
+          "failure": null
+        },
+        {
+          "name": "socket_document_error_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.133166,
+          "failure": null
+        },
+        {
+          "name": "socket_node_parse_contracts",
+          "result": "PASS",
+          "seconds": 0.135109,
+          "failure": null
+        },
+        {
+          "name": "socket_node_parse_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.122204,
+          "failure": null
+        },
+        {
+          "name": "socket_node_identify_contracts",
+          "result": "PASS",
+          "seconds": 0.0796631,
+          "failure": null
+        },
+        {
+          "name": "socket_node_identify_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.147841,
+          "failure": null
+        },
+        {
+          "name": "socket_node_constructors_contracts",
+          "result": "PASS",
+          "seconds": 0.144816,
+          "failure": null
+        },
+        {
+          "name": "socket_node_constructors_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.198854,
+          "failure": null
+        },
+        {
+          "name": "socket_node_insertion_contracts",
+          "result": "PASS",
+          "seconds": 0.141342,
+          "failure": null
+        },
+        {
+          "name": "socket_node_insertion_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.117496,
+          "failure": null
+        },
+        {
+          "name": "socket_node_string_contracts",
+          "result": "PASS",
+          "seconds": 0.119923,
+          "failure": null
+        },
+        {
+          "name": "socket_node_string_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.1057,
+          "failure": null
+        },
+        {
+          "name": "server_contracts",
+          "result": "PASS",
+          "seconds": 0.109917,
+          "failure": null
+        },
+        {
+          "name": "messages_contracts",
+          "result": "PASS",
+          "seconds": 0.193284,
+          "failure": null
+        },
+        {
+          "name": "handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.200605,
+          "failure": null
+        },
+        {
+          "name": "crypto_contracts",
+          "result": "PASS",
+          "seconds": 0.239975,
+          "failure": null
+        },
+        {
+          "name": "xml_printer_contracts",
+          "result": "PASS",
+          "seconds": 0.17842,
+          "failure": null
+        },
+        {
+          "name": "xml_reader_contracts",
+          "result": "PASS",
+          "seconds": 0.168624,
+          "failure": null
+        },
+        {
+          "name": "licensing_contracts",
+          "result": "PASS",
+          "seconds": 0.16571,
+          "failure": null
+        },
+        {
+          "name": "hash_contracts",
+          "result": "PASS",
+          "seconds": 0.203753,
+          "failure": null
+        },
+        {
+          "name": "token_contracts",
+          "result": "PASS",
+          "seconds": 0.115289,
+          "failure": null
+        },
+        {
+          "name": "file_io_contracts",
+          "result": "PASS",
+          "seconds": 0.18542,
+          "failure": null
+        },
+        {
+          "name": "license_file_integration",
+          "result": "PASS",
+          "seconds": 0.172662,
+          "failure": null
+        },
+        {
+          "name": "status_contracts",
+          "result": "PASS",
+          "seconds": 0.12047,
+          "failure": null
+        },
+        {
+          "name": "path_contracts",
+          "result": "PASS",
+          "seconds": 0.094702,
+          "failure": null
+        },
+        {
+          "name": "encoding_contracts",
+          "result": "PASS",
+          "seconds": 0.198442,
+          "failure": null
+        },
+        {
+          "name": "windows_effects_integration",
+          "result": "PASS",
+          "seconds": 0.175259,
+          "failure": null
+        },
+        {
+          "name": "content_handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.154829,
+          "failure": null
+        },
+        {
+          "name": "misc_handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.189271,
+          "failure": null
+        },
+        {
+          "name": "dispatch_integration",
+          "result": "PASS",
+          "seconds": 0.175992,
+          "failure": null
+        },
+        {
+          "name": "hook_adapter_integration",
+          "result": "PASS",
+          "seconds": 0.176637,
+          "failure": null
+        },
+        {
+          "name": "vdf_parser_regressions",
+          "result": "PASS",
+          "seconds": 0.404252,
+          "failure": null
+        },
+        {
+          "name": "dll_source_smoke",
+          "result": "PASS",
+          "seconds": 0.461327,
+          "failure": null
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "result": "PASS",
+          "seconds": 0.53569,
+          "failure": null
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "result": "PASS",
+          "seconds": 0.325264,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_contract",
+          "result": "PASS",
+          "seconds": 0.0726964,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "result": "PASS",
+          "seconds": 0.157091,
+          "failure": null
+        },
+        {
+          "name": "hook_engine_fixtures",
+          "result": "PASS",
+          "seconds": 0.131455,
+          "failure": null
+        }
+      ]
+    },
+    "debug-full": {
+      "passed": 185,
+      "failed": 3,
+      "skipped": 0,
+      "seconds_sum": 414.3775417,
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "result": "PASS",
+          "seconds": 1.77309,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_golden_pe",
+          "result": "PASS",
+          "seconds": 0.449234,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_named_imports",
+          "result": "PASS",
+          "seconds": 0.0889811,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_msvc_link",
+          "result": "PASS",
+          "seconds": 0.0716022,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_ownership_packaging",
+          "result": "PASS",
+          "seconds": 1.07826,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_target_requirements",
+          "result": "PASS",
+          "seconds": 0.152568,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_vendor_contract",
+          "result": "PASS",
+          "seconds": 1.40921,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_wine_runner",
+          "result": "PASS",
+          "seconds": 0.513731,
+          "failure": null
+        },
+        {
+          "name": "infrastructure_build_partition",
+          "result": "PASS",
+          "seconds": 0.223045,
+          "failure": null
+        },
+        {
+          "name": "vendor_api_smoke",
+          "result": "PASS",
+          "seconds": 0.171252,
+          "failure": null
+        },
+        {
+          "name": "vendor_io_contracts",
+          "result": "PASS",
+          "seconds": 0.181064,
+          "failure": null
+        },
+        {
+          "name": "vendor_source_integrity",
+          "result": "PASS",
+          "seconds": 0.496231,
+          "failure": null
+        },
+        {
+          "name": "vendor_pegtl_smoke",
+          "result": "PASS",
+          "seconds": 0.126864,
+          "failure": null
+        },
+        {
+          "name": "crt_runtime_smoke",
+          "result": "PASS",
+          "seconds": 0.183469,
+          "failure": null
+        },
+        {
+          "name": "production_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.173741,
+          "failure": null
+        },
+        {
+          "name": "production_network_hook_contracts",
+          "result": "PASS",
+          "seconds": 0.110736,
+          "failure": null
+        },
+        {
+          "name": "session_flow_contracts",
+          "result": "PASS",
+          "seconds": 0.0941581,
+          "failure": null
+        },
+        {
+          "name": "crypt_path_probe_contracts",
+          "result": "PASS",
+          "seconds": 0.165008,
+          "failure": null
+        },
+        {
+          "name": "network_policy_contracts",
+          "result": "PASS",
+          "seconds": 3.4505,
+          "failure": null
+        },
+        {
+          "name": "atomic_persistence_contracts",
+          "result": "PASS",
+          "seconds": 0.394273,
+          "failure": null
+        },
+        {
+          "name": "handler_pool_contracts",
+          "result": "PASS",
+          "seconds": 1.00317,
+          "failure": null
+        },
+        {
+          "name": "unload_guard_contracts",
+          "result": "PASS",
+          "seconds": 0.312249,
+          "failure": null
+        },
+        {
+          "name": "listener_port_contracts",
+          "result": "PASS",
+          "seconds": 0.246652,
+          "failure": null
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "result": "PASS",
+          "seconds": 0.125827,
+          "failure": null
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "result": "PASS",
+          "seconds": 0.59734,
+          "failure": null
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "result": "PASS",
+          "seconds": 0.690146,
+          "failure": null
+        },
+        {
+          "name": "file_copy_contracts",
+          "result": "PASS",
+          "seconds": 0.284656,
+          "failure": null
+        },
+        {
+          "name": "file_copy_windows_integration",
+          "result": "PASS",
+          "seconds": 0.370544,
+          "failure": null
+        },
+        {
+          "name": "bootstrap_contracts",
+          "result": "PASS",
+          "seconds": 0.243946,
+          "failure": null
+        },
+        {
+          "name": "crt_thread_contracts",
+          "result": "PASS",
+          "seconds": 0.25519,
+          "failure": null
+        },
+        {
+          "name": "host_init_contracts",
+          "result": "PASS",
+          "seconds": 0.149559,
+          "failure": null
+        },
+        {
+          "name": "registry_contracts",
+          "result": "PASS",
+          "seconds": 0.266645,
+          "failure": null
+        },
+        {
+          "name": "native_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.2644,
+          "failure": null
+        },
+        {
+          "name": "host_callback_contracts",
+          "result": "PASS",
+          "seconds": 0.171873,
+          "failure": null
+        },
+        {
+          "name": "network_hook_contracts",
+          "result": "PASS",
+          "seconds": 0.230312,
+          "failure": null
+        },
+        {
+          "name": "online_contracts",
+          "result": "PASS",
+          "seconds": 0.287298,
+          "failure": null
+        },
+        {
+          "name": "configuration_contracts",
+          "result": "PASS",
+          "seconds": 0.229213,
+          "failure": null
+        },
+        {
+          "name": "execution_contracts",
+          "result": "PASS",
+          "seconds": 0.248532,
+          "failure": null
+        },
+        {
+          "name": "libraries_contracts",
+          "result": "PASS",
+          "seconds": 0.239912,
+          "failure": null
+        },
+        {
+          "name": "startup_contracts",
+          "result": "PASS",
+          "seconds": 0.190749,
+          "failure": null
+        },
+        {
+          "name": "parser_contracts",
+          "result": "PASS",
+          "seconds": 0.185603,
+          "failure": null
+        },
+        {
+          "name": "config_order_contracts",
+          "result": "PASS",
+          "seconds": 0.239354,
+          "failure": null
+        },
+        {
+          "name": "config_pipeline_contracts",
+          "result": "PASS",
+          "seconds": 0.247629,
+          "failure": null
+        },
+        {
+          "name": "config_hash_contracts",
+          "result": "PASS",
+          "seconds": 0.964604,
+          "failure": null
+        },
+        {
+          "name": "config_application_contracts",
+          "result": "PASS",
+          "seconds": 0.173728,
+          "failure": null
+        },
+        {
+          "name": "config_startup_contracts",
+          "result": "PASS",
+          "seconds": 0.2656,
+          "failure": null
+        },
+        {
+          "name": "achievement_writer_contracts",
+          "result": "PASS",
+          "seconds": 0.176251,
+          "failure": null
+        },
+        {
+          "name": "achievement_storage_contracts",
+          "result": "PASS",
+          "seconds": 0.213536,
+          "failure": null
+        },
+        {
+          "name": "calendar_contracts",
+          "result": "PASS",
+          "seconds": 0.17037,
+          "failure": null
+        },
+        {
+          "name": "timestamp_contracts",
+          "result": "PASS",
+          "seconds": 0.134248,
+          "failure": null
+        },
+        {
+          "name": "utc_contracts",
+          "result": "PASS",
+          "seconds": 0.120495,
+          "failure": null
+        },
+        {
+          "name": "achievement_runtime_contracts",
+          "result": "PASS",
+          "seconds": 0.306725,
+          "failure": null
+        },
+        {
+          "name": "event_queue_contracts",
+          "result": "PASS",
+          "seconds": 0.224541,
+          "failure": null
+        },
+        {
+          "name": "event_queue_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.189802,
+          "failure": null
+        },
+        {
+          "name": "session_handler_contracts",
+          "result": "PASS",
+          "seconds": 0.200828,
+          "failure": null
+        },
+        {
+          "name": "session_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.198734,
+          "failure": null
+        },
+        {
+          "name": "socket_operations_contracts",
+          "result": "PASS",
+          "seconds": 0.167911,
+          "failure": null
+        },
+        {
+          "name": "socket_native_contracts",
+          "result": "PASS",
+          "seconds": 0.106715,
+          "failure": null
+        },
+        {
+          "name": "socket_acceptor_contracts",
+          "result": "PASS",
+          "seconds": 0.181977,
+          "failure": null
+        },
+        {
+          "name": "socket_acceptor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.13119,
+          "failure": null
+        },
+        {
+          "name": "socket_lifecycle_contracts",
+          "result": "PASS",
+          "seconds": 0.176255,
+          "failure": null
+        },
+        {
+          "name": "socket_lifecycle_native_contracts",
+          "result": "PASS",
+          "seconds": 0.12959,
+          "failure": null
+        },
+        {
+          "name": "socket_close_contracts",
+          "result": "PASS",
+          "seconds": 0.178019,
+          "failure": null
+        },
+        {
+          "name": "socket_closing_contracts",
+          "result": "PASS",
+          "seconds": 0.184124,
+          "failure": null
+        },
+        {
+          "name": "socket_cancellation_contracts",
+          "result": "PASS",
+          "seconds": 0.0906206,
+          "failure": null
+        },
+        {
+          "name": "socket_cancellation_native_contracts",
+          "result": "PASS",
+          "seconds": 0.127774,
+          "failure": null
+        },
+        {
+          "name": "socket_recycle_contracts",
+          "result": "PASS",
+          "seconds": 0.0834854,
+          "failure": null
+        },
+        {
+          "name": "socket_recycle_storage_contracts",
+          "result": "PASS",
+          "seconds": 0.150782,
+          "failure": null
+        },
+        {
+          "name": "socket_service_registry_contracts",
+          "result": "PASS",
+          "seconds": 0.0851707,
+          "failure": null
+        },
+        {
+          "name": "socket_service_registry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.285261,
+          "failure": null
+        },
+        {
+          "name": "socket_service_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.194367,
+          "failure": null
+        },
+        {
+          "name": "socket_service_constructor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.121208,
+          "failure": null
+        },
+        {
+          "name": "socket_scheduler_registry_contracts",
+          "result": "PASS",
+          "seconds": 0.172029,
+          "failure": null
+        },
+        {
+          "name": "socket_scheduler_registry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.1131,
+          "failure": null
+        },
+        {
+          "name": "socket_iocp_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.0825097,
+          "failure": null
+        },
+        {
+          "name": "socket_iocp_constructor_native_contracts",
+          "result": "PASS",
+          "seconds": 0.469507,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_startup_contracts",
+          "result": "PASS",
+          "seconds": 0.0993579,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_startup_native_contracts",
+          "result": "PASS",
+          "seconds": 0.08656,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_run_contracts",
+          "result": "PASS",
+          "seconds": 0.115295,
+          "failure": null
+        },
+        {
+          "name": "socket_worker_run_native_contracts",
+          "result": "PASS",
+          "seconds": 0.195661,
+          "failure": null
+        },
+        {
+          "name": "socket_completion_dispatcher_contracts",
+          "result": "PASS",
+          "seconds": 0.12237,
+          "failure": null
+        },
+        {
+          "name": "socket_completion_dispatcher_native_contracts",
+          "result": "PASS",
+          "seconds": 0.237107,
+          "failure": null
+        },
+        {
+          "name": "socket_posted_operation_contracts",
+          "result": "PASS",
+          "seconds": 0.217859,
+          "failure": null
+        },
+        {
+          "name": "socket_posted_operation_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.170295,
+          "failure": null
+        },
+        {
+          "name": "socket_io_completion_contracts",
+          "result": "PASS",
+          "seconds": 0.120908,
+          "failure": null
+        },
+        {
+          "name": "socket_io_completion_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.183691,
+          "failure": null
+        },
+        {
+          "name": "socket_handler_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.116363,
+          "failure": null
+        },
+        {
+          "name": "socket_handler_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.16432,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_write_contracts",
+          "result": "PASS",
+          "seconds": 0.174734,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_write_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.123324,
+          "failure": null
+        },
+        {
+          "name": "socket_environment_constructor_contracts",
+          "result": "PASS",
+          "seconds": 0.165414,
+          "failure": null
+        },
+        {
+          "name": "socket_environment_constructor_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.125461,
+          "failure": null
+        },
+        {
+          "name": "socket_write_finish_contracts",
+          "result": "PASS",
+          "seconds": 0.180877,
+          "failure": null
+        },
+        {
+          "name": "socket_write_finish_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.134643,
+          "failure": null
+        },
+        {
+          "name": "socket_queued_write_contracts",
+          "result": "PASS",
+          "seconds": 0.175133,
+          "failure": null
+        },
+        {
+          "name": "socket_queued_write_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.17646,
+          "failure": null
+        },
+        {
+          "name": "socket_async_receive_contracts",
+          "result": "PASS",
+          "seconds": 0.108795,
+          "failure": null
+        },
+        {
+          "name": "socket_async_receive_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.18448,
+          "failure": null
+        },
+        {
+          "name": "socket_receive_buffer_contracts",
+          "result": "PASS",
+          "seconds": 0.268054,
+          "failure": null
+        },
+        {
+          "name": "socket_receive_buffer_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.213586,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_read_contracts",
+          "result": "PASS",
+          "seconds": 0.16624,
+          "failure": null
+        },
+        {
+          "name": "socket_composed_read_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.123143,
+          "failure": null
+        },
+        {
+          "name": "socket_frame_read_contracts",
+          "result": "PASS",
+          "seconds": 0.19332,
+          "failure": null
+        },
+        {
+          "name": "socket_frame_read_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.164049,
+          "failure": null
+        },
+        {
+          "name": "socket_message_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.119272,
+          "failure": null
+        },
+        {
+          "name": "socket_message_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.169319,
+          "failure": null
+        },
+        {
+          "name": "socket_response_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.171914,
+          "failure": null
+        },
+        {
+          "name": "socket_response_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.116572,
+          "failure": null
+        },
+        {
+          "name": "socket_owned_response_contracts",
+          "result": "PASS",
+          "seconds": 0.111597,
+          "failure": null
+        },
+        {
+          "name": "socket_owned_response_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.182888,
+          "failure": null
+        },
+        {
+          "name": "socket_response_containers_contracts",
+          "result": "PASS",
+          "seconds": 0.172445,
+          "failure": null
+        },
+        {
+          "name": "socket_response_containers_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.164325,
+          "failure": null
+        },
+        {
+          "name": "socket_message_core_bridge_contracts",
+          "result": "PASS",
+          "seconds": 0.185249,
+          "failure": null
+        },
+        {
+          "name": "socket_message_core_bridge_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.252102,
+          "failure": null
+        },
+        {
+          "name": "socket_request_mutation_contracts",
+          "result": "PASS",
+          "seconds": 0.36248,
+          "failure": null
+        },
+        {
+          "name": "socket_request_mutation_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.291557,
+          "failure": null
+        },
+        {
+          "name": "socket_request_growth_contracts",
+          "result": "PASS",
+          "seconds": 0.231036,
+          "failure": null
+        },
+        {
+          "name": "socket_request_growth_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.223624,
+          "failure": null
+        },
+        {
+          "name": "socket_response_hex_contracts",
+          "result": "PASS",
+          "seconds": 0.22605,
+          "failure": null
+        },
+        {
+          "name": "socket_response_hex_integration_contracts",
+          "result": "PASS",
+          "seconds": 3.40518,
+          "failure": null
+        },
+        {
+          "name": "socket_native_message_contracts",
+          "result": "PASS",
+          "seconds": 3.56683,
+          "failure": null
+        },
+        {
+          "name": "socket_native_message_integration_contracts",
+          "result": "PASS",
+          "seconds": 6.31435,
+          "failure": null
+        },
+        {
+          "name": "socket_append_growth_contracts",
+          "result": "PASS",
+          "seconds": 0.224999,
+          "failure": null
+        },
+        {
+          "name": "socket_append_growth_integration_contracts",
+          "result": "PASS",
+          "seconds": 9.86471,
+          "failure": null
+        },
+        {
+          "name": "socket_prefix_cipher_contracts",
+          "result": "PASS",
+          "seconds": 1.89626,
+          "failure": null
+        },
+        {
+          "name": "socket_prefix_cipher_integration_contracts",
+          "result": "PASS",
+          "seconds": 17.6386,
+          "failure": null
+        },
+        {
+          "name": "socket_cipher_session_contracts",
+          "result": "PASS",
+          "seconds": 0.268539,
+          "failure": null
+        },
+        {
+          "name": "socket_cipher_session_integration_contracts",
+          "result": "PASS",
+          "seconds": 32.4067,
+          "failure": null
+        },
+        {
+          "name": "socket_native_dispatch_contracts",
+          "result": "PASS",
+          "seconds": 0.191749,
+          "failure": null
+        },
+        {
+          "name": "socket_native_dispatch_integration_contracts",
+          "result": "FAIL",
+          "seconds": 60.1366,
+          "failure": "Timeout"
+        },
+        {
+          "name": "socket_native_document_contracts",
+          "result": "PASS",
+          "seconds": 0.315466,
+          "failure": null
+        },
+        {
+          "name": "socket_native_document_integration_contracts",
+          "result": "PASS",
+          "seconds": 54.6687,
+          "failure": null
+        },
+        {
+          "name": "socket_document_clear_contracts",
+          "result": "PASS",
+          "seconds": 0.276325,
+          "failure": null
+        },
+        {
+          "name": "socket_document_clear_integration_contracts",
+          "result": "PASS",
+          "seconds": 46.6241,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_contracts",
+          "result": "PASS",
+          "seconds": 0.407845,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_integration_contracts",
+          "result": "FAIL",
+          "seconds": 60.1974,
+          "failure": "Timeout"
+        },
+        {
+          "name": "socket_pool_release_contracts",
+          "result": "PASS",
+          "seconds": 0.576981,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_integration_contracts",
+          "result": "FAIL",
+          "seconds": 60.1134,
+          "failure": "Timeout"
+        },
+        {
+          "name": "socket_pool_allocate_contracts",
+          "result": "PASS",
+          "seconds": 0.194377,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_allocate_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.212778,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_append_contracts",
+          "result": "PASS",
+          "seconds": 0.256344,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_append_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.195268,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_clear_contracts",
+          "result": "PASS",
+          "seconds": 0.290065,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_clear_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.240451,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_destruct_contracts",
+          "result": "PASS",
+          "seconds": 0.188946,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_destruct_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.125375,
+          "failure": null
+        },
+        {
+          "name": "socket_node_base_contracts",
+          "result": "PASS",
+          "seconds": 0.174306,
+          "failure": null
+        },
+        {
+          "name": "socket_node_base_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.156635,
+          "failure": null
+        },
+        {
+          "name": "socket_parse_entry_contracts",
+          "result": "PASS",
+          "seconds": 0.175857,
+          "failure": null
+        },
+        {
+          "name": "socket_parse_entry_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.121155,
+          "failure": null
+        },
+        {
+          "name": "socket_document_error_contracts",
+          "result": "PASS",
+          "seconds": 0.129188,
+          "failure": null
+        },
+        {
+          "name": "socket_document_error_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.137525,
+          "failure": null
+        },
+        {
+          "name": "socket_node_parse_contracts",
+          "result": "PASS",
+          "seconds": 0.178485,
+          "failure": null
+        },
+        {
+          "name": "socket_node_parse_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.18973,
+          "failure": null
+        },
+        {
+          "name": "socket_node_identify_contracts",
+          "result": "PASS",
+          "seconds": 0.166191,
+          "failure": null
+        },
+        {
+          "name": "socket_node_identify_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.191324,
+          "failure": null
+        },
+        {
+          "name": "socket_node_constructors_contracts",
+          "result": "PASS",
+          "seconds": 0.205867,
+          "failure": null
+        },
+        {
+          "name": "socket_node_constructors_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.192014,
+          "failure": null
+        },
+        {
+          "name": "socket_node_insertion_contracts",
+          "result": "PASS",
+          "seconds": 0.174892,
+          "failure": null
+        },
+        {
+          "name": "socket_node_insertion_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.154589,
+          "failure": null
+        },
+        {
+          "name": "socket_node_string_contracts",
+          "result": "PASS",
+          "seconds": 0.190179,
+          "failure": null
+        },
+        {
+          "name": "socket_node_string_integration_contracts",
+          "result": "PASS",
+          "seconds": 0.17489,
+          "failure": null
+        },
+        {
+          "name": "server_contracts",
+          "result": "PASS",
+          "seconds": 0.126909,
+          "failure": null
+        },
+        {
+          "name": "messages_contracts",
+          "result": "PASS",
+          "seconds": 0.179964,
+          "failure": null
+        },
+        {
+          "name": "handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.148079,
+          "failure": null
+        },
+        {
+          "name": "crypto_contracts",
+          "result": "PASS",
+          "seconds": 0.640659,
+          "failure": null
+        },
+        {
+          "name": "xml_printer_contracts",
+          "result": "PASS",
+          "seconds": 0.103215,
+          "failure": null
+        },
+        {
+          "name": "xml_reader_contracts",
+          "result": "PASS",
+          "seconds": 0.628164,
+          "failure": null
+        },
+        {
+          "name": "licensing_contracts",
+          "result": "PASS",
+          "seconds": 0.193105,
+          "failure": null
+        },
+        {
+          "name": "hash_contracts",
+          "result": "PASS",
+          "seconds": 1.51005,
+          "failure": null
+        },
+        {
+          "name": "token_contracts",
+          "result": "PASS",
+          "seconds": 0.291264,
+          "failure": null
+        },
+        {
+          "name": "file_io_contracts",
+          "result": "PASS",
+          "seconds": 0.125418,
+          "failure": null
+        },
+        {
+          "name": "license_file_integration",
+          "result": "PASS",
+          "seconds": 0.127679,
+          "failure": null
+        },
+        {
+          "name": "status_contracts",
+          "result": "PASS",
+          "seconds": 0.315425,
+          "failure": null
+        },
+        {
+          "name": "path_contracts",
+          "result": "PASS",
+          "seconds": 0.283965,
+          "failure": null
+        },
+        {
+          "name": "encoding_contracts",
+          "result": "PASS",
+          "seconds": 0.102438,
+          "failure": null
+        },
+        {
+          "name": "windows_effects_integration",
+          "result": "PASS",
+          "seconds": 0.183109,
+          "failure": null
+        },
+        {
+          "name": "content_handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.203924,
+          "failure": null
+        },
+        {
+          "name": "misc_handlers_contracts",
+          "result": "PASS",
+          "seconds": 0.177143,
+          "failure": null
+        },
+        {
+          "name": "dispatch_integration",
+          "result": "PASS",
+          "seconds": 0.245245,
+          "failure": null
+        },
+        {
+          "name": "hook_adapter_integration",
+          "result": "PASS",
+          "seconds": 0.218679,
+          "failure": null
+        },
+        {
+          "name": "vdf_parser_regressions",
+          "result": "PASS",
+          "seconds": 0.635346,
+          "failure": null
+        },
+        {
+          "name": "dll_source_smoke",
+          "result": "PASS",
+          "seconds": 0.812371,
+          "failure": null
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "result": "PASS",
+          "seconds": 0.765324,
+          "failure": null
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "result": "PASS",
+          "seconds": 2.84927,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_contract",
+          "result": "PASS",
+          "seconds": 0.827667,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "result": "PASS",
+          "seconds": 6.46574,
+          "failure": null
+        },
+        {
+          "name": "hook_engine_fixtures",
+          "result": "PASS",
+          "seconds": 0.259421,
+          "failure": null
+        }
+      ]
+    },
+    "release-final-dll": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "seconds_sum": 1.7873,
+      "tests": [
+        {
+          "name": "infrastructure_build_partition",
+          "result": "PASS",
+          "seconds": 0.237362,
+          "failure": null
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "result": "PASS",
+          "seconds": 0.648209,
+          "failure": null
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "result": "PASS",
+          "seconds": 0.47435,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_contract",
+          "result": "PASS",
+          "seconds": 0.111411,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "result": "PASS",
+          "seconds": 0.315968,
+          "failure": null
+        }
+      ]
+    },
+    "debug-final-dll": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "seconds_sum": 4.066779,
+      "tests": [
+        {
+          "name": "infrastructure_build_partition",
+          "result": "PASS",
+          "seconds": 0.181269,
+          "failure": null
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "result": "PASS",
+          "seconds": 0.85789,
+          "failure": null
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "result": "PASS",
+          "seconds": 0.539848,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_contract",
+          "result": "PASS",
+          "seconds": 0.229492,
+          "failure": null
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "result": "PASS",
+          "seconds": 2.25828,
+          "failure": null
+        }
+      ]
+    },
+    "debug-timing-recheck": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "seconds_sum": 427.2627,
+      "tests": [
+        {
+          "name": "socket_native_dispatch_integration_contracts",
+          "result": "PASS",
+          "seconds": 39.7807,
+          "failure": null
+        },
+        {
+          "name": "socket_node_delete_integration_contracts",
+          "result": "PASS",
+          "seconds": 104.92,
+          "failure": null
+        },
+        {
+          "name": "socket_pool_release_integration_contracts",
+          "result": "PASS",
+          "seconds": 282.562,
+          "failure": null
+        }
+      ]
+    }
+  },
+  "debug_aggregate": {
+    "passed": 188,
+    "failed": 0,
+    "method": "185 initial full-suite passes plus 3 successful retries with cross-Debug reference fixture budget; final DLL/boundary subset rechecked too"
+  },
+  "added_tests": [
+    "infrastructure_build_partition",
+    "production_callback_contracts",
+    "production_network_hook_contracts"
+  ],
+  "native_msvc_and_game": "NOT_RUN"
+}

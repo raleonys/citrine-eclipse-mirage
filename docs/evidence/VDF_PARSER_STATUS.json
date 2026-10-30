@@ -1,0 +1,138 @@
+{
+  "schema": "yellowfield.vdf-pegtl-status.v1",
+  "task": "YF-VDF-PEGTL-20261028",
+  "classification": "NOT_RELEASE",
+  "grammar": "EXISTING_RE_CONFIG2_VDF_BYTE_GRAMMAR",
+  "implementation": "PEGTL4_RULES_ACTIONS_AND_OWNED_PARSEERROR_CONTROL",
+  "application_entry": "preloader_l::parser::parse",
+  "application_owner": "preloader_l_vdf_objects",
+  "application_builds": [
+    "preloader_l_core",
+    "preloader_l"
+  ],
+  "handwritten_parser_fallback": false,
+  "bluefield_application_code_imported": false,
+  "brownfield_application_code_imported": false,
+  "reference_role": "Bluefield compared read-only; implementation basis is supplied RE rules/actions",
+  "re_evidence_sha256": {
+    "README.md": "06082f2656bcc86097b67e5ed265713992aec221ac3611fbb497d485858ef149",
+    "evidence.json": "4d1c2bebedc4bb0bbc7ae1ddb65bc74083f5d0918663d9404a9101acffdce3e9",
+    "parser.cpp": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2",
+    "parser.hpp": "9e09d6bd1c3f900462c94d7e3bc5acdb141ef1045b6a1ac4e37e25fc1973bdd1",
+    "parser_tests.cpp": "722c07f8e0d5e5ee0da2be6c70dd5ae7774055c24f2d75339eca84bb5b9c9123"
+  },
+  "baseline": {
+    "source_package": "yellowfield-vendor-compatible-source.zip",
+    "package_sha256": "c2a4d4622bb9cf03dd889d5bb9b0040e817d94a25fe2fcb44f4bcece52aa0767",
+    "parser_sha256": "bc93d8badfb33c89b268470ee95b27384bb4a6b700842a4f4f476f2c2075d139",
+    "compiled_outside_product_source": true,
+    "report": "metadata/VDF_BASELINE_CORPUS.log"
+  },
+  "corpus": {
+    "cases": 23417,
+    "accepted": 4724,
+    "rejected": 18693,
+    "full_state_fnv64": "ea70f5d56d33f404",
+    "kind": "regression fingerprint; not a cryptographic proof or original native acceptance",
+    "linux_and_windows_digest_match": true
+  },
+  "existing_115_parser_assertions_unchanged": true,
+  "vendor_bytes_unchanged": true,
+  "tinyxml2_default_max_element_depth": 500,
+  "vendor_adapters_bound_existing_dll": [
+    "minhook",
+    "tinyxml2",
+    "pegtl"
+  ],
+  "final_runtime_adapter_pending": [
+    "asio",
+    "filesystem"
+  ],
+  "tests": {
+    "linux_portable_group": {
+      "total": 17,
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/VDF_PORTABLE_TESTS.xml"
+    },
+    "windows_wine_group": {
+      "total": 167,
+      "passed": 167,
+      "failed": 0,
+      "skipped": 0,
+      "runner": "Wine 10.0 on Linux plus host-Python checks",
+      "configuration": "Release",
+      "toolchain": "LLVM-MinGW 20251118 / Clang 21.1.6 UCRT x64",
+      "report": "metadata/VDF_WINDOWS_TESTS.xml"
+    },
+    "existing_parser_assertions": 115,
+    "existing_config_pipeline_checks": 189
+  },
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "checks_passed": 14,
+    "checks_total": 14,
+    "command": "python -B scripts/run_source_qa.py",
+    "report": "build/qa/VDF_SOURCE_QA_FINAL.json"
+  },
+  "source_files_tracked": 3307,
+  "fresh_package": {
+    "result": "PASS_CLEAN_EXTRACT_BUILD_AND_RUNTIME_VDF_TESTS",
+    "root": "FLAT",
+    "typed_symlinks_preserved": 2,
+    "source_and_vendor_ledger_sha256": "63dd947d250bd7d8930719e17757eedfbbf5bb5b8a66858a40c7fc797fd5bcfa",
+    "dll_sha256": "762addab623a869e948f98e803801314a6658b9a9158c4d773611bcb2488a15a",
+    "dll_export_count": 2343,
+    "owner_avatar_exact": true,
+    "tests": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0
+    },
+    "compiled_input_sha256": {
+      "CMakeLists.txt": "2f2382e914c3d9e6c3f05c1ee8b4725716df1baacb8b0593308932d1fd869763",
+      "CMakePresets.json": "81be96d5a589271d399131bea92babc7a0db44d4fbc2b470c79aca200f6a7700",
+      "cmake/PortableChecks.cmake": "ab332111ad5cdfcebc402167650992fbe9fe6a9eab7543081a8836f55e8fd3e4",
+      "cmake/VendorChecks.cmake": "eafe2ded753dc84080fa33ee23d090f4bec26e3ff672940e84085ad9205cbd04",
+      "cmake/InfrastructureChecks.cmake": "6b400c0d9ffcc1aa11c3646825caaab190436fb9f2ab198d3c94d3689cd8c430",
+      "cmake/VendoredDependencies.cmake": "5ee2e2af8abd28e09b944305ded4e0d45f1e9acccf84f0b3abda9bcd13c9b43a",
+      "cmake/Sources.cmake": "e5caaf53b2f3fe12d8aec20128dd897831b7ee411500eea18b4981b9dac1295a",
+      "cmake/Tests.cmake": "6c99e5fb4980324cf2e345e180afba5f7ea351208b04f3e766109b9611aaf18a",
+      "cmake/toolchains/llvm-mingw-x64.cmake": "23e689d1de6e3c2f436562566d3bd946ba217580e9bc89e1f1b12d1214468e13"
+    },
+    "targets": [
+      "preloader_l",
+      "preloader_l_source_host",
+      "parser_contracts",
+      "config_pipeline_contracts",
+      "vdf_parser_regressions"
+    ],
+    "build_report": "metadata/VDF_FRESH_BUILD.log",
+    "test_report": "metadata/VDF_FRESH_TESTS.xml",
+    "reference_tree_build_dependency": false,
+    "validation_input": "Review ZIP; final validation records added after clean build. Compiled CMake inputs and complete source/vendor ledger match final package."
+  },
+  "source_package": "yellowfield-vdf-pegtl-source.zip",
+  "actual_windows_msvc": "NOT_RUN",
+  "original_native_equivalence": "NOT_VERIFIED",
+  "consumer_game_acceptance": "NOT_RUN",
+  "library_publication": false,
+  "remaining": [
+    "Asio/filesystem application adapters",
+    "SURGE filename selection/precedence",
+    "automatic bootstrap and final Consumer ABI",
+    "actual Windows/MSVC and game/hook acceptance"
+  ],
+  "dll_runtime_vdf_path": "PASS_BOM_NESTED_TREE_DUPLICATE_ACTIONS_AND_TYPED_ERROR_POSITION",
+  "dll": {
+    "sha256": "0fd7348f36b0f899de7ffa30c2e7d1961c8be60179df04d3238fcea2ecb2bc96",
+    "exports": 2343,
+    "kind": "SOURCE_API_DEVELOPMENT_DLL; not final Consumer ABI",
+    "report": "metadata/VDF_DLL_LOAD.log",
+    "owner_avatar_exact": true
+  },
+  "record_scope": "Historical task snapshot. Existing test/hash records remain historical; current application integration is in RUNTIME_BINDING_STATUS.json.",
+  "superseded_by_application_status": "metadata/RUNTIME_BINDING_STATUS.json"
+}

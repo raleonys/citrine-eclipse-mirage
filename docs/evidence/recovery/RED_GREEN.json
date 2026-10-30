@@ -1,0 +1,114 @@
+[
+  {
+    "variant": "before",
+    "group": "net_failure_contracts",
+    "case": "accept",
+    "exit": 1,
+    "log": "before-net_failure_contracts-accept.log"
+  },
+  {
+    "variant": "before",
+    "group": "net_failure_contracts",
+    "case": "post",
+    "exit": 1,
+    "log": "before-net_failure_contracts-post.log"
+  },
+  {
+    "variant": "before",
+    "group": "net_failure_contracts",
+    "case": "stop-oom",
+    "exit": 1,
+    "log": "before-net_failure_contracts-stop-oom.log"
+  },
+  {
+    "variant": "before",
+    "group": "net_failure_contracts",
+    "case": "io-exception",
+    "exit": 1,
+    "log": "before-net_failure_contracts-io-exception.log"
+  },
+  {
+    "variant": "before",
+    "group": "net_failure_contracts",
+    "case": "drain-retry",
+    "exit": 1,
+    "log": "before-net_failure_contracts-drain-retry.log"
+  },
+  {
+    "variant": "before",
+    "group": "extra_library_failure_contracts",
+    "case": "acquire",
+    "exit": 1,
+    "log": "before-extra_library_failure_contracts-acquire.log"
+  },
+  {
+    "variant": "before",
+    "group": "extra_library_failure_contracts",
+    "case": "mixed",
+    "exit": 1,
+    "log": "before-extra_library_failure_contracts-mixed.log"
+  },
+  {
+    "variant": "before",
+    "group": "extra_library_failure_contracts",
+    "case": "retry",
+    "exit": 1,
+    "log": "before-extra_library_failure_contracts-retry.log"
+  },
+  {
+    "variant": "after",
+    "group": "net_failure_contracts",
+    "case": "accept",
+    "exit": 0,
+    "log": "after-net_failure_contracts-accept.log"
+  },
+  {
+    "variant": "after",
+    "group": "net_failure_contracts",
+    "case": "post",
+    "exit": 0,
+    "log": "after-net_failure_contracts-post.log"
+  },
+  {
+    "variant": "after",
+    "group": "net_failure_contracts",
+    "case": "stop-oom",
+    "exit": 0,
+    "log": "after-net_failure_contracts-stop-oom.log"
+  },
+  {
+    "variant": "after",
+    "group": "net_failure_contracts",
+    "case": "io-exception",
+    "exit": 0,
+    "log": "after-net_failure_contracts-io-exception.log"
+  },
+  {
+    "variant": "after",
+    "group": "net_failure_contracts",
+    "case": "drain-retry",
+    "exit": 0,
+    "log": "after-net_failure_contracts-drain-retry.log"
+  },
+  {
+    "variant": "after",
+    "group": "extra_library_failure_contracts",
+    "case": "acquire",
+    "exit": 0,
+    "log": "after-extra_library_failure_contracts-acquire.log"
+  },
+  {
+    "variant": "after",
+    "group": "extra_library_failure_contracts",
+    "case": "mixed",
+    "exit": 0,
+    "log": "after-extra_library_failure_contracts-mixed.log"
+  },
+  {
+    "variant": "after",
+    "group": "extra_library_failure_contracts",
+    "case": "retry",
+    "exit": 0,
+    "log": "after-extra_library_failure_contracts-retry.log"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "finding": "F01",
+    "mutation_rejected_by_regression": true,
+    "exit_code": 1,
+    "group": "paths",
+    "output": "FAIL: UTF8 counted path conversion independent of file API codepage\nWINE_PROGRAM_EXIT=1\n"
+  },
+  {
+    "finding": "F02",
+    "mutation_rejected_by_regression": true,
+    "exit_code": 1,
+    "group": "avatar",
+    "output": "FAIL: old initial-open behavior\nWINE_PROGRAM_EXIT=1\n"
+  },
+  {
+    "finding": "F05",
+    "mutation_rejected_by_regression": true,
+    "exit_code": 1,
+    "group": "paths",
+    "output": "FAIL: document projection shares corrected resolver\nWINE_PROGRAM_EXIT=1\n"
+  },
+  {
+    "finding": "F03",
+    "mutation_rejected_by_regression": true,
+    "exit_code": 1,
+    "group": "",
+    "output": "FAIL: stream was collected\nWINE_PROGRAM_EXIT=1\n"
+  },
+  {
+    "finding": "F04",
+    "mutation_rejected_by_regression": true,
+    "exit_code": 1,
+    "group": "thread-errors",
+    "output": "FAIL: CRT thread error index 0\nWINE_PROGRAM_EXIT=1\n"
+  }
+]

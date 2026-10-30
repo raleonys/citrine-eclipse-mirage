@@ -1,0 +1,13 @@
+{
+  "application_source_files_token_identical": 268,
+  "source_files_with_comment_only_edits": [
+    "include/preloader_l/config/vdf_grammar.hpp",
+    "include/preloader_l/platform/crypt_query.hpp",
+    "include/preloader_l/platform/hook_native_callbacks.hpp",
+    "src/runtime/application.cpp",
+    "src/runtime/application_defaults.cpp"
+  ],
+  "PE_required_values_unchanged": true,
+  "public_export_contract_unchanged": true,
+  "vendor_pins_and_member_records_unchanged": true
+}

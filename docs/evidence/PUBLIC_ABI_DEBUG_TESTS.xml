@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="6"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="895fff974780"
+	time="5"
+	timestamp="2026-10-28T14:31:47"
+	>
+	<testcase name="application_runtime_contracts" classname="application_runtime_contracts" time="2.62195" status="run">
+		<properties/>
+		<system-out>PASS: 68 real application checks; five vendors, config collections, encrypted socket LSX, provider, resource, persistence, eleven enabled hooks and stop
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_source_smoke" classname="dll_source_smoke" time="0.474496" status="run">
+		<properties/>
+		<system-out>PASS: actual DLL auto-started; real socket LSX profile, calendar, SHA-1 and PEGTL Config2/VDF executed; shutdown drains application
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_lifecycle" classname="dll_public_lifecycle" time="0.686595" status="run">
+		<properties/>
+		<system-out>zero-timeout shutdown status: 2
+PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; bounded shutdown/retry and both shutdown APIs
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_c_consumer" classname="dll_public_c_consumer" time="0.424547" status="run">
+		<properties/>
+		<system-out>PASS: C17 consumer linked against application import library; real startup and shutdown
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_export_contract" classname="dll_public_export_contract" time="0.16887" status="run">
+		<properties/>
+		<system-out>{
+  "schema": "yellowfield.public-abi-check.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "dll_sha256": "6dc63f946574011fd38ad2a32fdcea4c991863263d22a9b8f1c90b77f47ae543",
+  "export_count": 6,
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0xf6c10",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0xf6b90",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0xf6b80",
+      "forwarded": false
+    },
+    "YellowfieldServerPort": {
+      "ordinal": 5,
+      "rva": "0xf6b40",
+      "forwarded": false
+    },
+    "YellowfieldShutdown": {
+      "ordinal": 6,
+      "rva": "0xf69c0",
+      "forwarded": false
+    },
+    "YellowfieldWaitReady": {
+      "ordinal": 4,
+      "rva": "0xf6940",
+      "forwarded": false
+    }
+  },
+  "errors": [],
+  "native_consumer_acceptance": "NOT_RUN"
+}
+</system-out>
+	</testcase>
+	<testcase name="dll_public_export_negatives" classname="dll_public_export_negatives" time="1.29112" status="run">
+		<properties/>
+		<system-out>PASS: actual DLL baseline and 7 export/machine mutations; all checks read-only
+</system-out>
+	</testcase>
+</testsuite>

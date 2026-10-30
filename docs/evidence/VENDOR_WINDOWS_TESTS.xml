@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="165"
+	failures="0"
+	disabled="0"
+	skipped="1"
+	hostname="895fff974780"
+	time="66"
+	timestamp="2026-10-28T08:16:55"
+	>
+	<testcase name="infrastructure_golden_pe" classname="infrastructure_golden_pe" time="0.10129" status="run">
+		<properties/>
+		<system-out>GOLDEN_PROTOCOL_TOOL_SELFTEST: PASS
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_named_imports" classname="infrastructure_named_imports" time="0.137242" status="run">
+		<properties/>
+		<system-out>CORVEXON_MSWSOCK_IMPORTS: PASS (12/12)
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_msvc_link" classname="infrastructure_msvc_link" time="0.0473286" status="run">
+		<properties/>
+		<system-out>MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS (21/21)
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_ownership_packaging" classname="infrastructure_ownership_packaging" time="0.309981" status="run">
+		<properties/>
+		<system-out>test_finalizer_failed_write_keeps_original_and_cleans_temp (__main__.GovernanceTests.test_finalizer_failed_write_keeps_original_and_cleans_temp) ... ok
+test_fixture_is_never_a_product_target (__main__.GovernanceTests.test_fixture_is_never_a_product_target) ... ok
+test_launcher_result_and_argument_mutations (__main__.GovernanceTests.test_launcher_result_and_argument_mutations) ... ok
+test_pending_product_target_cannot_mutate_binary (__main__.GovernanceTests.test_pending_product_target_cannot_mutate_binary) ... ok
+test_pipeline_order_and_failure_exit (__main__.GovernanceTests.test_pipeline_order_and_failure_exit) ... ok
+test_resource_assets_require_exact_hash_without_dropping_versioninfo (__main__.GovernanceTests.test_resource_assets_require_exact_hash_without_dropping_versioninfo) ... ok
+test_unowned_metadata_is_rejected (__main__.GovernanceTests.test_unowned_metadata_is_rejected) ... ok
+test_casefold_collision (__main__.PackageTests.test_casefold_collision) ... ok
+test_duplicate_package_member (__main__.Packa...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_target_requirements" classname="infrastructure_target_requirements" time="0.118326" status="run">
+		<properties/>
+		<system-out>test_brownfield_scope_cannot_shrink_to_build_helpers (__main__.RequirementsTests.test_brownfield_scope_cannot_shrink_to_build_helpers) ... ok
+test_comparison_role_cannot_become_code_donor (__main__.RequirementsTests.test_comparison_role_cannot_become_code_donor) ... ok
+test_current_target_contract (__main__.RequirementsTests.test_current_target_contract) ... ok
+test_golden_order_is_preserved (__main__.RequirementsTests.test_golden_order_is_preserved) ... ok
+test_library_sync_does_not_follow_build (__main__.RequirementsTests.test_library_sync_does_not_follow_build) ... ok
+test_namespace_cannot_be_renamed_with_display_identity (__main__.RequirementsTests.test_namespace_cannot_be_renamed_with_display_identity) ... ok
+test_release_claim_is_separate (__main__.RequirementsTests.test_release_claim_is_separate) ... ok
+test_release_log_remains_forbidden (__main__.RequirementsTests.test_release_log_remains_forbidden) ... ok
+test_surge_identity_and_exact_asset (__main__.RequirementsTests.test_surge_identity_and_exact_as...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_vendor_contract" classname="infrastructure_vendor_contract" time="0.613105" status="run">
+		<properties/>
+		<system-out>test_changed_link_target_is_rejected (__main__.LinkPackagingTests.test_changed_link_target_is_rejected) ... ok
+test_extractor_never_overwrites_existing_destination (__main__.LinkPackagingTests.test_extractor_never_overwrites_existing_destination) ... ok
+test_lost_symlink_type_is_rejected (__main__.LinkPackagingTests.test_lost_symlink_type_is_rejected) ... ok
+test_registered_alias_roundtrip_preserves_type_and_bytes (__main__.LinkPackagingTests.test_registered_alias_roundtrip_preserves_type_and_bytes) ... ok
+test_restore_only_exact_descriptors (__main__.LinkPackagingTests.test_restore_only_exact_descriptors) ... ok
+test_all_five_match_owner_pins_and_member_hashes (__main__.VendorTests.test_all_five_match_owner_pins_and_member_hashes) ... ok
+test_installed_single_byte_mutation_is_rejected (__main__.VendorTests.test_installed_single_byte_mutation_is_rejected) ... ok
+test_installer_refuses_overwrite (__main__.VendorTests.test_installer_refuses_overwrite) ... ok
+test_member_and_link_escape_rejected (__main__.Vendor...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="vendor_api_smoke" classname="vendor_api_smoke" time="0.0908269" status="run">
+		<properties/>
+		<system-out>PASS: supplied vendor API fixture (Asio, filesystem, TinyXML2; MinHook lifecycle on Windows); PEGTL has a separate toolchain probe; not production integration
+</system-out>
+	</testcase>
+	<testcase name="vendor_source_integrity" classname="vendor_source_integrity" time="0.826904" status="run">
+		<properties/>
+		<system-out>asio: INSTALLED_MEMBER_HASHES_PASS
+filesystem: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+</system-out>
+	</testcase>
+	<testcase name="vendor_pegtl_toolchain_unavailable" classname="vendor_pegtl_toolchain_unavailable" time="0.0340194" status="notrun">
+		<skipped message="SKIP_RETURN_CODE=77"/>
+		<properties/>
+		<system-out>UNAVAILABLE: supplied PEGTL public inputs do not compile with this exact toolchain.
+Vendor remains byte-exact. Compiler diagnostics: /workspace/yellowfield/build/llvm-mingw-x64/CMakeFiles/CMakeConfigureLog.yaml
+This is not production-use or runtime-test PASS.
+</system-out>
+	</testcase>
+	<testcase name="crt_runtime_smoke" classname="crt_runtime_smoke" time="0.110905" status="run">
+		<properties/>
+		<system-out>PASS: compiler CRT heap, exception unwind, containers and thread-local destruction; no game acceptance
+</system-out>
+	</testcase>
+	<testcase name="bootstrap_contracts" classname="bootstrap_contracts" time="0.129729" status="run">
+		<properties/>
+		<system-out>PASS: 191 mock contract assertions; original DLL was not loaded or executed.
+</system-out>
+	</testcase>
+	<testcase name="crt_thread_contracts" classname="crt_thread_contracts" time="0.143884" status="run">
+		<properties/>
+		<system-out>PASS: 655 thread/context/bootstrap checks (synthetic; no OS threads)
+</system-out>
+	</testcase>
+	<testcase name="host_init_contracts" classname="host_init_contracts" time="0.144454" status="run">
+		<properties/>
+		<system-out>PASS 6671 host initialization checks
+</system-out>
+	</testcase>
+	<testcase name="registry_contracts" classname="registry_contracts" time="0.101939" status="run">
+		<properties/>
+		<system-out>registry-source: 991 checks passed
+</system-out>
+	</testcase>
+	<testcase name="native_callback_contracts" classname="native_callback_contracts" time="0.180685" status="run">
+		<properties/>
+		<system-out>PASS: 130 native callback/trampoline checks; synthetic originals, real LastError metadata only
+</system-out>
+	</testcase>
+	<testcase name="host_callback_contracts" classname="host_callback_contracts" time="0.0781796" status="run">
+		<properties/>
+		<system-out>host callbacks: 194 checks passed (synthetic mocks only)
+</system-out>
+	</testcase>
+	<testcase name="network_hook_contracts" classname="network_hook_contracts" time="0.0465739" status="run">
+		<properties/>
+		<system-out>PASS: 324 connect/cleanup checks; synthetic effects, no sockets/hooks/process exit
+</system-out>
+	</testcase>
+	<testcase name="online_contracts" classname="online_contracts" time="0.0186744" status="run">
+		<properties/>
+		<system-out>online: 12869 checks passed (synthetic mocks only)
+</system-out>
+	</testcase>
+	<testcase name="configuration_contracts" classname="configuration_contracts" time="0.0663854" status="run">
+		<properties/>
+		<system-out>PASS: 150 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.
+</system-out>
+	</testcase>
+	<testcase name="execution_contracts" classname="execution_contracts" time="0.0451957" status="run">
+		<properties/>
+		<system-out>PASS 10201 checks; synthetic/mock tests only; no original DLL loaded
+</system-out>
+	</testcase>
+	<testcase name="libraries_contracts" classname="libraries_contracts" time="0.0492438" status="run">
+		<properties/>
+		<system-out>PASS: 157 checks; mocks only; no DLL loaded or freed
+</system-out>
+	</testcase>
+	<testcase name="startup_contracts" classname="startup_contracts" time="0.0477815" status="run">
+		<properties/>
+		<system-out>PASS: 155 checks; synthetic input/console only; no real environment writes or UI
+</system-out>
+	</testcase>
+	<testcase name="parser_contracts" classname="parser_contracts" time="0.0412918" status="run">
+		<properties/>
+		<system-out>PASS: 115 synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.
+</system-out>
+	</testcase>
+	<testcase name="config_order_contracts" classname="config_order_contracts" time="0.0447081" status="run">
+		<properties/>
+		<system-out>PASS: 2185 Config2 hash/list first-copy checks
+</system-out>
+	</testcase>
+	<testcase name="config_pipeline_contracts" classname="config_pipeline_contracts" time="0.0527822" status="run">
+		<properties/>
+		<system-out>PASS: 189 Config2 pipeline checks; generated fixture only; original targets never executed
+</system-out>
+	</testcase>
+	<testcase name="config_hash_contracts" classname="config_hash_contracts" time="0.210551" status="run">
+		<properties/>
+		<system-out>PASS: 4929 Config2 growth/copy/positional-reuse checks
+</system-out>
+	</testcase>
+	<testcase name="config_application_contracts" classname="config_application_contracts" time="0.0664971" status="run">
+		<properties/>
+		<system-out>PASS: 95 Config2 application checks; no original execution or real user CFG
+</system-out>
+	</testcase>
+	<testcase name="config_startup_contracts" classname="config_startup_contracts" time="0.0700915" status="run">
+		<properties/>
+		<system-out>PASS: 335 Config2 startup checks; own generated files, all other OS/worker effects controlled
+</system-out>
+	</testcase>
+	<testcase name="achievement_writer_contracts" classname="achievement_writer_contracts" time="0.0439051" status="run">
+		<properties/>
+		<system-out>PASS: 36 achievement INI writer checks; own fixture only
+</system-out>
+	</testcase>
+	<testcase name="achievement_storage_contracts" classname="achievement_storage_contracts" time="0.0299221" status="run">
+		<properties/>
+		<system-out>PASS: 116 achievement storage checks; own fixtures only, no original execution
+</system-out>
+	</testcase>
+	<testcase name="calendar_contracts" classname="calendar_contracts" time="0.0474598" status="run">
+		<properties/>
+		<system-out>PASS: 31760 calendar arithmetic checks; no original execution or OS time calls
+</system-out>
+	</testcase>
+	<testcase name="timestamp_contracts" classname="timestamp_contracts" time="0.0538495" status="run">
+		<properties/>
+		<system-out>PASS: 192 timestamp checks; classic ASCII native branch plus explicit host compatibility; own fixtures only
+</system-out>
+	</testcase>
+	<testcase name="utc_contracts" classname="utc_contracts" time="0.0570721" status="run">
+		<properties/>
+		<system-out>PASS: 76 UTC wrapper checks; fixed providers and explicit host compatibility
+</system-out>
+	</testcase>
+	<testcase name="achievement_runtime_contracts" classname="achievement_runtime_contracts" time="0.0289117" status="run">
+		<properties/>
+		<system-out>PASS: 163 achievement runtime integration checks; own fixtures and controlled clock/locks/events only
+</system-out>
+	</testcase>
+	<testcase name="event_queue_contracts" classname="event_queue_contracts" time="0.0434865" status="run">
+		<properties/>
+		<system-out>PASS: 2054 event queue checks; synthetic guards and chosen FIFO only
+</system-out>
+	</testcase>
+	<testcase name="event_queue_integration_contracts" classname="event_queue_integration_contracts" time="0.0448013" status="run">
+		<properties/>
+		<system-out>PASS: 133 event queue integration checks; shared synthetic guards and controlled cipher only
+</system-out>
+	</testcase>
+	<testcase name="session_handler_contracts" classname="session_handler_contracts" time="0.0501441" status="run">
+		<properties/>
+		<system-out>PASS: 19 session handler checks; actual message core and controlled cipher only
+</system-out>
+	</testcase>
+	<testcase name="session_integration_contracts" classname="session_integration_contracts" time="0.0447264" status="run">
+		<properties/>
+		<system-out>PASS: 1154 session integration checks; actual XML/AES/Router/handlers and memory transport only
+</system-out>
+	</testcase>
+	<testcase name="socket_operations_contracts" classname="socket_operations_contracts" time="0.0824745" status="run">
+		<properties/>
+		<system-out>PASS: 376 socket operation checks; injected APIs and actual Session greeting only
+</system-out>
+	</testcase>
+	<testcase name="socket_native_contracts" classname="socket_native_contracts" time="0.0169063" status="run">
+		<properties/>
+		<system-out>PASS: 308 socket native checks; injected SDK imports only
+</system-out>
+	</testcase>
+	<testcase name="socket_acceptor_contracts" classname="socket_acceptor_contracts" time="0.0629243" status="run">
+		<properties/>
+		<system-out>PASS: 364 acceptor operation checks; controlled runtime and socket APIs only
+</system-out>
+	</testcase>
+	<testcase name="socket_acceptor_native_contracts" classname="socket_acceptor_native_contracts" time="0.0649478" status="run">
+		<properties/>
+		<system-out>PASS: 308 acceptor native checks; injected SDK imports only
+</system-out>
+	</testcase>
+	<testcase name="socket_lifecycle_contracts" classname="socket_lifecycle_contracts" time="0.0197155" status="run">
+		<properties/>
+		<system-out>PASS: 244 socket lifecycle checks; controlled service/list/owner providers only
+</system-out>
+	</testcase>
+	<testcase name="socket_lifecycle_native_contracts" classname="socket_lifecycle_native_contracts" time="0.0593502" status="run">
+		<properties/>
+		<system-out>PASS: 165 socket lifecycle native checks; injected SDK gate imports only
+</system-out>
+	</testcase>
+	<testcase name="socket_close_contracts" classname="socket_close_contracts" time="0.0432844" status="run">
+		<properties/>
+		<system-out>PASS: 221 socket close checks; injected socket/error APIs only
+</system-out>
+	</testcase>
+	<testcase name="socket_closing_contracts" classname="socket_closing_contracts" time="0.044012" status="run">
+		<properties/>
+		<system-out>PASS: 143 socket closing checks; controlled cancellation and injected APIs only
+</system-out>
+	</testcase>
+	<testcase name="socket_cancellation_contracts" classname="socket_cancellation_contracts" time="0.046446" status="run">
+		<properties/>
+		<system-out>PASS: 1937 socket cancellation checks; finite offline graph and injected effects only
+</system-out>
+	</testcase>
+	<testcase name="socket_cancellation_native_contracts" classname="socket_cancellation_native_contracts" time="0.0185752" status="run">
+		<properties/>
+		<system-out>PASS: 107 socket native cancellation checks; injected SDK and actual source integration only
+</system-out>
+	</testcase>
+	<testcase name="socket_recycle_contracts" classname="socket_recycle_contracts" time="0.0914787" status="run">
+		<properties/>
+		<system-out>PASS: 5564 socket recycler checks; retained0283c0 contracts and offline initialized graphs only
+</system-out>
+	</testcase>
+	<testcase name="socket_recycle_storage_contracts" classname="socket_recycle_storage_contracts" time="0.0455234" status="run">
+		<properties/>
+		<system-out>PASS: 10400 socket recycler storage checks; selected host storage and actual source chain with injected effects only
+</system-out>
+	</testcase>
+	<testcase name="socket_service_registry_contracts" classname="socket_service_registry_contracts" time="0.0195551" status="run">
+		<properties/>
+		<system-out>PASS: 454 socket service registry checks; retained normal-flow predicates and controlled callback mutations only
+</system-out>
+	</testcase>
+	<testcase name="socket_service_registry_integration_contracts" classname="socket_service_registry_integration_contracts" time="0.0491199" status="run">
+		<properties/>
+		<system-out>PASS: 203 socket service registry integration checks; borrowed projection and actual acceptor-to-registry-to-recycler chain with controlled effects only
+</system-out>
+	</testcase>
+	<testcase name="socket_service_constructor_contracts" classname="socket_service_constructor_contracts" time="0.0417061" status="run">
+		<properties/>
+		<system-out>PASS: 339 socket service constructor checks; retained0228e0/027be0 normal flow and controlled effects only
+</system-out>
+	</testcase>
+	<testcase name="socket_service_constructor_native_contracts" classname="socket_service_constructor_native_contracts" time="0.0461679" status="run">
+		<properties/>
+		<system-out>PASS: 212 socket service constructor native checks; SDK-injected027be0 and actual constructor-to-acceptor-to-recycler chain only
+</system-out>
+	</testcase>
+	<testcase name="socket_scheduler_registry_contracts" classname="socket_scheduler_registry_contracts" time="0.0200976" status="run">
+		<properties/>
+		<system-out>PASS: 244 socket scheduler registry checks; retained022fd0/023b30 normal flow with controlled allocation/024990/RTTI only
+</system-out>
+	</testcase>
+	<testcase name="socket_scheduler_registry_integration_contracts" classname="socket_scheduler_registry_integration_contracts" time="0.0470094" status="run">
+		<properties/>
+		<system-out>PASS: 838 socket scheduler registry integration checks; shared nested socket/scheduler registry and actual constructor-to-acceptor-to-recycler chain with controlled effects only
+</system-out>
+	</testcase>
+	<testcase name="socket_iocp_constructor_contracts" classname="socket_iocp_constructor_contracts" time="0.0501922" status="run">
+		<properties/>
+		<system-out>PASS: 1872 socket IOCP constructor checks; retained024990 ordering/partial failure/live callback boundaries with controlled providers only
+</system-out>
+	</testcase>
+	<testcase name="socket_iocp_constructor_native_contracts" classname="socket_iocp_constructor_native_contracts" time="0.0501286" status="run">
+		<properties/>
+		<system-out>PASS: 527 socket IOCP constructor native checks; five SDK-typed injected imports and actual024990/023b30/0228e0/acceptor/cancellation/recycler source integration only
+</system-out>
+	</testcase>
+	<testcase name="socket_worker_startup_contracts" classname="socket_worker_startup_contracts" time="0.0171085" status="run">
+		<properties/>
+		<system-out>PASS: 616 socket worker startup checks; retained02a000/02a4a0 callbacks, cached errors/handles, controlled lifetime and unchanged recovered05e8e0 bridge
+</system-out>
+	</testcase>
+	<testcase name="socket_worker_startup_native_contracts" classname="socket_worker_startup_native_contracts" time="0.111728" status="run">
+		<properties/>
+		<system-out>PASS: 821 socket worker startup native checks; six injected SDK imports and actual02a000/02a4a0/024990/shared registry/acceptor/cancellation/recycler source integration only
+</system-out>
+	</testcase>
+	<testcase name="socket_worker_run_contracts" classname="socket_worker_run_contracts" time="0.0601869" status="run">
+		<properties/>
+		<system-out>PASS: 795 socket worker run checks; retained026320/029890/0298b0/02a190 logical status, low32 effects, TLS ordering, dispatch saturation, live cache cleanup and lifetime
+</system-out>
+	</testcase>
+	<testcase name="socket_worker_run_native_contracts" classname="socket_worker_run_native_contracts" time="0.542724" status="run">
+		<properties/>
+		<system-out>PASS: 577 socket worker run native checks; four injected SDK imports and actual024990/02a000/05e8e0/02a4a0/029890/0298b0/02a190/026320 source composition with controlled dispatcher and lifetime
+</system-out>
+	</testcase>
+	<testcase name="socket_completion_dispatcher_contracts" classname="socket_completion_dispatcher_contracts" time="0.0378181" status="run">
+		<properties/>
+		<system-out>PASS: 1970 socket completion dispatcher checks; full027c10 queue/timer/TLS/metadata/CAS/exception/status/stop flow and actual cancellation/worker source integration
+</system-out>
+	</testcase>
+	<testcase name="socket_completion_dispatcher_native_contracts" classname="socket_completion_dispatcher_native_contracts" time="0.0783747" status="run">
+		<properties/>
+		<system-out>PASS: 845 socket completion dispatcher native checks; five injected SDK imports and actual024990/02a000/05e8e0/02a4a0/029890/0298b0/027c10/02a190/026320 source composition
+</system-out>
+	</testcase>
+	<testcase name="socket_posted_operation_contracts" classname="socket_posted_operation_contracts" time="0.0325332" status="run">
+		<properties/>
+		<system-out>PASS: 4336 socket posted operation checks; six normal bodies, two-slot storage cache, source ownership, live TLS/scheduler and actual operation/functor lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_posted_operation_integration_contracts" classname="socket_posted_operation_integration_contracts" time="0.0848714" status="run">
+		<properties/>
+		<system-out>PASS: 110 socket posted operation integration checks; actual executor/dispatcher/worker/TLS-cache source chain, existing injected SDK adapters, unknown callback forwarding and heap lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_io_completion_contracts" classname="socket_io_completion_contracts" time="0.0350644" status="run">
+		<properties/>
+		<system-out>PASS: 12382 socket IO completion checks; eight retained normal bodies, defined-field error mapping, live environment/reference mutations, unsigned counters, two-slot storage and polymorphic factory sequencing
+</system-out>
+	</testcase>
+	<testcase name="socket_io_completion_integration_contracts" classname="socket_io_completion_integration_contracts" time="0.0452427" status="run">
+		<properties/>
+		<system-out>PASS: 128 socket IO completion integration checks; actual dispatcher/worker/IO/posted source composition, injected existing native SDK adapters, mixed size-class cache reuse, mandatory unknown routing and heap lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_handler_dispatch_contracts" classname="socket_handler_dispatch_contracts" time="0.0514191" status="run">
+		<properties/>
+		<system-out>PASS: 3268 socket handler dispatch core checks; slots4/5 allocator and cleanup, borrowed priority, live factory/vtable/owner semantics, mutable publication, early actual closure deletion and exception boundaries
+</system-out>
+	</testcase>
+	<testcase name="socket_handler_dispatch_integration_contracts" classname="socket_handler_dispatch_integration_contracts" time="0.0829898" status="run">
+		<properties/>
+		<system-out>PASS: 242 socket handler dispatch integration checks; actual027c10/0298b0/IO routing/handler scheduler composition, borrowed and owned branches, injected SDK adapters, fallback queue, independent pool0/1 plus4/5 reuse and actual heap lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_composed_write_contracts" classname="socket_composed_write_contracts" time="0.0645008" status="run">
+		<properties/>
+		<system-out>PASS: 3528 socket composed write core checks; five retained normal bodies, independent slice model, current TLS cache, weak ownership, live buffer reload, wrap arithmetic, early publication, fallback, exceptions and real synthetic heap lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_composed_write_integration_contracts" classname="socket_composed_write_integration_contracts" time="0.0462485" status="run">
+		<properties/>
+		<system-out>PASS: 593 socket composed write integration checks; actual021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_environment_constructor_contracts" classname="socket_environment_constructor_contracts" time="0.0480664" status="run">
+		<properties/>
+		<system-out>PASS: 544 socket environment constructor core checks; actual023dd0, zero and signed nonzero comparator, wrapped type identity, cached factory despite executor deletion, live moves and guard cleanup, exact exception prefixes and bounded registries
+</system-out>
+	</testcase>
+	<testcase name="socket_environment_constructor_integration_contracts" classname="socket_environment_constructor_integration_contracts" time="0.0603611" status="run">
+		<properties/>
+		<system-out>PASS: 626 socket environment constructor integration checks; actual023dd0/021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_write_finish_contracts" classname="socket_write_finish_contracts" time="0.0561421" status="run">
+		<properties/>
+		<system-out>PASS: 2493 socket write finish core checks; actual025a70 mask/pop, saved strings/owner and live callback mutations, size/alignment boundaries and terminal, exact category/code suppression and log stream order, wrapped signed virtual offset, heap lifetime ends, bounded projections and callback exception prefixes
+</system-out>
+	</testcase>
+	<testcase name="socket_write_finish_integration_contracts" classname="socket_write_finish_integration_contracts" time="0.0582349" status="run">
+		<properties/>
+		<system-out>PASS: 639 socket write finish integration checks; actual025a70/023dd0/021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_queued_write_contracts" classname="socket_queued_write_contracts" time="0.0975308" status="run">
+		<properties/>
+		<system-out>PASS: 1004 socket queued write core checks; actual02a500 empty and bad weak terminal, independent inline/heap/null/full64/masked head oracle, real low32 CAS wrap and bounded synthetic host contention, exact owner member identities and handler fields, residual ownership cached across mutation, heap lifetime ends, bounded registries and normal exception prefixes
+</system-out>
+	</testcase>
+	<testcase name="socket_queued_write_integration_contracts" classname="socket_queued_write_integration_contracts" time="0.0640918" status="run">
+		<properties/>
+		<system-out>PASS: 1597 socket queued write integration checks; actual02a500/021fd0/0261d0/025a70/02a500 cycle for two distinct messages, 64KiB slices, shared owner transfer and release, borrowed/owned scheduling, zero second item, cache reuse, early key2 and fallback key0 evidence semantics, mapped errors and category suppression; injected SDK only, actual synthetic heap lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_async_receive_contracts" classname="socket_async_receive_contracts" time="0.0475047" status="run">
+		<properties/>
+		<system-out>PASS: 691 async receive core checks; actual021d10 normal paths, receive-only64 mapping, full64 reloads, ownership/weak/cache/publication, injected exact SDK WSARecv/GetLastError and actual lifetime ends
+</system-out>
+	</testcase>
+	<testcase name="socket_async_receive_integration_contracts" classname="socket_async_receive_integration_contracts" time="0.0609341" status="run">
+		<properties/>
+		<system-out>PASS: 1270 async receive integration checks; actual023dd0 constructor and021d10 initiation, dispatcher IO route/027710/021a40, EOF/error normalization, retained owner/weak, actual cache/free lifetime;025c40 remains required boundary
+</system-out>
+	</testcase>
+	<testcase name="socket_receive_buffer_contracts" classname="socket_receive_buffer_contracts" time="0.0635901" status="run">
+		<properties/>
+		<system-out>PASS: 3977 receive buffer core checks; actual010040/008350, independent byte payload oracle, explicit growth anchors, alignment/header/free, symbolic max arithmetic and exact failure prefixes; no original CRT body claim
+</system-out>
+	</testcase>
+	<testcase name="socket_receive_buffer_integration_contracts" classname="socket_receive_buffer_integration_contracts" time="0.0221813" status="run">
+		<properties/>
+		<system-out>PASS: 684 receive buffer integration checks; actual010040/008350 byte storage with021d10/023dd0/injected SDK/027710/021a40; controlled prepare/commit caller, embedded NUL/EOF/error/owned cleanup;025c40 remains open
+</system-out>
+	</testcase>
+	<testcase name="socket_composed_read_contracts" classname="socket_composed_read_contracts" time="0.0548298" status="run">
+		<properties/>
+		<system-out>PASS: 3672 composed read core checks; actual025c40 with010040/008350, independent delimiter oracle and explicit request anchors, sentinel/flags/commit/error/category reloads/terminal ordering/lifetime; isolated021d10 capture only
+</system-out>
+	</testcase>
+	<testcase name="socket_composed_read_integration_contracts" classname="socket_composed_read_integration_contracts" time="0.0567298" status="run">
+		<properties/>
+		<system-out>PASS: 1714 composed read integration checks; recovered025c40 closes actual completion/borrowed/owned scheduling through010040/008350/021d10/023dd0/injected SDK/IO route/027710/021a40; split/embedded-NUL/trailing/EOF/limit/error, early key2/fallback and real IO/task lifetimes;025480 remains required
+</system-out>
+	</testcase>
+	<testcase name="socket_frame_read_contracts" classname="socket_frame_read_contracts" time="0.0508519" status="run">
+		<properties/>
+		<system-out>PASS: 1216 socket frame read core checks; addressed025480/0280d0 normal flow, independent payload/error/ownership oracles and controlled provider/lifetime mutations
+</system-out>
+	</testcase>
+	<testcase name="socket_frame_read_integration_contracts" classname="socket_frame_read_integration_contracts" time="0.0223684" status="run">
+		<properties/>
+		<system-out>PASS: 315 socket frame read integration checks; actual025480/0280d0/025c40/010040/008350/021d10/021a40 source loop, synthetic thread and controlled completion/environment adapters
+</system-out>
+	</testcase>
+	<testcase name="socket_message_dispatch_contracts" classname="socket_message_dispatch_contracts" time="0.0466044" status="run">
+		<properties/>
+		<system-out>PASS: 621 socket message dispatch core checks; actual021770/028d30 normal bodies, two executor copies, live delete target, precise string/control/closure ownership and bounded call-prefix tests
+</system-out>
+	</testcase>
+	<testcase name="socket_message_dispatch_integration_contracts" classname="socket_message_dispatch_integration_contracts" time="0.0461994" status="run">
+		<properties/>
+		<system-out>PASS: 199 socket message dispatch integration checks; actual025480/05e8e0/05e7a8/021770/028d30/033d70 source, compatibility XML parser/serializer, immediate and deferred synthetic thread, owned021420 response adapter
+</system-out>
+	</testcase>
+	<testcase name="socket_response_dispatch_contracts" classname="socket_response_dispatch_contracts" time="0.0653408" status="run">
+		<properties/>
+		<system-out>PASS: 662 socket response dispatch core checks; actual021420/028270/022240 bodies, factory caching/three environment moves, borrowed/owned ownership, deque wrap/live allocation reload and response residual cleanup
+</system-out>
+	</testcase>
+	<testcase name="socket_response_dispatch_integration_contracts" classname="socket_response_dispatch_integration_contracts" time="0.0516578" status="run">
+		<properties/>
+		<system-out>PASS: 115 socket response dispatch integration checks; actual028d30/021420/023cb0/022240/028270/02a500/021fd0/021a80/0261d0/025a70 source, controlled owned functor/string copy/constructor/completion and injected send
+</system-out>
+	</testcase>
+	<testcase name="socket_owned_response_contracts" classname="socket_owned_response_contracts" time="0.0191956" status="run">
+		<properties/>
+		<system-out>PASS: 317 socket owned response checks; actual020cb0/021900/022280/0219d0, early destruction, cache reuse, byte flags, independent copy and residual cleanup
+</system-out>
+	</testcase>
+	<testcase name="socket_owned_response_integration_contracts" classname="socket_owned_response_integration_contracts" time="0.0511168" status="run">
+		<properties/>
+		<system-out>PASS: 120 socket owned response integration checks; actual028d30/021420/020cb0/021900/022280/0219d0/028270/02a500/021fd0/021a80/0261d0/025a70 source; controlled string copy/constructor/completion and injected send
+</system-out>
+	</testcase>
+	<testcase name="socket_response_containers_contracts" classname="socket_response_containers_contracts" time="0.0569442" status="run">
+		<properties/>
+		<system-out>PASS: 1556 socket response container checks; actual009eb0/026670, independent copy/NUL/alignment, pointer permutation and zero oracle, cached/live fields and terminal prefixes
+</system-out>
+	</testcase>
+	<testcase name="socket_response_containers_integration_contracts" classname="socket_response_containers_integration_contracts" time="0.086705" status="run">
+		<properties/>
+		<system-out>PASS: 348 socket response containers integration checks; actual009eb0/026670 plus N1/N2/N3/queued-send/finish source;13-message FIFO, two map growths; controlled allocation/constructor/completion and injected send
+</system-out>
+	</testcase>
+	<testcase name="socket_message_core_bridge_contracts" classname="socket_message_core_bridge_contracts" time="0.0483032" status="run">
+		<properties/>
+		<system-out>PASS: 87 socket message core bridge checks; actual existing033d70/router/XML and010040/008350, normal-return request commit, identity/state binding and explicit exception/callback visibility limits;0 new native bodies
+</system-out>
+	</testcase>
+	<testcase name="socket_message_core_bridge_integration_contracts" classname="socket_message_core_bridge_integration_contracts" time="0.077564" status="run">
+		<properties/>
+		<system-out>PASS: 698 socket message core bridge integration checks; existing033d70/032d00/XML to actual N1/N2/N3/N4/queued-send/finish; normal-return adapter, controlled handler/cipher/constructor/completion and injected send;0 new native bodies
+</system-out>
+	</testcase>
+	<testcase name="socket_request_mutation_contracts" classname="socket_request_mutation_contracts" time="0.0929462" status="run">
+		<properties/>
+		<system-out>PASS: 72025 socket request mutation checks; actual03ce30/010040/034730, exhaustive byte pairs, external and safe alias oracles, raw alias-bound failures, exact lower-growth and cached/live prefixes
+</system-out>
+	</testcase>
+	<testcase name="socket_request_mutation_integration_contracts" classname="socket_request_mutation_integration_contracts" time="0.0405391" status="run">
+		<properties/>
+		<system-out>PASS: 1219 socket request mutation integration checks; actual03ce30/034730/010040 prefix before controlled caller callbacks and N1-N5/send/finish source; native033d70 orchestration and02b940 remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_request_growth_contracts" classname="socket_request_growth_contracts" time="0.0503493" status="run">
+		<properties/>
+		<system-out>PASS: 5304 socket request growth checks; actual02b940 and034730 provider closure, binary/alias oracle, metadata-before-COPY, sized-free-before-pointer, alignment and failure prefixes
+</system-out>
+	</testcase>
+	<testcase name="socket_request_growth_integration_contracts" classname="socket_request_growth_integration_contracts" time="0.136935" status="run">
+		<properties/>
+		<system-out>PASS: 1144 socket request growth integration checks; actual034730/02b940 provider closure, external/self source and aligned growth before controlled caller and N1-N6/send/finish; native033d70 orchestration remains open
+</system-out>
+	</testcase>
+	<testcase name="socket_response_hex_contracts" classname="socket_response_hex_contracts" time="0.0616488" status="run">
+		<properties/>
+		<system-out>PASS: 1876 socket response hex checks; actual03d190 and reused resize/grow, all byte values, binary/backward overlap oracle, exact empty no-op, live prefix and failure/wrap states
+</system-out>
+	</testcase>
+	<testcase name="socket_response_hex_integration_contracts" classname="socket_response_hex_integration_contracts" time="0.360837" status="run">
+		<properties/>
+		<system-out>PASS: 834 socket response hex integration checks; actual03d190 with controlled plain-response preparation, original response allocation pool, N1-N7 queue/send/finish and deferred lifetime; native033d70 orchestration remains open
+</system-out>
+	</testcase>
+	<testcase name="socket_native_message_contracts" classname="socket_native_message_contracts" time="0.481711" status="run">
+		<properties/>
+		<system-out>PASS: 1713 socket native message checks; typed033d70 request/cipher/parser retries, output codec/move, live event front and normal failure prefixes; lower providers/ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_native_message_integration_contracts" classname="socket_native_message_integration_contracts" time="0.838389" status="run">
+		<properties/>
+		<system-out>PASS: 2013 socket native message integration checks; actual033d70 final source bridge, native request retries/response codec/events to N1-N8 queue/send/finish; lower XML/cipher/growth/log providers and native ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_append_growth_contracts" classname="socket_append_growth_contracts" time="0.0805459" status="run">
+		<properties/>
+		<system-out>PASS: 3461 socket append growth checks; actual012350/007e30 distinct payload/extra semantics, external/self binary oracle, metadata/copy/tail/free/pointer order and bounded failure prefixes
+</system-out>
+	</testcase>
+	<testcase name="socket_append_growth_integration_contracts" classname="socket_append_growth_integration_contracts" time="0.838198" status="run">
+		<properties/>
+		<system-out>PASS: 2039 socket append growth integration checks; actual012350/007e30 final source bridges in033d70 and N1-N9 queue/send/finish; lower XML/cipher/log/allocator providers and native ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_prefix_cipher_contracts" classname="socket_prefix_cipher_contracts" time="0.172809" status="run">
+		<properties/>
+		<system-out>PASS: 5039 socket prefix cipher checks; actual042480/042610 and045620/045630/0454e0/045580 sources, known-answer AES, binary offset/padding/IV oracle, live callbacks and bounded failure prefixes
+</system-out>
+	</testcase>
+	<testcase name="socket_prefix_cipher_integration_contracts" classname="socket_prefix_cipher_integration_contracts" time="3.05182" status="run">
+		<properties/>
+		<system-out>PASS: 4224 socket prefix cipher integration checks; real ECB/CBC/IV/padding sources and final cipher/append bridges in033d70, request/response/event chain to N1-N10 queue/send/finish; key binding/XML/log/native ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_cipher_session_contracts" classname="socket_cipher_session_contracts" time="0.0983071" status="run">
+		<properties/>
+		<system-out>PASS: 716 socket cipher session checks; actual0423d0/042760/042780/02bc70 control projections, owned schedule/mode/IV/flags, semantic local and native prefix state coherence, reset and factory isolation
+</system-out>
+	</testcase>
+	<testcase name="socket_cipher_session_integration_contracts" classname="socket_cipher_session_integration_contracts" time="4.06011" status="run">
+		<properties/>
+		<system-out>PASS: 6622 socket cipher session integration checks; owned init/key/IV/reset and permanent semantic cipher/factory adapters, ChallengeResponse to real native cipher/append and N1-N11 queue/send/finish; XML/native object/allocator/ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_native_dispatch_contracts" classname="socket_native_dispatch_contracts" time="0.0556598" status="run">
+		<properties/>
+		<system-out>PASS: 850 native dispatch checks;39 commands, validation, live callbacks, signed count/reloads, output/free order and failure prefixes; native lower providers remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_native_dispatch_integration_contracts" classname="socket_native_dispatch_integration_contracts" time="3.7566" status="run">
+		<properties/>
+		<system-out>PASS: 8978 socket native dispatch integration checks; final032d00 source, owned session ChallengeResponse and native cipher/append to queue/send/finish; registry/DOM/printer/handler/string lower providers and native ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_native_document_contracts" classname="socket_native_document_contracts" time="0.061171" status="run">
+		<properties/>
+		<system-out>PASS: 567 native document checks;49 assembly anchored stores/holes/failure prefixes, live buffer/status, cleanup order and coherent final bindings; native lower providers/ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_native_document_integration_contracts" classname="socket_native_document_integration_contracts" time="5.4266" status="run">
+		<properties/>
+		<system-out>PASS: 15264 socket native document integration checks; final ctor/parse/destructor and dispatch/cipher/append sources to queue/send/finish; lower clear/parser/nodes/pools/allocator/vtable and native ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_document_clear_contracts" classname="socket_document_clear_contracts" time="0.0786863" status="run">
+		<properties/>
+		<system-out>PASS: 169 document clear checks; child graph unlink/tracking/virtual targets, cached and live callback fields, exact reset/free order and failure prefixes; native DOM/pool lower bodies and ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_document_clear_integration_contracts" classname="socket_document_clear_integration_contracts" time="4.10845" status="run">
+		<properties/>
+		<system-out>PASS: 17117 socket document clear integration checks; actual clear/node source and coherent document/cipher/dispatch/queue/send chain on controlled one-root projections; parser/full DOM/node virtual/helper/pool/heap/ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_delete_contracts" classname="socket_node_delete_contracts" time="0.0967636" status="run">
+		<properties/>
+		<system-out>PASS: 386 node delete checks; parent positions/mismatch, standalone null/link preservation, full64 probe, signed tracking/swap/dead slots, alias reloads, live targets and bounded/throw prefixes; native vtable/DOM/pool/ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_delete_integration_contracts" classname="socket_node_delete_integration_contracts" time="7.54584" status="run">
+		<properties/>
+		<system-out>PASS: 40107 socket node delete integration checks; actual003030/003240 plus coherent clear/document/cipher/dispatch/queue/send chain on3controlled root projections; nativevirtual/parser/fullDOM/pool/heap/ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_release_contracts" classname="socket_pool_release_contracts" time="0.0659971" status="run">
+		<properties/>
+		<system-out>PASS: 613 pool release/track checks; retained vtable defaults, four pools, exact LIFO/full-prefix preservation, raw32 wrapping, root-cache/shared-backing/item aliases, bounded prefixes and selected identities; native allocator/free, ABI and EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_release_integration_contracts" classname="socket_pool_release_integration_contracts" time="24.6714" status="run">
+		<properties/>
+		<system-out>PASS: 148389 socket pool release integration checks; source release/track on4mapped pool prefixes and3controlled roots through document/cipher/dispatch/queue/send; allocator/nodevirtual/fullDOM/ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_allocate_contracts" classname="socket_pool_allocate_contracts" time="0.0752555" status="run">
+		<properties/>
+		<system-out>PASS: 515 pool allocation core checks; four literal layouts, scalar/vector initialized images, recycled bypass, signed maxima/raw counters, ordered lower/mapping failures, shared aliases and raw SIMD lanes; native heap/append body/ABI/EH remain open
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_allocate_integration_contracts" classname="socket_pool_allocate_integration_contracts" time="0.0234107" status="run">
+		<properties/>
+		<system-out>PASS: 8720 pool allocation integration checks; four exact item extents across three blocks, source tracking/release/LIFO reuse, payload retention and committed failed-growth prefix; lower heap/fill/append supplied, no parser/DOM/nativeABI/EH claim
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_append_contracts" classname="socket_pool_append_contracts" time="0.0574451" status="run">
+		<properties/>
+		<system-out>PASS: 87 pool pointer-array core checks; inline/heap growth, raw signed arithmetic and saturated sizing, live lower-effect mutations, aliases, mapped null and exact failure prefixes; heap/copy/free/ABI/EH remain supplied
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_append_integration_contracts" classname="socket_pool_append_integration_contracts" time="0.230011" status="run">
+		<properties/>
+		<system-out>PASS: 22736 pool pointer-array integration checks; four source allocators scalar/SIMD, seven blocks with inline-to-heap/heap-to-heap growth, track/release/reuse and committed failures; lower allocation/fill/copy/free supplied, no parser/DOM/nativeABI/EH claim
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_clear_contracts" classname="socket_pool_clear_contracts" time="0.0462105" status="run">
+		<properties/>
+		<system-out>PASS: 117 pool clear core checks; three bodies, LIFO/raw negative counts, live free mutations, decrement aliases, QWORD reset order and bounded failure prefixes; lower free/ABI/EH remain supplied
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_clear_integration_contracts" classname="socket_pool_clear_integration_contracts" time="0.0264405" status="run">
+		<properties/>
+		<system-out>PASS: 13024 pool clear integration checks; four allocators scalar/SIMD through append/track/release/clear, retained-array reuse/regrowth and004280 four-pool parse-error cleanup; parser/heap/free supplied, nativeDOM/ABI/EH open
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_destruct_contracts" classname="socket_pool_destruct_contracts" time="0.0456502" status="run">
+		<properties/>
+		<system-out>PASS: 204 pool destructor core checks; four type/base identities,cached entry aliases both directions,LIFO/negative counts,live mutations,ordered resets,array free and exact failure prefixes; lower free/nativeABI/EH supplied
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_destruct_integration_contracts" classname="socket_pool_destruct_integration_contracts" time="0.0469437" status="run">
+		<properties/>
+		<system-out>PASS: 10580 pool destructor integration checks; four scalar/SIMD source allocation/append/track/release/clear/destruct chains and001e00 reverse embedded-pool/vector/string cleanup; node-base/heap/free supplied,nativeDOM/ABI/EH open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_base_contracts" classname="socket_node_base_contracts" time="0.0469683" status="run">
+		<properties/>
+		<system-out>PASS: 78 node-base core checks; null/non-null parent and memberships,live child/free effects,neighbor aliases,flagged storage widths and committed failure prefixes; child/free lower providers supplied
+</system-out>
+	</testcase>
+	<testcase name="socket_node_base_integration_contracts" classname="socket_node_base_integration_contracts" time="0.0500327" status="run">
+		<properties/>
+		<system-out>PASS: 97 node-base integration checks; actual003110 for zero/one/three owned children with source pool release,actual001e00 four-pool cleanup then final001ea0,parent unlink and failure prefixes; node virtual/free/heap/DOM/nativeABI/EH remain supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_parse_entry_contracts" classname="socket_parse_entry_contracts" time="0.0184172" status="run">
+		<properties/>
+		<system-out>PASS: 78 parse-entry core checks; mandatory byte classification,cached cursor/live line wrap,short-circuit BOM/aliases,wrapped zero line address,live virtual identity and failure prefixes; classifier/error/virtual bodies supplied
+</system-out>
+	</testcase>
+	<testcase name="socket_parse_entry_integration_contracts" classname="socket_parse_entry_integration_contracts" time="0.0415708" status="run">
+		<properties/>
+		<system-out>PASS: 142 parse-entry integration checks; actual001830/004280 copy→final0041b0→controlled virtual/error with shared error and actual four-pool cleanup,success/failure ownership prefixes; classifier,error body,virtual DOM,heap/nativeABI/EH supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_document_error_contracts" classname="socket_document_error_contracts" time="0.0509693" status="run">
+		<properties/>
+		<system-out>PASS: 248 document-error core checks; cached header arguments,signed table lookup,two live ownership phases,opaque detail transport,wrapping capacities,postcopy start and committed failure prefixes; formatters/heap/nativeABI supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_document_error_integration_contracts" classname="socket_document_error_integration_contracts" time="0.0446539" status="run">
+		<properties/>
+		<system-out>PASS: 99 document-error integration checks; actual001830/004280/0041b0/final005820 plus shared error,four-pool cleanup,explicit per-call detail context and failure prefixes; formatter/heap/virtualDOM/nativeABI supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_parse_contracts" classname="socket_node_parse_contracts" time="0.0715521" status="run">
+		<properties/>
+		<system-out>PASS: 198 node-parse core checks; depth/scratch/live documents,declaration/mode branches,explicit pointer errors,append/move aliases,four cleanup paths and failure prefixes; lower primitives/DOM/nativeABI supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_parse_integration_contracts" classname="socket_node_parse_integration_contracts" time="0.0541354" status="run">
+		<properties/>
+		<system-out>PASS: 42 node-parse integration checks; actual001830/004280/0041b0/selected004970 plus explicit005820 transport,shared error/cleanup,unknown fallback,recursive workspace and failure prefixes; primitives/DOM/nativeABI supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_identify_contracts" classname="socket_node_identify_contracts" time="0.0276497" status="run">
+		<properties/>
+		<system-out>PASS: 122 node-identify core checks; initial/live line,ordered live token slots,pointer identity,constructor operands,CDATA/fallback aliases and failure prefixes; constructors/classifier/compare/nativeABI supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_identify_integration_contracts" classname="socket_node_identify_integration_contracts" time="0.0426999" status="run">
+		<properties/>
+		<system-out>PASS: 47 node-identify integration checks; actual001830/004280/0041b0/selected004970/final0038b0 plus typed supplied constructors,shared error,unknown targets and failure prefixes; constructor/DOM/nativeABI supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_constructors_contracts" classname="socket_node_constructors_contracts" time="0.0177986" status="run">
+		<properties/>
+		<system-out>PASS: 102 node-constructors core checks; five raw images,widths/padding,cached operands,live allocation target,source005440 growth and failure prefixes; heap/virtualABI supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_constructors_integration_contracts" classname="socket_node_constructors_integration_contracts" time="0.0448114" status="run">
+		<properties/>
+		<system-out>PASS: 77 node-constructors integration checks; five final bridges with prior source pool allocation/005440 and actual document/Identify/parser chain; heap/unknown child/DOM/nativeABI supplied/open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_insertion_contracts" classname="socket_node_insertion_contracts" time="0.0924837" status="run">
+		<properties/>
+		<system-out>PASS: 71 node-insertion core checks; ignored owner,ordered detach,physical aliases,signed vector bounds/live unsigned tail,swap-liveDEC and failure prefixes; native ABI/EH open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_insertion_integration_contracts" classname="socket_node_insertion_integration_contracts" time="0.0470579" status="run">
+		<properties/>
+		<system-out>PASS: 108 node-insertion integration checks; final prepare with prior constructors,pool005a20,vector and document/Identify/parser chain; existing-node detach,live caller.last and failure prefixes; heap/unknown child/DOM/nativeABI open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_string_contracts" classname="socket_node_string_contracts" time="0.0181565" status="run">
+		<properties/>
+		<system-out>PASS: 65 node-string core checks; live flags/end/table fields,unknown-entity no-store,numeric signed count/newline/whitespace ordering and failure prefixes; decoder/copy/compare/classifier/nativeABI open
+</system-out>
+	</testcase>
+	<testcase name="socket_node_string_integration_contracts" classname="socket_node_string_integration_contracts" time="0.0646065" status="run">
+		<properties/>
+		<system-out>PASS: 57 node-string integration checks; final GetStr bridge with actual constructors/insertion and document/Identify/004970 matching/mismatch name paths; numeric/copy/compare/classifier and nativeABI remain supplied/open
+</system-out>
+	</testcase>
+	<testcase name="server_contracts" classname="server_contracts" time="0.0200983" status="run">
+		<properties/>
+		<system-out>PASS 247 synthetic checks; no socket/network/original target execution
+</system-out>
+	</testcase>
+	<testcase name="messages_contracts" classname="messages_contracts" time="0.0972727" status="run">
+		<properties/>
+		<system-out>PASS: 831 checks; synthetic XML/crypto/queue only; no sockets or target execution
+</system-out>
+	</testcase>
+	<testcase name="handlers_contracts" classname="handlers_contracts" time="0.0185999" status="run">
+		<properties/>
+		<system-out>PASS: 628 checks; synthetic XML/profile state; no target execution
+</system-out>
+	</testcase>
+	<testcase name="crypto_contracts" classname="crypto_contracts" time="0.0776457" status="run">
+		<properties/>
+		<system-out>PASS: 135410 deterministic crypto checks (NIST vectors, padding, mutation, state, PRNG/time); target DLL/EXE not executed
+</system-out>
+	</testcase>
+	<testcase name="xml_printer_contracts" classname="xml_printer_contracts" time="0.017077" status="run">
+		<properties/>
+		<system-out>PASS: 277 checks; concrete recovered serializer; synthetic readers/random only
+</system-out>
+	</testcase>
+	<testcase name="xml_reader_contracts" classname="xml_reader_contracts" time="0.106766" status="run">
+		<properties/>
+		<system-out>PASS: 641 actual XML reader checks; selected upstream compatibility source, original target not executed
+</system-out>
+	</testcase>
+	<testcase name="licensing_contracts" classname="licensing_contracts" time="0.0533452" status="run">
+		<properties/>
+		<system-out>PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)
+</system-out>
+	</testcase>
+	<testcase name="hash_contracts" classname="hash_contracts" time="0.0823897" status="run">
+		<properties/>
+		<system-out>6899 deterministic hash checks PASS
+</system-out>
+	</testcase>
+	<testcase name="token_contracts" classname="token_contracts" time="0.048153" status="run">
+		<properties/>
+		<system-out>579 synthetic token checks PASS
+</system-out>
+	</testcase>
+	<testcase name="file_io_contracts" classname="file_io_contracts" time="0.0656718" status="run">
+		<properties/>
+		<system-out>PASS: 78 IO checks; actual IO only on generated fixture files; original targets not executed or modified
+</system-out>
+	</testcase>
+	<testcase name="license_file_integration" classname="license_file_integration" time="0.061463" status="run">
+		<properties/>
+		<system-out>PASS: 33 file/license integration checks; actual IO/SHA1/CBC/XML on generated fixtures, remaining effects controlled; original targets untouched
+</system-out>
+	</testcase>
+	<testcase name="status_contracts" classname="status_contracts" time="0.045116" status="run">
+		<properties/>
+		<system-out>Native fixture scope: Z:\workspace\yellowfield\build\llvm-mingw-x64\status-fixtures
+PASS 9307 status checks
+</system-out>
+	</testcase>
+	<testcase name="path_contracts" classname="path_contracts" time="0.0227799" status="run">
+		<properties/>
+		<system-out>328 deterministic path checks PASS
+</system-out>
+	</testcase>
+	<testcase name="encoding_contracts" classname="encoding_contracts" time="0.041071" status="run">
+		<properties/>
+		<system-out>PASS: 57 encoding checks; real Win32 only on synthetic strings, original targets not executed
+</system-out>
+	</testcase>
+	<testcase name="windows_effects_integration" classname="windows_effects_integration" time="0.0235609" status="run">
+		<properties/>
+		<system-out>PASS: 23 Windows/license integration checks; actual status/path/conversion/IO/hash/CBC/XML on generated fixtures; remaining application effects controlled
+</system-out>
+	</testcase>
+	<testcase name="content_handlers_contracts" classname="content_handlers_contracts" time="0.052964" status="run">
+		<properties/>
+		<system-out>PASS: 1023 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.
+</system-out>
+	</testcase>
+	<testcase name="misc_handlers_contracts" classname="misc_handlers_contracts" time="0.0264302" status="run">
+		<properties/>
+		<system-out>PASS: 288 synthetic checks; 18 handler bodies; original execution none
+</system-out>
+	</testcase>
+	<testcase name="dispatch_integration" classname="dispatch_integration" time="0.041294" status="run">
+		<properties/>
+		<system-out>PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed
+</system-out>
+	</testcase>
+	<testcase name="hook_adapter_integration" classname="hook_adapter_integration" time="0.0212381" status="run">
+		<properties/>
+		<system-out>PASS: 484 hook adapter/source integration checks; fake Api, no native hooks
+</system-out>
+	</testcase>
+	<testcase name="dll_source_smoke" classname="dll_source_smoke" time="0.170112" status="run">
+		<properties/>
+		<system-out>PASS: actual development DLL loaded; calendar, SHA-1 and config parser executed
+</system-out>
+	</testcase>
+	<testcase name="hook_engine_fixtures" classname="hook_engine_fixtures" time="0.0257895" status="run">
+		<properties/>
+		<system-out>hook_engine_fixture: 379 checks passed; upstream C engine, fake Win32, data buffers only
+</system-out>
+	</testcase>
+</testsuite>

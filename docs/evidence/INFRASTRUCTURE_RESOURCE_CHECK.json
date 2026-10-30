@@ -1,0 +1,55 @@
+{
+  "classification": "NOT_RELEASE",
+  "execution_level": "READ_ONLY_BINARY_INSPECTION",
+  "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+  "dll_sha256": "8a297443db264ac68c8c506febad8b62ab3866f6e27ea7cf6ac460b72a337058",
+  "unchanged": true,
+  "machine": "0x8664",
+  "entrypoint_rva": "0x12e0",
+  "sections": [
+    ".text",
+    ".rdata",
+    ".buildid",
+    ".data",
+    ".pdata",
+    ".rsrc",
+    ".reloc",
+    "/4",
+    "/18",
+    "/58",
+    "/70",
+    "/82",
+    "/33",
+    "/47"
+  ],
+  "export_count": 2245,
+  "imports": [
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "LIBC++.DLL",
+    "LIBUNWIND.DLL",
+    "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+    "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+    "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+    "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL"
+  ],
+  "resources": [
+    {
+      "path": [
+        10,
+        101,
+        1033
+      ],
+      "bytes": 3653,
+      "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"
+    }
+  ],
+  "exact_owner_avatar": true,
+  "golden_shipping_acceptance": "NOT_RUN",
+  "game_acceptance": "NOT_RUN"
+}

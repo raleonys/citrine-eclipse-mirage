@@ -1,0 +1,250 @@
+{
+  "authority": "SURGE-IDENTITY-20261029",
+  "baseline": "yellowfield-windows-io-fix-source.zip",
+  "baseline_sha256": "f788a35c83c9a899dad76f8410477f9e686f295783066b829cd9d82b489f8a8b",
+  "excluded_self_record": "metadata/PRODUCT_IDENTITY_CHANGED_FILES.json",
+  "changes": [
+    {
+      "path": "AGENTS.md",
+      "previous_sha256": "6675fab26300889945cb273054d85920af190d651c390da710f89b36df0df048",
+      "sha256": "1df188626df201d0ae4c789007104d5454a435575f4e614d63071ae7f37d58ec"
+    },
+    {
+      "path": "README.md",
+      "previous_sha256": "2ec435baaa0cc97bc8202242691d260a48787114f613c12109528ab030943e04",
+      "sha256": "7bcb4c2ddb76a218ef4c74ea40dde5ed7f9b2b55fa0afa0ad006bd7b56ca7769"
+    },
+    {
+      "path": "RELEASE_STATE.json",
+      "previous_sha256": "693ac8cf4a1d6915606f4b5166b43607d4b9c2e844efa3a51f4db1e2d6fc46a4",
+      "sha256": "d67b6dfe1bd457ecf771302204d45b8b3dcf0058522abaf4df668d3fc4e5dfa6"
+    },
+    {
+      "path": "cmake/Sources.cmake",
+      "previous_sha256": "ad421b74d176eb805b34a976bff46fd66f3e77e3e9c3b78bfc4e14b58b959697",
+      "sha256": "c84b1c7a2fefac2f120fc30863dbb4259e968b868a9b31d3ee0a2c2624d8bcff"
+    },
+    {
+      "path": "docs/API_IMPORT_DIFFERENCES.md",
+      "previous_sha256": null,
+      "sha256": "1c57b5ec2f1e2f7d6ccb5aea8d4e2ef1ca85c03a6b6a13b41a2b4292ae7b548a"
+    },
+    {
+      "path": "docs/PRODUCT_IDENTITY_FIX.md",
+      "previous_sha256": null,
+      "sha256": "1b80361355a35d73f315bd5f5afda18e295d9856fdbe3592981d664e69b719b2"
+    },
+    {
+      "path": "docs/PUBLIC_DLL_ABI.md",
+      "previous_sha256": "03df0faa3d82f24ee0918ca6e5d1f796939e103d6147babb1a3d491527f3cf3b",
+      "sha256": "8ce293ec988e7cc7d6caf7ab77038f9c9625a47133fd4c1375a5985fd3a223a3"
+    },
+    {
+      "path": "governance/CURRENT_SCOPE.md",
+      "previous_sha256": "e407818b33b090c51402af2c1f1941197d8edbdb4f8126a627e0d2877c28a0e3",
+      "sha256": "9693a5092a0720920136160077878a2eb2bcebe41d7216e99fab5dda795e3d9f"
+    },
+    {
+      "path": "include/preloader_l/core/license_literals.hpp",
+      "previous_sha256": "bb4b0d9dc375933bb1ddcac1a7e3de0b488078b75efa23c46fd49b681704e595",
+      "sha256": "088dde04b6e494652d9633e89ad18de6b64e51b65990ee46c483c9a52c17315d"
+    },
+    {
+      "path": "include/preloader_l/core/product_identity.hpp",
+      "previous_sha256": null,
+      "sha256": "1cce4a5bef1b76f486f7dca55dabf02310a5ac2fc0be00be9baa39923dfcd072"
+    },
+    {
+      "path": "include/preloader_l/platform/hook_setup.hpp",
+      "previous_sha256": "d768ed2d861b7e741fced27dfcd583dff2ef18a722bcdd24997793162f337865",
+      "sha256": "fcf00e403c6d7d006dac9fcdc4aa8a6e4aca324593dc5c33d8b4b03c46e84ebd"
+    },
+    {
+      "path": "include/preloader_l/runtime/control.h",
+      "previous_sha256": "4241f396f9b68ea35215a8ffa2b1e0014b18ef513af6db15985b734f1dca346e",
+      "sha256": "8df0167dac63ad3a32b0f0490ce09711d2ed11f415249be61e8c05a846a620d8"
+    },
+    {
+      "path": "metadata/BRANDING_AND_IDENTITY.json",
+      "previous_sha256": "2af677b0a4104bf6d01d16469bd10199e9fe35a4aad383f19aa9e95d39e35c85",
+      "sha256": "4fc8c8f6ba5ad8b102df690c79107da54b7d3538b40df3e344fee47ed2f30b0b"
+    },
+    {
+      "path": "metadata/LOCAL_DATA_POLICY.json",
+      "previous_sha256": "2b780dd8da81b1e1ba0971b55c872507f38d10c39bdd359a234a888446a4eebd",
+      "sha256": "97d3fc7bc9f930bd4e3c8c52f0c7cc9adae03455cd4db57b938d96222ecf397c"
+    },
+    {
+      "path": "metadata/METADATA_OWNERSHIP.json",
+      "previous_sha256": "5e3a28a3a14cc3baf7838d71d7f42f45a4fa0b7a7f5f0b914d9ade61e84a328b",
+      "sha256": "3fe0748410b9e840902d2c370d36b1f5fc4a5ddc0e5a8d2ef9e9afa4925daf18"
+    },
+    {
+      "path": "metadata/PRODUCT_IDENTITY_AUDIT.json",
+      "previous_sha256": null,
+      "sha256": "fcc8d2f444aed449692e95e6191779989d8f1339f0c7f11e60c336d4948aa51d"
+    },
+    {
+      "path": "metadata/PRODUCT_IDENTITY_DEBUG_TESTS.log",
+      "previous_sha256": null,
+      "sha256": "7efcd2640cf46b7169f5b47183d15909179e34f5e54f1534d755262a770c4c3c"
+    },
+    {
+      "path": "metadata/PRODUCT_IDENTITY_DEBUG_TESTS.xml",
+      "previous_sha256": null,
+      "sha256": "6401a080cadab92a381f98d1c00f4344c564aa494dec628f516ad7a8f8e84c84"
+    },
+    {
+      "path": "metadata/PRODUCT_IDENTITY_FIX.json",
+      "previous_sha256": null,
+      "sha256": "a2cac72acd0501f772212bc4bf788bcae262dc25441c76fbc7084681537c7c7d"
+    },
+    {
+      "path": "metadata/PRODUCT_IDENTITY_RAW_DLL.json",
+      "previous_sha256": null,
+      "sha256": "6ffdff26d75bbadf96ecd849505725e24267914dc045f1625c9fe24756579a50"
+    },
+    {
+      "path": "metadata/PRODUCT_IDENTITY_RELEASE_TESTS.log",
+      "previous_sha256": null,
+      "sha256": "32dacfc1431e5a387e1d04f08c7d1133007bb8bf6b267384f8360713b77146a6"
+    },
+    {
+      "path": "metadata/PRODUCT_IDENTITY_RELEASE_TESTS.xml",
+      "previous_sha256": null,
+      "sha256": "1198381a562689f998453245e01c0a9d2f6769e42cd7224ee458ee3408920416"
+    },
+    {
+      "path": "metadata/PUBLIC_DLL_ABI.json",
+      "previous_sha256": "546bd93ad964156ca48d6fdd7522644ab652ee85e22e6dbc08fbddbcc7ed02e9",
+      "sha256": "5ac9a85f7e6680f58575b1d7dc0e538803b8cc240af7a37c514b7c52f4d0032b"
+    },
+    {
+      "path": "metadata/SOURCE_FILES.json",
+      "previous_sha256": "cdda0c8acc6def200a5c801b2aad91c5a1eb06c926dae6b2f3a06278ee7b9c0d",
+      "sha256": "77b7a9a66e34cb8e8d290b7f3e6ff43cd9e477af6dca88a9c7cdc8c9c79a6f27"
+    },
+    {
+      "path": "scripts/check_falcion_golden_cleaning.py",
+      "previous_sha256": "da535c3bae0db324260e84aef8f6e7e498bfa1838863e8041fe43f5e1489cb4c",
+      "sha256": "b069df76c24968b5cc1efbf9b174dd817c004e01244b8d9433a4b2ae06d4611c"
+    },
+    {
+      "path": "scripts/check_manifest.py",
+      "previous_sha256": "f19575c611a2245f68a5f75512eee65ca9994bce44846fa22a2f27e8b9759b2c",
+      "sha256": "eb0d377a72630ed69dd03b2c2dfe9c9adff079424d86eb484a5329f15466bdde"
+    },
+    {
+      "path": "scripts/extract_source.py",
+      "previous_sha256": "6d1c8184a00fad0e6a45b46afcc70a5218494623cbe22a8abbc9d7da8e03adb1",
+      "sha256": "4e6ff50a0c1fed2e724aed369a11972185bb9cc1a2e56890541aa8e36b08f68a"
+    },
+    {
+      "path": "scripts/run_source_qa.py",
+      "previous_sha256": "9eb07c6ca11791c1d9d3ec444264bbe808b9298d85f4ba4a3a96713f5bd34299",
+      "sha256": "44018bf7ca29e26e2f22d5e1a52a31ab65aed8be304fb48d4609debebafef0de"
+    },
+    {
+      "path": "src/config/application.cpp",
+      "previous_sha256": "68ade5a6be659dbf41b3d1ebc9bc1ec2a5c7a0abb3eb56ed48bae7e8cd84bfbd",
+      "sha256": "eb2b58925e6625259abd16e3b0f2370f582d6c334bc3678b1fdb3ec31f798486"
+    },
+    {
+      "path": "src/config/configuration.cpp",
+      "previous_sha256": "11638d18a163b672bb442a573ce26ca3e75b75f9d078b696f64f9479ce8ab2cb",
+      "sha256": "f8024c2d9f332db16d258bee63ef75d9c7d3b0284ba60ef87a4f65dbbfe4f16a"
+    },
+    {
+      "path": "src/platform/dll_entry.cpp",
+      "previous_sha256": "d288fdb1d4bad6eeff107050f2dfb0cfa8a947da8f48fb12639d20400990f543",
+      "sha256": "a87eb339e306277a388a807ae6127026d51b04cb6f4045f920f48ff4a866d155"
+    },
+    {
+      "path": "src/runtime/application.cpp",
+      "previous_sha256": "cfac4955608f8570f69d1bbdd617f0e570e06afacfec461a2935b62932e64905",
+      "sha256": "c5fe6398c8a4d1652b2e1fab13e41826620da735b28066a113ab593b09611d81"
+    },
+    {
+      "path": "src/runtime/application_environment.cpp",
+      "previous_sha256": "3fdbdda4123eb1be9059d463878ec9bd81719f19e1527b65e5d8ededf4965eeb",
+      "sha256": "16bfb34631bf15c7da3f500d8cae920a383f49e97b4e60a3c980aeda4e5a307e"
+    },
+    {
+      "path": "src/runtime/online.cpp",
+      "previous_sha256": "170eda450fef3b5e37de91725bbc9b20bda85c5456c26c60b22b0b85de85e43d",
+      "sha256": "3d824ba613ab7bb1c29935f3980e120370c7411bf7d42c7f81a4ad413a397b5c"
+    },
+    {
+      "path": "tests/native/application_runtime_tests.cpp",
+      "previous_sha256": "8e77a172468dc434fd95c932af6febf8fef8a9773a60c7d77ee695247b21b5a4",
+      "sha256": "8743630c3669e870802b7beb7da47de8077fba8da50db8cdeead7bb9477033ea"
+    },
+    {
+      "path": "tests/native/public_c_consumer.c",
+      "previous_sha256": "bc2928623f9dae2c46f4cc0fb199e031f7a8fdedeca2909f262ac987c3df3e08",
+      "sha256": "4466573e9f2448814b65aa92a21f99ac7232306e5653d6d000f28798b47bc33d"
+    },
+    {
+      "path": "tests/unit/achievement_storage/storage_tests.cpp",
+      "previous_sha256": "c2eec3ee74bfc149f3b17ae6925b3b8ada7d772d9ab513d09f0cc8810f530fd0",
+      "sha256": "8c2fe6a8ded59f688263c11c9bdf5c57417756376c7bc382a5bb05ebb3eee6d0"
+    },
+    {
+      "path": "tests/unit/config/configuration_tests.cpp",
+      "previous_sha256": "409bfdf517908a5db424ec4b3ca74a433bce72ee1a4e8f7f9d5824f15535f4e7",
+      "sha256": "fbe76397b1796b9885f3815c7a4f0da2230b09962b3dd38cba396f448d37d794"
+    },
+    {
+      "path": "tests/unit/config_application/application_tests.cpp",
+      "previous_sha256": "bfbfc468d0b25035c9439ed805f324381ca0ff24d027f9404967d23179f265b3",
+      "sha256": "12d22d3e6c0eb6c774fbe349b81fc6a1a33216be54285dc2cd175e2de2b972c0"
+    },
+    {
+      "path": "tests/unit/config_pipeline/pipeline_tests.cpp",
+      "previous_sha256": "aa1a1aeaebbe9046f0fdddd5eab23cee76745efb0e30c2437dd3e60903d9936b",
+      "sha256": "b9638e51de8ced67c91c017872717d33b5638ed476aad7d0aeb800dbaabd66bd"
+    },
+    {
+      "path": "tests/unit/config_startup/startup_tests.cpp",
+      "previous_sha256": "4627260b0557c3e25aafea0a7552a9b89343bed779c7feaf50404164166a34bc",
+      "sha256": "28c59acb8091eff0e942b2f3c46cde1f8a19b3cda01a8b064e9e4aed9ccbb013"
+    },
+    {
+      "path": "tests/unit/license/license_tests.cpp",
+      "previous_sha256": "aac0c9719661bfed53e85c95f7ed04ec1fda01c75bed5d3424dc6e0cd2795484",
+      "sha256": "a9b06100c9ed546cd32dc2a97367508077c81676ef45dbefe82ed643d8a55e95"
+    },
+    {
+      "path": "tests/unit/online/online_tests.cpp",
+      "previous_sha256": "11f02e7a28d0b7933605091193ffedf50885fd91815c28b5935e2d66a411dae2",
+      "sha256": "218742f911d70cf15a443b6fa9a639af897354dfad06fecda204387d9e0ccd73"
+    },
+    {
+      "path": "tests/unit/parser/vdf_regression_tests.cpp",
+      "previous_sha256": "9c5e43a943783deca1c01f013471608713db973e7f683bddf8feef72068e4f9c",
+      "sha256": "31b3f27b3523247933ec3a07cb04c23d5f0cfe408c13d03aa5eff3c69d3cfeda"
+    },
+    {
+      "path": "tests/vendors/vendor_io_contracts.cpp",
+      "previous_sha256": "aa97a2bde15f07c4f998e8e9ae24b17f977b8d8ccfdbceecd4e3c4e2da3e7d66",
+      "sha256": "3af6268abb4f79aaa443d9169ce808a65bea0ef1f60ed60ac18dfdab5695e1bc"
+    },
+    {
+      "path": "tools/README.md",
+      "previous_sha256": "3ac128626c5b90c4bf92fc041471f6d38359a8b914ef644a60e36886eda94aca",
+      "sha256": "4dbaaacccc2e86671fba79fd37c1a2e878e3e42d7d611be4b1d7c9424ad832a5"
+    },
+    {
+      "path": "tools/preloader_l_runtime_host/main.cpp",
+      "previous_sha256": "ae413cfa54c4e6662898facb5416284ac181dd458c8d9c72c30d8d6286b67d48",
+      "sha256": "369b51670c5172e120e8785be5afaf72c427b4418f2bceec085fab863d318100"
+    },
+    {
+      "path": "tools/preloader_l_source_host/main.cpp",
+      "previous_sha256": "8f9eaf8960329494f4decff7f269bbe60cf19878056ed3275d1e65f58941e803",
+      "sha256": "462a9f3c83505abc96a42420a3e31a85502bafb097fa36d665703e10ae0051d6"
+    }
+  ],
+  "removed": [],
+  "vendor_payloads_changed": false
+}

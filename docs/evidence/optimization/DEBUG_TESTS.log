@@ -1,0 +1,49 @@
+Test project /workspace/yellowfield/build/runtime-debug
+      Start   1: application_runtime_contracts
+ 1/20 Test   #1: application_runtime_contracts .....   Passed   10.45 sec
+      Start   3: environment_dialog_contracts
+ 2/20 Test   #3: environment_dialog_contracts ......   Passed    0.65 sec
+      Start   4: startup_publication_contracts
+ 3/20 Test   #4: startup_publication_contracts .....   Passed    2.30 sec
+      Start  21: session_flow_contracts
+ 4/20 Test  #21: session_flow_contracts ............   Passed    0.41 sec
+      Start  23: network_policy_contracts
+ 5/20 Test  #23: network_policy_contracts ..........   Passed    4.80 sec
+      Start  24: atomic_persistence_contracts
+ 6/20 Test  #24: atomic_persistence_contracts ......   Passed    0.49 sec
+      Start  25: handler_pool_contracts
+ 7/20 Test  #25: handler_pool_contracts ............   Passed    3.71 sec
+      Start  27: listener_port_contracts
+ 8/20 Test  #27: listener_port_contracts ...........   Passed    1.01 sec
+      Start  30: cleanup_retry_contracts
+ 9/20 Test  #30: cleanup_retry_contracts ...........   Passed    0.88 sec
+      Start  61: session_handler_contracts
+10/20 Test  #61: session_handler_contracts .........   Passed    0.38 sec
+      Start  62: session_integration_contracts
+11/20 Test  #62: session_integration_contracts .....   Passed    0.40 sec
+      Start 169: server_contracts
+12/20 Test #169: server_contracts ..................   Passed    0.33 sec
+      Start 170: messages_contracts
+13/20 Test #170: messages_contracts ................   Passed    0.38 sec
+      Start 174: xml_reader_contracts
+14/20 Test #174: xml_reader_contracts ..............   Passed    1.90 sec
+      Start 175: xml_reader_allocation_contracts
+15/20 Test #175: xml_reader_allocation_contracts ...   Passed    0.40 sec
+      Start 190: dll_source_smoke
+16/20 Test #190: dll_source_smoke ..................   Passed    1.21 sec
+      Start 191: dll_public_lifecycle
+17/20 Test #191: dll_public_lifecycle ..............   Passed    2.10 sec
+      Start 192: dll_public_c_consumer
+18/20 Test #192: dll_public_c_consumer .............   Passed    1.00 sec
+      Start 193: dll_public_export_contract
+19/20 Test #193: dll_public_export_contract ........   Passed    0.51 sec
+      Start 194: dll_public_export_negatives
+20/20 Test #194: dll_public_export_negatives .......   Passed    3.09 sec
+
+100% tests passed out of 20
+
+Label Time Summary:
+production    =  35.17 sec*proc (19 tests)
+source-api    =   1.21 sec*proc (1 test)
+
+Total Test time (real) =  36.45 sec

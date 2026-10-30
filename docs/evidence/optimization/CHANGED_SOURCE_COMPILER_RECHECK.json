@@ -1,0 +1,42 @@
+{
+  "tool": "LLVM Clang-Tidy21.1.6",
+  "scope": "Four changed first-party CPP recheck after the whole138TU baseline scan using real Windows x64 compile database; headers filtered to first-party source; no auto-fix",
+  "checks": "-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,bugprone-*,performance-*,misc-unused-*,readability-redundant-*,-bugprone-easily-swappable-parameters,-performance-enum-size,-performance-no-int-to-ptr",
+  "rows": [
+    {
+      "source": "src/xml/reader.cpp",
+      "source_sha256": "d879f90d54680e64a1998033d57b6c1fe67f812036907d7d92a071c702a3cf47",
+      "exit_code": 0,
+      "seconds": 47.3,
+      "log": "src__xml__reader.cpp.log",
+      "diagnostics": "src__xml__reader.cpp.yaml"
+    },
+    {
+      "source": "src/runtime/application.cpp",
+      "source_sha256": "1958c93d393c32c179358b899ed32282f63047c224612288625376c15091553b",
+      "exit_code": 0,
+      "seconds": 82.78,
+      "log": "src__runtime__application.cpp.log",
+      "diagnostics": "src__runtime__application.cpp.yaml",
+      "previous_attempt": "150second timeout during concurrent full builds; completed retry recorded separately"
+    },
+    {
+      "source": "src/runtime/application_environment.cpp",
+      "source_sha256": "1bd16a0d4d69010b9297c55ebe0705ab47caf1b48420cdea28bcb2b7f7330c71",
+      "exit_code": 0,
+      "seconds": 124.18,
+      "log": "src__runtime__application_environment.cpp.log",
+      "diagnostics": "src__runtime__application_environment.cpp.yaml"
+    },
+    {
+      "source": "src/net/server.cpp",
+      "source_sha256": "9d803224fc4e5d751939e8bdfb3857e77ae918ab09ba1d7297bfdd5b132947ee",
+      "exit_code": 0,
+      "seconds": 78.55,
+      "log": "src__net__server.cpp.log",
+      "diagnostics": "src__net__server.cpp.yaml"
+    }
+  ],
+  "files": 4,
+  "failed": []
+}

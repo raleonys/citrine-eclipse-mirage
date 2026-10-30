@@ -1,0 +1,98 @@
+{
+  "schema": "yellowfield.source-qa.v1",
+  "result": "PASS_SOURCE_QA",
+  "classification": "NOT_RELEASE",
+  "native_game_acceptance": "NOT_RUN",
+  "checks": [
+    {
+      "check": "Wine test process identity and exit propagation",
+      "exit_code": 0,
+      "output": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.362s\n\nOK\n",
+      "seconds": 0.497
+    },
+    {
+      "check": "source bytes",
+      "exit_code": 0,
+      "output": "{\n  \"status\": \"PASS\",\n  \"files_checked\": 3323,\n  \"scope\": \"declared source bytes and project boundaries, not native equivalence or signed authorization\",\n  \"errors\": []\n}\n",
+      "seconds": 0.656
+    },
+    {
+      "check": "five supplied vendor trees",
+      "exit_code": 0,
+      "output": "asio: INSTALLED_MEMBER_HASHES_PASS\nfilesystem: INSTALLED_MEMBER_HASHES_PASS\nminhook: INSTALLED_MEMBER_HASHES_PASS\npegtl: INSTALLED_MEMBER_HASHES_PASS\ntinyxml2: INSTALLED_MEMBER_HASHES_PASS\nVENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION\n",
+      "seconds": 0.384
+    },
+    {
+      "check": "vendor tamper and link packaging regressions",
+      "exit_code": 0,
+      "output": "test_changed_link_target_is_rejected (__main__.LinkPackagingTests.test_changed_link_target_is_rejected) ... ok\ntest_descriptor_directory_cannot_replace_locked_alias (__main__.LinkPackagingTests.test_descriptor_directory_cannot_replace_locked_alias) ... ok\ntest_descriptor_single_byte_mutation_is_rejected (__main__.LinkPackagingTests.test_descriptor_single_byte_mutation_is_rejected) ... ok\ntest_extractor_never_overwrites_existing_destination (__main__.LinkPackagingTests.test_extractor_never_overwrites_existing_destination) ... ok\ntest_registered_alias_roundtrip_uses_portable_exact_descriptor (__main__.LinkPackagingTests.test_registered_alias_roundtrip_uses_portable_exact_descriptor) ... ok\ntest_restore_only_exact_descriptors (__main__.LinkPackagingTests.test_restore_only_exact_descriptors) ... ok\ntest_standard_zip_extraction_needs_no_link_support (__main__.LinkPackagingTests.test_standard_zip_extraction_needs_no_link_support) ... ok\ntest_unexpected_symlink_type_in_portable_archive_is_rejected (__main__.LinkPackagingTests.test_unexpected_symlink_type_in_portable_archive_is_rejected) ... ok\ntest_all_five_match_owner_pins_and_member_hashes (__main__.VendorTests.test_all_five_match_owner_pins_and_member_hashes) ... ok\ntest_asio_same_count_damage_identifies_exact_alias_paths (__main__.VendorTests.test_asio_same_count_damage_identifies_exact_alias_paths) ... ok\ntest_installed_single_byte_mutation_is_rejected (__main__.VendorTests.test_installed_single_byte_mutation_is_rejected) ... ok\ntest_installer_refuses_overwrite (__main__.VendorTests.test_installer_refuses_overwrite) ... ok\ntest_member_and_link_escape_rejected (__main__.VendorTests.test_member_and_link_escape_rejected) ... ok\ntest_member_manifest_mutation_is_rejected (__main__.VendorTests.test_member_manifest_mutation_is_rejected) ... ok\ntest_wrong_archive_is_rejected_before_install (__main__.VendorTests.test_wrong_archive_is_rejected_before_install) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.787s\n\nOK\n",
+      "seconds": 1.008
+    },
+    {
+      "check": "repository and resource ownership",
+      "exit_code": 0,
+      "output": "REPOSITORY_CONTRACT: PASS\n",
+      "seconds": 0.096
+    },
+    {
+      "check": "owner integration requirements",
+      "exit_code": 0,
+      "output": "INTEGRATION_REQUIREMENTS: PASS_TARGET_CONTRACT_ONLY\n",
+      "seconds": 0.042
+    },
+    {
+      "check": "metadata ownership",
+      "exit_code": 0,
+      "output": "METADATA_OWNERSHIP: PASS\n",
+      "seconds": 0.038
+    },
+    {
+      "check": "operator entrypoints",
+      "exit_code": 0,
+      "output": "HUMAN_LAUNCHER_CONTRACT: PASS_SOURCE_STATIC_ONLY\n",
+      "seconds": 0.046
+    },
+    {
+      "check": "whole-source identity",
+      "exit_code": 0,
+      "output": "ACTIVE_SOURCE_MANIFEST: PASS\n",
+      "seconds": 0.809
+    },
+    {
+      "check": "FALCION source boundary",
+      "exit_code": 0,
+      "output": "FALCION_GOLDEN_CLEANING: PASS_SOURCE_PACKAGE_ONLY (NOT_RELEASE)\n",
+      "seconds": 1.406
+    },
+    {
+      "check": "Golden PE negative regressions",
+      "exit_code": 0,
+      "output": "GOLDEN_PROTOCOL_TOOL_SELFTEST: PASS\n",
+      "seconds": 0.307
+    },
+    {
+      "check": "restricted named imports",
+      "exit_code": 0,
+      "output": "CORVEXON_MSWSOCK_IMPORTS: PASS (12/12)\n",
+      "seconds": 0.062
+    },
+    {
+      "check": "MSVC link negative regressions",
+      "exit_code": 0,
+      "output": "MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS (21/21)\n",
+      "seconds": 0.055
+    },
+    {
+      "check": "Yellowfield infrastructure regressions",
+      "exit_code": 0,
+      "output": "[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: PASS\n[4/6] MUSTAVEX Golden Metadata: PASS\n[5/6] CORVEXON Golden Trail: PASS\n[6/6] FALCION Golden Cleaning: PASS\nFinal-name runtime check: PASS\n[1/6] MSVC Build: FAIL\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: FAIL\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: FAIL\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: PASS\n[4/6] MUSTAVEX Golden Metadata: FAIL\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: PASS\n[4/6] MUSTAVEX Golden Metadata: PASS\n[5/6] CORVEXON Golden Trail: FAIL\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: PASS\n[4/6] MUSTAVEX Golden Metadata: PASS\n[5/6] CORVEXON Golden Trail: PASS\n[6/6] FALCION Golden Cleaning: FAIL\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: PASS\n[4/6] MUSTAVEX Golden Metadata: PASS\n[5/6] CORVEXON Golden Trail: PASS\n[6/6] FALCION Golden Cleaning: PASS\nFinal-name runtime check: PASS\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: PASS\n[4/6] MUSTAVEX Golden Metadata: PASS\n[5/6] CORVEXON Golden Trail: PASS\n[6/6] FALCION Golden Cleaning: PASS\nFinal-name runtime check: FAIL\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: PASS\n[4/6] MUSTAVEX Golden Metadata: PASS\n[5/6] CORVEXON Golden Trail: PASS\n[6/6] FALCION Golden Cleaning: PASS\nFinal-name runtime check: FAIL\n[1/6] MSVC Build: PASS\n[2/6] URSYNEX Golden Finalizer: PASS\n[3/6] ARYRA Golden Layout: PASS\n[4/6] MUSTAVEX Golden Metadata: PASS\n[5/6] CORVEXON Golden Trail: PASS\n[6/6] FALCION Golden Cleaning: PASS\nFinal-name runtime check: PASS\ntest_activation_cannot_hide_missing_product_fields (__main__.GovernanceTests.test_activation_cannot_hide_missing_product_fields) ... ok\ntest_avatar_generator_refuses_tampered_input_before_output (__main__.GovernanceTests.test_avatar_generator_refuses_tampered_input_before_output) ... ok\ntest_finalizer_failed_write_keeps_original_and_cleans_temp (__main__.GovernanceTests.test_finalizer_failed_write_keeps_original_and_cleans_temp) ... ok\ntest_fixture_is_never_a_product_target (__main__.GovernanceTests.test_fixture_is_never_a_product_target) ... ok\ntest_launcher_result_and_argument_mutations (__main__.GovernanceTests.test_launcher_result_and_argument_mutations) ... ok\ntest_pending_product_target_cannot_mutate_binary (__main__.GovernanceTests.test_pending_product_target_cannot_mutate_binary) ... ok\ntest_pipeline_order_and_failure_exit (__main__.GovernanceTests.test_pipeline_order_and_failure_exit) ... ok\ntest_product_targets_are_configuration_ready_not_native_acceptance (__main__.GovernanceTests.test_product_targets_are_configuration_ready_not_native_acceptance) ... ok\ntest_resource_assets_require_exact_hash_without_dropping_versioninfo (__main__.GovernanceTests.test_resource_assets_require_exact_hash_without_dropping_versioninfo) ... ok\ntest_unowned_metadata_is_rejected (__main__.GovernanceTests.test_unowned_metadata_is_rejected) ... ok\ntest_every_golden_failure_preserves_previous_dist_and_skips_runtime (__main__.LocalDistTests.test_every_golden_failure_preserves_previous_dist_and_skips_runtime) ... ok\ntest_final_filename_matches_unchanged_hook_filter (__main__.LocalDistTests.test_final_filename_matches_unchanged_hook_filter) ... ok\ntest_incomplete_result_cannot_stage_dist (__main__.LocalDistTests.test_incomplete_result_cannot_stage_dist) ... ok\ntest_replace_failure_restores_previous_bundle (__main__.LocalDistTests.test_replace_failure_restores_previous_bundle) ... ok\ntest_runtime_failure_or_changed_candidate_cannot_create_dist (__main__.LocalDistTests.test_runtime_failure_or_changed_candidate_cannot_create_dist) ... ok\ntest_success_stages_exact_final_name_hash_receipt_and_original_bytes (__main__.LocalDistTests.test_success_stages_exact_final_name_hash_receipt_and_original_bytes) ... ok\ntest_casefold_collision (__main__.PackageTests.test_casefold_collision) ... ok\ntest_duplicate_package_member (__main__.PackageTests.test_duplicate_package_member) ... ok\ntest_embedded_archives_and_binaries_are_rejected (__main__.PackageTests.test_embedded_archives_and_binaries_are_rejected) ... ok\ntest_flat_roundtrip_and_determinism (__main__.PackageTests.test_flat_roundtrip_and_determinism) ... ok\ntest_no_product_zip_inside_source (__main__.PackageTests.test_no_product_zip_inside_source) ... ok\ntest_package_tamper_and_private_manifest_are_rejected (__main__.PackageTests.test_package_tamper_and_private_manifest_are_rejected) ... ok\ntest_source_drift_is_not_automatically_legitimized (__main__.PackageTests.test_source_drift_is_not_automatically_legitimized) ... ok\ntest_source_symlink (__main__.PackageTests.test_source_symlink) ... ok\ntest_unrecorded_source_is_rejected (__main__.PackageTests.test_unrecorded_source_is_rejected) ... ok\ntest_unsafe_archive_members (__main__.PackageTests.test_unsafe_archive_members) ... ok\ntest_cleanup_removes_only_owned_generated_caches_without_refresh (__main__.ToolCacheTests.test_cleanup_removes_only_owned_generated_caches_without_refresh) ... ok\ntest_corvexon_nested_children_reproduce_old_cache_and_keep_new_tree_clean (__main__.ToolCacheTests.test_corvexon_nested_children_reproduce_old_cache_and_keep_new_tree_clean) ... ok\n\n----------------------------------------------------------------------\nRan 28 tests in 0.568s\n\nOK\n",
+      "seconds": 0.843
+    },
+    {
+      "check": "Yellowfield directive regressions",
+      "exit_code": 0,
+      "output": "test_brownfield_scope_cannot_shrink_to_build_helpers (__main__.RequirementsTests.test_brownfield_scope_cannot_shrink_to_build_helpers) ... ok\ntest_comparison_role_cannot_become_code_donor (__main__.RequirementsTests.test_comparison_role_cannot_become_code_donor) ... ok\ntest_current_target_contract (__main__.RequirementsTests.test_current_target_contract) ... ok\ntest_golden_order_is_preserved (__main__.RequirementsTests.test_golden_order_is_preserved) ... ok\ntest_library_sync_does_not_follow_build (__main__.RequirementsTests.test_library_sync_does_not_follow_build) ... ok\ntest_namespace_cannot_be_renamed_with_display_identity (__main__.RequirementsTests.test_namespace_cannot_be_renamed_with_display_identity) ... ok\ntest_release_claim_is_separate (__main__.RequirementsTests.test_release_claim_is_separate) ... ok\ntest_release_log_remains_forbidden (__main__.RequirementsTests.test_release_log_remains_forbidden) ... ok\ntest_surge_identity_and_exact_asset (__main__.RequirementsTests.test_surge_identity_and_exact_asset) ... ok\ntest_transfer_matrix_cannot_drop_a_category (__main__.RequirementsTests.test_transfer_matrix_cannot_drop_a_category) ... ok\ntest_vendor_mandate_cannot_disappear_while_integration_is_pending (__main__.RequirementsTests.test_vendor_mandate_cannot_disappear_while_integration_is_pending) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.018s\n\nOK\n",
+      "seconds": 0.125
+    }
+  ]
+}

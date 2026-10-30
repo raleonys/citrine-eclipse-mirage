@@ -1,0 +1,27 @@
+{
+  "schema": "surge.config-platform-policy.v1",
+  "owner": "Application Environment and existing configuration source model",
+  "config_path_encoding": "UTF8_65001; keep filesystem-codepage route distinct",
+  "directory_cleanup": "Exact case-sensitive _AVATAR_ substring; complete callback before iterator advancement; propagate failure without undoing earlier removals",
+  "visitor_compatibility": "Optional appended C++ source method with vector fallback; rebuild C++ consumers; production C ABI unchanged",
+  "avatar_initial_open_failure": "Ignore false return only; propagate write/close exceptions; unknown identity rejected before IO",
+  "thread_error_codes": [
+    16,
+    22,
+    3,
+    12,
+    1,
+    36,
+    11
+  ],
+  "thread_error_category": "std::generic_category via compiler std::system_error; indices0..6; invalid indices rejected",
+  "document_projection": "Dependencies.load_document returns root containing Config2; active read_config2 returns selected subtree",
+  "runtime_filesystem": "Compiler std::filesystem retained; no recovered private CRT provider imported",
+  "review_document": "docs/SOURCE_REVIEW.md",
+  "source_and_test_matrix": [
+    "docs/evidence/SOURCE_DELTA_REVIEW.csv",
+    "docs/evidence/SOURCE_TEST_ADOPTIONS.csv"
+  ],
+  "native_msvc_and_game_retest": "Windows profile/native193_OF193 logs PASS; game owner-reported PASS",
+  "owner_acceptance": "docs/evidence/OWNER_NATIVE_ACCEPTANCE.json"
+}

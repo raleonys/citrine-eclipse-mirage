@@ -1,0 +1,87 @@
+{
+  "schema": "surge.shutdown-validation.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_LOCAL_SHUTDOWN_CORRECTION_CHECKS_WITH_OPEN_CLOSE_OWNERSHIP_FINDING",
+  "date": "2026-10-30",
+  "execution_class": "LLVM-MinGW 20251118 Clang21.1.6 x64 / Wine; not native Windows/MSVC",
+  "release": {
+    "passed": 201,
+    "total": 201,
+    "log": "docs/evidence/shutdown/RELEASE_TESTS.log"
+  },
+  "affected_debug": {
+    "passed": 13,
+    "total": 13,
+    "log": "docs/evidence/shutdown/DEBUG_TESTS.log"
+  },
+  "hook_cleanup_red_green": {
+    "before_failures": 4,
+    "after_passes": 4,
+    "fault_modes": [
+      "disable failure",
+      "actual native in-flight Lease drain",
+      "engine release failure",
+      "external unload guard rejection"
+    ],
+    "real_components": [
+      "DLL entry worker",
+      "DllShutdown",
+      "Application",
+      "Hook transaction",
+      "Binding",
+      "native callback Lease"
+    ],
+    "controlled_boundaries": [
+      "engine API: no actual patching",
+      "unload scan: no thread suspension"
+    ],
+    "evidence": "docs/evidence/shutdown/PINNED_RESULTS.json"
+  },
+  "timer_paths": {
+    "scenarios": 3,
+    "before": "PASS_EXISTING_CONTAINMENT",
+    "after": "PASS_UNCHANGED_CONTAINMENT",
+    "actual_io": "Real sockets, IOCP timers, receive and timer callbacks; test-only exceptions at initiation/cancel boundary",
+    "native_cancel_failure_frequency": "NOT_ESTABLISHED"
+  },
+  "socket_close": {
+    "scenarios": 4,
+    "library_characterization": "PASS",
+    "product_recovery": "NOT_FIXED",
+    "donor_actual_snapshot_probe": "REPRODUCED_OPEN_SOCKET_WITH_QUIESCENCE",
+    "same_version_different_snapshots": true,
+    "whole_vendor_byte_equivalence_claimed": false
+  },
+  "production_exports": {
+    "DllMain": 1,
+    "SURGE": 2,
+    "DllShutdown": 3
+  },
+  "source_api_exports": {
+    "before": 3350,
+    "after": 3350,
+    "added": 0,
+    "removed": 0
+  },
+  "public_header_changes": 0,
+  "vendor_changes": 0,
+  "production_cpp_count": 64,
+  "retained_reference_cpp_count": 74,
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "passed_groups": 17,
+    "total_groups": 17,
+    "log": "docs/evidence/shutdown/SOURCE_QA.log"
+  },
+  "clean_source_delivery": {
+    "evidence_class": "SEPARATE_FINAL_ARCHIVE_VERIFICATION",
+    "external_receipt_name": "surge-shutdown-delivery-verification.json",
+    "purpose": "Binds the exact final source ZIP to clean extraction/build/runtime proof without mutating that ZIP"
+  },
+  "donor_retirement": "BLOCKED",
+  "native_windows_msvc_golden": "NOT_RUN_FOR_CHANGED_SOURCE",
+  "game_acceptance": "NOT_RUN_FOR_CHANGED_SOURCE",
+  "dist_promotion": false,
+  "publication": false,
+  "test_fixture_include_order": "Winsock2 included before Windows/MinHook; final Release and Debug fixture rebuilds have no include-order warning"
+}

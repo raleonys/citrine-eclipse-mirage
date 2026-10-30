@@ -1,0 +1,118 @@
+{
+  "classification": "NOT_RELEASE",
+  "execution_level": "READ_ONLY_BINARY_INSPECTION",
+  "result": "PASS_FINAL_METADATA_CHECK",
+  "header_metadata": {
+    "timestamp": "0xA6FD7C8F",
+    "linker_version": [
+      14,
+      0
+    ],
+    "rich_header": "ABSENT",
+    "os_version": [
+      6,
+      0
+    ],
+    "subsystem_version": [
+      6,
+      0
+    ],
+    "subsystem": 2,
+    "export_internal_name": "preloader.unsigned.dll",
+    "debug_directory": [
+      0,
+      0
+    ],
+    "security_directory": [
+      0,
+      0
+    ],
+    "coff_symbol_table": [
+      0,
+      0
+    ],
+    "pe_checksum": "0x000DF163",
+    "checksum_valid": true
+  },
+  "infrastructure_metadata_validation": {
+    "stage": "FINAL_DLL",
+    "result": "PASS",
+    "differences": []
+  },
+  "dll_sha256": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",
+  "unchanged": true,
+  "machine": "0x8664",
+  "entrypoint_rva": "0x69670",
+  "sections": [
+    ".text",
+    ".rdata",
+    ".data",
+    ".pdata",
+    ".fptable",
+    ".rsrc",
+    ".reloc"
+  ],
+  "export_count": 3,
+  "imports": [
+    "CRYPT32.DLL",
+    "WS2_32.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "MSWSOCK.DLL"
+  ],
+  "resources": [
+    {
+      "path": [
+        16,
+        1,
+        1033
+      ],
+      "bytes": 572,
+      "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+    }
+  ],
+  "exact_owner_avatar": true,
+  "expected_import_module_order": [
+    "CRYPT32.DLL",
+    "WS2_32.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "MSWSOCK.DLL"
+  ],
+  "import_module_order_matches": true,
+  "crypt32_static_import": true,
+  "crypt32_named_imports": [
+    "CryptQueryObject"
+  ],
+  "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "avatar_data": {
+    "profile": {
+      "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    },
+    "fallback": {
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    }
+  },
+  "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+  "resource_metadata_errors": [],
+  "golden_shipping_acceptance": "NOT_RUN",
+  "game_acceptance": "NOT_RUN"
+}

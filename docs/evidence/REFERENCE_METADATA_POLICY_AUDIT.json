@@ -1,0 +1,31 @@
+{
+  "result": "PASS_ALL_DECLARED_POLICY_FIELDS",
+  "source_archive_sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",
+  "checks": {
+    "MUSTAVEX_GOLDEN_METADATA.json/required": "EXACT_MATCH",
+    "MUSTAVEX_GOLDEN_METADATA.json/shipping_debug_policy": "EXACT_MATCH",
+    "MUSTAVEX_GOLDEN_METADATA.json/explicit_exclusions": "EXACT_MATCH",
+    "MUSTAVEX_GOLDEN_METADATA.json/strict_recovery_allowlist": "EXACT_MATCH",
+    "MUSTAVEX_GOLDEN_METADATA.json/intentionally_stripped_allowlist_items": "EXACT_MATCH",
+    "MUSTAVEX_GOLDEN_METADATA.json/project_identity_forbidden_in_shipping_dll": "EXACT_MATCH",
+    "MUSTAVEX_GOLDEN_METADATA.json/forbidden_project_identity_tokens": "EXACT_MATCH",
+    "ARYRA_GOLDEN_LAYOUT.json/machine": "EXACT_MATCH",
+    "ARYRA_GOLDEN_LAYOUT.json/pe_format_magic": "EXACT_MATCH",
+    "ARYRA_GOLDEN_LAYOUT.json/section_count": "EXACT_MATCH",
+    "ARYRA_GOLDEN_LAYOUT.json/sections_in_order": "EXACT_MATCH",
+    "ARYRA_GOLDEN_LAYOUT.json/structural_validity": "EXACT_MATCH",
+    "ARYRA_GOLDEN_LAYOUT.json/static_crt_fptable_profile": "EXACT_MATCH",
+    "URSYNEX_GOLDEN_FINALIZER.json/mutation_values": "EXACT_MATCH",
+    "URSYNEX_GOLDEN_FINALIZER.json/approved_mutations": "EXACT_MATCH",
+    "URSYNEX_GOLDEN_FINALIZER.json/preconditions": "EXACT_MATCH",
+    "URSYNEX_GOLDEN_FINALIZER.json/forbidden": "EXACT_MATCH",
+    "URSYNEX_GOLDEN_FINALIZER.json/integrity_finalization": "EXACT_MATCH",
+    "URSYNEX_GOLDEN_FINALIZER.json/policy_bindings": "EXACT_MATCH"
+  },
+  "runtime_exceptions": [
+    "five explicitly selected C exports",
+    "six required import modules including CRYPT32",
+    "PNG in read-only C++ data; VERSIONINFO only PE resource"
+  ],
+  "native_msvc_updated_source": "NOT_RUN"
+}

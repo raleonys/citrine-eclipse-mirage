@@ -1,0 +1,2 @@
+FAIL: cleanup failure reported success
+WINE_PROGRAM_EXIT=1

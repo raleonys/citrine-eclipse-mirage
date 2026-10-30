@@ -1,0 +1,49 @@
+{
+  "schema": "yellowfield.public-abi-evidence.v1",
+  "task": "YF-PUBLIC-ABI-20261028",
+  "classification": "NOT_RELEASE",
+  "authoritative_marker": {
+    "input": "Reverse Engineering/anadius-all-functions.asm.txt",
+    "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "va": "0x180017a30",
+    "assembly": "RET 0x0",
+    "evidence": "ev_4ef5a2bb53b7728331fdd5c8debedafc4f7ebcce78b3dd4a30154920bfc23a9d"
+  },
+  "original_exports": {
+    "input": "Reverse Engineering/anadius-recovery-index.json",
+    "sha256": "727160403cf8c16009b69507ba747363abdc17a299f693b584d1a4baab63ec73",
+    "observed": {
+      "CDX": 1,
+      "RUNE": 2,
+      "anadius": 3
+    },
+    "shared_rva": "0x17a30"
+  },
+  "original_consumer": {
+    "input": "Reverse Engineering/host-compatibility/README.md",
+    "sha256": "0d67c109897a781df8897b615daacf447b91aaab478e1bb02231387c83959c1f",
+    "module": "anadius64",
+    "symbol": "anadius",
+    "status": "STATIC_IMPORT_OBSERVATION_NOT_EXECUTION"
+  },
+  "comparison_only": [
+    {
+      "input": "Brownfield/exports/preloader_l.def",
+      "member_sha256": "4700a091f2f7c3cf27869346ee3254528aba1a230d7cf1644a863b7787447bae",
+      "observed": {
+        "DllMain": 1,
+        "SURGE": 2,
+        "DllShutdown": 3
+      },
+      "use": "PUBLIC_TOOLING_SHAPE_ONLY_NO_IMPLEMENTATION_BODY"
+    },
+    {
+      "input": "Bluefield/include/preloader_l/exports.h",
+      "sha256": "50f2e66288daf99fb622b44798d3df7f9c307878c47e628dea9bce267487ceb6",
+      "observed": "SURGE(void) and DllShutdown(uint32_t timeout_ms)",
+      "use": "COMPARISON_ONLY_NO_APPLICATION_CODE_IMPORTED"
+    }
+  ],
+  "548_byte_layout": "NO_AUTHORITATIVE_DEFINITION_FOUND_REQUIREMENT_WITHDRAWN",
+  "application_donor_code_imported": false
+}

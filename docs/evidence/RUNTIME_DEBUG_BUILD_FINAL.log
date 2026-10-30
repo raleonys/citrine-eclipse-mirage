@@ -1,0 +1,13 @@
+[1/7] Verify the five owner-supplied vendor trees
+asio: INSTALLED_MEMBER_HASHES_PASS
+filesystem: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+[2/7] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/asio_service.cpp.obj
+[3/7] Linking CXX static library libpreloader_l_core.a
+[4/7] Linking CXX shared library preloader.unsigned.dll
+[5/7] Linking CXX executable preloader_l_source_host.exe
+[6/7] Building CXX object CMakeFiles/application_runtime_contracts.dir/tests/native/application_runtime_tests.cpp.obj
+[7/7] Linking CXX executable application_runtime_contracts.exe

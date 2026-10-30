@@ -1,0 +1,26 @@
+{
+  "schema": "yellowfield.avatar-data-contract.v1",
+  "owner_instruction": "Only replace the Anadius avatar data; no PE resource; no external file requirement",
+  "storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "assets": {
+    "profile": {
+      "source": "resources/branding/surge.png",
+      "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b",
+      "role": "Replace original green user avatar at0x1800809d0; no configured Avatar overwrite"
+    },
+    "fallback": {
+      "source": "resources/branding/default-avatar.png",
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "role": "Preserve separate original fallback at0x180082710"
+    }
+  },
+  "recovery": {
+    "input": "Reverse Engineering/anadius-rea-evidence.json",
+    "input_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "record": 337,
+    "base": "0x18007f000",
+    "evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "fallback_png_crc": "ALL_CHUNKS_VALID",
+    "original_profile_sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd"
+  }
+}

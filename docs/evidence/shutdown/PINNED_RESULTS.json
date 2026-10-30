@@ -1,0 +1,62 @@
+[
+  {
+    "variant": "before",
+    "case": "1",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "2",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "3",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "4",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "socket_close_semantics_contracts",
+    "exit": 0
+  },
+  {
+    "variant": "before",
+    "case": "timer_failure_contracts",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "1",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "2",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "3",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "4",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "socket_close_semantics_contracts",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "timer_failure_contracts",
+    "exit": 0
+  }
+]

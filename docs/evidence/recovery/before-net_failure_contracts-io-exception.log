@@ -1,0 +1,2 @@
+FAIL: unexpected IO exception leaves accepted socket open
+WINE_PROGRAM_EXIT=1

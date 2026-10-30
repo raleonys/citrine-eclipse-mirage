@@ -1,0 +1,292 @@
+{
+  "schema": "yellowfield.comparison-review.v1",
+  "task": "YF-COMPARE-20261028",
+  "date_utc": "2026-10-28",
+  "classification": "NOT_RELEASE",
+  "result": "SOURCE_FIDELITY_WITH_INCOMPLETE_PRODUCT_INTEGRATION",
+  "scope": "Read-only comparisons and review artifacts; no application, vendor, build, test, resource or tool implementation changes.",
+  "inputs": [
+    {
+      "role": "YELLOWFIELD_REVIEW_BASELINE",
+      "file": "yellowfield-vdf-pegtl-source.zip",
+      "bytes": 8237883,
+      "sha256": "19bc24bc1a8648d906a4dd5f7945034e72269d3efdf4360b58cfaa91072d5865"
+    },
+    {
+      "role": "BLUEFIELD_COMPARISON_ONLY",
+      "file": "preloader_l_BF02_FIX31_APPLICATION_SOURCE_NOT_RELEASE.zip",
+      "bytes": 6104728,
+      "sha256": "20c707f6cc57901674c26345983f5975150ab67fd547f4f3e95221e78066f416"
+    },
+    {
+      "role": "RE_IMPLEMENTATION_SOURCE",
+      "file": "dll-reverse-engineering(8).zip",
+      "bytes": 216839212,
+      "sha256": "64a870331be2c0555f7a7c21b66a657df8f36abfd8312730ff04cffcc906c9e5"
+    }
+  ],
+  "unchanged_against_yellowfield_baseline": {
+    "verified_members": 3358,
+    "result": "BYTE_IDENTICAL",
+    "directories": [
+      "src",
+      "include",
+      "tests",
+      "third_party",
+      "tools",
+      "scripts",
+      "cmake",
+      "resources",
+      "exports"
+    ],
+    "root_files": [
+      "CMakeLists.txt",
+      "CMakePresets.json"
+    ]
+  },
+  "feature_rows": {
+    "bluefield": 42,
+    "re": 29
+  },
+  "re_application_crosswalk": {
+    "files": 252,
+    "classes": {
+      "NORMALIZED_TOKEN_MATCH": 241,
+      "NEW_OR_SPECIAL_ADAPTER": 4,
+      "TOKEN_DIFF_REVIEW_REQUIRED": 7
+    },
+    "matching_staging_input_pins": 250,
+    "raw_archive_input_pin_differences": 5,
+    "explanation": "Five hook11-changed staging inputs match frozen staged inputs; raw original archive SHA and staging-input SHA are different evidence. Two newly authored files have no staging input."
+  },
+  "token_method": {
+    "ignored": [
+      "include directives",
+      "comments",
+      "whitespace"
+    ],
+    "normalized_identifiers": {
+      "anadius": "preloader_l",
+      "recovered_hooks": "preloader_l::platform::hook_engine"
+    },
+    "preserved": [
+      "string/character/raw-string literals",
+      "operators",
+      "all other identifiers and source tokens"
+    ],
+    "limit": "Lexical screening only; include/build flags, runtime composition and native ABI can differ even when body tokens match. No whole-program or original binary equivalence claim."
+  },
+  "reviewed_body_differences": {
+    "include/preloader_l/platform/hook_engine/adapters.hpp": "Remove unrelated PreloaderEngine declaration under authorized scope cleanup.",
+    "include/preloader_l/platform/hooks/native_callbacks.hpp": "Authorized hook11 context/effects/slot bindings.",
+    "include/preloader_l/platform/hooks/setup.hpp": "Authorized ten-to-eleven hook enum/slot change.",
+    "src/config/parser.cpp": "Authorized existing RE grammar/actions through PEGTL4 backend.",
+    "src/platform/hooks/native_callbacks.cpp": "Authorized hook11 native entry, resolver and type checks.",
+    "src/platform/hooks/original_effects.cpp": "Authorized hook11 original call, selector and LastError handling.",
+    "src/platform/hooks/setup.cpp": "Authorized crypt32 CryptQueryObject installation."
+  },
+  "bluefield_crosswalk": {
+    "pairs": 84,
+    "classes": {
+      "TOKEN_DIFF_REVIEW_REQUIRED": 79,
+      "NORMALIZED_TOKEN_MATCH": 5
+    },
+    "limit": "Text differences include member/namespace/interface restructuring; 79 differing pairs do not mean 79 behavioral bugs."
+  },
+  "bluefield_evidence_pin_checks": {
+    "crosswalk_current_files": 123,
+    "finding_current_locators": 97,
+    "finding_original_locators": 57,
+    "result": "ALL_SHA256_MATCH",
+    "bluefield_report_original_archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+    "limit": "The report original archive hash differs from supplied RE ZIP; cited member matches do not prove whole archive identity."
+  },
+  "bluefield_open_findings": [
+    "D02",
+    "D06",
+    "D07",
+    "D13",
+    "D14",
+    "D21"
+  ],
+  "re_module_classes": {
+    "SELECTED_APPLICATION": 43,
+    "EXPLICIT_SCOPE_EXCLUSION": 83,
+    "ANALYSIS_EVIDENCE_NOT_APPLICATION_SOURCE": 6,
+    "SELECTED_HOOK_ENGINE": 1,
+    "REFERENCE_WORKSPACE_NOT_PRODUCT": 2,
+    "HOOK11_ONLY_AUTHORIZED_EXCEPTION": 1,
+    "FOREIGN_VERSION_REBUILD_NOT_PRODUCT": 1
+  },
+  "vendor_common_member_comparison": [
+    {
+      "name": "asio",
+      "bluefield_regular_files": 675,
+      "yellowfield_regular_files": 1605,
+      "common_byte_identical": 674,
+      "common_different": 0
+    },
+    {
+      "name": "filesystem",
+      "bluefield_regular_files": 8,
+      "yellowfield_regular_files": 38,
+      "common_byte_identical": 7,
+      "common_different": 0
+    },
+    {
+      "name": "minhook",
+      "bluefield_regular_files": 11,
+      "yellowfield_regular_files": 61,
+      "common_byte_identical": 11,
+      "common_different": 0
+    },
+    {
+      "name": "pegtl",
+      "bluefield_regular_files": 363,
+      "yellowfield_regular_files": 872,
+      "common_byte_identical": 362,
+      "common_different": 0
+    },
+    {
+      "name": "tinyxml2",
+      "bluefield_regular_files": 3,
+      "yellowfield_regular_files": 273,
+      "common_byte_identical": 3,
+      "common_different": 0
+    }
+  ],
+  "fresh_comparison_checks": {
+    "bluefield_vdf": {
+      "runner": "Linux g++ executable of extracted Bluefield parser/state using the existing Yellowfield-owned regression harness outside product",
+      "cases": 23417,
+      "accepted": 4724,
+      "rejected": 18693,
+      "full_state_fnv64": "ea70f5d56d33f404",
+      "matches": "RE-derived old parser and current Yellowfield recorded corpus",
+      "result": "PASS_FINITE_CORPUS",
+      "log": "BLUEFIELD_VDF_CORPUS.log",
+      "limit": "Regression fingerprint, not cryptographic proof or native DLL ABI evidence."
+    },
+    "xml_depth": {
+      "runner": "Linux g++ of actual Yellowfield, Bluefield adapter, and supplied RE TinyXML2 parse profiles",
+      "results": {
+        "YELLOWFIELD": [
+          {
+            "80": "98",
+            "0": "0"
+          },
+          {
+            "80": "99",
+            "0": "0"
+          },
+          {
+            "80": "100",
+            "0": "0"
+          },
+          {
+            "80": "120",
+            "0": "0"
+          },
+          {
+            "80": "498",
+            "0": "0"
+          },
+          {
+            "80": "499",
+            "0": "18"
+          },
+          {
+            "80": "500",
+            "0": "18"
+          }
+        ],
+        "BLUEFIELD": [
+          {
+            "80": "98",
+            "0": "0"
+          },
+          {
+            "80": "99",
+            "0": "18"
+          },
+          {
+            "80": "100",
+            "0": "18"
+          },
+          {
+            "80": "120",
+            "0": "18"
+          },
+          {
+            "80": "498",
+            "0": "18"
+          },
+          {
+            "80": "499",
+            "0": "18"
+          },
+          {
+            "80": "500",
+            "0": "18"
+          }
+        ],
+        "RE": [
+          {
+            "80": "98",
+            "0": "0"
+          },
+          {
+            "80": "99",
+            "0": "18"
+          },
+          {
+            "80": "100",
+            "0": "18"
+          },
+          {
+            "80": "120",
+            "0": "18"
+          },
+          {
+            "80": "498",
+            "0": "18"
+          },
+          {
+            "80": "499",
+            "0": "18"
+          },
+          {
+            "80": "500",
+            "0": "18"
+          }
+        ]
+      },
+      "success_code": 0,
+      "depth_error_code": 18,
+      "result": "EXPECTED_APPROVED_DIFFERENCE",
+      "reason": "Owner requires unchanged vendor default 500 in Yellowfield; Bluefield build adapter and RE profile use 100. Header constants alone do not establish compiled profile."
+    }
+  },
+  "prior_yellowfield_validation_not_rerun": {
+    "source_record": "metadata/VDF_PARSER_STATUS.json",
+    "windows_wine_tests": "167/167",
+    "linux_portable_tests": "17/17",
+    "reason": "All compiled/test/build/tool/resource inputs are byte-identical; this task adds review documents and metadata only."
+  },
+  "remaining_product_work": [
+    "Concrete Application/Service bootstrap and teardown owner",
+    "Final Consumer/SURGE ABI",
+    "Complete config collection copy/application bridge and runtime defaults",
+    "Asio and filesystem final application bindings",
+    "SURGE config/path/provider/avatar/log policy implementation",
+    "Native hook installation rollback/quiescence/unload acceptance",
+    "Final product Golden contract and actual Windows/MSVC/game acceptance"
+  ],
+  "actual_windows_msvc": "NOT_RUN",
+  "consumer_game_acceptance": "NOT_RUN",
+  "library_publication": false,
+  "source_qa_command": "python -B scripts/run_source_qa.py --report build/qa/COMPARISON_SOURCE_QA.json",
+  "current_source_qa_result_location": "Review bundle SOURCE_QA.json; generated after report source manifest is explicitly recorded.",
+  "record_scope": "Historical PEGTL-baseline comparison. CFG01/RE11 scalar-only generalization was wrong even at that baseline; existing full config_application/FilePass is now used by Application.",
+  "current_application_status": "metadata/RUNTIME_BINDING_STATUS.json"
+}

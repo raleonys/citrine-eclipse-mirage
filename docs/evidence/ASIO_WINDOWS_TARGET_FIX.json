@@ -1,0 +1,47 @@
+{
+  "schema": "yellowfield.asio-windows-target.v1",
+  "task": "YF-ASIO-WINDOWS-TARGET-20261029",
+  "classification": "NOT_RELEASE",
+  "state": "INCLUDED_IN_WINDOWS_IO_FIX_SOURCE",
+  "parent_source_package": "yellowfield-startup-build-fix-source.zip",
+  "parent_sha256": "3b33807c5d01e7a0c8c94cb6d8493ac3855e0e0024ddba85b7a5256c85995801",
+  "source_package": "yellowfield-windows-io-fix-source.zip",
+  "cause": "Brownfield explicit Windows API target definitions were omitted; MSVC Asio config.hpp prints a pragma message and assumes0x0601",
+  "observed_production_log": "metadata/PRODUCTION_IMPORT_USER_GOLDEN_INPUT.log:93-96",
+  "correction": {
+    "file": "cmake/VendoredDependencies.cmake",
+    "target": "preloader_l_asio INTERFACE",
+    "definitions": [
+      "_WIN32_WINNT=0x0601",
+      "WINVER=0x0601"
+    ],
+    "scope": "Windows consumers of the active Asio dependency, including application and linked hosts/tests",
+    "warning_suppression_added": false,
+    "vendor_bytes_changed": false,
+    "previous_asio_fallback": "0x0601",
+    "pe_metadata_policy_changed": false,
+    "pe_OS_and_subsystem_version": [
+      6,
+      0
+    ]
+  },
+  "brownfield_source": {
+    "archive_sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",
+    "member": "CMakeLists.txt",
+    "member_sha256": "619ecbc7a08a5af0a8d772e2a9ff5f77705498286b0342c3d0586cd1555b2b4f",
+    "definition_line": 313
+  },
+  "owner_game_confirmation": {
+    "source_package": "yellowfield-startup-build-fix-source.zip",
+    "owner_statement": "son g\u00fcncellemeden sonra oyun a\u00e7\u0131l\u0131\u015f\u0131 do\u011fruland\u0131",
+    "scope": "Owner reports successful game startup after prior fix; no broad game/API certification inferred"
+  },
+  "native_msvc_updated_source": "NOT_RUN",
+  "game_after_this_build_setting_change": "NOT_RUN",
+  "related_owner_filesystem_question": {
+    "finding": "ghc filesystem supports Windows; current IO backend selection differs from supplied Windows MSVC filesystem paths",
+    "source_report": "docs/FILESYSTEM_BACKEND_COMPARISON.md",
+    "filesystem_implementation_changed_in_this_task": true
+  },
+  "included_in_task": "metadata/WINDOWS_IO_FIX.json"
+}

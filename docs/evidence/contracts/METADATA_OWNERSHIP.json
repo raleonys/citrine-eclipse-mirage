@@ -1,0 +1,575 @@
+{
+  "schema": "yellowfield.metadata-ownership.v1",
+  "files": {
+    "ACTIVE_SOURCE_MANIFEST.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "active source manifest"
+    },
+    "ARYRA_GOLDEN_LAYOUT.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "aryra golden layout"
+    },
+    "BRANDING_AND_IDENTITY.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "branding and identity"
+    },
+    "BROWNFIELD_CAPABILITY_MATRIX.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "brownfield capability matrix"
+    },
+    "BROWNFIELD_TRANSFER_MATRIX_V2.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "brownfield transfer matrix v2"
+    },
+    "BUILD_STATUS.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "VALIDATION_RECORD",
+      "purpose": "build status"
+    },
+    "CORVEXON_GOLDEN_TRAIL.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "corvexon golden trail"
+    },
+    "CRT_POLICY.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "crt policy"
+    },
+    "CRT_STATIC_CONTRACT.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "crt static contract"
+    },
+    "DLL_EXPORTS.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "dll exports"
+    },
+    "DLL_LOAD_TEST.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "VALIDATION_RECORD",
+      "purpose": "dll load test"
+    },
+    "HOOK11_REFERENCES.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "hook11 references"
+    },
+    "HUMAN_ENTRYPOINT_REGISTRY.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "human entrypoint registry"
+    },
+    "INFRASTRUCTURE_APPLICATION_SCOPE.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "infrastructure application scope"
+    },
+    "INFRASTRUCTURE_RESOURCE_CHECK.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "VALIDATION_RECORD",
+      "purpose": "infrastructure resource check"
+    },
+    "INFRASTRUCTURE_STATUS.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "VALIDATION_RECORD",
+      "purpose": "infrastructure status"
+    },
+    "INTEGRATION_REQUIREMENTS.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "integration requirements"
+    },
+    "LOCAL_DATA_POLICY.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "local data policy"
+    },
+    "METADATA_OWNERSHIP.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "metadata ownership"
+    },
+    "MUSTAVEX_GOLDEN_METADATA.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "mustavex golden metadata"
+    },
+    "ONLINE_PROVIDER_POLICY.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "online provider policy"
+    },
+    "REPOSITORY_CONTRACT.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "repository contract"
+    },
+    "SCRIPT_OWNERSHIP.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "script ownership"
+    },
+    "SOURCE_FILES.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "source files"
+    },
+    "SOURCE_INPUTS.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "source inputs"
+    },
+    "SOURCE_LAYOUT.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "source layout"
+    },
+    "SOURCE_VERIFICATION.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "source verification"
+    },
+    "TASK_AUTHORIZATION_REGISTER.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "task authorization register"
+    },
+    "TEST_ADOPTION_MATRIX.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "VALIDATION_RECORD",
+      "purpose": "test adoption matrix"
+    },
+    "THIRD_PARTY.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "third party"
+    },
+    "TOOLING_PROVENANCE.json": {
+      "owner": "Yellowfield source and target contracts",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "tooling provenance"
+    },
+    "URSYNEX_GOLDEN_FINALIZER.json": {
+      "owner": "Yellowfield infrastructure",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "ursynex golden finalizer"
+    },
+    "VENDORING_STATUS.json": {
+      "owner": "Yellowfield vendor source ownership",
+      "purpose": "vendoring status",
+      "role": "CURRENT_VENDOR_CONTRACT_OR_VALIDATION"
+    },
+    "VENDOR_LOCK.json": {
+      "owner": "Yellowfield vendor source ownership",
+      "purpose": "vendor lock",
+      "role": "CURRENT_VENDOR_CONTRACT_OR_VALIDATION"
+    },
+    "VENDORING_DEVIATIONS.json": {
+      "owner": "Yellowfield vendor source ownership",
+      "purpose": "vendoring deviations",
+      "role": "CURRENT_VENDOR_CONTRACT_OR_VALIDATION"
+    },
+    "VENDOR_CONTINUED_GATE_TESTS.json": {
+      "owner": "Yellowfield vendor validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "record actual no-test compatibility gating"
+    },
+    "VENDOR_CONTINUED_UNCHANGED_SOURCE.json": {
+      "owner": "Yellowfield vendor validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "byte comparison with previous vendored package"
+    },
+    "VDF_PARSER_STATUS.json": {
+      "owner": "Yellowfield existing RE VDF parser owner",
+      "purpose": "PEGTL application binding, source evidence and actual validation records",
+      "role": "CURRENT_CONTRACT_OR_VALIDATION"
+    },
+    "COMPARISON_REVIEW.json": {
+      "owner": "Yellowfield source comparison review",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Separate Bluefield and supplied RE comparisons, source/archive pins, finite behavioral checks and explicit product gaps"
+    },
+    "RUNTIME_BINDING_STATUS.json": {
+      "owner": "Yellowfield runtime application integration",
+      "role": "CURRENT_CONTRACT_OR_VALIDATION",
+      "purpose": "Concrete application/DLL vendor paths and actual runtime validation"
+    },
+    "RUNTIME_RE_EVIDENCE.json": {
+      "owner": "Yellowfield runtime application integration",
+      "role": "CURRENT_CONTRACT_OR_VALIDATION",
+      "purpose": "Pinned raw supplied RE constructor and 02a830 provenance"
+    },
+    "RUNTIME_SOURCE_CHANGES.json": {
+      "owner": "Yellowfield runtime application integration",
+      "role": "CURRENT_CONTRACT_OR_VALIDATION",
+      "purpose": "Explicit source changes relative to preserved comparison package"
+    },
+    "RESOURCE_METADATA_CONTRACT.json": {
+      "owner": "Yellowfield owner-requested Brownfield resource transfer",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Exact VERSIONINFO source bytes, semantic fixed/string/translation profile, SURGE resource pin and explicit transfer authority"
+    },
+    "RUNTIME_DEBUG_DLL_INSPECTION.json": {
+      "owner": "Yellowfield runtime/resource validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Actual compiled PE/resource inspection or resource tamper rejection"
+    },
+    "RUNTIME_DLL_INSPECTION.json": {
+      "owner": "Yellowfield runtime/resource validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Actual compiled PE/resource inspection or resource tamper rejection"
+    },
+    "RUNTIME_RESOURCE_NEGATIVE_CHECK.json": {
+      "owner": "Yellowfield runtime/resource validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Actual compiled PE/resource inspection or resource tamper rejection"
+    },
+    "LAYOUT_MIGRATION.json": {
+      "owner": "Yellowfield owner-requested Brownfield-style module layout",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Complete old/new path map, file-count preservation and exact non-include source-body identity"
+    },
+    "LAYOUT_DEBUG_DLL_INSPECTION.json": {
+      "owner": "Yellowfield layout/resource runtime validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Actual rebuilt flat-layout DLL resource inspection"
+    },
+    "LAYOUT_DLL_INSPECTION.json": {
+      "owner": "Yellowfield layout/resource runtime validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Actual rebuilt flat-layout DLL resource inspection"
+    },
+    "PUBLIC_DLL_ABI.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "Application public C API",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "PUBLIC_ABI_EVIDENCE.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "Pinned source and comparison evidence",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "PUBLIC_ABI_STATUS.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "Current application C API validation",
+      "role": "VALIDATION_RECORD"
+    },
+    "PUBLIC_EXPORT_RELEASE.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "public export release",
+      "role": "VALIDATION_RECORD"
+    },
+    "PUBLIC_ABI_CHANGES.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "public abi changes",
+      "role": "VALIDATION_RECORD"
+    },
+    "PUBLIC_RESOURCE_RELEASE.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "public resource release",
+      "role": "VALIDATION_RECORD"
+    },
+    "PUBLIC_EXPORT_DEBUG.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "public export debug",
+      "role": "VALIDATION_RECORD"
+    },
+    "PUBLIC_RESOURCE_DEBUG.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "public resource debug",
+      "role": "VALIDATION_RECORD"
+    },
+    "PUBLIC_ABI_FRESH_CHECK.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "public abi fresh check",
+      "role": "VALIDATION_RECORD"
+    },
+    "PUBLIC_ABI_FRESH_RESOURCES.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "public abi fresh resources",
+      "role": "VALIDATION_RECORD"
+    },
+    "PUBLIC_ABI_FRESH_EXPORTS.json": {
+      "owner": "Yellowfield public ABI workstream",
+      "purpose": "public abi fresh exports",
+      "role": "VALIDATION_RECORD"
+    },
+    "DLL_NAME_CHANGE.json": {
+      "owner": "Yellowfield owner-requested DLL naming correction",
+      "purpose": "Current rename scope and fresh validation evidence",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "DLL_NAMES_RELEASE_RESOURCES.json": {
+      "owner": "Yellowfield owner-requested DLL naming correction",
+      "purpose": "dll names release resources",
+      "role": "VALIDATION_RECORD"
+    },
+    "DLL_NAMES_RELEASE_EXPORTS.json": {
+      "owner": "Yellowfield owner-requested DLL naming correction",
+      "purpose": "dll names release exports",
+      "role": "VALIDATION_RECORD"
+    },
+    "DLL_NAMES_DEBUG_EXPORTS.json": {
+      "owner": "Yellowfield owner-requested DLL naming correction",
+      "purpose": "dll names debug exports",
+      "role": "VALIDATION_RECORD"
+    },
+    "DLL_NAMES_DEBUG_RESOURCES.json": {
+      "owner": "Yellowfield owner-requested DLL naming correction",
+      "purpose": "dll names debug resources",
+      "role": "VALIDATION_RECORD"
+    },
+    "WINDOWS_VENDOR_PACKAGE_FIX.json": {
+      "owner": "Yellowfield Windows source package compatibility",
+      "purpose": "Portable Asio alias representation and precise vendor integrity diagnostics",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "MSVC_PROFILE_FIX.json": {
+      "owner": "Yellowfield MSVC profile compatibility",
+      "purpose": "Five native user-log observations and bounded local fixes/verification",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "MSVC_NATIVE_LOOKUP_FIX.json": {
+      "owner": "Yellowfield MSVC native test portability",
+      "purpose": "msvc native lookup fix",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "MSVC_LOOKUP_AUDIT.json": {
+      "owner": "Yellowfield MSVC native test portability",
+      "purpose": "msvc lookup audit",
+      "role": "VALIDATION_RECORD"
+    },
+    "AVATAR_DATA_CONTRACT.json": {
+      "owner": "Yellowfield Golden and avatar correction",
+      "purpose": "Pinned replacement profile bytes and recovered separate fallback data provenance",
+      "role": "CURRENT_CONTRACT"
+    },
+    "GOLDEN_AVATAR_FIX.json": {
+      "owner": "Yellowfield Golden and avatar correction",
+      "purpose": "Owner log, resource/import correction and complete Yellowfield Golden target definitions",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "GOLDEN_AVATAR_DLL.json": {
+      "owner": "Yellowfield Golden and avatar correction",
+      "purpose": "Bounded read-only LLVM binary / genuine MSVC evidence boundary validation",
+      "role": "VALIDATION_RECORD"
+    },
+    "GOLDEN_AVATAR_EXPORTS.json": {
+      "owner": "Yellowfield Golden and avatar correction",
+      "purpose": "Bounded read-only LLVM binary / genuine MSVC evidence boundary validation",
+      "role": "VALIDATION_RECORD"
+    },
+    "GOLDEN_AVATAR_NON_MSVC_REJECTION.json": {
+      "owner": "Yellowfield Golden and avatar correction",
+      "purpose": "Bounded read-only LLVM binary / genuine MSVC evidence boundary validation",
+      "role": "VALIDATION_RECORD"
+    },
+    "GOLDEN_AVATAR_DEBUG_DLL.json": {
+      "owner": "Yellowfield Golden and avatar correction",
+      "purpose": "Debug read-only binary proof or source QA validation with explicit evidence boundary",
+      "role": "VALIDATION_RECORD"
+    },
+    "GOLDEN_AVATAR_SOURCE_QA_INITIAL.json": {
+      "owner": "Yellowfield Golden and avatar correction",
+      "purpose": "Debug read-only binary proof or source QA validation with explicit evidence boundary",
+      "role": "VALIDATION_RECORD"
+    },
+    "LOCAL_DIST_CONTRACT.json": {
+      "owner": "Yellowfield final local output",
+      "purpose": "Final runtime name, Golden/runtime gating, hash sidecar and bounded acceptance status",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "PRODUCTION_IMPORT_FIX.json": {
+      "owner": "Yellowfield production output/import correction",
+      "purpose": "Native Python-cache failure, owner-required static hook11 import and final dist contract provenance",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "PRODUCTION_IMPORT_DLL.json": {
+      "owner": "Yellowfield production output/import correction",
+      "purpose": "Bounded actual LLVM binary or non-MSVC rejection evidence, not native MSVC acceptance",
+      "role": "VALIDATION_RECORD"
+    },
+    "PRODUCTION_IMPORT_DEBUG_DLL.json": {
+      "owner": "Yellowfield production output/import correction",
+      "purpose": "Bounded actual LLVM binary or non-MSVC rejection evidence, not native MSVC acceptance",
+      "role": "VALIDATION_RECORD"
+    },
+    "PRODUCTION_IMPORT_NON_MSVC_REJECTION.json": {
+      "owner": "Yellowfield production output/import correction",
+      "purpose": "Bounded actual LLVM binary or non-MSVC rejection evidence, not native MSVC acceptance",
+      "role": "VALIDATION_RECORD"
+    },
+    "PRODUCTION_IMPORT_SOURCE_QA_INITIAL.json": {
+      "owner": "Yellowfield production output/import correction",
+      "purpose": "15-check source QA record with strict source/vendor/cache boundary intact",
+      "role": "VALIDATION_RECORD"
+    },
+    "BLUEFIELD_ALIGNMENT_STATUS.json": {
+      "owner": "Yellowfield explicit Bluefield hook/Brownfield metadata alignment",
+      "purpose": "Exact source-body transfers, latest owner authority and bounded metadata/runtime evidence",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE"
+    },
+    "BROWNFIELD_METADATA_POLICY_AUDIT.json": {
+      "owner": "Yellowfield Bluefield alignment and full Brownfield metadata audit",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Explicitly scoped comparison/diagnostic evidence; native MSVC Golden not run"
+    },
+    "BROWNFIELD_METADATA_PE_PROBE.json": {
+      "owner": "Yellowfield Bluefield alignment and full Brownfield metadata audit",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Explicitly scoped comparison/diagnostic evidence; native MSVC Golden not run"
+    },
+    "BLUEFIELD_ALIGNMENT_RAW_DLL.json": {
+      "owner": "Yellowfield Bluefield alignment and full Brownfield metadata audit",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Explicitly scoped comparison/diagnostic evidence; native MSVC Golden not run"
+    },
+    "BLUEFIELD_ALIGNMENT_SOURCE_QA.json": {
+      "owner": "Yellowfield source validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "15 source QA checks before final status recording; final packaged-source QA report stays in build/qa to avoid self-reference"
+    },
+    "STARTUP_BUILD_FIX_STATUS.json": {
+      "owner": "Yellowfield startup and build infrastructure",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Latest user console/native log/game startup correction and bounded validation evidence"
+    },
+    "STARTUP_BUILD_FIX_RAW_DLL.json": {
+      "owner": "Yellowfield binary/resource validation",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Read-only actual cross-built DLL/resource/avatar/CRYPT32 check, not MSVC Golden"
+    },
+    "STARTUP_BUILD_FIX_SOURCE_QA.json": {
+      "owner": "Yellowfield source verification",
+      "role": "VALIDATION_RECORD",
+      "purpose": "15 source QA checks before final status recording; same final check rerun outside source to avoid self-reference"
+    },
+    "ASIO_WINDOWS_TARGET_FIX.json": {
+      "owner": "Yellowfield Windows build and vendor integration",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Brownfield Windows API target definition transfer, production Asio diagnostic and bounded verification"
+    },
+    "WINDOWS_IO_FIX.json": {
+      "owner": "Yellowfield Windows IO and active vendor selection",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Explicit owner standard filesystem restoration and unused Gulrak removal with preserved original archive and bounded validation"
+    },
+    "WINDOWS_IO_RELEASE_EXPORTS.json": {
+      "owner": "Yellowfield Windows IO/ABI/import order verification",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Bounded cross-toolchain/source evidence; actual MSVC Golden remains separate"
+    },
+    "WINDOWS_IO_RAW_DLL.json": {
+      "owner": "Yellowfield Windows IO/ABI/import order verification",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Bounded cross-toolchain/source evidence; actual MSVC Golden remains separate"
+    },
+    "WINDOWS_IO_IMPORT_ORDER_DEVELOPMENT.json": {
+      "owner": "Yellowfield Windows IO/ABI/import order verification",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Bounded cross-toolchain/source evidence; actual MSVC Golden remains separate"
+    },
+    "WINDOWS_IO_BROWNFIELD_POLICY_AUDIT.json": {
+      "owner": "Yellowfield Windows IO/ABI/import order verification",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Bounded cross-toolchain/source evidence; actual MSVC Golden remains separate"
+    },
+    "ASIO_WINDOWS_TARGET_COMPILE_DEFINITIONS.json": {
+      "owner": "Yellowfield Windows IO/ABI/import order verification",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Bounded cross-toolchain/source evidence; actual MSVC Golden remains separate"
+    },
+    "WINDOWS_IO_SOURCE_QA.json": {
+      "owner": "Yellowfield source verification",
+      "role": "VALIDATION_RECORD",
+      "purpose": "15 source QA checks before final status recording; final identical check is retained under build/qa"
+    },
+    "PRODUCT_IDENTITY_AUDIT.json": {
+      "owner": "SURGE product identity correction",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Product source/provenance boundary and rebuilt development DLL string scan"
+    },
+    "PRODUCT_IDENTITY_CHANGED_FILES.json": {
+      "owner": "SURGE product identity correction",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Authorized first-party changes against immutable parent package"
+    },
+    "PRODUCT_IDENTITY_FIX.json": {
+      "owner": "SURGE product identity correction",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Owner naming correction, scope and bounded validation"
+    },
+    "PRODUCT_IDENTITY_RAW_DLL.json": {
+      "owner": "SURGE product identity correction",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Read-only current cross-toolchain resource/avatar/static Crypt32 evidence"
+    },
+    "RE_COPY_EVIDENCE.json": {
+      "owner": "SURGE original copy recovery",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Pinned original pseudo/assembly function excerpts and recovery scope"
+    },
+    "RE_COPY_RECOVERY.json": {
+      "owner": "SURGE original copy recovery",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Owner-requested complete copy helper source recovery and affected validations"
+    },
+    "RE_COPY_RELEASE_IMPORTS.json": {
+      "owner": "SURGE original copy recovery",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Actual development DLL static imports and unchanged three exports"
+    },
+    "RE_COPY_RAW_DLL.json": {
+      "owner": "SURGE original copy recovery",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Actual development DLL resource/avatar/static Crypt32 read-only inspection"
+    },
+    "API_IMPORT_RESEARCH_SUMMARY.json": {
+      "owner": "SURGE original copy recovery",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Bounded pre-recovery official library/link-probe research snapshot"
+    },
+    "RE_COPY_CHANGED_FILES.json": {
+      "owner": "SURGE original copy recovery",
+      "role": "VALIDATION_RECORD",
+      "purpose": "Explicit source/evidence changes against immutable identity-fix parent; no vendor mutation"
+    },
+    "RUNTIME_CURRENT_STATUS.json": {
+      "owner": "SURGE fidelity corrections",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Consolidated actual runtime bindings, ABI, vendors and logging; old snapshot remains historical"
+    },
+    "FIDELITY_FIX.json": {
+      "owner": "SURGE fidelity corrections",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "F01-F04 corrections and real validation evidence boundaries"
+    },
+    "FIDELITY_CHANGED_FILES.json": {
+      "owner": "SURGE fidelity corrections",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Before/after hash ledger for owner-authorized fidelity corrections"
+    },
+    "FIDELITY_SOURCE_QA.json": {
+      "owner": "SURGE fidelity corrections",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Final source QA result for corrected sources"
+    },
+    "FIDELITY_RELEASE_IMPORTS.json": {
+      "owner": "SURGE fidelity corrections",
+      "role": "CURRENT_CONTRACT_OR_PROVENANCE",
+      "purpose": "Read-only actual development Release DLL imports/exports inspection"
+    },
+    "FIDELITY_RELEASE_DLL.json": {
+      "owner": "SURGE fidelity corrections",
+      "role": "VALIDATION_EVIDENCE",
+      "purpose": "Read-only actual raw development DLL resource/avatar/export/import validation; not finalized Golden output"
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "schema": "surge.re-copy-recovery.v1",
+  "task": "SURGE-RE-COPY-20261029",
+  "classification": "NOT_RELEASE",
+  "owner_authority": "orijinal dll den o kismi \u00e7\u00f6zemiyormusun",
+  "parent_source_package": "surge-identity-fix-source.zip",
+  "parent_sha256": "c9dc93e2ec9a40afc5a712ae7c7e0d299fd61759d45c3d0ab320dbc4937d1a77",
+  "source_package": "surge-re-copy-recovered-source.zip",
+  "state": "IMPLEMENTED_AFFECTED_RELEASE_DEBUG_WINE_VERIFIED_NATIVE_MSVC_PENDING",
+  "scope": [
+    "Recover complete048d20 options/error/cleanup flow from original pseudo/assembly",
+    "Recover04895c FileIdInfo->legacy identity fallback and0489f4 LastWriteTime query",
+    "Bind existing avatar mode2 to complete helper rather than direct CopyFileW shortcut"
+  ],
+  "source_files": [
+    "include/preloader_l/platform/file_copy.hpp",
+    "src/platform/file_copy.cpp",
+    "src/platform/file_copy_windows.cpp",
+    "src/runtime/application_environment.cpp"
+  ],
+  "evidence": "metadata/RE_COPY_EVIDENCE.json",
+  "api_import_evidence": "metadata/RE_COPY_RELEASE_IMPORTS.json",
+  "raw_resource_import_avatar_check": "metadata/RE_COPY_RAW_DLL.json",
+  "tests": {
+    "release": {
+      "passed": 9,
+      "total": 9,
+      "class": "WINE_LLVM_MINGW_RELEASE",
+      "report": "metadata/RE_COPY_RELEASE_TESTS.xml"
+    },
+    "debug": {
+      "passed": 9,
+      "total": 9,
+      "class": "WINE_LLVM_MINGW_DEBUG",
+      "report": "metadata/RE_COPY_DEBUG_TESTS.xml"
+    }
+  },
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "passed": 15,
+    "total": 15,
+    "checks": [
+      {
+        "check": "Wine test process identity and exit propagation",
+        "exit_code": 0
+      },
+      {
+        "check": "source bytes",
+        "exit_code": 0
+      },
+      {
+        "check": "four active supplied vendor trees",
+        "exit_code": 0
+      },
+      {
+        "check": "vendor tamper and link packaging regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "repository and resource ownership",
+        "exit_code": 0
+      },
+      {
+        "check": "owner integration requirements",
+        "exit_code": 0
+      },
+      {
+        "check": "metadata ownership",
+        "exit_code": 0
+      },
+      {
+        "check": "operator entrypoints",
+        "exit_code": 0
+      },
+      {
+        "check": "whole-source identity",
+        "exit_code": 0
+      },
+      {
+        "check": "FALCION source boundary",
+        "exit_code": 0
+      },
+      {
+        "check": "Golden PE negative regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "restricted named imports",
+        "exit_code": 0
+      },
+      {
+        "check": "MSVC link negative regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "SURGE infrastructure regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "SURGE directive regressions",
+        "exit_code": 0
+      }
+    ]
+  },
+  "native_msvc_golden": "NOT_RUN",
+  "updated_game_retest": "NOT_RUN",
+  "preserved": [
+    "mode2 avatar copy semantics and conditional saved-size update",
+    "Three Brownfield export ordinals and final import module order",
+    "All Golden PE/resource/CRT policies and static CryptQueryObject",
+    "Four immutable vendors and standard IO elsewhere",
+    "Existing hook/registry wait fix and optional config",
+    "SURGE product naming; provenance/schema identifiers unchanged"
+  ],
+  "not_claimed": [
+    "Original C++ type names or compiler binary ABI",
+    "Undefined return padding equivalence",
+    "Full original CRT reconstruction",
+    "Original DLL runtime differential equivalence"
+  ],
+  "compatibility_exception": "Only the owner-requested original public filesystem copy helper; no private CRT runtime imported",
+  "unit_assertions_each_configuration": 700
+}

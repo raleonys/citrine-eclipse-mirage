@@ -1,0 +1,2 @@
+FAIL: failed bind rollback loses native socket ownership
+WINE_PROGRAM_EXIT=1

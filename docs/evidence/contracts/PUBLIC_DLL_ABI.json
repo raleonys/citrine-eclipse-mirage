@@ -1,0 +1,68 @@
+{
+  "schema": "yellowfield.public-dll-abi.v1",
+  "classification": "NOT_RELEASE",
+  "task": "YF-WINDOWS-IO-20261029",
+  "target": "preloader_l",
+  "dll": "preloader.unsigned.dll",
+  "platform": "Windows x64",
+  "implementation": "OWNED_C_INTERFACE_NOT_UNKNOWN_BINARY_LAYOUT",
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "signature": "BOOL WINAPI(HINSTANCE,DWORD,LPVOID)",
+      "role": "LOADER_ONLY_NEVER_CALL_MANUALLY"
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "signature": "void(void)",
+      "role": "RE_RET_ONLY_MARKER_WITH_APPROVED_BRANDING"
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "signature": "DWORD WINAPI(DWORD timeout_ms)",
+      "role": "REAL_APPLICATION_SHUTDOWN_STATUS_ADAPTER"
+    }
+  },
+  "shutdown_status": {
+    "0": "STOPPED_UNLOAD_ALLOWED",
+    "1": "CONCURRENT_CALL_RETAIN_MODULE",
+    "2": "TIMEOUT_RETAIN_MODULE_AND_RETRY",
+    "3": "WAIT_OR_STATE_FAILURE_RETAIN_MODULE",
+    "4": "CLEANUP_FAILURE_RETAIN_MODULE"
+  },
+  "caller_lifetime": "Retain the LoadLibrary reference until DllShutdown succeeds. Readiness/port exports removed by owner correction; tools observe existing EALsxPort/LSX protocol.",
+  "worker_lifetime": "Extra image lease acquired by worker outside loader lock, released only after successful application destruction. Failure retains application and image.",
+  "source_api_target": "preloader_l_source_api / preloader.source.dll; separate development C++ exports, opt-in when BUILD_TESTING=OFF",
+  "original_consumer_linkage": "NOT_BINARY_COMPATIBLE_BY_NAME: supplied original consumer imports anadius64!anadius; this branded interface does not patch that executable or invent matching imports",
+  "unverified_548_byte_claim": "WITHDRAWN_NO_AUTHORITATIVE_LAYOUT_FOUND_IN_SUPPLIED_RE",
+  "provenance": {
+    "original_marker": "anadius-recovery-index.json exports CDX@1/RUNE@2/anadius@3 -> 0x180017a30; host-compatibility/README.md identifies RET-only body",
+    "original_marker_evidence": "ev_269a52c149a8d060bc06f58d2667406ae1fc6d07e89999585766b0ae17e254f7",
+    "comparison": "Brownfield/Bluefield use SURGE no-argument marker and DllShutdown; public slots1-3 follow Brownfield tooling shape. No donor application body imported.",
+    "new_management_ordinals": "Removed from current ABI after owner rejects test-management exports in production"
+  },
+  "native_windows_msvc": "NOT_RUN",
+  "game_acceptance": "NOT_RUN",
+  "shutdown_interface": "Only DllShutdown is public. Duplicate YellowfieldShutdown and ordinal6 removed by explicit owner instruction; DllShutdown status codes0-4 and real shutdown sequence preserved.",
+  "previous_management_exports": {
+    "DllWaitReady": {
+      "ordinal": 4,
+      "signature": "DWORD WINAPI(DWORD timeout_ms)",
+      "role": "COMPLETED_STARTUP_WIN32_RESULT"
+    },
+    "DllServerPort": {
+      "ordinal": 5,
+      "signature": "DWORD WINAPI(void)",
+      "role": "ACTUAL_BOUND_PORT_OR_ZERO"
+    }
+  },
+  "source_status_type": "DllShutdownStatus",
+  "source_status_constants": {
+    "0": "DLL_SHUTDOWN_OK",
+    "1": "DLL_SHUTDOWN_CONCURRENT",
+    "2": "DLL_SHUTDOWN_TIMEOUT",
+    "3": "DLL_SHUTDOWN_WAIT_FAILED",
+    "4": "DLL_SHUTDOWN_CLEANUP_FAILED"
+  },
+  "source_naming_correction": "SURGE-IDENTITY-20261029; numeric ABI and export table unchanged"
+}

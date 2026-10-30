@@ -1,0 +1,10 @@
+{
+  "result": "BLOCKED_TARGET_SEMANTICS",
+  "pending": [
+    "URSYNEX_GOLDEN_FINALIZER.json: Yellowfield post-link mutation values are not yet established; Brownfield timestamp/linker disguise values are not inherited",
+    "ARYRA_GOLDEN_LAYOUT.json: Exact Yellowfield MSVC shipping section profile must be bound to the final shipping link",
+    "MUSTAVEX_GOLDEN_METADATA.json: VERSIONINFO and five public C exports are bound. Remaining non-resource PE/header/shipping metadata and actual MSVC Golden acceptance are open.",
+    "CORVEXON_GOLDEN_TRAIL.json: Public C exports and runtime bootstrap are implemented; remaining product import/CRT-cookie/checksum/header policies and native MSVC shipping evidence are not yet selected/accepted."
+  ],
+  "official_release": false
+}

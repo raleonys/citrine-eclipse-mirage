@@ -1,0 +1,61 @@
+{
+  "schema": "surge.socket-retirement-validation.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_LOCAL_RETRY_QUARANTINE_AND_IO_RETIREMENT_CHECKS_NATIVE_ACCEPTANCE_PENDING",
+  "date": "2026-10-30",
+  "execution_class": "LLVM-MinGW 20251118 Clang21.1.6 x64 / Wine; not native Windows/MSVC",
+  "release": {
+    "passed": 203,
+    "total": 203,
+    "log": "docs/evidence/socket-retirement/RELEASE_TESTS.log"
+  },
+  "affected_debug": {
+    "passed": 15,
+    "total": 15,
+    "log": "docs/evidence/socket-retirement/DEBUG_TESTS.log"
+  },
+  "before_after_contracts": {
+    "component_scenarios": 9,
+    "actual_dll_scenarios": 3,
+    "before_failing": 12,
+    "after_passing": 12,
+    "same_final_harness_pins": true,
+    "same_frozen_parent_core_archive": true
+  },
+  "unknown_close_policy": "PERMANENT_QUARANTINE_NO_BLIND_RETRY; RETAIN_OWNER_AND_IMAGE_UNTIL_PROCESS_EXIT",
+  "kernel_fault_frequency_established": false,
+  "all_vendor_internal_failure_paths_closed": false,
+  "production_exports": {
+    "DllMain": 1,
+    "SURGE": 2,
+    "DllShutdown": 3
+  },
+  "development_source_api": {
+    "before_symbols": 3350,
+    "after_symbols": 3346,
+    "removed_private_compiler_symbols": 7,
+    "added_private_symbols": 3,
+    "public_header_declaration_changes": 0,
+    "source_host_test": "PASS"
+  },
+  "vendor_payload_changes": 0,
+  "production_cpp_count": 64,
+  "retained_reference_cpp_count": 74,
+  "source_qa": {
+    "passed_groups": 17,
+    "total_groups": 17,
+    "result": "PASS_SOURCE_QA",
+    "log": "docs/evidence/socket-retirement/SOURCE_QA.log"
+  },
+  "clean_source_delivery": {
+    "evidence_class": "SEPARATE_FINAL_ARCHIVE_VERIFICATION",
+    "external_receipt_name": "surge-socket-delivery-verification.json"
+  },
+  "native_windows_msvc_golden": "NOT_RUN_CHANGED_SOURCE",
+  "game_acceptance": "NOT_RUN_CHANGED_SOURCE",
+  "donor_retirement": "BLOCKED",
+  "manual_reviewed_donor_file_entries": 76,
+  "whole_file_semantic_closures": 0,
+  "publication": false,
+  "dist_promotion": false
+}

@@ -1,0 +1,62 @@
+{
+  "11_hook_count": "TARGET_11_MEMBERS_UNVERIFIED",
+  "active_integration_gate": {
+    "current_result": "NOT_RUN",
+    "must_exercise_each_vendor_actual_production_path": true,
+    "must_link_vendor_production": true,
+    "must_test_build_profiles": true,
+    "no_dummy_link_or_dead_include": true
+  },
+  "bluefield": "FROZEN_LOCAL_PC_CODE_REVIEW_AND_COMPARISON_ONLY",
+  "brownfield": {
+    "build_orchestration": "MANDATORY_ADAPT",
+    "documentation": "MANDATORY_CLEAN_ADAPT",
+    "golden_tools": "MANDATORY_ADAPT_AND_INTEGRATE",
+    "metadata": "MANDATORY_CLEAN_ADAPT",
+    "preloader_l_application_code": "NOT_INHERITED",
+    "resources": "MANDATORY_ADAPT",
+    "root_layout": "MANDATORY_CLEAN_ADAPT",
+    "scripts": "MANDATORY_ADAPT",
+    "tests": "SELECT_COMPATIBLE_AND_PRESERVE_YELLOWFIELD_OWN_TESTS",
+    "tooling": "MANDATORY_EVALUATE_AND_ADAPT"
+  },
+  "custom_crt": "EVIDENCE_AND_EXPLICIT_APPROVAL_ONLY",
+  "entrypoint_order": "ARCHITECTURE_AND_OWNERSHIP_SKELETON_THEN_VENDOR_AND_BUILD_BINDING_WITH_SAME_CHANGE_CONTRACTS",
+  "golden_pipeline_order": [
+    "MSVC Build",
+    "URSYNEX Golden Finalizer",
+    "ARYRA Golden Layout",
+    "MUSTAVEX Golden Metadata",
+    "CORVEXON Golden Trail",
+    "FALCION Golden Cleaning"
+  ],
+  "greenfield": "COMPARISON_AND_CODE_REVIEW_ONLY",
+  "library_synchronization": "FORBIDDEN_UNLESS_NEW_EXPLICIT_USER_REQUEST",
+  "owner_source_roots": "SIX_MAPPED_BELOW_ONE_OWNER_PROVIDED_REPO_ROOT_FOLDER",
+  "primary_function_candidate_source": "REVERSE_ENGINEERING_OWNER_LOCAL_PC_TREE",
+  "redfield": "COMPARISON_AND_CODE_REVIEW_ONLY",
+  "schema": "yellowfield.integration-requirements.v1",
+  "scope": "TARGET_REQUIREMENTS_NOT_IMPLEMENTATION_CLAIMS",
+  "source_code_import_without_individual_approval": false,
+  "standard_crt": "REQUIRED_DEFAULT",
+  "surge_branding": "MANDATORY",
+  "third_party": {
+    "asio": "REQUIRED_ACTIVE",
+    "minhook": "REQUIRED_ACTIVE",
+    "pegtl": "REQUIRED_ACTIVE",
+    "tinyxml2": "REQUIRED_ACTIVE"
+  },
+  "vendor_source_exact_archive_pins": true,
+  "explicit_owner_exceptions": {
+    "Bluefield_hook11": "Owner now selects supplied Bluefield CryptQueryObject and required native hook lifecycle dependencies; other application modules remain comparison-only",
+    "Brownfield_PE_metadata": "Owner now selects full declared MUSTAVEX/ARYRA/URSYNEX metadata profile, with latest public ABI/import/avatar decisions retained",
+    "Windows_filesystem": "YF-WINDOWS-IO-20261029: restore standard Windows filesystem/fstream from RE; remove unused Gulrak vendor and bindings after owner asks complete removal"
+  },
+  "previous_five_vendor_requirements": {
+    "asio": "REQUIRED_ACTIVE",
+    "filesystem": "REQUIRED_ACTIVE",
+    "minhook": "REQUIRED_ACTIVE",
+    "pegtl": "REQUIRED_ACTIVE",
+    "tinyxml2": "REQUIRED_ACTIVE"
+  }
+}

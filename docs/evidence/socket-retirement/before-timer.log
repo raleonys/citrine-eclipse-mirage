@@ -1,0 +1,2 @@
+FAIL: pending timer incorrectly acknowledges complete cleanup
+WINE_PROGRAM_EXIT=1

@@ -1,0 +1,5 @@
+No first-party license declaration for Yellowfield was supplied with the RE
+inputs. This file records that status; it does not invent a new license grant.
+
+Existing third-party notices are preserved in third_party/minhook/LICENSE.txt
+and the TinyXML2 source/header notices. Local building is not release approval.

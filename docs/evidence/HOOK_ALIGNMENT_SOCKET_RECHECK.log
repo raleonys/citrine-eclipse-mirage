@@ -1,0 +1,9 @@
+Test project /workspace/yellowfield/build/llvm-mingw-x64-vendors
+    Start 121: socket_node_delete_integration_contracts
+    Start 123: socket_pool_release_integration_contracts
+1/2 Test #121: socket_node_delete_integration_contracts ....   Passed    8.27 sec
+2/2 Test #123: socket_pool_release_integration_contracts ...   Passed   21.23 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =  21.24 sec

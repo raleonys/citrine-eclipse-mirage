@@ -1,0 +1,72 @@
+{
+  "11_hook_count": "TARGET_11_MEMBERS_UNVERIFIED",
+  "active_integration_gate": {
+    "current_result": "NOT_RUN",
+    "must_exercise_each_vendor_actual_production_path": true,
+    "must_link_vendor_production": true,
+    "must_test_build_profiles": true,
+    "no_dummy_link_or_dead_include": true
+  },
+  "hook_reference": "FROZEN_LOCAL_PC_CODE_REVIEW_AND_COMPARISON_ONLY",
+  "infrastructure": {
+    "build_orchestration": "MANDATORY_ADAPT",
+    "documentation": "MANDATORY_CLEAN_ADAPT",
+    "golden_tools": "MANDATORY_ADAPT_AND_INTEGRATE",
+    "metadata": "MANDATORY_CLEAN_ADAPT",
+    "preloader_l_application_code": "NOT_INHERITED",
+    "resources": "MANDATORY_ADAPT",
+    "root_layout": "MANDATORY_CLEAN_ADAPT",
+    "scripts": "MANDATORY_ADAPT",
+    "tests": "SELECT_COMPATIBLE_AND_PRESERVE_SURGE_OWN_TESTS",
+    "tooling": "MANDATORY_EVALUATE_AND_ADAPT"
+  },
+  "custom_crt": "EVIDENCE_AND_EXPLICIT_APPROVAL_ONLY",
+  "entrypoint_order": "ARCHITECTURE_AND_OWNERSHIP_SKELETON_THEN_VENDOR_AND_BUILD_BINDING_WITH_SAME_CHANGE_CONTRACTS",
+  "golden_pipeline_order": [
+    "MSVC Build",
+    "URSYNEX Golden Finalizer",
+    "ARYRA Golden Layout",
+    "MUSTAVEX Golden Metadata",
+    "CORVEXON Golden Trail",
+    "FALCION Golden Cleaning"
+  ],
+  "greenfield": "COMPARISON_AND_CODE_REVIEW_ONLY",
+  "library_synchronization": "FORBIDDEN_UNLESS_NEW_EXPLICIT_USER_REQUEST",
+  "owner_source_roots": "SIX_MAPPED_BELOW_ONE_OWNER_PROVIDED_REPO_ROOT_FOLDER",
+  "primary_function_candidate_source": "REVERSE_ENGINEERING_OWNER_LOCAL_PC_TREE",
+  "redfield": "COMPARISON_AND_CODE_REVIEW_ONLY",
+  "schema": "surge.integration-requirements.v1",
+  "scope": "TARGET_REQUIREMENTS_NOT_IMPLEMENTATION_CLAIMS",
+  "source_code_import_without_individual_approval": false,
+  "standard_crt": "REQUIRED_DEFAULT",
+  "surge_branding": "MANDATORY",
+  "third_party": {
+    "asio": "REQUIRED_ACTIVE",
+    "minhook": "REQUIRED_ACTIVE",
+    "pegtl": "REQUIRED_ACTIVE",
+    "tinyxml2": "REQUIRED_ACTIVE"
+  },
+  "vendor_source_exact_archive_pins": true,
+  "explicit_owner_exceptions": {
+    "Hook reference_hook11": "Owner now selects supplied Hook reference CryptQueryObject and required native hook lifecycle dependencies; other application modules remain comparison-only",
+    "Infrastructure_PE_metadata": "Owner now selects full declared MUSTAVEX/ARYRA/URSYNEX metadata profile, with latest public ABI/import/avatar decisions retained",
+    "Windows_filesystem": "SURGE-WINDOWS-IO-20261029: restore standard Windows filesystem/fstream from RE; remove unused Gulrak vendor and bindings after owner asks complete removal",
+    "automatic_listener": "Owner selects automatic 3226-3236 listener range with no arbitrary-port fallback and removes ServerPort override; preserve live port publication and existing IPv6 hook support",
+    "fixed_sdk_identity": "Owner pins numeric SDK identity 10.6.2.31 without its build label; remove SDK config override and mutable state, preserving LSX formatting and separate client negotiation",
+    "loopback_connect": "Owner selects exact IPv4/IPv6 loopback:3216 destination filtering and a complete const sockaddr copy; preserve narrow attempts synchronization and callback lifetime",
+    "achievement_durability": "Owner selects checked atomic XML/INI batch persistence with prior-record rollback and event publication after successful persistence; retain incomplete file rollback ownership",
+    "handler_scheduling": "Owner selects two owned workers, bounded nonblocking admission and wire-order per-session processing with queued-work cancellation and running-work drain on stop",
+    "session_transport": "Owner adopts full combined-send request ordering, event reservation/commit/retry, asynchronous greeting, monotonic deadlines and connection/frame/output budgets; preserve protocol bytes, source ownership, fixed SDK/listener and public ABI",
+    "hook_path_scan": "Owner adopts bounded heap-free UTF16 inspection for hook11: 32768 units including NUL, fixed suffix scratch and protected streaming reads; retain selection, forwarding, LastError and lifecycle",
+    "build_partition": "Owner authorizes audited production/reference/source-API target separation without deleting reference source or changing runtime implementation; retain model tests and prove the production map/dependency boundary",
+    "reference_metadata_refresh": "Owner selects the newly supplied reference DLL VERSIONINFO and compilation timestamp under the existing selected-field allowlist; retain public ABI, import order, static CRT and avatar storage policy",
+    "exclusive_windows_listener": "Fix the reported native busy-port regression by assigning Windows listener candidates exclusive address ownership before bind; keep the same ascending range and exhaustion rules"
+  },
+  "previous_five_vendor_requirements": {
+    "asio": "REQUIRED_ACTIVE",
+    "filesystem": "REQUIRED_ACTIVE",
+    "minhook": "REQUIRED_ACTIVE",
+    "pegtl": "REQUIRED_ACTIVE",
+    "tinyxml2": "REQUIRED_ACTIVE"
+  }
+}

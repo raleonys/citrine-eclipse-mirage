@@ -1,0 +1,69 @@
+{
+  "change_id": "YF-HOOK11-01",
+  "implementation_basis": {
+    "project": "Bluefield",
+    "scope": "CryptQueryObject and required hook lifecycle only",
+    "authority": "Latest explicit owner correction",
+    "implementation_record": "metadata/BLUEFIELD_ALIGNMENT_STATUS.json"
+  },
+  "comparisons": [
+    {
+      "project": "Brownfield",
+      "archive": "HF20_REGISTRY_B_ARCH_B_STAGE03_ISSUER_SCOPE_FULL_SOURCE_CANDIDATE_NOT_RELEASE.zip",
+      "archive_sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",
+      "role": "READ_ONLY_COMPARISON_NOT_APPLICATION_CODE_DONOR",
+      "files": [
+        {
+          "path": "src/platform/crypt_observer.cpp",
+          "sha256": "422e9b944481f084f958965ba7438d12bf58c4abf9e495ce17eccf1c3252168b"
+        },
+        {
+          "path": "include/preloader_l/platform/crypt_observer.hpp",
+          "sha256": "a85365218510f33c891adfc50bbe2bce9891850a8b6a2051d5218172205b2f6d"
+        },
+        {
+          "path": "src/platform/core_hooks.cpp",
+          "sha256": "65ab00c862abd80225cf8523c87aa71899fb9ea5744f6510254b0ffbb6d7917a"
+        }
+      ]
+    },
+    {
+      "project": "Bluefield",
+      "archive": "preloader_l_BF02_FIX31_APPLICATION_SOURCE_NOT_RELEASE.zip",
+      "archive_sha256": "20c707f6cc57901674c26345983f5975150ab67fd547f4f3e95221e78066f416",
+      "role": "OWNER_SELECTED_HOOK11_AND_REQUIRED_LIFECYCLE_DONOR",
+      "files": [
+        {
+          "path": "preloader_l/metadata/HOOKS.json",
+          "sha256": "b3a59e9bae9ae97496fab2b5ba6584342283a8bf94a35c75e982388a30f00088"
+        },
+        {
+          "path": "preloader_l/src/hooks/crypt_query.cpp",
+          "sha256": "5cee5dcf52ea6c0dd436365c70395b72dc24a6655b6b07dc1ff0c5c92b0e0f39"
+        },
+        {
+          "path": "preloader_l/src/windows/hook_callbacks.cpp",
+          "sha256": "040d575e458c0a4a59fdbd35f0a3e40ca8083d953578caa7d7a95a435c596fb4"
+        },
+        {
+          "path": "preloader_l/src/windows/hooks.cpp",
+          "sha256": "c14327a6ce179f3d8da964c37ba86db477b19e7cd51493ce6b4c69cf3f8d039b"
+        }
+      ]
+    }
+  ],
+  "observed_differences": [
+    "Brownfield header claims pass-through, while cpp selects an effective object",
+    "Brownfield/Bluefield invalid-UTF16 fallback is not the RE trap behavior",
+    "No bounded-length or new safe-read policy was silently added"
+  ],
+  "static_dependency_correction": "YF-PRODUCTION-20261029: owner explicitly requires normal CRYPT32 import as Brownfield/Bluefield; direct SDK target reference with crypt32.lib. See metadata/PRODUCTION_IMPORT_FIX.json.",
+  "latest_implementation_authority": "Explicit owner selects Bluefield implementation, overriding previous RE trap selection and comparison-only restriction for hook11/lifecycle. See BLUEFIELD_ALIGNMENT_STATUS.json",
+  "initial_implementation_basis": {
+    "archive": "dll-reverse-engineering(8).zip",
+    "archive_sha256": "64a870331be2c0555f7a7c21b66a657df8f36abfd8312730ff04cffcc906c9e5",
+    "path": "preloader-source/preloader_core.cpp",
+    "symbol": "recovered_preloader::Core::crypt_query",
+    "rva": "preloader:0x1264"
+  }
+}

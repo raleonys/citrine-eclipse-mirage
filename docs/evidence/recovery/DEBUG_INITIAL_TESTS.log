@@ -1,0 +1,31 @@
+Test project /workspace/yellowfield/build/runtime-debug
+    Start   1: application_runtime_contracts
+1/8 Test   #1: application_runtime_contracts .....   Passed    2.72 sec
+    Start  19: net_failure_contracts
+2/8 Test  #19: net_failure_contracts .............   Passed    0.36 sec
+    Start  20: extra_library_failure_contracts
+3/8 Test  #20: extra_library_failure_contracts ...   Passed    0.48 sec
+    Start  23: session_flow_contracts
+4/8 Test  #23: session_flow_contracts ............   Passed    0.23 sec
+    Start  25: network_policy_contracts
+5/8 Test  #25: network_policy_contracts ..........***Failed    0.49 sec
+FAIL: oversize response is rejected before sending
+WINE_PROGRAM_EXIT=1
+
+    Start  27: handler_pool_contracts
+6/8 Test  #27: handler_pool_contracts ............   Passed    0.94 sec
+    Start  29: listener_port_contracts
+7/8 Test  #29: listener_port_contracts ...........   Passed    0.53 sec
+    Start 194: dll_public_lifecycle
+8/8 Test #194: dll_public_lifecycle ..............   Passed    0.76 sec
+
+88% tests passed, 1 tests failed out of 8
+
+Label Time Summary:
+production    =   6.52 sec*proc (8 tests)
+
+Total Test time (real) =   6.53 sec
+
+The following tests FAILED:
+	 25 - network_policy_contracts (Failed)                 production
+Errors while running CTest

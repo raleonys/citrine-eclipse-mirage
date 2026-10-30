@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="15"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="895fff974780"
+	time="4"
+	timestamp="2026-10-29T02:13:52"
+	>
+	<testcase name="application_runtime_contracts" classname="application_runtime_contracts" time="3.78457" status="run">
+		<properties/>
+		<system-out>PASS: 72 real application checks; five vendors, config collections, encrypted socket LSX, provider, resource, persistence, eleven enabled hooks and stop
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="vendor_io_contracts" classname="vendor_io_contracts" time="0.122436" status="run">
+		<properties/>
+		<system-out>PASS: standard Unicode/binary filesystem I/O; TCP loopback async accept/connect/read/write/EOF/cancel (fixture only)
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="online_contracts" classname="online_contracts" time="0.114759" status="run">
+		<properties/>
+		<system-out>online: 12869 checks passed (synthetic mocks only)
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="configuration_contracts" classname="configuration_contracts" time="0.171929" status="run">
+		<properties/>
+		<system-out>PASS: 150 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="config_pipeline_contracts" classname="config_pipeline_contracts" time="0.107476" status="run">
+		<properties/>
+		<system-out>PASS: 189 Config2 pipeline checks; generated fixture only; original targets never executed
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="config_application_contracts" classname="config_application_contracts" time="0.125882" status="run">
+		<properties/>
+		<system-out>PASS: 95 Config2 application checks; no original execution or real user CFG
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="config_startup_contracts" classname="config_startup_contracts" time="0.164631" status="run">
+		<properties/>
+		<system-out>PASS: 335 Config2 startup checks; own generated files, all other OS/worker effects controlled
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="achievement_storage_contracts" classname="achievement_storage_contracts" time="0.17836" status="run">
+		<properties/>
+		<system-out>PASS: 116 achievement storage checks; own fixtures only, no original execution
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="licensing_contracts" classname="licensing_contracts" time="0.157021" status="run">
+		<properties/>
+		<system-out>PASS 1039 deterministic licensing checks (synthetic dependencies; original targets not executed)
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="license_file_integration" classname="license_file_integration" time="0.131832" status="run">
+		<properties/>
+		<system-out>PASS: 33 file/license integration checks; actual IO/SHA1/CBC/XML on generated fixtures, remaining effects controlled; original targets untouched
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_source_smoke" classname="dll_source_smoke" time="0.467368" status="run">
+		<properties/>
+		<system-out>PASS: actual DLL auto-started; real socket LSX profile, calendar, SHA-1 and PEGTL Config2/VDF executed; shutdown drains application
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_lifecycle" classname="dll_public_lifecycle" time="0.521768" status="run">
+		<properties/>
+		<system-out>zero-timeout shutdown status: 2
+PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; single DllShutdown with bounded wait/retry; removed alias/ordinal absent
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_c_consumer" classname="dll_public_c_consumer" time="0.27236" status="run">
+		<properties/>
+		<system-out>PASS: C17 consumer linked against the three-export application import library; real worker startup and shutdown
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_export_contract" classname="dll_public_export_contract" time="0.182777" status="run">
+		<properties/>
+		<system-out>{
+  "schema": "yellowfield.public-abi-check.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "dll_sha256": "01a78a835e1f065e294069c7120859c3f8c481b0992cdb660f72b22b7d5e2b21",
+  "export_count": 3,
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0xf04f0",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0xf0330",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0xf04e0",
+      "forwarded": false
+    }
+  },
+  "errors": [],
+  "native_consumer_acceptance": "NOT_RUN"
+}
+</system-out>
+	</testcase>
+	<testcase name="dll_public_export_negatives" classname="dll_public_export_negatives" time="2.39365" status="run">
+		<properties/>
+		<system-out>PASS: actual DLL baseline and 7 export/machine mutations; all checks read-only
+</system-out>
+	</testcase>
+</testsuite>

@@ -1,0 +1,142 @@
+{
+  "schema": "yellowfield.bluefield-alignment.v1",
+  "task": "YF-BLUEFIELD-ALIGN-20261029",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_CROSS_TOOLCHAIN_VERIFIED_NATIVE_MSVC_PENDING",
+  "parent_source_package": "yellowfield-production-import-fix-source.zip",
+  "parent_sha256": "b9b022f0a8a3af2f889da21fa7c2e8e578c3d535ae868001f7131c055a4ce661",
+  "source_package": "yellowfield-bluefield-aligned-source.zip",
+  "owner_hook_instruction": "bluefielddeki implementation do\u011fruydu sen niye kafana g\u00f6re de\u011fi\u015ftin",
+  "owner_metadata_instruction": "Compilation Timestamp do\u011fru de\u011feri g\u00f6stermiyor tamam\u0131 kontrol edilmeli brownfieldda d\u00fczg\u00fcnd\u00fc",
+  "bluefield_reference_archive_sha256": "20c707f6cc57901674c26345983f5975150ab67fd547f4f3e95221e78066f416",
+  "bluefield_transfers": [
+    {
+      "source": "src/hooks/crypt_query.cpp",
+      "source_sha256": "5cee5dcf52ea6c0dd436365c70395b72dc24a6655b6b07dc1ff0c5c92b0e0f39",
+      "destination": "src/platform/crypt_query.cpp",
+      "destination_sha256": "13c798c11e0571a68fc3538bdf134f42ae04b74e3988f7f281cf42fc37d37616",
+      "adaptation": "Only include path and namespace renamed",
+      "normalized_body_identity": true,
+      "license": "GPL-3.0-only as supplied, SPDX retained"
+    },
+    {
+      "source": "src/windows/unload_guard.cpp",
+      "source_sha256": "563ed1c1b3a140128422e627ba1f5c0a02dd701c73b9bf36cc4e6508b0408ece",
+      "destination": "src/platform/hook_unload_guard.cpp",
+      "destination_sha256": "ec75d3653d2ef0c7b0de2185f810c1cbb9577ec7fc70d8f0850c7e1f4d82df4e",
+      "adaptation": "Only include path renamed",
+      "normalized_body_identity": true,
+      "license": "GPL-3.0-only as supplied, SPDX retained"
+    },
+    {
+      "source": "src/windows/unload_guard.hpp",
+      "source_sha256": "90e1a5100bc20a14d91c92dcd7fea536734f7b48eb88db339c4dcb5146ddb08a",
+      "destination": "include/preloader_l/platform/hook_unload_guard.hpp",
+      "destination_sha256": "90e1a5100bc20a14d91c92dcd7fea536734f7b48eb88db339c4dcb5146ddb08a",
+      "adaptation": "Byte-identical header",
+      "normalized_body_identity": true,
+      "license": "GPL-3.0-only as supplied, SPDX retained"
+    }
+  ],
+  "remaining_hook_adapters": [
+    "Bluefield protected-read loop extracted into existing WindowsCryptQueryHost boundary; no path cap added",
+    "OriginalEffects uses the supplied selector, forwards every SDK argument/result and observes the call with LastError preserved",
+    "Existing native owner queues each created hook, releases config lock, applies one batch, checks complete staging",
+    "Bluefield bounded quiescence/thread-register-stack guard before engine release; same shutdown-caller exclusion",
+    "Scope is hook11 and necessary shared hook lifecycle; configuration/transport/provider application bodies are not copied"
+  ],
+  "removed_previous_choices": [
+    "UTF8 heap conversion for selection",
+    "InvalidUTF16 and allocation UD2 path",
+    "Immediate per-hook production activation",
+    "Counter-only unbounded hook drain without external thread guard",
+    "Preserve-compiler metadata policy"
+  ],
+  "brownfield_metadata": {
+    "timestamp": "0xCD268EB1",
+    "linker_version": [
+      14,
+      0
+    ],
+    "rich_header": "ABSENT",
+    "os_version": [
+      6,
+      0
+    ],
+    "subsystem_version": [
+      6,
+      0
+    ],
+    "subsystem": 2,
+    "policy_audit": "metadata/BROWNFIELD_METADATA_POLICY_AUDIT.json",
+    "all_declared_policy_groups": 19,
+    "full_metadata_probe": "metadata/BROWNFIELD_METADATA_PE_PROBE.json",
+    "probe_evidence_class": "DIAGNOSTIC_FIXTURE_DERIVED_FROM_LLVM_DLL_NOT_MSVC_GOLDEN",
+    "reference_scope": "All declared MUSTAVEX/ARYRA/URSYNEX groups exactly compared to supplied Brownfield archive; distinct export/import/avatar requirements retained",
+    "raw_compiler_output": "Preserved under build; final dist is metadata-normalized copy",
+    "normalized_timestamp_is_actual_build_clock": false
+  },
+  "fixed_user_requirements": [
+    "Five public C exports",
+    "Static CRYPT32!CryptQueryObject import",
+    "Exact SURGE image replaces profile data in .rdata; no PNG PE resource",
+    "Separate recovered fallback image",
+    "Byte-identical Brownfield VERSIONINFO source",
+    "Immutable five owner-supplied vendors and TinyXML2 depth500",
+    "Compiler-owned standard CRT",
+    "Golden/runtime/receipt/hash sidecar gated local dist; no publication"
+  ],
+  "native_msvc_updated_source": "NOT_RUN",
+  "game_acceptance": "NOT_RUN",
+  "verification": {
+    "release_windows_wine": {
+      "passed": 173,
+      "total": 173,
+      "report": "metadata/BLUEFIELD_ALIGNMENT_FULL_RECHECK.xml",
+      "seconds": 48.91,
+      "parallel_jobs": 2
+    },
+    "initial_full_attempt": {
+      "passed": 171,
+      "total": 173,
+      "timeouts": [
+        "socket_node_delete_integration_contracts",
+        "socket_pool_release_integration_contracts"
+      ],
+      "report": "metadata/BLUEFIELD_ALIGNMENT_INITIAL_TIMEOUT.xml",
+      "followup": "Both pass isolated -j2 without timeout change; complete -j2 rerun173/173. Initial -j6 attempt not erased; environment load suspected, no socket source changes."
+    },
+    "isolated_socket_recheck": {
+      "passed": 2,
+      "total": 2,
+      "report": "metadata/BLUEFIELD_ALIGNMENT_SOCKET_RECHECK.xml"
+    },
+    "debug_affected": {
+      "passed": 7,
+      "total": 7,
+      "report": "metadata/BLUEFIELD_ALIGNMENT_DEBUG_TESTS.xml"
+    },
+    "final_name_development_runtime": {
+      "cycles": 3,
+      "exit_code": 0,
+      "report": "metadata/BLUEFIELD_ALIGNMENT_FINAL_NAME_RUNTIME.log",
+      "class": "WINE_DEVELOPMENT_DLL_NOT_MSVC_GOLDEN"
+    },
+    "metadata_policy_fields": {
+      "groups": 19,
+      "result": "EXACT_MATCH_TO_SUPPLIED_BROWNFIELD",
+      "report": "metadata/BROWNFIELD_METADATA_POLICY_AUDIT.json"
+    },
+    "metadata_binary_fixture": {
+      "result": "PASS_FINAL_METADATA_CHECK",
+      "report": "metadata/BROWNFIELD_METADATA_PE_PROBE.json",
+      "class": "DIAGNOSTIC_NOT_GOLDEN"
+    },
+    "source_qa": {
+      "result": "PASS_SOURCE_QA",
+      "checks": 15,
+      "report": "metadata/BLUEFIELD_ALIGNMENT_SOURCE_QA.json",
+      "final_boundary": "After status recording, refresh whole-source manifest once and rerun same checks into build/qa without further source edits"
+    }
+  }
+}

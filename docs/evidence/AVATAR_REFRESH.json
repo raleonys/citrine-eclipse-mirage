@@ -1,0 +1,543 @@
+{
+  "schema": "surge.avatar-refresh.v1",
+  "classification": "NOT_RELEASE",
+  "status": "OWNER_ASSET_APPLIED_AND_CROSS_VALIDATED",
+  "source_archive_sha256": "154926ca9f5d113b1970ac6039372035fe08c30fc7096d745c54918e9b66520f",
+  "source_archive_member": "surge.png",
+  "profile_png_sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+  "profile_png_bytes": 4181,
+  "profile_png_dimensions": [
+    208,
+    208
+  ],
+  "previous_profile_png_sha256": "4c0465795a5644823ec23960cd4b6ce44036ca27477c6bc6c73978b0b7854866",
+  "previous_profile_png_bytes": 3799,
+  "owner_asset_bytes_preserved": true,
+  "runtime_cpp_or_header_changes": 0,
+  "test_source_changes": 0,
+  "pe_metadata_profile_changes": 0,
+  "fallback_changed": false,
+  "storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "binaries": {
+    "release": {
+      "classification": "NOT_RELEASE",
+      "execution_level": "READ_ONLY_BINARY_INSPECTION",
+      "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "header_metadata": {
+        "timestamp": "0x6AE36EAE",
+        "linker_version": [
+          14,
+          0
+        ],
+        "rich_header": "ABSENT",
+        "os_version": [
+          6,
+          0
+        ],
+        "subsystem_version": [
+          6,
+          0
+        ],
+        "subsystem": 2,
+        "export_internal_name": "preloader.unsigned.dll",
+        "debug_directory": [
+          618496,
+          28
+        ],
+        "security_directory": [
+          0,
+          0
+        ],
+        "coff_symbol_table": [
+          697856,
+          4303
+        ],
+        "pe_checksum": "0x00000000",
+        "checksum_valid": false
+      },
+      "infrastructure_metadata_validation": {
+        "stage": "RAW_LINK_OUTPUT",
+        "result": "NOT_FINALIZED",
+        "differences": [
+          "TimeDateStamp: 0x6AE36EAE",
+          "COFF symbol table present",
+          "debug directory not stripped: (618496, 28)"
+        ]
+      },
+      "dll_sha256": "67033de4ed3fa1db0596ff1538f7b910485265d8d7e3746699934bc57e0e57f7",
+      "unchanged": true,
+      "machine": "0x8664",
+      "entrypoint_rva": "0x11e0",
+      "sections": [
+        ".text",
+        ".rdata",
+        ".buildid",
+        ".data",
+        ".pdata",
+        ".tls",
+        ".rsrc",
+        ".reloc",
+        "/4",
+        "/18",
+        "/58",
+        "/70",
+        "/82",
+        "/33",
+        "/47"
+      ],
+      "export_count": 3,
+      "imports": [
+        "MSWSOCK.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "WS2_32.DLL",
+        "CRYPT32.DLL",
+        "LIBC++.DLL",
+        "LIBUNWIND.DLL",
+        "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+        "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+        "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+        "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+      ],
+      "resources": [
+        {
+          "path": [
+            16,
+            1,
+            1033
+          ],
+          "bytes": 572,
+          "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+        }
+      ],
+      "exact_owner_avatar": true,
+      "expected_import_module_order": [
+        "CRYPT32.DLL",
+        "WS2_32.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "MSWSOCK.DLL"
+      ],
+      "import_module_order_matches": false,
+      "crypt32_static_import": true,
+      "crypt32_named_imports": [
+        "CryptQueryObject"
+      ],
+      "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+      "avatar_data": {
+        "profile": {
+          "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        },
+        "fallback": {
+          "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        }
+      },
+      "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+      "resource_metadata_errors": [],
+      "golden_shipping_acceptance": "NOT_RUN",
+      "game_acceptance": "NOT_RUN"
+    },
+    "debug": {
+      "classification": "NOT_RELEASE",
+      "execution_level": "READ_ONLY_BINARY_INSPECTION",
+      "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "header_metadata": {
+        "timestamp": "0x6AE36EAE",
+        "linker_version": [
+          14,
+          0
+        ],
+        "rich_header": "ABSENT",
+        "os_version": [
+          6,
+          0
+        ],
+        "subsystem_version": [
+          6,
+          0
+        ],
+        "subsystem": 2,
+        "export_internal_name": "preloader.unsigned.dll",
+        "debug_directory": [
+          1212416,
+          28
+        ],
+        "security_directory": [
+          0,
+          0
+        ],
+        "coff_symbol_table": [
+          13564416,
+          12467
+        ],
+        "pe_checksum": "0x00000000",
+        "checksum_valid": false
+      },
+      "infrastructure_metadata_validation": {
+        "stage": "RAW_LINK_OUTPUT",
+        "result": "NOT_FINALIZED",
+        "differences": [
+          "TimeDateStamp: 0x6AE36EAE",
+          "COFF symbol table present",
+          "debug directory not stripped: (1212416, 28)"
+        ]
+      },
+      "dll_sha256": "6b87dffba829260724a998a775759826775a18faf3b4ef3b4aa73b51cff609d6",
+      "unchanged": true,
+      "machine": "0x8664",
+      "entrypoint_rva": "0x11e0",
+      "sections": [
+        ".text",
+        ".rdata",
+        ".buildid",
+        ".data",
+        ".pdata",
+        ".tls",
+        ".rsrc",
+        ".reloc",
+        "/4",
+        "/18",
+        "/58",
+        "/70",
+        "/82",
+        "/33",
+        "/47"
+      ],
+      "export_count": 3,
+      "imports": [
+        "MSWSOCK.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "WS2_32.DLL",
+        "CRYPT32.DLL",
+        "LIBC++.DLL",
+        "LIBUNWIND.DLL",
+        "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+        "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+        "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+        "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+      ],
+      "resources": [
+        {
+          "path": [
+            16,
+            1,
+            1033
+          ],
+          "bytes": 572,
+          "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+        }
+      ],
+      "exact_owner_avatar": true,
+      "expected_import_module_order": [
+        "CRYPT32.DLL",
+        "WS2_32.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "MSWSOCK.DLL"
+      ],
+      "import_module_order_matches": false,
+      "crypt32_static_import": true,
+      "crypt32_named_imports": [
+        "CryptQueryObject"
+      ],
+      "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+      "avatar_data": {
+        "profile": {
+          "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        },
+        "fallback": {
+          "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        }
+      },
+      "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+      "resource_metadata_errors": [],
+      "golden_shipping_acceptance": "NOT_RUN",
+      "game_acceptance": "NOT_RUN"
+    },
+    "production_only": {
+      "classification": "NOT_RELEASE",
+      "execution_level": "READ_ONLY_BINARY_INSPECTION",
+      "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "header_metadata": {
+        "timestamp": "0x6AE36EBE",
+        "linker_version": [
+          14,
+          0
+        ],
+        "rich_header": "ABSENT",
+        "os_version": [
+          6,
+          0
+        ],
+        "subsystem_version": [
+          6,
+          0
+        ],
+        "subsystem": 2,
+        "export_internal_name": "preloader.unsigned.dll",
+        "debug_directory": [
+          618496,
+          28
+        ],
+        "security_directory": [
+          0,
+          0
+        ],
+        "coff_symbol_table": [
+          697856,
+          4303
+        ],
+        "pe_checksum": "0x00000000",
+        "checksum_valid": false
+      },
+      "infrastructure_metadata_validation": {
+        "stage": "RAW_LINK_OUTPUT",
+        "result": "NOT_FINALIZED",
+        "differences": [
+          "TimeDateStamp: 0x6AE36EBE",
+          "COFF symbol table present",
+          "debug directory not stripped: (618496, 28)"
+        ]
+      },
+      "dll_sha256": "c88e7efba594e314da6d852257f39459e938c786db8470190b43e9f34bdc055f",
+      "unchanged": true,
+      "machine": "0x8664",
+      "entrypoint_rva": "0x11e0",
+      "sections": [
+        ".text",
+        ".rdata",
+        ".buildid",
+        ".data",
+        ".pdata",
+        ".tls",
+        ".rsrc",
+        ".reloc",
+        "/4",
+        "/18",
+        "/58",
+        "/70",
+        "/82",
+        "/33",
+        "/47"
+      ],
+      "export_count": 3,
+      "imports": [
+        "MSWSOCK.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "WS2_32.DLL",
+        "CRYPT32.DLL",
+        "LIBC++.DLL",
+        "LIBUNWIND.DLL",
+        "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+        "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+        "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+        "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+      ],
+      "resources": [
+        {
+          "path": [
+            16,
+            1,
+            1033
+          ],
+          "bytes": 572,
+          "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+        }
+      ],
+      "exact_owner_avatar": true,
+      "expected_import_module_order": [
+        "CRYPT32.DLL",
+        "WS2_32.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "MSWSOCK.DLL"
+      ],
+      "import_module_order_matches": false,
+      "crypt32_static_import": true,
+      "crypt32_named_imports": [
+        "CryptQueryObject"
+      ],
+      "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+      "avatar_data": {
+        "profile": {
+          "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        },
+        "fallback": {
+          "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        }
+      },
+      "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+      "resource_metadata_errors": [],
+      "golden_shipping_acceptance": "NOT_RUN",
+      "game_acceptance": "NOT_RUN"
+    }
+  },
+  "fresh_tests": {
+    "release": {
+      "passed": 7,
+      "failed": 0,
+      "environment": "LLVM-MinGW x64 under Wine",
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "seconds": 3.31917,
+          "result": "PASS"
+        },
+        {
+          "name": "infrastructure_ownership_packaging",
+          "seconds": 1.12192,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_source_smoke",
+          "seconds": 0.482501,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "seconds": 0.415203,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "seconds": 0.391823,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_export_contract",
+          "seconds": 0.0656742,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "seconds": 0.159698,
+          "result": "PASS"
+        }
+      ]
+    },
+    "debug": {
+      "passed": 7,
+      "failed": 0,
+      "environment": "LLVM-MinGW x64 under Wine",
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "seconds": 1.74567,
+          "result": "PASS"
+        },
+        {
+          "name": "infrastructure_ownership_packaging",
+          "seconds": 1.03673,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_source_smoke",
+          "seconds": 0.470678,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "seconds": 0.465927,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "seconds": 0.31897,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_export_contract",
+          "seconds": 0.175027,
+          "result": "PASS"
+        },
+        {
+          "name": "dll_public_export_negatives",
+          "seconds": 1.21085,
+          "result": "PASS"
+        }
+      ]
+    }
+  },
+  "production_only_runtime_cycles": 3,
+  "old_profile_absent_in_inspected_dlls": true,
+  "unchanged_runtime_tests_vendor_metadata_and_prior_evidence_files": 3669,
+  "previous_metadata_and_native_fix_evidence": "docs/evidence/REFERENCE_METADATA_AVATAR.json",
+  "native_windows_current_update": "PENDING_OWNER_RERUN",
+  "game_current_update": "NOT_RUN_AFTER_ASSET_UPDATE",
+  "dist_promotion": "NOT_ATTEMPTED",
+  "library_sync": "NOT_REQUESTED"
+}

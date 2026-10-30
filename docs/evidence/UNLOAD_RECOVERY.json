@@ -1,0 +1,378 @@
+{
+  "schema": "surge.unload-recovery-evidence.v1",
+  "classification": "NOT_RELEASE",
+  "status": "IMPLEMENTED_AND_CROSS_TESTED",
+  "contract": "metadata/UNLOAD_RECOVERY_CONTRACT.json",
+  "regression_before_correction": {
+    "exit_code": 1,
+    "assertion": "failed resume retains physical handle and snapshot",
+    "original_source_sha256": "ec75d3653d2ef0c7b0de2185f810c1cbb9577ec7fc70d8f0850c7e1f4d82df4e",
+    "evidence_class": "REAL_SOURCE_WINDOWS_TARGET_EXE_WITH_INJECTED_API_EFFECTS_UNDER_WINE"
+  },
+  "runtime_validation": {
+    "release": {
+      "environment": "LLVM-MinGW 20251118 / Clang21.1.6 UCRT x64; Wine",
+      "result": "PASS",
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0,
+      "dll_sha256": "a391770a7c0ab14f30578716b491bcfbd03e13297fd9501c357e64521bb05102",
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "status": "run",
+          "seconds": 3.13214
+        },
+        {
+          "name": "unload_guard_contracts",
+          "status": "run",
+          "seconds": 0.267199
+        },
+        {
+          "name": "listener_port_contracts",
+          "status": "run",
+          "seconds": 0.164211
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "status": "run",
+          "seconds": 0.175429
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "status": "run",
+          "seconds": 0.169733
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "status": "run",
+          "seconds": 0.632686
+        },
+        {
+          "name": "file_copy_contracts",
+          "status": "run",
+          "seconds": 0.133544
+        },
+        {
+          "name": "file_copy_windows_integration",
+          "status": "run",
+          "seconds": 0.214361
+        },
+        {
+          "name": "host_init_contracts",
+          "status": "run",
+          "seconds": 0.0731151
+        },
+        {
+          "name": "registry_contracts",
+          "status": "run",
+          "seconds": 0.226589
+        },
+        {
+          "name": "native_callback_contracts",
+          "status": "run",
+          "seconds": 0.265348
+        },
+        {
+          "name": "host_callback_contracts",
+          "status": "run",
+          "seconds": 0.0885031
+        },
+        {
+          "name": "network_hook_contracts",
+          "status": "run",
+          "seconds": 0.178704
+        },
+        {
+          "name": "configuration_contracts",
+          "status": "run",
+          "seconds": 0.0851656
+        },
+        {
+          "name": "execution_contracts",
+          "status": "run",
+          "seconds": 0.179497
+        },
+        {
+          "name": "config_pipeline_contracts",
+          "status": "run",
+          "seconds": 0.174069
+        },
+        {
+          "name": "config_application_contracts",
+          "status": "run",
+          "seconds": 0.269392
+        },
+        {
+          "name": "config_startup_contracts",
+          "status": "run",
+          "seconds": 0.27805
+        },
+        {
+          "name": "event_queue_contracts",
+          "status": "run",
+          "seconds": 0.0749836
+        },
+        {
+          "name": "event_queue_integration_contracts",
+          "status": "run",
+          "seconds": 0.114336
+        },
+        {
+          "name": "server_contracts",
+          "status": "run",
+          "seconds": 0.112217
+        },
+        {
+          "name": "messages_contracts",
+          "status": "run",
+          "seconds": 0.292195
+        },
+        {
+          "name": "content_handlers_contracts",
+          "status": "run",
+          "seconds": 0.0983919
+        },
+        {
+          "name": "hook_adapter_integration",
+          "status": "run",
+          "seconds": 0.235665
+        },
+        {
+          "name": "dll_source_smoke",
+          "status": "run",
+          "seconds": 0.470438
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "status": "run",
+          "seconds": 1.71695
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "status": "run",
+          "seconds": 0.629846
+        },
+        {
+          "name": "dll_public_export_contract",
+          "status": "run",
+          "seconds": 0.158521
+        },
+        {
+          "name": "hook_engine_fixtures",
+          "status": "run",
+          "seconds": 0.119315
+        }
+      ]
+    },
+    "debug": {
+      "environment": "LLVM-MinGW 20251118 / Clang21.1.6 UCRT x64; Wine",
+      "result": "PASS",
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0,
+      "dll_sha256": "fffdee5b7f48baad0c08ec143c44f9bb3e7d4e53c17c3f1501b1661720668268",
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "status": "run",
+          "seconds": 1.61428
+        },
+        {
+          "name": "unload_guard_contracts",
+          "status": "run",
+          "seconds": 0.116624
+        },
+        {
+          "name": "listener_port_contracts",
+          "status": "run",
+          "seconds": 0.15795
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "status": "run",
+          "seconds": 0.0836572
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "status": "run",
+          "seconds": 0.0757333
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "status": "run",
+          "seconds": 0.613936
+        },
+        {
+          "name": "file_copy_contracts",
+          "status": "run",
+          "seconds": 0.108764
+        },
+        {
+          "name": "file_copy_windows_integration",
+          "status": "run",
+          "seconds": 0.159304
+        },
+        {
+          "name": "host_init_contracts",
+          "status": "run",
+          "seconds": 0.160962
+        },
+        {
+          "name": "registry_contracts",
+          "status": "run",
+          "seconds": 0.0899216
+        },
+        {
+          "name": "native_callback_contracts",
+          "status": "run",
+          "seconds": 0.2132
+        },
+        {
+          "name": "host_callback_contracts",
+          "status": "run",
+          "seconds": 0.0833124
+        },
+        {
+          "name": "network_hook_contracts",
+          "status": "run",
+          "seconds": 0.0839973
+        },
+        {
+          "name": "configuration_contracts",
+          "status": "run",
+          "seconds": 0.124873
+        },
+        {
+          "name": "execution_contracts",
+          "status": "run",
+          "seconds": 0.104778
+        },
+        {
+          "name": "config_pipeline_contracts",
+          "status": "run",
+          "seconds": 0.11924
+        },
+        {
+          "name": "config_application_contracts",
+          "status": "run",
+          "seconds": 0.124802
+        },
+        {
+          "name": "config_startup_contracts",
+          "status": "run",
+          "seconds": 0.110748
+        },
+        {
+          "name": "event_queue_contracts",
+          "status": "run",
+          "seconds": 0.114014
+        },
+        {
+          "name": "event_queue_integration_contracts",
+          "status": "run",
+          "seconds": 0.131128
+        },
+        {
+          "name": "server_contracts",
+          "status": "run",
+          "seconds": 0.126486
+        },
+        {
+          "name": "messages_contracts",
+          "status": "run",
+          "seconds": 0.0763012
+        },
+        {
+          "name": "content_handlers_contracts",
+          "status": "run",
+          "seconds": 0.106911
+        },
+        {
+          "name": "hook_adapter_integration",
+          "status": "run",
+          "seconds": 0.161963
+        },
+        {
+          "name": "dll_source_smoke",
+          "status": "run",
+          "seconds": 0.319773
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "status": "run",
+          "seconds": 0.412689
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "status": "run",
+          "seconds": 0.353726
+        },
+        {
+          "name": "dll_public_export_contract",
+          "status": "run",
+          "seconds": 0.150722
+        },
+        {
+          "name": "hook_engine_fixtures",
+          "status": "run",
+          "seconds": 0.10868
+        }
+      ]
+    }
+  },
+  "scan_body_proof": {
+    "scan_policy_body_byte_identical": true,
+    "sha256": "599b81e14fa8778bccaf726df4f32e868a51c729b0f0cf22507c0eb2d7a831c0"
+  },
+  "testing_disabled": {
+    "application_dll_build": "PASS",
+    "actual_runtime_cycles": 3,
+    "runtime_result": "PASS_WINE",
+    "exact_three_exports": "PASS",
+    "dll_sha256": "754f04fc0fbf9bd1ba1c42ab82f0fbee7f9b6463fb151c18940d0520431dbd6f"
+  },
+  "preserved_source_sha256": {
+    "src/platform/hook_connect.cpp": "f58bf72265f6c4f73aa0b6133821d7215d880a42ab907635ec03d98c143836cb",
+    "src/platform/hook_native_callbacks.cpp": "637cad20e40cedaf271d192b3625e16a0a4903df9d08eff60e8d001e97aaa389",
+    "src/platform/hook_transaction.cpp": "bc298b9a88ca762321228258a0d51baca4b0cdb012167dfccffab4bbd3c98039",
+    "src/net/asio_service.cpp": "020550ed26eb95c473c37066eb8dfe97324f58b40c30eed961fca266e8a15f50",
+    "include/preloader_l/net/listener_policy.hpp": "8dd31897c7a265e97d23c9020810aab86bf8cb8889dd4e3be699ca6d97b3300d",
+    "metadata/LISTENER_PORT_POLICY.json": "0b514d4e0fe156015005d1172635a08cf6ff224b9c3072038af0e5775530b998",
+    "cmake/PatchHookFreeze.cmake": "5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d",
+    "metadata/HOOK_ENGINE_PATCH.json": "47cb8ea86dab263eb0f2070a34dd5d8b5099f6b1a7295370e31ab05b65bb799f",
+    "exports/preloader_l.def": "e170b6354a1fa32b2026e2a6ff45563d69af99ad22d83ae8153ce8b178ebf0e8"
+  },
+  "source_changes": {
+    "changed": [
+      "AGENTS.md",
+      "CHANGELOG.md",
+      "README.md",
+      "RELEASE_STATE.json",
+      "cmake/Tests.cmake",
+      "docs/HOOK_ENGINE_HARDENING.md",
+      "include/preloader_l/platform/hook_unload_guard.hpp",
+      "metadata/METADATA_OWNERSHIP.json",
+      "metadata/RUNTIME_CURRENT_STATUS.json",
+      "metadata/SOURCE_FILES.json",
+      "src/platform/hook_unload_guard.cpp"
+    ],
+    "added": [
+      "docs/UNLOAD_RECOVERY.md",
+      "docs/evidence/UNLOAD_RECOVERY.json",
+      "metadata/UNLOAD_RECOVERY_CONTRACT.json",
+      "tests/native/unload_guard_tests.cpp"
+    ],
+    "removed": [],
+    "vendor_changes": 0
+  },
+  "source_qa": "15/15 PASS before packaging; fresh extracted source verified separately",
+  "remaining_review_policy_differences": [
+    "Direct RE file writes rather than atomic batch persistence",
+    "Owned per-frame handler threads rather than a fixed worker pool"
+  ],
+  "native_msvc_golden": "NOT_RUN",
+  "updated_game_acceptance": "NOT_RUN",
+  "dist_promoted": false,
+  "library_publication": false
+}

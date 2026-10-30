@@ -1,0 +1,92 @@
+{
+  "classification": "NOT_RELEASE",
+  "execution_level": "READ_ONLY_BINARY_INSPECTION",
+  "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+  "dll_sha256": "49c69e3f386f72bf3cf056f3d3a39468927fc6f37c426781de056908b11983fe",
+  "unchanged": true,
+  "machine": "0x8664",
+  "entrypoint_rva": "0x11e0",
+  "sections": [
+    ".text",
+    ".rdata",
+    ".buildid",
+    ".data",
+    ".pdata",
+    ".tls",
+    ".rsrc",
+    ".reloc",
+    "/4",
+    "/18",
+    "/58",
+    "/70",
+    "/82",
+    "/33",
+    "/47"
+  ],
+  "export_count": 5,
+  "imports": [
+    "MSWSOCK.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "WS2_32.DLL",
+    "CRYPT32.DLL",
+    "LIBC++.DLL",
+    "LIBUNWIND.DLL",
+    "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+    "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+    "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-HEAP-L1-1-0.DLL",
+    "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+    "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL"
+  ],
+  "resources": [
+    {
+      "path": [
+        16,
+        1,
+        1033
+      ],
+      "bytes": 572,
+      "sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1"
+    }
+  ],
+  "exact_owner_avatar": true,
+  "crypt32_static_import": true,
+  "crypt32_named_imports": [
+    "CryptQueryObject"
+  ],
+  "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "avatar_data": {
+    "profile": {
+      "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    },
+    "fallback": {
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    }
+  },
+  "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+  "resource_metadata_errors": [],
+  "golden_shipping_acceptance": "NOT_RUN",
+  "game_acceptance": "NOT_RUN"
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "surge.development-export-parity.v1",
+  "before_count": 3346,
+  "after_count": 3346,
+  "removed": [],
+  "added": [],
+  "before_dll_sha256": "2fe0f1b063761e80ae1bf238e6d417694091bd461c51caea28bda546983aa57d",
+  "after_dll_sha256": "ad2f7149e0a9eddf6173a4ba481600ca46e3c582d391fafde30b1596fa3f29dc",
+  "sorted_names_evidence": "docs/evidence/build-cleanup/SOURCE_API_NAMES.json",
+  "sorted_names_file_sha256": "bc0a16fdccbd892ecb0e314a570906d0451056a6bedb981d8a23f8d7b2ae985d",
+  "public_header_changes": 0
+}

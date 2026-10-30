@@ -1,0 +1,170 @@
+{
+  "task": "SURGE-RE-COPY-20261029",
+  "parent": "surge-identity-fix-source.zip",
+  "parent_sha256": "c9dc93e2ec9a40afc5a712ae7c7e0d299fd61759d45c3d0ab320dbc4937d1a77",
+  "changes": [
+    {
+      "path": "AGENTS.md",
+      "previous_sha256": "1df188626df201d0ae4c789007104d5454a435575f4e614d63071ae7f37d58ec",
+      "sha256": "b13b6f29594204ba1a74a6af09861d3fbd06b0fc7f811f3ba3684e2ffb905867"
+    },
+    {
+      "path": "README.md",
+      "previous_sha256": "7bcb4c2ddb76a218ef4c74ea40dde5ed7f9b2b55fa0afa0ad006bd7b56ca7769",
+      "sha256": "c09abc4e4be8427b308b1c582e2d3b4173954e2765955ad7ce412888191fc5b1"
+    },
+    {
+      "path": "RELEASE_STATE.json",
+      "previous_sha256": "d67b6dfe1bd457ecf771302204d45b8b3dcf0058522abaf4df668d3fc4e5dfa6",
+      "sha256": "d7620f03dc6bace1b8bd0b5eb393bc8c110d76181c642920689aad657503a68c"
+    },
+    {
+      "path": "cmake/Sources.cmake",
+      "previous_sha256": "c84b1c7a2fefac2f120fc30863dbb4259e968b868a9b31d3ee0a2c2624d8bcff",
+      "sha256": "26aaa9518fb71c848c88fc605ff19a38d228eb39bcaeb50c752b3198949761f2"
+    },
+    {
+      "path": "cmake/Tests.cmake",
+      "previous_sha256": "6c99e5fb4980324cf2e345e180afba5f7ea351208b04f3e766109b9611aaf18a",
+      "sha256": "1278fff8c543da2c70adbcf77a5fbe8ddeebf7838b9bb8bfc3261f4fcdb8990c"
+    },
+    {
+      "path": "docs/API_IMPORT_DIFFERENCES.md",
+      "previous_sha256": "1c57b5ec2f1e2f7d6ccb5aea8d4e2ef1ca85c03a6b6a13b41a2b4292ae7b548a",
+      "sha256": "2cac0960e8f489cf93ee67dcc74b65aaec0173221854467837c29632e5a4aa59"
+    },
+    {
+      "path": "docs/API_IMPORT_RESEARCH.md",
+      "previous_sha256": null,
+      "sha256": "83f2e04b388d167b2d01b64ffd51122d43be78e2c0d2366ca795892dfaf2a3ad"
+    },
+    {
+      "path": "docs/RE_COPY_RECOVERY.md",
+      "previous_sha256": null,
+      "sha256": "107523fdf0d34f563eed9d822074df0f785bb7c71dc9c53779664f7180f2733e"
+    },
+    {
+      "path": "governance/CURRENT_SCOPE.md",
+      "previous_sha256": "9693a5092a0720920136160077878a2eb2bcebe41d7216e99fab5dda795e3d9f",
+      "sha256": "0480212234ec74b21f4d478d0a27065e202b562d495e0a19d4ed22d3a333eaae"
+    },
+    {
+      "path": "include/preloader_l/platform/file_copy.hpp",
+      "previous_sha256": null,
+      "sha256": "fe91a8d3c0206bcf911a32a451f6fc2db22bc9fd628ca32f01b75da47638af02"
+    },
+    {
+      "path": "metadata/API_IMPORT_RESEARCH_SUMMARY.json",
+      "previous_sha256": null,
+      "sha256": "50bdc1ec08175b4038b89c570b9534aec087f653f73df74cbd55ab0dc3c679cc"
+    },
+    {
+      "path": "metadata/METADATA_OWNERSHIP.json",
+      "previous_sha256": "3fe0748410b9e840902d2c370d36b1f5fc4a5ddc0e5a8d2ef9e9afa4925daf18",
+      "sha256": "0892ea5e657748454c0a0d4fde2f167016980ef3166612f4987a1b8a1380cf40"
+    },
+    {
+      "path": "metadata/RE_COPY_04895C_asm.txt",
+      "previous_sha256": null,
+      "sha256": "4d538132e0841673ee600da34d14e8f102dd76a13a435fa59a9c3426d72efdcf"
+    },
+    {
+      "path": "metadata/RE_COPY_04895C_pseudo.txt",
+      "previous_sha256": null,
+      "sha256": "f2ea7e6d206627e7cdf39a76649c77602047d362b07f3f430a06017011c27af0"
+    },
+    {
+      "path": "metadata/RE_COPY_0489F4_asm.txt",
+      "previous_sha256": null,
+      "sha256": "6b58787c2fa87e9a0431ad5e5feefb470e58bd2297bc12cec8750aaded40b965"
+    },
+    {
+      "path": "metadata/RE_COPY_0489F4_pseudo.txt",
+      "previous_sha256": null,
+      "sha256": "e769feaba7ac6ae5aca9826062ca1e875f82b06d242c1fb949d78564122d7435"
+    },
+    {
+      "path": "metadata/RE_COPY_048D20_asm.txt",
+      "previous_sha256": null,
+      "sha256": "14d6b28daeec89e6efab8cd2ab2562e8fd6a7b7755081cc7186babd00925b8cf"
+    },
+    {
+      "path": "metadata/RE_COPY_048D20_pseudo.txt",
+      "previous_sha256": null,
+      "sha256": "4b97a6a99dd388c8a778a607137f7d2950337980755e85142d3c414d106d29f7"
+    },
+    {
+      "path": "metadata/RE_COPY_DEBUG_TESTS.log",
+      "previous_sha256": null,
+      "sha256": "ffbb9d0e1022d4e18ebb058932ed4525baaac0fb921e6e44ac9fb20c7c2f58f2"
+    },
+    {
+      "path": "metadata/RE_COPY_DEBUG_TESTS.xml",
+      "previous_sha256": null,
+      "sha256": "5adb6827b9fe239446047abbf55c7e68e2f337492a7e9789d1a2890740b322ee"
+    },
+    {
+      "path": "metadata/RE_COPY_EVIDENCE.json",
+      "previous_sha256": null,
+      "sha256": "06df25e57a9a8dfcfe6f34669258021bccd81140eea102118120571c217200ab"
+    },
+    {
+      "path": "metadata/RE_COPY_RAW_DLL.json",
+      "previous_sha256": null,
+      "sha256": "73db5a981d8335d18adb6d07b9a1670f5fecbaa08462b65a095cadbe34418b2f"
+    },
+    {
+      "path": "metadata/RE_COPY_RECOVERY.json",
+      "previous_sha256": null,
+      "sha256": "a883b1d7310e2ffa85fa2870bc4cf8899aa479dc0c3b4c087c537dc16e3088bf"
+    },
+    {
+      "path": "metadata/RE_COPY_RELEASE_IMPORTS.json",
+      "previous_sha256": null,
+      "sha256": "0fcecdf1b46d6bcda0ed55cd8a65a8669267a840499cc707a10a6c6c276cd656"
+    },
+    {
+      "path": "metadata/RE_COPY_RELEASE_TESTS.log",
+      "previous_sha256": null,
+      "sha256": "b0ad5f7b8e2f2c456542f3a1a5057a6270edfd083826ccbbce7075da94068b71"
+    },
+    {
+      "path": "metadata/RE_COPY_RELEASE_TESTS.xml",
+      "previous_sha256": null,
+      "sha256": "3968286d69742e4cf493f1b87eeb7952a6c476d3154eb8db5cc2c1813ed3023c"
+    },
+    {
+      "path": "metadata/SOURCE_FILES.json",
+      "previous_sha256": "77b7a9a66e34cb8e8d290b7f3e6ff43cd9e477af6dca88a9c7cdc8c9c79a6f27",
+      "sha256": "805995ef1e248682e5f94f7808f97ba199427acd28f41d1d4cd3b8e1d742dde3"
+    },
+    {
+      "path": "src/platform/file_copy.cpp",
+      "previous_sha256": null,
+      "sha256": "0c1f20bf9fc0b972f48fedc723a760a67d88a544c6688bfdf67b1a00c5d4735c"
+    },
+    {
+      "path": "src/platform/file_copy_windows.cpp",
+      "previous_sha256": null,
+      "sha256": "63287bcbd9ba07c92703036ddefe187cd7c08ed27714107b7ceb5f43605e3d1e"
+    },
+    {
+      "path": "src/runtime/application_environment.cpp",
+      "previous_sha256": "16bfb34631bf15c7da3f500d8cae920a383f49e97b4e60a3c980aeda4e5a307e",
+      "sha256": "59023c288c7896a53921f2d60221276d1f0fa7d3732619c4e4af05c7e73d14d1"
+    },
+    {
+      "path": "tests/native/file_copy_windows_tests.cpp",
+      "previous_sha256": null,
+      "sha256": "7e37442558277d759d1e2e1b419c2a6835c41d2e0b0143c134530ee5ea63f7c1"
+    },
+    {
+      "path": "tests/unit/file/file_copy_tests.cpp",
+      "previous_sha256": null,
+      "sha256": "d594ed70d8ede73cda6906b397fb6cbe28598eac0699995b7fa5a5dc71b19ee8"
+    }
+  ],
+  "removed": [],
+  "vendor_bytes_changed": false,
+  "self_record_excluded": true
+}

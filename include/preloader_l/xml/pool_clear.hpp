@@ -1,0 +1,23 @@
+#pragma once
+#include "preloader_l/xml/document_clear.hpp"
+
+namespace preloader_l::socket_recovered {
+// Keep the existing pointer-only free provider. Observed caller EDX block-size
+// hints are retained as static facts, not a new sized-free ABI or heap body.
+struct NativePoolClearContext {ReceiveBufferMemory& memory;NativeDocumentEffects& effects;};
+void clear_pool_blocks_002d70(std::uintptr_t pool,NativePoolClearContext&);
+void clear_pool_blocks_002dc0(std::uintptr_t pool,NativePoolClearContext&);
+void clear_pool_blocks_002e10(std::uintptr_t pool,NativePoolClearContext&);
+
+// Retain the earlier document/node-clear source bindings and close exactly the
+// three existing pool-clear providers. Pool destructors and free stay required.
+class RecoveredPoolClearEffects:public RecoveredDocumentClearEffects {
+public:
+    RecoveredPoolClearEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes)
+        :RecoveredDocumentClearEffects(memory,nodes),pool_clear_{memory,*this}{}
+    void clear_pool_002d70(std::uintptr_t) final;
+    void clear_pool_002dc0(std::uintptr_t) final;
+    void clear_pool_002e10(std::uintptr_t) final;
+private:NativePoolClearContext pool_clear_;
+};
+} // namespace preloader_l::socket_recovered

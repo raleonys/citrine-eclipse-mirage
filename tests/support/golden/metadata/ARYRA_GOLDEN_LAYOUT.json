@@ -1,0 +1,55 @@
+{
+  "schema": "preloader_l.aryra_golden_layout.v1",
+  "policy": "ARYRA Golden Layout",
+  "machine": "0x8664",
+  "pe_format_magic": "0x020B",
+  "pe_format_label": "PE32+",
+  "section_count": 6,
+  "sections_in_order": [
+    ".text",
+    ".rdata",
+    ".data",
+    ".pdata",
+    ".rsrc",
+    ".reloc"
+  ],
+  "exact_rva_size_offset_parity": false,
+  "notes": "Exact section RVA, virtual size, raw size, raw offset, image size and entrypoint parity is intentionally NOT enforced. Structural PE alignment, backing, non-overlap and ordering validity is fail-closed. HF12 /MT: an additional .fptable is allowed only in the exact seven-section MSVC static-UCRT profile; the .fptable size, permissions, placement, and zero-initialized raw bytes are enforced. The historical six-section profile remains otherwise unchanged.",
+  "structural_validity": {
+    "file_alignment": "POWER_OF_TWO_0x200_TO_0x10000",
+    "section_alignment": "WINDOWS_PE_ALIGNMENT_RULES",
+    "section_virtual_address_alignment": true,
+    "section_raw_pointer_alignment": true,
+    "section_raw_size_alignment": true,
+    "raw_extent_within_file": true,
+    "virtual_extent_nonoverlap": true,
+    "raw_extent_nonoverlap": true,
+    "raw_data_order_follows_rva_order": true
+  },
+  "static_crt_fptable_profile": {
+    "profile": "HF12_MSVC_STATIC_UCRT_FPTABLE_EXACT",
+    "requires_shipping_runtime": "/MT (MultiThreaded)",
+    "section_count": 7,
+    "sections_in_order": [
+      ".text",
+      ".rdata",
+      ".data",
+      ".pdata",
+      ".fptable",
+      ".rsrc",
+      ".reloc"
+    ],
+    "fptable": {
+      "name": ".fptable",
+      "index": 4,
+      "virtual_size": "0x100",
+      "raw_size": "0x200",
+      "characteristics": "0xC0000040",
+      "require_zero_initialized_raw_bytes": true,
+      "require_nonexecutability": true,
+      "require_read_and_write": true
+    }
+  },
+  "fixture_only": true,
+  "activation": "FIXTURE_ONLY_NOT_A_PRODUCT_CONTRACT"
+}

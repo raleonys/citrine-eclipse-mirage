@@ -1,0 +1,43 @@
+{
+  "schema": "yellowfield.test-adoption.v2",
+  "no_auto_copy": true,
+  "yellowfield_application_test_targets_retained": 153,
+  "existing_hook_engine_fixture_retained": true,
+  "existing_dynamic_dll_host_retained": true,
+  "brownfield_adopted": [
+    {
+      "input": "scripts/test_pe_metadata_tools.py",
+      "output": "tests/infrastructure/test_pe_metadata_tools.py",
+      "result": "PASS_SYNTHETIC_PARSER_NEGATIVE_SUITE"
+    },
+    {
+      "input": "scripts/test_corvexon_mswsock_imports.py",
+      "output": "tests/infrastructure/test_corvexon_mswsock_imports.py",
+      "result": "PASS_12_OF_12"
+    },
+    {
+      "input": "scripts/check_msvc_shipping_link_command.py --self-test",
+      "output": "scripts/check_msvc_shipping_link_command.py --self-test",
+      "result": "PASS_21_OF_21"
+    }
+  ],
+  "new_yellowfield_regressions": [
+    "tests/infrastructure/test_infrastructure.py",
+    "tests/infrastructure/test_requirements.py"
+  ],
+  "original_governance_test_disposition": {
+    "test_integration_directives.py": "Applicable namespace/avatar/frozen-role/CRT/log/vendor-mandate assertions adapted; vendor archive install/overwrite tests remain with the untouched original input for the later vendor phase. Old unselected-hook premise superseded by explicit hook-11 instruction.",
+    "test_governance.py": "Original report-only policy test remains in supplied input; active scope/release/mandatory-target guards now test the current authorized task.",
+    "test_enforcement.py": "Initial per-function authorization harness remains in supplied input; no application function is changed in this infrastructure task.",
+    "test_local_source_authority.py": "Original PC-layout baseline harness remains in supplied input; uploaded archive roles are recorded separately, with no independent signed-baseline claim."
+  },
+  "incompatible_brownfield_application_tests": "NOT_IMPORTED: route/state/runtime/Asio/native ABI tests depend on excluded Brownfield implementations",
+  "native_game_tests": "NOT_RUN",
+  "golden_product_acceptance": "BLOCKED_TARGET_SEMANTICS",
+  "vendor_archive_guards": "tests/infrastructure/test_vendor_contract.py",
+  "vendor_api_fixtures": [
+    "tests/vendors/vendor_api_smoke.cpp",
+    "tests/vendors/vendor_pegtl_smoke.cpp"
+  ],
+  "xml_depth_profile_transition": "Old RE 100 -> supplied unmodified TinyXML2 500; current tests check the documented vendor-default profile"
+}

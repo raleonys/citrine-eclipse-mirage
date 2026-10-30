@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="9"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="895fff974780"
+	time="2"
+	timestamp="2026-10-29T04:31:09"
+	>
+	<testcase name="application_runtime_contracts" classname="application_runtime_contracts" time="1.56881" status="run">
+		<properties/>
+		<system-out>PASS: 72 real application checks; five vendors, config collections, encrypted socket LSX, provider, resource, persistence, eleven enabled hooks and stop
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="file_copy_contracts" classname="file_copy_contracts" time="0.0889841" status="run">
+		<properties/>
+		<system-out>file copy recovered branches: PASS (700 checks)
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="file_copy_windows_integration" classname="file_copy_windows_integration" time="0.117173" status="run">
+		<properties/>
+		<system-out>file copy Windows integration: PASS (Unicode/binary, modes, hard links, metadata)
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="content_handlers_contracts" classname="content_handlers_contracts" time="0.115127" status="run">
+		<properties/>
+		<system-out>PASS: 1023 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_source_smoke" classname="dll_source_smoke" time="0.356317" status="run">
+		<properties/>
+		<system-out>PASS: actual DLL auto-started; real socket LSX profile, calendar, SHA-1 and PEGTL Config2/VDF executed; shutdown drains application
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_lifecycle" classname="dll_public_lifecycle" time="0.469497" status="run">
+		<properties/>
+		<system-out>zero-timeout shutdown status: 2
+PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; single DllShutdown with bounded wait/retry; removed alias/ordinal absent
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_c_consumer" classname="dll_public_c_consumer" time="0.318559" status="run">
+		<properties/>
+		<system-out>PASS: C17 consumer linked against the three-export application import library; real worker startup and shutdown
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_export_contract" classname="dll_public_export_contract" time="0.136712" status="run">
+		<properties/>
+		<system-out>{
+  "schema": "yellowfield.public-abi-check.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "dll_sha256": "0fd55c04b84c410839e2c1f4d0e85b6a91519fb55c24f1739303561692221dfd",
+  "export_count": 3,
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0xf0fb0",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0xf0df0",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0xf0fa0",
+      "forwarded": false
+    }
+  },
+  "errors": [],
+  "native_consumer_acceptance": "NOT_RUN"
+}
+</system-out>
+	</testcase>
+	<testcase name="dll_public_export_negatives" classname="dll_public_export_negatives" time="1.05545" status="run">
+		<properties/>
+		<system-out>PASS: actual DLL baseline and 7 export/machine mutations; all checks read-only
+</system-out>
+	</testcase>
+</testsuite>

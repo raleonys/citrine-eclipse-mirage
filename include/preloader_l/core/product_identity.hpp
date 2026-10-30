@@ -1,0 +1,10 @@
+#pragma once
+
+namespace preloader_l::product_identity {
+// Product names shared by configuration projections and the concrete runtime.
+inline constexpr char config_filename[] = "surge.cfg";
+inline constexpr char override_filename[] = "surge_override.cfg";
+inline constexpr char data_directory[] = "SURGE";
+inline constexpr char avatar_filename[] = "SURGE.png";
+inline constexpr char online_library[] = "preloader_l_online.dll";
+}

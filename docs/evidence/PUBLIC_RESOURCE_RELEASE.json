@@ -1,0 +1,72 @@
+{
+  "classification": "NOT_RELEASE",
+  "execution_level": "READ_ONLY_BINARY_INSPECTION",
+  "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+  "dll_sha256": "6ce0dad5603bfed9365881939b0b3006d7d9136cb9c46059bc93ca70423bb26c",
+  "unchanged": true,
+  "machine": "0x8664",
+  "entrypoint_rva": "0x11e0",
+  "sections": [
+    ".text",
+    ".rdata",
+    ".buildid",
+    ".data",
+    ".pdata",
+    ".tls",
+    ".rsrc",
+    ".reloc",
+    "/4",
+    "/18",
+    "/58",
+    "/70",
+    "/82",
+    "/33",
+    "/47"
+  ],
+  "export_count": 6,
+  "imports": [
+    "MSWSOCK.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "OLE32.DLL",
+    "WS2_32.DLL",
+    "LIBC++.DLL",
+    "LIBUNWIND.DLL",
+    "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+    "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+    "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-HEAP-L1-1-0.DLL",
+    "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+    "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL"
+  ],
+  "resources": [
+    {
+      "path": [
+        10,
+        101,
+        1033
+      ],
+      "bytes": 3653,
+      "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"
+    },
+    {
+      "path": [
+        16,
+        1,
+        1033
+      ],
+      "bytes": 572,
+      "sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1"
+    }
+  ],
+  "exact_owner_avatar": true,
+  "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+  "resource_metadata_errors": [],
+  "golden_shipping_acceptance": "NOT_RUN",
+  "game_acceptance": "NOT_RUN"
+}

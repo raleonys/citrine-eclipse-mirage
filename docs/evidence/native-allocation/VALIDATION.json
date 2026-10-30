@@ -1,0 +1,61 @@
+{
+  "schema": "surge.native-fixture-validation.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_LOCAL_TEST_FIXTURE_CORRECTION_NATIVE_MSVC_REEXECUTION_PENDING",
+  "parent_source_zip_sha256": "cb0fc73ecdfe90abbf3f88622ebc3df4c616ea77fc71513ef36cddcb525810aa",
+  "product_source_changes": 0,
+  "product_source_parity": "docs/evidence/native-allocation/PRODUCT_SOURCE_PARITY.json",
+  "actual_parent_windows_log_result": {
+    "compile_only": "PASS",
+    "production_local_golden": "PASS",
+    "debug": "PASS",
+    "static_crt_tests": {
+      "passed": 6,
+      "total": 6
+    },
+    "native_tests": {
+      "passed": 204,
+      "total": 205
+    }
+  },
+  "cross_release_tests": {
+    "passed": 206,
+    "total": 206
+  },
+  "affected_cross_debug_tests": {
+    "passed": 9,
+    "total": 9
+  },
+  "native_msvc_test_count": 205,
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "groups": 17,
+    "vendor_regressions": 19,
+    "vendor_skips": 0
+  },
+  "allocator_paths": {
+    "scalar_cases_passed": 5,
+    "aligned_cases_passed": 5,
+    "old_aligned_fixture_failure_reproduced": true
+  },
+  "rollback_negative_controls": {
+    "passed_expected_failure_checks": 2,
+    "product_code_modified": false
+  },
+  "development_api_exports": {
+    "before": 3346,
+    "after": 3346,
+    "removed": 0,
+    "added": 0
+  },
+  "production_cpp_count": 60,
+  "reference_cpp_count": 78,
+  "product_vendor_resource_export_bytes_identical": true,
+  "production_compile_definitions_changed": false,
+  "native_msvc_reacceptance": "NOT_RUN_CORRECTED_FIXTURE",
+  "game_acceptance": "NOT_REPORTED_FOR_PARENT_LOGS_NOT_RUN_HERE",
+  "vt_causal_rule_identified": false,
+  "clean_delivery_receipt": "surge-native-fixture-delivery-verification.json",
+  "dist_promotion": false,
+  "publication": false
+}

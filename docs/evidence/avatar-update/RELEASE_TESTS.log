@@ -1,0 +1,17 @@
+Test project /workspace/yellowfield/build/llvm-mingw-x64-vendors
+    Start  1: application_runtime_contracts
+1/4 Test  #1: application_runtime_contracts ......   Passed    3.80 sec
+    Start  2: configuration_platform_contracts
+2/4 Test  #2: configuration_platform_contracts ...   Passed    0.37 sec
+    Start 49: configuration_contracts
+3/4 Test #49: configuration_contracts ............   Passed    0.14 sec
+    Start 61: config_startup_contracts
+4/4 Test #61: config_startup_contracts ...........   Passed    0.16 sec
+
+100% tests passed out of 4
+
+Label Time Summary:
+production    =   4.31 sec*proc (3 tests)
+reference     =   0.16 sec*proc (1 test)
+
+Total Test time (real) =   4.49 sec

@@ -1,0 +1,361 @@
+{
+  "schema": "yellowfield.msvc-profile-fix.v1",
+  "task": "YF-MSVC-PROFILES-20261028",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_BOUNDED_VALIDATION_COMPLETE_NATIVE_MSVC_RERUN_REQUIRED_NOT_RELEASE",
+  "parent_source_package": "yellowfield-windows-vendor-source.zip",
+  "parent_sha256": "72845687501cb6ce84e4c2e7cd5b525768cb3e8300516e348115a4a17646c69a",
+  "user_log_observations": [
+    {
+      "profile": "Golden",
+      "uploaded_file_id": "file_00000000fe5481f4a8d3fb7051f70779",
+      "bytes": 23113,
+      "sha256": "9b15d6ae54c370a9fe8c75ef790a7923deec755b2a2ac5f0a4c689bae86a46c2",
+      "evidence_class": "USER_SUPPLIED_NATIVE_LOG_NOT_LOCAL_REEXECUTION",
+      "main_dll_and_runtime_host_build": "PASS_OBSERVED",
+      "development_dll_and_source_host_build": "DISABLED_IN_PROFILE",
+      "export_check": "PASS_FIVE_EXPORTS_OBSERVED",
+      "resource_check": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "observed_pe_report": {
+        "classification": "NOT_RELEASE",
+        "execution_level": "READ_ONLY_BINARY_INSPECTION",
+        "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+        "dll_sha256": "b16bd516324925d14bf73fb940248c4bb1857ffb4b41d5dd571bed41f0277cac",
+        "unchanged": true,
+        "machine": "0x8664",
+        "entrypoint_rva": "0x62420",
+        "sections": [
+          ".text",
+          ".rdata",
+          ".data",
+          ".pdata",
+          ".fptable",
+          ".rsrc",
+          ".reloc"
+        ],
+        "export_count": 5,
+        "imports": [
+          "MSWSOCK.DLL",
+          "KERNEL32.DLL",
+          "USER32.DLL",
+          "SHELL32.DLL",
+          "OLE32.DLL",
+          "WS2_32.DLL"
+        ],
+        "resources": [
+          {
+            "path": [
+              10,
+              101,
+              1033
+            ],
+            "bytes": 3653,
+            "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"
+          },
+          {
+            "path": [
+              16,
+              1,
+              1033
+            ],
+            "bytes": 572,
+            "sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1"
+          }
+        ],
+        "exact_owner_avatar": true,
+        "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+        "resource_metadata_errors": [],
+        "golden_shipping_acceptance": "NOT_RUN",
+        "game_acceptance": "NOT_RUN"
+      },
+      "terminal_result": "BLOCKED_PRODUCT_TARGETS_EXIT3",
+      "actual_runtime_tests": "NOT_REACHED"
+    },
+    {
+      "profile": "Compile",
+      "uploaded_file_id": "file_00000000ee00820aa5a096aea00811c3",
+      "bytes": 22252,
+      "sha256": "db6a6ec45fee26e796efabb9884b1de8c29cd3afa89d9694fa9fe62dabaf6b4e",
+      "evidence_class": "USER_SUPPLIED_NATIVE_LOG_NOT_LOCAL_REEXECUTION",
+      "main_dll_and_runtime_host_build": "PASS_OBSERVED",
+      "development_dll_and_source_host_build": "DISABLED_IN_PROFILE",
+      "export_check": "PASS_FIVE_EXPORTS_OBSERVED",
+      "resource_check": "FAIL",
+      "observed_pe_report": {
+        "classification": "NOT_RELEASE",
+        "execution_level": "READ_ONLY_BINARY_INSPECTION",
+        "result": "FAIL",
+        "dll_sha256": "159949bb68908f7579b906d73232d1607f7706ec1ea9bc128f9f0c685438fe91",
+        "unchanged": true,
+        "machine": "0x8664",
+        "entrypoint_rva": "0x62420",
+        "sections": [
+          ".text",
+          ".rdata",
+          ".data",
+          ".pdata",
+          ".fptable",
+          ".rsrc",
+          ".reloc"
+        ],
+        "export_count": 5,
+        "imports": [
+          "MSWSOCK.DLL",
+          "KERNEL32.DLL",
+          "USER32.DLL",
+          "SHELL32.DLL",
+          "OLE32.DLL",
+          "WS2_32.DLL"
+        ],
+        "resources": [
+          {
+            "path": [
+              10,
+              101,
+              1033
+            ],
+            "bytes": 3653,
+            "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"
+          },
+          {
+            "path": [
+              16,
+              1,
+              1033
+            ],
+            "bytes": 572,
+            "sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1"
+          },
+          {
+            "path": [
+              24,
+              2,
+              1033
+            ],
+            "bytes": 381,
+            "sha256": "4bb79dcea0a901f7d9eac5aa05728ae92acb42e0cb22e5dd14134f4421a3d8df"
+          }
+        ],
+        "exact_owner_avatar": true,
+        "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+        "resource_metadata_errors": [
+          "resource allowlist mismatch: [[10, 101, 1033], [16, 1, 1033], [24, 2, 1033]]"
+        ],
+        "golden_shipping_acceptance": "NOT_RUN",
+        "game_acceptance": "NOT_RUN"
+      },
+      "terminal_result": "RESOURCE_ALLOWLIST_RT_MANIFEST_FAILED",
+      "actual_runtime_tests": "NOT_REACHED"
+    },
+    {
+      "profile": "Debug",
+      "uploaded_file_id": "file_000000004f1081f4b15a9d87b907be1f",
+      "bytes": 22262,
+      "sha256": "7193ff637cafd93b771a79a1348f99d3a6f4d1ac49d8fb9301851aaa8d15875c",
+      "evidence_class": "USER_SUPPLIED_NATIVE_LOG_NOT_LOCAL_REEXECUTION",
+      "main_dll_and_runtime_host_build": "PASS_OBSERVED",
+      "development_dll_and_source_host_build": "DISABLED_IN_PROFILE",
+      "export_check": "PASS_FIVE_EXPORTS_OBSERVED",
+      "resource_check": "FAIL",
+      "observed_pe_report": {
+        "classification": "NOT_RELEASE",
+        "execution_level": "READ_ONLY_BINARY_INSPECTION",
+        "result": "FAIL",
+        "dll_sha256": "9fcf71aff74ecccb6629382dd5c9dd0fa3379945c1821573c8cec7cc56dc1fec",
+        "unchanged": true,
+        "machine": "0x8664",
+        "entrypoint_rva": "0x7cb1",
+        "sections": [
+          ".text",
+          ".rdata",
+          ".data",
+          ".pdata",
+          ".idata",
+          ".tls",
+          ".00cfg",
+          ".fptable",
+          ".rsrc",
+          ".reloc"
+        ],
+        "export_count": 5,
+        "imports": [
+          "MSWSOCK.DLL",
+          "KERNEL32.DLL",
+          "USER32.DLL",
+          "SHELL32.DLL",
+          "OLE32.DLL",
+          "WS2_32.DLL"
+        ],
+        "resources": [
+          {
+            "path": [
+              10,
+              101,
+              1033
+            ],
+            "bytes": 3653,
+            "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"
+          },
+          {
+            "path": [
+              16,
+              1,
+              1033
+            ],
+            "bytes": 572,
+            "sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1"
+          },
+          {
+            "path": [
+              24,
+              2,
+              1033
+            ],
+            "bytes": 406,
+            "sha256": "be8918559280a2e74748bf8f6238b568ed7cbf75183b2180a6a8a979a1ebf243"
+          }
+        ],
+        "exact_owner_avatar": true,
+        "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+        "resource_metadata_errors": [
+          "resource allowlist mismatch: [[10, 101, 1033], [16, 1, 1033], [24, 2, 1033]]"
+        ],
+        "golden_shipping_acceptance": "NOT_RUN",
+        "game_acceptance": "NOT_RUN"
+      },
+      "terminal_result": "RESOURCE_ALLOWLIST_RT_MANIFEST_FAILED",
+      "actual_runtime_tests": "NOT_REACHED"
+    },
+    {
+      "profile": "Native",
+      "uploaded_file_id": "file_00000000089081f4807c7bc766a38fcc",
+      "bytes": 30893,
+      "sha256": "ae35049f6c0cdb4f2f119bf6b576d33d394d1555fcba7e6dd1e21315f0baed84",
+      "evidence_class": "USER_SUPPLIED_NATIVE_LOG_NOT_LOCAL_REEXECUTION",
+      "main_dll_and_runtime_host_build": "PASS_OBSERVED",
+      "development_dll_and_source_host_build": "PASS_OBSERVED",
+      "export_check": "NOT_REACHED",
+      "resource_check": "NOT_REACHED",
+      "observed_pe_report": null,
+      "terminal_result": "TEST_BUILD_UNSUPPORTED_INT128_C4235",
+      "actual_runtime_tests": "NOT_REACHED"
+    },
+    {
+      "profile": "Crt",
+      "uploaded_file_id": "file_00000000b0a881f58887251d71beaa83",
+      "bytes": 30866,
+      "sha256": "88ab7e3ce897803c71012f98ef8729ea5d23cc3c65b4d59ce384723075e5e02a",
+      "evidence_class": "USER_SUPPLIED_NATIVE_LOG_NOT_LOCAL_REEXECUTION",
+      "main_dll_and_runtime_host_build": "PASS_OBSERVED",
+      "development_dll_and_source_host_build": "PASS_OBSERVED",
+      "export_check": "NOT_REACHED",
+      "resource_check": "NOT_REACHED",
+      "observed_pe_report": null,
+      "terminal_result": "TEST_BUILD_UNSUPPORTED_INT128_C4235",
+      "actual_runtime_tests": "NOT_REACHED"
+    }
+  ],
+  "fixes": {
+    "resource_link": "MSVC /MANIFEST:NO applies to application and development DLLs in every configuration. Executable manifests unchanged. Exact two-resource validator unchanged.",
+    "test_oracle": "Replace test-only unsupported128-bit language type with standard64-bit limb multiplication; production execution code untouched. Existing assembly-vs-division checks retained; four known-result checks added.",
+    "crt_scope": "Build only CRT/public-DLL/source-host targets selected by existing CRT test regex; Native still builds all source tests.",
+    "golden_reporting": "Pending-target exit3 is BLOCKED, not PASS. Other failures remain failures; original artifact hash rechecked. Local receipt separates build success from validation result."
+  },
+  "vendor_byte_changes": false,
+  "resource_file_byte_changes": false,
+  "application_cpp_header_changes": false,
+  "export_contract_changes": false,
+  "source_package": "yellowfield-msvc-profile-fix-source.zip",
+  "updated_source_actual_native_msvc": "NOT_RUN",
+  "powershell_cmd_updated_behavior": "SOURCE_REVIEW_ONLY_NOT_EXECUTED_ON_WINDOWS",
+  "actual_game_acceptance": "NOT_RUN",
+  "golden_product_acceptance": "STILL_BLOCKED_TARGET_SEMANTICS",
+  "tests": {
+    "release_wine_affected": {
+      "total": 7,
+      "passed": 7,
+      "report": "metadata/MSVC_FIX_RELEASE_TESTS.xml"
+    },
+    "debug_wine_affected": {
+      "total": 7,
+      "passed": 7,
+      "report": "metadata/MSVC_FIX_DEBUG_TESTS.xml"
+    },
+    "strict_standard_cxx_host": {
+      "checks": 10205,
+      "report": "metadata/MSVC_FIX_STRICT_CXX_TEST.log"
+    },
+    "independent_high_half_math": {
+      "cases": 100081,
+      "report": "metadata/MSVC_FIX_ARITHMETIC_ORACLE.log",
+      "oracle": "GCC128-bit reference in external scratch validation; not shipped or used by MSVC tests"
+    },
+    "resource_manifest_rejection": "Explicit RT_MANIFEST allowlist-negative assertion added, strict resource policy retained",
+    "golden_target_check": {
+      "result": "BLOCKED_TARGET_SEMANTICS",
+      "exit_code": 3,
+      "report": "metadata/MSVC_FIX_GOLDEN_TARGET_CHECK.log"
+    },
+    "manifest_link_option_profiles": {
+      "release": {
+        "result": "PASS_TARGET_LINK_OPTION_PLACEMENT",
+        "report": "metadata/MSVC_FIX_TARGET_OPTIONS_RELEASE.txt",
+        "evidence_class": "SYNTHETIC_CMAKE_MSVC_POLICY_BRANCH_USING_LLVM_MINGW_NOT_NATIVE_MSVC_EXECUTION"
+      },
+      "debug": {
+        "result": "PASS_TARGET_LINK_OPTION_PLACEMENT",
+        "report": "metadata/MSVC_FIX_TARGET_OPTIONS_DEBUG.txt",
+        "evidence_class": "SYNTHETIC_CMAKE_MSVC_POLICY_BRANCH_USING_LLVM_MINGW_NOT_NATIVE_MSVC_EXECUTION"
+      },
+      "golden": {
+        "result": "PASS_TARGET_LINK_OPTION_PLACEMENT",
+        "report": "metadata/MSVC_FIX_TARGET_OPTIONS_GOLDEN.txt",
+        "evidence_class": "SYNTHETIC_CMAKE_MSVC_POLICY_BRANCH_USING_LLVM_MINGW_NOT_NATIVE_MSVC_EXECUTION"
+      }
+    }
+  },
+  "code_build_test_changes": [
+    {
+      "path": "CMakeLists.txt",
+      "before_sha256": "60715941476fb3a63da54f15930674a296c06a044211dabf170459f076d420fd",
+      "after_sha256": "4093f20b58a7ad99767e68c9f91c5482de4b5c27aa221c64c4684e2969b776be"
+    },
+    {
+      "path": "scripts/build_orchestration/build_debug.cmd",
+      "before_sha256": "7031ef25f81aa2b151f22a71711a47747c76eb38fe767093cf4a60dcd3306fe3",
+      "after_sha256": "6a0b834d3d5bb368dc8e1a24b9f97c81b3916cd747785dc4d1eadfdc156f743c"
+    },
+    {
+      "path": "scripts/build_orchestration/build_production.cmd",
+      "before_sha256": "d4e8434059e0da3677d6fa73475eee0643ba84a2d1c21d8e166d5bb967dc5732",
+      "after_sha256": "bb299d753456bc570ef5be402a13375df015b49c19929a6ec6fef50d6ac8e235"
+    },
+    {
+      "path": "scripts/build_orchestration/build_profile.ps1",
+      "before_sha256": "f8a86d92def0369d37610c9093d167521f7ba26ac39f96d37234587a8f409050",
+      "after_sha256": "23cf56038f7d3f3f2e9ac9a050ea1f046abe2e166d0be3184c34ddc31e0458f7"
+    },
+    {
+      "path": "scripts/build_orchestration/build_unstable.cmd",
+      "before_sha256": "bd23439f2c17f70bbb65a87dcda6aee3d2adfcc15d3e509e742fda69e9a1c910",
+      "after_sha256": "8eb4c36571ced35d8cb5013d1173d781eff5b4f86b805ce5a0eda41bb81d0ae7"
+    },
+    {
+      "path": "tests/infrastructure/test_infrastructure.py",
+      "before_sha256": "85d48071197499c6c220dc919c5f863de346a6332b76b8f83e552bfaff575f99",
+      "after_sha256": "543374edc531751a8bd0811021c1c77c47c5dbad02882d409d7ed3d8a7880b1c"
+    },
+    {
+      "path": "tests/unit/execution/execution_tests.cpp",
+      "before_sha256": "75866fc9cdb95cb1e945cbe666a51598bc822d1c5d1f7a5ad96bb0d174579bb8",
+      "after_sha256": "8c300ab73f15eb8809bdbfadb653ca7e5fdc46f57b4627482a8b4ac4006dd65b"
+    }
+  ],
+  "source_qa": {
+    "completed_result": "PASS_SOURCE_QA",
+    "expected_checks": 15,
+    "completed_report": "build/qa/MSVC_FIX_SOURCE_QA_INITIAL.json",
+    "final_report": "build/qa/MSVC_FIX_SOURCE_QA_FINAL.json"
+  },
+  "remaining_blocker": "Golden product PE/header/import targets remain incomplete. BLOCKED/exit3 retained; no activation values or fixture substitutions added."
+}

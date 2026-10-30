@@ -1,0 +1,297 @@
+{
+  "schema": "surge.reviewed-recovery-changes.v1",
+  "parent_source_zip_sha256": "1f2a6581a08dbafa940031353c8723e1947e00f0a4681f3bceb1d9f65e3d509e",
+  "scope": "Exact parent archive bytes versus reviewed current files; self and whole-source manifest excluded to avoid recursive hash",
+  "build_input_changes": [
+    {
+      "path": "cmake/Tests.cmake",
+      "change": "MODIFIED",
+      "before_sha256": "b5c31dbcb0b596f6c01483fb38f5fb059f2e09c6d55c85f0eee480d7095248fe",
+      "after_sha256": "d41f47797b1556b0228b139fb9957c04aece1884537c469479a930bef0db8923"
+    },
+    {
+      "path": "src/net/asio_service.cpp",
+      "change": "MODIFIED",
+      "before_sha256": "58331e45a9b17977b014b7c990afbb01755cdca0b23535b37d8bb9a7418d0daa",
+      "after_sha256": "c729f3fa391d33815abb54720d05f2d96fd924da6f03f32c4ea03c60cb4e036f"
+    },
+    {
+      "path": "src/runtime/application.cpp",
+      "change": "MODIFIED",
+      "before_sha256": "1958c93d393c32c179358b899ed32282f63047c224612288625376c15091553b",
+      "after_sha256": "e876ced49cdb7a4b478892dcfcb926ad9aaaeec66f25b65de314076c4f1ee64c"
+    },
+    {
+      "path": "tests/native/extra_library_failure_tests.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "ed05fdb19063449b07fa55ac17a88824b92ff01ea9790824244932e101815370"
+    },
+    {
+      "path": "tests/native/net_failure_tests.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "41e4f60af0b9dced30b6d778b2fd3da735e26037d5daf12329315b5a1111ee7d"
+    },
+    {
+      "path": "tests/native/network_policy_tests.cpp",
+      "change": "MODIFIED",
+      "before_sha256": "9a5cfa6fc7c186c6caa9af87d5960618423b5f83d1da9ca196d7b7be6689a4b5",
+      "after_sha256": "bcff5a557f59d9f6bf2ca3876998692e11f656691f33a5800eb05a577a99b7e0"
+    }
+  ],
+  "all_other_changes": [
+    {
+      "path": "docs/CURRENT_RUNTIME.md",
+      "change": "MODIFIED",
+      "before_sha256": "8017c8afa5f7c685c2183f832b72484ea76ad0be3fb55769b4245163ac6ea8b6",
+      "after_sha256": "d3bac44cf3ef686f838cb7bcfb77996427d3e46b03f358c332a5d24832470681"
+    },
+    {
+      "path": "docs/DONOR_RECOVERY.md",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "91f30e589c2c93513dce7019e989d1b65dae427f961444d42fa2d403bef35936"
+    },
+    {
+      "path": "docs/evidence/recovery/ALL_DONOR_FILES.csv",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "e6ce2071335140d7c1bdf7693ebb6a9c175b8063029f03d73281b69aeca2554b"
+    },
+    {
+      "path": "docs/evidence/recovery/CANDIDATES.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "479d67c897cac6dbf037084487f75bc6af0e41b839ea423b9df3e99617e9f211"
+    },
+    {
+      "path": "docs/evidence/recovery/CONTINUATION_SCOPE.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "6c1495d05daac5a3fb313b890c77d8c87121c2b3a8beb026e65bbaa73ec2aa73"
+    },
+    {
+      "path": "docs/evidence/recovery/DEBUG_INITIAL_TESTS.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "134335e331ea5f0ac2a905e431a2f7553c088c10e6f0627d82a94ee169772498"
+    },
+    {
+      "path": "docs/evidence/recovery/DEBUG_NETWORK_REPEAT.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "0af0e67a522312ee970a8cc1d11f245694c9b6e9aaef06767d424fb22909a614"
+    },
+    {
+      "path": "docs/evidence/recovery/DEBUG_TESTS.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "dafabb396c8bbe2d3a19da53d966c623fd534bc9f8de11fe2048c4048698f651"
+    },
+    {
+      "path": "docs/evidence/recovery/MANUAL_REVIEW_LEDGER.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "44df6248a5e43c7eeae09cf2c5a981d5fabb1b56b3a91caecd60e0abe22ce007"
+    },
+    {
+      "path": "docs/evidence/recovery/PRODUCTION_BOUNDARY.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "b174ac21872feb88a374bf86d51675f4b00a3f901ab68202182c05b98b7a74b6"
+    },
+    {
+      "path": "docs/evidence/recovery/PRODUCTION_ONLY_BUILD.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "e6bc119a526741b4a7e736d3fd8800c275c48de5448a355f2b59e740afed5d7c"
+    },
+    {
+      "path": "docs/evidence/recovery/PRODUCTION_ONLY_RUNTIME.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "6e0b9a5d0fc44ef6c12a8e6ee6308c04e13cd2cede723bc19b749e06e3794540"
+    },
+    {
+      "path": "docs/evidence/recovery/RAW_DLL.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "5a85e8030178bbb4796b59c61251b4e629768fd7acb1d715e706c3b204f22274"
+    },
+    {
+      "path": "docs/evidence/recovery/RED_GREEN.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "4f266d2b2dfe5c311f520abb1a37e96ac90498aa05e4eeaef342b8d07e460892"
+    },
+    {
+      "path": "docs/evidence/recovery/RELEASE_BUILD.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "48c4c4eefb9633eb623c24609d8305b0a3481718712e3bd969acb26eefbc6e8e"
+    },
+    {
+      "path": "docs/evidence/recovery/RELEASE_TESTS.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "480d6a3e8eb5007ba9e7adfd361d5bd5e8a7a02804da7f4a3f9418a99b7d50aa"
+    },
+    {
+      "path": "docs/evidence/recovery/SCOPE.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "b7ed39188a5913304cabc09e063e7a5c8dc9bce419a601465b373f16ae566bb4"
+    },
+    {
+      "path": "docs/evidence/recovery/SOURCE_API_DELTA.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "57881ce6eba055d5fee1e08877e9b22e76c47171324c548e30900105922dcf4c"
+    },
+    {
+      "path": "docs/evidence/recovery/SOURCE_QA.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "c184c76807a572af7038ae5658b1d356549e59a8623053deae5caad0dea3bf03"
+    },
+    {
+      "path": "docs/evidence/recovery/VALIDATION.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "32820667e496c17d5cd555d9a5fced4d8848fb34d3c7fb613315dfba37102742"
+    },
+    {
+      "path": "docs/evidence/recovery/after-extra_library_failure_contracts-acquire.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "48c54ed59e704e5b0b8ad73c9e916f94181913d83056284f658eaeac14a9f81b"
+    },
+    {
+      "path": "docs/evidence/recovery/after-extra_library_failure_contracts-mixed.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "48c54ed59e704e5b0b8ad73c9e916f94181913d83056284f658eaeac14a9f81b"
+    },
+    {
+      "path": "docs/evidence/recovery/after-extra_library_failure_contracts-retry.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "48c54ed59e704e5b0b8ad73c9e916f94181913d83056284f658eaeac14a9f81b"
+    },
+    {
+      "path": "docs/evidence/recovery/after-net_failure_contracts-accept.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "1018ef3fb76a22e6f572ad80c49d9e2a2912b55f8096efa07980d2dfd1d35834"
+    },
+    {
+      "path": "docs/evidence/recovery/after-net_failure_contracts-drain-retry.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "a03efcaf4c29769f316ca65017a20a87e909bfc20eb901015908b8386f4b2dd2"
+    },
+    {
+      "path": "docs/evidence/recovery/after-net_failure_contracts-io-exception.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "4bc314d969297d83fec1430afc90dc3b99f86edf5e35d9b8382ac7d386facd9c"
+    },
+    {
+      "path": "docs/evidence/recovery/after-net_failure_contracts-post.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "67185fa4d3a5d501703644509a42a322950994053e2512873b342853ea92d1a0"
+    },
+    {
+      "path": "docs/evidence/recovery/after-net_failure_contracts-stop-oom.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "c7ea75ef50699dcfba70016b92e184428ffdff3cdd83f3dad4665b3cd94878ae"
+    },
+    {
+      "path": "docs/evidence/recovery/before-extra_library_failure_contracts-acquire.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "00a80bfd9843ff23434cdb68dbc3e1242bc4685775debaa70e5d39e2c6bd4be9"
+    },
+    {
+      "path": "docs/evidence/recovery/before-extra_library_failure_contracts-mixed.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "3ce1dc93852d4b20da05d9fbd2d249829c29dd646e692422b2bf372d3b571e35"
+    },
+    {
+      "path": "docs/evidence/recovery/before-extra_library_failure_contracts-retry.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "9f38ee4427d57cb9c93b835c7952f8850576c1bc936d8bd786449bb1fb87988a"
+    },
+    {
+      "path": "docs/evidence/recovery/before-net_failure_contracts-accept.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "0eda19f447ea9f5587bf0f59f9348c2685be52534b629b18bb11d488db81b330"
+    },
+    {
+      "path": "docs/evidence/recovery/before-net_failure_contracts-drain-retry.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "bd01543468b21fe25136b2f8c661ea06cb904d44f7b353e45d7275e9bae95eeb"
+    },
+    {
+      "path": "docs/evidence/recovery/before-net_failure_contracts-io-exception.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "fe53d07ab5a79e52325f27059556ad478b1aee7645b08a27eaab65215c83685e"
+    },
+    {
+      "path": "docs/evidence/recovery/before-net_failure_contracts-post.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "3bd13159afce426db6e2e309d99b1482ed8b7dca4ddac27e22c39cd60ae56b98"
+    },
+    {
+      "path": "docs/evidence/recovery/before-net_failure_contracts-stop-oom.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "11c5f7bb488ec9d76aba081ebe04f97353fcc09632e1acf98d3c1ab378e042b5"
+    },
+    {
+      "path": "governance/CURRENT_SCOPE.md",
+      "change": "MODIFIED",
+      "before_sha256": "06a6227e259184a5983a2aff5664d253c0aece8da143d2bf3de1aeb76125fe3d",
+      "after_sha256": "e8200de74dd7c879211245c447bc1b5b669baae0215bb9654606e80c2799340c"
+    },
+    {
+      "path": "metadata/BUILD_PARTITION_POLICY.json",
+      "change": "MODIFIED",
+      "before_sha256": "026595f0b2c5c1335ac9971b90de6dc3369d6fd212064133a4282c4d85124e97",
+      "after_sha256": "ac315b98252a6335d38f31d6c32d25f6933bab85786a9396dc59fb048e1eb9d8"
+    },
+    {
+      "path": "metadata/METADATA_OWNERSHIP.json",
+      "change": "MODIFIED",
+      "before_sha256": "cb37e181f62e78cfd855b9dd42f878b9d2ea7f3dc332a541c50b51234b21b1c1",
+      "after_sha256": "22e3df28c529ab98ba7a21646f4c00fd751c5b8c8cbac9efddd7bbb6aefbeee1"
+    },
+    {
+      "path": "metadata/RECOVERY_REVIEW.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "d83f459af44ea4ad0b51ccbd41c47d9bdbbf62067c8d6c810ce3937c06eb88de"
+    },
+    {
+      "path": "metadata/RUNTIME_CURRENT_STATUS.json",
+      "change": "MODIFIED",
+      "before_sha256": "2bb2e26f76e68189406bbb70193ce377865101a76e058e6142c83cf8d27290a9",
+      "after_sha256": "474b72b07a133c81ae36a27086bc9d5ce99667fdb157d9d13900cc6742829868"
+    },
+    {
+      "path": "metadata/SOURCE_FILES.json",
+      "change": "MODIFIED",
+      "before_sha256": "002e5c151be1f47fa54423589c782d4ec59b568f1fb1f5c9338c6902ff521d12",
+      "after_sha256": "1c89c9524a6961aa8a22de619cbc2f6a1af9862cc99495f76929902acbaa53e5"
+    }
+  ]
+}

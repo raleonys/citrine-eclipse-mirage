@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="2"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="895fff974780"
+	time="21"
+	timestamp="2026-10-28T23:40:48"
+	>
+	<testcase name="socket_node_delete_integration_contracts" classname="socket_node_delete_integration_contracts" time="8.26776" status="run">
+		<properties/>
+		<system-out>PASS: 40107 socket node delete integration checks; actual003030/003240 plus coherent clear/document/cipher/dispatch/queue/send chain on3controlled root projections; nativevirtual/parser/fullDOM/pool/heap/ABI/EH remain open
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="socket_pool_release_integration_contracts" classname="socket_pool_release_integration_contracts" time="21.2347" status="run">
+		<properties/>
+		<system-out>PASS: 148389 socket pool release integration checks; source release/track on4mapped pool prefixes and3controlled roots through document/cipher/dispatch/queue/send; allocator/nodevirtual/fullDOM/ABI/EH remain open
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+</testsuite>

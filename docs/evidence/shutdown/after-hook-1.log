@@ -1,0 +1,2 @@
+PASS: actual entry/Application/hook cleanup fault 1
+WINE_PROGRAM_EXIT=0

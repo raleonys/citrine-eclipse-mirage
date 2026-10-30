@@ -1,0 +1,10 @@
+{
+  "current_sha256": "ad4783b76d91cf37ea99682a5c79474ba158ba1ce7b5cbf8c29eeadeff984b52",
+  "donor_sha256": "fc894f862e6137a02235e8f30046ec7ed9c7f3e1f7af85078275d097f95393d0",
+  "whole_file_lf_normalized_equal": false,
+  "close_function_normalized_equal": false,
+  "current_close_function_sha256": "24d9bfe36930a22b0c0f58d84badcfde01016e605dd75e751bd9ace97792a614",
+  "donor_close_function_sha256": "b12573f964325d27634769017ed91fa3c4cef418f8519f1680444b798134449d",
+  "failure_branch_native_close_and_handle_reset": "Same unconditional reset after socket_ops::close; success error-clear spelling differs",
+  "claim": "Distinct snapshots; actual donor headers replayed separately, no whole-vendor byte-equivalence claim"
+}

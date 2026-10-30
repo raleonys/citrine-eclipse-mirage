@@ -1,0 +1,29 @@
+{
+  "result": "DONOR_RETIREMENT_BLOCKED_STATIC_PASS1_COMPLETE_MANUAL_CLOSURE_OPEN",
+  "scope": "Exact local donor snapshots; first-party code/tests/build/tools + documentation/evidence inventory",
+  "brownfield_archive": {
+    "path": "/workspace/project-input/Brownfield/HF20_REGISTRY_B_ARCH_B_STAGE03_ISSUER_SCOPE_FULL_SOURCE_CANDIDATE_NOT_RELEASE.zip",
+    "sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",
+    "role": "HF20 RegistryB Stage03 candidate, not independently identified as official HF19 release"
+  },
+  "bluefield_archive": {
+    "path": "/workspace/project-input/Bluefield/preloader_l_BF02_FIX31_APPLICATION_SOURCE_NOT_RELEASE.zip",
+    "sha256": "20c707f6cc57901674c26345983f5975150ab67fd547f4f3e95221e78066f416"
+  },
+  "current_source_zip": {
+    "path": "/workspace/preloader_l_3.2.6_TALVOR_R18_source.zip",
+    "sha256": "1f2a6581a08dbafa940031353c8723e1947e00f0a4681f3bceb1d9f65e3d509e"
+  },
+  "limits": [
+    "Official HF19 archive named in the external report is not available as a distinct local input.",
+    "File inventory/text matching is not semantic or binary equivalence.",
+    "No new donor code imported; no production or vendor modifications.",
+    "No Windows/native/game test rerun yet.",
+    "Automated inventory and manual semantic review tracked separately."
+  ],
+  "prior_retirement_recommendation": "WITHDRAWN",
+  "automated_inventory_complete": true,
+  "complete_manual_semantic_review": false,
+  "reproduced_failure_paths": 3,
+  "production_fixes_applied": false
+}

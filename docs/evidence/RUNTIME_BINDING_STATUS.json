@@ -1,0 +1,364 @@
+{
+  "schema": "yellowfield.runtime-binding.v1",
+  "task": "YF-RUNTIME-BIND-20261028",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_AND_VALIDATED_RUNTIME_RESOURCES_FLAT_MODULE_LAYOUT_NOT_RELEASE",
+  "parent_source_package": {
+    "file": "yellowfield-comparison-source.zip",
+    "sha256": "ae3416b78946da2b1b5eaf781eef12e49ed754dd47372b939bf1782b8bdd4432"
+  },
+  "owner": "application::Application",
+  "dll_entry": "src/platform/dll_entry.cpp",
+  "management_api": [
+    "DllWaitReady",
+    "DllServerPort",
+    "DllShutdown"
+  ],
+  "automatic_application_bootstrap": "WINDOWS_WORKER_OUTSIDE_LOADER_LOCK",
+  "compiler_crt": "STANDARD",
+  "application_code_donors": [
+    "SUPPLIED_RE_ONLY_PLUS_NEW_EXPLICIT_OWNED_ADAPTERS"
+  ],
+  "bluefield_application_code_imported": false,
+  "brownfield_application_code_imported": false,
+  "vendor_byte_changes": false,
+  "tinyxml2_max_depth": 500,
+  "bindings": {
+    "asio": "net::AsioService -> existing server_start/Session -> owned MessageHandler/Router",
+    "filesystem": "NativeFactory ghc streams and Environment ghc path/storage -> actual config/hash/token/avatar/persistence files",
+    "pegtl": "existing parser object target -> full config_hash/config_application path",
+    "tinyxml2": "actual XmlBackend -> dispatcher/router/storage request parsing",
+    "minhook": "NativeApi -> SDK-typed callback Binding/OriginalEffects -> eleven slot table"
+  },
+  "full_config_application": "CAPACITY_AWARE_HASH_AND_REUSED_SECTION_COPY_ALREADY_EXISTED_NOW_USED_BY_APPLICATION",
+  "comparison_correction": "ScalarDependencies was an intentionally restricted alternate; prior CFG01/RE11 incorrectly generalized that bound to the full existing application bridge.",
+  "startup_order": [
+    "RE constructor fields with requested SURGE display name",
+    "RE environment/console input",
+    "full main->override config application",
+    "SURGE paths/resources/achievement storage",
+    "source server/actual Asio context and ready flag",
+    "source host/hook setup",
+    "owned provider thread",
+    "source main extra-library calls overlapping provider",
+    "owned extra worker gated on provider/source readiness",
+    "join startup workers and admit sessions"
+  ],
+  "shutdown_order": [
+    "close admission",
+    "join startup workers",
+    "cancel sockets, join handler jobs and IO, drain cancellation completions",
+    "disable owned hooks, drain admitted callbacks, uninitialize MinHook and close binding",
+    "unload extra modules",
+    "destroy provider object and unload provider module"
+  ],
+  "resource_lifetimes": [
+    "session shared ownership through IO/job completions",
+    "per-session cipher lock",
+    "shared router state lock for mutable source maps/counters",
+    "separate recursive native registry/network state gates with SDK LastError preserved",
+    "QPC cache initialized before concurrent callback publication",
+    "permanent callback error-policy object; image lease through worker shutdown"
+  ],
+  "config_policy": {
+    "filenames": [
+      "surge.cfg",
+      "surge_override.cfg"
+    ],
+    "directory": "Process executable parent, preserving RE search root",
+    "precedence": "Main then override, preserving RE pass order",
+    "missing_file": "Existing RE read/open-state empty-overlay behavior; not an invented new permissive parser",
+    "data_root": "RE GetEnvironmentVariableW(LocalAppData)/SURGE; known-folder/COM adapter removed by YF-GOLDEN-AVATAR-20261029",
+    "writes": "Existing source direct-write behavior; no unrequested atomic persistence migration",
+    "legacy_avatar_cleanup": "RE case-sensitive _AVATAR_ cleanup retained in SURGE-owned directory"
+  },
+  "provider_policy": {
+    "name": "preloader_l_online.dll",
+    "directory": "Process executable parent",
+    "ABI": "Supplied RE version_check=2/create_online/known virtual slots; no new provider ABI invented",
+    "status": "OPTIONAL_RE_ABI_ADAPTER",
+    "tests": "Controlled DLL fixture; original external provider/native compatibility NOT_VERIFIED"
+  },
+  "logging": {
+    "path": "LocalAppData/SURGE/surge.log",
+    "debug": "Fixed typed-equivalent operation events; no request/profile/token payloads",
+    "release": "File sink compiled out with NDEBUG",
+    "actual_validation": "PASS_RELEASE_ABSENT_DEBUG_PRESENT"
+  },
+  "integration_adaptations": [
+    "Owned shared/thread/socket lifetimes replace private CRT containers and detached raw-pointer lifetime assumptions.",
+    "Source provider/main-extra overlap and readiness dependency order are retained; management wait additionally waits for complete initialization.",
+    "A per-session cipher lock and shared router-state lock serialize only mutable C++ state; source native scheduling/timing equivalence is not asserted.",
+    "Unexpected request exceptions close the managed session and remain reported failures. Source explicit ExitProcess policies are retained. This is an owned exception-containment boundary, not original native EH equivalence.",
+    "Source per-hook create/enable remains; owner detects installation failure and rolls back before ready instead of reporting a partially initialized application as ready.",
+    "All eleven slots are available; process/folder hooks follow source conditional settings.",
+    "Public C API implemented in the subsequent YF-PUBLIC-ABI task; earlier 548-byte ABI requirement withdrawn for lack of supplied authoritative layout.",
+    "Startup abort releases private source wait gates after admission closes; it remains a failed startup and cannot make the DLL ready API return success.",
+    "Synchronous greeting remains on the IO owner, with cancelable nonblocking retries so stop can drain a peer that never reads; actual8MiB blocked-greeting regression passes."
+  ],
+  "tests": {
+    "windows_wine_release_group": {
+      "total": 169,
+      "passed": 169,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/RUNTIME_WINDOWS_TESTS.xml"
+    },
+    "linux_portable_group": {
+      "total": 18,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/RUNTIME_PORTABLE_TESTS.xml"
+    },
+    "windows_wine_debug_runtime": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/RUNTIME_DEBUG_TESTS.xml"
+    },
+    "resource_followup_release": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/RUNTIME_RESOURCE_TESTS.xml"
+    },
+    "resource_followup_debug": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/RUNTIME_RESOURCE_DEBUG_TESTS.xml"
+    },
+    "application_runtime_checks": 68,
+    "source_qa": {
+      "result": "PASS_SOURCE_QA",
+      "checks": 15,
+      "report": "build/qa/RUNTIME_SOURCE_QA_FINAL.json"
+    },
+    "scope": "Full169 after final C++ changes; subsequent resource-only follow-up rebuilt and reran actual runtime/DLL tests in Release and Debug.",
+    "layout_windows_wine_group": {
+      "total": 169,
+      "passed": 169,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/LAYOUT_WINDOWS_TESTS.xml"
+    },
+    "layout_linux_portable_group": {
+      "total": 18,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/LAYOUT_PORTABLE_TESTS.xml"
+    },
+    "layout_debug_runtime": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/LAYOUT_DEBUG_TESTS.xml"
+    }
+  },
+  "actual_windows_msvc": "NOT_RUN",
+  "consumer_game_acceptance": "NOT_RUN",
+  "original_native_equivalence": "NOT_VERIFIED",
+  "legacy_consumer_SURGE_ABI": "UNVERIFIED_548_BYTE_REQUIREMENT_WITHDRAWN_SEE_PUBLIC_DLL_ABI",
+  "golden_product_acceptance": "BLOCKED_REMAINING_PE_HEADER_LAYOUT_IMPORT_TARGETS_AND_NATIVE_MSVC",
+  "library_publication": false,
+  "source_package": "yellowfield-runtime-bound-source.zip",
+  "extra_libraries_binding": "Existing load_phase_035850/load_list_035260/unload_035ab0 plus tracked module leases",
+  "initial_validation_failures": [
+    {
+      "case": "direct Wine launch under CTest captured pipes",
+      "observed": "PE program printed PASS and exited0; Wine services held inherited capture open",
+      "resolution": "File-backed runner; actual PE exit remains authoritative; independent exit/timeout/descendant regressions pass"
+    },
+    {
+      "case": "full suite source pool release test",
+      "observed": "runner timeout50 exited124 under concurrent Debug build; prior baselines23.5s/39.7s",
+      "resolution": "Removed the premature inner50s cap. Existing per-test CTest60s bound remains authoritative; final suite runs after build contention ends.",
+      "original_report": "metadata/RUNTIME_WINDOWS_INITIAL_TESTS.xml"
+    }
+  ],
+  "resource_metadata_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+  "resource_metadata_source": "Exact Brownfield resources/preloader_version.rc adopted by latest explicit owner instruction; SURGE image remains exact",
+  "dll": {
+    "classification": "NOT_RELEASE",
+    "execution_level": "READ_ONLY_BINARY_INSPECTION",
+    "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+    "dll_sha256": "8c2b7bf99f963fad9105f3331820aefc64995aadf9b45bafa53e71470545da7c",
+    "unchanged": true,
+    "machine": "0x8664",
+    "entrypoint_rva": "0x11e0",
+    "sections": [
+      ".text",
+      ".rdata",
+      ".buildid",
+      ".data",
+      ".pdata",
+      ".tls",
+      ".rsrc",
+      ".reloc",
+      "/4",
+      "/18",
+      "/58",
+      "/70",
+      "/82",
+      "/33",
+      "/47"
+    ],
+    "export_count": 6861,
+    "imports": [
+      "MSWSOCK.DLL",
+      "KERNEL32.DLL",
+      "USER32.DLL",
+      "SHELL32.DLL",
+      "OLE32.DLL",
+      "WS2_32.DLL",
+      "LIBC++.DLL",
+      "LIBUNWIND.DLL",
+      "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+      "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+      "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+      "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+      "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+      "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+      "API-MS-WIN-CRT-HEAP-L1-1-0.DLL",
+      "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+      "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+      "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL"
+    ],
+    "resources": [
+      {
+        "path": [
+          10,
+          101,
+          1033
+        ],
+        "bytes": 3653,
+        "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"
+      },
+      {
+        "path": [
+          16,
+          1,
+          1033
+        ],
+        "bytes": 572,
+        "sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1"
+      }
+    ],
+    "exact_owner_avatar": true,
+    "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+    "resource_metadata_errors": [],
+    "golden_shipping_acceptance": "NOT_RUN",
+    "game_acceptance": "NOT_RUN"
+  },
+  "debug_dll": {
+    "classification": "NOT_RELEASE",
+    "execution_level": "READ_ONLY_BINARY_INSPECTION",
+    "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+    "dll_sha256": "c977cc2c9c4a18b1b8f01036f49bc433d38e03ad052615b794b3965c6c38f2a8",
+    "unchanged": true,
+    "machine": "0x8664",
+    "entrypoint_rva": "0x11e0",
+    "sections": [
+      ".text",
+      ".rdata",
+      ".buildid",
+      ".data",
+      ".pdata",
+      ".tls",
+      ".rsrc",
+      ".reloc",
+      "/4",
+      "/18",
+      "/58",
+      "/70",
+      "/82",
+      "/33",
+      "/47"
+    ],
+    "export_count": 13131,
+    "imports": [
+      "MSWSOCK.DLL",
+      "KERNEL32.DLL",
+      "USER32.DLL",
+      "SHELL32.DLL",
+      "OLE32.DLL",
+      "WS2_32.DLL",
+      "LIBC++.DLL",
+      "LIBUNWIND.DLL",
+      "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+      "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+      "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+      "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+      "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+      "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+      "API-MS-WIN-CRT-HEAP-L1-1-0.DLL",
+      "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+      "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+      "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL"
+    ],
+    "resources": [
+      {
+        "path": [
+          10,
+          101,
+          1033
+        ],
+        "bytes": 3653,
+        "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"
+      },
+      {
+        "path": [
+          16,
+          1,
+          1033
+        ],
+        "bytes": 572,
+        "sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1"
+      }
+    ],
+    "exact_owner_avatar": true,
+    "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+    "resource_metadata_errors": [],
+    "golden_shipping_acceptance": "NOT_RUN",
+    "game_acceptance": "NOT_RUN"
+  },
+  "resource_metadata_negative_check": "metadata/RUNTIME_RESOURCE_NEGATIVE_CHECK.json",
+  "fresh_package": {
+    "result": "PASS_CLEAN_EXTRACT_BUILD_AND_RUNTIME",
+    "classification": "NOT_RELEASE",
+    "source_ledger_sha256": "04c3bf478f242a58321cd01e51b01fd5bd76ffa9b19035ce3c5dc1765c25946c",
+    "tests": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "dll_sha256": "6ca7f040a2fa1fcc497a964e7ba4974d19fde76b351067a8e9e21e5aeafe0f21",
+    "resource_errors": [],
+    "exact_owner_avatar": true,
+    "typed_vendor_symlinks_preserved": 2,
+    "reference_tree_build_dependency": false,
+    "validation_input": "Review ZIP clean extracted; final validation receipts appended later. CMake inputs and complete application/test/vendor ledger match final source package."
+  },
+  "layout_migration": "metadata/LAYOUT_MIGRATION.json",
+  "layout": "Brownfield-style one-level module directory in src and include/preloader_l",
+  "layout_followup_validation": "PASS_BUILD_AND_RUNTIME_SOURCE_BODIES_IDENTICAL_EXCEPT_INCLUDES",
+  "source_files_tracked": 3321,
+  "source_qa": {
+    "expected_checks": 15,
+    "report": "build/qa/LAYOUT_SOURCE_QA_FINAL.json",
+    "result": "PASS_SOURCE_QA",
+    "checks_passed": 15,
+    "checks_total": 15
+  },
+  "current_public_abi": "metadata/PUBLIC_DLL_ABI.json",
+  "current_validation_status": "metadata/DLL_NAME_CHANGE.json",
+  "public_abi_followup": "metadata/PUBLIC_ABI_STATUS.json",
+  "current_dll": "metadata/PUBLIC_EXPORT_RELEASE.json",
+  "validation_snapshot": "YF-RUNTIME-BIND pre-public-ABI reports retained. Current C ABI validation is PUBLIC_ABI_STATUS.json; old dll export counts are historical."
+}

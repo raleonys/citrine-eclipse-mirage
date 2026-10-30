@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="(empty)"
+	tests="11"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname=""
+	time="0"
+	timestamp="2026-10-28T07:32:27"
+	>
+	<testcase name="portable_calendar" classname="portable_calendar" time="0.00659983" status="run">
+		<properties/>
+		<system-out>PASS: 31760 calendar arithmetic checks; no original execution or OS time calls
+</system-out>
+	</testcase>
+	<testcase name="portable_parser" classname="portable_parser" time="0.0029793" status="run">
+		<properties/>
+		<system-out>PASS: 115 synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.
+</system-out>
+	</testcase>
+	<testcase name="portable_hash" classname="portable_hash" time="0.0743723" status="run">
+		<properties/>
+		<system-out>6899 deterministic hash checks PASS
+</system-out>
+	</testcase>
+	<testcase name="portable_config_order" classname="portable_config_order" time="0.0063428" status="run">
+		<properties/>
+		<system-out>PASS: 2185 Config2 hash/list first-copy checks
+</system-out>
+	</testcase>
+	<testcase name="portable_config_hash" classname="portable_config_hash" time="0.125127" status="run">
+		<properties/>
+		<system-out>PASS: 4929 Config2 growth/copy/positional-reuse checks
+</system-out>
+	</testcase>
+	<testcase name="portable_host_hooks" classname="portable_host_hooks" time="0.00735282" status="run">
+		<properties/>
+		<system-out>PASS 6671 host initialization checks
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_golden_pe" classname="infrastructure_golden_pe" time="0.137772" status="run">
+		<properties/>
+		<system-out>GOLDEN_PROTOCOL_TOOL_SELFTEST: PASS
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_named_imports" classname="infrastructure_named_imports" time="0.0786649" status="run">
+		<properties/>
+		<system-out>CORVEXON_MSWSOCK_IMPORTS: PASS (12/12)
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_msvc_link" classname="infrastructure_msvc_link" time="0.0578127" status="run">
+		<properties/>
+		<system-out>MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS (21/21)
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_ownership_packaging" classname="infrastructure_ownership_packaging" time="0.32804" status="run">
+		<properties/>
+		<system-out>test_finalizer_failed_write_keeps_original_and_cleans_temp (__main__.GovernanceTests.test_finalizer_failed_write_keeps_original_and_cleans_temp) ... ok
+test_fixture_is_never_a_product_target (__main__.GovernanceTests.test_fixture_is_never_a_product_target) ... ok
+test_launcher_result_and_argument_mutations (__main__.GovernanceTests.test_launcher_result_and_argument_mutations) ... ok
+test_pending_product_target_cannot_mutate_binary (__main__.GovernanceTests.test_pending_product_target_cannot_mutate_binary) ... ok
+test_pipeline_order_and_failure_exit (__main__.GovernanceTests.test_pipeline_order_and_failure_exit) ... ok
+test_resource_assets_require_exact_hash_without_dropping_versioninfo (__main__.GovernanceTests.test_resource_assets_require_exact_hash_without_dropping_versioninfo) ... ok
+test_unowned_metadata_is_rejected (__main__.GovernanceTests.test_unowned_metadata_is_rejected) ... ok
+test_casefold_collision (__main__.PackageTests.test_casefold_collision) ... ok
+test_duplicate_package_member (__main__.Packa...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+	<testcase name="infrastructure_target_requirements" classname="infrastructure_target_requirements" time="0.12422" status="run">
+		<properties/>
+		<system-out>test_brownfield_scope_cannot_shrink_to_build_helpers (__main__.RequirementsTests.test_brownfield_scope_cannot_shrink_to_build_helpers) ... ok
+test_comparison_role_cannot_become_code_donor (__main__.RequirementsTests.test_comparison_role_cannot_become_code_donor) ... ok
+test_current_target_contract (__main__.RequirementsTests.test_current_target_contract) ... ok
+test_golden_order_is_preserved (__main__.RequirementsTests.test_golden_order_is_preserved) ... ok
+test_library_sync_does_not_follow_build (__main__.RequirementsTests.test_library_sync_does_not_follow_build) ... ok
+test_namespace_cannot_be_renamed_with_display_identity (__main__.RequirementsTests.test_namespace_cannot_be_renamed_with_display_identity) ... ok
+test_release_claim_is_separate (__main__.RequirementsTests.test_release_claim_is_separate) ... ok
+test_release_log_remains_forbidden (__main__.RequirementsTests.test_release_log_remains_forbidden) ... ok
+test_surge_identity_and_exact_asset (__main__.RequirementsTests.test_surge_identity_and_exact_as...
+[This part of the test output was removed since it exceeds the threshold of 1024 bytes.]
+</system-out>
+	</testcase>
+</testsuite>

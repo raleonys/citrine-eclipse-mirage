@@ -1,0 +1,19 @@
+{
+  "third_party/": {
+    "files": 2813,
+    "byte_changes": []
+  },
+  "resources/branding/": {
+    "files": 2,
+    "byte_changes": []
+  },
+  "resources/preloader_version.rc": {
+    "files": 1,
+    "byte_changes": []
+  },
+  "alias_comparison": "Exact canonical relative target payload for the two locked Asio aliases, using project_files.source_payload",
+  "retained_reference_cpp": {
+    "files": 74,
+    "byte_changes": []
+  }
+}

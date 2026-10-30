@@ -1,0 +1,2 @@
+FAIL: first cleanup did not execute the pending fault
+WINE_PROGRAM_EXIT=1

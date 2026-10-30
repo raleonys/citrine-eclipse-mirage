@@ -1,0 +1,8 @@
+{
+  "schema": "surge.fixture-only-product-parity.v1",
+  "result": "PASS_ALL_PRODUCT_VENDOR_RESOURCE_EXPORT_BYTES_IDENTICAL",
+  "files": 3096,
+  "modified": [],
+  "added": [],
+  "removed": []
+}

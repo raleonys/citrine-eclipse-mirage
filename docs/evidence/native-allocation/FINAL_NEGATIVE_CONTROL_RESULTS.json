@@ -1,0 +1,30 @@
+{
+  "schema": "surge.allocator-fault-negative-controls.v1",
+  "product_source_changed": false,
+  "records": [
+    {
+      "variant": "before-aligned",
+      "case": "accept",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "log_sha256": "d81f16cd725c34770ff03da39ec810b08727e39c321f6ccda10074606c42d95f",
+      "expected_failure": "accept initiation allocation failure was not injected"
+    },
+    {
+      "variant": "rollback-control-after-default",
+      "case": "accept",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "log_sha256": "f521d8f92b4e01634ca0907df057e5db5b78e6baae2cef063d92e7f421e0ed23",
+      "expected_failure": "failed accept leaves a stale pending flag"
+    },
+    {
+      "variant": "rollback-control-after-aligned",
+      "case": "accept",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "log_sha256": "29aa757bb0613d30bfebfd4044c69f6709e0591c8980c3ab4d1429dd8c67378e",
+      "expected_failure": "failed accept leaves a stale pending flag"
+    }
+  ]
+}

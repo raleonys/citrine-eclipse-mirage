@@ -1,0 +1,19 @@
+{
+  "schema": "surge.avatar-data-contract.v1",
+  "owner_instruction": "Only replace the RE avatar data; no PE resource; no external file requirement",
+  "storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "assets": {
+    "profile": {
+      "source": "resources/branding/surge.png",
+      "sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+      "role": "Replace original green user avatar at0x1800809d0; no configured Avatar overwrite"
+    },
+    "fallback": {
+      "source": "resources/branding/default-avatar.png",
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "role": "Preserve separate original fallback at0x180082710"
+    }
+  },
+  "recovery_reference_document": "docs/evidence/contracts/AVATAR_DATA_CONTRACT.json",
+  "latest_owner_asset_update": "Owner explicitly retains embedded C++ PNG bytes; latest supplied208x208 PNG replaces profile only"
+}

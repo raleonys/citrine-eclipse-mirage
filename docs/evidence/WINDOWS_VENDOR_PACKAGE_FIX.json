@@ -1,0 +1,73 @@
+{
+  "schema": "yellowfield.windows-vendor-package-fix.v1",
+  "task": "YF-WIN-ZIP-20261028",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_AND_VALIDATED_PORTABLE_SOURCE_PACKAGE_NOT_RELEASE",
+  "parent_source_package": "yellowfield-dll-names-source.zip",
+  "parent_sha256": "c29f1be2bcd92a9b74546ebc4d22ed5dcb150d7ec85c1287566a84d27e3de601",
+  "user_report": {
+    "stage": "CMake configure, before compile",
+    "compiler_detection": "MSVC19.51.36260.0",
+    "python": "3.13.14",
+    "extractor": "7-Zip or WinRAR",
+    "error": "asio installed member set/hash mismatch1607/1607",
+    "exact_changed_paths": "UNKNOWN_FROM_ORIGINAL_LOG_NO_NATIVE_FILES_AVAILABLE"
+  },
+  "fixes": [
+    "Canonical source ZIP emits regular files only; two locked Asio aliases retain exact original relative-target bytes",
+    "Whole-source/vendor/type checks allow only those exact locked descriptors or matching real symlinks; all real member hashes remain mandatory",
+    "Vendor mismatch names missing/unexpected/changed paths and expected/actual SHA256 instead of only counts",
+    "Original ZIP installer also emits exact alias descriptors without symlink privilege"
+  ],
+  "vendor_archive_or_member_hash_changes": false,
+  "application_header_and_vendor_payload_changes": false,
+  "alias_transport_representation_changes": 2,
+  "tinyxml2_max_depth": 500,
+  "exports_unchanged": [
+    "DllMain",
+    "SURGE",
+    "DllShutdown",
+    "DllWaitReady",
+    "DllServerPort"
+  ],
+  "regression_results": {
+    "vendor_and_packaging_tests": 15,
+    "infrastructure_tests": 17,
+    "raw_reports": [
+      "metadata/WINDOWS_VENDOR_REGRESSIONS.log",
+      "metadata/WINDOWS_PACKAGE_INFRA_REGRESSIONS.log"
+    ]
+  },
+  "same_count_reproduction": "Two intentionally emptied locked descriptor files reproduce1607/1607 with changed=2; new error identifies asio/include and asio/src. This is a controlled reproduction, not proof of the exact user-side mismatches.",
+  "clean_original_archive_install": "PASS_ALL_FIVE_ORIGINAL_ZIPS",
+  "clean_install_report": "metadata/WINDOWS_VENDOR_CLEAN_INSTALL.log",
+  "native_windows_msvc_fixed_package": "NOT_RUN",
+  "golden_acceptance": "STILL_BLOCKED_REMAINING_PE_POLICIES",
+  "source_package": "yellowfield-windows-vendor-source.zip",
+  "source_qa": {
+    "expected_checks": 15,
+    "completed_result": "PASS_SOURCE_QA",
+    "completed_report": "build/qa/WINDOWS_VENDOR_SOURCE_QA_INITIAL.json",
+    "final_report": "build/qa/WINDOWS_VENDOR_SOURCE_QA_FINAL.json"
+  },
+  "fresh_source": {
+    "result": "PASS_STANDARD_ZIP_EXTRACT_VENDOR_IDENTITY_AND_CMAKE_CONFIGURE",
+    "symlinks_created": 0,
+    "logical_alias_descriptors": 2,
+    "all_vendor_member_payloads_verified": 2851,
+    "all_source_manifest_verified": true,
+    "all_source_ledger_verified": true,
+    "build_testing": false,
+    "development_source_dll": false,
+    "compiler": "LLVM-MinGW20251118/Clang21.1.6 UCRT x64",
+    "actual_msvc_execution": false,
+    "CMake_configure_exit": 0,
+    "PEGTL_public_input_probe": "PASS",
+    "code_build_tool_inputs_matched_final": 3374,
+    "scope": "Validation archive extracted via standard zipfile.extractall; only final validation receipts appended afterwards, with identical code/build/tool/test/vendor inputs and SOURCE_FILES ledger.",
+    "reports": [
+      "metadata/WINDOWS_VENDOR_FRESH_VERIFY.log",
+      "metadata/WINDOWS_VENDOR_FRESH_CONFIGURE.log"
+    ]
+  }
+}

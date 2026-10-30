@@ -1,0 +1,31 @@
+{
+  "schema": "surge.optimization-review.v1",
+  "classification": "NOT_RELEASE",
+  "owner": "Explicit owner authorization for whole-codebase dead-code and measured optimization review",
+  "documentation": "docs/CODEBASE_OPTIMIZATION.md",
+  "validation": "docs/evidence/optimization/VALIDATION.json",
+  "compiler_scope": "docs/evidence/optimization/COMPILER_SCOPE.json",
+  "file_matrix": "docs/evidence/optimization/FILE_MATRIX.csv",
+  "function_matrix": "docs/evidence/optimization/FUNCTION_MATRIX.csv",
+  "diagnostic_triage": "docs/evidence/optimization/STATIC_DIAGNOSTICS.json",
+  "baseline_accepted_dll_sha256": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",
+  "baseline_owner_acceptance": "docs/evidence/OWNER_NATIVE_ACCEPTANCE.json",
+  "current_native_acceptance": "PENDING_CHANGED_CODE_REEXECUTION",
+  "deleted_translation_units": 0,
+  "deleted_reference_functions": 0,
+  "vendors_modified": false,
+  "compiler_or_linker_policy_changed": false,
+  "implemented": [
+    "XML owned counted parse without staging copy; original first-NUL semantics retained",
+    "Map-owned XML wrappers with stable node addresses and retry after allocation failure",
+    "Inline Debug-only diagnostics at internal call sites; out-of-line development API symbols retained",
+    "Remove unused Environment XML reference and Release diagnostic mutex",
+    "Remove unreachable zero-receive-size branch after size guard"
+  ],
+  "remaining_evidence": [
+    "Native matching before/after MSVC MAP/OBJ/DLL comparison",
+    "Native Windows/Golden and game reacceptance for changed code",
+    "Exceptional Asio destructor resource-failure path remains a reviewed follow-up, not a claimed fix"
+  ],
+  "current_followup_review": "metadata/BUILD_CLEANUP_REVIEW.json"
+}

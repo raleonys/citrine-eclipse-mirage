@@ -1,0 +1,22 @@
+[
+  {
+    "variant": "baseline",
+    "exit": 1,
+    "output": "FAIL: XML parsing must not allocate a second input-sized staging buffer\nWINE_PROGRAM_EXIT=1\n"
+  },
+  {
+    "variant": "buffer-only",
+    "exit": 0,
+    "output": "PASS: one owned input-sized buffer; repeated wrapper lookups allocate zero times\nWINE_PROGRAM_EXIT=0\n"
+  },
+  {
+    "variant": "wrapper-only",
+    "exit": 1,
+    "output": "FAIL: XML parsing must not allocate a second input-sized staging buffer\nWINE_PROGRAM_EXIT=1\n"
+  },
+  {
+    "variant": "combined",
+    "exit": 0,
+    "output": "PASS: one owned input-sized buffer; repeated wrapper lookups allocate zero times\nWINE_PROGRAM_EXIT=0\n"
+  }
+]

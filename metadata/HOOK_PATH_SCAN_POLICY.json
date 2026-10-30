@@ -1,0 +1,30 @@
+{
+  "schema": "surge.hook-path-scan.v1",
+  "classification": "NOT_RELEASE",
+  "owner": "Explicit owner adoption of bounded heap-free hook11 path inspection",
+  "documentation": "docs/HOOK_PATH_SCAN.md",
+  "max_utf16_units_including_nul": 32768,
+  "max_non_nul_units": 32767,
+  "scratch_utf16_units": 15,
+  "cpp_heap_allocation_in_scan_and_selection": false,
+  "native_reader": "ReadProcessMemory; full-unit address-overflow check",
+  "utf16_validation": "INLINE_SURROGATE_VALIDATION",
+  "suffix_source": "FIXED_CIRCULAR_BUFFER_OF_ALREADY_OBSERVED_UNITS; NO_SECOND_CALLER_READ",
+  "invalid_unreadable_or_over_limit": "FORWARD_ORIGINAL_OBJECT",
+  "configuration_override": false,
+  "preserved": [
+    "non-file/null-file selection",
+    "case-sensitive suffix without separator requirement",
+    "companion identity",
+    "original SDK arguments/results/outputs",
+    "incoming/outgoing LastError",
+    "trampoline failure policy",
+    "static CRYPT32 import",
+    "hook ownership and shutdown",
+    "three public exports"
+  ],
+  "source_api_change": "CryptQueryHost::inspect_path returns PathProbe; removed full-path string output",
+  "validation": "docs/evidence/HOOK_PATH_SCAN.json",
+  "whole_project_no_further_issue_claimed": false,
+  "vendor_changes": false
+}

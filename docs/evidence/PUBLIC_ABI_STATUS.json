@@ -1,0 +1,72 @@
+{
+  "schema": "yellowfield.public-abi-status.v1",
+  "classification": "NOT_RELEASE",
+  "task": "YF-PUBLIC-ABI-20261028",
+  "state": "IMPLEMENTED_AND_VALIDATED_PUBLIC_C_API_AND_CLEAN_NO_TESTS_BUILD_NOT_RELEASE",
+  "parent_source_package": "yellowfield-runtime-bound-source.zip",
+  "parent_sha256": "e6dcce4a8d70e4e3b15761312df284ed1a6052394c9342db7ae9e7b897133743",
+  "contract": "metadata/PUBLIC_DLL_ABI.json",
+  "evidence": "metadata/PUBLIC_ABI_EVIDENCE.json",
+  "public_export_count": 6,
+  "development_exports_separated": true,
+  "dll_worker_lease": "OUTSIDE_LOADER_LOCK_CALLER_LEASE_REQUIRED",
+  "native_windows_msvc": "NOT_RUN",
+  "consumer_game_acceptance": "NOT_RUN",
+  "real_external_provider_compatibility": "NOT_VERIFIED_FIXTURE_ONLY",
+  "golden_acceptance": "BLOCKED_REMAINING_PE_HEADER_LAYOUT_IMPORT_TARGETS_AND_NATIVE_MSVC",
+  "548_byte_claim": "WITHDRAWN_NO_AUTHORITATIVE_LAYOUT",
+  "code_donor_policy": "SUPPLIED_RE_AND_OWNED_ADAPTERS_NO_BROWNFIELD_BLUEFIELD_APPLICATION_IMPORT",
+  "vendor_byte_changes": false,
+  "tinyxml2_max_depth": 500,
+  "tests": {
+    "windows_wine_release": {
+      "total": 173,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/PUBLIC_ABI_WINDOWS_TESTS.xml"
+    },
+    "windows_wine_debug_affected": {
+      "total": 6,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/PUBLIC_ABI_DEBUG_TESTS.xml"
+    },
+    "linux_portable": {
+      "total": 18,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/PUBLIC_ABI_PORTABLE_TESTS.xml"
+    }
+  },
+  "source_package": "yellowfield-public-api-source.zip",
+  "binary_checks": {
+    "release_exports": "metadata/PUBLIC_EXPORT_RELEASE.json",
+    "debug_exports": "metadata/PUBLIC_EXPORT_DEBUG.json",
+    "release_resources": "metadata/PUBLIC_RESOURCE_RELEASE.json",
+    "debug_resources": "metadata/PUBLIC_RESOURCE_DEBUG.json"
+  },
+  "zero_timeout_observed": "STATUS_2_THEN_SUCCESSFUL_RETRY_IN_RELEASE_AND_DEBUG",
+  "remaining_work": [
+    "Actual Windows/MSVC build and runtime acceptance, including PowerShell/CMD behavior",
+    "Real external provider compatibility, currently controlled fixture only",
+    "Named real Consumer/game acceptance; original input imports anadius64!anadius, not this branded name",
+    "Remaining PE/header/layout/import/CRT Golden policies and actual MSVC Golden chain"
+  ],
+  "fresh_package": "metadata/PUBLIC_ABI_FRESH_CHECK.json",
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "checks": 15,
+    "completed_report": "build/qa/PUBLIC_ABI_SOURCE_QA.json",
+    "final_recheck": "build/qa/PUBLIC_ABI_SOURCE_QA_FINAL.json",
+    "review_bundle": "SOURCE_QA.json"
+  },
+  "remaining_work_document": "docs/REMAINING_WORK.md",
+  "source_files_tracked": 3321,
+  "golden_target_check": {
+    "result": "BLOCKED_TARGET_SEMANTICS",
+    "exit_code": 3,
+    "report": "metadata/PUBLIC_ABI_GOLDEN_TARGET.log"
+  },
+  "record_scope": "Historical public-ABI acceptance before owner-requested readiness/port rename; current rename evidence is DLL_NAME_CHANGE.json",
+  "current_validation_status": "metadata/DLL_NAME_CHANGE.json"
+}

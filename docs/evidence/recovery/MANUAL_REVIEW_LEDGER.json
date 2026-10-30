@@ -1,0 +1,682 @@
+{
+  "limits": "Specific branch review only. No whole-file/all-donor semantic completion claimed. Current production witnesses are pinned in TEST_RESULTS.json.",
+  "rows": [
+    {
+      "donor": "brownfield",
+      "file": "CMakeLists.txt",
+      "sha256": "619ecbc7a08a5af0a8d772e2a9ff5f77705498286b0342c3d0586cd1555b2b4f",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "vendor/build-copy target declarations"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/asio_listener_owner.cpp",
+      "sha256": "38ad0fd18a78de848de79f1f849595247ed54f0f984cf0711962fc8c96841653",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "constructor",
+        "arm_accept",
+        "apply_stop",
+        "notify_quiesced"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/asio_session_owner.cpp",
+      "sha256": "e107c79b5cfa283e9d076a7e3edb5c31e6ec475be43c40c2d29e42f1192c7794",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "refresh_deadline",
+        "send_greeting",
+        "read_more",
+        "stop",
+        "maybe_finish"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/asio_service_owner.cpp",
+      "sha256": "a56f9346e7e498e45e4c020b2882570e1bb215e95d78ebad55e695d87cc8a910",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "symbol/call-site navigation only"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/asio_acceptance_resource_fault.hpp",
+      "sha256": "c48a270c108ea38db1f9d08d373380b4a534307dff50ef78a24f06b60f68b475",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "acceptance fault interface"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/asio_session_timeout_policy.hpp",
+      "sha256": "832f13103cd59b3f4e2e79d3f69e3d1737353bed993bfdbdb59a843e021b8bda",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "deadline policy"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/platform/addon_hooks.cpp",
+      "sha256": "d809cf5fbabf7ba07c456092933892497680fa08cc9255b02cf5130619a06364",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "drain_created ownership; selected callbacks"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/platform/environment_policy.cpp",
+      "sha256": "58c199574d5fa395736d9df21d977225c045c5632f925858997566e446cb0038",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "apply/restore environment ownership"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/hf19/test_addon_ownership_retry.cpp",
+      "sha256": "3e5ffac8cde160e4881cb49c1484c5cbf3839ea7bb935008568c33f482c38689",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "FreeLibrary failure/retry test branch"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/unit/test_bootstrap_shutdown_policy.cpp",
+      "sha256": "685c6d58f1d565ae982c4422f66325c5d40cf494222434a13102b3993ebd5ffc",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "full small test file"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/unit/test_grant_delivery_rollback.cpp",
+      "sha256": "fa7fc2b7ae4d317836f1aea52fb3926c3782ff4dbd82907f378cca4980d7285b",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "full small test file"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/unit/test_transient_allocation_owner.cpp",
+      "sha256": "35727bb126060721185f7a0a530ae2558fd8f01b183b1c0c316589621a249019",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "full small test file"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/unit/test_worker_shutdown_liveness.cpp",
+      "sha256": "58fbffc785a1329c0564c6e50d0f64451c74d3a7c328c4637b4c2959c26764fb",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "full small test file; actual socket poll scope"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/native/test_asio_iocp_delivery_completion.cpp",
+      "sha256": "5e6ce69b0c354be24c4ca59d0d8ae1bbb58678c485526260535b204fe7f4bde8",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "completion discriminator and real IOCP loop"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/unit/test_asio_listener_owner.cpp",
+      "sha256": "35ad1b1840944bbbdf6bfb30b2b176d445b2825572fac1fa0ccd463e207f18f8",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "oracle/accept/retirement assertions"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/unit/test_asio_service_owner.cpp",
+      "sha256": "422900b59d861fde0397c8415a00befa5b3fbd9f38de0ef45541477add908f3a",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "scenario/call-site navigation only"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/unit/test_asio_session_owner.cpp",
+      "sha256": "565a56c8b3eb14abccb4db4e184c9dec42770ae3591ea53345fb4f939891cff7",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "scenario/call-site navigation only"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "scripts/test_asio_listener_owner.py",
+      "sha256": "0c09da3513e147f909e533ba8b3291555d61743e292de999b6ae900b33391c2f",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "full runner and compiler flags"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "scripts/write_acceptance_record.py",
+      "sha256": "bf3809b4e4ea2dfcccdfbdbf2d05c392a00eec9778c121ccdbd00a886cf106bb",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "full recorder"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "scripts/check_loaded_data_memory.py",
+      "sha256": "675afb568dee58a6ab9fde7792afb7fc74c3d5e8aaef5246031c26ee4bb5a3dd",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "read-only process query and PE section logic"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "scripts/check_production_source_graph.py",
+      "sha256": "cdec33c24a4ce986c59e7eda5c279b4e2c195acadf1b0f4e542cb4200549b974",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "selected graph/parser policy checks"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "scripts/check_macro_hygiene.py",
+      "sha256": "879ef788ec1ace96d847c6f0ed76f66808ce6541d05ad03fffee19f8a2b05afa",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "full small script"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "scripts/check_environment_restore.py",
+      "sha256": "788df8e8ad51c2bf181c061feb6c831fa5c6c9b85605bac33d04536aef891add",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "full small script"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "scripts/test_resource_lifecycle.py",
+      "sha256": "c18d80c772a304781a55a765cfd548b11a060852fc9dac1b00ac3f6900f5fa21",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "selected source-text assertions"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "CMakeLists.txt",
+      "sha256": "6c8e023d39c28c7f05d49137c630c7f85c8c5cfdace56b47eb74c15010dd6bb4",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "profiles/compiler/link flags/test declarations"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "cmake/sources.cmake",
+      "sha256": "b4d066ca075081e98bedede1080b884c1808697aaac8e9280ede3e3c76c51afd",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "source list navigation"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/windows/startup_platform.cpp",
+      "sha256": "7bea32df070ffe4590596d39a4d23d58318fac72a9eb223854f522c2aa49c05f",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "owned environment snapshot"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/runtime/startup.hpp",
+      "sha256": "df968559e3027a2e87a7eb9add6666d6652d97c0eba5d8fe1c82cbdb702e2b9c",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "NativeInputPlatform ownership field/interface"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/windows/unload_guard.cpp",
+      "sha256": "563ed1c1b3a140128422e627ba1f5c0a02dd701c73b9bf36cc4e6508b0408ece",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "resume/close ownership branch navigation"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/transport/service.cpp",
+      "sha256": "ff08ec8a5d02f5c42133aa1d3ccaadbaa85620cb44a989b915f06fd0a1eb0a88",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "fail_compute,compute,prepare IO runner catch,shutdown branch navigation"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/application/avatars.cpp",
+      "sha256": "fa581c3bdf8407a55fba25668defb75eb5e6485c86d0fb9373e0fe5511cca111",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "sidecar/fallback selection"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/application/logging.cpp",
+      "sha256": "bccd042f4905eabe9bee4d7b0fa65fe42ff2f80b624f4ad52b1a375869fb9250",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "cross-process lock and event-only logging"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/application/providers.cpp",
+      "sha256": "cc2532f79d1cf5b15ef6d42eda9a63ce45c04fa80adcf44f0a2f7af12997de09",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "selected path/persistence effects"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/profiles/online_session.cpp",
+      "sha256": "1caa2c6e9d42e7750f3cedcaf559f405d63724333dd2d44ce3e26655a18b7fed",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "provider search policy,close,error-mode/auth storage"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/files/atomic_io.cpp",
+      "sha256": "dcecc3577482d652b1aaf4570f8cfbaeddf3492d6706755edc0c2196d0685a16",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "Stage ownership/write/finish/cleanup,batch rollback"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/libraries/libraries.cpp",
+      "sha256": "8f6981e055d9bb1b113a4b85a8fee60489b2da9afef68c2103712a78cee8c697",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "load list,unload helper fidelity"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/application/application.cpp",
+      "sha256": "1e2ca06b4d0da8f4fbdfd5345584e08d35c8ac89c97851fb3617bb1b2dd8d1d1",
+      "review_type": "SELECTED_BRANCH_REVIEW_OR_NAVIGATION",
+      "reviewed_scope": [
+        "Console lifetime,configuration,shutdown"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/request_parser.cpp",
+      "sha256": "fc9b213f7c6673acb52746f1967afd2d0da4954d591de8d3b93a043090189084",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "envelope cardinality, Request/direct-command policy, DOM ownership and exception result"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/lsx_framing.cpp",
+      "sha256": "4d223cae591d2de248f3b2d40779859c652f5877049621c0c20f9250d1e1ad33",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "literal LSX envelope scanner, quoted/comment/CDATA/PI lexical states"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/attribute_parser.cpp",
+      "sha256": "01ebeda2acd9435aea52edd24f975524c3c374710bc8490fdfbc8314fbc76db3",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "DOM-only lookup and decoded span ownership"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/request_children.cpp",
+      "sha256": "35a841abbc8d9320f78b3ba45a0d6d474857ee60b42dfe83482efe60700848d5",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "trivia validation, text-only child selection, indexed and fallback iteration"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/value_codec_normalize.cpp",
+      "sha256": "25c1d1d58757aba08ca2690bf70c820e7e99eff666bee1a7e598fbe1c86cc00c",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "decode then escape, checked lengths, full-source validation after equality mismatch"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/value_codec_semantic.cpp",
+      "sha256": "46c5ad655f955736d7367ec89f01180e7c5e6ac9bbf2e514978d8f521f7c12d4",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "self/overlap handling, owned versus borrowed values, custom allocator dependency"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/value_codec_utf8.cpp",
+      "sha256": "8fa68fd6b267c163653cf3c94c4deac1be5f0be671593f95b777916980c6931e",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "UTF8 scalar/XML-character validation, entities and numeric overflow"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/response_builder.cpp",
+      "sha256": "9894fe89c5a22aef3de338c02d544275334cf088453633d16d656cb10ffabef5",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "source versus semantic escaping, capacity query and checked envelope size"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/xml/tinyxml2_dom.hpp",
+      "sha256": "466fc1d291416300a64bb464f176abf5b6455205b31eca9f2d6bb86d69915096",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "explicit-length/NUL rejection, exception handling, child-index allocation"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/service_state_parser.cpp",
+      "sha256": "6a0b6d2ebfa74fbe14dbf0f9b15e1222436289fc3a675b9468e851d195b91319",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "staged Config2 visitor, signed totals, defaults and rollback"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/service_xml.cpp",
+      "sha256": "68ae5b4bac5ac1b5b9b7689b805dedaf2a8e83ca231a14d22c640c153c3ee798",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "model buffer side ledger and publish-after-release branches; selected review, model architecture not imported"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/config/config2_pegtl.hpp",
+      "sha256": "9802df50455d1ea2f43460a1cea65f53645df0192f6966476cb2a01db7aa3a04",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "visitor/result interfaces and raw quoted span contract"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/config/config2_pegtl.cpp",
+      "sha256": "37a309f0d418fbf4bec4a655fadc4b33c59927be5a4e1783031140370ba4a33b",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "root/depth, raw escapes, comment variants and action failure semantics"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/config/store_parser.cpp",
+      "sha256": "29d673c1bfa76b135fdad08def3562c284be0064fab2fb25395d2e0f08636ebb",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "strict scalar validation, decoded attributes, native store fields and root selection"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/config/runtime_configuration_parser.cpp",
+      "sha256": "c8ed181896d65c71ce07977a2b7a534128d671f74c511734f44b9ab9cee0a3be",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "reserved section/key policy, aliases, staged settings publication"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/config/runtime_configuration_command_line.hpp",
+      "sha256": "e4dc3cc85ce1ec3e19c8d373b9e047d93ccef03ce92f4094a989dc3252f569cf",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "quote/token acceptance and malformed status"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/config/module_relative_filesystem.hpp",
+      "sha256": "2c6008be4d9a59cb1ff0b29eedd0f476b3e4a2ded90c273630393ecff9a1afa9",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "restricted leaf, exact prefix preservation and ghc dependency"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/handlers/auth_routes.cpp",
+      "sha256": "ae906946cedd49643ed54ecc403fa3bfe39a553c7a8482daae938579cf0a19bf",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "required ClientId and generated-code lease commit boundary"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/handlers/route_response_support.hpp",
+      "sha256": "262a4a12079a73c5c41cd9018c619391b7a786e8cc99bbf08802496dfeb280bb",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "selected formatter and StreamWriter capacity/escaping/allocator branches"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/handlers/route_error_contracts.hpp",
+      "sha256": "db12a085498fa4df251aff2d61992395e97512f85df45b0d3181cec2319a77a6",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "route-local code/description constants, no inferred universal text"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/handlers/selector_pipeline.cpp",
+      "sha256": "2d85dee0fd4b9d7474d6770bfd8edeff45478723c7101f57c992a84bff4e6cc2",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "settings/game selectors, defaults, online inversion and language override"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/handlers/handler_registry.cpp",
+      "sha256": "e478a9a98c77febcbcd94c167b19db91597b795d538ad7eafe0033ec29e13714",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "all route bindings and null default"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/router/route_lookup.cpp",
+      "sha256": "438c9f77db85de4c5a1e00050c9c1f2af15134cd601d58d56d5da9d273eb96f0",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "signed FNV prefilter plus exact name check and null validation"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/router/route_inventory.cpp",
+      "sha256": "c9d57812ddde160deef7ca7fd922065fd648c420063fc2e4f92fc9f503e74e30",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "primary versus compatibility/extension/local-social route separation"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/bootstrap_runner.cpp",
+      "sha256": "c7ba36bccaa726ea37203742f222ea98446c2162fc4f0efb68fc719e4a104c6a",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "stop before initialization/listener publication, shutdown error precedence"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/bootstrap_state.cpp",
+      "sha256": "17a2ae4250e2f0053bad90d0078984e604e6f4be701aeefb62205ebcba395af4",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "phase transitions, cancellation, failure publication and serialized snapshot"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "src/runtime/release_service_lifetime.cpp",
+      "sha256": "a2660a734f0f575ea03c27928dfc1dd6f4f8863a32f2907cd7da834ea7de8ea7",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "selected singleton acquire/physical-retirement retry; private model ABI not ported"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "brownfield",
+      "file": "tests/native/test_asio_iocp_write_backpressure.cpp",
+      "sha256": "d1d723766df0bb6ffdb50f93100ffa645a7362267c0b5afa1b1494a7ab497aa8",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "actual donor test, 32MiB payload/5s stall, genuine-IOCP macro gate versus portable result; compared to current network_policy real slow peers"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/xml/reader.cpp",
+      "sha256": "953ef1cbbecb8a4513d244016fc988093bec5e27297683a30e47c54e71b4e174",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "full reader comparison against current wrapper ownership and explicit-length semantics"
+      ],
+      "whole_file_semantic_closure": false
+    },
+    {
+      "donor": "bluefield",
+      "file": "src/xml/upstream_parser.cpp",
+      "sha256": "d4869662c79183c34d4575760398434e00e726a83fb750f797c3ef7ed33ccd5f",
+      "review_type": "SELECTED_BRANCH_REVIEW_WITH_CURRENT_COMPARISON",
+      "reviewed_scope": [
+        "namespace-local depth100 implementation override; rejected against owner depth500 contract"
+      ],
+      "whole_file_semantic_closure": false
+    }
+  ]
+}

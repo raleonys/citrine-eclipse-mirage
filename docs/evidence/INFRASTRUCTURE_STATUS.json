@@ -1,0 +1,137 @@
+{
+  "schema": "yellowfield.infrastructure-status.v1",
+  "task": "YF-INFRA-20261028",
+  "classification": "NOT_RELEASE",
+  "application_source_scope": {
+    "baseline_package_sha256": "c5ef45a3b1acc6eaccae35feeb7cb7c7d9652634167d27b48972550713527ad0",
+    "src_include_files_checked": 251,
+    "changed": [],
+    "result": "PASS_UNCHANGED_APPLICATION_SOURCES"
+  },
+  "brownfield_application_code_imported": false,
+  "bluefield_application_code_imported": false,
+  "documentation_and_requirement_scope": "RESTORED_AND_ADAPTED",
+  "golden_tools": "FOUR_REAL_PE_TOOLS_PLUS_MSVC_LINK_AUDIT_ADAPTED",
+  "golden_negative_tests": "PASS_SYNTHETIC_FIXTURES_ONLY",
+  "golden_pipeline": "SIX_STAGE_RUNNER_WITH_FAILURE_STOP_AND_ORIGINAL_DLL_IMMUTABILITY",
+  "golden_product_acceptance": "BLOCKED_TARGET_SEMANTICS",
+  "operator_profiles": 5,
+  "windows_powershell_cmd_execution": "NOT_RUN",
+  "msvc_execution": "NOT_RUN",
+  "windows_ctest": {
+    "runner": "Windows CTest group: Wine 10.0/Linux executable tests plus five native-host Python suites",
+    "passed": 161,
+    "total": 161,
+    "result": "PASS",
+    "report": "metadata/INFRASTRUCTURE_WINDOWS_TESTS.xml",
+    "scope": "153 app tests + CRT probe + 5 host-Python infrastructure suites + DLL smoke + hook-engine fixture"
+  },
+  "portable_ctest": {
+    "passed": 11,
+    "total": 11,
+    "runner": "Linux native, 6 portable application + 5 infrastructure suites",
+    "result": "PASS",
+    "report": "metadata/INFRASTRUCTURE_PORTABLE_TESTS.xml"
+  },
+  "source_files_verified": 464,
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "passed": 12,
+    "total": 12,
+    "command": "python -B scripts/run_source_qa.py",
+    "checks": [
+      {
+        "check": "source bytes",
+        "exit_code": 0
+      },
+      {
+        "check": "repository and resource ownership",
+        "exit_code": 0
+      },
+      {
+        "check": "owner integration requirements",
+        "exit_code": 0
+      },
+      {
+        "check": "metadata ownership",
+        "exit_code": 0
+      },
+      {
+        "check": "operator entrypoints",
+        "exit_code": 0
+      },
+      {
+        "check": "whole-source identity",
+        "exit_code": 0
+      },
+      {
+        "check": "FALCION source boundary",
+        "exit_code": 0
+      },
+      {
+        "check": "Golden PE negative regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "restricted named imports",
+        "exit_code": 0
+      },
+      {
+        "check": "MSVC link negative regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "Yellowfield infrastructure regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "Yellowfield directive regressions",
+        "exit_code": 0
+      }
+    ]
+  },
+  "fresh_extract": {
+    "result": "PASS",
+    "package_root": "FLAT",
+    "source_and_test_ledger_sha256": "14c2471f55b268ff0365097b3e65d2a88c2d3a464e489696010e9409b97e2934",
+    "application_targets": [
+      "preloader_l",
+      "preloader_l_source_host",
+      "preloader_l_crt_host"
+    ],
+    "compiled_dll_sha256": "8a297443db264ac68c8c506febad8b62ab3866f6e27ea7cf6ac460b72a337058",
+    "actual_dll_source_and_crt_tests_passed": 7,
+    "actual_dll_source_and_crt_tests_total": 7,
+    "runner": "Wine 10.0/Linux and native-host Python",
+    "old_reference_tree_required": false,
+    "build_report": "metadata/INFRASTRUCTURE_FRESH_BUILD.log",
+    "test_report": "metadata/INFRASTRUCTURE_FRESH_EXTRACT_TESTS.xml"
+  },
+  "flat_source_packaging": "IMPLEMENTED_WITH_SOURCE_MANIFEST_CRC_AND_EXACT_FILE_SET",
+  "owner_avatar_in_real_dll": "EXACT_SHA256_VERIFIED",
+  "final_consumer_abi": "NOT_IMPLEMENTED",
+  "automatic_application_bootstrap": "NOT_IMPLEMENTED",
+  "five_new_vendors": "LATER_PHASE_NOT_INTEGRATED",
+  "game_acceptance": "NOT_RUN",
+  "library_publication": false,
+  "source_qa_negative_suites": {
+    "yellowfield_infrastructure_tests": 17,
+    "yellowfield_target_requirement_tests": 11,
+    "restricted_import_cases": 12,
+    "msvc_link_policy_cases": 21,
+    "golden_pe_suite": "PASS_BROWNFIELD_ADAPTED_SYNTHETIC_SUITE"
+  },
+  "repeat_note": {
+    "initial_concurrent_repeat": "160/161; socket_pool_release_integration_contracts timed out during parallel clean compilation",
+    "final_serial_repeat": "161/161 without increasing test timeout or disabling assertions",
+    "prior_log": "metadata/INFRASTRUCTURE_CONCURRENT_TESTS.log"
+  },
+  "remaining": [
+    "Real Windows/MSVC, PowerShell/CMD execution not available in this Linux session",
+    "Golden product metadata/section/Consumer ABI binding incomplete; no final Golden acceptance",
+    "Automatic application bootstrap and real game acceptance incomplete",
+    "Five new vendor archive runtime integration remains the requested later phase"
+  ],
+  "record_scope": "Historical baseline for its named task; current vendor build/test identity is in VENDORING_STATUS.json",
+  "current_vendoring_status": "metadata/VENDORING_STATUS.json"
+}

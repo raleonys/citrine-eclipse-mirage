@@ -1,0 +1,44 @@
+{
+  "schema": "surge.owner-uploaded-inputs.v1",
+  "authority": "OWNER_UPLOADED_ARCHIVE_BYTES",
+  "independent_owner_signature_claimed": false,
+  "library_access": false,
+  "next_phase_vendor_archives": {
+    "PEGTL-main.zip": {
+      "sha256": "80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad",
+      "bytes": 906094,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/PEGTL-main.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    },
+    "asio-master.zip": {
+      "sha256": "1070a32d6c26ebf441d3de8b2fc89c5fc580f2fe0ca4aee8dfb5e818a5096af9",
+      "bytes": 4192700,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/asio-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    },
+    "filesystem-master.zip": {
+      "sha256": "5db08830a172ca4d8d2ecf98d6397041a3d0fa4d04584a0bcddb29778b68a251",
+      "bytes": 233550,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/filesystem-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    },
+    "minhook-master.zip": {
+      "sha256": "9ba14a6d748d65ca9ed83763a96a144d888f50cc5771dd9a798ad50ee35336f5",
+      "bytes": 84197,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/minhook-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    },
+    "tinyxml2-master.zip": {
+      "sha256": "8b7508a943e0a06d4c44d40fcc8c6e71f51dd43b342c4c29f768c53a370399cd",
+      "bytes": 819823,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/tinyxml2-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    }
+  },
+  "source_reference_document": "docs/evidence/contracts/SOURCE_INPUTS.json"
+}

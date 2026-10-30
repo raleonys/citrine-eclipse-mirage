@@ -1,0 +1,40 @@
+{
+  "schema": "yellowfield.repository.v1",
+  "source_directories": [
+    "cmake",
+    "docs",
+    "exports",
+    "governance",
+    "include",
+    "metadata",
+    "resources",
+    "scripts",
+    "src",
+    "tests",
+    "third_party",
+    "tools"
+  ],
+  "required_files": [
+    "AGENTS.md",
+    "CODEX_FIRST_PROMPT.md",
+    "README.md",
+    "CMakeLists.txt",
+    "CMakePresets.json",
+    "RELEASE_STATE.json",
+    "docs/DEVELOPMENT.md",
+    "docs/GOLDEN_PROTOCOLS.md",
+    "docs/ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md",
+    "docs/VALIDATION.md",
+    "governance/CURRENT_SCOPE.md",
+    "metadata/INTEGRATION_REQUIREMENTS.json",
+    "metadata/BROWNFIELD_TRANSFER_MATRIX_V2.json",
+    "metadata/METADATA_OWNERSHIP.json",
+    "metadata/HUMAN_ENTRYPOINT_REGISTRY.json",
+    "resources/branding/surge.png"
+  ],
+  "flat_source_package": true,
+  "nested_reference_archives": false,
+  "library_sync": false,
+  "first_party_module_depth": 1,
+  "layout_migration": "metadata/LAYOUT_MIGRATION.json"
+}

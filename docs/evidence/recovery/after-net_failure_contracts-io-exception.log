@@ -1,0 +1,2 @@
+PASS: io-exception
+WINE_PROGRAM_EXIT=0

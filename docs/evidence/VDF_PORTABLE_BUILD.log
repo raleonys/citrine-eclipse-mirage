@@ -1,0 +1,19 @@
+[1/13] Verify the five owner-supplied vendor trees
+asio: INSTALLED_MEMBER_HASHES_PASS
+filesystem: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+[2/13] Building CXX object CMakeFiles/portable_config_order.dir/src/config/order.cpp.o
+[3/13] Building CXX object CMakeFiles/portable_config_order.dir/tests/unit/config_order/order_tests.cpp.o
+[4/13] Building CXX object CMakeFiles/portable_config_order.dir/src/config/parser.cpp.o
+[5/13] Building CXX object CMakeFiles/portable_config_hash.dir/src/config/order.cpp.o
+[6/13] Building CXX object CMakeFiles/portable_config_hash.dir/src/config/parser.cpp.o
+[7/13] Building CXX object CMakeFiles/portable_config_hash.dir/src/config/hash_table.cpp.o
+[8/13] Building CXX object CMakeFiles/portable_config_hash.dir/tests/unit/config_hash/hash_table_tests.cpp.o
+[9/13] Building CXX object CMakeFiles/vdf_parser_regressions.dir/src/config/parser.cpp.o
+[10/13] Linking CXX executable portable_config_order
+[11/13] Building CXX object CMakeFiles/vdf_parser_regressions.dir/tests/unit/parser/vdf_regression_tests.cpp.o
+[12/13] Linking CXX executable portable_config_hash
+[13/13] Linking CXX executable vdf_parser_regressions

@@ -1,0 +1,791 @@
+{
+  "schema": "surge.broad-audit-validation.v1",
+  "classification": "NOT_RELEASE",
+  "state": "SOURCE_FIXES_CROSS_VALIDATED_NATIVE_OWNER_RERUN_PENDING",
+  "input_archive_sha256": "a3dc3b3861b3beaf916dbeabfabf4d07383c98662a9c467ef55b5f56a9f1b010",
+  "preserved_prior_source_archive_sha256": "dcf371d3b83786c048b328ad3c72c5dd6ec0bf734e1cef3b984a8ea743f08f48",
+  "scope": {
+    "files": 277,
+    "production_cpp": 64,
+    "reference_cpp": 74,
+    "headers": 139,
+    "mapped": 248,
+    "normalized_token_matches": 211,
+    "reviewed_differences": 37,
+    "owned_or_scoped_donor_files": 29
+  },
+  "review_area_count": 23,
+  "findings": [
+    {
+      "id": "B01",
+      "before": "TSAN exit66/data race in actual execution.cpp",
+      "after": "Same probe clean; actual concurrency test 120000 critical sections clean under TSAN",
+      "evidence": [
+        "BROAD_OWNER_RACE_BEFORE.log",
+        "BROAD_OWNER_RACE_AFTER.log",
+        "BROAD_EXECUTION_TSAN.log"
+      ]
+    },
+    {
+      "id": "B02",
+      "before": "Injected argument conversion failure threw=1 frees=0",
+      "after": "threw=1 frees=1; startup unit regression passes",
+      "evidence": [
+        "BROAD_ARGV_BEFORE.log",
+        "BROAD_ARGV_AFTER.log"
+      ]
+    },
+    {
+      "id": "B03",
+      "before": "Old real DLL entry with current fixture fails stale caller assertion, exit1",
+      "after": "Current fixture checks caller reset after both failed cleanup returns and success",
+      "evidence": [
+        "BROAD_SHUTDOWN_CALLER_BEFORE.log"
+      ]
+    },
+    {
+      "id": "B04",
+      "before": "Static proof: GetText(nullptr result for empty child) passed to implicit string_view(const char*) without validation",
+      "after": "Actual XML/router empty-child regressions reject and valid subsequent request succeeds",
+      "evidence": [
+        "BROAD_RELEASE_TESTS.xml",
+        "BROAD_DEBUG_TESTS.xml"
+      ],
+      "pre_fix_crash_execution": "NOT_RUN"
+    },
+    {
+      "id": "B05",
+      "before": "Old real misc handler body fails new exception-unlock assertion, exit1",
+      "after": "Both queue-construction and enqueue exceptions release once",
+      "evidence": [
+        "BROAD_MISC_HANDLERS_CONTRACTS_BEFORE.log"
+      ]
+    },
+    {
+      "id": "B06",
+      "before": "Static proof: owned initializer exception left guard=-1 and init lock held",
+      "after": "Injected first seed bad_alloc, same-owner retry and peer access pass",
+      "evidence": [
+        "BROAD_RELEASE_TESTS.xml",
+        "BROAD_DEBUG_TESTS.xml"
+      ],
+      "pre_fix_deadlock_execution": "NOT_RUN"
+    },
+    {
+      "id": "B07",
+      "before": "Old real native atomic backend fails current staging recovery contract, exit1",
+      "after": "Real handle/file fault-injection tests retain close/delete/copy ownership through retries",
+      "evidence": [
+        "BROAD_ATOMIC_STAGING_CONTRACTS_BEFORE.log"
+      ]
+    },
+    {
+      "id": "B08",
+      "before": "Old Environment body fails actual field/value dialog assertion, exit1",
+      "after": "Real Environment UTF8 diagnostic captured at MessageBoxW boundary",
+      "evidence": [
+        "BROAD_DIALOG_BEFORE.log"
+      ]
+    },
+    {
+      "id": "B09",
+      "before": "IPv6 loopback actual socket connect refused, exit1",
+      "after": "Same-port v4/v6 greetings, IPv6 candidate conflict/IPv4 release, shared cap pass",
+      "evidence": [
+        "BROAD_IPV6_BEFORE.log",
+        "BROAD_RELEASE_TESTS.xml"
+      ]
+    },
+    {
+      "id": "B10",
+      "before": "Old real Application plus controlled Execution observer fails premature readiness assertion, exit1",
+      "after": "Paused extra worker cannot release all-phase callback before profile/factory publication",
+      "evidence": [
+        "BROAD_STARTUP_PUBLICATION_CONTRACTS_BEFORE.log"
+      ]
+    }
+  ],
+  "test_results": {
+    "release_full": {
+      "total": 193,
+      "passed": 193,
+      "failures": [],
+      "skipped": []
+    },
+    "debug_affected": {
+      "total": 17,
+      "passed": 17,
+      "failures": [],
+      "skipped": []
+    },
+    "execution_tsan": {
+      "result": "PASS_NO_RACE_IN_SCOPED_TEST",
+      "critical_sections": 120000,
+      "platform": "Linux GCC; actual execution.cpp with compiler std::mutex platform fixture; real Windows SRW path separately covered by cross/Wine contracts"
+    },
+    "controlled_pre_fix_rejections": {
+      "normal_program_exit1": 7,
+      "tsan_race_exit66": 1,
+      "static_failure_path_proof_plus_new_regression": 2,
+      "no_original_binary_modified": true
+    }
+  },
+  "production_only": {
+    "BUILD_TESTING": false,
+    "PRELOADER_L_BUILD_SOURCE_API_DLL": false,
+    "build": "PASS",
+    "boundary": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "bf086492197e1793aafbb77c86dd40646c066e63406434d771453bbceea3e88b",
+      "map_sha256": "b25f3d9006a4967c4be8d2927ce192b89f1ad5bc40f8114132fd824c4fdab54d"
+    },
+    "runtime_cycles": 3,
+    "runtime": "PASS",
+    "evidence": "BROAD_PRODUCTION_RUNTIME.log"
+  },
+  "dll_inspections": {
+    "release": {
+      "classification": "NOT_RELEASE",
+      "execution_level": "READ_ONLY_BINARY_INSPECTION",
+      "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "header_metadata": {
+        "timestamp": "0x6AE3974F",
+        "linker_version": [
+          14,
+          0
+        ],
+        "rich_header": "ABSENT",
+        "os_version": [
+          6,
+          0
+        ],
+        "subsystem_version": [
+          6,
+          0
+        ],
+        "subsystem": 2,
+        "export_internal_name": "preloader.unsigned.dll",
+        "debug_directory": [
+          630784,
+          28
+        ],
+        "security_directory": [
+          0,
+          0
+        ],
+        "coff_symbol_table": [
+          706560,
+          4339
+        ],
+        "pe_checksum": "0x00000000",
+        "checksum_valid": false
+      },
+      "infrastructure_metadata_validation": {
+        "stage": "RAW_LINK_OUTPUT",
+        "result": "NOT_FINALIZED",
+        "differences": [
+          "TimeDateStamp: 0x6AE3974F",
+          "COFF symbol table present",
+          "debug directory not stripped: (630784, 28)"
+        ]
+      },
+      "dll_sha256": "803ff8700cfaee228c0864c9653df0d6f2fca9ad55c6957de66160c1742fdee2",
+      "unchanged": true,
+      "machine": "0x8664",
+      "entrypoint_rva": "0x11e0",
+      "sections": [
+        ".text",
+        ".rdata",
+        ".buildid",
+        ".data",
+        ".pdata",
+        ".tls",
+        ".rsrc",
+        ".reloc",
+        "/4",
+        "/18",
+        "/58",
+        "/70",
+        "/82",
+        "/33",
+        "/47"
+      ],
+      "export_count": 3,
+      "imports": [
+        "MSWSOCK.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "WS2_32.DLL",
+        "CRYPT32.DLL",
+        "LIBC++.DLL",
+        "LIBUNWIND.DLL",
+        "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+        "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+        "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+        "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+      ],
+      "resources": [
+        {
+          "path": [
+            16,
+            1,
+            1033
+          ],
+          "bytes": 572,
+          "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+        }
+      ],
+      "exact_owner_avatar": true,
+      "expected_import_module_order": [
+        "CRYPT32.DLL",
+        "WS2_32.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "MSWSOCK.DLL"
+      ],
+      "import_module_order_matches": false,
+      "crypt32_static_import": true,
+      "crypt32_named_imports": [
+        "CryptQueryObject"
+      ],
+      "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+      "avatar_data": {
+        "profile": {
+          "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        },
+        "fallback": {
+          "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        }
+      },
+      "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+      "resource_metadata_errors": [],
+      "golden_shipping_acceptance": "NOT_RUN",
+      "game_acceptance": "NOT_RUN"
+    },
+    "debug": {
+      "classification": "NOT_RELEASE",
+      "execution_level": "READ_ONLY_BINARY_INSPECTION",
+      "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "header_metadata": {
+        "timestamp": "0x6AE39977",
+        "linker_version": [
+          14,
+          0
+        ],
+        "rich_header": "ABSENT",
+        "os_version": [
+          6,
+          0
+        ],
+        "subsystem_version": [
+          6,
+          0
+        ],
+        "subsystem": 2,
+        "export_internal_name": "preloader.unsigned.dll",
+        "debug_directory": [
+          1236992,
+          28
+        ],
+        "security_directory": [
+          0,
+          0
+        ],
+        "coff_symbol_table": [
+          13789184,
+          12710
+        ],
+        "pe_checksum": "0x00000000",
+        "checksum_valid": false
+      },
+      "infrastructure_metadata_validation": {
+        "stage": "RAW_LINK_OUTPUT",
+        "result": "NOT_FINALIZED",
+        "differences": [
+          "TimeDateStamp: 0x6AE39977",
+          "COFF symbol table present",
+          "debug directory not stripped: (1236992, 28)"
+        ]
+      },
+      "dll_sha256": "5afebd07e20c255aa470704c80e905fde6a35419ae91866f92426cfc281634fc",
+      "unchanged": true,
+      "machine": "0x8664",
+      "entrypoint_rva": "0x11e0",
+      "sections": [
+        ".text",
+        ".rdata",
+        ".buildid",
+        ".data",
+        ".pdata",
+        ".tls",
+        ".rsrc",
+        ".reloc",
+        "/4",
+        "/18",
+        "/58",
+        "/70",
+        "/82",
+        "/33",
+        "/47"
+      ],
+      "export_count": 3,
+      "imports": [
+        "MSWSOCK.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "WS2_32.DLL",
+        "CRYPT32.DLL",
+        "LIBC++.DLL",
+        "LIBUNWIND.DLL",
+        "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+        "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+        "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+        "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+      ],
+      "resources": [
+        {
+          "path": [
+            16,
+            1,
+            1033
+          ],
+          "bytes": 572,
+          "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+        }
+      ],
+      "exact_owner_avatar": true,
+      "expected_import_module_order": [
+        "CRYPT32.DLL",
+        "WS2_32.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "MSWSOCK.DLL"
+      ],
+      "import_module_order_matches": false,
+      "crypt32_static_import": true,
+      "crypt32_named_imports": [
+        "CryptQueryObject"
+      ],
+      "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+      "avatar_data": {
+        "profile": {
+          "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        },
+        "fallback": {
+          "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        }
+      },
+      "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+      "resource_metadata_errors": [],
+      "golden_shipping_acceptance": "NOT_RUN",
+      "game_acceptance": "NOT_RUN"
+    },
+    "production": {
+      "classification": "NOT_RELEASE",
+      "execution_level": "READ_ONLY_BINARY_INSPECTION",
+      "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "header_metadata": {
+        "timestamp": "0x6AE3981A",
+        "linker_version": [
+          14,
+          0
+        ],
+        "rich_header": "ABSENT",
+        "os_version": [
+          6,
+          0
+        ],
+        "subsystem_version": [
+          6,
+          0
+        ],
+        "subsystem": 2,
+        "export_internal_name": "preloader.unsigned.dll",
+        "debug_directory": [
+          630784,
+          28
+        ],
+        "security_directory": [
+          0,
+          0
+        ],
+        "coff_symbol_table": [
+          706560,
+          4339
+        ],
+        "pe_checksum": "0x00000000",
+        "checksum_valid": false
+      },
+      "infrastructure_metadata_validation": {
+        "stage": "RAW_LINK_OUTPUT",
+        "result": "NOT_FINALIZED",
+        "differences": [
+          "TimeDateStamp: 0x6AE3981A",
+          "COFF symbol table present",
+          "debug directory not stripped: (630784, 28)"
+        ]
+      },
+      "dll_sha256": "bf086492197e1793aafbb77c86dd40646c066e63406434d771453bbceea3e88b",
+      "unchanged": true,
+      "machine": "0x8664",
+      "entrypoint_rva": "0x11e0",
+      "sections": [
+        ".text",
+        ".rdata",
+        ".buildid",
+        ".data",
+        ".pdata",
+        ".tls",
+        ".rsrc",
+        ".reloc",
+        "/4",
+        "/18",
+        "/58",
+        "/70",
+        "/82",
+        "/33",
+        "/47"
+      ],
+      "export_count": 3,
+      "imports": [
+        "MSWSOCK.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "WS2_32.DLL",
+        "CRYPT32.DLL",
+        "LIBC++.DLL",
+        "LIBUNWIND.DLL",
+        "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+        "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+        "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+        "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+      ],
+      "resources": [
+        {
+          "path": [
+            16,
+            1,
+            1033
+          ],
+          "bytes": 572,
+          "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+        }
+      ],
+      "exact_owner_avatar": true,
+      "expected_import_module_order": [
+        "CRYPT32.DLL",
+        "WS2_32.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "MSWSOCK.DLL"
+      ],
+      "import_module_order_matches": false,
+      "crypt32_static_import": true,
+      "crypt32_named_imports": [
+        "CryptQueryObject"
+      ],
+      "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+      "avatar_data": {
+        "profile": {
+          "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        },
+        "fallback": {
+          "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        }
+      },
+      "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+      "resource_metadata_errors": [],
+      "golden_shipping_acceptance": "NOT_RUN",
+      "game_acceptance": "NOT_RUN"
+    }
+  },
+  "preservation": "BROAD_PRESERVATION.json",
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "checks": 16,
+    "evidence": "BROAD_SOURCE_QA.json"
+  },
+  "clean_extraction": {
+    "extraction": "PASS_CRC_MEMBER_MANIFEST_AND_HASH_VERIFIED",
+    "source_qa": {
+      "result": "PASS_SOURCE_QA",
+      "checks": 16,
+      "evidence": "BROAD_CLEAN_SOURCE_QA.json"
+    },
+    "production_configure": "PASS",
+    "production_build": "PASS",
+    "BUILD_TESTING": false,
+    "PRELOADER_L_BUILD_SOURCE_API_DLL": false,
+    "runtime_cycles": 3,
+    "runtime": "PASS",
+    "compiled_src_include_identities_matched": 277,
+    "boundary": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "d7934d557202d42424eced1784ceb4d76888bfbb1035a69619b03cd1179d2127",
+      "map_sha256": "b25f3d9006a4967c4be8d2927ce192b89f1ad5bc40f8114132fd824c4fdab54d"
+    },
+    "inspection": {
+      "classification": "NOT_RELEASE",
+      "execution_level": "READ_ONLY_BINARY_INSPECTION",
+      "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "header_metadata": {
+        "timestamp": "0x6AE39ACD",
+        "linker_version": [
+          14,
+          0
+        ],
+        "rich_header": "ABSENT",
+        "os_version": [
+          6,
+          0
+        ],
+        "subsystem_version": [
+          6,
+          0
+        ],
+        "subsystem": 2,
+        "export_internal_name": "preloader.unsigned.dll",
+        "debug_directory": [
+          630784,
+          28
+        ],
+        "security_directory": [
+          0,
+          0
+        ],
+        "coff_symbol_table": [
+          706560,
+          4339
+        ],
+        "pe_checksum": "0x00000000",
+        "checksum_valid": false
+      },
+      "infrastructure_metadata_validation": {
+        "stage": "RAW_LINK_OUTPUT",
+        "result": "NOT_FINALIZED",
+        "differences": [
+          "TimeDateStamp: 0x6AE39ACD",
+          "COFF symbol table present",
+          "debug directory not stripped: (630784, 28)"
+        ]
+      },
+      "dll_sha256": "d7934d557202d42424eced1784ceb4d76888bfbb1035a69619b03cd1179d2127",
+      "unchanged": true,
+      "machine": "0x8664",
+      "entrypoint_rva": "0x11e0",
+      "sections": [
+        ".text",
+        ".rdata",
+        ".buildid",
+        ".data",
+        ".pdata",
+        ".tls",
+        ".rsrc",
+        ".reloc",
+        "/4",
+        "/18",
+        "/58",
+        "/70",
+        "/82",
+        "/33",
+        "/47"
+      ],
+      "export_count": 3,
+      "imports": [
+        "MSWSOCK.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "WS2_32.DLL",
+        "CRYPT32.DLL",
+        "LIBC++.DLL",
+        "LIBUNWIND.DLL",
+        "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+        "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+        "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+        "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+        "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+        "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+        "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+      ],
+      "resources": [
+        {
+          "path": [
+            16,
+            1,
+            1033
+          ],
+          "bytes": 572,
+          "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+        }
+      ],
+      "exact_owner_avatar": true,
+      "expected_import_module_order": [
+        "CRYPT32.DLL",
+        "WS2_32.DLL",
+        "KERNEL32.DLL",
+        "USER32.DLL",
+        "SHELL32.DLL",
+        "MSWSOCK.DLL"
+      ],
+      "import_module_order_matches": false,
+      "crypt32_static_import": true,
+      "crypt32_named_imports": [
+        "CryptQueryObject"
+      ],
+      "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+      "avatar_data": {
+        "profile": {
+          "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        },
+        "fallback": {
+          "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+          "exact_input": true,
+          "storage": [
+            {
+              "section": ".rdata",
+              "read_only": true
+            }
+          ],
+          "present_as_data": true
+        }
+      },
+      "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+      "resource_metadata_errors": [],
+      "golden_shipping_acceptance": "NOT_RUN",
+      "game_acceptance": "NOT_RUN"
+    },
+    "scope": "Actual extracted candidate archive built from scratch; final recording adds documents/evidence only; all compiled source identities must match delivered archive"
+  },
+  "native_msvc_golden": "NOT_RUN_FOR_CURRENT_CHANGES",
+  "game_consumer_retest": "NOT_RUN_FOR_CURRENT_CHANGES",
+  "historical_owner_acceptance": "Prior Windows/Golden/game PASS remains historical; not inherited by changed code",
+  "scope_limits": [
+    "Static external symbol reachability does not establish executed lines/branches or cover every virtual/dynamic route",
+    "211 normalized reference matches are not proof of complete original binary behavior",
+    "Foreign provider ABI, private CRT/global/EH layouts and arbitrary pointer domains are not claimed",
+    "Filesystem group power-loss/cross-process atomicity and every OS error/version are not established"
+  ],
+  "elapsed_acceptance_class": "CROSS_BUILD_WINE_PLUS_SCOPED_LINUX_SANITIZER_AND_SOURCE_QA",
+  "evidence_sha256": {
+    "BROAD_ARGV_AFTER.log": "7e469af351b6621fcd7b87663a2b86791b8575e96598d9d99c1aae225015cbb9",
+    "BROAD_ARGV_BEFORE.log": "5948512b1a1c92f0ee3841fef3dc9d98fb29d0f9d8db9ed563ab7aeb93291840",
+    "BROAD_ATOMIC_STAGING_CONTRACTS_BEFORE.log": "c49b2f8abe0894f06027f8b5eb9b0397d4dd2c4662e41e7cd5664e886353f06e",
+    "BROAD_AUDIT_PROCEDURE.py.txt": "1f0902470cddf1973859eb01b7e431bbe94854a80a7c5e2c26539f85a420548b",
+    "BROAD_CLEAN_BUILD.log": "3158ba7a64888f02eb5200bd9c8339135bb523c7c6fba9162385935ab3cbf864",
+    "BROAD_CLEAN_CONFIGURE.log": "56d74c8396ae034b980cc4da1ce651ea4042bfc56c6e0d21ca5a34f072cbfe79",
+    "BROAD_CLEAN_RUNTIME.log": "25caa27a9e9d6f32210db822ebdc4a99afdf951ed10a66b2f034ba0e87b3ee02",
+    "BROAD_CLEAN_SOURCE_QA.json": "bb1a601cdf8560f49d512ea34017f44554d64bcfa9f62bf814960e213be168ea",
+    "BROAD_DEBUG_TESTS.log": "62b4ad9f4f42b4263495b155d6100abdd90a3cab25aad8c4865d0df35edd8bbe",
+    "BROAD_DEBUG_TESTS.xml": "1cb942e239d0a1d3de6a058c73ddd190ac59bb795019538a3fb23f0d21433b92",
+    "BROAD_DIALOG_BEFORE.log": "0c145bfa486fc550f7e341072c834706b220f88238dd389d667d8167375ba895",
+    "BROAD_EXECUTION_TSAN.log": "a4c1695eac345bd1607107730936d4c66596c37400f18cae490628e574ce74db",
+    "BROAD_IPV6_BEFORE.log": "93fe892cc7909c244484fd8320be539974948e1433f1d34223be84952d77365a",
+    "BROAD_MISC_HANDLERS_CONTRACTS_BEFORE.log": "564fe3d588a680f5333e1142e395e82ebb7465b71b7b345f4fd5a59fda34c7f2",
+    "BROAD_OWNER_RACE_AFTER.log": "c9cc8c596f99fce1c668bfaff28b3695a71be48aaa26e9f988af645665d96d15",
+    "BROAD_OWNER_RACE_BEFORE.log": "32faf7bcbfe21119d3685a54d59efc219615b28b5cf0dac158ea7691a78cb0b9",
+    "BROAD_PRESERVATION.json": "752ae637e0b1ee06be35b32a8a08100320b436090d47fb4e37fe9a9fd0e37b30",
+    "BROAD_PRODUCTION_RUNTIME.log": "25caa27a9e9d6f32210db822ebdc4a99afdf951ed10a66b2f034ba0e87b3ee02",
+    "BROAD_RELEASE_TESTS.log": "a738b629c6d093db60a4e5e87176f5889955db5078ebf39205681c4c58ccce92",
+    "BROAD_RELEASE_TESTS.xml": "3905a6be68912622a8eece42a954fac119b0dc234119cc65ed2386cb3202f8ac",
+    "BROAD_SHUTDOWN_CALLER_BEFORE.log": "7b7fdf42e96eb7d3a13194f8312e9a51902a1bde67d3dcb70a4511e8efc0b4fb",
+    "BROAD_SOURCE_CHANGES.json": "89ad2d7d3f9511e8b1f168044dfc0ea1776d403b63a17b6ea8260409b6d2427a",
+    "BROAD_SOURCE_INVENTORY.json": "1f2dcf7bf46a1bcfa9822f5afcd48cb0aa0d9a2aa242b1b0e00a49f9c442051a",
+    "BROAD_SOURCE_MATRIX.csv": "a9159423ddcf077097ff406f2f2b6f1d847d90a1a13943a4ff4452c3904225bb",
+    "BROAD_SOURCE_QA.json": "6468d44379b0f416472fdb1c24217dc72bff69dcc611a401140dea54cbd34906",
+    "BROAD_STARTUP_PUBLICATION_CONTRACTS_BEFORE.log": "673d004129257ce1efa4d7cb5206a416714f5d17913324099c97ef01757f2cf9"
+  }
+}

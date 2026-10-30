@@ -1,0 +1,254 @@
+{
+  "schema": "yellowfield.vendoring-status.v1",
+  "task": "YF-VENDOR-CONTINUE-20261028",
+  "classification": "NOT_RELEASE",
+  "source": "OWNER_SUPPLIED_3RD_PARTY_ARCHIVES",
+  "brownfield_vendors_used": false,
+  "archive_integrity": "PASS_5_OF_5",
+  "installed_member_integrity": "PASS_2851_OF_2851",
+  "symlinks_preserved": 2,
+  "vendor_source_changes": false,
+  "build_tree_vendor_patches": [],
+  "tinyxml2_default_max_element_depth": 500,
+  "legacy_re_profile_max_element_depth": 100,
+  "runtime_xml_default_profile": "SUPPLIED_VENDOR_DEFAULT_500; original RE parity not claimed",
+  "cmake_targets": [
+    "preloader_l_asio",
+    "preloader_l_filesystem",
+    "preloader_l_minhook",
+    "preloader_l_pegtl",
+    "preloader_l_tinyxml2"
+  ],
+  "final_runtime_adapter_pending": [
+    "asio",
+    "filesystem",
+    "pegtl"
+  ],
+  "tests": {
+    "linux_portable_group": {
+      "total": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "report": "metadata/VENDOR_CONTINUED_PORTABLE_TESTS.xml"
+    },
+    "windows_configured_group": {
+      "total": 166,
+      "passed": 166,
+      "failed": 0,
+      "skipped": 0,
+      "runner": "Windows x64 executables via Wine 10.0/Linux plus native-host Python",
+      "toolchain": "LLVM-MinGW 20251118 / Clang 21.1.6 UCRT x64",
+      "report": "metadata/VENDOR_CONTINUED_WINDOWS_TESTS.xml"
+    },
+    "vendor_integrity_and_packaging_negative_cases": 11,
+    "configure_compatibility_gates": [
+      {
+        "case": "clang23-strict-no-tests",
+        "exit_code": 1,
+        "expected_configure_success": false,
+        "result": "PASS"
+      },
+      {
+        "case": "clang23-diagnostic-no-tests",
+        "exit_code": 0,
+        "expected_configure_success": true,
+        "result": "PASS"
+      },
+      {
+        "case": "clang21-strict-no-tests",
+        "exit_code": 0,
+        "expected_configure_success": true,
+        "result": "PASS"
+      }
+    ]
+  },
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "checks_passed": 14,
+    "checks_total": 14,
+    "command": "python -B scripts/run_source_qa.py",
+    "report": "build/qa/VENDOR_COMPATIBLE_SOURCE_QA_FINAL.json"
+  },
+  "fresh_package": {
+    "result": "PASS_CLEAN_EXTRACT_BUILD_DLL_LOAD_AND_VENDOR_TESTS",
+    "root": "FLAT",
+    "typed_symlinks_preserved": 2,
+    "source_and_vendor_ledger_sha256": "b4ec3283c67c5f639c30580460c045bc5d2fcd0e5eb94aaf1216f70752ce3242",
+    "dll_sha256": "ae2ddd0f2974c99e63c44b861a331f69b557b99e6a214c5a85e439b867056338",
+    "export_count": 2343,
+    "tests": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "targets": [
+      "preloader_l",
+      "preloader_l_source_host",
+      "preloader_l_crt_host",
+      "vendor_api_smoke",
+      "vendor_io_contracts",
+      "vendor_pegtl_smoke",
+      "xml_reader_contracts",
+      "hook_engine_fixture_tests"
+    ],
+    "compiled_input_sha256": {
+      "CMakeLists.txt": "28094140c25ef3ef154c82445881eaace2b1397a7b9c1cbedfa3dd9a7db9725e",
+      "CMakePresets.json": "81be96d5a589271d399131bea92babc7a0db44d4fbc2b470c79aca200f6a7700",
+      "cmake/PortableChecks.cmake": "79dec63c090cf99c299908071de1268b50a370e2933406eec6fb712f66837fb1",
+      "cmake/VendorChecks.cmake": "eafe2ded753dc84080fa33ee23d090f4bec26e3ff672940e84085ad9205cbd04",
+      "cmake/InfrastructureChecks.cmake": "6b400c0d9ffcc1aa11c3646825caaab190436fb9f2ab198d3c94d3689cd8c430",
+      "cmake/VendoredDependencies.cmake": "5ee2e2af8abd28e09b944305ded4e0d45f1e9acccf84f0b3abda9bcd13c9b43a",
+      "cmake/Sources.cmake": "a02c63b615f7eb3e9db3cec5b95440d840cf72a816574953ae978d0a791b2bef",
+      "cmake/Tests.cmake": "6c99e5fb4980324cf2e345e180afba5f7ea351208b04f3e766109b9611aaf18a",
+      "cmake/toolchains/llvm-mingw-x64.cmake": "23e689d1de6e3c2f436562566d3bd946ba217580e9bc89e1f1b12d1214468e13"
+    },
+    "build_report": "metadata/VENDOR_CONTINUED_FRESH_BUILD.log",
+    "test_report": "metadata/VENDOR_CONTINUED_FRESH_TESTS.xml",
+    "owner_avatar_in_dll": "EXACT_SHA256_VERIFIED",
+    "existing_reference_tree_required": false,
+    "validation_input": "Review ZIP clean-extracted before recording final validation metadata and documentation links; all CMake inputs and complete source/vendor ledger identical to final package"
+  },
+  "game_acceptance": "NOT_RUN",
+  "library_publication": false,
+  "pegtl_public_input_compatibility": {
+    "linux_gcc": "PASS_COMPILE_AND_RUNTIME_FIXTURE",
+    "llvm_mingw_clang23_libcxx": "INCOMPATIBLE_UNCHANGED; rejected by default configure gate",
+    "msvc": "NOT_RUN",
+    "vendor_patch_applied": false,
+    "llvm_mingw_clang21_libcxx": "PASS_COMPILE_AND_WINDOWS_WINE_RUNTIME_FIXTURE"
+  },
+  "first_party_implementation_cpp_changed": false,
+  "src_include_changed": {
+    "files": [],
+    "reason": "No application source/header changes relative to previous vendored source package"
+  },
+  "dll_build": "PASS_WINDOWS_X64_DEVELOPMENT_DLL",
+  "original_native_abi_or_game_acceptance": "NOT_RUN",
+  "bound_existing_dll_adapter_vendors": [
+    "minhook",
+    "tinyxml2"
+  ],
+  "production_runtime_acceptance": "NOT_RUN",
+  "consumer_build_configuration": {
+    "asio": "ASIO_STANDALONE; Windows actual thread capability ASIO_HAS_THREADS=1",
+    "tinyxml2": "vendor default depth 500; no source/build patch"
+  },
+  "remaining": [
+    "LLVM23/libc++23 remains incompatible with the supplied PEGTL snapshot; use tested LLVM21 toolchain or separately verify MSVC, without modifying vendor sources",
+    "Asio/filesystem/PEGTL final production adapter/grammar bindings are separate from vendoring",
+    "Actual Windows/MSVC, Consumer ABI/bootstrap and game acceptance remain unverified/incomplete as previously recorded"
+  ],
+  "source_package": "yellowfield-vendor-compatible-source.zip",
+  "source_vendor_files_tracked": 3305,
+  "previous_validation": {
+    "source_package": "yellowfield-vendored-source.zip",
+    "tests": {
+      "windows_configured_group": {
+        "total": 165,
+        "passed": 164,
+        "failed": 0,
+        "skipped": 1,
+        "runner": "Windows executables via Wine 10.0/Linux plus native-host Python",
+        "skipped_test": "vendor_pegtl_toolchain_unavailable",
+        "report": "metadata/VENDOR_WINDOWS_TESTS.xml"
+      },
+      "linux_portable_group": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "report": "metadata/VENDOR_PORTABLE_TESTS.xml"
+      },
+      "vendor_integrity_and_packaging_negative_cases": 11,
+      "initial_asio_failure": "Preserved in VENDOR_WINDOWS_INITIAL_TESTS.log; fixed by declaring actual thread capability in CMake, with the timer test retained"
+    },
+    "fresh_package": {
+      "result": "PASS_CLEAN_EXTRACT_BUILD_AND_RUNTIME_TESTS",
+      "root": "FLAT",
+      "typed_symlinks_preserved": 2,
+      "source_and_vendor_ledger_sha256": "b73c644a05014d94496c4554bfa68b291e390252d2a7cc140d6636861a45e5f3",
+      "dll_sha256": "fa47b3c7e5bfed0adf6413591d891fdfdd4bc8ad5f25e8ca953b10009b1f6555",
+      "targets": [
+        "preloader_l",
+        "preloader_l_source_host",
+        "preloader_l_crt_host",
+        "vendor_api_smoke",
+        "xml_reader_contracts",
+        "hook_engine_fixture_tests"
+      ],
+      "compiled_input_sha256": {
+        "CMakeLists.txt": "28094140c25ef3ef154c82445881eaace2b1397a7b9c1cbedfa3dd9a7db9725e",
+        "cmake/VendoredDependencies.cmake": "9aa60b91a73e6445270c94da67e0d403f52e6c4eb7c83767a33dffc69bc05730",
+        "cmake/VendorChecks.cmake": "e44d92f1812db220d75d9eb5b4af41c82dc8707430757ed9e294af9e7196be25",
+        "cmake/Sources.cmake": "a02c63b615f7eb3e9db3cec5b95440d840cf72a816574953ae978d0a791b2bef",
+        "cmake/Tests.cmake": "6c99e5fb4980324cf2e345e180afba5f7ea351208b04f3e766109b9611aaf18a"
+      },
+      "tests": {
+        "total": 13,
+        "passed": 12,
+        "failed": 0,
+        "skipped": 1,
+        "skipped_test": "vendor_pegtl_toolchain_unavailable"
+      },
+      "build_report": "metadata/VENDOR_FRESH_BUILD.log",
+      "test_report": "metadata/VENDOR_FRESH_TESTS.xml",
+      "existing_reference_tree_required": false,
+      "owner_avatar_in_dll": "EXACT_SHA256_VERIFIED"
+    },
+    "toolchain": "LLVM-MinGW 20261006 / Clang 23.1.3; historical before compatibility follow-up"
+  },
+  "parent_task": "YF-VENDOR-20261028",
+  "compatibility_gate": {
+    "default": "ON",
+    "runs_with_BUILD_TESTING_OFF": true,
+    "option": "PRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY",
+    "OFF_mode": "EXPLICIT_DIAGNOSTIC_ONLY; unavailable PEGTL test stays skipped"
+  },
+  "tested_compatible_toolchain": {
+    "kind": "Windows x64 cross-toolchain; not MSVC",
+    "release": "LLVM-MinGW 20251118 UCRT",
+    "clang_version": "21.1.6",
+    "archive": "llvm-mingw-20251118-ucrt-ubuntu-22.04-x86_64.tar.xz",
+    "download_url": "https://github.com/mstorsjo/llvm-mingw/releases/download/20251118/llvm-mingw-20251118-ucrt-ubuntu-22.04-x86_64.tar.xz",
+    "archive_bytes": 80012108,
+    "archive_sha256": "53a0c22caa46b501e1c089e1c31b24a7c0e0d5a86f8ad12b131aafd4cee01ef4",
+    "expected_digest_source": "GitHub release asset API digest, checked against downloaded bytes; not an independent signature",
+    "product_source_package_contains_toolchain": false,
+    "configure_preset": "llvm-mingw-x64-vendors",
+    "configuration": "Release",
+    "windows_runner": "Wine 10.0 on Linux",
+    "msvc_native_execution": "NOT_RUN"
+  },
+  "application_and_vendor_baseline_comparison": {
+    "baseline": "yellowfield-vendored-source.zip",
+    "compared_files_or_links": 3102,
+    "changed": [],
+    "added": []
+  },
+  "vendor_io_fixture_scope": "Real loopback TCP async accept/connect/read/write/EOF/cancel; Unicode/binary file operations. Not application production transport/storage policy.",
+  "dll_current_development_build": {
+    "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+    "dll_sha256": "d4a3310a14e4e4eda6482d09eac35e9797c5ab1a0c591c9e18f3c1d911805f19",
+    "exports": 2343,
+    "resources": [
+      {
+        "path": [
+          10,
+          101,
+          1033
+        ],
+        "bytes": 3653,
+        "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"
+      }
+    ],
+    "exact_owner_avatar": true,
+    "game_acceptance": "NOT_RUN"
+  },
+  "validation_scope": "HISTORICAL_VENDOR_COMPATIBILITY_BASELINE_BEFORE_VDF_INTEGRATION",
+  "current_application_status": "metadata/VDF_PARSER_STATUS.json",
+  "record_scope": "Historical task snapshot. Existing test/hash records remain historical; current application integration is in RUNTIME_BINDING_STATUS.json.",
+  "superseded_by_application_status": "metadata/RUNTIME_BINDING_STATUS.json",
+  "current_windows_packaging_status": "metadata/WINDOWS_VENDOR_PACKAGE_FIX.json"
+}

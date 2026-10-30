@@ -1,0 +1,28 @@
+{
+  "schema": "surge.session-transport.v1",
+  "classification": "NOT_RELEASE",
+  "owner": "Explicit owner adoption of bounded asynchronous session transport",
+  "documentation": "docs/SESSION_TRANSPORT.md",
+  "defaults": {
+    "max_sessions": 128,
+    "max_frame_bytes_including_nul": 1048576,
+    "max_combined_response_or_greeting_bytes": 8388608,
+    "receive_idle_ms": 30000,
+    "receive_frame_ms": 10000,
+    "send_idle_ms": 5000,
+    "handler_workers": 2,
+    "handler_pending_jobs": 128
+  },
+  "configuration_override": false,
+  "source_construction_policy": "EXPLICIT_CPP_SESSIONPOLICY_AVAILABLE_TO_HOSTS; APPLICATION_USES_DEFAULTS",
+  "ordering": "NEXT_FRAME_AFTER_COMPLETE_COMBINED_DELIVERY",
+  "event": "RESERVE_PLAINTEXT_FRONT; LOCK_FREE_COMPLETION; DEFER_PHYSICAL_RETIREMENT_TO_LOCKED_ACCESS",
+  "failed_event_delivery": "RETRY_ON_LATER_REQUEST; NO_EXACTLY_ONCE_ACK_CLAIM",
+  "greeting": "OWNED_ASYNCHRONOUS_WRITE_PIPELINE",
+  "deadlines": "MONOTONIC_FIXED_FRAME_PROGRESS_IDLE_GENERATION_TAGGED_TIMERS",
+  "admission": "PAUSE_ACCEPT_AT_SHARED_CAP_RESUME_ON_RETIRE; CHECK_COMPLETING_ACCEPTS_FROM_BOTH_FAMILIES_BEFORE_FACTORY",
+  "stop": "CANCEL_TIMERS_AND_SOCKETS_DISCARD_QUEUED_JOIN_RUNNING_DRAIN_IO",
+  "public_abi": "UNCHANGED_THREE_EXPORTS",
+  "vendor_changes": false,
+  "validation": "docs/evidence/SESSION_TRANSPORT.json"
+}

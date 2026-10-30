@@ -1,0 +1,110 @@
+{
+  "schema": "yellowfield.production-import-fix.v1",
+  "task": "YF-PRODUCTION-20261029",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_RELEASE_DEBUG_NAMED_RUNTIME_SOURCE_QA_VALIDATED_NATIVE_MSVC_RERUN_REQUIRED_NOT_RELEASE",
+  "parent_source_package": "yellowfield-golden-avatar-source.zip",
+  "parent_sha256": "7213c420d08bffffd2e13ce0057bad964238334f67b174fec09c7dd3fafeff13",
+  "source_package": "yellowfield-production-import-fix-source.zip",
+  "owner_correction": "11th CryptQueryObject hook must preserve a real static CRYPT32 import as Brownfield/Bluefield did; final preloader_l.dll expected under dist",
+  "new_native_user_log": {
+    "file_id": "file_000000005748820ab5351fa4830dfbdd",
+    "bytes": 26282,
+    "sha256": "156dc94e71bd139d7a1d174ee7765fa37027abb6c3c75ea56312157f22add74f",
+    "evidence_class": "USER_NATIVE_MSVC_LOG_OF_PARENT_SOURCE_NOT_LOCAL_RUN",
+    "compiler": "MSVC19.51.36260.0",
+    "result": "GOLDEN_FIRST_FIVE_PASS_FALCION_FAIL_GENERATED_PYTHON_CACHE",
+    "first_five": [
+      "MSVC Build",
+      "URSYNEX Golden Finalizer",
+      "ARYRA Golden Layout",
+      "MUSTAVEX Golden Metadata",
+      "CORVEXON Golden Trail"
+    ],
+    "failed_stage": "FALCION Golden Cleaning",
+    "failed_file": "scripts/__pycache__/golden_policy.cpython-313.pyc",
+    "raw_dll_sha256": "c00ef12692972b93798eff440bc760135e4c8e4d2ddd35adcc0ec1406f366913",
+    "finalized_candidate_sha256": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651",
+    "avatar_and_VERSIONINFO": "PASS_NATIVE_LOG",
+    "OLE32_import": "ABSENT_NATIVE_LOG",
+    "CRYPT32_import": "ABSENT_IN_PARENT_FIXED_IN_THIS_SOURCE",
+    "report": "metadata/PRODUCTION_IMPORT_USER_GOLDEN_INPUT.log"
+  },
+  "bytecode_root_cause": "Parent -B was not inherited by three CORVEXON child interpreters; child imports compiled golden_policy.py in the source tree",
+  "bytecode_fix": [
+    "Explicit -B in all three nested CORVEXON child commands",
+    "PYTHONDONTWRITEBYTECODE=1 inherited by all pipeline descendants and scoped build process",
+    "Only manifest-owned first-party Python module cache files are removed before build; arbitrary unowned caches and source drift remain FALCION failures"
+  ],
+  "static_import_fix": [
+    "Link crypt32 import library on the application core interface",
+    "Use SDK &::CryptQueryObject for owned native hook11 target",
+    "Remove now-redundant explicit LoadLibraryExW/FreeLibrary crypt32 lease; normal PE loader dependency owns module lifetime",
+    "Require CRYPT32.DLL plus exact CryptQueryObject import in CORVEXON and actual DLL inspection"
+  ],
+  "hook_source_behavior_unchanged": true,
+  "public_exports_unchanged": true,
+  "vendor_bytes_changed": false,
+  "tinyxml2_depth": 500,
+  "dist_contract": "metadata/LOCAL_DIST_CONTRACT.json",
+  "application_code_donor_bodies_imported": false,
+  "reference_comparisons": {
+    "brownfield": {
+      "archive_sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",
+      "CMakeLists.txt_sha256": "619ecbc7a08a5af0a8d772e2a9ff5f77705498286b0342c3d0586cd1555b2b4f",
+      "CMake_crypt32_lines": [
+        323,
+        574
+      ],
+      "src/platform/crypt_observer.cpp_sha256": "422e9b944481f084f958965ba7438d12bf58c4abf9e495ce17eccf1c3252168b",
+      "direct_target_line": 144
+    },
+    "bluefield": {
+      "CMakeLists.txt_sha256": "6c8e023d39c28c7f05d49137c630c7f85c8c5cfdace56b47eb74c15010dd6bb4",
+      "src/windows/hooks.cpp_sha256": "c14327a6ce179f3d8da964c37ba86db477b19e7cd51493ce6b4c69cf3f8d039b",
+      "direct_target_line": 119,
+      "CMake_crypt32_line": 73
+    }
+  },
+  "native_msvc_updated_source": "NOT_RUN",
+  "native_msvc_dist_generation": "NOT_RUN",
+  "game_trace": "NOT_SUPPLIED_NOT_VERIFIED",
+  "validation": {
+    "release_windows_llvm_wine": {
+      "passed": 173,
+      "total": 173,
+      "report": "metadata/PRODUCTION_IMPORT_FULL_WINDOWS_TESTS.xml"
+    },
+    "debug_windows_llvm_wine": {
+      "passed": 5,
+      "total": 5,
+      "report": "metadata/PRODUCTION_IMPORT_DEBUG_TESTS.xml"
+    },
+    "release_actual_final_name_runtime": {
+      "dll_name": "preloader_l.dll",
+      "cycles": 3,
+      "result": "PASS_REAL_LOAD_START_SOCKET_PROFILE_SHUTDOWN_UNLOAD_UNDER_WINE",
+      "report": "metadata/PRODUCTION_IMPORT_NAMED_RUNTIME.log"
+    },
+    "infrastructure_regressions": {
+      "passed": 28,
+      "total": 28,
+      "report": "metadata/PRODUCTION_IMPORT_INFRASTRUCTURE.log",
+      "includes": "All-stage failure propagation; final-name runtime failure; immutable input; hash sidecar/receipt; previous bundle rollback; exact old nested pycache reproduction and corrected child behavior"
+    },
+    "real_release_DLL_import": "CRYPT32.DLL!CryptQueryObject_PRESENT",
+    "real_debug_DLL_import": "CRYPT32.DLL!CryptQueryObject_PRESENT",
+    "binary_reports": [
+      "metadata/PRODUCTION_IMPORT_DLL.json",
+      "metadata/PRODUCTION_IMPORT_DEBUG_DLL.json"
+    ],
+    "genuine_non_msvc_guard": "metadata/PRODUCTION_IMPORT_NON_MSVC_REJECTION.json",
+    "source_qa_report": "build/qa/PRODUCTION_IMPORT_SOURCE_QA_FINAL.json",
+    "source_qa": {
+      "passed": 15,
+      "total": 15,
+      "initial_report": "metadata/PRODUCTION_IMPORT_SOURCE_QA_INITIAL.json",
+      "final_report": "build/qa/PRODUCTION_IMPORT_SOURCE_QA_FINAL.json"
+    }
+  }
+}

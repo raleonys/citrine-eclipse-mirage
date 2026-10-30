@@ -1,0 +1,6 @@
+{
+  "target_modes": {
+    "shipping": "/MT (MultiThreaded)"
+  },
+  "fixture_only": true
+}

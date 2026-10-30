@@ -1,0 +1,129 @@
+{
+  "schema": "yellowfield.golden-avatar-fix.v1",
+  "task": "YF-GOLDEN-AVATAR-20261029",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_LOCAL_RELEASE_DEBUG_AND_SOURCE_QA_VALIDATED_REAL_MSVC_RERUN_REQUIRED_NOT_RELEASE",
+  "parent_source_package": "yellowfield-msvc-native-lookup-fix-source.zip",
+  "parent_sha256": "dd75774c65a28ba152130914ffb4e36dbeb509b2660932c4664d914efdb20f7e",
+  "source_package": "yellowfield-golden-avatar-source.zip",
+  "owner_avatar_instruction": "Yaln\u0131z PE resource olmas\u0131n; mevcut Anadius avatar verisinin yerine ge\u00e7sin",
+  "owner_sha256_instruction": "paketleri teslim ederken sha256 dosyas\u0131n\u0131 da teslim et yan\u0131nda",
+  "avatar_contract": "metadata/AVATAR_DATA_CONTRACT.json",
+  "resource_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+  "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "preserved_separate_fallback": true,
+  "avatar_external_runtime_dependency": false,
+  "ole32": {
+    "kind": "IMPORT_NOT_EXPORT",
+    "introduced_by": "Owned known-folder adapter SHGetKnownFolderPath + CoTaskMemFree, not supplied RE behavior",
+    "fix": "RE GetEnvironmentVariableW LocalAppData/ProgramData, grow260 UTF16 code units, remove ole32 link input",
+    "RE_function": "FUN_180039bc0",
+    "evidence_id": "ev_72d75fc9fa12d5c38ef034c259adc6d350c8c6000666bab5cd18fc7be06eb529",
+    "original_import_modules": [
+      "KERNEL32.dll",
+      "MSWSOCK.dll",
+      "SHELL32.dll",
+      "USER32.dll",
+      "WS2_32.dll"
+    ]
+  },
+  "user_native_log": {
+    "file_id": "file_00000000a31c820a8cf999c796c38e73",
+    "bytes": 74268,
+    "sha256": "89708a78e6231ca421b2166431fb6a6b483e8b1efc4d9628f5d3b61acbe6538c",
+    "evidence_class": "USER_NATIVE_LOG_OF_PARENT_NOT_LOCAL_RUN",
+    "result": "FAIL_C2589_ENCODING_STD_MIN_AT35_AND41",
+    "previous_C2668": "PASSED_PREVIOUS_FAILURE_POINT",
+    "full_native_tests": "NOT_REACHED"
+  },
+  "native_min_macro_fix": "Propagate NOMINMAX from preloader_l_core PUBLIC to all core consumers; TARGET_OBJECTS had not propagated object-library usage requirements. Guard existing registry test define. No vendor C compile definitions changed.",
+  "golden": {
+    "target_configuration": "READY_LOCAL_TARGET_FOUR_POLICIES",
+    "native_acceptance": "REQUIRES_NEW_REAL_MSVC_RUN",
+    "fixture_policy_values_activated": false,
+    "timestamp_linker_Rich_OS": "PRESERVE_INPUT",
+    "allowed_mutation": "PE_CHECKSUM_ONLY_ON_COPY",
+    "root_contracts": [
+      "metadata/URSYNEX_GOLDEN_FINALIZER.json",
+      "metadata/ARYRA_GOLDEN_LAYOUT.json",
+      "metadata/MUSTAVEX_GOLDEN_METADATA.json",
+      "metadata/CORVEXON_GOLDEN_TRAIL.json"
+    ],
+    "non_msvc_build_refused": "metadata/GOLDEN_AVATAR_NON_MSVC_REJECTION.json"
+  },
+  "public_exports_unchanged": [
+    "DllMain@1",
+    "SURGE@2",
+    "DllShutdown@3",
+    "DllWaitReady@4",
+    "DllServerPort@5"
+  ],
+  "vendor_bytes_changed": false,
+  "tinyxml2_depth": 500,
+  "new_package_sha256_sidecar": "AUTOMATIC_ADJACENT_ZIP_SHA256",
+  "native_msvc_updated_source": "NOT_RUN",
+  "game_acceptance": "NOT_RUN",
+  "tests": {
+    "release_full_windows_llvm_wine": {
+      "total": 173,
+      "passed": 173,
+      "failed": 0,
+      "evidence_class": "LLVM_MINGW_WINDOWS_BINARIES_UNDER_WINE_PLUS_HOST_INFRASTRUCTURE",
+      "report": "metadata/GOLDEN_AVATAR_FULL_WINDOWS_TESTS.xml",
+      "runtime_contracts": "Exact independent PNG inputs, separate fallback, real Unicode environment roots, provider/socket/persistence/eleven hooks/cleanup passed"
+    },
+    "source_qa_initial": {
+      "checks": 15,
+      "passed": 15,
+      "report": "metadata/GOLDEN_AVATAR_SOURCE_QA_INITIAL.json"
+    },
+    "no_tests_clean_zip": {
+      "configuration": "BUILD_TESTING=OFF; SOURCE_API=OFF",
+      "archive": "yellowfield-golden-avatar-validation-source.zip",
+      "archive_sha256": "ec994d00f099c7965bdd096aaf0d0e3c2d66879d36317eb5de8e99128202e1dc",
+      "archive_symlink_members": 0,
+      "extracted_real_symlinks": 0,
+      "result": "CONFIGURE_AND_CHANGED_TRANSLATION_UNIT_RESOURCE_AND_GENERATOR_BUILD_PASS",
+      "not_claimed": "Not a full clean DLL rebuild; complete current Release DLL and tests built separately",
+      "logs": [
+        "build/qa/GOLDEN_AVATAR_CLEAN_CONFIGURE.log",
+        "build/qa/GOLDEN_AVATAR_CLEAN_BUILD.log"
+      ]
+    },
+    "interruption": "First full run interrupted by environment restart after172 completed passes; preserved build/qa/GOLDEN_AVATAR_WINDOWS_INTERRUPTED.log. Fresh full rerun173/173 passed.",
+    "debug_affected_windows_llvm_wine": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "report": "metadata/GOLDEN_AVATAR_DEBUG_TESTS.xml",
+      "binary_report": "metadata/GOLDEN_AVATAR_DEBUG_DLL.json"
+    },
+    "final_source_qa_report": "build/qa/GOLDEN_AVATAR_SOURCE_QA_FINAL.json"
+  },
+  "binary_observations": {
+    "report": "metadata/GOLDEN_AVATAR_DLL.json",
+    "exports_report": "metadata/GOLDEN_AVATAR_EXPORTS.json",
+    "pe_resources": [
+      [
+        16,
+        1,
+        1033
+      ]
+    ],
+    "avatar_sections": {
+      "profile": ".rdata",
+      "fallback": ".rdata"
+    },
+    "ole32_import_absent": true,
+    "shell32_named_imports": [
+      "CommandLineToArgvW"
+    ],
+    "original_green_avatar_bytes_absent": true,
+    "version_rc_sha256": "454af99b76a4e1fc287c8af0f324c485744015e589736d1c267582651a5de693",
+    "execution_class": "LLVM_MINGW_DEVELOPMENT_DLL_NOT_MSVC_GOLDEN"
+  },
+  "nominmax_compile_usage": {
+    "encoding_tests_cpp": "-DNOMINMAX observed in actual generated compile command",
+    "minhook_buffer_c": "No NOMINMAX added; vendor C flags unaffected"
+  }
+}

@@ -1,0 +1,2 @@
+PASS: native-module acquisition/retained-release/retry controls
+WINE_PROGRAM_EXIT=0

@@ -1,0 +1,108 @@
+{
+  "schema": "yellowfield.golden-target.v1",
+  "policy": "CORVEXON Golden Trail",
+  "activation": "READY_LOCAL_TARGET",
+  "fixture_only": false,
+  "classification": "NOT_RELEASE",
+  "authority": "Owner-selected Brownfield three-export ordinals and original Anadius import module order; existing avatar/import/CRT constraints retained",
+  "native_acceptance": "REQUIRES_ACTUAL_MSVC_GOLDEN_RUN",
+  "implementation": "scripts/verify_corvexon_golden_trail.py",
+  "brownfield_policy_values_inherited": false,
+  "public_export_contract": "metadata/PUBLIC_DLL_ABI.json",
+  "required_core": {
+    "machine": "0x8664",
+    "pe_format_magic": "0x020B",
+    "subsystem": 2
+  },
+  "shipping_exports": [
+    {
+      "name": "DllMain",
+      "ordinal": 1,
+      "must_equal_entrypoint": false,
+      "must_not_equal_entrypoint": true
+    },
+    {
+      "name": "SURGE",
+      "ordinal": 2,
+      "must_equal_entrypoint": false
+    },
+    {
+      "name": "DllShutdown",
+      "ordinal": 3,
+      "must_equal_entrypoint": false
+    }
+  ],
+  "exact_named_export_set": true,
+  "forbid_forwarded_exports": true,
+  "require_entrypoint_executable_section": true,
+  "immutability": {
+    "sha256_before_equals_after": true,
+    "binary_write_operations_forbidden": true
+  },
+  "integrity_policy": {
+    "require_pe_checksum_valid": true,
+    "checksum_owner": "URSYNEX Golden Finalizer",
+    "verification_mode": "READ_ONLY_RECOMPUTE_COMPARE"
+  },
+  "import_policy": {
+    "required_modules": [
+      "KERNEL32.DLL",
+      "MSWSOCK.DLL",
+      "SHELL32.DLL",
+      "USER32.DLL",
+      "WS2_32.DLL",
+      "CRYPT32.DLL"
+    ],
+    "allowed_modules": [
+      "KERNEL32.DLL",
+      "MSWSOCK.DLL",
+      "SHELL32.DLL",
+      "USER32.DLL",
+      "WS2_32.DLL",
+      "CRYPT32.DLL"
+    ],
+    "forbidden_module_prefixes": [
+      "MSVCP",
+      "MSVCR",
+      "VCRUNTIME",
+      "UCRTBASE",
+      "API-MS-WIN-CRT-"
+    ],
+    "restricted_named_imports": {
+      "MSWSOCK.DLL": [
+        "AcceptEx",
+        "GetAcceptExSockaddrs"
+      ],
+      "CRYPT32.DLL": [
+        "CryptQueryObject"
+      ]
+    },
+    "gs_runtime_policy": {
+      "shipping_compiler_mode": "/GS",
+      "require_pe_load_config_security_cookie": true,
+      "require_security_cookie_writable_section": true
+    },
+    "crt_runtime_policy": {
+      "shipping_runtime": "/MT (MultiThreaded)",
+      "default_dll_entrypoint": "_DllMainCRTStartup selected by MSVC linker",
+      "allowed_runtime_modules": [],
+      "forbidden_runtime_families": [
+        "MSVCP",
+        "MSVCR",
+        "VCRUNTIME",
+        "UCRTBASE",
+        "API-MS-WIN-CRT-"
+      ]
+    },
+    "module_order": [
+      "CRYPT32.DLL",
+      "WS2_32.DLL",
+      "KERNEL32.DLL",
+      "USER32.DLL",
+      "SHELL32.DLL",
+      "MSWSOCK.DLL"
+    ],
+    "module_order_authority": "Latest owner explicitly requests original Anadius import DLL descriptor order"
+  },
+  "import_authority": "Original five Anadius modules plus explicitly required hook11 CRYPT32!CryptQueryObject static import, following owner correction and supplied Brownfield/Bluefield direct SDK import target; no OLE32."
+}

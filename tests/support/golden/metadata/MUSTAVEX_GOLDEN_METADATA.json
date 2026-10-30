@@ -1,0 +1,137 @@
+{
+  "schema": "preloader_l.mustavex_golden_metadata.v1",
+  "policy": "MUSTAVEX Golden Metadata",
+  "strict_recovery_allowlist": [
+    "#1",
+    "#2",
+    "#3",
+    "#5",
+    "#6",
+    "#7",
+    "#10",
+    "#11",
+    "#18",
+    "#36"
+  ],
+  "intentionally_stripped_allowlist_items": [
+    "#13 RSDS",
+    "#14 REPRO"
+  ],
+  "required": {
+    "versioninfo": {
+      "fixed": {
+        "dwSignature": "0xFEEF04BD",
+        "dwStrucVersion": "0x00010000",
+        "dwFileVersionMS": "0x3FE24D7B",
+        "dwFileVersionLS": "0x9AF25405",
+        "dwProductVersionMS": "0xB54B7381",
+        "dwProductVersionLS": "0x01A10EC2",
+        "dwFileFlagsMask": "0x0000003F",
+        "dwFileFlags": "0x00000000",
+        "dwFileOS": "0x00040000",
+        "dwFileType": "0x00000002",
+        "dwFileSubtype": "0x6A1AAE62",
+        "dwFileDateMS": "0x00000000",
+        "dwFileDateLS": "0x00000000"
+      },
+      "strings": {
+        "FileDescription": "SURGE synthetic tool fixture",
+        "LegalCopyright": "Test fixture only",
+        "ProductName": "SURGE fixture",
+        "ProductVersion": "0.0.0"
+      },
+      "string_table": "040904b0",
+      "translation_language": "0x0409",
+      "translation_codepage": 1200
+    },
+    "machine": "0x8664",
+    "pe_format_magic": "0x020B",
+    "subsystem": 2,
+    "os_version": [
+      6,
+      0
+    ],
+    "subsystem_version": [
+      6,
+      0
+    ],
+    "linker_version": [
+      14,
+      0
+    ],
+    "timestamp": "0xCD268EB1",
+    "export_internal_name": "preloader.unsigned.dll",
+    "rich_header": "ABSENT"
+  },
+  "shipping_debug_policy": {
+    "rsds": "ABSENT",
+    "repro": "ABSENT",
+    "debug_directory": "ABSENT",
+    "coff_symbol_table": "ABSENT",
+    "pdb_packaged": false
+  },
+  "explicit_exclusions": {
+    "authenticode": "ABSENT",
+    "certificate_table": "ABSENT",
+    "exact_pe_addresses_sizes_layout": "NOT_A_TARGET",
+    "non_allowlisted_metadata_recovery": "NOT_A_TARGET"
+  },
+  "project_identity_forbidden_in_shipping_dll": [
+    "3.1.3",
+    "MARTAVEX",
+    "martavex",
+    "preloader_l-3.1.3",
+    "3.1.4",
+    "LEPORVEX",
+    "leporvex",
+    "preloader_l-3.1.4",
+    "3.1.5",
+    "MELAVEX",
+    "melavex",
+    "preloader_l-3.1.5",
+    "3.1.6",
+    "VIVERRAVEX",
+    "viverravex",
+    "preloader_l-3.1.6",
+    "3.1.7",
+    "GENETAVEX",
+    "genetavex",
+    "preloader_l-3.1.7",
+    "3.1.8",
+    "CIVETAVEX",
+    "civetavex",
+    "preloader_l-3.1.8",
+    "3.1.9",
+    "CASTORADRON",
+    "castoradron",
+    "preloader_l-3.1.9",
+    "3.2.0",
+    "SCIURONYX",
+    "sciuronyx",
+    "preloader_l-3.2.0",
+    "3.2.1",
+    "CERVRAX",
+    "cervrax",
+    "preloader_l-3.2.1",
+    "3.2.2",
+    "MUSTORIN",
+    "mustorin",
+    "preloader_l-3.2.2",
+    "3.2.4",
+    "RANQUEL",
+    "ranquel",
+    "preloader_l-3.2.4",
+    "3.2.5",
+    "SQUALERIS",
+    "squaleris",
+    "preloader_l-3.2.5"
+  ],
+  "forbidden_project_identity_tokens": [
+    "3.2.3",
+    "MELOTRIX",
+    "melotrix",
+    "preloader_l-3.2.3"
+  ],
+  "fixture_only": true,
+  "activation": "FIXTURE_ONLY_NOT_A_PRODUCT_CONTRACT"
+}

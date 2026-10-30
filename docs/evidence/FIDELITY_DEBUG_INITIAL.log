@@ -1,0 +1,48 @@
+Test project /workspace/yellowfield/build/runtime-debug
+      Start   1: application_runtime_contracts
+      Start 171: dll_public_lifecycle
+ 1/18 Test   #1: application_runtime_contracts .......***Failed    0.81 sec
+FAIL after 45: Debug preserves XML error and original malformed input
+WINE_PROGRAM_EXIT=1
+
+      Start 172: dll_public_c_consumer
+ 2/18 Test #171: dll_public_lifecycle ................   Passed    0.89 sec
+      Start 168: hook_adapter_integration
+ 3/18 Test #168: hook_adapter_integration ............   Passed    0.23 sec
+      Start  20: native_callback_contracts
+ 4/18 Test  #20: native_callback_contracts ...........   Passed    0.17 sec
+      Start 170: dll_source_smoke
+ 5/18 Test #172: dll_public_c_consumer ...............   Passed    0.67 sec
+      Start 173: dll_public_export_contract
+ 6/18 Test #173: dll_public_export_contract ..........   Passed    0.20 sec
+      Start  25: execution_contracts
+ 7/18 Test #170: dll_source_smoke ....................   Passed    0.51 sec
+      Start  15: file_copy_windows_integration
+ 8/18 Test  #25: execution_contracts .................   Passed    0.12 sec
+      Start 165: content_handlers_contracts
+ 9/18 Test #165: content_handlers_contracts ..........   Passed    0.13 sec
+      Start  14: file_copy_contracts
+10/18 Test  #15: file_copy_windows_integration .......   Passed    0.17 sec
+      Start  18: host_init_contracts
+11/18 Test  #14: file_copy_contracts .................   Passed    0.08 sec
+      Start  19: registry_contracts
+12/18 Test  #18: host_init_contracts .................   Passed    0.12 sec
+      Start  21: host_callback_contracts
+13/18 Test  #19: registry_contracts ..................   Passed    0.09 sec
+      Start  22: network_hook_contracts
+14/18 Test  #21: host_callback_contracts .............   Passed    0.12 sec
+      Start  40: event_queue_contracts
+15/18 Test  #22: network_hook_contracts ..............   Passed    0.13 sec
+      Start  41: event_queue_integration_contracts
+16/18 Test  #41: event_queue_integration_contracts ...   Passed    0.11 sec
+      Start 151: messages_contracts
+17/18 Test  #40: event_queue_contracts ...............   Passed    0.17 sec
+18/18 Test #151: messages_contracts ..................   Passed    0.11 sec
+
+94% tests passed, 1 tests failed out of 18
+
+Total Test time (real) =   2.48 sec
+
+The following tests FAILED:
+	  1 - application_runtime_contracts (Failed)
+Errors while running CTest

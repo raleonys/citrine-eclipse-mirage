@@ -1,0 +1,18 @@
+[0/1] Re-running CMake...
+-- Configuring done (1.9s)
+-- Generating done (0.4s)
+-- Build files have been written to: /workspace/yellowfield/build/llvm-mingw-x64-vendors
+[1/8] Verify the pinned hook engine build copy
+HOOK_ENGINE_BUILD_COPY=PASS
+[2/8] Verify the four active owner-supplied vendor trees
+asio: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+[3/8] Building CXX object CMakeFiles/xml_reader_corpus_contracts.dir/tests/unit/xml_reader/corpus_tests.cpp.obj
+[4/8] Linking CXX executable xml_reader_corpus_contracts.exe
+[5/8] Linking CXX shared library preloader.unsigned.dll; Verify production target closure and linked object boundary
+BUILD_PARTITION: PASS_PRODUCTION_BOUNDARY
+[6/7] Recheck production boundary on incremental builds
+BUILD_PARTITION: PASS_PRODUCTION_BOUNDARY

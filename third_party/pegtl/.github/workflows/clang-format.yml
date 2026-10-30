@@ -1,0 +1,37 @@
+name: clang-format
+
+on:
+  push:
+    paths-ignore:
+      - 'README.md'
+      - 'doc/**'
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - 'doc/**'
+
+permissions:
+  contents: read
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-26.04
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install clang-format
+        run: |
+          sudo apt-get -qq update -yq
+          sudo apt-get -qq install -y clang-format-22 --no-install-recommends --no-install-suggests
+
+      - name: Show clang-format configuration
+        run: |
+          clang-format-22 --version
+          clang-format-22 -style=file -dump-config
+
+      - name: Run clang-format
+        run: |
+          git ls-files -z -- '*.hpp' '*.cpp' '*.ipp' |
+            xargs -0 -r clang-format-22 -style=file -i
+          git diff --exit-code

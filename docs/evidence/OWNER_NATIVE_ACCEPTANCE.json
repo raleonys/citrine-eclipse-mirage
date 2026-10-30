@@ -1,0 +1,83 @@
+{
+  "schema": "surge.owner-native-acceptance.v1",
+  "classification": "LOCAL_VALIDATED_CANDIDATE_NOT_PUBLISHED",
+  "recorded_date": "2026-10-29",
+  "profiles": {
+    "compile": {
+      "evidence": "OWNER_ACCEPTANCE_COMPILE.log",
+      "sha256": "b45544db043237df57bb6cd15daf5abc1c67d3d6683766f13b8f2b83f56de721",
+      "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
+      "dll_sha256": "bdda588afad1ec2110c4170174f92757cb4dbb0e21fb5d8fb2b79b35ef2c3ddb",
+      "tests": null,
+      "warning_count": 0
+    },
+    "production": {
+      "evidence": "OWNER_ACCEPTANCE_PRODUCTION.log",
+      "sha256": "346ad5d7fc8394a67ecdff75295fe3e716e94017d681db6a8ff2a931f7c98d08",
+      "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
+      "dll_sha256": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",
+      "tests": null,
+      "warning_count": 0,
+      "golden_gates": [
+        "MSVC Build",
+        "URSYNEX Golden Finalizer",
+        "ARYRA Golden Layout",
+        "MUSTAVEX Golden Metadata",
+        "CORVEXON Golden Trail",
+        "FALCION Golden Cleaning"
+      ]
+    },
+    "debug": {
+      "evidence": "OWNER_ACCEPTANCE_DEBUG.log",
+      "sha256": "115141f1f81ea094e87a7b153a1a79ad01e0b1a97a1420b962a8d9c1a556fc99",
+      "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
+      "dll_sha256": "ec63df6c2c9b347e8983de07a98644986b932348191ed1e522a75f958e43c89b",
+      "tests": null,
+      "warning_count": 0
+    },
+    "crt": {
+      "evidence": "OWNER_ACCEPTANCE_CRT.log",
+      "sha256": "0984e1bf653dee4b6614fb08c4592dff6e0c3a8cfaa3713f17ef402a84778387",
+      "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
+      "dll_sha256": "6973dd5e85c1b9aee0c2e91a99b2f0ec1e55547b22550a493467363a028d698a",
+      "tests": 6,
+      "warning_count": 0
+    },
+    "native": {
+      "evidence": "OWNER_ACCEPTANCE_NATIVE.log",
+      "sha256": "7f3af5e1636e74526c8fabe8f33f78edab633a394aeab1994b15cdb4bcaf2a57",
+      "result": "PASS_USER_SUPPLIED_WINDOWS_LOG",
+      "dll_sha256": "60872c91c2c27c999441a3da26a55d85dcb3c6d7de3d9b26961f3de2672dcba8",
+      "tests": 193,
+      "warning_count": 12
+    }
+  },
+  "uploaded_final_dll_sha256": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",
+  "production_log_uploaded_dll_hash_match": true,
+  "independent_binary_inspection": "PASS_FINAL_METADATA_CHECK",
+  "native_msvc_toolchain": "MSVC19.51.36260.0; Visual Studio18; as reported in supplied logs",
+  "game_acceptance": {
+    "result": "OWNER_REPORTED_PASS",
+    "statement": "oyun acceptance ve di\u011fer t\u00fcm acceptancelar\u0131 s\u0131k\u0131nt\u0131s\u0131z durumda",
+    "scope": "Owner report associated with uploaded DLL; game name and individual scenario matrix not supplied; not independently executed here"
+  },
+  "previous_open_acceptance_items": {
+    "native_msvc": "CLOSED_BY_SUPPLIED_NATIVE193_OF193_AND_PROFILE_LOGS",
+    "golden": "CLOSED_BY_SIX_SUPPLIED_GATE_PASS_RESULTS_AND_INDEPENDENT_FINAL_DLL_CHECK",
+    "game_retest": "CLOSED_AS_OWNER_REPORTED_PASS_FOR_SUPPLIED_DLL"
+  },
+  "binary_size": {
+    "reference_bytes": 694272,
+    "product_bytes": 901120,
+    "difference_bytes": 206848,
+    "difference_KiB": 202.0,
+    "difference_percent": 29.793510324483776,
+    "full_section_comparison": "OWNER_DLL_SIZE_COMPARISON.json",
+    "explanation": "Measured growth is in code/readonly/runtime data/unwind/relocation sections; no debug directory, COFF symbols or trailing overlay in product. PNG payload is smaller. Function/library attribution needs matching native MAP and object/library evidence; DLL alone does not establish it."
+  },
+  "preserved_prior_validation": "BROAD_AUDIT_VALIDATION.json",
+  "evidence_scope": "Supplied Windows execution logs and owner game report; local read-only binary inspection. No claim of independently rerunning Windows or a game, no new whole-original-DLL ABI equivalence claim.",
+  "public_release": false,
+  "library_publication": false,
+  "runtime_code_or_build_options_modified": false
+}

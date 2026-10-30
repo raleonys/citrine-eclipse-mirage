@@ -1,0 +1,53 @@
+{
+  "schema": "surge.owner-native-build-log-review.v1",
+  "source_parent_zip_sha256": "cb0fc73ecdfe90abbf3f88622ebc3df4c616ea77fc71513ef36cddcb525810aa",
+  "profiles": [
+    {
+      "profile": "compile-only",
+      "sha256": "03bd87cac68f3cc15cfb790849e4adb67e661e84334f7731597a82bdf904ad9f",
+      "bytes": 14568,
+      "exit": 0,
+      "warnings": 0
+    },
+    {
+      "profile": "production",
+      "sha256": "d77e583d6b023c73e46c7aae190ebd5e44dce5b6de901c1c9e778c096cd214aa",
+      "bytes": 19329,
+      "exit": 0,
+      "warnings": 0
+    },
+    {
+      "profile": "debug",
+      "sha256": "f8433456ea7873e4fbdfff01d18b8d8db52f4ed1a3a0649fbc6914f9799d886a",
+      "bytes": 14596,
+      "exit": 0,
+      "warnings": 0
+    },
+    {
+      "profile": "static-crt",
+      "sha256": "8344fbe826e1c9057b57d177999195bb1bd895d40b704fe1498f495b272af6c2",
+      "bytes": 28494,
+      "exit": 0,
+      "warnings": 0
+    },
+    {
+      "profile": "native",
+      "sha256": "0645da67e104bfa742b1a76557a8f51a19c1df572be689aef3b20e454d9056b8",
+      "bytes": 124622,
+      "exit": 8,
+      "warnings": 12
+    }
+  ],
+  "native_tests": {
+    "passed": 204,
+    "total": 205,
+    "failed": [
+      "net_failure_contracts"
+    ]
+  },
+  "production_final_dll_sha256": "5d75523d82a575277e1c5e91395637d301f0f981913c8358deee02c3c3cc24fc",
+  "production_local_golden": "PASS_REPORTED_BY_OWNER_LOG",
+  "game_acceptance": "NOT_REPORTED_IN_THESE_LOGS",
+  "actual_dll_provided_in_this_upload": false,
+  "owner_log_source_identity_basis": "Source directory label, unchanged source/ABI gates and matching fixture error; no uploaded source-ZIP checksum or actual DLL in this batch"
+}

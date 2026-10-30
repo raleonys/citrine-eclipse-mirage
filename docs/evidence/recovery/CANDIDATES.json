@@ -1,0 +1,215 @@
+{
+  "status": "RETIREMENT_BLOCKED",
+  "rows": [
+    {
+      "id": "DC01",
+      "kind": "OWNERSHIP_AVAILABILITY",
+      "title": "async_accept initiation failure leaves pending bit",
+      "status": "FAILURE_PATH_REPRODUCED",
+      "donor_evidence": "brownfield:src/runtime/asio_listener_owner.cpp:arm_accept",
+      "current_evidence": "src/net/asio_service.cpp:279-301",
+      "validation": "accept-arm-result.log; actual method, real loopback, injected bad_alloc; retry no-ops until test-only bit reset",
+      "next_step": "Restore pending state on initiation failure and define service health/fail-closed response; regression + threaded native replay"
+    },
+    {
+      "id": "DC02",
+      "kind": "ERROR_PATH_RETIREMENT",
+      "title": "Handler failure followed by cleanup-post allocation failure",
+      "status": "FAILURE_PATH_REPRODUCED",
+      "donor_evidence": "bluefield:src/transport/service.cpp:fail_compute",
+      "current_evidence": "src/net/asio_service.cpp:249-257;Application::Impl::error",
+      "validation": "post-failure-result.log; actual job/post body, real loopback; client stays open and owner.stopping stays false; synchronous job drive",
+      "next_step": "Retain failed cleanup ownership, stop false-ready admission and expose failure without allocating; preserve one IO owner and native replay"
+    },
+    {
+      "id": "DC03",
+      "kind": "MODULE_OWNERSHIP",
+      "title": "ExtraLibraries forgets lease after failed FreeLibrary",
+      "status": "FAILURE_PATH_REPRODUCED",
+      "donor_evidence": "brownfield:src/platform/addon_hooks.cpp:drain_created;tests/hf19/test_addon_ownership_retry.cpp",
+      "current_evidence": "src/runtime/application.cpp:94-110;src/runtime/libraries.cpp:unload_035ab0",
+      "validation": "extra-owner-result.log; actual ExtraLibraries/NativeSystemCalls, failure withheld before real FreeLibrary; second close skips the module",
+      "next_step": "Retain exact failed leases and retry without double-free; keep reference helper fidelity and adapt owned wrapper deliberately"
+    },
+    {
+      "id": "DC04",
+      "kind": "SOCKET_RETIREMENT",
+      "title": "Socket/listener close failures and pending callback drain",
+      "status": "SOURCE_GAP_NATIVE_FAULT_PROOF_PENDING",
+      "donor_evidence": "brownfield:src/runtime/asio_session_owner.cpp:356-408;asio_listener_owner.cpp:apply_stop;asio_acceptance_resource_fault.hpp",
+      "current_evidence": "src/net/asio_service.cpp:192-200,303-319",
+      "validation": "Current close error_code is ignored; closed flag prevents later Client::close retry. Donor test withholds real close, not a demonstration of every actual Winsock failure.",
+      "next_step": "Classify actual Winsock close failure semantics; test withheld close, cancellation, owner count and pending timers; do not assume Asio retains handle for every error"
+    },
+    {
+      "id": "DC05",
+      "kind": "TIMER_OWNERSHIP",
+      "title": "Deadline initiation failure after cached deadline publication",
+      "status": "SOURCE_HYPOTHESIS_INJECTION_PENDING",
+      "donor_evidence": "brownfield:src/runtime/asio_session_owner.cpp:refresh_deadline,cancel_deadline",
+      "current_evidence": "src/net/asio_service.cpp:202-217",
+      "validation": "armed_deadline assigned before cancel/expires_at/async_wait; need a failing initiation path and recovery proof, not just ordinary deadline tests",
+      "next_step": "Inject timer initiation/cancel failures, track outstanding callbacks and cache consistency; preserve generation protection"
+    },
+    {
+      "id": "DC06",
+      "kind": "PROCESS_SIDE_EFFECT",
+      "title": "Console acquisition lifetime and release",
+      "status": "POLICY_AND_LIFETIME_CANDIDATE",
+      "donor_evidence": "bluefield:src/application/application.cpp:Console,Application::Impl::console",
+      "current_evidence": "src/runtime/application.cpp:Console;Application::Impl::start local Console",
+      "validation": "Donor tracks successful acquisition and FreeConsole in destructor. Current Console is local to start: copying donor destructor directly would detach at start return.",
+      "next_step": "Decide lifetime/restore semantics, test inherited console and failed startup; move ownership only with documented product decision"
+    },
+    {
+      "id": "DC07",
+      "kind": "PROCESS_SIDE_EFFECT",
+      "title": "Ownership of process environment writes on rollback/stop",
+      "status": "POLICY_AND_CONCURRENCY_CANDIDATE",
+      "donor_evidence": "brownfield:src/platform/environment_policy.cpp;process_environment.cpp;bootstrap_thread.cpp;check_environment_restore.py",
+      "current_evidence": "src/platform/startup_windows.cpp;src/net/asio_service.cpp:set_environment_variable",
+      "validation": "Donor preserves pre-existing variables and removes tracked newly-created values. Current publication has different RE policy; no native failure reproduction in this review.",
+      "next_step": "Specify prior-value preservation, failed startup and concurrent host modification. Never delete another owner's later value by copying a written-bit mask blindly."
+    },
+    {
+      "id": "DC08",
+      "kind": "BUILD_HARDENING",
+      "title": "Control Flow Guard compiler/link policy",
+      "status": "MEASURED_CONFIGURATION_DIFFERENCE_NOT_A_PROVEN_EXPLOIT",
+      "donor_evidence": "bluefield:CMakeLists.txt:44,60,75-76",
+      "current_evidence": "CMakeLists.txt;cmake;previously accepted native DLL",
+      "validation": "CFG_COMPARISON.json: accepted native DllCharacteristics=0x160, GUARD_CF absent; Bluefield requests /guard:cf but its compiled enforcement not verified here",
+      "next_step": "Separate MSVC experiment + load-config validation + MinHook/trampoline/native/game checks + fixed PE policy review; no shipping flag mutation"
+    },
+    {
+      "id": "DC09",
+      "kind": "ACCEPTANCE_PROVENANCE",
+      "title": "Bind exact source snapshot to command/artifact evidence",
+      "status": "TOOL_IDEA_REQUIRES_SAFE_ADAPTATION",
+      "donor_evidence": "brownfield:scripts/write_acceptance_record.py",
+      "current_evidence": "scripts/collect_size_evidence.py;parent snapshot addendum",
+      "validation": "Donor records source ZIP hash/execution class/artifacts, but accepts caller-supplied --status; this is not automatic proof a command ran successfully",
+      "next_step": "Build a source/worktree/compiler/command/output trace; preserve actual exit codes and immutable artifacts; do not copy donor version strings into product metadata"
+    },
+    {
+      "id": "DC10",
+      "kind": "NATIVE_TESTS",
+      "title": "IOCP completion/backpressure/handshake/grant/FIFO/retirement",
+      "status": "SCENARIO_TRANSFER_CANDIDATES",
+      "donor_evidence": "brownfield:tests/native/test_asio_iocp_*.cpp;test_asio_service_lifetime_host.cpp",
+      "current_evidence": "tests/native/session_flow_tests.cpp;network_policy_tests.cpp;handler_pool_tests.cpp",
+      "validation": "Donor family extends beyond the one delivery test previously sampled. Their existence is not evidence the tests ran; some commit boundaries differ.",
+      "next_step": "Map each scenario to actual Session/AsioService and existing tests, then add only missing cases; require real Windows IOCP evidence"
+    },
+    {
+      "id": "DC11",
+      "kind": "RESOURCE_BUDGET",
+      "title": "Bounded serialization and aggregate event/map memory",
+      "status": "KNOWN_AUDIT_TOPIC_ADDITIONAL_DONOR_DESIGN_EVIDENCE",
+      "donor_evidence": "brownfield:include/preloader_l/xml/response_builder.hpp;stream_writer;bounded route sinks",
+      "current_evidence": "src/xml/memory_printer.cpp;src/net/server.cpp:110-127;src/runtime/event_queue.cpp",
+      "validation": "Transport checks output after prepare_response; XML and event allocations occur earlier. Existing XML allocation reduction is not an aggregate budget.",
+      "next_step": "Explicit response/event/map budgets and no-commit/rollback behavior; keep persistence serializers separate from wire budget"
+    },
+    {
+      "id": "DC12",
+      "kind": "PROTOCOL_SEMANTICS",
+      "title": "Donor grant/delivery commit order",
+      "status": "DO_NOT_COPY_DIRECTLY",
+      "donor_evidence": "brownfield:tests/unit/test_grant_delivery_rollback.cpp;socket_exchange_transaction_delivery.cpp",
+      "current_evidence": "achievement persistence + PreparedResponse/event reservation",
+      "validation": "Donor test may roll back grant pending network success. Current persistence and event full-send are distinct boundaries.",
+      "next_step": "Borrow fault combinations and assert current contract; no silent exactly-once or commit-order change"
+    },
+    {
+      "id": "DC13",
+      "kind": "ARCHITECTURE",
+      "title": "Private CRT/allocator/PTD and Registry B capability domains",
+      "status": "NO_AUTOMATIC_MODULE_TRANSFER",
+      "donor_evidence": "brownfield:runtime memory/heap/PTD modules;registry_b_*",
+      "current_evidence": "standard compiler CRT;typed registry cells and native callbacks",
+      "validation": "Owner chooses standard CRT; raw HKEY provenance remains unproved. Neither module count nor a donor ledger proves compatibility.",
+      "next_step": "Review transferable ownership tests separately; keep per-file unreviewed areas open and preserve native provenance research"
+    },
+    {
+      "id": "DC14",
+      "kind": "CONCURRENCY",
+      "title": "Add strands to current single IO runner",
+      "status": "NO_JUSTIFIED_WHOLESALE_TRANSFER",
+      "donor_evidence": "brownfield:Asio listener/session/service owners use strands",
+      "current_evidence": "src/net/asio_service.cpp:runner;stop joins runner before io.poll",
+      "validation": "Current callback execution is single IO-thread then post-join poll. Donor multi-owner strand structure is not automatically needed.",
+      "next_step": "Verify executor/concurrency invariant and future thread-count changes; do not add locks/strands just for source similarity"
+    },
+    {
+      "id": "DC15",
+      "kind": "ENVIRONMENT_LIFETIME",
+      "title": "Owned _dupenv_s snapshot",
+      "status": "NO_CURRENT_BUG_REPRODUCED",
+      "donor_evidence": "bluefield:src/windows/startup_platform.cpp;src/runtime/startup.hpp",
+      "current_evidence": "src/platform/startup_windows.cpp;src/runtime/startup.cpp:get_environment_039950",
+      "validation": "Current caller immediately copies getenv; no CRT putenv family mutation found. Donor adds copy/state/new error path.",
+      "next_step": "Retain source behavior unless concurrent mutation/lifetime need is demonstrated; add a targeted test if scope changes"
+    },
+    {
+      "id": "DC16",
+      "kind": "FILESYSTEM_OWNERSHIP",
+      "title": "Atomic staging close-failure handling",
+      "status": "KEEP_CURRENT_IMPLEMENTATION_AVOID_DONOR_REGRESSION",
+      "donor_evidence": "bluefield:src/files/atomic_io.cpp:Stage::finish,close_noexcept",
+      "current_evidence": "src/platform/atomic_files_windows.cpp:finish retained entry",
+      "validation": "Bluefield invalidates stored handle on failing close. Current checked owner retains file/path for retry; previous B07 tests cover this.",
+      "next_step": "Do not replace current atomic writer with donor copy; keep native combined disk/network tests as separate work"
+    },
+    {
+      "id": "DC17",
+      "kind": "TEST_ORACLE",
+      "title": "assert activation and real execution wiring",
+      "status": "TEST_QUALITY_REVIEW_REQUIRED_NOT_A_CONFIRMED_GLOBAL_DEFECT",
+      "donor_evidence": "brownfield:tests/unit/test_asio_listener_owner.cpp;scripts/test_asio_listener_owner.py;Bluefield CMake/profile tests",
+      "current_evidence": "current require/check-based tests and CTest",
+      "validation": "Sample Brownfield runner compiles -O0 without NDEBUG, so those asserts DO run. Other targets require their actual command; CMake literal omission is not unbuilt proof.",
+      "next_step": "Record actual compile flags/invocation per scenario, require nonzero failing controls; distinguish source-text checks from runtime tests"
+    },
+    {
+      "id": "DC18",
+      "kind": "DLL_SEARCH_POLICY",
+      "title": "Constrain provider DLL dependency search",
+      "status": "EXPLICIT_PRODUCT_POLICY_CANDIDATE",
+      "donor_evidence": "bluefield:src/profiles/online_session.cpp:load_copy_0450d0",
+      "current_evidence": "src/runtime/application.cpp:Provider::load_copy_0450d0;src/platform/library_system.cpp",
+      "validation": "Donor uses trusted module directory and LoadLibraryExW search flags; current RE adapter uses EXE-relative provider and LoadLibraryW.",
+      "next_step": "Test real provider dependency locations and error behavior before changing paths/search flags; not a missing mandatory module"
+    },
+    {
+      "id": "DC19",
+      "kind": "DEBUG_DIAGNOSTICS",
+      "title": "Cross-process append locking",
+      "status": "POLICY_TEST_CANDIDATE",
+      "donor_evidence": "bluefield:src/application/logging.cpp:LockFileEx/flock",
+      "current_evidence": "src/runtime/application_environment.cpp:log_mutex_ and ofstream append",
+      "validation": "Current mutex protects one Environment; donor uses an OS file lock too. No concurrent-process log corruption reproduction in this review.",
+      "next_step": "Test multiple processes/instances and complete-line writes while preserving owner-required full Debug content and Release logging ban"
+    },
+    {
+      "id": "DC20",
+      "kind": "CURRENT_STATE",
+      "title": "Historical comparison and active status ambiguity",
+      "status": "DOCUMENTATION_CONTROL_IMPROVEMENT",
+      "donor_evidence": "42-row comparison;infrastructure transfer matrix;CURRENT_SCOPE history",
+      "current_evidence": "RUNTIME_CURRENT_STATUS and optimization acceptance record",
+      "validation": "Old missing/pending labels can conflict with later implementations/acceptance, contributing to premature or repeated transfer decisions.",
+      "next_step": "Create an authoritative current overlay/disposition matrix; preserve historical documents and original requirements"
+    },
+    {
+      "id": "DC21",
+      "kind": "CONFIGURATION_ARCHITECTURE",
+      "title": "Live configuration generations and settings snapshots",
+      "status": "NO_AUTOMATIC_FEATURE_TRANSFER",
+      "donor_evidence": "brownfield:runtime_configuration/store/provider snapshot and generation APIs",
+      "current_evidence": "config application at startup;shared handler mutex and explicit reference models",
+      "validation": "A runtime-reload donor framework is not a required replacement for startup configuration. Partial parse/action state is an existing RE contract.",
+      "next_step": "Map actual consumer requirements and mutation/read concurrency; do not import hot reload or new controller admission implicitly"
+    }
+  ]
+}

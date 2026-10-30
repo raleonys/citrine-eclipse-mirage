@@ -1,0 +1,441 @@
+{
+  "schema": "surge.session-transport-evidence.v1",
+  "classification": "NOT_RELEASE",
+  "status": "IMPLEMENTED_AND_CROSS_TESTED",
+  "scope": "OWNER_AUTHORIZED_BOUNDED_ASYNC_TRANSPORT_AND_EVENT_DELIVERY",
+  "contract": "metadata/SESSION_TRANSPORT_POLICY.json",
+  "documentation": "docs/SESSION_TRANSPORT.md",
+  "runtime_validation": {
+    "release": {
+      "environment": "LLVM-MinGW 20251118 / Clang21.1.6 UCRT x64; Wine",
+      "result": "PASS",
+      "passed": 38,
+      "failed": 0,
+      "skipped": 0,
+      "dll_sha256": "21ce2fc0d1abd78acf573665bf942125587fddb7a6273665642eeb7c1cf3cc2e",
+      "final_network_fixture_recheck": "PASS; atomic fixture setup flag; no application-code change",
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "status": "run",
+          "seconds": 12.8776
+        },
+        {
+          "name": "session_flow_contracts",
+          "status": "run",
+          "seconds": 0.496942
+        },
+        {
+          "name": "network_policy_contracts",
+          "status": "run",
+          "seconds": 5.52747
+        },
+        {
+          "name": "atomic_persistence_contracts",
+          "status": "run",
+          "seconds": 1.08406
+        },
+        {
+          "name": "handler_pool_contracts",
+          "status": "run",
+          "seconds": 4.91023
+        },
+        {
+          "name": "unload_guard_contracts",
+          "status": "run",
+          "seconds": 0.488727
+        },
+        {
+          "name": "listener_port_contracts",
+          "status": "run",
+          "seconds": 0.894619
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "status": "run",
+          "seconds": 0.907666
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "status": "run",
+          "seconds": 0.785506
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "status": "run",
+          "seconds": 1.02886
+        },
+        {
+          "name": "file_copy_contracts",
+          "status": "run",
+          "seconds": 1.26368
+        },
+        {
+          "name": "file_copy_windows_integration",
+          "status": "run",
+          "seconds": 0.916184
+        },
+        {
+          "name": "host_init_contracts",
+          "status": "run",
+          "seconds": 0.599993
+        },
+        {
+          "name": "registry_contracts",
+          "status": "run",
+          "seconds": 0.714506
+        },
+        {
+          "name": "native_callback_contracts",
+          "status": "run",
+          "seconds": 0.711816
+        },
+        {
+          "name": "host_callback_contracts",
+          "status": "run",
+          "seconds": 0.57238
+        },
+        {
+          "name": "network_hook_contracts",
+          "status": "run",
+          "seconds": 0.788656
+        },
+        {
+          "name": "configuration_contracts",
+          "status": "run",
+          "seconds": 0.60626
+        },
+        {
+          "name": "execution_contracts",
+          "status": "run",
+          "seconds": 0.380787
+        },
+        {
+          "name": "config_pipeline_contracts",
+          "status": "run",
+          "seconds": 0.622356
+        },
+        {
+          "name": "config_application_contracts",
+          "status": "run",
+          "seconds": 0.293122
+        },
+        {
+          "name": "config_startup_contracts",
+          "status": "run",
+          "seconds": 0.280323
+        },
+        {
+          "name": "achievement_writer_contracts",
+          "status": "run",
+          "seconds": 0.248123
+        },
+        {
+          "name": "achievement_storage_contracts",
+          "status": "run",
+          "seconds": 0.578663
+        },
+        {
+          "name": "achievement_runtime_contracts",
+          "status": "run",
+          "seconds": 0.680659
+        },
+        {
+          "name": "event_queue_contracts",
+          "status": "run",
+          "seconds": 0.685685
+        },
+        {
+          "name": "event_queue_integration_contracts",
+          "status": "run",
+          "seconds": 0.561584
+        },
+        {
+          "name": "session_handler_contracts",
+          "status": "run",
+          "seconds": 0.345115
+        },
+        {
+          "name": "session_integration_contracts",
+          "status": "run",
+          "seconds": 0.191615
+        },
+        {
+          "name": "server_contracts",
+          "status": "run",
+          "seconds": 0.299492
+        },
+        {
+          "name": "messages_contracts",
+          "status": "run",
+          "seconds": 0.505189
+        },
+        {
+          "name": "content_handlers_contracts",
+          "status": "run",
+          "seconds": 0.298647
+        },
+        {
+          "name": "hook_adapter_integration",
+          "status": "run",
+          "seconds": 0.698237
+        },
+        {
+          "name": "dll_source_smoke",
+          "status": "run",
+          "seconds": 0.905554
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "status": "run",
+          "seconds": 1.40839
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "status": "run",
+          "seconds": 0.809683
+        },
+        {
+          "name": "dll_public_export_contract",
+          "status": "run",
+          "seconds": 0.311298
+        },
+        {
+          "name": "hook_engine_fixtures",
+          "status": "run",
+          "seconds": 0.488288
+        }
+      ]
+    },
+    "debug": {
+      "environment": "LLVM-MinGW 20251118 / Clang21.1.6 UCRT x64; Wine",
+      "result": "PASS",
+      "passed": 38,
+      "failed": 0,
+      "skipped": 0,
+      "dll_sha256": "fe9c9478c0d96cbc9bf5756ba70d417697830d6d3e478ab9a6910bd3d41439e7",
+      "final_network_fixture_recheck": "PASS; atomic fixture setup flag; no application-code change",
+      "tests": [
+        {
+          "name": "application_runtime_contracts",
+          "status": "run",
+          "seconds": 2.6907
+        },
+        {
+          "name": "session_flow_contracts",
+          "status": "run",
+          "seconds": 0.125583
+        },
+        {
+          "name": "network_policy_contracts",
+          "status": "run",
+          "seconds": 3.45614
+        },
+        {
+          "name": "atomic_persistence_contracts",
+          "status": "run",
+          "seconds": 0.169632
+        },
+        {
+          "name": "handler_pool_contracts",
+          "status": "run",
+          "seconds": 0.849773
+        },
+        {
+          "name": "unload_guard_contracts",
+          "status": "run",
+          "seconds": 0.170121
+        },
+        {
+          "name": "listener_port_contracts",
+          "status": "run",
+          "seconds": 0.165127
+        },
+        {
+          "name": "hook_freeze_contracts",
+          "status": "run",
+          "seconds": 0.131876
+        },
+        {
+          "name": "hook_transaction_contracts",
+          "status": "run",
+          "seconds": 0.119347
+        },
+        {
+          "name": "cleanup_retry_contracts",
+          "status": "run",
+          "seconds": 0.62438
+        },
+        {
+          "name": "file_copy_contracts",
+          "status": "run",
+          "seconds": 0.164106
+        },
+        {
+          "name": "file_copy_windows_integration",
+          "status": "run",
+          "seconds": 0.180857
+        },
+        {
+          "name": "host_init_contracts",
+          "status": "run",
+          "seconds": 0.176832
+        },
+        {
+          "name": "registry_contracts",
+          "status": "run",
+          "seconds": 0.138483
+        },
+        {
+          "name": "native_callback_contracts",
+          "status": "run",
+          "seconds": 0.219058
+        },
+        {
+          "name": "host_callback_contracts",
+          "status": "run",
+          "seconds": 0.111019
+        },
+        {
+          "name": "network_hook_contracts",
+          "status": "run",
+          "seconds": 0.110738
+        },
+        {
+          "name": "configuration_contracts",
+          "status": "run",
+          "seconds": 0.160414
+        },
+        {
+          "name": "execution_contracts",
+          "status": "run",
+          "seconds": 0.0842186
+        },
+        {
+          "name": "config_pipeline_contracts",
+          "status": "run",
+          "seconds": 0.118339
+        },
+        {
+          "name": "config_application_contracts",
+          "status": "run",
+          "seconds": 0.1654
+        },
+        {
+          "name": "config_startup_contracts",
+          "status": "run",
+          "seconds": 0.161351
+        },
+        {
+          "name": "achievement_writer_contracts",
+          "status": "run",
+          "seconds": 0.115735
+        },
+        {
+          "name": "achievement_storage_contracts",
+          "status": "run",
+          "seconds": 0.159769
+        },
+        {
+          "name": "achievement_runtime_contracts",
+          "status": "run",
+          "seconds": 0.172572
+        },
+        {
+          "name": "event_queue_contracts",
+          "status": "run",
+          "seconds": 0.159321
+        },
+        {
+          "name": "event_queue_integration_contracts",
+          "status": "run",
+          "seconds": 0.156504
+        },
+        {
+          "name": "session_handler_contracts",
+          "status": "run",
+          "seconds": 0.0824444
+        },
+        {
+          "name": "session_integration_contracts",
+          "status": "run",
+          "seconds": 0.10893
+        },
+        {
+          "name": "server_contracts",
+          "status": "run",
+          "seconds": 0.109798
+        },
+        {
+          "name": "messages_contracts",
+          "status": "run",
+          "seconds": 0.115707
+        },
+        {
+          "name": "content_handlers_contracts",
+          "status": "run",
+          "seconds": 0.113602
+        },
+        {
+          "name": "hook_adapter_integration",
+          "status": "run",
+          "seconds": 0.171379
+        },
+        {
+          "name": "dll_source_smoke",
+          "status": "run",
+          "seconds": 0.367706
+        },
+        {
+          "name": "dll_public_lifecycle",
+          "status": "run",
+          "seconds": 0.466696
+        },
+        {
+          "name": "dll_public_c_consumer",
+          "status": "run",
+          "seconds": 0.325227
+        },
+        {
+          "name": "dll_public_export_contract",
+          "status": "run",
+          "seconds": 0.186381
+        },
+        {
+          "name": "hook_engine_fixtures",
+          "status": "run",
+          "seconds": 0.111528
+        }
+      ]
+    }
+  },
+  "testing_disabled": {
+    "BUILD_TESTING": false,
+    "build_result": "PASS",
+    "runtime_result": "PASS",
+    "cycles": 3,
+    "dll_sha256": "3b74abb451933c7857c979c53ce3cc0d0cc952b34e43ba92ef13f21dfb31c9b5"
+  },
+  "focused_checks": {
+    "session_flow_delivery_buffer_ownership_deadlines": 32,
+    "real_socket_admission_limits_timeouts_backpressure": 40,
+    "event_queue_integration": 201
+  },
+  "implementation_sha256": {
+    "src/net/asio_service.cpp": "2e8e6a66455d210561b7bc40cb7639e12aa257063be63bcb8bedf0f88e9eb0c4",
+    "src/net/server.cpp": "e8fe52b44e0148cbf0e6b3958a3cbfd55d2b7631250bb36cdd670c994e87e230",
+    "src/net/session_handler.cpp": "ce59216c9977a8f5b13e4d408cde61da13ef75a51c6a3c3dbf357e5b83856e48",
+    "src/protocol/messages.cpp": "256602b05d85baa97e40decc4573d1f042c3ebf6c70d4ecc00dd242d3918402c",
+    "src/runtime/event_queue.cpp": "edc58280006684ad8b8a7f3e84ba2b3eb218eae5e84e9f8690377ec688907430",
+    "src/runtime/event_adapters.cpp": "c1bc7beabc0cab8395ef06ada3706a901994442c53f46022e6dda560ad0362c8",
+    "include/preloader_l/net/session_policy.hpp": "50dbc009254ed5db57e7e2f82bc187b2df8641a91b2eb8ce1454b4db6eea24cc"
+  },
+  "unchanged_vendor_prior_evidence_and_fixed_contract_members": 3159,
+  "source_qa_command": "python -B scripts/run_source_qa.py",
+  "native_msvc_golden": "NOT_RUN",
+  "game_retest": "NOT_RUN",
+  "dist_promotion": "NOT_ATTEMPTED",
+  "library_sync": "NOT_REQUESTED",
+  "delivery_acknowledgement": "LOCAL_SOCKET_WRITE_COMPLETION_ONLY; NO_EXACTLY_ONCE_CLAIM",
+  "whole_reference_application_import": false
+}

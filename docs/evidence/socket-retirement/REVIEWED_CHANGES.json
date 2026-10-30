@@ -1,0 +1,321 @@
+{
+  "schema": "surge.reviewed-socket-retirement-changes.v1",
+  "parent_source_zip_sha256": "e0b6964082c4343359d824684b5c60e667867db54f089796862080a81f73d8ac",
+  "scope": "Exact previous delivered source archive versus reviewed final inputs; self and whole-source manifest excluded to avoid recursive hash",
+  "build_input_changes": [
+    {
+      "path": "cmake/Tests.cmake",
+      "change": "MODIFIED",
+      "before_sha256": "55ec7dfaafa794bc607b7f87e87030fff502d8900722e7d4460038d9279f4d76",
+      "after_sha256": "004cd52daeb5ce19585cecb0d7139df293b995e80c422612c21c89542acc90b8"
+    },
+    {
+      "path": "src/net/asio_service.cpp",
+      "change": "MODIFIED",
+      "before_sha256": "c729f3fa391d33815abb54720d05f2d96fd924da6f03f32c4ea03c60cb4e036f",
+      "after_sha256": "be87ee068da08dd3fe7cb4e8b5e947640a4d8ef6c1de795b23c5c9a6eb2f3e4f"
+    },
+    {
+      "path": "tests/native/socket_dll_retirement_tests.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "602e5e58e8ebad3500e6b21c6229f412df58c65f81c1fd1cc91677d2ee32ee97"
+    },
+    {
+      "path": "tests/native/socket_retirement_tests.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "4493c5fcb00ca626ffa38ececb006d1a49215e567bc73505d740e2488f82ff3e"
+    },
+    {
+      "path": "tests/support/runtime/socket_retirement_fixture.cpp",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "06b2e493208ec2be805c5c9af707b0e5d7b2d42be2516bee644c1396f15d1a58"
+    }
+  ],
+  "all_other_changes": [
+    {
+      "path": "docs/CURRENT_RUNTIME.md",
+      "change": "MODIFIED",
+      "before_sha256": "9fd7c2a7501d4b4ff9a68cf2520b9630fc27797ddc8c2db85a01cf4d7483aa93",
+      "after_sha256": "5069363ba8b5d27e479b32ad619df3e4435054f39cff03034ec533508fb1368d"
+    },
+    {
+      "path": "docs/SOCKET_RETIREMENT.md",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "abba780f977ebb3889d4dbd92a802ae4bec3600da7ffe9ad890805e7c63b5aff"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/DEBUG_BUILD.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "eba1d1053d7f03cd00a08617d1a1db2ed5739c33951a4388075e88682a27e2d9"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/DEBUG_TESTS.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "006938b9330e1812cf26f3d574c20a89a1616fd6c763c665fcf7ce277b56efcb"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/PINNED_RESULTS.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "e19d10b052b8d06a4b066a8be6404d286cab25bde2eb383f7019d025e6e261fe"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/RAW_DLL.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "323380a178885408836f11afc30c71de2b74538ea829bbba4a787d6933f06edb"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/RELEASE_BUILD.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "3936d4c2ebd8199b5912f5d1ffa6e0b7472363086de622d2f31bd6eb1d7eb15f"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/RELEASE_TESTS.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "90bb3c1ab59be7ab219eef6e38684dd11051b3e1617b9977ee219fbfd7e0834d"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/SOURCE_API_DELTA.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "2d1e2568aaf54e52e2c9a36bf881c2db1b9d8319eaf2b13a36b023995b73f88e"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/SOURCE_QA.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "c184c76807a572af7038ae5658b1d356549e59a8623053deae5caad0dea3bf03"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/VALIDATION.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "3314d3f9df7e5e9911707aa8d251ee65ac0065d5ee376db423044b8aa132ccaa"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-bind.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "66f706b7d9d5cfe54a33b9e258d7a0d8777fdae70ba45f542690fad421fcca5f"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-completion.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "7e67dce16221a2b266481920bc53f227c5aece11bd09c6b9350bf69272a7ecb0"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-constructor.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "1ac33f14de3afe60a12d72b408699d1b9f5a6cffaac70793f02c1ec8953432b0"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-dll-retry.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "65d5b1a43de62e9185e576f498ffb96459c2a097f8017d3c67e0f8dc01ff9688"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-dll-uncertain-closed.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "197c15d4f18987df2e8afb981456fe4b738a5a984d8704efe9e65b97930cd117"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-dll-uncertain.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "e3aa27991f4eb1ebf3a2964017ff8cf822aebfa67c15d55d76a9f3c45d13b163"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-listener.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "32989047ff400b8e6d7acd5d5b05bdab3bac9a692936c233749072258560e3ec"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-retry-option.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "f573f27ba86a9562fc4a5b8d76f6258b6da67185847c5f1fba8f89643ec063f8"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-retry.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "f3bbe9bd467b93560701a4c58af19545f4c5e5d91342ead3387464693d35a1d7"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-socket_dll_retirement_tests-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "b59c354c1bba5b55423f7e8246a7a3924c746822e3b6cd30eae852f927b3cc8b"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-socket_retirement_fixture-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "765e54e424b9cbf38abc5d4684f67ed9017e47cb8e167f8479f7145ab2fbc48f"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-socket_retirement_tests-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "3254f082dda929d904a0243b942cbb257faf16cdf379564b1b8e5ca6d6e3953b"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-timer.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "489507d2a80963b55d33360247fd4edae413bea105d3fc616fb4cfff6c54ef70"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-uncertain-closed.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "c2f2988ab1239b8d8a29121afe146598e3da9bec612b24c961a10d95913e918d"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/after-uncertain-open.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "8ebaefa2fde10acc4bfcec4f02a5337ae26e7e2cd1717eedf3b13c38052c07ef"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-bind.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "d014cb68375039f8d28bc6e3fc3ef242ea74f396c47e3cd6ee5ae889fc2a1f4e"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-completion.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "dccb84d835c8e6e4fc44adac9413982e554cfa9380332a2ba078b3dbc8e2437a"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-constructor.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "9688803245c9508edf5c8c4ff06a6f43ffd06cec6d9ee4ee34f9c740daeb75d5"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-dll-retry.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "853fa80c58bff04125a40687e9e805a6161dc51bfa7574f5f49fcaa1945cfaca"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-dll-uncertain-closed.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "853fa80c58bff04125a40687e9e805a6161dc51bfa7574f5f49fcaa1945cfaca"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-dll-uncertain.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "853fa80c58bff04125a40687e9e805a6161dc51bfa7574f5f49fcaa1945cfaca"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-listener.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "c7766a8dc64ffd9e99a6483de4aae133f497540294840eeea97dd9a39acfb499"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-retry-option.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "852f488458c21b528849ceae667f4bc11bf02d43f5565c870e50880d67ef1e96"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-retry.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "852f488458c21b528849ceae667f4bc11bf02d43f5565c870e50880d67ef1e96"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-socket_dll_retirement_tests-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "239dc902fd3722c364a59648d0427d11539791d674524f8334fc708071405f00"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-socket_retirement_fixture-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "28a22f8d33c4d8c8363927962039c7db8db5010926d031b4ae092e640132ab70"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-socket_retirement_tests-BUILD.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "b625acc5d85fceac3a54dd585058e4fd4a71aadd9f78b9d3c55aee67675f7701"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-timer.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "8955dfae85a48c4d4830472e23e871ce1af1218b27ede3ad2c5b6a756e79aa7d"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-uncertain-closed.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "c438a8ce2a8cf1907d350c7560a5107a67e0986189d3f7da6b51a35e217b66c5"
+    },
+    {
+      "path": "docs/evidence/socket-retirement/before-uncertain-open.log",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "c438a8ce2a8cf1907d350c7560a5107a67e0986189d3f7da6b51a35e217b66c5"
+    },
+    {
+      "path": "governance/CURRENT_SCOPE.md",
+      "change": "MODIFIED",
+      "before_sha256": "2045e38ecb9ae2732bea50d12f03b7a4aadcb77d8f350ba60197ddf4aff65dde",
+      "after_sha256": "14a4639b44289797ffc1a59a120d2119928fa404949dee93246ddecdc4b146e3"
+    },
+    {
+      "path": "metadata/BUILD_PARTITION_POLICY.json",
+      "change": "MODIFIED",
+      "before_sha256": "c657595a4551c752cc7860b56ab39c8ff63f845a26f4d3d4fc9e01fddf9e7222",
+      "after_sha256": "871f24602761662628654af07668f1cff58a3651577f3d15062d67e2ab9da5c0"
+    },
+    {
+      "path": "metadata/METADATA_OWNERSHIP.json",
+      "change": "MODIFIED",
+      "before_sha256": "6346aed20307b6495b30094ce5e9f85efa698ba47641c6cb479aeb54db61e7cc",
+      "after_sha256": "39b8008ab191a95bfddadd6e44b4a9a50ffd7cb65fb9d73d2b591a162ff7f498"
+    },
+    {
+      "path": "metadata/RUNTIME_CURRENT_STATUS.json",
+      "change": "MODIFIED",
+      "before_sha256": "5f90e6ba3afb5ac0a15f89f93a5769cb846c3f41acf8c7b0731746bd12fd9591",
+      "after_sha256": "3105f0374f6135b2cdbbd5a81eabd65afe4821f0a739f966b17d99a30d36f63a"
+    },
+    {
+      "path": "metadata/SOCKET_RETIREMENT_REVIEW.json",
+      "change": "ADDED",
+      "before_sha256": null,
+      "after_sha256": "eab5f8920b1092ce59c24322d112b9115b42127a155d7596202d3ca70fdc161e"
+    },
+    {
+      "path": "metadata/SOURCE_FILES.json",
+      "change": "MODIFIED",
+      "before_sha256": "4f68f10f01f5383f5ceb80edae8949a01d40b7e47852955ea4515e71d85baa50",
+      "after_sha256": "8a79a76367a88096f1b4a4bc41a5dd2d4337968dc7123cbe1d836af02cc5fd69"
+    }
+  ]
+}

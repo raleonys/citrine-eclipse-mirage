@@ -1,0 +1,9 @@
+-- Configuring done (3.9s)
+-- Generating done (0.0s)
+CMake Warning (unused-cli):
+  Manually-specified variables were not used by the project:
+
+    BUILD_TESTING
+
+
+-- Build files have been written to: /workspace/yellowfield/build/portable

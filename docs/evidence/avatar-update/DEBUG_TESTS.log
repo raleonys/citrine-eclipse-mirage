@@ -1,0 +1,12 @@
+Test project /workspace/yellowfield/build/runtime-debug
+    Start 1: application_runtime_contracts
+1/2 Test #1: application_runtime_contracts ......   Passed    2.43 sec
+    Start 2: configuration_platform_contracts
+2/2 Test #2: configuration_platform_contracts ...   Passed    1.03 sec
+
+100% tests passed out of 2
+
+Label Time Summary:
+production    =   3.47 sec*proc (2 tests)
+
+Total Test time (real) =   3.66 sec

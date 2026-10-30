@@ -1,0 +1,13 @@
+{
+  "schema": "yellowfield.compiler-crt.v1",
+  "owner": "compiler standard CRT",
+  "private_recovered_crt": false,
+  "target_modes": {
+    "shipping": "/MT (MultiThreaded)",
+    "debug": "/MTd (MultiThreadedDebug)",
+    "llvm_mingw": "toolchain UCRT, development only"
+  },
+  "msvc_execution": "NOT_RUN",
+  "probe": "tools/preloader_l_crt_host/main.cpp",
+  "scope": "Infrastructure profile, not original/private CRT parity"
+}

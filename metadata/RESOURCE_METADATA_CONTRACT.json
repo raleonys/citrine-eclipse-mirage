@@ -1,0 +1,56 @@
+{
+  "schema": "surge.resource-metadata-contract.v1",
+  "task": "SURGE-REFERENCE-METADATA-AVATAR",
+  "owner_instruction": "Adopt VERSIONINFO and selected metadata from the owner-provided reference DLL",
+  "scope": "Owner-provided VERSIONINFO and selected PE metadata under the existing allowlist; profile avatar stays read-only C++ data, no PNG resource",
+  "source": {
+    "kind": "OWNER_PROVIDED_REFERENCE_DLL",
+    "input_sha256": "23c01053608af63359975cfba833764206a8eda410f111525ba1784d693e32d4",
+    "resource_path": [
+      16,
+      1,
+      1033
+    ],
+    "reference_resource_sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb",
+    "member": "resources/preloader_version.rc",
+    "member_sha256": "5c3a559664571cda90fa64a7c5266b6039d2506776013f5f717edb2ba66dffcc",
+    "adaptation": "VERSIONINFO fields extracted read-only; existing ABI, import policy, static CRT and debug/signature exclusions remain separate"
+  },
+  "required": {
+    "versioninfo": {
+      "fixed": {
+        "dwSignature": "0xFEEF04BD",
+        "dwStrucVersion": "0x00010000",
+        "dwFileVersionMS": "0x4F9CE840",
+        "dwFileVersionLS": "0x8D58F00B",
+        "dwProductVersionMS": "0xA49B7911",
+        "dwProductVersionLS": "0x01A15B5D",
+        "dwFileFlagsMask": "0x0000003F",
+        "dwFileFlags": "0x00000000",
+        "dwFileOS": "0x00040000",
+        "dwFileType": "0x00000002",
+        "dwFileSubtype": "0x6A1AAE62",
+        "dwFileDateMS": "0x00000000",
+        "dwFileDateLS": "0x00000000"
+      },
+      "strings": {
+        "FileDescription": "EA Javelin Anticheat",
+        "LegalCopyright": "Copyright 2023 Electronic Arts. All rights reserved.",
+        "ProductName": "EA Javelin Anticheat",
+        "ProductVersion": "3.9.5"
+      },
+      "string_table": "040904b0",
+      "translation_language": "0x0409",
+      "translation_codepage": 1200
+    },
+    "additional_resource_assets": []
+  },
+  "visible_SURGE_identity": "Runtime profile/UI and supplied image. The user-requested fixed VERSIONINFO reference profile is retained separately.",
+  "resource_only_acceptance": "PASS_RELEASE_DEBUG_PRODUCTION_ONLY_EXACT_REFERENCE_VERSIONINFO_AND_AVATAR",
+  "whole_golden_acceptance": "NOT_GRANTED_BY_RESOURCE_ONLY_PROFILE",
+  "resource_payload_sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb",
+  "avatar_data_contract": "metadata/AVATAR_DATA_CONTRACT.json",
+  "latest_task": "SURGE-REFERENCE-METADATA-AVATAR",
+  "full_PE_metadata_contract": "metadata/MUSTAVEX_GOLDEN_METADATA.json; current owner-reference VERSIONINFO and timestamp with retained structural policy",
+  "previous_reference_provenance": "docs/evidence/contracts/RESOURCE_METADATA_CONTRACT.json"
+}

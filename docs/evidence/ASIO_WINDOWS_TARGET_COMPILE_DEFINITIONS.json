@@ -1,0 +1,20 @@
+{
+  "result": "PASS_GENERATED_BUILD_DEFINITIONS",
+  "checks": {
+    "src/net/asio_service.cpp.obj": {
+      "win32_winnt": "0x0601",
+      "winver": "0x0601",
+      "command_definitions": "DEFINES = -DASIO_HAS_THREADS=1 -DASIO_STANDALONE -DNOMINMAX -DWINVER=0x0601 -D_WIN32_WINNT=0x0601"
+    },
+    "tools/preloader_l_runtime_host/main.cpp.obj": {
+      "win32_winnt": "0x0601",
+      "winver": "0x0601",
+      "command_definitions": "DEFINES = -DASIO_HAS_THREADS=1 -DASIO_STANDALONE -DWINVER=0x0601 -D_WIN32_WINNT=0x0601"
+    },
+    "tests/native/application_runtime_tests.cpp.obj": {
+      "win32_winnt": "0x0601",
+      "winver": "0x0601",
+      "command_definitions": "DEFINES = -DASIO_HAS_THREADS=1 -DASIO_STANDALONE -DNOMINMAX -DWINVER=0x0601 -D_WIN32_WINNT=0x0601"
+    }
+  }
+}

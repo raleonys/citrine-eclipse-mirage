@@ -1,0 +1,121 @@
+{
+  "schema": "surge.build-partition-evidence.v1",
+  "classification": "NOT_RELEASE",
+  "status": "IMPLEMENTED_AUDITED_AND_CROSS_TESTED",
+  "contract": "metadata/BUILD_PARTITION_POLICY.json",
+  "documentation": "docs/BUILD_PARTITION.md",
+  "usage_matrix": "docs/evidence/TRANSLATION_UNIT_USAGE.json",
+  "test_evidence": "docs/evidence/BUILD_PARTITION_TESTS.json",
+  "dll_parity": "docs/evidence/BUILD_PARTITION_DLL_PARITY.json",
+  "binary_evidence": "docs/evidence/BUILD_PARTITION_BINARIES.json",
+  "production_tus": 64,
+  "retained_reference_tus": 74,
+  "reference_files_deleted": 0,
+  "runtime_implementation_and_header_changes": 0,
+  "unchanged_first_party_source_and_header_files": 277,
+  "unchanged_product_vendor_and_prior_evidence_files": 3430,
+  "previous_source_package_sha256": "231af4ec297c0212f6e42ef3f55503646c3285048b9cea91cb1e06688ff69faf",
+  "reference_only_external_symbols": 898,
+  "production_references_to_reference_only_symbols": 0,
+  "reference_crt_tls_initializer_sections": 0,
+  "reference_tus_with_transitive_tests_and_source_api_exports": 74,
+  "dynamic_binding_review": "Concrete native callback resolver, DLL worker/thread entries, concrete vtables and OS/provider GetProcAddress sites reviewed; not an exhaustive dynamic call graph",
+  "baseline_release": {
+    "passed": 185,
+    "failed": 0
+  },
+  "release_full": {
+    "passed": 188,
+    "failed": 0
+  },
+  "debug_aggregate": {
+    "passed": 188,
+    "failed": 0,
+    "initial_full_passes": 185,
+    "initial_reference_timeouts": 3,
+    "retried_reference_passes": 3,
+    "test_process_budget_only": "Five large reference fixtures under single-config cross-Debug Wine may run600s; wrapper660s; no assertion or application deadline changes"
+  },
+  "initial_release_failures_preserved": "network_policy assertion and pool-release fixture timeout during concurrent clean build; focused recheck3/3 and unloaded complete Release rerun188/188 passed",
+  "boundary_negative_regressions": 18,
+  "source_qa_prior_pass_checks": 16,
+  "build_proofs": {
+    "release": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "ed120a6c32ea77bbc34fe898d1ba620e6c22ea5bf773d57ea7359d947b0646f5",
+      "map_sha256": "7343d7b0d8a940a85ccbf213b8f3220d4557cc38f48d182afc24bde2549a414b"
+    },
+    "debug": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "9c18bb7ab42a09948cadae26857098fb64768d350c57cb81cac4ef54ec873c59",
+      "map_sha256": "a5a29c7ca216f0cb2b97b5079f1a52bef70c4d90110d8de2191998610c949f54"
+    },
+    "clean_production_only": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "d243191f608d515c8cb3e22f08514f3c4fda5a23dfdd16986ef8a1d9b8bb2a79",
+      "map_sha256": "7343d7b0d8a940a85ccbf213b8f3220d4557cc38f48d182afc24bde2549a414b"
+    },
+    "cached_production_only_with_stale_objects": {
+      "schema": "surge.build-partition-check.v1",
+      "classification": "NOT_RELEASE",
+      "result": "PASS_PRODUCTION_BOUNDARY",
+      "map_format": "LLVM_MINGW",
+      "errors": [],
+      "native_msvc_and_game_acceptance": "SEPARATE_REQUIRED_EVIDENCE",
+      "binary_sha256": "e529a8b81843b4b456768867c29873c390b5960fd1b43c3ebc292543f11ae9bb",
+      "map_sha256": "7343d7b0d8a940a85ccbf213b8f3220d4557cc38f48d182afc24bde2549a414b"
+    }
+  },
+  "clean_production_only": {
+    "BUILD_TESTING": false,
+    "PRELOADER_L_BUILD_SOURCE_API_DLL": false,
+    "reference_targets_configured": [],
+    "first_configure_and_build_passed_without_file_api_reply": true,
+    "subsequent_incremental_checks": "PASS"
+  },
+  "production_exports": [
+    {
+      "ordinal": 1,
+      "name": "DllMain"
+    },
+    {
+      "ordinal": 2,
+      "name": "SURGE"
+    },
+    {
+      "ordinal": 3,
+      "name": "DllShutdown"
+    }
+  ],
+  "development_export_names": {
+    "baseline": 3336,
+    "candidate": 3336,
+    "removed": [],
+    "added": []
+  },
+  "raw_diagnostic_text_bytes": {
+    "baseline": 578726,
+    "candidate": 462886
+  },
+  "native_msvc_golden": "NOT_RUN",
+  "game_retest": "NOT_RUN",
+  "parent_game_evidence": "Owner accepted an earlier startup-fix package; not acceptance of this update",
+  "dist_promotion": "NOT_ATTEMPTED",
+  "library_sync": "NOT_REQUESTED",
+  "whole_project_no_further_issue_claimed": false
+}

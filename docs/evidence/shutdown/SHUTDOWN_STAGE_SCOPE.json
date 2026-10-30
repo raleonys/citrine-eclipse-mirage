@@ -1,0 +1,9 @@
+{
+  "manual_reviewed_file_entries": 76,
+  "new_entries_in_this_stage": 9,
+  "total_first_party_donor_files": 1805,
+  "remaining_without_manual_entry": 1729,
+  "whole_file_semantic_closures": 0,
+  "retirement": "BLOCKED",
+  "limits": "Selected branches only. Four actual-owner red/green failure modes; actual archived donor Asio+listener close characterization; timer caller containment tests. Not whole-source closure or native Windows acceptance."
+}

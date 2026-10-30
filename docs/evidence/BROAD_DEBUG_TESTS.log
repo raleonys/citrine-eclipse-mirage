@@ -1,0 +1,42 @@
+Test project /workspace/yellowfield/build/runtime-debug
+      Start   1: application_runtime_contracts
+ 1/17 Test   #1: application_runtime_contracts .......   Passed    3.15 sec
+      Start   2: configuration_platform_contracts
+ 2/17 Test   #2: configuration_platform_contracts ....   Passed    0.35 sec
+      Start   3: environment_dialog_contracts
+ 3/17 Test   #3: environment_dialog_contracts ........   Passed    0.16 sec
+      Start   4: startup_publication_contracts
+ 4/17 Test   #4: startup_publication_contracts .......   Passed    0.47 sec
+      Start  22: network_policy_contracts
+ 5/17 Test  #22: network_policy_contracts ............   Passed    3.70 sec
+      Start  23: atomic_persistence_contracts
+ 6/17 Test  #23: atomic_persistence_contracts ........   Passed    0.20 sec
+      Start  24: handler_pool_contracts
+ 7/17 Test  #24: handler_pool_contracts ..............   Passed    0.86 sec
+      Start  26: listener_port_contracts
+ 8/17 Test  #26: listener_port_contracts .............   Passed    0.21 sec
+      Start  29: cleanup_retry_contracts
+ 9/17 Test  #29: cleanup_retry_contracts .............   Passed    1.12 sec
+      Start  41: execution_contracts
+10/17 Test  #41: execution_contracts .................   Passed    0.28 sec
+      Start  42: execution_concurrency_contracts
+11/17 Test  #42: execution_concurrency_contracts .....   Passed    0.23 sec
+      Start  43: atomic_staging_contracts
+12/17 Test  #43: atomic_staging_contracts ............   Passed    0.93 sec
+      Start  45: startup_contracts
+13/17 Test  #45: startup_contracts ...................   Passed   16.74 sec
+      Start  58: event_queue_contracts
+14/17 Test  #58: event_queue_contracts ...............   Passed    0.46 sec
+      Start  59: event_queue_integration_contracts
+15/17 Test  #59: event_queue_integration_contracts ...   Passed    0.18 sec
+      Start 184: misc_handlers_contracts
+16/17 Test #184: misc_handlers_contracts .............   Passed    0.44 sec
+      Start 185: dispatch_integration
+17/17 Test #185: dispatch_integration ................   Passed    0.53 sec
+
+100% tests passed out of 17
+
+Label Time Summary:
+production    =  30.00 sec*proc (17 tests)
+
+Total Test time (real) =  30.04 sec

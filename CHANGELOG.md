@@ -1,0 +1,109 @@
+# Changes
+
+## Numeric SDK greeting format
+
+- Apply the owner's suffix-removal correction: advertise exactly four numeric SDK components, retaining the fixed config-independent identity policy.
+- Require the exact quoted numeric value in the actual socket greeting despite conflicting main/override CFG values.
+
+## Owner-pinned SDK greeting identity
+
+- Pin the complete owner-provided SDK identity in LSX greeting format, retaining its build suffix until an explicit owner update.
+- Remove the mutable SDK config field, both CFG assignment paths and obsolete normalization; main/override SDK values are ignored.
+- Check the actual greeting against an independent expected value despite conflicting configs; preserve separate client negotiation and PE metadata.
+
+## Unload guard ownership recovery
+
+- Retain failed peer-resume and handle-close owners across shutdown retries; never close a scan-owned suspended live peer.
+- Release a previous suspension before a new scan and retry close without repeating a successful resume, preserving other owners' suspend counts.
+- Retain snapshot-close failures, reject overlapping scans without blocking and cover the actual production scanner with injected Windows API failures.
+
+## Bounded automatic listener selection
+
+- Select the first usable listener port from 3226 through 3236, inclusive; fail startup on exhaustion without an arbitrary-port fallback.
+- Ignore obsolete ServerPort configuration in both application routes while retaining actual bound-port state and EALsxPort publication.
+- Preserve existing connect/IPv6 hook behavior and verify range exhaustion, endpoint ownership and recovery with real socket tests.
+
+## Hook lifecycle ownership and vendor commit provenance
+
+- Record the four owner-archive commit comments alongside immutable archive/member SHA-256 pins, distinguishing archive claims from independent Git verification.
+- Build MinHook with the selected NtGetNextThread SAFE-FREEZE patch in a separately verified build copy; preserve every original vendor member.
+- Add explicit transaction states, rollback ownership retention, call drain and retryable DLL cleanup without changing the three production exports.
+- Correct the donor helper's second-handle retention on simultaneous array allocation and two close failures; cover the actual patched engine with injected-failure tests.
+- See [hook lifecycle contract and provenance](docs/HOOK_ENGINE_HARDENING.md) and [fresh evidence](docs/evidence/HOOK_HARDENING.json).
+
+## Owner-restored Windows standard IO — 2026-10-29
+
+- Restore RE standard filesystem/fstream for Windows file IO, directory operations and Debug log stream.
+- Remove unused Gulrak vendor/target/include dependencies; retain standard Unicode/binary IO coverage and the four remaining immutable vendors.
+- Include Brownfield Asio Windows target definitions and verify old Debug log remains unchanged in Release.
+- Restore Brownfield DllMain@1/SURGE@2/DllShutdown@3; remove diagnostic export slots4/5 and observe readiness via existing EALsxPort/LSX.
+- Normalize the owner-selected six-module import descriptor order in the final copy; enforce exact record permutation and read-only final order checks.
+
+
+## Asio Windows target definition — 2026-10-29
+
+- Restore supplied Brownfield _WIN32_WINNT=0x0601/WINVER=0x0601 through the Windows Asio interface dependency.
+- Remove the cause of the Asio missing-target diagnostic without warning suppression or vendor edits.
+- Preserve PE metadata targets and record the owner-confirmed game startup on the parent package.
+
+
+## Startup wait and build console correction — 2026-10-29
+
+- Reproduce a native registry startup wait blocking peer callbacks, then bind the supplied Bluefield FIX19 Guard/Pause dependency; preserve original registry logic and LastError.
+- Add missing NOMINMAX to the independent MinHook fixture target reported by the user MSVC log.
+- Restore the five ordinary build-profile titles and keep successful Python cache cleanup quiet with a JSON report under build.
+- Keep config optional and record the reported game no-start separately from Wine/native-host validation.
+
+
+## Owner-selected Bluefield hook and full Brownfield metadata — 2026-10-29
+
+- Adopt Bluefield protected UTF16 selection, original-call observation, queued hook activation and native unload guard within the authorized scope.
+- Replace preserve-compiler policy with the supplied Brownfield timestamp0xCD268EB1/linker14.0/Rich-absent profile and all declared metadata/layout checks.
+- Preserve raw linker DLL, five C exports, static CRYPT32, read-only avatar data, exact VERSIONINFO and all five vendors.
+- Verify Release Wine173/173, affected Debug7/7, final-name DLL3cycles and 19 policy groups. Preserve initial2 socket timeouts and passing reruns; native MSVC/game acceptance pending.
+
+
+## RE VDF grammar executed by PEGTL — 2026-10-28
+
+- Replace the handwritten parser backend with PEGTL rules derived from the supplied RE grammar/action evidence.
+- Bind the dedicated VDF object owner to the real DLL and existing config pipeline; preserve the public parser interface.
+- Retain the 115 existing parser assertions and add 23,417 frozen-baseline corpus observations.
+- Exercise nested VDF, duplicate actions, BOM and failure position through the dynamically loaded DLL.
+- Preserve vendor bytes, TinyXML2 500, filename/precedence policy and comparison-only donor roles.
+
+## Vendor compatibility follow-up — 2026-10-28
+
+- Keep all five owner-archive vendor trees and TinyXML2 depth 500 unchanged.
+- Verify PEGTL public headers with LLVM-MinGW 20251118 / Clang 21.1.6; retain the Clang 23 incompatibility record.
+- Require PEGTL compatibility at configure time even with BUILD_TESTING=OFF; explicit diagnostic-only opt-out remains visible.
+- Add real Asio loopback I/O/EOF/cancellation and ghc::filesystem Unicode/binary I/O fixtures.
+- Preserve application implementations, grammar, storage policy and runtime ownership decisions.
+
+## Exact owner-archive vendoring — 2026-10-28
+
+- Materialize all five supplied archive trees and preserve the two Asio symlinks.
+- Replace old RE MinHook/TinyXML2 copies; take no Brownfield vendor files.
+- Verify archive pins and every member; keep all vendor defaults and bytes unchanged.
+- Use TinyXML2's default 500; record the difference from the older RE profile 100.
+- Add offline CMake targets, API fixtures and separate PEGTL toolchain diagnostics.
+- Preserve typed links through flat packaging and safe extraction; reject alias tampering.
+
+## Brownfield infrastructure adaptation — 2026-10-28
+
+- Restore the broad integration mandate and track all ten transfer categories.
+- Adapt four PE Golden tools, the MSVC link audit and compatible negative suites.
+- Add a gated six-stage local pipeline with exact build/DLL/source binding.
+- Add five registered operator profiles and compiler CRT/runtime probes.
+- Add metadata/script ownership, target-drift guards and a visible source-QA runner.
+- Package a deterministic flat source tree against the verified source manifest.
+- Verify the exact owner SURGE image in the real DLL; preserve application sources.
+- Keep final Golden product values, Windows/MSVC execution and game acceptance explicit.
+
+## Local source layout correction — 2026-10-28
+
+- Replace the raw RE-module tree with functional application directories.
+- Separate public headers, tests, third-party sources and operator tooling.
+- Remove whole preloader/version and private CRT research packages from build.
+- Decouple the approved hook-11 selector from the preloader project.
+- Add an actual development DLL target and a dynamically linked source host.
+- Adapt Brownfield local build launchers; keep publication and Golden acceptance separate.

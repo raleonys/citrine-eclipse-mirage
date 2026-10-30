@@ -1,0 +1,49 @@
+{
+  "schema": "yellowfield.resource-metadata-contract.v1",
+  "task": "YF-RUNTIME-BIND-20261028",
+  "owner_instruction": "brownfieldde resources kismindaki metadata alinmamis alinacakti",
+  "scope": "Explicitly adopted byte-identical Brownfield VERSIONINFO only. Owner correction removes PNG RCDATA; avatar bytes replace original Anadius profile data in read-only C++ storage.",
+  "source": {
+    "archive": "HF20_REGISTRY_B_ARCH_B_STAGE03_ISSUER_SCOPE_FULL_SOURCE_CANDIDATE_NOT_RELEASE.zip",
+    "archive_sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",
+    "member": "resources/preloader_version.rc",
+    "member_sha256": "454af99b76a4e1fc287c8af0f324c485744015e589736d1c267582651a5de693",
+    "adaptation": "Exact resource file bytes; included by surge.rc; no application code imported."
+  },
+  "required": {
+    "versioninfo": {
+      "fixed": {
+        "dwSignature": "0xFEEF04BD",
+        "dwStrucVersion": "0x00010000",
+        "dwFileVersionMS": "0x3FE24D7B",
+        "dwFileVersionLS": "0x9AF25405",
+        "dwProductVersionMS": "0xB54B7381",
+        "dwProductVersionLS": "0x01A10EC2",
+        "dwFileFlagsMask": "0x0000003F",
+        "dwFileFlags": "0x00000000",
+        "dwFileOS": "0x00040000",
+        "dwFileType": "0x00000002",
+        "dwFileSubtype": "0x6A1AAE62",
+        "dwFileDateMS": "0x00000000",
+        "dwFileDateLS": "0x00000000"
+      },
+      "strings": {
+        "FileDescription": "EA Javelin Anticheat",
+        "LegalCopyright": "Copyright 2023 Electronic Arts. All rights reserved.",
+        "ProductName": "EA Javelin Anticheat",
+        "ProductVersion": "3.9.5"
+      },
+      "string_table": "040904b0",
+      "translation_language": "0x0409",
+      "translation_codepage": 1200
+    },
+    "additional_resource_assets": []
+  },
+  "visible_SURGE_identity": "Runtime profile/UI and supplied image. The user-requested fixed VERSIONINFO reference profile is retained separately.",
+  "resource_only_acceptance": "PASS_RELEASE_DEBUG_ACTUAL_PE_AND_TAMPER_REJECTION",
+  "whole_golden_acceptance": "NOT_GRANTED_BY_RESOURCE_ONLY_PROFILE",
+  "resource_payload_sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1",
+  "avatar_data_contract": "metadata/AVATAR_DATA_CONTRACT.json",
+  "latest_task": "YF-BLUEFIELD-ALIGN-20261029",
+  "full_PE_metadata_contract": "metadata/MUSTAVEX_GOLDEN_METADATA.json explicitly adopted in YF-BLUEFIELD-ALIGN-20261029"
+}

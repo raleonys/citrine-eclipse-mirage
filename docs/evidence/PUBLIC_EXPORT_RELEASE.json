@@ -1,0 +1,41 @@
+{
+  "schema": "yellowfield.public-abi-check.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "dll_sha256": "6ce0dad5603bfed9365881939b0b3006d7d9136cb9c46059bc93ca70423bb26c",
+  "export_count": 6,
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0x79df0",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0x79ce0",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0x79cd0",
+      "forwarded": false
+    },
+    "YellowfieldServerPort": {
+      "ordinal": 5,
+      "rva": "0x79cb0",
+      "forwarded": false
+    },
+    "YellowfieldShutdown": {
+      "ordinal": 6,
+      "rva": "0x79c00",
+      "forwarded": false
+    },
+    "YellowfieldWaitReady": {
+      "ordinal": 4,
+      "rva": "0x79bb0",
+      "forwarded": false
+    }
+  },
+  "errors": [],
+  "native_consumer_acceptance": "NOT_RUN"
+}

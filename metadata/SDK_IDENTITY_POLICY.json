@@ -1,0 +1,20 @@
+{
+  "schema": "surge.sdk-identity-policy.v1",
+  "classification": "NOT_RELEASE",
+  "authority": "OWNER_PROVIDED_VERSION_TEXT",
+  "supplied_text": "10.6.2.31",
+  "wire_value": "10,6,2,31",
+  "normalization": "FOUR_NUMERIC_COMPONENTS; DOTS_TO_COMMAS; BUILD_SUFFIX_OMITTED_BY_OWNER",
+  "independent_consumer_binary_verification": false,
+  "source_header": "include/preloader_l/core/protocol_identity.hpp",
+  "runtime_owner": "const Application::Impl string; existing session version reference",
+  "config_override_supported": false,
+  "removed_legacy_key": "Emulator/SDK",
+  "mutable_config_field_removed": true,
+  "updates": "ONLY_NEW_EXPLICIT_OWNER_REQUEST; NO_AUTOMATIC_VENDOR_TOOLCHAIN_PROVIDER_RESOURCE_SYNC",
+  "compiler_sdk_selection": false,
+  "client_protocol_negotiation": "UNCHANGED",
+  "pe_metadata_version": "UNCHANGED_SEPARATE_POLICY",
+  "documentation": "docs/SDK_IDENTITY.md",
+  "source_text_provenance": "docs/SDK_IDENTITY.md"
+}

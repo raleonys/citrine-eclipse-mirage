@@ -1,0 +1,29 @@
+Test project /workspace/yellowfield/build/llvm-mingw-x64-vendors
+    Start   1: application_runtime_contracts
+    Test   #1: application_runtime_contracts ....   Passed    1.23 sec
+    Start   1: application_runtime_contracts
+    Test   #1: application_runtime_contracts ....   Passed    0.37 sec
+    Start   1: application_runtime_contracts
+1/4 Test   #1: application_runtime_contracts ....   Passed    0.32 sec
+    Start   8: infrastructure_wine_runner
+    Test   #8: infrastructure_wine_runner .......   Passed    0.44 sec
+    Start   8: infrastructure_wine_runner
+    Test   #8: infrastructure_wine_runner .......   Passed    1.04 sec
+    Start   8: infrastructure_wine_runner
+2/4 Test   #8: infrastructure_wine_runner .......   Passed    0.53 sec
+    Start  18: native_callback_contracts
+    Test  #18: native_callback_contracts ........   Passed    0.17 sec
+    Start  18: native_callback_contracts
+    Test  #18: native_callback_contracts ........   Passed    0.11 sec
+    Start  18: native_callback_contracts
+3/4 Test  #18: native_callback_contracts ........   Passed    0.08 sec
+    Start 168: dll_source_smoke
+    Test #168: dll_source_smoke .................   Passed    0.42 sec
+    Start 168: dll_source_smoke
+    Test #168: dll_source_smoke .................   Passed    0.36 sec
+    Start 168: dll_source_smoke
+4/4 Test #168: dll_source_smoke .................   Passed    0.58 sec
+
+100% tests passed out of 4
+
+Total Test time (real) =   5.68 sec

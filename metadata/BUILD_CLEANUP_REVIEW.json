@@ -1,0 +1,46 @@
+{
+  "schema": "surge.build-cleanup-review.v1",
+  "classification": "NOT_RELEASE",
+  "owner": "Explicit owner authorization to apply audited cleanup with diagnostic TLS gating",
+  "documentation": "docs/BUILD_CLEANUP.md",
+  "validation": "docs/evidence/build-cleanup/VALIDATION.json",
+  "parent_source_zip_sha256": "112a75990d5eee3fafc523bc15687372f64a7ce9b76141cd9a9f50a17de14536",
+  "input_audit_zip_sha256": "5e72bf441f4bd32a131f33b2fb6e90e1335354da03e0b47bd71c3b2adc00c65f",
+  "implemented_audit_ids": [
+    "DC-001",
+    "DC-002",
+    "DC-003",
+    "DC-004",
+    "DC-005",
+    "DC-006",
+    "DC-007",
+    "DC-008",
+    "DC-009",
+    "DC-010",
+    "DC-011"
+  ],
+  "diagnostic_tls": "crypt_observed body Debug-only; virtual slot and Debug logging retained",
+  "production_cpp_count": 60,
+  "reference_cpp_count": 78,
+  "source_cpp_deleted": 0,
+  "public_headers_changed": false,
+  "vendor_payloads_changed": false,
+  "compiler_linker_policy_changed": false,
+  "deferred_audit_ids": [
+    "DC-012",
+    "DC-013",
+    "DC-014",
+    "DC-015",
+    "DC-016",
+    "DC-017",
+    "DC-018",
+    "DC-019"
+  ],
+  "ownership_policy_changed": false,
+  "native_windows_msvc_golden_game": "PENDING_CHANGED_SOURCE",
+  "validation_status": "PASS_LOCAL_CLEANUP_REGRESSION_SOURCE_QA_AND_PARITY",
+  "retained_source_path_adaptations": {
+    "src/config/startup.cpp": "src/config/config_startup.cpp"
+  },
+  "retained_source_bodies_deleted": 0
+}

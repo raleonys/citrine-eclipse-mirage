@@ -1,0 +1,26 @@
+Test project /workspace/yellowfield/build/runtime-debug
+    Start   1: application_runtime_contracts
+1/9 Test   #1: application_runtime_contracts ......   Passed    1.87 sec
+    Start   2: configuration_platform_contracts
+2/9 Test   #2: configuration_platform_contracts ...   Passed    0.41 sec
+    Start  16: production_callback_contracts
+3/9 Test  #16: production_callback_contracts ......   Passed    0.28 sec
+    Start  38: configuration_contracts
+4/9 Test  #38: configuration_contracts ............   Passed    0.19 sec
+    Start 173: file_io_contracts
+5/9 Test #173: file_io_contracts ..................   Passed    0.23 sec
+    Start 185: dll_public_lifecycle
+6/9 Test #185: dll_public_lifecycle ...............   Passed    0.80 sec
+    Start 186: dll_public_c_consumer
+7/9 Test #186: dll_public_c_consumer ..............   Passed    0.52 sec
+    Start 187: dll_public_export_contract
+8/9 Test #187: dll_public_export_contract .........   Passed    0.20 sec
+    Start 188: dll_public_export_negatives
+9/9 Test #188: dll_public_export_negatives ........   Passed    1.24 sec
+
+100% tests passed out of 9
+
+Label Time Summary:
+production    =   5.73 sec*proc (9 tests)
+
+Total Test time (real) =   5.75 sec

@@ -1,0 +1,1828 @@
+============================================================
+ SURGE - NATIVE ACCEPTANCE
+ Build and run native Windows tests
+============================================================
+
+Running: build_native_acceptance.ps1
+
+SURGE: NATIVE ACCEPTANCE / Release
+[1/3] Configure
+-- The C compiler identification is MSVC 19.51.36260.0
+-- The CXX compiler identification is MSVC 19.51.36260.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: C:/Users/Skysect/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
+-- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS
+-- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS - Success
+-- Configuring done (26.0s)
+-- Generating done (5.0s)
+-- Build files have been written to: C:/Users/Skysect/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/native_msvc
+[2/3] Compile and link
+[  1%] Verify the four active owner-supplied vendor trees
+asio: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+[  1%] Built target preloader_l_verify_vendors
+[  1%] Building CXX object CMakeFiles/preloader_l_tinyxml2.dir/third_party/tinyxml2/tinyxml2.cpp.obj
+tinyxml2.cpp
+[  1%] Linking CXX static library preloader_l_tinyxml2.lib
+[  1%] Built target preloader_l_tinyxml2
+[  1%] Verify the pinned hook engine build copy
+HOOK_ENGINE_BUILD_COPY=PASS
+[  1%] Built target preloader_l_verify_hook_engine
+[  1%] Building C object CMakeFiles/preloader_l_minhook.dir/vendor_build/minhook/src/hook.c.obj
+hook.c
+[  2%] Building C object CMakeFiles/preloader_l_minhook.dir/vendor_build/minhook/src/buffer.c.obj
+buffer.c
+[  2%] Building C object CMakeFiles/preloader_l_minhook.dir/vendor_build/minhook/src/trampoline.c.obj
+trampoline.c
+[  2%] Building C object CMakeFiles/preloader_l_minhook.dir/vendor_build/minhook/src/hde/hde64.c.obj
+hde64.c
+[  2%] Linking C static library preloader_l_minhook.lib
+[  2%] Built target preloader_l_minhook
+[  2%] Building CXX object CMakeFiles/preloader_l_vdf_objects.dir/src/config/parser.cpp.obj
+parser.cpp
+[  2%] Built target preloader_l_vdf_objects
+[  2%] Generating generated/avatar_data.hpp
+[  3%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/atomic_files.cpp.obj
+atomic_files.cpp
+[  3%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/atomic_files_windows.cpp.obj
+atomic_files_windows.cpp
+[  3%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_transaction.cpp.obj
+hook_transaction.cpp
+[  3%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/file_copy.cpp.obj
+file_copy.cpp
+[  3%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/file_copy_windows.cpp.obj
+file_copy_windows.cpp
+[  4%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/codec/crypto.cpp.obj
+crypto.cpp
+[  4%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/codec/encoding.cpp.obj
+encoding.cpp
+[  4%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/application.cpp.obj
+application.cpp
+[  4%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/configuration.cpp.obj
+configuration.cpp
+[  4%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/hash_table.cpp.obj
+hash_table.cpp
+[  4%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/order.cpp.obj
+order.cpp
+[  5%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/startup.cpp.obj
+startup.cpp
+[  5%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/binary_io.cpp.obj
+binary_io.cpp
+[  5%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/license_files.cpp.obj
+license_files.cpp
+[  5%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/license.cpp.obj
+license.cpp
+[  5%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/paths.cpp.obj
+paths.cpp
+[  6%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/token.cpp.obj
+token.cpp
+[  6%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/content_handlers.cpp.obj
+content_handlers.cpp
+[  6%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/handlers.cpp.obj
+handlers.cpp
+[  6%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/misc_handlers.cpp.obj
+misc_handlers.cpp
+[  6%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/hash/hash.cpp.obj
+hash.cpp
+[  7%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/server.cpp.obj
+server.cpp
+[  7%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/asio_service.cpp.obj
+asio_service.cpp
+[  7%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/session_handler.cpp.obj
+session_handler.cpp
+[  7%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/session_routing.cpp.obj
+session_routing.cpp
+[  7%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/crypt_query.cpp.obj
+crypt_query.cpp
+[  8%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/encoding_windows.cpp.obj
+encoding_windows.cpp
+[  8%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/execution_windows.cpp.obj
+execution_windows.cpp
+[  8%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/file_io_windows.cpp.obj
+file_io_windows.cpp
+[  8%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_engine_api.cpp.obj
+hook_engine_api.cpp
+[  8%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_connect.cpp.obj
+hook_connect.cpp
+[  8%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_host_callbacks.cpp.obj
+hook_host_callbacks.cpp
+[  9%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_native_callbacks.cpp.obj
+hook_native_callbacks.cpp
+[  9%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_original_effects.cpp.obj
+hook_original_effects.cpp
+[  9%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_setup.cpp.obj
+hook_setup.cpp
+[  9%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_unload_guard.cpp.obj
+hook_unload_guard.cpp
+[  9%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/library_system.cpp.obj
+library_system.cpp
+[ 10%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/registry.cpp.obj
+registry.cpp
+[ 10%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/startup_windows.cpp.obj
+startup_windows.cpp
+[ 10%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/status_windows.cpp.obj
+status_windows.cpp
+[ 10%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/windows_effects.cpp.obj
+windows_effects.cpp
+[ 10%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/protocol/messages.cpp.obj
+messages.cpp
+[ 11%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/router/router.cpp.obj
+router.cpp
+[ 11%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_runtime.cpp.obj
+achievement_runtime.cpp
+[ 11%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_storage.cpp.obj
+achievement_storage.cpp
+[ 11%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_utc.cpp.obj
+achievement_utc.cpp
+[ 11%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_writer.cpp.obj
+achievement_writer.cpp
+[ 11%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application.cpp.obj
+application.cpp
+[ 12%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application_defaults.cpp.obj
+application_defaults.cpp
+[ 12%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application_environment.cpp.obj
+application_environment.cpp
+[ 12%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/event_adapters.cpp.obj
+event_adapters.cpp
+[ 12%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/event_queue.cpp.obj
+event_queue.cpp
+[ 12%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/execution.cpp.obj
+execution.cpp
+[ 13%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/libraries.cpp.obj
+libraries.cpp
+[ 13%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/online.cpp.obj
+online.cpp
+[ 13%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/startup.cpp.obj
+startup.cpp
+[ 13%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/status.cpp.obj
+status.cpp
+[ 13%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/calendar.cpp.obj
+calendar.cpp
+[ 14%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/timestamp.cpp.obj
+timestamp.cpp
+[ 14%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/memory_printer.cpp.obj
+memory_printer.cpp
+[ 14%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/reader.cpp.obj
+reader.cpp
+[ 14%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/crypt_query_host.cpp.obj
+crypt_query_host.cpp
+[ 14%] Built target preloader_l_objects
+[ 14%] Linking CXX static library preloader_l_core.lib
+[ 14%] Built target preloader_l_core
+[ 14%] Building CXX object CMakeFiles/preloader_l.dir/src/platform/dll_entry.cpp.obj
+dll_entry.cpp
+[ 15%] Building RC object CMakeFiles/preloader_l.dir/resources/surge.rc.res
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+[ 15%] Linking CXX shared library preloader.unsigned.dll
+Verify production target closure and linked object boundary
+BUILD_PARTITION: PASS_PRODUCTION_BOUNDARY
+[ 15%] Built target preloader_l
+[ 15%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_acceptor.cpp.obj
+transport_acceptor.cpp
+[ 16%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_acceptor_native.cpp.obj
+transport_acceptor_native.cpp
+[ 16%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_append_growth.cpp.obj
+transport_append_growth.cpp
+[ 16%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_async_receive.cpp.obj
+transport_async_receive.cpp
+[ 16%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_cancellation.cpp.obj
+transport_cancellation.cpp
+[ 16%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_cancellation_native.cpp.obj
+transport_cancellation_native.cpp
+[ 17%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_cipher_session.cpp.obj
+transport_cipher_session.cpp
+[ 17%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_close.cpp.obj
+transport_close.cpp
+[ 17%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_closing.cpp.obj
+transport_closing.cpp
+[ 17%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_completion_dispatcher.cpp.obj
+transport_completion_dispatcher.cpp
+[ 17%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_completion_dispatcher_native.cpp.obj
+transport_completion_dispatcher_native.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_composed_read.cpp.obj
+transport_composed_read.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_composed_write.cpp.obj
+transport_composed_write.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_composed_write_native.cpp.obj
+transport_composed_write_native.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_environment_constructor.cpp.obj
+transport_environment_constructor.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_frame_read.cpp.obj
+transport_frame_read.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_handler_dispatch.cpp.obj
+transport_handler_dispatch.cpp
+[ 19%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_handler_dispatch_bridge.cpp.obj
+transport_handler_dispatch_bridge.cpp
+[ 19%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_io_completion.cpp.obj
+transport_io_completion.cpp
+[ 19%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_io_completion_dispatch.cpp.obj
+transport_io_completion_dispatch.cpp
+[ 19%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_iocp_constructor.cpp.obj
+transport_iocp_constructor.cpp
+[ 19%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_iocp_constructor_native.cpp.obj
+transport_iocp_constructor_native.cpp
+[ 20%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_lifecycle.cpp.obj
+transport_lifecycle.cpp
+[ 20%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_lifecycle_native.cpp.obj
+transport_lifecycle_native.cpp
+[ 20%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_message_core_bridge.cpp.obj
+transport_message_core_bridge.cpp
+[ 20%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_message_dispatch.cpp.obj
+transport_message_dispatch.cpp
+[ 20%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_native.cpp.obj
+transport_native.cpp
+[ 21%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_native_dispatch.cpp.obj
+transport_native_dispatch.cpp
+[ 21%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_native_message.cpp.obj
+transport_native_message.cpp
+[ 21%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_operations.cpp.obj
+transport_operations.cpp
+[ 21%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_owned_response.cpp.obj
+transport_owned_response.cpp
+[ 21%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_posted_operation.cpp.obj
+transport_posted_operation.cpp
+[ 21%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_posted_operation_dispatch.cpp.obj
+transport_posted_operation_dispatch.cpp
+[ 22%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_prefix_cipher.cpp.obj
+transport_prefix_cipher.cpp
+[ 22%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_queued_write.cpp.obj
+transport_queued_write.cpp
+[ 22%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_receive_buffer.cpp.obj
+transport_receive_buffer.cpp
+[ 22%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_recycle.cpp.obj
+transport_recycle.cpp
+[ 22%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_recycle_storage.cpp.obj
+transport_recycle_storage.cpp
+[ 23%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_request_growth.cpp.obj
+transport_request_growth.cpp
+[ 23%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_request_mutation.cpp.obj
+transport_request_mutation.cpp
+[ 23%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_response_containers.cpp.obj
+transport_response_containers.cpp
+[ 23%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_response_dispatch.cpp.obj
+transport_response_dispatch.cpp
+[ 23%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_response_hex.cpp.obj
+transport_response_hex.cpp
+[ 24%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_scheduler_registry.cpp.obj
+transport_scheduler_registry.cpp
+[ 24%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_service_constructor.cpp.obj
+transport_service_constructor.cpp
+[ 24%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_service_constructor_native.cpp.obj
+transport_service_constructor_native.cpp
+[ 24%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_service_registry.cpp.obj
+transport_service_registry.cpp
+[ 24%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_worker_run.cpp.obj
+transport_worker_run.cpp
+[ 25%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_worker_run_native.cpp.obj
+transport_worker_run_native.cpp
+[ 25%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_worker_startup.cpp.obj
+transport_worker_startup.cpp
+[ 25%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_worker_startup_native.cpp.obj
+transport_worker_startup_native.cpp
+[ 25%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/net/transport_write_finish.cpp.obj
+transport_write_finish.cpp
+[ 25%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/document_clear.cpp.obj
+document_clear.cpp
+[ 25%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/document_error.cpp.obj
+document_error.cpp
+[ 26%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/native_document.cpp.obj
+native_document.cpp
+[ 26%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/node_base.cpp.obj
+node_base.cpp
+[ 26%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/node_constructors.cpp.obj
+node_constructors.cpp
+[ 26%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/node_delete.cpp.obj
+node_delete.cpp
+[ 26%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/node_identify.cpp.obj
+node_identify.cpp
+[ 27%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/node_insertion.cpp.obj
+node_insertion.cpp
+[ 27%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/node_parse.cpp.obj
+node_parse.cpp
+[ 27%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/node_string.cpp.obj
+node_string.cpp
+[ 27%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/parse_entry.cpp.obj
+parse_entry.cpp
+[ 27%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/pool_allocate.cpp.obj
+pool_allocate.cpp
+[ 28%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/pool_append.cpp.obj
+pool_append.cpp
+[ 28%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/pool_clear.cpp.obj
+pool_clear.cpp
+[ 28%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/pool_destruct.cpp.obj
+pool_destruct.cpp
+[ 28%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/xml/pool_release.cpp.obj
+pool_release.cpp
+[ 28%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/runtime/bootstrap.cpp.obj
+bootstrap.cpp
+[ 28%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/runtime/thread_launch.cpp.obj
+thread_launch.cpp
+[ 29%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/runtime/recovered_effects.cpp.obj
+recovered_effects.cpp
+[ 29%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/platform/hook_cleanup.cpp.obj
+hook_cleanup.cpp
+[ 29%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/platform/hook_engine_adapters.cpp.obj
+hook_engine_adapters.cpp
+[ 29%] Building CXX object CMakeFiles/preloader_l_reference_objects.dir/src/config/pipeline.cpp.obj
+pipeline.cpp
+[ 29%] Built target preloader_l_reference_objects
+[ 29%] Linking CXX static library preloader_l_reference_models.lib
+[ 29%] Built target preloader_l_reference_models
+[ 29%] Building CXX object CMakeFiles/preloader_l_source_api.dir/src/platform/dll_entry.cpp.obj
+dll_entry.cpp
+[ 29%] Building RC object CMakeFiles/preloader_l_source_api.dir/resources/surge.rc.res
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+[ 29%] Linking CXX shared library preloader.source.dll
+[ 29%] Built target preloader_l_source_api
+[ 29%] Building CXX object CMakeFiles/preloader_l_source_host.dir/tools/preloader_l_source_host/main.cpp.obj
+main.cpp
+[ 30%] Linking CXX executable preloader_l_source_host.exe
+[ 30%] Built target preloader_l_source_host
+[ 30%] Building CXX object CMakeFiles/preloader_l_runtime_host.dir/tools/preloader_l_runtime_host/main.cpp.obj
+main.cpp
+[ 31%] Linking CXX executable preloader_l_runtime_host.exe
+[ 31%] Built target preloader_l_runtime_host
+[ 31%] Building CXX object CMakeFiles/online_provider_fixture.dir/tests/support/runtime/online_fixture.cpp.obj
+online_fixture.cpp
+[ 31%] Linking CXX shared library fixtures\preloader_l_online.dll
+[ 31%] Built target online_provider_fixture
+[ 31%] Building CXX object CMakeFiles/application_runtime_contracts.dir/tests/native/application_runtime_tests.cpp.obj
+application_runtime_tests.cpp
+[ 31%] Building RC object CMakeFiles/application_runtime_contracts.dir/resources/surge.rc.res
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+[ 31%] Linking CXX executable application_runtime_contracts.exe
+[ 31%] Built target application_runtime_contracts
+[ 31%] Building CXX object CMakeFiles/configuration_platform_contracts.dir/tests/native/configuration_platform_tests.cpp.obj
+configuration_platform_tests.cpp
+[ 31%] Linking CXX executable configuration_platform_contracts.exe
+[ 31%] Built target configuration_platform_contracts
+[ 31%] Building CXX object CMakeFiles/environment_dialog_contracts.dir/tests/native/environment_dialog_tests.cpp.obj
+environment_dialog_tests.cpp
+[ 31%] Linking CXX executable environment_dialog_contracts.exe
+[ 31%] Built target environment_dialog_contracts
+[ 31%] Building CXX object CMakeFiles/startup_publication_contracts.dir/tests/native/startup_publication_tests.cpp.obj
+startup_publication_tests.cpp
+[ 31%] Linking CXX executable startup_publication_contracts.exe
+[ 31%] Built target startup_publication_contracts
+[ 31%] Building CXX object CMakeFiles/vendor_api_smoke.dir/tests/vendors/vendor_api_smoke.cpp.obj
+vendor_api_smoke.cpp
+[ 32%] Linking CXX executable vendor_api_smoke.exe
+[ 32%] Built target vendor_api_smoke
+[ 32%] Building CXX object CMakeFiles/vendor_io_contracts.dir/tests/vendors/vendor_io_contracts.cpp.obj
+vendor_io_contracts.cpp
+[ 32%] Linking CXX executable vendor_io_contracts.exe
+[ 32%] Built target vendor_io_contracts
+[ 32%] Building CXX object CMakeFiles/vendor_pegtl_smoke.dir/tests/vendors/vendor_pegtl_smoke.cpp.obj
+vendor_pegtl_smoke.cpp
+[ 32%] Linking CXX executable vendor_pegtl_smoke.exe
+[ 32%] Built target vendor_pegtl_smoke
+[ 32%] Building CXX object CMakeFiles/preloader_l_crt_host.dir/tools/preloader_l_crt_host/main.cpp.obj
+main.cpp
+[ 32%] Linking CXX executable preloader_l_crt_host.exe
+[ 32%] Built target preloader_l_crt_host
+[ 32%] Building CXX object CMakeFiles/production_callback_contracts.dir/tests/unit/native/native_tests.cpp.obj
+native_tests.cpp
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\native\native_tests.cpp(102): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_view_iterator<_Traits>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Traits=std::char_traits<char16_t>,
+            _Iter=std::_String_view_iterator<std::char_traits<char16_t>>,
+            _Alloc=std::allocator<char>
+        ]
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\native\native_tests.cpp(102): note: '`anonymous-namespace'::Effects::filesystem_narrow' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Size_type=unsigned __int64,
+            _Iter=const char16_t *,
+            _Sent=const char16_t *,
+            _Size=unsigned __int64
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(1018): note: derlenen şablon işlevi '_OutIt *std::_Copy_n_unchecked4<const char16_t*,_Size,char*>(_InIt,_SizeTy,_OutIt)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _OutIt=char *,
+            _Size=unsigned __int64,
+            _InIt=const char16_t *,
+            _SizeTy=unsigned __int64
+        ]
+[ 32%] Linking CXX executable production_callback_contracts.exe
+[ 32%] Built target production_callback_contracts
+[ 32%] Building CXX object CMakeFiles/production_network_hook_contracts.dir/tests/unit/network_hook/hook_tests.cpp.obj
+hook_tests.cpp
+[ 32%] Linking CXX executable production_network_hook_contracts.exe
+[ 32%] Built target production_network_hook_contracts
+[ 32%] Building CXX object CMakeFiles/session_flow_contracts.dir/tests/native/session_flow_tests.cpp.obj
+session_flow_tests.cpp
+[ 33%] Linking CXX executable session_flow_contracts.exe
+[ 33%] Built target session_flow_contracts
+[ 33%] Building CXX object CMakeFiles/crypt_path_probe_contracts.dir/tests/native/crypt_path_probe_tests.cpp.obj
+crypt_path_probe_tests.cpp
+[ 33%] Linking CXX executable crypt_path_probe_contracts.exe
+[ 33%] Built target crypt_path_probe_contracts
+[ 33%] Building CXX object CMakeFiles/network_policy_contracts.dir/tests/native/network_policy_tests.cpp.obj
+network_policy_tests.cpp
+[ 34%] Linking CXX executable network_policy_contracts.exe
+[ 34%] Built target network_policy_contracts
+[ 34%] Building CXX object CMakeFiles/atomic_persistence_contracts.dir/tests/native/atomic_persistence_tests.cpp.obj
+atomic_persistence_tests.cpp
+[ 35%] Linking CXX executable atomic_persistence_contracts.exe
+[ 35%] Built target atomic_persistence_contracts
+[ 35%] Building CXX object CMakeFiles/handler_pool_contracts.dir/tests/native/handler_pool_tests.cpp.obj
+handler_pool_tests.cpp
+[ 35%] Linking CXX executable handler_pool_contracts.exe
+[ 35%] Built target handler_pool_contracts
+[ 35%] Building CXX object CMakeFiles/unload_guard_contracts.dir/tests/native/unload_guard_tests.cpp.obj
+unload_guard_tests.cpp
+[ 35%] Linking CXX executable unload_guard_contracts.exe
+[ 35%] Built target unload_guard_contracts
+[ 36%] Building CXX object CMakeFiles/listener_port_contracts.dir/tests/native/listener_port_tests.cpp.obj
+listener_port_tests.cpp
+[ 36%] Linking CXX executable listener_port_contracts.exe
+[ 36%] Built target listener_port_contracts
+[ 36%] Building C object CMakeFiles/hook_freeze_contracts.dir/tests/native/hook_freeze_tests.c.obj
+hook_freeze_tests.c
+[ 36%] Linking C executable hook_freeze_contracts.exe
+[ 36%] Built target hook_freeze_contracts
+[ 36%] Building CXX object CMakeFiles/hook_transaction_contracts.dir/tests/unit/hooks/transaction_tests.cpp.obj
+transaction_tests.cpp
+[ 37%] Linking CXX executable hook_transaction_contracts.exe
+[ 37%] Built target hook_transaction_contracts
+[ 37%] Building CXX object CMakeFiles/cleanup_retry_fixture.dir/src/platform/dll_entry.cpp.obj
+dll_entry.cpp
+[ 37%] Building CXX object CMakeFiles/cleanup_retry_fixture.dir/tests/support/runtime/cleanup_retry_fixture.cpp.obj
+cleanup_retry_fixture.cpp
+[ 38%] Linking CXX shared library cleanup_retry_fixture.dll
+[ 38%] Built target cleanup_retry_fixture
+[ 38%] Building CXX object CMakeFiles/cleanup_retry_contracts.dir/tests/native/cleanup_retry_tests.cpp.obj
+cleanup_retry_tests.cpp
+[ 38%] Linking CXX executable cleanup_retry_contracts.exe
+[ 38%] Built target cleanup_retry_contracts
+[ 38%] Building CXX object CMakeFiles/file_copy_contracts.dir/tests/unit/file/file_copy_tests.cpp.obj
+file_copy_tests.cpp
+[ 38%] Linking CXX executable file_copy_contracts.exe
+[ 38%] Built target file_copy_contracts
+[ 38%] Building CXX object CMakeFiles/file_copy_windows_integration.dir/tests/native/file_copy_windows_tests.cpp.obj
+file_copy_windows_tests.cpp
+[ 39%] Linking CXX executable file_copy_windows_integration.exe
+[ 39%] Built target file_copy_windows_integration
+[ 39%] Building CXX object CMakeFiles/bootstrap_contracts.dir/tests/unit/bootstrap/bootstrap_tests.cpp.obj
+bootstrap_tests.cpp
+[ 39%] Linking CXX executable bootstrap_contracts.exe
+[ 39%] Built target bootstrap_contracts
+[ 39%] Building CXX object CMakeFiles/crt_thread_contracts.dir/tests/unit/thread/thread_tests.cpp.obj
+thread_tests.cpp
+[ 39%] Linking CXX executable crt_thread_contracts.exe
+[ 39%] Built target crt_thread_contracts
+[ 39%] Building CXX object CMakeFiles/host_init_contracts.dir/tests/unit/host_init/host_init_tests.cpp.obj
+host_init_tests.cpp
+[ 39%] Linking CXX executable host_init_contracts.exe
+[ 39%] Built target host_init_contracts
+[ 40%] Building CXX object CMakeFiles/registry_contracts.dir/tests/unit/registry/registry_tests.cpp.obj
+registry_tests.cpp
+[ 40%] Linking CXX executable registry_contracts.exe
+[ 40%] Built target registry_contracts
+[ 40%] Building CXX object CMakeFiles/native_callback_contracts.dir/tests/unit/native/native_tests.cpp.obj
+native_tests.cpp
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\native\native_tests.cpp(102): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_view_iterator<_Traits>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Traits=std::char_traits<char16_t>,
+            _Iter=std::_String_view_iterator<std::char_traits<char16_t>>,
+            _Alloc=std::allocator<char>
+        ]
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\native\native_tests.cpp(102): note: '`anonymous-namespace'::Effects::filesystem_narrow' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Size_type=unsigned __int64,
+            _Iter=const char16_t *,
+            _Sent=const char16_t *,
+            _Size=unsigned __int64
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(1018): note: derlenen şablon işlevi '_OutIt *std::_Copy_n_unchecked4<const char16_t*,_Size,char*>(_InIt,_SizeTy,_OutIt)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _OutIt=char *,
+            _Size=unsigned __int64,
+            _InIt=const char16_t *,
+            _SizeTy=unsigned __int64
+        ]
+[ 40%] Linking CXX executable native_callback_contracts.exe
+[ 40%] Built target native_callback_contracts
+[ 40%] Building CXX object CMakeFiles/host_callback_contracts.dir/tests/unit/host_callbacks/callbacks_tests.cpp.obj
+callbacks_tests.cpp
+[ 40%] Linking CXX executable host_callback_contracts.exe
+[ 40%] Built target host_callback_contracts
+[ 40%] Building CXX object CMakeFiles/network_hook_contracts.dir/tests/unit/network_hook/hook_tests.cpp.obj
+hook_tests.cpp
+[ 40%] Linking CXX executable network_hook_contracts.exe
+[ 40%] Built target network_hook_contracts
+[ 40%] Building CXX object CMakeFiles/online_contracts.dir/tests/unit/online/online_tests.cpp.obj
+online_tests.cpp
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\online\online_tests.cpp(320): warning C4805: '==': işlemde 'uint8_t' ve 'bool' türlerinin güvenli olmayan karışımı
+[ 40%] Linking CXX executable online_contracts.exe
+[ 40%] Built target online_contracts
+[ 40%] Building CXX object CMakeFiles/configuration_contracts.dir/tests/unit/config/configuration_tests.cpp.obj
+configuration_tests.cpp
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\config\configuration_tests.cpp(15): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Elem=char16_t,
+            _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<char16_t>>>,
+            _Alloc=std::allocator<char>
+        ]
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\config\configuration_tests.cpp(15): note: '`anonymous-namespace'::ascii' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Size_type=unsigned __int64,
+            _Iter=const char16_t *,
+            _Sent=const char16_t *,
+            _Size=unsigned __int64
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(1018): note: derlenen şablon işlevi '_OutIt *std::_Copy_n_unchecked4<const char16_t*,_Size,char*>(_InIt,_SizeTy,_OutIt)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _OutIt=char *,
+            _Size=unsigned __int64,
+            _InIt=const char16_t *,
+            _SizeTy=unsigned __int64
+        ]
+[ 40%] Linking CXX executable configuration_contracts.exe
+[ 40%] Built target configuration_contracts
+[ 41%] Building CXX object CMakeFiles/execution_contracts.dir/tests/unit/execution/execution_tests.cpp.obj
+execution_tests.cpp
+[ 41%] Linking CXX executable execution_contracts.exe
+[ 41%] Built target execution_contracts
+[ 41%] Building CXX object CMakeFiles/execution_concurrency_contracts.dir/tests/unit/execution/concurrency_tests.cpp.obj
+concurrency_tests.cpp
+[ 41%] Linking CXX executable execution_concurrency_contracts.exe
+[ 41%] Built target execution_concurrency_contracts
+[ 41%] Building CXX object CMakeFiles/atomic_staging_contracts.dir/tests/native/atomic_staging_tests.cpp.obj
+atomic_staging_tests.cpp
+[ 41%] Linking CXX executable atomic_staging_contracts.exe
+[ 41%] Built target atomic_staging_contracts
+[ 41%] Building CXX object CMakeFiles/libraries_contracts.dir/tests/unit/libraries/libraries_tests.cpp.obj
+libraries_tests.cpp
+[ 42%] Linking CXX executable libraries_contracts.exe
+[ 42%] Built target libraries_contracts
+[ 42%] Building CXX object CMakeFiles/startup_contracts.dir/tests/unit/startup/startup_tests.cpp.obj
+startup_tests.cpp
+[ 43%] Linking CXX executable startup_contracts.exe
+[ 43%] Built target startup_contracts
+[ 44%] Building CXX object CMakeFiles/parser_contracts.dir/tests/unit/parser/parser_tests.cpp.obj
+parser_tests.cpp
+[ 44%] Linking CXX executable parser_contracts.exe
+[ 44%] Built target parser_contracts
+[ 45%] Building CXX object CMakeFiles/config_order_contracts.dir/tests/unit/config_order/order_tests.cpp.obj
+order_tests.cpp
+[ 45%] Linking CXX executable config_order_contracts.exe
+[ 45%] Built target config_order_contracts
+[ 45%] Building CXX object CMakeFiles/config_pipeline_contracts.dir/tests/unit/config_pipeline/pipeline_tests.cpp.obj
+pipeline_tests.cpp
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\config_pipeline\pipeline_tests.cpp(156): warning C4805: '==': işlemde '__int64' ve 'bool' türlerinin güvenli olmayan karışımı
+[ 45%] Linking CXX executable config_pipeline_contracts.exe
+[ 45%] Built target config_pipeline_contracts
+[ 45%] Building CXX object CMakeFiles/config_hash_contracts.dir/tests/unit/config_hash/hash_table_tests.cpp.obj
+hash_table_tests.cpp
+[ 45%] Linking CXX executable config_hash_contracts.exe
+[ 45%] Built target config_hash_contracts
+[ 45%] Building CXX object CMakeFiles/config_application_contracts.dir/tests/unit/config_application/application_tests.cpp.obj
+application_tests.cpp
+[ 45%] Linking CXX executable config_application_contracts.exe
+[ 45%] Built target config_application_contracts
+[ 45%] Building CXX object CMakeFiles/config_startup_contracts.dir/tests/unit/config_startup/startup_tests.cpp.obj
+startup_tests.cpp
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\config_startup\startup_tests.cpp(16): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Elem=char16_t,
+            _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<char16_t>>>,
+            _Alloc=std::allocator<char>
+        ]
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\config_startup\startup_tests.cpp(16): note: '`anonymous-namespace'::ascii' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Size_type=unsigned __int64,
+            _Iter=const char16_t *,
+            _Sent=const char16_t *,
+            _Size=unsigned __int64
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(1018): note: derlenen şablon işlevi '_OutIt *std::_Copy_n_unchecked4<const char16_t*,_Size,char*>(_InIt,_SizeTy,_OutIt)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _OutIt=char *,
+            _Size=unsigned __int64,
+            _InIt=const char16_t *,
+            _SizeTy=unsigned __int64
+        ]
+[ 46%] Linking CXX executable config_startup_contracts.exe
+[ 46%] Built target config_startup_contracts
+[ 46%] Building CXX object CMakeFiles/achievement_writer_contracts.dir/tests/unit/achievement_writer/writer_tests.cpp.obj
+writer_tests.cpp
+[ 47%] Linking CXX executable achievement_writer_contracts.exe
+[ 47%] Built target achievement_writer_contracts
+[ 47%] Building CXX object CMakeFiles/achievement_storage_contracts.dir/tests/unit/achievement_storage/storage_tests.cpp.obj
+storage_tests.cpp
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\achievement_storage\storage_tests.cpp(169): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Elem=char16_t,
+            _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<char16_t>>>,
+            _Alloc=std::allocator<char>
+        ]
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\achievement_storage\storage_tests.cpp(169): note: '`anonymous-namespace'::Configuration::narrow_path' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Size_type=unsigned __int64,
+            _Iter=const char16_t *,
+            _Sent=const char16_t *,
+            _Size=unsigned __int64
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(1018): note: derlenen şablon işlevi '_OutIt *std::_Copy_n_unchecked4<const char16_t*,_Size,char*>(_InIt,_SizeTy,_OutIt)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _OutIt=char *,
+            _Size=unsigned __int64,
+            _InIt=const char16_t *,
+            _SizeTy=unsigned __int64
+        ]
+[ 47%] Linking CXX executable achievement_storage_contracts.exe
+[ 47%] Built target achievement_storage_contracts
+[ 48%] Building CXX object CMakeFiles/calendar_contracts.dir/tests/unit/calendar/calendar_tests.cpp.obj
+calendar_tests.cpp
+[ 48%] Linking CXX executable calendar_contracts.exe
+[ 48%] Built target calendar_contracts
+[ 49%] Building CXX object CMakeFiles/timestamp_contracts.dir/tests/unit/timestamp/timestamp_tests.cpp.obj
+timestamp_tests.cpp
+[ 49%] Linking CXX executable timestamp_contracts.exe
+[ 49%] Built target timestamp_contracts
+[ 50%] Building CXX object CMakeFiles/utc_contracts.dir/tests/unit/achievement_runtime/utc_tests.cpp.obj
+utc_tests.cpp
+[ 50%] Linking CXX executable utc_contracts.exe
+[ 50%] Built target utc_contracts
+[ 50%] Building CXX object CMakeFiles/achievement_runtime_contracts.dir/tests/unit/achievement_runtime/runtime_tests.cpp.obj
+runtime_tests.cpp
+[ 50%] Linking CXX executable achievement_runtime_contracts.exe
+[ 50%] Built target achievement_runtime_contracts
+[ 50%] Building CXX object CMakeFiles/event_queue_contracts.dir/tests/unit/event_queue/queue_tests.cpp.obj
+queue_tests.cpp
+[ 51%] Linking CXX executable event_queue_contracts.exe
+[ 51%] Built target event_queue_contracts
+[ 51%] Building CXX object CMakeFiles/event_queue_integration_contracts.dir/tests/unit/event_queue/integration_tests.cpp.obj
+integration_tests.cpp
+[ 51%] Linking CXX executable event_queue_integration_contracts.exe
+[ 51%] Built target event_queue_integration_contracts
+[ 51%] Building CXX object CMakeFiles/session_handler_contracts.dir/tests/unit/session/handler_tests.cpp.obj
+handler_tests.cpp
+[ 51%] Linking CXX executable session_handler_contracts.exe
+[ 51%] Built target session_handler_contracts
+[ 51%] Building CXX object CMakeFiles/session_integration_contracts.dir/tests/unit/session/session_tests.cpp.obj
+session_tests.cpp
+[ 51%] Linking CXX executable session_integration_contracts.exe
+[ 51%] Built target session_integration_contracts
+[ 51%] Building CXX object CMakeFiles/socket_operations_contracts.dir/tests/unit/socket/operations_tests.cpp.obj
+operations_tests.cpp
+[ 51%] Linking CXX executable socket_operations_contracts.exe
+[ 51%] Built target socket_operations_contracts
+[ 51%] Building CXX object CMakeFiles/socket_native_contracts.dir/tests/unit/socket/native_tests.cpp.obj
+native_tests.cpp
+[ 51%] Linking CXX executable socket_native_contracts.exe
+[ 51%] Built target socket_native_contracts
+[ 51%] Building CXX object CMakeFiles/socket_acceptor_contracts.dir/tests/unit/socket/acceptor_tests.cpp.obj
+acceptor_tests.cpp
+[ 52%] Linking CXX executable socket_acceptor_contracts.exe
+[ 52%] Built target socket_acceptor_contracts
+[ 52%] Building CXX object CMakeFiles/socket_acceptor_native_contracts.dir/tests/unit/socket/acceptor_native_tests.cpp.obj
+acceptor_native_tests.cpp
+[ 52%] Linking CXX executable socket_acceptor_native_contracts.exe
+[ 52%] Built target socket_acceptor_native_contracts
+[ 53%] Building CXX object CMakeFiles/socket_lifecycle_contracts.dir/tests/unit/socket/lifecycle_tests.cpp.obj
+lifecycle_tests.cpp
+[ 53%] Linking CXX executable socket_lifecycle_contracts.exe
+[ 53%] Built target socket_lifecycle_contracts
+[ 53%] Building CXX object CMakeFiles/socket_lifecycle_native_contracts.dir/tests/unit/socket/lifecycle_native_tests.cpp.obj
+lifecycle_native_tests.cpp
+[ 53%] Linking CXX executable socket_lifecycle_native_contracts.exe
+[ 53%] Built target socket_lifecycle_native_contracts
+[ 53%] Building CXX object CMakeFiles/socket_close_contracts.dir/tests/unit/socket/close_tests.cpp.obj
+close_tests.cpp
+[ 53%] Linking CXX executable socket_close_contracts.exe
+[ 53%] Built target socket_close_contracts
+[ 54%] Building CXX object CMakeFiles/socket_closing_contracts.dir/tests/unit/socket/closing_tests.cpp.obj
+closing_tests.cpp
+[ 54%] Linking CXX executable socket_closing_contracts.exe
+[ 54%] Built target socket_closing_contracts
+[ 54%] Building CXX object CMakeFiles/socket_cancellation_contracts.dir/tests/unit/socket/cancellation_tests.cpp.obj
+cancellation_tests.cpp
+[ 54%] Linking CXX executable socket_cancellation_contracts.exe
+[ 54%] Built target socket_cancellation_contracts
+[ 54%] Building CXX object CMakeFiles/socket_cancellation_native_contracts.dir/tests/unit/socket/cancellation_native_tests.cpp.obj
+cancellation_native_tests.cpp
+[ 54%] Linking CXX executable socket_cancellation_native_contracts.exe
+[ 54%] Built target socket_cancellation_native_contracts
+[ 54%] Building CXX object CMakeFiles/socket_recycle_contracts.dir/tests/unit/socket/recycle_tests.cpp.obj
+recycle_tests.cpp
+[ 55%] Linking CXX executable socket_recycle_contracts.exe
+[ 55%] Built target socket_recycle_contracts
+[ 55%] Building CXX object CMakeFiles/socket_recycle_storage_contracts.dir/tests/unit/socket/recycle_storage_tests.cpp.obj
+recycle_storage_tests.cpp
+[ 55%] Linking CXX executable socket_recycle_storage_contracts.exe
+[ 55%] Built target socket_recycle_storage_contracts
+[ 55%] Building CXX object CMakeFiles/socket_service_registry_contracts.dir/tests/unit/socket/service_registry_tests.cpp.obj
+service_registry_tests.cpp
+[ 56%] Linking CXX executable socket_service_registry_contracts.exe
+[ 56%] Built target socket_service_registry_contracts
+[ 56%] Building CXX object CMakeFiles/socket_service_registry_integration_contracts.dir/tests/unit/socket/service_registry_integration_tests.cpp.obj
+service_registry_integration_tests.cpp
+[ 56%] Linking CXX executable socket_service_registry_integration_contracts.exe
+[ 56%] Built target socket_service_registry_integration_contracts
+[ 57%] Building CXX object CMakeFiles/socket_service_constructor_contracts.dir/tests/unit/socket/service_constructor_tests.cpp.obj
+service_constructor_tests.cpp
+[ 57%] Linking CXX executable socket_service_constructor_contracts.exe
+[ 57%] Built target socket_service_constructor_contracts
+[ 57%] Building CXX object CMakeFiles/socket_service_constructor_native_contracts.dir/tests/unit/socket/service_constructor_native_tests.cpp.obj
+service_constructor_native_tests.cpp
+[ 57%] Linking CXX executable socket_service_constructor_native_contracts.exe
+[ 57%] Built target socket_service_constructor_native_contracts
+[ 57%] Building CXX object CMakeFiles/socket_scheduler_registry_contracts.dir/tests/unit/socket/scheduler_registry_tests.cpp.obj
+scheduler_registry_tests.cpp
+[ 57%] Linking CXX executable socket_scheduler_registry_contracts.exe
+[ 57%] Built target socket_scheduler_registry_contracts
+[ 57%] Building CXX object CMakeFiles/socket_scheduler_registry_integration_contracts.dir/tests/unit/socket/scheduler_registry_integration_tests.cpp.obj
+scheduler_registry_integration_tests.cpp
+[ 57%] Linking CXX executable socket_scheduler_registry_integration_contracts.exe
+[ 57%] Built target socket_scheduler_registry_integration_contracts
+[ 57%] Building CXX object CMakeFiles/socket_iocp_constructor_contracts.dir/tests/unit/socket/iocp_constructor_tests.cpp.obj
+iocp_constructor_tests.cpp
+[ 57%] Linking CXX executable socket_iocp_constructor_contracts.exe
+[ 57%] Built target socket_iocp_constructor_contracts
+[ 57%] Building CXX object CMakeFiles/socket_iocp_constructor_native_contracts.dir/tests/unit/socket/iocp_constructor_native_tests.cpp.obj
+iocp_constructor_native_tests.cpp
+[ 57%] Linking CXX executable socket_iocp_constructor_native_contracts.exe
+[ 57%] Built target socket_iocp_constructor_native_contracts
+[ 57%] Building CXX object CMakeFiles/socket_worker_startup_contracts.dir/tests/unit/socket/worker_startup_tests.cpp.obj
+worker_startup_tests.cpp
+[ 57%] Linking CXX executable socket_worker_startup_contracts.exe
+[ 57%] Built target socket_worker_startup_contracts
+[ 57%] Building CXX object CMakeFiles/socket_worker_startup_native_contracts.dir/tests/unit/socket/worker_startup_native_tests.cpp.obj
+worker_startup_native_tests.cpp
+[ 57%] Linking CXX executable socket_worker_startup_native_contracts.exe
+[ 57%] Built target socket_worker_startup_native_contracts
+[ 57%] Building CXX object CMakeFiles/socket_worker_run_contracts.dir/tests/unit/socket/worker_run_tests.cpp.obj
+worker_run_tests.cpp
+[ 57%] Linking CXX executable socket_worker_run_contracts.exe
+[ 57%] Built target socket_worker_run_contracts
+[ 58%] Building CXX object CMakeFiles/socket_worker_run_native_contracts.dir/tests/unit/socket/worker_run_native_tests.cpp.obj
+worker_run_native_tests.cpp
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\socket\worker_run_native_tests.cpp(82): warning C4312: 'reinterpret_cast': 'unsigned int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
+[ 58%] Linking CXX executable socket_worker_run_native_contracts.exe
+[ 58%] Built target socket_worker_run_native_contracts
+[ 58%] Building CXX object CMakeFiles/socket_completion_dispatcher_contracts.dir/tests/unit/socket/completion_dispatcher_tests.cpp.obj
+completion_dispatcher_tests.cpp
+[ 58%] Linking CXX executable socket_completion_dispatcher_contracts.exe
+[ 58%] Built target socket_completion_dispatcher_contracts
+[ 58%] Building CXX object CMakeFiles/socket_completion_dispatcher_native_contracts.dir/tests/unit/socket/completion_dispatcher_native_tests.cpp.obj
+completion_dispatcher_native_tests.cpp
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\socket\completion_dispatcher_native_tests.cpp(31): warning C4312: 'reinterpret_cast': 'unsigned int' öğesinden daha büyük boyutlu 'void *' öğesine dönüştürme
+[ 59%] Linking CXX executable socket_completion_dispatcher_native_contracts.exe
+[ 59%] Built target socket_completion_dispatcher_native_contracts
+[ 59%] Building CXX object CMakeFiles/socket_posted_operation_contracts.dir/tests/unit/socket/posted_operation_tests.cpp.obj
+posted_operation_tests.cpp
+[ 60%] Linking CXX executable socket_posted_operation_contracts.exe
+[ 60%] Built target socket_posted_operation_contracts
+[ 60%] Building CXX object CMakeFiles/socket_posted_operation_integration_contracts.dir/tests/unit/socket/posted_operation_integration_tests.cpp.obj
+posted_operation_integration_tests.cpp
+[ 60%] Linking CXX executable socket_posted_operation_integration_contracts.exe
+[ 60%] Built target socket_posted_operation_integration_contracts
+[ 60%] Building CXX object CMakeFiles/socket_io_completion_contracts.dir/tests/unit/socket/io_completion_tests.cpp.obj
+io_completion_tests.cpp
+[ 60%] Linking CXX executable socket_io_completion_contracts.exe
+[ 60%] Built target socket_io_completion_contracts
+[ 60%] Building CXX object CMakeFiles/socket_io_completion_integration_contracts.dir/tests/unit/socket/io_completion_integration_tests.cpp.obj
+io_completion_integration_tests.cpp
+[ 61%] Linking CXX executable socket_io_completion_integration_contracts.exe
+[ 61%] Built target socket_io_completion_integration_contracts
+[ 61%] Building CXX object CMakeFiles/socket_handler_dispatch_contracts.dir/tests/unit/socket/handler_dispatch_tests.cpp.obj
+handler_dispatch_tests.cpp
+[ 61%] Linking CXX executable socket_handler_dispatch_contracts.exe
+[ 61%] Built target socket_handler_dispatch_contracts
+[ 62%] Building CXX object CMakeFiles/socket_handler_dispatch_integration_contracts.dir/tests/unit/socket/handler_dispatch_integration_tests.cpp.obj
+handler_dispatch_integration_tests.cpp
+[ 62%] Linking CXX executable socket_handler_dispatch_integration_contracts.exe
+[ 62%] Built target socket_handler_dispatch_integration_contracts
+[ 63%] Building CXX object CMakeFiles/socket_composed_write_contracts.dir/tests/unit/socket/composed_write_tests.cpp.obj
+composed_write_tests.cpp
+[ 63%] Linking CXX executable socket_composed_write_contracts.exe
+[ 63%] Built target socket_composed_write_contracts
+[ 63%] Building CXX object CMakeFiles/socket_composed_write_integration_contracts.dir/tests/unit/socket/composed_write_integration_tests.cpp.obj
+composed_write_integration_tests.cpp
+[ 63%] Linking CXX executable socket_composed_write_integration_contracts.exe
+[ 63%] Built target socket_composed_write_integration_contracts
+[ 63%] Building CXX object CMakeFiles/socket_environment_constructor_contracts.dir/tests/unit/socket/environment_constructor_tests.cpp.obj
+environment_constructor_tests.cpp
+[ 63%] Linking CXX executable socket_environment_constructor_contracts.exe
+[ 63%] Built target socket_environment_constructor_contracts
+[ 63%] Building CXX object CMakeFiles/socket_environment_constructor_integration_contracts.dir/tests/unit/socket/environment_constructor_integration_tests.cpp.obj
+environment_constructor_integration_tests.cpp
+[ 63%] Linking CXX executable socket_environment_constructor_integration_contracts.exe
+[ 63%] Built target socket_environment_constructor_integration_contracts
+[ 64%] Building CXX object CMakeFiles/socket_write_finish_contracts.dir/tests/unit/socket/write_finish_tests.cpp.obj
+write_finish_tests.cpp
+[ 64%] Linking CXX executable socket_write_finish_contracts.exe
+[ 64%] Built target socket_write_finish_contracts
+[ 64%] Building CXX object CMakeFiles/socket_write_finish_integration_contracts.dir/tests/unit/socket/write_finish_integration_tests.cpp.obj
+write_finish_integration_tests.cpp
+[ 64%] Linking CXX executable socket_write_finish_integration_contracts.exe
+[ 64%] Built target socket_write_finish_integration_contracts
+[ 64%] Building CXX object CMakeFiles/socket_queued_write_contracts.dir/tests/unit/socket/queued_write_tests.cpp.obj
+queued_write_tests.cpp
+[ 64%] Linking CXX executable socket_queued_write_contracts.exe
+[ 64%] Built target socket_queued_write_contracts
+[ 64%] Building CXX object CMakeFiles/socket_queued_write_integration_contracts.dir/tests/unit/socket/queued_write_integration_tests.cpp.obj
+queued_write_integration_tests.cpp
+[ 64%] Linking CXX executable socket_queued_write_integration_contracts.exe
+[ 64%] Built target socket_queued_write_integration_contracts
+[ 64%] Building CXX object CMakeFiles/socket_async_receive_contracts.dir/tests/unit/socket/async_receive_tests.cpp.obj
+async_receive_tests.cpp
+[ 64%] Linking CXX executable socket_async_receive_contracts.exe
+[ 64%] Built target socket_async_receive_contracts
+[ 64%] Building CXX object CMakeFiles/socket_async_receive_integration_contracts.dir/tests/unit/socket/async_receive_integration_tests.cpp.obj
+async_receive_integration_tests.cpp
+[ 65%] Linking CXX executable socket_async_receive_integration_contracts.exe
+[ 65%] Built target socket_async_receive_integration_contracts
+[ 66%] Building CXX object CMakeFiles/socket_receive_buffer_contracts.dir/tests/unit/socket/receive_buffer_tests.cpp.obj
+receive_buffer_tests.cpp
+[ 66%] Linking CXX executable socket_receive_buffer_contracts.exe
+[ 66%] Built target socket_receive_buffer_contracts
+[ 66%] Building CXX object CMakeFiles/socket_receive_buffer_integration_contracts.dir/tests/unit/socket/receive_buffer_integration_tests.cpp.obj
+receive_buffer_integration_tests.cpp
+[ 66%] Linking CXX executable socket_receive_buffer_integration_contracts.exe
+[ 66%] Built target socket_receive_buffer_integration_contracts
+[ 66%] Building CXX object CMakeFiles/socket_composed_read_contracts.dir/tests/unit/socket/composed_read_tests.cpp.obj
+composed_read_tests.cpp
+[ 66%] Linking CXX executable socket_composed_read_contracts.exe
+[ 66%] Built target socket_composed_read_contracts
+[ 66%] Building CXX object CMakeFiles/socket_composed_read_integration_contracts.dir/tests/unit/socket/composed_read_integration_tests.cpp.obj
+composed_read_integration_tests.cpp
+[ 66%] Linking CXX executable socket_composed_read_integration_contracts.exe
+[ 66%] Built target socket_composed_read_integration_contracts
+[ 67%] Building CXX object CMakeFiles/socket_frame_read_contracts.dir/tests/unit/socket/frame_read_tests.cpp.obj
+frame_read_tests.cpp
+[ 67%] Linking CXX executable socket_frame_read_contracts.exe
+[ 67%] Built target socket_frame_read_contracts
+[ 67%] Building CXX object CMakeFiles/socket_frame_read_integration_contracts.dir/tests/unit/socket/frame_read_integration_tests.cpp.obj
+frame_read_integration_tests.cpp
+[ 67%] Linking CXX executable socket_frame_read_integration_contracts.exe
+[ 67%] Built target socket_frame_read_integration_contracts
+[ 67%] Building CXX object CMakeFiles/socket_message_dispatch_contracts.dir/tests/unit/socket/message_dispatch_tests.cpp.obj
+message_dispatch_tests.cpp
+[ 67%] Linking CXX executable socket_message_dispatch_contracts.exe
+[ 67%] Built target socket_message_dispatch_contracts
+[ 67%] Building CXX object CMakeFiles/socket_message_dispatch_integration_contracts.dir/tests/unit/socket/message_dispatch_integration_tests.cpp.obj
+message_dispatch_integration_tests.cpp
+[ 68%] Linking CXX executable socket_message_dispatch_integration_contracts.exe
+[ 68%] Built target socket_message_dispatch_integration_contracts
+[ 68%] Building CXX object CMakeFiles/socket_response_dispatch_contracts.dir/tests/unit/socket/response_dispatch_tests.cpp.obj
+response_dispatch_tests.cpp
+[ 69%] Linking CXX executable socket_response_dispatch_contracts.exe
+[ 69%] Built target socket_response_dispatch_contracts
+[ 69%] Building CXX object CMakeFiles/socket_response_dispatch_integration_contracts.dir/tests/unit/socket/response_dispatch_integration_tests.cpp.obj
+response_dispatch_integration_tests.cpp
+[ 69%] Linking CXX executable socket_response_dispatch_integration_contracts.exe
+[ 69%] Built target socket_response_dispatch_integration_contracts
+[ 69%] Building CXX object CMakeFiles/socket_owned_response_contracts.dir/tests/unit/socket/owned_response_tests.cpp.obj
+owned_response_tests.cpp
+[ 69%] Linking CXX executable socket_owned_response_contracts.exe
+[ 69%] Built target socket_owned_response_contracts
+[ 69%] Building CXX object CMakeFiles/socket_owned_response_integration_contracts.dir/tests/unit/socket/owned_response_integration_tests.cpp.obj
+owned_response_integration_tests.cpp
+[ 70%] Linking CXX executable socket_owned_response_integration_contracts.exe
+[ 70%] Built target socket_owned_response_integration_contracts
+[ 71%] Building CXX object CMakeFiles/socket_response_containers_contracts.dir/tests/unit/socket/response_containers_tests.cpp.obj
+response_containers_tests.cpp
+[ 71%] Linking CXX executable socket_response_containers_contracts.exe
+[ 71%] Built target socket_response_containers_contracts
+[ 71%] Building CXX object CMakeFiles/socket_response_containers_integration_contracts.dir/tests/unit/socket/response_containers_integration_tests.cpp.obj
+response_containers_integration_tests.cpp
+[ 71%] Linking CXX executable socket_response_containers_integration_contracts.exe
+[ 71%] Built target socket_response_containers_integration_contracts
+[ 71%] Building CXX object CMakeFiles/socket_message_core_bridge_contracts.dir/tests/unit/socket/message_core_bridge_tests.cpp.obj
+message_core_bridge_tests.cpp
+[ 71%] Linking CXX executable socket_message_core_bridge_contracts.exe
+[ 71%] Built target socket_message_core_bridge_contracts
+[ 72%] Building CXX object CMakeFiles/socket_message_core_bridge_integration_contracts.dir/tests/unit/socket/message_core_bridge_integration_tests.cpp.obj
+message_core_bridge_integration_tests.cpp
+[ 72%] Linking CXX executable socket_message_core_bridge_integration_contracts.exe
+[ 72%] Built target socket_message_core_bridge_integration_contracts
+[ 72%] Building CXX object CMakeFiles/socket_request_mutation_contracts.dir/tests/unit/socket/request_mutation_tests.cpp.obj
+request_mutation_tests.cpp
+[ 72%] Linking CXX executable socket_request_mutation_contracts.exe
+[ 72%] Built target socket_request_mutation_contracts
+[ 72%] Building CXX object CMakeFiles/socket_request_mutation_integration_contracts.dir/tests/unit/socket/request_mutation_integration_tests.cpp.obj
+request_mutation_integration_tests.cpp
+[ 72%] Linking CXX executable socket_request_mutation_integration_contracts.exe
+[ 72%] Built target socket_request_mutation_integration_contracts
+[ 72%] Building CXX object CMakeFiles/socket_request_growth_contracts.dir/tests/unit/socket/request_growth_tests.cpp.obj
+request_growth_tests.cpp
+[ 72%] Linking CXX executable socket_request_growth_contracts.exe
+[ 72%] Built target socket_request_growth_contracts
+[ 73%] Building CXX object CMakeFiles/socket_request_growth_integration_contracts.dir/tests/unit/socket/request_growth_integration_tests.cpp.obj
+request_growth_integration_tests.cpp
+[ 73%] Linking CXX executable socket_request_growth_integration_contracts.exe
+[ 73%] Built target socket_request_growth_integration_contracts
+[ 73%] Building CXX object CMakeFiles/socket_response_hex_contracts.dir/tests/unit/socket/response_hex_tests.cpp.obj
+response_hex_tests.cpp
+[ 73%] Linking CXX executable socket_response_hex_contracts.exe
+[ 73%] Built target socket_response_hex_contracts
+[ 74%] Building CXX object CMakeFiles/socket_response_hex_integration_contracts.dir/tests/unit/socket/response_hex_integration_tests.cpp.obj
+response_hex_integration_tests.cpp
+[ 74%] Linking CXX executable socket_response_hex_integration_contracts.exe
+[ 74%] Built target socket_response_hex_integration_contracts
+[ 75%] Building CXX object CMakeFiles/socket_native_message_contracts.dir/tests/unit/socket/native_message_tests.cpp.obj
+native_message_tests.cpp
+[ 75%] Linking CXX executable socket_native_message_contracts.exe
+[ 75%] Built target socket_native_message_contracts
+[ 75%] Building CXX object CMakeFiles/socket_native_message_integration_contracts.dir/tests/unit/socket/native_message_integration_tests.cpp.obj
+native_message_integration_tests.cpp
+[ 75%] Linking CXX executable socket_native_message_integration_contracts.exe
+[ 75%] Built target socket_native_message_integration_contracts
+[ 75%] Building CXX object CMakeFiles/socket_append_growth_contracts.dir/tests/unit/socket/append_growth_tests.cpp.obj
+append_growth_tests.cpp
+[ 75%] Linking CXX executable socket_append_growth_contracts.exe
+[ 75%] Built target socket_append_growth_contracts
+[ 76%] Building CXX object CMakeFiles/socket_append_growth_integration_contracts.dir/tests/unit/socket/append_growth_integration_tests.cpp.obj
+append_growth_integration_tests.cpp
+[ 76%] Linking CXX executable socket_append_growth_integration_contracts.exe
+[ 76%] Built target socket_append_growth_integration_contracts
+[ 76%] Building CXX object CMakeFiles/socket_prefix_cipher_contracts.dir/tests/unit/socket/prefix_cipher_tests.cpp.obj
+prefix_cipher_tests.cpp
+[ 76%] Linking CXX executable socket_prefix_cipher_contracts.exe
+[ 76%] Built target socket_prefix_cipher_contracts
+[ 76%] Building CXX object CMakeFiles/socket_prefix_cipher_integration_contracts.dir/tests/unit/socket/prefix_cipher_integration_tests.cpp.obj
+prefix_cipher_integration_tests.cpp
+[ 77%] Linking CXX executable socket_prefix_cipher_integration_contracts.exe
+[ 77%] Built target socket_prefix_cipher_integration_contracts
+[ 78%] Building CXX object CMakeFiles/socket_cipher_session_contracts.dir/tests/unit/socket/cipher_session_tests.cpp.obj
+cipher_session_tests.cpp
+[ 78%] Linking CXX executable socket_cipher_session_contracts.exe
+[ 78%] Built target socket_cipher_session_contracts
+[ 78%] Building CXX object CMakeFiles/socket_cipher_session_integration_contracts.dir/tests/unit/socket/cipher_session_integration_tests.cpp.obj
+cipher_session_integration_tests.cpp
+[ 78%] Linking CXX executable socket_cipher_session_integration_contracts.exe
+[ 78%] Built target socket_cipher_session_integration_contracts
+[ 78%] Building CXX object CMakeFiles/socket_native_dispatch_contracts.dir/tests/unit/socket/native_dispatch_tests.cpp.obj
+native_dispatch_tests.cpp
+[ 78%] Linking CXX executable socket_native_dispatch_contracts.exe
+[ 78%] Built target socket_native_dispatch_contracts
+[ 79%] Building CXX object CMakeFiles/socket_native_dispatch_integration_contracts.dir/tests/unit/socket/native_dispatch_integration_tests.cpp.obj
+native_dispatch_integration_tests.cpp
+[ 79%] Linking CXX executable socket_native_dispatch_integration_contracts.exe
+[ 79%] Built target socket_native_dispatch_integration_contracts
+[ 79%] Building CXX object CMakeFiles/socket_native_document_contracts.dir/tests/unit/socket/native_document_tests.cpp.obj
+native_document_tests.cpp
+[ 79%] Linking CXX executable socket_native_document_contracts.exe
+[ 79%] Built target socket_native_document_contracts
+[ 79%] Building CXX object CMakeFiles/socket_native_document_integration_contracts.dir/tests/unit/socket/native_document_integration_tests.cpp.obj
+native_document_integration_tests.cpp
+[ 79%] Linking CXX executable socket_native_document_integration_contracts.exe
+[ 79%] Built target socket_native_document_integration_contracts
+[ 79%] Building CXX object CMakeFiles/socket_document_clear_contracts.dir/tests/unit/socket/document_clear_tests.cpp.obj
+document_clear_tests.cpp
+[ 79%] Linking CXX executable socket_document_clear_contracts.exe
+[ 79%] Built target socket_document_clear_contracts
+[ 80%] Building CXX object CMakeFiles/socket_document_clear_integration_contracts.dir/tests/unit/socket/document_clear_integration_tests.cpp.obj
+document_clear_integration_tests.cpp
+[ 80%] Linking CXX executable socket_document_clear_integration_contracts.exe
+[ 80%] Built target socket_document_clear_integration_contracts
+[ 80%] Building CXX object CMakeFiles/socket_node_delete_contracts.dir/tests/unit/socket/node_delete_tests.cpp.obj
+node_delete_tests.cpp
+[ 80%] Linking CXX executable socket_node_delete_contracts.exe
+[ 80%] Built target socket_node_delete_contracts
+[ 80%] Building CXX object CMakeFiles/socket_node_delete_integration_contracts.dir/tests/unit/socket/node_delete_integration_tests.cpp.obj
+node_delete_integration_tests.cpp
+[ 81%] Linking CXX executable socket_node_delete_integration_contracts.exe
+[ 81%] Built target socket_node_delete_integration_contracts
+[ 82%] Building CXX object CMakeFiles/socket_pool_release_contracts.dir/tests/unit/socket/pool_release_tests.cpp.obj
+pool_release_tests.cpp
+[ 82%] Linking CXX executable socket_pool_release_contracts.exe
+[ 82%] Built target socket_pool_release_contracts
+[ 82%] Building CXX object CMakeFiles/socket_pool_release_integration_contracts.dir/tests/unit/socket/pool_release_integration_tests.cpp.obj
+pool_release_integration_tests.cpp
+[ 82%] Linking CXX executable socket_pool_release_integration_contracts.exe
+[ 82%] Built target socket_pool_release_integration_contracts
+[ 83%] Building CXX object CMakeFiles/socket_pool_allocate_contracts.dir/tests/unit/socket/pool_allocate_tests.cpp.obj
+pool_allocate_tests.cpp
+[ 83%] Linking CXX executable socket_pool_allocate_contracts.exe
+[ 83%] Built target socket_pool_allocate_contracts
+[ 83%] Building CXX object CMakeFiles/socket_pool_allocate_integration_contracts.dir/tests/unit/socket/pool_allocate_integration_tests.cpp.obj
+pool_allocate_integration_tests.cpp
+[ 83%] Linking CXX executable socket_pool_allocate_integration_contracts.exe
+[ 83%] Built target socket_pool_allocate_integration_contracts
+[ 83%] Building CXX object CMakeFiles/socket_pool_append_contracts.dir/tests/unit/socket/pool_append_tests.cpp.obj
+pool_append_tests.cpp
+[ 84%] Linking CXX executable socket_pool_append_contracts.exe
+[ 84%] Built target socket_pool_append_contracts
+[ 84%] Building CXX object CMakeFiles/socket_pool_append_integration_contracts.dir/tests/unit/socket/pool_append_integration_tests.cpp.obj
+pool_append_integration_tests.cpp
+[ 84%] Linking CXX executable socket_pool_append_integration_contracts.exe
+[ 84%] Built target socket_pool_append_integration_contracts
+[ 84%] Building CXX object CMakeFiles/socket_pool_clear_contracts.dir/tests/unit/socket/pool_clear_tests.cpp.obj
+pool_clear_tests.cpp
+[ 84%] Linking CXX executable socket_pool_clear_contracts.exe
+[ 84%] Built target socket_pool_clear_contracts
+[ 84%] Building CXX object CMakeFiles/socket_pool_clear_integration_contracts.dir/tests/unit/socket/pool_clear_integration_tests.cpp.obj
+pool_clear_integration_tests.cpp
+[ 85%] Linking CXX executable socket_pool_clear_integration_contracts.exe
+[ 85%] Built target socket_pool_clear_integration_contracts
+[ 85%] Building CXX object CMakeFiles/socket_pool_destruct_contracts.dir/tests/unit/socket/pool_destruct_tests.cpp.obj
+pool_destruct_tests.cpp
+[ 85%] Linking CXX executable socket_pool_destruct_contracts.exe
+[ 85%] Built target socket_pool_destruct_contracts
+[ 85%] Building CXX object CMakeFiles/socket_pool_destruct_integration_contracts.dir/tests/unit/socket/pool_destruct_integration_tests.cpp.obj
+pool_destruct_integration_tests.cpp
+[ 85%] Linking CXX executable socket_pool_destruct_integration_contracts.exe
+[ 85%] Built target socket_pool_destruct_integration_contracts
+[ 85%] Building CXX object CMakeFiles/socket_node_base_contracts.dir/tests/unit/socket/node_base_tests.cpp.obj
+node_base_tests.cpp
+[ 86%] Linking CXX executable socket_node_base_contracts.exe
+[ 86%] Built target socket_node_base_contracts
+[ 86%] Building CXX object CMakeFiles/socket_node_base_integration_contracts.dir/tests/unit/socket/node_base_integration_tests.cpp.obj
+node_base_integration_tests.cpp
+[ 86%] Linking CXX executable socket_node_base_integration_contracts.exe
+[ 86%] Built target socket_node_base_integration_contracts
+[ 86%] Building CXX object CMakeFiles/socket_parse_entry_contracts.dir/tests/unit/socket/parse_entry_tests.cpp.obj
+parse_entry_tests.cpp
+[ 86%] Linking CXX executable socket_parse_entry_contracts.exe
+[ 86%] Built target socket_parse_entry_contracts
+[ 86%] Building CXX object CMakeFiles/socket_parse_entry_integration_contracts.dir/tests/unit/socket/parse_entry_integration_tests.cpp.obj
+parse_entry_integration_tests.cpp
+[ 86%] Linking CXX executable socket_parse_entry_integration_contracts.exe
+[ 86%] Built target socket_parse_entry_integration_contracts
+[ 86%] Building CXX object CMakeFiles/socket_document_error_contracts.dir/tests/unit/socket/document_error_tests.cpp.obj
+document_error_tests.cpp
+[ 86%] Linking CXX executable socket_document_error_contracts.exe
+[ 86%] Built target socket_document_error_contracts
+[ 86%] Building CXX object CMakeFiles/socket_document_error_integration_contracts.dir/tests/unit/socket/document_error_integration_tests.cpp.obj
+document_error_integration_tests.cpp
+[ 87%] Linking CXX executable socket_document_error_integration_contracts.exe
+[ 87%] Built target socket_document_error_integration_contracts
+[ 87%] Building CXX object CMakeFiles/socket_node_parse_contracts.dir/tests/unit/socket/node_parse_tests.cpp.obj
+node_parse_tests.cpp
+[ 87%] Linking CXX executable socket_node_parse_contracts.exe
+[ 87%] Built target socket_node_parse_contracts
+[ 88%] Building CXX object CMakeFiles/socket_node_parse_integration_contracts.dir/tests/unit/socket/node_parse_integration_tests.cpp.obj
+node_parse_integration_tests.cpp
+[ 88%] Linking CXX executable socket_node_parse_integration_contracts.exe
+[ 88%] Built target socket_node_parse_integration_contracts
+[ 88%] Building CXX object CMakeFiles/socket_node_identify_contracts.dir/tests/unit/socket/node_identify_tests.cpp.obj
+node_identify_tests.cpp
+[ 88%] Linking CXX executable socket_node_identify_contracts.exe
+[ 88%] Built target socket_node_identify_contracts
+[ 88%] Building CXX object CMakeFiles/socket_node_identify_integration_contracts.dir/tests/unit/socket/node_identify_integration_tests.cpp.obj
+node_identify_integration_tests.cpp
+[ 88%] Linking CXX executable socket_node_identify_integration_contracts.exe
+[ 88%] Built target socket_node_identify_integration_contracts
+[ 88%] Building CXX object CMakeFiles/socket_node_constructors_contracts.dir/tests/unit/socket/node_constructors_tests.cpp.obj
+node_constructors_tests.cpp
+[ 88%] Linking CXX executable socket_node_constructors_contracts.exe
+[ 88%] Built target socket_node_constructors_contracts
+[ 89%] Building CXX object CMakeFiles/socket_node_constructors_integration_contracts.dir/tests/unit/socket/node_constructors_integration_tests.cpp.obj
+node_constructors_integration_tests.cpp
+[ 89%] Linking CXX executable socket_node_constructors_integration_contracts.exe
+[ 89%] Built target socket_node_constructors_integration_contracts
+[ 89%] Building CXX object CMakeFiles/socket_node_insertion_contracts.dir/tests/unit/socket/node_insertion_tests.cpp.obj
+node_insertion_tests.cpp
+[ 90%] Linking CXX executable socket_node_insertion_contracts.exe
+[ 90%] Built target socket_node_insertion_contracts
+[ 90%] Building CXX object CMakeFiles/socket_node_insertion_integration_contracts.dir/tests/unit/socket/node_insertion_integration_tests.cpp.obj
+node_insertion_integration_tests.cpp
+[ 90%] Linking CXX executable socket_node_insertion_integration_contracts.exe
+[ 90%] Built target socket_node_insertion_integration_contracts
+[ 90%] Building CXX object CMakeFiles/socket_node_string_contracts.dir/tests/unit/socket/node_string_tests.cpp.obj
+node_string_tests.cpp
+[ 90%] Linking CXX executable socket_node_string_contracts.exe
+[ 90%] Built target socket_node_string_contracts
+[ 90%] Building CXX object CMakeFiles/socket_node_string_integration_contracts.dir/tests/unit/socket/node_string_integration_tests.cpp.obj
+node_string_integration_tests.cpp
+[ 91%] Linking CXX executable socket_node_string_integration_contracts.exe
+[ 91%] Built target socket_node_string_integration_contracts
+[ 91%] Building CXX object CMakeFiles/server_contracts.dir/tests/unit/server/server_tests.cpp.obj
+server_tests.cpp
+[ 91%] Linking CXX executable server_contracts.exe
+[ 91%] Built target server_contracts
+[ 91%] Building CXX object CMakeFiles/messages_contracts.dir/tests/unit/messages/messages_tests.cpp.obj
+messages_tests.cpp
+[ 91%] Linking CXX executable messages_contracts.exe
+[ 91%] Built target messages_contracts
+[ 91%] Building CXX object CMakeFiles/handlers_contracts.dir/tests/unit/handlers/handlers_tests.cpp.obj
+handlers_tests.cpp
+[ 92%] Linking CXX executable handlers_contracts.exe
+[ 92%] Built target handlers_contracts
+[ 93%] Building CXX object CMakeFiles/crypto_contracts.dir/tests/unit/crypto/crypto_tests.cpp.obj
+crypto_tests.cpp
+[ 93%] Linking CXX executable crypto_contracts.exe
+[ 93%] Built target crypto_contracts
+[ 93%] Building CXX object CMakeFiles/xml_printer_contracts.dir/tests/unit/xml/printer_tests.cpp.obj
+printer_tests.cpp
+[ 93%] Linking CXX executable xml_printer_contracts.exe
+[ 93%] Built target xml_printer_contracts
+[ 93%] Building CXX object CMakeFiles/xml_reader_contracts.dir/tests/unit/xml_reader/reader_tests.cpp.obj
+reader_tests.cpp
+[ 94%] Linking CXX executable xml_reader_contracts.exe
+[ 94%] Built target xml_reader_contracts
+[ 94%] Building CXX object CMakeFiles/licensing_contracts.dir/tests/unit/license/license_tests.cpp.obj
+license_tests.cpp
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\license\license_tests.cpp(179): warning C4834: [[nodiscard]] özniteliğine sahip işlevin dönüş değerinin atılması
+[ 94%] Linking CXX executable licensing_contracts.exe
+[ 94%] Built target licensing_contracts
+[ 94%] Building CXX object CMakeFiles/hash_contracts.dir/tests/unit/hash/hash_tests.cpp.obj
+hash_tests.cpp
+[ 94%] Linking CXX executable hash_contracts.exe
+[ 94%] Built target hash_contracts
+[ 94%] Building CXX object CMakeFiles/token_contracts.dir/tests/unit/token/token_tests.cpp.obj
+token_tests.cpp
+[ 94%] Linking CXX executable token_contracts.exe
+[ 94%] Built target token_contracts
+[ 94%] Building CXX object CMakeFiles/file_io_contracts.dir/tests/unit/file/binary_io_tests.cpp.obj
+binary_io_tests.cpp
+[ 94%] Linking CXX executable file_io_contracts.exe
+[ 94%] Built target file_io_contracts
+[ 94%] Building CXX object CMakeFiles/license_file_integration.dir/tests/unit/file/license_files_tests.cpp.obj
+license_files_tests.cpp
+[ 94%] Linking CXX executable license_file_integration.exe
+[ 94%] Built target license_file_integration
+[ 94%] Building CXX object CMakeFiles/status_contracts.dir/tests/unit/status/status_tests.cpp.obj
+status_tests.cpp
+[ 94%] Linking CXX executable status_contracts.exe
+[ 94%] Built target status_contracts
+[ 94%] Building CXX object CMakeFiles/path_contracts.dir/tests/unit/path/path_tests.cpp.obj
+path_tests.cpp
+[ 94%] Linking CXX executable path_contracts.exe
+[ 94%] Built target path_contracts
+[ 94%] Building CXX object CMakeFiles/encoding_contracts.dir/tests/unit/encoding/encoding_tests.cpp.obj
+encoding_tests.cpp
+[ 94%] Linking CXX executable encoding_contracts.exe
+[ 94%] Built target encoding_contracts
+[ 95%] Building CXX object CMakeFiles/windows_effects_integration.dir/tests/unit/windows/windows_tests.cpp.obj
+windows_tests.cpp
+[ 95%] Linking CXX executable windows_effects_integration.exe
+[ 95%] Built target windows_effects_integration
+[ 95%] Building CXX object CMakeFiles/content_handlers_contracts.dir/tests/unit/content_handlers/content_handlers_tests.cpp.obj
+content_handlers_tests.cpp
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): warning C4244: '=': 'const char16_t' - 'char' dönüşümü; veri kaybı olabilir
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xutility(5094): note: şablon örneği oluşturma bağlamı (önce en eski olan)
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\content_handlers\content_handlers_tests.cpp(121): note: derlenen şablon işlevi 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(_Iter,_Iter,const _Alloc &)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Elem=char16_t,
+            _Iter=std::_String_const_iterator<std::_String_val<std::_Simple_types<char16_t>>>,
+            _Alloc=std::allocator<char>
+        ]
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\unit\content_handlers\content_handlers_tests.cpp(121): note: 'MockEffects::path_to_utf8_031ca0' içinde ilk 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string' başvurusuna bakın
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(862): note: derlenen şablon işlevi 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct_from_iter<const char16_t*,const char16_t*,_Size_type>(_Iter,const _Sent,_Size)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _Size_type=std::+::_Size_type,
+            _Iter=const char16_t *,
+            _Sent=const char16_t *,
+            _Size=std::+::_Size_type
+        ]
+C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\include\xstring(1018): note: derlenen şablon işlevi '_OutIt *std::_Copy_n_unchecked4<const char16_t*,_Size,char*>(_InIt,_SizeTy,_OutIt)' örneği oluşturma başvurusuna bakın
+        with
+        [
+            _OutIt=char *,
+            _Size=std::+::_Size_type,
+            _InIt=const char16_t *,
+            _SizeTy=std::+::_Size_type
+        ]
+[ 96%] Linking CXX executable content_handlers_contracts.exe
+[ 96%] Built target content_handlers_contracts
+[ 96%] Building CXX object CMakeFiles/misc_handlers_contracts.dir/tests/unit/misc_handlers/misc_handlers_tests.cpp.obj
+misc_handlers_tests.cpp
+[ 97%] Linking CXX executable misc_handlers_contracts.exe
+[ 97%] Built target misc_handlers_contracts
+[ 97%] Building CXX object CMakeFiles/dispatch_integration.dir/tests/unit/dispatch/integration_tests.cpp.obj
+integration_tests.cpp
+[ 97%] Linking CXX executable dispatch_integration.exe
+[ 97%] Built target dispatch_integration
+[ 97%] Building CXX object CMakeFiles/hook_adapter_integration.dir/tests/unit/hooks/adapter_tests.cpp.obj
+adapter_tests.cpp
+[ 97%] Linking CXX executable hook_adapter_integration.exe
+[ 97%] Built target hook_adapter_integration
+[ 97%] Building CXX object CMakeFiles/vdf_parser_regressions.dir/tests/unit/parser/vdf_regression_tests.cpp.obj
+vdf_regression_tests.cpp
+[ 97%] Linking CXX executable vdf_parser_regressions.exe
+[ 97%] Built target vdf_parser_regressions
+[ 97%] Building C object CMakeFiles/dll_public_c_consumer.dir/tests/native/public_c_consumer.c.obj
+public_c_consumer.c
+[ 98%] Linking C executable dll_public_c_consumer.exe
+[ 98%] Built target dll_public_c_consumer
+[ 99%] Building C object CMakeFiles/hook_engine_fixture_objects.dir/third_party/minhook/src/hook.c.obj
+hook.c
+[ 99%] Building C object CMakeFiles/hook_engine_fixture_objects.dir/third_party/minhook/src/buffer.c.obj
+buffer.c
+[ 99%] Building C object CMakeFiles/hook_engine_fixture_objects.dir/third_party/minhook/src/trampoline.c.obj
+trampoline.c
+[ 99%] Building C object CMakeFiles/hook_engine_fixture_objects.dir/third_party/minhook/src/hde/hde64.c.obj
+hde64.c
+[ 99%] Built target hook_engine_fixture_objects
+[ 99%] Building CXX object CMakeFiles/hook_engine_fixture_tests.dir/tests/native/hook_engine_fixture_tests.cpp.obj
+hook_engine_fixture_tests.cpp
+[100%] Building CXX object CMakeFiles/hook_engine_fixture_tests.dir/tests/support/hook_engine/fake_win32.cpp.obj
+fake_win32.cpp
+C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\tests\support\hook_engine\fake_win32.cpp(109): warning C4312: 'reinterpret_cast': 'unsigned long' öğesinden daha büyük boyutlu 'HANDLE' öğesine dönüştürme
+[100%] Linking CXX executable hook_engine_fixture_tests.exe
+[100%] Built target hook_engine_fixture_tests
+[100%] Recheck production boundary on incremental builds
+BUILD_PARTITION: PASS_PRODUCTION_BOUNDARY
+[100%] Built target preloader_l_verify_partition
+[3/3] Validate selected profile
+{
+  "schema": "surge.public-abi-check.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "dll_sha256": "60872c91c2c27c999441a3da26a55d85dcb3c6d7de3d9b26961f3de2672dcba8",
+  "export_count": 3,
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0x1be0",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0x1ce0",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0x1da0",
+      "forwarded": false
+    }
+  },
+  "errors": [],
+  "native_consumer_acceptance": "NOT_RUN"
+}
+{
+  "classification": "NOT_RELEASE",
+  "execution_level": "READ_ONLY_BINARY_INSPECTION",
+  "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+  "header_metadata": {
+    "timestamp": "0x6AE39D96",
+    "linker_version": [
+      14,
+      51
+    ],
+    "rich_header": "PRESENT",
+    "os_version": [
+      6,
+      0
+    ],
+    "subsystem_version": [
+      6,
+      0
+    ],
+    "subsystem": 2,
+    "export_internal_name": "preloader.unsigned.dll",
+    "debug_directory": [
+      743168,
+      28
+    ],
+    "security_directory": [
+      0,
+      0
+    ],
+    "coff_symbol_table": [
+      0,
+      0
+    ],
+    "pe_checksum": "0x00000000",
+    "checksum_valid": false
+  },
+  "infrastructure_metadata_validation": {
+    "stage": "RAW_LINK_OUTPUT",
+    "result": "NOT_FINALIZED",
+    "differences": [
+      "LinkerVersion: 14.51",
+      "TimeDateStamp: 0x6AE39D96",
+      "debug directory not stripped: (743168, 28)",
+      "Rich Header present"
+    ]
+  },
+  "dll_sha256": "60872c91c2c27c999441a3da26a55d85dcb3c6d7de3d9b26961f3de2672dcba8",
+  "unchanged": true,
+  "machine": "0x8664",
+  "entrypoint_rva": "0x69670",
+  "sections": [
+    ".text",
+    ".rdata",
+    ".data",
+    ".pdata",
+    ".fptable",
+    ".rsrc",
+    ".reloc"
+  ],
+  "export_count": 3,
+  "imports": [
+    "MSWSOCK.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "WS2_32.DLL",
+    "CRYPT32.DLL"
+  ],
+  "resources": [
+    {
+      "path": [
+        16,
+        1,
+        1033
+      ],
+      "bytes": 572,
+      "sha256": "581a0c85cd74162a778002fd3d27a4dbb085dc2bf4b64e1bc15210e3db6a2acb"
+    }
+  ],
+  "exact_owner_avatar": true,
+  "expected_import_module_order": [
+    "CRYPT32.DLL",
+    "WS2_32.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "MSWSOCK.DLL"
+  ],
+  "import_module_order_matches": false,
+  "crypt32_static_import": true,
+  "crypt32_named_imports": [
+    "CryptQueryObject"
+  ],
+  "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "avatar_data": {
+    "profile": {
+      "sha256": "7ef474ef2d4f52bc6859a5db2d1fc164891eed5793330aa73f57e386056fa639",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    },
+    "fallback": {
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    }
+  },
+  "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+  "resource_metadata_errors": [],
+  "golden_shipping_acceptance": "NOT_RUN",
+  "game_acceptance": "NOT_RUN"
+}
+Test project C:/Users/Skysect/Desktop/preloader_l_3.2.6_TALVOR_R17_source/build/native_msvc
+        Start   1: application_runtime_contracts
+  1/193 Test   #1: application_runtime_contracts ..........................   Passed    3.51 sec
+        Start   2: configuration_platform_contracts
+  2/193 Test   #2: configuration_platform_contracts .......................   Passed    0.14 sec
+        Start   3: environment_dialog_contracts
+  3/193 Test   #3: environment_dialog_contracts ...........................   Passed    0.10 sec
+        Start   4: startup_publication_contracts
+  4/193 Test   #4: startup_publication_contracts ..........................   Passed    0.30 sec
+        Start   5: infrastructure_golden_pe
+  5/193 Test   #5: infrastructure_golden_pe ...............................   Passed    1.23 sec
+        Start   6: infrastructure_named_imports
+  6/193 Test   #6: infrastructure_named_imports ...........................   Passed    0.09 sec
+        Start   7: infrastructure_msvc_link
+  7/193 Test   #7: infrastructure_msvc_link ...............................   Passed    0.10 sec
+        Start   8: infrastructure_ownership_packaging
+  8/193 Test   #8: infrastructure_ownership_packaging .....................   Passed    1.70 sec
+        Start   9: infrastructure_target_requirements
+  9/193 Test   #9: infrastructure_target_requirements .....................   Passed    0.42 sec
+        Start  10: infrastructure_vendor_contract
+ 10/193 Test  #10: infrastructure_vendor_contract .........................   Passed   23.28 sec
+        Start  11: infrastructure_wine_runner
+ 11/193 Test  #11: infrastructure_wine_runner .............................   Passed    0.49 sec
+        Start  12: infrastructure_build_partition
+ 12/193 Test  #12: infrastructure_build_partition .........................   Passed    0.14 sec
+        Start  13: vendor_api_smoke
+ 13/193 Test  #13: vendor_api_smoke .......................................   Passed    0.28 sec
+        Start  14: vendor_io_contracts
+ 14/193 Test  #14: vendor_io_contracts ....................................   Passed    0.11 sec
+        Start  15: vendor_source_integrity
+ 15/193 Test  #15: vendor_source_integrity ................................   Passed    1.58 sec
+        Start  16: vendor_pegtl_smoke
+ 16/193 Test  #16: vendor_pegtl_smoke .....................................   Passed    0.09 sec
+        Start  17: crt_runtime_smoke
+ 17/193 Test  #17: crt_runtime_smoke ......................................   Passed    0.09 sec
+        Start  18: production_callback_contracts
+ 18/193 Test  #18: production_callback_contracts ..........................   Passed    0.16 sec
+        Start  19: production_network_hook_contracts
+ 19/193 Test  #19: production_network_hook_contracts ......................   Passed    0.09 sec
+        Start  20: session_flow_contracts
+ 20/193 Test  #20: session_flow_contracts .................................   Passed    0.09 sec
+        Start  21: crypt_path_probe_contracts
+ 21/193 Test  #21: crypt_path_probe_contracts .............................   Passed    0.35 sec
+        Start  22: network_policy_contracts
+ 22/193 Test  #22: network_policy_contracts ...............................   Passed    3.63 sec
+        Start  23: atomic_persistence_contracts
+ 23/193 Test  #23: atomic_persistence_contracts ...........................   Passed    0.13 sec
+        Start  24: handler_pool_contracts
+ 24/193 Test  #24: handler_pool_contracts .................................   Passed    4.49 sec
+        Start  25: unload_guard_contracts
+ 25/193 Test  #25: unload_guard_contracts .................................   Passed    0.10 sec
+        Start  26: listener_port_contracts
+ 26/193 Test  #26: listener_port_contracts ................................   Passed    0.11 sec
+        Start  27: hook_freeze_contracts
+ 27/193 Test  #27: hook_freeze_contracts ..................................   Passed    0.09 sec
+        Start  28: hook_transaction_contracts
+ 28/193 Test  #28: hook_transaction_contracts .............................   Passed    0.10 sec
+        Start  29: cleanup_retry_contracts
+ 29/193 Test  #29: cleanup_retry_contracts ................................   Passed    1.00 sec
+        Start  30: file_copy_contracts
+ 30/193 Test  #30: file_copy_contracts ....................................   Passed    0.19 sec
+        Start  31: file_copy_windows_integration
+ 31/193 Test  #31: file_copy_windows_integration ..........................   Passed    0.14 sec
+        Start  32: bootstrap_contracts
+ 32/193 Test  #32: bootstrap_contracts ....................................   Passed    0.08 sec
+        Start  33: crt_thread_contracts
+ 33/193 Test  #33: crt_thread_contracts ...................................   Passed    0.09 sec
+        Start  34: host_init_contracts
+ 34/193 Test  #34: host_init_contracts ....................................   Passed    0.24 sec
+        Start  35: registry_contracts
+ 35/193 Test  #35: registry_contracts .....................................   Passed    0.14 sec
+        Start  36: native_callback_contracts
+ 36/193 Test  #36: native_callback_contracts ..............................   Passed    0.17 sec
+        Start  37: host_callback_contracts
+ 37/193 Test  #37: host_callback_contracts ................................   Passed    0.09 sec
+        Start  38: network_hook_contracts
+ 38/193 Test  #38: network_hook_contracts .................................   Passed    0.10 sec
+        Start  39: online_contracts
+ 39/193 Test  #39: online_contracts .......................................   Passed    0.12 sec
+        Start  40: configuration_contracts
+ 40/193 Test  #40: configuration_contracts ................................   Passed    0.09 sec
+        Start  41: execution_contracts
+ 41/193 Test  #41: execution_contracts ....................................   Passed    0.08 sec
+        Start  42: execution_concurrency_contracts
+ 42/193 Test  #42: execution_concurrency_contracts ........................   Passed    0.12 sec
+        Start  43: atomic_staging_contracts
+ 43/193 Test  #43: atomic_staging_contracts ...............................   Passed    0.14 sec
+        Start  44: libraries_contracts
+ 44/193 Test  #44: libraries_contracts ....................................   Passed    0.08 sec
+        Start  45: startup_contracts
+ 45/193 Test  #45: startup_contracts ......................................   Passed    0.09 sec
+        Start  46: parser_contracts
+ 46/193 Test  #46: parser_contracts .......................................   Passed    0.09 sec
+        Start  47: config_order_contracts
+ 47/193 Test  #47: config_order_contracts .................................   Passed    0.09 sec
+        Start  48: config_pipeline_contracts
+ 48/193 Test  #48: config_pipeline_contracts ..............................   Passed    0.10 sec
+        Start  49: config_hash_contracts
+ 49/193 Test  #49: config_hash_contracts ..................................   Passed    0.16 sec
+        Start  50: config_application_contracts
+ 50/193 Test  #50: config_application_contracts ...........................   Passed    0.09 sec
+        Start  51: config_startup_contracts
+ 51/193 Test  #51: config_startup_contracts ...............................   Passed    0.10 sec
+        Start  52: achievement_writer_contracts
+ 52/193 Test  #52: achievement_writer_contracts ...........................   Passed    0.10 sec
+        Start  53: achievement_storage_contracts
+ 53/193 Test  #53: achievement_storage_contracts ..........................   Passed    0.11 sec
+        Start  54: calendar_contracts
+ 54/193 Test  #54: calendar_contracts .....................................   Passed    0.12 sec
+        Start  55: timestamp_contracts
+ 55/193 Test  #55: timestamp_contracts ....................................   Passed    0.10 sec
+        Start  56: utc_contracts
+ 56/193 Test  #56: utc_contracts ..........................................   Passed    0.08 sec
+        Start  57: achievement_runtime_contracts
+ 57/193 Test  #57: achievement_runtime_contracts ..........................   Passed    0.20 sec
+        Start  58: event_queue_contracts
+ 58/193 Test  #58: event_queue_contracts ..................................   Passed    0.09 sec
+        Start  59: event_queue_integration_contracts
+ 59/193 Test  #59: event_queue_integration_contracts ......................   Passed    0.19 sec
+        Start  60: session_handler_contracts
+ 60/193 Test  #60: session_handler_contracts ..............................   Passed    0.11 sec
+        Start  61: session_integration_contracts
+ 61/193 Test  #61: session_integration_contracts ..........................   Passed    0.23 sec
+        Start  62: socket_operations_contracts
+ 62/193 Test  #62: socket_operations_contracts ............................   Passed    0.13 sec
+        Start  63: socket_native_contracts
+ 63/193 Test  #63: socket_native_contracts ................................   Passed    0.08 sec
+        Start  64: socket_acceptor_contracts
+ 64/193 Test  #64: socket_acceptor_contracts ..............................   Passed    0.10 sec
+        Start  65: socket_acceptor_native_contracts
+ 65/193 Test  #65: socket_acceptor_native_contracts .......................   Passed    0.09 sec
+        Start  66: socket_lifecycle_contracts
+ 66/193 Test  #66: socket_lifecycle_contracts .............................   Passed    0.09 sec
+        Start  67: socket_lifecycle_native_contracts
+ 67/193 Test  #67: socket_lifecycle_native_contracts ......................   Passed    0.10 sec
+        Start  68: socket_close_contracts
+ 68/193 Test  #68: socket_close_contracts .................................   Passed    0.10 sec
+        Start  69: socket_closing_contracts
+ 69/193 Test  #69: socket_closing_contracts ...............................   Passed    0.09 sec
+        Start  70: socket_cancellation_contracts
+ 70/193 Test  #70: socket_cancellation_contracts ..........................   Passed    0.11 sec
+        Start  71: socket_cancellation_native_contracts
+ 71/193 Test  #71: socket_cancellation_native_contracts ...................   Passed    0.10 sec
+        Start  72: socket_recycle_contracts
+ 72/193 Test  #72: socket_recycle_contracts ...............................   Passed    0.11 sec
+        Start  73: socket_recycle_storage_contracts
+ 73/193 Test  #73: socket_recycle_storage_contracts .......................   Passed    0.08 sec
+        Start  74: socket_service_registry_contracts
+ 74/193 Test  #74: socket_service_registry_contracts ......................   Passed    0.10 sec
+        Start  75: socket_service_registry_integration_contracts
+ 75/193 Test  #75: socket_service_registry_integration_contracts ..........   Passed    0.09 sec
+        Start  76: socket_service_constructor_contracts
+ 76/193 Test  #76: socket_service_constructor_contracts ...................   Passed    0.09 sec
+        Start  77: socket_service_constructor_native_contracts
+ 77/193 Test  #77: socket_service_constructor_native_contracts ............   Passed    0.11 sec
+        Start  78: socket_scheduler_registry_contracts
+ 78/193 Test  #78: socket_scheduler_registry_contracts ....................   Passed    0.09 sec
+        Start  79: socket_scheduler_registry_integration_contracts
+ 79/193 Test  #79: socket_scheduler_registry_integration_contracts ........   Passed    0.12 sec
+        Start  80: socket_iocp_constructor_contracts
+ 80/193 Test  #80: socket_iocp_constructor_contracts ......................   Passed    0.10 sec
+        Start  81: socket_iocp_constructor_native_contracts
+ 81/193 Test  #81: socket_iocp_constructor_native_contracts ...............   Passed    0.11 sec
+        Start  82: socket_worker_startup_contracts
+ 82/193 Test  #82: socket_worker_startup_contracts ........................   Passed    0.10 sec
+        Start  83: socket_worker_startup_native_contracts
+ 83/193 Test  #83: socket_worker_startup_native_contracts .................   Passed    0.11 sec
+        Start  84: socket_worker_run_contracts
+ 84/193 Test  #84: socket_worker_run_contracts ............................   Passed    0.10 sec
+        Start  85: socket_worker_run_native_contracts
+ 85/193 Test  #85: socket_worker_run_native_contracts .....................   Passed    0.10 sec
+        Start  86: socket_completion_dispatcher_contracts
+ 86/193 Test  #86: socket_completion_dispatcher_contracts .................   Passed    0.13 sec
+        Start  87: socket_completion_dispatcher_native_contracts
+ 87/193 Test  #87: socket_completion_dispatcher_native_contracts ..........   Passed    0.11 sec
+        Start  88: socket_posted_operation_contracts
+ 88/193 Test  #88: socket_posted_operation_contracts ......................   Passed    0.16 sec
+        Start  89: socket_posted_operation_integration_contracts
+ 89/193 Test  #89: socket_posted_operation_integration_contracts ..........   Passed    0.12 sec
+        Start  90: socket_io_completion_contracts
+ 90/193 Test  #90: socket_io_completion_contracts .........................   Passed    0.10 sec
+        Start  91: socket_io_completion_integration_contracts
+ 91/193 Test  #91: socket_io_completion_integration_contracts .............   Passed    0.10 sec
+        Start  92: socket_handler_dispatch_contracts
+ 92/193 Test  #92: socket_handler_dispatch_contracts ......................   Passed    0.13 sec
+        Start  93: socket_handler_dispatch_integration_contracts
+ 93/193 Test  #93: socket_handler_dispatch_integration_contracts ..........   Passed    0.11 sec
+        Start  94: socket_composed_write_contracts
+ 94/193 Test  #94: socket_composed_write_contracts ........................   Passed    0.11 sec
+        Start  95: socket_composed_write_integration_contracts
+ 95/193 Test  #95: socket_composed_write_integration_contracts ............   Passed    0.13 sec
+        Start  96: socket_environment_constructor_contracts
+ 96/193 Test  #96: socket_environment_constructor_contracts ...............   Passed    0.11 sec
+        Start  97: socket_environment_constructor_integration_contracts
+ 97/193 Test  #97: socket_environment_constructor_integration_contracts ...   Passed    0.11 sec
+        Start  98: socket_write_finish_contracts
+ 98/193 Test  #98: socket_write_finish_contracts ..........................   Passed    0.11 sec
+        Start  99: socket_write_finish_integration_contracts
+ 99/193 Test  #99: socket_write_finish_integration_contracts ..............   Passed    0.13 sec
+        Start 100: socket_queued_write_contracts
+100/193 Test #100: socket_queued_write_contracts ..........................   Passed    0.08 sec
+        Start 101: socket_queued_write_integration_contracts
+101/193 Test #101: socket_queued_write_integration_contracts ..............   Passed    0.14 sec
+        Start 102: socket_async_receive_contracts
+102/193 Test #102: socket_async_receive_contracts .........................   Passed    0.10 sec
+        Start 103: socket_async_receive_integration_contracts
+103/193 Test #103: socket_async_receive_integration_contracts .............   Passed    0.10 sec
+        Start 104: socket_receive_buffer_contracts
+104/193 Test #104: socket_receive_buffer_contracts ........................   Passed    0.25 sec
+        Start 105: socket_receive_buffer_integration_contracts
+105/193 Test #105: socket_receive_buffer_integration_contracts ............   Passed    0.21 sec
+        Start 106: socket_composed_read_contracts
+106/193 Test #106: socket_composed_read_contracts .........................   Passed    0.17 sec
+        Start 107: socket_composed_read_integration_contracts
+107/193 Test #107: socket_composed_read_integration_contracts .............   Passed    0.15 sec
+        Start 108: socket_frame_read_contracts
+108/193 Test #108: socket_frame_read_contracts ............................   Passed    0.11 sec
+        Start 109: socket_frame_read_integration_contracts
+109/193 Test #109: socket_frame_read_integration_contracts ................   Passed    0.13 sec
+        Start 110: socket_message_dispatch_contracts
+110/193 Test #110: socket_message_dispatch_contracts ......................   Passed    0.13 sec
+        Start 111: socket_message_dispatch_integration_contracts
+111/193 Test #111: socket_message_dispatch_integration_contracts ..........   Passed    0.11 sec
+        Start 112: socket_response_dispatch_contracts
+112/193 Test #112: socket_response_dispatch_contracts .....................   Passed    0.10 sec
+        Start 113: socket_response_dispatch_integration_contracts
+113/193 Test #113: socket_response_dispatch_integration_contracts .........   Passed    0.15 sec
+        Start 114: socket_owned_response_contracts
+114/193 Test #114: socket_owned_response_contracts ........................   Passed    0.10 sec
+        Start 115: socket_owned_response_integration_contracts
+115/193 Test #115: socket_owned_response_integration_contracts ............   Passed    0.13 sec
+        Start 116: socket_response_containers_contracts
+116/193 Test #116: socket_response_containers_contracts ...................   Passed    0.13 sec
+        Start 117: socket_response_containers_integration_contracts
+117/193 Test #117: socket_response_containers_integration_contracts .......   Passed    0.14 sec
+        Start 118: socket_message_core_bridge_contracts
+118/193 Test #118: socket_message_core_bridge_contracts ...................   Passed    0.19 sec
+        Start 119: socket_message_core_bridge_integration_contracts
+119/193 Test #119: socket_message_core_bridge_integration_contracts .......   Passed    0.46 sec
+        Start 120: socket_request_mutation_contracts
+120/193 Test #120: socket_request_mutation_contracts ......................   Passed    0.42 sec
+        Start 121: socket_request_mutation_integration_contracts
+121/193 Test #121: socket_request_mutation_integration_contracts ..........   Passed    0.48 sec
+        Start 122: socket_request_growth_contracts
+122/193 Test #122: socket_request_growth_contracts ........................   Passed    0.25 sec
+        Start 123: socket_request_growth_integration_contracts
+123/193 Test #123: socket_request_growth_integration_contracts ............   Passed    0.41 sec
+        Start 124: socket_response_hex_contracts
+124/193 Test #124: socket_response_hex_contracts ..........................   Passed    0.38 sec
+        Start 125: socket_response_hex_integration_contracts
+125/193 Test #125: socket_response_hex_integration_contracts ..............   Passed    0.56 sec
+        Start 126: socket_native_message_contracts
+126/193 Test #126: socket_native_message_contracts ........................   Passed    0.59 sec
+        Start 127: socket_native_message_integration_contracts
+127/193 Test #127: socket_native_message_integration_contracts ............   Passed    0.69 sec
+        Start 128: socket_append_growth_contracts
+128/193 Test #128: socket_append_growth_contracts .........................   Passed    0.34 sec
+        Start 129: socket_append_growth_integration_contracts
+129/193 Test #129: socket_append_growth_integration_contracts .............   Passed    0.55 sec
+        Start 130: socket_prefix_cipher_contracts
+130/193 Test #130: socket_prefix_cipher_contracts .........................   Passed    0.32 sec
+        Start 131: socket_prefix_cipher_integration_contracts
+131/193 Test #131: socket_prefix_cipher_integration_contracts .............   Passed    1.14 sec
+        Start 132: socket_cipher_session_contracts
+132/193 Test #132: socket_cipher_session_contracts ........................   Passed    0.22 sec
+        Start 133: socket_cipher_session_integration_contracts
+133/193 Test #133: socket_cipher_session_integration_contracts ............   Passed    1.88 sec
+        Start 134: socket_native_dispatch_contracts
+134/193 Test #134: socket_native_dispatch_contracts .......................   Passed    0.22 sec
+        Start 135: socket_native_dispatch_integration_contracts
+135/193 Test #135: socket_native_dispatch_integration_contracts ...........   Passed    1.89 sec
+        Start 136: socket_native_document_contracts
+136/193 Test #136: socket_native_document_contracts .......................   Passed    0.10 sec
+        Start 137: socket_native_document_integration_contracts
+137/193 Test #137: socket_native_document_integration_contracts ...........   Passed    1.93 sec
+        Start 138: socket_document_clear_contracts
+138/193 Test #138: socket_document_clear_contracts ........................   Passed    0.26 sec
+        Start 139: socket_document_clear_integration_contracts
+139/193 Test #139: socket_document_clear_integration_contracts ............   Passed    2.00 sec
+        Start 140: socket_node_delete_contracts
+140/193 Test #140: socket_node_delete_contracts ...........................   Passed    0.14 sec
+        Start 141: socket_node_delete_integration_contracts
+141/193 Test #141: socket_node_delete_integration_contracts ...............   Passed    3.49 sec
+        Start 142: socket_pool_release_contracts
+142/193 Test #142: socket_pool_release_contracts ..........................   Passed    0.25 sec
+        Start 143: socket_pool_release_integration_contracts
+143/193 Test #143: socket_pool_release_integration_contracts ..............   Passed   11.33 sec
+        Start 144: socket_pool_allocate_contracts
+144/193 Test #144: socket_pool_allocate_contracts .........................   Passed    0.08 sec
+        Start 145: socket_pool_allocate_integration_contracts
+145/193 Test #145: socket_pool_allocate_integration_contracts .............   Passed    0.08 sec
+        Start 146: socket_pool_append_contracts
+146/193 Test #146: socket_pool_append_contracts ...........................   Passed    0.08 sec
+        Start 147: socket_pool_append_integration_contracts
+147/193 Test #147: socket_pool_append_integration_contracts ...............   Passed    0.09 sec
+        Start 148: socket_pool_clear_contracts
+148/193 Test #148: socket_pool_clear_contracts ............................   Passed    0.08 sec
+        Start 149: socket_pool_clear_integration_contracts
+149/193 Test #149: socket_pool_clear_integration_contracts ................   Passed    0.08 sec
+        Start 150: socket_pool_destruct_contracts
+150/193 Test #150: socket_pool_destruct_contracts .........................   Passed    0.08 sec
+        Start 151: socket_pool_destruct_integration_contracts
+151/193 Test #151: socket_pool_destruct_integration_contracts .............   Passed    0.08 sec
+        Start 152: socket_node_base_contracts
+152/193 Test #152: socket_node_base_contracts .............................   Passed    0.09 sec
+        Start 153: socket_node_base_integration_contracts
+153/193 Test #153: socket_node_base_integration_contracts .................   Passed    0.09 sec
+        Start 154: socket_parse_entry_contracts
+154/193 Test #154: socket_parse_entry_contracts ...........................   Passed    0.09 sec
+        Start 155: socket_parse_entry_integration_contracts
+155/193 Test #155: socket_parse_entry_integration_contracts ...............   Passed    0.10 sec
+        Start 156: socket_document_error_contracts
+156/193 Test #156: socket_document_error_contracts ........................   Passed    0.12 sec
+        Start 157: socket_document_error_integration_contracts
+157/193 Test #157: socket_document_error_integration_contracts ............   Passed    0.08 sec
+        Start 158: socket_node_parse_contracts
+158/193 Test #158: socket_node_parse_contracts ............................   Passed    0.08 sec
+        Start 159: socket_node_parse_integration_contracts
+159/193 Test #159: socket_node_parse_integration_contracts ................   Passed    0.09 sec
+        Start 160: socket_node_identify_contracts
+160/193 Test #160: socket_node_identify_contracts .........................   Passed    0.09 sec
+        Start 161: socket_node_identify_integration_contracts
+161/193 Test #161: socket_node_identify_integration_contracts .............   Passed    0.09 sec
+        Start 162: socket_node_constructors_contracts
+162/193 Test #162: socket_node_constructors_contracts .....................   Passed    0.10 sec
+        Start 163: socket_node_constructors_integration_contracts
+163/193 Test #163: socket_node_constructors_integration_contracts .........   Passed    0.08 sec
+        Start 164: socket_node_insertion_contracts
+164/193 Test #164: socket_node_insertion_contracts ........................   Passed    0.09 sec
+        Start 165: socket_node_insertion_integration_contracts
+165/193 Test #165: socket_node_insertion_integration_contracts ............   Passed    0.08 sec
+        Start 166: socket_node_string_contracts
+166/193 Test #166: socket_node_string_contracts ...........................   Passed    0.09 sec
+        Start 167: socket_node_string_integration_contracts
+167/193 Test #167: socket_node_string_integration_contracts ...............   Passed    0.09 sec
+        Start 168: server_contracts
+168/193 Test #168: server_contracts .......................................   Passed    0.09 sec
+        Start 169: messages_contracts
+169/193 Test #169: messages_contracts .....................................   Passed    0.07 sec
+        Start 170: handlers_contracts
+170/193 Test #170: handlers_contracts .....................................   Passed    0.10 sec
+        Start 171: crypto_contracts
+171/193 Test #171: crypto_contracts .......................................   Passed    0.22 sec
+        Start 172: xml_printer_contracts
+172/193 Test #172: xml_printer_contracts ..................................   Passed    0.10 sec
+        Start 173: xml_reader_contracts
+173/193 Test #173: xml_reader_contracts ...................................   Passed    0.57 sec
+        Start 174: licensing_contracts
+174/193 Test #174: licensing_contracts ....................................   Passed    0.11 sec
+        Start 175: hash_contracts
+175/193 Test #175: hash_contracts .........................................   Passed    0.25 sec
+        Start 176: token_contracts
+176/193 Test #176: token_contracts ........................................   Passed    0.09 sec
+        Start 177: file_io_contracts
+177/193 Test #177: file_io_contracts ......................................   Passed    0.13 sec
+        Start 178: license_file_integration
+178/193 Test #178: license_file_integration ...............................   Passed    0.10 sec
+        Start 179: status_contracts
+179/193 Test #179: status_contracts .......................................   Passed    0.13 sec
+        Start 180: path_contracts
+180/193 Test #180: path_contracts .........................................   Passed    0.10 sec
+        Start 181: encoding_contracts
+181/193 Test #181: encoding_contracts .....................................   Passed    0.09 sec
+        Start 182: windows_effects_integration
+182/193 Test #182: windows_effects_integration ............................   Passed    0.11 sec
+        Start 183: content_handlers_contracts
+183/193 Test #183: content_handlers_contracts .............................   Passed    0.13 sec
+        Start 184: misc_handlers_contracts
+184/193 Test #184: misc_handlers_contracts ................................   Passed    0.10 sec
+        Start 185: dispatch_integration
+185/193 Test #185: dispatch_integration ...................................   Passed    0.12 sec
+        Start 186: hook_adapter_integration
+186/193 Test #186: hook_adapter_integration ...............................   Passed    0.20 sec
+        Start 187: vdf_parser_regressions
+187/193 Test #187: vdf_parser_regressions .................................   Passed    0.13 sec
+        Start 188: dll_source_smoke
+188/193 Test #188: dll_source_smoke .......................................   Passed    0.48 sec
+        Start 189: dll_public_lifecycle
+189/193 Test #189: dll_public_lifecycle ...................................   Passed    6.46 sec
+        Start 190: dll_public_c_consumer
+190/193 Test #190: dll_public_c_consumer ..................................   Passed    0.12 sec
+        Start 191: dll_public_export_contract
+191/193 Test #191: dll_public_export_contract .............................   Passed    0.08 sec
+        Start 192: dll_public_export_negatives
+192/193 Test #192: dll_public_export_negatives ............................   Passed    1.18 sec
+        Start 193: hook_engine_fixtures
+193/193 Test #193: hook_engine_fixtures ...................................   Passed    0.12 sec
+
+100% tests passed, 0 tests failed out of 193
+
+Label Time Summary:
+infrastructure       =  29.12 sec*proc (10 tests)
+production           =  28.65 sec*proc (67 tests)
+reference            =  40.02 sec*proc (114 tests)
+source-api           =   0.48 sec*proc (1 test)
+vendor-comparison    =   0.12 sec*proc (1 test)
+
+Total Test time (real) = 121.41 sec
+NATIVE ACCEPTANCE: PASS
+DLL: C:\Users\Skysect\Desktop\preloader_l_3.2.6_TALVOR_R17_source\build\native_msvc\preloader.unsigned.dll
+SHA256: 60872c91c2c27c999441a3da26a55d85dcb3c6d7de3d9b26961f3de2672dcba8
+
+============================================================
+  NATIVE ACCEPTANCE: PASS
+  Exit code: 0
+============================================================
+
+Press any key to close this operator window.

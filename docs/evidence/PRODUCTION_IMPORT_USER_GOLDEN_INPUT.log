@@ -1,0 +1,513 @@
+============================================================
+ SURGE - LOCAL GOLDEN
+ Build and check the local Golden candidate; no publication
+============================================================
+
+Running: build_production.ps1
+
+SURGE: Golden / Release; local build, NOT_RELEASE
+[1/3] Configure
+-- The C compiler identification is MSVC 19.51.36260.0
+-- The CXX compiler identification is MSVC 19.51.36260.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: C:/Users/Skysect/AppData/Local/Programs/Python/Python313/python.exe (found version "3.13.14") found components: Interpreter
+-- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS
+-- Performing Test PRELOADER_L_PEGTL_PUBLIC_INPUT_WORKS - Success
+-- Configuring done (35.8s)
+-- Generating done (0.3s)
+-- Build files have been written to: C:/Users/Skysect/Desktop/yellowfield-golden-avatar-source/build/golden_msvc
+[2/3] Compile and link
+[  1%] Verify the five owner-supplied vendor trees
+asio: INSTALLED_MEMBER_HASHES_PASS
+filesystem: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+[  1%] Built target preloader_l_verify_vendors
+[  1%] Building CXX object CMakeFiles/preloader_l_tinyxml2.dir/third_party/tinyxml2/tinyxml2.cpp.obj
+tinyxml2.cpp
+[  2%] Linking CXX static library preloader_l_tinyxml2.lib
+[  2%] Built target preloader_l_tinyxml2
+[  3%] Building C object CMakeFiles/preloader_l_minhook.dir/third_party/minhook/src/hook.c.obj
+hook.c
+[  4%] Building C object CMakeFiles/preloader_l_minhook.dir/third_party/minhook/src/buffer.c.obj
+buffer.c
+[  4%] Building C object CMakeFiles/preloader_l_minhook.dir/third_party/minhook/src/trampoline.c.obj
+trampoline.c
+[  5%] Building C object CMakeFiles/preloader_l_minhook.dir/third_party/minhook/src/hde/hde64.c.obj
+hde64.c
+[  6%] Linking C static library preloader_l_minhook.lib
+[  6%] Built target preloader_l_minhook
+[  7%] Building CXX object CMakeFiles/preloader_l_vdf_objects.dir/src/config/parser.cpp.obj
+parser.cpp
+[  7%] Built target preloader_l_vdf_objects
+[  7%] Generating generated/avatar_data.hpp
+[  8%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/codec/crypto.cpp.obj
+crypto.cpp
+[  9%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/codec/encoding.cpp.obj
+encoding.cpp
+[  9%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/application.cpp.obj
+application.cpp
+[ 10%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/configuration.cpp.obj
+configuration.cpp
+[ 11%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/hash_table.cpp.obj
+hash_table.cpp
+[ 11%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/order.cpp.obj
+order.cpp
+[ 12%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/pipeline.cpp.obj
+pipeline.cpp
+[ 13%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/config/startup.cpp.obj
+startup.cpp
+[ 14%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/binary_io.cpp.obj
+binary_io.cpp
+[ 14%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/license_files.cpp.obj
+license_files.cpp
+[ 15%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/license.cpp.obj
+license.cpp
+[ 16%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/paths.cpp.obj
+paths.cpp
+[ 16%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/core/token.cpp.obj
+token.cpp
+[ 17%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/content_handlers.cpp.obj
+content_handlers.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/handlers.cpp.obj
+handlers.cpp
+[ 18%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/handlers/misc_handlers.cpp.obj
+misc_handlers.cpp
+[ 19%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/hash/hash.cpp.obj
+hash.cpp
+[ 20%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/server.cpp.obj
+server.cpp
+[ 20%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/asio_service.cpp.obj
+asio_service.cpp
+Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+- add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+- add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+[ 21%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/session_handler.cpp.obj
+session_handler.cpp
+[ 22%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/session_routing.cpp.obj
+session_routing.cpp
+[ 22%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_acceptor.cpp.obj
+transport_acceptor.cpp
+[ 23%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_acceptor_native.cpp.obj
+transport_acceptor_native.cpp
+[ 24%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_append_growth.cpp.obj
+transport_append_growth.cpp
+[ 24%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_async_receive.cpp.obj
+transport_async_receive.cpp
+[ 25%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_cancellation.cpp.obj
+transport_cancellation.cpp
+[ 26%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_cancellation_native.cpp.obj
+transport_cancellation_native.cpp
+[ 27%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_cipher_session.cpp.obj
+transport_cipher_session.cpp
+[ 27%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_close.cpp.obj
+transport_close.cpp
+[ 28%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_closing.cpp.obj
+transport_closing.cpp
+[ 29%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_completion_dispatcher.cpp.obj
+transport_completion_dispatcher.cpp
+[ 29%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_completion_dispatcher_native.cpp.obj
+transport_completion_dispatcher_native.cpp
+[ 30%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_composed_read.cpp.obj
+transport_composed_read.cpp
+[ 31%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_composed_write.cpp.obj
+transport_composed_write.cpp
+[ 31%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_composed_write_native.cpp.obj
+transport_composed_write_native.cpp
+[ 32%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_environment_constructor.cpp.obj
+transport_environment_constructor.cpp
+[ 33%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_frame_read.cpp.obj
+transport_frame_read.cpp
+[ 33%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_handler_dispatch.cpp.obj
+transport_handler_dispatch.cpp
+[ 34%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_handler_dispatch_bridge.cpp.obj
+transport_handler_dispatch_bridge.cpp
+[ 35%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_io_completion.cpp.obj
+transport_io_completion.cpp
+[ 35%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_io_completion_dispatch.cpp.obj
+transport_io_completion_dispatch.cpp
+[ 36%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_iocp_constructor.cpp.obj
+transport_iocp_constructor.cpp
+[ 37%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_iocp_constructor_native.cpp.obj
+transport_iocp_constructor_native.cpp
+[ 37%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_lifecycle.cpp.obj
+transport_lifecycle.cpp
+[ 38%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_lifecycle_native.cpp.obj
+transport_lifecycle_native.cpp
+[ 39%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_message_core_bridge.cpp.obj
+transport_message_core_bridge.cpp
+[ 40%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_message_dispatch.cpp.obj
+transport_message_dispatch.cpp
+[ 40%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_native.cpp.obj
+transport_native.cpp
+[ 41%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_native_dispatch.cpp.obj
+transport_native_dispatch.cpp
+[ 42%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_native_message.cpp.obj
+transport_native_message.cpp
+[ 42%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_operations.cpp.obj
+transport_operations.cpp
+[ 43%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_owned_response.cpp.obj
+transport_owned_response.cpp
+[ 44%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_posted_operation.cpp.obj
+transport_posted_operation.cpp
+[ 44%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_posted_operation_dispatch.cpp.obj
+transport_posted_operation_dispatch.cpp
+[ 45%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_prefix_cipher.cpp.obj
+transport_prefix_cipher.cpp
+[ 46%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_queued_write.cpp.obj
+transport_queued_write.cpp
+[ 46%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_receive_buffer.cpp.obj
+transport_receive_buffer.cpp
+[ 47%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_recycle.cpp.obj
+transport_recycle.cpp
+[ 48%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_recycle_storage.cpp.obj
+transport_recycle_storage.cpp
+[ 48%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_request_growth.cpp.obj
+transport_request_growth.cpp
+[ 49%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_request_mutation.cpp.obj
+transport_request_mutation.cpp
+[ 50%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_response_containers.cpp.obj
+transport_response_containers.cpp
+[ 51%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_response_dispatch.cpp.obj
+transport_response_dispatch.cpp
+[ 51%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_response_hex.cpp.obj
+transport_response_hex.cpp
+[ 52%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_scheduler_registry.cpp.obj
+transport_scheduler_registry.cpp
+[ 53%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_service_constructor.cpp.obj
+transport_service_constructor.cpp
+[ 53%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_service_constructor_native.cpp.obj
+transport_service_constructor_native.cpp
+[ 54%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_service_registry.cpp.obj
+transport_service_registry.cpp
+[ 55%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_worker_run.cpp.obj
+transport_worker_run.cpp
+[ 55%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_worker_run_native.cpp.obj
+transport_worker_run_native.cpp
+[ 56%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_worker_startup.cpp.obj
+transport_worker_startup.cpp
+[ 57%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_worker_startup_native.cpp.obj
+transport_worker_startup_native.cpp
+[ 57%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/net/transport_write_finish.cpp.obj
+transport_write_finish.cpp
+[ 58%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/crypt_query.cpp.obj
+crypt_query.cpp
+[ 59%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/encoding_windows.cpp.obj
+encoding_windows.cpp
+[ 59%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/execution_windows.cpp.obj
+execution_windows.cpp
+[ 60%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/file_io_windows.cpp.obj
+file_io_windows.cpp
+[ 61%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_engine_adapters.cpp.obj
+hook_engine_adapters.cpp
+[ 61%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_engine_api.cpp.obj
+hook_engine_api.cpp
+[ 62%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_connect.cpp.obj
+hook_connect.cpp
+[ 63%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_cleanup.cpp.obj
+hook_cleanup.cpp
+[ 64%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_host_callbacks.cpp.obj
+hook_host_callbacks.cpp
+[ 64%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_native_callbacks.cpp.obj
+hook_native_callbacks.cpp
+[ 65%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_original_effects.cpp.obj
+hook_original_effects.cpp
+[ 66%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/hook_setup.cpp.obj
+hook_setup.cpp
+[ 66%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/library_system.cpp.obj
+library_system.cpp
+[ 67%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/registry.cpp.obj
+registry.cpp
+[ 68%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/startup_windows.cpp.obj
+startup_windows.cpp
+[ 68%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/status_windows.cpp.obj
+status_windows.cpp
+[ 69%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/windows_effects.cpp.obj
+windows_effects.cpp
+[ 70%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/protocol/messages.cpp.obj
+messages.cpp
+[ 70%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/router/router.cpp.obj
+router.cpp
+[ 71%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_runtime.cpp.obj
+achievement_runtime.cpp
+[ 72%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_storage.cpp.obj
+achievement_storage.cpp
+[ 72%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_utc.cpp.obj
+achievement_utc.cpp
+[ 73%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/achievement_writer.cpp.obj
+achievement_writer.cpp
+[ 74%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/bootstrap.cpp.obj
+bootstrap.cpp
+[ 74%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application.cpp.obj
+application.cpp
+[ 75%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application_defaults.cpp.obj
+application_defaults.cpp
+[ 76%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/application_environment.cpp.obj
+application_environment.cpp
+[ 77%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/event_adapters.cpp.obj
+event_adapters.cpp
+[ 77%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/event_queue.cpp.obj
+event_queue.cpp
+[ 78%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/execution.cpp.obj
+execution.cpp
+[ 79%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/libraries.cpp.obj
+libraries.cpp
+[ 79%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/online.cpp.obj
+online.cpp
+[ 80%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/recovered_effects.cpp.obj
+recovered_effects.cpp
+[ 81%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/startup.cpp.obj
+startup.cpp
+[ 81%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/status.cpp.obj
+status.cpp
+[ 82%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/thread_launch.cpp.obj
+thread_launch.cpp
+[ 83%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/calendar.cpp.obj
+calendar.cpp
+[ 83%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/runtime/timestamp.cpp.obj
+timestamp.cpp
+[ 84%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/memory_printer.cpp.obj
+memory_printer.cpp
+[ 85%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/document_clear.cpp.obj
+document_clear.cpp
+[ 85%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/document_error.cpp.obj
+document_error.cpp
+[ 86%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/native_document.cpp.obj
+native_document.cpp
+[ 87%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/node_base.cpp.obj
+node_base.cpp
+[ 87%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/node_constructors.cpp.obj
+node_constructors.cpp
+[ 88%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/node_delete.cpp.obj
+node_delete.cpp
+[ 89%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/node_identify.cpp.obj
+node_identify.cpp
+[ 90%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/node_insertion.cpp.obj
+node_insertion.cpp
+[ 90%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/node_parse.cpp.obj
+node_parse.cpp
+[ 91%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/node_string.cpp.obj
+node_string.cpp
+[ 92%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/parse_entry.cpp.obj
+parse_entry.cpp
+[ 92%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/pool_allocate.cpp.obj
+pool_allocate.cpp
+[ 93%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/pool_append.cpp.obj
+pool_append.cpp
+[ 94%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/pool_clear.cpp.obj
+pool_clear.cpp
+[ 94%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/pool_destruct.cpp.obj
+pool_destruct.cpp
+[ 95%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/pool_release.cpp.obj
+pool_release.cpp
+[ 96%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/xml/reader.cpp.obj
+reader.cpp
+[ 96%] Building CXX object CMakeFiles/preloader_l_objects.dir/src/platform/crypt_query_host.cpp.obj
+crypt_query_host.cpp
+[ 96%] Built target preloader_l_objects
+[ 96%] Linking CXX static library preloader_l_core.lib
+[ 96%] Built target preloader_l_core
+[ 96%] Building CXX object CMakeFiles/preloader_l.dir/src/platform/dll_entry.cpp.obj
+dll_entry.cpp
+[ 97%] Building RC object CMakeFiles/preloader_l.dir/resources/surge.rc.res
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+[ 98%] Linking CXX shared library preloader.unsigned.dll
+[ 98%] Built target preloader_l
+[ 99%] Building CXX object CMakeFiles/preloader_l_runtime_host.dir/tools/preloader_l_runtime_host/main.cpp.obj
+main.cpp
+[100%] Linking CXX executable preloader_l_runtime_host.exe
+[100%] Built target preloader_l_runtime_host
+[3/3] Validate selected profile
+{
+  "schema": "yellowfield.public-abi-check.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "dll_sha256": "c00ef12692972b93798eff440bc760135e4c8e4d2ddd35adcc0ec1406f366913",
+  "export_count": 5,
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0x1bf0",
+      "forwarded": false
+    },
+    "DllServerPort": {
+      "ordinal": 5,
+      "rva": "0x1d60",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0x1d80",
+      "forwarded": false
+    },
+    "DllWaitReady": {
+      "ordinal": 4,
+      "rva": "0x1e40",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0x1e90",
+      "forwarded": false
+    }
+  },
+  "errors": [],
+  "native_consumer_acceptance": "NOT_RUN"
+}
+{
+  "classification": "NOT_RELEASE",
+  "execution_level": "READ_ONLY_BINARY_INSPECTION",
+  "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+  "dll_sha256": "c00ef12692972b93798eff440bc760135e4c8e4d2ddd35adcc0ec1406f366913",
+  "unchanged": true,
+  "machine": "0x8664",
+  "entrypoint_rva": "0x624c0",
+  "sections": [
+    ".text",
+    ".rdata",
+    ".data",
+    ".pdata",
+    ".fptable",
+    ".rsrc",
+    ".reloc"
+  ],
+  "export_count": 5,
+  "imports": [
+    "MSWSOCK.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "WS2_32.DLL"
+  ],
+  "resources": [
+    {
+      "path": [
+        16,
+        1,
+        1033
+      ],
+      "bytes": 572,
+      "sha256": "c8d2ab09ed06b731f9180e1cd84ca4289e949c4d2560c47ad51b605e032a5ae1"
+    }
+  ],
+  "exact_owner_avatar": true,
+  "avatar_storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "avatar_data": {
+    "profile": {
+      "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    },
+    "fallback": {
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "exact_input": true,
+      "storage": [
+        {
+          "section": ".rdata",
+          "read_only": true
+        }
+      ],
+      "present_as_data": true
+    }
+  },
+  "versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
+  "resource_metadata_errors": [],
+  "golden_shipping_acceptance": "NOT_RUN",
+  "game_acceptance": "NOT_RUN"
+}
+[1/6] MSVC Build: PASS
+[2/6] URSYNEX Golden Finalizer: PASS
+[3/6] ARYRA Golden Layout: PASS
+[4/6] MUSTAVEX Golden Metadata: PASS
+[5/6] CORVEXON Golden Trail: PASS
+[6/6] FALCION Golden Cleaning: FAIL
+{
+  "schema": "yellowfield.local-golden.v1",
+  "classification": "NOT_RELEASE",
+  "stage_order": [
+    "MSVC Build",
+    "URSYNEX Golden Finalizer",
+    "ARYRA Golden Layout",
+    "MUSTAVEX Golden Metadata",
+    "CORVEXON Golden Trail",
+    "FALCION Golden Cleaning"
+  ],
+  "official_release": false,
+  "library_publication": false,
+  "result": "FAIL",
+  "steps": [
+    {
+      "stage": "MSVC Build",
+      "exit_code": 0,
+      "output": "MSVC_BUILD_EVIDENCE: PASS_LOCAL_BUILD_ONLY\n",
+      "sha256_before": "c00ef12692972b93798eff440bc760135e4c8e4d2ddd35adcc0ec1406f366913",
+      "sha256_after": "c00ef12692972b93798eff440bc760135e4c8e4d2ddd35adcc0ec1406f366913"
+    },
+    {
+      "stage": "URSYNEX Golden Finalizer",
+      "exit_code": 0,
+      "output": "URSYNEX_GOLDEN_FINALIZER: PASS\n TimeDateStamp=0x6AE278BA (preserved)\n LinkerVersion=14.51 (preserved)\n RichHeader=PRESERVED\n PECheckSum=0x000D9806\n RSDS/REPRO=ABSENT (precondition)\n",
+      "sha256_before": "c00ef12692972b93798eff440bc760135e4c8e4d2ddd35adcc0ec1406f366913",
+      "sha256_after": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651"
+    },
+    {
+      "stage": "ARYRA Golden Layout",
+      "exit_code": 0,
+      "output": "ARYRA_GOLDEN_LAYOUT: PASS\n machine: AMD64\n format: PE32+\n sections: .text .rdata .data .pdata .fptable .rsrc .reloc\n exact RVA/size/offset parity: NOT ENFORCED\n",
+      "sha256_before": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651",
+      "sha256_after": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651"
+    },
+    {
+      "stage": "MUSTAVEX Golden Metadata",
+      "exit_code": 0,
+      "output": "MUSTAVEX_GOLDEN_METADATA: PASS\n curio: #1 #2 #3 #5 #6 #7 #10 #11 #18 #36\n stripped: #13 RSDS, #14 REPRO; COFF symbols absent\n excluded: Authenticode/certificate and non-allowlisted recovery targets\n",
+      "sha256_before": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651",
+      "sha256_after": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651"
+    },
+    {
+      "stage": "CORVEXON Golden Trail",
+      "exit_code": 0,
+      "output": "CORVEXON_GOLDEN_TRAIL: PASS\n mode: READ_ONLY_FAIL_CLOSED_POST_FINALIZATION_ACCEPTANCE\n F1411-001: CLOSED_BY_FINAL_BINARY_ACCEPTANCE_GATE\n sha256_immutable: e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651\n exports: DllMain@1 SURGE@2 DllShutdown@3 DllWaitReady@4 DllServerPort@5\n entrypoint: executable CRT startup in .text; distinct from exported DllMain@1\n imports: KERNEL32.DLL MSWSOCK.DLL SHELL32.DLL USER32.DLL WS2_32.DLL\n/GS LoadConfig SecurityCookie: VALID WRITABLE .data RVA=0xC46C0\n PE CheckSum: VALID 0x000D9806 (URSYNEX-owned; CORVEXON read-only verified)\n upstream: ARYRA PASS; MUSTAVEX PASS; MSVC shipping link policy PASS\n",
+      "sha256_before": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651",
+      "sha256_after": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651"
+    },
+    {
+      "stage": "FALCION Golden Cleaning",
+      "exit_code": 1,
+      "output": " - Generated binary/cache or nested archive in source: scripts/__pycache__/golden_policy.cpython-313.pyc\nFALCION_GOLDEN_CLEANING: FAIL (NOT_RELEASE)\n",
+      "sha256_before": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651",
+      "sha256_after": "e751ce510f05628f68af452f5c98ec0582db0c3bbef12a6395ffa55e418b5651"
+    }
+  ],
+  "pending": [],
+  "input_sha256": "c00ef12692972b93798eff440bc760135e4c8e4d2ddd35adcc0ec1406f366913"
+}
+
+ERROR: Local Golden chain basarisiz (exit 1).
+
+============================================================
+  LOCAL GOLDEN: FAIL
+  Exit code: 1
+============================================================
+
+Press any key to close this operator window.

@@ -1,0 +1,39 @@
+Test project /workspace/yellowfield/build/portable
+      Start  1: portable_calendar
+ 1/17 Test  #1: portable_calendar ....................   Passed    0.01 sec
+      Start  2: portable_parser
+ 2/17 Test  #2: portable_parser ......................   Passed    0.00 sec
+      Start  3: portable_hash
+ 3/17 Test  #3: portable_hash ........................   Passed    0.09 sec
+      Start  4: portable_config_order
+ 4/17 Test  #4: portable_config_order ................   Passed    0.01 sec
+      Start  5: portable_config_hash
+ 5/17 Test  #5: portable_config_hash .................   Passed    0.20 sec
+      Start  6: portable_host_hooks
+ 6/17 Test  #6: portable_host_hooks ..................   Passed    0.04 sec
+      Start  7: vdf_parser_regressions
+ 7/17 Test  #7: vdf_parser_regressions ...............   Passed    0.13 sec
+      Start  8: infrastructure_golden_pe
+ 8/17 Test  #8: infrastructure_golden_pe .............   Passed    0.27 sec
+      Start  9: infrastructure_named_imports
+ 9/17 Test  #9: infrastructure_named_imports .........   Passed    0.13 sec
+      Start 10: infrastructure_msvc_link
+10/17 Test #10: infrastructure_msvc_link .............   Passed    0.11 sec
+      Start 11: infrastructure_ownership_packaging
+11/17 Test #11: infrastructure_ownership_packaging ...   Passed    0.67 sec
+      Start 12: infrastructure_target_requirements
+12/17 Test #12: infrastructure_target_requirements ...   Passed    0.25 sec
+      Start 13: infrastructure_vendor_contract
+13/17 Test #13: infrastructure_vendor_contract .......   Passed    1.29 sec
+      Start 14: vendor_api_smoke
+14/17 Test #14: vendor_api_smoke .....................   Passed    0.01 sec
+      Start 15: vendor_io_contracts
+15/17 Test #15: vendor_io_contracts ..................   Passed    0.01 sec
+      Start 16: vendor_source_integrity
+16/17 Test #16: vendor_source_integrity ..............   Passed    0.35 sec
+      Start 17: vendor_pegtl_smoke
+17/17 Test #17: vendor_pegtl_smoke ...................   Passed    0.01 sec
+
+100% tests passed out of 17
+
+Total Test time (real) =   3.59 sec

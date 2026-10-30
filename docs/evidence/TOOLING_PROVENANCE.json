@@ -1,0 +1,266 @@
+{
+  "files": [
+    {
+      "path": "scripts/build_orchestration/build_common.ps1",
+      "origin_project": "Brownfield operational tooling, not application code",
+      "input_sha256": "c7fb77a7fc95e7ede1e477a390834a3dfa9a4a2cfa8348e18efeaabb1e0fc575",
+      "sha256": "38ab922a7d8d8f44060460aba425b637116d8b26533f0ffe0cc5792541cc2226",
+      "changes": "remove unused external publication gate and legacy project flags"
+    },
+    {
+      "path": "scripts/build_orchestration/build_unstable.ps1",
+      "origin_project": "Brownfield operational tooling, not application code",
+      "input_sha256": "7c7595554d2ac39e178e9960803ee34f975522152dbdeb9408ce8dde4bfd394e",
+      "sha256": "97026726fd0277a8c140fae9cc446570ac26d135c09a5c2641996ec1ca4577df",
+      "changes": "replace Brownfield application targets/scenarios with actual Yellowfield build/test targets; no game acceptance claim"
+    },
+    {
+      "path": "scripts/build_orchestration/build_unstable.cmd",
+      "origin_project": "Brownfield operational tooling, not application code",
+      "input_sha256": "95347ff5a80d480aebb4e984fda1ad8bc54bf3e98bcd5d709ba94acd1583da10",
+      "sha256": "bd23439f2c17f70bbb65a87dcda6aee3d2adfcc15d3e509e742fda69e9a1c910",
+      "changes": "preserve result colors, exact child exit and human pause; SURGE branding and bounded Yellowfield profile engine"
+    },
+    {
+      "path": "scripts/ursynex_golden_finalizer.py",
+      "origin_project": "Brownfield infrastructure; no application implementation",
+      "origin": "scripts/ursynex_golden_finalizer.py",
+      "input_sha256": "18607ee2cbaaec4655b5734ef5fc79b0c6a521dc3bdda6c8cc8dab13064ac9a0",
+      "changes": "preserve PE/link algorithms; product CLI requires an active Yellowfield target; tests use separate synthetic fixtures",
+      "sha256": "3913772f77001ad94fef694ec682ec590cc7b499269d4614105c5275c7d8e00b"
+    },
+    {
+      "path": "scripts/verify_aryra_golden_layout.py",
+      "origin_project": "Brownfield infrastructure; no application implementation",
+      "origin": "scripts/verify_aryra_golden_layout.py",
+      "input_sha256": "57f983922efa842f3680b84cde34ef7e3fc7ec0362cda918dd68029625b49968",
+      "changes": "preserve PE/link algorithms; product CLI requires an active Yellowfield target; tests use separate synthetic fixtures",
+      "sha256": "cd73c707865f3618cabe236316261e2d23712b5e098d8a4ed410a0cc915a34a9"
+    },
+    {
+      "path": "scripts/verify_mustavex_golden_metadata.py",
+      "origin_project": "Brownfield infrastructure; no application implementation",
+      "origin": "scripts/verify_mustavex_golden_metadata.py",
+      "input_sha256": "c07619b97faf10d1ec670ffae37ea3ced42a9ac601f9eb2b8989e89eadfadaeb",
+      "changes": "preserve PE/link algorithms; product CLI requires an active Yellowfield target; tests use separate synthetic fixtures",
+      "sha256": "ce139395f00ecd00fc3b561c98f763eda0662d963f7b729aa2b6e066d3734a08"
+    },
+    {
+      "path": "scripts/verify_corvexon_golden_trail.py",
+      "origin_project": "Brownfield infrastructure; no application implementation",
+      "origin": "scripts/verify_corvexon_golden_trail.py",
+      "input_sha256": "f1b4772f7b1f03c956e038dc9535868d278595df8295487610dafc09f7bac38e",
+      "changes": "preserve PE/link algorithms; product CLI requires an active Yellowfield target; tests use separate synthetic fixtures",
+      "sha256": "86193b9c5080379db9a5443a6b890d185d66078287b48772269f2b03ea4529d2"
+    },
+    {
+      "path": "scripts/check_msvc_shipping_link_command.py",
+      "origin_project": "Brownfield infrastructure; no application implementation",
+      "origin": "scripts/check_msvc_shipping_link_command.py",
+      "input_sha256": "fca29b17ca5b8e91e9630dcf2a649b98c18ac0656e0cbca898224068765d298d",
+      "changes": "algorithm unchanged, self-tests retained",
+      "sha256": "fca29b17ca5b8e91e9630dcf2a649b98c18ac0656e0cbca898224068765d298d"
+    },
+    {
+      "path": "tests/infrastructure/test_pe_metadata_tools.py",
+      "origin_project": "Brownfield compatible infrastructure regression",
+      "origin": "scripts/test_pe_metadata_tools.py",
+      "input_sha256": "720e270db1ad89e0bb8e3a802027af20a66c6f6074c67e3048198d12a90ad045",
+      "changes": "test-only synthetic policies and new test path",
+      "sha256": "2ccb299980b6e4b038cc8f95714c000db88408ce1d5ba1b1e199db05c466dc75"
+    },
+    {
+      "path": "tests/infrastructure/test_corvexon_mswsock_imports.py",
+      "origin_project": "Brownfield compatible infrastructure regression",
+      "origin": "scripts/test_corvexon_mswsock_imports.py",
+      "input_sha256": "6c87a6550c62341e193a86b44a5c5d8b1082d5f996028424a7b7717b0c89168a",
+      "changes": "test-only synthetic policies and new test path",
+      "sha256": "301ff2e33a80d398c2ca51c6623046261e84043e11ee0f2d6afce6276d6ab1c0"
+    },
+    {
+      "path": "tests/support/golden/metadata/URSYNEX_GOLDEN_FINALIZER.json",
+      "origin_project": "Brownfield Golden policy shapes, synthetic test only",
+      "origin": "metadata/URSYNEX_GOLDEN_FINALIZER.json",
+      "input_sha256": "ca89b8771b37d7c34dec2a51bea89085a466e0bb8a1427bf93fe72b51ae8128b",
+      "changes": "mark fixture-only; replace original product metadata strings and remove original PE provenance claim",
+      "sha256": "ea76a0ed35607a8f0f6181da0f5962b773fe1166f6a43c8c1b0f2fcb6ac13b70"
+    },
+    {
+      "path": "tests/support/golden/metadata/ARYRA_GOLDEN_LAYOUT.json",
+      "origin_project": "Brownfield Golden policy shapes, synthetic test only",
+      "origin": "metadata/ARYRA_GOLDEN_LAYOUT.json",
+      "input_sha256": "ed8a238401570703639df1890b38ce87a45bb4db4ffcb158095a7a6555814245",
+      "changes": "mark fixture-only; replace original product metadata strings and remove original PE provenance claim",
+      "sha256": "48029f4847b3ff5c4d3f742c49d4d1d8f87a5c308457f4f72e469ac53ac6403b"
+    },
+    {
+      "path": "tests/support/golden/metadata/MUSTAVEX_GOLDEN_METADATA.json",
+      "origin_project": "Brownfield Golden policy shapes, synthetic test only",
+      "origin": "metadata/MUSTAVEX_GOLDEN_METADATA.json",
+      "input_sha256": "99e08f4352a4ba31eca610c7cddede065af07de92864e50e751204e3c26f657a",
+      "changes": "mark fixture-only; replace original product metadata strings and remove original PE provenance claim",
+      "sha256": "245295dc334ffb56121961c13e82e5e3b787cb091039fcef6b6bb2aa8fe3348a"
+    },
+    {
+      "path": "tests/support/golden/metadata/CORVEXON_GOLDEN_TRAIL.json",
+      "origin_project": "Brownfield Golden policy shapes, synthetic test only",
+      "origin": "metadata/CORVEXON_GOLDEN_TRAIL.json",
+      "input_sha256": "bf40efa4e75d104ee617f5725ea90cd999a62b23393354960350635408ef7588",
+      "changes": "mark fixture-only; replace original product metadata strings and remove original PE provenance claim",
+      "sha256": "465a3eeebc8250286e0a3a3aa6bea0131a91eaa7d2d2895b52d7bfac62c5b271"
+    },
+    {
+      "path": "scripts/build_orchestration/build_debug.cmd",
+      "origin_project": "Brownfield operator/build infrastructure",
+      "origin": "scripts/build_orchestration/build_debug.cmd",
+      "input_sha256": "74ebfd89ea8b26a2d2dca4975ca471874c3094dcb7a93ec1b84c58c2172aec9b",
+      "changes": "preserve result colors, exact child exit and human pause; SURGE branding and bounded Yellowfield profile engine",
+      "sha256": "7031ef25f81aa2b151f22a71711a47747c76eb38fe767093cf4a60dcd3306fe3"
+    },
+    {
+      "path": "scripts/build_orchestration/build_debug.ps1",
+      "origin_project": "Brownfield operator/build infrastructure",
+      "origin": "scripts/build_orchestration/build_debug.ps1",
+      "input_sha256": "01abc77440c024fb1f043822db990be7078ee531910b3862ffe2bec37a1276c8",
+      "changes": "replace Brownfield application targets/scenarios with actual Yellowfield build/test targets; no game acceptance claim",
+      "sha256": "e0dbaeaa7eadb7414489efa432c0a7300c19c13cbafb8b04221c3b1b4535f87a"
+    },
+    {
+      "path": "scripts/build_orchestration/build_native_acceptance.cmd",
+      "origin_project": "Brownfield operator/build infrastructure",
+      "origin": "scripts/build_orchestration/build_native_acceptance.cmd",
+      "input_sha256": "447fb34d797772fa100d0fad634aacddd0cf3a0caba01e4b1bf60a2b3743074d",
+      "changes": "preserve result colors, exact child exit and human pause; SURGE branding and bounded Yellowfield profile engine",
+      "sha256": "796460b4be2b86fb9d13f202688ccbf3e8552c1e1b8c9102768ecbdc6fdd571a"
+    },
+    {
+      "path": "scripts/build_orchestration/build_native_acceptance.ps1",
+      "origin_project": "Brownfield operator/build infrastructure",
+      "origin": "scripts/build_orchestration/build_native_acceptance.ps1",
+      "input_sha256": "9b44a0459b08738b5ecdb7b0b6cdaeddb91632e85045723c6fd767120616db86",
+      "changes": "replace Brownfield application targets/scenarios with actual Yellowfield build/test targets; no game acceptance claim",
+      "sha256": "5a4df089ae026e5aad3c4a680bb2320c0baff96b7b9f66cedc46d4963dfd8b21"
+    },
+    {
+      "path": "scripts/build_orchestration/build_crt_acceptance.cmd",
+      "origin_project": "Brownfield operator/build infrastructure",
+      "origin": "scripts/build_orchestration/build_crt_acceptance.cmd",
+      "input_sha256": "4e42a8282053900a6f28151adec1b7730468c360a0451165687c490fbf673262",
+      "changes": "preserve result colors, exact child exit and human pause; SURGE branding and bounded Yellowfield profile engine",
+      "sha256": "88a15b49a1641a90f7a570fceebb5b688e4fd6f1d0a0ca523b3930a5ed90408b"
+    },
+    {
+      "path": "scripts/build_orchestration/build_crt_acceptance.ps1",
+      "origin_project": "Brownfield operator/build infrastructure",
+      "origin": "scripts/build_orchestration/build_crt_acceptance.ps1",
+      "input_sha256": "6f3e4557a291d347aa076e9450efeda6711352787cc17fb947129cb01a85e22d",
+      "changes": "replace Brownfield application targets/scenarios with actual Yellowfield build/test targets; no game acceptance claim",
+      "sha256": "b789462717735c51321fdaefeed3e496729b06e0f9af5b2bb44c3ace698f73b9"
+    },
+    {
+      "path": "scripts/build_orchestration/build_production.cmd",
+      "origin_project": "Brownfield operator/build infrastructure",
+      "origin": "scripts/build_orchestration/build_production.cmd",
+      "input_sha256": "8d7f172a35730940fc0fab3e4cadce54ff2d36052bb7f87f7184fdb6e0193bcc",
+      "changes": "preserve result colors, exact child exit and human pause; SURGE branding and bounded Yellowfield profile engine",
+      "sha256": "d4e8434059e0da3677d6fa73475eee0643ba84a2d1c21d8e166d5bb967dc5732"
+    },
+    {
+      "path": "scripts/build_orchestration/build_production.ps1",
+      "origin_project": "Brownfield operator/build infrastructure",
+      "origin": "scripts/build_orchestration/build_production.ps1",
+      "input_sha256": "cf52381e16cf4eb5e23b472e87ccf1ab521d6c29d6b155ee19298bfbe3b2bc20",
+      "changes": "replace Brownfield application targets/scenarios with actual Yellowfield build/test targets; no game acceptance claim",
+      "sha256": "829fece7fad93f2c3043ba25acf8d660d2c43c5ae02e946c7010b3c089aa851d"
+    },
+    {
+      "path": "scripts/check_falcion_golden_cleaning.py",
+      "origin_project": "Brownfield infrastructure design/code adaptation",
+      "origin": "scripts/check_falcion_golden_cleaning.py",
+      "input_sha256": "e2268ffda5572a96404e6c426e83183f8c47a5027814723a5fc338687d75196b",
+      "changes": "adapt flat source/package, exact manifest/CRC/hash/casefold and stale-file checks; remove application-specific release fixtures and old Library policy",
+      "sha256": "73149c24e6a0a84f61f21b2cca77bf0570cb7b736dd1339ac89c4c11f5aecba9",
+      "vendor_task_adaptation": "Typed locked-vendor symlinks and/or installed-source guards; no donor vendor code imported"
+    },
+    {
+      "path": "scripts/check_metadata_ownership.py",
+      "origin_project": "Brownfield infrastructure design/code adaptation",
+      "origin": "scripts/check_metadata_ownership.py",
+      "input_sha256": "ab675757647e56b006e72fcdb51d651d4e9d847954d45cdd24fad9d251788fa3",
+      "changes": "adapt exact metadata and script ownership sets; remove Brownfield route/version/Library assumptions",
+      "sha256": "83212b57b6e2e188aafed5132add75fcfd2f0fd92560ecc13f80f0254534c84b"
+    },
+    {
+      "path": "scripts/check_human_launcher_contract.py",
+      "origin_project": "Brownfield infrastructure design/code adaptation",
+      "origin": "scripts/check_human_launcher_contract.py",
+      "input_sha256": "8018fd644298f15649f7173b20e2629b70c8e2ffdc65a39b2c82dfc694ff128b",
+      "changes": "adapt registry, SURGE result UX, argument/exit/pause checks to actual Yellowfield profiles",
+      "sha256": "8cf311b045d89002e4531eefde9ce558312c9b154f291d5be768955da41cd418"
+    },
+    {
+      "path": "scripts/build_orchestration/build_profile.ps1",
+      "origin_project": "Brownfield infrastructure design/code adaptation",
+      "origin": "scripts/build_orchestration/build_production.ps1",
+      "input_sha256": "cf52381e16cf4eb5e23b472e87ccf1ab521d6c29d6b155ee19298bfbe3b2bc20",
+      "changes": "shared profile engine from reviewed build flow; compiler/tool hashes, locking, environment restore, actual Yellowfield CTest targets, local gated Golden; no deletion/publication",
+      "sha256": "b6e62378f10eab6c4afc70d9f02e1bba3176cbf16181dfe0564a1107f1184c7a"
+    },
+    {
+      "path": "scripts/pe_resources.py",
+      "origin_project": "Brownfield infrastructure design/code adaptation",
+      "origin": "scripts/verify_mustavex_golden_metadata.py",
+      "input_sha256": "c07619b97faf10d1ec670ffae37ea3ced42a9ac601f9eb2b8989e89eadfadaeb",
+      "changes": "extract bounded resource-walker design for read-only exact-owner RCDATA inspection; reject cycle/range/size violations",
+      "sha256": "6be32d00ac0c6e859ecd04c59ae8fe15f9db805c325c62d0e798c5454850d39f"
+    },
+    {
+      "path": "scripts/run_source_qa.py",
+      "origin_project": "Brownfield infrastructure design/code adaptation",
+      "origin": "scripts/test_universal_shipping_qa.py",
+      "input_sha256": "f559597324ad4648440b3fe2125af44a3a7ac9ecde3b2d86d08db51dfcea66a8",
+      "changes": "adapt visible independent subprocess QA, fresh report and nonzero failure propagation; no release/G0 inheritance",
+      "sha256": "11ce95aeb70a0ca099436308f561458475e59dc0b8a12765d8470e93c7976bfc",
+      "vendor_task_adaptation": "Typed locked-vendor symlinks and/or installed-source guards; no donor vendor code imported"
+    },
+    {
+      "path": "scripts/vendor_sync.py",
+      "origin_project": "Original Yellowfield governance starter, not Brownfield",
+      "origin": "/workspace/project-input/Yellowfield/scripts/vendor_sync.py",
+      "input_sha256": "c33da9f53ead8cf4b638093b74e49dc72cdbde3708c1817123c8d07af9776826",
+      "sha256": "8ea4a7b0d1fe76ff6887f0c8c9b3e3c5e873bd9cbc2e2b972d156e8ad0f93233",
+      "changes": "external archive directory, offline installed verification; preserve source and reject overwrites"
+    },
+    {
+      "path": "resources/preloader_version.rc",
+      "origin_project": "Brownfield resource metadata, not application code",
+      "origin": "resources/preloader_version.rc",
+      "input_sha256": "454af99b76a4e1fc287c8af0f324c485744015e589736d1c267582651a5de693",
+      "sha256": "454af99b76a4e1fc287c8af0f324c485744015e589736d1c267582651a5de693",
+      "changes": "Exact resource file requested by the owner; included once alongside independent SURGE RCDATA"
+    }
+  ],
+  "application_code_imported": false,
+  "msvc_execution": "NOT_RUN",
+  "task": "YF-INFRA-20261028",
+  "powershell_cmd_execution": "NOT_RUN",
+  "application_cpp_or_headers_changed": true,
+  "documentation_reference_adaptation": [
+    {
+      "output": "docs/GOLDEN_PROTOCOLS.md",
+      "input": "docs/GOLDEN_PROTOCOLS.md",
+      "input_sha256": "688c2311db5645915d6a761403c9f0f8d78b1736a351add1f76a8af8da17a82d",
+      "output_sha256": "13f8180e3492c94ffd898200e5f7b630ba413d9c4f81bd23e5ec15c9921d9424",
+      "mode": "CLEAN_REWRITE_FOR_YELLOWFIELD; no Brownfield PE/product/acceptance values inherited"
+    },
+    {
+      "output": "docs/DEVELOPMENT.md",
+      "input": "docs/BUILD_MODE_SEPARATION.md",
+      "input_sha256": "44795ba91f58ebee8aa5982637ccf4fa31dc08aee8714b493fa80193ee77f4d0",
+      "output_sha256": "acfbece8519af41ad9a3320ecdd702cb08ba9872852d906fec263c78f124949b",
+      "mode": "CLEAN_REWRITE_FOR_ACTUAL_YELLOWFIELD_TARGETS"
+    }
+  ],
+  "application_implementation_cpp_changed": false,
+  "header_change_kind": "vendor profile documentation comment only"
+}

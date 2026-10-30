@@ -1,0 +1,34 @@
+{
+  "schema": "yellowfield.vendor-differences.v1",
+  "task": "YF-VENDOR-20261028",
+  "records": [
+    {
+      "id": "YF-VENDOR-XML-DEPTH",
+      "before": "Previous RE vendor copy set TinyXML2 depth constant to 100",
+      "after": "Supplied archive keeps its default constant 500; document level is counted, so nested-element rejection begins at 499",
+      "basis": "Owner requested the supplied archives and questioned the proposed 100 adjustment; assistant withdrew that adjustment and retained the supplied default",
+      "vendor_source_or_build_patch": false,
+      "original_native_equivalence": "NOT_CLAIMED",
+      "regression": "tests/unit/xml_reader/reader_tests.cpp now independently checks levels 1..505 for the supplied profile"
+    },
+    {
+      "id": "YF-VENDOR-PEGTL-LIBCXX23",
+      "difference": "Supplied PEGTL4 includes private libc++ vector layout assumptions that no longer match LLVM23",
+      "linux_gcc": "PUBLIC_API_RUNTIME_FIXTURE_PASS",
+      "windows_llvm_mingw": "LLVM23 remains incompatible; now rejected by default configure gate, including BUILD_TESTING=OFF",
+      "compiler_diagnostics": "build/llvm-mingw-x64/CMakeFiles/CMakeConfigureLog.yaml",
+      "vendor_modified": false,
+      "production_grammar_selected": true,
+      "windows_llvm_mingw_21": "PUBLIC_INPUT_COMPILE_AND_WINDOWS_WINE_RUNTIME_FIXTURE_PASS",
+      "production_grammar": "existing RE Config2/VDF, authorized YF-VDF-PEGTL-20261028"
+    },
+    {
+      "id": "YF-VENDOR-ASIO-THREAD-DETECTION",
+      "initial_result": "Windows API fixture failed with Asio null_thread / operation_not_supported (10045)",
+      "cause": "LLVM-MinGW lacks the _MT/_REENTRANT macros used by upstream standalone thread autodetection",
+      "correction": "CMake declares actual Windows thread capability with ASIO_HAS_THREADS=1; real timer/thread test retained",
+      "vendor_source_modified": false,
+      "thread_test_disabled": false
+    }
+  ]
+}

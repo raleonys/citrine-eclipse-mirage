@@ -1,0 +1,45 @@
+{
+  "schema": "yellowfield.runtime-re-evidence.v1",
+  "task": "YF-RUNTIME-BIND-20261028",
+  "primary_source": "Owner supplied Reverse Engineering archive 64a870331be2c0555f7a7c21b66a657df8f36abfd8312730ff04cffcc906c9e5",
+  "source_files": {
+    "anadius-all-functions.pseudo.c": {
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "selected_sections": [
+        {
+          "function": "0x180036d20",
+          "start_line": 43881,
+          "normalized_text_sha256": "012dcad82f88ef385c5851ee5e58c0b8fc8846e9153c5bae209b308d6144bb19",
+          "bytes_utf8": 13463
+        },
+        {
+          "function": "0x18002a830",
+          "start_line": 35715,
+          "normalized_text_sha256": "e8c3aafc0f0c71eecd4e0b467d160bed8e2ddd101c405bbe594f9e92b926c5f9",
+          "bytes_utf8": 9534
+        }
+      ]
+    },
+    "anadius-all-functions.asm.txt": {
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "selected_sections": [
+        {
+          "function": "0x180036d20",
+          "start_line": 55644,
+          "normalized_text_sha256": "b2ec9af6a05aaf2c7d1bdc0f96eb306631b8a18630837e6836fd2110d611dad7",
+          "bytes_utf8": 25184
+        },
+        {
+          "function": "0x18002a830",
+          "start_line": 43799,
+          "normalized_text_sha256": "1d321de39caaead0ad0d0a660f94151a234f59de11e21838e875aab0bf2ccd29",
+          "bytes_utf8": 14267
+        }
+      ]
+    }
+  },
+  "projection": "Independent application constructor/default fields and 02a830 integration from supplied pseudo/assembly. Existing app source modules provide config/hash, socket Session, XML/router/crypto/events/achievements/hooks/provider/libraries. No private CRT or comparison application code imported.",
+  "bluefield_role": "READ_ONLY_COMPARISON",
+  "brownfield_application_code_imported": false,
+  "native_equivalence": "NOT_VERIFIED"
+}

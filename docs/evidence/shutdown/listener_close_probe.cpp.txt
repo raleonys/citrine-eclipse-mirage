@@ -1,0 +1,28 @@
+#include <winsock2.h>
+#include <windows.h>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+namespace fault {bool fail=false;SOCKET retained=INVALID_SOCKET;}
+int WSAAPI TestCloseSocket(SOCKET s){if(fault::fail){fault::fail=false;fault::retained=s;WSASetLastError(WSAENETDOWN);return SOCKET_ERROR;}return ::closesocket(s);}
+#define closesocket TestCloseSocket
+#include <asio.hpp>
+#include "/workspace/donor-closure-audit/inputs/brownfield/src/runtime/asio_listener_owner.cpp"
+#undef closesocket
+int main()try{
+ asio::io_context io;auto owner=std::make_shared<preloader_l::runtime::AsioListenerOwner>(io);asio::error_code ec;
+ if(!owner->bind_loopback(0,ec))throw std::runtime_error("bind");
+ struct Observed{unsigned quiesced=0,failed=0;} observed;
+ preloader_l::runtime::AsioListenerObserver observer{&observed,
+ +[](void*,asio::ip::tcp::socket&&,const asio::ip::tcp::endpoint&)noexcept{},
+ +[](void* p)noexcept{++static_cast<Observed*>(p)->quiesced;},
+ +[](void* p,const asio::error_code&)noexcept{++static_cast<Observed*>(p)->failed;}};
+ if(!owner->start(observer))throw std::runtime_error("start");io.poll();fault::fail=true;
+ if(!owner->request_stop())throw std::runtime_error("post stop");io.run_for(std::chrono::milliseconds(100));
+ int listening=0,length=sizeof listening;const bool raw_alive=fault::retained!=INVALID_SOCKET&&::getsockopt(fault::retained,SOL_SOCKET,SO_ACCEPTCONN,reinterpret_cast<char*>(&listening),&length)==0;
+ owner->request_stop();io.restart();io.poll();
+ std::cout<<"raw_socket_alive="<<raw_alive<<" listening="<<listening<<" quiesced="<<observed.quiesced<<" failed="<<observed.failed<<'\n';
+ if(fault::retained!=INVALID_SOCKET)::closesocket(fault::retained);
+ if(!raw_alive||observed.quiesced!=1||observed.failed==0)throw std::runtime_error("expected actual-source boundary not reached");
+ std::cout<<"REPRODUCED: listener reports quiescence while withheld native close remains open; not a safe transplant\n";
+}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}

@@ -1,0 +1,110 @@
+{
+  "schema": "surge.product-identity-fix.v1",
+  "task": "SURGE-IDENTITY-20261029",
+  "classification": "NOT_RELEASE",
+  "owner_authority": "bunlar tutarl\u0131 \u015fekilde d\u00fczeltilmeli",
+  "parent_source_package": "yellowfield-windows-io-fix-source.zip",
+  "parent_sha256": "f788a35c83c9a899dad76f8410477f9e686f295783066b829cd9d82b489f8a8b",
+  "source_package": "surge-identity-fix-source.zip",
+  "changes": [
+    "Shared product names in core/product_identity.hpp across config projections and concrete runtime",
+    "Four config diagnostics name surge.cfg",
+    "All config projections use existing SURGE runtime data root/avatar names",
+    "Online module selects preloader_l_online.dll directly; no donor-name translation",
+    "DllShutdownStatus and DLL_SHUTDOWN_* numeric values0..4 retained",
+    "Related tests and current contracts/docs updated"
+  ],
+  "preserved": [
+    "DllMain@1/SURGE@2/DllShutdown@3",
+    "Optional EXE-relative config; base then override",
+    "Bluefield hook11/lifecycle and original registry wait fix",
+    "Debug-only log; Release preserves old Debug log",
+    "Four immutable vendors and standard Windows filesystem",
+    "Brownfield PE metadata and finalized import descriptor order",
+    "Historical evidence, original donor references and stable JSON schema identifiers"
+  ],
+  "release_tests": {
+    "passed": 15,
+    "total": 15,
+    "evidence_class": "WINE_LLVM_MINGW_X64_RELEASE",
+    "report": "metadata/PRODUCT_IDENTITY_RELEASE_TESTS.xml"
+  },
+  "debug_tests": {
+    "passed": 15,
+    "total": 15,
+    "evidence_class": "WINE_LLVM_MINGW_X64_DEBUG",
+    "report": "metadata/PRODUCT_IDENTITY_DEBUG_TESTS.xml"
+  },
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "passed": 15,
+    "total": 15,
+    "checks": [
+      {
+        "check": "Wine test process identity and exit propagation",
+        "exit_code": 0
+      },
+      {
+        "check": "source bytes",
+        "exit_code": 0
+      },
+      {
+        "check": "four active supplied vendor trees",
+        "exit_code": 0
+      },
+      {
+        "check": "vendor tamper and link packaging regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "repository and resource ownership",
+        "exit_code": 0
+      },
+      {
+        "check": "owner integration requirements",
+        "exit_code": 0
+      },
+      {
+        "check": "metadata ownership",
+        "exit_code": 0
+      },
+      {
+        "check": "operator entrypoints",
+        "exit_code": 0
+      },
+      {
+        "check": "whole-source identity",
+        "exit_code": 0
+      },
+      {
+        "check": "FALCION source boundary",
+        "exit_code": 0
+      },
+      {
+        "check": "Golden PE negative regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "restricted named imports",
+        "exit_code": 0
+      },
+      {
+        "check": "MSVC link negative regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "SURGE infrastructure regressions",
+        "exit_code": 0
+      },
+      {
+        "check": "SURGE directive regressions",
+        "exit_code": 0
+      }
+    ]
+  },
+  "identity_audit": "metadata/PRODUCT_IDENTITY_AUDIT.json",
+  "raw_resource_avatar_static_crypt32_audit": "metadata/PRODUCT_IDENTITY_RAW_DLL.json",
+  "latest_user_import_table_analysis": "docs/API_IMPORT_DIFFERENCES.md",
+  "native_msvc_golden": "NOT_RUN",
+  "game_retest": "NOT_RUN; parent startup-build-fix package user-confirmed separately"
+}

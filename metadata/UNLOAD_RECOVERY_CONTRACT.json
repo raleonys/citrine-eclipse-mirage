@@ -1,0 +1,20 @@
+{
+  "schema": "surge.unload-recovery-contract.v1",
+  "classification": "NOT_RELEASE",
+  "source": "src/platform/hook_unload_guard.cpp",
+  "state": "IMAGE_OWNED_THREAD_SUSPENSION_AND_SNAPSHOT; ZERO_ALLOCATION",
+  "retry_order": [
+    "resume_owned_suspension_if_any",
+    "close_retained_thread",
+    "close_retained_snapshot",
+    "start_fresh_scan"
+  ],
+  "persistent_failure": "RETURN_FALSE_KEEP_OWNERS_AND_BLOCK_UNLOAD",
+  "close_retry": "NEVER_REPEAT_SUCCESSFUL_RESUME",
+  "overlapping_scans": "ATOMIC_TRY_GATE_RETURN_FALSE_WITHOUT_WAITING",
+  "scan_policy": "EXISTING_REGISTERS_CONSERVATIVE_STACK_SEH_BUDGET_AND_CALLER_EXCLUSIONS",
+  "reference_relationship": "ADAPTED_SCAN_PLUS_OWNED_RECOVERY; NOT_TOKEN_IDENTICAL",
+  "original_vendor_or_hook_patch_changed": false,
+  "documentation": "docs/UNLOAD_RECOVERY.md",
+  "tests": "tests/native/unload_guard_tests.cpp"
+}

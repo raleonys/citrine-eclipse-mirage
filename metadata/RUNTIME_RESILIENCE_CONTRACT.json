@@ -1,0 +1,49 @@
+{
+  "schema": "surge.runtime-resilience.v1",
+  "classification": "NOT_RELEASE",
+  "owner": "Explicit owner request: scoped connect, atomic achievement persistence and bounded handler scheduling",
+  "documentation": "docs/RUNTIME_RESILIENCE.md",
+  "connect": {
+    "destinations": [
+      "127.0.0.1:3216",
+      "[::1]:3216"
+    ],
+    "caller_address": "READ_ONLY_STACK_COPY_ON_REDIRECT",
+    "other_destinations": "DIRECT_PASSTHROUGH_NO_STARTUP_WAIT",
+    "preserved": [
+      "IPv6 hook support",
+      "narrow attempt synchronization",
+      "binding leases",
+      "Winsock LastError"
+    ]
+  },
+  "persistence": {
+    "scope": [
+      "runtime achievement XML/INI batch",
+      "startup achievement INI",
+      "explicit achievement XML/INI writers"
+    ],
+    "other_binary_io": "UNCHANGED",
+    "staging": "EXCLUSIVE_SAME_DIRECTORY_CHECKED_WRITE_FLUSH_CLOSE",
+    "replacement": "MoveFileExW REPLACE_EXISTING WRITE_THROUGH",
+    "rollback": "REVERSE_ORDER_RETAINED_BACKUPS_RETRY_BEFORE_NEXT_UPDATE_AND_STOP",
+    "memory": "RESTORE_PREVIOUS_RECORD_OR_ERASE_NEW_ENTRY_ON_FAILURE",
+    "event": "RESERVE_BEFORE_PERSIST_PUBLISH_AFTER_SUCCESS",
+    "group_power_loss_atomic": false,
+    "external_concurrent_writers": "UNSUPPORTED",
+    "failed_native_staging": "Retain acquired handles and exact owned paths before stage/backup returns; retry close/delete through recover_atomic"
+  },
+  "handler_pool": {
+    "workers": 2,
+    "max_queued_jobs": 128,
+    "queue_full": "FAIL_REQUESTING_SESSION_WITHOUT_BLOCKING_IO",
+    "session_order": "ONE_HANDLER_IN_FLIGHT_PER_SESSION_WIRE_FIFO",
+    "stop": "CANCEL_SOCKETS_DISCARD_QUEUED_JOIN_RUNNING_DRAIN_IO",
+    "frame_and_output_byte_limits": "metadata/SESSION_TRANSPORT_POLICY.json"
+  },
+  "validation": "docs/evidence/RUNTIME_RESILIENCE.json",
+  "public_abi": "UNCHANGED_THREE_EXPORTS",
+  "vendor_changes": false,
+  "later_transport_adoption": "metadata/SESSION_TRANSPORT_POLICY.json",
+  "broad_review": "docs/BROAD_SOURCE_AUDIT.md"
+}

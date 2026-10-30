@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="13"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="895fff974780"
+	time="2"
+	timestamp="2026-10-29T01:06:25"
+	>
+	<testcase name="application_runtime_contracts" classname="application_runtime_contracts" time="1.37118" status="run">
+		<properties/>
+		<system-out>PASS: 72 real application checks; five vendors, config collections, encrypted socket LSX, provider, resource, persistence, eleven enabled hooks and stop
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="vendor_io_contracts" classname="vendor_io_contracts" time="0.209556" status="run">
+		<properties/>
+		<system-out>PASS: standard Unicode/binary filesystem I/O; TCP loopback async accept/connect/read/write/EOF/cancel (fixture only)
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="native_callback_contracts" classname="native_callback_contracts" time="0.191747" status="run">
+		<properties/>
+		<system-out>PASS: 146 native callback/trampoline checks; synthetic originals, real LastError metadata only
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="file_io_contracts" classname="file_io_contracts" time="0.197482" status="run">
+		<properties/>
+		<system-out>PASS: 78 IO checks; actual IO only on generated fixture files; original targets not executed or modified
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="license_file_integration" classname="license_file_integration" time="0.0768428" status="run">
+		<properties/>
+		<system-out>PASS: 33 file/license integration checks; actual IO/SHA1/CBC/XML on generated fixtures, remaining effects controlled; original targets untouched
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="status_contracts" classname="status_contracts" time="0.12606" status="run">
+		<properties/>
+		<system-out>Native fixture scope: Z:\workspace\yellowfield\build\runtime-debug\status-fixtures
+PASS 9307 status checks
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="hook_adapter_integration" classname="hook_adapter_integration" time="0.130955" status="run">
+		<properties/>
+		<system-out>PASS: 497 hook adapter/source checks; controlled backend plus real queued activation and external thread guard
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_source_smoke" classname="dll_source_smoke" time="0.502377" status="run">
+		<properties/>
+		<system-out>PASS: actual DLL auto-started; real socket LSX profile, calendar, SHA-1 and PEGTL Config2/VDF executed; shutdown drains application
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_lifecycle" classname="dll_public_lifecycle" time="0.542768" status="run">
+		<properties/>
+		<system-out>zero-timeout shutdown status: 2
+PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; single DllShutdown with bounded wait/retry; removed alias/ordinal absent
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_c_consumer" classname="dll_public_c_consumer" time="0.334058" status="run">
+		<properties/>
+		<system-out>PASS: C17 consumer linked against the three-export application import library; real worker startup and shutdown
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+	<testcase name="dll_public_export_contract" classname="dll_public_export_contract" time="0.17479" status="run">
+		<properties/>
+		<system-out>{
+  "schema": "yellowfield.public-abi-check.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "dll_sha256": "8b5a755e202bf209d23cbc38c5be5e9283b79234b3fcccc615c7ece03d6c7c6a",
+  "export_count": 3,
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0xf0770",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0xf05b0",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0xf0760",
+      "forwarded": false
+    }
+  },
+  "errors": [],
+  "native_consumer_acceptance": "NOT_RUN"
+}
+</system-out>
+	</testcase>
+	<testcase name="dll_public_export_negatives" classname="dll_public_export_negatives" time="1.03169" status="run">
+		<properties/>
+		<system-out>PASS: actual DLL baseline and 7 export/machine mutations; all checks read-only
+</system-out>
+	</testcase>
+	<testcase name="hook_engine_fixtures" classname="hook_engine_fixtures" time="0.154746" status="run">
+		<properties/>
+		<system-out>hook_engine_fixture: 379 checks passed; upstream C engine, fake Win32, data buffers only
+WINE_PROGRAM_EXIT=0
+</system-out>
+	</testcase>
+</testsuite>

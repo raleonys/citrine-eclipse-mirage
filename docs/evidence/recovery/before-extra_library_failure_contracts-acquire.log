@@ -1,0 +1,2 @@
+FAIL: ownership allocation failed after acquiring a native module
+WINE_PROGRAM_EXIT=1

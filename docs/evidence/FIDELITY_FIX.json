@@ -1,0 +1,109 @@
+{
+  "schema": "yellowfield.fidelity-fix.v1",
+  "task": "SURGE-FIDELITY-FIX-20261029",
+  "classification": "NOT_RELEASE",
+  "parent": {
+    "file": "surge-re-copy-recovered-source.zip",
+    "sha256": "152eac467275f4f686e5b8f3af6c149517e3f889e78895c1894e2c3720492ad2"
+  },
+  "owner_instruction": "Resolve all four audit findings; preserve selected RE/Bluefield behavior and all standing product contracts",
+  "fixes": [
+    {
+      "id": "F01",
+      "status": "FIXED_AND_EXECUTED",
+      "change": "No whole connect lock. Bluefield-style Effects increment owns narrow lock and returns per-call counter result; preserve unsigned wrap, attempt15, leases and LastError. ExecutionEffects forwards the increment.",
+      "tests": [
+        "startup-wait peer progress",
+        "original-connect peer progress",
+        "in-flight binding close rejected",
+        "eight-thread counter wrap and exact15 observation"
+      ]
+    },
+    {
+      "id": "F02",
+      "status": "FIXED_AND_EXECUTED",
+      "change": "Owned event mutex exposes RE type2 return3/count1 on same-thread reentry, using standard CRT storage. Retain cross-thread exclusion and release/reacquire.",
+      "tests": [
+        "real Events owner through source queue initialization",
+        "same-thread reentry return/count",
+        "another thread waits then acquires"
+      ]
+    },
+    {
+      "id": "F03",
+      "status": "FIXED_AND_EXECUTED",
+      "change": "Preserve actual request/response/event, full XML ErrorStr plus input, decryption input and config paths. Buffer pre-directory config records. Restore runtime string/number diagnostic arguments. Existing showLSX filter and Debug-only file sink retained.",
+      "tests": [
+        "actual socket request/response and encrypted event",
+        "malformed XML and bad AES length followed by valid requests",
+        "Debug actual payload and config-path checks",
+        "Release log absent and existing Debug log unchanged"
+      ]
+    },
+    {
+      "id": "F04",
+      "status": "FIXED_AND_VALIDATED",
+      "change": "Current app/runtime/vendor pointers refer to consolidated four-vendor, three-export standard-filesystem status. Historical snapshots remain byte-identical. Validate current status against owner requirements, authoritative ABI and logging policy.",
+      "tests": [
+        "stale pointer negative",
+        "export drift negative",
+        "vendor drift negative",
+        "Release logging drift negative"
+      ]
+    }
+  ],
+  "additional_review_resolution": {
+    "item": "Bluefield common callback guard scope",
+    "status": "ALIGNED_AND_EXECUTED",
+    "change": "Serialize process/folder and registry through the common guard; exclude connect/crypt exactly as donor. Preserve registry wait Pause.",
+    "test": "blocked process callback serializes registry peer while connect/crypt continue"
+  },
+  "initial_debug_failure": {
+    "result": "FAIL_TEST_EXPECTATION_CORRECTED",
+    "report": "metadata/FIDELITY_DEBUG_INITIAL.xml",
+    "reason": "Assertion expected XML_ERROR_ immediately after prefix. Backend correctly returns full ErrorStr starting Error=. Test now compares full backend diagnostic and original input; runtime code was already preserving full text."
+  },
+  "current_runtime_state": "metadata/RUNTIME_CURRENT_STATUS.json",
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "report": "metadata/FIDELITY_SOURCE_QA.json",
+    "passed": 15,
+    "total": 15
+  },
+  "vendor_byte_changes": false,
+  "historical_runtime_snapshot_changed": false,
+  "preserved": [
+    "Three exports DllMain@1/SURGE@2/DllShutdown@3",
+    "Four immutable user vendors and TinyXML2 depth500",
+    "Standard compiler CRT/filesystem; full copy helper and static CryptQueryObject import",
+    "Optional EXE-relative config, main then override; current SURGE naming",
+    "Bluefield hook11 protected reader/selector, forwarding, unload/thread guard and registry Pause",
+    "PNG data outside PE resources; exact Brownfield VERSIONINFO and Golden metadata/import-order policies"
+  ],
+  "release_dll_inspection": "metadata/FIDELITY_RELEASE_DLL.json",
+  "imports_exports": "metadata/FIDELITY_RELEASE_IMPORTS.json",
+  "native_msvc_golden": "NOT_RUN",
+  "updated_game_retest": "NOT_RUN",
+  "dist_promoted": false,
+  "library_publication": false,
+  "validation_scope": "Affected targeted contracts, real Win32/IO/LSX paths through LLVM-MinGW executables under Wine, and host Python checks. No full original-DLL differential-equivalence claim.",
+  "release_tests": {
+    "passed": 18,
+    "total": 18,
+    "failed": 0,
+    "report": "metadata/FIDELITY_RELEASE_TESTS.xml",
+    "evidence_class": "WINE_LLVM_MINGW_X64_RELEASE_PLUS_HOST_PE_CHECK"
+  },
+  "debug_tests": {
+    "passed": 18,
+    "total": 18,
+    "failed": 0,
+    "report": "metadata/FIDELITY_DEBUG_TESTS.xml",
+    "evidence_class": "WINE_LLVM_MINGW_X64_DEBUG_PLUS_HOST_PE_CHECK"
+  },
+  "targeted_builds": {
+    "release": "PASS",
+    "debug": "PASS",
+    "full_test_tree_build": "NOT_CLAIMED; initial broad rebuild stopped in favor of affected target set"
+  }
+}

@@ -1,0 +1,11 @@
+        In file included from /workspace/yellowfield/third_party/pegtl/include/tao/pegtl/argv_input.hpp:12:
+        In file included from /workspace/yellowfield/third_party/pegtl/include/tao/pegtl/internal/input_aliases.hpp:19:
+        In file included from /workspace/yellowfield/third_party/pegtl/include/tao/pegtl/internal/read_input.hpp:15:
+        In file included from /workspace/yellowfield/third_party/pegtl/include/tao/pegtl/internal/read_file_stdio.hpp:20:
+        /workspace/yellowfield/third_party/pegtl/include/tao/pegtl/internal/resize_uninitialized.hpp:110:64: error: no member named '__end_' in 'std::vector<std::byte>'; did you mean '_xend'?
+          110 |       template struct vector_proxy< std::vector< std::byte >, &std::vector< std::byte >::__end_ >;
+              |                                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+              |                                                                _xend
+        /workspace/.tools/llvm-mingw-20261006-ucrt-ubuntu-22.04-x86_64/lib/clang/23/include/rtmintrin.h:36:1: note: '_xend' declared here
+           36 | _xend(void)
+              | ^

@@ -1,0 +1,32 @@
+{
+  "schema": "surge.listener-port-policy.v1",
+  "classification": "NOT_RELEASE",
+  "selection": "AUTOMATIC_ASCENDING_BOUNDED_RANGE",
+  "first_port": 3226,
+  "last_port": 3236,
+  "cfg_override_supported": false,
+  "ignored_legacy_key": "ServerPort",
+  "port_zero_arbitrary_fallback": false,
+  "exhaustion": "STARTUP_ERROR_WITHOUT_READY_OR_NEW_PORT_PUBLICATION",
+  "retry_bind_errors": [
+    "address_in_use",
+    "access_denied"
+  ],
+  "other_errors": "FAIL_IMMEDIATELY",
+  "live_port_state": "configuration::State::server_port",
+  "publication": "EALsxPort",
+  "connect_hook_ipv6": "SUPPORTED_WITH_SAME_PORT_LOOPBACK_LISTENER",
+  "connect_legacy_port": 3216,
+  "implementation": "src/net/asio_service.cpp",
+  "constants": "include/preloader_l/net/listener_policy.hpp",
+  "reference_provenance": "docs/AUTOMATIC_LISTENER.md",
+  "windows_bind_ownership": "SO_EXCLUSIVEADDRUSE before bind; no sharing of a live endpoint",
+  "listen_addresses": [
+    "127.0.0.1",
+    "::1 when supported by host"
+  ],
+  "ipv6_only": true,
+  "candidate_ownership": "Bind/listen both available loopback families before publication; companion conflict releases candidate and advances within range",
+  "ipv6_unavailable": "Address family unsupported or address not available: retain IPv4; other errors retain existing retry/fail policy",
+  "shared_session_cap": true
+}

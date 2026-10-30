@@ -1,0 +1,23 @@
+{
+  "config_candidates": [
+    "surge.cfg",
+    "surge_override.cfg"
+  ],
+  "config_grammar": "EXISTING_RE_CONFIG2_VDF_EXECUTED_BY_PEGTL4",
+  "config_precedence": "RE_MAIN_THEN_OVERRIDE_EXECUTABLE_RELATIVE",
+  "config_write_policy": "NO_IMPLICIT_CREATE_OR_OVERWRITE",
+  "debug_only_log": "%LOCALAPPDATA%\\SURGE\\surge.log",
+  "metadata_status": "IMPLEMENTED_IN_APPLICATION_ENVIRONMENT",
+  "path_validation": "REQUIRED",
+  "release_file_logging": "FORBIDDEN",
+  "resolution": "RE039bc0 GetEnvironmentVariableW(LocalAppData) buffer growth; no known-folder/COM allocator",
+  "root": "%LOCALAPPDATA%\\SURGE",
+  "schema": "surge.local-data.v1",
+  "shipping_log_artifact": "FORBIDDEN",
+  "config_grammar_scope": "Existing PEGTL grammar unchanged; configuration projections and concrete runtime share core/product_identity.hpp names",
+  "config_grammar_evidence": "docs/VDF_PARSER.md",
+  "implementation_status_record": "metadata/RUNTIME_CURRENT_STATUS.json",
+  "existing_debug_log_in_release": "PRESERVE_UNCHANGED_NO_APPEND_NO_AUTOMATIC_DELETE",
+  "identity_status_record": "docs/evidence/PRODUCT_IDENTITY_FIX.json",
+  "debug_payload_policy": "Preserve actual RE diagnostics; showLSX gate retained; Debug only"
+}

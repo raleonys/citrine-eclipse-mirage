@@ -1,0 +1,75 @@
+{
+  "schema": "yellowfield.owner-uploaded-inputs.v1",
+  "authority": "OWNER_UPLOADED_ARCHIVE_BYTES",
+  "independent_owner_signature_claimed": false,
+  "library_access": false,
+  "roles": {
+    "BROWNFIELD": {
+      "path": "/workspace/project-input/Brownfield/HF20_REGISTRY_B_ARCH_B_STAGE03_ISSUER_SCOPE_FULL_SOURCE_CANDIDATE_NOT_RELEASE.zip",
+      "sha256": "2f32febfcd7ed330cb84b7fcf876ae4bdc8037ce4d7826c921f775c7b6dc6e67",
+      "role": "SELECTED_INFRASTRUCTURE_ONLY"
+    },
+    "BLUEFIELD": {
+      "path": "/workspace/project-input/Bluefield/preloader_l_BF02_FIX31_APPLICATION_SOURCE_NOT_RELEASE.zip",
+      "sha256": "20c707f6cc57901674c26345983f5975150ab67fd547f4f3e95221e78066f416",
+      "role": "COMPARISON_ONLY"
+    },
+    "REVERSE_ENGINEERING": {
+      "path": "/workspace/project-input/Reverse Engineering/dll-reverse-engineering(8).zip",
+      "sha256": "64a870331be2c0555f7a7c21b66a657df8f36abfd8312730ff04cffcc906c9e5",
+      "role": "APPLICATION_CANDIDATE"
+    },
+    "GREENFIELD": {
+      "path": "/workspace/project-input/Greenfield/GF14_SOURCE.zip",
+      "sha256": "03edc7930459a67518b4c4833779b00f41e8fb4f55ba9ee179b0d3f76dbc2b23",
+      "role": "COMPARISON_ONLY"
+    },
+    "REDFIELD": {
+      "path": "/workspace/project-input/Redfield/REDFIELD_RF37.zip",
+      "sha256": "e9e6eb8ffe0aa24d4e21a12273aeac32791119b07df82cccaa09394d363f1fc6",
+      "role": "COMPARISON_ONLY"
+    },
+    "YELLOWFIELD": {
+      "active_root": "/workspace/yellowfield",
+      "original_governance_input": "/workspace/project-input/Yellowfield",
+      "source_reference": "metadata/SOURCE_LAYOUT.json"
+    }
+  },
+  "next_phase_vendor_archives": {
+    "PEGTL-main.zip": {
+      "sha256": "80ac358a098e83637b2ee367baab1ca569e1475c51b1b8dacece2088f86349ad",
+      "bytes": 906094,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/PEGTL-main.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    },
+    "asio-master.zip": {
+      "sha256": "1070a32d6c26ebf441d3de8b2fc89c5fc580f2fe0ca4aee8dfb5e818a5096af9",
+      "bytes": 4192700,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/asio-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    },
+    "filesystem-master.zip": {
+      "sha256": "5db08830a172ca4d8d2ecf98d6397041a3d0fa4d04584a0bcddb29778b68a251",
+      "bytes": 233550,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/filesystem-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    },
+    "minhook-master.zip": {
+      "sha256": "9ba14a6d748d65ca9ed83763a96a144d888f50cc5771dd9a798ad50ee35336f5",
+      "bytes": 84197,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/minhook-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    },
+    "tinyxml2-master.zip": {
+      "sha256": "8b7508a943e0a06d4c44d40fcc8c6e71f51dd43b342c4c29f768c53a370399cd",
+      "bytes": 819823,
+      "production_integration": "See VENDOR_LOCK.json; archive presence is not all-five runtime integration",
+      "path": "/workspace/project-input/3RD PARTY/tinyxml2-master.zip",
+      "source_materialization": "INSTALLED_BYTE_EXACT"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "yellowfield.local-golden.v1",
+  "classification": "NOT_RELEASE",
+  "stage_order": [
+    "MSVC Build",
+    "URSYNEX Golden Finalizer",
+    "ARYRA Golden Layout",
+    "MUSTAVEX Golden Metadata",
+    "CORVEXON Golden Trail",
+    "FALCION Golden Cleaning"
+  ],
+  "official_release": false,
+  "library_publication": false,
+  "result": "FAIL",
+  "steps": [
+    {
+      "stage": "MSVC Build",
+      "exit_code": 1,
+      "output": " - [Errno 2] No such file or directory: '/workspace/yellowfield/build/llvm-mingw-x64-vendors/LOCAL_BUILD_RECEIPT.json'\nMSVC_BUILD_EVIDENCE: FAIL\n",
+      "sha256_before": "6e1d072914ddcd0261717db3c06e0abe9d23df667748d3e53f822dc06c526d42",
+      "sha256_after": "6e1d072914ddcd0261717db3c06e0abe9d23df667748d3e53f822dc06c526d42"
+    }
+  ],
+  "pending": [],
+  "input_sha256": "6e1d072914ddcd0261717db3c06e0abe9d23df667748d3e53f822dc06c526d42"
+}

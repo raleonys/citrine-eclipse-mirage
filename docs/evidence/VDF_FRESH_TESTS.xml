@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Win32-ninja"
+	tests="5"
+	failures="0"
+	disabled="0"
+	skipped="0"
+	hostname="895fff974780"
+	time="0"
+	timestamp="2026-10-28T09:56:06"
+	>
+	<testcase name="vendor_source_integrity" classname="vendor_source_integrity" time="0.368081" status="run">
+		<properties/>
+		<system-out>asio: INSTALLED_MEMBER_HASHES_PASS
+filesystem: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+</system-out>
+	</testcase>
+	<testcase name="parser_contracts" classname="parser_contracts" time="0.0407324" status="run">
+		<properties/>
+		<system-out>PASS: 115 synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.
+</system-out>
+	</testcase>
+	<testcase name="config_pipeline_contracts" classname="config_pipeline_contracts" time="0.0426604" status="run">
+		<properties/>
+		<system-out>PASS: 189 Config2 pipeline checks; generated fixture only; original targets never executed
+</system-out>
+	</testcase>
+	<testcase name="vdf_parser_regressions" classname="vdf_parser_regressions" time="0.149814" status="run">
+		<properties/>
+		<system-out>VDF corpus: 23417 cases; 4724 accepted; 18693 rejected; full-state FNV64=ea70f5d56d33f404
+PASS: acceptance, error position, AST, assignment chronology and partial action state match RE-derived baseline
+</system-out>
+	</testcase>
+	<testcase name="dll_source_smoke" classname="dll_source_smoke" time="0.138507" status="run">
+		<properties/>
+		<system-out>PASS: actual development DLL loaded; calendar, SHA-1 and PEGTL Config2/VDF parser (BOM, nested tree, duplicate actions, failure position) executed
+</system-out>
+	</testcase>
+</testsuite>

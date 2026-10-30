@@ -1,0 +1,68 @@
+{
+  "schema": "yellowfield.entrypoints.v1",
+  "entrypoints": [
+    {
+      "launcher": "scripts/build_orchestration/build_unstable.cmd",
+      "automation": "scripts/build_orchestration/build_unstable.ps1",
+      "mode": "Compile",
+      "description": "Build the unsigned DLL and run startup and shutdown checks",
+      "windows_execution": "NOT_RUN",
+      "previous_user_windows_run": "LOG_SUPPLIED_PARTIAL_BUILD_OR_VALIDATION; see MSVC_PROFILE_FIX.json",
+      "updated_script_windows_execution": "NOT_RUN_AFTER_YF_STARTUP_BUILD_FIX",
+      "latest_user_native_log": "PASS",
+      "latest_user_native_evidence": "metadata/MSVC_NATIVE_LOOKUP_FIX.json",
+      "label": "COMPILE ONLY"
+    },
+    {
+      "launcher": "scripts/build_orchestration/build_debug.cmd",
+      "automation": "scripts/build_orchestration/build_debug.ps1",
+      "mode": "Debug",
+      "description": "Build the Debug DLL and run startup and shutdown checks",
+      "windows_execution": "NOT_RUN",
+      "previous_user_windows_run": "LOG_SUPPLIED_PARTIAL_BUILD_OR_VALIDATION; see MSVC_PROFILE_FIX.json",
+      "updated_script_windows_execution": "NOT_RUN_AFTER_YF_STARTUP_BUILD_FIX",
+      "latest_user_native_log": "PASS",
+      "latest_user_native_evidence": "metadata/MSVC_NATIVE_LOOKUP_FIX.json",
+      "label": "DEBUG BUILD"
+    },
+    {
+      "launcher": "scripts/build_orchestration/build_native_acceptance.cmd",
+      "automation": "scripts/build_orchestration/build_native_acceptance.ps1",
+      "mode": "Native",
+      "description": "Build and run native Windows tests",
+      "windows_execution": "NOT_RUN",
+      "previous_user_windows_run": "LOG_SUPPLIED_PARTIAL_BUILD_OR_VALIDATION; see MSVC_PROFILE_FIX.json",
+      "updated_script_windows_execution": "NOT_RUN_AFTER_YF_STARTUP_BUILD_FIX",
+      "latest_user_native_log": "FAIL_BUILD_C2589_INDEPENDENT_MINHOOK_FIXTURE_PATCHED_NOT_RERUN_MSVC",
+      "latest_user_native_evidence": "metadata/STARTUP_BUILD_FIX_STATUS.json",
+      "label": "NATIVE ACCEPTANCE"
+    },
+    {
+      "launcher": "scripts/build_orchestration/build_crt_acceptance.cmd",
+      "automation": "scripts/build_orchestration/build_crt_acceptance.ps1",
+      "mode": "Crt",
+      "description": "Build and run static CRT and DLL interface tests",
+      "windows_execution": "NOT_RUN",
+      "previous_user_windows_run": "LOG_SUPPLIED_PARTIAL_BUILD_OR_VALIDATION; see MSVC_PROFILE_FIX.json",
+      "updated_script_windows_execution": "NOT_RUN_AFTER_YF_STARTUP_BUILD_FIX",
+      "latest_user_native_log": "PASS",
+      "latest_user_native_evidence": "metadata/MSVC_NATIVE_LOOKUP_FIX.json",
+      "label": "STATIC CRT ACCEPTANCE"
+    },
+    {
+      "launcher": "scripts/build_orchestration/build_production.cmd",
+      "automation": "scripts/build_orchestration/build_production.ps1",
+      "mode": "Golden",
+      "description": "Build and validate the shipping DLL and create dist artifacts",
+      "windows_execution": "NOT_RUN",
+      "previous_user_windows_run": "LOG_SUPPLIED_PARTIAL_BUILD_OR_VALIDATION; see MSVC_PROFILE_FIX.json",
+      "updated_script_windows_execution": "NOT_RUN_AFTER_YF_STARTUP_BUILD_FIX",
+      "latest_user_native_log": "BLOCKED_TARGET_SEMANTICS",
+      "latest_user_native_evidence": "metadata/MSVC_NATIVE_LOOKUP_FIX.json",
+      "label": "PRODUCTION BUILD"
+    }
+  ],
+  "human_only_pause": true,
+  "automation": "Call corresponding .ps1 or Python script directly; no pause",
+  "latest_console_correction": "metadata/STARTUP_BUILD_FIX_STATUS.json"
+}

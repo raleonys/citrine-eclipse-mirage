@@ -1,0 +1,20 @@
+test_changed_link_target_is_rejected (__main__.LinkPackagingTests.test_changed_link_target_is_rejected) ... ok
+test_descriptor_directory_cannot_replace_locked_alias (__main__.LinkPackagingTests.test_descriptor_directory_cannot_replace_locked_alias) ... ok
+test_descriptor_single_byte_mutation_is_rejected (__main__.LinkPackagingTests.test_descriptor_single_byte_mutation_is_rejected) ... ok
+test_extractor_never_overwrites_existing_destination (__main__.LinkPackagingTests.test_extractor_never_overwrites_existing_destination) ... ok
+test_registered_alias_roundtrip_uses_portable_exact_descriptor (__main__.LinkPackagingTests.test_registered_alias_roundtrip_uses_portable_exact_descriptor) ... ok
+test_restore_only_exact_descriptors (__main__.LinkPackagingTests.test_restore_only_exact_descriptors) ... ok
+test_standard_zip_extraction_needs_no_link_support (__main__.LinkPackagingTests.test_standard_zip_extraction_needs_no_link_support) ... ok
+test_unexpected_symlink_type_in_portable_archive_is_rejected (__main__.LinkPackagingTests.test_unexpected_symlink_type_in_portable_archive_is_rejected) ... ok
+test_all_five_match_owner_pins_and_member_hashes (__main__.VendorTests.test_all_five_match_owner_pins_and_member_hashes) ... ok
+test_asio_same_count_damage_identifies_exact_alias_paths (__main__.VendorTests.test_asio_same_count_damage_identifies_exact_alias_paths) ... ok
+test_installed_single_byte_mutation_is_rejected (__main__.VendorTests.test_installed_single_byte_mutation_is_rejected) ... ok
+test_installer_refuses_overwrite (__main__.VendorTests.test_installer_refuses_overwrite) ... ok
+test_member_and_link_escape_rejected (__main__.VendorTests.test_member_and_link_escape_rejected) ... ok
+test_member_manifest_mutation_is_rejected (__main__.VendorTests.test_member_manifest_mutation_is_rejected) ... ok
+test_wrong_archive_is_rejected_before_install (__main__.VendorTests.test_wrong_archive_is_rejected_before_install) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.916s
+
+OK

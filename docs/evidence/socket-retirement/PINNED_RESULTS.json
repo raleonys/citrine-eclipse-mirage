@@ -1,0 +1,122 @@
+[
+  {
+    "variant": "before",
+    "case": "retry",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "retry-option",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "uncertain-open",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "uncertain-closed",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "completion",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "timer",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "constructor",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "bind",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "listener",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "dll-retry",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "dll-uncertain",
+    "exit": 1
+  },
+  {
+    "variant": "before",
+    "case": "dll-uncertain-closed",
+    "exit": 1
+  },
+  {
+    "variant": "after",
+    "case": "retry",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "retry-option",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "uncertain-open",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "uncertain-closed",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "completion",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "timer",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "constructor",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "bind",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "listener",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "dll-retry",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "dll-uncertain",
+    "exit": 0
+  },
+  {
+    "variant": "after",
+    "case": "dll-uncertain-closed",
+    "exit": 0
+  }
+]

@@ -1,0 +1,1141 @@
+{
+  "schema": "surge.optimization-compiler-scope.v1",
+  "scope": {
+    "cpp": 138,
+    "production_cpp": 64,
+    "reference_cpp": 74,
+    "headers_observed_in_compiler_dependencies": 139,
+    "files": 277,
+    "explicit_ast_definition_records": 1779,
+    "records_without_observed_syntax_reference": 969,
+    "virtual_or_override_records": 738
+  },
+  "function_dispositions": {
+    "RETAIN_HEADER_OR_SOURCE_API_NO_DELETION_PROOF": 26,
+    "RETAIN_VIRTUAL_DISPATCH_ROOT_NOT_EXHAUSTED": 678,
+    "RETAIN_AUTOMATIC_LIFETIME_ROOT_NOT_EXHAUSTED": 179,
+    "RETAIN_OBSERVED_SYNTAX_REFERENCE": 810,
+    "RETAIN_CALLBACK_OR_SOURCE_API_REVIEW_NO_DELETION_PROOF": 69,
+    "RETAIN_REFERENCE_TEST_AND_SOURCE_API_SCOPE": 17
+  },
+  "tidy_run": {
+    "tool": "LLVM Clang-Tidy21.1.6",
+    "scope": "All138first-partyCPP using real Windows x64 compile database; headers filtered to first-party source; no auto-fix",
+    "checks": "-*,clang-analyzer-core.*,clang-analyzer-cplusplus.*,clang-analyzer-deadcode.*,bugprone-*,performance-*,misc-unused-*,readability-redundant-*,-bugprone-easily-swappable-parameters,-performance-enum-size,-performance-no-int-to-ptr",
+    "rows": [
+      {
+        "source": "src/core/atomic_files.cpp",
+        "source_sha256": "1a4bc007d62f8bafad4eca8ca496d1568c7c53652a6995afe9e74ceff02fb1ab",
+        "exit_code": 0,
+        "seconds": 20.62,
+        "log": "src__core__atomic_files.cpp.log",
+        "diagnostics": "src__core__atomic_files.cpp.yaml"
+      },
+      {
+        "source": "src/platform/atomic_files_windows.cpp",
+        "source_sha256": "ab53b7af13377d85d77a46f9408302298a416f2af58eb771fd52e3bf79384212",
+        "exit_code": 0,
+        "seconds": 27.01,
+        "log": "src__platform__atomic_files_windows.cpp.log",
+        "diagnostics": "src__platform__atomic_files_windows.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_transaction.cpp",
+        "source_sha256": "bc298b9a88ca762321228258a0d51baca4b0cdb012167dfccffab4bbd3c98039",
+        "exit_code": 0,
+        "seconds": 10.25,
+        "log": "src__platform__hook_transaction.cpp.log",
+        "diagnostics": "src__platform__hook_transaction.cpp.yaml"
+      },
+      {
+        "source": "src/platform/file_copy.cpp",
+        "source_sha256": "0c1f20bf9fc0b972f48fedc723a760a67d88a544c6688bfdf67b1a00c5d4735c",
+        "exit_code": 0,
+        "seconds": 4.13,
+        "log": "src__platform__file_copy.cpp.log",
+        "diagnostics": "src__platform__file_copy.cpp.yaml"
+      },
+      {
+        "source": "src/platform/file_copy_windows.cpp",
+        "source_sha256": "63287bcbd9ba07c92703036ddefe187cd7c08ed27714107b7ceb5f43605e3d1e",
+        "exit_code": 0,
+        "seconds": 5.95,
+        "log": "src__platform__file_copy_windows.cpp.log",
+        "diagnostics": "src__platform__file_copy_windows.cpp.yaml"
+      },
+      {
+        "source": "src/codec/crypto.cpp",
+        "source_sha256": "fc8f9ad588ba4a97f7ba829e9b07aa848abae9c1d4178754001081702f9e3f95",
+        "exit_code": 0,
+        "seconds": 9.77,
+        "log": "src__codec__crypto.cpp.log",
+        "diagnostics": "src__codec__crypto.cpp.yaml"
+      },
+      {
+        "source": "src/codec/encoding.cpp",
+        "source_sha256": "7d8b06e7a7051595dae1642205f2a59fcd6797bdfb5fa659b001cbee0b2d40e4",
+        "exit_code": 0,
+        "seconds": 4.47,
+        "log": "src__codec__encoding.cpp.log",
+        "diagnostics": "src__codec__encoding.cpp.yaml"
+      },
+      {
+        "source": "src/config/application.cpp",
+        "source_sha256": "44ab68cd068bea9d8013743be5802a7949e5dc751751447f7158fe09581a0b5e",
+        "exit_code": 0,
+        "seconds": 10.41,
+        "log": "src__config__application.cpp.log",
+        "diagnostics": "src__config__application.cpp.yaml"
+      },
+      {
+        "source": "src/config/configuration.cpp",
+        "source_sha256": "b269795f182b8523a818f68dcf249cd74b45fcb9899430e34eacb926ddd63112",
+        "exit_code": 0,
+        "seconds": 8.79,
+        "log": "src__config__configuration.cpp.log",
+        "diagnostics": "src__config__configuration.cpp.yaml"
+      },
+      {
+        "source": "src/config/hash_table.cpp",
+        "source_sha256": "777863044fb25869e5ef27b45459ce1bdc51c710f56ac33991b10c4c9e0d8b10",
+        "exit_code": 0,
+        "seconds": 15.8,
+        "log": "src__config__hash_table.cpp.log",
+        "diagnostics": "src__config__hash_table.cpp.yaml"
+      },
+      {
+        "source": "src/config/order.cpp",
+        "source_sha256": "f93e6196bca4a6127d352d3e3e2d58482f42c209d43f104cb7eb6728d4a33533",
+        "exit_code": 0,
+        "seconds": 9.84,
+        "log": "src__config__order.cpp.log",
+        "diagnostics": "src__config__order.cpp.yaml"
+      },
+      {
+        "source": "src/config/startup.cpp",
+        "source_sha256": "ab6e83234302ebe2ae9bb86a3ecad453a9dd51623824d0288b1c4f4c3f570ddd",
+        "exit_code": 0,
+        "seconds": 4.69,
+        "log": "src__config__startup.cpp.log",
+        "diagnostics": "src__config__startup.cpp.yaml"
+      },
+      {
+        "source": "src/core/binary_io.cpp",
+        "source_sha256": "2f1f3b452f2c014a29e77786ee8858199b664547eb04211bdf1a557e5c320e58",
+        "exit_code": 0,
+        "seconds": 5.09,
+        "log": "src__core__binary_io.cpp.log",
+        "diagnostics": "src__core__binary_io.cpp.yaml"
+      },
+      {
+        "source": "src/core/license_files.cpp",
+        "source_sha256": "814232741dca3e0a487704e4e0b546662dc5953706b580dfde5790ba8eaf66a5",
+        "exit_code": 0,
+        "seconds": 7.05,
+        "log": "src__core__license_files.cpp.log",
+        "diagnostics": "src__core__license_files.cpp.yaml"
+      },
+      {
+        "source": "src/core/license.cpp",
+        "source_sha256": "8323309dbd9bdfa348a2a2b525067d7c9843076e2e98735bb3d6154838f74b98",
+        "exit_code": 0,
+        "seconds": 5.19,
+        "log": "src__core__license.cpp.log",
+        "diagnostics": "src__core__license.cpp.yaml"
+      },
+      {
+        "source": "src/core/paths.cpp",
+        "source_sha256": "1ca43c693a020ecc220e438a31d14a0319304ba43355040f94cecb9f4f10b69a",
+        "exit_code": 0,
+        "seconds": 5.5,
+        "log": "src__core__paths.cpp.log",
+        "diagnostics": "src__core__paths.cpp.yaml"
+      },
+      {
+        "source": "src/core/token.cpp",
+        "source_sha256": "8bdc0127d892ba12c2efbcef6bee778ff8b15b96df2a2255d3596b17bbff0abe",
+        "exit_code": 0,
+        "seconds": 4.78,
+        "log": "src__core__token.cpp.log",
+        "diagnostics": "src__core__token.cpp.yaml"
+      },
+      {
+        "source": "src/handlers/content_handlers.cpp",
+        "source_sha256": "64388843bf8551cd7389ca47f7c9cbdbbda72cb09bb7017aaf0da55688f7d180",
+        "exit_code": 0,
+        "seconds": 11.3,
+        "log": "src__handlers__content_handlers.cpp.log",
+        "diagnostics": "src__handlers__content_handlers.cpp.yaml"
+      },
+      {
+        "source": "src/handlers/handlers.cpp",
+        "source_sha256": "eb3f1204d5cc718d3124b7fabf3f4115710b3962505b39fab9e18ab62a9cd427",
+        "exit_code": 0,
+        "seconds": 5.01,
+        "log": "src__handlers__handlers.cpp.log",
+        "diagnostics": "src__handlers__handlers.cpp.yaml"
+      },
+      {
+        "source": "src/handlers/misc_handlers.cpp",
+        "source_sha256": "07f2378c5d1bd05b5f4191caa1ea0bfc385c8821f3a65a65b39d20c4adf64d76",
+        "exit_code": 0,
+        "seconds": 5.9,
+        "log": "src__handlers__misc_handlers.cpp.log",
+        "diagnostics": "src__handlers__misc_handlers.cpp.yaml"
+      },
+      {
+        "source": "src/hash/hash.cpp",
+        "source_sha256": "9f1ed7a274113f2f1a490945aca26039c480dd721c233763fb3d95f5c5fd818d",
+        "exit_code": 0,
+        "seconds": 6.19,
+        "log": "src__hash__hash.cpp.log",
+        "diagnostics": "src__hash__hash.cpp.yaml"
+      },
+      {
+        "source": "src/net/server.cpp",
+        "source_sha256": "e8fe52b44e0148cbf0e6b3958a3cbfd55d2b7631250bb36cdd670c994e87e230",
+        "exit_code": 0,
+        "seconds": 8.9,
+        "log": "src__net__server.cpp.log",
+        "diagnostics": "src__net__server.cpp.yaml"
+      },
+      {
+        "source": "src/net/asio_service.cpp",
+        "source_sha256": "58331e45a9b17977b014b7c990afbb01755cdca0b23535b37d8bb9a7418d0daa",
+        "exit_code": 0,
+        "seconds": 103.95,
+        "log": "src__net__asio_service.cpp.log",
+        "diagnostics": "src__net__asio_service.cpp.yaml"
+      },
+      {
+        "source": "src/net/session_handler.cpp",
+        "source_sha256": "ce59216c9977a8f5b13e4d408cde61da13ef75a51c6a3c3dbf357e5b83856e48",
+        "exit_code": 0,
+        "seconds": 5.46,
+        "log": "src__net__session_handler.cpp.log",
+        "diagnostics": "src__net__session_handler.cpp.yaml"
+      },
+      {
+        "source": "src/net/session_routing.cpp",
+        "source_sha256": "a0908e594e24b57a8fabff2786832dbf1dd0a20992de17b34541e730bf85c6db",
+        "exit_code": 0,
+        "seconds": 8.49,
+        "log": "src__net__session_routing.cpp.log",
+        "diagnostics": "src__net__session_routing.cpp.yaml"
+      },
+      {
+        "source": "src/platform/crypt_query.cpp",
+        "source_sha256": "a1301a1b509c20470d56170b44c2ffd07acf236f0a9cffb012f3dca718169789",
+        "exit_code": 0,
+        "seconds": 6.72,
+        "log": "src__platform__crypt_query.cpp.log",
+        "diagnostics": "src__platform__crypt_query.cpp.yaml"
+      },
+      {
+        "source": "src/platform/encoding_windows.cpp",
+        "source_sha256": "a9311dfbd7330a156475595bbdb339faf5b3c6ccbe746838c3edddb5737902ff",
+        "exit_code": 0,
+        "seconds": 29.03,
+        "log": "src__platform__encoding_windows.cpp.log",
+        "diagnostics": "src__platform__encoding_windows.cpp.yaml"
+      },
+      {
+        "source": "src/platform/execution_windows.cpp",
+        "source_sha256": "39f5124e4f45218360bb1790fdafb8c84b1791e992d43aec3ea11ff199b0dbe3",
+        "exit_code": 0,
+        "seconds": 4.35,
+        "log": "src__platform__execution_windows.cpp.log",
+        "diagnostics": "src__platform__execution_windows.cpp.yaml"
+      },
+      {
+        "source": "src/platform/file_io_windows.cpp",
+        "source_sha256": "bc0d52051f7565184bd27a58c6304c095337d333628a5964a1366b16f3d262da",
+        "exit_code": 0,
+        "seconds": 6.9,
+        "log": "src__platform__file_io_windows.cpp.log",
+        "diagnostics": "src__platform__file_io_windows.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_engine_api.cpp",
+        "source_sha256": "15bfadc20f624c7c8e43d5f9702e5aa8b4a283de56944c5de70b0b44f540e380",
+        "exit_code": 0,
+        "seconds": 6.9,
+        "log": "src__platform__hook_engine_api.cpp.log",
+        "diagnostics": "src__platform__hook_engine_api.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_connect.cpp",
+        "source_sha256": "03bc0a1f0300bb8ca815823617b3e33a2a9e61c6e4f05b9e1765caf11fb289ec",
+        "exit_code": 0,
+        "seconds": 5.39,
+        "log": "src__platform__hook_connect.cpp.log",
+        "diagnostics": "src__platform__hook_connect.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_host_callbacks.cpp",
+        "source_sha256": "de776bc2b4b4ee10c26fb10d23be4687e71fb63c8a4280d3791a44c4f1b7ee10",
+        "exit_code": 0,
+        "seconds": 4.65,
+        "log": "src__platform__hook_host_callbacks.cpp.log",
+        "diagnostics": "src__platform__hook_host_callbacks.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_native_callbacks.cpp",
+        "source_sha256": "87a8ba109a7672b3fc945c236ffbbef2e30a7214633266af3b2e24c1d8fcc6df",
+        "exit_code": 0,
+        "seconds": 9.43,
+        "log": "src__platform__hook_native_callbacks.cpp.log",
+        "diagnostics": "src__platform__hook_native_callbacks.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_original_effects.cpp",
+        "source_sha256": "9fc9ca839515b2fd76598a3759e358e07fe47ec0c1d185b33e1887c6fcbfaa49",
+        "exit_code": 0,
+        "seconds": 9.2,
+        "log": "src__platform__hook_original_effects.cpp.log",
+        "diagnostics": "src__platform__hook_original_effects.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_setup.cpp",
+        "source_sha256": "ab697b422393095518ecb20423515253f0f093180653b815c0d195e29ae5330c",
+        "exit_code": 0,
+        "seconds": 6.12,
+        "log": "src__platform__hook_setup.cpp.log",
+        "diagnostics": "src__platform__hook_setup.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_unload_guard.cpp",
+        "source_sha256": "870df4a9bd27371470bd67b45ba27fadd6492ad3a097408f795bc4ede0b7a2f5",
+        "exit_code": 0,
+        "seconds": 8.46,
+        "log": "src__platform__hook_unload_guard.cpp.log",
+        "diagnostics": "src__platform__hook_unload_guard.cpp.yaml"
+      },
+      {
+        "source": "src/platform/library_system.cpp",
+        "source_sha256": "444fcf6532d0ddc6352c97c7791e81bf29e663fe0c7b9cab082582e13028fab6",
+        "exit_code": 0,
+        "seconds": 8.27,
+        "log": "src__platform__library_system.cpp.log",
+        "diagnostics": "src__platform__library_system.cpp.yaml"
+      },
+      {
+        "source": "src/platform/registry.cpp",
+        "source_sha256": "a243429d59757fcce480595b0e455ee78817d6203370619c5a47c56fea3fd175",
+        "exit_code": 0,
+        "seconds": 29.45,
+        "log": "src__platform__registry.cpp.log",
+        "diagnostics": "src__platform__registry.cpp.yaml"
+      },
+      {
+        "source": "src/platform/startup_windows.cpp",
+        "source_sha256": "5f98526346058fec93b7e7631d98d4d7945e9f50e8b1238ff00fdb1293a49ca8",
+        "exit_code": 0,
+        "seconds": 32.62,
+        "log": "src__platform__startup_windows.cpp.log",
+        "diagnostics": "src__platform__startup_windows.cpp.yaml"
+      },
+      {
+        "source": "src/platform/status_windows.cpp",
+        "source_sha256": "3b9d9273bea5fb33b17ff31995e3a80dbe9a357dc133685adc8806c4bafe51fe",
+        "exit_code": 0,
+        "seconds": 8.89,
+        "log": "src__platform__status_windows.cpp.log",
+        "diagnostics": "src__platform__status_windows.cpp.yaml"
+      },
+      {
+        "source": "src/platform/windows_effects.cpp",
+        "source_sha256": "493a5d6b4fd131741417e447845736383d927b79daf22d7e2e286a4d5b9f2ffa",
+        "exit_code": 0,
+        "seconds": 6.72,
+        "log": "src__platform__windows_effects.cpp.log",
+        "diagnostics": "src__platform__windows_effects.cpp.yaml"
+      },
+      {
+        "source": "src/protocol/messages.cpp",
+        "source_sha256": "256602b05d85baa97e40decc4573d1f042c3ebf6c70d4ecc00dd242d3918402c",
+        "exit_code": 0,
+        "seconds": 11.04,
+        "log": "src__protocol__messages.cpp.log",
+        "diagnostics": "src__protocol__messages.cpp.yaml"
+      },
+      {
+        "source": "src/router/router.cpp",
+        "source_sha256": "6afffd673cfeef3bdfcded6b29991133b43daf4aca81dda4aac5c1355957c184",
+        "exit_code": 0,
+        "seconds": 6.57,
+        "log": "src__router__router.cpp.log",
+        "diagnostics": "src__router__router.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/achievement_runtime.cpp",
+        "source_sha256": "39de6bde7b2d62d6c2e1900751a7d981f5a030e3c7c6a75d4ca87557ae972538",
+        "exit_code": 0,
+        "seconds": 7.05,
+        "log": "src__runtime__achievement_runtime.cpp.log",
+        "diagnostics": "src__runtime__achievement_runtime.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/achievement_storage.cpp",
+        "source_sha256": "b5a094de2535f6e682eeeb6c05b00a41c7355baa0c4134b1eca67f36d3aa7d54",
+        "exit_code": 0,
+        "seconds": 7.27,
+        "log": "src__runtime__achievement_storage.cpp.log",
+        "diagnostics": "src__runtime__achievement_storage.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/achievement_utc.cpp",
+        "source_sha256": "01be71f526a75aa710e7c0a84db929931ac80b572b0582b4e3d5ae4af63c8a3b",
+        "exit_code": 0,
+        "seconds": 5.37,
+        "log": "src__runtime__achievement_utc.cpp.log",
+        "diagnostics": "src__runtime__achievement_utc.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/achievement_writer.cpp",
+        "source_sha256": "580964926cfd1c9b725b8eda88395b526a6593a7b3926629dc5cf17bad7baa05",
+        "exit_code": 0,
+        "seconds": 5.17,
+        "log": "src__runtime__achievement_writer.cpp.log",
+        "diagnostics": "src__runtime__achievement_writer.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/application.cpp",
+        "source_sha256": "ed1fac0e05c4b8e6d72aadd64fd72fbe12521f79af2f9baee25c6c3dab8f9f20",
+        "exit_code": 0,
+        "seconds": 21.57,
+        "log": "src__runtime__application.cpp.log",
+        "diagnostics": "src__runtime__application.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/application_defaults.cpp",
+        "source_sha256": "21c863442851915abae7eb1bef9e1f4659ca399dea97fec38a21753ef8e1714b",
+        "exit_code": 0,
+        "seconds": 5.37,
+        "log": "src__runtime__application_defaults.cpp.log",
+        "diagnostics": "src__runtime__application_defaults.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/application_environment.cpp",
+        "source_sha256": "0ceb4ee468d7de572cf41ae8d274b56c81f16406a1a6ff7419fb842e1a7170e7",
+        "exit_code": 0,
+        "seconds": 19.22,
+        "log": "src__runtime__application_environment.cpp.log",
+        "diagnostics": "src__runtime__application_environment.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/event_adapters.cpp",
+        "source_sha256": "c1bc7beabc0cab8395ef06ada3706a901994442c53f46022e6dda560ad0362c8",
+        "exit_code": 0,
+        "seconds": 4.89,
+        "log": "src__runtime__event_adapters.cpp.log",
+        "diagnostics": "src__runtime__event_adapters.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/event_queue.cpp",
+        "source_sha256": "a566622fe74ccd55571497a9a0c45be7f38048b9c794a8fa264fe4098e65c3a9",
+        "exit_code": 0,
+        "seconds": 7.61,
+        "log": "src__runtime__event_queue.cpp.log",
+        "diagnostics": "src__runtime__event_queue.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/execution.cpp",
+        "source_sha256": "170b1eaa3efc78de562e76217dbac718760026e020afa3d69d12dc7a33065439",
+        "exit_code": 0,
+        "seconds": 5.4,
+        "log": "src__runtime__execution.cpp.log",
+        "diagnostics": "src__runtime__execution.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/libraries.cpp",
+        "source_sha256": "adde08f2eb2ec205c51448ef5a59f2a60adbbf89f33b23a00e621b397e348d38",
+        "exit_code": 0,
+        "seconds": 5.23,
+        "log": "src__runtime__libraries.cpp.log",
+        "diagnostics": "src__runtime__libraries.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/online.cpp",
+        "source_sha256": "3d824ba613ab7bb1c29935f3980e120370c7411bf7d42c7f81a4ad413a397b5c",
+        "exit_code": 0,
+        "seconds": 5.8,
+        "log": "src__runtime__online.cpp.log",
+        "diagnostics": "src__runtime__online.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/startup.cpp",
+        "source_sha256": "3e0753b6be877fc54c9f6eb441670d20fd9b7a3d9c88e59ecaee8d626a10d249",
+        "exit_code": 0,
+        "seconds": 6.55,
+        "log": "src__runtime__startup.cpp.log",
+        "diagnostics": "src__runtime__startup.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/status.cpp",
+        "source_sha256": "d591e06d25da8b14a9f19f9f201cbfffef41567838ef774273ae1ddc0cf4579a",
+        "exit_code": 0,
+        "seconds": 4.74,
+        "log": "src__runtime__status.cpp.log",
+        "diagnostics": "src__runtime__status.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/calendar.cpp",
+        "source_sha256": "5e53a245d973e638738f4dd0dfc8adb98496c48337535c99516aacce72e9e6d7",
+        "exit_code": 0,
+        "seconds": 0.62,
+        "log": "src__runtime__calendar.cpp.log",
+        "diagnostics": "src__runtime__calendar.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/timestamp.cpp",
+        "source_sha256": "8d60beb6e1c8643bf6b0dc99d0b4922807d8dfc934c0f65c53d4479f62e3c35f",
+        "exit_code": 0,
+        "seconds": 6.51,
+        "log": "src__runtime__timestamp.cpp.log",
+        "diagnostics": "src__runtime__timestamp.cpp.yaml"
+      },
+      {
+        "source": "src/xml/memory_printer.cpp",
+        "source_sha256": "62ee59359cf6fb93a08a79e14d92633d87323007124528afaf65ec8d03376636",
+        "exit_code": 0,
+        "seconds": 5.17,
+        "log": "src__xml__memory_printer.cpp.log",
+        "diagnostics": "src__xml__memory_printer.cpp.yaml"
+      },
+      {
+        "source": "src/xml/reader.cpp",
+        "source_sha256": "642e2dced2244928ab6c4a05e5b2f89d0dfe3832022b39131875ff9c4a26bd70",
+        "exit_code": 0,
+        "seconds": 5.92,
+        "log": "src__xml__reader.cpp.log",
+        "diagnostics": "src__xml__reader.cpp.yaml"
+      },
+      {
+        "source": "src/platform/crypt_query_host.cpp",
+        "source_sha256": "c106f2b1180f2176b4bb74fe69d6e8d52707979c03129b32d9db0ac60450891e",
+        "exit_code": 0,
+        "seconds": 6.26,
+        "log": "src__platform__crypt_query_host.cpp.log",
+        "diagnostics": "src__platform__crypt_query_host.cpp.yaml"
+      },
+      {
+        "source": "src/config/parser.cpp",
+        "source_sha256": "80e64fbb8f7ca08b7c9d4acbe819e732229cde74a0c2456eff0106a29630afdb",
+        "exit_code": 0,
+        "seconds": 25.21,
+        "log": "src__config__parser.cpp.log",
+        "diagnostics": "src__config__parser.cpp.yaml"
+      },
+      {
+        "source": "src/platform/dll_entry.cpp",
+        "source_sha256": "7696c72b08c171256557163b78e074783ae1adc760b915a1418391eae48ff85b",
+        "exit_code": 0,
+        "seconds": 41.65,
+        "log": "src__platform__dll_entry.cpp.log",
+        "diagnostics": "src__platform__dll_entry.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_acceptor.cpp",
+        "source_sha256": "2dfe2af880f7d9a90191e21808a719260f70e30a88140e33492ea0dbe44c5ce8",
+        "exit_code": 0,
+        "seconds": 13.93,
+        "log": "src__net__transport_acceptor.cpp.log",
+        "diagnostics": "src__net__transport_acceptor.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_acceptor_native.cpp",
+        "source_sha256": "faa4d2957752c3af2e8f9d031d2ef2d50c2ad9ff682ce1c41267b57a7caa7f92",
+        "exit_code": 0,
+        "seconds": 8.26,
+        "log": "src__net__transport_acceptor_native.cpp.log",
+        "diagnostics": "src__net__transport_acceptor_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_append_growth.cpp",
+        "source_sha256": "1d3eedc1eb2394f720b05734d391c87abd3dce9e9a112d33452d449f3f0e482b",
+        "exit_code": 0,
+        "seconds": 11.51,
+        "log": "src__net__transport_append_growth.cpp.log",
+        "diagnostics": "src__net__transport_append_growth.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_async_receive.cpp",
+        "source_sha256": "d358e5ae2c984d535fc723eb8b456eb6f7afeece5a991fd9c26cfe8b05337cd5",
+        "exit_code": 0,
+        "seconds": 11.53,
+        "log": "src__net__transport_async_receive.cpp.log",
+        "diagnostics": "src__net__transport_async_receive.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_cancellation.cpp",
+        "source_sha256": "083b19ead1d9f72e111d134827efdbc568d036d41b8c9f0d9415d0f75c7358d4",
+        "exit_code": 0,
+        "seconds": 8.89,
+        "log": "src__net__transport_cancellation.cpp.log",
+        "diagnostics": "src__net__transport_cancellation.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_cancellation_native.cpp",
+        "source_sha256": "6654511fa9cfe499f8e42af5f7767ba590a96ffb694febbcdaca47167ac6d92e",
+        "exit_code": 0,
+        "seconds": 9.09,
+        "log": "src__net__transport_cancellation_native.cpp.log",
+        "diagnostics": "src__net__transport_cancellation_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_cipher_session.cpp",
+        "source_sha256": "be5d3c1d5ccf022d4b2bac69b8dca84e21f5cb8f3ec5df184c39491cdb5e6b0b",
+        "exit_code": 0,
+        "seconds": 7.91,
+        "log": "src__net__transport_cipher_session.cpp.log",
+        "diagnostics": "src__net__transport_cipher_session.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_close.cpp",
+        "source_sha256": "fa5a0d11c1664a3271f900b11e1f29c928690f1509d0dd11dd1f7fcbfd6e6c08",
+        "exit_code": 0,
+        "seconds": 9.91,
+        "log": "src__net__transport_close.cpp.log",
+        "diagnostics": "src__net__transport_close.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_closing.cpp",
+        "source_sha256": "dc60895f01d59180403b45888baf28a73a76aa625e0d0893bc256443374b252a",
+        "exit_code": 0,
+        "seconds": 9.38,
+        "log": "src__net__transport_closing.cpp.log",
+        "diagnostics": "src__net__transport_closing.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_completion_dispatcher.cpp",
+        "source_sha256": "22cab0a68e38b4a2929d0400a4b21c7817e1c39b067bb24614668bc8a8eb893a",
+        "exit_code": 0,
+        "seconds": 16.01,
+        "log": "src__net__transport_completion_dispatcher.cpp.log",
+        "diagnostics": "src__net__transport_completion_dispatcher.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_completion_dispatcher_native.cpp",
+        "source_sha256": "9e50e40fd07ee29ca8b3bd1fc6282322598f71d19b7c592f065b0e8bc60e0252",
+        "exit_code": 0,
+        "seconds": 8.75,
+        "log": "src__net__transport_completion_dispatcher_native.cpp.log",
+        "diagnostics": "src__net__transport_completion_dispatcher_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_composed_read.cpp",
+        "source_sha256": "f90750d1230cc075b34e1ae96aa6e082ab640f9e63c316aca85c0389d04056b1",
+        "exit_code": 0,
+        "seconds": 26.09,
+        "log": "src__net__transport_composed_read.cpp.log",
+        "diagnostics": "src__net__transport_composed_read.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_composed_write.cpp",
+        "source_sha256": "e8c31c5c84cf9749585df5487bdbb55742cabd83e07ec87f29bb3da0d01c8a36",
+        "exit_code": 0,
+        "seconds": 26.53,
+        "log": "src__net__transport_composed_write.cpp.log",
+        "diagnostics": "src__net__transport_composed_write.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_composed_write_native.cpp",
+        "source_sha256": "90ef16b1cd15db3174e0a5fdcc677571700deb36e72408eadf981fb47b74cce6",
+        "exit_code": 0,
+        "seconds": 15.19,
+        "log": "src__net__transport_composed_write_native.cpp.log",
+        "diagnostics": "src__net__transport_composed_write_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_environment_constructor.cpp",
+        "source_sha256": "da486c0544f10005b46097d3a5600bfdb0a5c893415375de21c57ba056736290",
+        "exit_code": 0,
+        "seconds": 14.63,
+        "log": "src__net__transport_environment_constructor.cpp.log",
+        "diagnostics": "src__net__transport_environment_constructor.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_frame_read.cpp",
+        "source_sha256": "e2127ce88e432649315d979fb462abe39a02db6473f7a553b40be7ed4008ed8f",
+        "exit_code": 0,
+        "seconds": 15.02,
+        "log": "src__net__transport_frame_read.cpp.log",
+        "diagnostics": "src__net__transport_frame_read.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_handler_dispatch.cpp",
+        "source_sha256": "2c4857ea447e804fbb720def545ac5b89ab45952b3ebd64fa5379fcf7fe28eb5",
+        "exit_code": 0,
+        "seconds": 13.64,
+        "log": "src__net__transport_handler_dispatch.cpp.log",
+        "diagnostics": "src__net__transport_handler_dispatch.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_handler_dispatch_bridge.cpp",
+        "source_sha256": "2d24293d65c8e1a567ae7e7255fc50de66672f4b9277d3d36c3e584e6e8a86de",
+        "exit_code": 0,
+        "seconds": 7.94,
+        "log": "src__net__transport_handler_dispatch_bridge.cpp.log",
+        "diagnostics": "src__net__transport_handler_dispatch_bridge.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_io_completion.cpp",
+        "source_sha256": "fff249d41afe46913829504d9638652477b128b3343f000a164ff5ad9b4e2de4",
+        "exit_code": 0,
+        "seconds": 11.07,
+        "log": "src__net__transport_io_completion.cpp.log",
+        "diagnostics": "src__net__transport_io_completion.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_io_completion_dispatch.cpp",
+        "source_sha256": "63cf5713e865664a1000876f54bc016dbc942b6bf5dda9f76e1f69df6a515fc8",
+        "exit_code": 0,
+        "seconds": 15.25,
+        "log": "src__net__transport_io_completion_dispatch.cpp.log",
+        "diagnostics": "src__net__transport_io_completion_dispatch.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_iocp_constructor.cpp",
+        "source_sha256": "b819b9cdc2f8590929292dcda001a8d5a6049735234d6089a8b93b2474119d08",
+        "exit_code": 0,
+        "seconds": 15.92,
+        "log": "src__net__transport_iocp_constructor.cpp.log",
+        "diagnostics": "src__net__transport_iocp_constructor.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_iocp_constructor_native.cpp",
+        "source_sha256": "b3fb0e0cd45470d2ccd9460692083a5cda0da0cddaf0c5fce62fe9cbcf1f2a35",
+        "exit_code": 0,
+        "seconds": 15.88,
+        "log": "src__net__transport_iocp_constructor_native.cpp.log",
+        "diagnostics": "src__net__transport_iocp_constructor_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_lifecycle.cpp",
+        "source_sha256": "ea6b8a4f6e3404783ec748cb0a8a53b31d32a9d338d5e2a249a525e63aae5287",
+        "exit_code": 0,
+        "seconds": 15.04,
+        "log": "src__net__transport_lifecycle.cpp.log",
+        "diagnostics": "src__net__transport_lifecycle.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_lifecycle_native.cpp",
+        "source_sha256": "899d6872a3b2d01f5d53bbfe0037e6bdd640cb34f0d2be1b1523e94fd722b566",
+        "exit_code": 0,
+        "seconds": 14.4,
+        "log": "src__net__transport_lifecycle_native.cpp.log",
+        "diagnostics": "src__net__transport_lifecycle_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_message_core_bridge.cpp",
+        "source_sha256": "a810a68d4f73d2311ae644e56e0c6937e9d1a0adff18366fa4b6316fbfacdb5b",
+        "exit_code": 0,
+        "seconds": 16.14,
+        "log": "src__net__transport_message_core_bridge.cpp.log",
+        "diagnostics": "src__net__transport_message_core_bridge.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_message_dispatch.cpp",
+        "source_sha256": "d3846800ca3cdbb6c189f6aa899fb76bf0156b4852dd92126a44b2f570594fca",
+        "exit_code": 0,
+        "seconds": 14.06,
+        "log": "src__net__transport_message_dispatch.cpp.log",
+        "diagnostics": "src__net__transport_message_dispatch.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_native.cpp",
+        "source_sha256": "c337abdb2dfb734fd3429ec3a495b27275916af5bef33f8c3971c553ce4ecdcc",
+        "exit_code": 0,
+        "seconds": 11.39,
+        "log": "src__net__transport_native.cpp.log",
+        "diagnostics": "src__net__transport_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_native_dispatch.cpp",
+        "source_sha256": "f6dd67734804006f127d8467ce869abaed06626939d9ddf4156bbd2fef1be46f",
+        "exit_code": 0,
+        "seconds": 14.72,
+        "log": "src__net__transport_native_dispatch.cpp.log",
+        "diagnostics": "src__net__transport_native_dispatch.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_native_message.cpp",
+        "source_sha256": "7f7e593cc943023b78eb78950b9a4729f6dfa3734ba238a9f62b3798ad24e590",
+        "exit_code": 0,
+        "seconds": 21.14,
+        "log": "src__net__transport_native_message.cpp.log",
+        "diagnostics": "src__net__transport_native_message.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_operations.cpp",
+        "source_sha256": "942bb4bbc4f0a218693651f94c807b3f2534af219cebde4d243e6f5d06c59893",
+        "exit_code": 0,
+        "seconds": 15.3,
+        "log": "src__net__transport_operations.cpp.log",
+        "diagnostics": "src__net__transport_operations.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_owned_response.cpp",
+        "source_sha256": "408449039a39622d3caad12fed5e1fe09dd7a445e9bb805634a4694e8f12a339",
+        "exit_code": 0,
+        "seconds": 9.43,
+        "log": "src__net__transport_owned_response.cpp.log",
+        "diagnostics": "src__net__transport_owned_response.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_posted_operation.cpp",
+        "source_sha256": "33728724516d88a17d0ba9304ad810b84c5378bab99a1335d534911e5beeea21",
+        "exit_code": 0,
+        "seconds": 12.23,
+        "log": "src__net__transport_posted_operation.cpp.log",
+        "diagnostics": "src__net__transport_posted_operation.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_posted_operation_dispatch.cpp",
+        "source_sha256": "33dc9b348a64bf940a284bc6c6363550fe35a54b14def4d3183cf98878d8913c",
+        "exit_code": 0,
+        "seconds": 13.59,
+        "log": "src__net__transport_posted_operation_dispatch.cpp.log",
+        "diagnostics": "src__net__transport_posted_operation_dispatch.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_prefix_cipher.cpp",
+        "source_sha256": "19b61fb5af48d15b50d493ff06321ff27c54a6685398854545edef2a95f4f503",
+        "exit_code": 0,
+        "seconds": 10.45,
+        "log": "src__net__transport_prefix_cipher.cpp.log",
+        "diagnostics": "src__net__transport_prefix_cipher.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_queued_write.cpp",
+        "source_sha256": "43115abb2c6e5539a0578416c8df9f3e964e5994e4ea54ef1c4dfdb27330b02a",
+        "exit_code": 0,
+        "seconds": 22.61,
+        "log": "src__net__transport_queued_write.cpp.log",
+        "diagnostics": "src__net__transport_queued_write.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_receive_buffer.cpp",
+        "source_sha256": "2f46907725ca982aff8bd6a415e0331792c87a97bb17a09e7a8c9e4f2c0b4f88",
+        "exit_code": 0,
+        "seconds": 27.32,
+        "log": "src__net__transport_receive_buffer.cpp.log",
+        "diagnostics": "src__net__transport_receive_buffer.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_recycle.cpp",
+        "source_sha256": "6ab139cdd9686c972c7596006e63dec9ff3f2e0614921479a7afa0a0951ad37b",
+        "exit_code": 0,
+        "seconds": 9.76,
+        "log": "src__net__transport_recycle.cpp.log",
+        "diagnostics": "src__net__transport_recycle.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_recycle_storage.cpp",
+        "source_sha256": "74c8ca528945249a27af21bb509681e864d67764454a3d1e8d2deaa3b366152d",
+        "exit_code": 0,
+        "seconds": 11.03,
+        "log": "src__net__transport_recycle_storage.cpp.log",
+        "diagnostics": "src__net__transport_recycle_storage.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_request_growth.cpp",
+        "source_sha256": "a43b8adcdcd99da8997fae74d0599e1b28c40471658f5fd65bc658d4ca359336",
+        "exit_code": 0,
+        "seconds": 11.12,
+        "log": "src__net__transport_request_growth.cpp.log",
+        "diagnostics": "src__net__transport_request_growth.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_request_mutation.cpp",
+        "source_sha256": "70dd3899c34760a0806a29f037f478c3e4d0494658821cd2b67c727c5bacd443",
+        "exit_code": 0,
+        "seconds": 8.73,
+        "log": "src__net__transport_request_mutation.cpp.log",
+        "diagnostics": "src__net__transport_request_mutation.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_response_containers.cpp",
+        "source_sha256": "51daccbe05b860a04f34804d6d33715412fabfda7f604f7825ea62a4a7c4b511",
+        "exit_code": 0,
+        "seconds": 16.31,
+        "log": "src__net__transport_response_containers.cpp.log",
+        "diagnostics": "src__net__transport_response_containers.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_response_dispatch.cpp",
+        "source_sha256": "bb0c6f46c99a5d912b636f3d7377ad0be5150bcbb6d0600c91117101ecf613b5",
+        "exit_code": 0,
+        "seconds": 16.77,
+        "log": "src__net__transport_response_dispatch.cpp.log",
+        "diagnostics": "src__net__transport_response_dispatch.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_response_hex.cpp",
+        "source_sha256": "d49a4ccadc13872309ce25f85dafb5ff8d7c8b336ed3e1ba0fccaa5c44d7ffbc",
+        "exit_code": 0,
+        "seconds": 9.07,
+        "log": "src__net__transport_response_hex.cpp.log",
+        "diagnostics": "src__net__transport_response_hex.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_scheduler_registry.cpp",
+        "source_sha256": "426ef92d0f524dc006af682d95aee7b599551452f8295d98de7db935cb713ab7",
+        "exit_code": 0,
+        "seconds": 11.41,
+        "log": "src__net__transport_scheduler_registry.cpp.log",
+        "diagnostics": "src__net__transport_scheduler_registry.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_service_constructor.cpp",
+        "source_sha256": "9131e4fced6b385770e612ad3565bc90de691811b0940a52c71ba17b5965800e",
+        "exit_code": 0,
+        "seconds": 8.25,
+        "log": "src__net__transport_service_constructor.cpp.log",
+        "diagnostics": "src__net__transport_service_constructor.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_service_constructor_native.cpp",
+        "source_sha256": "06dc891f1698e0c68ea1799f0c6789eebb9af5db115598ec38258874469e033a",
+        "exit_code": 0,
+        "seconds": 10.27,
+        "log": "src__net__transport_service_constructor_native.cpp.log",
+        "diagnostics": "src__net__transport_service_constructor_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_service_registry.cpp",
+        "source_sha256": "fa38ef89496c9285c44e4beaf2efde8754d62f108b9cc0d4403355b6cee3b4be",
+        "exit_code": 0,
+        "seconds": 10.14,
+        "log": "src__net__transport_service_registry.cpp.log",
+        "diagnostics": "src__net__transport_service_registry.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_worker_run.cpp",
+        "source_sha256": "185ef8cf6efc6917b817e1e71f208570834d4aa12f0697aec581310641f57a8a",
+        "exit_code": 0,
+        "seconds": 14.35,
+        "log": "src__net__transport_worker_run.cpp.log",
+        "diagnostics": "src__net__transport_worker_run.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_worker_run_native.cpp",
+        "source_sha256": "0cb793d8485e5eb612b092dd13ece306e4daf972b8b6de41d74a12fae4f5be62",
+        "exit_code": 0,
+        "seconds": 13.75,
+        "log": "src__net__transport_worker_run_native.cpp.log",
+        "diagnostics": "src__net__transport_worker_run_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_worker_startup.cpp",
+        "source_sha256": "b20ad1dcfdf456dd1c653b130661f06e0155e9f4253be8e2eb72f60d447a5e1c",
+        "exit_code": 0,
+        "seconds": 14.96,
+        "log": "src__net__transport_worker_startup.cpp.log",
+        "diagnostics": "src__net__transport_worker_startup.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_worker_startup_native.cpp",
+        "source_sha256": "a68fa7b40d6b883f4a2e1fa73353a1c76dce381ed1d751858d6eb2a3dcc59f38",
+        "exit_code": 0,
+        "seconds": 15.15,
+        "log": "src__net__transport_worker_startup_native.cpp.log",
+        "diagnostics": "src__net__transport_worker_startup_native.cpp.yaml"
+      },
+      {
+        "source": "src/net/transport_write_finish.cpp",
+        "source_sha256": "e0227711538ca58acd4f298c0f7f8818932f38ebb7b6d61270fa9c26b48cc06c",
+        "exit_code": 0,
+        "seconds": 14.42,
+        "log": "src__net__transport_write_finish.cpp.log",
+        "diagnostics": "src__net__transport_write_finish.cpp.yaml"
+      },
+      {
+        "source": "src/xml/document_clear.cpp",
+        "source_sha256": "7eeac43b57fdd52978d4541f713c4a2d66c6776dfa55c0ef80084db63c0a3373",
+        "exit_code": 0,
+        "seconds": 13.99,
+        "log": "src__xml__document_clear.cpp.log",
+        "diagnostics": "src__xml__document_clear.cpp.yaml"
+      },
+      {
+        "source": "src/xml/document_error.cpp",
+        "source_sha256": "26e2112effdf7cca40a5d56c3e301df9e486e2a82a2ebba4492dd101921b9300",
+        "exit_code": 0,
+        "seconds": 13.65,
+        "log": "src__xml__document_error.cpp.log",
+        "diagnostics": "src__xml__document_error.cpp.yaml"
+      },
+      {
+        "source": "src/xml/native_document.cpp",
+        "source_sha256": "fecb08b92800ea05bfaa693bae1ceb937941c4db3b7ef83c008c122165f566a6",
+        "exit_code": 0,
+        "seconds": 20.17,
+        "log": "src__xml__native_document.cpp.log",
+        "diagnostics": "src__xml__native_document.cpp.yaml"
+      },
+      {
+        "source": "src/xml/node_base.cpp",
+        "source_sha256": "e5227ac3f81a0a5d66057fb9a5798bafb5ae56f0d764d7bc3d2de2cb237c70e9",
+        "exit_code": 0,
+        "seconds": 15.46,
+        "log": "src__xml__node_base.cpp.log",
+        "diagnostics": "src__xml__node_base.cpp.yaml"
+      },
+      {
+        "source": "src/xml/node_constructors.cpp",
+        "source_sha256": "718a7520d4892f2dc66f84e889b40d2073f457b9e2d7d26a0dae9e093f18cc42",
+        "exit_code": 0,
+        "seconds": 17.05,
+        "log": "src__xml__node_constructors.cpp.log",
+        "diagnostics": "src__xml__node_constructors.cpp.yaml"
+      },
+      {
+        "source": "src/xml/node_delete.cpp",
+        "source_sha256": "e837d14e35a9b84af6c96a9273c0ddc865d1dbbfd166b1173af51a3e652413a1",
+        "exit_code": 0,
+        "seconds": 16.88,
+        "log": "src__xml__node_delete.cpp.log",
+        "diagnostics": "src__xml__node_delete.cpp.yaml"
+      },
+      {
+        "source": "src/xml/node_identify.cpp",
+        "source_sha256": "0384b146117d512e7c411223faa87f6182736552b01154e44eef810bef8d6d59",
+        "exit_code": 0,
+        "seconds": 13.65,
+        "log": "src__xml__node_identify.cpp.log",
+        "diagnostics": "src__xml__node_identify.cpp.yaml"
+      },
+      {
+        "source": "src/xml/node_insertion.cpp",
+        "source_sha256": "1a5d08e47f798560b19b3854e54caeae3ca4d13e1c63e148d4cc413b0237fc6a",
+        "exit_code": 0,
+        "seconds": 16.75,
+        "log": "src__xml__node_insertion.cpp.log",
+        "diagnostics": "src__xml__node_insertion.cpp.yaml"
+      },
+      {
+        "source": "src/xml/node_parse.cpp",
+        "source_sha256": "0b7f97196e34f9c8a3d1e331835a0ee81ed5c4c73beabaac10bf27783ed43fde",
+        "exit_code": 0,
+        "seconds": 14.47,
+        "log": "src__xml__node_parse.cpp.log",
+        "diagnostics": "src__xml__node_parse.cpp.yaml"
+      },
+      {
+        "source": "src/xml/node_string.cpp",
+        "source_sha256": "aa44f2f103f7ba514a070d9548d8687434d5bf9a1249675f0cf703c7ec71c377",
+        "exit_code": 0,
+        "seconds": 16.84,
+        "log": "src__xml__node_string.cpp.log",
+        "diagnostics": "src__xml__node_string.cpp.yaml"
+      },
+      {
+        "source": "src/xml/parse_entry.cpp",
+        "source_sha256": "8e1f0f6d0d3ca236399b8ae1a2a3ddb81694a1fa98c6be6491960fb06e9c707c",
+        "exit_code": 0,
+        "seconds": 11.42,
+        "log": "src__xml__parse_entry.cpp.log",
+        "diagnostics": "src__xml__parse_entry.cpp.yaml"
+      },
+      {
+        "source": "src/xml/pool_allocate.cpp",
+        "source_sha256": "e75114a4c328eb65da35f271563cd175e13fd0641ca669ab7a60234bee0278e2",
+        "exit_code": 0,
+        "seconds": 9.44,
+        "log": "src__xml__pool_allocate.cpp.log",
+        "diagnostics": "src__xml__pool_allocate.cpp.yaml"
+      },
+      {
+        "source": "src/xml/pool_append.cpp",
+        "source_sha256": "edb29b0d9d214a3fa78c8573862c2e33d086f65e2b9c57e592dfa3bcef222b12",
+        "exit_code": 0,
+        "seconds": 9.69,
+        "log": "src__xml__pool_append.cpp.log",
+        "diagnostics": "src__xml__pool_append.cpp.yaml"
+      },
+      {
+        "source": "src/xml/pool_clear.cpp",
+        "source_sha256": "a8c0404cbf926c1be2ab8f0610398531e5c4b5e68db8aebb0059922572f8a095",
+        "exit_code": 0,
+        "seconds": 8.15,
+        "log": "src__xml__pool_clear.cpp.log",
+        "diagnostics": "src__xml__pool_clear.cpp.yaml"
+      },
+      {
+        "source": "src/xml/pool_destruct.cpp",
+        "source_sha256": "2521ca4f44bf2230e2216e98d10d8d9391874e9460cd463ea9dad133799d4dc7",
+        "exit_code": 0,
+        "seconds": 9.35,
+        "log": "src__xml__pool_destruct.cpp.log",
+        "diagnostics": "src__xml__pool_destruct.cpp.yaml"
+      },
+      {
+        "source": "src/xml/pool_release.cpp",
+        "source_sha256": "ad9c09b5ca0771fefae0d65be8fdfa85160d4171375a87fa1b23ca614372462a",
+        "exit_code": 0,
+        "seconds": 9.08,
+        "log": "src__xml__pool_release.cpp.log",
+        "diagnostics": "src__xml__pool_release.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/bootstrap.cpp",
+        "source_sha256": "f441709bdfc70d52ad2d9ebbba59cae5c3d2d9482c1301b85a8fd40a6328986b",
+        "exit_code": 0,
+        "seconds": 0.23,
+        "log": "src__runtime__bootstrap.cpp.log",
+        "diagnostics": "src__runtime__bootstrap.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/thread_launch.cpp",
+        "source_sha256": "8f0d0d6f1b1007bd922ed0adfc441fd29c624e9ad751dc4a479485a0219b5f57",
+        "exit_code": 0,
+        "seconds": 0.15,
+        "log": "src__runtime__thread_launch.cpp.log",
+        "diagnostics": "src__runtime__thread_launch.cpp.yaml"
+      },
+      {
+        "source": "src/runtime/recovered_effects.cpp",
+        "source_sha256": "509a4695c2c1e597c3a334d555eeda905f0be191a9ac342740da4b6f3835a786",
+        "exit_code": 0,
+        "seconds": 5.44,
+        "log": "src__runtime__recovered_effects.cpp.log",
+        "diagnostics": "src__runtime__recovered_effects.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_cleanup.cpp",
+        "source_sha256": "5f0ccc88416adbce6655c351e2dd171b67c9e47fcf78fd1c2e9d675e6a2b83a8",
+        "exit_code": 0,
+        "seconds": 5.22,
+        "log": "src__platform__hook_cleanup.cpp.log",
+        "diagnostics": "src__platform__hook_cleanup.cpp.yaml"
+      },
+      {
+        "source": "src/platform/hook_engine_adapters.cpp",
+        "source_sha256": "48a24993e4a1e0271e7c293e7abad6cf9d08de63c7eb0e879d9766af4ba80f73",
+        "exit_code": 0,
+        "seconds": 8.75,
+        "log": "src__platform__hook_engine_adapters.cpp.log",
+        "diagnostics": "src__platform__hook_engine_adapters.cpp.yaml"
+      },
+      {
+        "source": "src/config/pipeline.cpp",
+        "source_sha256": "adc504c6704224808c041bd454c95801563240e915c7a91fca16ab77032b3c8a",
+        "exit_code": 0,
+        "seconds": 5.66,
+        "log": "src__config__pipeline.cpp.log",
+        "diagnostics": "src__config__pipeline.cpp.yaml"
+      }
+    ],
+    "files": 138,
+    "failed": []
+  },
+  "limits": [
+    "Compiler AST records include template instantiations/constructors and are not a count of unique logical functions.",
+    "DeclRefExpr/MemberExpr collection is not a complete program reachability graph; virtual/callback/automatic lifetime/CRT/TLS/development API roots remain live.",
+    "Files with no recorded function definition can contain declarations, constants or definitions not captured by this namespace-filtered AST scan.",
+    "No globally dead function or TU was proved by this scan; no runtime/reference function or TU is deleted.",
+    "Clang-Tidy candidates are individually triaged, not auto-fixed. One exceptional teardown warning remains a follow-up rather than a verified fix."
+  ]
+}

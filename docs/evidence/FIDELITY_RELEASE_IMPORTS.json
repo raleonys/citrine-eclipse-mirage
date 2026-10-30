@@ -1,0 +1,53 @@
+{
+  "classification": "NOT_RELEASE",
+  "evidence_class": "LLVM_MINGW_X64_RELEASE_DEVELOPMENT_DLL_READ_ONLY",
+  "dll_sha256": "6e5097a129aec8bd1e53c3d0ccb829cd5668302e8bbc52fc1590c825a9d2c331",
+  "exports": {
+    "DllMain": {
+      "ordinal": 1,
+      "rva": "0x74f40",
+      "forwarded": false
+    },
+    "DllShutdown": {
+      "ordinal": 3,
+      "rva": "0x74e60",
+      "forwarded": false
+    },
+    "SURGE": {
+      "ordinal": 2,
+      "rva": "0x74f30",
+      "forwarded": false
+    }
+  },
+  "export_check": "PASS_PUBLIC_C_EXPORT_CONTRACT",
+  "imports": [
+    "MSWSOCK.DLL",
+    "KERNEL32.DLL",
+    "USER32.DLL",
+    "SHELL32.DLL",
+    "WS2_32.DLL",
+    "CRYPT32.DLL",
+    "LIBC++.DLL",
+    "LIBUNWIND.DLL",
+    "API-MS-WIN-CRT-LOCALE-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STDIO-L1-1-0.DLL",
+    "API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-TIME-L1-1-0.DLL",
+    "API-MS-WIN-CRT-STRING-L1-1-0.DLL",
+    "API-MS-WIN-CRT-CONVERT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-MATH-L1-1-0.DLL",
+    "API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL",
+    "API-MS-WIN-CRT-PRIVATE-L1-1-0.DLL",
+    "API-MS-WIN-CRT-HEAP-L1-1-0.DLL"
+  ],
+  "kernel_copy_imports": {
+    "GetFileInformationByHandle": true,
+    "GetFileInformationByHandleEx": true,
+    "CopyFileW": true
+  },
+  "crypt32_imports": [
+    "CryptQueryObject"
+  ],
+  "native_msvc_golden": "NOT_RUN",
+  "updated_game_retest": "NOT_RUN"
+}

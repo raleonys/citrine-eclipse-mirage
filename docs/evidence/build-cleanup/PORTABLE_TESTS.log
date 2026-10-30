@@ -1,0 +1,47 @@
+Test project /workspace/yellowfield/build/portable
+      Start  1: portable_calendar
+ 1/21 Test  #1: portable_calendar .........................   Passed    0.01 sec
+      Start  2: portable_parser
+ 2/21 Test  #2: portable_parser ...........................   Passed    0.01 sec
+      Start  3: portable_hash
+ 3/21 Test  #3: portable_hash .............................   Passed    0.06 sec
+      Start  4: portable_config_order
+ 4/21 Test  #4: portable_config_order .....................   Passed    0.01 sec
+      Start  5: portable_config_hash
+ 5/21 Test  #5: portable_config_hash ......................   Passed    0.12 sec
+      Start  6: portable_config_hash_model_differential
+ 6/21 Test  #6: portable_config_hash_model_differential ...   Passed    0.01 sec
+      Start  7: portable_host_hooks
+ 7/21 Test  #7: portable_host_hooks .......................   Passed    0.01 sec
+      Start  8: vdf_parser_regressions
+ 8/21 Test  #8: vdf_parser_regressions ....................   Passed    0.06 sec
+      Start  9: infrastructure_golden_pe
+ 9/21 Test  #9: infrastructure_golden_pe ..................   Passed    0.43 sec
+      Start 10: infrastructure_named_imports
+10/21 Test #10: infrastructure_named_imports ..............   Passed    0.07 sec
+      Start 11: infrastructure_msvc_link
+11/21 Test #11: infrastructure_msvc_link ..................   Passed    0.07 sec
+      Start 12: infrastructure_ownership_packaging
+12/21 Test #12: infrastructure_ownership_packaging ........   Passed    1.37 sec
+      Start 13: infrastructure_target_requirements
+13/21 Test #13: infrastructure_target_requirements ........   Passed    0.32 sec
+      Start 14: infrastructure_vendor_contract
+14/21 Test #14: infrastructure_vendor_contract ............   Passed    2.63 sec
+      Start 15: infrastructure_wine_runner
+15/21 Test #15: infrastructure_wine_runner ................   Passed    0.87 sec
+      Start 16: infrastructure_build_partition
+16/21 Test #16: infrastructure_build_partition ............   Passed    0.38 sec
+      Start 17: infrastructure_size_evidence
+17/21 Test #17: infrastructure_size_evidence ..............   Passed    0.22 sec
+      Start 18: vendor_api_smoke
+18/21 Test #18: vendor_api_smoke ..........................   Passed    0.01 sec
+      Start 19: vendor_io_contracts
+19/21 Test #19: vendor_io_contracts .......................   Passed    0.01 sec
+      Start 20: vendor_source_integrity
+20/21 Test #20: vendor_source_integrity ...................   Passed    0.50 sec
+      Start 21: vendor_pegtl_smoke
+21/21 Test #21: vendor_pegtl_smoke ........................   Passed    0.00 sec
+
+100% tests passed out of 21
+
+Total Test time (real) =   7.16 sec

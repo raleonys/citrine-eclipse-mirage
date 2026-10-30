@@ -1,0 +1,35 @@
+Test project /workspace/yellowfield/build/portable
+      Start  1: portable_calendar
+ 1/15 Test  #1: portable_calendar ....................   Passed    0.01 sec
+      Start  2: portable_parser
+ 2/15 Test  #2: portable_parser ......................   Passed    0.01 sec
+      Start  3: portable_hash
+ 3/15 Test  #3: portable_hash ........................   Passed    0.16 sec
+      Start  4: portable_config_order
+ 4/15 Test  #4: portable_config_order ................   Passed    0.02 sec
+      Start  5: portable_config_hash
+ 5/15 Test  #5: portable_config_hash .................   Passed    0.23 sec
+      Start  6: portable_host_hooks
+ 6/15 Test  #6: portable_host_hooks ..................   Passed    0.02 sec
+      Start  7: infrastructure_golden_pe
+ 7/15 Test  #7: infrastructure_golden_pe .............   Passed    0.29 sec
+      Start  8: infrastructure_named_imports
+ 8/15 Test  #8: infrastructure_named_imports .........   Passed    0.16 sec
+      Start  9: infrastructure_msvc_link
+ 9/15 Test  #9: infrastructure_msvc_link .............   Passed    0.13 sec
+      Start 10: infrastructure_ownership_packaging
+10/15 Test #10: infrastructure_ownership_packaging ...   Passed    0.45 sec
+      Start 11: infrastructure_target_requirements
+11/15 Test #11: infrastructure_target_requirements ...   Passed    0.13 sec
+      Start 12: infrastructure_vendor_contract
+12/15 Test #12: infrastructure_vendor_contract .......   Passed    0.48 sec
+      Start 13: vendor_api_smoke
+13/15 Test #13: vendor_api_smoke .....................   Passed    0.00 sec
+      Start 14: vendor_source_integrity
+14/15 Test #14: vendor_source_integrity ..............   Passed    0.41 sec
+      Start 15: vendor_pegtl_smoke
+15/15 Test #15: vendor_pegtl_smoke ...................   Passed    0.00 sec
+
+100% tests passed out of 15
+
+Total Test time (real) =   2.52 sec

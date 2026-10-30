@@ -1,0 +1,38 @@
+Test project /workspace/yellowfield/build/runtime-debug
+      Start   1: application_runtime_contracts
+ 1/15 Test   #1: application_runtime_contracts ............   Passed    2.30 sec
+      Start  19: socket_retirement_contracts
+ 2/15 Test  #19: socket_retirement_contracts ..............   Passed    0.29 sec
+      Start  20: socket_dll_retirement_contracts
+ 3/15 Test  #20: socket_dll_retirement_contracts ..........   Passed    6.02 sec
+      Start  21: application_shutdown_failure_contracts
+ 4/15 Test  #21: application_shutdown_failure_contracts ...   Passed    4.54 sec
+      Start  22: socket_close_semantics_contracts
+ 5/15 Test  #22: socket_close_semantics_contracts .........   Passed    0.16 sec
+      Start  23: timer_failure_contracts
+ 6/15 Test  #23: timer_failure_contracts ..................   Passed    0.37 sec
+      Start  24: net_failure_contracts
+ 7/15 Test  #24: net_failure_contracts ....................   Passed    0.37 sec
+      Start  25: extra_library_failure_contracts
+ 8/15 Test  #25: extra_library_failure_contracts ..........   Passed    0.32 sec
+      Start  28: session_flow_contracts
+ 9/15 Test  #28: session_flow_contracts ...................   Passed    0.11 sec
+      Start  30: network_policy_contracts
+10/15 Test  #30: network_policy_contracts .................   Passed    3.70 sec
+      Start  32: handler_pool_contracts
+11/15 Test  #32: handler_pool_contracts ...................   Passed    0.64 sec
+      Start  34: listener_port_contracts
+12/15 Test  #34: listener_port_contracts ..................   Passed    0.64 sec
+      Start  36: hook_transaction_contracts
+13/15 Test  #36: hook_transaction_contracts ...............   Passed    0.18 sec
+      Start  37: cleanup_retry_contracts
+14/15 Test  #37: cleanup_retry_contracts ..................   Passed    0.69 sec
+      Start 199: dll_public_lifecycle
+15/15 Test #199: dll_public_lifecycle .....................   Passed    0.84 sec
+
+100% tests passed out of 15
+
+Label Time Summary:
+production    =  21.17 sec*proc (15 tests)
+
+Total Test time (real) =  21.18 sec

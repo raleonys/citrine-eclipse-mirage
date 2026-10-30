@@ -1,0 +1,2 @@
+FAIL: failed Client construction loses native rollback ownership
+WINE_PROGRAM_EXIT=1

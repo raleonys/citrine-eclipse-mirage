@@ -1,0 +1,228 @@
+{
+  "schema": "surge.script-ownership.v1",
+  "files": {
+    "scripts/build_orchestration/build_common.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build common",
+      "role": "AUTOMATION"
+    },
+    "scripts/build_orchestration/build_crt_acceptance.cmd": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build crt acceptance",
+      "role": "HUMAN_LAUNCHER"
+    },
+    "scripts/build_orchestration/build_crt_acceptance.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build crt acceptance",
+      "role": "AUTOMATION"
+    },
+    "scripts/build_orchestration/build_debug.cmd": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build debug",
+      "role": "HUMAN_LAUNCHER"
+    },
+    "scripts/build_orchestration/build_debug.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build debug",
+      "role": "AUTOMATION"
+    },
+    "scripts/build_orchestration/build_native_acceptance.cmd": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build native acceptance",
+      "role": "HUMAN_LAUNCHER"
+    },
+    "scripts/build_orchestration/build_native_acceptance.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build native acceptance",
+      "role": "AUTOMATION"
+    },
+    "scripts/build_orchestration/build_production.cmd": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build production",
+      "role": "HUMAN_LAUNCHER"
+    },
+    "scripts/build_orchestration/build_production.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build production",
+      "role": "AUTOMATION"
+    },
+    "scripts/build_orchestration/build_profile.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build profile",
+      "role": "AUTOMATION"
+    },
+    "scripts/build_orchestration/build_unstable.cmd": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build unstable",
+      "role": "HUMAN_LAUNCHER"
+    },
+    "scripts/build_orchestration/build_unstable.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "build unstable",
+      "role": "AUTOMATION"
+    },
+    "scripts/check_falcion_golden_cleaning.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "check falcion golden cleaning",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_human_launcher_contract.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "check human launcher contract",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_integration_requirements.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "check integration requirements",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_manifest.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "check manifest",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_metadata_ownership.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "check metadata ownership",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_msvc_build_evidence.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "check msvc build evidence",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_msvc_shipping_link_command.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "check msvc shipping link command",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_repository_contract.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "check repository contract",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/extract_source.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "extract source",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/golden_policy.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "golden policy",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/package_source.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "package source",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/pe_resources.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "pe resources",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/project_files.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "project files",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/restore_vendor_links.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "restore vendor links",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/run_golden_pipeline.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "run golden pipeline",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/run_source_qa.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "run source qa",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/ursynex_golden_finalizer.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "ursynex golden finalizer",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/vendor_sync.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "vendor sync",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/vendor_toolchain_status.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "vendor toolchain status",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/verify_aryra_golden_layout.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "verify aryra golden layout",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/verify_corvexon_golden_trail.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "verify corvexon golden trail",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/verify_mustavex_golden_metadata.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "verify mustavex golden metadata",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/verify_sources.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "verify sources",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "tools/inspect_dll.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "inspect dll",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/run_wine_test.py": {
+      "owner": "SURGE local validation",
+      "purpose": "Preserve actual Wine program exit and output without inheriting unrelated service pipe lifetimes",
+      "origin": "New SURGE implementation; regression-tested with ordinary subprocesses"
+    },
+    "scripts/check_dll_exports.py": {
+      "owner": "SURGE public ABI workstream",
+      "purpose": "Read-only application export and ordinal validation",
+      "role": "AUTOMATION"
+    },
+    "scripts/generate_avatar_data.py": {
+      "owner": "SURGE avatar data integration",
+      "purpose": "Verify pinned profile/fallback PNG inputs and generate private read-only C++ data",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/clear_tool_python_cache.py": {
+      "owner": "SURGE local build hygiene",
+      "purpose": "Remove only known generated Python caches for manifest-owned first-party tools; never refresh source manifests",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/import_descriptor_order.py": {
+      "owner": "SURGE Golden import descriptor normalization",
+      "purpose": "Bounded import-descriptor permutation preserving all thunk/name/IAT bytes",
+      "role": "AUTOMATION"
+    },
+    "scripts/prepare_hook_engine.py": {
+      "owner": "SURGE hook lifecycle",
+      "purpose": "Prepare and verify pinned hook engine build copy without modifying vendor input",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_build_partition.py": {
+      "owner": "SURGE target ownership",
+      "purpose": "Fail closed on reference code or source API contamination of production targets/maps"
+    },
+    "scripts/audit_translation_units.py": {
+      "owner": "SURGE translation-unit audit",
+      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source"
+    },
+    "scripts/collect_size_evidence.py": {
+      "owner": "SURGE size evidence",
+      "purpose": "Read-only existing DLL/MAP/current COFF object collection; no rebuild or promotion",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    }
+  }
+}

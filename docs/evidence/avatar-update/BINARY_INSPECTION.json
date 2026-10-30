@@ -1,0 +1,27 @@
+{
+  "schema": "surge.embedded-avatar-binary-inspection.v1",
+  "classification": "NOT_RELEASE",
+  "raw_cross_dll_sha256": "db3a86274a4aee22d991f0d266d86f6c60d7002931da44aa12a487e862a3842c",
+  "profile_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+  "profile_exact_occurrences": 1,
+  "profile_bytes": 3840,
+  "old_profile_occurrences": 0,
+  "fallback_exact_occurrences": 1,
+  "pe_resource_paths": [
+    [
+      16,
+      1,
+      1033
+    ]
+  ],
+  "png_pe_resources": 0,
+  "source_implementation_changes": 0,
+  "native_msvc_golden": "NOT_RUN",
+  "profile_section": ".rdata",
+  "profile_section_writable": false,
+  "public_exports": {
+    "DllMain": 1,
+    "SURGE": 2,
+    "DllShutdown": 3
+  }
+}

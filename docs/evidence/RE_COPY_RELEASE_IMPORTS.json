@@ -1,0 +1,26 @@
+{
+  "classification": "NOT_RELEASE",
+  "evidence_class": "LLVM_MINGW_X64_RELEASE_DEVELOPMENT_DLL",
+  "dll_sha256": "10491f2810b2dcaa39b0aacf2016ccf2c36037596dbb4da1cffa54b6e031c285",
+  "get_file_information_by_handle_static_import": true,
+  "get_file_information_by_handle_ex_static_import": true,
+  "copy_file_w_static_import": true,
+  "exports": {
+    "DllMain": [
+      1,
+      478176,
+      false
+    ],
+    "DllShutdown": [
+      3,
+      477952,
+      false
+    ],
+    "SURGE": [
+      2,
+      478160,
+      false
+    ]
+  },
+  "native_msvc_golden": "NOT_RUN"
+}

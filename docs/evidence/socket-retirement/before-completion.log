@@ -1,0 +1,2 @@
+FAIL: session capacity retired before IO cancellation completions
+WINE_PROGRAM_EXIT=1

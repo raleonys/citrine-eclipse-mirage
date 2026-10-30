@@ -1,0 +1,35 @@
+/* 0x18004895c FUN_18004895c; Evidence ev_8a94e5d2bae457c9f6069398c3e0e8fd7c98e5f2f196911f543d5057891ff205 */
+
+/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */
+
+DWORD FUN_18004895c(HANDLE param_1,ulonglong *param_2)
+
+{
+  BOOL BVar1;
+  DWORD DVar2;
+  undefined1 auStack_68 [32];
+  _BY_HANDLE_FILE_INFORMATION local_48;
+  ulonglong local_10;
+  
+  local_10 = DAT_1800a1580 ^ (ulonglong)auStack_68;
+  BVar1 = GetFileInformationByHandleEx(param_1,0x12,param_2,0x18);
+  if (BVar1 == 0) {
+    DVar2 = GetLastError();
+    if ((DVar2 == 0x32) || (DVar2 == 0x57)) {
+      BVar1 = GetFileInformationByHandle(param_1,&local_48);
+      if (BVar1 == 0) {
+        DVar2 = GetLastError();
+      }
+      else {
+        *param_2 = (ulonglong)local_48.dwVolumeSerialNumber;
+        param_2[1] = local_48._44_8_;
+        DVar2 = 0;
+        param_2[2] = 0;
+      }
+    }
+  }
+  else {
+    DVar2 = 0;
+  }
+  return DVar2;
+}

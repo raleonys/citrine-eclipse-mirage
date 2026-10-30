@@ -1,0 +1,73 @@
+{
+  "schema": "surge.re-copy-evidence.v1",
+  "original_dll_sha256_from_supplied_re": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "raw_original_dll_executed": false,
+  "raw_original_dll_available_for_new_capture": false,
+  "inputs": {
+    "anadius-all-functions.pseudo.c": {
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "bytes": 3320290
+    },
+    "anadius-all-functions.asm.txt": {
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "bytes": 4467796
+    }
+  },
+  "excerpts": [
+    {
+      "rva": "0x048d20",
+      "input": "anadius-all-functions.pseudo.c",
+      "text_normalization": "UTF8 universal-newline decode; function marker to next marker; trailing whitespace normalized to one LF",
+      "excerpt": "metadata/RE_COPY_048D20_pseudo.txt",
+      "excerpt_sha256": "4b97a6a99dd388c8a778a607137f7d2950337980755e85142d3c414d106d29f7"
+    },
+    {
+      "rva": "0x048d20",
+      "input": "anadius-all-functions.asm.txt",
+      "text_normalization": "UTF8 universal-newline decode; function marker to next marker; trailing whitespace normalized to one LF",
+      "excerpt": "metadata/RE_COPY_048D20_asm.txt",
+      "excerpt_sha256": "14d6b28daeec89e6efab8cd2ab2562e8fd6a7b7755081cc7186babd00925b8cf"
+    },
+    {
+      "rva": "0x04895c",
+      "input": "anadius-all-functions.pseudo.c",
+      "text_normalization": "UTF8 universal-newline decode; function marker to next marker; trailing whitespace normalized to one LF",
+      "excerpt": "metadata/RE_COPY_04895C_pseudo.txt",
+      "excerpt_sha256": "f2ea7e6d206627e7cdf39a76649c77602047d362b07f3f430a06017011c27af0"
+    },
+    {
+      "rva": "0x04895c",
+      "input": "anadius-all-functions.asm.txt",
+      "text_normalization": "UTF8 universal-newline decode; function marker to next marker; trailing whitespace normalized to one LF",
+      "excerpt": "metadata/RE_COPY_04895C_asm.txt",
+      "excerpt_sha256": "4d538132e0841673ee600da34d14e8f102dd76a13a435fa59a9c3426d72efdcf"
+    },
+    {
+      "rva": "0x0489f4",
+      "input": "anadius-all-functions.pseudo.c",
+      "text_normalization": "UTF8 universal-newline decode; function marker to next marker; trailing whitespace normalized to one LF",
+      "excerpt": "metadata/RE_COPY_0489F4_pseudo.txt",
+      "excerpt_sha256": "e769feaba7ac6ae5aca9826062ca1e875f82b06d242c1fb949d78564122d7435"
+    },
+    {
+      "rva": "0x0489f4",
+      "input": "anadius-all-functions.asm.txt",
+      "text_normalization": "UTF8 universal-newline decode; function marker to next marker; trailing whitespace normalized to one LF",
+      "excerpt": "metadata/RE_COPY_0489F4_asm.txt",
+      "excerpt_sha256": "6b58787c2fa87e9a0431ad5e5feefb470e58bd2297bc12cec8750aaded40b965"
+    }
+  ],
+  "supplied_re_projection": {
+    "path": "anadius-content-handlers-source/content_handlers.hpp",
+    "sha256": "3d7e56eac5fe80d0a76cec2baa7a160dc7a2e32d06b1d2fb18ff006cdc514ba7",
+    "boundary": "copy_overwrite_048d20 only, documented mode2 CopyFileW"
+  },
+  "critical_assembly": [
+    "048d52 AND ESI,0xf",
+    "031b4c MOV R8D,0x2;031b52 CALL048d20",
+    "048e96 CMP target_time,source_time;048e9a JGE identity_path",
+    "048f07/048f4e call04895c",
+    "048fcb/048fd1 abort on close failure"
+  ],
+  "return_scope": "bool and Win32 error fields; undefined padding/source-level ABI not claimed recovered"
+}

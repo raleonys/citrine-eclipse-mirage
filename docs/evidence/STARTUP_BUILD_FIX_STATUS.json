@@ -1,0 +1,107 @@
+{
+  "schema": "yellowfield.startup-build-fix.v1",
+  "task": "YF-STARTUP-BUILD-20261029",
+  "classification": "NOT_RELEASE",
+  "state": "IMPLEMENTED_CROSS_TESTED_ACTUAL_GAME_RETEST_PENDING",
+  "parent_source_package": "yellowfield-bluefield-aligned-source.zip",
+  "parent_sha256": "42b42e173d27d41fc8b5a7727f4b9243d9d122733f365245eadaec76e61854c5",
+  "source_package": "yellowfield-startup-build-fix-source.zip",
+  "owner_reports": [
+    "Build orchestration console has confusing titles and raw cleanup JSON",
+    "dist/preloader_l.dll does not open the game; Bluefield worked; config must remain optional"
+  ],
+  "user_game_symptom": "NO_VISIBLE_GAME_START",
+  "game_name": "NOT_SUPPLIED",
+  "game_failure_root_cause": "NOT_CONFIRMED_WITH_ACTUAL_GAME",
+  "input_log": {
+    "path": "metadata/STARTUP_BUILD_FIX_USER_NATIVE_INPUT.log",
+    "bytes": 79850,
+    "sha256": "02ab1157edb38dc1f9c4afbcaa72771d691f4230fdde8ccfb004c66b5bd45dbd",
+    "reported_checkout_basename": "yellowfield-production-import-fix-source",
+    "observed_error": "C2589 fake_win32.cpp159/160; native build exits2; no CTest/game execution in this log",
+    "exact_user_source_zip_identity": "NOT_VERIFIED_FROM_FOLDER_NAME"
+  },
+  "verified_defects": {
+    "registry_startup_wait": {
+      "before": "Native registry callback held registry_gate while waiting for all startup phases, blocking peer registry callback",
+      "regression": "metadata/STARTUP_WAIT_BEFORE.xml",
+      "before_exit_code": 1,
+      "before_message": "startup registry wait blocked peer callback needed to finish startup",
+      "fix": "Use exact supplied Bluefield callback_lock Guard/Pause across registry phase wait; binding lease and recursive acquisitions retained/restored, LastError preserved",
+      "reference": "Bluefield src/hooks/callback_lock.hpp and docs/RE_SOURCE_DEVIATIONS_FIX19.md",
+      "not_claimed": "Actual game failure proven or fixed"
+    },
+    "independent_minhook_fixture": {
+      "cause": "Fixture links vendor MinHook only, not preloader_l_core, so core PUBLIC NOMINMAX never propagates",
+      "fix": "Private NOMINMAX on hook_engine_fixture_tests; vendor and test assertions unchanged"
+    }
+  },
+  "build_console": {
+    "cache_cleanup": "Still removes only manifest-owned generated Python bytecode; success quiet, detailed JSON under selected build/PYTHON_CACHE_CLEANUP.json, errors nonzero/stderr",
+    "labels": [
+      "COMPILE ONLY",
+      "DEBUG BUILD",
+      "NATIVE ACCEPTANCE",
+      "STATIC CRT ACCEPTANCE",
+      "PRODUCTION BUILD"
+    ],
+    "publication_or_gates_changed": false
+  },
+  "other_comparison_findings": {
+    "config_optional": "Retained; no config prerequisite added; user no-config expectation accepted",
+    "config_provider_location": "Bluefield module-adjacent, Yellowfield executable-adjacent; source difference confirmed, deployment relevance not established; not silently switched",
+    "network_callback_serialization": "Current Yellowfield holds network_gate around callback, Bluefield locks attempt increment only; source difference, actual game causality unverified; not changed in this task"
+  },
+  "bluefield_import": {
+    "source": "src/hooks/callback_lock.hpp",
+    "destination": "include/preloader_l/platform/callback_lock.hpp",
+    "sha256": "377e51fed5bc97dfdb39306574ef191dc3ded3ce488c04c5dda56f1dc0eea0fd",
+    "byte_identical": true,
+    "scope": "Required native hook lifecycle dependency; no donor config/transport/application bulk copy"
+  },
+  "native_msvc_updated_source": "NOT_RUN",
+  "actual_game_retest": "PENDING_OWNER_WINDOWS_RETEST",
+  "game_source_package_confirmed_by_owner": "yellowfield-bluefield-aligned-source.zip",
+  "verification": {
+    "release": {
+      "passed": 173,
+      "total": 173,
+      "seconds": 102.26,
+      "parallel_jobs": 2,
+      "report": "metadata/STARTUP_BUILD_FIX_RELEASE_TESTS.xml"
+    },
+    "debug_affected": {
+      "passed": 8,
+      "total": 8,
+      "seconds": 4.25,
+      "report": "metadata/STARTUP_BUILD_FIX_DEBUG_TESTS.xml"
+    },
+    "no_config_dll": {
+      "cycles": 3,
+      "exit_code": 0,
+      "basename": "preloader_l.dll",
+      "config_files_absent_in": [
+        "host executable directory",
+        "supplied DLL directory"
+      ],
+      "report": "metadata/STARTUP_BUILD_FIX_NO_CONFIG_RUNTIME.log",
+      "scope": "Real development DLL with Wine; no actual game"
+    },
+    "infrastructure": {
+      "passed": 29,
+      "total": 29,
+      "report": "metadata/STARTUP_BUILD_FIX_INFRASTRUCTURE.log"
+    },
+    "resource_and_imports": {
+      "result": "PASS_DEVELOPMENT_RESOURCE_CHECK",
+      "report": "metadata/STARTUP_BUILD_FIX_RAW_DLL.json"
+    },
+    "powershell_cmd_execution": "NOT_RUN_REAL_WINDOWS",
+    "source_qa": {
+      "result": "PASS_SOURCE_QA",
+      "checks": 15,
+      "report": "metadata/STARTUP_BUILD_FIX_SOURCE_QA.json",
+      "final_check": "Same15 checks rerun into build/qa after final status/manifest recording"
+    }
+  }
+}

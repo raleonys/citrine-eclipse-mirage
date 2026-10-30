@@ -1,0 +1,69 @@
+{
+  "schema": "surge.recovery-validation.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_LOCAL_RECOVERY_CHECKS_NATIVE_ACCEPTANCE_PENDING",
+  "date": "2026-10-30",
+  "execution_class": "LLVM-MinGW 20251118 Clang21.1.6 x64 / Wine; not native Windows/MSVC",
+  "red_green": {
+    "before_failing_scenarios": 8,
+    "after_passing_scenarios": 8,
+    "permanent_executables": 2,
+    "evidence": "docs/evidence/recovery/RED_GREEN.json"
+  },
+  "release": {
+    "passed": 198,
+    "total": 198,
+    "log": "docs/evidence/recovery/RELEASE_TESTS.log"
+  },
+  "affected_debug": {
+    "passed": 8,
+    "total": 8,
+    "log": "docs/evidence/recovery/DEBUG_TESTS.log"
+  },
+  "asynchronous_oracle_correction": {
+    "initial_failure_preserved": "docs/evidence/recovery/DEBUG_INITIAL_TESTS.log",
+    "network_debug_consecutive_passes": 10,
+    "repeat_log": "docs/evidence/recovery/DEBUG_NETWORK_REPEAT.log"
+  },
+  "source_qa": {
+    "passed_groups": 17,
+    "total_groups": 17,
+    "result": "PASS_SOURCE_QA",
+    "log": "docs/evidence/recovery/SOURCE_QA.log"
+  },
+  "production_only": {
+    "build_testing": false,
+    "source_api_dll": false,
+    "configure": "PASS",
+    "build": "PASS",
+    "boundary": "PASS_PRODUCTION_BOUNDARY",
+    "final_name_runtime_cycles": 3,
+    "optional_configs": "ABSENT",
+    "runtime_log": "docs/evidence/recovery/PRODUCTION_ONLY_RUNTIME.log"
+  },
+  "binary_inspection": {
+    "level": "RAW_LINK_OUTPUT_NOT_FINALIZED",
+    "production_exports": {
+      "DllMain": 1,
+      "SURGE": 2,
+      "DllShutdown": 3
+    },
+    "static_crypt_query_object": true,
+    "exact_readonly_avatars": true,
+    "only_versioninfo_resource": true,
+    "golden_shipping": "NOT_RUN"
+  },
+  "production_first_party_tus": 64,
+  "retained_reference_tus": 74,
+  "declared_public_header_changes": 0,
+  "vendor_payload_changes": 0,
+  "reference_helper_changes": 0,
+  "comparison_closure": "BLOCKED_NOT_RETIRED",
+  "manual_reviewed_donor_file_entries": 67,
+  "whole_file_semantic_closures": 0,
+  "native_msvc_golden": "NOT_RUN_FOR_CHANGED_SOURCE",
+  "game_acceptance": "NOT_RUN_FOR_CHANGED_SOURCE",
+  "owner_accepted_binary_is_current": false,
+  "dist_promotion": false,
+  "publication": false
+}

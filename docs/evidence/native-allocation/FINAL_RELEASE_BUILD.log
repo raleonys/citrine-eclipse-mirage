@@ -1,0 +1,12 @@
+[1/6] Verify the pinned hook engine build copy
+HOOK_ENGINE_BUILD_COPY=PASS
+[2/6] Verify the four active owner-supplied vendor trees
+asio: INSTALLED_MEMBER_HASHES_PASS
+minhook: INSTALLED_MEMBER_HASHES_PASS
+pegtl: INSTALLED_MEMBER_HASHES_PASS
+tinyxml2: INSTALLED_MEMBER_HASHES_PASS
+VENDOR_SYNC=PASS_BYTES_NOT_ACTIVE_PRODUCTION
+[3/6] Building CXX object CMakeFiles/net_failure_msvc_memory_replay_contracts.dir/tests/native/net_failure_tests.cpp.obj
+[4/6] Linking CXX executable net_failure_msvc_memory_replay_contracts.exe
+[5/6] Building CXX object CMakeFiles/net_failure_contracts.dir/tests/native/net_failure_tests.cpp.obj
+[6/6] Linking CXX executable net_failure_contracts.exe

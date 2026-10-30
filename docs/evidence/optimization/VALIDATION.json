@@ -1,0 +1,98 @@
+{
+  "schema": "surge.optimization-validation.v1",
+  "result": "PASS_LOCAL_CROSS_AND_SANITIZER_CHECKS_NATIVE_REACCEPTANCE_PENDING",
+  "classification": "NOT_RELEASE",
+  "date": "2026-10-30",
+  "release": {
+    "toolchain": "LLVM-MinGW20251118 / Clang21.1.6 UCRT x64; Wine",
+    "passed": 196,
+    "total": 196,
+    "log": "docs/evidence/optimization/RELEASE_TESTS.log"
+  },
+  "affected_debug": {
+    "passed": 21,
+    "total": 21,
+    "logs": [
+      "docs/evidence/optimization/DEBUG_TESTS.log",
+      "docs/evidence/optimization/DEBUG_CORPUS_TESTS.log"
+    ]
+  },
+  "source_qa": {
+    "passed_groups": 17,
+    "total_groups": 17,
+    "root_result": "PASS_SOURCE_QA",
+    "clean_zip_result": "PASS_SOURCE_QA"
+  },
+  "sanitizers": {
+    "platform": "Linux g++ ASAN+UBSAN",
+    "xml_reader_checks": 649,
+    "permanent_corpus_cases": 12087,
+    "findings": 0,
+    "differential_reference": "docs/evidence/optimization/XML_CORPUS_PARITY.json"
+  },
+  "clean_source_zip": {
+    "configure": "PASS",
+    "build_testing": false,
+    "development_source_api": false,
+    "production_build": "PASS",
+    "production_boundary": "PASS_PRODUCTION_BOUNDARY",
+    "load_start_profile_stop_unload_cycles": 3,
+    "runtime_exit_code": 0,
+    "same_reviewed_build_input_files": 3391,
+    "verification_source_zip_sha256": "9fea5a02ff54e2837dce44aafcfdf6f5dc6cccaa25b07b4300a9a2b90a1ec402",
+    "limits": "Final delivery changes only evidence/documentation after these exact build inputs were verified."
+  },
+  "compiler_audit": {
+    "baseline_cpp": 138,
+    "headers_observed": 139,
+    "baseline_compiler_failures": 0,
+    "changed_cpp_recheck": 4,
+    "changed_compiler_failures": 0,
+    "tidy_unique_baseline_candidates": 53,
+    "automatic_fixes": false,
+    "follow_up": "Exceptional Asio destructor resource-failure path; see STATIC_DIAGNOSTICS.json"
+  },
+  "binary_measurement": {
+    "evidence": "docs/evidence/optimization/BINARY_MEASUREMENTS.json",
+    "before_bytes": 1081856,
+    "after_bytes": 1077760,
+    "delta_bytes": -4096,
+    "scope": "Same-tree LLVM-MinGW Release only; not native MSVC gain"
+  },
+  "c_exports": {
+    "DllMain": 1,
+    "SURGE": 2,
+    "DllShutdown": 3
+  },
+  "source_api_exports": {
+    "before": 3347,
+    "after": 3347,
+    "added": 0,
+    "removed": 0
+  },
+  "preservation": {
+    "reference_cpp_unchanged": 74,
+    "production_cpp_count": 64,
+    "vendor_payloads_unchanged": 4,
+    "resource_and_avatars_unchanged": true,
+    "compiler_linker_policy_unchanged": true
+  },
+  "coff_collector": {
+    "regressions_passed": 14,
+    "actual_current_objects": 145,
+    "unsupported_actual_objects": 0,
+    "excludes_stale_objects_not_in_current_target_graph": true
+  },
+  "native_msvc": "NOT_RUN_FOR_CHANGED_CODE",
+  "golden_native": "NOT_RUN_FOR_CHANGED_CODE",
+  "game_acceptance": "NOT_RUN_FOR_CHANGED_CODE",
+  "prior_owner_accepted_dll_sha256": "4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b",
+  "prior_accepted_dll_is_current": false,
+  "publication": false,
+  "dist_promotion": false,
+  "remaining": [
+    "Native Windows/Golden and game reacceptance",
+    "Matching native MSVC before/after MAP/OBJ evidence for exact size contribution",
+    "Exceptional Asio teardown warning remains an explicitly reviewed follow-up"
+  ]
+}

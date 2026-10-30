@@ -1,0 +1,43 @@
+{
+  "schema": "surge.avatar-refresh-validation.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_LOCAL_EMBEDDED_PROFILE_REFRESH",
+  "parent_source_zip_sha256": "3c3ff7bb98cdfe4e9e82a3e7f4ba422fb7653aa54b65ad02a4bfd4a9bf4b3221",
+  "profile_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+  "profile_bytes": 3840,
+  "profile_dimensions": [
+    208,
+    208
+  ],
+  "fallback_sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+  "storage": "READ_ONLY_CPP_DATA_NOT_PE_RESOURCE",
+  "runtime_cpp_changes": 0,
+  "vendor_changes": 0,
+  "native_windows_msvc": "NOT_RUN",
+  "game_acceptance": "NOT_RUN",
+  "virustotal_causal_claim": false,
+  "dist_promotion": false,
+  "release_affected_tests": {
+    "passed": 4,
+    "total": 4
+  },
+  "debug_affected_tests": {
+    "passed": 2,
+    "total": 2
+  },
+  "real_dll_cycles": 3,
+  "real_dll_written_profile_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+  "real_dll_written_fallback_sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+  "release_no_log_test": "PASS_FRESH_APPLICATION_DATA_DIRECTORY",
+  "existing_global_debug_log_mtime_predates_dll_test": true,
+  "new_png_in_raw_dll": true,
+  "old_profile_in_raw_dll": false,
+  "png_pe_resources": 0,
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "groups": 17,
+    "vendor_tests": 19,
+    "vendor_skips": 0
+  },
+  "uploaded_archive_sha256": "78082441ebeae9284210d0e4b102f3eea849d149931b7bc7d56eef05b01b31c8"
+}

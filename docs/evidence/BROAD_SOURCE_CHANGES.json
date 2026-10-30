@@ -1,0 +1,155 @@
+{
+  "classification": "NOT_RELEASE",
+  "entries": [
+    {
+      "path": "CMakeLists.txt",
+      "kind": "MODIFIED",
+      "sha256": "39330a6f1c9b7552f2cfda982bda4ecb3970b4a40529505a3b10d64bf66955e0"
+    },
+    {
+      "path": "cmake/Tests.cmake",
+      "kind": "MODIFIED",
+      "sha256": "a6f3a2e8703d781f2f6bb071fcff83c2443f49cc2932d5ee8378a790d44872e9"
+    },
+    {
+      "path": "include/preloader_l/core/atomic_files.hpp",
+      "kind": "MODIFIED",
+      "sha256": "3713624abca0b0faf25f083e76ba66048cb8c0c31782670bccd7b84c9d5baf41"
+    },
+    {
+      "path": "include/preloader_l/runtime/event_queue.hpp",
+      "kind": "MODIFIED",
+      "sha256": "64995be69899a4b505e1c0fa7bbc264e5068c560692cd0020d8e2ca0b0c4aa36"
+    },
+    {
+      "path": "metadata/BUILD_PARTITION_POLICY.json",
+      "kind": "MODIFIED",
+      "sha256": "6da6dadf2fcb9871262086cba977c14b9747939e7745e21f8a493d10df7aad6b"
+    },
+    {
+      "path": "src/core/atomic_files.cpp",
+      "kind": "MODIFIED",
+      "sha256": "1a4bc007d62f8bafad4eca8ca496d1568c7c53652a6995afe9e74ceff02fb1ab"
+    },
+    {
+      "path": "src/handlers/misc_handlers.cpp",
+      "kind": "MODIFIED",
+      "sha256": "07f2378c5d1bd05b5f4191caa1ea0bfc385c8821f3a65a65b39d20c4adf64d76"
+    },
+    {
+      "path": "src/net/asio_service.cpp",
+      "kind": "MODIFIED",
+      "sha256": "58331e45a9b17977b014b7c990afbb01755cdca0b23535b37d8bb9a7418d0daa"
+    },
+    {
+      "path": "src/platform/atomic_files_windows.cpp",
+      "kind": "MODIFIED",
+      "sha256": "ab53b7af13377d85d77a46f9408302298a416f2af58eb771fd52e3bf79384212"
+    },
+    {
+      "path": "src/platform/dll_entry.cpp",
+      "kind": "MODIFIED",
+      "sha256": "7696c72b08c171256557163b78e074783ae1adc760b915a1418391eae48ff85b"
+    },
+    {
+      "path": "src/router/router.cpp",
+      "kind": "MODIFIED",
+      "sha256": "6afffd673cfeef3bdfcded6b29991133b43daf4aca81dda4aac5c1355957c184"
+    },
+    {
+      "path": "src/runtime/application.cpp",
+      "kind": "MODIFIED",
+      "sha256": "ed1fac0e05c4b8e6d72aadd64fd72fbe12521f79af2f9baee25c6c3dab8f9f20"
+    },
+    {
+      "path": "src/runtime/application_environment.cpp",
+      "kind": "MODIFIED",
+      "sha256": "0ceb4ee468d7de572cf41ae8d274b56c81f16406a1a6ff7419fb842e1a7170e7"
+    },
+    {
+      "path": "src/runtime/application_internal.hpp",
+      "kind": "MODIFIED",
+      "sha256": "6ef8719bac59ed71d1cc3a9145f6a66436c9623e99f587edda803212a9a8a025"
+    },
+    {
+      "path": "src/runtime/event_queue.cpp",
+      "kind": "MODIFIED",
+      "sha256": "a566622fe74ccd55571497a9a0c45be7f38048b9c794a8fa264fe4098e65c3a9"
+    },
+    {
+      "path": "src/runtime/execution.cpp",
+      "kind": "MODIFIED",
+      "sha256": "170b1eaa3efc78de562e76217dbac718760026e020afa3d69d12dc7a33065439"
+    },
+    {
+      "path": "src/runtime/startup.cpp",
+      "kind": "MODIFIED",
+      "sha256": "3e0753b6be877fc54c9f6eb441670d20fd9b7a3d9c88e59ecaee8d626a10d249"
+    },
+    {
+      "path": "tests/native/application_runtime_tests.cpp",
+      "kind": "MODIFIED",
+      "sha256": "29b41f42dd7cd45f3e78b90d1363cf8ebc97430e3fd228f1d89ee4e708d70697"
+    },
+    {
+      "path": "tests/native/atomic_staging_tests.cpp",
+      "kind": "ADDED",
+      "sha256": "6f5ce7b4fe83e8a09e9e766f9ccf37dae30dfb51a03447bfc5ae0d2d57056d48"
+    },
+    {
+      "path": "tests/native/cleanup_retry_tests.cpp",
+      "kind": "MODIFIED",
+      "sha256": "28f7e03f81ea57740ca3c547266d6f1e590f5c7151e03e2f0c0aa5f2ec0701e8"
+    },
+    {
+      "path": "tests/native/configuration_platform_tests.cpp",
+      "kind": "MODIFIED",
+      "sha256": "904e644ca45dfbf97a10b79bd18a15ab90a381b0e3441c10442c8df70f9a1c4a"
+    },
+    {
+      "path": "tests/native/environment_dialog_tests.cpp",
+      "kind": "ADDED",
+      "sha256": "03716f88a6839a3a163295bdcef4fa5be0d8057907d409ec1c0cbbc18876e36b"
+    },
+    {
+      "path": "tests/native/listener_port_tests.cpp",
+      "kind": "MODIFIED",
+      "sha256": "0a6f6c2ba0e2c2513d209d27796c24222bf6b673a372f696e9ebae88fc1c5f6b"
+    },
+    {
+      "path": "tests/native/network_policy_tests.cpp",
+      "kind": "MODIFIED",
+      "sha256": "9a5cfa6fc7c186c6caa9af87d5960618423b5f83d1da9ca196d7b7be6689a4b5"
+    },
+    {
+      "path": "tests/native/startup_publication_tests.cpp",
+      "kind": "ADDED",
+      "sha256": "3ee9e6d3c8f7e6d4bdb0ff1b852a43e486c7dffa8e76a1753e4856cfcd4179ff"
+    },
+    {
+      "path": "tests/support/runtime/cleanup_retry_fixture.cpp",
+      "kind": "MODIFIED",
+      "sha256": "1beb9b14f9827551000df5b29d6b98096f5d76c687060e823255004fbbfdd939"
+    },
+    {
+      "path": "tests/unit/dispatch/integration_tests.cpp",
+      "kind": "MODIFIED",
+      "sha256": "ef9e823e277f5b7affe67c48e2d6aa11db37e3bb313bde36e35afeba4dbc5f19"
+    },
+    {
+      "path": "tests/unit/execution/concurrency_tests.cpp",
+      "kind": "ADDED",
+      "sha256": "aaa78351bddbd65ab44510e2ef1dc1d6023edeec488989f26d242f354052484a"
+    },
+    {
+      "path": "tests/unit/misc_handlers/misc_handlers_tests.cpp",
+      "kind": "MODIFIED",
+      "sha256": "d87e6f8f6fabf0760ec2f6d2bd6c4d39ba28bdecbd70fa861157f8723376181a"
+    },
+    {
+      "path": "tests/unit/startup/startup_tests.cpp",
+      "kind": "MODIFIED",
+      "sha256": "44151ab669fbd4cf7108f532a3e86fb1042ea106392a43b5381e91d5a02b5e81"
+    }
+  ]
+}

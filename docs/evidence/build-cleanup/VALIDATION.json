@@ -1,0 +1,87 @@
+{
+  "schema": "surge.build-cleanup-validation.v1",
+  "classification": "NOT_RELEASE",
+  "result": "PASS_LOCAL_CLEANUP_VALIDATION_NATIVE_ACCEPTANCE_PENDING",
+  "execution_class": "LLVM-MinGW 20251118 Clang21.1.6 x64 / Wine; portable Linux; not native Windows/MSVC",
+  "parent_source_zip_sha256": "112a75990d5eee3fafc523bc15687372f64a7ce9b76141cd9a9f50a17de14536",
+  "release_tests": {
+    "passed": 205,
+    "total": 205
+  },
+  "affected_debug_tests": {
+    "passed": 23,
+    "total": 23
+  },
+  "portable_tests": {
+    "passed": 21,
+    "total": 21
+  },
+  "source_qa": {
+    "result": "PASS_SOURCE_QA",
+    "passed_groups": 17,
+    "total_groups": 17,
+    "log": "docs/evidence/build-cleanup/SOURCE_QA.log"
+  },
+  "production_cpp_count": 60,
+  "reference_cpp_count": 78,
+  "retained_cpp_body_deletions": 0,
+  "source_path_adaptation": {
+    "src/config/startup.cpp": "src/config/config_startup.cpp"
+  },
+  "new_test_targets": {
+    "production": [],
+    "reference": [
+      "config_hash_model_differential_contracts",
+      "achievement_storage_startup_model_contracts"
+    ],
+    "portable": [
+      "portable_config_hash_model_differential"
+    ]
+  },
+  "test_cases_lost": 0,
+  "production_boundary": "PASS_PRODUCTION_BOUNDARY",
+  "partition_regressions": {
+    "passed": 20,
+    "total": 20
+  },
+  "source_api_export_names": {
+    "before": 3346,
+    "after": 3346,
+    "added": 0,
+    "removed": 0
+  },
+  "production_exports": {
+    "DllMain": 1,
+    "SURGE": 2,
+    "DllShutdown": 3
+  },
+  "public_headers_changed": false,
+  "vendor_payloads_changed": false,
+  "resource_export_contracts_changed": false,
+  "compiler_linker_flags_changed": false,
+  "raw_llvm_dll_bytes": {
+    "before": 1083392,
+    "after": 1070080,
+    "delta": -13312,
+    "section_raw_delta": -6144,
+    "nonsection_tail_delta": -7168
+  },
+  "tls": "Release diagnostic guard removed; Debug callback parent instruction parity",
+  "native_windows_msvc_golden": "NOT_RUN_CHANGED_SOURCE",
+  "game_acceptance": "NOT_RUN_CHANGED_SOURCE",
+  "clean_delivery_receipt": "surge-build-cleanup-delivery-verification.json",
+  "donor_retirement": "BLOCKED_SEPARATE_REVIEW",
+  "deferred_audit_ids": [
+    "DC-012",
+    "DC-013",
+    "DC-014",
+    "DC-015",
+    "DC-016",
+    "DC-017",
+    "DC-018",
+    "DC-019"
+  ],
+  "vt_causal_rule_identified": false,
+  "dist_promotion": false,
+  "publication": false
+}

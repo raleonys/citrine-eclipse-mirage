@@ -1,0 +1,53 @@
+{
+  "schema": "surge.socket-retirement-review.v1",
+  "classification": "NOT_RELEASE",
+  "owner": "Explicit owner continuation of native socket ownership, safe retry and pending IO review",
+  "documentation": "docs/SOCKET_RETIREMENT.md",
+  "validation": "docs/evidence/socket-retirement/VALIDATION.json",
+  "parent_source_zip_sha256": "e0b6964082c4343359d824684b5c60e667867db54f089796862080a81f73d8ac",
+  "source": "src/net/asio_service.cpp",
+  "native_close": {
+    "success": "Release exact native record; retain completion owners until IO drain",
+    "would_block": "Retain exact native descriptor; retry with ordinary linger-off policy; never retry after success",
+    "other_errors": "Sticky uncertain quarantine; no subsequent numeric-handle access; cleanup failure retains Application and worker image lease",
+    "option_failure": "Keep retained ownership without closing; invalid/not-initialized descriptor becomes uncertain",
+    "force_clear_export_or_cfg": false,
+    "preconditions": "Exclusive first-party socket ownership and a live balanced Winsock scope"
+  },
+  "owned_boundaries": [
+    "IPv4/IPv6 listeners",
+    "published Client sockets",
+    "accepted callback temporaries",
+    "Client constructor failure",
+    "bind/listener rollback"
+  ],
+  "deferred_capacity": "validated session cap + 8, allocated before first-party socket acquisition",
+  "admission_on_retirement_failure": "STOP",
+  "client_ownership": "Strong until native close and read/write/timer completions retire; no strong back-reference to Impl",
+  "io_drain_attempt_ms": 100,
+  "ack_requires": [
+    "naturally stopped IO context",
+    "no pending accepts",
+    "all native wrappers retired",
+    "no deferred retained/uncertain observations",
+    "all Client read/write/timer counts zero"
+  ],
+  "end_to_end_preemptive_shutdown_bound": false,
+  "vendor_modifications": false,
+  "requires_modern_asio_release": false,
+  "public_header_changes": false,
+  "production_c_abi_changed": false,
+  "tests": [
+    "socket_retirement_contracts",
+    "socket_dll_retirement_contracts"
+  ],
+  "component_scenarios": 9,
+  "actual_dll_scenarios": 3,
+  "native_windows_msvc_golden": "PENDING_CHANGED_SOURCE_REEXECUTION",
+  "game_acceptance": "PENDING_CHANGED_SOURCE_REEXECUTION",
+  "vendor_internal_all_failure_paths_closed": false,
+  "donor_retirement": "BLOCKED",
+  "manual_reviewed_donor_file_entries": 76,
+  "whole_file_semantic_closures": 0,
+  "publication": false
+}
