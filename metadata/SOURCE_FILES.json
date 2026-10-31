@@ -1222,8 +1222,8 @@
       "sha256": "0a6f6c2ba0e2c2513d209d27796c24222bf6b673a372f696e9ebae88fc1c5f6b"
     },
     "tests/native/net_failure_tests.cpp": {
-      "bytes": 10209,
-      "sha256": "c71be336b92ad6463742f640822a9cbf0b448b01280234ba5853bcea92ccfbd4"
+      "bytes": 11369,
+      "sha256": "14b95782855137c3ecea5409f8bf27cd165a7b0bd925024d1407e677edbe548f"
     },
     "tests/native/network_policy_tests.cpp": {
       "bytes": 8922,
@@ -1246,8 +1246,8 @@
       "sha256": "602e5e58e8ebad3500e6b21c6229f412df58c65f81c1fd1cc91677d2ee32ee97"
     },
     "tests/native/socket_retirement_tests.cpp": {
-      "bytes": 11483,
-      "sha256": "4493c5fcb00ca626ffa38ececb006d1a49215e567bc73505d740e2488f82ff3e"
+      "bytes": 15891,
+      "sha256": "f020c67487efe9e583635f139313a6d120504a09cde1e6e9a3e0e3167dbee9cf"
     },
     "tests/native/startup_publication_tests.cpp": {
       "bytes": 3384,
@@ -11667,7 +11667,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
+    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },
