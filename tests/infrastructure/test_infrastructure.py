@@ -468,6 +468,53 @@ class ToolCacheTests(unittest.TestCase):
             self.assertNotEqual(0,cp.returncode)
             self.assertIn('TOOL_CACHE_CLEANUP: FAIL:',cp.stderr)
 
+
+    def test_cleanup_report_rejects_source_destinations_before_mutation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'scripts').mkdir()
+            (root / 'metadata').mkdir()
+            (root / 'scripts/helper.py').write_text('value=1\n')
+            victim = root / 'metadata/METADATA_OWNERSHIP.json'
+            victim.write_bytes(b'original active record')
+            inventory.write_manifest(root)
+            baseline = victim.read_bytes()
+            cache = root / 'scripts/__pycache__'
+            cache.mkdir()
+            payload = cache / 'helper.cpython-313.pyc'
+            payload.write_bytes(b'fixture')
+
+            command = [sys.executable, '-B', str(ROOT / 'scripts/clear_tool_python_cache.py'),
+                       '--root', str(root), '--quiet', '--report', str(victim)]
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertNotEqual(0, result.returncode)
+            self.assertIn('beneath source build/', result.stderr)
+            self.assertEqual(baseline, victim.read_bytes())
+            self.assertTrue(payload.exists())
+
+            build = root / 'build'
+            build.mkdir()
+            linked = build / 'unsafe.json'
+            try:
+                linked.symlink_to(victim)
+            except (OSError, NotImplementedError):
+                pass
+            else:
+                command[-1] = str(linked)
+                result = subprocess.run(command, capture_output=True, text=True)
+                self.assertNotEqual(0, result.returncode)
+                self.assertEqual(baseline, victim.read_bytes())
+                self.assertTrue(payload.exists())
+
+            report = build / 'PYTHON_CACHE_CLEANUP.json'
+            command[-1] = str(report)
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual(['scripts/__pycache__/helper.cpython-313.pyc'],
+                             json.loads(report.read_text())['removed'])
+            self.assertEqual(baseline, victim.read_bytes())
+            self.assertFalse(list(build.glob('.*.partial')))
+
     def test_cleanup_removes_only_owned_generated_caches_without_refresh(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

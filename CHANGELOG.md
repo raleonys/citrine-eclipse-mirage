@@ -8,6 +8,7 @@ The 51 entries below are the merged pull requests verified through PR #61, linke
 
 ### Additional unreleased changes
 
+- Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe destinations before deleting caches.
 - Link Windows x64 and C++20 README badges to their source documentation and use a general Windows icon.
 - Remove redundant project-name declarations and branding-transition commentary from current documentation; existing independent technical contracts are unchanged.
 - Integrate the owner's final campaign artwork into the README hero, with exact PNG identity pinned in the branding contract and active source manifest.
