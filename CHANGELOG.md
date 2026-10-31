@@ -9,6 +9,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 ### Additional unreleased changes
 
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.
+- Add a Python 3.9+ README prerequisites badge linked to the development instructions.
 - Apply the previously approved `GPL-3.0-only` licensing policy with the complete GNU GPLv3 text in the root `LICENSE` and governance; preserve independent vendor licenses and add a README license badge.
 - Correct the owner-supplied README hero PNG to exactly 1400 x 1100 pixels, update its SHA-256 in branding and source manifest, and retain the existing README image link.
 - Link Windows x64 and C++20 README badges to their source documentation and use a general Windows icon.
