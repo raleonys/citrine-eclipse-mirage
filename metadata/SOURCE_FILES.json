@@ -1118,8 +1118,8 @@
       "sha256": "0f860de117e3786c4b58c5f74b3d5a34a1ba4e39bee1253ae563f917bd14a5a1"
     },
     "tests/infrastructure/test_build_partition.py": {
-      "bytes": 13841,
-      "sha256": "2be3f7fccf5bfa61469fcedc036e2aeeb36ca5896b69160094343bb82cc1e35d"
+      "bytes": 15998,
+      "sha256": "c09047dee5bb0856bc5a8ee7c072a1324492425cb7afa89a86c0c1eea0f3b89f"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
       "bytes": 2043,
