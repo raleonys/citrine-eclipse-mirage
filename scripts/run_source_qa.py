@@ -25,6 +25,8 @@ CHECKS = [
     ('Golden PE negative regressions', ['tests/infrastructure/test_pe_metadata_tools.py']),
     ('restricted named imports', ['tests/infrastructure/test_corvexon_mswsock_imports.py']),
     ('MSVC link negative regressions', ['scripts/check_msvc_shipping_link_command.py', '--self-test']),
+    ('first-party language audit regressions', ['tests/infrastructure/test_english_only_audit.py']),
+    ('first-party English-only prose gate', ['scripts/check_english_only.py', '--check']),
     ('SURGE infrastructure regressions', ['tests/infrastructure/test_infrastructure.py']),
     ('SURGE directive regressions', ['tests/infrastructure/test_requirements.py'])]
 

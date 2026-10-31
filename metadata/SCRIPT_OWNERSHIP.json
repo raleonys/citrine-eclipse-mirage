@@ -61,6 +61,11 @@
       "purpose": "build unstable",
       "role": "AUTOMATION"
     },
+    "scripts/check_english_only.py": {
+      "owner": "First-party language audit",
+      "purpose": "Read-only active-source language-signal audit and Markdown prose check",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
     "scripts/check_falcion_golden_cleaning.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "check falcion golden cleaning",
