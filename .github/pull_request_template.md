@@ -9,6 +9,8 @@ request when it changes an existing product decision.
 
 ## Branch policy
 
+- [ ] This PR is ready for review; draft mode is not used to track remaining
+      work or pending validation. Any merge blockers are recorded below.
 - [ ] Routine work reuses `bugfix`; a dedicated audit/project branch has a
       documented sustained scope, or a temporary exception has an explicit owner instruction.
 - [ ] No direct changes or pushes to `main`, shared-history rewrites, or branch

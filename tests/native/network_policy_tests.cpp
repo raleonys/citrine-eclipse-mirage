@@ -4,7 +4,9 @@
 #include <atomic>
 #include <chrono>
 #include <iostream>
+#include <memory>
 #include <stdexcept>
+#include <vector>
 
 using namespace preloader_l;
 using namespace std::chrono_literals;
@@ -76,6 +78,33 @@ void session_cap() {
         require(excess.closed()&&h.factory.created==3,"IPv6 and IPv4 pending accepts share one application cap");
     }
 }
+void same_family_accept_burst() {
+    // B36/B37 accept-owner regression: one family must rearm while several
+    // sessions are live, not only when a previous session is retired.
+    net::SessionPolicy p;p.max_sessions=4;Harness h(p);
+    std::vector<std::unique_ptr<Peer>> active;
+    for(unsigned n=0;n<4;++n) {
+        auto peer=std::make_unique<Peer>(h.port);
+        require(peer->frame()=="hello","IPv4 accept rearms before any existing session retires");
+        active.push_back(std::move(peer));
+    }
+    require(h.factory.created==4,"four simultaneously active IPv4 peers reached handler factories");
+    for(auto& peer:active) {
+        peer->send("keep");
+        require(peer->frame()=="keep","each admitted session retains independent request/response state");
+    }
+    Peer waiting(h.port);
+    Sleep(80);
+    require(h.factory.created==4&&waiting.socket.available()==0,
+            "session cap blocks application admission while four IPv4 peers remain live");
+    active[2]->close();
+    require(waiting.frame()=="hello"&&until([&]{return h.factory.created==5;}),
+            "one retired IPv4 owner resumes exactly one backlog admission");
+    waiting.send("resumed");
+    require(waiting.frame()=="resumed","newly accepted client processes a request after cap retirement");
+    active[0]->send("still");
+    require(active[0]->frame()=="still","retiring a different peer preserves existing sessions");
+}
 void frame_and_response_limits() {
     net::SessionPolicy p;p.max_frame_bytes=8;p.max_response_bytes=16;Harness h(p);
     Peer exact(h.port);require(exact.frame()=="hello","bounded session greeting");exact.send("1234567");
@@ -114,5 +143,5 @@ void send_backpressure_and_stop() {
     require(std::chrono::steady_clock::now()-start<1000ms,"stop cancels armed timers and drains without waiting for idle expiry");
 }
 }
-int main()try{session_cap();frame_and_response_limits();receive_deadlines();asynchronous_greeting_and_send_timeout();send_backpressure_and_stop();std::cout<<"PASS: "<<checks<<" real-socket admission/limits/deadlines/backpressure/stop checks\n";}
+int main()try{session_cap();same_family_accept_burst();frame_and_response_limits();receive_deadlines();asynchronous_greeting_and_send_timeout();send_backpressure_and_stop();std::cout<<"PASS: "<<checks<<" real-socket admission/limits/deadlines/backpressure/stop checks\n";}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

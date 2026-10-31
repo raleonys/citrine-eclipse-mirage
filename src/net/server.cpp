@@ -60,17 +60,19 @@ void Session::log_unless_eof(std::string_view operation, Error error) {
 }
 void Session::start_025720() {
     handler_.reset_02bc70();
-    auto initial = handler_.initial_message_02d540();
-    if(scheduling_.async_greeting()) {
-        greeting_=true;do_write_028270(std::move(initial));return;
-    }
-    std::size_t sent = 0;
-    while (sent < initial.size()) {
-        const auto count = std::min(initial.size()-sent,std::size_t{0x10000});
-        const auto result = transport_.synchronous_send({initial.data()+sent,count});
-        sent += result.transferred;
-        if (result.error.value != 0) scheduling_.raise_write_error(result.error);
-        // Original blocking loop does not synthesize a failure on zero progress.
+    {
+        auto initial = handler_.initial_message_02d540();
+        if(scheduling_.async_greeting()) {
+            greeting_=true;do_write_028270(std::move(initial));return;
+        }
+        std::size_t sent = 0;
+        while (sent < initial.size()) {
+            const auto count = std::min(initial.size()-sent,std::size_t{0x10000});
+            const auto result = transport_.synchronous_send({initial.data()+sent,count});
+            sent += result.transferred;
+            if (result.error.value != 0) scheduling_.raise_write_error(result.error);
+            // Original blocking loop does not synthesize a failure on zero progress.
+        }
     }
     do_read_0280d0();
 }
