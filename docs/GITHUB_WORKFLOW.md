@@ -39,6 +39,15 @@ tests and remaining work. Retain bugfix after merge. Prefer merge commits for
 these PRs to make later synchronization simple. A dependency update, documentation
 change, new task or new PR does not by itself justify a new branch.
 
+Never create a draft PR, convert a PR to draft or leave a PR in draft. Complete
+the required local validation before opening a ready-for-review PR. Track
+remaining work, pending CI/native MSVC/Golden/game validation and merge blockers
+explicitly in its description. Keep that description current as evidence changes.
+Ready-for-review is a review state, not acceptance, approval or permission to
+merge; existing validation gates and the owner-only merge rule still apply.
+This rule concerns pull requests. Owner-authorized weekly draft releases
+continue under the separate release policy.
+
 Dedicated audit/project branches need a descriptive name and an explicit scope
 recorded in the PR. Reuse each branch through the sustained workstream rather than
 opening another branch for each finding. Do not create a dedicated branch merely
