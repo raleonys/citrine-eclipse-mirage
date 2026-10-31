@@ -1,3 +1,4 @@
+#include "../../support/fixture_ascii.hpp"
 #include "preloader_l/runtime/application.hpp"
 #include "preloader_l/config/startup.hpp"
 #include "preloader_l/xml/memory_printer.hpp"
@@ -84,7 +85,7 @@ struct Dependencies final:config::Dependencies {
     config::Path join_016b00(const config::Path& a,const config::Path& b)override{return a+u"/"+b;}
     config::Path widen_0145d0(std::string_view value)override{return widen(value);}
     config::Path filesystem_widen_010540(std::string_view value)override{return widen(value);}
-    std::string narrow_path(const config::Path& value)override{return {value.begin(),value.end()};}
+    std::string narrow_path(const config::Path& value)override{return preloader_l::test_support::fixture_ascii(value);}
     config::Path resolve_path_0192d0(std::string_view value,const config::Path&,bool relative)override{
         require(relative,"configuration keeps relative-path mode");return u"C:/fixture/"+widen(value);
     }

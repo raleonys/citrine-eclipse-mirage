@@ -153,7 +153,7 @@ void stream_and_parser() {
         f.files[path]=Spec{};f.files[path].fail=fail;f.events.clear();
         rejects<std::runtime_error>([&]{(void)pipeline.read(path);},"stream exception propagated");
         require(f.events.back()=="destroy","stream destroyed on exception");
-        require(std::count(f.events.begin(),f.events.end(),"close")==std::string_view(fail).ends_with("close"),"no extra close on earlier failure");
+        require(std::count(f.events.begin(),f.events.end(),"close")== (std::string_view(fail).ends_with("close")?1:0),"no extra close on earlier failure");
     }
     f.null_result=true;
     rejects<std::invalid_argument>([&]{(void)pipeline.read(path);},"null stream provider contract rejected");

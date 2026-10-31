@@ -176,7 +176,7 @@ void test_auth_and_invalidation() {
     }
     {
         Fixture f; f.online=1; f.request.attributes={{"ClientId","fixture"}}; f.effects.null_online=true;
-        thrown<std::invalid_argument>([&]{f.handlers.auth_code_02e3b0(f.request,f.xml);});
+        thrown<std::invalid_argument>([&]{(void)f.handlers.auth_code_02e3b0(f.request,f.xml);});
         check(f.xml.calls.empty(),"out-of-domain null provider does not fabricate a value");
     }
     {

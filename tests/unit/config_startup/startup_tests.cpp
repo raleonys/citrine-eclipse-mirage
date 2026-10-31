@@ -1,3 +1,4 @@
+#include "../../support/fixture_ascii.hpp"
 #include "preloader_l/config/startup.hpp"
 #include <algorithm>
 #include <filesystem>
@@ -13,7 +14,7 @@ void require(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error
 template<class E,class F>void rejects(F f,const char* label){bool caught=false;try{f();}catch(const E&){caught=true;}require(caught,label);}
 using Events=std::vector<std::string>;
 configuration::Path wide(std::string_view value){return {value.begin(),value.end()};}
-std::string ascii(const configuration::Path& value){return {value.begin(),value.end()};}
+std::string ascii(const configuration::Path& value){return preloader_l::test_support::fixture_ascii(value);}
 std::size_t position(const Events& events,std::string_view value){const auto found=std::find(events.begin(),events.end(),value);require(found!=events.end(),"expected event present");return static_cast<std::size_t>(found-events.begin());}
 
 struct FileInput final:file_recovered::Input {

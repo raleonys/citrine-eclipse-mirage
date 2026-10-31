@@ -1,3 +1,4 @@
+#include "../../support/fixture_ascii.hpp"
 #include "preloader_l/handlers/content_handlers.hpp"
 #include <algorithm>
 #include <cstdio>
@@ -118,7 +119,7 @@ struct MockEffects final:Effects {
     Path path_append_016b50(const Path& a,const Path& b)override{return a+u"\\"+b;}
     bool online_avatar_virtual_28(const Path& path)override{online_paths.push_back(path);return avatar_success;}
     bool copy_overwrite_048d20(const Path& a,const Path& b)override{copies.emplace_back(a,b);return copy_success;}
-    std::string path_to_utf8_031ca0(const Path& path)override{utf8_paths.push_back(path);return std::string(path.begin(),path.end());}
+    std::string path_to_utf8_031ca0(const Path& path)override{utf8_paths.push_back(path);return preloader_l::test_support::fixture_ascii(path);}
     void log_saved_size_085530(std::int32_t size)override{saved_logs.push_back(size);}
 };
 struct Fixture {

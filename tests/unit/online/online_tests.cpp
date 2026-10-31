@@ -343,7 +343,7 @@ static void composition() {
         o::RecoveredEffects effects(remaining,libraries,stats,encoding,errors,files);
         o::worker_035b60(state.refs(),effects);
         CHECK(libraries.loaded==L"C:\\fixture\\preloader_l_online.dll");CHECK(libraries.mode==0x40);CHECK(encoding.calls==2);
-        CHECK(state.online==success);CHECK(state.avatar==state.last_avatar);CHECK(remaining.called("finish"));
+        CHECK(state.online==static_cast<std::uint8_t>(success));CHECK(state.avatar==state.last_avatar);CHECK(remaining.called("finish"));
         CHECK(!remaining.called("widen"));CHECK(!remaining.called("load"));CHECK(!remaining.called("read"));CHECK(!remaining.called("write"));
         if(success) {
             CHECK(files.output_closed);CHECK(!files.input_closed);CHECK(files.written=="provider-persona;provider-user;provider-name");
