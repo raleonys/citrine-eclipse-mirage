@@ -1,6 +1,7 @@
 """Deterministic first-party language audit and exclusion boundary tests."""
 import json
-from pathlib import Path
+import re
+from pathlib import Path, PurePosixPath
 import sys
 import tempfile
 import unittest
@@ -108,6 +109,61 @@ class LanguageSignalAuditTests(unittest.TestCase):
             for statement in statements:
                 with self.subTest(path=relative_path, statement=statement):
                     self.assertEqual(1, content.count(statement))
+
+
+    @staticmethod
+    def _ascii_only_diagnostic_review(root):
+        """Review a narrow set of transliterated diagnostic signals, not all language."""
+        root = Path(root)
+        manifest = json.loads((root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
+                              .read_text(encoding='utf-8'))
+        # Keep lexemes split so the regression itself cannot trigger its scan.
+        lexemes = (
+            'buluna' + 'madi', 'basari' + 'siz', 'gecer' + 'siz',
+            'olusturula' + 'madi', 'baslatila' + 'madi',
+            'kapatila' + 'madi', 'acila' + 'madi',
+            'islen' + 'emedi', 'silin' + 'emedi',
+            'yuklene' + 'medi', 'kaydedile' + 'medi',
+        )
+        pattern = re.compile(r'(?<![A-Za-z])(?:' +
+                             '|'.join(re.escape(word) for word in lexemes) +
+                             r')(?![A-Za-z])', re.IGNORECASE)
+        counts = {'src': 0, 'include': 0, 'tests': 0}
+        findings = []
+        extensions = {'.c', '.cpp', '.h', '.hpp', '.py', '.ps1'}
+        for name in checker.source_paths(manifest):
+            family = name.split('/', 1)[0]
+            if family not in counts or PurePosixPath(name).suffix.lower() not in extensions:
+                continue
+            path = root.joinpath(*PurePosixPath(name).parts)
+            if not path.is_file() or path.is_symlink():
+                raise ValueError('Missing or nonregular reviewed source: ' + name)
+            counts[family] += 1
+            for number, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
+                match = pattern.search(line)
+                if match:
+                    findings.append((name, number, match.group(0).lower()))
+        return counts, findings
+
+    def test_ascii_only_diagnostic_review_preserves_filename_fixtures(self):
+        self.write('src/transport.cpp', '// File was not found.\n')
+        self.write('tests/unit/fixture.cpp', r'const auto path = u"dosya-\u0131.dat";' + '\n')
+        self.manifest(['src/transport.cpp', 'tests/unit/fixture.cpp'])
+        counts, findings = self._ascii_only_diagnostic_review(self.root)
+        self.assertEqual({'src': 1, 'include': 0, 'tests': 1}, counts)
+        self.assertEqual([], findings)
+        self.write('src/transport.cpp', '// Fatal: buluna' + 'madi\n')
+        _, findings = self._ascii_only_diagnostic_review(self.root)
+        self.assertEqual([('src/transport.cpp', 1, 'buluna' + 'madi')], findings)
+
+    def test_current_cpp_header_and_test_diagnostic_review(self):
+        """Current-tree signal guard; still not a semantic language certificate."""
+        root = Path(__file__).resolve().parents[2]
+        counts, findings = self._ascii_only_diagnostic_review(root)
+        self.assertGreaterEqual(counts['src'], 100)
+        self.assertGreaterEqual(counts['include'], 100)
+        self.assertGreaterEqual(counts['tests'], 200)
+        self.assertEqual([], findings)
 
 if __name__ == '__main__':
     unittest.main()
