@@ -19,7 +19,7 @@ collection is not claimed to implement every intended architectural component.
 Automatic Application/Service ownership, production Asio/filesystem bindings,
 and the conditional 11-hook rollback/drain path have been implemented. Network,
 configuration, hook, and blocking teardown work runs on a worker thread, apart
-from DllMain preparation. The application's six C exports are distinct from the
+from DllMain preparation. The application's three C exports are distinct from the
 C++ development DLL; [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md) documents the
 current contract. Actual Windows/native quiescence and game acceptance require
 separate evidence; Wine tests do not establish either.
