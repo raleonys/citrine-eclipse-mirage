@@ -143,11 +143,35 @@ def check_archived_evidence(root):
     return errors
 
 
+
+def check_layout_migration_reference(root, contract):
+    """Reject stale, malformed or escaping layout_migration contract targets."""
+    root = Path(root)
+    name = contract.get('layout_migration')
+    if (not isinstance(name, str) or not name or
+            '\\' in name or not name.endswith('.json') or
+            any(part in ('', '.', '..') for part in name.split('/'))):
+        return ['Unsafe layout_migration repository contract reference']
+    target = root / name
+    try:
+        resolved = target.resolve(strict=True)
+        if (not resolved.is_relative_to(root.resolve(strict=True)) or
+                target.is_symlink() or not target.is_file()):
+            return ['Invalid layout_migration file target: ' + name]
+        payload = json.loads(target.read_text(encoding='utf-8'))
+    except (OSError, UnicodeError, ValueError):
+        return ['Invalid or missing layout_migration file target: ' + name]
+    if not isinstance(payload, dict) or payload.get('schema') != 'yellowfield.layout-migration.v1':
+        return ['Unexpected layout_migration schema: ' + name]
+    return []
+
+
 def check(root):
     root = Path(root)
     errors = check_active_identifiers(root)
     errors.extend(check_archived_evidence(root))
     contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text())
+    errors.extend(check_layout_migration_reference(root, contract))
     errors.extend(check_root_file_ownership(root, contract['allowed_root_files']))
     for name in contract['required_files']:
         if not (root / name).is_file():
