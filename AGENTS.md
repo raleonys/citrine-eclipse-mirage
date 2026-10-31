@@ -11,6 +11,11 @@ per-change branch advice below; all product and evidence contracts still apply.
   testing main in a clean checkout is allowed. Only the owner merges reviewed
   PRs into main; agents must not merge, enable auto-merge, approve their own PRs
   or bypass failed checks.
+- Never create draft pull requests, convert a PR to draft, or leave a PR in
+  draft. Open PRs as ready for review after the required local validation passes.
+  Record remaining work, pending CI/native MSVC/Golden/game checks and merge
+  blockers explicitly in the PR description. Ready-for-review status does not
+  establish acceptance, grant approval, waive checks or authorize a merge.
 - Use the existing long-lived `bugfix` branch for routine fixes, dependency
   updates, documentation, tests and small maintenance. A new task, commit or PR
   is not a reason to create another branch. Review coherent batches through

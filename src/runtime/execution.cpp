@@ -123,8 +123,16 @@ bool Execution::steps_finished_initializing_under_lock(std::int32_t count) const
 
 std::int64_t Execution::now_nanoseconds_036740() {
     // 04a824 returns RAX even though Ghidra inferred a void declaration.
-    if (frequency_cache_ == 0) frequency_cache_ = platform_.query_performance_frequency();
-    const auto frequency = frequency_cache_;
+    // More than one waiter may observe the caller-owned cold cache. Publish
+    // the frequency atomically without changing its storage or mutex layout.
+    std::atomic_ref<std::int64_t> cache(frequency_cache_);
+    auto frequency = cache.load(std::memory_order_relaxed);
+    if (frequency == 0) {
+        frequency = platform_.query_performance_frequency();
+        std::int64_t empty = 0;
+        if (!cache.compare_exchange_strong(empty,frequency,std::memory_order_relaxed))
+            frequency = empty;
+    }
     const auto counter = platform_.query_performance_counter();
     return counter_to_nanoseconds(counter, frequency);
 }
