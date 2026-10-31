@@ -1,6 +1,6 @@
 {
   "asset_preservation": "EXACT_BYTES",
-  "asset_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+  "asset_sha256": "5cc62afa98d4e97ac2f780cc7e2d7edd4ae538ece62d81d0da3b61858a0a08a6",
   "branding_asset": "resources/branding/surge.png",
   "cpp_root_namespace": "preloader_l",
   "display_name": "SURGE",

@@ -1,35 +1,29 @@
 # Current profile avatar
 
-The owner explicitly chose to retain the existing embedding approach. The
-latest supplied PNG is 208 x 208 pixels and 3,840 bytes, with SHA-256
-`df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e`.
-`resources/branding/surge.png` is a byte-identical copy of that file.
+The owner-provided `surge.zip` contains `surge.png`: a 208 x 208 RGB PNG
+of exactly 4,478 bytes, with SHA-256
+`5cc62afa98d4e97ac2f780cc7e2d7edd4ae538ece62d81d0da3b61858a0a08a6`.
+`resources/branding/surge.png` is byte-identical to the supplied PNG; the
+image has not been redrawn or re-encoded. The supplied ZIP has SHA-256
+`9644e3b5a19447673b66fdfa58fff4bc9d3ad0cff89a5048eab73d34a2b792bf`.
 
-The existing generator converts the complete file into a private, read-only
-C++ array. It neither redraws pixels, re-encodes PNG data, nor adds a PNG PE
-resource. Normal startup writes the profile PNG to the local user-data
-directory. The CFG User/Avatar selection continues to skip this profile write.
-The original 3,882-byte fallback and the separate `default.png` write remain
-unchanged. An external avatar file is not required.
+The existing `scripts/generate_avatar_data.py` generator validates the PNG
+against `metadata/AVATAR_DATA_CONTRACT.json` and converts its exact bytes
+into private, read-only C++ data during the build. No PNG PE resource or
+external runtime avatar file is introduced. Normal startup writes that
+embedded profile PNG into the local user-data directory, except when the
+configured User/Avatar selection skips the profile write.
 
-Application, test, generator, vendor, and export source code did not change.
-Only the image input and its current records were updated. Previous TLS/cleanup
-and allocation-injection test corrections were retained. This change neither
-explains nor resolves the VirusTotal Files Dropped difference.
+The separate original 3,882-byte `resources/branding/default-avatar.png`
+fallback, its C++ embedding and the default-avatar write are unchanged.
+The reference VERSIONINFO, Windows resource script, DLL exports, runtime C++
+source and vendor inputs are unchanged. This change updates only the profile
+image, its current metadata/hash pins and the documentation.
 
-[Validation](../metadata/evidence/avatar-update/VALIDATION.json) records local
-cross-build/Wine results. Those local checks do not prove native Windows/MSVC,
-Golden, or game acceptance of the binary containing the new image. Builds use
-the source package; this work did not update or publish a distribution artifact.
-
-Local results: the relevant Release tests passed 4/4 and Debug tests passed
-2/2. The actual DLL was loaded and started three times, returned an LSX profile
-response, shut down, and unloaded. The profile PNG written to disk was
-byte-identical to the new input; the fallback was byte-identical to the
-original input. The raw DLL contained the new PNG, did not contain the old
-profile PNG, and had no PNG PE resource. The Release application test did not
-create a log in a clean data directory. The pre-existing global Debug log's
-timestamp remained earlier than the DLL execution.
-
-Source QA passed 17/17 and vendor regressions passed 19/19; no vendor test was
-skipped.
+The prior avatar validation files under
+`metadata/evidence/avatar-update/` refer to an earlier image and are
+historical evidence, not new acceptance of this replacement. The build must
+regenerate its private avatar header from the new pinned PNG. Source QA,
+portable tests and native Windows/MSVC plus game acceptance must be assessed
+for this exact PR head before any release claim. No binary or release output
+is committed or published by this image update.
