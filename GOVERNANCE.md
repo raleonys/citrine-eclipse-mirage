@@ -48,13 +48,9 @@ The former `governance/CURRENT_SCOPE.md` is retired after operational rules were
 
 Keep meaningful negative tests, source/vendor identity, ABI, lifetime, and actual native/Golden coverage. Remove redundant workflow machinery only after proving that its failure-detection purpose remains covered. Preserve historical evidence without treating historical states as current authority.
 
-## Public project identity
-
-The current public identity and the pending exact campaign-artwork contract are recorded in [Project branding](docs/PROJECT_BRANDING.md). Public branding remains separate from compatibility-sensitive C++ namespaces, configuration fields, PE metadata, binary filenames and exported ordinals.
-
 ## Public readiness and disclosure
 
-Public-facing project naming uses `Citrine Eclipse Mirage`. Public documents should not disclose unnecessary implementation or integration details. Review the full source tree, metadata, history, license status, and distributed assets before any public visibility change. Repository visibility is changed only with explicit owner approval.
+Public documents should not disclose unnecessary implementation or integration details. Review the full source tree, metadata, history, license status, and distributed assets before any public visibility change. Repository visibility is changed only with explicit owner approval.
 
 ## Migration record
 

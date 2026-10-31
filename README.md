@@ -1,7 +1,9 @@
 # Citrine Eclipse Mirage
 
-![Windows x64](https://img.shields.io/badge/Windows-x64-0078D4?logo=windows11&logoColor=white)
-![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)
+![Citrine Eclipse Mirage campaign artwork](resources/branding/citrine-eclipse-mirage.png)
+
+[![Windows x64](https://img.shields.io/badge/Windows-x64-0078D4?logo=windows&logoColor=white)](docs/DEVELOPMENT.md)
+[![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)](CMakeLists.txt)
 [![CI](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml)
 
 A Windows-native C++ utility library focused on compatibility, maintainability, and controlled changes.
@@ -9,8 +11,6 @@ A Windows-native C++ utility library focused on compatibility, maintainability, 
 ## Overview
 
 Citrine Eclipse Mirage provides auxiliary routines and shared components for Windows-based applications. It is a supplementary dynamic-link library rather than a standalone application.
-
-The public project name is Citrine Eclipse Mirage. Compatibility-sensitive DLL filenames, internal code identifiers, runtime configuration and exported symbols remain unchanged.
 
 ## Project history
 
@@ -26,6 +26,3 @@ Source QA, portable tests, Windows/MSVC native acceptance, Golden validation and
 
 See the [development instructions](docs/DEVELOPMENT.md) for build and test commands.
 
-## Notes
-
-This repository remains private until its owner approves a separate visibility change. Rebranding does not modify the binary compatibility contract or authorize a release.
