@@ -94,6 +94,28 @@ resources or release artifacts.
 `GOVERNANCE.md` creation and movement of
 `governance/CURRENT_SCOPE.md` remain deferred by owner decision.
 
+## External compiler diagnostic language
+
+The first-party language audit examines repository-authored text, not messages
+loaded from a user's Visual Studio installation. MSVC's diagnostic resources
+may be localized independently of the source language; a Turkish C4834 warning,
+for example, is not necessarily a Turkish diagnostic string in our source.
+
+The shared `scripts/build_orchestration/build_profile.ps1` now sets
+`VSLANG=1033` (US English) after the Visual C++ environment is loaded and
+before running CMake, the MSVC compiler, linker, and test tools. This request
+applies to Compile, Debug, Native, CRT and Golden builds. It is scoped to the
+build process, and the existing `finally` block restores the operator's
+original environment.
+
+English compiler message resources must be available in the installed Visual
+Studio toolset. The locale request cannot translate arbitrary operating-system
+or vendor diagnostics, and it cannot certify zero warnings. If the installed
+toolset still produces localized messages, check that English language resources
+are installed and capture the actual compiler message-code and toolchain details.
+A freshly downloaded source snapshot is also needed to verify fixes merged
+after an earlier ZIP was created.
+
 ## Acceptance boundaries
 
 Review the changed files and both source pin ledgers before

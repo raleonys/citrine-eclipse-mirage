@@ -111,6 +111,25 @@ class LanguageSignalAuditTests(unittest.TestCase):
                     self.assertEqual(1, content.count(statement))
 
 
+    def test_all_windows_build_profiles_request_english_tool_diagnostics(self):
+        """The shared operator profile opts into en-US without changing caller settings."""
+        root = Path(__file__).resolve().parents[2]
+        profile = (root / 'scripts/build_orchestration/build_profile.ps1').read_text(
+            encoding='utf-8')
+        self.assertIn("ValidateSet('Compile','Debug','Native','Crt','Golden')", profile)
+        selection = "$env:VSLANG = '1033'"
+        self.assertEqual(1, profile.count(selection))
+        self.assertLess(profile.index('Import-VcVarsEnvironment $CmdExe $vs[1]'),
+                        profile.index(selection))
+        self.assertLess(profile.index(selection),
+                        profile.index("Invoke-ExternalChecked $CMakeExe @('-S'"))
+        self.assertIn('MSVC diagnostic locale requested: English (VSLANG=1033)',
+                      profile)
+        self.assertIn('Get-ChildItem Env: | ForEach-Object { $EnvironmentBefore', profile)
+        self.assertIn('foreach ($Name in $EnvironmentBefore.Keys)', profile)
+        self.assertIn("[Environment]::SetEnvironmentVariable($Name,$EnvironmentBefore[$Name],'Process')",
+                      profile)
+
     @staticmethod
     def _ascii_only_diagnostic_review(root):
         """Review a narrow set of transliterated diagnostic signals, not all language."""
