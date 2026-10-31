@@ -67,6 +67,19 @@ function(preloader_l_install_partition_gate)
     string(APPEND _graph "TARGET\t${_target}\nTYPE\t${_type}\nDEPS\t${_deps}\nSOURCES\t$<TARGET_GENEX_EVAL:${_target},$<TARGET_PROPERTY:${_target},SOURCES>>\nEND\n")
   endforeach()
   file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/partition.$<CONFIG>.targets" CONTENT "${_graph}")
+  # Keep the unsigned application output in the same import order as Golden.
+  # MSVC may emit a different descriptor sequence from transitive Asio libs.
+  if(MSVC)
+    set_property(TARGET preloader_l APPEND PROPERTY LINK_DEPENDS
+      "${PROJECT_SOURCE_DIR}/scripts/import_descriptor_order.py"
+      "${PROJECT_SOURCE_DIR}/metadata/URSYNEX_GOLDEN_FINALIZER.json"
+      "${PROJECT_SOURCE_DIR}/metadata/CORVEXON_GOLDEN_TRAIL.json"
+      "${PROJECT_SOURCE_DIR}/metadata/LOCAL_DIST_CONTRACT.json")
+    add_custom_command(TARGET preloader_l POST_BUILD
+      COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/scripts/import_descriptor_order.py"
+        --root "${PROJECT_SOURCE_DIR}" --dll "$<TARGET_FILE:preloader_l>"
+      COMMENT "Normalize unsigned DLL import descriptors before validation" VERBATIM)
+  endif()
   add_custom_command(TARGET preloader_l POST_BUILD
     COMMAND "${Python3_EXECUTABLE}" -B "${PROJECT_SOURCE_DIR}/scripts/check_build_partition.py"
       --root "${PROJECT_SOURCE_DIR}" --build-dir "${CMAKE_CURRENT_BINARY_DIR}"

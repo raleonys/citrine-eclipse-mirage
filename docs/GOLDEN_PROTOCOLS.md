@@ -123,6 +123,22 @@ The full field matrix and correction of the
 former preserve-compiler decision are in
 [metadata audit](REFERENCE_METADATA_AUDIT.md).
 
+The owner requires the same import descriptor order in every MSVC
+application DLL profile, including `preloader.unsigned.dll`. The shared
+`scripts/import_descriptor_order.py` normalizes the unsigned image immediately
+after the linker completes and before the build partition gate and raw-asset
+inspection; `build_profile.ps1` independently verifies the resulting
+unsigned DLL on both clean and incremental builds. It uses the exact same
+six-module order as URSYNEX/CORVEXON/LOCAL_DIST, changes no other bytes, and
+fails without replacing the file if the import module set is unexpected.
+
+This is explicitly **post-link normalization of the unsigned artifact**, not
+a claim that MSVC LINK.exe itself emitted the descriptor records in this
+order. The final Golden step remains independent, idempotent for already
+ordered imports, and responsible for its separate metadata/checksum work.
+Development source-API and test fixture DLLs are outside the six-import
+shipping application contract.
+
 The owner's latest import-order correction
 permits URSYNEX, in addition to the
 header/Rich/checksum fields above, to

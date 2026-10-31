@@ -50,3 +50,82 @@ def reorder(data, expected):
     by_name=dict(zip(names,records))
     data[offset:offset+20*len(records)]=b''.join(by_name[name] for name in expected)
     return {'before':names,'after':expected,'descriptor_offset':offset,'descriptor_bytes':20*len(records)}
+
+
+def product_order(root):
+    """One exact import contract for unsigned and Golden SURGE application DLLs."""
+    import json
+    from pathlib import Path
+    root = Path(root)
+    gold = json.loads((root / 'metadata/URSYNEX_GOLDEN_FINALIZER.json').read_text(encoding='utf-8'))
+    cor = json.loads((root / 'metadata/CORVEXON_GOLDEN_TRAIL.json').read_text(encoding='utf-8'))
+    dist = json.loads((root / 'metadata/LOCAL_DIST_CONTRACT.json').read_text(encoding='utf-8'))
+    ordered = gold['import_module_order']
+    if (not isinstance(ordered, list) or not ordered or
+            len(set(ordered)) != len(ordered) or
+            ordered != cor['import_policy']['module_order'] or
+            ordered != cor['import_policy']['required_modules'] or
+            ordered != cor['import_policy']['allowed_modules'] or
+            ordered != dist['final_import_descriptor_order']):
+        raise ValueError('Unsigned and Golden application import policies differ')
+    return ordered
+
+
+def normalize_application(path, expected, verify=False):
+    """Change only complete PE import descriptors; fail without writes on a bad set."""
+    import os
+    import tempfile
+    from pathlib import Path
+    path = Path(path)
+    original = path.read_bytes()
+    data = bytearray(original)
+    result = reorder(data, expected)
+    if verify:
+        if result['before'] != expected:
+            raise ValueError('Unsigned application import order differs: ' + str(result['before']))
+        return result
+    start = result['descriptor_offset']
+    end = start + result['descriptor_bytes']
+    if original[:start] != data[:start] or original[end:] != data[end:] or len(original) != len(data):
+        raise ValueError('Import normalizer modified bytes outside the descriptor table')
+    if data != original:
+        # A failed validation must never publish a partially rewritten DLL.
+        temp = None
+        try:
+            with tempfile.NamedTemporaryFile(
+                    mode='wb', prefix=path.name + '.order-', suffix='.tmp',
+                    dir=path.parent, delete=False) as output:
+                temp = Path(output.name)
+                output.write(data)
+                output.flush()
+                os.fsync(output.fileno())
+            os.replace(temp, path)
+        finally:
+            if temp is not None:
+                temp.unlink(missing_ok=True)
+    if descriptors(path.read_bytes())[2] != expected:
+        raise ValueError('Unsigned application DLL was not normalized')
+    return result
+
+
+def main():
+    import argparse
+    from pathlib import Path
+    parser = argparse.ArgumentParser(
+        description='Normalize or verify the unsigned application DLL import descriptors')
+    parser.add_argument('--root', type=Path, required=True)
+    parser.add_argument('--dll', type=Path, required=True)
+    parser.add_argument('--verify', action='store_true', help='Fail without modifying the DLL')
+    args = parser.parse_args()
+    try:
+        result = normalize_application(args.dll, product_order(args.root), args.verify)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        print('UNSIGNED_IMPORT_ORDER: FAIL (' + str(exc) + ')')
+        return 1
+    print('UNSIGNED_IMPORT_ORDER: PASS (post-link unsigned image; before=' +
+          str(result['before']) + '; after=' + str(result['after']) + ')')
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
