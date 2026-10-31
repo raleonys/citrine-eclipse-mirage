@@ -87,7 +87,7 @@ template<class F> bool until(F f) {
 struct HandlerFailure{};
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> creates{0},errors{0},dispatch_errors{0};
-    bool null_handler=false;
+    std::atomic<bool> null_handler{false};
     struct Handler final:server_recovered::Handler {
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
@@ -98,7 +98,7 @@ struct Factory final:net::HandlerFactory {
         }
     };
     std::unique_ptr<server_recovered::Handler> create()override {
-        ++creates;return null_handler?nullptr:std::make_unique<Handler>();
+        ++creates;return null_handler.load()?nullptr:std::make_unique<Handler>();
     }
     void error(std::string_view op,std::exception_ptr)noexcept override {
         ++errors;if(op=="cleanup dispatch")++dispatch_errors;
@@ -154,6 +154,23 @@ void accept_failure() {
     require(until([&]{owner.io.restart();owner.io.poll();return c.factory.creates.load()==1;}),"accept retry does not reach the queued peer");
     owner.stopping=true;asio::error_code ec;owner.acceptor.close(ec);peer.close(ec);owner.io.restart();while(owner.io.poll()){}
 }
+void factory_failure_rearms() {
+    // A failed handler factory must retire its accepted socket without
+    // poisoning listener admission or the next independent handler owner.
+    Context c;c.factory.null_handler.store(true);
+    net::AsioService service(c.factory,c.execution,c.port,c.ready);
+    service.start();
+    Peer rejected(c.port);
+    require(rejected.closed(),"rejected session keeps accepted socket alive");
+    require(until([&]{return c.factory.creates.load()>=1&&c.factory.errors.load()>=1;}),
+            "failed handler construction must be reported");
+    c.factory.null_handler.store(false);
+    Peer healthy(c.port);
+    require(healthy.frame()=="hello","listener did not rearm after handler factory failure");
+    healthy.send("recovered");
+    require(healthy.frame()=="recovered","new handler cannot process traffic after factory recovery");
+    service.stop();service.stop();
+}
 void post_failure() {
     Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);service.start();
     Peer control(c.port);require(control.frame()=="hello","control greeting");control.send("fail");
@@ -197,7 +214,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry}})
+    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
