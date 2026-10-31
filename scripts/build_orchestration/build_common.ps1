@@ -21,7 +21,7 @@ function Assert-DevelopmentBuildPreflight {
 function Resolve-BoundExecutable {
     param([string]$Name)
     $cmd = Get-Command $Name -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
-    if (-not $cmd) { Fail-Build "$Name bulunamadi." 127 }
+    if (-not $cmd) { Fail-Build "$Name was not found." 127 }
     return $cmd.Source
 }
 
@@ -69,16 +69,16 @@ function Get-BuildPathComponentViolation {
 
 function Resolve-ConfinedBuildDirectory {
     param([string]$Root, [string]$RelativePath, [string]$Label)
-    if ([string]::IsNullOrWhiteSpace($RelativePath)) { Fail-Build "$Label bos olamaz." 64 }
-    if ([System.IO.Path]::IsPathRooted($RelativePath)) { Fail-Build "$Label mutlak yol olamaz: $RelativePath" 64 }
+    if ([string]::IsNullOrWhiteSpace($RelativePath)) { Fail-Build "$Label cannot be empty." 64 }
+    if ([System.IO.Path]::IsPathRooted($RelativePath)) { Fail-Build "$Label must not be an absolute path: $RelativePath" 64 }
     $buildRoot = [System.IO.Path]::GetFullPath((Join-Path $Root 'build'))
     $candidate = [System.IO.Path]::GetFullPath((Join-Path $Root $RelativePath))
     $prefix = $buildRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar,[System.IO.Path]::AltDirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
     if (-not $candidate.StartsWith($prefix,[System.StringComparison]::OrdinalIgnoreCase)) {
-        Fail-Build "$Label repository build/ siniri disina cikiyor: $RelativePath" 64
+        Fail-Build "$Label is outside the repository build/ boundary: $RelativePath" 64
     }
     if ($candidate.Equals($buildRoot,[System.StringComparison]::OrdinalIgnoreCase)) {
-        Fail-Build "$Label build kokunun kendisi olamaz." 64
+        Fail-Build "$Label cannot be the build root itself." 64
     }
     $componentViolation = Get-BuildPathComponentViolation $Root $candidate
     if ($componentViolation) { Fail-Build "$Label reparse path check failed: $componentViolation" 64 }
@@ -94,11 +94,11 @@ function Find-VcVars64 {
     foreach ($c in $vswhereCandidates) {
         if ($c -and (Test-Path -LiteralPath $c)) { $vswhere = $c; break }
     }
-    if (-not $vswhere) { Fail-Build 'vswhere.exe bulunamadi.' 101 }
+    if (-not $vswhere) { Fail-Build 'vswhere.exe was not found.' 101 }
     $vsPath = (& $vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath | Select-Object -First 1)
-    if (-not $vsPath) { Fail-Build 'MSVC C++ x64 toolset bulunamadi.' 102 }
+    if (-not $vsPath) { Fail-Build 'MSVC C++ x64 toolset was not found.' 102 }
     $vcvars = Join-Path $vsPath 'VC\Auxiliary\Build\vcvars64.bat'
-    if (-not (Test-Path -LiteralPath $vcvars)) { Fail-Build "vcvars64.bat bulunamadi: $vcvars" 103 }
+    if (-not (Test-Path -LiteralPath $vcvars)) { Fail-Build "vcvars64.bat was not found: $vcvars" 103 }
     return @($vsPath,$vcvars)
 }
 
@@ -107,7 +107,7 @@ function Import-VcVarsEnvironment {
     $command = 'call "' + $VcVars + '" >nul && set'
     $lines = & $CmdExe /d /s /c $command
     $rc = $LASTEXITCODE
-    if ($rc -ne 0) { Fail-Build "vcvars64.bat basarisiz (exit $rc)." $rc }
+    if ($rc -ne 0) { Fail-Build "vcvars64.bat failed (exit $rc)." $rc }
     foreach ($line in $lines) {
         $idx = $line.IndexOf('=')
         if ($idx -le 0) { continue }
@@ -157,7 +157,7 @@ function Acquire-ExclusiveBuildLock {
         New-Item -ItemType Directory -Path $parent -Force | Out-Null
         return [System.IO.File]::Open($Path,[System.IO.FileMode]::OpenOrCreate,[System.IO.FileAccess]::ReadWrite,[System.IO.FileShare]::None)
     } catch {
-        Fail-Build "Baska bir production build bu checkout'u kullaniyor: $Path" 73
+        Fail-Build "Another production build is using this checkout: $Path" 73
     }
 }
 
@@ -167,6 +167,6 @@ function Invoke-ExternalChecked {
     $rc = $LASTEXITCODE
     if ($rc -ne 0) {
         if ($rc -lt 1 -or $rc -gt 255) { $rc = $FallbackCode }
-        Fail-Build "$Label basarisiz (exit $rc)." $rc
+        Fail-Build "$Label failed (exit $rc)." $rc
     }
 }
