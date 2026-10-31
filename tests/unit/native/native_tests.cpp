@@ -1,3 +1,4 @@
+#include "../../support/fixture_ascii.hpp"
 #include <ws2tcpip.h>
 #include "preloader_l/platform/hook_native_callbacks.hpp"
 #include "preloader_l/platform/callback_lock.hpp"
@@ -99,7 +100,7 @@ struct Effects final:OriginalEffects {
     std::function<void()> network_wait;
     void crypt_observed(preloader_l::hooks::Selection) noexcept override{++crypt_observations;SetLastError(993);}
     Effects(const std::array<std::uintptr_t,callback_count>& s,Wide& w,CryptHost& h):OriginalEffects(s,w,h){}
-    std::string filesystem_narrow(std::u16string_view s)override{return {s.begin(),s.end()};}
+    std::string filesystem_narrow(std::u16string_view s)override{return preloader_l::test_support::fixture_ascii(s);}
     int crt_stricmp(const char* a,const char* b)override{std::string x(a),y(b);for(auto& c:x)if(c>='A'&&c<='Z')c+=32;for(auto& c:y)if(c>='A'&&c<='Z')c+=32;return x.compare(y);}
     int crt_strcpy_s(char* d,std::size_t n,const char* s)override{const auto len=std::strlen(s)+1;if(!d||len>n)return 34;std::memcpy(d,s,len);return 0;}
     preloader_l::registry_recovered::Handle allocate_4_04b0bc()override{++allocs;return 0x9876;}
