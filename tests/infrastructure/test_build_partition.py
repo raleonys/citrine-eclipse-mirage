@@ -194,6 +194,43 @@ class TargetBoundaryTests(unittest.TestCase):
         g = graph(); g['application_contract']['sources'].append({'path': 'C:/build/transport_operations.cpp.obj'})
         self.assertTrue(boundary.codemodel_errors(g, POLICY))
 
+    def test_configuration_defaults_targets_follow_real_cmake_ownership(self):
+        root = Path(__file__).resolve().parents[2]
+        policy = json.loads((root / 'metadata/BUILD_PARTITION_POLICY.json').read_text())
+        cmake = (root / 'cmake/Tests.cmake').read_text(encoding='utf-8')
+        production = 'configuration_defaults_contracts'
+        reference = 'configuration_defaults_integration_contracts'
+        # A build with BUILD_TESTING=ON must classify both executables.
+        self.assertIn(production, policy['production_test_targets'])
+        self.assertNotIn(production, policy['reference_test_targets'])
+        self.assertIn(reference, policy['reference_test_targets'])
+        self.assertNotIn(reference, policy['production_test_targets'])
+        self.assertIn('add_executable(' + production + ' ', cmake)
+        self.assertIn('add_executable(' + reference + ' ', cmake)
+        self.assertIn(
+            'target_link_libraries(' + reference + ' PRIVATE preloader_l_reference_models)',
+            cmake)
+        # The generated-graph validator stays fail-closed rather than exempting
+        # previously unknown executable targets.
+        scope = copy.deepcopy(POLICY)
+        scope['production_test_targets'].append(production)
+        scope['reference_test_targets'].append(reference)
+        current = graph()
+        current[production] = target(production, ['src/runtime/application_defaults.cpp'])
+        current[reference] = target(reference, deps=['preloader_l_reference_models'])
+        current[production]['type'] = 'EXECUTABLE'
+        current[reference]['type'] = 'EXECUTABLE'
+        self.assertEqual([], boundary.codemodel_errors(current, scope))
+        omitted = copy.deepcopy(scope)
+        omitted['production_test_targets'].remove(production)
+        omitted['reference_test_targets'].remove(reference)
+        self.assertIn(
+            'Unclassified executable test/tool target: ' + production,
+            boundary.codemodel_errors(current, omitted))
+        self.assertIn(
+            'Unclassified executable test/tool target: ' + reference,
+            boundary.codemodel_errors(current, omitted))
+
     def test_new_test_cannot_silently_escape_scope_classification(self):
         g = graph(); g['unclassified'] = target('unclassified', deps=['preloader_l_reference_models'])
         g['unclassified']['type'] = 'EXECUTABLE'
