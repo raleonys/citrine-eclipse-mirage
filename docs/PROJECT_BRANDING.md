@@ -1,6 +1,4 @@
-# Citrine Eclipse Mirage public identity
-
-The official public-facing project name is **Citrine Eclipse Mirage**. Current public documentation, project descriptions, live links and future source/release package names use this identity.
+# Campaign artwork and repository links
 
 ## Repository URL identity
 
@@ -22,8 +20,3 @@ The owner-approved project campaign image is the exact supplied PNG:
 
 The campaign artwork is separate from `resources/branding/surge.png`, a runtime/profile avatar that remains unchanged.
 
-## Compatibility boundary
-
-Project naming does not change binary filenames, internal C++ identifiers, existing schemas, configuration paths, in-binary resource identities or the exact public DLL export/ordinal contract (`DllMain@1`, `SURGE@2`, `DllShutdown@3`) without a separate approved and verified migration.
-
-Historical comparisons, real earlier package names and negative ABI regression identities remain evidence, not active project branding.

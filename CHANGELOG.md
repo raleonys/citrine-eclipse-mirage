@@ -8,8 +8,9 @@ The 51 entries below are the merged pull requests verified through PR #61, linke
 
 ### Additional unreleased changes
 
+- Remove redundant project-name declarations and branding-transition commentary from current documentation; existing independent technical contracts are unchanged.
 - Integrate the owner's final campaign artwork into the README hero, with exact PNG identity pinned in the branding contract and active source manifest.
-- Record the completed GitHub repository rename while preserving runtime, DLL ABI and historical identities.
+- Update repository URLs to the renamed GitHub project.
 
 ### 2026-10-31
 

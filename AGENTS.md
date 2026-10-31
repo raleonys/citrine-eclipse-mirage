@@ -10,7 +10,7 @@ This document is the operational entrypoint for agents and contributors. [GOVERN
 - Read current `AGENTS.md` and `GOVERNANCE.md` from fetched `main` and the working branch before modifying source. Consult `docs/GITHUB_WORKFLOW.md` for mechanics.
 - Every PR with user-visible, QA, build, governance or compatibility impact must update `CHANGELOG.md` under unreleased development history, or obtain the owner-reviewed `changelog-exempt` label with an explicit rationale in its PR description. A PR merge is not a published release, and missing R revisions must not be invented.
 - Open PRs ready for review, never as draft PRs. Report exact scope, validation performed, failures, and pending checks. Ready status is not approval or proof of native acceptance.
-- Use English for new repository text, PR descriptions and commits. Use "foreign-language", "non-English" and "foreign-character scan" in language-audit work. Public project identity is `Citrine Eclipse Mirage`. Preserve ABI-sensitive internal identifiers.
+- Use English for new repository text, PR descriptions and commits. Use "foreign-language", "non-English" and "foreign-character scan" in language-audit work. Preserve ABI-sensitive internal identifiers.
 - Obtain explicit owner approval for public README edits, visibility changes, publication, license changes, new public disclosures and internal source/target renames.
 
 ## Source identity and QA

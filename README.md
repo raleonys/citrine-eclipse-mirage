@@ -12,8 +12,6 @@ A Windows-native C++ utility library focused on compatibility, maintainability, 
 
 Citrine Eclipse Mirage provides auxiliary routines and shared components for Windows-based applications. It is a supplementary dynamic-link library rather than a standalone application.
 
-The public project name is Citrine Eclipse Mirage. Compatibility-sensitive DLL filenames, internal code identifiers, runtime configuration and exported symbols remain unchanged.
-
 ## Project history
 
 See the [changelog](CHANGELOG.md) for the recorded GitHub development timeline and imported source history. A merged PR does not constitute a published release.
@@ -28,6 +26,3 @@ Source QA, portable tests, Windows/MSVC native acceptance, Golden validation and
 
 See the [development instructions](docs/DEVELOPMENT.md) for build and test commands.
 
-## Notes
-
-This repository remains private until its owner approves a separate visibility change. Rebranding does not modify the binary compatibility contract or authorize a release.

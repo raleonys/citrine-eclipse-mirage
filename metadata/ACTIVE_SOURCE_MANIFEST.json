@@ -12,12 +12,12 @@
     ".github/workflows/ci.yml": "364cec739645abd6a30caf3be25d7d8aa7e12b867609bac6fa993f6d8c5b389e",
     ".github/workflows/weekly-release.yml": "eb5b4a70e492405ba1636f0015e680feed5a0eaac54e30f10f8443ec62639fab",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
-    "AGENTS.md": "8c7acaa7aa6ef4b20be18da611861f4c010d5619cc12125f707e2f940e965c6c",
-    "CHANGELOG.md": "ff1e308d1cd00fde34edbab58c5c3f36ff2d7fcf0ab9a8a72b1ef2fe2f2336d9",
+    "AGENTS.md": "978593d1e4a8599798082508b1b77e1731fe06a065e8b6f82d14e446d5a4047c",
+    "CHANGELOG.md": "5e42a8fcc2ad20c7e3ef69972c6780a3a9cbf1d22a6d6c2215491abb945a7fb8",
     "CMakeLists.txt": "d83de5c06662b2c09e6b0fc0651b5534ee48bfd99b09e81a417698fa22994ad8",
     "CMakePresets.json": "b05ad740be9469829b68e71cdbc4d7a603e4c12599ef857c0729fd4972218796",
     "LICENSE": "5eb41c3b31c701a1fce6dd7aac32d4637f11a586dfeb1e6aa7a9a94e4d676055",
-    "README.md": "08ff287b41400bff614087d848bda46f81a2edf51542c2c6ca6eb1c16ba508e7",
+    "README.md": "f2fa95809f9820e49a29daec9e2a017050ff9e3cef6011da2cae2c1d176aca62",
     "cmake/BuildPartition.cmake": "f37350aed03be78de8c5f121564416acb3a6b2d6e714b23ce93bb8d64c05f192",
     "cmake/InfrastructureChecks.cmake": "f897c17185622bc25ec92d4e2d9a7996393e72368c97861a43c14585202807be",
     "cmake/PatchHookFreeze.cmake": "5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d",
@@ -3674,8 +3674,8 @@
     "metadata/evidence/socket-retirement/VALIDATION.json": "3314d3f9df7e5e9911707aa8d251ee65ac0065d5ee376db423044b8aa132ccaa",
     "metadata/evidence/weekly-release/VALIDATION.json": "6db92bceb67957f8e779530c46ae7caf49e6ca5f9e23c8dfc3a7340b2417703c",
     "metadata/evidence/REFERENCE_METADATA_AVATAR.json": "1e00a1e0e81bc97f9364c03e67e7a94d6641e63b9f54438ae7dc1c209fb5de0c",
-    "GOVERNANCE.md": "8a3f681c027d3e5f46080d1b74a1a7d0c04bf988f496d63493f5ead2a1217315",
-    "docs/PROJECT_BRANDING.md": "8c857112f7a4e686133b0718384ba174ced577b8a2d892aabd128353b1501173",
+    "GOVERNANCE.md": "567aa3d7407e965ee165e2e80272bc9ba9ffa05f2c8d863f18690cb1f4fa447e",
+    "docs/PROJECT_BRANDING.md": "79939fd84f95faa50ca647a61201541c89db73695d1a01a8b704f3055c2f79bd",
     "resources/branding/citrine-eclipse-mirage.png": "fd9524cfcff509349e2b1b040d44a9877cd09d4784b7b7eb678a807278086ac8"
   }
 }
