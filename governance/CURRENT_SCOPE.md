@@ -1,5 +1,12 @@
 # Güncel görev ve kaynak yetkisi
 
+Current owner PR-readiness rule: never create draft pull requests, convert PRs
+to draft or leave PRs in draft. Open ready-for-review PRs after the required
+local validation passes; document pending checks, remaining work and merge
+blockers in the description. Ready status does not certify native acceptance,
+approve changes or authorize a merge. The owner alone merges reviewed PRs.
+This does not change the separate owner-authorized weekly draft-release policy.
+
 Current owner source-validation correction: prevent repeated PR inventory errors.
 SOURCE_FILES and ACTIVE_SOURCE_MANIFEST are separate records; review and update
 only approved first-party entries before explicitly refreshing the whole-source
