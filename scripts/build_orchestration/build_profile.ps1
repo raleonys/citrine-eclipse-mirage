@@ -49,6 +49,8 @@ try {
     Invoke-ExternalChecked $CMakeExe $BuildArgs 'MSVC build' 106
     $Dll = Join-Path $Out 'preloader.unsigned.dll'
     if (-not (Test-Path -LiteralPath $Dll -PathType Leaf)) { Fail-Build 'DLL missing after link.' 108 }
+    # Verify even on incremental builds that bypass the link POST_BUILD hook.
+    Invoke-ExternalChecked $PythonExe @('-B',(Join-Path $Root 'scripts/import_descriptor_order.py'),'--root',$Root,'--dll',$Dll,'--verify') 'Unsigned DLL import descriptor order' 118
     $BeforeHash = (Get-FileHash -LiteralPath $Dll -Algorithm SHA256).Hash.ToLowerInvariant()
     $Receipt = @{classification='NOT_RELEASE'; build_succeeded=$true; mode=$Mode; configuration=$Config; dll_sha256=$BeforeHash; compiler=$ClExe; compiler_sha256=(Get-FileHash -LiteralPath $ClExe -Algorithm SHA256).Hash.ToLowerInvariant(); cmake_cache_sha256=(Get-FileHash -LiteralPath (Join-Path $Out 'CMakeCache.txt') -Algorithm SHA256).Hash.ToLowerInvariant(); source_manifest_sha256=(Get-FileHash -LiteralPath (Join-Path $Root 'metadata/ACTIVE_SOURCE_MANIFEST.json') -Algorithm SHA256).Hash.ToLowerInvariant(); real_game_acceptance='NOT_RUN'}
     $Receipt['validation_result'] = 'NOT_COMPLETED'
