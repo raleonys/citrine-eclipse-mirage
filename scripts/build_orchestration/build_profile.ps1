@@ -21,11 +21,20 @@ try {
     $vs = Find-VcVars64
     Import-VcVarsEnvironment $CmdExe $vs[1]
     Clear-BuildSelectorEnvironment
+    # First-party source language checks do not control localized MSVC output.
+    # Request English tool diagnostics for every build mode after vcvars setup.
+    # The caller's original VSLANG value is restored by the existing finally.
+    $env:VSLANG = '1033'
     $env:PYTHONDONTWRITEBYTECODE = '1'
     $PythonExe = Resolve-BoundExecutable 'python.exe'
     $ClExe = Resolve-BoundExecutable 'cl.exe'
     $LinkExe = Resolve-BoundExecutable 'link.exe'
     $NMakeExe = Resolve-BoundExecutable 'nmake.exe'
+    # English diagnostics only; reject missing message resources without fallback.
+    $EnglishCompilerMessages = Join-Path (Split-Path -Parent $ClExe) '1033\clui.dll'
+    if (-not (Test-Path -LiteralPath $EnglishCompilerMessages -PathType Leaf)) {
+        Fail-Build "English MSVC diagnostic resources are required: $EnglishCompilerMessages" 119
+    }
     Invoke-ExternalChecked $PythonExe @('-B',(Join-Path $Root 'scripts/clear_tool_python_cache.py'),'--root',$Root,'--quiet','--report',(Join-Path $Out 'PYTHON_CACHE_CLEANUP.json')) 'Previous first-party Python bytecode cleanup' 115
     New-Item -ItemType Directory -Path $Out -Force | Out-Null
     Write-ToolchainProvenance (Join-Path $Out 'BUILD_TOOLCHAIN_PROVENANCE.log') $vs[0] $vs[1] $CMakeExe $PythonExe $ClExe $LinkExe $NMakeExe
@@ -39,6 +48,7 @@ try {
         Golden = 'PRODUCTION BUILD'
     }[$Mode]
     Write-Host "SURGE: $ProfileLabel / $Config"
+    Write-Host "MSVC diagnostic locale requested: English (VSLANG=1033)"
     Write-Host '[1/3] Configure'
     Invoke-ExternalChecked $CMakeExe @('-S',$Root,'-B',$Out,'-G','NMake Makefiles',"-DCMAKE_BUILD_TYPE=$Config","-DBUILD_TESTING=$Testing","-DPRELOADER_L_BUILD_SOURCE_API_DLL=$Testing","-DPRELOADER_L_GOLDEN_LINK_PROFILE=$GoldenLink") 'CMake configure' 105
     Write-Host '[2/3] Compile and link'
