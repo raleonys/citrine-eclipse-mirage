@@ -4,15 +4,16 @@ This file distinguishes source imports, integrated pull requests and published r
 
 ## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
 
-The 50 entries below are the merged pull requests verified through PR #60, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
+The 51 entries below are the merged pull requests verified through PR #61, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
 
 ### Additional unreleased changes
 
-- Add a pull-request-only changelog coverage check to CI, with a documented owner-reviewed exemption path.
-- Record the exact public project identity, target repository slug and owner-approved campaign image hash without changing runtime compatibility. The actual PNG upload and GitHub repository rename remain pending.
+- Integrate the owner's final campaign artwork into the README hero, with exact PNG identity pinned in the branding contract and active source manifest.
+- Record the completed GitHub repository rename while preserving runtime, DLL ABI and historical identities.
 
 ### 2026-10-31
 
+- [PR #61](https://github.com/raleonys/citrine-eclipse-mirage/pull/61): ci/docs: require changelog coverage and pin Citrine Eclipse Mirage branding.
 - [PR #60](https://github.com/raleonys/citrine-eclipse-mirage/pull/60): docs: establish Citrine Eclipse Mirage identity and repair stale changelog.
 - [PR #59](https://github.com/raleonys/citrine-eclipse-mirage/pull/59): refactor: retire duplicate root release-state records.
 - [PR #58](https://github.com/raleonys/citrine-eclipse-mirage/pull/58): docs: consolidate governance and retire historical scope ledger.

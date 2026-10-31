@@ -13,11 +13,11 @@
     ".github/workflows/weekly-release.yml": "eb5b4a70e492405ba1636f0015e680feed5a0eaac54e30f10f8443ec62639fab",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "8c7acaa7aa6ef4b20be18da611861f4c010d5619cc12125f707e2f940e965c6c",
-    "CHANGELOG.md": "65df254964e84ed9c55ce2bf2c29bb3a0f951b86eb2e7916befb91b6a5612c58",
+    "CHANGELOG.md": "ff1e308d1cd00fde34edbab58c5c3f36ff2d7fcf0ab9a8a72b1ef2fe2f2336d9",
     "CMakeLists.txt": "d83de5c06662b2c09e6b0fc0651b5534ee48bfd99b09e81a417698fa22994ad8",
     "CMakePresets.json": "b05ad740be9469829b68e71cdbc4d7a603e4c12599ef857c0729fd4972218796",
     "LICENSE": "5eb41c3b31c701a1fce6dd7aac32d4637f11a586dfeb1e6aa7a9a94e4d676055",
-    "README.md": "19264ba6c990843a5025e83b31a053f083bb7ea1101328ba06f3b8f76a58992f",
+    "README.md": "08ff287b41400bff614087d848bda46f81a2edf51542c2c6ca6eb1c16ba508e7",
     "cmake/BuildPartition.cmake": "f37350aed03be78de8c5f121564416acb3a6b2d6e714b23ce93bb8d64c05f192",
     "cmake/InfrastructureChecks.cmake": "f897c17185622bc25ec92d4e2d9a7996393e72368c97861a43c14585202807be",
     "cmake/PatchHookFreeze.cmake": "5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d",
@@ -3675,6 +3675,7 @@
     "metadata/evidence/weekly-release/VALIDATION.json": "6db92bceb67957f8e779530c46ae7caf49e6ca5f9e23c8dfc3a7340b2417703c",
     "metadata/evidence/REFERENCE_METADATA_AVATAR.json": "1e00a1e0e81bc97f9364c03e67e7a94d6641e63b9f54438ae7dc1c209fb5de0c",
     "GOVERNANCE.md": "8a3f681c027d3e5f46080d1b74a1a7d0c04bf988f496d63493f5ead2a1217315",
-    "docs/PROJECT_BRANDING.md": "52a25d61c1b6ded03ceb62c78fdb6ad84424561f86e421e21a42fb67b536ea5c"
+    "docs/PROJECT_BRANDING.md": "8c857112f7a4e686133b0718384ba174ced577b8a2d892aabd128353b1501173",
+    "resources/branding/citrine-eclipse-mirage.png": "fd9524cfcff509349e2b1b040d44a9877cd09d4784b7b7eb678a807278086ac8"
   }
 }
