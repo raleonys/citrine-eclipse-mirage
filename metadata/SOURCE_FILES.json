@@ -1130,8 +1130,8 @@
       "sha256": "301ff2e33a80d398c2ca51c6623046261e84043e11ee0f2d6afce6276d6ab1c0"
     },
     "tests/infrastructure/test_english_only_audit.py": {
-      "bytes": 9082,
-      "sha256": "bbb5e8d41e1d30fd7887ed13c388a10830d0b680d0ece3b9f70bdf14e1df4fb1"
+      "bytes": 9084,
+      "sha256": "e819d1864be07e4d4eca5384a17626bf852c042e029e3ee0a19ce182e53e4317"
     },
     "tests/infrastructure/test_infrastructure.py": {
       "bytes": 29006,

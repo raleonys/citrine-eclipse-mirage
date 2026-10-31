@@ -127,9 +127,9 @@ class LanguageSignalAuditTests(unittest.TestCase):
                         profile.index("Invoke-ExternalChecked $CMakeExe @('-S'"))
         self.assertIn('MSVC diagnostic locale requested: English (VSLANG=1033)',
                       profile)
-        self.assertIn("Join-Path (Split-Path -Parent $ClExe) '1033\clui.dll'", profile)
+        self.assertIn("Join-Path (Split-Path -Parent $ClExe) '1033\\clui.dll'", profile)
         self.assertIn('Fail-Build "English MSVC diagnostic resources are required:', profile)
-        self.assertLess(profile.index("1033\clui.dll"),
+        self.assertLess(profile.index("1033\\clui.dll"),
                         profile.index("Invoke-ExternalChecked $CMakeExe @('-S'"))
         self.assertIn('Get-ChildItem Env: | ForEach-Object { $EnvironmentBefore', profile)
         self.assertIn('foreach ($Name in $EnvironmentBefore.Keys)', profile)

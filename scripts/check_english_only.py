@@ -56,10 +56,6 @@ def is_letter_signal(char):
     return ord(char) > 127 and unicodedata.category(char).startswith('L')
 
 
-def is_prose_document(name):
-    return PurePosixPath(name).suffix.lower() == '.md'
-
-
 def blocking_language_signal(name):
     """Unicode test data and structured metadata require separate review."""
     return not name.startswith(('tests/', 'metadata/'))
