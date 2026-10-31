@@ -391,6 +391,41 @@ class LocalDistTests(unittest.TestCase):
         self.assertFalse(receipt['official_release'])
         self.assertFalse(receipt['library_publication'])
 
+
+    def test_golden_output_symlink_cannot_overwrite_external_file(self):
+        self.output.mkdir(parents=True, exist_ok=True)
+        victim = self.root.parent / 'outside-golden-victim.bin'
+        victim.write_bytes(b'original external fixture bytes')
+        candidate_hash = golden.sha(self.raw)[:16]
+        output_name = 'preloader_l.' + candidate_hash + '.dll'
+        artifact = self.output / output_name
+        sidecar = Path(str(artifact) + '.sha256')
+        for unsafe in (artifact, sidecar):
+            with self.subTest(unsafe=unsafe.name):
+                try:
+                    unsafe.symlink_to(victim)
+                except (OSError, NotImplementedError):
+                    self.skipTest('Symlink fixtures are unavailable')
+                try:
+                    with self.assertRaisesRegex(ValueError, 'Unsafe existing Golden output member'):
+                        self.run_pipeline()
+                    self.assertEqual(b'original external fixture bytes', victim.read_bytes())
+                    self.assertTrue(unsafe.is_symlink())
+                    self.assertFalse((self.root / 'dist').exists())
+                    self.assertFalse(list(self.output.glob('.golden-*.partial')))
+                finally:
+                    unsafe.unlink()
+
+    def test_golden_output_staging_leaves_no_partial_files(self):
+        report, calls = self.run_pipeline()
+        self.assertEqual('LOCAL_GOLDEN_PASS', report['result'])
+        self.assertEqual(7, len(calls))
+        artifact = Path(report['artifact'])
+        self.assertEqual(self.raw.read_bytes(), artifact.read_bytes())
+        self.assertEqual(golden.sha(artifact) + '  ' + artifact.name + '\n',
+                         Path(report['sha256_file']).read_text())
+        self.assertFalse(list(self.output.glob('.golden-*.partial')))
+
     def test_every_golden_failure_preserves_previous_dist_and_skips_runtime(self):
         self.run_pipeline()
         before=self.dist_bytes()
