@@ -27,3 +27,4 @@ portable_check(portable_configuration_defaults_integration
 target_link_libraries(portable_configuration_defaults_integration PRIVATE preloader_l_pegtl)
 portable_check(portable_online src/runtime/online.cpp src/core/paths.cpp tests/unit/online/online_tests.cpp)
 target_compile_definitions(portable_online PRIVATE PRELOADER_L_PORTABLE_ONLINE_TESTS=1)
+portable_check(portable_server src/net/server.cpp src/runtime/execution.cpp tests/unit/server/server_tests.cpp)

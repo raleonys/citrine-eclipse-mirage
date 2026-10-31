@@ -634,8 +634,8 @@
       "sha256": "be87ee068da08dd3fe7cb4e8b5e947640a4d8ef6c1de795b23c5c9a6eb2f3e4f"
     },
     "src/net/server.cpp": {
-      "bytes": 8440,
-      "sha256": "9d803224fc4e5d751939e8bdfb3857e77ae918ab09ba1d7297bfdd5b132947ee"
+      "bytes": 8500,
+      "sha256": "d981cbd6ac6fbbaefbff274575ccb1c9e5a7310da56ecec3005be37deca61a50"
     },
     "src/net/session_handler.cpp": {
       "bytes": 1511,
@@ -1626,8 +1626,8 @@
       "sha256": "45a59e23dcf2dcfd590b252772d31d93ec7c3c0b59847ac42007966fa4641988"
     },
     "tests/unit/server/server_tests.cpp": {
-      "bytes": 17635,
-      "sha256": "3bc9b0c89217f6079da69166d215efaaf7608965bc8b2d4a2ea3d50c97c0281b"
+      "bytes": 20992,
+      "sha256": "d8123bd8141acf83df2e3d54288b5e6787f106220897b941ab202d326446c603"
     },
     "tests/unit/session/handler_tests.cpp": {
       "bytes": 5663,
