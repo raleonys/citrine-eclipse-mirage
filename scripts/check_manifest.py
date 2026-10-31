@@ -12,7 +12,7 @@ def main():
     try:
         if args.refresh:
             data = write_manifest(args.root)
-            print('ACTIVE_SOURCE_MANIFEST: RECORDED', len(data['files']), 'files; NOT_RELEASE')
+            print('ACTIVE_SOURCE_MANIFEST: RECORDED', len(data['files']), 'files')
             return 0
         errors = verify_manifest(args.root)
     except (OSError, ValueError, KeyError) as error:

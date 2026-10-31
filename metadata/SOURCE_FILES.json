@@ -1146,8 +1146,8 @@
       "sha256": "a295f21ebd72fd7dbda21d0b21a347da56bd3c8f922d01fbaf8f21b7d061c4c9"
     },
     "tests/infrastructure/test_requirements.py": {
-      "bytes": 4777,
-      "sha256": "b40fa80b0b52ec725f2f58d7b57ae740541f6b2e24ba36fead9f9a5edc271d25"
+      "bytes": 4735,
+      "sha256": "83ace03f4f4e7d225bd2727f7b0ab1855131b81a551a4135dbf65da0b6d6e259"
     },
     "tests/infrastructure/test_root_ownership.py": {
       "bytes": 10162,
@@ -11683,7 +11683,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
+    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },

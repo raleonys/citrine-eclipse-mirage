@@ -32,27 +32,21 @@ def check(root):
         errors.append('SURGE_IDENTITY_CHANGED')
     if hashlib.sha256((root / identity['branding_asset']).read_bytes()).hexdigest() != identity['asset_sha256']:
         errors.append('OWNER_AVATAR_CHANGED')
-    state = json.loads((root / 'RELEASE_STATE.json').read_text())
-    if state.get('official_release') is not False or state.get('library_publication') is not False:
-        errors.append('UNVERIFIED_RELEASE_CLAIM')
     local = json.loads((root / 'metadata/LOCAL_DATA_POLICY.json').read_text())
     if local.get('release_file_logging') != 'FORBIDDEN':
         errors.append('RELEASE_LOG_POLICY_WEAKENED')
-    runtime_path=state.get('current_runtime_binding_status')
-    if (runtime_path!='metadata/RUNTIME_CURRENT_STATUS.json'
-            or state.get('current_application_status')!=runtime_path
-            or state.get('current_vendoring_status')!=runtime_path):
-        errors.append('CURRENT_RUNTIME_POINTER_STALE')
+    runtime_path = root / 'metadata/RUNTIME_CURRENT_STATUS.json'
+    if not runtime_path.is_file():
+        errors.append('CURRENT_RUNTIME_STATE_MISSING')
     else:
-        runtime=json.loads((root/runtime_path).read_text())
+        runtime=json.loads(runtime_path.read_text())
         abi=json.loads((root/'metadata/PUBLIC_DLL_ABI.json').read_text())
         if runtime.get('role')!='CURRENT_RUNTIME_STATE':
             errors.append('CURRENT_RUNTIME_SNAPSHOT_STALE')
         if runtime.get('exports')!={name:entry['ordinal'] for name,entry in abi['exports'].items()}:
             errors.append('CURRENT_RUNTIME_ABI_MISMATCH')
         if (set(runtime.get('active_vendors',{}))!=set(req['third_party'])
-                or runtime.get('active_vendor_count')!=len(req['third_party'])
-                or state.get('active_vendor_count')!=len(req['third_party'])):
+                or runtime.get('active_vendor_count')!=len(req['third_party'])):
             errors.append('CURRENT_RUNTIME_VENDOR_MISMATCH')
         if runtime.get('logging',{}).get('release_file_logging')!=local['release_file_logging']:
             errors.append('CURRENT_RUNTIME_LOG_POLICY_MISMATCH')
