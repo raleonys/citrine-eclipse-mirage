@@ -974,8 +974,8 @@
       "sha256": "580964926cfd1c9b725b8eda88395b526a6593a7b3926629dc5cf17bad7baa05"
     },
     "src/runtime/application.cpp": {
-      "bytes": 28948,
-      "sha256": "73e1e8c4559bf5dfe86db9c159ae0110ae57e9cc1fc1aa259fd9ecf407b90d03"
+      "bytes": 29425,
+      "sha256": "70dfe3adad415460c8e70530fbaf965572ba306bd922ae1c6f8acf0784f80f6c"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2219,
@@ -1198,8 +1198,8 @@
       "sha256": "03716f88a6839a3a163295bdcef4fa5be0d8057907d409ec1c0cbbc18876e36b"
     },
     "tests/native/extra_library_failure_tests.cpp": {
-      "bytes": 6251,
-      "sha256": "88cee86eae95cdd393c3a258e8401a04a412e3dc701dac647470a1e8cb2c6154"
+      "bytes": 8290,
+      "sha256": "56fd71057ca72d3fb4a5e3d8e1b54d19ceace69da7c733bcc802331dc9666bfd"
     },
     "tests/native/file_copy_windows_tests.cpp": {
       "bytes": 4774,
@@ -1306,8 +1306,8 @@
       "sha256": "1beb9b14f9827551000df5b29d6b98096f5d76c687060e823255004fbbfdd939"
     },
     "tests/support/runtime/online_fixture.cpp": {
-      "bytes": 1372,
-      "sha256": "7e9a37c10d5e0d9a29d8ad4dfceb37d6f50145a66c66b5a77c78d61c39d3df5f"
+      "bytes": 1363,
+      "sha256": "13924472d781a6b157ea08d5d245d73737499af9b293d251c001e4f8d3385f06"
     },
     "tests/support/runtime/socket_retirement_fixture.cpp": {
       "bytes": 2753,
@@ -11667,7 +11667,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
+    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },
