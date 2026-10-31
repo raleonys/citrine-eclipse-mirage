@@ -314,11 +314,65 @@ class GovernanceTests(unittest.TestCase):
             (root / 'metadata').mkdir()
             (root / 'metadata/METADATA_OWNERSHIP.json').write_text(json.dumps({'files': {
                 'METADATA_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'registry', 'role': 'CURRENT_CONTRACT'},
-                'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry', 'role': 'CURRENT_CONTRACT'}}}))
-            (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps({'files': {}}))
+                'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry', 'role': 'CURRENT_CONTRACT'}},
+                'schema': ownership.METADATA_SCHEMA}))
+            (root / 'metadata/SCRIPT_OWNERSHIP.json').write_text(json.dumps({'schema': ownership.SCRIPT_SCHEMA, 'files': {}}))
             self.assertEqual([], ownership.check(root))
             (root / 'metadata/unowned.json').write_text('{}')
             self.assertTrue(any('Unowned' in e for e in ownership.check(root)))
+
+
+    def test_ownership_schemas_and_allowed_roles_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'metadata').mkdir()
+            (root / 'scripts').mkdir()
+            (root / 'scripts/audit_tool.py').write_text('pass\n')
+            metadata = {
+                'schema': ownership.METADATA_SCHEMA,
+                'files': {
+                    'METADATA_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'metadata registry',
+                                                'role': 'CURRENT_CONTRACT'},
+                    'SCRIPT_OWNERSHIP.json': {'owner': 'qa', 'purpose': 'script registry',
+                                              'role': 'CURRENT_CONTRACT'},
+                },
+            }
+            scripts = {
+                'schema': ownership.SCRIPT_SCHEMA,
+                'files': {
+                    'scripts/audit_tool.py': {'owner': 'qa', 'purpose': 'fixture script',
+                                              'role': 'PYTHON_TOOL_OR_MODULE'},
+                },
+            }
+            metadata_path = root / 'metadata/METADATA_OWNERSHIP.json'
+            script_path = root / 'metadata/SCRIPT_OWNERSHIP.json'
+            def write_records():
+                metadata_path.write_text(json.dumps(metadata))
+                script_path.write_text(json.dumps(scripts))
+            write_records()
+            self.assertEqual([], ownership.check(root))
+            for ledger, key in ((metadata, 'metadata'), (scripts, 'script')):
+                ledger['schema'] = 'unexpected.audit.schema'
+                write_records()
+                self.assertTrue(any('Unrecognized ' + key + ' ownership schema' in error
+                                    for error in ownership.check(root)))
+                ledger['schema'] = (ownership.METADATA_SCHEMA if key == 'metadata'
+                                    else ownership.SCRIPT_SCHEMA)
+                write_records()
+            for ledger, name in ((metadata, 'METADATA_OWNERSHIP.json'),
+                                 (scripts, 'scripts/audit_tool.py')):
+                record = ledger['files'][name]
+                role = record.pop('role')
+                write_records()
+                self.assertTrue(any('invalid' in error and name in error
+                                    for error in ownership.check(root)))
+                record['role'] = 'UNKNOWN_ROLE'
+                write_records()
+                self.assertTrue(any('invalid' in error and name in error
+                                    for error in ownership.check(root)))
+                record['role'] = role
+                write_records()
+                self.assertEqual([], ownership.check(root))
 
     def test_launcher_result_and_argument_mutations(self):
         with tempfile.TemporaryDirectory() as tmp:

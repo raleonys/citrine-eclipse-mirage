@@ -189,6 +189,7 @@
     "scripts/run_wine_test.py": {
       "owner": "SURGE local validation",
       "purpose": "Preserve actual Wine program exit and output without inheriting unrelated service pipe lifetimes",
+      "role": "PYTHON_TOOL_OR_MODULE",
       "origin": "New SURGE implementation; regression-tested with ordinary subprocesses"
     },
     "scripts/check_dll_exports.py": {
@@ -218,11 +219,13 @@
     },
     "scripts/check_build_partition.py": {
       "owner": "SURGE target ownership",
-      "purpose": "Fail closed on reference code or source API contamination of production targets/maps"
+      "purpose": "Fail closed on reference code or source API contamination of production targets/maps",
+      "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/audit_translation_units.py": {
       "owner": "SURGE translation-unit audit",
-      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source"
+      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source",
+      "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/collect_size_evidence.py": {
       "owner": "SURGE size evidence",
