@@ -46,6 +46,11 @@
       "purpose": "build production",
       "role": "AUTOMATION"
     },
+    "scripts/build_orchestration/build_path_pinning.ps1": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "Pin Windows build components and reject reparse swaps",
+      "role": "AUTOMATION"
+    },
     "scripts/build_orchestration/build_profile.ps1": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "build profile",
