@@ -123,7 +123,7 @@ class RepositoryRootOwnership(unittest.TestCase):
             target = root / 'metadata/evidence/LAYOUT_MIGRATION.json'
             target.parent.mkdir(parents=True)
             contract = {'layout_migration': 'metadata/evidence/LAYOUT_MIGRATION.json'}
-            target.write_text('{"schema":"yellowfield.layout-migration.v1"}', encoding='utf-8')
+            target.write_text('{"schema":"surge.layout-migration.v1"}', encoding='utf-8')
             self.assertEqual([], check_layout_migration_reference(root, contract))
             self.assertTrue(check_layout_migration_reference(
                 root, {'layout_migration': 'docs/evidence/LAYOUT_MIGRATION.json'}))
@@ -141,7 +141,7 @@ class RepositoryRootOwnership(unittest.TestCase):
             self.assertTrue(check_layout_migration_reference(root, contract))
             target.unlink()
             outside = root / 'elsewhere.json'
-            outside.write_text('{"schema":"yellowfield.layout-migration.v1"}')
+            outside.write_text('{"schema":"surge.layout-migration.v1"}')
             try:
                 target.symlink_to(outside)
             except (OSError, NotImplementedError):

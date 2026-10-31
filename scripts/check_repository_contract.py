@@ -161,7 +161,8 @@ def check_layout_migration_reference(root, contract):
         payload = json.loads(target.read_text(encoding='utf-8'))
     except (OSError, UnicodeError, ValueError):
         return ['Invalid or missing layout_migration file target: ' + name]
-    if not isinstance(payload, dict) or payload.get('schema') != 'yellowfield.layout-migration.v1':
+    schema = payload.get('schema') if isinstance(payload, dict) else None
+    if not isinstance(schema, str) or not schema.endswith('.layout-migration.v1'):
         return ['Unexpected layout_migration schema: ' + name]
     return []
 
