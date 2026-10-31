@@ -1,8 +1,8 @@
-# yellowfield governance
+# Citrine Eclipse Mirage governance
 
 ## Authority and scope
 
-This document defines the intended GitHub-centered contribution and release model for yellowfield. The repository remains private until the owner separately approves a visibility change.
+This document defines the intended GitHub-centered contribution and release model for Citrine Eclipse Mirage. The repository remains private until the owner separately approves a visibility change.
 
 The owner's latest explicit instructions take precedence over repository guidance. Technical safety requirements and compatibility contracts remain effective unless an approved change explicitly replaces them. A successful check does not prove a different validation class.
 
@@ -26,6 +26,10 @@ The repository's current private workflow only runs source and portable checks a
 
 Local build, debug, and focused testing remain available developer tools; separate publication-governance credentials or repeated release gates are not prerequisites for ordinary development. During the migration, existing tracked hooks and QA scripts are updated only through reviewed changes, not silently bypassed.
 
+## Changelog maintenance
+
+Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. Report merged PR development separately from source-revision imports and actual published release tags. Do not invent historical R-series labels, dates or release claims: unresolved archive provenance must remain explicitly incomplete until artifact and checksum verification.
+
 ## Weekly stable releases
 
 - There is one regular GitHub Release flow: a weekly stable-release draft built from the accepted `main` commit.
@@ -46,7 +50,7 @@ Keep meaningful negative tests, source/vendor identity, ABI, lifetime, and actua
 
 ## Public readiness and disclosure
 
-Public-facing project naming uses lowercase `yellowfield`. Public documents should not disclose unnecessary implementation or integration details. Review the full source tree, metadata, history, license status, and distributed assets before any public visibility change. Repository visibility is changed only with explicit owner approval.
+Public-facing project naming uses `Citrine Eclipse Mirage`. Public documents should not disclose unnecessary implementation or integration details. Review the full source tree, metadata, history, license status, and distributed assets before any public visibility change. Repository visibility is changed only with explicit owner approval.
 
 ## Migration record
 

@@ -11,7 +11,7 @@ Human-facing commands under `scripts/build_orchestration/`:
 |---|---|
 | `build_unstable.cmd` | Release application DLL; checks exports/resources and actual load/socket/shutdown/unload |
 | `build_debug.cmd` | Debug application DLL with the same public API checks; debugger symbols are retained |
-| `build_native_acceptance.cmd` | Yellowfield CTest source/adapter/CRT tests on Windows |
+| `build_native_acceptance.cmd` | Citrine Eclipse Mirage CTest source/adapter/CRT tests on Windows |
 | `build_crt_acceptance.cmd` | Builds and runs only selected compiler CRT/public DLL/source smoke targets |
 | `build_production.cmd` | Native MSVC Golden link and six-stage verification; does not publish an official release |
 
@@ -41,8 +41,8 @@ identity, then verify it again:
 ```sh
 python -B scripts/check_manifest.py --refresh
 python -B scripts/run_source_qa.py
-python -B scripts/package_source.py --output ../yellowfield-startup-build-fix-source.zip
-python -B scripts/check_falcion_golden_cleaning.py --package ../yellowfield-startup-build-fix-source.zip
+python -B scripts/package_source.py --output ../citrine-eclipse-mirage-source.zip
+python -B scripts/check_falcion_golden_cleaning.py --package ../citrine-eclipse-mirage-source.zip
 ```
 
 Packaging does not refresh the manifest automatically. The Golden command

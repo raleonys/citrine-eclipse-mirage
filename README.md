@@ -1,27 +1,31 @@
-# yellowfield
+# Citrine Eclipse Mirage
 
 ![Windows x64](https://img.shields.io/badge/Windows-x64-0078D4?logo=windows11&logoColor=white)
 ![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)
-[![CI](https://github.com/raleonys/yellowfield/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/raleonys/yellowfield/actions/workflows/ci.yml)
+[![CI](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml)
 
-A lightweight utility library for Windows.
+A Windows-native C++ utility library focused on compatibility, maintainability, and controlled changes.
 
 ## Overview
 
-yellowfield is a native C++ dynamic-link library that provides auxiliary routines and shared components for Windows-based applications.
+Citrine Eclipse Mirage provides auxiliary routines and shared components for Windows-based applications. It is a supplementary dynamic-link library rather than a standalone application.
 
-It combines common utilities, internal helpers, and supporting functionality within a single module.
+The public project name is Citrine Eclipse Mirage. Compatibility-sensitive DLL filenames, internal code identifiers, runtime configuration and exported symbols remain unchanged.
 
-The library is intended as a supplementary component rather than a standalone application.
+## Project history
+
+See the [changelog](CHANGELOG.md) for the recorded GitHub development timeline and imported source history. A merged PR does not constitute a published release.
 
 ## Development
 
-yellowfield is independently maintained, with development focused on compatibility, code maintenance, and incremental improvements.
+Read the [development instructions](docs/DEVELOPMENT.md), [project governance](GOVERNANCE.md), and [contribution workflow](docs/GITHUB_WORKFLOW.md).
+
+Source QA, portable tests, Windows/MSVC native acceptance, Golden validation and application/game acceptance are distinct evidence classes.
 
 ## Building
 
-The repository contains the source code and relevant project files. Build configurations and integration requirements may vary depending on the target environment.
+See the [development instructions](docs/DEVELOPMENT.md) for build and test commands.
 
 ## Notes
 
-Implementation details and application-specific integration are outside the scope of this document.
+This repository remains private until its owner approves a separate visibility change. Rebranding does not modify the binary compatibility contract or authorize a release.
