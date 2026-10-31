@@ -18,5 +18,12 @@ foreach(_parser_target portable_parser portable_config_order portable_config_has
 endforeach()
 portable_check(vdf_parser_regressions src/config/parser.cpp tests/unit/parser/vdf_regression_tests.cpp)
 target_link_libraries(vdf_parser_regressions PRIVATE preloader_l_pegtl)
+portable_check(portable_configuration_defaults src/runtime/application_defaults.cpp tests/unit/config_defaults/defaults_tests.cpp)
+portable_check(portable_configuration_defaults_integration
+  tests/unit/config_defaults/defaults_integration_tests.cpp
+  src/runtime/application_defaults.cpp src/config/config_startup.cpp src/config/application.cpp
+  src/config/parser.cpp src/config/order.cpp src/config/hash_table.cpp src/runtime/startup.cpp
+  src/core/binary_io.cpp src/handlers/handlers.cpp src/xml/memory_printer.cpp)
+target_link_libraries(portable_configuration_defaults_integration PRIVATE preloader_l_pegtl)
 portable_check(portable_online src/runtime/online.cpp src/core/paths.cpp tests/unit/online/online_tests.cpp)
 target_compile_definitions(portable_online PRIVATE PRELOADER_L_PORTABLE_ONLINE_TESTS=1)
