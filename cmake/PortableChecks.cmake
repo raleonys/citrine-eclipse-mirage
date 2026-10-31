@@ -18,3 +18,4 @@ foreach(_parser_target portable_parser portable_config_order portable_config_has
 endforeach()
 portable_check(vdf_parser_regressions src/config/parser.cpp tests/unit/parser/vdf_regression_tests.cpp)
 target_link_libraries(vdf_parser_regressions PRIVATE preloader_l_pegtl)
+portable_check(portable_server src/net/server.cpp src/runtime/execution.cpp tests/unit/server/server_tests.cpp)
