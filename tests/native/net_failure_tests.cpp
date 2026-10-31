@@ -171,6 +171,21 @@ void factory_failure_rearms() {
     require(healthy.frame()=="recovered","new handler cannot process traffic after factory recovery");
     service.stop();service.stop();
 }
+void accept_cancellation_finality() {
+    Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
+    owner.used=true;
+    owner.acceptor.open(Tcp::v4());owner.acceptor.bind({asio::ip::address_v4::loopback(),0});owner.acceptor.listen();
+    owner.queue_accept(owner.acceptor,0);
+    require(owner.accept_pending[0],"accept submission records a pending operation");
+    owner.stopping=true;asio::error_code error;owner.acceptor.cancel(error);
+    require(!error&&owner.accept_pending[0],"cancel intent must not retire an accept before its completion");
+    owner.acceptor.close(error);
+    require(!error&&owner.accept_pending[0]&&c.factory.creates==0,"closing the listener retains its unconsumed completion without constructing a handler");
+    owner.stop();owner.stop();
+    require(!owner.accept_pending[0]&&!owner.accept_pending[1]&&owner.active_sessions==0,
+        "stop drains the exact pending accept before acknowledging complete cleanup");
+    require(c.factory.creates==0&&c.factory.errors==0,"cancelled accept completion cannot create a session or rearm a closed listener");
+}
 void post_failure() {
     Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);service.start();
     Peer control(c.port);require(control.frame()=="hello","control greeting");control.send("fail");
@@ -214,7 +229,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
+    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

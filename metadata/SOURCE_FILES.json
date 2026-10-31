@@ -1222,8 +1222,8 @@
       "sha256": "0a6f6c2ba0e2c2513d209d27796c24222bf6b673a372f696e9ebae88fc1c5f6b"
     },
     "tests/native/net_failure_tests.cpp": {
-      "bytes": 11177,
-      "sha256": "fe9e177b8ab879c558cd742518368440012fdf6b1cbde38ba7b5b691bd901ae9"
+      "bytes": 12337,
+      "sha256": "949507edb619f00d5f4c09f0422aa8a31a5e568a318c05a35a97fd41de9ed04f"
     },
     "tests/native/network_policy_tests.cpp": {
       "bytes": 10412,
@@ -1246,8 +1246,8 @@
       "sha256": "602e5e58e8ebad3500e6b21c6229f412df58c65f81c1fd1cc91677d2ee32ee97"
     },
     "tests/native/socket_retirement_tests.cpp": {
-      "bytes": 11483,
-      "sha256": "4493c5fcb00ca626ffa38ececb006d1a49215e567bc73505d740e2488f82ff3e"
+      "bytes": 15891,
+      "sha256": "f020c67487efe9e583635f139313a6d120504a09cde1e6e9a3e0e3167dbee9cf"
     },
     "tests/native/startup_publication_tests.cpp": {
       "bytes": 3384,
