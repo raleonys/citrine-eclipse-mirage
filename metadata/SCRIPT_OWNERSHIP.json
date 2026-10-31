@@ -62,7 +62,7 @@
       "role": "AUTOMATION"
     },
     "scripts/check_english_only.py": {
-      "owner": "Yellowfield first-party language audit",
+      "owner": "First-party language audit",
       "purpose": "Read-only active-source language-signal audit and Markdown prose check",
       "role": "PYTHON_TOOL_OR_MODULE"
     },

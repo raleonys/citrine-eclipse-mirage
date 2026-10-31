@@ -48,6 +48,7 @@ class LanguageSignalAuditTests(unittest.TestCase):
         self.write('docs/prose.md', 'An ASCII-only sentence.\n')
         self.manifest(['docs/prose.md'])
         report = checker.audit(self.root)
+        self.assertEqual('surge.english-only-audit.v1', report['schema'])
         self.assertEqual('LANGUAGE_SIGNAL_AUDIT_NOT_SEMANTIC_CERTIFICATE',
                          report['classification'])
         self.assertEqual([], report['findings'])

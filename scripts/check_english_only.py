@@ -65,7 +65,7 @@ def audit(root):
                 findings.append({'path': name, 'line': number, 'kind': 'non_ascii_letters',
                                  'severity': 'block' if is_prose_document(name) else 'review',
                                  'codepoints': letters})
-    return {'schema': 'yellowfield.english-only-audit.v1',
+    return {'schema': 'surge.english-only-audit.v1',
             'classification': 'LANGUAGE_SIGNAL_AUDIT_NOT_SEMANTIC_CERTIFICATE',
             'scanned_text_files': scanned,
             'findings': findings,
