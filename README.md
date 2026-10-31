@@ -2,8 +2,8 @@
 
 ![Citrine Eclipse Mirage campaign artwork](resources/branding/citrine-eclipse-mirage.png)
 
-![Windows x64](https://img.shields.io/badge/Windows-x64-0078D4?logo=windows11&logoColor=white)
-![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)
+[![Windows x64](https://img.shields.io/badge/Windows-x64-0078D4?logo=windows&logoColor=white)](docs/DEVELOPMENT.md)
+[![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)](CMakeLists.txt)
 [![CI](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/raleonys/citrine-eclipse-mirage/actions/workflows/ci.yml)
 
 A Windows-native C++ utility library focused on compatibility, maintainability, and controlled changes.
