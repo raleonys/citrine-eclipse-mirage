@@ -1,26 +1,30 @@
-# Uygulama ve araç sahipliği
+# Application and tooling ownership
 
-Bu görev runtime mimarisini yeniden tasarlamaz. Mevcut RE uygulama kaynakları
-`src/{config,core,runtime,net,platform,protocol,router,handlers,codec,hash,xml}`
-altında; başlıklar `include/preloader_l/` içindedir. CMake kaynakları açık listeler,
-araştırma/frozen köklere glob veya include yolu açmaz.
+This scope does not redesign the runtime architecture. The current RE application
+sources reside under
+`src/{config,core,runtime,net,platform,protocol,router,handlers,codec,hash,xml}`,
+with headers under `include/preloader_l/`. CMake uses explicit source lists and
+does not add glob patterns or include paths into research or frozen roots.
 
-`tools/` ve `scripts/` operatör/QA katmanıdır; uygulama DLL'ine Golden Python,
-PowerShell veya test fixture'ı bağlanmaz. Testlere ait sahte OS sağlayıcıları
-yalnız test hedeflerinde kalır. First-party namespace `preloader_l` korunur.
+`tools/` and `scripts/` form the operator and QA layer; Golden Python,
+PowerShell, and test fixtures are not linked into the application DLL. Mock
+operating-system providers remain confined to test targets. The first-party
+`preloader_l` namespace is preserved.
 
-Özgün hedef mimarisinin temel sınırları korunur: ABI ingress, application/domain,
-dar ports, Windows/transport/storage adapter'ları, ayrı LSX/XML framing ve
-bootstrap/teardown owner'ı. Mevcut RE fonksiyon koleksiyonunun bu hedeflerin
-tamamını gerçekleştirdiği iddia edilmez.
+The intended architecture retains distinct boundaries for ABI ingress,
+application/domain logic, narrow ports, Windows/transport/storage adapters,
+LSX/XML framing, and bootstrap/teardown ownership. The current RE function
+collection is not claimed to implement every intended architectural component.
 
-Otomatik Application/Service owner, Asio/filesystem üretim bağları ve koşullu
-11-hook rollback/drain yolu uygulanmıştır. DllMain hazırlığı dışında ağ,
-config, hook ve beklemeli teardown worker üzerinde çalışır. Uygulamanın altı
-C export'u ile C++ geliştirme DLL'i ayrıdır; [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md)
-güncel sözleşmeyi açıklar. Gerçek Windows/native quiescence ve oyun kabulü
-ayrı kanıt ister; Wine testleri bunları tamamlamış sayılmaz.
+Automatic Application/Service ownership, production Asio/filesystem bindings,
+and the conditional 11-hook rollback/drain path have been implemented. Network,
+configuration, hook, and blocking teardown work runs on a worker thread, apart
+from DllMain preparation. The application's six C exports are distinct from the
+C++ development DLL; [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md) documents the
+current contract. Actual Windows/native quiescence and game acceptance require
+separate evidence; Wine tests do not establish either.
 
-Mevcut Config2/VDF byte grameri PEGTL ile `preloader_l_vdf_objects` sahibi altında
-derlenir; gerçek DLL ve DocumentPipeline bu parser'ı kullanır. Kaynak/action ve
-regresyon sınırları [VDF_PARSER.md](VDF_PARSER.md) içindedir.
+The current Config2/VDF byte grammar is compiled with PEGTL under the
+`preloader_l_vdf_objects` owner target. Both the actual DLL and
+DocumentPipeline use this parser. Source/action coverage and regression
+boundaries are recorded in [VDF_PARSER.md](VDF_PARSER.md).
