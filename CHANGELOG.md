@@ -4,11 +4,15 @@ This file distinguishes source imports, integrated pull requests and published r
 
 ## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
 
-The 51 entries below are the merged pull requests verified through PR #61, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
+The 52 entries below are the merged pull requests verified through PR #62, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
 
 ### Additional unreleased changes
 
 - Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe destinations before deleting caches.
+- Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.
+- Add a Python 3.9+ README prerequisites badge linked to the development instructions.
+- Apply the previously approved `GPL-3.0-only` licensing policy with the complete GNU GPLv3 text in the root `LICENSE` and governance; preserve independent vendor licenses and add a README license badge.
+- Correct the owner-supplied README hero PNG to exactly 1400 x 1100 pixels, update its SHA-256 in branding and source manifest, and retain the existing README image link.
 - Link Windows x64 and C++20 README badges to their source documentation and use a general Windows icon.
 - Remove redundant project-name declarations and branding-transition commentary from current documentation; existing independent technical contracts are unchanged.
 - Integrate the owner's final campaign artwork into the README hero, with exact PNG identity pinned in the branding contract and active source manifest.
@@ -16,6 +20,7 @@ The 51 entries below are the merged pull requests verified through PR #61, linke
 
 ### 2026-10-31
 
+- [PR #62](https://github.com/raleonys/citrine-eclipse-mirage/pull/62): docs/assets: display final campaign artwork and simplify README.
 - [PR #61](https://github.com/raleonys/citrine-eclipse-mirage/pull/61): ci/docs: require changelog coverage and pin Citrine Eclipse Mirage branding.
 - [PR #60](https://github.com/raleonys/citrine-eclipse-mirage/pull/60): docs: establish Citrine Eclipse Mirage identity and repair stale changelog.
 - [PR #59](https://github.com/raleonys/citrine-eclipse-mirage/pull/59): refactor: retire duplicate root release-state records.
