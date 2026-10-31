@@ -1,6 +1,6 @@
-# First-party C++ and test language review (PR52)
+# First-party C++ and test language review (PR53)
 
-## Frozen baseline and inventory
+## Original review and synchronized inventory
 
 - Repository: raleonys/yellowfield
 - Parent main commit: 40fb349259039a512e5ab4c2f1e8b0d3180ca5c6 (merged PR51).
@@ -8,6 +8,14 @@
   139 files under src/, 138 under include/, and 244 code files under tests/.
 - The remaining seven tests/ inventory files are data fixtures (five JSON and
   two TXT); they are not treated as human-facing prose or modified.
+- PR53 synchronization base: e684a1cf364bc73adbafe0b8b08cf71c55ce0aa2
+  (merged PR52), yielding **522** code files: src/ 139, include/ 138,
+  tests/ 245. PR52 added tests/support/fixture_ascii.hpp, which contains
+  English-only comments and a synthetic ASCII fixture guard; it is not a
+  translation target. The PR52 test fixture diff was checked separately.
+- The original 521-file screen remains historical to the PR51 baseline;
+  the post-PR52 inventory and regression CI are separate evidence, not a claim
+  of repeating all manual spot checks on every updated test file.
 
 ## Bounded review and result
 

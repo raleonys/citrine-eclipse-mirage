@@ -1,3 +1,4 @@
+#include "../../support/fixture_ascii.hpp"
 #include "preloader_l/config/configuration.hpp"
 #include <algorithm>
 #include <iostream>
@@ -12,7 +13,13 @@ void require(bool condition, const char* label) {
     if (!condition) throw std::runtime_error(label);
 }
 Path utf16(std::string_view text) { return {text.begin(), text.end()}; }
-std::string ascii(const Path& path) { return {path.begin(), path.end()}; }
+std::string ascii(const Path& path) { return preloader_l::test_support::fixture_ascii(path); }
+void fixture_ascii_contract() {
+    require(ascii(u"ASCII/fixture")=="ASCII/fixture","ASCII fixture path preserves bytes");
+    bool refused=false;
+    try { (void)ascii(u"\u00E9"); } catch (const std::invalid_argument&) { refused=true; }
+    require(refused,"fixture must reject non-ASCII input rather than silently truncate UTF-16");
+}
 void setting(Node& root, const char* section, const char* key, std::string value) {
     root.children[section].children[key].value = std::move(value);
 }
@@ -374,7 +381,7 @@ void streaming_cleanup() {
 }
 } // namespace
 int main() {
-    try {helpers();all_settings_and_overrides();edge_conditions();collection_order_contract();orchestration();streaming_cleanup();
+    try {fixture_ascii_contract();helpers();all_settings_and_overrides();edge_conditions();collection_order_contract();orchestration();streaming_cleanup();
         std::cout<<"PASS: "<<assertions<<" synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.\n";return 0;}
     catch(const std::exception& error){std::cerr<<"FAIL: "<<error.what()<<'\n';return 1;}
 }

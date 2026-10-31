@@ -351,6 +351,38 @@ with tempfile.TemporaryDirectory() as td:
         bad=bytearray(original);mutate(bad);path.write_bytes(bad)
         cp=subprocess.run([sys.executable,'-B',str(r/'scripts/ursynex_golden_finalizer.py'),str(path)],capture_output=True,text=True)
         assert cp.returncode!=0 and path.read_bytes()==bad,(label,cp.stdout,cp.stderr)
+    # Every MSVC application profile must yield a canonical unsigned DLL,
+    # BEFORE URSYNEX. The normalizer is fail-closed and idempotent.
+    raw_path = Path(td) / 'preloader.unsigned.dll'
+    raw, _, _ = build_corvexon_fixture(tuple(reversed(order)))
+    raw_path.write_bytes(raw)
+    call = [sys.executable, '-B', str(r / 'scripts/import_descriptor_order.py'),
+            '--root', str(r), '--dll', str(raw_path)]
+    unnormalized = raw_path.read_bytes()
+    cp = subprocess.run(call + ['--verify'], capture_output=True, text=True)
+    assert cp.returncode != 0 and raw_path.read_bytes() == unnormalized, (cp.stdout, cp.stderr)
+    cp = subprocess.run(call, capture_output=True, text=True)
+    assert cp.returncode == 0, (cp.stdout, cp.stderr)
+    normalized = raw_path.read_bytes()
+    table, records, _ = descriptors(unnormalized)
+    stop = table + 20 * len(records)
+    assert descriptors(normalized)[2] == canonical
+    assert normalized[:table] == unnormalized[:table] and normalized[stop:] == unnormalized[stop:]
+    assert len(normalized) == len(unnormalized)
+    cp = subprocess.run(call + ['--verify'], capture_output=True, text=True)
+    assert cp.returncode == 0 and raw_path.read_bytes() == normalized, (cp.stdout, cp.stderr)
+    cp = subprocess.run(call, capture_output=True, text=True)
+    assert cp.returncode == 0 and raw_path.read_bytes() == normalized, (cp.stdout, cp.stderr)
+    # An unexpected module is never silently removed or renamed.
+    unexpected, _, _ = build_corvexon_fixture(('CRYPT32.DLL', 'KERNEL32.DLL', 'EXTRA.DLL'))
+    raw_path.write_bytes(unexpected)
+    cp = subprocess.run(call, capture_output=True, text=True)
+    assert cp.returncode != 0 and raw_path.read_bytes() == unexpected, (cp.stdout, cp.stderr)
+    cmake_text = (r / 'cmake/BuildPartition.cmake').read_text()
+    profile_text = (r / 'scripts/build_orchestration/build_profile.ps1').read_text()
+    assert 'Normalize unsigned DLL import descriptors before validation' in cmake_text
+    assert 'Unsigned DLL import descriptor order' in profile_text
+
     # The earlier ARYRA fixture remains an independently tested geometry fixture.
     path.write_bytes(data);errors,_=ary.inspect(path,json.loads((r/'metadata/ARYRA_GOLDEN_LAYOUT.json').read_text()))
     assert not errors,errors
