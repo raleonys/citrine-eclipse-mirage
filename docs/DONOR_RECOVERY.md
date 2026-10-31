@@ -1,105 +1,141 @@
-# Donor kapanışı ve doğrulanan hata yolları
+# Donor retirement and validated failure paths
 
-**Brownfield ve Bluefield emekliye ayrılmadı.** Önceki emeklilik önerisi geri
-çekildi. Bu tur, kanıtlanmış üç hata yolunun düzeltmesini ve karşılaştırmalı
-incelemenin devamını içerir; başka hata kalmadığı iddiası içermez.
+**Brownfield and Bluefield have not been retired.** The earlier
+retirement proposal was withdrawn. This pass corrected three proven
+failure paths and continued the comparative review; it does not
+claim that no further defects remain.
 
-## Uygulanan düzeltmeler
+## Corrections implemented
 
-| Hata yolu | Değişiklik | Kalıcı regresyon |
+| Failure path | Change | Persistent regression |
 |---|---|---|
-| `async_accept` başlangıcında tahsis hatası | `accept_pending` geri alınır; exception saklanmaz. Yeniden başlatma artık eski bayrağa takılmaz. | `net_failure_contracts`: gerçek acceptor, tahsis hatası, gerçek loopback peer ile tekrar kabul. |
-| Handler hatasından sonra cleanup post tahsisinin de başarısız olması | Worker yalnız atomik stop işaretini yazar. IO döngüsü işareti görüp kendi listener/client kaynaklarını kapatır. | Gerçek worker, gerçek socket, sıradan handler hatası için sağlıklı oturum kontrolü ve cleanup-post tahsis hatası. |
-| `FreeLibrary` başarısızlığında ek DLL kaydının kaybolması | Başarılı slotlar sıfırlanır; başarısız slotlar aynı sahibin sonraki cleanup denemesine kalır. Load öncesinde sahiplik slotu ayrılır. | Gerçek inert fixture DLL, iki lease, karışık başarı/hata, ardışık hata ve tekrar; tahsis hatasında hiç native load yapılmaması. |
+| Allocation failure when initiating `async_accept` | Roll back `accept_pending`; do not swallow the exception. A restart is no longer blocked by a stale flag. | `net_failure_contracts`: actual acceptor, allocation failure, and acceptance retry with a real loopback peer. |
+| Cleanup-post allocation also fails after a handler error | The worker only writes an atomic stop marker. The I/O loop observes it and closes its own listener/client resources. | Real worker and socket; verify a healthy session under an ordinary handler error and a cleanup-post allocation failure. |
+| Loss of companion-DLL record when `FreeLibrary` fails | Clear successful slots; retain failed slots for the same owner's next cleanup attempt. Reserve the ownership slot before loading. | Real inert fixture DLL, two leases, mixed success/failure, consecutive failures and retry; no native load under reservation-allocation failure. |
 
-Transport stop artık yeni bir `asio::post` tahsisine ihtiyaç duymaz. IO runner
-100 ms'lik `run_for` dilimleriyle stop işaretini gözler; bu yeni bir CFG ayarı
-veya protokol timeout'u değildir. 100 ms, yürütülmekte olan callback'in bitmesi
-koşuluyla kontrol gözlem aralığıdır; toplam shutdown süresi garantisi değildir.
-Windows Asio `io.stop()` yolundaki IOCP wake işlemi de exception üretebildiği
-için tahsis hatası düzeltmesi yalnız `io.stop()` çağrısına dayandırılmadı.
-Socket'ler worker thread'den kapatılmaz. IO runner socket'leri kapattıktan sonra
-kontrol thread'i onu join eder; aktif handler'lar bundan sonra drain edilir.
-Join sonrası cancellation callback'i exception üretirse sonraki `stop()` kalan
-callback'leri yeniden drain edebilir. Kullanıcı/provider callback'lerini zorla
-sonlandırma veya genel bounded-shutdown iddiası eklenmedi.
+Transport stop no longer requires a new `asio::post`
+allocation. The I/O runner observes the stop marker in
+100 ms `run_for` slices. This is neither a new CFG option
+nor a protocol timeout. The 100 ms interval is the
+observation interval, conditional on the executing callback
+returning; it is not a total shutdown-duration guarantee.
+The Windows Asio `io.stop()` path can also throw during
+its IOCP wake-up, so the allocation-failure correction
+does not rely exclusively on `io.stop()`.
+Sockets are not closed from a worker thread.
+Once the I/O runner closes the sockets, the control
+thread joins it, then drains active handlers.
+If a cancellation callback throws after the join,
+a later `stop()` can drain the remaining callbacks.
+There is no forced termination of user/provider callbacks
+or general bounded-shutdown guarantee.
 
-Referans `libraries::unload_035ab0` gövdesi değiştirilmedi: özgün kaynağın
-FreeLibrary sonucunu görmezden gelen davranışı referans olarak kalır. Retry
-sahipliği somut `ExtraLibraries` uygulama adaptöründe düzeltilmiştir. Native
-yüklemeden önce sahiplik ayrıldığı için başarısız bir vector tahsisinden sonra
-başarısız olabilecek FreeLibrary rollback'ine ihtiyaç kalmaz.
+The reference `libraries::unload_035ab0` body was
+not changed: its original behavior of ignoring the
+`FreeLibrary` result remains in the reference model.
+Retry ownership was fixed in the concrete
+`ExtraLibraries` Application adapter. Since ownership
+is reserved before native loading, an unsuccessful
+vector allocation cannot force an unsafe potentially
+failing FreeLibrary rollback.
 
-## Test kanıtı ve sınırı
+## Test evidence and limits
 
-İki kalıcı test executable'ı sekiz ayrı hata senaryosu içerir. Aynı test kaynakları
-önceki ve düzeltilmiş üretim CPP'leri üzerinde derlendi: eski kodda sekiz senaryo
-FAIL, düzeltilmiş kodda sekizi PASS. [RED_GREEN.json](../metadata/evidence/recovery/RED_GREEN.json)
-ve ham case logları saklanır. Testler hata injection'ını kendi executable'larıyla
-sınırlar; üretime allocator veya Win32 API override'ı eklenmedi.
+Two persistent test executables contain eight independent
+failure scenarios. The same test sources were compiled
+against the old and corrected Production CPP files:
+all eight scenarios FAILED on the old code and PASSED
+on the corrected code.
+[RED_GREEN.json](../metadata/evidence/recovery/RED_GREEN.json)
+and raw case logs are retained. Fault injection is
+restricted to the test executables; no allocation
+or Win32 API overrides were added to Production.
 
-İlk Debug koşusunda `network_policy_contracts` mevcut bir oracle yarışı gösterdi:
-IO thread socket'i kapatabilirken worker henüz hata sayacını artırmamış olabilir.
-Test artık hem kapanmayı hem asenkron hata kaydını süre sınırında gözler; oversized
-response kabulü veya hata beklentisi gevşetilmedi. İlk FAIL logu
-[DEBUG_INITIAL_TESTS.log](../metadata/evidence/recovery/DEBUG_INITIAL_TESTS.log) olarak korunur.
-Son koşular, tekrar sayıları ve kaynak QA sonucu
-[VALIDATION.json](../metadata/evidence/recovery/VALIDATION.json) içindedir.
+The initial Debug run exposed a pre-existing test-oracle
+race in `network_policy_contracts`: the I/O thread may
+close the socket before the worker increments its
+error counter. The revised test observes both closure
+and the asynchronous error record within a time bound;
+neither oversized response acceptance nor the expected
+error was weakened. The initial failed log remains in
+[DEBUG_INITIAL_TESTS.log](../metadata/evidence/recovery/DEBUG_INITIAL_TESTS.log).
+Final runs, repetition counts and source QA are in
+[VALIDATION.json](../metadata/evidence/recovery/VALIDATION.json).
 
-Üç üretim C export'u/ordinal'ı, dört vendor, TinyXML derinliği500, sabit SDK/port,
-connect kapsamı, PNG/VERSIONINFO ve Golden linker/metadata politikası korunur.
-Public header veya fonksiyon imzası değiştirilmedi. Geliştirme DLL'inin otomatik
-C++ symbol tablosu aynı compiler altında ayrıca karşılaştırıldı; compiler'ın
-implicit inline destructor emisyonu ve yeni iç metotlar farklıdır. Bu tablo sabit
-üretim C ABI'si değildir; ayrıntı [SOURCE_API_DELTA.json](../metadata/evidence/recovery/SOURCE_API_DELTA.json).
+The three Production C exports/ordinals, four vendors,
+TinyXML depth 500, fixed SDK/port, connect scope,
+PNG/VERSIONINFO and Golden linker/metadata policy
+were preserved. No public header or function signature
+was changed. The development DLL's automatically
+emitted C++ symbols were compared under the same
+compiler: compiler-generated inline destructor
+emission and new private methods differ. This table
+is not the fixed Production C ABI; details are in
+[SOURCE_API_DELTA.json](../metadata/evidence/recovery/SOURCE_API_DELTA.json).
 
-LLVM-MinGW/Wine sonuçları native Windows/MSVC, Golden veya oyun kabulü sayılmaz.
-Eski kabul edilmiş DLL'in SHA256'sı
+LLVM-MinGW/Wine results are not native Windows/MSVC,
+Golden, or game acceptance. The previously accepted
+DLL SHA-256 was
 `4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b`;
-o DLL güncel değişmiş kaynak olarak sunulmaz. Yeni native Windows/Golden ve oyun
-kabulü bekliyor. Yerel çıktı dist'e terfi ettirilmedi.
+that DLL is not represented as the current modified
+source. New native Windows/Golden and game acceptance
+remained pending. Local output was not promoted to dist.
 
-## Genişletilen karşılaştırma
+## Expanded comparative review
 
-1805 first-party donor dosyasının hash/rol envanteri korunur. Bu turda XML,
-Config2, route binding/selector, startup ve IOCP backpressure alanlarından
-30 dosya daha seçilmiş branch'ler düzeyinde karşılaştırıldı: toplam67 kayıt.
-**67 tam dosyanın bütün semantiği kapatılmadı; 1738 dosyada henüz manuel kayıt
-yoktur.** Bunların hepsi uygulama CPP'si değildir; test, araç ve belge de içerir.
-Lexical fonksiyon ve benzerlik indeksleri semantik eşdeğerlik kanıtı sayılmaz.
+The hash/role inventory of 1,805 first-party donor
+files remains preserved. In this pass, 30 additional
+files covering XML, Config2, route bindings/selectors,
+startup and IOCP backpressure were reviewed at the
+level of selected branches: **67 reviewed records total**.
+This did **not** close the complete semantics of all
+67 files; 1,738 files still lacked individual manual
+review records. These files also include tests, tools
+and documents, not only Application CPP files.
+Lexical function and similarity indexes are not
+proof of semantic equivalence.
 
-| Aile | İncelenen fark | Karar |
+| Family | Reviewed difference | Decision |
 |---|---|---|
-| XML framing / RequestView / child index | Brownfield literal LSX çerçevesi, tek envelope/command ve owned DOM span/index kullanır. Bizde NUL-framing ve RE belge/dispatch sözleşmesi var. | Daha katı kabul politikası sessizce aktarılmadı; ownership/sınır test fikirleri ayrı tutuldu. |
-| Entity/UTF8/response formatter | Brownfield decoded/source ayrımı, checked-size formatter ve strict XML karakter doğrulaması içerir. Bizde TinyXML ve RE printer yürür. | Donor codec/allocator'ı toptan alınmadı. Erken serializer ve toplam bellek bütçesi hâlâ açık adaydır. |
-| TinyXML adapter | Bluefield implementation-local sınırı100'e indirir; ayrıca staging ve wrapper tahsislerini içerir. | Kullanıcı depth500 kararı ve mevcut ölçülen tahsis iyileştirmesi korunur. |
-| Config2 / settings | Donor raw quoted spans, depth33, staged visitor, section/key authority ve farklı trailing-comment politikaları kullanır. | RE escape action'ları, partial state ve hata pozisyonları değiştirilmedi. SDK/port CFG override'ları geri alınmadı. |
-| Path / store | Brownfield module-relative ghc helper ve private model/arena storage içerir. | EXE-relative config ve std::filesystem kararı korunur; Gulrak veya özel CRT/548-byte ABI geri getirilmedi. |
-| Route inventory / auth / selectors | Donor primary, compatibility, extension ve local-social route'larını ayırır; bazı selector/default ve auth lease sınırları farklıdır. | Yeni komutlar veya farklı commit politikaları eksik RE aktarımı diye ithal edilmedi. Tam route-output differential kampanyası hâlâ açık. |
-| Startup / teardown | Donor stop-before-initialize ve stop-before-listener kontrolleri, ayrı logical/physical owner retirement kullanır. | Mevcut DLL worker/Hook sahibiyle faz bazlı fault karşılaştırması sürmeli; singleton/model mimarisi alınmadı. |
-| IOCP backpressure | Donor testi 32MiB non-reading peer ve native-IOCP compile gate kullanır. Bizde actual AsioService slow greeting/response/deadline testleri var. | Var olan test karşılığı görülüyor; Wine'da çalıştırmak gerçek Windows IOCP kabulü sayılmıyor. Tam completion/cancellation/fault matrisi açık. |
+| XML framing / RequestView / child index | Brownfield uses literal LSX framing, one envelope/command and owned DOM spans/indexes. Yellowfield has NUL framing and RE document/dispatch contracts. | Stricter acceptance was not silently imported; ownership/boundary test ideas were tracked separately. |
+| Entity/UTF-8/response formatter | Brownfield distinguishes decoded/source data and uses checked-size formatting with strict XML character validation. Yellowfield runs TinyXML and the RE printer. | Do not import the donor codec/allocator wholesale. Early serializer validation and aggregate memory budget remain open candidates. |
+| TinyXML adapter | Bluefield limits implementation-local depth to 100 and uses staging and wrapper allocations. | Preserve the owner's depth-500 decision and measured allocation improvements. |
+| Config2 / settings | Donor uses raw quoted spans, depth 33, staged visitor, section/key authority and different trailing-comment rules. | Preserve RE escape actions, partial state and error positions. Do not restore SDK/port CFG overrides. |
+| Path / store | Brownfield uses module-relative ghc helpers and private model/arena storage. | Preserve EXE-relative configuration and standard filesystem; do not reintroduce Gulrak, custom CRT or a 548-byte ABI. |
+| Route inventory / authentication / selectors | Donor distinguishes primary, compatibility, extension and local-social routes; certain selector/default and authentication-lease boundaries differ. | Do not import new commands or commit policies as presumed omissions from RE. Full route/output differential campaign remains open. |
+| Startup / teardown | Donor has stop-before-initialize and stop-before-listener checks and separate logical/physical owner retirement. | Continue phase-specific fault comparison with the existing DLL worker/hook owner; do not import singleton/model architecture. |
+| IOCP backpressure | Donor uses a 32 MiB non-reading peer and native IOCP compile gate. Yellowfield has actual AsioService slow-greeting/response/deadline tests. | Existing test counterparts were identified; Wine execution does not prove real Windows IOCP acceptance. Complete completion/cancellation/fault matrix remains open. |
 
-Dosya/hash/okunan branch kayıtları:
+File hashes and reviewed branch records:
 [MANUAL_REVIEW_LEDGER.json](../metadata/evidence/recovery/MANUAL_REVIEW_LEDGER.json),
 [ALL_DONOR_FILES.csv](../metadata/evidence/recovery/ALL_DONOR_FILES.csv),
 [CANDIDATES.json](../metadata/evidence/recovery/CANDIDATES.json).
-Bu aday listesi ilk bulguların tarihsel durumunu korur; bu turda DC01–DC03 için
-uygulanan düzeltmeler ve kalan işler yukarıdaki güncel kayıtla okunmalıdır.
+The candidate list preserves the initial findings'
+historical status; read it alongside the corrections
+applied for DC01–DC03 and remaining work above.
 
-## Emeklilik için açık işler
+## Outstanding work before retirement
 
-Socket/listener close hatasında gerçek Winsock sahipliği ve pending callback
-retirement; timer kurulum/iptal hatasında cached deadline; sınırsız hook quiesce
-beklemesi; registry original-close/handle-reuse provenance; toplam serializer,
-event ve config bellek bütçeleri; console/environment yan etkileri ve startup
-fazları kapanmadı. Kalan kaynak/test/araç aileleri manuel karşılaştırılmalı;
-her aday için uygulandı, zaten karşılanıyor, bilinçli politika farkı, uygun değil
-veya açık kararının somut kaynak/test kanıtı olmalı. Ardından değişmiş kaynakla
-native Windows/Golden ve oyun kabulü gerekir. Bunlar tamamlanmadan "başka
-iyileştirme kalmadı" veya "donor obsolete" sonucu verilmez.
+Native Winsock ownership and pending-callback retirement
+under socket/listener close failures; cached deadlines
+under timer setup/cancel failures; unbounded hook
+quiescence waits; registry original-close/handle-reuse
+provenance; aggregate serializer, event and configuration
+memory budgets; console/environment side effects; and
+startup phases remained open. Remaining source, test
+and tooling families require manual comparison.
+Every candidate needs concrete source/test evidence for
+one disposition: implemented, already covered,
+intentional policy difference, not applicable or open.
+Updated source then needs native Windows/Golden and
+game acceptance. Until these are closed, neither
+"no further improvements" nor "donor obsolete"
+is justified.
 
-Kaynak parent kimliği, bir önce teslim edilmiş kaynak ZIP'in birebir hash'idir:
+The source parent identity is the exact hash of
+the immediately preceding delivered source ZIP:
 `1f2a6581a08dbafa940031353c8723e1947e00f0a4681f3bceb1d9f65e3d509e`.
-Accepted binary/log ZIP'i veya sonradan kabul belgeleri eklenmiş çalışma kopyası
-bu parent yerine kullanılmaz. Review edilen değişen dosya listesi ve byte pin'leri
-[REVIEWED_CHANGES.json](../metadata/evidence/recovery/REVIEWED_CHANGES.json) içinde kayıtlıdır.
+The accepted binary/log ZIP or a later working
+copy with acceptance documents must not replace
+that parent. Reviewed changed files and byte pins
+are in [REVIEWED_CHANGES.json](../metadata/evidence/recovery/REVIEWED_CHANGES.json).
