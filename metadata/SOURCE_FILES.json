@@ -1485,6 +1485,14 @@
       "bytes": 17484,
       "sha256": "15ea3a4939a912e27e00bc7f85c9ef1313d636826fed8d10873a6926075dd900"
     },
+    "tests/unit/config_defaults/defaults_integration_tests.cpp": {
+      "bytes": 15884,
+      "sha256": "8411f2ee04cf333edda54a0e096e2bf730a3f66f1492e8813a87649f5247a445"
+    },
+    "tests/unit/config_defaults/defaults_tests.cpp": {
+      "bytes": 6074,
+      "sha256": "3e7d4ec16daed34317db481f57993cc81480586f0bb422ba33a8049ae4c4ff41"
+    },
     "tests/unit/config_hash/hash_table_tests.cpp": {
       "bytes": 10523,
       "sha256": "88865d737c369f07605646216e724f844c185d75c3120e9945acc692500725d0"
@@ -11667,7 +11675,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
+    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },
