@@ -1,4 +1,75 @@
-# Changes
+# Changelog
+
+This file distinguishes source imports, integrated pull requests and published releases. A GitHub merge is a source change, not an R-numbered release or release tag.
+
+## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
+
+The 49 entries below are the merged pull requests verified through PR #59, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
+
+### 2026-10-31
+
+- [PR #59](https://github.com/raleonys/citrine-eclipse-mirage/pull/59): refactor: retire duplicate root release-state records.
+- [PR #58](https://github.com/raleonys/citrine-eclipse-mirage/pull/58): docs: consolidate governance and retire historical scope ledger.
+- [PR #56](https://github.com/raleonys/citrine-eclipse-mirage/pull/56): docs: introduce yellowfield governance and approved README.
+- [PR #55](https://github.com/raleonys/citrine-eclipse-mirage/pull/55): build: enforce English-only diagnostics and first-party language policy.
+- [PR #53](https://github.com/raleonys/citrine-eclipse-mirage/pull/53): qa: audit C++ and test language signals with ASCII diagnostic regression.
+- [PR #52](https://github.com/raleonys/citrine-eclipse-mirage/pull/52): test: resolve Native MSVC C4244/C4312/C4805/C4834 fixture warnings.
+- [PR #54](https://github.com/raleonys/citrine-eclipse-mirage/pull/54): fix: canonical import descriptor order in every unsigned MSVC application DLL.
+- [PR #51](https://github.com/raleonys/citrine-eclipse-mirage/pull/51): qa: translate build diagnostics and protect English-only error messages.
+- [PR #50](https://github.com/raleonys/citrine-eclipse-mirage/pull/50): fix: register configuration defaults test targets in build partition policy.
+- [PR #49](https://github.com/raleonys/citrine-eclipse-mirage/pull/49): assets: update SURGE profile avatar from owner-supplied PNG.
+- [PR #48](https://github.com/raleonys/citrine-eclipse-mirage/pull/48): qa/docs: audit first-party English-only content and enforce prose checks.
+- [PR #47](https://github.com/raleonys/citrine-eclipse-mirage/pull/47): docs: translate socket retirement and shutdown recovery audits.
+- [PR #46](https://github.com/raleonys/citrine-eclipse-mirage/pull/46): docs: translate donor recovery, Golden pipeline and vendor records.
+- [PR #45](https://github.com/raleonys/citrine-eclipse-mirage/pull/45): docs: translate API import research and source audit records.
+- [PR #44](https://github.com/raleonys/citrine-eclipse-mirage/pull/44): docs: translate historical comparison tables and build cleanup.
+- [PR #43](https://github.com/raleonys/citrine-eclipse-mirage/pull/43): docs: translate source review and native acceptance records to English.
+- [PR #42](https://github.com/raleonys/citrine-eclipse-mirage/pull/42): docs: complete English translation of the Bluefield comparison CSV.
+- [PR #41](https://github.com/raleonys/citrine-eclipse-mirage/pull/41): docs: translate governance scope and two structured comparison records.
+- [PR #40](https://github.com/raleonys/citrine-eclipse-mirage/pull/40): docs: translate runtime and build evidence guides to English.
+- [PR #39](https://github.com/raleonys/citrine-eclipse-mirage/pull/39): docs: extend English-only migration to native integration and ABI guides.
+- [PR #38](https://github.com/raleonys/citrine-eclipse-mirage/pull/38): docs: continue English-only migration across project guides.
+- [PR #37](https://github.com/raleonys/citrine-eclipse-mirage/pull/37): docs: establish English-only documentation baseline.
+- [PR #35](https://github.com/raleonys/citrine-eclipse-mirage/pull/35): Test Debug log record integrity and the Release logging gate.
+- [PR #34](https://github.com/raleonys/citrine-eclipse-mirage/pull/34): Test native accept and receive ownership through cancellation.
+- [PR #33](https://github.com/raleonys/citrine-eclipse-mirage/pull/33): test: recover listener admission after accepted-handler factory failure.
+- [PR #32](https://github.com/raleonys/citrine-eclipse-mirage/pull/32): test: cover B37-style multi-client accept/rearm and session-cap behavior.
+- [PR #31](https://github.com/raleonys/citrine-eclipse-mirage/pull/31): qa: reject stale or unsafe layout migration contract references.
+- [PR #29](https://github.com/raleonys/citrine-eclipse-mirage/pull/29): Publish the cold performance-frequency cache atomically.
+- [PR #27](https://github.com/raleonys/citrine-eclipse-mirage/pull/27): Release synchronous greeting storage before starting reads.
+- [PR #26](https://github.com/raleonys/citrine-eclipse-mirage/pull/26): Fix online cookie temporary lifetime before provider queries.
+- [PR #30](https://github.com/raleonys/citrine-eclipse-mirage/pull/30): Test defaults through configuration and serialized responses.
+- [PR #36](https://github.com/raleonys/citrine-eclipse-mirage/pull/36): Require ready-for-review pull requests for all agents.
+
+### 2026-10-30
+
+- [PR #25](https://github.com/raleonys/citrine-eclipse-mirage/pull/25): Retain the online provider module after a failed FreeLibrary.
+- [PR #21](https://github.com/raleonys/citrine-eclipse-mirage/pull/21): docs: remove obsolete bootstrap/export notes and curate evidence.
+- [PR #24](https://github.com/raleonys/citrine-eclipse-mirage/pull/24): fix: standardize DLL import descriptor ordering across active policies and reports.
+- [PR #18](https://github.com/raleonys/citrine-eclipse-mirage/pull/18): Fix audit F-C03-002 unresolved forbidden CMake dependency checks.
+- [PR #8](https://github.com/raleonys/citrine-eclipse-mirage/pull/8): fix: worktree-safe root guard, source inventory and Windows CTest integration.
+- [PR #15](https://github.com/raleonys/citrine-eclipse-mirage/pull/15): Fix audit F-C04-001 COFF .ctors initializer inventory.
+- [PR #13](https://github.com/raleonys/citrine-eclipse-mirage/pull/13): Fix audit F-C03-001 uppercase C++ source partition detection.
+- [PR #9](https://github.com/raleonys/citrine-eclipse-mirage/pull/9): Reject Windows-unsafe source archive member names.
+- [PR #11](https://github.com/raleonys/citrine-eclipse-mirage/pull/11): Prevent incomplete source inventory updates before pushing.
+- [PR #10](https://github.com/raleonys/citrine-eclipse-mirage/pull/10): Define mandatory branch rules for agents and contributors.
+- [PR #7](https://github.com/raleonys/citrine-eclipse-mirage/pull/7): Reuse a shared bugfix branch for routine maintenance.
+- [PR #6](https://github.com/raleonys/citrine-eclipse-mirage/pull/6): Prepare weekly draft releases with verified source and Windows artifacts.
+- [PR #5](https://github.com/raleonys/citrine-eclipse-mirage/pull/5): Rewrite README as an English project guide.
+- [PR #4](https://github.com/raleonys/citrine-eclipse-mirage/pull/4): Make Windows CI validation manual for the private repository.
+- [PR #3](https://github.com/raleonys/citrine-eclipse-mirage/pull/3): Update Asio to the owner-provided source snapshot.
+- [PR #2](https://github.com/raleonys/citrine-eclipse-mirage/pull/2): Add the Source and Windows checks badge to README.
+- [PR #1](https://github.com/raleonys/citrine-eclipse-mirage/pull/1): Set up GitHub CI, manual PR reviews, and Windows test-path fixes.
+
+## R-series source provenance (historical reconciliation required)
+
+- **R24:** Source baseline imported 2026-10-30 by commit `50b6a293522bf63ebdd1fccc900b061abc964362` (`Import verified R24 source baseline`). This identifies the source archive ancestry, not a GitHub release publication.
+- **R01–R23 and any other pre-GitHub revisions:** Exact revision-by-revision names, dates, artifact checksums, status and deltas have not been established in the available repository records. These entries require independent artifact-backed reconciliation. Do not invent missing milestones, or conflate research/audit R01/R02 checkpoints with product releases.
+- Imported pre-GitHub engineering notes are retained below for traceability, in their original order. They are **unversioned notes**, not a verified replacement for the missing R-series release ledger.
+
+## Imported pre-GitHub development notes (historical, unversioned)
+
+The following sections are preserved verbatim from the R24 source-import changelog. Some linked historic evidence paths may have been retired in later repository maintenance.
 
 ## Numeric SDK greeting format
 

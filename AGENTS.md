@@ -1,4 +1,4 @@
-# yellowfield agent workflow
+# Citrine Eclipse Mirage agent workflow
 
 This document is the operational entrypoint for agents and contributors. [GOVERNANCE.md](GOVERNANCE.md) is the canonical project policy; `docs/` describes the current design, and `metadata/` holds machine-checkable contracts. The owner's latest explicit decisions take precedence. Historical task notes are not new instructions.
 
@@ -8,8 +8,9 @@ This document is the operational entrypoint for agents and contributors. [GOVERN
 - Use permanent `bugfix` for normal fixes, documentation, and tests. Before writing, inspect current branch, working tree, main/bugfix refs, and open PRs. Fetch `main` and synchronize by fast-forward or normal merge only; do not rewrite shared history. Preserve others' uncommitted work.
 - Use dedicated branches only for explicitly scoped sustained audits/projects. Never delete main, bugfix, or active audit branches. Retire finished branches only after owner confirmation, preservation and open-PR review.
 - Read current `AGENTS.md` and `GOVERNANCE.md` from fetched `main` and the working branch before modifying source. Consult `docs/GITHUB_WORKFLOW.md` for mechanics.
+- Every PR with user-visible, QA, build, governance or compatibility impact must update `CHANGELOG.md` under unreleased development history, or explain the omission in its PR description. A PR merge is not a published release, and missing R revisions must not be invented.
 - Open PRs ready for review, never as draft PRs. Report exact scope, validation performed, failures, and pending checks. Ready status is not approval or proof of native acceptance.
-- Use English for new repository text, PR descriptions and commits. Use "foreign-language", "non-English" and "foreign-character scan" in language-audit work. Public identity is lowercase `yellowfield`. Preserve ABI-sensitive internal identifiers.
+- Use English for new repository text, PR descriptions and commits. Use "foreign-language", "non-English" and "foreign-character scan" in language-audit work. Public project identity is `Citrine Eclipse Mirage`. Preserve ABI-sensitive internal identifiers.
 - Obtain explicit owner approval for public README edits, visibility changes, publication, license changes, new public disclosures and internal source/target renames.
 
 ## Source identity and QA

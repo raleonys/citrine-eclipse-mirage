@@ -18,7 +18,7 @@ request when it changes an existing product decision.
 - [ ] Overlapping contributions were checked; unrelated active work is excluded.
 
 For a dedicated branch, describe its continuing scope and completion criteria.
-Keep `bugfix` after merge; follow [branch cleanup](https://github.com/cyanoleon/yellowfield/blob/main/docs/GITHUB_WORKFLOW.md#branch-completion-and-cleanup)
+Keep `bugfix` after merge; follow [branch cleanup](https://github.com/raleonys/citrine-eclipse-mirage/blob/main/docs/GITHUB_WORKFLOW.md#branch-completion-and-cleanup)
 before retiring another branch.
 
 ## Validation
