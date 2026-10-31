@@ -1,4 +1,6 @@
-# Yellowfield
+# yellowfield
+
+The owner-approved GitHub-centered governance transition is defined in [GOVERNANCE.md](GOVERNANCE.md). Existing technical safety contracts and legacy workflow enforcement remain intact until each dependency is migrated and reviewed. See the migration record there; do not claim pending PR Windows/Golden checks are already active.
 
 ## Mandatory branch and integration rules
 

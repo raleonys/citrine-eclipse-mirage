@@ -17,6 +17,7 @@
   ],
   "required_files": [
     "AGENTS.md",
+    "GOVERNANCE.md",
     "README.md",
     "CMakeLists.txt",
     "CMakePresets.json",
@@ -50,6 +51,7 @@
     ".gitattributes",
     ".gitignore",
     "AGENTS.md",
+    "GOVERNANCE.md",
     "CHANGELOG.md",
     "CMakeLists.txt",
     "CMakePresets.json",
