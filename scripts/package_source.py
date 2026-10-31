@@ -47,7 +47,7 @@ def package(root, output):
     finally:
         sidecar_partial.unlink(missing_ok=True)
     return {'path': str(output), 'files': len(files), 'bytes': output.stat().st_size,
-            'sha256': checksum, 'sha256_file': str(sidecar), 'root': 'FLAT', 'classification': 'NOT_RELEASE'}
+            'sha256': checksum, 'sha256_file': str(sidecar), 'root': 'FLAT'}
 
 
 if __name__ == '__main__':

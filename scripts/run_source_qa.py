@@ -51,14 +51,14 @@ def main():
             print(result['output'], flush=True)
     passed = all(r['exit_code'] == 0 for r in results)
     report = {'schema': 'surge.source-qa.v1', 'result': 'PASS_SOURCE_QA' if passed else 'FAIL',
-              'classification': 'NOT_RELEASE', 'native_game_acceptance': 'NOT_RUN', 'checks': results}
+              'native_game_acceptance': 'NOT_RUN', 'checks': results}
     if args.report:
         path = args.report.resolve()
         if ROOT / 'build' not in path.parents:
             ap.error('--report must be inside project build/ to avoid changing the source manifest')
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
-    print('SOURCE_QA:', report['result'], '(NOT_RELEASE)')
+    print('SOURCE_QA:', report['result'])
     return 0 if passed else 1
 
 

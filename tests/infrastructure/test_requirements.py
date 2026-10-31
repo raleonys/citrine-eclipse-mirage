@@ -19,7 +19,7 @@ class RequirementsTests(unittest.TestCase):
         for name in ['metadata/INTEGRATION_REQUIREMENTS.json','metadata/BRANDING_AND_IDENTITY.json',
                      'metadata/LOCAL_DATA_POLICY.json','metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json',
                      'metadata/RUNTIME_CURRENT_STATUS.json','metadata/PUBLIC_DLL_ABI.json',
-                     'RELEASE_STATE.json','resources/branding/surge.png']:
+                     'resources/branding/surge.png']:
             path = self.root / name
             path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ROOT / name, path)
@@ -33,9 +33,9 @@ class RequirementsTests(unittest.TestCase):
     def test_current_target_contract(self):
         self.assertEqual([], check(self.root))
 
-    def test_current_pointer_cannot_refer_to_historical_snapshot(self):
-        self.alter('RELEASE_STATE.json',lambda d:d.update(current_runtime_binding_status='metadata/evidence/RUNTIME_BINDING_STATUS.json'))
-        self.assertIn('CURRENT_RUNTIME_POINTER_STALE',check(self.root))
+    def test_current_runtime_contract_must_exist(self):
+        (self.root / 'metadata/RUNTIME_CURRENT_STATUS.json').unlink()
+        self.assertIn('CURRENT_RUNTIME_STATE_MISSING', check(self.root))
 
     def test_current_exports_match_authoritative_abi(self):
         self.alter('metadata/RUNTIME_CURRENT_STATUS.json',lambda d:d['exports'].update(DllWaitReady=4))
@@ -77,9 +77,9 @@ class RequirementsTests(unittest.TestCase):
         self.alter('metadata/BRANDING_AND_IDENTITY.json', lambda d: d.update(cpp_root_namespace='SURGE'))
         self.assertIn('SURGE_IDENTITY_CHANGED', check(self.root))
 
-    def test_release_claim_is_separate(self):
-        self.alter('RELEASE_STATE.json', lambda d: d.update(official_release=True))
-        self.assertIn('UNVERIFIED_RELEASE_CLAIM', check(self.root))
+    def test_historical_runtime_snapshot_cannot_replace_current_contract(self):
+        self.alter('metadata/RUNTIME_CURRENT_STATUS.json', lambda d: d.update(role='HISTORICAL_SNAPSHOT'))
+        self.assertIn('CURRENT_RUNTIME_SNAPSHOT_STALE', check(self.root))
 
     def test_release_log_remains_forbidden(self):
         self.alter('metadata/LOCAL_DATA_POLICY.json', lambda d: d.update(release_file_logging='ALLOWED'))

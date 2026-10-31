@@ -1,7 +1,6 @@
 {
   "schema": "surge.runtime-current.v1",
   "role": "CURRENT_RUNTIME_STATE",
-  "classification": "NOT_RELEASE",
   "task": "SURGE-ASIO-OWNER-SNAPSHOT",
   "owner": "application::Application",
   "dll_entry": "src/platform/dll_entry.cpp",
