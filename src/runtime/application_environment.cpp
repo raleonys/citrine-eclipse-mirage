@@ -97,6 +97,8 @@ void Environment::log(std::initializer_list<std::string_view> parts) {
         return;
     }
     std::ofstream out(fs::path(state_.user_directory)/"surge.log",std::ios::binary|std::ios::app);
+    // Do not discard buffered startup diagnostics when the Debug sink cannot open.
+    if(!out)return;
     for(const auto& pending:pending_logs_){out.write(pending.data(),static_cast<std::streamsize>(pending.size()));out.put('\n');}
     pending_logs_.clear();
     if(parts.size()){out.write(event.data(),static_cast<std::streamsize>(event.size()));out.put('\n');}
