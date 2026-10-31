@@ -14,7 +14,7 @@ to the checker itself.
 {"reserved_reference_labels": ["anadius", "yellowfield", "bluefield", "brownfield"]}
 ```
 
-Document contents under `docs/` and `governance/`, as well as Markdown documents,
+Document contents under `docs/`, as well as root Markdown documents,
 are excluded from this check. Root licensing/attribution documents named
 LICENSE, COPYING, NOTICE, or AUTHORS are also preserved. Active file paths are
 checked. The `build/`, `dist/`, and `.git/` directories and pinned

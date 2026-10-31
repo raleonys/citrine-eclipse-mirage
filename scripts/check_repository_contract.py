@@ -31,7 +31,7 @@ def check_active_identifiers(root):
         if pattern.search(name):
             errors.append('Reserved reference label in active path: '+name)
         legal_document=len(rel.parts)==1 and path.name in {'LICENSE','COPYING','NOTICE','AUTHORS'}
-        if rel.parts[0] in {'docs','governance'} or path.suffix.lower()=='.md' or legal_document:
+        if rel.parts[0] == 'docs' or path.suffix.lower()=='.md' or legal_document:
             continue
         try:
             text=path.read_text(encoding='utf-8-sig')

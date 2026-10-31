@@ -6,7 +6,7 @@ This document defines the intended GitHub-centered contribution and release mode
 
 The owner's latest explicit instructions take precedence over repository guidance. Technical safety requirements and compatibility contracts remain effective unless an approved change explicitly replaces them. A successful check does not prove a different validation class.
 
-This is the foundation of a staged governance migration. It does not claim that all older scripts, metadata, CI triggers, and documents have already been migrated.
+This is the active governance authority. Historical task orders remain accessible through Git history and specialist documents, not as a second live policy file. Build scripts, release-state metadata and CI triggers still require separate verified migrations.
 
 ## Source control and contributions
 
@@ -40,7 +40,7 @@ Local build, debug, and focused testing remain available developer tools; separa
 
 The repository root owns `README.md` (public overview), `GOVERNANCE.md` (normative policy), `AGENTS.md` (agent workflow), `LICENSE`, `CHANGELOG.md`, and required build entrypoints. Technical explanations belong under `docs/`; executable contracts, inventories, and exact pins belong under `metadata/`.
 
-The legacy `governance/` directory, `RELEASE_STATE.json`, and `SOURCE_REVISION.md` are migration targets. Remove them together with their active references and test dependencies in focused follow-up changes; they must not be deleted while required checks still depend on them.
+The former `governance/CURRENT_SCOPE.md` is retired after operational rules were consolidated into this file and `AGENTS.md`. `RELEASE_STATE.json`, `SOURCE_REVISION.md`, and their associated code/test references remain separate migration targets; do not remove them while live checks still depend on them.
 
 Keep meaningful negative tests, source/vendor identity, ABI, lifetime, and actual native/Golden coverage. Remove redundant workflow machinery only after proving that its failure-detection purpose remains covered. Preserve historical evidence without treating historical states as current authority.
 
@@ -50,4 +50,15 @@ Public-facing project naming uses lowercase `yellowfield`. Public documents shou
 
 ## Migration record
 
-This document establishes the agreed target model. Remaining work includes consolidation of legacy scope rules into this document and `AGENTS.md`, canonical documentation ownership, metadata rationalization, removal of obsolete state files, PR-triggered Windows/Golden QA, and verified merge protection. Each migration change must show its actual result and must not advertise pending controls as active.
+Remaining work includes metadata rationalization, removal of obsolete state files, PR-triggered Windows/Golden QA, and verified merge protection. Each migration must report its actual result and must not advertise pending controls as active.
+
+## Retained technical boundaries
+
+The former scope ledger mixed superseded task decisions with live application constraints. Current details are owned by source and specialized machine contracts; historical instructions are preserved in Git history, not repeated as mandatory active work.
+
+- Preserve the exact three-entry production export/ordinal contract and the separate development C++ ABI. An ABI change requires explicit owner review.
+- The shipping hook architecture retains scoped native callback, rollback, safe quiescence, destination filtering, resource lifetime and original-call semantics; no process-wide byte-order hook may be introduced.
+- Preserve accepted vendor pins, the standard compiler CRT, source/reference link partition, current configuration and network protocols, and the existing startup/shutdown contracts.
+- Golden checks still validate actual finalized production PE copies and not merely synthetic fixtures. Do not change PE identity, imports or resources without independent review.
+- Tie published source, binary, and archive receipts to the precise accepted commit and checksums. A ZIP package is an output, not a second release authority.
+- `metadata/` and specialist `docs/` files provide detailed machine and implementation constraints. Retiring a stale task log does not authorize source rewrites or waive existing tests.
