@@ -1,4 +1,4 @@
-# Güncel görev ve kaynak yetkisi
+# Current scope and source authority
 
 Current owner PR-readiness rule: never create draft pull requests, convert PRs
 to draft or leave PRs in draft. Open ready-for-review PRs after the required
@@ -42,267 +42,330 @@ Local build/acceptance scripts and product/vendor contracts remain unchanged.
 Skipped Windows jobs do not count as native acceptance. See the
 [review workflow](../docs/GITHUB_WORKFLOW.md).
 
-Güncel sahip görevi: yeni yüklenen Asio kaynak arşivini byte eşitliğiyle vendorlamak.
-Başlık sürümü1.38.2 değişmiyor; snapshot ZIP hash ve commit yorumuyla sabitlenir.
-Diğer üç vendor ve ürün politikaları korunur. PR ayrı hazırlanır; birleştirme
-sahibine aittir. [Kapsam](../docs/ASIO_UPDATE.md).
+Current owner task: vendor the newly uploaded Asio source archive byte-for-byte.
+The header version remains 1.38.2; the snapshot is pinned by its ZIP hash and
+commit annotation. Preserve the other three vendors and product policies.
+Prepare a separate PR; only the owner merges it.
+[Scope](../docs/ASIO_UPDATE.md).
 
-Güncel sahip kararı: kaynak arşivi byte eşitliğiyle GitHub başlangıcına alındı.
-CI ve PR çalışma kuralları ayrı dal/PR olarak hazırlanır; birleştirme sahibine
-aittir. Bu iş runtime/vendor davranışını değiştirme yetkisi vermez.
-[Çalışma düzeni](../docs/GITHUB_WORKFLOW.md).
+Current owner decision: the source archive was imported into the initial
+GitHub source tree byte-identically. CI and PR workflow rules are prepared
+on a separate branch/PR; only the owner merges. This does not authorize
+changes to runtime or vendor behavior.
+[Workflow](../docs/GITHUB_WORKFLOW.md).
 
-Güncel sahip kararı: mevcut gömülü C++ avatar yöntemi korunacak; son sağlanan
-PNG yalnız profil avatarı yerine alınacak. Haricî dosya zorunluluğu, fallback,
-CFG önceliği ve dosya yazma davranışı değişmez. [Kapsam](../docs/AVATAR_UPDATE.md).
+Current owner decision: retain the existing embedded C++ avatar method;
+replace only the profile avatar with the latest supplied PNG. Do not
+change the external-file requirement, fallback, CFG precedence, or file
+write behavior. [Scope](../docs/AVATAR_UPDATE.md).
 
-Güncel devam: sahibin Windows/MSVC loglarındaki net_failure_contracts tahsis
-enjeksiyonu kusurunu düzeltmek. Pin'li Asio'nun gerçek MSVC aligned CRT yolu
-test executable'ında yakalanır; production/vendor baytları ve seçenekleri
-değiştirilmez. Eski dört başarılı profil ile204/205 Native sonucu tarihsel
-kanıttır; düzeltilmiş native testin kabulü yeniden istenir. Önceki kapsamlar
-aşağıda korunur. [İnceleme](../docs/NATIVE_ALLOCATION_FIXTURE.md).
+Current continuation: correct the allocation-injection defect in
+`net_failure_contracts` reported by the owner's Windows/MSVC logs.
+Intercept the pinned Asio library's actual MSVC aligned-CRT allocation
+path in the test executable. Do not change Production/vendor bytes or
+options. The four earlier successful profiles and Native 204/205
+result remain historical evidence; request acceptance of the corrected
+native test separately. Earlier scopes are retained below.
+[Review](../docs/NATIVE_ALLOCATION_FIXTURE.md).
 
-Güncel sahip talimatı: doğrulanan dört-TU üretim/referans ayrımını, DC-005–011
-dar araç/test/ifade temizliğini ve crypt_observed Debug TLS kapısını birlikte
-uygulamak. Kaynak API/test kapsamı ve bütün shutdown/native sahiplik düzeltmeleri
-korunur. DC-012–019 tasarım adayları bu değişikliğe dahil değildir.
-[Güncel kapsam](../docs/BUILD_CLEANUP.md). Aşağıdaki önceki görevler tarihsel
-yetki/kapsam kayıtlarıdır; donor emekliliği onaylanmış değildir.
+Current owner instruction: implement the verified four-TU Production/reference
+partition, narrow DC-005–011 tool/test/expression cleanup, and
+`crypt_observed` Debug TLS gate together. Preserve source API/test scope
+and all shutdown/native ownership corrections. The DC-012–019 design
+candidates are excluded from this change.
+[Current scope](../docs/BUILD_CLEANUP.md). The earlier tasks below
+remain historical authorization/scope records; donor retirement is not
+approved.
 
-Son devam turu native socket sahipliği ve IO retirement düzeltmesidir. Belgelenen
-would-block sonucu exact handle ile retry edilir; belirsiz sonuçta kör reclose
-yapılmaz, owner ve image lease korunur. Kapanış native kayıtlar ve callback drain
-ile kabul edilir. [Güncel kapsam](../docs/SOCKET_RETIREMENT.md). Donor emekliliği
-onaylanmadı; aşağıdaki eski açık bulgu kayıtları kendi tarihsel kapsamlarıyla kalır.
+Latest continuation: native socket ownership and I/O retirement correction.
+Retry a documented would-block result using the exact handle; do not blindly
+reclose after an uncertain outcome. Retain the owner and image lease.
+Accept shutdown based on native records and callback drain.
+[Current scope](../docs/SOCKET_RETIREMENT.md). Donor retirement remains
+unapproved; prior open findings below retain their historical scopes.
 
-Son devam turu: hook cleanup iç döngüsünün tek denemeye çevrilmesi, gerçek DLL
-worker/uygulama/binding üzerinde hata testleri, timer containment ve native
-socket-close sahipliğinin karşılaştırılması. [Güncel karar](../docs/SHUTDOWN_RECOVERY_AUDIT.md).
-Socket-close hata yolu çözülmedi; donor emekliliği BLOCKED kalır.
+Previous continuation: change the inner hook cleanup loop to a single
+attempt, test failures against the actual DLL worker/application/binding,
+contain timers, and compare native socket-close ownership.
+[Current decision](../docs/SHUTDOWN_RECOVERY_AUDIT.md).
+The socket-close failure path remained unresolved; donor retirement was BLOCKED.
 
-Güncel kapsam: doğrulanmış transport/ek DLL sahiplik hatalarını düzeltmek,
-regresyon testlerini eklemek ve Brownfield/Bluefield kapanış incelemesini
-sürdürmek. **Donor emekliliği onaylanmış değildir.** Seçilmiş branch incelemesi,
-tüm kaynakların semantik kapanışı sayılmaz. Güncel karar ve kanıtlar:
-[inceleme](../docs/DONOR_RECOVERY.md),
-[doğrulama](../metadata/evidence/recovery/VALIDATION.json),
-[makine kaydı](../metadata/RECOVERY_REVIEW.json).
-Aşağıdaki önceki görev açıklamaları tarihsel yetki kaydıdır; güncel durumu
-`RUNTIME_CURRENT_STATUS.json` belirler.
+Current scope: correct verified transport/companion-DLL ownership defects,
+add regression tests, and continue the Brownfield/Bluefield shutdown review.
+**Donor retirement is not approved.** Reviewing selected branches does not
+establish semantic closure across all source files. Current decisions and
+evidence:
+[review](../docs/DONOR_RECOVERY.md),
+[validation](../metadata/evidence/recovery/VALIDATION.json),
+[machine record](../metadata/RECOVERY_REVIEW.json).
+Earlier task descriptions below retain their historical authorization
+scope; `RUNTIME_CURRENT_STATUS.json` determines current status.
 
-Güncel görev: **SURGE-RE-COPY-20261029**. Kullanıcı eksik genel kopyalama
-yardımcısının orijinal DLL’den çözülmesini istedi.048d20/04895c/0489f4 gövdeleri
-pseudocode+assembly’den yeniden oluşturulur; avatar mode2 üzerinden tam gövdeye
-bağlanır. Bu, filesystem kopyalama için sınırlı bir uyumluluk ekidir. Özel CRT
-ithali, vendor değişikliği veya diğer hook’ların değiştirilmesi kapsamda değildir.
-[Kurtarım ve doğrulama](../docs/RE_COPY_RECOVERY.md).
+Current work item: **SURGE-RE-COPY-20261029**. The owner requested recovery
+of the missing general copy helper from the original DLL.
+Bodies 048d20/04895c/0489f4 are reconstructed from pseudocode and assembly;
+the avatar mode-2 path connects to the full body. This is a bounded
+compatibility addition for filesystem copying. Importing a custom CRT,
+changing vendors, or modifying other hooks is outside scope.
+[Recovery and validation](../docs/RE_COPY_RECOVERY.md).
 
-Önceki görev: **SURGE-IDENTITY-20261029**. Kullanıcı ürün kodunda kalan
-eski adların tutarlı düzeltilmesini istedi. Config/veri/avatar/provider adları
-ortak ürün tanımına bağlanır; hatalar surge.cfg der. Kaynak seviyesindeki
-shutdown durum adları DllShutdownStatus / DLL_SHUTDOWN_* olur, değerler0..4
-ve üç export/ordinal korunur. Köken yorumları, eski raporlar ve mevcut JSON
-şema kimlikleri tarihsel kayıt olarak korunur.
-[Adlandırma düzeltmesi](../docs/PRODUCT_IDENTITY_FIX.md).
+Earlier work item: **SURGE-IDENTITY-20261029**. The owner requested
+consistent correction of remaining old names in product code.
+Configuration/data/avatar/provider names are tied to a shared
+product definition; errors name `surge.cfg`. Source-level shutdown
+status names become `DllShutdownStatus` / `DLL_SHUTDOWN_*`,
+values remain 0..4, and three exports/ordinals are preserved.
+Provenance comments, historical reports, and existing JSON schema
+identities remain historical records.
+[Naming correction](../docs/PRODUCT_IDENTITY_FIX.md).
 
-Önceki görev: **YF-WINDOWS-IO-20261029**. Kullanıcı Windows filesystem farkını
-düzeltmeyi, aktif başka kullanımı kalmayan Gulrak’ı tamamen kaldırmayı istedi.
-RE standard filesystem/fstream adaptörü geri bağlanır; Gulrak vendor ağacı ve
-CMake/API bağımlılıkları kaldırılır. Diğer dört vendor ve TinyXML2 500 korunur.
-Asio Windows hedef tanımı düzeltmesi bu pakete dahildir. Kullanıcının export ve
-log soruları açıklanır: son talimatla Brownfield üçlüsü Production’da kalır, surge.log yalnız Debug
-yazar; eski Debug logunun Release’te değişmediği de kontrol edilir.
-Önceki paketle oyun başlangıcı kullanıcı tarafından doğrulandı.
-[Güncel kayıt](../docs/WINDOWS_IO_FIX.md).
+Earlier work item: **YF-WINDOWS-IO-20261029**. The owner requested
+correction of Windows filesystem differences and complete removal
+of Gulrak, which had no other active uses. Restore the RE standard
+filesystem/fstream adapter and remove the Gulrak vendor tree and
+CMake/API dependencies. Preserve the other four vendors and
+TinyXML2 limit 500. The Asio Windows target-definition fix is included.
+The owner's export/log questions are resolved: the final Brownfield
+three-export set remains in Production, and only Debug writes
+`surge.log`. Also verify that Release does not modify an existing
+Debug log. The owner confirmed game startup with the previous package.
+[Current record](../docs/WINDOWS_IO_FIX.md).
 
-Önceki görev: **YF-ASIO-WINDOWS-TARGET-20261029**. Kullanıcı production Asio
-uyarılarının Brownfield’de çözülmüş olduğunu belirtti. Eksik _WIN32_WINNT ve
-WINVER0x0601 build tanımları supplied Brownfield’den alınır; vendor patch veya
-genel warning suppression yapılmaz. PE metadata profili değişmez. Kullanıcı
-önceki paketle oyun başlangıcını doğruladı; güncel ayarla gerçek MSVC tekrarı
-ayrı kanıt gerektirir. [Düzeltme](../docs/ASIO_WINDOWS_TARGET_FIX.md).
+Earlier work item: **YF-ASIO-WINDOWS-TARGET-20261029**. The owner noted
+that Brownfield had already addressed the Production Asio diagnostics.
+Take the missing `_WIN32_WINNT` and `WINVER=0x0601` build definitions
+from the supplied Brownfield reference; add no vendor patches or general
+warning suppression. Do not change the PE metadata profile. The owner
+confirmed game startup with the previous package, but actual MSVC testing
+with the current setting requires separate evidence.
+[Correction](../docs/ASIO_WINDOWS_TARGET_FIX.md).
 
-Önceki görev: **YF-STARTUP-BUILD-20261029**. Kullanıcı beş build başlığını ve
-cache JSON çıktısını düzeltti; ardından dist DLL ile oyunun hiç başlamadığını
-bildirdi. Config isteğe bağlı kalır. Bluefield FIX19’da bulunan eksik native
-registry wait Guard/Pause bağı kontrollü başarısız testle kanıtlanıp uyarlanır.
-Yeni dosya-arama politikası, vendor değişikliği veya oyun PASS iddiası eklenmez.
-Native logdaki bağımsız fixture NOMINMAX hatası da bu görevde düzeltilir.
-[Bulgular ve sınır](../docs/STARTUP_BUILD_FIX.md).
+Earlier work item: **YF-STARTUP-BUILD-20261029**. The owner corrected
+five build headings and cache JSON output, then reported that the game
+did not start with the distribution DLL. Keep configuration optional.
+Demonstrate the missing native registry-wait Guard/Pause dependency from
+Bluefield FIX19 using a controlled failing test and adapt it.
+Do not introduce a new file-search policy, change vendors, or claim
+game PASS. Also correct the independent test-fixture NOMINMAX
+error from native logs. [Findings and limits](../docs/STARTUP_BUILD_FIX.md).
 
-Önceki görev: **YF-BLUEFIELD-ALIGN-20261029**. Kullanıcı Bluefield’in 11. hook
-implementation’ını doğru referans olarak seçti; korumalı dosya adı okuma, UTF16
-selector/fallback, original çağrı gözlemi, toplu hook aktivasyonu ve unload/thread
-guard bu kapsamda uyarlanır. Önceki RE trap seçimi geçersizdir. Kullanıcı ayrıca
-Compilation Timestamp dahil tüm derlenmiş metadata’nın Brownfield’e göre
-kontrolünü istedi: MUSTAVEX/ARYRA/URSYNEX’in tüm beyan edilmiş alanları seçilir.
-Timestamp0xCD268EB1, linker14.0, Rich-yok; checksum yeniden hesaplanır.
-Önceki preserve-compiler talimatları tarihsel kalır. Beş export, statik CRYPT32,
-PNG’nin PE resource olmaması, standard CRT ve immutable vendor kuralları korunur.
-[Hook uyumu](../docs/HOOK_ALIGNMENT.md),
-[metadata denetimi](../docs/REFERENCE_METADATA_AUDIT.md).
+Earlier work item: **YF-BLUEFIELD-ALIGN-20261029**. The owner selected
+the Bluefield eleventh-hook implementation as the correct reference.
+Adapt protected filename reading, UTF-16 selector/fallback, observation
+of the original call, batch hook activation, and unload/thread guards.
+The earlier RE trap selection is superseded. The owner also requested
+comparison of all compiled metadata, including Compilation Timestamp,
+against Brownfield: choose all declared fields from MUSTAVEX/ARYRA/URSYNEX.
+Timestamp 0xCD268EB1, linker 14.0, no Rich header, and recomputed checksum.
+Earlier preserve-compiler instructions remain historical. Preserve five
+exports, static CRYPT32, no PNG PE resource, standard CRT, and immutable
+vendor rules.
+[Hook alignment](../docs/HOOK_ALIGNMENT.md),
+[metadata audit](../docs/REFERENCE_METADATA_AUDIT.md).
 
-Önceki görev: **YF-PRODUCTION-20261029**. Kullanıcı son dosyanın dist içinde
-üretilmesini ve 11. hook için Brownfield/Bluefield gibi statik CRYPT32
-importunun korunmasını istedi. Önceki dinamik-only lookup kararı bu talimatla
-geçersizdir; doğrudan SDK hedef referansı + crypt32.lib kullanılır. Callback/
-selector ve beş export korunur. Yeni native logdaki ilk5 Golden PASS, son
-FALCION Python cache FAIL düzeltilir. Alt yorumlayıcılara -B/PYTHONDONTWRITEBYTECODE
-aktarılır; yalnız bilinen manifest-owned generated cache temizlenir. FALCION
-gevşetilmez. Altı Golden kontrolü + final isimli DLL runtime çevrimleri sonrası
-dist/preloader_l.dll, SHA256 ve receipt yazılır; yayın değildir. Önceki maddeler
-tarihsel görev kayıtlarıdır. [Düzeltme](../docs/PRODUCTION_IMPORT_FIX.md).
+Earlier work item: **YF-PRODUCTION-20261029**. The owner requested
+creation of the final file in dist and retention of the static CRYPT32
+import for hook 11, as in Brownfield/Bluefield. This supersedes the
+earlier dynamic-only lookup decision: use the direct SDK target reference
+and `crypt32.lib`. Preserve the callback/selector and five exports.
+The new native log showed Golden PASS for the first five gates and a
+FALCION Python-cache FAIL at the last gate. Propagate
+`-B` / `PYTHONDONTWRITEBYTECODE` to subprocess interpreters and remove
+only known manifest-owned generated cache files; do not relax FALCION.
+After all six Golden checks and runtime cycles against the final-named DLL,
+write `dist/preloader_l.dll`, SHA-256, and receipt; this is not a release.
+Earlier items remain historical work records.
+[Correction](../docs/PRODUCTION_IMPORT_FIX.md).
 
-Önceki görev: **YF-GOLDEN-AVATAR-20261029**. Kullanıcı dört eksik Golden hedefinin
-tamamlanmasını istedi. Hedefler Yellowfield kaynak/export/import/CRT sözleşmesine
-bağlanır; timestamp/linker/Rich/OS kimliği korunur, yalnız checksum kopyada
-tamamlanır. Fixture sonuçları gerçek MSVC kabulü sayılmaz. PNG için açık yanıt:
-“Yalnız PE resource olmasın; mevcut Anadius avatar verisinin yerine geçsin”.
-Profil PNG ordinary read-only C++ veri olur; özgün ayrı fallback RE verisinden
-korunur. VERSIONINFO değişmez. Önce eklenen COM known-folder bağımlılığı RE
-ortam değişkeni okumasına döndürülür; OLE32 importu kaldırılır. Native C2589
-hatası core tüketicilerine NOMINMAX yayılımıyla düzeltilir. Yeni ZIP yanında
-birebir SHA256 yan dosyası teslim edilir. Aşağıdakiler önceki görev kayıtlarıdır.
+Earlier work item: **YF-GOLDEN-AVATAR-20261029**. The owner requested
+completion of four missing Golden targets. Bind targets to Yellowfield
+source/export/import/CRT contracts, retain timestamp/linker/Rich/OS identity,
+and finalize only the checksum in the copied file. Fixture PASS is not
+actual MSVC acceptance. The explicit avatar decision, translated, was:
+"Do not make it a PE resource; replace the existing Anadius avatar data."
+Profile PNG becomes ordinary read-only C++ data, with a separate original
+fallback preserved from RE data. VERSIONINFO remains unchanged.
+Restore the original environment-variable-reading implementation instead
+of the previously introduced COM known-folder dependency, removing OLE32.
+Fix Native C2589 by propagating NOMINMAX to core consumers. Supply a
+matching SHA-256 sidecar with the new ZIP. Following items retain
+earlier historical scope.
 
-Güncel düzeltme: **YF-MSVC-LOOKUP-20261029**. Son beş kullanıcı logunda
-Compile/Debug/CRT PASS, CRT6/6 doğrulandı. Native derlemesindeki
-`unexpected()` C2668 çakışması test fixture namespace nitelemesiyle düzeltilir.
-On iki çağrı açıkça bağlanır; senaryolar atılmaz. MSVC dışı derleyicide aynı
-global bildirim derleme regresyonu olarak tutulur. Uygulama/vendor/resource
-ve beş export değişmez. Golden BLOCKED/exit3 korunur.
+Correction at that checkpoint: **YF-MSVC-LOOKUP-20261029**.
+Five owner logs showed Compile/Debug/CRT PASS, including CRT 6/6.
+The Native `unexpected()` C2668 collision is corrected by qualifying
+the test fixture namespace. All twelve calls are explicitly bound;
+no scenarios are skipped. A matching global declaration under non-MSVC
+compilers remains a compilation regression guard. Application/vendor/
+resource data and five exports are unchanged. Golden BLOCKED/exit 3
+remains the recorded state.
 
+Correction at that checkpoint: **YF-MSVC-PROFILES-20261028**.
+Two confirmed incompatibilities in the owner's five native profile logs
+are corrected: an extra MSVC DLL manifest and test-only `__int128`.
+Do not relax the product resource allowlist. Apply `/MANIFEST:NO` to all
+DLL profiles; use standard 64-bit arithmetic in the test oracle while
+retaining tests. CRT builds only selected test targets. If Golden targets
+are missing, report BLOCKED/exit 3: do not invent target values or
+activate them from fixture policy. Application, vendors, resource bytes,
+and exports remain unchanged. A native MSVC rerun of the revised
+source had not yet occurred.
 
-Güncel düzeltme: **YF-MSVC-PROFILES-20261028**. Kullanıcının beş native profil
-logundaki iki gerçek uyumsuzluk düzeltilir: ek MSVC DLL manifesti ve test-only
-`__int128`. Ürün resource allowlisti gevşetilmez; `/MANIFEST:NO` tüm DLL
-profillerine uygulanır. Test oracle standart64-bit olur, mevcut testler korunur.
-CRT yalnız seçili test hedeflerini derler. Golden hedefleri eksikse sonuç
-BLOCKED/exit3 kalır; hedef değerleri uydurulmaz veya fixture
-politikasından etkinleştirilmez. Uygulama, vendor, resource byte ve exportlar
-değişmez. Yeni kaynak için native MSVC tekrarı henüz yapılmamıştır.
+Correction at that checkpoint: **YF-WIN-ZIP-20261028**.
+Address the Asio 1607/1607 vendor verification error during the owner's
+Windows/MSVC configuration. Without changing pristine vendor hashes,
+store the two locked Asio aliases in ZIP as regular files containing
+the exact relative target descriptors, removing Windows symlink
+permission as a prerequisite. Accept only those exact two descriptors;
+report actual paths and hashes on mismatch. Preserve application C++,
+exports, and TinyXML2=500.
 
+Naming correction at that checkpoint: **YF-DLL-NAMES-20261028**.
+At the owner's instruction, readiness and port exports were named
+`DllWaitReady` and `DllServerPort`. Signatures, behavior, and
+ordinals 4/5 were preserved, and all calling tools updated.
+A subsequent instruction removed duplicate `YellowfieldShutdown`
+and ordinal 6, leaving one public `DllShutdown`. Shutdown order
+and status codes remained unchanged. Five exports were present
+at that checkpoint; earlier source ZIPs are retained.
 
-Güncel düzeltme: **YF-WIN-ZIP-20261028**. Kullanıcının Windows/MSVC configure
-aşamasındaki Asio1607/1607 vendor doğrulama hatası ele alınır. Özgün vendor
-hashleri değiştirilmeden iki kilitli Asio aliasının ZIP taşıması normal dosya
-hedef metni olarak yapılır; Windows symlink yetkisi önkoşulu kaldırılır.
-Yalnız birebir kilitli iki descriptor kabul edilir. Uyuşmazlık gerçek dosya
-yollarını/hashleri yazar. Uygulama C++ kodu, exportlar ve TinyXML2=500 korunur.
+Continuation work item: **YF-PUBLIC-ABI-20261028**.
+After reviewing open work, the owner authorized continuation.
+Six C exports of the application DLL were pinned and C++ source
+APIs moved to a separate development DLL. An actual
+startup/socket/shutdown/unload tool was added. The SURGE marker
+adapted RE's RET-only behavior; `DllShutdown` was connected to
+actual cleanup. The earlier 548-byte ABI claim was withdrawn for
+lack of evidence. New export ordinals 4–6 belonged to Yellowfield;
+original Consumer imports and EXE were not changed.
+[Scope and limits](../docs/PUBLIC_DLL_ABI.md).
 
+Work item: **YF-RUNTIME-BIND-20261028**.
+The owner's correction, translated as "those bindings should already
+have been present," required completion of concrete integrations
+missing from the earlier product target: actual Asio/ghc application
+paths, complete existing configuration application path, source
+constructor fields, XML/crypto/router/persistence, hook/provider,
+and DLL startup/shutdown ownership. The earlier report-only limit
+applied only to the comparison pass, not this implementation task.
+Keep vendor bytes and TinyXML2=500 unchanged; do not import Bluefield
+application code.
+[Details and behavioral differences](../docs/RUNTIME_BINDING.md).
 
-Güncel isim düzeltmesi: **YF-DLL-NAMES-20261028**. Kullanıcının talimatıyla
-readiness ve port exportları `DllWaitReady` ve `DllServerPort` olarak adlandırılır.
-İmzalar, davranışlar ve ordinal4/5 korunur; tüm çağıran araçlar güncellenir.
-Takip talimatıyla yinelenen `YellowfieldShutdown` ve ordinal6 kaldırılır;
-dışarıya tek `DllShutdown` kalır. Kapanış sırası ve mevcut DllShutdown sonuç
-kodları korunur. Toplam beş export vardır. Önceki kaynak ZIPleri korunur.
+Additional correction, translated: "The metadata under Brownfield
+resources was missing and should have been included." Import
+Brownfield `resources/preloader_version.rc` VERSIONINFO byte-identically.
+Do not invent a fixed SURGE profile name/version. The former RCDATA
+decision was later superseded by the owner's avatar correction.
+Other PE header/ABI decisions are not automatically selected
+by importing this resource.
 
+Subsequent correction, translated: "There are still strange nested
+folders under src and include." Apply Brownfield's one-level module
+structure. Move 177 files, verify 261 source bodies byte-identical
+except for include lines. Record paths and evidence in
+[LAYOUT_MIGRATION.json](../metadata/evidence/LAYOUT_MIGRATION.json).
 
-Güncel devam görevi: **YF-PUBLIC-ABI-20261028**. Kullanıcı açık kalan işleri
-gördükten sonra “devam edelim” dedi. Uygulama DLL'inin altı C export'u sabitlenir,
-C++ kaynak API'leri ayrı geliştirme DLL'ine taşınır; gerçek başlangıç, socket,
-shutdown ve unload aracı eklenir. SURGE marker'ı RE'deki RET-only davranışın
-isim uyarlamasıdır; DllShutdown mevcut gerçek cleanup'a bağlanır. Önceki
-548-byte ABI iddiası kanıt bulunamadığı için geri çekilir. Yeni export ordinal4–6
-Yellowfield'e aittir; özgün consumer importları veya EXE değiştirilmez.
-Kapsam ve sınırlar: [PUBLIC_DLL_ABI.md](../docs/PUBLIC_DLL_ABI.md).
+Earlier work item: **YF-COMPARE-20261028**.
+The owner requested two separate difference/omission/deviation tables
+for Bluefield and RE sources, then authorized continuation.
+That pass only covered review, source evidence, documentation, and
+packaging; no application behavior/code changes. Bluefield decisions
+do not automatically become product instructions.
+Tables: [Bluefield](../docs/COMPARISON_HOOK_REFERENCE.md),
+[RE](../docs/COMPARISON_RE.md).
 
-Güncel görev: **YF-RUNTIME-BIND-20261028**. Kullanıcının “o bağlantıların
-saglanmis olmasi gerekiyordu” düzeltmesi, önceki ürün hedefindeki eksik somut
-bağlantıları tamamlamayı gerektirir. Asio/ghc gerçek uygulama yolları, mevcut tam
-config uygulama yolu, kaynak constructor alanları, XML/crypto/router/persistence,
-hook/provider ve DLL başlatma/kapatma sahipliği bu görevde bağlanır. Önceki
-report-only kısıtı yalnız karşılaştırma turuna aitti; bu uygulama görevinin
-engeli değildir. Vendor byte'ları ve TinyXML2=500 korunur. Bluefield uygulama
-kodu alınmaz. Detay ve davranış farkları: [RUNTIME_BINDING.md](../docs/RUNTIME_BINDING.md).
+Earlier implementation work item: **YF-VDF-PEGTL-20261028**.
+After correcting the record, translated as "the PEGTL VDF grammar
+already existed," the owner authorized binding that RE grammar to
+PEGTL. Authorization covers changing the parser backend to PEGTL
+while preserving existing Config2/VDF rules and action semantics.
+Bluefield remains comparison input, not application code.
+[Details](../docs/VDF_PARSER.md).
 
-Ek düzeltme: “brownfieldde resources kismindaki metadata alinmamis alinacakti”.
-Brownfield `resources/preloader_version.rc` VERSIONINFO dosyası birebir alınır;
-sabit profile SURGE adı/sürümü uydurulmaz. Bu eski RCDATA kararı son kullanıcı düzeltmesiyle kaldırılmıştır; aşağıdaki güncel avatar sözleşmesi geçerlidir.
-Diğer PE header/ABI kararları bu resource aktarımıyla otomatik seçilmez.
+Earlier **YF-VENDOR-20261028** and **YF-VENDOR-CONTINUE-20261028**
+work installed five original vendor archives and verified them
+using compatible LLVM-MinGW 20251118 / Clang 21.1.6. Preserve vendor
+bytes, versions, and TinyXML2's default **500**; do not apply
+the patch to 100. Do not choose a new storage/transport policy.
 
-Sonraki düzeltme: “src ve include icinde hala garip alt klasor altinda klasorler var.”
-Brownfield'in tek modül katmanlı düzeni uygulanır. 177 dosya taşınmış, 261 kaynak
-gövdesi include satırları dışında byte-identical doğrulanmıştır. Yollar ve
-kanıtlar [LAYOUT_MIGRATION.json](../metadata/evidence/LAYOUT_MIGRATION.json) içindedir.
+Earlier work item: **YF-INFRA-20261028**.
+Adapt Brownfield infrastructure for Yellowfield, as separately
+authorized when the owner agreed to proceed from the missing-transfer
+list. That authorization covers the infrastructure work below without
+renewed approval for the same operation. The initial package's
+report-only phase does not block this work.
 
-Önceki görev: **YF-COMPARE-20261028**. Kullanıcı Bluefield ve RE source için
-iki ayrı fark/eksik/sapma tablosu istedi ve “devam edelim” dedi. Bu tur
-yalnız inceleme, kaynak kanıtı, dokümantasyon ve paketleme içerir; uygulama
-kodu veya davranışı değişmez. Bluefield kararları otomatik ürün talimatı sayılmaz.
-Tablolar: [Bluefield](../docs/COMPARISON_HOOK_REFERENCE.md), [RE](../docs/COMPARISON_RE.md).
+## Scope
 
-Önceki uygulama görevi: **YF-VDF-PEGTL-20261028**. Kullanıcı “pegtl vdf grameri vardi”
-düzeltmesinden sonra RE'deki mevcut grameri PEGTL'ye bağlama açıklamasına
-**“devam edelim”** dedi. Bu, yalnız mevcut Config2/VDF kuralları ve action
-semantiğini koruyarak parser backend'ini PEGTL'ye geçirme yetkisidir.
-Bluefield karşılaştırma kaynağı kalır; uygulama kodu alınmaz.
-Ayrıntı: [VDF_PARSER.md](../docs/VDF_PARSER.md).
+Documentation system, Golden tools/pipeline, root layout, metadata
+ownership, resource verification, scripts, local build/test orchestration,
+compatible tests, command failure/status visibility, and source packaging.
+The original requirements are in
+[INTEGRATION_REQUIREMENTS.json](../metadata/INTEGRATION_REQUIREMENTS.json);
+the current transfer record is
+[BROWNFIELD_TRANSFER_MATRIX_V2.json](../metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json).
 
-Önceki **YF-VENDOR-20261028** ve **YF-VENDOR-CONTINUE-20261028** görevlerinde beş
-orijinal vendor arşivi kuruldu ve uyumlu LLVM-MinGW 20251118 / Clang 21.1.6
-ile doğrulandı. Vendor byte'ları, sürümleri ve TinyXML2'nin **500** varsayılanı
-korunur; 100 patch'i uygulanmaz. Yeni storage/transport politikası seçilmez.
+No application `.cpp`/header semantics were changed by the infrastructure
+task. The new CRT probe host is a tool testing the standard compiler CRT,
+not a recovered custom CRT. Six old hosts requiring the Brownfield
+application ABI were not imported unchanged. The existing Yellowfield
+source host and CTest targets use their actual interfaces.
 
-Önceki görev: **YF-INFRA-20261028**, Brownfield altyapısının Yellowfield'e uyarlanması.
-Kullanıcı, eksik aktarım listesine yanıt olarak **“evet devam edelim”** dedi.
-Bu talimat aşağıdaki altyapı çalışmasının yetkisidir; aynı işlem için yeniden
-onay istenmez. Eski başlangıç paketinin report-only evresi bu görevi engellemez.
+## Standing targets
 
-## Kapsam
+- First-party namespace `preloader_l`; visible identity SURGE;
+  owner-provided artwork preserved byte-for-byte.
+- Reverse Engineering is the base function source; Bluefield is explicitly
+  selected as donor only for hook 11 and required hook lifecycle;
+  other modules remain comparison scope. Frozen inputs are unchanged.
+- Eleven-hook MinHook target; runtime patch/rollback/quiescence requires
+  separate native acceptance.
+- Four active vendors: Asio, MinHook, PEGTL, TinyXML2. The unused Gulrak
+  vendor was removed by owner correction. Preserve versions and byte pins;
+  copying does not establish active runtime acceptance.
+  Current status: `metadata/RUNTIME_CURRENT_STATUS.json`.
+- Standard CRT; no automatic fallback to a custom CRT.
+- `%LOCALAPPDATA%\SURGE` and Debug-only `surge.log`.
+  The runtime adapter follows RE's EXE-relative main -> override
+  sequence using `surge.cfg` / `surge_override.cfg`.
+  PEGTL implements the existing RE Config2/VDF grammar.
+- Optional `preloader_l_online.dll` follows the RE version2/factory/
+  virtual-slot contract. Acceptance of actual external provider/native
+  compatibility remains open.
+- Library synchronization, publication, and official release are
+  outside this task's scope.
 
-Dokümantasyon sistemi, Golden araçları/zinciri, root düzeni, metadata sahipliği,
-resource kontrolü, scriptler, yerel build/test orchestration, uyumlu testler,
-komutların hata/durum görünürlüğü ve kaynak paketleme.
-Hedeflerin özgün kaydı [INTEGRATION_REQUIREMENTS.json](../metadata/INTEGRATION_REQUIREMENTS.json),
-güncel aktarım kaydı [BROWNFIELD_TRANSFER_MATRIX_V2.json](../metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json).
+## Evidence boundaries
 
-Altyapı görevinde uygulama `.cpp`/başlık semantiği değiştirilmedi. Yeni CRT kontrol host'u
-bir araçtır; compiler standart CRT'sini sınar, özel kurtarılmış CRT sağlamaz.
-Brownfield'in uygulama ABI'sini isteyen altı eski host aynen alınmaz. Yellowfield'in
-mevcut source host'u ve CTest hedefleri gerçek arayüzleriyle kullanılır.
+Source QA, synthetic parser tests, cross-DLL linking, Wine execution,
+actual Windows/MSVC, and game/Consumer acceptance are different evidence
+classes. PASS in one is not proof in another. If Golden product values
+are unknown, tools fail without changing the file. Brownfield metadata
+values have since been explicitly selected by the owner; preserve three
+public exports and other owner exceptions.
 
-## Kalıcı hedefler
+Additional export instruction: preserve Brownfield's
+`DllMain@1`, `SURGE@2`, `DllShutdown@3` ordinal layout.
+Remove `DllWaitReady`/`DllServerPort` added for testing/management;
+tools use existing EALsxPort/LSX behavior. Imported DLL descriptor order
+is separate. At the owner's later explicit instruction, select the
+CRYPT32, WS2_32, KERNEL32, USER32, SHELL32, MSWSOCK order only in the
+finalized copy. Do not alter raw compiler output; retain read-only
+Golden validation.
 
-- First-party namespace `preloader_l`, görünen kimlik SURGE, kullanıcı görseli birebir.
-- Reverse Engineering temel fonksiyon kaynağı; Bluefield yalnız 11. hook ve gerekli hook lifecycle için açıkça seçilmiş donor, diğer modüller karşılaştırma kapsamındadır. Frozen girişler değişmez.
-- 11-hook MinHook hedefi; runtime patch/rollback/quiescence kabulü ayrıca gerçek native kanıt ister.
-- Dört vendor aktiftir: Asio, MinHook, PEGTL ve TinyXML2. Kullanıcı düzeltmesiyle
-  kullanılmayan Gulrak kaldırılmıştır. Sürüm/byte pinleri değişmez; kopyalama,
-  aktif runtime kabulü sayılmaz. Güncel durum metadata/RUNTIME_CURRENT_STATUS.json.
-- Standart CRT; özel CRT için otomatik geri dönüş yok.
-- `%LOCALAPPDATA%\SURGE`, Debug-only `surge.log`; runtime adapterında RE'nin
-  executable-relative main→override sırası `surge.cfg`/`surge_override.cfg`
-  adlarıyla kullanılır. Mevcut RE Config2/VDF grameri PEGTL ile bağlıdır.
-- Opsiyonel `preloader_l_online.dll` mevcut RE version2/factory/virtual-slot
-  sözleşmesine bağlıdır. Gerçek harici provider/native uyumluluk kabulü açık kalır.
-- Library senkronizasyonu, yayın ve resmî release kapsam dışıdır.
+The final **SURGE-FIDELITY-FIX-20261029** instruction addressed all
+four audit findings: Bluefield's narrow network counter and shared
+callback Guard scope, RE type-2 event mutex contract, Debug diagnostic
+content, and current-status pointers. Preserve standard CRT, Debug-only
+file logging, vendor bytes, and Golden policies. Do not rewrite
+historical runtime reports; record new status separately.
 
-## Kanıt sınırı
-
-Kaynak QA, sentetik parser testleri, çapraz DLL linki, Wine çalıştırması,
-gerçek Windows/MSVC ve oyun/Consumer kabulü farklıdır. Birinin PASS sonucu
-diğerine aktarılmaz. Golden ürün değerleri belirsizken araçlar dosyayı değiştirmeden başarısız çıkar.
-Şimdi Brownfield metadata değerleri açık kullanıcı talimatıyla seçilmiştir;
-üç public export ve diğer kullanıcı istisnaları korunur.
-
-Ek export talimatı: DllMain@1, SURGE@2, DllShutdown@3 ordinal düzeni Brownfield
-ile aynı kalacak. Test/yönetim için eklenen DllWaitReady/DllServerPort kaldırılır;
-araçlar mevcut EALsxPort/LSX akışına bağlanır. Import edilen DLL’lerin descriptor
-sıralaması ayrı bir konudur. Sonraki açık kullanıcı talimatıyla yalnız finalized
-kopyada CRYPT32, WS2_32, KERNEL32, USER32, SHELL32, MSWSOCK sırası seçilmiştir;
-raw compiler çıktısı değiştirilmez ve read-only Golden kontrolleri gerekir.
-
-Son SURGE-FIDELITY-FIX-20261029 talimatı dört denetim bulgusunun tamamını giderir:
-Bluefield dar network sayacı ve ortak callback Guard kapsamı, RE type2 event
-mutex sözleşmesi, Debug tanılama içeriği ve güncel durum işaretçileri. Standart
-CRT, Debug-only dosya logu, vendor byte'ları ve Golden politikaları korunur.
-Tarihsel runtime raporları yeniden yazılmaz; yeni durum ayrı kaydedilir.
-
-Teslim sürümü, kod adı ve revizyonu yalnız dış arşiv adı ve yanındaki checksum
-dosyasında kullanılır. Kaynak, araçlar, build başlıkları, receipt ve paket içi
-metadata/dokümanlara taşınmaz. Paketleme aracı çıktı yolunu çağırandan alır.
+Delivery version, codename, and revision appear only in the external
+archive filename and accompanying checksum file, not in source,
+tools, build headings, receipts, or metadata/documentation inside
+the package. The packaging tool receives the output path from
+its caller.
 
 ## Whole-source review continuation
 
