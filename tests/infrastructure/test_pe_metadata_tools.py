@@ -353,7 +353,7 @@ with tempfile.TemporaryDirectory() as td:
         assert cp.returncode!=0 and path.read_bytes()==bad,(label,cp.stdout,cp.stderr)
     # Every MSVC application profile must yield a canonical unsigned DLL,
     # BEFORE URSYNEX. The normalizer is fail-closed and idempotent.
-    raw_path = td / 'preloader.unsigned.dll'
+    raw_path = Path(td) / 'preloader.unsigned.dll'
     raw, _, _ = build_corvexon_fixture(tuple(reversed(order)))
     raw_path.write_bytes(raw)
     call = [sys.executable, '-B', str(r / 'scripts/import_descriptor_order.py'),
