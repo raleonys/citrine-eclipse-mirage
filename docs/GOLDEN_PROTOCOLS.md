@@ -1,96 +1,139 @@
-# Golden araçları ve yerel zincir
+# Golden tools and local pipeline
 
-Brownfield'den seçilip uyarlanan gerçek araçlar:
+The actual tools selected and adapted from Brownfield:
 
 `MSVC Build → URSYNEX Golden Finalizer → ARYRA Golden Layout → MUSTAVEX Golden Metadata → CORVEXON Golden Trail → FALCION Golden Cleaning`
 
-| Aşama | Uygulama ve sınır |
+| Stage | Implementation and boundaries |
 |---|---|
-| MSVC Build | `check_msvc_shipping_link_command.py`; hedefin gerçek link reçetesi ve yalnız bağlı response dosyaları |
-| URSYNEX | `ursynex_golden_finalizer.py`; tek sınırlı PE mutatörü, atomic replace, checksum finalizasyonu |
-| ARYRA | `verify_aryra_golden_layout.py`; bounds/alignment/overlap/section-order kontrolü, read-only |
-| MUSTAVEX | `verify_mustavex_golden_metadata.py`; sınırlandırılmış resource/metadata/export-name kontrolü, read-only |
-| CORVEXON | `verify_corvexon_golden_trail.py`; export/ordinal/import/CRT-cookie/checksum kontrolü, read-only |
-| FALCION | `check_falcion_golden_cleaning.py`; düz kaynak paketi, aynı source manifesti, CRC/byte/hash ve dosya kümesi |
+| MSVC Build | `check_msvc_shipping_link_command.py`; actual target linker command and only the associated response files |
+| URSYNEX | `ursynex_golden_finalizer.py`; sole bounded PE mutator, atomic replacement and checksum finalization |
+| ARYRA | `verify_aryra_golden_layout.py`; bounds/alignment/overlap/section-order checks, read-only |
+| MUSTAVEX | `verify_mustavex_golden_metadata.py`; bounded resource/metadata/export-name checks, read-only |
+| CORVEXON | `verify_corvexon_golden_trail.py`; export/ordinal/import/CRT-cookie/checksum checks, read-only |
+| FALCION | `check_falcion_golden_cleaning.py`; flat source package, matching source manifest, CRC/byte/hash and file-set checks |
 
-`run_golden_pipeline.py` aşamaları bu sırayla çalıştırır; ilk hatada durur.
-Sadece ayrı geçici aday kopyasını değiştirir, özgün build DLL'ini korur ve
-read-only aşamalarda hash değişmediğini denetler. Altı aşama ve son isimli DLL
-runtime testi geçerse hash isimli build adayı ve aşağıdaki dist bundle’ı yazılır.
-Library veya resmî pointer yoktur.
+`run_golden_pipeline.py` runs these stages in that
+order and stops at the first failure. Only a separate
+temporary candidate copy is mutated: the original
+build DLL is preserved, and hashes must remain
+unchanged across read-only stages. Once all six
+stages and the final-named DLL runtime test pass,
+the pipeline writes the hash-named build candidate
+and the dist bundle described below. It does not
+publish to a Library or official release pointer.
 
-## Güncel ürün hedefleri
+## Current product targets
 
-Kullanıcının eksik hedefleri tamamlama talimatıyla dört profil
-`READY_LOCAL_TARGET` durumuna getirildi. Bunlar Yellowfield ürün kurallarıdır;
-`tests/support/golden/` altındaki sabit fixture kimlikleri etkinleştirilmez.
+Following the owner's instruction to complete missing
+targets, four profiles entered `READY_LOCAL_TARGET`
+status. These are Yellowfield product rules;
+fixed fixture identities under
+`tests/support/golden/` are not activated.
 
-| Profil | Güncel kural |
+| Profile | Current rule |
 |---|---|
-| URSYNEX | Brownfield’in açıkça seçilen timestamp0xCD268EB1, linker14.0 ve Rich-yok profilini kopyaya uygular, checksum’u yeniden hesaplar. Son kullanıcı talimatıyla import descriptor’ları da sabit DLL sırasına permüte eder; isim/thunk/IAT verileri korunur. |
-| ARYRA | MSVC altı section veya statik UCRT `.fptable` ile yedi section; sıralama, alignment, dosya sınırı ve çakışmama. `.fptable` tam virtual0x100/raw0x200, index4, characteristics0xC0000040 ve sıfır verili olmalıdır. Diğer section RVA/boyutları zorlanmaz. |
-| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem6.0, linker14.0, timestamp0xCD268EB1, Rich yok; birebir Brownfield VERSIONINFO. PNG/RCDATA/manifest yok. COFF symbol/debug/certificate yok. Internal export adı `preloader.unsigned.dll`. |
-| CORVEXON | Üç tam C export/ordinal; CRT entrypoint exported DllMain'den ayrı ve executable `.text` içinde. CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK dışında statik import yok; MSWSOCK yalnız AcceptEx/GetAcceptExSockaddrs, CRYPT32 yalnız CryptQueryObject. `/MT`, writable image-backed `/GS` cookie, geçerli checksum. |
+| URSYNEX | Apply Brownfield's explicitly selected timestamp 0xCD268EB1, linker 14.0 and no-Rich-header profile to the copy, then recompute checksum. Following the owner's later instruction, permute complete import descriptors into the fixed DLL order; preserve names/thunks/IAT data. |
+| ARYRA | MSVC six sections, or seven with the static UCRT `.fptable`: verify ordering, alignment, file bounds and non-overlap. `.fptable` must have virtual 0x100, raw 0x200, index 4, characteristics 0xC0000040 and all-zero data. Other section RVAs/sizes are not fixed. |
+| MUSTAVEX | AMD64/PE32+/Windows GUI, OS/subsystem 6.0, linker 14.0, timestamp 0xCD268EB1, no Rich header, Brownfield VERSIONINFO byte-for-byte. No PNG/RCDATA/manifest or COFF symbol/debug/certificate. Internal export name `preloader.unsigned.dll`. |
+| CORVEXON | Exactly three C exports/ordinals. The CRT entrypoint is separate from exported DllMain and lies in executable `.text`. No static imports outside CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK; MSWSOCK only AcceptEx/GetAcceptExSockaddrs, CRYPT32 only CryptQueryObject. `/MT`, writable image-backed `/GS` cookie and valid checksum. |
 
-OLE32, önceki COM known-folder adaptöründen geliyordu; RE ortam değişkeni
-okumasına dönüşle kaldırıldı. Son kullanıcı düzeltmesiyle 11. hook için
-`crypt32.lib` ve doğrudan SDK `&CryptQueryObject` hedefi kullanılır; CRYPT32
-normal PE importudur. Önceki beş-modül sınırlaması bu yetkili genişletmeyi
-dışarıda bırakıyordu ve düzeltildi. PNG, ordinary read-only C++ veridir.
-Brownfield VERSIONINFO dosyasının birebir byte'ları korunur.
+OLE32 originated in the earlier COM known-folder adapter
+and was removed by restoring RE environment-variable
+lookup. The final owner correction uses
+`crypt32.lib` and the direct SDK
+`&CryptQueryObject` target for hook 11;
+CRYPT32 is a normal PE import. The earlier
+five-module restriction excluded this authorized
+extension and was corrected. PNG is ordinary
+read-only C++ data. Brownfield's VERSIONINFO
+file bytes remain unchanged.
 
 ```sh
 python -B scripts/run_golden_pipeline.py --check-target
 ```
 
-Bu komutun `READY_LOCAL_TARGET`/exit0 sonucu yalnız hedef tanımlarının
-hazırlığını gösterir. Tam Golden için `build_production.cmd` gerçek MSVC
-Release DLL'ini derleyip altı aşamayı çalıştırır. İlk aşama compiler kimliği,
-link komutu, kaynak ve build receipt hashlerini doğrular. LLVM/Wine veya
-sentetik PE, MSVC build kanıtı yerine geçmez.
+A `READY_LOCAL_TARGET` / exit 0 result from that
+command only shows that target definitions are
+ready. Full Golden requires `build_production.cmd`
+to build an actual MSVC Release DLL and run all
+six stages. The first stage verifies compiler
+identity, linker command, and source/build
+receipt hashes. LLVM/Wine or a synthetic PE
+does not replace MSVC build evidence.
 
-Tam zincirde exit0 yalnız yerel Golden kabulüdür. Exit1 kontrol/derleme
-hatasıdır; exit3 ürün hedefi eksik olduğunda BLOCKED'dır. Hedef tanımı hazır
-olması, gerçek MSVC Golden veya oyun PASS iddiası değildir. Başarılı yerel
-adayın yanında `.dll.sha256` üretilir; yayın yapılmaz. Kaynak ZIP paketleyici
-ayrıca her ZIP yanında `.zip.sha256` üretir.
+Exit 0 from the full pipeline represents only
+local Golden acceptance. Exit 1 is a validation
+or build error; exit 3 means BLOCKED because
+a required product target is missing. Target
+definition readiness is not actual MSVC Golden
+or game PASS. A successful local candidate
+receives a companion `.dll.sha256`; nothing
+is published. The source ZIP packager also
+creates a `.zip.sha256` beside each archive.
 
-Bütün read-only aşamalarda aday hash’i sabit kalır. URSYNEX yalnız izinli timestamp,
-linker, tam Rich bloğu ve checksum alanlarını değiştirebilir; diğer byte’lar
-değişirse durur. Özgün build DLL'inin değişmediği de
-zincir sonunda kontrol edilir. Fixture ve bozuk-girdi regresyonları ayrı
-korunur; fixture'lar aktif ürün politikasını açamaz.
+Candidate hashes must remain unchanged during
+all read-only stages. URSYNEX may change only
+permitted timestamp, linker, full Rich-header
+block and checksum fields; any other byte
+mutation must stop the pipeline. The original
+build DLL's unchanged bytes are also checked
+at the end. Fixture and malformed-input
+regressions are retained separately; fixtures
+cannot activate actual product policy.
 
-## Yerel dist çıktısı
+## Local dist output
 
-Altı aşama geçtikten sonra finalized kopya **preloader_l.dll** adıyla mevcut
-runtime host'a verilir. Üç gerçek yükleme/başlatma/socket/profile/kapatma/unload
-çevrimi geçmeli ve adayın byte'ları değişmemelidir. Ardından şu dosyalar yazılır:
+After all six stages, the finalized copy is
+passed to the existing runtime host as
+**preloader_l.dll**. Three actual
+load/start/socket/profile/stop/unload cycles
+must pass without mutation of the candidate
+bytes. Only then are these files written:
 
 - `dist/preloader_l.dll`
 - `dist/preloader_l.dll.sha256`
 - `dist/LOCAL_DIST_RECEIPT.json`
 
-Böylece runtime adı Bluefield hook11 filtresiyle eşleşir. Ham link çıktısı
-`preloader.unsigned.dll` kalır; export-directory internal adı ve üç C export
-kopyalama sırasında değiştirilmez. Önceki hash adlı build adayı da korunur.
-Golden/son runtime kontrolü başarısızsa yeni dist verilmez; önceki başarılı
-bundle varsa kendi hash/source receipt'iyle korunur. Güncel denemenin sonucu
-build dizinindeki `golden-local/GOLDEN_REPORT.json` içindedir. Compile, Debug,
-Native ve CRT profilleri dist'e yükseltilmez; resmî yayın yapılmaz.
+The runtime name thus matches the Bluefield
+hook-11 filter. The raw link output remains
+`preloader.unsigned.dll`; copying does not
+change the export-directory internal name
+or the three C exports. The earlier
+hash-named build candidate is also retained.
+If Golden or final runtime validation fails,
+no new dist is published; any prior successful
+bundle is preserved with its hash/source
+receipt. Results of the current attempt are
+in `golden-local/GOLDEN_REPORT.json` under
+the build directory. Compile, Debug, Native,
+and CRT profiles cannot be promoted to dist,
+and no official publication occurs.
 
-Bütün alt Python yorumlayıcıları `-B` ve/veya miras alınan
-`PYTHONDONTWRITEBYTECODE=1` kullanır. Operatör akışı önce, yalnız manifestteki
-birinci taraf Python araçlarına ait bilinen `__pycache__/*.pyc` dosyalarını
-temizler. FALCION rastgele cache/ek kaynak dosyalarını hâlâ reddeder.
-Ayrıntı: [Production düzeltmesi](PRODUCTION_IMPORT_FIX.md).
+All child Python interpreters use `-B` and/or
+inherit `PYTHONDONTWRITEBYTECODE=1`.
+The operator flow first removes only known
+`__pycache__/*.pyc` files from manifest-owned
+first-party Python tools. FALCION continues
+to reject unexpected caches or additional
+source files. See
+[Production correction](PRODUCTION_IMPORT_FIX.md).
 
-Tam alan tablosu ve önceki preserve-compiler kararının düzeltmesi: [metadata denetimi](REFERENCE_METADATA_AUDIT.md).
+The full field matrix and correction of the
+former preserve-compiler decision are in
+[metadata audit](REFERENCE_METADATA_AUDIT.md).
 
-Son kullanıcı import-sırası düzeltmesi: URSYNEX, yukarıdaki header/Rich/checksum
-alanlarına ek olarak yalnız tam import descriptor kayıtlarını
-CRYPT32/WS2_32/KERNEL32/USER32/SHELL32/MSWSOCK sırasına permüte eder.
-Descriptor isim/RVA alanları kendi kaydıyla birlikte taşınır; import thunk/name/IAT
-byte’ları ve directory yerleri korunur. Modül kümesi farklıysa işlem reddedilir.
-Checksum bundan sonra hesaplanır. CORVEXON sırayı read-only denetler. Bu ek izin
-önceki yalnız-header mutasyon kapsamını son kullanıcı talimatıyla genişletir.
+The owner's latest import-order correction
+permits URSYNEX, in addition to the
+header/Rich/checksum fields above, to
+permute only complete import-descriptor
+records into CRYPT32/WS2_32/KERNEL32/
+USER32/SHELL32/MSWSOCK order. Descriptor
+name/RVA fields move with their own
+records; import thunk/name/IAT bytes and
+directory locations remain unchanged.
+Reject the operation if the module set
+differs. Recompute checksum afterwards.
+CORVEXON verifies ordering read-only.
+This explicit permission extends the
+earlier header-only mutation scope.
