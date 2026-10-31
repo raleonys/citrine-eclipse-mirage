@@ -17,7 +17,7 @@ std::string ascii(const Path& path) { return preloader_l::test_support::fixture_
 void fixture_ascii_contract() {
     require(ascii(u"ASCII/fixture")=="ASCII/fixture","ASCII fixture path preserves bytes");
     bool refused=false;
-    try { (void)ascii(u"\\u00E9"); } catch (const std::invalid_argument&) { refused=true; }
+    try { (void)ascii(u"\u00E9"); } catch (const std::invalid_argument&) { refused=true; }
     require(refused,"fixture must reject non-ASCII input rather than silently truncate UTF-16");
 }
 void setting(Node& root, const char* section, const char* key, std::string value) {
