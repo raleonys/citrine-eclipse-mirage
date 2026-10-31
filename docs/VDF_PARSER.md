@@ -1,72 +1,90 @@
-# PEGTL ile mevcut Config2/VDF grameri
+# Existing Config2/VDF grammar with PEGTL
 
-Kullanıcının “pegtl vdf grameri vardi” düzeltmesi ve ardından “devam edelim”
-talimatı, RE'de zaten belgelenen gramerin PEGTL'ye bağlanmasının yetkisidir.
-Önceki “gramer belirlenmedi” kaydı eksikti: RE kaynaklarında kurallar ve action
-sırası bulunur. Bluefield karşılaştırma için okunur; uygulama kodu alınmaz.
+The owner's correction, translated as "the PEGTL VDF grammar already
+existed," followed by authorization to continue, permits binding the
+grammar already documented in RE to PEGTL. The earlier claim that the
+grammar was unspecified was incomplete: the RE sources contain rules
+and action ordering. Bluefield is read for comparison, not as an
+application-code source.
 
-Temel kaynak, kullanıcının `Reverse Engineering/anadius-parser-source/` altındaki
-`README.md`, `evidence.json`, `parser.cpp` ve `parser_tests.cpp` dosyalarıdır.
-`anadius-all-functions.pseudo.c` içindeki `vdf::parser::KeyValue`, `Object`,
-`Seps` ve `tao::pegtl` rule metinleri bu kaynağı destekler.
+The primary inputs are the owner-supplied `README.md`,
+`evidence.json`, `parser.cpp`, and `parser_tests.cpp` under
+`Reverse Engineering/anadius-parser-source/`.
+Rule text for `vdf::parser::KeyValue`, `Object`, `Seps`,
+and `tao::pegtl` in `anadius-all-functions.pseudo.c`
+corroborates these inputs.
 
-| RE yordamı | Kural / action |
+| RE routine | Rule / action |
 |---|---|
-| 014310 | Root: EOF'ye kadar EOL, separator veya quoted object; uyumsuzlukta hata |
-| 013810, 013640, 0141a0 | Quoted byte dizisi; yalnız quote ve backslash escape'i çözülür |
-| 013460, 0135b0 | Satır yorumu ve HT/LF/VT/FF/CR/SP whitespace |
-| 013ed0, 013520, 013ab0 | Block comment; direct tüketim ve rewind ayrımı |
-| 0138e0, 013b70, 013cc0 | Önce scalar sonra object; üyeler, mandatory scalar separator |
-| 012ff0 | Object adı okunduğunda, açılış `{` doğrulanmadan frame oluşturma |
-| 012cf0, 012bf0, 0164f0 | Tamamlanmış atama; duplicate subtree replacement |
+| 014310 | Root: EOL, separator, or quoted object until EOF; reject mismatches |
+| 013810, 013640, 0141a0 | Quoted byte string; decode only quote and backslash escapes |
+| 013460, 0135b0 | Line comment and HT/LF/VT/FF/CR/SP whitespace |
+| 013ed0, 013520, 013ab0 | Block comment; distinction between direct consumption and rewind |
+| 0138e0, 013b70, 013cc0 | Scalar before object; members and mandatory scalar separator |
+| 012ff0 | Create an object frame after reading its name, before validating opening `{` |
+| 012cf0, 012bf0, 0164f0 | Complete assignment; replace duplicate subtree |
 
-`include/preloader_l/config/vdf_grammar.hpp` byte kurallarını tanımlar.
-`src/config/parser.cpp` PEGTL action/control'lerini, owned `ParseError` arayüzünü
-ve mevcut Node dönüşümünü taşır. `parser::parse` daima gerçek
-`tao::pegtl::parse<vdf::Document,...>` çağırır; eski elle yazılmış parser veya
-başarısızlıkta başka backend'e geçiş bulunmaz.
+`include/preloader_l/config/vdf_grammar.hpp` defines the byte-level rules.
+`src/config/parser.cpp` provides PEGTL actions/controls, the owned
+`ParseError` interface, and current Node conversion.
+`parser::parse` always invokes the real
+`tao::pegtl::parse<vdf::Document,...>`. There is neither the former
+hand-written parser nor an alternate backend after failure.
 
-Root'ta scalar kabul edilmez; object adları, key ve value quoted'dur. Scalar
-key/value arasında separator gerekir; tamamlanmış üyeler bitişik olabilir.
-Block comment ilk `*/` ile biter. Bilinmeyen escape'ler, NUL ve geçersiz UTF-8
-byte'ları korunur; ham CR/LF quoted token içinde hata verir. Bir UTF-8 BOM
-kaldırılır. LF sayımı host'tan bağımsızdır. Input rewind action `State`'ini geri
-almaz; hata öncesindeki atamalar ve açık/orphan frame'ler korunur. Duplicate key
-önceki node'un tüm değer/çocuklarını değiştirir. Her belge için yeni `State`
-kullanılır ve input parse boyunca yaşamalıdır.
+Scalar tokens are not accepted at the root; object names, keys, and
+values are quoted. Scalar key/value pairs require a separator, while
+completed members may be adjacent. A block comment ends at the first
+`*/`. Unknown escapes, NUL, and invalid UTF-8 bytes are preserved;
+raw CR/LF within a quoted token is an error. One UTF-8 BOM is removed.
+LF counting is host-independent. Input rewind does not undo action
+`State`; assignments and open/orphan frames before an error are retained.
+Duplicate keys replace the entire preceding node, including values
+and children. A fresh `State` is used per document and input must
+remain alive throughout parsing.
 
-Windows'ta `preloader_l_vdf_objects`, `preloader_l_pegtl` hedefiyle derlenir;
-objeleri hem `preloader_l_core` test arşivine hem gerçek `preloader_l` DLL'ine
-girer. DocumentPipeline ve mevcut config uygulama akışı bu parser'ı kullanır.
-Dinamik source host, DLL üzerinden BOM'lu nested Config2 belgesini, duplicate
-atamaları ve hata konumunu denetler. Sayı fixture'ı ayrıca yalnız vendor API testidir.
+On Windows, `preloader_l_vdf_objects` compiles against the
+`preloader_l_pegtl` target. Its objects link into both the
+`preloader_l_core` test archive and actual `preloader_l` DLL.
+DocumentPipeline and the existing configuration application path use
+this parser. Through the DLL, the dynamic source host checks a
+BOM-prefixed nested Config2 document, duplicate assignments, and
+error locations. The numeric fixture tests only the vendor API.
 
-Bu bağ `surge.cfg` / `surge_override.cfg` dosyalarının seçimini veya önceliğini
-belirlemez. Asio/filesystem üretim adapter'ları, otomatik bootstrap, Consumer ABI,
-gerçek Windows/MSVC ve oyun kabulü ayrı kalan işlerdir. XML sahibi TinyXML2'dır;
-bu gramer XML/LSX parser'ı değildir. Vendor dosyaları ve TinyXML2 500 değişmez.
+This binding does not select `surge.cfg` / `surge_override.cfg`
+or establish their precedence. Production Asio/filesystem adapters,
+automatic bootstrap, Consumer ABI, and native Windows/MSVC/game
+acceptance remain separate tasks. TinyXML2 owns XML; this grammar
+is not the XML/LSX parser. Vendored files and TinyXML2 depth 500
+remain unchanged.
 
-Mevcut 115 parser assertion'ı değiştirilmeden korunur. Yeni
-`vdf_parser_regressions` testi 23.417 girdide eski RE-tabanlı Yellowfield
-parser'ından alınmış golden gözlemleri denetler: 4.724 kabul, 18.693 parse hatası.
-Girdiler kısa token kombinasyonları, bütün 256 byte'ın farklı bağlamları,
-belge kesme/silme/ekleme/değiştirmeleri ve deterministik üretilen belgelerdir.
-Kullanıcının gerçek config dosyaları okunmaz.
+All 115 existing parser assertions were retained without modification.
+The new `vdf_parser_regressions` test checks 23,417 inputs against
+golden observations from the former RE-based Yellowfield parser:
+4,724 accepted and 18,693 parse errors. Inputs cover short token
+combinations, all 256 byte values in different contexts, truncation/
+deletion/insertion/replacement of documents, and deterministically
+generated documents. No real owner configuration files are read.
 
-Gözleme input, sonuç/hata sınıfı, byte/line/column, tüm AST, atama sırası,
-açık frame'ler, accumulator/key/value ve BOM durumu dahildir. Sayılar sabit
-little-endian biçimde FNV64'e katılır. Bu bir regresyon fingerprint'idir;
-kriptografik eşdeğerlik, orijinal native DLL veya exception ABI kanıtı değildir.
+Observations include input, result/error class, byte/line/column,
+complete AST, assignment order, open frames, accumulator/key/value,
+and BOM state. Numeric values are included in FNV64 using fixed
+little-endian encoding. This is a regression fingerprint, not proof
+of cryptographic equivalence, original native DLL behavior, or
+exception ABI parity.
 
-- Baseline paket: `yellowfield-vendor-compatible-source.zip`
-- Paket SHA-256: `c2a4d4622bb9cf03dd889d5bb9b0040e817d94a25fe2fcb44f4bcece52aa0767`
-- Eski `src/config/parser.cpp` SHA-256: `bc93d8badfb33c89b268470ee95b27384bb4a6b700842a4f4f476f2c2075d139`
-- Beklenen full-state FNV64: `ea70f5d56d33f404`
+- Baseline package: `yellowfield-vendor-compatible-source.zip`
+- Package SHA-256: `c2a4d4622bb9cf03dd889d5bb9b0040e817d94a25fe2fcb44f4bcece52aa0767`
+- Former `src/config/parser.cpp` SHA-256: `bc93d8badfb33c89b268470ee95b27384bb4a6b700842a4f4f476f2c2075d139`
+- Expected full-state FNV64: `ea70f5d56d33f404`
 
-Eski implementasyon ürün ağacına eklenmez. Baseline kontrolü aynı test harness'ını
-eski parser ve configuration kaynağıyla ayrı executable olarak derleyerek yapıldı.
-Normal CTest yeni PEGTL parser'ını bu sabit gözlemlere karşı sınar.
-Güncel ham kayıtlar ve sonuçlar
-[VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json) içindedir.
+The former implementation is not added back to the product tree.
+The baseline check compiled the same test harness with the earlier
+parser and configuration source as a separate executable. Normal
+CTest compares the new PEGTL parser against the pinned observations.
+Current raw results are in
+[VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json).
 
-Güncel runtime bağı: [RUNTIME_BINDING.md](RUNTIME_BINDING.md). Buradaki önceki vendor/parser test sayıları tarihsel snapshot kanıtıdır; yeni app testleri [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json) içindedir.
+Current runtime binding:
+[RUNTIME_BINDING.md](RUNTIME_BINDING.md). Earlier vendor/parser counts
+here are historical snapshot evidence; new application tests are
+tracked in [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
