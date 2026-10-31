@@ -46,15 +46,16 @@ changed.
 
 ## Preventing an ASCII-only diagnostic regression
 
-The existing test_english_only_audit.py now includes a narrow, deterministic
-source-inventory check for unambiguous transliterated diagnostic lexemes in
-src/, include/, and tests/. It reads the active manifest and fails if known
-diagnostic signals reappear. Synthetic tests prove detection and ensure an
-intentional Unicode filename fixture is not rejected.
+The original language review used selected lexical diagnostic signals.
+The follow-up English-only correction removed foreign-language literal
+examples from the audit tests. Selected known signals are retained as
+SHA-256 token fingerprints, and regression uses an English-only synthetic
+marker. Non-ASCII letters in first-party source and build scripts block the
+gate; Unicode test data remain reviewable without allowing foreign-language
+prose.
 
-This is deliberately a limited signal guard, not a general-purpose language
-detector, parser, source transformer, or replacement for human review. It does
-not alter the existing prose gate or its review-only handling of source fixtures.
+The detector cannot semantically classify arbitrary ASCII-only text. Manual
+English-language review remains mandatory, including for fixture prose.
 
 ## Boundaries and acceptance
 

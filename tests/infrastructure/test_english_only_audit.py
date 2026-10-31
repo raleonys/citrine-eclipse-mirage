@@ -27,22 +27,24 @@ class LanguageSignalAuditTests(unittest.TestCase):
         self.write('metadata/ACTIVE_SOURCE_MANIFEST.json',
                    json.dumps({'files': {name: 'test-only' for name in names}}))
 
-    def test_document_blocks_code_requires_review_and_exclusions_are_preserved(self):
-        paths = ['docs/prose.md', 'src/module.cpp',
+    def test_source_and_prose_block_non_english_letters_but_fixture_data_is_reviewed(self):
+        paths = ['docs/prose.md', 'src/module.cpp', 'tests/unit/fixture.cpp',
                  'third_party/vendor/readme.md', 'metadata/evidence/record.md']
-        self.write('docs/prose.md', 'Headline\nCaf\u00e9\n')
-        self.write('src/module.cpp', '// \u03b1: intentional fixture\n')
-        self.write('third_party/vendor/readme.md', 'Caf\u00e9\n')
-        self.write('metadata/evidence/record.md', 'Caf\u00e9\n')
+        self.write('docs/prose.md', 'English heading\nUnicode scalar: \u03b1\n')
+        self.write('src/module.cpp', '// Synthetic scalar: \u03b1\n')
+        self.write('tests/unit/fixture.cpp', '// Synthetic scalar: \u03b1\n')
+        self.write('third_party/vendor/readme.md', 'Unicode scalar: \u03b1\n')
+        self.write('metadata/evidence/record.md', 'Unicode scalar: \u03b1\n')
         self.manifest(paths)
         report = checker.audit(self.root)
-        self.assertEqual(2, report['scanned_text_files'])
-        self.assertEqual(1, report['blocking'])
+        self.assertEqual(3, report['scanned_text_files'])
+        self.assertEqual(2, report['blocking'])
         self.assertEqual(1, report['review_required'])
-        self.assertEqual(['docs/prose.md', 'src/module.cpp'],
+        self.assertEqual(['docs/prose.md', 'src/module.cpp', 'tests/unit/fixture.cpp'],
                          [x['path'] for x in report['findings']])
         self.assertEqual(1, checker.main(['--root', str(self.root), '--check']))
         self.write('docs/prose.md', 'English text only\n')
+        self.write('src/module.cpp', '// English diagnostic only\n')
         self.assertEqual(0, checker.main(['--root', str(self.root), '--check']))
 
     def test_ascii_only_content_is_not_certified(self):
@@ -125,64 +127,43 @@ class LanguageSignalAuditTests(unittest.TestCase):
                         profile.index("Invoke-ExternalChecked $CMakeExe @('-S'"))
         self.assertIn('MSVC diagnostic locale requested: English (VSLANG=1033)',
                       profile)
+        self.assertIn("Join-Path (Split-Path -Parent $ClExe) '1033\clui.dll'", profile)
+        self.assertIn('Fail-Build "English MSVC diagnostic resources are required:', profile)
+        self.assertLess(profile.index("1033\clui.dll"),
+                        profile.index("Invoke-ExternalChecked $CMakeExe @('-S'"))
         self.assertIn('Get-ChildItem Env: | ForEach-Object { $EnvironmentBefore', profile)
         self.assertIn('foreach ($Name in $EnvironmentBefore.Keys)', profile)
         self.assertIn("[Environment]::SetEnvironmentVariable($Name,$EnvironmentBefore[$Name],'Process')",
                       profile)
 
-    @staticmethod
-    def _ascii_only_diagnostic_review(root):
-        """Review a narrow set of transliterated diagnostic signals, not all language."""
-        root = Path(root)
+    def test_known_ascii_diagnostic_rejected_without_foreign_language_examples(self):
+        # This marker is synthetic English. No foreign-language words are used.
+        marker = 'Language' + 'Violation' + 'Probe'
+        self.write('src/fixture.cpp', '// ' + marker + '\n')
+        self.manifest(['src/fixture.cpp'])
+        report = checker.audit(self.root)
+        self.assertEqual(1, report['blocking'])
+        self.assertEqual('non_english_ascii_diagnostic', report['findings'][0]['kind'])
+        self.assertEqual(1, checker.main(['--root', str(self.root), '--check']))
+        self.write('src/fixture.cpp', '// English diagnostic only\n')
+        self.assertEqual(0, checker.main(['--root', str(self.root), '--check']))
+
+    def test_current_code_inventory_has_no_blocking_language_signals(self):
+        root = Path(__file__).resolve().parents[2]
         manifest = json.loads((root / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
                               .read_text(encoding='utf-8'))
-        # Keep lexemes split so the regression itself cannot trigger its scan.
-        lexemes = (
-            'buluna' + 'madi', 'basari' + 'siz', 'gecer' + 'siz',
-            'olusturula' + 'madi', 'baslatila' + 'madi',
-            'kapatila' + 'madi', 'acila' + 'madi',
-            'islen' + 'emedi', 'silin' + 'emedi',
-            'yuklene' + 'medi', 'kaydedile' + 'medi',
-        )
-        pattern = re.compile(r'(?<![A-Za-z])(?:' +
-                             '|'.join(re.escape(word) for word in lexemes) +
-                             r')(?![A-Za-z])', re.IGNORECASE)
         counts = {'src': 0, 'include': 0, 'tests': 0}
-        findings = []
         extensions = {'.c', '.cpp', '.h', '.hpp', '.py', '.ps1'}
         for name in checker.source_paths(manifest):
             family = name.split('/', 1)[0]
-            if family not in counts or PurePosixPath(name).suffix.lower() not in extensions:
-                continue
-            path = root.joinpath(*PurePosixPath(name).parts)
-            if not path.is_file() or path.is_symlink():
-                raise ValueError('Missing or nonregular reviewed source: ' + name)
-            counts[family] += 1
-            for number, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
-                match = pattern.search(line)
-                if match:
-                    findings.append((name, number, match.group(0).lower()))
-        return counts, findings
-
-    def test_ascii_only_diagnostic_review_preserves_filename_fixtures(self):
-        self.write('src/transport.cpp', '// File was not found.\n')
-        self.write('tests/unit/fixture.cpp', r'const auto path = u"dosya-\u0131.dat";' + '\n')
-        self.manifest(['src/transport.cpp', 'tests/unit/fixture.cpp'])
-        counts, findings = self._ascii_only_diagnostic_review(self.root)
-        self.assertEqual({'src': 1, 'include': 0, 'tests': 1}, counts)
-        self.assertEqual([], findings)
-        self.write('src/transport.cpp', '// Fatal: buluna' + 'madi\n')
-        _, findings = self._ascii_only_diagnostic_review(self.root)
-        self.assertEqual([('src/transport.cpp', 1, 'buluna' + 'madi')], findings)
-
-    def test_current_cpp_header_and_test_diagnostic_review(self):
-        """Current-tree signal guard; still not a semantic language certificate."""
-        root = Path(__file__).resolve().parents[2]
-        counts, findings = self._ascii_only_diagnostic_review(root)
+            if family in counts and PurePosixPath(name).suffix.lower() in extensions:
+                counts[family] += 1
         self.assertGreaterEqual(counts['src'], 100)
         self.assertGreaterEqual(counts['include'], 100)
         self.assertGreaterEqual(counts['tests'], 200)
-        self.assertEqual([], findings)
+        report = checker.audit(root)
+        self.assertEqual(0, report['blocking'], report['findings'][:10])
+
 
 if __name__ == '__main__':
     unittest.main()

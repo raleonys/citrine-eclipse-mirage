@@ -5,6 +5,11 @@ entire repository has achieved semantic English-only compliance.
 The repository's technical identifiers, historical evidence and
 third-party snapshots are independent preservation contracts.
 
+**Policy:** English is the only permitted natural language for first-party
+source comments, documentation, diagnostics, and test descriptions. Other
+languages may be referenced using English terms, never quoted using actual
+foreign-language vocabulary. Unicode file and codepoint data are not prose.
+
 ## Exact inventory and baseline
 
 The starting snapshot is the accepted `main` commit
@@ -52,12 +57,14 @@ files and unsafe inventory paths. For each UTF-8 text file it
 records the file, line and Unicode code-point identifiers when
 a non-ASCII **letter** occurs.
 
-- Markdown prose: signals block the `--check` gate and require
-  editorial review; invalid UTF-8 also blocks.
-- Source, tests, scripts, metadata, fixtures and other text:
-  signals are **review required**, not automatic failures.
-  A C++ string, parser fixture or identifier can carry
-  deliberate Unicode without violating the prose policy.
+- First-party prose, source code and scripts: non-ASCII letter signals
+  **block** the `--check` gate; invalid UTF-8 also blocks.
+- Test data and structured metadata: Unicode letter signals require
+  **review** because a fixture may exercise Unicode filenames without
+  expressing foreign-language words. No foreign-language prose is allowed.
+- Known prohibited ASCII-only diagnostic tokens are checked using SHA-256
+  fingerprints so no foreign-language examples appear in source or tests.
+  Such findings **block** across active source categories.
 - Vendor snapshots, locked historical evidence and binary assets
   are excluded from the scan. Neither exclusion authorizes
   modifications to those files.
@@ -97,9 +104,9 @@ resources or release artifacts.
 ## External compiler diagnostic language
 
 The first-party language audit examines repository-authored text, not messages
-loaded from a user's Visual Studio installation. MSVC's diagnostic resources
-may be localized independently of the source language; a Turkish C4834 warning,
-for example, is not necessarily a Turkish diagnostic string in our source.
+loaded from a user's Visual Studio installation. MSVC diagnostic resources
+may be localized independently of source language; localized compiler output
+does not by itself mean the project contains foreign-language source text.
 
 The shared `scripts/build_orchestration/build_profile.ps1` now sets
 `VSLANG=1033` (US English) after the Visual C++ environment is loaded and
@@ -108,9 +115,10 @@ applies to Compile, Debug, Native, CRT and Golden builds. It is scoped to the
 build process, and the existing `finally` block restores the operator's
 original environment.
 
-English compiler message resources must be available in the installed Visual
-Studio toolset. The locale request cannot translate arbitrary operating-system
-or vendor diagnostics, and it cannot certify zero warnings. If the installed
+The build now requires the installed English compiler message catalog at
+`1033/clui.dll` and fails closed rather than using a localized fallback.
+The locale request cannot translate arbitrary operating-system or vendor
+diagnostics, and it cannot certify zero warnings. If the installed
 toolset still produces localized messages, check that English language resources
 are installed and capture the actual compiler message-code and toolchain details.
 A freshly downloaded source snapshot is also needed to verify fixes merged

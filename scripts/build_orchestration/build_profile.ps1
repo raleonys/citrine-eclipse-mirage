@@ -30,6 +30,11 @@ try {
     $ClExe = Resolve-BoundExecutable 'cl.exe'
     $LinkExe = Resolve-BoundExecutable 'link.exe'
     $NMakeExe = Resolve-BoundExecutable 'nmake.exe'
+    # English diagnostics only; reject missing message resources without fallback.
+    $EnglishCompilerMessages = Join-Path (Split-Path -Parent $ClExe) '1033\clui.dll'
+    if (-not (Test-Path -LiteralPath $EnglishCompilerMessages -PathType Leaf)) {
+        Fail-Build "English MSVC diagnostic resources are required: $EnglishCompilerMessages" 119
+    }
     Invoke-ExternalChecked $PythonExe @('-B',(Join-Path $Root 'scripts/clear_tool_python_cache.py'),'--root',$Root,'--quiet','--report',(Join-Path $Out 'PYTHON_CACHE_CLEANUP.json')) 'Previous first-party Python bytecode cleanup' 115
     New-Item -ItemType Directory -Path $Out -Force | Out-Null
     Write-ToolchainProvenance (Join-Path $Out 'BUILD_TOOLCHAIN_PROVENANCE.log') $vs[0] $vs[1] $CMakeExe $PythonExe $ClExe $LinkExe $NMakeExe
