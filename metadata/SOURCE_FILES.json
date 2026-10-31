@@ -1014,8 +1014,8 @@
       "sha256": "adde08f2eb2ec205c51448ef5a59f2a60adbbf89f33b23a00e621b397e348d38"
     },
     "src/runtime/online.cpp": {
-      "bytes": 5050,
-      "sha256": "3d824ba613ab7bb1c29935f3980e120370c7411bf7d42c7f81a4ad413a397b5c"
+      "bytes": 5070,
+      "sha256": "ca18423300b7d2d98b5678551aafea62b9da9c30ed124bdb3ed41b12f6457559"
     },
     "src/runtime/recovered_effects.cpp": {
       "bytes": 3416,
@@ -1485,6 +1485,14 @@
       "bytes": 17484,
       "sha256": "15ea3a4939a912e27e00bc7f85c9ef1313d636826fed8d10873a6926075dd900"
     },
+    "tests/unit/config_defaults/defaults_integration_tests.cpp": {
+      "bytes": 15884,
+      "sha256": "8411f2ee04cf333edda54a0e096e2bf730a3f66f1492e8813a87649f5247a445"
+    },
+    "tests/unit/config_defaults/defaults_tests.cpp": {
+      "bytes": 6074,
+      "sha256": "3e7d4ec16daed34317db481f57993cc81480586f0bb422ba33a8049ae4c4ff41"
+    },
     "tests/unit/config_hash/hash_table_tests.cpp": {
       "bytes": 10523,
       "sha256": "88865d737c369f07605646216e724f844c185d75c3120e9945acc692500725d0"
@@ -1598,8 +1606,8 @@
       "sha256": "871e85deb47306acf17c30b34cc7dceb8dc736b2f41bbe69e78433a38e000fd4"
     },
     "tests/unit/online/online_tests.cpp": {
-      "bytes": 20955,
-      "sha256": "218742f911d70cf15a443b6fa9a639af897354dfad06fecda204387d9e0ccd73"
+      "bytes": 23289,
+      "sha256": "d9b874ec4f9a36fb47fd9b654703a750f927b08a84c6c0270ad31db3cc4c146f"
     },
     "tests/unit/parser/parser_tests.cpp": {
       "bytes": 7343,

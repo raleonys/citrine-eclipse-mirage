@@ -59,8 +59,10 @@ void load_online_035bd0(StateRefs state, Effects& effects) {
         log_line(effects, "factory function not found");
         return;
     }
-    const Path cookie_copy(state.cookie_0a3a20);
-    state.object_0a3a88 = effects.call_create_online(factory, cookie_copy.c_str());
+    {
+        const Path cookie_copy(state.cookie_0a3a20);
+        state.object_0a3a88 = effects.call_create_online(factory, cookie_copy.c_str());
+    }
     if (!state.object_0a3a88)
         throw OutOfEvidenceInput("035bd0 dereferences a null create_online result");
     const auto status = effects.status_virtual_08(state.object_0a3a88);
