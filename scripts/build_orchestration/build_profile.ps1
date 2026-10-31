@@ -71,7 +71,7 @@ try {
         if ($GoldenCode -eq 3) { $GoldenBlocked = $true }
         elseif ($GoldenCode -ne 0) {
             if ($GoldenCode -lt 1 -or $GoldenCode -gt 255) { $GoldenCode = 110 }
-            Fail-Build "Local Golden chain basarisiz (exit $GoldenCode)." $GoldenCode
+            Fail-Build "Local Golden chain failed (exit $GoldenCode)." $GoldenCode
         }
         else {
             $GoldenReport = Get-Content -LiteralPath (Join-Path $Out 'golden-local/GOLDEN_REPORT.json') -Raw | ConvertFrom-Json

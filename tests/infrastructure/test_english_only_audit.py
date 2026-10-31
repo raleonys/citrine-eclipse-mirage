@@ -82,5 +82,32 @@ class LanguageSignalAuditTests(unittest.TestCase):
         self.assertEqual([], checker.audit(self.root)['findings'])
 
 
+    def test_active_build_diagnostics_use_english(self):
+        """Guard user-facing build errors and their existing exit codes."""
+        root = Path(__file__).resolve().parents[2]
+        expected = {
+            "scripts/build_orchestration/build_common.ps1": (
+                "if (-not $cmd) { Fail-Build \"$Name was not found.\" 127 }",
+                "if ([string]::IsNullOrWhiteSpace($RelativePath)) { Fail-Build \"$Label cannot be empty.\" 64 }",
+                "if ([System.IO.Path]::IsPathRooted($RelativePath)) { Fail-Build \"$Label must not be an absolute path: $RelativePath\" 64 }",
+                "Fail-Build \"$Label is outside the repository build/ boundary: $RelativePath\" 64",
+                "Fail-Build \"$Label cannot be the build root itself.\" 64",
+                "if (-not $vswhere) { Fail-Build 'vswhere.exe was not found.' 101 }",
+                "if (-not $vsPath) { Fail-Build 'MSVC C++ x64 toolset was not found.' 102 }",
+                "if (-not (Test-Path -LiteralPath $vcvars)) { Fail-Build \"vcvars64.bat was not found: $vcvars\" 103 }",
+                "if ($rc -ne 0) { Fail-Build \"vcvars64.bat failed (exit $rc).\" $rc }",
+                "Fail-Build \"Another production build is using this checkout: $Path\" 73",
+                "Fail-Build \"$Label failed (exit $rc).\" $rc",
+            ),
+            "scripts/build_orchestration/build_profile.ps1": (
+                "Fail-Build \"Local Golden chain failed (exit $GoldenCode).\" $GoldenCode",
+            ),
+        }
+        for relative_path, statements in expected.items():
+            content = (root / relative_path).read_text(encoding='utf-8')
+            for statement in statements:
+                with self.subTest(path=relative_path, statement=statement):
+                    self.assertEqual(1, content.count(statement))
+
 if __name__ == '__main__':
     unittest.main()
