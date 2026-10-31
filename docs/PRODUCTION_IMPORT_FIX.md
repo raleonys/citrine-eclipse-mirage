@@ -1,55 +1,81 @@
-> Tarihsel snapshot: hook11/lifecycle ve metadata için son düzeltme
-> [Bluefield uyumu](HOOK_ALIGNMENT.md) ve [Brownfield metadata denetimi](REFERENCE_METADATA_AUDIT.md) içindedir.
+> Historical snapshot: the subsequent hook 11/lifecycle and metadata
+> corrections are documented in
+> [Bluefield alignment](HOOK_ALIGNMENT.md) and
+> [Brownfield metadata audit](REFERENCE_METADATA_AUDIT.md).
 
-# Production, CRYPT32 ve son çıktı düzeltmesi
+# Production, CRYPT32, and final output corrections
 
-Görev: YF-PRODUCTION-20261029. Parent kaynak ZIP'i ve SHA256 yan dosyası korunur.
+Work item: YF-PRODUCTION-20261029. The parent source ZIP and
+its SHA-256 sidecar were preserved.
 
-Kullanıcının gerçek MSVC production logunda DLL derlemesi ve Golden'ın ilk
-beş aşaması geçti. OLE32 yoktu; yalnız VERSIONINFO resource'u vardı, iki PNG
-read-only `.rdata` içindeydi. Altıncı FALCION aşaması
-`scripts/__pycache__/golden_policy.cpython-313.pyc` nedeniyle durdu. Üst
-Python `-B` ile başlatılsa da CORVEXON'un üç alt yorumlayıcısı `-B` almıyordu.
-Bu gerçek neden, eski/yeni alt süreç davranışını karşılaştıran bir regresyonla
-yeniden üretildi ve düzeltildi. Artık üç alt çağrıda `-B` var, pipeline ve
-scoped PowerShell sürecinde `PYTHONDONTWRITEBYTECODE=1` miras alınır.
+In the owner's actual MSVC Production log, DLL compilation
+and the first five Golden stages passed. OLE32 was absent;
+VERSIONINFO was the only PE resource, and both PNGs resided
+in read-only `.rdata`. The sixth, FALCION stage stopped
+because of `scripts/__pycache__/golden_policy.cpython-313.pyc`.
+Although the top-level Python process used `-B`, three
+CORVEXON subprocess interpreters did not receive that flag.
+A regression comparing old and new child-process behavior
+reproduced and corrected this root cause. All three
+subprocess invocations now receive `-B`; the pipeline
+and scoped PowerShell process inherit
+`PYTHONDONTWRITEBYTECODE=1`.
 
-Önceki çalışmanın ürettiği cache için `clear_tool_python_cache.py`, yalnız
-manifestte kayıtlı scripts/tools/tests Python kaynaklarının standart
-cache-tag/opt bytecode dosyalarını temizler. Vendor'a veya gerçek kaynak
-byte'larına dokunmaz, manifest yenilemez; bilinmeyen dosyaları silmez veya
-FALCION'da yok saymaz. Bu yüzden kullanıcı mevcut kaynakta tekrar derleyebilir.
+For caches produced by earlier work,
+`clear_tool_python_cache.py` removes only standard cache-tag/
+optimization bytecode files corresponding to manifest-owned
+Python sources in scripts/tools/tests. It does not touch
+vendor or actual source bytes, refresh the manifest,
+delete unknown files, or make FALCION ignore them.
+The owner can therefore rebuild the existing source.
 
-Kullanıcı 11. hook için Brownfield/Bluefield gibi gerçek CRYPT32 importu
-istedi. Referansların ikisinde de doğrudan `&CryptQueryObject` ve `crypt32`
-link girdisi doğrulandı. Yellowfield'deki önceki dinamik-only lookup, Anadius
-baseline import listesini yeni hook'a yanlış uyguluyordu. Şimdi core
-`crypt32.lib` üzerinden bağlanır; owned native target çözümünde SDK
-`&::CryptQueryObject` adresi kullanılır. Gereksiz explicit crypt32 LoadLibrary/
-FreeLibrary lease'i kaldırılır; normal PE dependency grafiği yaşam süresini
-taşır. MinHook trampoline/callback/cleanup ve RE selector davranışı korunur.
+The owner requested an actual CRYPT32 import for hook 11,
+as in Brownfield/Bluefield. Both references contained
+a direct `&CryptQueryObject` reference and a `crypt32`
+link dependency. Yellowfield's earlier dynamic-only
+lookup incorrectly applied the Anadius baseline import
+list to this new hook. The core now links through
+`crypt32.lib` and resolves the owned native target
+using the SDK address `&::CryptQueryObject`.
+The unnecessary explicit crypt32 LoadLibrary/FreeLibrary
+lease was removed; the normal PE dependency graph
+carries its lifetime. MinHook trampoline/callback/
+cleanup and the RE selector behavior remain intact.
 
-`CryptQueryObject` bizim DLL'nin export'u olmaz: import tablosunda
-`CRYPT32.dll -> CryptQueryObject` bulunur. Golden ve gerçek DLL incelemesi bunu
-zorunlu kılar; public export sayısı beş kalır, OLE32 dönmez. Referans hashleri
-ve native kullanıcı logu: [PRODUCTION_IMPORT_FIX.json](../metadata/evidence/PRODUCTION_IMPORT_FIX.json).
+`CryptQueryObject` is not an export of this DLL:
+the import table contains
+`CRYPT32.dll -> CryptQueryObject`.
+Golden and actual DLL inspection require that import;
+the public export count remained five at this checkpoint,
+and OLE32 was not reintroduced. Reference hashes
+and the owner's native log are in
+[PRODUCTION_IMPORT_FIX.json](../metadata/evidence/PRODUCTION_IMPORT_FIX.json).
 
-Son dosyanın dist'e yazılması da parent pakette eksikti. Altı Golden aşaması
-ve finalized **preloader_l.dll** kopyasıyla üç gerçek runtime çevrimi geçince
-DLL/SHA256/receipt üretilir. Runtime host artık unload kontrolünde verilen
-dosyanın gerçek basename'ini kullanır; unsigned adına sabit kontrol yapmaz.
-Filtre `preloader_l.dll` olarak korunur.
-[Golden ve dist akışı](GOLDEN_PROTOCOLS.md),
-[yerel çıktı sözleşmesi](../metadata/LOCAL_DIST_CONTRACT.json).
+The parent package had also failed to write the final
+file to dist. After six Golden stages and three actual
+runtime cycles with the finalized `preloader_l.dll`
+copy, it now writes the DLL, SHA-256, and receipt.
+The runtime host uses the supplied file's actual
+basename during unload checks instead of hard-coding
+the unsigned name. The filter remains
+`preloader_l.dll`.
+See [Golden and dist flow](GOLDEN_PROTOCOLS.md) and
+[local output contract](../metadata/LOCAL_DIST_CONTRACT.json).
 
-Sentetik orchestration testleri her Golden hatasında ilk hata ile durmayı,
-runtime hatası/değişen DLL nedeniyle dist verilmemesini, önceki output'un
-korunmasını ve dosya-commit hatasında rollback'i doğrular. Bu testler MSVC
-Golden PASS değildir. Gerçek Windows/MSVC'de güncel kaynağın bütün zinciri ve
-dist üretimi henüz çalıştırılmadı; oyun çağrı izi de verilmedi.
+Synthetic orchestration tests verify stop-on-first-error
+at each Golden failure, withholding dist after runtime
+failure or DLL mutation, retaining the prior output,
+and rolling back a file-commit error. These are not
+MSVC Golden PASS results. The entire pipeline and dist
+output for the revised source had not been executed on
+actual Windows/MSVC, and no game call trace was provided.
 
-Yerel doğrulama: Release/Wine173/173, Debug5/5 ve28 infrastructure regresyonu
-geçti. Final adı preloader_l.dll olan gerçek LLVM DLL ile üç runtime çevrimi
-geçti. Release ve Debug import tablolarında CRYPT32!CryptQueryObject var;
-OLE32 yok, VERSIONINFO ve PNG veri alanları korundu. Native MSVC güncel
-kaynak/dist ve oyun kabulü bu sonuçlardan ayrı, henüz çalıştırılmadı.
+Local validation passed Release/Wine 173/173,
+affected Debug 5/5, and 28 infrastructure regressions.
+Three runtime cycles passed with an actual LLVM DLL
+named `preloader_l.dll`. Both Release and Debug imports
+included CRYPT32!CryptQueryObject, OLE32 was absent,
+and the VERSIONINFO and PNG data placement remained
+unchanged. Native MSVC acceptance of the current
+source/dist and game acceptance are separate and
+were not run at this checkpoint.

@@ -1,65 +1,100 @@
-> Güncel bağlantılar ve F01–F04 düzeltmeleri: [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md).
-> Aşağıdaki gövde önceki görevin tarihsel kaydıdır; eski export/resource anlatımı güncel sözleşme değildir.
+> Current bindings and F01–F04 corrections:
+> [CURRENT_RUNTIME.md](CURRENT_RUNTIME.md).
+> The body below is a historical record of the earlier task;
+> its former export/resource descriptions are not the current contract.
 
-> Bu bağlantı görevinin tarihsel kaydıdır. Windows IO ve vendor seçimi için
-> son kullanıcı düzeltmesi [WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md) içindedir.
+> This is a historical record of the binding task. Later owner
+> corrections for Windows I/O and vendor selection are in
+> [WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md).
 
-# Uygulama bağlantıları — YF-RUNTIME-BIND-20261028
+# Application integration — YF-RUNTIME-BIND-20261028
 
-Kullanıcı, karşılaştırmada eksik görünen bağlantıların zaten yapılmış olması
-gerektiğini belirtti. Bu görev somut uygulama bağlantılarını tamamlar; yalnız
-rapor veya yeni soyut port eklemekle tamamlanmış sayılmaz.
+The owner pointed out that the bindings reported as missing in
+the comparison should already have been implemented. This task
+completes concrete application integration; reports or additional
+abstract ports alone cannot satisfy it.
 
-Önceki karşılaştırmada bir hata: `ScalarDependencies` sınırlı bir alternatif
-köprüydü. `config_application::read_config2/apply_config2` ve `FilePass` tam
-hash-capacity/section-copy yolunu zaten sağlıyordu. Sekiz çocuk veya scalar-only
-sınırı bütün config uygulamasına ait değildi. Yeni owner doğrudan tam yolu kullanır.
+One mistake in the earlier comparison: `ScalarDependencies` was
+a restricted alternative bridge. The
+`config_application::read_config2/apply_config2` and `FilePass`
+paths already supplied the complete hash-capacity/section-copy
+implementation. Neither an eight-child limit nor a scalar-only
+restriction applied to the entire configuration application.
+The new owner uses the full implementation directly.
 
-Uygulama değişiklik alanları: `src/net/asio_service.cpp`,
-`src/platform/file_io_windows.cpp`, `src/runtime/application*.cpp`, ilgili
-başlıklar, DLL entry/management API, CMake ve gerçek uygulama entegrasyon testleri.
-Kaynak işlevlerin temeli mevcut RE modülleri ve `FUN_180036d20` constructor'ının
-sağlanan pseudo/asm kanıtıdır. Özel CRT veya karşılaştırma uygulama kodu alınmaz.
+Application changes involve `src/net/asio_service.cpp`,
+`src/platform/file_io_windows.cpp`,
+`src/runtime/application*.cpp`, related headers, DLL
+entry/management APIs, CMake, and actual integration tests.
+The underlying functions are based on the existing RE modules
+and supplied pseudo/assembly evidence for the
+`FUN_180036d20` constructor. No custom CRT or comparison-only
+application code is imported.
 
-Ürün uyarlamaları açıkça ayrı tutulur: SURGE görünen ad, LocalAppData/SURGE,
-SURGE PNG ve Debug-only sabit olay logu; RE executable-relative main→override
-sırası `surge.cfg`→`surge_override.cfg` adlarıyla kullanılır. Provider mevcut
-RE version_check=2/create_online/vtable sözleşmesiyle yeni isim altında ayrı
-adapterdır. Özgün native ABI eşdeğerliği bu bağlantıdan çıkarsanmaz.
+Product adaptations remain explicit and separate: visible
+SURGE name, LocalAppData/SURGE, SURGE PNG, and a Debug-only
+fixed-event log. The RE executable-relative main -> override
+ordering is retained with `surge.cfg` ->
+`surge_override.cfg`. The provider is a separate adapter
+under a new name using the existing RE
+version_check=2/create_online/vtable contract.
+Native original ABI equivalence cannot be inferred from
+these bindings.
 
-Sahiplik: tek Application config/effect/event/provider/hook/service ömrünü tutar;
-Asio session callback ve işler session'ı canlı tutar. İşler gerçek standart CRT
-thread'leridir; kaynak frame-başına iş modeline sabit worker havuzu eklenmez.
-Cipher per-session korunur. Stop, admission'ı kapatır, socket'leri iptal eder,
-IO ve handler işlerini bekler; kaynaklar sonra bırakılır. Native hook rollback,
-quiescence ve gerçek Windows kabulü ayrıca kaydedilir.
+Ownership: one Application owns configuration, effects,
+events, provider, hooks, and service lifetimes. Asio
+session callbacks and jobs keep their session alive.
+Jobs are real standard-CRT threads; no fixed worker pool
+replaces the source per-frame job model in this historical
+snapshot. Cipher state remains per session. Stop closes
+admission, cancels sockets, waits for I/O and handler jobs,
+and then releases resources. Native hook rollback,
+quiescence, and actual Windows acceptance are documented
+separately.
 
-DLL attach yalnız worker için Windows handle'larını kurar. Ağ, config, hook,
-provider veya C++ Application kurulumunu loader lock altında çalıştırmaz.
-`DllWaitReady`, `DllServerPort`, `DllShutdown` bu yeni
-uygulamanın yönetim API'sidir. Sonraki C arayüzü göreviyle SURGE import işareti
-ve gerçek DllShutdown adaptörü eklendi; C++ kaynak API'leri ayrı geliştirme
-DLL'ine taşındı. Önceki 548-byte ABI iddiası kaynakla doğrulanamadığı için geri
-çekildi. Güncel sözleşme: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
+DLL attach only creates Windows handles for the worker.
+It does not set up the network, configuration, hooks,
+provider, or C++ Application under loader lock.
+`DllWaitReady`, `DllServerPort`, and `DllShutdown` were
+management APIs of this new application at that checkpoint.
+A later C-interface task added the SURGE import marker
+and actual DllShutdown adapter; C++ source APIs moved
+to a separate development DLL. The previous 548-byte
+ABI claim was withdrawn for lack of source evidence.
+Current contract: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
 
-Doğrulama hedefi: gerçek vendor-backed config/Unicode dosya IO, gerçek yerel
-soketten XML/LSX profile/content/achievement istekleri, DLL yüklemesiyle otomatik
-başlatma, hata prefix rollback ve bekleyen socket/handler işlerinde stop. Wine,
-yerel Windows/MSVC ve gerçek Consumer/oyun kanıtı ayrı sınıflardır.
+Validation targeted actual vendor-backed configuration/
+Unicode file I/O, XML/LSX profile/content/achievement
+requests over a real local socket, automatic startup on DLL
+load, error-prefix rollback, and stopping pending socket/
+handler jobs. Wine, native Windows/MSVC, and actual
+Consumer/game evidence are separate classes.
 
-Abort'ta admission kapandıktan sonra özel source wait gate'leri bırakılır;
-henüz tamamlanmamış sonraki fazı bekleyen native callback'ler drain'i kilitlemez.
-Bu işlem başlangıç başarısı değildir: `start()` hata verir, DLL wait API'si de
-başarı döndürmez. Kısmen etkinleşmiş hook kümesi hazır uygulama sayılmaz.
+After admission closes during abort, private source
+wait gates are released so native callbacks waiting
+for later incomplete phases cannot block draining.
+This is not successful startup: `start()` returns an
+error and the DLL wait API does not report success.
+A partially activated hook set is not a ready application.
 
-Ek DLL fazları gerçek `load_phase_035850/load_list_035260/unload_035ab0`
-işlevlerine bağlıdır. Her başarılı OS load'u source listesine ekleme allocation'ı
-başarısız olsa bile owner tarafından izlenir; cleanup lease'leri bir kez bırakır.
+Companion-DLL phases are connected to actual
+`load_phase_035850/load_list_035260/unload_035ab0`
+functions. Every successful OS load is tracked by the
+owner even if allocation to append it to the source
+list fails. Cleanup releases leases once.
 
-Kullanıcının sonraki düzeltmesiyle Brownfield'in `resources/preloader_version.rc`
-dosyası birebir alındı. Sabit VERSIONINFO numerikleri, dört string alanı ve
-0409/1200 translation profili korunur. Son kullanıcı düzeltmesiyle PNG artık PE resource değildir; eski profil avatar verisinin yerine read-only C++ veri olur. Ayrı fallback PNG, RE kaynağından korunur. [Güncel düzeltme](GOLDEN_AVATAR_FIX.md).
-Seçili sözleşme: [RESOURCE_METADATA_CONTRACT.json](../metadata/RESOURCE_METADATA_CONTRACT.json).
-`inspect_dll.py` yalnız görseli değil gerçek PE içindeki VERSIONINFO alanlarını
-ve iki resource'tan oluşan allowlist'i birlikte denetler. Bu resource profili
-diğer PE header/ABI/Golden politikalarını otomatik etkinleştirmez.
+A later owner correction imported Brownfield's
+`resources/preloader_version.rc` byte-identically.
+Fixed VERSIONINFO numeric fields, four string fields,
+and translation profile 0409/1200 were retained.
+Following the last owner correction, the PNG is
+no longer a PE resource; it is read-only C++ data
+replacing the prior profile-avatar bytes. The separate
+fallback PNG remains from RE.
+[Current correction](GOLDEN_AVATAR_FIX.md).
+The selected contract is in
+[RESOURCE_METADATA_CONTRACT.json](../metadata/RESOURCE_METADATA_CONTRACT.json).
+`inspect_dll.py` examines actual PE VERSIONINFO fields
+and the then-current two-resource allowlist, not just
+the image. That historical resource profile does not
+automatically activate other PE header/ABI/Golden policies.
