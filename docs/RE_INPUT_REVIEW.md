@@ -33,7 +33,7 @@ input. Their SHA256 values are, respectively:
 | Synchronous greeting | Release the temporary greeting after full transmission, before initiating the first read. Check large chunked output and send failure. Preserve the active asynchronous transport. |
 | Foreign provider slots | Read the readable foreign object/table as bytes, reject null tables/slots, and use the observed one-object destroy call. Test the production adapter with an actual provider fixture and unaligned byte-backed layouts. This does not validate arbitrary addresses or prove a complete foreign class ABI. |
 | Cold clock cache | Publish the caller-owned frequency atomically. A two-thread cold-cache test reproduces a data race under ThreadSanitizer before the fix and passes afterwards. The application already initializes its frequency before workers; this is not evidence of an observed game-startup failure. |
-| Configuration constructor | Existing defaults already match the selected contract, subject to explicit owner policies. Add exact defaults, independent state and allocation-failure unwind tests; do not rewrite correct construction code. |
+| Configuration constructor | Existing defaults already match the selected contract, subject to explicit owner policies. Add exact defaults, independent state and allocation-failure unwind tests, plus binary configuration and serialized-response integration; do not rewrite correct construction code. |
 
 The corrections are independently reviewable. Passing portable tests or Wine
 tests does not establish native MSVC, Golden or game acceptance for changed
@@ -54,9 +54,32 @@ binary, rather than an older accepted build.
 | DLL link gate and reconstruction tooling | These describe the input's blocked reconstruction. Preserve the product's three-entry production ABI, vendor locks and Golden pipeline. |
 
 An external per-member applicability ledger covers all 115 delta members; raw
-logs and generated ledgers remain outside the source deliverable. This review
-does not close every original native ABI, provider-liveness or donor-retirement
-obligation, and does not assert that no further bugs exist. In particular,
+logs and generated ledgers remain outside the source deliverable. That ledger
+records applicability decisions, not a line-by-line semantic review of every
+body or a completed transfer of every useful test scenario. The comprehensive
+source/test audit remains open. This review does not close every original
+native ABI, provider-liveness or donor-retirement obligation. In particular,
 private-domain graph tests cannot be counted as tests of the active product
 unless their scenario is adapted to, and executed against, the actual product
 implementation.
+
+## Follow-up test adoption
+
+The constructor integration tests from the input do not require its private
+CRT. The product test now exercises `initial_state`, the binary `FilePass`
+source bridge, PEGTL/Config2 application, business handlers and the real memory
+XML printer together. The fixture replaces only file/path/time and other
+external effects. The native target links the existing reference-model library
+for the FilePass bridge; this is not a test of every `Environment::configure`
+effect in the shipping DLL.
+
+The 64 integration checks cover default profile/settings/game responses,
+unknown-key behavior, exact NUL framing, absent and empty base/override CFGs,
+base-only fields, empty override retention, XML escaping, separate emulator/game
+languages and simultaneously live configuration instances. The removed CFG
+port/SDK override behavior is not restored. An independently mutated copy of
+the actual profile serializer is rejected by the new integration test.
+
+Useful cancellation and shared-log scenarios are being adapted in separate
+test-only workstreams. Architecture differences are not, by themselves, a
+reason to dismiss a transferable test scenario.
