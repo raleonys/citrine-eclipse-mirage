@@ -98,8 +98,7 @@ a **separate public-identity/README decision**, not an automatic
 translation or authorization to rename C++ targets, ABI exports,
 resources or release artifacts.
 
-`GOVERNANCE.md` creation and movement of
-`governance/CURRENT_SCOPE.md` remain deferred by owner decision.
+At the time of this historical audit, root governance consolidation was deferred. The current policy now resides in root `GOVERNANCE.md` and `AGENTS.md`; the historical `governance/CURRENT_SCOPE.md` is retired by the governance migration. Directory counts above represent the original scan.
 
 ## External compiler diagnostic language
 
