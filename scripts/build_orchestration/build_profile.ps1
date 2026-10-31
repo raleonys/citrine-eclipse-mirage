@@ -5,6 +5,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'build_common.ps1')
+. (Join-Path $PSScriptRoot 'build_path_pinning.ps1')
 Assert-DevelopmentBuildPreflight
 $Root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..\..')).Path
 if ($Mode -eq 'Debug') { $Config = 'Debug' }
@@ -14,7 +15,9 @@ $Out = Resolve-ConfinedBuildDirectory $Root $BuildDir 'BuildDir'
 $EnvironmentBefore = @{}
 Get-ChildItem Env: | ForEach-Object { $EnvironmentBefore[$_.Name] = $_.Value }
 $Lock = $null
+$PinnedDirectories = $null
 try {
+    $PinnedDirectories = Enter-PinnedBuildPath $Root $Out
     $Lock = Acquire-ExclusiveBuildLock (Join-Path $Out '.build.lock')
     $CMakeExe = Resolve-BoundExecutable 'cmake.exe'
     $CmdExe = Resolve-BoundExecutable 'cmd.exe'
@@ -117,6 +120,9 @@ try {
     Write-Host "SHA256: $ReportedHash"
 } finally {
     if ($null -ne $Lock) { $Lock.Dispose() }
+    if ($null -ne $PinnedDirectories) {
+        foreach ($handle in $PinnedDirectories) { $handle.Dispose() }
+    }
     Get-ChildItem Env: | ForEach-Object {
         if (-not $EnvironmentBefore.ContainsKey($_.Name)) { [Environment]::SetEnvironmentVariable($_.Name,$null,'Process') }
     }
