@@ -21,6 +21,10 @@ For a dedicated branch, describe its continuing scope and completion criteria.
 Keep `bugfix` after merge; follow [branch cleanup](https://github.com/raleonys/citrine-eclipse-mirage/blob/main/docs/GITHUB_WORKFLOW.md#branch-completion-and-cleanup)
 before retiring another branch.
 
+## Changelog coverage
+
+- [ ] `CHANGELOG.md` records this PR's changes, or the owner reviewed the `changelog-exempt` label and a concrete justification appears in the PR description.
+
 ## Validation
 
 Record executed commands/results and relevant CI or artifact links. Distinguish

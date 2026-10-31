@@ -8,12 +8,12 @@
   "files": {
     ".gitattributes": "0ecb37bbacc8487e7f4b6b1326c77475b0bf6847049586467950934a97d613a9",
     ".github/hooks/pre-push": "1802a1db2e0e304110e9e9cae2c096c207b11add6a21096bc48bc00e2a20889d",
-    ".github/pull_request_template.md": "3741fcd10d8373654e91970012e04b315aee9a2656089660db23e2246b2651ad",
-    ".github/workflows/ci.yml": "cda585fe6d61aa760d9741b5a375a0e622396050dbb39b615d28c690b669a368",
+    ".github/pull_request_template.md": "c46e16c3906cb310342fa5eb9560c930a5c743951683a598f6666d7c70a5feba",
+    ".github/workflows/ci.yml": "364cec739645abd6a30caf3be25d7d8aa7e12b867609bac6fa993f6d8c5b389e",
     ".github/workflows/weekly-release.yml": "eb5b4a70e492405ba1636f0015e680feed5a0eaac54e30f10f8443ec62639fab",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
-    "AGENTS.md": "d06afd803b0af10ca59c9883d872d547b8011c336c77b3f40835307fe6f22a6a",
-    "CHANGELOG.md": "c1bc216d2dbe01ce6219619fb0b09c2a8d629924e6e8cb9bed2e2b06c16f11c3",
+    "AGENTS.md": "8c7acaa7aa6ef4b20be18da611861f4c010d5619cc12125f707e2f940e965c6c",
+    "CHANGELOG.md": "65df254964e84ed9c55ce2bf2c29bb3a0f951b86eb2e7916befb91b6a5612c58",
     "CMakeLists.txt": "d83de5c06662b2c09e6b0fc0651b5534ee48bfd99b09e81a417698fa22994ad8",
     "CMakePresets.json": "b05ad740be9469829b68e71cdbc4d7a603e4c12599ef857c0729fd4972218796",
     "LICENSE": "5eb41c3b31c701a1fce6dd7aac32d4637f11a586dfeb1e6aa7a9a94e4d676055",
@@ -3674,6 +3674,7 @@
     "metadata/evidence/socket-retirement/VALIDATION.json": "3314d3f9df7e5e9911707aa8d251ee65ac0065d5ee376db423044b8aa132ccaa",
     "metadata/evidence/weekly-release/VALIDATION.json": "6db92bceb67957f8e779530c46ae7caf49e6ca5f9e23c8dfc3a7340b2417703c",
     "metadata/evidence/REFERENCE_METADATA_AVATAR.json": "1e00a1e0e81bc97f9364c03e67e7a94d6641e63b9f54438ae7dc1c209fb5de0c",
-    "GOVERNANCE.md": "8bcc439e14858034dc9c09d5e2167e42f4268c4f4c4e9bb7f20692ceb2399c75"
+    "GOVERNANCE.md": "8a3f681c027d3e5f46080d1b74a1a7d0c04bf988f496d63493f5ead2a1217315",
+    "docs/PROJECT_BRANDING.md": "52a25d61c1b6ded03ceb62c78fdb6ad84424561f86e421e21a42fb67b536ea5c"
   }
 }

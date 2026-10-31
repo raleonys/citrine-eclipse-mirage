@@ -4,10 +4,16 @@ This file distinguishes source imports, integrated pull requests and published r
 
 ## Unreleased — post-import GitHub development (2026-10-30 to 2026-10-31)
 
-The 49 entries below are the merged pull requests verified through PR #59, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
+The 50 entries below are the merged pull requests verified through PR #60, linked to their individual review records. The GitHub Releases collection was empty at this checkpoint, so these entries must not be read as published releases or evidence of Windows/native/game acceptance.
+
+### Additional unreleased changes
+
+- Add a pull-request-only changelog coverage check to CI, with a documented owner-reviewed exemption path.
+- Record the exact public project identity, target repository slug and owner-approved campaign image hash without changing runtime compatibility. The actual PNG upload and GitHub repository rename remain pending.
 
 ### 2026-10-31
 
+- [PR #60](https://github.com/raleonys/citrine-eclipse-mirage/pull/60): docs: establish Citrine Eclipse Mirage identity and repair stale changelog.
 - [PR #59](https://github.com/raleonys/citrine-eclipse-mirage/pull/59): refactor: retire duplicate root release-state records.
 - [PR #58](https://github.com/raleonys/citrine-eclipse-mirage/pull/58): docs: consolidate governance and retire historical scope ledger.
 - [PR #56](https://github.com/raleonys/citrine-eclipse-mirage/pull/56): docs: introduce yellowfield governance and approved README.

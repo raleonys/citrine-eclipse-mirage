@@ -28,7 +28,7 @@ Local build, debug, and focused testing remain available developer tools; separa
 
 ## Changelog maintenance
 
-Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. Report merged PR development separately from source-revision imports and actual published release tags. Do not invent historical R-series labels, dates or release claims: unresolved archive provenance must remain explicitly incomplete until artifact and checksum verification.
+Maintain a source-linked `CHANGELOG.md` alongside relevant PRs. A PR-only CI coverage check requires a changed changelog file; an exceptional omission requires the owner-reviewed `changelog-exempt` label and a written PR rationale. Report merged PR development separately from source-revision imports and actual published release tags. Do not invent historical R-series labels, dates or release claims: unresolved archive provenance must remain explicitly incomplete until artifact and checksum verification.
 
 ## Weekly stable releases
 
@@ -47,6 +47,10 @@ The repository root owns `README.md` (public overview), `GOVERNANCE.md` (normati
 The former `governance/CURRENT_SCOPE.md` is retired after operational rules were consolidated into this file and `AGENTS.md`. The obsolete root `RELEASE_STATE.json` and `SOURCE_REVISION.md` are retired. Active runtime verification now reads `metadata/RUNTIME_CURRENT_STATUS.json` directly; the Git commit and weekly draft tag identify source and publication lineage.
 
 Keep meaningful negative tests, source/vendor identity, ABI, lifetime, and actual native/Golden coverage. Remove redundant workflow machinery only after proving that its failure-detection purpose remains covered. Preserve historical evidence without treating historical states as current authority.
+
+## Public project identity
+
+The current public identity and the pending exact campaign-artwork contract are recorded in [Project branding](docs/PROJECT_BRANDING.md). Public branding remains separate from compatibility-sensitive C++ namespaces, configuration fields, PE metadata, binary filenames and exported ordinals.
 
 ## Public readiness and disclosure
 
