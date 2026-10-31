@@ -1,31 +1,35 @@
-# Güncel profil avatarı
+# Current profile avatar
 
-Sahip, mevcut gömme yöntemiyle devam etmeyi açıkça seçti. Son gönderilen
-PNG208x208 piksel,3840 bayt; SHA256:
+The owner explicitly chose to retain the existing embedding approach. The
+latest supplied PNG is 208 x 208 pixels and 3,840 bytes, with SHA-256
 `df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e`.
-`resources/branding/surge.png` bu dosyanın byte-byte kopyasıdır.
+`resources/branding/surge.png` is a byte-identical copy of that file.
 
-Mevcut generator dosyanın tamamını private read-only C++ dizisine dönüştürür.
-Pikselden yeniden çizim, yeniden PNG encode etme veya PE PNG resource ekleme
-yoktur. Normal başlangıçta profil PNG yerel kullanıcı veri klasörüne yazılır;
-CFG User/Avatar seçimi bu profil yazımını önceki gibi atlar. Özgün3882 baytlık
-fallback ve ayrı default.png yazımı korunur. Haricî avatar zorunlu değildir.
+The existing generator converts the complete file into a private, read-only
+C++ array. It neither redraws pixels, re-encodes PNG data, nor adds a PNG PE
+resource. Normal startup writes the profile PNG to the local user-data
+directory. The CFG User/Avatar selection continues to skip this profile write.
+The original 3,882-byte fallback and the separate `default.png` write remain
+unchanged. An external avatar file is not required.
 
-Uygulama, test, generator, vendor ve export kaynak kodlarında değişiklik yoktur.
-Yalnız görsel girdisi ve buna ait güncel kayıtlar yenilenir. Önceki TLS/temizlik
-ve tahsis-enjeksiyonu test düzeltmeleri korunur. VirusTotal Files Dropped
-farkının nedeni bu değişiklikle açıklanmış veya giderilmiş sayılmaz.
+Application, test, generator, vendor, and export source code did not change.
+Only the image input and its current records were updated. Previous TLS/cleanup
+and allocation-injection test corrections were retained. This change neither
+explains nor resolves the VirusTotal Files Dropped difference.
 
-[Doğrulama](../metadata/evidence/avatar-update/VALIDATION.json) yerel çapraz derleme/Wine
-sonuçlarını kaydeder. Yeni görseli içeren binary için native Windows/MSVC, Golden
-ve oyun kabulü bu yerel testlerden çıkarılamaz. Derleme kaynak paketiyle yapılır;
-bu çalışma dist çıktısını güncellemez veya yayımlamaz.
+[Validation](../metadata/evidence/avatar-update/VALIDATION.json) records local
+cross-build/Wine results. Those local checks do not prove native Windows/MSVC,
+Golden, or game acceptance of the binary containing the new image. Builds use
+the source package; this work did not update or publish a distribution artifact.
 
-Yerel sonuç: ilgili Release4/4 ve Debug2/2 test geçti. Gerçek DLL üç kez
-yüklenip başlatıldı, LSX profil yanıtı alındı, kapatılıp unload edildi. DLL’in
-diske yazdığı profil PNG yeni girdiye, fallback özgün girdiye byte-byte eşit.
-Raw DLL’de yeni PNG mevcut; önceki profil PNG yok ve PNG PE resource yoktur.
-Release uygulama testinin temiz veri klasöründe log oluşmadı; global eski
-Debug logunun zaman damgası DLL çalıştırmasından önceki değerinde kaldı.
+Local results: the relevant Release tests passed 4/4 and Debug tests passed
+2/2. The actual DLL was loaded and started three times, returned an LSX profile
+response, shut down, and unloaded. The profile PNG written to disk was
+byte-identical to the new input; the fallback was byte-identical to the
+original input. The raw DLL contained the new PNG, did not contain the old
+profile PNG, and had no PNG PE resource. The Release application test did not
+create a log in a clean data directory. The pre-existing global Debug log's
+timestamp remained earlier than the DLL execution.
 
-Kaynak QA17/17 ve vendor regresyonları19/19 geçti; atlanan vendor testi yok.
+Source QA passed 17/17 and vendor regressions passed 19/19; no vendor test was
+skipped.
