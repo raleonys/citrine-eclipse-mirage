@@ -57,9 +57,9 @@ struct Effects:s::NativeDispatchEffects {
     void destroy_printer_001f60(m::XmlPrinter& p)override{check(&p==printer.get(),"same printer destructor receiver");event("destroy-printer");++destroyed;printer.reset();}
     [[noreturn]]void invalid_message_02bd30_04d228()override{event("invalid");throw core_test::Failure{66};}
 };
-struct Api:s::MessageDispatchApi {
+struct Api:s::MessageDispatchApiAdapter {
     s::NativeMessageApi& next;session_cipher_test::Effects& effects;
-    Api(s::PrefixCipherContext& c,std::span<s::PrefixCipherBinding> b,s::NativeDispatchContext& d,s::NativeMessageApi& n,session_cipher_test::Effects& e):MessageDispatchApi(c,b,d),next(n),effects(e){}
+    Api(s::PrefixCipherContext& c,std::span<s::PrefixCipherBinding> b,s::NativeDispatchContext& d,s::NativeMessageApi& n,session_cipher_test::Effects& e):MessageDispatchApiAdapter(c,b,d),next(n),effects(e){}
     void construct_document_001830(s::NativeMessageDocument& d,bool a,std::uint32_t b)override{next.construct_document_001830(d,a,b);}
     int parse_document_004280(s::NativeMessageDocument& d,std::uintptr_t p,std::uint64_t n)override{return next.parse_document_004280(d,p,n);}
     void destroy_document_001e00(s::NativeMessageDocument& d)override{next.destroy_document_001e00(d);}

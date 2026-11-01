@@ -72,7 +72,7 @@ void cancellation(){
         std::array<s::RecycleMap*,4> metadata{};std::array<std::array<s::CancelOperation,2>,4> operations{};std::array<s::CancelNode*,4> nodes{};
         const s::Socket key=0xabcdef0123456789ULL;std::vector<s::CancelOperation*> expected;
         for(unsigned i=0;i<4;++i){auto& map=*owned[i];for(auto& operation:operations[i]){operation.queued=99;operation.overlapped.Internal=0x7788;map.append(key,operation);expected.push_back(&operation);}nodes[i]=&map.insert(key);state.maps[i]=map.map();metadata[i]=&map.metadata();}
-        s::CancellationRecycler recycler(metadata,failure);s::cancel_queue_026aa0(state,key,{995,{0x5555,srv::ErrorCategory::other}},recycler,post,api);
+        s::CancellationRecyclerAdapter recycler(metadata,failure);s::cancel_queue_026aa0(state,key,{995,{0x5555,srv::ErrorCategory::other}},recycler,post,api);
         check(post.posted.size()==(fail?1:8) && api.sends==1,"four owned maps aggregate completions and wake once");
         check(scheduler.head==(fail?expected.front():nullptr) && scheduler.tail==(fail?expected.back():nullptr) && scheduler.dispatch_required==(fail?1:0),"real recovered recycler composes with both queue delivery outcomes");
         for(unsigned i=0;i<4;++i){invariant(*owned[i],{});check(!nodes[i]->head && !nodes[i]->tail,"real cancellation drains FIFO before moving node into free pool");auto& node=owned[i]->insert(key+1);check(&node==nodes[i] && owned[i]->owned_nodes()==1,"cancellation-recycled node is immediately reusable without growth");invariant(*owned[i],{{key+1,&node}});}
@@ -106,7 +106,7 @@ void full_chain(){
     for(bool fail:{false,true}){
         Gate engine_gate,service_gate,fallback_gate;s::CancellationEngine engine(engine_gate);s::CloseContext context;context.engine=&engine;
         s::CompletionScheduler scheduler(fallback_gate);scheduler.port=123;s::CancellationState queue;queue.scheduler=&scheduler;Api errors;queue.wake.socket=errors.wake;Post completion;completion.fail=fail;
-        s::OwnedRecycleMap storage(3);s::CancelOperation operation;storage.append(13,operation);auto* original=&storage.insert(13);queue.maps[0]=storage.map();std::array<s::RecycleMap*,1> maps{&storage.metadata()};Failure failure;s::CancellationRecycler recycler(maps,failure);
+        s::OwnedRecycleMap storage(3);s::CancelOperation operation;storage.append(13,operation);auto* original=&storage.insert(13);queue.maps[0]=storage.map();std::array<s::RecycleMap*,1> maps{&storage.metadata()};Failure failure;s::CancellationRecyclerAdapter recycler(maps,failure);
         s::QueueCancellationEffects cancel(engine,queue,recycler,completion,errors);s::SocketService service(service_gate);service.completion_port=99;Acceptor api;Effects effects(service,context,errors,api,cancel);s::AcceptorState state;s::SocketObject object(state);Factory factory;Runtime runtime(object,{42},effects,factory);
         alignas(8)std::array<std::byte,128> endpoint{};endpoint[0]=std::byte{2};s::acceptor_020e20(state,endpoint,false,errors,api,runtime);
         check(service.head==&object && state.socket==13 && object.cancellation.control==&factory.owner,"actual acceptor/lifecycle creates object and shared cancellation owner");

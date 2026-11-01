@@ -59,9 +59,9 @@ void composed_write_0261d0(SendHandler&,const Error&,std::uint64_t bytes,std::ui
 // Closes the previous 0261d0 provider using its implemented source. Native
 // receive body/factory/025a70 still remain mandatory. Context and dependencies
 // must outlive all operations; no native object/OVERLAPPED ABI overlay is used.
-class ComposedWriteEffects:public HandlerDispatchEffects,public ComposedWriteEffects {
+class ComposedWriteEffectsAdapter:public HandlerDispatchEffects,public ComposedWriteEffects {
 public:
-    ComposedWriteEffects(IoCompletionEnvironment environment,WorkerRunApi& worker,
+    ComposedWriteEffectsAdapter(IoCompletionEnvironment environment,WorkerRunApi& worker,
         HandlerDispatchMemory& memory,std::span<HandlerScheduleBinding> schedules,
         AsyncSendApi& send,DispatcherApi& completion,Api& errors,std::span<SendStreamBinding> streams)
         :HandlerDispatchEffects(environment,worker,memory,schedules),

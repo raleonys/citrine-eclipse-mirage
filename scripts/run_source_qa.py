@@ -28,6 +28,8 @@ CHECKS = [
     ('Golden PE negative regressions', ['tests/infrastructure/test_pe_metadata_tools.py']),
     ('restricted named imports', ['tests/infrastructure/test_corvexon_mswsock_imports.py']),
     ('MSVC link negative regressions', ['scripts/check_msvc_shipping_link_command.py', '--self-test']),
+    ('C++ interface/adapter identity regressions', ['tests/infrastructure/test_cpp_type_identities.py']),
+    ('C++ interface/adapter identity policy', ['scripts/check_cpp_type_identities.py']),
     ('source SPDX and identifier regressions', ['tests/infrastructure/test_source_identity_license.py']),
     ('source SPDX and identifier policy', ['scripts/check_source_identity_license.py']),
     ('first-party language audit regressions', ['tests/infrastructure/test_english_only_audit.py']),

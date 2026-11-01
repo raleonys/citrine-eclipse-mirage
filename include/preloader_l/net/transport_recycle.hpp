@@ -21,9 +21,9 @@ public:
 // Caller serializes access and supplies initialized circular lists/buckets.
 // The two list subobjects are distinct; no self-splice shortcut is invented.
 void recycle_0283c0(RecycleMap&,CancelNode&,RecycleFailureEffects&);
-class CancellationRecycler final:public CancellationRecycler {
+class CancellationRecyclerAdapter final:public CancellationRecycler {
 public:
-    CancellationRecycler(std::span<RecycleMap*> maps,RecycleFailureEffects& failures)
+    CancellationRecyclerAdapter(std::span<RecycleMap*> maps,RecycleFailureEffects& failures)
         :maps_(maps),failures_(failures){}
     void recycle_0283c0(CancelMap&,CancelNode&) override;
 private:std::span<RecycleMap*> maps_;RecycleFailureEffects& failures_;

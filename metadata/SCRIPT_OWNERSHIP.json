@@ -69,6 +69,11 @@
       "owner": "SURGE target ownership",
       "purpose": "Fail closed on reference code or source API contamination of production targets/maps"
     },
+    "scripts/check_cpp_type_identities.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "Fail-closed C++ interface/adapter class identity regression check",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
     "scripts/check_dll_exports.py": {
       "owner": "SURGE public ABI workstream",
       "purpose": "Read-only application export and ordinal validation",

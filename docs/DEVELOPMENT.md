@@ -1,8 +1,10 @@
 # Local development and operator commands
 
 Windows requires Visual Studio C++ x64 tools/SDK, CMake >= 3.20, and Python
-3.9 or later. Builds use the compiler's standard CRT: MSVC Release `/MT` and
-Debug `/MTd`. This Linux session does not claim PowerShell/CMD or MSVC
+3.9 or later. Production and static-test builds use the compiler's standard CRT:
+MSVC Release `/MT` and Debug `/MTd`. The separate C++ development DLL and its
+host use `/MD` and `/MDd`, with their own matching vendor builds, because STL
+objects cross that module boundary. This Linux session does not claim PowerShell/CMD or MSVC
 execution.
 
 Human-facing commands under `scripts/build_orchestration/`:

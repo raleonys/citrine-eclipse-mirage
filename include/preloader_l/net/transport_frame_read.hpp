@@ -39,9 +39,9 @@ void finish_frame_read_025480(ReceiveHandler&,Error&,std::uint64_t matched,Frame
     FrameReadRestart call_0280d0=&start_frame_read_0280d0);
 // Default production bridge closes the R3 frame hook with actual025480 and
 // actual0280d0/025c40; explicit function injection is isolated-test-only.
-class FrameReadApi:public ComposedReadApi {
+class FrameReadApiAdapter:public ComposedReadApi {
 public:
-    explicit FrameReadApi(FrameReadContext& context):context_(context){}
+    explicit FrameReadApiAdapter(FrameReadContext& context):context_(context){}
     void finish_frame_025480(ReceiveHandler&,Error&,std::uint64_t) final;
 private:FrameReadContext& context_;
 };

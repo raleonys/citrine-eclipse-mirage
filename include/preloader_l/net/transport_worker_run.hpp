@@ -62,12 +62,12 @@ void run_worker_function_029890(IocpWorkerFunction&,WorkerRunEnvironment,
 std::uintptr_t delete_worker_function_026320(IocpWorkerFunction&,std::uint32_t flags,WorkerRunEffects&);
 // Source composition of 02a000/05e8e0/02a4a0 with two required slots.
 // Allocation, CRT thread effects, dispatcher and native lifetime remain required.
-class WorkerFunctionEffects:public WorkerStartupEffects {
+class WorkerFunctionEffects:public WorkerStartupEffectsAdapter {
 public:
     WorkerFunctionEffects(WorkerStartupApi& startup,Api& errors,
         threads::Effects& threads,WorkerRunEnvironment environment,
         WorkerRunApi& api,WorkerRunEffects& effects)
-        :WorkerStartupEffects(startup,errors,threads),environment_(environment),
+        :WorkerStartupEffectsAdapter(startup,errors,threads),environment_(environment),
          api_(api),errors_(errors),effects_(effects){}
     void delete_function_slot_00(IocpWorkerFunction&,std::uint32_t) final;
     void invoke_function_slot_08(IocpWorkerFunction&) final;
