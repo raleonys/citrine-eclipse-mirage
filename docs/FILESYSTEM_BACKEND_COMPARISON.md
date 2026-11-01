@@ -1,38 +1,41 @@
-> Bu tablo ilk inceleme snapshot’ıdır. Kullanıcının sonraki talimatıyla standart
-> Windows IO geri getirildi ve Gulrak kaldırıldı: [güncel durum](WINDOWS_IO_FIX.md).
+> This table represents the initial review snapshot. Following the owner's
+> subsequent instruction, standard Windows I/O was restored and Gulrak was
+> removed: [current status](WINDOWS_IO_FIX.md).
 
-# Windows filesystem farkının kaynağı
+# Origin of the Windows filesystem difference
 
-`gulrak/filesystem`, `ghc::filesystem` namespace’ini kullanan taşınabilir
-kütüphanedir; Windows’u da destekler. Mac’e özel değildir. Anadius’un Mac
-sürümünün backend seçimi, sağlanan Windows DLL kanıtından çıkarılamaz.
+`gulrak/filesystem` is a portable library using the `ghc::filesystem`
+namespace and supports Windows as well. It is not specific to macOS.
+The backend choice of an Anadius macOS build cannot be established from
+the supplied Windows DLL evidence.
 
-## Eldeki kanıt
+## Available evidence
 
-| Katman | Kaynak / gözlem |
+| Layer | Source / observation |
 |---|---|
-| Anadius Windows binary RE | `anadius-all-functions.pseudo.c` içinde `__std_fs_open_handle`, `__std_fs_code_page` ve MSVC filesystem yardımcıları |
-| RE file source adapter | Sağlanan `anadius-file-source/native_io.cpp`: `std::filesystem::path` ve standart fstream |
-| Yellowfield aktif IO | `src/platform/file_io_windows.cpp`: ghc path/stream; runtime internal namespace fs=ghc::filesystem |
-| Yellowfield silme çağrısı | `Environment::remove_04948c` -> `fs::remove`; avatar cache temizliğinde kullanılır |
-| ghc Windows silme | GetFileAttributesW, gerekirse SetFileAttributesW; sonra DeleteFileW veya RemoveDirectoryW |
-| Anadius Windows silme | Handle açma; SetFileInformationByHandle disposition/basic-information dalları ve hata fallback’leri |
+| Anadius Windows binary RE | `anadius-all-functions.pseudo.c` contains `__std_fs_open_handle`, `__std_fs_code_page`, and MSVC filesystem helpers |
+| RE file source adapter | Supplied `anadius-file-source/native_io.cpp` uses `std::filesystem::path` and standard fstream |
+| Yellowfield active I/O | `src/platform/file_io_windows.cpp` uses ghc paths/streams; runtime's internal `fs` alias is `ghc::filesystem` |
+| Yellowfield deletion call | `Environment::remove_04948c` calls `fs::remove` during avatar-cache cleanup |
+| ghc Windows deletion | `GetFileAttributesW`, then `SetFileAttributesW` when required, followed by `DeleteFileW` or `RemoveDirectoryW` |
+| Anadius Windows deletion | Opens a handle and follows `SetFileInformationByHandle` disposition/basic-information branches with error fallbacks |
 
-Fark, Yellowfield runtime bağlama görevinde ghc’yi aktif dosya IO ve storage
-yolu olarak seçmemizden oluştu. Vendor arşivinin byte’ları değiştirilmedi;
-uygulamanın hangi backend’i çağırdığı değişti. Aynı C++ filesystem API’sini
-hedeflemeleri, Windows hata/attribute/paylaşım davranışlarının byte-byte veya
-her durumda eşdeğer olduğunu kanıtlamaz.
+The difference arose from choosing ghc as the active file I/O and storage
+backend during the Yellowfield runtime integration. Vendored library bytes
+were unchanged; the backend called by the application changed.
+Targeting the same C++ filesystem API does not establish byte-for-byte or
+universal equivalence of Windows error, attribute, or sharing behavior.
 
-Kütüphaneyi projeye vendorlamak tek başına bütün Windows dosya işlemlerini
-ona taşımayı gerektirmez. Standart MSVC filesystem de derleyicinin C++
-kütüphanesidir; gulrak ayrı bir uygulamadır. Bu tercih Mac/Windows ayrımı
-gibi sunulmamalıdır.
+Vendoring a library does not require migrating every Windows file operation
+to it. Standard MSVC filesystem is part of the compiler's C++ library;
+Gulrak is a separate implementation. This choice must not be presented as
+a macOS-versus-Windows distinction.
 
-Bu karşılaştırma yeni bir backend değişikliği uygulamaz. Mevcut görevde yalnız
-Brownfield Windows API compile-target tanımları düzeltilir. Dosya silme/IO
-yolunun değiştirilmesi ayrıca kendi davranış ve hata testleriyle ele alınmalıdır.
+This comparison did not itself implement a backend change. Its initial
+scope corrected only the Brownfield Windows API compile-target definitions;
+a file deletion/I/O backend change required separate behavior and error tests.
 
-Son kullanıcı talimatı uygulanmıştır: Windows IO standard filesystem/fstream’e
-geri bağlandı ve aktif başka kullanımı kalmayan Gulrak üründen kaldırıldı.
-Yukarıdaki ghc tablosu değişiklik öncesini açıklar. [Güncel uygulama](WINDOWS_IO_FIX.md).
+The later owner instruction was implemented: Windows I/O was reconnected to
+standard filesystem/fstream, and Gulrak was removed from the product once
+no active uses remained. The ghc table above describes the earlier state.
+See [current implementation](WINDOWS_IO_FIX.md).

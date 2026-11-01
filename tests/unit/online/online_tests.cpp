@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/online.hpp"
-#include "preloader_l/runtime/recovered_effects.hpp"
+#include "preloader_l/runtime/delegating_effects.hpp"
 #include "preloader_l/core/paths.hpp"
 #include <algorithm>
 #include <array>
@@ -8,12 +10,34 @@
 #include <map>
 #include <memory>
 #include <stdexcept>
+#include <cstdlib>
+#include <new>
 
-namespace o = preloader_l::online_recovered;
-namespace s = preloader_l::status_recovered;
-namespace f = preloader_l::file_recovered;
-namespace e = preloader_l::encoding_recovered;
-namespace l = preloader_l::recovered::libraries;
+namespace cookie_lifetime {
+const void* tracked=nullptr;
+const std::uintptr_t* object=nullptr;
+std::uintptr_t expected=0;
+unsigned released=0;
+bool committed=false;
+void release(void* pointer) noexcept {
+    if(pointer&&pointer==tracked){
+        tracked=nullptr;++released;committed=object&&*object==expected;
+    }
+    std::free(pointer);
+}
+}
+void* operator new(std::size_t size){if(auto* p=std::malloc(size?size:1))return p;throw std::bad_alloc();}
+void* operator new[](std::size_t size){return ::operator new(size);}
+void operator delete(void* p) noexcept {cookie_lifetime::release(p);}
+void operator delete[](void* p) noexcept {cookie_lifetime::release(p);}
+void operator delete(void* p,std::size_t) noexcept {cookie_lifetime::release(p);}
+void operator delete[](void* p,std::size_t) noexcept {cookie_lifetime::release(p);}
+
+namespace o = preloader_l::online;
+namespace s = preloader_l::status;
+namespace f = preloader_l::file;
+namespace e = preloader_l::encoding;
+namespace l = preloader_l::system_services::libraries;
 static unsigned checks = 0;
 #define CHECK(x) do { ++checks; if (!(x)) throw std::runtime_error("Check failed at line " + std::to_string(__LINE__) + ": " #x); } while(false)
 struct Injected : std::runtime_error { Injected() : std::runtime_error("synthetic failure") {} };
@@ -44,6 +68,7 @@ struct Mock : o::Effects {
     std::string name="provider-name", persona="provider-persona", user="provider-user";
     bool null_name=false, null_persona=false, null_user=false, free_result=true, write_result=true;
     std::function<void(std::string_view)> inspect;
+    std::function<void(const char16_t*)> inspect_cookie;
     void event(std::string value) {
         calls.push_back(value);
         if (inspect) inspect(value);
@@ -56,8 +81,8 @@ struct Mock : o::Effects {
         event("widen"); CHECK(value=="preloader_l_online.dll"); CHECK(value.size()==0x16);
         return o::Path(value.begin(),value.end());
     }
-    o::Path parent_path_019820(const o::Path& value) override {event("parent");return preloader_l::path_recovered::parent_path_019820(value);}
-    o::Path join_016b00(const o::Path& a,const o::Path& b) override {event("join");return preloader_l::path_recovered::join_016b00(a,b);}
+    o::Path parent_path_019820(const o::Path& value) override {event("parent");return preloader_l::path::parent_path_019820(value);}
+    o::Path join_016b00(const o::Path& a,const o::Path& b) override {event("join");return preloader_l::path::join_016b00(a,b);}
     o::Module load_copy_0450d0(const o::Path& value) override {event("load");loaded_path=value;return loaded;}
     o::Procedure get_proc_address(o::Module module,std::string_view value) override {
         CHECK(module==loaded);event("resolve:"+std::string(value));
@@ -65,7 +90,9 @@ struct Mock : o::Effects {
     }
     std::int32_t call_version_check(o::Procedure value) override {CHECK(value==version_proc);event("version");return version;}
     o::Object call_create_online(o::Procedure value,const char16_t* cookie) override {
-        CHECK(value==factory_proc);event("create");cookie_copy=cookie;return created;
+        CHECK(value==factory_proc);event("create");cookie_copy=cookie;
+        if(inspect_cookie)inspect_cookie(cookie);
+        return created;
     }
     std::int32_t status_virtual_08(o::Object value) override {CHECK(value==created);event("auth-status");return auth_status;}
     const char* username_virtual_10(o::Object value) override {CHECK(value==created);event("name");return null_name?nullptr:name.c_str();}
@@ -310,14 +337,15 @@ struct Files : f::Factory {
         CHECK(path==u"C:\\fixture\\profile.synthetic");CHECK(mode==0x20);CHECK(share==0x40);return std::make_unique<Output>(written,output_closed);
     }
 };
+#if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
 static void composition() {
     for(bool success:{false,true}) {
         State state;Mock remaining;LibraryCalls libraries;Stats stats;Encoding encoding;Errors errors;Files files;
         state.use_last=1;remaining.auth_status=success?0:1;
-        o::RecoveredEffects effects(remaining,libraries,stats,encoding,errors,files);
+        o::DelegatingEffects effects(remaining,libraries,stats,encoding,errors,files);
         o::worker_035b60(state.refs(),effects);
         CHECK(libraries.loaded==L"C:\\fixture\\preloader_l_online.dll");CHECK(libraries.mode==0x40);CHECK(encoding.calls==2);
-        CHECK(state.online==success);CHECK(state.avatar==state.last_avatar);CHECK(remaining.called("finish"));
+        CHECK(state.online==static_cast<std::uint8_t>(success));CHECK(state.avatar==state.last_avatar);CHECK(remaining.called("finish"));
         CHECK(!remaining.called("widen"));CHECK(!remaining.called("load"));CHECK(!remaining.called("read"));CHECK(!remaining.called("write"));
         if(success) {
             CHECK(files.output_closed);CHECK(!files.input_closed);CHECK(files.written=="provider-persona;provider-user;provider-name");
@@ -328,8 +356,36 @@ static void composition() {
         }
     }
 }
+#endif
+static void cookie_release_before_status() {
+    for(int failure:{0,1,2}) {
+        State state;Mock mock;state.cookie.assign(512,u'c');
+        struct Reset {~Reset(){cookie_lifetime::tracked=nullptr;cookie_lifetime::object=nullptr;}} reset;
+        cookie_lifetime::released=0;cookie_lifetime::committed=false;
+        cookie_lifetime::object=&state.object;cookie_lifetime::expected=failure==2?0:mock.created;
+        mock.inspect_cookie=[&](const char16_t* cookie){
+            CHECK(cookie!=state.cookie.data());cookie_lifetime::tracked=cookie;
+            if(failure==2)throw Injected();
+        };
+        mock.inspect=[&](std::string_view event){
+            if(event=="auth-status"){
+                CHECK(cookie_lifetime::released==1&&cookie_lifetime::committed);
+                if(failure==1)throw Injected();
+            }
+        };
+        if(failure) throws<Injected>([&]{o::load_online_035bd0(state.refs(),mock);});
+        else o::load_online_035bd0(state.refs(),mock);
+        CHECK(cookie_lifetime::released==1&&cookie_lifetime::committed);
+        CHECK(state.cookie.size()==512&&state.cookie.front()==u'c');
+        CHECK(state.object==(failure==2?0:mock.created));
+    }
+}
 int main() {
-    try {entry_branches();live_profile();offline_profile();split_cases();status_and_cleanup();exceptions();composition();}
+    try {entry_branches();live_profile();offline_profile();split_cases();status_and_cleanup();exceptions();
+#if !defined(PRELOADER_L_PORTABLE_ONLINE_TESTS)
+        composition();
+#endif
+        cookie_release_before_status();}
     catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}
     std::cout<<"online: "<<checks<<" checks passed (synthetic mocks only)\n";
 }

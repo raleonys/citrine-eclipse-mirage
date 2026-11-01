@@ -1,30 +1,34 @@
-# Asio Windows hedef tanımı
+# Asio Windows target definitions
 
-Production logundaki mesaj `Please define _WIN32_WINNT or _WIN32_WINDOWS` ve
-`Assuming _WIN32_WINNT=0x0601` satırlarıdır. Bu bir Asio compile-target mesajıdır;
-MSVC tarafında `#pragma message` ile basılır, build’i durduran hata değildir.
+The Production log contained the messages
+`Please define _WIN32_WINNT or _WIN32_WINDOWS` and
+`Assuming _WIN32_WINNT=0x0601`. These are Asio compile-target messages emitted
+through MSVC `#pragma message`, not build-stopping errors.
 
-Sağlanan Brownfield CMakeLists.txt:313 iki değeri açıkça tanımlar:
+The supplied Brownfield `CMakeLists.txt:313` explicitly defines both values:
 
 ```cmake
 _WIN32_WINNT=0x0601 WINVER=0x0601
 ```
 
-Yellowfield aktarımında bu tanımlar eksik kaldığı için Asio kendi varsayımını
-her ilgili translation unit için yazıyordu. Değerler Windows için
-`preloader_l_asio INTERFACE` target’ına eklendi; bu target’ı kullanan uygulama,
-host ve testler header’lar okunmadan önce aynı tanımı alır.
+These definitions were missing from the Yellowfield adaptation, so Asio emitted
+its default-assumption message for each affected translation unit. Both values
+were added to the Windows `preloader_l_asio INTERFACE` target. Application,
+host, and test targets that consume it now receive the same definitions before
+including the corresponding headers.
 
-Uyarı susturma flag’i veya vendor patch’i eklenmedi. Eski Asio fallback değeri
-aynıdır. Tanım, Windows API header görünürlüğünü seçer; Golden PE OS/subsystem
-6.0 metadata hedefini değiştirmez. Bluefield’de görülen0x0602 değeri bu görevin
-Brownfield referansı değildir. Brownfield’in diğer compile seçenekleri bu küçük
-düzeltme kapsamında otomatik kopyalanmadı.
+No warning-suppression flag or vendor patch was added. The previous Asio
+fallback value is unchanged. These definitions select Windows API header
+visibility; they do not change the Golden PE operating-system/subsystem 6.0
+metadata target. The `0x0602` value observed in Bluefield is not the Brownfield
+reference for this change. Other Brownfield compile settings were not copied
+automatically as part of this narrowly scoped correction.
 
-Önceki paketten oyun başlangıcının çalıştığını kullanıcı doğruladı; bu kayıt
-korunur. Güncel build ayarı için Wine/cross-build ve source QA sonuçları
-`metadata/evidence/ASIO_WINDOWS_TARGET_FIX.json` içindedir. Yeni kaynakla gerçek MSVC
-production çıktısı bu ortamda çalıştırılmış sayılmaz.
+The owner confirmed that the game started with the previous package, and that
+observation is retained. The Wine/cross-build and source QA results for the
+current configuration are in
+`metadata/evidence/ASIO_WINDOWS_TARGET_FIX.json`. An actual MSVC Production
+run of the revised source was not performed in that environment.
 
-Bu düzeltme Windows IO/Gulrak kaldırma değişikliğiyle birlikte teslim edilir:
+This correction was delivered alongside the Windows IO/Gulrak removal:
 [WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md).

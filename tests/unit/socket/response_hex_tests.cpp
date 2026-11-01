@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/response_hex_test_fixture.hpp"
 using namespace response_hex_test;
 namespace {

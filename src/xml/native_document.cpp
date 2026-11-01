@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/native_document.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 void store(ReceiveBufferMemory& memory,std::uintptr_t address,std::uint64_t value,unsigned width){
     auto bytes=memory.view(address,width);
@@ -83,7 +85,7 @@ void destroy_native_document_001e00(std::uintptr_t address,NativeDocumentContext
     store(memory,address+0x78,0,4);store(memory,address+0x80,0,8);store(memory,address+0x88,0,8);
     effects.destroy_node_base_001ea0(address);
 }
-std::uintptr_t RecoveredMessageDocumentApi::resolve(NativeMessageDocument& document){
+std::uintptr_t MessageDocumentApi::resolve(NativeMessageDocument& document){
     static_assert(sizeof(int)==4&&std::endian::native==std::endian::little);
     std::uintptr_t result=0;bool matched=false;
     for(const auto& binding:bindings_)if(binding.projection==&document){
@@ -95,13 +97,13 @@ std::uintptr_t RecoveredMessageDocumentApi::resolve(NativeMessageDocument& docum
         throw UnsupportedInput("Native document error cell must share caller storage");
     return result;
 }
-void RecoveredMessageDocumentApi::construct_document_001830(NativeMessageDocument& document,bool mode,std::uint32_t flags){
+void MessageDocumentApi::construct_document_001830(NativeMessageDocument& document,bool mode,std::uint32_t flags){
     (void)construct_native_document_001830(resolve(document),static_cast<std::uint8_t>(mode),flags,documents_);
 }
-int RecoveredMessageDocumentApi::parse_document_004280(NativeMessageDocument& document,std::uintptr_t data,std::uint64_t count){
+int MessageDocumentApi::parse_document_004280(NativeMessageDocument& document,std::uintptr_t data,std::uint64_t count){
     return parse_native_document_004280(resolve(document),data,count,documents_);
 }
-void RecoveredMessageDocumentApi::destroy_document_001e00(NativeMessageDocument& document){
+void MessageDocumentApi::destroy_document_001e00(NativeMessageDocument& document){
     destroy_native_document_001e00(resolve(document),documents_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

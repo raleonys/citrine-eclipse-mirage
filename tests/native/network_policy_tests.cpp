@@ -1,10 +1,14 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/asio_service.hpp"
 #include "preloader_l/platform/execution_windows.hpp"
 #include <asio.hpp>
 #include <atomic>
 #include <chrono>
 #include <iostream>
+#include <memory>
 #include <stdexcept>
+#include <vector>
 
 using namespace preloader_l;
 using namespace std::chrono_literals;
@@ -15,7 +19,7 @@ template<class F>bool until(F fn,std::chrono::milliseconds timeout=3000ms){auto 
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> created{0},timeouts{0},requests{0},next_requests{0},limits{0};
     std::atomic<bool> large_first_greeting{false};
-    struct Handler final:server_recovered::Handler {
+    struct Handler final:server::Handler {
         Factory& f;unsigned id;
         Handler(Factory& factory,unsigned number):f(factory),id(number){}
         void reset_02bc70()override{}
@@ -29,20 +33,20 @@ struct Factory final:net::HandlerFactory {
             std::string result(request);result.push_back('\0');return result;
         }
     };
-    std::unique_ptr<server_recovered::Handler> create()override{return std::make_unique<Handler>(*this,++created);}
+    std::unique_ptr<server::Handler> create()override{return std::make_unique<Handler>(*this,++created);}
     void error(std::string_view operation,std::exception_ptr error)noexcept override {
         if(operation=="session timeout")++timeouts;
         try{if(error)std::rethrow_exception(error);}catch(const std::length_error&){++limits;}catch(...){}
     }
 };
 struct Harness {
-    Factory factory;execution_recovered::MutexState mutex{};
+    Factory factory;execution::MutexState mutex{};
     std::uint8_t a=0,b=0,c=0;std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{a,b,c},frequency,platform};
+    execution::Execution execution{mutex,{a,b,c},frequency,platform};
     net::AsioService service;
-    explicit Harness(net::SessionPolicy policy={}):service(factory,execution,port,a,policy){execution_recovered::initialize_mutex_04a698(mutex,2);service.start();}
+    explicit Harness(net::SessionPolicy policy={}):service(factory,execution,port,a,policy){execution::initialize_mutex_04a698(mutex,2);service.start();}
 };
 struct Peer {
     asio::io_context io;asio::ip::tcp::socket socket{io};std::string input;
@@ -75,6 +79,33 @@ void session_cap() {
         Peer excess(h.port,false,true);
         require(excess.closed()&&h.factory.created==3,"IPv6 and IPv4 pending accepts share one application cap");
     }
+}
+void same_family_accept_burst() {
+    // B36/B37 accept-owner regression: one family must rearm while several
+    // sessions are live, not only when a previous session is retired.
+    net::SessionPolicy p;p.max_sessions=4;Harness h(p);
+    std::vector<std::unique_ptr<Peer>> active;
+    for(unsigned n=0;n<4;++n) {
+        auto peer=std::make_unique<Peer>(h.port);
+        require(peer->frame()=="hello","IPv4 accept rearms before any existing session retires");
+        active.push_back(std::move(peer));
+    }
+    require(h.factory.created==4,"four simultaneously active IPv4 peers reached handler factories");
+    for(auto& peer:active) {
+        peer->send("keep");
+        require(peer->frame()=="keep","each admitted session retains independent request/response state");
+    }
+    Peer waiting(h.port);
+    Sleep(80);
+    require(h.factory.created==4&&waiting.socket.available()==0,
+            "session cap blocks application admission while four IPv4 peers remain live");
+    active[2]->close();
+    require(waiting.frame()=="hello"&&until([&]{return h.factory.created==5;}),
+            "one retired IPv4 owner resumes exactly one backlog admission");
+    waiting.send("resumed");
+    require(waiting.frame()=="resumed","newly accepted client processes a request after cap retirement");
+    active[0]->send("still");
+    require(active[0]->frame()=="still","retiring a different peer preserves existing sessions");
 }
 void frame_and_response_limits() {
     net::SessionPolicy p;p.max_frame_bytes=8;p.max_response_bytes=16;Harness h(p);
@@ -114,5 +145,5 @@ void send_backpressure_and_stop() {
     require(std::chrono::steady_clock::now()-start<1000ms,"stop cancels armed timers and drains without waiting for idle expiry");
 }
 }
-int main()try{session_cap();frame_and_response_limits();receive_deadlines();asynchronous_greeting_and_send_timeout();send_backpressure_and_stop();std::cout<<"PASS: "<<checks<<" real-socket admission/limits/deadlines/backpressure/stop checks\n";}
+int main()try{session_cap();same_family_accept_burst();frame_and_response_limits();receive_deadlines();asynchronous_greeting_and_send_timeout();send_backpressure_and_stop();std::cout<<"PASS: "<<checks<<" real-socket admission/limits/deadlines/backpressure/stop checks\n";}
 catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

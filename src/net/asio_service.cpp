@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/asio_service.hpp"
 #include "preloader_l/net/listener_policy.hpp"
 #include "preloader_l/net/handler_policy.hpp"
@@ -13,7 +15,7 @@
 
 namespace preloader_l::net {
 namespace {
-using namespace server_recovered;
+using namespace server;
 Error translated(const asio::error_code& e) {
     auto category=ErrorCategory::system;
     if(e.category()==asio::error::get_misc_category())category=ErrorCategory::asio_misc;
@@ -83,7 +85,7 @@ SessionPolicy validated(SessionPolicy policy){policy.validate();return policy;}
 struct AsioService::Impl final:ServerBackend {
     struct Client;
     HandlerFactory& factory;
-    execution_recovered::Execution& execution;
+    execution::Execution& execution;
     std::uint16_t& port;
     std::uint8_t& ready;
     const SessionPolicy policy;
@@ -107,7 +109,7 @@ struct AsioService::Impl final:ServerBackend {
     std::array<bool,2> accept_pending{};
     bool start_signalled=false;
     bool used=false;
-    Impl(HandlerFactory& f,execution_recovered::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy limits)
+    Impl(HandlerFactory& f,execution::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy limits)
         :factory(f),execution(e),port(p),ready(r),policy(validated(limits)){
             deferred_closes.reserve(policy.max_sessions+8);
         }
@@ -447,7 +449,7 @@ void AsioService::Impl::stop() {
         throw std::runtime_error("Native socket or IO cleanup incomplete");
     clients.clear();
 }
-AsioService::AsioService(HandlerFactory& f,execution_recovered::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy policy)
+AsioService::AsioService(HandlerFactory& f,execution::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy policy)
     :impl_(std::make_unique<Impl>(f,e,p,r,policy)){}
 AsioService::~AsioService()=default;
 void AsioService::start(){impl_->start();}

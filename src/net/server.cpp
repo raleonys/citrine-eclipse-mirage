@@ -1,17 +1,19 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/server.hpp"
 #include <algorithm>
 #include <limits>
 #include <utility>
 #include <stdexcept>
 
-namespace preloader_l::server_recovered {
+namespace preloader_l::server {
 namespace {
 std::uint16_t network_port_to_host(std::uint16_t value) {
     return static_cast<std::uint16_t>((value >> 8) | (value << 8));
 }
 }
 void construct_server_024480(ServerBackend& backend, std::uint16_t& port,
-                            std::uint8_t& ready, execution_recovered::Execution& execution) {
+                            std::uint8_t& ready, execution::Execution& execution) {
     const auto ipv6 = backend.parse_address_028690(23, "127.0.0.1");
     Endpoint endpoint;
     endpoint.port_host_order = port;
@@ -39,7 +41,7 @@ void construct_server_024480(ServerBackend& backend, std::uint16_t& port,
     backend.async_accept_021b00();
 }
 void server_start_029ea0(ServerBackend& backend, std::uint16_t& port,
-                        std::uint8_t& ready, execution_recovered::Execution& execution) {
+                        std::uint8_t& ready, execution::Execution& execution) {
     backend.initialize_context_0241b0();
     construct_server_024480(backend, port, ready, execution);
     const auto error = backend.run_context_0298b0();
@@ -60,17 +62,19 @@ void Session::log_unless_eof(std::string_view operation, Error error) {
 }
 void Session::start_025720() {
     handler_.reset_02bc70();
-    auto initial = handler_.initial_message_02d540();
-    if(scheduling_.async_greeting()) {
-        greeting_=true;do_write_028270(std::move(initial));return;
-    }
-    std::size_t sent = 0;
-    while (sent < initial.size()) {
-        const auto count = std::min(initial.size()-sent,std::size_t{0x10000});
-        const auto result = transport_.synchronous_send({initial.data()+sent,count});
-        sent += result.transferred;
-        if (result.error.value != 0) scheduling_.raise_write_error(result.error);
-        // Original blocking loop does not synthesize a failure on zero progress.
+    {
+        auto initial = handler_.initial_message_02d540();
+        if(scheduling_.async_greeting()) {
+            greeting_=true;do_write_028270(std::move(initial));return;
+        }
+        std::size_t sent = 0;
+        while (sent < initial.size()) {
+            const auto count = std::min(initial.size()-sent,std::size_t{0x10000});
+            const auto result = transport_.synchronous_send({initial.data()+sent,count});
+            sent += result.transferred;
+            if (result.error.value != 0) scheduling_.raise_write_error(result.error);
+            // Original blocking loop does not synthesize a failure on zero progress.
+        }
     }
     do_read_0280d0();
 }

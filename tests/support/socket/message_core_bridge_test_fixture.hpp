@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_message_core_bridge.hpp"
 #include "tests/support/socket/response_containers_test_fixture.hpp"
@@ -5,7 +7,7 @@
 #include <deque>
 
 namespace core_test {
-namespace s=preloader_l::socket_recovered;namespace m=preloader_l::messages_recovered;
+namespace s=preloader_l::socket;namespace m=preloader_l::messages;
 namespace b=buffer_test;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure {int code;};

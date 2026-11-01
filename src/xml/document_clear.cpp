@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/document_clear.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -74,6 +76,6 @@ void clear_native_document_002e60(std::uintptr_t document,NativeDocumentClearCon
     context.documents.free_04b0f8(load(memory,document+0x98));
     store(memory,document+0x98,0);store(memory,document+0xa4,0,4);
 }
-void RecoveredDocumentClearEffects::clear_002e60(std::uintptr_t document){clear_native_document_002e60(document,clear_);}
-void RecoveredDocumentClearEffects::delete_nodes_003110(std::uintptr_t owner){delete_native_nodes_003110(owner,clear_);}
-} // namespace preloader_l::socket_recovered
+void DocumentClearEffects::clear_002e60(std::uintptr_t document){clear_native_document_002e60(document,clear_);}
+void DocumentClearEffects::delete_nodes_003110(std::uintptr_t owner){delete_native_nodes_003110(owner,clear_);}
+} // namespace preloader_l::socket

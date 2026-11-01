@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/achievement_storage.hpp"
 #include "preloader_l/core/paths.hpp"
 #include <bit>
@@ -7,7 +9,7 @@
 
 namespace preloader_l::achievement_storage {
 namespace {
-std::optional<std::string_view> attribute(const messages_recovered::XmlNode& node,std::string_view key) {
+std::optional<std::string_view> attribute(const messages::XmlNode& node,std::string_view key) {
     const auto value=node.attribute(key);
     if(!value)return std::nullopt;
     return value->substr(0,value->find('\0')); // Original attributes are C strings.
@@ -25,7 +27,7 @@ std::optional<std::uint32_t> HostCrtNumbers::scan_hex(std::string_view raw) {
     if(std::sscanf(input.c_str(),"%x",&value)!=1)return std::nullopt;
     return value;
 }
-std::uint32_t attribute_003b70(const messages_recovered::XmlNode& node,std::string_view key,
+std::uint32_t attribute_003b70(const messages::XmlNode& node,std::string_view key,
                              std::uint32_t fallback,Numbers& numbers) {
     const auto value=attribute(node,key);
     if(!value)return fallback;
@@ -46,7 +48,7 @@ configuration::Achievement empty_achievement() {
     return {1,0,0,"0000-00-00T00:00:00",{},{},0};
 }
 configuration::Path append(configuration::Path base,const configuration::Path& component) {
-    path_recovered::append_016b50(base,component);return base;
+    path::append_016b50(base,component);return base;
 }
 }
 void Storage::update_01eb00(configuration::State& state) {
@@ -57,7 +59,7 @@ void Storage::update_01eb00(configuration::State& state) {
     }
     // Empty set preserves a previously supplied XML path; it does not disable it.
     if(!paths_.xml_path.empty()) {
-        const auto bytes=file_recovered::read_binary_03b3f0(paths_.xml_path,files_);
+        const auto bytes=file::read_binary_03b3f0(paths_.xml_path,files_);
         auto parsed=xml_.parse_c_string(bytes);
         if(!parsed.document)throw std::invalid_argument("Achievement XML backend returned no document");
         if(!parsed.has_error) {

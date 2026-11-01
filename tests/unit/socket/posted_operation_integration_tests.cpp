@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_posted_operation_dispatch.hpp"
 #include "preloader_l/net/transport_completion_dispatcher_native.hpp"
 #include "preloader_l/net/transport_worker_run_native.hpp"
@@ -5,7 +7,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 namespace {
 unsigned checks=0;void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 [[noreturn]]void unexpected(){throw std::logic_error("Unexpected posted integration dependency");}
@@ -17,7 +19,7 @@ LPVOID WINAPI tls_get(DWORD);BOOL WINAPI tls_set(DWORD,LPVOID);BOOL WINAPI post(
 struct Node{std::array<std::byte,73> bytes{};s::OperationStorage storage;std::unique_ptr<s::PostedOperation> op;explicit Node(std::uintptr_t id):storage{id,bytes},op(new s::PostedOperation{storage,{},0,nullptr}){}};
 struct Memory:s::PostedMemoryEffects{Fixture& f;explicit Memory(Fixture& value):f(value){}std::array<std::unique_ptr<Node>,8> nodes;std::vector<std::uint64_t> sizes;std::vector<std::uintptr_t> freed;bool delete_on_free=false;s::OperationStorage& allocate_04b0bc(std::uint64_t)override;void free_04b788(s::OperationStorage&)override;s::PostedOperation& project_posted(s::OperationStorage&)override;};
 struct Routing:s::PostedDispatcherEffects{Fixture& f;explicit Routing(Fixture&);unsigned others=0;std::function<void(s::IocpSchedulerEntry*,s::CancelOperation&,const s::Error&,std::uint32_t)> other;void complete_other(s::IocpSchedulerEntry*,s::CancelOperation&,const s::Error&,std::uint32_t)override;std::uintptr_t capture_tls_slot()override{return 0x1234;}std::int32_t thread_epoch(std::uintptr_t slot)override{check(slot==0x1234,"same captured GS TLS token");return 0;}void guard_header_04b838(std::int32_t&)override{unexpected();}void register_atexit_04b770(std::uintptr_t)override{unexpected();}void guard_footer_04b7cc(std::int32_t&)override{unexpected();}std::uint32_t read_stop_34(s::IocpSchedulerEntry& e)override{return e.high_34;}std::array<std::uintptr_t,2>& copy_exception_024100(std::array<std::uintptr_t,2>&,const std::array<std::uintptr_t,2>&)override{unexpected();}[[noreturn]]void rethrow_029880(std::array<std::uintptr_t,2>&)override{unexpected();}};
-struct Worker:s::RecoveredDispatcherWorkerEffects{Fixture& f;explicit Worker(Fixture&);std::uint32_t exchange_stop_34(s::IocpSchedulerEntry&,std::uint32_t)override;std::uint32_t exchange_wake_38(s::IocpSchedulerEntry&,std::uint32_t)override;void initialize_04a240(std::array<std::uintptr_t,2>&)override;void finish_04a2cc(std::array<std::uintptr_t,2>&)override;void free_cache_04b788(std::uintptr_t)override;void delete_function_04b0f8(s::IocpWorkerFunction&,std::uint32_t)override{unexpected();}[[noreturn]]void raise_028240(s::Error,std::uintptr_t)override{unexpected();}};
+struct Worker:s::DispatcherWorkerEffects{Fixture& f;explicit Worker(Fixture&);std::uint32_t exchange_stop_34(s::IocpSchedulerEntry&,std::uint32_t)override;std::uint32_t exchange_wake_38(s::IocpSchedulerEntry&,std::uint32_t)override;void initialize_04a240(std::array<std::uintptr_t,2>&)override;void finish_04a2cc(std::array<std::uintptr_t,2>&)override;void free_cache_04b788(std::uintptr_t)override;void delete_function_04b0f8(s::IocpWorkerFunction&,std::uint32_t)override{unexpected();}[[noreturn]]void raise_028240(s::Error,std::uintptr_t)override{unexpected();}};
 struct Functor:s::PostedFunctor{unsigned invoked=0,discarded=0;std::function<void(std::uint8_t)> action;void call_slot_00(std::uint8_t flag)override{if(flag)++invoked;else ++discarded;if(action)action(flag);}};
 struct Fixture{
  Gate gate;CRITICAL_SECTION cs{};Entry entry{gate,cs};Errors errors;std::uint32_t index=17;std::int32_t guard=0;std::array<s::OperationStorageBinding,8> storage_bindings{};std::array<s::PostedOperationBinding,8> posted_bindings{};std::array<s::DispatcherOperationBinding,8> dispatcher_bindings{};s::DispatcherState state{entry,nullptr,0,0,dispatcher_bindings};
@@ -28,7 +30,7 @@ struct Fixture{
  std::uint64_t run(){s::WorkerRunResult result;const auto count=s::run_worker_0298b0(entry,result,{index,{0x1111}},worker_api,errors,worker);check(result.error&&result.error->value==0&&result.error->category.name_identity==0x1111,"actual worker returns logical generic success");return count;}
 };
 Routing::Routing(Fixture& value):PostedDispatcherEffects(value.posted_bindings,value.environment(),value.worker_api,value.memory),f(value){}
-Worker::Worker(Fixture& value):RecoveredDispatcherWorkerEffects(value.state,{value.guard,{0x1111},{0x2222}},value.api,value.routing,value.worker_api,value.errors),f(value){}
+Worker::Worker(Fixture& value):DispatcherWorkerEffects(value.state,{value.guard,{0x1111},{0x2222}},value.api,value.routing,value.worker_api,value.errors),f(value){}
 void Routing::complete_other(s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes){++others;if(other)other(owner,op,error,bytes);else unexpected();}
 std::uint32_t Worker::exchange_stop_34(s::IocpSchedulerEntry& e,std::uint32_t value){auto previous=e.high_34;e.high_34=value;f.events.push_back("stop");return previous;}
 std::uint32_t Worker::exchange_wake_38(s::IocpSchedulerEntry& e,std::uint32_t value){const auto previous=static_cast<std::uint32_t>(e.word_38);e.word_38=(e.word_38&0xffffffff00000000ULL)|value;return previous;}

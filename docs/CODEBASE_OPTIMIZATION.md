@@ -1,153 +1,216 @@
-# Kaynak temizliği ve ölçülen optimizasyonlar
+# Source cleanup and measured optimizations
 
-Bu belge ilk optimizasyon aşamasının tarihsel ölçümlerini tutar. Güncel üretim
-ayrımı60/78 ve dar temizlik/TLS uygulaması [BUILD_CLEANUP.md](BUILD_CLEANUP.md)
-içindedir; aşağıdaki eski test, TU ve export sayıları güncel toplamlar değildir.
+This document records historical measurements from the first
+optimization pass. The current 60/78 Production/reference split
+and subsequent narrow cleanup/TLS work are documented in
+[BUILD_CLEANUP.md](BUILD_CLEANUP.md). Earlier test counts,
+translation-unit totals, and export counts below are not
+the current totals.
 
-İnceleme 138 first-party CPP ve derleyici bağımlılıklarında görülen 139 başlığın
-tamamını kapsıyor. 64 üretim ve 74 korunan referans CPP ayrımı değişmedi. Bir CPP
-veya genel API fonksiyonu silinmedi. Kullanılmayan özel depolama ve erişilemeyen
-bir dal kaldırıldı; XML işleme ve Release tanılama çağrıları iyileştirildi.
+This review covered all 138 first-party CPP files and
+139 headers observed in compiler dependencies. The split
+remained 64 Production and 74 retained reference CPP files.
+No CPP file or general API function was removed.
+Unused private storage and an unreachable branch were
+removed; XML processing and Release diagnostic calls
+were improved.
 
-Önceki sahibin kabul ettiği DLL SHA256:
+The previously owner-accepted DLL SHA-256 was:
 `4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b`.
-O DLL için Windows Native 193/193 ve sahibin bildirdiği oyun kabulü geçerli tarihsel
-kanıttır. Aşağıdaki kaynak değişiklikleri için yeni native Windows/Golden ve oyun
-kabulü henüz çalıştırılmadı. Yerel sonuçlar LLVM-MinGW/Wine ve Linux sanitizer
-kanıtlarıdır; MSVC veya oyun performans sonucu olarak sunulmuyor.
+Its Windows Native 193/193 PASS and owner-reported game
+acceptance remain historical evidence for that DLL.
+The source changes below had not received a new native
+Windows/Golden or game rerun at this checkpoint.
+Local results were LLVM-MinGW/Wine and Linux-sanitizer
+evidence, not MSVC or game-performance measurements.
 
-## İnceleme ve kararlar
+## Review and decisions
 
-Gerçek Windows x64 compile database kullanılarak bütün 138 CPP Clang-Tidy21.1.6
-ve Clang AST ile tarandı; derleyici hatası yok. Seçilen kontroller analyzer
-core/cplusplus/deadcode, bugprone, performance, misc-unused ve redundant grupları.
-Vendor başlıklarının uyarıları first-party bulgu sayısına eklenmedi ve vendor
-kaynaklarında düzeltme yapılmadı.
+Using the actual Windows x64 compile database, all 138 CPP
+files were analyzed with Clang-Tidy 21.1.6 and Clang AST;
+there were no compiler errors. Selected checks covered
+analyzer core/cplusplus/deadcode, bugprone, performance,
+misc-unused, and redundant groups. Vendor-header warnings
+were not counted as first-party findings and no vendor
+source was patched.
 
-1779 açık AST tanım kaydı çıkarıldı. Bu sayı template örneklerini ve constructor
-kayıtlarını da içerir;1779 bağımsız mantıksal fonksiyon iddiası değildir.
-969 kayıtta doğrudan DeclRefExpr/MemberExpr başvurusu gözlenmedi. Bu sonuç
-"969 ölü fonksiyon" anlamına gelmez: sanal dispatch, Windows callback'leri,
-constructor/destructor, CRT/TLS başlangıcı ve geliştirme DLL export kökleri bu
-grafikle bütünüyle kanıtlanamaz. 738 kayıt virtual/override niteliğindedir.
-Geliştirme DLL'inin önce/sonra 3347 export adı da korundu.
+A total of 1,779 explicit AST definition records were
+extracted. This includes template instances and constructor
+records; it does not mean 1,779 independent logical functions.
+No direct DeclRefExpr/MemberExpr reference was observed for
+969 records. This does not mean "969 dead functions":
+virtual dispatch, Windows callbacks, constructors/destructors,
+CRT/TLS startup, and development-DLL export roots cannot be
+fully proven by that graph. Of the records, 738 were
+virtual/override. All 3,347 development-DLL export names
+were preserved before and after this checkpoint.
 
-53 benzersiz first-party Clang-Tidy bildiriminin tamamı gerekçesiyle kaydedildi.
-Örneğin messages.cpp içindeki c_str() önerisini uygulamak ilk-NUL sınırını
-değiştirebilir; Asio error_code overload'ları ise yalnız dönüş değerine bakılarak
-"hata kontrol edilmiyor" diye değerlendirilemez. Otomatik düzeltme uygulanmadı.
-Asio destructor'ından stop() çağrısının olağanüstü tahsis/join hatasında exception
-üretebilmesi ayrı takip konusudur. Bu yol için native hata enjeksiyonu yapılmadı;
-uyarı düzeltilmiş veya güvenliği kanıtlanmış sayılmadı. Canlı thread sahipliğini
-riske atacak şekilde exception yutma eklenmedi.
+All 53 distinct first-party Clang-Tidy diagnostics were
+recorded with individual dispositions. For example,
+applying a `c_str()` suggestion in `messages.cpp` could
+change the first-NUL boundary; Asio `error_code`
+overloads cannot be labeled "unchecked errors" simply
+by inspecting return values. No automatic fixes were
+applied. A separate follow-up concerned the possibility
+that calling `stop()` from the Asio destructor could
+throw during exceptional allocation/join failures.
+No native fault injection covered that path; the
+warning was neither declared resolved nor safety-proven.
+Exceptions were not swallowed in ways that risked live
+thread ownership.
 
-Dosya başına güncel/eski hash ve kapsam:
+Per-file old/current hashes and scope:
 [FILE_MATRIX.csv](../metadata/evidence/optimization/FILE_MATRIX.csv).
-Fonksiyon kayıtları ve saklama kararları:
+Function records and retention decisions:
 [FUNCTION_MATRIX.csv](../metadata/evidence/optimization/FUNCTION_MATRIX.csv).
-Bütün uyarılar ve tek tek kararları:
+All diagnostics and individual decisions:
 [STATIC_DIAGNOSTICS.csv](../metadata/evidence/optimization/STATIC_DIAGNOSTICS.csv).
-Derleyici kapsamı ve sınırlar:
+Compiler scope and boundaries:
 [COMPILER_SCOPE.json](../metadata/evidence/optimization/COMPILER_SCOPE.json).
 
-## Uygulanan değişiklikler
+## Changes implemented
 
-| Değişiklik | Gerekçe ve korunan davranış |
+| Change | Rationale and preserved behavior |
 |---|---|
-| XML parse öncesindeki staging string kaldırıldı | TinyXML2 zaten sahip olduğu sonlandırılmış tamponu kopyalıyor. Sayılı view içinde ilk NUL sınırı, boş girdi, kesilmiş view, tam ErrorStr ve belge sahipliği korunuyor. |
-| XML Element wrapper map düğümünde tutuluyor | Her düğüm için ikinci heap tahsisi kalkıyor. unordered_map rehash sırasında düğüm adreslerini korur; vendor belge wrapper'lardan sonra yok edilir. |
-| İç tanılama çağrılarına inline Debug kapısı | Golden LTO'suz derlendiği için başka TU'daki boş Release log gövdeleri çağıranın stringlerini temizlemiyordu. Release çağrıları artık kendi TU'sunda elenir; mevcut out-of-line geliştirme API log sembolleri korunur. |
-| Environment özel alan temizliği | Kullanılmayan xml_ referansı kaldırıldı. Yalnız Debug'da kullanılan log_mutex_ Release sınıfında tutulmuyor. XML constructor girdisi gerçek Storage kullanımı için korunuyor. clock_/formatter_ gerçek kullanım nedeniyle tutuluyor. |
-| Sıfır receive boyutu dalı kaldırıldı | Önceki size>=maximum kontrolünden sonra maximum-size,65536 ve max(spare,512) pozitiftir. Dolayısıyla minimumları sıfır olamaz. Yardımcı fonksiyonun API'si ve dolu tampon davranışı korunuyor. |
+| Remove staging string before XML parse | TinyXML2 already copies the owned terminated buffer. Preserve the first-NUL boundary of a counted view, empty input, truncated views, complete ErrorStr, and document ownership. |
+| Store the XML Element wrapper in the map node | Remove a second heap allocation per node. `unordered_map` rehash preserves node addresses; the vendor document is destroyed after its wrappers. |
+| Inline Debug gate for internal diagnostic calls | With Golden LTO disabled, empty Release log bodies in other translation units did not remove the caller's strings. Release calls are now eliminated within their own translation unit, while existing out-of-line development API logging symbols remain. |
+| Clean up private Environment fields | Remove the unused `xml_` reference. `log_mutex_`, used only in Debug, is absent from the Release class. Retain the XML constructor input for actual Storage use. Retain `clock_`/`formatter_` because they are used. |
+| Remove zero receive-size branch | After the prior `size>=maximum` guard, maximum-size, 65,536, and `max(spare,512)` are positive; their minimum cannot be zero. Preserve helper API and full-buffer behavior. |
 
-Hook'lar, shutdown/rollback sahipliği, FIFO/event commit, atomik dosya yazımı,
-sabit SDK/port, dört immutable vendor, PNG/resource/PE metadata politikaları,
-üç C export ve ordinal'ları değişmedi. Derleyici/linker ayarları değiştirilmedi;
-Golden için mevcut /LTCG:OFF sözleşmesi korunuyor. Kamuya açık C++ kaynak API
-imzaları korunuyor; iç Environment yerleşimi değiştiğinden eski C++ OBJ dosyaları
-yeniden kullanılmamalı, kaynaklar yeniden derlenmeli.
+Hooks, shutdown/rollback ownership, FIFO/event commits,
+atomic file writes, fixed SDK/port settings, four immutable
+vendors, PNG/resource/PE metadata policy, and the three
+C exports/ordinals were unchanged. Compiler/linker
+settings remained unchanged, including the existing
+`/LTCG:OFF` Golden contract. Public C++ source API
+signatures were preserved, but internal Environment
+layout changed; old C++ OBJ files must not be reused
+without recompiling the sources.
 
-## Ölçüm ve regresyon
+## Measurements and regressions
 
-Tek probe, aynı LLVM-MinGW Release ayarları ve aynı XML dışı core kütüphanesiyle
-dört varyant karşılaştırıldı: önceki kod, yalnız tampon değişikliği, yalnız
-wrapper değişikliği, ikisi birlikte. Her varyant için 5 dönüşümlü sırada tur,
-her turda 3 senaryo ve senaryo başına 500 işlem çalıştırıldı. Üretim allocator'ı
-değiştirilmedi; tahsis sayacı yalnız ayrı test executable'ındadır.
+A standalone probe compared four variants using identical
+LLVM-MinGW Release settings and the same non-XML core
+library: old code, staging-buffer change only, wrapper
+change only, and both together. Each variant ran five
+rounds in rotated order, with three scenarios per round
+and 500 operations per scenario. The Production allocator
+was not modified; the allocation counter existed only
+in the separate test executable.
 
-| Senaryo | Tahsis/işlem önce → sonra | İstenen heap baytı/işlem önce → sonra |
+| Scenario | Allocations/operation, before → after | Requested heap bytes/operation, before → after |
 |---|---:|---:|
-| Küçük LSX isteği |13 →9|9482 →9370|
-| 64KiB metin |8 →6|140200 →74648|
-| 256 alt düğüm |539 →281|83808 →79184|
+| Small LSX request | 13 → 9 | 9482 → 9370 |
+| 64 KiB text | 8 → 6 | 140200 → 74648 |
+| 256 child elements | 539 → 281 | 83808 → 79184 |
 
-Tahsis sayıları ve baytları allocator metadata'sını içermez. p50 ortancaları
-iyileşti, ancak p95/p99 değerleri her senaryoda iyileşmedi; Wine zamanlaması
-dalgalanıyor. Örneğin çok düğümlü senaryoda p95 ortancası 255900→291900 ns oldu.
-Bu ölçümden native hız veya kuyruk gecikmesi kazanımı çıkarılmıyor. Tüm varyantlar
-ve tüm örnekler [XML_BENCHMARKS.json](../metadata/evidence/optimization/XML_BENCHMARKS.json)
-içinde tutuluyor.
+Allocation counts and requested bytes exclude allocator
+metadata. The p50 medians improved, but p95/p99 did not
+improve in every scenario; Wine timings varied. For
+example, the p95 median for the many-child scenario
+increased from 255,900 to 291,900 ns. These measurements
+do not establish native speed or queue-latency gains.
+All variants and samples are retained in
+[XML_BENCHMARKS.json](../metadata/evidence/optimization/XML_BENCHMARKS.json).
 
-Yeni xml_reader_allocation_contracts testi önceki kodda ikinci input büyüklüğünde
-tampon nedeniyle başarısız, yeni kodda başarılıdır. Test ayrıca cache lookup'ın
-yeni tahsis yapmamasını ve wrapper tahsis hatasından sonra belge kaybetmeden
-yeniden denenmesini doğrular. Süreye bağlı kırılgan test eşiği yoktur.
-Kalıcı xml_reader_corpus_contracts testi aynı 12087 girdiyi ve önceki koddan
-kaydedilen tam çıktıları tests/fixtures/xml_reader altında tutar; her Native
-Acceptance çalışmasında yeniden karşılaştırır. XML unit testleri sayılı/sonlandırılmamış dilim, çağıran tamponun sonradan
-değiştirilmesi ve 1025 çocukla rehash/pointer kimliğini de denetler. Server testleri
-receive-size pozitiflik ve üst sınırını SIZE_MAX dahil sınırlarla kontrol eder.
+The new `xml_reader_allocation_contracts` test fails on
+the older code due to a second input-sized allocation
+and passes on the new code. It also verifies that
+cache lookup performs no new allocation and that the
+wrapper can be retried after an allocation failure
+without losing the document. No brittle time-based
+test threshold was added.
 
-Eski/yeni XML okuyucu ayrıca 12087 normal, bozuk, kesilmiş, NUL içeren, UTF8/rasgele
-bayt ve depth sınır girdisinde Linux ASAN+UBSAN altında karşılaştırıldı. Error
-code/flag, tam ErrorStr, bütün element/attribute/text çıktıları bayt düzeyinde
-aynı, sanitizer hata çıktısı yok. Bu sonlu corpus tam program eşdeğerliği veya
-oyun kabulü iddiası değildir. Sonuç ve corpus/output hash'leri
-[XML_CORPUS_PARITY.json](../metadata/evidence/optimization/XML_CORPUS_PARITY.json) içinde.
+The persistent `xml_reader_corpus_contracts` test stores
+the same 12,087 inputs and the old code's complete
+expected outputs under `tests/fixtures/xml_reader`,
+rechecking them at every Native Acceptance run.
+XML unit tests also cover counted/unterminated spans,
+subsequent modification of the caller buffer, and
+rehashing/pointer identity with 1,025 children.
+Server tests verify receive-size positivity and
+maximum boundaries, including SIZE_MAX.
 
-Yerel son sonuç: Release 196/196, etkilenen Debug 21/21, kaynak QA 17/17
-grup başarılı. XML unit testinde 649 kontrol ve kalıcı corpus testinde 12087
-girdi ASAN+UBSAN altında geçti. Temiz ZIP açılımından testler ve geliştirme DLL
-kapalı üretim derlemesi ile üç gerçek yükle/başlat/profil/kapat/unload döngüsü
-başarılı. Aynı LLVM Release çıktısı 1081856 → 1077760 bayt, yani 4 KiB küçüldü.
+Old and new XML readers were additionally compared
+over 12,087 normal, malformed, truncated, NUL-bearing,
+UTF-8/random-byte, and depth-boundary inputs using
+Linux ASan+UBSan. Error codes/flags, full ErrorStr,
+and all element/attribute/text outputs matched
+byte-for-byte; no sanitizer errors were reported.
+This finite corpus does not prove whole-program
+equivalence or game acceptance. Results and corpus/
+output hashes are in
+[XML_CORPUS_PARITY.json](../metadata/evidence/optimization/XML_CORPUS_PARITY.json).
 
-Güncel derleme/test sonuçları, gerçek önce/sonra DLL bölüm boyutları ve native
-bekleyen işler [VALIDATION.json](../metadata/evidence/optimization/VALIDATION.json) içinde.
-LLVM çıktısındaki küçülme sahibin önceki MSVC DLL boyutuna oranlanmamalı; farklı
-toolchain çıktıları karşılaştırılarak kazanım iddiası yapılmıyor.
+At this checkpoint, Release 196/196, affected Debug
+21/21, and source QA 17/17 groups passed. The XML
+unit test passed 649 checks and the persistent corpus
+passed 12,087 inputs under ASan+UBSan. After clean
+ZIP extraction, a Production build with tests and
+development DLL disabled passed alongside three
+actual load/start/profile/stop/unload cycles.
+The same LLVM Release output shrank from 1,081,856
+to 1,077,760 bytes, a reduction of 4 KiB.
 
-## Windows'ta gerçek boyut kanıtı toplama
+Current build/test results, actual before/after DLL
+section sizes, and pending native tasks are in
+[VALIDATION.json](../metadata/evidence/optimization/VALIDATION.json).
+The reduction in the LLVM output must not be
+extrapolated from the owner's previous MSVC DLL;
+different toolchains cannot establish a comparative
+improvement.
 
-Normal Production Build tamamlandıktan sonra proje kökünden:
+## Collecting actual Windows size evidence
+
+After a normal Production Build, from the project root:
 
 ```powershell
 python -B scripts/collect_size_evidence.py --build-dir build/golden_msvc --dll dist/preloader_l.dll --output build/qa/native-size-evidence.zip
 ```
 
-VS Developer ortamında gerçek dumpbin de PATH'teyse `--with-symbols` eklenebilir.
-Araç mevcut kaynak manifestini doğrular; DLL'i çalıştırmaz, derlemeyi veya link
-ayarlarını değiştirmez, dist'e terfi/yayın yapmaz. Var olan raporun üzerine yazmaz.
-ZIP ve yanına SHA256 dosyası üretir. Bilinmeyen/LTCG object biçimleri için PARTIAL
-sonuç verir; boş kanıtı tam sonuç diye sunmaz.
+If `dumpbin` is available on PATH within a Visual
+Studio Developer environment, add `--with-symbols`.
+The tool verifies the current source manifest;
+it does not execute the DLL, modify compilation/link
+options, or promote/publish files from dist.
+It does not overwrite an existing report.
+It creates a ZIP and a companion SHA-256 file.
+Unknown/LTCG object formats produce PARTIAL,
+not a misleading complete evidence claim.
 
-Kaynak sözleşmeleri, final/raw DLL bölümleri/export'ları, üretim MAP'i ve yalnız
-güncel CMake hedef girdilerindeki ordinary/BigObj COFF OBJ bölümleri toplanır.
-Diskte kalmış eski OBJ'ler güncel grafikte yoksa dahil edilmez. 14 altyapı testi
-bu sınırları, VS object yolu çözümünü, bozuk COFF'u ve üzerine yazma engelini
-doğrular. Gerçek LLVM üretim grafiğinde 145 güncel OBJ başarıyla okundu.
+The tool collects source contracts, final/raw DLL
+sections/exports, the Production MAP, and sections
+from ordinary/BigObj COFF OBJs in the current
+CMake target inputs. Stale objects on disk are
+excluded if they do not belong to the current
+graph. Fourteen infrastructure tests check these
+limits, Visual Studio object-path resolution,
+malformed COFF, and overwrite prevention.
+The actual LLVM Production graph successfully
+read 145 current OBJs.
 
-OBJ bayt toplamı final DLL katkısı değildir: linker kullanılmayan/aynı COMDAT'ları
-çıkarabilir veya birleştirebilir. MAP public-symbol aralığı da kesin fonksiyon
-boyutu sayılmaz. Gerçek native önce/sonra incelemesi, aynı MSVC/SDK/Release
-ayarlarıyla yeniden derlenmiş iki sürümün MAP/OBJ/DLL kanıtlarını gerektirir.
-Şu an eski kabul edilmiş native DLL ve logları mevcut, karşılık gelen eski
-native OBJ/MAP elde değil. Yeni collector bu eksik kanıtı toplamayı mümkün kılar.
+The total OBJ bytes are not their final-DLL
+contribution: the linker may discard or merge
+unused/identical COMDATs. A MAP public-symbol
+range is also not an exact function size.
+A proper before/after native investigation
+requires MAP/OBJ/DLL evidence from two versions
+rebuilt under the same MSVC/SDK/Release settings.
+The earlier accepted native DLL and logs exist;
+its matching original native OBJ/MAP records
+were not provided. The new collector enables
+gathering such missing evidence for future builds.
 
-## Sonraki optimizasyonların kabul ölçütü
+## Acceptance criteria for subsequent optimizations
 
-Yeni bir silme adayı için gerçek production link katkısı, gelişim DLL/test/virtual/
-callback/lifetime kökleri ve hata yolları birlikte incelenmeli. İyileştirme ayrı
-değişiklik olarak ölçülmeli; önceki davranışla kontrollü regresyon, ilgili Debug
-ve tam Release testleri, source QA, temiz üretim derlemesi ve native/game kabulü
-tamamlanmalı. Vendor, ABI veya ürün politikasını sessizce değiştirerek küçültme
-yapılmamalı. Bu tarama "başka hata veya ölü kod kalmadı" garantisi değildir.
+Before deleting any candidate, evaluate its
+actual Production link contribution, development
+DLL/test/virtual/callback/lifetime roots, and
+error paths. Measure changes independently and
+run controlled regression against prior behavior,
+affected Debug and full Release tests, source QA,
+clean Production build, and native/game acceptance.
+Do not silently change vendor, ABI, or product
+policy to reduce size. This review does not
+guarantee that no other bugs or dead code remain.

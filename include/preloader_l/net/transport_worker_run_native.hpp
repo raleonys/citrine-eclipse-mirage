@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_worker_run.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct WorkerRunImports {
     decltype(&::TlsGetValue) tls_get=&::TlsGetValue;
     decltype(&::TlsSetValue) tls_set=&::TlsSetValue;
@@ -17,4 +19,4 @@ public:
     std::uint32_t get_last_error() override;
 private:WorkerRunImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

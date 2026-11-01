@@ -1,63 +1,79 @@
-# Yerel geliştirme ve operatör komutları
+# Local development and operator commands
 
-Windows: Visual Studio C++ x64 araçları/SDK, CMake >=3.20 ve Python 3.9+ gerekir.
-Komutlar compiler standart CRT'sini kullanır: MSVC Release `/MT`, Debug `/MTd`.
-Bu Linux oturumunda PowerShell/CMD ve MSVC çalıştırılması iddia edilmez.
+Windows requires Visual Studio C++ x64 tools/SDK, CMake >= 3.20, and Python
+3.9 or later. Production and static-test builds use the compiler's standard CRT:
+MSVC Release `/MT` and Debug `/MTd`. The separate C++ development DLL and its
+host use `/MD` and `/MDd`, with their own matching vendor builds, because STL
+objects cross that module boundary. This Linux session does not claim PowerShell/CMD or MSVC
+execution.
 
-`scripts/build_orchestration/` altındaki insan komutları:
+Human-facing commands under `scripts/build_orchestration/`:
 
-| Komut | Çıktı / kontrol |
+| Command | Output / verification |
 |---|---|
-| `build_unstable.cmd` | Release uygulama DLL'i; export/resource ve gerçek yükleme/socket/kapatma/unload denetimi |
-| `build_debug.cmd` | Debug uygulama DLL'i ve aynı public API denetimleri; debugger sembolleri korunur |
-| `build_native_acceptance.cmd` | Windows üzerinde Yellowfield CTest kaynak/adapter/CRT testleri |
-| `build_crt_acceptance.cmd` | Yalnız seçili compiler CRT/public DLL/source smoke hedeflerini derler ve çalıştırır |
-| `build_production.cmd` | MSVC yerel Golden linki ve altı aşamalı kontrol; resmî yayın yapmaz |
+| `build_unstable.cmd` | Release application DLL; checks exports/resources and actual load/socket/shutdown/unload |
+| `build_debug.cmd` | Debug application DLL with the same public API checks; debugger symbols are retained |
+| `build_native_acceptance.cmd` | Citrine Eclipse Mirage CTest source/adapter/CRT tests on Windows |
+| `build_crt_acceptance.cmd` | Builds and runs only selected compiler CRT/public DLL/source smoke targets |
+| `build_production.cmd` | Native MSVC Golden link and six-stage verification; does not publish an official release |
 
-İnsan CMD penceresi yalnız final sonucu renklendirir, çıkış kodunu gösterir ve
-kapatılmayı bekler. Otomasyon için aynı isimli `.ps1` dosyasını doğrudan çağır;
-bekleme yoktur. Argümanlar `-BuildDir build\...`, `-Config Release|RelWithDebInfo|Debug`.
-Tek uygulayıcı `build_profile.ps1`; paylaşılan yardımcı `build_common.ps1`.
-Her profil ayrı build dizini, kilit, toolchain hash kaydı ve yerel receipt kullanır.
-MSVC ortam değişkenleri iş sonunda geri yüklenir; test hataları başarıya çevrilmez.
-Golden ürün hedefleri eksikse operatör BLOCKED gösterir ve exit3 döndürür.
-Receipt, build başarısı ile profil doğrulamasını ayrı tutar.
-MSVC resource/test uyumluluk düzeltmesi: [MSVC_PROFILE_FIX.md](MSVC_PROFILE_FIX.md).
+The human-facing CMD window colors the final result, shows the exit code,
+and waits before closing. Automation should invoke the matching `.ps1`
+script directly without waiting. Arguments include
+`-BuildDir build\...` and `-Config Release|RelWithDebInfo|Debug`.
+The sole profile executor is `build_profile.ps1`; `build_common.ps1` is the
+shared helper. Each profile uses its own build directory, lock, toolchain
+hash record, and local receipt. MSVC environment variables are restored
+after execution; test failures are never converted into success.
+When Golden product targets are missing, the operator reports `BLOCKED`
+and returns exit code 3. Receipts distinguish build success from profile
+validation. See [MSVC_PROFILE_FIX.md](MSVC_PROFILE_FIX.md) for the MSVC
+resource/test compatibility correction.
 
-Kaynak QA (Windows gerektirmez):
+Source QA (does not require Windows):
 
 ```sh
 python -B scripts/run_source_qa.py --report build/qa/SOURCE_QA.json
 ```
 
-İstenerek yapılan kaynak değişikliğinden sonra `SOURCE_FILES.json`/köken kaydını
-güncelle; ardından tüm kaynak kimliğini **açıkça** kaydet ve tekrar doğrula:
+After an intentional source change, update `SOURCE_FILES.json` and the
+corresponding provenance record. Explicitly refresh the complete source
+identity, then verify it again:
 
 ```sh
 python -B scripts/check_manifest.py --refresh
 python -B scripts/run_source_qa.py
-python -B scripts/package_source.py --output ../yellowfield-startup-build-fix-source.zip
-python -B scripts/check_falcion_golden_cleaning.py --package ../yellowfield-startup-build-fix-source.zip
+python -B scripts/package_source.py --output ../citrine-eclipse-mirage-source.zip
+python -B scripts/check_falcion_golden_cleaning.py --package ../citrine-eclipse-mirage-source.zip
 ```
 
-Paketleme manifesti kendiliğinden yenilemez. Golden komutu eksik ürün hedefinde
-nonzero döner; [GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) bu durumu açıklar.
-Derleme ve testler Library, haricî yayın kimliği veya release onayı gerektirmez.
+Packaging does not refresh the manifest automatically. The Golden command
+returns a nonzero exit code if required product targets are missing;
+[GOLDEN_PROTOCOLS.md](GOLDEN_PROTOCOLS.md) documents that case. Building
+and testing do not require Library publication, an external release identity,
+or release authorization.
 
-## Güncel somut runtime
+## Current concrete runtime
 
-Application, gerçek vendor IO ve DLL worker başlangıcı [RUNTIME_BINDING.md](RUNTIME_BINDING.md) içindedir.
-Windows/MSVC normal derlemede Wine kullanılmaz. LLVM-MinGW/Wine çapraz testleri için
-`-DPRELOADER_L_WINE_EXECUTABLE=/path/to/wine64` CMake seçeneği, gerçek programın
-exit kodunu koruyan `scripts/run_wine_test.py` çalıştırıcısını seçer.
-Wine servislerinin miras aldığı çıktı descriptor'ları test başarısını veya zamanını belirlemez.
+Application ownership, actual vendor I/O, and DLL worker startup are
+described in [RUNTIME_BINDING.md](RUNTIME_BINDING.md).
+Normal Windows/MSVC builds do not use Wine. For LLVM-MinGW/Wine cross-tests,
+the CMake option `-DPRELOADER_L_WINE_EXECUTABLE=/path/to/wine64` selects
+`scripts/run_wine_test.py`, which preserves the actual process exit code.
+Output descriptors inherited by Wine services do not determine test success
+or timeout behavior.
 
-Güncel uygulama C arayüzü ve kaynak DLL ayrımı: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
-Güncel doğrulama: [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
+Current application C interface and source DLL separation:
+[PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
+Current verification:
+[PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 
-Son kullanıcı native loglarında Compile/Debug/CRT PASS; kalan Native test
-derlemesi düzeltmesi: [MSVC_NATIVE_LOOKUP_FIX.md](MSVC_NATIVE_LOOKUP_FIX.md).
+The latest owner-provided native logs report Compile/Debug/CRT PASS;
+the remaining Native test build correction is documented in
+[MSVC_NATIVE_LOOKUP_FIX.md](MSVC_NATIVE_LOOKUP_FIX.md).
 
-Güncel beş başlık ve cache temizleme kaydı: [STARTUP_BUILD_FIX.md](STARTUP_BUILD_FIX.md).
-Başarılı temizleme konsolda JSON basmaz; seçili build dizinindeki
-`PYTHON_CACHE_CLEANUP.json` ayrıntıları saklar. Hatalar nonzero ile build’i durdurur.
+Current five-launcher and cache-cleanup record:
+[STARTUP_BUILD_FIX.md](STARTUP_BUILD_FIX.md).
+Successful cleanup does not print JSON to the console; details are stored
+in `PYTHON_CACHE_CLEANUP.json` in the selected build directory.
+Failures stop the build with a nonzero exit code.

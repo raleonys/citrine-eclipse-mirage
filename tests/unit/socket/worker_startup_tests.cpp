@@ -1,11 +1,13 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_worker_startup.hpp"
 #include <algorithm>
 #include <bit>
 #include <functional>
 #include <iostream>
 #include <vector>
-namespace s=preloader_l::socket_recovered;
-namespace t=preloader_l::threads_recovered;
+namespace s=preloader_l::socket;
+namespace t=preloader_l::threads;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -58,7 +60,7 @@ std::int32_t Api::close_handle(std::uintptr_t h){f.closed.push_back(h);f.event("
 std::uint32_t Api::wait_one(std::uintptr_t h,std::uint32_t timeout){check(timeout==0xffffffffU,"infinite entry handshake wait");f.waited.push_back(h);f.event("wait");return f.wait_result;}
 std::int32_t Api::set_event(std::uintptr_t h){f.signaled.push_back(h);f.event("signal");return f.api_result;}
 std::uint32_t Api::sleep_ex(std::uint32_t ms,std::int32_t alertable){check(ms==0xffffffffU && alertable==1,"infinite alertable SleepEx once");f.event("sleep");return f.sleep_result;}
-s::Category Errors::system_category_028620(){++f.categories;f.event("category");return {0x9922,preloader_l::server_recovered::ErrorCategory::system};}
+s::Category Errors::system_category_028620(){++f.categories;f.event("category");return {0x9922,preloader_l::server::ErrorCategory::system};}
 [[noreturn]]void Effects::raise_028240(s::Error error,std::uintptr_t context){f.event("raise");throw Raised{error,context};}
 std::uintptr_t Effects::begin_thread_05e8e0(std::uintptr_t security,std::uint32_t stack,std::uintptr_t entry,s::IocpWorkerFunction* argument,std::uint32_t flags,std::uint32_t& id){check(!security && stack==f.stack && entry==0x18002a4a0ULL && argument==f.expected && !flags && !id,"cached uint32 stack, opaque entry, live argument, flags0 and zero local id");auto result=f.thread;f.event("thread");id=0xfedcba98U;return result;}
 void Effects::delete_function_slot_00(s::IocpWorkerFunction& function,std::uint32_t flags){check(&function==f.expected && flags==1,"exact deleting slot target and flag1");++f.deletes;f.event("delete");if(f.heap_delete){delete &function;f.expected=nullptr;}}
@@ -110,16 +112,16 @@ struct ThreadEffects final:t::Effects{
  std::uint32_t invoke_entry(std::uintptr_t identity,std::uintptr_t argument)override{return dispatch(identity,argument);}
  [[noreturn]]void free_library_and_exit_thread(t::Handle,std::uint32_t)override{unused();}[[noreturn]]void exit_thread(std::uint32_t)override{unused();}
 };
-struct Recovered final:s::RecoveredWorkerStartupEffects{
- Fixture& f;Recovered(Fixture& f,ThreadEffects& t):RecoveredWorkerStartupEffects(f.api,f.errors,t),f(f){}
+struct Recovered final:s::WorkerStartupEffectsAdapter{
+ Fixture& f;Recovered(Fixture& f,ThreadEffects& t):WorkerStartupEffectsAdapter(f.api,f.errors,t),f(f){}
  s::IocpWorker* allocate_worker_04b0bc(std::uint32_t)override{unused();}s::IocpWorkerFunction* allocate_function_04b0bc(std::uint32_t)override{unused();}
  void delete_worker_04b0f8(s::IocpWorker&,std::uint32_t)override{unused();}[[noreturn]]void raise_028240(s::Error e,std::uintptr_t c)override{throw Raised{e,c};}
  void delete_function_slot_00(s::IocpWorkerFunction& p,std::uint32_t flags)override{check(&p==f.expected && flags==1,"recovered bridge delete slot target");++f.deletes;}
  void invoke_function_slot_08(s::IocpWorkerFunction& p)override{check(&p==f.expected,"recovered bridge run target");++f.runs;}
 };
 void recovered_bridge(){
- for(auto stack:{0U,1U,0x80000000U,0xffffffffU}){Fixture f;ThreadEffects threads;Recovered recovered(f,threads);threads.requested_stack=stack;recovered.start_worker_02a000(f.worker,&f.function,stack);check(f.worker.handle_08==threads.returned && threads.context.entry==0x18002a4a0ULL && threads.context.argument==reinterpret_cast<std::uintptr_t>(&f.function) && threads.creates==1 && threads.frees==1,"actual unchanged05e8e0 bridge stores worker handle and opaque context with unconditional free(null)");threads.dispatch=[&](auto identity,auto argument){check(identity==0x18002a4a0ULL && argument==reinterpret_cast<std::uintptr_t>(&f.function),"controlled dispatch compares token, never executes image address");return s::worker_entry_02a4a0(*reinterpret_cast<s::IocpWorkerFunction*>(argument),f.api,recovered);};check(!threads.invoke_entry(threads.context.entry,threads.context.argument) && f.runs==1 && f.deletes==1,"controlled source worker entry executes through synthetic CRT Effects routing");}
- for(bool allocated:{false,true}){Fixture f;ThreadEffects threads;threads.allocation=allocated;threads.returned=0;Recovered recovered(f,threads);f.status=7;bool caught=false;try{recovered.start_worker_02a000(f.worker,&f.function,0);}catch(const Raised& e){caught=e.context==0x1800844f4ULL && e.error.value==7;}check(caught && !f.worker.handle_08 && threads.creates==static_cast<unsigned>(allocated) && threads.maps==static_cast<unsigned>(allocated) && threads.frees==1+static_cast<unsigned>(allocated),"existing CRT allocation/thread failures feed recovered startup failure with proper ownership effects");}
+ for(auto stack:{0U,1U,0x80000000U,0xffffffffU}){Fixture f;ThreadEffects threads;Recovered system_services(f,threads);threads.requested_stack=stack;system_services.start_worker_02a000(f.worker,&f.function,stack);check(f.worker.handle_08==threads.returned && threads.context.entry==0x18002a4a0ULL && threads.context.argument==reinterpret_cast<std::uintptr_t>(&f.function) && threads.creates==1 && threads.frees==1,"actual unchanged05e8e0 bridge stores worker handle and opaque context with unconditional free(null)");threads.dispatch=[&](auto identity,auto argument){check(identity==0x18002a4a0ULL && argument==reinterpret_cast<std::uintptr_t>(&f.function),"controlled dispatch compares token, never executes image address");return s::worker_entry_02a4a0(*reinterpret_cast<s::IocpWorkerFunction*>(argument),f.api,system_services);};check(!threads.invoke_entry(threads.context.entry,threads.context.argument) && f.runs==1 && f.deletes==1,"controlled source worker entry executes through synthetic CRT Effects routing");}
+ for(bool allocated:{false,true}){Fixture f;ThreadEffects threads;threads.allocation=allocated;threads.returned=0;Recovered system_services(f,threads);f.status=7;bool caught=false;try{system_services.start_worker_02a000(f.worker,&f.function,0);}catch(const Raised& e){caught=e.context==0x1800844f4ULL && e.error.value==7;}check(caught && !f.worker.handle_08 && threads.creates==static_cast<unsigned>(allocated) && threads.maps==static_cast<unsigned>(allocated) && threads.frees==1+static_cast<unsigned>(allocated),"existing CRT allocation/thread failures feed recovered startup failure with proper ownership effects");}
 }
 }
 int main(){try{success_matrix();failures();entry();recovered_bridge();std::cout<<"PASS: "<<checks<<" socket worker startup checks; retained02a000/02a4a0 callbacks, cached errors/handles, controlled lifetime and unchanged recovered05e8e0 bridge\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

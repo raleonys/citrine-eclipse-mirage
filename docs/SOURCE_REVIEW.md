@@ -1,44 +1,103 @@
-Bu belge önceki delta incelemesinin kaydıdır. Sonraki geniş tarama ve yeni düzeltmeler: [tüm kaynak denetimi](BROAD_SOURCE_AUDIT.md).
+This document records the earlier delta review. The subsequent wider
+audit and corrections are in
+[the whole-source audit](BROAD_SOURCE_AUDIT.md).
 
-# Kaynak deltası, düzeltmeler ve test katkıları
+# Source delta, corrections, and test contributions
 
-Yeni kullanıcı RE paketi incelemesindeki dört bulgu düzeltildi. Eklenen karşılaştırmalı test ayrıca ikinci document/configuration girişinin Config2 kökünü kaybettiğini ortaya çıkardı; bu beşinci adaptör hatası da düzeltildi. Bu belge tüm özgün DLL ile kaynak/ABI eşdeğerliği iddiası değildir.
+Four findings from the new owner-provided RE package review were
+corrected. An additional comparative test exposed a fifth adapter
+defect: the second document/configuration entry lost the Config2
+root. That defect was also corrected. This document does not
+claim source/ABI equivalence with the entire original DLL.
 
-## İncelenen kapsam
+## Reviewed scope
 
-Önceki arşive göre yeni12modülün33CPP/HPP dosyası ve değişen11öncekiCPP/HPP dosyası tek tek sınıflandırıldı. Paket içindeki24yeni testCPP için uygunluk/karşılık kaydı çıkarıldı. Ana pseudocode/assembly dökümleri öncekiyle byte-identical; kaynak bileşimi ilerlemesi yeni native fonksiyon gövdesi sayılmaz.
+The 33 CPP/HPP files in twelve new modules and eleven changed
+CPP/HPP files from existing modules were classified individually
+against the preceding archive. For 24 new test CPP files,
+adoption/correspondence decisions were recorded. The main
+pseudocode/assembly dumps remained byte-identical to the prior
+package; progress in source composition must not be counted
+as new native function bodies.
 
-- [44 kaynak/başlık için karşılık ve karar](../metadata/evidence/SOURCE_DELTA_REVIEW.csv)
-- [24 yeni test dosyası için uyarlama kararı](../metadata/evidence/SOURCE_TEST_ADOPTIONS.csv)
-- [Güncel politika](../metadata/CONFIG_PLATFORM_POLICY.json)
-- [Çalıştırılmış doğrulama](../metadata/evidence/SOURCE_REVIEW_VALIDATION.json)
+- [Crosswalk and decisions for 44 source/header files](../metadata/evidence/SOURCE_DELTA_REVIEW.csv)
+- [Adoption decisions for 24 new test files](../metadata/evidence/SOURCE_TEST_ADOPTIONS.csv)
+- [Current policy](../metadata/CONFIG_PLATFORM_POLICY.json)
+- [Executed validation](../metadata/evidence/SOURCE_REVIEW_VALIDATION.json)
 
-Tablodaki işlev adları kaynakta gezinmek içindir; çağrı adlarını da içeren bir metin envanteridir, compiler AST veya yürütülmüş satır kapsamı değildir. Uygulama sahibinden gerçek Windows adaptörüne giden ilgili çağrı aileleri ayrıca incelenmiştir. İlgisiz private CRT/domain yolları ürün kapsamına alınmamıştır.
+Function names in these tables assist source navigation. This
+is a text inventory containing call names, not a compiler AST
+or executed line coverage. The relevant call families from the
+application owner to actual Windows adapters were also reviewed.
+Unrelated private CRT/domain paths were not brought into the
+product scope.
 
-## Uygulanan değişiklikler
+## Changes implemented
 
-| Konu | Önce | Sonra / yeni regresyon |
+| Area | Before | After / new regression |
 |---|---|---|
-| UTF8 CFG yolları | resolve_path filesystem ANSI/OEM codepage seçiyordu. | Özgün0192d0→0145d0 gibi UTF8/65001; ASCII, Latin/Türkçe/CJK/nonBMP, absolute/UNC/relative, counted NUL, malformed input ve iki gerçek CFG yükleme yolu sınanır. Ayrı filesystem-codepage işlemleri korunur. |
-| Avatar ilk açma hatası | binary writer false sonucuna ek runtime_error üretiliyordu. | İlk open/state hatası göz ardı edilir; alt write/close exception'ları yayılır. Gerçek açılamayan yol ve configure devamı sınanır. Invalid image enum dosyaya erişmeden reddedilir; sentinel dosyanın değişmediği kontrol edilir. |
-| Dizin yan-etki sırası | Bütün liste alındıktan sonra filtre/silme yapılıyordu. | Ortak cleanup_cached_avatars, senkron visitor üzerinde exact `_AVATAR_` filtresini işler. Somut Environment std::directory_iterator kullanır; callback bitmeden increment olmaz. Vector API eski sağlayıcılar için optional fallback'tir. Geç enumeration ve filename/narrow/remove hataları, önceki etkilerin korunması, sonraki etkilerin durması sınanır. |
-| Thread hataları | Genel runtime_error yalnız indeks metni taşıyordu. | Yedi binary tablo kodu16/22/3/12/1/36/11 + generic category + context; gerçek Windows Execution ve Events aynı standart compiler helper'ı kullanır. Invalid indeksler güvenli reddedilir. |
-| Document kökü | Environment.load_document seçilmiş Config2 alt ağacını tam document sanıyordu; üst çağıran tekrar child(Config2) arıyordu. | document arayüzü Config2'yi kendi kökü altında döndürür. Aktif hash girişinin subtree sözleşmesi değişmez. Ana/override dosyaları iki adaptörden de beklenen Unicode yolu verir. |
+| UTF-8 CFG paths | `resolve_path` selected the filesystem ANSI/OEM codepage. | The original 0192d0 -> 0145d0 path uses UTF-8/65001. Test ASCII, Latin/non-English/CJK/non-BMP, absolute/UNC/relative, counted NUL, malformed input, and two actual CFG loading paths. Separate filesystem-codepage operations remain intact. |
+| Initial avatar open error | A false result from the binary writer generated an additional `runtime_error`. | Ignore only the initial open/state failure; propagate downstream write/close exceptions. Test an actually unopenable path and continuation of configuration. Reject an invalid image enum before file access and verify an existing sentinel file is unchanged. |
+| Directory side-effect ordering | Filtering/deletion happened after the entire listing was collected. | Shared `cleanup_cached_avatars` applies the exact `_AVATAR_` filter within a synchronous visitor. Concrete Environment uses `std::directory_iterator`; do not increment before callback completion. Vector API remains an optional fallback for older providers. Test late enumeration and filename/narrow/remove errors, preservation of previous effects, and stopping subsequent effects. |
+| Thread errors | Generic `runtime_error` contained only an index. | Seven binary table codes 16/22/3/12/1/36/11 plus generic category and context; actual Windows Execution and Events use the same standard-compiler helper. Invalid indices are rejected safely. |
+| Document root | `Environment.load_document` treated the selected Config2 subtree as the full document, while its caller looked for `child(Config2)` again. | Return Config2 under its own root from the document interface. Keep the active hash entry's subtree contract unchanged. Main/override files produce the expected Unicode paths through both adapters. |
 
-Ek savunma: UTF8 giriş boyutu SDK int sınırından önce kontrol edilir; bilinmeyen avatar kimliği fallback olarak kabul edilmez. Bunlar yeni bir private CRT veya farklı filesystem backend'i gerektirmez.
+Additional defense: validate UTF-8 input length before the SDK
+integer limit; do not treat unknown avatar IDs as a fallback.
+These changes do not require a private CRT or different filesystem
+backend.
 
-## Test katkısı ve sınırlama
+## Test contributions and limitations
 
-Yeni configuration_platform_contracts yalnız production core'a bağlanır. Gerçek dosya/parser/hash/adaptör yollarını ve NativeFactory'yi çalıştırır. Konfigürasyon unit fixture'ları gerçek initialize_configuration gövdesine kontrollü stream/callback hataları verir. Late FindNext failure için gerçek Windows API enjeksiyonu yapıldığı iddia edilmez: mevcut Win32/std iterator uygulamasında normal silme, callback exception, reentry/nested cursor ve compatibility collection ayrıca gerçek dosyalarla sınanır.
+The new `configuration_platform_contracts` target links only
+the Production core. It exercises actual file/parser/hash/adapter
+paths and NativeFactory. Configuration unit fixtures inject
+controlled stream/callback failures into the real
+`initialize_configuration` implementation. Actual Windows API
+fault injection for a late FindNext failure is not claimed:
+normal deletion, callback exceptions, reentry/nested cursors,
+and compatibility collections are separately tested with
+real files through the current Win32/standard iterator.
 
-Native callback fixture'ı artık Effects/Context/Binding kurulduktan SONRA original slot, map ve seçilmiş portu değiştirir. Callback sonuçları aynı owner depolamasından geldiği için equal-valued snapshot kopyaları bu testi geçemez. Busy close/drain/retry ve LastError testleri zaten vardır ve korunur. Yeni callback/domain paketleri aynen taşınmaz.
+The native callback fixture now changes the original slot, map,
+and selected port **after** constructing Effects/Context/Binding.
+Because callback results come from the same owner storage,
+equal-valued snapshot copies cannot pass this test. Busy
+close/drain/retry and LastError tests already existed and
+remain. Entire new callback/domain packages were not copied.
 
-Binary output testine write exception sırasında tam bir destructor ve uydurulmuş explicit close olmaması kontrolü eklendi. Mevcut close-exception/open-failure testleri korunur. Başarısızlıklar başarı gibi normalize edilmez.
+The binary output test now checks that there is exactly one
+destructor during a write exception and no invented explicit
+close. Existing close-exception/open-failure tests remain.
+Failures are not normalized as successful results.
 
-Karşılaştırılan test ailelerinden literal stream flush/private PTD/FLS/single-controller admission modelleri mevcut standard-CRT ürünün sözleşmesi değildir. Doğrudan taşınmaları yanlış bir davranışı zorunlu hale getirirdi. ByteWide staging'in arbitrary/unaligned domain'i bu tur üretime alınmadı; mevcut typed SDK pointer sözleşmesinde yeni bir crash gösterilmedi. Debug log formatı ve ürün UI başlığı mevcut onaylı politikalardır. Std::filesystem create/remove motoru korunur; farklı compiler sürümlerinin bütün error-prefix'leri orijinalle eşdeğer ilan edilmez.
+Among the compared test families, literal stream flushing,
+private PTD/FLS, and single-controller admission models are
+not contracts of the current standard-CRT product. Copying
+them would mandate incorrect behavior. ByteWide staging with
+arbitrary/unaligned inputs was not added to Production in
+this pass; no new crash was demonstrated under the existing
+typed SDK pointer contract. Debug log format and product
+UI title are existing approved policies. The standard
+filesystem create/remove implementation remains; error
+prefixes across all compiler versions are not declared
+equivalent to the original.
 
-C++ Dependencies arayüzüne optional virtual visitor eklendi; geliştirme C++ tüketicileri bütün kaynaklarla yeniden derlenmelidir. Üç production C export/ordinal, hook11/static Crypt32, metadata/PNG politikası, dört vendor pini,64production/74referenceTU ayrımı ve önceki onaylı transport/persistence/lifetime kararları değişmez.
+An optional virtual visitor was added to the C++ Dependencies
+interface; development C++ consumers must be rebuilt with
+all the sources. The three Production C exports/ordinals,
+hook 11/static CRYPT32, metadata/PNG policy, four vendor
+pins, 64 Production/74 reference translation-unit split,
+and previously approved transport/persistence/lifetime
+decisions remain unchanged.
 
-## Kabul sınırı
+## Acceptance boundary
 
-Kaynak denetimi, kontrollü regresyon, Wine cross-build ve native Windows/game kabulü ayrı tutulur. Önceki build için kullanıcının Windows/Golden/oyun başarısı tarihsel kanıt olarak korunur; güncel kod için native MSVC/game tekrar koşulmalıdır. Beş düzeltme ve genişleyen testler, başka hiçbir hata bulunamayacağının ispatı değildir. Çalıştırılmamış platform/domain koşulları doğrulama kaydında açık bırakılır.
+Source review, controlled regression, Wine cross-build,
+and native Windows/game acceptance are separate classes.
+The owner-provided Windows/Golden/game PASS of the earlier
+build remains historical evidence; native MSVC/game tests
+must be repeated for the changed source. Five corrections
+and expanded tests are not proof that no other defects
+remain. Unexecuted platform/domain conditions are left
+open in the validation record.

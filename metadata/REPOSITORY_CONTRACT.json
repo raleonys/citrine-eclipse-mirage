@@ -5,7 +5,6 @@
     "cmake",
     "docs",
     "exports",
-    "governance",
     "include",
     "metadata",
     "resources",
@@ -17,15 +16,14 @@
   ],
   "required_files": [
     "AGENTS.md",
+    "GOVERNANCE.md",
     "README.md",
     "CMakeLists.txt",
     "CMakePresets.json",
-    "RELEASE_STATE.json",
     "docs/DEVELOPMENT.md",
     "docs/GOLDEN_PROTOCOLS.md",
     "docs/ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md",
     "docs/VALIDATION.md",
-    "governance/CURRENT_SCOPE.md",
     "metadata/INTEGRATION_REQUIREMENTS.json",
     "metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json",
     "metadata/METADATA_OWNERSHIP.json",
@@ -39,7 +37,8 @@
     "docs/GITHUB_WORKFLOW.md",
     ".github/workflows/weekly-release.yml",
     "scripts/weekly_release.py",
-    "docs/WEEKLY_RELEASE.md"
+    "docs/WEEKLY_RELEASE.md",
+    "metadata/RUNTIME_CURRENT_STATUS.json"
   ],
   "flat_source_package": true,
   "nested_reference_archives": false,
@@ -50,12 +49,11 @@
     ".gitattributes",
     ".gitignore",
     "AGENTS.md",
+    "GOVERNANCE.md",
     "CHANGELOG.md",
     "CMakeLists.txt",
     "CMakePresets.json",
     "LICENSE",
-    "README.md",
-    "RELEASE_STATE.json",
-    "SOURCE_REVISION.md"
+    "README.md"
   ]
 }

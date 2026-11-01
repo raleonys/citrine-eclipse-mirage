@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/config/parser.hpp"
 #include "preloader_l/config/vdf_grammar.hpp"
 #include <type_traits>
@@ -5,7 +7,7 @@
 
 namespace preloader_l::parser {
 ParseError::ParseError(ErrorRule r,Position p)
- :std::runtime_error("recovered Config2 grammar mismatch"),rule(r),position(p) {}
+ :std::runtime_error("Config2 grammar mismatch"),rule(r),position(p) {}
 const Node* Node::find(std::string_view key) const {
     for(const auto& node:children) if(node.name==key)return &node;
     return nullptr;
@@ -91,7 +93,7 @@ configuration::Node convert(const Node& node,const BinaryIterationOrder& orders,
 bool parse(std::string_view raw,State& state) {
     state.removed_utf8_bom=raw.substr(0,3)==std::string_view("\xef\xbb\xbf",3);
     if(state.removed_utf8_bom)raw.remove_prefix(3);
-    // Explicit LF-only counting matches the recovered byte/line/column contract
+    // Explicit LF-only counting matches the byte/line/column contract
     // for CR, LF and CRLF on both hosts. Empty views may otherwise have nullptr data.
     peg::text_view_input<peg::ascii::scan::lf> input(raw.empty()?std::string_view(""):raw);
     return peg::parse<vdf::Document,VdfAction,VdfControl>(input,state);

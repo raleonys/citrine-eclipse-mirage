@@ -15,6 +15,19 @@ recorded in [BUILD_CLEANUP.md](BUILD_CLEANUP.md).
 | `preloader_l_reference_objects` | 52 transport models, 16 XML models and ten reference adapters/compositions |
 | `preloader_l_reference_models` | Retained models; may depend on the production core |
 | `preloader_l_source_api` | Both source sets, preserving the development C++ API |
+| `preloader_l_source_minhook`, `preloader_l_source_tinyxml2` | MSVC shared-CRT vendor builds used only by the C++ development DLL |
+
+MSVC compiles the complete development DLL source set separately with `/MD`
+(Release) or `/MDd` (Debug); its C++ host and vendor libraries use the same CRT.
+The source host constructs parser states that the DLL mutates, receives strings,
+and catches parser exceptions, so separate static CRT instances are unsafe at
+this boundary. The Debug timeout was observed immediately before destruction of
+the invalid-input parser state, after all functional checks completed and before
+shutdown. This identifies a destructor boundary, not a captured native stack.
+The shared-CRT correction still requires fresh native Debug/Release execution.
+Production and static reference/test targets retain `/MT` or `/MTd` and their
+existing objects. The MSVC development DLL must not link those static-CRT
+objects or archives. Non-MSVC development builds retain their existing graph.
 
 Production must never depend on a reference target or the source API DLL. With
 `BUILD_TESTING=OFF` and `PRELOADER_L_BUILD_SOURCE_API_DLL=OFF`, reference targets

@@ -1,39 +1,99 @@
-# Windows kabulü ve DLL boyutu
+# Windows acceptance and DLL size
 
-Kullanıcının sunduğu Compile, Production, Debug, Static CRT ve Native logları PASS ile kapanıyor. Native193/193, CRT6/6 ve Production'ın altı Golden kapısı başarılı. Yüklenen DLL'in SHA-256'sı Production logundaki nihai DLL ile aynı:
+The owner-provided Compile, Production, Debug, Static CRT, and Native logs
+all concluded with PASS. Native passed 193/193, CRT passed 6/6, and all
+six Production Golden gates passed. The uploaded DLL has the same SHA-256
+as the final DLL in the Production log:
 
 `4a0f37c9328ecf31d0815a9e9b85634bc481e77e2f07b636d4ea65bb4783f26b`
 
-Ayrıca yüklenen DLL üzerinde salt okunur final metadata incelemesi PASS: doğru timestamp, geçerli checksum, Rich/debug/COFF symbol/certificate yokluğu, üç doğru C export/ordinal, istenen import sırası, static CryptQueryObject import ve iki doğru read-only avatar doğrulanır. PE resource yalnız beklenen VERSIONINFO'dur.
+Read-only inspection of the uploaded final DLL metadata also passed:
+the correct timestamp, valid checksum, no Rich/debug/COFF-symbol/certificate
+data, three correct C exports and ordinals, required import ordering,
+static CryptQueryObject import, and two correct read-only avatars were
+verified. VERSIONINFO is the only PE resource.
 
-Oyun kabulü kullanıcının açık PASS beyanı olarak kaydedildi; oyun adı veya her senaryonun ayrı matrisi verilmedi ve burada oyun tekrar çalıştırılmadı. Önceki native/Golden/oyun bekleme kayıtları tarihsel kanıt olarak korunur; güncel durum [kabul kaydındadır](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json). Yeni DLL için önceki üç bekleyen kabul işi bu kanıt sınıflarıyla kapanmıştır. Bu, bütün özgün DLL fonksiyonları/ABI'si veya tüm OS/consumer senaryoları için sınırsız eşdeğerlik iddiası değildir.
+Game acceptance was recorded as an explicit PASS statement from the
+owner. No game name or per-scenario matrix was provided, and the game
+was not rerun in this investigation. Earlier pending native/Golden/game
+acceptance records remain historical evidence; the current status is
+in [the acceptance record](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json).
+For that DLL, the three previously pending acceptance tasks were
+closed by those specific evidence classes. This does not establish
+unlimited equivalence with every original DLL function/ABI or every
+OS/Consumer scenario.
 
-## Ölçülen fark
+## Measured difference
 
-| Bölüm / dosya | Özgün DLL, KiB | Ürün DLL, KiB | Fark, KiB |
+| Section / file | Original DLL, KiB | Product DLL, KiB | Difference, KiB |
 |---|---:|---:|---:|
-| Dosyanın tamamı | 678 | 880 | +202 |
-| .text: makine kodu | 501 | 626,5 | +125,5 |
-| .rdata: sabitler, tablolar, C++/exception bilgileri | 135,5 | 185 | +49,5 |
-| .data: dosyada bulunan değiştirilebilir veriler | 10 | 26 | +16 |
-| .pdata: x64 unwind kayıtları | 25 | 34 | +9 |
+| Entire file | 678 | 880 | +202 |
+| .text: machine code | 501 | 626.5 | +125.5 |
+| .rdata: constants, tables, C++/exception information | 135.5 | 185 | +49.5 |
+| .data: writable file-backed data | 10 | 26 | +16 |
+| .pdata: x64 unwind records | 25 | 34 | +9 |
 | .reloc | 4 | 6 | +2 |
 | .rsrc | 1 | 1 | 0 |
 
-KiB=1024byte; tabloda PE bölümlerinin dosyada kapladığı raw size kullanılır. Dosya farkı206848byte, yani202KiB ve%29,7935. Başlık boyutları aynı; üründeki0,5KiB .fptable ve özgündeki0,5KiB _RDATA da toplam farkta birbirini dengeler. İlk beş büyüyen bölüm farkın tamamını açıklar. Bu dosya boyutudur; private working set/RAM ölçümü değildir.
+KiB means 1,024 bytes. The table uses the PE sections' on-disk raw
+sizes. The file-size difference is 206,848 bytes (202 KiB), or
+29.7935%. Header sizes are equal. The product's additional 0.5 KiB
+`.fptable` and the original's 0.5 KiB `_RDATA` offset each other in
+the total. The five growing sections account for the full
+difference. These are file measurements, not private working-set
+or RAM measurements.
 
-Ürün iki geçerli PNG içerir:4181+3882=8063byte. Özgünde7488+3882=11370byte vardır. Avatar verisi3307byte küçülmüştür. Resource bölümü aynı1KiB; avatar PE resource'a konmamıştır. Üründe debug dizini/COFF symbol tablosu ve bölümlerden sonra overlay bulunmaz. Dolayısıyla bu büyüme avatar, PDB gömülmesi veya dosyaya eklenmiş artı veriden gelmiyor.
+The product contains two valid PNGs, 4,181 + 3,882 = 8,063 bytes.
+The original has 7,488 + 3,882 = 11,370 bytes. Avatar data is
+3,307 bytes smaller. The resource section remains 1 KiB; the
+avatar is not stored as a PE resource. The product has no debug
+directory, COFF symbol table, or trailing overlay. Therefore,
+the increase does not arise from avatar data, embedded PDBs,
+or additional trailing file data.
 
-## Neden makul, ne kadarını kesin biliyoruz?
+## Why this is plausible, and what is established
 
-Kaynakta açıkça onaylanan ek runtime davranışları bulunuyor: hook11/SAFE-FREEZE, call-gate ve retryable cleanup, atomik dosya/rollback sahipliği, bounded worker/oturum/deadline/event delivery yönetimi ve artık iki ailede çalışan listener. Modern vendor sürümleri, compiler-owned standard CRT/STL, template/inlining tercihleri ve C++ exception/RAII kodu da özgün binary ile farklı bir codegen üretir. Bunlar ek kod/veri üretebilecek somut kaynak farklarıdır;202KiB'ın her kütüphaneye kesin dağıtımı değildir.
+The source includes explicitly approved additional runtime behavior:
+hook 11/SAFE-FREEZE, call gates and retryable cleanup, atomic
+file/rollback ownership, bounded worker/session/deadline/event
+delivery management, and a listener operating for both address
+families. Modern vendor versions, the standard compiler-owned
+CRT/STL, template/inlining choices, and C++ exception/RAII code
+also yield code generation different from the original binary.
+These are concrete source-level differences capable of increasing
+code and data size; they do not establish an exact attribution
+of the 202 KiB among libraries.
 
-İki DLL'in de doğrudan dinamik CRT import'u yoktur; yalnız “biz statik CRT kullanıyoruz” açıklaması farkın tamamını kanıtlamaz. Mevcut Golden link profilinde /LTCG:OFF açıkça seçilidir; özgünün gerçek optimizasyon/LTO ayarları DLL başlığından çıkarılamaz. Üründe2869, özgünde2130x64 exception-directory girdisi vardır; bu daha fazla unwind bölgesiyle tutarlıdır ama739bağımsız ek fonksiyon kanıtı değildir.
+Neither DLL directly imports a dynamic CRT, so merely citing the
+product's static CRT does not explain the whole difference.
+The current Golden linker profile explicitly chooses `/LTCG:OFF`;
+the original's optimization/LTO settings cannot be inferred from
+its DLL headers. The product has 2,869 x64 exception-directory
+entries versus 2,130 in the original. That is consistent with
+more unwind regions, but it is not proof of 739 independent
+additional functions.
 
-Production ve Native loglarında gerçek target/linker-map sınırı PASS;74referenceTU'nun ürüne karıştığına dair bir bulgu yok. Herhangi bir unreachable/dead code olmadığının ispatı olarak yorumlanmaz. Tam fonksiyon/kütüphane boyut hesabı için kabul edilen aynı native build'in linker MAP, OBJ/LIB veya PDB katkı bilgileri gerekir; bunlar yüklenmedi. Mevcut DLL'lerle tam byte-attribution iddia edilmez.
+The Production and Native logs passed real target/linker-map
+boundaries; no finding indicates that the 74 reference translation
+units entered the product. This does not prove the absence of
+all unreachable or dead code. Exact function/library-size
+attribution would require linker MAP, OBJ/LIB, or PDB contribution
+data from the same accepted native build; those were not uploaded.
+Exact byte attribution from the available DLLs is not claimed.
 
-Boyut farkı mevcut ek davranışlar ve farklı build bileşimi için makuldür; tek başına çalışma hatası veya gereksiz source import'u göstermez. Bu incelemede runtime kodu, vendor byte'ları, linker/optimizasyon seçenekleri ve teslim edilmiş ZIP'ler değiştirilmedi. Yalnız yeni kanıt ve güncel kabul durumu kaydedildi.
+The size difference is plausible given additional behavior and
+the different build composition; alone it does not demonstrate a
+runtime defect or unnecessary source import. This investigation
+did not change runtime code, vendor bytes, linker/optimization
+settings, or delivered ZIPs. Only new evidence and the current
+acceptance status were recorded.
 
-Native logda12compiler uyarısı vardır; verilen konumlar test/fixture kaynaklarına veya onların template instantiation zincirlerine aittir. Native test sonucu başarısız değildir. Compiler uyarısız kabul iddiası yapılmaz; bu tur boyut sorusu nedeniyle test kodu da değiştirilmedi.
+The Native log contains twelve compiler warnings at locations
+belonging to test/fixture sources or their template-instantiation
+chains. The Native test result was not a failure. Warning-free
+compilation is not claimed; the size investigation did not modify
+test code.
 
-[Byte ve bölüm dökümü](../metadata/evidence/OWNER_DLL_SIZE_COMPARISON.json) · [Final DLL incelemesi](../metadata/evidence/OWNER_FINAL_DLL_INSPECTION.json) · [Ham log ve kabul özeti](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json)
+[Byte and section dump](../metadata/evidence/OWNER_DLL_SIZE_COMPARISON.json)
+· [Final DLL inspection](../metadata/evidence/OWNER_FINAL_DLL_INSPECTION.json)
+· [Raw logs and acceptance summary](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json)

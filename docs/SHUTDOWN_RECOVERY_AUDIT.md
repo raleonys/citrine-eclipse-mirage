@@ -1,146 +1,224 @@
-# Hook kapanışı, timer containment ve socket-close incelemesi
+# Hook shutdown, timer containment and socket-close review
 
-**Donor emekliliği BLOCKED kalır.** Bu devam turu bir doğrulanmış üretim
-düzeltmesi, üç kalıcı test executable'ı ve Brownfield'in kendi Asio snapshot'ıyla
-yeniden üretilen bir sahiplik açığı içerir. Socket-close bulgusu çözülmüş değildir.
-Önceki rapor [DONOR_RECOVERY.md](DONOR_RECOVERY.md) tarihsel kapsamıyla korunur.
+**Donor retirement remains BLOCKED.** This follow-up review
+contains one verified Production correction, three persistent
+test executables and an ownership gap reproduced with
+Brownfield's own Asio snapshot. The socket-close finding
+was unresolved at this historical checkpoint. The earlier
+[DONOR_RECOVERY.md](DONOR_RECOVERY.md) retains its
+historical scope.
 
-## Uygulanan hook cleanup düzeltmesi
+## Applied hook-cleanup correction
 
-`Application::Impl::stop`, hook quiesce başarısızlığını kendi içinde sonsuz
-`while`/Sleep döngüsünde yeniden deniyordu. MinHook disable veya release sürekli
-başarısızsa worker bu çağrıdan çıkamıyor; DLL worker'ının mevcut `ERROR_BUSY` ve
-sonraki shutdown isteğiyle retry protokolüne ulaşamıyordu. Çağıranın
-`DllShutdown(timeout)` beklemesi süre sonunda dönebilse de içerideki cleanup
-bitmeyen denemeyi sürdürüyordu.
+`Application::Impl::stop` previously retried failed
+hook quiescence indefinitely inside its own
+`while`/Sleep loop. If MinHook disable or release
+failed persistently, the worker could not leave
+this call and reach the DLL worker's existing
+`ERROR_BUSY` and retry-on-next-shutdown protocol.
+Although a `DllShutdown(timeout)` caller could
+time out, internal cleanup continued retrying.
 
-Artık her stop isteği tek quiesce denemesi yapar. Tamamlanmazsa exception aynı
-Application/Hooks/Binding sahibini canlı tutan DLL worker'ına ulaşır. Worker
-cleanup başarısızlığını kaydeder ve sonraki stop isteğini bekler. Başarılı disable
-tekrar yapılmaz; drain veya engine release kaldığı yerden tamamlanır. Owner ancak
-binding ve trampoline sahipliği bırakıldıktan sonra yok edilir. Üç C export,
-ordinal'lar ve mevcut0–4 shutdown kodları değişmedi. Bu durumda eski kodun pending
-timeout sonucunun yerini, worker'ın raporladığı `DLL_SHUTDOWN_CLEANUP_FAILED`
-alabilir; yeni durum kodu eklenmedi.
+Each stop request now makes one quiescence attempt.
+If incomplete, an exception reaches the DLL worker
+while preserving the same Application/Hooks/Binding
+owner. The worker records cleanup failure and waits
+for another stop request. A completed disable is not
+repeated; drain or engine release resumes where it
+stopped. The owner is destroyed only after the
+binding and trampoline ownership are released.
+The three C exports, ordinals and existing shutdown
+codes 0–4 remain unchanged. The former pending-timeout
+result may be replaced by worker-reported
+`DLL_SHUTDOWN_CLEANUP_FAILED`; no new status code
+was introduced.
 
-100 ms yalnız mevcut hook drain denemesinin bütçesidir. Bu değişiklik native
-API'leri, provider/handler join'lerini veya bütün Application shutdown işlemini
-preempt eden bir toplam süre garantisi değildir. Caller timeout'u ve sahipliği
-koruma sözleşmesi devam eder. Harici audit'in tüm shutdown liveness konusu
-tamamlanmış sayılmaz.
+The 100 ms value is only the budget for the
+existing hook-drain attempt. This change does
+not provide a total shutdown guarantee that
+preempts native APIs, provider/handler joins
+or all Application shutdown work. Caller timeout
+and ownership-preservation contracts remain.
+The external audit's wider shutdown-liveness
+question was not declared closed.
 
-## Gerçek owner zincirinde önce/sonra kanıtı
+## Before/after evidence on the actual ownership chain
 
-`application_shutdown_failure_contracts` gerçek `dll_entry.cpp` worker'ını,
-`DllShutdown`, `Application`, hook transaction ve binding'i çalıştırır. Fixture
-wrapper'ı yalnız izole Options ve sayaçlar sağlar; lifecycle işlemlerini gerçek
-Application'a devreder. MinHook API ve external-thread scan sınırları kontrollüdür:
-bu fixture gerçek hook patching veya thread suspension yapmaz. Native call drain
-senaryosunda gerçek callback `Lease` sahibi açık tutulur; sayaç değeri elle
-uydurulmaz.
+`application_shutdown_failure_contracts` runs the
+actual `dll_entry.cpp` worker, `DllShutdown`,
+Application, hook transaction and binding.
+The fixture wrapper supplies only isolated Options
+and counters; lifecycle operations go to the real
+Application. MinHook API and external-thread scan
+boundaries are controlled, so this fixture does
+not perform actual hook patching or thread suspension.
+The native-call drain scenario holds an actual
+callback `Lease` open; its count is not fabricated.
 
-| Hata | Eski kaynak | Düzeltilmiş kaynakta beklenen ve görülen |
+| Failure | Previous source | Expected and observed in corrected source |
 |---|---|---|
-| Hook disable başarısız | İç retry döngüsünden çıkmıyor. | Tek denemeden sonra cleanup failure; aynı binding/owner saklanıyor. |
-| Gerçek in-flight Lease sürüyor | İçeride drain tekrarları sürüyor. | Lease ve engine canlı kalıyor; lease bırakıldıktan sonraki istekte tamamlanıyor. |
-| Engine uninitialize başarısız | İç cleanup döngüsü tekrar ediyor. | Önceden tamamlanmış disable tekrarlanmadan yalnız release yeniden deneniyor. |
-| External unload scan reddediyor | İç quiesce döngüsü sürüyor. | Owner korunuyor; scan izin verince sonraki istekte aynı owner kapanıyor. |
+| Hook disable fails | Internal retry loop never exits. | Cleanup failure after one attempt; retain the same binding/owner. |
+| Real in-flight Lease remains | Internal drain retries continue. | Keep Lease and engine alive; finish on a later request after Lease release. |
+| Engine uninitialize fails | Internal cleanup loop repeats. | Retry only release without repeating a previously successful disable. |
+| External unload scan rejects | Internal quiescence loop continues. | Preserve owner; close the same owner on a later request when the scan permits. |
 
-Aynı son test kaynaklarıyla dört senaryo önceki kaynakta FAIL, düzeltmede PASS.
-Başarısız fixture testleri de fault'u kaldırıp DLL worker'ını kapatır; çalışan
-trampoline/owner üzerinde kör FreeLibrary yapılmaz. Önceki kaynak, teslim edilmiş
-arşivin manifesti doğrulanmış temiz açılımından derlenir; değişen çalışma ağacı
-baseline yerine kullanılmaz. Build kayıtları harness ve application hash'lerini
-ve her iki varyantın kullandığı aynı eski core archive hash'ini tutar.
+The same final test sources were used for all four
+scenarios: FAIL with the preceding source and PASS
+with the corrected source. Failure fixtures also
+clear the injected fault and shut down the DLL
+worker; no blind FreeLibrary is performed on a
+live trampoline/owner. The preceding source was
+built from a manifest-verified clean extraction
+of the delivered archive, not from a modified
+working tree used as a baseline. Build receipts
+bind harness and Application hashes and the
+same old core-archive hash for both variants.
 [PINNED_RESULTS.json](../metadata/evidence/shutdown/PINNED_RESULTS.json).
 
-## Timer hipotezinin sonucu: test edilen çağıranlar fail-closed
+## Timer hypothesis: tested callers fail closed
 
-`refresh_deadline` yeni bekleyişi başlatmadan cached deadline'ı günceller.
-Tek başına metoda bakınca exception sonrası cached state şüpheli görünür.
-Ancak canlı oturuma etkisi, exception'ı çağıranın nasıl ele aldığına bağlıdır.
+`refresh_deadline` updates the cached deadline
+before initiating a new wait. Examining that
+method alone suggests potentially stale cache
+state after an exception; the effect on a live
+session depends on how its caller handles it.
 
-Yeni `timer_failure_contracts`, gerçek Asio socket/IOCP timer ve üretim Client
-callback'leri üzerinde üç yolu sınar: receive callback sırasında wait initiation
-hatası, receive sırasında cancellation sınırında exception ve timer callback'i
-içinde reschedule hatası. Her üçünde session kapanır, cached deadline temizlenir
-ve peer kapanışı görür. Eski kaynak da bu testleri geçirir. Bu yüzden timer runtime
-politikasına veya vendor'a gereksiz bir düzeltme uygulanmadı.
+The new `timer_failure_contracts` runs three
+paths through real Asio socket/IOCP timers
+and Production Client callbacks: wait-initiation
+failure during receive, exception at the
+cancellation boundary during receive, and
+reschedule failure inside a timer callback.
+In all three cases the session closes, the
+cached deadline is cleared and the peer
+sees closure. The preceding source also
+passes the tests. No unnecessary vendor
+or timer runtime-policy change was made.
 
-Hata injection'ı yalnız test executable'ındaki timer sınırındadır. Başarılı
-çağrılar gerçek Asio timer'a gider; kontrollü exception'lar operasyondan önce
-üretilir. Bu, gerçek Windows'ta `cancel()`ın belirli bir hatayı ne sıklıkta
-ürettiği veya bütün olası kısmi OS arızalarının kapandığı iddiası değildir.
-Örneğin IOCP completion post başarısızlığında Asio'nun kendi completed queue
-fallback'i vardır; bunun varlığı otomatik olarak C++ cancel exception'ı sayılmaz.
+Fault injection is limited to the timer
+boundary in the test executable. Successful
+operations use the real Asio timer; controlled
+exceptions occur before the operation.
+This does not measure real-Windows `cancel()`
+failure frequency or prove coverage of every
+partial OS failure. For example, Asio's
+completed-queue fallback following IOCP
+completion-post failure is not automatically
+a C++ cancellation exception.
 
-## Socket close: donor aktarımıyla çözülemeyen açık bulgu
+## Socket close: an open issue not resolved by donor transfer
 
-Windows IOCP `win_iocp_socket_service_base::close`, `socket_ops::close` sonucunu
-döndürürken implementation socket'ini **hata halinde de invalid_socket yapar**.
-Bu nedenle yalnız `is_open()` ve ikinci Asio `close()` çağrısıyla native handle'ın
-retirement'ı kanıtlanamaz. İkinci çağrı artık Win32 close'u denemeyebilir.
+On Windows IOCP, `win_iocp_socket_service_base::close`
+returns `socket_ops::close` while setting the
+implementation socket to **invalid_socket
+even on error**. Therefore, `is_open()`
+and another Asio `close()` cannot alone
+prove native-handle retirement. A second
+Asio call may perform no Win32 close attempt.
 
-`socket_close_semantics_contracts` test-only Win32 sınırında native close'u
-kontrollü olarak yapmadan hata döndürür. Sonraki Asio kodu ve socket gerçektir.
-Normal close, ilk would-block sonrasında başarılı iç retry, iki kez withheld
-would-block ve withheld network-down olmak üzere dört senaryo vardır. Son iki
-senaryoda raw socket hâlâ geçerli, Asio `is_open()` false ve ikinci Asio close yeni
-bir native deneme yapmıyor. Test native descriptor'ı sonunda kendisi kapatır.
-Bu karakterizasyon testinin PASS olması ürünün bu hatadan kurtulduğu anlamına
-gelmez. Kontrollü kombinasyonların gerçek Windows'taki oluşma sıklığı ölçülmedi.
+`socket_close_semantics_contracts` injects a
+controlled native-close error without closing
+the socket at a test-only Win32 boundary.
+The subsequent Asio code and socket are real.
+Four scenarios cover normal close, successful
+internal retry after initial would-block,
+twice-withheld would-block and withheld
+network-down. In the last two, the raw
+socket remains valid, Asio `is_open()` is
+false, and the second Asio close makes no
+new native attempt. The test ultimately
+closes the descriptor itself. A PASS in
+this characterization test does not mean
+the product recovered from the failure.
+Real-Windows occurrence rates for these
+controlled combinations were not measured.
 
-Brownfield'in `AsioListenerOwner::apply_stop` kodu close hatasında return eder;
-ancak sonraki kontrol veya cancelled accept completion, Asio kaydını kapalı
-görüp quiescent bildirimine ilerleyebilir. Gerçek donor kaynak ve donor arşivinin
-kendi Asio header'larıyla probe sonucu:
+Brownfield's `AsioListenerOwner::apply_stop`
+returns on close failure; however, a subsequent
+check or cancelled-accept completion may see the
+Asio record as closed and advance to reporting
+quiescence. A probe with actual donor source
+and the donor archive's own Asio headers showed:
 
 ```text
 raw_socket_alive=1 listening=1 quiesced=1 failed=1
 ```
 
-Donor ve mevcut vendor snapshot'ı ikisi de1.38.2 bildirir ama dosyaları birebir
-aynı değildir. Bu nedenle yalnız mevcut vendor ile çalıştırılan ilk probe'a
-dayanılmadı: donor'un arşivden çıkarılmış kendi include ağacıyla yeniden derlendi
-ve aynı sonuç alındı. [Donor build kimliği](../metadata/evidence/shutdown/DONOR_CLOSE_BUILD.json),
-[sonuç](../metadata/evidence/shutdown/ACTUAL_DONOR_CLOSE_RESULT.log),
-[snapshot farkı](../metadata/evidence/shutdown/ASIO_CLOSE_COMPARISON.json),
-[probe kaynağı](../metadata/evidence/shutdown/listener_close_probe.cpp.txt).
+Donor and current vendor snapshots both report
+1.38.2 but are not byte-identical. This review
+therefore did not rely on the initial probe
+against the current vendor: the probe was
+rebuilt with the donor's extracted include
+tree and reproduced the result.
+[Donor build identity](../metadata/evidence/shutdown/DONOR_CLOSE_BUILD.json),
+[result](../metadata/evidence/shutdown/ACTUAL_DONOR_CLOSE_RESULT.log),
+[snapshot comparison](../metadata/evidence/shutdown/ASIO_CLOSE_COMPARISON.json),
+[probe source](../metadata/evidence/shutdown/listener_close_probe.cpp.txt).
 
-Brownfield'in ayrı raw `SocketHandle` adaptörü başarısız close'da kendi numeric
-owner'ını korur. `test_socket_close_retry` bu adaptörü fake `SocketApi` ile sınar;
-Asio close davranışını sınamaz. Bu iki mimarinin test sonuçları birbirinin yerine
-kullanılamaz. Benzer şekilde `test_shipping_shutdown_contract` enum static_assert
-testidir; gerçek worker/cleanup hata enjeksiyonu değildir.
+Brownfield's separate raw `SocketHandle`
+adapter preserves its own numeric owner
+when close fails. `test_socket_close_retry`
+exercises that adapter with fake `SocketApi`,
+not Asio close semantics. The results of
+these different architectures cannot be
+substituted for one another. Likewise,
+`test_shipping_shutdown_contract` is an
+enum static_assert test, not real worker/
+cleanup fault injection.
 
-Mevcut ürünün native-close hata sahipliği de **açıktır**. Asio'nun kaydı sildikten
-sonra raw sayısal handle'ı körlemesine yeniden kapatmak handle reuse ve pending
-IO/callback sahipliğini çözmez. Retry sözleşmesi, native descriptor'ın durumunu,
-cancel completion'larını, buffer ömrünü ve DLL unload iznini birlikte ele almalı.
-Vendor baytlarını değiştirme veya donor socket runtime'ını toptan ithal etme
-yapılmadı. Bu açık konu emekliliği engellemeye devam eder.
+Native-close error ownership in the product
+was **open at this historical checkpoint**.
+Blindly closing a raw numeric handle after
+Asio has removed its record does not resolve
+handle reuse or pending I/O/callback ownership.
+Retry design must address native descriptor
+state, cancellation completions, buffer
+lifetime and DLL unload permissions together.
+Vendor bytes were unchanged, and the donor
+socket runtime was not imported wholesale.
+This issue continued to block donor retirement
+at the time; later source changes are covered
+by the separate socket-retirement report.
 
-## Kapsam, doğrulama ve kalan işler
+## Scope, verification and remaining work
 
-9 donor dosyasında ek branch karşılaştırmasıyla manuel kayıt sayısı76 oldu;
-1729 first-party dosyada henüz manuel kayıt yok. 76 tam dosyanın bütün semantik
-kapanışı iddia edilmiyor. [Ledger](../metadata/evidence/shutdown/MANUAL_REVIEW_LEDGER.json),
-[bütün açık dosyalar](../metadata/evidence/shutdown/ALL_DONOR_FILES.csv).
+Nine additional donor files received selected-
+branch comparisons, bringing manual records
+to 76 files; 1,729 first-party files still
+lacked manual review records. This does not
+establish complete semantic closure for
+all 76 files.
+[Ledger](../metadata/evidence/shutdown/MANUAL_REVIEW_LEDGER.json),
+[all open files](../metadata/evidence/shutdown/ALL_DONOR_FILES.csv).
 
-Yerel Release201/201 ve etkilenen Debug13/13 geçti. Üretim C export'ları üç ve
-ordinal'ları aynı; geliştirme DLL'i3350→3350, eklenen/çıkarılan sembol yok.
-Public header, dört vendor, PE/resource/avatar, CFG/SDK/port ve Golden linker
-politikaları değişmedi. Üretim64 ve korunan referans74 CPP ayrımı korunur.
-Son source QA ve paket doğrulama kaydı
-[VALIDATION.json](../metadata/evidence/shutdown/VALIDATION.json) içindedir.
+Local Release 201/201 and affected Debug
+13/13 passed. The three Production C exports
+and their ordinals were unchanged; the
+development DLL export names were 3,350
+before and after, with no additions/removals.
+Public headers, four vendors, PE/resource/
+avatar, CFG/SDK/port and Golden linker
+policy were unchanged. The partition
+remained 64 Production and 74 retained
+reference CPP files. Final source QA
+and package validation are in
+[VALIDATION.json](../metadata/evidence/shutdown/VALIDATION.json).
 
-Bu sonuçlar LLVM-MinGW/Wine sınıfındadır; gerçek MSVC/Windows IOCP arızası,
-Golden veya oyun kabulü değildir. Native Windows/Golden ve oyun tekrarı bekliyor.
-Socket close ownership dışında registry provenance, aggregate memory budgets,
-provider/handler shutdown liveness, environment/console rollback ve kalan
-source/test/tool ailelerinin incelemesi sürmelidir. Donor'lar obsolete ilan edilmedi.
+These are LLVM-MinGW/Wine-class results,
+not real MSVC/Windows IOCP failures,
+Golden or game acceptance. Native Windows/
+Golden and game reruns remained pending.
+Outside socket-close ownership, registry
+provenance, aggregate memory budgets,
+provider/handler shutdown liveness,
+environment/console rollback, and review
+of remaining source/test/tool families
+were still open. Donors were not
+declared obsolete.
 
-Bu turun exact parent kaynak ZIP SHA256'sı:
+Exact parent source ZIP SHA-256:
 `ef4572d32076e0ace03039b17e0fb6103b084a395ccdd27fd59b76886f2d9d1c`.
-İncelenen dosya farkları [REVIEWED_CHANGES.json](../metadata/evidence/shutdown/REVIEWED_CHANGES.json)
-içindedir; kabul edilmiş eski binary/log paketi parent yerine kullanılmaz.
+Reviewed file differences are recorded in
+[REVIEWED_CHANGES.json](../metadata/evidence/shutdown/REVIEWED_CHANGES.json);
+the previously accepted binary/log package
+cannot replace this parent.

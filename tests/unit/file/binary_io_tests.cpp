@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/binary_io.hpp"
 #include <algorithm>
 #include <array>
@@ -6,7 +8,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace io=preloader_l::file_recovered;
+namespace io=preloader_l::file;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

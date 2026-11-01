@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/paths.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
-using namespace preloader_l::path_recovered;
+using namespace preloader_l::path;
 namespace {
 int checks;
 void check(bool condition, int line) {

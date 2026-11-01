@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Bind the local MSVC link audit to its exact DLL, cache and source receipt."""
 import argparse
 import hashlib

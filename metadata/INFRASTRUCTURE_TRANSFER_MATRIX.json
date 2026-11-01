@@ -9,7 +9,7 @@
         "docs/GOLDEN_PROTOCOLS.md",
         "docs/ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md",
         "docs/VALIDATION.md",
-        "governance/CURRENT_SCOPE.md"
+        "GOVERNANCE.md"
       ],
       "id": "INFRA-DOC",
       "implementation": "ADAPTED_CURRENT_DOCS",

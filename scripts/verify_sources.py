@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Check the declared application/test/vendor source bytes and layout boundary."""
 from pathlib import Path
 import hashlib

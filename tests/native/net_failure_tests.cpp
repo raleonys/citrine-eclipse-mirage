@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include <atomic>
 #include <cstddef>
 #include <cstdlib>
@@ -87,8 +89,8 @@ template<class F> bool until(F f) {
 struct HandlerFailure{};
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> creates{0},errors{0},dispatch_errors{0};
-    bool null_handler=false;
-    struct Handler final:server_recovered::Handler {
+    std::atomic<bool> null_handler{false};
+    struct Handler final:server::Handler {
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
         std::string process_message_033d70(std::string_view input)override {
@@ -97,8 +99,8 @@ struct Factory final:net::HandlerFactory {
             std::string response(input);response.push_back('\0');return response;
         }
     };
-    std::unique_ptr<server_recovered::Handler> create()override {
-        ++creates;return null_handler?nullptr:std::make_unique<Handler>();
+    std::unique_ptr<server::Handler> create()override {
+        ++creates;return null_handler.load()?nullptr:std::make_unique<Handler>();
     }
     void error(std::string_view op,std::exception_ptr)noexcept override {
         ++errors;if(op=="cleanup dispatch")++dispatch_errors;
@@ -106,13 +108,13 @@ struct Factory final:net::HandlerFactory {
 };
 struct Context {
     Factory factory;
-    execution_recovered::MutexState mutex{};
+    execution::MutexState mutex{};
     std::uint8_t ready=0,second=0,third=0;
     std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw HandlerFailure{};}};
+    execution::WindowsPlatform platform{+[](int){throw HandlerFailure{};}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{ready,second,third},frequency,platform};
-    Context(){execution_recovered::initialize_mutex_04a698(mutex,2);}
+    execution::Execution execution{mutex,{ready,second,third},frequency,platform};
+    Context(){execution::initialize_mutex_04a698(mutex,2);}
 };
 struct Peer {
     asio::io_context io;Tcp::socket socket{io};std::string pending;
@@ -153,6 +155,38 @@ void accept_failure() {
     asio::io_context io;Tcp::socket peer(io);peer.connect(owner.acceptor.local_endpoint());
     require(until([&]{owner.io.restart();owner.io.poll();return c.factory.creates.load()==1;}),"accept retry does not reach the queued peer");
     owner.stopping=true;asio::error_code ec;owner.acceptor.close(ec);peer.close(ec);owner.io.restart();while(owner.io.poll()){}
+}
+void factory_failure_rearms() {
+    // A failed handler factory must retire its accepted socket without
+    // poisoning listener admission or the next independent handler owner.
+    Context c;c.factory.null_handler.store(true);
+    net::AsioService service(c.factory,c.execution,c.port,c.ready);
+    service.start();
+    Peer rejected(c.port);
+    require(rejected.closed(),"rejected session keeps accepted socket alive");
+    require(until([&]{return c.factory.creates.load()>=1&&c.factory.errors.load()>=1;}),
+            "failed handler construction must be reported");
+    c.factory.null_handler.store(false);
+    Peer healthy(c.port);
+    require(healthy.frame()=="hello","listener did not rearm after handler factory failure");
+    healthy.send("recovered");
+    require(healthy.frame()=="recovered","new handler cannot process traffic after factory recovery");
+    service.stop();service.stop();
+}
+void accept_cancellation_finality() {
+    Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
+    owner.used=true;
+    owner.acceptor.open(Tcp::v4());owner.acceptor.bind({asio::ip::address_v4::loopback(),0});owner.acceptor.listen();
+    owner.queue_accept(owner.acceptor,0);
+    require(owner.accept_pending[0],"accept submission records a pending operation");
+    owner.stopping=true;asio::error_code error;owner.acceptor.cancel(error);
+    require(!error&&owner.accept_pending[0],"cancel intent must not retire an accept before its completion");
+    owner.acceptor.close(error);
+    require(!error&&owner.accept_pending[0]&&c.factory.creates==0,"closing the listener retains its unconsumed completion without constructing a handler");
+    owner.stop();owner.stop();
+    require(!owner.accept_pending[0]&&!owner.accept_pending[1]&&owner.active_sessions==0,
+        "stop drains the exact pending accept before acknowledging complete cleanup");
+    require(c.factory.creates==0&&c.factory.errors==0,"cancelled accept completion cannot create a session or rearm a closed listener");
 }
 void post_failure() {
     Context c;net::AsioService service(c.factory,c.execution,c.port,c.ready);service.start();
@@ -197,7 +231,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry}})
+    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/hook_host_callbacks.hpp"
 #include <algorithm>
 #include <array>
@@ -7,7 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-using namespace preloader_l::host_callbacks_recovered;
+using namespace preloader_l::host_callbacks;
 namespace {
 unsigned checks;
 void check(bool value) { ++checks; if (!value) throw std::runtime_error("host callback check failed"); }
@@ -222,20 +224,20 @@ void folder_tests() {
     Mock throw_original; throw_original.throw_original=true;
     throws_probe([&]{folder_w_00fc80({},throw_original,wc);});check(throw_original.folders_w==1);
 }
-struct HostMock final : preloader_l::host_init_recovered::Effects {
+struct HostMock final : preloader_l::host_init::Effects {
     std::int32_t initialize_status=0;
-    std::vector<preloader_l::host_init_recovered::Callback> installed;
+    std::vector<preloader_l::host_init::Callback> installed;
     std::u16string filesystem_widen_006d70(std::string_view text) override {
         return {text.begin(),text.end()}; // Synthetic ASCII configuration only.
     }
     std::uint64_t version_condition_mask(std::uint64_t mask,std::uint32_t type,std::uint8_t condition) override {
         return mask+type+condition;
     }
-    bool verify_version(const preloader_l::host_init_recovered::VersionRequest&,std::uint32_t,std::uint64_t) override { return true; }
+    bool verify_version(const preloader_l::host_init::VersionRequest&,std::uint32_t,std::uint64_t) override { return true; }
     std::int32_t initialize_engine_046a20() override { return initialize_status; }
     Address get_module_handle(std::u16string_view) override { return 0x100; }
     Address get_proc_address(Address,std::string_view) override { return 0x200+installed.size(); }
-    std::int32_t create_hook_0466e0(Address,preloader_l::host_init_recovered::Callback callback,Address& original) override {
+    std::int32_t create_hook_0466e0(Address,preloader_l::host_init::Callback callback,Address& original) override {
         installed.push_back(callback);original=0x300+installed.size();return 0;
     }
     std::int32_t enable_hook_046a10(Address) override { return 0; }
@@ -244,7 +246,7 @@ struct HostMock final : preloader_l::host_init_recovered::Effects {
     void finish_log_0088e0() override {}
 };
 void host_integration_tests() {
-    namespace host=preloader_l::host_init_recovered;
+    namespace host=preloader_l::host_init;
     // Run actual initialization, actual Windows lexical paths, shared map helper
     // implementations, and actual callback decisions. Only OS/CRT edges are mocks.
     preloader_l::configuration::State configuration{};

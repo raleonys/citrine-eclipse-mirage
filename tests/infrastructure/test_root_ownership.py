@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Regression tests for the independent repository root ownership gate."""
 import shutil
 import hashlib
@@ -10,7 +12,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'scripts'))
-from check_repository_contract import check_root_file_ownership, check_archived_evidence, check_active_identifiers
+from check_repository_contract import (
+    check_root_file_ownership, check_archived_evidence, check_active_identifiers,
+    check_layout_migration_reference,
+)
 
 
 class RepositoryRootOwnership(unittest.TestCase):
@@ -113,6 +118,38 @@ class RepositoryRootOwnership(unittest.TestCase):
                            ['a\\b'], ['.'], [123], 'README.md']:
                 with self.subTest(policy=policy), self.assertRaises(ValueError):
                     check_root_file_ownership(tmp, policy)
+
+    def test_layout_migration_contract_pointer_is_safe_and_live(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = root / 'metadata/evidence/LAYOUT_MIGRATION.json'
+            target.parent.mkdir(parents=True)
+            contract = {'layout_migration': 'metadata/evidence/LAYOUT_MIGRATION.json'}
+            target.write_text('{"schema":"surge.layout-migration.v1"}', encoding='utf-8')
+            self.assertEqual([], check_layout_migration_reference(root, contract))
+            self.assertTrue(check_layout_migration_reference(
+                root, {'layout_migration': 'docs/evidence/LAYOUT_MIGRATION.json'}))
+            for unsafe in ('../escape.json', '/tmp/absolute.json',
+                           'metadata//evidence/LAYOUT_MIGRATION.json',
+                           'metadata/./evidence/LAYOUT_MIGRATION.json',
+                           'metadata/../evidence/LAYOUT_MIGRATION.json',
+                           'metadata\\\\evidence\\\\LAYOUT_MIGRATION.json', '', None, 1):
+                with self.subTest(unsafe=unsafe):
+                    self.assertTrue(check_layout_migration_reference(
+                        root, {'layout_migration': unsafe}))
+            target.write_text('not JSON', encoding='utf-8')
+            self.assertTrue(check_layout_migration_reference(root, contract))
+            target.write_text('{"schema":"wrong.document"}', encoding='utf-8')
+            self.assertTrue(check_layout_migration_reference(root, contract))
+            target.unlink()
+            outside = root / 'elsewhere.json'
+            outside.write_text('{"schema":"surge.layout-migration.v1"}')
+            try:
+                target.symlink_to(outside)
+            except (OSError, NotImplementedError):
+                pass
+            else:
+                self.assertTrue(check_layout_migration_reference(root, contract))
 
     def test_historical_evidence_retained_bytes_and_file_set(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,9 +1,58 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include <winsock2.h>
 #include <windows.h>
 #include <atomic>
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <array>
+#include <cstdlib>
+#include <cstdint>
+#include <mutex>
+#include <new>
+namespace receive_buffer_probe {
+struct Allocation{void* base;std::size_t bytes;};
+std::atomic<bool> recording{false};
+std::atomic<void*> tracked{nullptr};
+std::atomic<unsigned> released{0};
+std::mutex gate;std::array<Allocation,64> allocations{};std::size_t count=0;
+SOCKET socket=INVALID_SOCKET;
+void observe_allocation(void* memory,std::size_t bytes){
+    if(recording.load()&&bytes>=4096){
+        std::lock_guard lock(gate);
+        if(count<allocations.size())allocations[count++]={memory,bytes};
+    }
+}
+void observe_buffer(SOCKET value,LPWSABUF buffers,DWORD n){
+    if(!recording.load()||value!=socket||n!=1||buffers[0].len!=4096)return;
+    const auto data=reinterpret_cast<std::uintptr_t>(buffers[0].buf);
+    std::lock_guard lock(gate);
+    for(std::size_t i=0;i<count;++i){
+        const auto base=reinterpret_cast<std::uintptr_t>(allocations[i].base);
+        if(data>=base&&data-base<=allocations[i].bytes&&buffers[0].len<=allocations[i].bytes-(data-base)){
+            tracked=allocations[i].base;return;
+        }
+    }
+}
+}
+void* operator new(std::size_t bytes){
+    if(auto* memory=std::malloc(bytes?bytes:1)){receive_buffer_probe::observe_allocation(memory,bytes);return memory;}
+    throw std::bad_alloc();
+}
+void* operator new[](std::size_t bytes){return ::operator new(bytes);}
+void operator delete(void* memory)noexcept{
+    auto* expected=memory;
+    if(memory&&receive_buffer_probe::tracked.compare_exchange_strong(expected,nullptr))++receive_buffer_probe::released;
+    std::free(memory);
+}
+void operator delete[](void* memory)noexcept{::operator delete(memory);}
+void operator delete(void* memory,std::size_t)noexcept{::operator delete(memory);}
+void operator delete[](void* memory,std::size_t)noexcept{::operator delete(memory);}
+int WSAAPI TestReceive(SOCKET value,LPWSABUF buffers,DWORD n,LPDWORD bytes,LPDWORD flags,LPWSAOVERLAPPED operation,LPWSAOVERLAPPED_COMPLETION_ROUTINE callback){
+    receive_buffer_probe::observe_buffer(value,buffers,n);
+    return ::WSARecv(value,buffers,n,bytes,flags,operation,callback);
+}
 namespace fault {
 std::atomic<SOCKET> target{INVALID_SOCKET};
 std::atomic<int> error{0};
@@ -31,6 +80,7 @@ int WSAAPI TestSetSockOpt(SOCKET value,int level,int name,const char* data,int s
 }
 #define closesocket TestCloseSocket
 #define setsockopt TestSetSockOpt
+#define WSARecv TestReceive
 #include <asio.hpp>
 #include "preloader_l/net/server.hpp"
 #include "preloader_l/net/session_policy.hpp"
@@ -50,6 +100,7 @@ public:
 #undef steady_timer
 #undef setsockopt
 #undef closesocket
+#undef WSARecv
 
 namespace {
 using namespace preloader_l;using Tcp=asio::ip::tcp;using namespace std::chrono_literals;
@@ -57,38 +108,39 @@ void require(bool b,const char* text){if(!b)throw std::runtime_error(text);}
 struct Factory:net::HandlerFactory {
     bool throw_create=false;
     unsigned tickets=0,positive=0,negative=0;
-    struct Ticket:server_recovered::DeliveryReceipt {
+    struct Ticket:server::DeliveryReceipt {
         Factory& f;explicit Ticket(Factory& x):f(x){++f.tickets;}
         ~Ticket(){--f.tickets;}
         bool finish(bool success)noexcept override{if(success)++f.positive;else ++f.negative;return true;}
     };
-    struct Handler:server_recovered::Handler {
+    struct Handler:server::Handler {
         Factory& f;explicit Handler(Factory& x):f(x){}
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
         std::string process_message_033d70(std::string_view)override{return {};}
-        server_recovered::PreparedResponse prepare_response(std::string_view)override{return {std::string(128*1024,'X'),std::make_unique<Ticket>(f)};}
+        server::PreparedResponse prepare_response(std::string_view)override{return {std::string(128*1024,'X'),std::make_unique<Ticket>(f)};}
     };
-    std::unique_ptr<server_recovered::Handler> create()override{if(throw_create)throw std::runtime_error("fixture handler failure");return std::make_unique<Handler>(*this);}
+    std::unique_ptr<server::Handler> create()override{if(throw_create)throw std::runtime_error("fixture handler failure");return std::make_unique<Handler>(*this);}
     void error(std::string_view,std::exception_ptr)noexcept override{}
 };
 struct Context {
-    Factory factory;execution_recovered::MutexState mutex{};
+    Factory factory;execution::MutexState mutex{};
     std::uint8_t a=0,b=0,c=0;std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{a,b,c},frequency,platform};
-    Context(){execution_recovered::initialize_mutex_04a698(mutex,2);}
+    execution::Execution execution{mutex,{a,b,c},frequency,platform};
+    Context(){execution::initialize_mutex_04a698(mutex,2);}
 };
 struct Harness {
     Context c;net::AsioService::Impl owner{c.factory,c.execution,c.port,c.a,{}};
     asio::io_context peer_io;Tcp::socket peer{peer_io};
     std::shared_ptr<net::AsioService::Impl::Client> client;
-    Harness(){
+    explicit Harness(bool start_session=true){
         fault::reset();Tcp::acceptor listener(owner.io,{asio::ip::address_v4::loopback(),0});
         peer.connect(listener.local_endpoint());peer.non_blocking(true);
         client=std::make_shared<net::AsioService::Impl::Client>(owner,listener.accept());
         owner.clients.push_back(client);client->counted=true;++owner.active_sessions;owner.used=true;
+        if(!start_session)return;
         client->session.start_025720();std::string greeting;const auto end=std::chrono::steady_clock::now()+2s;
         while(greeting.size()<6&&std::chrono::steady_clock::now()<end){owner.io.poll();char b[32];asio::error_code ec;const auto n=peer.read_some(asio::buffer(b),ec);if(!ec)greeting.append(b,n);if(greeting.size()<6)Sleep(1);}
         require(greeting==std::string("hello\0",6),"real greeting and queued receive");
@@ -132,6 +184,34 @@ void completion_lifetime(){
     require(active_before_callbacks==1,"session capacity retired before IO cancellation completions");
     require(h.owner.active_sessions==0&&h.c.factory.tickets==0&&h.c.factory.negative==1&&!h.c.factory.positive,"completion releases output exactly once without acknowledging cancelled delivery");
 }
+void receive_cancellation_lifetime(){
+    Harness h(false);
+    require(h.client->pending_reads==0,"own connected client starts without an outstanding read");
+    unsigned callbacks=0;
+    // Supply only the business observer: keep the production receive buffer,
+    // socket operation and CompletionRetirement path in the actual Client.
+    struct Reset{~Reset(){receive_buffer_probe::recording=false;receive_buffer_probe::tracked=nullptr;}} reset;
+    receive_buffer_probe::count=0;receive_buffer_probe::released=0;
+    receive_buffer_probe::socket=h.client->socket.native_handle();receive_buffer_probe::recording=true;
+    h.client->async_receive(4096,[&](server::Error,std::string){++callbacks;});
+    receive_buffer_probe::recording=false;
+    require(receive_buffer_probe::tracked!=nullptr&&receive_buffer_probe::released==0,
+        "actual WSARecv borrows the observed live containing buffer allocation");
+    require(h.client->pending_reads==1,"actual receive initiation owns one pending buffer operation");
+    std::weak_ptr<net::AsioService::Impl::Client> lifetime=h.client;
+    h.client->close();
+    require(receive_buffer_probe::released==0,"cancel/close cannot free the exact kernel-borrowed receive buffer");
+    require(h.client->pending_reads==1&&h.owner.active_sessions==1&&!h.client->retired(),
+        "cancel/close cannot retire receive storage or session capacity before terminal completions");
+    h.client.reset();
+    require(!lifetime.expired(),"pending receives keep their client and owned buffers alive after caller release");
+    require(receive_buffer_probe::released==0,"caller release retains the kernel-borrowed buffer until completion");
+    h.owner.stop();h.owner.stop();
+    require(callbacks==0,"a cancelled receive never invokes its stale business callback");
+    require(h.owner.active_sessions==0&&h.owner.clients.empty()&&lifetime.expired(),
+        "terminal completion drains the receive loan and releases the client exactly once");
+    require(receive_buffer_probe::released==1,"terminal completion frees the exact observed receive allocation once");
+}
 void timer_retirement(){
     Harness h;fault::hold_timer=true;const bool pending=stop_failed(h.owner);fault::hold_timer=false;
     h.client->timer.cancel();h.owner.stop();
@@ -150,7 +230,7 @@ void constructor_rollback(){
 void bind_rollback(){
     fault::reset();Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.a,{});owner.used=true;
     Tcp::acceptor blocker(owner.io,{asio::ip::address_v4::loopback(),net::listener_policy::first_port});
-    server_recovered::Endpoint endpoint;endpoint.family=2;endpoint.address[0]=127;endpoint.address[3]=1;
+    server::Endpoint endpoint;endpoint.family=2;endpoint.address[0]=127;endpoint.address[3]=1;
     fault::select_next=true;fault::error=WSAEWOULDBLOCK;
     try{owner.construct_acceptor_020e20(endpoint,true,128);}catch(const std::exception&){}
     const auto raw=fault::target.load();const bool blocked=stop_failed(owner);fault::error=0;
@@ -173,7 +253,7 @@ int main(int argc,char** argv)try{
     for(auto [name,fn]:{std::pair{"retry",+[]{retained_retry(false);}},
         {"retry-option",+[]{retained_retry(true);}},{"uncertain-open",+[]{unknown_quarantine(false);}},
         {"uncertain-closed",+[]{unknown_quarantine(true);}},{"completion",completion_lifetime},
-        {"timer",timer_retirement},{"constructor",constructor_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
+        {"receive-completion",receive_cancellation_lifetime},{"timer",timer_retirement},{"constructor",constructor_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");
 }catch(const std::exception& e){fault::error=0;fault::hold_timer=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

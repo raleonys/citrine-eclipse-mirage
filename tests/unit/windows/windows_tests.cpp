@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/windows_effects.hpp"
 #include "preloader_l/core/license_files.hpp"
 #include "preloader_l/core/token_constants.hpp"
@@ -6,14 +8,14 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace win=preloader_l::windows_recovered;
-namespace file=preloader_l::file_recovered;
-namespace lic=preloader_l::license_recovered;
-namespace enc=preloader_l::encoding_recovered;
-namespace file_status=preloader_l::status_recovered;
-namespace token=preloader_l::token_recovered;
-namespace crypto=preloader_l::crypto_recovered;
-namespace xml=preloader_l::xml_recovered;
+namespace win=preloader_l::windows;
+namespace file=preloader_l::file;
+namespace lic=preloader_l::license;
+namespace enc=preloader_l::encoding;
+namespace file_status=preloader_l::status;
+namespace token=preloader_l::token;
+namespace crypto=preloader_l::crypto;
+namespace xml=preloader_l::xml;
 namespace reader=preloader_l::xml_reader_bridge;
 namespace {
 unsigned checks=0;
@@ -42,7 +44,7 @@ public:
     [[noreturn]] void no_response_02bcd0_04d228()override{throw NoResponse{};}
 };
 class NoAttributes final:public xml::AttributeReader {
-public:const char* attribute(preloader_l::handlers_recovered::Request,const char*)override{unused();}
+public:const char* attribute(preloader_l::handlers::Request,const char*)override{unused();}
 };
 std::string encrypted_fixture() {
     std::string bytes(65,'H');bytes+="<GameToken>synthetic-win-token<&</GameToken>";
@@ -77,7 +79,7 @@ void run(const std::filesystem::path& directory) {
     check(complete.load_token_02afa0(base+u".dlf")=="synthetic-win-token<&","native status/read/CBC/raw extraction");
     std::string auth,license_value,exe_hash(40,'0'),content_id="fixture-content";
     std::uint8_t online=0,fake_auth=0,blocked=0;std::int32_t attempts=0;
-    preloader_l::handlers_recovered::Attributes game;
+    preloader_l::handlers::Attributes game;
     lic::Handlers handler({auth,online,fake_auth,license_value,expected,exe_hash,content_id,
         artifact,artifact,base,game,attempts,blocked},complete);
     reader::Backend backend;auto parsed=backend.parse_c_string("<RequestLicense/>");check(!parsed.has_error,"actual XML parse");

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Check source scope, native CMake source ownership and pinned SURGE resource."""
 import hashlib
 import json
@@ -31,7 +33,7 @@ def check_active_identifiers(root):
         if pattern.search(name):
             errors.append('Reserved reference label in active path: '+name)
         legal_document=len(rel.parts)==1 and path.name in {'LICENSE','COPYING','NOTICE','AUTHORS'}
-        if rel.parts[0] in {'docs','governance'} or path.suffix.lower()=='.md' or legal_document:
+        if rel.parts[0] == 'docs' or path.suffix.lower()=='.md' or legal_document:
             continue
         try:
             text=path.read_text(encoding='utf-8-sig')
@@ -143,11 +145,36 @@ def check_archived_evidence(root):
     return errors
 
 
+
+def check_layout_migration_reference(root, contract):
+    """Reject stale, malformed or escaping layout_migration contract targets."""
+    root = Path(root)
+    name = contract.get('layout_migration')
+    if (not isinstance(name, str) or not name or
+            '\\' in name or not name.endswith('.json') or
+            any(part in ('', '.', '..') for part in name.split('/'))):
+        return ['Unsafe layout_migration repository contract reference']
+    target = root / name
+    try:
+        resolved = target.resolve(strict=True)
+        if (not resolved.is_relative_to(root.resolve(strict=True)) or
+                target.is_symlink() or not target.is_file()):
+            return ['Invalid layout_migration file target: ' + name]
+        payload = json.loads(target.read_text(encoding='utf-8'))
+    except (OSError, UnicodeError, ValueError):
+        return ['Invalid or missing layout_migration file target: ' + name]
+    schema = payload.get('schema') if isinstance(payload, dict) else None
+    if not isinstance(schema, str) or not schema.endswith('.layout-migration.v1'):
+        return ['Unexpected layout_migration schema: ' + name]
+    return []
+
+
 def check(root):
     root = Path(root)
     errors = check_active_identifiers(root)
     errors.extend(check_archived_evidence(root))
     contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text())
+    errors.extend(check_layout_migration_reference(root, contract))
     errors.extend(check_root_file_ownership(root, contract['allowed_root_files']))
     for name in contract['required_files']:
         if not (root / name).is_file():

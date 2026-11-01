@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/server.hpp"
 #include <algorithm>
 #include <iostream>
@@ -5,12 +7,39 @@
 #include <stdexcept>
 #include <utility>
 #include <vector>
-using namespace preloader_l::server_recovered;
+#include <cstdlib>
+#include <new>
+namespace greeting_lifetime {
+const void* tracked=nullptr;
+void* candidate=nullptr;
+std::size_t candidate_bytes=0,minimum_bytes=0;
+bool capturing=false;
+unsigned released=0;
+void release(void* pointer) noexcept {
+    if(pointer&&pointer==tracked){tracked=nullptr;++released;}
+    std::free(pointer);
+}
+}
+void* operator new(std::size_t size){
+    if(auto* p=std::malloc(size?size:1)){
+        if(greeting_lifetime::capturing&&size>=greeting_lifetime::minimum_bytes){
+            greeting_lifetime::candidate=p;greeting_lifetime::candidate_bytes=size;
+        }
+        return p;
+    }
+    throw std::bad_alloc();
+}
+void* operator new[](std::size_t size){return ::operator new(size);}
+void operator delete(void* p) noexcept {greeting_lifetime::release(p);}
+void operator delete[](void* p) noexcept {greeting_lifetime::release(p);}
+void operator delete(void* p,std::size_t) noexcept {greeting_lifetime::release(p);}
+void operator delete[](void* p,std::size_t) noexcept {greeting_lifetime::release(p);}
+using namespace preloader_l::server;
 namespace {
 int checks=0;
 void check(bool value,const char* text) {++checks;if(!value)throw std::runtime_error(text);}
 struct Raised {Error error; std::string context;};
-struct FakeExecutionPlatform final : preloader_l::execution_recovered::Platform {
+struct FakeExecutionPlatform final : preloader_l::execution::Platform {
     int acquired=0,released=0;
     std::uint32_t current_thread_id() override {return 7;}
     void acquire_srw_exclusive(std::uintptr_t&) override {++acquired;}
@@ -90,14 +119,18 @@ struct FakeTransport final : Transport {
     bool sync_zero_once=false;
     int sync_calls=0;
     Error sync_error;
+    std::function<void(std::span<const char>)> observe_greeting;
+    std::function<void()> observe_read;
     WriteResult synchronous_send(std::span<const char> bytes) override {
         ++sync_calls;
+        if(observe_greeting)observe_greeting(bytes);
         check(bytes.size()<=0x10000,"greeting chunks capped64KiB");
         if(sync_zero_once){sync_zero_once=false;return {};}
         const auto length=std::min(bytes.size(),sync_limit);
         greeting.append(bytes.data(),length);return {sync_error,length};
     }
     void async_receive(std::size_t size,std::function<void(Error,std::string)> callback) override {
+        if(observe_read)observe_read();
         check(!receive,"no concurrent read operation");requested=size;receive=std::move(callback);
     }
     void async_send(std::span<const char> bytes,Completion callback) override {
@@ -123,11 +156,11 @@ struct Fixture {
 };
 void server_tests() {
     FakeExecutionPlatform platform;
-    preloader_l::execution_recovered::MutexState mutex{};
-    preloader_l::execution_recovered::initialize_mutex_04a698(mutex,2);
+    preloader_l::execution::MutexState mutex{};
+    preloader_l::execution::initialize_mutex_04a698(mutex,2);
     std::uint8_t first=0,second=0,third=0;
     std::int64_t frequency=0;
-    preloader_l::execution_recovered::Execution execution{mutex,{first,second,third},frequency,platform};
+    preloader_l::execution::Execution execution{mutex,{first,second,third},frequency,platform};
     FakeServer server;server.ready=&first;server.env_result=false;
     std::uint16_t port=0;
     server_start_029ea0(server,port,first,execution);
@@ -244,8 +277,40 @@ void sizing_and_accept_tests() {
     check(!fail.transport.receive&&server.events.size()==2,"greeting failure prevents session read and accept rearm");
 }
 }
+void greeting_release_before_read() {
+    for(bool fail:{false,true}) {
+        Fixture f;f.handler.initial.assign(150001,'g');
+        struct Reset {~Reset(){greeting_lifetime::tracked=nullptr;greeting_lifetime::capturing=false;}} reset;
+        greeting_lifetime::released=0;bool armed=false,read=false;
+        greeting_lifetime::candidate=nullptr;greeting_lifetime::capturing=true;
+        greeting_lifetime::minimum_bytes=f.handler.initial.size();
+        f.transport.observe_greeting=[&](std::span<const char> bytes){
+            if(!armed){
+                // A standard library may align the character buffer inside a
+                // larger allocation. Observe that containing new/delete pair,
+                // rather than assuming data() is the operator-new pointer.
+                const auto base=reinterpret_cast<std::uintptr_t>(greeting_lifetime::candidate);
+                const auto data=reinterpret_cast<std::uintptr_t>(bytes.data());
+                check(base&&data>=base&&data-base<greeting_lifetime::candidate_bytes,
+                    "greeting buffer belongs to the observed temporary allocation");
+                greeting_lifetime::tracked=greeting_lifetime::candidate;
+                greeting_lifetime::capturing=false;armed=true;
+            }
+            check(greeting_lifetime::released==0,"greeting lives through every synchronous send");
+        };
+        f.transport.observe_read=[&]{read=true;check(greeting_lifetime::released==1,"greeting storage released before first read initiation");};
+        if(fail){
+            f.transport.sync_error={54,ErrorCategory::system};bool raised=false;
+            try{f.session.start_025720();}catch(const Raised& e){raised=e.error.value==54;}
+            check(raised&&!read,"send failure retains original error and does not start reading");
+        }else{
+            f.session.start_025720();check(read&&f.transport.greeting==f.handler.initial,"full greeting precedes first read");
+        }
+        check(greeting_lifetime::released==1,"greeting allocation released once on normal and throwing paths");
+    }
+}
 int main() {
-    try{server_tests();read_tests();write_tests();sizing_and_accept_tests();std::cout<<"PASS "<<checks<<" synthetic checks; no socket/network/original target execution\n";return 0;}
+    try{server_tests();read_tests();write_tests();sizing_and_accept_tests();greeting_release_before_read();std::cout<<"PASS "<<checks<<" synthetic checks; no socket/network/original target execution\n";return 0;}
     catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}
     catch(const Raised& e){std::cerr<<"FAIL unexpected Raised "<<e.context<<'\n';return 1;}
 }

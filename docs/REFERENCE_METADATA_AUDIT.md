@@ -1,18 +1,22 @@
-# Brownfield metadata denetimi
+# Brownfield metadata audit
 
-Kullanıcının Compilation Timestamp dahil tüm metadata’yı Brownfield’e göre kontrol
-etme talimatı uygulanır. Önceki compiler timestamp/linker/Rich değerlerini koruma
-kararı kaldırılmıştır. Kaynak, sağlanan Brownfield arşivindeki gerçek
-MUSTAVEX/ARYRA/URSYNEX politikalarıdır; parser fixture’ları değildir.
+The owner's instruction to check all metadata against
+Brownfield, including Compilation Timestamp, was applied.
+The former decision to preserve compiler timestamp,
+linker, and Rich-header values was superseded.
+The authority is the actual MUSTAVEX/ARYRA/URSYNEX
+policies in the supplied Brownfield archive,
+not parser fixtures.
 
-`metadata/evidence/REFERENCE_METADATA_POLICY_AUDIT.json` 19 beyan edilmiş politika
-grubunun Brownfield ile birebir karşılaştırmasını kaydeder. PE’nin her byte’ını
-Brownfield DLL’iyle aynı yapma hedefi yoktur: kod, adresler, image boyutu ve
-üç açık kullanıcı istisnası farklıdır.
+`metadata/evidence/REFERENCE_METADATA_POLICY_AUDIT.json`
+records exact comparison of all 19 declared policy groups
+against Brownfield. The goal is not to make every PE
+byte identical to the Brownfield DLL: code, addresses,
+image size, and three explicit owner exceptions differ.
 
-## Final DLL için alanlar
+## Fields in the final DLL
 
-| Alan | Beklenen değer |
+| Field | Expected value |
 |---|---|
 | `machine` | `"0x8664"` |
 | `pe_format_magic` | `"0x020B"` |
@@ -45,59 +49,79 @@ Brownfield DLL’iyle aynı yapma hedefi yoktur: kod, adresler, image boyutu ve
 | `VERSIONINFO.translation_language` | `0x0409` |
 | `VERSIONINFO.translation_codepage` | `1200` |
 
-Timestamp **0xCD268EB1** Brownfield’in sabit hedef değeridir; bugünkü gerçek
-derleme saati değildir. Bir PE görüntüleyicisi bunu kendi saat diliminde tarih
-olarak gösterebilir. Doğrulama ham 32-bit değeri karşılaştırır.
+Timestamp **0xCD268EB1** is Brownfield's fixed target value,
+not the wall-clock time of the build. A PE viewer may
+display it as a date using the viewer's local time zone.
+Verification compares the raw 32-bit value.
 
-## Diğer kontroller
+## Other checks
 
-| Grup | Kural |
+| Group | Rule |
 |---|---|
-| Debug | Debug Directory, RSDS, REPRO, COFF symbol table yok; PDB paketlenmez |
-| İmza | Authenticode/certificate/security table yok |
-| Resource | Tek VERSIONINFO yaprağı; PNG/RCDATA/manifest yok; Brownfield RC byte’ları aynı |
-| Avatar | Kullanıcı PNG’si salt okunur C++ veri, ayrı RE fallback korunur |
-| Sections | `.text,.rdata,.data,.pdata,.rsrc,.reloc`; /MT UCRT profili `.pdata` sonrası `.fptable` ekler |
-| `.fptable` | Index4, virtual0x100, raw0x200, chars0xC0000040; RW/non-executable ve sıfır verili |
-| Yapısal geçerlilik | Alignment, dosya sınırları, raw/virtual non-overlap ve RVA sırası kontrolü |
-| Hariç hedefler | Diğer section adres/boyutları, entrypoint RVA veya tüm image boyutu Brownfield’e eşitlenmez |
-| Kimlik | Brownfield’in beyan edilmiş yasak eski proje sürüm/isim listeleri aynı |
-| Export | Kullanıcının beş C export’u korunur; internal module adı `preloader.unsigned.dll` |
-| Import | Kullanıcının altı modülü, CRYPT32 yalnız `CryptQueryObject`; OLE32 yok |
-| CRT | Gerçek MSVC /MT, /GS cookie ve executable CRT entrypoint denetlenir |
-| Bütünlük | PE checksum hesaplanır; read-only Golden aşamalarında byte değişimi reddedilir |
+| Debug | No Debug Directory, RSDS, REPRO, or COFF symbol table; no packaged PDB |
+| Signature | No Authenticode/certificate/security table |
+| Resource | One VERSIONINFO leaf; no PNG/RCDATA/manifest; Brownfield RC bytes unchanged |
+| Avatar | Owner's PNG in read-only C++ data; independent RE fallback retained |
+| Sections | `.text,.rdata,.data,.pdata,.rsrc,.reloc`; /MT UCRT profile adds `.fptable` after `.pdata` |
+| `.fptable` | Index 4, virtual 0x100, raw 0x200, characteristics 0xC0000040; writable/non-executable and all-zero data |
+| Structural validity | Alignment, file extents, no raw/virtual overlaps, and RVA ordering checked |
+| Excluded targets | Other section addresses/sizes, entrypoint RVA, and entire image size are not required to match Brownfield |
+| Identity | Brownfield's declared blocklists for older project names/versions remain the same |
+| Export | Preserve the owner's five C exports; internal module name `preloader.unsigned.dll` |
+| Import | Owner's six modules, with only `CryptQueryObject` from CRYPT32; no OLE32 |
+| CRT | Verify actual MSVC /MT, /GS cookie, and executable CRT entrypoint |
+| Integrity | Compute PE checksum; reject byte mutations during read-only Golden stages |
 
-## Hangi dosya denetlenir
+## File under inspection
 
-Ham `build/.../preloader.unsigned.dll` değiştirilmez. URSYNEX ayrı aday kopyasında
-yalnız timestamp4, linker2, Rich bloğu ve checksum4 alanlarını değiştirebilir.
-OS/subsystem6.0 ve Debug Directory yokluğu önkoşuldur; hatalı derlemeyi gizlemek
-için bu alanları silmez. Diğer byte’larda değişiklik varsa finalizasyon reddedilir.
+Do not modify the raw
+`build/.../preloader.unsigned.dll`.
+URSYNEX can modify only the four-byte timestamp,
+two-byte linker value, Rich block, and four-byte
+checksum in a separate candidate copy.
+OS/subsystem version 6.0 and absence of the Debug
+Directory are preconditions; they are not silently
+removed to conceal a bad build. Reject finalization
+if any other bytes change.
 
-Tüm Golden kontrolleri ve final isimli runtime testi sonrası
-`dist/preloader_l.dll`, SHA256 ve receipt yazılır. Dosya adının değişmesi internal
-export module adını değiştirmez. Eski raw unsigned dosyaya bakmak final metadata
-sonucunu göstermez.
+After all Golden checks and the final-named runtime
+test, write `dist/preloader_l.dll`, its SHA-256,
+and receipt. Renaming the file does not change
+the internal export-module name. Inspection of
+the old raw unsigned file does not show the final
+metadata outcome.
 
 ```powershell
 python -B tools/inspect_dll.py dist/preloader_l.dll --final --report build/final-metadata.json
 ```
 
-Bu read-only kontrol MUSTAVEX/header/checksum/resource/avatar ve statik CRYPT32
-sonucunu raporlar; ARYRA/CORVEXON/MSVC kapıları için tam production zinciri gerekir.
-Ham DLL denetimi `--final` olmadan RAW_LINK_OUTPUT / NOT_FINALIZED farklarını gösterir.
+This read-only check reports MUSTAVEX/header/checksum/
+resource/avatar and the static CRYPT32 result.
+The full Production pipeline is required for
+ARYRA/CORVEXON/MSVC gates.
+Raw DLL inspection without `--final` identifies
+RAW_LINK_OUTPUT / NOT_FINALIZED differences.
 
-## Kanıt sınırı
+## Evidence boundary
 
-Politika karşılaştırması ve negatif PE regresyonları doğrulandı.
-`metadata/evidence/REFERENCE_METADATA_PE_PROBE.json`, gerçek LLVM development DLL’inden
-üretilmiş açıkça işaretli **diagnostic fixture** üzerinde header/VERSIONINFO
-finalizasyonunu doğrular. Fixture hazırlığında yalnız test kopyasının development
-Debug Directory/COFF symbol pointer alanları sıfırlanmıştır; production finalizer
-bunu yapmaz. LLVM section/import/CRT farkları nedeniyle bu fixture Golden değildir
-ve dist’e taşınmaz. Yeni kaynak için gerçek Windows/MSVC production turu gereklidir.
+The policy comparison and negative PE regressions
+were verified.
+`metadata/evidence/REFERENCE_METADATA_PE_PROBE.json`
+checks header/VERSIONINFO finalization on an explicitly
+labeled **diagnostic fixture** created from the actual
+LLVM development DLL. Only in preparing that test
+copy were the development Debug Directory/COFF symbol
+pointer fields cleared; the Production finalizer
+does not do this. Because LLVM section/import/CRT
+details differ, the fixture is not Golden acceptance
+and is not copied to dist. The revised source
+requires actual Windows/MSVC Production testing.
 
-Son kullanıcı talimatıyla URSYNEX izinli kapsamına tam import descriptor
-permütasyonu eklendi. Brownfield header/VERSIONINFO/layout değerleri korunur.
-Güncel karşılaştırma metadata/evidence/WINDOWS_IO_REFERENCE_POLICY_AUDIT.json içindedir;
-önceki19-group raporu önceki görevin snapshot’ıdır. [Güncel değişiklik](WINDOWS_IO_FIX.md).
+A subsequent owner instruction added a complete import
+descriptor permutation to the permitted URSYNEX scope.
+The Brownfield header/VERSIONINFO/layout requirements
+were retained. The updated comparison is in
+`metadata/evidence/WINDOWS_IO_REFERENCE_POLICY_AUDIT.json`;
+the earlier 19-group report is the snapshot of the
+previous task.
+[Current change](WINDOWS_IO_FIX.md).
