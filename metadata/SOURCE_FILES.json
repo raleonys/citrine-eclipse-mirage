@@ -678,8 +678,8 @@
       "sha256": "86c5e16c0335e7c207343079522692899a96888cff5ee45950699319b8169ed1"
     },
     "src/net/transport_closing.cpp": {
-      "bytes": 1711,
-      "sha256": "73ab1e15af196e09ecb36aff87605891108838ce69518cdb6c760589a1523483"
+      "bytes": 2142,
+      "sha256": "f29afb653c0c89da67ea5bd2f0e05eafc8f8b23643443243408b26f13d697bc6"
     },
     "src/net/transport_completion_dispatcher.cpp": {
       "bytes": 6857,
@@ -1702,8 +1702,8 @@
       "sha256": "726dbe282128dcd044606e9632446344e34941f86aa4eb12192636bcfb960181"
     },
     "tests/unit/socket/closing_tests.cpp": {
-      "bytes": 16155,
-      "sha256": "40255a7fb538ff076c2bf3104e7843c2018e6aa24638cbad4bd057cdb2d31414"
+      "bytes": 18011,
+      "sha256": "968c3081b72ff4a111c36536732818eeeaec1a61d010c620390b093943b894fa"
     },
     "tests/unit/socket/completion_dispatcher_native_tests.cpp": {
       "bytes": 17192,

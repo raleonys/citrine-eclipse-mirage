@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Repair the reference socket cancellation gate's exception path: release the selected engine gate when category resolution or cancellation rejects unsupported source input, while preserving normal close order and retaining the socket/control state on failure. Add focused injected-failure regression checks; shipping Asio and native acceptance are unchanged.
+
 - Add a PR #23 post-merge Windows listener-shutdown follow-up with repeated Debug/Release CTest evidence and an explicit unpinned local Compile Only failure; production runtime remains unchanged.
 
 - Make the native CreateProcessA argument-forwarding fixture use explicit caller buffers for pointer identity, removing its dependence on string-literal pooling in MSVC Debug while retaining all ten argument assertions. Production callbacks and connect behavior are unchanged; fresh native Debug/Release validation remains pending.
