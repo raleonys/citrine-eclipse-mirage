@@ -614,8 +614,8 @@
       "sha256": "d09099adbd26697e1bdaa46d0fffb9ccbd633ac7364179a488f99ccbe92daadb"
     },
     "src/handlers/content_handlers.cpp": {
-      "bytes": 9633,
-      "sha256": "dd8d3536d13bff3f20a1e2670d8eb3fad07c3546e65578e0bde6bcd140b3a713"
+      "bytes": 10532,
+      "sha256": "d83f8687369246f0977df638409abd17ee6e9fbbb9b76f14e30b94954fd3edf4"
     },
     "src/handlers/handlers.cpp": {
       "bytes": 5890,
@@ -1526,8 +1526,8 @@
       "sha256": "47fdd6a091d3c40613da92d81e2ed789f9257e1930110543bbcd980b97509a56"
     },
     "tests/unit/content_handlers/content_handlers_tests.cpp": {
-      "bytes": 22463,
-      "sha256": "9c3a0fa4775f17103a4be97bc33ffb1fe3a10326c0c8ea91f6a8c6532685d715"
+      "bytes": 24746,
+      "sha256": "531e74b052d088808fbc5bf4886aad3832b3ba4e6e88a8fc57c75d457a94030b"
     },
     "tests/unit/crypto/crypto_tests.cpp": {
       "bytes": 9783,

@@ -8,6 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Audit C36-F001: prevent untrusted QueryImage cache owner/width components from reaching online provider paths while preserving normal responses and safe inputs; Windows provider acceptance remains pending.
 - Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
 
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.
