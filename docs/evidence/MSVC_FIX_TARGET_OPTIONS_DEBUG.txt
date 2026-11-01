@@ -1,4 +1,0 @@
-SYNTHETIC_MSVC_POLICY_BRANCH_NOT_NATIVE_WINDOWS_EXECUTION
-preloader_l=/MANIFEST:NO;-Wl,--exclude-all-symbols
-preloader_l_source_api=/MANIFEST:NO;-Wl,--export-all-symbols
-preloader_l_runtime_host=-municode

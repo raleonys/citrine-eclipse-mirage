@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/composed_read_test_fixture.hpp"
 #include "preloader_l/net/transport_io_completion_dispatch.hpp"
 #include <deque>
@@ -45,15 +47,15 @@ struct NoFinish:s::WriteFinishApi {
     s::WriteFinishStream& append_007990(s::WriteFinishStream&,std::uintptr_t,std::uint64_t)override{r::unexpected();}
     std::uint64_t widen_01e510(std::uintptr_t,std::uint8_t)override{r::unexpected();}void put_00fe90(s::WriteFinishStream&,std::uint8_t)override{r::unexpected();}void flush_00e1e0(s::WriteFinishStream&)override{r::unexpected();}
 };
-struct Reader:s::RecoveredComposedReadEffects {
-    using RecoveredComposedReadEffects::RecoveredComposedReadEffects;
+struct Reader:s::ComposedReadEffects {
+    using ComposedReadEffects::ComposedReadEffects;
     s::AsyncSendOperation& project_async_send(s::OperationStorage&)override{r::unexpected();}
     s::Category misc_category_0285b0()override{return {0x3333};}
 };
-struct ReceiveEffects:s::RecoveredAsyncReceiveEffects {
+struct ReceiveEffects:s::AsyncReceiveEffects {
     Memory& memory;
     ReceiveEffects(Memory& memory,s::IoHandlerSentinels sentinels,s::IoEnvironmentConstructorContext& constructor,std::span<s::IoEnvironmentSourceBinding> sources)
-        :RecoveredAsyncReceiveEffects(sentinels,constructor,sources),memory(memory){}
+        :AsyncReceiveEffects(sentinels,constructor,sources),memory(memory){}
     s::AsyncReceiveOperation& project_async_receive(s::OperationStorage&)override;
 };
 struct Routing:s::IoDispatcherEffects {

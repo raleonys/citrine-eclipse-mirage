@@ -1,28 +1,31 @@
-# MSVC profil loglarının düzeltmesi
+# MSVC profile log corrections
 
-Beş kullanıcı logu, önceki vendor doğrulama engelinin aşıldığını gösterir.
-Release/Debug/Golden uygulama DLL'leri MSVC19.51 ile derlenip linklenmiştir.
-Bu gözlem tam runtime, native test veya oyun kabulü değildir.
+Five owner-supplied logs show that the previous vendor validation blocker was
+resolved. Release, Debug, and Golden application DLLs were compiled and linked
+with MSVC 19.51. This observation does not establish full runtime, native-test,
+or game acceptance.
 
-| Profil | Kullanıcı logundaki sonuç | Düzeltme / kalan iş |
+| Profile | Result in the supplied log | Correction / outstanding work |
 |---|---|---|
-| Compile | DLL ve runtime host derlendi, beş export doğru; resource allowlist üçüncü manifesti reddetti. | Ürün DLL'ine bütün MSVC profillerinde `/MANIFEST:NO` uygulanır. PNG ve VERSIONINFO denetimi aynı sıkılıkta kalır. |
-| Debug | DLL ve runtime host derlendi; aynı ek manifest nedeniyle resource kontrolü durdu. | Aynı link kuralı Debug'a da uygulanır. Debug sembolleri korunur. |
-| Native | Source API DLL/host dahil hedefler derlendi; execution testindeki `__int128` MSVC tarafından reddedildi. | Test oracle'ı dört32-bit çarpım ve signed high-half düzeltmesiyle standart64-bit aritmetiğe taşındı; uygulama aritmetiği değiştirilmedi. |
-| CRT | Seçilmemiş execution testini de derleyen genel ALL hedefi aynı hatada durdu. | Oracle düzeltmesine ek olarak CRT yalnız kendi CRT/DLL test hedeflerini derler. Native profili tüm testleri derlemeye devam eder. |
-| Golden | MSVC DLL/host derlemesi, export ve iki resource kontrolü başarılı; ürün hedefleri eksik, zincir başlamadan exit3. | Hedefler tamamlanmış sayılmaz. Operatör sonucu `BLOCKED` gösterir, exit3 ve özgün DLL'in değişmediği kontrolü korunur. |
+| Compile | DLL and runtime host compiled; all five exports were correct. The resource allowlist rejected a third manifest. | Apply `/MANIFEST:NO` to the product DLL under all MSVC profiles. PNG and VERSIONINFO validation remains strict. |
+| Debug | DLL and runtime host compiled; resource validation stopped because of the same additional manifest. | Apply the same link rule to Debug. Preserve Debug symbols. |
+| Native | Targets including the Source API DLL/host compiled, but MSVC rejected `__int128` in an execution test. | Replace the test oracle with four 32-bit multiplications and a signed high-half adjustment using standard 64-bit arithmetic. Application arithmetic is unchanged. |
+| CRT | The general ALL target also compiled an unselected execution test and encountered the same error. | In addition to correcting the oracle, restrict CRT builds to their own CRT/DLL test targets. Native continues to build all tests. |
+| Golden | MSVC DLL/host compilation, export validation, and two resource checks succeeded; required product targets were missing, so the chain stopped before it began with exit code 3. | Do not claim completion of missing targets. Report `BLOCKED`; preserve exit code 3 and the check that the original DLL remains unchanged. |
 
-MSVC'nin eklediği üçüncü resource `[24,2,1033]` RT_MANIFEST'tir. Kullanıcının
-adopt ettiği iki resource `[10,101,1033]` SURGE PNG ve `[16,1,1033]` VERSIONINFO
-olarak kalır. Resource dosyaları, vendor byte'ları ve beş export değişmez.
-Source API geliştirme DLL'i de aynı manifest link kuralını alır; EXE manifestleri
-bu ayardan etkilenmez. Metadata denetçisi manifesti kabul edecek şekilde gevşetilmez.
+The third resource added by MSVC was `[24,2,1033]` (`RT_MANIFEST`). The two
+owner-adopted resources remain `[10,101,1033]` (SURGE PNG) and `[16,1,1033]`
+(VERSIONINFO). Resource files, vendor bytes, and all five exports remain
+unchanged. The Source API development DLL receives the same manifest link rule;
+EXE manifests are unaffected. The metadata checker is not relaxed to allow the
+extra manifest.
 
-`LOCAL_BUILD_RECEIPT.json` artık build başarısı ile seçili profil doğrulamasını
-ayrı kaydeder. Golden hedefleri eksikse doğrulama sonucu BLOCKED, exit3 olur;
-bir derleme PASS'ı Golden PASS'ına çevrilmez.
+`LOCAL_BUILD_RECEIPT.json` now records build success separately from validation
+of the selected profile. If Golden targets are missing, validation reports
+`BLOCKED` and exit code 3; a compilation PASS is not treated as a Golden PASS.
 
-Yeni kaynak için Windows'ta Compile/Debug/Native/CRT profilleri tekrar çalıştırılmalıdır.
-Bu oturumdaki GCC, LLVM-MinGW/Wine ve kaynak QA kanıtı, düzeltilmiş kaynakların
-gerçek MSVC yeniden çalıştırması olarak sunulmaz. Girdi loglarının hash'leri ve
-güncel sonuçlar [MSVC_PROFILE_FIX.json](evidence/MSVC_PROFILE_FIX.json) içindedir.
+Compile, Debug, Native, and CRT profiles must be rerun on Windows for the new
+source. GCC, LLVM-MinGW/Wine, and source QA evidence from that session is not
+presented as an actual MSVC rerun of the corrected sources. Input log hashes
+and current results are in
+[MSVC_PROFILE_FIX.json](../metadata/evidence/MSVC_PROFILE_FIX.json).

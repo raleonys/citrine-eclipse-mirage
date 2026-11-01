@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/status.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <cstdlib>
-namespace preloader_l::status_recovered {
+namespace preloader_l::status {
 namespace {
 const wchar_t* wide(const Path& path) { static_assert(sizeof(wchar_t) == sizeof(char16_t)); return reinterpret_cast<const wchar_t*>(path.c_str()); }
 HANDLE handle(Handle value) { return reinterpret_cast<HANDLE>(value); }

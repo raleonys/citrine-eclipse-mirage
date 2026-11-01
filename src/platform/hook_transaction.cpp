@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/hook_transaction.hpp"
 #include <exception>
 #include <stdexcept>

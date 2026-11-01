@@ -1,48 +1,64 @@
-# Orijinal genel dosya kopyalama yardımcısının kurtarılması
+# Recovery of the original general-purpose file copy helper
 
-Kullanıcı talimatı: “orijinal dll den o kismi çözemiyormusun”. Hazırlanmış
-RE content_handlers kaynağı yalnız copy_overwrite(mode2) etkisini tanımlıyordu.
-Orijinal DLL dökümü ise048d20 genel gövdesini,04895c dosya kimliği yardımcısını
-ve0489f4 son yazma zamanı sorgusunu içerir. Bu turda bu üç gövdenin gözlenen
-kararları doğrudan pseudocode ve assembly üzerinden yeniden oluşturuldu.
+The owner asked whether this part could be recovered from the original DLL.
+The prepared RE `content_handlers` source defined only the
+`copy_overwrite` (mode 2) effect. The original DLL dump contained
+the general body 048d20, the file-identity helper 04895c, and the
+last-write-time query 0489f4. This pass reconstructed the observed
+decisions in all three bodies directly from pseudocode and assembly.
 
-| Seçenek (options & 0xF) | Gözlenen davranış |
+| Option (`options & 0xF`) | Observed behavior |
 |---|---|
-| 0 | Önce CopyFileW(fail_if_exists=TRUE); sonucu ve hata kodunu döndürür. |
-| 1 | Hedef mevcutsa iki handle açar (share=READ + WRITE), kimlikleri karşılaştırır. Farklı dosya skip sonucu false/0; aynı dosya false/32. |
-| 2 | CopyFileW(fail_if_exists=FALSE); diğer seçenek dallarına girmez. |
-| 4 | Hedef mevcutsa share=READ ile açar; signed64-bit son yazma zamanları karşılaştırılır. Kaynak daha yeniyse önce hedef ve kaynak handle’ları kapanır, ardından overwrite yapılır. Aksi halde kimlik kontrolü yürür. |
-| Diğer düşük nibble değerleri | Orijinaldeki gibi reddedilmez; share=READ ile kimlik dalına gider. Yüksek option bitleri yok sayılır. |
+| 0 | First call `CopyFileW(fail_if_exists=TRUE)`, returning its result and error code. |
+| 1 | If the target exists, open two handles (`share=READ + WRITE`) and compare identities. Different files give skip/false/0; the same file gives false/32. |
+| 2 | Call `CopyFileW(fail_if_exists=FALSE)` without entering the other option branches. |
+| 4 | If the target exists, open it with `share=READ` and compare signed 64-bit last-write times. If the source is newer, first close the target and source handles, then overwrite. Otherwise continue to the identity check. |
+| Other low-nibble values | Do not reject them: follow the original `share=READ` identity branch. Ignore high option bits. |
 
-Dosya kimliği helper’ı önce GetFileInformationByHandleEx(FileIdInfo=0x12,24byte)
-çağırır. Yalnız hata50/87 için GetFileInformationByHandle fallback’i çalışır.
-Legacy sonuçta volume32->64 genişletilir; indexHigh dört bayt, indexLow dört
-bayt olarak yerleştirilir ve kalan sekiz bayt sıfırlanır. Diğer hatalar aynen
-döner. Zaman helper’ı FileBasicInfo sorgusunun 0x28 baytlık sonucundan LastWriteTime okur.
+The file-identity helper first invokes
+`GetFileInformationByHandleEx(FileIdInfo=0x12,24 bytes)`.
+Only errors 50/87 trigger the `GetFileInformationByHandle`
+fallback. In the legacy result, the 32-bit volume is widened
+to 64 bits, indexHigh and indexLow each occupy four bytes,
+and the remaining eight bytes are zeroed. Other errors are
+returned unchanged. The time helper reads `LastWriteTime`
+from the 0x28-byte `FileBasicInfo` query result.
 
-Handle’lar hedef -> kaynak sırasıyla kapatılır. CloseHandle başarısızlığı
-orijinaldeki gibi abort ile biter. Kaynak/target açma, zaman ve kimlik sorgusu
-hatalarında kısa devre sırası ve temizlik korunur. INVALID_HANDLE_VALUE ile
-GetLastError=0 uç durumu yeni bir hata olarak normalize edilmez.
+Handles are closed target before source. A `CloseHandle`
+failure ends with `abort`, as in the original. Short-circuit
+ordering and cleanup are retained for source/target open,
+time-query, and identity-query failures. The
+`INVALID_HANDLE_VALUE` with `GetLastError=0` edge case
+is not normalized into a newly invented error.
 
-Uygulama kodu [file_copy.cpp](../src/platform/file_copy.cpp) ve gerçek SDK sınırı
-[file_copy_windows.cpp](../src/platform/file_copy_windows.cpp) içindedir.
-[Kaynak arayüzü](../include/preloader_l/platform/file_copy.hpp) bool/error alanlarını
-açıkça taşır; orijinal derleyicinin tanımsız üç padding byte’ını veya eski C++
-binary ABI’sini yeniden üretme iddiası yoktur. Özel CRT/heap kaynakları ürüne
-alınmadı; diğer std::filesystem/fstream yolları ve dört vendor korunur.
+The implementation is in
+[file_copy.cpp](../src/platform/file_copy.cpp) and the
+actual SDK boundary in
+[file_copy_windows.cpp](../src/platform/file_copy_windows.cpp).
+The [source interface](../include/preloader_l/platform/file_copy.hpp)
+carries explicit boolean/error fields. It does not claim to
+reproduce three undefined padding bytes of the original
+compiler or its former C++ binary ABI. Private CRT/heap
+sources were not imported; other standard filesystem/fstream
+paths and the four vendors were preserved.
 
-Avatar adaptörü artık CopyFileW’ye doğrudan kısayol yerine bu genel gövdeyi
-mode2 ile çağırır. Normal avatar davranışı hâlâ orijinal mode2 dalıdır. Diğer
-seçeneklerin tamamı kaynakta mevcuttur; legacy dosya kimliği çağrısı gerçek
-helper’a bağlıdır. Güncel Release geliştirme DLL’inde GetFileInformationByHandle,
-GetFileInformationByHandleEx ve CopyFileW statik importları doğrulandı.
-Bu, orijinal davranıştan farklı bir kimlik sorgusunu her avatar kopyasına
-zorlamak veya sahte import üretmek değildir.
+Instead of directly shortcutting to `CopyFileW`, the avatar
+adapter calls the general body in mode 2. Normal avatar
+behavior remains the original mode-2 branch. All other options
+are available in source, and the legacy file-identity call is
+connected to the real helper. The current Release development
+DLL has verified static imports of
+`GetFileInformationByHandle`,
+`GetFileInformationByHandleEx`, and `CopyFileW`.
+This does not force a different identity query on every
+avatar copy or fabricate imports.
 
-Testler: seçenek maskesi, bilinmeyen bit kombinasyonları, signed tarih uçları,
-kimlik byte’larının tamamı,50/87 fallback ve diğer hata kodları, kısa devre ve
-fatal kapatma sıraları kontrollü testlerle; Unicode/binary dosyalar, skip/overwrite/
-update, aynı dosya, hard link ve gerçek metadata sorguları Windows test EXE’siyle
-sınanır. Sonuçlar docs/evidence/RE_COPY_RECOVERY.json içindedir. Wine/cross-build,
-gerçek Windows/MSVC Golden ve kullanıcı oyunu kabulü ayrı kanıt sınıflarıdır.
+Controlled tests cover option masks, unknown bit combinations,
+signed timestamp boundaries, all identity bytes, 50/87
+fallback and other errors, short-circuit ordering, and fatal
+close ordering. A Windows test executable covers Unicode/
+binary files, skip/overwrite/update, the same file,
+hard links, and actual metadata queries. Results are recorded
+in `metadata/evidence/RE_COPY_RECOVERY.json`.
+Wine/cross-build, actual Windows/MSVC Golden, and the owner's
+game acceptance are separate evidence classes.

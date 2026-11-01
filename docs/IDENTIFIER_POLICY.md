@@ -1,20 +1,27 @@
-# Aktif adlandırma sınırı
+# Active naming boundary
 
-Kaynak kökenini anlatan belgeler ve tarihsel kanıtlar eski adları koruyabilir.
-Aktif kaynak, yorumlar, araçlar, testler ve metadata bu adları taşımaz.
-Yeni ürün şemaları `surge.*` ailesini kullanır. Vendor kaynakları byte pinleriyle
-korunur; bu temizlik onların içeriğini değiştirmez.
+Documentation describing source provenance and historical evidence may retain
+older names. Active source code, comments, tools, tests, and metadata must not
+carry those names. New product schemas use the `surge.*` family. Vendored
+source is preserved using byte pins; this cleanup does not change its contents.
 
-Aşağıdaki liste kaynak QA tarafından okunur. Adların kontrol aracının içine
-yeniden yazılması yerine belge içinde tutulması, aynı adlandırma sınırını
-kontrolün kendisinde de korur.
+Source QA reads the list below. Keeping the list in this document instead of
+hard-coding the names in the checker makes the same naming boundary applicable
+to the checker itself.
 
 <!-- active-name-policy -->
 ```json
 {"reserved_reference_labels": ["anadius", "yellowfield", "bluefield", "brownfield"]}
 ```
 
-`docs/` ve `governance/` altındaki belge içerikleri ile Markdown belgeler bu
-kontrolün dışındadır. Kök LICENSE/COPYING/NOTICE/AUTHORS lisans ve atıf belgeleri
-de korunur. Aktif dosya yolları da kontrol edilir. `build/`, `dist/`,
-`.git/` ve sabitlenen `third_party/` payload'u aktif first-party taramasına girmez.
+Document contents under `docs/`, as well as root Markdown documents,
+are excluded from this check. Root licensing/attribution documents named
+LICENSE, COPYING, NOTICE, or AUTHORS are also preserved. Active file paths are
+checked. The `build/`, `dist/`, and `.git/` directories and pinned
+`third_party/` payloads are outside the active first-party scan.
+
+Historical evidence now resides in the read-only archive under
+`metadata/evidence/`. That directory is not treated as an active metadata
+contract; its files are verified against historical identities and SHA-256
+records. The naming check applies unchanged to new active source or metadata
+files.

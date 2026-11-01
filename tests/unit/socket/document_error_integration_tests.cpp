@@ -1,14 +1,16 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/document_error_test_fixture.hpp"
 using namespace document_error_test;
 namespace {
-struct Effects:s::RecoveredDocumentErrorEffects {
+struct Effects:s::DocumentErrorEffects {
     Operations& ops;Lower& lower;
     std::function<std::uintptr_t(std::uint64_t)> input_allocator;
     std::function<void(std::uintptr_t,std::uintptr_t,std::uint64_t)> input_copier;
     std::function<void(std::uintptr_t,std::uintptr_t,std::uintptr_t,std::uintptr_t,std::uintptr_t)> virtual_hook;
     std::function<std::int32_t(std::uint32_t)> classifier;
     std::vector<std::uint32_t> classified;unsigned virtuals=0;
-    Effects(s::ReceiveBufferMemory& m,s::NativeNodeClearEffects& n,const s::NativeErrorArgumentTail& a,Operations& o,Lower& l):RecoveredDocumentErrorEffects(m,n,a),ops(o),lower(l){}
+    Effects(s::ReceiveBufferMemory& m,s::NativeNodeClearEffects& n,const s::NativeErrorArgumentTail& a,Operations& o,Lower& l):DocumentErrorEffects(m,n,a),ops(o),lower(l){}
     std::uintptr_t allocate_04b100(std::uint64_t n)override{if(input_allocator)return input_allocator(n);return ops.allocate(n);}
     void copy_078d30(std::uintptr_t to,std::uintptr_t from,std::uint64_t n)override{if(input_copier)input_copier(to,from,n);else ops.copy(to,from,n);}
     void free_04b0f8(std::uintptr_t p)override{ops.free(p);}

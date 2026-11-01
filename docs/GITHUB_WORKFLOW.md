@@ -26,7 +26,7 @@ on the appropriate working branch and open PRs; only the owner merges into main.
 
 Before writing, inspect the working tree and current branch, fetch remote refs,
 and inspect open PRs for overlapping work. Read the current AGENTS.md and
-governance/CURRENT_SCOPE.md from fetched origin/main as well as the working branch;
+GOVERNANCE.md from fetched origin/main as well as the working branch;
 an older audit checkout does not exempt an agent from current owner rules.
 Synchronize bugfix with current main
 before the next batch: fast-forward when possible, otherwise merge main normally.
@@ -38,6 +38,15 @@ Open a focused PR for each coherent reviewable batch, stating the problem, scope
 tests and remaining work. Retain bugfix after merge. Prefer merge commits for
 these PRs to make later synchronization simple. A dependency update, documentation
 change, new task or new PR does not by itself justify a new branch.
+
+Never create a draft PR, convert a PR to draft or leave a PR in draft. Complete
+the required local validation before opening a ready-for-review PR. Track
+remaining work, pending CI/native MSVC/Golden/game validation and merge blockers
+explicitly in its description. Keep that description current as evidence changes.
+Ready-for-review is a review state, not acceptance, approval or permission to
+merge; existing validation gates and the owner-only merge rule still apply.
+This rule concerns pull requests. Owner-authorized weekly draft releases
+continue under the separate release policy.
 
 Dedicated audit/project branches need a descriptive name and an explicit scope
 recorded in the PR. Reuse each branch through the sustained workstream rather than
@@ -103,6 +112,12 @@ Do not replace them with directories or regenerate vendor files.
 Changes to tracked source require an explicit reviewed refresh of the whole-source
 manifest. Never refresh merely to hide drift. Build/dist remain untracked. No
 release version/revision is introduced into product code or CI job names.
+
+## Evidence retention and repository hygiene
+
+No new `docs/evidence/` files are to be committed. This includes build/test logs, JUnit/XML output, transient JSON/CSV reports, before/after captures, duplicate contract snapshots, and bulk audit dumps. Use ignored `build/` for local outputs and CI run artifacts for temporary test evidence. Preserve non-reproducible provenance or owner-native acceptance evidence externally with a checksum and concise traceable reference; keep current contracts in `metadata/` and human-readable conclusions in `docs/`. The root `.gitignore` discourages accidental additions, but reviewers must also reject forced additions unless specifically authorized by the owner.
+
+Historical `docs/evidence/` files were reviewed: 119 byte-exact records were relocated to locked `metadata/evidence/`, while 492 redundant/reproducible outputs were retired from HEAD and remain available in the original Git history. The immutable archive is checked against `metadata/EVIDENCE_RETENTION_POLICY.json`. Do not add to it or restore legacy output folders without an owner-approved change. Current documentation and metadata refer to the relocated evidence; historical path strings within archived snapshots still describe their original context.
 
 ## Local validation before a push
 

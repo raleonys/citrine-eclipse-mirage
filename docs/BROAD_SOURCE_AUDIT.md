@@ -1,86 +1,164 @@
-Sonraki kullanıcı Windows/Golden/native ve oyun kabulü ile DLL boyut ölçümleri: [güncel kabul kaydı](DLL_SIZE_AND_NATIVE_ACCEPTANCE.md). Aşağıdaki test ve bekleme bilgileri inceleme anının tarihsel kaydıdır.
+Later owner-provided Windows/Golden/native and game acceptance,
+including DLL size measurements, is recorded in
+[the current acceptance record](DLL_SIZE_AND_NATIVE_ACCEPTANCE.md).
+All test and pending-work statements below are historical as of this audit.
 
-# Tüm kaynak ve adaptör denetimi
+# Whole-source and adapter audit
 
-Önceki inceleme yeni RE paketinin deltasına odaklanmıştı; beş düzeltme bütün codebase'in denetlendiği anlamına gelmiyordu. Bu tur kapsam, ürünün **277 kaynak/başlığının tamamına**, gerçek build ayrımına ve uygulama sahibinden Windows adaptörüne giden çağrı zincirlerine genişletildi. Yeni bulgular yalnız önceki beşliyle sınırlanmadı.
+The earlier review focused on the delta of a new RE package;
+five corrections were not evidence of an entire codebase audit.
+This pass expanded coverage to **all 277 product sources/headers**,
+the actual build partition, and call chains from the Application
+owner to Windows adapters. Findings were not limited to the
+previous five.
 
-## Kapsam ve kanıtın anlamı
+## Scope and meaning of the evidence
 
-| Kaynak grubu | Dosya | Yapılan işlem |
+| Source group | Files | Work performed |
 |---|---:|---|
-| Production C++ | 64 | Gerçek CMake nesneleri ve bağlantı sınırı; OS/adaptör, exception, sahiplik ve eşzamanlılık yolları |
-| Korunan reference C++ | 74 | RE kaynak karşılaştırması, test/host sembol bağlantıları, production'a girmeme kontrolü; silinmedi |
-| Başlıklar | 139 | Kaynak karşılığı, arayüz/layout değişiklikleri, doğrudan CPP kullanıcıları |
-| Önceki dosya eşlemesi bulunanlar | 248 | Yeni RE girdisiyle yeniden token karşılaştırması:211eşleşme,37incelenmiş fark |
-| Önceki dosya eşlemesinin dışındakiler | 29 | Uygulama bağlantıları, açık politikalar ve izinli donor/yeniden oluşturma adaptörleri |
+| Production C++ | 64 | Actual CMake objects/link boundaries, OS/adapter, exception, ownership, and concurrency paths |
+| Retained reference C++ | 74 | RE source comparison, test/host symbol linkage, exclusion from Production; not deleted |
+| Headers | 139 | Source counterparts, interface/layout changes, direct CPP consumers |
+| Files with earlier mapping | 248 | Token re-comparison with new RE input: 211 matches, 37 reviewed differences |
+| Files outside earlier mapping | 29 | Application integration, explicit policies, and authorized donor/reconstruction adapters |
 
-Son iki satır ilk üç satırın başka bir sınıflandırmasıdır; toplamı artırmaz. Include yolları, yorum/boşluk ve kaydedilmiş namespace dönüşümleri token karşılaştırmasında ayrılır. Bu, compiler AST veya özgün DLL ile davranış eşdeğerliği ölçümü değildir.
+The last two rows classify the same files in the first
+three rows; they are not additional files. Includes,
+comments/whitespace, and recorded namespace transformations
+were excluded from token comparison. This is not a compiler
+AST audit or a measure of behavioral equivalence to the
+original DLL.
 
-[Dosya bazındaki CSV](evidence/BROAD_SOURCE_MATRIX.csv), [hash ve sembol bağlantıları içeren JSON](evidence/BROAD_SOURCE_INVENTORY.json) ve [doğrulama kaydı](evidence/BROAD_AUDIT_VALIDATION.json) birlikte okunmalıdır. JSON, gerçek138COFF nesnesi ve derlenmiş test/host nesnelerinin dış sembol bağlantılarını da içerir. Bir testin bir sembole bağlanması o fonksiyonun bütün dallarının çalıştığını göstermez. Inline, virtual, callback ve GetProcAddress yolları ayrıca değerlendirilmiştir; satır/dal kapsam yüzdesi uydurulmamıştır.
+Read [the file-level CSV](../metadata/evidence/BROAD_SOURCE_MATRIX.csv),
+[the JSON inventory with hashes and symbol links](../metadata/evidence/BROAD_SOURCE_INVENTORY.json),
+and [the validation record](../metadata/evidence/BROAD_AUDIT_VALIDATION.json)
+together. The JSON also records external symbol links in
+138 actual COFF objects and compiled test/host objects.
+A test linking a symbol does not imply execution of
+all branches of that function. Inline, virtual,
+callback, and GetProcAddress paths were separately
+considered; no line/branch coverage percentage was invented.
 
-## Bu tur düzeltilenler
+## Corrections in this audit
 
-| Kimlik | Kaynak / sorun | Düzeltme ve regresyon kanıtı |
+| ID | Source / defect | Correction and regression evidence |
 |---|---|---|
-| B01 | Execution mutex `owner_48` alanı native kilitten önce okunuyordu; diğer thread'in yazımıyla C++ veri yarışı. | Layout korunarak atomic_ref erişimi. Aynı gerçek execution.cpp, düzeltmeden önce TSAN race/exit66; sonra temiz. Dört thread ile üç mutex tipinde120000kritik bölüm testi. |
-| B02 | CommandLineToArgvW listesini dönüştürme/vektöre ekleme exception'ında LocalFree yoktu. | Exception yolunda da serbest bırakma. Kontrollü dönüştürme hatasında önce frees=0, sonra frees=1; normal/null yollar korunur. |
-| B03 | DllShutdown döndükten sonra caller thread kimliği unload taramasından dışlanmaya devam ediyordu. | RAII her dönüşte kimliği sıfırlar. Gerçek worker/cleanup-retry DLL fixture'ı iki başarısız ve bir başarılı kapanışın ardından sıfırı denetler. Tam native unload ispatı olarak sunulmaz. |
-| B04 | Boş XML child metni `const char*`→string_view dönüşümünde nullptr olabiliyordu. | Somut serializer adaptörü eksik metni invalid_argument ile reddeder. Gerçek XML reader/router ile boş Id içeren QueryPresence/AreChunksInstalled ve ardından geçerli istek sınanır. Kaynak modelin diğer serileştirme kuralları korunur. |
-| B05 | ShowIGO queue oluşturma/enqueue exception'ında event mutex'i kilitli kalıyordu. | Başarılı kilit ediniminden sonra RAII unlock. İki ayrı hata noktasında tam bir unlock doğrulanır; eski gövde aynı testi başarısız bitirir. |
-| B06 | Owned event initializer oluşturma başarısızlığında guard=-1 ve init kilidi kalabiliyordu. | Optional abort callback; owned runtime guard'ı sıfırlayıp kilidi bırakır. İlk seed oluşturma bad_alloc, aynı owner üzerinde retry, tek seed ve peer thread erişimi sınanır. Pure modelin default abort'u no-op; özgün private CRT EH mekanizması icat edilmez. |
-| B07 | Stage/backup henüz yol döndürmeden write/close/copy hatasında handle veya geçici yol sahipliği kaybolabiliyordu. | Native backend edinimden önce kayıt ayırır, handle/yolu başarılı close/delete'a kadar saklar; recover_atomic retry eder. Gerçek geçici dosya/handle üzerinde kontrollü WriteFile/CloseHandle/DeleteFileW/CopyFileW hataları; hedefin korunması ve başarı sonrası tekrar yazım sınanır. Eski backend aynı testi geçemez. |
-| B08 | Bilinmeyen entitlement alanının gerçek tanısı yerine dialog'da `UNKNOWN MESSAGE` yazıyordu. | Sayılı UTF8 tanı gerçek gövdede Unicode'a çevrilir; SURGE başlığı korunur. Gerçek Environment kodunda yalnız MessageBoxW yakalanır; eski gövde alan/değer kontrolünü geçemez. |
-| B09 | IPv6 connect hook ::1'e yönlendiriyordu; somut server yalnız127.0.0.1dinliyordu. | Aynı seçilmiş portta exclusive IPv4 ve IPv6-only loopback listener. Önce ::1 testi Connection refused; sonra iki aile, IPv6 aday çakışması/IPv4 adayının bırakılması ve ortak oturum sınırı geçer. IPv6 hostta yoksa yalnız o kontroller açıkça skip edilir. |
-| B10 | Extra worker son readiness bayrağını profile/factory hazır olmadan yayımlıyordu. | Worker tamamlanması private bayrakta; profile ve accepting yayımlandıktan sonra callback'in üçüncü kapısı açılır. Gerçek Application, Windows mutex ve worker'lar ile kontrollü duraklatma; eski gövde erken dönüşü yakalar, yeni gövde bekleyeni doğru anda bırakır. |
+| B01 | Execution mutex field `owner_48` was read before the native lock; a write by another thread caused a C++ data race. | Use `atomic_ref` while preserving layout. The real `execution.cpp` showed a TSAN race/exit 66 before the correction and a clean result after it. A four-thread test exercised 120,000 critical sections across three mutex types. |
+| B02 | An exception during CommandLineToArgvW item conversion/vector insertion failed to call LocalFree. | Release the list on the exceptional path too. Injected conversion failure changed the expected free count from zero to one; normal/null paths were preserved. |
+| B03 | Caller thread identity remained excluded from the unload scan after `DllShutdown` returned. | RAII clears the identity on every return. A real worker/cleanup-retry DLL fixture checks for zero after two failed and one successful shutdowns. This is not a complete proof of native unload safety. |
+| B04 | A missing XML child's text could be null during `const char*` to `string_view` conversion. | Concrete serializer adapter rejects missing text with `invalid_argument`. Actual XML reader/router tests use QueryPresence/AreChunksInstalled with empty Id followed by a valid request. Other source-model serialization rules remain intact. |
+| B05 | ShowIGO left the event mutex locked if queue creation/enqueue threw an exception. | RAII unlocks after successful lock acquisition. Exactly one unlock is verified for two separate failure points; the old body fails the same test. |
+| B06 | A failed owned-event initializer could leave guard = -1 and the init mutex held. | Optional abort callback resets the owned runtime guard and releases the lock. Tests inject `bad_alloc` at first seed creation, retry with the same owner, check exactly one seed and peer-thread access. The pure model's default abort is a no-op; no private-CRT EH mechanism is invented. |
+| B07 | A handle or temporary-path owner could be lost if stage/backup write/close/copy failed before returning a path. | Native backend reserves a record before acquisition, retaining handle/path until successful close/delete; `recover_atomic` retries. Injected WriteFile/CloseHandle/DeleteFileW/CopyFileW failures on real temporary files/handles verify target preservation and successful subsequent writing. The old backend fails the same test. |
+| B08 | An unknown entitlement field produced `UNKNOWN MESSAGE` in the dialog instead of the actual diagnostic. | Convert the counted UTF-8 diagnostic to Unicode in the actual body; retain the SURGE title. Only MessageBoxW is intercepted in real Environment code. The prior body fails the field/value assertion. |
+| B09 | IPv6 connect hook redirected to ::1, while the concrete server listened only on 127.0.0.1. | Add exclusive IPv4 and IPv6-only loopback listeners for the same chosen port. Before the change, ::1 failed with Connection refused; afterwards both families, IPv6 candidate collision/IPv4 release, and a shared session limit passed. If IPv6 is unavailable on the host, only the affected checks are explicitly skipped. |
+| B10 | Extra worker published the final readiness flag before profile/factory became ready. | Keep worker completion in a private flag; open the callback's third gate only after publishing profile and accepting state. An actual Application with Windows mutexes and workers under controlled pause catches early return in the old body and releases waiters at the correct time in the new body. |
 
-B01/B02/B05/B06/B04, kaynak modelini C++/somut ürün içinde çalıştırmanın exception/eşzamanlılık sınırlarıyla ilgilidir; özgün makine kodunun aynı hatayı taşıdığı iddia edilmez. B03/B07/B08/B09/B10 sahip olduğumuz uygulama/adaptör birleşimindeki açıklardır. B09/B10 önceden onaylanmış IPv6 ve başlangıç hazır olma davranışlarını tamamlar; yeni CFG, export, port veya SDK politikası getirmez.
+B01/B02/B05/B06/B04 relate to exception/concurrency
+boundaries arising when source models run in C++ or
+the concrete product; they do not imply that the
+original machine code necessarily contained the same
+defects. B03/B07/B08/B09/B10 were gaps in the owned
+application/adapter integration. B09/B10 completed
+previously approved IPv6 and startup-readiness
+behavior; no new CFG, export, port, or SDK policy
+was introduced.
 
-## İnceleme alanları
+## Reviewed areas
 
-| Alan | Denetlenen sınır / kullanılan test aileleri |
+| Area | Reviewed boundary / test families |
 |---|---|
-| Application startup/shutdown | Worker join, readiness/profile yayını, iptal, sahiplik, timeout/retry; application_runtime, startup_publication, cleanup_retry, public lifecycle |
-| Environment OS bağlantıları | Unicode/path, optional main/override CFG, avatar, dizin, log, gerçek dialog; configuration_platform, environment_dialog, application_runtime |
-| Execution/argv/flags | Pre-lock owner erişimi, mutex tipleri/layout, argüman cleanup, QPC'nin callback öncesi yayını; execution, execution_concurrency, startup + TSAN |
-| Config/VDF/hash/order | PEGTL action/rewind/partial state, iki Config2 girişinin kökü ve sıra, kaldırılan SDK/port override'ları; parser, vdf_parser_regressions, configuration, config_application/hash/order |
-| File/path/status/license/token | Stream false/throw/close, path kökü, standard filesystem ve mevcut kaynak kuralları; file_io, path, status, license_file_integration, licensing, token, windows_effects |
-| Tam copy helper | Mod/identity fallback, zaman karşılaştırması, ters close ve fatal sınırı; file_copy, file_copy_windows_integration |
-| Atomik persistence | Edinim/yol devri, stage/backup başarısızlığı, reverse rollback ve retry sahipliği; atomic_persistence, atomic_staging, achievement_runtime/writer |
-| Hook kurulumu/rollback/unload | Queued apply, SAFE-FREEZE build-copy pinleri, incomplete rollback, trampoline drain ve handle retry; hook_transaction, hook_freeze, unload_guard, hook_engine_fixtures |
-| Callback binding/lease/locks | Aynı canlı state/original slots, common Guard/Pause, LastError, close/drain; production_callback, native_callback, host_init, hook_adapter_integration |
-| Connect | Exact loopback, tam const adres kopyası, dar attempts kilidi, readiness; production_network_hook, network_hook + gerçek listener testleri |
-| Hook11 | 32768UTF16 sınırı, protected read, suffix/null/fallback, SDK sonucu/LastError; crypt_path_probe + callback testleri |
-| Registry/process/folder | A/W ABI sınırları, handle/map kimliği, registry wait sırasında Pause; registry, host_callback, production_callback |
-| Aktif transport/messages | Asenkron greeting, iki worker, oturum FIFO, limit/deadline, cancellation buffer ömrü; server, handler_pool, network_policy, session_flow, listener_port |
-| Event queue | Seed/guard retry, mutex exception, reserve/commit/retry ve allocation/persistence sırası; event_queue/integration, misc_handlers, session_flow |
-| Achievement | Map rollback, XML/INI batch, event'in kalıcılıktan sonra yayını; content_handlers, achievement_storage/runtime/writer, atomic_persistence |
-| Handler/router | Komut kayıtları, XML null text, stable attribute kopyaları; handlers, misc_handlers, dispatch_integration, messages |
-| TinyXML bridge/printer | Document/wrapper ömrü, ErrorStr, attribute sırası/escaping, backend node kimliği; xml_reader, xml_printer, dispatch_integration |
-| Codec/hash/encoding | AES/padding/offset ve mevcut hata domain'i, SHA1, UTF8 ve filesystem codepage ayrımı; crypto, hash, encoding + gerçek encrypted roundtrip |
-| Provider/extra library | Vtable slotları ve mevcut fixture, yükleme/sahiplik, worker bağımlılıkları; online, libraries, application_runtime. Gerçek harici provider ABI'sinin tümü doğrulanmadı. |
-| Zaman | Wrap/signed arithmetic ve UTC/timestamp parsing; calendar, timestamp, utc |
-| Sabit kimlikler | SDK10.6.2.31/wire10,6,2,31, product path ve CFG override olmaması; configuration, application_runtime, source requirement kontrolleri |
-| Reference transport/XML | Tüm68CPP + başlıklar kaynak karşılaştırmasında ve var olan model/integration fixture'larında; production dışı oldukları linker-map ile ayrıca denetlenir |
-| Reference composition | Diğer6CPP + başlıklar, test/source API bağlantıları korunur; private CRT veya yeni controller admission ürün yoluna alınmaz |
+| Application startup/shutdown | Worker join, readiness/profile publication, cancellation, ownership, timeout/retry; application_runtime, startup_publication, cleanup_retry, public lifecycle |
+| Environment OS integration | Unicode/path, optional main/override CFG, avatar, directories, logging, actual dialog; configuration_platform, environment_dialog, application_runtime |
+| Execution/argv/flags | Pre-lock owner access, mutex types/layout, argument cleanup, QPC publication before callbacks; execution, execution_concurrency, startup and TSAN |
+| Config/VDF/hash/order | PEGTL actions/rewind/partial state, roots/order of two Config2 inputs, removed SDK/port overrides; parser, vdf_parser_regressions, configuration, config_application/hash/order |
+| File/path/status/license/token | Stream false/throw/close, path root, standard filesystem and source rules; file_io, path, status, license_file_integration, licensing, token, windows_effects |
+| Full copy helper | Mode/identity fallback, timestamp comparison, reverse close and fatal boundary; file_copy, file_copy_windows_integration |
+| Atomic persistence | Acquisition/path transfer, stage/backup failure, reverse rollback and retry ownership; atomic_persistence, atomic_staging, achievement_runtime/writer |
+| Hook installation/rollback/unload | Queued apply, SAFE-FREEZE build-copy pins, incomplete rollback, trampoline drain, handle retry; hook_transaction, hook_freeze, unload_guard, hook_engine_fixtures |
+| Callback binding/lease/locks | Shared live state/original slots, common Guard/Pause, LastError, close/drain; production_callback, native_callback, host_init, hook_adapter_integration |
+| Connect | Exact loopback, complete const address copy, narrow attempt-counter lock, readiness; production_network_hook, network_hook, actual listener tests |
+| Hook 11 | 32,768 UTF-16 limit, protected read, suffix/null/fallback, SDK result/LastError; crypt_path_probe and callback tests |
+| Registry/process/folder | A/W ABI boundaries, handle/map identity, Pause during registry wait; registry, host_callback, production_callback |
+| Active transport/messages | Asynchronous greeting, two workers, per-session FIFO, limit/deadline, cancellation-buffer lifetime; server, handler_pool, network_policy, session_flow, listener_port |
+| Event queue | Seed/guard retry, mutex exception, reserve/commit/retry, allocation/persistence ordering; event_queue/integration, misc_handlers, session_flow |
+| Achievement | Map rollback, XML/INI batch, event publication after persistence; content_handlers, achievement_storage/runtime/writer, atomic_persistence |
+| Handler/router | Command registration, XML null text, stable attribute copies; handlers, misc_handlers, dispatch_integration, messages |
+| TinyXML bridge/printer | Document/wrapper lifetime, ErrorStr, attribute order/escaping, backend-node identity; xml_reader, xml_printer, dispatch_integration |
+| Codec/hash/encoding | AES/padding/offset, existing error domains, SHA-1, UTF-8 versus filesystem-codepage distinction; crypto, hash, encoding and actual encrypted round-trip |
+| Provider/extra library | Vtable slots and existing fixture, loading/ownership, worker dependencies; online, libraries, application_runtime. Full external-provider ABI not verified. |
+| Time | Wrap/signed arithmetic and UTC/timestamp parsing; calendar, timestamp, utc |
+| Fixed identities | SDK 10.6.2.31 / wire 10,6,2,31, product path, no CFG overrides; configuration, application_runtime, source-requirement checks |
+| Reference transport/XML | All 68 CPP files and headers covered by source comparison and existing model/integration fixtures; separate linker-map verification of exclusion from Production |
+| Reference composition | Remaining six CPP files and headers, test/source API linkage preserved; private CRT or new controller-admission policy not imported into Production |
 
-## Elenen şüpheler ve açık sınırlar
+## Ruled-out suspicions and open boundaries
 
-TinyXML2 başarılı parse için ErrorStr'ın nullptr olabileceği şüphesi elendi: vendored implementation boş C string döndürüyor; mevcut başarı testi empty() denetliyor. Gereksiz reader değişikliği yapılmadı. Soyut boundary'lerdeki bilinçli throw'lar otomatik olarak eksik implementasyon sayılmadı; örneğin LicenseFiles hashing/token işini sahiplenir, output-only achievement reader istek okumaz, native greeting senkron yolu kullanmaz.
+The suspicion that TinyXML2 `ErrorStr` could be nullptr
+after successful parsing was ruled out: the vendored
+implementation returns an empty C string, and the
+existing success test checks `empty()`. No unnecessary
+reader change was introduced. Intentional throws at
+abstract boundaries were not automatically classified
+as missing implementations: LicenseFiles owns hashing/
+token processing, an output-only achievement reader
+does not read requests, and the native greeting path
+does not require synchronous operation.
 
-Execution'ın QPC cache'i Application constructor'da callback yayımından önce hazırlanır. Event seed/guard'ları da session yayımından önce oluşturulur. Bu gerçek ürün sırası, bütün bağımsız C++ model kullanıcılarının concurrent cold initialization'ının ispatı değildir. Başlangıç dışındaki soyut model kullanımları kendi sözleşmesiyle sınanmalıdır.
+Execution's QPC cache is initialized in the Application
+constructor before callback publication. Event seed/
+guards are also created before session publication.
+This actual product ordering is not proof of safe
+concurrent cold initialization by every independent
+C++ model consumer; off-startup uses of abstract
+models need their own contracts and tests.
 
-Kalan doğrulama sınırları: yeni kaynak için native MSVC/Golden ve gerçek oyun/consumer tekrar koşulmadı; yabancı provider ABI'si, özgün private CRT/global-layout/EH, her Windows/filesystem hata kodu ve bütün OS sürümleri eşdeğer ilan edilmez. Atomik çoklu dosya güncellemesi power-loss/cross-process transaction değildir. Arbitrary/unaligned yabancı pointer domain'i, mevcut typed SDK sözleşmesinin ötesinde kabul edilmiş sayılmaz.
+Outstanding acceptance limits: the updated source
+had not been rerun under native MSVC/Golden or a real
+game/Consumer in this audit. The external provider
+ABI, original private CRT/global layout/exception
+handling, every Windows/filesystem error code, and
+all OS versions are not declared equivalent.
+Atomic multi-file updates are not power-loss or
+cross-process transactions. Arbitrary/unaligned
+foreign pointer domains beyond the existing typed
+SDK contract were not accepted.
 
-## Korunanlar ve yeniden çalıştırma
+## Preserved contracts and reruns
 
-64production/74reference ayrımı, üç C export/ordinal, static Crypt32, dört vendorun byte pinleri, version metadata profili, profile/fallback avatar byte'ları ve Release log yasağı korunur. Production build bağımsız olarak tests/source API kapalı derlenir; raw compiler DLL incelemesi final Golden/MSVC kabulü yerine konmaz. C++ source arayüzlerine optional virtual yöntemler eklendiğinden geliştirme tüketicileri tüm kaynaklarla yeniden derlenmelidir.
+The 64 Production/74 reference split, three C
+exports/ordinals, static CRYPT32, byte pins of four
+vendors, version-metadata profile, profile/fallback
+avatar bytes, and Release logging prohibition
+were preserved. Production builds independently
+with tests/source APIs disabled; inspecting a raw
+compiler DLL is not equivalent to final Golden/MSVC
+acceptance. Optional virtual methods were added to
+C++ source interfaces, so development consumers
+must rebuild from all the sources.
 
-Normal native acceptance launcher tüm testleri toplar. Ayrı Release/Debug CTest çalıştırmaları, source QA, gerçek linker-map sınırı ve production-only runtime host üç load/request/stop/unload çevrimi doğrulama kaydındadır. İlave dört bağımsız test target'ı execution concurrency, native atomic staging, Environment dialog ve startup publication alanlarını kapsar; mevcut testlere de hata yolları eklendi.
+The normal native-acceptance launcher gathers all
+tests. Separate Release/Debug CTest runs, source QA,
+the actual linker-map boundary, and three
+load/request/stop/unload cycles of the Production-only
+runtime host are recorded in the validation results.
+Four additional independent test targets cover
+Execution concurrency, native atomic staging,
+Environment dialog, and startup publication;
+failure paths were added to existing tests too.
 
-Bu rapor tamamlanan kapsamı ve bulunan hataları kaydeder. Hata sayısı, başka hata bulunamayacağına dair bir kapanış ölçütü değildir. Sonraki değişikliklerde aynı dosya/çağrı alanları ve native tüketici senaryoları yeniden değerlendirilmelidir.
+This report documents the reviewed scope and
+identified fixes. The defect count does not certify
+that no other defects remain. Later changes must
+revisit the same files/call chains and native
+Consumer scenarios as needed.
 
-Güncel sonuç: tam Release193/193, etkilenen Debug17/17, kaynak QA16/16.
-ZIP temiz klasöre açılarak QA16/16 ve tests/source API kapalı sıfırdan
-production derlemesi geçti; bu DLL de üç gerçek public-ABI runtime çevrimini
-tamamladı. Ayrıntılı sınıflandırma, eski kodda başarısız olan regresyonlar ve
-platform sınırları doğrulama JSON/XML/log dosyalarındadır.
+At this checkpoint, full Release 193/193,
+affected Debug 17/17, and source QA 16/16 passed.
+QA 16/16 passed after clean ZIP extraction alongside
+a clean Production build with tests/source APIs
+disabled; that DLL also completed three real
+public-ABI runtime cycles. Detailed classifications,
+regressions failing on the previous code, and
+platform limits are retained in validation
+JSON/XML/log files.

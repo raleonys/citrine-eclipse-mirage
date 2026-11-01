@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/control.h"
 #include <iostream>
 #include <stdexcept>

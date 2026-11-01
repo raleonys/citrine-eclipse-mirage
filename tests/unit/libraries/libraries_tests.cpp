@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/libraries.hpp"
 #include <algorithm>
 #include <cstdio>
@@ -6,7 +8,7 @@
 #include <stdexcept>
 #include <tuple>
 
-using namespace preloader_l::recovered::libraries;
+using namespace preloader_l::system_services::libraries;
 static unsigned checks;
 static void check(bool value) {
     ++checks;

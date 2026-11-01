@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_closing.hpp"
 #include <windows.h>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Typed logical operation; only overlapped is a real SDK object. The remaining
 // fields are not an overlay of original ASIO memory or a native error_code ABI.
 struct CancelOperation {
@@ -37,7 +39,7 @@ struct CancellationState {
 class CancellationRecycler {
 public:
     virtual ~CancellationRecycler()=default;
-    // Required bucket/list/free-pool change;0283c0 internals are not recovered
+    // Required bucket/list/free-pool change; 0283c0 internals are not modeled
     // here. Node storage must remain alive until this call returns.
     virtual void recycle_0283c0(CancelMap&,CancelNode&)=0;
 };
@@ -61,4 +63,4 @@ private:
     CancellationEngine& engine_;CancellationState& state_;CancellationRecycler& recycler_;
     CompletionApi& completion_;Api& wake_api_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

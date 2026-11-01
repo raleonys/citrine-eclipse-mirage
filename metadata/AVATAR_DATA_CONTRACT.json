@@ -5,7 +5,7 @@
   "assets": {
     "profile": {
       "source": "resources/branding/surge.png",
-      "sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+      "sha256": "5cc62afa98d4e97ac2f780cc7e2d7edd4ae538ece62d81d0da3b61858a0a08a6",
       "role": "Replace original green user avatar at0x1800809d0; no configured Avatar overwrite"
     },
     "fallback": {
@@ -14,6 +14,6 @@
       "role": "Preserve separate original fallback at0x180082710"
     }
   },
-  "recovery_reference_document": "docs/evidence/contracts/AVATAR_DATA_CONTRACT.json",
-  "latest_owner_asset_update": "Owner explicitly retains embedded C++ PNG bytes; latest supplied208x208 PNG replaces profile only"
+  "recovery_reference_document": "metadata/evidence/contracts/AVATAR_DATA_CONTRACT.json",
+  "latest_owner_asset_update": "Owner supplied a new 208x208, 4478-byte PNG; pinned C++ profile embedding replaces the previous avatar only, fallback unchanged"
 }

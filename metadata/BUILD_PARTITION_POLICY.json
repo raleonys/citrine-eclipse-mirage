@@ -149,7 +149,7 @@
     "src/xml/pool_release.cpp",
     "src/runtime/bootstrap.cpp",
     "src/runtime/thread_launch.cpp",
-    "src/runtime/recovered_effects.cpp",
+    "src/runtime/delegating_effects.cpp",
     "src/platform/hook_cleanup.cpp",
     "src/platform/hook_engine_adapters.cpp",
     "src/config/pipeline.cpp",
@@ -274,6 +274,7 @@
     "socket_write_finish_contracts",
     "socket_write_finish_integration_contracts",
     "config_order_contracts",
+    "configuration_defaults_integration_contracts",
     "session_integration_contracts",
     "windows_effects_integration",
     "config_hash_model_differential_contracts",
@@ -292,6 +293,7 @@
     "config_application_contracts",
     "config_hash_contracts",
     "configuration_contracts",
+    "configuration_defaults_contracts",
     "configuration_platform_contracts",
     "content_handlers_contracts",
     "crypt_path_probe_contracts",
@@ -376,7 +378,7 @@
   "native_msvc_golden": "PASS_USER_SUPPLIED_WINDOWS_LOGS_FOR_ACCEPTED_DLL",
   "game_retest": "OWNER_REPORTED_PASS_FOR_ACCEPTED_DLL",
   "documentation": "docs/BUILD_PARTITION.md",
-  "usage_matrix": "docs/evidence/TRANSLATION_UNIT_USAGE.json",
+  "usage_matrix": "metadata/evidence/TRANSLATION_UNIT_USAGE.json",
   "cross_debug_large_reference_tests": [
     "socket_native_dispatch_integration_contracts",
     "socket_native_document_integration_contracts",
@@ -385,5 +387,5 @@
     "socket_pool_release_integration_contracts"
   ],
   "cross_debug_reference_budget_seconds": 600,
-  "owner_acceptance": "docs/evidence/OWNER_NATIVE_ACCEPTANCE.json"
+  "owner_acceptance": "metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json"
 }

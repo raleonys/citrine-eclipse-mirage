@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 from pathlib import Path
 import importlib.util, json, struct, tempfile, sys
 sys.dont_write_bytecode = True
@@ -199,7 +200,7 @@ with tempfile.TemporaryDirectory() as td:
 cor=load('cor',r/'scripts/verify_corvexon_golden_trail.py')
 cor_policy=json.loads((fixture_root/'metadata/CORVEXON_GOLDEN_TRAIL.json').read_text())
 
-def build_corvexon_fixture(imports=('KERNEL32.DLL','WS2_32.DLL','CRYPT32.DLL')):
+def build_corvexon_fixture(imports=('CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL')):
     pe=0x100; coff=pe+4; opt=coff+20; optsz=0xF0; sec=opt+optsz
     raw_base=0x400; va_base=0x1000; raw_size=0x1600
     data=bytearray(raw_base+raw_size)
@@ -268,11 +269,11 @@ with tempfile.TemporaryDirectory() as td:
     bad=bytearray(good); chars=struct.unpack_from('<I',bad,sec_off+36)[0]; struct.pack_into('<I',bad,sec_off+36,chars & ~0x20000000); bp=td/'bad_entry_nonexec.dll'; bp.write_bytes(bad)
     errors,_=cor.inspect_shipping_abi(bp,cor_policy); assert any('non-executable .text' in x for x in errors), errors
     # Forbidden legacy CRT import must fail closed.
-    bad,_,_=build_corvexon_fixture(('KERNEL32.DLL','WS2_32.DLL','CRYPT32.DLL','MSVCRT.DLL')); bp=td/'bad_import.dll'; bp.write_bytes(bad)
+    bad,_,_=build_corvexon_fixture(('CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL','MSVCRT.DLL')); bp=td/'bad_import.dll'; bp.write_bytes(bad)
     errors,_=cor.inspect_shipping_abi(bp,cor_policy); assert any('MSVCRT.DLL' in x for x in errors)
     # HF12 static CRT: both MSVC runtime and Universal CRT dynamic imports must fail closed.
     for forbidden in ('MSVCP140.DLL','VCRUNTIME140.DLL','VCRUNTIME140_1.DLL','UCRTBASE.DLL','API-MS-WIN-CRT-HEAP-L1-1-0.DLL'):
-        bad,_,_=build_corvexon_fixture(('KERNEL32.DLL','WS2_32.DLL','CRYPT32.DLL',forbidden))
+        bad,_,_=build_corvexon_fixture(('CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL',forbidden))
         bp=td/('bad_static_'+forbidden.replace('.','_')+'.dll');bp.write_bytes(bad)
         errors,_=cor.inspect_shipping_abi(bp,cor_policy)
         assert any(forbidden in e for e in errors),(forbidden,errors)
@@ -291,6 +292,23 @@ with tempfile.TemporaryDirectory() as td:
 import subprocess
 from import_descriptor_order import descriptors
 order=json.loads((r/'metadata/URSYNEX_GOLDEN_FINALIZER.json').read_text())['import_module_order']
+canonical=['CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL','USER32.DLL','SHELL32.DLL','MSWSOCK.DLL']
+assert order==canonical, (order,canonical)
+active_import_policy=json.loads((r/'metadata/CORVEXON_GOLDEN_TRAIL.json').read_text())['import_policy']
+assert active_import_policy['module_order']==canonical
+assert active_import_policy['required_modules']==canonical
+assert active_import_policy['allowed_modules']==canonical
+assert list(active_import_policy['restricted_named_imports'])==['CRYPT32.DLL','MSWSOCK.DLL']
+dist=json.loads((r/'metadata/LOCAL_DIST_CONTRACT.json').read_text())
+assert dist['final_import_descriptor_order']==canonical
+fixture_import_policy=cor_policy['import_policy']
+assert fixture_import_policy['required_modules']==['CRYPT32.DLL','WS2_32.DLL','KERNEL32.DLL']
+assert [module for module in fixture_import_policy['allowed_modules'] if module in canonical]==canonical
+source_link=(r/'CMakeLists.txt').read_text()
+assert '  crypt32 ws2_32 kernel32 user32 shell32)' in source_link
+assert 'target_link_libraries(preloader_l_asio INTERFACE ws2_32 mswsock)' in (r/'cmake/VendoredDependencies.cmake').read_text()
+assert 'const wchar_t* modules[]={L"crypt32.dll",L"ws2_32.dll",L"kernel32.dll",L"shell32.dll",L"KernelBase.dll",L"advapi32.dll"};' in (r/'tests/native/application_runtime_tests.cpp').read_text()
+
 with tempfile.TemporaryDirectory() as td:
     path=Path(td)/'normalized.dll'
     original,_,opt2=build_corvexon_fixture(tuple(reversed(order)))
@@ -308,10 +326,12 @@ with tempfile.TemporaryDirectory() as td:
     assert struct.unpack_from('<I',result,opt2+64)[0]==cor.compute_pe_checksum(result,opt2+64)
     assert descriptors(result)[2]==order
     shipping_policy=json.loads((r/'metadata/CORVEXON_GOLDEN_TRAIL.json').read_text())
-    errors,_=cor.inspect_shipping_abi(path,shipping_policy)
+    errors,report=cor.inspect_shipping_abi(path,shipping_policy)
+    assert report['imports']==canonical, report['imports']
     assert not any('import module order differs' in x for x in errors),errors
     path.write_bytes(original)
-    errors,_=cor.inspect_shipping_abi(path,shipping_policy)
+    errors,report=cor.inspect_shipping_abi(path,shipping_policy)
+    assert report['imports']==list(reversed(canonical)), report['imports']
     assert any('import module order differs' in x for x in errors),errors
     path.write_bytes(result)
     fin.validate_approved_mutation(original,result,pe2,coff2,opt2,order)
@@ -332,6 +352,38 @@ with tempfile.TemporaryDirectory() as td:
         bad=bytearray(original);mutate(bad);path.write_bytes(bad)
         cp=subprocess.run([sys.executable,'-B',str(r/'scripts/ursynex_golden_finalizer.py'),str(path)],capture_output=True,text=True)
         assert cp.returncode!=0 and path.read_bytes()==bad,(label,cp.stdout,cp.stderr)
+    # Every MSVC application profile must yield a canonical unsigned DLL,
+    # BEFORE URSYNEX. The normalizer is fail-closed and idempotent.
+    raw_path = Path(td) / 'preloader.unsigned.dll'
+    raw, _, _ = build_corvexon_fixture(tuple(reversed(order)))
+    raw_path.write_bytes(raw)
+    call = [sys.executable, '-B', str(r / 'scripts/import_descriptor_order.py'),
+            '--root', str(r), '--dll', str(raw_path)]
+    unnormalized = raw_path.read_bytes()
+    cp = subprocess.run(call + ['--verify'], capture_output=True, text=True)
+    assert cp.returncode != 0 and raw_path.read_bytes() == unnormalized, (cp.stdout, cp.stderr)
+    cp = subprocess.run(call, capture_output=True, text=True)
+    assert cp.returncode == 0, (cp.stdout, cp.stderr)
+    normalized = raw_path.read_bytes()
+    table, records, _ = descriptors(unnormalized)
+    stop = table + 20 * len(records)
+    assert descriptors(normalized)[2] == canonical
+    assert normalized[:table] == unnormalized[:table] and normalized[stop:] == unnormalized[stop:]
+    assert len(normalized) == len(unnormalized)
+    cp = subprocess.run(call + ['--verify'], capture_output=True, text=True)
+    assert cp.returncode == 0 and raw_path.read_bytes() == normalized, (cp.stdout, cp.stderr)
+    cp = subprocess.run(call, capture_output=True, text=True)
+    assert cp.returncode == 0 and raw_path.read_bytes() == normalized, (cp.stdout, cp.stderr)
+    # An unexpected module is never silently removed or renamed.
+    unexpected, _, _ = build_corvexon_fixture(('CRYPT32.DLL', 'KERNEL32.DLL', 'EXTRA.DLL'))
+    raw_path.write_bytes(unexpected)
+    cp = subprocess.run(call, capture_output=True, text=True)
+    assert cp.returncode != 0 and raw_path.read_bytes() == unexpected, (cp.stdout, cp.stderr)
+    cmake_text = (r / 'cmake/BuildPartition.cmake').read_text()
+    profile_text = (r / 'scripts/build_orchestration/build_profile.ps1').read_text()
+    assert 'Normalize unsigned DLL import descriptors before validation' in cmake_text
+    assert 'Unsigned DLL import descriptor order' in profile_text
+
     # The earlier ARYRA fixture remains an independently tested geometry fixture.
     path.write_bytes(data);errors,_=ary.inspect(path,json.loads((r/'metadata/ARYRA_GOLDEN_LAYOUT.json').read_text()))
     assert not errors,errors

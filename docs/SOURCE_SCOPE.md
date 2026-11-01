@@ -1,51 +1,60 @@
-# Kaynak ve build sınırı
+# Source and build boundaries
 
-## Önceki çıktının düzeltilmesi
+## Correction of the earlier output
 
-Önceki `src/recovered` düzeni, RE çalışma alanının büyük ölçüde taşınmasıydı.
-Anadius uygulaması, özel CRT kurtarımı, ayrı preloader ve test kaynakları aynı
-ağaçtaydı; ana hedef yalnız statik arşivler üretiyordu. Bu, Brownfield tarzı bir
-uygulama projesi değildi. Önceki paket ve çalışma ağacı referans olarak korunur;
-güncel ürün ağacının build girdileri değillerdir.
+The former `src/recovered` layout largely reproduced the RE working tree.
+Anadius application sources, custom CRT recovery, separate preloader
+projects, and test sources were all in one tree; the main targets produced
+only static archives. That was not a Brownfield-style application project.
+The previous package and working tree are retained for reference but are
+not build inputs to the current product.
 
-## Güncel seçim
+## Current selection
 
-- Anadius64 uygulama kaynakları: config, bootstrap sözleşmeleri, temel thread
-  launch akışı, protocol/mesajlar, handler'lar, transport/IOCP, XML, registry,
-  dosya, zaman, hash ve native platform bağlayıcıları.
-- Ayrı preloader Core/Once/process-enumeration/mutex ve version wrapper projeleri
-  alınmaz. Sadece açıkça istenen CryptQueryObject davranışı bağımsız platform
-  arayüzüne ayrılır. Host artık dört allocation/trap işlemi ister; bütün eski
-  preloader Host/HookEngine bağımlılığını taşımaz.
-- Özgün özel CRT/VCRT kurtarım paketleri ve onlara bağlı tarihsel B2-B6
-  composition deneyleri ürün hedefinde yoktur. Bunlar standart CRT'nin yerine
-  otomatik bağlanmaz. RE girdileri ve önceki paketlerden erişilebilir.
-- Dört aktif vendor, kullanıcının ayrı sunduğu `3RD PARTY` arşivlerinden alınır.
-  Gulrak son kullanıcı talimatıyla kaldırıldı; orijinal arşiv korunur.
-  Eski RE MinHook/TinyXML2 kopyaları aktif ağaçtan çıkarılır; Brownfield vendor'ı
-  alınmaz. Vendor byte'ları ve TinyXML2'nin 500 varsayılanı değiştirilmez.
-- Testler başlıklardan ve uygulama .cpp dosyalarından ayrıdır. Ürün kapsamından
-  çıkarılan CRT/preloader testleri başarısızlık gizlemek için değiştirilmez;
-  önceki pakette korunur ve kapsam listesinde tek tek belirtilir.
-- Brownfield aktarımı yerel build yardımcıları, gerçek Golden araçları/zinciri,
-  uyumlu negatif testler, metadata/script sahipliği, kaynak QA, beş operatör
-  profili ve düz kaynak paketlemeyi kapsar. Uygulama kodu taşınmaz.
+- Anadius64 application sources include configuration, bootstrap contracts,
+  core thread launch flow, protocol/messages, handlers, transport/IOCP, XML,
+  registry, file, time, hash, and native platform adapters.
+- Separate preloader Core/Once/process-enumeration/mutex and version-wrapper
+  projects are not imported. Only the explicitly requested `CryptQueryObject`
+  behavior is isolated behind an independent platform interface. The host
+  now requires four allocation/trap operations instead of importing the
+  entire old preloader Host/HookEngine dependency graph.
+- Original custom CRT/VCRT recovery packages and the historical B2-B6
+  composition experiments dependent on them are not part of the product
+  target. They are not automatically linked in place of the standard CRT.
+  They remain accessible from the RE inputs and earlier packages.
+- Four active vendors are selected from the owner's separately supplied
+  `3RD PARTY` archives. Gulrak was subsequently removed by explicit owner
+  instruction; the original archive is retained. Older RE MinHook/TinyXML2
+  copies are removed from the active tree, and Brownfield's vendor tree is
+  not imported. Vendor bytes and TinyXML2's default limit of 500 remain
+  unchanged.
+- Tests are separate from headers and application `.cpp` files. CRT/preloader
+  tests excluded from the product scope are not modified to conceal failures;
+  they remain in the earlier package and are itemized in the scope list.
+- Brownfield adaptation covers local build helpers, actual Golden tools
+  and pipeline, compatible negative tests, metadata/script ownership,
+  source QA, five operator profiles, and flat source packaging. It does
+  not transfer application code.
 
-Güncel kapsam için
-[BROWNFIELD_ADAPTATION.md](INFRASTRUCTURE_ADAPTATION.md) ve aktarım matrisi geçerlidir.
-Final ürün Golden kabulü, eksik metadata/ABI sözleşmesi nedeniyle henüz yoktur.
+See [the Brownfield adaptation](INFRASTRUCTURE_ADAPTATION.md) and transfer
+matrix for the current scope. Final product Golden acceptance was still
+unavailable at this checkpoint because metadata/ABI contracts were incomplete.
 
-`docs/evidence/SOURCE_LAYOUT.json`, her taşınan dosyanın önceki yolunu ve hash'ini,
-uygulanan yol/namespace dönüşümlerini, seçilen ve dışarıda tutulan modülleri içerir.
-Bu, native orijinal davranış eşdeğerliği veya bağımsız kullanıcı imzası değildir.
+`metadata/evidence/SOURCE_LAYOUT.json` contains the earlier path and hash
+for every transferred file, applied path/namespace transformations, and
+selected/excluded modules. This is not proof of native behavioral equivalence
+to the original or an independent owner signature.
 
-## Gerçek DLL ve eksik ürün bağlantısı
+## Actual DLL and outstanding product integration
 
-`preloader_l` bir SHARED hedefidir; bütün seçili uygulama objeleri gerçek DLL
-linkine girer. `preloader_l_source_host` statik arşive değil bu DLL'e bağlanır.
-Bu, önceki statik-collection çıktısından farklı ve doğrulanabilir bir build'dir.
+`preloader_l` is a SHARED target: all selected application objects are
+linked into the actual DLL. `preloader_l_source_host` links against this
+DLL rather than a static archive. This is a verifiable build difference
+from the prior static-collection output.
 
-Derlenen DLL'in geliştirme C++ exportları nihai oyunun/Consumer'ın public ABI'si
-değildir. Otomatik başlangıç, somut uygulama owner/sağlayıcı bağlantıları,
-SURGE ABI'si ve gerçek native hook/teardown kabulü tamamlanmadan ürün çalışıyor
-iddiası yapılmaz. Eksikler boş başarı döndüren implementasyonlarla kapatılmaz.
+Development C++ exports of the compiled DLL do not form the final
+game/Consumer public ABI. The product cannot be claimed to run before
+automatic startup, concrete application owner/provider bindings, SURGE ABI,
+and actual native hook/teardown acceptance are complete. Missing
+functionality is not replaced with implementations returning false success.

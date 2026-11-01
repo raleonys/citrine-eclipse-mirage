@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Check source scope, native CMake source ownership and pinned SURGE resource."""
 import hashlib
 import json
@@ -24,13 +26,14 @@ def check_active_identifiers(root):
     errors=[]
     for path in root.rglob('*'):
         rel=path.relative_to(root)
-        if rel.parts[0] in {'build','dist','.git','third_party'} or not path.is_file():
+        if (rel.parts[0] in {'build','dist','.git','third_party'} or
+                rel.parts[:2] == ('metadata', 'evidence') or not path.is_file()):
             continue
         name=rel.as_posix()
         if pattern.search(name):
             errors.append('Reserved reference label in active path: '+name)
         legal_document=len(rel.parts)==1 and path.name in {'LICENSE','COPYING','NOTICE','AUTHORS'}
-        if rel.parts[0] in {'docs','governance'} or path.suffix.lower()=='.md' or legal_document:
+        if rel.parts[0] == 'docs' or path.suffix.lower()=='.md' or legal_document:
             continue
         try:
             text=path.read_text(encoding='utf-8-sig')
@@ -107,10 +110,71 @@ def check_root_file_ownership(root, allowed_root_files):
             if (path.is_file() or path.is_symlink()) and path.name not in allowed
             and not is_git_worktree_file(path)]
 
+def check_archived_evidence(root):
+    """Fail closed on new evidence dumps and modifications to locked historical files."""
+    root = Path(root)
+    errors = []
+    if (root / 'docs/evidence').exists():
+        errors.append('Forbidden legacy evidence directory: docs/evidence')
+    archive = root / 'metadata/evidence'
+    policy = json.loads((root / 'metadata/EVIDENCE_RETENTION_POLICY.json').read_text(encoding='utf-8'))
+    retained = policy.get('retained_files')
+    if (policy.get('schema') != 'surge.evidence-retention.v1' or
+            not isinstance(retained, dict) or not retained or
+            policy.get('retained_count') != len(retained)):
+        return errors + ['Invalid historical evidence retention policy']
+    for name, digest in retained.items():
+        if (not isinstance(name, str) or not name or
+                not isinstance(digest, str) or not re.fullmatch(r'[a-f0-9]{64}', digest) or
+                name.startswith('/') or '\\' in name or
+                any(part in ('', '.', '..') for part in name.split('/'))):
+            return errors + ['Unsafe historical evidence entry']
+    actual = {p.relative_to(archive).as_posix()
+              for p in archive.rglob('*') if p.is_file() or p.is_symlink()} if archive.is_dir() else set()
+    expected = set(retained) | {'README.md'}
+    if actual != expected:
+        errors.append('Historical evidence file-set mismatch: missing='
+                      + str(sorted(expected - actual)) + ', unrecorded='
+                      + str(sorted(actual - expected)))
+    for name, digest in retained.items():
+        path = archive / name
+        if path.is_symlink() or not path.is_file():
+            continue
+        if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            errors.append('Historical evidence bytes differ: ' + name)
+    return errors
+
+
+
+def check_layout_migration_reference(root, contract):
+    """Reject stale, malformed or escaping layout_migration contract targets."""
+    root = Path(root)
+    name = contract.get('layout_migration')
+    if (not isinstance(name, str) or not name or
+            '\\' in name or not name.endswith('.json') or
+            any(part in ('', '.', '..') for part in name.split('/'))):
+        return ['Unsafe layout_migration repository contract reference']
+    target = root / name
+    try:
+        resolved = target.resolve(strict=True)
+        if (not resolved.is_relative_to(root.resolve(strict=True)) or
+                target.is_symlink() or not target.is_file()):
+            return ['Invalid layout_migration file target: ' + name]
+        payload = json.loads(target.read_text(encoding='utf-8'))
+    except (OSError, UnicodeError, ValueError):
+        return ['Invalid or missing layout_migration file target: ' + name]
+    schema = payload.get('schema') if isinstance(payload, dict) else None
+    if not isinstance(schema, str) or not schema.endswith('.layout-migration.v1'):
+        return ['Unexpected layout_migration schema: ' + name]
+    return []
+
+
 def check(root):
     root = Path(root)
     errors = check_active_identifiers(root)
+    errors.extend(check_archived_evidence(root))
     contract = json.loads((root / 'metadata/REPOSITORY_CONTRACT.json').read_text())
+    errors.extend(check_layout_migration_reference(root, contract))
     errors.extend(check_root_file_ownership(root, contract['allowed_root_files']))
     for name in contract['required_files']:
         if not (root / name).is_file():

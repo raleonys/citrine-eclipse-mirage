@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/message_core_bridge_test_fixture.hpp"
 using namespace core_test;
 using container_test::active_container;

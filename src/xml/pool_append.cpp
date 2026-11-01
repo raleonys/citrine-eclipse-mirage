@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/pool_append.hpp"
 #include <bit>
 #include <limits>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -45,8 +47,8 @@ void append_pool_block_005440(std::uintptr_t array,std::uintptr_t block,PoolAppe
     const auto live_count=static_cast<std::uint32_t>(load(memory,array+0x5c,4));
     store(memory,array+0x5c,live_count+std::uint32_t{1},4);
 }
-void RecoveredPoolAppendEffects::append_block_005440(std::uintptr_t array,std::uintptr_t block){
+void PoolAppendEffects::append_block_005440(std::uintptr_t array,std::uintptr_t block){
     PoolAppendContext context{memory_,*this};
     append_pool_block_005440(array,block,context);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

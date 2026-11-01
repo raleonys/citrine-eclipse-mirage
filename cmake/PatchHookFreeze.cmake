@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 if(NOT DEFINED MINHOOK_HOOK_C OR NOT EXISTS "${MINHOOK_HOOK_C}")
     message(FATAL_ERROR "MINHOOK_HOOK_C missing")
 endif()
@@ -480,9 +482,11 @@ _mh "${_mh}")
 # Individual MH_DisableHook must map suspended peer IPs from trampoline back
 # to target. Stock MinHook incorrectly requested ACTION_ENABLE for both modes.
 # Replace only the proven single-hook call in the owned build copy.
-string(FIND "${_mh}" "status = Freeze(&threads, pos, ACTION_ENABLE);" _individual_action_pos)
-if(_individual_action_pos LESS 0)
-    message(FATAL_ERROR "MinHook single-hook action anchor not found")
+string(REGEX MATCHALL [=[status = Freeze\(&threads, pos, ACTION_ENABLE\)]=]
+    _individual_actions "${_mh}")
+list(LENGTH _individual_actions _individual_action_count)
+if(NOT _individual_action_count EQUAL 1)
+    message(FATAL_ERROR "MinHook single-hook action anchor must occur exactly once")
 endif()
 string(REPLACE
     "status = Freeze(&threads, pos, ACTION_ENABLE);"

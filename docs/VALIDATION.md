@@ -1,37 +1,47 @@
-# Doğrulama sınıfları
+# Validation classes
 
-| Sınıf | Neyi kanıtlar |
+| Class | Evidence established |
 |---|---|
-| SOURCE_QA | Kaynak hash/kapsam, metadata/komut sahipliği, düz paket kimliği ve negatif altyapı kontrolleri |
-| PORTABLE_UNIT | Linux üzerinde taşınabilir uygulama ve host-Python altyapı testleri |
-| WINDOWS_CROSS_BUILD | LLVM-MinGW ile Windows x64 nesneleri ve gerçek DLL linki |
-| WINE_SOURCE_TEST | Windows executable'larının Wine altında kaynak/adapter testleri; gerçek Windows değildir |
-| READ_ONLY_BINARY_INSPECTION | PE import/export/resource raporu ve kullanıcı avatarı byte eşitliği |
-| WINDOWS_MSVC / WINDOWS_NATIVE | Yalnız gerçekten Windows/MSVC ile çalıştırıldığında kaydedilir |
-| GOLDEN_TARGET_ACCEPTANCE | Gerçek ürün politikası ve exact DLL üzerinde zincir; fixture PASS yeterli değildir |
-| CONSUMER_GAME | Adı/sürümü belli gerçek oyun ve Consumer akışı; şu anda NOT_RUN |
+| SOURCE_QA | Source hashes and scope, metadata/command ownership, flat package identity, and negative infrastructure checks |
+| PORTABLE_UNIT | Portable application and host-Python infrastructure tests on Linux |
+| WINDOWS_CROSS_BUILD | Windows x64 objects and actual DLL linking with LLVM-MinGW |
+| WINE_SOURCE_TEST | Source/adapter tests of Windows executables under Wine; this is not native Windows execution |
+| READ_ONLY_BINARY_INSPECTION | PE import/export/resource reporting and byte identity of the owner-supplied avatar |
+| WINDOWS_MSVC / WINDOWS_NATIVE | Recorded only when actually executed on Windows with MSVC |
+| GOLDEN_TARGET_ACCEPTANCE | Full pipeline against the actual product policy and exact DLL; fixture PASS is insufficient |
+| CONSUMER_GAME | Actual named/versioned game and Consumer flow; currently NOT_RUN |
 
-Komut: `python -B scripts/run_source_qa.py`. CTest altyapı testleri hem portable
-konfigürasyona hem Windows test grubuna kayıtlıdır. CRT probe compiler'ın heap,
-exception unwind, container/thread ve TLS destructor davranışını sınar; özel
-CRT eşdeğerliği veya DLL'ler arası C++ ABI garantisi vermez.
+Run `python -B scripts/run_source_qa.py`. CTest infrastructure tests are
+registered in both the portable configuration and the Windows test group.
+The CRT probe checks the compiler CRT's heap, exception unwinding,
+container/thread, and TLS-destructor behavior. It does not guarantee custom
+CRT equivalence or a cross-DLL C++ ABI.
 
-Brownfield'den uyarlanan PE testleri bozuk optional header, raw extent/overlap,
-resource recursion/fanout, ordinal-only export, forbidden CRT import, checksum
-ve SecurityCookie hatalarını reddeder. Yeni testler ayrıca yanlış/private manifest,
-source drift, duplicate/unsafe ZIP yolu, nested archive, symlink, write failure,
-unowned metadata, kayıp komut argümanı/exit kodu ve Golden erken-durma yollarını sınar.
+The PE checks adapted from Brownfield reject malformed optional headers, raw
+extents/overlap, resource recursion/fanout, ordinal-only exports, prohibited
+CRT imports, checksum errors, and SecurityCookie defects. Additional tests
+reject incorrect/private manifests, source drift, duplicate or unsafe ZIP
+paths, nested archives, symlinks, write failures, unowned metadata, missing
+command arguments/exit codes, and premature Golden termination.
 
-Güncel VDF uygulama/derleyici sonucu [VDF_PARSER_STATUS.json](evidence/VDF_PARSER_STATUS.json),
-uyarlama kapsamı [BROWNFIELD_TRANSFER_MATRIX_V2.json](../metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json).
-Önceki altyapı ve kaynak testlerinin ham kayıtları korunur; güncel raporlarla aynı iddia sayılmaz.
+Current VDF implementation/compiler results are in
+[VDF_PARSER_STATUS.json](../metadata/evidence/VDF_PARSER_STATUS.json);
+the adaptation scope is recorded in
+[BROWNFIELD_TRANSFER_MATRIX_V2.json](../metadata/INFRASTRUCTURE_TRANSFER_MATRIX.json).
+Raw results of earlier infrastructure/source tests are retained; they do not
+establish the same claims as the current reports.
 
-Güncel runtime bağı: [RUNTIME_BINDING.md](RUNTIME_BINDING.md). Buradaki önceki vendor/parser test sayıları tarihsel snapshot kanıtıdır; yeni app testleri [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json) içindedir.
+Current runtime integration:
+[RUNTIME_BINDING.md](RUNTIME_BINDING.md). The earlier vendor/parser test
+counts here are historical snapshot evidence. New application tests are
+recorded in [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
 
-Güncel uygulama C arayüzü ve kaynak DLL ayrımı: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
-Güncel doğrulama: [PUBLIC_ABI_STATUS.json](evidence/PUBLIC_ABI_STATUS.json).
+Current application C interface and separation of source DLL variants:
+[PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
+Current validation:
+[PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 
-Production/referans hedef ayrımı ve dosya başına kullanım denetimi:
-[BUILD_PARTITION.md](BUILD_PARTITION.md). En son karşılaştırmalı doğrulama
-[BUILD_PARTITION.json](evidence/BUILD_PARTITION.json) içindedir; önceki raporlar
-tarihsel sonuçlarını korur.
+Production/reference target partitioning and per-file use checks:
+[BUILD_PARTITION.md](BUILD_PARTITION.md). The latest comparative verification
+is [BUILD_PARTITION.json](../metadata/evidence/BUILD_PARTITION.json);
+earlier reports retain their original historical results.

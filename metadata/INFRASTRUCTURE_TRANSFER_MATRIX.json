@@ -9,7 +9,7 @@
         "docs/GOLDEN_PROTOCOLS.md",
         "docs/ROOT_LAYOUT_AND_BUILD_OWNERSHIP.md",
         "docs/VALIDATION.md",
-        "governance/CURRENT_SCOPE.md"
+        "GOVERNANCE.md"
       ],
       "id": "INFRA-DOC",
       "implementation": "ADAPTED_CURRENT_DOCS",
@@ -108,7 +108,7 @@
         "tests/infrastructure/test_corvexon_mswsock_imports.py",
         "tests/infrastructure/test_infrastructure.py",
         "tests/infrastructure/test_requirements.py",
-        "docs/evidence/TEST_ADOPTION_MATRIX.json"
+        "metadata/evidence/TEST_ADOPTION_MATRIX.json"
       ],
       "id": "INFRA-TEST",
       "implementation": "COMPATIBLE_TESTS_ADAPTED_EXISTING_APPLICATION_TESTS_PRESERVED",

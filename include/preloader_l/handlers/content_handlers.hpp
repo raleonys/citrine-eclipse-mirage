@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include "preloader_l/handlers/handlers.hpp"
@@ -8,8 +10,8 @@
 #include <span>
 #include <vector>
 
-namespace preloader_l::content_handlers_recovered {
-using Xml = handlers_recovered::Xml;
+namespace preloader_l::content_handlers {
+using Xml = handlers::Xml;
 using Path = configuration::Path;
 using Achievement = configuration::Achievement;
 using AchievementMap = std::map<std::string,Achievement,std::less<>>;
@@ -80,7 +82,7 @@ public:
 struct StateReferences {
     std::span<const configuration::Content> content_0a3d98;
     std::span<const configuration::Entitlement> entitlements_0a3db0;
-    handlers_recovered::Attributes& game_0a3d88;
+    handlers::Attributes& game_0a3d88;
     AchievementMap& achievements_0a3e58;
     const std::string& achievements_set_0a3dc8;
     const std::string& content_id_0a3af8;
@@ -104,4 +106,4 @@ void achievement_element_02c080(Xml&,std::string_view id,const Achievement&);
 bool query_achievements_030d30(const RequestTree&,Xml&,StateReferences);
 bool grant_achievement_030010(const RequestTree&,Xml&,StateReferences,Effects&);
 bool query_image_0314f0(const RequestTree&,Xml&,StateReferences,Effects&);
-} // namespace preloader_l::content_handlers_recovered
+} // namespace preloader_l::content_handlers

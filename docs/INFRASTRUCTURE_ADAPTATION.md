@@ -1,21 +1,23 @@
-# Brownfield aktarımı
+# Brownfield infrastructure adaptation
 
-Kaynak: kullanıcı tarafından yüklenen HF20 full-source candidate ZIP'i;
-frozen Brownfield değiştirilmedi. Dosya düzeyinde input/output SHA kayıtları
-[TOOLING_PROVENANCE.json](evidence/TOOLING_PROVENANCE.json) içindedir.
+Source: the owner-supplied HF20 full-source candidate ZIP.
+The frozen Brownfield source was not modified. File-level input/output SHA
+records are in [TOOLING_PROVENANCE.json](../metadata/evidence/TOOLING_PROVENANCE.json).
 
-Seçilen parçalar: beş build yardımcısının operatör UX akışı ve paylaşılan MSVC
-yardımcıları; dört gerçek PE Golden aracı; MSVC link policy denetleyicisi;
-PE ve restricted-import negatif testleri. Metadata ownership ve FALCION
-mekanikleri, Brownfield uygulama/sürüm bağımlılıkları temizlenerek uyarlanır.
+Selected components include the operator UX flow from five build helpers
+and shared MSVC utilities; four actual PE Golden tools; the MSVC linker-policy
+checker; and PE/restricted-import negative tests. Metadata ownership and
+FALCION mechanics were adapted after removing Brownfield-specific application
+and version dependencies.
 
-Brownfield'in debug/runtime/session/socket/native/release host'ları kendi export
-ABI'sini ister. Bunları kopyalayıp Yellowfield'de olmayan exportları varmış gibi
-göstermek yerine mevcut dinamik source host'u, yeni standart CRT probe ve
-Yellowfield CTest hedefleri kullanılır. Bu host'lar geldiğinde tam oyun/native
-kabulün tamamlandığı ileri sürülmez.
+Brownfield's Debug/runtime/session/socket/native/release hosts require its
+own export ABI. Rather than copying them and pretending Yellowfield offers
+exports that it does not have, the existing dynamic source host, a new
+standard-CRT probe, and Yellowfield CTest targets are used. The presence of
+these hosts is not evidence of completed native/game acceptance.
 
-Eski uygulama route/state/Asio testleri ve geçmiş release/Library/G0 kayıtları
-taşınmaz. Gerekçe ve incelenen dosyalar güncel aktarım/uyarlama kayıtlarındadır.
-SURGE görseli özgün kullanıcı girdisinden korunur; Brownfield'in üçüncü taraf
-ürün metadata'sı resource dosyasına alınmaz.
+Old application route/state/Asio tests and historical release/Library/G0
+records were not migrated. The rationale and inspected files are recorded
+in the current transfer/adaptation records. The SURGE artwork is preserved
+from the owner's original input; third-party Brownfield product metadata
+was not added to the resource file.

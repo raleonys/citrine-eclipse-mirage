@@ -1,23 +1,25 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_prefix_cipher.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket_recovered {
-void RecoveredPrefixCipherBlocks::decrypt_ecb_045620(PrefixCipherState& state,std::uintptr_t address){
+namespace preloader_l::socket {
+void PrefixCipherBlocks::decrypt_ecb_045620(PrefixCipherState& state,std::uintptr_t address){
     state.schedule.decrypt_block_0458d0(std::span<std::uint8_t,16>(memory_.view(address,16).data(),16));
 }
-void RecoveredPrefixCipherBlocks::encrypt_ecb_045630(PrefixCipherState& state,std::uintptr_t address){
+void PrefixCipherBlocks::encrypt_ecb_045630(PrefixCipherState& state,std::uintptr_t address){
     state.schedule.encrypt_block_045670(std::span<std::uint8_t,16>(memory_.view(address,16).data(),16));
 }
-void RecoveredPrefixCipherBlocks::decrypt_cbc_0454e0(PrefixCipherState& state,std::uintptr_t address,std::uint64_t count){
+void PrefixCipherBlocks::decrypt_cbc_0454e0(PrefixCipherState& state,std::uintptr_t address,std::uint64_t count){
     if(!count)return;auto remaining=((count-1)>>4)+1;
     do{
-        const auto bytes=memory_.view(address,16);crypto_recovered::Key original;std::copy(bytes.begin(),bytes.end(),original.begin());
+        const auto bytes=memory_.view(address,16);crypto::Key original;std::copy(bytes.begin(),bytes.end(),original.begin());
         state.schedule.decrypt_block_0458d0(std::span<std::uint8_t,16>(bytes.data(),16));
         for(unsigned i=0;i<16;++i)bytes[i]^=state.iv_b4[i];
         state.iv_b4=original;address+=16;
     }while(--remaining);
 }
-void RecoveredPrefixCipherBlocks::encrypt_cbc_045580(PrefixCipherState& state,std::uintptr_t address,std::uint64_t count){
+void PrefixCipherBlocks::encrypt_cbc_045580(PrefixCipherState& state,std::uintptr_t address,std::uint64_t count){
     auto previous=state.iv_b4;
     if(count){auto remaining=((count-1)>>4)+1;do{
         const auto bytes=memory_.view(address,16);
@@ -59,6 +61,6 @@ PrefixCipherState& bound(std::uintptr_t id,std::span<PrefixCipherBinding> bindin
     if(!id||!found)throw UnsupportedInput("Cipher handler state is unbound");return *found;
 }
 }
-bool RecoveredMessageCipherApi::decrypt_042480(std::uintptr_t id,ReceiveBufferString& value,std::uint32_t offset){return decrypt_prefix_042480(bound(id,bindings_),value,offset,context_);}
-bool RecoveredMessageCipherApi::encrypt_042610(std::uintptr_t id,ReceiveBufferString& value,std::uint32_t offset){return encrypt_prefix_042610(bound(id,bindings_),value,offset,context_);}
-} // namespace preloader_l::socket_recovered
+bool MessageCipherApi::decrypt_042480(std::uintptr_t id,ReceiveBufferString& value,std::uint32_t offset){return decrypt_prefix_042480(bound(id,bindings_),value,offset,context_);}
+bool MessageCipherApi::encrypt_042610(std::uintptr_t id,ReceiveBufferString& value,std::uint32_t offset){return encrypt_prefix_042610(bound(id,bindings_),value,offset,context_);}
+} // namespace preloader_l::socket

@@ -1,74 +1,123 @@
-# Kullanıcının vendor arşivleri
+# Owner-supplied vendor archives
 
-Kaynak, kullanıcının sağladığı dört aktif ZIP’tir. Asio için sonradan yüklenen
-yeni arşiv, önceki girdinin yerini alır; diğer üç özgün arşiv korunur. Gulrak son kullanıcı talimatıyla çıkarılmıştır.
-Brownfield vendor kopyaları ve internetten başka sürüm kullanılmaz.
+The source consists of four active ZIP archives supplied
+by the owner. For Asio, the later uploaded archive
+replaced the former input; the other three original
+archives were retained. Gulrak was removed by the
+owner's later instruction. Brownfield vendor copies
+or other versions downloaded from the internet
+are not substituted.
 
-| Vendor | Arşivde bildirilen sürüm | Yerleşim |
+| Vendor | Version stated in archive | Location |
 |---|---|---|
 | Asio | 1.38.2; owner snapshot `bdf337ddb1a667c274372a602de5857ad3cb3ed0` | `third_party/asio` |
-| MinHook | README'de v1.3.4 | `third_party/minhook` |
+| MinHook | v1.3.4 in README | `third_party/minhook` |
 | PEGTL | 4.0.0 | `third_party/pegtl` |
 | TinyXML2 | 11.0.0 | `third_party/tinyxml2` |
 
-2835 dosya/link girdisi arşiv-member hash listeleriyle doğrulanır; lisanslar ve
-Asio'nun `asio/include → ../include`, `asio/src → ../src` mantıksal bağlantı
-hedefleri korunur. Windows'a taşınabilir kaynak ZIP'inde bu iki girdi, arşivdeki
-hedef metnini aynı baytlarla içeren normal dosyalardır; symlink yetkisi gerekmez.
-Derleme gerçek `third_party/asio/include` dizinini kullanır. Başlık/kaynak,
-lisans, özgün ZIP ve vendor member hash'leri değiştirilmez.
-Arşiv byte eşitliği, ayrıca doğrulanmış bir upstream Git commit iddiası değildir.
-Input ZIP'leri kaynak paketine gömülmez; açılmış tam vendor ağaçları pakettedir.
+All 2,835 file/link entries are verified against
+archive-member hash lists. Licenses and Asio's
+logical links `asio/include → ../include`
+and `asio/src → ../src` are preserved.
+In the Windows-portable source ZIP, these two
+entries are regular files containing the exact
+original link-target text bytes; symlink
+permissions are not required. Compilation
+uses the actual `third_party/asio/include`
+directory. Headers/sources, licenses,
+original ZIPs and vendor member hashes
+remain unchanged. Archive-byte equality
+is not an additional claim of a verified
+upstream Git commit. Source packages contain
+the complete extracted vendor trees, not
+the original input ZIP files.
 
 ```sh
 python -B scripts/vendor_sync.py --root . --verify-installed
 python -B scripts/vendor_sync.py --root . --archive-dir "/path/to/3RD PARTY" --verify-archives
 ```
 
-Kurulum komutu `--install` dolu hedefin üstüne yazmaz. CMake yapılandırması
-vendored kaynakları offline doğrular; upstream CMake, fetch veya paket yöneticisi
-çalıştırmaz. Proje CMake hedefleri `preloader_l_asio`,
-`preloader_l_minhook`, `preloader_l_pegtl`, `preloader_l_tinyxml2`.
-Build sırasında da member hash kontrolü çalışır. Uyuşmazlıkta eksik/fazla/değişmiş
-yollar ve beklenen/gerçek SHA256 yazılır; `1607/1607` yalnız toplamların eşit
-olduğunu gösterir, dosyaların aynı olduğunu göstermez. Hash yenileyerek veya
-denetimi kapatarak hatayı geçme. Standalone Asio hedefi,
-Windows'ta var olan thread yeteneğini `ASIO_HAS_THREADS=1` ile bildirir;
-LLVM-MinGW'nin `_MT` tanımlamaması yüzünden yanlışlıkla `null_thread` seçilmez.
-Bu bir vendor kaynak patch'i veya thread testini devre dışı bırakma değildir.
+An installation with `--install` does not
+overwrite a populated target. CMake verifies
+vendored sources offline at configure time;
+it does not execute upstream CMake, fetch
+dependencies or use a package manager.
+Project CMake targets are
+`preloader_l_asio`, `preloader_l_minhook`,
+`preloader_l_pegtl`, and
+`preloader_l_tinyxml2`.
+Build-time member-hash verification also runs.
+On mismatch, the checker reports missing,
+extra and modified paths and expected/actual
+SHA-256 values. `1607/1607` merely indicates
+matching counts, not identical bytes.
+Do not resolve a mismatch by refreshing
+hashes or disabling the checker.
 
-## TinyXML2'nin 500 değeri
+On Windows, the standalone Asio target
+declares available threading using
+`ASIO_HAS_THREADS=1`. This prevents
+LLVM-MinGW's missing `_MT` definition
+from incorrectly selecting `null_thread`.
+It is not a vendor-source patch or a
+disabled threading test.
 
-Eski RE kopyasında `TINYXML2_MAX_ELEMENT_DEPTH` 100'e değiştirilmişti.
-Yeni arşivde **500**. Vendor varsayılanı korunur; kaynakta veya build ağacında
-100'e döndüren patch yoktur. XML adapter testi artık bu gerçek vendor sınırını
-doğrular: document seviyesi de sayıldığından 498 iç içe element kabul edilir,
-499'da depth hatası oluşur. Bu, eski RE profile göre bilinçli olarak kaydedilen
-bir davranış farkıdır; original/native eşdeğerlik iddiası yapılmaz.
+## TinyXML2 depth 500
 
-## Derleme ve aktif kullanım ayrımı
+The old RE copy had changed
+`TINYXML2_MAX_ELEMENT_DEPTH` to 100;
+the new archive uses **500**. The vendor
+default is preserved; no source or build-tree
+patch resets it to 100. The XML adapter
+test now checks this actual vendor limit:
+because the document level is also counted,
+498 nested elements are accepted and 499
+trigger a depth error. This is an explicitly
+recorded behavior difference from the older
+RE profile, not proof of original/native
+equivalence.
 
-MinHook ve TinyXML2 mevcut DLL hook-engine/XML hedeflerine bağlıdır.
-PEGTL artık RE'de belgelenen mevcut Config2/VDF gramerini gerçek uygulama
-parser'ında çalıştırır: [VDF_PARSER.md](VDF_PARSER.md). Ayrı sayı fixture'ı
-vendor API kontrolü olarak kalır. Asio gerçek Application transport’una bağlıdır.
-Windows storage/IO standard filesystem/fstream kullanır; Gulrak target’ı kaldırıldı.
-Dört aktif kütüphanenin somut yolları [RUNTIME_BINDING.md](RUNTIME_BINDING.md) içindedir;
-bu bağlantılar gerçek Windows/oyun kabulünün yerine geçmez.
+## Build-time versus active runtime use
 
-## PEGTL ve derleyici uyumluluğu
+MinHook and TinyXML2 are linked to existing
+DLL hook-engine/XML targets. PEGTL now runs
+the existing Config2/VDF grammar documented
+in RE within the actual Application parser:
+[VDF_PARSER.md](VDF_PARSER.md).
+The separate numeric fixture remains a
+vendor-API check. Asio is linked to the
+actual Application transport.
+Windows storage/I/O uses standard
+filesystem/fstream; the Gulrak target
+was removed. Concrete paths for the
+four active libraries are documented in
+[RUNTIME_BINDING.md](RUNTIME_BINDING.md).
+These integrations are not substitutes
+for actual Windows/game acceptance.
 
-PEGTL 4 public-input probe Linux/GCC'de çalışır. LLVM-MinGW **20251118,
-Clang/libc++ 21.1.6, UCRT x64** ile de aynı public başlıklar derlenir.
-LLVM-MinGW 20261006 / Clang 23'teki libc++ ise PEGTL'nin eriştiği private
-`std::vector::__end_` alanını değiştirmiştir. Bu iki ayrı derleyici sonucudur;
-vendor dosyalarına patch uygulanmaz, PEGTL sürümü değiştirilmez.
+## PEGTL/compiler compatibility
 
-Varsayılan `PRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=ON` kontrolü,
-`BUILD_TESTING=OFF` olsa bile PEGTL public API'si derlenmiyorsa CMake'i durdurur.
-Önceki atlanan test, uyumlu Windows çapraz derlemesinde gerçek PEGTL çalıştırma
-testiyle yer değiştirir. MSVC sonucu ayrıca doğrulanmalıdır; bu Linux oturumunda
-MSVC çalıştırıldığı iddia edilmez.
+The PEGTL 4 public-input probe runs with
+Linux/GCC. The same public headers also
+compile with LLVM-MinGW **20251118,
+Clang/libc++ 21.1.6, UCRT x64**.
+LLVM-MinGW 20261006 / Clang 23's libc++
+changed the private `std::vector::__end_`
+field accessed by PEGTL. These are
+two different compiler outcomes.
+Vendor files were not patched and the
+PEGTL version was not changed.
+
+The default
+`PRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=ON`
+gate stops CMake if the PEGTL public API
+cannot compile, even with
+`BUILD_TESTING=OFF`. The previously
+skipped test was replaced by an actual
+PEGTL execution test in the compatible
+Windows cross-build. MSVC results still
+require separate verification; MSVC was
+not executed in the Linux session.
 
 ```sh
 export LLVM_MINGW_ROOT=/path/to/llvm-mingw-20251118-ucrt-ubuntu-22.04-x86_64
@@ -76,50 +125,91 @@ cmake --preset llvm-mingw-x64-vendors
 cmake --build --preset vendors --parallel 3
 ```
 
-Derleyici indirmesi vendor kaynağı değildir ve ürün ZIP'ine gömülmez.
-Doğrulanan araç arşivinin SHA-256'sı:
+Compiler downloads are not vendor-source
+inputs and are not bundled in the product
+ZIP. The verified tool archive SHA-256:
 `53a0c22caa46b501e1c089e1c31b24a7c0e0d5a86f8ad12b131aafd4cee01ef4`.
-Asıl vendor pinleri değişmez. Güncel sonuçlar ve araç kökeni
-[VENDORING_STATUS.json](evidence/VENDORING_STATUS.json) içindedir.
+The actual vendor pins remain unchanged.
+Results and tool provenance are in
+[VENDORING_STATUS.json](../metadata/evidence/VENDORING_STATUS.json).
 
-Yalnız eski/uyumsuz derleyiciyi teşhis etmek için ayrı build dizininde
-`-DPRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=OFF` kullanılabilir. Bu mod yalnız vendor teşhisi içindir. PEGTL testi **SKIPPED/UNAVAILABLE** kalır;
-gerçek VDF parser hedefi bu derleyicide yine derlenemez. Uyumluluk PASS sayılmaz.
-Derleyici tanısı yeni CMake'de `CMakeFiles/CMakeConfigureLog.yaml`, eski CMake'de
-`CMakeFiles/CMakeError.log` içinde bulunur. İlk Clang 23 hatası
-`docs/evidence/VENDOR_PEGTL_COMPILER_DIAGNOSTIC.log` içinde korunur.
+For diagnosing an old/incompatible compiler
+only, a separate build directory may use
+`-DPRELOADER_L_REQUIRE_VENDOR_COMPATIBILITY=OFF`.
+This mode is solely for vendor diagnostics.
+The PEGTL test remains **SKIPPED/UNAVAILABLE**;
+the real VDF parser target still fails
+to compile under that compiler. This does
+not count as compatibility PASS.
+Compiler diagnostics appear in
+`CMakeFiles/CMakeConfigureLog.yaml`
+on new CMake versions or
+`CMakeFiles/CMakeError.log` on old ones.
+The original Clang 23 error is retained
+in `metadata/evidence/VENDOR_PEGTL_COMPILER_DIAGNOSTIC.log`.
 
-`vendor_io_contracts`, Asio ile gerçek loopback TCP accept/connect/read/write,
-EOF ve iptal completion’larını; standart filesystem ile Unicode dizin/dosya,
-binary içerik, yeniden adlandırma, listeleme, silme ve eksik dosya hatasını sınar.
-Bağlantı yalnız kernel'in seçtiği geçici loopback portuna açılır; geçici dosyalar
-testin kendi dizininde temizlenir. Bunlar uygulamanın üretim transport/storage
-politikasını veya nihai bootstrap'ını tanımlamaz.
+`vendor_io_contracts` exercises actual
+loopback TCP accept/connect/read/write,
+EOF and cancellation completions with
+Asio, and Unicode directories/files,
+binary content, rename, enumeration,
+deletion and missing-file errors with
+standard filesystem. The connection
+uses only an ephemeral loopback port
+selected by the kernel; temporary files
+are removed from the test's own directory.
+These tests do not establish the
+Application's Production transport/storage
+policy or final bootstrap.
 
-## Windows'ta ZIP açma
+## Extracting ZIPs on Windows
 
-Güncel kaynak ZIP'i düz köklüdür ve yalnız normal dosya girdileri taşır.
-7-Zip, WinRAR veya Windows'un standart ZIP açma işlemi kullanılabilir.
-Yeni paketi temiz bir klasöre aç; önceki bozulmuş açılımın üstüne birleştirme.
-İsteğe bağlı doğrulamalı açma aracı:
+The current source ZIP has a flat root
+and contains only regular file entries.
+It can be extracted using 7-Zip, WinRAR
+or the standard Windows ZIP extractor.
+Extract into a fresh directory rather
+than merging into an earlier damaged
+extraction. Optional verified extraction:
 
 ```sh
 python -B scripts/extract_source.py ../yellowfield-windows-vendor-source.zip ../yellowfield-clean
 ```
 
-Araç CRC/hash/member/type kontrolü yapar ve mevcut hedefin üstüne yazmaz.
-Yeni paket için Developer Mode, yönetici yetkisi veya `restore_vendor_links.py`
-gerekmez. Yalnız VENDOR_LOCK'taki iki yolun birebir hedef metni kabul edilir;
-boş/yanlış metin, yanlış symlink, dizin kopyası veya başka symlink reddedilir.
-Gerçek symlink içeren eski ZIP'ler tarihsel paketlerdir; eski açma koşulları
-onlar için geçerlidir. `restore_vendor_links.py` yalnız isteğe bağlı olarak
-doğru metni gerçek bağlantıya dönüştüren araçtır; derlemenin önkoşulu değildir.
+The extractor verifies CRC, hash, member
+and type and refuses to overwrite an
+existing destination. No Developer Mode,
+administrator permission or
+`restore_vendor_links.py` is needed
+for the new package. Only the exact
+target text for the two paths in
+VENDOR_LOCK is accepted. Empty/wrong
+text, mismatched symlinks, directory
+copies and other symlinks are rejected.
+Historical ZIPs with real symlinks
+retain their earlier extraction
+requirements. `restore_vendor_links.py`
+remains optional for converting the
+correct text back into real links;
+it is not a build prerequisite.
 
-Güncel runtime bağı: [RUNTIME_BINDING.md](RUNTIME_BINDING.md). Buradaki önceki vendor/parser test sayıları tarihsel snapshot kanıtıdır; yeni app testleri [RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json) içindedir.
+Current runtime integration:
+[RUNTIME_BINDING.md](RUNTIME_BINDING.md).
+Earlier vendor/parser test counts here
+are historical snapshot evidence; newer
+Application tests are in
+[RUNTIME_CURRENT_STATUS.json](../metadata/RUNTIME_CURRENT_STATUS.json).
 
-Gulrak kaldırma yetkisi ve Windows IO geri dönüşü: [WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md).
-Asio Windows tüketicileri Brownfield gibi _WIN32_WINNT/WINVER0x0601 alır.
+Owner authorization to remove Gulrak
+and restore Windows I/O:
+[WINDOWS_IO_FIX.md](WINDOWS_IO_FIX.md).
+Asio Windows consumers use
+`_WIN32_WINNT`/`WINVER=0x0601`
+as in Brownfield.
 
-Güncel commit kanıtı ve yalnız build kopyasına uygulanan, hash ile sabitlenmiş
-SAFE-FREEZE istisnası: [HOOK_ENGINE_HARDENING.md](HOOK_ENGINE_HARDENING.md).
-Orijinal dört vendor ağacının üye hash'leri değişmez.
+Current commit evidence and hash-pinned
+SAFE-FREEZE exception applied only to
+a build copy:
+[HOOK_ENGINE_HARDENING.md](HOOK_ENGINE_HARDENING.md).
+Member hashes of the four original
+vendor trees remain unchanged.

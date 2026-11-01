@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_request_growth.hpp"
 #include "preloader_l/net/transport_response_hex.hpp"
 #include "preloader_l/net/transport_response_containers.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Explicit caller-owned projection of the native automatic document/string
 // locals. Fresh per invocation, nonaliasing and mapped in strings.memory;
 // no shared scratch, reentrancy, MSVC object layout or EH implementation implied.
@@ -24,7 +26,7 @@ public:
     virtual bool encrypt_042610(std::uintptr_t handler,ReceiveBufferString&,std::uint32_t)=0;
     virtual ReceiveBufferString& dispatch_032d00(ReceiveBufferString&,std::uintptr_t handler,NativeMessageDocument&)=0;
     // Defined log groups stand for006880/0088e0/007990 operations; no original
-    // stream, callback-intermediate log ABI or native log helpers recovered.
+    // stream, callback-intermediate log ABI or native log helpers are modeled.
     virtual void log(NativeMessageLog,NativeMessageDocument&,ReceiveBufferString&)=0;
     // Mandatory lower helpers with the exact defined native arguments. They
     // are not replaced by a claim that010040 is called by native033d70.
@@ -46,11 +48,11 @@ ReceiveBufferString& process_native_message_033d70(std::uintptr_t handler_f0,
     ReceiveBufferString& response,ReceiveBufferString& request,NativeMessageContext&);
 // Selects the typed normal source in028d30 instead of the historical N5
 // deferred-writeback semantic adapter. Lower native providers/ABI/EH stay open.
-class RecoveredNativeMessageApi:public RecoveredResponseDispatchApi {
+class NativeMessageApi:public ResponseDispatchApi {
 public:
-    RecoveredNativeMessageApi(ResponseDispatchContext& responses,NativeMessageContext& context)
-        :RecoveredResponseDispatchApi(responses),context_(context){}
+    NativeMessageApi(ResponseDispatchContext& responses,NativeMessageContext& context)
+        :ResponseDispatchApi(responses),context_(context){}
     void process_message_033d70(std::uintptr_t,ReceiveBufferString&,ReceiveBufferString&) final;
 private:NativeMessageContext& context_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

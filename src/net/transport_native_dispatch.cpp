@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_native_dispatch.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::string_view c_string(std::string_view value){const auto at=value.find('\0');return at==std::string_view::npos?value:value.substr(0,at);}
 void free_name(ReceiveBufferString& value,ReceiveBufferContext& context){
@@ -14,9 +16,9 @@ ReceiveBufferString& dispatch_native_032d00(ReceiveBufferString& output,std::uin
     NativeMessageDocument& document,NativeDispatchContext& context){
     auto& effects=context.effects;auto& scratch=context.locals.scratch;
     if(&output==&scratch)throw UnsupportedInput("Dispatch output aliases automatic scratch projection");
-    effects.prepare_registry(messages_recovered::registrations_032d00());
+    effects.prepare_registry(messages::registrations_032d00());
     const auto& parsed=effects.document(document);bool invalid=true,constructed_name=false;
-    const messages_recovered::XmlNode* command=nullptr;NativeDispatchEntry* selected=nullptr;
+    const messages::XmlNode* command=nullptr;NativeDispatchEntry* selected=nullptr;
     std::optional<std::string_view> id,recipient;
     const auto* root=parsed.first_element();
     if(root&&c_string(root->name())=="LSX"){
@@ -56,7 +58,7 @@ ReceiveBufferString& dispatch_native_032d00(ReceiveBufferString& output,std::uin
     if(capacity>15)effects.free_scratch_00b520(scratch,receive_buffer_address(scratch),capacity);
     effects.destroy_printer_001f60(printer);return output;
 }
-ReceiveBufferString& RecoveredMessageDispatchApi::dispatch_032d00(ReceiveBufferString& output,std::uintptr_t handler,NativeMessageDocument& document){
+ReceiveBufferString& MessageDispatchApi::dispatch_032d00(ReceiveBufferString& output,std::uintptr_t handler,NativeMessageDocument& document){
     return dispatch_native_032d00(output,handler,document,dispatch_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

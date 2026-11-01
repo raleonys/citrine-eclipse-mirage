@@ -1,2 +1,0 @@
-FAIL: stop depends on a new heap allocation
-WINE_PROGRAM_EXIT=1

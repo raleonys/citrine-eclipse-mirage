@@ -1,73 +1,90 @@
-# Başlangıç kilidi ve build girişleri
+# Startup lock and build entrypoints
 
-Kullanıcı son `yellowfield-bluefield-aligned-source.zip` paketinden derlenen
-`dist/preloader_l.dll` ile oyunun hiç açılmadığını, Bluefield’in aynı
-ürün görevini yerine getirdiğini bildirdi. `surge.cfg` isteğe bağlı kalmalıdır.
-Derleme/test başarısı gerçek oyun uyumu olarak sunulamaz.
+The owner reported that the game did not start at all with
+`dist/preloader_l.dll` built from the last
+`yellowfield-bluefield-aligned-source.zip` package, while Bluefield performed
+the same product task. `surge.cfg` must remain optional. A successful build
+or test does not establish real game compatibility.
 
-## Doğrulanmış başlangıç hatası
+## Confirmed startup defect
 
-Native registry sorgusu tracked `ClientValue` için başlangıcın server/provider/extra
-aşamalarını beklerken eklediğimiz `registry_gate` kilidini tutuyordu. Başlangıcın
-ilerlemesi için başka thread’in registry callback’i gerekirse iki taraf birbirini
-bekliyordu. Bluefield bunu FIX19’da `callback_lock::Guard/Pause` ile çözmüş;
-önceki Yellowfield aktarımında bu gerekli parça eksik kalmıştı.
+During a native registry query for tracked `ClientValue`, the
+`registry_gate` lock that we had introduced remained held while waiting
+for startup server/provider/extra phases. If another thread needed to
+enter a registry callback to advance startup, both sides could wait
+on each other. Bluefield addressed this in FIX19 through
+`callback_lock::Guard/Pause`, but that required component was missing
+from the earlier Yellowfield adaptation.
 
-Yeni regresyon gerçek native callback girişlerini iki thread’de çağırır. İlk sorgu
-phase beklemesinde dururken ikinci thread’in callback’i ilerlemelidir. Eski kod
-5 saniyelik kontrollü gözlemde ilerleyemedi ve exit1 verdi; thread’ler test
-tarafından serbest bırakılıp join edildi. Başarısız kanıt silinmez.
+The new regression invokes actual native callback entrypoints on two
+threads. While the first query waits for its phase, the second thread's
+callback must be able to advance. The previous code did not advance
+within a controlled five-second observation and exited with code 1.
+The test then released and joined both threads; this failure evidence
+is retained.
 
-Düzeltme supplied Bluefield header’ını byte-identical kullanır; yalnız registry
-callback’inin takip edilen recursive kilitleri wait süresince bırakılır ve sonra
-yeniden alınır. Native binding lease beklerken canlı kalır; original-call,
-match/wait/write sırası, sonuç ve LastError korunur. `registry.cpp` değişmez.
-Network callback kilidinin ayrı kapsamı bu düzeltmede değiştirilmez.
+The correction uses the supplied Bluefield header byte-identically.
+Only the registry callback's tracked recursive locks are released
+during the wait and reacquired afterwards. The native binding lease
+remains live throughout the wait; original-call, match/wait/write
+ordering, results, and LastError remain unchanged. `registry.cpp`
+is unchanged. The separate network callback lock scope is not
+modified by this correction.
 
-Bu, başlangıcı engelleyebilen bir kaynak hatasının kanıtıdır. Kullanıcının
-oyunundaki tek nedenin bu olduğu veya oyunun artık açıldığı henüz doğrulanmadı.
+This demonstrates a source defect capable of blocking startup.
+It does not establish that this was the only cause of the owner's
+game-startup failure or that the game now starts.
 
-## Build logundaki diğer hata
+## Other failure in the build log
 
-Logdaki checkout adı önceki `yellowfield-production-import-fix-source`; klasör adı
-ZIP hash’iyle tam kimlik kanıtı değildir. Derleme test-only
-`fake_win32.cpp:159/160` C2589 ile durmuş; CTest’e geçmemiş.
-`hook_engine_fixture_tests` bağımsız olarak vendor MinHook’a bağlandığı için
-core’daki PUBLIC NOMINMAX tanımını almıyordu. Hedefe PRIVATE NOMINMAX eklendi.
-Vendor kaynaklarına veya test gövdelerine bu hata için patch uygulanmadı.
+The log identified the earlier
+`yellowfield-production-import-fix-source` checkout; a folder name
+alone is not exact identity evidence without a ZIP hash. The build
+stopped at C2589 in test-only `fake_win32.cpp:159/160` before CTest.
+Because `hook_engine_fixture_tests` links MinHook independently,
+it did not receive the core target's PUBLIC NOMINMAX definition.
+PRIVATE NOMINMAX was added to this target. Vendor sources and test
+bodies were not patched to address this error.
 
-## Beş girişin başlıkları
+## Five command headings
 
-| Komut | Başlık | İşlev |
+| Command | Heading | Purpose |
 |---|---|---|
-| build_unstable.cmd | COMPILE ONLY | Unsigned DLL derleme, başlangıç/kapatma kontrolü |
-| build_debug.cmd | DEBUG BUILD | Debug DLL derleme, başlangıç/kapatma kontrolü |
-| build_native_acceptance.cmd | NATIVE ACCEPTANCE | Native Windows testlerini derleme/çalıştırma |
-| build_crt_acceptance.cmd | STATIC CRT ACCEPTANCE | Statik CRT ve DLL arayüz testleri |
-| build_production.cmd | PRODUCTION BUILD | Shipping DLL derleme, Golden doğrulama ve dist çıktısı |
+| `build_unstable.cmd` | COMPILE ONLY | Compile unsigned DLL, verify startup/shutdown |
+| `build_debug.cmd` | DEBUG BUILD | Compile Debug DLL, verify startup/shutdown |
+| `build_native_acceptance.cmd` | NATIVE ACCEPTANCE | Compile/run native Windows tests |
+| `build_crt_acceptance.cmd` | STATIC CRT ACCEPTANCE | Static CRT and DLL-interface tests |
+| `build_production.cmd` | PRODUCTION BUILD | Compile shipping DLL, Golden validation and dist output |
 
-Başlıklar supplied Brownfield’in profil isimlerinden alındı; eski HF12 etiketleri
-ve mevcut işi anlatmayan açıklamalar taşınmadı. Çıkış kodu, renkli sonuç, pause,
-parametre aktarımı ve Golden kapıları korunur. Otomatik yayın eklenmedi.
+The headings come from the supplied Brownfield profile names. Former
+HF12 labels and descriptions unrelated to current work were not copied.
+Exit codes, colored result, pause, argument propagation, and Golden
+gates were retained. Automatic publication was not added.
 
-`CLEARED_KNOWN_GENERATED_CACHE_ONLY` önceki FALCION hatasını önlemek için bilinen
-first-party Python bytecode cache’lerini temizleyen yardımcının sonucudur.
-`removed: []` hiçbir dosyanın temizlenmediğini gösterir. Build akışı artık başarıda
-bunu konsola basmaz; ayrıntıyı seçili build klasöründeki
-`PYTHON_CACHE_CLEANUP.json` içine yazar. Temizleme hataları stderr/nonzero olarak
-üst akışı durdurur; sessizlik hata gizleme değildir.
+`CLEARED_KNOWN_GENERATED_CACHE_ONLY` is the outcome of the helper that
+removes known first-party Python bytecode caches to prevent the earlier
+FALCION failure. `removed: []` indicates that nothing was removed.
+The build flow no longer prints this on successful completion; details
+are written to `PYTHON_CACHE_CLEANUP.json` in the selected build
+directory. Cleanup errors stop the upstream build via stderr and
+nonzero exit code; silence on success does not conceal errors.
 
-## Açık kalan oyun incelemesi
+## Outstanding game investigation
 
-Config olmadan varsayılanlarla başlama korunur. Bluefield config/provider yolları
-DLL’e, Yellowfield yolları EXE’ye göredir. Bu deployment farkı kaydedildi;
-dosya konumu doğrulanmadan yeni arama/öncelik politikası eklenmedi. Exportlar
-SURGE/DllMain/DllShutdown açısından uyumlu; Yellowfield’in iki ek yönetim export’u
-kullanıcının önceki açık talimatıdır.
+Startup without configuration using defaults is preserved.
+Bluefield resolves its configuration/provider paths relative to
+the DLL; Yellowfield uses the EXE. This deployment difference is
+recorded, and no new search or precedence policy was added without
+validating file placement. The SURGE/DllMain/DllShutdown exports
+are compatible; the two additional Yellowfield management exports
+in that snapshot came from a previous explicit owner instruction.
 
-Yeni kaynak için Windows/MSVC üretim turu ve gerçek oyun denemesi gereklidir.
-Durum/ham test kanıtları: `docs/evidence/STARTUP_BUILD_FIX_STATUS.json`.
+Actual Windows/MSVC Production execution and a game rerun are
+required for the changed source. Status and raw test results:
+`metadata/evidence/STARTUP_BUILD_FIX_STATUS.json`.
 
-Çapraz doğrulama: Release173/173, ilgili Debug8/8, altyapı29/29 ve config
-olmadan üç gerçek DLL runtime çevrimi geçti. Eski kilit testinin exit1 kaydı
-korunur. Güncel oyun tekrarı ve yeni kaynakla native MSVC çalıştırması yapılmadı.
+Cross-validation passed Release 173/173, affected Debug 8/8,
+infrastructure 29/29, and three actual DLL runtime cycles without
+configuration. The original lock test's exit-1 evidence is retained.
+No game rerun or native MSVC execution of this revised source was
+performed in that session.

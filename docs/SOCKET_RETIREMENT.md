@@ -1,113 +1,143 @@
-# Native socket sahipliği ve IO retirement
+# Native socket ownership and I/O retirement
 
-Önceki incelemede doğrulanan uygulama-owned socket boşluğu için kapanış sahibi
-eklendi. Asio close hatasından sonra kaybolan kayıt artık sessiz başarıya
-dönüşmez. Güvenli retry ile belirsiz sonuç birbirinden ayrılır; pending IO ve
-tampon ömrü kapanış kabulünün parçasıdır. Donor emekliliği hâlâ BLOCKED.
+A shutdown owner was added to address the Application-owned socket
+gap confirmed in the preceding review. A lost record after an Asio
+close failure no longer silently becomes success. Safe retry is
+distinguished from uncertain results; pending I/O and buffer lifetime
+are part of the shutdown acceptance criteria. Donor retirement
+remains **BLOCKED**.
 
-## Native sonuç politikası
+## Native-result policy
 
-Microsoft, `WSAEWOULDBLOCK` durumunda handle'ın geçerli kaldığını açıkça belirtir.
-Aynı belge handle'ın yeniden kullanılabileceğini ve close dönüşünün pending IO
-completion'larının bittiği anlamına gelmediğini de belirtir.
-[closesocket sözleşmesi](https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-closesocket).
+Microsoft explicitly states that a handle remains valid on
+`WSAEWOULDBLOCK`. The same documentation also notes that handle
+values can be reused and that a close return does not necessarily
+mean all pending I/O completions have finished.
+[closesocket contract](https://learn.microsoft.com/en-us/windows/win32/api/winsock/nf-winsock-closesocket).
 
-| Sonuç | Uygulanan sahiplik davranışı |
+| Result | Implemented ownership behavior |
 |---|---|
-| Başarılı close | Native kayıt bırakılır; ilgili callback'ler bitene kadar oturum tutulur. |
-| Would-block | Exact raw handle retained durumunda tutulur. Retry öncesi uygulamanın varsayılan linger-off politikası kurulur; başarılı native close yalnız bir kez kabul edilir. |
-| Diğer close hatası | Sayısal değer uncertain durumunda kaydedilir; kör native close, socket sorgusu veya tekrar kullanım yapılmaz. Cleanup başarısı engellenir. |
-| Retry sırasında linger ayarı hatası | Close çağrılmaz. Retained sahiplik saklanır; descriptor/not-initialized hatası varsa uncertain'a geçilir. |
+| Successful close | Release the native record; retain the session until associated callbacks finish. |
+| Would-block | Retain the exact raw handle. Before retry, apply the Application's default linger-off policy; accept successful native close only once. |
+| Other close failure | Record the numeric value as uncertain. Do not perform blind native close, socket queries or reuse. Block successful cleanup. |
+| Linger-option failure during retry | Do not call close. Preserve retained ownership; move to uncertain on descriptor/not-initialized errors. |
 
-Uncertain durum otomatik olarak temizlenmez. Kaydın hâlâ aynı kernel socket'ini
-gösterdiği kanıtlanamadığında yeniden kapatma güvenli değildir. Bu durumda DLL
-worker'ı aynı Application/IO sahibini ve image lease'i tutar; shutdown cleanup
-failure döndürür. Bir sonraki istek durumu yeniden raporlar, sayısal handle'a
-yeniden dokunmaz. Force-clear CFG anahtarı veya üretim export'u eklenmedi.
-Bu, her native arızanın otomatik kurtarılacağı iddiası değildir. Retained retry,
-uygulamanın socket üzerinde tek sahibi olmasına ve dengeli Winsock scope
-ömrünün korunmasına dayanır.
+Uncertain state is not cleared automatically. If it cannot be
+proven that a record still identifies the same kernel socket,
+closing it again is unsafe. The DLL worker therefore retains
+the same Application/I/O owner and image lease and returns
+shutdown cleanup failure. A later request reports that state
+again without touching the numeric handle. No force-clear CFG
+setting or Production export was added. This is not a claim
+that every native failure is automatically recoverable.
+Retained retry relies on the Application having sole ownership
+of the socket and on balanced Winsock-scope lifetime.
 
-## Sahipliğin kapsamı
+## Ownership scope
 
-First-party retained wrapper'lar Client socket'ini, IPv4/IPv6 acceptor'larını,
-bind adaylarını ve accepted callback'e geçen geçici socket'leri kapsar. Native
-close başarısızlığından sonra wrapper yok olacaksa kayıt önceden ayrılmış deferred
-listeye aktarılır. Client constructor/handler hatası da native kaynak sahibini
-kaybettirmez. İlk deferred failure admission'ı durdurur; başarısız bind cleanup'ı
-arkada bırakılıp sonraki port açılmaz. Normal occupied-port taraması3226–3236
-aynı kalır.
+First-party retained wrappers cover Client sockets, IPv4/IPv6
+acceptors, bind candidates and temporary sockets transferred
+to accepted callbacks. If a wrapper would be destroyed after
+a failed native close, its record is moved to a preallocated
+deferred list. Client-constructor and handler failures also
+preserve ownership of native resources. The first deferred
+failure stops admission; a failed bind cleanup cannot be left
+behind while the next port is opened. The normal occupied-port
+scan remains 3226–3236.
 
-Deferred kapasite, policy session cap +8 olarak socket ediniminden önce ayrılır.
-Published client/listener'lara en fazla iki accept callback'i ve iki bind adayı
-katılabilir; ilk başarısız retirement sonrası yeni edinim durur. İlgili IO ve
-deferred kayıtlar callback target'larından sonra yok edilir. Bu liste retirement
-yolunda yeni heap tahsisine dayanmaz.
+Deferred capacity is reserved before socket acquisition as the
+policy session cap + 8. Published clients/listeners can have
+at most two additional accept callbacks and two bind candidates.
+Acquisition stops after the first failed retirement. Associated
+I/O and deferred records are destroyed only after their callback
+targets. The retirement path does not depend on fresh heap
+allocation for this list.
 
-Client listesi artık strong ownership taşır; Client yalnız Impl'i borrow eder,
-ownership cycle kurulmaz. Native close, timer ve read/write callback'leri bitmeden
-oturum kapasiteden çıkarılmaz. Sayımlar initiation exception'ında geri alınır,
-completion'ın her çıkış yolunda bir kez düşürülür. Tamamlanmış client'lar sonraki
-admission sırasında prune edilir.
+The Client list now holds strong ownership; a Client only
+borrows its Impl, avoiding an ownership cycle. A session is
+not removed from capacity before native close, timer and
+read/write callbacks finish. Counts are rolled back on
+initiation exceptions and decremented once on every
+completion exit path. Completed clients are pruned during
+subsequent admission.
 
-Kapanış IO runner'ın socket'leri kapatması, runner join, aktif handler drain ve
-IO context drain sırasını korur. Son IO drain100 ms'lik deneme kullanır; zaman
-dolarsa yeniden denenebilir sahibi saklar. Başarı için context'in doğal olarak
-stopped olması, accept callback'lerinin tamamlanması, native/deferred kayıtların
-boşalması ve client retirement'ı birlikte gerekir. Bu süre, kullanıcı/provider
-kodunu veya tek bir callback'i preempt eden toplam shutdown garantisi değildir.
+Shutdown retains the ordering: the I/O runner closes sockets,
+then runner join, active-handler drain and I/O-context drain.
+The final I/O drain uses a 100 ms attempt; on timeout a
+retryable owner is retained. Success jointly requires the
+context to be naturally stopped, all accept callbacks completed,
+native/deferred records empty, and clients retired.
+The interval does not provide a global shutdown-time bound
+that preempts user/provider code or any individual callback.
 
-Mevcut response completion closure'ı PreparedResponse tamponunu zaten sahiplenir;
-bu davranış korundu. Cancel sırasında negative receipt verilir, kernel tarafından
-kullanılan tampon completion'a kadar tutulur. Tamamlanmayan veya iptal edilen
-gönderim için positive delivery acknowledgement eklenmedi.
+The existing response-completion closure already owns its
+PreparedResponse buffer; that behavior is preserved.
+Cancellation produces a negative receipt, and a buffer
+still in use by the kernel remains alive through completion.
+No positive delivery acknowledgement was added for
+incomplete or cancelled sends.
 
-Bu değişiklik Asio vendor baytlarını, private service implementation'ını veya
-header makrolarını üretimde değiştirmez. Public Asio API kullanılır; Windows7
-hedefini yükselten `release()` zorunluluğu getirilmez. Sınır, first-party tarafından
-edinilmiş/teslim alınmış socket'lerdir. Vendor'ın kendi iç geçici nesnelerindeki
-bütün olası OS failure yollarının kapandığı iddia edilmiyor.
+This change does not modify Asio vendor bytes, its private
+service implementation or header macros in Production.
+It uses the public Asio API and does not introduce a mandatory
+`release()` operation that would raise the Windows 7 target.
+The scope is sockets acquired or received by first-party
+code. It does not claim to close every conceivable OS failure
+path within the vendor's own temporary objects.
 
-## Test kanıtı
+## Test evidence
 
-`socket_retirement_contracts` gerçek IOCP socket/timer ve üretim implementation'ı
-üzerinde dokuz senaryo içerir: retained retry, option failure, belirsiz açık/kapalı
-sonuçlar, write-buffer/receipt completion ömrü, timer retirement, Client constructor
-rollback, bind rollback ve listener/accept retirement. Native hata injection'ı
-yalnız test executable'ında belirlenmiş socket'e uygulanır. Sayısal reuse
-gözlenmediyse gözlenmiş gibi raporlanmaz; esas oracle belirsiz değere tekrar native
-çağrı yapılmaması ve unrelated socket'in canlı kalmasıdır.
+`socket_retirement_contracts` contains nine scenarios with
+real IOCP sockets/timers and the Production implementation:
+retained retry, option failure, uncertain open/closed results,
+write-buffer/receipt-completion lifetime, timer retirement,
+Client-constructor rollback, bind rollback, and listener/
+accept retirement. Native fault injection is restricted to
+specified sockets in the test executable. Numeric reuse is
+not reported as observed unless it actually occurs.
+The central oracle is that uncertain values never receive
+another native operation and unrelated sockets remain alive.
 
-`socket_dll_retirement_contracts` üç izole child process'te gerçek DLL worker'ı,
-Application ve Asio service'i çalıştırır. Hooks bu fixture'ın Options'ında kapalıdır;
-bu bir hook patching testi değildir. Would-block retry aynı Application'ı kapatır,
-tekrar native close yapmaz ve image lease'i bırakır. Diğer iki çocukta close'un
-gerçekte yapılmadığı ve yapıldığı halde hata bildirildiği kontrollü sonuçlar
-üretilir. Her ikisinde de caller FreeLibrary yapsa bile worker lease'i erken
-unload'u engeller. Quarantine sahibini yalnız test process exit'i/OS reclaim eder;
-üretime test amaçlı unquarantine API'si eklenmez. Parent test, çocuklara ayrılmış
-fixture dizinlerini çocuklar sonlandıktan sonra temizler.
+`socket_dll_retirement_contracts` runs the real DLL worker,
+Application and Asio service in three isolated child processes.
+Hooks are disabled in the fixture Options; this is not a hook-
+patching test. Would-block retry shuts down the same Application,
+does not repeat native close after success, and releases the
+image lease. The two remaining children produce controlled
+results in which close was not performed, or close completed
+but reported an error. In both cases the worker lease prevents
+premature unload even if the caller invokes FreeLibrary.
+Only test-process exit/OS reclamation releases the quarantined
+owner; no test-only unquarantine API was added to Production.
+The parent removes dedicated fixture directories after the
+children have terminated.
 
-Aynı son harness kaynakları ve aynı eski core archive kullanılarak exact önceki
-kaynak ve düzeltme derlenir. 12 sözleşme senaryosu önce FAIL, sonra PASS.
-[Önce/sonra kayıtları](evidence/socket-retirement/PINNED_RESULTS.json) ve build
-receipt'leri source/harness/core archive hash'lerini taşır. Bunlar test sırasında
-kontrollü Win32 sınır hatalarıdır; gerçek Windows hata sıklığı veya native MSVC
-kabulü değildir.
+Using the same final harness sources and the same old core
+archive, the exact preceding and corrected sources were built.
+All 12 contract scenarios FAILED before and PASSED after.
+[Before/after records](../metadata/evidence/socket-retirement/PINNED_RESULTS.json)
+and build receipts bind source, harness and core-archive hashes.
+These are controlled Win32 boundary failures during tests,
+not evidence of real-world Windows failure frequency or
+native MSVC acceptance.
 
-Yerel tam sonuç, Debug ve kaynak QA kayıtları
-[VALIDATION.json](evidence/socket-retirement/VALIDATION.json) içindedir.
-Public header bildirimi ve üretim C ABI'si değişmez: DllMain@1, SURGE@2,
-DllShutdown@3. Geliştirme DLL'inin otomatik compiler/helper sembol farkları
-[SOURCE_API_DELTA.json](evidence/socket-retirement/SOURCE_API_DELTA.json) içinde
-ayrı tutulur; private template emisyonu sabit C ABI değildir.
+Complete local, Debug and source-QA results are in
+[VALIDATION.json](../metadata/evidence/socket-retirement/VALIDATION.json).
+Public header declarations and Production C ABI are unchanged:
+DllMain@1, SURGE@2, DllShutdown@3.
+Compiler-generated/helper symbol differences in the
+development DLL are recorded separately in
+[SOURCE_API_DELTA.json](../metadata/evidence/socket-retirement/SOURCE_API_DELTA.json);
+private template emission is not the fixed C ABI.
 
-Native Windows/Golden ve oyun kabulü değişen kaynakla yeniden yapılmalıdır.
-Registry provenance, aggregate bellek bütçeleri, provider/handler liveness ve
-kalan donor kaynak/test/araç incelemeleri açıktır. Manuel donor branch ledger'ı
-76 dosyadadır; bu tur tüm donor semantiğinin kapanışı sayılmaz.
+Native Windows/Golden and game acceptance must be rerun
+against the modified source. Registry provenance,
+aggregate memory budgets, provider/handler liveness
+and review of remaining donor source/test/tool families
+are still open. The manual donor branch ledger covers
+76 files; this is not closure of all donor semantics.
 
-Exact parent kaynak ZIP SHA256:
+Exact parent source ZIP SHA-256:
 `e0b6964082c4343359d824684b5c60e667867db54f089796862080a81f73d8ac`.
-Güncel değişen dosya pin'leri
-[REVIEWED_CHANGES.json](evidence/socket-retirement/REVIEWED_CHANGES.json) içindedir.
+Changed-file pins for this source are in
+[REVIEWED_CHANGES.json](../metadata/evidence/socket-retirement/REVIEWED_CHANGES.json).

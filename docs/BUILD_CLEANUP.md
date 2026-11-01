@@ -1,65 +1,101 @@
-# Üretim bağlantısı ve tanılama temizliği
+# Production linkage and diagnostic cleanup
 
-Sahip, doğrulanan dead-code audit kararlarının TLS tanılama düzeltmesiyle birlikte
-uygulanmasını istedi. Dört kaynak dosyası silinmeden üretim bağlantısından
-korunan referans/kaynak API grubuna ayrıldı. Güncel bölünme60 üretim ve78 referans
-CPP; toplam138. Public header, dört vendor, kaynak API imzaları, üç üretim
-export'u ve Golden derleyici/linker politikası korunur.
+The owner requested that the confirmed dead-code audit decisions
+be implemented together with the TLS diagnostic correction.
+Four source files were moved out of Production linkage into
+the retained reference/source-API group without deletion.
+The current partition is **60 Production and 78 reference
+CPP files, 138 total**. Public headers, four vendors, source
+API signatures, three Production exports, and Golden
+compiler/linker policy remain unchanged.
 
-| Audit maddesi | Uygulama |
+| Audit item | Implementation |
 |---|---|
-| DC-001–004 | config/order.cpp, config/config_startup.cpp, net/session_routing.cpp ve platform/windows_effects.cpp yalnız referans/API/test grubuna taşındı. |
-| DC-005 | Etkin CLI'nin kullanmadığı eski load_codemodel Python okuyucusu kaldırıldı; generation-time graph kapısı ve CMake file-API query korundu. |
-| DC-006 | Altı dosyada yalnız yedi kullanılmayan import bağlaması kaldırıldı. |
-| DC-007 | Avatar testindeki sonucu okunmayan SHA-1 hesabı kaldırıldı; PNG/fallback byte assertion'ları ve hash API korunur. |
-| DC-008–011 | Token'ın kanıtlanmış gereksiz boyut alt koşulu, farklı kök dalındaki alias guard, ClassicIso tekrar EOF kontrolü ve QPC özdeş ternary sadeleştirildi. |
-| Crypt tanılama | crypt_observed gövdesi NDEBUG dışına alındı; Debug reentry guard ve mevcut debug_log çağrısı duruyor. Virtual method, hook seçimi/orijinal çağrı/LastError ve yaşam süresi sözleşmesi korunur. |
+| DC-001–004 | Move `config/order.cpp`, `config/config_startup.cpp`, `net/session_routing.cpp`, and `platform/windows_effects.cpp` exclusively to the reference/API/test group. |
+| DC-005 | Remove the obsolete `load_codemodel` Python reader unused by the active CLI; retain the generation-time graph gate and CMake file-API query. |
+| DC-006 | Remove only seven unused import bindings across six files. |
+| DC-007 | Remove an unused-result SHA-1 calculation in the avatar test; retain PNG/fallback byte assertions and the hash API. |
+| DC-008–011 | Simplify a provably redundant token-length subcondition, an alias guard in a different-root branch, a repeated ClassicIso EOF check, and an identical QPC ternary. |
+| Crypt diagnostics | Move `crypt_observed` outside NDEBUG builds, while retaining the Debug reentry guard and existing `debug_log` call. Preserve virtual method layout, hook selection, original invocation, LastError, and lifetime contracts. |
 
-Eski config/startup.cpp dosyası, üretimdeki runtime/startup.cpp ile MSVC MAP'te
-aynı startup.obj adına dönüşmemesi için config/config_startup.cpp olarak
-adlandırıldı. Dosya gövdesi byte düzeyinde aynı; header ve C++ sembol adları
-değişmedi. Bir kaynak gövdesi silinmedi;138 CPP sayısı korunur.
+The earlier `config/startup.cpp` was renamed to
+`config/config_startup.cpp` to avoid sharing the same
+`startup.obj` name in the MSVC MAP with the Production
+`runtime/startup.cpp`. Its body was byte-identical;
+headers and C++ symbol names were unchanged.
+No source body was deleted; all 138 CPP files remain.
 
-config_hash'ın eski modelle1440 karşılaştırması ayrı referans testine, achievement
-storage'ın eski bootstrap bileşimi kendi model testine taşındı. Asıl hash/storage
-testleri production-only core üzerinde kaldı. config_order, session integration
-ve WindowsEffects model testleri referans olarak sınıflandırıldı; gövdeleri ve
-assertion'ları korunur. Portable hash testinden de model bağımlılığı ayrıldı;
-ayrı portable differential hedefi eklendi. Üretim testi referans kütüphanesine
-bağlanarak geçerli gösterilmez.
+The former model's 1,440 `config_hash` comparisons
+were moved to a separate reference test, as was the
+former bootstrap composition of achievement storage.
+The actual hash/storage tests still run on the
+Production-only core. `config_order`, session
+integration, and WindowsEffects model tests were
+classified as reference and retained without changing
+their bodies or assertions. The portable hash test
+was separated from the model dependency, with a
+separate portable differential target added.
+A Production test is not represented as passing merely
+by linking the reference library.
 
-DC-012–019 kapsamındaki public temsil/metadata/ownership veya karma TU tasarımları
-bu dar temizliğe dahil edilmedi. Özellikle leases_ rezervasyonu, başarısız native
-release sonrası retry, belirsiz socket sonucu karantinası, pending IO sayaçları,
-buffer/receipt capture'ları ve image lease korunur. Genel unload helper'ı kaynak
-API/test köklerinde kalır; checked close onunla değiştirilmez.
+Public representation/metadata/ownership designs and
+mixed translation-unit proposals DC-012–019 were
+outside this narrow cleanup. In particular,
+`leases_` reservations, retry after failed native
+release, quarantine for uncertain socket results,
+pending I/O counters, buffer/receipt captures, and
+the image lease remain intact. The generic unload
+helper remains in source-API/test roots; it does not
+replace checked close.
 
-Bu TLS koruması önceki kaynakta da vardı. Temizlik, VirusTotal etiketinin nedeni
-bulundu veya etiket kalkacak anlamına gelmez. Aynı toolchain ile ölçülen bölüm,
-TLS, ham DLL ve geliştirme export farkları son doğrulamada ayrı kaydedilir;
-cross-build farkı native MSVC kazancı olarak sunulmaz.
+The TLS guard existed in the preceding source as well.
+This cleanup does not establish the cause of a
+VirusTotal label or predict that the label will
+disappear. Section/TLS/raw-DLL/development-export
+differences under the same toolchain are reported
+separately in final validation. Cross-build
+differences are not presented as native MSVC gains.
 
-Güncel makine sözleşmesi [BUILD_CLEANUP_REVIEW.json](../metadata/BUILD_CLEANUP_REVIEW.json),
-doğrulama [VALIDATION.json](evidence/build-cleanup/VALIDATION.json).
-Native Windows/MSVC/Golden ve oyun kabulü değişen kaynak için ayrıca gerekir;
-eski kabul bu değişikliğe aktarılmaz. Donor emekliliği incelemesi açık kalır.
+The active machine contract is
+[BUILD_CLEANUP_REVIEW.json](../metadata/BUILD_CLEANUP_REVIEW.json);
+validation is in
+[VALIDATION.json](../metadata/evidence/build-cleanup/VALIDATION.json).
+Native Windows/MSVC/Golden and game acceptance must
+be repeated for the changed source; earlier acceptance
+cannot be transferred. Donor retirement remains under
+review.
 
-## Yerel sonuç ve sınırlar
+## Local results and limits
 
-Release205/205, etkilenen Debug23/23 ve portable21/21 test başarılıdır. Kaynak QA
-17/17 gruptur; portable/altyapı alt kontrolleri çakıştığından sayılar toplanmaz.
-Production/referans MAP sınırı başarılı; kaynak API'nin3346 export adı
-önce/sonra birebir aynı. Yeni20 partition regresyonu, dört model nesnesinin
-üretim adlı arşivden geri gelmesini ve startup dosya adlarının ayrımını denetler.
+Release 205/205, affected Debug 23/23, and portable
+21/21 tests passed. Source QA passed in 17/17 groups;
+portable and infrastructure subchecks overlap, so
+these totals must not be added together.
+The Production/reference MAP boundary passed;
+all 3,346 source-API export names matched exactly
+before and after. Twenty new partition regressions
+check that the four model objects do not reappear in
+the Production-named archive and that startup
+object filenames remain distinct.
 
-Aynı LLVM-MinGW Release ham DLL1.083.392→1.070.080 bayt,13.312 bayt küçüldü.
-Farkın6144 baytı PE raw bölümler,7168 baytı bölüm dışı COFF tabloları/dolgudur;
-13KiB makine kodu veya MSVC kazancı değildir. .text VirtualSize3600, TLS şablonu8
-bayt azaldı; TLS raw bölümü aynı512 baytta kaldı. Tek tek dar değişikliklere
-bağımsız hız/boyut kazanımı atanmadı. Gerçek hedefin Release OBJ'sinde tanılama
-TLS'i yok; Debug callback talimatları önceki kaynakla aynıdır.
+Using the same LLVM-MinGW toolchain, the raw Release
+DLL shrank from 1,083,392 to 1,070,080 bytes, a
+13,312-byte reduction. Of that difference, 6,144
+bytes were PE raw sections and 7,168 bytes were
+out-of-section COFF tables/padding; this is not
+13 KiB of machine code or an MSVC improvement.
+`.text` VirtualSize fell by 3,600 bytes; the TLS
+template fell by eight bytes, while the TLS raw
+section remained 512 bytes. No independent size
+or speed gain was attributed to each narrow edit.
+The actual target's Release OBJ has no diagnostic
+TLS; Debug callback instructions match the earlier
+source.
 
-Bu sonuçlar LLVM-MinGW/Wine ve Linux portable kanıtıdır. MSVC/Golden veya oyun
-testi çalıştırılmış sayılmaz. Tam ZIP'in temiz açılımından test/API kapalı build
-ve üç gerçek DLL döngüsü için paket dışındaki `surge-build-cleanup-delivery-verification.json`
-son kaydı kullanılır; derleme/log kanıtları bu kaynak snapshot'ına bağlanır.
+These are LLVM-MinGW/Wine and Linux portable results,
+not MSVC/Golden or game execution. For a full ZIP
+clean-extract build with tests/source APIs disabled
+and three actual DLL cycles, use the external final
+record `surge-build-cleanup-delivery-verification.json`.
+Build/log evidence is bound to that exact source
+snapshot.

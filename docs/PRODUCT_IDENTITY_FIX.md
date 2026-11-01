@@ -1,26 +1,32 @@
-# SURGE ürün adlarının tutarlılığı
+# SURGE product name consistency
 
-Kullanıcı talimatı: “bunlar tutarlı şekilde düzeltilmeli”.
+Owner instruction (translated): "These must be corrected consistently."
 
-`include/preloader_l/core/product_identity.hpp` config, override, veri klasörü,
-avatar ve online DLL adlarını tanımlar. Config projeksiyonları ve somut runtime
-aynı adları kullanır. Config arama konumu EXE dizini, öncelik base -> override,
-varsayılan veri kökü %LOCALAPPDATA%/SURGE olarak kalır. Eksik config isteğe
-bağlıdır; eski dosya adlarına otomatik geri dönüş veya dosya taşıma eklenmez.
-Alt config projeksiyonundaki eski iki bileşenli veri kökü de mevcut runtime
-SURGE köküyle eşitlenir. Online modülü doğrudan preloader_l_online.dll ister;
-uygulama adaptöründe eski adı yeni ada çeviren özel koşul kaldırılmıştır.
+`include/preloader_l/core/product_identity.hpp` defines configuration,
+override, data-directory, avatar, and online-DLL names. Configuration projections
+and the concrete runtime use the same names. The configuration search location
+remains the EXE directory, with base -> override precedence, and the default
+data root remains `%LOCALAPPDATA%/SURGE`. Missing configuration is optional;
+no automatic fallback to old filenames or file migration is added.
 
-Dört config hata mesajı surge.cfg der. Shutdown kaynak türü DllShutdownStatus,
-sabitler DLL_SHUTDOWN_* olur; değerler0..4 ve DllMain@1/SURGE@2/DllShutdown@3
-korunur. Hostlar ve mevcut config/provider/diagnostic testleri buna göre
-güncellenir. Production'a yeni export eklenmez.
+The earlier two-component data root in the lower configuration projection is
+aligned with the existing runtime SURGE root. The online module requests
+`preloader_l_online.dll` directly; the application adapter no longer has a
+special case that translates the former name to the new one.
 
-Orijinal kaynak dosyalarına işaret eden iki köken yorumu, geçmiş raporlar,
-karşılaştırma tabloları, lisans/kaynak atıfları ve yellowfield.* JSON şema
-kimlikleri korunur. Bunlar ürünün kullandığı dosya adı veya görünen kimlik
-değildir. Test host'unda kaldırılmış YellowfieldShutdown export'unun yokluğu
-denetlenmeye devam eder. Önceki ZIP'ler ve vendor payload'ları değiştirilmez.
+Four configuration error messages identify `surge.cfg`. The shutdown source
+type is `DllShutdownStatus`, with `DLL_SHUTDOWN_*` constants. Values 0..4 and
+`DllMain@1` / `SURGE@2` / `DllShutdown@3` remain unchanged. Hosts and existing
+configuration/provider/diagnostic tests are updated accordingly. No new
+Production export is introduced.
 
-Doğrulama sonuçları docs/evidence/PRODUCT_IDENTITY_FIX.json içindedir. Cross-build
-ve Wine sonuçları gerçek Windows/MSVC Golden veya oyun kabulü yerine geçmez.
+Two provenance comments pointing to original source files, historical reports,
+comparison tables, licensing/source attributions, and `yellowfield.*` JSON
+schema identities are retained. These are not filenames or visible product
+identities used by the application. The test host continues to verify that the
+removed `YellowfieldShutdown` export is absent. Earlier ZIP packages and
+vendored payloads remain unchanged.
+
+Validation results are in
+`metadata/evidence/PRODUCT_IDENTITY_FIX.json`. Cross-build and Wine results do
+not replace actual Windows/MSVC Golden or game acceptance.

@@ -1,40 +1,44 @@
-> Sonraki açık kullanıcı kararı: sınırsız/heap kullanan yol okuması artık
-> [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) sözleşmesiyle değiştirilmiştir.
-> 32.768 UTF-16 birimi sınırı, sabit suffix tamponu ve korumalı okuma geçerlidir;
-> aşağıdaki eski okuyucu/body-identity ifadeleri bu kapsamda tarihsel kayıttır.
+> Later explicit owner decision: unbounded/heap-based path reading was
+> superseded by the [HOOK_PATH_SCAN.md](HOOK_PATH_SCAN.md) contract.
+> The limit of 32,768 UTF-16 units, fixed suffix buffer, and protected reads
+> apply. Descriptions of the older reader and body identity below are retained
+> as historical records within that scope.
 
-# Bluefield 11. hook uyumu
+# Bluefield hook 11 alignment
 
-Kullanıcı Bluefield implementation’ını doğru referans seçti. Önceki RE UTF8/UD2
-selector tercihi ve bağımsız unload politikası bu yetkiye uygun değildi; kaldırıldı.
-Aktarım kapsamı `CryptQueryObject` ve gerekli ortak native hook ömür yönetimidir.
-Diğer uygulama modülleri Bluefield’den kopyalanmadı.
+The owner selected the Bluefield implementation as the correct reference.
+The previous RE UTF-8/UD2 selector and independent unload policy were
+inconsistent with that decision and were removed. The transferred scope
+covers `CryptQueryObject` and the shared native hook lifetime management
+required by it. Other application modules were not copied from Bluefield.
 
-| Konu | Güncel davranış / kaynak |
+| Area | Recorded behavior / source |
 |---|---|
-| Selector | Bluefield `crypt_query.cpp`; yalnız include/namespace uyarlaması, normalized body aynı |
-| Dosya adı okuma | `ReadProcessMemory` ile UTF16 unit okuma; pointer overflow kontrolü, sabit yol sınırı yok |
-| Okunamayan/geçersiz UTF16 | Original nesneye dönüş; UD2/heap UTF8 dönüşümü yok |
-| Eşleşme | Case-sensitive `preloader_l.dll` suffix; companion `EAAntiCheat.GameServiceLauncher.dll`; Bluefield null/non-file kuralları |
-| Original çağrı | Tüm SDK argümanları/output pointer’ları ve sonuç aynen aktarılır |
-| LastError / gözlem | Bluefield sırasıyla incoming/outgoing LastError korunur; thread-local phase gözlemi |
-| Eksik trampoline | Bluefield failure log + fail-fast; sessiz uydurma dönüş yok |
-| Hedef | Doğrudan SDK `&CryptQueryObject` ve zorunlu statik CRYPT32 importu |
-| Aktivasyon | Tüm native hook’lar queue edilir, config kilidi bırakılır, tek apply yapılır |
-| Quiescence | Disable, bounded admitted-call bekleme, external thread/register/stack guard, uninitialize |
-| Unload guard | Bluefield gövdesi yalnız include adı değiştirilerek; header byte-identical |
-| Shutdown caller | Public kapatma thread’i guard taramasından Bluefield gibi hariç tutulur |
+| Selector | Bluefield `crypt_query.cpp`; include/namespace adaptation only; normalized body unchanged |
+| Filename reading | UTF-16 unit reads via `ReadProcessMemory`; pointer-overflow check; no fixed path bound in the original version |
+| Unreadable/invalid UTF-16 | Fall back to the original object; no UD2/heap UTF-8 conversion |
+| Matching | Case-sensitive `preloader_l.dll` suffix; companion `EAAntiCheat.GameServiceLauncher.dll`; Bluefield null/non-file rules |
+| Original call | Preserve all SDK arguments/output pointers and the result |
+| LastError / observation | Preserve incoming/outgoing LastError in Bluefield order; thread-local phase observation |
+| Missing trampoline | Bluefield failure log and fail-fast; no fabricated silent return |
+| Target | Direct SDK `&CryptQueryObject` and mandatory static CRYPT32 import |
+| Activation | Queue all native hooks, release the configuration lock, then apply once |
+| Quiescence | Disable, wait a bounded period for admitted calls, check external threads/registers/stacks, then uninitialize |
+| Unload guard | Bluefield body with only the include name changed; header byte-identical |
+| Shutdown caller | Exclude the public shutdown thread from the guard scan, as in Bluefield |
 
-Somut uygulama adapterı mevcut Hooks/NativeApi/Binding sınırlarını kullanır;
-Bluefield’in tüm application class’ı aynen kopyalanmış değildir. Protected reader
-ayrı host sınırına çıkarıldı, ömür temizliği mevcut worker’a bağlandı. Kaynak
-hashleri ve tam uyarlamalar `docs/evidence/HOOK_ALIGNMENT_STATUS.json` içindedir.
-SPDX GPL-3.0-only bildirimleri korunur.
+The implementation adapter uses the existing Hooks/NativeApi/Binding
+boundaries; the entire Bluefield application class was not copied.
+The protected reader was moved to a separate host boundary, and lifetime
+cleanup was connected to the existing worker. Source hashes and exact
+adaptations are in `metadata/evidence/HOOK_ALIGNMENT_STATUS.json`.
+SPDX GPL-3.0-only notices are retained.
 
-Doğrulama gerçek MinHook queue/apply, disable/uninitialize, original-call argümanları,
-LastError, geçersiz UTF16, erişilemeyen ve page-boundary yol okuma, canlı external
-thread guard ve DLL startup/shutdown/unload testlerini içerir. Tam test kayıtları
-aynı status dosyasına bağlıdır. Wine testleri gerçek Windows/MSVC/oyun kabulü
-yerine geçmez; oyun içinden çağrı izi sunulmamıştır.
+Validation covers real MinHook queue/apply, disable/uninitialize, original-call
+arguments, LastError, invalid UTF-16, unreadable and page-boundary path reads,
+live external-thread guards, and DLL startup/shutdown/unload tests.
+Full test records are associated with the same status file. Wine tests do not
+replace actual Windows/MSVC/game acceptance; no in-game call trace was supplied.
 
-Metadata düzeltmesi ayrı kayıttır: [Brownfield alan tablosu](REFERENCE_METADATA_AUDIT.md).
+The separate metadata correction is recorded in
+[the Brownfield field table](REFERENCE_METADATA_AUDIT.md).

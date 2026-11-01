@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/hook_setup.hpp"
 #include "preloader_l/core/paths.hpp"
 
-namespace preloader_l::host_init_recovered {
+namespace preloader_l::host_init {
 std::int32_t create_named_hook_046970(Effects& effects, std::u16string_view module,
     std::string_view name, Callback callback, Address& original, Address* target) {
     const Address handle = effects.get_module_handle(module);
@@ -49,9 +51,9 @@ void initialize_host_00e310(StateRefs state, Effects& effects) {
     if (config.language_registry_key.empty()) {
         config.registry_spoof = 0;
     } else {
-        auto parent = path_recovered::parent_path_019820(config.language_registry_key);
+        auto parent = path::parent_path_019820(config.language_registry_key);
         values["LanguageKey"] = std::move(parent);
-        auto filename = path_recovered::filename_00e120(config.language_registry_key);
+        auto filename = path::filename_00e120(config.language_registry_key);
         values["LanguageValue"] = std::move(filename);
         // Original map helper 0084e0 inserts a missing INSTALLED_LANGUAGE as empty.
         const auto& installed = config.game_attributes["INSTALLED_LANGUAGE"];

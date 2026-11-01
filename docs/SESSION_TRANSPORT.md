@@ -105,6 +105,6 @@ receive/frame/send expiry, stale timer cancellation, slow-greeting isolation,
 backpressure and stop with armed timers. The earlier pool, atomic persistence,
 hook, SDK/config, export and DLL lifecycle tests remain part of validation.
 
-The current report is docs/evidence/SESSION_TRANSPORT.json. Cross-build/Wine PASS
+The current report is metadata/evidence/SESSION_TRANSPORT.json. Cross-build/Wine PASS
 is distinct from native MSVC Golden and a new game run. No dist promotion or Library
 synchronization is part of this work.

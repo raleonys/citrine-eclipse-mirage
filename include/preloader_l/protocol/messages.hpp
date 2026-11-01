@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <array>
 #include <cstdint>
@@ -7,7 +9,7 @@
 #include <string>
 #include <string_view>
 
-namespace preloader_l::messages_recovered {
+namespace preloader_l::messages {
 using Key = std::array<std::uint8_t,16>;
 struct Registration { std::string_view name; std::uint32_t rva; };
 std::span<const Registration> registrations_032d00();
@@ -127,4 +129,4 @@ bool challenge_response_02d7e0(const XmlNode&,XmlPrinter&,Cipher&,CryptoFactory&
 std::string dispatch_032d00(const XmlDocument&,Cipher&,XmlBackend&,CryptoFactory&,Random&,Effects&);
 // Mutates input in place, including retries; no socket or transport operations.
 std::string process_message_033d70(State, std::string& input,XmlBackend&,CryptoFactory&,Random&,Effects&);
-} // namespace preloader_l::messages_recovered
+} // namespace preloader_l::messages

@@ -1,52 +1,58 @@
-# Güncel açık işler
+# Current outstanding work
 
-Güncel değişiklikler [CODEBASE_OPTIMIZATION.md](CODEBASE_OPTIMIZATION.md), yerel
-test sonuçları [doğrulama kaydı](evidence/optimization/VALIDATION.json) içindedir.
+Recent changes are documented in
+[CODEBASE_OPTIMIZATION.md](CODEBASE_OPTIMIZATION.md); local test results are
+in the [validation record](../metadata/evidence/optimization/VALIDATION.json).
 
-Önceki yüklenen DLL için beş Windows profili ve Native193/193 PASS loglarla
-doğrulandı; oyun kabulünü kullanıcı bildirdi. Bu sonuçlar
-[sabit kabul kaydında](evidence/OWNER_NATIVE_ACCEPTANCE.json) korunuyor.
-Önceki DLL'in kabulü yeni XML/Release kaynak değişikliklerini kapsamaz.
+Five Windows profiles and Native 193/193 PASS were confirmed by logs for
+the previously uploaded DLL; the owner reported game acceptance. The
+[pinned acceptance record](../metadata/evidence/OWNER_NATIVE_ACCEPTANCE.json)
+retains these results. Acceptance of that earlier DLL does not cover
+subsequent XML/Release source changes.
 
-| Açık iş | Sonraki işlem | Kanıt sınırı |
+| Outstanding item | Next action | Evidence boundary |
 |---|---|---|
-| Yeni Windows/MSVC kabulü | Beş normal build profili ve Native Acceptance'ı temiz kaynakta çalıştır. | Yeni kaynak için LLVM-MinGW/Wine ve sanitizer kanıtı var; MSVC çalıştırılmadı. |
-| Yeni oyun kabulü | Production dist/preloader_l.dll ile kullanılan oyun senaryolarını ve kapanışı doğrula. | Önceki oyun PASS yeni kaynak için yeniden test yerine geçmez. |
-| Native boyut katkısı | Aynı MSVC/SDK/Release ayarlarıyla önce/sonra derle; collect_size_evidence.py ile DLL/MAP/OBJ kanıtlarını topla. | Önceki native DLL/log mevcut; aynı build'in native OBJ/MAP'i yüklenmedi. |
-| Olağanüstü Asio teardown | stop() post/join/resource failure yollarını sahiplik korunarak native hata enjeksiyonuyla incele. | Destructor exception uyarısı takip olarak açık; güvenli düzeltme kanıtlanmadığı için exception yutma eklenmedi. |
+| New Windows/MSVC acceptance | Run the five normal build profiles and Native Acceptance on a clean source checkout. | LLVM-MinGW/Wine and sanitizer evidence exists for new source; MSVC was not executed. |
+| New game acceptance | Verify the applicable game scenarios and shutdown with the Production `dist/preloader_l.dll`. | The earlier game PASS does not replace retesting of new source. |
+| Native size attribution | Build before/after with identical MSVC/SDK/Release settings; collect DLL/MAP/OBJ evidence using `collect_size_evidence.py`. | The earlier native DLL/log exists, but its same-build native OBJ/MAP was not uploaded. |
+| Exceptional Asio teardown | Inject native faults in the `stop()` post/join/resource-failure paths while preserving ownership. | A destructor-exception warning remains open; no exception-swallowing change was introduced without proof of a safe fix. |
 
-AST'de başvuru görülmemesi silme kanıtı değildir; virtual/callback/lifetime ve
-geliştirme API kökleri korunur. Aşağıdaki önceki notlar tarihsel kayıttır ve
-güncel yerel sonuç/kalan iş listesi yerine kullanılmamalıdır.
+An absent AST reference is not proof that a file can be removed; virtual,
+callback, lifetime, and development API roots remain in scope. The earlier
+notes below are historical and must not replace the current local results
+or outstanding-work list.
 
-## Tarihsel kabul notları
+## Historical acceptance notes
 
-Güncel not (YF-BLUEFIELD-ALIGN-20261029): Bluefield 11. hook/lifecycle ve tüm
-beyan edilmiş Brownfield metadata hedefleri kaynakta bağlıdır. Güncel doğrulama
-[BLUEFIELD_ALIGNMENT_STATUS.json](evidence/HOOK_ALIGNMENT_STATUS.json)
-içindedir. Yeni kaynakla gerçek Windows/MSVC Native/Production ve oyun kabulü
-hâlâ gereklidir. Aşağıdaki önceki kabul ayrıntıları tarihsel kayıttır.
+Current note (`YF-BLUEFIELD-ALIGN-20261029`): the Bluefield eleventh
+hook/lifecycle and all declared Brownfield metadata targets are connected
+at source level. Current verification is recorded in
+[BLUEFIELD_ALIGNMENT_STATUS.json](../metadata/evidence/HOOK_ALIGNMENT_STATUS.json).
+Actual Windows/MSVC Native/Production and game acceptance on the new source
+remain required. The earlier acceptance details below are historical.
 
-Güncel not (YF-GOLDEN-AVATAR-20261029): Dört Golden ürün hedefi artık tanımlıdır;
-önceki hedef-eksik BLOCKED durumu giderildi. Kalan iş yeni kaynakla gerçek
-Windows Native/Golden kabulüdür. [Güncel kayıt](GOLDEN_AVATAR_FIX.md).
-Aşağıdaki liste önceki kabul durumunun tarihsel ayrıntılarını içerir.
+Current note (`YF-GOLDEN-AVATAR-20261029`): all four Golden product targets
+are now defined, resolving the former missing-target `BLOCKED` status.
+The remaining task is actual Windows Native/Golden acceptance on new source.
+See [current record](GOLDEN_AVATAR_FIX.md). The list below preserves
+historical acceptance details.
 
-# Açık kalan kabul işleri
+# Outstanding acceptance tasks
 
-Bu liste uygulama kodu eksikliği ile çalıştırılmamış kabul testini ayırır.
-Güncel kaynak, sabit C arayüzü ve Wine doğrulaması
-[PUBLIC_ABI_STATUS.json](evidence/PUBLIC_ABI_STATUS.json) içindedir.
+This list distinguishes missing application code from acceptance tests
+that were not executed. Current source, the fixed C interface, and Wine
+results are in [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
 
-| İş | Somut sonraki işlem | Mevcut sınır |
+| Item | Concrete next action | Current limit |
 |---|---|---|
-| Windows/MSVC | Native profilini namespace çakışması düzeltmesiyle tekrar çalıştır; tam CTest sonucunu sakla. | Son kullanıcı loglarında Compile/Debug runtime ve CRT6/6 PASS. Tam Native test grubu async receive testindeki C2668 nedeniyle henüz çalışmadı. |
-| Windows komut arayüzü | Compile/Debug/Native/CRT girişlerinde hata kodu, son sonuç ve console pause davranışını gerçek PowerShell/CMD ile çalıştır. | Kaynak ve negatif sözleşme denetimleri geçti; Windows penceresi davranışı çalıştırılmadı. |
-| Gerçek online provider | Doğru hash/sürümü belli `preloader_l_online.dll` ile version2/factory/virtual-slot ve hata/cleanup yollarını çalıştır. | Mevcut test kontrollü fixture DLL'i kullanır; özgün harici provider verilmiş ve kabul edilmiş sayılmaz. |
-| Adı/sürümü belli Consumer/oyun | Hangi host'un bu branded DLL'i nasıl yükleyeceğini pinle; gerçek başlangıç, LSX istekleri, hook koşulları ve kapanışı izle. | Sağlanan özgün EXE'nin statik importu `anadius64!anadius`; bu kaynak paket EXE'yi değiştirmez ve farklı isimlere otomatik uyumluluk iddia etmez. |
-| Tam Golden zinciri | Gerçek MSVC linkinden kalan section/header/import/CRT hedeflerini kanıtla; ardından altı aşamayı gerçek DLL üzerinde çalıştır. | Resource profili ve beş C export sabit. Artık tüm ürün hedefleri tanımlıdır; yeni kaynakla gerçek MSVC altı kapı + final isim runtime doğrulaması çalıştırılmalıdır. Fixture sonuçları MSVC Golden yerine geçmez. |
+| Windows/MSVC | Rerun the Native profile with the namespace-collision fix and retain full CTest results. | Latest owner logs show Compile/Debug runtime and CRT 6/6 PASS. The complete Native test suite did not run because of C2668 in an asynchronous receive test. |
+| Windows command interface | Exercise error codes, final result, and console pause behavior for Compile/Debug/Native/CRT entrypoints using actual PowerShell/CMD. | Source and negative contract checks passed; the Windows console behavior was not exercised. |
+| Actual online provider | Exercise version 2/factory/virtual-slot and error/cleanup paths using a `preloader_l_online.dll` with a known hash and version. | Current tests use a controlled fixture DLL; an original external provider has not been supplied or accepted. |
+| Named/versioned Consumer/game | Pin the exact host and how it loads the branded DLL; observe actual startup, LSX requests, hook conditions, and shutdown. | Static imports in the supplied original EXE reference `anadius64!anadius`. This source package does not modify the EXE or claim automatic compatibility under other names. |
+| Complete Golden pipeline | Prove remaining section/header/import/CRT targets after actual MSVC linking, then run all six stages against the real DLL. | Resource profile and five C exports are pinned. All product targets are now defined; actual MSVC six-gate acceptance and final-name runtime checks remain required for new source. Fixture results are not an MSVC Golden substitute. |
 
-548-byte legacy ABI, kanıtlanmış açık iş listesinden çıkarılmıştır. Sağlanan
-RE kaynaklarında bu boyutta yetkili bir arayüz tanımı bulunmadı. SURGE marker'ı
-ve gerçek DllShutdown uygulanmıştır; ayrıntı [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
-Library senkronizasyonu, yayın ve resmî release bu çalışmanın parçası değildir.
+The 548-byte legacy ABI was removed from the proven outstanding-work list;
+the supplied RE sources had no authoritative interface definition of that
+size. The SURGE marker and actual DllShutdown were implemented; see
+[PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md). Library synchronization, publication,
+and official release were outside that work's scope.

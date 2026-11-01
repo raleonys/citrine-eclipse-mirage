@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_write_finish.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uintptr_t heap_address(const WriteFinishString& string){
     std::uint64_t address=0;
@@ -88,7 +90,7 @@ void finish_write_025a70(SendHandler& handler,Error& error,WriteFinishContext& c
     context.api.flush_00e1e0(stream);
     destroy_heap(message,context); // capacity/address reloaded after log callbacks
 }
-void RecoveredFinishedWriteEffects::finish_write_025a70(SendHandler& handler,Error& error){
-    socket_recovered::finish_write_025a70(handler,error,finish_context_);
+void FinishedWriteEffects::finish_write_025a70(SendHandler& handler,Error& error){
+    socket::finish_write_025a70(handler,error,finish_context_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

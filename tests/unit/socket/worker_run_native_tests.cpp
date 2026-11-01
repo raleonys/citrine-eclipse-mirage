@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_worker_run_native.hpp"
 #include <functional>
 #include <iostream>
 #include <limits>
 #include <vector>
-namespace s=preloader_l::socket_recovered;namespace t=preloader_l::threads_recovered;
+namespace s=preloader_l::socket;namespace t=preloader_l::threads;
 namespace {
 unsigned checks=0;void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 [[noreturn]]void unused(){throw std::logic_error("Unexpected native run integration dependency");}
@@ -61,9 +63,9 @@ struct Effects:s::WorkerRunEffects{
  void delete_function_04b0f8(s::IocpWorkerFunction& value,std::uint32_t bytes)override{check(&value==function && value.table_identity==0x1800844b8ULL && bytes==32,"actual scalar delete base table before native-size free");trace.push_back("delete");++deletes;delete function;function=nullptr;}
  [[noreturn]]void raise_028240(s::Error,std::uintptr_t)override{unused();}
 };
-struct Workers:s::RecoveredWorkerFunctionEffects{
+struct Workers:s::WorkerFunctionEffects{
  s::IocpWorker worker;Effects& effects;
- Workers(Startup& startup,Errors& errors,Threads& threads,s::WorkerRunEnvironment environment,s::WorkerRunApi& api,Effects& effects):RecoveredWorkerFunctionEffects(startup,errors,threads,environment,api,effects),effects(effects){}
+ Workers(Startup& startup,Errors& errors,Threads& threads,s::WorkerRunEnvironment environment,s::WorkerRunApi& api,Effects& effects):WorkerFunctionEffects(startup,errors,threads,environment,api,effects),effects(effects){}
  s::IocpWorker* allocate_worker_04b0bc(std::uint32_t bytes)override{check(bytes==24,"actual024990 requests native24 worker bytes");return &worker;}
  s::IocpWorkerFunction* allocate_function_04b0bc(std::uint32_t bytes)override{check(bytes==32,"actual024990 requests native32 function bytes");effects.function=new s::IocpWorkerFunction;return effects.function;}
  void delete_worker_04b0f8(s::IocpWorker&,std::uint32_t)override{unused();}[[noreturn]]void raise_028240(s::Error,std::uintptr_t)override{unused();}
@@ -79,7 +81,7 @@ struct ServiceGate:s::ServiceGateApi{
  std::uint32_t get_last_error()override{unused();}
 };
 void composition(){
- for(bool active:{false,true}){SDK f;sdk=&f;f.boolean=1;f.value=reinterpret_cast<void*>(0xdeadbeef);auto* prior=f.value;s::NativeWorkerRunApi api(imports());Gate gate;CRITICAL_SECTION section{};Entry scheduler(gate,section);std::vector<std::string> trace;Startup startup(trace);Errors errors;Threads threads;Effects effects(scheduler,f,trace);effects.active=active;std::uint32_t index=77;Workers workers(startup,errors,threads,{index,{0x7788}},api,effects);Constructor constructor;ServiceGate gates;
+ for(bool active:{false,true}){SDK f;sdk=&f;f.boolean=1;f.value=reinterpret_cast<void*>(std::uintptr_t{0xdeadbeef});auto* prior=f.value;s::NativeWorkerRunApi api(imports());Gate gate;CRITICAL_SECTION section{};Entry scheduler(gate,section);std::vector<std::string> trace;Startup startup(trace);Errors errors;Threads threads;Effects effects(scheduler,f,trace);effects.active=active;std::uint32_t index=77;Workers workers(startup,errors,threads,{index,{0x7788}},api,effects);Constructor constructor;ServiceGate gates;
   check(&s::construct_iocp_024990(scheduler,42,0,1,constructor,gates,errors,workers)==&scheduler,"actual024990 returns same scheduler using real worker startup source");
   check(scheduler.worker_a8==&workers.worker && workers.worker.handle_08==0x3333 && workers.worker.event_10==0x2222 && startup.creates==2 && startup.waits==1 && startup.closes==1 && threads.creates==1 && threads.frees==1,"actual024990/02a000/05e8e0 handshake shares worker context and live handles");
   auto* function=effects.function;check(function && function->scheduler_18==&scheduler && function->table_identity==0x180084710ULL && threads.context.entry==0x18002a4a0ULL && threads.context.argument==reinterpret_cast<std::uintptr_t>(function),"constructor binds real scheduler and opaque source entry token to recovered thread argument");

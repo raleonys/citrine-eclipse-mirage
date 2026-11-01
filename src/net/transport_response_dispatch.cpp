@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_response_dispatch.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 void reset(ReceiveBufferString& value){value.size_10=0;value.capacity_18=15;value.storage_00[0]=0;}
 void destroy(ReceiveBufferString& value,FrameReadContext& context){
@@ -139,7 +141,7 @@ void BorrowedResponse::invoke(ResponseDispatchContext& context) const{
     if(!task || invoke_identity!=0x180022240ULL)throw UnsupportedInput("Borrowed response descriptor is unbound");
     invoke_borrowed_response_022240(*task,context);
 }
-void RecoveredResponseDispatchApi::dispatch_response_021420(IoHandlerEnvironment& env,MessageWriteTask& task,std::uint64_t,std::uint64_t){
-    socket_recovered::dispatch_response_021420(env,task,context_);
+void ResponseDispatchApi::dispatch_response_021420(IoHandlerEnvironment& env,MessageWriteTask& task,std::uint64_t,std::uint64_t){
+    socket::dispatch_response_021420(env,task,context_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

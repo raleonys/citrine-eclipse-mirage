@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/hook_engine/fake_state.hpp"
 #include "tests/support/hook_engine/fake_win32.h"
 #include <algorithm>
@@ -106,7 +108,7 @@ BOOL WINAPI ReaTestCloseHandle(HANDLE h) { invariant(h != nullptr && h != INVALI
 HANDLE WINAPI ReaTestOpenThread(DWORD, BOOL inherit, DWORD id) {
     invariant(!inherit);
     for (auto& t : state.threads) if (t.id == id)
-        return t.open_ok ? reinterpret_cast<HANDLE>(0x10000u + id) : nullptr;
+        return t.open_ok ? reinterpret_cast<HANDLE>(std::uintptr_t{0x10000u} + static_cast<std::uintptr_t>(id)) : nullptr;
     invariant(false); return nullptr;
 }
 DWORD WINAPI ReaTestSuspendThread(HANDLE h) {

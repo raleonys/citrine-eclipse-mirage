@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "application_internal.hpp"
 #include "preloader_l/codec/crypto.hpp"
 #include "preloader_l/core/protocol_identity.hpp"
@@ -18,7 +20,7 @@
 namespace preloader_l::application {
 namespace {
 using namespace detail;
-class Console final:public startup_recovered::NativeConsolePlatform {
+class Console final:public startup::NativeConsolePlatform {
     std::uintptr_t stream_052238(unsigned n) override {
         if(n==0)return reinterpret_cast<std::uintptr_t>(stdin);
         if(n==1)return reinterpret_cast<std::uintptr_t>(stdout);
@@ -29,18 +31,18 @@ class Console final:public startup_recovered::NativeConsolePlatform {
         return std::freopen(path,mode,reinterpret_cast<FILE*>(stream))?0:errno;
     }
 };
-class Provider final:public online_recovered::Effects {
+class Provider final:public online::Effects {
 public:
     configuration::State& state;
     Environment& env;
-    file_recovered::Factory& files;
-    execution_recovered::Execution& execution;
+    file::Factory& files;
+    execution::Execution& execution;
     std::uint8_t& ready;
     std::uintptr_t module=0,object=0;
     std::uint8_t online=0;
-    Provider(configuration::State& s,Environment& e,file_recovered::Factory& f,
-        execution_recovered::Execution& x,std::uint8_t& r):state(s),env(e),files(f),execution(x),ready(r){}
-    online_recovered::StateRefs refs(){return {state.executable_path,state.cookie_path,state.last_profile_path,
+    Provider(configuration::State& s,Environment& e,file::Factory& f,
+        execution::Execution& x,std::uint8_t& r):state(s),env(e),files(f),execution(x),ready(r){}
+    online::StateRefs refs(){return {state.executable_path,state.cookie_path,state.last_profile_path,
         state.last_avatar_path,state.avatar,module,object,state.username,state.persona_id,state.user_id,
         state.use_last_online_profile,online};}
     template<class Fn> static Fn method(std::uintptr_t o,std::size_t slot) {
@@ -65,34 +67,38 @@ public:
     const char* persona_virtual_18(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,3)(reinterpret_cast<void*>(o));}
     const char* user_id_virtual_20(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,4)(reinterpret_cast<void*>(o));}
     void destroy_virtual_00(std::uintptr_t o) override{method<void(*)(void*,unsigned)>(o,0)(reinterpret_cast<void*>(o),1);}
-    bool free_library(std::uintptr_t m) override{return FreeLibrary(reinterpret_cast<HMODULE>(m))!=FALSE;}
-    status_recovered::Status status_01ea20(const Path& p,std::uint32_t f) override{return env.status_01ea20(p,f);}
+    bool free_library(std::uintptr_t m) override {
+        if(!FreeLibrary(reinterpret_cast<HMODULE>(m)))
+            throw std::runtime_error("Online DLL cleanup incomplete");
+        return true;
+    }
+    status::Status status_01ea20(const Path& p,std::uint32_t f) override{return env.status_01ea20(p,f);}
     [[noreturn]] void filesystem_error_018130(std::string_view op,std::uint32_t e,const Path& p) override{env.filesystem_error_018130(op,e,p);}
-    std::string read_binary_03b3f0(const Path& p) override{return file_recovered::read_binary_03b3f0(p,files);}
-    bool write_binary_03c1d0(const Path& p,std::string_view s) override{return file_recovered::write_binary_03c1d0(p,s,files);}
+    std::string read_binary_03b3f0(const Path& p) override{return file::read_binary_03b3f0(p,files);}
+    bool write_binary_03c1d0(const Path& p,std::string_view s) override{return file::write_binary_03c1d0(p,s,files);}
     void log_literal_006880(std::string_view text) override{env.debug_log({"provider status: ",text});}
     void log_finish_0088e0() override{env.debug_log("provider phase complete");}
     void dialog_038bc0(std::string_view,std::string_view text,std::uint32_t flags) override{MessageBoxW(nullptr,wide(env.widen_0145d0(text)).c_str(),L"SURGE",flags);}
     void wait_steps_036880(std::int32_t n) override{execution.wait_steps_036880(n);}
     void finish_flag_036820() override{execution.finish_flag_036820(ready);}
-    void load(){online_recovered::worker_035b60(refs(),*this);env.provider=object;}
-    void close(){env.provider=0;online_recovered::cleanup_0366f0(refs(),*this);online=0;}
+    void load(){online::worker_035b60(refs(),*this);env.provider=object;}
+    void close(){env.provider=0;online::cleanup_0366f0(refs(),*this);online=0;}
 };
-class ExtraLibraries final:public recovered::libraries::SystemCalls,
-                           public recovered::libraries::Effects {
+class ExtraLibraries final:public system_services::libraries::SystemCalls,
+                           public system_services::libraries::Effects {
     Environment& env_;
-    execution_recovered::Execution& execution_;
+    execution::Execution& execution_;
     std::uint8_t& ready_;
-    recovered::libraries::NativeSystemCalls native_;
-    recovered::libraries::State state_;
+    system_services::libraries::NativeSystemCalls native_;
+    system_services::libraries::State state_;
     std::vector<std::uintptr_t> leases_;
 public:
-    ExtraLibraries(Environment& e,execution_recovered::Execution& x,std::uint8_t& r):env_(e),execution_(x),ready_(r){}
+    ExtraLibraries(Environment& e,execution::Execution& x,std::uint8_t& r):env_(e),execution_(x),ready_(r){}
     void configure(const configuration::State& s) {
         for(const auto& p:s.extra_dlls_from_main)state_.from_main.push_back(wide(p));
         for(const auto& p:s.extra_dlls)state_.from_worker.push_back(wide(p));
     }
-    void load(bool main){recovered::libraries::load_phase_035850(*this,*this,state_,main);}
+    void load(bool main){system_services::libraries::load_phase_035850(*this,*this,state_,main);}
     void close() {
         bool pending=false;
         for(auto& module:leases_)if(module) {
@@ -125,16 +131,16 @@ public:
     void wait_steps_036880(int n) override{execution_.wait_steps_036880(n);}
     void finish_flag_036820() override{execution_.finish_flag_036820(ready_);}
 };
-class LicenseEffects final:public license_recovered::Effects {
+class LicenseEffects final:public license::Effects {
     Environment& env_;
     Provider& provider_;
-    file_recovered::Factory& files_;
+    file::Factory& files_;
 public:
-    LicenseEffects(Environment& e,Provider& p,file_recovered::Factory& f):env_(e),provider_(p),files_(f){}
+    LicenseEffects(Environment& e,Provider& p,file::Factory& f):env_(e),provider_(p),files_(f){}
     const char* online_auth_virtual_30(const char* id) override {
         return Provider::method<const char*(*)(void*,const char*)>(provider_.object,6)(reinterpret_cast<void*>(provider_.object),id);
     }
-    license_recovered::FileStatus status_01ea20(const Path& p,std::uint32_t f) override {auto s=env_.status_01ea20(p,f);return {s.kind,static_cast<std::int32_t>(s.error)};}
+    license::FileStatus status_01ea20(const Path& p,std::uint32_t f) override {auto s=env_.status_01ea20(p,f);return {s.kind,static_cast<std::int32_t>(s.error)};}
     [[noreturn]] void filesystem_error_018130(std::string_view op,std::int32_t e,const Path& p) override{env_.filesystem_error_018130(op,e,p);}
     bool file_hash_matches_042d20(const Path&,std::string) override{throw std::logic_error("LicenseFiles owns hashing");}
     std::string load_token_02afa0(const Path&) override{throw std::logic_error("LicenseFiles owns token loading");}
@@ -147,51 +153,51 @@ public:
     bool wine_detected_045010() override{return GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"wine_get_version")!=nullptr;}
     void log_literal_006880(std::string_view text) override{env_.debug_log({"licensing status: ",text});}
     void log_string_006860(std::string_view text) override{env_.debug_log({"licensing diagnostic: ",text});}
-    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file_recovered::write_binary_03c1d0(p,v,files_);}
+    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_03c1d0(p,v,files_);}
     void dialog_038bc0(std::string_view,std::string_view body,std::uint32_t flags) override{MessageBoxW(nullptr,wide(env_.widen_0145d0(body)).c_str(),L"SURGE",flags);}
     [[noreturn]] void exit_05cdc0(std::int32_t code) override{ExitProcess(code);}
     [[noreturn]] void no_response_02bcd0_04d228() override{throw NoResponse();}
 };
-class HookErrors final:public native_recovered::Errors {
+class HookErrors final:public native::Errors {
     Environment& env_;
 public:
     explicit HookErrors(Environment& e):env_(e){}
-    [[noreturn]] void lifecycle(native_recovered::LifecycleFault) override{throw std::runtime_error("Native hook binding lifecycle violation");}
-    [[noreturn]] void callback_exception(host_init_recovered::Callback,std::exception_ptr) noexcept override{
+    [[noreturn]] void lifecycle(native::LifecycleFault) override{throw std::runtime_error("Native hook binding lifecycle violation");}
+    [[noreturn]] void callback_exception(host_init::Callback,std::exception_ptr) noexcept override{
         try{env_.debug_log("failure");}catch(...){}
         RaiseFailFastException(nullptr,nullptr,0);std::abort();
     }
 };
-class Hooks final:public native_recovered::WideOperations,
-                  public native_recovered::OriginalEffects,
-                  public host_init_recovered::Effects,
+class Hooks final:public native::WideOperations,
+                  public native::OriginalEffects,
+                  public host_init::Effects,
                   public platform::hook_engine::Quiescence {
     configuration::State& state_;
     Environment& env_;
-    execution_recovered::Execution& execution_;
+    execution::Execution& execution_;
     platform::hook_engine::NativeApi engine_;
-    native_recovered::Resolver resolver_;
+    native::Resolver resolver_;
     platform::WindowsCryptQueryHost crypt_host_;
     std::array<std::uintptr_t,11> originals_{};
-    host_init_recovered::Values values_;
+    host_init::Values values_;
     std::vector<std::uintptr_t> targets_;
-    registry_recovered::Handles client_,language_,fabricated_;
+    registry::Handles client_,language_,fabricated_;
     std::int32_t ipv4_=16,ipv6_=28;
     std::uint32_t attempts_=0;
     HookErrors errors_;
-    native_recovered::Context context_;
-    std::unique_ptr<native_recovered::Binding> binding_;
+    native::Context context_;
+    std::unique_ptr<native::Binding> binding_;
     platform::hook_engine::Transaction transaction_{engine_,*this};
     bool failed_=false;
 public:
-    Hooks(configuration::State& s,Environment& e,execution_recovered::Execution& x)
+    Hooks(configuration::State& s,Environment& e,execution::Execution& x)
         :OriginalEffects(originals_,*this,crypt_host_),state_(s),env_(e),execution_(x),errors_(e),
          context_{{values_,client_,language_,fabricated_,s.registry_spoof},{ipv4_,ipv6_,s.server_port,attempts_},*this,*this,*this,*this}{}
     void start() {
-        binding_=std::make_unique<native_recovered::Binding>(context_,errors_);
+        binding_=std::make_unique<native::Binding>(context_,errors_);
         try {
         {std::lock_guard lock(context_.registry_gate);
-         host_init_recovered::initialize_host_00e310({state_,values_,targets_,originals_},*this);}
+         host_init::initialize_host_00e310({state_,values_,targets_,originals_},*this);}
         if(!transaction_.owns_engine()||failed_)throw std::runtime_error("Selected hook installation failed; owner must abort startup");
         const std::size_t expected=7+(state_.block_reruns?2:0)+(!state_.documents.empty()?2:0);
         if(targets_.size()!=expected)throw std::runtime_error("Required native hook staging incomplete");
@@ -204,7 +210,7 @@ public:
     }
     bool drain(std::chrono::milliseconds timeout) override {
         const auto until=std::chrono::steady_clock::now()+timeout;
-        while(native_recovered::active_calls()!=0){if(std::chrono::steady_clock::now()>=until)return false;std::this_thread::sleep_for(std::chrono::milliseconds(1));}
+        while(native::active_calls()!=0){if(std::chrono::steady_clock::now()>=until)return false;std::this_thread::sleep_for(std::chrono::milliseconds(1));}
         return external_threads_outside_module();
     }
     bool quiesce(std::chrono::milliseconds timeout) {
@@ -245,7 +251,7 @@ public:
     [[noreturn]] void exit_05cdc0(std::uint32_t n) override{ExitProcess(n);}
     Path filesystem_widen_006d70(std::string_view s) override{return env_.filesystem_widen_006d70(s);}
     std::uint64_t version_condition_mask(std::uint64_t m,std::uint32_t t,std::uint8_t c) override{return VerSetConditionMask(m,t,c);}
-    bool verify_version(const host_init_recovered::VersionRequest& r,std::uint32_t types,std::uint64_t mask) override {
+    bool verify_version(const host_init::VersionRequest& r,std::uint32_t types,std::uint64_t mask) override {
         OSVERSIONINFOEXW v{};v.dwOSVersionInfoSize=sizeof(v);v.dwMajorVersion=r.major;v.dwMinorVersion=r.minor;
         v.dwBuildNumber=r.build;v.dwPlatformId=r.platform;std::copy(r.service_pack_text.begin(),r.service_pack_text.end(),v.szCSDVersion);
         v.wServicePackMajor=r.service_pack_major;v.wServicePackMinor=r.service_pack_minor;v.wSuiteMask=r.suite;v.wProductType=r.product_type;
@@ -261,7 +267,7 @@ public:
             return reinterpret_cast<std::uintptr_t>(&::CryptQueryObject);
         return reinterpret_cast<std::uintptr_t>(GetProcAddress(reinterpret_cast<HMODULE>(m),std::string(s).c_str()));
     }
-    std::int32_t create_hook_0466e0(std::uintptr_t target,host_init_recovered::Callback c,std::uintptr_t& original) override {
+    std::int32_t create_hook_0466e0(std::uintptr_t target,host_init::Callback c,std::uintptr_t& original) override {
         void* result=nullptr;auto status=transaction_.create(reinterpret_cast<void*>(target),reinterpret_cast<void*>(resolver_.rebuilt_address(c)),&result);
         original=reinterpret_cast<std::uintptr_t>(result);if(status!=MH_OK)failed_=true;return status;
     }
@@ -271,32 +277,32 @@ public:
 };
 }
 
-struct Application::Impl final:net::HandlerFactory,misc_handlers_recovered::NoResponse {
+struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
     Options options;
     configuration::State state=initial_state();
     const std::string sdk_version{protocol_identity::sdk_version};
-    file_recovered::NativeFactory files;
+    file::NativeFactory files;
     xml_reader_bridge::Backend xml;
     achievement_storage::Paths achievement_paths;
     achievement_runtime::HostClock clock;
     achievement_runtime::HostFormatter formatter;
     Environment environment{state,options,files,xml,achievement_paths,clock,formatter};
-    execution_recovered::MutexState mutex{};
+    execution::MutexState mutex{};
     std::uint8_t server_ready=0,provider_ready=0,extra_ready=0,extra_loaded=0,show_lsx=0,show_console=0,no_console=0;
     std::int64_t frequency=0;
-    execution_recovered::WindowsPlatform platform{detail::thread_error};
-    execution_recovered::Execution execution{mutex,{server_ready,provider_ready,extra_ready},frequency,platform};
+    execution::WindowsPlatform platform{detail::thread_error};
+    execution::Execution execution{mutex,{server_ready,provider_ready,extra_ready},frequency,platform};
     Provider provider{state,environment,files,execution,provider_ready};
     ExtraLibraries extras{environment,execution,extra_loaded};
     Events events;
     Mutex achievements_mutex;
-    handlers_recovered::Profile profile;
+    handlers::Profile profile;
     std::int32_t saved_avatar_size=0,attempted_files=0;
     std::uint8_t blocked=0;
     LicenseEffects license_base{environment,provider,files};
-    file_recovered::NativeTextEnvironment hash_text;
-    file_recovered::LicenseFiles license_files{license_base,files,hash_text};
-    license_recovered::Handlers license{{environment.auth_code,provider.online,state.fake_auth,state.denuvo_token,
+    file::NativeTextEnvironment hash_text;
+    file::LicenseFiles license_files{license_base,files,hash_text};
+    license::Handlers license{{environment.auth_code,provider.online,state.fake_auth,state.denuvo_token,
         state.dll_hash,state.exe_hash,state.content_id,state.denuvo_dll,state.executable_path,state.license_directory,
         state.game_attributes,attempted_files,blocked},license_files};
     std::mutex handler_state_mutex;
@@ -307,7 +313,7 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers_recovered::NoRe
     std::thread provider_worker,extra_worker;
     std::exception_ptr extra_failure;
     explicit Impl(Options o):options(std::move(o)) {
-        execution_recovered::initialize_mutex_04a698(mutex,2);
+        execution::initialize_mutex_04a698(mutex,2);
         // Publish an immutable QPC frequency before callbacks can concurrently
         // enter the source polling code's otherwise unsynchronized cold cache.
         frequency=platform.query_performance_frequency();
@@ -316,14 +322,14 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers_recovered::NoRe
     ~Impl(){try{stop();}catch(...){std::terminate();}}
     [[noreturn]] void throw_no_response_02bcd0_04d228() override{throw detail::NoResponse();}
     void error(std::string_view,std::exception_ptr) noexcept override{try{environment.debug_log("session operation failed");}catch(...){}}
-    struct SessionHandler final:server_recovered::Handler,messages_recovered::Effects {
+    struct SessionHandler final:server::Handler,messages::Effects {
         Impl& app;
         std::uint8_t encrypted=0,unknown=0;
-        crypto_recovered::Cipher cipher;
-        crypto_recovered::CryptoFactory crypto;
-        crypto_recovered::WindowsTimeSource time;
-        crypto_recovered::Random random{time};
-        dispatch_recovered::Router router;
+        crypto::Cipher cipher;
+        crypto::CryptoFactory crypto;
+        crypto::WindowsTimeSource time;
+        crypto::Random random{time};
+        dispatch::Router router;
         session_bridge::MessageHandler handler;
         SessionHandler(Impl& a):app(a),
             router({a.state.game_attributes,a.state.emulator_attributes,a.profile,a.provider.online,a.state.pretend_connected},
@@ -333,8 +339,8 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers_recovered::NoRe
         void reset_02bc70() override{handler.reset_02bc70();}
         std::string initial_message_02d540() override{return handler.initial_message_02d540();}
         std::string process_message_033d70(std::string_view s) override{return handler.process_message_033d70(s);}
-        server_recovered::PreparedResponse prepare_response(std::string_view s) override{return handler.prepare_response(s);}
-        bool registered_handler(std::uint32_t rva,const messages_recovered::XmlNode& n,messages_recovered::XmlPrinter& out) override {
+        server::PreparedResponse prepare_response(std::string_view s) override{return handler.prepare_response(s);}
+        bool registered_handler(std::uint32_t rva,const messages::XmlNode& n,messages::XmlPrinter& out) override {
             // Protect the shared mutable source maps/counters only. XML parsing,
             // cipher work and socket completion remain per-session/concurrent.
             std::lock_guard lock(app.handler_state_mutex);return router.registered_handler(rva,n,out);
@@ -348,23 +354,23 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers_recovered::NoRe
         void log_bad_xml(std::string_view error,std::string_view input) override{app.environment.debug_log({"invalid XML: ",error,"; input: ",input});}
         void log_decryption_failure(std::string_view input) override{app.environment.debug_log({"decryption failure: ",input});}
     };
-    std::unique_ptr<server_recovered::Handler> create() override {
+    std::unique_ptr<server::Handler> create() override {
         if(!accepting.load(std::memory_order_acquire))throw std::runtime_error("Application is initializing or stopping");
         return std::make_unique<SessionHandler>(*this);
     }
     void start() {
         if(used)throw std::logic_error("Application start is single-use");used=true;
         try {
-            startup_recovered::NativeInputPlatform input;Console console;
-            startup_recovered::StateReferences refs{state.language_from_arguments,state.registry_spoof,show_lsx,show_console,no_console,state.game_attributes};
-            startup_recovered::setup_environment_019910(refs,input);
-            startup_recovered::setup_console_038760(refs,console);
+            startup::NativeInputPlatform input;Console console;
+            startup::StateReferences refs{state.language_from_arguments,state.registry_spoof,show_lsx,show_console,no_console,state.game_attributes};
+            startup::setup_environment_019910(refs,input);
+            startup::setup_console_038760(refs,console);
             environment.configure();
             extras.configure(state);
             // Initialize shared source queue before publishing sessions; its DOWN
             // seed is the same one the first source message getter would create.
-            (void)event_queue_recovered::mutex_02c620(events.context);
-            (void)event_queue_recovered::queue_02c400(events.context);
+            (void)event_queue::mutex_02c620(events.context);
+            (void)event_queue::queue_02c400(events.context);
             service=std::make_unique<net::AsioService>(*this,execution,state.server_port,server_ready);
             service->start();
             if(options.install_hooks){hooks=std::make_unique<Hooks>(state,environment,execution);hooks->start();}

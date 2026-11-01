@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_composed_write.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 IocpSchedulerEntry& scheduler(AsyncSendService& service){
     if(!service.scheduler_08)throw UnsupportedInput("Native send scheduler has no live projection");
@@ -120,7 +122,7 @@ void composed_write_0261d0(SendHandler& handler,const Error& error,std::uint64_t
     if(!stream.service || !stream.implementation)throw UnsupportedInput("Native composed-write stream members have no live projection");
     start_async_send_021fd0(*stream.service,*stream.implementation,buffer,0,handler,stream.allocator_identity_68,context);
 }
-void RecoveredComposedWriteEffects::send_body_0261d0(SendHandler& handler,Error& error,std::uint64_t bytes,std::uint32_t flag){
+void ComposedWriteEffects::send_body_0261d0(SendHandler& handler,Error& error,std::uint64_t bytes,std::uint32_t flag){
     composed_write_0261d0(handler,error,bytes,flag,context_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

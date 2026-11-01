@@ -1,6 +1,6 @@
 {
   "asset_preservation": "EXACT_BYTES",
-  "asset_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+  "asset_sha256": "5cc62afa98d4e97ac2f780cc7e2d7edd4ae538ece62d81d0da3b61858a0a08a6",
   "branding_asset": "resources/branding/surge.png",
   "cpp_root_namespace": "preloader_l",
   "display_name": "SURGE",
@@ -12,13 +12,13 @@
   "schema": "surge.identity.v1",
   "shipping_public_abi": "REQUIRES_EXACT_EVIDENCE_AND_APPROVAL",
   "source_image_user_supplied": true,
-  "binary_resource_report": "docs/evidence/avatar-update/BINARY_INSPECTION.json",
+  "binary_resource_report": "metadata/evidence/avatar-update/BINARY_INSPECTION.json",
   "implementation_status_record": "metadata/RUNTIME_CURRENT_STATUS.json",
   "visible_identity_scope": "Owner SURGE avatar in read-only C++ data; VERSIONINFO uses the separately supplied reference DLL",
   "resource_versioninfo_contract": "metadata/RESOURCE_METADATA_CONTRACT.json",
   "avatar_data_contract": "metadata/AVATAR_DATA_CONTRACT.json",
-  "latest_metadata_audit": "docs/evidence/avatar-update/VALIDATION.json",
+  "latest_metadata_audit": "metadata/evidence/avatar-update/VALIDATION.json",
   "product_name_definitions": "include/preloader_l/core/product_identity.hpp",
-  "identity_status_record": "docs/evidence/PRODUCT_IDENTITY_FIX.json",
+  "identity_status_record": "metadata/evidence/PRODUCT_IDENTITY_FIX.json",
   "remaining_legacy_names": "Documentary source provenance and preserved reports only; active contracts and schemas use the product identity"
 }

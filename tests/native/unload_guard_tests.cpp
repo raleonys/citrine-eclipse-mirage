@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 // Actual production source with fault-injected Windows API boundaries.
 #define NOMINMAX
 #include <windows.h>

@@ -1,72 +1,95 @@
-# Native hata enjeksiyonu: Asio tahsis yolu
+# Native fault injection: Asio allocation path
 
-Sahibin gönderdiği Windows/MSVC loglarında Compile Only, Production/LOCAL_GOLDEN,
-Debug ve Static CRT profilleri başarılıdır. Native Acceptance204/205; yalnız
-net_failure_contracts, `accept initiation allocation failure was not injected`
-ile ilk senaryoda durmuştur. Static CRT6/6 geçmiştir. Oyun kabulü bu loglarda
-bildirilmemiştir. Üretim profillerinde warning yok; native test derlemesindeki12
-uyarı kaydı test fixture'larından gelir, bu dar düzeltmeyle giderilmiş sayılmaz.
+In the Windows/MSVC logs supplied by the owner, Compile Only,
+Production/LOCAL_GOLDEN, Debug, and Static CRT profiles passed.
+Native Acceptance was 204/205; only `net_failure_contracts` stopped
+at the first scenario with
+`accept initiation allocation failure was not injected`.
+Static CRT passed 6/6. These logs do not report game acceptance.
+There were no warnings in Production profiles; twelve warnings in
+the native test compilation came from test fixtures and are not
+claimed resolved by this narrow correction.
 
-Özgün girdiler ve özet [OWNER_LOG_REVIEW.json](evidence/native-allocation/OWNER_LOG_REVIEW.json)
-içindedir. Production logunun bildirdiği son DLL SHA256:
+Original inputs and summary are retained in
+[OWNER_LOG_REVIEW.json](../metadata/evidence/native-allocation/OWNER_LOG_REVIEW.json).
+The final DLL SHA-256 printed by the Production log is
 `5d75523d82a575277e1c5e91395637d301f0f981913c8358deee02c3c3cc24fc`.
-Bu DLL bu yüklemede verilmedi; hash logdan okunmuştur. Bunlar önceki kaynak
-snapshot'ının kullanıcı ortamı kanıtlarıdır; yeni testin native kabulü değildir.
+The DLL itself was not provided with those logs; its hash was read
+from the log. These are owner-environment results for the earlier
+source snapshot, not native acceptance of the revised test.
 
-## Neden ve düzeltme
+## Cause and correction
 
-Eski test yalnız global operator new/new[] çağrısını bir thread-local flag ile
-başarısız yapıyordu. Pin'li Asio'nun detail/memory.hpp dosyası MinGW yolunda
-operator new kullanırken MSVC yolunda `_aligned_malloc` çağırır; null sonucu
-Asio tarafından bad_alloc'a çevrilir. Testin flag'i o yolda okunmadığından accept
-işlemi normal başlatılıyor ve test, enjeksiyon oluşmadığını bildiriyordu. Bu
-mesaj gerçek bir accept başarısızlığı veya stale-pending bayrağı kanıtı değildir.
+The earlier test used a thread-local flag to force failures only
+in global `operator new` / `new[]`. Pinned Asio
+`detail/memory.hpp` uses `operator new` on MinGW but calls
+`_aligned_malloc` on MSVC; Asio converts its null result to
+`bad_alloc`. The test flag was never consulted on that path, so
+accept initiation succeeded normally and the test reported that
+no injection occurred. This is not evidence of an actual accept
+failure or a stale-pending flag.
 
-Test, `_aligned_malloc` çağrısını yalnız kendi executable'ında ve yalnız Asio'nun
-memory helper header'ı işlenirken kapsar. Arızada null döndürür; bad_alloc'u
-gerçek Asio helper'ı üretir. Başarılı çağrı orijinal CRT allocator'a gider ve
-normal aligned free eşleşmesi korunur. Global scalar new arızası da tutulur.
-Helper'ın standart/vendor bağımlı header'ları macro'dan önce işlenir; mapping
-STL/CRT header gövdelerine sızmaz. Helper önceden işlenmişse veya başka bir CRT
-macro mapping'i varsa fixture sessizce devam etmez, compile-time hata verir.
-Vendor dosyaları, ürün src/include, production derleyici seçenekleri, listener,
-handler, rollback ve shutdown kodları değiştirilmez.
+The revised test intercepts `_aligned_malloc` only inside its own
+executable and only while processing Asio's memory-helper header.
+Under fault injection it returns null, leaving the real Asio helper
+to throw `bad_alloc`. Successful calls reach the original CRT allocator,
+with corresponding aligned free preserved. Global scalar-new fault
+injection is also retained.
 
-Hangi allocator yolunun gerçekten tüketildiği ve tam bir enjeksiyon gerçekleştiği
-assert edilir. Post-failure senaryosu da enjeksiyon sayısını doğrular; stop-oom
-senaryosu çağıran thread'deki iki izlenen tahsis yolunda arıza tüketilmediğini
-denetler. Bu, bütün malloc/HeapAlloc çağrıları veya bütün thread'ler için global
-"hiç tahsis yok" ispatı değildir. Yeni ve desteklenmeyen std/Boost aligned branch
-görülürse fixture compile-time hata verir; sessizce yeşil sonuç üretmez.
+The helper's standard/vendor-dependent headers are processed before
+the macro is introduced, so the mapping cannot leak into STL/CRT
+header bodies. A preprocessed helper or conflicting CRT macro mapping
+causes a compile-time error instead of silently proceeding.
+Vendor files, product `src/include`, Production compiler options,
+listener, handler, rollback, and shutdown code remain unchanged.
 
-## Platformlar arası regresyon
+The test asserts both which allocator path was consumed and that a
+complete injection occurred. The post-failure scenario also verifies
+the injection count; the stop-OOM scenario checks that neither of
+two tracked allocation paths was consumed on the calling thread.
+This is not a global proof of no allocation across all
+`malloc`/`HeapAlloc` calls or all threads. An unsupported new
+`std`/Boost aligned branch causes compile-time failure rather
+than a misleading green result.
 
-Normal net_failure_contracts hedefi MSVC'de doğal CRT aligned yolunu, MinGW'de
-normal compiler yolunu kullanır. MinGW'ye ayrıca
-net_failure_msvc_memory_replay_contracts eklenmiştir. Bu test yalnız memory.hpp
-işlenirken MSVC allocation branch'ini seçer, sonra geçici macro'yu geri alır.
-Geri kalan Asio platform/compiler algısı ve gerçek Windows IOCP/socket/timer
-işlemleri aynı kalır. Bu bir MSVC derleyicisi emülasyonu veya native MSVC kabulü
-değildir; pin'li helper'ın tahsis yolunu gerçek Windows CRT üstünde canlandırır.
+## Cross-platform regression
 
-İzole kontrolde eski test bu yolla aynı hatayı verdi; düzeltilmiş testin normal ve
-aligned yollarının her birinde accept, post, stop-oom, io-exception ve drain-retry
-başarılı oldu. Ürünün queue_accept catch/reset davranışı değiştirilmedi. Assert
-kaldırılmadı, test skip edilmedi, deadline/bütçe büyütülmedi ve production Asio
-bayrakları değiştirilmedi.
+The normal `net_failure_contracts` target uses the native CRT
+aligned path on MSVC and the ordinary compiler path on MinGW.
+An additional `net_failure_msvc_memory_replay_contracts` test was
+added on MinGW. It selects the MSVC allocation branch only while
+processing `memory.hpp` and then removes the temporary macro.
+All other Asio platform/compiler detection and actual Windows
+IOCP/socket/timer operations stay unchanged. This is not MSVC
+compiler emulation or native MSVC acceptance; it replays the pinned
+helper's allocation path with a real Windows CRT.
 
-MSVC Native Acceptance205 test olarak kalır; MinGW çapraz suite ek replay ile206
-testtir. Her ikisinin sayısı ve yürütme sınıfı [VALIDATION.json](evidence/native-allocation/VALIDATION.json)
-içinde ayrı tutulur. Önceki204/205 Windows sonucu düzeltilmiş test205/205 geçti
-diye yeniden etiketlenmez; native Windows tekrarına hâlâ ihtiyaç vardır.
+In isolation, the previous test reproduced the same error on
+that path. With the correction, accept, post, stop-OOM,
+I/O-exception, and drain-retry passed on both ordinary and aligned
+paths. Product `queue_accept` catch/reset behavior was not
+changed. Assertions were not removed; no tests were skipped,
+deadlines/budgets expanded, or Production Asio flags changed.
 
-Güncel sözleşme [NATIVE_FIXTURE_REVIEW.json](../metadata/NATIVE_FIXTURE_REVIEW.json).
-Kaynak paketinin temiz açılımından derleme/QA/üç DLL döngüsü için paket dışı
-`surge-native-fixture-delivery-verification.json` son kaydı kullanılmalıdır.
-Oyun ve VirusTotal etiketi hakkında yeni kabul veya neden iddiası yoktur.
+MSVC Native Acceptance retains 205 tests; the MinGW cross-suite
+has 206 with the additional replay. Their separate counts and
+execution classes are recorded in
+[VALIDATION.json](../metadata/evidence/native-allocation/VALIDATION.json).
+The previous Windows 204/205 result is not relabeled as a passing
+205/205 result; native Windows rerun remains required.
 
-Yerel doğrulama: Release206/206, ilgili Debug9/9 ve kaynak QA17/17 geçti.
-Vendor regresyonları19/19, atlanan test yok. Pending bayrağı resetini yalnız
-paket dışındaki negatif kontrol kopyasında kaldırmak, her iki tahsis yolunda
-beklenen stale-pending hatasını üretti. Ürün/vendor/resource/export3096 dosyası
-üst paketle byte-byte aynı; geliştirme DLL API adı3346 olarak korundu.
+The current contract is
+[NATIVE_FIXTURE_REVIEW.json](../metadata/NATIVE_FIXTURE_REVIEW.json).
+The external record
+`surge-native-fixture-delivery-verification.json` covers build,
+QA, and three DLL cycles from a cleanly extracted source package.
+There is no new claim about game acceptance or the cause of
+a VirusTotal label.
+
+Local validation passed Release 206/206, affected Debug 9/9,
+and source QA 17/17; vendor regressions passed 19/19 with no
+skipped tests. Removing the pending-flag reset in an external
+negative-control copy reproduced the expected stale-pending
+error on both allocator paths. The 3,096 product/vendor/resource/
+export files remained byte-identical to the parent package;
+all 3,346 development-DLL API names were preserved.

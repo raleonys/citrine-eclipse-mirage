@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 from __future__ import annotations
 from pathlib import Path
 import argparse, fnmatch, hashlib, json, struct, subprocess, sys
@@ -264,7 +265,7 @@ def inspect_shipping_abi(path:Path,policy:dict):
                                 cookie_info.update({'present':True,'rva':cookie_rva,'section':cookie_section,'characteristics':cookie_characteristics})
     if cookie_info['required'] and not cookie_info['present']:
         errors.append('normalized /GS image lacks required nonzero image-backed Load Config SecurityCookie')
-    return errors, {'exports':ex,'imports':sorted(modset),'entrypoint_rva':entry,'entrypoint_section':entry_section,'entrypoint_characteristics':entry_characteristics,'machine':machine,'magic':pe.magic,'subsystem':subsystem,'gs_cookie':cookie_info,'pe_checksum':stored_checksum}
+    return errors, {'exports':ex,'imports':modules,'entrypoint_rva':entry,'entrypoint_section':entry_section,'entrypoint_characteristics':entry_characteristics,'machine':machine,'magic':pe.magic,'subsystem':subsystem,'gs_cookie':cookie_info,'pe_checksum':stored_checksum}
 
 def run_gate(cmd,label):
     cp=subprocess.run(cmd,text=True,capture_output=True)

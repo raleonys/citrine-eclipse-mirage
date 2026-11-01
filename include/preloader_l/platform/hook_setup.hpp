@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include <array>
@@ -7,7 +9,7 @@
 #include <string_view>
 #include <vector>
 
-namespace preloader_l::host_init_recovered {
+namespace preloader_l::host_init {
 using Address = std::uintptr_t;
 using Values = std::map<std::string, std::u16string, std::less<>>;
 enum class Callback : std::uint8_t {

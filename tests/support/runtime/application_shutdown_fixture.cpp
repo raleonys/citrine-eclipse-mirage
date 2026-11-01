@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include <winsock2.h>
 #include "preloader_l/runtime/application.hpp"
 #include "preloader_l/platform/hook_engine_api.hpp"
@@ -33,7 +35,7 @@ namespace preloader_l {bool fixture_threads_outside_module(){return fixture::mod
 #undef MH_DisableHook
 #undef MH_Uninitialize
 #include "src/platform/hook_native_callbacks.cpp"
-namespace fixture {std::unique_ptr<preloader_l::native_recovered::Lease> held_call;}
+namespace fixture {std::unique_ptr<preloader_l::native::Lease> held_call;}
 #define external_threads_outside_module fixture_threads_outside_module
 #include "src/runtime/application.cpp"
 #undef external_threads_outside_module
@@ -62,12 +64,12 @@ public:
 #undef Application
 extern "C" __declspec(dllexport) void FixtureMode(unsigned mode){
     fixture::mode=mode;
-    if(mode==2)fixture::held_call=std::make_unique<preloader_l::native_recovered::Lease>();
+    if(mode==2)fixture::held_call=std::make_unique<preloader_l::native::Lease>();
     else fixture::held_call.reset();
 }
 extern "C" __declspec(dllexport) unsigned FixtureValue(unsigned key){
     switch(key){case 0:return fixture::ready;case 1:return fixture::attempts;
     case 2:return fixture::created;case 3:return fixture::destroyed;case 4:return fixture::disables;
-    case 5:return fixture::releases;case 6:return preloader_l::native_recovered::is_bound();
-    case 7:return static_cast<unsigned>(preloader_l::native_recovered::active_calls());default:return ~0u;}
+    case 5:return fixture::releases;case 6:return preloader_l::native::is_bound();
+    case 7:return static_cast<unsigned>(preloader_l::native::active_calls());default:return ~0u;}
 }

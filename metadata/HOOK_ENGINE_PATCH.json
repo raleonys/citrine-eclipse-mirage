@@ -4,7 +4,7 @@
   "input_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
   "input_hook_sha256": "3060d3c42f03a2f11324cbee95d853071757ed0fe4b1bc9eb5f0d8fc9e346a37",
   "patch_script": "cmake/PatchHookFreeze.cmake",
-  "patch_script_sha256": "bf8e6a11362e603ddc78ac1676b2402bb693df249f08f63d4ed10982b2836366",
+  "patch_script_sha256": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
   "output_hook_sha256": "0b586a3aa53d3d0b08f148784219da111375bc3557d52a195dd040c9125a56d1",
   "vendor_tree_modified": false,
   "scope": "NtGetNextThread freeze, retained thread/heap ownership, and correct single-hook disable IP relocation; build copy only",

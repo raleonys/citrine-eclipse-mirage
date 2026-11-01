@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/native_message_test_fixture.hpp"
 using namespace core_test;
 using container_test::active_container;
@@ -31,8 +33,8 @@ struct Finish:s::WriteFinishApi {
     s::WriteFinishStream& append_007990(s::WriteFinishStream&,std::uintptr_t,std::uint64_t)override{r::unexpected();}
     std::uint64_t widen_01e510(std::uintptr_t,std::uint8_t)override{r::unexpected();}void put_00fe90(s::WriteFinishStream&,std::uint8_t)override{r::unexpected();}void flush_00e1e0(s::WriteFinishStream&)override{r::unexpected();}
 };
-struct App:s::RecoveredNativeMessageApi {
-    message_test::Fixture& m;App(s::ResponseDispatchContext& c,s::NativeMessageContext& core,message_test::Fixture& m):RecoveredNativeMessageApi(c,core),m(m){}
+struct App:s::NativeMessageApi {
+    message_test::Fixture& m;App(s::ResponseDispatchContext& c,s::NativeMessageContext& core,message_test::Fixture& m):NativeMessageApi(c,core),m(m){}
     void destroy_empty_message_00aa50(s::ReceiveBufferString& value)override{m.api.destroy_empty_message_00aa50(value);}
     void cleanup_exit_waits_04a47c()override{r::unexpected();}
 };

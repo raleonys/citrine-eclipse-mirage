@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_worker_startup.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct WorkerStartupImports {
     decltype(&::CreateEventW) create_event=&::CreateEventW;
     decltype(&::GetLastError) get_last_error=&::GetLastError;
@@ -23,4 +25,4 @@ public:
     std::uint32_t sleep_ex(std::uint32_t,std::int32_t) override;
 private:WorkerStartupImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

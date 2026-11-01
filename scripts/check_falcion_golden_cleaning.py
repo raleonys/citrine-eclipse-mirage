@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Infrastructure FALCION boundaries adapted to the SURGE source product."""
 import argparse
 import json
@@ -65,7 +67,7 @@ def main():
         errors = [str(error)]
     for error in errors:
         print(' -', error)
-    print('FALCION_GOLDEN_CLEANING:', 'FAIL' if errors else 'PASS_SOURCE_PACKAGE_ONLY', '(NOT_RELEASE)')
+    print('FALCION_GOLDEN_CLEANING:', 'FAIL' if errors else 'PASS_SOURCE_PACKAGE_ONLY')
     return 1 if errors else 0
 
 

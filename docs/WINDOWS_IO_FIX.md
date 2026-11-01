@@ -1,61 +1,67 @@
-# Windows IO geri dönüşü ve kullanılmayan vendorun kaldırılması
+# Restoring Windows I/O and removing an unused vendor
 
-Kullanıcı Windows filesystem farkının düzeltilmesini ve aktif başka kullanımı
-kalmayan Gulrak’ın tamamen kaldırılmasını istedi. Önceki beş vendor hedefi bu
-kütüphane için son kullanıcı talimatıyla değişmiştir.
+The owner requested correction of the Windows filesystem difference and
+complete removal of Gulrak, which had no other active use. This changed the
+earlier five-vendor target list by explicit owner instruction.
 
-| Alan | Güncel uygulama |
+| Area | Current implementation |
 |---|---|
-| NativeFactory input/output | Sağlanan RE adaptörü gibi std::filesystem::path + std::ifstream/ofstream |
-| Dizin oluşturma/tarama/silme | Runtime namespace fs=std::filesystem; Windows/MSVC compiler-owned filesystem |
-| Debug log akışı | std::ofstream; #ifndef NDEBUG guard korunur |
-| Gulrak kullanımı | Uygulama, include, target veya test backend’inde kalmadı |
-| Gulrak vendor | third_party/filesystem, CMake interface target, include bağı ve current lock kaydı çıkarıldı |
-| IO testleri | Unicode/binary/rename/remove/error kontrolleri standard filesystem ile korunur |
-| Kalan vendorlar | Asio, MinHook, PEGTL, TinyXML2; özgün member hashleri ve TinyXML2 500 aynı |
-| Asio mesajı | Brownfield _WIN32_WINNT=0x0601/WINVER=0x0601 tanımları tüketici hedeflerine bağlı |
+| NativeFactory input/output | `std::filesystem::path` plus `std::ifstream/ofstream`, as in the supplied RE adapter |
+| Directory creation/enumeration/removal | Runtime alias `fs=std::filesystem`; Windows/MSVC compiler-owned filesystem |
+| Debug logging | `std::ofstream` with retained `#ifndef NDEBUG` guard |
+| Gulrak usage | No longer present in application, includes, targets, or test backend |
+| Gulrak vendor | `third_party/filesystem`, CMake interface target, include dependency, and current lock entry removed |
+| I/O tests | Unicode/binary/rename/remove/error checks preserved with standard filesystem |
+| Remaining vendors | Asio, MinHook, PEGTL, TinyXML2; original member hashes and TinyXML2 limit 500 unchanged |
+| Asio diagnostics | Brownfield `_WIN32_WINNT=0x0601` / `WINVER=0x0601` definitions propagated to consumers |
 
-Gulrak’ın orijinal kullanıcı arşivi ve önceki kaynak paketleri dışarıda korunur.
-Güncel product snapshot’ta vendor payload’ı yoktur; geçmiş metadata karşılaştırma
-kayıtlarında adı köken bilgisi olarak kalabilir.
+The owner's original Gulrak archive and prior source packages remain preserved
+outside the current product snapshot. The current product has no vendor payload
+for it; historical metadata comparison records may retain its name for
+provenance purposes.
 
-Bu dönüş Windows/MSVC standard filesystem implementasyonunu seçer. Güncel
-MSVC CRT’nin tarihsel Anadius CRT’siyle bütün import/byte/edge-case davranışlarının
-birebir aynı olduğu iddia edilmez. LLVM/Wine testleri Microsoft STL implementasyonu
-için gerçek Windows testlerinin yerine geçmez.
+This change selects the Windows/MSVC standard filesystem implementation.
+It does not claim full import/byte/edge-case equivalence with the historical
+Anadius CRT. LLVM/Wine tests do not replace actual Windows testing of the
+Microsoft STL implementation.
 
-## Production export ve log açıklaması
+## Production exports and logging
 
-Production .def artık Brownfield ile aynı üç C export içerir: DllMain@1,
-SURGE@2, DllShutdown@3. DllWaitReady/DllServerPort uygulaması ve ordinal4/5
-kaldırıldı. Ayrı development DLL’e taşınanlar C++ kaynak API’leridir. Runtime
-host hazır olmayı/portu ek public API yerine mevcut EALsxPort/LSX greeting ve
-profile cevabıyla doğrular.
+The Production `.def` now contains the same three C exports as Brownfield:
+`DllMain@1`, `SURGE@2`, and `DllShutdown@3`. The implementations and ordinals
+4/5 for `DllWaitReady` and `DllServerPort` were removed. C++ source APIs
+were moved to a separate development DLL. The runtime host verifies readiness
+and the port through existing `EALsxPort`/LSX greeting and profile replies
+rather than additional public APIs.
 
-DllMain’in export edilmesi Windows loader başlangıcı için zorunlu değildir.
-Windows CRT entrypoint’i DllMain’i çağırır. Export ordinal’leri sayısal ABI
-kimlikleridir; alfabetik gösterim veya .def satır sırası çağrı/başlangıç/hook
-sırasını belirlemez.
+Exporting `DllMain` is not required for Windows loader startup: the Windows
+CRT entrypoint calls it. Export ordinals are numeric ABI identifiers;
+alphabetic display order and `.def` line order do not determine call,
+startup, or hook order.
 
-`surge.log` yazıcısı yalnız NDEBUG olmayan Debug build’de derlenir. Release
-yeni log üretmez ve eski bir Debug loguna ekleme yapmaz; kullanıcı dosyası
-otomatik silinmez. Mevcut logun bulunması tek başına Production’ın yazdığını
-göstermez. Entegrasyon regresyonu her iki build’de bu durumu denetler.
+The `surge.log` writer is compiled only into non-NDEBUG Debug builds.
+Release creates no new log and does not append to a pre-existing Debug log;
+user files are not deleted automatically. Mere presence of an existing log
+does not prove that Production wrote it. An integration regression checks
+this distinction in both build configurations.
 
-Önceki startup-build-fix paketiyle oyun açılışı kullanıcı tarafından doğrulandı.
-Bu yeni IO/build ayarı için gerçek Windows/MSVC ve oyun tekrarı ayrı olarak
-gereklidir. Güncel sonuçlar `docs/evidence/WINDOWS_IO_FIX.json` içindedir.
+The owner confirmed game startup with the earlier startup-build-fix package.
+Actual Windows/MSVC and game reruns remain required for the new I/O/build
+configuration. Current results are in
+`metadata/evidence/WINDOWS_IO_FIX.json`.
 
-## İstenen import DLL sırası
+## Required import DLL order
 
-Kullanıcı final listede orijinal Anadius sırasını istedi: CRYPT32, WS2_32,
-KERNEL32, USER32, SHELL32, MSWSOCK. Bu, export ordinal sırası değildir. Finalizer
-yalnız tam IMAGE_IMPORT_DESCRIPTOR kayıtlarını yer değiştirir; descriptorların
-RVA/isim/thunk/IAT değerleri değiştirilmez ve diğer byte’lar guard ile korunur.
-Modül kümesi farklıysa işlem fail-closed durur. Null descriptor korunur, checksum
-yeniden hesaplanır; CORVEXON final sırayı ayrıca denetler.
+The owner required the final list to follow the original Anadius order:
+CRYPT32, WS2_32, KERNEL32, USER32, SHELL32, MSWSOCK. This is unrelated to
+export ordinal order. The finalizer only permutes complete
+`IMAGE_IMPORT_DESCRIPTOR` entries; it preserves their RVA/name/thunk/IAT
+values and guards all other bytes. It fails closed if the module set differs.
+The null descriptor is preserved, the checksum recomputed, and CORVEXON
+separately verifies final order.
 
-Bu sıra yalnız Golden sonrası dist/preloader_l.dll için hedeflenir. Ham
-build/preloader.unsigned.dll linker’ın sırasını korur. LLVM development DLL’i
-dinamik CRT modülleri içerdiğinden shipping kabulü sayılmaz; aynı permutation
-yardımcısı üzerinde canlı load/LSX/shutdown/unload kontrolü ayrı kanıtlanır.
+This order applies only to `dist/preloader_l.dll` after Golden finalization.
+The raw `build/preloader.unsigned.dll` retains linker order. The LLVM
+development DLL includes dynamic CRT modules and cannot count as shipping
+acceptance; runtime load/LSX/shutdown/unload tests of the same permutation
+helper are separately evidenced.

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Infrastructure ownership-ledger checks, without Infrastructure release assumptions."""
 import json
 from pathlib import Path

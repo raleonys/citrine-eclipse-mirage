@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Source-linked single-hook disable action regression for the exact owned MinHook copy.
 
 The test runs the actual CMake build-copy transform on the immutable vendored
@@ -19,6 +21,28 @@ DONOR = ROOT / 'third_party/minhook/src/hook.c'
 
 
 class SingleHookDisableIP(unittest.TestCase):
+    def assert_rejected_anchor(self, source):
+        executable = shutil.which('cmake')
+        self.assertIsNotNone(executable, 'CMake is required for the source QA gate')
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / 'hook.c'
+            target.write_bytes(source)
+            result = subprocess.run([executable, '-DMINHOOK_HOOK_C=' + str(target),
+                                     '-P', str(PATCH)], capture_output=True, text=True, timeout=30)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('anchor must occur exactly once', result.stderr)
+            self.assertEqual(target.read_bytes(), source, 'Rejected transform must not write partial output')
+
+    def test_missing_single_hook_anchor_fails_closed(self):
+        source = DONOR.read_bytes()
+        anchor = b'status = Freeze(&threads, pos, ACTION_ENABLE);'
+        self.assertEqual(source.count(anchor), 1)
+        self.assert_rejected_anchor(source.replace(anchor, b'status = Freeze( &threads, pos, ACTION_ENABLE);'))
+
+    def test_duplicate_single_hook_anchor_fails_closed(self):
+        source = DONOR.read_bytes()
+        self.assert_rejected_anchor(source + b'\n/* status = Freeze(&threads, pos, ACTION_ENABLE); */\n')
+
     def test_exact_pinned_hook_copy_preserves_disable_ip_action(self):
         policy = json.loads(POLICY.read_text(encoding='utf-8'))
         original = DONOR.read_bytes()

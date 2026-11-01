@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/online.hpp"
 #include "preloader_l/core/product_identity.hpp"
 
-namespace preloader_l::online_recovered {
+namespace preloader_l::online {
 bool exists_035b00(const Path& path, Effects& effects) {
     const auto status = effects.status_01ea20(path, 3);
     const auto kind = static_cast<std::uint32_t>(status.kind);
@@ -59,8 +61,10 @@ void load_online_035bd0(StateRefs state, Effects& effects) {
         log_line(effects, "factory function not found");
         return;
     }
-    const Path cookie_copy(state.cookie_0a3a20);
-    state.object_0a3a88 = effects.call_create_online(factory, cookie_copy.c_str());
+    {
+        const Path cookie_copy(state.cookie_0a3a20);
+        state.object_0a3a88 = effects.call_create_online(factory, cookie_copy.c_str());
+    }
     if (!state.object_0a3a88)
         throw OutOfEvidenceInput("035bd0 dereferences a null create_online result");
     const auto status = effects.status_virtual_08(state.object_0a3a88);
@@ -116,4 +120,4 @@ void worker_035b60(StateRefs state, Effects& effects) {
     if (!state.online_0a3c3b) cleanup_0366f0(state, effects);
     effects.finish_flag_036820();
 }
-} // namespace preloader_l::online_recovered
+} // namespace preloader_l::online

@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/pool_destruct.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -43,8 +45,8 @@ void destroy_native_pool_001bb0(std::uintptr_t pool,NativePoolDestructContext& c
 void destroy_native_pool_001c30(std::uintptr_t pool,NativePoolDestructContext& context){destroy_pool(pool,0x18007fe98ULL,context);}
 void destroy_native_pool_001cb0(std::uintptr_t pool,NativePoolDestructContext& context){destroy_pool(pool,0x18007fe68ULL,context);}
 void destroy_native_pool_001d30(std::uintptr_t pool,NativePoolDestructContext& context){destroy_pool(pool,0x18007fe08ULL,context);}
-void RecoveredPoolDestructEffects::destroy_pool_001bb0(std::uintptr_t pool){destroy_native_pool_001bb0(pool,pool_destruct_);}
-void RecoveredPoolDestructEffects::destroy_pool_001c30(std::uintptr_t pool){destroy_native_pool_001c30(pool,pool_destruct_);}
-void RecoveredPoolDestructEffects::destroy_pool_001cb0(std::uintptr_t pool){destroy_native_pool_001cb0(pool,pool_destruct_);}
-void RecoveredPoolDestructEffects::destroy_pool_001d30(std::uintptr_t pool){destroy_native_pool_001d30(pool,pool_destruct_);}
-} // namespace preloader_l::socket_recovered
+void PoolDestructEffects::destroy_pool_001bb0(std::uintptr_t pool){destroy_native_pool_001bb0(pool,pool_destruct_);}
+void PoolDestructEffects::destroy_pool_001c30(std::uintptr_t pool){destroy_native_pool_001c30(pool,pool_destruct_);}
+void PoolDestructEffects::destroy_pool_001cb0(std::uintptr_t pool){destroy_native_pool_001cb0(pool,pool_destruct_);}
+void PoolDestructEffects::destroy_pool_001d30(std::uintptr_t pool){destroy_native_pool_001d30(pool,pool_destruct_);}
+} // namespace preloader_l::socket

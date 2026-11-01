@@ -38,7 +38,7 @@ tracking. The helper now uses the existing second emergency slot as well. A new
 test failed on the exact donor output and passes on the corrected copy. No success
 path, enumeration policy or public API is changed by this supplement.
 Adapted patch script SHA-256:
-`5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d`.
+`cd22a276907f4cd7dcaca6d091ebe4147e79d19c6577e5ac56164a735c614d4f`.
 Patched `hook.c` SHA-256:
 `4d0fc88c91deed5eb97344e4daa9bd69d2fdca15d2fabefd911e08e27ef9fea3`.
 
@@ -59,7 +59,7 @@ content is not rewritten or accepted; read-only verification still rejects a
 CRLF build copy. The vendor input, patch script and output hash pins are unchanged.
 Mismatch diagnostics now identify missing, extra and changed member paths with
 expected/actual hashes. Reproduction and fresh checks are recorded in
-[HOOK_BUILD_COPY_PORTABILITY.json](evidence/HOOK_BUILD_COPY_PORTABILITY.json).
+[HOOK_BUILD_COPY_PORTABILITY.json](../metadata/evidence/HOOK_BUILD_COPY_PORTABILITY.json).
 
 ## Lifecycle contract
 
@@ -87,6 +87,21 @@ activation for eleven staged hooks, partial staging, failed apply/rollback, live
 call drain, failed uninitialize and external ownership. `cleanup_retry_contracts`
 uses the actual DLL worker with a test-only Application that fails cleanup twice;
 the third shutdown must destroy the same single owner.
+
+Single-hook disable selects `ACTION_DISABLE` so suspended peer IPs are moved
+from trampoline instruction boundaries back to the target before unpatching.
+The build-copy transform requires exactly one single-hook action anchor;
+missing or ambiguous input fails before writing output. The source-linked
+Python regression checks the transform and exact output identity. The native
+`hook_freeze_contracts` fixture creates a real engine hook on executable test
+bytes (never called), verifies target-to-trampoline enable relocation, rejects
+disable with an unreadable peer context, then verifies trampoline-to-target
+relocation and original-byte restoration on retry. Native Windows execution is
+separate required evidence; source QA does not establish that result.
+The focused `Windows MinHook single-disable acceptance` PR workflow builds
+`hook_freeze_contracts` and the unchanged `hook_engine_fixture_tests` target
+with genuine MSVC in Debug and Release, and retains the CTest and patched-source
+artifacts. These two tests do not establish full native/Golden or game acceptance.
 
 The older `hook_engine_fixtures` intentionally compiles the immutable upstream
 source as a comparison baseline. Its stock failure expectations do not describe

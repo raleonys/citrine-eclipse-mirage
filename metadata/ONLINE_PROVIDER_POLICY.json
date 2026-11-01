@@ -8,7 +8,7 @@
   "role": "OPTIONAL_PROVIDER_RE_ABI_ADAPTER",
   "schema": "surge.online-provider.v1",
   "user_specific_design_approval_required": true,
-  "implementation_status_record": "docs/evidence/RUNTIME_BINDING_STATUS.json",
+  "implementation_status_record": "metadata/evidence/RUNTIME_BINDING_STATUS.json",
   "native_external_provider_compatibility": "NOT_VERIFIED",
   "approval_scope": "Future new provider ABI/loading/error semantics remain distinct from the existing RE ABI adapter."
 }

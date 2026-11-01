@@ -1,34 +1,39 @@
-# MSVC Native test ad çakışması
+# MSVC Native test name collision
 
-29 Ekim 2026 kullanıcı logları önceki düzeltmeleri doğrular:
+Owner-provided logs dated October 29, 2026 confirm earlier corrections:
 
-| Profil | Kullanıcının gerçek Windows/MSVC sonucu |
+| Profile | Actual Windows/MSVC result reported by the owner |
 |---|---|
-| Compile | PASS; gerçek DLL ile üç yükleme/socket/profil/kapatma/unload döngüsü |
-| Debug | PASS; aynı public DLL runtime kontrolü |
-| CRT | PASS;6/6 seçili CRT/public/source-DLL testi |
-| Native | Derleme C2668 nedeniyle async receive integration testinde durdu; tam CTest henüz çalışmadı |
-| Golden | Derleme ve export/resource kontrolleri tamamlandı; ürün hedefleri eksik, BLOCKED/exit3 |
+| Compile | PASS; three load/socket/profile/shutdown/unload cycles using the real DLL |
+| Debug | PASS; same public DLL runtime verification |
+| CRT | PASS; 6/6 selected CRT/public/source-DLL tests |
+| Native | Compilation stopped at C2668 in the asynchronous receive integration test; full CTest did not run |
+| Golden | Compilation and export/resource checks completed; product targets missing, BLOCKED/exit 3 |
 
-Kalan Native derleme hatası, MSVC `eh.h` içindeki global `unexpected(void)`
-bildirimi ile `receive_test::unexpected()` test yardımcısının aynı anda görünür
-olmasından kaynaklanır. `using namespace receive_test` işlevin on iki niteliksiz
-çağrısını belirsiz bırakıyordu. Çağrılar açıkça `receive_test::unexpected()`
-olarak yazıldı. Fixture'ın exception davranışı ve tüm test senaryoları korundu.
+The remaining Native compilation error arose when the global
+`unexpected(void)` declaration from MSVC `eh.h` and the test helper
+`receive_test::unexpected()` were visible simultaneously.
+`using namespace receive_test` made twelve unqualified calls ambiguous.
+Those calls were explicitly qualified as `receive_test::unexpected()`.
+Fixture exception behavior and all test scenarios were retained.
 
-İlgili testte MSVC dışındaki derleyicilere aynı global bildirim eklenir; bunun
-tanımı ve çağrısı yoktur. Böylece ileride niteliksiz bir çağrı eklenirse derleme
-kontrolü onu MSVC dışında da yakalar. MSVC kendi gerçek CRT bildirimini kullanır.
-Bu bildirim yalnız test executable'ındadır; ürün DLL'ine veya exportlarına eklenmez.
+The corresponding test adds the same global declaration for non-MSVC
+compilers; it has no definition or call there. This allows a future
+unqualified call to be rejected during compilation outside MSVC as well.
+MSVC uses the real CRT declaration. This test-only declaration is not
+added to the product DLL or its exports.
 
-Benzer niteliksiz çağrı/deklarasyon içeren18 test dosyası, aynı global CRT
-bildirimi zorlanarak derleme kontrolünden geçirilir. Yardımcıyı kendi sınıf veya
-namespace'inde tanımlayan diğer dosyalarda çakışma gözlenmemiştir. Eski hatanın
-yeniden üretimi, düzeltme ve tarama sonucu ayrı kanıtlardır; gerçek MSVC tekrarının
-yerine geçmezler. Ham sonuçlar [MSVC_NATIVE_LOOKUP_FIX.json](evidence/MSVC_NATIVE_LOOKUP_FIX.json) içindedir.
+Eighteen test files containing similar unqualified calls/declarations
+were compilation-checked with the same global CRT declaration forced
+into scope. No collision was observed in other files that define helpers
+inside their own class or namespace. Reproduction of the original error,
+the correction, and the scan are separate evidence, not a substitute for
+an actual MSVC rerun. Raw results are in
+[MSVC_NATIVE_LOOKUP_FIX.json](../metadata/evidence/MSVC_NATIVE_LOOKUP_FIX.json).
 
-Yeni kaynakta yalnız Native profilini tekrar çalıştırmak gerekir:
+Only the Native profile needs to be rerun for the revised source:
 `scripts/build_orchestration/build_native_acceptance.cmd`.
-Uygulama, vendor ve resource byte'ları ile beş export değişmemiştir. Önceki
-Compile/Debug/CRT başarıları kullanıcı loglarına aittir; düzeltilmiş tam Native
-grubunun Windows sonucu henüz alınmamıştır. Golden ürün hedefleri bu görevde açılmaz.
+Application, vendor, resource bytes, and all five exports remained unchanged.
+The earlier Compile/Debug/CRT successes belong to the supplied logs;
+a Windows result for the corrected complete Native suite is not yet available.
+Golden product targets are not addressed by this task.

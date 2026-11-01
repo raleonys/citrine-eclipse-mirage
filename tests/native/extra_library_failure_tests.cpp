@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "src/runtime/application_internal.hpp"
 #include <windows.h>
 #include <cstdlib>
@@ -26,15 +28,16 @@ using namespace preloader_l;
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 struct Fixture {
     configuration::State state=application::initial_state();application::Options options;
-    file_recovered::NativeFactory files;xml_reader_bridge::Backend xml;
+    file::NativeFactory files;xml_reader_bridge::Backend xml;
     achievement_storage::Paths paths;achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;
     application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
-    execution_recovered::MutexState mutex{};std::uint8_t a=0,b=0,c=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw std::runtime_error("mutex error");}};
+    execution::MutexState mutex{};std::uint8_t a=0,b=0,c=0;
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("mutex error");}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{a,b,c},frequency,platform};
+    execution::Execution execution{mutex,{a,b,c},frequency,platform};
     application::ExtraLibraries extras{env,execution,c};
-    Fixture(){execution_recovered::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=0;}
+    application::Provider provider{state,env,files,execution,b};
+    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=0;}
 };
 void acquisition_failure(const wchar_t* path) {
     Fixture f;bool threw=false;fault::next=true;fault::fail_frees=1;
@@ -54,11 +57,46 @@ void repeated_failure(const wchar_t* path) {
     for(unsigned i=0;i<2;++i){bool threw=false;try{f.extras.close();}catch(const std::exception&){threw=true;}require(threw,"cleanup failure reported success");}
     f.extras.close();f.extras.close();require(fault::frees==3,"third cleanup did not release exactly the retained module");
 }
+void provider_retry(const wchar_t* path) {
+    Fixture f;f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+    const auto module=f.provider.module;require(module!=0,"provider fixture DLL load");
+    f.provider.online=1;fault::fail_frees=2;
+    for(unsigned i=0;i<2;++i) {
+        bool threw=false;try{f.provider.close();}catch(const std::exception&){threw=true;}
+        require(threw&&f.provider.module==module&&f.provider.online==1&&fault::frees==i+1,
+            "provider cleanup lost its failed module lease or reported success");
+    }
+    f.provider.close();f.provider.close();
+    require(f.provider.module==0&&f.provider.online==0&&fault::frees==3,
+        "provider cleanup retry did not release exactly the retained lease");
+}
+void provider_object_once(const wchar_t* path) {
+    Fixture f;
+    struct Observer {
+        HMODULE module;
+        ~Observer(){if(module)::FreeLibrary(module);}
+    } observer{::LoadLibraryW(path)};
+    require(observer.module!=nullptr,"provider observer lease");
+    const auto destroyed=reinterpret_cast<int(*)()>(GetProcAddress(observer.module,"FixtureDestroyed"));
+    const auto create=reinterpret_cast<std::uintptr_t(*)(const wchar_t*)>(GetProcAddress(observer.module,"create_online"));
+    require(destroyed&&create,"provider fixture methods");
+    f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+    require(f.provider.module!=0,"provider owned lease");
+    f.provider.object=create(L"NUL");require(f.provider.object!=0&&destroyed()==0,"provider object creation");
+    fault::fail_frees=1;bool threw=false;
+    try{f.provider.close();}catch(const std::exception&){threw=true;}
+    require(threw&&f.provider.object==0&&f.provider.module!=0&&destroyed()==1,
+        "provider object/module ownership was lost after partial cleanup");
+    f.provider.close();f.provider.close();
+    require(f.provider.module==0&&destroyed()==1&&fault::frees==2,
+        "provider cleanup destroyed the object or released the module twice");
+}
 }
 int wmain(int argc,wchar_t** argv)try {
     require(argc==2||argc==3,"expected fixture DLL path and optional case");
     const std::wstring_view selected=argc==3?argv[2]:L"all";bool ran=false;
-    for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"mixed",mixed_release},{L"retry",repeated_failure}})
+    for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"mixed",mixed_release},{L"retry",repeated_failure},
+                      {L"provider-retry",provider_retry},{L"provider-object",provider_object_once}})
         if(selected==L"all"||selected==name){fn(argv[1]);ran=true;}
     require(ran,"unknown case");std::cout<<"PASS: native-module acquisition/retained-release/retry controls\n";return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

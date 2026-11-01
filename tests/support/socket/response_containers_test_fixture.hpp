@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_response_containers.hpp"
 #include "tests/support/socket/owned_response_test_fixture.hpp"
 #include <cstring>
 
 namespace container_test {
-namespace s=preloader_l::socket_recovered;namespace b=buffer_test;namespace r=receive_test;
+namespace s=preloader_l::socket;namespace b=buffer_test;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure {int code;};
 struct MapBlock {std::uintptr_t raw=0,address=0;std::vector<s::WriteFinishString*> cells;};
@@ -83,12 +85,12 @@ struct Fixture {
     }
     void grow(std::uint64_t extra){s::grow_response_deque_026670(queue,extra,context);}
 };
-struct ContainerApi final:s::RecoveredResponseContainersApi {
-    ContainerApi(s::OwnedResponseContext& c,s::ReceiveBufferContext& strings):RecoveredResponseContainersApi(c,strings){}
+struct ContainerApi final:s::ResponseContainersApi {
+    ContainerApi(s::OwnedResponseContext& c,s::ReceiveBufferContext& strings):ResponseContainersApi(c,strings){}
 };
-struct QueueApi final:s::RecoveredResponseQueueApi {
+struct QueueApi final:s::ResponseQueueApi {
     std::vector<std::unique_ptr<s::WriteFinishString>> cells;unsigned allocations=0;
-    explicit QueueApi(s::DequeGrowthContext& c):RecoveredResponseQueueApi(c){}
+    explicit QueueApi(s::DequeGrowthContext& c):ResponseQueueApi(c){}
     s::WriteFinishString* allocate_string_04b0bc(std::uint64_t n)override{check(n==32,"queue cell allocation is separate32-byte object effect");++allocations;cells.push_back(std::make_unique<s::WriteFinishString>());return cells.back().get();}
 };
 struct ContainerFixture;inline ContainerFixture* active_container=nullptr;

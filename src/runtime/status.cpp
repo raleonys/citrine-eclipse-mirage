@@ -1,5 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/status.hpp"
-namespace preloader_l::status_recovered {
+namespace preloader_l::status {
 Status status_01ea20(const Path& path, std::uint32_t flags, Stats& stats) {
     const auto raw = stats.query(path, flags);
     Status result{0, 0xffff, raw.error};

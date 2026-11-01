@@ -1,9 +1,0 @@
-{
-  "case": "actual PE VERSIONINFO FileDescription tamper while SURGE PNG stays exact",
-  "result": "PASS_REJECTED_TAMPER",
-  "owner_avatar_still_exact": true,
-  "metadata_errors": [
-    "StringFileInfo={'FileDescription': 'XX Javelin Anticheat', 'LegalCopyright': 'Copyright 2023 Electronic Arts. All rights reserved.', 'ProductName': 'EA Javelin Anticheat', 'ProductVersion': '3.9.5'}"
-  ],
-  "original_dll_unchanged": true
-}
