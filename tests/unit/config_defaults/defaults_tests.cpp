@@ -3,6 +3,7 @@
 #include "preloader_l/runtime/application.hpp"
 #include <cstddef>
 #include <cstdio>
+#include <cstring>
 #include <cstdlib>
 #include <exception>
 #include <iostream>
@@ -105,7 +106,7 @@ void allocation_unwind() {
     constructor_contract();
 }
 }
-int main() try {
+int main(int argc,char** argv) try {
 #if defined(_MSC_VER) && defined(_DEBUG)
     // Test-only: avoid interactive MSVC CRT dialogs that stall hosted CI.
     // Preserve errors as stderr output and an actual nonzero test exit.
@@ -126,6 +127,42 @@ int main() try {
         std::fflush(stderr);
         std::_Exit(86);
     });
+#endif
+#if defined(_MSC_VER) && defined(_DEBUG)
+    if (argc == 2 && std::strncmp(argv[1], "--probe=", 8) == 0) {
+        const char* mode = argv[1] + 8;
+        const bool raw = std::strcmp(mode, "raw-new") == 0;
+        const bool map = std::strcmp(mode, "map-default") == 0;
+        const bool state = std::strcmp(mode, "state-default") == 0;
+        if (!raw && !map && !state) return 2;
+        debug_stage(mode);
+        allocation::remaining = 1;
+        allocation::armed = true;
+        try {
+            if (raw) {
+                void* p = ::operator new(sizeof(int));
+                ::operator delete(p);
+            } else if (map) {
+                std::map<std::string, std::string, std::less<>> value;
+                (void)value;
+            } else {
+                preloader_l::configuration::State value{};
+                (void)value;
+            }
+            allocation::armed = false;
+            std::fprintf(stderr, "PROBE_UNEXPECTED_SUCCESS mode=%s\n", mode);
+            return 3;
+        } catch (const std::bad_alloc&) {
+            allocation::armed = false;
+            std::fprintf(stderr, "PROBE_CAUGHT mode=%s exception=bad_alloc live=%zu\n",
+                         mode, allocation::live);
+            std::fflush(stderr);
+            return allocation::live == 0 ? 0 : 4;
+        }
+    }
+#else
+    (void)argc;
+    (void)argv;
 #endif
     debug_stage("constructor-contract-start");
     constructor_contract();

@@ -33,6 +33,19 @@ jobs:
           $target = 'build/msvc-defaults-diagnostic/Debug/portable_configuration_defaults.exe'
           if (-not (Test-Path -LiteralPath $target)) { throw "Missing Debug test executable: $target" }
           Get-Item -LiteralPath $target | Select-Object FullName, Length
+      - name: Compare injected failure across allocation boundaries
+        shell: pwsh
+        run: |
+          $target = 'build/msvc-defaults-diagnostic/Debug/portable_configuration_defaults.exe'
+          $log = 'build/msvc-defaults-diagnostic/constructor_probe.log'
+          foreach ($mode in @('raw-new', 'map-default', 'state-default')) {
+            & $target "--probe=$mode" 2>&1 | Tee-Object -FilePath $log -Append
+            $probeExit = $LASTEXITCODE
+            "PROBE_EXIT mode=$mode code=$probeExit" | Tee-Object -FilePath $log -Append
+            if ($mode -eq 'raw-new' -and $probeExit -ne 0) {
+              throw "Direct allocation exception control failed: $probeExit"
+            }
+          }
       - name: Run isolated test and collect stage breadcrumbs
         shell: pwsh
         run: |
@@ -49,6 +62,7 @@ jobs:
           path: |
             build/msvc-defaults-diagnostic/CTEST_EXIT_CODE.txt
             build/msvc-defaults-diagnostic/config_defaults_debug_ctest.log
+            build/msvc-defaults-diagnostic/constructor_probe.log
             build/msvc-defaults-diagnostic/CTEST_RESULTS.xml
             build/msvc-defaults-diagnostic/Testing/Temporary/LastTest.log
             build/msvc-defaults-diagnostic/CMakeCache.txt
