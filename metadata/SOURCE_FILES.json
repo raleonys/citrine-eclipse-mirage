@@ -1502,8 +1502,8 @@
       "sha256": "a771b0c74417777bb6d6ca265c63c6ce3a33e6531edbcc28be8c9130326ad58a"
     },
     "tests/unit/config_defaults/defaults_tests.cpp": {
-      "bytes": 6116,
-      "sha256": "05f401c98bacf4abb4efa3658c79a934291bb362e656ea5f0b0012f64db102eb"
+      "bytes": 6879,
+      "sha256": "7b0859c082d77f63be946c562365b35f6ce4ec828fc8d36f9b1cca9a7276a9a6"
     },
     "tests/unit/config_hash/hash_table_tests.cpp": {
       "bytes": 10565,

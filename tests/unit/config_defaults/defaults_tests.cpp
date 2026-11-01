@@ -2,6 +2,7 @@
 
 #include "preloader_l/runtime/application.hpp"
 #include <cstddef>
+#include <cstdio>
 #include <cstdlib>
 #include <iostream>
 #include <limits>
@@ -31,6 +32,18 @@ void operator delete(void* p,std::size_t) noexcept {allocation::release(p);}
 void operator delete[](void* p,std::size_t) noexcept {allocation::release(p);}
 
 namespace {
+// Test-only breadcrumb: preserve the last stage if MSVC Debug terminates
+// before main can report an exception. No production code is modified.
+void debug_stage(const char* stage, std::size_t fail_at=0) noexcept {
+#if defined(_MSC_VER) && defined(_DEBUG)
+    std::fprintf(stderr, "CONFIG_DEFAULTS_DEBUG stage=%s fail_at=%zu live=%zu\n",
+                 stage, fail_at, allocation::live);
+    std::fflush(stderr);
+#else
+    (void)stage;
+    (void)fail_at;
+#endif
+}
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 void constructor_contract() {
     const auto s=preloader_l::application::initial_state();
@@ -77,9 +90,11 @@ void independent_values() {
 void allocation_unwind() {
     unsigned failures=0;bool completed=false;
     for(std::size_t fail_at=1;fail_at<=256&&!completed;++fail_at) {
+        debug_stage("allocation-attempt", fail_at);
         allocation::remaining=fail_at;allocation::armed=true;
         try {auto state=preloader_l::application::initial_state();allocation::armed=false;completed=state.game_attributes.size()==14;}
         catch(const std::bad_alloc&){allocation::armed=false;++failures;}
+        debug_stage("allocation-result", fail_at);
         require(allocation::live==0,"every injected construction failure releases all partially constructed allocations");
     }
     require(completed&&failures>20,"all actual constructor allocation points were exhausted before a successful call");
@@ -87,6 +102,12 @@ void allocation_unwind() {
 }
 }
 int main() try {
-    constructor_contract();independent_values();allocation_unwind();
+    debug_stage("constructor-contract-start");
+    constructor_contract();
+    debug_stage("independent-values-start");
+    independent_values();
+    debug_stage("allocation-unwind-start");
+    allocation_unwind();
+    debug_stage("complete");
     std::cout<<"PASS: constructor defaults, independent state and allocation-failure recovery\n";return 0;
 }catch(const std::exception& e){allocation::armed=false;std::cerr<<e.what()<<'\n';return 1;}
