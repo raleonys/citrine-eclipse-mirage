@@ -75,6 +75,7 @@ jobs:
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-junit-*.xml
             build/ci-shutdown-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/ci-shutdown-${{ matrix.configuration }}/CMakeCache.txt
+            build/ci-shutdown-${{ matrix.configuration }}/shutdown-trace.map
             build/ci-shutdown-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
           retention-days: 14

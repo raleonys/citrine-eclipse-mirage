@@ -88,6 +88,9 @@ option(PRELOADER_L_SHUTDOWN_TRACE "Trace shutdown failures to the inherited CI e
 if(PRELOADER_L_SHUTDOWN_TRACE)
   target_compile_definitions(preloader_l_objects PRIVATE PRELOADER_L_SHUTDOWN_TRACE)
   target_compile_definitions(preloader_l_core PUBLIC PRELOADER_L_SHUTDOWN_TRACE)
+  if(MSVC)
+    target_link_options(preloader_l PRIVATE "/MAP:${CMAKE_CURRENT_BINARY_DIR}/shutdown-trace.map")
+  endif()
 endif()
 target_include_directories(preloader_l PRIVATE resources)
 set_target_properties(preloader_l PROPERTIES

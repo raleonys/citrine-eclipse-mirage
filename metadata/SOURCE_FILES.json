@@ -386,8 +386,8 @@
       "sha256": "1e65786181115106bdd62e7231dd686cb0e7ef064f4056b75825b7583150e4d9"
     },
     "include/preloader_l/platform/hook_unload_guard.hpp": {
-      "bytes": 590,
-      "sha256": "611cffe106cbbec1b05cd020329755443dbe046e83042aeeb3174834df6bb26e"
+      "bytes": 725,
+      "sha256": "de612548cdb5e366a774fedc55acba4ccc35cd6f4f89bbe220c9edbe6d7427a8"
     },
     "include/preloader_l/platform/registry.hpp": {
       "bytes": 3575,
@@ -926,8 +926,8 @@
       "sha256": "227e3e14323ca7aa71a495aa349900f15234148def80253aea17a489b5c5243b"
     },
     "src/platform/hook_unload_guard.cpp": {
-      "bytes": 6632,
-      "sha256": "23f3eacd235f6e686f5b3dd541d099a10e3888b73a157665d4c1ac23e47baeb7"
+      "bytes": 7513,
+      "sha256": "6edf5cf0960ea2a063fb3b720199553c99d177ba615934972e953b2b96f11f46"
     },
     "src/platform/library_system.cpp": {
       "bytes": 1272,
