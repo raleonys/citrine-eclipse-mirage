@@ -10,6 +10,9 @@
 #include <limits>
 #include <new>
 #include <stdexcept>
+#include <string>
+#include <utility>
+#include <vector>
 #if defined(_MSC_VER) && defined(_DEBUG)
 #include <crtdbg.h>
 #endif
@@ -93,16 +96,44 @@ void independent_values() {
         "independent results share no mutable configuration state");
 }
 void allocation_unwind() {
+#if defined(_MSC_VER) && defined(_DEBUG)
+    // MSVC Debug basic_string can allocate iterator proxies inside noexcept
+    // constructors. Failing global new during State construction terminates.
+    // Build the real initial_state() unarmed, then inject failures only into
+    // throwing map insertion boundaries. This tests cleanup of partial map
+    // mutations, not early initial_state() constructor failure unwind.
+    std::vector<std::pair<std::string,std::string>> inserts;
+    inserts.reserve(32);
+    for(unsigned i=0;i<32;++i)
+        inserts.emplace_back("FAULT_TEST_KEY_"+std::to_string(i),std::string(64,'v'));
+#endif
     unsigned failures=0;bool completed=false;
     for(std::size_t fail_at=1;fail_at<=256&&!completed;++fail_at) {
         debug_stage("allocation-attempt", fail_at);
+#if !(defined(_MSC_VER) && defined(_DEBUG))
         allocation::remaining=fail_at;allocation::armed=true;
-        try {auto state=preloader_l::application::initial_state();allocation::armed=false;completed=state.game_attributes.size()==14;}
+#endif
+        try {
+            auto state=preloader_l::application::initial_state();
+#if defined(_MSC_VER) && defined(_DEBUG)
+            allocation::remaining=fail_at;allocation::armed=true;
+            for(const auto& item:inserts)
+                state.game_attributes.emplace(item.first,item.second);
+            allocation::armed=false;
+            completed=state.game_attributes.size()==14+inserts.size();
+#else
+            allocation::armed=false;completed=state.game_attributes.size()==14;
+#endif
+        }
         catch(const std::bad_alloc&){allocation::armed=false;++failures;}
         debug_stage("allocation-result", fail_at);
-        require(allocation::live==0,"every injected construction failure releases all partially constructed allocations");
+        require(allocation::live==0,"every injected failure releases all tracked partially inserted allocations");
     }
+#if defined(_MSC_VER) && defined(_DEBUG)
+    require(completed&&failures>20,"all throwing map insertion failure points were exhausted before success");
+#else
     require(completed&&failures>20,"all actual constructor allocation points were exhausted before a successful call");
+#endif
     constructor_contract();
 }
 }
