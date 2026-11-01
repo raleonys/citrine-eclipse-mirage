@@ -84,5 +84,8 @@ int main() {
     }
     debug_stage("invalid-parser-ok");
     debug_stage("checks-complete");
+    debug_stage("success-output-enter");
     std::cout<<"PASS: actual DLL auto-started; real socket LSX profile, calendar, SHA-1 and PEGTL Config2/VDF executed; shutdown drains application\n";
+    debug_stage("success-output-returned");
+    debug_stage("main-return-enter");
 }
