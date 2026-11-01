@@ -88,6 +88,21 @@ call drain, failed uninitialize and external ownership. `cleanup_retry_contracts
 uses the actual DLL worker with a test-only Application that fails cleanup twice;
 the third shutdown must destroy the same single owner.
 
+Single-hook disable selects `ACTION_DISABLE` so suspended peer IPs are moved
+from trampoline instruction boundaries back to the target before unpatching.
+The build-copy transform requires exactly one single-hook action anchor;
+missing or ambiguous input fails before writing output. The source-linked
+Python regression checks the transform and exact output identity. The native
+`hook_freeze_contracts` fixture creates a real engine hook on executable test
+bytes (never called), verifies target-to-trampoline enable relocation, rejects
+disable with an unreadable peer context, then verifies trampoline-to-target
+relocation and original-byte restoration on retry. Native Windows execution is
+separate required evidence; source QA does not establish that result.
+The focused `Windows MinHook single-disable acceptance` PR workflow builds
+`hook_freeze_contracts` and the unchanged `hook_engine_fixture_tests` target
+with genuine MSVC in Debug and Release, and retains the CTest and patched-source
+artifacts. These two tests do not establish full native/Golden or game acceptance.
+
 The older `hook_engine_fixtures` intentionally compiles the immutable upstream
 source as a comparison baseline. Its stock failure expectations do not describe
 the hardened production engine; the new patched-source tests cover that engine.

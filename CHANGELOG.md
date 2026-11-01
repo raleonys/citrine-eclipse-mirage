@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Correct single-hook disable IP relocation in the pinned MinHook build copy, preserve upstream vendor bytes, and add exact patch, source, and focused Windows MSVC Debug/Release regression checks. The focused fixture passed; genuine suspended-peer and full Native/Golden acceptance remain pending.
+
 - Isolate the MSVC C++ development DLL and host in a shared compiler-CRT graph, including separately compiled vendor dependencies, to avoid cross-module static Debug CRT ownership during parser-state destruction. Production retains its static CRT, sources and three-export ABI; native Debug/Release validation remains required.
 
 - Report source-host smoke success only after local C++ destruction and successful application shutdown; preserve failure codes and Debug timeout diagnostics.

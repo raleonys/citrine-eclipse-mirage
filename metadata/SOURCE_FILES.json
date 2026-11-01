@@ -1137,6 +1137,10 @@
       "bytes": 9125,
       "sha256": "d5b6c41e67b42e8fb3c298efc0434251efa3c93283c9bc19b8cb2ebd3a7d6d2b"
     },
+    "tests/infrastructure/test_hook_disable_action.py": {
+      "bytes": 4307,
+      "sha256": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771"
+    },
     "tests/infrastructure/test_infrastructure.py": {
       "bytes": 29047,
       "sha256": "26f812931e3ebb407a338d96019c39d959164b02a6961de325586c4fbea54c2a"
@@ -1226,8 +1230,8 @@
       "sha256": "b44b7a448065fb462cdd2e822e6f4b0cd802a84d7f0fca62e1d6fa1d6b983d45"
     },
     "tests/native/hook_freeze_tests.c": {
-      "bytes": 6462,
-      "sha256": "aba05a6761ee2fe01bcadf2e63eef3c25e2e91f8bb1c1fd48b3f8abd6d720d1d"
+      "bytes": 8502,
+      "sha256": "26b042274cd483af987dc01b1c97473b574387f212aaa51afae0ac33bed44500"
     },
     "tests/native/listener_port_tests.cpp": {
       "bytes": 6703,
