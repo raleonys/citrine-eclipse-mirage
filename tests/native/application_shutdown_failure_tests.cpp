@@ -44,7 +44,7 @@ void scenario(const char* path,unsigned fault){
     std::cout<<"PASS: actual entry/Application/hook cleanup fault "<<fault<<'\n';
 }
 }
-void queued_shutdown_requests(const char* path){
+void queued_shutdown_requests(const char* path,bool persistent=false){
     // Keep the worker before its first event wait. Both public calls must be
     // enqueued before the first ResetEvent, not raced by test scheduling.
     const char* env="SURGE_TEST_HOLD_WORKER_BEFORE_STOP";
@@ -57,11 +57,24 @@ void queued_shutdown_requests(const char* path){
         "actual worker must be live, ready and held before both requests");
     // One deliberate scan failure gives the second caller's queued request
     // a distinct, observable successful retry. No third call may mask loss.
-    m.mode(5);
+    m.mode(persistent?4:5);
     const auto first=m.stop(0),second=m.stop(0);
     m.resume();
     require(first==DLL_SHUTDOWN_TIMEOUT&&second==DLL_SHUTDOWN_TIMEOUT,
         "two zero-wait caller requests must be accepted before worker cleanup");
+    if(persistent){
+        const auto attempts_until=std::chrono::steady_clock::now()+std::chrono::seconds(3);
+        while(m.value(1)<2&&std::chrono::steady_clock::now()<attempts_until)Sleep(1);
+        Sleep(100);
+        require(m.value(1)==2&&m.value(2)==1&&m.value(3)==0&&m.value(6),
+            "two failed requests must retain the owner without an unsolicited third attempt");
+        m.mode(0);
+        require(m.stop(10000)==DLL_SHUTDOWN_OK,"third explicit request retries retained cleanup");
+        require(m.value(1)==3&&m.value(3)==1&&m.value(4)==1&&m.value(5)==1,
+            "third request destroys the sole owner without duplicate hook disable");
+        std::cout<<"PASS: two queued failures wait for a third explicit shutdown request\n";
+        return;
+    }
     const auto done_until=std::chrono::steady_clock::now()+std::chrono::seconds(3);
     while(!m.value(3)&&std::chrono::steady_clock::now()<done_until)Sleep(1);
     require(m.value(1)==2&&m.value(2)==1&&m.value(3)==1,
@@ -79,6 +92,9 @@ int main(int argc,char** argv)try{
         if(argc==2||std::string_view(argv[2])==std::to_string(fault)){scenario(argv[1],fault);ran=true;}
     if(argc==2||std::string_view(argv[2])=="queued"){
         queued_shutdown_requests(argv[1]);ran=true;
+    }
+    if(argc==2||std::string_view(argv[2])=="queued-failure"){
+        queued_shutdown_requests(argv[1],true);ran=true;
     }
     require(ran,"unknown fault mode");
     return 0;

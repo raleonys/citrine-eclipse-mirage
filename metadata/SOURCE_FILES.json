@@ -866,8 +866,8 @@
       "sha256": "c106f2b1180f2176b4bb74fe69d6e8d52707979c03129b32d9db0ac60450891e"
     },
     "src/platform/dll_entry.cpp": {
-      "bytes": 3951,
-      "sha256": "aafccaf5d2aadba4cf7549ad1f1df5b746bccb2aa23384f6efec053788e5114d"
+      "bytes": 4544,
+      "sha256": "b01fb34e7afb7a203df7a6e6e1fa5fcdaa457d6998adcd54b79f2f6c43ea65ee"
     },
     "src/platform/encoding_windows.cpp": {
       "bytes": 2245,
@@ -1186,8 +1186,8 @@
       "sha256": "27e726242ff53aa461df7c71128cb23733285e97af9e7bcc7d74addc4528442b"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
-      "bytes": 4770,
-      "sha256": "739cc7a1855fadabce553b4a04a03e5dce58f2cb506d20b67300f2bc2d482260"
+      "bytes": 5710,
+      "sha256": "d2ca4acf091c3e3cf4db00b4f2d015e60172ce3fbf52bbc7b1eae82b9e3f8e5d"
     },
     "tests/native/atomic_persistence_tests.cpp": {
       "bytes": 6840,
