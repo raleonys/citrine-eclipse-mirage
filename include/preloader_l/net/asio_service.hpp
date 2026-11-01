@@ -24,11 +24,14 @@ public:
 class AsioService final {
 public:
     AsioService(HandlerFactory&, execution::Execution&,
-                std::uint16_t& port, std::uint8_t& ready,SessionPolicy policy={});
+                std::uint16_t& port, std::uint8_t& ready,SessionPolicy policy={},bool defer_accept=false);
     ~AsioService();
     AsioService(const AsioService&) = delete;
     AsioService& operator=(const AsioService&) = delete;
     void start();
+    // Used by Application only: listener is bound before provider/profile readiness,
+    // but early OS-backlog clients are not accepted until readiness is published.
+    void resume_accepts();
     void stop();
 private:
     struct Impl;
