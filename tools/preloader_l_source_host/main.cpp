@@ -14,6 +14,10 @@ void debug_stage(const char* label) {
     std::cerr << "SOURCE_HOST_DEBUG_STAGE: " << label << '\n';
     std::cerr.flush();
 }
+struct DebugDestructorFence {
+    const char* stage;
+    ~DebugDestructorFence() { debug_stage(stage); }
+};
 #else
 void debug_stage(const char*) {}
 #endif
@@ -27,6 +31,9 @@ int main() {
         debug_stage(status==DLL_SHUTDOWN_OK?"shutdown-ok":"shutdown-failed");
         if(status!=DLL_SHUTDOWN_OK)std::terminate();
     }} stop;
+#if defined(_DEBUG)
+    DebugDestructorFence before_shutdown{"before-stop-destructor"};
+#endif
     {
         asio::io_context io;asio::ip::tcp::socket socket(io);std::string buffered;
         debug_stage("greeting-wait-enter");
@@ -59,15 +66,24 @@ int main() {
     debug_stage("sha1-finalize-ok");
     debug_stage("sha1-render-enter");
     const auto sha1_text=preloader_l::hash::classic_hex_digest(sha1_words);
+#if defined(_DEBUG)
+    DebugDestructorFence before_sha1_locals{"before-sha1-local-destructors"};
+#endif
     debug_stage("sha1-render-ok");
     if(sha1_text!="a9993e364706816aba3e25717850c26c9cd0d89d") return 12;
     debug_stage("sha1-ok");
     debug_stage("empty-parser-enter");
     preloader_l::parser::State state;
+#if defined(_DEBUG)
+    DebugDestructorFence before_empty_parser_destructor{"before-empty-parser-destructor"};
+#endif
     if(!preloader_l::parser::parse("",state)) return 13;
     debug_stage("empty-parser-ok");
     debug_stage("config-parser-enter");
     preloader_l::parser::State config;
+#if defined(_DEBUG)
+    DebugDestructorFence before_config_parser_destructor{"before-config-parser-destructor"};
+#endif
     if(!preloader_l::parser::parse(
         "\xef\xbb\xbf\"Config2\"{/* comment */\"User\"{\"Username\" \"first\"\"Username\" \"last\"}}",config))return 14;
     debug_stage("config-parser-ok");
@@ -78,6 +94,9 @@ int main() {
     if(user->completed_assignments!=std::vector<std::string>{"Username","Username"})return 16;
     debug_stage("invalid-parser-enter");
     preloader_l::parser::State invalid;
+#if defined(_DEBUG)
+    DebugDestructorFence before_invalid_parser_destructor{"before-invalid-parser-destructor"};
+#endif
     try {preloader_l::parser::parse("\"R\"{/}",invalid);return 17;}
     catch(const preloader_l::parser::ParseError& error) {
         if(error.rule!=preloader_l::parser::ErrorRule::object_members || error.position.byte!=5)return 18;
