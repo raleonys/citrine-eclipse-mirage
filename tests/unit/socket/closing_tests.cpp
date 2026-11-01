@@ -90,7 +90,7 @@ void cancellation_exception_gate_balance() {
             "failed lower operation must propagate and release the original engine gate");
         require(state.socket==17&&state.socket_state==3&&
                 object.cancellation.resource==77&&object.cancellation.control==&owner&&
-                owner.strong==0&&!owner.destroys&&!owner.deletes,
+                owner.strong==1&&owner.weak==1&&!owner.destroys&&!owner.deletes,
             "failed cancellation must not close/reset the live source owner");
         const std::vector<std::string> expected=fail_before_cancel
             ?std::vector<std::string>{"engine_enter","category","engine_leave"}
