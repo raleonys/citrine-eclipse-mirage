@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Make the native CreateProcessA argument-forwarding fixture use explicit caller buffers for pointer identity, removing its dependence on string-literal pooling in MSVC Debug while retaining all ten argument assertions. Production callbacks and connect behavior are unchanged; fresh native Debug/Release validation remains pending.
+
 - Guard native connect address inspection with a bounded readable snapshot, forwarding malformed addresses to Winsock with their original pointer/length and error behavior. Preserve exact loopback redirection, add portable snapshot/no-listener checks, and register focused Windows Debug/Release callback and real Winsock equivalence coverage; native validation remains pending.
 
 - Audit C36-F003: keep unknown-entitlement diagnostics nonmodal and redacted, repair native test namespace scope, and cover Debug output plus Release preservation of existing logs. Add focused Windows MSVC Debug/Release acceptance; fresh native execution remains pending.

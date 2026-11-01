@@ -252,9 +252,11 @@ void test_resolver_and_registry(){
 }
 void test_process_folder_connect(){
     Fixture f;STARTUPINFOA sa{};STARTUPINFOW sw{};PROCESS_INFORMATION info{};SECURITY_ATTRIBUTES p{},t{};char cmd[]="arg";wchar_t wcmd[]=L"arg";
+    // Pointer identity must use the same caller objects, independent of /GF pooling.
+    const char app_a[]="different",cwd_a[]="cwd";
     decltype(&::CreateProcessA) pa=&process_a_entry;
-    require(pa("different",cmd,&p,&t,-7,0xdeadbeef,reinterpret_cast<void*>(0x123),"cwd",&sa,&info)==7,"native BOOL result preserves nonboolean value");
-    require(seen.process==std::array<std::uintptr_t,10>{reinterpret_cast<std::uintptr_t>("different"),reinterpret_cast<std::uintptr_t>(cmd),reinterpret_cast<std::uintptr_t>(&p),reinterpret_cast<std::uintptr_t>(&t),static_cast<unsigned>(-7),0xdeadbeef,0x123,reinterpret_cast<std::uintptr_t>("cwd"),reinterpret_cast<std::uintptr_t>(&sa),reinterpret_cast<std::uintptr_t>(&info)},"all ten SDK process arguments forwarded");
+    require(pa(app_a,cmd,&p,&t,-7,0xdeadbeef,reinterpret_cast<void*>(0x123),cwd_a,&sa,&info)==7,"native BOOL result preserves nonboolean value");
+    require(seen.process==std::array<std::uintptr_t,10>{reinterpret_cast<std::uintptr_t>(app_a),reinterpret_cast<std::uintptr_t>(cmd),reinterpret_cast<std::uintptr_t>(&p),reinterpret_cast<std::uintptr_t>(&t),static_cast<unsigned>(-7),0xdeadbeef,0x123,reinterpret_cast<std::uintptr_t>(cwd_a),reinterpret_cast<std::uintptr_t>(&sa),reinterpret_cast<std::uintptr_t>(&info)},"all ten SDK process arguments forwarded");
     require(info.dwProcessId==0xfedcba98&&GetLastError()==325,"native process output and error state retained");
     info.dwProcessId=42;SetLastError(567);const auto before=seen.process_a.load();
     require(pa("c:\\GAME.EXE",cmd,&p,&t,0,0,nullptr,nullptr,&sa,&info)==0&&seen.process_a==before&&info.dwProcessId==42&&GetLastError()==567,"blocked native process preserves untouched output and LastError");
