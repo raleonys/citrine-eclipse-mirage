@@ -9,6 +9,9 @@ on:
       - "src/net/**"
       - "src/runtime/**"
       - "src/platform/dll_entry.cpp"
+      - "src/platform/hook_unload_guard.cpp"
+      - "include/preloader_l/platform/hook_unload_guard.hpp"
+      - "tests/native/unload_guard_tests.cpp"
   workflow_dispatch:
 
 permissions:
@@ -38,20 +41,13 @@ jobs:
       - name: Configure lifecycle acceptance
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF -DPRELOADER_L_SHUTDOWN_TRACE=ON
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown configure failed' }
       - name: Build actual DLL and lifecycle host
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host unload_guard_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
-      - name: Preserve linker map before lifecycle execution
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: msvc-shutdown-${{ matrix.configuration }}-linkmap
-          path: build/ci-shutdown-${{ matrix.configuration }}/preloader.production.*.map
-          if-no-files-found: error
-          retention-days: 14
       - name: Verify unload guard ownership and TLS marker rejection boundaries
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'

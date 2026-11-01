@@ -54,13 +54,7 @@ DWORD WINAPI application_worker(void*) {
                 shutdown_result=ERROR_SUCCESS;
                 stopped=true;
                 break;
-            }catch(const std::exception& error) {
-                preloader_l::trace_shutdown_failure(error.what());
-                shutdown_result=ERROR_BUSY;
-            }catch(...) {
-                preloader_l::trace_shutdown_failure("non-standard cleanup exception");
-                shutdown_result=ERROR_BUSY;
-            }
+            }catch(...) {shutdown_result=ERROR_BUSY;}
         }
     }
     auto lease=image_lease;image_lease=nullptr;

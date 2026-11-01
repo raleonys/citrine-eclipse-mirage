@@ -84,11 +84,6 @@ add_library(preloader_l SHARED $<TARGET_OBJECTS:preloader_l_objects>
   resources/surge.rc exports/preloader_l.def)
 target_include_directories(preloader_l PRIVATE include)
 target_link_libraries(preloader_l PRIVATE preloader_l_core)
-option(PRELOADER_L_SHUTDOWN_TRACE "Trace shutdown failures to the inherited CI error handle" OFF)
-if(PRELOADER_L_SHUTDOWN_TRACE)
-  target_compile_definitions(preloader_l_objects PRIVATE PRELOADER_L_SHUTDOWN_TRACE)
-  target_compile_definitions(preloader_l_core PUBLIC PRELOADER_L_SHUTDOWN_TRACE)
-endif()
 target_include_directories(preloader_l PRIVATE resources)
 set_target_properties(preloader_l PROPERTIES
   OUTPUT_NAME "preloader.unsigned" PREFIX "" WINDOWS_EXPORT_ALL_SYMBOLS OFF)

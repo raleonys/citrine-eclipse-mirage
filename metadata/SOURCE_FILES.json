@@ -386,8 +386,8 @@
       "sha256": "1e65786181115106bdd62e7231dd686cb0e7ef064f4056b75825b7583150e4d9"
     },
     "include/preloader_l/platform/hook_unload_guard.hpp": {
-      "bytes": 725,
-      "sha256": "de612548cdb5e366a774fedc55acba4ccc35cd6f4f89bbe220c9edbe6d7427a8"
+      "bytes": 352,
+      "sha256": "7a7ace8e8a794d2a84cfa6954383b7b86b021726524df1b0ca76cd9420d7a2f4"
     },
     "include/preloader_l/platform/registry.hpp": {
       "bytes": 3575,
@@ -866,8 +866,8 @@
       "sha256": "c106f2b1180f2176b4bb74fe69d6e8d52707979c03129b32d9db0ac60450891e"
     },
     "src/platform/dll_entry.cpp": {
-      "bytes": 5231,
-      "sha256": "635998af65a8568fb7f3b8a6008b905ae684ce4b9be84378968b3a0e2af1e251"
+      "bytes": 4953,
+      "sha256": "1b1474464ca87f5c2869e2e9dbb569d6d636361ac2f57ca836d695fba3896e71"
     },
     "src/platform/encoding_windows.cpp": {
       "bytes": 2245,
@@ -922,12 +922,12 @@
       "sha256": "a2c7a2a6059a00da0b706736dfb4f587eba60b7ac07f22df69617283e08adadf"
     },
     "src/platform/hook_transaction.cpp": {
-      "bytes": 2638,
-      "sha256": "227e3e14323ca7aa71a495aa349900f15234148def80253aea17a489b5c5243b"
+      "bytes": 2429,
+      "sha256": "69a8030d5424aba789967e56ed8a6c5d4250b443b2f6d8216b38a29376dc7920"
     },
     "src/platform/hook_unload_guard.cpp": {
-      "bytes": 10087,
-      "sha256": "f249def47a7340fab7abd23aac09247510525d601adc03ee3f8e153d8b85e0f3"
+      "bytes": 7613,
+      "sha256": "d8f7a770c74f2cf444ba2a2786b7827a8371151f208a2bac0da960cc781aaeef"
     },
     "src/platform/library_system.cpp": {
       "bytes": 1272,
