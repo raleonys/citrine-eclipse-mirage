@@ -16,7 +16,7 @@ public:
 struct PoolAppendContext {ReceiveBufferMemory& memory;PoolAppendEffects& effects;};
 void append_pool_block_005440(std::uintptr_t array,std::uintptr_t block,PoolAppendContext&);
 
-// Close the N18 append provider with the recovered source. The four N18 pool
+// Implements the N18 append provider. The four N18 pool
 // bodies can now use this bridge; block allocation and fill remain mandatory,
 // together with this stage's array allocation/copy/free providers.
 class PoolAppendEffects:public PoolAllocationEffects,public PoolAppendEffects {

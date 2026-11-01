@@ -35,7 +35,7 @@ struct Dependencies {
     LicenseHandlers& licensing;
 };
 // Integration layer chosen for this reconstruction, NOT a separately identified
-// original function. It binds verified dispatcher RVAs to recovered source bodies.
+// original function. It binds verified dispatcher RVAs to implemented source bodies.
 class Router {
 public:
     Router(handlers::StateReferences information,

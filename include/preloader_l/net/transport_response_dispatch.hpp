@@ -5,7 +5,7 @@
 #include "preloader_l/net/transport_queued_write.hpp"
 
 namespace preloader_l::socket {
-struct ResponseExecutorScratch {}; // native uninitialized tag, not recovered bytes
+struct ResponseExecutorScratch {}; // native uninitialized tag; bytes not specified
 using ResponseFactory20=void(*)(IoHandlerEnvironment&,std::uintptr_t query,std::uintptr_t literal_84425);
 using ResponseFactory88=void(*)(IoHandlerEnvironment&,std::uintptr_t query,ResponseExecutorScratch&);
 struct ResponseExecutorBinding {IoHandlerExecutor* identity=nullptr;ResponseFactory20 factory_20=nullptr;ResponseFactory88 factory_88=nullptr;};

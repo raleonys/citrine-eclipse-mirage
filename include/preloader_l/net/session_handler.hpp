@@ -13,7 +13,7 @@ struct StateReferences {
     messages::Cipher& cipher;
     messages::EventQueue& events;
 };
-// New source composition, not a separately recovered native procedure.
+// Source composition, not an independently verified native procedure.
 // Does not reset at construction: Session constructor and accepted start own
 // the two observed reset calls. All referenced dependencies must outlive it.
 class MessageHandler final:public server::Handler {

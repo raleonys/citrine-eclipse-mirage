@@ -5,7 +5,7 @@
 #include <cstdint>
 
 namespace preloader_l::execution {
-// Recovered MSVC mutex layout; this is not std::mutex ABI from this compiler.
+// MSVC mutex layout used by this adapter; not this compiler's std::mutex ABI.
 struct alignas(8) MutexState {
     std::uint32_t type;
     std::uint32_t reserved_04;
@@ -35,7 +35,7 @@ struct Platform {
     [[noreturn]] virtual void raise_thread_error_04a648(int index) = 0;
 };
 
-// 04a698 writes only these recovered fields, leaving unrelated bytes untouched.
+// 04a698 writes only these identified fields, leaving unrelated bytes untouched.
 void initialize_mutex_04a698(MutexState&, std::uint32_t observed_type);
 int lock_04a6ac(MutexState&, Platform&); // precisely the nullptr-deadline path
 int unlock_04a6b4(MutexState&, Platform&);

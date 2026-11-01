@@ -29,7 +29,7 @@ private:ReceiveBufferContext& context_;
 };
 struct MessageCoreContext {std::span<MessageCoreBinding> handlers;MessageCoreStrings& strings;};
 // Explicit NORMAL-RETURN compatibility composition of the existing semantic
-//033d70 body. This is not a newly recovered native body. Requests are committed
+// 033d70 body. This is not a verified native body. Requests are committed
 // after the semantic call returns, before response construction. No catch,
 // exception-state writeback or native callback-intermediate visibility is
 // invented. Sessions and referenced state/providers must outlive the call.
