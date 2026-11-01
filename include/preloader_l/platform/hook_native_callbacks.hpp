@@ -51,8 +51,11 @@ struct Context {
     // synchronization in OriginalEffects; no lock spans a network wait/connect.
     std::recursive_mutex registry_gate;
 };
-// Explicit per-image binding. Errors must outlive all bindings and native entry
-// attempts. Context/state/effects stay alive and stable until close succeeds.
+// Explicit per-image binding. Errors must outlive its Binding object and every
+// admitted callback, including nonreturning exception reporting under its lease.
+// Context/state/effects stay alive and stable until close succeeds. An unbound
+// entry terminates without borrowing a retired policy; this does not extend the
+// DLL image lifetime or make arbitrary late entry safe after image unload.
 // Close is nonblocking and rejects in-flight calls; first disable hooks, obtain
 // external callback quiescence, then close. It does not disable hooks itself.
 class Binding final {

@@ -374,8 +374,8 @@
       "sha256": "0fd9083f1b9dc498e4f19ed1e9d4186a1ef4c9c2071de05dae98de8e0cf7ccf7"
     },
     "include/preloader_l/platform/hook_native_callbacks.hpp": {
-      "bytes": 6616,
-      "sha256": "bc153b6f9eacff597a58b81103c21179fb29facbeb7cedaecb8e01e2d392621d"
+      "bytes": 6855,
+      "sha256": "3822032e3678034418666042f2f0c8bbd37140f2910531164649eb2465c51c87"
     },
     "include/preloader_l/platform/hook_setup.hpp": {
       "bytes": 3644,
@@ -1618,8 +1618,8 @@
       "sha256": "63d9c47a8c562e1c7c883026458ac863e5fbfc467bebdf3fcbf2100196ada055"
     },
     "tests/unit/native/native_tests.cpp": {
-      "bytes": 47703,
-      "sha256": "8d0b78c19727cb1713715924184f76e0ff30e26df90ec734e41bcf723fc2e4f9"
+      "bytes": 49946,
+      "sha256": "dd4923cbb55838de4520bac4ea3aa3b2d1ef2bbfae54df5ba616b4a0cd6258bc"
     },
     "tests/unit/network_hook/hook_tests.cpp": {
       "bytes": 14430,
