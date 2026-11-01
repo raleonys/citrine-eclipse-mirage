@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Add a focused GitHub Actions Windows x64 MSVC Debug/Release gate for the existing source-linked `startup_publication_contracts` test. On relevant startup, Asio and execution changes it compiles the actual test target, requires a real native CTest result, and retains build/JUnit evidence; no runtime, SDK, vendor or ABI changes.
+
 - Fix the owner-scoped native callback error policy lifetime: borrow it only under a live callback lease, keep the lease during terminal exception reporting, and clear the cached policy after successful unbinding. Add isolated Windows post-close and live-throw regressions, including a competing close during error reporting and guarded storage after policy destruction. The external reconstruction packet informed this audit; native/Golden/game acceptance remains pending.
 
 - Add a PR #23 post-merge Windows listener-shutdown follow-up with repeated Debug/Release CTest evidence and an explicit unpinned local Compile Only failure; production runtime remains unchanged.
