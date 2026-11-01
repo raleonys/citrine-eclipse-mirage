@@ -30,7 +30,7 @@ struct IoEnvironmentConstructorContext {
     std::span<IoEnvironmentTypeBinding> type_queries;
     std::span<IoEnvironmentFactoryBinding> factories;
 };
-// Temporary payload placeholders are not recovered native initialization.
+// Temporary payload placeholders do not implement native initialization.
 // Factory/move providers construct defined fields before any consumer reads
 // them; sentinel move/destroy providers must not inspect unspecified payload.
 IoHandlerEnvironment& construct_io_environment_023dd0(IoHandlerEnvironment& destination,

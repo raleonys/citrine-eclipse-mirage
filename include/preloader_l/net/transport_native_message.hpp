@@ -26,7 +26,7 @@ public:
     virtual bool encrypt_042610(std::uintptr_t handler,ReceiveBufferString&,std::uint32_t)=0;
     virtual ReceiveBufferString& dispatch_032d00(ReceiveBufferString&,std::uintptr_t handler,NativeMessageDocument&)=0;
     // Defined log groups stand for006880/0088e0/007990 operations; no original
-    // stream, callback-intermediate log ABI or native log helpers recovered.
+    // stream, callback-intermediate log ABI or native log helpers are modeled.
     virtual void log(NativeMessageLog,NativeMessageDocument&,ReceiveBufferString&)=0;
     // Mandatory lower helpers with the exact defined native arguments. They
     // are not replaced by a claim that010040 is called by native033d70.

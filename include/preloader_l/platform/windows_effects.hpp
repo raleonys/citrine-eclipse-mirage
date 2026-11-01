@@ -7,7 +7,7 @@
 #include "preloader_l/core/paths.hpp"
 
 namespace preloader_l::windows {
-// New source composition layer. Supplies recovered status/path/encoding and
+// Source composition layer. Supplies status/path/encoding and
 // delegates every other application effect. Compose as LicenseFiles(inner,...)
 // so token status lookups also reach this inner WindowsEffects object.
 class WindowsEffects final:public license::Effects {

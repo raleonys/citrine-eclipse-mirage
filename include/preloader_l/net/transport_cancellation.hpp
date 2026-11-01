@@ -39,7 +39,7 @@ struct CancellationState {
 class CancellationRecycler {
 public:
     virtual ~CancellationRecycler()=default;
-    // Required bucket/list/free-pool change;0283c0 internals are not recovered
+    // Required bucket/list/free-pool change; 0283c0 internals are not modeled
     // here. Node storage must remain alive until this call returns.
     virtual void recycle_0283c0(CancelMap&,CancelNode&)=0;
 };

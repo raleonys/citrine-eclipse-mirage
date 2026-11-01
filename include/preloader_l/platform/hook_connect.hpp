@@ -38,7 +38,7 @@ public:
 std::int32_t connect_00fd00(StateRefs, Effects&, Socket, std::span<const std::byte> address,
                            std::int32_t supplied_length);
 
-// New composition adapter to the already recovered synchronization core.
+// Composition adapter to the existing synchronization core.
 // All other Effects still come from the caller, never original DLL addresses.
 class ExecutionEffects final : public Effects {
 public:

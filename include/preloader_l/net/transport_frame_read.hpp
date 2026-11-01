@@ -11,7 +11,7 @@ struct FrameMessageClosure {ReceiveBufferString message_00;std::uintptr_t owner_
 struct FrameThreadHandle {std::uintptr_t handle=0;std::uint32_t id=0;};
 class FrameReadApi:public WriteFinishApi {
 public:
-    // Required existing dependencies, not bodies recovered by this stage.
+    // Required existing dependencies; native bodies are not supplied by this stage.
     virtual void construct_message_006b30(ReceiveBufferString&,std::uintptr_t source,std::uint64_t)=0;
     virtual FrameMessageClosure* allocate_frame_04b0bc(std::uint64_t)=0;
     // Entry/function image identities are opaque data, NEVER invoked as VAs.

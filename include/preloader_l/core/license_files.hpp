@@ -15,7 +15,7 @@ public:
     std::int32_t tolower_05fca0(std::int32_t)override;
 };
 // New composition adapter, not a separately identified original function.
-// Three file operations use recovered concrete source; ALL remaining effects
+// Three file operations are implemented locally; ALL remaining effects
 // delegate to caller-supplied implementations, with no successful defaults.
 class LicenseFiles final:public license::Effects {
 public:

@@ -95,7 +95,7 @@ AcceptorState& acceptor_020e20(AcceptorState& state,std::span<const std::byte> e
 }
 void AcceptorBackend::construct_acceptor_020e20(const server::Endpoint& endpoint,bool reuse,int backlog){
     if(backlog!=std::numeric_limits<std::int32_t>::max())
-        throw UnsupportedInput("Recovered constructor uses fixed INT_MAX backlog");
+        throw UnsupportedInput("Constructor requires fixed INT_MAX backlog");
     static_assert(sizeof(sockaddr_in)==16 && sizeof(sockaddr_in6)==28);
     sockaddr_storage storage{};
     const auto port=static_cast<std::uint16_t>((endpoint.port_host_order>>8)|(endpoint.port_host_order<<8));

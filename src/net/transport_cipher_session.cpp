@@ -28,7 +28,7 @@ void SessionCipher::set_fixed_key_084c98(){set_session_key_042780(*this,crypto::
 void SessionCipher::set_key_042780(const crypto::Key& key){set_session_key_042780(*this,key);}
 void SessionCipher::set_key_and_iv_042760(const crypto::Key& key,const crypto::Key& iv){set_session_key_iv_042760(*this,key,iv);}
 namespace {
-// Local semantic strings borrow a reserved host buffer. No recovered native
+// Local semantic strings borrow a reserved host buffer. No native
 // allocation/free ABI is claimed. Real request/response prefixes use N11's
 // caller context directly and do not enter this local-string projection.
 struct BorrowedApi:BoundedReceiveBufferApi {
