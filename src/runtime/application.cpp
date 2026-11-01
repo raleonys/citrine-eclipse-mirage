@@ -371,7 +371,8 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             // seed is the same one the first source message getter would create.
             (void)event_queue::mutex_02c620(events.context);
             (void)event_queue::queue_02c400(events.context);
-            service=std::make_unique<net::AsioService>(*this,execution,state.server_port,server_ready);
+            service=std::make_unique<net::AsioService>(*this,execution,state.server_port,server_ready,
+                net::SessionPolicy{},true); // Bind first; leave accept callbacks inactive until ready.
             service->start();
             if(options.install_hooks){hooks=std::make_unique<Hooks>(state,environment,execution);hooks->start();}
             std::promise<std::exception_ptr> completed;
@@ -397,6 +398,7 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             // A connect callback waiting for all three source phases must not
             // escape while the handler factory still rejects new sessions.
             execution.finish_flag_036820(extra_ready);
+            service->resume_accepts(); // IO executor arms accepts only after profile publication.
             started=true;environment.debug_log("application ready");
         }catch(...){stop();throw;}
     }
