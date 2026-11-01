@@ -10,7 +10,7 @@
     ".github/hooks/pre-push": "9495c255f16bdafc9d838be55828f13a85f6587182a2320ce8899cb1602aa198",
     ".github/pull_request_template.md": "c46e16c3906cb310342fa5eb9560c930a5c743951683a598f6666d7c70a5feba",
     ".github/workflows/ci.yml": "d895892c650a1275521d9fa21e441d753377930dc07138f785778cc079b1e0b4",
-    ".github/workflows/msvc-debug-defaults-diagnostic.yml": "8196e3b7635062177f69f88a948746a8d52b1c738e8ba8a4fafe12558b769350",
+    ".github/workflows/msvc-debug-defaults-diagnostic.yml": "b4735f0f74f9cfcbcfb7b0d814d1551c544ac14f527d1be17dfb0800fc547597",
     ".github/workflows/weekly-release.yml": "efcf35209c3798257089eb9048d726218bbd4427457fda8369628a645d579d2d",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "978593d1e4a8599798082508b1b77e1731fe06a065e8b6f82d14e446d5a4047c",
