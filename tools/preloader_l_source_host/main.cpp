@@ -50,9 +50,17 @@ int main() {
     debug_stage("calendar-ok");
     debug_stage("sha1-enter");
     preloader_l::hash::Sha1 hash;
+    debug_stage("sha1-constructed");
+    debug_stage("sha1-update-enter");
     hash.update("abc");
-    if(preloader_l::hash::classic_hex_digest(hash.finalize_words_043270())
-       !="a9993e364706816aba3e25717850c26c9cd0d89d") return 12;
+    debug_stage("sha1-update-ok");
+    debug_stage("sha1-finalize-enter");
+    const auto sha1_words=hash.finalize_words_043270();
+    debug_stage("sha1-finalize-ok");
+    debug_stage("sha1-render-enter");
+    const auto sha1_text=preloader_l::hash::classic_hex_digest(sha1_words);
+    debug_stage("sha1-render-ok");
+    if(sha1_text!="a9993e364706816aba3e25717850c26c9cd0d89d") return 12;
     debug_stage("sha1-ok");
     debug_stage("empty-parser-enter");
     preloader_l::parser::State state;
