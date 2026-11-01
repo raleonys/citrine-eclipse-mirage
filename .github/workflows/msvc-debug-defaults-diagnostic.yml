@@ -56,32 +56,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Iterator-control configuration failed' }
           cmake --build $build --config Debug --target portable_configuration_defaults --parallel 2
           if ($LASTEXITCODE -ne 0) { throw 'Iterator-control build failed' }
-          ctest --test-dir $build -C Debug -R '^portable_configuration_defaults        shell: pwsh
-        run: |
-          $build = 'build/msvc-defaults-diagnostic'
-          ctest --test-dir $build -C Debug -R '^portable_configuration_defaults$' --output-on-failure --verbose --timeout 75 --output-junit "$build/CTEST_RESULTS.xml" 2>&1 | Tee-Object -FilePath "$build/config_defaults_debug_ctest.log"
-          $testExit = $LASTEXITCODE
-          "CTEST_EXIT_CODE=$testExit" | Set-Content -Path "$build/CTEST_EXIT_CODE.txt"
-          if ($testExit -ne 0) { exit $testExit }
-      - name: Retain Windows Debug diagnostic evidence
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: msvc-config-defaults-debug-evidence
-          path: |
-            build/msvc-defaults-diagnostic/CTEST_EXIT_CODE.txt
-            build/msvc-defaults-diagnostic/config_defaults_debug_ctest.log
-            build/msvc-defaults-diagnostic/constructor_probe.log
-            build/msvc-defaults-diagnostic/CTEST_RESULTS.xml
-            build/msvc-defaults-diagnostic/Testing/Temporary/LastTest.log
-            build/msvc-defaults-diagnostic/CMakeCache.txt
-            build/msvc-defaults-diagnostic/CMakeFiles/CMakeConfigureLog.yaml
-          if-no-files-found: warn
-          retention-days: 14
- --verbose --output-on-failure --timeout 90 2>&1 | Tee-Object -FilePath "$build/control_ctest.log"
+          ctest --test-dir $build -C Debug -R '^portable_configuration_defaults$' --verbose --output-on-failure --timeout 90 2>&1 | Tee-Object -FilePath "$build/control_ctest.log"
           $controlExit = $LASTEXITCODE
           "CONTROL_EXIT_CODE=$controlExit"
-          # This is a cause-isolation control, not the normal Debug acceptance.
+          # This is diagnostic evidence, not genuine Debug acceptance.
           exit 0
       - name: Run isolated test and collect stage breadcrumbs
         shell: pwsh
@@ -100,6 +78,7 @@ jobs:
             build/msvc-defaults-diagnostic/CTEST_EXIT_CODE.txt
             build/msvc-defaults-diagnostic/config_defaults_debug_ctest.log
             build/msvc-defaults-diagnostic/constructor_probe.log
+            build/msvc-iterator0-control/control_ctest.log
             build/msvc-defaults-diagnostic/CTEST_RESULTS.xml
             build/msvc-defaults-diagnostic/Testing/Temporary/LastTest.log
             build/msvc-defaults-diagnostic/CMakeCache.txt
