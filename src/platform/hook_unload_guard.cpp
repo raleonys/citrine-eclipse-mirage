@@ -7,27 +7,7 @@
 #include <algorithm>
 #include <cstring>
 namespace preloader_l {
-#ifdef PRELOADER_L_SHUTDOWN_TRACE
-void trace_shutdown_failure(const char* reason) noexcept {
- const auto saved=GetLastError();
- const auto output=GetStdHandle(STD_ERROR_HANDLE);
- DWORD written=0;const char prefix[]="SHUTDOWN_TRACE: ";
- DWORD size=0;while(reason[size]&&size<512)++size;
- WriteFile(output,prefix,sizeof(prefix)-1,&written,nullptr);
- WriteFile(output,reason,size,&written,nullptr);
- WriteFile(output,"\r\n",2,&written,nullptr);
- SetLastError(saved);
-}
-void trace_shutdown_value(const char* name,std::uint64_t value) noexcept {
- char number[19]={'0','x'};const char digits[]="0123456789abcdef";
- for(unsigned i=0;i<16;++i)number[2+i]=digits[(value>>(60-4*i))&15];
- trace_shutdown_failure(name);trace_shutdown_failure(number);
-}
-#endif
 namespace {
-const char* scan_rejection="thread context or scan API rejected";
-std::uint64_t scan_peer=0,scan_caller=0,scan_register=~std::uint64_t{},scan_offset=0,scan_instruction=0;
-bool reject_scan(const char* reason) noexcept{scan_rejection=reason;return false;}
 std::atomic<DWORD> shutdown_caller{0};
 std::atomic_flag scan_active=ATOMIC_FLAG_INIT;
 struct ScanOwners {
@@ -57,26 +37,7 @@ bool release_scan_owners() noexcept{
 }
 bool finish_scan(bool safe) noexcept{
  // Cleanup is required even when the scan already proved unsafe.
- const bool released=release_scan_owners();
- if(!safe){
-  trace_shutdown_failure(scan_rejection);
-  trace_shutdown_value("peer thread",scan_peer);
-  trace_shutdown_value("caller snapshot",scan_caller);
-  trace_shutdown_value("caller now",shutdown_caller.load());
-  trace_shutdown_value("register index (RIP,RAX,RBX,RCX,RDX,RSI,RDI,RBP,R8..R15)",scan_register);
-  trace_shutdown_value("image offset",scan_offset);
-#ifdef PRELOADER_L_SHUTDOWN_TRACE
-  HMODULE peer_image=nullptr;
-  if(GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-      reinterpret_cast<LPCWSTR>(scan_instruction),&peer_image)){
-   char path[MAX_PATH]{};
-   if(GetModuleFileNameA(peer_image,path,MAX_PATH))trace_shutdown_failure(path);
-   trace_shutdown_value("peer instruction offset",scan_instruction-reinterpret_cast<std::uint64_t>(peer_image));
-  }
-#endif
- }
- if(!released)trace_shutdown_failure("scan handle or suspension release rejected");
- return released&&safe;
+ const bool released=release_scan_owners();return released&&safe;
 }
 bool in_module(std::uint64_t value,std::uint64_t base,std::uint64_t end) noexcept{return value>=base&&value<end;}
 std::uint64_t tls_template_end(const IMAGE_NT_HEADERS64& nt,std::uint64_t base,std::uint64_t end) noexcept{
@@ -109,32 +70,30 @@ std::uint64_t tls_template_end(const IMAGE_NT_HEADERS64& nt,std::uint64_t base,s
  return 0;
 }
 bool scan_stack(CONTEXT& context,std::uint64_t base,std::uint64_t end,std::uint64_t tls_end) noexcept{
- scan_instruction=context.Rip;
- const std::uint64_t registers[]={context.Rip,context.Rax,context.Rbx,context.Rcx,context.Rdx,context.Rsi,context.Rdi,context.Rbp,context.R8,context.R9,context.R10,context.R11,context.R12,context.R13,context.R14,context.R15};
- for(unsigned i=0;i<sizeof(registers)/sizeof(registers[0]);++i)if(in_module(registers[i],base,end)&&!(i!=0&&registers[i]==tls_end)){
-  scan_register=i;scan_offset=registers[i]-base;
-  return reject_scan("peer register contains image address");
- }
+ // RIP always denotes execution, including an unexpected jump into TLS data.
+ if(in_module(context.Rip,base,end))return false;
+ const std::uint64_t registers[]={context.Rax,context.Rbx,context.Rcx,context.Rdx,context.Rsi,context.Rdi,context.Rbp,context.R8,context.R9,context.R10,context.R11,context.R12,context.R13,context.R14,context.R15};
+ for(auto value:registers)if(in_module(value,base,end)&&value!=tls_end)return false;
  MEMORY_BASIC_INFORMATION first{};
- if(!VirtualQuery(reinterpret_cast<const void*>(context.Rsp),&first,sizeof first))return reject_scan("initial stack query rejected");
+ if(!VirtualQuery(reinterpret_cast<const void*>(context.Rsp),&first,sizeof first))return false;
  auto cursor=context.Rsp;const auto allocation=first.AllocationBase;std::uint64_t scanned=0;
  // Conservative return-address/data scan catches pre-lease callback prologues
  // and callbacks temporarily inside a system API. False positives defer unload.
  while(scanned<64ULL*1024*1024){
   MEMORY_BASIC_INFORMATION region{};
-  if(!VirtualQuery(reinterpret_cast<const void*>(cursor),&region,sizeof region))return reject_scan("stack region query rejected");
+  if(!VirtualQuery(reinterpret_cast<const void*>(cursor),&region,sizeof region))return false;
   if(region.AllocationBase!=allocation)return true;
   const auto limit=reinterpret_cast<std::uint64_t>(region.BaseAddress)+region.RegionSize;
-  if(limit<=cursor)return reject_scan("stack region has no progress");
+  if(limit<=cursor)return false;
   // Refuse a region exceeding the remaining scan budget; never infer it safe.
-  if(limit-cursor>64ULL*1024*1024-scanned)return reject_scan("stack scan budget exhausted");
-  if(region.State!=MEM_COMMIT||(region.Protect&(PAGE_NOACCESS|PAGE_GUARD)))return reject_scan("stack region unreadable");
+  if(limit-cursor>64ULL*1024*1024-scanned)return false;
+  if(region.State!=MEM_COMMIT||(region.Protect&(PAGE_NOACCESS|PAGE_GUARD)))return false;
   __try {
    for(auto address=cursor;address+sizeof(std::uint64_t)<=limit;address+=sizeof(std::uint64_t)){
     std::uint64_t value;std::memcpy(&value,reinterpret_cast<const void*>(address),sizeof value);
-    if(in_module(value,base,end)&&value!=tls_end)return reject_scan("peer stack contains image address");
+    if(in_module(value,base,end)&&value!=tls_end)return false;
    }
-  }__except(EXCEPTION_EXECUTE_HANDLER){return reject_scan("stack read exception");}
+  }__except(EXCEPTION_EXECUTE_HANDLER){return false;}
   scanned+=limit-cursor;cursor=limit;
  }
  return false;
@@ -146,8 +105,7 @@ bool external_threads_outside_module() noexcept{
  if(scan_active.test_and_set(std::memory_order_acquire))return false;
  struct Unlock {~Unlock(){scan_active.clear(std::memory_order_release);}} unlock;
  // Retry the exact handles before enumerating or adding a new suspension.
- if(!release_scan_owners()){trace_shutdown_failure("retained scan cleanup rejected");return false;}
- scan_rejection="thread context or scan API rejected";
+ if(!release_scan_owners())return false;
  HMODULE module=nullptr;
  if(!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,reinterpret_cast<LPCWSTR>(&external_threads_outside_module),&module))return false;
  const auto base=reinterpret_cast<std::uint64_t>(module);
@@ -160,10 +118,8 @@ bool external_threads_outside_module() noexcept{
  THREADENTRY32 entry{};entry.dwSize=sizeof entry;
  if(!Thread32First(snapshot,&entry))return finish_scan(false);
  const DWORD self=GetCurrentThreadId(),caller=shutdown_caller.load(std::memory_order_acquire),process=GetCurrentProcessId();
- scan_caller=caller;scan_register=~std::uint64_t{};scan_offset=0;
  do {
   if(entry.th32OwnerProcessID!=process||entry.th32ThreadID==self||entry.th32ThreadID==caller)continue;
-  scan_peer=entry.th32ThreadID;
   retained.thread=OpenThread(THREAD_SUSPEND_RESUME|THREAD_GET_CONTEXT|THREAD_QUERY_INFORMATION,FALSE,entry.th32ThreadID);
   if(!retained.thread){if(GetLastError()==ERROR_INVALID_PARAMETER)continue;return finish_scan(false);}
   if(SuspendThread(retained.thread)==DWORD(-1)){

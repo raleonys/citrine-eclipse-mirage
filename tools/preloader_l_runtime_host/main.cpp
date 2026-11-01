@@ -88,7 +88,6 @@ void cycle(const wchar_t* path,unsigned index) {
 int wmain(int argc,wchar_t** argv) {
     try {
         require(argc==2,"usage: preloader_l_runtime_host <application DLL>");
-        std::cout<<"lifecycle main thread: "<<GetCurrentThreadId()<<'\n';
         for(unsigned i=0;i<3;++i)cycle(argv[1],i);
         std::cout<<"PASS: public C API names/ordinals; 3 actual load/start/socket/profile/stop/unload cycles; single DllShutdown with bounded wait/retry; removed alias/ordinal absent\n";
         return 0;

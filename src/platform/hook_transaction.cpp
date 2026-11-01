@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "preloader_l/platform/hook_transaction.hpp"
-#include "preloader_l/platform/hook_unload_guard.hpp"
 #include <exception>
 #include <stdexcept>
 namespace preloader_l::platform::hook_engine {
@@ -33,11 +32,11 @@ bool Transaction::teardown(std::chrono::milliseconds timeout,bool rollback) noex
     try {
         if(owns_&&!disabled_){
             const auto status=api_.disable(nullptr);
-            if(status!=MH_OK&&status!=MH_ERROR_DISABLED){trace_shutdown_failure("hook disable rejected");throw std::runtime_error("Hook disable incomplete");}
+            if(status!=MH_OK&&status!=MH_ERROR_DISABLED)throw std::runtime_error("Hook disable incomplete");
             disabled_=true;
         }
-        if(!calls_.drain(timeout)){trace_shutdown_failure("hook drain rejected");throw std::runtime_error("Hook calls not quiescent");}
-        if(owns_&&api_.uninitialize()!=MH_OK){trace_shutdown_failure("hook engine release rejected");throw std::runtime_error("Hook engine cleanup incomplete");}
+        if(!calls_.drain(timeout))throw std::runtime_error("Hook calls not quiescent");
+        if(owns_&&api_.uninitialize()!=MH_OK)throw std::runtime_error("Hook engine cleanup incomplete");
         owns_=false;state_=TransactionState::Stopped;return true;
     }catch(...){state_=rollback?TransactionState::RollbackIncomplete:TransactionState::CleanupIncomplete;return false;}
 }
