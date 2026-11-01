@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Audit C36-F003: keep unknown-entitlement diagnostics nonmodal and redacted, repair native test namespace scope, and cover Debug output plus Release preservation of existing logs. Add focused Windows MSVC Debug/Release acceptance; fresh native execution remains pending.
+
 - Correct single-hook disable IP relocation in the pinned MinHook build copy, preserve upstream vendor bytes, and add exact patch, source, and focused Windows MSVC Debug/Release regression checks. The focused fixture passed; genuine suspended-peer and full Native/Golden acceptance remain pending.
 
 - Isolate the MSVC C++ development DLL and host in a shared compiler-CRT graph, including separately compiled vendor dependencies, to avoid cross-module static Debug CRT ownership during parser-state destruction. Production retains its static CRT, sources and three-export ABI; native Debug/Release validation remains required.

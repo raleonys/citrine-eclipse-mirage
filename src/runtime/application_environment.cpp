@@ -156,7 +156,12 @@ std::int64_t Environment::timestamp_to_epoch_041e10(std::string_view s){return t
 void Environment::log_profile_name_084f48(std::string_view name){debug_log({"profile requested: ",name});}
 std::string Environment::current_time_041b60(){return achievement_runtime::utc_time_041b60(clock_,formatter_);}
 std::int32_t Environment::atoi_05ee08(std::string_view s){return std::atoi(std::string(s).c_str());}
-void Environment::unknown_entitlement_field(std::string_view field){debug_log({"unknown entitlement field: ",field});MessageBoxW(nullptr,wide(widen_0145d0(field)).c_str(),L"SURGE",MB_OK);}
+void Environment::unknown_entitlement_field(std::string_view) {
+    // This callback is reached while the shared handler state lock is held.
+    // Do not display a synchronous modal or copy caller-controlled fields
+    // (which may include secrets or line breaks) into diagnostic storage.
+    debug_log("QueryEntitlements ignored unknown field");
+}
 bool Environment::online_avatar_virtual_28(const Path& p) {
     if(!provider)throw std::logic_error("Online avatar requested without provider");
     using Fn=bool(*)(void*,const wchar_t*);auto object=reinterpret_cast<void*>(provider);

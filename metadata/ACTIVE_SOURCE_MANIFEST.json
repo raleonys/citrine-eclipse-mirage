@@ -15,7 +15,7 @@
     ".github/workflows/weekly-release.yml": "efcf35209c3798257089eb9048d726218bbd4427457fda8369628a645d579d2d",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "978593d1e4a8599798082508b1b77e1731fe06a065e8b6f82d14e446d5a4047c",
-    "CHANGELOG.md": "963a2e8ec855316f5b1af85a0db09908d80171efce93b75e678f20a0857e2573",
+    "CHANGELOG.md": "fe9197686f61687b4ed05a03aefd366e5253a393564dd923ef66dfa003739884",
     "cmake/BuildPartition.cmake": "bb3a9c833c694256250d04be258c5f6a9315ea10189198185ae4fba58b281882",
     "cmake/InfrastructureChecks.cmake": "1e4ec0c5319403be3dfe5db904fb188a3edde069236d794a69e6e4bfb564634b",
     "cmake/PatchHookFreeze.cmake": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
@@ -386,7 +386,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "2403d829c98174d3cf7caa0d382d6478457d22f4d74e162194372d66c8894b66",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "6a0799c62dd9fcba984035ab48a06c078e0b7958ed778e2641e44124726b0ce9",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "a27d0cd84fc6ab05cf5b321bafce23cde6b887dc374c715ee9fa8553c97d45c6",
-    "metadata/SOURCE_FILES.json": "593b6b1b8d2b93150555bfff97c602cbeb9cb4a2f3670de7edcf2de56538965d",
+    "metadata/SOURCE_FILES.json": "616f355277fd8df073d316ea478924fee1101570bf83b6b794024a6d78d08732",
     "metadata/SOURCE_INPUTS.json": "fb5b29dad4e05eed197e57a98c30803f48ed0e9c30c92d4b05afb9c3751c5513",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "c413071a0a78fb8fbfc4eeabf1e970dfde51b31a870852f50bc175b4a2f4f765",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -556,7 +556,7 @@
     "src/runtime/achievement_writer.cpp": "d4018b757421f9638861a4ac889f4a2393eb79d689860ba26710b8b2f2c9a605",
     "src/runtime/application.cpp": "a79fbad8b52083da1b7f94342eacef737f06cf79f050217f1e12a37537752989",
     "src/runtime/application_defaults.cpp": "cc36e01fb302d11d91e0a9245e53bfabf667e35d3fa30c7dedcc130ac46d8fd1",
-    "src/runtime/application_environment.cpp": "c2ce56f5e37818b5d25a25a07da9273c8d0cc81c50380c3cca184fd8336e90b1",
+    "src/runtime/application_environment.cpp": "e519757c341f522865cc5698c88b9ddf66c64e5d53a799df60dda8c8f6f65e67",
     "src/runtime/application_internal.hpp": "807f9439621b227aa56038a5c13988d1dbdc1bae74d2d7c09a2b01bae0b7949c",
     "src/runtime/bootstrap.cpp": "ec1bf236a429db912906ba39ef7a16b7cf8949dea02986499a2f1817da822f82",
     "src/runtime/calendar.cpp": "2f1535f0d60706c6857d9b138bed21c1d9c33a8221a28560424ae6e028467da9",
@@ -612,7 +612,7 @@
     "tests/native/cleanup_retry_tests.cpp": "759d224a612606bae1d9856adc330994ec0cfe49fe0cf5808be609e254822be8",
     "tests/native/configuration_platform_tests.cpp": "c1c71f5514103ec38be1c48cfaf0ecfab56eff6370496476a04eb5caa8e1e850",
     "tests/native/crypt_path_probe_tests.cpp": "4dd291bb6d380f3e01ba041c67a79df928a5584a6cc366a865044e0a2cb112aa",
-    "tests/native/environment_dialog_tests.cpp": "5b78f97fbc15bb4a1267be6a2a9b2e409c24227fa2c3ede6c173cbb048bd4cef",
+    "tests/native/environment_dialog_tests.cpp": "569c65ef825bab01f6e838e7330d75cb99c43a5cdebffa2a6a801bd0af032140",
     "tests/native/extra_library_failure_tests.cpp": "531d7de03aedded120120f38c9d0e764a2ec28b5d13329e7bfcb3f9011ca8777",
     "tests/native/file_copy_windows_tests.cpp": "4ec15f4ece5c5eeae1b38a85efcb3935ff0a8b501a33cf3344abafacbc4bbdc8",
     "tests/native/handler_pool_tests.cpp": "a73bdcd580ffff0e8e9b18f00b67106974fd816558bc8dbb870b93d70f5657b7",
@@ -3684,6 +3684,7 @@
     "tools/README.md": "100b6b0bce155329c2e6bd3647229231d602b93898fc917f042d3b48b3bfda26",
     "tools/runtime_probe.hpp": "54ad0df82fa98f263b2ddfe5f8ef97c9a500b34e7e9fd32f6054f1f3a8081c7f",
     ".github/workflows/msvc-hook-disable.yml": "7dd818eacdb8344fb0ee608638d771c3803af796fc3c57692936a67da5a74b66",
-    "tests/infrastructure/test_hook_disable_action.py": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771"
+    "tests/infrastructure/test_hook_disable_action.py": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771",
+    ".github/workflows/msvc-environment-diagnostics.yml": "46026f582e9f8b2df80cc0e40a8dd2720cd1e44b7348869ba33330ca83cf59f3"
   }
 }
