@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - '.github/workflows/msvc-debug-defaults-diagnostic.yml'
+      - 'tests/unit/config_defaults/defaults_tests.cpp'
 
 permissions:
   contents: read
