@@ -24,24 +24,29 @@ struct Lease {
 };
 template<class F> auto invoke(Callback callback,F&& f) noexcept -> decltype(f(std::declval<Context&>())) {
     const auto incoming=GetLastError();
-    Errors* invocation_errors=last_errors.load(std::memory_order_acquire);
     try {
-        Lease lease;
-        invocation_errors=lease.errors; // retain this binding's policy after release
-        const auto result=[&]{
-            callback_lock::Guard state_lock(lease.context->registry_gate,
-                callback!=Callback::connect_00fd00&&callback!=Callback::crypt_query_001264);
-            SetLastError(incoming); // binding synchronization adds no API error state
-            auto value=f(*lease.context);
-            return std::pair{value,GetLastError()};
-        }();
-        lease.release();
-        SetLastError(result.second);
-        return result.first;
+        Lease lease; // Borrow an owner-scoped error policy only under a live lease.
+        try {
+            const auto result=[&]{
+                callback_lock::Guard state_lock(lease.context->registry_gate,
+                    callback!=Callback::connect_00fd00&&callback!=Callback::crypt_query_001264);
+                SetLastError(incoming); // binding synchronization does not alter API error state
+                auto value=f(*lease.context);
+                return std::pair{value,GetLastError()};
+            }();
+            lease.release();
+            SetLastError(result.second);
+            return result.first;
+        } catch(...) {
+            // The error policy belongs to the live binding. Keep the lease
+            // until the nonreturning policy finishes or terminates.
+            lease.errors->callback_exception(callback,std::current_exception());
+            std::terminate();
+        }
     } catch(...) {
-        if(invocation_errors)
-            invocation_errors->callback_exception(callback,std::current_exception());
-        std::terminate(); // explicit out-of-contract entry before any binding
+        // Without a live lease no owner-scoped policy may be dereferenced.
+        // An unbound native callback is terminal, never a successful API call.
+        std::terminate();
     }
 }
 std::uintptr_t address(const void* p){return reinterpret_cast<std::uintptr_t>(p);}
@@ -58,7 +63,7 @@ void Binding::close(){
     {std::lock_guard lock(gate);
      if(current!=context_){failure=LifecycleFault::WrongOwner;rejected=true;}
      else if(calls){failure=LifecycleFault::Busy;rejected=true;}
-     else{current=nullptr;context_=nullptr;}}
+     else{current=nullptr;last_errors.store(nullptr,std::memory_order_release);context_=nullptr;}}
     if(rejected)errors_.lifecycle(failure);
 }
 Binding::~Binding() noexcept{close();}

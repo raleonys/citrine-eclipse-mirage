@@ -12,6 +12,7 @@
 #include <thread>
 #include <string>
 #include <cstdlib>
+#include <exception>
 #include <condition_variable>
 #include <chrono>
 #include <functional>
@@ -475,6 +476,31 @@ void test_crypt_lifetime(){
     require(result==7&&error==0x1234abcd&&active_calls()==0,"crypt original finishes before lease releases");
     f.binding.close();require(!is_bound(),"crypt context closes after callback quiescence");
 }
+// Child processes isolate terminal paths. A closed binding has no owned
+// error policy; an exception during a live callback still uses its policy.
+void test_terminal_policy_lifetime() {
+    std::array<char,32768> executable{};
+    const DWORD n=GetModuleFileNameA(nullptr,executable.data(),static_cast<DWORD>(executable.size()));
+    require(n>0&&n<executable.size(),"native callback executable path");
+    for(int scenario=0;scenario<3;++scenario) {
+        const char* mode=scenario==0?"--closed":scenario==1?"--crypt-closed":"--throw-original";
+        const DWORD expected=scenario<2?87u:86u;
+        auto command="\"" + std::string(executable.data(),n) + "\" " + mode;
+        STARTUPINFOA startup{};startup.cb=sizeof(startup);
+        PROCESS_INFORMATION process{};
+        require(CreateProcessA(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,
+                               nullptr,nullptr,&startup,&process)!=FALSE,
+                "spawn isolated terminal callback regression");
+        const DWORD waited=WaitForSingleObject(process.hProcess,15000);
+        DWORD code=0;
+        const BOOL got=GetExitCodeProcess(process.hProcess,&code);
+        if(waited!=WAIT_OBJECT_0)(void)TerminateProcess(process.hProcess,88);
+        (void)CloseHandle(process.hThread);
+        (void)CloseHandle(process.hProcess);
+        require(waited==WAIT_OBJECT_0&&got&&code==expected,
+                "retired callback policy cannot run; live policy still handles exceptions");
+    }
+}
 #if !defined(PRELOADER_L_PRODUCTION_CALLBACK_TESTS)
 struct InitRemaining final:preloader_l::host_init::Effects {
     std::array<std::uintptr_t,callback_count>& targets;std::size_t index{};
@@ -537,11 +563,11 @@ void test_actual_host_install_binding(){
 }
 int main(int argc,char** argv){try{
     if(argc>1){boundary_mode=true;Fixture f;
-        if(std::strcmp(argv[1],"--closed")==0){expected_failure=Callback::reg_close_00f5b0;f.binding.close();reg_close_entry(nullptr);}
+        if(std::strcmp(argv[1],"--closed")==0){std::set_terminate([]{std::_Exit(87);});expected_failure=Callback::reg_close_00f5b0;f.binding.close();reg_close_entry(nullptr);}
         else if(std::strcmp(argv[1],"--missing")==0){expected_failure=Callback::reg_close_00f5b0;f.originals[3]=0;reg_close_entry(nullptr);}
         else if(std::strcmp(argv[1],"--throw-original")==0){expected_failure=Callback::create_process_a_00f3f0;seen.throw_process=true;process_a_entry("other",nullptr,nullptr,nullptr,0,0,nullptr,nullptr,nullptr,nullptr);}
         else if(std::strcmp(argv[1],"--crypt-missing")==0){expected_failure=Callback::crypt_query_001264;f.originals[10]=0;crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
-        else if(std::strcmp(argv[1],"--crypt-closed")==0){expected_failure=Callback::crypt_query_001264;f.binding.close();crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
+        else if(std::strcmp(argv[1],"--crypt-closed")==0){std::set_terminate([]{std::_Exit(87);});expected_failure=Callback::crypt_query_001264;f.binding.close();crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
         else if(std::strcmp(argv[1],"--crypt-invalid")==0){const wchar_t invalid[]={0xd800,0};require(crypt_query_entry(1,invalid,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr)==7,"invalid UTF16 forwards instead of trapping");return 0;}
         return 98;
     }
@@ -556,5 +582,6 @@ int main(int argc,char** argv){try{
     test_real_winsock_invalid_address_equivalence();
     test_network_wait_allows_peer_callbacks(true);test_network_wait_allows_peer_callbacks(false);test_concurrent_attempts();
     test_hook_reference_common_guard_scope();
+    test_terminal_policy_lifetime();
     std::cout<<"PASS: "<<checks<<" native callback/trampoline checks; synthetic originals plus real Winsock invalid-address equivalence\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected native test exception\n";return 1;}}
