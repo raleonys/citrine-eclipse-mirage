@@ -50,8 +50,8 @@
       "sha256": "99e57616d41f22cf5f0170691c0430e860af96c7bf7b6b50c796559fff3f2e9a"
     },
     "include/preloader_l/core/binary_io.hpp": {
-      "bytes": 2453,
-      "sha256": "a082eb102fff36ab1890e22419ce424af1ff18f56c176a3a809b3fcaeb42e31b"
+      "bytes": 2703,
+      "sha256": "4ad8f2ca661a5df16fa37790c5bc76558f56281159b514769259cc1ac912f3a0"
     },
     "include/preloader_l/core/license.hpp": {
       "bytes": 3654,
@@ -594,16 +594,16 @@
       "sha256": "2c077e82e12bdfa96a593ee1cae6478b72add8c5d4bd36f3ba08ecfa2e50349a"
     },
     "src/core/binary_io.cpp": {
-      "bytes": 1505,
-      "sha256": "47c98952ffb4dc4ef3dcf835ded7084588538f4027e30879de7a54d57d47b2fe"
+      "bytes": 2034,
+      "sha256": "1ae2b229b5f28514c197ec90e663d9db40a2045c0b3e8cac099ca566aa7944a8"
     },
     "src/core/license.cpp": {
       "bytes": 6709,
       "sha256": "cc4341801af69680fe2b372c6be11772f993e2d5ff1811a2583a46d7c7b97e54"
     },
     "src/core/license_files.cpp": {
-      "bytes": 4615,
-      "sha256": "283458bde9242cd5f0069999b65c1cd6bdacbbe8b1968880165aeb11012dee73"
+      "bytes": 4616,
+      "sha256": "5a732d022f2c014741ef125ce2371bf5df63bf0feed0b0ef23752180d67b0be7"
     },
     "src/core/paths.cpp": {
       "bytes": 3339,
@@ -974,8 +974,8 @@
       "sha256": "d4018b757421f9638861a4ac889f4a2393eb79d689860ba26710b8b2f2c9a605"
     },
     "src/runtime/application.cpp": {
-      "bytes": 28380,
-      "sha256": "a79fbad8b52083da1b7f94342eacef737f06cf79f050217f1e12a37537752989"
+      "bytes": 28381,
+      "sha256": "969c1f4c3c1288ba0f8faa7666934188e5e21c3e4b9b567c52e694334054564e"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2261,
@@ -1558,8 +1558,8 @@
       "sha256": "f0f2476bdfc4336c323a3360be098d5b30803cb5e7cb6c4bca37399af92e4c90"
     },
     "tests/unit/file/binary_io_tests.cpp": {
-      "bytes": 6796,
-      "sha256": "7374e32cbe6cb5e8fd7194ca1e1955b217f1c71932600cb380ba9d3e1a6ac75e"
+      "bytes": 9183,
+      "sha256": "f61854667680c76c086265b5de2355be5722fbd20d605fcfa9a61912e5f5c8be"
     },
     "tests/unit/file/file_copy_tests.cpp": {
       "bytes": 9422,

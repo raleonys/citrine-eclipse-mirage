@@ -30,4 +30,14 @@ bool write_binary_03c1d0(const Path& path,std::string_view value,Factory& factor
     // validation. A stream with exceptions enabled can still throw above.
     return true;
 }
+bool write_binary_checked(const Path& path,std::string_view value,Factory& factory) {
+    auto stream=factory.open_output_03a1a0(path,0x20,0x40);
+    if(!stream)throw std::invalid_argument("Output factory returned null (integration contract)");
+    if(stream->initial_state()!=0)return false;
+    stream->write_03be80(value);
+    const bool write_failed=stream->initial_state()!=0;
+    // Buffered output can signal failure only during close.
+    stream->close_03ae70();
+    return !write_failed && stream->initial_state()==0;
+}
 } // namespace preloader_l::file

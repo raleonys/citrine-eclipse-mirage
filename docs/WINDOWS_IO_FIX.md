@@ -25,6 +25,22 @@ It does not claim full import/byte/edge-case equivalence with the historical
 Anadius CRT. LLVM/Wine tests do not replace actual Windows testing of the
 Microsoft STL implementation.
 
+
+## Checked license ticket writes (F-C24-001 candidate)
+
+The original `write_binary_03c1d0` remains unchanged because it
+intentionally reflects the recovered RE initial-open-only success rule.
+The opt-in `write_binary_checked` checks the live stream status after
+writing and after close. Production LicenseFiles and LicenseEffects ticket
+adapters select it, so nonthrowing late I/O failures do not trigger a
+false ticket-success dialog. The producer's other legacy file writes
+(avatar, profile, Config2 license-key output) remain unchanged.
+
+This is neither atomic replacement nor a guarantee of fsync durability,
+Windows sharing or later hardware error detection. A new caller-selected
+success policy requires owner review, native Windows/MSVC failure injection
+and Consumer acceptance before merge.
+
 ## Production exports and logging
 
 The Production `.def` now contains the same three C exports as Brownfield:

@@ -153,7 +153,7 @@ public:
     bool wine_detected_045010() override{return GetProcAddress(GetModuleHandleW(L"ntdll.dll"),"wine_get_version")!=nullptr;}
     void log_literal_006880(std::string_view text) override{env_.debug_log({"licensing status: ",text});}
     void log_string_006860(std::string_view text) override{env_.debug_log({"licensing diagnostic: ",text});}
-    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_03c1d0(p,v,files_);}
+    bool write_ticket_03c1d0(const Path& p,std::string_view v) override{return file::write_binary_checked(p,v,files_);}
     void dialog_038bc0(std::string_view,std::string_view body,std::uint32_t flags) override{MessageBoxW(nullptr,wide(env_.widen_0145d0(body)).c_str(),L"SURGE",flags);}
     [[noreturn]] void exit_05cdc0(std::int32_t code) override{ExitProcess(code);}
     [[noreturn]] void no_response_02bcd0_04d228() override{throw NoResponse();}
