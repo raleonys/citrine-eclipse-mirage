@@ -1,0 +1,78 @@
+from pathlib import Path,PureWindowsPath
+import hashlib,importlib.util,json,shutil,struct,subprocess,sys,tempfile
+R=Path('rf37_work/REDFIELD_RF37').resolve();P=Path('rf36_work/REDFIELD_RF36').resolve()
+sys.path.insert(0,str(R/'scripts/build_orchestration'))
+import golden as g
+from pe_image import Image,PEError,checksum
+sha=lambda b:hashlib.sha256(b).hexdigest()
+original=Path('upload/preloader.unsigned(3).dll').read_bytes();failure=json.loads(Path('upload/failure.json').read_text())
+assert sha(original)==failure['golden']['stages'][-1]['before']==failure['golden']['stages'][0]['after']
+reported=hashlib.sha256()
+for row in failure['build_input_files']:reported.update(row['path'].encode()+b'\0'+bytes.fromhex(row['sha256']))
+assert reported.hexdigest()==failure['source_tree_sha256']
+assert all(sha((P/row['path']).read_bytes())==row['sha256'] for row in failure['build_input_files'])
+binding,policies=g.load_contract(R);before_policies={p:sha((R/('metadata/'+p+'.json')).read_bytes()) for p in g.POLICIES}
+spec=importlib.util.spec_from_file_location('parent_golden',P/'scripts/build_orchestration/golden.py');parent=importlib.util.module_from_spec(spec);sys.modules['parent_golden']=parent;spec.loader.exec_module(parent)
+_,old=parent.load_contract(P)
+try:parent.binary_acceptance(Image(original),policy=old[g.POLICIES[3]])
+except PEError as ex:assert str(ex)=='IMPORT_MODULE_ALLOWLIST'
+else:raise AssertionError('parent did not reproduce supplied failure')
+image=Image(original);g.layout(image,policies[g.POLICIES[1]]);g.metadata(image,policies[g.POLICIES[2]],binding)
+accepted=g.binary_acceptance(image,policy=policies[g.POLICIES[3]])
+cases=[]
+def reject(name,call,expected):
+    try:call()
+    except (ValueError,PEError) as ex:
+        assert expected in str(ex),(name,str(ex));cases.append({'name':name,'status':'REJECTED_EXPECTED','error':str(ex)})
+    else:raise AssertionError('accepted '+name)
+def descriptor(module):
+    rva,size=image.directory(1)
+    for i in range(size//20):
+        row=image.read_rva(rva+20*i,'<IIIII')
+        if not any(row):break
+        if image.string(row[3]).upper()==module:return row
+    raise AssertionError(module)
+module='API-MS-WIN-CORE-SYNCH-L1-2-0.DLL';row=descriptor(module)
+def rename_module(name,which=module):
+    current=descriptor(which);offset,_=image.mapped(current[3],1);old_name=image.string(current[3]);new=name.encode()+b'\0';assert len(new)<=len(old_name)+1
+    data=bytearray(original);data[offset:offset+len(new)]=new;return data
+def accept(data):
+    data=bytearray(data);struct.pack_into('<I',data,image.optional+64,checksum(data,image.optional+64))
+    return g.binary_acceptance(Image(data),policy=policies[g.POLICIES[3]])
+reject('unknown_module',lambda:accept(rename_module('UNAPPROVED.DLL')),'IMPORT_MODULE_ALLOWLIST:missing=;unexpected=UNAPPROVED.DLL')
+for module_name in ['VCRUNTIME140.DLL','MSVCP140.DLL','UCRTBASE.DLL','api-ms-win-crt-heap-l1-1-0.dll']:
+    reject('dynamic_crt_'+module_name,lambda m=module_name:accept(rename_module(m)),'DYNAMIC_CRT_IMPORT')
+reject('missing_required_ws2',lambda:accept(rename_module('BAD_32.DLL','WS2_32.DLL')),'missing=WS2_32.DLL')
+table=row[0] or row[4];slot_offset,_=image.mapped(table,8)
+data=bytearray(original);struct.pack_into('<Q',data,slot_offset,(1<<63)|1)
+reject('ordinal_in_synchronization_contract',lambda:accept(data),'RESTRICTED_IMPORT_NAMES:'+module)
+data=bytearray(original);struct.pack_into('<Q',data,slot_offset+16,0)
+reject('missing_one_named_function',lambda:accept(data),'RESTRICTED_IMPORT_NAMES:'+module)
+value,=image.read_rva(table,'<Q');function_offset,_=image.mapped(value+2,1)
+data=bytearray(original);data[function_offset:function_offset+4]=b'Fake'
+reject('unexpected_named_function',lambda:accept(data),'RESTRICTED_IMPORT_NAMES:'+module)
+with tempfile.TemporaryDirectory(prefix='rf37_contract_') as d:
+    clone=Path(d)/'source';shutil.copytree(R,clone,ignore=shutil.ignore_patterns('__pycache__'))
+    bpath=clone/'metadata/GOLDEN_BINDING.json';base=json.loads(bpath.read_text())
+    mutations=[('wildcard_api_set',lambda b:b['local_named_import_adaptation'].update({'API-MS-WIN-*':[]})),
+        ('extra_function',lambda b:b['local_named_import_adaptation'][module].append('UnexpectedFunction')),
+        ('wrong_contract_version',lambda b:b['local_named_import_adaptation'].update({'API-MS-WIN-CORE-SYNCH-L9-9-9.DLL':[]})),
+        ('unbounded_data_budget',lambda b:b.update(data_virtual_size_limit=0x20001)),
+        ('changed_path_capacity_budget',lambda b:b['data_footprint_profile'].update(registry_path_capacity=32769))]
+    for name,change in mutations:
+        value=json.loads(json.dumps(base));change(value);bpath.write_text(json.dumps(value))
+        reject(name,lambda:g.load_contract(clone),'GOLDEN_')
+    bpath.write_text(json.dumps(base));header=clone/'src/platform/registry_hook_runtime_internal.hpp';header.write_text(header.read_text().replace('path_capacity=32768u','path_capacity=32769u'))
+    reject('source_path_capacity_drift',lambda:g.load_contract(clone),'GOLDEN_DATA_PROFILE_SOURCE_DRIFT')
+assert all(sha((R/('metadata/'+p+'.json')).read_bytes())==h for p,h in before_policies.items())
+data_section=next(s for s in image.sections if s['name']=='.data')
+result={'status':'PASS_REAL_USER_PE_CORVEXON_AND_NEGATIVES','parent_failure_reproduced':True,'binary_sha256':sha(original),'binary_bytes':len(original),
+    'actual_imports':image.imports(),'current_binary_acceptance':accepted,'negative_cases':cases,
+    'all_user_build_input_hashes_match_exact_rf36_source':len(failure['build_input_files']),
+    'reported_windows_source_aggregate':failure['source_tree_sha256'],'aggregate_check':'Recomputed fromoriginal list;3090filemaps equal;Windows pathlib ordering differs fromLinux aggregate ordering',
+    'user_windows_observation':'MSVC production compile/link+3ABI lifecycle cyclesPASS;URSYNEX/ARYRA/MUSTAVEXPASS;CORVEXON failedold allowlist;not a newbuild here',
+    'data_footprint':{'observed':data_section,'source_fixed_path_buffers':98304,'observed_virtual_remainder_after_path_bytes':data_section['vs']-98304,'destination_limit':131072,
+        'other_state_budget':32768,'limits':'No exact linker-symbol attribution orclaimthat entire remainder isCRT;current source contains retained fixed96KiB path arrays. Existing source design is preserved.'},
+    'retained_policy_hashes':before_policies,'limits':['Actual uploadedRF36PE revalidated;RF37MSVC rebuild notrun.','FullGolden/FALCION checked aftersource packaging preparation.','No change toapplication code,ABI orupstreamHF19 policies.']}
+Path('rf37_checks/golden_policy.json').write_text(json.dumps(result,indent=2)+'\n')
+print('RF37 actualPE CORVEXONPASS;15negative cases;3090userinputs matchRF36;policies immutable')

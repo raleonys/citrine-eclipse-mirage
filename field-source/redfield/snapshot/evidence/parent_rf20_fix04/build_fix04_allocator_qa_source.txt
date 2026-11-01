@@ -1,0 +1,57 @@
+from pathlib import Path
+import hashlib, json, subprocess, tempfile
+
+R = Path('rf20_fix04_work/REDFIELD_RF20').resolve()
+graph = json.loads((R/'metadata/BUILD_GRAPH.json').read_text())
+cases = []
+commands = []
+log = []
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def run(args, expected=0):
+    p = subprocess.run([str(x) for x in args], capture_output=True, text=True)
+    commands.append([str(x) for x in args])
+    log.append('$ '+json.dumps(commands[-1])+'\n'+p.stdout+p.stderr)
+    if expected == 'failure': assert p.returncode != 0
+    else: assert p.returncode == expected, log[-1]
+    return p
+
+backends = ['src/runtime/memory_allocator.cpp', 'src/runtime/ptd_runtime.cpp']
+branch = ['src/xml/value_codec.cpp', 'src/xml/value_codec_utf8.cpp',
+          'src/xml/value_codec_normalize.cpp', 'src/xml/value_codec_semantic.cpp',
+          'tests/test_semantic_allocator.cpp']
+adopted = [p for n,p in graph['tests'].items() if n.startswith(('test_allocator_', 'test_ptd_')) or n=='test_transient_allocation_owner']
+assert len(adopted)==15
+with tempfile.TemporaryDirectory(prefix='rf20_fix04_allocator_') as td:
+    base=Path(td)
+    for profile in ['none', 'address', 'undefined']:
+        b=base/profile; b.mkdir()
+        flags=['g++','-std=c++20','-O1','-g','-UNDEBUG','-I'+str(R/'include')]
+        if profile!='none': flags += ['-fsanitize='+profile,'-fno-omit-frame-pointer','-fno-pie','-no-pie']
+        objects=[]
+        for i,u in enumerate(backends):
+            obj=b/('backend'+str(i)+'.o'); run([*flags,'-c',R/u,'-o',obj]);objects.append(obj)
+        branch_objects=[]
+        winflags=['-D_WIN32','-DREDFIELD_HEAP_SHIM','-D__declspec(x)=','-D__stdcall=']
+        for i,u in enumerate(branch):
+            obj=b/('branch'+str(i)+'.o'); run([*flags,*winflags,'-c',R/u,'-o',obj]);branch_objects.append(obj)
+        if profile=='none':
+            p=run([*flags,*branch_objects,'-o',b/'missing_allocator'],'failure')
+            assert 'allocate_transient_bytes' in p.stderr and 'release_transient_bytes' in p.stderr
+            cases.append(dict(case='old_graph_windows_branch_missing_allocator',status='EXPECTED_LINK_REJECTION'))
+            p=run([*flags,*branch_objects,objects[0],'-o',b/'missing_ptd'],'failure')
+            assert 'current_errno_slot' in p.stderr
+            cases.append(dict(case='allocator_without_ptd_dependency',status='EXPECTED_LINK_REJECTION'))
+        exe=b/'semantic_windows_branch'
+        run([*flags,*branch_objects,*objects,'-o',exe]);run([exe])
+        cases.append(dict(case='semantic_windows_branch_heap_shim',profile=profile,status='PASS',binary_sha256=sha(exe)))
+        for u in adopted:
+            exe=b/Path(u).stem
+            run([*flags,R/u,*objects,'-o',exe]);run([exe])
+            cases.append(dict(case=Path(u).stem,profile=profile,status='PASS',binary_sha256=sha(exe)))
+result=dict(scope='Real Linux ELF compile/link/run. Actual _WIN32 SemanticValue branch; __declspec/__stdcall erased for ELF; Heap API shim only. Not Windows ABI/MSVC/native/game acceptance.',
+    cases=cases,commands=commands,source_sha256={u:sha(R/u) for u in backends+branch+adopted},
+    profiles=['none','address','undefined'],positive_runs=48,expected_link_rejections=2)
+assert len(cases)==50
+(R/'evidence/build_fix04_allocator_qa.json').write_text(json.dumps(result,indent=2)+'\n')
+(R/'evidence/build_fix04_allocator_qa.log').write_text('\n'.join(log))
+print('ALLOCATOR_QA_PASS positive=48 expected_link_rejections=2')

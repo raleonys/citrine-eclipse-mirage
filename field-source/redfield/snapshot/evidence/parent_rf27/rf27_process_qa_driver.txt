@@ -1,0 +1,50 @@
+from pathlib import Path
+import importlib.util,sys,os,json,subprocess,tempfile,time,io,hashlib,shutil
+from contextlib import redirect_stdout
+R=Path('rf27_work/REDFIELD_RF27').resolve()
+import sys; sys.path.insert(0,str(R/'scripts/build_orchestration'))
+s=importlib.util.spec_from_file_location('builder',R/'scripts/build_orchestration/build_verify.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+cases=[]
+class Console(io.StringIO):
+ def __init__(self):super().__init__();self.events=[]
+ def write(self,value):self.events.append((time.monotonic(),value));return super().write(value)
+with tempfile.TemporaryDirectory(prefix='rf20_real_process_') as td:
+ root=Path(td);log=root/'process.log';env=os.environ.copy()
+ def run(code,**kw):return m.run_logged([sys.executable,'-u','-c',code],cwd=root,env=env,log=log,label=kw.pop('label','real Python subprocess'),**kw)
+ c=Console()
+ with redirect_stdout(c):
+  r=run("import time; print('EARLY',flush=True); time.sleep(0.6); print('LATE',flush=True)",allowed_exit=0)
+ early=next(t for t,v in c.events if 'EARLY' in v);late=next(t for t,v in c.events if 'LATE' in v)
+ assert late-early>0.25 and r.stdout=='EARLY\nLATE\n' and 'EARLY\nLATE\n' in log.read_text()
+ cases.append(dict(case='real_child_output_visible_before_exit',status='PASS',early_to_late_seconds=late-early))
+ c=Console()
+ with redirect_stdout(c):r=run("import sys; print('EXPECTED_DIAGNOSTIC'); sys.exit(14)",allowed_exit=14)
+ assert r.returncode==14 and 'EXPECTED_DIAGNOSTIC' in r.stdout and '[EXIT 14;' in c.getvalue();cases.append(dict(case='real_expected_exit14_preserved',status='PASS'))
+ try:
+  with redirect_stdout(Console()):run("import sys; print('REAL_FAILURE',flush=True); sys.exit(7)",allowed_exit=0)
+  raise AssertionError('nonzero exit accepted')
+ except RuntimeError as e:assert 'exit=7' in str(e)
+ assert 'REAL_FAILURE' in log.read_text();cases.append(dict(case='real_exit7_rejected_log_retained',status='EXPECTED_REJECTION'))
+ started=time.monotonic()
+ try:
+  with redirect_stdout(Console()):run("import time; print('TIMEOUT_STARTED',flush=True); time.sleep(20)",timeout=0.3)
+  raise AssertionError('timeout accepted')
+ except subprocess.TimeoutExpired as e:assert 'TIMEOUT_STARTED' in e.stdout
+ assert time.monotonic()-started<3 and '[TIMEOUT 0.3s]' in log.read_text();cases.append(dict(case='real_timeout_kills_owned_posix_process_group',status='PASS',windows_taskkill='NOT_RUN'))
+ c=Console()
+ with redirect_stdout(c):r=run("import os,time; os.write(1,bytes([0xe2])); time.sleep(.2); os.write(1,bytes([0x82,0xac,10])); os.write(2,b'STDERR-LIVE\\n')",allowed_exit=0)
+ assert r.stdout=='€\nSTDERR-LIVE\n';cases.append(dict(case='real_split_utf8_and_stderr_stream',status='PASS'))
+ c=Console()
+ with redirect_stdout(c):run("import time; time.sleep(5.3); print('AFTER_WAIT')",allowed_exit=0)
+ assert '[WAIT 5s]' in c.getvalue() and 'AFTER_WAIT' in c.getvalue();cases.append(dict(case='real_silent_child_heartbeat',status='PASS'))
+ compiler=shutil.which('g++');assert compiler
+ source=root/'probe.cpp';source.write_text('#include <cstdio>\nint main(){std::puts("REAL_CPP_EXECUTION_PASS");}\n');obj=root/'probe.o';exe=root/'probe'
+ with redirect_stdout(Console()):
+  m.run_logged([compiler,'-std=c++20','-Wall','-Wextra','-Werror','-c',source,'-o',obj],cwd=root,env=env,log=log,label='CXX 1/1: probe.cpp',allowed_exit=0)
+  m.run_logged([compiler,obj,'-o',exe],cwd=root,env=env,log=log,label='LINK probe',allowed_exit=0)
+  r=m.run_logged([exe],cwd=root,env=env,log=log,label='RUN probe',allowed_exit=0)
+ assert obj.read_bytes()[:4]==b'\x7fELF' and exe.read_bytes()[:4]==b'\x7fELF' and r.stdout=='REAL_CPP_EXECUTION_PASS\n'
+ cases.append(dict(case='real_gcc_cpp20_compile_link_execute_through_same_runner',status='PASS',compiler=compiler,object_sha256=hashlib.sha256(obj.read_bytes()).hexdigest(),binary_sha256=hashlib.sha256(exe.read_bytes()).hexdigest(),stdout=r.stdout))
+ (R/'evidence/rf27_real_process.log').write_bytes(log.read_bytes())
+(R/'evidence/rf27_real_process_qa.json').write_text(json.dumps(dict(scope='Real POSIX subprocesses and real GCC compile/link/execute; Windows CMD/MSVC/taskkill NOT_RUN',builder_sha256=hashlib.sha256((R/'scripts/build_orchestration/build_verify.py').read_bytes()).hexdigest(),cases=cases),indent=2)+'\n')
+print(len(cases),'real process/compiler cases PASS (including expected rejection)')

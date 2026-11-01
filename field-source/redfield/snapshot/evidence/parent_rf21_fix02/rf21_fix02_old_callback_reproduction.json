@@ -1,0 +1,7 @@
+{
+  "status": "EXPECTED_FAILURE_REPRODUCED",
+  "callback_source_sha256": "6340ede9036bc1a2bdb9795a622728796e95dc8ab6d21691a7e4ed37b60babaa",
+  "driver_sha256": "69c4f301a491514a27353a8be6354c5f4a5fc8c48448be9f6cadbc941f4ec67d",
+  "result": "OLD_EXACT_CLEANUP blocked=10 retry=10 pending=1 unpins=0",
+  "scope": "Linux real connected LocalService and old exact cleanup callback, modeled hook preflight and signaled worker; not actual Windows return-code evidence"
+}

@@ -1,0 +1,9 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF26",
+  "refactor": "IDENTITY05",
+  "parent_checkpoint": "RF25",
+  "parent_zip_sha256": "f07222956f70d10a7d89a95f03533958545578ca46d66ad0b8c9b7a88f36506b",
+  "parent_library_file_id": "libfile_9a33a857a3e08191a5a09a56f42fb5e6",
+  "official_hf19_unchanged": true
+}

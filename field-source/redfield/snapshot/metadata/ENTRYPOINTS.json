@@ -1,0 +1,86 @@
+{
+  "human_entrypoints": [
+    {
+      "launcher": "scripts/build_orchestration/build_verify.cmd",
+      "target": "scripts/build_orchestration/build_verify.py",
+      "owner": "build orchestration",
+      "purpose": "Developer aggregate:96 regressions+legacy diagnostic andWindows DLL/native scoped hosts;output build/verify;never dist"
+    },
+    {
+      "launcher": "scripts/verify_source.cmd",
+      "target": "scripts/verify_source.py",
+      "owner": "source integrity",
+      "purpose": "Verify package/ancestry recipes, unified application architecture, pinned vendors, exports and launcher contracts"
+    },
+    {
+      "launcher": "scripts/build_orchestration/build_production.cmd",
+      "target": "scripts/build_orchestration/build_production.py",
+      "owner": "build orchestration",
+      "purpose": "Compile production candidate/resource,public ABI smoke,actual linkaudit,five ordered Golden stages andhash-bound atomic dist;not official release"
+    },
+    {
+      "launcher": "scripts/build_orchestration/build_debug.cmd",
+      "target": "scripts/build_orchestration/build_debug.py",
+      "owner": "build orchestration",
+      "purpose": "Isolated debug local build andcurrent scoped host checks"
+    },
+    {
+      "launcher": "scripts/build_orchestration/build_native_acceptance.cmd",
+      "target": "scripts/build_orchestration/build_native_acceptance.py",
+      "owner": "build orchestration",
+      "purpose": "Isolated native local build andcurrent scoped host checks"
+    },
+    {
+      "launcher": "scripts/build_orchestration/build_crt_acceptance.cmd",
+      "target": "scripts/build_orchestration/build_crt_acceptance.py",
+      "owner": "build orchestration",
+      "purpose": "Isolated crt local build andcurrent scoped host checks"
+    },
+    {
+      "launcher": "scripts/ursynex_golden_finalizer.cmd",
+      "target": "scripts/ursynex_golden_finalizer.py",
+      "owner": "M20 Golden",
+      "purpose": "Scoped URSYNEX mutator;not whole production chain orofficial release acceptance"
+    },
+    {
+      "launcher": "scripts/verify_aryra_golden_layout.cmd",
+      "target": "scripts/verify_aryra_golden_layout.py",
+      "owner": "M20 Golden",
+      "purpose": "Scoped ARYRA layout;not whole production chain orofficial release acceptance"
+    },
+    {
+      "launcher": "scripts/verify_mustavex_golden_metadata.cmd",
+      "target": "scripts/verify_mustavex_golden_metadata.py",
+      "owner": "M20 Golden",
+      "purpose": "Scoped MUSTAVEX metadata;not whole production chain orofficial release acceptance"
+    },
+    {
+      "launcher": "scripts/verify_corvexon_golden_trail.cmd",
+      "target": "scripts/verify_corvexon_golden_trail.py",
+      "owner": "M20 Golden",
+      "purpose": "Scoped CORVEXON binary acceptance;not whole production chain orofficial release acceptance"
+    },
+    {
+      "launcher": "scripts/check_falcion_golden_cleaning.cmd",
+      "target": "scripts/check_falcion_golden_cleaning.py",
+      "owner": "M20 Golden",
+      "purpose": "Scoped FALCION source/package/data hygiene;not whole production chain orofficial release acceptance"
+    }
+  ],
+  "internal_helpers": [
+    "scripts/build_orchestration/hook_build.py",
+    "scripts/build_orchestration/PatchMinHookSafeFreeze.cmake",
+    "scripts/build_orchestration/build_contract.py",
+    "scripts/build_orchestration/build_common.py",
+    "scripts/build_orchestration/build_profiles.py",
+    "scripts/build_orchestration/pe_acceptance.py",
+    "scripts/build_orchestration/pe_image.py",
+    "scripts/build_orchestration/golden.py"
+  ],
+  "vendor_launchers_forbidden": true,
+  "internal_native_hosts": [
+    "tests/native/abi_smoke.cpp",
+    "tests/native/native_acceptance.cpp"
+  ],
+  "upstream_vendor_helpers_are_not_project_entrypoints": true
+}

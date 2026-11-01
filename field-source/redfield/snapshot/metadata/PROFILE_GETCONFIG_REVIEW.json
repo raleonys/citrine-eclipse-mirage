@@ -1,0 +1,16 @@
+{
+  "checkpoint": "RF30",
+  "user_report": "In-game profile missing;not reproducible as actual game in this environment",
+  "getconfig_diagnostic": "exit14 isfinal unknown XML entity rejection expectation,not normal34-service response failure;no PASS relabel",
+  "confirmed_example_defect": "RF29 distributed surge.cfg has only Emulator;loaded overlay intentionally makes absent User fields empty",
+  "correction": "Add explicit9 User constructor-default values toexample;read actual example inexisting profile regression viaregistered argument",
+  "runtime_profile_policy_changed": false,
+  "remaining": [
+    "Need actual game request/response path to establish missing-profile root cause",
+    "GetProfile requires exact lowercase index attribute;missing/child/Index produces noresponse",
+    "Plaintext local tests do not establish SDK handshake/session crypto acceptance"
+  ],
+  "evidence": "evidence/rf30_getconfig_profile_qa.json",
+  "old_example_sha256": "726dbc99d3da74db0098673c42fb11ecbc5054624782db6fadee100de7f1514e",
+  "new_example_sha256": "988402a8f4a4146012098d4bcbe79b8204d779c73140bbdb550d9d1804bd3067"
+}

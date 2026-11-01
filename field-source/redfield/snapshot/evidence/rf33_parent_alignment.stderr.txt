@@ -1,0 +1,4 @@
+rf33_checks/parent/registry_policy_values.cpp:47:82: runtime error: store to misaligned address 0x7ffdd08727e1 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffdd08727e1: note: pointer points here
+ 7f 00 00  a5 a5 a5 a5 a5 a5 a5 a5  a5 a5 a5 a5 a5 a5 a5 a5  a5 a5 a5 a5 a5 a5 a5 a5  a5 a5 a5 a5 a5
+              ^ 

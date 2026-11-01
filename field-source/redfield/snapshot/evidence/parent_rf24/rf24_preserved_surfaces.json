@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "files": 1088,
+  "scope": "Vendor/export/hook backend/35 route binding/MinHook SAFE-FREEZE/CMake bytes unchanged;258 application references checked against exact RF23 ZIP. Hook config consumer changed and freshly tested.",
+  "parent_zip_sha256": "3c0fc8371abbbf62198cab0402b6ff338d6253b0535bacb7af57a9c183110d6f"
+}

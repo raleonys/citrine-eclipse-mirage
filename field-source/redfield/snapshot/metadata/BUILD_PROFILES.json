@@ -1,0 +1,219 @@
+{
+  "schema": 1,
+  "profiles": {
+    "production": {
+      "build_root": "build/production",
+      "runtime": "/MT",
+      "configuration": "Release",
+      "cxx_flags": [
+        "/nologo",
+        "/std:c++20",
+        "/EHsc",
+        "/permissive-",
+        "/utf-8",
+        "/W4",
+        "/GS",
+        "/MT",
+        "/O2",
+        "/DNDEBUG"
+      ],
+      "c_flags": [
+        "/nologo",
+        "/TC",
+        "/W3",
+        "/GS",
+        "/MT",
+        "/O2",
+        "/DNDEBUG",
+        "/DWIN32_LEAN_AND_MEAN",
+        "/D_WIN32_WINNT=0x0A00"
+      ],
+      "link_flags": [
+        "/INCREMENTAL:NO",
+        "/DYNAMICBASE",
+        "/NXCOMPAT",
+        "/HIGHENTROPYVA",
+        "/DEBUG:NONE",
+        "/OPT:REF",
+        "/OPT:ICF",
+        "/LTCG:OFF",
+        "/NOCOFFGRPINFO",
+        "/MANIFEST:NO"
+      ],
+      "dll_link_flags": [
+        "/SUBSYSTEM:WINDOWS,6.00",
+        "/OSVERSION:6.0"
+      ]
+    },
+    "debug": {
+      "build_root": "build/debug",
+      "runtime": "/MTd",
+      "configuration": "Debug",
+      "cxx_flags": [
+        "/nologo",
+        "/std:c++20",
+        "/EHsc",
+        "/permissive-",
+        "/utf-8",
+        "/W4",
+        "/GS",
+        "/MTd",
+        "/Od",
+        "/Zi",
+        "/D_DEBUG"
+      ],
+      "c_flags": [
+        "/nologo",
+        "/TC",
+        "/W3",
+        "/GS",
+        "/MTd",
+        "/Od",
+        "/Zi",
+        "/D_DEBUG",
+        "/DWIN32_LEAN_AND_MEAN",
+        "/D_WIN32_WINNT=0x0A00"
+      ],
+      "link_flags": [
+        "/INCREMENTAL:NO",
+        "/DYNAMICBASE",
+        "/NXCOMPAT",
+        "/HIGHENTROPYVA",
+        "/DEBUG:FULL"
+      ]
+    },
+    "native": {
+      "build_root": "build/native",
+      "runtime": "/MT",
+      "configuration": "Release",
+      "cxx_flags": [
+        "/nologo",
+        "/std:c++20",
+        "/EHsc",
+        "/permissive-",
+        "/utf-8",
+        "/W4",
+        "/GS",
+        "/MT",
+        "/O2",
+        "/DNDEBUG"
+      ],
+      "c_flags": [
+        "/nologo",
+        "/TC",
+        "/W3",
+        "/GS",
+        "/MT",
+        "/O2",
+        "/DNDEBUG",
+        "/DWIN32_LEAN_AND_MEAN",
+        "/D_WIN32_WINNT=0x0A00"
+      ],
+      "link_flags": [
+        "/INCREMENTAL:NO",
+        "/DYNAMICBASE",
+        "/NXCOMPAT",
+        "/HIGHENTROPYVA",
+        "/DEBUG:NONE",
+        "/OPT:REF",
+        "/OPT:ICF",
+        "/LTCG:OFF",
+        "/NOCOFFGRPINFO",
+        "/MANIFEST:NO"
+      ]
+    },
+    "crt": {
+      "build_root": "build/crt",
+      "runtime": "/MT",
+      "configuration": "Release",
+      "cxx_flags": [
+        "/nologo",
+        "/std:c++20",
+        "/EHsc",
+        "/permissive-",
+        "/utf-8",
+        "/W4",
+        "/GS",
+        "/MT",
+        "/O2",
+        "/DNDEBUG"
+      ],
+      "c_flags": [
+        "/nologo",
+        "/TC",
+        "/W3",
+        "/GS",
+        "/MT",
+        "/O2",
+        "/DNDEBUG",
+        "/DWIN32_LEAN_AND_MEAN",
+        "/D_WIN32_WINNT=0x0A00"
+      ],
+      "link_flags": [
+        "/INCREMENTAL:NO",
+        "/DYNAMICBASE",
+        "/NXCOMPAT",
+        "/HIGHENTROPYVA",
+        "/DEBUG:NONE",
+        "/OPT:REF",
+        "/OPT:ICF",
+        "/LTCG:OFF",
+        "/NOCOFFGRPINFO",
+        "/MANIFEST:NO"
+      ]
+    },
+    "verify": {
+      "build_root": "build/verify",
+      "runtime": "/MT",
+      "configuration": "Release",
+      "cxx_flags": [
+        "/nologo",
+        "/std:c++20",
+        "/EHsc",
+        "/permissive-",
+        "/utf-8",
+        "/W4",
+        "/GS",
+        "/MT",
+        "/O2",
+        "/DNDEBUG"
+      ],
+      "c_flags": [
+        "/nologo",
+        "/TC",
+        "/W3",
+        "/GS",
+        "/MT",
+        "/O2",
+        "/DNDEBUG",
+        "/DWIN32_LEAN_AND_MEAN",
+        "/D_WIN32_WINNT=0x0A00"
+      ],
+      "link_flags": [
+        "/INCREMENTAL:NO",
+        "/DYNAMICBASE",
+        "/NXCOMPAT",
+        "/HIGHENTROPYVA",
+        "/DEBUG:NONE",
+        "/OPT:REF",
+        "/OPT:ICF",
+        "/LTCG:OFF",
+        "/NOCOFFGRPINFO",
+        "/MANIFEST:NO"
+      ]
+    }
+  },
+  "golden_binding": "BOUND_LOCAL_M20_3",
+  "golden_order": [
+    "URSYNEX Golden Finalizer",
+    "ARYRA Golden Layout",
+    "MUSTAVEX Golden Metadata",
+    "CORVEXON Golden Trail",
+    "FALCION Golden Cleaning"
+  ],
+  "source_authority": "Shared production sources once;independent compile objects per profile;no cross-profile link",
+  "operator_backend": "build_common.BuildSession",
+  "cmake_scope": "Developer aggregate only;not production dist authority",
+  "production_dist": "Only real ordered five-stage acceptance andhash-bound atomic publication;not official release",
+  "coverage": "Current ABI/native hosts only;full prior-project scenario applicability andDebug diagnostic composition remain pending"
+}

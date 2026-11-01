@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "parent_checkpoint": "RF32",
+  "current_checkpoint": "RF33",
+  "compared_tests": 97,
+  "stdout_and_exit_equal": 97,
+  "new_tests": [
+    "test_registry_value_output"
+  ],
+  "legacy_exit": 14,
+  "input_binding_equal": true,
+  "receipt_source_tree_sha256": "feb7fed92519781f0ee08354010f1388995c1d6e59e871afc62898eae0b4a563",
+  "first_workspace_attempt": "FAIL_FINAL_OUTPUT_MODE_CHECK; not accepted or relabeled PASS",
+  "final_run": "Fresh isolated source copy; complete compile, link, execution and final object/output/tool/input checks passed"
+}

@@ -1,0 +1,39 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF24",
+  "refactor": "SNAPSHOT03",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_SCOPED_REFACTOR_QA_NOT_RELEASE",
+  "application_files": 260,
+  "normal_regressions": 95,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 156,
+  "normal_linked_outputs": 96,
+  "windows_compile_actions": 176,
+  "parent_stdout_equal": 94,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "sanitizers": {
+    "address": 8,
+    "undefined": 8,
+    "leak_detection": false
+  },
+  "hook_model": {
+    "normal": 27,
+    "address": 27,
+    "undefined": 27,
+    "scope": "Linux Win32/MinHook shim;not Windows ABI/detour patching"
+  },
+  "architecture_negatives": 9,
+  "package_negatives": 2,
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_runner_cases": 7,
+  "windows_native": "NOT_RUN_RF24",
+  "game": "NOT_RUN_RF24",
+  "cmake": "UNCHANGED;NOT_RUN_TOOL_UNAVAILABLE",
+  "scope": "Snapshot lookup deduplication and achievement staging simplification;whole-codebase semantic refactor remains open"
+}

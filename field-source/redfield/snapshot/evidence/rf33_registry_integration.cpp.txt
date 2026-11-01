@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: GPL-3.0-only
+#include "preloader_l/config/settings_values.hpp"
+#include "preloader_l/platform/registry_policy.hpp"
+#include <cassert>
+#include <cstdint>
+#include <cstdlib>
+namespace preloader_l::platform::host_policy_detail {
+void* heap_alloc(size_t n) noexcept { return std::malloc(n); }
+void heap_free(void* p) noexcept { std::free(p); }
+int32_t write_a(preloader_l::config::ValueView,const char*,size_t,uint32_t,uint32_t*,uint8_t*,uint32_t*) noexcept;
+int32_t write_w(preloader_l::config::ValueView,const uint16_t*,size_t,uint32_t,uint32_t*,uint8_t*,uint32_t*) noexcept;
+}
+int main() {
+    using namespace preloader_l::platform;
+    using namespace preloader_l::platform::host_policy_detail;
+    alignas(8) uint8_t buffer[32];
+    for (auto& byte:buffer) byte=0xa5;
+    const uint16_t text[]={0x41,0x20ac,0xd83d,0xde00};
+    const preloader_l::config::ValueView absent{nullptr,0,false};
+    uint32_t type=99,bytes=11;
+    assert(write_w(absent,text,4,11,&type,buffer+1,&bytes)==host_error_success);
+    assert(type==host_reg_sz && bytes==10);
+    const uint8_t expected[]={0x41,0,0xac,0x20,0x3d,0xd8,0,0xde,0,0};
+    for(size_t i=0;i<10;++i) assert(buffer[i+1]==expected[i]);
+    assert(buffer[0]==0xa5 && buffer[11]==0xa5);
+    for(auto& byte:buffer) byte=0xa5;
+    bytes=99;type=99;
+    assert(write_w(absent,text,4,9,&type,buffer+1,&bytes)==host_error_more_data);
+    assert(bytes==10 && type==host_reg_sz);
+    for(auto byte:buffer) assert(byte==0xa5);
+    bytes=0;type=99;
+    assert(write_w(absent,text,4,0,&type,nullptr,&bytes)==host_error_success);
+    assert(bytes==10 && type==host_reg_sz);
+    bytes=99;type=99;
+    assert(write_a(absent,"ok",2,3,&type,buffer+1,&bytes)==host_error_success);
+    assert(bytes==3 && buffer[1]=='o' && buffer[2]=='k' && buffer[3]==0);
+    type=99;
+    assert(write_w(absent,text,4,20,&type,buffer+1,nullptr)==host_error_invalid_parameter);
+    assert(type==99);
+}

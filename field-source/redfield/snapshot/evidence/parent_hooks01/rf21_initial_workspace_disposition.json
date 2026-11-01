@@ -1,0 +1,5 @@
+{
+  "status": "FAIL_ARTIFACT_PERMISSION_GUARD;NOT_COUNTED_AS_PASS",
+  "reason": "Four linked outputs lost execute permission after their successful execution; cause not identified",
+  "action": "No guard bypass/chmod-to-PASS; clean isolated /tmp tree recompiled and reran 90 tests successfully"
+}

@@ -1,0 +1,19 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF20",
+  "build_fix": "FIX03",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_FOCUSED_QA_ONLY_NOT_RELEASE",
+  "environment_mock_cases": 13,
+  "real_process_cases": 7,
+  "cwd_pin_comparison": "Exact old rejects modeled pin; new succeeds and removes private capture/helper",
+  "windows_cmd_vsdevcmd_msvc": "NOT_RUN_CURRENT_FIX",
+  "windows_dll_produced_here": false,
+  "cpp_regressions": "NOT_RUN_CURRENT_FIX;1233 C++/header/vendor/ABI/build inputs unchanged",
+  "parent_normal_tests": "Historical FIX02 70/70; not fresh FIX03 evidence",
+  "reported_failure": "USER_REPORTED_SETUP_EXIT0_THEN_WINERROR32_TEMP_DIRECTORY_CLEANUP",
+  "locking_process": "NOT_IDENTIFIED",
+  "source_integrity": "PASS_FRESH_SCOPED",
+  "integrity_negative_cases": 2,
+  "qa_builder_sha256": "ff76ab11ebea23f70af242765462bc633d3e1f5371fe1b22586e7f8bb5f14e95"
+}

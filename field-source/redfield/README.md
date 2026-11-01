@@ -1,18 +1,10 @@
-# Redfield — retirement research source branch
+# Redfield research source snapshot
 
-**Status: SOURCE_IMPORT_PENDING / NOT_RELEASE / NOT_MERGEABLE_AS_APPLICATION_REPLACEMENT.**
+**Status: SOURCE_IMPORTED / RESEARCH_REVIEW_OPEN / NOT_RELEASE.**
 
-This is an independent reference working branch. It does not replace Citrine Eclipse Mirage's main C++ application and must not be merged wholesale into `main`.
+Exact archived reference: `REDFIELD_RF37_GOLDEN_BINDING_FIX01_FULL_SOURCE_NOT_RELEASE_2026-10-21.zip`.
+Archive SHA-256: `e9e6eb8ffe0aa24d4e21a12273aeac32791119b07df82cccaa09394d363f1fc6`.
+Source files: **3,796**, retained byte for byte under `snapshot/`.
+Original source class: `NOT_RELEASE_REFERENCE`.
 
-## Pinned input
-- Source: RF37 GOLDEN_BINDING_FIX01 full source
-- Archive: `REDFIELD_RF37_GOLDEN_BINDING_FIX01_FULL_SOURCE_NOT_RELEASE_2026-10-21.zip`
-- SHA-256: `e9e6eb8ffe0aa24d4e21a12273aeac32791119b07df82cccaa09394d363f1fc6`
-- Archive date: 2026-10-21
-- ZIP entries (including any directories): 3,796
-- Source of record: owner's retained Library at `/DLL R&D Football/REDFIELD/RF37/`
-- Intended import directory: `field-source/redfield/snapshot/`
-
-**The full source files have not yet been pushed to this branch.** The branch is initialized for collaboration and provenance tracking, not represented as containing the archival ZIP/source tree. Use the separately supplied, hash-verified four-field upload bundle to import source files. Preserve vendor notices, history and original paths; do not add original donor/game PE binaries, personal credentials or secrets.
-
-Retirement is a *research disposition*, not automatic deletion. Track implemented, retained as reference, intentional difference, unreviewed, evidence-blocked, and not-applicable findings in the central draft retirement PR. Do not close source findings or change the official release merely because a branch exists.
+See `SOURCE_IMPORT_RECEIPT.json` and `SOURCE_FILE_HASHES.json` for provenance and byte identity. This is a source-reference import for PR #81. It does not replace the active application, close research findings, inherit native/game acceptance or publish a release. Do not merge this research branch wholesale into main. Preserve original licenses and notices.

@@ -1,0 +1,50 @@
+{
+  "schema": "preloader_l.ursynex_golden_finalizer.v1",
+  "policy": "URSYNEX Golden Finalizer",
+  "lineage": "2.9.3 URSYNEX provenance-preserving derived policy",
+  "mode": "BOUNDED_MUTATING_POST_LINK_FINALIZER",
+  "purpose": "Apply only approved post-link PE metadata mutations before all read-only Golden validators.",
+  "input": "MSVC-linked preloader.unsigned.dll",
+  "output": "same file after bounded mutation",
+  "approved_mutations": [
+    "#10 LinkerVersion 14.0",
+    "#11 TimeDateStamp 0xCD268EB1",
+    "#36 Rich Header absent",
+    "PE OptionalHeader.CheckSum recomputed after approved mutations"
+  ],
+  "preconditions": [
+    "AMD64 / PE32+",
+    "Windows GUI subsystem",
+    "OS/subsystem version 6.0",
+    "Debug Directory absent"
+  ],
+  "forbidden": [
+    "Authenticode/certificate mutation",
+    "exact PE address/size/layout targeting",
+    "non-allowlisted metadata recovery",
+    "ARYRA/MUSTAVEX/CORVEXON byte mutation"
+  ],
+  "downstream_authorities": [
+    "ARYRA Golden Layout",
+    "MUSTAVEX Golden Metadata",
+    "CORVEXON Golden Trail"
+  ],
+  "mutation_values": {
+    "linker_version": [
+      14,
+      0
+    ],
+    "timestamp": "0xCD268EB1",
+    "rich_header": "ABSENT"
+  },
+  "integrity_finalization": {
+    "pe_checksum": "RECOMPUTE_AFTER_APPROVED_MUTATIONS",
+    "downstream_validation": "CORVEXON_READ_ONLY_REQUIRED"
+  },
+  "policy_bindings": {
+    "metadata_policy": "metadata/MUSTAVEX_GOLDEN_METADATA.json",
+    "linker_version": "required.linker_version",
+    "timestamp": "required.timestamp",
+    "rich_header": "required.rich_header"
+  }
+}

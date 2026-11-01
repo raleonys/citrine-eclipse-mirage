@@ -1,0 +1,308 @@
+{
+  "status": "PASS_REAL_USER_PE_CORVEXON_AND_NEGATIVES",
+  "parent_failure_reproduced": true,
+  "binary_sha256": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+  "binary_bytes": 627712,
+  "actual_imports": {
+    "WS2_32.DLL": [
+      "#6",
+      "#5",
+      "#10",
+      "#3",
+      "#7",
+      "WSARecv",
+      "WSASocketW",
+      "WSASend",
+      "#111",
+      "#116",
+      "#115",
+      "#21",
+      "#15",
+      "#14",
+      "#13",
+      "#9",
+      "#8",
+      "#2"
+    ],
+    "MSWSOCK.DLL": [
+      "GetAcceptExSockaddrs",
+      "AcceptEx"
+    ],
+    "CRYPT32.DLL": [
+      "CryptQueryObject"
+    ],
+    "API-MS-WIN-CORE-SYNCH-L1-2-0.DLL": [
+      "WakeByAddressAll",
+      "WakeByAddressSingle",
+      "WaitOnAddress"
+    ],
+    "KERNEL32.DLL": [
+      "WriteConsoleW",
+      "SetEndOfFile",
+      "CreateFileW",
+      "SetStdHandle",
+      "FreeEnvironmentStringsW",
+      "GetEnvironmentStringsW",
+      "GetCommandLineW",
+      "GetCommandLineA",
+      "GetOEMCP",
+      "GetACP",
+      "IsValidCodePage",
+      "HeapQueryInformation",
+      "HeapSize",
+      "FlushFileBuffers",
+      "GetConsoleOutputCP",
+      "WriteFile",
+      "ReadConsoleW",
+      "GetLocaleInfoEx",
+      "GetConsoleMode",
+      "SetFilePointerEx",
+      "GetFileSizeEx",
+      "GetFileType",
+      "GetEnvironmentVariableA",
+      "SetEnvironmentVariableA",
+      "CloseHandle",
+      "GetLastError",
+      "SetLastError",
+      "WaitForSingleObject",
+      "Sleep",
+      "CreateThread",
+      "FreeLibrary",
+      "GetModuleFileNameW",
+      "GetModuleHandleExW",
+      "CreateIoCompletionPort",
+      "GetQueuedCompletionStatus",
+      "PostQueuedCompletionStatus",
+      "CancelIoEx",
+      "InitializeSRWLock",
+      "ReleaseSRWLockExclusive",
+      "AcquireSRWLockExclusive",
+      "SetEvent",
+      "SleepEx",
+      "CreateEventW",
+      "SetWaitableTimer",
+      "WaitForMultipleObjects",
+      "QueueUserAPC",
+      "TerminateThread",
+      "TlsAlloc",
+      "TlsGetValue",
+      "TlsSetValue",
+      "TlsFree",
+      "GetModuleHandleA",
+      "GetProcAddress",
+      "LocalFree",
+      "FormatMessageA",
+      "GetProcessHeap",
+      "HeapAlloc",
+      "HeapFree",
+      "GetSystemTimeAsFileTime",
+      "SwitchToThread",
+      "GetTickCount64",
+      "GetModuleFileNameA",
+      "MultiByteToWideChar",
+      "CompareStringOrdinal",
+      "GetCurrentProcess",
+      "ReadProcessMemory",
+      "GetModuleHandleW",
+      "LoadLibraryW",
+      "GetSystemInfo",
+      "VirtualAlloc",
+      "VirtualFree",
+      "VirtualQuery",
+      "DuplicateHandle",
+      "HeapCreate",
+      "HeapDestroy",
+      "HeapReAlloc",
+      "GetCurrentThreadId",
+      "GetExitCodeThread",
+      "SuspendThread",
+      "ResumeThread",
+      "GetThreadId",
+      "GetThreadContext",
+      "SetThreadContext",
+      "FlushInstructionCache",
+      "VirtualProtect",
+      "QueryPerformanceCounter",
+      "QueryPerformanceFrequency",
+      "TryAcquireSRWLockExclusive",
+      "SleepConditionVariableSRW",
+      "WakeAllConditionVariable",
+      "RtlUnwind",
+      "FindClose",
+      "FindFirstFileW",
+      "FindFirstFileExW",
+      "FindNextFileW",
+      "GetFileAttributesExW",
+      "CreateFile2",
+      "AreFileApisANSI",
+      "GetFileInformationByHandleEx",
+      "WideCharToMultiByte",
+      "RtlPcToFileHeader",
+      "RaiseException",
+      "EnterCriticalSection",
+      "LeaveCriticalSection",
+      "InitializeCriticalSectionEx",
+      "DeleteCriticalSection",
+      "EncodePointer",
+      "DecodePointer",
+      "LCMapStringEx",
+      "GetStringTypeW",
+      "GetCPInfo",
+      "SetUnhandledExceptionFilter",
+      "GetStartupInfoW",
+      "GetCurrentProcessId",
+      "InitializeSListHead",
+      "GetStdHandle",
+      "RtlLookupFunctionEntry",
+      "RtlUnwindEx",
+      "InterlockedFlushSList",
+      "FlsAlloc",
+      "FlsGetValue",
+      "FlsSetValue",
+      "FlsFree",
+      "ReadFile",
+      "ExitThread",
+      "FreeLibraryAndExitThread",
+      "IsProcessorFeaturePresent",
+      "ExitProcess",
+      "TerminateProcess",
+      "RtlCaptureContext",
+      "RtlVirtualUnwind",
+      "IsDebuggerPresent",
+      "UnhandledExceptionFilter",
+      "LoadLibraryExW",
+      "LCMapStringW",
+      "GetLocaleInfoW",
+      "IsValidLocale",
+      "GetUserDefaultLCID",
+      "EnumSystemLocalesW"
+    ]
+  },
+  "current_binary_acceptance": {
+    "exports": {
+      "DllMain": 1,
+      "DllShutdown": 3,
+      "SURGE": 2
+    },
+    "imports": [
+      "API-MS-WIN-CORE-SYNCH-L1-2-0.DLL",
+      "CRYPT32.DLL",
+      "KERNEL32.DLL",
+      "MSWSOCK.DLL",
+      "WS2_32.DLL"
+    ],
+    "entry_rva": 314960,
+    "machine": "x64",
+    "static_crt_import_check": "PASS",
+    "gs_cookie_rva": 595456,
+    "checksum": 671104,
+    "crt_entry_distinct_from_DllMain": true
+  },
+  "negative_cases": [
+    {
+      "name": "unknown_module",
+      "status": "REJECTED_EXPECTED",
+      "error": "IMPORT_MODULE_ALLOWLIST:missing=;unexpected=UNAPPROVED.DLL"
+    },
+    {
+      "name": "dynamic_crt_VCRUNTIME140.DLL",
+      "status": "REJECTED_EXPECTED",
+      "error": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "name": "dynamic_crt_MSVCP140.DLL",
+      "status": "REJECTED_EXPECTED",
+      "error": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "name": "dynamic_crt_UCRTBASE.DLL",
+      "status": "REJECTED_EXPECTED",
+      "error": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "name": "dynamic_crt_api-ms-win-crt-heap-l1-1-0.dll",
+      "status": "REJECTED_EXPECTED",
+      "error": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "name": "missing_required_ws2",
+      "status": "REJECTED_EXPECTED",
+      "error": "IMPORT_MODULE_ALLOWLIST:missing=WS2_32.DLL;unexpected=BAD_32.DLL"
+    },
+    {
+      "name": "ordinal_in_synchronization_contract",
+      "status": "REJECTED_EXPECTED",
+      "error": "RESTRICTED_IMPORT_NAMES:API-MS-WIN-CORE-SYNCH-L1-2-0.DLL"
+    },
+    {
+      "name": "missing_one_named_function",
+      "status": "REJECTED_EXPECTED",
+      "error": "RESTRICTED_IMPORT_NAMES:API-MS-WIN-CORE-SYNCH-L1-2-0.DLL"
+    },
+    {
+      "name": "unexpected_named_function",
+      "status": "REJECTED_EXPECTED",
+      "error": "RESTRICTED_IMPORT_NAMES:API-MS-WIN-CORE-SYNCH-L1-2-0.DLL"
+    },
+    {
+      "name": "wildcard_api_set",
+      "status": "REJECTED_EXPECTED",
+      "error": "GOLDEN_LOCAL_ADAPTATION_DRIFT"
+    },
+    {
+      "name": "extra_function",
+      "status": "REJECTED_EXPECTED",
+      "error": "GOLDEN_LOCAL_ADAPTATION_DRIFT"
+    },
+    {
+      "name": "wrong_contract_version",
+      "status": "REJECTED_EXPECTED",
+      "error": "GOLDEN_LOCAL_ADAPTATION_DRIFT"
+    },
+    {
+      "name": "unbounded_data_budget",
+      "status": "REJECTED_EXPECTED",
+      "error": "GOLDEN_DESTINATION_BINDING_DRIFT"
+    },
+    {
+      "name": "changed_path_capacity_budget",
+      "status": "REJECTED_EXPECTED",
+      "error": "GOLDEN_LOCAL_ADAPTATION_DRIFT"
+    },
+    {
+      "name": "source_path_capacity_drift",
+      "status": "REJECTED_EXPECTED",
+      "error": "GOLDEN_DATA_PROFILE_SOURCE_DRIFT"
+    }
+  ],
+  "all_user_build_input_hashes_match_exact_rf36_source": 3090,
+  "reported_windows_source_aggregate": "2161c489a76d997ffa141a487fac2b16542868329914b7f557d5bd5afe578e9e",
+  "aggregate_check": "Recomputed fromoriginal list;3090filemaps equal;Windows pathlib ordering differs fromLinux aggregate ordering",
+  "user_windows_observation": "MSVC production compile/link+3ABI lifecycle cyclesPASS;URSYNEX/ARYRA/MUSTAVEXPASS;CORVEXON failedold allowlist;not a newbuild here",
+  "data_footprint": {
+    "observed": {
+      "name": ".data",
+      "va": 593920,
+      "vs": 114116,
+      "raw": 587776,
+      "size": 10752,
+      "flags": 3221225536
+    },
+    "source_fixed_path_buffers": 98304,
+    "observed_virtual_remainder_after_path_bytes": 15812,
+    "destination_limit": 131072,
+    "other_state_budget": 32768,
+    "limits": "No exact linker-symbol attribution orclaimthat entire remainder isCRT;current source contains retained fixed96KiB path arrays. Existing source design is preserved."
+  },
+  "retained_policy_hashes": {
+    "URSYNEX_GOLDEN_FINALIZER": "ca89b8771b37d7c34dec2a51bea89085a466e0bb8a1427bf93fe72b51ae8128b",
+    "ARYRA_GOLDEN_LAYOUT": "ed8a238401570703639df1890b38ce87a45bb4db4ffcb158095a7a6555814245",
+    "MUSTAVEX_GOLDEN_METADATA": "99e08f4352a4ba31eca610c7cddede065af07de92864e50e751204e3c26f657a",
+    "CORVEXON_GOLDEN_TRAIL": "bf40efa4e75d104ee617f5725ea90cd999a62b23393354960350635408ef7588"
+  },
+  "limits": [
+    "Actual uploadedRF36PE revalidated;RF37MSVC rebuild notrun.",
+    "FullGolden/FALCION checked aftersource packaging preparation.",
+    "No change toapplication code,ABI orupstreamHF19 policies."
+  ]
+}

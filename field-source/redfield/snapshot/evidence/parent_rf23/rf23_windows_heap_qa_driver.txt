@@ -1,0 +1,20 @@
+from pathlib import Path
+import json,hashlib,subprocess,tempfile,os
+R=Path('rf23_work/REDFIELD_RF23').resolve();cases=[]
+units=['src/xml/value_codec.cpp','src/xml/value_codec_utf8.cpp','src/xml/value_codec_normalize.cpp','src/xml/value_codec_semantic.cpp','tests/test_semantic_allocator.cpp','src/runtime/transient_allocator.cpp']
+env=os.environ.copy();env['ASAN_OPTIONS']='detect_leaks=0:halt_on_error=1';env['UBSAN_OPTIONS']='halt_on_error=1:print_stacktrace=1'
+with tempfile.TemporaryDirectory(prefix='rf23_heap_') as td:
+    with open('rf23_windows_heap_qa.log','w') as log:
+        for mode in ['none','address','undefined']:
+            b=Path(td)/mode;b.mkdir();flags=['g++','-std=c++20','-pthread','-O1','-g','-UNDEBUG','-I'+str(R/'include'),'-D_WIN32','-DREDFIELD_HEAP_SHIM','-D__declspec(x)=','-D__stdcall=']
+            if mode!='none':flags+=['-fsanitize='+mode,'-fno-omit-frame-pointer','-fno-pie','-no-pie']
+            objects=[]
+            for i,u in enumerate(units):
+                obj=b/(str(i)+'.o');cmd=[*flags,'-c',str(R/u),'-o',str(obj)];p=subprocess.run(cmd,capture_output=True,text=True);log.write(repr(cmd)+'\n'+p.stdout+p.stderr);assert p.returncode==0,p.stderr;objects.append(obj)
+            cmd=[*flags,*map(str,objects),'-o',str(b/'probe')];p=subprocess.run(cmd,capture_output=True,text=True);log.write(repr(cmd)+'\n'+p.stdout+p.stderr);assert p.returncode==0,p.stderr
+            p=subprocess.run([str(b/'probe')],env=env,capture_output=True,text=True,timeout=20);log.write(p.stdout+p.stderr);assert p.returncode==0,p.stderr
+            symbols=subprocess.run(['nm',str(b/'probe')],capture_output=True,text=True,check=True).stdout
+            assert 'current_errno_slot' not in symbols and 'initialize_ptd_runtime' not in symbols and 'allocate_block' not in symbols
+            cases.append(dict(profile=mode,status='PASS',exit_code=0,production_backend_only=True,ptd_generic_symbols='ABSENT',binary_sha256=hashlib.sha256((b/'probe').read_bytes()).hexdigest()))
+            print(mode,'WIN32_BRANCH_HEAP_SHIM_STANDALONE_PASS',flush=True)
+(R/'evidence/rf23_windows_heap_qa.json').write_text(json.dumps(dict(scope='Actual _WIN32 SemanticValue code compiled on Linux with Heap API shim and __declspec/__stdcall erased. ELF, not Windows native/ABI acceptance.',cases=cases,input_sha256={u:hashlib.sha256((R/u).read_bytes()).hexdigest() for u in units}),indent=2)+'\n')

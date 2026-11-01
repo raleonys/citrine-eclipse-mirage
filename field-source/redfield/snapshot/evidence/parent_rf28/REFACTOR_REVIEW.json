@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "checkpoint": "RF28",
+  "batch": "B01",
+  "complete_modules": [
+    "M01",
+    "M15",
+    "M16",
+    "M17",
+    "M20"
+  ],
+  "remaining_modules": 15,
+  "findings": [
+    {
+      "id": "RFCL-001",
+      "status": "CLOSED",
+      "resolution": "Existing disjoint-byte-buffer and separate-written precondition documented;no in-place feature added",
+      "caller_scan": [
+        "include/preloader_l/codec/hex_codec.hpp",
+        "tests/test_hex.cpp"
+      ]
+    },
+    {
+      "id": "RFCL-002",
+      "status": "CLOSED",
+      "resolution": "Current architecture/Debug-CRT-native boundaries and closure status documented;exact RF20 note retained under docs/history"
+    }
+  ],
+  "review_methods": {
+    "M01": "All27 module files read;parser callbacks/spans,limits,owned publication/raw/typed semantics,borrow contract,hook configuration generation and module-anchored surge.cfg reviewed;no implementation change required",
+    "M16": "All3 files read;capacity/overflow/validation-before-write reviewed;precondition documented;existing test_hex rerun",
+    "M20": "Executable Python/CMD/CMake/patch and current normative control contracts read;generated provenance/manifests and historical metadata validated by parse/hash/ordered replay with negative cases;old receipts never treated as fresh"
+  },
+  "not_claimed": [
+    "Full semantic review of all20 modules",
+    "Fresh Debug/CRT/native/game acceptance",
+    "Globally optimal algorithms"
+  ],
+  "evidence": "evidence/rf28_normal_receipt.json"
+}

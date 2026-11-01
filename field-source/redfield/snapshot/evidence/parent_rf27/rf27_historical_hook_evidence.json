@@ -1,0 +1,7 @@
+{
+  "status": "HISTORICAL_RF26_NOT_RERUN",
+  "receipt": "evidence/parent_rf26/rf26_hook_model_qa.json",
+  "cases": 81,
+  "backend_sources_unchanged": true,
+  "limit": "Not fresh RF27 native Windows/game evidence"
+}

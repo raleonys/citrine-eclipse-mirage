@@ -1,0 +1,16 @@
+@echo off
+setlocal EnableExtensions DisableDelayedExpansion
+title REDFIELD - native Local Build
+echo ================================================================
+echo   REDFIELD RF36 CRT STARTUP FIX 01 - LOCAL BUILD / NOT RELEASE
+echo   native: separate objects, CRT and outputs
+echo ================================================================
+python -u "%~dp0build_native_acceptance.py" %*
+set "PRELOADER_L_CHILD_EXIT=%ERRORLEVEL%"
+echo.
+if "%PRELOADER_L_CHILD_EXIT%"=="0" (echo RESULT: SCOPED PASS - see receipt scope) else (echo RESULT: FAIL - see build log/failure evidence)
+echo EXIT CODE: %PRELOADER_L_CHILD_EXIT%
+echo OUTPUT: "%~dp0..\..\build\native"
+echo.
+pause
+exit /b %PRELOADER_L_CHILD_EXIT%

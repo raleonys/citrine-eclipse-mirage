@@ -1,0 +1,42 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF31",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_BOUNDED_GOLDEN_REFACTOR_NOT_RELEASE",
+  "normal_regressions": 96,
+  "parent_stdout_and_exit_equal": 96,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 157,
+  "normal_linked_outputs": 97,
+  "qa": {
+    "golden": 61,
+    "profiles": 62,
+    "boundary": 30,
+    "architecture": 13,
+    "encoding": 16,
+    "environment": 13,
+    "real_process": 7
+  },
+  "package_negatives": 2,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 294,
+    "qualified_files": 0,
+    "pending_files": 294,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "application_body_changes": 0,
+  "production_body_changes": 0,
+  "windows_native_game": "NOT_RUN_RF31",
+  "cmake": "NOT_RUN_TOOL_UNAVAILABLE",
+  "sanitizers": "NOT_RUN_RF31_NO_APPLICATION_CPP_CHANGE",
+  "golden": "Actual Python five-stage chain tested on synthetic PE;actual current Windows production NOT_RUN",
+  "full_production_debug_crt_golden_migration": "PENDING_REAL_ACCEPTANCE_AND_FULL_COVERAGE",
+  "canonical_unchanged": true
+}

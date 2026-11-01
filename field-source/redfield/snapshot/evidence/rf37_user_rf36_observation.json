@@ -1,0 +1,87 @@
+{
+  "user_receipt_sha256": "0381eb0e931c669dc82575b690f4c3deb64b0e90849b309af8b8bb23490df335",
+  "user_dll_sha256": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+  "reported_source_aggregate": "2161c489a76d997ffa141a487fac2b16542868329914b7f557d5bd5afe578e9e",
+  "all_input_hashes_match_rf36": 3090,
+  "profile": "production",
+  "acceptance": [
+    {
+      "kind": "public_abi_lifecycle",
+      "status": "PASS",
+      "scope": "Current ABI host only;not complete legacy CRT acceptance",
+      "dll_sha256": "9fee65ffc10172c12a81e64afb3fe80ff2db99287cb79ae5d8276b3459fa205d",
+      "pe": {
+        "exports": {
+          "DllMain": 1,
+          "DllShutdown": 3,
+          "SURGE": 2
+        },
+        "imports": [
+          "API-MS-WIN-CORE-SYNCH-L1-2-0.DLL",
+          "CRYPT32.DLL",
+          "KERNEL32.DLL",
+          "MSWSOCK.DLL",
+          "WS2_32.DLL"
+        ],
+        "entry_rva": 314960,
+        "machine": "x64",
+        "static_crt_import_check": "PASS"
+      },
+      "stdout": "ABI_SMOKE_PASS:3_LOAD_SHUTDOWN_UNLOAD_CYCLES"
+    }
+  ],
+  "golden_stages": [
+    {
+      "name": "URSYNEX Golden Finalizer",
+      "status": "PASS",
+      "before": "9fee65ffc10172c12a81e64afb3fe80ff2db99287cb79ae5d8276b3459fa205d",
+      "after": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "info": {
+        "changed_bytes": 144
+      }
+    },
+    {
+      "name": "ARYRA Golden Layout",
+      "status": "PASS",
+      "before": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "after": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "info": {
+        "sections": [
+          ".text",
+          ".rdata",
+          ".data",
+          ".pdata",
+          ".fptable",
+          ".rsrc",
+          ".reloc"
+        ],
+        "exact_donor_rva_size_parity": false
+      }
+    },
+    {
+      "name": "MUSTAVEX Golden Metadata",
+      "status": "PASS",
+      "before": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "after": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "info": {
+        "internal_export_name": "preloader.unsigned.dll",
+        "versioninfo": "PINNED_COMPATIBILITY_ALLOWLIST",
+        "certificate_debug_rich_symbols": "ABSENT"
+      }
+    },
+    {
+      "name": "CORVEXON Golden Trail",
+      "status": "FAIL",
+      "before": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "error": "PEError:IMPORT_MODULE_ALLOWLIST"
+    }
+  ],
+  "link_policy": {
+    "status": "PASS",
+    "scope": "Actual session compile/link/object/resource/tool contract;part of MSVC Build",
+    "command_sha256": "c68eaee363ad44f71d807fced1690aaead158f78ae8bd02fd4cbbccd0a8384dd",
+    "candidate_sha256": "9fee65ffc10172c12a81e64afb3fe80ff2db99287cb79ae5d8276b3459fa205d",
+    "production_objects": 75
+  },
+  "full_original_receipt_library_file_id": "libfile_745570d2ff1c8191ae1444bf346b7cdd"
+}

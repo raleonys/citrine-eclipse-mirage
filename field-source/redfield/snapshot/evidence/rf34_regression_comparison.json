@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "parent_checkpoint": "RF33",
+  "compared_tests": 98,
+  "stdout_and_exit_equal": 98,
+  "legacy_diagnostic_exit": 14,
+  "source_tree_sha256": "1a7471d4b7b5bb21faa064e6097937592a5a6aadbcc4fd150b32b8b08fa28ee1"
+}

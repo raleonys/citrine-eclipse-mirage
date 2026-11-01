@@ -1,0 +1,16 @@
+{
+  "revision": "2026-10-19.3",
+  "scope": "User-authorized whole-application structural refactor; LOCAL_BUILD/NOT_RELEASE; current master v5 development clauses freshly read; no canonical mutation",
+  "master_md_sha256": "0c044aae023a4281b00cb54ba6bfe6400746091db21acbe1392dbfafa1821f5c",
+  "master_json_sha256": "db3fc166340f363ffaba3a175e82d63df477b7ab94b5c6dbe734830b799977b3",
+  "master_md_library_file_id": "libfile_b1de5dceb8448191a0d52c120edc5215",
+  "master_json_library_file_id": "libfile_c451831f61c88191a98aa9ab08cc7714",
+  "prior_revision": "2026-10-19.2",
+  "official_hf19_unchanged": true,
+  "fresh_library_master_read_version": "5",
+  "fresh_library_master_read_revision": "2026-10-19.3",
+  "fresh_read_scope": "Current master MD development-build/game-policy clauses and JSON canonical baseline v5 read before source edits; inherited full hashes unchanged",
+  "checkpoint": "RF22",
+  "topology_disposition": "Seven current HF19 core hooks; historical nine-hook master membership superseded in adopted source by explicit HF16/HF17 removal. This RF21 user-authorized hook integration preserves that source topology; optional HF17 addon hooks not selected. No master/canonical mutation.",
+  "refactor": "UNIFIED01"
+}

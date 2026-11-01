@@ -1,0 +1,45 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF33",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_BOUNDED_REGISTRY_VALUE_REFACTOR_NOT_RELEASE",
+  "normal_regressions": 98,
+  "parent_stdout_and_exit_equal": 97,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 159,
+  "normal_linked_outputs": 99,
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 300,
+    "qualified_files": 2,
+    "pending_files": 298,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "targeted": "UBSan, ASan+UBSan writer and actual fallback integration PASS; synthetic Windows conversion/heap branch PASS",
+  "mutation_tests": {
+    "wrong_endian": "REJECTED",
+    "reject_exact_capacity": "REJECTED",
+    "short_buffer_claims_success": "REJECTED"
+  },
+  "source_boundary_qa": {
+    "cases": 35,
+    "evidence": "evidence/rf33_boundary_qa.json"
+  },
+  "existing_application_files_changed": 1,
+  "new_application_files": 2,
+  "application_files_unchanged": 265,
+  "portable_core_body_changes": 0,
+  "windows_msvc": "NOT_RUN_RF33",
+  "native_crt_debug_game": "NOT_RUN_RF33",
+  "cmake": "NOT_RUN_TOOL_UNAVAILABLE",
+  "leak_sanitizer": "NOT_RUN; focused ASan uses detect_leaks=0",
+  "first_workspace_attempt": "FAIL_FINAL_OUTPUT_MODE_CHECK; preserved as failed evidence",
+  "full_production_debug_crt_golden_migration": "PENDING_REAL_ACCEPTANCE_AND_FULL_COVERAGE",
+  "canonical_unchanged": true
+}

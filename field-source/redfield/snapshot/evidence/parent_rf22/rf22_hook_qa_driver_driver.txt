@@ -1,0 +1,16 @@
+from pathlib import Path
+import json,hashlib,subprocess,os,tempfile
+R=Path('rf22_work/REDFIELD_RF22').resolve();old=str(Path('rf21_work/REDFIELD_RF21').resolve())
+records=[]
+for row in json.loads(Path('rf21_hook_profiles.json').read_text()):
+    mode=row['profile'];b=Path(tempfile.mkdtemp(prefix='rf22_hook_'+mode+'_'))/'probe'
+    cmd=[s.replace(old,str(R)).replace('rf21_hook_qa.cpp','rf22_hook_qa.cpp') for s in row['command']]
+    cmd[cmd.index('-o')+1]=str(b)
+    env=os.environ.copy();env['ASAN_OPTIONS']='detect_leaks=0:halt_on_error=1';env['UBSAN_OPTIONS']='halt_on_error=1:print_stacktrace=1'
+    with open('rf22_hook_'+mode+'.log','w') as out:
+        c=subprocess.run(cmd,capture_output=True,text=True);out.write(repr(cmd)+'\n'+c.stdout+c.stderr);assert c.returncode==0,c.stderr
+        p=subprocess.run([str(b)],env=env,capture_output=True,text=True,timeout=30);out.write(p.stdout+p.stderr);assert p.returncode==0,p.stdout+p.stderr
+    assert 'RF22_HOOK_SOURCE_QA_PASS cases=27' in p.stdout
+    records.append(dict(profile=mode,cases=27,exit_code=0,stdout=p.stdout,binary_sha256=hashlib.sha256(b.read_bytes()).hexdigest(),command=cmd))
+    print(mode,'27 PASS',flush=True)
+(R/'evidence/rf22_hook_model_qa.json').write_text(json.dumps(dict(scope='Actual Windows hook source compiled under Linux Win32/MinHook shim; not native executable patching/Windows ABI',profiles=records),indent=2)+'\n')

@@ -1,0 +1,50 @@
+from pathlib import Path
+import hashlib,json,subprocess,tempfile,shutil,sys
+R=Path('rf32_work/REDFIELD_RF32').resolve();cases=[]
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def run(cmd):
+ p=subprocess.run([str(x) for x in cmd],capture_output=True,text=True,timeout=90)
+ assert p.returncode==0,p.stdout+p.stderr
+ return p.stdout
+stub=r'''#pragma once
+#include <cstdint>
+#include <cstddef>
+#define WINAPI
+#define __stdcall
+using DWORD=std::uint32_t;using BOOL=int;using HMODULE=void*;using HINSTANCE=void*;
+using LPVOID=void*;using HANDLE=void*;using LPCWSTR=const wchar_t*;
+inline constexpr BOOL FALSE=0,TRUE=1;
+inline constexpr DWORD ERROR_SUCCESS=0,ERROR_ENVVAR_NOT_FOUND=203,DLL_PROCESS_ATTACH=1;
+inline constexpr DWORD GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS=4,WAIT_OBJECT_0=0,WAIT_TIMEOUT=258;
+void SetLastError(DWORD);DWORD GetLastError();
+DWORD GetEnvironmentVariableA(const char*,char*,DWORD);
+BOOL SetEnvironmentVariableA(const char*,const char*);
+DWORD GetModuleFileNameW(HMODULE,wchar_t*,DWORD);
+BOOL GetModuleHandleExW(DWORD,LPCWSTR,HMODULE*);
+HANDLE CreateThread(void*,std::size_t,DWORD(WINAPI*)(void*),void*,DWORD,void*);
+DWORD WaitForSingleObject(HANDLE,DWORD);BOOL CloseHandle(HANDLE);BOOL FreeLibrary(HMODULE);
+void Sleep(DWORD);
+// The real declaration is _WIN32-only. This Linux model declares exactly that
+// API instead of defining _WIN32 (which would switch Asio to unavailable Win32).
+namespace preloader_l::platform { std::uint32_t connect_redirect_mapped_count() noexcept; }
+'''
+g=json.loads((R/'metadata/BUILD_GRAPH.json').read_text())
+work=Path(tempfile.mkdtemp(prefix='rf32_worker_qa_'));(work/'windows.h').write_text(stub)
+Path('rf32_worker_qa_root.txt').write_text(str(work)+'\n')
+common=['g++','-std=c++20','-pthread','-Wall','-Wextra','-Werror','-O1','-g','-DASIO_STANDALONE=1','-DASIO_NO_TYPEID=1','-I'+str(work),*['-I'+str(R/p) for p in g['include_directories']]]
+entries={'production':R/'src/windows/dll_entry.cpp','native':R/'tests/native/dll_entry.cpp','parent_production':R/'provenance/rf31/src/windows/dll_entry.cpp','parent_native':R/'provenance/rf31/src/windows/dll_entry.cpp'}
+for name,source in entries.items():
+ extra=['-DPRELOADER_L_NATIVE_TEST=1'] if name=='parent_native' else []
+ output=work/(name+'.o');deps=work/(name+'.d')
+ run([*common,*extra,'-MMD','-MF',deps,'-c',source,'-o',output])
+ symbols=run(['nm','-C',output]);is_native=name.endswith('native')
+ assert (' T RFTestStatus' in symbols)==is_native and (' T RFTestSetFaults' in symbols)==is_native and (' T RFTestTransport' in symbols)==is_native
+ assert all(' T '+n in symbols for n in ['DllMain','SURGE','DllShutdown'])
+ if not name.startswith('parent'):
+  closure=deps.read_text();assert ('tests/native/worker_observation.hpp' in closure)==is_native
+  assert ('testing::WorkerObservation' in symbols)==is_native
+ cases.append(dict(case='real_GCC_compile_'+name,status='PASS',scope='Exact entry bodies withdeclaration-onlyWin32 model;not actualWindows orDLL',object_sha256=sha(output),native_exports=is_native))
+assert 'PRELOADER_L_NATIVE_TEST' not in (R/'src/windows/worker_runtime.hpp').read_text()+(R/'src/windows/dll_entry.cpp').read_text()
+cases.append(dict(case='production_sources_have_no_native_switch_or_exports',status='PASS'))
+Path('rf32_worker_compile_cases.json').write_text(json.dumps(cases,indent=2)+'\n')
+print('RF32_WORKER_ENTRY_GCC_COMPILE_PASS',len(cases),work,flush=True)

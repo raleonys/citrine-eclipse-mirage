@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "application_files": 262,
+  "project_name_occurrences_in_active_application": 0,
+  "code_identity": "preloader_l",
+  "include_root": "include/preloader_l",
+  "config_basename": "preloader_l.cfg",
+  "cmake_project_name_only": true,
+  "license_identifiers": "262 existing GPL-3.0-only markers retained;LICENSE and vendors byte-identical",
+  "history": "Old names remain verbatim only in immutable uncompiled reference snapshots/receipts",
+  "mechanical_files": 260,
+  "semantic_and_strengthened_test_files": [
+    "src/config/achievement_projection.hpp",
+    "tests/test_record_projection_transaction.cpp"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF21",
+  "classification": "NON_RELEASE_WORK",
+  "status": "NOT_RELEASE",
+  "semantic_version": null,
+  "official_codename": null,
+  "public_abi": "DllMain @1, SURGE @2, DllShutdown @3 unchanged;35 plaintext local routes;seven new Windows MinHook detours;SURGE passive",
+  "runtime_compatibility": "NOT_PROVEN",
+  "canonical_release_mutation": false,
+  "known_diagnostic": "RF03-QA-001 unchanged original GetConfig diagnostic exit14, separate from passing regressions",
+  "derivation_scope": "1227 exact adopted files;27 derived files including two registry recovery fences and existing SAFE-FREEZE materialization",
+  "build_fix": "HOOKS01_FIX02",
+  "build_fix_scope": "Caller remaining shutdown budget reaches retry cleanup; pending TCP/session bookkeeping driven to quiescence within deadline; zero poll remains nonblocking; retained ownership on incomplete teardown",
+  "windows_msvc": "FIX01_USER_LOG_170_COMPILES_90_REGRESSIONS_PRODUCTION_SMOKE_PASS_NATIVE_HOST_EXIT56;FIX02_NATIVE_NOT_RUN",
+  "current_regressions": 91
+}

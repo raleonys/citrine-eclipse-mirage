@@ -1,0 +1,24 @@
+{
+  "checkpoint": "RF35",
+  "status": "SOURCE_CAUSE_CONFIRMED_NATIVE_RERUN_NOT_RUN",
+  "user_log": {
+    "path": "evidence/rf35_user_rf33_msvc_failure.log",
+    "sha256": "178f696be174f57ef84951b015a819e021cd18b9bae10f102d4cba8e0bf5896a",
+    "observed_compiler": "MSVC 14.51.36231 x64",
+    "observed_exit": 2,
+    "error": "C2386",
+    "failed_translation_unit": "src/net/tcp_ingress.cpp",
+    "reported_line": 13,
+    "scope": "User RF33 compile stops before tests/DLL link; not a GetConfig runtime failure"
+  },
+  "source_parent": "RF34 exact archive; same alias is present in RF33/RF34",
+  "cause": "frame_ingress.hpp already defines preloader_l::net; tcp_ingress.cpp aliases net to that same namespace inside namespace preloader_l. User MSVC rejects the duplicate declaration.",
+  "fix": "Remove the redundant alias. Existing net:: uses resolve directly to preloader_l::net. No transport code, configuration, callback, ABI or ownership rule changed.",
+  "changed_application_files": [
+    "src/net/tcp_ingress.cpp"
+  ],
+  "other_changes": "Developer checkpoint labels updated; shared build logs no longer misleadingly identify every checkpoint as RF32.",
+  "audit": "All application namespace-alias declarations inspected; no other same-scope self-alias found. config aliases in anonymous namespace, formatter aliases in nested namespace, function aliases and distinct names retained.",
+  "native_limit": "No actual MSVC/Windows SDK available here. Source correction and GCC regressions cannot establish full current Windows build success.",
+  "module_review": "M09 whole-module review remains open; no new import qualification or completed refactor module claimed."
+}

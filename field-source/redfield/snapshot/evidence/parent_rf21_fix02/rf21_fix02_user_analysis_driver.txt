@@ -1,0 +1,41 @@
+from pathlib import Path
+import hashlib,json,re,struct,subprocess
+R=Path('rf21_fix02_work/REDFIELD_RF21')
+log=Path('upload/build(1).log');dll=Path('upload/preloader_l(7).dll')
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+lines=log.read_text(errors='replace').splitlines()
+compile_runs=[s for s in lines if re.match(r'^\[RUN\] CXX \d+/170:',s)]
+compile_exits=[s for s in lines if re.match(r'^\[EXIT 0; [^\]]+\] CXX \d+/170:',s)]
+tests=[s for s in lines if re.match(r'^\[EXIT 0; [^\]]+\] test_.*\.exe$',s)]
+assert len(compile_runs)==len(compile_exits)==170 and len(tests)==90
+assert any(s.startswith('[EXIT 14;') and s.endswith('test_get_config_legacy.exe') for s in lines)
+assert any(s.startswith('[EXIT 0;') and s.endswith('LINK preloader_l.dll') for s in lines)
+assert 'ABI_SMOKE_PASS:3_LOAD_SHUTDOWN_UNLOAD_CYCLES' in lines
+passed=[s.removeprefix('NATIVE_CASE_PASS:') for s in lines if s.startswith('NATIVE_CASE_PASS:')]
+assert passed==['missing','online_true','numeric_ignored','invalid_config','cleanup_retry','self_pin']
+assert any(s.startswith('[EXIT 56;') and s.endswith('native_acceptance.exe') for s in lines)
+assert not any('REDFIELD_NATIVE_ACCEPTANCE_PASS' in s for s in lines)
+data=dll.read_bytes();pe=struct.unpack_from('<I',data,0x3c)[0]
+assert data[:2]==b'MZ' and data[pe:pe+4]==b'PE\0\0' and struct.unpack_from('<H',data,pe+4)[0]==0x8664
+out=subprocess.run(['objdump','-p',str(dll)],capture_output=True,text=True,check=True).stdout
+exports=[]
+for line in out.splitlines():
+    m=re.match(r'^\s*\[\s*(\d+)\]\s+(DllMain|DllShutdown|SURGE)$',line)
+    if m:exports.append(dict(name=m[2],ordinal=int(m[1])+1))
+assert sorted((e['name'],e['ordinal']) for e in exports)==[('DllMain',1),('DllShutdown',3),('SURGE',2)]
+j=dict(classification='USER_SUPPLIED_WINDOWS_EXECUTION_LOG_PLUS_STATIC_PE_INSPECTION; not agent-native execution',
+       inputs=[dict(name=log.name,bytes=log.stat().st_size,sha256=sha(log),library_file_id='libfile_c4d150a9f9688191bf54c178dc9753bb'),
+               dict(name=dll.name,bytes=dll.stat().st_size,sha256=sha(dll),library_file_id='libfile_c590f9c6f7fc81919fca52e33ac07ba6')],
+       parent_build='RF21 HOOKS01 FIX01',compiler='MSVC14.51.36231 HostX64/x64',
+       successful_compile_actions=170,regression_exit0_count=90,legacy_diagnostic_exit=14,
+       production_dll_link='PASS',production_lifecycle_smoke='PASS_3_CYCLES',native_cases_passed=passed,
+       native_host_exit=56,native_completion_marker=False,overall_status='FAIL_NATIVE_ACCEPTANCE',
+       failed_assertion='hooks case: second DllShutdown(10000) after RegCloseKey must return0',
+       preceding_hook_assertions='connect redirect mapping, pseudo RegOpen/Query, first shutdown==10 and RegCloseKey success all reached before exit56',
+       actual_second_shutdown_return='NOT_RECORDED_IN_SUBMITTED_LOG;56 is host assertion exit, not DllShutdown result',
+       portable_old_exact_callback_reproduction='blocked=10 retry=10 pending=1 unpins=0; real Linux TCP, hook preflight model only',
+       diagnosis_limit='Source defect and portable reproduction established. Same root cause on Windows inferred; corrected FIX02 native execution still required.',
+       pe=dict(machine='AMD64',exports=exports,imports=re.findall(r'DLL Name: ([^\r\n]+)',out)),
+       current_fix02_windows='NOT_RUN',game='NOT_RUN')
+(R/'evidence/rf21_fix02_user_native_analysis.json').write_text(json.dumps(j,indent=2)+'\n')
+print('USER_NATIVE_LOG_170_COMPILES_90_REGRESSIONS_SMOKE_PASS_NATIVE_EXIT56_PE_EXPORTS_VERIFIED')

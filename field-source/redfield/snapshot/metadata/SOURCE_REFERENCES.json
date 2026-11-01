@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "name": "OriginSDK_0.91.3_Kaynak.zip",
+      "library_file_id": "libfile_141e0776903c8191bb21806fb5f27fc0",
+      "file_id": "file_000000004b9c820aa07d3ef702572a8e",
+      "path": "/OriginSDK_0.91.3_Kaynak.zip",
+      "version_id": null
+    },
+    {
+      "name": "EAappEmulater-main.zip",
+      "library_file_id": "libfile_97e27f71c8b881919f00273bc1358236",
+      "file_id": "file_0000000002f8820aa37d2096d799b286",
+      "path": "/EAappEmulater-main.zip",
+      "version_id": null
+    },
+    {
+      "name": "Maxima-Draconis-master.zip",
+      "library_file_id": "libfile_fa80b10d61d081918603af763396fb85",
+      "file_id": "file_00000000ed28820aa516ebd0fe608d02",
+      "path": "/Maxima-Draconis-master.zip",
+      "version_id": null
+    },
+    {
+      "name": "preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+      "library_file_id": "libfile_87a80bf95388819199a80aa9915fa561",
+      "file_id": "file_00000000c0d4820a8139a76ecb9b3dc8",
+      "path": "/DLL R&D Football/releases/3.2.5 SQUALERIS/HOTFIX19/artifacts/c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab/preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+      "version_id": null
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+from pathlib import Path
+import hashlib,json,shutil,struct,sys,tempfile
+R=Path('rf37_work/REDFIELD_RF37').resolve();sys.path.insert(0,str(R/'scripts/build_orchestration'))
+import golden as g
+from pe_image import Image
+sha=lambda b:hashlib.sha256(b).hexdigest()
+binary=Path('upload/preloader.unsigned(3).dll');original=binary.read_bytes()
+candidate=R/'build/validation/preloader.unsigned.dll';candidate.parent.mkdir(parents=True,exist_ok=True);candidate.write_bytes(original)
+rows=[];outcome=g.execute(R,candidate,stage_sink=rows)
+assert len(rows)==5 and all(x['status']=='PASS' for x in rows)
+assert candidate.read_bytes()==original==binary.read_bytes() and outcome.original==outcome.final
+binding,policies=g.load_contract(R);cases=[]
+def reject(name,call,expected):
+    try:call()
+    except ValueError as ex:
+        assert expected in str(ex),(name,str(ex));cases.append({'name':name,'status':'REJECTED_EXPECTED','error':str(ex)})
+    else:raise AssertionError('accepted '+name)
+image=Image(original);index=next(i for i,s in enumerate(image.sections) if s['name']=='.data')
+offset=image.section_table_end-len(image.sections)*40+index*40+8
+bad=bytearray(original);struct.pack_into('<I',bad,offset,0x20001)
+reject('data_virtual_size_over128KiB',lambda:g.hygiene(R,Image(bad),binding,policies),'DATA_VIRTUAL_SIZE_BUDGET')
+with tempfile.TemporaryDirectory(prefix='rf37_hygiene_') as d:
+    root=Path(d)/'source';shutil.copytree(R,root,ignore=shutil.ignore_patterns('__pycache__'))
+    # Exclude only the root generated directory. Never drop vendor build trees.
+    shutil.rmtree(root/'build')
+    manifest_path=root/'metadata/PACKAGE_MANIFEST.json';base=json.loads(manifest_path.read_text())
+    for name,payload,suffix,expected in [('private_path',b'C:\\Users\\PRIVATE_PERSON\\work\\file','txt','HYGIENE_SENSITIVE_MATERIAL'),
+        ('embedded_binary',b'not an actual PE','dll','HYGIENE_GENERATED_OR_EMBEDDED_PAYLOAD')]:
+        relative='evidence/qa_'+name+'.'+suffix;target=root/relative;target.write_bytes(payload)
+        manifest=json.loads(json.dumps(base));manifest['files'][relative]={'bytes':len(payload),'sha256':sha(payload)};manifest_path.write_text(json.dumps(manifest))
+        reject(name,lambda:g.hygiene(root,Image(original),binding,policies),expected)
+        target.unlink();manifest_path.write_text(json.dumps(base))
+result={'status':'PASS_FULL_ORDERED_GOLDEN_REAL_RF36_USER_PE','source_checkpoint':'RF37','binary_compiled_checkpoint':'RF36',
+    'binary_sha256':sha(original),'binary_bytes':len(original),'stages':rows,'unchanged_binary_bytes':True,'source_hygiene_negatives':cases,
+    'limits':['NoRF37MSVC rebuild;actualuserRF36PE andsource-boundGolden validation.','No realWindowsprocess/game execution here;user supplied3ABIcycles separately.','Sourcepackage FALCION applicability islocalrefactor scope,not officialrelease qualification.']}
+Path('rf37_checks/full_golden.json').write_text(json.dumps(result,indent=2)+'\n')
+print('RF37 full5Goldenstages PASS onactualuserRF36PE;binaryunchanged;3hygienenegatives rejected')

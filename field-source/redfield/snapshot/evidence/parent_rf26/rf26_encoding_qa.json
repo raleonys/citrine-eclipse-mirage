@@ -1,0 +1,93 @@
+{
+  "scope": "Actual Python verifier and filesystem materialization under controlled default text encodings; not native Windows execution",
+  "cases": [
+    {
+      "case": "old_default_cp1254",
+      "status": "EXPECTED_REJECTION",
+      "reason": "MINHOOK_PATCH_REPLAY_MISMATCH"
+    },
+    {
+      "case": "old_default_cp1252",
+      "status": "EXPECTED_REJECTION",
+      "reason": "MINHOOK_PATCH_REPLAY_MISMATCH"
+    },
+    {
+      "case": "explicit_utf8_under_default_cp1254",
+      "status": "PASS",
+      "patched_sha256": "7485de758b0d1e841fff185b7588f2c0e41e42d6d87faee4162ede935aed713b"
+    },
+    {
+      "case": "explicit_utf8_under_default_cp1252",
+      "status": "PASS",
+      "patched_sha256": "7485de758b0d1e841fff185b7588f2c0e41e42d6d87faee4162ede935aed713b"
+    },
+    {
+      "case": "explicit_utf8_under_default_cp1251",
+      "status": "PASS",
+      "patched_sha256": "7485de758b0d1e841fff185b7588f2c0e41e42d6d87faee4162ede935aed713b"
+    },
+    {
+      "case": "explicit_utf8_under_default_ascii",
+      "status": "PASS",
+      "patched_sha256": "7485de758b0d1e841fff185b7588f2c0e41e42d6d87faee4162ede935aed713b"
+    },
+    {
+      "case": "explicit_utf8_under_default_utf-8",
+      "status": "PASS",
+      "patched_sha256": "7485de758b0d1e841fff185b7588f2c0e41e42d6d87faee4162ede935aed713b"
+    },
+    {
+      "case": "real_materialization_unicode_path_cp1254",
+      "status": "PASS",
+      "bom": "EFBBBF",
+      "all_other_vendor_files": "BYTE_IDENTICAL"
+    },
+    {
+      "case": "real_materialization_unicode_path_cp1252",
+      "status": "PASS",
+      "bom": "EFBBBF",
+      "all_other_vendor_files": "BYTE_IDENTICAL"
+    },
+    {
+      "case": "real_materialization_unicode_path_ascii",
+      "status": "PASS",
+      "bom": "EFBBBF",
+      "all_other_vendor_files": "BYTE_IDENTICAL"
+    },
+    {
+      "case": "source_bom",
+      "status": "EXPECTED_REJECTION",
+      "reason": "MINHOOK_PIN_MISMATCH:source"
+    },
+    {
+      "case": "replacement_bom",
+      "status": "EXPECTED_REJECTION",
+      "reason": "MINHOOK_PIN_MISMATCH:replacement"
+    },
+    {
+      "case": "source_crlf",
+      "status": "EXPECTED_REJECTION",
+      "reason": "MINHOOK_PIN_MISMATCH:source"
+    },
+    {
+      "case": "patch_tamper",
+      "status": "EXPECTED_REJECTION",
+      "reason": "MINHOOK_PIN_MISMATCH:patch"
+    },
+    {
+      "case": "rebound_replacement",
+      "status": "EXPECTED_REJECTION",
+      "reason": "MINHOOK_PATCH_REPLAY_MISMATCH"
+    },
+    {
+      "case": "actual_cli_handler_preserves_failure_exit1",
+      "status": "PASS"
+    }
+  ],
+  "helper_sha256": "24809a7c8cad5723354e1def88f939e9acb05242db8b7299afc25ca20165b2b7",
+  "builder_sha256": "b4a7c1e27693801b6586bb974e3b1f9b57b1758a4c0e7a694c75fe5410224055",
+  "driver_sha256": "29df24f80f945a4f55ed39eca6ae9655bb3f65dbf8489b24c9f088c660d1257f",
+  "upstream_bom": "EFBBBF retained; UTF-8-SIG stripping forbidden",
+  "patched_sha256": "7485de758b0d1e841fff185b7588f2c0e41e42d6d87faee4162ede935aed713b",
+  "current_driver_sha256": "29df24f80f945a4f55ed39eca6ae9655bb3f65dbf8489b24c9f088c660d1257f"
+}

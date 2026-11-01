@@ -1,0 +1,16 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF21",
+  "classification": "NON_RELEASE_WORK",
+  "status": "NOT_RELEASE",
+  "semantic_version": null,
+  "official_codename": null,
+  "public_abi": "DllMain @1, SURGE @2, DllShutdown @3 unchanged;35 plaintext local routes;seven new Windows MinHook detours;SURGE passive",
+  "runtime_compatibility": "NOT_PROVEN",
+  "canonical_release_mutation": false,
+  "known_diagnostic": "RF03-QA-001 unchanged original GetConfig diagnostic exit14, separate from passing regressions",
+  "derivation_scope": "1227 exact adopted files;27 derived files including two registry recovery fences and existing SAFE-FREEZE materialization",
+  "build_fix": "HOOKS01_FIX01",
+  "build_fix_scope": "Explicit UTF-8 patch replay preserves upstream BOM independently of Windows code page; prepare phase logging and fail-closed ValueError diagnostic; generated build output excluded from launcher inventory",
+  "windows_msvc": "HOOKS01_USER_REPORTED_PRECOMPILE_ENCODING_FAILURE;FIX01_NOT_RUN_HERE"
+}

@@ -1,0 +1,28 @@
+{
+  "scope": "Source-package path hygiene only;original user attachments andparentZIP remainimmutable;no code ordiagnostic outcome edited",
+  "files": [
+    {
+      "path": "evidence/rf35_user_rf33_msvc_failure.log",
+      "parent_original_sha256": "178f696be174f57ef84951b015a819e021cd18b9bae10f102d4cba8e0bf5896a",
+      "redacted_sha256": "d382b59aef543ceb25508916252f559f814acbd9c93a45ed24e0b20d37c4a3a3",
+      "operation": "Windows user path segment replaced with USERNAME;parent hash references remain historical original evidence,not hashes ofthe redacted copy"
+    },
+    {
+      "path": "evidence/rf36_user_rf35_console.txt",
+      "parent_original_sha256": "70b106d0bcc30a884f331782e9a6db8b6e8a9492e9a74ba1a1e7e33e593492ba",
+      "redacted_sha256": "6100b9374356d14e62ad5cbd42a9317d14d7fa202d24fed2935faf32a6b151ed",
+      "operation": "Windows user path segment replaced with USERNAME;parent hash references remain historical original evidence,not hashes ofthe redacted copy"
+    },
+    {
+      "path": "evidence/rf36_user_rf35_production_build.log",
+      "parent_original_sha256": "c5513a5af6b9e34691ccfde8fdf60d2239c3efcc6c957f5cde2f21fdd0e243f6",
+      "redacted_sha256": "d6085301da9c1776cf49edeb2b1b72adb1b07f98b30a427e44eca5833989c3e9",
+      "operation": "Windows user path segment replaced with USERNAME;parent hash references remain historical original evidence,not hashes ofthe redacted copy"
+    }
+  ],
+  "original_library_files": [
+    "libfile_7ae1755aaa808191a77b1632d967eeea",
+    "libfile_bf64cdaa16d8819196aaee549d78494d",
+    "libfile_874ca53df9e481918245782c6ef4d2b4"
+  ]
+}

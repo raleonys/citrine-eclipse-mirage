@@ -1,0 +1,17 @@
+{
+  "revision": "2026-10-21.1",
+  "scope": "Bound exactWindowscore synchronization import andcurrent retained staticdata footprint;source/package hygiene remediation;runtimecode unchanged",
+  "master_md_sha256": "717c46379469a5a34d7868a6d5bc04e1d86f225be3b11ac58f2f30e0bf08acc5",
+  "master_json_sha256": "965b7db066c9cb336a69bef58156e352693b3913604875c5e2956acfc9a82092",
+  "master_md_library_file_id": "libfile_b1de5dceb8448191a0d52c120edc5215",
+  "master_json_library_file_id": "libfile_c451831f61c88191a98aa9ab08cc7714",
+  "prior_revision": "2026-10-19.2",
+  "official_hf19_unchanged": true,
+  "fresh_library_master_read_version": "6",
+  "fresh_library_master_read_revision": "2026-10-21.1",
+  "fresh_read_scope": "Previously read current masterMDv6 development clauses andsame pinned2026-10-21.1 retained;currentRF35 tracker produced inthis session andLibrary metadata v9 confirmed",
+  "checkpoint": "RF37",
+  "topology_disposition": "Seven current HF19 core hooks; historical nine-hook master membership superseded in adopted source by explicit HF16/HF17 removal. This RF21 user-authorized hook integration preserves that source topology; optional HF17 addon hooks not selected. No master/canonical mutation.",
+  "refactor": "GOLDEN_BINDING_FIX01",
+  "local_destination_adaptation": "ExactoptionalWindowsAPIset/exact3names;128KiBsource-boundfootprint;immutableHF19policies retained;no canonicalrelease/CURRENT change"
+}

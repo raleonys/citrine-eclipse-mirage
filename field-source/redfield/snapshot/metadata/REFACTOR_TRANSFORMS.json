@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "checkpoint": "RF37",
+  "parent_zip_sha256": "57eeb66a07466dedbf84c187a1be5f024c1bbdacb757422911344679e5f9d913",
+  "existing_application_files_changed": 0,
+  "new_application_files": 0,
+  "portable_core_body_changes": 0,
+  "changes": [
+    "ExactWindowscore synchronization API-set adaptation;dynamicCRT/wildcards/unknownimports stillrejected",
+    "Currentstaticdataprofile boundtoretained96KiBsourcepathstorage+32KiBremainder",
+    "Redact3packageduserlogs;originalsimmutable;actualuserPE andfailure receipt bound",
+    "All268applicationfiles unchanged;no newmoduleclosure"
+  ],
+  "remaining": [
+    "M12 test CRT/PTD support and13 other whole-module reviews",
+    "284 maintained code and4 vendor integrations pending",
+    "Actual current Windows/MSVC/native/CRT/Debug/game acceptance not run",
+    "M20 carryover scope andRFCL-005 remainopen"
+  ]
+}

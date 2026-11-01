@@ -1,0 +1,57 @@
+"""Synthetic nonexecuted PE fixtures;never MSVC output orWindows acceptance."""
+from pathlib import Path
+import json,struct
+
+def fixture(root,native=False,seven=True,rich=True,first_module='KERNEL32.DLL',data_vs=0x400):
+ req=json.loads((root/'metadata/MUSTAVEX_GOLDEN_METADATA.json').read_text())['required']
+ def node(key,value=b'',kind=0,children=()):
+  b=bytearray(bytes(6)+key.encode('utf-16le')+b'\0\0')
+  while len(b)%4:b+=b'\0'
+  b+=value
+  if children:
+   while len(b)%4:b+=b'\0'
+   for child in children:
+    b+=child
+    while len(b)%4:b+=b'\0'
+  struct.pack_into('<HHH',b,0,len(b),len(value)//2 if kind else len(value),kind)
+  return bytes(b)
+ fixed=struct.pack('<13I',*(int(v,16) for v in req['versioninfo']['fixed'].values()))
+ strings=[node(k,(v+'\0').encode('utf-16le'),1) for k,v in req['versioninfo']['strings'].items()]
+ version=node('VS_VERSION_INFO',fixed,children=[node('StringFileInfo',kind=1,children=[node('040904b0',kind=1,children=strings)]),node('VarFileInfo',kind=1,children=[node('Translation',struct.pack('<HH',0x409,1200))])])
+ sections=[('.text',0x400,0x400,0x60000020),('.rdata',0x1000,0x1000,0x40000040),('.data',data_vs,0x200,0xc0000040),('.pdata',0x200,0x200,0x40000040)]
+ if seven:sections.append(('.fptable',0x100,0x200,0xc0000040))
+ sections += [('.rsrc',0x800,0x800,0x40000040),('.reloc',0x200,0x200,0x42000040)]
+ data=bytearray(0x400+sum(s[2] for s in sections));pe=0x100;opt=pe+24;coff=pe+4
+ def put(fmt,off,*v):struct.pack_into(fmt,data,off,*v)
+ data[:2]=b'MZ';put('<I',0x3c,pe);data[pe:pe+4]=b'PE\0\0';put('<HHI',coff,0x8664,len(sections),0x10203040);put('<HH',coff+16,240,0x2022)
+ put('<HBB',opt,0x20b,15,99);put('<I',opt+16,0x1100);put('<Q',opt+24,0x180000000);put('<II',opt+32,0x1000,0x200);put('<HH',opt+40,6,0);put('<HH',opt+48,6,0);put('<II',opt+56,(len(sections)+1)*0x1000,0x400);put('<HH',opt+68,2,0x160);put('<I',opt+108,16)
+ rows={};raw=0x400;va=0x1000
+ for i,(name,vs,size,flags) in enumerate(sections):
+  o=opt+240+i*40;data[o:o+8]=name.encode().ljust(8,b'\0');put('<IIII',o+8,vs,va,size,raw);put('<I',o+36,flags);rows[name]=(va,raw,size);raw+=size;va+=(max(vs,size)+0xfff)//0x1000*0x1000
+ put('<I',opt+56,va)
+ def off(rva):
+  return next(raw+rva-va for va,raw,size in rows.values() if va<=rva<va+size)
+ def rput(fmt,rva,*v):put(fmt,off(rva),*v)
+ def text(rva,s):b=s.encode('ascii')+b'\0';data[off(rva):off(rva)+len(b)]=b
+ wanted={'DllMain':1,'SURGE':2,'DllShutdown':3}
+ if native:wanted.update(RFTestStatus=100,RFTestSetFaults=101,RFTestTransport=102)
+ put('<II',opt+112,0x2000,0x400);rput('<IIIIIII',0x2000+12,0x23c0,1,max(wanted.values()),len(wanted),0x2040,0x2220,0x2240);text(0x23c0,'preloader.unsigned.dll')
+ cursor=0x2280
+ for i,(name,ordinal) in enumerate(wanted.items()):
+  rput('<I',0x2040+(ordinal-1)*4,0x1010+i*16);rput('<I',0x2220+i*4,cursor);rput('<H',0x2240+i*2,ordinal-1);text(cursor,name);cursor+=len(name)+1
+ mods={first_module:['GetLastError'],'WS2_32.DLL':['connect'],'CRYPT32.DLL':['CryptQueryObject'],'MSWSOCK.DLL':['AcceptEx','GetAcceptExSockaddrs']}
+ put('<II',opt+120,0x2500,(len(mods)+1)*20);names=0x2580;thunks=0x2600;functions=0x2780
+ for i,(name,fns) in enumerate(mods.items()):
+  rput('<IIIII',0x2500+i*20,thunks,0,0,names,thunks);text(names,name);names+=len(name)+1
+  for j,name in enumerate(fns):rput('<Q',thunks+j*8,functions);rput('<H',functions,0);text(functions+2,name);functions+=len(name)+3
+  thunks+=(len(fns)+1)*8
+ load=0x2b00;put('<II',opt+112+10*8,load,0xa0);rput('<I',load,0xa0);rput('<Q',load+88,0x180003010);rput('<Q',0x3010,0x2b992ddfa232)
+ rva,raw,size=rows['.rsrc'];put('<II',opt+112+2*8,rva,0x80+len(version))
+ for relative,key,child in [(0,16,0x80000020),(0x20,1,0x80000040),(0x40,0x409,0x60)]:put('<HH',raw+relative+12,0,1);put('<II',raw+relative+16,key,child)
+ put('<IIII',raw+0x60,rva+0x80,len(version),0,0);data[raw+0x80:raw+0x80+len(version)]=version
+ rva,raw,_=rows['.reloc'];put('<II',opt+112+5*8,rva,12);put('<IIHH',raw,0x1000,12,0,0)
+ if rich:
+  key=0x12345678
+  for i,v in enumerate([0x536e6144,0,0,0,0x01020304,5]):put('<I',0x80+i*4,v^key)
+  data[0xb0:0xb4]=b'Rich';put('<I',0xb4,key)
+ return bytes(data)

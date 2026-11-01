@@ -1,0 +1,19 @@
+from pathlib import Path
+import concurrent.futures,json,hashlib,subprocess,tempfile
+root=Path('rf34_work/REDFIELD_RF34').resolve();graph=json.loads((root/'metadata/BUILD_GRAPH.json').read_text())
+build=Path(tempfile.mkdtemp(prefix='rf34_modules_'));sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+inputs={p.relative_to(root).as_posix():sha(p) for d in ['src','include','tests','third_party'] for p in (root/d).rglob('*') if p.is_file()}
+flags=['-std=c++20','-O0','-Wall','-Wextra','-Werror','-pthread','-UNDEBUG',*['-D'+x for x in graph['compile_definitions']],*['-I'+str(root/x) for x in graph['include_directories']]]
+def compile_one(item):
+    index,relative=item;obj=build/(str(index)+'.o');cmd=['g++',*flags,'-c',str(root/relative),'-o',str(obj)];p=subprocess.run(cmd,capture_output=True,text=True)
+    return {'source':relative,'command':cmd,'exit':p.returncode,'stderr':p.stderr,'object':str(obj),'sha256':sha(obj) if p.returncode==0 else None}
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:objects=list(pool.map(compile_one,enumerate(graph['core_sources'])))
+assert all(p['exit']==0 for p in objects),[p for p in objects if p['exit']]
+names=['test_worker_owner','test_pending_session_cleanup','test_session_retirement','test_transient_shutdown','test_semantic_allocator','test_transient_allocation_owner','test_transient_retry_concurrency'];cases=[]
+for i,name in enumerate(names):
+    main=compile_one((len(objects)+i,graph['tests'][name]));assert main['exit']==0,main
+    target=build/name;cmd=['g++','-pthread',main['object'],*[o['object'] for o in objects],'-o',str(target)];link=subprocess.run(cmd,capture_output=True,text=True);assert link.returncode==0,link.stderr
+    run=subprocess.run([str(target)],capture_output=True,text=True,timeout=45);assert run.returncode==0,(name,run.stderr)
+    cases.append({'name':name,'compile':main,'link':cmd,'link_exit':link.returncode,'run_exit':run.returncode,'stdout':run.stdout,'stderr':run.stderr,'binary_sha256':sha(target)});print(name,'PASS',flush=True)
+assert all(sha(root/p)==h for p,h in inputs.items())
+Path('rf34_checks/module_checks.json').write_text(json.dumps({'status':'PASS','scope':'Fresh58 portable core objects and7 module programs; no test-support/CRT-model linkage; actual local TCP in retirement tests,not Windows','source_hashes':inputs,'core_objects':objects,'tests':cases},indent=2)+'\n')

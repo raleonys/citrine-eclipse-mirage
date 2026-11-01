@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "checkpoint": "RF31",
+  "scope": "Current evidence only;original OEM bytes retained exceptASCII user path prefixes;no application/vendor/ancestry recipes changed",
+  "source_parent_zip_sha256": "49281dce51461aaf2c245e9cad3637ef8868123518bd603a02111be474d7e652",
+  "source_parent_library_file_id": "libfile_7ad6140833b48191809ec2edc3076de8",
+  "files": [
+    {
+      "path": "evidence/parent_hooks01/parent_rf20_fix04_user_windows.txt",
+      "original_sha256": "40fd0d8bc220050164c18e7cc71e6355f069296d856e8033b4625f633578b760",
+      "redacted_sha256": "331c4ce9f397393792c003841f454eb38ad2a805ca3da69de4c05428e8d10821",
+      "redacted_user_path_prefixes": 7
+    },
+    {
+      "path": "evidence/parent_hooks01/user_fix03_build.log",
+      "original_sha256": "37167c8f88d803409f18b3312c3b6bea01d04c7d655543dcd7eb56ef3b7b7c1c",
+      "redacted_sha256": "606c8583f087294cee6c0319c71df8e7785e7a86f96868461b27f487f453da79",
+      "redacted_user_path_prefixes": 1
+    }
+  ]
+}

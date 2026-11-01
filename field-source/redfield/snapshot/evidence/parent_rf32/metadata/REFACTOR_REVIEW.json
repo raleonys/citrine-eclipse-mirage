@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "checkpoint": "RF32",
+  "scope": "M20.4 separate native composition andsource-bound oldcoverage inventory",
+  "current_source_reviews_complete": [
+    "M01",
+    "M15",
+    "M16",
+    "M17"
+  ],
+  "remaining_source_modules": 16,
+  "implemented": [
+    "Separate production/native entry TUs share oneWindowsWorker template",
+    "Production owns empty observation policy;native counters/fault budgets onlyintests/native",
+    "Native entry separate source role;macro-based production entry variant rejected byallbuilders",
+    "29oldnative/CRT scenarios,4debughosts,2stress sets andshippingblackbox explicitly mapped withsource hashes"
+  ],
+  "remaining": [
+    "Actual currentWindows/MSVC DLL/hook/CRT/game acceptance",
+    "Dedicateddebugdiagnostic composition andfulllegacy native/CRT/stress/blackbox applicability",
+    "RFCL-005 actualgameprofile rootcause",
+    "298 maintained-code+4vendor semanticqualification and16modulereviews"
+  ],
+  "evidence": "evidence/rf32_normal_receipt.json",
+  "worker_model": "evidence/rf32_worker_qa.json",
+  "limits": "Win32/WindowsHooks model isnot actualWindows execution"
+}

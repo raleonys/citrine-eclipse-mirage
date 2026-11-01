@@ -1,0 +1,41 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF36",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_CONTROLLED_STARTUP_AND_PORTABLE_NATIVE_NOT_RUN",
+  "normal_regressions": 98,
+  "parent_stdout_and_exit_equal": 98,
+  "normal_compiled_objects": 159,
+  "normal_linked_outputs": 99,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "startup_model_comparisons": 22,
+  "startup_model_executions": 44,
+  "module_programs": 7,
+  "crt_entry_policy_negatives": 15,
+  "startup_mutations_rejected": 2,
+  "trivial_destruction_assertions": 2,
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 300,
+    "qualified_files": 16,
+    "pending_files": 284,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "source_module_reviews_complete": 6,
+  "source_module_reviews_remaining": 14,
+  "new_whole_module_reviews": 0,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "application_files_changed": 3,
+  "new_application_files": 0,
+  "user_rf35_msvc_observation": "74 units compiled;production entry C2127;no link/DLL success in supplied log",
+  "windows_msvc": "NOT_RUN_RF36",
+  "native_crt_debug_game": "NOT_RUN_RF36",
+  "sanitizers": "NOT_RUN_RF36;historicalRF34 retained",
+  "golden": "NOT_RUN_RF36;all current pipeline code/policy unchanged exceptcheckpoint labels inprofile driver",
+  "canonical_unchanged": true
+}

@@ -1,0 +1,57 @@
+from pathlib import Path
+import json,hashlib,subprocess,tempfile
+R=Path('rf30_work/REDFIELD_RF30').resolve()
+build=Path(Path('rf30_clean_root.txt').read_text().strip())/'build/verify/portable_none'
+with tempfile.TemporaryDirectory(prefix='rf30_config_profile_probe_') as td:
+ p=Path(td);cpp=p/'probe.cpp';exe=p/'probe'
+ cpp.write_text(r'''
+#include "preloader_l/handlers/config_route.hpp"
+#include "preloader_l/profile_response.hpp"
+#include "preloader_l/xml/request_parser.hpp"
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <string>
+using namespace preloader_l;
+int main(int argc,char**argv){
+ if(argc!=2)return 2;
+ xml::Request request;char output[16384];std::size_t n=0;
+ if(xml::parse("<LSX><Request id='21'><GetConfig/></Request></LSX>",request)!=xml::Result::ok)return 3;
+ if(handlers::handle_get_config(request,output,sizeof(output),&n)!=handlers::HandlerStatus::ok)return 4;
+ std::string text(output,n);unsigned count=0;for(std::size_t at=0;(at=text.find("<Service ",at))!=std::string::npos;at+=9)++count;
+ std::cout<<"normal_getconfig_services="<<count<<"\n";
+ if(xml::parse("<LSX><Request id='bad&bogus;'><GetConfig/></Request></LSX>",request)!=xml::Result::ok)return 5;
+ if(handlers::handle_get_config(request,output,sizeof(output),&n)!=handlers::HandlerStatus::ok)return 6;
+ std::cout<<"unknown_entity_escaped="<<(std::string(output,n).find("bad&amp;bogus;")!=std::string::npos)<<"\n";
+ std::ifstream input(argv[1],std::ios::binary);if(!input)return 7;
+ const std::string bytes{std::istreambuf_iterator<char>(input),std::istreambuf_iterator<char>()};ConfigStore store;
+ if(store.replace(bytes)!=ConfigResult::published)return 8;
+ const auto policy=profile_policy(*store.snapshot());
+ std::cout<<"cfg_profile_username_bytes="<<policy.username.size<<"\ncfg_profile_user_id_bytes="<<policy.user_id.size<<"\n";
+ if(xml::parse("<LSX><Request id='p'><GetProfile index='0'/></Request></LSX>",request)!=xml::Result::ok)return 9;
+ if(dispatch_response_with_config(request,*store.snapshot(),output,sizeof(output),&n)!=ResponseResult::response)return 10;
+ std::cout<<"profile_response_emitted=1\n";
+ if(xml::parse("<LSX><Request id='p'><GetProfile/></Request></LSX>",request)!=xml::Result::ok)return 11;
+ std::cout<<"missing_index_no_response="<<(dispatch_response_with_config(request,*store.snapshot(),output,sizeof(output),&n)==ResponseResult::no_response)<<"\n";
+}
+''')
+ graph=json.loads((R/'metadata/BUILD_GRAPH.json').read_text())
+ command=['g++','-std=c++20','-pthread',*['-I'+str(R/x) for x in graph['include_directories']],str(cpp),*[str(x) for x in sorted((build/'objects/production').glob('*.o'))],'-o',str(exe)]
+ compile_result=subprocess.run(command,capture_output=True,text=True);assert compile_result.returncode==0,compile_result.stderr
+ before=R/'provenance/rf29/examples/surge.cfg';before.parent.mkdir(parents=True,exist_ok=True)
+ if not before.exists():before.write_bytes(Path('rf29_work/REDFIELD_RF29/examples/surge.cfg').read_bytes())
+ runs=[]
+ for label,file in [('RF29_example',before),('RF30_example',R/'examples/surge.cfg')]:
+  result=subprocess.run([exe,str(file)],capture_output=True,text=True);assert result.returncode==0,result.stderr
+  values={k:int(v) for k,v in (row.split('=') for row in result.stdout.splitlines())}
+  assert values['normal_getconfig_services']==34 and values['unknown_entity_escaped']==1 and values['profile_response_emitted']==1 and values['missing_index_no_response']==1
+  if label=='RF29_example':assert values['cfg_profile_username_bytes']==0 and values['cfg_profile_user_id_bytes']==0
+  else:assert values['cfg_profile_username_bytes']>0 and values['cfg_profile_user_id_bytes']>0
+  runs.append(dict(label=label,cfg_sha256=hashlib.sha256(file.read_bytes()).hexdigest(),observed=values,stdout=result.stdout))
+ regression=p/'profile_regression';command[command.index(str(cpp))]=str(R/'tests/test_profile_response.cpp');command[-1]=str(regression)
+ test_compile=subprocess.run(command,capture_output=True,text=True);assert test_compile.returncode==0,test_compile.stderr
+ after=subprocess.run([regression,str(R/'examples/surge.cfg')],capture_output=True,text=True);assert after.returncode==0,after.stderr
+ before_test=subprocess.run([regression,str(before)],capture_output=True,text=True);assert before_test.returncode==1 and 'example_profile.username' in before_test.stderr,before_test.stderr
+ report=dict(status='PASS',scope='Real GCC compile/link/execute againstcurrent production core objects;in-memory ConfigStore andresponse dispatch;not game,Windows orSDK handshake',runs=runs,distributed_example_regression=dict(new_example='PASS_EXIT0',old_example='EXPECTED_REJECTION_EXIT1',positive_stdout=after.stdout,negative_stderr=before_test.stderr),diagnostic_exit14='Only final unknown-entity rejection expectation;normal GetConfig34 services pass;kept separately andnot reclassified',user_report='In-game profile missing;root cause not established. Confirmed shipped example omission produced empty profile fields;current formatter also requires exact index attribute;SDK handshake/crypto still deferred',runtime_policy_changed=False,probe_cpp_sha256=hashlib.sha256(cpp.read_bytes()).hexdigest())
+ (R/'evidence/rf30_getconfig_profile_qa.json').write_text(json.dumps(report,indent=2)+'\n')
+ print(json.dumps(report,indent=2))

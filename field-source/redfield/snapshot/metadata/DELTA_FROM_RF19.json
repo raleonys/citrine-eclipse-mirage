@@ -1,0 +1,58 @@
+{
+  "parent_zip_sha256": "dace3c99f0c9d9d11660c2274e9e0573766646f88ae6356c2aa09cca6da91068",
+  "added": [
+    "evidence/environment.json",
+    "evidence/workspace_output_guard_rejection.json",
+    "tests/test_tcp_delivery.cpp",
+    "tests/test_tcp_grant.cpp",
+    "tests/test_tcp_grant_failure.cpp"
+  ],
+  "modified": [
+    "CHANGELOG.md",
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/REPORT_TR.md",
+    "evidence/clean_extract_build.log",
+    "evidence/clean_extract_receipt.json",
+    "evidence/compiler_empty_output_negative.json",
+    "evidence/compiler_linked_execute_permission_negative.json",
+    "evidence/compiler_linked_truncation_negative.json",
+    "evidence/compiler_mutated_object_negative.json",
+    "evidence/final_input_binding.json",
+    "evidence/integrity_negatives.json",
+    "evidence/known_limits.json",
+    "evidence/leaksanitizer_probe.json",
+    "evidence/portable_address_no_leaks_build.log",
+    "evidence/portable_address_no_leaks_receipt.json",
+    "evidence/portable_none_no_leaks_build.log",
+    "evidence/portable_none_no_leaks_receipt.json",
+    "evidence/portable_undefined_build.log",
+    "evidence/portable_undefined_receipt.json",
+    "evidence/source_provenance.json",
+    "include/redfield/achievement_delivery.hpp",
+    "include/redfield/achievement_response.hpp",
+    "include/redfield/achievement_session.hpp",
+    "include/redfield/local_service.hpp",
+    "include/redfield/tcp_ingress.hpp",
+    "metadata/ACCEPTANCE.json",
+    "metadata/BUILD_GRAPH.json",
+    "metadata/GOVERNANCE_BINDING.json",
+    "metadata/PARENT.json",
+    "metadata/RELEASE_STATE.json",
+    "metadata/REUSE_DECISIONS.json",
+    "metadata/ROUTE_BINDINGS.json",
+    "metadata/SOURCE_INVENTORY.json",
+    "scripts/build_orchestration/build_verify.py",
+    "src/net/local_service.cpp",
+    "src/net/tcp_ingress.cpp",
+    "tools/native_acceptance.cpp"
+  ],
+  "removed": [
+    "metadata/DELTA_FROM_RF18.json"
+  ],
+  "self_records_excluded": [
+    "metadata/DELTA_FROM_RF19.json",
+    "metadata/PACKAGE_MANIFEST.json"
+  ],
+  "classification": "NON_RELEASE_WORK / NOT_RELEASE"
+}

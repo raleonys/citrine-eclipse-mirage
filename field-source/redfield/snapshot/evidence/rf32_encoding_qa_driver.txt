@@ -1,0 +1,84 @@
+from pathlib import Path
+import ast, contextlib, hashlib, importlib.util, io, json, shutil, tempfile
+from unittest.mock import patch
+
+R=Path('rf32_work/REDFIELD_RF32').resolve()
+OLD=Path('rf21_work/REDFIELD_RF21').resolve()
+def module(root):
+    s=importlib.util.spec_from_file_location('hook_build_qa',root/'scripts/build_orchestration/hook_build.py')
+    m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+new,old=module(R),module(OLD)
+real_read=Path.read_text
+cases=[]
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+@contextlib.contextmanager
+def default_encoding(codec):
+    def read(path,encoding=None,errors=None):
+        return real_read(path,encoding=encoding or codec,errors=errors)
+    with patch.object(Path,'read_text',read):yield
+
+for codec in ['cp1254','cp1252']:
+    try:
+        with default_encoding(codec):old.verify_patch(OLD)
+        raise AssertionError('old code unexpectedly passed')
+    except ValueError as e:assert str(e)=='MINHOOK_PATCH_REPLAY_MISMATCH'
+    cases.append(dict(case='old_default_'+codec,status='EXPECTED_REJECTION',reason='MINHOOK_PATCH_REPLAY_MISMATCH'))
+
+for codec in ['cp1254','cp1252','cp1251','ascii','utf-8']:
+    with default_encoding(codec):record=new.verify_patch(R)
+    assert (R/record['replacement']).read_bytes().startswith(b'\xef\xbb\xbf')
+    cases.append(dict(case='explicit_utf8_under_default_'+codec,status='PASS',patched_sha256=record['replacement_sha256']))
+
+with tempfile.TemporaryDirectory(prefix='rf21_FIX01_Çorlu ') as td:
+    base=Path(td)
+    for codec in ['cp1254','cp1252','ascii']:
+        build=base/('build '+codec)
+        with default_encoding(codec):vendor=new.prepare(R,build)
+        assert (vendor/'src/hook.c').read_bytes()==(R/record['replacement']).read_bytes()
+        for p in (R/'third_party/minhook/upstream').rglob('*'):
+            if p.is_file() and p.relative_to(R/'third_party/minhook/upstream').as_posix()!='src/hook.c':
+                assert p.read_bytes()==(vendor/p.relative_to(R/'third_party/minhook/upstream')).read_bytes()
+        cases.append(dict(case='real_materialization_unicode_path_'+codec,status='PASS',bom='EFBBBF',all_other_vendor_files='BYTE_IDENTICAL'))
+    # Pin failures remain failures, including BOM removal and newline changes.
+    for name,key,mutation in [('source_bom','source','bom'),('replacement_bom','replacement','bom'),
+                              ('source_crlf','source','crlf'),('patch_tamper','patch','append'),
+                              ('rebound_replacement','replacement','rebind')]:
+        fixture=base/name;fixture.mkdir()
+        for path in ['metadata/MINHOOK_BUILD.json',record['source'],record['replacement'],record['patch'],'third_party/minhook/UPSTREAM_COMMIT.txt']:
+            dest=fixture/path;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(R/path,dest)
+        target=fixture/record[key];data=target.read_bytes()
+        if mutation=='bom':assert data.startswith(b'\xef\xbb\xbf');data=data[3:]
+        elif mutation=='crlf':data=data.replace(b'\n',b'\r\n')
+        else:data+=b'\n/* tamper */\n'
+        target.write_bytes(data)
+        if mutation=='rebind':
+            j=json.loads((fixture/'metadata/MINHOOK_BUILD.json').read_text(encoding='utf-8'))
+            j['replacement_sha256']=sha(target)
+            (fixture/'metadata/MINHOOK_BUILD.json').write_text(json.dumps(j),encoding='utf-8')
+        reason='MINHOOK_PATCH_REPLAY_MISMATCH' if mutation=='rebind' else 'MINHOOK_PIN_MISMATCH:'+key
+        try:
+            with default_encoding('cp1254'):new.verify_patch(fixture)
+            raise AssertionError('tamper accepted')
+        except ValueError as e:assert str(e)==reason,(name,str(e))
+        cases.append(dict(case=name,status='EXPECTED_REJECTION',reason=reason))
+
+# Execute the actual CLI exception handler AST, with a failing main boundary.
+# This does not simulate compiler or Windows execution.
+tree=ast.parse((R/'scripts/build_orchestration/build_verify.py').read_text(encoding='utf-8'))
+handler=ast.Module(body=[tree.body[-1]],type_ignores=[])
+def failed_main():raise ValueError('MINHOOK_PATCH_REPLAY_MISMATCH')
+import sys,subprocess
+out=io.StringIO()
+try:
+    with contextlib.redirect_stderr(out):
+        exec(compile(handler,'actual_builder_cli_handler','exec'),dict(__name__='__main__',main=failed_main,sys=sys,subprocess=subprocess))
+    raise AssertionError('missing exit')
+except SystemExit as e:assert e.code==1
+assert 'PRELOADER_L_RF32_FAIL: MINHOOK_PATCH_REPLAY_MISMATCH' in out.getvalue() and 'Traceback' not in out.getvalue()
+cases.append(dict(case='actual_cli_handler_preserves_failure_exit1',status='PASS'))
+assert len(cases)==16
+result=dict(scope='Actual Python verifier and filesystem materialization under controlled default text encodings; not native Windows execution',cases=cases,
+    helper_sha256=sha(R/'scripts/build_orchestration/hook_build.py'),builder_sha256=sha(R/'scripts/build_orchestration/build_verify.py'),driver_sha256=sha(Path(__file__)),
+    upstream_bom='EFBBBF retained; UTF-8-SIG stripping forbidden',patched_sha256=record['replacement_sha256'])
+(R/'evidence/rf32_encoding_qa.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+print('ENCODING_QA_PASS cases=16; old CP1254/CP1252 rejected, fixed codec matrix/materialization passed')

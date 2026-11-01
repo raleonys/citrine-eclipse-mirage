@@ -1,0 +1,59 @@
+{
+  "scope": "Linux unit/behavior simulation of Python environment preparation; subprocess and cl discovery mocked. Real Windows CMD/VsDevCmd/MSVC NOT_RUN",
+  "cases": [
+    {
+      "case": "existing_compiler_sanitized",
+      "status": "PASS"
+    },
+    {
+      "case": "space_ampersand_parentheses_path_utf16_capture",
+      "status": "PASS"
+    },
+    {
+      "case": "setup_exit1_diagnostics_retained",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "setup_exit42_preserved",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "discovery_exit7_diagnostics_retained",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "no_vswhere",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "no_setup_batch",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "setup_no_capture",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "empty_path_rejected",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "invalid_utf16_rejected",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "timeout_output_retained",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "percent_setup_path_rejected",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "diagnostic_encoding_empty_ascii_utf16bom",
+      "status": "PASS"
+    }
+  ],
+  "builder_sha256": "eec568648a308f74ccec16fa16a4f6e59d0581ec4d209c166a60b102b4ad01bd",
+  "current_driver_sha256": "f0bb2201d91e035c259f6e5696e84a1504c586f99019beffa326d9f26ec7622a"
+}

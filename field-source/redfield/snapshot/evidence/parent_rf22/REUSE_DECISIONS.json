@@ -1,0 +1,25 @@
+{
+  "checkpoint": "RF22",
+  "policy": "All active application code has one maintenance/architecture/test contract independent of origin. Preserve or change by concrete behavior/ownership/dependency evidence.",
+  "active_ownership": "REDFIELD_MAINTAINED",
+  "application_files": 253,
+  "history": "evidence/parent_rf21_fix02/REUSE_DECISIONS.json",
+  "ancestry": "ADOPTED_SOURCES.json and DERIVED_SOURCES.json preserve verifiable origins; archived references never compile",
+  "vendors": "External TinyXML2/PEGTL/Asio/MinHook sources remain pinned under third_party with original licenses",
+  "changes": [
+    "One redfield namespace and include/redfield tree for all application modules",
+    "All regressions directly under tests; no adoption-derived test category",
+    "Record views separated from retired global service-store APIs",
+    "Registry policy reads the maintained hook configuration directly; global runtime_configuration shim removed",
+    "SessionRetirement centralizes pending LocalService handoff and cleanup ownership"
+  ],
+  "retained": [
+    "Current DLL exports,35 route bindings,seven hook targets,Online policy and finite/zero shutdown retry semantics",
+    "Generic allocator/PTD compatibility APIs remain explicitly under runtime; this refactor does not claim they are minimal or globally optimal"
+  ],
+  "limitations": [
+    "No complete new line-by-line semantic audit of all functions claimed",
+    "No fresh RF22 Windows/native/game execution",
+    "Structural unification does not prove absence of all inherited bugs"
+  ]
+}

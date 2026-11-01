@@ -1,0 +1,251 @@
+{
+  "scope": "Fresh Linux GCC sanitizer compilation of all 58 core TUs and eight snapshot lookup/response/hook configuration tests; not Win32 detour/native validation",
+  "profiles": [
+    {
+      "sanitizer": "address",
+      "leak_detection": false,
+      "core_objects": 58,
+      "tests": [
+        {
+          "name": "test_config_snapshot_view",
+          "exit_code": 0,
+          "stdout": "CONFIG_SNAPSHOT_BORROWED_DIRECT_LAST_ALIAS_EMPTY_RAW_PINNED_GENERATION_PASS",
+          "binary_sha256": "6ea06a0afe44621d5fd6f851c6e51a0f8f2d58f49f2ac527f8c0cf048c4e4ca8"
+        },
+        {
+          "name": "test_settings_response",
+          "exit_code": 0,
+          "stdout": "SETTINGS_PINNED_POLICY_AND_SELECTOR_PASS",
+          "binary_sha256": "a4aee9f80d4327d9c07e16fe364f2b01389b9ecdb84e6b65205bdaee201ecf5f"
+        },
+        {
+          "name": "test_profile_response",
+          "exit_code": 0,
+          "stdout": "PROFILE_DEFAULT_OVERLAY_ENTITY_SNAPSHOT_ISOLATION_PASS",
+          "binary_sha256": "159c74526b463ea58a2c3f35ec1097c4fb5ffddfb336057ba7adf95a034d62a0"
+        },
+        {
+          "name": "test_game_info_response",
+          "exit_code": 0,
+          "stdout": "GAME_INFO_14_SELECTORS_AGGREGATE_ENTITY_SNAPSHOT_PASS",
+          "binary_sha256": "3386d8dd60551d9885b41bf2cbbd5e586376b48f37664615c5f3afc42cb65dad"
+        },
+        {
+          "name": "test_image_response",
+          "exit_code": 0,
+          "stdout": "IMAGE_DOM_PROVIDER_DISABLED_SEMANTICS_SNAPSHOT_CAPACITY_PASS",
+          "binary_sha256": "66483510142f923efae0c3380a4df7a97d35e85c139e84b17481a8eecc3566df"
+        },
+        {
+          "name": "test_achievement_projection",
+          "exit_code": 0,
+          "stdout": "ACHIEVEMENT_TOTALS_FIRST_DUPLICATES_I32_ATOMIC_SNAPSHOT_LIFETIME_PASS",
+          "binary_sha256": "73a3e00e69fae554e189b3e97e5e94112109b00130dde0326b6e772a87a3f03c"
+        },
+        {
+          "name": "test_achievement_response",
+          "exit_code": 0,
+          "stdout": "QUERY_ACHIEVEMENTS_ALL_EXACT_WIRE_MEASURE_SNAPSHOT_PASS",
+          "binary_sha256": "c54925aeec10188c987bf122499add9eb15f985f3b03c2dcb9ba5839f193b2e4"
+        },
+        {
+          "name": "test_hook_configuration",
+          "exit_code": 0,
+          "stdout": "",
+          "binary_sha256": "acd17ad28e8efdc90ec62d1e6dc9537edbbb8141d0b9446f0ba5e05f3040fe86"
+        }
+      ],
+      "inputs": {
+        "src/core/runtime.cpp": "48093dc63a456b03a0e7f615e1348e48f3679ee82805f232d9be7e5487b39c71",
+        "src/core/xml.cpp": "535094bb23241896222e03ac48f5eca558100eedd738c16fa970a568600f1ad1",
+        "src/config/config.cpp": "1a154ab883091b3ceee9f6abf40da5b7a71426230672e5bcfbd5551de65e01bc",
+        "src/config/config2_pegtl.cpp": "6f9ca90ccdaab4b11828f26d3bf3b89723699b4b89ff10268b82d4a4a3166f45",
+        "src/codec/hex_codec.cpp": "f0e164c1d9c3f3a9ec424683b9616dcbb2ef336ee3bd75d10b8654a6257089aa",
+        "src/xml/lsx_framing.cpp": "cc25b0f80f84b0b0b934258329de4b2971a2ccd34c4d9e8f66d3f27e745e17b4",
+        "src/xml/request_parser.cpp": "22e2ab17eb94d37e986cb854b75b9bb507acdb544f38adc03a1c9a2829c82d99",
+        "src/xml/request_children.cpp": "510916c296b7690763e30d0bf6d3d3d144d51de079314dfd2f314f2d537316cf",
+        "src/xml/attribute_parser.cpp": "55f2ed0b0b4d28531a7a55f25c240e5b8ad3867ebe5e97b018540640757423c2",
+        "third_party/tinyxml2/tinyxml2.cpp": "07b4e7a1d021256255b91a0844640f26508201b40cfc576b9499b068d981c39b",
+        "src/core/worker_owner.cpp": "ada4216789100b90fe5f853b75cc762b34720689d1e86c31bb4d1e3e9b8cf9c4",
+        "src/core/service_session.cpp": "c6d8ea28902b0666eacaab9e57cfe0aeddce95e67113e70a713eedb8f7f69387",
+        "src/config/config_file.cpp": "7e8a9721140597a1d05da9a219057d7bf47e435524bd3f9b5c87d58b8e386d02",
+        "src/runtime/asio_listener_owner.cpp": "22f15355f89abd996c24efc36827bce64b3a776b8a8871763949c503cb59cbf1",
+        "src/net/receive_buffer.cpp": "84b9c3a3bf83185232cdc190fd5274b3a97323e4b3d2babf4fe4da84cfd71383",
+        "src/net/frame_ingress.cpp": "e975158ba17505c447aac8ef9eaa6172e349ed147f2243bf61d541b3d42a1377",
+        "src/net/tcp_ingress.cpp": "d937187f2a058f5197ce8376ed8beedb9976cab58ae86ab6ebf600b2c8202a84",
+        "src/net/local_service.cpp": "aa4ad7b9dfe677ce65e015269ea34515265982cfd584bf99ed993b7b0d5efbbf",
+        "src/xml/response_builder.cpp": "9dd5a77f5c404264d16f47bcc615c3927f06ae66cf031013fb2336e0dab31c6e",
+        "src/xml/value_codec.cpp": "b20a59511d927cfacfea6b1dc5714fe4ff9f8e98f4b267d0dc13c38d96a5e156",
+        "src/xml/value_codec_utf8.cpp": "074a82cd9667f7862f84e0afd73dc76ef9ff2463ac6f6ccd7132eee296c096a6",
+        "src/xml/value_codec_normalize.cpp": "0f8cc01eeedb166f496ad959e1ef574eb97292cb25fda3ec2ce228de00a451d1",
+        "src/xml/value_codec_semantic.cpp": "cd95217fbbebc01a561c2bb86eb8651e9e18bf5c174c433578be5c04ded8a5b4",
+        "src/handlers/config_route.cpp": "d2fcbce2eeb4bbb767c957292d6acf82683d40a22d8c5cb2c68f18ab235ed392",
+        "src/handlers/progressive_installation_route.cpp": "1c8144e9849f6d49fc105db24c44dd32df19e1385fd4551f1d98831a1d6a81a5",
+        "src/router/route_inventory.cpp": "4655a1a46aef7942a860054d43e7d143a0972195cd9c7ac1d9d4ee9c0e791e82",
+        "src/router/route_lookup.cpp": "dc00bebf3e5c2dffe3d2b898f548666f0cff022d18aae11de156eff9fb7759c7",
+        "src/hash/fnv_hash.cpp": "29063f5a43d1a0a10a31cc50938a6a02856523cf0c66e35e4832ef2de5d2b2fd",
+        "src/core/port_publication.cpp": "5091ffa6f75c84170534b46850edbfc896c3906588e1f27db083baaa5ecabc09",
+        "src/core/response_dispatch.cpp": "ec7bc48afc08bd5906e084f58f4193796826c850ad9caa14dfc7acbdea326c49",
+        "src/config/settings_values.cpp": "61ee044f5f6811a8e4999764d1fcc0a41f12297e49607e68e534a9000c67442c",
+        "src/config/settings_provider.cpp": "590bcb2c5292fb1ca60f7892b0e4574b71226ce6e6d149f911963c6042aec203",
+        "src/handlers/setting_value_route.cpp": "791b7fbce1f5f73f5b039fe5190ee8d1ece27552200999db66f53450244ab67a",
+        "src/handlers/settings_snapshot_route.cpp": "462318a4ecd8d471b75c8feec4c72bd06e4ead8c366f7b3c413f701a525073b0",
+        "src/handlers/connection_state_route.cpp": "c8873b1c1fb6e3029c42e4d739c42b150a16d188320aa9fec1296b890a2d1a8a",
+        "src/handlers/settings_query.cpp": "f9d16854b374ced40cd3f404132c98016886d10682113dfbee47193b739c055d",
+        "src/core/settings_response.cpp": "8d8a85b41dd27d477eca3a66670da3d974f8b5051fea3bb1764fc5006dcfff00",
+        "src/handlers/friends_route.cpp": "d0f3643dc347a5caf9d693c95af91cd30b6b3a8c6b2cce5b1bbb314550311189",
+        "src/handlers/group_info_route.cpp": "42a3d070a2509daa32d37b35f35ba8d855845145c998ec4d1f4591b649bd1d8a",
+        "src/handlers/stateless_routes.cpp": "5b815b37b7e0c2cdaf77639f57d42d423af3690b6de8e4de115c1a2523b7a121",
+        "src/core/profile_response.cpp": "a02e4ded48027aeb8ee452e6a83363e11fa76589c8b00d015d23d160259aecaf",
+        "src/core/profile_formatter.cpp": "55c658ca9e264a8b73d089112a6ba372f4bd7d1b77bd43773bad39e1a84e716a",
+        "src/handlers/utc_time_route.cpp": "de0cd64c1462aae0cac775d3b0523154fc78b41b51a98660faca33133111e457",
+        "src/runtime/utc_time.cpp": "bed15441fef8022133452a393df5af3b5475e2b7ce45d47f3624cf53a429b45f",
+        "src/core/game_info_response.cpp": "f1fddae68387046bce17f0568fbc8d23b93c1557cc77765cdb3d2aee63fe1139",
+        "src/core/query_presence_response.cpp": "b821816428eaa3a87fab2c6adad897ec7c831627affcde6e3a56d5143fc4e9e9",
+        "src/core/image_response.cpp": "474ea1ce3ca6a48cc0f7ddddbed793c52fc188b3714ac1b8daa5b96bec7a9d48",
+        "src/core/chunks_response.cpp": "7ff3f2a3a7455aea616ad27e8487c7b78ff6c125723f13ae1f4975ed8f386404",
+        "src/core/auth_code_session.cpp": "1a8d48969d775d29fd72aaa622d872b39ab7568d5b8c8ce668a1c7758df26be0",
+        "src/core/content_response.cpp": "13ceb306834130b3078d6883e655d4638be7cfd50f66974464b65fdbf392b317",
+        "src/core/entitlement_response.cpp": "d81be393b65538fe8d081d44f2cfd8831fc8666692f34e1fdd00d8d8e4019e6a",
+        "src/core/achievement_response.cpp": "db43c01a7e329c8d7ad26404c55a0c8e85494d56e0126730967fb4135a827d09",
+        "src/core/achievement_session.cpp": "896b6c1a9d3ef6e299d6f4f74bc0ff58f3500e7197a46b955e3e14339466c5bb",
+        "src/core/achievement_delivery.cpp": "d158322b261b944486ee7707b3c2d98d0074b42b83a7e6928f28f7989210df08",
+        "src/platform/connect_redirect.cpp": "3e6fb028b32560edf7167170495554e4d37cc13bbbdf410be24cb95ff011ec35",
+        "src/platform/crypt_wrapper.cpp": "154c5270630b219c1490c4345686d4f63368189a5397fb3a223bf2836dd6edb4",
+        "src/config/hook_configuration.cpp": "d3aa546fc1e0a80f03ac6439d41fa965974dd454f72898a0de21bb6cab29e056",
+        "src/runtime/transient_allocator.cpp": "2f214b259dec502ccb6bbc9c929c579c7575b5e7f8e069b55821fa5d814a7b85",
+        "tests/test_config_snapshot_view.cpp": "5a6061db9ba19e3de156909f2ea46037b0ee7d7cbf34ab6eb4f39e5eecae2cde",
+        "tests/test_settings_response.cpp": "0c2da9db0166c6f59cd2aa413a49dbc7d0fd4a807ff6b48ed3d2d823f16f4332",
+        "tests/test_profile_response.cpp": "141123f3cb440056dee0fe891232dc5108817b4d3813faf0fc442d2a45b6b154",
+        "tests/test_game_info_response.cpp": "78b3a0c46c7f42b42c07073a5688752bc8efc3729acd62bfb1bf99529edf95a1",
+        "tests/test_image_response.cpp": "a2dde0d1870aa5129ad051b9a3f217313dea07c404c348304a4a200ad5be39b3",
+        "tests/test_achievement_projection.cpp": "fa8dcfaff5836b0fad28f39dd148fd5473e4a38918a0bc213af63ee0a7b34b74",
+        "tests/test_achievement_response.cpp": "115dcb1ac6fd5caa6498e75b88c5fe3c375676fdc78a7c9483cb5297b0f9de85",
+        "tests/test_hook_configuration.cpp": "c153b7c0db83b5b15b29de6c10307ed0e5d7dafe16ec7fb7a806d67b1447c884"
+      }
+    },
+    {
+      "sanitizer": "undefined",
+      "leak_detection": false,
+      "core_objects": 58,
+      "tests": [
+        {
+          "name": "test_config_snapshot_view",
+          "exit_code": 0,
+          "stdout": "CONFIG_SNAPSHOT_BORROWED_DIRECT_LAST_ALIAS_EMPTY_RAW_PINNED_GENERATION_PASS",
+          "binary_sha256": "22dbaf081f299dfde800095203a22043e3fc697c5c68f902d43a3a85ae88c7d0"
+        },
+        {
+          "name": "test_settings_response",
+          "exit_code": 0,
+          "stdout": "SETTINGS_PINNED_POLICY_AND_SELECTOR_PASS",
+          "binary_sha256": "8d39af12ec0cd6984593498f3f85ea234cd21e5ec085053aa327309f522c5b1a"
+        },
+        {
+          "name": "test_profile_response",
+          "exit_code": 0,
+          "stdout": "PROFILE_DEFAULT_OVERLAY_ENTITY_SNAPSHOT_ISOLATION_PASS",
+          "binary_sha256": "8e6807ea19d7e15f9b1e0720df49d54c6a7706591cf9b2613b1e59bdd48ddf7a"
+        },
+        {
+          "name": "test_game_info_response",
+          "exit_code": 0,
+          "stdout": "GAME_INFO_14_SELECTORS_AGGREGATE_ENTITY_SNAPSHOT_PASS",
+          "binary_sha256": "2d4b41d42acedc5154709e62af9b8cf1cb44513560b8133c74f1e5e1356b186a"
+        },
+        {
+          "name": "test_image_response",
+          "exit_code": 0,
+          "stdout": "IMAGE_DOM_PROVIDER_DISABLED_SEMANTICS_SNAPSHOT_CAPACITY_PASS",
+          "binary_sha256": "e973d8579b2b072fe1cb4635d79a790e2fc60dbac0cb55d51546040842c7ed91"
+        },
+        {
+          "name": "test_achievement_projection",
+          "exit_code": 0,
+          "stdout": "ACHIEVEMENT_TOTALS_FIRST_DUPLICATES_I32_ATOMIC_SNAPSHOT_LIFETIME_PASS",
+          "binary_sha256": "ed63429381d4dbce63d3ea679a424c70407eed5fe4bb7e0cd6e65693d570fef4"
+        },
+        {
+          "name": "test_achievement_response",
+          "exit_code": 0,
+          "stdout": "QUERY_ACHIEVEMENTS_ALL_EXACT_WIRE_MEASURE_SNAPSHOT_PASS",
+          "binary_sha256": "1c15c58abb5b3f7c30fd3c591370542e40f1f7ddc54a0b219795336354192ac8"
+        },
+        {
+          "name": "test_hook_configuration",
+          "exit_code": 0,
+          "stdout": "",
+          "binary_sha256": "59230d10476d6350a2c93af83dcbda65f000f277085703372b68e7a28d9a157c"
+        }
+      ],
+      "inputs": {
+        "src/core/runtime.cpp": "48093dc63a456b03a0e7f615e1348e48f3679ee82805f232d9be7e5487b39c71",
+        "src/core/xml.cpp": "535094bb23241896222e03ac48f5eca558100eedd738c16fa970a568600f1ad1",
+        "src/config/config.cpp": "1a154ab883091b3ceee9f6abf40da5b7a71426230672e5bcfbd5551de65e01bc",
+        "src/config/config2_pegtl.cpp": "6f9ca90ccdaab4b11828f26d3bf3b89723699b4b89ff10268b82d4a4a3166f45",
+        "src/codec/hex_codec.cpp": "f0e164c1d9c3f3a9ec424683b9616dcbb2ef336ee3bd75d10b8654a6257089aa",
+        "src/xml/lsx_framing.cpp": "cc25b0f80f84b0b0b934258329de4b2971a2ccd34c4d9e8f66d3f27e745e17b4",
+        "src/xml/request_parser.cpp": "22e2ab17eb94d37e986cb854b75b9bb507acdb544f38adc03a1c9a2829c82d99",
+        "src/xml/request_children.cpp": "510916c296b7690763e30d0bf6d3d3d144d51de079314dfd2f314f2d537316cf",
+        "src/xml/attribute_parser.cpp": "55f2ed0b0b4d28531a7a55f25c240e5b8ad3867ebe5e97b018540640757423c2",
+        "third_party/tinyxml2/tinyxml2.cpp": "07b4e7a1d021256255b91a0844640f26508201b40cfc576b9499b068d981c39b",
+        "src/core/worker_owner.cpp": "ada4216789100b90fe5f853b75cc762b34720689d1e86c31bb4d1e3e9b8cf9c4",
+        "src/core/service_session.cpp": "c6d8ea28902b0666eacaab9e57cfe0aeddce95e67113e70a713eedb8f7f69387",
+        "src/config/config_file.cpp": "7e8a9721140597a1d05da9a219057d7bf47e435524bd3f9b5c87d58b8e386d02",
+        "src/runtime/asio_listener_owner.cpp": "22f15355f89abd996c24efc36827bce64b3a776b8a8871763949c503cb59cbf1",
+        "src/net/receive_buffer.cpp": "84b9c3a3bf83185232cdc190fd5274b3a97323e4b3d2babf4fe4da84cfd71383",
+        "src/net/frame_ingress.cpp": "e975158ba17505c447aac8ef9eaa6172e349ed147f2243bf61d541b3d42a1377",
+        "src/net/tcp_ingress.cpp": "d937187f2a058f5197ce8376ed8beedb9976cab58ae86ab6ebf600b2c8202a84",
+        "src/net/local_service.cpp": "aa4ad7b9dfe677ce65e015269ea34515265982cfd584bf99ed993b7b0d5efbbf",
+        "src/xml/response_builder.cpp": "9dd5a77f5c404264d16f47bcc615c3927f06ae66cf031013fb2336e0dab31c6e",
+        "src/xml/value_codec.cpp": "b20a59511d927cfacfea6b1dc5714fe4ff9f8e98f4b267d0dc13c38d96a5e156",
+        "src/xml/value_codec_utf8.cpp": "074a82cd9667f7862f84e0afd73dc76ef9ff2463ac6f6ccd7132eee296c096a6",
+        "src/xml/value_codec_normalize.cpp": "0f8cc01eeedb166f496ad959e1ef574eb97292cb25fda3ec2ce228de00a451d1",
+        "src/xml/value_codec_semantic.cpp": "cd95217fbbebc01a561c2bb86eb8651e9e18bf5c174c433578be5c04ded8a5b4",
+        "src/handlers/config_route.cpp": "d2fcbce2eeb4bbb767c957292d6acf82683d40a22d8c5cb2c68f18ab235ed392",
+        "src/handlers/progressive_installation_route.cpp": "1c8144e9849f6d49fc105db24c44dd32df19e1385fd4551f1d98831a1d6a81a5",
+        "src/router/route_inventory.cpp": "4655a1a46aef7942a860054d43e7d143a0972195cd9c7ac1d9d4ee9c0e791e82",
+        "src/router/route_lookup.cpp": "dc00bebf3e5c2dffe3d2b898f548666f0cff022d18aae11de156eff9fb7759c7",
+        "src/hash/fnv_hash.cpp": "29063f5a43d1a0a10a31cc50938a6a02856523cf0c66e35e4832ef2de5d2b2fd",
+        "src/core/port_publication.cpp": "5091ffa6f75c84170534b46850edbfc896c3906588e1f27db083baaa5ecabc09",
+        "src/core/response_dispatch.cpp": "ec7bc48afc08bd5906e084f58f4193796826c850ad9caa14dfc7acbdea326c49",
+        "src/config/settings_values.cpp": "61ee044f5f6811a8e4999764d1fcc0a41f12297e49607e68e534a9000c67442c",
+        "src/config/settings_provider.cpp": "590bcb2c5292fb1ca60f7892b0e4574b71226ce6e6d149f911963c6042aec203",
+        "src/handlers/setting_value_route.cpp": "791b7fbce1f5f73f5b039fe5190ee8d1ece27552200999db66f53450244ab67a",
+        "src/handlers/settings_snapshot_route.cpp": "462318a4ecd8d471b75c8feec4c72bd06e4ead8c366f7b3c413f701a525073b0",
+        "src/handlers/connection_state_route.cpp": "c8873b1c1fb6e3029c42e4d739c42b150a16d188320aa9fec1296b890a2d1a8a",
+        "src/handlers/settings_query.cpp": "f9d16854b374ced40cd3f404132c98016886d10682113dfbee47193b739c055d",
+        "src/core/settings_response.cpp": "8d8a85b41dd27d477eca3a66670da3d974f8b5051fea3bb1764fc5006dcfff00",
+        "src/handlers/friends_route.cpp": "d0f3643dc347a5caf9d693c95af91cd30b6b3a8c6b2cce5b1bbb314550311189",
+        "src/handlers/group_info_route.cpp": "42a3d070a2509daa32d37b35f35ba8d855845145c998ec4d1f4591b649bd1d8a",
+        "src/handlers/stateless_routes.cpp": "5b815b37b7e0c2cdaf77639f57d42d423af3690b6de8e4de115c1a2523b7a121",
+        "src/core/profile_response.cpp": "a02e4ded48027aeb8ee452e6a83363e11fa76589c8b00d015d23d160259aecaf",
+        "src/core/profile_formatter.cpp": "55c658ca9e264a8b73d089112a6ba372f4bd7d1b77bd43773bad39e1a84e716a",
+        "src/handlers/utc_time_route.cpp": "de0cd64c1462aae0cac775d3b0523154fc78b41b51a98660faca33133111e457",
+        "src/runtime/utc_time.cpp": "bed15441fef8022133452a393df5af3b5475e2b7ce45d47f3624cf53a429b45f",
+        "src/core/game_info_response.cpp": "f1fddae68387046bce17f0568fbc8d23b93c1557cc77765cdb3d2aee63fe1139",
+        "src/core/query_presence_response.cpp": "b821816428eaa3a87fab2c6adad897ec7c831627affcde6e3a56d5143fc4e9e9",
+        "src/core/image_response.cpp": "474ea1ce3ca6a48cc0f7ddddbed793c52fc188b3714ac1b8daa5b96bec7a9d48",
+        "src/core/chunks_response.cpp": "7ff3f2a3a7455aea616ad27e8487c7b78ff6c125723f13ae1f4975ed8f386404",
+        "src/core/auth_code_session.cpp": "1a8d48969d775d29fd72aaa622d872b39ab7568d5b8c8ce668a1c7758df26be0",
+        "src/core/content_response.cpp": "13ceb306834130b3078d6883e655d4638be7cfd50f66974464b65fdbf392b317",
+        "src/core/entitlement_response.cpp": "d81be393b65538fe8d081d44f2cfd8831fc8666692f34e1fdd00d8d8e4019e6a",
+        "src/core/achievement_response.cpp": "db43c01a7e329c8d7ad26404c55a0c8e85494d56e0126730967fb4135a827d09",
+        "src/core/achievement_session.cpp": "896b6c1a9d3ef6e299d6f4f74bc0ff58f3500e7197a46b955e3e14339466c5bb",
+        "src/core/achievement_delivery.cpp": "d158322b261b944486ee7707b3c2d98d0074b42b83a7e6928f28f7989210df08",
+        "src/platform/connect_redirect.cpp": "3e6fb028b32560edf7167170495554e4d37cc13bbbdf410be24cb95ff011ec35",
+        "src/platform/crypt_wrapper.cpp": "154c5270630b219c1490c4345686d4f63368189a5397fb3a223bf2836dd6edb4",
+        "src/config/hook_configuration.cpp": "d3aa546fc1e0a80f03ac6439d41fa965974dd454f72898a0de21bb6cab29e056",
+        "src/runtime/transient_allocator.cpp": "2f214b259dec502ccb6bbc9c929c579c7575b5e7f8e069b55821fa5d814a7b85",
+        "tests/test_config_snapshot_view.cpp": "5a6061db9ba19e3de156909f2ea46037b0ee7d7cbf34ab6eb4f39e5eecae2cde",
+        "tests/test_settings_response.cpp": "0c2da9db0166c6f59cd2aa413a49dbc7d0fd4a807ff6b48ed3d2d823f16f4332",
+        "tests/test_profile_response.cpp": "141123f3cb440056dee0fe891232dc5108817b4d3813faf0fc442d2a45b6b154",
+        "tests/test_game_info_response.cpp": "78b3a0c46c7f42b42c07073a5688752bc8efc3729acd62bfb1bf99529edf95a1",
+        "tests/test_image_response.cpp": "a2dde0d1870aa5129ad051b9a3f217313dea07c404c348304a4a200ad5be39b3",
+        "tests/test_achievement_projection.cpp": "fa8dcfaff5836b0fad28f39dd148fd5473e4a38918a0bc213af63ee0a7b34b74",
+        "tests/test_achievement_response.cpp": "115dcb1ac6fd5caa6498e75b88c5fe3c375676fdc78a7c9483cb5297b0f9de85",
+        "tests/test_hook_configuration.cpp": "c153b7c0db83b5b15b29de6c10307ed0e5d7dafe16ec7fb7a806d67b1447c884"
+      }
+    }
+  ]
+}

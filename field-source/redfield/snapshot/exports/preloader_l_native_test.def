@@ -1,0 +1,8 @@
+LIBRARY "preloader_l_native_test"
+EXPORTS
+    DllMain @1
+    SURGE @2
+    DllShutdown @3
+    RFTestStatus @100
+    RFTestSetFaults @101
+    RFTestTransport @102

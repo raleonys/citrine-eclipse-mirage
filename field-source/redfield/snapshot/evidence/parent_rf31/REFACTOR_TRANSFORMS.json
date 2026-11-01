@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "checkpoint": "RF31",
+  "parent_zip_sha256": "49281dce51461aaf2c245e9cad3637ef8868123518bd603a02111be474d7e652",
+  "application_body_changes": 0,
+  "production_body_changes": 0,
+  "moves": {},
+  "changes": [
+    "Consolidate PE reading/checksum/exports/imports/resource parsing into explicit bounded immutable image model",
+    "Adapt all five Golden responsibilities tocurrent source/profile contracts",
+    "Compile pinned compatibility VERSIONINFO through profile-owned RC resource",
+    "Audit actual link/compile inputs andbind authorized finalization hashes before atomic production dist"
+  ],
+  "remaining": [
+    "Actual MSVC/Windows/game execution",
+    "Full native/CRT/debug coverage/composition",
+    "All semantic import qualifications andremaining module source reviews"
+  ]
+}

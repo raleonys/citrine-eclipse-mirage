@@ -1,0 +1,26 @@
+#pragma once
+#include <stddef.h>
+#include <stdint.h>
+#define WINAPI
+#define __stdcall
+#define __declspec(x)
+typedef void* HMODULE;
+typedef void VOID;
+typedef void* LPVOID;
+typedef const char* LPCSTR;
+typedef const wchar_t* LPCWSTR;
+typedef int BOOL;
+typedef unsigned long DWORD;
+typedef unsigned long long ULONGLONG;
+#define FALSE 0
+#define TRUE 1
+#ifdef __cplusplus
+extern "C" {
+#endif
+BOOL SwitchToThread(void);
+ULONGLONG GetTickCount64(void);
+HMODULE LoadLibraryW(LPCWSTR);
+BOOL FreeLibrary(HMODULE);
+#ifdef __cplusplus
+}
+#endif

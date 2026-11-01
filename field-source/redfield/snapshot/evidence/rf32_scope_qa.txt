@@ -1,0 +1,24 @@
+from pathlib import Path
+import subprocess,tempfile,os,json,hashlib,re,zipfile
+R=Path('rf32_work/REDFIELD_RF32').resolve();g=json.loads((R/'metadata/BUILD_GRAPH.json').read_text());work=Path(tempfile.mkdtemp(prefix='rf32_observer_san_'));exe=work/'observer'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+cmd=['g++','-std=c++20','-pthread','-O1','-g','-Wall','-Wextra','-Werror','-fsanitize=address,undefined','-fno-omit-frame-pointer','-fno-pie','-no-pie',*['-I'+str(R/p) for p in g['include_directories']],str(R/'tests/test_worker_observation.cpp'),'-o',str(exe)]
+a=subprocess.run(cmd,capture_output=True,text=True);assert a.returncode==0,a.stderr
+probe=subprocess.run([str(exe)],capture_output=True,text=True,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=1:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1'))
+limited=probe.returncode!=0
+if limited:assert 'LeakSanitizer has encountered a fatal error' in probe.stderr and ('ptrace' in probe.stderr or "Can't open /proc/" in probe.stderr),probe.stdout+probe.stderr
+b=subprocess.run([str(exe)],capture_output=True,text=True,env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')) if limited else probe
+assert b.returncode==0,b.stdout+b.stderr
+out=dict(status='PASS_ASAN_UBSAN_TARGETED',scope='Real GCC targeted observation ABI/budget/concurrency regression;not fullinstrumentation ofWindows/unchangedcore',source_sha256=sha(R/'tests/test_worker_observation.cpp'),observer_sha256=sha(R/'tests/native/worker_observation.hpp'),exit_code=b.returncode,stdout=b.stdout,stderr=b.stderr,leak_sanitizer='UNAVAILABLE_ENVIRONMENT_PTRACE_PROC' if limited else 'PASS',leak_probe_exit=probe.returncode,leak_probe_stderr=probe.stderr,command=cmd)
+(R/'evidence/rf32_observer_sanitizer.json').write_text(json.dumps(out,indent=2)+'\n');print('OBSERVER_ASAN_UBSAN_PASS',out['leak_sanitizer'],flush=True)
+j=json.loads((R/'metadata/ACCEPTANCE_COVERAGE.json').read_text());ids=[x['id'] for x in j['native_crt_scenarios']];assert len(set(ids))==len(ids)==29
+for script in ['build_native_acceptance','build_crt_acceptance']:
+ text=(R/'provenance/hf19_build'/(script+'.ps1')).read_text();assert re.findall("'([^']+)'",re.search(r'\$scenarios=@\((.*?)\)',text,re.S).group(1))==ids
+with zipfile.ZipFile('rf20_fix04_reference/preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip') as z:
+ for row in j['sources']:assert (R/row['path']).read_bytes()==z.read(row['origin']) and sha(R/row['path'])==row['sha256']
+for row in j['native_crt_scenarios']:
+ assert row['actual_windows']=='NOT_RUN_RF32' and row['remaining'] and row['status']=='PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING'
+ for rel,expected in row['targets'].items():assert sha(R/rel)==expected
+assert len(j['debug_hosts'])==4 and all(x['status']=='NOT_PORTED_DIAGNOSTIC_COMPOSITION' for x in j['debug_hosts'])
+assert len(j['stress_rounds'])==2 and all(x['additional_rounds']==4 for x in j['stress_rounds'])
+(R/'evidence/rf32_coverage_qa.json').write_text(json.dumps(dict(status='PASS',scope='Exact canonical scenario/reference/current-source binding andexplicit pending disposition,not coverage execution acceptance',native_crt_scenarios=29,debug_hosts=4,canonical_references=len(j['sources']),stress_scenarios=2,additional_rounds_per_profile_scenario=4,current_target_hashes='PASS',windows='NOT_RUN_RF32'),indent=2)+'\n');print('COVERAGE_REFERENCE_BINDING_PASS29_4_12')

@@ -1,0 +1,29 @@
+{
+  "subject": "tests/test_registry_value_output.cpp",
+  "sha256": "5aa74199b30d8546c08b93bda952cac5cd8d7bb5c87c4c40b0eb3fe7dc75c82a",
+  "status": "PASS",
+  "adaptation_kind": "TARGET_BOUNDARY_REFACTOR",
+  "structural_justification": "Pure caller-owned byte-buffer contract is separated from configuration conversion and allocation. Tests call this single maintained implementation at all destination alignments and short/query/invalid/max boundaries. This qualification covers the portable writer/regression, not the whole Windows registry module.",
+  "checks": [
+    {
+      "name": "GCC_Werror_strict_aliasing_UBSan",
+      "status": "PASS"
+    },
+    {
+      "name": "ASan_UBSan_leaks_disabled",
+      "status": "PASS"
+    },
+    {
+      "name": "Three_mutated_contracts_rejected",
+      "status": "PASS"
+    }
+  ],
+  "dependencies": {
+    "src/platform/registry_value_output.hpp": "6663ecfcf6a6f7fef115549ace923ca3ea0f92cfa77f03566ac869162dcaab3c",
+    "tests/test_registry_value_output.cpp": "5aa74199b30d8546c08b93bda952cac5cd8d7bb5c87c4c40b0eb3fe7dc75c82a",
+    "include/preloader_l/platform/registry_policy.hpp": "04a89d013f77b12bf8e0723fec54917afc1a6d80b0fecedb325d2af74b1a838c",
+    "evidence/rf33_registry_targeted.json": "d67fd81b7f81d4416cceaccc2c29b06b7931f9c89c9491e5f70f270fedda6c4f",
+    "evidence/rf33_registry_asan.json": "a71664932bbc2b864a6fca88843de721f89bb5d6dd71a7694a403be165be4884",
+    "evidence/rf33_registry_mutations.json": "1b28b0bd5789874fbb54c4b7a8ac9ed74e0e8d1b871063c8b816ee99adb2362f"
+  }
+}

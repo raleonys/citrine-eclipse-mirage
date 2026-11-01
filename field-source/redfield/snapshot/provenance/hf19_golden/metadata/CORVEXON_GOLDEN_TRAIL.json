@@ -1,0 +1,107 @@
+{
+  "schema": "preloader_l.corvexon_golden_trail.v1",
+  "policy": "CORVEXON Golden Trail",
+  "lineage": "3.1.1 CORVEXON provenance-preserving derived gate",
+  "finding": "F1411-001",
+  "mode": "READ_ONLY_FAIL_CLOSED_POST_FINALIZATION_ACCEPTANCE",
+  "purpose": "Verify the final shipping DLL after URSYNEX Golden Finalizer and the read-only ARYRA/MUSTAVEX gates, including the normalized MSVC /MT static CRT startup and /GS runtime boundary, without mutating PE bytes.",
+  "upstream_authorities": [
+    "URSYNEX Golden Finalizer",
+    "ARYRA Golden Layout",
+    "MUSTAVEX Golden Metadata",
+    "MSVC Shipping Link Policy"
+  ],
+  "required_core": {
+    "machine": "0x8664",
+    "pe_format_magic": "0x020B",
+    "subsystem": 2
+  },
+  "shipping_exports": [
+    {
+      "name": "DllMain",
+      "ordinal": 1,
+      "must_equal_entrypoint": false,
+      "must_not_equal_entrypoint": true
+    },
+    {
+      "name": "SURGE",
+      "ordinal": 2,
+      "must_equal_entrypoint": false
+    },
+    {
+      "name": "DllShutdown",
+      "ordinal": 3,
+      "must_equal_entrypoint": false
+    }
+  ],
+  "exact_named_export_set": true,
+  "forbid_forwarded_exports": true,
+  "import_policy": {
+    "required_modules": [
+      "KERNEL32.DLL",
+      "WS2_32.DLL",
+      "CRYPT32.DLL"
+    ],
+    "allowed_modules": [
+      "ADVAPI32.DLL",
+      "COMDLG32.DLL",
+      "CRYPT32.DLL",
+      "GDI32.DLL",
+      "KERNEL32.DLL",
+      "OLE32.DLL",
+      "OLEAUT32.DLL",
+      "SHELL32.DLL",
+      "USER32.DLL",
+      "UUID.DLL",
+      "WINSPOOL.DRV",
+      "MSWSOCK.DLL",
+      "WS2_32.DLL"
+    ],
+    "forbidden_module_prefixes": [
+      "MSVCP",
+      "MSVCR",
+      "VCRUNTIME",
+      "UCRTBASE",
+      "API-MS-WIN-CRT-"
+    ],
+    "gs_runtime_policy": {
+      "shipping_compiler_mode": "/GS",
+      "security_cookie_owner": "MSVC CRT/VCRuntime startup",
+      "manual_cookie_bootstrap": "FORBIDDEN_IN_NORMALIZED_SHIPPING",
+      "require_pe_load_config_security_cookie": true,
+      "load_config_security_cookie_policy": "REQUIRED_NONZERO_IMAGE_BACKED_POINTER_IN_IMAGE_SCN_MEM_WRITE_SECTION",
+      "require_security_cookie_writable_section": true
+    },
+    "crt_runtime_policy": {
+      "shipping_runtime": "/MT (MultiThreaded)",
+      "default_dll_entrypoint": "_DllMainCRTStartup selected by MSVC linker",
+      "required_entrypoint_relation": "AddressOfEntryPoint must differ from exported DllMain@1, reside in .text, and the containing section must carry IMAGE_SCN_MEM_EXECUTE",
+      "allowed_runtime_modules": [],
+      "forbidden_runtime_families": [
+        "MSVCP",
+        "MSVCR",
+        "VCRUNTIME",
+        "UCRTBASE",
+        "API-MS-WIN-CRT-"
+      ],
+      "crt_objects_across_public_abi": "FORBIDDEN_BY_PROJECT_ABI_POLICY",
+      "static_link_contract": "NO_DYNAMIC_MSVC_CPP_OR_CRT_IMPORTS_IN_FINAL_PE; default MSVC static CRT libraries; exact binary proof mandatory"
+    },
+    "restricted_named_imports": {
+      "MSWSOCK.DLL": [
+        "AcceptEx",
+        "GetAcceptExSockaddrs"
+      ]
+    }
+  },
+  "immutability": {
+    "sha256_before_equals_after": true,
+    "binary_write_operations_forbidden": true
+  },
+  "require_entrypoint_executable_section": true,
+  "integrity_policy": {
+    "require_pe_checksum_valid": true,
+    "checksum_owner": "URSYNEX Golden Finalizer",
+    "verification_mode": "READ_ONLY_RECOMPUTE_COMPARE"
+  }
+}

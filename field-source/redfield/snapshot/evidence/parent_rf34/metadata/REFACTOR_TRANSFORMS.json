@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "checkpoint": "RF34",
+  "parent_zip_sha256": "fb71cf44efec43947d5a5f0208d273af983cc73704dfeee23636e1728f7698d5",
+  "existing_application_files_changed": 6,
+  "new_application_files": 0,
+  "portable_core_body_changes": 1,
+  "changes": [
+    "Explicit placement construction of intrusive owner on raw platform storage;layout and heap-call counts retained",
+    "Document captured descriptor versus long-lived callback context and queued versus detached metrics",
+    "Extend3 existing regressions;no new runtime feature",
+    "Complete source reviews ofM02/M11;14 units newlyqualified,16 total;other modules remainopen"
+  ],
+  "remaining": [
+    "M12 test CRT/PTD support and13 other whole-module reviews",
+    "284 maintained code and4 vendor integrations pending",
+    "Actual current Windows/MSVC/native/CRT/Debug/game acceptance not run",
+    "M20 carryover scope andRFCL-005 remainopen"
+  ]
+}

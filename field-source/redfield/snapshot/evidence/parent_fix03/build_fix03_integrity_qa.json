@@ -1,0 +1,15 @@
+{
+  "source_verifier": "REDFIELD_INTEGRITY_PASS files=1308 adopted=1114 derived=24 build_units=128",
+  "negatives": [
+    {
+      "case": "modified_builder_rejected",
+      "status": "EXPECTED_REJECTION",
+      "exit_code": 1
+    },
+    {
+      "case": "missing_launcher_rebound_manifest_rejected",
+      "status": "EXPECTED_REJECTION",
+      "exit_code": 1
+    }
+  ]
+}

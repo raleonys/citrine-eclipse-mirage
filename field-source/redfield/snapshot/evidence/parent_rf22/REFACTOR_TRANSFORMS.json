@@ -1,0 +1,2278 @@
+{
+  "schema": 1,
+  "parent_zip_sha256": "b4ab019ab72947f80a19764bf9d358925f55854589dba981f4cf1a5e65c2b5e2",
+  "scope": "All application source/header/test/host files enter one REDFIELD ownership domain; original snapshots remain evidence",
+  "files": [
+    {
+      "original": "src/router/route_inventory.cpp",
+      "destination": "src/router/route_inventory.cpp",
+      "reference": "provenance/rf21_fix02/src/router/route_inventory.cpp",
+      "parent_sha256": "c9d57812ddde160deef7ca7fd922065fd648c420063fc2e4f92fc9f503e74e30",
+      "mechanical_sha256": "4655a1a46aef7942a860054d43e7d143a0972195cd9c7ac1d9d4ee9c0e791e82",
+      "final_sha256": "4655a1a46aef7942a860054d43e7d143a0972195cd9c7ac1d9d4ee9c0e791e82",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/router/route_lookup.cpp",
+      "destination": "src/router/route_lookup.cpp",
+      "reference": "provenance/rf21_fix02/src/router/route_lookup.cpp",
+      "parent_sha256": "438c9f77db85de4c5a1e00050c9c1f2af15134cd601d58d56d5da9d273eb96f0",
+      "mechanical_sha256": "dc00bebf3e5c2dffe3d2b898f548666f0cff022d18aae11de156eff9fb7759c7",
+      "final_sha256": "dc00bebf3e5c2dffe3d2b898f548666f0cff022d18aae11de156eff9fb7759c7",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/runtime/utc_time.cpp",
+      "destination": "src/runtime/utc_time.cpp",
+      "reference": "provenance/rf21_fix02/src/runtime/utc_time.cpp",
+      "parent_sha256": "d2220f243a3139ebf496752069aadefec89299d129860ceb59e1927351f38dd1",
+      "mechanical_sha256": "bed15441fef8022133452a393df5af3b5475e2b7ce45d47f3624cf53a429b45f",
+      "final_sha256": "bed15441fef8022133452a393df5af3b5475e2b7ce45d47f3624cf53a429b45f",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/runtime/memory_allocator.cpp",
+      "destination": "src/runtime/memory_allocator.cpp",
+      "reference": "provenance/rf21_fix02/src/runtime/memory_allocator.cpp",
+      "parent_sha256": "27711d8eec6de26851e0b96b40a8d7504ec20776fd3802f66d53b6198d8ae399",
+      "mechanical_sha256": "c30c143c746911692cdc4fc89a5939ec27fc6b5fce03c133e1dc8f3dd61a1ee1",
+      "final_sha256": "c30c143c746911692cdc4fc89a5939ec27fc6b5fce03c133e1dc8f3dd61a1ee1",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/runtime/ptd_runtime.cpp",
+      "destination": "src/runtime/ptd_runtime.cpp",
+      "reference": "provenance/rf21_fix02/src/runtime/ptd_runtime.cpp",
+      "parent_sha256": "8f7d240c4b57972826f14b89436cdb1d7f5f618ef6ee7c703b0aefd4efc2fef5",
+      "mechanical_sha256": "bfbbec347dce9e8aa3c5368cc66c46d62efa5fb0c9b05b779604ba3c45ddb98f",
+      "final_sha256": "bfbbec347dce9e8aa3c5368cc66c46d62efa5fb0c9b05b779604ba3c45ddb98f",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/runtime/asio_session_timeout_policy.hpp",
+      "destination": "src/runtime/asio_session_timeout_policy.hpp",
+      "reference": "provenance/rf21_fix02/src/runtime/asio_session_timeout_policy.hpp",
+      "parent_sha256": "832f13103cd59b3f4e2e79d3f69e3d1737353bed993bfdbdb59a843e021b8bda",
+      "mechanical_sha256": "0502f3bef78c6ad8dbcdd04f518bc633f0254e992022a0c2f3dc4fa29aa70ee8",
+      "final_sha256": "0502f3bef78c6ad8dbcdd04f518bc633f0254e992022a0c2f3dc4fa29aa70ee8",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/runtime/asio_listener_owner.cpp",
+      "destination": "src/runtime/asio_listener_owner.cpp",
+      "reference": "provenance/rf21_fix02/src/runtime/asio_listener_owner.cpp",
+      "parent_sha256": "38ad0fd18a78de848de79f1f849595247ed54f0f984cf0711962fc8c96841653",
+      "mechanical_sha256": "22f15355f89abd996c24efc36827bce64b3a776b8a8871763949c503cb59cbf1",
+      "final_sha256": "22f15355f89abd996c24efc36827bce64b3a776b8a8871763949c503cb59cbf1",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/runtime/asio_listener_owner.hpp",
+      "destination": "src/runtime/asio_listener_owner.hpp",
+      "reference": "provenance/rf21_fix02/src/runtime/asio_listener_owner.hpp",
+      "parent_sha256": "3763f7e2ea8c6c4f9df3a75ccaa63eaf03d5cc274dee3b23212d7a6eae4a5e1d",
+      "mechanical_sha256": "8d0a641c1cab6a06304f3d36c3d75fc53d44c5167afebb2cbae6f6529a71d9af",
+      "final_sha256": "8d0a641c1cab6a06304f3d36c3d75fc53d44c5167afebb2cbae6f6529a71d9af",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/lsx_framing.cpp",
+      "destination": "src/xml/lsx_framing.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/lsx_framing.cpp",
+      "parent_sha256": "4d223cae591d2de248f3b2d40779859c652f5877049621c0c20f9250d1e1ad33",
+      "mechanical_sha256": "cc25b0f80f84b0b0b934258329de4b2971a2ccd34c4d9e8f66d3f27e745e17b4",
+      "final_sha256": "cc25b0f80f84b0b0b934258329de4b2971a2ccd34c4d9e8f66d3f27e745e17b4",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/attribute_parser.cpp",
+      "destination": "src/xml/attribute_parser.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/attribute_parser.cpp",
+      "parent_sha256": "01ebeda2acd9435aea52edd24f975524c3c374710bc8490fdfbc8314fbc76db3",
+      "mechanical_sha256": "55f2ed0b0b4d28531a7a55f25c240e5b8ad3867ebe5e97b018540640757423c2",
+      "final_sha256": "55f2ed0b0b4d28531a7a55f25c240e5b8ad3867ebe5e97b018540640757423c2",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/value_codec.cpp",
+      "destination": "src/xml/value_codec.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/value_codec.cpp",
+      "parent_sha256": "94445c4f4e28da62a8c7bd6fe2ff0a3dbcc0266558f02f5648732c0b777c751f",
+      "mechanical_sha256": "b20a59511d927cfacfea6b1dc5714fe4ff9f8e98f4b267d0dc13c38d96a5e156",
+      "final_sha256": "b20a59511d927cfacfea6b1dc5714fe4ff9f8e98f4b267d0dc13c38d96a5e156",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/value_codec_normalize.cpp",
+      "destination": "src/xml/value_codec_normalize.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/value_codec_normalize.cpp",
+      "parent_sha256": "25c1d1d58757aba08ca2690bf70c820e7e99eff666bee1a7e598fbe1c86cc00c",
+      "mechanical_sha256": "0f8cc01eeedb166f496ad959e1ef574eb97292cb25fda3ec2ce228de00a451d1",
+      "final_sha256": "0f8cc01eeedb166f496ad959e1ef574eb97292cb25fda3ec2ce228de00a451d1",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/tinyxml2_dom.hpp",
+      "destination": "src/xml/tinyxml2_dom.hpp",
+      "reference": "provenance/rf21_fix02/src/xml/tinyxml2_dom.hpp",
+      "parent_sha256": "466fc1d291416300a64bb464f176abf5b6455205b31eca9f2d6bb86d69915096",
+      "mechanical_sha256": "29212b3219b03dda472c86ad0fef56527ba14b9c6cbd7a192363edd05c59f672",
+      "final_sha256": "29212b3219b03dda472c86ad0fef56527ba14b9c6cbd7a192363edd05c59f672",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/value_codec_utf8.cpp",
+      "destination": "src/xml/value_codec_utf8.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/value_codec_utf8.cpp",
+      "parent_sha256": "8fa68fd6b267c163653cf3c94c4deac1be5f0be671593f95b777916980c6931e",
+      "mechanical_sha256": "074a82cd9667f7862f84e0afd73dc76ef9ff2463ac6f6ccd7132eee296c096a6",
+      "final_sha256": "074a82cd9667f7862f84e0afd73dc76ef9ff2463ac6f6ccd7132eee296c096a6",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/request_parser.cpp",
+      "destination": "src/xml/request_parser.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/request_parser.cpp",
+      "parent_sha256": "fc9b213f7c6673acb52746f1967afd2d0da4954d591de8d3b93a043090189084",
+      "mechanical_sha256": "22e2ab17eb94d37e986cb854b75b9bb507acdb544f38adc03a1c9a2829c82d99",
+      "final_sha256": "22e2ab17eb94d37e986cb854b75b9bb507acdb544f38adc03a1c9a2829c82d99",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/value_codec_semantic.cpp",
+      "destination": "src/xml/value_codec_semantic.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/value_codec_semantic.cpp",
+      "parent_sha256": "46c5ad655f955736d7367ec89f01180e7c5e6ac9bbf2e514978d8f521f7c12d4",
+      "mechanical_sha256": "a6a31e774081f0e743ac96c624d4b0e925c55487bae049674180982eb9e107d7",
+      "final_sha256": "a6a31e774081f0e743ac96c624d4b0e925c55487bae049674180982eb9e107d7",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/response_builder.cpp",
+      "destination": "src/xml/response_builder.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/response_builder.cpp",
+      "parent_sha256": "9894fe89c5a22aef3de338c02d544275334cf088453633d16d656cb10ffabef5",
+      "mechanical_sha256": "9dd5a77f5c404264d16f47bcc615c3927f06ae66cf031013fb2336e0dab31c6e",
+      "final_sha256": "9dd5a77f5c404264d16f47bcc615c3927f06ae66cf031013fb2336e0dab31c6e",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/value_codec_internal.hpp",
+      "destination": "src/xml/value_codec_internal.hpp",
+      "reference": "provenance/rf21_fix02/src/xml/value_codec_internal.hpp",
+      "parent_sha256": "39a54fab374cca82cc71517567ee7230ded02bda154d7637c7302b6604ddeade",
+      "mechanical_sha256": "0db6bbd147a871cad8d10d32e9085436acd6114eeec411d9e60bd3b476d48149",
+      "final_sha256": "0db6bbd147a871cad8d10d32e9085436acd6114eeec411d9e60bd3b476d48149",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/xml/request_children.cpp",
+      "destination": "src/xml/request_children.cpp",
+      "reference": "provenance/rf21_fix02/src/xml/request_children.cpp",
+      "parent_sha256": "35a841abbc8d9320f78b3ba45a0d6d474857ee60b42dfe83482efe60700848d5",
+      "mechanical_sha256": "510916c296b7690763e30d0bf6d3d3d144d51de079314dfd2f314f2d537316cf",
+      "final_sha256": "510916c296b7690763e30d0bf6d3d3d144d51de079314dfd2f314f2d537316cf",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/codec/hex_codec.cpp",
+      "destination": "src/codec/hex_codec.cpp",
+      "reference": "provenance/rf21_fix02/src/codec/hex_codec.cpp",
+      "parent_sha256": "49cfc356a019b21dcbec4800c9ff0711458f3ea0cb83932234453faae94eb411",
+      "mechanical_sha256": "f0e164c1d9c3f3a9ec424683b9616dcbb2ef336ee3bd75d10b8654a6257089aa",
+      "final_sha256": "f0e164c1d9c3f3a9ec424683b9616dcbb2ef336ee3bd75d10b8654a6257089aa",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/config/config2_pegtl.hpp",
+      "destination": "src/config/config2_pegtl.hpp",
+      "reference": "provenance/rf21_fix02/src/config/config2_pegtl.hpp",
+      "parent_sha256": "9802df50455d1ea2f43460a1cea65f53645df0192f6966476cb2a01db7aa3a04",
+      "mechanical_sha256": "b17b8197d31a55b7fb43141ad80ccf58e1375e5bcaaf9b4c0b270e1a609620aa",
+      "final_sha256": "b17b8197d31a55b7fb43141ad80ccf58e1375e5bcaaf9b4c0b270e1a609620aa",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/config/content_projection.hpp",
+      "destination": "src/config/content_projection.hpp",
+      "reference": "provenance/rf21_fix02/src/config/content_projection.hpp",
+      "parent_sha256": "a2534100c84e5bd66ce3a41743dc7c2036e2c418ca2c968334d934802b777321",
+      "mechanical_sha256": "37dda016fb863e8ee6fd497fdf386d9f4ae4ba348fd6980dcacc79a29f37cb2b",
+      "final_sha256": "9512079de35145262ed0d08fb02b34a20d1e11468c396bee19e3fe0d51e3e0f2",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/config/config_file.cpp",
+      "destination": "src/config/config_file.cpp",
+      "reference": "provenance/rf21_fix02/src/config/config_file.cpp",
+      "parent_sha256": "7e8a9721140597a1d05da9a219057d7bf47e435524bd3f9b5c87d58b8e386d02",
+      "mechanical_sha256": "7e8a9721140597a1d05da9a219057d7bf47e435524bd3f9b5c87d58b8e386d02",
+      "final_sha256": "7e8a9721140597a1d05da9a219057d7bf47e435524bd3f9b5c87d58b8e386d02",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/config/settings_provider.cpp",
+      "destination": "src/config/settings_provider.cpp",
+      "reference": "provenance/rf21_fix02/src/config/settings_provider.cpp",
+      "parent_sha256": "0b083ea8c40e5fcc91cb13f87ac34353baa406456f38a13222a91332f31ea662",
+      "mechanical_sha256": "590bcb2c5292fb1ca60f7892b0e4574b71226ce6e6d149f911963c6042aec203",
+      "final_sha256": "590bcb2c5292fb1ca60f7892b0e4574b71226ce6e6d149f911963c6042aec203",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/config/config.cpp",
+      "destination": "src/config/config.cpp",
+      "reference": "provenance/rf21_fix02/src/config/config.cpp",
+      "parent_sha256": "fefd491ca51fadc83c2bb7978f5363af7be24ea0e97d79164a18c59b95a1193c",
+      "mechanical_sha256": "0cc5e00c2164ef2b4126bd27ecc0f47c32602646cadab7e9ad4cec87aae4cbf9",
+      "final_sha256": "0cc5e00c2164ef2b4126bd27ecc0f47c32602646cadab7e9ad4cec87aae4cbf9",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/config/config2_pegtl.cpp",
+      "destination": "src/config/config2_pegtl.cpp",
+      "reference": "provenance/rf21_fix02/src/config/config2_pegtl.cpp",
+      "parent_sha256": "37a309f0d418fbf4bec4a655fadc4b33c59927be5a4e1783031140370ba4a33b",
+      "mechanical_sha256": "6f9ca90ccdaab4b11828f26d3bf3b89723699b4b89ff10268b82d4a4a3166f45",
+      "final_sha256": "6f9ca90ccdaab4b11828f26d3bf3b89723699b4b89ff10268b82d4a4a3166f45",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/config/achievement_projection.hpp",
+      "destination": "src/config/achievement_projection.hpp",
+      "reference": "provenance/rf21_fix02/src/config/achievement_projection.hpp",
+      "parent_sha256": "642d308f79e1874c822eb4d7f27f8180f70df69497609c6f2fa1a116d2dce98a",
+      "mechanical_sha256": "8e86d75ba9d9258342e8dba7b89f9ad1ab6ceab84d59c8e919791d89f0ae2c55",
+      "final_sha256": "41fd7c0bda04878fedc36f4aace2aefee6dbaa4b2dcd83ccf7e5ca57b569c00e",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/config/entitlement_projection.hpp",
+      "destination": "src/config/entitlement_projection.hpp",
+      "reference": "provenance/rf21_fix02/src/config/entitlement_projection.hpp",
+      "parent_sha256": "a2820f830832c2758d52cfb167ba0d221f907486d729f038c3375bcbb1024212",
+      "mechanical_sha256": "9d9933958a06f6de3f652b5fff57a0d663b88ce09323a4a88e084eef96947fd7",
+      "final_sha256": "6b25f04813f272c26a57c2bc3e8ca8dcbba22aa972da967821dee44aa85553dc",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/config/hook_configuration.cpp",
+      "destination": "src/config/hook_configuration.cpp",
+      "reference": "provenance/rf21_fix02/src/config/hook_configuration.cpp",
+      "parent_sha256": "60b6f1f73ac4d6ba53480f3a31bbbf9651951307c7e196f9b11d486ae7c54f50",
+      "mechanical_sha256": "6fa349e86cfdc7c301e9bf37c4102cadf2031e87fc2c1a2e9fa84393d1279bfd",
+      "final_sha256": "eb346e82a49bcd6a7723a9a083e954a9d12dde28426a487924083d191770dce0",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/config/settings_values.cpp",
+      "destination": "src/config/settings_values.cpp",
+      "reference": "provenance/rf21_fix02/src/config/settings_values.cpp",
+      "parent_sha256": "65138c2965bfe5cb3f7bc72bd84e4abb42a1e2416d54aec4114f4371495e8642",
+      "mechanical_sha256": "61ee044f5f6811a8e4999764d1fcc0a41f12297e49607e68e534a9000c67442c",
+      "final_sha256": "61ee044f5f6811a8e4999764d1fcc0a41f12297e49607e68e534a9000c67442c",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/hash/fnv_hash.cpp",
+      "destination": "src/hash/fnv_hash.cpp",
+      "reference": "provenance/rf21_fix02/src/hash/fnv_hash.cpp",
+      "parent_sha256": "3f1f19e1110da0fa85508e5473192d400aec3be208905eb6c63e79d9e560de05",
+      "mechanical_sha256": "29063f5a43d1a0a10a31cc50938a6a02856523cf0c66e35e4832ef2de5d2b2fd",
+      "final_sha256": "29063f5a43d1a0a10a31cc50938a6a02856523cf0c66e35e4832ef2de5d2b2fd",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/windows/dll_entry.cpp",
+      "destination": "src/windows/dll_entry.cpp",
+      "reference": "provenance/rf21_fix02/src/windows/dll_entry.cpp",
+      "parent_sha256": "9f9e0406b20236f0c7bc99cad54e83eccdbdcf59cc1bc80d12a8925a088d93d6",
+      "mechanical_sha256": "c5ac4300948c176337e1f79f53427fcdf857772294ceecf211212f70f6943c19",
+      "final_sha256": "2eef89b534722b034819f7925267129c768df4562859c934a311a5fd452f810c",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/windows/windows_hooks.cpp",
+      "destination": "src/windows/windows_hooks.cpp",
+      "reference": "provenance/rf21_fix02/src/windows/windows_hooks.cpp",
+      "parent_sha256": "df8848968cc282ab0468460619f2a9720d1082386529167e2c188f8df185476d",
+      "mechanical_sha256": "725ed36330b0674cb39f6c8c6fde198cb4ac401f07fb6c3f6ca800335ea88bc2",
+      "final_sha256": "725ed36330b0674cb39f6c8c6fde198cb4ac401f07fb6c3f6ca800335ea88bc2",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/settings_query.cpp",
+      "destination": "src/handlers/settings_query.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/settings_query.cpp",
+      "parent_sha256": "247b3a00136b04368900d553c83e466d3b6c3c4e699f3fbd43acf7a475cc9c1f",
+      "mechanical_sha256": "f9d16854b374ced40cd3f404132c98016886d10682113dfbee47193b739c055d",
+      "final_sha256": "f9d16854b374ced40cd3f404132c98016886d10682113dfbee47193b739c055d",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/stateless_routes.cpp",
+      "destination": "src/handlers/stateless_routes.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/stateless_routes.cpp",
+      "parent_sha256": "ae59353220c2136c7d5b8f531664fb7690e7a377b70f702e74f00930d237b409",
+      "mechanical_sha256": "5b815b37b7e0c2cdaf77639f57d42d423af3690b6de8e4de115c1a2523b7a121",
+      "final_sha256": "5b815b37b7e0c2cdaf77639f57d42d423af3690b6de8e4de115c1a2523b7a121",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/utc_time_route.cpp",
+      "destination": "src/handlers/utc_time_route.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/utc_time_route.cpp",
+      "parent_sha256": "a8d608589471406e16273a95d57e0ca8e23c6e2f036755f0a461baf0aebf89a7",
+      "mechanical_sha256": "de0cd64c1462aae0cac775d3b0523154fc78b41b51a98660faca33133111e457",
+      "final_sha256": "de0cd64c1462aae0cac775d3b0523154fc78b41b51a98660faca33133111e457",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/config_route.cpp",
+      "destination": "src/handlers/config_route.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/config_route.cpp",
+      "parent_sha256": "cc567c0620d959f2e55eefe7af4f2e17953f170e22832f36bb5dc2c0b5901660",
+      "mechanical_sha256": "d2fcbce2eeb4bbb767c957292d6acf82683d40a22d8c5cb2c68f18ab235ed392",
+      "final_sha256": "d2fcbce2eeb4bbb767c957292d6acf82683d40a22d8c5cb2c68f18ab235ed392",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/group_info_route.cpp",
+      "destination": "src/handlers/group_info_route.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/group_info_route.cpp",
+      "parent_sha256": "899346f0718b34d38f9ee4ed2ffd624a84f3eed8409a39059f7a15202b393fde",
+      "mechanical_sha256": "42a3d070a2509daa32d37b35f35ba8d855845145c998ec4d1f4591b649bd1d8a",
+      "final_sha256": "42a3d070a2509daa32d37b35f35ba8d855845145c998ec4d1f4591b649bd1d8a",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/route_error_contracts.hpp",
+      "destination": "src/handlers/route_error_contracts.hpp",
+      "reference": "provenance/rf21_fix02/src/handlers/route_error_contracts.hpp",
+      "parent_sha256": "db12a085498fa4df251aff2d61992395e97512f85df45b0d3181cec2319a77a6",
+      "mechanical_sha256": "fe65807e714287d7404d9e484c1d2f93969cc9c7369b9a59143bb99859589609",
+      "final_sha256": "fe65807e714287d7404d9e484c1d2f93969cc9c7369b9a59143bb99859589609",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/progressive_installation_route.cpp",
+      "destination": "src/handlers/progressive_installation_route.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/progressive_installation_route.cpp",
+      "parent_sha256": "38ff35a268cfe8812829ec182e771e872bad4b717deb7d575f390b5958ef8a6b",
+      "mechanical_sha256": "1c8144e9849f6d49fc105db24c44dd32df19e1385fd4551f1d98831a1d6a81a5",
+      "final_sha256": "1c8144e9849f6d49fc105db24c44dd32df19e1385fd4551f1d98831a1d6a81a5",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/setting_value_route.cpp",
+      "destination": "src/handlers/setting_value_route.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/setting_value_route.cpp",
+      "parent_sha256": "420052ccaeee73601bd66aac55458d24510d1cc491eaac0e57b634f42a641c82",
+      "mechanical_sha256": "791b7fbce1f5f73f5b039fe5190ee8d1ece27552200999db66f53450244ab67a",
+      "final_sha256": "791b7fbce1f5f73f5b039fe5190ee8d1ece27552200999db66f53450244ab67a",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/friends_route.cpp",
+      "destination": "src/handlers/friends_route.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/friends_route.cpp",
+      "parent_sha256": "c82a77e3a5047f7bb629f4b47b2973cf90507452d3624da0ba30772d1740ae8b",
+      "mechanical_sha256": "d0f3643dc347a5caf9d693c95af91cd30b6b3a8c6b2cce5b1bbb314550311189",
+      "final_sha256": "d0f3643dc347a5caf9d693c95af91cd30b6b3a8c6b2cce5b1bbb314550311189",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/connection_state_route.cpp",
+      "destination": "src/handlers/connection_state_route.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/connection_state_route.cpp",
+      "parent_sha256": "d62285d23b9e262162587110089a248b412056843a48a69bf604c8d378b65bda",
+      "mechanical_sha256": "c8873b1c1fb6e3029c42e4d739c42b150a16d188320aa9fec1296b890a2d1a8a",
+      "final_sha256": "c8873b1c1fb6e3029c42e4d739c42b150a16d188320aa9fec1296b890a2d1a8a",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/settings_snapshot_route.cpp",
+      "destination": "src/handlers/settings_snapshot_route.cpp",
+      "reference": "provenance/rf21_fix02/src/handlers/settings_snapshot_route.cpp",
+      "parent_sha256": "db9f4af0875653b81d0707f4cd68eb04732e5a5e56ea47c9ffe257d4f28d51d1",
+      "mechanical_sha256": "462318a4ecd8d471b75c8feec4c72bd06e4ead8c366f7b3c413f701a525073b0",
+      "final_sha256": "462318a4ecd8d471b75c8feec4c72bd06e4ead8c366f7b3c413f701a525073b0",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/handlers/error_success_support.hpp",
+      "destination": "src/handlers/error_success_support.hpp",
+      "reference": "provenance/rf21_fix02/src/handlers/error_success_support.hpp",
+      "parent_sha256": "02a4e08279c7a1c30f4767099f681110cb093eef9fb4ec974f1857099afe16b1",
+      "mechanical_sha256": "e9062aa33daca20881d726b6debae291833e2491393a318715c8d42fea7be1fd",
+      "final_sha256": "e9062aa33daca20881d726b6debae291833e2491393a318715c8d42fea7be1fd",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/minhook_runtime.cpp",
+      "destination": "src/platform/minhook_runtime.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/minhook_runtime.cpp",
+      "parent_sha256": "5438deeaa0c209fb53d3142ccc5ef353903f8898578124f57aa3e80f05304038",
+      "mechanical_sha256": "310f12b10181439abca02ca1efa95b2d7bc791fed7542475b27ae0d6a829179e",
+      "final_sha256": "310f12b10181439abca02ca1efa95b2d7bc791fed7542475b27ae0d6a829179e",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/connect_redirect.cpp",
+      "destination": "src/platform/connect_redirect.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/connect_redirect.cpp",
+      "parent_sha256": "ca3180a6b3d01d3d9b89fad87d341ab456df9aaa9c1bd0542e8bc68c783b0a58",
+      "mechanical_sha256": "3e6fb028b32560edf7167170495554e4d37cc13bbbdf410be24cb95ff011ec35",
+      "final_sha256": "3e6fb028b32560edf7167170495554e4d37cc13bbbdf410be24cb95ff011ec35",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/crypt_wrapper.cpp",
+      "destination": "src/platform/crypt_wrapper.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/crypt_wrapper.cpp",
+      "parent_sha256": "9a5367ae719633606273cff3a12ab4e6b23ad97e7d3484fe2032b775a927eb6e",
+      "mechanical_sha256": "154c5270630b219c1490c4345686d4f63368189a5397fb3a223bf2836dd6edb4",
+      "final_sha256": "154c5270630b219c1490c4345686d4f63368189a5397fb3a223bf2836dd6edb4",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_bridge.cpp",
+      "destination": "src/platform/registry_bridge.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_bridge.cpp",
+      "parent_sha256": "d5f540dedf702aed63cdaa401381a99632689984c0cbcde64933ab92a6a4b986",
+      "mechanical_sha256": "ca03a402f40db356587882fe03e7ae2a652d3f0bd0344f1b50b6362c16318636",
+      "final_sha256": "ca03a402f40db356587882fe03e7ae2a652d3f0bd0344f1b50b6362c16318636",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/crypt_observer.cpp",
+      "destination": "src/platform/crypt_observer.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/crypt_observer.cpp",
+      "parent_sha256": "422e9b944481f084f958965ba7438d12bf58c4abf9e495ce17eccf1c3252168b",
+      "mechanical_sha256": "1e251bd5e0dd615441c44e5dddec07770e3db66a08b304612f2cadbf701e8d22",
+      "final_sha256": "1e251bd5e0dd615441c44e5dddec07770e3db66a08b304612f2cadbf701e8d22",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_wrappers.cpp",
+      "destination": "src/platform/registry_wrappers.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_wrappers.cpp",
+      "parent_sha256": "87e16b51fb8d730640b08bb2673ac37b480368c7a23244ac6f0f2b49f8fdf2dd",
+      "mechanical_sha256": "713eab7ab890fea72d21630a05f1cb725b6da28e0d55a532bb64ffea79ad9ca4",
+      "final_sha256": "713eab7ab890fea72d21630a05f1cb725b6da28e0d55a532bb64ffea79ad9ca4",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/connect_redirect_hook.cpp",
+      "destination": "src/platform/connect_redirect_hook.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/connect_redirect_hook.cpp",
+      "parent_sha256": "a6b5f377956ad71ffe8d99d8f4af5e9278ec3c5e93cdf21fcbb4d63c94528bcf",
+      "mechanical_sha256": "714c69f9b2654e718e5eecc91c30d944527ad40116af2ac9d046ecb50b0e26a3",
+      "final_sha256": "714c69f9b2654e718e5eecc91c30d944527ad40116af2ac9d046ecb50b0e26a3",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_policy_values.cpp",
+      "destination": "src/platform/registry_policy_values.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_policy_values.cpp",
+      "parent_sha256": "f2b09876f60fcd6aa7dc49f69389c2aafbc95025d3717d46286a0102f67e9b0d",
+      "mechanical_sha256": "03a3a07a6ccee22eed99de5907118f630490faf7be30b785f2870ab7c4f61717",
+      "final_sha256": "03a3a07a6ccee22eed99de5907118f630490faf7be30b785f2870ab7c4f61717",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_policy.cpp",
+      "destination": "src/platform/registry_policy.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_policy.cpp",
+      "parent_sha256": "b06fd23500d71b5e82746be9a4c5bf886381ad185d5fd53b7e8231dcdc240762",
+      "mechanical_sha256": "482d56e7346e3919e1bd47eed1862c9caa916f33db1b2bbad3a0ff7abcf3495e",
+      "final_sha256": "482d56e7346e3919e1bd47eed1862c9caa916f33db1b2bbad3a0ff7abcf3495e",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_hooks.cpp",
+      "destination": "src/platform/registry_hooks.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_hooks.cpp",
+      "parent_sha256": "2f3505e9c791713e099c97e4bd921c88271e50ecd37b338e6bf41cd94ef8ab5a",
+      "mechanical_sha256": "ac22c33853636da7f742965fd00904664786e6ae282a2b142a0f8ae448f64457",
+      "final_sha256": "ac22c33853636da7f742965fd00904664786e6ae282a2b142a0f8ae448f64457",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_hook_runtime.cpp",
+      "destination": "src/platform/registry_hook_runtime.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_hook_runtime.cpp",
+      "parent_sha256": "5a1135bba6a2c916c4940c3da4b137da73caa7c4965c7fe145a2d020ceb0ed70",
+      "mechanical_sha256": "9d319ce7a376be5bb1cde329a7726a169c1b0923032a09ac41d425d99f8612f2",
+      "final_sha256": "9d319ce7a376be5bb1cde329a7726a169c1b0923032a09ac41d425d99f8612f2",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_policy_config.cpp",
+      "destination": "src/platform/registry_policy_config.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_policy_config.cpp",
+      "parent_sha256": "aa9f65c8faf6a9ec32ea20626da71930dcd0c36d7c01080fda42b8e2396f030e",
+      "mechanical_sha256": "884b785ba295c699c0d584f73b4ecef7af8d448f80f3b03df6679fafb8b6ecae",
+      "final_sha256": "73bdbf8d337160d36b60bda4078bd72c306ad55021cc893c9af7c3459b7e8f50",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/platform/registry_policy_internal.hpp",
+      "destination": "src/platform/registry_policy_internal.hpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_policy_internal.hpp",
+      "parent_sha256": "92b4586688dfb9ad4a33b164088f2f51d4cfb5183b4c46f3391d8399adfeb19c",
+      "mechanical_sha256": "bc820f7b4f1c0158f0e6df5f98ecd1fd31140d8b26c9cd46fc77fcbc720ab746",
+      "final_sha256": "bc820f7b4f1c0158f0e6df5f98ecd1fd31140d8b26c9cd46fc77fcbc720ab746",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_policy_state.cpp",
+      "destination": "src/platform/registry_policy_state.cpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_policy_state.cpp",
+      "parent_sha256": "049aa44363773b978f92d7e95b5865585410d08df61305c276e0aa92e03b7267",
+      "mechanical_sha256": "351cfd82452cdbd36381d0d78d52ab253dde45ac2883d80cee0a63b95f1882a6",
+      "final_sha256": "351cfd82452cdbd36381d0d78d52ab253dde45ac2883d80cee0a63b95f1882a6",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/platform/registry_hook_runtime_internal.hpp",
+      "destination": "src/platform/registry_hook_runtime_internal.hpp",
+      "reference": "provenance/rf21_fix02/src/platform/registry_hook_runtime_internal.hpp",
+      "parent_sha256": "b5b168eb283f6ef958bb79ece5079089f9be68bc81ec9df0a678d4434e8f34e2",
+      "mechanical_sha256": "97f9b8e4ea12dd0dc5e489f8e7dd62ca7b21f4dfe8eaa539c2351f0ce07f1ae2",
+      "final_sha256": "97f9b8e4ea12dd0dc5e489f8e7dd62ca7b21f4dfe8eaa539c2351f0ce07f1ae2",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/port_publication.cpp",
+      "destination": "src/core/port_publication.cpp",
+      "reference": "provenance/rf21_fix02/src/core/port_publication.cpp",
+      "parent_sha256": "5091ffa6f75c84170534b46850edbfc896c3906588e1f27db083baaa5ecabc09",
+      "mechanical_sha256": "5091ffa6f75c84170534b46850edbfc896c3906588e1f27db083baaa5ecabc09",
+      "final_sha256": "5091ffa6f75c84170534b46850edbfc896c3906588e1f27db083baaa5ecabc09",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/xml.cpp",
+      "destination": "src/core/xml.cpp",
+      "reference": "provenance/rf21_fix02/src/core/xml.cpp",
+      "parent_sha256": "9720b2105807988e20f4684336072083ee94548463123ab83105d07b499bebc7",
+      "mechanical_sha256": "535094bb23241896222e03ac48f5eca558100eedd738c16fa970a568600f1ad1",
+      "final_sha256": "535094bb23241896222e03ac48f5eca558100eedd738c16fa970a568600f1ad1",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/auth_code_algorithm.hpp",
+      "destination": "src/core/auth_code_algorithm.hpp",
+      "reference": "provenance/rf21_fix02/src/core/auth_code_algorithm.hpp",
+      "parent_sha256": "417a1fcec1a6b591c32333f164f69ae9222b97823af6bc568a133a09f3f42a3a",
+      "mechanical_sha256": "417a1fcec1a6b591c32333f164f69ae9222b97823af6bc568a133a09f3f42a3a",
+      "final_sha256": "417a1fcec1a6b591c32333f164f69ae9222b97823af6bc568a133a09f3f42a3a",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/profile_formatter.cpp",
+      "destination": "src/core/profile_formatter.cpp",
+      "reference": "provenance/rf21_fix02/src/core/profile_formatter.cpp",
+      "parent_sha256": "e19b44c2177ef42830ead9913812df057939e088cfb72fc8b593f19b15bcd914",
+      "mechanical_sha256": "55c658ca9e264a8b73d089112a6ba372f4bd7d1b77bd43773bad39e1a84e716a",
+      "final_sha256": "55c658ca9e264a8b73d089112a6ba372f4bd7d1b77bd43773bad39e1a84e716a",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/achievement_session.cpp",
+      "destination": "src/core/achievement_session.cpp",
+      "reference": "provenance/rf21_fix02/src/core/achievement_session.cpp",
+      "parent_sha256": "896b6c1a9d3ef6e299d6f4f74bc0ff58f3500e7197a46b955e3e14339466c5bb",
+      "mechanical_sha256": "896b6c1a9d3ef6e299d6f4f74bc0ff58f3500e7197a46b955e3e14339466c5bb",
+      "final_sha256": "896b6c1a9d3ef6e299d6f4f74bc0ff58f3500e7197a46b955e3e14339466c5bb",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/service_session.cpp",
+      "destination": "src/core/service_session.cpp",
+      "reference": "provenance/rf21_fix02/src/core/service_session.cpp",
+      "parent_sha256": "67ee8fad09671c44e312e2d188f9aa695100fa24fa76891c0bba8a90cf94c49e",
+      "mechanical_sha256": "c6d8ea28902b0666eacaab9e57cfe0aeddce95e67113e70a713eedb8f7f69387",
+      "final_sha256": "c6d8ea28902b0666eacaab9e57cfe0aeddce95e67113e70a713eedb8f7f69387",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/worker_owner.cpp",
+      "destination": "src/core/worker_owner.cpp",
+      "reference": "provenance/rf21_fix02/src/core/worker_owner.cpp",
+      "parent_sha256": "55cc30a36e5c752c34c02b25a8473226c87a52dea22b7915de8f0407f069cd92",
+      "mechanical_sha256": "55cc30a36e5c752c34c02b25a8473226c87a52dea22b7915de8f0407f069cd92",
+      "final_sha256": "55cc30a36e5c752c34c02b25a8473226c87a52dea22b7915de8f0407f069cd92",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/entitlement_response.cpp",
+      "destination": "src/core/entitlement_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/entitlement_response.cpp",
+      "parent_sha256": "3e5f52b8aded0732a81334f9f8e0748e92a0aa19b78ba25c7e7a2644ebc2c9ac",
+      "mechanical_sha256": "d748a42c4feb0b08590d7cbe865316443ad8321de93a98b6d25e8d905317aeeb",
+      "final_sha256": "3347f846b91e5d32df5a497091685b4bdaa2b90e3eafb6ed1a730f4aa57c2b5c",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/core/game_info_response.cpp",
+      "destination": "src/core/game_info_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/game_info_response.cpp",
+      "parent_sha256": "8ad724d5ce287c93f6d4b88e9e7f760d02a6a55d4d5798ef1a1f617a4aba8540",
+      "mechanical_sha256": "255b5447c8462df5bcb42734b200ba716f1e0f7dc1dc09fedc60089d16f9b82c",
+      "final_sha256": "255b5447c8462df5bcb42734b200ba716f1e0f7dc1dc09fedc60089d16f9b82c",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/auth_code_formatter.hpp",
+      "destination": "src/core/auth_code_formatter.hpp",
+      "reference": "provenance/rf21_fix02/src/core/auth_code_formatter.hpp",
+      "parent_sha256": "5d7a3142813d7d05fcd01a511bbf2ad145c573d36b5317c689795c95f2fc6590",
+      "mechanical_sha256": "87a16de02b2e912fd34898ad117fea7485766e321a8c9fe5441b01b71175d71d",
+      "final_sha256": "87a16de02b2e912fd34898ad117fea7485766e321a8c9fe5441b01b71175d71d",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/content_response.cpp",
+      "destination": "src/core/content_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/content_response.cpp",
+      "parent_sha256": "ff82074a2ed05d4ae29dfd7876f3988bf583911ed30ef10fda10882cd79776be",
+      "mechanical_sha256": "0c41dd66ce564e69d3a1b5b117ecb5af3af6e6fc23f3b141120b644758828677",
+      "final_sha256": "6f7efc285f2acc0031d84baa47320bbb0f9e417c8f4646e80b0129c783d8735c",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/core/achievement_response.cpp",
+      "destination": "src/core/achievement_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/achievement_response.cpp",
+      "parent_sha256": "daafa8fa94f55fde1d3a91441018a68d203eeb23f51a70ed2cc01e01506320c8",
+      "mechanical_sha256": "4282bec26e10b92350f49739acdc6ca3613e1579c67d10630f0463d84535ea9f",
+      "final_sha256": "bb1b27db9a7cde9ee6a41ebc25dc42c979a108f4a616a5be50333db755ace2bd",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/core/response_formatter_support.hpp",
+      "destination": "src/core/response_formatter_support.hpp",
+      "reference": "provenance/rf21_fix02/src/core/response_formatter_support.hpp",
+      "parent_sha256": "f1e8516ff8744198eb6a55eac292eed64b5f66a8a5d09ee3e9e345c1a66e7596",
+      "mechanical_sha256": "e7938f30a9f58f20df1036a03b39aaa384269b81fd645bbf5098675b192fcd93",
+      "final_sha256": "e7938f30a9f58f20df1036a03b39aaa384269b81fd645bbf5098675b192fcd93",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/settings_response.cpp",
+      "destination": "src/core/settings_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/settings_response.cpp",
+      "parent_sha256": "929761832a42b5ef9f1f2f60e6c8ce3efa61ecd6b57aaa883f36767a42dd484c",
+      "mechanical_sha256": "11a18934f9ec6d34d3dad482e9cd16a8285bf8876a29ee2b98bdd8fd93ea7e54",
+      "final_sha256": "11a18934f9ec6d34d3dad482e9cd16a8285bf8876a29ee2b98bdd8fd93ea7e54",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/auth_code_session.cpp",
+      "destination": "src/core/auth_code_session.cpp",
+      "reference": "provenance/rf21_fix02/src/core/auth_code_session.cpp",
+      "parent_sha256": "accb9cfc3af275af354e2daf2613cdd4eac199259aa7006599cecfe0cf235060",
+      "mechanical_sha256": "1a8d48969d775d29fd72aaa622d872b39ab7568d5b8c8ce668a1c7758df26be0",
+      "final_sha256": "1a8d48969d775d29fd72aaa622d872b39ab7568d5b8c8ce668a1c7758df26be0",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/chunks_response.cpp",
+      "destination": "src/core/chunks_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/chunks_response.cpp",
+      "parent_sha256": "e0974f12e875b347b35665a09aa9b3ee7fa1dc9642334bee3ec90bb8d768f09b",
+      "mechanical_sha256": "7ff3f2a3a7455aea616ad27e8487c7b78ff6c125723f13ae1f4975ed8f386404",
+      "final_sha256": "7ff3f2a3a7455aea616ad27e8487c7b78ff6c125723f13ae1f4975ed8f386404",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/store_formatter.hpp",
+      "destination": "src/core/store_formatter.hpp",
+      "reference": "provenance/rf21_fix02/src/core/store_formatter.hpp",
+      "parent_sha256": "10a67b4a56ff708ee28dbc0c40ad25ff0e9b27ec5b3f6dceb8c9b83bdf748b56",
+      "mechanical_sha256": "1473b99ff8dcdc6451d15912fd3d08b819e70ecdaa18757e9a513dad7b933ab9",
+      "final_sha256": "1473b99ff8dcdc6451d15912fd3d08b819e70ecdaa18757e9a513dad7b933ab9",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/runtime.cpp",
+      "destination": "src/core/runtime.cpp",
+      "reference": "provenance/rf21_fix02/src/core/runtime.cpp",
+      "parent_sha256": "48093dc63a456b03a0e7f615e1348e48f3679ee82805f232d9be7e5487b39c71",
+      "mechanical_sha256": "48093dc63a456b03a0e7f615e1348e48f3679ee82805f232d9be7e5487b39c71",
+      "final_sha256": "48093dc63a456b03a0e7f615e1348e48f3679ee82805f232d9be7e5487b39c71",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/achievement_delivery.cpp",
+      "destination": "src/core/achievement_delivery.cpp",
+      "reference": "provenance/rf21_fix02/src/core/achievement_delivery.cpp",
+      "parent_sha256": "add483a1abb9c43a00f38077f2dfc0b8599b7d8f501fb3155f9059d5a84815ee",
+      "mechanical_sha256": "f34c0620469fcc111892cba647a2c6bda2f16d710eb1db7afcacb2d1d5f1b5b0",
+      "final_sha256": "d158322b261b944486ee7707b3c2d98d0074b42b83a7e6928f28f7989210df08",
+      "mechanical_only": false
+    },
+    {
+      "original": "src/core/permission_formatter.hpp",
+      "destination": "src/core/permission_formatter.hpp",
+      "reference": "provenance/rf21_fix02/src/core/permission_formatter.hpp",
+      "parent_sha256": "578917c40781fabc51cfd9935afe6650e4ecfada37e2df4702ec491c1903e2fa",
+      "mechanical_sha256": "37fbca65d6bd49f66b078a81057066742a5cb08ad85aea2a21cbea00f356a2a9",
+      "final_sha256": "37fbca65d6bd49f66b078a81057066742a5cb08ad85aea2a21cbea00f356a2a9",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/query_presence_response.cpp",
+      "destination": "src/core/query_presence_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/query_presence_response.cpp",
+      "parent_sha256": "949b59d584d2916af5a7b3eba88a01f85555ceae79b3b36e1a9d0e24a56b670a",
+      "mechanical_sha256": "b821816428eaa3a87fab2c6adad897ec7c831627affcde6e3a56d5143fc4e9e9",
+      "final_sha256": "b821816428eaa3a87fab2c6adad897ec7c831627affcde6e3a56d5143fc4e9e9",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/image_response.cpp",
+      "destination": "src/core/image_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/image_response.cpp",
+      "parent_sha256": "dfb2cf1cd86b46006e6495e95a1aeb65d1894e15e8c485c1f5aff60ebf6609c8",
+      "mechanical_sha256": "0931597840cbfadf64c4c6e8f74cfeb10eee6c91f3ffe0f570e62b248feb9807",
+      "final_sha256": "0931597840cbfadf64c4c6e8f74cfeb10eee6c91f3ffe0f570e62b248feb9807",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/response_dispatch.cpp",
+      "destination": "src/core/response_dispatch.cpp",
+      "reference": "provenance/rf21_fix02/src/core/response_dispatch.cpp",
+      "parent_sha256": "cd7e60354b398a3c514ec33de69d95e8149f72569ce250168e77155b5ac0e1a7",
+      "mechanical_sha256": "ec7bc48afc08bd5906e084f58f4193796826c850ad9caa14dfc7acbdea326c49",
+      "final_sha256": "ec7bc48afc08bd5906e084f58f4193796826c850ad9caa14dfc7acbdea326c49",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/profile_response.cpp",
+      "destination": "src/core/profile_response.cpp",
+      "reference": "provenance/rf21_fix02/src/core/profile_response.cpp",
+      "parent_sha256": "563584ad77eb6d1ae1e3e58b0b384d420bbc6dc09452c6a3561d6220e8b2fcbd",
+      "mechanical_sha256": "b9201df3e9175605b5090054fc48d3237b9b8532512f0d46e1a393d92b8044d0",
+      "final_sha256": "b9201df3e9175605b5090054fc48d3237b9b8532512f0d46e1a393d92b8044d0",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/core/stream_response_support.hpp",
+      "destination": "src/core/stream_response_support.hpp",
+      "reference": "provenance/rf21_fix02/src/core/stream_response_support.hpp",
+      "parent_sha256": "5900af123a9ef28af0a5db4cc46025925a535edc59e03895f773226b13c8e0b1",
+      "mechanical_sha256": "66594ff30d416ad901151899d81230e41163a8a8d8943b99f07e8a36c3a30eed",
+      "final_sha256": "66594ff30d416ad901151899d81230e41163a8a8d8943b99f07e8a36c3a30eed",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/net/frame_ingress.cpp",
+      "destination": "src/net/frame_ingress.cpp",
+      "reference": "provenance/rf21_fix02/src/net/frame_ingress.cpp",
+      "parent_sha256": "f10f78967121e569c5a332b58614858c9f0133fb0e1bd05104853b50c1818ee9",
+      "mechanical_sha256": "e975158ba17505c447aac8ef9eaa6172e349ed147f2243bf61d541b3d42a1377",
+      "final_sha256": "e975158ba17505c447aac8ef9eaa6172e349ed147f2243bf61d541b3d42a1377",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/net/tcp_ingress.cpp",
+      "destination": "src/net/tcp_ingress.cpp",
+      "reference": "provenance/rf21_fix02/src/net/tcp_ingress.cpp",
+      "parent_sha256": "f6cda9275c12244b484f5a745057c1f79235b0313a0b51b8d5db5dc7d494d9b8",
+      "mechanical_sha256": "d937187f2a058f5197ce8376ed8beedb9976cab58ae86ab6ebf600b2c8202a84",
+      "final_sha256": "d937187f2a058f5197ce8376ed8beedb9976cab58ae86ab6ebf600b2c8202a84",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/net/receive_buffer.cpp",
+      "destination": "src/net/receive_buffer.cpp",
+      "reference": "provenance/rf21_fix02/src/net/receive_buffer.cpp",
+      "parent_sha256": "f9c29f4386589b9323144d602dcab527e3c45a3eff418011c5d46d49f0a25def",
+      "mechanical_sha256": "84b9c3a3bf83185232cdc190fd5274b3a97323e4b3d2babf4fe4da84cfd71383",
+      "final_sha256": "84b9c3a3bf83185232cdc190fd5274b3a97323e4b3d2babf4fe4da84cfd71383",
+      "mechanical_only": true
+    },
+    {
+      "original": "src/net/local_service.cpp",
+      "destination": "src/net/local_service.cpp",
+      "reference": "provenance/rf21_fix02/src/net/local_service.cpp",
+      "parent_sha256": "f3a23afc0400ae6abbb184f28479213a2b4aa47f7317cdfcfcfc27c8ff2ae66e",
+      "mechanical_sha256": "aa4ad7b9dfe677ce65e015269ea34515265982cfd584bf99ed993b7b0d5efbbf",
+      "final_sha256": "aa4ad7b9dfe677ce65e015269ea34515265982cfd584bf99ed993b7b0d5efbbf",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/profile_response.hpp",
+      "destination": "include/redfield/profile_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/profile_response.hpp",
+      "parent_sha256": "13e95e817875c31af7fe2c5917cadc1395866e090a7c1e2708dc5df764546c79",
+      "mechanical_sha256": "3b61ce72f2426315ad58f65d476a7763e0fc8e29c30f2c89340d40bfb105f674",
+      "final_sha256": "3b61ce72f2426315ad58f65d476a7763e0fc8e29c30f2c89340d40bfb105f674",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/config.hpp",
+      "destination": "include/redfield/config.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/config.hpp",
+      "parent_sha256": "5bb0e469e393628a55e56fabc644a3e93a4ee673065d3ce528f9421927e495aa",
+      "mechanical_sha256": "5bb0e469e393628a55e56fabc644a3e93a4ee673065d3ce528f9421927e495aa",
+      "final_sha256": "97a28252a761dd33f5859071d90a82bc8c5047f9808e4f5c3999971f510f70c7",
+      "mechanical_only": false
+    },
+    {
+      "original": "include/redfield/local_service.hpp",
+      "destination": "include/redfield/local_service.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/local_service.hpp",
+      "parent_sha256": "ca42c633e4b1b42e6cfb9b9833ab3a76f25276f75cc30020f63a6a99c2465c91",
+      "mechanical_sha256": "ca42c633e4b1b42e6cfb9b9833ab3a76f25276f75cc30020f63a6a99c2465c91",
+      "final_sha256": "ca42c633e4b1b42e6cfb9b9833ab3a76f25276f75cc30020f63a6a99c2465c91",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/runtime.hpp",
+      "destination": "include/redfield/runtime.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/runtime.hpp",
+      "parent_sha256": "50db27fc86390b717371853c31e7592ac989c1cf351d36e1db8923e450d72bb4",
+      "mechanical_sha256": "50db27fc86390b717371853c31e7592ac989c1cf351d36e1db8923e450d72bb4",
+      "final_sha256": "50db27fc86390b717371853c31e7592ac989c1cf351d36e1db8923e450d72bb4",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/achievement_delivery.hpp",
+      "destination": "include/redfield/achievement_delivery.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/achievement_delivery.hpp",
+      "parent_sha256": "fcbd25d529e8799ba9a26a7566f5c3148069944125e92063c9aa415fab8fd0eb",
+      "mechanical_sha256": "fcbd25d529e8799ba9a26a7566f5c3148069944125e92063c9aa415fab8fd0eb",
+      "final_sha256": "fcbd25d529e8799ba9a26a7566f5c3148069944125e92063c9aa415fab8fd0eb",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/chunks_response.hpp",
+      "destination": "include/redfield/chunks_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/chunks_response.hpp",
+      "parent_sha256": "1bcdb21b43b39a8e83dc6c7b5d6c9114e67d1a96f548de4645b4dcb39cf37342",
+      "mechanical_sha256": "1bcdb21b43b39a8e83dc6c7b5d6c9114e67d1a96f548de4645b4dcb39cf37342",
+      "final_sha256": "1bcdb21b43b39a8e83dc6c7b5d6c9114e67d1a96f548de4645b4dcb39cf37342",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/shutdown_budget.hpp",
+      "destination": "include/redfield/shutdown_budget.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/shutdown_budget.hpp",
+      "parent_sha256": "da606d108f198179bf5491af893927691f56c294643b8a397ddb7c636b970129",
+      "mechanical_sha256": "da606d108f198179bf5491af893927691f56c294643b8a397ddb7c636b970129",
+      "final_sha256": "da606d108f198179bf5491af893927691f56c294643b8a397ddb7c636b970129",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/worker_owner.hpp",
+      "destination": "include/redfield/worker_owner.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/worker_owner.hpp",
+      "parent_sha256": "64565455a3b4838103599d2b7daf7f06650aad653b8b85e4907b89b45581ed29",
+      "mechanical_sha256": "64565455a3b4838103599d2b7daf7f06650aad653b8b85e4907b89b45581ed29",
+      "final_sha256": "64565455a3b4838103599d2b7daf7f06650aad653b8b85e4907b89b45581ed29",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/achievement_response.hpp",
+      "destination": "include/redfield/achievement_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/achievement_response.hpp",
+      "parent_sha256": "c464cbdf696186a6a60f31272519a558894940525917b1f1752c427a865357f1",
+      "mechanical_sha256": "c464cbdf696186a6a60f31272519a558894940525917b1f1752c427a865357f1",
+      "final_sha256": "c464cbdf696186a6a60f31272519a558894940525917b1f1752c427a865357f1",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/config_file.hpp",
+      "destination": "include/redfield/config_file.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/config_file.hpp",
+      "parent_sha256": "085796a116ee241940df757c8560259521887932688aea6979d6e9dc59048c24",
+      "mechanical_sha256": "085796a116ee241940df757c8560259521887932688aea6979d6e9dc59048c24",
+      "final_sha256": "085796a116ee241940df757c8560259521887932688aea6979d6e9dc59048c24",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/port_publication.hpp",
+      "destination": "include/redfield/port_publication.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/port_publication.hpp",
+      "parent_sha256": "824250aeafe73dc2da45cbb2b82fe64a2448e53beb63f7c295e98a3d370316db",
+      "mechanical_sha256": "824250aeafe73dc2da45cbb2b82fe64a2448e53beb63f7c295e98a3d370316db",
+      "final_sha256": "824250aeafe73dc2da45cbb2b82fe64a2448e53beb63f7c295e98a3d370316db",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/content_response.hpp",
+      "destination": "include/redfield/content_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/content_response.hpp",
+      "parent_sha256": "360c96a3221207ad3a506cd307227828c923df4ede36d5001610d96ed83d2f14",
+      "mechanical_sha256": "360c96a3221207ad3a506cd307227828c923df4ede36d5001610d96ed83d2f14",
+      "final_sha256": "360c96a3221207ad3a506cd307227828c923df4ede36d5001610d96ed83d2f14",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/auth_code_session.hpp",
+      "destination": "include/redfield/auth_code_session.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/auth_code_session.hpp",
+      "parent_sha256": "e95dab4b3cdb5e72884332185cf24186c108fc31028adf65781513187a5ee7a3",
+      "mechanical_sha256": "e95dab4b3cdb5e72884332185cf24186c108fc31028adf65781513187a5ee7a3",
+      "final_sha256": "e95dab4b3cdb5e72884332185cf24186c108fc31028adf65781513187a5ee7a3",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/service_session.hpp",
+      "destination": "include/redfield/service_session.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/service_session.hpp",
+      "parent_sha256": "bf59e0a6a241a1339a91e3dd82ee6005e83e6eb95aa414e26520c2a8a4d5a026",
+      "mechanical_sha256": "bf59e0a6a241a1339a91e3dd82ee6005e83e6eb95aa414e26520c2a8a4d5a026",
+      "final_sha256": "bf59e0a6a241a1339a91e3dd82ee6005e83e6eb95aa414e26520c2a8a4d5a026",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/settings_response.hpp",
+      "destination": "include/redfield/settings_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/settings_response.hpp",
+      "parent_sha256": "9ed96af6fd5b74f2eae2c97c18b55bfc6a4f97428b30d724b96a6a334f8d1897",
+      "mechanical_sha256": "3a1d88604600f15b1a565010dfd612d92e7cf5e388898fb562120dbb98b519f9",
+      "final_sha256": "3a1d88604600f15b1a565010dfd612d92e7cf5e388898fb562120dbb98b519f9",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/windows_hooks.hpp",
+      "destination": "include/redfield/windows_hooks.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/windows_hooks.hpp",
+      "parent_sha256": "793b365cb09d945334f341965b90424f5228d05f5fb805e72695520dfa87dcd0",
+      "mechanical_sha256": "793b365cb09d945334f341965b90424f5228d05f5fb805e72695520dfa87dcd0",
+      "final_sha256": "793b365cb09d945334f341965b90424f5228d05f5fb805e72695520dfa87dcd0",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/game_info_response.hpp",
+      "destination": "include/redfield/game_info_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/game_info_response.hpp",
+      "parent_sha256": "a986a66a0a39940c33de8f548ac8abb02dfcbe7e3f5ae4ea8a82aefe5efd0b9e",
+      "mechanical_sha256": "a986a66a0a39940c33de8f548ac8abb02dfcbe7e3f5ae4ea8a82aefe5efd0b9e",
+      "final_sha256": "a986a66a0a39940c33de8f548ac8abb02dfcbe7e3f5ae4ea8a82aefe5efd0b9e",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/query_presence_response.hpp",
+      "destination": "include/redfield/query_presence_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/query_presence_response.hpp",
+      "parent_sha256": "375e0f69e654292d20b660e231f4e2df03c6d761aa9ee75d2462185591ea67c8",
+      "mechanical_sha256": "375e0f69e654292d20b660e231f4e2df03c6d761aa9ee75d2462185591ea67c8",
+      "final_sha256": "375e0f69e654292d20b660e231f4e2df03c6d761aa9ee75d2462185591ea67c8",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/entitlement_response.hpp",
+      "destination": "include/redfield/entitlement_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/entitlement_response.hpp",
+      "parent_sha256": "73fada6f69309bf6ac9faca1d086cb591fe4b63d78b8ca39cb3b8324b5af1970",
+      "mechanical_sha256": "73fada6f69309bf6ac9faca1d086cb591fe4b63d78b8ca39cb3b8324b5af1970",
+      "final_sha256": "73fada6f69309bf6ac9faca1d086cb591fe4b63d78b8ca39cb3b8324b5af1970",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/image_response.hpp",
+      "destination": "include/redfield/image_response.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/image_response.hpp",
+      "parent_sha256": "8e27ee58b54234fa69b704b30160c1916eb3f1dd03b7e5b466f002b2b6d7babf",
+      "mechanical_sha256": "8e27ee58b54234fa69b704b30160c1916eb3f1dd03b7e5b466f002b2b6d7babf",
+      "final_sha256": "8e27ee58b54234fa69b704b30160c1916eb3f1dd03b7e5b466f002b2b6d7babf",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/pending_session_cleanup.hpp",
+      "destination": "include/redfield/pending_session_cleanup.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/pending_session_cleanup.hpp",
+      "parent_sha256": "fe74bc900622011960cc6922f737517253101f01273e3f71e7b5cad9a6c38cae",
+      "mechanical_sha256": "fe74bc900622011960cc6922f737517253101f01273e3f71e7b5cad9a6c38cae",
+      "final_sha256": "fe74bc900622011960cc6922f737517253101f01273e3f71e7b5cad9a6c38cae",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/response_dispatch.hpp",
+      "destination": "include/redfield/response_dispatch.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/response_dispatch.hpp",
+      "parent_sha256": "575bb5d41730a679e82c196772a02ed6357798b5d6ec3ca6190c479872842781",
+      "mechanical_sha256": "575bb5d41730a679e82c196772a02ed6357798b5d6ec3ca6190c479872842781",
+      "final_sha256": "575bb5d41730a679e82c196772a02ed6357798b5d6ec3ca6190c479872842781",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/achievement_session.hpp",
+      "destination": "include/redfield/achievement_session.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/achievement_session.hpp",
+      "parent_sha256": "27125bbc8a26ccd20c25aa2a0a9ef587c3d7975b471e9202a115b3cb19001dcb",
+      "mechanical_sha256": "27125bbc8a26ccd20c25aa2a0a9ef587c3d7975b471e9202a115b3cb19001dcb",
+      "final_sha256": "27125bbc8a26ccd20c25aa2a0a9ef587c3d7975b471e9202a115b3cb19001dcb",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/hook_configuration.hpp",
+      "destination": "include/redfield/hook_configuration.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/hook_configuration.hpp",
+      "parent_sha256": "b1b5f4fbf90de208d4555798e2874f68b39552f8c2aa9fe3f4ada28a944477ef",
+      "mechanical_sha256": "4d26c1de02ea61a8fc2b9d7ee1deb52d0565479a2c321ed07795ea91ee13c7c8",
+      "final_sha256": "4d26c1de02ea61a8fc2b9d7ee1deb52d0565479a2c321ed07795ea91ee13c7c8",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/xml.hpp",
+      "destination": "include/redfield/xml.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/xml.hpp",
+      "parent_sha256": "74760f62ebb54efb735a083785c61cf6c53d7209c05eaa0c37a9ddf6f6792342",
+      "mechanical_sha256": "aac0772538a718fa9a0ced183907c12185b387a79b5e20fce2bd6fff6c6ee7aa",
+      "final_sha256": "aac0772538a718fa9a0ced183907c12185b387a79b5e20fce2bd6fff6c6ee7aa",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/redfield/tcp_ingress.hpp",
+      "destination": "include/redfield/tcp_ingress.hpp",
+      "reference": "provenance/rf21_fix02/include/redfield/tcp_ingress.hpp",
+      "parent_sha256": "760c7ae9356b9601ea80b6caed89cb4d6a2cb525093dfd6caf7e146ba0a1f00f",
+      "mechanical_sha256": "760c7ae9356b9601ea80b6caed89cb4d6a2cb525093dfd6caf7e146ba0a1f00f",
+      "final_sha256": "760c7ae9356b9601ea80b6caed89cb4d6a2cb525093dfd6caf7e146ba0a1f00f",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/router/route_inventory.hpp",
+      "destination": "include/redfield/router/route_inventory.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/router/route_inventory.hpp",
+      "parent_sha256": "19b0051a014b920b21862786f394c3d2a3ec86da5e913451035b5e28a9b3cb9c",
+      "mechanical_sha256": "0e490adb084c9b4fdf5ff1f664cf4834a97a0cdec0cb70f26f9b3ce6298691eb",
+      "final_sha256": "1229938a8a079afef4430d922bb75a38183cf7843243d5bcc73e744dd47d22b4",
+      "mechanical_only": false
+    },
+    {
+      "original": "include/preloader_l/router/route_lookup.hpp",
+      "destination": "include/redfield/router/route_lookup.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/router/route_lookup.hpp",
+      "parent_sha256": "fbb64f7b6ae7116e18b154f8fea1fb0f19f80f247b168d6e10cfe1a12f45b5d8",
+      "mechanical_sha256": "e829f837f35e5d599093eb5d18b03f6464738c0fefc7204516f4c41c66bbafd1",
+      "final_sha256": "e829f837f35e5d599093eb5d18b03f6464738c0fefc7204516f4c41c66bbafd1",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/runtime/utc_time.hpp",
+      "destination": "include/redfield/runtime/utc_time.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/runtime/utc_time.hpp",
+      "parent_sha256": "fa8de606f56a775e95ab1aa210144f9c4821c6e0271e604a58a6c93dffb1c22f",
+      "mechanical_sha256": "e6929e9f1ba9bed873577070519a16e86d8c571f702d3459e513af167a29b1f7",
+      "final_sha256": "e6929e9f1ba9bed873577070519a16e86d8c571f702d3459e513af167a29b1f7",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/runtime/trace_macros.hpp",
+      "destination": "include/redfield/runtime/trace_macros.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/runtime/trace_macros.hpp",
+      "parent_sha256": "235ab625b98965d5aba968ba32988ccfd291af15335a9501c72bac4945954c66",
+      "mechanical_sha256": "f0946436bc246da2be2ba8c4bbb3e046a6db2909edd1dd70f6714e0f6564ca50",
+      "final_sha256": "f0946436bc246da2be2ba8c4bbb3e046a6db2909edd1dd70f6714e0f6564ca50",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/runtime/service_state.hpp",
+      "destination": "include/redfield/runtime/record_views.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/runtime/service_state.hpp",
+      "parent_sha256": "bfd408bb5636677724ba2df7ac8d3e553248981958c9aec0b69169a45b46e2aa",
+      "mechanical_sha256": "47350e19c603c08721ba0738fc240231e8d2f3948f01405e4ae06e34682c0d6d",
+      "final_sha256": "cf29c025b02b981c7f525f2e0de16e6e7ee0218fbfec78a9856d9c5ef8e817ab",
+      "mechanical_only": false
+    },
+    {
+      "original": "include/preloader_l/runtime/memory_allocator.hpp",
+      "destination": "include/redfield/runtime/memory_allocator.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/runtime/memory_allocator.hpp",
+      "parent_sha256": "b58ff9e5b5f1241479432ed8dad2bbbd1a996f77c40cd01a46e5381fc46e84d2",
+      "mechanical_sha256": "236aa90e8b960cb2612e0053aae0b7dbc407a057cc73705dc71c8ed73b152e2b",
+      "final_sha256": "236aa90e8b960cb2612e0053aae0b7dbc407a057cc73705dc71c8ed73b152e2b",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/runtime/ptd_runtime.hpp",
+      "destination": "include/redfield/runtime/ptd_runtime.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/runtime/ptd_runtime.hpp",
+      "parent_sha256": "fd6108b6680ee80736930f01c128645a7a02f35c51ba43662e7654b7620f41f3",
+      "mechanical_sha256": "66ccdbf5b38fe0026b0273e380928f9111a145763a5beeb80cd5e7637c38c132",
+      "final_sha256": "66ccdbf5b38fe0026b0273e380928f9111a145763a5beeb80cd5e7637c38c132",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/xml/attribute_parser.hpp",
+      "destination": "include/redfield/xml/attribute_parser.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/xml/attribute_parser.hpp",
+      "parent_sha256": "4527c41886c0f613e80731b19196e966e1bc6b9faae4c82dd9b83155f0b82b40",
+      "mechanical_sha256": "c57520de761764d21f706658f89a3beb9dc92367f09ebe4d3fbe80357623eed3",
+      "final_sha256": "c57520de761764d21f706658f89a3beb9dc92367f09ebe4d3fbe80357623eed3",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/xml/request_parser.hpp",
+      "destination": "include/redfield/xml/request_parser.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/xml/request_parser.hpp",
+      "parent_sha256": "54c50efe8441ad14cdd78f34802856630110536f47626954fffd5b4da475a737",
+      "mechanical_sha256": "b831476bac2b2ed9450a14d1be90072b6f9fbfb731708457cb781deed0085b14",
+      "final_sha256": "b831476bac2b2ed9450a14d1be90072b6f9fbfb731708457cb781deed0085b14",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/xml/lsx_framing.hpp",
+      "destination": "include/redfield/xml/lsx_framing.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/xml/lsx_framing.hpp",
+      "parent_sha256": "2fcbd72378306fc53a4ea29448a37b9e86616b5be8fd97085e4fe740126deaec",
+      "mechanical_sha256": "2b3142d25c2d2a9c07c889f0db14a1e16b8192ec4f17af7e85a4931b1d5f329d",
+      "final_sha256": "2b3142d25c2d2a9c07c889f0db14a1e16b8192ec4f17af7e85a4931b1d5f329d",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/xml/response_builder.hpp",
+      "destination": "include/redfield/xml/response_builder.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/xml/response_builder.hpp",
+      "parent_sha256": "274b30ebfcba6f32aff91400b5203b4d6e134a155f0fecfcd5511c3a6cdabbb5",
+      "mechanical_sha256": "6c6ef143fcf746ce4cfc5fc9aa5373f4bf8c654fd2144b645fab0c3223036f69",
+      "final_sha256": "6c6ef143fcf746ce4cfc5fc9aa5373f4bf8c654fd2144b645fab0c3223036f69",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/xml/value_codec.hpp",
+      "destination": "include/redfield/xml/value_codec.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/xml/value_codec.hpp",
+      "parent_sha256": "af270322de4c485fc94b0f7a68c7be31d766e3262017076934a38389c79af520",
+      "mechanical_sha256": "1ff38389ccc8d8fd7278ad22a02a2f2f15f96cc4e589060683667ccc3d3b85aa",
+      "final_sha256": "1ff38389ccc8d8fd7278ad22a02a2f2f15f96cc4e589060683667ccc3d3b85aa",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/protocol/origin_error.hpp",
+      "destination": "include/redfield/protocol/origin_error.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/protocol/origin_error.hpp",
+      "parent_sha256": "673baa3e74fe4fae6fa589b15a0734de62e9c15ab6cdd3af9ff8cec87ebf5833",
+      "mechanical_sha256": "5dd9c1484716f6dedab196434b3b6eaa18afa6f213967b60a10c38928098458f",
+      "final_sha256": "5dd9c1484716f6dedab196434b3b6eaa18afa6f213967b60a10c38928098458f",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/codec/hex_codec.hpp",
+      "destination": "include/redfield/codec/hex_codec.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/codec/hex_codec.hpp",
+      "parent_sha256": "e925647c40fd380bd59f25b4219d732122c8e41207d7112fbac76179f47ef6a5",
+      "mechanical_sha256": "4b0890d8eec65ba383fe2fe9b50f759aa97f3dd51d39317174fa8e3e40d785e1",
+      "final_sha256": "4b0890d8eec65ba383fe2fe9b50f759aa97f3dd51d39317174fa8e3e40d785e1",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/config/runtime_configuration.hpp",
+      "destination": null,
+      "reference": "provenance/rf21_fix02/include/preloader_l/config/runtime_configuration.hpp",
+      "parent_sha256": "f1dda4536c05ecca187a831af0fb6d9929ecaabf1224d95e7b0ed390931693e7",
+      "mechanical_sha256": "88acfcfc1895c62470a67ab1a955b7939471dc7a4e6b183d0f96fad55b300fb1",
+      "disposition": "REMOVED_UNUSED_GLOBAL_RUNTIME_API"
+    },
+    {
+      "original": "include/preloader_l/config/settings_provider.hpp",
+      "destination": "include/redfield/config/settings_provider.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/config/settings_provider.hpp",
+      "parent_sha256": "1e85abe8b211c36c612e8779eb8a4b44200c8e09d9df666206237ab514633ad7",
+      "mechanical_sha256": "b2cbd87e4a177201f000a6f45fdd0f604d15ad6908de23475d28a66de4befa44",
+      "final_sha256": "b2cbd87e4a177201f000a6f45fdd0f604d15ad6908de23475d28a66de4befa44",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/config/settings_values.hpp",
+      "destination": "include/redfield/config/settings_values.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/config/settings_values.hpp",
+      "parent_sha256": "eef9c25ffe51acb22e12014f42e364d8aabbb3c9efe3564310734afa7bbcb033",
+      "mechanical_sha256": "09a71d7e2ffb2fd74ab6b3183e8696075a863b35dfb70279e48aa3f27626bb3d",
+      "final_sha256": "09a71d7e2ffb2fd74ab6b3183e8696075a863b35dfb70279e48aa3f27626bb3d",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/hash/fnv_hash.hpp",
+      "destination": "include/redfield/hash/fnv_hash.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/hash/fnv_hash.hpp",
+      "parent_sha256": "1f9ad12313ab79868ec74754d808369817af0a64d0b6d1eaed121ae70869d7b8",
+      "mechanical_sha256": "4c77d2ff2b63d5c67791944fcd17c5a5612d219d4eaf4e39906d8bc20e47cce8",
+      "final_sha256": "4c77d2ff2b63d5c67791944fcd17c5a5612d219d4eaf4e39906d8bc20e47cce8",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/settings_snapshot_route.hpp",
+      "destination": "include/redfield/handlers/settings_snapshot_route.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/settings_snapshot_route.hpp",
+      "parent_sha256": "7ccee514a3e81d0a05ed1014d7de361f5bca1d53b19be6f3c8f46c0909fba7cf",
+      "mechanical_sha256": "e040a5caaac0aa23cb8b285b10c270d37c55bf72ae9a0c5f8096c7269ec902fb",
+      "final_sha256": "e040a5caaac0aa23cb8b285b10c270d37c55bf72ae9a0c5f8096c7269ec902fb",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/group_info_route.hpp",
+      "destination": "include/redfield/handlers/group_info_route.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/group_info_route.hpp",
+      "parent_sha256": "ea233f206b49ba34bbfe691874ab143de74dfe13632ac9a7075fcae611f88a8b",
+      "mechanical_sha256": "5f29a49a4bbc00266879a884b159d3fdabdc046c05683db79639b765bfb1998d",
+      "final_sha256": "5f29a49a4bbc00266879a884b159d3fdabdc046c05683db79639b765bfb1998d",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/setting_value_route.hpp",
+      "destination": "include/redfield/handlers/setting_value_route.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/setting_value_route.hpp",
+      "parent_sha256": "b4d5817ec7c30f96f876c431d140e1af8fac4897a44fe3b0595ada7791931769",
+      "mechanical_sha256": "75a09fb821ad1ddcb4fda29e945475d394d72c2a27b1ec7926625d4fa1b5a18d",
+      "final_sha256": "75a09fb821ad1ddcb4fda29e945475d394d72c2a27b1ec7926625d4fa1b5a18d",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/handler_status.hpp",
+      "destination": "include/redfield/handlers/handler_status.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/handler_status.hpp",
+      "parent_sha256": "ffcb13d55a52766064b1213ea43e382c8d9fd7f1aacf9dc0ee938ea041c0eb71",
+      "mechanical_sha256": "2db61c3d37e9faeff59555eee21ad9c77ad228ba6ba44cf55d99cccd35fd685f",
+      "final_sha256": "2db61c3d37e9faeff59555eee21ad9c77ad228ba6ba44cf55d99cccd35fd685f",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/integration_routes.hpp",
+      "destination": "include/redfield/handlers/integration_routes.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/integration_routes.hpp",
+      "parent_sha256": "7a276b569cc9f9b31c85f2adb28875bf2e87bb15e766f76020cab64a6810a14e",
+      "mechanical_sha256": "39e2092c34931d56ed9364641ebe41d9153e8d1d4635042a789ec83984b5e066",
+      "final_sha256": "6ffe3eae3ce295fabf60ce7b842c7a770192375174f1239c17cf4bd24c8eea8d",
+      "mechanical_only": false
+    },
+    {
+      "original": "include/preloader_l/handlers/progressive_installation_route.hpp",
+      "destination": "include/redfield/handlers/progressive_installation_route.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/progressive_installation_route.hpp",
+      "parent_sha256": "fb304113865207d1f9567fd508bb8e4e3e828fe037846e264fe627240615bf88",
+      "mechanical_sha256": "ecacbd907bc345ba86127d27ff024552c44a903a6dee8a5dae9621b45482d3f2",
+      "final_sha256": "ecacbd907bc345ba86127d27ff024552c44a903a6dee8a5dae9621b45482d3f2",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/settings_query.hpp",
+      "destination": "include/redfield/handlers/settings_query.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/settings_query.hpp",
+      "parent_sha256": "3ad5fda447c7b3d5bd055768ea04ce3b058770995d65aafb4c7d9d38b98aec26",
+      "mechanical_sha256": "332c31ef1ea4ed2fdf5819af6aff0499c1edd3aa4d18ae48189fff63c62e4ff0",
+      "final_sha256": "332c31ef1ea4ed2fdf5819af6aff0499c1edd3aa4d18ae48189fff63c62e4ff0",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/selector_pipeline.hpp",
+      "destination": "include/redfield/handlers/selector_pipeline.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/selector_pipeline.hpp",
+      "parent_sha256": "f604cfe7fed3a703d90a14501f1726f53fb3d3d88f715f41ad14de38187acde7",
+      "mechanical_sha256": "881963c7f27868ffdf38e8fd912b68280ba5a40325594172da1d4b2633ff6064",
+      "final_sha256": "881963c7f27868ffdf38e8fd912b68280ba5a40325594172da1d4b2633ff6064",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/config_route.hpp",
+      "destination": "include/redfield/handlers/config_route.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/config_route.hpp",
+      "parent_sha256": "f21c9e336d88dddc7418c9698f7ce2aa843ff5c7c4e0e9fd360e7087f47bd1f3",
+      "mechanical_sha256": "dc2f6586ba5936add8bd2aef2fff3b1e924e2430d54afc3f34d5a9f1c795bb83",
+      "final_sha256": "dc2f6586ba5936add8bd2aef2fff3b1e924e2430d54afc3f34d5a9f1c795bb83",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/utc_time_route.hpp",
+      "destination": "include/redfield/handlers/utc_time_route.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/utc_time_route.hpp",
+      "parent_sha256": "a1337e8c0cd26b8c4c194ff3f7dd7168d099b8fb8708fb51a89cdec7f3a03ac8",
+      "mechanical_sha256": "5b4da3e13325d5dca40d656c64a14024ad09e2c830ad0795bf4ad7e7b8eb8d1f",
+      "final_sha256": "5b4da3e13325d5dca40d656c64a14024ad09e2c830ad0795bf4ad7e7b8eb8d1f",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/connection_state_route.hpp",
+      "destination": "include/redfield/handlers/connection_state_route.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/connection_state_route.hpp",
+      "parent_sha256": "f8737e4f2cb3b7d9c7101f306d5ba0f2c5297cebba637f5852f3bf8ed0089931",
+      "mechanical_sha256": "09a5e94b459cf377f25fcd276e23b9c55d0088b27ad1e73732d1db909ed4069b",
+      "final_sha256": "09a5e94b459cf377f25fcd276e23b9c55d0088b27ad1e73732d1db909ed4069b",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/handlers/friends_route.hpp",
+      "destination": "include/redfield/handlers/friends_route.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/handlers/friends_route.hpp",
+      "parent_sha256": "7b2777470fdb5f212a1960929b8efd8a4e64517d9eff2a89b47fb663b5a77798",
+      "mechanical_sha256": "5ad2b9a3c42ca51a82d149edf925eb1f4ed4330fd5d5e821d6a52dca66d880b0",
+      "final_sha256": "5ad2b9a3c42ca51a82d149edf925eb1f4ed4330fd5d5e821d6a52dca66d880b0",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/platform/crypt_wrapper.hpp",
+      "destination": "include/redfield/platform/crypt_wrapper.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/platform/crypt_wrapper.hpp",
+      "parent_sha256": "e53e1e16163be011ada7956df08e908bc16321aa1fc8af01d65e2cfbfc27c8b3",
+      "mechanical_sha256": "f11ba4c5399c4067c6a8ce8ce2944af2a1a5fcb3d3854782d236aca3f07aac0b",
+      "final_sha256": "f11ba4c5399c4067c6a8ce8ce2944af2a1a5fcb3d3854782d236aca3f07aac0b",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/platform/minhook_runtime.hpp",
+      "destination": "include/redfield/platform/minhook_runtime.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/platform/minhook_runtime.hpp",
+      "parent_sha256": "a5ca8c4a29b73c96204ea00a6ba7864222cc441a955328f5224835809637215d",
+      "mechanical_sha256": "96133d55b68a739970a0c5a65891762a7a23eacd435d3c961163f93e71ddbcd9",
+      "final_sha256": "96133d55b68a739970a0c5a65891762a7a23eacd435d3c961163f93e71ddbcd9",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/platform/registry_bridge.hpp",
+      "destination": "include/redfield/platform/registry_bridge.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/platform/registry_bridge.hpp",
+      "parent_sha256": "830ea03a5cee1087b601b52dccaca663742ac49ad7569a431484747ce44726e3",
+      "mechanical_sha256": "49772a1a836d370f8c6b7dd72c26a8c96d0ea082c606be88cbd52d04dfd9d751",
+      "final_sha256": "49772a1a836d370f8c6b7dd72c26a8c96d0ea082c606be88cbd52d04dfd9d751",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/platform/registry_hook_runtime.hpp",
+      "destination": "include/redfield/platform/registry_hook_runtime.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/platform/registry_hook_runtime.hpp",
+      "parent_sha256": "7023098298e7e3d4752119f57ad710da0f30fe109a7f4efc8f5a5e2b40893d9f",
+      "mechanical_sha256": "696ac50f8f6006e36b00c236f0100f8a21a0ba77e57f5470778c45c003e03c91",
+      "final_sha256": "696ac50f8f6006e36b00c236f0100f8a21a0ba77e57f5470778c45c003e03c91",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/platform/connect_redirect.hpp",
+      "destination": "include/redfield/platform/connect_redirect.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/platform/connect_redirect.hpp",
+      "parent_sha256": "704ac4581fa02e14d13bbfebb50b5342ea14d26a095d8e229a147167200eadfe",
+      "mechanical_sha256": "2ac9996b316acdc912362cf39f201c28c0196a5a498aa184cdd04e5a2e3f0171",
+      "final_sha256": "2ac9996b316acdc912362cf39f201c28c0196a5a498aa184cdd04e5a2e3f0171",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/platform/registry_policy.hpp",
+      "destination": "include/redfield/platform/registry_policy.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/platform/registry_policy.hpp",
+      "parent_sha256": "3e4e90ae9b4bf410e1d90df8da9e2abfec94012f14e5fc73ea761a9cfb9aab95",
+      "mechanical_sha256": "d8b2fab2393d3e56603a2dac3098bcd913054eabf9f178da128021b4153ccd91",
+      "final_sha256": "d8b2fab2393d3e56603a2dac3098bcd913054eabf9f178da128021b4153ccd91",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/platform/crypt_observer.hpp",
+      "destination": "include/redfield/platform/crypt_observer.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/platform/crypt_observer.hpp",
+      "parent_sha256": "a85365218510f33c891adfc50bbe2bce9891850a8b6a2051d5218172205b2f6d",
+      "mechanical_sha256": "f129126d8abc2e743c84a4c60d6f287235d2955e7bdb21230e6770f4a6668a28",
+      "final_sha256": "f129126d8abc2e743c84a4c60d6f287235d2955e7bdb21230e6770f4a6668a28",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/core/byte_semantics.hpp",
+      "destination": "include/redfield/core/byte_semantics.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/core/byte_semantics.hpp",
+      "parent_sha256": "4799c63b49299d95826eaef3d08671e2fdb1aae3e5e25e9ee773e0e556584699",
+      "mechanical_sha256": "8e0ac750f0b2a81088f7e9bde4025a80e370baab90ec36933e763882a9cf1dd2",
+      "final_sha256": "8e0ac750f0b2a81088f7e9bde4025a80e370baab90ec36933e763882a9cf1dd2",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/core/checked_math.hpp",
+      "destination": "include/redfield/core/checked_math.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/core/checked_math.hpp",
+      "parent_sha256": "1ceb0ba01ca365c109f0683b272bd008c0f65ed76e366c2601f8f7e255b49ecb",
+      "mechanical_sha256": "d7a2939d35adf0e498731d86ae4bf4d9b83e519775421e8e323f813e47c6eab5",
+      "final_sha256": "d7a2939d35adf0e498731d86ae4bf4d9b83e519775421e8e323f813e47c6eab5",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/net/receive_buffer.hpp",
+      "destination": "include/redfield/net/receive_buffer.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/net/receive_buffer.hpp",
+      "parent_sha256": "52060aa56b2cad2add251db86c81ebef30bc51121d9bfc51afec3d361be07e28",
+      "mechanical_sha256": "3161ebeb7ecb4cb7cb43b9953874169b261f56883d7d9d4774b5c07865a1da2f",
+      "final_sha256": "3161ebeb7ecb4cb7cb43b9953874169b261f56883d7d9d4774b5c07865a1da2f",
+      "mechanical_only": true
+    },
+    {
+      "original": "include/preloader_l/net/frame_ingress.hpp",
+      "destination": "include/redfield/net/frame_ingress.hpp",
+      "reference": "provenance/rf21_fix02/include/preloader_l/net/frame_ingress.hpp",
+      "parent_sha256": "c6341437569ec3f4e8f2ca11fee1f40d7f2384aa8beed6ee99d85e6d4265366a",
+      "mechanical_sha256": "30ab96a3a4be0826ef19b786ed5dc3e67a9e6d26e64a82fb3b8fcfbfd8f3dc12",
+      "final_sha256": "30ab96a3a4be0826ef19b786ed5dc3e67a9e6d26e64a82fb3b8fcfbfd8f3dc12",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_store_replies.cpp",
+      "destination": "tests/test_store_replies.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_store_replies.cpp",
+      "parent_sha256": "575db31c8032095bbbdc273f948a4c31d83167ac28e2ac12e97bd7c071e4939b",
+      "mechanical_sha256": "575db31c8032095bbbdc273f948a4c31d83167ac28e2ac12e97bd7c071e4939b",
+      "final_sha256": "d65cd63483fc3340f5c06b8403dd18aef9f62b8a80db51cb5f659f36382c516f",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/test_tcp_stateless.cpp",
+      "destination": "tests/test_tcp_stateless.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_stateless.cpp",
+      "parent_sha256": "0db479f6aa122bf183fe836e0f96ccec851a0b36b0cbba7406f5e2a4c789c68f",
+      "mechanical_sha256": "0db479f6aa122bf183fe836e0f96ccec851a0b36b0cbba7406f5e2a4c789c68f",
+      "final_sha256": "0db479f6aa122bf183fe836e0f96ccec851a0b36b0cbba7406f5e2a4c789c68f",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/utc_test_support.hpp",
+      "destination": "tests/utc_test_support.hpp",
+      "reference": "provenance/rf21_fix02/tests/utc_test_support.hpp",
+      "parent_sha256": "9c6349f26f22e6802874ee6da058f2fea27ad5d40d5bcf8a4f7aba87f8ac4d69",
+      "mechanical_sha256": "9c6349f26f22e6802874ee6da058f2fea27ad5d40d5bcf8a4f7aba87f8ac4d69",
+      "final_sha256": "9c6349f26f22e6802874ee6da058f2fea27ad5d40d5bcf8a4f7aba87f8ac4d69",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_achievement_session_lifetime.cpp",
+      "destination": "tests/test_achievement_session_lifetime.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_achievement_session_lifetime.cpp",
+      "parent_sha256": "4f72670749a38f55bac265f64438d11e7d0aff02d65079f9f30915fc7fff537f",
+      "mechanical_sha256": "4f72670749a38f55bac265f64438d11e7d0aff02d65079f9f30915fc7fff537f",
+      "final_sha256": "4f72670749a38f55bac265f64438d11e7d0aff02d65079f9f30915fc7fff537f",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_pending_session_cleanup.cpp",
+      "destination": "tests/test_pending_session_cleanup.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_pending_session_cleanup.cpp",
+      "parent_sha256": "d98f1517058da101c672087c1be7a9f9318392910608e7c5be1ded7b6dc2e4e7",
+      "mechanical_sha256": "d98f1517058da101c672087c1be7a9f9318392910608e7c5be1ded7b6dc2e4e7",
+      "final_sha256": "d98f1517058da101c672087c1be7a9f9318392910608e7c5be1ded7b6dc2e4e7",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_achievement_response.cpp",
+      "destination": "tests/test_achievement_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_achievement_response.cpp",
+      "parent_sha256": "d2f36033032ce9295016fcf96378776be7a880fa39b8c7e5850fa6cf18e775db",
+      "mechanical_sha256": "d2f36033032ce9295016fcf96378776be7a880fa39b8c7e5850fa6cf18e775db",
+      "final_sha256": "115dcb1ac6fd5caa6498e75b88c5fe3c375676fdc78a7c9483cb5297b0f9de85",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/test_chunks_response.cpp",
+      "destination": "tests/test_chunks_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_chunks_response.cpp",
+      "parent_sha256": "304734bbec8d0f103d7b062fa71fe69ece6da746c717ede61233e280c05133e0",
+      "mechanical_sha256": "1dd5263fb8cf414cea96c685638eb91f30e1c6ee397442b466f3adcbbc78cc7f",
+      "final_sha256": "1dd5263fb8cf414cea96c685638eb91f30e1c6ee397442b466f3adcbbc78cc7f",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_entitlements.cpp",
+      "destination": "tests/test_tcp_entitlements.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_entitlements.cpp",
+      "parent_sha256": "909d1f61be12adffcdcabbc09144e9336914a47f6b0054a7653efe229bb52071",
+      "mechanical_sha256": "909d1f61be12adffcdcabbc09144e9336914a47f6b0054a7653efe229bb52071",
+      "final_sha256": "909d1f61be12adffcdcabbc09144e9336914a47f6b0054a7653efe229bb52071",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_image_response.cpp",
+      "destination": "tests/test_image_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_image_response.cpp",
+      "parent_sha256": "a2dde0d1870aa5129ad051b9a3f217313dea07c404c348304a4a200ad5be39b3",
+      "mechanical_sha256": "a2dde0d1870aa5129ad051b9a3f217313dea07c404c348304a4a200ad5be39b3",
+      "final_sha256": "a2dde0d1870aa5129ad051b9a3f217313dea07c404c348304a4a200ad5be39b3",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_grant.cpp",
+      "destination": "tests/test_tcp_grant.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_grant.cpp",
+      "parent_sha256": "820127e85ed4737538c22ab96a920b55b2307dece0038aa352c09895c43bbbe2",
+      "mechanical_sha256": "820127e85ed4737538c22ab96a920b55b2307dece0038aa352c09895c43bbbe2",
+      "final_sha256": "820127e85ed4737538c22ab96a920b55b2307dece0038aa352c09895c43bbbe2",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_settings.cpp",
+      "destination": "tests/test_tcp_settings.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_settings.cpp",
+      "parent_sha256": "387879f6587bc02dcf9dcfa187ae14bb8b70b59d3330a7aa2ecdff381f6651f0",
+      "mechanical_sha256": "387879f6587bc02dcf9dcfa187ae14bb8b70b59d3330a7aa2ecdff381f6651f0",
+      "final_sha256": "387879f6587bc02dcf9dcfa187ae14bb8b70b59d3330a7aa2ecdff381f6651f0",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_entitlement_response.cpp",
+      "destination": "tests/test_entitlement_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_entitlement_response.cpp",
+      "parent_sha256": "2258b0469dd68c656864e0c21623cc980a18301cd87e18d6087fccef6a8f7baa",
+      "mechanical_sha256": "2258b0469dd68c656864e0c21623cc980a18301cd87e18d6087fccef6a8f7baa",
+      "final_sha256": "063d1757fdd8fcbe5e57e2c35546ed39f195032bff7a614928d6ffe1b0bf4c21",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/test_ingress.cpp",
+      "destination": "tests/test_ingress.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_ingress.cpp",
+      "parent_sha256": "34830e9799fcb241a756365593db1d0d220766aba7ca6ed2b83b46764f1848c9",
+      "mechanical_sha256": "e711d57febc7192f59299bccd20b2422669e1a591fd84bd0e8e11f598eb30f91",
+      "final_sha256": "e711d57febc7192f59299bccd20b2422669e1a591fd84bd0e8e11f598eb30f91",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_settings_response.cpp",
+      "destination": "tests/test_settings_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_settings_response.cpp",
+      "parent_sha256": "0c2da9db0166c6f59cd2aa413a49dbc7d0fd4a807ff6b48ed3d2d823f16f4332",
+      "mechanical_sha256": "0c2da9db0166c6f59cd2aa413a49dbc7d0fd4a807ff6b48ed3d2d823f16f4332",
+      "final_sha256": "0c2da9db0166c6f59cd2aa413a49dbc7d0fd4a807ff6b48ed3d2d823f16f4332",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_auth_code.cpp",
+      "destination": "tests/test_tcp_auth_code.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_auth_code.cpp",
+      "parent_sha256": "a55ec9878b605c8cfc2f2ea1e1c31f630f6f072a2d5cb772323edeb031ca6928",
+      "mechanical_sha256": "a55ec9878b605c8cfc2f2ea1e1c31f630f6f072a2d5cb772323edeb031ca6928",
+      "final_sha256": "a55ec9878b605c8cfc2f2ea1e1c31f630f6f072a2d5cb772323edeb031ca6928",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_query_presence_response.cpp",
+      "destination": "tests/test_query_presence_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_query_presence_response.cpp",
+      "parent_sha256": "e1f7564795dbbce167d78b4b6b834afbdc3bfa919db97bcdbbfd240764f7aae3",
+      "mechanical_sha256": "e1f7564795dbbce167d78b4b6b834afbdc3bfa919db97bcdbbfd240764f7aae3",
+      "final_sha256": "e1f7564795dbbce167d78b4b6b834afbdc3bfa919db97bcdbbfd240764f7aae3",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_achievements.cpp",
+      "destination": "tests/test_tcp_achievements.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_achievements.cpp",
+      "parent_sha256": "0683b546b9e1a6bef4fcafcdfa43aafddffd08a3747ded8b690a4ed87bc602e8",
+      "mechanical_sha256": "0683b546b9e1a6bef4fcafcdfa43aafddffd08a3747ded8b690a4ed87bc602e8",
+      "final_sha256": "0683b546b9e1a6bef4fcafcdfa43aafddffd08a3747ded8b690a4ed87bc602e8",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_game_info_response.cpp",
+      "destination": "tests/test_game_info_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_game_info_response.cpp",
+      "parent_sha256": "78b3a0c46c7f42b42c07073a5688752bc8efc3729acd62bfb1bf99529edf95a1",
+      "mechanical_sha256": "78b3a0c46c7f42b42c07073a5688752bc8efc3729acd62bfb1bf99529edf95a1",
+      "final_sha256": "78b3a0c46c7f42b42c07073a5688752bc8efc3729acd62bfb1bf99529edf95a1",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_achievement_delivery_lifetime.cpp",
+      "destination": "tests/test_achievement_delivery_lifetime.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_achievement_delivery_lifetime.cpp",
+      "parent_sha256": "17ab086b1065355367fbe804d29bc0b8a0f82d9461edd24c2a59a8a4d2064b1b",
+      "mechanical_sha256": "17ab086b1065355367fbe804d29bc0b8a0f82d9461edd24c2a59a8a4d2064b1b",
+      "final_sha256": "17ab086b1065355367fbe804d29bc0b8a0f82d9461edd24c2a59a8a4d2064b1b",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_query_presence.cpp",
+      "destination": "tests/test_tcp_query_presence.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_query_presence.cpp",
+      "parent_sha256": "d4188a461bf93e59df29bae79caf84626f45b50672edc94fdd146dae66c39d96",
+      "mechanical_sha256": "d4188a461bf93e59df29bae79caf84626f45b50672edc94fdd146dae66c39d96",
+      "final_sha256": "d4188a461bf93e59df29bae79caf84626f45b50672edc94fdd146dae66c39d96",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_ingress.cpp",
+      "destination": "tests/test_tcp_ingress.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_ingress.cpp",
+      "parent_sha256": "615c10c2496bbd9eba41df776d2106b31e385fc8f704a49e2d6c39c4c629da6c",
+      "mechanical_sha256": "867d5939702b0c0e0259cf99a13c34545e66c9541ca7b1fda9480a15e7e1617c",
+      "final_sha256": "867d5939702b0c0e0259cf99a13c34545e66c9541ca7b1fda9480a15e7e1617c",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_entity_contract.cpp",
+      "destination": "tests/test_entity_contract.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_entity_contract.cpp",
+      "parent_sha256": "a30eaf77266d19fb5b8ee834974d025fb22463ef02d7223fe1727ba13cc1ba49",
+      "mechanical_sha256": "10d294a08ddd70b234033db4886a2170914b78b22bacb13bf1d61d1fbf83c868",
+      "final_sha256": "10d294a08ddd70b234033db4886a2170914b78b22bacb13bf1d61d1fbf83c868",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_entitlement_projection.cpp",
+      "destination": "tests/test_entitlement_projection.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_entitlement_projection.cpp",
+      "parent_sha256": "3896fdaf1f33f09286ae15a77e3421e49121096ed8efe2cfb00160491ee762d4",
+      "mechanical_sha256": "3896fdaf1f33f09286ae15a77e3421e49121096ed8efe2cfb00160491ee762d4",
+      "final_sha256": "3896fdaf1f33f09286ae15a77e3421e49121096ed8efe2cfb00160491ee762d4",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_store_replies.cpp",
+      "destination": "tests/test_tcp_store_replies.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_store_replies.cpp",
+      "parent_sha256": "1b582735d92ff64150bd3d50f457f231a26b0eddf3cc8baca6a524c9c9553c6d",
+      "mechanical_sha256": "1b582735d92ff64150bd3d50f457f231a26b0eddf3cc8baca6a524c9c9553c6d",
+      "final_sha256": "1b582735d92ff64150bd3d50f457f231a26b0eddf3cc8baca6a524c9c9553c6d",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_semantic_allocator.cpp",
+      "destination": "tests/test_semantic_allocator.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_semantic_allocator.cpp",
+      "parent_sha256": "53926498036317a6c127c26e87c29e27f2cdc02099f0aa0fa879798fde71181a",
+      "mechanical_sha256": "82171ca72e456b3e2bb129a0f12d438f2034fa1f72cd69be1cdaa57288be2f6d",
+      "final_sha256": "2d2f110c8d3c6e697f5a2847a6222191c062eae5e644f0244c3d5a681d0f1f74",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/test_tcp_game_info.cpp",
+      "destination": "tests/test_tcp_game_info.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_game_info.cpp",
+      "parent_sha256": "839453b8b16d32f7325750a72145fc46abe1cae4c8b23f2a6528c63a33ebf5e1",
+      "mechanical_sha256": "839453b8b16d32f7325750a72145fc46abe1cae4c8b23f2a6528c63a33ebf5e1",
+      "final_sha256": "839453b8b16d32f7325750a72145fc46abe1cae4c8b23f2a6528c63a33ebf5e1",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_xml.cpp",
+      "destination": "tests/test_xml.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_xml.cpp",
+      "parent_sha256": "96b2fb6ffaba057988cb04b5cc7ebc849e441df845d029974addf348d972fc54",
+      "mechanical_sha256": "0069f641f5e0dabc023bb77427bdd303fadb8b254c998d870e01405877da39cf",
+      "final_sha256": "0069f641f5e0dabc023bb77427bdd303fadb8b254c998d870e01405877da39cf",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_runtime.cpp",
+      "destination": "tests/test_runtime.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_runtime.cpp",
+      "parent_sha256": "7d9f5650dd42994b94b57b6cdbc5902fb374747a48e587e6410152b70b16d087",
+      "mechanical_sha256": "7d9f5650dd42994b94b57b6cdbc5902fb374747a48e587e6410152b70b16d087",
+      "final_sha256": "7d9f5650dd42994b94b57b6cdbc5902fb374747a48e587e6410152b70b16d087",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_auth_code_session.cpp",
+      "destination": "tests/test_auth_code_session.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_auth_code_session.cpp",
+      "parent_sha256": "77c21618c8e5fbdeff6d6d90724b2886a4a5469e41403eb3035b4dd14fd3f1ec",
+      "mechanical_sha256": "77c21618c8e5fbdeff6d6d90724b2886a4a5469e41403eb3035b4dd14fd3f1ec",
+      "final_sha256": "f45084d5cc332111328ccf4c94ec2688f0c42397e0fce7dc9b91260471e140f7",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/test_tcp_content.cpp",
+      "destination": "tests/test_tcp_content.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_content.cpp",
+      "parent_sha256": "3bf2b34892166d8536a805b7043b50cc7fc5031ee7cdaac14b45a0e8a1b81460",
+      "mechanical_sha256": "3bf2b34892166d8536a805b7043b50cc7fc5031ee7cdaac14b45a0e8a1b81460",
+      "final_sha256": "3bf2b34892166d8536a805b7043b50cc7fc5031ee7cdaac14b45a0e8a1b81460",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_permission.cpp",
+      "destination": "tests/test_tcp_permission.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_permission.cpp",
+      "parent_sha256": "032e97928d20b67128829ff3ab19cf842125bf7cce8c458188c83b90b982e4f9",
+      "mechanical_sha256": "032e97928d20b67128829ff3ab19cf842125bf7cce8c458188c83b90b982e4f9",
+      "final_sha256": "032e97928d20b67128829ff3ab19cf842125bf7cce8c458188c83b90b982e4f9",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_utc_response.cpp",
+      "destination": "tests/test_utc_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_utc_response.cpp",
+      "parent_sha256": "215145863f9efbf723254d55c13de2803caae4e12c6aceb5c39548b40740b360",
+      "mechanical_sha256": "e52b6c61bc6cc39c4582fa6d3ea56dd0569c4b27b9e84bf0692021af8b8a9f14",
+      "final_sha256": "e52b6c61bc6cc39c4582fa6d3ea56dd0569c4b27b9e84bf0692021af8b8a9f14",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_stateless_response.cpp",
+      "destination": "tests/test_stateless_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_stateless_response.cpp",
+      "parent_sha256": "43ce7e187eb9beac41e8b97777d6d970334f06b6684a25a82000ef4904b7dc01",
+      "mechanical_sha256": "43ce7e187eb9beac41e8b97777d6d970334f06b6684a25a82000ef4904b7dc01",
+      "final_sha256": "43ce7e187eb9beac41e8b97777d6d970334f06b6684a25a82000ef4904b7dc01",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_achievement_delivery_admission.cpp",
+      "destination": "tests/test_achievement_delivery_admission.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_achievement_delivery_admission.cpp",
+      "parent_sha256": "784caae54f120913229726879ae83f59f5056b2436275916c33dbab1db6dd7ff",
+      "mechanical_sha256": "784caae54f120913229726879ae83f59f5056b2436275916c33dbab1db6dd7ff",
+      "final_sha256": "784caae54f120913229726879ae83f59f5056b2436275916c33dbab1db6dd7ff",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_profile_time.cpp",
+      "destination": "tests/test_tcp_profile_time.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_profile_time.cpp",
+      "parent_sha256": "cd616625f0a847972bd122b9b0393fd7a07b232a531f7513c987a0290e56e0c8",
+      "mechanical_sha256": "cd616625f0a847972bd122b9b0393fd7a07b232a531f7513c987a0290e56e0c8",
+      "final_sha256": "cd616625f0a847972bd122b9b0393fd7a07b232a531f7513c987a0290e56e0c8",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_permission_response.cpp",
+      "destination": "tests/test_permission_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_permission_response.cpp",
+      "parent_sha256": "1851e681f9e3772b4e329cffe5ae2e73e73235b4ae59a0f03c6498e8b07bae38",
+      "mechanical_sha256": "1851e681f9e3772b4e329cffe5ae2e73e73235b4ae59a0f03c6498e8b07bae38",
+      "final_sha256": "1851e681f9e3772b4e329cffe5ae2e73e73235b4ae59a0f03c6498e8b07bae38",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_content_response.cpp",
+      "destination": "tests/test_content_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_content_response.cpp",
+      "parent_sha256": "2295af3d0548f3a901b0e643abb054d1ab9d4b45f3d24b0fc74a0c67f9aa7c62",
+      "mechanical_sha256": "2295af3d0548f3a901b0e643abb054d1ab9d4b45f3d24b0fc74a0c67f9aa7c62",
+      "final_sha256": "2295af3d0548f3a901b0e643abb054d1ab9d4b45f3d24b0fc74a0c67f9aa7c62",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_port_publication.cpp",
+      "destination": "tests/test_port_publication.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_port_publication.cpp",
+      "parent_sha256": "493294434e0f0d87480d28d588908bf3a7857f269bbc072f9381565e283968d0",
+      "mechanical_sha256": "493294434e0f0d87480d28d588908bf3a7857f269bbc072f9381565e283968d0",
+      "final_sha256": "493294434e0f0d87480d28d588908bf3a7857f269bbc072f9381565e283968d0",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_response.cpp",
+      "destination": "tests/test_tcp_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_response.cpp",
+      "parent_sha256": "019ddd6e5e406c4319c2edc6663de3b79f6c93d7a81c232690ad13764f81ef15",
+      "mechanical_sha256": "019ddd6e5e406c4319c2edc6663de3b79f6c93d7a81c232690ad13764f81ef15",
+      "final_sha256": "019ddd6e5e406c4319c2edc6663de3b79f6c93d7a81c232690ad13764f81ef15",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_response_dispatch.cpp",
+      "destination": "tests/test_response_dispatch.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_response_dispatch.cpp",
+      "parent_sha256": "b828a2278b86d27682c181b7cda9ef8ef3c2ff1bdee5445eccc71dc0555fbbcb",
+      "mechanical_sha256": "b828a2278b86d27682c181b7cda9ef8ef3c2ff1bdee5445eccc71dc0555fbbcb",
+      "final_sha256": "b828a2278b86d27682c181b7cda9ef8ef3c2ff1bdee5445eccc71dc0555fbbcb",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_control.cpp",
+      "destination": "tests/test_tcp_control.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_control.cpp",
+      "parent_sha256": "22f852056e41b6267fa74285fe34239bd26d9d8851759696d17eac2522e48eee",
+      "mechanical_sha256": "22f852056e41b6267fa74285fe34239bd26d9d8851759696d17eac2522e48eee",
+      "final_sha256": "22f852056e41b6267fa74285fe34239bd26d9d8851759696d17eac2522e48eee",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_achievement_grant_policy.cpp",
+      "destination": "tests/test_achievement_grant_policy.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_achievement_grant_policy.cpp",
+      "parent_sha256": "1e62311b885b6840966f699f4cb7fed92dcb21818d1a0e7c3e41812faeed72f5",
+      "mechanical_sha256": "1e62311b885b6840966f699f4cb7fed92dcb21818d1a0e7c3e41812faeed72f5",
+      "final_sha256": "1e62311b885b6840966f699f4cb7fed92dcb21818d1a0e7c3e41812faeed72f5",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_service_session.cpp",
+      "destination": "tests/test_service_session.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_service_session.cpp",
+      "parent_sha256": "07d214b0b42e7997bc6309974b1bb8d4ed550ac254c45c6ab64a8724d4eba4ce",
+      "mechanical_sha256": "3da1851088a592cbac8870e451651b0c71d60263e065434b66012893fffe9cb5",
+      "final_sha256": "3da1851088a592cbac8870e451651b0c71d60263e065434b66012893fffe9cb5",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_worker_owner.cpp",
+      "destination": "tests/test_worker_owner.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_worker_owner.cpp",
+      "parent_sha256": "784aa8f526c9eaa73346714b252cadff4436ab75817fb8f3c0e6bbd00c86c818",
+      "mechanical_sha256": "784aa8f526c9eaa73346714b252cadff4436ab75817fb8f3c0e6bbd00c86c818",
+      "final_sha256": "784aa8f526c9eaa73346714b252cadff4436ab75817fb8f3c0e6bbd00c86c818",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_config.cpp",
+      "destination": "tests/test_config.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_config.cpp",
+      "parent_sha256": "914e5308ad567e4f5f6e847415bcf0de19cb18eb32828bed0e89db27f2940903",
+      "mechanical_sha256": "914e5308ad567e4f5f6e847415bcf0de19cb18eb32828bed0e89db27f2940903",
+      "final_sha256": "914e5308ad567e4f5f6e847415bcf0de19cb18eb32828bed0e89db27f2940903",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_achievement_delivery_wire.cpp",
+      "destination": "tests/test_achievement_delivery_wire.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_achievement_delivery_wire.cpp",
+      "parent_sha256": "2de92d8d81a98f23c34927dd79413e4feebe4ddbf928dbb91f89622443aae3c5",
+      "mechanical_sha256": "2de92d8d81a98f23c34927dd79413e4feebe4ddbf928dbb91f89622443aae3c5",
+      "final_sha256": "2fea1d167147061f99a1ce72a013337efc92e6017c2d27dc0f48260d8035ea51",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/test_tcp_grant_failure.cpp",
+      "destination": "tests/test_tcp_grant_failure.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_grant_failure.cpp",
+      "parent_sha256": "8cf3a6715b1227eec5c035b4c259eacaf222d49d4838d9460fbeed729b628ce3",
+      "mechanical_sha256": "d277a4714578806f84f7ca74e31b1e590188b6f0c4d202f248f4a95e56edd0fa",
+      "final_sha256": "d277a4714578806f84f7ca74e31b1e590188b6f0c4d202f248f4a95e56edd0fa",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_achievement_projection.cpp",
+      "destination": "tests/test_achievement_projection.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_achievement_projection.cpp",
+      "parent_sha256": "fa8dcfaff5836b0fad28f39dd148fd5473e4a38918a0bc213af63ee0a7b34b74",
+      "mechanical_sha256": "fa8dcfaff5836b0fad28f39dd148fd5473e4a38918a0bc213af63ee0a7b34b74",
+      "final_sha256": "fa8dcfaff5836b0fad28f39dd148fd5473e4a38918a0bc213af63ee0a7b34b74",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_image.cpp",
+      "destination": "tests/test_tcp_image.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_image.cpp",
+      "parent_sha256": "5c455f16fecdb5b7bf6df171600097157b04c5d9d3c488869f588a56afdbb878",
+      "mechanical_sha256": "5c455f16fecdb5b7bf6df171600097157b04c5d9d3c488869f588a56afdbb878",
+      "final_sha256": "5c455f16fecdb5b7bf6df171600097157b04c5d9d3c488869f588a56afdbb878",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_control_response.cpp",
+      "destination": "tests/test_control_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_control_response.cpp",
+      "parent_sha256": "3f2f0702a6b5ff119c7a6e6b0a4cc75b09a1c1dc364f965dcea06cc85e32e002",
+      "mechanical_sha256": "ffda4ef4b66d99841732f9acc6de7588bdc05e03041afd56207abf3855f80648",
+      "final_sha256": "ffda4ef4b66d99841732f9acc6de7588bdc05e03041afd56207abf3855f80648",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_content_projection.cpp",
+      "destination": "tests/test_content_projection.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_content_projection.cpp",
+      "parent_sha256": "92f654765268a7a3f90a459534ef67ac5f20728330d1901a24c0e9226a7245a6",
+      "mechanical_sha256": "92f654765268a7a3f90a459534ef67ac5f20728330d1901a24c0e9226a7245a6",
+      "final_sha256": "92f654765268a7a3f90a459534ef67ac5f20728330d1901a24c0e9226a7245a6",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_chunks.cpp",
+      "destination": "tests/test_tcp_chunks.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_chunks.cpp",
+      "parent_sha256": "b63b336eb2beff40fe429d2fca87e4918009df1cdbebc8b6c44f370d6c39b4ac",
+      "mechanical_sha256": "b63b336eb2beff40fe429d2fca87e4918009df1cdbebc8b6c44f370d6c39b4ac",
+      "final_sha256": "b63b336eb2beff40fe429d2fca87e4918009df1cdbebc8b6c44f370d6c39b4ac",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_hook_configuration.cpp",
+      "destination": "tests/test_hook_configuration.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_hook_configuration.cpp",
+      "parent_sha256": "c153b7c0db83b5b15b29de6c10307ed0e5d7dafe16ec7fb7a806d67b1447c884",
+      "mechanical_sha256": "c153b7c0db83b5b15b29de6c10307ed0e5d7dafe16ec7fb7a806d67b1447c884",
+      "final_sha256": "c153b7c0db83b5b15b29de6c10307ed0e5d7dafe16ec7fb7a806d67b1447c884",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_tcp_delivery.cpp",
+      "destination": "tests/test_tcp_delivery.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_tcp_delivery.cpp",
+      "parent_sha256": "f67781deb0d3e9a6f5cb7de769529f77401755a66f9e29d56a967be40b5bb0c1",
+      "mechanical_sha256": "f67781deb0d3e9a6f5cb7de769529f77401755a66f9e29d56a967be40b5bb0c1",
+      "final_sha256": "f67781deb0d3e9a6f5cb7de769529f77401755a66f9e29d56a967be40b5bb0c1",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_achievement_session.cpp",
+      "destination": "tests/test_achievement_session.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_achievement_session.cpp",
+      "parent_sha256": "9170198abf0a75e9e91d5e63d324747c97c03907d3d4c47a5be49124da346d9a",
+      "mechanical_sha256": "9170198abf0a75e9e91d5e63d324747c97c03907d3d4c47a5be49124da346d9a",
+      "final_sha256": "9170198abf0a75e9e91d5e63d324747c97c03907d3d4c47a5be49124da346d9a",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_profile_response.cpp",
+      "destination": "tests/test_profile_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_profile_response.cpp",
+      "parent_sha256": "141123f3cb440056dee0fe891232dc5108817b4d3813faf0fc442d2a45b6b154",
+      "mechanical_sha256": "141123f3cb440056dee0fe891232dc5108817b4d3813faf0fc442d2a45b6b154",
+      "final_sha256": "141123f3cb440056dee0fe891232dc5108817b4d3813faf0fc442d2a45b6b154",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/test_image_session.cpp",
+      "destination": "tests/test_image_session.cpp",
+      "reference": "provenance/rf21_fix02/tests/test_image_session.cpp",
+      "parent_sha256": "7c631fed2ff1c4090723644aa291d2a0a41a2ebf8cc9f4a20af33b235eef00a8",
+      "mechanical_sha256": "7c631fed2ff1c4090723644aa291d2a0a41a2ebf8cc9f4a20af33b235eef00a8",
+      "final_sha256": "7c631fed2ff1c4090723644aa291d2a0a41a2ebf8cc9f4a20af33b235eef00a8",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_ptd_intrusive_pending.cpp",
+      "destination": "tests/test_ptd_intrusive_pending.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_ptd_intrusive_pending.cpp",
+      "parent_sha256": "e826595332a5de91eee5a694f98b5de99b150304515650551e6ededcecbcc61e",
+      "mechanical_sha256": "f95e4ffde22154f6922168ffaad104bed7b52304a143e6ffe99fa0cf94c8fc4f",
+      "final_sha256": "f95e4ffde22154f6922168ffaad104bed7b52304a143e6ffe99fa0cf94c8fc4f",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_ptd_lifecycle.cpp",
+      "destination": "tests/test_ptd_lifecycle.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_ptd_lifecycle.cpp",
+      "parent_sha256": "1780fd73a670388ca1ec849422c392ee98f0d37908bc7d388a23b7eb7d741646",
+      "mechanical_sha256": "65423433cb1e44a8796f33b665a4dbe85eb6889159977f1325ea1a79515b23e9",
+      "final_sha256": "65423433cb1e44a8796f33b665a4dbe85eb6889159977f1325ea1a79515b23e9",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_connect_redirect.cpp",
+      "destination": "tests/test_connect_redirect.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_connect_redirect.cpp",
+      "parent_sha256": "424e627b709cfeb26b0ac629a301072511533d20157ab84ce64b3974797d0708",
+      "mechanical_sha256": "8d41624a5038a888e83031b3f6cb7a84bd7797c1190605f424b09979312da92f",
+      "final_sha256": "8d41624a5038a888e83031b3f6cb7a84bd7797c1190605f424b09979312da92f",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_hex.cpp",
+      "destination": "tests/test_hex.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_hex.cpp",
+      "parent_sha256": "f6b427c668eb8be165e827ced0e94bc66fd7cdcb286739d63464e77a70c31c91",
+      "mechanical_sha256": "7deece5617ce92c6fb418e29dd34a329ba4c1899b5ae5980a569462c85302ca3",
+      "final_sha256": "7deece5617ce92c6fb418e29dd34a329ba4c1899b5ae5980a569462c85302ca3",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_allocator_release_validation.cpp",
+      "destination": "tests/test_allocator_release_validation.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_allocator_release_validation.cpp",
+      "parent_sha256": "6e7f12c421a0a59513702682a9724776588b27345711b0eb3e5acd1b181a1d19",
+      "mechanical_sha256": "bbe328fe51c3a9e1809b725b392e0b417b5646a2927e0a6a5cec139b3a375289",
+      "final_sha256": "bbe328fe51c3a9e1809b725b392e0b417b5646a2927e0a6a5cec139b3a375289",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_transient_allocation_owner.cpp",
+      "destination": "tests/test_transient_allocation_owner.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_transient_allocation_owner.cpp",
+      "parent_sha256": "35727bb126060721185f7a0a530ae2558fd8f01b183b1c0c316589621a249019",
+      "mechanical_sha256": "8a93356af6e4eb44f357dc1e53d825d3af15260d7bb3a61e9f4fcee96e4f4d6e",
+      "final_sha256": "8a93356af6e4eb44f357dc1e53d825d3af15260d7bb3a61e9f4fcee96e4f4d6e",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/allocator_ptd_support.hpp",
+      "destination": "tests/allocator_ptd_support.hpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/allocator_ptd_support.hpp",
+      "parent_sha256": "a0c0037cfcdbfbcacd020138b0d9f5daac6eea961bded7670e9384b09c7af75f",
+      "mechanical_sha256": "85dbaeae13f850f1a3d61d18ff732f5a6511996f4dee7875eb05c9787c688184",
+      "final_sha256": "85dbaeae13f850f1a3d61d18ff732f5a6511996f4dee7875eb05c9787c688184",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_progressive_installation.cpp",
+      "destination": "tests/test_progressive_installation.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_progressive_installation.cpp",
+      "parent_sha256": "15c820d7d74d6ba44946493d7c44d55a3b33a7cf7f3be98f8339614cd655a000",
+      "mechanical_sha256": "1f16f35a6fad0b8681bf9402b76baf4d8361f7afb6229d727a72e8c6dc848078",
+      "final_sha256": "0aed8c69d643ff551f43022bf4baf69e57552e4d96aea6f7fa2cb49794cf2400",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/adopted/test_xml_owned_child_index.cpp",
+      "destination": "tests/test_xml_owned_child_index.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_xml_owned_child_index.cpp",
+      "parent_sha256": "74a255416a83e465958403e6ebb44002bd7ffb3c144035ab0ff4e4f9cac0541e",
+      "mechanical_sha256": "1cb47971fe6e32d87d1f619357e6ca3df93d1f4fd8989702b4866de1590141d8",
+      "final_sha256": "1cb47971fe6e32d87d1f619357e6ca3df93d1f4fd8989702b4866de1590141d8",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_settings_query.cpp",
+      "destination": "tests/test_settings_query.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_settings_query.cpp",
+      "parent_sha256": "68d2b95747b33b47f85e0fa50f148ed3bf9c9a7e6e558df3143e61059686992e",
+      "mechanical_sha256": "ffd9d369fc1b630b92080666b2f7df1d49c63f83642f7f6786496f69f520fba4",
+      "final_sha256": "30b974eb264cca79cb8e3d6f7eb797f9df02576e6ce9e7f0c6690178b5c6e1dc",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/adopted/test_allocator_large_alignment.cpp",
+      "destination": "tests/test_allocator_large_alignment.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_allocator_large_alignment.cpp",
+      "parent_sha256": "33c7698a448220a2e71195136d339855eee2e0e0612abaa4f284c0d843da5c62",
+      "mechanical_sha256": "c033d294136de3a04c223ea6c6524f969f2f61700a916d5d802ec2fe3871ee2f",
+      "final_sha256": "c033d294136de3a04c223ea6c6524f969f2f61700a916d5d802ec2fe3871ee2f",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_allocator_release_failure.cpp",
+      "destination": "tests/test_allocator_release_failure.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_allocator_release_failure.cpp",
+      "parent_sha256": "a070675427fc12bef0f4a188cdf426aafa67d5ddfdb272642e377ed8970eb02d",
+      "mechanical_sha256": "e8f002ce2cd44d213cec3b5cb4d7ddbb3cead4324959df41549994340e161313",
+      "final_sha256": "e8f002ce2cd44d213cec3b5cb4d7ddbb3cead4324959df41549994340e161313",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_settings_snapshot.cpp",
+      "destination": "tests/test_settings_snapshot.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_settings_snapshot.cpp",
+      "parent_sha256": "ae7095737c417623946344518a95e1ff4530e43b7ef376df9581fad0089ab5ee",
+      "mechanical_sha256": "bd75b39ae80768b328ceaa7e0073a5c665bbd0812d920e61a96a0cdaf9ca288a",
+      "final_sha256": "77b24b9b80670902182dfb40c967745310922da54616e6a3d36f6d64180fd343",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/adopted/test_allocator_terminals.cpp",
+      "destination": "tests/test_allocator_terminals.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_allocator_terminals.cpp",
+      "parent_sha256": "136a8db630834215e5085b7c6151bc5d34d2b142b045932f81992d5797440e96",
+      "mechanical_sha256": "b659be6d652c07c75bb1a9d3dc1afb92358a2a3c385584fbba61c0f2fc875c0c",
+      "final_sha256": "b659be6d652c07c75bb1a9d3dc1afb92358a2a3c385584fbba61c0f2fc875c0c",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_ptd_action_table.cpp",
+      "destination": "tests/test_ptd_action_table.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_ptd_action_table.cpp",
+      "parent_sha256": "7f025ae1ed7bb54c3c6689fc854758f410c3d3838f19fe7fb26374aa8dab9855",
+      "mechanical_sha256": "a68242781f68d3bf9c11159d928aeaf391a0a4400d7eaf173c2e35b8c166addb",
+      "final_sha256": "a68242781f68d3bf9c11159d928aeaf391a0a4400d7eaf173c2e35b8c166addb",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_receive_buffer.cpp",
+      "destination": "tests/test_receive_buffer.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_receive_buffer.cpp",
+      "parent_sha256": "960bd64fd369dadf5e14fe463f8b9629d8c13d881c3e4c94a02c33283938cb1a",
+      "mechanical_sha256": "c3bc7d3dfb04b8d3f5f32e6f7a70d29be621ca435a1f0c296b842f4558aa465b",
+      "final_sha256": "c3bc7d3dfb04b8d3f5f32e6f7a70d29be621ca435a1f0c296b842f4558aa465b",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_allocator_release_block.cpp",
+      "destination": "tests/test_allocator_release_block.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_allocator_release_block.cpp",
+      "parent_sha256": "6d2ba86ea413419e42f3838dbe1667241819ce4945930a94e01c9aac6b5aad39",
+      "mechanical_sha256": "c40e27125e5ed82923a73d79a13d336e024b89b0ca878d95b62f55117a3eb892",
+      "final_sha256": "c40e27125e5ed82923a73d79a13d336e024b89b0ca878d95b62f55117a3eb892",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_crypt_wrapper.cpp",
+      "destination": "tests/test_crypt_wrapper.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_crypt_wrapper.cpp",
+      "parent_sha256": "9876418ac75d7037ca66d49c378f543a3e3f5fcbf039760c69a1035893b979cc",
+      "mechanical_sha256": "d7047b015dde1534edccb6ebd9f6626d09db574070e442a03aae98d6254ba441",
+      "final_sha256": "d7047b015dde1534edccb6ebd9f6626d09db574070e442a03aae98d6254ba441",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_curio_crypt_wrapper.cpp",
+      "destination": "tests/test_curio_crypt_wrapper.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_curio_crypt_wrapper.cpp",
+      "parent_sha256": "d38f98c1bad4b7f60a80c6328e82fe98b735f335fcaf6e45294f282260c5c246",
+      "mechanical_sha256": "5267dde5097d58b28361754e6d735c16e6ea368b949003f1fc2c1619851dddd7",
+      "final_sha256": "5267dde5097d58b28361754e6d735c16e6ea368b949003f1fc2c1619851dddd7",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_router.cpp",
+      "destination": "tests/test_router.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_router.cpp",
+      "parent_sha256": "16685f472de7233f238d315e3b9bafd24541fe5fa3560a4511b2fc9c290bc159",
+      "mechanical_sha256": "071ed7b23484b9f7cb29741bce2936b188e525211ec83ba32f08145450f6db78",
+      "final_sha256": "c24f134779b7ac295bbeecf653cc19eca825ab928abb82e9291f47460dfcc3b4",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/adopted/test_asio_session_timeout_policy.cpp",
+      "destination": "tests/test_asio_session_timeout_policy.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_asio_session_timeout_policy.cpp",
+      "parent_sha256": "c8cdcb9718a72298426a317fcec6d8dbef3567ac89beb5be07443aaad3231c71",
+      "mechanical_sha256": "b5d6dd9870c2160b27e237e31883740afa3e4ab104824f2cb13a75fb7352c9c9",
+      "final_sha256": "b5d6dd9870c2160b27e237e31883740afa3e4ab104824f2cb13a75fb7352c9c9",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_connection_state.cpp",
+      "destination": "tests/test_connection_state.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_connection_state.cpp",
+      "parent_sha256": "fe16fa4a92a1b8bbea060d7da0c5d9eb538a7020d2705b13bcb89686e76be758",
+      "mechanical_sha256": "edc3e8f5ad6a1de302e3bc921c0ab2d5d2de5bd3937a52e50164801e421cfc23",
+      "final_sha256": "89a9e78ff073e382e96bbdb49b5011aab14912557c9d07589f4fc8f92bdcfd04",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/adopted/test_settings_provider.cpp",
+      "destination": "tests/test_settings_provider.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_settings_provider.cpp",
+      "parent_sha256": "2fa12eefa675a2664790cd2ea1a91aafa28354a69537f2ee00649b70a9ead5cc",
+      "mechanical_sha256": "1dec63111fdfbac710f052e152f1f33759822a86f63649015ca5e49ea2155f04",
+      "final_sha256": "1dec63111fdfbac710f052e152f1f33759822a86f63649015ca5e49ea2155f04",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_allocator_retry_policy.cpp",
+      "destination": "tests/test_allocator_retry_policy.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_allocator_retry_policy.cpp",
+      "parent_sha256": "eaa3471fcc974f00223b8e21470ed6d09cddce39de9a6e2d6a7a29e951a197d0",
+      "mechanical_sha256": "de6f78bf4bfbbd6b1a3ae197990f8887e957fc143ff70091e1b6d0631bcca5a9",
+      "final_sha256": "de6f78bf4bfbbd6b1a3ae197990f8887e957fc143ff70091e1b6d0631bcca5a9",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_fnv.cpp",
+      "destination": "tests/test_fnv.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_fnv.cpp",
+      "parent_sha256": "fad06274b8e7181f479f2495a73d815271782c6bcf0b8f83658acfd519762fa2",
+      "mechanical_sha256": "b08c05d3e8b1dadd2aae40e29adc94994da2a8035a4d7f81d888ebc9ffff5ad3",
+      "final_sha256": "b08c05d3e8b1dadd2aae40e29adc94994da2a8035a4d7f81d888ebc9ffff5ad3",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_ptd_failure_teardown.cpp",
+      "destination": "tests/test_ptd_failure_teardown.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_ptd_failure_teardown.cpp",
+      "parent_sha256": "2e575d66727fed475e085888457f62d66b807d568dc79fb83ace39d6e9c15bb4",
+      "mechanical_sha256": "45be38b63701e7908d7fb73096f06635fd6a5f0f74c11fb412e22e5b7a54cf6a",
+      "final_sha256": "45be38b63701e7908d7fb73096f06635fd6a5f0f74c11fb412e22e5b7a54cf6a",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_get_config.cpp",
+      "destination": "tests/test_get_config.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_get_config.cpp",
+      "parent_sha256": "eed91b20609e4c1fb0808b9696bbe43a9b25d57aafc613827de63df530a32be9",
+      "mechanical_sha256": "c6741080de8b5c6438d4f31dc7d4ae31a973a209cff40cf9d71e4daf473796ea",
+      "final_sha256": "dce6b55f878c42048b8949e5f1f0f1cbdef3f5ef32c4626a2c06ea2afea26999",
+      "mechanical_only": false
+    },
+    {
+      "original": "tests/adopted/test_ptd_fls_free.cpp",
+      "destination": "tests/test_ptd_fls_free.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_ptd_fls_free.cpp",
+      "parent_sha256": "3f717debe23c5e852012f6fb414c92fa57b64b464502b6b9fe4b4f4d97ea9de7",
+      "mechanical_sha256": "1c6b709bfd6d04c0f89b8be5271006ca64839179206f72eebd6c9276dc6049cf",
+      "final_sha256": "1c6b709bfd6d04c0f89b8be5271006ca64839179206f72eebd6c9276dc6049cf",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_ptd_global_cleanup_order.cpp",
+      "destination": "tests/test_ptd_global_cleanup_order.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_ptd_global_cleanup_order.cpp",
+      "parent_sha256": "264b5e57d95a295a84c80858a238974532d91cf8d1fbedd34e19f3e3d1aba09a",
+      "mechanical_sha256": "e255bb47bd615468069d52c166d75fd06d866bdf9f1ac50d93febf4e95e4aefe",
+      "final_sha256": "e255bb47bd615468069d52c166d75fd06d866bdf9f1ac50d93febf4e95e4aefe",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_allocator_heap_paths.cpp",
+      "destination": "tests/test_allocator_heap_paths.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_allocator_heap_paths.cpp",
+      "parent_sha256": "c0c0f575f1d2be7f46350702dd4567b83fffb942afa26791ded694c61481c646",
+      "mechanical_sha256": "b386ba7f90b07e283ce898a5873677803ca1f815ae2ff5fe8cf69045291e5b7a",
+      "final_sha256": "b386ba7f90b07e283ce898a5873677803ca1f815ae2ff5fe8cf69045291e5b7a",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_origin_error.cpp",
+      "destination": "tests/test_origin_error.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_origin_error.cpp",
+      "parent_sha256": "7501fec801699cf341dd58f22ec1ca4872d8915b27ddf30e65a56956e9debcf4",
+      "mechanical_sha256": "365a0c7062918bd1681bd61c85af00bb5aedb87bf5bfe0702d56bde632d5813b",
+      "final_sha256": "365a0c7062918bd1681bd61c85af00bb5aedb87bf5bfe0702d56bde632d5813b",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_ptd_retry_ownership.cpp",
+      "destination": "tests/test_ptd_retry_ownership.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_ptd_retry_ownership.cpp",
+      "parent_sha256": "230b85576a078349842acb3c15942c7423681ed971545cd39f93c3b09396fcc3",
+      "mechanical_sha256": "3b0202f574b022c41d65df32f5260f582385c690effb0a01d83e0ade8e037340",
+      "final_sha256": "3b0202f574b022c41d65df32f5260f582385c690effb0a01d83e0ade8e037340",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_framing.cpp",
+      "destination": "tests/test_framing.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_framing.cpp",
+      "parent_sha256": "7b94de2fca0c87b1737703042a8d72cd03c7f3ef59d859b466d13789f79ab814",
+      "mechanical_sha256": "c9455884e637d9584c45299b85bac372b8943f702d272a4fb42e2b118d9bfaba",
+      "final_sha256": "c9455884e637d9584c45299b85bac372b8943f702d272a4fb42e2b118d9bfaba",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_xml_child_index_semantics.cpp",
+      "destination": "tests/test_xml_child_index_semantics.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_xml_child_index_semantics.cpp",
+      "parent_sha256": "90094fe94f689ddd2e8ef32ca275e4dc9c32ac2ab6ee715745837e9a85b57b20",
+      "mechanical_sha256": "34adb3bc22670b29bbff2bd44ca318421bf0f5f4c2317d4637e0b4df99dc41b5",
+      "final_sha256": "34adb3bc22670b29bbff2bd44ca318421bf0f5f4c2317d4637e0b4df99dc41b5",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_settings.cpp",
+      "destination": "tests/test_settings.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_settings.cpp",
+      "parent_sha256": "94a46b817347e02022b0d469b61f80c001773818c8628c4c7ac19b5a0a776ada",
+      "mechanical_sha256": "5c4d4a4ecaf2b3baa7f62d15fb5c51559638d094f5f1be49d0046357bbf27e01",
+      "final_sha256": "5c4d4a4ecaf2b3baa7f62d15fb5c51559638d094f5f1be49d0046357bbf27e01",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_response.cpp",
+      "destination": "tests/test_response.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_response.cpp",
+      "parent_sha256": "b32a78a9821cc3d1805a69bb8f964428e395aced20b24e389771352b0ad2fde3",
+      "mechanical_sha256": "574ef3bae27498c0f71c12f62b0ea91b3e96cf7aaccdba3d2cfc5548986c79e4",
+      "final_sha256": "574ef3bae27498c0f71c12f62b0ea91b3e96cf7aaccdba3d2cfc5548986c79e4",
+      "mechanical_only": true
+    },
+    {
+      "original": "tests/adopted/test_asio_listener_owner.cpp",
+      "destination": "tests/test_asio_listener_owner.cpp",
+      "reference": "provenance/rf21_fix02/tests/adopted/test_asio_listener_owner.cpp",
+      "parent_sha256": "35ad1b1840944bbbdf6bfb30b2b176d445b2825572fac1fa0ccd463e207f18f8",
+      "mechanical_sha256": "04a6e09e0ea56170fe7345b217419329da5c18cf450ed220ad1bce3f2f6fc94f",
+      "final_sha256": "04a6e09e0ea56170fe7345b217419329da5c18cf450ed220ad1bce3f2f6fc94f",
+      "mechanical_only": true
+    },
+    {
+      "original": "tools/abi_smoke.cpp",
+      "destination": "tools/abi_smoke.cpp",
+      "reference": "provenance/rf21_fix02/tools/abi_smoke.cpp",
+      "parent_sha256": "e7447cc1b1a9df0b2c7639bbe25be1b387659218311cc0703fde87e6b2a6385f",
+      "mechanical_sha256": "e7447cc1b1a9df0b2c7639bbe25be1b387659218311cc0703fde87e6b2a6385f",
+      "final_sha256": "e7447cc1b1a9df0b2c7639bbe25be1b387659218311cc0703fde87e6b2a6385f",
+      "mechanical_only": true
+    },
+    {
+      "original": "tools/native_acceptance.cpp",
+      "destination": "tools/native_acceptance.cpp",
+      "reference": "provenance/rf21_fix02/tools/native_acceptance.cpp",
+      "parent_sha256": "037f05282e47c8517d540444969c09afff0e35fa17e6c72bb0f12dfcf3cff878",
+      "mechanical_sha256": "037f05282e47c8517d540444969c09afff0e35fa17e6c72bb0f12dfcf3cff878",
+      "final_sha256": "037f05282e47c8517d540444969c09afff0e35fa17e6c72bb0f12dfcf3cff878",
+      "mechanical_only": true
+    }
+  ],
+  "new_application_files": [
+    "include/redfield/session_retirement.hpp",
+    "tests/test_session_retirement.cpp"
+  ]
+}

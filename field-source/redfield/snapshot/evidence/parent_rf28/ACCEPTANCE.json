@@ -1,0 +1,32 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF28",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_B01_SOURCE_REVIEW_NOT_RELEASE",
+  "application_files": 262,
+  "normal_regressions": 96,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 157,
+  "normal_linked_outputs": 97,
+  "windows_compile_actions": 177,
+  "parent_stdout_equal": 96,
+  "normal_allocation_failure_points": 115,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "architecture_negatives": 13,
+  "package_negatives": 2,
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_runner_cases": 7,
+  "sanitizers": "RF27_HISTORICAL_NOT_RERUN_RF28",
+  "windows_native": "NOT_RUN_RF28",
+  "debug_crt": "CMAKE_CONFIGURATION_DEFINED;NOT_RUN_RF28",
+  "game": "NOT_RUN_RF28",
+  "cmake": "NOT_RUN_TOOL_UNAVAILABLE",
+  "complete_modules": 5,
+  "remaining_modules": 15,
+  "scope": "B01 configuration/hex/build closure;one header comment and docs;application implementations unchanged"
+}

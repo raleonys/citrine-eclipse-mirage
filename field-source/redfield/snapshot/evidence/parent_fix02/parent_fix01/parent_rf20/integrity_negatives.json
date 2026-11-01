@@ -1,0 +1,70 @@
+{
+  "checkpoint": "RF20",
+  "fixture_policy": "Independent extraction per mutation; never reused for positive tests",
+  "cases": [
+    {
+      "case": "modified_transport",
+      "manifest_rebound": false,
+      "exit_code": 1,
+      "expected_rejection": "SHA_MISMATCH",
+      "stdout": "REDFIELD_INTEGRITY_FAIL: SHA_MISMATCH:src/net/tcp_ingress.cpp",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "unexpected_file",
+      "manifest_rebound": false,
+      "exit_code": 1,
+      "expected_rejection": "FILE_SET_MISMATCH",
+      "stdout": "REDFIELD_INTEGRITY_FAIL: FILE_SET_MISMATCH",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "altered_legacy_diagnostic",
+      "manifest_rebound": true,
+      "exit_code": 1,
+      "expected_rejection": "ADOPTION_MISMATCH",
+      "stdout": "REDFIELD_INTEGRITY_FAIL: ADOPTION_MISMATCH:tests/adopted/test_get_config.cpp",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "altered_derived_body",
+      "manifest_rebound": true,
+      "exit_code": 1,
+      "expected_rejection": "DERIVATION_MISMATCH",
+      "stdout": "REDFIELD_INTEGRITY_FAIL: DERIVATION_MISMATCH:src/core/achievement_delivery.cpp",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "recipe_fragment_hash",
+      "manifest_rebound": true,
+      "exit_code": 1,
+      "expected_rejection": "DERIVATION_FRAGMENT_MISMATCH",
+      "stdout": "REDFIELD_INTEGRITY_FAIL: DERIVATION_FRAGMENT_MISMATCH",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "missing_build_unit",
+      "manifest_rebound": true,
+      "exit_code": 1,
+      "expected_rejection": "BUILD_GRAPH_MISMATCH",
+      "stdout": "REDFIELD_INTEGRITY_FAIL: BUILD_GRAPH_MISMATCH",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "missing_launcher",
+      "manifest_rebound": true,
+      "exit_code": 1,
+      "expected_rejection": "LAUNCHER_SET_MISMATCH",
+      "stdout": "REDFIELD_INTEGRITY_FAIL: LAUNCHER_SET_MISMATCH",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "wrong_export",
+      "manifest_rebound": true,
+      "exit_code": 1,
+      "expected_rejection": "EXPORT_CONTRACT_MISMATCH",
+      "stdout": "REDFIELD_INTEGRITY_FAIL: EXPORT_CONTRACT_MISMATCH",
+      "status": "EXPECTED_REJECTION"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "files": 1091,
+  "scope": "Vendor,LICENSE,exports,hook sources/config,35 route bindings,MinHook/CMake unchanged.262 exact RF26 application references checked;258 current files equal CFG-token substitution or byte identity.",
+  "parent_zip_sha256": "0e04ca9de5573efdd9a98f32dbfe8ff74c1e406fc7c159e6b536d9ec7a91bdb8"
+}

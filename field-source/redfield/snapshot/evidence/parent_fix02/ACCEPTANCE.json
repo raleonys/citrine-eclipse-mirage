@@ -1,0 +1,20 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF20",
+  "build_fix": "FIX02",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_FRESH_SCOPED_NOT_RELEASE",
+  "build_input_sha256": "22de5e6452de4640339d3014cb1649c450ddb42def1d4b2e7f8f9d09991afb66",
+  "normal_regressions": 70,
+  "compiled_objects": 125,
+  "linked_outputs": 71,
+  "environment_cases": 13,
+  "real_process_cases": 7,
+  "windows_cmd_vsdevcmd_msvc": "NOT_RUN",
+  "windows_dll_produced_here": false,
+  "sanitizers": "NOT_RUN_CURRENT_FIX",
+  "legacy_get_config": "FAIL_OBSERVED exit14, separate from PASS",
+  "integrity_negatives": 2,
+  "parent_runtime_evidence": "Historical only under evidence/parent_fix01",
+  "reported_hang_root_cause": "NOT_ESTABLISHED; confirmed silent process capture corrected, actual Windows wait not reproduced"
+}

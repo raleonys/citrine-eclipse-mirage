@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "application_files": 266,
+  "existing_application_files_changed": 1,
+  "new_application_files": 4,
+  "production_entry_refactored": true,
+  "unchanged_parent_application_files": 261,
+  "build_graph_adds_separate_native_entry_andone_regression": true,
+  "canonical_hf19_golden_references": 15,
+  "project_name_occurrences_in_application": 0,
+  "vendor_and_license_pins_unchanged": true,
+  "production_exports": 3,
+  "hook_count": 7,
+  "bound_routes": 35,
+  "governance_revision": "2026-10-21.1"
+}

@@ -1,0 +1,506 @@
+{
+  "status": "FAIL_FINAL_OUTPUT_MODE_CHECK",
+  "log": "normal_build.log",
+  "outputs": [
+    {
+      "name": "test_tcp_control",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_response_dispatch",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_settings",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_fnv",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_xml_owned_child_index",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_crypt_wrapper",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_settings_snapshot",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_transient_allocation_owner",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_ptd_failure_teardown",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_connection_state",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_store_replies",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_xml",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_allocator_large_alignment",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_ingress",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_game_info_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_image",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_delivery",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_ptd_global_cleanup_order",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_grant",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_achievement_projection",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_achievement_delivery_admission",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_settings_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_allocator_retry_policy",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_content",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_connect_redirect",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_image_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_transient_shutdown",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_stateless_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_ptd_retry_ownership",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_utc_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_pending_session_cleanup",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_allocator_release_failure",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_entitlement_projection",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_settings_provider",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_chunks",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_port_publication",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_allocator_terminals",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_allocator_release_block",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_query_presence",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_service_session",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_achievements",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_xml_child_index_semantics",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_store_replies",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_profile_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_config_snapshot_view",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_runtime",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_ingress",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_auth_code",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_settings_query",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_ptd_lifecycle",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_session_retirement",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_achievement_delivery_wire",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_game_info",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_worker_owner",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_hook_configuration",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_stateless",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_achievement_grant_policy",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_hex",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_allocator_heap_paths",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_semantic_allocator",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_auth_code_session",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_asio_session_timeout_policy",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_permission_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_query_presence_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_grant_failure",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_entitlements",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_framing",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_router",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_chunks_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_receive_buffer",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_image_session",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_ptd_intrusive_pending",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_entitlement_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_allocator_release_validation",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_asio_listener_owner",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_achievement_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_control_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_worker_observation",
+      "mode": "0o100644",
+      "executable": false
+    },
+    {
+      "name": "test_tcp_profile_time",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_entity_contract",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_curio_crypt_wrapper",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_progressive_installation",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_content_projection",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_registry_value_output",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_settings",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_config",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_content_response",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_record_projection_transaction",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_origin_error",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_ptd_action_table",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_get_config_legacy",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_transient_retry_concurrency",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_achievement_session_lifetime",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_achievement_delivery_lifetime",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_tcp_permission",
+      "mode": "0o100755",
+      "executable": true
+    },
+    {
+      "name": "test_ptd_fls_free",
+      "mode": "0o100644",
+      "executable": false
+    },
+    {
+      "name": "build.log",
+      "mode": "0o100644",
+      "executable": false
+    },
+    {
+      "name": "test_achievement_session",
+      "mode": "0o100755",
+      "executable": true
+    }
+  ]
+}

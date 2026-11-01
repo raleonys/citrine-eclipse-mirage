@@ -1,0 +1,20 @@
+#include "redfield/runtime/memory_allocator.hpp"
+#include "redfield/worker_owner.hpp"
+#include <cstdlib>
+#include <iostream>
+using namespace redfield;
+using namespace redfield::runtime;
+struct Backend {
+ bool fail=true;unsigned unpins=0;
+ static void* alloc(void*,size_t n) noexcept{return std::malloc(n);}
+ static int free(void* p,void* m) noexcept{if(static_cast<Backend*>(p)->fail)return 0;std::free(m);return 1;}
+ static bool pin(void* p,void*,void** out) noexcept{*out=p;return true;}
+ static void* spawn(void* p,WorkerOwner*) noexcept{return p;}
+ static WaitResult wait(void*,void*,unsigned) noexcept{return WaitResult::signaled;}
+ static bool close(void*,void*) noexcept{return true;}
+ static bool unpin(void* p,void*) noexcept{++static_cast<Backend*>(p)->unpins;return true;}
+};
+int main(){Backend b;WorkerOperations ops{&b,Backend::pin,Backend::spawn,Backend::wait,Backend::close,Backend::unpin};WorkerOwner owner;
+if(!owner.schedule(ops,&b))return 1;owner.mark_worker_clean();void* memory=allocate_transient_bytes(64,{&b,Backend::alloc,Backend::free,nullptr});if(!memory||release_transient_bytes(memory))return 2;
+auto result=owner.shutdown(0);bool reproduced=result==ShutdownResult::stopped&&b.unpins==1&&transient_release_pending();std::cout<<"OLD_CLEAN_WORKER shutdown="<<static_cast<unsigned>(result)<<" unpins="<<b.unpins<<" pending="<<transient_release_pending()<<"\n";
+b.fail=false;retry_pending_transient_releases();return reproduced?0:3;}

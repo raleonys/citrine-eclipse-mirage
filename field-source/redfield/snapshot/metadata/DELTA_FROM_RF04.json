@@ -1,0 +1,217 @@
+{
+  "parent_zip_sha256": "1c2e0f99488bb43a976978e00b4ae5c605b5324bccd16ea4d37c26984a2e27c3",
+  "parent_library_file_id": "libfile_7a3093f5b264819185b9ce712e432e22",
+  "scope": "All source/docs/current metadata except evidence outputs, generated package manifest, this self-record and historical prior delta",
+  "changes": [
+    {
+      "path": "CHANGELOG.md",
+      "change": "modified",
+      "parent_sha256": "6e335143ccf8f06a1c71487b0aeb8a6707f5b2eadf11cc70a6c1f6f25e3f4767",
+      "current_sha256": "16e2df32720ce9a7492ec35ed1b7afaf80ab63f201765fe9fbec2d1ec28816bd"
+    },
+    {
+      "path": "README.md",
+      "change": "modified",
+      "parent_sha256": "8c03f24ec8313c8e52d022554c32a4a6f26b9c88530c61afa30136e3983ff6ce",
+      "current_sha256": "ce2528f787f830241e0d827799131ead5cde319ec835768b0c0c9bade05dc83b"
+    },
+    {
+      "path": "SOURCE_REVISION.md",
+      "change": "modified",
+      "parent_sha256": "80ea59a7000dc8a93e41bdffd6cda291a3673bd1f65b1619182f4779febcd749",
+      "current_sha256": "131b022bf9c9c8164bc47213fdd5ac7069cadf7650bc5dad5409047afd82028c"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "change": "modified",
+      "parent_sha256": "5f8af782a0c0943b6493f2e5ceb42e8fba17b988b990770ee887ecb74cd8331f",
+      "current_sha256": "5ffd20287188e7fabe19f5cdd521f3717be54fa053d3be3cbc566c7d81cd4faa"
+    },
+    {
+      "path": "docs/REPORT_TR.md",
+      "change": "modified",
+      "parent_sha256": "6f138bc7408c1a4299c48d24c1a9e58ebd7e82de2b024f34ba9277ac830d97b3",
+      "current_sha256": "27408901bc5d762264739db4fdeeea30dd82b4cd5b260af830cc2b5bc81e4ed6"
+    },
+    {
+      "path": "include/preloader_l/handlers/friends_route.hpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "7b2777470fdb5f212a1960929b8efd8a4e64517d9eff2a89b47fb663b5a77798"
+    },
+    {
+      "path": "include/preloader_l/handlers/group_info_route.hpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "ea233f206b49ba34bbfe691874ab143de74dfe13632ac9a7075fcae611f88a8b"
+    },
+    {
+      "path": "include/preloader_l/handlers/integration_routes.hpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "7a276b569cc9f9b31c85f2adb28875bf2e87bb15e766f76020cab64a6810a14e"
+    },
+    {
+      "path": "include/preloader_l/protocol/origin_error.hpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "673baa3e74fe4fae6fa589b15a0734de62e9c15ab6cdd3af9ff8cec87ebf5833"
+    },
+    {
+      "path": "metadata/ACCEPTANCE.json",
+      "change": "modified",
+      "parent_sha256": "6e85e8c1c1c4d2529123ee168a836045fc9b843db293b26e64c3408811922a9f",
+      "current_sha256": "572f18e7985b8fcfe198a87f8633a0ccf444958e646132c020ab437cc79bf604"
+    },
+    {
+      "path": "metadata/ADOPTED_SOURCES.json",
+      "change": "modified",
+      "parent_sha256": "b09b737cc3ade10507535729269302438ee0b473170ece35376e78e5f4deb1bb",
+      "current_sha256": "9fa3e8568c7aa8f69ad671869205ad7b63a901055fb114eedd0490f244eac216"
+    },
+    {
+      "path": "metadata/BUILD_GRAPH.json",
+      "change": "modified",
+      "parent_sha256": "f80c272d63df8698502c5791a434f6d9d028723b4e42397745a29ba75af34c8c",
+      "current_sha256": "d6ef5168db30859221c2415dc09e4616869f1886057ca6bc9a5845565a1c3498"
+    },
+    {
+      "path": "metadata/DERIVED_SOURCES.json",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "00b71f8ae08d99c5d0beec33fcc8fc8b0a927855fcce32d3769f097f45c199cb"
+    },
+    {
+      "path": "metadata/ENTRYPOINTS.json",
+      "change": "modified",
+      "parent_sha256": "dcc674ac3b9392e79891f33a6df77203e6eb8858f6fa312fb5497b6b7773a810",
+      "current_sha256": "8e0b91283ffb047adeb94438dfb450f8dff13d0cff95aa06c37286083444ea0f"
+    },
+    {
+      "path": "metadata/GOVERNANCE_BINDING.json",
+      "change": "modified",
+      "parent_sha256": "c5c5be9e5fb00ae63acacb94e331cbbe538f9054965d9b14fc3b0e5a4d6bc5c7",
+      "current_sha256": "27eb66bd6490876b4298cea14e33d26f9800124be18407905f57165eadd25503"
+    },
+    {
+      "path": "metadata/PARENT.json",
+      "change": "modified",
+      "parent_sha256": "658ea0b142f69a57de03842f54c28ed2131af4afc9dd0cfc69ca288ba8aceea3",
+      "current_sha256": "901cd3d8a69200dfdcd4836fb75fb003e46c78a883faab5f09a131d49a9f855e"
+    },
+    {
+      "path": "metadata/RELEASE_STATE.json",
+      "change": "modified",
+      "parent_sha256": "c9daad3847eb0f207f74d74d249d192878d1e73f308b9192750b861d507bf754",
+      "current_sha256": "c5527a9a5ff53fba5424a65044f9df2039d2f8481d160ef4d8369df20598993f"
+    },
+    {
+      "path": "metadata/REUSE_DECISIONS.json",
+      "change": "modified",
+      "parent_sha256": "35d13b3c6f9132684c1a937d41dfaf71b0774f8d4869d8a6628623e3dc24c668",
+      "current_sha256": "e4541b91dd936c8ad42e2a834b485aa285cde6bb311f938302452504b5fb9fae"
+    },
+    {
+      "path": "provenance/hf19/src/handlers/group_info_route.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "aeb5915b480183abe853c373c0c167dd0aaaa88b182d1914457b5ad0e869cb24"
+    },
+    {
+      "path": "provenance/hf19/src/handlers/integration_routes.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "9dd41396c3c83295ed05ffb13594b656b4e44857d03562891815a19c32b7cc93"
+    },
+    {
+      "path": "provenance/hf19/src/handlers/route_response_support.hpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "262a4a12079a73c5c41cd9018c619391b7a786e8cc99bbf08802496dfeb280bb"
+    },
+    {
+      "path": "provenance/hf19/tests/unit/test_query_friends.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "affa20824abc6c0739dfa6010f445c11c1f00c5aa9dd16963c6583a46138f76a"
+    },
+    {
+      "path": "scripts/build_orchestration/build_verify.cmd",
+      "change": "modified",
+      "parent_sha256": "d271442b826b584556df5a87d123de27e5733794abd9c143cecf85301c0431f8",
+      "current_sha256": "d9d178931e07465f186be12765f4d62e9fb0896356f3e9c8b76d95f53826214e"
+    },
+    {
+      "path": "scripts/build_orchestration/build_verify.py",
+      "change": "modified",
+      "parent_sha256": "c31f82cd21e0880e2a5a05f95a6227a7d5a2ae8cd1fd0e9e83c05c9c4562997c",
+      "current_sha256": "4517fab9290f5c9c05ae883340cc215e079e96cc6f99d09ead0a636200d57ed9"
+    },
+    {
+      "path": "scripts/verify_source.py",
+      "change": "modified",
+      "parent_sha256": "016b291ddbf921d51e1bdaad55be1f78a6fdd3998190b556fad425d94d43e040",
+      "current_sha256": "9867c68e7cb8a547fc601307de51d4e30bac791494c1b317a4143fc6b2073e16"
+    },
+    {
+      "path": "src/core/response_dispatch.cpp",
+      "change": "modified",
+      "parent_sha256": "0a2d3194a3cc8ad007c151d5493bc40bdfd239a721dc1c92f4401acad21710b1",
+      "current_sha256": "39e41e61e7905287f7bcb43db47fa6f6df96e64ca5ec51be7bc299699a8b03e0"
+    },
+    {
+      "path": "src/handlers/error_success_support.hpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "02a4e08279c7a1c30f4767099f681110cb093eef9fb4ec974f1857099afe16b1"
+    },
+    {
+      "path": "src/handlers/friends_route.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "c82a77e3a5047f7bb629f4b47b2973cf90507452d3624da0ba30772d1740ae8b"
+    },
+    {
+      "path": "src/handlers/group_info_route.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "899346f0718b34d38f9ee4ed2ffd624a84f3eed8409a39059f7a15202b393fde"
+    },
+    {
+      "path": "src/handlers/route_error_contracts.hpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "db12a085498fa4df251aff2d61992395e97512f85df45b0d3181cec2319a77a6"
+    },
+    {
+      "path": "src/handlers/stateless_routes.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "d4257e6e61c751e21d078937e9b69d2a5b7615728d2cc32f287f176a212b5332"
+    },
+    {
+      "path": "tests/adopted/test_origin_error.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "7501fec801699cf341dd58f22ec1ca4872d8915b27ddf30e65a56956e9debcf4"
+    },
+    {
+      "path": "tests/test_stateless_response.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "43ce7e187eb9beac41e8b97777d6d970334f06b6684a25a82000ef4904b7dc01"
+    },
+    {
+      "path": "tests/test_tcp_stateless.cpp",
+      "change": "added",
+      "parent_sha256": null,
+      "current_sha256": "0db479f6aa122bf183fe836e0f96ccec851a0b36b0cbba7406f5e2a4c789c68f"
+    },
+    {
+      "path": "tools/native_acceptance.cpp",
+      "change": "modified",
+      "parent_sha256": "baab184b0fb937bac570b119574bb42de3d419c491979d144e44f414c1535494",
+      "current_sha256": "09a8de65cedffbce83ececec838a276463e0fd78ef31925ba94556a80c8d88f6"
+    }
+  ]
+}

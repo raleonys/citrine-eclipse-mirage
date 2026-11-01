@@ -1,0 +1,17 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF37",
+  "classification": "NON_RELEASE_WORK",
+  "status": "NOT_RELEASE",
+  "semantic_version": null,
+  "official_codename": null,
+  "public_abi": "DllMain @1,SURGE @2,DllShutdown @3 unchanged;35 plaintext local routes;seven existing Windows MinHook detours;SURGE passive",
+  "runtime_compatibility": "Currentapplicationbytes matchRF36userbuild;gameunverified",
+  "canonical_release_mutation": false,
+  "known_diagnostic": "RF03-QA-001 unchanged original GetConfig diagnostic exit14, separate from passing regressions",
+  "derivation_scope": "268 application files unchanged;1634 byte-bound source recipes",
+  "windows_msvc": "RF37_NOT_RUN;RF36_USER_COMPILE_LINK_ABI_PASS",
+  "current_regressions": 98,
+  "refactor": "GOLDEN_BINDING_FIX01",
+  "scope": "Bound exactWindowscore synchronization import andcurrent retained staticdata footprint;source/package hygiene remediation;runtimecode unchanged"
+}

@@ -1,0 +1,50 @@
+{
+  "status": "PASS_SCOPED",
+  "modified_application_files": [
+    "include/preloader_l/config_file.hpp",
+    "src/config/config.cpp",
+    "src/config/config_file.cpp",
+    "tests/test_image_session.cpp",
+    "tests/test_service_session.cpp",
+    "tests/test_tcp_achievements.cpp",
+    "tests/test_tcp_auth_code.cpp",
+    "tests/test_tcp_chunks.cpp",
+    "tests/test_tcp_content.cpp",
+    "tests/test_tcp_control.cpp",
+    "tests/test_tcp_entitlements.cpp",
+    "tests/test_tcp_game_info.cpp",
+    "tests/test_tcp_grant.cpp",
+    "tests/test_tcp_image.cpp",
+    "tests/test_tcp_permission.cpp",
+    "tests/test_tcp_profile_time.cpp",
+    "tests/test_tcp_query_presence.cpp",
+    "tests/test_tcp_settings.cpp",
+    "tests/test_tcp_stateless.cpp",
+    "tests/test_tcp_store_replies.cpp",
+    "tools/native_acceptance.cpp"
+  ],
+  "non_token_only_changes": [
+    "include/preloader_l/config_file.hpp",
+    "src/config/config.cpp",
+    "src/config/config_file.cpp",
+    "tests/test_service_session.cpp"
+  ],
+  "changes": [
+    "Restore user-confirmed surge.cfg filename and centralize production basename independently of DLL name",
+    "Required ConfigStore staging bindings are references",
+    "Raw leaf capture shares parser-validated SourceView with typed projections",
+    "Strengthen file/session test against wrong-basename input/fallback"
+  ],
+  "preserved": [
+    "Raw escape representation",
+    "Exact Online literal policy",
+    "Atomic snapshot publication and allocation-failure behavior",
+    "Module-relative loading and all file error statuses"
+  ],
+  "not_claimed": [
+    "Whole-codebase semantic refactor complete",
+    "Observed Windows/game launch fix",
+    "Filesystem handle race elimination",
+    "Fresh native Windows/game result"
+  ]
+}

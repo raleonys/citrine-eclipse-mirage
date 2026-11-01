@@ -1,0 +1,17 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF20",
+  "build_fix": "FIX01",
+  "classification": "NON_RELEASE_WORK",
+  "status": "FOCUSED_QA_ONLY_NOT_RELEASE",
+  "python_environment_cases": 13,
+  "source_integrity": "PASS_FRESH_SCOPED",
+  "windows_cmd_vsdevcmd_msvc": "NOT_RUN",
+  "dll_produced_here": false,
+  "cpp_tests_rerun": "NOT_RUN_THIS_FIX_CPP_BYTES_UNCHANGED",
+  "parent_runtime_evidence": "Historical RF20 evidence retained under evidence/parent_rf20, never fresh FIX01 acceptance",
+  "user_windows_observation": "USER_REPORTED_RF20_SETUP_EXIT1_BEFORE_COMPILATION",
+  "root_cause": "Original hidden VsDevCmd failure NOT_ESTABLISHED; CRT-vs-CMD quoting boundary and diagnostic suppression corrected",
+  "integrity_negative_cases": 2,
+  "qa_builder_sha256": "4c4eefce12de164c8242fb6deed683087a3d46916ac1523c8d4b766e8d534425"
+}

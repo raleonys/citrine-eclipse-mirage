@@ -1,0 +1,26 @@
+{
+  "human_entrypoints": [
+    {
+      "launcher": "scripts/build_orchestration/build_verify.cmd",
+      "target": "scripts/build_orchestration/build_verify.py",
+      "owner": "build orchestration",
+      "purpose": "Compile59 core sources,92 regressions, unchanged legacy GetConfig diagnostic and Windows x64 production/native DLL; unified application ownership"
+    },
+    {
+      "launcher": "scripts/verify_source.cmd",
+      "target": "scripts/verify_source.py",
+      "owner": "source integrity",
+      "purpose": "Verify package/ancestry recipes, unified application architecture, pinned vendors, exports and launcher contracts"
+    }
+  ],
+  "internal_helpers": [
+    "scripts/build_orchestration/hook_build.py",
+    "scripts/build_orchestration/PatchMinHookSafeFreeze.cmake"
+  ],
+  "vendor_launchers_forbidden": true,
+  "internal_native_hosts": [
+    "tools/abi_smoke.cpp",
+    "tools/native_acceptance.cpp"
+  ],
+  "upstream_vendor_helpers_are_not_project_entrypoints": true
+}

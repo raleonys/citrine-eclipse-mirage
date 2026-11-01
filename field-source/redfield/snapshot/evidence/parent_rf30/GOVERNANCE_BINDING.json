@@ -1,0 +1,16 @@
+{
+  "revision": "2026-10-21.1",
+  "scope": "M20.2 shared compilation/session infrastructure and four operator profiles;Golden destination binding andWindows acceptance remain pending",
+  "master_md_sha256": "717c46379469a5a34d7868a6d5bc04e1d86f225be3b11ac58f2f30e0bf08acc5",
+  "master_json_sha256": "965b7db066c9cb336a69bef58156e352693b3913604875c5e2956acfc9a82092",
+  "master_md_library_file_id": "libfile_b1de5dceb8448191a0d52c120edc5215",
+  "master_json_library_file_id": "libfile_c451831f61c88191a98aa9ab08cc7714",
+  "prior_revision": "2026-10-19.2",
+  "official_hf19_unchanged": true,
+  "fresh_library_master_read_version": "6",
+  "fresh_library_master_read_revision": "2026-10-21.1",
+  "fresh_read_scope": "Current master MD development-build/game-policy clauses and JSON canonical baseline v5 read before source edits; inherited full hashes unchanged",
+  "checkpoint": "RF30",
+  "topology_disposition": "Seven current HF19 core hooks; historical nine-hook master membership superseded in adopted source by explicit HF16/HF17 removal. This RF21 user-authorized hook integration preserves that source topology; optional HF17 addon hooks not selected. No master/canonical mutation.",
+  "refactor": "BUILD_PROFILES01"
+}

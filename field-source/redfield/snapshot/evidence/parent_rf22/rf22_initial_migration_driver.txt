@@ -1,0 +1,50 @@
+from pathlib import Path
+import zipfile,json,hashlib,re
+P=Path('deliverables/REDFIELD_RF21_HOOKS01_FIX02_FULL_SOURCE_NOT_RELEASE_2026-10-21.zip')
+W=Path('rf22_work');assert not W.exists()
+with zipfile.ZipFile(P) as z:
+    for info in z.infolist():
+        relative=Path(info.filename).relative_to('REDFIELD_RF21')
+        if info.is_dir():continue
+        dest=W/'REDFIELD_RF22'/relative;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(z.read(info))
+R=W/'REDFIELD_RF22'
+def sha(b):return hashlib.sha256(b).hexdigest()
+def write(p,j):p.write_text(json.dumps(j,indent=2)+'\n',encoding='utf-8')
+owned=[p for top in ['src','include','tests','tools'] for p in (R/top).rglob('*') if p.is_file()]
+adopted=json.loads((R/'metadata/ADOPTED_SOURCES.json').read_text());derived=json.loads((R/'metadata/DERIVED_SOURCES.json').read_text())
+apaths={x['destination'] for x in adopted['files']};dpaths={x['destination'] for x in derived['files']}
+mapping={};records=[]
+for p in owned:
+    old=p.relative_to(R).as_posix();dest=old.replace('include/preloader_l/','include/redfield/').replace('tests/adopted/','tests/regression/')
+    original=p.read_bytes();reference='provenance/rf21_fix02/'+old
+    q=R/reference;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(original)
+    mapping[old]=reference
+    if old not in apaths|dpaths:
+        adopted['files'].append(dict(source_archive_sha256=sha(P.read_bytes()),source_member='REDFIELD_RF21/'+old,destination=reference,source_sha256=sha(original),adoption='BYTE_IDENTICAL',reason='Immutable FIX02 source before unified REDFIELD refactor; reference only, never compiled'))
+    text=original.decode('utf-8')
+    text=re.sub(r'\bpreloader_l\b(?=\s*::|\s*\{)', 'redfield',text)
+    text=text.replace('preloader_l/','redfield/').replace('PRELOADER_L_','REDFIELD_')
+    if p.suffix in {'.cpp','.hpp','.h'} and 'SPDX-License-Identifier:' not in text:
+        text='// SPDX-License-Identifier: GPL-3.0-only\n'+text
+    q=R/dest
+    if q!=p:assert not q.exists(),dest
+    q.parent.mkdir(parents=True,exist_ok=True);q.write_text(text,encoding='utf-8')
+    if q!=p:p.unlink()
+    records.append(dict(original=old,destination=dest,reference=reference,parent_sha256=sha(original),mechanical_sha256=sha(text.encode('utf-8'))))
+for row in adopted['files']:
+    if row['destination'] in mapping:row['destination']=mapping[row['destination']]
+for row in derived['files']:
+    if row['destination'] in mapping:row['destination']=mapping[row['destination']]
+    for segment in row['segments']:
+        if 'reference' in segment:segment['reference']=mapping.get(segment['reference'],segment['reference'])
+write(R/'metadata/ADOPTED_SOURCES.json',adopted);write(R/'metadata/DERIVED_SOURCES.json',derived)
+for top in ['include/preloader_l','tests/adopted']:
+    for p in sorted((R/top).rglob('*'),reverse=True):
+        if p.is_dir():p.rmdir()
+    (R/top).rmdir()
+g=json.loads((R/'metadata/BUILD_GRAPH.json').read_text())
+g['tests']={k:v.replace('tests/adopted/','tests/regression/') for k,v in g['tests'].items()}
+for row in g['diagnostics'].values():row['source']=row['source'].replace('tests/adopted/','tests/regression/')
+write(R/'metadata/BUILD_GRAPH.json',g)
+write(R/'metadata/REFACTOR_TRANSFORMS.json',dict(schema=1,parent_zip_sha256=sha(P.read_bytes()),scope='All application source/header/test/host files enter one REDFIELD ownership domain; original snapshots remain evidence',files=records))
+print('MIGRATED',len(records),'application files; vendors unchanged')

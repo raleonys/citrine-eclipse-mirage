@@ -1,0 +1,39 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF30",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_BOUNDED_ORCHESTRATION_REFACTOR_NOT_RELEASE",
+  "normal_regressions": 96,
+  "parent_stdout_and_exit_equal": 96,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 157,
+  "normal_linked_outputs": 97,
+  "profile_qa_cases": 55,
+  "boundary_import_cases": 30,
+  "architecture_negatives": 13,
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_cases": 7,
+  "package_negatives": 2,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 281,
+    "qualified_files": 0,
+    "pending_files": 281,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "application_body_changes": 1,
+  "production_body_changes": 0,
+  "windows_native_game": "NOT_RUN_RF30",
+  "cmake": "NOT_RUN_TOOL_UNAVAILABLE",
+  "sanitizers": "NOT_RUN_RF30_NO_PRODUCTION_CPP_BODY_CHANGE",
+  "golden": "PENDING_DESTINATION_BINDING_M20_3;no production dist publication",
+  "full_production_debug_crt_golden_migration": "PENDING",
+  "canonical_unchanged": true
+}

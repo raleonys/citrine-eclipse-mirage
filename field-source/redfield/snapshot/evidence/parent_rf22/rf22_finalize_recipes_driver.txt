@@ -1,0 +1,33 @@
+from pathlib import Path
+import json,difflib,hashlib
+R=Path('rf22_work/REDFIELD_RF22')
+def digest(b):return hashlib.sha256(b).hexdigest()
+def write(p,j):p.write_text(json.dumps(j,indent=2)+'\n',encoding='utf-8')
+j=json.loads((R/'metadata/REFACTOR_TRANSFORMS.json').read_text());records={x['destination']:x for x in j['files'] if x['destination']}
+ledger=json.loads((R/'metadata/DERIVED_SOURCES.json').read_text());assert len(ledger['files'])==27
+application=json.loads((R/'metadata/ARCHITECTURE.json').read_text())['application_files']
+new=[]
+for destination in application:
+    target=(R/destination).read_bytes();segments=[]
+    if destination in records:
+        row=records[destination];reference=row['reference'];base=(R/reference).read_bytes()
+        before=base.splitlines(keepends=True);after=target.splitlines(keepends=True)
+        offsets=[0]
+        for line in before:offsets.append(offsets[-1]+len(line))
+        for op,i,k,a,b in difflib.SequenceMatcher(None,before,after,autojunk=False).get_opcodes():
+            if op=='equal':
+                fragment=b''.join(before[i:k]);segments.append(dict(reference=reference,offset=offsets[i],length=len(fragment),sha256=digest(fragment)))
+            elif op in {'replace','insert'}:segments.append(dict(literal=b''.join(after[a:b]).decode('utf-8')))
+        row['final_sha256']=digest(target)
+        row['mechanical_only']=digest(target)==row['mechanical_sha256']
+    else:
+        segments=[dict(literal=target.decode('utf-8'))];new.append(destination)
+    ledger['files'].append(dict(destination=destination,destination_sha256=digest(target),derivation='RF22 unified application ownership; original ancestry retained solely as reproducible reference, no origin-based protection',segments=segments))
+ledger['scope']='Reproducible ancestry of archival and maintained application files; changes are permitted under the same architecture/tests for all application code'
+write(R/'metadata/DERIVED_SOURCES.json',ledger)
+j['new_application_files']=new;write(R/'metadata/REFACTOR_TRANSFORMS.json',j)
+manifest=dict(schema=1,checkpoint='RF22',refactor='UNIFIED01',files={})
+for p in sorted(R.rglob('*')):
+    if p.is_file() and '__pycache__' not in p.parts and p.relative_to(R).parts[0]!='build' and p.relative_to(R).as_posix()!='metadata/PACKAGE_MANIFEST.json':manifest['files'][p.relative_to(R).as_posix()]=dict(bytes=p.stat().st_size,sha256=digest(p.read_bytes()))
+write(R/'metadata/PACKAGE_MANIFEST.json',manifest)
+print('DERIVED_RECIPES',len(ledger['files']),'APPLICATION',len(application))

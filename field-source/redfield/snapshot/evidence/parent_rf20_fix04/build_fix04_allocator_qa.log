@@ -1,0 +1,263 @@
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/memory_allocator.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/ptd_runtime.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch0.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_utf8.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch1.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_normalize.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch2.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_semantic.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch1.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch2.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/missing_allocator"]
+/usr/bin/ld: /tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o: in function `preloader_l::xml::SemanticValue::clear()':
+/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_semantic.cpp:42:(.text+0xab): undefined reference to `preloader_l::runtime::release_transient_bytes(void*)'
+/usr/bin/ld: /tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o: in function `preloader_l::xml::SemanticValue::assign_source(preloader_l::xml::TextSpan)':
+/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_semantic.cpp:97:(.text+0xb5c): undefined reference to `preloader_l::runtime::allocate_transient_bytes(unsigned long, preloader_l::runtime::AllocatorPlatformOps const&)'
+/usr/bin/ld: /tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o: in function `main':
+/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:52:(.text+0x151): undefined reference to `preloader_l::runtime::transient_release_pending()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:56:(.text+0x1ac): undefined reference to `preloader_l::runtime::allocate_transient_bytes(unsigned long, preloader_l::runtime::AllocatorPlatformOps const&)'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:57:(.text+0x1c6): undefined reference to `preloader_l::runtime::allocate_transient_bytes(unsigned long, preloader_l::runtime::AllocatorPlatformOps const&)'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:59:(.text+0x201): undefined reference to `preloader_l::runtime::allocate_transient_bytes(unsigned long, preloader_l::runtime::AllocatorPlatformOps const&)'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:61:(.text+0x21d): undefined reference to `preloader_l::runtime::allocate_transient_bytes(unsigned long, preloader_l::runtime::AllocatorPlatformOps const&)'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:63:(.text+0x239): undefined reference to `preloader_l::runtime::allocate_transient_bytes(unsigned long, preloader_l::runtime::AllocatorPlatformOps const&)'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:68:(.text+0x26f): undefined reference to `preloader_l::runtime::release_transient_bytes(void*)'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:69:(.text+0x27c): undefined reference to `preloader_l::runtime::transient_pending_release_count()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:69:(.text+0x28b): undefined reference to `preloader_l::runtime::transient_pending_release_bytes()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:70:(.text+0x29a): undefined reference to `preloader_l::runtime::retry_pending_transient_releases()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:72:(.text+0x2ac): undefined reference to `preloader_l::runtime::retry_pending_transient_releases()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:73:(.text+0x2ce): undefined reference to `preloader_l::runtime::release_transient_bytes(void*)'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:85:(.text+0x618): undefined reference to `preloader_l::runtime::transient_release_pending()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:98:(.text+0x8ef): undefined reference to `preloader_l::runtime::transient_pending_release_count()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:99:(.text+0x90b): undefined reference to `preloader_l::runtime::retry_pending_transient_releases()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:101:(.text+0x91f): undefined reference to `preloader_l::runtime::retry_pending_transient_releases()'
+/usr/bin/ld: /workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp:103:(.text+0x940): undefined reference to `preloader_l::runtime::transient_release_pending()'
+collect2: error: ld returned 1 exit status
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch1.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch2.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/missing_ptd"]
+/usr/bin/ld: /tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o: in function `preloader_l::runtime::allocate_block(unsigned long, preloader_l::runtime::AllocationRetryPolicy, preloader_l::runtime::AllocatorPlatformOps const&)':
+/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/memory_allocator.cpp:15:(.text+0x116): undefined reference to `preloader_l::runtime::current_errno_slot()'
+collect2: error: ld returned 1 exit status
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch1.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch2.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/semantic_windows_branch"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/semantic_windows_branch"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_heap_paths.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_heap_paths"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_heap_paths"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_large_alignment.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_large_alignment"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_large_alignment"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_block.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_block"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_block"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_failure.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_failure"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_failure"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_validation.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_validation"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_validation"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_retry_policy.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_retry_policy"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_retry_policy"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_terminals.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_terminals"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_terminals"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_action_table.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_action_table"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_action_table"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_failure_teardown.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_failure_teardown"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_failure_teardown"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_fls_free.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_fls_free"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_fls_free"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_global_cleanup_order.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_global_cleanup_order"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_global_cleanup_order"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_intrusive_pending.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_intrusive_pending"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_intrusive_pending"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_lifecycle.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_lifecycle"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_lifecycle"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_retry_ownership.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_retry_ownership"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_retry_ownership"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_transient_allocation_owner.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_transient_allocation_owner"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/none/test_transient_allocation_owner"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/memory_allocator.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/ptd_runtime.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch0.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_utf8.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch1.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_normalize.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch2.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_semantic.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch3.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch4.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch1.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch2.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch3.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch4.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/semantic_windows_branch"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/semantic_windows_branch"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_heap_paths.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_heap_paths"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_heap_paths"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_large_alignment.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_large_alignment"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_large_alignment"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_block.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_block"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_block"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_failure.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_failure"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_failure"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_validation.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_validation"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_validation"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_retry_policy.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_retry_policy"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_retry_policy"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_terminals.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_terminals"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_terminals"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_action_table.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_action_table"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_action_table"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_failure_teardown.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_failure_teardown"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_failure_teardown"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_fls_free.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_fls_free"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_fls_free"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_global_cleanup_order.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_global_cleanup_order"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_global_cleanup_order"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_intrusive_pending.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_intrusive_pending"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_intrusive_pending"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_lifecycle.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_lifecycle"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_lifecycle"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_retry_ownership.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_retry_ownership"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_retry_ownership"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=address", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_transient_allocation_owner.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_transient_allocation_owner"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/address/test_transient_allocation_owner"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/memory_allocator.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/ptd_runtime.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch0.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_utf8.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch1.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_normalize.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch2.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_semantic.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch3.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "-D_WIN32", "-DREDFIELD_HEAP_SHIM", "-D__declspec(x)=", "-D__stdcall=", "-c", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch4.o"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch1.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch2.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch3.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch4.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/semantic_windows_branch"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/semantic_windows_branch"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_heap_paths.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_heap_paths"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_heap_paths"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_large_alignment.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_large_alignment"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_large_alignment"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_block.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_block"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_block"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_failure.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_failure"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_failure"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_validation.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_validation"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_validation"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_retry_policy.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_retry_policy"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_retry_policy"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_terminals.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_terminals"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_terminals"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_action_table.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_action_table"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_action_table"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_failure_teardown.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_failure_teardown"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_failure_teardown"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_fls_free.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_fls_free"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_fls_free"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_global_cleanup_order.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_global_cleanup_order"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_global_cleanup_order"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_intrusive_pending.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_intrusive_pending"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_intrusive_pending"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_lifecycle.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_lifecycle"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_lifecycle"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_retry_ownership.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_retry_ownership"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_retry_ownership"]
+
+$ ["g++", "-std=c++20", "-O1", "-g", "-UNDEBUG", "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include", "-fsanitize=undefined", "-fno-omit-frame-pointer", "-fno-pie", "-no-pie", "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_transient_allocation_owner.cpp", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o", "-o", "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_transient_allocation_owner"]
+
+$ ["/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_transient_allocation_owner"]

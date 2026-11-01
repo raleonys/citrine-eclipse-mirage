@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "checkpoint": "RF36",
+  "status": "SOURCE_CORRECTION_CONTROLLED_TESTS_ONLY",
+  "parent_checkpoint": "RF35",
+  "user_observation": {
+    "profile": "production",
+    "successful_compilations": 74,
+    "failed_unit": "src/windows/dll_entry.cpp",
+    "error": "C2127",
+    "line": 4,
+    "link_reached": false,
+    "prior_net_C2386": "PASSED_IN_USER_MSVC"
+  },
+  "observed_source_problem": "MSVC refuses the composite global WindowsWorker constinit declaration. The log provides no failing constructor subexpression; no particular compiler bug or member is asserted.",
+  "chosen_correction": "Explicit value initialization of an inert WindowsWorker using supported CRT construction before user DllMain; remove constinit at both entry compositions and constexpr on composite constructor.",
+  "constructor_contract": "Only member defaults,hook reference andcallback/context addresses;no heap/Win32 calls/threads/session cleanup. No function-local singleton or CRT bypass. Worker object remains static andhas trivial destruction.",
+  "startup_authority": "Default _DllMainCRTStartup; /MT production/native/CRT/verify and/MTd Debug; existing policy rejects /ENTRY,/NODEFAULTLIB,/NOENTRY for all5 profiles.",
+  "unchanged_lifecycle": "Attach schedules only;heap/service/hook work remains in worker thread. Shutdown joins then retires/retries,closes andunpins with external host-held reference. No global destructor shuts down live work.",
+  "fresh_controlled_tests": {
+    "comparison_cases": 22,
+    "executions": 44,
+    "module_regressions": 7,
+    "crt_policy_negatives": 15,
+    "constructor_side_effect_mutations_rejected": 2,
+    "trivial_destruction_assertions": 2
+  },
+  "application_files_changed": [
+    "src/windows/dll_entry.cpp",
+    "src/windows/worker_runtime.hpp",
+    "tests/native/dll_entry.cpp"
+  ],
+  "normal_regressions": "PENDING_CURRENT_FRESH_BUILD",
+  "windows_msvc": "NOT_RUN_RF36",
+  "native_game": "NOT_RUN_RF36",
+  "module_closure": "M14 whole-module review remains open;M02/M11 unchanged sources explicitly revalidated after caller dependency change.",
+  "official_reference_urls": [
+    "https://learn.microsoft.com/en-us/cpp/build/run-time-library-behavior?view=msvc-170",
+    "https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain",
+    "https://learn.microsoft.com/en-us/cpp/build/reference/entry-entry-point-symbol?view=msvc-170"
+  ],
+  "user_evidence": {
+    "evidence/rf36_user_rf35_production_build.log": "c5513a5af6b9e34691ccfde8fdf60d2239c3efcc6c957f5cde2f21fdd0e243f6",
+    "evidence/rf36_user_rf35_console.txt": "70b106d0bcc30a884f331782e9a6db8b6e8a9492e9a74ba1a1e7e33e593492ba"
+  },
+  "limits": [
+    "ControlledGCC host does not establish MSVC,SDK,Win32 loader orreal DLL acceptance.",
+    "Prior RF34 sanitizer/mutation evidence remains historical;not reissued asfresh.",
+    "No newwhole-module closure orqualification count increase."
+  ]
+}

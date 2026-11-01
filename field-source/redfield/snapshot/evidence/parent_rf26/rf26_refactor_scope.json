@@ -1,0 +1,21 @@
+{
+  "status": "PASS_SCOPED",
+  "changes": [
+    "User-requested restoration of preloader_l source identity;source guard now separates project branding from code names",
+    "Achievement uses shared SourceView/member-key lookup and std::string_view;no runtime text DTO dependency",
+    "Unpublished candidate destruction is owned by ConfigStore;manual stage-clearing path removed",
+    "Existing allocation-failure regression now covers Content/Entitlement/Achievement together"
+  ],
+  "preserved": [
+    "Totals-first ordering",
+    "Duplicate totals",
+    "First matching achievement name",
+    "Nested-leaf and raw bytes",
+    "Signed32-bit parsing including explicit plus and leading zeroes"
+  ],
+  "not_claimed": [
+    "Whole-codebase semantic audit complete",
+    "Fresh native Windows/game acceptance",
+    "Indexing/asymptotic speedup"
+  ]
+}

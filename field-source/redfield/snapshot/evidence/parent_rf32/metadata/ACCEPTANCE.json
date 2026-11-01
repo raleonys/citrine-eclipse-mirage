@@ -1,0 +1,50 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF32",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_BOUNDED_COMPOSITION_REFACTOR_NOT_RELEASE",
+  "normal_regressions": 97,
+  "parent_stdout_and_exit_equal": 96,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 158,
+  "normal_linked_outputs": 98,
+  "qa": {
+    "golden": 61,
+    "profiles": 64,
+    "boundary": 35,
+    "architecture": 13,
+    "encoding": 16,
+    "environment": 13,
+    "real_process": 7
+  },
+  "worker_checks": 21,
+  "worker_parent_current_comparisons": 16,
+  "worker_executions": 32,
+  "coverage_inventory_scenarios": 29,
+  "coverage_inventory_debug_hosts": 4,
+  "package_negatives": 2,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 298,
+    "qualified_files": 0,
+    "pending_files": 298,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "existing_application_files_changed": 1,
+  "new_application_files": 4,
+  "portable_core_body_changes": 0,
+  "production_entry_refactored": true,
+  "windows_native_game": "NOT_RUN_RF32",
+  "cmake": "NOT_RUN_TOOL_UNAVAILABLE",
+  "sanitizers": "PASS_ASAN_UBSAN_TARGETED",
+  "leak_sanitizer": "UNAVAILABLE_ENVIRONMENT_PTRACE_PROC",
+  "golden": "RF31 actualPythonchain retained;61syntheticPE QA;actualWindowsNOT_RUN",
+  "full_production_debug_crt_golden_migration": "PENDING_REAL_ACCEPTANCE_AND_FULL_COVERAGE",
+  "canonical_unchanged": true
+}

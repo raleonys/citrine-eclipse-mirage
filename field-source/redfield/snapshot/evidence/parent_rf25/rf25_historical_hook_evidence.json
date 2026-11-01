@@ -1,0 +1,7 @@
+{
+  "status": "HISTORICAL_RF24_NOT_RERUN",
+  "parent_receipt": "evidence/parent_rf24/rf24_hook_model_qa.json",
+  "cases": 81,
+  "tracked_inputs_unchanged": true,
+  "limit": "Retained historical source model;not fresh RF25 Windows/ABI/game acceptance"
+}

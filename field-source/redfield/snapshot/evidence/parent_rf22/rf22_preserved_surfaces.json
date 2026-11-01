@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "parent_zip_sha256": "b4ab019ab72947f80a19764bf9d358925f55854589dba981f4cf1a5e65c2b5e2",
+  "preserved_files": 1076,
+  "scope": "Every vendor file,production/native exports,CMake,MinHook pin+patch and35 route binding record byte-identical;252 parent application references hash-checked against exact ZIP"
+}

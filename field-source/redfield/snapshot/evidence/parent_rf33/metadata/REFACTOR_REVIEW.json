@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "checkpoint": "RF33",
+  "scope": "M13 bounded REG_SZ byte-output ownership extraction and source-proven misalignment fix",
+  "current_source_reviews_complete": [
+    "M01",
+    "M15",
+    "M16",
+    "M17"
+  ],
+  "remaining_source_modules": 16,
+  "implemented": [
+    "Separate caller byte-output contract from existing Win32 conversion/allocation policy",
+    "Reproduce parent misalignment with actual write_w fallback under UBSan",
+    "Add one portable output regression; current writer and fallback integration pass ASan/UBSan; three incorrect variants rejected"
+  ],
+  "remaining": [
+    "16 module reviews remain open; M13 whole-module review is not closed",
+    "298 maintained-code qualifications and four vendor integrations pending",
+    "Current Windows/MSVC, configured conversion and typed SDK ABI verification not run",
+    "Debug/native/CRT carryover scope and RFCL-005 remain open"
+  ],
+  "evidence": "evidence/rf33_registry_root_cause.json",
+  "worker_model": "evidence/rf32_worker_qa.json",
+  "limits": "Win32/WindowsHooks model isnot actualWindows execution"
+}

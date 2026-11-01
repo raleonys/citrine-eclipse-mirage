@@ -1,0 +1,40 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF26",
+  "refactor": "IDENTITY05",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_SCOPED_REFACTOR_QA_NOT_RELEASE",
+  "application_files": 262,
+  "normal_regressions": 96,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 157,
+  "normal_linked_outputs": 97,
+  "windows_compile_actions": 177,
+  "parent_stdout_equal": 95,
+  "normal_allocation_failure_points": 115,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "sanitizers": {
+    "address": 8,
+    "undefined": 8,
+    "leak_detection": false
+  },
+  "hook_model": {
+    "normal": 27,
+    "address": 27,
+    "undefined": 27,
+    "scope": "Fresh Linux Win32/MinHook shim;not Windows ABI"
+  },
+  "architecture_negatives": 13,
+  "package_negatives": 2,
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_runner_cases": 7,
+  "windows_native": "NOT_RUN_RF26",
+  "game": "NOT_RUN_RF26",
+  "cmake": "IDENTITY_ONLY_STATIC_CHECK;NOT_RUN_TOOL_UNAVAILABLE",
+  "scope": "Restore code identity and refactor Achievement projection primitives/lifetime;whole-codebase semantic refactor remains open"
+}

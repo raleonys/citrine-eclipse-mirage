@@ -1,0 +1,29 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF21",
+  "build_fix": "HOOKS01_FIX02",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_PORTABLE_SCOPED_QA_NOT_RELEASE",
+  "normal_regressions": 91,
+  "normal_core_objects": 59,
+  "normal_all_objects": 151,
+  "normal_linked_outputs": 92,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit": 14
+  },
+  "focused_sanitizer_profiles": [
+    "ASAN_NO_LEAKS_2_TESTS",
+    "UBSAN_2_TESTS"
+  ],
+  "leak_detection": "UNAVAILABLE_PROC_THREAD_INSPECTION_ENVIRONMENT_FAILURE",
+  "old_exact_callback": "FAILURE_REPRODUCED_AS_EXPECTED",
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_process_cases": 7,
+  "previous_fix01_native": "USER_LOG_FAIL_EXIT56; production DLL smoke and90 regressions passed",
+  "native_windows": "FIX02_NOT_RUN",
+  "game": "NOT_RUN",
+  "source_integrity": "PASS_FRESH_SCOPED",
+  "integrity_negatives": 4
+}

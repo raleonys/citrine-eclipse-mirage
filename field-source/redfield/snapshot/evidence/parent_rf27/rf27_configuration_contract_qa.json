@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "configuration_filename": "surge.cfg",
+  "production_basename_definitions": 1,
+  "module_anchor": "Absolute module parent only",
+  "independent_runtime_test": "test_service_session supplies surge.cfg,CWD decoy and DLL-stem decoy;missing surge never falls back",
+  "code_identity": "preloader_l",
+  "project_name_occurrences_in_active_application": 0,
+  "application_files": 262
+}

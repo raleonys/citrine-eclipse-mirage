@@ -1,0 +1,38 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF29",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_BOUNDED_BUILD_ROLE_REFACTOR_NOT_RELEASE",
+  "normal_regressions": 96,
+  "parent_stdout_and_exit_equal": 96,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 157,
+  "normal_linked_outputs": 97,
+  "windows_compile_actions": 177,
+  "boundary_import_cases": 30,
+  "architecture_negatives": 13,
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_cases": 7,
+  "package_negatives": 2,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 270,
+    "qualified_files": 0,
+    "pending_files": 270,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "application_body_changes": 0,
+  "application_exact_moves": 6,
+  "windows_native_game": "NOT_RUN_RF29",
+  "cmake": "NOT_RUN_TOOL_UNAVAILABLE",
+  "sanitizers": "NOT_RUN_RF29_NO_CPP_BODY_CHANGE",
+  "full_production_debug_crt_golden_migration": "PENDING",
+  "canonical_unchanged": true
+}

@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "checkpoint": "RF37",
+  "classification": "LOCAL_BUILD/NOT_RELEASE",
+  "scope": "DestinationGolden binding repair;noapplication source changes",
+  "parent_rf36_zip_sha256": "57eeb66a07466dedbf84c187a1be5f024c1bbdacb757422911344679e5f9d913",
+  "user_binary": {
+    "library_file_id": "libfile_c37c29a4d1c48191876e8ed91b675d32",
+    "sha256": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+    "bytes": 627712
+  },
+  "user_failure_receipt": {
+    "library_file_id": "libfile_745570d2ff1c8191ae1444bf346b7cdd",
+    "sha256": "0381eb0e931c669dc82575b690f4c3deb64b0e90849b309af8b8bb23490df335"
+  },
+  "source_binding": "All3090individualuser build-input hashes match exactRF36 source;originalWindows aggregate recomputed. DifferentLinux aggregate order is notsource divergence.",
+  "import_cause": "Exactly API-MS-WIN-CORE-SYNCH-L1-2-0.DLL missing fromdestination allowlist;3documented synchronization imports,no forbidden dynamicCRT family.",
+  "import_adaptation": {
+    "module": "API-MS-WIN-CORE-SYNCH-L1-2-0.DLL",
+    "exact_functions": [
+      "WaitOnAddress",
+      "WakeByAddressAll",
+      "WakeByAddressSingle"
+    ],
+    "optional_module": true,
+    "wildcards": false
+  },
+  "data_profile": {
+    "observed": {
+      "name": ".data",
+      "va": 593920,
+      "vs": 114116,
+      "raw": 587776,
+      "size": 10752,
+      "flags": 3221225536
+    },
+    "source_fixed_path_buffers": 98304,
+    "observed_virtual_remainder_after_path_bytes": 15812,
+    "destination_limit": 131072,
+    "other_state_budget": 32768,
+    "limits": "No exact linker-symbol attribution orclaimthat entire remainder isCRT;current source contains retained fixed96KiB path arrays. Existing source design is preserved."
+  },
+  "data_budget_rationale": "Retained registry bridge has32768char and32768uint16 path arrays=98304bytes. Destinationreserve forother static state is bounded32768bytes,total128KiB. Actualremainder15812bytes;not an exactCRT/symbol attribution. Do notforce runtime rewrites solely tofit inherited6KiB snapshot.",
+  "hygiene_remediation": "Three prioruser-log copies redact personalWindows path component;original attachments immutable. Historicaloriginalhash references explained byrf37_evidence_redactions.json. Rawbinary remains external,not sourceZIP.",
+  "retained_hf19_policy": "Fourpolicy files andallimmutableHF19 provenance remain byte-identical;adapt only validated localdestinationbinding/inmemoryeffectivepolicy.",
+  "official_sources": [
+    "https://learn.microsoft.com/en-us/windows/desktop/api/synchapi/nf-synchapi-waitonaddress",
+    "https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-wakebyaddresssingle",
+    "https://learn.microsoft.com/windows/win32/apiindex/windows-apisets"
+  ],
+  "validation": "ActualRF36PE CORVEXONpass;15negative cases. Fullordered chain checked aftersourcepreparation;see finalACCEPTANCE andrf37_full_golden.json.",
+  "limits": [
+    "NoRF37MSVC rebuild orcurrentgame/native/CRT/Debug acceptance.",
+    "UserRF36compile/link and3ABIcycles areactual supplied observations,not a newexecutionhere.",
+    "M20fullreview andglobalqualification remainopen;16qualified/284code+4vendorpending."
+  ]
+}

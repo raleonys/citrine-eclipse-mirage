@@ -514,5 +514,84 @@ class ToolCacheTests(unittest.TestCase):
                 for name in children:(scripts/name).with_suffix('.ran').unlink()
 
 
+class ResearchReferenceBoundaryTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        (self.root/'metadata').mkdir()
+        (self.root/'docs').mkdir()
+        (self.root/'docs/IDENTIFIER_POLICY.md').write_bytes((ROOT/'docs/IDENTIFIER_POLICY.md').read_bytes())
+        self.field = self.root/'field-source/redfield'
+        (self.field/'snapshot').mkdir(parents=True)
+        (self.field/'snapshot/original.cpp').write_bytes(b'// archival original\n')
+        manifest = {'field':'redfield','source_archive_sha256':'a'*64,
+                    'files':{'original.cpp':{'bytes':21,'sha256':inventory.digest(b'// archival original\n')}}}
+        (self.field/'SOURCE_FILE_HASHES.json').write_text(json.dumps(manifest))
+        (self.field/'README.md').write_bytes(b'Imported reference\n')
+        (self.field/'SOURCE_IMPORT_RECEIPT.json').write_bytes(b'{"snapshot_import_only":true}\n')
+        spec = {'archive_sha256':'a'*64,'file_count':1,
+                'pending_readme_sha256':inventory.digest(b'Pending reference\n')}
+        for name,key in [('README.md','imported_readme_sha256'),
+                         ('SOURCE_FILE_HASHES.json','file_manifest_sha256'),
+                         ('SOURCE_IMPORT_RECEIPT.json','receipt_sha256')]:
+            spec[key]=inventory.digest((self.field/name).read_bytes())
+        self.policy={'schema':'cem.field-source-import-policy.v1','fields':{'redfield':spec}}
+        self.save_policy()
+
+    def save_policy(self):
+        (self.root/'docs/FIELD_SOURCE_IMPORT_POLICY.json').write_text(json.dumps(self.policy))
+
+    def test_verified_reference_is_separate_from_application_inventory(self):
+        files=inventory.source_files(self.root)
+        self.assertIn('docs/FIELD_SOURCE_IMPORT_POLICY.json',files)
+        self.assertFalse(any(name.startswith('field-source/') for name in files))
+
+    def test_archival_names_are_documentary_and_active_names_remain_checked(self):
+        self.assertEqual(repository.check_active_identifiers(self.root),[])
+        (self.root/'src').mkdir()
+        label=repository.load_active_name_policy(self.root)[0]
+        (self.root/'src/live.cpp').write_text('// '+label+'\n')
+        self.assertTrue(repository.check_active_identifiers(self.root))
+        (self.field/'snapshot/original.cpp').write_bytes(b'changed')
+        with self.assertRaises(ValueError):repository.check_active_identifiers(self.root)
+
+    def test_changed_missing_and_extra_archival_bytes_fail_closed(self):
+        source=self.field/'snapshot/original.cpp'
+        source.write_bytes(b'// changed archival\n')
+        with self.assertRaises(ValueError):inventory.source_files(self.root)
+        source.unlink()
+        with self.assertRaises(ValueError):inventory.source_files(self.root)
+        source.write_bytes(b'// archival original\n')
+        (self.field/'snapshot/extra.cpp').write_bytes(b'extra')
+        with self.assertRaises(ValueError):inventory.source_files(self.root)
+
+    def test_changed_provenance_or_unknown_field_is_rejected(self):
+        receipt=self.field/'SOURCE_IMPORT_RECEIPT.json'
+        original=receipt.read_bytes();receipt.write_bytes(b'{}')
+        with self.assertRaises(ValueError):inventory.source_files(self.root)
+        receipt.write_bytes(original)
+        (self.root/'field-source/unregistered').mkdir()
+        with self.assertRaises(ValueError):inventory.source_files(self.root)
+
+    def test_reference_symlink_and_missing_registry_are_rejected(self):
+        source=self.field/'snapshot/original.cpp';source.unlink()
+        try:source.symlink_to(self.field/'README.md')
+        except (OSError,NotImplementedError):self.skipTest('Symlink creation unavailable')
+        with self.assertRaises(ValueError):inventory.source_files(self.root)
+        source.unlink();source.write_bytes(b'// archival original\n')
+        (self.root/'docs/FIELD_SOURCE_IMPORT_POLICY.json').unlink()
+        with self.assertRaises(OSError):inventory.source_files(self.root)
+
+    def test_only_exact_pending_scaffold_is_allowed(self):
+        for path in (self.field/'snapshot').iterdir():path.unlink()
+        (self.field/'snapshot').rmdir()
+        for name in ('SOURCE_FILE_HASHES.json','SOURCE_IMPORT_RECEIPT.json'):(self.field/name).unlink()
+        (self.field/'README.md').write_bytes(b'Pending reference\n')
+        inventory.source_files(self.root)
+        (self.field/'README.md').write_bytes(b'Unpinned scaffold\n')
+        with self.assertRaises(ValueError):inventory.source_files(self.root)
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

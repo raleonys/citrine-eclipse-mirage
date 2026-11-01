@@ -1,0 +1,13 @@
+from pathlib import Path
+import re,json,hashlib,zipfile
+R=Path('rf31_work/REDFIELD_RF31');P=Path('/tmp/rf30_final_zip_57ib1k4i/REDFIELD_RF30_BUILD_PROFILES01_FULL_SOURCE_NOT_RELEASE_2026-10-21.zip')
+sep=bytes([92]);rx=re.compile(b'[A-Z]:'+re.escape(sep+b'Users'+sep)+b'[^'+re.escape(sep)+b'\r\n\t ]+'+re.escape(sep),re.I);rows=[]
+with zipfile.ZipFile(P) as z:
+ for rel in ['evidence/parent_hooks01/parent_rf20_fix04_user_windows.txt','evidence/parent_hooks01/user_fix03_build.log']:
+  old=z.read('REDFIELD_RF30/'+rel);clean,count=rx.subn(lambda _:b'C:'+sep+b'Users'+sep+b'USERNAME'+sep,old)
+  assert count>0,(rel,rx.pattern)
+  current=(R/rel).read_bytes();assert current in {old,clean},rel
+  (R/rel).write_bytes(clean)
+  rows.append(dict(path=rel,original_sha256=hashlib.sha256(old).hexdigest(),redacted_sha256=hashlib.sha256(clean).hexdigest(),redacted_user_path_prefixes=count))
+(R/'metadata/REDACTIONS_RF31.json').write_text(json.dumps(dict(schema=1,checkpoint='RF31',scope='Current evidence only;original OEM bytes retained exceptASCII user path prefixes;no application/vendor/ancestry recipes changed',source_parent_zip_sha256='49281dce51461aaf2c245e9cad3637ef8868123518bd603a02111be474d7e652',source_parent_library_file_id='libfile_7ad6140833b48191809ec2edc3076de8',files=rows),indent=2)+'\n')
+print('CURRENT_EVIDENCE_REDACTION_PASS',len(rows),sum(x['redacted_user_path_prefixes'] for x in rows))

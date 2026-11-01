@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "parent": "RF31",
+  "equal_stdout_and_exit": 96,
+  "application_files_exact_parent": 261,
+  "existing_entry_refactored": 1,
+  "new_application_files": 4
+}

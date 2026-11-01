@@ -1,0 +1,14 @@
+{
+  "checkpoint": "RF20",
+  "status": "REJECTED_NO_RECEIPT",
+  "phase": "final linked output guard",
+  "observed_failure": "linked output lost execute permission: test_tcp_content",
+  "receipt_written": false,
+  "observed_mode": "0o644",
+  "observed_bytes": 10729040,
+  "observed_sha256": "1c98ca2f11c78acc9341fedabcc9c707441d2e310b0e6baae7e8e118d287f36f",
+  "root_cause": "NOT_ESTABLISHED",
+  "source_changed": false,
+  "repair": "No chmod or output repair for acceptance; fresh independent extraction and full rebuild",
+  "tests_executed": 70
+}

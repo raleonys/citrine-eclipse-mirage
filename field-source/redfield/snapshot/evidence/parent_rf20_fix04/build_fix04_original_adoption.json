@@ -1,0 +1,159 @@
+{
+  "canonical_hf19_zip_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "new_exact_members": 19,
+  "files": [
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "src/runtime/memory_allocator.cpp",
+      "destination": "src/runtime/memory_allocator.cpp",
+      "source_sha256": "27711d8eec6de26851e0b96b40a8d7504ec20776fd3802f66d53b6198d8ae399",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "src/runtime/ptd_runtime.cpp",
+      "destination": "src/runtime/ptd_runtime.cpp",
+      "source_sha256": "8f7d240c4b57972826f14b89436cdb1d7f5f618ef6ee7c703b0aefd4efc2fef5",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "include/preloader_l/runtime/ptd_runtime.hpp",
+      "destination": "include/preloader_l/runtime/ptd_runtime.hpp",
+      "source_sha256": "fd6108b6680ee80736930f01c128645a7a02f35c51ba43662e7654b7620f41f3",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/allocator_ptd_support.hpp",
+      "destination": "tests/adopted/allocator_ptd_support.hpp",
+      "source_sha256": "a0c0037cfcdbfbcacd020138b0d9f5daac6eea961bded7670e9384b09c7af75f",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_allocator_heap_paths.cpp",
+      "destination": "tests/adopted/test_allocator_heap_paths.cpp",
+      "source_sha256": "c0c0f575f1d2be7f46350702dd4567b83fffb942afa26791ded694c61481c646",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_allocator_large_alignment.cpp",
+      "destination": "tests/adopted/test_allocator_large_alignment.cpp",
+      "source_sha256": "33c7698a448220a2e71195136d339855eee2e0e0612abaa4f284c0d843da5c62",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_allocator_release_block.cpp",
+      "destination": "tests/adopted/test_allocator_release_block.cpp",
+      "source_sha256": "6d2ba86ea413419e42f3838dbe1667241819ce4945930a94e01c9aac6b5aad39",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_allocator_release_failure.cpp",
+      "destination": "tests/adopted/test_allocator_release_failure.cpp",
+      "source_sha256": "a070675427fc12bef0f4a188cdf426aafa67d5ddfdb272642e377ed8970eb02d",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_allocator_release_validation.cpp",
+      "destination": "tests/adopted/test_allocator_release_validation.cpp",
+      "source_sha256": "6e7f12c421a0a59513702682a9724776588b27345711b0eb3e5acd1b181a1d19",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_allocator_retry_policy.cpp",
+      "destination": "tests/adopted/test_allocator_retry_policy.cpp",
+      "source_sha256": "eaa3471fcc974f00223b8e21470ed6d09cddce39de9a6e2d6a7a29e951a197d0",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_allocator_terminals.cpp",
+      "destination": "tests/adopted/test_allocator_terminals.cpp",
+      "source_sha256": "136a8db630834215e5085b7c6151bc5d34d2b142b045932f81992d5797440e96",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_ptd_action_table.cpp",
+      "destination": "tests/adopted/test_ptd_action_table.cpp",
+      "source_sha256": "7f025ae1ed7bb54c3c6689fc854758f410c3d3838f19fe7fb26374aa8dab9855",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_ptd_failure_teardown.cpp",
+      "destination": "tests/adopted/test_ptd_failure_teardown.cpp",
+      "source_sha256": "2e575d66727fed475e085888457f62d66b807d568dc79fb83ace39d6e9c15bb4",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_ptd_fls_free.cpp",
+      "destination": "tests/adopted/test_ptd_fls_free.cpp",
+      "source_sha256": "3f717debe23c5e852012f6fb414c92fa57b64b464502b6b9fe4b4f4d97ea9de7",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_ptd_global_cleanup_order.cpp",
+      "destination": "tests/adopted/test_ptd_global_cleanup_order.cpp",
+      "source_sha256": "264b5e57d95a295a84c80858a238974532d91cf8d1fbedd34e19f3e3d1aba09a",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_ptd_intrusive_pending.cpp",
+      "destination": "tests/adopted/test_ptd_intrusive_pending.cpp",
+      "source_sha256": "e826595332a5de91eee5a694f98b5de99b150304515650551e6ededcecbcc61e",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_ptd_lifecycle.cpp",
+      "destination": "tests/adopted/test_ptd_lifecycle.cpp",
+      "source_sha256": "1780fd73a670388ca1ec849422c392ee98f0d37908bc7d388a23b7eb7d741646",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_ptd_retry_ownership.cpp",
+      "destination": "tests/adopted/test_ptd_retry_ownership.cpp",
+      "source_sha256": "230b85576a078349842acb3c15942c7423681ed971545cd39f93c3b09396fcc3",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    },
+    {
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "source_member": "tests/unit/test_transient_allocation_owner.cpp",
+      "destination": "tests/adopted/test_transient_allocation_owner.cpp",
+      "source_sha256": "35727bb126060721185f7a0a530ae2558fd8f01b183b1c0c316589621a249019",
+      "adoption": "BYTE_IDENTICAL",
+      "reason": "FIX04 complete original allocator/PTD dependency closure and original regressions"
+    }
+  ],
+  "status": "PASS_FRESH_ACTUAL_ARCHIVE_BYTE_COMPARISON"
+}

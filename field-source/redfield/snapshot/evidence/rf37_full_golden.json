@@ -1,0 +1,117 @@
+{
+  "status": "PASS_FULL_ORDERED_GOLDEN_REAL_RF36_USER_PE",
+  "source_checkpoint": "RF37",
+  "binary_compiled_checkpoint": "RF36",
+  "binary_sha256": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+  "binary_bytes": 627712,
+  "stages": [
+    {
+      "name": "URSYNEX Golden Finalizer",
+      "status": "PASS",
+      "before": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "after": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "info": {
+        "changed_bytes": 0
+      }
+    },
+    {
+      "name": "ARYRA Golden Layout",
+      "status": "PASS",
+      "before": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "after": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "info": {
+        "sections": [
+          ".text",
+          ".rdata",
+          ".data",
+          ".pdata",
+          ".fptable",
+          ".rsrc",
+          ".reloc"
+        ],
+        "exact_donor_rva_size_parity": false
+      }
+    },
+    {
+      "name": "MUSTAVEX Golden Metadata",
+      "status": "PASS",
+      "before": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "after": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "info": {
+        "internal_export_name": "preloader.unsigned.dll",
+        "versioninfo": "PINNED_COMPATIBILITY_ALLOWLIST",
+        "certificate_debug_rich_symbols": "ABSENT"
+      }
+    },
+    {
+      "name": "CORVEXON Golden Trail",
+      "status": "PASS",
+      "before": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "after": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "info": {
+        "exports": {
+          "DllMain": 1,
+          "DllShutdown": 3,
+          "SURGE": 2
+        },
+        "imports": [
+          "API-MS-WIN-CORE-SYNCH-L1-2-0.DLL",
+          "CRYPT32.DLL",
+          "KERNEL32.DLL",
+          "MSWSOCK.DLL",
+          "WS2_32.DLL"
+        ],
+        "entry_rva": 314960,
+        "machine": "x64",
+        "static_crt_import_check": "PASS",
+        "gs_cookie_rva": 595456,
+        "checksum": 671104,
+        "crt_entry_distinct_from_DllMain": true
+      }
+    },
+    {
+      "name": "FALCION Golden Cleaning",
+      "status": "PASS",
+      "before": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "after": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+      "info": {
+        "source_manifest_sha256": "7c72c4db143a1247e4816d7976b8d591d325cc37a6b932e6d51d6128fd53c08a",
+        "data_virtual_size": 114116,
+        "data_budget": 131072,
+        "scope": "LOCAL_REFACTOR_SOURCE_PACKAGE;not official flat release acceptance",
+        "import_refactor": {
+          "rule_revision": "2026-10-21.1",
+          "managed_files": 300,
+          "qualified_files": 16,
+          "pending_files": 284,
+          "pending_vendor_integrations": 4,
+          "status": "PENDING"
+        },
+        "package_checked": false
+      }
+    }
+  ],
+  "unchanged_binary_bytes": true,
+  "source_hygiene_negatives": [
+    {
+      "name": "data_virtual_size_over128KiB",
+      "status": "REJECTED_EXPECTED",
+      "error": "DATA_VIRTUAL_SIZE_BUDGET"
+    },
+    {
+      "name": "private_path",
+      "status": "REJECTED_EXPECTED",
+      "error": "HYGIENE_SENSITIVE_MATERIAL:evidence/qa_private_path.txt"
+    },
+    {
+      "name": "embedded_binary",
+      "status": "REJECTED_EXPECTED",
+      "error": "HYGIENE_GENERATED_OR_EMBEDDED_PAYLOAD:evidence/qa_embedded_binary.dll"
+    }
+  ],
+  "limits": [
+    "NoRF37MSVC rebuild;actualuserRF36PE andsource-boundGolden validation.",
+    "No realWindowsprocess/game execution here;user supplied3ABIcycles separately.",
+    "Sourcepackage FALCION applicability islocalrefactor scope,not officialrelease qualification."
+  ]
+}

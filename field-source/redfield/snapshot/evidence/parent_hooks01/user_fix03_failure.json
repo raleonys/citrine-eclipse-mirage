@@ -1,0 +1,17 @@
+{
+  "source": "user-provided local build.log",
+  "sha256": "37167c8f88d803409f18b3312c3b6bea01d04c7d655543dcd7eb56ef3b7b7c1c",
+  "status": "USER_REPORTED_NATIVE_EVIDENCE_NOT_EXECUTED_HERE",
+  "compiler": "MSVC 14.51.36231 HostX64/x64",
+  "vswhere_exit": 0,
+  "vsdevcmd_exit": 0,
+  "core_compilations_completed": 54,
+  "first_test_compile_exit": 0,
+  "first_link": "test_tcp_delivery.exe",
+  "first_link_exit": 2,
+  "unresolved_symbols": [
+    "allocate_transient_bytes",
+    "release_transient_bytes"
+  ],
+  "fix04_native_status": "NOT_RUN"
+}

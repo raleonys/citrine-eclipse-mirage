@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "byte_identical_files": 1076,
+  "scope": "Vendor,LICENSE,C exports,35 route bindings,MinHook pin/SAFE-FREEZE unchanged. All262 parent application references retain exact RF25 bytes;260 current application files equal explicit identity-only mapping;two scoped semantic/test changes are separately listed.",
+  "parent_zip_sha256": "f07222956f70d10a7d89a95f03533958545578ca46d66ad0b8c9b7a88f36506b"
+}

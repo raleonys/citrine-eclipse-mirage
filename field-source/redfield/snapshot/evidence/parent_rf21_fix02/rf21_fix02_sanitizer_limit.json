@@ -1,0 +1,7 @@
+{
+  "leak_detection": "UNAVAILABLE_IN_THIS_SANDBOX",
+  "initial_attempt": "LeakSanitizer fatal: cannot open /proc task; runtime cannot inspect threads",
+  "initial_attempt_status": "ENVIRONMENT_FAILURE_NOT_PASS",
+  "rerun": "Fresh ASan core compilation and two tests, detect_leaks=0; UBSan separately",
+  "windows": "NOT_RUN"
+}

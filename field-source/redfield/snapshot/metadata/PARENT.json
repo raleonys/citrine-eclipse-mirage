@@ -1,0 +1,9 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF37",
+  "parent_checkpoint": "RF36",
+  "parent_zip_sha256": "57eeb66a07466dedbf84c187a1be5f024c1bbdacb757422911344679e5f9d913",
+  "parent_library_file_id": null,
+  "parent_delivery": "ExactRF36ZIP delivered as/mnt/data/REDFIELD_RF36.zip;priorLibraryuploadtimedoutandwasnotblindlyretried;parentLibraryidentity unconfirmed",
+  "official_hf19_unchanged": true
+}

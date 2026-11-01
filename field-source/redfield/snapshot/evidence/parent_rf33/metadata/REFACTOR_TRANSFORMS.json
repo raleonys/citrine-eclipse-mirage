@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "checkpoint": "RF33",
+  "parent_zip_sha256": "6bbdb8efec0cf4c92b8d356d54023018c647cb568facbe7ef553a9b2010781e7",
+  "existing_application_files_changed": 1,
+  "new_application_files": 2,
+  "portable_core_body_changes": 0,
+  "changes": [
+    "One Windows registry value policy delegates all REG_SZ output to an allocation-free byte writer",
+    "UTF-16LE byte stores replace invalid uint16_t lvalues into caller BYTE storage",
+    "One independently registered boundary regression; build runner display/receipt labels only updated",
+    "Two new portable units qualified by current tests; existing registry module remains pending"
+  ],
+  "remaining": [
+    "16 module reviews remain open; M13 whole-module review is not closed",
+    "298 maintained-code qualifications and four vendor integrations pending",
+    "Current Windows/MSVC, configured conversion and typed SDK ABI verification not run",
+    "Debug/native/CRT carryover scope and RFCL-005 remain open"
+  ]
+}

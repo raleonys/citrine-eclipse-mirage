@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "parent": "RF27",
+  "equal_stdout_and_exit": 96,
+  "normal_allocation_failure_points": 115,
+  "scope": "Existing scenarios;not a complete semantic equivalence proof or Windows/game execution"
+}

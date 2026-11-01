@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: GPL-3.0-only
+#include "redfield/achievement_delivery.hpp"
+#include <iostream>
+using namespace redfield;using D=PreparedAchievementDelivery;
+#define CHECK(x) do{if(!(x)){std::cerr<<__LINE__<<": " #x "\n";return 1;}}while(false)
+constexpr auto prepared=GrantDeliveryResult::prepared;
+std::shared_ptr<ConfigSnapshot> seed(){auto s=std::make_shared<ConfigSnapshot>();s->achievements.push_back({"A","Alpha","","","","0000-00-00T00:00:00","0000-00-00T00:00:00",1,0,0});return s;}
+int main(){
+    xml::Request r;CHECK(xml::parse("<LSX><Request id='g'><GrantAchievement><AchievementId>A</AchievementId></GrantAchievement></Request></LSX>",r)==xml::Result::ok);AchievementSession owner;const auto initial=seed();CHECK(owner.initialize(initial)==AchievementSession::InitializeResult::initialized);D d;CHECK(prepare_achievement_delivery(owner,r,"stamp",{},d)==prepared);const auto rn=d.response().size(),en=d.completion_event().size();CHECK(rn && en);d.rollback();
+    const GrantWireBudget invalids[]={{rn,16384,32768},{16384,en,32768},{rn+1,en+1,rn+en-1},{0,16384,32768},{16384,0,32768},{16385,16384,32768},{16384,16385,32768},{16384,16384,32769}};
+    for(const auto& cap:invalids){CHECK(prepare_achievement_delivery(owner,r,"stamp",cap,d)==GrantDeliveryResult::limit && !d.active() && d.response().empty() && d.completion_event().empty() && owner.snapshot()==initial);CHECK(prepare_achievement_delivery(owner,r,"stamp",{},d)==prepared);d.rollback();}
+    CHECK(prepare_achievement_delivery(owner,r,"stamp",{rn+1,en+1,rn+en},d)==prepared && d.response().size()==rn && d.completion_event().size()==en);const std::string response(d.response()),event(d.completion_event());CHECK(prepare_achievement_delivery(owner,r,"other",{},d)==GrantDeliveryResult::rejected && d.response()==response && d.completion_event()==event && owner.snapshot()==initial);CHECK(d.commit());const auto done=owner.snapshot();CHECK(prepare_achievement_delivery(owner,r,"other",{},d)==GrantDeliveryResult::rejected && owner.snapshot()==done);d.rollback();CHECK(prepare_achievement_delivery(owner,r,"other",{rn+1,0,rn},d)==prepared && d.completion_event().empty() && d.commit() && owner.snapshot()==done);d.rollback();
+    const auto id=r.id;r.id={};CHECK(prepare_achievement_delivery(owner,r,"stamp",{},d)==GrantDeliveryResult::rejected && !d.active() && owner.snapshot()==done);r.id=id;
+    for(unsigned field=0;field<6;++field){auto bad=seed();auto& a=bad->achievements[0];std::string* values[]={&a.name,&a.description,&a.how_to,&a.image_id,&a.grant_date,&a.expiration};*values[field]=std::string(1,'\1');if(field==4)a.progress=a.total; // Preserve invalid old GrantDate in no-op.
+        AchievementSession fresh;CHECK(fresh.initialize(bad)==AchievementSession::InitializeResult::initialized);CHECK(prepare_achievement_delivery(fresh,r,"stamp",{},d)==GrantDeliveryResult::rejected && !d.active() && d.response().empty() && d.completion_event().empty() && fresh.snapshot()==bad);}
+    auto expanded=seed();expanded->achievements[0].name.assign(4000,'&');AchievementSession large;CHECK(large.initialize(expanded)==AchievementSession::InitializeResult::initialized);CHECK(prepare_achievement_delivery(large,r,"stamp",{},d)==GrantDeliveryResult::limit && !d.active() && d.response().empty() && large.snapshot()==expanded);
+    AchievementSession empty;const auto base=std::make_shared<ConfigSnapshot>();CHECK(empty.initialize(base)==AchievementSession::InitializeResult::initialized);CHECK(prepare_achievement_delivery(empty,r,"stamp",{16384,0,32768},d)==GrantDeliveryResult::limit && empty.snapshot()==base && base->achievements.empty());CHECK(prepare_achievement_delivery(empty,r,"stamp",{},d)==prepared && d.projected()->achievements.size()==1 && d.commit());d.rollback();
+    AchievementSession not_ready;CHECK(prepare_achievement_delivery(not_ready,r,"stamp",{},d)==GrantDeliveryResult::not_ready && !d.active());not_ready.close();CHECK(prepare_achievement_delivery(not_ready,r,"stamp",{},d)==GrantDeliveryResult::not_ready);
+    std::cout<<"GRANT_COUPLED_FRAME_TOTAL_CAP_NUL_UNSAFE_ROLLBACK_RETRY_PASS\n";
+}

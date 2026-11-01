@@ -1,0 +1,16 @@
+@echo off
+setlocal EnableExtensions DisableDelayedExpansion
+title REDFIELD - production Local Build
+echo ================================================================
+echo   REDFIELD RF32 COMPOSITION 01 - LOCAL BUILD / NOT RELEASE
+echo   production: separate objects, CRT and outputs
+echo ================================================================
+python -u "%~dp0build_production.py" %*
+set "PRELOADER_L_CHILD_EXIT=%ERRORLEVEL%"
+echo.
+if "%PRELOADER_L_CHILD_EXIT%"=="0" (echo RESULT: SCOPED PASS - see receipt scope) else (echo RESULT: FAIL - see build log/failure evidence)
+echo EXIT CODE: %PRELOADER_L_CHILD_EXIT%
+echo OUTPUT: "%~dp0..\..\build\production"
+echo.
+pause
+exit /b %PRELOADER_L_CHILD_EXIT%

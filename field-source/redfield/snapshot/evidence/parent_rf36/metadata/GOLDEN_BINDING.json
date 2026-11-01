@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "status": "BOUND_LOCAL_M20_3",
+  "classification": "LOCAL_BUILD/NOT_RELEASE",
+  "owner": "M20",
+  "canonical_hf19_zip_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "sources": [
+    {
+      "path": "provenance/hf19_golden/scripts/ursynex_golden_finalizer.py",
+      "origin": "scripts/ursynex_golden_finalizer.py",
+      "sha256": "18607ee2cbaaec4655b5734ef5fc79b0c6a521dc3bdda6c8cc8dab13064ac9a0"
+    },
+    {
+      "path": "provenance/hf19_golden/scripts/verify_aryra_golden_layout.py",
+      "origin": "scripts/verify_aryra_golden_layout.py",
+      "sha256": "57f983922efa842f3680b84cde34ef7e3fc7ec0362cda918dd68029625b49968"
+    },
+    {
+      "path": "provenance/hf19_golden/scripts/verify_mustavex_golden_metadata.py",
+      "origin": "scripts/verify_mustavex_golden_metadata.py",
+      "sha256": "c07619b97faf10d1ec670ffae37ea3ced42a9ac601f9eb2b8989e89eadfadaeb"
+    },
+    {
+      "path": "provenance/hf19_golden/scripts/verify_corvexon_golden_trail.py",
+      "origin": "scripts/verify_corvexon_golden_trail.py",
+      "sha256": "f1b4772f7b1f03c956e038dc9535868d278595df8295487610dafc09f7bac38e"
+    },
+    {
+      "path": "provenance/hf19_golden/scripts/check_falcion_golden_cleaning.py",
+      "origin": "scripts/check_falcion_golden_cleaning.py",
+      "sha256": "e2268ffda5572a96404e6c426e83183f8c47a5027814723a5fc338687d75196b"
+    },
+    {
+      "path": "provenance/hf19_golden/scripts/check_data_footprint.py",
+      "origin": "scripts/check_data_footprint.py",
+      "sha256": "c4c128947aeb6723d7b764770ee3afde6769a6ac2787c37f5f18b5fceb6d4963"
+    },
+    {
+      "path": "provenance/hf19_golden/scripts/check_msvc_shipping_link_command.py",
+      "origin": "scripts/check_msvc_shipping_link_command.py",
+      "sha256": "fca29b17ca5b8e91e9630dcf2a649b98c18ac0656e0cbca898224068765d298d"
+    },
+    {
+      "path": "provenance/hf19_golden/scripts/test_pe_metadata_tools.py",
+      "origin": "scripts/test_pe_metadata_tools.py",
+      "sha256": "720e270db1ad89e0bb8e3a802027af20a66c6f6074c67e3048198d12a90ad045"
+    },
+    {
+      "path": "provenance/hf19_golden/metadata/URSYNEX_GOLDEN_FINALIZER.json",
+      "origin": "metadata/URSYNEX_GOLDEN_FINALIZER.json",
+      "sha256": "ca89b8771b37d7c34dec2a51bea89085a466e0bb8a1427bf93fe72b51ae8128b"
+    },
+    {
+      "path": "provenance/hf19_golden/metadata/ARYRA_GOLDEN_LAYOUT.json",
+      "origin": "metadata/ARYRA_GOLDEN_LAYOUT.json",
+      "sha256": "ed8a238401570703639df1890b38ce87a45bb4db4ffcb158095a7a6555814245"
+    },
+    {
+      "path": "provenance/hf19_golden/metadata/MUSTAVEX_GOLDEN_METADATA.json",
+      "origin": "metadata/MUSTAVEX_GOLDEN_METADATA.json",
+      "sha256": "99e08f4352a4ba31eca610c7cddede065af07de92864e50e751204e3c26f657a"
+    },
+    {
+      "path": "provenance/hf19_golden/metadata/CORVEXON_GOLDEN_TRAIL.json",
+      "origin": "metadata/CORVEXON_GOLDEN_TRAIL.json",
+      "sha256": "bf40efa4e75d104ee617f5725ea90cd999a62b23393354960350635408ef7588"
+    },
+    {
+      "path": "provenance/hf19_golden/metadata/CRT_STATIC_CONTRACT.json",
+      "origin": "metadata/CRT_STATIC_CONTRACT.json",
+      "sha256": "b6b9673252faf7edd5e4a7c356d86feefdce8e6f6c4e98822cfdcfeee0faa937"
+    },
+    {
+      "path": "provenance/hf19_golden/resources/preloader_version.rc",
+      "origin": "resources/preloader_version.rc",
+      "sha256": "454af99b76a4e1fc287c8af0f324c485744015e589736d1c267582651a5de693"
+    },
+    {
+      "path": "provenance/hf19_golden/exports/preloader_l.def",
+      "origin": "exports/preloader_l.def",
+      "sha256": "4700a091f2f7c3cf27869346ee3254528aba1a230d7cf1644a863b7787447bae"
+    }
+  ],
+  "retained_policies": [
+    "URSYNEX_GOLDEN_FINALIZER",
+    "ARYRA_GOLDEN_LAYOUT",
+    "MUSTAVEX_GOLDEN_METADATA",
+    "CORVEXON_GOLDEN_TRAIL"
+  ],
+  "retained_metadata_values": "Exact existing compatibility VERSIONINFO/linker/timestamp/export internal name;not project release version;no new identity invented",
+  "resource_source": "resources/preloader_version.rc",
+  "shipping_runtime": "/MT",
+  "shipping_gs": "/GS",
+  "data_virtual_size_limit": 6144,
+  "require_static_fptable_for_production": true,
+  "additional_forbidden_identity_tokens": [
+    "REDFIELD"
+  ],
+  "hygiene_profile": "LOCAL_REFACTOR_SOURCE_PACKAGE",
+  "hygiene_adaptation": "Use current PACKAGE_MANIFEST/source-role/import authority;retain bounded immutable evidence/provenance for local refactor,never infer official flat release acceptance;generated build/dist/cache excluded from immutable source andforbidden inpackage",
+  "link_audit_adaptation": "Use actual BuildSession command/object/resource/tool receipt,not historical CMake generated-file grep",
+  "pending_acceptance": [
+    "Actual current MSVC/Windows production/Debug/native/CRT andgame",
+    "Full HF19 native/CRT stress anddebug diagnostics applicability",
+    "Official release/package qualification andall semantic import reviews"
+  ]
+}

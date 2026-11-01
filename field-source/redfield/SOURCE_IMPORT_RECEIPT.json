@@ -1,0 +1,17 @@
+{
+  "archive_basename": "REDFIELD_RF37_GOLDEN_BINDING_FIX01_FULL_SOURCE_NOT_RELEASE_2026-10-21.zip",
+  "archive_sha256": "e9e6eb8ffe0aa24d4e21a12273aeac32791119b07df82cccaa09394d363f1fc6",
+  "field": "redfield",
+  "file_count": 3796,
+  "import_parent_commit": "8ac2de66dda844d403405463881f6a04acc785ec",
+  "main_application_unchanged": true,
+  "native_or_game_acceptance_inherited": false,
+  "not_release": true,
+  "schema": "cem.field-source-import.v1",
+  "snapshot_import_only": true,
+  "source_branch": "research/field-retirement/redfield",
+  "source_class": "NOT_RELEASE_REFERENCE",
+  "source_file_manifest_sha256": "6bc9ab6ac94ab8878c4d708da4d3cf056457574334afa8e00f952d2aa2c7e703",
+  "source_import_kit_sha256": "62383643ff46d1cb65a5d1d6c2bb2d2a6607e7b5da5f267deb57dddd6f7a8886",
+  "uncompressed_bytes": 58456581
+}

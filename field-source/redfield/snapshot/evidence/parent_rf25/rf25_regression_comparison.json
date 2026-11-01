@@ -1,0 +1,9 @@
+{
+  "parent_count": 95,
+  "equal_stdout_and_exit": 95,
+  "new_tests": [
+    "test_record_projection_transaction"
+  ],
+  "normal_allocation_failure_points": 76,
+  "limit": "Existing scenarios only;not complete equivalence or native game evidence"
+}

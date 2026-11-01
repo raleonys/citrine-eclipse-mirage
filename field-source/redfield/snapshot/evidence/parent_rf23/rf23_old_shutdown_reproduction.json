@@ -1,0 +1,6 @@
+{
+  "status": "DEFECT_REPRODUCED",
+  "parent_zip_sha256": "bacc81fd6bbcf8170e1a2b651f1639a56541bc2152ad6ace913cb668530a5d20",
+  "result": "OLD_CLEAN_WORKER shutdown=0 unpins=1 pending=1",
+  "scope": "Actual RF22 WorkerOwner+allocator/PTD linked on Linux,signaled-thread and failing-free test backend; not observed Windows failure"
+}

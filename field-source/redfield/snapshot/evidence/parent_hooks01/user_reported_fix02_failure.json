@@ -1,0 +1,8 @@
+{
+  "provenance": "USER_PROVIDED_CONSOLE_TEXT; not independently executed here",
+  "visual_studio_discovery_exit": 0,
+  "vsdevcmd_exit": 0,
+  "error": "WinError32 during rf_vs_xxfa02xi directory cleanup",
+  "phase": "Before compiler selection/core compilation",
+  "locking_process": "NOT_IDENTIFIED"
+}

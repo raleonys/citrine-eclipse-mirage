@@ -1,0 +1,24 @@
+{
+  "negatives": [
+    {
+      "case": "builder",
+      "status": "EXPECTED_REJECTION",
+      "reason": "SHA_MISMATCH"
+    },
+    {
+      "case": "launcher",
+      "status": "EXPECTED_REJECTION",
+      "reason": "LAUNCHER_SET_MISMATCH"
+    },
+    {
+      "case": "vendor",
+      "status": "EXPECTED_REJECTION",
+      "reason": "ADOPTION_MISMATCH"
+    },
+    {
+      "case": "replacement",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DERIVATION_MISMATCH"
+    }
+  ]
+}

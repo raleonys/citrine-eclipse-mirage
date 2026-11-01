@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "production_objects": 58,
+  "test_support_objects": 2,
+  "production_ptd_allocator_model_symbols_absent": true,
+  "test_support_model_symbols_present": true,
+  "scope": "Real GCC objects;Windows CRT/import evidence remains NOT_RUN"
+}

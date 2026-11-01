@@ -1,0 +1,303 @@
+{
+  "status": "PASS",
+  "scope": "Actual Python Golden functions/CLI andfilesystem operations;all PE fixtures synthetic andneverexecuted;MSVC/Windows/currentDLL NOT_RUN",
+  "cases": [
+    {
+      "case": "synthetic_full_final_PE_acceptance",
+      "status": "PASS",
+      "fixture_only": true,
+      "changed_bytes": 40
+    },
+    {
+      "case": "finalizer_idempotence",
+      "status": "PASS"
+    },
+    {
+      "case": "historical_six_section_layout_retained",
+      "status": "PASS"
+    },
+    {
+      "case": "original_finalizer_exact_byte_parity_on_synthetic_PE",
+      "status": "PASS"
+    },
+    {
+      "case": "original_old_aryra_accepts_same_synthetic_final_PE",
+      "status": "PASS"
+    },
+    {
+      "case": "original_old_metadata_accepts_same_synthetic_final_PE",
+      "status": "PASS"
+    },
+    {
+      "case": "original_old_corvexon_accepts_same_synthetic_final_PE",
+      "status": "PASS"
+    },
+    {
+      "case": "actual_five_stage_controller_order_hash_chain_and_source_hygiene",
+      "status": "PASS",
+      "windows": "NOT_RUN"
+    },
+    {
+      "case": "actual_scoped_cli_0",
+      "status": "PASS",
+      "exit": 0
+    },
+    {
+      "case": "actual_scoped_cli_1",
+      "status": "PASS",
+      "exit": 0
+    },
+    {
+      "case": "actual_scoped_cli_2",
+      "status": "PASS",
+      "exit": 0
+    },
+    {
+      "case": "actual_scoped_cli_3",
+      "status": "PASS",
+      "exit": 0
+    },
+    {
+      "case": "actual_scoped_cli_4",
+      "status": "PASS",
+      "exit": 0
+    },
+    {
+      "case": "finalizer_atomic_rename_failure",
+      "status": "EXPECTED_REJECTION",
+      "reason": "injected rename failure"
+    },
+    {
+      "case": "finalizer_failure_preserves_original_and_cleans_temp",
+      "status": "PASS"
+    },
+    {
+      "case": "stale_finalizer_input",
+      "status": "EXPECTED_REJECTION",
+      "reason": "FINALIZER_INPUT_CHANGED"
+    },
+    {
+      "case": "wrong_layout_raw_alignment",
+      "status": "EXPECTED_REJECTION",
+      "reason": "SECTION_RAW_ALIGNMENT"
+    },
+    {
+      "case": "virtual_overlap",
+      "status": "EXPECTED_REJECTION",
+      "reason": "SECTION_OVERLAP"
+    },
+    {
+      "case": "fptable_size",
+      "status": "EXPECTED_REJECTION",
+      "reason": "FPTABLE_PROFILE"
+    },
+    {
+      "case": "fptable_nonzero",
+      "status": "EXPECTED_REJECTION",
+      "reason": "FPTABLE_PROFILE"
+    },
+    {
+      "case": "writable_executable",
+      "status": "EXPECTED_REJECTION",
+      "reason": "WRITABLE_EXECUTABLE_SECTION"
+    },
+    {
+      "case": "image_size_truncated",
+      "status": "EXPECTED_REJECTION",
+      "reason": "SIZE_OF_IMAGE"
+    },
+    {
+      "case": "timestamp_drift",
+      "status": "EXPECTED_REJECTION",
+      "reason": "FINAL_METADATA"
+    },
+    {
+      "case": "debug_directory",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DEBUG_DIRECTORY"
+    },
+    {
+      "case": "certificate_directory",
+      "status": "EXPECTED_REJECTION",
+      "reason": "CERTIFICATE_DIRECTORY"
+    },
+    {
+      "case": "coff_symbol_table",
+      "status": "EXPECTED_REJECTION",
+      "reason": "COFF_SYMBOLS"
+    },
+    {
+      "case": "resource_cycle",
+      "status": "EXPECTED_REJECTION",
+      "reason": "RESOURCE_CYCLE"
+    },
+    {
+      "case": "resource_payload_outside_directory",
+      "status": "EXPECTED_REJECTION",
+      "reason": "RESOURCE_PAYLOAD_OUTSIDE"
+    },
+    {
+      "case": "versioninfo_value_range",
+      "status": "EXPECTED_REJECTION",
+      "reason": "VERSIONINFO_VALUE_RANGE"
+    },
+    {
+      "case": "versioninfo_fixed",
+      "status": "EXPECTED_REJECTION",
+      "reason": "VERSIONINFO_FIXED"
+    },
+    {
+      "case": "entry_bypasses_crt",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DEFAULT_CRT_ENTRY_RELATION"
+    },
+    {
+      "case": "gs_load_config_missing",
+      "status": "EXPECTED_REJECTION",
+      "reason": "GS_LOAD_CONFIG_REQUIRED"
+    },
+    {
+      "case": "gs_cookie_outside_image",
+      "status": "EXPECTED_REJECTION",
+      "reason": "GS_COOKIE_RANGE"
+    },
+    {
+      "case": "gs_cookie_not_writable",
+      "status": "EXPECTED_REJECTION",
+      "reason": "GS_COOKIE_WRITABLE_SECTION"
+    },
+    {
+      "case": "checksum_corrupt",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PE_CHECKSUM"
+    },
+    {
+      "case": "delay_import",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DELAY_IMPORTS_NOT_APPROVED"
+    },
+    {
+      "case": "optional_header_claim_too_short",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OPTIONAL_HEADER_TRUNCATED"
+    },
+    {
+      "case": "truncated_PE_header",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PE_TRUNCATED"
+    },
+    {
+      "case": "changed_policy_reloaded_and_rejected",
+      "status": "EXPECTED_REJECTION",
+      "reason": "RETAINED_POLICY_DRIFT"
+    },
+    {
+      "case": "archive_reference_hash_drift",
+      "status": "EXPECTED_REJECTION",
+      "reason": "REFERENCE_HASH"
+    },
+    {
+      "case": "dictionary_isnot_production_outcome",
+      "status": "EXPECTED_REJECTION",
+      "reason": "GOLDEN_OUTCOME"
+    },
+    {
+      "case": "reordered_stage_proof",
+      "status": "EXPECTED_REJECTION",
+      "reason": "GOLDEN_OUTCOME"
+    },
+    {
+      "case": "candidate_changed_after_gates",
+      "status": "EXPECTED_REJECTION",
+      "reason": "GOLDEN_OUTCOME"
+    },
+    {
+      "case": "read_only_stage_mutation",
+      "status": "EXPECTED_REJECTION",
+      "reason": "READ_ONLY_STAGE_MUTATED"
+    },
+    {
+      "case": "failed_stage_recorded_and_chain_stops",
+      "status": "PASS"
+    },
+    {
+      "case": "local_package_exact_membership_and_bytes",
+      "status": "PASS"
+    },
+    {
+      "case": "package_REDFIELD_RF31/../bad",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PACKAGE_PATH"
+    },
+    {
+      "case": "package_REDFIELD_RF31/LICENSE",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PACKAGE_PATH"
+    },
+    {
+      "case": "package_REDFIELD_RF31/license",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PACKAGE_PATH"
+    },
+    {
+      "case": "package_REDFIELD_RF31/build/leak.obj",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PACKAGE_BYTES_OR_MEMBERSHIP"
+    },
+    {
+      "case": "package_byte_tamper",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PACKAGE_BYTES_OR_MEMBERSHIP"
+    },
+    {
+      "case": "data_budget_retained_at_final_stage",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DATA_VIRTUAL_SIZE_BUDGET"
+    },
+    {
+      "case": "data_budget_failure_keeps_prior_four_stages_read_only",
+      "status": "PASS"
+    },
+    {
+      "case": "sensitive_material_0",
+      "status": "EXPECTED_REJECTION",
+      "reason": "HYGIENE_SENSITIVE_MATERIAL"
+    },
+    {
+      "case": "sensitive_material_1",
+      "status": "EXPECTED_REJECTION",
+      "reason": "HYGIENE_SENSITIVE_MATERIAL"
+    },
+    {
+      "case": "sensitive_material_2",
+      "status": "EXPECTED_REJECTION",
+      "reason": "HYGIENE_SENSITIVE_MATERIAL"
+    },
+    {
+      "case": "sensitive_material_3",
+      "status": "EXPECTED_REJECTION",
+      "reason": "HYGIENE_SENSITIVE_MATERIAL"
+    },
+    {
+      "case": "sensitive_material_4",
+      "status": "EXPECTED_REJECTION",
+      "reason": "HYGIENE_SENSITIVE_MATERIAL"
+    },
+    {
+      "case": "sensitive_material_5",
+      "status": "EXPECTED_REJECTION",
+      "reason": "HYGIENE_SENSITIVE_MATERIAL"
+    },
+    {
+      "case": "sensitive_material_6",
+      "status": "EXPECTED_REJECTION",
+      "reason": "HYGIENE_SENSITIVE_MATERIAL"
+    },
+    {
+      "case": "local_ancestry_retained_without_official_flat_release_claim",
+      "status": "PASS"
+    }
+  ],
+  "original_finalizer_parity": true,
+  "production_cpp_changes": 0
+}

@@ -1,0 +1,17 @@
+{
+  "source_input_sha256": "22de5e6452de4640339d3014cb1649c450ddb42def1d4b2e7f8f9d09991afb66",
+  "cases": [
+    {
+      "case": "modified_builder",
+      "status": "EXPECTED_REJECTION",
+      "exit_code": 1,
+      "expected": "SHA_MISMATCH"
+    },
+    {
+      "case": "missing_launcher",
+      "status": "EXPECTED_REJECTION",
+      "exit_code": 1,
+      "expected": "LAUNCHER_SET_MISMATCH"
+    }
+  ]
+}

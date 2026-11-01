@@ -1,0 +1,16 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF21",
+  "build_fix": "HOOKS01_FIX01",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_FOCUSED_TOOLING_QA_NOT_RELEASE",
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_process_cases": 7,
+  "cpp": "BYTE_IDENTICAL_TO_PARENT;NO_FRESH_FULL_CPP_RERUN",
+  "native_windows": "NOT_RUN",
+  "game": "NOT_RUN",
+  "prior_90_regressions_and_81_hook_scenarios": "Historical parent evidence only; not fresh FIX01 acceptance",
+  "source_integrity": "PASS_FRESH_SCOPED",
+  "integrity_negatives": 4
+}

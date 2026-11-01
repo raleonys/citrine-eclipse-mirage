@@ -1,0 +1,8 @@
+{
+  "parent_count": 94,
+  "equal_stdout_and_exit": 94,
+  "new_tests": [
+    "test_config_snapshot_view"
+  ],
+  "limit": "Existing scenarios only; not complete equivalence or native game evidence"
+}

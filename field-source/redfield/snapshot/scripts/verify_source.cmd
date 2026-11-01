@@ -1,0 +1,15 @@
+@echo off
+setlocal
+title REDFIELD - Source Integrity Verification
+echo ================================================================
+echo   REDFIELD RF32 BUILD BOUNDARY REFACTOR 01 - Source Integrity Verification
+echo ================================================================
+python "%~dp0verify_source.py" %*
+set "PRELOADER_L_CHILD_EXIT=%ERRORLEVEL%"
+echo.
+if "%PRELOADER_L_CHILD_EXIT%"=="0" (echo RESULT: PASS) else (echo RESULT: FAIL)
+echo EXIT CODE: %PRELOADER_L_CHILD_EXIT%
+echo SOURCE: "%~dp0.."
+echo.
+pause
+exit /b %PRELOADER_L_CHILD_EXIT%

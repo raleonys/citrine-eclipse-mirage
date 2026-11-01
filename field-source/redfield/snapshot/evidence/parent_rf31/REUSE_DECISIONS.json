@@ -1,0 +1,15 @@
+{
+  "checkpoint": "RF31",
+  "project": "REDFIELD",
+  "code_identity": "preloader_l",
+  "configuration_filename": "surge.cfg",
+  "policy_revision": "2026-10-21.1",
+  "mandatory_import_refactor": true,
+  "managed_code_records": 294,
+  "qualified_records": 0,
+  "vendor_integrations_pending": 4,
+  "local_build_with_pending_review": true,
+  "whole_refactor_closure_with_pending_review": false,
+  "hf19_golden_carryover": "15 exact references;algorithms integrated into bounded PE/per-root policy/current session interfaces;four policies and compatibility values retained explicitly",
+  "limits": "Synthetic PE/Windows mocks validate Python gates and orchestration,not real MSVC DLL or semantic optimality"
+}

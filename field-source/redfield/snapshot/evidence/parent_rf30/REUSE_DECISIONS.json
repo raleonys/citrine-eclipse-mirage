@@ -1,0 +1,15 @@
+{
+  "checkpoint": "RF30",
+  "project": "REDFIELD",
+  "code_identity": "preloader_l",
+  "configuration_filename": "surge.cfg",
+  "policy_revision": "2026-10-21.1",
+  "mandatory_import_refactor": true,
+  "managed_code_records": 281,
+  "qualified_records": 0,
+  "vendor_integrations_pending": 4,
+  "local_build_with_pending_review": true,
+  "whole_refactor_closure_with_pending_review": false,
+  "hf19_build_carryover": "Exact9 archived scripts;contracts adapted into existing RF29 compiler/process engine;no parallel maintained PowerShell backend",
+  "limits": "New source-bound build tests are not actual Windows orGolden evidence andnot proof of semantic optimality"
+}

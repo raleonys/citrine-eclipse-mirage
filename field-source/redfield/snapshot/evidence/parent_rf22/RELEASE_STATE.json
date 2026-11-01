@@ -1,0 +1,17 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF22",
+  "classification": "NON_RELEASE_WORK",
+  "status": "NOT_RELEASE",
+  "semantic_version": null,
+  "official_codename": null,
+  "public_abi": "DllMain @1, SURGE @2, DllShutdown @3 unchanged;35 plaintext local routes;seven new Windows MinHook detours;SURGE passive",
+  "runtime_compatibility": "PARENT_USER_REPORTS_GAME_LAUNCH;RF22_NOT_VERIFIED",
+  "canonical_release_mutation": false,
+  "known_diagnostic": "RF03-QA-001 unchanged original GetConfig diagnostic exit14, separate from passing regressions",
+  "derivation_scope": "253 maintained application files with ancestry recipes;1327 immutable adoptions are vendor/reference material, never an exemption for active application code",
+  "windows_msvc": "RF22_NOT_RUN",
+  "current_regressions": 92,
+  "refactor": "UNIFIED01",
+  "scope": "All maintained application namespaces/includes/tests unified; legacy global API bridge removed; explicit service retirement owner; no new routes/hooks/protocol features"
+}

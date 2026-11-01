@@ -1,0 +1,10 @@
+{
+  "commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+  "source": "third_party/minhook/upstream/src/hook.c",
+  "source_sha256": "3060d3c42f03a2f11324cbee95d853071757ed0fe4b1bc9eb5f0d8fc9e346a37",
+  "replacement": "provenance/minhook/hook_safe_freeze.c",
+  "replacement_sha256": "7485de758b0d1e841fff185b7588f2c0e41e42d6d87faee4162ede935aed713b",
+  "patch": "scripts/build_orchestration/PatchMinHookSafeFreeze.cmake",
+  "patch_sha256": "0c6a6f72d558b2114a02fccec6e25e0d360714a9ac9bf9a6a4f18e42af928fe2",
+  "materialization": "Exact five marker replacements and two string replacements from existing approved CMake patch; CMake independent replay required by CMake build"
+}

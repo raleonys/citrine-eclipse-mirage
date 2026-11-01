@@ -1,0 +1,129 @@
+#include "redfield/windows_hooks.hpp"
+#include "redfield/hook_configuration.hpp"
+#include "redfield/platform/minhook_runtime.hpp"
+#include "redfield/platform/connect_redirect.hpp"
+#include "redfield/platform/crypt_wrapper.hpp"
+#include "redfield/platform/registry_hook_runtime.hpp"
+#include "registry_hook_runtime_internal.hpp"
+#include <MinHook.h>
+#include <cassert>
+#include <chrono>
+#include <thread>
+#include <cstring>
+#include <cstdlib>
+#include <map>
+#include <string>
+#include <vector>
+#include <cstdio>
+using namespace redfield::platform;
+struct Hook { void* detour; bool queued=false,enabled=false; };
+static std::map<void*,Hook> hooks;
+static std::map<std::string,void*> names;
+static unsigned creates=0,queues=0,applies=0,removes=0,loads=0,module_refs=0;
+static unsigned fail_create=0,fail_queue=0,fail_load=0,fail_free=0,fail_remove=0,fail_apply=0;
+static bool always_fail_apply=false,initialized=false;
+static void* fail_remove_target=nullptr;
+static thread_local unsigned long last_error=7;
+static unsigned short forwarded_port=0;
+static const void* forwarded_address=nullptr;
+static const void* crypt_object=nullptr;
+static unsigned long crypt_incoming_error=0;
+struct Address { uint16_t family,port; uint8_t ip[4],zero[8]; };
+static int original_connect(uintptr_t,const void* address,int size) {
+    forwarded_address=address;
+    if(address && size==16)forwarded_port=static_cast<const Address*>(address)->port;
+    return 73;
+}
+static int32_t original_open_a(void*,const char*,uint32_t,uint32_t,void**) { return 2; }
+static int32_t original_open_w(void*,const uint16_t*,uint32_t,uint32_t,void**) { return 2; }
+static int32_t original_query_a(void*,const char*,uint32_t*,uint32_t*,uint8_t*,uint32_t*) { return 2; }
+static int32_t original_query_w(void*,const uint16_t*,uint32_t*,uint32_t*,uint8_t*,uint32_t*) { return 2; }
+static int32_t original_close(void*) { return 0; }
+extern "C" {
+HMODULE LoadLibraryW(const wchar_t*) { ++loads;if(loads==fail_load)return nullptr;++module_refs;return reinterpret_cast<void*>(1); }
+int FreeLibrary(HMODULE) {if(fail_free){--fail_free;return 0;}assert(module_refs);--module_refs;return 1;}
+HMODULE GetModuleHandleW(const wchar_t*) {return reinterpret_cast<void*>(1);}
+HMODULE GetModuleHandleA(const char*) {return reinterpret_cast<void*>(1);}
+void* GetProcAddress(HMODULE,const char* name) {auto i=names.find(name);return i==names.end()?nullptr:i->second;}
+unsigned long GetModuleFileNameA(HMODULE,char* out,unsigned long n) {const char path[]="C:\\game.exe";assert(n>sizeof(path));std::memcpy(out,path,sizeof(path));return sizeof(path)-1;}
+unsigned long GetModuleFileNameW(HMODULE,uint16_t* out,unsigned long n) {const char path[]="C:\\game.exe";assert(n>sizeof(path));for(size_t i=0;i<sizeof(path);++i)out[i]=path[i];return sizeof(path)-1;}
+unsigned long GetLastError() {return last_error;}
+void SetLastError(unsigned long e) {last_error=e;}
+void* GetCurrentProcess() {return reinterpret_cast<void*>(1);}
+int ReadProcessMemory(void*,const void* p,void* out,size_t n,size_t* read) {std::memcpy(out,p,n);*read=n;return 1;}
+int CryptQueryObject(unsigned long,const void* object,unsigned long,unsigned long,unsigned long,unsigned long*,unsigned long*,unsigned long*,void**,void**,const void**) {crypt_object=object;crypt_incoming_error=last_error;last_error=91;return 1;}
+void* GetProcessHeap() {return reinterpret_cast<void*>(1);}
+void* HeapAlloc(void*,unsigned long,size_t n) {return std::malloc(n);}
+int HeapFree(void*,unsigned long,void* p) {std::free(p);return 1;}
+int MultiByteToWideChar(unsigned int,unsigned long,const char* s,int n,uint16_t* out,int cap) {if(!out)return n;if(cap<n)return 0;for(int i=0;i<n;++i)out[i]=static_cast<unsigned char>(s[i]);return n;}
+int CompareStringOrdinal(const uint16_t* a,int an,const uint16_t* b,int bn,int fold) {if(an!=bn)return 1;for(int i=0;i<an;++i){auto x=a[i],y=b[i];if(fold){if(x>='a'&&x<='z')x-=32;if(y>='a'&&y<='z')y-=32;}if(x!=y)return 1;}return 2;}
+BOOL SwitchToThread() {std::this_thread::yield();return 1;}
+ULONGLONG GetTickCount64() {return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();}
+MH_STATUS MH_Initialize() {initialized=true;return MH_OK;}
+MH_STATUS MH_Uninitialize() {assert(hooks.empty());initialized=false;return MH_OK;}
+MH_STATUS MH_CreateHook(LPVOID target,LPVOID detour,LPVOID* original) {++creates;if(creates==fail_create)return MH_ERROR_MEMORY_ALLOC;assert(initialized&&!hooks.count(target));hooks[target]={detour};*original=target;return MH_OK;}
+MH_STATUS MH_QueueEnableHook(LPVOID target) {++queues;if(queues==fail_queue)return MH_ERROR_MEMORY_PROTECT;if(!target){for(auto& [k,h]:hooks)h.queued=true;}else hooks.at(target).queued=true;return MH_OK;}
+MH_STATUS MH_QueueDisableHook(LPVOID target) {if(!target){for(auto& [k,h]:hooks)h.queued=false;}else hooks.at(target).queued=false;return MH_OK;}
+MH_STATUS MH_ApplyQueued() {++applies;const bool failure=always_fail_apply || fail_apply>0;if(fail_apply)--fail_apply;if(failure) {if(!hooks.empty())hooks.begin()->second.enabled=hooks.begin()->second.queued;return MH_ERROR_MEMORY_PROTECT;}for(auto& [k,h]:hooks)h.enabled=h.queued;return MH_OK;}
+MH_STATUS MH_RemoveHook(LPVOID target) {++removes;if(fail_remove && (!fail_remove_target || fail_remove_target==target)){--fail_remove;return MH_ERROR_MEMORY_PROTECT;}auto i=hooks.find(target);if(i==hooks.end())return MH_ERROR_NOT_CREATED;assert(!i->second.enabled);hooks.erase(i);return MH_OK;}
+}
+static void* replacement(const char* name) {auto& h=hooks.at(names.at(name));assert(h.enabled);return h.detour;}
+static void reset() {
+    assert(hooks.empty() && module_refs==0 && !connect_selected_port());
+    assert(!redfield::hook_setting("ClientPath").present);
+    creates=queues=applies=removes=loads=0;
+    fail_create=fail_queue=fail_load=fail_free=fail_remove=fail_apply=0;always_fail_apply=false;fail_remove_target=nullptr;
+}
+static std::shared_ptr<const redfield::ConfigSnapshot> configuration() {
+    auto p=std::make_shared<redfield::ConfigSnapshot>();
+    p->leaves.push_back({{"Game"},"ClientKey","RF21_TEST"});
+    p->leaves.push_back({{"Game"},"ClientPath","RF21_CLIENT"});return p;
+}
+static void assert_clean(redfield::WindowsHooks& owner) {assert(owner.stop(0));assert(hooks.empty()&&module_refs==0);assert(!connect_selected_port());}
+int main() {
+    names={{"connect",reinterpret_cast<void*>(&original_connect)},
+        {"RegOpenKeyExA",reinterpret_cast<void*>(&original_open_a)},
+        {"RegOpenKeyExW",reinterpret_cast<void*>(&original_open_w)},
+        {"RegQueryValueExA",reinterpret_cast<void*>(&original_query_a)},
+        {"RegQueryValueExW",reinterpret_cast<void*>(&original_query_w)},
+        {"RegCloseKey",reinterpret_cast<void*>(&original_close)}};
+    unsigned cases=0;
+    {reset();redfield::WindowsHooks owner;assert(owner.start(configuration(),3226));assert(hooks.size()==7&&applies==1);
+     using Crypt=int(*)(unsigned long,const void*,unsigned long,unsigned long,unsigned long,unsigned long*,unsigned long*,unsigned long*,void**,void**,const void**);
+     auto crypt=reinterpret_cast<Crypt>(hooks.at(reinterpret_cast<void*>(&CryptQueryObject)).detour);
+     const wchar_t other[]=L"other.dll";SetLastError(1234);
+     assert(crypt(2,other,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr)==1);
+     assert(crypt_object==other && crypt_incoming_error==1234 && GetLastError()==91);
+     assert(crypt(1,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr)==1);
+     assert(crypt_object==curio_crypt_companion_name);
+     const wchar_t exact[]=L"C:\\Game\\preloader_l.dll";
+     assert(crypt(1,exact,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr)==1);
+     assert(crypt_object==curio_crypt_companion_name);
+     using Connect=int(*)(uintptr_t,const void*,int);auto connect=reinterpret_cast<Connect>(replacement("connect"));
+     Address a{2,static_cast<uint16_t>((3216u<<8)|(3216u>>8)),{127,0,0,1},{}};auto old=a;
+     assert(connect(1,&a,16)==73 && forwarded_port==static_cast<uint16_t>((3226u<<8)|(3226u>>8)) && std::memcmp(&old,&a,16)==0);
+     a.ip[0]=10;assert(connect(1,&a,16)==73 && forwarded_address==&a);
+     a.ip[0]=127;a.port=static_cast<uint16_t>((443u<<8)|(443u>>8));assert(connect(1,&a,16)==73&&forwarded_address==&a);
+     assert(connect(1,&a,15)==73&&forwarded_address==&a);assert(connect(1,nullptr,0)==73);
+     using Open=int32_t(*)(void*,const char*,uint32_t,uint32_t,void**);
+     using Query=int32_t(*)(void*,const char*,uint32_t*,uint32_t*,uint8_t*,uint32_t*);
+     using Close=int32_t(*)(void*);
+     void* key=nullptr;auto open=reinterpret_cast<Open>(replacement("RegOpenKeyExA"));auto close=reinterpret_cast<Close>(replacement("RegCloseKey"));
+     assert(open(nullptr,"RF21_TEST",0,0,&key)==0&&key);uint8_t value[32]{};uint32_t type=0,n=sizeof(value);
+     assert(reinterpret_cast<Query>(replacement("RegQueryValueExA"))(key,"ClientPath",nullptr,&type,value,&n)==0);
+     assert(type==1&&std::strcmp(reinterpret_cast<char*>(value),"RF21_CLIENT")==0);
+     assert(!owner.stop(0)&&hooks.size()==7&&applies==1);assert(close(key)==0);assert_clean(owner);assert(applies==3);++cases;}
+    for(unsigned failure=1;failure<=7;++failure){reset();fail_create=failure;redfield::WindowsHooks owner;assert(!owner.start(configuration(),3226));assert_clean(owner);++cases;}
+    for(unsigned failure=1;failure<=7;++failure){reset();fail_queue=failure;redfield::WindowsHooks owner;assert(!owner.start(configuration(),3226));assert_clean(owner);++cases;}
+    {reset();fail_apply=1;redfield::WindowsHooks owner;assert(!owner.start(configuration(),3226));assert_clean(owner);++cases;}
+    {reset();always_fail_apply=true;redfield::WindowsHooks owner;assert(!owner.start(configuration(),3226));assert(owner.phase()==redfield::HookPhase::retained&&hooks.size()==7&&module_refs==3);assert(redfield::hook_setting("ClientPath").present);always_fail_apply=false;assert_clean(owner);++cases;}
+    {reset();redfield::WindowsHooks owner;assert(owner.start(configuration(),3226));fail_remove=1;fail_remove_target=names.at("RegOpenKeyExA");assert(!owner.stop(0));assert(redfield::hook_setting("ClientPath").present);assert(!install_windows_registry_minhook_early());assert(!install_windows_registry_iat_hooks());assert_clean(owner);++cases;}
+    {reset();redfield::WindowsHooks owner;assert(owner.start(configuration(),3226));auto* gate=host_bridge_windows_detail::registry_quiescence_gate(0);
+     {MinHookCallGuard in_flight(gate);assert(!owner.stop(0));assert(hooks.size()==7&&removes==0&&applies==2);}
+     assert_clean(owner);assert(applies==3);++cases;}
+    for(unsigned failure=1;failure<=3;++failure){reset();fail_load=failure;redfield::WindowsHooks owner;assert(!owner.start(configuration(),3226));assert_clean(owner);++cases;}
+    {reset();redfield::WindowsHooks owner;assert(owner.start(configuration(),3226));fail_free=1;assert(!owner.stop(0));assert(hooks.empty()&&module_refs>0);assert_clean(owner);++cases;}
+    {reset();redfield::WindowsHooks first,second;assert(first.start(configuration(),3226));const auto before=applies;assert(!second.start(configuration(),3333));assert(second.stop(0));assert(hooks.size()==7&&module_refs==3&&applies==before&&connect_selected_port()==3226);assert_clean(first);++cases;}
+    for(unsigned i=0;i<3;++i){reset();redfield::WindowsHooks owner;assert(owner.start(configuration(),3226));assert_clean(owner);++cases;}
+    std::printf("RF24_HOOK_SOURCE_QA_PASS cases=%u\n",cases);
+}

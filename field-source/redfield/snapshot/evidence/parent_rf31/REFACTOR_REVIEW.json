@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "checkpoint": "RF31",
+  "scope": "M20.3 actual destination-bound Golden implementation/resource/link/local dist",
+  "current_source_reviews_complete": [
+    "M01",
+    "M15",
+    "M16",
+    "M17"
+  ],
+  "remaining_source_modules": 16,
+  "implemented": [
+    "One bounded immutable PE parser shared by Golden and scoped binary acceptance",
+    "Five actual functions in exact Golden order;only allowlisted URSYNEX mutation,read-only hashes thereafter",
+    "Production-owned RC compile and resource/tool/input hash binding;actual link command audit in MSVC build",
+    "Typed live Golden outcome required before atomic dist/readback;failure/cancellation clears dist",
+    "Local refactor package hygiene retains explicit ancestry and rejects generated payloads/sensitive material"
+  ],
+  "remaining": [
+    "Actual current Windows/MSVC production resource/link/layout/data footprint and DLL acceptance",
+    "Full HF19 Debug diagnostic/native fault/CRT stress applicability and composition",
+    "Actual game profile request/response cause RFCL-005",
+    "294 maintained-code and4 vendor integration semantic qualifications;16 module reviews"
+  ],
+  "evidence": "evidence/rf31_normal_receipt.json"
+}

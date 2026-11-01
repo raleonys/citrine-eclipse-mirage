@@ -1,0 +1,24 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF21",
+  "build_fix": "HOOKS01",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_SCOPED_SOURCE_AND_PORTABLE_NOT_RELEASE",
+  "portable_regressions": 90,
+  "portable_receipt": "evidence/rf21_portable_receipt.json",
+  "portable_final_applicability": "All compiled Linux inputs unchanged; one later Windows-only source change is bound by conservation evidence and final source-linked hook QA",
+  "hook_source_scenarios": 81,
+  "hook_source_profiles": [
+    "normal",
+    "ASan leak OFF",
+    "UBSan"
+  ],
+  "environment_cases": 13,
+  "real_process_cases": 7,
+  "windows_native_hooks": "NOT_RUN",
+  "cmake_native": "NOT_RUN",
+  "game": "NOT_RUN",
+  "parent_windows": "USER_REPORTED_FIX04_PASS;NOT_INHERITED_AS_RF21",
+  "legacy_diagnostic": "GetConfig exit14 FAIL_OBSERVED",
+  "semantic_version": null
+}

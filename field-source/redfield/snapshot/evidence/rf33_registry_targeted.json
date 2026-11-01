@@ -1,0 +1,59 @@
+[
+  {
+    "name": "output",
+    "compile": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fstrict-aliasing",
+      "-fsanitize=undefined",
+      "-fno-sanitize-recover=all",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-I",
+      "/workspace/scratch/3ee542eeb8a6/rf33_work/REDFIELD_RF33/include",
+      "/workspace/scratch/3ee542eeb8a6/rf33_work/REDFIELD_RF33/tests/test_registry_value_output.cpp",
+      "-Wl,--gc-sections",
+      "-o",
+      "rf33_checks/output"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "",
+    "compile_stderr": "",
+    "run_exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "integration",
+    "compile": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fstrict-aliasing",
+      "-fsanitize=undefined",
+      "-fno-sanitize-recover=all",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-I",
+      "/workspace/scratch/3ee542eeb8a6/rf33_work/REDFIELD_RF33/include",
+      "rf33_checks/integration.cpp",
+      "/workspace/scratch/3ee542eeb8a6/rf33_work/REDFIELD_RF33/src/platform/registry_policy_values.cpp",
+      "-Wl,--gc-sections",
+      "-o",
+      "rf33_checks/integration"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "",
+    "compile_stderr": "",
+    "run_exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

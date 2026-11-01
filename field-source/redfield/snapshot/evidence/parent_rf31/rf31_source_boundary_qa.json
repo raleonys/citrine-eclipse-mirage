@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "application_files": 262,
+  "application_body_changes": 0,
+  "production_body_changes": 0,
+  "unchanged_application_files": 262,
+  "build_graph_only_adds_resource": true,
+  "canonical_hf19_golden_references": 15,
+  "project_name_occurrences_in_application": 0,
+  "vendor_and_license_pins_unchanged": true,
+  "production_exports": 3,
+  "hook_count": 7,
+  "bound_routes": 35,
+  "governance_revision": "2026-10-21.1"
+}

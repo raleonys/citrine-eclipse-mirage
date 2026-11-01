@@ -1,0 +1,155 @@
+from pathlib import Path
+import hashlib,json,subprocess
+R=Path('rf32_work/REDFIELD_RF32').resolve();W=Path(Path('rf32_worker_qa_root.txt').read_text().strip());P=Path(Path('rf31_clean_root.txt').read_text().strip());g=json.loads((R/'metadata/BUILD_GRAPH.json').read_text());cases=json.loads(Path('rf32_worker_compile_cases.json').read_text())
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def run(cmd,timeout=90):
+ p=subprocess.run([str(x) for x in cmd],capture_output=True,text=True,timeout=timeout)
+ assert p.returncode==0,' '.join(map(str,cmd))+'\n'+p.stdout+p.stderr
+ return p.stdout
+# Reuse parent portable core only after exact current-source/header/vendor and
+# object/receipt identity checks. Entry objects and model host are freshly built.
+receipt=json.loads((P/'build/verify/portable_none/receipt.json').read_text());objects=[]
+for folder in ['include','src/config','src/runtime','third_party']:
+ for f in (R/folder).rglob('*'):
+  if f.is_file():assert f.read_bytes()==(P/f.relative_to(R)).read_bytes()
+for src in g['core_sources']:
+ assert (R/src).read_bytes()==(P/src).read_bytes()
+ relative='objects/production/'+src.replace('/','__')+'.o';obj=P/'build/verify/portable_none'/relative
+ assert sha(obj)==receipt['compiled_object_sha256'][obj.name]
+ objects.append(obj)
+host=r'''#include <windows.h>
+#include "preloader_l/windows_hooks.hpp"
+#include "preloader_l/platform/connect_redirect.hpp"
+#include <asio/ip/tcp.hpp>
+#include <asio/write.hpp>
+#include <atomic>
+#include <cassert>
+#include <chrono>
+#include <condition_variable>
+#include <cstring>
+#include <cwchar>
+#include <cstdio>
+#include <filesystem>
+#include <mutex>
+#include <optional>
+#include <string>
+#include <thread>
+
+namespace {
+thread_local DWORD error=0;
+std::mutex env_mutex;std::optional<std::string> value;
+std::wstring filename;std::atomic<unsigned> pins{0},close_failures{0},unpin_failures{0};
+std::atomic<bool> ready{false},done{false},block_hooks{false};
+struct Thread {std::thread thread;std::mutex mutex;std::condition_variable event;bool finished=false;};
+bool consume(std::atomic<unsigned>& budget){auto n=budget.load();while(n&&!budget.compare_exchange_weak(n,n-1)){}return n!=0;}
+}
+void SetLastError(DWORD v){error=v;}DWORD GetLastError(){return error;}
+DWORD GetEnvironmentVariableA(const char*,char* out,DWORD size){
+    std::lock_guard lock(env_mutex);if(!value){error=ERROR_ENVVAR_NOT_FOUND;return 0;}
+    if(!out||size<=value->size())return static_cast<DWORD>(value->size()+1);
+    std::memcpy(out,value->c_str(),value->size()+1);return static_cast<DWORD>(value->size());
+}
+BOOL SetEnvironmentVariableA(const char*,const char* text){std::lock_guard lock(env_mutex);if(text)value=text;else value.reset();return TRUE;}
+DWORD GetModuleFileNameW(HMODULE,wchar_t* out,DWORD size){
+    if(filename.empty())return 0;
+    if(size<=filename.size())return size;
+    std::wmemcpy(out,filename.c_str(),filename.size()+1);return static_cast<DWORD>(filename.size());
+}
+BOOL GetModuleHandleExW(DWORD,LPCWSTR module,HMODULE* result){++pins;*result=const_cast<wchar_t*>(module);return TRUE;}
+HANDLE CreateThread(void*,std::size_t,DWORD(WINAPI* entry)(void*),void* user,DWORD,void*){
+    auto* state=new Thread;
+    state->thread=std::thread([=]{entry(user);{std::lock_guard lock(state->mutex);state->finished=true;}done=true;state->event.notify_all();});
+    return state;
+}
+DWORD WaitForSingleObject(HANDLE handle,DWORD timeout){
+    auto* state=static_cast<Thread*>(handle);std::unique_lock lock(state->mutex);
+    return state->event.wait_for(lock,std::chrono::milliseconds(timeout),[=]{return state->finished;})?WAIT_OBJECT_0:WAIT_TIMEOUT;
+}
+BOOL CloseHandle(HANDLE handle){
+    if(consume(close_failures))return FALSE;
+    auto* state=static_cast<Thread*>(handle);state->thread.join();delete state;return TRUE;
+}
+BOOL FreeLibrary(HMODULE){if(consume(unpin_failures))return FALSE;assert(pins>0);--pins;return TRUE;}
+void Sleep(DWORD ms){std::this_thread::sleep_for(std::chrono::milliseconds(ms));}
+namespace preloader_l {
+bool WindowsHooks::start(std::shared_ptr<const ConfigSnapshot>,std::uint16_t) noexcept {phase_=HookPhase::committed;ready=true;return true;}
+bool WindowsHooks::stop(std::uint32_t) noexcept {if(block_hooks){phase_=HookPhase::retained;return false;}phase_=HookPhase::stopped;return true;}
+}
+namespace preloader_l::platform {std::uint32_t connect_redirect_mapped_count() noexcept {return 23;}}
+extern "C" BOOL WINAPI DllMain(HINSTANCE,DWORD,LPVOID) noexcept;
+extern "C" void SURGE() noexcept;
+extern "C" std::uint32_t __stdcall DllShutdown(std::uint32_t) noexcept;
+#if MODEL_NATIVE
+extern "C" std::uint64_t RFTestStatus() noexcept;
+extern "C" void RFTestSetFaults(unsigned,unsigned) noexcept;
+extern "C" std::uint64_t RFTestTransport() noexcept;
+#endif
+int main(int argc,char** argv){
+    assert(argc==3);const std::string mode=argv[1];filename=std::filesystem::path(argv[2]).wstring();
+    if(mode=="invalid_path")filename.clear();
+    SetEnvironmentVariableA("EALsxPort","MODEL_ORIGINAL");
+    if(mode=="retained")block_hooks=true;
+    assert(DllMain(reinterpret_cast<void*>(1),DLL_PROCESS_ATTACH,nullptr));SURGE();
+    if(mode=="early"){
+        auto first=DllShutdown(0);assert(first==0||first==2||first==10);
+    }else{
+        const auto end=std::chrono::steady_clock::now()+std::chrono::seconds(10);
+        while(!ready&&!done&&std::chrono::steady_clock::now()<end)Sleep(1);
+        assert(ready||done);
+#if MODEL_NATIVE
+        while((RFTestStatus()&255)==1&&std::chrono::steady_clock::now()<end)Sleep(1);
+        assert((RFTestStatus()&255)==(mode=="invalid_path"||mode=="invalid_config"?3:2));
+        assert(((RFTestStatus()>>8)&255)==(mode=="invalid_path"?2:mode=="invalid_config"?4:mode=="missing"?1:0));
+        if(mode=="observer_faults")RFTestSetFaults(1,1);
+#endif
+    }
+    std::optional<asio::ip::tcp::socket> socket;asio::io_context io;
+#if MODEL_NATIVE
+    if(mode=="frames"){
+        auto status=RFTestStatus();const auto port=static_cast<std::uint16_t>((status>>17)&65535);assert(port);
+        socket.emplace(io);socket->connect({asio::ip::address_v4::loopback(),port});
+        std::string frame="<LSX><Request id='model'><IsProgressiveInstallationAvailable/></Request></LSX>";
+        asio::write(*socket,asio::buffer(frame));const auto end=std::chrono::steady_clock::now()+std::chrono::seconds(10);
+        while((RFTestTransport()&0xffffffffu)<1&&std::chrono::steady_clock::now()<end)Sleep(1);
+        assert((RFTestTransport()&0xffffffffu)==1&&(RFTestTransport()>>48)==1);
+    }
+#endif
+    if(mode=="faults"){close_failures=1;unpin_failures=1;}
+    if(mode=="faults"||mode=="observer_faults"){assert(DllShutdown(10000)==7);assert(pins==1);assert(DllShutdown(10000)==8);assert(pins==1);}
+    if(mode=="retained"){assert(DllShutdown(10000)==10);assert(pins==1);block_hooks=false;}
+    assert(DllShutdown(10000)==0&&DllShutdown(0)==0&&pins==0);
+    {std::lock_guard lock(env_mutex);assert(value==std::optional<std::string>{"MODEL_ORIGINAL"});}
+#if MODEL_NATIVE
+    assert((RFTestStatus()&255)==6);
+    // Port ischosen byreal loopback binding,so mask its nondeterministic value.
+    std::printf("MODEL_PASS:%s status=%llu frames=%llu\n",mode.c_str(),
+        static_cast<unsigned long long>(RFTestStatus()&~(65535ull<<17)),
+        static_cast<unsigned long long>(RFTestTransport()));
+#else
+    std::printf("MODEL_PASS:%s\n",mode.c_str());
+#endif
+}
+'''
+(W/'host.cpp').write_text(host)
+common=['g++','-std=c++20','-pthread','-Wall','-Wextra','-Werror','-O1','-g','-DASIO_STANDALONE=1','-DASIO_NO_TYPEID=1','-I'+str(W),*['-I'+str(R/p) for p in g['include_directories']]]
+for native in [False,True]:run([*common,'-DMODEL_NATIVE='+str(int(native)),'-c',W/'host.cpp','-o',W/('host_native.o' if native else 'host_production.o')])
+root=W/'config';root.mkdir(exist_ok=True)
+for mode in ['normal','missing','invalid_config','invalid_path','faults','retained','early','observer_faults','frames']:
+ directory=root/mode;directory.mkdir(exist_ok=True)
+ if mode!='missing':(directory/'surge.cfg').write_text('"Config2" {' if mode=='invalid_config' else '"Config2" {}')
+comparisons=0
+for native in [False,True]:
+ kind='native' if native else 'production';modes=['normal','missing','invalid_config','invalid_path','faults','retained','early']+(['observer_faults','frames'] if native else [])
+ for prefix in ['', 'parent_']:
+  exe=W/(prefix+kind);run([*common,W/(prefix+kind+'.o'),W/('host_'+kind+'.o'),*objects,'-o',exe])
+ for mode in modes:
+  outputs=[run([W/(prefix+kind),mode,root/mode/'module.dll'],timeout=20) for prefix in ['','parent_']]
+  if mode=='early':
+   # Cancellation maywin atdifferent points;publication details arenot anoracle
+   # for therace. Both still mustrelease all resources andrestore theenvironment.
+   assert all('MODEL_PASS:early' in x for x in outputs)
+  else:assert outputs[0]==outputs[1],(kind,mode,outputs)
+  comparisons+=1;cases.append(dict(case=kind+'_'+mode,status='PASS',parent_and_current_execution='PASS',stdout_equal=mode!='early',stdout=outputs[0].strip(),scope='Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance'))
+evidence=dict(status='PASS',cases=cases,execution_comparisons=comparisons,executions=comparisons*2,reused_parent_portable_core_sources=len(objects),parent_core_source_exact_current=True,parent_core_object_hashes_verified=True,core_objects={p.name:sha(p) for p in objects},current_entry_sources={p:sha(R/p) for p in ['src/windows/dll_entry.cpp','src/windows/worker_runtime.hpp','tests/native/dll_entry.cpp','tests/native/worker_observation.hpp']},limits=['No actual Windows/MSVC/DLL load/MinHook execution','Only modeled OS boundaries andunchanged portable core reused after exactbyte/receipt validation','Old29 native/CRT cases and4debughosts stillpendingfullparity'])
+(R/'evidence/rf32_worker_qa.json').write_text(json.dumps(evidence,indent=2)+'\n')
+print('RF32_WORKER_MODEL_PARITY_PASS',comparisons,'comparisons',comparisons*2,'executions',len(cases),'checks')

@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "parent_hf19_zip_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "sources": [
+    {
+      "path": "provenance/hf19_build/build_common.ps1",
+      "sha256": "5ff28853f628cd1abe6ef3572963df7cd2abbadfecb14332b6797698f93bfec2",
+      "origin": "canonical HF19 scripts/build_orchestration/build_common.ps1"
+    },
+    {
+      "path": "provenance/hf19_build/build_production.ps1",
+      "sha256": "eae0c65b527ea4c273505a9e48d3e9aa8ad127c89bb8c08dc1c72befee3d994a",
+      "origin": "canonical HF19 scripts/build_orchestration/build_production.ps1"
+    },
+    {
+      "path": "provenance/hf19_build/build_production.cmd.txt",
+      "sha256": "8d7f172a35730940fc0fab3e4cadce54ff2d36052bb7f87f7184fdb6e0193bcc",
+      "origin": "canonical HF19 scripts/build_orchestration/build_production.cmd"
+    },
+    {
+      "path": "provenance/hf19_build/build_debug.ps1",
+      "sha256": "01abc77440c024fb1f043822db990be7078ee531910b3862ffe2bec37a1276c8",
+      "origin": "canonical HF19 scripts/build_orchestration/build_debug.ps1"
+    },
+    {
+      "path": "provenance/hf19_build/build_debug.cmd.txt",
+      "sha256": "74ebfd89ea8b26a2d2dca4975ca471874c3094dcb7a93ec1b84c58c2172aec9b",
+      "origin": "canonical HF19 scripts/build_orchestration/build_debug.cmd"
+    },
+    {
+      "path": "provenance/hf19_build/build_native_acceptance.ps1",
+      "sha256": "9b44a0459b08738b5ecdb7b0b6cdaeddb91632e85045723c6fd767120616db86",
+      "origin": "canonical HF19 scripts/build_orchestration/build_native_acceptance.ps1"
+    },
+    {
+      "path": "provenance/hf19_build/build_native_acceptance.cmd.txt",
+      "sha256": "447fb34d797772fa100d0fad634aacddd0cf3a0caba01e4b1bf60a2b3743074d",
+      "origin": "canonical HF19 scripts/build_orchestration/build_native_acceptance.cmd"
+    },
+    {
+      "path": "provenance/hf19_build/build_crt_acceptance.ps1",
+      "sha256": "6f3e4557a291d347aa076e9450efeda6711352787cc17fb947129cb01a85e22d",
+      "origin": "canonical HF19 scripts/build_orchestration/build_crt_acceptance.ps1"
+    },
+    {
+      "path": "provenance/hf19_build/build_crt_acceptance.cmd.txt",
+      "sha256": "4e42a8282053900a6f28151adec1b7730468c360a0451165687c490fbf673262",
+      "origin": "canonical HF19 scripts/build_orchestration/build_crt_acceptance.cmd"
+    }
+  ],
+  "adaptation": "One shared Python engine reuses RF29 verified compiler/environment runner;HF19 lock/confinement/profile/stale-output/atomic-dist behavior is adapted,not a second maintained PowerShell implementation",
+  "pending": [
+    "Golden destination resource/layout/metadata binding",
+    "Full native and CRT legacy scenario applicability",
+    "Debug-only diagnostic composition"
+  ]
+}

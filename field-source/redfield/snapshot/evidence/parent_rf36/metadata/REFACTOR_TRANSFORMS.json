@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "checkpoint": "RF36",
+  "parent_zip_sha256": "9cf22601a7730ed54c0ef8c895bcca74c8d8a9d495de0999c0b2e2b80b8886ea",
+  "existing_application_files_changed": 3,
+  "new_application_files": 0,
+  "portable_core_body_changes": 0,
+  "changes": [
+    "SupportedCRT inert worker construction;both production/native entries corrected",
+    "Current22 modeled scenario comparisons,7module programs,15CRT-entry policy negatives,2startup side-effect mutations",
+    "M02/M11 caller dependency proofs revalidated;M14 whole review remainsopen"
+  ],
+  "remaining": [
+    "M12 test CRT/PTD support and13 other whole-module reviews",
+    "284 maintained code and4 vendor integrations pending",
+    "Actual current Windows/MSVC/native/CRT/Debug/game acceptance not run",
+    "M20 carryover scope andRFCL-005 remainopen"
+  ]
+}

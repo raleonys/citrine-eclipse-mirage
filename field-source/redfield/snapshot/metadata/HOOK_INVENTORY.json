@@ -1,0 +1,22 @@
+{
+  "checkpoint": "RF22",
+  "hook_count": 7,
+  "engine": "MinHook",
+  "commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+  "targets": [
+    "advapi32!RegOpenKeyExA",
+    "advapi32!RegOpenKeyExW",
+    "advapi32!RegQueryValueExA",
+    "advapi32!RegQueryValueExW",
+    "advapi32!RegCloseKey",
+    "crypt32!CryptQueryObject",
+    "ws2_32!connect"
+  ],
+  "redirect": "Only IPv4 length16 127.0.0.1:3216 maps to selected port; other addresses/ports/families unchanged; caller bytes unchanged",
+  "process_wide_htons": "FORBIDDEN_ABSENT",
+  "surge": "Passive export; HF19-removed Process32NextW/_Mtx_trylock not restored",
+  "startup": "DLL attach schedules worker; configuration/listener selected; stage all seven in one MinHook transaction; one SAFE-FREEZE apply; activate registry policy; publish ready",
+  "shutdown": "Registry pseudo-owner preflight before executable mutation; global rollback and gate drain; original registry idempotent disable; remove tickets; uninitialize; release immutable config/modules; stop service; permit unpin",
+  "native": "RF22_NOT_RUN_HERE",
+  "session_retirement": "SessionRetirement owns one worker-to-explicit-shutdown handoff; underlying patch rollback/gates unchanged"
+}

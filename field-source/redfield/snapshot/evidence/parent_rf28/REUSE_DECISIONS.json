@@ -1,0 +1,9 @@
+{
+  "checkpoint": "RF28",
+  "project": "REDFIELD",
+  "code_identity": "preloader_l",
+  "configuration_filename": "surge.cfg",
+  "policy": "Origin grants no maintenance exemption;code/project/compatible configuration names are independent contracts",
+  "application_files": 262,
+  "scope": "Same origin-neutral maintenance;M01/M16/M20 reviewed;no-change decisions valid;15 other modules remain open"
+}

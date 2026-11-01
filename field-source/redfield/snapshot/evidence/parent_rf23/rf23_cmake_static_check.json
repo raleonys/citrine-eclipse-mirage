@@ -1,0 +1,6 @@
+{
+  "status": "PASS_STATIC_ONLY",
+  "cmake_execution": "NOT_RUN_TOOL_UNAVAILABLE",
+  "legacy_diagnostic": "Source comes from BUILD_GRAPH instead of stale tests/adopted path",
+  "support": "redfield_test_support links only test executables;production core excludes generic allocator/PTD"
+}

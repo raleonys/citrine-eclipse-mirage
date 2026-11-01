@@ -1,0 +1,241 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "real_GCC_compile_production",
+      "status": "PASS",
+      "scope": "Exact entry bodies withdeclaration-onlyWin32 model;not actualWindows orDLL",
+      "object_sha256": "233efe001b26caa23dd86ef27433e15ca0fbac2a0aa93f7fc8f4cab02757bb4e",
+      "native_exports": false
+    },
+    {
+      "case": "real_GCC_compile_native",
+      "status": "PASS",
+      "scope": "Exact entry bodies withdeclaration-onlyWin32 model;not actualWindows orDLL",
+      "object_sha256": "f221be48cd3de12a5f9cc997ff5ae910d26a56e5296fcbf2bb8304f239cf8bca",
+      "native_exports": true
+    },
+    {
+      "case": "real_GCC_compile_parent_production",
+      "status": "PASS",
+      "scope": "Exact entry bodies withdeclaration-onlyWin32 model;not actualWindows orDLL",
+      "object_sha256": "7ce79022da80a49ddd327902489d1b9b854e275c64775d73082a45abd7f9b45b",
+      "native_exports": false
+    },
+    {
+      "case": "real_GCC_compile_parent_native",
+      "status": "PASS",
+      "scope": "Exact entry bodies withdeclaration-onlyWin32 model;not actualWindows orDLL",
+      "object_sha256": "07250cde4b07f667b2c0d73001db39bfd78cd2b1956e606690406ce9b9dec482",
+      "native_exports": true
+    },
+    {
+      "case": "production_sources_have_no_native_switch_or_exports",
+      "status": "PASS"
+    },
+    {
+      "case": "production_normal",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:normal",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "production_missing",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:missing",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "production_invalid_config",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:invalid_config",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "production_invalid_path",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:invalid_path",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "production_faults",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:faults",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "production_retained",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:retained",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "production_early",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": false,
+      "stdout": "MODEL_PASS:early",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_normal",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:normal status=25323127177222 frames=0",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_missing",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:missing status=25323127177478 frames=0",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_invalid_config",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:invalid_config status=25323127178246 frames=0",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_invalid_path",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:invalid_path status=25288767439366 frames=0",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_faults",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:faults status=25323127177222 frames=0",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_retained",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:retained status=25323127177222 frames=0",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_early",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": false,
+      "stdout": "MODEL_PASS:early status=25288767504134 frames=0",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_observer_faults",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:observer_faults status=25323127177222 frames=0",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    },
+    {
+      "case": "native_frames",
+      "status": "PASS",
+      "parent_and_current_execution": "PASS",
+      "stdout_equal": true,
+      "stdout": "MODEL_PASS:frames status=25323127177222 frames=281479271677953",
+      "scope": "Real C++worker/LocalService/ASIO/WorkerOwner;fakeWin32 thread/module/environment andWindowsHooks;not actualWindows hook/DLL acceptance"
+    }
+  ],
+  "execution_comparisons": 16,
+  "executions": 32,
+  "reused_parent_portable_core_sources": 58,
+  "parent_core_source_exact_current": true,
+  "parent_core_object_hashes_verified": true,
+  "core_objects": {
+    "src__core__runtime.cpp.o": "3833ae0c265fdebf4bd53f92d8e96fc615b524869e01c7fbeefcce928f8fa2b0",
+    "src__core__xml.cpp.o": "330fd72af59ad880697de6cfaea075ea97000b9746c60a338195e6ed615cbf85",
+    "src__config__config.cpp.o": "95ee9c60a0b6df7bbd447de38eff1a6e3811c9fca4352e1bdfed9ca944bd4785",
+    "src__config__config2_pegtl.cpp.o": "74822ea3327e63841b41b6b027a36db8b7364e1493ca9ea7b7ea09a6297649bf",
+    "src__codec__hex_codec.cpp.o": "640cb1084f0abbaf20672951a0472bb6182ee481e26aee186d8a819d09dc3e84",
+    "src__xml__lsx_framing.cpp.o": "931f02c366d11d883f1f9dc23e68d55b618a806cde40acdff754eb9c6ef618be",
+    "src__xml__request_parser.cpp.o": "3d5e4a72def3db399063a9c9a3673237f29e2f6dd441dd99983668d2876de8ac",
+    "src__xml__request_children.cpp.o": "dc7875e0181a3ba80afe990e8cda7e4da6857c6af9a6db6e5a5b028c98330773",
+    "src__xml__attribute_parser.cpp.o": "ff796c0b4080fee277c568ecab1e590600552d64d055d02a894d5e77d564edba",
+    "third_party__tinyxml2__tinyxml2.cpp.o": "66103ab2322b5804f96d6b8389cab1827a772a598182dbdc8de443933108a15c",
+    "src__core__worker_owner.cpp.o": "e5f3a22a5ba02c39bd1fec48207c258f9b43928c3c119d983e5f8d1f0ce16b01",
+    "src__core__service_session.cpp.o": "79c020bf46886305aa6aae7c4afe79a77e181f7967d614dd8b8b6fe19dbacaf7",
+    "src__config__config_file.cpp.o": "946e1b35b0087ffb62f42bf8ad4c4b6d778abe63c4d80757ce04974909fd7a8e",
+    "src__runtime__asio_listener_owner.cpp.o": "ab74b46d671248df285bb69a737576d4f98511d8df3dfff87f6be6f28045c6bc",
+    "src__net__receive_buffer.cpp.o": "1f956641392a538caa558ea1b2574075fce3f737324224ef06d5290f45076bfd",
+    "src__net__frame_ingress.cpp.o": "04c784f80b0fb464f6195ac4335aaf4fbe3aa5f05d77c7e8ae1eaa5b4237f71e",
+    "src__net__tcp_ingress.cpp.o": "88f52d6b90e1aa06b1da80225e363bb00cba350646ab59693e4ef1c69ef92f57",
+    "src__net__local_service.cpp.o": "6e0c139e82ccf97c76d7b1ff4f0e1aa171918e2904d7431a1b51f40a156030e5",
+    "src__xml__response_builder.cpp.o": "ba5754bb972cac9a9f2f4f87886fc0199cbb962e7f49cc0c9861aa4c4ed63e56",
+    "src__xml__value_codec.cpp.o": "b3805ec24cf3328215f1de8e48170e67aff6cd75cfc87c56e9d3caa06a54dc72",
+    "src__xml__value_codec_utf8.cpp.o": "1efb64b310084143435676e47f18028a7f52c89573fa808068c1d4016905bd3d",
+    "src__xml__value_codec_normalize.cpp.o": "03d93e303750c6d881cc038f9e114de512606d3bb20354da39ce6169ff7244d6",
+    "src__xml__value_codec_semantic.cpp.o": "c71d660304436e69cf58dc59d9874856e5f62ceb99b880267d31158616a9fc96",
+    "src__handlers__config_route.cpp.o": "d63f2fe329e496fb0a12a8b7db7582434283425a5ed45c2bf214d85fc0ffafb1",
+    "src__handlers__progressive_installation_route.cpp.o": "c7a42d47652abb97f30da852c18c93e4a5701de18f75f982320a159829d49ec9",
+    "src__router__route_inventory.cpp.o": "45fd6feb2a4fcf2776b0ac0162f53a32f32c534287a015d16188cab2fb3785ed",
+    "src__router__route_lookup.cpp.o": "6212686b827bedc32f97570dbe763ee4d19d5d2a334a8c75386bcf4aa9799077",
+    "src__hash__fnv_hash.cpp.o": "a17120a2362db083c82b071a0112137b87288f12fb52ecc3a65640ce44a9b177",
+    "src__core__port_publication.cpp.o": "c5ba13d3c80cc900d26ca8d809f5096c4faa08e445c126f906aec63fe72e69aa",
+    "src__core__response_dispatch.cpp.o": "11a44afbcbb7430bfd9e47ab0a30212e833b3fa7a6f59b24fceb6b1b4cf0bb23",
+    "src__config__settings_values.cpp.o": "e4b64a4e084fb379dd5b773019e9514b0ccb0a6d11dea1ae2431174c74c36011",
+    "src__config__settings_provider.cpp.o": "423668a2551d5bc9652c7f4d013022619ca0eda7c4ae63fb7aa8ad71ccc5b83d",
+    "src__handlers__setting_value_route.cpp.o": "c9d594bad94e1285d879e7c8d5cb3c9b6d78c7f1f666d388f2d4ec1c9b3d8d2a",
+    "src__handlers__settings_snapshot_route.cpp.o": "92b6c18f90472e20718aaf338ed11b7db8b739fbec391c1d833b856656aea082",
+    "src__handlers__connection_state_route.cpp.o": "bdeb52cd772a7f5779f1b5516850c1e4ceb27fca66521bb37fbeb5e614721b5a",
+    "src__handlers__settings_query.cpp.o": "116f575a9ba7aac88c9b517010bb6d191d8b4688931e8bbfc8f1e0b30ab6fe83",
+    "src__core__settings_response.cpp.o": "1f8cdc2b3abc08e2008102c5857365e2cdcc8a483ba4fce2309bf453c545405a",
+    "src__handlers__friends_route.cpp.o": "0c728425e1a24e74846ad0866737a58c9d26574908b5c41f65a3c018843021d3",
+    "src__handlers__group_info_route.cpp.o": "387cd507e521ad4abdc6d2475ff0b7b925c7ec784d6eb3c75c1822b1065f15ce",
+    "src__handlers__stateless_routes.cpp.o": "5b27a0b7685b127c858d412ea4afd31de115bac3371e7b8fa5e3f0fc7dcf3edc",
+    "src__core__profile_response.cpp.o": "d40dc43e33bfd876b0d986487778f2d719f1ae8ca222e9a10618c95a36e8a43b",
+    "src__core__profile_formatter.cpp.o": "5f0f9096bf42c43cb0a7331b4eabba53b1afc337d8bed953cb8320ab29d812c4",
+    "src__handlers__utc_time_route.cpp.o": "caccb7ef5ef112bc901a781791e7dea71708a35fbc5e9b4f9ad0117ac57f87f7",
+    "src__runtime__utc_time.cpp.o": "f1d1641a0539a61cccacb50ea82856051927813bda7cb182966c1f3e20fb4210",
+    "src__core__game_info_response.cpp.o": "bf6c2562a538b70bd6970d6f0deaef014327701b3499b6618058b2856ea6c5f1",
+    "src__core__query_presence_response.cpp.o": "3ec6108f1c5d167d8600be7575733c9f6323b463a645e29130bcbf17ebb480a6",
+    "src__core__image_response.cpp.o": "2ec756debce0db38962401722ced20303e1e586ae677856e40b98500c2e8d2b5",
+    "src__core__chunks_response.cpp.o": "78083f1bf408d5af41c520a9e7445802c98d0b4d6bab5050030e52464b959528",
+    "src__core__auth_code_session.cpp.o": "2170dcf1ec1b9d752d86dad5b97a448ad5afd0d74d9f7de98019c5293e229541",
+    "src__core__content_response.cpp.o": "b942caa85d17c5550c9fdeee6e43b059d08f963475cfbfd7dc3a390e2126094d",
+    "src__core__entitlement_response.cpp.o": "f6b5b72c14ba12cac6cd127a2c6a5454e9e046c5da2b2ed0fe031ec32fa95c6d",
+    "src__core__achievement_response.cpp.o": "fbe8f7b596d4854f1b959db3f66494dcac2f5f26775c0053d82757fe179b2927",
+    "src__core__achievement_session.cpp.o": "aed44316654406df5e599ccd95ccd2c604c16682241127a9283a79d5775fe6f0",
+    "src__core__achievement_delivery.cpp.o": "68d83d3370d599a0af9a193d973a6ad0406aaf400dd97db226603daddfb9f5b7",
+    "src__platform__connect_redirect.cpp.o": "4b2b118a261c55decd4ad6349c120931c77edab8e57e79c5b8157d6555370401",
+    "src__platform__crypt_wrapper.cpp.o": "aa525cab6dd34645981cac6d519b4caf0846f9824959a1746b09416abd441cb1",
+    "src__config__hook_configuration.cpp.o": "0b0ac06ff729e31e2068a676c4b2efe4eb5b0a83148ec218d07cdfb6e288995d",
+    "src__runtime__transient_allocator.cpp.o": "27c7b06efd915c48ad8f7b83a9a2b4e95733856ff654d61fe0865c41745848be"
+  },
+  "current_entry_sources": {
+    "src/windows/dll_entry.cpp": "2535843b99252e6ba3cbeb895e8180ac41ca512cb7ee95d7535fff446589f019",
+    "src/windows/worker_runtime.hpp": "d5c328e6a8bab8fd3502a8196c7ae35362e756b028d65c124ada3bb1bb60fe7c",
+    "tests/native/dll_entry.cpp": "9cb28a5e7ad68f4fd62b00e67245497e2b8b3541912ccdb93edffecae978338a",
+    "tests/native/worker_observation.hpp": "3254956af454be429e28647481c790e07df7354f7440312db795c01f5c5b24f4"
+  },
+  "limits": [
+    "No actual Windows/MSVC/DLL load/MinHook execution",
+    "Only modeled OS boundaries andunchanged portable core reused after exactbyte/receipt validation",
+    "Old29 native/CRT cases and4debughosts stillpendingfullparity"
+  ]
+}

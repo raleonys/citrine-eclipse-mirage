@@ -1,0 +1,8 @@
+{
+  "source": "User conversation: bu s\u00fcr\u00fcm oyunu da a\u00e7abiliyor art\u0131k",
+  "classification": "USER_REPORTED_GAME_LAUNCH",
+  "observed": "Game opens in user environment before RF22 refactor",
+  "exact_artifact_sha256": "NOT_SUPPLIED_FOR_THIS_OBSERVATION",
+  "gameplay_network_shutdown": "NOT_ESTABLISHED_BY_LAUNCH_STATEMENT",
+  "rf22": "NOT_RUN; no inherited fresh PASS"
+}

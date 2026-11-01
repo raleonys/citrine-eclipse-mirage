@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "checkpoint": "RF25",
+  "parent_zip_sha256": "3f9ede705eecbe0cd4a7295b1a0307f3ae9a9b5e0cc30670805470ce57000b55",
+  "scope": "Bounded Content/Entitlement projection refactor;no whole-codebase completion claim",
+  "changes": [
+    "Common parser SourceView,member-key record lookup and checked string assignment",
+    "Separate module empty-value/default policies remain explicit",
+    "Owned record construction drops runtime/record_views input adapters and redundant second search",
+    "New public ConfigStore allocation-failure transaction regression",
+    "Remove now-unused ContentRecordInput and EntitlementRecordInput definitions; response view types unchanged"
+  ],
+  "application_files": 262,
+  "new_application_files": [
+    "src/config/projection_support.hpp",
+    "tests/test_record_projection_transaction.cpp"
+  ],
+  "historical_transforms": "evidence/parent_rf24/REFACTOR_TRANSFORMS.json"
+}

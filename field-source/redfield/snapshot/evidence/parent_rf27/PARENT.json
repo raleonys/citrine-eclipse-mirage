@@ -1,0 +1,9 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF27",
+  "refactor": "CONFIG06",
+  "parent_checkpoint": "RF26",
+  "parent_zip_sha256": "0e04ca9de5573efdd9a98f32dbfe8ff74c1e406fc7c159e6b536d9ec7a91bdb8",
+  "parent_library_file_id": "libfile_0bfb25b271f481918c554d6e16c0c6cd",
+  "official_hf19_unchanged": true
+}

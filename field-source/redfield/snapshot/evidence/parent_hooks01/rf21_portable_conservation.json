@@ -1,0 +1,15 @@
+{
+  "status": "PASS_COMPILED_INPUT_CONSERVATION",
+  "actual_receipt_source_tree_sha256": "d37083f21fd12342ba3c4228e54da847ec5a5420133718646058f13615ec4e1e",
+  "normal_tests": 90,
+  "post_run_changes": [
+    {
+      "path": "src/windows/windows_hooks.cpp",
+      "tested_sha256": "e93a3b7fc56ba43c6952077413b8bbf006188eaef9126fca37fd8eb7a805a52a",
+      "final_sha256": "df8848968cc282ab0468460619f2a9720d1082386529167e2c188f8df185476d",
+      "scope": "Windows-only; not compiled into portable regression executables; fresh 27x3 source-linked Windows-path shim cases cover final bytes"
+    }
+  ],
+  "all_other_build_inputs": "BYTE_IDENTICAL",
+  "no_receipt_rewrite": true
+}

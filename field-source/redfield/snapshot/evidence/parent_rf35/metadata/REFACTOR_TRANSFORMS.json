@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "checkpoint": "RF35",
+  "parent_zip_sha256": "b6d821d7466a07085ac1b5a8182ddae12034d1fb665139be57417cee4c6925ad",
+  "existing_application_files_changed": 1,
+  "new_application_files": 0,
+  "portable_core_body_changes": 0,
+  "changes": [
+    "Remove redundant net alias inside the namespace that already contains net",
+    "Developer labels updated; generic shared log titles no longer hardcode RF32"
+  ],
+  "remaining": [
+    "M12 test CRT/PTD support and13 other whole-module reviews",
+    "284 maintained code and4 vendor integrations pending",
+    "Actual current Windows/MSVC/native/CRT/Debug/game acceptance not run",
+    "M20 carryover scope andRFCL-005 remainopen"
+  ]
+}

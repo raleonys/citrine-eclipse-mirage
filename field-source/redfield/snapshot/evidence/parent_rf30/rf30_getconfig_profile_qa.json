@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "scope": "Real GCC compile/link/execute againstcurrent production core objects;in-memory ConfigStore andresponse dispatch;not game,Windows orSDK handshake",
+  "runs": [
+    {
+      "label": "RF29_example",
+      "cfg_sha256": "726dbc99d3da74db0098673c42fb11ecbc5054624782db6fadee100de7f1514e",
+      "observed": {
+        "normal_getconfig_services": 34,
+        "unknown_entity_escaped": 1,
+        "cfg_profile_username_bytes": 0,
+        "cfg_profile_user_id_bytes": 0,
+        "profile_response_emitted": 1,
+        "missing_index_no_response": 1
+      },
+      "stdout": "normal_getconfig_services=34\nunknown_entity_escaped=1\ncfg_profile_username_bytes=0\ncfg_profile_user_id_bytes=0\nprofile_response_emitted=1\nmissing_index_no_response=1\n"
+    },
+    {
+      "label": "RF30_example",
+      "cfg_sha256": "988402a8f4a4146012098d4bcbe79b8204d779c73140bbdb550d9d1804bd3067",
+      "observed": {
+        "normal_getconfig_services": 34,
+        "unknown_entity_escaped": 1,
+        "cfg_profile_username_bytes": 5,
+        "cfg_profile_user_id_bytes": 13,
+        "profile_response_emitted": 1,
+        "missing_index_no_response": 1
+      },
+      "stdout": "normal_getconfig_services=34\nunknown_entity_escaped=1\ncfg_profile_username_bytes=5\ncfg_profile_user_id_bytes=13\nprofile_response_emitted=1\nmissing_index_no_response=1\n"
+    }
+  ],
+  "distributed_example_regression": {
+    "new_example": "PASS_EXIT0",
+    "old_example": "EXPECTED_REJECTION_EXIT1",
+    "positive_stdout": "PROFILE_DEFAULT_OVERLAY_ENTITY_SNAPSHOT_ISOLATION_PASS\n",
+    "negative_stderr": "74: view(example_profile.username)==\"SURGE\" && view(example_profile.persona_id)==\"1144668899\" && view(example_profile.user_id)==\"1000200030000\" && view(example_profile.country)==\"US\" && view(example_profile.currency)==\"USD\" && view(example_profile.is_subscriber)==\"true\" && view(example_profile.is_steam_subscriber)==\"false\" && view(example_profile.subscriber_level)==\"2\" && view(example_profile.is_under_age)==\"false\"\n"
+  },
+  "diagnostic_exit14": "Only final unknown-entity rejection expectation;normal GetConfig34 services pass;kept separately andnot reclassified",
+  "user_report": "In-game profile missing;root cause not established. Confirmed shipped example omission produced empty profile fields;current formatter also requires exact index attribute;SDK handshake/crypto still deferred",
+  "runtime_policy_changed": false,
+  "probe_cpp_sha256": "6c333a8691594e3df642c8d56df73131a720ed9e6151dbed5d93357b220f9252"
+}

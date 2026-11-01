@@ -1,0 +1,46 @@
+#include "redfield/local_service.hpp"
+#include "redfield/worker_owner.hpp"
+#include <asio/ip/tcp.hpp>
+#include <asio/write.hpp>
+#include <atomic>
+#include <iostream>
+#include <filesystem>
+using namespace redfield;
+using namespace std::chrono_literals;
+struct HookProbe { bool blocked=true; bool stop(std::uint32_t) noexcept{return !blocked;} } hooks;
+std::atomic<LocalService*> pending_session{nullptr};
+bool cleanup_session(void*) noexcept {
+    if (!hooks.stop(0)) return false;
+    auto* session=pending_session.load(std::memory_order_acquire);
+    if (!session) return true;
+    try {
+        if (!session->stop_for(std::chrono::milliseconds(0))) return false;
+        pending_session.store(nullptr,std::memory_order_release);
+        delete session;
+        return true;
+    } catch (...) { return false; }
+}
+struct Backend {
+ unsigned closes=0,unpins=0;
+ static bool pin(void* c,void*,void** out) noexcept {*out=c;return true;}
+ static void* spawn(void* c,WorkerOwner*) noexcept{return c;}
+ static WaitResult wait(void*,void*,std::uint32_t) noexcept{return WaitResult::signaled;}
+ static bool close(void* c,void*) noexcept{++static_cast<Backend*>(c)->closes;return true;}
+ static bool unpin(void* c,void*) noexcept{++static_cast<Backend*>(c)->unpins;return true;}
+};
+int main(){
+ auto* service=new LocalService(std::filesystem::temp_directory_path()/"RF21_ZERO_BUDGET_REPRO"/"preloader_l.dll");
+ if(!service->start())return 1;
+ asio::io_context io;asio::ip::tcp::socket socket(io);socket.connect({asio::ip::address_v4::loopback(),service->snapshot().port});
+ const auto until=std::chrono::steady_clock::now()+2s;
+ while(service->snapshot().active!=1 && std::chrono::steady_clock::now()<until)service->poll_for(1ms);
+ if(service->snapshot().active!=1)return 2;
+ pending_session.store(service);
+ Backend back;WorkerOperations ops{&back,Backend::pin,Backend::spawn,Backend::wait,Backend::close,Backend::unpin,cleanup_session};WorkerOwner owner;
+ if(!owner.schedule(ops,&back))return 3;
+ auto blocked=owner.shutdown(1000);hooks.blocked=false;auto retry=owner.shutdown(1000);
+ std::cout<<"OLD_EXACT_CLEANUP blocked="<<static_cast<unsigned>(blocked)<<" retry="<<static_cast<unsigned>(retry)<<" pending="<<(pending_session.load()!=nullptr)<<" unpins="<<back.unpins<<"\n";
+ const bool reproduced=blocked==ShutdownResult::service_cleanup_pending && retry==ShutdownResult::service_cleanup_pending && back.unpins==0;
+ for(unsigned i=0;i<1000 && owner.shutdown(1)!=ShutdownResult::stopped;++i){}
+ return reproduced?0:4;
+}

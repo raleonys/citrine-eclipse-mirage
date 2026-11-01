@@ -1,0 +1,30 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF20",
+  "build_fix": "FIX04",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_PORTABLE_AND_FOCUSED_QA_NOT_RELEASE",
+  "core_sources": 56,
+  "regressions": 86,
+  "normal_tests": "86/86 PASS_FRESH",
+  "compiled_objects": 143,
+  "linked_outputs": 87,
+  "source_tree_sha256": "d95f732ce75a6417f7400b87013fff4b040334122fae60ea2aaa9ead24e6a20e",
+  "allocator_focused_runs": 48,
+  "allocator_profiles": [
+    "normal",
+    "ASan leak OFF",
+    "UBSan"
+  ],
+  "expected_link_rejections": 2,
+  "environment_mock_cases": 13,
+  "real_posix_process_cases": 7,
+  "legacy_diagnostic": "GetConfig exit14 FAIL_OBSERVED, separate from passing tests",
+  "fix03_user_evidence": "VS environment ready; 54 core compiled; first test link LNK2019/LNK1120",
+  "windows_fix04": "NOT_RUN_HERE",
+  "windows_dll_produced_here": false,
+  "game": "NOT_RUN",
+  "full_suite_sanitizers": "NOT_RUN_CURRENT_FIX; focused allocator/PTD/Windows-branch tests only",
+  "source_integrity": "PASS_FRESH_SCOPED",
+  "integrity_negatives": 4
+}

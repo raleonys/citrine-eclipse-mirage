@@ -1,0 +1,17 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF32",
+  "classification": "NON_RELEASE_WORK",
+  "status": "NOT_RELEASE",
+  "semantic_version": null,
+  "official_codename": null,
+  "public_abi": "DllMain @1,SURGE @2,DllShutdown @3 unchanged;35 plaintext local routes;seven existing Windows MinHook detours;SURGE passive",
+  "runtime_compatibility": "RF32_NOT_VERIFIED_ON_WINDOWS_OR_GAME",
+  "canonical_release_mutation": false,
+  "known_diagnostic": "RF03-QA-001 unchanged original GetConfig diagnostic exit14, separate from passing regressions",
+  "derivation_scope": "266 maintained application files;1590 byte-bound ancestry recipes",
+  "windows_msvc": "RF32_NOT_RUN",
+  "current_regressions": 97,
+  "refactor": "COMPOSITION01",
+  "scope": "M20.4 isolated native composition andexplicit oldscenario applicability;realWindows/fullcoverage/semanticqualification pending"
+}

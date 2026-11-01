@@ -1,0 +1,12 @@
+{
+  "source": "User console message, no raw log attachment supplied",
+  "classification": "USER_REPORTED_NATIVE_FAILURE",
+  "vswhere_exit": 0,
+  "vsdevcmd_exit": 0,
+  "environment_ready": true,
+  "compiler": "MSVC14.51.36231 HostX64/x64",
+  "failure": "ValueError: MINHOOK_PATCH_REPLAY_MISMATCH",
+  "stage": "prepare_minhook -> verify_patch, before CXX",
+  "actual_user_default_codec": "NOT_SUPPLIED; CP1254 mechanism reproduced exactly, not measured on user machine",
+  "fixed_native_status": "NOT_RUN"
+}

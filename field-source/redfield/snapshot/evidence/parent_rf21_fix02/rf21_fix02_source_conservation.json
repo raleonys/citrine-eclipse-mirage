@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "parent_zip_sha256": "8af115903ef215d3f73d374acce323bea91305171493254a5d4e1e59d0119555",
+  "preserved_critical_files": 1350,
+  "changed_critical_inputs": [
+    "include/redfield/worker_owner.hpp",
+    "metadata/BUILD_GRAPH.json",
+    "src/core/worker_owner.cpp",
+    "src/windows/dll_entry.cpp",
+    "tests/test_worker_owner.cpp",
+    "tools/native_acceptance.cpp"
+  ],
+  "scope": "Every other parent C/C++/header/export/CMake/MinHook/patch/adoption/derivation/vendor input compared byte-for-byte; original seven detour implementations unchanged"
+}

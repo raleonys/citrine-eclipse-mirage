@@ -1,0 +1,70 @@
+from pathlib import Path
+import importlib.util,json,subprocess,tempfile,os
+from types import SimpleNamespace
+from unittest.mock import patch
+R=Path('rf20_fix01_work/REDFIELD_RF20').resolve()
+spec=importlib.util.spec_from_file_location('builder',R/'scripts/build_orchestration/build_verify.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+results=[]
+def scenario(name,*,existing=False,discovery_exit=0,setup_exit=0,missing_vswhere=False,missing_setup=False,missing_dump=False,path_value='TOOLS',bad_dump=False,timeout=False,unsafe=False):
+ with tempfile.TemporaryDirectory(prefix='rf20_fixture_') as td:
+  root=Path(td);base=root/'Program Files (x86)';vswhere=base/'Microsoft Visual Studio/Installer/vswhere.exe';vswhere.parent.mkdir(parents=True);vswhere.write_text('fixture')
+  install=root/('VS %BAD%' if unsafe else 'Visual Studio 18 & (Community)');setup=install/'Common7/Tools/VsDevCmd.bat';setup.parent.mkdir(parents=True);setup.write_text('fixture')
+  if missing_vswhere:vswhere.unlink()
+  if missing_setup:setup.unlink()
+  build=root/'build with spaces';build.mkdir();calls=[]
+  def which(name,path=None):return 'C:/tools/cl.exe' if existing or path=='TOOLS' else None
+  def run(args,**kw):
+   calls.append(args)
+   if args[0]==str(vswhere):
+    assert args[1:]==['-latest','-products','*','-requires','Microsoft.VisualStudio.Component.VC.Tools.x86.x64','-property','installationPath']
+    return SimpleNamespace(returncode=discovery_exit,stdout='DISCOVERY FAILED' if discovery_exit else str(install)+'\n')
+   assert args==['cmd.exe','/d','/u','/v:off','/c','capture.cmd'],args
+   child=kw['env'];assert not any(x in child for x in ['CL','_CL_','LINK','_LINK_'])
+   assert child['REDFIELD_VS_SETUP']==str(setup)
+   body=(Path(kw['cwd'])/'capture.cmd').read_bytes();assert b'\r\n' in body and b'>nul' not in body and b'if not "%REDFIELD_VS_SETUP_EXIT%"=="0" exit /b %REDFIELD_VS_SETUP_EXIT%' in body
+   if timeout:raise subprocess.TimeoutExpired(args,120,output='SETUP TIMEOUT'.encode('utf-16le'))
+   if not missing_dump and not setup_exit:
+    data=('Path='+path_value+'\r\nINCLUDE=include & space\r\nLIB=library path\r\nMY_VALUE=x=y\r\nCL=injected\r\n_link_=injected\r\nREDFIELD_VS_SETUP=internal\r\nPRIVATE_TOKEN=do-not-log-this-value\r\n=C:=pseudo\r\n').encode('utf-16le')
+    Path(child['REDFIELD_VS_ENV_FILE']).write_bytes(b'x' if bad_dump else data)
+   return SimpleNamespace(returncode=setup_exit,stdout=('VS FAILED DETAILS' if setup_exit else 'VS SETUP OK').encode('utf-16le'))
+  environment={'Path':'ORIGINAL','ProgramFiles(x86)':str(base),'ComSpec':'cmd.exe','cl':'bad','_CL_':'bad','Link':'bad','_LINK_':'bad'}
+  expected_failure=any([discovery_exit,setup_exit,missing_vswhere,missing_setup,missing_dump,bad_dump,timeout,unsafe,not path_value])
+  try:
+   with patch.dict(os.environ,environment,clear=True),patch.object(m.shutil,'which',side_effect=which),patch.object(m.subprocess,'run',side_effect=run):out=m.windows_environment(build)
+   assert not expected_failure,name
+   assert not any(x in out for x in ['CL','_CL_','LINK','_LINK_']) and not any(x.startswith('REDFIELD_VS_') for x in out)
+   if existing:assert not calls and out['PATH']=='ORIGINAL'
+   else:
+    assert out['PATH']=='TOOLS' and out['MY_VALUE']=='x=y' and out['INCLUDE']=='include & space'
+    assert (build/'msvc_environment.log').read_text().endswith('VS SETUP OK')
+   status='PASS'
+  except RuntimeError as e:
+   assert expected_failure,(name,str(e));message=str(e)
+   if setup_exit:assert f'exit {setup_exit}' in message and 'VS FAILED DETAILS' in message and 'msvc_environment.log' in message
+   if discovery_exit:assert 'DISCOVERY FAILED' in message
+   if timeout:assert 'SETUP TIMEOUT' in message and 'timed out' in message
+   if bad_dump:assert 'UTF-16LE' in message
+   status='EXPECTED_REJECTION'
+  assert not list(build.glob('rf_vs_*')),name
+  log=build/'msvc_environment.log'
+  if log.exists():assert 'do-not-log-this-value' not in log.read_text()
+  results.append(dict(case=name,status=status))
+scenario('existing_compiler_sanitized',existing=True)
+scenario('space_ampersand_parentheses_path_utf16_capture')
+scenario('setup_exit1_diagnostics_retained',setup_exit=1)
+scenario('setup_exit42_preserved',setup_exit=42)
+scenario('discovery_exit7_diagnostics_retained',discovery_exit=7)
+scenario('no_vswhere',missing_vswhere=True)
+scenario('no_setup_batch',missing_setup=True)
+scenario('setup_no_capture',missing_dump=True)
+scenario('empty_path_rejected',path_value='')
+scenario('invalid_utf16_rejected',bad_dump=True)
+scenario('timeout_output_retained',timeout=True)
+scenario('percent_setup_path_rejected',unsafe=True)
+assert m.decode_cmd_output(b'ASCII diagnostic')=='ASCII diagnostic'
+assert m.decode_cmd_output(b'\xff\xfe'+'UNICODE'.encode('utf-16le'))=='UNICODE'
+assert m.decode_cmd_output(b'')==''
+results.append(dict(case='diagnostic_encoding_empty_ascii_utf16bom',status='PASS'))
+E=R/'evidence';E.mkdir(exist_ok=True)
+(E/'build_fix01_python_qa.json').write_text(json.dumps(dict(scope='Linux unit/behavior simulation of Python environment preparation; subprocess and cl discovery mocked. Real Windows CMD/VsDevCmd/MSVC NOT_RUN',cases=results),indent=2)+'\n')
+print(len(results),'focused Python cases PASS (expected rejection cases verified; Windows execution NOT_RUN)')

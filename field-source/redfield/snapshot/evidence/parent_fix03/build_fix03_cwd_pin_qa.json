@@ -1,0 +1,14 @@
+{
+  "scope": "Simulated Windows directory pin at cleanup, with real TemporaryDirectory and exact old/new Python builders; not native Windows execution and not identification of user locking process",
+  "cases": [
+    {
+      "implementation": "exact_fix02",
+      "status": "EXPECTED_REJECTION_MODELED_WINERROR32"
+    },
+    {
+      "implementation": "fix03",
+      "status": "PASS_STABLE_CWD_PRIVATE_DUMP_REMOVED"
+    }
+  ],
+  "builder_sha256": "ff76ab11ebea23f70af242765462bc633d3e1f5371fe1b22586e7f8bb5f14e95"
+}

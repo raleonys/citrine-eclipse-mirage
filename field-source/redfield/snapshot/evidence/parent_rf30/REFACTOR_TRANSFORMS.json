@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "checkpoint": "RF30",
+  "parent_zip_sha256": "8103dfa48903ac6331253949d8c549c99c16e239009a057e02da7620d4dcd6ff",
+  "moves": {},
+  "application_body_changes": 1,
+  "scope": "M20.2 shared compiler/process/environment engine;isolated profile outputs andoperator flows;Golden pending is an explicit failure,not production acceptance",
+  "changes": [
+    "Extract one shared compiler/link/session authority from RF29",
+    "Adapt HF19 profile confinement,exclusive locks,stale-output clearing andatomic local dist writes",
+    "Restore four same-stem CMD/Python operator workflows",
+    "Production candidate remains in build until destination Golden binding is implemented"
+  ],
+  "historical_transforms": "evidence/parent_rf29/REFACTOR_TRANSFORMS.json",
+  "production_body_changes": 0,
+  "regression_test_extended": "tests/test_profile_response.cpp",
+  "profile_example_correction": "examples/surge.cfg explicit9 User fields;runtime defaults/policy unchanged"
+}

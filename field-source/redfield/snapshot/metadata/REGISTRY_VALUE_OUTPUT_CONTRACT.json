@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "checkpoint": "RF33",
+  "classification": "BEHAVIOR_FIX_WITH_BOUNDED_STRUCTURAL_REFACTOR",
+  "finding": "RF33-REGISTRY-001",
+  "writer": "src/platform/registry_value_output.hpp",
+  "caller": "src/platform/registry_policy_values.cpp",
+  "test": "tests/test_registry_value_output.cpp",
+  "test_role": "regression",
+  "lifetime": "Borrowed synchronous spans; no allocation/retention/Win32 calls in writer",
+  "retained": [
+    "Pre-original input capacity",
+    "REG_SZ type before query/insufficient-capacity result",
+    "Required size includes terminator",
+    "No partial data on insufficient capacity",
+    "Invalid inputs leave metadata/data untouched",
+    "Windows UTF-8 conversion, allocation and release order",
+    "Source-selected narrow bytes; explicit UTF-16LE wide bytes"
+  ],
+  "semantic_delta": "Previously undefined unaligned typed stores become defined byte stores; supported aligned output/error results retained",
+  "reference_package": {
+    "name": "dll-reverse-engineering(3).zip",
+    "sha256": "41b8825760087d188204ac5e9b635a6d9d913703ba8f1bf2cb4c48a9b92aaf60",
+    "member": "anadius-registry-source/abi_cells.hpp",
+    "member_sha256": "4fd3d0a6169f8feb22d60f982b94194c3d4b47f2eee1478444e3767070a92351",
+    "use": "Storage representation review input only; no code body copied; not a donor-equivalence gate"
+  },
+  "windows_native": "NOT_RUN",
+  "whole_registry_qualified": false
+}

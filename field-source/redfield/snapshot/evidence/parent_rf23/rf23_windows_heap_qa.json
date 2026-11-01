@@ -1,0 +1,37 @@
+{
+  "scope": "Actual _WIN32 SemanticValue code compiled on Linux with Heap API shim and __declspec/__stdcall erased. ELF, not Windows native/ABI acceptance.",
+  "cases": [
+    {
+      "profile": "none",
+      "status": "PASS",
+      "exit_code": 0,
+      "production_backend_only": true,
+      "ptd_generic_symbols": "ABSENT",
+      "binary_sha256": "fc5dd7761605402cf13c6775c631ade926595b14d903b5ae7abac4f22903982b"
+    },
+    {
+      "profile": "address",
+      "status": "PASS",
+      "exit_code": 0,
+      "production_backend_only": true,
+      "ptd_generic_symbols": "ABSENT",
+      "binary_sha256": "c6591150f04312d266fdde7f3191bb627bda1ea0e99d0275c0b9e3f343b456cd"
+    },
+    {
+      "profile": "undefined",
+      "status": "PASS",
+      "exit_code": 0,
+      "production_backend_only": true,
+      "ptd_generic_symbols": "ABSENT",
+      "binary_sha256": "9ac60be07f016d8c6a7413ecd4faef4686f6a17e0aa688c1e4b4aebf80291a5a"
+    }
+  ],
+  "input_sha256": {
+    "src/xml/value_codec.cpp": "b20a59511d927cfacfea6b1dc5714fe4ff9f8e98f4b267d0dc13c38d96a5e156",
+    "src/xml/value_codec_utf8.cpp": "074a82cd9667f7862f84e0afd73dc76ef9ff2463ac6f6ccd7132eee296c096a6",
+    "src/xml/value_codec_normalize.cpp": "0f8cc01eeedb166f496ad959e1ef574eb97292cb25fda3ec2ce228de00a451d1",
+    "src/xml/value_codec_semantic.cpp": "cd95217fbbebc01a561c2bb86eb8651e9e18bf5c174c433578be5c04ded8a5b4",
+    "tests/test_semantic_allocator.cpp": "908a931e4d311c43f12cb26f9dd3b4ea4f015353152c5d2849284d87a3f92414",
+    "src/runtime/transient_allocator.cpp": "2f214b259dec502ccb6bbc9c929c579c7575b5e7f8e069b55821fa5d814a7b85"
+  }
+}

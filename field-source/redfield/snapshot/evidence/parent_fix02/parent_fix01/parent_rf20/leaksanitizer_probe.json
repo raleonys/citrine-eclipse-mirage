@@ -1,0 +1,8 @@
+{
+  "checkpoint": "RF20",
+  "binary": "/tmp/redfield_rf20_final/REDFIELD_RF20/build/portable_address_no_leaks/test_tcp_grant_failure",
+  "binary_sha256": "3baaa80e63f4bb88caddc763a27e5992b4ebcb410063b0d677de477d96af187c",
+  "exit_code": 1,
+  "output": "==6==LeakSanitizer has encountered a fatal error.\n==6==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==6==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n",
+  "scope": "Fresh real TCP Grant failure/cancel binary with leak enabled; not full leak-enabled suite"
+}

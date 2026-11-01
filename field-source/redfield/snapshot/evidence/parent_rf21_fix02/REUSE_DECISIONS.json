@@ -1,0 +1,434 @@
+{
+  "selected": [
+    {
+      "source": "HF19",
+      "decision": "ADOPT_SELECTED_BYTE_IDENTICAL",
+      "scope": "XML framer/request/attribute/children; Config2 PEGTL grammar; hex; checked arithmetic; TinyXML2+PEGTL+licenses; four original tests"
+    }
+  ],
+  "reviewed_inventory_only": [
+    {
+      "source": "OriginSDK_0.91.3_Kaynak.zip",
+      "decision": "DEFER_PROTOCOL_MODULES",
+      "reason": "Native client/protocol ownership reviewed at tree level; no implementation imported in RF00"
+    },
+    {
+      "source": "EAappEmulater-main.zip",
+      "decision": "DEFER",
+      "reason": "C# application and static XML assets; not a direct C++ core import"
+    },
+    {
+      "source": "Maxima-Draconis-master.zip",
+      "decision": "DEFER",
+      "reason": "Rust LSX/service structure; FFI or translation not needed for first core"
+    }
+  ],
+  "limitations": [
+    "Not all Library bytes were scanned",
+    "No full-file semantic review claimed for all inventory entries",
+    "No donor binary is needed by source build or verification",
+    "No source implementation copied from historical GF00"
+  ],
+  "rf01": {
+    "prior_adoptions": "386 byte-identical files from RF00 unchanged",
+    "new_code": "Worker ownership, module-relative config reader, ServiceSession and platform adapter",
+    "reason_for_new_worker": "HF19 bootstrap is coupled to its current hook/service/PTD/config ownership; importing the whole implementation would impose unrelated architecture dependencies",
+    "external_binary_dependency": false
+  },
+  "rf02": {
+    "adopted_byte_identical": [
+      "HF19 AsioListenerOwner source/header",
+      "ReceiveBuffer and FrameIngress source/header",
+      "AsioSessionTimeoutPolicy header",
+      "Three original tests",
+      "Asio 1.38.2 exact upstream 635 files + existing pin record"
+    ],
+    "deferred": [
+      "HF19 AsioSessionOwner/AsioServiceOwner depend on encrypted ExchangeState, transactions and full dispatch; RF02 is plaintext ingress only"
+    ],
+    "new_components": [
+      "TcpIngress Peer registry/driver; LocalService composition; real TCP integration tests"
+    ],
+    "scope": "Loopback ingress does not invent an LSX auth greeting, route response or donor parity requirement"
+  },
+  "rf03": {
+    "byte_identical": "26 additional files: 10 implementation TUs, required headers/private codec support, five original tests; cumulative 1058 files",
+    "enabled_routes": [
+      "GetConfig",
+      "IsProgressiveInstallationAvailable"
+    ],
+    "new_components": [
+      "Bounded async write ownership in TcpIngress",
+      "Two-binding dispatch over existing owned DOM",
+      "Transactional EALsxPort publication with injected backend"
+    ],
+    "deferred": [
+      "Full HF19 dispatcher/handler_registry depends on runtime configuration, event queues, social session and encrypted transaction delivery; it is not imported or stubbed",
+      "HF19 port_mapping selects fallback 3227 even without reservation; RF03 retains OS-reserved ephemeral port and publishes actual bound port",
+      "No connect hook, auth greeting, crypto, transaction events or game acceptance"
+    ],
+    "discovery_source": "OriginSDK_0.91.3/src/native/startup_profile_policy.hpp reads EALsxPort for port=0; not copied as a replacement OS publisher",
+    "known_diagnostic": "RF03-QA-001: untouched original test_get_config exits 14 due existing unknown-entity DOM contract; diagnostic is not PASS"
+  },
+  "rf04": {
+    "adopted_new_files": 17,
+    "cumulative_byte_identical_files": 1075,
+    "new_exact_sources": [
+      "settings values/provider",
+      "GetSetting formatter",
+      "GetSettings formatter",
+      "contextual internet-connected formatter",
+      "debug contextual settings-query helper and five original tests"
+    ],
+    "new_adapter": "Per-call SettingsView over an immutable REDFIELD ConfigSnapshot, no global runtime provider. Six SettingId bindings use original formatter implementations.",
+    "deferred": [
+      "Full global runtime settings resolver and full request dispatcher",
+      "Auth/greeting/crypto/events/entitlements",
+      "Strict XML entity validation: original GetConfig diagnostic still exit 14"
+    ],
+    "policy_boundary": "Explicit normalized Online always supplied to the adopted contextual provider; missing/numeric Online cannot activate the inherited default-enabled path. Game.Language and Emulator policy fields keep section boundaries.",
+    "entity_matrix": "Eight request-to-response cases verify existing DOM semantics; the historical diagnostic is not changed or counted PASS."
+  },
+  "rf05": {
+    "new_byte_identical_files": 12,
+    "cumulative_byte_identical_files": 1087,
+    "derived_translation_units": 2,
+    "enabled_new_routes": [
+      "QueryFriends",
+      "GetBlockList",
+      "GetPresenceVisibility",
+      "GetGroupInfo",
+      "GetVoipStatus",
+      "QueryChunkStatus"
+    ],
+    "derivation": "Original raw files preserved in provenance/hf19. GroupInfo drops one unused broad include; stateless helpers/functions/constants are exact byte slices from mixed integration TU. Two derived files are never counted byte-identical.",
+    "why_isolate": "Avoid event queue/global runtime/mutation dependencies; retain original stateless code instead of rewriting its formatting logic.",
+    "original_query_friends_test": "Preserved as reference only, not executed: its global runtime_provider fixture would import unrelated state. New literal-wire and offline/online TCP tests cover enabled behavior.",
+    "scope": "No committed social mutations, no live remote friend/party state, no VoIP implementation, no download/chunk state claim. QueryChunkStatus is explicit no-response control flow."
+  },
+  "rf06": {
+    "new_byte_identical_files": 8,
+    "cumulative_byte_identical_files": 1095,
+    "cumulative_derived_files": 7,
+    "cumulative_derived_tus": 5,
+    "enabled_new_routes": [
+      "GetProfile",
+      "GetPresence",
+      "GetUTCTime"
+    ],
+    "new_adapter": "Explicit snapshot profile/title projection; overlay_loaded publishes atomically with leaves",
+    "derivation": "Exact HF19 formatter bodies/support slices + explicit parameter/scaffolding changes. UTC unused broad includes removed; only portable epoch branch replaced.",
+    "scope": "Local static profile/presence and system UTC; no auth, remote social service, global policy, events or game parity."
+  },
+  "rf07": {
+    "new_byte_identical_files": 2,
+    "cumulative_byte_identical_files": 1097,
+    "cumulative_derived_files": 8,
+    "cumulative_derived_tus": 6,
+    "enabled_new_routes": [
+      "GetGameInfo",
+      "GetAllGameInfo"
+    ],
+    "derivation": "Exact 14-selector body and original two formatter bodies in stack-owned snapshot context; shared formatter helper header with three maybe_unused annotations; profile formatter include updated by byte recipe",
+    "shared_policy": "Game language uses same SettingsView leaf lookup; display title and Game aliases checked against presence policy",
+    "build_hardening": "Before receipt, all linked outputs must still match initial size/hash and have execute permission on Linux; protects against post-validation output loss",
+    "deferred": [
+      "Global HF19 runtime/provider/hooks",
+      "Native Windows game-info DLL acceptance",
+      "Greeting/auth/session crypto/entitlement/event chain"
+    ]
+  },
+  "rf08": {
+    "new_byte_identical_files": 1,
+    "cumulative_byte_identical_files": 1098,
+    "cumulative_derived_files": 10,
+    "cumulative_derived_tus": 7,
+    "enabled_new_routes": [
+      "QueryPresence"
+    ],
+    "derivation": "Exact DOM first-text/CDATA, validation and Friend emission. Replace only global configuration lease acquire/release with outer immutable snapshot and persona parameter. Exact StreamWriter minus two unused ServiceTextView overloads; shared helpers acquire inline declarations only.",
+    "scope": "Static UNKNOWN/NONE Friend projection with local username, not remote presence or committed social state",
+    "limits": "512 input children; actual TCP output still 16KiB; validation precedes all rendering",
+    "ownership": "Snapshot pins persona through validation/measure/render; owned Request pins same TinyXML2 DOM; transport owns materialized response bytes"
+  },
+  "rf09": {
+    "new_byte_identical_files": 3,
+    "cumulative_byte_identical_files": 1101,
+    "cumulative_derived_files": 11,
+    "cumulative_derived_tus": 8,
+    "enabled_new_routes": [
+      "QueryImage"
+    ],
+    "derivation": "Exact QueryImage validation, provider-disabled control flow and formatting; replace only global Avatar/path block with explicit snapshot-owned resource parameter and outer adapter",
+    "references": [
+      "Original image_route.cpp for derived byte slices",
+      "Original avatar_path.cpp for surge.png module-relative fallback policy; not compiled",
+      "Original runtime_configuration_parser.cpp for direct User.Avatar reserved section/depth behavior; not compiled"
+    ],
+    "scope": "ResourcePath only; no file existence, read/decode/resize/cache or provider execution",
+    "ownership": "Session derives module parent fallback once; every immutable config snapshot owns the fallback; async output owns completed bytes",
+    "deferred": [
+      "Windows raw-prefix/UNC/extended path equivalence and native image DLL-host acceptance",
+      "Greeting/auth/crypto/entitlement/events/connect redirect"
+    ]
+  },
+  "rf10": {
+    "new_byte_identical_files": 0,
+    "cumulative_byte_identical_files": 1101,
+    "cumulative_derived_files": 12,
+    "cumulative_derived_tus": 9,
+    "enabled_new_routes": [
+      "AreChunksInstalled"
+    ],
+    "derivation": "Already-pinned integration_routes.cpp int32 parser and handler, plus route_response_support.hpp i32 formatter; exact fragments with one explicit successful measure tail and two-pass outer adapter",
+    "scope": "Static Installed=true/ItemId empty projection, no filesystem/download inventory or state mutation",
+    "ownership": "Same owned DOM is validated/measured before rendering; completed bytes owned by transport",
+    "limits": "Signed int32, ASCII decimal with optional sign, no whitespace trim; existing 8KiB ingress/16KiB output; no new logical child-count limit",
+    "deferred": [
+      "Windows native chunks DLL-host acceptance",
+      "Greeting/auth/session crypto/entitlement/events/connect redirect"
+    ]
+  },
+  "rf11": {
+    "new_byte_identical_files": 0,
+    "cumulative_byte_identical_files": 1101,
+    "cumulative_derived_files": 12,
+    "cumulative_derived_tus": 9,
+    "new_core_tus": 0,
+    "enabled_new_routes": [
+      "GoOnline",
+      "EnableVoip",
+      "SetDownloaderUtilization",
+      "SetPresenceVisibility",
+      "SetPresence",
+      "StartDownload",
+      "RestartGame"
+    ],
+    "derivation": "Extend existing stateless_routes.cpp recipe with exact HF19 handler bodies and simple_route_result; no body rewrites, new event queues or global providers",
+    "scope": "Wire reply contract only; GoOnline does not enable connectivity/auth, setters do not mutate stored state, download/restart do not execute actions",
+    "ownership": "Existing bounded pure ErrorSuccess helper and owned DOM/transport response bytes",
+    "deferred": [
+      "ShowIGO requires event ownership and remains unbound",
+      "Windows dedicated control DLL-host acceptance",
+      "Greeting/auth/session crypto/entitlement/events/connect redirect"
+    ]
+  },
+  "rf12": {
+    "new_byte_identical_files": 2,
+    "cumulative_byte_identical_files": 1103,
+    "cumulative_derived_files": 13,
+    "cumulative_derived_tus": 9,
+    "cumulative_derived_headers": 4,
+    "new_core_tus": 0,
+    "enabled_new_routes": [
+      "CheckPermission"
+    ],
+    "derivation": "Exact CheckPermission constants/render_body/handler checks and reply branches in private formatter header; replace only global provider/offline() with explicit bool from existing SettingsView",
+    "policy": "Only normalized Online true grants; missing/numeric/other literals default offline, recognized duplicate literals fold with existing ConfigStore policy",
+    "reference_test": "Original global-provider/default-online test preserved exactly as reference, NOT_RUN and not relabeled passing",
+    "scope": "Local immutable configuration projection; no remote authorization, authentication, entitlement or permission service",
+    "deferred": [
+      "AuthCodeSession lease/commit and SDK greeting/crypto",
+      "Windows dedicated permission DLL-host acceptance"
+    ]
+  },
+  "rf13": {
+    "new_byte_identical_files": 3,
+    "cumulative_byte_identical_files": 1106,
+    "cumulative_derived_files": 15,
+    "cumulative_derived_tus": 9,
+    "cumulative_derived_headers": 6,
+    "new_core_tus": 1,
+    "enabled_new_routes": [
+      "GetAuthCode"
+    ],
+    "derivation": "Exact mix64/Auth8 alphabet-loop + ClientId checks/offline error/envelope fragments; explicit seed and owner replace global state, Win32 entropy and no-op portable lock",
+    "ownership": "LocalService owns mutex-protected AuthCodeSession across all peers; lazy generation, commit after full successful render, terminal clear after transport drain; no global provider or pending lease/view escape",
+    "entropy": "Default std::random_device bytes with exception failure; deterministic injected seed callback only in explicit unit owners, never selected from request/config; local compatibility token, no uniqueness/cryptographic/remote-auth guarantee",
+    "reference_test": "Original test_connectivity_auth_policy.cpp global fixture exact reference-only NOT_RUN",
+    "deferred": [
+      "SDK greeting/session crypto and remote authentication",
+      "Windows dedicated Auth8 DLL-host acceptance",
+      "Entitlement/events/mutation/connect redirect"
+    ]
+  },
+  "rf14": {
+    "new_byte_identical_files": 1,
+    "cumulative_byte_identical_files": 1107,
+    "cumulative_derived_files": 16,
+    "cumulative_derived_tus": 9,
+    "cumulative_derived_headers": 7,
+    "new_core_tus": 0,
+    "enabled_new_routes": [
+      "QueryOffers",
+      "SelectStore",
+      "GetWalletBalance"
+    ],
+    "derivation": "Exact three handler bodies and two pure helpers from HF19 store_routes.cpp; private namespace/alias scaffolding and existing shared formatting support; no body rewrites",
+    "scope": "Fixed compatibility wire replies only, independent of config/auth/store; no selecting a store, remote wallet/balance or offers inventory",
+    "ownership": "Same already-owned DOM and bounded complete-response byte path; no new owner/global state/worker, pending lease or event queue",
+    "deferred": [
+      "QueryContent/QueryEntitlements require generation-pinned owned store data",
+      "ShowIGO requires event delivery ownership",
+      "Windows dedicated store-reply DLL-host acceptance",
+      "Greeting/session crypto, entitlement/events/mutation backends/connect redirect"
+    ]
+  },
+  "rf15": {
+    "new_byte_identical_files": 3,
+    "cumulative_byte_identical_files": 1110,
+    "cumulative_derived_files": 18,
+    "cumulative_derived_tus": 10,
+    "cumulative_derived_headers": 8,
+    "new_core_tus": 1,
+    "enabled_new_routes": [
+      "QueryContent"
+    ],
+    "derivation": "Exact original ensure_content and Content leaf branch/defaults + QueryContent wire/check fragments; original record view types exact. Owned std::string/vector staging replaces global/manual store and guard; same ConfigSnapshot publication; fully validated measure success adapter",
+    "ownership": "One existing PEGTL parse builds raw leaves, Online and typed content into one candidate; one atomic publication, no process-global store or independently published generation; same pinned snapshot spans measure/render and old snapshots outlive replacement/stop",
+    "policy": "First Content ID occurrence order, duplicate raw IDs merge; unknown/nested leaf creates defaults GAME/0/INSTALLED; only direct nonempty Name/Version/State update; empty section alone creates no record; no record sort/trim/unescape",
+    "scope": "Config-declared content projection, not live installed files/download/backend ownership discovery; progressValue fixed 0, versions identical",
+    "deferred": [
+      "QueryEntitlements typed ownership/filter route",
+      "Achievement/event mutation and SDK greeting/session crypto",
+      "Windows dedicated QueryContent DLL-host acceptance",
+      "Connect redirect"
+    ]
+  },
+  "rf16": {
+    "new_byte_identical_files": 0,
+    "cumulative_byte_identical_files": 1110,
+    "cumulative_derived_files": 20,
+    "cumulative_derived_tus": 11,
+    "cumulative_derived_headers": 9,
+    "new_core_tus": 1,
+    "enabled_new_routes": [
+      "QueryEntitlements"
+    ],
+    "derivation": "Exact ensure_entitlement/default/leaf branch, filter prevalidation/probes/include and serializer/u64/safe-text fragments; explicit owned snapshot storage/count/get replace global manual store; same pinned generation across successful measure/render",
+    "ownership": "Existing one PEGTL pass publishes leaves/Online/content/entitlements in one shared immutable snapshot; no independent store generation, global state, remote account or entitlement grant mutation",
+    "projection": "First raw-ID occurrence order; duplicate merge; default Group empty, Version 0, Type DEFAULT, Tag ONLINE_ACCESS; direct Group/Version/Type/EntitlementTag including empty replace; nested/unknown leaf ensures defaults",
+    "filter": "OfferId/ItemId/FilterOffers -> record item_id; Group/FilterGroups -> group; FilterItems -> entitlement_tag. OR within each active dimension, AND across dimensions. No trim. Nested Filter element ignored. Existing owned-DOM empty/multiple-node semantics unchanged",
+    "sequence": "Counter starts 1000000000000 and increments before each record filter; first ID 1000000000001, filtered positions are consumed, not stored in record",
+    "scope": "Local Config2 entitlement projection, not account authentication, remote ownership validation or granting entitlement",
+    "deferred": [
+      "SDK greeting/session crypto",
+      "Achievement/event mutation ownership",
+      "Windows dedicated QueryEntitlements DLL-host acceptance",
+      "Connect redirect"
+    ]
+  },
+  "rf17": {
+    "new_byte_identical_files": 1,
+    "cumulative_byte_identical_files": 1111,
+    "cumulative_derived_files": 22,
+    "cumulative_derived_tus": 12,
+    "cumulative_derived_headers": 10,
+    "new_core_tus": 1,
+    "enabled_new_routes": [
+      "QueryAchievements"
+    ],
+    "ownership": "One PEGTL pass stages names/totals as borrowed spans only until finalization; records own strings; one atomic immutable snapshot publication with Online/Content/Entitlements. No mutable store/watcher/delivery shim",
+    "projection": "Exact int32 parser and achievement leaf/finalization loops; totals first with duplicate rows, first matching name; name-only IDs once total1; empty IDs skipped, invalid totals ignored, nested depth>=2 branch preserved; initial count/progress0",
+    "serializer": "Exact first direct All selector, wire body, i32/safe-text; explicit snapshot count/get/Game/set lookups; fully validated measure/render on same generation",
+    "deferred": [
+      "GrantAchievement transactional state/event/delivery ownership",
+      "SDK greeting/session crypto",
+      "Windows native QueryAchievements host acceptance",
+      "Connect redirect"
+    ]
+  },
+  "rf18": {
+    "new_byte_identical_files": 2,
+    "cumulative_byte_identical_files": 1113,
+    "cumulative_derived_files": 23,
+    "cumulative_derived_tus": 13,
+    "cumulative_derived_headers": 10,
+    "new_core_tus": 1,
+    "new_routes": [],
+    "derivation": "Exact original uint32 wrapped grant arithmetic/completion transition, owned timestamp assignment and candidate/transaction adapters. Whole original service_state_grant.cpp and transaction fixture retained as references",
+    "ownership": "Standalone owner initialized once from immutable ConfigStore publication; committed/candidate generations, one weak pending reservation; move-only RAII ticket; no mutex held across caller delivery wait; explicit commit/rollback, terminal close, tickets/pins survive owner lifetime safely",
+    "bounds": "4096 records and4MiB sum of seven achievement text fields; initialize/prepare budget admission failures retain previous pointer. This is explicit new owner admission, not claimed original global runtime parity",
+    "not_integrated": "LocalService/dispatcher/TcpIngress still use RF17 initial configuration. No Grant route, response/event/watcher/persistence producer, socket completion callback or deferred delivery ticket binding",
+    "deferred": [
+      "Grant response and completion-event all-or-nothing serialization/admission",
+      "TCP post-send commit/rollback and queued event ordering",
+      "LocalService lifecycle integration and query committed-owner selection",
+      "Watcher/persistence policy",
+      "SDK greeting/session crypto",
+      "Connect redirect"
+    ]
+  },
+  "rf19": {
+    "new_byte_identical_files": 1,
+    "cumulative_byte_identical_files": 1114,
+    "cumulative_derived_files": 24,
+    "cumulative_derived_tus": 14,
+    "cumulative_derived_headers": 10,
+    "new_core_tus": 1,
+    "new_routes": [],
+    "derivation": "Exact Grant direct-child selector/parse_i32/record response/completion-event, semantic_span and formatter/i32/safe-text fragments; private size-query adapters and namespace qualification; global watcher/store/socket scaffolding omitted",
+    "ownership": "Move-only PreparedAchievementDelivery owns response/event strings and RF18 PreparedGrant. Validates/measures both against same candidate, admits both before allocation/render/public output. Local RAII staging rollback on failure; successful explicit state commit retains bytes for future transfer",
+    "bounds": "Each response/event capacity<=16KiB including NUL; combined logical bytes<=32KiB, caller may lower each budget. Non-completion needs no event capacity. RF18 owner4096/4MiB budget unchanged",
+    "selector": "First exact direct AchievementId required; Progress absent defaults1, optional signed int32. Existing find_direct_child_text trims single text/CDATA, rejects nested/comment/multinode recognized first child. Later duplicate ignored, unknown/descendant ignored, command trivia validated. XML semantic decoding once",
+    "not_integrated": "Standalone API only; LocalService/TcpIngress/dispatcher and34 routes unchanged. No clock provider, socket write, queued-event transfer, watcher/persistence or remote grant",
+    "deferred": [
+      "TCP response completion commit/rollback and event queue admission/order",
+      "LocalService lifetime integration and query committed-owner selection",
+      "Watcher/persistence semantics",
+      "SDK greeting/session crypto",
+      "Connect redirect"
+    ]
+  },
+  "rf20": {
+    "new_byte_identical_files": 0,
+    "cumulative_byte_identical_files": 1114,
+    "cumulative_derived_files": 24,
+    "new_core_tus": 0,
+    "new_routes": [
+      "GrantAchievement"
+    ],
+    "ownership": "Generic FrameDelivery owned by TCP Peer retains immutable response/event views and transaction through async completion. One optional event slot reserved as part of the object before response write. Commit only full successful response; precommit failure/cancel drops ticket after outstanding handler drains. Successful commit survives event failure",
+    "local_service": "Owns AchievementSession initialized once from config; supplies current_utc_timestamp helper to RF19 preparation; QueryAchievements uses committed snapshot; shutdown restores port, drains TCP, closes achievement/Auth8 owners then service session",
+    "deferred": [
+      "Cross-peer watcher/event fanout",
+      "Persistent achievement store/replay/retry",
+      "Remote consumption acknowledgement",
+      "SDK greeting/session crypto",
+      "Connect redirect"
+    ]
+  },
+  "rf20_build_fix04": {
+    "new_byte_identical_files": 19,
+    "cumulative_byte_identical_files": 1133,
+    "cumulative_derived_files": 24,
+    "new_core_tus": 2,
+    "new_original_regressions": 15,
+    "new_project_regressions": 1,
+    "reason": "value_codec_semantic Windows branch requires transient allocator. Whole original memory_allocator TU requires current_errno_slot from whole original ptd_runtime TU. Adopt both exact with PTD header, preserve original source boundaries, allocation/failure ownership and errno/retry semantics. No replacement stubs or modified donor body.",
+    "activation": "PTD initialization is not added to RF20 lifecycle. Transient allocation/release do not require initialized PTD. Full allocate_block API retains original optional errno-slot behavior."
+  },
+  "rf21": {
+    "parent": "RF20 FIX04",
+    "core_hooks": 7,
+    "original_hook_sources": "HF19 exact sources; two bounded registry recovery fixes retain exact original references",
+    "new_project_owners": [
+      "WindowsHooks",
+      "hook_configuration adapter"
+    ],
+    "new_project_policy": "Immutable ConfigSnapshot retained until hook quiescence; Game section only and last duplicate wins, matching HF19 parser rules",
+    "patch_engine": "Only pinned MinHook; original upstream tree unchanged; approved SAFE-FREEZE patch source materialized/replayed",
+    "not_integrated": [
+      "HF17 optional CreateProcess/SHGetFolderPath addon hooks",
+      "SDK greeting/session crypto",
+      "Consumer launch coordination/handshake",
+      "Game acceptance"
+    ]
+  },
+  "rf21_hooks01_fix02": {
+    "reused": "Existing WorkerOwner, LocalService and TcpIngress; original seven hook backends, pinned MinHook and all vendor bytes unchanged",
+    "new_code": "Shared shutdown deadline and pending-session cleanup adapter; internal callback now receives remaining budget; one connected-TCP lifecycle regression",
+    "reason": "Bug is in REDFIELD-owned shutdown glue. Original donor hook implementation has no matching WorkerOwner/LocalService ownership boundary to adopt",
+    "native_test": "Same single-retry success assertion retained; actual result/state now printed before exit56"
+  }
+}

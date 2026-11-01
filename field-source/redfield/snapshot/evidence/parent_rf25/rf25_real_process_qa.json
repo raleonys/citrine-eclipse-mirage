@@ -1,0 +1,41 @@
+{
+  "scope": "Real POSIX subprocesses and real GCC compile/link/execute; Windows CMD/MSVC/taskkill NOT_RUN",
+  "builder_sha256": "ebb1874528f181e009cfe7899905c8b645818b3e6c6bb3a4da7ba7230771d7c0",
+  "cases": [
+    {
+      "case": "real_child_output_visible_before_exit",
+      "status": "PASS",
+      "early_to_late_seconds": 0.6023333139992246
+    },
+    {
+      "case": "real_expected_exit14_preserved",
+      "status": "PASS"
+    },
+    {
+      "case": "real_exit7_rejected_log_retained",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "real_timeout_kills_owned_posix_process_group",
+      "status": "PASS",
+      "windows_taskkill": "NOT_RUN"
+    },
+    {
+      "case": "real_split_utf8_and_stderr_stream",
+      "status": "PASS"
+    },
+    {
+      "case": "real_silent_child_heartbeat",
+      "status": "PASS"
+    },
+    {
+      "case": "real_gcc_cpp20_compile_link_execute_through_same_runner",
+      "status": "PASS",
+      "compiler": "/usr/bin/g++",
+      "object_sha256": "f5538a6e334939778bc84b1ee4ac2ac47bb05cca41faf32cda7cdc395786f0a7",
+      "binary_sha256": "f24f83149a4d50a2b850a1f4b3f188990060140483616f2af5be4c6644a4c07e",
+      "stdout": "REAL_CPP_EXECUTION_PASS\n"
+    }
+  ],
+  "current_driver_sha256": "f69c4ad3627bc2f5f09be50d2102f4d7b7e0341c0df27343337ed067c6b1744a"
+}

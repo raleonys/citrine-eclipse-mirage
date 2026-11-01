@@ -1,0 +1,23 @@
+{
+  "finding": "RF33-REGISTRY-001",
+  "status": "CLOSED_FIXED",
+  "verification": "VERIFIED_SOURCE",
+  "parent_zip_sha256": "6bbdb8efec0cf4c92b8d356d54023018c647cb568facbe7ef553a9b2010781e7",
+  "parent_source_sha256": "1858ce5848be4fd52f7d1273bc699415560b0401dfb4d3f6118a390b3b5f42b8",
+  "reproduction": "Actual immediate-parent write_w fallback invoked with alignas(8) byte array + 1; GNU UBSan reports misaligned uint16_t store and exits 1",
+  "reproduction_exit": 1,
+  "current_source_sha256": "b2bac7d4552aefcc24949c62f4ae5297687adcf8732d8ce229e40449b28f66d6",
+  "root": "Caller output is a byte buffer; reinterpret_cast<uint16_t*> creates invalid aligned typed stores",
+  "minimal_fix": "Separate allocation-free byte writer; serialize UTF-16LE into uint8_t slots; preserve pre-original capacity and output/failure order",
+  "current_targeted_status": "PASS",
+  "native_windows_status": "NOT_RUN",
+  "integration_model": "Actual write_a/write_w code, controlled malloc/free, fallback paths only; no Windows conversion or real registry",
+  "excluded": [
+    "DWORD/HKEY typed ABI/trampoline review",
+    "registry B ledger",
+    "config/Online defaults",
+    "new hooks",
+    "SDK session crypto",
+    "native/game acceptance"
+  ]
+}

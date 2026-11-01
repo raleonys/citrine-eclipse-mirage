@@ -1,0 +1,14 @@
+{
+  "checkpoint": "RF20",
+  "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+  "legacy_get_config": "RF03-QA-001 FAIL_OBSERVED exit14, not PASS",
+  "leak_detection": "BLOCKED",
+  "leak_detail": "Fresh detect_leaks=1 fails under ptrace; full accepted ASan suite uses leak detection off",
+  "windows_native_iocp": "NOT_RUN",
+  "cmake_cmd": "NOT_RUN",
+  "live_sdk_game": "NOT_RUN_NOT_PROVEN",
+  "owner_scope": "LocalService Grant and committed query with TCP-owned response/event delivery;35 LocalService bindings,34 old dispatch bindings. Commit at full local response callback, event follows on same peer. No remote ACK/retry, watcher/fanout/persistence",
+  "original_grant_global_fixture": "Reference-only NOT_RUN; new owner scenarios exercised separately",
+  "previous_output_environment_root_cause": "NOT_ESTABLISHED; RF20 workspace guard rejection recorded, isolated full rebuilds used; guards retained",
+  "parent_receipts": "Not carried forward"
+}

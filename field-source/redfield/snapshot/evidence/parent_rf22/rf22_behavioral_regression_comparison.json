@@ -1,0 +1,6 @@
+{
+  "scope": "Exact stdout and exit of every91 parent portable regression; not complete behavioral equivalence proof",
+  "matched": 91,
+  "new_test": "test_session_retirement",
+  "known_diagnostic_exit": 14
+}

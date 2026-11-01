@@ -1,0 +1,53 @@
+{
+  "subject": "include/preloader_l/session_retirement.hpp",
+  "sha256": "8c72dd84abb2a6c36eadbbb0545344bb55c01cc25c6ed08a8335b9aa1d4dfd1d",
+  "status": "PASS",
+  "adaptation_kind": "TARGET_BOUNDARY_REFACTOR",
+  "structural_justification": "Existing RF22/RF23 per-owner retirement, single deadline and physical-release fence boundaries reviewed in all9 current files; current full caller/LocalService boundary read and7 real module programs executed. Existing state-machine bodies retained with explicit source/integration justification. This file has an explicit destination responsibility, callback/lifetime/failure boundary and current executable source validation; prior origin/namespace/old PASS alone does not qualify it.",
+  "checks": [
+    {
+      "name": "Unchanged_M02_M11_full_source_contract_rechecked_at_changed_caller_startup_boundary",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh_current7_module_programs_linked_to58_exact_hash_bound_RF35_core_objects",
+      "status": "PASS"
+    },
+    {
+      "name": "Current22_startup_lifecycle_comparisons_44executions_15CRT_policy_negatives_2startup_mutations",
+      "status": "PASS"
+    }
+  ],
+  "dependencies": {
+    "include/preloader_l/pending_session_cleanup.hpp": "4b172066eb973c77f7897393270be92b707bc031d3e0fb184ed0556913c5d445",
+    "include/preloader_l/runtime/transient_allocator.hpp": "1429571a2dd1b7d83427b08d82fcedb86b8727311ac8f0b09605c6cbbbe76da9",
+    "include/preloader_l/session_retirement.hpp": "8c72dd84abb2a6c36eadbbb0545344bb55c01cc25c6ed08a8335b9aa1d4dfd1d",
+    "include/preloader_l/shutdown_budget.hpp": "d0018c503cc40c9ae31ef9e2b5d4fa9d84aecc9a509ab853b39b9d7f227f1cb1",
+    "include/preloader_l/worker_owner.hpp": "b68534a8a029df160ba984083ab9ec09926035b94fe1a7754d2c9265c0cc2268",
+    "src/core/worker_owner.cpp": "ea360d910a55294da05f23e096decfd59bbf104a6fdee3001d379de6a90af9e9",
+    "src/runtime/transient_allocator.cpp": "2d95bea4738b3e51c8e2ae04591a739f0ad664049c1ffb843e401bb148aee6d7",
+    "tests/test_pending_session_cleanup.cpp": "1e8ad306a1903295193d6831740bb19781a775dfd9d37d52b67b9a1513830dc4",
+    "tests/test_semantic_allocator.cpp": "9fb33bace4373a8298fb41c923974b5b5f6cb60a6cab2436c252d4ad060d70d8",
+    "tests/test_session_retirement.cpp": "a85c6cb5817e36c2cf2bfb6fa1ea0330d9b0097dfbe47a28043d4ad9fbf47dd7",
+    "tests/test_transient_allocation_owner.cpp": "977e5c558c0a19c547c4a7531d9c7e21c507462aaa026795cf2090d7bf45e92a",
+    "tests/test_transient_retry_concurrency.cpp": "56fbc0681759d02b378ae61a133604c19f6284a8044783713803f281ed4d601a",
+    "tests/test_transient_shutdown.cpp": "ee6774a20af8c7d6a9fa35d85ae1828dca3eb137ee0c4d68e282e156647f582f",
+    "tests/test_worker_owner.cpp": "db869b907f6fbb79038f69b5e9438996f64498ef83de33e75a2fc8e1097ba8fd",
+    "metadata/BUILD_GRAPH.json": "d2766a52b6c3a8672f04025ac28ea5c8e4543697e2252eae51d3553417b09731",
+    "metadata/BUILD_PROFILES.json": "784fe92f3e1fc758fafed0d9de375d00d4cbb48d68d27edbb2029d9488271251",
+    "CMakeLists.txt": "ea92c6a8cab249ab2851971c74babd2556672e73098ec79e8b0cb79bca23c0c1",
+    "scripts/build_orchestration/build_common.py": "f2282f952b1c814da0b5bd4aca9984dd864fc395b27c7111ab271cb09e975380",
+    "src/windows/worker_runtime.hpp": "b41bb1c1faa8a8421bdf7b5fa23aef9174b33ca3eb8c9ed8403034628474acfb",
+    "src/windows/dll_entry.cpp": "b9303f291f9461da5f8966e01c72a97a9a1a6b78a970beb6e04f3bc571011740",
+    "tests/native/dll_entry.cpp": "94342e285b20fa596cbe6e9cc759e39baaf53316c9a0886414e302625dec9054",
+    "src/net/local_service.cpp": "b89adf1230aef9059a51ab3749272f2e848f585f1b41b217660781ee2aed0d75",
+    "src/xml/value_codec_semantic.cpp": "90c83d662a9fbcd2331fd78428785a697fe4bafab6868933e11cb1b3fa25c180",
+    "evidence/rf36_worker_startup.json": "99f5a773ab6e6627c098e9a5ab659b21eb894e8eb4caf640985a03ead0c3efe7",
+    "evidence/rf36_startup_contract.json": "7f3456874f589797740dd28c0c02422333856c35bc7f424f52ebcaf1ab6a8c8a",
+    "evidence/rf36_crt_startup_review.json": "a5d8faa011ac642b2c176864624675697c4fb6eba30f8834959d8b7a16e59c96"
+  },
+  "prior_evidence": {
+    "path": "evidence/rf34_qualification_02.json",
+    "sha256": "4edb8ed87a458e2d61fc3a1d2e54b920c5bbf68d3eae541d276c06c47248e8e5"
+  }
+}

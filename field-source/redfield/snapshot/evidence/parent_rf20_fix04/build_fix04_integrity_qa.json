@@ -1,0 +1,25 @@
+{
+  "source_verifier": "REDFIELD_INTEGRITY_PASS files=1346 adopted=1133 derived=24 build_units=146",
+  "negatives": [
+    {
+      "case": "builder",
+      "status": "EXPECTED_REJECTION",
+      "reason": "SHA_MISMATCH"
+    },
+    {
+      "case": "launcher",
+      "status": "EXPECTED_REJECTION",
+      "reason": "LAUNCHER_SET_MISMATCH"
+    },
+    {
+      "case": "allocator",
+      "status": "EXPECTED_REJECTION",
+      "reason": "ADOPTION_MISMATCH"
+    },
+    {
+      "case": "graph",
+      "status": "EXPECTED_REJECTION",
+      "reason": "BUILD_GRAPH_MISMATCH"
+    }
+  ]
+}

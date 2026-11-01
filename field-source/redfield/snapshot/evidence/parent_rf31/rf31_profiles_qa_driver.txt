@@ -1,0 +1,149 @@
+from pathlib import Path
+import copy,hashlib,importlib.util,json,os,shutil,struct,subprocess,sys,tempfile
+from types import SimpleNamespace
+from unittest.mock import patch
+R=Path('rf31_work/REDFIELD_RF31').resolve();sys.path.insert(0,str(R/'scripts/build_orchestration'))
+import build_common as m
+import build_profiles as bp
+from pe_acceptance import inspect
+cases=[]
+def passed(name,**kw):cases.append(dict(case=name,status='PASS',**kw))
+def reject(name,fn,reason):
+ try:fn();raise AssertionError(name+' accepted')
+ except (RuntimeError,ValueError,OSError) as e:
+  assert reason in str(e),(name,str(e));cases.append(dict(case=name,status='EXPECTED_REJECTION',reason=reason))
+def write(p,j):p.write_text(json.dumps(j,indent=2)+'\n',encoding='utf-8')
+from rf31_pe_fixtures import fixture
+def pe_fixture(native=False,crt='kernel32.dll'):
+ return fixture(R,native=native,first_module=crt)
+
+assert inspect(pe_fixture())['exports']=={'DllMain':1,'SURGE':2,'DllShutdown':3};passed('synthetic_public_export_contract_parser',fixture_only=True)
+assert len(inspect(pe_fixture(True),native=True)['exports'])==6;passed('synthetic_native_export_sparse_ordinals',fixture_only=True)
+for dll in ['ucrtbase.dll','ucrtbased.dll','vcruntime140.dll','MSVCP140D.dll','api-ms-win-crt-runtime-l1-1-0.dll']:
+ reject('dynamic_crt_'+dll,lambda d=dll:inspect(pe_fixture(crt=d)),'DYNAMIC_CRT_IMPORT')
+reject('native_exports_cannot_ship',lambda:inspect(pe_fixture(True)),'EXPORT_COUNT')
+for kind,offset,fmt,value,reason in [('security',0x118+70,'<H',0,'ENTRY_OR_ASLR_NX_HIGH_ENTROPY'),('zero_entry',0x118+16,'<I',0,'ENTRY_OR_ASLR_NX_HIGH_ENTROPY'),('wrong_machine',0x104,'<H',0x14c,'X64_DLL_REQUIRED'),('hidden_ordinal',0x840+3*4,'<I',0x1000,'UNNAMED_EXPORT')]:
+ data=bytearray(pe_fixture());struct.pack_into(fmt,data,offset,value)
+ # Hidden ordinal needs an extra function table slot in the declared range.
+ if kind=='hidden_ordinal':struct.pack_into('<I',data,0x800+20,4)
+ reject('pe_'+kind,lambda d=bytes(data):inspect(d),reason)
+reject('truncated_pe',lambda:inspect(pe_fixture()[:300]),'TRUNCATED')
+
+with tempfile.TemporaryDirectory(prefix='rf31_profiles_qa_') as td:
+ root=Path(td)/'source';shutil.copytree(R,root,ignore=lambda p,n:[x for x in n if x=='__pycache__' or Path(p)==R and x in {'build','dist'}])
+ # Real OS locks,confinement,stale cleanup andatomic copies operate on fixtures.
+ with m.BuildLock(root,'production'):
+  reject('same_profile_second_lock',lambda:m.BuildLock(root,'production').__enter__(),'BUILD_ALREADY_RUNNING')
+  with m.BuildLock(root,'debug'):passed('distinct_profiles_have_distinct_locks')
+  child=subprocess.run([sys.executable,'-c',"import sys;sys.path.insert(0,sys.argv[1]);from pathlib import Path;from build_common import BuildLock\nwith BuildLock(Path(sys.argv[2]),'production'):pass",str(R/'scripts/build_orchestration'),str(root)],capture_output=True,text=True)
+  assert child.returncode and 'BUILD_ALREADY_RUNNING' in child.stderr;passed('real_child_process_cannot_acquire_held_profile_lock')
+ with m.BuildLock(root,'production'):passed('released_lock_can_be_reacquired')
+ for relative in ['../outside','/tmp/outside','build/../outside','dist/./preloader_l.dll','dist//preloader_l.dll','build\\debug']:
+  reject('confined_'+relative,lambda r=relative:m.confined(root,r),'OUTPUT_PATH_NOT_CONFINED')
+ outside=Path(td)/'outside';outside.mkdir();(root/'dist').symlink_to(outside,target_is_directory=True)
+ reject('symlink_output_root',lambda:m.confined(root,'dist/debug/result.dll'),'OUTPUT_SYMLINK');(root/'dist').unlink()
+ source=Path(td)/'candidate';source.write_bytes(b'nonproduction QA only');expected=m.digest(source)
+ target=m.atomic_copy(root,source,'dist/debug/fixture.dll',expected);assert target.read_bytes()==source.read_bytes();passed('real_same_directory_atomic_copy_readback')
+ reject('production_dist_cannot_bypass_pending_golden',lambda:m.atomic_copy(root,source,'dist/preloader_l.dll',expected),'PRODUCTION_DIST_REQUIRES_GOLDEN_OUTCOME')
+ reject('unapproved_nonproduction_destination',lambda:m.atomic_copy(root,source,'dist/other/fixture.dll',expected),'NONPRODUCTION_DIST_PATH_REQUIRED')
+ reject('changed_publish_source',lambda:m.atomic_copy(root,source,'dist/debug/fixture.dll','0'*64),'PUBLISH_SOURCE_CHANGED')
+ with patch.object(m.os,'replace',side_effect=OSError('injected rename failure')):
+  reject('atomic_rename_failure_temp_cleanup',lambda:m.atomic_copy(root,source,'dist/debug/fixture.dll',expected),'injected rename failure')
+ assert not list(target.parent.glob('.preloader_l.*.tmp'));assert target.read_bytes()==source.read_bytes()
+ (root/'dist/preloader_l.dll').write_bytes(b'stale');m.clear_dist(root,'production');assert not (root/'dist/preloader_l.dll').exists();passed('stale_shipping_output_removed_before_new_attempt')
+ p=m.prepare_output(root,'build/debug');(p/'stale.obj').write_text('stale');m.prepare_output(root,'build/debug');assert not (p/'stale.obj').exists();passed('profile_build_output_reset')
+ reject('no_broad_output_reset',lambda:m.prepare_output(root,'build'),'OUTPUT_RESET_NOT_APPROVED')
+ original=(root/'metadata/BUILD_PROFILES.json').read_bytes();policy=json.loads(original)
+ for name,mutate,reason in [('mt_debug_leak',lambda j:j['profiles']['production']['cxx_flags'].append('/MTd'),'FLAG_INJECTION'),('custom_entry',lambda j:j['profiles']['production']['link_flags'].append('/ENTRY:DllMain'),'LINK_POLICY'),('production_pdb',lambda j:j['profiles']['production']['link_flags'].append('/DEBUG:FULL'),'DEBUG_LEAK'),('cross_root',lambda j:j['profiles']['debug'].update(build_root='build/production'),'PROFILE_BOUNDARY'),('fake_golden_ready',lambda j:j.update(golden_binding='PASS'),'GOLDEN_BINDING_CONTRACT'),('missing_release_opt',lambda j:j['profiles']['production']['cxx_flags'].remove('/O2'),'PROFILE_FLAGS')]:
+  j=copy.deepcopy(policy);mutate(j);write(root/'metadata/BUILD_PROFILES.json',j);reject('policy_'+name,lambda:m.load_profiles(root),reason)
+ (root/'metadata/BUILD_PROFILES.json').write_bytes(original)
+ # Full actual Python profile composition +shared command builder,with MSVC,
+ # process execution andVsDevCmd replaced by explicit test doubles only.
+ tool=Path(td)/'MSVC tools';tool.mkdir();cl=tool/'cl.exe';cl.write_bytes(b'not a compiler;QA fixture');(tool/'link.exe').write_bytes(b'QA linker fixture');(tool/'rc.exe').write_bytes(b'QA resource compiler fixture')
+ command_rows=[];state={'missing_object':False,'fail_host':False,'mutate_dll':False,'bad_stage':None,'missing_resource':False,'mutate_resource':False}
+ def execute(command,**kw):
+  command=[str(x) for x in command];command_rows.append(dict(argv=command,label=kw['label']))
+  if command[0].endswith('rc.exe'):
+   if not state['missing_resource']:
+    output=next(x[3:] for x in command if x.startswith('/fo'))
+    Path(output).write_bytes(struct.pack('<IIHHHHIHHII',0,32,0xffff,0,0xffff,0,0,0,0,0,0)+bytes(64))
+   return subprocess.CompletedProcess(command,0,'RC simulated')
+  obj=next((x[3:] for x in command if x.startswith('/Fo')),None)
+  out=next((x[3:] for x in command if x.startswith('/Fe')),None)
+  text=''
+  if obj:
+   if not state['missing_object']:Path(obj).write_bytes(b'\x64\x86'+b'\0'*30)
+  elif out:
+   if out.endswith('.dll'):
+    native=any('preloader_l_native_test.def' in x for x in command)
+    data=bytearray(fixture(R,native=native,data_vs=0x1801 if state['bad_stage']==4 else 0x400))
+    if state['bad_stage']==0:struct.pack_into('<II',data,0x118+112+6*8,0x2c00,28)
+    elif state['bad_stage']==1:data[0x1c00]=1
+    elif state['bad_stage']==2:data[0x1e00+0x80+40]=0
+    elif state['bad_stage']==3:struct.pack_into('<Q',data,0x800+(0x2b00-0x2000)+88,1)
+    Path(out).write_bytes(data)
+   else:Path(out).write_bytes(b'MZ'+b'\0'*58+(64).to_bytes(4,'little')+b'PE\0\0\x64\x86'+b'\0'*18)
+   if '/Zi' in command:
+    for flag in command:
+     if flag.startswith(('/PDB:','/MAP:')):Path(flag.split(':',1)[1]).write_bytes(b'debug QA fixture')
+  else:
+   if state['fail_host']:raise RuntimeError('command exit=7:simulated host failure')
+   text='PRELOADER_L_NATIVE_ACCEPTANCE_PASS' if command[0].endswith('native_acceptance.exe') else 'ABI_SMOKE_PASS:3_LOAD_SHUTDOWN_UNLOAD_CYCLES'
+   if state['mutate_dll']:Path(command[1]).write_bytes(Path(command[1]).read_bytes()+b'tamper')
+   if state['mutate_resource']:
+    res=Path(command[1]).parent/'preloader_version.res';res.write_bytes(res.read_bytes()+b'tamper')
+  return subprocess.CompletedProcess(command,0,text)
+ with patch.object(bp,'os',SimpleNamespace(name='nt')),patch.object(m,'windows_environment',return_value={'PATH':str(tool)}),patch.object(m.shutil,'which',side_effect=lambda name,path=None:str(tool/name)),patch.object(m,'run_logged',side_effect=execute):
+  for profile in ['debug','native','crt']:
+   start=len(command_rows);assert bp.run_profile(root,profile)==0
+   receipt=json.loads((root/'build'/profile/'receipt.json').read_text());assert receipt['status']=='PASS_SCOPED_'+profile.upper();assert receipt['profile']==profile
+   assert all(row['profile']==profile for row in receipt['compile_roles'].values())
+   assert not any(x['role'] in {'test_support','regression','diagnostic'} for x in receipt['compile_roles'].values())
+   commands=command_rows[start:];runtime='/MTd' if profile=='debug' else '/MT'
+   assert all(runtime in c['argv'] for c in commands if c['argv'][0]==str(cl))
+   assert not any(('/MT' if profile=='debug' else '/MTd') in c['argv'] for c in commands)
+   assert all('tests/support/include' not in ' '.join(c['argv']) for c in commands)
+   assert not (root/'dist/preloader_l.dll').exists()
+   passed('actual_profile_composition_mock_msvc_'+profile,scope='Simulated processes;real shared flags/roles/path/hash/publish/receipt logic;Windows NOT_RUN',compiled_objects=len(receipt['compiled_object_sha256']),published=len(receipt['published']))
+  assert bp.run_profile(root,'production')==0
+  shipping=root/'dist/preloader_l.dll'
+  receipt=json.loads((root/'build/production/receipt.json').read_text())
+  assert receipt['status']=='PASS_LOCAL_PRODUCTION_GOLDEN_NOT_RELEASE' and receipt['golden']['status']=='PASS_LOCAL_BOUND_CHAIN'
+  assert [x['name'] for x in receipt['golden']['stages']]==list(m.GOLDEN_ORDER)
+  assert shipping.read_bytes()==(root/'build/production/preloader.unsigned.dll').read_bytes()
+  assert len(receipt['compiled_resource_sha256'])==1 and receipt['link_policy']['status']=='PASS'
+  passed('actual_profile_complete_Golden_then_atomic_dist_mock_msvc',scope='Actual Python stages;synthetic PE andmocked MSVC/RC/hosts;Windows NOT_RUN')
+  for index,reason in [(0,'DEBUG_DIRECTORY'),(1,'FPTABLE_PROFILE'),(2,'VERSIONINFO_FIXED'),(3,'GS_COOKIE_RANGE'),(4,'DATA_VIRTUAL_SIZE_BUDGET')]:
+   state['bad_stage']=index
+   reject('production_rejection_in_stage_'+str(index),lambda:bp.run_profile(root,'production'),reason)
+   failure=json.loads((root/'build/production/failure.json').read_text())
+   assert not shipping.exists() and not (root/'build/production/receipt.json').exists()
+   assert failure['golden']['status']=='FAIL' and failure['golden']['stages'][-1]['status']=='FAIL' and len(failure['golden']['stages'])==index+1
+  state['bad_stage']=None
+  state['missing_resource']=True;reject('zero_exit_without_fresh_RC_output',lambda:bp.run_profile(root,'production'),'No such file');state['missing_resource']=False
+  state['mutate_resource']=True;reject('resource_changed_before_gates',lambda:bp.run_profile(root,'production'),'COMPILED_RESOURCE_CHANGED');state['mutate_resource']=False
+  with patch.object(bp,'execute_golden',side_effect=KeyboardInterrupt):
+   try:bp.run_profile(root,'production');raise AssertionError('cancel accepted')
+   except KeyboardInterrupt:assert not shipping.exists()
+  passed('cancelled_production_removes_dist_andrecords_failure')
+  state['fail_host']=True;reject('new_failed_native_attempt_clears_previous_dist',lambda:bp.run_profile(root,'native'),'command exit=7');state['fail_host']=False
+  assert not (root/'dist/native_acceptance').exists() and not (root/'build/native/receipt.json').exists()
+  state['mutate_dll']=True;reject('acceptance_binary_mutation_rejected',lambda:bp.run_profile(root,'debug'),'ACCEPTANCE_MUTATED_DLL');state['mutate_dll']=False
+  assert not (root/'dist/debug').exists()
+  # A successful compiler return with no fresh object cannot reuse stale data.
+  graph=json.loads((root/'metadata/BUILD_GRAPH.json').read_text());build=m.prepare_output(root,'build/crt');s=m.BuildSession(root,build,graph,windows=True,profile='crt')
+  state['missing_object']=True;reject('zero_exit_without_fresh_object',lambda:s.compile(graph['core_sources'][0]),'No such file');state['missing_object']=False
+  reject('production_rejects_test_support_role',lambda:m.BuildSession(root,m.prepare_output(root,'build/production'),graph,windows=True,profile='production').compile(graph['test_support_sources'][0]),'PROFILE_SOURCE_ROLE_REJECTED')
+  reject('foreign_profile_object',lambda:s.check_objects([root/'build/debug/foreign.obj']),'FOREIGN_PROFILE_OBJECT')
+  obj=s.compile(graph['core_sources'][0]);obj.write_bytes(obj.read_bytes()+b'tamper');reject('object_changed_before_link',lambda:s.link(build/'host.exe',[obj]),'COMPILED_OBJECT_CHANGED')
+ # New input files are detected,not merely changed existing files.
+ _,before=m.input_snapshot(root);(root/'scripts/new_unregistered.py').write_text('#injected\n');reject('new_input_file_detected_at_finish',lambda:m.verify_inputs(root,before),'BUILD_INPUT_CHANGED');(root/'scripts/new_unregistered.py').unlink()
+ # Public entrypoints reject unknown overrides andunsupported platform.
+ for script in ['build_production','build_debug','build_native_acceptance','build_crt_acceptance']:
+  p=subprocess.run([sys.executable,str(R/'scripts/build_orchestration'/script)+'.py','--skip-golden'],capture_output=True,text=True);assert p.returncode==2 and 'unrecognized arguments' in p.stderr
+  passed(script+'_unknown_override_exit2')
+ p=subprocess.run([sys.executable,str(R/'scripts/build_orchestration/build_debug.py')],capture_output=True,text=True);assert p.returncode==1 and 'WINDOWS_MSVC_X64_REQUIRED' in p.stderr;passed('actual_non_windows_operator_fails_honestly')
+ (root/'scripts/new_unregistered.py').write_text('#injected\n')
+
+write(R/'evidence/rf31_profiles_qa.json',dict(status='PASS',scope='Real POSIX locks/filesystem/atomic copy andactual Python profile/command logic with mocked MSVC/VS/process execution;synthetic PE parser cases;NOT actual Windows orGolden acceptance',cases=cases,common_sha256=m.digest(R/'scripts/build_orchestration/build_common.py'),profiles_sha256=m.digest(R/'scripts/build_orchestration/build_profiles.py'),pe_helper_sha256=m.digest(R/'scripts/build_orchestration/pe_acceptance.py')))
+print('RF31_PROFILE_QA_PASS',len(cases))

@@ -1,0 +1,159 @@
+{
+  "status": "PASS",
+  "scope": "Actual source-role/import functions and GCC header visibility;fixture qualified proof is not a real component qualification;no Windows execution",
+  "cases": [
+    {
+      "case": "current_source_pending_is_not_closure",
+      "status": "PASS",
+      "summary": {
+        "rule_revision": "2026-10-21.1",
+        "managed_files": 294,
+        "qualified_files": 0,
+        "pending_files": 294,
+        "pending_vendor_integrations": 4,
+        "status": "PENDING"
+      }
+    },
+    {
+      "case": "strict_pending_closure_rejected",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_PENDING:298"
+    },
+    {
+      "case": "missing",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_INVENTORY"
+    },
+    {
+      "case": "duplicate",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_INVENTORY"
+    },
+    {
+      "case": "stale",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_STALE:CMakeLists.txt"
+    },
+    {
+      "case": "exempt",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_ORIGIN_EXEMPTION:CMakeLists.txt"
+    },
+    {
+      "case": "license",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_ORIGIN_EXEMPTION:CMakeLists.txt"
+    },
+    {
+      "case": "owner",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_RECORD:CMakeLists.txt:owner"
+    },
+    {
+      "case": "role",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_ROLE:CMakeLists.txt"
+    },
+    {
+      "case": "source_hash",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_SOURCE:CMakeLists.txt"
+    },
+    {
+      "case": "source_path",
+      "status": "EXPECTED_REJECTION",
+      "reason": "BUILD_CONTRACT_UNSAFE_PATH:provenance/../../escape"
+    },
+    {
+      "case": "cosmetic",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_QUALIFICATION:CMakeLists.txt"
+    },
+    {
+      "case": "no_evidence",
+      "status": "EXPECTED_REJECTION",
+      "reason": "BUILD_CONTRACT_SCHEMA:'evidence'"
+    },
+    {
+      "case": "vendor_removed",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_VENDOR_INVENTORY"
+    },
+    {
+      "case": "vendor_fake_qualified",
+      "status": "EXPECTED_REJECTION",
+      "reason": "BUILD_CONTRACT_SCHEMA:'evidence'"
+    },
+    {
+      "case": "source_coupling",
+      "status": "EXPECTED_REJECTION",
+      "reason": "BUILD_ROLE_DUPLICATE:tests/support/runtime/memory_allocator.cpp"
+    },
+    {
+      "case": "test_include",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PRODUCTION_TEST_INCLUDE:tests/support/include"
+    },
+    {
+      "case": "test_define",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PRODUCTION_TEST_DEFINE:PRELOADER_L_NATIVE_TEST=1"
+    },
+    {
+      "case": "support_include",
+      "status": "EXPECTED_REJECTION",
+      "reason": "TEST_SUPPORT_INCLUDE_CONTRACT"
+    },
+    {
+      "case": "native_location",
+      "status": "EXPECTED_REJECTION",
+      "reason": "NATIVE_HOST_TREE:src/core/runtime.cpp"
+    },
+    {
+      "case": "production_declared_test_header",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PRODUCTION_TEST_HEADER:src/core/runtime.cpp"
+    },
+    {
+      "case": "forged_aggregate_complete_ignored",
+      "status": "PASS"
+    },
+    {
+      "case": "source_bound_fixture_proof_accepted",
+      "status": "PASS",
+      "not_a_real_qualification": true
+    },
+    {
+      "case": "stale_qualification_dependency",
+      "status": "EXPECTED_REJECTION",
+      "reason": "IMPORT_REFACTOR_EVIDENCE_STALE:CMakeLists.txt"
+    },
+    {
+      "case": "real_compiler_production_cannot_see_ptd_header",
+      "status": "PASS"
+    },
+    {
+      "case": "real_compiler_test_target_can_see_ptd_header",
+      "status": "PASS"
+    },
+    {
+      "case": "forbidden_variant_src/core/runtime.cpp/DPRELOADER_L_NATIVE_TEST=1",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "forbidden_variant_src/windows/dll_entry.cpp/DBAD=1",
+      "status": "EXPECTED_REJECTION"
+    },
+    {
+      "case": "only_registered_native_entry_variant_allowed",
+      "status": "PASS"
+    },
+    {
+      "case": "actual_operator_closure_flag_rejects_pending",
+      "status": "EXPECTED_REJECTION"
+    }
+  ],
+  "current_source_qualified_files": 0,
+  "driver_sha256": "74584451ae6cb0a9cac21360b2873422850edd505334fd006ce702c087efd15b",
+  "contract_sha256": "086e8371a5b466ca1eb7c265ab692d65e1179ef6770b8181cda8a01ccec1d654"
+}

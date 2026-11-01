@@ -1,0 +1,66 @@
+{
+  "classification": "USER_SUPPLIED_WINDOWS_EXECUTION_LOG_PLUS_STATIC_PE_INSPECTION; not agent-native execution",
+  "inputs": [
+    {
+      "name": "build(1).log",
+      "bytes": 1564697,
+      "sha256": "01571cf1e1cb7bc909335a538bb3935d58c75aa9f4b1b010a5c18b0ce96fa421",
+      "library_file_id": "libfile_c4d150a9f9688191bf54c178dc9753bb"
+    },
+    {
+      "name": "preloader_l(7).dll",
+      "bytes": 646656,
+      "sha256": "51dae24e7463b549a05e39a9d561c39c613dea77f8742778db0bd69e20f3df8a",
+      "library_file_id": "libfile_c590f9c6f7fc81919fca52e33ac07ba6"
+    }
+  ],
+  "parent_build": "RF21 HOOKS01 FIX01",
+  "compiler": "MSVC14.51.36231 HostX64/x64",
+  "successful_compile_actions": 170,
+  "regression_exit0_count": 90,
+  "legacy_diagnostic_exit": 14,
+  "production_dll_link": "PASS",
+  "production_lifecycle_smoke": "PASS_3_CYCLES",
+  "native_cases_passed": [
+    "missing",
+    "online_true",
+    "numeric_ignored",
+    "invalid_config",
+    "cleanup_retry",
+    "self_pin"
+  ],
+  "native_host_exit": 56,
+  "native_completion_marker": false,
+  "overall_status": "FAIL_NATIVE_ACCEPTANCE",
+  "failed_assertion": "hooks case: second DllShutdown(10000) after RegCloseKey must return0",
+  "preceding_hook_assertions": "connect redirect mapping, pseudo RegOpen/Query, first shutdown==10 and RegCloseKey success all reached before exit56",
+  "actual_second_shutdown_return": "NOT_RECORDED_IN_SUBMITTED_LOG;56 is host assertion exit, not DllShutdown result",
+  "portable_old_exact_callback_reproduction": "blocked=10 retry=10 pending=1 unpins=0; real Linux TCP, hook preflight model only",
+  "diagnosis_limit": "Source defect and portable reproduction established. Same root cause on Windows inferred; corrected FIX02 native execution still required.",
+  "pe": {
+    "machine": "AMD64",
+    "exports": [
+      {
+        "name": "DllMain",
+        "ordinal": 1
+      },
+      {
+        "name": "DllShutdown",
+        "ordinal": 3
+      },
+      {
+        "name": "SURGE",
+        "ordinal": 2
+      }
+    ],
+    "imports": [
+      "WS2_32.dll",
+      "MSWSOCK.dll",
+      "CRYPT32.dll",
+      "api-ms-win-core-synch-l1-2-0.dll",
+      "KERNEL32.dll"
+    ]
+  },
+  "current_fix02_windows": "NOT_RUN",
+  "game": "NOT_RUN"
+}

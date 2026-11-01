@@ -1,0 +1,9 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF24",
+  "refactor": "SNAPSHOT03",
+  "parent_checkpoint": "RF23",
+  "parent_zip_sha256": "3c0fc8371abbbf62198cab0402b6ff338d6253b0535bacb7af57a9c183110d6f",
+  "parent_library_file_id": "libfile_a54fef0898548191b2b505c219ef0ac6",
+  "official_hf19_unchanged": true
+}

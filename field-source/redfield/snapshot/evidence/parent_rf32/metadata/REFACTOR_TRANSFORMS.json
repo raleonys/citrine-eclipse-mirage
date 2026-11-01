@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "checkpoint": "RF32",
+  "parent_zip_sha256": "8a7d6465acdab9e592825c64ab908605d7a41cd97960f37b9c434c1165400b60",
+  "existing_application_files_changed": 1,
+  "new_application_files": 4,
+  "portable_core_body_changes": 0,
+  "changes": [
+    "Native entry moved fromproduction macrovariant into tests/native/dll_entry.cpp",
+    "Worker lifetime algorithm extracted into one sharedsrc/windows/worker_runtime.hpp template",
+    "Native-only observation/fault state moved to tests/native/worker_observation.hpp",
+    "One observation ABI/concurrency regression;source-role isolation andCMake/native builder adaptation",
+    "Explicit29scenario/4debughost coverage and12canonical sourcebindings"
+  ],
+  "remaining": [
+    "ActualcurrentWindows acceptance",
+    "Dedicated Debug diagnostics andfullnative/CRT/stress/shippingblackbox coverage",
+    "Allsource semanticqualifications and16modulereviews"
+  ]
+}

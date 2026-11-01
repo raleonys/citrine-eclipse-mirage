@@ -1,0 +1,35 @@
+from pathlib import Path
+import subprocess,hashlib,json,os,tempfile
+R=Path('rf27_work/REDFIELD_RF27').resolve()
+G=json.loads((R/'metadata/BUILD_GRAPH.json').read_text())
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+records=[]
+for mode in ['address','undefined']:
+    b=Path(tempfile.mkdtemp(prefix='rf27_'+mode+'_'))
+    flags=['-std=c++20','-pthread','-Wall','-Wextra','-Werror','-O1','-g',
+           '-fsanitize='+mode,'-fno-omit-frame-pointer','-fno-pie','-no-pie',
+           *['-D'+d for d in G['compile_definitions']],
+           *['-I'+str(R/p) for p in G['include_directories']]]
+    env=os.environ.copy();env['ASAN_OPTIONS']='detect_leaks=0:halt_on_error=1'
+    env['UBSAN_OPTIONS']='halt_on_error=1:print_stacktrace=1'
+    compiled=[];runs=[]
+    with open('rf27_'+mode+'_qa.log','w') as log:
+        def run(cmd,timeout=180):
+            log.write('COMMAND '+repr(cmd)+'\n');log.flush()
+            p=subprocess.run(cmd,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=timeout)
+            log.write(p.stdout);log.write('EXIT '+str(p.returncode)+'\n');log.flush()
+            assert p.returncode==0,p.stdout
+            return p.stdout
+        for relative in G['core_sources']:
+            obj=b/(relative.replace('/','__')+'.o')
+            run(['g++',*flags,'-c',str(R/relative),'-o',str(obj)])
+            compiled.append(obj)
+        for name in ['test_service_session','test_config','test_config_snapshot_view','test_record_projection_transaction','test_achievement_projection','test_tcp_settings']:
+            exe=b/name
+            run(['g++',*flags,'-UNDEBUG',str(R/G['tests'][name]),*[str(p) for p in compiled],'-o',str(exe)])
+            out=run([str(exe)],timeout=30)
+            runs.append(dict(name=name,exit_code=0,stdout=out.strip(),binary_sha256=sha(exe)))
+    records.append(dict(sanitizer=mode,leak_detection=False,core_objects=len(compiled),tests=runs,
+                        inputs={p:sha(R/p) for p in G['core_sources']+[G['tests'][t['name']] for t in runs]+['src/config/projection_support.hpp','src/config/content_projection.hpp','src/config/entitlement_projection.hpp','include/preloader_l/runtime/record_views.hpp','src/config/achievement_projection.hpp','include/preloader_l/config_file.hpp']}))
+    print(mode,'PASS',flush=True)
+(R/'evidence/rf27_sanitizer_qa.json').write_text(json.dumps(dict(scope='Fresh Linux GCC sanitizer compilation of all 58 core TUs and six configuration file/capture/transaction/snapshot/TCP tests; not Win32 detour/native validation',profiles=records),indent=2)+'\n')

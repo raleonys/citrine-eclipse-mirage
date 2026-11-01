@@ -1,0 +1,20 @@
+{
+  "checkpoint": "RF35",
+  "project": "REDFIELD",
+  "code_identity": "preloader_l",
+  "configuration_filename": "surge.cfg",
+  "policy_revision": "2026-10-21.1",
+  "mandatory_import_refactor": true,
+  "managed_code_records": 300,
+  "qualified_records": 16,
+  "vendor_integrations_pending": 4,
+  "local_build_with_pending_review": true,
+  "whole_refactor_closure_with_pending_review": false,
+  "worker_adaptation": "One source implementation withseparate static composition andlifetime-neutral observation;no legacy parallel worker backend",
+  "canonical_acceptance_references": 12,
+  "full_native_debug_crt_parity": false,
+  "limits": "Source-bound inventory andmodeled execution do not establish realWindows orsemanticqualification",
+  "registry_output": "Two project-authored isolated writer/regression units qualified by current executable checks. Existing conversion/policy remains pending; reference ScalarCell body not imported.",
+  "lifetime_review": "M02 nine andM11 five current units qualified through full contract review and fresh component validation;6 module source reviews complete,14 remain",
+  "msvc_namespace_fix": "One redundant namespace alias removed; current module/source qualification counts unchanged; M09 review still open"
+}

@@ -1,0 +1,8 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF36",
+  "parent_checkpoint": "RF35",
+  "parent_zip_sha256": "9cf22601a7730ed54c0ef8c895bcca74c8d8a9d495de0999c0b2e2b80b8886ea",
+  "parent_library_file_id": "libfile_39071161c67c81919b868d3eb28c524b",
+  "official_hf19_unchanged": true
+}

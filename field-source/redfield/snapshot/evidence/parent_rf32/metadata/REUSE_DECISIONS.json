@@ -1,0 +1,17 @@
+{
+  "checkpoint": "RF32",
+  "project": "REDFIELD",
+  "code_identity": "preloader_l",
+  "configuration_filename": "surge.cfg",
+  "policy_revision": "2026-10-21.1",
+  "mandatory_import_refactor": true,
+  "managed_code_records": 298,
+  "qualified_records": 0,
+  "vendor_integrations_pending": 4,
+  "local_build_with_pending_review": true,
+  "whole_refactor_closure_with_pending_review": false,
+  "worker_adaptation": "One source implementation withseparate static composition andlifetime-neutral observation;no legacy parallel worker backend",
+  "canonical_acceptance_references": 12,
+  "full_native_debug_crt_parity": false,
+  "limits": "Source-bound inventory andmodeled execution do not establish realWindows orsemanticqualification"
+}

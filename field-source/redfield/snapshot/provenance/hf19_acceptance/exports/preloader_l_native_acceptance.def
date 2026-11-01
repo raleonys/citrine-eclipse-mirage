@@ -1,0 +1,14 @@
+LIBRARY "preloader_l_native_test"
+EXPORTS
+    preloader_l_debug_wait_ready
+    DllMain                                  @1
+    DllShutdown                    @3
+    SURGE                                     @2
+    preloader_l_debug_controlled_teardown    @201
+    preloader_l_native_acceptance_quiesce    @202
+    preloader_l_native_acceptance_worker_metric @203
+    preloader_l_native_acceptance_config_scenario @204
+    preloader_l_native_acceptance_connect_metric @205
+    preloader_l_native_acceptance_f02_control @206
+    preloader_l_native_acceptance_campaign18_scenario @207
+    preloader_l_native_acceptance_wave4_control @208

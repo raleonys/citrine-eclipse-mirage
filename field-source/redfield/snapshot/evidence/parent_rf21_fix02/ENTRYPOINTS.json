@@ -1,0 +1,26 @@
+{
+  "human_entrypoints": [
+    {
+      "launcher": "scripts/build_orchestration/build_verify.cmd",
+      "target": "scripts/build_orchestration/build_verify.py",
+      "owner": "build orchestration",
+      "purpose": "Compile source,91 regressions, separate unchanged GetConfig diagnostic, Windows x64 production/native DLL and lifecycle tests; object/output identity guards;seven Windows hooks with pinned MinHook SAFE-FREEZE"
+    },
+    {
+      "launcher": "scripts/verify_source.cmd",
+      "target": "scripts/verify_source.py",
+      "owner": "source integrity",
+      "purpose": "Exact package/adoption/27 derived byte recipes, Windows hook graph/SAFE-FREEZE/export/launcher validation"
+    }
+  ],
+  "internal_helpers": [
+    "scripts/build_orchestration/hook_build.py",
+    "scripts/build_orchestration/PatchMinHookSafeFreeze.cmake"
+  ],
+  "vendor_launchers_forbidden": true,
+  "internal_native_hosts": [
+    "tools/abi_smoke.cpp",
+    "tools/native_acceptance.cpp"
+  ],
+  "upstream_vendor_helpers_are_not_project_entrypoints": true
+}

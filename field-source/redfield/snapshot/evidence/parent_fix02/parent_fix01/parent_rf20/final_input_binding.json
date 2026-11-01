@@ -1,0 +1,12 @@
+{
+  "checkpoint": "RF20",
+  "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+  "all_receipt_input_lists_equal": true,
+  "all_current_source_files_match": true,
+  "tests_per_profile": 70,
+  "compiled_objects_per_profile": 125,
+  "linked_outputs_per_profile": 71,
+  "diagnostic_exit_per_profile": 14,
+  "clean_input_zip_sha256": "998a9c0e364f629df6c3341f99e8040b0486dedcc3ac30a6474e1a2497692fc2",
+  "rejected_workspace_attempt_carried_forward": false
+}

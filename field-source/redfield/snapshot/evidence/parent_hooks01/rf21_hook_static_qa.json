@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "minhook_vendor_files": 61,
+  "minhook_c_units": 4,
+  "windows_cpp_units": 12,
+  "source_hook_inventory": 7,
+  "legacy_process_wide_htons": "ABSENT",
+  "legacy_surge_hooks": "ABSENT",
+  "DllMain": "SCHEDULING_ONLY",
+  "production_exports": "UNCHANGED",
+  "vendor_upstream_make_bat": "UNCHANGED_INTERNAL_VENDOR_HELPER",
+  "cmake_independent_patch_replay": "NOT_RUN;CMake unavailable here",
+  "native_windows": "NOT_RUN",
+  "game": "NOT_RUN"
+}

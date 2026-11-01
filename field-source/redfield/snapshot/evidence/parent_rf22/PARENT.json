@@ -1,0 +1,10 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF22",
+  "refactor": "UNIFIED01",
+  "parent_checkpoint": "RF21",
+  "parent_build_fix": "HOOKS01_FIX02",
+  "parent_zip_sha256": "b4ab019ab72947f80a19764bf9d358925f55854589dba981f4cf1a5e65c2b5e2",
+  "parent_library_file_id": "libfile_a8548449e9888191bee5849f67733c70",
+  "official_hf19_unchanged": true
+}

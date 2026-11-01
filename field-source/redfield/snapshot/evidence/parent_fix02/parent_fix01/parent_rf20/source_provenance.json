@@ -1,0 +1,9 @@
+{
+  "checkpoint": "RF20",
+  "canonical_zip_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "zip_crc": "PASS",
+  "adopted_destinations": 1114,
+  "derived_files": 24,
+  "all_actual_zip_member_comparisons": "PASS",
+  "derived_reconstruction": "PASS"
+}

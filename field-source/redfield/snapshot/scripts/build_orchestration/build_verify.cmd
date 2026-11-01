@@ -1,0 +1,16 @@
+@echo off
+setlocal
+title REDFIELD - Developer Build and Verification
+echo ================================================================
+echo   REDFIELD RF37 GOLDEN BINDING FIX 01 - LOCAL BUILD / NOT RELEASE
+echo   Compile source, run regressions, build and test Windows x64 DLL
+echo ================================================================
+python -u "%~dp0build_verify.py" %*
+set "PRELOADER_L_CHILD_EXIT=%ERRORLEVEL%"
+echo.
+if "%PRELOADER_L_CHILD_EXIT%"=="0" (echo RESULT: SCOPED PASS - legacy diagnostic is recorded separately) else (echo RESULT: FAIL)
+echo EXIT CODE: %PRELOADER_L_CHILD_EXIT%
+echo OUTPUT: "%~dp0..\..\build\verify\msvc_x64"
+echo.
+pause
+exit /b %PRELOADER_L_CHILD_EXIT%

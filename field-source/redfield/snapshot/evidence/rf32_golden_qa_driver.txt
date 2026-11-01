@@ -1,0 +1,111 @@
+from pathlib import Path
+import copy,hashlib,importlib.util,json,os,shutil,struct,subprocess,sys,tempfile,zipfile
+from unittest.mock import patch
+R=Path('rf32_work/REDFIELD_RF32').resolve();sys.path.insert(0,str(R/'scripts/build_orchestration'))
+import golden as g
+import build_common as m
+from pe_image import Image,checksum,version_tree
+from rf32_pe_fixtures import fixture
+cases=[]
+def ok(name,**kw):cases.append(dict(case=name,status='PASS',**kw))
+def reject(name,fn,reason):
+ try:fn();raise AssertionError('accepted '+name)
+ except (ValueError,OSError,UnicodeError) as e:
+  assert reason in str(e),(name,str(e));cases.append(dict(case=name,status='EXPECTED_REJECTION',reason=reason))
+def manifest(root):
+ p=root/'metadata/PACKAGE_MANIFEST.json';p.write_text(json.dumps(dict(schema=1,checkpoint='RF32',files={f.relative_to(root).as_posix():dict(bytes=f.stat().st_size,sha256=g.sha(f.read_bytes())) for f in root.rglob('*') if f.is_file() and '__pycache__' not in f.parts and f.relative_to(root).parts[0] not in {'build','dist'} and f!=p}),indent=2)+'\n')
+binding,policies=g.load_contract(R)
+raw=fixture(R);final,changed=g.finalized_bytes(raw,policies);assert changed>0
+image=Image(final);assert g.layout(image,policies[g.POLICIES[1]])['sections']==['.text','.rdata','.data','.pdata','.fptable','.rsrc','.reloc'];g.metadata(image,policies[g.POLICIES[2]],binding);g.binary_acceptance(image,policy=policies[g.POLICIES[3]]);ok('synthetic_full_final_PE_acceptance',fixture_only=True,changed_bytes=changed)
+assert g.finalized_bytes(final,policies)[0]==final;ok('finalizer_idempotence')
+six,_=g.finalized_bytes(fixture(R,seven=False),policies);g.layout(Image(six),policies[g.POLICIES[1]]);ok('historical_six_section_layout_retained')
+# Compare retained semantics with the exact original implementations.
+def load(name,rel):
+ spec=importlib.util.spec_from_file_location(name,Path('rf21_reference/hf19')/rel);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
+oldf=load('old_finalizer','scripts/ursynex_golden_finalizer.py');oldf.validate_policy_bindings()
+o=bytearray(raw);pe,coff,opt=oldf.parse_core(o);struct.pack_into('<I',o,coff+4,oldf.TARGET_TIMESTAMP);o[opt+2:opt+4]=bytes(oldf.TARGET_LINKER);oldf.strip_rich_in_place(o,pe);struct.pack_into('<I',o,opt+64,oldf.compute_pe_checksum(o,opt+64));assert bytes(o)==final;ok('original_finalizer_exact_byte_parity_on_synthetic_PE')
+with tempfile.TemporaryDirectory(prefix='rf32_golden_qa_') as td:
+ root=Path(td)/'REDFIELD_RF32';shutil.copytree(R,root,ignore=lambda p,n:[x for x in n if x=='__pycache__' or Path(p)==R and x in {'build','dist'}])
+ candidate=root/'build/production/preloader.unsigned.dll';candidate.parent.mkdir(parents=True);candidate.write_bytes(final)
+ for name,rel,policy in [('old_aryra','scripts/verify_aryra_golden_layout.py',policies[g.POLICIES[1]]),('old_metadata','scripts/verify_mustavex_golden_metadata.py',policies[g.POLICIES[2]]),('old_corvexon','scripts/verify_corvexon_golden_trail.py',policies[g.POLICIES[3]])]:
+  old=load(name,rel)
+  result=old.inspect_shipping_abi(candidate,policy)[0] if name=='old_corvexon' else old.inspect(candidate,policy)
+  if name=='old_aryra':result=result[0]
+  assert result==[],(name,result);ok('original_'+name+'_accepts_same_synthetic_final_PE')
+ rows=[];candidate.write_bytes(raw);outcome=g.execute(root,candidate,stage_sink=rows);assert [s['name'] for s in rows]==list(g.ORDER) and all(s['status']=='PASS' for s in rows);g.validate_outcome(outcome,candidate,g.sha(raw));assert candidate.read_bytes()==final;ok('actual_five_stage_controller_order_hash_chain_and_source_hygiene',windows='NOT_RUN')
+ for index in range(5):
+  cp=subprocess.run([sys.executable,str(R/'scripts'/['ursynex_golden_finalizer.py','verify_aryra_golden_layout.py','verify_mustavex_golden_metadata.py','verify_corvexon_golden_trail.py','check_falcion_golden_cleaning.py'][index]),str(candidate)],capture_output=True,text=True)
+  assert cp.returncode==0,cp.stdout+cp.stderr;ok('actual_scoped_cli_'+str(index),exit=0)
+ # Atomic mutation errors leave the original bytes and clean staged files.
+ candidate.write_bytes(raw)
+ with patch.object(g.os,'replace',side_effect=OSError('injected rename failure')):reject('finalizer_atomic_rename_failure',lambda:g.atomic_finalize(candidate,final,g.sha(raw)),'injected rename failure')
+ assert candidate.read_bytes()==raw and not list(candidate.parent.glob('.preloader.unsigned.dll.*.tmp'));ok('finalizer_failure_preserves_original_and_cleans_temp')
+ reject('stale_finalizer_input',lambda:g.atomic_finalize(candidate,final,'0'*64),'FINALIZER_INPUT_CHANGED')
+ # Mutations must fail in the owner gate,not merely an old manifest check.
+ def mutate(name,fn,check,reason):
+  b=bytearray(final);fn(b);reject(name,lambda:check(Image(bytes(b))),reason)
+ opt=Image(final).optional;coff=Image(final).coff;st=opt+240
+ mutate('wrong_layout_raw_alignment',lambda b:struct.pack_into('<I',b,st+20,0x401),lambda i:g.layout(i,policies[g.POLICIES[1]]),'SECTION_RAW_ALIGNMENT')
+ mutate('virtual_overlap',lambda b:struct.pack_into('<I',b,st+40+12,0x1000),lambda i:g.layout(i,policies[g.POLICIES[1]]),'SECTION_OVERLAP')
+ mutate('fptable_size',lambda b:struct.pack_into('<I',b,st+4*40+8,0x110),lambda i:g.layout(i,policies[g.POLICIES[1]]),'FPTABLE_PROFILE')
+ fp=Image(final).sections[4]['raw'];mutate('fptable_nonzero',lambda b:b.__setitem__(fp,1),lambda i:g.layout(i,policies[g.POLICIES[1]]),'FPTABLE_PROFILE')
+ mutate('writable_executable',lambda b:struct.pack_into('<I',b,st+36,0xe0000020),lambda i:g.layout(i,policies[g.POLICIES[1]]),'WRITABLE_EXECUTABLE_SECTION')
+ mutate('image_size_truncated',lambda b:struct.pack_into('<I',b,opt+56,0x7000),lambda i:g.layout(i,policies[g.POLICIES[1]]),'SIZE_OF_IMAGE')
+ mutate('timestamp_drift',lambda b:struct.pack_into('<I',b,coff+4,1),lambda i:g.metadata(i,policies[g.POLICIES[2]],binding),'FINAL_METADATA')
+ mutate('debug_directory',lambda b:struct.pack_into('<II',b,opt+112+6*8,0x2c00,28),lambda i:g.metadata(i,policies[g.POLICIES[2]],binding),'DEBUG_DIRECTORY')
+ mutate('certificate_directory',lambda b:struct.pack_into('<II',b,opt+112+4*8,0x1000,8),lambda i:g.metadata(i,policies[g.POLICIES[2]],binding),'CERTIFICATE_DIRECTORY')
+ mutate('coff_symbol_table',lambda b:struct.pack_into('<I',b,coff+8,1),lambda i:g.metadata(i,policies[g.POLICIES[2]],binding),'COFF_SYMBOLS')
+ rsrc=Image(final).sections[5]['raw'];mutate('resource_cycle',lambda b:struct.pack_into('<I',b,rsrc+20,0x80000000),lambda i:g.metadata(i,policies[g.POLICIES[2]],binding),'RESOURCE_CYCLE')
+ mutate('resource_payload_outside_directory',lambda b:struct.pack_into('<I',b,rsrc+0x60,0x2000),lambda i:g.metadata(i,policies[g.POLICIES[2]],binding),'RESOURCE_PAYLOAD_OUTSIDE')
+ mutate('versioninfo_value_range',lambda b:struct.pack_into('<H',b,rsrc+0x80+2,0xffff),lambda i:g.metadata(i,policies[g.POLICIES[2]],binding),'VERSIONINFO_VALUE_RANGE')
+ mutate('versioninfo_fixed',lambda b:struct.pack_into('<I',b,rsrc+0x80+40,0),lambda i:g.metadata(i,policies[g.POLICIES[2]],binding),'VERSIONINFO_FIXED')
+ mutate('entry_bypasses_crt',lambda b:struct.pack_into('<I',b,opt+16,0x1010),lambda i:g.binary_acceptance(i,policy=policies[g.POLICIES[3]]),'DEFAULT_CRT_ENTRY_RELATION')
+ mutate('gs_load_config_missing',lambda b:struct.pack_into('<II',b,opt+112+10*8,0,0),lambda i:g.binary_acceptance(i,policy=policies[g.POLICIES[3]]),'GS_LOAD_CONFIG_REQUIRED')
+ cookie_off=Image(final).mapped(0x2b00+88,8)[0]
+ mutate('gs_cookie_outside_image',lambda b:struct.pack_into('<Q',b,cookie_off,1),lambda i:g.binary_acceptance(i,policy=policies[g.POLICIES[3]]),'GS_COOKIE_RANGE')
+ mutate('gs_cookie_not_writable',lambda b:struct.pack_into('<Q',b,cookie_off,0x180002010),lambda i:g.binary_acceptance(i,policy=policies[g.POLICIES[3]]),'GS_COOKIE_WRITABLE_SECTION')
+ mutate('checksum_corrupt',lambda b:struct.pack_into('<I',b,opt+64,0),lambda i:g.binary_acceptance(i,policy=policies[g.POLICIES[3]]),'PE_CHECKSUM')
+ mutate('delay_import',lambda b:struct.pack_into('<II',b,opt+112+13*8,0x2000,32),lambda i:g.binary_acceptance(i,policy=policies[g.POLICIES[3]]),'DELAY_IMPORTS_NOT_APPROVED')
+ mutate('optional_header_claim_too_short',lambda b:struct.pack_into('<H',b,coff+16,100),lambda i:g.layout(i,policies[g.POLICIES[1]]),'OPTIONAL_HEADER_TRUNCATED')
+ reject('truncated_PE_header',lambda:Image(final[:300]),'PE_TRUNCATED')
+ # One source/policy call never trusts a previous root's cached globals.
+ p=root/'metadata/MUSTAVEX_GOLDEN_METADATA.json';old=p.read_bytes();j=json.loads(old);j['required']['timestamp']='0x1';p.write_text(json.dumps(j));reject('changed_policy_reloaded_and_rejected',lambda:g.load_contract(root),'RETAINED_POLICY_DRIFT');p.write_bytes(old)
+ p=root/'metadata/GOLDEN_BINDING.json';old=p.read_bytes();j=json.loads(old);j['sources'][0]['sha256']='0'*64;p.write_text(json.dumps(j));reject('archive_reference_hash_drift',lambda:g.load_contract(root),'REFERENCE_HASH');p.write_bytes(old)
+ candidate.write_bytes(final);reject('dictionary_isnot_production_outcome',lambda:g.validate_outcome({'status':'PASS'},candidate,g.sha(raw)),'GOLDEN_OUTCOME')
+ wrong=g.Outcome(candidate,g.sha(raw),g.sha(final),outcome.stages[::-1]);reject('reordered_stage_proof',lambda:g.validate_outcome(wrong,candidate,g.sha(raw)),'GOLDEN_OUTCOME')
+ candidate.write_bytes(final+b'x');reject('candidate_changed_after_gates',lambda:g.validate_outcome(outcome,candidate,g.sha(raw)),'GOLDEN_OUTCOME');candidate.write_bytes(final)
+ # Read-only stage mutation is caught before later phases orpublication.
+ real_layout=g.layout
+ def bad_layout(i,p):result=real_layout(i,p);candidate.write_bytes(candidate.read_bytes()+b'x');return result
+ rows=[];candidate.write_bytes(raw)
+ with patch.object(g,'layout',side_effect=bad_layout):reject('read_only_stage_mutation',lambda:g.execute(root,candidate,stage_sink=rows),'READ_ONLY_STAGE_MUTATED')
+ assert [r['status'] for r in rows]==['PASS','FAIL'];ok('failed_stage_recorded_and_chain_stops')
+ candidate.write_bytes(final)
+ # Actual local package validation,including path/case/duplicate/byte defects.
+ def pack(path,extra=None,alter=False):
+  with zipfile.ZipFile(path,'w',zipfile.ZIP_DEFLATED) as z:
+   manifest_rows=json.loads((root/'metadata/PACKAGE_MANIFEST.json').read_text())['files']
+   for rel in list(manifest_rows)+['metadata/PACKAGE_MANIFEST.json']:
+    b=(root/rel).read_bytes();z.writestr(root.name+'/'+rel,b+(b'x' if alter and rel=='LICENSE' else b''))
+   if extra:z.writestr(extra,b'x')
+ package=Path(td)/'source.zip';pack(package);g.hygiene(root,Image(final),binding,policies,package);ok('local_package_exact_membership_and_bytes')
+ for extra,reason in [(root.name+'/../bad','PACKAGE_PATH'),(root.name+'/LICENSE','PACKAGE_PATH'),(root.name+'/license','PACKAGE_PATH'),(root.name+'/build/leak.obj','PACKAGE_BYTES_OR_MEMBERSHIP')]:
+  pack(package,extra=extra);reject('package_'+extra,lambda:g.hygiene(root,Image(final),binding,policies,package),reason)
+ pack(package,alter=True);reject('package_byte_tamper',lambda:g.hygiene(root,Image(final),binding,policies,package),'PACKAGE_BYTES_OR_MEMBERSHIP')
+ large=fixture(root,data_vs=0x1801);candidate.write_bytes(large);rows=[]
+ reject('data_budget_retained_at_final_stage',lambda:g.execute(root,candidate,stage_sink=rows),'DATA_VIRTUAL_SIZE_BUDGET')
+ assert len(rows)==5 and [r['status'] for r in rows]==['PASS']*4+['FAIL'];ok('data_budget_failure_keeps_prior_four_stages_read_only')
+ probe=root/'docs/qa_sensitive_probe.txt'
+ samples=['-----BEGIN '+'PRIVATE KEY-----','AK'+'IA'+'A'*16,'gh'+'p_'+'x'*30,'Bearer '+'x'*32,
+          'ey'+'J'+'x'*15+'.'+'x'*15+'.'+'x'*15,
+          'C:'+chr(92)+'Users'+chr(92)+'private_name'+chr(92)+'token',
+          chr(47)+'home'+chr(47)+'private_name'+chr(47)+'token']
+ for index,sample in enumerate(samples):
+  probe.write_text(sample);manifest(root)
+  reject('sensitive_material_'+str(index),lambda:g.hygiene(root,Image(final),binding,policies),'HYGIENE_SENSITIVE_MATERIAL')
+ probe.unlink();manifest(root)
+ # Classified local hygiene retains immutable ancestry,not official release acceptance.
+ assert (root/'provenance').is_dir() and (root/'evidence').is_dir();ok('local_ancestry_retained_without_official_flat_release_claim')
+
+(R/'evidence/rf32_golden_qa.json').write_text(json.dumps(dict(status='PASS',scope='Actual Python Golden functions/CLI andfilesystem operations;all PE fixtures synthetic andneverexecuted;MSVC/Windows/currentDLL NOT_RUN',cases=cases,original_finalizer_parity=True,production_cpp_changes=0),indent=2)+'\n')
+print('GOLDEN_QA_PASS',len(cases))

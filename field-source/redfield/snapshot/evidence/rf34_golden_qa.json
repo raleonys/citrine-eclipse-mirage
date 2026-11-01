@@ -1,0 +1,91 @@
+{
+  "status": "PASS_SYNTHETIC_PE_ONLY",
+  "scope": "Actual current Python five-stage chain on synthetic nonexecuted PE;not MSVC/Windows DLL",
+  "stages": [
+    {
+      "name": "URSYNEX Golden Finalizer",
+      "status": "PASS",
+      "before": "14669c81ba82d87bbfdd1e439f06bf7b72663e024284d357082e98385b15431a",
+      "after": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "info": {
+        "changed_bytes": 40
+      }
+    },
+    {
+      "name": "ARYRA Golden Layout",
+      "status": "PASS",
+      "before": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "after": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "info": {
+        "sections": [
+          ".text",
+          ".rdata",
+          ".data",
+          ".pdata",
+          ".fptable",
+          ".rsrc",
+          ".reloc"
+        ],
+        "exact_donor_rva_size_parity": false
+      }
+    },
+    {
+      "name": "MUSTAVEX Golden Metadata",
+      "status": "PASS",
+      "before": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "after": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "info": {
+        "internal_export_name": "preloader.unsigned.dll",
+        "versioninfo": "PINNED_COMPATIBILITY_ALLOWLIST",
+        "certificate_debug_rich_symbols": "ABSENT"
+      }
+    },
+    {
+      "name": "CORVEXON Golden Trail",
+      "status": "PASS",
+      "before": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "after": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "info": {
+        "exports": {
+          "DllMain": 1,
+          "SURGE": 2,
+          "DllShutdown": 3
+        },
+        "imports": [
+          "CRYPT32.DLL",
+          "KERNEL32.DLL",
+          "MSWSOCK.DLL",
+          "WS2_32.DLL"
+        ],
+        "entry_rva": 4352,
+        "machine": "x64",
+        "static_crt_import_check": "PASS",
+        "gs_cookie_rva": 12304,
+        "checksum": 31304,
+        "crt_entry_distinct_from_DllMain": true
+      }
+    },
+    {
+      "name": "FALCION Golden Cleaning",
+      "status": "PASS",
+      "before": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "after": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d",
+      "info": {
+        "source_manifest_sha256": "955178b2bd83d0540bc1a9350fcfc076ce90000fdf2d66302de38003655058da",
+        "data_virtual_size": 1024,
+        "data_budget": 6144,
+        "scope": "LOCAL_REFACTOR_SOURCE_PACKAGE;not official flat release acceptance",
+        "import_refactor": {
+          "rule_revision": "2026-10-21.1",
+          "managed_files": 300,
+          "qualified_files": 16,
+          "pending_files": 284,
+          "pending_vendor_integrations": 4,
+          "status": "PENDING"
+        },
+        "package_checked": false
+      }
+    }
+  ],
+  "final_sha256": "92ebd91bf370a570963594ed77338154c59038f586e75d4016d12852d9c4dc6d"
+}

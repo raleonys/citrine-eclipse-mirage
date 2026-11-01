@@ -1,0 +1,44 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF37",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_REAL_RF36_PE_GOLDEN_REVALIDATION_AND_CURRENT_PORTABLE_SOURCE",
+  "normal_regressions": 98,
+  "parent_stdout_and_exit_equal": 98,
+  "normal_compiled_objects": 159,
+  "normal_linked_outputs": 99,
+  "application_files_changed": 0,
+  "application_files_exact_parent": 268,
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 300,
+    "qualified_files": 16,
+    "pending_files": 284,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "actual_uploaded_pe": {
+    "compiled_checkpoint": "RF36",
+    "sha256": "508d915f9eeb5af50160e1238b257a1a4eb62974a466d21f73e4b120817a7bc3",
+    "full5stage_golden": "PASS_UNCHANGED_BYTES",
+    "userWindowsABIcycles": 3
+  },
+  "current_golden_policy_negatives": 15,
+  "current_hygiene_negatives": 3,
+  "all_user_rf36_build_inputs_equal_source": 3090,
+  "effective_data_limit": 131072,
+  "observed_data_virtual_size": 114116,
+  "retained_registry_path_storage": 98304,
+  "other_static_state_budget": 32768,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "source_module_reviews_complete": 6,
+  "source_module_reviews_remaining": 14,
+  "new_whole_module_reviews": 0,
+  "windows_msvc": "NOT_RUN_RF37_REBUILD;ACTUAL_RF36_USER_COMPILE_LINK_ABI_PASS",
+  "native_crt_debug_game": "NOT_RUN_RF37",
+  "sanitizers": "NOT_RUN_RF37;noapplicationcodechange",
+  "canonical_unchanged": true
+}

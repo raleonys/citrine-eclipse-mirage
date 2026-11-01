@@ -1,0 +1,30 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF22",
+  "refactor": "UNIFIED01",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_SCOPED_REFACTOR_QA_NOT_RELEASE",
+  "application_files": 253,
+  "normal_regressions": 92,
+  "normal_compiled_objects": 152,
+  "normal_linked_outputs": 93,
+  "parent_stdout_equal": 91,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "sanitizers": {
+    "address": 3,
+    "undefined": 3,
+    "leak_detection": false
+  },
+  "hook_model_cases": 81,
+  "architecture_negatives": 8,
+  "package_negatives": 2,
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_runner_cases": 7,
+  "windows_native": "NOT_RUN_RF22",
+  "game": "USER_REPORTED_PRE_REFACTOR_LAUNCH_ONLY;RF22_NOT_RUN",
+  "scope": "Whole application structural unification and bounded ownership/dependency changes; no full new line-by-line semantic audit or global optimum proof"
+}

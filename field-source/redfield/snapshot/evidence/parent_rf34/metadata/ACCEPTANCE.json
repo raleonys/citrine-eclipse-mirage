@@ -1,0 +1,38 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF34",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_BOUNDED_LIFETIME_REVIEW_NOT_RELEASE",
+  "normal_regressions": 98,
+  "parent_stdout_and_exit_equal": 98,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 159,
+  "normal_linked_outputs": 99,
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 300,
+    "qualified_files": 16,
+    "pending_files": 284,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "source_module_reviews_complete": 6,
+  "source_module_reviews_remaining": 14,
+  "module_programs_fresh": 7,
+  "targeted_ASan_UBSan_programs": 4,
+  "windows_semantic_layout_model": "PASS_CONTROLLED_HEAP_NOT_WINDOWS",
+  "negative_mutations": 4,
+  "queue_interleavings": 16,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "application_files_changed": 6,
+  "new_application_files": 0,
+  "windows_msvc": "NOT_RUN_RF34",
+  "native_crt_debug_game": "NOT_RUN_RF34",
+  "cmake": "NOT_RUN_TOOL_UNAVAILABLE",
+  "leak_sanitizer": "NOT_RUN;focused ASan detect_leaks=0",
+  "canonical_unchanged": true
+}

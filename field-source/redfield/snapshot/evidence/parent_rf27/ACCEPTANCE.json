@@ -1,0 +1,35 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF27",
+  "refactor": "CONFIG06",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_SCOPED_REFACTOR_QA_NOT_RELEASE",
+  "application_files": 262,
+  "normal_regressions": 96,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 157,
+  "normal_linked_outputs": 97,
+  "windows_compile_actions": 177,
+  "parent_stdout_equal": 96,
+  "normal_allocation_failure_points": 115,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "sanitizers": {
+    "address": 6,
+    "undefined": 6,
+    "leak_detection": false
+  },
+  "hook_model": "RF26_81_HISTORICAL_NOT_RERUN",
+  "architecture_negatives": 13,
+  "package_negatives": 2,
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_runner_cases": 7,
+  "windows_native": "NOT_RUN_RF27",
+  "game": "NOT_RUN_RF27",
+  "cmake": "UNCHANGED;NOT_RUN_TOOL_UNAVAILABLE",
+  "scope": "Restore surge.cfg and refactor required staging/raw token capture;whole-codebase semantic refactor remains open"
+}

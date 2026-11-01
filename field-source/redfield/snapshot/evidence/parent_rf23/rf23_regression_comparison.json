@@ -1,0 +1,9 @@
+{
+  "parent_count": 92,
+  "equal_stdout_and_exit": 92,
+  "new_tests": [
+    "test_transient_shutdown",
+    "test_transient_retry_concurrency"
+  ],
+  "limit": "Existing test scenarios only; not complete equivalence/game evidence"
+}

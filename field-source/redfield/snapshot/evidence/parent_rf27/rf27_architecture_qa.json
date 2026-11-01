@@ -1,0 +1,84 @@
+{
+  "scope": "Actual source verifier; structural relapse fixtures rebind file hashes/recipes to reach semantic architecture guards. Not native Windows.",
+  "negative_cases": [
+    {
+      "case": "namespace",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROJECT_NAME_IN_APPLICATION_CODE",
+      "metadata_rebound": true
+    },
+    {
+      "case": "retired_api",
+      "status": "EXPECTED_REJECTION",
+      "reason": "RETIRED_GLOBAL_API",
+      "metadata_rebound": true
+    },
+    {
+      "case": "origin_exemption",
+      "status": "EXPECTED_REJECTION",
+      "reason": "ORIGIN_BASED_APPLICATION_EXEMPTION",
+      "metadata_rebound": true
+    },
+    {
+      "case": "legacy_tree",
+      "status": "EXPECTED_REJECTION",
+      "reason": "LEGACY_APPLICATION_TREE",
+      "metadata_rebound": true
+    },
+    {
+      "case": "hook_surface",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PRESERVED_BUILD_SURFACE_CHANGED",
+      "metadata_rebound": true
+    },
+    {
+      "case": "ptd_coupling",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PRODUCTION_PTD_COUPLING",
+      "metadata_rebound": true
+    },
+    {
+      "case": "ancestry_cycle",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DERIVATION_REFERENCE_MISMATCH",
+      "metadata_rebound": true
+    },
+    {
+      "case": "vendor",
+      "status": "EXPECTED_REJECTION",
+      "reason": "ADOPTION_MISMATCH",
+      "metadata_rebound": true
+    },
+    {
+      "case": "launcher",
+      "status": "EXPECTED_REJECTION",
+      "reason": "LAUNCHER_SET_MISMATCH",
+      "metadata_rebound": true
+    },
+    {
+      "case": "config_brand",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROJECT_NAME_IN_APPLICATION_CODE",
+      "metadata_rebound": true
+    },
+    {
+      "case": "build_macro",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROJECT_NAME_IN_APPLICATION_CODE",
+      "metadata_rebound": true
+    },
+    {
+      "case": "cmake_target",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROJECT_NAME_IN_BUILD_IDENTIFIER",
+      "metadata_rebound": true
+    },
+    {
+      "case": "script_env",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROJECT_NAME_IN_BUILD_IDENTIFIER",
+      "metadata_rebound": true
+    }
+  ],
+  "constinit_retirement": "GCC_CXX20_SYNTAX_PASS"
+}

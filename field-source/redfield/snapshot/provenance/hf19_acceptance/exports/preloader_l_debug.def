@@ -1,0 +1,21 @@
+LIBRARY "preloader_l_debug"
+EXPORTS
+    DllMain                       @1
+    DllShutdown                    @3
+    SURGE                          @2
+    preloader_l_debug_self_test             @101
+    preloader_l_debug_dispatch              @102
+    preloader_l_debug_reset_stats           @103
+    preloader_l_debug_get_stats             @104
+    preloader_l_debug_runtime_init          @105
+    preloader_l_debug_runtime_shutdown      @106
+    preloader_l_debug_get_runtime_status    @107
+    preloader_l_debug_session_reset         @108
+    preloader_l_debug_session_feed          @109
+    preloader_l_debug_get_session_status    @110
+    preloader_l_debug_session_close         @111
+    preloader_l_debug_socket_start          @112
+    preloader_l_debug_socket_accept         @113
+    preloader_l_debug_socket_pump           @114
+    preloader_l_debug_get_socket_status     @115
+    preloader_l_debug_socket_stop           @116

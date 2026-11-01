@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "checkpoint": "RF36",
+  "scope": "Correct MSVC-rejected composite constinit using supported CRT startup for inert worker construction; preserve callback/lifetime duties",
+  "current_source_reviews_complete": [
+    "M01",
+    "M02",
+    "M11",
+    "M15",
+    "M16",
+    "M17"
+  ],
+  "remaining_source_modules": 14,
+  "implemented": [
+    "SupportedCRT inert worker construction;both production/native entries corrected",
+    "Current22 modeled scenario comparisons,7module programs,15CRT-entry policy negatives,2startup side-effect mutations",
+    "M02/M11 caller dependency proofs revalidated;M14 whole review remainsopen"
+  ],
+  "remaining": [
+    "M12 test CRT/PTD support and13 other whole-module reviews",
+    "284 maintained code and4 vendor integrations pending",
+    "Actual current Windows/MSVC/native/CRT/Debug/game acceptance not run",
+    "M20 carryover scope andRFCL-005 remainopen"
+  ],
+  "evidence": "evidence/rf36_crt_startup_review.json",
+  "worker_model": "evidence/rf36_worker_startup.json",
+  "limits": "Win32/WindowsHooks model isnot actualWindows execution"
+}

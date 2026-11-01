@@ -1,0 +1,40 @@
+from pathlib import Path
+import hashlib,json,shutil,subprocess,sys,tempfile
+R=Path('rf36_work/REDFIELD_RF36').resolve()
+evidence=json.loads(Path('rf36_checks/worker_startup.json').read_text())
+W=Path(evidence['commands'][0]['command'][-1]).parent
+graph=json.loads((R/'metadata/BUILD_GRAPH.json').read_text())
+flags=['g++','-std=c++20','-pthread','-Wall','-Wextra','-Werror','-O1','-I'+str(W),*['-I'+str(R/p) for p in graph['include_directories']]]
+def run(args):
+    p=subprocess.run([str(x) for x in args],capture_output=True,text=True,timeout=45)
+    return {'command':[str(x) for x in args],'exit':p.returncode,'stdout':p.stdout,'stderr':p.stderr}
+probe=W/'destructor.cpp';probe.write_text('#include "'+str(R/'src/windows/worker_runtime.hpp')+'"\n#include "'+str(R/'tests/native/worker_observation.hpp')+'"\n#include <type_traits>\nstatic_assert(std::is_trivially_destructible_v<preloader_l::WindowsWorker<>>);\nstatic_assert(std::is_trivially_destructible_v<preloader_l::WindowsWorker<preloader_l::testing::WorkerObservation>>);\n')
+destructor=run([*flags,'-c',probe,'-o',W/'destructor.o']);assert destructor['exit']==0,destructor
+sys.path.insert(0,str(R/'scripts/build_orchestration'));from build_common import load_profiles
+policy=json.loads((R/'metadata/BUILD_PROFILES.json').read_text());negatives=[]
+with tempfile.TemporaryDirectory(prefix='rf36_profile_policy_') as d:
+    fresh=Path(d)/'source';shutil.copytree(R,fresh,ignore=shutil.ignore_patterns('__pycache__'))
+    for profile in policy['profiles']:
+        for flag in ['/ENTRY:DllMain','/NODEFAULTLIB','/NOENTRY']:
+            data=json.loads(json.dumps(policy));data['profiles'][profile]['link_flags'].append(flag)
+            (fresh/'metadata/BUILD_PROFILES.json').write_text(json.dumps(data))
+            try:load_profiles(fresh)
+            except ValueError as ex:
+                assert str(ex)=='BUILD_PROFILE_LINK_POLICY:'+profile,str(ex)
+                negatives.append({'profile':profile,'flag':flag,'expected_rejection':str(ex)})
+            else:raise AssertionError((profile,flag))
+objects=[Path(c['command'][-1]) for c in evidence['commands'] if c['command'][:2]==['nm','-C']]
+normal=Path(Path('rf35_checks/normal_root.txt').read_text());core=[normal/'build/verify/portable_none/objects/production'/(s.replace('/','__')+'.o') for s in graph['core_sources']]
+mutations=[]
+original=(R/'src/windows/worker_runtime.hpp').read_text();needle='unpin_module,cleanup_session,finalize_memory} {}';assert needle in original
+for name,body in [('win32_in_constructor','Sleep(0);'),('heap_in_constructor','auto* p=::operator new(1);::operator delete(p);')]:
+    directory=W/name;directory.mkdir();(directory/'worker_runtime.hpp').write_text(original.replace(needle,'unpin_module,cleanup_session,finalize_memory} { '+body+' }'))
+    (directory/'entry.cpp').write_bytes((R/'src/windows/dll_entry.cpp').read_bytes())
+    obj=directory/'entry.o';build=run([*flags,'-c',directory/'entry.cpp','-o',obj]);assert build['exit']==0,build
+    link=run([*flags,obj,W/'production_host.o',*core,'-o',directory/'host']);assert link['exit']==0,link
+    case=run([directory/'host','startup_only',W/'config/startup_only/module.dll']);assert case['exit']!=0 and 'Assertion' in case['stderr'],case
+    mutations.append({'variant':name,'status':'REJECTED_EXPECTED','compile':build,'link':link,'execution':case})
+result={'status':'PASS_SCOPED_STARTUP_CONTRACT','destructor_static_asserts':destructor,'default_crt_entry_policy_negative_cases':negatives,'startup_side_effect_mutations':mutations,
+    'limits':['No current Windows/MSVC;profile negatives exercise actual Python policy,not link.exe.','Trivial destruction assertions andmutated startup rejection areGCC host tests.']}
+Path('rf36_checks/startup_contract.json').write_text(json.dumps(result,indent=2)+'\n')
+print('RF36 startup contract PASS:2 trivial-destructor assertions,15 CRT-entry negatives,2 startup mutations')

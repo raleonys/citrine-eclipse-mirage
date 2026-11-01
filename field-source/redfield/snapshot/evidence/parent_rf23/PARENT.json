@@ -1,0 +1,9 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF23",
+  "refactor": "OWNERSHIP02",
+  "parent_checkpoint": "RF22",
+  "parent_zip_sha256": "bacc81fd6bbcf8170e1a2b651f1639a56541bc2152ad6ace913cb668530a5d20",
+  "parent_library_file_id": "libfile_60656b6ee10c819197399dddea06e54b",
+  "official_hf19_unchanged": true
+}

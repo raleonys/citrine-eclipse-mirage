@@ -1,0 +1,23 @@
+[
+  {
+    "mutation": "wrong_endian",
+    "compile_exit": 0,
+    "run_exit": -6,
+    "status": "REJECTED",
+    "stderr": "check: /tmp/rf_registry_mutation_7dxw9jva/tests/test_registry_value_output.cpp:33: int main(): Assertion `buffer[i]==expected' failed.\n"
+  },
+  {
+    "mutation": "reject_exact_capacity",
+    "compile_exit": 0,
+    "run_exit": -6,
+    "status": "REJECTED",
+    "stderr": "check: /tmp/rf_registry_mutation_ijfz13h8/tests/test_registry_value_output.cpp:29: int main(): Assertion `status==(capacity<required?host_error_more_data:host_error_success)' failed.\n"
+  },
+  {
+    "mutation": "short_buffer_claims_success",
+    "compile_exit": 0,
+    "run_exit": -6,
+    "status": "REJECTED",
+    "stderr": "check: /tmp/rf_registry_mutation_jrjdvwo0/tests/test_registry_value_output.cpp:29: int main(): Assertion `status==(capacity<required?host_error_more_data:host_error_success)' failed.\n"
+  }
+]

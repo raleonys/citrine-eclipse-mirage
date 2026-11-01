@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "production_objects": 58,
+  "test_support_objects": 2,
+  "production_include_roots_exclude_tests": true,
+  "role_directories_disjoint": true,
+  "production_ptd_allocator_model_symbols_absent": true,
+  "test_support_model_symbols_present": true,
+  "scope": "Actual GCC objects and symbol tables;not Windows PE/import acceptance"
+}

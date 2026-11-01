@@ -1,0 +1,21 @@
+{
+  "status": "PASS_SCOPED",
+  "consumers": [
+    "src/core/settings_response.cpp",
+    "src/core/profile_response.cpp",
+    "src/core/game_info_response.cpp",
+    "src/core/image_response.cpp",
+    "src/core/achievement_response.cpp",
+    "src/config/hook_configuration.cpp"
+  ],
+  "removed_lookup_copies": 7,
+  "helper": "include/redfield/config_snapshot_view.hpp",
+  "achievement_stage": "Vector sizes are the only cardinality state; ordering/duplicate policy retained",
+  "not_claimed": [
+    "whole-codebase semantic audit",
+    "lookup indexing or asymptotic speedup",
+    "new parser/normalization",
+    "automatic lifetime extension",
+    "Windows/game result"
+  ]
+}

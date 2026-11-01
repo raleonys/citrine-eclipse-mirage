@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "checkpoint": "RF29",
+  "scope": "M20.1 current-source boundary and import-record enforcement",
+  "current_source_reviews_complete": [
+    "M01",
+    "M15",
+    "M16",
+    "M17"
+  ],
+  "remaining_source_modules": 16,
+  "implemented": [
+    "Six exact moves:two test model sources,two test headers,two Windows hosts",
+    "Test-only include visibility;objects separated by role",
+    "Shared source/role/import preflight in Python builder and CMake",
+    "270 maintained code records +4 vendor integration records validated",
+    "Explicit closure flag rejects pending qualification"
+  ],
+  "remaining": [
+    "All semantic import qualifications remain PENDING",
+    "Four standalone production/debug/native/CRT pipelines",
+    "dist and five Golden protocols",
+    "Native fault/telemetry composition extraction and true Windows acceptance"
+  ],
+  "scope_note": "Source review completion is separate from imported-code qualification under the new rule",
+  "evidence": "evidence/rf29_normal_receipt.json"
+}

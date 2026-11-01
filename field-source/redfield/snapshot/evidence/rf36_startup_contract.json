@@ -1,0 +1,355 @@
+{
+  "status": "PASS_SCOPED_STARTUP_CONTRACT",
+  "destructor_static_asserts": {
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-pthread",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O1",
+      "-I/tmp/rf36_worker_startup_lfjccx62",
+      "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/include",
+      "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/config",
+      "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/pegtl/upstream/include",
+      "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/runtime",
+      "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/asio/upstream/include",
+      "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/minhook/upstream/include",
+      "-c",
+      "/tmp/rf36_worker_startup_lfjccx62/destructor.cpp",
+      "-o",
+      "/tmp/rf36_worker_startup_lfjccx62/destructor.o"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "default_crt_entry_policy_negative_cases": [
+    {
+      "profile": "production",
+      "flag": "/ENTRY:DllMain",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:production"
+    },
+    {
+      "profile": "production",
+      "flag": "/NODEFAULTLIB",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:production"
+    },
+    {
+      "profile": "production",
+      "flag": "/NOENTRY",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:production"
+    },
+    {
+      "profile": "debug",
+      "flag": "/ENTRY:DllMain",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:debug"
+    },
+    {
+      "profile": "debug",
+      "flag": "/NODEFAULTLIB",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:debug"
+    },
+    {
+      "profile": "debug",
+      "flag": "/NOENTRY",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:debug"
+    },
+    {
+      "profile": "native",
+      "flag": "/ENTRY:DllMain",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:native"
+    },
+    {
+      "profile": "native",
+      "flag": "/NODEFAULTLIB",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:native"
+    },
+    {
+      "profile": "native",
+      "flag": "/NOENTRY",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:native"
+    },
+    {
+      "profile": "crt",
+      "flag": "/ENTRY:DllMain",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:crt"
+    },
+    {
+      "profile": "crt",
+      "flag": "/NODEFAULTLIB",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:crt"
+    },
+    {
+      "profile": "crt",
+      "flag": "/NOENTRY",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:crt"
+    },
+    {
+      "profile": "verify",
+      "flag": "/ENTRY:DllMain",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:verify"
+    },
+    {
+      "profile": "verify",
+      "flag": "/NODEFAULTLIB",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:verify"
+    },
+    {
+      "profile": "verify",
+      "flag": "/NOENTRY",
+      "expected_rejection": "BUILD_PROFILE_LINK_POLICY:verify"
+    }
+  ],
+  "startup_side_effect_mutations": [
+    {
+      "variant": "win32_in_constructor",
+      "status": "REJECTED_EXPECTED",
+      "compile": {
+        "command": [
+          "g++",
+          "-std=c++20",
+          "-pthread",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O1",
+          "-I/tmp/rf36_worker_startup_lfjccx62",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/config",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/pegtl/upstream/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/runtime",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/asio/upstream/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/minhook/upstream/include",
+          "-c",
+          "/tmp/rf36_worker_startup_lfjccx62/win32_in_constructor/entry.cpp",
+          "-o",
+          "/tmp/rf36_worker_startup_lfjccx62/win32_in_constructor/entry.o"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "link": {
+        "command": [
+          "g++",
+          "-std=c++20",
+          "-pthread",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O1",
+          "-I/tmp/rf36_worker_startup_lfjccx62",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/config",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/pegtl/upstream/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/runtime",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/asio/upstream/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/minhook/upstream/include",
+          "/tmp/rf36_worker_startup_lfjccx62/win32_in_constructor/entry.o",
+          "/tmp/rf36_worker_startup_lfjccx62/production_host.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__runtime.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__xml.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__config.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__config2_pegtl.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__codec__hex_codec.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__lsx_framing.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__request_parser.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__request_children.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__attribute_parser.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/third_party__tinyxml2__tinyxml2.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__worker_owner.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__service_session.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__config_file.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__runtime__asio_listener_owner.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__net__receive_buffer.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__net__frame_ingress.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__net__tcp_ingress.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__net__local_service.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__response_builder.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__value_codec.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__value_codec_utf8.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__value_codec_normalize.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__value_codec_semantic.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__config_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__progressive_installation_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__router__route_inventory.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__router__route_lookup.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__hash__fnv_hash.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__port_publication.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__response_dispatch.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__settings_values.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__settings_provider.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__setting_value_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__settings_snapshot_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__connection_state_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__settings_query.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__settings_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__friends_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__group_info_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__stateless_routes.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__profile_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__profile_formatter.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__utc_time_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__runtime__utc_time.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__game_info_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__query_presence_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__image_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__chunks_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__auth_code_session.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__content_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__entitlement_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__achievement_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__achievement_session.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__achievement_delivery.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__platform__connect_redirect.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__platform__crypt_wrapper.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__hook_configuration.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__runtime__transient_allocator.cpp.o",
+          "-o",
+          "/tmp/rf36_worker_startup_lfjccx62/win32_in_constructor/host"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "execution": {
+        "command": [
+          "/tmp/rf36_worker_startup_lfjccx62/win32_in_constructor/host",
+          "startup_only",
+          "/tmp/rf36_worker_startup_lfjccx62/config/startup_only/module.dll"
+        ],
+        "exit": -6,
+        "stdout": "",
+        "stderr": "host: /tmp/rf36_worker_startup_lfjccx62/host.cpp:34: void {anonymous}::os_call(): Assertion `main_started' failed.\n"
+      }
+    },
+    {
+      "variant": "heap_in_constructor",
+      "status": "REJECTED_EXPECTED",
+      "compile": {
+        "command": [
+          "g++",
+          "-std=c++20",
+          "-pthread",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O1",
+          "-I/tmp/rf36_worker_startup_lfjccx62",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/config",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/pegtl/upstream/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/runtime",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/asio/upstream/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/minhook/upstream/include",
+          "-c",
+          "/tmp/rf36_worker_startup_lfjccx62/heap_in_constructor/entry.cpp",
+          "-o",
+          "/tmp/rf36_worker_startup_lfjccx62/heap_in_constructor/entry.o"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "link": {
+        "command": [
+          "g++",
+          "-std=c++20",
+          "-pthread",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-O1",
+          "-I/tmp/rf36_worker_startup_lfjccx62",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/config",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/pegtl/upstream/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/src/runtime",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/asio/upstream/include",
+          "-I/workspace/scratch/3ee542eeb8a6/rf36_work/REDFIELD_RF36/third_party/minhook/upstream/include",
+          "/tmp/rf36_worker_startup_lfjccx62/heap_in_constructor/entry.o",
+          "/tmp/rf36_worker_startup_lfjccx62/production_host.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__runtime.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__xml.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__config.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__config2_pegtl.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__codec__hex_codec.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__lsx_framing.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__request_parser.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__request_children.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__attribute_parser.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/third_party__tinyxml2__tinyxml2.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__worker_owner.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__service_session.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__config_file.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__runtime__asio_listener_owner.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__net__receive_buffer.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__net__frame_ingress.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__net__tcp_ingress.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__net__local_service.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__response_builder.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__value_codec.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__value_codec_utf8.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__value_codec_normalize.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__xml__value_codec_semantic.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__config_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__progressive_installation_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__router__route_inventory.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__router__route_lookup.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__hash__fnv_hash.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__port_publication.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__response_dispatch.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__settings_values.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__settings_provider.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__setting_value_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__settings_snapshot_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__connection_state_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__settings_query.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__settings_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__friends_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__group_info_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__stateless_routes.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__profile_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__profile_formatter.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__handlers__utc_time_route.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__runtime__utc_time.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__game_info_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__query_presence_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__image_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__chunks_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__auth_code_session.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__content_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__entitlement_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__achievement_response.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__achievement_session.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__core__achievement_delivery.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__platform__connect_redirect.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__platform__crypt_wrapper.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__config__hook_configuration.cpp.o",
+          "/tmp/preloader_rf35_clean_k98pv1xx/REDFIELD_RF35/build/verify/portable_none/objects/production/src__runtime__transient_allocator.cpp.o",
+          "-o",
+          "/tmp/rf36_worker_startup_lfjccx62/heap_in_constructor/host"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "execution": {
+        "command": [
+          "/tmp/rf36_worker_startup_lfjccx62/heap_in_constructor/host",
+          "startup_only",
+          "/tmp/rf36_worker_startup_lfjccx62/config/startup_only/module.dll"
+        ],
+        "exit": -6,
+        "stdout": "",
+        "stderr": "host: /tmp/rf36_worker_startup_lfjccx62/host.cpp:85: int main(int, char**): Assertion `startup_allocations==0 && os_calls==0' failed.\n"
+      }
+    }
+  ],
+  "limits": [
+    "No current Windows/MSVC;profile negatives exercise actual Python policy,not link.exe.",
+    "Trivial destruction assertions andmutated startup rejection areGCC host tests."
+  ]
+}

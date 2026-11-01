@@ -1,0 +1,33 @@
+{
+  "scope": "Actual _WIN32 conversion branch with synthetic API and controlled allocation; GCC host ABI, not SDK or Windows execution",
+  "compile": [
+    "g++",
+    "-std=c++20",
+    "-O1",
+    "-g",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-D_WIN32",
+    "-D__declspec(x)=",
+    "-D__stdcall=",
+    "-fsanitize=address,undefined",
+    "-fno-sanitize-recover=all",
+    "-ffunction-sections",
+    "-fdata-sections",
+    "-I",
+    "/workspace/scratch/3ee542eeb8a6/rf33_work/REDFIELD_RF33/include",
+    "rf33_checks/conversion_model.cpp",
+    "/workspace/scratch/3ee542eeb8a6/rf33_work/REDFIELD_RF33/src/platform/registry_policy_values.cpp",
+    "-Wl,--gc-sections",
+    "-o",
+    "rf33_checks/conversion_model"
+  ],
+  "compile_exit": 0,
+  "compile_stdout": "",
+  "compile_stderr": "",
+  "run_exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "ASAN_OPTIONS": "detect_leaks=0"
+}

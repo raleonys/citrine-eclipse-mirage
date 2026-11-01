@@ -1,0 +1,254 @@
+{
+  "schema": 1,
+  "project": "REDFIELD",
+  "checkpoint": "RF20",
+  "classification": "NON_RELEASE_WORK",
+  "build_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+  "scope": "70 scoped current regressions; separate legacy diagnostic, no full HF19/SDK/game/release acceptance",
+  "source_identity": "Relative path + NUL + raw SHA over compile/header/reference/recipe/test/tool inputs. Reports/evidence excluded; ZIP separate identity",
+  "classes": [
+    {
+      "classification": "normal",
+      "status": "PASS_FRESH_SCOPED",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/portable_none_no_leaks_receipt.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "70 regressions;125 object and 71 linked-output identities/execute permissions verified; separate unchanged GetConfig14",
+      "regression_tests": 70,
+      "compiled_objects": 125,
+      "linked_outputs": 71
+    },
+    {
+      "classification": "asan_no_leaks",
+      "status": "PASS_FRESH_SCOPED",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/portable_address_no_leaks_receipt.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "70 regressions;125 object and 71 linked-output identities/execute permissions verified; separate unchanged GetConfig14",
+      "regression_tests": 70,
+      "compiled_objects": 125,
+      "linked_outputs": 71
+    },
+    {
+      "classification": "ubsan",
+      "status": "PASS_FRESH_SCOPED",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/portable_undefined_receipt.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "70 regressions;125 object and 71 linked-output identities/execute permissions verified; separate unchanged GetConfig14",
+      "regression_tests": 70,
+      "compiled_objects": 125,
+      "linked_outputs": 71
+    },
+    {
+      "classification": "clean_extract",
+      "status": "PASS_FRESH_SCOPED",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/clean_extract_receipt.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "70 regressions;125 object and 71 linked-output identities/execute permissions verified; separate unchanged GetConfig14",
+      "regression_tests": 70,
+      "compiled_objects": 125,
+      "linked_outputs": 71
+    },
+    {
+      "classification": "source_adoption_and_derivation",
+      "status": "PASS_FRESH",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/source_provenance.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "1114 exact destinations +24 reconstructed recipes compared against actual canonical HF19 ZIP members"
+    },
+    {
+      "classification": "integrity_negatives",
+      "status": "PASS_FRESH",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/integrity_negatives.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "8 independent intentional source/manifest/recipe/build/export/launcher corruptions rejected",
+      "cases": 8
+    },
+    {
+      "classification": "compiler_empty_output_negative",
+      "status": "PASS_FRESH",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/compiler_empty_output_negative.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Inert fault fixture rejected with no receipt; never genuine positive test evidence"
+    },
+    {
+      "classification": "compiler_mutated_object_negative",
+      "status": "PASS_FRESH",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/compiler_mutated_object_negative.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Inert fault fixture rejected with no receipt; never genuine positive test evidence"
+    },
+    {
+      "classification": "compiler_linked_truncation_negative",
+      "status": "PASS_FRESH",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/compiler_linked_truncation_negative.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Inert fault fixture rejected with no receipt; never genuine positive test evidence"
+    },
+    {
+      "classification": "compiler_linked_execute_permission_negative",
+      "status": "PASS_FRESH",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/compiler_linked_execute_permission_negative.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Inert fault fixture rejected with no receipt; never genuine positive test evidence"
+    },
+    {
+      "classification": "workspace_linked_output_guard",
+      "status": "EXPECTED_REJECTION",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/workspace_output_guard_rejection.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Earlier workspace attempt rejected after final output permission guard; no receipt and no output repair. Root cause NOT_ESTABLISHED; four independent fresh current-input profiles replace it"
+    },
+    {
+      "classification": "legacy_get_config",
+      "status": "FAIL_OBSERVED",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/known_limits.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "RF03-QA-001 unchanged original diagnostic exit14 in all four profiles, not counted PASS"
+    },
+    {
+      "classification": "leak_detection",
+      "status": "BLOCKED",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": "evidence/leaksanitizer_probe.json",
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Fresh detect_leaks=1 fails under ptrace; full accepted ASan suite uses leak detection off"
+    },
+    {
+      "classification": "windows_msvc_production",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "No Windows compiler/linker/runtime"
+    },
+    {
+      "classification": "windows_native_iocp",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Dedicated achievement owner DLL host not added; no Windows IOCP run"
+    },
+    {
+      "classification": "cmake_cmd",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "CMake and Windows CMD unavailable"
+    },
+    {
+      "classification": "live_sdk_game",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "No live SDK/game; local Grant response/event/query loopback does not prove SDK session, watcher fanout, persistence or remote consumption"
+    },
+    {
+      "classification": "original_auth_policy_global_fixture",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Reference-only original global provider/lease fixture not used"
+    },
+    {
+      "classification": "original_check_permission_global_fixture",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Reference-only original default-online/numeric policy differs"
+    },
+    {
+      "classification": "original_query_friends_global_fixture",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Reference only"
+    },
+    {
+      "classification": "original_grant_global_fixture",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Original global service_state transaction fixture retained exactly as reference; new standalone-owner tests are separate"
+    },
+    {
+      "classification": "original_grant_global_handler",
+      "status": "NOT_RUN",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "Original Grant handler/watcher/deferred socket implementation is reference-only; new prepared-wire API tests are separate"
+    },
+    {
+      "classification": "official_release_publication",
+      "status": "NOT_APPLICABLE",
+      "source_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+      "evidence": null,
+      "owner": "REDFIELD RF20",
+      "carry_forward": null,
+      "invalidation": "Relevant source/header/recipe/test/build/tool change requires fresh exact-input evidence",
+      "detail": "NON_RELEASE_WORK / NOT_RELEASE; canonical HF19/CURRENT unchanged"
+    }
+  ]
+}

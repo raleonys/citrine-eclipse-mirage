@@ -1,0 +1,693 @@
+{
+  "schema": 1,
+  "checkpoint": "RF32",
+  "classification": "LOCAL_BUILD/NOT_RELEASE",
+  "status": "INVENTORY_BOUND_COVERAGE_NOT_COMPLETE",
+  "canonical_hf19_zip_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "sources": [
+    {
+      "path": "provenance/hf19_acceptance/CMakeLists.txt",
+      "origin": "CMakeLists.txt",
+      "sha256": "04410b5084d60faeca292f305a3be769274cb1b1de4ec018d9e078f9b8e7a64c"
+    },
+    {
+      "path": "provenance/hf19_acceptance/tools/preloader_l_native_acceptance_host/native_acceptance_main.cpp",
+      "origin": "tools/preloader_l_native_acceptance_host/native_acceptance_main.cpp",
+      "sha256": "edb1593b34a8e696575dfc81a91be2dd194f449afd49b8105bd584b24239938f"
+    },
+    {
+      "path": "provenance/hf19_acceptance/tools/preloader_l_release_host/release_host_main.cpp",
+      "origin": "tools/preloader_l_release_host/release_host_main.cpp",
+      "sha256": "9f2e9652b0cced85aa803ee1822829e03a7a6aca04e808159a2fdb2250ef76a1"
+    },
+    {
+      "path": "provenance/hf19_acceptance/exports/preloader_l_debug.def",
+      "origin": "exports/preloader_l_debug.def",
+      "sha256": "97852569abcb06711cb206ba210057cc7c0628e02837a688cd5f6d719b0339b2"
+    },
+    {
+      "path": "provenance/hf19_acceptance/exports/preloader_l_native_acceptance.def",
+      "origin": "exports/preloader_l_native_acceptance.def",
+      "sha256": "cc2710c5693cf8f9efbbd756330cfdcf4c1e7df6e226f1c2a8c4c15d218ca53a"
+    },
+    {
+      "path": "provenance/hf19_acceptance/tools/preloader_l_debug_host/debug_host_main.cpp",
+      "origin": "tools/preloader_l_debug_host/debug_host_main.cpp",
+      "sha256": "c73e5573eb94d02b6e0db2a5f4b4ecf4ca371453d214adb290a7c724c6a6dade"
+    },
+    {
+      "path": "provenance/hf19_acceptance/tools/preloader_l_runtime_host/runtime_host_main.cpp",
+      "origin": "tools/preloader_l_runtime_host/runtime_host_main.cpp",
+      "sha256": "55dc0d984b60391bfe5a95cc3c1ad1b87b184dab6eaa5292fb84b2e8ebb500f4"
+    },
+    {
+      "path": "provenance/hf19_acceptance/tools/preloader_l_session_host/session_host_main.cpp",
+      "origin": "tools/preloader_l_session_host/session_host_main.cpp",
+      "sha256": "7f2dd95149532e512f5cfa8fe3374199ebd7281a350d116b92a26a3e46e3805d"
+    },
+    {
+      "path": "provenance/hf19_acceptance/tools/preloader_l_socket_host/socket_host_main.cpp",
+      "origin": "tools/preloader_l_socket_host/socket_host_main.cpp",
+      "sha256": "e384407741d3dd34f9432a343ca77df9a430297c9abace4c5c07cf9be07dd9dd"
+    },
+    {
+      "path": "provenance/hf19_build/build_debug.ps1",
+      "origin": "scripts/build_orchestration/build_debug.ps1",
+      "sha256": "01abc77440c024fb1f043822db990be7078ee531910b3862ffe2bec37a1276c8"
+    },
+    {
+      "path": "provenance/hf19_build/build_native_acceptance.ps1",
+      "origin": "scripts/build_orchestration/build_native_acceptance.ps1",
+      "sha256": "9b44a0459b08738b5ecdb7b0b6cdaeddb91632e85045723c6fd767120616db86"
+    },
+    {
+      "path": "provenance/hf19_build/build_crt_acceptance.ps1",
+      "origin": "scripts/build_orchestration/build_crt_acceptance.ps1",
+      "sha256": "6f3e4557a291d347aa076e9450efeda6711352787cc17fb947129cb01a85e22d"
+    }
+  ],
+  "native_crt_scenarios": [
+    {
+      "id": "reload_generation",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_config_snapshot_view",
+        "test_service_session"
+      ],
+      "current_native_cases": [
+        "missing",
+        "self_pin"
+      ],
+      "targets": {
+        "tests/test_config_snapshot_view.cpp": "6a5086cac7cecfda7665a0b3b6d7bedee9a2a75e6d2a7d0dc11fa2aa799345e3",
+        "tests/test_service_session.cpp": "005f1eba8a8c5397094ddf18bd1ac97e1dda89a4b92a26a9fe178d2091fe0cb0"
+      },
+      "remaining": "Actual DLL reload generations/config mutation isolation pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "shipping_shutdown",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_worker_owner",
+        "test_session_retirement"
+      ],
+      "current_native_cases": [
+        "cleanup_retry"
+      ],
+      "targets": {
+        "tests/test_worker_owner.cpp": "7c700e1250e359064c05c77a581200bb148da47ee9e560c096b2d9916fa7b3b1",
+        "tests/test_session_retirement.cpp": "a85c6cb5817e36c2cf2bfb6fa1ea0330d9b0097dfbe47a28043d4ad9fbf47dd7"
+      },
+      "remaining": "Current public ABI3 cycles;old shipping GetConfig black-box path pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "zero",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_tcp_ingress"
+      ],
+      "current_native_cases": [
+        "missing"
+      ],
+      "targets": {
+        "tests/test_tcp_ingress.cpp": "c442cdeaa658916f2835e663fe6e274a058c276fb2c1e551b1c499815d21cd6b"
+      },
+      "remaining": "Exact zero-client lifecycle scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "one",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_tcp_ingress"
+      ],
+      "current_native_cases": [
+        "online_true"
+      ],
+      "targets": {
+        "tests/test_tcp_ingress.cpp": "c442cdeaa658916f2835e663fe6e274a058c276fb2c1e551b1c499815d21cd6b"
+      },
+      "remaining": "Current one-client native path;oldscenario assertions not fully matched",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "growth",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_tcp_ingress"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_tcp_ingress.cpp": "c442cdeaa658916f2835e663fe6e274a058c276fb2c1e551b1c499815d21cd6b"
+      },
+      "remaining": "Multi-client native growth scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "parallel",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_tcp_delivery"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_tcp_delivery.cpp": "50f1aa99cd4f910d9f8cb7ab57121ad3cbd7e1e6597aec08bf920c2c24143963"
+      },
+      "remaining": "Parallel live native client ownership andshutdown scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "active_shutdown",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_pending_session_cleanup",
+        "test_session_retirement"
+      ],
+      "current_native_cases": [
+        "cleanup_retry"
+      ],
+      "targets": {
+        "tests/test_pending_session_cleanup.cpp": "1e8ad306a1903295193d6831740bb19781a775dfd9d37d52b67b9a1513830dc4",
+        "tests/test_session_retirement.cpp": "a85c6cb5817e36c2cf2bfb6fa1ea0330d9b0097dfbe47a28043d4ad9fbf47dd7"
+      },
+      "remaining": "Current connected client closure;old active-shutdown stress rounds pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "blocked_shutdown",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_worker_owner",
+        "test_transient_shutdown"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_worker_owner.cpp": "7c700e1250e359064c05c77a581200bb148da47ee9e560c096b2d9916fa7b3b1",
+        "tests/test_transient_shutdown.cpp": "ee6774a20af8c7d6a9fa35d85ae1828dca3eb137ee0c4d68e282e156647f582f"
+      },
+      "remaining": "Native blocked completion/timeout ownership andfour stress rounds pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "f02_delivery_stall_parallel",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_tcp_delivery",
+        "test_tcp_grant_failure"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_tcp_delivery.cpp": "50f1aa99cd4f910d9f8cb7ab57121ad3cbd7e1e6597aec08bf920c2c24143963",
+        "tests/test_tcp_grant_failure.cpp": "8989bcf495404db2383f817315d6c1c349c47c6bb4dc3551d53139680847d256"
+      },
+      "remaining": "Native delayed completion/fault controls andparallel scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "ids07_send_idle_timeout",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_asio_session_timeout_policy"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_asio_session_timeout_policy.cpp": "f52c6bfeef90d22c599754a1f1cb7d0a2d7397772d4042056eacab3148470f20"
+      },
+      "remaining": "Native real idle timeout/send-progress scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "connect_redirect_lifecycle",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_connect_redirect"
+      ],
+      "current_native_cases": [
+        "hooks"
+      ],
+      "targets": {
+        "tests/test_connect_redirect.cpp": "09e67656c7d43ce9e3106bb921d69e8e41d51e23710c91730b01ac7fa4dc1ee2"
+      },
+      "remaining": "Current targeted connect/registry retry;generation/direct-target bypass/native restoration assertions pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "wave4_resource_retry",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_worker_owner",
+        "test_transient_retry_concurrency"
+      ],
+      "current_native_cases": [
+        "cleanup_retry",
+        "hooks"
+      ],
+      "targets": {
+        "tests/test_worker_owner.cpp": "7c700e1250e359064c05c77a581200bb148da47ee9e560c096b2d9916fa7b3b1",
+        "tests/test_transient_retry_concurrency.cpp": "b4e581c7f4bd7a1572d12c8a9b29cb2f3dcf3fa1b7a593ec6b500f32f2d03416"
+      },
+      "remaining": "Current close/unpin andregistry pending owner retries;full historical resource fault matrix pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "path_ascii_sso7",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_service_session"
+      ],
+      "current_native_cases": [
+        "missing"
+      ],
+      "targets": {
+        "tests/test_service_session.cpp": "005f1eba8a8c5397094ddf18bd1ac97e1dda89a4b92a26a9fe178d2091fe0cb0"
+      },
+      "remaining": "Module-relative config implemented;old exact ASCII path selection pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "path_unicode_heap",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_service_session"
+      ],
+      "current_native_cases": [
+        "missing"
+      ],
+      "targets": {
+        "tests/test_service_session.cpp": "005f1eba8a8c5397094ddf18bd1ac97e1dda89a4b92a26a9fe178d2091fe0cb0"
+      },
+      "remaining": "Current native workspace Unicode path exists;old long/replace scenario assertions pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "path_long_replace",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_service_session"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_service_session.cpp": "005f1eba8a8c5397094ddf18bd1ac97e1dda89a4b92a26a9fe178d2091fe0cb0"
+      },
+      "remaining": "Native long-path/config replacement pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "xml_no_bom",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_config",
+        "test_xml"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_config.cpp": "b87c1fb95263a05e35722a5c02e6eb96d206dfe5e4a1135fd5493774e5e3b701",
+        "tests/test_xml.cpp": "536e968b77aa169d2b99d22bd01c511e3cb4e2df523d1ca2d45b26039c7f2cda"
+      },
+      "remaining": "Old native Config XML scenario uses changed parser/config boundaries;explicit destination equivalence review pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "xml_bom",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_config",
+        "test_xml"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_config.cpp": "b87c1fb95263a05e35722a5c02e6eb96d206dfe5e4a1135fd5493774e5e3b701",
+        "tests/test_xml.cpp": "536e968b77aa169d2b99d22bd01c511e3cb4e2df523d1ca2d45b26039c7f2cda"
+      },
+      "remaining": "Native BOM/config boundary equivalence pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "xml_large",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_config",
+        "test_xml"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_config.cpp": "b87c1fb95263a05e35722a5c02e6eb96d206dfe5e4a1135fd5493774e5e3b701",
+        "tests/test_xml.cpp": "536e968b77aa169d2b99d22bd01c511e3cb4e2df523d1ca2d45b26039c7f2cda"
+      },
+      "remaining": "Native large XML/config ownership andfailure equivalence pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "xml_invalid_retain",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_config",
+        "test_config_snapshot_view"
+      ],
+      "current_native_cases": [
+        "invalid_config"
+      ],
+      "targets": {
+        "tests/test_config.cpp": "b87c1fb95263a05e35722a5c02e6eb96d206dfe5e4a1135fd5493774e5e3b701",
+        "tests/test_config_snapshot_view.cpp": "6a5086cac7cecfda7665a0b3b6d7bedee9a2a75e6d2a7d0dc11fa2aa799345e3"
+      },
+      "remaining": "Current invalid Config2 startup tested;old live-retain semantics need separate mapping",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "xml_replace",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_config_snapshot_view"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_config_snapshot_view.cpp": "6a5086cac7cecfda7665a0b3b6d7bedee9a2a75e6d2a7d0dc11fa2aa799345e3"
+      },
+      "remaining": "Native live source replacement parity pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "xml_clear",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_config"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_config.cpp": "b87c1fb95263a05e35722a5c02e6eb96d206dfe5e4a1135fd5493774e5e3b701"
+      },
+      "remaining": "Native clear-versus-empty semantics pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "prestart_stop",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_worker_owner"
+      ],
+      "current_native_cases": [
+        "early_stop"
+      ],
+      "targets": {
+        "tests/test_worker_owner.cpp": "7c700e1250e359064c05c77a581200bb148da47ee9e560c096b2d9916fa7b3b1"
+      },
+      "remaining": "Current native10 early-stop cycles;oldscenario whole lifecycle equivalence pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "ptd_fls_lifecycle",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_ptd_lifecycle",
+        "test_ptd_fls_free"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_ptd_lifecycle.cpp": "bf9a129a59e770fe63e6dbc5f46f7fe9c0c34f80d36173c3f085ab26cc101e01",
+        "tests/test_ptd_fls_free.cpp": "6e27e265e7abf2a0bc5fca004eb3c8eeed5a909bd1804ff791f88d3e5d554d2d"
+      },
+      "remaining": "Old custom PTD/FLS model is tests/support only;production supported /MT CRT;actual platform runtime lifetime acceptance required,not model-test substitution",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "frame_fragmentation",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_framing",
+        "test_tcp_ingress"
+      ],
+      "current_native_cases": [
+        "online_true"
+      ],
+      "targets": {
+        "tests/test_framing.cpp": "310fc556bab32e0acc52142095bd86bfabcee0c39dcad1c42d0b618950824152",
+        "tests/test_tcp_ingress.cpp": "c442cdeaa658916f2835e663fe6e274a058c276fb2c1e551b1c499815d21cd6b"
+      },
+      "remaining": "Current native fragment+coalesce3 replies;fullold malformed/connection boundary scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "frame_coalescing",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_framing",
+        "test_tcp_ingress"
+      ],
+      "current_native_cases": [
+        "online_true"
+      ],
+      "targets": {
+        "tests/test_framing.cpp": "310fc556bab32e0acc52142095bd86bfabcee0c39dcad1c42d0b618950824152",
+        "tests/test_tcp_ingress.cpp": "c442cdeaa658916f2835e663fe6e274a058c276fb2c1e551b1c499815d21cd6b"
+      },
+      "remaining": "Current native coalescing covered inonecase;fulloldnative assertions pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "frame_malformed",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_framing",
+        "test_ingress"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_framing.cpp": "310fc556bab32e0acc52142095bd86bfabcee0c39dcad1c42d0b618950824152",
+        "tests/test_ingress.cpp": "199b9c93b7fcded270d8b07deef013307224447fd66a707daf2aa2f2d9396be8"
+      },
+      "remaining": "Native malformed frame isolation scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "protocol_route_surface",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_router",
+        "test_tcp_profile_time",
+        "test_tcp_settings"
+      ],
+      "current_native_cases": [
+        "online_true"
+      ],
+      "targets": {
+        "tests/test_router.cpp": "265da31f00ca1ebd2de785c845c7eadcada881bacb344c61078362a66dfc89af",
+        "tests/test_tcp_profile_time.cpp": "eac98c8db4ec7670baf7090650d48754dd7efab57f3a16c87aea6715fa606c0f",
+        "tests/test_tcp_settings.cpp": "b8632a30ae724d5debbeb2c3937d3daa0eb564240a5dbaa99d6f87974920c230"
+      },
+      "remaining": "35bindings/7deferred;SDK handshake/sessioncrypto intentionallydeferred;fulloldroute/native parity not implied",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "store_content_entitlement",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_tcp_store_replies",
+        "test_tcp_content",
+        "test_tcp_entitlements"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_tcp_store_replies.cpp": "1b5966583db549145a1df82070081b12d2077e1edcb4e76ecb1000b3e8e2be5b",
+        "tests/test_tcp_content.cpp": "156f448ba765180378019e93c6daa039461e7e8a957b50303ef655606a67c6be",
+        "tests/test_tcp_entitlements.cpp": "2bb44d3f7080acee01becef64734c2e51c5e568427e3adea38da47524ca744bb"
+      },
+      "remaining": "Portable wire tests exist;native end-to-end scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "achievement_event_delivery",
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "PARTIAL_DESTINATION_COVERAGE_NATIVE_PARITY_PENDING",
+      "current_tests": [
+        "test_tcp_achievements",
+        "test_achievement_delivery_wire"
+      ],
+      "current_native_cases": [],
+      "targets": {
+        "tests/test_tcp_achievements.cpp": "fd249d486b6e16a893ebae968fade3e48ebd469d77b6cd80834a8ec7792111f9",
+        "tests/test_achievement_delivery_wire.cpp": "691f63b232e3454ef94ce4e0decf71ae40964f6a63543c8b981f38a2d88e427c"
+      },
+      "remaining": "Portable event delivery exists;native state/timeout/event delivery scenario pending",
+      "actual_windows": "NOT_RUN_RF32"
+    }
+  ],
+  "stress_rounds": [
+    {
+      "id": "active_shutdown",
+      "additional_rounds": 4,
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "NOT_PORTED_STRESS"
+    },
+    {
+      "id": "blocked_shutdown",
+      "additional_rounds": 4,
+      "profiles": [
+        "native",
+        "crt"
+      ],
+      "status": "NOT_PORTED_STRESS"
+    }
+  ],
+  "debug_hosts": [
+    {
+      "id": "debug",
+      "status": "NOT_PORTED_DIAGNOSTIC_COMPOSITION",
+      "original_host": "tools/preloader_l_debug_host/debug_host_main.cpp",
+      "current": "Debug compiles thecurrent publicABI production composition with/MTd andsymbols;no legacydebug ABI declared",
+      "remaining": "Review andadapt applicable diagnostic API/host behavior into separate debug tree;do not copylegacy parallel runtime",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "runtime",
+      "status": "NOT_PORTED_DIAGNOSTIC_COMPOSITION",
+      "original_host": "tools/preloader_l_runtime_host/runtime_host_main.cpp",
+      "current": "Debug compiles thecurrent publicABI production composition with/MTd andsymbols;no legacydebug ABI declared",
+      "remaining": "Review andadapt applicable diagnostic API/host behavior into separate debug tree;do not copylegacy parallel runtime",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "session",
+      "status": "NOT_PORTED_DIAGNOSTIC_COMPOSITION",
+      "original_host": "tools/preloader_l_session_host/session_host_main.cpp",
+      "current": "Debug compiles thecurrent publicABI production composition with/MTd andsymbols;no legacydebug ABI declared",
+      "remaining": "Review andadapt applicable diagnostic API/host behavior into separate debug tree;do not copylegacy parallel runtime",
+      "actual_windows": "NOT_RUN_RF32"
+    },
+    {
+      "id": "socket",
+      "status": "NOT_PORTED_DIAGNOSTIC_COMPOSITION",
+      "original_host": "tools/preloader_l_socket_host/socket_host_main.cpp",
+      "current": "Debug compiles thecurrent publicABI production composition with/MTd andsymbols;no legacydebug ABI declared",
+      "remaining": "Review andadapt applicable diagnostic API/host behavior into separate debug tree;do not copylegacy parallel runtime",
+      "actual_windows": "NOT_RUN_RF32"
+    }
+  ],
+  "crt_shipping_blackbox": {
+    "status": "PARTIAL_PUBLIC_ABI_ONLY",
+    "current_host": "tests/native/abi_smoke.cpp",
+    "remaining": "Old shippingblackbox GetConfig path andCRT profile Golden acceptance pending;production Golden implemented separately",
+    "actual_windows": "NOT_RUN_RF32"
+  },
+  "qualification": "All managed-code/vendor semanticqualification recordsremainpending;thisinventory isnotsemantic orruntime closure"
+}

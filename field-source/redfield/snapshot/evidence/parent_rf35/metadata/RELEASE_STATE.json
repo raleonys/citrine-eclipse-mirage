@@ -1,0 +1,17 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF35",
+  "classification": "NON_RELEASE_WORK",
+  "status": "NOT_RELEASE",
+  "semantic_version": null,
+  "official_codename": null,
+  "public_abi": "DllMain @1,SURGE @2,DllShutdown @3 unchanged;35 plaintext local routes;seven existing Windows MinHook detours;SURGE passive",
+  "runtime_compatibility": "RF35_NOT_VERIFIED_ON_WINDOWS_OR_GAME",
+  "canonical_release_mutation": false,
+  "known_diagnostic": "RF03-QA-001 unchanged original GetConfig diagnostic exit14, separate from passing regressions",
+  "derivation_scope": "268 maintained application files;1610 byte-bound ancestry recipes",
+  "windows_msvc": "RF35_NOT_RUN",
+  "current_regressions": 98,
+  "refactor": "MSVC_NAMESPACE_FIX01",
+  "scope": "Remove the redundant net namespace alias rejected by user MSVC C2386; retain RF34 lifetime work and runtime behavior"
+}

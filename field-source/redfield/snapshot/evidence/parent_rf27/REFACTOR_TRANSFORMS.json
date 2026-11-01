@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "checkpoint": "RF27",
+  "parent_zip_sha256": "0e04ca9de5573efdd9a98f32dbfe8ff74c1e406fc7c159e6b536d9ec7a91bdb8",
+  "scope": "User correction of configuration contract plus bounded ConfigStore capture refactor",
+  "application_files": 262,
+  "configuration_filename": "surge.cfg",
+  "changes": [
+    "Restore surge.cfg across loader/example/test/native host fixtures",
+    "One module_config_basename constant independent of DLL name",
+    "Required staging bindings are references;raw leaf capture shares SourceView",
+    "ServiceSession test rejects DLL-stem configuration as input or fallback"
+  ],
+  "historical_transforms": "evidence/parent_rf26/REFACTOR_TRANSFORMS.json"
+}

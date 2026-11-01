@@ -1,0 +1,59 @@
+{
+  "parent_zip_sha256": "b6d821d7466a07085ac1b5a8182ddae12034d1fb665139be57417cee4c6925ad",
+  "classification": "NON_RELEASE_WORK",
+  "added": [
+    "evidence/parent_rf34/CHANGELOG.md",
+    "evidence/parent_rf34/README.md",
+    "evidence/parent_rf34/SOURCE_REVISION.md",
+    "evidence/parent_rf34/docs/REFACTOR_STATUS_TR.md",
+    "evidence/parent_rf34/docs/REPORT_TR.md",
+    "evidence/parent_rf34/metadata/ACCEPTANCE.json",
+    "evidence/parent_rf34/metadata/GOVERNANCE_BINDING.json",
+    "evidence/parent_rf34/metadata/PARENT.json",
+    "evidence/parent_rf34/metadata/REFACTOR_REVIEW.json",
+    "evidence/parent_rf34/metadata/REFACTOR_TRANSFORMS.json",
+    "evidence/parent_rf34/metadata/RELEASE_STATE.json",
+    "evidence/parent_rf34/metadata/REUSE_DECISIONS.json",
+    "evidence/rf35_msvc_namespace_fix.json",
+    "evidence/rf35_normal_build.log",
+    "evidence/rf35_normal_receipt.json",
+    "evidence/rf35_preserved_boundaries.json",
+    "evidence/rf35_regression_comparison.json",
+    "evidence/rf35_user_rf33_msvc_failure.log",
+    "metadata/RF35_DELTA.json",
+    "provenance/rf34/scripts/build_orchestration/build_common.py",
+    "provenance/rf34/scripts/build_orchestration/build_verify.cmd.txt",
+    "provenance/rf34/scripts/build_orchestration/build_verify.py",
+    "provenance/rf34/src/net/tcp_ingress.cpp"
+  ],
+  "modified": [
+    "CHANGELOG.md",
+    "README.md",
+    "SOURCE_REVISION.md",
+    "docs/REFACTOR_STATUS_TR.md",
+    "docs/REPORT_TR.md",
+    "metadata/ACCEPTANCE.json",
+    "metadata/ARCHITECTURE.json",
+    "metadata/DERIVED_SOURCES.json",
+    "metadata/GOVERNANCE_BINDING.json",
+    "metadata/IMPORT_REFACTOR.json",
+    "metadata/PARENT.json",
+    "metadata/REFACTOR_REVIEW.json",
+    "metadata/REFACTOR_TRANSFORMS.json",
+    "metadata/RELEASE_STATE.json",
+    "metadata/REUSE_DECISIONS.json",
+    "scripts/build_orchestration/build_common.py",
+    "scripts/build_orchestration/build_verify.cmd",
+    "scripts/build_orchestration/build_verify.py",
+    "src/net/tcp_ingress.cpp"
+  ],
+  "removed": [],
+  "excluded_from_delta": "Self and generated PACKAGE_MANIFEST hashes; final manifest covers all bytes",
+  "application_delta": {
+    "unchanged": 267,
+    "modified": [
+      "src/net/tcp_ingress.cpp"
+    ],
+    "added": []
+  }
+}

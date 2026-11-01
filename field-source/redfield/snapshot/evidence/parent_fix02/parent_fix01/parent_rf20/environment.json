@@ -1,0 +1,16 @@
+{
+  "checkpoint": "RF20",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "compiler": "/usr/bin/g++",
+  "cmake": null,
+  "cl_exe": null,
+  "native_windows": "NOT_RUN",
+  "game_sdk": "NOT_RUN",
+  "normal_initial_fixture_failure": "Exploratory selector fixture had no Request id; corrected fixture before complete fresh acceptance. No receipt from failed attempt",
+  "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "accepted_validation_root": "/tmp/redfield_rf20_final/REDFIELD_RF20",
+  "independent_clean_root": "/tmp/redfield_rf20_clean/REDFIELD_RF20",
+  "current_input_sha256": "e039fd6bb2bd7fc31045f279b501e85dc56139d1caa5b0cf91884b5c3ffe83a5",
+  "comment_contract_refresh": "All accepted profiles started after final FrameObserver null/output-buffer comment clarification; earlier interrupted validation receipts not used"
+}

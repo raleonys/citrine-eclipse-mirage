@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "scope": "Exact canonical scenario/reference/current-source binding andexplicit pending disposition,not coverage execution acceptance",
+  "native_crt_scenarios": 29,
+  "debug_hosts": 4,
+  "canonical_references": 12,
+  "stress_scenarios": 2,
+  "additional_rounds_per_profile_scenario": 4,
+  "current_target_hashes": "PASS",
+  "windows": "NOT_RUN_RF32"
+}

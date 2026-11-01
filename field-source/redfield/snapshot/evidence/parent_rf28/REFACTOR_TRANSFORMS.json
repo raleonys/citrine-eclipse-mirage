@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "checkpoint": "RF28",
+  "parent_zip_sha256": "63429a0a9071ea95ed4728c7eb4a05ac9f4109b306079ff5bf77b3fdcb130155",
+  "scope": "B01 module closure;no implementation changes or new feature",
+  "application_files": 262,
+  "changes": [
+    "Document disjoint input/output and independent written storage in hex API",
+    "Preserve RF20 architecture note byte-identically under docs/history",
+    "Describe current ownership,shared source and actual Debug/CRT/native build boundaries",
+    "Update checkpoint banners only in builder/launchers"
+  ],
+  "historical_transforms": "evidence/parent_rf27/REFACTOR_TRANSFORMS.json"
+}

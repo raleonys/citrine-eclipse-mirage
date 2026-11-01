@@ -1,0 +1,54 @@
+
+[RUN] real Python subprocess
+["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3", "-u", "-c", "import time; print('EARLY',flush=True); time.sleep(0.6); print('LATE',flush=True)"]
+EARLY
+LATE
+
+[EXIT 0; 0.7s] real Python subprocess
+
+[RUN] real Python subprocess
+["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3", "-u", "-c", "import sys; print('EXPECTED_DIAGNOSTIC'); sys.exit(14)"]
+EXPECTED_DIAGNOSTIC
+
+[EXIT 14; 0.1s] real Python subprocess
+
+[RUN] real Python subprocess
+["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3", "-u", "-c", "import sys; print('REAL_FAILURE',flush=True); sys.exit(7)"]
+REAL_FAILURE
+
+[EXIT 7; 0.1s] real Python subprocess
+
+[RUN] real Python subprocess
+["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3", "-u", "-c", "import time; print('TIMEOUT_STARTED',flush=True); time.sleep(20)"]
+TIMEOUT_STARTED
+
+[TIMEOUT 0.3s] real Python subprocess
+
+[RUN] real Python subprocess
+["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3", "-u", "-c", "import os,time; os.write(1,bytes([0xe2])); time.sleep(.2); os.write(1,bytes([0x82,0xac,10])); os.write(2,b'STDERR-LIVE\\n')"]
+€
+STDERR-LIVE
+
+[EXIT 0; 0.3s] real Python subprocess
+
+[RUN] real Python subprocess
+["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3", "-u", "-c", "import time; time.sleep(5.3); print('AFTER_WAIT')"]
+AFTER_WAIT
+
+[EXIT 0; 5.3s] real Python subprocess
+
+[RUN] CXX 1/1: probe.cpp
+["/usr/bin/g++", "-std=c++20", "-Wall", "-Wextra", "-Werror", "-c", "/tmp/rf20_real_process_bn_9rado/probe.cpp", "-o", "/tmp/rf20_real_process_bn_9rado/probe.o"]
+
+[EXIT 0; 0.1s] CXX 1/1: probe.cpp
+
+[RUN] LINK probe
+["/usr/bin/g++", "/tmp/rf20_real_process_bn_9rado/probe.o", "-o", "/tmp/rf20_real_process_bn_9rado/probe"]
+
+[EXIT 0; 0.1s] LINK probe
+
+[RUN] RUN probe
+["/tmp/rf20_real_process_bn_9rado/probe"]
+REAL_CPP_EXECUTION_PASS
+
+[EXIT 0; 0.1s] RUN probe

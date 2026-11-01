@@ -1,0 +1,323 @@
+{
+  "status": "PASS",
+  "scope": "Real POSIX locks/filesystem/atomic copy andactual Python profile/command logic with mocked MSVC/VS/process execution;synthetic PE parser cases;NOT actual Windows orGolden acceptance",
+  "cases": [
+    {
+      "case": "synthetic_public_export_contract_parser",
+      "status": "PASS",
+      "fixture_only": true
+    },
+    {
+      "case": "synthetic_native_export_sparse_ordinals",
+      "status": "PASS",
+      "fixture_only": true
+    },
+    {
+      "case": "dynamic_crt_ucrtbase.dll",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "case": "dynamic_crt_ucrtbased.dll",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "case": "dynamic_crt_vcruntime140.dll",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "case": "dynamic_crt_MSVCP140D.dll",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "case": "dynamic_crt_api-ms-win-crt-runtime-l1-1-0.dll",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DYNAMIC_CRT_IMPORT"
+    },
+    {
+      "case": "native_exports_cannot_ship",
+      "status": "EXPECTED_REJECTION",
+      "reason": "EXPORT_COUNT"
+    },
+    {
+      "case": "pe_security",
+      "status": "EXPECTED_REJECTION",
+      "reason": "ENTRY_OR_ASLR_NX_HIGH_ENTROPY"
+    },
+    {
+      "case": "pe_zero_entry",
+      "status": "EXPECTED_REJECTION",
+      "reason": "ENTRY_OR_ASLR_NX_HIGH_ENTROPY"
+    },
+    {
+      "case": "pe_wrong_machine",
+      "status": "EXPECTED_REJECTION",
+      "reason": "X64_DLL_REQUIRED"
+    },
+    {
+      "case": "pe_hidden_ordinal",
+      "status": "EXPECTED_REJECTION",
+      "reason": "UNNAMED_EXPORT"
+    },
+    {
+      "case": "truncated_pe",
+      "status": "EXPECTED_REJECTION",
+      "reason": "TRUNCATED"
+    },
+    {
+      "case": "same_profile_second_lock",
+      "status": "EXPECTED_REJECTION",
+      "reason": "BUILD_ALREADY_RUNNING"
+    },
+    {
+      "case": "distinct_profiles_have_distinct_locks",
+      "status": "PASS"
+    },
+    {
+      "case": "real_child_process_cannot_acquire_held_profile_lock",
+      "status": "PASS"
+    },
+    {
+      "case": "released_lock_can_be_reacquired",
+      "status": "PASS"
+    },
+    {
+      "case": "confined_../outside",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OUTPUT_PATH_NOT_CONFINED"
+    },
+    {
+      "case": "confined_/tmp/outside",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OUTPUT_PATH_NOT_CONFINED"
+    },
+    {
+      "case": "confined_build/../outside",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OUTPUT_PATH_NOT_CONFINED"
+    },
+    {
+      "case": "confined_dist/./preloader_l.dll",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OUTPUT_PATH_NOT_CONFINED"
+    },
+    {
+      "case": "confined_dist//preloader_l.dll",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OUTPUT_PATH_NOT_CONFINED"
+    },
+    {
+      "case": "confined_build\\debug",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OUTPUT_PATH_NOT_CONFINED"
+    },
+    {
+      "case": "symlink_output_root",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OUTPUT_SYMLINK"
+    },
+    {
+      "case": "real_same_directory_atomic_copy_readback",
+      "status": "PASS"
+    },
+    {
+      "case": "production_dist_cannot_bypass_pending_golden",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PRODUCTION_DIST_REQUIRES_GOLDEN_OUTCOME"
+    },
+    {
+      "case": "unapproved_nonproduction_destination",
+      "status": "EXPECTED_REJECTION",
+      "reason": "NONPRODUCTION_DIST_PATH_REQUIRED"
+    },
+    {
+      "case": "changed_publish_source",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PUBLISH_SOURCE_CHANGED"
+    },
+    {
+      "case": "atomic_rename_failure_temp_cleanup",
+      "status": "EXPECTED_REJECTION",
+      "reason": "injected rename failure"
+    },
+    {
+      "case": "stale_shipping_output_removed_before_new_attempt",
+      "status": "PASS"
+    },
+    {
+      "case": "profile_build_output_reset",
+      "status": "PASS"
+    },
+    {
+      "case": "no_broad_output_reset",
+      "status": "EXPECTED_REJECTION",
+      "reason": "OUTPUT_RESET_NOT_APPROVED"
+    },
+    {
+      "case": "policy_mt_debug_leak",
+      "status": "EXPECTED_REJECTION",
+      "reason": "FLAG_INJECTION"
+    },
+    {
+      "case": "policy_custom_entry",
+      "status": "EXPECTED_REJECTION",
+      "reason": "LINK_POLICY"
+    },
+    {
+      "case": "policy_production_pdb",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DEBUG_LEAK"
+    },
+    {
+      "case": "policy_cross_root",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROFILE_BOUNDARY"
+    },
+    {
+      "case": "policy_fake_golden_ready",
+      "status": "EXPECTED_REJECTION",
+      "reason": "GOLDEN_BINDING_CONTRACT"
+    },
+    {
+      "case": "policy_missing_release_opt",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROFILE_FLAGS"
+    },
+    {
+      "case": "actual_profile_composition_mock_msvc_debug",
+      "status": "PASS",
+      "scope": "Simulated processes;real shared flags/roles/path/hash/publish/receipt logic;Windows NOT_RUN",
+      "compiled_objects": 76,
+      "published": 6
+    },
+    {
+      "case": "actual_profile_composition_mock_msvc_native",
+      "status": "PASS",
+      "scope": "Simulated processes;real shared flags/roles/path/hash/publish/receipt logic;Windows NOT_RUN",
+      "compiled_objects": 76,
+      "published": 2
+    },
+    {
+      "case": "actual_profile_composition_mock_msvc_crt",
+      "status": "PASS",
+      "scope": "Simulated processes;real shared flags/roles/path/hash/publish/receipt logic;Windows NOT_RUN",
+      "compiled_objects": 78,
+      "published": 4
+    },
+    {
+      "case": "actual_profile_complete_Golden_then_atomic_dist_mock_msvc",
+      "status": "PASS",
+      "scope": "Actual Python stages;synthetic PE andmocked MSVC/RC/hosts;Windows NOT_RUN"
+    },
+    {
+      "case": "production_rejection_in_stage_0",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DEBUG_DIRECTORY"
+    },
+    {
+      "case": "production_rejection_in_stage_1",
+      "status": "EXPECTED_REJECTION",
+      "reason": "FPTABLE_PROFILE"
+    },
+    {
+      "case": "production_rejection_in_stage_2",
+      "status": "EXPECTED_REJECTION",
+      "reason": "VERSIONINFO_FIXED"
+    },
+    {
+      "case": "production_rejection_in_stage_3",
+      "status": "EXPECTED_REJECTION",
+      "reason": "GS_COOKIE_RANGE"
+    },
+    {
+      "case": "production_rejection_in_stage_4",
+      "status": "EXPECTED_REJECTION",
+      "reason": "DATA_VIRTUAL_SIZE_BUDGET"
+    },
+    {
+      "case": "zero_exit_without_fresh_RC_output",
+      "status": "EXPECTED_REJECTION",
+      "reason": "No such file"
+    },
+    {
+      "case": "resource_changed_before_gates",
+      "status": "EXPECTED_REJECTION",
+      "reason": "COMPILED_RESOURCE_CHANGED"
+    },
+    {
+      "case": "cancelled_production_removes_dist_andrecords_failure",
+      "status": "PASS"
+    },
+    {
+      "case": "new_failed_native_attempt_clears_previous_dist",
+      "status": "EXPECTED_REJECTION",
+      "reason": "command exit=7"
+    },
+    {
+      "case": "acceptance_binary_mutation_rejected",
+      "status": "EXPECTED_REJECTION",
+      "reason": "ACCEPTANCE_MUTATED_DLL"
+    },
+    {
+      "case": "zero_exit_without_fresh_object",
+      "status": "EXPECTED_REJECTION",
+      "reason": "No such file"
+    },
+    {
+      "case": "production_rejects_test_support_role",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROFILE_SOURCE_ROLE_REJECTED"
+    },
+    {
+      "case": "production_rejects_native_entry_role",
+      "status": "EXPECTED_REJECTION",
+      "reason": "PROFILE_SOURCE_ROLE_REJECTED"
+    },
+    {
+      "case": "native_rejects_production_entry",
+      "status": "EXPECTED_REJECTION",
+      "reason": "NATIVE_PROFILE_REQUIRES_TEST_ENTRY"
+    },
+    {
+      "case": "foreign_profile_object",
+      "status": "EXPECTED_REJECTION",
+      "reason": "FOREIGN_PROFILE_OBJECT"
+    },
+    {
+      "case": "object_changed_before_link",
+      "status": "EXPECTED_REJECTION",
+      "reason": "COMPILED_OBJECT_CHANGED"
+    },
+    {
+      "case": "new_input_file_detected_at_finish",
+      "status": "EXPECTED_REJECTION",
+      "reason": "BUILD_INPUT_CHANGED"
+    },
+    {
+      "case": "build_production_unknown_override_exit2",
+      "status": "PASS"
+    },
+    {
+      "case": "build_debug_unknown_override_exit2",
+      "status": "PASS"
+    },
+    {
+      "case": "build_native_acceptance_unknown_override_exit2",
+      "status": "PASS"
+    },
+    {
+      "case": "build_crt_acceptance_unknown_override_exit2",
+      "status": "PASS"
+    },
+    {
+      "case": "actual_non_windows_operator_fails_honestly",
+      "status": "PASS"
+    }
+  ],
+  "common_sha256": "788ddf52adbb06e9c18ab316556905c3d0662fd8f71899a92b12076843cc20ec",
+  "profiles_sha256": "53ffba75edea945df8a659ed396891608a7846ccdde924981be5256df5623f8c",
+  "pe_helper_sha256": "eeed3472f70ec997271bc1adf19fda10aa00fb54d82dcafeace7f592cf475ecb"
+}

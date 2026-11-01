@@ -1,0 +1,1237 @@
+PRELOADER_L_INTEGRITY_PASS files=3757 adopted=1327 derived=1625 build_units=175
+PRELOADER_L_IMPORT_REFACTOR {"managed_files": 300, "pending_files": 284, "pending_vendor_integrations": 4, "qualified_files": 16, "rule_revision": "2026-10-21.1", "status": "PENDING"}
+[START] RF36 CRT STARTUP FIX 01 - developer aggregate
+[OUTPUT] /tmp/preloader_rf36_clean_glfcb3pm/REDFIELD_RF36/build/verify/portable_none
+[COMPILER] /usr/bin/x86_64-linux-gnu-g++-13
+[RUN] CXX 1: src/core/runtime.cpp
+
+[EXIT 0; 1.4s] CXX 1: src/core/runtime.cpp
+[RUN] CXX 2: src/core/xml.cpp
+
+[EXIT 0; 0.8s] CXX 2: src/core/xml.cpp
+[RUN] CXX 3: src/config/config.cpp
+
+[EXIT 0; 1.7s] CXX 3: src/config/config.cpp
+[RUN] CXX 4: src/config/config2_pegtl.cpp
+
+[EXIT 0; 1.3s] CXX 4: src/config/config2_pegtl.cpp
+[RUN] CXX 5: src/codec/hex_codec.cpp
+
+[EXIT 0; 0.1s] CXX 5: src/codec/hex_codec.cpp
+[RUN] CXX 6: src/xml/lsx_framing.cpp
+
+[EXIT 0; 0.1s] CXX 6: src/xml/lsx_framing.cpp
+[RUN] CXX 7: src/xml/request_parser.cpp
+
+[EXIT 0; 0.8s] CXX 7: src/xml/request_parser.cpp
+[RUN] CXX 8: src/xml/request_children.cpp
+
+[EXIT 0; 0.7s] CXX 8: src/xml/request_children.cpp
+[RUN] CXX 9: src/xml/attribute_parser.cpp
+
+[EXIT 0; 0.5s] CXX 9: src/xml/attribute_parser.cpp
+[RUN] CXX 10: third_party/tinyxml2/tinyxml2.cpp
+
+[EXIT 0; 0.7s] CXX 10: third_party/tinyxml2/tinyxml2.cpp
+[RUN] CXX 11: src/core/worker_owner.cpp
+
+[EXIT 0; 1.0s] CXX 11: src/core/worker_owner.cpp
+[RUN] CXX 12: src/core/service_session.cpp
+
+[EXIT 0; 1.6s] CXX 12: src/core/service_session.cpp
+[RUN] CXX 13: src/config/config_file.cpp
+
+[EXIT 0; 0.8s] CXX 13: src/config/config_file.cpp
+[RUN] CXX 14: src/runtime/asio_listener_owner.cpp
+
+[EXIT 0; 5.0s] CXX 14: src/runtime/asio_listener_owner.cpp
+[RUN] CXX 15: src/net/receive_buffer.cpp
+
+[EXIT 0; 0.1s] CXX 15: src/net/receive_buffer.cpp
+[RUN] CXX 16: src/net/frame_ingress.cpp
+
+[EXIT 0; 0.5s] CXX 16: src/net/frame_ingress.cpp
+[RUN] CXX 17: src/net/tcp_ingress.cpp
+
+[EXIT 0; 2.9s] CXX 17: src/net/tcp_ingress.cpp
+[RUN] CXX 18: src/net/local_service.cpp
+
+[EXIT 0; 1.3s] CXX 18: src/net/local_service.cpp
+[RUN] CXX 19: src/xml/response_builder.cpp
+
+[EXIT 0; 0.5s] CXX 19: src/xml/response_builder.cpp
+[RUN] CXX 20: src/xml/value_codec.cpp
+
+[EXIT 0; 0.5s] CXX 20: src/xml/value_codec.cpp
+[RUN] CXX 21: src/xml/value_codec_utf8.cpp
+
+[EXIT 0; 0.5s] CXX 21: src/xml/value_codec_utf8.cpp
+[RUN] CXX 22: src/xml/value_codec_normalize.cpp
+
+[EXIT 0; 0.6s] CXX 22: src/xml/value_codec_normalize.cpp
+[RUN] CXX 23: src/xml/value_codec_semantic.cpp
+
+[EXIT 0; 0.6s] CXX 23: src/xml/value_codec_semantic.cpp
+[RUN] CXX 24: src/handlers/config_route.cpp
+
+[EXIT 0; 0.5s] CXX 24: src/handlers/config_route.cpp
+[RUN] CXX 25: src/handlers/progressive_installation_route.cpp
+
+[EXIT 0; 0.5s] CXX 25: src/handlers/progressive_installation_route.cpp
+[RUN] CXX 26: src/router/route_inventory.cpp
+
+[EXIT 0; 0.5s] CXX 26: src/router/route_inventory.cpp
+[RUN] CXX 27: src/router/route_lookup.cpp
+
+[EXIT 0; 0.6s] CXX 27: src/router/route_lookup.cpp
+[RUN] CXX 28: src/hash/fnv_hash.cpp
+
+[EXIT 0; 0.1s] CXX 28: src/hash/fnv_hash.cpp
+[RUN] CXX 29: src/core/port_publication.cpp
+
+[EXIT 0; 0.4s] CXX 29: src/core/port_publication.cpp
+[RUN] CXX 30: src/core/response_dispatch.cpp
+
+[EXIT 0; 0.9s] CXX 30: src/core/response_dispatch.cpp
+[RUN] CXX 31: src/config/settings_values.cpp
+
+[EXIT 0; 0.1s] CXX 31: src/config/settings_values.cpp
+[RUN] CXX 32: src/config/settings_provider.cpp
+
+[EXIT 0; 0.1s] CXX 32: src/config/settings_provider.cpp
+[RUN] CXX 33: src/handlers/setting_value_route.cpp
+
+[EXIT 0; 0.5s] CXX 33: src/handlers/setting_value_route.cpp
+[RUN] CXX 34: src/handlers/settings_snapshot_route.cpp
+
+[EXIT 0; 0.6s] CXX 34: src/handlers/settings_snapshot_route.cpp
+[RUN] CXX 35: src/handlers/connection_state_route.cpp
+
+[EXIT 0; 0.5s] CXX 35: src/handlers/connection_state_route.cpp
+[RUN] CXX 36: src/handlers/settings_query.cpp
+
+[EXIT 0; 0.5s] CXX 36: src/handlers/settings_query.cpp
+[RUN] CXX 37: src/core/settings_response.cpp
+
+[EXIT 0; 0.7s] CXX 37: src/core/settings_response.cpp
+[RUN] CXX 38: src/handlers/friends_route.cpp
+
+[EXIT 0; 0.5s] CXX 38: src/handlers/friends_route.cpp
+[RUN] CXX 39: src/handlers/group_info_route.cpp
+
+[EXIT 0; 0.5s] CXX 39: src/handlers/group_info_route.cpp
+[RUN] CXX 40: src/handlers/stateless_routes.cpp
+
+[EXIT 0; 0.5s] CXX 40: src/handlers/stateless_routes.cpp
+[RUN] CXX 41: src/core/profile_response.cpp
+
+[EXIT 0; 0.6s] CXX 41: src/core/profile_response.cpp
+[RUN] CXX 42: src/core/profile_formatter.cpp
+
+[EXIT 0; 0.7s] CXX 42: src/core/profile_formatter.cpp
+[RUN] CXX 43: src/handlers/utc_time_route.cpp
+
+[EXIT 0; 0.5s] CXX 43: src/handlers/utc_time_route.cpp
+[RUN] CXX 44: src/runtime/utc_time.cpp
+
+[EXIT 0; 1.0s] CXX 44: src/runtime/utc_time.cpp
+[RUN] CXX 45: src/core/game_info_response.cpp
+
+[EXIT 0; 0.9s] CXX 45: src/core/game_info_response.cpp
+[RUN] CXX 46: src/core/query_presence_response.cpp
+
+[EXIT 0; 0.8s] CXX 46: src/core/query_presence_response.cpp
+[RUN] CXX 47: src/core/image_response.cpp
+
+[EXIT 0; 0.8s] CXX 47: src/core/image_response.cpp
+[RUN] CXX 48: src/core/chunks_response.cpp
+
+[EXIT 0; 0.8s] CXX 48: src/core/chunks_response.cpp
+[RUN] CXX 49: src/core/auth_code_session.cpp
+
+[EXIT 0; 1.0s] CXX 49: src/core/auth_code_session.cpp
+[RUN] CXX 50: src/core/content_response.cpp
+
+[EXIT 0; 0.8s] CXX 50: src/core/content_response.cpp
+[RUN] CXX 51: src/core/entitlement_response.cpp
+
+[EXIT 0; 1.0s] CXX 51: src/core/entitlement_response.cpp
+[RUN] CXX 52: src/core/achievement_response.cpp
+
+[EXIT 0; 1.0s] CXX 52: src/core/achievement_response.cpp
+[RUN] CXX 53: src/core/achievement_session.cpp
+
+[EXIT 0; 1.3s] CXX 53: src/core/achievement_session.cpp
+[RUN] CXX 54: src/core/achievement_delivery.cpp
+
+[EXIT 0; 0.9s] CXX 54: src/core/achievement_delivery.cpp
+[RUN] CXX 55: src/platform/connect_redirect.cpp
+
+[EXIT 0; 0.1s] CXX 55: src/platform/connect_redirect.cpp
+[RUN] CXX 56: src/platform/crypt_wrapper.cpp
+
+[EXIT 0; 0.1s] CXX 56: src/platform/crypt_wrapper.cpp
+[RUN] CXX 57: src/config/hook_configuration.cpp
+
+[EXIT 0; 0.6s] CXX 57: src/config/hook_configuration.cpp
+[RUN] CXX 58: src/runtime/transient_allocator.cpp
+
+[EXIT 0; 1.2s] CXX 58: src/runtime/transient_allocator.cpp
+[RUN] CXX 59: tests/support/runtime/memory_allocator.cpp
+
+[EXIT 0; 0.1s] CXX 59: tests/support/runtime/memory_allocator.cpp
+[RUN] CXX 60: tests/support/runtime/ptd_runtime.cpp
+
+[EXIT 0; 0.1s] CXX 60: tests/support/runtime/ptd_runtime.cpp
+[RUN] CXX 61: tests/test_tcp_delivery.cpp
+
+[EXIT 0; 3.7s] CXX 61: tests/test_tcp_delivery.cpp
+[RUN] LINK test_tcp_delivery
+
+[EXIT 0; 0.2s] LINK test_tcp_delivery
+[RUN] test_tcp_delivery
+TCP_OWNED_DELIVERY_FULL_WRITE_COMMIT_EVENT_FIFO_CANCEL_ADMISSION_PASS
+
+[EXIT 0; 0.1s] test_tcp_delivery
+PASS test_tcp_delivery
+[RUN] CXX 62: tests/test_tcp_grant.cpp
+
+[EXIT 0; 4.1s] CXX 62: tests/test_tcp_grant.cpp
+[RUN] LINK test_tcp_grant
+
+[EXIT 0; 0.2s] LINK test_tcp_grant
+[RUN] test_tcp_grant
+LOCAL_GRANT_PARTIAL_COMPLETE_EVENT_QUERY_COMMITTED_FIFO_HALF_CLOSE_PASS
+
+[EXIT 0; 0.1s] test_tcp_grant
+PASS test_tcp_grant
+[RUN] CXX 63: tests/test_tcp_grant_failure.cpp
+
+[EXIT 0; 4.1s] CXX 63: tests/test_tcp_grant_failure.cpp
+[RUN] LINK test_tcp_grant_failure
+
+[EXIT 0; 0.2s] LINK test_tcp_grant_failure
+[RUN] test_tcp_grant_failure
+TCP_REAL_GRANT_PARTIAL_CANCEL_COMMIT_EVENT_CANCEL_OWNER_CLOSE_LIMIT_BUSY_PASS
+
+[EXIT 0; 0.1s] test_tcp_grant_failure
+PASS test_tcp_grant_failure
+[RUN] CXX 64: tests/test_achievement_delivery_wire.cpp
+
+[EXIT 0; 1.1s] CXX 64: tests/test_achievement_delivery_wire.cpp
+[RUN] LINK test_achievement_delivery_wire
+
+[EXIT 0; 0.2s] LINK test_achievement_delivery_wire
+[RUN] test_achievement_delivery_wire
+GRANT_RESPONSE_EVENT_LITERAL_SELECTOR_SEMANTIC_POLICY_PASS
+
+[EXIT 0; 0.1s] test_achievement_delivery_wire
+PASS test_achievement_delivery_wire
+[RUN] CXX 65: tests/test_achievement_delivery_admission.cpp
+
+[EXIT 0; 1.1s] CXX 65: tests/test_achievement_delivery_admission.cpp
+[RUN] LINK test_achievement_delivery_admission
+
+[EXIT 0; 0.2s] LINK test_achievement_delivery_admission
+[RUN] test_achievement_delivery_admission
+GRANT_COUPLED_FRAME_TOTAL_CAP_NUL_UNSAFE_ROLLBACK_RETRY_PASS
+
+[EXIT 0; 0.1s] test_achievement_delivery_admission
+PASS test_achievement_delivery_admission
+[RUN] CXX 66: tests/test_achievement_delivery_lifetime.cpp
+
+[EXIT 0; 1.1s] CXX 66: tests/test_achievement_delivery_lifetime.cpp
+[RUN] LINK test_achievement_delivery_lifetime
+
+[EXIT 0; 0.2s] LINK test_achievement_delivery_lifetime
+[RUN] test_achievement_delivery_lifetime
+GRANT_OWNED_WIRE_DOM_DROP_MOVE_CANCEL_CLOSE_BUSY_UNBOUND_PASS
+
+[EXIT 0; 0.1s] test_achievement_delivery_lifetime
+PASS test_achievement_delivery_lifetime
+[RUN] CXX 67: tests/test_achievement_session.cpp
+
+[EXIT 0; 0.8s] CXX 67: tests/test_achievement_session.cpp
+[RUN] LINK test_achievement_session
+
+[EXIT 0; 0.2s] LINK test_achievement_session
+[RUN] test_achievement_session
+ACHIEVEMENT_SESSION_PREPARE_ABORT_COMMIT_QUERY_ISOLATION_PASS
+
+[EXIT 0; 0.1s] test_achievement_session
+PASS test_achievement_session
+[RUN] CXX 68: tests/test_achievement_grant_policy.cpp
+
+[EXIT 0; 1.3s] CXX 68: tests/test_achievement_grant_policy.cpp
+[RUN] LINK test_achievement_grant_policy
+
+[EXIT 0; 0.2s] LINK test_achievement_grant_policy
+[RUN] test_achievement_grant_policy
+GRANT_POLICY_WRAP_NEGATIVE_DUPLICATE_FIRST_AGGREGATE_BUDGET_PASS
+
+[EXIT 0; 0.1s] test_achievement_grant_policy
+PASS test_achievement_grant_policy
+[RUN] CXX 69: tests/test_achievement_session_lifetime.cpp
+
+[EXIT 0; 1.2s] CXX 69: tests/test_achievement_session_lifetime.cpp
+[RUN] LINK test_achievement_session_lifetime
+
+[EXIT 0; 0.2s] LINK test_achievement_session_lifetime
+[RUN] test_achievement_session_lifetime
+ACHIEVEMENT_RESERVATION_MOVE_CLOSE_ORPHAN_THREAD_PUBLICATION_PASS
+
+[EXIT 0; 0.1s] test_achievement_session_lifetime
+PASS test_achievement_session_lifetime
+[RUN] CXX 70: tests/test_achievement_projection.cpp
+
+[EXIT 0; 0.8s] CXX 70: tests/test_achievement_projection.cpp
+[RUN] LINK test_achievement_projection
+
+[EXIT 0; 0.2s] LINK test_achievement_projection
+[RUN] test_achievement_projection
+ACHIEVEMENT_TOTALS_FIRST_DUPLICATES_I32_ATOMIC_SNAPSHOT_LIFETIME_PASS
+
+[EXIT 0; 0.1s] test_achievement_projection
+PASS test_achievement_projection
+[RUN] CXX 71: tests/test_achievement_response.cpp
+
+[EXIT 0; 1.7s] CXX 71: tests/test_achievement_response.cpp
+[RUN] LINK test_achievement_response
+
+[EXIT 0; 0.2s] LINK test_achievement_response
+[RUN] test_achievement_response
+QUERY_ACHIEVEMENTS_ALL_EXACT_WIRE_MEASURE_SNAPSHOT_PASS
+
+[EXIT 0; 0.1s] test_achievement_response
+PASS test_achievement_response
+[RUN] CXX 72: tests/test_tcp_achievements.cpp
+
+[EXIT 0; 4.8s] CXX 72: tests/test_tcp_achievements.cpp
+[RUN] LINK test_tcp_achievements
+
+[EXIT 0; 0.2s] LINK test_tcp_achievements
+[RUN] test_tcp_achievements
+TCP_ACHIEVEMENTS_ALL_TOTAL_ORDER_FIFO_HALF_CLOSE_CAP_REJECTION_PASS
+
+[EXIT 0; 0.1s] test_tcp_achievements
+PASS test_tcp_achievements
+[RUN] CXX 73: tests/test_entitlement_projection.cpp
+
+[EXIT 0; 0.9s] CXX 73: tests/test_entitlement_projection.cpp
+[RUN] LINK test_entitlement_projection
+
+[EXIT 0; 0.2s] LINK test_entitlement_projection
+[RUN] test_entitlement_projection
+ENTITLEMENT_PROJECTION_DEFAULTS_EMPTY_REPLACE_ORDER_ATOMIC_CONTENT_LIFETIME_PASS
+
+[EXIT 0; 0.1s] test_entitlement_projection
+PASS test_entitlement_projection
+[RUN] CXX 74: tests/test_entitlement_response.cpp
+
+[EXIT 0; 1.8s] CXX 74: tests/test_entitlement_response.cpp
+[RUN] LINK test_entitlement_response
+
+[EXIT 0; 0.2s] LINK test_entitlement_response
+[RUN] test_entitlement_response
+QUERY_ENTITLEMENTS_FILTER_OR_AND_STABLE_SEQUENCE_DOM_MEASURE_SNAPSHOT_PASS
+
+[EXIT 0; 0.1s] test_entitlement_response
+PASS test_entitlement_response
+[RUN] CXX 75: tests/test_tcp_entitlements.cpp
+
+[EXIT 0; 4.2s] CXX 75: tests/test_tcp_entitlements.cpp
+[RUN] LINK test_tcp_entitlements
+
+[EXIT 0; 0.2s] LINK test_tcp_entitlements
+[RUN] test_tcp_entitlements
+TCP_ENTITLEMENTS_FILTER_SEQUENCE_CONTENT_FIFO_EMPTY_PREVALIDATION_CAP_PASS
+
+[EXIT 0; 0.1s] test_tcp_entitlements
+PASS test_tcp_entitlements
+[RUN] CXX 76: tests/test_content_projection.cpp
+
+[EXIT 0; 0.8s] CXX 76: tests/test_content_projection.cpp
+[RUN] LINK test_content_projection
+
+[EXIT 0; 0.2s] LINK test_content_projection
+[RUN] test_content_projection
+CONTENT_TYPED_PROJECTION_DEFAULTS_ORDER_DUPLICATES_ATOMIC_LIMIT_LIFETIME_PASS
+
+[EXIT 0; 0.1s] test_content_projection
+PASS test_content_projection
+[RUN] CXX 77: tests/test_content_response.cpp
+
+[EXIT 0; 1.4s] CXX 77: tests/test_content_response.cpp
+[RUN] LINK test_content_response
+
+[EXIT 0; 0.3s] LINK test_content_response
+[RUN] test_content_response
+QUERY_CONTENT_TYPED_SNAPSHOT_WIRE_MEASURE_RENDER_CAPACITY_CONCURRENCY_PASS
+
+[EXIT 0; 0.1s] test_content_response
+PASS test_content_response
+[RUN] CXX 78: tests/test_tcp_content.cpp
+
+[EXIT 0; 4.9s] CXX 78: tests/test_tcp_content.cpp
+[RUN] LINK test_tcp_content
+
+[EXIT 0; 0.2s] LINK test_tcp_content
+[RUN] test_tcp_content
+TCP_QUERY_CONTENT_CFG_TYPED_DATA_FIFO_HALF_CLOSE_CAP_INVALID_TEXT_PASS
+
+[EXIT 0; 0.1s] test_tcp_content
+PASS test_tcp_content
+[RUN] CXX 79: tests/test_store_replies.cpp
+
+[EXIT 0; 1.5s] CXX 79: tests/test_store_replies.cpp
+[RUN] LINK test_store_replies
+
+[EXIT 0; 0.2s] LINK test_store_replies
+[RUN] test_store_replies
+STORE_PURE_REPLIES_LITERAL_WIRE_CONFIG_AUTH_ISOLATION_CAPACITY_PASS
+
+[EXIT 0; 0.1s] test_store_replies
+PASS test_store_replies
+[RUN] CXX 80: tests/test_tcp_store_replies.cpp
+
+[EXIT 0; 4.7s] CXX 80: tests/test_tcp_store_replies.cpp
+[RUN] LINK test_tcp_store_replies
+
+[EXIT 0; 0.2s] LINK test_tcp_store_replies
+[RUN] test_tcp_store_replies
+TCP_STORE_PURE_REPLIES_FIFO_CONFIG_AUTH_PERMISSION_CAPACITY_PASS
+
+[EXIT 0; 0.1s] test_tcp_store_replies
+PASS test_tcp_store_replies
+[RUN] CXX 81: tests/test_auth_code_session.cpp
+
+[EXIT 0; 1.1s] CXX 81: tests/test_auth_code_session.cpp
+[RUN] LINK test_auth_code_session
+
+[EXIT 0; 0.2s] LINK test_auth_code_session
+[RUN] test_auth_code_session
+AUTH8_SESSION_RENDER_COMMIT_ABORT_CONCURRENCY_SNAPSHOT_CLOSE_PASS
+
+[EXIT 0; 0.1s] test_auth_code_session
+PASS test_auth_code_session
+[RUN] CXX 82: tests/test_tcp_auth_code.cpp
+
+[EXIT 0; 4.4s] CXX 82: tests/test_tcp_auth_code.cpp
+[RUN] LINK test_tcp_auth_code
+
+[EXIT 0; 0.2s] LINK test_tcp_auth_code
+[RUN] test_tcp_auth_code
+TCP_AUTH8_SESSION_PEERS_FIFO_OFFLINE_REQUIRED_CLIENT_CAPACITY_STOP_PASS
+
+[EXIT 0; 0.1s] test_tcp_auth_code
+PASS test_tcp_auth_code
+[RUN] CXX 83: tests/test_permission_response.cpp
+
+[EXIT 0; 1.0s] CXX 83: tests/test_permission_response.cpp
+[RUN] LINK test_permission_response
+
+[EXIT 0; 0.2s] LINK test_permission_response
+[RUN] test_permission_response
+PERMISSION_STRICT_ONLINE_MATRIX_SHARED_SNAPSHOT_CAPACITY_PASS
+
+[EXIT 0; 0.1s] test_permission_response
+PASS test_permission_response
+[RUN] CXX 84: tests/test_tcp_permission.cpp
+
+[EXIT 0; 4.3s] CXX 84: tests/test_tcp_permission.cpp
+[RUN] LINK test_tcp_permission
+
+[EXIT 0; 0.2s] LINK test_tcp_permission
+[RUN] test_tcp_permission
+TCP_PERMISSION_ONLINE_OFFLINE_NUMERIC_GOONLINE_FIFO_CAPACITY_PASS
+
+[EXIT 0; 0.1s] test_tcp_permission
+PASS test_tcp_permission
+[RUN] CXX 85: tests/test_control_response.cpp
+
+[EXIT 0; 1.0s] CXX 85: tests/test_control_response.cpp
+[RUN] LINK test_control_response
+
+[EXIT 0; 0.2s] LINK test_control_response
+[RUN] test_control_response
+CONTROL_LITERAL_CODES_DESCRIPTIONS_PAYLOAD_IGNORED_STATE_UNCHANGED_PASS
+
+[EXIT 0; 0.1s] test_control_response
+PASS test_control_response
+[RUN] CXX 86: tests/test_tcp_control.cpp
+
+[EXIT 0; 4.5s] CXX 86: tests/test_tcp_control.cpp
+[RUN] LINK test_tcp_control
+
+[EXIT 0; 0.2s] LINK test_tcp_control
+[RUN] test_tcp_control
+TCP_CONTROL_ACK_FIFO_NO_STATE_TRANSITION_CAPACITY_ATOMIC_PASS
+
+[EXIT 0; 0.1s] test_tcp_control
+PASS test_tcp_control
+[RUN] CXX 87: tests/test_chunks_response.cpp
+
+[EXIT 0; 1.1s] CXX 87: tests/test_chunks_response.cpp
+[RUN] LINK test_chunks_response
+
+[EXIT 0; 0.2s] LINK test_chunks_response
+[RUN] test_chunks_response
+CHUNKS_INT32_CANONICALIZATION_DOM_TWO_PASS_CAPACITY_PASS
+
+[EXIT 0; 0.1s] test_chunks_response
+PASS test_chunks_response
+[RUN] CXX 88: tests/test_tcp_chunks.cpp
+
+[EXIT 0; 4.5s] CXX 88: tests/test_tcp_chunks.cpp
+[RUN] LINK test_tcp_chunks
+
+[EXIT 0; 0.2s] LINK test_tcp_chunks
+[RUN] test_tcp_chunks
+TCP_CHUNKS_INT32_NO_RESPONSE_FIFO_ENTITY_EXPANSION_BOUND_PASS
+
+[EXIT 0; 0.1s] test_tcp_chunks
+PASS test_tcp_chunks
+[RUN] CXX 89: tests/test_runtime.cpp
+
+[EXIT 0; 1.5s] CXX 89: tests/test_runtime.cpp
+[RUN] LINK test_runtime
+
+[EXIT 0; 0.2s] LINK test_runtime
+[RUN] test_runtime
+RUNTIME_PASS
+
+[EXIT 0; 0.1s] test_runtime
+PASS test_runtime
+[RUN] CXX 90: tests/test_config.cpp
+
+[EXIT 0; 1.0s] CXX 90: tests/test_config.cpp
+[RUN] LINK test_config
+
+[EXIT 0; 0.2s] LINK test_config
+[RUN] test_config
+CONFIG_PASS
+
+[EXIT 0; 0.1s] test_config
+PASS test_config
+[RUN] CXX 91: tests/test_xml.cpp
+
+[EXIT 0; 0.7s] CXX 91: tests/test_xml.cpp
+[RUN] LINK test_xml
+
+[EXIT 0; 0.2s] LINK test_xml
+[RUN] test_xml
+XML_PASS
+
+[EXIT 0; 0.1s] test_xml
+PASS test_xml
+[RUN] CXX 92: tests/test_hex.cpp
+
+[EXIT 0; 0.2s] CXX 92: tests/test_hex.cpp
+[RUN] LINK test_hex
+
+[EXIT 0; 0.2s] LINK test_hex
+[RUN] test_hex
+
+[EXIT 0; 0.1s] test_hex
+PASS test_hex
+[RUN] CXX 93: tests/test_framing.cpp
+
+[EXIT 0; 0.1s] CXX 93: tests/test_framing.cpp
+[RUN] LINK test_framing
+
+[EXIT 0; 0.2s] LINK test_framing
+[RUN] test_framing
+
+[EXIT 0; 0.1s] test_framing
+PASS test_framing
+[RUN] CXX 94: tests/test_xml_owned_child_index.cpp
+
+[EXIT 0; 0.7s] CXX 94: tests/test_xml_owned_child_index.cpp
+[RUN] LINK test_xml_owned_child_index
+
+[EXIT 0; 0.2s] LINK test_xml_owned_child_index
+[RUN] test_xml_owned_child_index
+
+[EXIT 0; 0.1s] test_xml_owned_child_index
+PASS test_xml_owned_child_index
+[RUN] CXX 95: tests/test_xml_child_index_semantics.cpp
+
+[EXIT 0; 0.6s] CXX 95: tests/test_xml_child_index_semantics.cpp
+[RUN] LINK test_xml_child_index_semantics
+
+[EXIT 0; 0.2s] LINK test_xml_child_index_semantics
+[RUN] test_xml_child_index_semantics
+
+[EXIT 0; 0.1s] test_xml_child_index_semantics
+PASS test_xml_child_index_semantics
+[RUN] CXX 96: tests/test_worker_owner.cpp
+
+[EXIT 0; 0.7s] CXX 96: tests/test_worker_owner.cpp
+[RUN] LINK test_worker_owner
+
+[EXIT 0; 0.2s] LINK test_worker_owner
+[RUN] test_worker_owner
+WORKER_OWNER_PASS
+
+[EXIT 0; 0.1s] test_worker_owner
+PASS test_worker_owner
+[RUN] CXX 97: tests/test_service_session.cpp
+
+[EXIT 0; 1.8s] CXX 97: tests/test_service_session.cpp
+[RUN] LINK test_service_session
+
+[EXIT 0; 0.2s] LINK test_service_session
+[RUN] test_service_session
+SERVICE_SESSION_PASS
+
+[EXIT 0; 0.1s] test_service_session
+PASS test_service_session
+[RUN] CXX 98: tests/test_asio_listener_owner.cpp
+
+[EXIT 0; 4.1s] CXX 98: tests/test_asio_listener_owner.cpp
+[RUN] LINK test_asio_listener_owner
+
+[EXIT 0; 0.2s] LINK test_asio_listener_owner
+[RUN] test_asio_listener_owner
+HF13_ASIO_LISTENER_OWNER_PORTABLE: PASS
+
+[EXIT 0; 1.1s] test_asio_listener_owner
+PASS test_asio_listener_owner
+[RUN] CXX 99: tests/test_receive_buffer.cpp
+
+[EXIT 0; 0.1s] CXX 99: tests/test_receive_buffer.cpp
+[RUN] LINK test_receive_buffer
+
+[EXIT 0; 0.2s] LINK test_receive_buffer
+[RUN] test_receive_buffer
+
+[EXIT 0; 0.1s] test_receive_buffer
+PASS test_receive_buffer
+[RUN] CXX 100: tests/test_asio_session_timeout_policy.cpp
+
+[EXIT 0; 1.0s] CXX 100: tests/test_asio_session_timeout_policy.cpp
+[RUN] LINK test_asio_session_timeout_policy
+
+[EXIT 0; 0.2s] LINK test_asio_session_timeout_policy
+[RUN] test_asio_session_timeout_policy
+ASIO_SESSION_TIMEOUT_POLICY: PASS 23
+
+[EXIT 0; 0.1s] test_asio_session_timeout_policy
+PASS test_asio_session_timeout_policy
+[RUN] CXX 101: tests/test_ingress.cpp
+
+[EXIT 0; 0.6s] CXX 101: tests/test_ingress.cpp
+[RUN] LINK test_ingress
+
+[EXIT 0; 0.2s] LINK test_ingress
+[RUN] test_ingress
+INGRESS_PASS
+
+[EXIT 0; 0.1s] test_ingress
+PASS test_ingress
+[RUN] CXX 102: tests/test_tcp_ingress.cpp
+
+[EXIT 0; 4.2s] CXX 102: tests/test_tcp_ingress.cpp
+[RUN] LINK test_tcp_ingress
+
+[EXIT 0; 0.2s] LINK test_tcp_ingress
+[RUN] test_tcp_ingress
+TCP_INGRESS_REAL_LOOPBACK_PASS
+
+[EXIT 0; 0.2s] test_tcp_ingress
+PASS test_tcp_ingress
+[RUN] CXX 103: tests/test_response.cpp
+
+[EXIT 0; 0.5s] CXX 103: tests/test_response.cpp
+[RUN] LINK test_response
+
+[EXIT 0; 0.2s] LINK test_response
+[RUN] test_response
+
+[EXIT 0; 0.1s] test_response
+PASS test_response
+[RUN] CXX 104: tests/test_progressive_installation.cpp
+
+[EXIT 0; 0.5s] CXX 104: tests/test_progressive_installation.cpp
+[RUN] LINK test_progressive_installation
+
+[EXIT 0; 0.2s] LINK test_progressive_installation
+[RUN] test_progressive_installation
+
+[EXIT 0; 0.1s] test_progressive_installation
+PASS test_progressive_installation
+[RUN] CXX 105: tests/test_router.cpp
+
+[EXIT 0; 0.5s] CXX 105: tests/test_router.cpp
+[RUN] LINK test_router
+
+[EXIT 0; 0.2s] LINK test_router
+[RUN] test_router
+
+[EXIT 0; 0.1s] test_router
+PASS test_router
+[RUN] CXX 106: tests/test_fnv.cpp
+
+[EXIT 0; 0.1s] CXX 106: tests/test_fnv.cpp
+[RUN] LINK test_fnv
+
+[EXIT 0; 0.2s] LINK test_fnv
+[RUN] test_fnv
+
+[EXIT 0; 0.1s] test_fnv
+PASS test_fnv
+[RUN] CXX 107: tests/test_port_publication.cpp
+
+[EXIT 0; 0.6s] CXX 107: tests/test_port_publication.cpp
+[RUN] LINK test_port_publication
+
+[EXIT 0; 0.2s] LINK test_port_publication
+[RUN] test_port_publication
+PORT_PUBLICATION_RETRY_RESTORE_PASS
+
+[EXIT 0; 0.1s] test_port_publication
+PASS test_port_publication
+[RUN] CXX 108: tests/test_response_dispatch.cpp
+
+[EXIT 0; 0.6s] CXX 108: tests/test_response_dispatch.cpp
+[RUN] LINK test_response_dispatch
+
+[EXIT 0; 0.2s] LINK test_response_dispatch
+[RUN] test_response_dispatch
+PARSED_RESPONSE_DISPATCH_PASS
+
+[EXIT 0; 0.1s] test_response_dispatch
+PASS test_response_dispatch
+[RUN] CXX 109: tests/test_tcp_response.cpp
+
+[EXIT 0; 4.4s] CXX 109: tests/test_tcp_response.cpp
+[RUN] LINK test_tcp_response
+
+[EXIT 0; 0.2s] LINK test_tcp_response
+[RUN] test_tcp_response
+TCP_RESPONSE_ORDER_EOF_CANCEL_PASS
+
+[EXIT 0; 0.1s] test_tcp_response
+PASS test_tcp_response
+[RUN] CXX 110: tests/test_settings.cpp
+
+[EXIT 0; 0.1s] CXX 110: tests/test_settings.cpp
+[RUN] LINK test_settings
+
+[EXIT 0; 0.2s] LINK test_settings
+[RUN] test_settings
+
+[EXIT 0; 0.1s] test_settings
+PASS test_settings
+[RUN] CXX 111: tests/test_settings_provider.cpp
+
+[EXIT 0; 0.1s] CXX 111: tests/test_settings_provider.cpp
+[RUN] LINK test_settings_provider
+
+[EXIT 0; 0.2s] LINK test_settings_provider
+[RUN] test_settings_provider
+
+[EXIT 0; 0.1s] test_settings_provider
+PASS test_settings_provider
+[RUN] CXX 112: tests/test_settings_snapshot.cpp
+
+[EXIT 0; 0.5s] CXX 112: tests/test_settings_snapshot.cpp
+[RUN] LINK test_settings_snapshot
+
+[EXIT 0; 0.2s] LINK test_settings_snapshot
+[RUN] test_settings_snapshot
+
+[EXIT 0; 0.1s] test_settings_snapshot
+PASS test_settings_snapshot
+[RUN] CXX 113: tests/test_connection_state.cpp
+
+[EXIT 0; 0.5s] CXX 113: tests/test_connection_state.cpp
+[RUN] LINK test_connection_state
+
+[EXIT 0; 0.2s] LINK test_connection_state
+[RUN] test_connection_state
+
+[EXIT 0; 0.1s] test_connection_state
+PASS test_connection_state
+[RUN] CXX 114: tests/test_settings_query.cpp
+
+[EXIT 0; 0.5s] CXX 114: tests/test_settings_query.cpp
+[RUN] LINK test_settings_query
+
+[EXIT 0; 0.2s] LINK test_settings_query
+[RUN] test_settings_query
+
+[EXIT 0; 0.1s] test_settings_query
+PASS test_settings_query
+[RUN] CXX 115: tests/test_entity_contract.cpp
+
+[EXIT 0; 0.7s] CXX 115: tests/test_entity_contract.cpp
+[RUN] LINK test_entity_contract
+
+[EXIT 0; 0.2s] LINK test_entity_contract
+[RUN] test_entity_contract
+ENTITY_DOM_RESPONSE_MATRIX_PASS:8; original legacy GetConfig diagnostic remains separately FAIL_OBSERVED
+
+[EXIT 0; 0.1s] test_entity_contract
+PASS test_entity_contract
+[RUN] CXX 116: tests/test_settings_response.cpp
+
+[EXIT 0; 1.0s] CXX 116: tests/test_settings_response.cpp
+[RUN] LINK test_settings_response
+
+[EXIT 0; 0.2s] LINK test_settings_response
+[RUN] test_settings_response
+SETTINGS_PINNED_POLICY_AND_SELECTOR_PASS
+
+[EXIT 0; 0.1s] test_settings_response
+PASS test_settings_response
+[RUN] CXX 117: tests/test_tcp_settings.cpp
+
+[EXIT 0; 4.3s] CXX 117: tests/test_tcp_settings.cpp
+[RUN] LINK test_tcp_settings
+
+[EXIT 0; 0.2s] LINK test_tcp_settings
+[RUN] test_tcp_settings
+TCP_SETTINGS_SNAPSHOT_OFFLINE_ONLINE_PASS
+
+[EXIT 0; 0.1s] test_tcp_settings
+PASS test_tcp_settings
+[RUN] CXX 118: tests/test_origin_error.cpp
+
+[EXIT 0; 0.2s] CXX 118: tests/test_origin_error.cpp
+[RUN] LINK test_origin_error
+
+[EXIT 0; 0.2s] LINK test_origin_error
+[RUN] test_origin_error
+
+[EXIT 0; 0.1s] test_origin_error
+PASS test_origin_error
+[RUN] CXX 119: tests/test_stateless_response.cpp
+
+[EXIT 0; 0.7s] CXX 119: tests/test_stateless_response.cpp
+[RUN] LINK test_stateless_response
+
+[EXIT 0; 0.2s] LINK test_stateless_response
+[RUN] test_stateless_response
+STATELESS_LITERAL_WIRE_AND_NO_RESPONSE_PASS
+
+[EXIT 0; 0.1s] test_stateless_response
+PASS test_stateless_response
+[RUN] CXX 120: tests/test_tcp_stateless.cpp
+
+[EXIT 0; 4.3s] CXX 120: tests/test_tcp_stateless.cpp
+[RUN] LINK test_tcp_stateless
+
+[EXIT 0; 0.2s] LINK test_tcp_stateless
+[RUN] test_tcp_stateless
+TCP_STATELESS_NO_RESPONSE_THEN_FIFO_ERRORS_PASS
+
+[EXIT 0; 0.1s] test_tcp_stateless
+PASS test_tcp_stateless
+[RUN] CXX 121: tests/test_profile_response.cpp
+
+[EXIT 0; 1.3s] CXX 121: tests/test_profile_response.cpp
+[RUN] LINK test_profile_response
+
+[EXIT 0; 0.2s] LINK test_profile_response
+[RUN] test_profile_response
+PROFILE_DEFAULT_OVERLAY_ENTITY_SNAPSHOT_ISOLATION_PASS
+
+[EXIT 0; 0.1s] test_profile_response
+PASS test_profile_response
+[RUN] CXX 122: tests/test_utc_response.cpp
+
+[EXIT 0; 1.2s] CXX 122: tests/test_utc_response.cpp
+[RUN] LINK test_utc_response
+
+[EXIT 0; 0.2s] LINK test_utc_response
+[RUN] test_utc_response
+UTC_ACTUAL_CLOCK_LITERAL_ENVELOPE_PASS
+
+[EXIT 0; 0.1s] test_utc_response
+PASS test_utc_response
+[RUN] CXX 123: tests/test_tcp_profile_time.cpp
+
+[EXIT 0; 4.0s] CXX 123: tests/test_tcp_profile_time.cpp
+[RUN] LINK test_tcp_profile_time
+
+[EXIT 0; 0.2s] LINK test_tcp_profile_time
+[RUN] test_tcp_profile_time
+TCP_PROFILE_TIME_MISSING_EMPTY_OVERLAY_FIFO_PASS
+
+[EXIT 0; 0.1s] test_tcp_profile_time
+PASS test_tcp_profile_time
+[RUN] CXX 124: tests/test_game_info_response.cpp
+
+[EXIT 0; 1.9s] CXX 124: tests/test_game_info_response.cpp
+[RUN] LINK test_game_info_response
+
+[EXIT 0; 0.2s] LINK test_game_info_response
+[RUN] test_game_info_response
+GAME_INFO_14_SELECTORS_AGGREGATE_ENTITY_SNAPSHOT_PASS
+
+[EXIT 0; 0.1s] test_game_info_response
+PASS test_game_info_response
+[RUN] CXX 125: tests/test_tcp_game_info.cpp
+
+[EXIT 0; 4.6s] CXX 125: tests/test_tcp_game_info.cpp
+[RUN] LINK test_tcp_game_info
+
+[EXIT 0; 0.2s] LINK test_tcp_game_info
+[RUN] test_tcp_game_info
+TCP_GAME_INFO_DEFAULT_CONFIG_FIFO_NO_RESPONSE_BOUNDED_PASS
+
+[EXIT 0; 0.1s] test_tcp_game_info
+PASS test_tcp_game_info
+[RUN] CXX 126: tests/test_query_presence_response.cpp
+
+[EXIT 0; 1.3s] CXX 126: tests/test_query_presence_response.cpp
+[RUN] LINK test_query_presence_response
+
+[EXIT 0; 0.2s] LINK test_query_presence_response
+[RUN] test_query_presence_response
+QUERY_PRESENCE_DOM_FIRST_NODE_CDATA_BOUNDS_SNAPSHOT_PASS
+
+[EXIT 0; 0.1s] test_query_presence_response
+PASS test_query_presence_response
+[RUN] CXX 127: tests/test_tcp_query_presence.cpp
+
+[EXIT 0; 4.6s] CXX 127: tests/test_tcp_query_presence.cpp
+[RUN] LINK test_tcp_query_presence
+
+[EXIT 0; 0.2s] LINK test_tcp_query_presence
+[RUN] test_tcp_query_presence
+TCP_QUERY_PRESENCE_FIFO_COUNT_BOUND_CAPACITY_ATOMIC_PASS
+
+[EXIT 0; 0.1s] test_tcp_query_presence
+PASS test_tcp_query_presence
+[RUN] CXX 128: tests/test_image_response.cpp
+
+[EXIT 0; 1.5s] CXX 128: tests/test_image_response.cpp
+[RUN] LINK test_image_response
+
+[EXIT 0; 0.2s] LINK test_image_response
+[RUN] test_image_response
+IMAGE_DOM_PROVIDER_DISABLED_SEMANTICS_SNAPSHOT_CAPACITY_PASS
+
+[EXIT 0; 0.1s] test_image_response
+PASS test_image_response
+[RUN] CXX 129: tests/test_image_session.cpp
+
+[EXIT 0; 1.6s] CXX 129: tests/test_image_session.cpp
+[RUN] LINK test_image_session
+
+[EXIT 0; 0.2s] LINK test_image_session
+[RUN] test_image_session
+IMAGE_DLL_RELATIVE_UTF8_CWD_MISSING_ASSET_RETAINED_SNAPSHOT_PASS
+
+[EXIT 0; 0.1s] test_image_session
+PASS test_image_session
+[RUN] CXX 130: tests/test_tcp_image.cpp
+
+[EXIT 0; 4.0s] CXX 130: tests/test_tcp_image.cpp
+[RUN] LINK test_tcp_image
+
+[EXIT 0; 0.2s] LINK test_tcp_image
+[RUN] test_tcp_image
+TCP_IMAGE_DLL_FALLBACK_OVERRIDE_FIFO_ENTITY_CAPACITY_ATOMIC_PASS
+
+[EXIT 0; 0.1s] test_tcp_image
+PASS test_tcp_image
+[RUN] CXX 131: tests/test_allocator_heap_paths.cpp
+
+[EXIT 0; 0.4s] CXX 131: tests/test_allocator_heap_paths.cpp
+[RUN] LINK test_allocator_heap_paths
+
+[EXIT 0; 0.2s] LINK test_allocator_heap_paths
+[RUN] test_allocator_heap_paths
+
+[EXIT 0; 0.1s] test_allocator_heap_paths
+PASS test_allocator_heap_paths
+[RUN] CXX 132: tests/test_allocator_large_alignment.cpp
+
+[EXIT 0; 0.3s] CXX 132: tests/test_allocator_large_alignment.cpp
+[RUN] LINK test_allocator_large_alignment
+
+[EXIT 0; 0.2s] LINK test_allocator_large_alignment
+[RUN] test_allocator_large_alignment
+
+[EXIT 0; 0.1s] test_allocator_large_alignment
+PASS test_allocator_large_alignment
+[RUN] CXX 133: tests/test_allocator_release_block.cpp
+
+[EXIT 0; 0.4s] CXX 133: tests/test_allocator_release_block.cpp
+[RUN] LINK test_allocator_release_block
+
+[EXIT 0; 0.2s] LINK test_allocator_release_block
+[RUN] test_allocator_release_block
+
+[EXIT 0; 0.1s] test_allocator_release_block
+PASS test_allocator_release_block
+[RUN] CXX 134: tests/test_allocator_release_failure.cpp
+
+[EXIT 0; 0.1s] CXX 134: tests/test_allocator_release_failure.cpp
+[RUN] LINK test_allocator_release_failure
+
+[EXIT 0; 0.2s] LINK test_allocator_release_failure
+[RUN] test_allocator_release_failure
+
+[EXIT 0; 0.1s] test_allocator_release_failure
+PASS test_allocator_release_failure
+[RUN] CXX 135: tests/test_allocator_release_validation.cpp
+
+[EXIT 0; 0.4s] CXX 135: tests/test_allocator_release_validation.cpp
+[RUN] LINK test_allocator_release_validation
+
+[EXIT 0; 0.2s] LINK test_allocator_release_validation
+[RUN] test_allocator_release_validation
+
+[EXIT 0; 0.1s] test_allocator_release_validation
+PASS test_allocator_release_validation
+[RUN] CXX 136: tests/test_allocator_retry_policy.cpp
+
+[EXIT 0; 0.4s] CXX 136: tests/test_allocator_retry_policy.cpp
+[RUN] LINK test_allocator_retry_policy
+
+[EXIT 0; 0.2s] LINK test_allocator_retry_policy
+[RUN] test_allocator_retry_policy
+
+[EXIT 0; 0.1s] test_allocator_retry_policy
+PASS test_allocator_retry_policy
+[RUN] CXX 137: tests/test_allocator_terminals.cpp
+
+[EXIT 0; 0.4s] CXX 137: tests/test_allocator_terminals.cpp
+[RUN] LINK test_allocator_terminals
+
+[EXIT 0; 0.2s] LINK test_allocator_terminals
+[RUN] test_allocator_terminals
+
+[EXIT 0; 0.1s] test_allocator_terminals
+PASS test_allocator_terminals
+[RUN] CXX 138: tests/test_ptd_action_table.cpp
+
+[EXIT 0; 0.2s] CXX 138: tests/test_ptd_action_table.cpp
+[RUN] LINK test_ptd_action_table
+
+[EXIT 0; 0.4s] LINK test_ptd_action_table
+[RUN] test_ptd_action_table
+
+[EXIT 0; 0.1s] test_ptd_action_table
+PASS test_ptd_action_table
+[RUN] CXX 139: tests/test_ptd_failure_teardown.cpp
+
+[EXIT 0; 0.4s] CXX 139: tests/test_ptd_failure_teardown.cpp
+[RUN] LINK test_ptd_failure_teardown
+
+[EXIT 0; 0.2s] LINK test_ptd_failure_teardown
+[RUN] test_ptd_failure_teardown
+
+[EXIT 0; 0.1s] test_ptd_failure_teardown
+PASS test_ptd_failure_teardown
+[RUN] CXX 140: tests/test_ptd_fls_free.cpp
+
+[EXIT 0; 0.1s] CXX 140: tests/test_ptd_fls_free.cpp
+[RUN] LINK test_ptd_fls_free
+
+[EXIT 0; 0.2s] LINK test_ptd_fls_free
+[RUN] test_ptd_fls_free
+
+[EXIT 0; 0.1s] test_ptd_fls_free
+PASS test_ptd_fls_free
+[RUN] CXX 141: tests/test_ptd_global_cleanup_order.cpp
+
+[EXIT 0; 0.1s] CXX 141: tests/test_ptd_global_cleanup_order.cpp
+[RUN] LINK test_ptd_global_cleanup_order
+
+[EXIT 0; 0.2s] LINK test_ptd_global_cleanup_order
+[RUN] test_ptd_global_cleanup_order
+
+[EXIT 0; 0.1s] test_ptd_global_cleanup_order
+PASS test_ptd_global_cleanup_order
+[RUN] CXX 142: tests/test_ptd_intrusive_pending.cpp
+
+[EXIT 0; 0.1s] CXX 142: tests/test_ptd_intrusive_pending.cpp
+[RUN] LINK test_ptd_intrusive_pending
+
+[EXIT 0; 0.2s] LINK test_ptd_intrusive_pending
+[RUN] test_ptd_intrusive_pending
+
+[EXIT 0; 0.1s] test_ptd_intrusive_pending
+PASS test_ptd_intrusive_pending
+[RUN] CXX 143: tests/test_ptd_lifecycle.cpp
+
+[EXIT 0; 0.4s] CXX 143: tests/test_ptd_lifecycle.cpp
+[RUN] LINK test_ptd_lifecycle
+
+[EXIT 0; 0.2s] LINK test_ptd_lifecycle
+[RUN] test_ptd_lifecycle
+
+[EXIT 0; 0.1s] test_ptd_lifecycle
+PASS test_ptd_lifecycle
+[RUN] CXX 144: tests/test_ptd_retry_ownership.cpp
+
+[EXIT 0; 0.1s] CXX 144: tests/test_ptd_retry_ownership.cpp
+[RUN] LINK test_ptd_retry_ownership
+
+[EXIT 0; 0.2s] LINK test_ptd_retry_ownership
+[RUN] test_ptd_retry_ownership
+
+[EXIT 0; 0.1s] test_ptd_retry_ownership
+PASS test_ptd_retry_ownership
+[RUN] CXX 145: tests/test_transient_allocation_owner.cpp
+
+[EXIT 0; 0.1s] CXX 145: tests/test_transient_allocation_owner.cpp
+[RUN] LINK test_transient_allocation_owner
+
+[EXIT 0; 0.2s] LINK test_transient_allocation_owner
+[RUN] test_transient_allocation_owner
+
+[EXIT 0; 0.1s] test_transient_allocation_owner
+PASS test_transient_allocation_owner
+[RUN] CXX 146: tests/test_semantic_allocator.cpp
+
+[EXIT 0; 0.6s] CXX 146: tests/test_semantic_allocator.cpp
+[RUN] LINK test_semantic_allocator
+
+[EXIT 0; 0.2s] LINK test_semantic_allocator
+[RUN] test_semantic_allocator
+
+[EXIT 0; 0.1s] test_semantic_allocator
+PASS test_semantic_allocator
+[RUN] CXX 147: tests/test_connect_redirect.cpp
+
+[EXIT 0; 0.1s] CXX 147: tests/test_connect_redirect.cpp
+[RUN] LINK test_connect_redirect
+
+[EXIT 0; 0.2s] LINK test_connect_redirect
+[RUN] test_connect_redirect
+
+[EXIT 0; 0.1s] test_connect_redirect
+PASS test_connect_redirect
+[RUN] CXX 148: tests/test_crypt_wrapper.cpp
+
+[EXIT 0; 0.1s] CXX 148: tests/test_crypt_wrapper.cpp
+[RUN] LINK test_crypt_wrapper
+
+[EXIT 0; 0.2s] LINK test_crypt_wrapper
+[RUN] test_crypt_wrapper
+
+[EXIT 0; 0.1s] test_crypt_wrapper
+PASS test_crypt_wrapper
+[RUN] CXX 149: tests/test_curio_crypt_wrapper.cpp
+
+[EXIT 0; 0.1s] CXX 149: tests/test_curio_crypt_wrapper.cpp
+[RUN] LINK test_curio_crypt_wrapper
+
+[EXIT 0; 0.2s] LINK test_curio_crypt_wrapper
+[RUN] test_curio_crypt_wrapper
+
+[EXIT 0; 0.1s] test_curio_crypt_wrapper
+PASS test_curio_crypt_wrapper
+[RUN] CXX 150: tests/test_hook_configuration.cpp
+
+[EXIT 0; 0.7s] CXX 150: tests/test_hook_configuration.cpp
+[RUN] LINK test_hook_configuration
+
+[EXIT 0; 0.2s] LINK test_hook_configuration
+[RUN] test_hook_configuration
+
+[EXIT 0; 0.1s] test_hook_configuration
+PASS test_hook_configuration
+[RUN] CXX 151: tests/test_pending_session_cleanup.cpp
+
+[EXIT 0; 4.6s] CXX 151: tests/test_pending_session_cleanup.cpp
+[RUN] LINK test_pending_session_cleanup
+
+[EXIT 0; 0.2s] LINK test_pending_session_cleanup
+[RUN] test_pending_session_cleanup
+PENDING_SESSION_REAL_TCP_BLOCKED_OWNER_FINITE_RETRY_ZERO_EXHAUSTED_INFINITE_BUDGET_PASS
+
+[EXIT 0; 0.1s] test_pending_session_cleanup
+PASS test_pending_session_cleanup
+[RUN] CXX 152: tests/test_session_retirement.cpp
+
+[EXIT 0; 3.9s] CXX 152: tests/test_session_retirement.cpp
+[RUN] LINK test_session_retirement
+
+[EXIT 0; 0.2s] LINK test_session_retirement
+[RUN] test_session_retirement
+SESSION_RETIREMENT_WORKER_HANDOFF_BLOCKED_FINISH_RETRY_AND_IDLE_PASS
+
+[EXIT 0; 0.1s] test_session_retirement
+PASS test_session_retirement
+[RUN] CXX 153: tests/test_transient_shutdown.cpp
+
+[EXIT 0; 0.5s] CXX 153: tests/test_transient_shutdown.cpp
+[RUN] LINK test_transient_shutdown
+
+[EXIT 0; 0.2s] LINK test_transient_shutdown
+[RUN] test_transient_shutdown
+TRANSIENT_SHUTDOWN_CLEAN_AND_DIRTY_WORKER_PIN_RETAIN_RETRY_PASS
+
+[EXIT 0; 0.1s] test_transient_shutdown
+PASS test_transient_shutdown
+[RUN] CXX 154: tests/test_transient_retry_concurrency.cpp
+
+[EXIT 0; 0.7s] CXX 154: tests/test_transient_retry_concurrency.cpp
+[RUN] LINK test_transient_retry_concurrency
+
+[EXIT 0; 0.2s] LINK test_transient_retry_concurrency
+[RUN] test_transient_retry_concurrency
+TRANSIENT_RETRY_DETACHED_LIST_STILL_OWNED_CONCURRENT_FENCE_PASS
+
+[EXIT 0; 0.1s] test_transient_retry_concurrency
+PASS test_transient_retry_concurrency
+[RUN] CXX 155: tests/test_config_snapshot_view.cpp
+
+[EXIT 0; 0.8s] CXX 155: tests/test_config_snapshot_view.cpp
+[RUN] LINK test_config_snapshot_view
+
+[EXIT 0; 0.2s] LINK test_config_snapshot_view
+[RUN] test_config_snapshot_view
+CONFIG_SNAPSHOT_BORROWED_DIRECT_LAST_ALIAS_EMPTY_RAW_PINNED_GENERATION_PASS
+
+[EXIT 0; 0.1s] test_config_snapshot_view
+PASS test_config_snapshot_view
+[RUN] CXX 156: tests/test_record_projection_transaction.cpp
+
+[EXIT 0; 0.8s] CXX 156: tests/test_record_projection_transaction.cpp
+[RUN] LINK test_record_projection_transaction
+
+[EXIT 0; 0.2s] LINK test_record_projection_transaction
+[RUN] test_record_projection_transaction
+CONFIG_PROJECTION_EMPTY_POLICY_OWNED_ORDER_AND_ALLOCATION_TRANSACTION_PASS allocation_points=115
+
+[EXIT 0; 0.1s] test_record_projection_transaction
+PASS test_record_projection_transaction
+[RUN] CXX 157: tests/test_worker_observation.cpp
+
+[EXIT 0; 0.9s] CXX 157: tests/test_worker_observation.cpp
+[RUN] LINK test_worker_observation
+
+[EXIT 0; 0.2s] LINK test_worker_observation
+[RUN] test_worker_observation
+
+[EXIT 0; 0.1s] test_worker_observation
+PASS test_worker_observation
+[RUN] CXX 158: tests/test_registry_value_output.cpp
+
+[EXIT 0; 0.2s] CXX 158: tests/test_registry_value_output.cpp
+[RUN] LINK test_registry_value_output
+
+[EXIT 0; 0.2s] LINK test_registry_value_output
+[RUN] test_registry_value_output
+
+[EXIT 0; 0.1s] test_registry_value_output
+PASS test_registry_value_output
+[RUN] CXX 159: tests/test_get_config.cpp
+
+[EXIT 0; 0.6s] CXX 159: tests/test_get_config.cpp
+[RUN] LINK test_get_config_legacy
+
+[EXIT 0; 0.2s] LINK test_get_config_legacy
+[RUN] test_get_config_legacy
+
+[EXIT 14; 0.1s] test_get_config_legacy
+DIAGNOSTIC_FAIL_OBSERVED test_get_config_legacy
+PRELOADER_L_RF36_SCOPED_PASS_WITH_RECORDED_DIAGNOSTIC /tmp/preloader_rf36_clean_glfcb3pm/REDFIELD_RF36/build/verify/portable_none/receipt.json

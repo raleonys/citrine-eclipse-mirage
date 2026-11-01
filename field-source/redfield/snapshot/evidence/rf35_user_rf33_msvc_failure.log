@@ -1,0 +1,104 @@
+REDFIELD RF32 verify - LOCAL_BUILD/NOT_RELEASE
+
+[RUN] CXX 1: src/core/runtime.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\core\\runtime.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__core__runtime.cpp.obj"]
+runtime.cpp
+
+[EXIT 0; 1.2s] CXX 1: src/core/runtime.cpp
+
+[RUN] CXX 2: src/core/xml.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\core\\xml.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__core__xml.cpp.obj"]
+xml.cpp
+
+[EXIT 0; 0.4s] CXX 2: src/core/xml.cpp
+
+[RUN] CXX 3: src/config/config.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config\\config.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__config__config.cpp.obj"]
+config.cpp
+
+[EXIT 0; 0.7s] CXX 3: src/config/config.cpp
+
+[RUN] CXX 4: src/config/config2_pegtl.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config\\config2_pegtl.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__config__config2_pegtl.cpp.obj"]
+config2_pegtl.cpp
+
+[EXIT 0; 1.9s] CXX 4: src/config/config2_pegtl.cpp
+
+[RUN] CXX 5: src/codec/hex_codec.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\codec\\hex_codec.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__codec__hex_codec.cpp.obj"]
+hex_codec.cpp
+
+[EXIT 0; 0.1s] CXX 5: src/codec/hex_codec.cpp
+
+[RUN] CXX 6: src/xml/lsx_framing.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\xml\\lsx_framing.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__xml__lsx_framing.cpp.obj"]
+lsx_framing.cpp
+
+[EXIT 0; 0.1s] CXX 6: src/xml/lsx_framing.cpp
+
+[RUN] CXX 7: src/xml/request_parser.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\xml\\request_parser.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__xml__request_parser.cpp.obj"]
+request_parser.cpp
+
+[EXIT 0; 0.5s] CXX 7: src/xml/request_parser.cpp
+
+[RUN] CXX 8: src/xml/request_children.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\xml\\request_children.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__xml__request_children.cpp.obj"]
+request_children.cpp
+
+[EXIT 0; 0.4s] CXX 8: src/xml/request_children.cpp
+
+[RUN] CXX 9: src/xml/attribute_parser.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\xml\\attribute_parser.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__xml__attribute_parser.cpp.obj"]
+attribute_parser.cpp
+
+[EXIT 0; 0.4s] CXX 9: src/xml/attribute_parser.cpp
+
+[RUN] CXX 10: third_party/tinyxml2/tinyxml2.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\tinyxml2\\tinyxml2.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\third_party__tinyxml2__tinyxml2.cpp.obj"]
+tinyxml2.cpp
+
+[EXIT 0; 0.3s] CXX 10: third_party/tinyxml2/tinyxml2.cpp
+
+[RUN] CXX 11: src/core/worker_owner.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\core\\worker_owner.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__core__worker_owner.cpp.obj"]
+worker_owner.cpp
+
+[EXIT 0; 0.9s] CXX 11: src/core/worker_owner.cpp
+
+[RUN] CXX 12: src/core/service_session.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\core\\service_session.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__core__service_session.cpp.obj"]
+service_session.cpp
+
+[EXIT 0; 1.2s] CXX 12: src/core/service_session.cpp
+
+[RUN] CXX 13: src/config/config_file.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config\\config_file.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__config__config_file.cpp.obj"]
+config_file.cpp
+
+[EXIT 0; 1.3s] CXX 13: src/config/config_file.cpp
+
+[RUN] CXX 14: src/runtime/asio_listener_owner.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime\\asio_listener_owner.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__runtime__asio_listener_owner.cpp.obj"]
+asio_listener_owner.cpp
+
+[EXIT 0; 2.5s] CXX 14: src/runtime/asio_listener_owner.cpp
+
+[RUN] CXX 15: src/net/receive_buffer.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\net\\receive_buffer.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__net__receive_buffer.cpp.obj"]
+receive_buffer.cpp
+
+[EXIT 0; 0.1s] CXX 15: src/net/receive_buffer.cpp
+
+[RUN] CXX 16: src/net/frame_ingress.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\net\\frame_ingress.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__net__frame_ingress.cpp.obj"]
+frame_ingress.cpp
+
+[EXIT 0; 0.4s] CXX 16: src/net/frame_ingress.cpp
+
+[RUN] CXX 17: src/net/tcp_ingress.cpp
+["C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe", "/nologo", "/std:c++20", "/EHsc", "/permissive-", "/utf-8", "/W4", "/GS", "/MT", "/O2", "/DNDEBUG", "/DASIO_STANDALONE=1", "/DASIO_NO_TYPEID=1", "/DWIN32_LEAN_AND_MEAN", "/DNOMINMAX", "/D_WIN32_WINNT=0x0A00", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\config", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\pegtl\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\runtime", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\asio\\upstream\\include", "/IC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\third_party\\minhook\\upstream\\include", "/c", "C:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\src\\net\\tcp_ingress.cpp", "/FoC:\\Users\\USERNAME\\Desktop\\zx\\REDFIELD_RF33\\build\\verify\\msvc_x64\\objects\\production\\src__net__tcp_ingress.cpp.obj"]
+tcp_ingress.cpp
+C:\Users\USERNAME\Desktop\zx\REDFIELD_RF33\src\net\tcp_ingress.cpp(13): error C2386: 'net': Ÿu anki kapsamda bu ada sahip bir simge zaten var
+
+[EXIT 2; 1.3s] CXX 17: src/net/tcp_ingress.cpp

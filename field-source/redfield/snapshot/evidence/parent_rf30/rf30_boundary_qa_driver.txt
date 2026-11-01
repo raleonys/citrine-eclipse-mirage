@@ -1,0 +1,70 @@
+from pathlib import Path
+import copy,hashlib,importlib.util,json,shutil,subprocess,tempfile
+
+R=Path('rf30_work/REDFIELD_RF30').resolve()
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def write(p,j):p.write_text(json.dumps(j,indent=2)+'\n',encoding='utf-8')
+s=importlib.util.spec_from_file_location('contract_qa',R/'scripts/build_orchestration/build_contract.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+graph=json.loads((R/'metadata/BUILD_GRAPH.json').read_text());ledger=json.loads((R/'metadata/IMPORT_REFACTOR.json').read_text());cases=[]
+def reject(name,root,g,reason):
+ try:m.verify_build_contract(root,g);raise AssertionError(name+' accepted')
+ except ValueError as e:assert reason in str(e),(name,str(e));cases.append(dict(case=name,status='EXPECTED_REJECTION',reason=str(e)))
+baseline=m.verify_build_contract(R,graph);assert baseline['qualified_files']==0 and baseline['pending_files']==281
+cases.append(dict(case='current_source_pending_is_not_closure',status='PASS',summary=baseline))
+try:m.verify_build_contract(R,graph,True);raise AssertionError('pending closure accepted')
+except ValueError as e:assert 'IMPORT_REFACTOR_PENDING' in str(e);cases.append(dict(case='strict_pending_closure_rejected',status='EXPECTED_REJECTION',reason=str(e)))
+with tempfile.TemporaryDirectory(prefix='rf30_contract_qa_') as td:
+ root=Path(td)/'tree';shutil.copytree(R,root,ignore=shutil.ignore_patterns('__pycache__'))
+ original=(root/'metadata/IMPORT_REFACTOR.json').read_bytes()
+ for kind,reason in [('missing','IMPORT_REFACTOR_INVENTORY'),('duplicate','IMPORT_REFACTOR_INVENTORY'),('stale','IMPORT_REFACTOR_STALE'),('exempt','IMPORT_REFACTOR_ORIGIN_EXEMPTION'),('license','IMPORT_REFACTOR_ORIGIN_EXEMPTION'),('owner','IMPORT_REFACTOR_RECORD'),('role','IMPORT_REFACTOR_ROLE'),('source_hash','IMPORT_REFACTOR_SOURCE'),('source_path','BUILD_CONTRACT_UNSAFE_PATH'),('cosmetic','IMPORT_REFACTOR_QUALIFICATION'),('no_evidence','BUILD_CONTRACT_SCHEMA'),('vendor_removed','IMPORT_REFACTOR_VENDOR_INVENTORY'),('vendor_fake_qualified','BUILD_CONTRACT_SCHEMA')]:
+  j=copy.deepcopy(ledger);row=j['files'][0]
+  if kind=='missing':j['files'].pop()
+  elif kind=='duplicate':j['files'].append(copy.deepcopy(row))
+  elif kind=='stale':row['sha256']='0'*64
+  elif kind=='exempt':row['origin_exempt']=True
+  elif kind=='license':row['license']='unknown'
+  elif kind=='owner':row['owner']=''
+  elif kind=='role':row['role']='production'
+  elif kind=='source_hash':row['sources'][0]['sha256']='0'*64
+  elif kind=='source_path':row['sources'][0]['path']='provenance/../../escape'
+  elif kind=='cosmetic':row.update(status='QUALIFIED',adaptation_kind='NAMESPACE_ONLY')
+  elif kind=='no_evidence':row.update(status='QUALIFIED',adaptation_kind='STRUCTURAL_REFACTOR')
+  elif kind=='vendor_removed':j['vendor_integrations'].pop()
+  else:j['vendor_integrations'][0]['status']='QUALIFIED'
+  write(root/'metadata/IMPORT_REFACTOR.json',j);reject(kind,root,graph,reason)
+ (root/'metadata/IMPORT_REFACTOR.json').write_bytes(original)
+ for kind,reason in [('source_coupling','BUILD_ROLE_DUPLICATE'),('test_include','PRODUCTION_TEST_INCLUDE'),('test_define','PRODUCTION_TEST_DEFINE'),('support_include','TEST_SUPPORT_INCLUDE_CONTRACT'),('native_location','NATIVE_HOST_TREE')]:
+  g=copy.deepcopy(graph)
+  if kind=='source_coupling':g['core_sources'].append(g['test_support_sources'][0])
+  elif kind=='test_include':g['include_directories'].append('tests/support/include')
+  elif kind=='test_define':g['compile_definitions'].append('PRELOADER_L_NATIVE_TEST=1')
+  elif kind=='support_include':g['test_support_include_directories'].append('include')
+  else:g['windows_smoke_source']='src/core/runtime.cpp';g['core_sources'].remove('src/core/runtime.cpp')
+  reject(kind,root,g,reason)
+ p=root/'src/core/runtime.cpp';before=p.read_bytes();p.write_bytes(before+b'\n#include "preloader_l/runtime/ptd_runtime.hpp"\n');reject('production_declared_test_header',root,graph,'PRODUCTION_TEST_HEADER');p.write_bytes(before)
+ # An untrusted top-level status cannot override the computed file/vendor state.
+ j=copy.deepcopy(ledger);j['status']='COMPLETE';write(root/'metadata/IMPORT_REFACTOR.json',j)
+ assert m.verify_build_contract(root,graph)['status']=='PENDING'
+ cases.append(dict(case='forged_aggregate_complete_ignored',status='PASS'))
+ # Exercise the evidence validator on a fixture, not on real qualified records.
+ j=copy.deepcopy(ledger);row=j['files'][0];row.update(status='QUALIFIED',adaptation_kind='TARGET_BOUNDARY_REFACTOR',evidence='evidence/qa_only_proof.json')
+ proof=dict(status='PASS',subject=row['path'],sha256=row['sha256'],adaptation_kind=row['adaptation_kind'],structural_justification='QA fixture only;not a production qualification assertion',dependencies={'metadata/BUILD_GRAPH.json':sha(root/'metadata/BUILD_GRAPH.json')},checks=[dict(name='fixture evidence consistency',status='PASS')]);write(root/row['evidence'],proof);write(root/'metadata/IMPORT_REFACTOR.json',j)
+ assert m.verify_build_contract(root,graph)['qualified_files']==1
+ cases.append(dict(case='source_bound_fixture_proof_accepted',status='PASS',not_a_real_qualification=True))
+ proof['dependencies']['metadata/BUILD_GRAPH.json']='0'*64;write(root/row['evidence'],proof);reject('stale_qualification_dependency',root,graph,'IMPORT_REFACTOR_EVIDENCE_STALE')
+ # Compile real headers through actual include boundaries with GCC.
+ source=Path(td)/'header_probe.cpp';source.write_text('#include "preloader_l/runtime/ptd_runtime.hpp"\nint main(){return 0;}\n')
+ common=['g++','-std=c++20','-fsyntax-only',*['-I'+str(R/p) for p in graph['include_directories']],str(source)]
+ denied=subprocess.run(common,capture_output=True,text=True);assert denied.returncode!=0 and 'No such file' in denied.stderr
+ accepted=subprocess.run(common[:-1]+['-I'+str(R/'tests/support/include'),str(source)],capture_output=True,text=True);assert accepted.returncode==0,accepted.stderr
+ cases.append(dict(case='real_compiler_production_cannot_see_ptd_header',status='PASS'))
+ cases.append(dict(case='real_compiler_test_target_can_see_ptd_header',status='PASS'))
+ for relative,defines,variant in [('src/core/runtime.cpp',['/DPRELOADER_L_NATIVE_TEST=1'],'_native_test'),(graph['windows_dll_sources'][0],['/DBAD=1'],'_native_test')]:
+  try:m.compile_role(graph,relative,defines,variant);raise AssertionError('variant accepted')
+  except ValueError as e:assert 'UNAPPROVED_COMPILE_VARIANT' in str(e);cases.append(dict(case='forbidden_variant_'+relative+defines[0],status='EXPECTED_REJECTION'))
+ assert m.compile_role(graph,graph['windows_dll_sources'][0],['/DPRELOADER_L_NATIVE_TEST=1'],'_native_test')=='native_entry'
+ cases.append(dict(case='only_registered_native_entry_variant_allowed',status='PASS'))
+cli=subprocess.run(['python3',str(R/'scripts/verify_source.py'),'--require-refactor-complete'],capture_output=True,text=True);assert cli.returncode==1 and 'IMPORT_REFACTOR_PENDING' in cli.stderr
+cases.append(dict(case='actual_operator_closure_flag_rejects_pending',status='EXPECTED_REJECTION'))
+write(R/'evidence/rf30_boundary_qa.json',dict(status='PASS',scope='Actual source-role/import functions and GCC header visibility;fixture qualified proof is not a real component qualification;no Windows execution',cases=cases,current_source_qualified_files=0,driver_sha256=sha(Path(__file__)),contract_sha256=sha(R/'scripts/build_orchestration/build_contract.py')))
+print('BOUNDARY_AND_IMPORT_QA_PASS',len(cases),'cases')

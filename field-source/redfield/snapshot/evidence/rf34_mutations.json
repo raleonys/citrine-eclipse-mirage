@@ -1,0 +1,30 @@
+[
+  {
+    "mutation": "skip_finalizer",
+    "status": "REJECTED",
+    "compile_exit": 0,
+    "run_exit": 1,
+    "stderr": "line 61: owner.shutdown(0)==ShutdownResult::service_cleanup_pending\n"
+  },
+  {
+    "mutation": "repeat_completed_cleanup",
+    "status": "REJECTED",
+    "compile_exit": 0,
+    "run_exit": 1,
+    "stderr": "line 69: std::strcmp(b.trace,\"PSWCFWFHWFHUFU\")==0\n"
+  },
+  {
+    "mutation": "drop_concurrent_queue",
+    "status": "REJECTED",
+    "compile_exit": 0,
+    "run_exit": 1,
+    "stderr": "63: transient_pending_release_count()==2 && transient_pending_release_bytes()==8\n"
+  },
+  {
+    "mutation": "ignore_detached_batch",
+    "status": "REJECTED",
+    "compile_exit": 0,
+    "run_exit": 1,
+    "stderr": "46: retained && !competing && done && !transient_release_pending()\n"
+  }
+]

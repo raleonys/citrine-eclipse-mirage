@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "application_files": 262,
+  "moved_exact_files": {
+    "src/runtime/memory_allocator.cpp": "tests/support/runtime/memory_allocator.cpp",
+    "src/runtime/ptd_runtime.cpp": "tests/support/runtime/ptd_runtime.cpp",
+    "include/preloader_l/runtime/memory_allocator.hpp": "tests/support/include/preloader_l/runtime/memory_allocator.hpp",
+    "include/preloader_l/runtime/ptd_runtime.hpp": "tests/support/include/preloader_l/runtime/ptd_runtime.hpp",
+    "tools/abi_smoke.cpp": "tests/native/abi_smoke.cpp",
+    "tools/native_acceptance.cpp": "tests/native/native_acceptance.cpp"
+  },
+  "application_body_changes": 0,
+  "unchanged_current_application_files": 256,
+  "project_name_occurrences_in_application": 0,
+  "governance_revision": "2026-10-21.1",
+  "library_only_debt_not_in_mirror": true,
+  "production_exports": 3,
+  "route_bindings": 35,
+  "hooks": 7,
+  "vendor_license_pins_unchanged": true
+}

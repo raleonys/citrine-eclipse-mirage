@@ -1,0 +1,122 @@
+from pathlib import Path
+import ast,hashlib,json,subprocess,tempfile
+R=Path('rf36_work/REDFIELD_RF36').resolve();P=Path('rf35_work/REDFIELD_RF35').resolve()
+W=Path(tempfile.mkdtemp(prefix='rf36_worker_startup_'));sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def literal(path,name):
+    tree=ast.parse(path.read_text())
+    for node in tree.body:
+        if isinstance(node,ast.Assign) and any(isinstance(x,ast.Name) and x.id==name for x in node.targets):return ast.literal_eval(node.value)
+    raise ValueError(name)
+stub=literal(R/'evidence/rf32_worker_qa.txt','stub');(W/'windows.h').write_text(stub)
+host=literal(R/'evidence/rf32_worker_model.txt','host')
+host=host.replace('namespace {\nthread_local DWORD', '''#include "preloader_l/worker_owner.hpp"
+#include <cstdlib>
+#include <new>
+constinit std::atomic<unsigned> startup_allocations{0};
+constinit bool main_started=false;
+void* operator new(std::size_t size) {
+    if(!main_started)++startup_allocations;
+    if(auto* p=std::malloc(size?size:1))return p;
+    throw std::bad_alloc();
+}
+void operator delete(void* p) noexcept {std::free(p);}
+void operator delete(void* p,std::size_t) noexcept {std::free(p);}
+namespace {
+constinit std::atomic<unsigned> os_calls{0};
+std::string selected_mode;
+void os_call(){assert(main_started);++os_calls;}
+thread_local DWORD''')
+for text in ['void SetLastError(DWORD v){','DWORD GetLastError(){','DWORD GetEnvironmentVariableA(const char*,char* out,DWORD size){',
+    'BOOL SetEnvironmentVariableA(const char*,const char* text){','DWORD GetModuleFileNameW(HMODULE,wchar_t* out,DWORD size){',
+    'BOOL GetModuleHandleExW(DWORD,LPCWSTR module,HMODULE* result){',
+    'HANDLE CreateThread(void*,std::size_t,DWORD(WINAPI* entry)(void*),void* user,DWORD,void*){',
+    'DWORD WaitForSingleObject(HANDLE handle,DWORD timeout){','BOOL CloseHandle(HANDLE handle){','BOOL FreeLibrary(HMODULE){','void Sleep(DWORD ms){']:
+    assert text in host;host=host.replace(text,text+'os_call();')
+host=host.replace('os_call();++pins;*result=', 'os_call();if(selected_mode=="pin_failure")return FALSE;++pins;*result=')
+host=host.replace('    auto* state=new Thread;', '    if(selected_mode=="spawn_failure")return nullptr;\n    auto* state=new Thread;')
+start='''    assert(argc==3);const std::string mode=argv[1];filename=std::filesystem::path(argv[2]).wstring();'''
+assert start in host
+host=host.replace(start,'''    assert(startup_allocations==0 && os_calls==0);
+    main_started=true;
+    assert(argc==3);const std::string mode=argv[1];selected_mode=mode;
+#if MODEL_NATIVE
+    assert((RFTestStatus()&((1ull<<40)-1))==(255u<<8) && RFTestTransport()==0);
+#endif
+    SURGE();assert(os_calls==0);
+    assert(DllMain(nullptr,0,nullptr) && os_calls==0);
+    if(mode=="startup_only"){
+        assert(DllShutdown(0)==0 && DllShutdown(0)==0 && os_calls==0);
+        std::puts("MODEL_PASS:startup_only");return 0;
+    }
+    if(mode=="pin_failure" || mode=="spawn_failure"){
+        assert(DllMain(reinterpret_cast<void*>(1),DLL_PROCESS_ATTACH,nullptr));
+        assert(pins==(mode=="spawn_failure"?1u:0u));
+#if MODEL_NATIVE
+        assert((RFTestStatus()&255)==static_cast<unsigned>(preloader_l::WorkerPhase::failed));
+#endif
+        assert(DllShutdown(1000)==0 && DllShutdown(0)==0 && pins==0);
+        std::printf("MODEL_PASS:%s\\n",mode.c_str());return 0;
+    }
+    filename=std::filesystem::path(argv[2]).wstring();''')
+(W/'host.cpp').write_text(host)
+g=json.loads((R/'metadata/BUILD_GRAPH.json').read_text())
+normal=Path(Path('rf35_checks/normal_root.txt').read_text());receipt=json.loads((normal/'build/verify/portable_none/receipt.json').read_text())
+objects=[]
+for folder in ['include','src/config','src/runtime','third_party']:
+    for f in (R/folder).rglob('*'):
+        if f.is_file():assert f.read_bytes()==(normal/f.relative_to(R)).read_bytes()
+for src in g['core_sources']:
+    assert (R/src).read_bytes()==(normal/src).read_bytes()
+    obj=normal/'build/verify/portable_none/objects/production'/(src.replace('/','__')+'.o')
+    assert sha(obj)==receipt['compiled_object_sha256'][obj.name];objects.append(obj)
+common=['g++','-std=c++20','-pthread','-Wall','-Wextra','-Werror','-O1','-g','-DASIO_STANDALONE=1','-DASIO_NO_TYPEID=1','-I'+str(W)]
+commands=[]
+def run(argv,timeout=90):
+    p=subprocess.run([str(x) for x in argv],capture_output=True,text=True,timeout=timeout)
+    commands.append({'command':[str(x) for x in argv],'exit':p.returncode,'stdout':p.stdout,'stderr':p.stderr})
+    assert p.returncode==0,commands[-1]
+    return p.stdout
+cases=[];entry_objects={}
+for parent,root in [(False,R),(True,P)]:
+    flags=[*common,*['-I'+str(root/p) for p in g['include_directories']]]
+    for native in [False,True]:
+        kind=('parent_' if parent else '')+('native' if native else 'production')
+        src=root/('tests/native/dll_entry.cpp' if native else 'src/windows/dll_entry.cpp')
+        obj=W/(kind+'.o');deps=W/(kind+'.d')
+        run([*flags,'-MMD','-MF',deps,'-c',src,'-o',obj])
+        symbols=run(['nm','-C',obj]);sections=run(['objdump','-h',obj])
+        assert all(' T '+name in symbols for name in ['DllMain','SURGE','DllShutdown'])
+        assert (' T RFTestStatus' in symbols)==native
+        assert ('tests/native/worker_observation.hpp' in deps.read_text())==native
+        assert ('testing::WorkerObservation' in symbols)==native
+        if not parent:assert '.init_array' in sections and '_GLOBAL__sub_I' in symbols
+        entry_objects[kind]={'sha256':sha(obj),'has_init_array':'.init_array' in sections,'source_sha256':sha(src),'dependency_file':deps.read_text()}
+        host_obj=W/(kind+'_host.o')
+        run([*flags,'-DMODEL_NATIVE='+str(int(native)),'-c',W/'host.cpp','-o',host_obj])
+        run([*flags,obj,host_obj,*objects,'-o',W/kind])
+configs=W/'config';configs.mkdir()
+modes=['startup_only','pin_failure','spawn_failure','normal','missing','invalid_config','invalid_path','faults','retained','early','observer_faults','frames']
+for mode in modes:
+    directory=configs/mode;directory.mkdir()
+    if mode!='missing':(directory/'surge.cfg').write_text('"Config2" {' if mode=='invalid_config' else '"Config2" {}')
+for native in [False,True]:
+    kind='native' if native else 'production'
+    for mode in modes if native else modes[:-2]:
+        outputs=[run([W/(prefix+kind),mode,configs/mode/'module.dll'],timeout=20) for prefix in ['','parent_']]
+        if mode!='early':assert outputs[0]==outputs[1],(kind,mode,outputs)
+        else:assert all('MODEL_PASS:early' in x for x in outputs)
+        cases.append({'composition':kind,'mode':mode,'status':'PASS','parent_and_current_executed':True,'stdout_equal':mode!='early','stdout':outputs[0].strip()})
+# Revalidate M02/M11's current source regressions with current test mains and
+# previously compiled objects only after complete current core/input hash checks.
+module_tests=[]
+for name in ['test_worker_owner','test_pending_session_cleanup','test_session_retirement','test_transient_shutdown','test_semantic_allocator','test_transient_allocation_owner','test_transient_retry_concurrency']:
+    flags=[*common,*['-I'+str(R/p) for p in g['include_directories']]];obj=W/(name+'.o')
+    run([*flags,'-c',R/g['tests'][name],'-o',obj]);run([*flags,obj,*objects,'-o',W/name]);stdout=run([W/name],timeout=45)
+    module_tests.append({'name':name,'status':'PASS','stdout':stdout.strip(),'binary_sha256':sha(W/name)})
+result={'status':'PASS_CONTROLLED_HOST_NOT_WINDOWS','cases':cases,'comparison_cases':len(cases),'executions':len(cases)*2,
+    'startup_checks':'Before main:zero modeled Win32 calls,zero intercepted scalar startup allocations;native idle status andtransport;inert SURGE/nonattach;explicit shutdown;pin/spawn failure retry',
+    'entry_objects':entry_objects,'module_tests':module_tests,'reused_core_objects_exact_rf35':{p.name:sha(p) for p in objects},
+    'current_entry_sources':{p:sha(R/p) for p in ['src/windows/dll_entry.cpp','src/windows/worker_runtime.hpp','tests/native/dll_entry.cpp']},
+    'commands':commands,'limits':['GCC host with declaration-only Win32/model callbacks;not current MSVC/SDK/DLL load acceptance.','Real LocalService/ASIO loopback in service modes;WindowsHooks andOS boundaries modeled.','Pre-main counter intercepts scalar new,not every possibleallocator API;source constructor also reviewed.','Native/CRT/Debug full acceptance scope remains open.']}
+Path('rf36_checks/worker_startup.json').write_text(json.dumps(result,indent=2)+'\n')
+print('RF36 startup models PASS',len(cases),'comparisons',len(cases)*2,'executions;7 module programs PASS')

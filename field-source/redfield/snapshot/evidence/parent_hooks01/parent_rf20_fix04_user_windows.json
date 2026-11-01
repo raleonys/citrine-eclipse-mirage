@@ -1,0 +1,18 @@
+{
+  "status": "USER_PROVIDED_LOG_AND_DLL_STATIC_INSPECTION;NOT_RF21_ACCEPTANCE",
+  "console_sha256": "40fd0d8bc220050164c18e7cc71e6355f069296d856e8033b4625f633578b760",
+  "dll_sha256": "ada234c8d99a0a8511db3c1c6b43700b7809b66778bd4deda8162d6dfb4f5689",
+  "dll_bytes": 609280,
+  "dll_machine": "0x8664",
+  "exports": [
+    "DllMain@1",
+    "SURGE@2",
+    "DllShutdown@3"
+  ],
+  "reported_regressions": 86,
+  "reported_compile_actions": 147,
+  "reported_native_cases": 6,
+  "reported_early_stop": 10,
+  "reported_exit_code": 0,
+  "receipt_json": "NOT_SUPPLIED;console-to-DLL source binding not independently proven"
+}

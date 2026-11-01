@@ -1,0 +1,1643 @@
+{
+  "scope": "Real Linux ELF compile/link/run. Actual _WIN32 SemanticValue branch; __declspec/__stdcall erased for ELF; Heap API shim only. Not Windows ABI/MSVC/native/game acceptance.",
+  "cases": [
+    {
+      "case": "old_graph_windows_branch_missing_allocator",
+      "status": "EXPECTED_LINK_REJECTION"
+    },
+    {
+      "case": "allocator_without_ptd_dependency",
+      "status": "EXPECTED_LINK_REJECTION"
+    },
+    {
+      "case": "semantic_windows_branch_heap_shim",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "cafef5c241d245726b9d9737d81e917c4e10025561390e890c08f89918d27219"
+    },
+    {
+      "case": "test_allocator_heap_paths",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "c0a493c592dd42d48beed785c6cb1d835ead0a2cd8f214da9b73c44ba37e8dc5"
+    },
+    {
+      "case": "test_allocator_large_alignment",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "f90687387ba56996d22afda04d744cd213fd4ff04f14deed189146613dc3c52c"
+    },
+    {
+      "case": "test_allocator_release_block",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "083949c14c631df68c21e6b08ff12ca4d26cd93b427e050e7f38ddf2b4d65190"
+    },
+    {
+      "case": "test_allocator_release_failure",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "8cc5cdc91993dbb08d1b73ee12140e26663ea631fef233437835c50e256b98ad"
+    },
+    {
+      "case": "test_allocator_release_validation",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "52b2de6866589246d53cb6d1181b4df04ca530349d6548c8142d8ef23885a39d"
+    },
+    {
+      "case": "test_allocator_retry_policy",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "47e6db22484acd50edd1078e128f0d1377350ac75addf4b75dda0e9333532d31"
+    },
+    {
+      "case": "test_allocator_terminals",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "dd72b601797867314685f2cf63413b35680e7ba0a9d56f04bec92ae682e8cb23"
+    },
+    {
+      "case": "test_ptd_action_table",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "1dcb59ffd2120f14ef851a13c4b69393b1f28e39caa9d02806d1f06a7f5d6018"
+    },
+    {
+      "case": "test_ptd_failure_teardown",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "f2d2c8cbb81287fb99dbed9ba12cfec01019f07e237e3a42cfc9f1ba209fc20f"
+    },
+    {
+      "case": "test_ptd_fls_free",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "e415e5807224419b833c7c08072b813f86f726de7a4fb4106e055cce269dee6a"
+    },
+    {
+      "case": "test_ptd_global_cleanup_order",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "495477beea67ff9ff2fe5e203640352ba65bfebd391ec0c9a5c312cdc1ac1cec"
+    },
+    {
+      "case": "test_ptd_intrusive_pending",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "f6bb7a07464c152b4ef9bff6d4544e421151c3bf71191717419d7335f20ae8b7"
+    },
+    {
+      "case": "test_ptd_lifecycle",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "48f4d7020bfe19bab4ba839c48e180d5dfbf8a4d1ce9231124099f22fbfbb799"
+    },
+    {
+      "case": "test_ptd_retry_ownership",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "a64aa33c4bf12e6632a6e1bad0c176804e962cb391a45a46c050861b7f995cb4"
+    },
+    {
+      "case": "test_transient_allocation_owner",
+      "profile": "none",
+      "status": "PASS",
+      "binary_sha256": "00b5e7ec97a6732b8915527f78d28c13036603065cd30c154dc300da0f5585c0"
+    },
+    {
+      "case": "semantic_windows_branch_heap_shim",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "7f3f4166a50a1356a8c9742bb0ee68496ff793ea3f8ac543a95c160bed1d8080"
+    },
+    {
+      "case": "test_allocator_heap_paths",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "9bd2e4cc0ba24d50ad1bdae48b0fc22823874f6a6bebd268ce4101adc932ce68"
+    },
+    {
+      "case": "test_allocator_large_alignment",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "24178802c22040376f3eea06fdbb9d67a3177c132f0a0fee1b3b247b239e20c3"
+    },
+    {
+      "case": "test_allocator_release_block",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "5e89cefe6aa751d4ed6288056aa9eb9c929b4be71a9085c4c817ec3633e78a43"
+    },
+    {
+      "case": "test_allocator_release_failure",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "6574dc13d054f47cef12508426e9c38490b8c6315d42779b590baf37779cf4bd"
+    },
+    {
+      "case": "test_allocator_release_validation",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "b3844a35e8e9bff301094a875ef7b4f974e5f0330b6399216529da94b01d6c1b"
+    },
+    {
+      "case": "test_allocator_retry_policy",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "3bf91aea535a1d68f5723ed4e759f88f6fa2fb540107490c3afbf1f8580e206b"
+    },
+    {
+      "case": "test_allocator_terminals",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "654f0294c55b51afd9330c4a233fd3fe9d14178bd85788b30ff51d0351c72d6f"
+    },
+    {
+      "case": "test_ptd_action_table",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "9d6c0ed731e6b495813a286f532b3069a1d03dcbaf2709f58de0dba6441a276b"
+    },
+    {
+      "case": "test_ptd_failure_teardown",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "86a5d71853f8728799540fa07b1facda74c1c0e3d883fac8f9b6741364649dd2"
+    },
+    {
+      "case": "test_ptd_fls_free",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "07cd10d497f9658c330ed33c041202ae23ad59a4e6b77bc2f752c0acf167c72a"
+    },
+    {
+      "case": "test_ptd_global_cleanup_order",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "8cae6be5cf3baaebecdb89d6ffc23e1cea149f1716fe34a4084367d2a5dd3286"
+    },
+    {
+      "case": "test_ptd_intrusive_pending",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "4960d625b7b070a132d840877676d4d7b430fb5f2baaa75af69ee11752e05c27"
+    },
+    {
+      "case": "test_ptd_lifecycle",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "9009614c138db8db41b62600e6652883d10cf5d60937894222f2255c4982532e"
+    },
+    {
+      "case": "test_ptd_retry_ownership",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "cc5108b604d0711962983542eca6eb3b2446edd8783a4fb595fb49e44e67ad26"
+    },
+    {
+      "case": "test_transient_allocation_owner",
+      "profile": "address",
+      "status": "PASS",
+      "binary_sha256": "d98d050f39ec4233d9b5777b44273bc559ca3b89adc0947ef66897a600b396a0"
+    },
+    {
+      "case": "semantic_windows_branch_heap_shim",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "3b0b81c47639a9070b62259275697090cf4da0330e7beec629665b5e1763f0b6"
+    },
+    {
+      "case": "test_allocator_heap_paths",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "1755db82b62c9327cf0f5325d9e7bd570963d2abbcc457c1489ead9a21cd57ba"
+    },
+    {
+      "case": "test_allocator_large_alignment",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "c557834b3b65848c492f652bfd6a64564422b97293f7a583c703dee738391498"
+    },
+    {
+      "case": "test_allocator_release_block",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "74c1656573603ba15fce98f906460167bbeae3befae37cfbca8280938fe352ea"
+    },
+    {
+      "case": "test_allocator_release_failure",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "9886431fac4951be71892d86e115a19b2a5047cef0b8162607e8875675c6fa37"
+    },
+    {
+      "case": "test_allocator_release_validation",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "d70550249d353e2064c0e266f7bfc3c22ad792a11c927914987227be8124fb39"
+    },
+    {
+      "case": "test_allocator_retry_policy",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "a160ba0b4afc73237345a5b9ecb7831648e731a292d0f4201b8daeaebff9dccc"
+    },
+    {
+      "case": "test_allocator_terminals",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "7aa9c244090095a245d2d829840a5b4f27825bd3937fcc6e59dea850facca5b3"
+    },
+    {
+      "case": "test_ptd_action_table",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "fa0d7eb2bffe69bd37bc3a419808f0fad63e99b49d3e11a91377dcd3264be4a9"
+    },
+    {
+      "case": "test_ptd_failure_teardown",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "e114f6fd6f5fa26322ebc1f2df0dde48fd8b2ff246e8a66c3b85a9df20b82a78"
+    },
+    {
+      "case": "test_ptd_fls_free",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "675d1fac431b10cfa28106f4a4c0d0b620ce54557cb1e91b3b067a649a8bfd62"
+    },
+    {
+      "case": "test_ptd_global_cleanup_order",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "e4b2439420aa627af0d3dbcb12dce4e213637b70dded6fd1014ad95759da65df"
+    },
+    {
+      "case": "test_ptd_intrusive_pending",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "540566ecb9b94cced9d54d2ac425e6b56eccad2b43dca53421f0d49fe86c2c2f"
+    },
+    {
+      "case": "test_ptd_lifecycle",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "553752fa05bc227ef09628d12c5b70c458609a54ed3a85ca9ea8e6e6c85c024a"
+    },
+    {
+      "case": "test_ptd_retry_ownership",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "db83f997617e4eb9b00af50d9d2326768cb419164312a683878aacad4691d76d"
+    },
+    {
+      "case": "test_transient_allocation_owner",
+      "profile": "undefined",
+      "status": "PASS",
+      "binary_sha256": "868dccbf9511ab62beee5c675fd9af337b9a5b2759d2e8b663e802b9ea0fb555"
+    }
+  ],
+  "commands": [
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/memory_allocator.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/ptd_runtime.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch0.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_utf8.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch1.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_normalize.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch2.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_semantic.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch1.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch2.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/missing_allocator"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch1.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch2.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/missing_ptd"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch1.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch2.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch3.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/branch4.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/semantic_windows_branch"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/semantic_windows_branch"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_heap_paths.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_heap_paths"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_heap_paths"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_large_alignment.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_large_alignment"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_large_alignment"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_block.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_block"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_block"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_failure.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_failure"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_failure"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_validation.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_validation"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_release_validation"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_retry_policy.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_retry_policy"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_retry_policy"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_terminals.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_terminals"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_allocator_terminals"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_action_table.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_action_table"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_action_table"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_failure_teardown.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_failure_teardown"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_failure_teardown"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_fls_free.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_fls_free"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_fls_free"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_global_cleanup_order.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_global_cleanup_order"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_global_cleanup_order"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_intrusive_pending.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_intrusive_pending"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_intrusive_pending"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_lifecycle.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_lifecycle"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_lifecycle"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_retry_ownership.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_retry_ownership"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_ptd_retry_ownership"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_transient_allocation_owner.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_transient_allocation_owner"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/none/test_transient_allocation_owner"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/memory_allocator.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/ptd_runtime.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch0.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_utf8.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch1.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_normalize.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch2.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_semantic.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch3.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch4.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch1.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch2.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch3.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/branch4.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/semantic_windows_branch"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/semantic_windows_branch"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_heap_paths.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_heap_paths"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_heap_paths"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_large_alignment.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_large_alignment"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_large_alignment"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_block.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_block"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_block"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_failure.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_failure"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_failure"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_validation.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_validation"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_release_validation"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_retry_policy.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_retry_policy"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_retry_policy"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_terminals.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_terminals"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_allocator_terminals"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_action_table.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_action_table"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_action_table"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_failure_teardown.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_failure_teardown"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_failure_teardown"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_fls_free.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_fls_free"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_fls_free"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_global_cleanup_order.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_global_cleanup_order"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_global_cleanup_order"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_intrusive_pending.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_intrusive_pending"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_intrusive_pending"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_lifecycle.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_lifecycle"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_lifecycle"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_retry_ownership.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_retry_ownership"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_ptd_retry_ownership"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=address",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_transient_allocation_owner.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_transient_allocation_owner"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/address/test_transient_allocation_owner"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/memory_allocator.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/runtime/ptd_runtime.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch0.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_utf8.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch1.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_normalize.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch2.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/src/xml/value_codec_semantic.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch3.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "-D_WIN32",
+      "-DREDFIELD_HEAP_SHIM",
+      "-D__declspec(x)=",
+      "-D__stdcall=",
+      "-c",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/test_semantic_allocator.cpp",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch4.o"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch1.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch2.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch3.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/branch4.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/semantic_windows_branch"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/semantic_windows_branch"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_heap_paths.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_heap_paths"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_heap_paths"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_large_alignment.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_large_alignment"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_large_alignment"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_block.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_block"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_block"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_failure.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_failure"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_failure"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_release_validation.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_validation"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_release_validation"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_retry_policy.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_retry_policy"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_retry_policy"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_allocator_terminals.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_terminals"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_allocator_terminals"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_action_table.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_action_table"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_action_table"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_failure_teardown.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_failure_teardown"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_failure_teardown"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_fls_free.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_fls_free"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_fls_free"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_global_cleanup_order.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_global_cleanup_order"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_global_cleanup_order"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_intrusive_pending.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_intrusive_pending"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_intrusive_pending"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_lifecycle.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_lifecycle"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_lifecycle"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_ptd_retry_ownership.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_retry_ownership"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_ptd_retry_ownership"
+    ],
+    [
+      "g++",
+      "-std=c++20",
+      "-O1",
+      "-g",
+      "-UNDEBUG",
+      "-I/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/include",
+      "-fsanitize=undefined",
+      "-fno-omit-frame-pointer",
+      "-fno-pie",
+      "-no-pie",
+      "/workspace/scratch/3ee542eeb8a6/rf20_fix04_work/REDFIELD_RF20/tests/adopted/test_transient_allocation_owner.cpp",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend0.o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/backend1.o",
+      "-o",
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_transient_allocation_owner"
+    ],
+    [
+      "/tmp/rf20_fix04_allocator_cy2nthbo/undefined/test_transient_allocation_owner"
+    ]
+  ],
+  "source_sha256": {
+    "src/runtime/memory_allocator.cpp": "27711d8eec6de26851e0b96b40a8d7504ec20776fd3802f66d53b6198d8ae399",
+    "src/runtime/ptd_runtime.cpp": "8f7d240c4b57972826f14b89436cdb1d7f5f618ef6ee7c703b0aefd4efc2fef5",
+    "src/xml/value_codec.cpp": "94445c4f4e28da62a8c7bd6fe2ff0a3dbcc0266558f02f5648732c0b777c751f",
+    "src/xml/value_codec_utf8.cpp": "8fa68fd6b267c163653cf3c94c4deac1be5f0be671593f95b777916980c6931e",
+    "src/xml/value_codec_normalize.cpp": "25c1d1d58757aba08ca2690bf70c820e7e99eff666bee1a7e598fbe1c86cc00c",
+    "src/xml/value_codec_semantic.cpp": "46c5ad655f955736d7367ec89f01180e7c5e6ac9bbf2e514978d8f521f7c12d4",
+    "tests/test_semantic_allocator.cpp": "53926498036317a6c127c26e87c29e27f2cdc02099f0aa0fa879798fde71181a",
+    "tests/adopted/test_allocator_heap_paths.cpp": "c0c0f575f1d2be7f46350702dd4567b83fffb942afa26791ded694c61481c646",
+    "tests/adopted/test_allocator_large_alignment.cpp": "33c7698a448220a2e71195136d339855eee2e0e0612abaa4f284c0d843da5c62",
+    "tests/adopted/test_allocator_release_block.cpp": "6d2ba86ea413419e42f3838dbe1667241819ce4945930a94e01c9aac6b5aad39",
+    "tests/adopted/test_allocator_release_failure.cpp": "a070675427fc12bef0f4a188cdf426aafa67d5ddfdb272642e377ed8970eb02d",
+    "tests/adopted/test_allocator_release_validation.cpp": "6e7f12c421a0a59513702682a9724776588b27345711b0eb3e5acd1b181a1d19",
+    "tests/adopted/test_allocator_retry_policy.cpp": "eaa3471fcc974f00223b8e21470ed6d09cddce39de9a6e2d6a7a29e951a197d0",
+    "tests/adopted/test_allocator_terminals.cpp": "136a8db630834215e5085b7c6151bc5d34d2b142b045932f81992d5797440e96",
+    "tests/adopted/test_ptd_action_table.cpp": "7f025ae1ed7bb54c3c6689fc854758f410c3d3838f19fe7fb26374aa8dab9855",
+    "tests/adopted/test_ptd_failure_teardown.cpp": "2e575d66727fed475e085888457f62d66b807d568dc79fb83ace39d6e9c15bb4",
+    "tests/adopted/test_ptd_fls_free.cpp": "3f717debe23c5e852012f6fb414c92fa57b64b464502b6b9fe4b4f4d97ea9de7",
+    "tests/adopted/test_ptd_global_cleanup_order.cpp": "264b5e57d95a295a84c80858a238974532d91cf8d1fbedd34e19f3e3d1aba09a",
+    "tests/adopted/test_ptd_intrusive_pending.cpp": "e826595332a5de91eee5a694f98b5de99b150304515650551e6ededcecbcc61e",
+    "tests/adopted/test_ptd_lifecycle.cpp": "1780fd73a670388ca1ec849422c392ee98f0d37908bc7d388a23b7eb7d741646",
+    "tests/adopted/test_ptd_retry_ownership.cpp": "230b85576a078349842acb3c15942c7423681ed971545cd39f93c3b09396fcc3",
+    "tests/adopted/test_transient_allocation_owner.cpp": "35727bb126060721185f7a0a530ae2558fd8f01b183b1c0c316589621a249019"
+  },
+  "profiles": [
+    "none",
+    "address",
+    "undefined"
+  ],
+  "positive_runs": 48,
+  "expected_link_rejections": 2,
+  "asan_leak_detection": "OFF; no leak-free claim",
+  "driver_sha256": "1aae0855232dde38800f528040184695024009e054c3cac2e9407ae91d1173dc"
+}

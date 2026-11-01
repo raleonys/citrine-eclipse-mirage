@@ -1,0 +1,10 @@
+{
+  "checkpoint": "RF20",
+  "mode": "mutated_object",
+  "status": "EXPECTED_REJECTION",
+  "exit_code": 1,
+  "receipt_written": false,
+  "stdout": "REDFIELD_RF20_FAIL: compiled object changed after validation: /workspace/scratch/3ee542eeb8a6/rf20_qa_final/mutated_object/REDFIELD_RF20/build/portable_none_no_leaks/src__core__runtime.cpp.o",
+  "fixture": "Inert compiler-output fault simulation, never genuine regression PASS evidence",
+  "wrapper_source": "#!/usr/bin/env python3\nimport sys,json\nfrom pathlib import Path\na=sys.argv[1:];out=Path(a[a.index(\"-o\")+1]);state=Path('/workspace/scratch/3ee542eeb8a6/rf20_qa_final/mutated_object_state.json');prior=json.loads(state.read_text()) if state.exists() else []\nout.write_bytes(Path('/workspace/scratch/3ee542eeb8a6/rf20_qa_final/empty.o').read_bytes())\nif prior:Path(prior[0]).write_bytes(b\"mutated after validation\")\nprior.append(str(out));state.write_text(json.dumps(prior))\n"
+}

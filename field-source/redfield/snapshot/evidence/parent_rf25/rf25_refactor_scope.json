@@ -1,0 +1,29 @@
+{
+  "status": "PASS_SCOPED",
+  "modified_application_files": [
+    "include/redfield/runtime/record_views.hpp",
+    "src/config/content_projection.hpp",
+    "src/config/entitlement_projection.hpp"
+  ],
+  "new_files": [
+    "src/config/projection_support.hpp",
+    "tests/test_record_projection_transaction.cpp"
+  ],
+  "policies": {
+    "Content": "ignore empty field update",
+    "Entitlements": "replace field with empty"
+  },
+  "removed": [
+    "Two duplicated source span readers/string assignment helpers/record lookup loops",
+    "Two redundant second lookups after append",
+    "Two reference-only ParseStage wrappers",
+    "Two unused runtime input DTOs"
+  ],
+  "not_claimed": [
+    "Whole-codebase semantic audit",
+    "All config/runtime dependencies removed",
+    "Hash index or asymptotic lookup speedup",
+    "Fix for an observed game failure",
+    "Fresh Windows/game result"
+  ]
+}

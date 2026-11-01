@@ -1,0 +1,270 @@
+[START] RF22 UNIFIED REFACTOR 01: 59 core sources, 92 regressions
+[OUTPUT] /tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/build/portable_none
+[COMPILER] /usr/bin/g++
+[INPUT] Hashing source/header/tool inputs
+[PHASE] Compile core
+[RUN] CXX 1/152: src/core/runtime.cpp
+
+[EXIT 0; 1.5s] CXX 1/152: src/core/runtime.cpp
+[RUN] CXX 2/152: src/core/xml.cpp
+
+[EXIT 0; 0.6s] CXX 2/152: src/core/xml.cpp
+[RUN] CXX 3/152: src/config/config.cpp
+
+[EXIT 0; 1.3s] CXX 3/152: src/config/config.cpp
+[RUN] CXX 4/152: src/config/config2_pegtl.cpp
+
+[EXIT 0; 1.0s] CXX 4/152: src/config/config2_pegtl.cpp
+[RUN] CXX 5/152: src/codec/hex_codec.cpp
+
+[EXIT 0; 0.1s] CXX 5/152: src/codec/hex_codec.cpp
+[RUN] CXX 6/152: src/xml/lsx_framing.cpp
+
+[EXIT 0; 0.1s] CXX 6/152: src/xml/lsx_framing.cpp
+[RUN] CXX 7/152: src/xml/request_parser.cpp
+
+[EXIT 0; 0.7s] CXX 7/152: src/xml/request_parser.cpp
+[RUN] CXX 8/152: src/xml/request_children.cpp
+
+[EXIT 0; 0.7s] CXX 8/152: src/xml/request_children.cpp
+[RUN] CXX 9/152: src/xml/attribute_parser.cpp
+
+[EXIT 0; 0.5s] CXX 9/152: src/xml/attribute_parser.cpp
+[RUN] CXX 10/152: third_party/tinyxml2/tinyxml2.cpp
+
+[EXIT 0; 0.7s] CXX 10/152: third_party/tinyxml2/tinyxml2.cpp
+[RUN] CXX 11/152: src/core/worker_owner.cpp
+
+[EXIT 0; 1.0s] CXX 11/152: src/core/worker_owner.cpp
+[RUN] CXX 12/152: src/core/service_session.cpp
+
+[EXIT 0; 1.3s] CXX 12/152: src/core/service_session.cpp
+[RUN] CXX 13/152: src/config/config_file.cpp
+
+[EXIT 0; 0.8s] CXX 13/152: src/config/config_file.cpp
+[RUN] CXX 14/152: src/runtime/asio_listener_owner.cpp
+
+[EXIT 0; 3.7s] CXX 14/152: src/runtime/asio_listener_owner.cpp
+[RUN] CXX 15/152: src/net/receive_buffer.cpp
+
+[EXIT 0; 0.1s] CXX 15/152: src/net/receive_buffer.cpp
+[RUN] CXX 16/152: src/net/frame_ingress.cpp
+
+[EXIT 0; 0.4s] CXX 16/152: src/net/frame_ingress.cpp
+[RUN] CXX 17/152: src/net/tcp_ingress.cpp
+
+[EXIT 0; 3.2s] CXX 17/152: src/net/tcp_ingress.cpp
+[RUN] CXX 18/152: src/net/local_service.cpp
+
+[EXIT 0; 1.4s] CXX 18/152: src/net/local_service.cpp
+[RUN] CXX 19/152: src/xml/response_builder.cpp
+
+[EXIT 0; 0.6s] CXX 19/152: src/xml/response_builder.cpp
+[RUN] CXX 20/152: src/xml/value_codec.cpp
+
+[EXIT 0; 0.6s] CXX 20/152: src/xml/value_codec.cpp
+[RUN] CXX 21/152: src/xml/value_codec_utf8.cpp
+
+[EXIT 0; 0.5s] CXX 21/152: src/xml/value_codec_utf8.cpp
+[RUN] CXX 22/152: src/xml/value_codec_normalize.cpp
+
+[EXIT 0; 0.5s] CXX 22/152: src/xml/value_codec_normalize.cpp
+[RUN] CXX 23/152: src/xml/value_codec_semantic.cpp
+
+[EXIT 0; 0.6s] CXX 23/152: src/xml/value_codec_semantic.cpp
+[RUN] CXX 24/152: src/handlers/config_route.cpp
+
+[EXIT 0; 0.5s] CXX 24/152: src/handlers/config_route.cpp
+[RUN] CXX 25/152: src/handlers/progressive_installation_route.cpp
+
+[EXIT 0; 0.5s] CXX 25/152: src/handlers/progressive_installation_route.cpp
+[RUN] CXX 26/152: src/router/route_inventory.cpp
+
+[EXIT 0; 0.5s] CXX 26/152: src/router/route_inventory.cpp
+[RUN] CXX 27/152: src/router/route_lookup.cpp
+
+[EXIT 0; 0.4s] CXX 27/152: src/router/route_lookup.cpp
+[RUN] CXX 28/152: src/hash/fnv_hash.cpp
+
+[EXIT 0; 0.1s] CXX 28/152: src/hash/fnv_hash.cpp
+[RUN] CXX 29/152: src/core/port_publication.cpp
+
+[EXIT 0; 0.4s] CXX 29/152: src/core/port_publication.cpp
+[RUN] CXX 30/152: src/core/response_dispatch.cpp
+
+[EXIT 0; 0.7s] CXX 30/152: src/core/response_dispatch.cpp
+[RUN] CXX 31/152: src/config/settings_values.cpp
+
+[EXIT 0; 0.1s] CXX 31/152: src/config/settings_values.cpp
+[RUN] CXX 32/152: src/config/settings_provider.cpp
+
+[EXIT 0; 0.1s] CXX 32/152: src/config/settings_provider.cpp
+[RUN] CXX 33/152: src/handlers/setting_value_route.cpp
+
+[EXIT 0; 0.5s] CXX 33/152: src/handlers/setting_value_route.cpp
+[RUN] CXX 34/152: src/handlers/settings_snapshot_route.cpp
+
+[EXIT 0; 0.5s] CXX 34/152: src/handlers/settings_snapshot_route.cpp
+[RUN] CXX 35/152: src/handlers/connection_state_route.cpp
+
+[EXIT 0; 0.5s] CXX 35/152: src/handlers/connection_state_route.cpp
+[RUN] CXX 36/152: src/handlers/settings_query.cpp
+
+[EXIT 0; 0.5s] CXX 36/152: src/handlers/settings_query.cpp
+[RUN] CXX 37/152: src/core/settings_response.cpp
+
+[EXIT 0; 0.7s] CXX 37/152: src/core/settings_response.cpp
+[RUN] CXX 38/152: src/handlers/friends_route.cpp
+
+[EXIT 0; 0.4s] CXX 38/152: src/handlers/friends_route.cpp
+[RUN] CXX 39/152: src/handlers/group_info_route.cpp
+
+[EXIT 0; 0.5s] CXX 39/152: src/handlers/group_info_route.cpp
+[RUN] CXX 40/152: src/handlers/stateless_routes.cpp
+
+[EXIT 0; 0.5s] CXX 40/152: src/handlers/stateless_routes.cpp
+[RUN] CXX 41/152: src/core/profile_response.cpp
+
+[EXIT 0; 0.5s] CXX 41/152: src/core/profile_response.cpp
+[RUN] CXX 42/152: src/core/profile_formatter.cpp
+
+[EXIT 0; 0.7s] CXX 42/152: src/core/profile_formatter.cpp
+[RUN] CXX 43/152: src/handlers/utc_time_route.cpp
+
+[EXIT 0; 0.5s] CXX 43/152: src/handlers/utc_time_route.cpp
+[RUN] CXX 44/152: src/runtime/utc_time.cpp
+
+[EXIT 0; 0.9s] CXX 44/152: src/runtime/utc_time.cpp
+[RUN] CXX 45/152: src/core/game_info_response.cpp
+
+[EXIT 0; 0.7s] CXX 45/152: src/core/game_info_response.cpp
+[RUN] CXX 46/152: src/core/query_presence_response.cpp
+
+[EXIT 0; 0.8s] CXX 46/152: src/core/query_presence_response.cpp
+[RUN] CXX 47/152: src/core/image_response.cpp
+
+[EXIT 0; 0.7s] CXX 47/152: src/core/image_response.cpp
+[RUN] CXX 48/152: src/core/chunks_response.cpp
+
+[EXIT 0; 0.6s] CXX 48/152: src/core/chunks_response.cpp
+[RUN] CXX 49/152: src/core/auth_code_session.cpp
+
+[EXIT 0; 0.8s] CXX 49/152: src/core/auth_code_session.cpp
+[RUN] CXX 50/152: src/core/content_response.cpp
+
+[EXIT 0; 0.8s] CXX 50/152: src/core/content_response.cpp
+[RUN] CXX 51/152: src/core/entitlement_response.cpp
+
+[EXIT 0; 0.8s] CXX 51/152: src/core/entitlement_response.cpp
+[RUN] CXX 52/152: src/core/achievement_response.cpp
+
+[EXIT 0; 0.8s] CXX 52/152: src/core/achievement_response.cpp
+[RUN] CXX 53/152: src/core/achievement_session.cpp
+
+[EXIT 0; 1.3s] CXX 53/152: src/core/achievement_session.cpp
+[RUN] CXX 54/152: src/core/achievement_delivery.cpp
+
+[EXIT 0; 0.8s] CXX 54/152: src/core/achievement_delivery.cpp
+[RUN] CXX 55/152: src/runtime/memory_allocator.cpp
+
+[EXIT 0; 0.2s] CXX 55/152: src/runtime/memory_allocator.cpp
+[RUN] CXX 56/152: src/runtime/ptd_runtime.cpp
+
+[EXIT 0; 0.1s] CXX 56/152: src/runtime/ptd_runtime.cpp
+[RUN] CXX 57/152: src/platform/connect_redirect.cpp
+
+[EXIT 0; 0.1s] CXX 57/152: src/platform/connect_redirect.cpp
+[RUN] CXX 58/152: src/platform/crypt_wrapper.cpp
+
+[EXIT 0; 0.1s] CXX 58/152: src/platform/crypt_wrapper.cpp
+[RUN] CXX 59/152: src/config/hook_configuration.cpp
+
+[EXIT 0; 0.6s] CXX 59/152: src/config/hook_configuration.cpp
+[RUN] CXX 60/152: tests/test_tcp_delivery.cpp
+
+[EXIT 0; 3.2s] CXX 60/152: tests/test_tcp_delivery.cpp
+[RUN] LINK test_tcp_delivery
+
+[EXIT 0; 0.2s] LINK test_tcp_delivery
+[RUN] test_tcp_delivery
+TCP_OWNED_DELIVERY_FULL_WRITE_COMMIT_EVENT_FIFO_CANCEL_ADMISSION_PASS
+
+[EXIT 0; 0.1s] test_tcp_delivery
+PASS test_tcp_delivery
+[RUN] CXX 61/152: tests/test_tcp_grant.cpp
+
+[EXIT 0; 3.7s] CXX 61/152: tests/test_tcp_grant.cpp
+[RUN] LINK test_tcp_grant
+
+[EXIT 0; 0.2s] LINK test_tcp_grant
+[RUN] test_tcp_grant
+LOCAL_GRANT_PARTIAL_COMPLETE_EVENT_QUERY_COMMITTED_FIFO_HALF_CLOSE_PASS
+
+[EXIT 0; 0.1s] test_tcp_grant
+PASS test_tcp_grant
+[RUN] CXX 62/152: tests/test_tcp_grant_failure.cpp
+
+[EXIT 0; 3.5s] CXX 62/152: tests/test_tcp_grant_failure.cpp
+[RUN] LINK test_tcp_grant_failure
+
+[EXIT 0; 0.2s] LINK test_tcp_grant_failure
+[RUN] test_tcp_grant_failure
+TCP_REAL_GRANT_PARTIAL_CANCEL_COMMIT_EVENT_CANCEL_OWNER_CLOSE_LIMIT_BUSY_PASS
+
+[EXIT 0; 0.1s] test_tcp_grant_failure
+PASS test_tcp_grant_failure
+[RUN] CXX 63/152: tests/test_achievement_delivery_wire.cpp
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp: In function ‘int main()’:
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:11:16: error: call of overloaded ‘parse(const char [60], redfield::xml::Request&)’ is ambiguous
+   11 |     CHECK(parse("<AchievementId>A&amp;</AchievementId><Progress>1</Progress>",r));CHECK(prepare_achievement_delivery(owner,r,stamp,{},d)==prepared && d.active() && d.completion_event().empty() && owner.snapshot()==initial);CHECK(d.projected()->achievements[0].progress==1 && d.commit());const auto partial=owner.snapshot();CHECK(partial->achievements[0].progress==1 && !d.response().empty());d.rollback();
+      |           ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:5:26: note: in definition of macro ‘CHECK’
+    5 | #define CHECK(x) do{if(!(x)){std::cerr<<__LINE__<<": " #x "\n";return 1;}}while(false)
+      |                          ^
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:7:6: note: candidate: ‘bool parse(const std::string&, redfield::xml::Request&)’
+    7 | bool parse(const std::string& children,xml::Request& r){std::string source="<LSX><Request id='G&amp;lt;' recipient='Client&amp;X'><GrantAchievement>"+children+"</GrantAchievement></Request></LSX>";const auto result=xml::parse(source,r);source.assign(source.size(),'!');return result==xml::Result::ok;}
+      |      ^~~~~
+In file included from /tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/include/redfield/achievement_delivery.hpp:4,
+                 from /tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:2:
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/include/redfield/xml.hpp:12:8: note: candidate: ‘redfield::xml::Result redfield::xml::parse(std::string_view, Request&)’
+   12 | Result parse(std::string_view frame, Request& output) noexcept;
+      |        ^~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:12:16: error: call of overloaded ‘parse(const char [60], redfield::xml::Request&)’ is ambiguous
+   12 |     CHECK(parse("<AchievementId>A&amp;</AchievementId><Progress>2</Progress>",r));CHECK(prepare_achievement_delivery(owner,r,stamp,{},d)==prepared && !d.completion_event().empty() && owner.snapshot()==partial);
+      |           ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:5:26: note: in definition of macro ‘CHECK’
+    5 | #define CHECK(x) do{if(!(x)){std::cerr<<__LINE__<<": " #x "\n";return 1;}}while(false)
+      |                          ^
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:7:6: note: candidate: ‘bool parse(const std::string&, redfield::xml::Request&)’
+    7 | bool parse(const std::string& children,xml::Request& r){std::string source="<LSX><Request id='G&amp;lt;' recipient='Client&amp;X'><GrantAchievement>"+children+"</GrantAchievement></Request></LSX>";const auto result=xml::parse(source,r);source.assign(source.size(),'!');return result==xml::Result::ok;}
+      |      ^~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/include/redfield/xml.hpp:12:8: note: candidate: ‘redfield::xml::Result redfield::xml::parse(std::string_view, Request&)’
+   12 | Result parse(std::string_view frame, Request& output) noexcept;
+      |        ^~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:40:166: error: call of overloaded ‘parse(const char* const&, redfield::xml::Request&)’ is ambiguous
+   40 |     for(const auto& c:cases){AchievementSession fresh;const auto base=seed();CHECK(fresh.initialize(base)==AchievementSession::InitializeResult::initialized && parse(c.body,r));Delivery staged;CHECK(prepare_achievement_delivery(fresh,r,stamp,{},staged)==c.result && fresh.snapshot()==base);if(c.result==prepared)CHECK(staged.projected()->achievements[0].progress==c.progress);else CHECK(!staged.active() && staged.response().empty() && staged.completion_event().empty());}
+      |                                                                                                                                                                 ~~~~~^~~~~~~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:5:26: note: in definition of macro ‘CHECK’
+    5 | #define CHECK(x) do{if(!(x)){std::cerr<<__LINE__<<": " #x "\n";return 1;}}while(false)
+      |                          ^
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:7:6: note: candidate: ‘bool parse(const std::string&, redfield::xml::Request&)’
+    7 | bool parse(const std::string& children,xml::Request& r){std::string source="<LSX><Request id='G&amp;lt;' recipient='Client&amp;X'><GrantAchievement>"+children+"</GrantAchievement></Request></LSX>";const auto result=xml::parse(source,r);source.assign(source.size(),'!');return result==xml::Result::ok;}
+      |      ^~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/include/redfield/xml.hpp:12:8: note: candidate: ‘redfield::xml::Result redfield::xml::parse(std::string_view, Request&)’
+   12 | Result parse(std::string_view frame, Request& output) noexcept;
+      |        ^~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:41:126: error: call of overloaded ‘parse(const char [44], redfield::xml::Request&)’ is ambiguous
+   41 |     AchievementSession raw;CHECK(raw.initialize(seed("raw&amp;"))==AchievementSession::InitializeResult::initialized && parse("<AchievementId>raw&amp;amp;</AchievementId>",r));CHECK(prepare_achievement_delivery(raw,r,stamp,{},d)==prepared && d.projected()->achievements.size()==1 && d.response().find("Id=\"raw&amp;amp;\"")!=std::string_view::npos);d.rollback();
+      |                                                                                                                         ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:5:26: note: in definition of macro ‘CHECK’
+    5 | #define CHECK(x) do{if(!(x)){std::cerr<<__LINE__<<": " #x "\n";return 1;}}while(false)
+      |                          ^
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/tests/test_achievement_delivery_wire.cpp:7:6: note: candidate: ‘bool parse(const std::string&, redfield::xml::Request&)’
+    7 | bool parse(const std::string& children,xml::Request& r){std::string source="<LSX><Request id='G&amp;lt;' recipient='Client&amp;X'><GrantAchievement>"+children+"</GrantAchievement></Request></LSX>";const auto result=xml::parse(source,r);source.assign(source.size(),'!');return result==xml::Result::ok;}
+      |      ^~~~~
+/tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/include/redfield/xml.hpp:12:8: note: candidate: ‘redfield::xml::Result redfield::xml::parse(std::string_view, Request&)’
+   12 | Result parse(std::string_view frame, Request& output) noexcept;
+      |        ^~~~~
+
+[EXIT 1; 0.6s] CXX 63/152: tests/test_achievement_delivery_wire.cpp
+REDFIELD_RF22_FAIL: command exit=1: CXX 63/152: tests/test_achievement_delivery_wire.cpp. Log: /tmp/redfield_rf22_clean_fp_ubt0n/REDFIELD_RF22/build/portable_none/build.log

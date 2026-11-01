@@ -1,0 +1,35 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF35",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_PORTABLE_SOURCE_CORRECTION_NATIVE_NOT_RUN",
+  "normal_regressions": 98,
+  "parent_stdout_and_exit_equal": 98,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 159,
+  "normal_linked_outputs": 99,
+  "import_refactor": {
+    "rule_revision": "2026-10-21.1",
+    "managed_files": 300,
+    "qualified_files": 16,
+    "pending_files": 284,
+    "pending_vendor_integrations": 4,
+    "status": "PENDING"
+  },
+  "source_module_reviews_complete": 6,
+  "source_module_reviews_remaining": 14,
+  "new_whole_module_reviews": 0,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "application_files_changed": 1,
+  "new_application_files": 0,
+  "msvc_c2386": "User failure source declaration removed; current native verification remains NOT_RUN",
+  "windows_msvc": "NOT_RUN_RF35",
+  "native_crt_debug_game": "NOT_RUN_RF35",
+  "sanitizers": "NOT_RUN_RF35; no function body or runtime behavior changed",
+  "golden": "NOT_RUN_RF35; pipeline/exports/resources preserved",
+  "canonical_unchanged": true
+}

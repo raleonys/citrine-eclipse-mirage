@@ -1,0 +1,39 @@
+from pathlib import Path
+import importlib.util,json,tempfile,os,errno
+from types import SimpleNamespace
+from unittest.mock import patch
+def module(path,name):
+ s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+R=Path('rf20_fix03_work/REDFIELD_RF20').resolve()
+old=module(Path('rf20_fix02_work/REDFIELD_RF20/scripts/build_orchestration/build_verify.py').resolve(),'old_builder')
+new=module(R/'scripts/build_orchestration/build_verify.py','new_builder')
+real_temporary=tempfile.TemporaryDirectory
+cases=[]
+for name,builder,expect_error in [('exact_fix02',old,True),('fix03',new,False)]:
+ with real_temporary(prefix='rf_lock_case_') as td:
+  base=Path(td);install=base/'Visual Studio & (Community)';setup=install/'Common7/Tools/VsDevCmd.bat';setup.parent.mkdir(parents=True);setup.write_text('fixture')
+  pf=base/'Program Files';vswhere=pf/'Microsoft Visual Studio/Installer/vswhere.exe';vswhere.parent.mkdir(parents=True);vswhere.write_text('fixture');build=base/'build';build.mkdir();retained=[]
+  class PinnedTemporary:
+   def __init__(self,*a,**k):self.actual=real_temporary(*a,**k)
+   def __enter__(self):self.directory=Path(self.actual.__enter__());return str(self.directory)
+   def __exit__(self,*args):
+    blocked=self.directory in retained
+    self.actual.__exit__(*args)
+    if blocked:
+     e=PermissionError(errno.EACCES,'MODELED_WINDOWS_CWD_PIN',str(self.directory));e.winerror=32;raise e
+  def fake_run(command,**kw):
+   if command[0]==str(vswhere):return SimpleNamespace(returncode=0,stdout=str(install)+'\n')
+   retained.append(Path(kw['cwd']))
+   Path(kw['env']['REDFIELD_VS_ENV_FILE']).write_text('PATH=TOOLS\r\nINCLUDE=fixture\r\n',encoding='utf-16le')
+   return SimpleNamespace(returncode=0,stdout='SETUP EXIT0\n')
+  def which(name,path=None):return 'C:/tools/cl.exe' if path=='TOOLS' else None
+  try:
+   with patch.dict(os.environ,{'ProgramFiles(x86)':str(pf),'PATH':'ORIGINAL','COMSPEC':'cmd.exe'},clear=True),patch.object(builder,'run_logged',side_effect=fake_run),patch.object(builder.shutil,'which',side_effect=which),patch.object(builder.tempfile,'TemporaryDirectory',PinnedTemporary):out=builder.windows_environment(build)
+   assert not expect_error and out['PATH']=='TOOLS'
+   assert retained==[build] and not list(build.glob('rf_vs_*')) and not (build/'_rf_capture_environment.cmd').exists()
+   cases.append(dict(implementation=name,status='PASS_STABLE_CWD_PRIVATE_DUMP_REMOVED'))
+  except PermissionError as e:
+   assert expect_error and e.winerror==32
+   cases.append(dict(implementation=name,status='EXPECTED_REJECTION_MODELED_WINERROR32'))
+(R/'evidence/build_fix03_cwd_pin_qa.json').write_text(json.dumps(dict(scope='Simulated Windows directory pin at cleanup, with real TemporaryDirectory and exact old/new Python builders; not native Windows execution and not identification of user locking process',cases=cases),indent=2)+'\n')
+print('Exact FIX02 rejects modeled cwd pin; FIX03 passes with stable CWD and private capture cleanup')

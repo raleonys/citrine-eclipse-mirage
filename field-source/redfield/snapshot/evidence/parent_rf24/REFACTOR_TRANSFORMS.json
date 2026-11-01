@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "checkpoint": "RF24",
+  "parent_zip_sha256": "3c0fc8371abbbf62198cab0402b6ff338d6253b0535bacb7af57a9c183110d6f",
+  "scope": "Bounded semantic-preserving application refactor; no whole-codebase completion claim",
+  "changes": [
+    "Seven duplicate lookup loops across six consumers replaced by ConfigSnapshotView",
+    "Snapshot lifetime remains caller-owned and raw values remain distinct from normalized projections",
+    "Achievement staging uses vector size directly rather than redundant counters"
+  ],
+  "application_files": 260,
+  "new_application_files": [
+    "include/redfield/config_snapshot_view.hpp",
+    "tests/test_config_snapshot_view.cpp"
+  ],
+  "historical_transforms": "evidence/parent_rf23/REFACTOR_TRANSFORMS.json"
+}

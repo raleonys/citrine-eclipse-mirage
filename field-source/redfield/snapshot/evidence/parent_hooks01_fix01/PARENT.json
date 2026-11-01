@@ -1,0 +1,10 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF21",
+  "build_fix": "HOOKS01_FIX01",
+  "parent_checkpoint": "RF21",
+  "parent_build_fix": "HOOKS01",
+  "parent_zip_sha256": "f739e6dcfdf3d4180d8ef61091cb402e6ab72e59d235413a3375f47c218f36fb",
+  "parent_library_file_id": "libfile_e31a866d39d48191ad58e1b29fa3a8fa",
+  "official_hf19_unchanged": true
+}

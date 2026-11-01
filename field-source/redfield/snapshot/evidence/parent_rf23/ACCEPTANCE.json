@@ -1,0 +1,33 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF23",
+  "refactor": "OWNERSHIP02",
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_SCOPED_REFACTOR_QA_NOT_RELEASE",
+  "application_files": 258,
+  "normal_regressions": 94,
+  "production_core_sources": 58,
+  "test_support_sources": 2,
+  "normal_compiled_objects": 155,
+  "normal_linked_outputs": 95,
+  "parent_stdout_equal": 92,
+  "legacy_diagnostic": {
+    "status": "FAIL_OBSERVED",
+    "exit_code": 14
+  },
+  "sanitizers": {
+    "address": 6,
+    "undefined": 6,
+    "leak_detection": false
+  },
+  "windows_heap_branch_model_cases": 3,
+  "architecture_negatives": 9,
+  "package_negatives": 2,
+  "encoding_cases": 16,
+  "environment_mock_cases": 13,
+  "real_posix_runner_cases": 7,
+  "windows_native": "NOT_RUN_RF23",
+  "game": "NOT_RUN_RF23",
+  "cmake": "STATIC_REVIEW_ONLY;NOT_RUN",
+  "scope": "Three named ownership/dependency/record-writer refactors complete;no claim of completed whole-codebase semantic audit"
+}

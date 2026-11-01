@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "preserved_files": 1356,
+  "scope": "Every parent C/C++/header/export/CMake/patch source plus all vendors, build graph, MinHook pin, adoption and derivation metadata",
+  "parent_zip_sha256": "f739e6dcfdf3d4180d8ef61091cb402e6ab72e59d235413a3375f47c218f36fb",
+  "cpp_regressions": "NOT_RERUN_CURRENT_FIX; original C++ bytes unchanged"
+}

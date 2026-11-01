@@ -1,0 +1,17 @@
+{
+  "project": "REDFIELD",
+  "checkpoint": "RF24",
+  "classification": "NON_RELEASE_WORK",
+  "status": "NOT_RELEASE",
+  "semantic_version": null,
+  "official_codename": null,
+  "public_abi": "DllMain @1, SURGE @2, DllShutdown @3 unchanged;35 plaintext local routes;seven new Windows MinHook detours;SURGE passive",
+  "runtime_compatibility": "RF24_NOT_VERIFIED_ON_WINDOWS_OR_GAME",
+  "canonical_release_mutation": false,
+  "known_diagnostic": "RF03-QA-001 unchanged original GetConfig diagnostic exit14, separate from passing regressions",
+  "derivation_scope": "260 maintained application files;798 verified ancestry recipes",
+  "windows_msvc": "RF24_NOT_RUN",
+  "current_regressions": 95,
+  "refactor": "SNAPSHOT03",
+  "scope": "Shared immutable snapshot leaf lookup; explicit borrowed lifetime; eliminate redundant achievement staging counters"
+}

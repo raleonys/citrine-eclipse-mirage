@@ -1,0 +1,14 @@
+{
+  "cases": [
+    {
+      "case": "source_bytes",
+      "status": "EXPECTED_REJECTION",
+      "reason": "SHA_MISMATCH"
+    },
+    {
+      "case": "unowned_application",
+      "status": "EXPECTED_REJECTION",
+      "reason": "APPLICATION_OWNERSHIP_INVENTORY_MISMATCH"
+    }
+  ]
+}

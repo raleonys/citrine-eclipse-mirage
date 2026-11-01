@@ -1,0 +1,54 @@
+from pathlib import Path
+import json,hashlib,shutil,subprocess,tempfile,importlib.util
+R=Path('rf32_work/REDFIELD_RF32')
+def sha(b):return hashlib.sha256(b).hexdigest()
+def write(p,j):p.write_text(json.dumps(j,indent=2)+'\n')
+def manifest(root):
+    write(root/'metadata/PACKAGE_MANIFEST.json',dict(schema=1,files={p.relative_to(root).as_posix():dict(bytes=p.stat().st_size,sha256=sha(p.read_bytes())) for p in root.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.relative_to(root).parts[0]!='build' and p.relative_to(root).as_posix()!='metadata/PACKAGE_MANIFEST.json'}))
+def rebind(root,relative):
+    p=root/'metadata/DERIVED_SOURCES.json';j=json.loads(p.read_text())
+    row=next(x for x in j['files'] if x['destination']==relative)
+    row.update(destination_sha256=sha((root/relative).read_bytes()),segments=[dict(literal=(root/relative).read_text())]);write(p,j)
+cases=[]
+with tempfile.TemporaryDirectory(prefix='rf32_architecture_qa_') as tmp:
+    for kind,reason in [('namespace','PROJECT_NAME_IN_APPLICATION_CODE'),('retired_api','RETIRED_GLOBAL_API'),('origin_exemption','ORIGIN_BASED_APPLICATION_EXEMPTION'),('legacy_tree','LEGACY_APPLICATION_TREE'),('hook_surface','PRESERVED_BUILD_SURFACE_CHANGED'),('ptd_coupling','PRODUCTION_PTD_COUPLING'),('ancestry_cycle','DERIVATION_REFERENCE_MISMATCH'),('vendor','ADOPTION_MISMATCH'),('launcher','LAUNCHER_SET_MISMATCH'),('config_brand','PROJECT_NAME_IN_APPLICATION_CODE'),('build_macro','PROJECT_NAME_IN_APPLICATION_CODE'),('cmake_target','PROJECT_NAME_IN_BUILD_IDENTIFIER'),('script_env','PROJECT_NAME_IN_BUILD_IDENTIFIER')]:
+        root=Path(tmp)/kind;shutil.copytree(R,root,ignore=shutil.ignore_patterns('__pycache__'))
+        if kind in {'namespace','retired_api'}:
+            relative='src/config/hook_configuration.cpp' if kind=='namespace' else 'include/preloader_l/runtime/record_views.hpp'
+            p=root/relative;p.write_text(p.read_text()+('\nnamespace redfield {}\n' if kind=='namespace' else '\nbool begin_runtime_configuration_read(void*) noexcept;\n'));rebind(root,relative)
+        elif kind in {'config_brand','build_macro'}:
+            relative='src/config/config_file.cpp' if kind=='config_brand' else 'src/windows/dll_entry.cpp'
+            p=root/relative;p.write_text(p.read_text()+('\nconst char* bad_cfg="redfield.cfg";\n' if kind=='config_brand' else '\n#define REDFIELD_NATIVE_TEST 1\n'));rebind(root,relative)
+        elif kind in {'cmake_target','script_env'}:
+            p=root/('CMakeLists.txt' if kind=='cmake_target' else 'scripts/build_orchestration/build_verify.py')
+            p.write_text(p.read_text()+('\nadd_library(redfield_core STATIC bad.cpp)\n' if kind=='cmake_target' else '\nREDFIELD_VS_SETUP="bad"\n'))
+        elif kind=='origin_exemption':
+            p=root/'metadata/ADOPTED_SOURCES.json';j=json.loads(p.read_text());j['files'].append(dict(destination='src/config/hook_configuration.cpp',source_sha256=sha((root/'src/config/hook_configuration.cpp').read_bytes())));write(p,j)
+            # Remove this active derivation so the forged exemption reaches the
+            # ownership guard instead of only failing duplicate inventory.
+            p=root/'metadata/DERIVED_SOURCES.json';j=json.loads(p.read_text());j['files']=[x for x in j['files'] if x['destination']!='src/config/hook_configuration.cpp'];write(p,j)
+        elif kind=='legacy_tree':
+            relative='include/redfield/old.hpp';p=root/relative;p.parent.mkdir(parents=True);p.write_text('// SPDX-License-Identifier: GPL-3.0-only\n')
+            p=root/'metadata/ARCHITECTURE.json';j=json.loads(p.read_text());j['application_files'].append(relative);write(p,j)
+        elif kind in {'hook_surface','ptd_coupling'}:
+            p=root/'metadata/BUILD_GRAPH.json';j=json.loads(p.read_text());j['windows_core_sources'].pop() if kind=='hook_surface' else j['core_sources'].append('tests/support/runtime/ptd_runtime.cpp');write(p,j)
+        elif kind=='ancestry_cycle':
+            p=root/'metadata/DERIVED_SOURCES.json';j=json.loads(p.read_text());row=j['files'][-1];row['segments']=[dict(reference=row['destination'],offset=0,length=0,sha256=sha(b''))];write(p,j)
+        elif kind=='vendor':
+            p=root/'third_party/minhook/upstream/src/buffer.c';p.write_bytes(p.read_bytes()+b'\n/*tamper*/\n')
+        else:
+            relative='scripts/build_orchestration/build_verify.cmd'
+            (root/relative).unlink()
+            # Keep the new code-record inventory consistent so this fixture
+            # specifically reaches the independent operator-launcher guard.
+            p=root/'metadata/IMPORT_REFACTOR.json';j=json.loads(p.read_text())
+            j['files']=[x for x in j['files'] if x['path']!=relative];write(p,j)
+        manifest(root)
+        p=subprocess.run(['python3',str(root/'scripts/verify_source.py')],capture_output=True,text=True)
+        assert p.returncode==1 and reason in p.stdout+p.stderr,(kind,p.stdout,p.stderr)
+        cases.append(dict(case=kind,status='EXPECTED_REJECTION',reason=reason,metadata_rebound=True))
+    probe=Path(tmp)/'constinit.cpp';probe.write_text('#include "preloader_l/session_retirement.hpp"\nstruct Hooks {bool stop(unsigned) noexcept {return true;}};\nconstinit Hooks hooks;\nconstinit preloader_l::SessionRetirement<Hooks> owner{hooks};\nint main(){return owner.pending();}\n')
+    g=json.loads((R/'metadata/BUILD_GRAPH.json').read_text());cmd=['g++','-std=c++20','-DASIO_STANDALONE=1',*['-I'+str((R/p).resolve()) for p in g['include_directories']],'-fsyntax-only',str(probe)]
+    p=subprocess.run(cmd,capture_output=True,text=True);assert p.returncode==0,p.stderr
+write(R/'evidence/rf32_architecture_qa.json',dict(scope='Actual source verifier; structural relapse fixtures rebind file hashes/recipes to reach semantic architecture guards. Not native Windows.',negative_cases=cases,constinit_retirement='GCC_CXX20_SYNTAX_PASS'))
+print('ARCHITECTURE_QA_PASS negatives=13 constinit=1')
