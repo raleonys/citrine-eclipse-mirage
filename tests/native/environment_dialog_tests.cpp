@@ -5,6 +5,7 @@
 #include <string>
 #include <filesystem>
 #include <fstream>
+#include <iterator>
 #include <mutex>
 #include <set>
 #include <thread>
@@ -83,17 +84,51 @@ void actual_environment_logging(preloader_l::application::detail::Environment& e
 }
 }
 
+void unknown_entitlement_is_nonmodal_and_redacted(preloader_l::application::detail::Environment& env,
+                                                  preloader_l::configuration::State& state) {
+    namespace fs=std::filesystem;
+    const auto directory=fs::temp_directory_path()/("surge-unknown-field-fixture-"+
+        std::to_string(GetCurrentProcessId())+"-"+std::to_string(GetTickCount64()));
+    require(fs::create_directory(directory),"own isolated unknown field fixture directory");
+    struct Cleanup{fs::path path;~Cleanup(){std::error_code error;fs::remove_all(path,error);}} cleanup{directory};
+    state.user_directory=directory.u16string();
+    const auto before=dialog::calls;
+    env.unknown_entitlement_field("Unknown|sensitive-value\nforged diagnostic");
+    const std::string oversized(32768,'S');
+    env.unknown_entitlement_field(oversized);
+    require(dialog::calls==before,"caller-controlled entitlement diagnostics must never show a modal");
+#ifndef NDEBUG
+    const auto file=directory/"surge.log";
+    std::ifstream input(file,std::ios::binary);
+    require(static_cast<bool>(input),"Debug diagnostic must create its owned log");
+    const std::string output((std::istreambuf_iterator<char>(input)),
+                              std::istreambuf_iterator<char>());
+    require(output=="QueryEntitlements ignored unknown field\nQueryEntitlements ignored unknown field\n",
+            "Debug diagnostics must be bounded and must not echo unknown request bytes");
+    require(output.find("sensitive-value")==std::string::npos,
+            "Debug diagnostic must not contain request secrets");
+    std::cout<<"PASS: nonmodal bounded unknown entitlement diagnostics preserve Debug redaction\n";
+#else
+    require(!fs::exists(directory/"surge.log"),"Release unknown field must not create a log file");
+    std::cout<<"PASS: nonmodal unknown entitlement diagnostics keep Release logging disabled\n";
+#endif
+}
+}
+
 int main()try{
     using namespace preloader_l;
     configuration::State state{};application::Options options;
     file::NativeFactory files;xml_reader_bridge::Backend xml;achievement_storage::Paths paths;
     achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;
     application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
-    env.unknown_entitlement_field("QueryEntitlements unknown attr: \xc3\xa9|value");
-    if(dialog::calls!=1||dialog::title!=L"SURGE"||dialog::body!=L"QueryEntitlements unknown attr: \u00e9|value")
-        throw std::runtime_error("actual dialog lost the supplied field/value diagnostic");
+    env.unknown_entitlement_field("QueryEntitlements unknown attr: unexpected|value");
+    if(dialog::calls!=0)
+        throw std::runtime_error("unknown entitlement input must not invoke a blocking dialog");
     configuration::State logging_state{};
     application::detail::Environment logging_env{logging_state,options,files,xml,paths,clock,formatter};
     logging_fixture::actual_environment_logging(logging_env,logging_state);
-    std::cout<<"PASS: actual Environment dialog forwards counted UTF8 diagnostic and product title\n";
+    configuration::State unknown_state{};
+    application::detail::Environment unknown_env{unknown_state,options,files,xml,paths,clock,formatter};
+    logging_fixture::unknown_entitlement_is_nonmodal_and_redacted(unknown_env,unknown_state);
+    std::cout<<"PASS: actual Environment unknown field remains nonmodal under shared-handler invocation\n";
 }catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
