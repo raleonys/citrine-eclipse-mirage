@@ -14,12 +14,14 @@ struct Module {
     DWORD (WINAPI* stop)(DWORD)=nullptr;
     void (*mode)(unsigned)=nullptr;
     unsigned (*value)(unsigned)=nullptr;
+    void (*resume)()=nullptr;
     explicit Module(const char* path){
         module=LoadLibraryA(path);require(module!=nullptr,"fixture DLL load");
         stop=reinterpret_cast<decltype(stop)>(GetProcAddress(module,"DllShutdown"));
         mode=reinterpret_cast<decltype(mode)>(GetProcAddress(module,"FixtureMode"));
         value=reinterpret_cast<decltype(value)>(GetProcAddress(module,"FixtureValue"));
-        require(stop&&mode&&value,"fixture methods");
+        resume=reinterpret_cast<decltype(resume)>(GetProcAddress(module,"FixtureReleaseWorker"));
+        require(stop&&mode&&value&&resume,"fixture methods");
     }
     ~Module(){if(mode&&stop){mode(0);if(stop(10000)==DLL_SHUTDOWN_OK)FreeLibrary(module);}}
 };
@@ -42,11 +44,42 @@ void scenario(const char* path,unsigned fault){
     std::cout<<"PASS: actual entry/Application/hook cleanup fault "<<fault<<'\n';
 }
 }
+void queued_shutdown_requests(const char* path){
+    // Keep the worker before its first event wait. Both public calls must be
+    // enqueued before the first ResetEvent, not raced by test scheduling.
+    const char* env="SURGE_TEST_HOLD_WORKER_BEFORE_STOP";
+    require(SetEnvironmentVariableA(env,"1")!=FALSE,"set worker pause fixture");
+    struct Restore {const char* name;~Restore(){SetEnvironmentVariableA(name,nullptr);}} restore{env};
+    Module m(path);
+    const auto ready_until=std::chrono::steady_clock::now()+std::chrono::seconds(10);
+    while((!m.value(0)||!m.value(8))&&std::chrono::steady_clock::now()<ready_until)Sleep(1);
+    require(m.value(0)&&m.value(8)&&m.value(1)==0,
+        "actual worker must be live, ready and held before both requests");
+    // One deliberate scan failure gives the second caller's queued request
+    // a distinct, observable successful retry. No third call may mask loss.
+    m.mode(5);
+    const auto first=m.stop(0),second=m.stop(0);
+    m.resume();
+    require(first==DLL_SHUTDOWN_TIMEOUT&&second==DLL_SHUTDOWN_TIMEOUT,
+        "two zero-wait caller requests must be accepted before worker cleanup");
+    const auto done_until=std::chrono::steady_clock::now()+std::chrono::seconds(3);
+    while(!m.value(3)&&std::chrono::steady_clock::now()<done_until)Sleep(1);
+    require(m.value(1)==2&&m.value(2)==1&&m.value(3)==1,
+        "coalesced event must not discard second shutdown attempt after first fails");
+    require(m.value(4)==1&&m.value(5)==1,
+        "queued retry retains sole engine owner and avoids duplicate disable");
+    require(m.stop(10000)==DLL_SHUTDOWN_OK,
+        "completed queued shutdown must retain the public success contract");
+    std::cout<<"PASS: two queued public shutdown requests preserve exactly two cleanup attempts\n";
+}
 int main(int argc,char** argv)try{
     require(argc==2||argc==3,"fixture DLL path and optional mode required");
     bool ran=false;
     for(unsigned fault=1;fault<=4;++fault)
         if(argc==2||std::string_view(argv[2])==std::to_string(fault)){scenario(argv[1],fault);ran=true;}
+    if(argc==2||std::string_view(argv[2])=="queued"){
+        queued_shutdown_requests(argv[1]);ran=true;
+    }
     require(ran,"unknown fault mode");
     return 0;
 }catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
