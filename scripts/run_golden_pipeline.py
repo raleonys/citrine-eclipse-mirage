@@ -161,7 +161,13 @@ def _recover_local_dist_locked(dist):
         if not isinstance(previous, dict) or set(previous) != set(DIST_NAMES):
             raise ValueError('Invalid local dist recovery snapshot index')
         backup = transaction / 'previous'
-        if _is_link(backup) or _bundle_hashes(backup) != previous:
+        if _is_link(backup):
+            raise ValueError('Corrupt local dist recovery snapshot; refusing overwrite')
+        try:
+            backup_hashes = _bundle_hashes(backup)
+        except (OSError, ValueError, UnicodeError) as error:
+            raise ValueError('Corrupt local dist recovery snapshot; refusing overwrite') from error
+        if backup_hashes != previous:
             raise ValueError('Corrupt local dist recovery snapshot; refusing overwrite')
     for name in DIST_NAMES:
         path = dist / name
