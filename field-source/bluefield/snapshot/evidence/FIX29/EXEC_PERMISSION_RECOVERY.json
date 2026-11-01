@@ -1,0 +1,13 @@
+{
+  "failure": "Debug CTest BAD_COMMAND permission denied, not a semantic PASS",
+  "file": "paths_test_encoding",
+  "byte_sha256": "4c61d390c4a345a29e25e68e327d15b4e1738eb2c002eca96ef08b9f24776714",
+  "observed_mode": "0o644",
+  "initial_preflight_mode": "0o755",
+  "observed_later_mode": "0o644",
+  "cause": "Execute permission did not persist between preflight and CTest; underlying cause undetermined",
+  "source_changes": false,
+  "test_expectation_changes": false,
+  "repaired_mode": "0o755",
+  "status": "PASS_RECOVERED_FULL_DEBUG_CTEST50"
+}

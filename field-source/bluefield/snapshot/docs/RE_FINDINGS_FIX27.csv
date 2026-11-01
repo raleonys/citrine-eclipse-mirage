@@ -1,0 +1,39 @@
+id,status,priority,title,FIX27_resolution,recommended_next_action
+DEP01,KEEP_DOCUMENTED,P3,Asio snapshot güncellemesi,,Koru; güncellemenin regresyon sonuçlarını değerlendir.
+DEP02,KEEP_DOCUMENTED,P3,MinHook upstream pini,,Koru; vendor hashleri ayrı doğrulansın.
+DEP03,KEEP_DOCUMENTED,P3,TinyXML2 upstream pini,,Koru; adapter ile vendoru aynı bulgu sayma.
+DEP04,KEEP_DOCUMENTED,P3,PEGTL üzerinde VDF/Config2 grameri,,Koru; syntax/action farkı iddiasını paketteki karşı örnekle kanıtla. 8766-case differential corpus bağımsız binary oracle değildir.
+DEP05,REVIEW_NO_AUTOMATIC_REVERT,P2,gulrak/filesystem kapsamı kısmi,,"Path construction, status, encoding ve IO için ayrı sahiplik/kapsam kararı çıkar."
+U01,KEEP_DOCUMENTED,P3,"Kimlik, namespace ve görünür profil",,Koru; kaynak constructor projeksiyonu ve isimleri birbirine karıştırma.
+U02,KEEP_DOCUMENTED,P3,Veri kökü ve config/provider konumu,,Koru; üç farklı filesystem işlevini tek bir backend iddiasıyla açıklama.
+U03,KEEP_DOCUMENTED,P3,Config olmadan başlangıç ve varsayılanlar,,Koru; defaultları rastgele değiştirme.
+U04,KEEP_DOCUMENTED,P3,Provider adı ve güvenilir yükleme dizini,,Koru; provider factory hatası ve phase wait ayrı bulgulardır.
+U05,KEEP_DOCUMENTED,P3,Production log compile-out ve hassas veri gizliliği,,Koru; log kotası veya CFG switchi yeniden icat etme.
+U06,KEEP_DOCUMENTED,P3,Resmî avatar ve cache override engeli,,Retain visible selection tests separately from restored provider/cache/copy effects; native provider ABI remains NOT_RUN.
+U07,KEEP_DOCUMENTED,P2,Atomik dosya/state/event persistence,,Koru; READ guard yetki genişletmesini D09 ile ayır; crash-proof transaction iddiası yapma.
+U08,KEEP_DOCUMENTED,P3,Başlangıçta eski avatarları silmeme ve lazy fallback,,Koru; U06 ile bağlı ama rejected INI delay ile aynı karar değil.
+P01,KEEP_DOCUMENTED,P3,Platform ve derleyici uyarlamaları,,Koru; platform farklı hata dallarını kaynak algoritma bozulması olarak sayma.
+P02,KEEP_DOCUMENTED,P3,Native DLL helper ve include macro koruması,,Koru; raw diff sayısını bug sayısı yapma.
+D01,CORRECTED_SOURCE_PHASE_SCOPE_OWNED_LIFECYCLE_RETAINED,P1,Bootstrap ve ek DLL phase sırası,,Keep owned phase regression and independently run Windows changed-surface tests; no source process-main-thread guarantee is asserted.
+D02,REVIEW_NO_AUTOMATIC_REVERT,P1,IO/handler thread düzeni,,"Kapasite, ownership ve kaynak sırasını incele; uygun karar verilmeksizin değiştirme."
+D03,CORRECTED_IO_COUPLING_REVIEWED_OWNED_EXECUTION_RETAINED,P1,Session okuma/işleme/yazma ardışıklığı,,Retain actual blocked-write side-effect/FIFO/stop and literal source queue oracle. Native Windows IOCP is separate NOT_RUN; do not reopen corrected TCP write gate as missing read-ahead.
+D04,CORRECTED_SOURCE_SCOPE,P1,Accept hatasında servis sonlandırma,,Retain source-derived completion behavior; native Windows execution remains a separate test scope.
+D05,KEEP_REVIEWED_ACTIVATION_STAGING,P2,Hookları tek batch ile etkinleştirme,,Keep recorded ordering and incomplete-staging regressions. Native activation/rollback validation remains NOT_RUN; conservative cleanup policy remains D13.
+D06,REVIEW_NO_AUTOMATIC_REVERT,P2,Ek global kilitler ve attempt counter senkronizasyonu,,Kilit grafiğini ve callback recursionını ayrı incele; blanket revert yok.
+D07,PARTIAL_SOURCE_RESTORED_PACKET_UNKNOWN_DOMAIN_RETAINED,P1,Dosya status dalları basitleştirilmiş,,Hangi status alanlarının callerda kullanıldığını belirle; bilinen dallar için adapter kararı çıkar.
+D08,CORRECTED_SOURCE_SCOPE,P1,Encoding kod sayfası ve hata bayrakları,,Retain recorded Win32 encoding helpers and boundary tests. D10 lexical source binding is closed; native encoding/IO execution remains separate NOT_RUN.
+D09,CORRECTED_SOURCE_SCOPE,P1,Salt okuma işlemlerine require_write denetimi,,Retain read/write ownership separation and external read/rejected-write regression.
+D10,CLOSED_SOURCE_LEXICAL_BINDING,P2,Path çözümleme adapterının farklı API kullanması,,"Retain source lexical regressions. Record actual Windows execution separately; residual backend scope remains DEP05, status domain D07 and encoding/native validation ledger."
+D11,CORRECTED_PACKET_NULL_FACTORY_GUARD,P2,Provider factory null sonucu hata yerine return,,Retain original null-factory oracle and worker-no-finish/module-ownership checks. Native original null-factory behavior remains unknown; no binary exception parity claim.
+D12,CORRECTED_SOURCE_WAIT_SCOPE_OWNED_CANCELLATION_RETAINED,P2,Source wait_steps yerine readiness/port kontrolü,,Retain focused registry/source/reentry regressions; run actual Windows changed-surface tests independently. No full binary-equivalence claim.
+D13,REVIEW_NO_AUTOMATIC_REVERT,P2,Conservative unload ve fault-domain korumaları,,Güvenlik gerekçesiyle ayrı değerlendir; input/cache kota bulgularıyla karıştırma.
+D14,PARTIAL_SOURCE_IO_OPEN_BRANCH_RESTORED_EXIT_POLICY_OPEN,P1,Kaynak exit/error etkisinin SessionFailure ile karşılanması,"Source initial failure restored; FIX26 LIC11 inactive-writer binding corrected. No broad system-error catch around the complete write, and no allocation/recovery/ownership/budget masking.",Keep initial-open false/error timing and atomic post-open failure tests; separately resolve license process-vs-session and CRT ownership. Do not reopen the corrected initial-open branch as a missing file-write boolean.
+D15,REVIEW_NO_AUTOMATIC_REVERT,P2,XML derinlik denetimi parse sonrasına taşınmış,,Upstream kodunu körlemesine geri alma; adapterın malformed/depth sözleşmesini değerlendir.
+D16,CORRECTED_AVATAR_EFFECTS_USER_SELECTION_RETAINED,P2,Avatar seçim isteğinin provider yan etkilerine uzanması,,Retain source trace/failure/size matrix and disk cache/selection checks. Native provider ABI and Windows file behavior remain NOT_RUN. Preserve alias disclosure and avoid adding arbitrary cache layout or path restrictions.
+D17,KEEP_REVIEWED_CRT_OWNERSHIP,P3,getenv yerine sahipli _dupenv_s kopyası,,Keep CRT-origin/copy/error ownership documented. Native CRT/OOM execution remains NOT_RUN; do not replace with Win32 environment reads or global warning suppression.
+D18,CORRECTED_SHARED_CONFIGURATION_OWNERSHIP,P2,Çift configuration orchestration yolu,,Retain shared-owner source binding and configuration/environment failure regressions; no policy changes needed for this corrected duplication.
+D19,KEEP_DOCUMENTED,P3,CRT/TLS/container/thread alt modellerinin host ile karşılanması,,Host replacement olarak sınıflandır; eksik application feature sayısını şişirme.
+Q01,DOCUMENTED_CURRENT_CROSSWALK,P2,Kümülatif metadata açıklamaları güncel davranışla karışmış,,Güncel otorite olarak bu raporu ve ASIO_UPSTREAM_FIX14ü kullan; geçmiş stage JSONlarını current contract sayma.
+Q02,REVIEW_NO_AUTOMATIC_REVERT,P2,Test oracle bağımsızlığı ve aşırı kaba diagnostic,,"Source-derived unchanged expectations, app-specific tests ve synthetic fixtureları ayrı raporla; nonsecret event sınıflarını değerlendirmeye al."
+D20,CORRECTED_SOURCE_SCOPE,P2,Config hata metni EXE dizinini söylüyor,,Retain diagnostic text matching module-relative configuration location; search semantics unchanged.
+D21,REVIEW_NO_AUTOMATIC_REVERT,P2,Staging ve unload iç algoritma sınırları,,Ürün kabulünü daraltan sınırla iç algoritma bütçesini ayır; kapsam/gerekçe incelemesi yapılmadan hepsini kaldırma.

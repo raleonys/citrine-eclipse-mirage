@@ -1,0 +1,611 @@
+{
+  "scope": "Conservative C++/header test roles including literal packet XML compatibility dependency; not semantic approval by metadata.",
+  "files": [
+    {
+      "file": "tests/integration/test_asio_transport.cpp",
+      "sha256": "b25c721d05857b15766ef6121a5f227ff647803cf3299229a24fc4f96d78125f",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_avatar_effects.cpp",
+      "sha256": "1f9aed8fa7f88419936a28f5c44eccfb27528057fe980de47f928c32af42f84b",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_brownfield_contracts.cpp",
+      "sha256": "8b3e4b9492c524e06e149d2c215b4073e342f0c8a54abaf9aaa807fc19449ee4",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_config2_source_oracle.cpp",
+      "sha256": "350f7d216003fc2d68fbbe5348c6afd4065d4b894fb0e0143559bbc1e54502f0",
+      "role": "LIVE_SOURCE_DIFFERENTIAL_DRIVER",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": false,
+      "limit": "Uses live literal packet parse outputs; ignores historical output column; generic state serializer shared only by test.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_configuration_orchestration.cpp",
+      "sha256": "ac524f4d019a4c5a9f908b25bee92e1428209893d0688d4536ce281e2b63dc67",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_configuration_profile.cpp",
+      "sha256": "07f4c2e0a79291b3bae2c87ee8b47396b7ff6aaab6ee8cdd17f0f683f7405e16",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_failure_diagnostics.cpp",
+      "sha256": "3b9288c1377924b9dd3459ed73d070f870fd90bee4ea046cfae86088e4e64a73",
+      "role": "OWNED_FIXED_EVENT_PRIVACY_INTEGRATION",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": false,
+      "limit": "Actual host logger; Windows bootstrap catch dispatch is statically checked, not executed.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_filesystem_config.cpp",
+      "sha256": "868c0a9225e6974ec6a09fec0792a79992b44f38e4be9cf64d5045a38cbeab5c",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_original_compat.cpp",
+      "sha256": "fd1f159223a48b22376ccecd4bae2996cccd8705851fd1242f758d0928ef7663",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_path_effects.cpp",
+      "sha256": "7e6c58f9eaefe79f84deee4ae414b693b07fddad2de0bc634c9a66e442792094",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_path_resolution.cpp",
+      "sha256": "f489622d3c61fe88859cd5c00e108f91d2b0f307162dd620a562e64775eadf31",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_runtime.cpp",
+      "sha256": "7541efc24a19515d76c999af1f641e3ebf822b27a2f8461e2d56d90fc36e4bc5",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_runtime_migration.cpp",
+      "sha256": "e055ae1e533dcbeaf0c07d9664c06fd38f7ca2809d8f7c92155acb4d66acfa66",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_startup_compat.cpp",
+      "sha256": "a6eb86c3c4bda682ef9ea4aa12290c1ccc92f7c96c0ea4a9b0b0727eba641b34",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_startup_phases.cpp",
+      "sha256": "0b9725d7caa35abb45a3941c271d45c17aac31dd4452da922517f93f6aa10f0d",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_supplied_config.cpp",
+      "sha256": "f2b91646c34db2f3cfbb11f4c4d118628eaae9c7be75eff33c4b49da82b6271b",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_ticket_output.cpp",
+      "sha256": "59e94b42298c45b594fc34e2ef257b48d0d3c06f2e8efea551e58314ff32de7e",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_transport_pipeline.cpp",
+      "sha256": "aaf6353bfde3b3a063f3f17a0573b440a0b7a27e237e4a3b7048b9a89d4e8a04",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/integration/test_xml_depth_source_oracle.cpp",
+      "role": "OWNED_LIVE_XML_DIFFERENTIAL_DRIVER_OR_ADAPTER",
+      "origin": "",
+      "original_sha256": "",
+      "limit": "Test-only XML comparison support, not native/DLL proof.",
+      "sha256": "3772d119e8a51ce604c1c1a9fc4ef4799214442d758e4f7519c310d78e6fa814",
+      "byte_identical_to_FIX28": false
+    },
+    {
+      "file": "tests/native/online_fixture.cpp",
+      "sha256": "b4532d2c1d16edced26999eea5641bc140f21ba21f90ff43d2d19ca47c8f1d6b",
+      "role": "NATIVE_FIXTURE_NOT_RUN",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Presence/compilation plan does not imply native execution.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/native/test_crt.cpp",
+      "sha256": "593d0e645a8f6b0581c4764fe36432b4e547ddecd60c6200a7802b4950b37d3b",
+      "role": "NATIVE_FIXTURE_NOT_RUN",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Presence/compilation plan does not imply native execution.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/configuration/order.cpp",
+      "sha256": "2f68a4fe29519e8664ad10ff0a57c11f583ba2ba1fa541a0c70b5bffc02a2b27",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-config-order-source/order.cpp",
+      "original_sha256": "70af2d1c3e948d6b1d2eca3e4339d19869ee731216dae2b85258e77cf33dd719",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/configuration/order.hpp",
+      "sha256": "b319375c3fee63d6f74294c9a6973133845490f93e3697406038ecb8aaeacaad",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-config-order-source/order.hpp",
+      "original_sha256": "1e9f2b46e6a1cece859dc193ecb5573df3dc4bbee94ec00490d5264cedf7345f",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/configuration/packet_parser.cpp",
+      "sha256": "7a397e32f995aaab20bd37964bee7bfd1e636dde504d0da2f6cd67d7d52ea990",
+      "role": "LITERAL_SOURCE_ORACLE_NAMESPACE_INCLUDE_ONLY",
+      "origin": "anadius-parser-source/parser.cpp",
+      "original_sha256": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2",
+      "byte_identical_to_FIX27": false,
+      "limit": "Exact reversible transform of user RE C++; only test target links it; not original DLL.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/configuration/packet_parser.hpp",
+      "sha256": "c52e2aa7c5f2b0c3459fb769af340ebc70a3835cbda9a370e306f3888f0f76dc",
+      "role": "LITERAL_SOURCE_ORACLE_NAMESPACE_INCLUDE_ONLY",
+      "origin": "anadius-parser-source/parser.hpp",
+      "original_sha256": "9e09d6bd1c3f900462c94d7e3bc5acdb141ef1045b6a1ac4e37e25fc1973bdd1",
+      "byte_identical_to_FIX27": false,
+      "limit": "Exact reversible transform of user RE C++; only test target links it; not original DLL.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/configuration/parser_snapshot.hpp",
+      "sha256": "3bb1cce6232eb9e7430535ac62b5c0224e5b5fe5ba3522f958e88cd826ba874b",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/handlers/packet_image.hpp",
+      "sha256": "8e378ea49f2189ca4c9c10f343328ecbbe6a7e4382bfd1f8b344b3910af5bccd",
+      "role": "BOUND_SOURCE_FRAGMENT_WITH_DISCLOSED_ADAPTER",
+      "origin": "anadius-content-handlers-source/content_handlers.cpp",
+      "original_sha256": "3cd0a086a6fb9451d87cf63470877e8be72264ca29894dcb009785dedbc0eab3",
+      "byte_identical_to_FIX27": true,
+      "limit": "Partial source extract; see packet oracle binding metadata and earlier adaptation record.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/io.hpp",
+      "sha256": "1e0f632d14e92864ddb905a43d394bc0d459cdfe7a59879b25cd1c8400d8c741",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/transport/packet_session.hpp",
+      "sha256": "ad3c5e55dcb35f10c32e354f921996892100362073d622045417689b64c15243",
+      "role": "BOUND_SOURCE_FRAGMENT_WITH_DISCLOSED_ADAPTER",
+      "origin": "anadius-server-source/server.cpp",
+      "original_sha256": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0",
+      "byte_identical_to_FIX27": true,
+      "limit": "Partial source extract; see packet oracle binding metadata and earlier adaptation record.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/support/xml/packet/tinyxml2.cpp",
+      "role": "EXACT_PACKET_SELECTED_UPSTREAM_COMPATIBILITY_SOURCE",
+      "origin": "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp",
+      "original_sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554",
+      "limit": "Source packet selected tinyxml2 11.0.0 compatibility parser, not proof of original binary release. Current upstream security/entity fixes are retained; differential domain is ordinary structural XML/depth/error precedence.",
+      "sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554",
+      "byte_identical_to_FIX28": false
+    },
+    {
+      "file": "tests/support/xml/packet/tinyxml2.h",
+      "role": "EXACT_PACKET_SELECTED_UPSTREAM_COMPATIBILITY_SOURCE",
+      "origin": "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.h",
+      "original_sha256": "aed790f764e4663f6cb99839648dd642c7e7a730d12c67d3ab7ca075f0ac67c0",
+      "limit": "Source packet selected tinyxml2 11.0.0 compatibility parser, not proof of original binary release. Current upstream security/entity fixes are retained; differential domain is ordinary structural XML/depth/error precedence.",
+      "sha256": "aed790f764e4663f6cb99839648dd642c7e7a730d12c67d3ab7ca075f0ac67c0",
+      "byte_identical_to_FIX28": false
+    },
+    {
+      "file": "tests/support/xml/packet_oracle.cpp",
+      "role": "OWNED_LIVE_XML_DIFFERENTIAL_DRIVER_OR_ADAPTER",
+      "origin": "",
+      "original_sha256": "",
+      "limit": "Test-only XML comparison support, not native/DLL proof.",
+      "sha256": "74bbc0c42de91fa8e0983f706b1902ee316ee6da8976f2dfea8a5c36b169930f",
+      "byte_identical_to_FIX28": false
+    },
+    {
+      "file": "tests/support/xml/packet_oracle.hpp",
+      "role": "OWNED_LIVE_XML_DIFFERENTIAL_DRIVER_OR_ADAPTER",
+      "origin": "",
+      "original_sha256": "",
+      "limit": "Test-only XML comparison support, not native/DLL proof.",
+      "sha256": "08e1c646a7700ec4bbc06bb9e4ab9abbc2a5901be1d8b2a5238e18ac899d8f0d",
+      "byte_identical_to_FIX28": false
+    },
+    {
+      "file": "tests/unit/configuration/test_hash_table.cpp",
+      "sha256": "ae418d2b77734a5530c163efdeef9f2c83e4b2ca0875deb3077d11c7c420f569",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-config-hash-source/hash_table_tests.cpp",
+      "original_sha256": "5cafe744cc5d8b6dfa356a4c378d289ef2c3717b04be3b4dd4e16e7f3db00360",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/configuration/test_parser.cpp",
+      "sha256": "680be7ecad24e2a92a4d1087344119a131876522161d0fb956941540e4780022",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-parser-source/parser_tests.cpp",
+      "original_sha256": "722c07f8e0d5e5ee0da2be6c70dd5ae7774055c24f2d75339eca84bb5b9c9123",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/configuration/test_pegtl_differential.cpp",
+      "sha256": "bdfbb5d9b386b54cec345e280b3def64cac1b1af80573f650139bf87665629d3",
+      "role": "FROZEN_SELF_REGRESSION",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "8766 historical expected outputs are regression evidence, not independent source proof.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/configuration/test_state.cpp",
+      "sha256": "c30feaed5a63e8a474f7d8d56589ba9adba952f8426ef5d425bbf1d205a596ac",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-config-source/configuration_tests.cpp",
+      "original_sha256": "d275d51b127d958ee2b52a484deaa7c188eb4165586e70e26776726c98f7d95a",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/crypto/test_crypto.cpp",
+      "sha256": "09b3fac9f4d380125f3fe751a23fc725280021d6728a33012e021d7d5849fb44",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-crypto-source/crypto_tests.cpp",
+      "original_sha256": "185679607d2f7fa9b1c37d0495ee4bd00b4722f435ec90513e7ff05281161fb2",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/files/test_status.cpp",
+      "sha256": "d602be314bf1e8e6ffb9c72a0e6d5b6e53681221e77ee2b297f0a82719b780ac",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-status-source/status_tests.cpp",
+      "original_sha256": "315a5e01a90b2936d9ad40f63322940b0c2fac058c051925ac4961d43b469f05",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/handlers/test_content.cpp",
+      "sha256": "4d7ef191b6f4f4620d4ef22225b07fae177cfb972974508010c8a590dd94265f",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-content-handlers-source/content_handlers_tests.cpp",
+      "original_sha256": "23c2ed7eb48ef81a93fef084c4f3f2982ec30a5721a9c6a2b05307cd7602c517",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/handlers/test_information.cpp",
+      "sha256": "dfd61acfd89aef36d8df40727e512a36d8a5fc2dd06dfce17a16553fa59ecde5",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-handlers-source/handlers_tests.cpp",
+      "original_sha256": "86509ce3855e841ad50bb61e1b260b106ef8c2f8ec7801ecf9b039b0043e8d63",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/handlers/test_presence.cpp",
+      "sha256": "d94ab7b84e9cf146b2511e04979f0306fc984ae612e280fe7310949dba495100",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-misc-handlers-source/misc_handlers_tests.cpp",
+      "original_sha256": "b835781a8526dbd16e22785562137c097512cb9cd64391604c0f089245037579",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/hashing/test_hash.cpp",
+      "sha256": "c96bb4db2462bf2290e7567f837c69ca47fcc16e004b0357fb3259c146a033f0",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-hash-source/hash_tests.cpp",
+      "original_sha256": "dff37e81b356f88297c3a1911592043b96a02aa79115679d5204e93d148458e1",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/hooks/test_crypt_query.cpp",
+      "sha256": "ea43f175082c577d142bc0f7ecf8e8676b8b6614d6e2f5760807e4b288ac3eea",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/hooks/test_registry_source.cpp",
+      "sha256": "807e155bfd6f820670054db62f7ccc785d22d746ea9589f0700d1f0019cab025",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-registry-source/registry_tests.cpp",
+      "original_sha256": "14f9f7148e517d4241904add1c8aaa1c55b57aa97d20aa54830a67b896683da8",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/hooks/test_registry_wait.cpp",
+      "sha256": "c30571154e8aa32834b829d0758eda6125d603d75080afeeb29bea8e28bf0e8c",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/hooks/test_setup_plan.cpp",
+      "sha256": "f3e1b1dfce8a2fc247ec212f4c1615a8c2d776cdd56cd7d7f2db0d71e8f4c93e",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/libraries/test_libraries.cpp",
+      "sha256": "2ce818776d79ce80ec03de869c263e8940568c0577f979f97649035d188261a7",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-libraries-source/libraries_tests.cpp",
+      "original_sha256": "921615ebda91b6a4914967d3b40f043184168f331112b23517b67348c7b51a73",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/licensing/test_key_store.cpp",
+      "sha256": "6dce7ac970810e4c3d927dab80d5055b1950229bb31ee81fa6a34716f73d9221",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/licensing/test_license.cpp",
+      "sha256": "8cccaf9c09c17f55b7a6b7d37bd1b8b127cd9c906cf7fe9da448ba3b859d1bd7",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-license-source/license_tests.cpp",
+      "original_sha256": "04b17b1a2e424857c5709aca0aab60c9eb82eac3f5c7de87416f97e19a2f8c20",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/paths/test_encoding.cpp",
+      "sha256": "abd184a9feb5603c09cf90dff93075b5c37d536641fa009c15616bb245de0d05",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-encoding-source/encoding_tests.cpp",
+      "original_sha256": "ab99d6f54d33e92031eabcfe8c8c534fdf504a799f9ccb99de62f5064211f480",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/paths/test_module_relative.cpp",
+      "sha256": "f3a23e79a0e3254622ed39bf7d2c29a7080b65984ced685e2af5a065137f3b5c",
+      "role": "OWNED_APPLICATION_TEST_OR_SUPPORT",
+      "origin": "",
+      "original_sha256": "",
+      "byte_identical_to_FIX27": true,
+      "limit": "Current application/synthetic fixture; not independent source/native acceptance.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/paths/test_path.cpp",
+      "sha256": "2244616783b648dba2ae64cd293513ed9dea79cafa46563aa1524bcfcd7520f1",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-path-source/path_tests.cpp",
+      "original_sha256": "1daa97aee6953ca853b213f02c73cfb2b0ea038f079c3e4299b3e384865aad78",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/profiles/test_online.cpp",
+      "sha256": "f967dd8a61d09f72efb9aae433b35f510dec1384707297d65228ba6adfda1bfb",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-online-source/online_tests.cpp",
+      "original_sha256": "63b11d362aaefae64143e3a8642193285456420dcd9ef1f4c8d1cef7877b7428",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/protocol/test_integration.cpp",
+      "sha256": "07e7ee3d37b0131467047fa25cbb358debf61743187b39612bfb1b450f1ac1cc",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-dispatch-source/integration_tests.cpp",
+      "original_sha256": "7749626b4a0acc3d1998c1401b549f3126f0719a9eacf8014e6dec556686a1e2",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/protocol/test_messages.cpp",
+      "sha256": "ff6d45416a3e74f9ccb49d0dfbe1bc4656d6da8a79e185faff760ae414b78343",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-messages-source/messages_tests.cpp",
+      "original_sha256": "9056a292b59f6363dd94cc761b2b61e7d721184c6d365f13d47f9cee6173251e",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/runtime/test_startup.cpp",
+      "sha256": "485cedd98b5bd23773f56c317395c3da7723d7e3a87d8c996957deaf5dbc900f",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-startup-source/startup_tests.cpp",
+      "original_sha256": "526c8422941523e9727131da4aae45edb9b579ac9e6027b4dde57f1e5991482c",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/time/test_calendar.cpp",
+      "sha256": "395e54b5b25a2d1dbf32f667f6416969de661d81fd1cbd6ef6ef6822181201c6",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-calendar-source/calendar_tests.cpp",
+      "original_sha256": "dd058d7ff7d156149bd4cd3a178173d121c4f1f8d366d2daded290fde6419e8b",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/tokens/test_token.cpp",
+      "sha256": "216edb1e819fea7a430172464462479b6d1c47ab0c250ce15461d7d31d0393f4",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-token-source/token_tests.cpp",
+      "original_sha256": "e040b765066ac6ab4326800a884ca4d71490f2f6541e992fbbbdd696419daa2e",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/xml/test_printer.cpp",
+      "sha256": "53a96ab8916d617e53a304b9e6c499f2fac1636dbd03a8cb3ba86db61d9b35e8",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-xml-source/printer_tests.cpp",
+      "original_sha256": "9c0be4b6387ab61429872cb1f40f6d13c77170541665d47fee24c7edd4275f00",
+      "byte_identical_to_FIX27": true,
+      "limit": "Original provenance bound; app/upstream adaptations may alter expectations. Not automatically a literal oracle.",
+      "byte_identical_to_FIX28": true
+    },
+    {
+      "file": "tests/unit/xml/test_reader.cpp",
+      "sha256": "69a39bb0a348c8964d0188b651f56b4b35e46de2beb9a6629e26de171fd00d1d",
+      "role": "PACKET_ANCESTRY_WITH_ADAPTED_EXPECTATIONS",
+      "origin": "anadius-xml-reader-source/reader_tests.cpp",
+      "original_sha256": "750b046372b025ad5e6f3abe130e20a3760be732a35b0c86d29fd641aabcbb30",
+      "byte_identical_to_FIX27": true,
+      "limit": "Source-based expectations strengthened for parse-time ErrorStr; previous adapter-only string expectation corrected with live source reference.",
+      "byte_identical_to_FIX28": false
+    }
+  ],
+  "Golden": "Inherited tools unchanged; protocol/tool/synthetic link-policy tests are not actual Windows DLL acceptance."
+}

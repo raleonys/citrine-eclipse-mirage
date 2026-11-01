@@ -1,0 +1,38 @@
+{
+  "status": "PASS_TARGETED_NEGATIVE_CONTROLS",
+  "source_digest": "871cd89911b1677fe121ad965bb11768f5d4425574794da2a001cf3685654490",
+  "test_sha256": "ac524f4d019a4c5a9f908b25bee92e1428209893d0688d4536ce281e2b63dc67",
+  "scope": "Temporary production state.cpp mutations; unchanged new test and actual core. Replaced TU/test freshly compiled and linked against validated same-code preliminary core objects; shipping source unchanged.",
+  "cases": [
+    {
+      "case": "publication_in_preparation",
+      "file": "src/configuration/state.cpp",
+      "current_sha256": "729df7c96298646c3f29c5ad581a1e686c9f0bf38d2bad1c3cee6e2c7567232e",
+      "mutated_sha256": "ba8da49a967dd1e06a92787da227b4e5e75309eb35b6a06398a23ac26d15770f",
+      "mutation": {
+        "before": "deps.update_achievement_storage_01eb00(state);",
+        "after": "deps.update_achievement_storage_01eb00(state);\n    publish_configuration_environment(state,deps);"
+      },
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_assertion": "shared source post-configuration sequence",
+      "output": "FAIL shared configuration orchestration: shared source post-configuration sequence\n",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    },
+    {
+      "case": "base_replayed_instead_of_override",
+      "file": "src/configuration/state.cpp",
+      "current_sha256": "729df7c96298646c3f29c5ad581a1e686c9f0bf38d2bad1c3cee6e2c7567232e",
+      "mutated_sha256": "4221af6b136381a77b11dbad3c3a8cea5ca6e91faf62ad55984f59932eac5604",
+      "mutation": {
+        "before": "passes.load_and_apply(state, true, deps);",
+        "after": "passes.load_and_apply(state, false, deps);"
+      },
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_assertion": "layers run once in base-override order",
+      "output": "FAIL shared configuration orchestration: layers run once in base-override order\n",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    }
+  ]
+}

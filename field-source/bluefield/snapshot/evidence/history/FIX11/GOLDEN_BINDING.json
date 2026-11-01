@@ -1,0 +1,7 @@
+{
+  "source_digest": "61e898fcbf29ac6828827dbdbb3b1f3edee2c51791f318e1f5d4a15e4c562394",
+  "production_binding": "UNCHANGED_FROM_FIX06",
+  "synthetic_tool_pipeline": "PASS 14 cases",
+  "actual_FIX09_DLL_Golden": "NOT_RUN",
+  "receipt": "evidence/portable_debug.json"
+}

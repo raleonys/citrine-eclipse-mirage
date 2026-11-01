@@ -1,0 +1,25 @@
+{
+  "status": "CURRENT_LIBRARY_VERSION9_RECHECKED_FOR_FIX19",
+  "revision": "2026-10-25.1",
+  "master_md": {
+    "library_file_id": "libfile_b1de5dceb8448191a0d52c120edc5215",
+    "version": 9,
+    "sha256": "8bfe91091fb115ee816d1a7204f2256d837df79d14957e78d332d3602daa981b"
+  },
+  "master_json": {
+    "library_file_id": "libfile_c451831f61c88191a98aa9ab08cc7714",
+    "version": 9,
+    "sha256": "06ab4d5e070a191e40045d681e03f9fbd99bbbed4195c89174f5656d95beb141"
+  },
+  "packaged_projection": {
+    "json": "metadata/GOVERNANCE_APPLICABLE.json",
+    "md": "docs/GOVERNANCE_APPLICABLE.md",
+    "json_sha256": "e59e4c396aa167081e657c04f1379a910958e2b69a23d4da23da73cdb21fa458",
+    "md_sha256": "4cea18ff937d7a15951f7e329d416c810237d0877421a99efd0b1ee7545feddf",
+    "full_master_mirror": false,
+    "library_only_debt_excluded": true
+  },
+  "independent_authority_limit": "Packaged projection and source checks cannot manufacture user authorization or prove semantic compliance. Latest user instruction wins.",
+  "publication_authorized": false,
+  "scope": "Source-selected registry ClientValue waits all startup phases while callback-owned recursive serialization is suspended; lifetime lease remains active. No unrelated startup/provider/vendor change."
+}

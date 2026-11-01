@@ -1,0 +1,45 @@
+{
+  "status": "PASS_FOCUSED_DEBUG_ASAN_UBSAN",
+  "source_digest": "b1a02c3b53e74d2d1775aaeb07f02820e34e428dae49426d23d90dd486de94fd",
+  "tests": [
+    {
+      "profile": "debug",
+      "exit": 0,
+      "output": "online: 12758 checks passed (synthetic mocks only)\n",
+      "executable_sha256": "1e2c5fcb58bfd655cc73e90bf8f46d836f09bb896daa7a5c37cdc0d650672781",
+      "source_hashes": {
+        "tests/unit/profiles/test_online.cpp": "f967dd8a61d09f72efb9aae433b35f510dec1384707297d65228ba6adfda1bfb",
+        "src/profiles/online.cpp": "c2390147e5f9e8ad837c20362f850afc83dcc6f7f790166e124ba6d0bde67845",
+        "src/paths/paths.cpp": "8f5eb06ecf054d5ea8882c913245d0872f0b96e76bd344eddc5ab469094aa4cb"
+      },
+      "flags": [
+        "-std=c++20",
+        "-O0",
+        "-g",
+        "-I/workspace/scratch/2072698c927d/fix23_work/preloader_l"
+      ],
+      "asan_options": "detect_leaks=0"
+    },
+    {
+      "profile": "sanitizer",
+      "exit": 0,
+      "output": "online: 12758 checks passed (synthetic mocks only)\n",
+      "executable_sha256": "c1a5e48c77aebb857c6fb20092dc03942f4c5ef7d9ad4c90060a820ed526fedf",
+      "source_hashes": {
+        "tests/unit/profiles/test_online.cpp": "f967dd8a61d09f72efb9aae433b35f510dec1384707297d65228ba6adfda1bfb",
+        "src/profiles/online.cpp": "c2390147e5f9e8ad837c20362f850afc83dcc6f7f790166e124ba6d0bde67845",
+        "src/paths/paths.cpp": "8f5eb06ecf054d5ea8882c913245d0872f0b96e76bd344eddc5ab469094aa4cb"
+      },
+      "flags": [
+        "-std=c++20",
+        "-O0",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "-I/workspace/scratch/2072698c927d/fix23_work/preloader_l"
+      ],
+      "asan_options": "detect_leaks=0"
+    }
+  ],
+  "scope": "Original reconstructed-source unit fixture; synthetic effects only, no native provider/CRT/DLL"
+}

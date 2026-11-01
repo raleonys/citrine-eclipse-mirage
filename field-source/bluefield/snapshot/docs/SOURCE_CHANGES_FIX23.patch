@@ -1,0 +1,92 @@
+--- FIX22/src/profiles/online.cpp
++++ FIX23/src/profiles/online.cpp
+@@ -60,7 +60,8 @@
+     }
+     const Path cookie_copy(state.cookie_0a3a20);
+     state.object_0a3a88 = effects.call_create_online(factory, cookie_copy.c_str());
+-    if (!state.object_0a3a88) {log_line(effects,"provider factory rejected");return;}
++    if (!state.object_0a3a88)
++        throw OutOfEvidenceInput("035bd0 dereferences a null create_online result");
+     const auto status = effects.status_virtual_08(state.object_0a3a88);
+     if (status != 0) {
+         if (status == 1) effects.log_literal_006880("authentication failed, ");
+--- FIX22/tests/unit/profiles/test_online.cpp
++++ FIX23/tests/unit/profiles/test_online.cpp
+@@ -154,8 +154,8 @@
+     }
+     {
+         State state;Mock m;m.created=0;
+-        o::worker_035b60(state.refs(),m);
+-        CHECK(state.object==0);CHECK(state.module==0);CHECK(state.online==0);CHECK(!m.called("auth-status"));CHECK(m.called("finish"));
++        throws<o::OutOfEvidenceInput>([&]{o::worker_035b60(state.refs(),m);});
++        CHECK(state.object==0);CHECK(state.module==41);CHECK(state.online==0);CHECK(!m.called("auth-status"));CHECK(!m.called("finish"));
+     }
+ }
+ static void offline_profile() {
+--- FIX22/scripts/qa/check_source.py
++++ FIX23/scripts/qa/check_source.py
+@@ -16,18 +16,18 @@
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX22 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX23 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX22.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX23.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX22 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX23 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX22 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX22')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX22.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX23 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX23')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX23.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX22 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX23 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -126,6 +126,11 @@
+  if 'lexically_normal' in host:fail(2,'host resolver normalization reintroduced')
+  for name in ['test_path_resolution.cpp','test_path_effects.cpp']:
+   if 'tests/integration/'+name not in graph['integration_tests'] or 'tests/integration/'+name not in cmake:fail(2,'path fixture missing from build graph: '+name)
++ # D11 retains the packet's null-factory guard and independent source oracle.
++ online=(root/'src/profiles/online.cpp').read_text()
++ if 'if (!state.object_0a3a88)\n        throw OutOfEvidenceInput("035bd0 dereferences a null create_online result");' not in online or 'provider factory rejected' in online:fail(2,'null provider guard replaced by silent completion')
++ fixture=(root/'tests/unit/profiles/test_online.cpp').read_text()
++ if 'CHECK(state.object==0);CHECK(state.module==41);CHECK(state.online==0);CHECK(!m.called("auth-status"));CHECK(!m.called("finish"));' not in fixture:fail(2,'original null-factory oracle weakened')
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -216,7 +221,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX22.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX23.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX22/tests/tools/test_source_policy.py
++++ FIX23/tests/tools/test_source_policy.py
+@@ -75,6 +75,7 @@
+   modify('src/application/application.cpp',lambda b:b.replace(b'configuration::apply_configuration_layers(state,configuration_effects,passes);',b'configuration::apply_configuration_layers(state,configuration_effects,passes);storage.update_01eb00(state);'),'duplicated post-configuration storage replay')
+   modify('src/application/environment.hpp',lambda b:b.replace(b'using PathEffects=paths::WindowsEffects;',b'using PathEffects=WrongWindowsOwner;'),'Windows lexical owner bypass')
+   modify('src/application/providers.hpp',lambda b:b.replace(b'return PathEffects::join(a,b);',b'return model_path(native_path(a)/native_path(b));'),'application lexical join bypass')
++  modify('src/profiles/online.cpp',lambda b:b.replace(b'throw OutOfEvidenceInput("035bd0 dereferences a null create_online result");',b'return;'),'silent null-factory completion restored')
+   assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())

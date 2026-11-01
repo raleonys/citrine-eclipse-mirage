@@ -1,0 +1,39 @@
+{
+  "source_digest": "a99eedbf72d52d2a987079266f783a8b5472bff29c7893531d472ff8c8833d35",
+  "fixture_sha256": "59e94b42298c45b594fc34e2ef257b48d0d3c06f2e8efea551e58314ff32de7e",
+  "cases": [
+    {
+      "name": "broad_open_catch",
+      "result": {
+        "exit": 1,
+        "output": "FAIL non-system open error masked\n",
+        "command": [
+          "/workspace/scratch/2072698c927d/fix27_helpers/broad_open_catch"
+        ]
+      },
+      "mutant_sha256": "ea9b101e47e94203a9830b9ff281388f0b774df11e079f41c0cbf2e8bdb07ab6"
+    },
+    {
+      "name": "initial_state_always_success",
+      "result": {
+        "exit": 1,
+        "output": "FAIL native output did not open\n",
+        "command": [
+          "/workspace/scratch/2072698c927d/fix27_helpers/initial_state_always_success"
+        ]
+      },
+      "mutant_sha256": "36a24c06e6dcb76c732ecce528c6b853d2645926a5a3bc7aa6204ee0393090e7"
+    },
+    {
+      "name": "poisoned_stage_can_commit",
+      "result": {
+        "exit": 1,
+        "output": "FAIL failed stage must not commit after caller catches write error\n",
+        "command": [
+          "/workspace/scratch/2072698c927d/fix27_helpers/poisoned_stage_can_commit"
+        ]
+      },
+      "mutant_sha256": "d09ac21d4abc823defe6b71cec19abd3936fb967e9f0f04709cebfe3202528a6"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "parent_Werror_expected_rejection": {
+    "exit": 1,
+    "output": "/workspace/scratch/2072698c927d/fix26_helpers/parent_license.cpp: In member function \u2018void preloader_l::licensing::Handlers::fatal(std::string_view, std::string_view, int32_t)\u2019:\n/workspace/scratch/2072698c927d/fix26_helpers/parent_license.cpp:54:1: error: \u2018noreturn\u2019 function does return [-Werror]\n   54 | }\n      | ^\n/workspace/scratch/2072698c927d/fix26_helpers/parent_license.cpp: In member function \u2018void preloader_l::licensing::Handlers::ticket_required(const char*, const char*)\u2019:\n/workspace/scratch/2072698c927d/fix26_helpers/parent_license.cpp:106:1: error: \u2018noreturn\u2019 function does return [-Werror]\n  106 | }\n      | ^\ncc1plus: all warnings being treated as errors\n",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-Werror",
+      "-O2",
+      "-I",
+      "/workspace/scratch/2072698c927d/fix26_work/preloader_l",
+      "-c",
+      "/workspace/scratch/2072698c927d/fix26_helpers/parent_license.cpp",
+      "-o",
+      "/workspace/scratch/2072698c927d/fix26_helpers/parent_werror.o"
+    ]
+  },
+  "current_Werror": {
+    "exit": 0,
+    "output": "",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-Werror",
+      "-O2",
+      "-I",
+      "/workspace/scratch/2072698c927d/fix26_work/preloader_l",
+      "-c",
+      "/workspace/scratch/2072698c927d/fix26_work/preloader_l/src/licensing/license.cpp",
+      "-o",
+      "/workspace/scratch/2072698c927d/fix26_helpers/license_werror.o"
+    ]
+  },
+  "unchanged_unit_fixture_runs": {
+    "parent": {
+      "exit": 0,
+      "output": "PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)\n",
+      "command": [
+        "/workspace/scratch/2072698c927d/fix26_helpers/parent_license_fixture"
+      ]
+    },
+    "current": {
+      "exit": 0,
+      "output": "PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)\n",
+      "command": [
+        "/workspace/scratch/2072698c927d/fix26_helpers/current_license_fixture"
+      ]
+    }
+  },
+  "fixture_sha256": "8cccaf9c09c17f55b7a6b7d37bd1b8b127cd9c906cf7fe9da448ba3b859d1bd7",
+  "parent_core_archive_sha256": "519932c7a7d3a8abef1ccb44a0322e8fc6ad93152dd2c751416ba4c8f2266f48",
+  "current_source_sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808",
+  "source_digest": "251519c94014571af00ba5b5af9dfdbd4982d04bd636ace6ec961580a075b9cf"
+}

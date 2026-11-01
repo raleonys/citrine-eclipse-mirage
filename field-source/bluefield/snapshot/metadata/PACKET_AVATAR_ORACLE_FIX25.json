@@ -1,0 +1,16 @@
+{
+  "origin": "anadius-content-handlers-source/content_handlers.cpp",
+  "origin_sha256": "3cd0a086a6fb9451d87cf63470877e8be72264ca29894dcb009785dedbc0eab3",
+  "original_archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "body_slice_sha256": "3cecd1ff8388cc2b215be6e10c658b2d41c18be84966ae83889da29af8e75cf5",
+  "helpers_slice_sha256": "99c14fbe7c46a8dd06e79798a08a5cede737b45b883b7c7d05106fe648e86427",
+  "destination": "tests/support/handlers/packet_image.hpp",
+  "destination_sha256": "8e378ea49f2189ca4c9c10f343328ecbbe6a7e4382bfd1f8b344b3910af5bccd",
+  "literal_body_preserved": true,
+  "adaptations": [
+    "Test-only preloader_l::test_packet_avatar namespace and imported model types.",
+    "Path-only packet virtual avatar effect forwards explicit owner and parsed width/208 to candidate Effects; native signature not proved by this oracle.",
+    "Only visible own-avatar ResourcePath differs deliberately; retained official/custom selection and lazy resolve are tested separately."
+  ],
+  "production_linked": false
+}

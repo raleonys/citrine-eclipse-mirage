@@ -1,0 +1,39 @@
+{
+  "scope": "Three generated owned ELF outputs; bytes unchanged; first CTest41/44_BAD_COMMAND",
+  "repairs": [
+    {
+      "name": "hooks_test_setup_plan",
+      "before": {
+        "sha256": "c5f7fb58c438b18b347bfbbac25cb63a5608c0ae6114c656159ec975b39332eb",
+        "mode": "0o644"
+      },
+      "after": {
+        "sha256": "c5f7fb58c438b18b347bfbbac25cb63a5608c0ae6114c656159ec975b39332eb",
+        "mode": "0o755"
+      }
+    },
+    {
+      "name": "test_startup_phases",
+      "before": {
+        "sha256": "3952300e598f95acf761c3beec08d21e17a4024ede41e3108478e856782715b8",
+        "mode": "0o644"
+      },
+      "after": {
+        "sha256": "3952300e598f95acf761c3beec08d21e17a4024ede41e3108478e856782715b8",
+        "mode": "0o755"
+      }
+    },
+    {
+      "name": "test_asio_transport",
+      "before": {
+        "sha256": "353d8f104694d6d394cb6c97055c9a07dcab4e5ac0fa3286555faffd6c1b6d88",
+        "mode": "0o644"
+      },
+      "after": {
+        "sha256": "353d8f104694d6d394cb6c97055c9a07dcab4e5ac0fa3286555faffd6c1b6d88",
+        "mode": "0o755"
+      }
+    }
+  ],
+  "cause": "not_independently_established"
+}

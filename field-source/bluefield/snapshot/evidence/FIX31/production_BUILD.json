@@ -1,0 +1,14 @@
+{
+  "profile": "production",
+  "source_digest": "459db9aac948a242e06c309c60a58b642679c9799ae5907e27b2f16b7f729375",
+  "configure": {
+    "exit_code": 0,
+    "seconds": 1.079,
+    "log": "fix31_helpers/production_configure.log"
+  },
+  "build": {
+    "exit_code": 0,
+    "seconds": 114.588,
+    "log": "fix31_helpers/production_build.log"
+  }
+}

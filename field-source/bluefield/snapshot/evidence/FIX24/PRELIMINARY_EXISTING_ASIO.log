@@ -1,0 +1,3 @@
+Native accept fault regression injected=3 platform=Linux; Win32 boundary NOT_RUN
+Asio fault campaign attempts=1 terminal=1 dispatch=0 rearm=0 recovery=0
+PASS Asio transport checks=59; fragmentation/FIFO/300k-write/fault recovery/cancel/repeated lifecycle; native IOCP requires Windows

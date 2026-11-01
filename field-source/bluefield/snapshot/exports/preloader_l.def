@@ -1,0 +1,5 @@
+LIBRARY preloader_l
+EXPORTS
+    DllMain @1
+    SURGE @2
+    DllShutdown @3

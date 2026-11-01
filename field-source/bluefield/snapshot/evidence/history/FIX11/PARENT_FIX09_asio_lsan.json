@@ -1,0 +1,8 @@
+{
+  "status": "ENVIRONMENT_BLOCKED",
+  "source_digest": "61e898fcbf29ac6828827dbdbb3b1f3edee2c51791f318e1f5d4a15e4c562394",
+  "binary_sha256": "d59a6e7554a3d4b796a637dac31df44f6e33c7e11d5f189397d45a62b17a5792",
+  "exit_code": 1,
+  "output": "==4==LeakSanitizer has encountered a fatal error.\n==4==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==4==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n",
+  "scope": "focused Asio transport lifecycle only; not full project leak acceptance"
+}

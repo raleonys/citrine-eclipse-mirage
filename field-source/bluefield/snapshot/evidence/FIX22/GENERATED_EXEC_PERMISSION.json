@@ -1,0 +1,14 @@
+{
+  "file": "fix22_qa/cmake_release/test_startup_compat",
+  "scope": "Generated owned CMake test executable; no source/test/body bytes changed",
+  "before": {
+    "sha256": "829c5af99a0d8d8d6b948a4533f9f56b00fc5aa62481397c0b6055c883c0498b",
+    "mode": "0o644"
+  },
+  "after": {
+    "sha256": "829c5af99a0d8d8d6b948a4533f9f56b00fc5aa62481397c0b6055c883c0498b",
+    "mode": "0o755"
+  },
+  "first_CTest": "FAIL_43_OF_44_startup_compat_BAD_COMMAND_permission_denied",
+  "cause_of_mode_loss": "not_independently_established"
+}

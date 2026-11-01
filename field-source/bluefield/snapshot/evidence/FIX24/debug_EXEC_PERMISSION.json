@@ -1,0 +1,17 @@
+{
+  "scope": "Generated owned test ELF only; bytes unchanged",
+  "repairs": [
+    {
+      "file": "/workspace/scratch/2072698c927d/fix24_qa/debug/licensing_test_license",
+      "sha256": "bec429ca9572e57b515292b5240e5e2f308e479b30e055343f9fe13565403653",
+      "before_mode": "0o644",
+      "after_mode": "0o755"
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix24_qa/debug/test_configuration_orchestration",
+      "sha256": "372327869fe076706bfbeebc2c199e81623946a0b67e11d8ca1868ff20d0eb99",
+      "before_mode": "0o644",
+      "after_mode": "0o755"
+    }
+  ]
+}

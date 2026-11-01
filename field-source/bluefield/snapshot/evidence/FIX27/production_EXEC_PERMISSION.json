@@ -1,0 +1,313 @@
+{
+  "scope": "Owned generated ELF execute-mode preflight; no source/test content changes.",
+  "files": [
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/hooks_test_registry_source",
+      "sha256": "2b1e265e2cad4ea1c89426868fe6f269afbdbf90e570e96143825b756e97121e",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/hooks_test_registry_wait",
+      "sha256": "59a0e816bfe024b0269a35cadb2e870babb3001ba0c0d219d124bbdc8b6651a0",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/paths_test_encoding",
+      "sha256": "ab92e4f50a0d2937c67921724fc2511fbcf3deb512458df5d3349ddc11beb88b",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/files_test_status",
+      "sha256": "ac4e770fb7bfa28e5f97b01c9578bf7f3d3ff734bacbbc128f60461da1e2f66b",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/libraries_test_libraries",
+      "sha256": "0633d19737c980e0c3359ab1a2e3327332145fcf6dfbef51e07de42f669b0f24",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/configuration_test_hash_table",
+      "sha256": "4bd32573aac7c7efd7096afac07f6db82b3d7d74b0a162fc6efb4cbf0e8e5b66",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/configuration_test_parser",
+      "sha256": "f81570e28082883ea4ea4fe128db652da0541128597bd38657bc4f6290565d69",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/configuration_test_pegtl_differential",
+      "sha256": "f0bed90651645b19cb88e11dc3f98ee3cfd48666ca1eab89ad1f94c6e027a61a",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/configuration_test_state",
+      "sha256": "9bb6a8b7e3a31a22ad126b4ceb6cfaf774ffde5ef896805aa3491bc5e51df25a",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/crypto_test_crypto",
+      "sha256": "152cd90c5d705dcd348804c3657182d327f03dc368f78a71327dec22e515552f",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/handlers_test_content",
+      "sha256": "95a7126475472155f45fae35a505317e4bc8b753182541650c0b7407e926e1d7",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/handlers_test_information",
+      "sha256": "bcc2ab3f5b30bd352f4d34766d1eee724c7b4091f124dcc9df0d6092ccc40875",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/handlers_test_presence",
+      "sha256": "4c7863dd13397647fc31daf813adac8ad49d954ba719f7992c013fa7ac2345e3",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/hashing_test_hash",
+      "sha256": "06a6dacb2983f10a37b8413faff8f82308508c7c80252163c0e245c5fd563427",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/hooks_test_crypt_query",
+      "sha256": "4da6d5c33085a8dadda11122bae42159254f8cc2a22e9a98e75aa52a2402eb98",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/hooks_test_setup_plan",
+      "sha256": "c5f7fb58c438b18b347bfbbac25cb63a5608c0ae6114c656159ec975b39332eb",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/licensing_test_key_store",
+      "sha256": "54b46f80a45ff394563b5e155cb9c555d6a71e60ae313f3dc9e1f1a4ff30d704",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/licensing_test_license",
+      "sha256": "dba7de2bb9467f5fa3b7b4c76ecde4994aa62b392f8d1beac14de2b412c47c54",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/paths_test_path",
+      "sha256": "b86804a9699fd02aac9b6377f06c15ea8e0b58378089e67dd4925b234e21c439",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/paths_test_module_relative",
+      "sha256": "68b0d99ac073b2fe0af83d25559dbbf85897e407b0f15e951f0a7d32b2e9a141",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/profiles_test_online",
+      "sha256": "e03f9df58e7491444e9312db79857cad6741645cd4fd5087422a65219971318e",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/protocol_test_integration",
+      "sha256": "6c70cd6b08bc3845b5492cd0cf125f0b32595787c691ae7cc47e7fba159d395d",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/protocol_test_messages",
+      "sha256": "1e751cceb717b5552714e31587293e76beda04f9bd11f0cca5a471f0814301da",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/runtime_test_startup",
+      "sha256": "9e194866f4c075ef349886974b478d6cc108fda71d2d3ff79a91f93ae845fd9e",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/time_test_calendar",
+      "sha256": "d28d4d6f459fde45268589650d6e1a92e625df61dc7af900638723a1bcc16c6e",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/tokens_test_token",
+      "sha256": "d7b1e896a16ecf90a54e30c90d7f4390a5d02a0913f4039f7baf6dfca26cc619",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/xml_test_printer",
+      "sha256": "90c697f9ce0511503f8defa29efc500bfd30b529c85bd7b990e6e29ffb34ddcc",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/xml_test_reader",
+      "sha256": "6fffcbd5613353743c667a41eb49d1c51643d52b53ba4f034fff131b9a850050",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_runtime",
+      "sha256": "80a4a9bb4e4d53687e77f1514b13cf8cbb3a3658a145cb345b250f3f376de296",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_startup_compat",
+      "sha256": "32980882963c1cba0f4669d5723b63189fdb968517f43e5d73e62e0e83da7eb7",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_ticket_output",
+      "sha256": "f4a65e36b3ba8f680b9ddd3802c72f558a659e8fb9e823c5375ddd578827e964",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_avatar_effects",
+      "sha256": "5cc119dda8df86e4151cd0d4a07f3921677c04cd9cb0d95dc13d38a249ab03bd",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_transport_pipeline",
+      "sha256": "8780353e6e42e07b058f9041ef80a92891f626d0f142ce990a32afefee4f7f2b",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_path_effects",
+      "sha256": "a128004298d39430ceb2dce777634e8f4b42b1e26ccb2af3cd76d3c7fbefe095",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_path_resolution",
+      "sha256": "fa70587499d435927cce64dd8a8489db9e1195665096448da9b7ad14ef297c86",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_configuration_orchestration",
+      "sha256": "74aa50647d70c174c20c88b586422525cc9dc363106e414f0dd051cb9fdefef8",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_startup_phases",
+      "sha256": "09d5f1239dea6cb223021be6247a7762368e7a9f887ab9367ca1419dda7b770d",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_brownfield_contracts",
+      "sha256": "7eb6e01f89b4800f7c10e0b11f68ae0fb1877fc179e7d0561cf5052413412d23",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_supplied_config",
+      "sha256": "607aafe49e136a52475d20f63cda3327033826e3afa128121651882b11245a64",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_configuration_profile",
+      "sha256": "b606fdc1d7a08eaa9f8f6d967c0d4d4b3d75b59427fcb6ce8ee7218f00407cf3",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_asio_transport",
+      "sha256": "1d2adf77657a2d9f9fb0ce26a985be44ef8668aa99b43ac1139ba4ce172131cd",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_filesystem_config",
+      "sha256": "a54a165e40b30c70f36d2714a1d2b691970a48d322d368b1a369a662e96cafb4",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_runtime_migration",
+      "sha256": "9f936183c40cde30025a4a5e122b19ba43f401b825690a701f5c6b172f159999",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix27_qa/production/test_original_compat",
+      "sha256": "f0538a3b24841d3bdb91bd1134aead7b266f1fc2fa1719976867fb951ea5bbb4",
+      "before_mode": "0o755",
+      "after_mode": "0o755",
+      "changed_bytes": false
+    }
+  ]
+}

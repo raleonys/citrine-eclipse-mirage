@@ -1,0 +1,104 @@
+--- FIX25/src/licensing/license.cpp
++++ FIX26/src/licensing/license.cpp
+@@ -6,6 +6,16 @@
+ namespace preloader_l::licensing {
+ namespace {
+ using namespace literals;
++// Keep the existing non-returning Effect contract visible at a nonvirtual
++// call boundary. GCC does not retain it for these virtual-call end points.
++[[noreturn]] void invoke_exit_effect(Effects& effects,std::int32_t code) {
++    effects.exit_05cdc0(code);
++#if defined(__GNUC__) || defined(__clang__)
++    // A returning implementation already violates Effects' noreturn contract.
++    // This hint adds no termination, exception translation or fallback policy.
++    __builtin_unreachable();
++#endif
++}
+ // Input attributes are C strings in 002cc0. The portable reader exposes a view;
+ // stop at its first NUL so this boundary does not invent embedded-NUL behavior.
+ std::optional<std::string> attribute(const Node& request,std::string_view key) {
+@@ -50,7 +60,7 @@
+ }
+ [[noreturn]] void Handlers::fatal(std::string_view title,std::string_view body,std::int32_t code) {
+     effects_.dialog_038bc0(title,body,0x10);
+-    effects_.exit_05cdc0(code);
++    invoke_exit_effect(effects_,code);
+ }
+ Path Handlers::token_path_02af30(bool cached) {
+     auto path=state_.license_base_0a3b38;
+@@ -102,7 +112,7 @@
+     } else {
+         effects_.dialog_038bc0(c_085f80,std::string(c_085f58)+text,0x40);
+     }
+-    effects_.exit_05cdc0(-1);
++    invoke_exit_effect(effects_,-1);
+ }
+ bool Handlers::request_license_0320c0(const Node& request,Xml& xml) {
+     if(state_.blocked_0a39c0) effects_.no_response_02bcd0_04d228();
+--- FIX25/scripts/qa/check_source.py
++++ FIX26/scripts/qa/check_source.py
+@@ -16,18 +16,18 @@
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX25 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX26 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX25.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX26.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX25 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX26 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX25 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX25')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX25.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX26 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX26')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX26.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX25 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX26 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -148,6 +148,10 @@
+  avatar_oracle=json.loads((root/'metadata/PACKET_AVATAR_ORACLE_FIX25.json').read_text())
+  if sha(root/avatar_oracle['destination'])!=avatar_oracle['destination_sha256']:fail(2,'literal source avatar oracle drift')
+  if 'tests/integration/test_avatar_effects.cpp' not in graph['integration_tests'] or 'tests/integration/test_avatar_effects.cpp' not in cmake:fail(2,'avatar effects test not integrated')
++ # GCC/Clang nonreturn hint restates the existing virtual Effect contract.
++ license=(root/'src/licensing/license.cpp').read_text()
++ for term in ['[[noreturn]] void invoke_exit_effect(Effects& effects,std::int32_t code)','effects.exit_05cdc0(code);','__builtin_unreachable();','invoke_exit_effect(effects_,code);','invoke_exit_effect(effects_,-1);']:
++  if term not in license:fail(2,'license compiler contract missing: '+term)
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -238,7 +242,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX25.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX26.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX25/tests/tools/test_source_policy.py
++++ FIX26/tests/tools/test_source_policy.py
+@@ -80,6 +80,8 @@
+   modify('src/transport/service.cpp',lambda b:b.replace(b'self->fail_compute();',b'asio::error_code ignored;self->socket.close(ignored);'),'worker closes socket during async IO')
+   modify('src/handlers/content.cpp',lambda b:b.replace(b'if(s.online_0a3c3b!=0) {',b'if(s.online_0a3c3b!=0 && !own) {'),'own avatar provider suppressed')
+   modify('src/handlers/content.cpp',lambda b:b.replace(b's.saved_avatar_size_0a1130<size',b's.saved_avatar_size_0a1130<=size'),'equal avatar size recopied')
++  modify('src/licensing/license.cpp',lambda b:b.replace(b'__builtin_unreachable();',b'/* hint removed */'),'nonreturn compiler contract lost')
++  modify('src/licensing/license.cpp',lambda b:b.replace(b'invoke_exit_effect(effects_,-1);',b'effects_.exit_05cdc0(-1);'),'ticket caller bypasses compiler boundary')
+   assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())

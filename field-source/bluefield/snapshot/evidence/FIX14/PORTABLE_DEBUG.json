@@ -1,0 +1,244 @@
+{
+  "status": "PASS",
+  "scope": "portable application core + unit contracts + real loopback/persistence; not Windows DLL acceptance",
+  "source_digest": "3d9c89d61e64b0d7679ce889be9aa22ac46d5e953126970b4e60586ad1bd7a01",
+  "compiler_sha256": "52f1ddb33fe78b9441e0f42e9cd22c571f1101938e046c8a26582494e041cc73",
+  "compiler_flags": [
+    "-std=c++20",
+    "-O0",
+    "-g",
+    "-pthread",
+    "-fPIC",
+    "-I${PROJECT_ROOT}",
+    "-isystem",
+    "${PROJECT_ROOT}/third_party/asio/include",
+    "-isystem",
+    "${PROJECT_ROOT}/third_party/pegtl/include",
+    "-isystem",
+    "${PROJECT_ROOT}/third_party/filesystem/include",
+    "-DASIO_STANDALONE=1",
+    "-DASIO_NO_DEPRECATED=1",
+    "-DPRELOADER_L_DISK_DIAGNOSTICS=1"
+  ],
+  "profile": "debug",
+  "disk_diagnostics": true,
+  "asan_options": "default",
+  "tests": [
+    {
+      "test": "configuration_test_hash_table",
+      "exit_code": 0,
+      "sha256": "9c2b8237847693c3dae9d9643f77cd631cc24f98b7c23145454782789b9e58ae",
+      "output": "PASS: 4929 Config2 growth/copy/positional-reuse checks\n"
+    },
+    {
+      "test": "configuration_test_parser",
+      "exit_code": 0,
+      "sha256": "e5a617889094f6f6c85cd799259b340ed3e04271838e57cd9a5ce0cad7669661",
+      "output": "PASS: 115 synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.\n"
+    },
+    {
+      "test": "configuration_test_pegtl_differential",
+      "exit_code": 0,
+      "sha256": "4db3e7683d5dae77899c890e5545565ca2320591b93ef67367a2a5951371a888",
+      "output": "PASS: 8766 frozen FIX09 Config2 comparisons (tree, actions, errors, BOM).\n"
+    },
+    {
+      "test": "configuration_test_state",
+      "exit_code": 0,
+      "sha256": "202f92240a21398be9b8cb6301b7b74265d45347ed87f29eeb0c27bb90a2ea12",
+      "output": "PASS: 148 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.\n"
+    },
+    {
+      "test": "crypto_test_crypto",
+      "exit_code": 0,
+      "sha256": "d15c5c70458882130da4d5016111c0739b0fdadf44f1ac882d1314b1b9c3cdbb",
+      "output": "PASS: 135410 deterministic crypto checks (NIST vectors, padding, mutation, state, PRNG/time); target DLL/EXE not executed\n"
+    },
+    {
+      "test": "handlers_test_content",
+      "exit_code": 0,
+      "sha256": "b2d250140957d1eb1568ff2ba4f5e08eb769f08a51af73bc1e2794a65941ea59",
+      "output": "PASS: 963 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.\n"
+    },
+    {
+      "test": "handlers_test_information",
+      "exit_code": 0,
+      "sha256": "6318e5e88647a0066565d391ccc93dc2ed48b7bab9cc11f64b16e8a7a00abf72",
+      "output": "PASS: 628 checks; synthetic XML/profile state; no target execution\n"
+    },
+    {
+      "test": "handlers_test_presence",
+      "exit_code": 0,
+      "sha256": "8e4bca02457e8c5b7d5430e2f5823ca4c573c7274042795166d1e42ff66802f1",
+      "output": "PASS: 288 synthetic checks; 18 handler bodies; original execution none\n"
+    },
+    {
+      "test": "hashing_test_hash",
+      "exit_code": 0,
+      "sha256": "0f7463c36ab68e0461af1431ad24627e2616b6301d302b78660b6579bc83d0ce",
+      "output": "6899 deterministic hash checks PASS\n"
+    },
+    {
+      "test": "hooks_test_crypt_query",
+      "exit_code": 0,
+      "sha256": "fd0c4e1a5ff80fb93addb5cd3f422ad14399343517659b88971e4ae6ae758b75",
+      "output": "PASS crypt-query UTF16/null/type/case/suffix selection checks=1538\n"
+    },
+    {
+      "test": "hooks_test_setup_plan",
+      "exit_code": 0,
+      "sha256": "d2adbe0a37114cbb37745f12638e3d9fdc7808dc2e571c29ecb6b5b8b7afb7e3",
+      "output": "PASS source hook stage-only plan, optional surfaces, partial create/queue and missing target checks=76; no native engine executed\n"
+    },
+    {
+      "test": "licensing_test_key_store",
+      "exit_code": 0,
+      "sha256": "da566e9142a7da673d304fb9ef22deaad0c70c8d4595d60afbbf05ee00a35856",
+      "output": "PASS key store header/CBC/XML/identity/no-overwrite\n"
+    },
+    {
+      "test": "licensing_test_license",
+      "exit_code": 0,
+      "sha256": "192a4a6522f74fc91363c74f3f2b006c5e8782d0b25b41f78e935af11ce2cd67",
+      "output": "PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)\n"
+    },
+    {
+      "test": "paths_test_path",
+      "exit_code": 0,
+      "sha256": "d60bb6e7805df2828dd20c4c8b07a174fdbbad85a030641d052d63d6cccd9e4d",
+      "output": "328 deterministic path checks PASS\n"
+    },
+    {
+      "test": "profiles_test_online",
+      "exit_code": 0,
+      "sha256": "ab59e2955e33688cc3205dfd90b65bc5e20448e76b33a5d97a371a20b3209d37",
+      "output": "online: 12758 checks passed (synthetic mocks only)\n"
+    },
+    {
+      "test": "protocol_test_integration",
+      "exit_code": 0,
+      "sha256": "84b988d6bc3444e22c7eb3065c4c749dafbfce74b072614f4c218570ddfc6e21",
+      "output": "PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed\n"
+    },
+    {
+      "test": "protocol_test_messages",
+      "exit_code": 0,
+      "sha256": "d11fbd8a340fbed54cf5e2a691232f50aa1e2c983409e37f1810d3973005debd",
+      "output": "PASS: 831 checks; synthetic XML/crypto/queue only; no sockets or target execution\n"
+    },
+    {
+      "test": "runtime_test_startup",
+      "exit_code": 0,
+      "sha256": "e337cda5c62c825b3b995805151490bda19e6f6fddce25886a6efdf2f2af00bc",
+      "output": "PASS: 155 checks; synthetic input/console only; no real environment writes or UI\n"
+    },
+    {
+      "test": "time_test_calendar",
+      "exit_code": 0,
+      "sha256": "c6d285075df1d7f96ea241a0b93c1e37855b4c197e0d9d6ffe35c584d47e200e",
+      "output": "PASS: 31760 calendar arithmetic checks; no original execution or OS time calls\n"
+    },
+    {
+      "test": "tokens_test_token",
+      "exit_code": 0,
+      "sha256": "3b19c6bf5a70cd97e7958e4cbc7c7dc78f9860ce2951a78cabf426421bc7b4fc",
+      "output": "579 synthetic token checks PASS\n"
+    },
+    {
+      "test": "xml_test_printer",
+      "exit_code": 0,
+      "sha256": "350c8aac844dad328d5b01705f5f494a16190c9ec383a550752b5e6159211d69",
+      "output": "PASS: 277 checks; concrete recovered serializer; synthetic readers/random only\n"
+    },
+    {
+      "test": "xml_test_reader",
+      "exit_code": 0,
+      "sha256": "862b73bdea5c1e8839523a47468481cd597656d83f79e32f3d852a5d8a7fb224",
+      "output": "PASS: 352 actual XML reader checks; selected upstream compatibility source, original target not executed\n"
+    },
+    {
+      "test": "paths_test_module_relative",
+      "exit_code": 0,
+      "sha256": "46c0cebd58593cfc283f6ab0841a961a9ab2b984428520cd8c53e7763a7d4580",
+      "output": "PASS module sibling checks=2137 gulrak=554 preserved_native=508; Windows-specific cases require native execution\n"
+    },
+    {
+      "test": "libraries_test_libraries",
+      "exit_code": 0,
+      "sha256": "e280edba4cc6ee4e5c6710ba627b75b40792f4c141e72b539fb378091842cd20",
+      "output": "PASS: 157 checks; mocks only; no DLL loaded or freed\n"
+    },
+    {
+      "test": "integration_test_runtime",
+      "exit_code": 0,
+      "sha256": "c9a7e626575448dee3ce4225b78219b68014d6d033282c1e6706801073d926e4",
+      "output": "PASS full runtime integration checks=17; concurrent clients=8; profile requests=160\n"
+    },
+    {
+      "test": "integration_test_startup_compat",
+      "exit_code": 0,
+      "sha256": "ef1227f655a96c363e346b520f2228fd5caeb2746a294e2e310b8983c661bdad",
+      "output": "PASS startup compatibility checks=281; absent/empty/root/partial/override/empty-fields; complete profile/settings/game responses\n"
+    },
+    {
+      "test": "integration_test_brownfield_contracts",
+      "exit_code": 0,
+      "sha256": "838b459cc8199a0db4b25b39c98a8ea8842224a2dfd32cb71eed442207e5009f",
+      "output": "PASS HF19-derived field ownership/nesting/comment contracts checks=9; no claim of all-HF19 equivalence\n"
+    },
+    {
+      "test": "integration_test_supplied_config",
+      "exit_code": 0,
+      "sha256": "18a94261f487b24ee865391e365fc97379770bf0285a349d26027ab95810e3b8",
+      "output": "PASS supplied CFG parser/bindings checks=16; Online UNSUPPORTED; observed HF19 QueryImage/GrantAchievement child shapes rejected; game NOT_RUN\n"
+    },
+    {
+      "test": "integration_test_configuration_profile",
+      "exit_code": 0,
+      "sha256": "99f0b440e4a1e9e683b7ec4eaccb638c51440a404e9ff9657ad8ff439c67d2ac",
+      "output": "PASS config/profile checks=53; full 14-field response; legacy reproduced; corrected config/default parity; override and non-sensitive diagnostics\n"
+    },
+    {
+      "test": "integration_test_asio_transport",
+      "exit_code": 0,
+      "sha256": "16e72290385f00a2703f733a00aaae38dc60258f036f9b2223a14a330a72b6df",
+      "output": "Asio fault campaign attempts=1 terminal=1 dispatch=1 rearm=0 recovery=0\nPASS Asio transport checks=54; fragmentation/FIFO/300k-write/fault recovery/cancel/repeated lifecycle; native IOCP requires Windows\n"
+    },
+    {
+      "test": "integration_test_filesystem_config",
+      "exit_code": 0,
+      "sha256": "a4608c24a2972242f58441cf675f2cb931d601ac8c899df164781393349f47c7",
+      "output": "PASS filesystem/config integration checks=47; Unicode module/override/cwd isolation/no-config/profile/native binary IO\n"
+    },
+    {
+      "test": "integration_test_runtime_migration",
+      "exit_code": 0,
+      "sha256": "48b8df1df1633283148f82a3b5a89746467236128b1542c3ce74d8e443970c25",
+      "output": "PASS FIX13 rollback checks=80; disk_diagnostics=1\n"
+    },
+    {
+      "test": "integration_test_original_compat",
+      "exit_code": 0,
+      "sha256": "d8c350056a38121ed3905e325784f5134b4a2731c29635f5eb5e89b2e6f7ba0c",
+      "output": "PASS original-package compatibility counterexamples=9; not original binary execution\n"
+    },
+    {
+      "test": "tools/golden/scripts/test_pe_metadata_tools.py",
+      "exit_code": 0,
+      "sha256": "720e270db1ad89e0bb8e3a802027af20a66c6f6074c67e3048198d12a90ad045",
+      "output": "GOLDEN_PROTOCOL_TOOL_SELFTEST: PASS\n"
+    },
+    {
+      "test": "tests/tools/test_golden_pipeline.py",
+      "exit_code": 0,
+      "sha256": "a46a420cd2322003f26cd9f6a619c4e81b7cdd3fe3651ab972e4af3031b7b3ef",
+      "output": "PASS real five-stage Golden orchestration SYNTHETIC cases=14; Windows DLL execution NOT_RUN\n"
+    },
+    {
+      "test": "tests/tools/test_golden_link_policy.py",
+      "exit_code": 0,
+      "sha256": "1208dd9b8ffb2d409b30262a0822845d2dbc32a3e050650ab0112112f3549fe0",
+      "output": "MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS (21/21)\n"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "status": "PASS_TARGETED_NEGATIVE_CONTROLS",
+  "source_digest": "9e08d79a04dc77214be645a8b8af73db36fd35aa4067fb8e4d399eec290b4500",
+  "test_sha256": "f489622d3c61fe88859cd5c00e108f91d2b0f307162dd620a562e64775eadf31",
+  "core_archive_sha256": "bddef7b1ec190047efaecda62980e27449790ad137daa661f96f3ff78e48de40",
+  "scope": "Mutated providers TU and unchanged focused test freshly compiled/linked against actual current CMake core archive. Explicit object supplies all providers symbols, so archive providers member is not selected. Shipping source unchanged.",
+  "cases": [
+    {
+      "case": "old_normalization_restored",
+      "file": "src/application/providers.cpp",
+      "current_sha256": "d179d93865f199e61cda4fc44a3d9ed6ebe61937d5c7bba08c1bc869ee3352f0",
+      "mutated_sha256": "e93d70f5ef67f2176d335abb8c9af99a7a7a833b579287b978edca294fc24e43",
+      "mutation": {
+        "before": "return model_path(p);",
+        "after": "return model_path(p.lexically_normal());"
+      },
+      "actual_exit": 1,
+      "expected_assertion": "relative path spelling retained",
+      "output": "FAIL path resolution: relative path spelling retained\n",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    },
+    {
+      "case": "normalization_only_for_link_case",
+      "file": "src/application/providers.cpp",
+      "current_sha256": "d179d93865f199e61cda4fc44a3d9ed6ebe61937d5c7bba08c1bc869ee3352f0",
+      "mutated_sha256": "504789f7ccb1207b32cf26ac994ca06ee92733b57b3fdbe3c1f17f741a0ace0a",
+      "mutation": {
+        "before": "return model_path(p);",
+        "after": "if(value==\"link/../picked.txt\")p=p.lexically_normal();return model_path(p);"
+      },
+      "actual_exit": 1,
+      "expected_assertion": "link-parent read selects source target",
+      "output": "FAIL path resolution: link-parent read selects source target\n",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    }
+  ]
+}

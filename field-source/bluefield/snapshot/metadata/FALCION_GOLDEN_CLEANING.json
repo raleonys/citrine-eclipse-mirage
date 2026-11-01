@@ -1,0 +1,56 @@
+{
+  "schema": "preloader_l.falcion_local_source_payload.v1",
+  "policy": "FALCION Golden Cleaning",
+  "scope": "LOCAL_BUILD source integrity and flat staged DLL payload; no official-release or game acceptance",
+  "source_root_files": [
+    ".gitignore",
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "CMakeLists.txt",
+    "LICENSE",
+    "README.md",
+    "surge.cfg.example"
+  ],
+  "source_root_directories": [
+    "cmake",
+    "docs",
+    "exports",
+    "include",
+    "metadata",
+    "resources",
+    "scripts",
+    "src",
+    "tests",
+    "third_party",
+    "tools"
+  ],
+  "transient_root_directories": [
+    "build",
+    "dist",
+    "evidence"
+  ],
+  "derived_metadata_files": [
+    "SOURCE_MANIFEST.json",
+    "PACKAGE_MANIFEST.json",
+    "ACCEPTANCE.json"
+  ],
+  "forbidden_source_suffixes": [
+    ".dll",
+    ".exe",
+    ".pdb",
+    ".obj",
+    ".o",
+    ".lib",
+    ".a",
+    ".pyc",
+    ".pyo",
+    ".zip",
+    ".7z",
+    ".rar",
+    ".gz"
+  ],
+  "payload_files": [
+    "preloader_l.dll"
+  ],
+  "notes": "Build/dist/cache are local transients. NON_RELEASE audit evidence is excluded from code manifest and never shipped as DLL payload. Source ZIP is checked separately by check_package.py. Existing source manifest is validated, never regenerated or blessed by this gate."
+}

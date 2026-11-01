@@ -1,0 +1,12 @@
+{
+  "original_archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "header_origin": "anadius-server-source/server.hpp",
+  "header_sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+  "cpp_origin": "anadius-server-source/server.cpp",
+  "cpp_sha256": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0",
+  "header_slice_sha256": "dc8074c88601c629d3f64255f43d4867a868a2adca78de8ed074e0675076a3fe",
+  "body_slice_sha256": "cc130eaf5c06fed70ab3a79155047cbf4ecb6aa6afc21cdb0721053ea5476b9e",
+  "destination": "tests/support/transport/packet_session.hpp",
+  "destination_sha256": "ad3c5e55dcb35f10c32e354f921996892100362073d622045417689b64c15243",
+  "adaptation": "Only source fragments, prerequisite standard includes, standalone receive_request_size declaration, test namespace and SPDX. Bodies literal. ServerBackend/execution boundary intentionally outside this test-only projection."
+}

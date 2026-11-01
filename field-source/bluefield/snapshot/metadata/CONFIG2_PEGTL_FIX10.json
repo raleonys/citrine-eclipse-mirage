@@ -1,0 +1,43 @@
+{
+  "schema": "preloader_l.config2_pegtl_fix10.v1",
+  "parent_archive_sha256": "505411caf8290c72b4d1b523875d0997b68cea987242c17f40fbc10e55a17d1a",
+  "original_archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "original_evidence": {
+    "anadius-parser-source/README.md": "06082f2656bcc86097b67e5ed265713992aec221ac3611fbb497d485858ef149",
+    "anadius-parser-source/evidence.json": "4d1c2bebedc4bb0bbc7ae1ddb65bc74083f5d0918663d9404a9101acffdce3e9",
+    "anadius-parser-source/parser.cpp": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2"
+  },
+  "upstream": {
+    "name": "PEGTL",
+    "header_version": "4.0.0",
+    "reference": "prerelease main snapshot",
+    "commit": "3b075432e94f6f906425350b43d03cd9cebfa4f1",
+    "origin": "BROWNFIELD HF19 pristine upstream include tree",
+    "origin_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+    "vendor_files": 363,
+    "local_vendor_patches": [],
+    "brownfield_application_cpp_copied": false
+  },
+  "active_backend": "peg::parse<vdf::Grammar,Action,Control>; no manual fallback or config selector",
+  "retained": [
+    "optional config/defaults/SURGE/numeric IDs/SDK",
+    "byte grammar and whole duplicate subtree replacement",
+    "cursor rewind without action rollback",
+    "owned error categories and byte/line/column",
+    "single UTF-8 BOM policy; no UTF-16 conversion added",
+    "existing hash iteration adapter and Application size/nesting guards"
+  ],
+  "tests": {
+    "existing_parser_assertions": 115,
+    "frozen_FIX09_state_comparisons": 8766,
+    "config_profile_assertions": 53,
+    "native": "NOT_RUN"
+  },
+  "scope_limits": [
+    "original PEGTL version/exception ABI and unwind unproved",
+    "allocation/performance and native stack behavior not equivalent by assertion",
+    "Windows MSVC/IOCP/Native/CRT and real DLL Golden NOT_RUN",
+    "filesystem backend/path/error parity remains separate"
+  ],
+  "current_parser_sha256": "6fd4733d1bfbea607ace2eb1c13dd071b56c80b012dd61d410e6e7537d29d7f1"
+}

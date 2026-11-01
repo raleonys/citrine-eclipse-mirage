@@ -1,0 +1,41 @@
+{
+  "status": "PASS_RELINK",
+  "cause": "UNDETERMINED_BUILD_ARTIFACT_FAILURE",
+  "source_changes": false,
+  "repairs": [
+    {
+      "target": "configuration_test_pegtl_differential",
+      "previous_bytes": 0,
+      "relink_command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "-Wl,--dependency-file=CMakeFiles/configuration_test_pegtl_differential.dir/link.d",
+        "CMakeFiles/configuration_test_pegtl_differential.dir/tests/unit/configuration/test_pegtl_differential.cpp.o",
+        "-o",
+        "configuration_test_pegtl_differential",
+        "libpreloader_l_core.a"
+      ],
+      "exit_code": 0,
+      "bytes": 149912,
+      "sha256": "d667fc54bbac0cc1c01f10654e6cd1a112360936c9733c406a8c3219d174750d"
+    },
+    {
+      "target": "tokens_test_token",
+      "previous_bytes": 0,
+      "relink_command": [
+        "/usr/bin/c++",
+        "-O3",
+        "-DNDEBUG",
+        "-Wl,--dependency-file=CMakeFiles/tokens_test_token.dir/link.d",
+        "CMakeFiles/tokens_test_token.dir/tests/unit/tokens/test_token.cpp.o",
+        "-o",
+        "tokens_test_token",
+        "libpreloader_l_core.a"
+      ],
+      "exit_code": 0,
+      "bytes": 78072,
+      "sha256": "d7b1e896a16ecf90a54e30c90d7f4390a5d02a0913f4039f7baf6dfca26cc619"
+    }
+  ]
+}

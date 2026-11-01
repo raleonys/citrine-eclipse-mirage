@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Linux-c++"
+	tests="44"
+	failures="3"
+	disabled="0"
+	skipped="0"
+	hostname="ff1c46d6faa3"
+	time="8"
+	timestamp="2026-10-26T21:31:15"
+	>
+	<testcase name="hooks_test_registry_source" classname="hooks_test_registry_source" time="0.00215125" status="run">
+		<properties/>
+		<system-out>Windows ABI body NOT_RUN; registry-source: 957 checks passed
+</system-out>
+	</testcase>
+	<testcase name="hooks_test_registry_wait" classname="hooks_test_registry_wait" time="0.103571" status="run">
+		<properties/>
+		<system-out>PASS registry wait checks=51; real recursive mutex/phase CV + unmodified source registry algorithm; Win32 API and native lease boundary NOT_RUN
+</system-out>
+	</testcase>
+	<testcase name="paths_test_encoding" classname="paths_test_encoding" time="0.00212208" status="run">
+		<properties/>
+		<system-out>PASS: 48 encoding checks; real Win32 only on synthetic strings, original targets not executed
+</system-out>
+	</testcase>
+	<testcase name="files_test_status" classname="files_test_status" time="0.00220258" status="run">
+		<properties/>
+		<system-out>PASS 9295 status checks
+</system-out>
+	</testcase>
+	<testcase name="libraries_test_libraries" classname="libraries_test_libraries" time="0.00170684" status="run">
+		<properties/>
+		<system-out>PASS: 157 checks; mocks only; no DLL loaded or freed
+</system-out>
+	</testcase>
+	<testcase name="configuration_test_hash_table" classname="configuration_test_hash_table" time="0.0904799" status="run">
+		<properties/>
+		<system-out>PASS: 4929 Config2 growth/copy/positional-reuse checks
+</system-out>
+	</testcase>
+	<testcase name="configuration_test_parser" classname="configuration_test_parser" time="0.00199461" status="run">
+		<properties/>
+		<system-out>PASS: 115 synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.
+</system-out>
+	</testcase>
+	<testcase name="configuration_test_pegtl_differential" classname="configuration_test_pegtl_differential" time="0.0677548" status="run">
+		<properties/>
+		<system-out>PASS: 8766 frozen FIX09 Config2 comparisons (tree, actions, errors, BOM).
+</system-out>
+	</testcase>
+	<testcase name="configuration_test_state" classname="configuration_test_state" time="0.00205982" status="run">
+		<properties/>
+		<system-out>PASS: 148 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.
+</system-out>
+	</testcase>
+	<testcase name="crypto_test_crypto" classname="crypto_test_crypto" time="0.0542889" status="run">
+		<properties/>
+		<system-out>PASS: 135410 deterministic crypto checks (NIST vectors, padding, mutation, state, PRNG/time); target DLL/EXE not executed
+</system-out>
+	</testcase>
+	<testcase name="handlers_test_content" classname="handlers_test_content" time="0.00233974" status="run">
+		<properties/>
+		<system-out>PASS: 963 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.
+</system-out>
+	</testcase>
+	<testcase name="handlers_test_information" classname="handlers_test_information" time="0.00225537" status="run">
+		<properties/>
+		<system-out>PASS: 628 checks; synthetic XML/profile state; no target execution
+</system-out>
+	</testcase>
+	<testcase name="handlers_test_presence" classname="handlers_test_presence" time="0.00179373" status="run">
+		<properties/>
+		<system-out>PASS: 288 synthetic checks; 18 handler bodies; original execution none
+</system-out>
+	</testcase>
+	<testcase name="hashing_test_hash" classname="hashing_test_hash" time="0.0443888" status="run">
+		<properties/>
+		<system-out>6899 deterministic hash checks PASS
+</system-out>
+	</testcase>
+	<testcase name="hooks_test_crypt_query" classname="hooks_test_crypt_query" time="0.00212411" status="run">
+		<properties/>
+		<system-out>PASS crypt-query UTF16/null/type/case/suffix selection checks=1538
+</system-out>
+	</testcase>
+	<testcase name="hooks_test_setup_plan" classname="hooks_test_setup_plan" time="0" status="fail">
+		<failure message="BAD_COMMAND"/>
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="licensing_test_key_store" classname="licensing_test_key_store" time="0.0038763" status="run">
+		<properties/>
+		<system-out>PASS key store header/CBC/XML/identity/no-overwrite
+</system-out>
+	</testcase>
+	<testcase name="licensing_test_license" classname="licensing_test_license" time="0.00198305" status="run">
+		<properties/>
+		<system-out>PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)
+</system-out>
+	</testcase>
+	<testcase name="paths_test_path" classname="paths_test_path" time="0.00139283" status="run">
+		<properties/>
+		<system-out>328 deterministic path checks PASS
+</system-out>
+	</testcase>
+	<testcase name="paths_test_module_relative" classname="paths_test_module_relative" time="0.00287291" status="run">
+		<properties/>
+		<system-out>PASS module sibling checks=2137 gulrak=554 preserved_native=508; Windows-specific cases require native execution
+</system-out>
+	</testcase>
+	<testcase name="profiles_test_online" classname="profiles_test_online" time="0.00226085" status="run">
+		<properties/>
+		<system-out>online: 12758 checks passed (synthetic mocks only)
+</system-out>
+	</testcase>
+	<testcase name="protocol_test_integration" classname="protocol_test_integration" time="0.00165968" status="run">
+		<properties/>
+		<system-out>PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed
+</system-out>
+	</testcase>
+	<testcase name="protocol_test_messages" classname="protocol_test_messages" time="0.00134091" status="run">
+		<properties/>
+		<system-out>PASS: 831 checks; synthetic XML/crypto/queue only; no sockets or target execution
+</system-out>
+	</testcase>
+	<testcase name="runtime_test_startup" classname="runtime_test_startup" time="0.00137949" status="run">
+		<properties/>
+		<system-out>PASS: 155 checks; synthetic input/console only; no real environment writes or UI
+</system-out>
+	</testcase>
+	<testcase name="time_test_calendar" classname="time_test_calendar" time="0.00282297" status="run">
+		<properties/>
+		<system-out>PASS: 31760 calendar arithmetic checks; no original execution or OS time calls
+</system-out>
+	</testcase>
+	<testcase name="tokens_test_token" classname="tokens_test_token" time="0.00165318" status="run">
+		<properties/>
+		<system-out>579 synthetic token checks PASS
+</system-out>
+	</testcase>
+	<testcase name="xml_test_printer" classname="xml_test_printer" time="0.0016666" status="run">
+		<properties/>
+		<system-out>PASS: 277 checks; concrete recovered serializer; synthetic readers/random only
+</system-out>
+	</testcase>
+	<testcase name="xml_test_reader" classname="xml_test_reader" time="0.00362306" status="run">
+		<properties/>
+		<system-out>PASS: 352 actual XML reader checks; selected upstream compatibility source, original target not executed
+</system-out>
+	</testcase>
+	<testcase name="runtime_tcp_and_persistence" classname="runtime_tcp_and_persistence" time="0.057421" status="run">
+		<properties/>
+		<system-out>PASS full runtime integration checks=17; concurrent clients=8; profile requests=160
+</system-out>
+	</testcase>
+	<testcase name="startup_configuration_profile_compat" classname="startup_configuration_profile_compat" time="0.0140206" status="run">
+		<properties/>
+		<system-out>PASS startup compatibility checks=281; absent/empty/root/partial/override/empty-fields; complete profile/settings/game responses
+</system-out>
+	</testcase>
+	<testcase name="test_path_effects" classname="test_path_effects" time="0.00192691" status="run">
+		<properties/>
+		<system-out>PASS path effects checks=71; pure source Windows lexical bodies + actual platform-selected callers; no native Windows IO/ABI acceptance
+</system-out>
+	</testcase>
+	<testcase name="test_path_resolution" classname="test_path_resolution" time="0.00378174" status="run">
+		<properties/>
+		<system-out>POSIX directory-link semantic fixture: PASS; Windows native path/ABI: NOT_RUN
+PASS path resolution checks=26
+</system-out>
+	</testcase>
+	<testcase name="test_configuration_orchestration" classname="test_configuration_orchestration" time="0.00857354" status="run">
+		<properties/>
+		<system-out>PASS shared configuration orchestration checks=31; source order + actual Application overlays/profile/filesystem/environment failure boundaries; no original binary execution
+</system-out>
+	</testcase>
+	<testcase name="test_startup_phases" classname="test_startup_phases" time="0" status="fail">
+		<failure message="BAD_COMMAND"/>
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="test_brownfield_contracts" classname="test_brownfield_contracts" time="0.00633046" status="run">
+		<properties/>
+		<system-out>PASS HF19-derived field ownership/nesting/comment contracts checks=9; no claim of all-HF19 equivalence
+</system-out>
+	</testcase>
+	<testcase name="test_supplied_config" classname="test_supplied_config" time="0.00491011" status="run">
+		<properties/>
+		<system-out>PASS supplied CFG parser/bindings checks=16; Online UNSUPPORTED; observed HF19 QueryImage/GrantAchievement child shapes rejected; game NOT_RUN
+</system-out>
+	</testcase>
+	<testcase name="test_configuration_profile" classname="test_configuration_profile" time="0.00735785" status="run">
+		<properties/>
+		<system-out>PASS config/profile checks=53; full 14-field response; legacy reproduced; corrected config/default parity; override and non-sensitive diagnostics
+</system-out>
+	</testcase>
+	<testcase name="test_asio_transport" classname="test_asio_transport" time="0" status="fail">
+		<failure message="BAD_COMMAND"/>
+		<properties/>
+		<system-out></system-out>
+	</testcase>
+	<testcase name="test_filesystem_config" classname="test_filesystem_config" time="0.00951051" status="run">
+		<properties/>
+		<system-out>PASS filesystem/config integration checks=52; Unicode module/override/cwd isolation/no-config/profile/native binary IO
+</system-out>
+	</testcase>
+	<testcase name="test_runtime_migration" classname="test_runtime_migration" time="0.0331583" status="run">
+		<properties/>
+		<system-out>PASS FIX13 rollback checks=80; disk_diagnostics=0
+</system-out>
+	</testcase>
+	<testcase name="test_original_compat" classname="test_original_compat" time="0.0648884" status="run">
+		<properties/>
+		<system-out>PASS original-package compatibility counterexamples=9; not original binary execution
+</system-out>
+	</testcase>
+	<testcase name="golden_protocol_tool_selftests" classname="golden_protocol_tool_selftests" time="0.0783576" status="run">
+		<properties/>
+		<system-out>GOLDEN_PROTOCOL_TOOL_SELFTEST: PASS
+</system-out>
+	</testcase>
+	<testcase name="test_golden_pipeline" classname="test_golden_pipeline" time="7.29067" status="run">
+		<properties/>
+		<system-out>PASS real five-stage Golden orchestration SYNTHETIC cases=14; Windows DLL execution NOT_RUN
+</system-out>
+	</testcase>
+	<testcase name="test_golden_link_policy" classname="test_golden_link_policy" time="0.0291045" status="run">
+		<properties/>
+		<system-out>MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS (21/21)
+</system-out>
+	</testcase>
+</testsuite>

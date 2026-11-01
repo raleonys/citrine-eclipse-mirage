@@ -1,0 +1,2426 @@
+{
+  "scope": "Every top-level packet module/payload is categorized; binary and build payloads are not candidate source modules.",
+  "modules": [
+    {
+      "module": "DLL-ANALIZ-RAPORU.md",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "KAYNAK-DURUMU.md",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "KOD-REHBERI.md",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "TAMAMLANMA-TAHMINI.md",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "YOL-HARITASI.md",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-achievement-runtime-source",
+      "archive_files": 30,
+      "source_files": 4,
+      "directly_imported_source_files": 4,
+      "source_paths": [
+        "anadius-achievement-runtime-source/runtime.cpp",
+        "anadius-achievement-runtime-source/runtime.hpp",
+        "anadius-achievement-runtime-source/utc.cpp",
+        "anadius-achievement-runtime-source/utc.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-achievement-storage-source",
+      "archive_files": 21,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-achievement-storage-source/storage.cpp",
+        "anadius-achievement-storage-source/storage.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-achievement-writer-source",
+      "archive_files": 17,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-achievement-writer-source/writer.cpp",
+        "anadius-achievement-writer-source/writer.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-all-functions.asm.txt",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-all-functions.pseudo.c",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-archive-evidence.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-bootstrap-native-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-bootstrap-native-source/native_entries.cpp",
+        "anadius-bootstrap-native-source/native_entries.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-bootstrap-native-source/native_entries.cpp",
+        "anadius-bootstrap-native-source/native_entries.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-calendar-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-calendar-source/calendar.cpp",
+        "anadius-calendar-source/calendar.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-callgraph.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-config-application-source",
+      "archive_files": 18,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-config-application-source/application.cpp",
+        "anadius-config-application-source/application.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-config-hash-source",
+      "archive_files": 16,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-config-hash-source/hash_table.cpp",
+        "anadius-config-hash-source/hash_table.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-config-order-source",
+      "archive_files": 17,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-config-order-source/order.cpp",
+        "anadius-config-order-source/order.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-config-pipeline-source",
+      "archive_files": 18,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-config-pipeline-source/pipeline.cpp",
+        "anadius-config-pipeline-source/pipeline.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-config-pipeline-source/pipeline.cpp",
+        "anadius-config-pipeline-source/pipeline.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-config-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-config-source/configuration.cpp",
+        "anadius-config-source/configuration.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-config-startup-source",
+      "archive_files": 19,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-config-startup-source/startup.cpp",
+        "anadius-config-startup-source/startup.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-config-startup-source/startup.cpp",
+        "anadius-config-startup-source/startup.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-content-handlers-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-content-handlers-source/content_handlers.cpp",
+        "anadius-content-handlers-source/content_handlers.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-argv-bridge-source",
+      "archive_files": 15,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-argv-bridge-source/argv_bridge.cpp",
+        "anadius-crt-argv-bridge-source/argv_bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-argv-bridge-source/argv_bridge.cpp",
+        "anadius-crt-argv-bridge-source/argv_bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-argv-parser-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-argv-parser-source/parse.cpp",
+        "anadius-crt-argv-parser-source/parse.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-argv-parser-source/parse.cpp",
+        "anadius-crt-argv-parser-source/parse.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-argv-source",
+      "archive_files": 15,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-argv-source/argv.cpp",
+        "anadius-crt-argv-source/argv.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-argv-source/argv.cpp",
+        "anadius-crt-argv-source/argv.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-atomic-native-source",
+      "archive_files": 13,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-atomic-native-source/atomic.cpp",
+        "anadius-crt-atomic-native-source/atomic.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-atomic-native-source/atomic.cpp",
+        "anadius-crt-atomic-native-source/atomic.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-byteclass-source",
+      "archive_files": 13,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-byteclass-source/byteclass.cpp",
+        "anadius-crt-byteclass-source/byteclass.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-byteclass-source/byteclass.cpp",
+        "anadius-crt-byteclass-source/byteclass.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-cache-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-cache-source/cache.cpp",
+        "anadius-crt-cache-source/cache.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-cache-source/cache.cpp",
+        "anadius-crt-cache-source/cache.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-conversion-api-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-conversion-api-source/api.cpp",
+        "anadius-crt-conversion-api-source/api.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-conversion-api-source/api.cpp",
+        "anadius-crt-conversion-api-source/api.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-conversion-bridge-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-conversion-bridge-source/bridge.cpp",
+        "anadius-crt-conversion-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-conversion-bridge-source/bridge.cpp",
+        "anadius-crt-conversion-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-conversion-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-conversion-source/conversion.cpp",
+        "anadius-crt-conversion-source/conversion.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-conversion-source/conversion.cpp",
+        "anadius-crt-conversion-source/conversion.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-counter-native-source",
+      "archive_files": 13,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-counter-native-source/counters.cpp",
+        "anadius-crt-counter-native-source/counters.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-counter-native-source/counters.cpp",
+        "anadius-crt-counter-native-source/counters.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-cpu-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-cpu-source/cpu.cpp",
+        "anadius-crt-cpu-source/cpu.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-cpu-source/cpu.cpp",
+        "anadius-crt-cpu-source/cpu.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-entry-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-entry-source/entry.cpp",
+        "anadius-crt-entry-source/entry.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-entry-source/entry.cpp",
+        "anadius-crt-entry-source/entry.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-environment-cleanup-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-environment-cleanup-source/environment_cleanup.cpp",
+        "anadius-crt-environment-cleanup-source/environment_cleanup.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-environment-cleanup-source/environment_cleanup.cpp",
+        "anadius-crt-environment-cleanup-source/environment_cleanup.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-environment-source",
+      "archive_files": 13,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-environment-source/environment.cpp",
+        "anadius-crt-environment-source/environment.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-environment-source/environment.cpp",
+        "anadius-crt-environment-source/environment.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-error-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-error-source/errors.cpp",
+        "anadius-crt-error-source/errors.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-error-source/errors.cpp",
+        "anadius-crt-error-source/errors.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-find-bridge-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-find-bridge-source/bridge.cpp",
+        "anadius-crt-find-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-find-bridge-source/bridge.cpp",
+        "anadius-crt-find-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-find-native-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-find-native-source/find_native.cpp",
+        "anadius-crt-find-native-source/find_native.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-find-native-source/find_native.cpp",
+        "anadius-crt-find-native-source/find_native.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-fls-native-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-fls-native-source/fls.cpp",
+        "anadius-crt-fls-native-source/fls.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-fls-native-source/fls.cpp",
+        "anadius-crt-fls-native-source/fls.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-glue-source",
+      "archive_files": 13,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-glue-source/crt_glue.cpp",
+        "anadius-crt-glue-source/crt_glue.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-glue-source/crt_glue.cpp",
+        "anadius-crt-glue-source/crt_glue.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-heap-native-bridge-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-heap-native-bridge-source/bridge.cpp",
+        "anadius-crt-heap-native-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-heap-native-bridge-source/bridge.cpp",
+        "anadius-crt-heap-native-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-heap-native-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-heap-native-source/native_api.cpp",
+        "anadius-crt-heap-native-source/native_api.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-heap-native-source/native_api.cpp",
+        "anadius-crt-heap-native-source/native_api.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-heap-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-heap-source/heap.cpp",
+        "anadius-crt-heap-source/heap.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-heap-source/heap.cpp",
+        "anadius-crt-heap-source/heap.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-initial-locale-source",
+      "archive_files": 15,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-initial-locale-source/initial_locale_data.cpp",
+        "anadius-crt-initial-locale-source/initial_locale_data.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-initial-locale-source/initial_locale_data.cpp",
+        "anadius-crt-initial-locale-source/initial_locale_data.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-initial-multibyte-source",
+      "archive_files": 17,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-initial-multibyte-source/initial_mb.cpp",
+        "anadius-crt-initial-multibyte-source/initial_mb.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-initial-multibyte-source/initial_mb.cpp",
+        "anadius-crt-initial-multibyte-source/initial_mb.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-initial-state-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-initial-state-source/initial_state.cpp",
+        "anadius-crt-initial-state-source/initial_state.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-initial-state-source/initial_state.cpp",
+        "anadius-crt-initial-state-source/initial_state.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-initializers-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-initializers-source/initializers.cpp",
+        "anadius-crt-initializers-source/initializers.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-initializers-source/initializers.cpp",
+        "anadius-crt-initializers-source/initializers.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-invalid-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-invalid-source/invalid.cpp",
+        "anadius-crt-invalid-source/invalid.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-invalid-source/invalid.cpp",
+        "anadius-crt-invalid-source/invalid.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-lcmap-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-lcmap-source/lcmap.cpp",
+        "anadius-crt-lcmap-source/lcmap.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-lcmap-source/lcmap.cpp",
+        "anadius-crt-lcmap-source/lcmap.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-lifecycle-callbacks-source",
+      "archive_files": 17,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-lifecycle-callbacks-source/callbacks.cpp",
+        "anadius-crt-lifecycle-callbacks-source/callbacks.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-lifecycle-callbacks-source/callbacks.cpp",
+        "anadius-crt-lifecycle-callbacks-source/callbacks.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-bridge-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-bridge-source/bridge.cpp",
+        "anadius-crt-locale-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-bridge-source/bridge.cpp",
+        "anadius-crt-locale-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-free-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-free-source/locale_free.cpp",
+        "anadius-crt-locale-free-source/locale_free.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-free-source/locale_free.cpp",
+        "anadius-crt-locale-free-source/locale_free.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-names-source",
+      "archive_files": 15,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-names-source/locale_names.cpp",
+        "anadius-crt-locale-names-source/locale_names.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-names-source/locale_names.cpp",
+        "anadius-crt-locale-names-source/locale_names.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-native-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-native-source/native.cpp",
+        "anadius-crt-locale-native-source/native.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-native-source/native.cpp",
+        "anadius-crt-locale-native-source/native.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-ref-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-ref-source/locale_ref.cpp",
+        "anadius-crt-locale-ref-source/locale_ref.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-ref-source/locale_ref.cpp",
+        "anadius-crt-locale-ref-source/locale_ref.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-resource-bridge-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-resource-bridge-source/bridge.cpp",
+        "anadius-crt-locale-resource-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-resource-bridge-source/bridge.cpp",
+        "anadius-crt-locale-resource-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-startup-source",
+      "archive_files": 19,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-startup-source/locale_startup.cpp",
+        "anadius-crt-locale-startup-source/locale_startup.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-startup-source/locale_startup.cpp",
+        "anadius-crt-locale-startup-source/locale_startup.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-thread-source",
+      "archive_files": 13,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-thread-source/locale_thread.cpp",
+        "anadius-crt-locale-thread-source/locale_thread.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-thread-source/locale_thread.cpp",
+        "anadius-crt-locale-thread-source/locale_thread.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-locale-update-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-locale-update-source/locale_update.cpp",
+        "anadius-crt-locale-update-source/locale_update.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-locale-update-source/locale_update.cpp",
+        "anadius-crt-locale-update-source/locale_update.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-lock-native-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-lock-native-source/native.cpp",
+        "anadius-crt-lock-native-source/native.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-lock-native-source/native.cpp",
+        "anadius-crt-lock-native-source/native.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-lock-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-lock-source/locks.cpp",
+        "anadius-crt-lock-source/locks.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-lock-source/locks.cpp",
+        "anadius-crt-lock-source/locks.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-lowio-lifecycle-source",
+      "archive_files": 16,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp",
+        "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp",
+        "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-module-path-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-module-path-source/module_path.cpp",
+        "anadius-crt-module-path-source/module_path.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-module-path-source/module_path.cpp",
+        "anadius-crt-module-path-source/module_path.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-multibyte-bridge-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "anadius-crt-multibyte-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "anadius-crt-multibyte-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-multibyte-builder-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-multibyte-builder-source/multibyte_builder.cpp",
+        "anadius-crt-multibyte-builder-source/multibyte_builder.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-multibyte-builder-source/multibyte_builder.cpp",
+        "anadius-crt-multibyte-builder-source/multibyte_builder.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-multibyte-control-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-multibyte-control-source/multibyte_control.cpp",
+        "anadius-crt-multibyte-control-source/multibyte_control.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-multibyte-control-source/multibyte_control.cpp",
+        "anadius-crt-multibyte-control-source/multibyte_control.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-multibyte-record-bridge-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+        "anadius-crt-multibyte-record-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+        "anadius-crt-multibyte-record-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-multibyte-support-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-multibyte-support-source/multibyte_support.cpp",
+        "anadius-crt-multibyte-support-source/multibyte_support.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-multibyte-support-source/multibyte_support.cpp",
+        "anadius-crt-multibyte-support-source/multibyte_support.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-multibyte-tables-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-multibyte-tables-source/multibyte_tables.cpp",
+        "anadius-crt-multibyte-tables-source/multibyte_tables.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-multibyte-tables-source/multibyte_tables.cpp",
+        "anadius-crt-multibyte-tables-source/multibyte_tables.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-nls-bridge-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-nls-bridge-source/bridge.cpp",
+        "anadius-crt-nls-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-nls-bridge-source/bridge.cpp",
+        "anadius-crt-nls-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-nls-dispatch-bridge-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-nls-dispatch-bridge-source/bridge.cpp",
+        "anadius-crt-nls-dispatch-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-nls-dispatch-bridge-source/bridge.cpp",
+        "anadius-crt-nls-dispatch-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-nls-dispatch-native-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-nls-dispatch-native-source/native.cpp",
+        "anadius-crt-nls-dispatch-native-source/native.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-nls-dispatch-native-source/native.cpp",
+        "anadius-crt-nls-dispatch-native-source/native.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-nls-dispatch-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-nls-dispatch-source/nls_dispatch.cpp",
+        "anadius-crt-nls-dispatch-source/nls_dispatch.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-nls-dispatch-source/nls_dispatch.cpp",
+        "anadius-crt-nls-dispatch-source/nls_dispatch.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-nls-native-bridge-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-nls-native-bridge-source/bridge.cpp",
+        "anadius-crt-nls-native-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-nls-native-bridge-source/bridge.cpp",
+        "anadius-crt-nls-native-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-nls-native-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-nls-native-source/native_api.cpp",
+        "anadius-crt-nls-native-source/native_api.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-nls-native-source/native_api.cpp",
+        "anadius-crt-nls-native-source/native_api.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-onexit-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-onexit-source/onexit.cpp",
+        "anadius-crt-onexit-source/onexit.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-onexit-source/onexit.cpp",
+        "anadius-crt-onexit-source/onexit.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-pair-bindings-source",
+      "archive_files": 15,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-pair-bindings-source/bindings.cpp",
+        "anadius-crt-pair-bindings-source/bindings.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-pair-bindings-source/bindings.cpp",
+        "anadius-crt-pair-bindings-source/bindings.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-pair-leaves-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+        "anadius-crt-pair-leaves-source/pair_leaves.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+        "anadius-crt-pair-leaves-source/pair_leaves.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-ptd-data-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-ptd-data-source/ptd_data.cpp",
+        "anadius-crt-ptd-data-source/ptd_data.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-ptd-data-source/ptd_data.cpp",
+        "anadius-crt-ptd-data-source/ptd_data.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-ptd-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-ptd-source/ptd.cpp",
+        "anadius-crt-ptd-source/ptd.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-ptd-source/ptd.cpp",
+        "anadius-crt-ptd-source/ptd.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-realloc-source",
+      "archive_files": 13,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-realloc-source/realloc.cpp",
+        "anadius-crt-realloc-source/realloc.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-realloc-source/realloc.cpp",
+        "anadius-crt-realloc-source/realloc.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-recalloc-bridge-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-recalloc-bridge-source/bridge.cpp",
+        "anadius-crt-recalloc-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-recalloc-bridge-source/bridge.cpp",
+        "anadius-crt-recalloc-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-recalloc-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-recalloc-source/recalloc.cpp",
+        "anadius-crt-recalloc-source/recalloc.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-recalloc-source/recalloc.cpp",
+        "anadius-crt-recalloc-source/recalloc.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-runtime-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-runtime-source/runtime.cpp",
+        "anadius-crt-runtime-source/runtime.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-runtime-source/runtime.cpp",
+        "anadius-crt-runtime-source/runtime.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-sort-source",
+      "archive_files": 16,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-sort-source/sort.cpp",
+        "anadius-crt-sort-source/sort.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-sort-source/sort.cpp",
+        "anadius-crt-sort-source/sort.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-startup-bridge-source",
+      "archive_files": 15,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-startup-bridge-source/startup_bridge.cpp",
+        "anadius-crt-startup-bridge-source/startup_bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-startup-bridge-source/startup_bridge.cpp",
+        "anadius-crt-startup-bridge-source/startup_bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-string-type-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-string-type-source/string_type.cpp",
+        "anadius-crt-string-type-source/string_type.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-string-type-source/string_type.cpp",
+        "anadius-crt-string-type-source/string_type.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-support-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-support-source/support.cpp",
+        "anadius-crt-support-source/support.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-support-source/support.cpp",
+        "anadius-crt-support-source/support.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-sync-bridge-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-sync-bridge-source/bridge.cpp",
+        "anadius-crt-sync-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-sync-bridge-source/bridge.cpp",
+        "anadius-crt-sync-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-termination-source",
+      "archive_files": 13,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-termination-source/termination.cpp",
+        "anadius-crt-termination-source/termination.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-termination-source/termination.cpp",
+        "anadius-crt-termination-source/termination.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-wildcard-search-source",
+      "archive_files": 15,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-wildcard-search-source/search.cpp",
+        "anadius-crt-wildcard-search-source/search.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-wildcard-search-source/search.cpp",
+        "anadius-crt-wildcard-search-source/search.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-wildcard-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-wildcard-source/wildcard.cpp",
+        "anadius-crt-wildcard-source/wildcard.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-wildcard-source/wildcard.cpp",
+        "anadius-crt-wildcard-source/wildcard.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crt-wildcard-storage-source",
+      "archive_files": 14,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-crt-wildcard-storage-source/storage.cpp",
+        "anadius-crt-wildcard-storage-source/storage.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-crt-wildcard-storage-source/storage.cpp",
+        "anadius-crt-wildcard-storage-source/storage.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-crypto-source",
+      "archive_files": 12,
+      "source_files": 3,
+      "directly_imported_source_files": 3,
+      "source_paths": [
+        "anadius-crypto-source/constants.hpp",
+        "anadius-crypto-source/crypto.cpp",
+        "anadius-crypto-source/crypto.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-dispatch-source",
+      "archive_files": 8,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-dispatch-source/router.cpp",
+        "anadius-dispatch-source/router.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-encoding-source",
+      "archive_files": 9,
+      "source_files": 3,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-encoding-source/encoding.cpp",
+        "anadius-encoding-source/encoding.hpp",
+        "anadius-encoding-source/native_encoding.cpp"
+      ],
+      "not_directly_imported": [
+        "anadius-encoding-source/encoding.cpp",
+        "anadius-encoding-source/encoding.hpp",
+        "anadius-encoding-source/native_encoding.cpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-event-queue-source",
+      "archive_files": 22,
+      "source_files": 4,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-event-queue-source/adapters.cpp",
+        "anadius-event-queue-source/adapters.hpp",
+        "anadius-event-queue-source/queue.cpp",
+        "anadius-event-queue-source/queue.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-event-queue-source/adapters.cpp",
+        "anadius-event-queue-source/adapters.hpp",
+        "anadius-event-queue-source/queue.cpp",
+        "anadius-event-queue-source/queue.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-execution-source",
+      "archive_files": 12,
+      "source_files": 4,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-execution-source/execution.cpp",
+        "anadius-execution-source/execution.hpp",
+        "anadius-execution-source/windows_platform.cpp",
+        "anadius-execution-source/windows_platform.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-execution-source/execution.cpp",
+        "anadius-execution-source/execution.hpp",
+        "anadius-execution-source/windows_platform.cpp",
+        "anadius-execution-source/windows_platform.hpp"
+      ],
+      "classification": "ASIO_REIMPLEMENTATION_OR_SCOPED_EXTRACTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-file-source",
+      "archive_files": 19,
+      "source_files": 5,
+      "directly_imported_source_files": 5,
+      "source_paths": [
+        "anadius-file-source/binary_io.cpp",
+        "anadius-file-source/binary_io.hpp",
+        "anadius-file-source/license_files.cpp",
+        "anadius-file-source/license_files.hpp",
+        "anadius-file-source/native_io.cpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-handlers-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-handlers-source/handlers.cpp",
+        "anadius-handlers-source/handlers.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-hash-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-hash-source/hash.cpp",
+        "anadius-hash-source/hash.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-host-callbacks-source",
+      "archive_files": 9,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-host-callbacks-source/callbacks.cpp",
+        "anadius-host-callbacks-source/callbacks.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-host-init-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-host-init-source/host_init.cpp",
+        "anadius-host-init-source/host_init.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-libraries-source",
+      "archive_files": 12,
+      "source_files": 3,
+      "directly_imported_source_files": 3,
+      "source_paths": [
+        "anadius-libraries-source/libraries.cpp",
+        "anadius-libraries-source/libraries.hpp",
+        "anadius-libraries-source/native_system.cpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-license-source",
+      "archive_files": 11,
+      "source_files": 3,
+      "directly_imported_source_files": 3,
+      "source_paths": [
+        "anadius-license-source/license.cpp",
+        "anadius-license-source/license.hpp",
+        "anadius-license-source/literals.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-messages-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-messages-source/messages.cpp",
+        "anadius-messages-source/messages.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-misc-handlers-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-misc-handlers-source/misc_handlers.cpp",
+        "anadius-misc-handlers-source/misc_handlers.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-native-source",
+      "archive_files": 12,
+      "source_files": 3,
+      "directly_imported_source_files": 3,
+      "source_paths": [
+        "anadius-native-source/native_callbacks.cpp",
+        "anadius-native-source/native_callbacks.hpp",
+        "anadius-native-source/original_effects.cpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-network-hook-source",
+      "archive_files": 11,
+      "source_files": 4,
+      "directly_imported_source_files": 4,
+      "source_paths": [
+        "anadius-network-hook-source/connect.cpp",
+        "anadius-network-hook-source/connect.hpp",
+        "anadius-network-hook-source/hook_cleanup.cpp",
+        "anadius-network-hook-source/hook_cleanup.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-online-source",
+      "archive_files": 12,
+      "source_files": 4,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-online-source/online.cpp",
+        "anadius-online-source/online.hpp",
+        "anadius-online-source/recovered_effects.cpp",
+        "anadius-online-source/recovered_effects.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-online-source/recovered_effects.cpp",
+        "anadius-online-source/recovered_effects.hpp"
+      ],
+      "classification": "PARTIAL_IMPORT_AND_ADAPTERS_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-parser-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-parser-source/parser.cpp",
+        "anadius-parser-source/parser.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-path-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-path-source/paths.cpp",
+        "anadius-path-source/paths.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-rea-evidence.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-recovery-index.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-registry-source",
+      "archive_files": 11,
+      "source_files": 3,
+      "directly_imported_source_files": 3,
+      "source_paths": [
+        "anadius-registry-source/abi_cells.hpp",
+        "anadius-registry-source/registry.cpp",
+        "anadius-registry-source/registry.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-server-source",
+      "archive_files": 10,
+      "source_files": 2,
+      "directly_imported_source_files": 1,
+      "source_paths": [
+        "anadius-server-source/server.cpp",
+        "anadius-server-source/server.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-server-source/server.hpp"
+      ],
+      "classification": "ASIO_REIMPLEMENTATION_OR_SCOPED_EXTRACTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-session-source",
+      "archive_files": 22,
+      "source_files": 4,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-session-source/handler.cpp",
+        "anadius-session-source/handler.hpp",
+        "anadius-session-source/routing.cpp",
+        "anadius-session-source/routing.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-session-source/routing.cpp",
+        "anadius-session-source/routing.hpp"
+      ],
+      "classification": "PARTIAL_IMPORT_AND_ADAPTERS_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-socket-source",
+      "archive_files": 724,
+      "source_files": 112,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-socket-source/acceptor_native.cpp",
+        "anadius-socket-source/acceptor_native.hpp",
+        "anadius-socket-source/acceptor.cpp",
+        "anadius-socket-source/acceptor.hpp",
+        "anadius-socket-source/append_growth.cpp",
+        "anadius-socket-source/append_growth.hpp",
+        "anadius-socket-source/async_receive.cpp",
+        "anadius-socket-source/async_receive.hpp",
+        "anadius-socket-source/cancellation_native.cpp",
+        "anadius-socket-source/cancellation_native.hpp",
+        "anadius-socket-source/cancellation.cpp",
+        "anadius-socket-source/cancellation.hpp",
+        "anadius-socket-source/cipher_session.cpp",
+        "anadius-socket-source/cipher_session.hpp",
+        "anadius-socket-source/close.cpp",
+        "anadius-socket-source/close.hpp",
+        "anadius-socket-source/closing.cpp",
+        "anadius-socket-source/closing.hpp",
+        "anadius-socket-source/completion_dispatcher_native.cpp",
+        "anadius-socket-source/completion_dispatcher_native.hpp",
+        "anadius-socket-source/completion_dispatcher.cpp",
+        "anadius-socket-source/completion_dispatcher.hpp",
+        "anadius-socket-source/composed_read.cpp",
+        "anadius-socket-source/composed_read.hpp",
+        "anadius-socket-source/composed_write_native.cpp",
+        "anadius-socket-source/composed_write_native.hpp",
+        "anadius-socket-source/composed_write.cpp",
+        "anadius-socket-source/composed_write.hpp",
+        "anadius-socket-source/document_clear.cpp",
+        "anadius-socket-source/document_clear.hpp",
+        "anadius-socket-source/environment_constructor.cpp",
+        "anadius-socket-source/environment_constructor.hpp",
+        "anadius-socket-source/frame_read.cpp",
+        "anadius-socket-source/frame_read.hpp",
+        "anadius-socket-source/handler_dispatch_bridge.cpp",
+        "anadius-socket-source/handler_dispatch_bridge.hpp",
+        "anadius-socket-source/handler_dispatch.cpp",
+        "anadius-socket-source/handler_dispatch.hpp",
+        "anadius-socket-source/io_completion_dispatch.cpp",
+        "anadius-socket-source/io_completion_dispatch.hpp",
+        "anadius-socket-source/io_completion.cpp",
+        "anadius-socket-source/io_completion.hpp",
+        "anadius-socket-source/iocp_constructor_native.cpp",
+        "anadius-socket-source/iocp_constructor_native.hpp",
+        "anadius-socket-source/iocp_constructor.cpp",
+        "anadius-socket-source/iocp_constructor.hpp",
+        "anadius-socket-source/lifecycle_native.cpp",
+        "anadius-socket-source/lifecycle_native.hpp",
+        "anadius-socket-source/lifecycle.cpp",
+        "anadius-socket-source/lifecycle.hpp",
+        "anadius-socket-source/message_core_bridge.cpp",
+        "anadius-socket-source/message_core_bridge.hpp",
+        "anadius-socket-source/message_dispatch.cpp",
+        "anadius-socket-source/message_dispatch.hpp",
+        "anadius-socket-source/native_dispatch.cpp",
+        "anadius-socket-source/native_dispatch.hpp",
+        "anadius-socket-source/native_document.cpp",
+        "anadius-socket-source/native_document.hpp",
+        "anadius-socket-source/native_message.cpp",
+        "anadius-socket-source/native_message.hpp",
+        "anadius-socket-source/native.cpp",
+        "anadius-socket-source/native.hpp",
+        "anadius-socket-source/node_delete.cpp",
+        "anadius-socket-source/node_delete.hpp",
+        "anadius-socket-source/operations.cpp",
+        "anadius-socket-source/operations.hpp",
+        "anadius-socket-source/owned_response.cpp",
+        "anadius-socket-source/owned_response.hpp",
+        "anadius-socket-source/pool_release.cpp",
+        "anadius-socket-source/pool_release.hpp",
+        "anadius-socket-source/posted_operation_dispatch.cpp",
+        "anadius-socket-source/posted_operation_dispatch.hpp",
+        "anadius-socket-source/posted_operation.cpp",
+        "anadius-socket-source/posted_operation.hpp",
+        "anadius-socket-source/prefix_cipher.cpp",
+        "anadius-socket-source/prefix_cipher.hpp",
+        "anadius-socket-source/queued_write.cpp",
+        "anadius-socket-source/queued_write.hpp",
+        "anadius-socket-source/receive_buffer.cpp",
+        "anadius-socket-source/receive_buffer.hpp",
+        "anadius-socket-source/recycle_storage.cpp",
+        "anadius-socket-source/recycle_storage.hpp",
+        "anadius-socket-source/recycle.cpp",
+        "anadius-socket-source/recycle.hpp",
+        "anadius-socket-source/request_growth.cpp",
+        "anadius-socket-source/request_growth.hpp",
+        "anadius-socket-source/request_mutation.cpp",
+        "anadius-socket-source/request_mutation.hpp",
+        "anadius-socket-source/response_containers.cpp",
+        "anadius-socket-source/response_containers.hpp",
+        "anadius-socket-source/response_dispatch.cpp",
+        "anadius-socket-source/response_dispatch.hpp",
+        "anadius-socket-source/response_hex.cpp",
+        "anadius-socket-source/response_hex.hpp",
+        "anadius-socket-source/scheduler_registry.cpp",
+        "anadius-socket-source/scheduler_registry.hpp",
+        "anadius-socket-source/service_constructor_native.cpp",
+        "anadius-socket-source/service_constructor_native.hpp",
+        "anadius-socket-source/service_constructor.cpp",
+        "anadius-socket-source/service_constructor.hpp",
+        "anadius-socket-source/service_registry.cpp",
+        "anadius-socket-source/service_registry.hpp",
+        "anadius-socket-source/worker_run_native.cpp",
+        "anadius-socket-source/worker_run_native.hpp",
+        "anadius-socket-source/worker_run.cpp",
+        "anadius-socket-source/worker_run.hpp",
+        "anadius-socket-source/worker_startup_native.cpp",
+        "anadius-socket-source/worker_startup_native.hpp",
+        "anadius-socket-source/worker_startup.cpp",
+        "anadius-socket-source/worker_startup.hpp",
+        "anadius-socket-source/write_finish.cpp",
+        "anadius-socket-source/write_finish.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-socket-source/acceptor_native.cpp",
+        "anadius-socket-source/acceptor_native.hpp",
+        "anadius-socket-source/acceptor.cpp",
+        "anadius-socket-source/acceptor.hpp",
+        "anadius-socket-source/append_growth.cpp",
+        "anadius-socket-source/append_growth.hpp",
+        "anadius-socket-source/async_receive.cpp",
+        "anadius-socket-source/async_receive.hpp",
+        "anadius-socket-source/cancellation_native.cpp",
+        "anadius-socket-source/cancellation_native.hpp",
+        "anadius-socket-source/cancellation.cpp",
+        "anadius-socket-source/cancellation.hpp",
+        "anadius-socket-source/cipher_session.cpp",
+        "anadius-socket-source/cipher_session.hpp",
+        "anadius-socket-source/close.cpp",
+        "anadius-socket-source/close.hpp",
+        "anadius-socket-source/closing.cpp",
+        "anadius-socket-source/closing.hpp",
+        "anadius-socket-source/completion_dispatcher_native.cpp",
+        "anadius-socket-source/completion_dispatcher_native.hpp",
+        "anadius-socket-source/completion_dispatcher.cpp",
+        "anadius-socket-source/completion_dispatcher.hpp",
+        "anadius-socket-source/composed_read.cpp",
+        "anadius-socket-source/composed_read.hpp",
+        "anadius-socket-source/composed_write_native.cpp",
+        "anadius-socket-source/composed_write_native.hpp",
+        "anadius-socket-source/composed_write.cpp",
+        "anadius-socket-source/composed_write.hpp",
+        "anadius-socket-source/document_clear.cpp",
+        "anadius-socket-source/document_clear.hpp",
+        "anadius-socket-source/environment_constructor.cpp",
+        "anadius-socket-source/environment_constructor.hpp",
+        "anadius-socket-source/frame_read.cpp",
+        "anadius-socket-source/frame_read.hpp",
+        "anadius-socket-source/handler_dispatch_bridge.cpp",
+        "anadius-socket-source/handler_dispatch_bridge.hpp",
+        "anadius-socket-source/handler_dispatch.cpp",
+        "anadius-socket-source/handler_dispatch.hpp",
+        "anadius-socket-source/io_completion_dispatch.cpp",
+        "anadius-socket-source/io_completion_dispatch.hpp",
+        "anadius-socket-source/io_completion.cpp",
+        "anadius-socket-source/io_completion.hpp",
+        "anadius-socket-source/iocp_constructor_native.cpp",
+        "anadius-socket-source/iocp_constructor_native.hpp",
+        "anadius-socket-source/iocp_constructor.cpp",
+        "anadius-socket-source/iocp_constructor.hpp",
+        "anadius-socket-source/lifecycle_native.cpp",
+        "anadius-socket-source/lifecycle_native.hpp",
+        "anadius-socket-source/lifecycle.cpp",
+        "anadius-socket-source/lifecycle.hpp",
+        "anadius-socket-source/message_core_bridge.cpp",
+        "anadius-socket-source/message_core_bridge.hpp",
+        "anadius-socket-source/message_dispatch.cpp",
+        "anadius-socket-source/message_dispatch.hpp",
+        "anadius-socket-source/native_dispatch.cpp",
+        "anadius-socket-source/native_dispatch.hpp",
+        "anadius-socket-source/native_document.cpp",
+        "anadius-socket-source/native_document.hpp",
+        "anadius-socket-source/native_message.cpp",
+        "anadius-socket-source/native_message.hpp",
+        "anadius-socket-source/native.cpp",
+        "anadius-socket-source/native.hpp",
+        "anadius-socket-source/node_delete.cpp",
+        "anadius-socket-source/node_delete.hpp",
+        "anadius-socket-source/operations.cpp",
+        "anadius-socket-source/operations.hpp",
+        "anadius-socket-source/owned_response.cpp",
+        "anadius-socket-source/owned_response.hpp",
+        "anadius-socket-source/pool_release.cpp",
+        "anadius-socket-source/pool_release.hpp",
+        "anadius-socket-source/posted_operation_dispatch.cpp",
+        "anadius-socket-source/posted_operation_dispatch.hpp",
+        "anadius-socket-source/posted_operation.cpp",
+        "anadius-socket-source/posted_operation.hpp",
+        "anadius-socket-source/prefix_cipher.cpp",
+        "anadius-socket-source/prefix_cipher.hpp",
+        "anadius-socket-source/queued_write.cpp",
+        "anadius-socket-source/queued_write.hpp",
+        "anadius-socket-source/receive_buffer.cpp",
+        "anadius-socket-source/receive_buffer.hpp",
+        "anadius-socket-source/recycle_storage.cpp",
+        "anadius-socket-source/recycle_storage.hpp",
+        "anadius-socket-source/recycle.cpp",
+        "anadius-socket-source/recycle.hpp",
+        "anadius-socket-source/request_growth.cpp",
+        "anadius-socket-source/request_growth.hpp",
+        "anadius-socket-source/request_mutation.cpp",
+        "anadius-socket-source/request_mutation.hpp",
+        "anadius-socket-source/response_containers.cpp",
+        "anadius-socket-source/response_containers.hpp",
+        "anadius-socket-source/response_dispatch.cpp",
+        "anadius-socket-source/response_dispatch.hpp",
+        "anadius-socket-source/response_hex.cpp",
+        "anadius-socket-source/response_hex.hpp",
+        "anadius-socket-source/scheduler_registry.cpp",
+        "anadius-socket-source/scheduler_registry.hpp",
+        "anadius-socket-source/service_constructor_native.cpp",
+        "anadius-socket-source/service_constructor_native.hpp",
+        "anadius-socket-source/service_constructor.cpp",
+        "anadius-socket-source/service_constructor.hpp",
+        "anadius-socket-source/service_registry.cpp",
+        "anadius-socket-source/service_registry.hpp",
+        "anadius-socket-source/worker_run_native.cpp",
+        "anadius-socket-source/worker_run_native.hpp",
+        "anadius-socket-source/worker_run.cpp",
+        "anadius-socket-source/worker_run.hpp",
+        "anadius-socket-source/worker_startup_native.cpp",
+        "anadius-socket-source/worker_startup_native.hpp",
+        "anadius-socket-source/worker_startup.cpp",
+        "anadius-socket-source/worker_startup.hpp",
+        "anadius-socket-source/write_finish.cpp",
+        "anadius-socket-source/write_finish.hpp"
+      ],
+      "classification": "ASIO_REIMPLEMENTATION_OR_SCOPED_EXTRACTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-source",
+      "archive_files": 9,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-source/bootstrap.cpp",
+        "anadius-source/bootstrap.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-source/bootstrap.cpp",
+        "anadius-source/bootstrap.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-startup-source",
+      "archive_files": 12,
+      "source_files": 3,
+      "directly_imported_source_files": 3,
+      "source_paths": [
+        "anadius-startup-source/startup.cpp",
+        "anadius-startup-source/startup.hpp",
+        "anadius-startup-source/windows_platform.cpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-status-source",
+      "archive_files": 10,
+      "source_files": 3,
+      "directly_imported_source_files": 1,
+      "source_paths": [
+        "anadius-status-source/native_status.cpp",
+        "anadius-status-source/status.cpp",
+        "anadius-status-source/status.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-status-source/native_status.cpp",
+        "anadius-status-source/status.cpp"
+      ],
+      "classification": "PARTIAL_IMPORT_AND_ADAPTERS_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-thread-native-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-thread-native-source/win32_effects.cpp",
+        "anadius-thread-native-source/win32_effects.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-thread-native-source/win32_effects.cpp",
+        "anadius-thread-native-source/win32_effects.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-thread-source",
+      "archive_files": 9,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-thread-source/threads.cpp",
+        "anadius-thread-source/threads.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-thread-source/threads.cpp",
+        "anadius-thread-source/threads.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-timestamp-source",
+      "archive_files": 21,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-timestamp-source/timestamp.cpp",
+        "anadius-timestamp-source/timestamp.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-token-source",
+      "archive_files": 11,
+      "source_files": 3,
+      "directly_imported_source_files": 3,
+      "source_paths": [
+        "anadius-token-source/constants.hpp",
+        "anadius-token-source/token.cpp",
+        "anadius-token-source/token.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-type-recovery",
+      "archive_files": 4,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-vcrt-api-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-vcrt-api-source/api.cpp",
+        "anadius-vcrt-api-source/api.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-vcrt-api-source/api.cpp",
+        "anadius-vcrt-api-source/api.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-vcrt-bridge-source",
+      "archive_files": 15,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-vcrt-bridge-source/bridge.cpp",
+        "anadius-vcrt-bridge-source/bridge.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-vcrt-bridge-source/bridge.cpp",
+        "anadius-vcrt-bridge-source/bridge.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-vcrt-ptd-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-vcrt-ptd-source/vcrt_ptd.cpp",
+        "anadius-vcrt-ptd-source/vcrt_ptd.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-vcrt-ptd-source/vcrt_ptd.cpp",
+        "anadius-vcrt-ptd-source/vcrt_ptd.hpp"
+      ],
+      "classification": "HOST_CRT_SUBSTITUTION_NATIVE_EQUIVALENCE_UNVERIFIED",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-windows-source",
+      "archive_files": 9,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "anadius-windows-source/windows_effects.cpp",
+        "anadius-windows-source/windows_effects.hpp"
+      ],
+      "not_directly_imported": [
+        "anadius-windows-source/windows_effects.cpp",
+        "anadius-windows-source/windows_effects.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-xml-reader-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-xml-reader-source/reader.cpp",
+        "anadius-xml-reader-source/reader.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "anadius-xml-source",
+      "archive_files": 12,
+      "source_files": 2,
+      "directly_imported_source_files": 2,
+      "source_paths": [
+        "anadius-xml-source/memory_printer.cpp",
+        "anadius-xml-source/memory_printer.hpp"
+      ],
+      "not_directly_imported": [],
+      "classification": "DIRECT_IMPORTS_REVIEWED_BELOW",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "hook-engine-source",
+      "archive_files": 42,
+      "source_files": 8,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "hook-engine-source/adapters.cpp",
+        "hook-engine-source/adapters.hpp",
+        "hook-engine-source/api.cpp",
+        "hook-engine-source/api.hpp",
+        "hook-engine-source/preloader_engine.cpp",
+        "hook-engine-source/testing/fake_state.hpp",
+        "hook-engine-source/testing/fake_win32.cpp",
+        "hook-engine-source/testing/fake_win32.h"
+      ],
+      "not_directly_imported": [
+        "hook-engine-source/adapters.cpp",
+        "hook-engine-source/adapters.hpp",
+        "hook-engine-source/api.cpp",
+        "hook-engine-source/api.hpp",
+        "hook-engine-source/preloader_engine.cpp",
+        "hook-engine-source/testing/fake_state.hpp",
+        "hook-engine-source/testing/fake_win32.cpp",
+        "hook-engine-source/testing/fake_win32.h"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "host-compatibility",
+      "archive_files": 5,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "integrity-final.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "mac-symbol-comparison",
+      "archive_files": 3,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "package-manifest.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "package-omissions.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "preloader-analysis",
+      "archive_files": 8,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "preloader-native-source",
+      "archive_files": 11,
+      "source_files": 2,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "preloader-native-source/native_shims.cpp",
+        "preloader-native-source/native_shims.hpp"
+      ],
+      "not_directly_imported": [
+        "preloader-native-source/native_shims.cpp",
+        "preloader-native-source/native_shims.hpp"
+      ],
+      "classification": "NOT_DIRECTLY_IMPORTED_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "preloader-source",
+      "archive_files": 9,
+      "source_files": 2,
+      "directly_imported_source_files": 1,
+      "source_paths": [
+        "preloader-source/preloader_core.cpp",
+        "preloader-source/preloader_core.hpp"
+      ],
+      "not_directly_imported": [
+        "preloader-source/preloader_core.hpp"
+      ],
+      "classification": "PARTIAL_IMPORT_AND_ADAPTERS_REQUIRES_CROSSWALK",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "reconstruction-inventory",
+      "archive_files": 20,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "source-workspace",
+      "archive_files": 539,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "version-all-functions.asm.txt",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "version-all-functions.pseudo.c",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "version-build-verification",
+      "archive_files": 5,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "version-pe-tables.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "version-rea-evidence.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "version-rebuild",
+      "archive_files": 23,
+      "source_files": 1,
+      "directly_imported_source_files": 0,
+      "source_paths": [
+        "version-rebuild/loader.cpp"
+      ],
+      "not_directly_imported": [
+        "version-rebuild/loader.cpp"
+      ],
+      "classification": "OTHER_BINARY_REFERENCE_NOT_ACTIVE_APPLICATION",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "version-reconstruction-input.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    },
+    {
+      "module": "version-resource-evidence.json",
+      "archive_files": 1,
+      "source_files": 0,
+      "directly_imported_source_files": 0,
+      "source_paths": [],
+      "not_directly_imported": [],
+      "classification": "EVIDENCE_ONLY_OR_OTHER_PAYLOAD",
+      "note": "No direct import is a coverage finding, not proof a required feature is absent. Host CRT/library/adapter replacement needs original native evidence."
+    }
+  ]
+}

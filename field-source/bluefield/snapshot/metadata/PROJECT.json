@@ -1,0 +1,30 @@
+{
+  "project": "preloader_l",
+  "code_state": "BF02_FIX31_UNLOAD_REGION_SCAN_BUDGET",
+  "classification": "NON_RELEASE_WORK",
+  "release_status": "NOT_RELEASE",
+  "replaces_rejected_delivery": "BF01 config-only scaffold is not this application package",
+  "code_parent": {
+    "archive": "dll-reverse-engineering(6).zip",
+    "sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9"
+  },
+  "brownfield_reuse": "operator/ABI/QA discipline plus scoped test cases and byte-identical protocol tooling; no application C++ copied",
+  "governance": {
+    "revision": "2026-10-25.1",
+    "master_md_sha256": "8bfe91091fb115ee816d1a7204f2256d837df79d14957e78d332d3602daa981b",
+    "master_json_sha256": "06ab4d5e070a191e40045d681e03f9fbd99bbbed4195c89174f5656d95beb141",
+    "binding": "metadata/GOVERNANCE_BINDING_FIX31.json"
+  },
+  "release_pointer_changed": false,
+  "snapshot_parent": {
+    "archive": "preloader_l_BF02_FIX30_APPLICATION_SOURCE_NOT_RELEASE.zip",
+    "sha256": "106d67c12e7a2fa82e907f4520afaa1bf28ccd92d60d33cdf9d35381cabc6095",
+    "classification": "FULL_SOURCE_SNAPSHOT_PARENT"
+  },
+  "change_reason": "Apply REVIEW31 proposed over-budget region refusal. Same64MiB, no partial region treated safe. Execute actual source scan/enumeration under declared test-only SDK shims and build native scanner fixture for future MSVC run. Document quiesce lease-only timeout; preserve all native ownership and runtime policies. Carry REVIEW31 DEP05 review closure;6 main reviews remain.",
+  "user_reported_parent_game_status": "FIX07 works correctly per latest user confirmation; exact DLL hash/Golden receipts not supplied",
+  "code_namespace": "preloader_l",
+  "profile_display_name": "SURGE",
+  "development_lineage": "BLUEFIELD",
+  "rejected_FIX12_archive_sha256": "f182d50ad8fd5632071cb3291a854a054480c625a831bfc2dc2a615f0262e0de"
+}

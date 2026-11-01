@@ -1,0 +1,422 @@
+--- FIX26/src/files/atomic_io.hpp
++++ FIX27/src/files/atomic_io.hpp
+@@ -2,6 +2,7 @@
+ #pragma once
+ #include "src/runtime/runtime_paths.hpp"
+ #include <filesystem>
++#include <memory>
+ #include <string>
+ #include <string_view>
+ #include <vector>
+@@ -10,6 +11,20 @@
+ class PersistenceRecoveryRequired:public std::runtime_error{public:using std::runtime_error::runtime_error;};
+ struct BatchHooks {virtual ~BatchHooks()=default;virtual void before_commit(std::size_t)=0;};
+ struct FileUpdate {std::filesystem::path target;std::string bytes;};
++// Opens an exclusive sibling stage without publishing/truncating the target.
++// A stream backend can report open failure before accepting any payload.
++class AtomicFileWriter final {
++public:
++    AtomicFileWriter(const std::filesystem::path&,const RuntimePaths* owner);
++    ~AtomicFileWriter();
++    AtomicFileWriter(const AtomicFileWriter&)=delete;
++    AtomicFileWriter& operator=(const AtomicFileWriter&)=delete;
++    void write(std::string_view);
++    void commit();
++private:
++    struct Impl;
++    std::unique_ptr<Impl> impl_;
++};
+ // Sibling exclusive temporaries, flushed before replace; originals are backed up
+ // before a batch commit. Errors are exceptions, never successful short writes.
+ void atomic_write(const std::filesystem::path&,std::string_view,const RuntimePaths* owner,bool create_only=false);
+--- FIX26/src/files/binary_io.hpp
++++ FIX27/src/files/binary_io.hpp
+@@ -37,9 +37,10 @@
+ std::string read_binary_03b3f0(const Path&,Factory&);
+ bool write_binary_03c1d0(const Path&,std::string_view,Factory&);
+ 
+-// Working Windows/LLVM-MinGW std::fstream compatibility backend. This is a
+-// chosen source dependency, not the original MSVC CRT/filebuf implementation.
+-// Default exception mask is zero. Sharing/locale/ABI equality is not established.
++// Inputs use host fstream. Outputs open an owned atomic sibling stage and expose
++// setup IO failure through initial_state; later write/flush/commit errors throw.
++// This is an integration backend, not the original MSVC CRT/filebuf. Native
++// sharing, exception-mask, locale and ABI equality are not established.
+ class NativeFactory final:public Factory {
+     const RuntimePaths* owner_=nullptr;
+ public:
+--- FIX26/src/files/atomic_io.cpp
++++ FIX27/src/files/atomic_io.cpp
+@@ -6,6 +6,7 @@
+ #include <fstream>
+ #include <mutex>
+ #include <memory>
++#include <optional>
+ #include <stdexcept>
+ #include <system_error>
+ #ifdef _WIN32
+@@ -28,7 +29,12 @@
+ }
+ struct Stage {
+  fs::path path;bool owned=false;
+- Stage(const fs::path& target,std::string_view bytes){
++#ifdef _WIN32
++ HANDLE handle=INVALID_HANDLE_VALUE;
++#else
++ int descriptor=-1;
++#endif
++ explicit Stage(const fs::path& target){
+   fs::create_directories(target.parent_path());
+ #ifdef _WIN32
+   const auto pid=GetCurrentProcessId();
+@@ -38,23 +44,44 @@
+   for(unsigned attempt=0;attempt<100;++attempt){
+    path=target.parent_path()/(".preloader_l-"+std::to_string(pid)+"-"+std::to_string(sequence.fetch_add(1))+".tmp");
+ #ifdef _WIN32
+-   HANDLE h=CreateFileW(path.c_str(),GENERIC_WRITE,0,nullptr,CREATE_NEW,FILE_ATTRIBUTE_TEMPORARY,nullptr);
+-   if(h==INVALID_HANDLE_VALUE){if(GetLastError()==ERROR_FILE_EXISTS)continue;fail("create atomic temporary");}
++   handle=CreateFileW(path.c_str(),GENERIC_WRITE,0,nullptr,CREATE_NEW,FILE_ATTRIBUTE_TEMPORARY,nullptr);
++   if(handle==INVALID_HANDLE_VALUE){if(GetLastError()==ERROR_FILE_EXISTS)continue;fail("create atomic temporary");}
+    owned=true;
+-   try{std::size_t n=0;while(n<bytes.size()){DWORD got=0;const auto want=static_cast<DWORD>((std::min)(bytes.size()-n,std::size_t(0x7fffffff)));if(!WriteFile(h,bytes.data()+n,want,&got,nullptr)||got==0)fail("write atomic temporary");n+=got;}if(!FlushFileBuffers(h))fail("flush atomic temporary");if(!CloseHandle(h)){h=INVALID_HANDLE_VALUE;fail("close atomic temporary");}h=INVALID_HANDLE_VALUE;}
+-   catch(...){if(h!=INVALID_HANDLE_VALUE)CloseHandle(h);cleanup();throw;}
+ #else
+-   int fd=::open(path.c_str(),O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC|O_NOFOLLOW,0600);
+-   if(fd<0){if(errno==EEXIST)continue;fail("create atomic temporary");}owned=true;
+-   try{std::size_t n=0;while(n<bytes.size()){auto got=::write(fd,bytes.data()+n,bytes.size()-n);if(got<0&&errno==EINTR)continue;if(got<=0)fail("write atomic temporary");n+=static_cast<std::size_t>(got);}if(::fsync(fd))fail("flush atomic temporary");const int old=fd;fd=-1;if(::close(old))fail("close atomic temporary");}
+-   catch(...){if(fd>=0)::close(fd);cleanup();throw;}
++   descriptor=::open(path.c_str(),O_WRONLY|O_CREAT|O_EXCL|O_CLOEXEC|O_NOFOLLOW,0600);
++   if(descriptor<0){if(errno==EEXIST)continue;fail("create atomic temporary");}owned=true;
+ #endif
+    return;
+   }
+   throw std::runtime_error("atomic temporary quota");
+  }
++ Stage(const fs::path& target,std::string_view bytes):Stage(target){
++  try{write(bytes);finish();}catch(...){close_noexcept();cleanup();throw;}
++ }
++ void write(std::string_view bytes){
++#ifdef _WIN32
++  std::size_t n=0;while(n<bytes.size()){DWORD got=0;const auto want=static_cast<DWORD>((std::min)(bytes.size()-n,std::size_t(0x7fffffff)));if(!WriteFile(handle,bytes.data()+n,want,&got,nullptr)||got==0)fail("write atomic temporary");n+=got;}
++#else
++  std::size_t n=0;while(n<bytes.size()){auto got=::write(descriptor,bytes.data()+n,bytes.size()-n);if(got<0&&errno==EINTR)continue;if(got<=0)fail("write atomic temporary");n+=static_cast<std::size_t>(got);}
++#endif
++ }
++ void finish(){
++#ifdef _WIN32
++  if(!FlushFileBuffers(handle))fail("flush atomic temporary");
++  if(!CloseHandle(handle)){handle=INVALID_HANDLE_VALUE;fail("close atomic temporary");}handle=INVALID_HANDLE_VALUE;
++#else
++  if(::fsync(descriptor))fail("flush atomic temporary");const int old=descriptor;descriptor=-1;if(::close(old))fail("close atomic temporary");
++#endif
++ }
++ void close_noexcept()noexcept{
++#ifdef _WIN32
++  if(handle!=INVALID_HANDLE_VALUE){CloseHandle(handle);handle=INVALID_HANDLE_VALUE;}
++#else
++  if(descriptor>=0){::close(descriptor);descriptor=-1;}
++#endif
++ }
+  void cleanup() noexcept{if(owned){std::error_code ec;fs::remove(path,ec);owned=false;}}
+- ~Stage(){cleanup();}
++ ~Stage(){close_noexcept();cleanup();}
+  Stage(const Stage&)=delete;
+  void commit(const fs::path& target,bool create_only=false){
+ #ifdef _WIN32
+@@ -69,6 +96,24 @@
+ };
+ void validate_target(const fs::path& p,const RuntimePaths* owner){if(owner)owner->require_write(p);std::error_code ec;auto st=fs::symlink_status(p,ec);if(fs::exists(st)&&(!fs::is_regular_file(st)||fs::is_symlink(st)))throw std::invalid_argument("atomic target is not a regular owned file");}
+ }
++struct AtomicFileWriter::Impl {
++ fs::path target;const RuntimePaths* owner;std::optional<Stage> stage;bool failed=false,committed=false;
++ Impl(const fs::path& p,const RuntimePaths* o):target(p.lexically_normal()),owner(o){
++  std::lock_guard lock(write_mutex);validate_target(target,owner);stage.emplace(target);
++ }
++};
++AtomicFileWriter::AtomicFileWriter(const fs::path& p,const RuntimePaths* owner):impl_(std::make_unique<Impl>(p,owner)){}
++AtomicFileWriter::~AtomicFileWriter()=default;
++void AtomicFileWriter::write(std::string_view bytes){
++ if(impl_->failed||impl_->committed)throw std::logic_error("atomic stream is no longer writable");
++ try{impl_->stage->write(bytes);}catch(...){impl_->failed=true;throw;}
++}
++void AtomicFileWriter::commit(){
++ if(impl_->failed||impl_->committed)throw std::logic_error("atomic stream cannot commit");
++ std::lock_guard lock(write_mutex);
++ try{impl_->stage->finish();if(impl_->owner)impl_->owner->require_write(impl_->target);impl_->stage->commit(impl_->target);impl_->committed=true;}
++ catch(...){impl_->failed=true;throw;}
++}
+ void atomic_write(const fs::path& p,std::string_view bytes,const RuntimePaths* owner,bool create_only){std::lock_guard lock(write_mutex);auto target=p.lexically_normal();validate_target(target,owner);Stage stage(target,bytes);if(owner)owner->require_write(target);stage.commit(target,create_only);}
+ void atomic_batch(const std::vector<FileUpdate>& writes,const RuntimePaths& owner,BatchHooks* hooks){
+  std::lock_guard lock(write_mutex);
+--- FIX26/src/files/native_io.cpp
++++ FIX27/src/files/native_io.cpp
+@@ -4,6 +4,7 @@
+ #include <fstream>
+ #include <limits>
+ #include <stdexcept>
++#include <system_error>
+ 
+ namespace preloader_l::files {
+ namespace {
+@@ -47,12 +48,19 @@
+ private:std::ifstream stream_;
+ };
+ class NativeOutput final:public Output {
+- std::filesystem::path path_;const RuntimePaths* owner_;std::string bytes_;
++ std::unique_ptr<AtomicFileWriter> writer_;std::uint32_t initial_=0;
+ public:
+- NativeOutput(const Path& path,const RuntimePaths* owner):path_(native_file_path(path)),owner_(owner){if(!owner_)throw std::invalid_argument("native output requires RuntimePaths");owner_->require_write(path_);}
+- std::uint32_t initial_state()const override{return 0;}
+- void write_03be80(std::string_view value)override{bytes_.append(value);}
+- void close_03ae70()override{atomic_write(path_,bytes_,owner_);}
++ NativeOutput(const Path& path,const RuntimePaths* owner){
++  if(!owner)throw std::invalid_argument("native output requires RuntimePaths");
++  const auto file=native_file_path(path);
++  // Only open/setup OS failures become the source initial fail state. Payload,
++  // flush, publication, ownership, allocation and recovery errors still throw.
++  try{writer_=std::make_unique<AtomicFileWriter>(file,owner);}
++  catch(const std::system_error&){initial_=2;}
++ }
++ std::uint32_t initial_state()const override{return initial_;}
++ void write_03be80(std::string_view value)override{if(!writer_)throw std::logic_error("native output did not open");writer_->write(value);}
++ void close_03ae70()override{if(!writer_)throw std::logic_error("native output did not open");writer_->commit();writer_.reset();}
+ };
+ }
+ std::unique_ptr<Input> NativeFactory::open_input_039f70(const Path& path,std::uint32_t mode,std::uint32_t share) {
+--- FIX26/tests/integration/test_ticket_output.cpp
++++ FIX27/tests/integration/test_ticket_output.cpp
+@@ -0,0 +1,143 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/files/license_files.hpp"
++#include "src/files/atomic_io.hpp"
++#include "src/application/environment.hpp"
++#include <chrono>
++#include <cstring>
++#include <fstream>
++#include <iostream>
++#include <stdexcept>
++#include <type_traits>
++#if defined(__linux__)
++#include <cerrno>
++#include <cstdarg>
++#include <fcntl.h>
++#include <sys/syscall.h>
++#include <unistd.h>
++enum class Fault {none,open,write,flush,commit,allocation,recovery,collision};
++static Fault fault=Fault::none;
++static int staged_fd=-1;
++static unsigned open_attempts=0;
++// Test-only syscall interposition. Only the process-owned staging filename
++// branch is controlled; no production fault selector or ABI change is added.
++extern "C" int open(const char* p,int flags,...){
++    mode_t mode=0;if(flags&O_CREAT){va_list ap;va_start(ap,flags);mode=static_cast<mode_t>(va_arg(ap,int));va_end(ap);}
++    const bool stage=(flags&O_EXCL)&&(flags&O_CREAT)&&std::strstr(p,".preloader_l-");
++    if(stage){
++        ++open_attempts;
++        if(fault==Fault::open){errno=EACCES;return -1;}
++        if(fault==Fault::allocation)throw std::bad_alloc{};
++        if(fault==Fault::recovery)throw preloader_l::PersistenceRecoveryRequired("test recovery sentinel");
++        if(fault==Fault::collision){errno=EEXIST;return -1;}
++    }
++    const int fd=static_cast<int>(::syscall(SYS_openat,AT_FDCWD,p,flags,mode));if(stage)staged_fd=fd;return fd;
++}
++extern "C" ssize_t write(int fd,const void* p,size_t size){if(fd==staged_fd&&fault==Fault::write){errno=ENOSPC;return -1;}return static_cast<ssize_t>(::syscall(SYS_write,fd,p,size));}
++extern "C" int fsync(int fd){if(fd==staged_fd&&fault==Fault::flush){errno=EIO;return -1;}return static_cast<int>(::syscall(SYS_fsync,fd));}
++extern "C" int rename(const char* from,const char* to)noexcept{if(fault==Fault::commit&&std::strstr(from,".preloader_l-")){errno=EIO;return -1;}return static_cast<int>(::syscall(SYS_renameat,AT_FDCWD,from,AT_FDCWD,to));}
++struct FaultScope {explicit FaultScope(Fault value){fault=value;open_attempts=0;staged_fd=-1;}~FaultScope(){fault=Fault::none;staged_fd=-1;}};
++#endif
++namespace fs=std::filesystem;
++namespace f=preloader_l::files;
++namespace l=preloader_l::licensing;
++using preloader_l::Path;
++static unsigned checks=0;
++static void check(bool ok,const char* label){++checks;if(!ok)throw std::runtime_error(label);}
++static std::string get(const fs::path& p){std::ifstream in(p,std::ios::binary);return {std::istreambuf_iterator<char>(in),std::istreambuf_iterator<char>()};}
++static void put(const fs::path& p,std::string_view bytes){fs::create_directories(p.parent_path());std::ofstream out(p,std::ios::binary);out.write(bytes.data(),static_cast<std::streamsize>(bytes.size()));check(bool(out),"fixture write");}
++static bool no_stages(const fs::path& p){if(!fs::exists(p))return true;for(auto& e:fs::recursive_directory_iterator(p))if(e.path().filename().string().starts_with(".preloader_l-"))return false;return true;}
++struct Node final:l::Node {
++    std::string_view name()const override{return "RequestLicense";}
++    const l::Node* first_element()const override{return nullptr;}
++    const l::Node* next_element()const override{return nullptr;}
++    std::optional<std::string_view> attribute(std::string_view key)const override{if(key=="RequestTicket")return "synthetic-ticket";if(key=="TicketEngine")return "synthetic-engine";return {};}
++};
++struct Xml final:l::Xml {
++    const char* attribute_002cc0(preloader_l::handlers::Request,const char*)override{throw std::logic_error("unexpected XML lookup");}
++    void open_004080(const char*,bool)override{throw std::logic_error("unexpected success response");}
++    void attribute_005560(const char*,const char*)override{throw std::logic_error("unexpected response attribute");}
++    void close_virtual_48(bool)override{throw std::logic_error("unexpected response close");}
++};
++struct Exit {int code;};
++struct Effects final:l::Effects {
++    std::vector<std::string> dialogs;
++    std::vector<std::string> trace;
++    bool first_wine=false,second_wine=false;unsigned wine_calls=0;
++    const char* online_auth_virtual_30(const char*)override{throw std::logic_error("unexpected auth");}
++    l::FileStatus status_01ea20(const Path&,std::uint32_t)override{return {2,0};}
++    [[noreturn]]void filesystem_error_018130(std::string_view,std::int32_t,const Path&)override{throw std::logic_error("unexpected status error");}
++    bool file_hash_matches_042d20(const Path&,std::string)override{throw std::logic_error("LicenseFiles hash bypassed");}
++    std::string load_token_02afa0(const Path&)override{throw std::logic_error("LicenseFiles token bypassed");}
++    Path filesystem_widen_006d70(std::string_view s)override{return preloader_l::filesystem_path(s);}
++    Path filename_00e120(const Path& p)override{return fs::path(p).filename().u16string();}
++    Path parent_path_019820(const Path& p)override{return fs::path(p).parent_path().u16string();}
++    Path join_016b00(const Path& a,const Path& b)override{return (fs::path(a)/fs::path(b)).u16string();}
++    std::string path_utf8_01e3f0(const Path& p)override{return preloader_l::path_utf8(p);}
++    std::string current_time_041b60_null_true()override{return "fixed";}
++    bool wine_detected_045010()override{trace.push_back("wine");return wine_calls++==0?first_wine:second_wine;}
++    void log_literal_006880(std::string_view)override{trace.push_back("literal");}
++    void log_string_006860(std::string_view)override{trace.push_back("ticket");}
++    bool write_ticket_03c1d0(const Path&,std::string_view)override{throw std::logic_error("Inactive remaining ticket method was called");}
++    void dialog_038bc0(std::string_view title,std::string_view,std::uint32_t)override{dialogs.emplace_back(title);trace.push_back("dialog:"+std::string(title));}
++    [[noreturn]]void exit_05cdc0(std::int32_t code)override{trace.push_back("exit:"+std::to_string(code));throw Exit{code};}
++    [[noreturn]]void no_response_02bcd0_04d228()override{throw std::logic_error("unexpected no response");}
++};
++struct Fixture {
++    preloader_l::RuntimePaths paths;
++    std::string auth,license,dll_hash="f8e35c47f44d379d14be1c8c98c77ad79198347f",exe_hash="eedf922ce5c596b88935b313af80472b698dc5da",content="fixture-content";
++    std::uint8_t online=0,fake=0,blocked=0;std::int32_t attempts=0;
++    Path dll,exe,base;
++    preloader_l::handlers::Attributes game{{"DISPLAY_NAME","Fixture Game"},{"INSTALLED_VERSION","1"}};
++    Effects effects;f::NativeFactory files;f::NativeTextEnvironment text;f::LicenseFiles bound;l::Handlers handlers;Node request;Xml xml;
++    explicit Fixture(const fs::path& root):paths(preloader_l::RuntimePaths::from_system(root/"module/preloader_l.dll",root/"game/game.exe",root/"local",root/"program")),dll((root/"game/dbdata.dll").u16string()),exe(paths.executable().u16string()),base((paths.data()/"license").u16string()),files(paths),bound(effects,files,text),handlers({auth,online,fake,license,dll_hash,exe_hash,content,dll,exe,base,game,attempts,blocked},bound){put(paths.executable(),"fixture-exe");put(fs::path(dll),"fixture-dll");}
++    fs::path ticket()const{return paths.executable().parent_path()/"Denuvo_ticket_fixed.txt";}
++    void run(){(void)handlers.request_license_0320c0(request,xml);}
++};
++static void stream_basics(const fs::path& root){
++    Fixture v(root);const auto target=v.paths.data()/"output";put(target,"OLD");
++    {auto output=v.files.open_output_03a1a0(target.u16string(),0x20,0x40);check(output->initial_state()==0,"open success");output->write_03be80("NEW");check(get(target)=="OLD","target visible before commit");}
++    check(get(target)=="OLD"&&no_stages(root),"abandoned stage preservation/cleanup");
++    check(f::write_binary_03c1d0(target.u16string(),"COMMITTED",v.files),"normal binary output");check(get(target)=="COMMITTED"&&no_stages(root),"commit bytes/cleanup");
++    auto blocker=v.paths.data()/"blocked";put(blocker,"KEEP");
++    check(!f::write_binary_03c1d0((blocker/"ticket").u16string(),"NO",v.files),"initial filesystem setup error returns false");
++    check(get(blocker)=="KEEP"&&no_stages(root),"failed open leaves files intact");
++    bool invalid=false;try{(void)v.files.open_output_03a1a0((root/"unowned").u16string(),0x20,0x40);}catch(const std::invalid_argument&){invalid=true;}
++    check(invalid,"ownership validation must propagate");
++    try{v.run();check(false,"ticket branch must not return");}catch(const Exit& e){check(e.code==-1,"success source exit code");}
++    check(v.effects.dialogs==std::vector<std::string>{"Ticket saved"},"success source dialog");check(v.blocked==1&&v.attempts==2,"source state changes");check(get(v.ticket()).find("synthetic-ticket")!=std::string::npos,"actual ticket bytes");
++}
++#if defined(__linux__)
++static void controlled_failures(const fs::path& root){
++    for(bool first:{false,true})for(bool second:{false,true}){
++        Fixture v(root/(std::string(first?"w":"n")+(second?"w":"n")));v.effects.first_wine=first;v.effects.second_wine=second;put(v.ticket(),"OLD-TICKET");
++        {FaultScope inject(Fault::open);try{v.run();check(false,"open failure must end via source exit");}catch(const Exit& e){check(e.code==-1,"failure source exit code");}check(open_attempts==1,"open-error branch was controlled");}
++        const std::vector<std::string> expected=first?std::vector<std::string>{"Wine detected",second?"Wine detected":"Token required"}:std::vector<std::string>{second?"Wine detected":"Token required"};
++        check(v.effects.dialogs==expected,"source false-result fallback dialog");check(v.effects.wine_calls==2,"source false-result wine predicate order");check(v.effects.trace.back()=="exit:-1","fallback must precede exit");check(get(v.ticket())=="OLD-TICKET"&&no_stages(v.ticket().parent_path()),"open failure preserves ticket");
++    }
++    for(auto fault_kind:{Fault::write,Fault::flush,Fault::commit}){
++        Fixture v(root/"post_open");put(v.ticket(),"OLD");bool failed=false;
++        {FaultScope inject(fault_kind);try{v.run();}catch(const std::system_error&){failed=true;}}
++        check(failed,"post-open IO must propagate");check(v.effects.dialogs.empty(),"post-open failure must not become initial false fallback");check(get(v.ticket())=="OLD"&&no_stages(v.ticket().parent_path()),"post-open failure preserves target and cleans stage");
++    }
++    for(auto fault_kind:{Fault::allocation,Fault::recovery,Fault::collision}){
++        Fixture v(root/"non_io");bool propagated=false;
++        {FaultScope inject(fault_kind);try{(void)v.bound.write_ticket_03c1d0(v.ticket().u16string(),"payload");}catch(const std::bad_alloc&){propagated=fault_kind==Fault::allocation;}catch(const preloader_l::PersistenceRecoveryRequired&){propagated=fault_kind==Fault::recovery;}catch(const std::runtime_error&){propagated=fault_kind==Fault::collision;}if(fault_kind==Fault::collision)check(open_attempts==100,"retained staging budget");}
++        check(propagated,"non-system open error masked");check(no_stages(v.ticket().parent_path()),"non-system failure stage leak");
++    }
++    Fixture v(root/"poison");put(v.ticket(),"OLD");std::unique_ptr<f::Output> output;
++    {FaultScope inject(Fault::write);output=v.files.open_output_03a1a0(v.ticket().u16string(),0x20,0x40);
++        bool failed=false;try{output->write_03be80("partial");}catch(const std::system_error&){failed=true;}check(failed,"controlled poisoned write");}
++    bool rejected=false;try{output->close_03ae70();}catch(const std::logic_error&){rejected=true;}check(rejected,"failed stage must not commit after caller catches write error");output.reset();check(get(v.ticket())=="OLD"&&no_stages(v.ticket().parent_path()),"poisoned stage preservation/cleanup");
++}
++#endif
++int main(){try{
++    static_assert(!std::is_base_of_v<std::system_error,preloader_l::PersistenceRecoveryRequired>);
++    auto root=fs::temp_directory_path()/("preloader_l_ticket_"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));struct Cleanup{fs::path p;~Cleanup(){std::error_code ec;fs::remove_all(p,ec);}}cleanup{root};
++#if defined(__linux__)
++    controlled_failures(root/"controlled");
++#else
++    std::cout<<"Controlled syscall fault cases NOT_RUN on this platform\n";
++#endif
++    stream_basics(root/"basic");
++    std::cout<<"PASS ticket output checks="<<checks<<"; native Windows fault cases NOT_RUN\n";return 0;
++}catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"FAIL unexpected exception\n";return 1;}}
+--- FIX26/CMakeLists.txt
++++ FIX27/CMakeLists.txt
+@@ -112,7 +112,7 @@
+   target_link_libraries(test_startup_compat PRIVATE preloader_l_core)
+   add_test(NAME startup_configuration_profile_compat COMMAND test_startup_compat)
+   set_tests_properties(startup_configuration_profile_compat PROPERTIES TIMEOUT 60)
+-  foreach(source IN ITEMS tests/integration/test_avatar_effects.cpp tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
++  foreach(source IN ITEMS tests/integration/test_ticket_output.cpp tests/integration/test_avatar_effects.cpp tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
+     get_filename_component(name "${source}" NAME_WE)
+     add_executable(${name} "${source}")
+     target_link_libraries(${name} PRIVATE preloader_l_core)
+--- FIX26/metadata/BUILD_GRAPH.json
++++ FIX27/metadata/BUILD_GRAPH.json
+@@ -104,7 +104,8 @@
+     "tests/integration/test_path_resolution.cpp",
+     "tests/integration/test_path_effects.cpp",
+     "tests/integration/test_transport_pipeline.cpp",
+-    "tests/integration/test_avatar_effects.cpp"
++    "tests/integration/test_avatar_effects.cpp",
++    "tests/integration/test_ticket_output.cpp"
+   ],
+   "windows_core": [
+     "src/windows/startup_platform.cpp",
+--- FIX26/scripts/qa/check_source.py
++++ FIX27/scripts/qa/check_source.py
+@@ -16,18 +16,18 @@
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX26 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX27 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX26.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX27.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX26 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX27 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX26 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX26')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX26.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX27 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX27')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX27.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX26 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX27 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -152,6 +152,11 @@
+  license=(root/'src/licensing/license.cpp').read_text()
+  for term in ['[[noreturn]] void invoke_exit_effect(Effects& effects,std::int32_t code)','effects.exit_05cdc0(code);','__builtin_unreachable();','invoke_exit_effect(effects_,code);','invoke_exit_effect(effects_,-1);']:
+   if term not in license:fail(2,'license compiler contract missing: '+term)
++ # D14 LIC11: only initial stage setup maps to failbit, not later failures.
++ native_output=(root/'src/files/native_io.cpp').read_text()
++ for term in ['writer_=std::make_unique<AtomicFileWriter>(file,owner);','catch(const std::system_error&){initial_=2;}','initial_state()const override{return initial_;}','writer_->write(value);','writer_->commit();writer_.reset();']:
++  if term not in native_output:fail(2,'native output open/error contract missing: '+term)
++ if 'tests/integration/test_ticket_output.cpp' not in graph['integration_tests'] or 'tests/integration/test_ticket_output.cpp' not in cmake:fail(2,'ticket output test not integrated')
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -242,7 +247,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX26.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX27.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX26/tests/tools/test_source_policy.py
++++ FIX27/tests/tools/test_source_policy.py
+@@ -82,6 +82,8 @@
+   modify('src/handlers/content.cpp',lambda b:b.replace(b's.saved_avatar_size_0a1130<size',b's.saved_avatar_size_0a1130<=size'),'equal avatar size recopied')
+   modify('src/licensing/license.cpp',lambda b:b.replace(b'__builtin_unreachable();',b'/* hint removed */'),'nonreturn compiler contract lost')
+   modify('src/licensing/license.cpp',lambda b:b.replace(b'invoke_exit_effect(effects_,-1);',b'effects_.exit_05cdc0(-1);'),'ticket caller bypasses compiler boundary')
++  modify('src/files/native_io.cpp',lambda b:b.replace(b'catch(const std::system_error&){initial_=2;}',b'catch(const std::exception&){initial_=2;}'),'initial open masks non-system exceptions')
++  modify('src/files/native_io.cpp',lambda b:b.replace(b'initial_state()const override{return initial_;}',b'initial_state()const override{return 0;}'),'initial open failure silently reports success')
+   assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())

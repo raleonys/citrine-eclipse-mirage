@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "source_digest": "459db9aac948a242e06c309c60a58b642679c9799ae5907e27b2f16b7f729375",
+  "negative_controls": [
+    {
+      "label": "parent_rejected",
+      "command": [
+        "/workspace/scratch/2072698c927d/fix31_qa/supplemental/parent"
+      ],
+      "exit_code": 1,
+      "seconds": 0.005,
+      "output": "FAIL unload scan: over-budget region was read before refusal\n",
+      "actual_body_sha256": "f11e2339f01305cc4de0dd547cde3fcf41133cd043edf85333fdd2a78be24a48",
+      "same_driver_sha256": "a14bf9cf400234a85342120309bba03d85461f7f3d735c080575d45106645355"
+    },
+    {
+      "label": "false_safe_rejected",
+      "command": [
+        "/workspace/scratch/2072698c927d/fix31_qa/supplemental/false_safe"
+      ],
+      "exit_code": 1,
+      "seconds": 0.007,
+      "output": "FAIL unload scan: oversize region refused\n",
+      "actual_body_sha256": "acf851ad48009178cbe2fd13d81a4d94264d4396b423680b7d98b05d3693135f",
+      "same_driver_sha256": "a14bf9cf400234a85342120309bba03d85461f7f3d735c080575d45106645355"
+    },
+    {
+      "label": "off_by_one_rejected",
+      "command": [
+        "/workspace/scratch/2072698c927d/fix31_qa/supplemental/off_by_one"
+      ],
+      "exit_code": 1,
+      "seconds": 0.067,
+      "output": "FAIL unload scan: exact budget read count\n",
+      "actual_body_sha256": "78849ca16611be92e751242258fc7fc748d84e646cf57424d3749975dfe4c4fa",
+      "same_driver_sha256": "a14bf9cf400234a85342120309bba03d85461f7f3d735c080575d45106645355"
+    }
+  ],
+  "sanitizers": [
+    {
+      "label": "unload_focused_sanitizer",
+      "command": [
+        "/workspace/scratch/2072698c927d/fix31_qa/supplemental/unload_focused_sanitizer"
+      ],
+      "exit_code": 0,
+      "seconds": 0.851,
+      "output": "PASS unload production-body model checks=150; actual memcpy observation + test-only SDK declarations/API effects; native SDK ABI/SEH/Windows thread suspension NOT_RUN\n",
+      "instrumented_translation_units": [
+        "tests/integration/test_unload_scan.cpp (includes actual src/windows/unload_guard.cpp)"
+      ],
+      "production_core_archive_linked": false,
+      "full_core": "NOT_RUN",
+      "LSan": "NOT_RUN",
+      "native_SDK_SEH_OS": "NOT_RUN"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "status": "PASS_CHANGED_TRANSPORT_AND_TEST_ASAN_UBSAN",
+  "source_digest": "c8f5666a3acd69a72d714979552c2e48589b61c7f0a321726c830ccf42f47a90",
+  "exit": 0,
+  "output": "Real TCP backpressure: PASS on Linux; Windows IOCP: NOT_RUN\nPASS transport pipeline checks=41; literal packet session oracle + actual owned Asio transport\n",
+  "flags": [
+    "-std=c++20",
+    "-O0",
+    "-g0",
+    "-fsanitize=address,undefined",
+    "-fno-omit-frame-pointer",
+    "-pthread",
+    "-DASIO_STANDALONE=1",
+    "-DASIO_NO_DEPRECATED=1",
+    "-DPRELOADER_L_DISK_DIAGNOSTICS=0",
+    "-I/workspace/scratch/2072698c927d/fix24_work/preloader_l",
+    "-isystem",
+    "/workspace/scratch/2072698c927d/fix24_work/preloader_l/third_party/asio/include"
+  ],
+  "asan_options": "detect_leaks=0",
+  "test_sha256": "aaf6353bfde3b3a063f3f17a0573b440a0b7a27e237e4a3b7048b9a89d4e8a04",
+  "service_sha256": "ff08ec8a5d02f5c42133aa1d3ccaadbaa85620cb44a989b915f06fd0a1eb0a88",
+  "linked_core_archive_sha256": "3f273b672fc0da97641b2a9ad461db05e463cc1c19c84211013247ac50667e19",
+  "scope": "Changed service TU and new test instrumented; unchanged parent Production core linked, not a full-core sanitizer acceptance"
+}

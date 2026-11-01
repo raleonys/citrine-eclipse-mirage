@@ -1,0 +1,30 @@
+{
+  "before_open": 9,
+  "after_open": 8,
+  "closed_bounded_records": [
+    "Q02"
+  ],
+  "corrections": [
+    "Live RE parser reference instead of frozen-only authority",
+    "Wrong lifecycle failure event labels"
+  ],
+  "reviewed_retained": [
+    "Fixed nonsecret network event categories and no raw what/payload/path restoration"
+  ],
+  "remaining_open": [
+    "DEP05",
+    "D02",
+    "D06",
+    "D07",
+    "D13",
+    "D14",
+    "D15",
+    "D21"
+  ],
+  "not_claimed": [
+    "All fixtures are independent",
+    "Original DLL equivalence",
+    "Native Windows catch execution"
+  ],
+  "native_validation": "NOT_RUN_separate_dimension"
+}

@@ -1,0 +1,38 @@
+// Optional overlay: copy as surge.cfg beside the loaded preloader_l.dll.
+// Omitting this file also works. Numeric IDs preserve the working local identity.
+// A successful online provider can replace Username/PersonaId/UserId afterward.
+"Config2"
+{
+    "Game"
+    {
+        // Leave defaults unless you have values for your actual game.
+        // "Name" "Your game display name"
+        // "Version" "Your installed version"
+        // "ContentId" "Your game content ID"
+        // "Languages" "en_US"
+        // "Language" "en_US"
+        // "LanguageRegistryKey" "Your game registry key"
+    }
+    "Emulator"
+    {
+        "ServerPort" "random"
+        "PretendConnected" "true"
+        "FakeAuth" "true"
+        "BlockReruns" "false"
+        // No SDK override: retain the working built-in 10,5,96,47512.
+    }
+    "User"
+    {
+        "Username" "SURGE"
+        "PersonaId" "1144668899"
+        "UserId" "1000200030000"
+        "Country" "US"
+        "Currency" "USD"
+        "IsSubscriber" "true"
+        "IsSteamSubscriber" "false"
+        "SubscriberLevel" "2"
+        "IsUnderAge" "false"
+        "UseLastOnlineProfile" "false"
+        // "Avatar" "Your avatar file"
+    }
+}

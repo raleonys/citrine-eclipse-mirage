@@ -1,0 +1,8 @@
+{
+  "scope": "Literal RE session oracle passes; actual unchanged FIX23 Asio runtime fails real controlled TCP backpressure case",
+  "exit": 1,
+  "output": "FAIL transport pipeline: second request executes while first TCP response is backpressured\n",
+  "parent_runtime_sha256": "262e833008ff3878e1b9af26d52b6b8d783b8757258ace6fbefb34456d20317c",
+  "current_fixture_sha256": "aaf6353bfde3b3a063f3f17a0573b440a0b7a27e237e4a3b7048b9a89d4e8a04",
+  "source_oracle_sha256": "ad3c5e55dcb35f10c32e354f921996892100362073d622045417689b64c15243"
+}

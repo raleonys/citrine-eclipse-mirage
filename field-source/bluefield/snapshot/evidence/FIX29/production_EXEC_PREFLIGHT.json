@@ -1,0 +1,337 @@
+{
+  "status": "PASS",
+  "tests": 50,
+  "owned_ELF": 47,
+  "scope": "execute-bit repair only on generated executables; byte hashes unchanged",
+  "entries": [
+    {
+      "test": "hooks_test_registry_source",
+      "file": "hooks_test_registry_source",
+      "sha256": "2b1e265e2cad4ea1c89426868fe6f269afbdbf90e570e96143825b756e97121e",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "hooks_test_registry_wait",
+      "file": "hooks_test_registry_wait",
+      "sha256": "59a0e816bfe024b0269a35cadb2e870babb3001ba0c0d219d124bbdc8b6651a0",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "paths_test_encoding",
+      "file": "paths_test_encoding",
+      "sha256": "ab92e4f50a0d2937c67921724fc2511fbcf3deb512458df5d3349ddc11beb88b",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "files_test_status",
+      "file": "files_test_status",
+      "sha256": "ac4e770fb7bfa28e5f97b01c9578bf7f3d3ff734bacbbc128f60461da1e2f66b",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "libraries_test_libraries",
+      "file": "libraries_test_libraries",
+      "sha256": "0633d19737c980e0c3359ab1a2e3327332145fcf6dfbef51e07de42f669b0f24",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "configuration_test_hash_table",
+      "file": "configuration_test_hash_table",
+      "sha256": "4bd32573aac7c7efd7096afac07f6db82b3d7d74b0a162fc6efb4cbf0e8e5b66",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "configuration_test_parser",
+      "file": "configuration_test_parser",
+      "sha256": "f81570e28082883ea4ea4fe128db652da0541128597bd38657bc4f6290565d69",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "configuration_test_pegtl_differential",
+      "file": "configuration_test_pegtl_differential",
+      "sha256": "0ea222c6a7ee5b101f9faf7150e1e7a0f424be84809caddeeab36eeb55bae021",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "configuration_test_state",
+      "file": "configuration_test_state",
+      "sha256": "9bb6a8b7e3a31a22ad126b4ceb6cfaf774ffde5ef896805aa3491bc5e51df25a",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "crypto_test_crypto",
+      "file": "crypto_test_crypto",
+      "sha256": "152cd90c5d705dcd348804c3657182d327f03dc368f78a71327dec22e515552f",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "handlers_test_content",
+      "file": "handlers_test_content",
+      "sha256": "95a7126475472155f45fae35a505317e4bc8b753182541650c0b7407e926e1d7",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "handlers_test_information",
+      "file": "handlers_test_information",
+      "sha256": "bcc2ab3f5b30bd352f4d34766d1eee724c7b4091f124dcc9df0d6092ccc40875",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "handlers_test_presence",
+      "file": "handlers_test_presence",
+      "sha256": "599b15f5294e781a316b45d2205f3fd8ce84e9e6c2508f59fe5f9f1ea4d63129",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "hashing_test_hash",
+      "file": "hashing_test_hash",
+      "sha256": "06a6dacb2983f10a37b8413faff8f82308508c7c80252163c0e245c5fd563427",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "hooks_test_crypt_query",
+      "file": "hooks_test_crypt_query",
+      "sha256": "4da6d5c33085a8dadda11122bae42159254f8cc2a22e9a98e75aa52a2402eb98",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "hooks_test_setup_plan",
+      "file": "hooks_test_setup_plan",
+      "sha256": "c5f7fb58c438b18b347bfbbac25cb63a5608c0ae6114c656159ec975b39332eb",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "licensing_test_key_store",
+      "file": "licensing_test_key_store",
+      "sha256": "54b46f80a45ff394563b5e155cb9c555d6a71e60ae313f3dc9e1f1a4ff30d704",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "licensing_test_license",
+      "file": "licensing_test_license",
+      "sha256": "dba7de2bb9467f5fa3b7b4c76ecde4994aa62b392f8d1beac14de2b412c47c54",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "paths_test_path",
+      "file": "paths_test_path",
+      "sha256": "b86804a9699fd02aac9b6377f06c15ea8e0b58378089e67dd4925b234e21c439",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "paths_test_module_relative",
+      "file": "paths_test_module_relative",
+      "sha256": "68b0d99ac073b2fe0af83d25559dbbf85897e407b0f15e951f0a7d32b2e9a141",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "profiles_test_online",
+      "file": "profiles_test_online",
+      "sha256": "e03f9df58e7491444e9312db79857cad6741645cd4fd5087422a65219971318e",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "protocol_test_integration",
+      "file": "protocol_test_integration",
+      "sha256": "20c2fcc470b589fc371297de15cba67e274c0bbfdce6caca0063e6167e1c444d",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "protocol_test_messages",
+      "file": "protocol_test_messages",
+      "sha256": "1e751cceb717b5552714e31587293e76beda04f9bd11f0cca5a471f0814301da",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "runtime_test_startup",
+      "file": "runtime_test_startup",
+      "sha256": "9e194866f4c075ef349886974b478d6cc108fda71d2d3ff79a91f93ae845fd9e",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "time_test_calendar",
+      "file": "time_test_calendar",
+      "sha256": "d28d4d6f459fde45268589650d6e1a92e625df61dc7af900638723a1bcc16c6e",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "tokens_test_token",
+      "file": "tokens_test_token",
+      "sha256": "d7b1e896a16ecf90a54e30c90d7f4390a5d02a0913f4039f7baf6dfca26cc619",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "xml_test_printer",
+      "file": "xml_test_printer",
+      "sha256": "90c697f9ce0511503f8defa29efc500bfd30b529c85bd7b990e6e29ffb34ddcc",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "xml_test_reader",
+      "file": "xml_test_reader",
+      "sha256": "a2fd77039e83b74fbeb98eaeeda51e5cff33a626d84ec45f92dd91de7a5f7e3c",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "runtime_tcp_and_persistence",
+      "file": "test_runtime",
+      "sha256": "ab713b0465e7cf3db3b95ce29019fbbf40380e964e4f3473bb293408e5705ecb",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "startup_configuration_profile_compat",
+      "file": "test_startup_compat",
+      "sha256": "9ea6edc48c5a01a77e69d6b48f7bdd520ffd2b47d2bedaab056cfad332ff8a43",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_xml_depth_source_oracle",
+      "file": "test_xml_depth_source_oracle",
+      "sha256": "8d60e3b4b471a7d54ce23ce6469ae73c80b4c330d1cf791d549141097bbee750",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_config2_source_oracle",
+      "file": "test_config2_source_oracle",
+      "sha256": "deadc349cc5274d1a5d735fd8711b8d88ffd327c0991df749577b16fe471b37c",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_failure_diagnostics",
+      "file": "test_failure_diagnostics",
+      "sha256": "f741e2973c3e5daa31c30aae28b5ee176268216e48a2e61f081f199e263739b8",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_ticket_output",
+      "file": "test_ticket_output",
+      "sha256": "f4a65e36b3ba8f680b9ddd3802c72f558a659e8fb9e823c5375ddd578827e964",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_avatar_effects",
+      "file": "test_avatar_effects",
+      "sha256": "5cc119dda8df86e4151cd0d4a07f3921677c04cd9cb0d95dc13d38a249ab03bd",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_transport_pipeline",
+      "file": "test_transport_pipeline",
+      "sha256": "c519b0c37f3cff451cdee487509360b93e11088a50d7c43d947d3f7fd0700c1a",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_path_effects",
+      "file": "test_path_effects",
+      "sha256": "8471a55d6619132d5b37a4b092d203a7fa9c14c345eb3fc8954f438699040085",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_path_resolution",
+      "file": "test_path_resolution",
+      "sha256": "bc281ecb2a4ba9b22b36ba0110df6ad673b694e19ae3de241b9959af46be25c5",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_configuration_orchestration",
+      "file": "test_configuration_orchestration",
+      "sha256": "2a9029c4d005c3fea91c81fa520c02b317562a2372dd41e0c66490c34a817556",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_startup_phases",
+      "file": "test_startup_phases",
+      "sha256": "ed3e93c4bea32d57fd917c8ab27eccd3b8c62fb955c0e2d4fb8eaa9fc500a7bc",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_brownfield_contracts",
+      "file": "test_brownfield_contracts",
+      "sha256": "347c693773d4d10f9e49893dcc7045326aa9953cc035caa1af82199fdb683ad1",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_supplied_config",
+      "file": "test_supplied_config",
+      "sha256": "d0fb8e85007e2977fe757b647cb39baed95a210ed8e8386724f597be03364f7b",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_configuration_profile",
+      "file": "test_configuration_profile",
+      "sha256": "c5f4263ef5759bd2a6e123b804fcd2bfe2eba86e58efa3b29c2e0af658319e67",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_asio_transport",
+      "file": "test_asio_transport",
+      "sha256": "a944c046e6d1273c83c62a3eb901892108a91acdd133f700a6f3fd36aa38cbf9",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_filesystem_config",
+      "file": "test_filesystem_config",
+      "sha256": "b9386ba028816833d3863f2e4d49b7f1ca9f73d248037ca2af81664463fdf525",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_runtime_migration",
+      "file": "test_runtime_migration",
+      "sha256": "dd4b8ff4fbc4b21e2cc67159a3e0a1278b1e043be4bd7a4d4902f086f333bf9b",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    },
+    {
+      "test": "test_original_compat",
+      "file": "test_original_compat",
+      "sha256": "c1a7e7fca1588e28a607847c1ce0a2a2b12e8dfbca5d5fbc8ca2d966eb5f6647",
+      "before_mode": "0o755",
+      "after_mode": "0o755"
+    }
+  ]
+}

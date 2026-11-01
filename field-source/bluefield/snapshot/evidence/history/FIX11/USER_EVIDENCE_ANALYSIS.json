@@ -1,0 +1,15 @@
+{
+  "user_dll_sha256": "b00dc6908e9889574a5d18cc38edbbf0beda03111c423552bf771a605e5a0a1d",
+  "user_dll_bytes": 737792,
+  "user_log_sha256": "701fe0dd14bcb24a87607dadb468e55a68371243a909f5b5b2082de8e237a84d",
+  "application_initialized_count": 5,
+  "runtime_ready_count": 1,
+  "minhook_init_succeeded_count": 5,
+  "remaining_starts_without_ready": 4,
+  "crypt_hook_installed_marker_in_user_log": false,
+  "attribution_limit": "old append log has no PID/time/build identity; exact binary/process correlation unavailable",
+  "proven_scope": "repeated startup logs stop after MinHook initialization; precise blocked call unknown",
+  "static_code_risk_addressed": "per-hook activation while callback serialization held, before later target resolution",
+  "windows_root_cause": "NOT_CONFIRMED",
+  "game_fix": "NOT_CONFIRMED"
+}

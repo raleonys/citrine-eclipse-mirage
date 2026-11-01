@@ -1,0 +1,406 @@
+{
+  "schema": "preloader_l.D14_error_boundary_FIX26.v1",
+  "classification": "CURRENT_SOURCE_AND_FULL_PACKET_CROSSWALK_NOT_NEW_POLICY",
+  "source_archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "rows": [
+    {
+      "id": "LIC01",
+      "trigger": "DLL hash length != 40",
+      "source_effect": "fatal/ticket_required -> exit_05cdc0",
+      "code": -4,
+      "current_effect": "LicenseEffects throws SessionFailure; transport closes the affected TCP session",
+      "current_domain": "SESSION_FAILURE_WITH_SHARED_LICENSE_BLOCKED_STATE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 111,
+        "locator": "fatal(c_085978,c_085920,-4);",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 121,
+        "locator": "fatal(c_085978,c_085920,-4);",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": "License blocked flag is shared application state; service ready is not cleared by ordinary SessionFailure. Source CRT termination is not invoked here."
+    },
+    {
+      "id": "LIC02",
+      "trigger": "DLL path empty",
+      "source_effect": "fatal/ticket_required -> exit_05cdc0",
+      "code": -5,
+      "current_effect": "LicenseEffects throws SessionFailure; transport closes the affected TCP session",
+      "current_domain": "SESSION_FAILURE_WITH_SHARED_LICENSE_BLOCKED_STATE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 113,
+        "locator": "if(state_.dll_path_0a3bb8.empty())",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 123,
+        "locator": "if(state_.dll_path_0a3bb8.empty())",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": "License blocked flag is shared application state; service ready is not cleared by ordinary SessionFailure. Source CRT termination is not invoked here."
+    },
+    {
+      "id": "LIC03",
+      "trigger": "DLL status kind != 2 after source error predicate",
+      "source_effect": "fatal/ticket_required -> exit_05cdc0",
+      "code": -5,
+      "current_effect": "LicenseEffects throws SessionFailure; transport closes the affected TCP session",
+      "current_domain": "SESSION_FAILURE_WITH_SHARED_LICENSE_BLOCKED_STATE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 120,
+        "locator": "if(status.kind!=2)",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 130,
+        "locator": "if(status.kind!=2)",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": "License blocked flag is shared application state; service ready is not cleared by ordinary SessionFailure. Source CRT termination is not invoked here."
+    },
+    {
+      "id": "LIC04",
+      "trigger": "DLL hash mismatch",
+      "source_effect": "fatal/ticket_required -> exit_05cdc0",
+      "code": -6,
+      "current_effect": "LicenseEffects throws SessionFailure; transport closes the affected TCP session",
+      "current_domain": "SESSION_FAILURE_WITH_SHARED_LICENSE_BLOCKED_STATE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 126,
+        "locator": "fatal(c_085978,std::string(c_085a7c)",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 136,
+        "locator": "fatal(c_085978,std::string(c_085a7c)",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": "License blocked flag is shared application state; service ready is not cleared by ordinary SessionFailure. Source CRT termination is not invoked here."
+    },
+    {
+      "id": "LIC05",
+      "trigger": "Tokens exhausted; ticket/engine present; content ID absent/source zero literal",
+      "source_effect": "fatal/ticket_required -> exit_05cdc0",
+      "code": -2,
+      "current_effect": "LicenseEffects throws SessionFailure; transport closes the affected TCP session",
+      "current_domain": "SESSION_FAILURE_WITH_SHARED_LICENSE_BLOCKED_STATE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 143,
+        "locator": "fatal(c_085b18,c_085aa0,-2);",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 153,
+        "locator": "fatal(c_085b18,c_085aa0,-2);",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": "License blocked flag is shared application state; service ready is not cleared by ordinary SessionFailure. Source CRT termination is not invoked here."
+    },
+    {
+      "id": "LIC06",
+      "trigger": "Ticket path; EXE hash length != 40",
+      "source_effect": "fatal/ticket_required -> exit_05cdc0",
+      "code": -3,
+      "current_effect": "LicenseEffects throws SessionFailure; transport closes the affected TCP session",
+      "current_domain": "SESSION_FAILURE_WITH_SHARED_LICENSE_BLOCKED_STATE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 144,
+        "locator": "fatal(c_085b88,c_085b30,-3);",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 154,
+        "locator": "fatal(c_085b88,c_085b30,-3);",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": "License blocked flag is shared application state; service ready is not cleared by ordinary SessionFailure. Source CRT termination is not invoked here."
+    },
+    {
+      "id": "LIC07",
+      "trigger": "Ticket path; EXE hash mismatch",
+      "source_effect": "fatal/ticket_required -> exit_05cdc0",
+      "code": -7,
+      "current_effect": "LicenseEffects throws SessionFailure; transport closes the affected TCP session",
+      "current_domain": "SESSION_FAILURE_WITH_SHARED_LICENSE_BLOCKED_STATE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 146,
+        "locator": "effects_.path_utf8_01e3f0(state_.executable_path_0a39e0)+c_085ba0,-7);",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 156,
+        "locator": "effects_.path_utf8_01e3f0(state_.executable_path_0a39e0)+c_085ba0,-7);",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": "License blocked flag is shared application state; service ready is not cleared by ordinary SessionFailure. Source CRT termination is not invoked here."
+    },
+    {
+      "id": "LIC08",
+      "trigger": "Token absent; ticket metadata valid; ticket effects complete",
+      "source_effect": "fatal/ticket_required -> exit_05cdc0",
+      "code": -1,
+      "current_effect": "LicenseEffects throws SessionFailure; transport closes the affected TCP session",
+      "current_domain": "SESSION_FAILURE_WITH_SHARED_LICENSE_BLOCKED_STATE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 147,
+        "locator": "ticket_required(ticket->c_str(),engine->c_str());",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 157,
+        "locator": "ticket_required(ticket->c_str(),engine->c_str());",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": "License blocked flag is shared application state; service ready is not cleared by ordinary SessionFailure. Source CRT termination is not invoked here."
+    },
+    {
+      "id": "LIC09",
+      "trigger": "License already blocked",
+      "source_effect": "no_response_02bcd0_04d228",
+      "code": null,
+      "current_effect": "NoResponse caught by Connection::process -> empty response",
+      "current_domain": "REQUEST_NO_RESPONSE_SESSION_CONTINUES",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 108,
+        "locator": "if(state_.blocked_0a39c0)",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 118,
+        "locator": "if(state_.blocked_0a39c0)",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": ""
+    },
+    {
+      "id": "LIC10",
+      "trigger": "Tokens absent and RequestTicket or TicketEngine attribute absent",
+      "source_effect": "return false -> dispatcher invalid_message Effect",
+      "code": null,
+      "current_effect": "Dispatcher emits SessionFailure -> failed session",
+      "current_domain": "SESSION_FAILURE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 141,
+        "locator": "if(!ticket || !engine) return false;",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/licensing/license.cpp",
+        "line": 151,
+        "locator": "if(!ticket || !engine) return false;",
+        "sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808"
+      },
+      "decision": "D14_OPEN_NO_SEMANTIC_CHANGE",
+      "note": ""
+    },
+    {
+      "id": "LIC11",
+      "trigger": "Ticket file write fails",
+      "source_effect": "write_ticket returns false -> Wine/Windows fallback dialog -> exit(-1)",
+      "code": -1,
+      "current_effect": "Current atomic writer returns true or throws; exceptions bypass source false-result fallback dialogs/exit call",
+      "current_domain": "ORDINARY_EXCEPTION_SESSION_FAILURE_OR_PERSISTENCE_RECOVERY_SERVICE_FAILURE",
+      "source": {
+        "file": "anadius-license-source/license.cpp",
+        "line": 98,
+        "locator": "if(effects_.write_ticket_03c1d0(file,text))",
+        "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+      },
+      "current": {
+        "file": "src/application/providers.hpp",
+        "line": 94,
+        "locator": "bool write_ticket_03c1d0",
+        "sha256": "392be36c07dca8d9158e89c053e1324db6ae20d2c55592f9213a08783a965f11"
+      },
+      "decision": "D14_OPEN_ATOMIC_BOOL_VS_EXCEPTION_BOUNDARY",
+      "note": "A separate confirmed adapter difference, not a new regression in FIX26. Do not blanket-catch bad_alloc or recovery exceptions or invent a write-failure policy."
+    },
+    {
+      "id": "NET01",
+      "trigger": "Redirect connection attempt count becomes 15",
+      "source_effect": "exit_05cdc0(0xffffffffu); RE CRT normal exit performs onexit/initterm and process termination effects",
+      "code": "0xffffffff",
+      "current_effect": "Native network Effect directly calls ExitProcess(n)",
+      "current_domain": "PROCESS_EXIT_DIRECT_WIN32",
+      "source": {
+        "file": "anadius-network-hook-source/connect.cpp",
+        "line": 38,
+        "locator": "effects.exit_05cdc0(0xffffffffu);",
+        "sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f"
+      },
+      "current": {
+        "file": "src/windows/hooks.cpp",
+        "line": 79,
+        "locator": "void exit_05cdc0(std::uint32_t n)",
+        "sha256": "c14327a6ce179f3d8da964c37ba86db477b19e7cd51493ce6b4c69cf3f8d039b"
+      },
+      "decision": "SOURCE_PROCESS_SCOPE_RETAINED_CRT_TERMINATION_SEQUENCE_NOT_BOUND",
+      "note": "Do not claim all source exit calls became session exceptions. Native Windows execution remains NOT_RUN."
+    },
+    {
+      "id": "CRT01",
+      "trigger": "Source exit_05cdc0(status)",
+      "source_effect": "common_exit(status,mode=0,return_to_caller=0); callbacks/onexit/initterm; selected terminate/managed exit/ExitProcess",
+      "code": "uint32(status)",
+      "current_effect": "This reconstructed CRT body is not imported; application host CRT remains runtime owner",
+      "current_domain": "HOST_CRT_SUBSTITUTION",
+      "source": {
+        "file": "anadius-crt-termination-source/termination.cpp",
+        "line": 88,
+        "locator": "void exit_05cdc0(",
+        "sha256": "d06c707dfe7daefadba5d890f2b6745f75ba1c089743800462759df2f11c3e5d"
+      },
+      "current": {
+        "file": "src/application/providers.hpp",
+        "line": 96,
+        "locator": "void exit_05cdc0(std::int32_t n)",
+        "sha256": "392be36c07dca8d9158e89c053e1324db6ae20d2c55592f9213a08783a965f11"
+      },
+      "decision": "D14_OPEN_CRT_MAPPING_NOT_EQUIVALENCE",
+      "note": "Full packet contains the termination body; it is not missing evidence. Reconstruction calls effects; test exception sentinels are not proof of real process exit."
+    },
+    {
+      "id": "MSG01",
+      "trigger": "Invalid LSX/root/request/id/recipient/command or rejected handler",
+      "source_effect": "invalid_message noreturn Effect",
+      "code": null,
+      "current_effect": "MessageEffects throws SessionFailure; transport fails that session",
+      "current_domain": "SESSION_FAILURE",
+      "source": {
+        "file": "anadius-messages-source/messages.cpp",
+        "line": 87,
+        "locator": "if(!root || root->name()!=",
+        "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+      },
+      "current": {
+        "file": "src/protocol/messages.cpp",
+        "line": 87,
+        "locator": "if(!root || root->name()!=",
+        "sha256": "65433c16c66528520bb41912eb880f9a9a06c21b4f0dbc0966e49e29bd52e260"
+      },
+      "decision": "MAP_EXISTING_BEHAVIOR_NO_NEW_POLICY",
+      "note": "Do not classify every malformed/decrypt/NoResponse condition as a source process-exit request."
+    },
+    {
+      "id": "MSG02",
+      "trigger": "Malformed XML after existing encrypted/version retries",
+      "source_effect": "empty response",
+      "code": null,
+      "current_effect": "Source and current return empty string after diagnostic",
+      "current_domain": "REQUEST_NO_RESPONSE",
+      "source": {
+        "file": "anadius-messages-source/messages.cpp",
+        "line": 164,
+        "locator": "effects.log_bad_xml(",
+        "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+      },
+      "current": {
+        "file": "src/protocol/messages.cpp",
+        "line": 164,
+        "locator": "effects.log_bad_xml(",
+        "sha256": "65433c16c66528520bb41912eb880f9a9a06c21b4f0dbc0966e49e29bd52e260"
+      },
+      "decision": "MAP_EXISTING_BEHAVIOR_NO_NEW_POLICY",
+      "note": "Do not classify every malformed/decrypt/NoResponse condition as a source process-exit request."
+    },
+    {
+      "id": "MSG03",
+      "trigger": "Decrypt fails",
+      "source_effect": "empty response",
+      "code": null,
+      "current_effect": "Source and current return empty string after diagnostic",
+      "current_domain": "REQUEST_NO_RESPONSE",
+      "source": {
+        "file": "anadius-messages-source/messages.cpp",
+        "line": 118,
+        "locator": "effects.log_decryption_failure(input);",
+        "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+      },
+      "current": {
+        "file": "src/protocol/messages.cpp",
+        "line": 118,
+        "locator": "effects.log_decryption_failure(input);",
+        "sha256": "65433c16c66528520bb41912eb880f9a9a06c21b4f0dbc0966e49e29bd52e260"
+      },
+      "decision": "MAP_EXISTING_BEHAVIOR_NO_NEW_POLICY",
+      "note": "Do not classify every malformed/decrypt/NoResponse condition as a source process-exit request."
+    },
+    {
+      "id": "OWN01",
+      "trigger": "PersistenceRecoveryRequired escapes request computation",
+      "source_effect": "No direct original analogue: added atomic persistence recovery owner",
+      "code": null,
+      "current_effect": "Application ready false; service stopping true/ready false; stop IO; cancel startup waits",
+      "current_domain": "SERVICE_FAILURE",
+      "source": null,
+      "current": {
+        "file": "src/transport/service.cpp",
+        "line": 131,
+        "locator": "catch(const PersistenceRecoveryRequired&)",
+        "sha256": "ff08ec8a5d02f5c42133aa1d3ccaadbaa85620cb44a989b915f06fd0a1eb0a88"
+      },
+      "decision": "PRESERVED_USER_FAILURE_ATOMIC_OWNERSHIP",
+      "note": "This is distinct from ordinary SessionFailure; no new policy in FIX26."
+    },
+    {
+      "id": "HOOK01",
+      "trigger": "Exception crosses native callback boundary",
+      "source_effect": "Native source invoke delegates to invocation_errors->callback_exception; out-of-contract no-policy path terminates",
+      "code": null,
+      "current_effect": "HookErrors callback_exception calls RaiseFailFastException then abort fallback",
+      "current_domain": "PROCESS_FAILFAST",
+      "source": {
+        "file": "anadius-native-source/native_callbacks.cpp",
+        "line": 34,
+        "locator": "invocation_errors->callback_exception(callback",
+        "sha256": "06521178fbe3a611e8af29706bf4c1d07974e299c0f044a382656330ef6c7d52"
+      },
+      "current": {
+        "file": "src/windows/hooks.cpp",
+        "line": 41,
+        "locator": "RaiseFailFastException(",
+        "sha256": "c14327a6ce179f3d8da964c37ba86db477b19e7cd51493ce6b4c69cf3f8d039b"
+      },
+      "decision": "D13_D14_ADJACENT_NATIVE_POLICY_NOT_MODIFIED",
+      "note": "A callback policy is not the ordinary TCP-session exception handler; native behavior NOT_RUN."
+    }
+  ],
+  "source_scan": "evidence/FIX26/PACKET_EXIT_EFFECT_SCAN.json",
+  "open_semantic_questions": [
+    "Should license exit intent terminate process or remain owned session failure? Existing substitution is not source-equivalent.",
+    "How should a boolean ticket-write failure and atomic-write exceptions map while preserving recovery ownership?",
+    "How much of reconstructed CRT normal-exit sequence is delegated to host runtime/native process exit?"
+  ],
+  "not_authorized_by_this_document": "No change to process/service/session behavior, file-error catching or source termination policy.",
+  "historical_cause": "Original adaptation cause not independently recorded; source helpers/labels do not manufacture user authorization."
+}

@@ -1,0 +1,1275 @@
+--- FIX12/CMakeLists.txt
++++ FIX13/CMakeLists.txt
+@@ -47,7 +47,7 @@
+   else()
+     target_compile_options(preloader_l_core PRIVATE /O2)
+   endif()
+-  target_sources(preloader_l_core PRIVATE src/windows/startup_platform.cpp)
++  target_sources(preloader_l_core PRIVATE src/windows/startup_platform.cpp src/windows/library_calls.cpp)
+   target_link_libraries(preloader_l_core PUBLIC ws2_32 shell32 user32 advapi32)
+ endif()
+ if(WIN32)
+@@ -109,7 +109,7 @@
+   target_link_libraries(test_startup_compat PRIVATE preloader_l_core)
+   add_test(NAME startup_configuration_profile_compat COMMAND test_startup_compat)
+   set_tests_properties(startup_configuration_profile_compat PROPERTIES TIMEOUT 60)
+-  foreach(source IN ITEMS tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp)
++  foreach(source IN ITEMS tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
+     get_filename_component(name "${source}" NAME_WE)
+     add_executable(${name} "${source}")
+     target_link_libraries(${name} PRIVATE preloader_l_core)
+--- FIX12/cmake/sources.cmake
++++ FIX13/cmake/sources.cmake
+@@ -1,4 +1,5 @@
+ set(PRELOADER_L_CORE_SOURCES
++  "src/libraries/libraries.cpp"
+   "src/runtime/runtime_paths.cpp"
+   "src/files/atomic_io.cpp"
+   "src/application/logging.cpp"
+@@ -57,6 +58,7 @@
+   "src/windows/unload_guard.cpp"
+ )
+ set(PRELOADER_L_UNIT_TEST_SOURCES
++  "tests/unit/libraries/test_libraries.cpp"
+   "tests/unit/configuration/test_hash_table.cpp"
+   "tests/unit/configuration/test_parser.cpp"
+   "tests/unit/configuration/test_pegtl_differential.cpp"
+--- FIX12/scripts/qa/check_source.py
++++ FIX13/scripts/qa/check_source.py
+@@ -114,7 +114,7 @@
+    if re.search(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\bsk-(?:proj-)?[A-Za-z0-9_-]{32,}',text):fail(7,'sensitive material pattern: '+p.name)
+  # The migration seal binds exact user-provided PNG bytes in both locations.
+  try:
+-  proof=json.loads((root/'metadata/AVATAR_FIX12.json').read_text())['official']
++  proof=json.loads((root/'metadata/AVATAR_FIX13.json').read_text())['official']
+   arrays=dict(re.findall(r'unsigned char (\w+)\[\]=\{([^}]+)',(root/'src/application/avatar_assets.hpp').read_text()))
+   if set(arrays)!={'surge_png'}:raise ValueError('asset inventory')
+   raw=bytes(map(int,arrays['surge_png'].split(',')));offset=8
+@@ -128,15 +128,15 @@
+  except Exception:fail(7,'invalid official SURGE PNG asset')
+  # Active runtime names, trusted provider loading and compile-time logging policy.
+  runtime=(root/'src/runtime/runtime_paths.cpp').read_text()
+- for term in ['data_(local_/"SURGE")','RuntimePaths::achievement_xml','RuntimePaths::achievement_ini','reparse(c)','unowned runtime write']:
++ for term in ['data_(local_/"SURGE")','return data_/"surge.png";','RuntimePaths::profile_cache()const{return data_;}','reparse(c)','unowned runtime write']:
+   if term not in runtime:fail(7,'runtime ownership policy missing: '+term)
+  provider=(root/'src/profiles/online_session.cpp').read_text()
+  for term in ['filename()!=provider_filename','env_.paths.provider()','LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_SYSTEM32']:
+   if term not in provider:fail(7,'trusted provider policy missing: '+term)
+  if 'provider_filename="preloader_l_online.dll"' not in (root/'src/runtime/path_kind.hpp').read_text():fail(7,'wrong active provider basename')
+  log=(root/'src/application/logging.cpp').read_text()
+- for term in ['#if PRELOADER_L_DISK_DIAGNOSTICS','limit=256*1024','(void)event;']:
+-  if term not in log:fail(7,'compile-time/bounded diagnostics missing: '+term)
++ for term in ['#if PRELOADER_L_DISK_DIAGNOSTICS','(void)event;']:
++  if term not in log:fail(7,'compile-time diagnostics missing: '+term)
+  if 'void log(LogEvent)' not in (root/'src/application/environment.hpp').read_text():fail(7,'typed event-only logger missing')
+  for term in ['PRELOADER_L_DISK_DIAGNOSTICS=0','PRELOADER_L_DISK_DIAGNOSTICS=1','^(DEBUG|DIAGNOSTIC)$']:
+   if term not in cmake:fail(7,'profile disk diagnostics contract missing: '+term)
+@@ -147,10 +147,17 @@
+   if re.search(r'"(?:BLUEFIELD|anadius|LSX emu|anadius64online\.dll|bluefield\.png|default\.png|bluefield\.log)"',text):fail(7,'retired active runtime literal: '+p.relative_to(root).as_posix())
+   if re.search(r'\b(?:ofstream|fstream)\s+\w|\b(?:fopen|CreateFile[AW]?)\s*\(',re.sub(r'//[^\n]*|/\*.*?\*/','',text,flags=re.S)) and p.relative_to(root).as_posix() not in ['src/files/atomic_io.cpp','src/application/logging.cpp']:
+    fail(7,'unowned direct disk writer: '+p.relative_to(root).as_posix())
++ # User-rejected additions must stay out of active runtime code.
++ for text,label,terms in [(runtime,'runtime layout/naming',['provider-v2','session-','std::from_chars','size()>128']), (provider,'profile cache',['4096','from_chars','cp<min']), (log,'diagnostics cutoff',['limit=256','size.QuadPart>','status.st_size>']), ((root/'src/application/providers.cpp').read_text(),'avatar quotas',['downloaded_bytes_','downloads_.size()','be32('])]:
++  if any(term in text for term in terms):fail(7,'rejected FIX12 rule reintroduced: '+label)
++ app=(root/'src/application/application.cpp').read_text()
++ if 'validate_configuration_input' in app or 'pending_license_key' in app or 'message.size()>1024*1024' in app:fail(7,'unsupported config precheck or deferred license effect')
++ if 'pending.max_size()' not in transport or 'clients.size()<32' in transport:fail(7,'invented transport input/client limit')
++ if 'n>64*1024*1024' in (root/'src/application/environment.cpp').read_text():fail(7,'invented general file-size limit')
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX12.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX13.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX12/scripts/qa/filesystem_inventory.py
++++ FIX13/scripts/qa/filesystem_inventory.py
+@@ -3,7 +3,7 @@
+ import hashlib,json,re
+ from pathlib import Path
+ # Includes indirect abstract effects and build/script operations. Not a dynamic trace.
+-PATTERN=re.compile(r'\b(?:CreateFile[AW]?|WriteFile|FlushFileBuffers|CloseHandle|LockFileEx|UnlockFileEx|GetFileSizeEx|ReplaceFileW|MoveFileExW|GetFileAttributesW|GetModuleFileNameW|GetEnvironmentVariable[AW]|LoadLibraryExW|FreeLibrary|fopen|freopen_s|ifstream|ofstream|fstream|read_file|write_file|atomic_write|atomic_batch|read_binary_\w+|write_binary_\w+|write_ticket_\w+|write_ini_\w+|write_embedded_png_\w+|store_cipher_key|load_token_\w+|file_hash_matches_\w+|copy_overwrite_\w+|create_directories(?:_\w+)?|create_directory|remove(?:_\w+)?|rename|copy_file|copytree|copy2|copyfile|rmtree|unlink|mkdir|mkstemp|TemporaryDirectory|NamedTemporaryFile|read_bytes|write_bytes|read_text|write_text|open|file_size|status(?:_\w+)?|symlink_status|is_regular_file|exists(?:_\w+)?|directory_iterator|directory_entries|recursive_directory_iterator|temp_directory_path|fsync|flock|fstat|read|write|close|link|avatar|call_create_online|read_binary|persist_achievement|Get-Content|Set-Content|Copy-Item|New-Item|Get-FileHash)\b')
++PATTERN=re.compile(r'\b(?:CreateFile[AW]?|WriteFile|SetFilePointerEx|FlushFileBuffers|CloseHandle|LockFileEx|UnlockFileEx|GetFileSizeEx|ReplaceFileW|MoveFileExW|GetFileAttributesW|GetModuleFileNameW|GetEnvironmentVariable[AW]|LoadLibraryExW|LoadLibraryW|GetErrorMode|SetErrorMode|FreeLibrary|load_list_\w+|unload_\w+|fopen|freopen_s|ifstream|ofstream|fstream|read_file|write_file|atomic_write|atomic_batch|read_binary_\w+|write_binary_\w+|write_ticket_\w+|write_ini_\w+|write_embedded_png_\w+|store_cipher_key|load_token_\w+|file_hash_matches_\w+|copy_overwrite_\w+|create_directories(?:_\w+)?|create_directory|remove(?:_\w+)?|rename|copy_file|copytree|copy2|copyfile|rmtree|unlink|mkdir|mkstemp|TemporaryDirectory|NamedTemporaryFile|read_bytes|write_bytes|read_text|write_text|open|file_size|status(?:_\w+)?|symlink_status|is_regular_file|exists(?:_\w+)?|directory_iterator|directory_entries|recursive_directory_iterator|temp_directory_path|fsync|flock|fstat|read|write|close|link|avatar|call_create_online|read_binary|persist_achievement|Get-Content|Set-Content|Copy-Item|New-Item|Get-FileHash)\b')
+ FUNC=re.compile(r'(?:(?:[A-Za-z_]\w*::)+)?([A-Za-z_]\w*(?:::[A-Za-z_]\w*)*)\s*\([^;]*\)\s*(?:const\s*|noexcept\s*|override\s*|final\s*)*\{')
+ def scan_calls(root):
+  result=[]
+--- FIX12/scripts/qa/package_source.py
++++ FIX13/scripts/qa/package_source.py
+@@ -13,7 +13,7 @@
+  files += sorted(p for p in (ROOT/'evidence').rglob('*') if p.is_file())
+  save(ROOT/'metadata/PACKAGE_MANIFEST.json',{'files':{p.relative_to(ROOT).as_posix():{'sha256':sha(p),'bytes':p.stat().st_size} for p in files}})
+  files += [ROOT/'metadata/PACKAGE_MANIFEST.json']
+- out=ROOT/'dist/preloader_l_BF02_FIX12_APPLICATION_SOURCE_NOT_RELEASE.zip';out.parent.mkdir(exist_ok=True)
++ out=ROOT/'dist/preloader_l_BF02_FIX13_APPLICATION_SOURCE_NOT_RELEASE.zip';out.parent.mkdir(exist_ok=True)
+  pending=out.with_suffix('.pending')
+  with zipfile.ZipFile(pending,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as archive:
+   for p in sorted(files):
+--- FIX12/src/achievements/storage.cpp
++++ FIX13/src/achievements/storage.cpp
+@@ -61,7 +61,7 @@
+     if(!state.achievements_set.empty()) {
+         const auto filename="achievement-"+state.achievements_set+".xml";
+         const auto component=effects_.filesystem_widen_006d70(filename);
+-        paths_.xml_path=effects_.persistence_path(append(state.user_directory,component),state.achievements_set,false);
++        paths_.xml_path=append(state.user_directory,component);
+     }
+     // Empty set preserves a previously supplied XML path; it does not disable it.
+     if(!paths_.xml_path.empty()) {
+@@ -91,12 +91,15 @@
+         const auto watcher=effects_.filesystem_widen_006d70("achievement_watcher");
+         auto path=append(state.user_directory,watcher);
+         path=append(std::move(path),app);
+-        paths_.ini_path=effects_.persistence_path(append(std::move(path),filename),state.steam_app_id,true);
++        paths_.ini_path=append(std::move(path),filename);
+         for(auto& [id,achievement]:state.achievements) {
+             (void)id;
+             achievement.field70=static_cast<std::uint64_t>(effects_.timestamp_to_epoch_041e10(achievement.timestamp));
+         }
+-        // FIX12: startup reads state only. The grant transaction owns XML/INI writes.
++        const auto status=effects_.status_01ea20(paths_.ini_path,3);
++        if(status.error!=0 && ((static_cast<std::uint32_t>(status.kind)-1U)&0xfffffff7U)!=0)
++            effects_.filesystem_error_018130("status",status.error,paths_.ini_path);
++        if(status.kind!=2)achievement_writer::write_ini_01f9a0(paths_.ini_path,state,effects_,files_);
+     }
+ }
+ } // namespace preloader_l::achievement_storage
+--- FIX12/src/achievements/storage.hpp
++++ FIX13/src/achievements/storage.hpp
+@@ -25,7 +25,6 @@
+                             std::uint32_t fallback,Numbers&);
+ class Effects:public achievement_writer::Effects {
+ public:
+-    virtual configuration::Path persistence_path(const configuration::Path& candidate,std::string_view,bool){return candidate;}
+     virtual configuration::Path filesystem_widen_006d70(std::string_view)=0;
+     virtual std::int64_t timestamp_to_epoch_041e10(std::string_view)=0;
+     virtual status_recovered::Status status_01ea20(const configuration::Path&,std::uint32_t flags)=0;
+--- FIX12/src/application/application.cpp
++++ FIX13/src/application/application.cpp
+@@ -27,9 +27,6 @@
+ class ResponsePolicy final:public presence::NoResponse {
+  [[noreturn]] void throw_no_response_02bcd0_04d228() override{throw preloader_l::NoResponse{};}
+ };
+-class ProtocolTime final:public crypto::TimeSource {
+- std::int64_t unix_seconds_05eeb8() override{return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();}
+-};
+ #ifdef _WIN32
+ class Console final:public startup::NativeConsolePlatform {
+  bool acquired_=false;
+@@ -55,20 +52,7 @@
+  void log_bad_xml(std::string_view,std::string_view) override{env_.log(LogEvent::network_parse);}
+  void log_decryption_failure(std::string_view) override{env_.log(LogEvent::network_crypto);}
+ };
+-void validate_configuration_input(std::string_view text){
+- if(text.size()>1024*1024)throw std::length_error("configuration exceeds 1 MiB");
+- enum class Lex{normal,string,line,block};auto lex=Lex::normal;size_t depth=0;
+- for(size_t i=0;i<text.size();++i){const auto c=text[i],n=i+1<text.size()?text[i+1]:'\0';
+-  if(lex==Lex::string){if(c=='\\'&&(n=='"'||n=='\\'))++i;else if(c=='"')lex=Lex::normal;}
+-  else if(lex==Lex::line){if(c=='\n')lex=Lex::normal;}
+-  else if(lex==Lex::block){if(c=='*'&&n=='/'){lex=Lex::normal;++i;}}
+-  else if(c=='"')lex=Lex::string;
+-  else if(c=='/'&&n=='/'){lex=Lex::line;++i;}
+-  else if(c=='/'&&n=='*'){lex=Lex::block;++i;}
+-  else if(c=='{'){if(++depth>128)throw std::length_error("configuration nesting exceeds 128");}
+-  else if(c=='}'&&depth)--depth;
+- }
+-}
++
+ }
+ struct Application::Impl {
+  Environment& env;configuration::State state=configuration::initial_state();std::recursive_mutex state_mutex;
+@@ -104,7 +88,7 @@
+   if(error&&!absent)throw std::filesystem::filesystem_error("configuration status",file,error);
+   if(!absent&&!std::filesystem::is_regular_file(status))throw std::invalid_argument("configuration path is not a regular file");
+   if(!absent)env.log(override_pass?LogEvent::config_override_present:LogEvent::config_base_present);
+-  auto bytes=absent?std::string{}:read_file(model_path(file),true);validate_configuration_input(bytes);
++  auto bytes=absent?std::string{}:read_file(model_path(file),true);
+   parser::State parsed;(void)parser::parse(bytes,parsed);
+   const auto* selected=parsed.root.find("Config2");
+   auto config=selected?config_hash::selected_copy(*selected):config_hash::Node{};
+@@ -152,14 +136,13 @@
+ 
+   env.log(online?LogEvent::profile_online:LogEvent::profile_local);
+   profile={state.username,state.persona_id,state.user_id,state.country,state.currency,state.subscriber_level,state.is_subscriber,state.is_under_age,state.is_steam_subscriber};
+-  licensing::store_cipher_key(state,configuration_effects.pending_license_key,env.paths);
+   ready=true;
+  }
+  void shutdown(){std::lock_guard lock(state_mutex);ready=false;online_session.close();}
+ };
+ struct Connection::Impl {
+  Application::Impl& app;std::mutex mutex;std::uint8_t encrypted=0,unknown=0;
+- crypto::Cipher cipher;crypto::CryptoFactory crypto_factory;ProtocolTime time;crypto::Random random{time};
++ crypto::Cipher cipher;crypto::CryptoFactory crypto_factory;crypto::WindowsTimeSource time;crypto::Random random{time};
+  MessageEffects effects;sessions::MessageHandler handler;
+  explicit Impl(Application::Impl& a):app(a),effects(*a.router,a.env),handler({encrypted,unknown,a.show_lsx,a.state.sdk,cipher,a.events},a.xml,crypto_factory,random,effects) {handler.reset_02bc70();}
+ };
+@@ -174,7 +157,6 @@
+ Connection::~Connection()=default;
+ std::string Connection::greeting(){std::scoped_lock lock(impl_->mutex,impl_->app.state_mutex);if(!impl_->app.ready)throw SessionFailure("application stopped");return impl_->handler.initial_message_02d540();}
+ std::string Connection::process(std::string_view message){
+- if(message.size()>1024*1024)throw SessionFailure("message limit exceeded");
+  std::scoped_lock lock(impl_->mutex,impl_->app.state_mutex);
+  if(!impl_->app.ready)throw SessionFailure("application stopped");
+  try{return impl_->handler.process_message_033d70(message);}catch(const NoResponse&){return {};}catch(const PersistenceRecoveryRequired&){impl_->app.ready=false;throw;}
+--- FIX12/src/application/avatars.cpp
++++ FIX13/src/application/avatars.cpp
+@@ -2,19 +2,17 @@
+ #include "src/application/avatars.hpp"
+ #include "src/application/avatar_assets.hpp"
+ #include "src/files/atomic_io.hpp"
+-#include <filesystem>
+-#include <fstream>
+ namespace preloader_l {
+-namespace {
+-bool official(const std::filesystem::path& p){std::error_code ec;if(!std::filesystem::is_regular_file(p,ec)||std::filesystem::file_size(p,ec)!=sizeof assets::surge_png)return false;auto value=read_file(p.u16string(),true);return value==std::string_view(reinterpret_cast<const char*>(assets::surge_png),sizeof assets::surge_png);}
+-}
+ Path AvatarStore::resolve(const Path& requested){
+- if(requested!=logical_default())return requested; // explicit custom/provider image remains read-only here
+- if(official(paths_.sidecar_avatar()))return paths_.sidecar_avatar().u16string();
+- const auto file=paths_.default_avatar();paths_.require_write(file);if(official(file))return file.u16string();
+- if(std::filesystem::exists(file))throw std::runtime_error("managed avatar conflicts with existing file");
++ if(requested!=logical_default())return requested;
++ const auto file=paths_.default_avatar();
++ // Keep module-sidecar priority from the prior resolver; remove only its rejected byte gate.
++ if(std::filesystem::is_regular_file(paths_.sidecar_avatar()))return paths_.sidecar_avatar().u16string();
++ if(std::filesystem::is_regular_file(file))return file.u16string();
++ paths_.require_write(file);
++ // Never replace an existing file. The embedded official bytes are a missing-file fallback.
+  try{atomic_write(file,{reinterpret_cast<const char*>(assets::surge_png),sizeof assets::surge_png},&paths_,true);}
+- catch(...){if(!official(file))throw;}
++ catch(...){if(!std::filesystem::is_regular_file(file))throw;}
+  return file.u16string();
+ }
+ }
+--- FIX12/src/application/avatars.hpp
++++ FIX13/src/application/avatars.hpp
+@@ -2,8 +2,8 @@
+ #pragma once
+ #include "src/application/environment.hpp"
+ namespace preloader_l {
+-// Official bytes only. Module sidecar is read-only and must match the seal.
+-// The embedded copy is materialized lazily in a version-owned asset location.
++// Existing app/module images and explicit custom paths are read-only.
++// The official embedded image is a missing-file fallback at SURGE/surge.png.
+ class AvatarStore final {
+  const RuntimePaths& paths_;
+ public:
+--- FIX12/src/application/environment.cpp
++++ FIX13/src/application/environment.cpp
+@@ -41,9 +41,9 @@
+  std::ifstream in(native_path(path),std::ios::binary);
+  if(!in){if(required)throw std::runtime_error("required file cannot be opened: "+path_utf8(path));return {};}
+  in.seekg(0,std::ios::end);auto n=in.tellg();
+- if(n<0||n>64*1024*1024)throw std::length_error("file size outside application limit");
++ if(n<0)throw std::length_error("file position unavailable");
+  std::string bytes(static_cast<size_t>(n),'\0');in.seekg(0);
+- if(!bytes.empty()&&!in.read(bytes.data(),static_cast<std::streamsize>(bytes.size())))throw std::runtime_error("short file read");return bytes;
++ if(!bytes.empty())in.read(bytes.data(),static_cast<std::streamsize>(bytes.size()));return bytes;
+ }
+ 
+ void publish_environment(std::string_view name,std::string_view value){
+--- FIX12/src/application/logging.cpp
++++ FIX13/src/application/logging.cpp
+@@ -26,21 +26,19 @@
+   const auto path=paths.diagnostic_log();paths.require_write(path);
+   const auto stamp=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+   const auto line="utc_ms="+std::to_string(stamp)+" event="+log_event_name(event)+"\n";
+-  constexpr std::size_t limit=256*1024;
+   std::filesystem::create_directories(path.parent_path());
+ #ifdef _WIN32
+-  struct File {HANDLE h;~File(){if(h!=INVALID_HANDLE_VALUE)CloseHandle(h);}} file{CreateFileW(path.c_str(),FILE_APPEND_DATA|GENERIC_READ,FILE_SHARE_READ|FILE_SHARE_WRITE,nullptr,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,nullptr)};
++  struct File {HANDLE h;~File(){if(h!=INVALID_HANDLE_VALUE)CloseHandle(h);}} file{CreateFileW(path.c_str(),GENERIC_WRITE,FILE_SHARE_READ|FILE_SHARE_WRITE,nullptr,OPEN_ALWAYS,FILE_ATTRIBUTE_NORMAL,nullptr)};
+   if(file.h==INVALID_HANDLE_VALUE)return;
+   OVERLAPPED range{};
+   if(!LockFileEx(file.h,LOCKFILE_EXCLUSIVE_LOCK|LOCKFILE_FAIL_IMMEDIATELY,0,MAXDWORD,MAXDWORD,&range))return;
+   struct Lock {HANDLE h;OVERLAPPED* range;~Lock(){UnlockFileEx(h,0,MAXDWORD,MAXDWORD,range);}} held{file.h,&range};
+-  LARGE_INTEGER size{};if(!GetFileSizeEx(file.h,&size)||size.QuadPart<0||static_cast<unsigned long long>(size.QuadPart)>limit-line.size())return;
++  LARGE_INTEGER end{};if(!SetFilePointerEx(file.h,end,nullptr,FILE_END))return;
+   DWORD written=0;if(!WriteFile(file.h,line.data(),static_cast<DWORD>(line.size()),&written,nullptr)||written!=line.size())return;
+   FlushFileBuffers(file.h);
+ #else
+   struct File {int fd;~File(){if(fd>=0)::close(fd);}} file{::open(path.c_str(),O_WRONLY|O_APPEND|O_CREAT|O_CLOEXEC|O_NOFOLLOW,0600)};
+   if(file.fd<0||::flock(file.fd,LOCK_EX|LOCK_NB))return;
+-  struct stat status{};if(::fstat(file.fd,&status)||!S_ISREG(status.st_mode)||status.st_size<0||static_cast<unsigned long long>(status.st_size)>limit-line.size())return;
+   (void)::write(file.fd,line.data(),line.size()); // best-effort diagnostics; no sensitive payload
+ #endif
+  }catch(...){}
+--- FIX12/src/application/providers.cpp
++++ FIX13/src/application/providers.cpp
+@@ -3,6 +3,7 @@
+ #include "src/application/avatar_assets.hpp"
+ #include "src/files/license_files.hpp"
+ #include "src/profiles/online_session.hpp"
++#include "src/licensing/key_store.hpp"
+ #include <array>
+ #include <fstream>
+ #ifdef _WIN32
+@@ -27,31 +28,16 @@
+  return config_hash::to_configuration(config_hash::from_parser(parsed.root));
+ }
+ void ConfigurationEffects::apply_license_key_02a830(std::string_view key){
+- pending_license_key.assign(key);
++ licensing::store_cipher_key(state_,key,env_.paths);
+ }
+ void ConfigurationEffects::write_embedded_png_03c020(const Path& path,configuration::EmbeddedPng image){
+  (void)image;atomic_write(native_path(path),{reinterpret_cast<const char*>(assets::surge_png),sizeof assets::surge_png},&env_.paths,true);
+ }
+ std::vector<Path> ConfigurationEffects::directory_entries(const Path& root){std::vector<Path> paths;for(const auto& entry:std::filesystem::directory_iterator(native_path(root)))paths.push_back(model_path(entry.path()));return paths;}
+-ContentEffects::~ContentEffects(){for(const auto& [logical,actual]:downloads_){(void)logical;std::error_code ec;const auto file=native_path(actual);std::filesystem::remove(file,ec);std::filesystem::remove(file.parent_path(),ec);}}
+ bool ContentEffects::online_avatar_virtual_28(const Path& path,std::string_view owner,std::int32_t size){
+- if(path==state_.avatar || path.empty())return false;
+- if(downloads_.contains(path))return true;
+- if(downloads_.size()>=64 || downloaded_bytes_>=32*1024*1024)return false;
+- const auto logical=native_path(path);env_.paths.require_write(logical);
+- const auto temporary=env_.paths.avatar_download(logical);env_.paths.require_write(temporary);
+- std::filesystem::create_directories(temporary.parent_path().parent_path());
+- if(!std::filesystem::create_directory(temporary.parent_path()))return false;
+- struct Lease {std::filesystem::path path;bool retained=false;~Lease(){if(!retained){std::error_code ec;std::filesystem::remove(path,ec);std::filesystem::remove(path.parent_path(),ec);}}} lease{temporary};
+- atomic_write(temporary,{},&env_.paths,true);
+- if(!online_.avatar(model_path(temporary),owner,size))return false;
+- env_.paths.require_write(temporary);const auto count=std::filesystem::file_size(temporary);
+- if(count<24 || count>8*1024*1024 || count>32*1024*1024-downloaded_bytes_)return false;
+- const auto bytes=read_file(model_path(temporary),true);
+- if(bytes.size()<33 || bytes.substr(0,8)!=std::string("\x89PNG\r\n\x1a\n",8) || bytes.substr(12,4)!="IHDR")return false;
+- auto be32=[&](std::size_t i){return (std::uint32_t(static_cast<unsigned char>(bytes[i]))<<24)|(std::uint32_t(static_cast<unsigned char>(bytes[i+1]))<<16)|(std::uint32_t(static_cast<unsigned char>(bytes[i+2]))<<8)|std::uint32_t(static_cast<unsigned char>(bytes[i+3]));};
+- if(be32(8)!=13 || be32(16)==0 || be32(20)==0 || be32(16)>8192 || be32(20)>8192)return false;
+- downloads_.emplace(path,model_path(temporary));downloaded_bytes_+=bytes.size();lease.retained=true;return true;
++ env_.paths.require_write(native_path(path));
++ std::filesystem::create_directories(native_path(path).parent_path());
++ return online_.avatar(path,owner,size);
+ }
+ 
+ const char* LicenseEffects::online_auth_virtual_30(const char* client){return online_.auth(client);}
+--- FIX12/src/application/providers.hpp
++++ FIX13/src/application/providers.hpp
+@@ -19,7 +19,6 @@
+     const RuntimePaths& paths_;
+ public:
+     StorageEffects(timestamps::Parser& parser,const RuntimePaths& paths):timestamps::StorageEffects(parser),paths_(paths){}
+-    Path persistence_path(const Path&,std::string_view id,bool ini) override{return model_path(ini?paths_.achievement_ini(id):paths_.achievement_xml(id));}
+     Path filesystem_widen_006d70(std::string_view s) override{return filesystem_path(s);}
+     void create_directories_018e00(const Path& p) override{paths_.require_write(native_path(p)/".directory-check");std::filesystem::create_directories(native_path(p));}
+     status_recovered::Status status_01ea20(const Path&,std::uint32_t) override;
+@@ -28,7 +27,6 @@
+ class ConfigurationEffects final:public achievement_storage::ConfigurationDependencies {
+     configuration::State& state_;Environment& env_;
+ public:
+-    std::string pending_license_key;
+     ConfigurationEffects(configuration::State& s,Environment& e,achievement_storage::Storage& storage):achievement_storage::ConfigurationDependencies(storage),state_(s),env_(e){}
+     Path executable_path_03c6d0() override{return model_path(env_.executable);}
+     Path parent_path_019820(const Path& p) override{return model_path(native_path(p).parent_path());}
+@@ -54,17 +52,15 @@
+ };
+ class ContentEffects final:public achievement_runtime::PersistenceEffects {
+     Environment& env_;OnlineSession& online_;AvatarStore& avatars_;
+-    std::map<Path,Path> downloads_;std::size_t downloaded_bytes_=0;
+ public:
+     ContentEffects(configuration::State& s,achievement_storage::Paths& p,achievement_runtime::Clock& c,achievement_runtime::Formatter& f,achievement_writer::Effects& d,files::Factory& files,Environment& e,OnlineSession& online,AvatarStore& avatars):achievement_runtime::PersistenceEffects(s,p,c,f,d,files),env_(e),online_(online),avatars_(avatars){}
+-    ~ContentEffects();
+     std::int32_t atoi_05ee08(std::string_view s) override{return std::atoi(std::string(s).c_str());}
+     void unknown_entitlement_field(std::string_view) override{env_.log(LogEvent::unknown_field);}
+     Path filesystem_widen_006d70(std::string_view s) override{return filesystem_path(s);}
+     Path path_append_016b50(const Path& a,const Path& b) override{return model_path(native_path(a)/native_path(b));}
+     bool online_avatar_virtual_28(const Path&,std::string_view,std::int32_t) override;
+     Path avatar_cache_path(const Path&,std::string_view owner,std::string_view width) override{return model_path(env_.paths.avatar_cache(owner,width));}
+-    Path resolve_image(const Path& p) override{auto i=downloads_.find(p);return i==downloads_.end()?avatars_.resolve(p):i->second;}
++    Path resolve_image(const Path& p) override{return avatars_.resolve(p);}
+     void persist_achievement(const Path&,std::string_view,const content::AchievementMap&) override;
+     bool copy_overwrite_048d20(const Path& a,const Path& b) override{atomic_write(native_path(b),read_file(a,true),&env_.paths);return true;}
+     std::string path_to_utf8_031ca0(const Path& p) override{return path_utf8(p);}
+--- FIX12/src/files/atomic_io.cpp
++++ FIX13/src/files/atomic_io.cpp
+@@ -73,7 +73,7 @@
+ void atomic_batch(const std::vector<FileUpdate>& writes,const RuntimePaths& owner,BatchHooks* hooks){
+  std::lock_guard lock(write_mutex);
+  struct Entry {fs::path target;std::unique_ptr<Stage> fresh,backup;bool existed=false,committed=false;};std::vector<Entry> entries;entries.reserve(writes.size());
+- for(const auto& w:writes){auto target=w.target.lexically_normal();validate_target(target,&owner);for(const auto& e:entries)if(e.target==target)throw std::invalid_argument("duplicate atomic target");Entry e;e.target=target;e.fresh=std::make_unique<Stage>(target,w.bytes);e.existed=fs::exists(target);if(e.existed){std::ifstream in(target,std::ios::binary);in.exceptions(std::ios::badbit|std::ios::failbit);const auto size=fs::file_size(target);if(size>64*1024*1024)throw std::length_error("preimage quota");std::string old(static_cast<std::size_t>(size),'\0');if(size)in.read(old.data(),static_cast<std::streamsize>(size));e.backup=std::make_unique<Stage>(target,old);}entries.push_back(std::move(e));}
++ for(const auto& w:writes){auto target=w.target.lexically_normal();validate_target(target,&owner);for(const auto& e:entries)if(e.target==target)throw std::invalid_argument("duplicate atomic target");Entry e;e.target=target;e.fresh=std::make_unique<Stage>(target,w.bytes);e.existed=fs::exists(target);if(e.existed){std::ifstream in(target,std::ios::binary);in.exceptions(std::ios::badbit|std::ios::failbit);const auto size=fs::file_size(target);std::string old(static_cast<std::size_t>(size),'\0');if(size)in.read(old.data(),static_cast<std::streamsize>(size));e.backup=std::make_unique<Stage>(target,old);}entries.push_back(std::move(e));}
+  try{std::size_t index=0;for(auto& e:entries){if(hooks)hooks->before_commit(index++);owner.require_write(e.target);e.fresh->commit(e.target);e.committed=true;}}
+  catch(...){auto original=std::current_exception();bool restored=true;for(auto i=entries.rbegin();i!=entries.rend();++i)if(i->committed){try{if(i->existed)i->backup->commit(i->target);else{std::error_code ec;fs::remove(i->target,ec);if(ec)restored=false;}}catch(...){restored=false;}}if(!restored){for(auto& e:entries){if(e.backup)e.backup->owned=false;}throw PersistenceRecoveryRequired("persistence rollback incomplete; stop application, retained backups");}std::rethrow_exception(original);}
+ }
+--- FIX12/src/files/native_io.cpp
++++ FIX13/src/files/native_io.cpp
+@@ -41,7 +41,6 @@
+     }
+     std::size_t read_03b2a0(std::span<std::uint8_t> target)override {
+         stream_.read(reinterpret_cast<char*>(target.data()),count(target.size()));
+-        if(static_cast<std::size_t>(stream_.gcount())!=target.size())throw std::runtime_error("short native read");
+         return static_cast<std::size_t>(stream_.gcount());
+     }
+     void close_03ae70()override{stream_.close();}
+@@ -52,7 +51,7 @@
+ public:
+  NativeOutput(const Path& path,const RuntimePaths* owner):path_(native_file_path(path)),owner_(owner){if(!owner_)throw std::invalid_argument("native output requires RuntimePaths");owner_->require_write(path_);}
+  std::uint32_t initial_state()const override{return 0;}
+- void write_03be80(std::string_view value)override{if(value.size()>64*1024*1024-bytes_.size())throw std::length_error("native output quota");bytes_.append(value);}
++ void write_03be80(std::string_view value)override{bytes_.append(value);}
+  void close_03ae70()override{atomic_write(path_,bytes_,owner_);}
+ };
+ }
+--- FIX12/src/libraries/libraries.cpp
++++ FIX13/src/libraries/libraries.cpp
+@@ -0,0 +1,95 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/libraries/libraries.hpp"
++#include <climits>
++
++namespace preloader_l::libraries {
++Conversion convert_wide_048b30(SystemCalls& os, std::uint32_t codepage,
++    const wchar_t* input, int count, char* output, int capacity) {
++    int converted;
++    if (codepage == 65001 || codepage == 54936) {
++        converted = os.wide_to_narrow(codepage, 0x80, input, count,
++                                      output, capacity, nullptr);
++    } else {
++        bool used_default = false;
++        converted = os.wide_to_narrow(codepage, 0x400, input, count,
++                                      output, capacity, &used_default);
++        if (used_default) return {0, 0x459};
++    }
++    std::uint32_t error = converted == 0 ? os.last_error() : 0;
++    if (error == 0x3ec) {
++        converted = os.wide_to_narrow(codepage, 0, input, count,
++                                      output, capacity, nullptr);
++        error = converted == 0 ? os.last_error() : 0;
++    }
++    return {converted, error};
++}
++
++std::uint32_t suppress_errors_0450a0(SystemCalls& os) {
++    const auto previous = os.get_error_mode();
++    os.set_error_mode(previous | 1u);
++    return previous;
++}
++
++Module load_copy_0450d0(SystemCalls& os, const std::wstring& path) {
++    const std::wstring copy(path); // 00a140 copies, rather than canonicalizes path
++    return os.load_library(copy.c_str());
++}
++
++static std::string utf8_path(SystemCalls& os, Effects& effects,
++                              const std::wstring& path) {
++    if (path.empty()) return {};
++    if (path.size() > INT_MAX) effects.throw_runtime_00cd70(22);
++    auto result = convert_wide_048b30(os, 65001, path.data(),
++                                     static_cast<int>(path.size()), nullptr, 0);
++    if (result.error != 0) effects.throw_filesystem_00cdb0(result.error);
++    std::string converted(static_cast<std::size_t>(result.count), '\0');
++    result = convert_wide_048b30(os, 65001, path.data(),
++        static_cast<int>(path.size()), converted.data(), result.count);
++    if (result.error != 0) effects.throw_filesystem_00cdb0(result.error);
++    // Original string length remains the size returned by the first conversion.
++    return converted;
++}
++
++std::vector<Module> load_list_035260(SystemCalls& os, Effects& effects,
++                                    std::span<const std::wstring> paths) {
++    std::vector<Module> loaded;
++    const auto previous_mode = suppress_errors_0450a0(os);
++    for (const auto& path : paths) {
++        effects.begin_load_log_0863e0();
++        effects.append_log_path_and_flush(utf8_path(os, effects, path));
++        const auto module = load_copy_0450d0(os, path);
++        if (module != 0) {
++            loaded.push_back(module);
++        } else {
++            // Reconvert after LoadLibraryW failure: both conversion side effects
++            // and possible failure precede the error dialog in the original.
++            auto message = utf8_path(os, effects, path);
++            message.insert(0, "Can't load ");
++            effects.message_038bc0("error", std::move(message), 0x10);
++        }
++    }
++    // Intentionally normal-path restoration, not RAII. The observed body has no
++    // mode-restoration call on its throwing conversion/allocator paths.
++    os.set_error_mode(previous_mode);
++    return loaded;
++}
++
++void load_phase_035850(SystemCalls& os, Effects& effects, State& state,
++                       bool from_main) {
++    if (!from_main) effects.wait_steps_036880(2);
++    auto loaded = load_list_035260(os, effects,
++                                  from_main ? state.from_main : state.from_worker);
++    state.loaded.insert(state.loaded.end(), loaded.begin(), loaded.end());
++    if (!from_main) effects.finish_flag_036820();
++}
++
++void unload_035ab0(SystemCalls& os, const State& state) {
++    // Original code snapshots the end, iterates forwards, skips null, ignores
++    // FreeLibrary results, and does not clear the vector or individual entries.
++    const auto* const entries = state.loaded.data();
++    const auto count = state.loaded.size();
++    for (std::size_t i = 0; i < count; ++i) {
++        if (entries[i] != 0) os.free_library(entries[i]);
++    }
++}
++} // namespace preloader_l::libraries
+--- FIX12/src/libraries/libraries.hpp
++++ FIX13/src/libraries/libraries.hpp
+@@ -0,0 +1,67 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#pragma once
++#include <cstdint>
++#include <span>
++#include <string>
++#include <string_view>
++#include <vector>
++
++namespace preloader_l::libraries {
++using Module = std::uintptr_t;
++struct Conversion { int count; std::uint32_t error; };
++
++// Native API boundary. Mocks must preserve GetLastError and used_default semantics.
++class SystemCalls {
++public:
++    virtual ~SystemCalls() = default;
++    virtual std::uint32_t get_error_mode() = 0;
++    virtual std::uint32_t set_error_mode(std::uint32_t) = 0;
++    virtual Module load_library(const wchar_t*) = 0;
++    virtual bool free_library(Module) = 0;
++    virtual int wide_to_narrow(std::uint32_t codepage, std::uint32_t flags,
++        const wchar_t*, int count, char* destination, int capacity, bool* used_default) = 0;
++    virtual std::uint32_t last_error() = 0;
++};
++
++// Genuine Win32 adapter; compiled, never called in this investigation.
++class NativeSystemCalls final : public SystemCalls {
++public:
++    std::uint32_t get_error_mode() override;
++    std::uint32_t set_error_mode(std::uint32_t) override;
++    Module load_library(const wchar_t*) override;
++    bool free_library(Module) override;
++    int wide_to_narrow(std::uint32_t, std::uint32_t, const wchar_t*, int,
++                       char*, int, bool*) override;
++    std::uint32_t last_error() override;
++};
++
++// Unrecovered logging/UI, CRT exception and execution-global bindings. No default
++// success implementations; the core below contains the recovered load decisions.
++class Effects {
++public:
++    virtual ~Effects() = default;
++    virtual void begin_load_log_0863e0() = 0;
++    virtual void append_log_path_and_flush(std::string_view utf8) = 0;
++    virtual void message_038bc0(std::string title, std::string text,
++                               std::uint32_t flags) = 0;
++    [[noreturn]] virtual void throw_runtime_00cd70(int code) = 0;
++    [[noreturn]] virtual void throw_filesystem_00cdb0(std::uint32_t code) = 0;
++    virtual void wait_steps_036880(int count) = 0;
++    virtual void finish_flag_036820() = 0; // byte at original VA 1800a3c3e
++};
++
++Conversion convert_wide_048b30(SystemCalls&, std::uint32_t codepage,
++    const wchar_t*, int count, char* destination, int capacity);
++std::uint32_t suppress_errors_0450a0(SystemCalls&);
++Module load_copy_0450d0(SystemCalls&, const std::wstring&);
++std::vector<Module> load_list_035260(SystemCalls&, Effects&,
++                                    std::span<const std::wstring> paths);
++
++struct State {
++    std::vector<std::wstring> from_main; // original global vector 1800a3ea8
++    std::vector<std::wstring> from_worker; // 1800a3ec0
++    std::vector<Module> loaded; // 1800a3ed8, end 1800a3ee0, capacity 1800a3ee8
++};
++void load_phase_035850(SystemCalls&, Effects&, State&, bool from_main);
++void unload_035ab0(SystemCalls&, const State&);
++} // namespace preloader_l::libraries
+--- FIX12/src/profiles/online_session.cpp
++++ FIX13/src/profiles/online_session.cpp
+@@ -1,8 +1,7 @@
+ // SPDX-License-Identifier: GPL-3.0-only
+ #include "src/profiles/online_session.hpp"
+ #include "src/application/providers.hpp"
+-#include <charconv>
+-#include <limits>
++#include "src/libraries/libraries.hpp"
+ #ifdef _WIN32
+ #include <windows.h>
+ #endif
+@@ -17,13 +16,7 @@
+ OnlineSession::OnlineSession(configuration::State& s,Environment& e,std::uint8_t& online):state_(s),env_(e),online_(online){}
+ online::StateRefs OnlineSession::refs(){return {state_.executable_path,state_.cookie_path,state_.last_profile_path,state_.last_avatar_path,state_.avatar,module_,object_,state_.username,state_.persona_id,state_.user_id,state_.use_last_online_profile,online_};}
+ OnlineSession::~OnlineSession(){try{close();}catch(...){std::terminate();}}
+-void OnlineSession::initialize(){
+- auto name=state_.username,persona=state_.persona_id,user=state_.user_id;auto avatar=state_.avatar;
+- auto restore=[&]{state_.username.swap(name);state_.persona_id.swap(persona);state_.user_id.swap(user);state_.avatar.swap(avatar);online_=0;};
+- try{online::worker_035b60(refs(),*this);if(!finished_)throw SessionFailure("online initialization did not complete");}
+- catch(const std::bad_alloc&){restore();close();throw;}
+- catch(...){restore();close();finished_=true;env_.log(LogEvent::provider);}
+-}
++void OnlineSession::initialize(){online::worker_035b60(refs(),*this);if(!finished_)throw SessionFailure("online initialization did not complete");}
+ void OnlineSession::close(){
+  if(object_){destroy_virtual_00(object_);object_=0;}
+  if(module_){if(!free_library(module_))throw SessionFailure("online module close pending");module_=0;}
+@@ -41,14 +34,14 @@
+ }
+ std::uint32_t OnlineSession::suppress_errors_0450a0(){
+ #ifdef _WIN32
+- DWORD previous=0;if(!SetThreadErrorMode(SEM_FAILCRITICALERRORS,&previous))throw SessionFailure("thread error mode failed");error_mode_=previous;return previous;
++ libraries::NativeSystemCalls calls;const auto previous=libraries::suppress_errors_0450a0(calls);error_mode_=previous;return previous;
+ #else
+  error_mode_=0;return 0;
+ #endif
+ }
+ void OnlineSession::restore_error_mode(std::uint32_t mode){
+ #ifdef _WIN32
+- if(!SetThreadErrorMode(mode,nullptr))throw SessionFailure("thread error mode restore failed");
++ SetErrorMode(mode);
+ #else
+  (void)mode;
+ #endif
+@@ -94,21 +87,20 @@
+ }
+ [[noreturn]] void OnlineSession::filesystem_error_018130(std::string_view op,std::uint32_t n,const Path&){throw SessionFailure(std::string(op)+": "+std::to_string(n));}
+ void OnlineSession::dialog_038bc0(std::string_view title,std::string_view text,std::uint32_t flags){
+- // Provider incompatibility is deterministic offline, without a blocking GUI.
+- (void)title;(void)text;(void)flags;env_.log(LogEvent::provider);
++ env_.log(LogEvent::provider);
++#ifdef _WIN32
++ const std::string caption(title),body(text);MessageBoxA(nullptr,body.c_str(),caption.c_str(),flags);
++#else
++ (void)title;(void)text;(void)flags;
++#endif
+ }
+ void OnlineSession::wait_steps_036880(std::int32_t){if(!state_.server_port)throw SessionFailure("online provider started before transport bind");}
+ }
+ 
+ namespace preloader_l {
+ std::string OnlineSession::read_binary_03b3f0(const Path& p){
+- env_.paths.require_write(native_path(p));if(std::filesystem::file_size(native_path(p))>4096)return {};const auto bytes=read_file(p,true);
+- if(bytes.size()>4096 || bytes.find('\0')!=std::string::npos || bytes.find_first_of("\r\n")!=std::string::npos)return {};
+- const auto fields=online::split_profile_fields_03cf00(bytes);if(fields.size()!=3 || fields[2].empty())return {};
+- for(unsigned i=0;i<2;++i){std::uint64_t id=0;const auto& f=fields[i];const auto result=std::from_chars(f.data(),f.data()+f.size(),id);if(f.empty()||result.ec!=std::errc{}||result.ptr!=f.data()+f.size())return {};}
+- // Reject malformed UTF-8 and XML control characters before publishing cached identity.
+- const auto& name=fields[2];for(std::size_t i=0;i<name.size();){const auto c=static_cast<unsigned char>(name[i++]);if(c<32||c==127)return {};if(c<128)continue;unsigned left=0;std::uint32_t cp=0,min=0;if(c>=0xc2&&c<=0xdf){left=1;cp=c&31;min=0x80;}else if(c>=0xe0&&c<=0xef){left=2;cp=c&15;min=0x800;}else if(c>=0xf0&&c<=0xf4){left=3;cp=c&7;min=0x10000;}else return {};if(i+left>name.size())return {};while(left--){const auto b=static_cast<unsigned char>(name[i++]);if((b&0xc0)!=0x80)return {};cp=(cp<<6)|(b&63);}if(cp<min||cp>0x10ffff||(cp>=0xd800&&cp<=0xdfff))return {};}
+-
+- return bytes;
++ env_.paths.require_write(native_path(p));
++ // The source reader returns raw bytes. Parsing remains in online.cpp.
++ return read_file(p);
+ }
+ }
+--- FIX12/src/runtime/runtime_paths.cpp
++++ FIX13/src/runtime/runtime_paths.cpp
+@@ -2,9 +2,7 @@
+ #include "src/runtime/runtime_paths.hpp"
+ #include "src/paths/module_relative.hpp"
+ #include <stdexcept>
+-#include <charconv>
+-#include <atomic>
+-#include <chrono>
++#include "src/application/environment.hpp"
+ #ifdef _WIN32
+ #include <windows.h>
+ #endif
+@@ -12,7 +10,6 @@
+ namespace fs=std::filesystem;
+ namespace {
+ void validate_root(const fs::path& p){if(p.empty()||!p.is_absolute()||p.native().find(fs::path::value_type(0))!=fs::path::string_type::npos)throw std::invalid_argument("invalid runtime root");}
+-bool component(std::string_view s){if(s.empty()||s.size()>128)return false;for(unsigned char c:s)if(!((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9')||c=='_'||c=='-'))return false;return true;}
+ bool within(const fs::path& p,const fs::path& base){auto n=p.lexically_normal(),r=base.lexically_normal();auto a=n.begin(),b=r.begin();for(;b!=r.end();++b,++a)if(a==n.end()||*a!=*b)return false;return true;}
+ bool reparse(const fs::path& p){
+ #ifdef _WIN32
+@@ -35,27 +32,24 @@
+ fs::path RuntimePaths::override_config()const{return paths::module_sibling(config_,"surge_override.cfg").value;}
+ fs::path RuntimePaths::provider()const{return paths::module_sibling(module_,provider_filename).value;}
+ fs::path RuntimePaths::sidecar_avatar()const{return paths::module_sibling(module_,"surge.png").value;}
+-fs::path RuntimePaths::default_avatar()const{return data_/"assets"/"606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b"/"surge.png";}
+-fs::path RuntimePaths::profile_cache()const{return data_/"cache"/"provider-v2";}
+-fs::path RuntimePaths::achievement_xml(std::string_view set)const{if(!component(set))throw std::invalid_argument("invalid achievement set component");return data_/("achievement-"+std::string(set)+".xml");}
+-fs::path RuntimePaths::achievement_ini(std::string_view app)const{if(!component(app))throw std::invalid_argument("invalid achievement app component");return data_/"achievement_watcher"/std::string(app)/"achievements.ini";}
++fs::path RuntimePaths::default_avatar()const{return data_/"surge.png";}
++fs::path RuntimePaths::profile_cache()const{return data_;}
+ fs::path RuntimePaths::diagnostic_log()const{return data_/"surge.log";}
+ fs::path RuntimePaths::file(RuntimeFile f)const{switch(f){case RuntimeFile::data_root:return data_;case RuntimeFile::base_config:return config_;case RuntimeFile::override_config:return override_config();case RuntimeFile::cookie:return profile_cache()/"remid_cookie";case RuntimeFile::last_profile:return profile_cache()/"last_profile";case RuntimeFile::last_avatar:return profile_cache()/"last_avatar";case RuntimeFile::default_avatar:return default_avatar();}throw std::logic_error("runtime file kind");}
+-fs::path RuntimePaths::avatar_cache(std::string_view owner,std::string_view width)const{unsigned n=0;auto parsed=std::from_chars(width.data(),width.data()+width.size(),n);if(!component(owner)||parsed.ec!=std::errc{}||parsed.ptr!=width.data()+width.size()||n==0||n>8192)return {};return data_/"avatars"/"provider-v2"/("_AVATAR_"+std::string(owner)+"_"+std::to_string(n));}
+-fs::path RuntimePaths::avatar_download(const fs::path& logical)const{
+- static std::atomic<unsigned long long> next{0};
+- if(!owns(logical)||logical.parent_path()!=data_/"avatars"/"provider-v2")throw std::invalid_argument("avatar cache ownership");
+- const auto nonce=std::chrono::steady_clock::now().time_since_epoch().count();
+- return logical.parent_path()/("session-"+std::to_string(nonce)+"-"+std::to_string(next.fetch_add(1)))/logical.filename();
++fs::path RuntimePaths::avatar_cache(std::string_view owner,std::string_view width)const{
++ // Preserve the source filename spelling, including the original Width text.
++ const auto component=filesystem_path("_AVATAR_"+std::string(owner)+"_"+std::string(width));
++ return data_/fs::path(component);
+ }
+ bool RuntimePaths::owns(const fs::path& p)const{return p.is_absolute()&&within(p,data_);}
+ bool RuntimePaths::external_contract(const fs::path& p)const{
+- const auto name=p.filename().string();const auto license=program_/"Electronic Arts"/"EA Services"/"License";
+- if(p.parent_path().lexically_normal()==license.lexically_normal()){
+-  auto base=p.stem().string();if(base.ends_with("_cached"))base.resize(base.size()-7);return p.extension()==".dlf"&&component(base);
+- }
+- return p.parent_path().lexically_normal()==executable_.parent_path().lexically_normal()&&name.starts_with("Denuvo_ticket_")&&name.ends_with(".txt")&&name.find_first_of("/\\:")==std::string::npos;
++ const auto license=program_/"Electronic Arts"/"EA Services"/"License";
++ if(within(p,license))return p.extension()==fs::path(".dlf");
++ const auto name=p.filename().native();
++ return p.parent_path().lexically_normal()==executable_.parent_path().lexically_normal()
++     &&name.starts_with(fs::path("Denuvo_ticket_").native())&&name.ends_with(fs::path(".txt").native());
+ }
++
+ void RuntimePaths::require_write(const fs::path& original)const{
+  if(original.native().find(fs::path::value_type(0))!=fs::path::string_type::npos)throw std::invalid_argument("NUL runtime path");
+  const auto p=original.lexically_normal();
+--- FIX12/src/runtime/runtime_paths.hpp
++++ FIX13/src/runtime/runtime_paths.hpp
+@@ -24,12 +24,9 @@
+     std::filesystem::path default_avatar() const;
+     std::filesystem::path profile_cache() const;
+     std::filesystem::path diagnostic_log() const;
+-    std::filesystem::path achievement_xml(std::string_view set) const;
+-    std::filesystem::path achievement_ini(std::string_view app) const;
+     std::filesystem::path file(RuntimeFile) const;
+     std::u16string model(RuntimeFile f) const{return file(f).u16string();}
+     std::filesystem::path avatar_cache(std::string_view owner,std::string_view width) const;
+-    std::filesystem::path avatar_download(const std::filesystem::path& logical) const;
+     bool owns(const std::filesystem::path&) const;
+     bool external_contract(const std::filesystem::path&) const;
+     void require_write(const std::filesystem::path&) const;
+--- FIX12/src/transport/service.cpp
++++ FIX13/src/transport/service.cpp
+@@ -108,7 +108,7 @@
+   }
+   void read(){
+    if(owner.stopping.load()){finish();return;}
+-   const auto count=server::receive_request_size(pending.size(),pending.capacity(),1024*1024);
++   const auto count=server::receive_request_size(pending.size(),pending.capacity(),pending.max_size());
+    if(!count){owner.env.log(LogEvent::phase);finish();return;}
+    auto self=shared_from_this();
+    socket.async_read_some(asio::buffer(buffer.data(),std::min(count,buffer.size())),
+@@ -208,7 +208,7 @@
+   }
+   try{
+    clients.erase(std::remove_if(clients.begin(),clients.end(),[](const auto& p){return p->failed.load(std::memory_order_acquire);}),clients.end());
+-   if(!error&&!stopping.load()&&clients.size()<32){
++   if(!error&&!stopping.load()){
+     auto client=std::make_shared<Session>(*this,std::move(socket));
+     clients.push_back(client);
+     try{client->start();}catch(...){client->finish();throw;}
+--- FIX12/src/windows/dll_entry.cpp
++++ FIX13/src/windows/dll_entry.cpp
+@@ -1,4 +1,6 @@
+ // SPDX-License-Identifier: GPL-3.0-only
++#include "src/libraries/libraries.hpp"
++#include <system_error>
+ #include <winsock2.h>
+ #include <windows.h>
+ #include <process.h>
+@@ -36,17 +38,28 @@
+  bool restore() noexcept{bool restored=true;for(const auto& item:items_)if(!SetEnvironmentVariableA(item.name.c_str(),item.existed?item.value.c_str():nullptr))restored=false;return restored;}
+ };
+ EnvironmentLease* environment_lease=nullptr;
+-class ExtraModules {
+- std::vector<HMODULE> modules_;
++class ExtraModules final:private preloader_l::libraries::Effects {
++ preloader_l::Environment& env_;
++ preloader_l::libraries::NativeSystemCalls calls_;
++ preloader_l::libraries::State state_;
++ void begin_load_log_0863e0() override{env_.log(preloader_l::LogEvent::phase);}
++ void append_log_path_and_flush(std::string_view) override{env_.log(preloader_l::LogEvent::phase);}
++ void message_038bc0(std::string title,std::string text,std::uint32_t flags) override{MessageBoxA(nullptr,text.c_str(),title.c_str(),flags);}
++ [[noreturn]] void throw_runtime_00cd70(int code) override{throw std::runtime_error("extra-library conversion code="+std::to_string(code));}
++ [[noreturn]] void throw_filesystem_00cdb0(std::uint32_t code) override{throw std::system_error(static_cast<int>(code),std::system_category(),"extra-library conversion");}
++ void wait_steps_036880(int) override{throw std::logic_error("phase scheduling is not bound through load_list");}
++ void finish_flag_036820() override{throw std::logic_error("phase scheduling is not bound through load_list");}
+ public:
++ explicit ExtraModules(preloader_l::Environment& env):env_(env){}
+  void load(const preloader_l::configuration::State& state){
+-  for(const auto* list:{&state.extra_dlls_from_main,&state.extra_dlls})for(const auto& file:*list){
+-   auto path=preloader_l::native_path(file);HMODULE module=LoadLibraryExW(path.c_str(),nullptr,LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR|LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
+-   if(!module)throw std::runtime_error("configured extra DLL could not be loaded");
+-   try{modules_.push_back(module);}catch(...){FreeLibrary(module);throw;}
++  for(const auto* list:{&state.extra_dlls_from_main,&state.extra_dlls}){
++   std::vector<std::wstring> paths;for(const auto& file:*list)paths.push_back(preloader_l::native_path(file).wstring());
++   auto loaded=preloader_l::libraries::load_list_035260(calls_,*this,paths);
++   try{state_.loaded.insert(state_.loaded.end(),loaded.begin(),loaded.end());}
++   catch(...){for(auto module:loaded)calls_.free_library(module);throw;}
+   }
+  }
+- ~ExtraModules(){for(auto it=modules_.rbegin();it!=modules_.rend();++it)FreeLibrary(*it);}
++ ~ExtraModules(){preloader_l::libraries::unload_035ab0(calls_,state_);}
+ };
+ unsigned __stdcall runtime_worker(void*) noexcept{
+  std::unique_ptr<preloader_l::Environment> environment;
+@@ -69,7 +82,7 @@
+   service->activate();
+   environment->log(preloader_l::LogEvent::phase);
+   environment->log(preloader_l::LogEvent::phase);
+-  extras=std::make_unique<ExtraModules>();extras->load(service->application().configuration());
++  extras=std::make_unique<ExtraModules>(*environment);extras->load(service->application().configuration());
+   environment->log(preloader_l::LogEvent::phase);
+   environment->log(preloader_l::LogEvent::ready);
+   if(WaitForSingleObject(stop_event,INFINITE)!=WAIT_OBJECT_0)throw std::runtime_error("stop wait failed");
+--- FIX12/src/windows/library_calls.cpp
++++ FIX13/src/windows/library_calls.cpp
+@@ -0,0 +1,29 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/libraries/libraries.hpp"
++#ifndef WIN32_LEAN_AND_MEAN
++#define WIN32_LEAN_AND_MEAN
++#endif
++#include <windows.h>
++
++namespace preloader_l::libraries {
++static_assert(sizeof(wchar_t) == 2, "This adapter requires Windows UTF-16 wchar_t");
++std::uint32_t NativeSystemCalls::get_error_mode() { return GetErrorMode(); }
++std::uint32_t NativeSystemCalls::set_error_mode(std::uint32_t mode) {
++    return SetErrorMode(mode);
++}
++Module NativeSystemCalls::load_library(const wchar_t* path) {
++    return reinterpret_cast<Module>(LoadLibraryW(path));
++}
++bool NativeSystemCalls::free_library(Module module) {
++    return FreeLibrary(reinterpret_cast<HMODULE>(module)) != 0;
++}
++int NativeSystemCalls::wide_to_narrow(std::uint32_t codepage, std::uint32_t flags,
++    const wchar_t* input, int count, char* destination, int capacity, bool* used_default) {
++    BOOL native_default = FALSE;
++    const int result = WideCharToMultiByte(codepage, flags, input, count,
++        destination, capacity, nullptr, used_default ? &native_default : nullptr);
++    if (used_default) *used_default = native_default != FALSE;
++    return result;
++}
++std::uint32_t NativeSystemCalls::last_error() { return GetLastError(); }
++} // namespace preloader_l::libraries
+--- FIX12/src/windows/original_effects.cpp
++++ FIX13/src/windows/original_effects.cpp
+@@ -20,8 +20,8 @@
+     std::u16string path;bool readable=false;
+     if(type==CERT_QUERY_OBJECT_FILE&&object){
+         const auto base=reinterpret_cast<std::uintptr_t>(object);
+-        for(std::size_t i=0;i<32768;++i){
+-            if(base>std::numeric_limits<std::uintptr_t>::max()-i*sizeof(char16_t))break;
++        for(std::size_t i=0;;++i){
++            if(i>(std::numeric_limits<std::uintptr_t>::max()-base)/sizeof(char16_t))break;
+             char16_t unit{};SIZE_T copied=0;
+             if(!ReadProcessMemory(GetCurrentProcess(),reinterpret_cast<const void*>(base+i*sizeof(char16_t)),&unit,sizeof unit,&copied)||copied!=sizeof unit)break;
+             if(!unit){readable=true;break;}
+--- FIX12/tests/integration/test_asio_transport.cpp
++++ FIX13/tests/integration/test_asio_transport.cpp
+@@ -84,6 +84,7 @@
+   require(c.frame().find("Persona=\"SURGE\"")!=std::string::npos,"fragmented request and default profile");
+   std::string batch;batch.push_back('\0');for(int i=2;i<32;++i){batch+=request(i);batch.push_back('\0');}c.send(batch);
+   for(int i=2;i<32;++i)require(c.frame().find("id=\""+std::to_string(i)+"\"")!=std::string::npos,"coalesced frames preserve response FIFO");
++  phase="source frame domain";const std::string padding(1024*1024+1,'P');c.message("<LSX><Request id=\"wide\" recipient=\"EbisuSDK\"><GetProfile index=\"0\" Padding=\""+padding+"\"/></Request></LSX>");require(c.frame().find("GetProfileResponse")!=std::string::npos,"source transport accepts frame beyond invented 1MiB cap");
+   phase="large write";c.message(request(32,"<GetGameInfo GameInfoId=\"DISPLAY_NAME\"/>"));const auto response=c.frame();
+   require(response.find(large)!=std::string::npos,"300k response retained across async writes and tiny receive chunks");
+   phase="malformed no-response";{Client broken(service.port());(void)broken.frame();broken.message("<malformed");bool closed=false;try{(void)broken.frame();}catch(...){closed=true;}require(closed,"malformed request gives no response; listener stays available");}
+@@ -99,10 +100,10 @@
+  }
+  phase="repeated lifecycle";for(int generation=0;generation<10;++generation){preloader_l::Service service(env);service.start();Client c(service.port());(void)c.frame();c.message(request(35));require(c.frame().find("SURGE")!=std::string::npos,"repeated create/start/stop with live socket");service.stop();}
+  {
+-  phase="32 client cap";preloader_l::Service service(env);service.start();std::vector<std::unique_ptr<Client>> admitted;
+-  for(int i=0;i<32;++i){auto c=std::make_unique<Client>(service.port());(void)c->frame();admitted.push_back(std::move(c));}
+-  {Client excess(service.port());bool rejected=false;try{(void)excess.frame();}catch(const FrameClosed&){rejected=true;}require(rejected,"existing 32-client cap retained");}
+-  const auto begin=std::chrono::steady_clock::now();service.stop();require(std::chrono::steady_clock::now()-begin<std::chrono::seconds(2),"stop drains 32 live async sessions");
++  phase="source client domain";preloader_l::Service service(env);service.start();std::vector<std::unique_ptr<Client>> admitted;
++  for(int i=0;i<40;++i){auto c=std::make_unique<Client>(service.port());(void)c->frame();admitted.push_back(std::move(c));}
++  {Client excess(service.port());require(excess.frame().find("Challenge")!=std::string::npos,"source accepts beyond invented client cap");}
++  const auto begin=std::chrono::steady_clock::now();service.stop();require(std::chrono::steady_clock::now()-begin<std::chrono::seconds(2),"stop drains live async sessions");
+  }
+  phase="arbitrary dispatch allocation";unsigned attempts=0,terminal=0,recovered=0,dispatch=0,rearm=0;
+  session_allocations_only.store(false);
+--- FIX12/tests/integration/test_original_compat.cpp
++++ FIX13/tests/integration/test_original_compat.cpp
+@@ -0,0 +1,25 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "tests/support/io.hpp"
++#include "src/application/application.hpp"
++#include "src/transport/service.hpp"
++#include "src/files/binary_io.hpp"
++#include "src/crypto/crypto.hpp"
++#include "src/tokens/constants.hpp"
++#include <chrono>
++#include <fstream>
++#include <iostream>
++namespace fs=std::filesystem;
++using namespace preloader_l;
++namespace {int count=0;void check(bool v,const char* message){++count;if(!v)throw std::runtime_error(message);}
++RuntimePaths paths(const fs::path& r){return RuntimePaths::fixture(r/"host.exe",r/"surge.cfg",r/"local",r/"program");}
++void config_domain(const fs::path& root){
++ auto p=paths(root/"large");std::string value(1024*1024+7,'A');write_file(p.config().u16string(),"\"Config2\"{\"Game\"{\"Name\" \""+value+"\"}}");Environment env{p};Application app(env);app.initialize();check(app.configuration().game_attributes.at("DISPLAY_NAME")==value,"source parser accepts config larger than invented 1MiB limit");
++ auto q=paths(root/"deep");std::string text="\"Config2\"{";for(int i=0;i<140;++i)text+="\"Nested\"{";text+=std::string(141,'}');write_file(q.config().u16string(),text);Environment deep_env{q};Application deep(deep_env);deep.initialize();check(deep.configuration().username=="SURGE","source parser accepts deeper than invented 128 precheck");
++}
++void read_domain(const fs::path& root){auto p=paths(root);auto file=p.data()/"large.dat";fs::create_directories(file.parent_path());{std::ofstream f(file,std::ios::binary);f.seekp(64*1024*1024);f.put('Z');}auto bytes=read_file(file.u16string(),true);check(bytes.size()==64*1024*1024+1 && bytes.back()=='Z',"no invented general 64MiB read cap");
++ auto short_file=p.data()/"short.dat";write_file(short_file.u16string(),"abcdef");files::NativeFactory factory{p};auto input=factory.open_input_039f70(short_file.u16string(),0x20,0x40);check(input->initial_state()==0,"native input opens");input->seek_03b610(0,files::Seek::end);auto n=input->position_sum_03ba50();input->seek_03b610(0,files::Seek::begin);fs::resize_file(short_file,2);std::string target(n,'\0');auto got=input->read_03b2a0({reinterpret_cast<std::uint8_t*>(target.data()),target.size()});check(got==2 && target==std::string("ab\0\0\0\0",6),"source short read preserves zero-filled tail without added throw");}
++void ini_and_key_order(const fs::path& root){
++ auto p=paths(root);const auto long_set=std::string(160,'a');write_file(p.config().u16string(),"\"Config2\"{\"Game\"{\"ContentId\" \"fixture\" \"KeyForLicense\" \"SYNTHETIC_TEST_ONLY\"}\"User\"{\"UserId\" \"changed-after-key\"}\"Achievements\"{\"AchievementsSet\" \""+long_set+"\" \"SteamAppId\" \"42\"}}");Environment env{p};Application app(env);app.initialize();
++ check(app.configuration().user_id=="changed-after-key","User applied after Game key");auto license=p.program_data()/"Electronic Arts/EA Services/License/fixture.dlf";auto bytes=read_file(license.u16string(),true);crypto::Cipher c;c.set_key_and_iv_042760(tokens::constants::key_084a50,tokens::constants::iv_084a60);check(c.decrypt_with_offset(bytes,0x41),"synthetic license decrypts");check(bytes.find("<UserId>1000200030000</UserId>")!=std::string::npos,"source Game key side effect occurs before later User section, not delayed to provider stage");check(fs::is_regular_file(p.data()/"achievement_watcher/42/achievements.ini"),"source missing INI startup write restored");}
++}
++int main(){auto root=fs::temp_directory_path()/("preloader_l_original_compat_"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));try{config_domain(root);read_domain(root/"read");ini_and_key_order(root/"order");fs::remove_all(root);std::cout<<"PASS original-package compatibility counterexamples="<<count<<"; not original binary execution\n";return 0;}catch(const std::exception& e){std::cerr<<e.what()<<'\n';fs::remove_all(root);return 1;}}
+--- FIX12/tests/integration/test_runtime_migration.cpp
++++ FIX13/tests/integration/test_runtime_migration.cpp
+@@ -29,18 +29,20 @@
+  auto nul=(r/"nul").native();nul.push_back(fs::path::value_type(0));nul+=fs::path("tail").native();rejected([&]{RuntimePaths::from_system(r/"m.dll",r/"g.exe",fs::path(nul),r/"program");},"NUL root");
+  atomic_write(r/"file","occupied",nullptr);rejected([&]{RuntimePaths::from_system(r/"m.dll",r/"g.exe",r/"file",r/"program");},"local file not directory");
+  for(const auto& bad:{r/"local/BLUEFIELD/LSX emu/x",r/"local/anadius/LSX emu/x",p.data()/"../escape",r/"module/surge.cfg"})rejected([&]{atomic_write(bad,"no",&p);},"unowned writes rejected");
+- require(p.avatar_cache("123","00208").filename()=="_AVATAR_123_208","canonical width");
+- for(const auto& owner:{"../escape","x/y","x\\y","x:y","","x.y"})require(p.avatar_cache(owner,"208").empty(),"bad avatar owner");
+- for(const auto& width:{"0","-1","8193","208x","","999999999999999999999"})require(p.avatar_cache("123",width).empty(),"bad avatar width");
++ require(p.default_avatar()==p.data()/"surge.png" && p.profile_cache()==p.data(),"flat source-compatible layout");
++ require(p.avatar_cache("123","00208").filename()=="_AVATAR_123_00208","original width spelling retained");
++ require(p.avatar_cache("name.with spaces","8193").filename()=="_AVATAR_name.with spaces_8193","no invented owner/width restrictions");
++ require(p.avatar_cache(std::string(160,'a'),"-1").filename().string().size()>128,"no invented 128 character cap");
++ require(p.external_contract(r/"program/Electronic Arts/EA Services/License"/fs::path(u8"İçerik uzun değer.dlf")),"no invented ASCII narrowing in external owner check");
+  require(p.external_contract(r/"program/Electronic Arts/EA Services/License/ABC_cached.dlf"),"external license contract retained");require(p.external_contract(r/"game/Denuvo_ticket_123.txt"),"external ticket contract retained");require(!p.external_contract(r/"game/other.txt"),"external write scope bounded");
+  fs::create_directories(p.data());fs::create_directories(r/"elsewhere");std::error_code ec;fs::create_directory_symlink(r/"elsewhere",p.data()/"redirect",ec);if(!ec){rejected([&]{atomic_write(p.data()/"redirect/x","no",&p);},"symlink write blocked");require(!fs::exists(r/"elsewhere/x"),"redirect untouched");}
+ }
+ void check_assets(const fs::path& r){
+  auto p=paths(r);AvatarStore a(p);const auto logical=a.logical_default();require(!fs::exists(p.data()),"lazy constructor");require(fs::path(a.resolve(logical))==p.default_avatar(),"embedded fallback path");require(get(p.default_avatar())==official(),"exact embedded official bytes");
+- atomic_write(p.default_avatar(),"user collision",nullptr);rejected([&]{a.resolve(logical);},"managed collision not overwritten");require(get(p.default_avatar())=="user collision","collision intact");
++ atomic_write(p.default_avatar(),"user collision",nullptr);require(a.resolve(logical)==p.default_avatar().u16string(),"existing image accepted without byte seal");require(get(p.default_avatar())=="user collision","existing image intact");
+  const auto custom=r/"custom.png";atomic_write(custom,"CUSTOM",nullptr);require(a.resolve(custom.u16string())==custom.u16string(),"explicit avatar readonly");require(get(custom)=="CUSTOM","custom intact");
+- auto q=paths(r/"sidecar");AvatarStore side(q);atomic_write(q.sidecar_avatar(),official(),nullptr);require(side.resolve(side.logical_default())==q.sidecar_avatar().u16string(),"official module sidecar chosen");require(!fs::exists(q.data()),"sidecar creates no app files");require(get(q.sidecar_avatar())==official(),"sidecar intact");
+- auto bad=paths(r/"bad_sidecar");AvatarStore wrong(bad);atomic_write(bad.sidecar_avatar(),"user data",nullptr);require(wrong.resolve(wrong.logical_default())==bad.default_avatar().u16string(),"unsealed sidecar falls back to official");require(get(bad.sidecar_avatar())=="user data","unsealed sidecar preserved");
++ auto q=paths(r/"sidecar");AvatarStore side(q);atomic_write(q.sidecar_avatar(),official(),nullptr);require(side.resolve(side.logical_default())==q.sidecar_avatar().u16string(),"official module sidecar chosen");require(!fs::exists(q.data()),"sidecar creates no app files");atomic_write(q.default_avatar(),"existing-default",nullptr);require(side.resolve(side.logical_default())==q.sidecar_avatar().u16string(),"previous sidecar priority retained without byte gate");require(get(q.default_avatar())=="existing-default","sidecar selection does not overwrite prior default");require(get(q.sidecar_avatar())==official(),"sidecar intact");
++ auto bad=paths(r/"bad_sidecar");AvatarStore wrong(bad);atomic_write(bad.sidecar_avatar(),"user data",nullptr);require(wrong.resolve(wrong.logical_default())==bad.sidecar_avatar().u16string(),"sidecar accepted without invented hash requirement");require(get(bad.sidecar_avatar())=="user data","unsealed sidecar preserved");
+ }
+ struct Fault:BatchHooks {void before_commit(std::size_t index)override{if(index==1)throw std::runtime_error("second commit injected");}};
+ void check_atomic(const fs::path& r){auto p=paths(r);auto a=p.data()/"a",b=p.data()/"b";atomic_write(a,"old-a",&p);atomic_write(b,"old-b",&p);Fault fault;
+@@ -55,12 +57,13 @@
+  require(recovery_required,"incomplete rollback never reports ordinary success");bool retained=false;for(const auto& e:fs::directory_iterator(p.data()))if(e.path().filename().string().starts_with(".preloader_l-")&&get(e.path())=="new-a")retained=true;require(retained,"recovery preimage retained");
+ }
+ void check_logs(const fs::path& r){Environment env{paths(r)};env.log(LogEvent::startup);
+- if(disk_diagnostics_enabled()){require(fs::is_regular_file(env.paths.diagnostic_log()),"debug log exists");auto text=get(env.paths.diagnostic_log());require(text.find("event=startup")!=std::string::npos,"fixed safe event");for(unsigned i=0;i<10000;++i)env.log(LogEvent::network_receive);require(fs::file_size(env.paths.diagnostic_log())<=256*1024,"bounded log");}
++ if(disk_diagnostics_enabled()){require(fs::is_regular_file(env.paths.diagnostic_log()),"debug log exists");auto text=get(env.paths.diagnostic_log());require(text.find("event=startup")!=std::string::npos,"fixed safe event");atomic_write(env.paths.diagnostic_log(),std::string(300000,'x'),&env.paths);env.log(LogEvent::network_receive);require(fs::file_size(env.paths.diagnostic_log())>300000,"no invented append cutoff");}
+  else require(!fs::exists(env.data_root),"production log creates no directory");
+  atomic_write(env.paths.diagnostic_log(),"prior-user-log",&env.paths);env.log(LogEvent::stopped);if(!disk_diagnostics_enabled())require(get(env.paths.diagnostic_log())=="prior-user-log","production preserves old log");
+ }
+ void check_cache(const fs::path& r){Environment env{paths(r)};configuration::State state;std::uint8_t online=0;OnlineSession session(state,env,online);require(session.load_copy_0450d0((r/"module/anadius64online.dll").u16string())==0,"old provider basename rejected");require(session.load_copy_0450d0(env.paths.provider().u16string())==0,"missing provider offline");auto file=env.paths.file(RuntimeFile::last_profile);
+- for(const auto& bad:std::vector<std::string>{"wrong","1;2;","1;2;name;extra","18446744073709551616;2;name","1;2;bad\nname",std::string("1;2;bad\0name",12),std::string("1;2;\xc0\xaf",6),"1;2;\x01"}){atomic_write(file,bad,&env.paths);require(session.read_binary_03b3f0(file.u16string()).empty(),"bad profile cache rejected");}
++ for(const auto& bad:std::vector<std::string>{"wrong","1;2;","1;2;name;extra","18446744073709551616;2;name","1;2;bad\nname",std::string("1;2;bad\0name",12),std::string("1;2;\xc0\xaf",6),"1;2;\x01"}){atomic_write(file,bad,&env.paths);require(session.read_binary_03b3f0(file.u16string())==bad,"source raw cache reader, no additional acceptance rules");}
++ atomic_write(file,std::string(8192,'x'),&env.paths);require(session.read_binary_03b3f0(file.u16string()).size()==8192,"no 4KiB cap");
+  atomic_write(file,"1;2;Oyuncu \xc4\xb0",&env.paths);require(!session.read_binary_03b3f0(file.u16string()).empty(),"UTF-8 profile accepted");
+ }
+ void check_application(const fs::path& r){Environment env{paths(r)};
+@@ -68,7 +71,7 @@
+  Service service(env);service.start();require(service.is_ready(),"no config ready");require(!fs::exists(env.paths.default_avatar()),"no eager avatar");if(!disk_diagnostics_enabled())require(!fs::exists(env.data_root),"production no-config no app files");
+  auto c=service.application().connect();auto profile=request(*c,"<GetProfile index=\"0\"/>");require(profile.find("Persona=\"SURGE\"")!=std::string::npos,"official display");require(profile.find("AvatarId=\"\"")!=std::string::npos,"protocol avatar id preserved");auto resource=image(*c,"1000200030000");require(fs::path(utf8_path(resource))==env.paths.default_avatar(),"own response selects official");require(get(env.paths.default_avatar())==official(),"response materialized exact official");require(get(old)=="OLD-USER-DATA","old data not migrated or deleted");service.stop();
+  // Actual application rollback when persistence fails before commit.
+- const auto f=paths(r/"failure");atomic_write(f.config(),"\"Config2\"{\"Achievements\"{\"AchievementsSet\" \"fixture\" \"AchievementIDs\" \"a1\" \"SteamAppId\" \"42\"}}",nullptr);Environment broken{f};Service b(broken);b.start();auto client=b.application().connect();fs::create_directories(f.data()/"achievement-fixture.xml");auto before=b.application().configuration().achievements.at("a1").field04;rejected([&]{request(*client,"<GrantAchievement AchievementId=\"a1\" Progress=\"1\"/>");},"actual persistence failure propagated");require(b.application().configuration().achievements.at("a1").field04==before,"actual memory rollback");require(!fs::exists(f.data()/"achievement_watcher/42/achievements.ini"),"no partial INI");b.stop();
++ const auto f=paths(r/"failure");atomic_write(f.config(),"\"Config2\"{\"Achievements\"{\"AchievementsSet\" \"fixture\" \"AchievementIDs\" \"a1\" \"SteamAppId\" \"42\"}}",nullptr);Environment broken{f};Service b(broken);b.start();auto client=b.application().connect();fs::create_directories(f.data()/"achievement-fixture.xml");auto before=b.application().configuration().achievements.at("a1").field04;const auto ini=f.data()/"achievement_watcher/42/achievements.ini";require(fs::is_regular_file(ini),"source startup creates missing INI");const auto ini_before=get(ini);rejected([&]{request(*client,"<GrantAchievement AchievementId=\"a1\" Progress=\"1\"/>");},"actual persistence failure propagated");require(b.application().configuration().achievements.at("a1").field04==before,"actual memory rollback");require(get(ini)==ini_before,"failed grant preserves startup INI");b.stop();
+ }
+ }
+-int main(){auto root=fs::temp_directory_path()/("preloader_l_fix12_"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));try{check_paths(root/"paths");check_assets(root/"assets");check_atomic(root/"atomic");check_logs(root/"logs");check_cache(root/"cache");check_application(root/"app");fs::remove_all(root);std::cout<<"PASS FIX12 migration checks="<<checks<<"; disk_diagnostics="<<disk_diagnostics_enabled()<<"\n";return 0;}catch(const std::exception& e){std::cerr<<"FAIL FIX12 migration: "<<e.what()<<"\n";fs::remove_all(root);return 1;}}
++int main(){auto root=fs::temp_directory_path()/("preloader_l_fix13_"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));try{check_paths(root/"paths");check_assets(root/"assets");check_atomic(root/"atomic");check_logs(root/"logs");check_cache(root/"cache");check_application(root/"app");fs::remove_all(root);std::cout<<"PASS FIX13 rollback checks="<<checks<<"; disk_diagnostics="<<disk_diagnostics_enabled()<<"\n";return 0;}catch(const std::exception& e){std::cerr<<"FAIL FIX13 rollback: "<<e.what()<<"\n";fs::remove_all(root);return 1;}}
+--- FIX12/tests/native/test_dll_load.py
++++ FIX13/tests/native/test_dll_load.py
+@@ -91,11 +91,11 @@
+  if query_path(missing)!=before_missing:raise RuntimeError('crypt original forwarding after DLL unload changed')
+  print('PASS Windows DLL scenario='+scenario+'; complete profile, loader/hooks/LSX/environment/unload')
+ def main():
+- ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('dll',type=Path);ap.add_argument('--child',action='store_true');ap.add_argument('--online-fixture',type=Path);ap.add_argument('--scenario',default='configured');a=ap.parse_args()
++ ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('dll',type=Path);ap.add_argument('--child',action='store_true');ap.add_argument('--online-fixture',type=Path);ap.add_argument('--scenario');a=ap.parse_args()
+  if os.name!='nt':print('Windows DLL fixture requires Windows; NOT_RUN');return 2
+- if a.child:child(a.dll.resolve(),a.online_fixture is not None,a.scenario);return 0
++ if a.child:child(a.dll.resolve(),a.online_fixture is not None,a.scenario or 'configured');return 0
+  results=[]
+- scenarios=['configured','absent','partial','override_only']+(['cached','cached_invalid','old_only','bad_version','null_factory'] if a.online_fixture else [])
++ scenarios=[a.scenario] if a.scenario else ['configured','absent','partial','override_only']+(['cached','cached_invalid','old_only','null_factory'] if a.online_fixture else [])
+  for scenario in scenarios:
+   with tempfile.TemporaryDirectory(prefix='preloader_l_native_') as temp:
+    root=Path(temp);dll=root/a.dll.name;shutil.copy2(a.dll,dll)
+@@ -105,14 +105,14 @@
+    elif scenario=='override_only':(root/'surge_override.cfg').write_text('"Config2"{"User"{"Username" "OverrideUser"}}')
+    elif scenario.startswith('cached'):
+     (root/'surge.cfg').write_text('"Config2"{"User"{"UseLastOnlineProfile" "true"}}')
+-    cache=root/'localdata/SURGE/cache/provider-v2';cache.mkdir(parents=True)
++    cache=root/'localdata/SURGE';cache.mkdir(parents=True)
+     (cache/'last_profile').write_text('41001;42001;CachedUser' if scenario=='cached' else 'invalid;fields')
+     (cache/'last_avatar').write_bytes(b'synthetic avatar')
+    env=dict(os.environ,LOCALAPPDATA=str(root/'localdata'),PROGRAMDATA=str(root/'programdata'),PRELOADER_L_FIXTURE_AVATAR_RECORD=str(root/'provider_avatar_calls.txt'),PRELOADER_L_FIXTURE_BAD_VERSION='1' if scenario=='bad_version' else '0',PRELOADER_L_FIXTURE_NULL_FACTORY='1' if scenario=='null_factory' else '0',PRELOADER_L_FIXTURE_AUTH_FAIL='1' if scenario.startswith('cached') else '0')
+    command=[sys.executable,__file__,str(dll),'--child','--scenario',scenario]
+    if a.online_fixture:command+=['--online-fixture',str(root/('anadius64online.dll' if scenario=='old_only' else 'preloader_l_online.dll'))]
+-   p=subprocess.run(command,env=env,cwd=root,capture_output=True,text=True,timeout=35)
++   p=subprocess.run(command,env=env,cwd=root,capture_output=True,text=True,timeout=None if scenario=='bad_version' else 35)
+    row={'scenario':scenario,'exit_code':p.returncode,'output':(p.stdout+p.stderr).replace(str(root),'${FIXTURE_ROOT}')};results.append(row);print(row['output'])
+- result={'status':'PASS' if all(r['exit_code']==0 for r in results) else 'FAIL','scenarios':results,'scope':'real Windows loader/hooks/protocol/unload; synthetic files, no game process'}
++ result={'status':'PASS' if all(r['exit_code']==0 for r in results) else 'FAIL','scenarios':results,'scope':'real Windows loader/hooks/protocol/unload; synthetic files, no game process','manual_bad_version':'Required: original version-mismatch modal dialog must be observed and acknowledged; not silently auto-passed'}
+  report=a.dll.parent/('NATIVE_DLL_ONLINE_FIXTURE_RESULT.json' if a.online_fixture else 'NATIVE_DLL_RESULT.json');report.write_text(json.dumps(result,indent=2)+'\n');return 0 if result['status']=='PASS' else 1
+ if __name__=='__main__':sys.exit(main())
+--- FIX12/tests/tools/test_source_policy.py
++++ FIX13/tests/tools/test_source_policy.py
+@@ -57,9 +57,12 @@
+   modify('src/runtime/runtime_paths.cpp',lambda b:b.replace(b'local_/"SURGE"',b'local_/"BLUEFIELD"'),'old root reintroduced')
+   modify('src/runtime/runtime_paths.cpp',lambda b:b.replace(b'if(reparse(c))',b'if(false)'),'reparse guard bypass')
+   modify('CMakeLists.txt',lambda b:b.replace(b'PRELOADER_L_DISK_DIAGNOSTICS=0',b'PRELOADER_L_DISK_DIAGNOSTICS=1'),'production disk logging enabled')
+-  modify('src/application/logging.cpp',lambda b:b.replace(b'limit=256*1024',b'limit=999999999'),'log bound removed')
++  modify('src/application/logging.cpp',lambda b:b.replace(b'  const auto line=',b'  constexpr auto limit=256*1024;\n  const auto line='),'rejected log cutoff reintroduced')
+   modify('src/application/application.cpp',lambda b:b+b'\nvoid injected(){std::ofstream out("bypass.log");}\n','unowned direct writer')
+   modify('src/application/avatars.cpp',lambda b:b+b'\nvoid injected_read(){read_file(u"/unowned");}\n','unreviewed indirect IO surface')
+-  assert not check(root),'restored baseline'
++  modify('src/runtime/runtime_paths.cpp',lambda b:b.replace(b'return data_;',b'return data_/"cache"/"provider-v2";'),'rejected cache layout')
++  modify('src/profiles/online_session.cpp',lambda b:b.replace(b'return read_file(p);',b'if(std::filesystem::file_size(native_path(p))>4096)return {};return read_file(p);'),'rejected profile size cap')
++  modify('src/transport/service.cpp',lambda b:b.replace(b'pending.max_size()',b'1024*1024'),'invented frame cap reintroduced')
++  assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())
+--- FIX12/tests/unit/configuration/test_state.cpp
++++ FIX13/tests/unit/configuration/test_state.cpp
+@@ -66,7 +66,7 @@
+     Path local_app_data_03c6f0() override {events.emplace_back("localappdata");return u"LOCALAPPDATA";}
+     Path runtime_path(preloader_l::RuntimeFile f) override {
+       using K=preloader_l::RuntimeFile;
+-      switch(f){case K::data_root:return u"C:/Local/SURGE";case K::base_config:return u"C:/game/surge.cfg";case K::override_config:return u"C:/game/surge_override.cfg";case K::cookie:return u"C:/Local/SURGE/cache/provider-v2/remid_cookie";case K::last_profile:return u"C:/Local/SURGE/cache/provider-v2/last_profile";case K::last_avatar:return u"C:/Local/SURGE/cache/provider-v2/last_avatar";case K::default_avatar:return u"C:/Local/SURGE/assets/official/surge.png";}throw std::logic_error("fixture path kind");
++      switch(f){case K::data_root:return u"C:/Local/SURGE";case K::base_config:return u"C:/game/surge.cfg";case K::override_config:return u"C:/game/surge_override.cfg";case K::cookie:return u"C:/Local/SURGE/remid_cookie";case K::last_profile:return u"C:/Local/SURGE/last_profile";case K::last_avatar:return u"C:/Local/SURGE/last_avatar";case K::default_avatar:return u"C:/Local/SURGE/surge.png";}throw std::logic_error("fixture path kind");
+     }
+     Node load_document(const Path& path) override {
+         loaded.push_back(path);events.emplace_back("load");
+@@ -312,8 +312,8 @@
+     require(m.filesystem_widened==std::vector<std::string>{"synthetic-content","synthetic-content"},"only external content path uses filesystem conversion");
+     require(m.events[0]=="executable" && m.events[1]=="load" && m.events[2]=="config-log","read/log order");
+     require(s.username=="override-user" && s.sdk=="1,2,3","profile and SDK semantics retained");
+-    require(s.user_directory==u"C:/Local/SURGE" && s.cookie_path.ends_with(u"cache/provider-v2/remid_cookie"),"central runtime paths");
+-    require(s.last_profile_path.ends_with(u"cache/provider-v2/last_profile") && s.last_avatar_path.ends_with(u"cache/provider-v2/last_avatar"),"version-owned caches");
++    require(s.user_directory==u"C:/Local/SURGE" && s.cookie_path.ends_with(u"remid_cookie"),"central runtime paths");
++    require(s.last_profile_path.ends_with(u"last_profile") && s.last_avatar_path.ends_with(u"last_avatar"),"flat source cache names");
+     require(s.avatar==s.default_avatar && s.avatar.ends_with(u"surge.png"),"official logical default");
+     require(m.writes.empty() && m.images.empty() && m.removed.empty(),"no eager avatar writes or user-file deletion");
+     require(s.game_attributes["AVAILABLE_VERSION"]=="synthetic-version","available version copies installed");
+--- FIX12/tests/unit/hooks/test_crypt_query.cpp
++++ FIX13/tests/unit/hooks/test_crypt_query.cpp
+@@ -29,5 +29,6 @@
+         std::u16string path{static_cast<char16_t>(high),static_cast<char16_t>(low)};
+         expect(1,false,path+u"preloader_l.dll",true,true);expect(1,false,path+u"PRELOADER_L.DLL",true,false);
+     }
++    expect(1,false,std::u16string(40000,u'a')+u"preloader_l.dll",true,true);
+     std::cout<<"PASS crypt-query UTF16/null/type/case/suffix selection checks="<<checks<<'\n';return 0;
+ }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+--- FIX12/tests/unit/libraries/test_libraries.cpp
++++ FIX13/tests/unit/libraries/test_libraries.cpp
+@@ -0,0 +1,234 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/libraries/libraries.hpp"
++#include <algorithm>
++#include <cstdio>
++#include <deque>
++#include <functional>
++#include <stdexcept>
++#include <tuple>
++
++using namespace preloader_l::libraries;
++static unsigned checks;
++static void check(bool value) {
++    ++checks;
++    if (!value) throw std::runtime_error("check failed: " + std::to_string(checks));
++}
++struct ConversionFailure { std::uint32_t code; };
++struct LogFailure {};
++
++struct FakeSystem final : SystemCalls {
++    struct Reply { int count; std::uint32_t error; bool used_default = false; };
++    struct Call { std::uint32_t page, flags; int count, capacity; bool has_output, has_default; };
++    std::vector<std::string>& trace;
++    std::vector<Call> conversions;
++    std::deque<Reply> replies;
++    std::deque<Module> modules;
++    std::vector<std::wstring> paths;
++    std::vector<Module> frees;
++    std::function<void(Module)> on_free;
++    std::uint32_t mode = 0x8000, error = 0;
++    explicit FakeSystem(std::vector<std::string>& events) : trace(events) {}
++    std::uint32_t get_error_mode() override { trace.push_back("get-mode"); return mode; }
++    std::uint32_t set_error_mode(std::uint32_t value) override {
++        trace.push_back("mode:" + std::to_string(value));
++        auto previous = mode; mode = value; return previous;
++    }
++    Module load_library(const wchar_t* path) override {
++        trace.push_back("load"); paths.emplace_back(path);
++        check(!modules.empty()); auto result = modules.front(); modules.pop_front(); return result;
++    }
++    bool free_library(Module module) override {
++        trace.push_back("free:" + std::to_string(module)); frees.push_back(module);
++        if (on_free) on_free(module);
++        return false;
++    }
++    int wide_to_narrow(std::uint32_t page, std::uint32_t flags, const wchar_t* input,
++        int length, char* output, int capacity, bool* used_default) override {
++        trace.push_back("convert");
++        conversions.push_back({page, flags, length, capacity, output != nullptr, used_default != nullptr});
++        if (!replies.empty()) {
++            const auto reply = replies.front(); replies.pop_front(); error = reply.error;
++            if (used_default) *used_default = reply.used_default;
++            if (output && reply.count > 0) std::fill_n(output, std::min(capacity, reply.count), 'x');
++            return reply.count;
++        }
++        // Fixture codec, deliberately only handles the ASCII paths used below;
++        // Win32 UTF behavior belongs to the separately compiled native adapter.
++        check(page == 65001 && flags == 0x80);
++        if (output) {
++            check(capacity >= length);
++            for (int i = 0; i < length; ++i) {
++                check(input[i] <= 127); output[i] = static_cast<char>(input[i]);
++            }
++        }
++        return length;
++    }
++    std::uint32_t last_error() override { trace.push_back("last-error"); return error; }
++};
++struct FakeEffects final : Effects {
++    std::vector<std::string>& trace;
++    std::vector<std::string> logs;
++    std::vector<std::tuple<std::string,std::string,std::uint32_t>> messages;
++    bool fail_log = false;
++    explicit FakeEffects(std::vector<std::string>& events) : trace(events) {}
++    void begin_load_log_0863e0() override { trace.push_back("log-begin"); if (fail_log) throw LogFailure{}; }
++    void append_log_path_and_flush(std::string_view value) override {
++        trace.push_back("log-end"); logs.emplace_back(value);
++    }
++    void message_038bc0(std::string title, std::string text, std::uint32_t flags) override {
++        trace.push_back("dialog"); messages.emplace_back(title,text,flags);
++    }
++    [[noreturn]] void throw_runtime_00cd70(int code) override { throw ConversionFailure{static_cast<std::uint32_t>(code)}; }
++    [[noreturn]] void throw_filesystem_00cdb0(std::uint32_t code) override { throw ConversionFailure{code}; }
++    void wait_steps_036880(int count) override { check(count == 2); trace.push_back("wait:2"); }
++    void finish_flag_036820() override { trace.push_back("finished"); }
++};
++
++static void test_conversion() {
++    for (auto page : {65001u,54936u,1252u}) {
++        std::vector<std::string> trace; FakeSystem os(trace);
++        os.replies.push_back({4,0,false});
++        auto r = convert_wide_048b30(os,page,L"test",4,nullptr,0);
++        check(r.count == 4 && r.error == 0);
++        check(os.conversions.size() == 1);
++        const auto& c = os.conversions[0];
++        check(c.page == page && c.count == 4 && c.capacity == 0 && !c.has_output);
++        check(c.flags == (page == 1252 ? 0x400u : 0x80u));
++        check(c.has_default == (page == 1252));
++        check(trace.size() == 1); // successful API conversion must not query LastError
++    }
++    {
++        std::vector<std::string> trace; FakeSystem os(trace);
++        os.replies = {{7,55,true}};
++        auto r = convert_wide_048b30(os,1252,L"test",4,nullptr,0);
++        check(r.count == 0 && r.error == 0x459);
++        check(trace == std::vector<std::string>{"convert"});
++    }
++    for (auto fallback_error : {0u,0x57u}) {
++        std::vector<std::string> trace; FakeSystem os(trace);
++        os.replies = {{0,0x3ec,false},{fallback_error == 0 ? 4 : 0,fallback_error,false}};
++        char output[4]{};
++        auto r = convert_wide_048b30(os,65001,L"test",4,output,4);
++        check(r.error == fallback_error && r.count == (fallback_error == 0 ? 4 : 0));
++        check(os.conversions.size() == 2);
++        check(os.conversions[1].flags == 0 && !os.conversions[1].has_default);
++        check(os.conversions[1].has_output && os.conversions[1].capacity == 4);
++    }
++    {
++        std::vector<std::string> trace; FakeSystem os(trace);
++        os.replies = {{0,0x57,false}};
++        auto r = convert_wide_048b30(os,65001,L"test",4,nullptr,0);
++        check(r.count == 0 && r.error == 0x57 && os.conversions.size() == 1);
++    }
++}
++
++static void test_list() {
++    {
++        std::vector<std::string> trace; FakeSystem os(trace); FakeEffects effects(trace);
++        auto handles = load_list_035260(os,effects,{});
++        check(handles.empty()); check(os.mode == 0x8000);
++        check(trace == std::vector<std::string>{"get-mode","mode:32769","mode:32768"});
++    }
++    {
++        std::vector<std::string> trace; FakeSystem os(trace); FakeEffects effects(trace);
++        os.modules = {10,0,20,10};
++        std::vector<std::wstring> paths{L"a.dll",L"b.dll",L"c.dll",L"a.dll"};
++        auto handles = load_list_035260(os,effects,paths);
++        check(handles == std::vector<Module>{10,20,10}); // duplicates retained
++        check(os.paths == paths);
++        check(effects.logs == std::vector<std::string>{"a.dll","b.dll","c.dll","a.dll"});
++        check(effects.messages.size() == 1);
++        check(effects.messages[0] == std::tuple<std::string,std::string,std::uint32_t>{"error","Can't load b.dll",0x10});
++        check(os.conversions.size() == 10); // failed path reconverted after load
++        check(os.mode == 0x8000 && trace.back() == "mode:32768");
++        auto dialog = std::find(trace.begin(),trace.end(),"dialog");
++        check(dialog != trace.end() && dialog[-1] == "convert");
++        check(std::count(trace.begin(),trace.end(),"load") == 4);
++    }
++    {
++        std::vector<std::string> trace; FakeSystem os(trace); FakeEffects effects(trace);
++        os.modules = {0}; std::vector<std::wstring> paths{L""};
++        check(load_list_035260(os,effects,paths).empty());
++        check(os.conversions.empty() && os.paths == paths);
++        check(std::get<1>(effects.messages[0]) == "Can't load ");
++    }
++    {
++        std::vector<std::string> trace; FakeSystem os(trace); FakeEffects effects(trace);
++        os.modules = {42}; std::vector<std::wstring> paths{std::wstring(L"a\0hidden",8)};
++        check(load_list_035260(os,effects,paths) == std::vector<Module>{42});
++        check(os.paths[0] == L"a"); // API sees c_str terminator, log uses full length
++        check(effects.logs[0].size() == 8 && effects.logs[0][1] == '\0');
++        check(os.conversions[0].count == 8);
++    }
++    for (int fail_at : {1,2,3,4}) {
++        std::vector<std::string> trace; FakeSystem os(trace); FakeEffects effects(trace);
++        // Fail first sizing/writing conversion or second sizing/writing on load failure.
++        for (int i = 1; i < fail_at; ++i) os.replies.push_back({5,0,false});
++        os.replies.push_back({0,1113,false});
++        os.modules = {0}; std::vector<std::wstring> paths{L"x.dll"};
++        bool threw = false;
++        try { (void)load_list_035260(os,effects,paths); }
++        catch (const ConversionFailure& failure) { threw = true; check(failure.code == 1113); }
++        check(threw && os.mode == 0x8001); // no synthesized RAII restoration
++        check(effects.messages.empty());
++        check(os.paths.size() == (fail_at > 2 ? 1u : 0u));
++    }
++    {
++        std::vector<std::string> trace; FakeSystem os(trace); FakeEffects effects(trace);
++        effects.fail_log = true; std::vector<std::wstring> paths{L"x.dll"};
++        bool threw = false;
++        try { (void)load_list_035260(os,effects,paths); } catch (LogFailure&) { threw = true; }
++        check(threw && os.mode == 0x8001 && os.paths.empty() && os.conversions.empty());
++    }
++}
++
++static void test_phases_and_unload() {
++    std::vector<std::string> trace; FakeSystem os(trace); FakeEffects effects(trace);
++    State state{{L"m.dll"},{L"w.dll"},{99}};
++    os.modules = {10,20};
++    load_phase_035850(os,effects,state,true);
++    check(state.loaded == std::vector<Module>{99,10});
++    check(trace.front() == "get-mode");
++    check(std::count(trace.begin(),trace.end(),"finished") == 0);
++    trace.clear();
++    load_phase_035850(os,effects,state,false);
++    check(state.loaded == std::vector<Module>{99,10,20});
++    check(trace.front() == "wait:2" && trace.back() == "finished");
++    state.loaded.insert(state.loaded.begin()+1,0);
++    state.loaded.push_back(10);
++    unload_035ab0(os,state);
++    check(os.frees == std::vector<Module>{99,10,20,10}); // forward order, no deduplication
++    check(state.loaded == std::vector<Module>{99,0,10,20,10});
++    unload_035ab0(os,state); // original does not clear; second call repeats releases
++    check(os.frees == std::vector<Module>{99,10,20,10,99,10,20,10});
++    trace.clear();
++    State empty;
++    load_phase_035850(os,effects,empty,false);
++    check(trace.front() == "wait:2" && trace.back() == "finished");
++    trace.clear(); effects.fail_log = true;
++    bool threw = false;
++    try { load_phase_035850(os,effects,state,false); } catch (LogFailure&) { threw = true; }
++    check(threw && std::count(trace.begin(),trace.end(),"finished") == 0);
++}
++
++static void test_unload_snapshots_storage() {
++    std::vector<std::string> trace;
++    FakeSystem os(trace);
++    State state;
++    state.loaded = {10,20};
++    // Synthetic reentry swaps the vector while retaining its old allocation.
++    // Assembly snapshots begin/end before calling FreeLibrary, so the second
++    // handle still comes from the original allocation rather than global data.
++    std::vector<Module> retained{30,40};
++    os.on_free = [&](Module module) {
++        if (module == 10) state.loaded.swap(retained);
++    };
++    unload_035ab0(os,state);
++    check(os.frees == std::vector<Module>{10,20});
++    check(state.loaded == std::vector<Module>{30,40});
++}
++
++int main() {
++    test_conversion(); test_list(); test_phases_and_unload(); test_unload_snapshots_storage();
++    std::printf("PASS: %u checks; mocks only; no DLL loaded or freed\n",checks);
++}

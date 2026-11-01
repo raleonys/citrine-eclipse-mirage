@@ -1,0 +1,7 @@
+{
+  "scope": "new test instrumentation only",
+  "observation": "Initial focused runs observed0 memcpy calls: glibc fortified inline expanded the8-byte copy despite -fno-builtin-memcpy. Disassembly confirmed raw load; assertions correctly failed.",
+  "repair": "Only test_unload_scan TU undefines fortify inline and disables builtin memcpy so GNU --wrap sees actual source calls. Existing read-count assertions preserved.",
+  "production_flags_changed": false,
+  "source_expectation_weakened": false
+}

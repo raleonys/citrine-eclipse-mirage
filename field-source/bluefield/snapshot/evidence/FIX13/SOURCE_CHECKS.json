@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "scope": "source invariants only; not native acceptance",
+  "source_digest": "5891e7409bc493dbaea8ee516fac7939cf295c073f05c916f3a9b66b2144c925",
+  "shard": null,
+  "errors": []
+}

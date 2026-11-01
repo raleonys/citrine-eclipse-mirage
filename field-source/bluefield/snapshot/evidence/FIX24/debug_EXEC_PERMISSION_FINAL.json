@@ -1,0 +1,4 @@
+{
+  "scope": "Owned generated ELF outputs only; bytes unchanged; separate invocation before CTest",
+  "repairs": []
+}

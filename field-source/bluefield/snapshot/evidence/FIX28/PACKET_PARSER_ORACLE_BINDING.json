@@ -1,0 +1,22 @@
+{
+  "archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "files": [
+    {
+      "origin": "anadius-parser-source/parser.hpp",
+      "original_sha256": "9e09d6bd1c3f900462c94d7e3bc5acdb141ef1045b6a1ac4e37e25fc1973bdd1",
+      "destination": "tests/support/configuration/packet_parser.hpp",
+      "current_sha256": "c52e2aa7c5f2b0c3459fb769af340ebc70a3835cbda9a370e306f3888f0f76dc",
+      "adaptation": "Include relocation and test-only namespace substitution only; exact byte reversal verified.",
+      "production_linked": false
+    },
+    {
+      "origin": "anadius-parser-source/parser.cpp",
+      "original_sha256": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2",
+      "destination": "tests/support/configuration/packet_parser.cpp",
+      "current_sha256": "7a397e32f995aaab20bd37964bee7bfd1e636dde504d0da2f6cd67d7d52ea990",
+      "adaptation": "Include relocation and test-only namespace substitution only; exact byte reversal verified.",
+      "production_linked": false
+    }
+  ],
+  "limit": "User RE C++ source oracle, not original DLL or PEGTL version/ABI equivalence. Shared configuration types are used only for unused conversion API; parser State/Node/algorithm remain independent source definitions."
+}

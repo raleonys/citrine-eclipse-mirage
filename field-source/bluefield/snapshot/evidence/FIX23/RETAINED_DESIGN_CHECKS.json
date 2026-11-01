@@ -1,0 +1,12 @@
+[
+  {
+    "case": "hook_staging",
+    "exit": 0,
+    "output": "PASS source hook stage-only plan, optional surfaces, partial create/queue and missing target checks=76; no native engine executed\n"
+  },
+  {
+    "case": "startup_inputs",
+    "exit": 0,
+    "output": "PASS: 155 checks; synthetic input/console only; no real environment writes or UI\n"
+  }
+]

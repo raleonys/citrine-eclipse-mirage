@@ -1,0 +1,9 @@
+{
+  "source_digest": "c672f814a915cd4eaf900cc94d42f1b951bb3a22861eb1a9aa9dfdb12e94e7de",
+  "vendor_files": "PASS all used files byte-identical to exact HF19 pristine source locations",
+  "pins": "metadata/DEPENDENCIES_FIX08.json",
+  "MinHook_Windows_native": "NOT_RUN",
+  "TinyXML2_portable": "PASS 29/29 debug and ASan/UBSan with 352 XML-reader checks",
+  "original_Anadius_runtime_equivalence": "NOT_CLAIMED",
+  "remaining_coverage": "Asio/IOCP, PEGTL engine and filesystem backend migration are not implemented by vendor alignment"
+}

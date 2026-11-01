@@ -1,0 +1,29 @@
+{
+  "source_upload": {
+    "filename": "zsurge.cfg",
+    "sha256": "5d3e5c4b0cc7405dd26618bd2016df82b36686397da7570b4b65a3eff3e1f0f9",
+    "runtime_filename_confirmed": "surge.cfg",
+    "fixture": "tests/fixtures/legacy_synthetic.cfg"
+  },
+  "legacy_local_probe": {
+    "Username": "Player",
+    "PersonaId": "1",
+    "UserId": "1",
+    "SDK": "9,9,0,0",
+    "FakeAuth": 0,
+    "IsSubscriber": "false",
+    "SubscriberLevel": "0"
+  },
+  "diagnosis": "All nine configurable profile fields are present. Legacy synthetic values override working defaults. Consumer anadius display with this CFG not reproduced by local Application/GetProfile probe.",
+  "default_display_name": "SURGE",
+  "numeric_defaults_preserved": true,
+  "precedence": [
+    "constructor/product default",
+    "CLI language",
+    "surge.cfg beside loaded DLL",
+    "surge_override.cfg beside loaded DLL",
+    "successful online provider or conditional cache path"
+  ],
+  "parent_game_status": "No-config startup/profile confirmed by user; no exact DLL hash received",
+  "fix07_windows": "NOT_RUN"
+}

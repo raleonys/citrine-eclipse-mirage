@@ -1,0 +1,22 @@
+{
+  "format": "hex(input) TAB hex(length-prefixed full result/state snapshot), one fresh State per record",
+  "cases": 8766,
+  "categories": {
+    "seed": 14,
+    "BOM": 42,
+    "every_prefix": 4322,
+    "all_bytes": 1022,
+    "random_short": 1496,
+    "mutated_seed": 1856,
+    "nested": 10,
+    "wide_tree": 4
+  },
+  "generator_seed": "0xBF0210",
+  "generator_runtime": "Python random.Random, MT19937",
+  "expected_results_from": "unmodified sealed FIX09 parser, g++ -std=c++20 -O0; never new PEGTL implementation",
+  "parent_zip_sha256": "505411caf8290c72b4d1b523875d0997b68cea987242c17f40fbc10e55a17d1a",
+  "baseline_parser_sha256": "57bd716d4351f12fb3f5e8946bf50d0b9356e9dd4bb0134316e25c39e75126f2",
+  "snapshot_format_sha256": "3bb1cce6232eb9e7430535ac62b5c0224e5b5fe5ba3522f958e88cd826ba874b",
+  "corpus_sha256": "25161833fb6fe9a4831f39eb2f06aed8372243e90ff1fa353df282b0f267d563",
+  "scope": "Regression parity against FIX09; not original native DLL equivalence; test data only, no reference executable or fallback parser shipped"
+}

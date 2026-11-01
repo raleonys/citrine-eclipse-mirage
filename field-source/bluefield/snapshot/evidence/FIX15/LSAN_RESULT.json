@@ -1,0 +1,8 @@
+{
+  "status": "UNAVAILABLE_ENVIRONMENT",
+  "source_digest": "2ac1916047aa4a33757eea2e09527d6ee9b9cbd4f2d7445a2bb64527a80c71d5",
+  "exit_code": 1,
+  "output": "==4==LeakSanitizer has encountered a fatal error.\n==4==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==4==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n",
+  "binary_sha256": "0933655eec4fa2ca7861c1cd41be357f6e0b3d27343f0418f7c99119f33b1ff9",
+  "asan_options": "detect_leaks=1"
+}

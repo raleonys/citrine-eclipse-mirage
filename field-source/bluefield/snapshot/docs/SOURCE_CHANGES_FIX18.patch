@@ -1,0 +1,589 @@
+--- FIX16/src/application/application.cpp
++++ FIX18/src/application/application.cpp
+@@ -19,6 +19,7 @@
+ #include <chrono>
+ #include <fstream>
+ #include <utility>
++#include <type_traits>
+ #ifdef _WIN32
+ #include <windows.h>
+ #endif
+@@ -55,7 +56,7 @@
+ 
+ }
+ struct Application::Impl {
+- Environment& env;configuration::State state=configuration::initial_state();std::recursive_mutex state_mutex;
++ Environment& env;configuration::State state=configuration::initial_state();std::recursive_mutex state_mutex;std::mutex provider_mutex;
+  std::uint8_t online=0,show_lsx=0,show_console=0,no_console=0;
+  OnlineSession online_session;
+  AvatarStore avatars{env.paths};achievement_storage::Paths achievement_paths;files::NativeFactory files{env.paths};
+@@ -75,7 +76,7 @@
+ #endif
+  OwnedMutex achievements_mutex;Events events;ResponsePolicy response_policy;
+  std::unique_ptr<licensing::Handlers> licensing_handlers;std::unique_ptr<dispatch::Router> router;
+- bool initialized=false,ready=false;
++ bool initialized=false,ready=false,online_initialized=false;
+  explicit Impl(Environment& e):env(e),online_session(state,e,online),configuration_effects(state,e,storage),content_effects(state,achievement_paths,clock,formatter,storage_effects,files,e,online_session,avatars),information_effects(e,clock,formatter),license_effects(e,clock,formatter,online_session),license_files(license_effects,files,license_text){}
+  void apply(const std::filesystem::path& file,bool override_pass){
+   // Absence is an optional overlay, not a startup prerequisite. Existing but
+@@ -125,20 +126,22 @@
+   licensing_handlers=std::make_unique<licensing::Handlers>(licensing::StateReferences{auth_code,online,state.fake_auth,state.denuvo_token,state.dll_hash,state.exe_hash,state.content_id,state.denuvo_dll,state.executable_path,state.license_directory,state.game_attributes,attempted_files,license_blocked},license_files);
+   router=std::make_unique<dispatch::Router>(handlers::StateReferences{state.game_attributes,state.emulator_attributes,profile,online,state.pretend_connected},achievement_runtime::bind_state(state,achievement_paths,online,saved_avatar,achievements_mutex,events),dispatch::Dependencies{xml,information_effects,events,response_policy,content_effects,*licensing_handlers});
+   publish_environment("ContentId",state.content_id);publish_environment("EAGameLocale",state.game_attributes["INSTALLED_LANGUAGE"]);
+-  initialized=true;env.log(LogEvent::phase);
++  initialized=true;ready=true;env.log(LogEvent::phase);
+  }
+  void initialize_online(){
++  std::lock_guard provider_lock(provider_mutex);
++  {std::lock_guard lock(state_mutex);if(!initialized||online_initialized||!ready)throw std::logic_error("online stage lifecycle");}
++  auto result=online_session.initialize();
+   std::lock_guard lock(state_mutex);
+-  if(!initialized||ready)throw std::logic_error("online stage lifecycle");
+-  const Path selected_avatar=state.avatar;
+-  online_session.initialize();
+-  state.avatar=selected_avatar; // user/official selection outranks provider cache
+-
++  // All potentially allocating profile construction precedes publication.
++  handlers::Profile next{result.username,result.persona_id,result.user_id,state.country,state.currency,state.subscriber_level,state.is_subscriber,state.is_under_age,state.is_steam_subscriber};
++  static_assert(std::is_nothrow_move_assignable_v<handlers::Profile>);
++  state.username.swap(result.username);state.persona_id.swap(result.persona_id);state.user_id.swap(result.user_id);
++  profile=std::move(next);online=result.online;online_initialized=true;
++  // Existing explicit avatar selection remains authoritative.
+   env.log(online?LogEvent::profile_online:LogEvent::profile_local);
+-  profile={state.username,state.persona_id,state.user_id,state.country,state.currency,state.subscriber_level,state.is_subscriber,state.is_under_age,state.is_steam_subscriber};
+-  ready=true;
+  }
+- void shutdown(){std::lock_guard lock(state_mutex);ready=false;online_session.close();}
++ void shutdown(){std::lock_guard provider_lock(provider_mutex);std::lock_guard lock(state_mutex);ready=false;online_session.close();}
+ };
+ struct Connection::Impl {
+  Application::Impl& app;std::mutex mutex;std::uint8_t encrypted=0,unknown=0;
+@@ -152,7 +155,7 @@
+ void Application::initialize_online(){impl_->initialize_online();}
+ void Application::shutdown(){impl_->shutdown();}
+ configuration::State& Application::configuration(){return impl_->state;}
+-std::unique_ptr<Connection> Application::connect(){if(!impl_->ready)throw std::logic_error("application not ready");return std::make_unique<Connection>(*this);}
++std::unique_ptr<Connection> Application::connect(){std::lock_guard lock(impl_->state_mutex);if(!impl_->ready)throw std::logic_error("application not ready");return std::make_unique<Connection>(*this);}
+ Connection::Connection(Application& app):impl_(std::make_unique<Impl>(*app.impl_)){}
+ Connection::~Connection()=default;
+ std::string Connection::greeting(){std::scoped_lock lock(impl_->mutex,impl_->app.state_mutex);if(!impl_->app.ready)throw SessionFailure("application stopped");return impl_->handler.initial_message_02d540();}
+--- FIX16/src/transport/service.hpp
++++ FIX18/src/transport/service.hpp
+@@ -3,6 +3,7 @@
+ #include "src/application/application.hpp"
+ #include <memory>
+ #include <cstdint>
++#include <functional>
+ namespace preloader_l {
+ class Service final {
+ public:
+@@ -13,6 +14,12 @@
+     void start();
+     void prepare();
+     void activate();
++    // Source bootstrap order: provider worker, synchronous true phase,
++    // then an owned worker for the false phase after server+provider finish.
++    void activate_async(std::function<void(bool)> extra_loader);
++    bool wait_steps(std::int32_t);
++    void wait_startup();
++    void request_stop();
+     void wait_ready_or_stopping();
+     void stop();
+     bool is_ready() const noexcept;
+--- FIX16/src/transport/service.cpp
++++ FIX18/src/transport/service.cpp
+@@ -2,6 +2,7 @@
+ #include "src/transport/service.hpp"
+ #include "src/application/providers.hpp"
+ #include "src/transport/read_window.hpp"
++#include "src/runtime/startup_steps.hpp"
+ #include <asio/io_context.hpp>
+ #include <asio/ip/tcp.hpp>
+ #include <asio/thread_pool.hpp>
+@@ -30,14 +31,15 @@
+  std::unique_ptr<Tcp::acceptor> listener;
+  std::unique_ptr<asio::thread_pool> handlers;
+  std::unique_ptr<Guard> work;
+- std::thread io_thread;
++ std::thread io_thread,provider_thread,extra_thread;
+  std::vector<std::shared_ptr<Session>> clients; // IO thread only; host after joins.
+  std::mutex lifecycle_mutex,ready_mutex;
+- std::condition_variable ready_condition;
++ StartupSteps steps;
++ std::exception_ptr startup_failure;
+  std::atomic<bool> ready{false},stopping{false};
+- bool prepared=false,started=false;
++ bool prepared=false,started=false,activated=false;
+  std::uint16_t bound_port=0;
+- std::thread::id initialization_thread;
++
+  explicit Impl(Environment& e):env(e),app(e){}
+  void retire(Session* session);
+  void accept_next();
+@@ -95,7 +97,7 @@
+       });
+      }catch(const PersistenceRecoveryRequired&){
+       {std::lock_guard lock(self->owner.ready_mutex);self->owner.stopping.store(true);self->owner.ready.store(false);}
+-      self->owner.io->stop();self->owner.ready_condition.notify_all();self->owner.env.log(LogEvent::failure);
++      self->owner.io->stop();self->owner.steps.cancel();self->owner.env.log(LogEvent::failure);
+      }catch(...){
+       // Posting can itself fail on OOM. While computing, no socket operation
+       // is pending; stop joins this pool before touching client sockets. Close
+@@ -127,7 +129,6 @@
+   std::lock_guard lifecycle(lifecycle_mutex);
+   if(prepared||stopping.load())throw std::logic_error("service prepare lifecycle");
+   app.initialize();
+-  {std::lock_guard lock(ready_mutex);initialization_thread=std::this_thread::get_id();}
+   io=std::make_unique<asio::io_context>();
+   listener=std::make_unique<Tcp::acceptor>(*io);
+   listener->open(Tcp::v4());listener->set_option(Tcp::acceptor::reuse_address(true));
+@@ -135,12 +136,7 @@
+   listener->listen(asio::socket_base::max_listen_connections);
+   bound_port=listener->local_endpoint().port();app.configuration().server_port=bound_port;
+   publish_environment("EALsxPort",std::to_string(bound_port));
+-  {std::lock_guard lock(ready_mutex);prepared=true;}
+- }
+- void activate(){
+-  std::lock_guard lifecycle(lifecycle_mutex);
+-  if(!prepared||started||stopping.load())throw std::logic_error("service activation lifecycle");
+-  app.initialize_online();
++  prepared=true;steps.finish(StartupSteps::Step::server);
+   // Constructors may allocate: intentionally not noexcept. Partial activation
+   // uses the ordinary stop path and cannot escape a background thread entry.
+   handlers=std::make_unique<asio::thread_pool>(2);
+@@ -153,32 +149,56 @@
+     // Continuing run() could otherwise leave a false-ready stranded listener.
+     {std::lock_guard lock(ready_mutex);stopping.store(true);ready.store(false);}
+     asio::error_code ignored;listener->close(ignored);io->stop();
+-    ready_condition.notify_all();env.log(LogEvent::dispatch_failed);
++    steps.cancel();env.log(LogEvent::dispatch_failed);
+    }
+    if(stopping.load()){asio::error_code ignored;listener->close(ignored);}
+   });
+-  started=true;
+-  {
+-   std::lock_guard lock(ready_mutex);
+-   if(stopping.load())throw std::runtime_error("Asio activation failed before readiness");
+-   ready.store(true,std::memory_order_release);
+-  }
+-  ready_condition.notify_all();env.log(LogEvent::listener_started);
+-#ifdef _WIN32
+-  env.log(LogEvent::phase);
+-#else
+-  env.log(LogEvent::phase);
+-#endif
+- }
+- void wait_ready_or_stopping(){
+-  std::unique_lock lock(ready_mutex);
+-  if(std::this_thread::get_id()==initialization_thread&&prepared)return;
+-  ready_condition.wait(lock,[&]{return ready.load()||stopping.load();});
++  started=true;env.log(LogEvent::listener_started);
++ }
++ void request_stop(){
++  {std::lock_guard lock(ready_mutex);stopping.store(true,std::memory_order_release);ready.store(false);}
++  steps.cancel();
++ }
++ void fail_startup(){
++  {std::lock_guard lock(ready_mutex);if(!startup_failure)startup_failure=std::current_exception();}
++  request_stop();env.log(LogEvent::failure);
++ }
++ void activate_async(std::function<void(bool)> extra_loader){
++  std::lock_guard lifecycle(lifecycle_mutex);
++  if(!prepared||!started||activated||stopping.load())throw std::logic_error("service activation lifecycle");
++  activated=true;
++  provider_thread=std::thread([this]{
++   try{
++    if(!steps.wait(1))return;
++    app.initialize_online();
++    steps.finish(StartupSteps::Step::provider);
++   }catch(...){fail_startup();}
++  });
++  // Source true phase is synchronous with bootstrap; no wait/third flag.
++  if(extra_loader)extra_loader(true);
++  extra_thread=std::thread([this,load=std::move(extra_loader)]{
++   try{
++    if(!steps.wait(2))return;
++    if(load)load(false);
++    // Publish readiness before waking successful all-step waiters. Failure
++    // and stop use the same mutex, so they cannot leave false-ready state.
++    std::lock_guard lock(ready_mutex);
++    if(stopping.load())return;
++    ready.store(true,std::memory_order_release);
++    steps.finish(StartupSteps::Step::extra_worker);
++   }catch(...){fail_startup();}
++  });
++ }
++ void wait_startup(){
++  if(steps.wait(-1))return;
++  std::exception_ptr failure;
++  {std::lock_guard lock(ready_mutex);failure=startup_failure;}
++  if(failure)std::rethrow_exception(failure);
++  throw SessionFailure("initialization stopped");
+  }
+  void stop(){
+   std::lock_guard lifecycle(lifecycle_mutex);
+-  {std::lock_guard lock(ready_mutex);stopping.store(true,std::memory_order_release);ready.store(false);}
+-  ready_condition.notify_all();
++  request_stop();
+   if(io)io->stop();
+   if(io_thread.joinable())io_thread.join();
+   // No IO callbacks now execute. Worker tasks may post completion ownership,
+@@ -187,7 +207,12 @@
+   asio::error_code ignored;
+   if(listener)listener->close(ignored);
+   for(auto& client:clients){client->closed=true;client->socket.close(ignored);}
+-  clients.clear();work.reset();listener.reset();
++  clients.clear();
++  // No request worker can use the provider now. Close sockets before joins
++  // so provider/extra workers waiting for local IO can observe cancellation.
++  if(provider_thread.joinable())provider_thread.join();
++  if(extra_thread.joinable())extra_thread.join();
++  work.reset();listener.reset();
+   // Destroy undelivered/cancelled completion closures before Application.
+   io.reset();app.shutdown();
+   if(started)env.log(LogEvent::stopped);started=false;
+@@ -221,17 +246,21 @@
+     env.log(LogEvent::accept_rearm_failed);
+     asio::error_code ignored;listener->close(ignored);
+     {std::lock_guard lock(ready_mutex);stopping.store(true);ready.store(false);}
+-    ready_condition.notify_all();
++    steps.cancel();
+    }
+   }
+  });
+ }
+ Service::Service(Environment& e):impl_(std::make_unique<Impl>(e)){}
+ Service::~Service()=default;
+-void Service::start(){try{impl_->prepare();impl_->activate();}catch(...){impl_->stop();throw;}}
+-void Service::prepare(){impl_->prepare();}
+-void Service::activate(){impl_->activate();}
+-void Service::wait_ready_or_stopping(){impl_->wait_ready_or_stopping();}
++void Service::start(){try{impl_->prepare();activate();}catch(...){impl_->stop();throw;}}
++void Service::prepare(){try{impl_->prepare();}catch(...){impl_->request_stop();throw;}}
++void Service::activate(){activate_async({});impl_->wait_startup();}
++void Service::activate_async(std::function<void(bool)> load){try{impl_->activate_async(std::move(load));}catch(...){impl_->request_stop();throw;}}
++bool Service::wait_steps(std::int32_t count){return impl_->steps.wait(count);}
++void Service::wait_startup(){impl_->wait_startup();}
++void Service::request_stop(){impl_->request_stop();}
++void Service::wait_ready_or_stopping(){(void)impl_->steps.wait(-1);}
+ void Service::stop(){impl_->stop();}
+ bool Service::is_ready() const noexcept{return impl_->ready.load(std::memory_order_acquire);}
+ std::uint16_t Service::port() const{return impl_->bound_port;}
+--- FIX16/src/runtime/startup_steps.hpp
++++ FIX18/src/runtime/startup_steps.hpp
+@@ -0,0 +1,34 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#pragma once
++#include <condition_variable>
++#include <cstdint>
++#include <mutex>
++namespace preloader_l {
++// Source Execution predicate (036900..036958); owned cancellation replaces
++// polling so shutdown can release waits without claiming phase success.
++class StartupSteps final {
++public:
++ enum class Step { server, provider, extra_worker };
++ static constexpr bool finished(std::int32_t count,bool server,bool provider,bool extra) noexcept {
++  const auto limit=count==-1?3:count;
++  return (limit<1||server)&&(limit<2||provider)&&(limit<3||extra);
++ }
++ void finish(Step step){
++  {std::lock_guard lock(mutex_);if(cancelled_)return;
++   switch(step){case Step::server:server_=true;break;case Step::provider:provider_=true;break;case Step::extra_worker:extra_=true;break;}}
++  condition_.notify_all();
++ }
++ bool wait(std::int32_t count){
++  std::unique_lock lock(mutex_);
++  condition_.wait(lock,[&]{return cancelled_||finished(count,server_,provider_,extra_);});
++  return !cancelled_;
++ }
++ void cancel(){
++  {std::lock_guard lock(mutex_);cancelled_=true;}
++  condition_.notify_all();
++ }
++private:
++ std::mutex mutex_;std::condition_variable condition_;
++ bool server_=false,provider_=false,extra_=false,cancelled_=false;
++};
++}
+--- FIX16/src/profiles/online_session.hpp
++++ FIX18/src/profiles/online_session.hpp
+@@ -11,11 +11,15 @@
+     configuration::State& state_;Environment& env_;std::uint8_t& online_;
+     online::Module module_=0;online::Object object_=0;bool finished_=false;
+     std::optional<std::uint32_t> error_mode_;std::string auth_storage_;std::wstring cookie_parameter_;
+-    online::StateRefs refs();
+ public:
++    struct ProfileResult {
++        std::string username,persona_id,user_id;
++        Path avatar;
++        std::uint8_t online=0;
++    };
+     OnlineSession(configuration::State&,Environment&,std::uint8_t&);
+     ~OnlineSession();
+-    void initialize();
++    ProfileResult initialize();
+     void close();
+     const char* auth(const char*);
+     bool avatar(const Path&,std::string_view owner,std::int32_t size);
+--- FIX16/src/profiles/online_session.cpp
++++ FIX18/src/profiles/online_session.cpp
+@@ -14,9 +14,16 @@
+ }
+ }
+ OnlineSession::OnlineSession(configuration::State& s,Environment& e,std::uint8_t& online):state_(s),env_(e),online_(online){}
+-online::StateRefs OnlineSession::refs(){return {state_.executable_path,state_.cookie_path,state_.last_profile_path,state_.last_avatar_path,state_.avatar,module_,object_,state_.username,state_.persona_id,state_.user_id,state_.use_last_online_profile,online_};}
+ OnlineSession::~OnlineSession(){try{close();}catch(...){std::terminate();}}
+-void OnlineSession::initialize(){online::worker_035b60(refs(),*this);if(!finished_)throw SessionFailure("online initialization did not complete");}
++OnlineSession::ProfileResult OnlineSession::initialize(){
++ // Native provider calls run without the application's request-state lock.
++ // Stage only the fields this source worker writes; publish after completion.
++ ProfileResult result{state_.username,state_.persona_id,state_.user_id,state_.avatar,0};
++ online::StateRefs refs{state_.executable_path,state_.cookie_path,state_.last_profile_path,state_.last_avatar_path,result.avatar,module_,object_,result.username,result.persona_id,result.user_id,state_.use_last_online_profile,result.online};
++ online::worker_035b60(refs,*this);
++ if(!finished_)throw SessionFailure("online initialization did not complete");
++ return result;
++}
+ void OnlineSession::close(){
+  if(object_){destroy_virtual_00(object_);object_=0;}
+  if(module_){if(!free_library(module_))throw SessionFailure("online module close pending");module_=0;}
+--- FIX16/src/windows/dll_entry.cpp
++++ FIX18/src/windows/dll_entry.cpp
+@@ -17,6 +17,8 @@
+ HANDLE worker_handle=nullptr,stop_event=nullptr;
+ volatile LONG shutdown_busy=0;
+ unsigned worker_thread_id=0;
++SRWLOCK active_service_lock=SRWLOCK_INIT;
++preloader_l::Service* active_service=nullptr;
+ std::filesystem::path module_path(HMODULE module){
+  std::vector<wchar_t> buffer(512);
+  for(;;){DWORD n=GetModuleFileNameW(module,buffer.data(),static_cast<DWORD>(buffer.size()));if(!n)throw std::runtime_error("module path failed");if(n<buffer.size())return std::filesystem::path(buffer.data(),buffer.data()+n);if(buffer.size()>=32768)throw std::length_error("module path limit");buffer.resize(buffer.size()*2);}
+@@ -50,14 +52,15 @@
+  void wait_steps_036880(int) override{throw std::logic_error("phase scheduling is not bound through load_list");}
+  void finish_flag_036820() override{throw std::logic_error("phase scheduling is not bound through load_list");}
+ public:
+- explicit ExtraModules(preloader_l::Environment& env):env_(env){}
+- void load(const preloader_l::configuration::State& state){
+-  for(const auto* list:{&state.extra_dlls_from_main,&state.extra_dlls}){
+-   std::vector<std::wstring> paths;for(const auto& file:*list)paths.push_back(preloader_l::native_path(file).wstring());
+-   auto loaded=preloader_l::libraries::load_list_035260(calls_,*this,paths);
+-   try{state_.loaded.insert(state_.loaded.end(),loaded.begin(),loaded.end());}
+-   catch(...){for(auto module:loaded)calls_.free_library(module);throw;}
+-  }
++ explicit ExtraModules(preloader_l::Environment& env,const preloader_l::configuration::State& state):env_(env){
++  for(const auto& path:state.extra_dlls_from_main)state_.from_main.push_back(preloader_l::native_path(path).wstring());
++  for(const auto& path:state.extra_dlls)state_.from_worker.push_back(preloader_l::native_path(path).wstring());
++ }
++ void load(bool from_main){
++  const auto& paths=from_main?state_.from_main:state_.from_worker;
++  auto loaded=preloader_l::libraries::load_list_035260(calls_,*this,paths);
++  try{state_.loaded.insert(state_.loaded.end(),loaded.begin(),loaded.end());}
++  catch(...){for(auto module:loaded)calls_.free_library(module);throw;}
+  }
+  ~ExtraModules(){preloader_l::libraries::unload_035ab0(calls_,state_);}
+ };
+@@ -72,17 +75,22 @@
+    module_path(owned_module),module_path(nullptr),environment_directory(L"LOCALAPPDATA"),environment_directory(L"PROGRAMDATA")));
+   environment->log(preloader_l::LogEvent::startup);
+   environment->log(preloader_l::LogEvent::phase);
+-  service=std::make_unique<preloader_l::Service>(*environment);service->prepare();
++  service=std::make_unique<preloader_l::Service>(*environment);
++  AcquireSRWLockExclusive(&active_service_lock);active_service=service.get();ReleaseSRWLockExclusive(&active_service_lock);
++  if(WaitForSingleObject(stop_event,0)==WAIT_OBJECT_0)service->request_stop();
++  service->prepare();
+   environment->log(preloader_l::LogEvent::phase);
+   hooks=std::make_unique<preloader_l::NativeHooks>(*environment,*service);
+   environment->log(preloader_l::LogEvent::phase);
+   hooks->install();
+   environment->log(preloader_l::LogEvent::phase);
+   environment->log(preloader_l::LogEvent::phase);
+-  service->activate();
++  extras=std::make_unique<ExtraModules>(*environment,service->application().configuration());
++  service->activate_async([&extras](bool from_main){extras->load(from_main);});
++  service->wait_startup();
+   environment->log(preloader_l::LogEvent::phase);
+   environment->log(preloader_l::LogEvent::phase);
+-  extras=std::make_unique<ExtraModules>(*environment);extras->load(service->application().configuration());
++
+   environment->log(preloader_l::LogEvent::phase);
+   environment->log(preloader_l::LogEvent::ready);
+   if(WaitForSingleObject(stop_event,INFINITE)!=WAIT_OBJECT_0)throw std::runtime_error("stop wait failed");
+@@ -93,6 +101,7 @@
+   if(service)service->stop();
+   if(hooks){while(!hooks->quiesce(std::chrono::milliseconds(100)))Sleep(10);hooks.reset();}
+   extras.reset();
++  AcquireSRWLockExclusive(&active_service_lock);active_service=nullptr;ReleaseSRWLockExclusive(&active_service_lock);
+   service.reset();if(environment)environment->log(preloader_l::LogEvent::stopped);
+  }catch(...){
+   if(environment)environment->log(preloader_l::LogEvent::phase);
+@@ -110,6 +119,11 @@
+  preloader_l::set_shutdown_caller(GetCurrentThreadId());
+  uint32_t result=0;
+  if(stop_event&&!SetEvent(stop_event))result=3;
++ // Hold the published owner alive while cancelling phase waits. The worker
++ // clears this pointer under the exclusive lock before destroying Service.
++ AcquireSRWLockShared(&active_service_lock);
++ try{if(active_service)active_service->request_stop();}catch(...){result=3;}
++ ReleaseSRWLockShared(&active_service_lock);
+  if(!result&&worker_handle){
+   DWORD wait=WaitForSingleObject(worker_handle,timeout_ms==UINT32_MAX?INFINITE:timeout_ms);
+   if(wait==WAIT_TIMEOUT)result=2;else if(wait!=WAIT_OBJECT_0)result=3;
+--- FIX16/src/windows/hooks.cpp
++++ FIX18/src/windows/hooks.cpp
+@@ -62,7 +62,7 @@
+  registry::Handle allocate_4_04b0bc() override{return reinterpret_cast<registry::Handle>(new std::byte[4]);}
+  void free_04b0f8(registry::Handle handle) override{delete[] reinterpret_cast<std::byte*>(handle);}
+  void wait_036880(std::int32_t) override{if(!service_.port())throw std::logic_error("registry effects require bound configuration");}
+- void wait_steps_036880(std::int32_t) override{service_.wait_ready_or_stopping();}
++ void wait_steps_036880(std::int32_t count) override{(void)service_.wait_steps(count);}
+  std::uint32_t increment_attempts(std::uint32_t& value) override{std::lock_guard lock(attempts_mutex_);return ++value;}
+  void log_literal_006880(std::uint64_t) override{env_.log(LogEvent::phase);}
+  void log_literal_006880(std::string_view s) override{env_.log(LogEvent::phase);}
+--- FIX16/tests/integration/test_startup_phases.cpp
++++ FIX18/tests/integration/test_startup_phases.cpp
+@@ -0,0 +1,145 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/transport/service.hpp"
++#include "src/runtime/startup_steps.hpp"
++#include "tests/support/io.hpp"
++#include <atomic>
++#include <cerrno>
++#include <chrono>
++#include <condition_variable>
++#include <future>
++#include <iostream>
++#include <mutex>
++#include <thread>
++#ifdef _WIN32
++#include <winsock2.h>
++#include <ws2tcpip.h>
++using Socket=SOCKET;constexpr Socket bad_socket=INVALID_SOCKET;
++void close_socket(Socket s){closesocket(s);}
++#else
++#include <sys/socket.h>
++#include <arpa/inet.h>
++#include <unistd.h>
++using Socket=int;constexpr Socket bad_socket=-1;
++void close_socket(Socket s){::close(s);}
++#endif
++#if defined(__linux__)
++#include <sys/stat.h>
++#include <sys/syscall.h>
++#include <fcntl.h>
++namespace {
++std::atomic<bool> gate_armed{false};std::mutex gate_mutex;std::condition_variable gate_condition;
++bool gate_entered=false,gate_released=false;
++}
++// Executable-only libc boundary: delay the real provider-file stat, then
++// forward it unchanged. No provider search override or production test seam.
++extern "C" int stat(const char* path,struct stat* output) noexcept {
++ if(gate_armed.load()&&std::string_view(path).ends_with("/preloader_l_online.dll")){
++  std::unique_lock lock(gate_mutex);gate_entered=true;gate_condition.notify_all();
++  gate_condition.wait(lock,[]{return gate_released;});
++ }
++ return static_cast<int>(::syscall(SYS_newfstatat,AT_FDCWD,path,output,0));
++}
++#endif
++namespace {
++using namespace std::chrono_literals;
++int checks=0;
++void require(bool b,const char* reason){++checks;if(!b)throw std::runtime_error(reason);}
++struct Client {
++ Socket socket=bad_socket;std::string pending;
++ explicit Client(std::uint16_t port){
++  socket=::socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);if(socket==bad_socket)throw std::runtime_error("test socket");
++  sockaddr_in a{};a.sin_family=AF_INET;a.sin_port=htons(port);a.sin_addr.s_addr=htonl(INADDR_LOOPBACK);
++  if(::connect(socket,reinterpret_cast<sockaddr*>(&a),sizeof a)){close_socket(socket);socket=bad_socket;throw std::runtime_error("test connect");}
++#ifdef _WIN32
++  DWORD timeout=3000;setsockopt(socket,SOL_SOCKET,SO_RCVTIMEO,reinterpret_cast<const char*>(&timeout),sizeof timeout);
++#else
++  timeval timeout{3,0};setsockopt(socket,SOL_SOCKET,SO_RCVTIMEO,&timeout,sizeof timeout);
++#endif
++ }
++ ~Client(){if(socket!=bad_socket)close_socket(socket);}
++ std::string frame(){for(;;){auto n=pending.find('\0');if(n!=std::string::npos){auto result=pending.substr(0,n);pending.erase(0,n+1);return result;}char b[1024];const auto got=::recv(socket,b,sizeof b,0);if(got<=0)throw std::runtime_error("test receive");pending.append(b,static_cast<std::size_t>(got));}}
++ std::string profile(){std::string text="<LSX><Request id=\"phase\" recipient=\"EbisuSDK\"><GetProfile index=\"0\"/></Request></LSX>";text.push_back('\0');
++  while(!text.empty()){
++#ifdef _WIN32
++   auto n=::send(socket,text.data(),static_cast<int>(text.size()),0);
++#else
++   auto n=::send(socket,text.data(),text.size(),MSG_NOSIGNAL);
++#endif
++   if(n<=0)throw std::runtime_error("test send");text.erase(0,static_cast<std::size_t>(n));
++  }return frame();
++ }
++};
++struct Waiter {
++ preloader_l::Service& service;std::promise<void> entered;std::promise<bool> done;
++ std::future<void> entrance=entered.get_future();std::future<bool> completion=done.get_future();std::thread thread;
++ explicit Waiter(preloader_l::Service& s):service(s),thread([this]{entered.set_value();done.set_value(service.wait_steps(-1));}){entrance.wait();}
++ ~Waiter(){if(thread.joinable()){service.request_stop();thread.join();}}
++ bool pending(){return completion.wait_for(50ms)==std::future_status::timeout;}
++ bool result(){require(completion.wait_for(2s)==std::future_status::ready,"phase waiter released");auto value=completion.get();thread.join();return value;}
++};
++struct Gate {
++#if defined(__linux__)
++ Gate(){std::lock_guard lock(gate_mutex);gate_entered=false;gate_released=false;gate_armed.store(true);}
++ void entered(){std::unique_lock lock(gate_mutex);require(gate_condition.wait_for(lock,2s,[]{return gate_entered;}),"real provider-file boundary reached");}
++ void release(){gate_armed.store(false);{std::lock_guard lock(gate_mutex);gate_released=true;}gate_condition.notify_all();}
++ ~Gate(){release();}
++#endif
++};
++preloader_l::RuntimePaths paths(const std::filesystem::path& root){std::filesystem::create_directories(root);return preloader_l::RuntimePaths::fixture(root/"fixture.exe",root/"surge.cfg",root/"local",root/"programdata");}
++void predicate(){for(unsigned bits=0;bits<8;++bits)for(int count:{-1,0,1,2,3}){
++ const auto need=count==-1?7u:count==0?0u:(1u<<count)-1;
++ require(preloader_l::StartupSteps::finished(count,bits&1,bits&2,bits&4)==((bits&need)==need),"source 40-case step predicate");
++}}
++void basic(const std::filesystem::path& root){
++ preloader_l::Environment env(paths(root));preloader_l::Service service(env);service.prepare();
++ require(service.wait_steps(1)&&!service.is_ready(),"source server stage precedes provider and extras");
++ {Client c(service.port());require(c.frame().find("Challenge")!=std::string::npos,"IO serves greeting before provider launch");require(c.profile().find("Persona=\"SURGE\"")!=std::string::npos,"configured local profile available before provider");}
++ const auto bootstrap=std::this_thread::get_id();std::thread::id worker;bool main_seen=false;
++ service.activate_async([&](bool main){if(main){require(std::this_thread::get_id()==bootstrap,"true phase synchronous bootstrap");main_seen=true;}else{require(main_seen,"false phase follows true phase");worker=std::this_thread::get_id();}});
++ service.wait_startup();require(worker!=bootstrap&&service.is_ready(),"false phase uses owned worker and all-step readiness");service.stop();require(!service.wait_steps(-1)&&!service.is_ready(),"stop is cancellation, not successful phase completion");
++}
++#if defined(__linux__)
++void gated(const std::filesystem::path& root){
++ preloader_l::Environment env(paths(root));preloader_l::Service service(env);service.prepare();Gate gate;
++ const auto bootstrap=std::this_thread::get_id();std::promise<void> worker_entered,worker_release;auto entered=worker_entered.get_future();auto release=worker_release.get_future().share();
++ // Ensure a failed assertion cannot strand the owned extra worker during unwind.
++ struct Release {std::promise<void>& p;bool released=false;void finish(){if(!released){p.set_value();released=true;}}~Release(){finish();}} extra_release{worker_release};
++ service.activate_async([&,release](bool main){
++  if(main){require(std::this_thread::get_id()==bootstrap,"main selector stays on bootstrap caller");gate.entered();Client client(service.port());(void)client.frame();require(client.profile().find("Persona=\"SURGE\"")!=std::string::npos,"provider wait does not hold request-state lock");}
++  else{worker_entered.set_value();release.wait();}
++ });
++ Waiter all(service);require(all.pending()&&!service.is_ready(),"all-step hook-style wait includes blocked provider");
++ require(entered.wait_for(50ms)==std::future_status::timeout,"worker extras do not start before provider completes");
++ gate.release();require(entered.wait_for(2s)==std::future_status::ready,"worker extras start after provider completion");
++ require(service.wait_steps(2),"first two phases completed");require(all.pending()&&!service.is_ready(),"third extra-worker phase remains required");
++ extra_release.finish();service.wait_startup();require(all.result()&&service.is_ready(),"all phases publish honest readiness");service.stop();
++}
++void cancelled(const std::filesystem::path& root){
++ preloader_l::Environment env(paths(root));preloader_l::Service service(env);service.prepare();Gate gate;std::atomic<bool> extra_called=false;
++ service.activate_async([&](bool main){if(main)gate.entered();else extra_called=true;});Waiter all(service);
++ service.request_stop();require(!all.result()&&!service.is_ready(),"shutdown releases incomplete provider wait as cancellation");
++ gate.release();service.stop();require(!extra_called.load(),"cancelled dependent extra phase does not run");
++}
++void provider_failure(const std::filesystem::path& root){
++ preloader_l::Environment env(paths(root));preloader_l::write_file(preloader_l::model_path(env.paths.provider()),"synthetic regular file");preloader_l::Service service(env);service.prepare();Gate gate;
++ service.activate_async([&](bool main){if(main)gate.entered();});Waiter all(service);gate.release();
++ require(!all.result()&&!service.is_ready(),"provider failure cancels completion wait");bool failed=false;
++ try{service.wait_startup();}catch(const std::exception& e){failed=std::string(e.what())=="optional native provider requires Windows";}
++ require(failed,"provider exception transported to startup owner");service.stop();
++}
++#endif
++void extra_failure(const std::filesystem::path& root){
++ preloader_l::Environment env(paths(root));preloader_l::Service service(env);service.prepare();
++ service.activate_async([](bool main){if(!main)throw std::runtime_error("fixture extra failure");});bool failed=false;
++ try{service.wait_startup();}catch(const std::exception& e){failed=std::string(e.what())=="fixture extra failure";}
++ require(failed&&!service.is_ready()&&!service.wait_steps(-1),"extra-worker error is not readiness success");service.stop();
++}
++}
++int main(){try{
++ const auto root=std::filesystem::temp_directory_path()/("preloader_l_phase_"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
++ predicate();basic(root/"basic");extra_failure(root/"extra-error");
++#if defined(__linux__)
++ gated(root/"gated");cancelled(root/"cancelled");provider_failure(root/"provider-error");
++#endif
++ std::filesystem::remove_all(root);std::cout<<"PASS startup phases checks="<<checks<<"; source predicate, actual IO/provider ordering, extra-phase completion, cancellation/failure. Windows provider/hook boundary NOT_RUN unless native fixture executed\n";return 0;
++}catch(const std::exception& e){std::cerr<<"FAIL startup phases: "<<e.what()<<'\n';return 1;}}

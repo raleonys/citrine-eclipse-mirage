@@ -1,0 +1,57 @@
+{
+  "scope": "source review, not new runtime policy",
+  "rows": [
+    {
+      "operation": "NativeHooks::quiesce(timeout)",
+      "observed_contract": "timeout bounds active_calls polling only; external_threads_outside_module and MH_Uninitialize have no supplied deadline",
+      "source": "src/windows/hooks.cpp",
+      "resolution": "documented; no new timeout policy; D13/D21 OPEN",
+      "source_sha256": "c14327a6ce179f3d8da964c37ba86db477b19e7cd51493ce6b4c69cf3f8d039b"
+    },
+    {
+      "operation": "NativeHooks destructor",
+      "observed_contract": "quiesce5s; unsuccessful quiescence terminates. Normal worker explicitly retries100ms+Sleep10 before destructor.",
+      "source": "src/windows/hooks.cpp",
+      "resolution": "retained, native execution NOT_RUN",
+      "source_sha256": "c14327a6ce179f3d8da964c37ba86db477b19e7cd51493ce6b4c69cf3f8d039b"
+    },
+    {
+      "operation": "runtime_worker cleanup",
+      "observed_contract": "Service::stop/join precedes hook quiescence; native provider call/join cannot be assumed bounded. Quiesce refusal retains live owner. Cleanup exception retains module and owners indefinitely.",
+      "source": "src/windows/dll_entry.cpp",
+      "resolution": "retained safe lifetime; bounded shutdown not claimed",
+      "source_sha256": "2aed18a9286f7cff9b7ea15785266102d99a3e078134e48a2852f7be148ebbdf"
+    },
+    {
+      "operation": "DllShutdown(timeout_ms)",
+      "observed_contract": "signals stop and shared-published service cancellation before timed worker wait; full export deadline not established. Successful completion releases self-pin after CRT worker cleanup. Caller module reference contract remains unproven.",
+      "source": "src/windows/dll_entry.cpp",
+      "resolution": "native caller/module-reference and repeated retry tests needed; D13 OPEN",
+      "source_sha256": "2aed18a9286f7cff9b7ea15785266102d99a3e078134e48a2852f7be148ebbdf"
+    },
+    {
+      "operation": "shutdown caller exclusion lifetime",
+      "observed_contract": "set_shutdown_caller stores caller ID; no clearing call in DllShutdown exit path. Value persists after timeout/return until overwritten by another shutdown.",
+      "source": "src/windows/dll_entry.cpp",
+      "resolution": "test timeout followed caller resumption/thread ID reuse and scan retries on Windows; risk item, not reproduced UAF",
+      "source_sha256": "2aed18a9286f7cff9b7ea15785266102d99a3e078134e48a2852f7be148ebbdf"
+    },
+    {
+      "operation": "whole-region scan",
+      "observed_contract": "FIX31 guards every memory read with remaining64MiB region fit; first and accumulated overshoot now rejected before reading. Existing allocation-change success and conservative exact-budget failure retained.",
+      "source": "src/windows/unload_guard.cpp",
+      "resolution": "portable actual-body/model150 checks; native SDK/SEH/thread scan NOT_RUN",
+      "source_sha256": "563ed1c1b3a140128422e627ba1f5c0a02dd701c73b9bf36cc4e6508b0408ece"
+    }
+  ],
+  "required_native_cases": [
+    "context register/data module pointer",
+    "suspend/context/resume failure and OS effects",
+    "new thread/callback race around scan",
+    "scan false positives and over-budget retry",
+    "timeout then caller resumes; caller ID reuse",
+    "caller retains module ref across DllShutdown self-pin release",
+    "cancel while provider native call is blocked"
+  ],
+  "automatic_native_PASS": false
+}

@@ -1,0 +1,29 @@
+{
+  "input_archive_sha256": "522401e1bc48c8e71bb97476f57a4398ab5305ecb93a442417a34b6ddab2a23e",
+  "members": {
+    "Madden27.exe": {
+      "bytes": 254169600
+    },
+    "preloader_l.dll": {
+      "bytes": 678912
+    },
+    "preloader_l.srg": {
+      "bytes": 46840
+    },
+    "surge.cfg": {
+      "bytes": 2271
+    },
+    "surge.png": {
+      "bytes": 3653
+    }
+  },
+  "analysis_mode": "read-only ZIP/CFG; no uploaded executable or DLL executed",
+  "config_sha256": "29fdff01edcfe5cd811d26445b096558c8eabed21a8b0c92cede0a1e4c7dc02d",
+  "supplied_dll_sha256": "099fde0b22aa91b9c8879397b35331d0d1ebb9c21b8958568a9108cdbbb1df44",
+  "anadius_source_target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "SDK_in_supplied_cfg": false,
+  "Emulator.Online": "present; HF19 recognized; adopted Anadius application ignores it; now emits explicit unsupported diagnostic",
+  "private_profile_values": "not copied; fixture anonymizes Username/PersonaId/UserId",
+  "test_fixture": "tests/fixtures/madden_config.cfg",
+  "finding_status": "configuration dialect mismatch verified in source; game launch root cause remains OPEN"
+}

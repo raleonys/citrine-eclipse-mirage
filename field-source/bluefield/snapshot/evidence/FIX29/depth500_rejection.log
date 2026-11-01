@@ -1,0 +1,1 @@
+FAIL XML source mismatch case=3543 expected_code=18 actual_code=14 expected_error=Error=XML_ELEMENT_DEPTH_EXCEEDED ErrorID=18 (0x12) Line number=1: Element nesting is too deep. actual_error=Error=XML_ERROR_MISMATCHED_ELEMENT ErrorID=14 (0xe) Line number=1: XMLElement name=bad

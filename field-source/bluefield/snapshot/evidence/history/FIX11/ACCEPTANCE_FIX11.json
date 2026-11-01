@@ -1,0 +1,102 @@
+{
+  "project": "BLUEFIELD",
+  "code_namespace": "preloader_l",
+  "code_state": "BF02_FIX11_FILESYSTEM_DISPATCH_REPAIR",
+  "classification": "NON_RELEASE_WORK",
+  "release_status": "NOT_RELEASE",
+  "snapshot_parent_sha256": "8d1efc5957f55132c0dddbd2bad9c9479d4d6f99f3bcad37caba056ab607a677",
+  "source_digest": "8780173346e9cddf32f055c624448a1694f8711fca301959b225638e9698c644",
+  "deliverable": "full cumulative source; no newly compiled Windows DLL",
+  "checks": {
+    "portable_debug": {
+      "status": "PASS",
+      "cpp_groups": 30,
+      "tool_groups": 3
+    },
+    "ASan_UBSan": {
+      "status": "PASS",
+      "groups": 33,
+      "ASAN_OPTIONS": "detect_leaks=0"
+    },
+    "gulrak_native_spelling": {
+      "status": "PASS",
+      "Linux_checks": 2137
+    },
+    "Unicode_config_integration": {
+      "status": "PASS",
+      "checks": 47
+    },
+    "Asio_failure_campaign": "PASS; result-specific counts in portable receipts",
+    "old_dispatch_negative_control": {
+      "status": "NEGATIVE_CONTROL_REJECTED",
+      "scope": "same focused core/test, only old io run catch loop restored in scratch translation unit",
+      "exit_code": 1,
+      "output": "FAIL Asio phase=arbitrary dispatch allocation checks=52 fault_size=143: arbitrary failure recovers or explicitly clears readiness\n",
+      "negative_service_sha256": "a883bf2709802f309e996508dd5368dc1741b3d0aaab9704876cdc6cc0b0e9a9",
+      "binary_sha256": "e27538f6caa1734351e20df21e903e1f347f07904ad8657f2aa7a10e0a3a98ff"
+    },
+    "Config2_FIX09_differential": {
+      "status": "PASS",
+      "cases": 8766
+    },
+    "source_invariants": {
+      "status": "PASS",
+      "areas": 8
+    },
+    "source_policy_negatives": {
+      "status": "PASS",
+      "cases": 38
+    },
+    "synthetic_PE": {
+      "status": "PASS",
+      "positive": 1,
+      "negative": 8
+    },
+    "synthetic_Golden_pipeline": {
+      "status": "PASS",
+      "cases": 14
+    },
+    "link_selftest": {
+      "status": "PASS",
+      "cases": 21
+    },
+    "Windows_MSVC_IOCP_Native_CRT_FIX11": "NOT_RUN",
+    "actual_FIX11_DLL_Golden": "NOT_RUN",
+    "game_FIX11": "NOT_RUN; FIX07 prior user confirmation not inherited",
+    "LeakSanitizer_FIX11": "NOT_RUN",
+    "exact_ZIP_replay": "PENDING external FINAL_QA",
+    "package_negatives": "PENDING external FINAL_QA"
+  },
+  "remaining": [
+    "native Windows path/IOCP/CRT/hook/unload acceptance",
+    "actual Windows DLL Golden acceptance",
+    "original filesystem version/IO/allocator/exception equivalence",
+    "transport deadlines and global application lock granularity"
+  ],
+  "evidence": {
+    "evidence/ASIO_DISPATCH_NEGATIVE_CONTROL.json": "8825c56a396f3603a94d1f2e0ec93d998fd18dc5f2999e96f3a913b22b076e32",
+    "evidence/ASIO_TRANSPORT_FIX09.json": "fd186ab1cf59e0b4a4abf65a877cf728b36088299845d7a140084caade1345ed",
+    "evidence/CODE_IDENTITY.json": "d0f2df7e17b4860f12fdd0f0de78af49b6cd1ca450a715241b3ce0d5cad0f30d",
+    "evidence/CONFIG2_PEGTL_FIX10.json": "5e7779a15b38c191d6543e11daf73cee9470ba5035c69f5239d10af53426c30f",
+    "evidence/DEPENDENCY_ALIGNMENT.json": "9ac2acf00c1f8b4699350dca1b19b0dc67622e0ef5ceeccefb39a6d87d8212e9",
+    "evidence/FILESYSTEM_FIX11.json": "1bb10634f50168be33da3d2d4b120e2a57183d1c8609ac80319aca50939c7f93",
+    "evidence/FIX10_STATIC_CHECKS.json": "6dd80646628139c0725f99a8f363c996c332114bdc144c684ca60a435801cf94",
+    "evidence/FIX11_STATIC_CHECKS.json": "a93758e676e7b061f8ae48cf94612cb34bd553736797dffe4d42ce1f2f467c0d",
+    "evidence/FOCUSED_FIX11.json": "f0a95278a5b6d499883f79f275c8d77984ea0619f35a4ac55ce10f0b3ec8e8c0",
+    "evidence/GOLDEN_BINDING.json": "70f60cff2fd5d837ab1cef25c63b0752461150617da74f32476a1f9a89a9c535",
+    "evidence/INITIAL_FAILURE_FIX11.json": "63918348928d46ee769a3246c09153fb548309851c842056b3e98435a9774b95",
+    "evidence/PARENT_FIX06_portable_sanitizer.json": "30be512e00a6597df7ab79ac42b5cfbc7ee890a99d8cad6eedc1116990eb3daa",
+    "evidence/PARENT_FIX09_asio_lsan.json": "a5d6fa4c77ad2b51cca475f57684163d1b13eb4ef41efbc2112b2e6ff7bfedd9",
+    "evidence/SUPPLIED_MODULE_LAYOUT.json": "fe379a58dd0c391ce78547d13d09669ae16d9a5df510555b37c4c5b8d6c03957",
+    "evidence/USER_BLUEFIELD_STARTUP.log": "701fe0dd14bcb24a87607dadb468e55a68371243a909f5b5b2082de8e237a84d",
+    "evidence/USER_DLL_STATIC_PE.json": "c35169e8116b652575458cf574e970465cd3b4282bc675ec6cf1101e5bd2b09e",
+    "evidence/USER_EVIDENCE_ANALYSIS.json": "6d479d758e68346a423b44612041f30bef6cde8f0435602be7b11dfc518f041d",
+    "evidence/USER_RUNTIME_CONFIRMATION.json": "b95e2ceb6fff6f9ce970eb0764252729f2de89067e3c0e910097892188e9de4b",
+    "evidence/package_policy.json": "6061f2fe9f79d1e00cbd4634f72017eb0ceffc25561dc7a6ac742e46152b6f9a",
+    "evidence/policy_fixture_results.json": "77804b2af2012acbd1fffbc8870eecd722ed6642dbac0c190e57a8412333fecb",
+    "evidence/portable_debug.json": "fb437a2f4e2f9e8d8567a25831c1ce26a60c0234a926095c12ef03676e1e0d36",
+    "evidence/portable_sanitizer.json": "4f5680147393e9dfa68230c524b6865801c8f61301940ba31a979e995d871593",
+    "evidence/source_checks.json": "15726b0b97fc947d6f5d498a49851fc7d22702989b72bc8d1af899677a27f4bd"
+  },
+  "official_release_pointer_changed": false
+}

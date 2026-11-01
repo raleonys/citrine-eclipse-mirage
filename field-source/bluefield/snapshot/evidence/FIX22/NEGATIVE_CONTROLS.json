@@ -1,0 +1,61 @@
+{
+  "status": "PASS_TARGETED_NEGATIVE_CONTROLS",
+  "source_digest": "99eab1d1dc4b91029f32941bc9325e3cc89b89cdd71cdff5ec1372ae8c52f263",
+  "current_core_archive_sha256": "85ca2c24907935a711db50ad4d41925f90e22073c9f9209cfaf11003f35a7dd8",
+  "test_sha256": "7e6c58f9eaefe79f84deee4ae414b693b07fddad2de0bc634c9a66e442792094",
+  "existing_FIX21_test_sha256": "f489622d3c61fe88859cd5c00e108f91d2b0f307162dd620a562e64775eadf31",
+  "cases": [
+    {
+      "case": "parent_binding_wrong",
+      "file": "src/paths/paths.hpp",
+      "current_sha256": "6f8981254311581aca9a97c57202fa9c67e5476825ff45813130e8c6b72a4e18",
+      "mutated_sha256": "d2b7ef74ef29d2d77163294b2170b81bccb1653785d54a5adc3f3176fed08925",
+      "before": "return parent_path_019820(value);",
+      "after": "return filename_00e120(value);",
+      "actual_exit": 1,
+      "expected_assertion": "Windows parent literal",
+      "output": "FAIL path effects: Windows parent literal\n",
+      "scope": "Pure inline Windows owner used by native alias; not native Windows API execution",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    },
+    {
+      "case": "filename_binding_wrong",
+      "file": "src/paths/paths.hpp",
+      "current_sha256": "6f8981254311581aca9a97c57202fa9c67e5476825ff45813130e8c6b72a4e18",
+      "mutated_sha256": "7f991a5ba4309f40ae4f19c413f8479e97e708f280d8c6b6bf9e0c5b0e90a14f",
+      "before": "return filename_00e120(value);",
+      "after": "return parent_path_019820(value);",
+      "actual_exit": 1,
+      "expected_assertion": "Windows filename literal",
+      "output": "FAIL path effects: Windows filename literal\n",
+      "scope": "Pure inline Windows owner used by native alias; not native Windows API execution",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    },
+    {
+      "case": "relative_classification_skipped",
+      "file": "src/paths/paths.hpp",
+      "current_sha256": "6f8981254311581aca9a97c57202fa9c67e5476825ff45813130e8c6b72a4e18",
+      "mutated_sha256": "28c94af28ad1775dc023e2c2eb28e3a0a9c4f43f319c9223adb259e7f2370979",
+      "before": "relative && !is_absolute_0195b0(value)",
+      "after": "relative && false",
+      "actual_exit": 1,
+      "expected_assertion": "Windows resolver literal",
+      "output": "FAIL path effects: Windows resolver literal\n",
+      "scope": "Pure inline Windows owner used by native alias; not native Windows API execution",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    },
+    {
+      "case": "host_normalization_reintroduced",
+      "file": "src/application/environment.cpp",
+      "current_sha256": "72d498ae477051afc6bf645170686e6c392ced0935a3a63374eaaf8063ca1aa6",
+      "mutated_sha256": "6b83b96f2f10efa3ae56cfc0a46b0d8c412de8f0b02bf0887935a139c4445403",
+      "before": "if(relative&&p.is_relative())p=native_path(executable).parent_path()/p;return model_path(p);",
+      "after": "if(relative&&p.is_relative())p=native_path(executable).parent_path()/p;return model_path(p.lexically_normal());",
+      "actual_exit": 1,
+      "expected_assertion": "relative path spelling retained",
+      "output": "FAIL path resolution: relative path spelling retained\n",
+      "scope": "Actual current HostPathEffects with unchanged FIX21 fixture; replaced TU supplies environment symbols before current core archive",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    }
+  ]
+}

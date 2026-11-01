@@ -1,0 +1,22 @@
+{
+  "classification": "NON_RELEASE_WORK",
+  "parent_zip_sha256": "106d67c12e7a2fa82e907f4520afaa1bf28ccd92d60d33cdf9d35381cabc6095",
+  "RE_zip_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "master_revision": "2026-10-25.1",
+  "master_versions": {
+    "md": 9,
+    "json": 9
+  },
+  "master_sha256": {
+    "PROJECT_RULES_MASTER.md": "8bfe91091fb115ee816d1a7204f2256d837df79d14957e78d332d3602daa981b",
+    "PROJECT_RULES_MASTER.json": "06ab4d5e070a191e40045d681e03f9fbd99bbbed4195c89174f5656d95beb141"
+  },
+  "scope": "Apply REVIEW31 proposed over-budget region refusal. Same64MiB, no partial region treated safe. Execute actual source scan/enumeration under declared test-only SDK shims and build native scanner fixture for future MSVC run. Document quiesce lease-only timeout; preserve all native ownership and runtime policies. Carry REVIEW31 DEP05 review closure;6 main reviews remain.",
+  "runtime_allowed": [
+    "src/windows/unload_guard.cpp"
+  ],
+  "vendor_change": false,
+  "official_publication": false,
+  "user_instruction": "devam edelim",
+  "native_execution": "NOT_RUN"
+}

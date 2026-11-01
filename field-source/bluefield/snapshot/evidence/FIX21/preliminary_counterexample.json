@@ -1,0 +1,12 @@
+[
+  {
+    "case": "parent",
+    "exit": 1,
+    "output": "FAIL path resolution: relative path spelling retained\n"
+  },
+  {
+    "case": "fixed",
+    "exit": 0,
+    "output": "POSIX directory-link semantic fixture: PASS; Windows native path/ABI: NOT_RUN\nPASS path resolution checks=26\n"
+  }
+]

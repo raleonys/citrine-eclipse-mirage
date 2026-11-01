@@ -1,0 +1,330 @@
+--- FIX28/src/xml/reader.cpp
++++ FIX29/src/xml/reader.cpp
+@@ -6,23 +6,6 @@
+ namespace preloader_l::xml_reader {
+ namespace {
+ namespace msg=messages;
+-// Keep the source reader's successful-document depth contract outside the
+-// pristine upstream dependency. TinyXML2 retains its own independent limit.
+-class SourceDepthPolicy final:public tinyxml2::XMLVisitor {
+-public:
+-    bool VisitEnter(const tinyxml2::XMLElement& element,const tinyxml2::XMLAttribute*) override {
+-        if(element.ClosingType()==tinyxml2::XMLElement::OPEN && ++depth_>=100)exceeded_=true;
+-        return !exceeded_;
+-    }
+-    bool VisitExit(const tinyxml2::XMLElement& element) override {
+-        if(element.ClosingType()==tinyxml2::XMLElement::OPEN)--depth_;
+-        return !exceeded_;
+-    }
+-    bool exceeded()const{return exceeded_;}
+-private:
+-    unsigned depth_=1; // XMLDocument::ParseDeep is the first source level.
+-    bool exceeded_=false;
+-};
+ class Document;
+ class Element final:public msg::XmlNode {
+ public:
+@@ -43,23 +26,12 @@
+ class Document final:public msg::XmlDocument {
+ public:
+     Document():document_(true,tinyxml2::PRESERVE_WHITESPACE){}
+-    int parse(const char* value){
+-        const auto code=document_.Parse(value,static_cast<std::size_t>(-1));
+-        if(code!=tinyxml2::XML_SUCCESS)return code;
+-        SourceDepthPolicy policy;(void)document_.Accept(&policy);
+-        if(policy.exceeded()){
+-            source_depth_error_=true;
+-            document_.Clear();
+-            return tinyxml2::XML_ELEMENT_DEPTH_EXCEEDED;
+-        }
+-        return code;
+-    }
+-    bool has_error()const{return source_depth_error_||document_.Error();}
++    int parse(const char* value){return document_.Parse(value,static_cast<std::size_t>(-1));}
++    bool has_error()const{return document_.Error();}
+     const msg::XmlNode* first_element()const override{return wrap(document_.FirstChildElement());}
+     // Historical interface name: original 033fd7 calls ErrorStr (0032d0),
+     // the full diagnostic, rather than tinyxml2::ErrorName.
+     std::string_view error_name()const override{
+-        if(source_depth_error_)return "XML_ELEMENT_DEPTH_EXCEEDED: source reader policy=100 (adapter diagnostic)";
+         return document_.ErrorStr();
+     }
+     const Element* wrap(const tinyxml2::XMLElement* native)const {
+@@ -72,7 +44,6 @@
+ private:
+     // Wrappers are destroyed before the upstream document owning native nodes.
+     tinyxml2::XMLDocument document_;
+-    bool source_depth_error_=false;
+     mutable std::unordered_map<const tinyxml2::XMLElement*,std::unique_ptr<Element>> elements_;
+ };
+ const msg::XmlNode* Element::first_element()const{return owner_.wrap(native_.FirstChildElement());}
+--- FIX28/src/xml/upstream_parser.cpp
++++ FIX29/src/xml/upstream_parser.cpp
+@@ -0,0 +1,10 @@
++// SPDX-License-Identifier: GPL-3.0-only
++// Compile the exact pinned upstream implementation once through this adapter.
++// Namespace lookup selects the packet's parse-time depth=100 without modifying
++// third_party files, generating a fork, or changing public header definitions.
++#include "third_party/tinyxml2/tinyxml2.h"
++static_assert(::TINYXML2_MAX_ELEMENT_DEPTH==500,"review the adapter when upstream changes");
++namespace tinyxml2 {
++constexpr int TINYXML2_MAX_ELEMENT_DEPTH=100;
++}
++#include "third_party/tinyxml2/tinyxml2.cpp"
+--- FIX28/tests/unit/xml/test_reader.cpp
++++ FIX29/tests/unit/xml/test_reader.cpp
+@@ -74,7 +74,7 @@
+         input+="<R/>";for(unsigned i=1;i<depth;++i)input+="</R>";
+         const auto parsed=backend.parse_c_string(input);
+         check(parsed.returned_code==(depth>=100?18:0),"self-closing element does not enter source ParseDeep");
+-        if(depth>=100)check(parsed.has_error&&!parsed.document->first_element()&&parsed.document->error_name().find("adapter diagnostic")!=std::string_view::npos,"adapter depth error hides document and names its owner");
++        if(depth>=100)check(parsed.has_error&&!parsed.document->first_element()&&parsed.document->error_name().find("ErrorID=18")!=std::string_view::npos&&parsed.document->error_name().find("Line number=1")!=std::string_view::npos,"native parse-time depth error hides document and preserves full ErrorStr");
+     }
+     for(unsigned depth=1;depth<=105;++depth) {
+         std::string input;for(unsigned i=0;i<depth;++i)input+="<R>";
+--- FIX28/tests/integration/test_xml_depth_source_oracle.cpp
++++ FIX29/tests/integration/test_xml_depth_source_oracle.cpp
+@@ -0,0 +1,45 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/xml/reader.hpp"
++#include "tests/support/xml/packet_oracle.hpp"
++#include <array>
++#include <iostream>
++#include <stdexcept>
++namespace packet=preloader_l::test_packet_xml;
++namespace msg=preloader_l::messages;
++static unsigned cases=0,checks=0;
++static void check(bool ok,const char* message){++checks;if(!ok)throw std::runtime_error(message);}
++static void node(std::string& out,const msg::XmlNode* n,preloader_l::xml_reader::Backend& b){
++ for(;n;n=n->next_element()){
++  packet::field(out,n->name());out+='[';
++  for(auto& [name,value]:b.attributes_in_order(*n)){packet::field(out,name);packet::field(out,value);}
++  out+=']';const auto* text=b.text_003860(*n);out+=text?'T':'N';if(text)packet::field(out,text);
++  out+='{';node(out,n->first_element(),b);out+='}';
++ }
++}
++static void compare(std::string_view input){
++ ++cases;auto expected=packet::parse(input);preloader_l::xml_reader::Backend backend;
++ auto actual=backend.parse_c_string(input);std::string tree;node(tree,actual.document->first_element(),backend);
++ if(actual.returned_code!=expected.code||actual.has_error!=expected.error||actual.document->error_name()!=expected.diagnostic||tree!=expected.tree)
++  throw std::runtime_error("XML source mismatch case="+std::to_string(cases)+" expected_code="+std::to_string(expected.code)+" actual_code="+std::to_string(actual.returned_code)+" expected_error="+expected.diagnostic+" actual_error="+std::string(actual.document->error_name()));
++ checks+=4;
++}
++static std::string nested(unsigned depth,std::string_view body,bool lines=false){
++ std::string input;for(unsigned i=0;i<depth;++i)input+=lines?"<R>\r\n":"<R>";
++ input+=body;for(unsigned i=0;i<depth;++i)input+="</R>";return input;
++}
++int main(){try{
++ // The comparison domain is depth/error precedence and ordinary structural XML.
++ // Known upstream Unicode/entity fixes are retained separately, not reverted
++ // or misrepresented as original packet/full-binary parser equivalence.
++ const std::array<std::string,18> bodies{"","text","<R/>","<!--comment-->","<![CDATA[text]]>","<R a='x' b='&amp;'/>tests","<bad a=>","<bad>","</wrong>","<!--unterminated","<![CDATA[unterminated","<?bad?>","<!DOCTYPE r>","<R a='1' a='2'/>","&amp;","<R/><!--tail-->","\r\n",std::string("\0<bad a=>",10)};
++ for(unsigned depth=0;depth<=110;++depth)for(auto& body:bodies)for(bool lines:{false,true})compare(nested(depth,body,lines));
++ for(auto depth:{200u,499u,500u,510u})for(auto& body:bodies)compare(nested(depth,body));
++ for(auto depth:{97u,98u,99u,100u})for(auto& body:bodies){
++  compare(nested(depth,body)+"<bad a=>");compare("<Good/>"+nested(depth,body));
++  compare(std::string("\xef\xbb\xbf")+nested(depth,body));
++ }
++ // Concrete earlier-parse-error versus later-syntax-error counterexample.
++ auto failed=packet::parse(nested(99,"<bad a=>"));check(failed.code==18,"packet depth error precedence changed");
++ check(packet::parse(nested(98,"<bad a=>")).code==7,"pre-boundary syntax error changed");
++ std::cout<<"PASS live packet XML depth oracle cases="<<cases<<" checks="<<checks<<"; full diagnostics/tree compared; packet selected compatibility source, original DLL NOT_RUN\n";return 0;
++}catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
+--- FIX28/tests/support/xml/packet_oracle.cpp
++++ FIX29/tests/support/xml/packet_oracle.cpp
+@@ -0,0 +1,27 @@
++// SPDX-License-Identifier: GPL-3.0-only
++// The included packet compatibility files are literal archive bytes. Rename
++// their namespace and depth symbol only inside this test TU to avoid ODR/name
++// collisions with the active upstream build. Never linked into production.
++#define tinyxml2 preloader_l_packet_tinyxml2
++#define TINYXML2_MAX_ELEMENT_DEPTH PRELOADER_L_PACKET_XML_DEPTH
++#include "tests/support/xml/packet/tinyxml2.cpp"
++#undef TINYXML2_MAX_ELEMENT_DEPTH
++#undef tinyxml2
++#include "tests/support/xml/packet_oracle.hpp"
++namespace preloader_l::test_packet_xml {
++namespace packet=preloader_l_packet_tinyxml2;
++static_assert(::PRELOADER_L_PACKET_XML_DEPTH==100);
++static void node(std::string& out,const packet::XMLElement* n){
++ for(;n;n=n->NextSiblingElement()){
++  field(out,n->Name());out+='[';
++  for(auto* a=n->FirstAttribute();a;a=a->Next()){field(out,a->Name());field(out,a->Value());}
++  out+=']';const auto* text=n->GetText();out+=text?'T':'N';if(text)field(out,text);
++  out+='{';node(out,n->FirstChildElement());out+='}';
++ }
++}
++Result parse(std::string_view input){
++ const std::string owned(input);packet::XMLDocument d(true,packet::PRESERVE_WHITESPACE);
++ const int code=d.Parse(owned.c_str(),static_cast<std::size_t>(-1));
++ Result r{code,d.Error(),d.ErrorStr(),{}};node(r.tree,d.FirstChildElement());return r;
++}
++}
+--- FIX28/tests/support/xml/packet_oracle.hpp
++++ FIX29/tests/support/xml/packet_oracle.hpp
+@@ -0,0 +1,9 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#pragma once
++#include <string>
++#include <string_view>
++namespace preloader_l::test_packet_xml {
++struct Result {int code;bool error;std::string diagnostic,tree;};
++Result parse(std::string_view);
++inline void field(std::string& out,std::string_view value){out+=std::to_string(value.size());out+=':';out.append(value);}
++}
+--- FIX28/CMakeLists.txt
++++ FIX29/CMakeLists.txt
+@@ -112,11 +112,14 @@
+   target_link_libraries(test_startup_compat PRIVATE preloader_l_core)
+   add_test(NAME startup_configuration_profile_compat COMMAND test_startup_compat)
+   set_tests_properties(startup_configuration_profile_compat PROPERTIES TIMEOUT 60)
+-  foreach(source IN ITEMS tests/integration/test_config2_source_oracle.cpp tests/integration/test_failure_diagnostics.cpp tests/integration/test_ticket_output.cpp tests/integration/test_avatar_effects.cpp tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
++  foreach(source IN ITEMS tests/integration/test_xml_depth_source_oracle.cpp tests/integration/test_config2_source_oracle.cpp tests/integration/test_failure_diagnostics.cpp tests/integration/test_ticket_output.cpp tests/integration/test_avatar_effects.cpp tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
+     get_filename_component(name "${source}" NAME_WE)
+     add_executable(${name} "${source}")
+     if(name STREQUAL "test_config2_source_oracle")
+       target_sources(${name} PRIVATE tests/support/configuration/packet_parser.cpp)
++    endif()
++    if(name STREQUAL "test_xml_depth_source_oracle")
++      target_sources(${name} PRIVATE tests/support/xml/packet_oracle.cpp)
+     endif()
+     target_link_libraries(${name} PRIVATE preloader_l_core)
+     add_test(NAME ${name} COMMAND ${name})
+--- FIX28/cmake/sources.cmake
++++ FIX29/cmake/sources.cmake
+@@ -46,7 +46,7 @@
+   "src/transport/service.cpp"
+   "src/xml/memory_printer.cpp"
+   "src/xml/reader.cpp"
+-  "third_party/tinyxml2/tinyxml2.cpp"
++  "src/xml/upstream_parser.cpp"
+ )
+ set(PRELOADER_L_WINDOWS_SOURCES
+   "src/hooks/connect.cpp"
+--- FIX28/metadata/BUILD_GRAPH.json
++++ FIX29/metadata/BUILD_GRAPH.json
+@@ -38,7 +38,7 @@
+     "src/transport/service.cpp",
+     "src/xml/memory_printer.cpp",
+     "src/xml/reader.cpp",
+-    "third_party/tinyxml2/tinyxml2.cpp",
++    "src/xml/upstream_parser.cpp",
+     "src/paths/module_relative.cpp",
+     "src/runtime/runtime_paths.cpp",
+     "src/files/atomic_io.cpp",
+@@ -107,7 +107,8 @@
+     "tests/integration/test_avatar_effects.cpp",
+     "tests/integration/test_ticket_output.cpp",
+     "tests/integration/test_config2_source_oracle.cpp",
+-    "tests/integration/test_failure_diagnostics.cpp"
++    "tests/integration/test_failure_diagnostics.cpp",
++    "tests/integration/test_xml_depth_source_oracle.cpp"
+   ],
+   "windows_core": [
+     "src/windows/startup_platform.cpp",
+@@ -135,6 +136,17 @@
+     ],
+     "tests/integration/test_config2_source_oracle.cpp": [
+       "tests/support/configuration/packet_parser.cpp"
++    ],
++    "tests/integration/test_xml_depth_source_oracle.cpp": [
++      "tests/support/xml/packet_oracle.cpp"
++    ]
++  },
++  "included_implementation_sources": {
++    "src/xml/upstream_parser.cpp": [
++      "third_party/tinyxml2/tinyxml2.cpp"
++    ],
++    "tests/support/xml/packet_oracle.cpp": [
++      "tests/support/xml/packet/tinyxml2.cpp"
+     ]
+   }
+ }
+--- FIX28/scripts/qa/check_source.py
++++ FIX29/scripts/qa/check_source.py
+@@ -9,25 +9,25 @@
+   if shard is None or area==shard:issues.append(reason)
+  graph=json.loads((root/'metadata/BUILD_GRAPH.json').read_text())
+  # 0: owned repository/production dependency graph
+- expected=set(graph['core']+graph['windows']+graph['windows_core']);actual={p.relative_to(root).as_posix() for p in (root/'src').rglob('*.cpp')}|{'third_party/tinyxml2/tinyxml2.cpp'}
++ expected=set(graph['core']+graph['windows']+graph['windows_core']);actual={p.relative_to(root).as_posix() for p in (root/'src').rglob('*.cpp')}
+  if actual!=expected:fail(0,'production graph differs from owned source inventory')
+  for name in expected:
+   if not (root/name).is_file():fail(0,'missing production source: '+name)
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX28 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX29 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX28.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX29.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX28 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX29 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX28 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX28')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX28.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX29 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX29')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX29.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX28 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX29 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -164,8 +164,21 @@
+  if graph['test_support_sources'].get('tests/integration/test_config2_source_oracle.cpp')!=['tests/support/configuration/packet_parser.cpp'] or 'target_sources(${name} PRIVATE tests/support/configuration/packet_parser.cpp)' not in cmake:fail(2,'source parser oracle test-only target binding lost')
+  entry=(root/'src/windows/dll_entry.cpp').read_text()
+  if entry.count('LogEvent::startup_failed')!=2 or entry.count('LogEvent::shutdown_failed')!=1:fail(2,'wrong native lifecycle failure event')
+- for row in json.loads((root/'metadata/TEST_ORACLE_ROLES_FIX28.json').read_text())['files']:
++ for row in json.loads((root/'metadata/TEST_ORACLE_ROLES_FIX29.json').read_text())['files']:
+   if sha(root/row['file'])!=row['sha256']:fail(2,'test role binding drift')
++ # D15: parse-time source depth via the sole pinned upstream implementation TU.
++ wrapper=(root/'src/xml/upstream_parser.cpp').read_text()
++ for term in ['namespace tinyxml2 {','constexpr int TINYXML2_MAX_ELEMENT_DEPTH=100;','#include "third_party/tinyxml2/tinyxml2.cpp"','static_assert(::TINYXML2_MAX_ELEMENT_DEPTH==500']:
++  if term not in wrapper:fail(2,'source parse depth compile adapter lost: '+term)
++ if 'third_party/tinyxml2/tinyxml2.cpp' in graph['core'] or 'src/xml/upstream_parser.cpp' not in graph['core']:fail(2,'upstream implementation must compile exactly once through adapter')
++ if '"src/xml/upstream_parser.cpp"' not in (root/'cmake/sources.cmake').read_text() or '"third_party/tinyxml2/tinyxml2.cpp"' in (root/'cmake/sources.cmake').read_text():fail(2,'CMake source depth adapter bypass')
++ reader=(root/'src/xml/reader.cpp').read_text()
++ if any(term in reader for term in ['SourceDepthPolicy','source_depth_error_','adapter diagnostic']):fail(2,'post-parse depth approximation restored')
++ if 'if (_parsingDepth == TINYXML2_MAX_ELEMENT_DEPTH)' not in (root/'third_party/tinyxml2/tinyxml2.cpp').read_text():fail(2,'review namespace lookup adapter for new upstream depth body')
++ xml_oracle=json.loads((root/'metadata/PACKET_XML_ORACLE_FIX29.json').read_text())
++ for row in xml_oracle['files']:
++  if sha(root/row['destination'])!=row['current_sha256']:fail(2,'packet XML oracle bytes drift')
++ if graph['test_support_sources'].get('tests/integration/test_xml_depth_source_oracle.cpp')!=['tests/support/xml/packet_oracle.cpp'] or 'target_sources(${name} PRIVATE tests/support/xml/packet_oracle.cpp)' not in cmake:fail(2,'XML reference test-only target binding lost')
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -256,7 +269,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX28.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX29.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX28/tests/tools/test_source_policy.py
++++ FIX29/tests/tools/test_source_policy.py
+@@ -86,6 +86,9 @@
+   modify('src/files/native_io.cpp',lambda b:b.replace(b'initial_state()const override{return initial_;}',b'initial_state()const override{return 0;}'),'initial open failure silently reports success')
+   modify('src/windows/dll_entry.cpp',lambda b:b.replace(b'LogEvent::startup_failed',b'LogEvent::startup'),'failure relabeled as startup')
+   modify('tests/support/configuration/packet_parser.cpp',lambda b:b+b'\n// tampered oracle\n','literal source oracle tamper')
++  modify('src/xml/upstream_parser.cpp',lambda b:b.replace(b'TINYXML2_MAX_ELEMENT_DEPTH=100;',b'TINYXML2_MAX_ELEMENT_DEPTH=500;'),'source parse depth removed')
++  modify('cmake/sources.cmake',lambda b:b.replace(b'src/xml/upstream_parser.cpp',b'third_party/tinyxml2/tinyxml2.cpp'),'source depth compile adapter bypassed')
++  modify('tests/support/xml/packet/tinyxml2.h',lambda b:b+b'\n// mutation\n','packet XML reference tamper')
+   assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())

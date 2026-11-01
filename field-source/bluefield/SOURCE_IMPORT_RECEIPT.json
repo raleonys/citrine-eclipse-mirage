@@ -1,0 +1,17 @@
+{
+  "archive_basename": "preloader_l_BF02_FIX31_APPLICATION_SOURCE_NOT_RELEASE.zip",
+  "archive_sha256": "20c707f6cc57901674c26345983f5975150ab67fd547f4f3e95221e78066f416",
+  "field": "bluefield",
+  "file_count": 2018,
+  "import_parent_commit": "6e41786e23061dd639057e63852cbdf2c2a29d4a",
+  "main_application_unchanged": true,
+  "native_or_game_acceptance_inherited": false,
+  "not_release": true,
+  "schema": "cem.field-source-import.v1",
+  "snapshot_import_only": true,
+  "source_branch": "research/field-retirement/bluefield",
+  "source_class": "NOT_RELEASE_REFERENCE",
+  "source_file_manifest_sha256": "50cb59e3b2ad47bb6dd13ebcb5cb6bf7a2fbad68134da4ede60e74465bbc816c",
+  "source_import_kit_sha256": "62383643ff46d1cb65a5d1d6c2bb2d2a6607e7b5da5f267deb57dddd6f7a8886",
+  "uncompressed_bytes": 54282095
+}

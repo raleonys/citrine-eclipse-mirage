@@ -1,0 +1,7 @@
+{
+  "status": "UNAVAILABLE_ENVIRONMENT",
+  "exit_code": 1,
+  "scope": "focused FIX12 migration executable with detect_leaks=1; not all suites LSan",
+  "binary_sha256": "1559989ccc9bdbcfe9ab3c79910c7520d9e8712728e4684963d3ab90ac191eb6",
+  "output": "==3==LeakSanitizer has encountered a fatal error.\n==3==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==3==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n"
+}

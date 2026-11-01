@@ -1,0 +1,28 @@
+{
+  "source_FIX30_open": 7,
+  "review31_open": 6,
+  "before_open": 6,
+  "after_open": 6,
+  "closed_bounded_records": [],
+  "carried_review_closure": [
+    "DEP05"
+  ],
+  "resolved_subfindings": [
+    "D13/D21_OVER_BUDGET_REGION_READ_BEFORE_REFUSAL"
+  ],
+  "remaining_open": [
+    "D02",
+    "D06",
+    "D07",
+    "D13",
+    "D14",
+    "D21"
+  ],
+  "not_claimed": [
+    "D13/D21 main closure",
+    "All6 reviews solved",
+    "Native Windows/SEH/thread/DLL/game acceptance",
+    "Original binary equality"
+  ],
+  "native_validation": "NOT_RUN_separate_dimension"
+}

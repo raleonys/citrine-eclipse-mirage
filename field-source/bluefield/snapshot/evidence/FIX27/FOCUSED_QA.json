@@ -1,0 +1,13 @@
+{
+  "source_digest": "a99eedbf72d52d2a987079266f783a8b5472bff29c7893531d472ff8c8833d35",
+  "result": {
+    "exit": 0,
+    "output": "PASS ticket output checks=89; native Windows fault cases NOT_RUN\n",
+    "command": [
+      "/workspace/scratch/2072698c927d/fix27_helpers/fixed_ticket_output"
+    ]
+  },
+  "changed_TUs_Werror": "PASS_no_diagnostics",
+  "fixture_sha256": "59e94b42298c45b594fc34e2ef257b48d0d3c06f2e8efea551e58314ff32de7e",
+  "parent_core_sha256": "eb9f0b1bb97145e4ece02cc4c0c70ead2504a2fbe81e8e0c1b66f8730d3485d6"
+}

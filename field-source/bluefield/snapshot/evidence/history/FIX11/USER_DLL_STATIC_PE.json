@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "scope": "static PE/ABI/CRT audit; no runtime or Golden claim",
+  "sha256": "b00dc6908e9889574a5d18cc38edbbf0beda03111c423552bf771a605e5a0a1d",
+  "exports": {
+    "DllMain": 1,
+    "DllShutdown": 3,
+    "SURGE": 2
+  },
+  "imports": [
+    "crypt32.dll",
+    "ws2_32.dll",
+    "shell32.dll",
+    "user32.dll",
+    "kernel32.dll"
+  ],
+  "machine": "x64",
+  "entry_rva": 335136,
+  "dll_characteristics": 16736,
+  "sections": [
+    {
+      "name": ".text",
+      "rva": 4096,
+      "virtual_size": 532060,
+      "raw": 1024,
+      "raw_size": 532480,
+      "flags": 1610612768
+    },
+    {
+      "name": ".rdata",
+      "rva": 536576,
+      "virtual_size": 154846,
+      "raw": 533504,
+      "raw_size": 155136,
+      "flags": 1073741888
+    },
+    {
+      "name": ".data",
+      "rva": 692224,
+      "virtual_size": 19632,
+      "raw": 688640,
+      "raw_size": 14848,
+      "flags": 3221225536
+    },
+    {
+      "name": ".pdata",
+      "rva": 712704,
+      "virtual_size": 27336,
+      "raw": 703488,
+      "raw_size": 27648,
+      "flags": 1073741888
+    },
+    {
+      "name": ".fptable",
+      "rva": 741376,
+      "virtual_size": 256,
+      "raw": 731136,
+      "raw_size": 512,
+      "flags": 3221225536
+    },
+    {
+      "name": ".rsrc",
+      "rva": 745472,
+      "virtual_size": 1232,
+      "raw": 731648,
+      "raw_size": 1536,
+      "flags": 1073741888
+    },
+    {
+      "name": ".reloc",
+      "rva": 749568,
+      "virtual_size": 4560,
+      "raw": 733184,
+      "raw_size": 4608,
+      "flags": 1107296320
+    }
+  ]
+}

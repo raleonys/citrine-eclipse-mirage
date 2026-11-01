@@ -1,0 +1,51 @@
+{
+  "schema": "cem.field-source-import-policy.v1",
+  "scope": "Exact research imports excluded from the application source package only after complete byte verification",
+  "source_import_kit_sha256": "62383643ff46d1cb65a5d1d6c2bb2d2a6607e7b5da5f267deb57dddd6f7a8886",
+  "fields": {
+    "bluefield": {
+      "archive": "preloader_l_BF02_FIX31_APPLICATION_SOURCE_NOT_RELEASE.zip",
+      "archive_sha256": "20c707f6cc57901674c26345983f5975150ab67fd547f4f3e95221e78066f416",
+      "file_count": 2018,
+      "file_manifest_sha256": "50cb59e3b2ad47bb6dd13ebcb5cb6bf7a2fbad68134da4ede60e74465bbc816c",
+      "pending_readme_sha256": "2fb67b725ecf37d086349349141ab9ddcb413b367be87308221bb2cbb5fa7aae",
+      "imported_readme_sha256": "be2d460a2cd285922a8f6f3b709e9afc1e5362ab52c930e4918c58cd393f7e97",
+      "receipt_sha256": "6e5080670d92ee47c0413a0ed848f7b1b1302cf43a4b1488e86f6aea2be524ae",
+      "branch": "research/field-retirement/bluefield",
+      "import_parent_commit": "6e41786e23061dd639057e63852cbdf2c2a29d4a"
+    },
+    "brownfield": {
+      "archive": "preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+      "archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "file_count": 1898,
+      "file_manifest_sha256": "e5ebaebcb5b6ef0c734fd46fa2c65aace60ee3eb7b4bbad7a61d87eae230567c",
+      "pending_readme_sha256": "f7dd190441bf822e60d407dc3ec145d1dab180806e0dac10057d901ef30cc047",
+      "imported_readme_sha256": "495677bd8d5e3127f8d9282e7580ab73630a77ceb9709db8c49e9c2ed45475df",
+      "receipt_sha256": "71a09efe8340155989c641b37b0f28317b74904cebb83d8dddbee5f5880234c1",
+      "branch": "research/field-retirement/brownfield",
+      "import_parent_commit": "6372de4422c05f8bd76ced119ceea46cdd7ebf03"
+    },
+    "greenfield": {
+      "archive": "GREENFIELD_PRELOADER_SURGE_GF14_NATIVE_EVIDENCE_CUSTODY_FULL_SOURCE_NOT_RELEASE_2026-10-20.zip",
+      "archive_sha256": "03edc7930459a67518b4c4833779b00f41e8fb4f55ba9ee179b0d3f76dbc2b23",
+      "file_count": 1369,
+      "file_manifest_sha256": "ab8b24b9c6060e88b8cd7dc2d391d4d0fd1d76b24b126a0d28d001322ab5913e",
+      "pending_readme_sha256": "6e93ada5082db793c82a7f2c6aa871f8c19d4e61bc899e23f75b7f3b96160a68",
+      "imported_readme_sha256": "133d9c327ace3104de5a78c77d50639cab7d5a001e3539f234f55b68536aad1b",
+      "receipt_sha256": "3f148d8815cfc9e92087bff4f9c72e069c1e250e2574a1aed22867f4ae7a4bc0",
+      "branch": "research/field-retirement/greenfield",
+      "import_parent_commit": "552abae71cbaa56b6d2aa84c25efeebee3c44361"
+    },
+    "redfield": {
+      "archive": "REDFIELD_RF37_GOLDEN_BINDING_FIX01_FULL_SOURCE_NOT_RELEASE_2026-10-21.zip",
+      "archive_sha256": "e9e6eb8ffe0aa24d4e21a12273aeac32791119b07df82cccaa09394d363f1fc6",
+      "file_count": 3796,
+      "file_manifest_sha256": "6bc9ab6ac94ab8878c4d708da4d3cf056457574334afa8e00f952d2aa2c7e703",
+      "pending_readme_sha256": "85c73d79e1b9c7847e3c8c8708f49216909496a59fe79212867ac66bf918ed54",
+      "imported_readme_sha256": "f115387d63c0e6f012ed742c9171ddf7382feecb0ded6f826403d4e595d5b20a",
+      "receipt_sha256": "a3f90486c3c122fa0cf8faf9d7d64492b97c158f1769a73f34322715b89ff8c5",
+      "branch": "research/field-retirement/redfield",
+      "import_parent_commit": "8ac2de66dda844d403405463881f6a04acc785ec"
+    }
+  }
+}

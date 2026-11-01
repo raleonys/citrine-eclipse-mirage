@@ -1,0 +1,14 @@
+{
+  "profile": "debug",
+  "source_digest": "4d97420c289b9b4088cb483c3a07c64ae4dbea89ad8536b6f3557d3b36df9e20",
+  "configure": {
+    "exit_code": 0,
+    "log": "debug_configure.log"
+  },
+  "build": {
+    "exit_code": 0,
+    "log": "debug_build.log"
+  },
+  "artifact_recovery": "DEBUG_BUILD_RECOVERY.json",
+  "preflight": "PASS"
+}

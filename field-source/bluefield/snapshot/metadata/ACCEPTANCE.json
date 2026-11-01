@@ -1,0 +1,39 @@
+{
+  "classification": "NON_RELEASE_WORK",
+  "status": "PASS_BOUNDED_SOURCE_QA_NATIVE_NOT_RUN",
+  "source_digest": "459db9aac948a242e06c309c60a58b642679c9799ae5907e27b2f16b7f729375",
+  "official_publication": false,
+  "scope": "Exact REVIEW31 whole-region64MiB remaining scan guard; other122 runtime unchanged. All native lifecycle/timeout/numeric policies retained.",
+  "portable_CTest": {
+    "Production": "52/52",
+    "Debug": "52/52"
+  },
+  "source_negatives": 80,
+  "synthetic_PE_negatives": 8,
+  "actual_body_model_checks": 150,
+  "negative_runtime_controls": 3,
+  "focused_ASan_UBSan": "PASS1 test TU including actual production unload body; not native SDK/SEH/OS or full-core",
+  "all64_prior_Cpp_headers_unchanged": true,
+  "vendor_files_unchanged": 1060,
+  "resolved_subfinding": "D13/D21_OVER_BUDGET_REGION_READ_BEFORE_REFUSAL",
+  "source_FIX30_open": 7,
+  "carried_REVIEW31_DEP05_review_closure": true,
+  "main_reviews_before": 6,
+  "main_reviews_after": 6,
+  "remaining_open": [
+    "D02",
+    "D06",
+    "D07",
+    "D13",
+    "D14",
+    "D21"
+  ],
+  "NOT_RUN": [
+    "Windows/MSVC DLL or native fixture build",
+    "native SDK/SEH/thread suspension/unload/provider/IOCP/CRT/game",
+    "actual DLL Golden",
+    "full-core sanitizer",
+    "LSan"
+  ],
+  "exact_ZIP_clean_replay": "Pending external exact-ZIP final QA; receipt cannot be inserted into the same sealed archive it validates."
+}

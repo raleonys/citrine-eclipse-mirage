@@ -1,0 +1,38 @@
+{
+  "status": "PASS_TARGETED_NEGATIVE_CONTROLS",
+  "source_digest": "b0000e730ae5e5db5f8be686d7d2920dad915a6b3f843c08cefd51b4f08efbec",
+  "test_sha256": "c30571154e8aa32834b829d0758eda6125d603d75080afeeb29bea8e28bf0e8c",
+  "scope": "Two temporary production-header mutations; unchanged actual registry algorithm/new test freshly compiled. No shipping source changed. Native Win32 binding is separately static, not executed.",
+  "cases": [
+    {
+      "case": "only_top_recursive_frame",
+      "file": "src/hooks/callback_lock.hpp",
+      "current_sha256": "377e51fed5bc97dfdb39306574ef191dc3ded3ce488c04c5dda56f1dc0eea0fd",
+      "mutated_sha256": "6cb36d76130e07c1eafa1ee4585712448785e402aee31e3b42625bec9cea47d0",
+      "mutation": {
+        "before": "frame=frame->previous_",
+        "after": "frame=nullptr"
+      },
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_assertion": "pause releases every recursive acquisition",
+      "output": "FAIL registry wait: pause releases every recursive acquisition\n",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    },
+    {
+      "case": "no_lock_restoration",
+      "file": "src/hooks/callback_lock.hpp",
+      "current_sha256": "377e51fed5bc97dfdb39306574ef191dc3ded3ce488c04c5dda56f1dc0eea0fd",
+      "mutated_sha256": "3fbf27c25cc497a9dfbbc3bf2f36e6468207a52e2edda1f8aa703d9029672699",
+      "mutation": {
+        "before": "while(resume_)",
+        "after": "while(false && resume_)"
+      },
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_assertion": "nested pause restores reentrant ownership",
+      "output": "FAIL registry wait: nested pause restores reentrant ownership\n",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    }
+  ]
+}

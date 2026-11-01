@@ -1,0 +1,825 @@
+{
+  "scope": "All directly mapped first-party src imports with exact archive-member SHA verification; include/namespace/comment normalization preserves string literals. A normalized match is not native behavior/ABI proof. Scoped extracts and binary constants are separate.",
+  "files": [
+    {
+      "destination": "src/achievements/persistence.cpp",
+      "origin": "anadius-achievement-runtime-source/runtime.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "5ec1e7c2fc2dced97d781450ad15058bc9cc2c9f5486d7ff3c35fe81bfd9e2b7",
+      "current_sha256": "500266a15958f948ff3c232b2eb8a73b1e957191c4dc4730d1c10d9492aedf16",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/achievements/persistence.hpp",
+      "origin": "anadius-achievement-runtime-source/runtime.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "d28eb0121de0efa000ea2179f3d8934d4aaf212a36407146b5078116844ea400",
+      "current_sha256": "bd478e58b438e137c7bad05cbe8b654ba6718bcac665e7f40fa8a56b6cd072ee",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/achievements/utc.cpp",
+      "origin": "anadius-achievement-runtime-source/utc.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "7684a1ffe3dfbb52585c893eb23c53c1ec7f272862cb258cb99b52f84d9f7cbe",
+      "current_sha256": "9d89d59eef8497b63750bbb988ea442b955b73ff4fa255b04b4f81e8f1c2f166",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/achievements/utc.hpp",
+      "origin": "anadius-achievement-runtime-source/utc.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "75f907fe609da71eeb4c7737da137ed0a53574fac251c820a4007b19c5214373",
+      "current_sha256": "0e08cf6c932a59fa244a2775304be653bfe66624443ca8d86baa4a37a54a87df",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/achievements/storage.cpp",
+      "origin": "anadius-achievement-storage-source/storage.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "2a2f23e278f35e8920047c2a9444e1fd150220d01bb2d727d1f3378a43684d13",
+      "current_sha256": "62bccab3bc9e05db7a0564978cb7ccbbde94dbeca5a1bdeb8b05103a78340d6e",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/achievements/storage.hpp",
+      "origin": "anadius-achievement-storage-source/storage.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "54e040d5b54eb6846a849ac5e128681de5adc2e17258b2ed39fc40ff51c9403a",
+      "current_sha256": "a9796c23f348e5a9a496988b28dabbf9ef6e598f443449ff62cf537db0500bf2",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/achievements/ini_writer.cpp",
+      "origin": "anadius-achievement-writer-source/writer.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "20bd58a3fb48d3db046725fa6c154da475072c9dbd29f21e7c6a34c617319b87",
+      "current_sha256": "f40063d740b75cb12f4395d864d51702d7cd9c409300f01929a74544e61e4039",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/achievements/ini_writer.hpp",
+      "origin": "anadius-achievement-writer-source/writer.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "3c2b5bf57369279c5d484c4435b33157a0af6b363e798f3852a70a40b6691f9b",
+      "current_sha256": "c13c87a8215d6664d9a0c94312692ec9b9737d035d83d9c368b58c967af94c2e",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/time/calendar.cpp",
+      "origin": "anadius-calendar-source/calendar.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "ef95920c0c8c4a3056cb8878931ec6733a4c3262b7fb1d96ff5352c9ffbcda0f",
+      "current_sha256": "891ab9a0241bcb6c0bb87ddb4050e7475b77e8318c9ef23d1e3a5711c183b07b",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/time/calendar.hpp",
+      "origin": "anadius-calendar-source/calendar.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "e46c9ed16d357d6c225aae29afb799ad2d41ce26160749e3ea25eeb762b685b4",
+      "current_sha256": "0e28eb30e01dbce58b7248db63aa369685219c2f6cb9b08f3abbc1ac662d4f5c",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/configuration/apply.cpp",
+      "origin": "anadius-config-application-source/application.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb",
+      "current_sha256": "986192fb49d9aa214c88ef2d69bd97fbd39abd376014ae40a9ee6f9299d075d5",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/configuration/apply.hpp",
+      "origin": "anadius-config-application-source/application.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2",
+      "current_sha256": "cef0ed611f25980398c23ba327426ac4cf5970fc1aae4d8e2adf57ad0cd04f2a",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/configuration/hash_table.cpp",
+      "origin": "anadius-config-hash-source/hash_table.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f",
+      "current_sha256": "229e92d613298a9bcf4c1cabc96b03373900a3dcfa0e8833b6ab7046af381c6a",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/configuration/hash_table.hpp",
+      "origin": "anadius-config-hash-source/hash_table.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "d05e54e5232dda1b8cb9e3aabe46677135cf60483939bee7b2801f489025e2bf",
+      "current_sha256": "0bb455575fce4a446dba2c38e132881dc7c398ddeb55d8f175a1527c771f234a",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/configuration/state.cpp",
+      "origin": "anadius-config-source/configuration.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "ab1c09e52c3b4f8a8a24070b057d9eb4da72d6b24722cba931d80a5f92a9a05a",
+      "current_sha256": "b230785d2152efd576170c29211f8f231af5cdabd58cbfc00b8992056dba1a01",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/configuration/state.hpp",
+      "origin": "anadius-config-source/configuration.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "036eea42c74731b9c4e5bbe574e2c953b8010c2e626f5f5caf84f2029aab3f24",
+      "current_sha256": "2ea70c400268b56a09a765006fd0af8a285312dcd987fb8923bd22be363c6189",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/handlers/content.cpp",
+      "origin": "anadius-content-handlers-source/content_handlers.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "3cd0a086a6fb9451d87cf63470877e8be72264ca29894dcb009785dedbc0eab3",
+      "current_sha256": "a157ab93dd31372ab612886edd64e1ed3552ef62a38161d88a828fc6397d5e30",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/handlers/content.hpp",
+      "origin": "anadius-content-handlers-source/content_handlers.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "3d7e56eac5fe80d0a76cec2baa7a160dc7a2e32d06b1d2fb18ff006cdc514ba7",
+      "current_sha256": "7976df2fd35415a4263e406c9cac67c2c8d6edcf87a52c3eb6fea4467686927c",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/crypto/constants.hpp",
+      "origin": "anadius-crypto-source/constants.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "05b802de2ac78f93c1fdf8abed0ea50ef2f9b284a6a5cefef2f4188b0f4b56b2",
+      "current_sha256": "f93d4f923e7838fd0c78a25f6daed9b743ea4b4ef8e24c99d15fdd5250500f1b",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/crypto/crypto.cpp",
+      "origin": "anadius-crypto-source/crypto.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "cd493597464ba22c7c11557c36f033387770e0cc62d4fbbaefc1676bbfabd436",
+      "current_sha256": "4054f6628740cbc7613ba86d1831d8d14640aa1632c9ddf197fa2798b6b64bda",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/crypto/crypto.hpp",
+      "origin": "anadius-crypto-source/crypto.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "33ae57c39012534dc5b8321199e0ef2c82ac77455c17632df28a74a27ac2fa77",
+      "current_sha256": "ba093b9c7e2902bea2a381e9bddbaf005f25ccfe1066d5914f756e3e2012ce19",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/protocol/router.cpp",
+      "origin": "anadius-dispatch-source/router.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "64fbd0a5403f624f1d204617fb3eb80e188d27b86de74418d02b56d916f73801",
+      "current_sha256": "aad5f0871e3045aa8102b6b308d49c9aef0d2aff323a51504e8851d29199e075",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/protocol/router.hpp",
+      "origin": "anadius-dispatch-source/router.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "f451f93d8095218650405d2c8c471efcf4cc26df72ee6358d11378282aef0492",
+      "current_sha256": "6402cb5eec31ad81458948409c149406276f519cb2b3e5afc519c0d544be1349",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/files/binary_io.cpp",
+      "origin": "anadius-file-source/binary_io.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222",
+      "current_sha256": "d2b42a5d5d2047c52f049e13ad2253c1e45cbc5b6106ac4e871fbd852320283d",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/files/binary_io.hpp",
+      "origin": "anadius-file-source/binary_io.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "5a1ef9c90437e70677458e559488d8c340de0dfcff4b74157254bf391889f7b4",
+      "current_sha256": "d0caced86e11cff1419f233e2722bf4d89ab0a1405754686b7ee3a29e543d1ac",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/files/license_files.cpp",
+      "origin": "anadius-file-source/license_files.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "bc4d9250aeba6abf3feb55408f812a2f6efe58e79e9524bcf84d8972682db371",
+      "current_sha256": "8a2a186872d479f18d5b5650c6434c63371fdcfb0e81bcdf9ab72765e030891e",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/files/license_files.hpp",
+      "origin": "anadius-file-source/license_files.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "5984806f93a8a3d2980ece6e9da8504f79241109168a447408624077c4474340",
+      "current_sha256": "c7feaf920bed9521077a0ba09d2862bfe4a4703215cee3b4deed6b7a22497b9d",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/files/native_io.cpp",
+      "origin": "anadius-file-source/native_io.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "e786fbd46741d172eca7d9a2f511e9757703d738f9998a857306665b316792ca",
+      "current_sha256": "f5f0ceb827a658728b9bdd176c322058a37ccad64f28e7757bf0dedffb032624",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/handlers/information.cpp",
+      "origin": "anadius-handlers-source/handlers.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+      "current_sha256": "cbfd9935b47cb6b26be4d3b267cac3bced0aefbd9f87562b3662d89bd8b87c44",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/handlers/information.hpp",
+      "origin": "anadius-handlers-source/handlers.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "e393944f178db370cac993d9f11e91508112e4ef9e7b16872360c0211ef61aed",
+      "current_sha256": "f98bf37e8b513f85f4f609f00df03f55def624c29dce13152f41b27e2edf318d",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/hashing/hash.cpp",
+      "origin": "anadius-hash-source/hash.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "c9e6e2836f5a2763551b6e05699d124c2c3ba720f63f6c26a0b30bbaf6a35186",
+      "current_sha256": "b28b8a9e7d716170cafabeef3fae318a606fb1593eeb2d5d3b5f7723908a2005",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/hashing/hash.hpp",
+      "origin": "anadius-hash-source/hash.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "1719714ed038c7bfa8cb1cbda94927d3cd34fac3783b54fff6a880a8bee771c7",
+      "current_sha256": "fc286621075633456e8bb49ca90657336469fd569a1e385a825c578b098a2238",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/hooks/host_callbacks.cpp",
+      "origin": "anadius-host-callbacks-source/callbacks.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "a21e66575abe057fcaf05b2f4782593c4a537fb01d707ec77b07c4ec634330a1",
+      "current_sha256": "ae19803c44bc1b72ad12b3d46a049cb17c99bf0ff648f1c0559a6e76cd2e3636",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/hooks/host_callbacks.hpp",
+      "origin": "anadius-host-callbacks-source/callbacks.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "1fc379d622ae3480bd9d441f181454703735bacb7832f80206bf79d0d863f0bf",
+      "current_sha256": "8b75f90833212cba75526e97f0b8f61c9a145bb85b472bf6e3c5a7fb8c187701",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/hooks/setup.cpp",
+      "origin": "anadius-host-init-source/host_init.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b",
+      "current_sha256": "d03cc66a308bc954e546da7c417e3d0387b81c5bb178ae43cdad96a81485977f",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/hooks/setup.hpp",
+      "origin": "anadius-host-init-source/host_init.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "0ef5afbf19ad7452ddfc4ed54ed1dd0789f6c42eb9a47bc9dbccc1aa4cc35ba7",
+      "current_sha256": "b2bec8ea3566e6a1e1d86b385aafaf420d5fa234ae46dbba293c7586245a161f",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/licensing/license.cpp",
+      "origin": "anadius-license-source/license.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152",
+      "current_sha256": "613ec9a3b9b9b5f3edb38ec49b4548b7bbae2039d0fa825c169b6894a9af9a74",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/licensing/license.hpp",
+      "origin": "anadius-license-source/license.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "a949a169740b5bce16398f18f39a8f13a9d9065e343509c3791dca9e03816c36",
+      "current_sha256": "d1f4b4caa486568e6e2a6c1397198b0d1b023adf75b74ce8bc4f9d582b4752ed",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/licensing/literals.hpp",
+      "origin": "anadius-license-source/literals.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "bcd245a5d73798417e4e13533b013e811b873f2710a8e517a71cfdd003c3f6f1",
+      "current_sha256": "462835f57a943c11676f4233d2ed80956c13fadb1baead6d2357bef54a1c43e0",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/protocol/messages.cpp",
+      "origin": "anadius-messages-source/messages.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2",
+      "current_sha256": "65433c16c66528520bb41912eb880f9a9a06c21b4f0dbc0966e49e29bd52e260",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/protocol/messages.hpp",
+      "origin": "anadius-messages-source/messages.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "42a33b619026a7a3201adbff54d853252d46a18d8d2252b7804c39929d4f54d4",
+      "current_sha256": "7d54e7d84746a0290c245bf6bd5d5007ecb65be0bd965a3f5e810ababc19b8be",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/handlers/presence.cpp",
+      "origin": "anadius-misc-handlers-source/misc_handlers.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+      "current_sha256": "8c66bc2fc126798920f7b5821f065c14693ef2ff6b37ff047ef11d578e0097cb",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/handlers/presence.hpp",
+      "origin": "anadius-misc-handlers-source/misc_handlers.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "6d8adccf80a5f81656a69c02821eadb6497459aa10c2e88b4d99b2dad02a2cf3",
+      "current_sha256": "0bb2254ea6a04e0ac85f9aa845baddac826eee504c725acca217e37739a4a18a",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/windows/hook_callbacks.cpp",
+      "origin": "anadius-native-source/native_callbacks.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "06521178fbe3a611e8af29706bf4c1d07974e299c0f044a382656330ef6c7d52",
+      "current_sha256": "03461818d29eccbd9e1d84b810e45ab85b1258b18c6ca269421fada507bc6e02",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/windows/hook_callbacks.hpp",
+      "origin": "anadius-native-source/native_callbacks.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "43f76b04c2dda924a2b10b8a7e956d08fe724f7b7d0c7ae398b8515886ecbf95",
+      "current_sha256": "ae61fb3cf905bfc337c26bdbddee6e4ffac11845ed72f9928f823ec4e4bd370c",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/windows/original_effects.cpp",
+      "origin": "anadius-native-source/original_effects.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "44e5dadee6249de342ff7c31c8beeb38a5109b0992c823156ed202aae23b0cf1",
+      "current_sha256": "3ccb5673103865ad297dd8895db3037e4a60aab9b7766bfbe7dc7fa5b69d4b8f",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/hooks/connect.cpp",
+      "origin": "anadius-network-hook-source/connect.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f",
+      "current_sha256": "25aae9038f6b737d2180ab2a65f4b2c8cc2bc1a5f12ec32d0b5796d495c1b446",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/hooks/connect.hpp",
+      "origin": "anadius-network-hook-source/connect.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "f6afcdaf8d2437c1dbb1b71d0d6496a3b653c445619baa60646268be828bafc4",
+      "current_sha256": "cd0e844ed388efbfb4446c15535c245d598a258106447bdb2fa423d9d13e6f77",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/hooks/hook_cleanup.cpp",
+      "origin": "anadius-network-hook-source/hook_cleanup.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "a0dc1b5726b78abad8066537f1b4abc45e0a9245da9bdac425a0aafa30da050b",
+      "current_sha256": "6a0602d0d53ff424f209acc4e947760de3d0b9dcada16dfa4b8b0b0577ac7872",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/hooks/hook_cleanup.hpp",
+      "origin": "anadius-network-hook-source/hook_cleanup.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "d940ec9b265188b0cd10230a2e79bd1ded28a88f28646de52ca3170cc80bc997",
+      "current_sha256": "f33f30e3433428b3b822d92e3951fc23ac9ba5273175ff4ec941a9b4e1e67c6b",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/configuration/parser.cpp",
+      "origin": "anadius-parser-source/parser.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2",
+      "current_sha256": "6fd4733d1bfbea607ace2eb1c13dd071b56c80b012dd61d410e6e7537d29d7f1",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/configuration/parser.hpp",
+      "origin": "anadius-parser-source/parser.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "9e09d6bd1c3f900462c94d7e3bc5acdb141ef1045b6a1ac4e37e25fc1973bdd1",
+      "current_sha256": "aeaf522afe063f959e97600a382c289e04307d3273606688439ba58bb5fa02de",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/paths/paths.cpp",
+      "origin": "anadius-path-source/paths.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "303335a49823dcc91aeea53d3b593d7be3c64c21136c0478d90f043ed127f67e",
+      "current_sha256": "8f5eb06ecf054d5ea8882c913245d0872f0b96e76bd344eddc5ab469094aa4cb",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/paths/paths.hpp",
+      "origin": "anadius-path-source/paths.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "32b694932082aa94d0014e366965c2687afdb7eeeefd2730af957093e32225dc",
+      "current_sha256": "8ecf15c8e0a42c329243ca5c98c01ad7dd5d0b3d78fd5b76726ab2e3c9a94695",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/hooks/abi_cells.hpp",
+      "origin": "anadius-registry-source/abi_cells.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "4fd3d0a6169f8feb22d60f982b94194c3d4b47f2eee1478444e3767070a92351",
+      "current_sha256": "4cb55e7c653dd39e0f9dd8631c302c6a240870e8c9c3dae16c4d2dc7d4cbcc9d",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/hooks/registry.cpp",
+      "origin": "anadius-registry-source/registry.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5",
+      "current_sha256": "5b196a732af11ba65e352c5eb2ef841cd23866dbd7449bb5a436db526ac21995",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/hooks/registry.hpp",
+      "origin": "anadius-registry-source/registry.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "f3393a359bbafe7feef5725aae73967f18e65814cafd0726792b51fbe5716d34",
+      "current_sha256": "30f04d2a3f572fa7a674758a3cae947575ab2f8e1a1ead2ec973f6c46072897c",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/sessions/handler.cpp",
+      "origin": "anadius-session-source/handler.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42",
+      "current_sha256": "2c10ce38afad8f41706a6040830620c5eb324600c29a2e55df47aac746c23929",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/sessions/handler.hpp",
+      "origin": "anadius-session-source/handler.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "270aa21281852e2698983e312b3ebf347cafdc1da2deda94b80ced295addb8c0",
+      "current_sha256": "87b504c00c7f8a3dfff13ed36a3e5b7cb86e2ee081456bc0a879b622f3e34b39",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/contracts/status.hpp",
+      "origin": "anadius-status-source/status.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "db4f36d8804eb75ab63497b47efe33e5ebaf77529dd5cdd33cfa31aee2b1fe81",
+      "current_sha256": "fd20ef54181810f2a8e325ef4746d3ed35c8a78440612c9668b72840bfd246a3",
+      "FIX11_exists": true,
+      "FIX11_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE",
+      "FIX13_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE"
+    },
+    {
+      "destination": "src/time/timestamp.cpp",
+      "origin": "anadius-timestamp-source/timestamp.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "443dc4a0dea62b717d4513f6d8432f84f8d51ff6edf3bc26bd12f6578c02e52c",
+      "current_sha256": "124fe39ab50509eb022e186cc2b1a80ae1fd26022f12c53ab0bdf641e35ce9d7",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/time/timestamp.hpp",
+      "origin": "anadius-timestamp-source/timestamp.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "bdf47aadc38b11393e9317ed9c2e4b43067f8c81c02256a4001289da31ba017e",
+      "current_sha256": "8d39e581b6639ca1351c10a41bbb3db44c9f825c7bee0394924a709d6241ff6a",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/tokens/constants.hpp",
+      "origin": "anadius-token-source/constants.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "5ca7807f6b219ffa2f5d8b1af084495cbe5ac602bc8a93f14ef9a39274dbce3e",
+      "current_sha256": "53c1d1e01d403876fc18000a11c5077bb90648a281f04c5885163fbfc0d320ce",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/tokens/token.cpp",
+      "origin": "anadius-token-source/token.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "fba652fd5f6027ac2d0988237bac10f4cefc9a74fceecc2554667b8484fee020",
+      "current_sha256": "9604ace808de86a3b267af2f177a2e72d755bd66aed0e48793c456f2b62fdf76",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/tokens/token.hpp",
+      "origin": "anadius-token-source/token.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "7a5735cf9198ec8aa18e94a3f339721e12e3b6603efb9933e21a78ef4c8eea4d",
+      "current_sha256": "223067e538b98c2a66fb2c0d3acecbc4b47194bb07eff6369b345bed946b4f1f",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/xml/reader.cpp",
+      "origin": "anadius-xml-reader-source/reader.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "0c80c24764ad925ada9ca2c485a984ba490f07d7a596db1eb12c2f18af817d66",
+      "current_sha256": "17a0309e68e2f28e875f51325452b12849fcdb7f7fbdc68c63bf6e70965fa0af",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/xml/reader.hpp",
+      "origin": "anadius-xml-reader-source/reader.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e",
+      "current_sha256": "21327311723692569b5b1c62e040ac9174d6780b1de6a9e3e82b550af88e1d9f",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/xml/memory_printer.cpp",
+      "origin": "anadius-xml-source/memory_printer.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "0b15eda57fe5396438869e00b5de5d17ce117af9ab29ccd49335b9ca30414e05",
+      "current_sha256": "eeacf4e54ddc9f664463fd6b091f8a22fe0f04de9c347392c8f26a36638863ed",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/xml/memory_printer.hpp",
+      "origin": "anadius-xml-source/memory_printer.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "3980f07002c4375413d3d9b517f6bb4ce9c53fa034ec6eba5c7d16d9ed39c6af",
+      "current_sha256": "837f7c15e96c43e31622a3c62d5ea325d82fc4b0a55e59b86e39a302c260287e",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/runtime/startup.hpp",
+      "origin": "anadius-startup-source/startup.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "fc915cf189761a78bea8b0d7ac083722881893bf4d2007fa343986484c95f5e9",
+      "current_sha256": "df968559e3027a2e87a7eb9add6666d6652d97c0eba5d8fe1c82cbdb702e2b9c",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/runtime/startup.cpp",
+      "origin": "anadius-startup-source/startup.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "87bcd90892dcea301fc3c1aceb589d1097875d9400d3bd69b64570d008740dea",
+      "current_sha256": "a3a4c2df97660d2b607685c27699479e0c4d48fa35b9ee19b334aef376d17929",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/windows/startup_platform.cpp",
+      "origin": "anadius-startup-source/windows_platform.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "d765091c8a8b4ee121a425860c59d558eff918d75e7e7c87114d117ee65b5ef9",
+      "current_sha256": "7bea32df070ffe4590596d39a4d23d58318fac72a9eb223854f522c2aa49c05f",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/profiles/online.hpp",
+      "origin": "anadius-online-source/online.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b",
+      "current_sha256": "0fafba297f9184849227734e855986fb97b2df3197f2b20281c7c0f854fc6a65",
+      "FIX11_exists": true,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NORMALIZED_SOURCE_MATCH"
+    },
+    {
+      "destination": "src/profiles/online.cpp",
+      "origin": "anadius-online-source/online.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c",
+      "current_sha256": "42bdb53574806059f9fb05230cb99e6584d8418b020790279cce8dd0d46ce71a",
+      "FIX11_exists": true,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "SOURCE_DIFF_REVIEW_REQUIRED"
+    },
+    {
+      "destination": "src/transport/read_window.cpp",
+      "origin": "anadius-server-source/server.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0",
+      "current_sha256": "05047e1b30068016a17194767e9282f9c58dd804eb83752e886f8516fae32402",
+      "FIX11_exists": true,
+      "FIX11_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE",
+      "FIX13_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE"
+    },
+    {
+      "destination": "src/licensing/key_store.cpp",
+      "origin": "anadius-all-functions.pseudo.c",
+      "origin_sha256_verified": true,
+      "original_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "current_sha256": "7f8d21018f35c19d840ddd7c3562f362f1d5844094a8bd42ead117b7f3bc29c8",
+      "FIX11_exists": true,
+      "FIX11_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE",
+      "FIX13_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE"
+    },
+    {
+      "destination": "src/profiles/online_session.cpp",
+      "origin": "anadius-all-functions.asm.txt",
+      "origin_sha256_verified": true,
+      "original_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "current_sha256": "c06ecc7993be6d15e7d8c09b260cd7d2d343ea3a705399958dca8d424f2069e3",
+      "FIX11_exists": true,
+      "FIX11_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE",
+      "FIX13_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE"
+    },
+    {
+      "destination": "src/hooks/crypt_query.hpp",
+      "origin": "preloader-source/preloader_core.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "61e1b948bd7461194ef86099de7ea4ecdacafd1627fe701a5bdd04de85435de9",
+      "current_sha256": "6d2fa16e6261b734f60326ad4fce0efaabf67bf27dd55869c344a5a94b34c6ae",
+      "FIX11_exists": true,
+      "FIX11_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE",
+      "FIX13_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE"
+    },
+    {
+      "destination": "src/hooks/crypt_query.cpp",
+      "origin": "preloader-source/preloader_core.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "61e1b948bd7461194ef86099de7ea4ecdacafd1627fe701a5bdd04de85435de9",
+      "current_sha256": "5cee5dcf52ea6c0dd436365c70395b72dc24a6655b6b07dc1ff0c5c92b0e0f39",
+      "FIX11_exists": true,
+      "FIX11_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE",
+      "FIX13_comparison": "SCOPED_EXTRACTION_NOT_WHOLE_FILE"
+    },
+    {
+      "destination": "src/libraries/libraries.cpp",
+      "origin": "anadius-libraries-source/libraries.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "e31b948aef40abd8510e16324389a80f81edbedf27fbfdfb6357073d2497960f",
+      "current_sha256": "8f6981e055d9bb1b113a4b85a8fee60489b2da9afef68c2103712a78cee8c697",
+      "FIX11_exists": false,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NOT_IN_FIX11_ADDED_DIRECT_ORIGINAL_IMPORT"
+    },
+    {
+      "destination": "src/libraries/libraries.hpp",
+      "origin": "anadius-libraries-source/libraries.hpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "711dd108523bc0ea5b3a0ceab3c9f3f2afb507837866a78f554d7dfab4fdb4f1",
+      "current_sha256": "e07cffbe930eaeb403562712479789e8f7f9f85f0ad538953c3a13b08055a029",
+      "FIX11_exists": false,
+      "FIX13_comparison": "NORMALIZED_SOURCE_MATCH",
+      "FIX11_comparison": "NOT_IN_FIX11_ADDED_DIRECT_ORIGINAL_IMPORT"
+    },
+    {
+      "destination": "src/windows/library_calls.cpp",
+      "origin": "anadius-libraries-source/native_system.cpp",
+      "origin_sha256_verified": true,
+      "original_sha256": "07d0334288981264b83b6832dcf3bb79276ee11f1d9313c60a29638d6ede53ad",
+      "current_sha256": "0cc9510cf0b02741d63151bb1c66595063982b3488c2d18e9a516ea4644e2457",
+      "FIX11_exists": false,
+      "FIX13_comparison": "SOURCE_DIFF_REVIEW_REQUIRED",
+      "FIX11_comparison": "NOT_IN_FIX11_ADDED_DIRECT_ORIGINAL_IMPORT"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+#include <windows.h>
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 0,0,0,0
+PRODUCTVERSION 0,0,0,0
+FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+FILEFLAGS VS_FF_PRIVATEBUILD
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_DLL
+BEGIN
+ BLOCK "StringFileInfo"
+ BEGIN
+  BLOCK "040904B0"
+  BEGIN
+   VALUE "FileDescription", "preloader_l local development DLL\0"
+   VALUE "ProductName", "SURGE\0"
+   VALUE "PrivateBuild", "NON_RELEASE_WORK\0"
+   VALUE "OriginalFilename", "preloader_l.dll\0"
+   VALUE "LegalCopyright", "Project-authored portions GPL-3.0-only; vendor notices preserved\0"
+  END
+ END
+ BLOCK "VarFileInfo"
+ BEGIN
+  VALUE "Translation", 0x0409, 1200
+ END
+END

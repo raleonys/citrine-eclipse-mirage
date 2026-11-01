@@ -1,0 +1,1724 @@
+--- RE_PACKET/anadius-achievement-runtime-source/runtime.hpp
++++ FIX14/src/achievements/persistence.hpp
+@@ -1,35 +1,35 @@
+ #pragma once
+-#include "utc.hpp"
+-#include "../anadius-achievement-storage-source/storage.hpp"
+-#include "../anadius-content-handlers-source/content_handlers.hpp"
++#include "src/achievements/utc.hpp"
++#include "src/achievements/storage.hpp"
++#include "src/handlers/content.hpp"
+ 
+-namespace anadius::achievement_runtime {
++namespace preloader_l::achievement_runtime {
+ // New source composition, not a separately identified original function.
+ // One caller-owned State/Paths supplies the native shared-global identities.
+ // Other content/provider methods stay abstract; no successful no-op effects.
+-class PersistenceEffects:public content_handlers_recovered::Effects {
++class PersistenceEffects:public content::Effects {
+ public:
+     PersistenceEffects(configuration::State& state,achievement_storage::Paths& paths,
+         Clock& clock,Formatter& formatter,achievement_writer::Effects& directories,
+-        file_recovered::Factory& files)
++        files::Factory& files)
+         :state_(state),paths_(paths),clock_(clock),formatter_(formatter),
+          directories_(directories),files_(files){}
+     std::string utc_time_041b60(std::uint64_t&) final;
+-    std::unique_ptr<content_handlers_recovered::DocumentWriter> printer_0019b0() final;
++    std::unique_ptr<content::DocumentWriter> printer_0019b0() final;
+     void write_xml_03c1d0(const configuration::Path&,std::string_view) final;
+-    void save_steam_01f9a0(const content_handlers_recovered::AchievementMap&) final;
+-private:
++    void save_steam_01f9a0(const content::AchievementMap&) final;
++protected:
+     configuration::State& state_;
+     achievement_storage::Paths& paths_;
+     Clock& clock_;
+     Formatter& formatter_;
+     achievement_writer::Effects& directories_;
+-    file_recovered::Factory& files_;
++    files::Factory& files_;
+ };
+ // Vectors are borrowed as spans: do not reallocate them while using this view.
+ // Mutex/event/global lifetimes and initialization remain caller obligations.
+-content_handlers_recovered::StateReferences bind_state(configuration::State&,
++content::StateReferences bind_state(configuration::State&,
+     const achievement_storage::Paths&,const std::uint8_t& online,
+-    std::int32_t& saved_avatar_size,content_handlers_recovered::Mutex&,
+-    content_handlers_recovered::EventQueue&);
+-} // namespace anadius::achievement_runtime
++    std::int32_t& saved_avatar_size,content::Mutex&,
++    content::EventQueue&);
++} // namespace preloader_l::achievement_runtime
+--- RE_PACKET/anadius-achievement-storage-source/storage.cpp
++++ FIX14/src/achievements/storage.cpp
+@@ -1,13 +1,13 @@
+-#include "storage.hpp"
+-#include "../anadius-path-source/paths.hpp"
++#include "src/achievements/storage.hpp"
++#include "src/paths/paths.hpp"
+ #include <bit>
+ #include <cctype>
+ #include <cstdio>
+ #include <stdexcept>
+ 
+-namespace anadius::achievement_storage {
++namespace preloader_l::achievement_storage {
+ namespace {
+-std::optional<std::string_view> attribute(const messages_recovered::XmlNode& node,std::string_view key) {
++std::optional<std::string_view> attribute(const messages::XmlNode& node,std::string_view key) {
+     const auto value=node.attribute(key);
+     if(!value)return std::nullopt;
+     return value->substr(0,value->find('\0')); // Original attributes are C strings.
+@@ -16,16 +16,24 @@
+ bool HostCrtNumbers::is_space(unsigned char c) {return std::isspace(c)!=0;}
+ std::optional<std::uint32_t> HostCrtNumbers::scan_decimal(std::string_view raw) {
+     const std::string input(raw);int value=0;
++#ifdef _MSC_VER
++    if(::sscanf_s(input.c_str(),"%d",&value)!=1)return std::nullopt;
++#else
+     if(std::sscanf(input.c_str(),"%d",&value)!=1)return std::nullopt;
++#endif
+     static_assert(sizeof(int)==sizeof(std::uint32_t));
+     return std::bit_cast<std::uint32_t>(value);
+ }
+ std::optional<std::uint32_t> HostCrtNumbers::scan_hex(std::string_view raw) {
+     const std::string input(raw);unsigned value=0;
++#ifdef _MSC_VER
++    if(::sscanf_s(input.c_str(),"%x",&value)!=1)return std::nullopt;
++#else
+     if(std::sscanf(input.c_str(),"%x",&value)!=1)return std::nullopt;
++#endif
+     return value;
+ }
+-std::uint32_t attribute_003b70(const messages_recovered::XmlNode& node,std::string_view key,
++std::uint32_t attribute_003b70(const messages::XmlNode& node,std::string_view key,
+                              std::uint32_t fallback,Numbers& numbers) {
+     const auto value=attribute(node,key);
+     if(!value)return fallback;
+@@ -46,7 +54,7 @@
+     return {1,0,0,"0000-00-00T00:00:00",{},{},0};
+ }
+ configuration::Path append(configuration::Path base,const configuration::Path& component) {
+-    path_recovered::append_016b50(base,component);return base;
++    paths::append_016b50(base,component);return base;
+ }
+ }
+ void Storage::update_01eb00(configuration::State& state) {
+@@ -57,7 +65,7 @@
+     }
+     // Empty set preserves a previously supplied XML path; it does not disable it.
+     if(!paths_.xml_path.empty()) {
+-        const auto bytes=file_recovered::read_binary_03b3f0(paths_.xml_path,files_);
++        const auto bytes=files::read_binary_03b3f0(paths_.xml_path,files_);
+         auto parsed=xml_.parse_c_string(bytes);
+         if(!parsed.document)throw std::invalid_argument("Achievement XML backend returned no document");
+         if(!parsed.has_error) {
+@@ -94,4 +102,4 @@
+         if(status.kind!=2)achievement_writer::write_ini_01f9a0(paths_.ini_path,state,effects_,files_);
+     }
+ }
+-} // namespace anadius::achievement_storage
++} // namespace preloader_l::achievement_storage
+--- RE_PACKET/anadius-achievement-runtime-source/utc.cpp
++++ FIX14/src/achievements/utc.cpp
+@@ -1,16 +1,21 @@
+-#include "utc.hpp"
++#include "src/achievements/utc.hpp"
+ #include <ctime>
+ #include <iomanip>
+ #include <sstream>
+ 
+-namespace anadius::achievement_runtime {
++namespace preloader_l::achievement_runtime {
+ std::int64_t HostClock::time_05eeb8() {
+     return static_cast<std::int64_t>(std::time(nullptr));
+ }
+ std::optional<BrokenDown> HostClock::gmtime_05fffc(std::int64_t value) {
++    std::tm fields{};
++#ifdef _WIN32
+     const __time64_t seconds=value;
+-    std::tm fields{};
+     if(::_gmtime64_s(&fields,&seconds)!=0)return std::nullopt;
++#else
++    const std::time_t seconds=static_cast<std::time_t>(value);
++    if(!::gmtime_r(&seconds,&fields))return std::nullopt;
++#endif
+     return BrokenDown{fields.tm_sec,fields.tm_min,fields.tm_hour,fields.tm_mday,
+         fields.tm_mon,fields.tm_year,fields.tm_wday,fields.tm_yday,fields.tm_isdst};
+ }
+@@ -31,8 +36,8 @@
+         if(epoch)*epoch=0;
+         return {};
+     }
+-    if(epoch)*epoch=static_cast<std::uint64_t>(calendar_recovered::epoch_041ff0(*fields));
++    if(epoch)*epoch=static_cast<std::uint64_t>(calendar::epoch_041ff0(*fields));
+     return formatter.put_time_03d610(*fields,filename_mode?
+         "%Y-%m-%d_%H-%M-%S":"%Y-%m-%dT%H:%M:%S");
+ }
+-} // namespace anadius::achievement_runtime
++} // namespace preloader_l::achievement_runtime
+--- RE_PACKET/anadius-config-application-source/application.cpp
++++ FIX14/src/configuration/apply.cpp
+@@ -1,6 +1,6 @@
+-#include "application.hpp"
++#include "src/configuration/apply.hpp"
+ 
+-namespace anadius::config_application {
++namespace preloader_l::config_application {
+ namespace {
+ using namespace configuration;
+ using HashNode=config_hash::Node;
+@@ -20,8 +20,8 @@
+ }
+ }
+ 
+-config_hash::Node read_config2(const configuration::Path& path,file_recovered::Factory& files) {
+-    const auto bytes=file_recovered::read_binary_03b3f0(path,files);
++config_hash::Node read_config2(const configuration::Path& path,files::Factory& files) {
++    const auto bytes=files::read_binary_03b3f0(path,files);
+     parser::State parsed;
+     (void)parser::parse(bytes,parsed); // Raw bytes; parser removes only one BOM.
+     if(const auto* selected=parsed.root.find("Config2"))return config_hash::selected_copy(*selected);
+@@ -141,13 +141,10 @@
+ }
+ 
+ void load_and_apply(configuration::State& state,bool override_pass,
+-                    configuration::Dependencies& deps,file_recovered::Factory& files,Trace* trace) {
+-    const auto name=override_pass?"anadius_override.cfg":"anadius.cfg";
+-    const auto filename=deps.filesystem_widen_010540(name);
+-    const auto parent=deps.parent_path_019820(state.executable_path);
+-    const auto path=deps.join_016b00(parent,filename);
++                    configuration::Dependencies& deps,files::Factory& files,Trace* trace) {
++    const auto path=deps.runtime_path(override_pass?preloader_l::RuntimeFile::override_config:preloader_l::RuntimeFile::base_config);
+     auto selected=read_config2(path,files); // Parser/input destroyed before path log.
+     deps.log_config_path(path);
+     apply_config2(state,selected,override_pass,deps,trace);
+ }
+-} // namespace anadius::config_application
++} // namespace preloader_l::config_application
+--- RE_PACKET/anadius-parser-source/parser.cpp
++++ FIX14/src/configuration/parser.cpp
+@@ -1,8 +1,9 @@
+-#include "parser.hpp"
+-#include <algorithm>
++#include "src/configuration/parser.hpp"
++#include <tao/pegtl.hpp>
++#include <type_traits>
+ #include <utility>
+ 
+-namespace anadius::parser {
++namespace preloader_l::parser {
+ ParseError::ParseError(ErrorRule r,Position p)
+  :std::runtime_error("recovered Config2 grammar mismatch"),rule(r),position(p) {}
+ const Node* Node::find(std::string_view key) const {
+@@ -16,147 +17,89 @@
+         if(old.name==node.name){old=std::move(node);return;}
+     parent.children.push_back(std::move(node));
+ }
+-class Parser {
+-    std::string_view text;
+-    State& state;
+-    Position pos;
+-    bool at(char c) const{return pos.byte<text.size() && text[pos.byte]==c;}
+-    void bump() {
+-        if(text[pos.byte++]=='\n'){++pos.line;pos.column=1;}
+-        else ++pos.column;
++// The original package establishes these VDF rules and action ordering. PEGTL
++// owns matching and input rewind; State actions intentionally do not roll back.
++namespace peg = tao::pegtl;
++namespace vdf {
++struct Escaped : peg::seq<peg::one<'\\'>,peg::one<'"','\\'>> {};
++struct Regular : peg::not_one<'\r','\n'> {};
++struct Character : peg::sor<Escaped,Regular> {};
++struct Quoted : peg::seq<peg::one<'"'>,
++    peg::until<peg::one<'"'>,peg::must<Character>>> {};
++struct Key : Quoted {};
++struct Value : Quoted {};
++struct ObjectName : Quoted {};
++struct Eol : peg::sor<peg::one<'\n'>,peg::string<'\r','\n'>> {};
++struct LineComment : peg::seq<peg::string<'/','/'>,
++    peg::until<peg::sor<Eol,peg::eof>>> {};
++// Separate '/' and '*' matches are intentional: a direct failed opener consumes
++// '/', while a failed attempt under a required rewind guard restores the cursor.
++struct BlockComment : peg::seq<peg::one<'/'>,peg::one<'*'>,
++    peg::until<peg::string<'*','/'>>> {};
++struct Sep : peg::sor<peg::ascii::space,LineComment,BlockComment> {};
++struct Seps : peg::plus<Sep> {};
++struct Object;
++struct KeyValue : peg::seq<Key,Seps,Value> {};
++struct Member : peg::sor<KeyValue,Object> {};
++struct ObjectMembers : peg::until<peg::one<'}'>,
++    peg::sor<peg::list<Member,Seps>,Seps>> {};
++struct Object : peg::seq<ObjectName,peg::star<Sep>,peg::one<'{'>,
++    peg::must<ObjectMembers>> {};
++struct Grammar : peg::until<peg::eof,
++    peg::sor<Eol,Sep,Object,peg::raise<Grammar>>> {};
++} // namespace vdf
++
++template<class Rule> struct Action : peg::nothing<Rule> {};
++template<> struct Action<vdf::Escaped> {
++    template<class Input> static void apply(const Input& in,State& s) {
++        s.accumulator.push_back(in.peek_char(1));
+     }
+-    [[noreturn]] void error(ErrorRule rule) const {throw ParseError(rule,pos);}
+-    // 0135b0 ascii-space mask: HT LF VT FF CR SP; no locale assumption.
+-    bool space() {
+-        if(pos.byte==text.size())return false;
+-        const auto c=static_cast<unsigned char>(text[pos.byte]);
+-        if(c!=' ' && !(c>='\t' && c<='\r'))return false;
+-        bump();return true;
++};
++template<> struct Action<vdf::Regular> {
++    template<class Input> static void apply(const Input& in,State& s) {
++        s.accumulator.push_back(in.peek_char());
+     }
+-    // 013460: // through and including LF/CRLF, or to EOF.
+-    bool comment() {
+-        if(text.substr(pos.byte,2)!="//")return false;
+-        bump();bump();
+-        while(pos.byte<text.size()){
+-            if(at('\n')){bump();return true;}
+-            if(text.substr(pos.byte,2)=="\r\n"){bump();bump();return true;}
+-            bump();
+-        }
+-        return true;
++};
++void move_accumulator(State& s,std::string& destination) {
++    destination=std::move(s.accumulator);s.accumulator.clear();
++}
++template<> struct Action<vdf::Key> {
++    static void apply0(State& s) {move_accumulator(s,s.key);}
++};
++template<> struct Action<vdf::Value> {
++    static void apply0(State& s) {move_accumulator(s,s.value);}
++};
++template<> struct Action<vdf::ObjectName> {
++    static void apply0(State& s) {
++        Node frame;move_accumulator(s,frame.name);
++        s.open_objects.push_back(std::move(frame));
+     }
+-    // 013ed0 direct body form: failure may consume '/' or the entire unfinished
+-    // comment. Callers using a rewind marker restore it; direct body error does not.
+-    bool block_comment_body() {
+-        if(!at('/'))return false;
+-        bump();
+-        if(!at('*'))return false;
+-        bump();
+-        while(pos.byte<text.size()){
+-            if(text.substr(pos.byte,2)=="*/"){bump();bump();return true;}
+-            bump();
+-        }
+-        return false;
++};
++template<> struct Action<vdf::KeyValue> {
++    static void apply0(State& s) {
++        Node node;node.name=std::move(s.key);s.key.clear();
++        node.value=std::move(s.value);s.value.clear();
++        if(s.open_objects.empty())throw std::logic_error("parser action stack empty");
++        assign(s.open_objects.back(),std::move(node));
+     }
+-    // 013520 and the repeat tail of013ab0 wrap the block attempt in a marker.
+-    bool sep(){
+-        if(space() || comment())return true;
+-        const auto saved=pos;
+-        if(block_comment_body())return true;
+-        pos=saved;return false;
++};
++template<> struct Action<vdf::Object> {
++    static void apply0(State& s) {
++        Node node=std::move(s.open_objects.back());s.open_objects.pop_back();
++        assign(s.open_objects.empty()?s.root:s.open_objects.back(),std::move(node));
+     }
+-    // 013ab0 /013cc0's initial Sep has no successful enclosing marker to restore
+-    // before a direct syntax throw; preserve its consumed-failure diagnostic.
+-    bool seps(){
+-        if(!(space() || comment() || block_comment_body()))return false;
+-        while(sep()){}
+-        return true;
+-    }
+-    // 013810 +013640 +0141a0. Unknown escape falls through Regular:
+-    // backslash remains literal; only backslash-quote/backslash-backslash decode.
+-    bool quoted() {
+-        if(!at('"'))return false;
+-        bump();
+-        while(!at('"')){
+-            if(pos.byte==text.size() || at('\r') || at('\n'))error(ErrorRule::quoted_character);
+-            if(at('\\') && pos.byte+1<text.size() &&
+-               (text[pos.byte+1]=='"' || text[pos.byte+1]=='\\')){
+-                bump();state.accumulator.push_back(text[pos.byte]);bump();
+-            }else{state.accumulator.push_back(text[pos.byte]);bump();}
+-        }
+-        bump();return true;
+-    }
+-    void move_accumulator(std::string& destination) {
+-        destination=std::move(state.accumulator);state.accumulator.clear();
+-    }
+-    // 012cf0 assigns a fresh scalar node into current object: duplicate replaces
+-    // previous node including all previous child objects, rather than merging.
+-    void scalar_action() {
+-        Node node;node.name=std::move(state.key);state.key.clear();
+-        node.value=std::move(state.value);state.value.clear();
+-        if(state.open_objects.empty())throw std::logic_error("parser action stack empty");
+-        assign(state.open_objects.back(),std::move(node));
+-    }
+-    // 012bf0 moves completed frame to parent/root; all children are replaced.
+-    void object_action() {
+-        Node node=std::move(state.open_objects.back());state.open_objects.pop_back();
+-        assign(state.open_objects.empty()?state.root:state.open_objects.back(),std::move(node));
+-    }
+-    // 0138e0 ordered choice: KeyValue before Object. Input markers rewind failed
+-    // alternatives; action state (key strings/open frames) does not roll back.
+-    bool member() {
+-        const auto start=pos;
+-        if(quoted()){
+-            move_accumulator(state.key);
+-            if(seps() && quoted()){
+-                move_accumulator(state.value);scalar_action();return true;
+-            }
+-        }
+-        pos=start;
+-        if(object()){object_action();return true;}
+-        pos=start;return false;
+-    }
+-    // 013b70: ObjectName action happens immediately after quoted name, even if
+-    // following '{' does not match. It is NOT a transaction rolled back on false.
+-    bool object() {
+-        if(!quoted())return false;
+-        Node frame;move_accumulator(frame.name);state.open_objects.push_back(std::move(frame));
+-        while(sep()){}
+-        if(!at('{'))return false;
+-        bump();members();return true;
+-    }
+-    // 013cc0: until<'~}'> sor<list<sor<KeyValue,Object>,Seps>,Seps>.
+-    // Repeated outer until also permits adjacent members without a separator;
+-    // KeyValue itself still requires >=1 Sep between quoted key and value.
+-    void members() {
+-        while(!at('}')){
+-            const auto start=pos;
+-            if(member()){
+-                while(true){
+-                    const auto next=pos;
+-                    if(seps() && member())continue;
+-                    pos=next;break;
+-                }
+-            }else{
+-                pos=start;
+-                if(!seps())error(ErrorRule::object_members);
+-            }
+-        }
+-        bump();
+-    }
+-public:
+-    Parser(std::string_view input,State& s):text(input),state(s){}
+-    bool run() {
+-        // 014310 only accepts Objects/Seps/EOL at root. Every invalid ordinary
+-        // exit is a throw helper; no normal plain-false exit was identified.
+-        while(pos.byte<text.size()){
+-            if(at('\n')){bump();continue;}
+-            if(text.substr(pos.byte,2)=="\r\n"){bump();bump();continue;}
+-            if(sep())continue;
+-            const auto start=pos;
+-            if(object()){object_action();continue;}
+-            pos=start;error(ErrorRule::grammar);
+-        }
+-        return true;
++};
++// Keep the owned diagnostic interface consumed by Application and existing tests.
++// This is not an assertion about the original PEGTL version or exception ABI.
++template<class Rule> struct Control : peg::normal<Rule> {
++    template<class Input> [[noreturn]] static void raise(const Input& in,State&) {
++        static_assert(std::is_same_v<Rule,vdf::Character> ||
++                      std::is_same_v<Rule,vdf::ObjectMembers> ||
++                      std::is_same_v<Rule,vdf::Grammar>);
++        constexpr auto rule=std::is_same_v<Rule,vdf::Character> ? ErrorRule::quoted_character :
++            std::is_same_v<Rule,vdf::ObjectMembers> ? ErrorRule::object_members : ErrorRule::grammar;
++        const auto p=in.current_position();
++        throw ParseError(rule,{p.count,p.line,p.column});
+     }
+ };
+ configuration::Node convert(const Node& node,const BinaryIterationOrder& orders,
+@@ -177,9 +120,11 @@
+ bool parse(std::string_view raw,State& state) {
+     state.removed_utf8_bom=raw.substr(0,3)==std::string_view("\xef\xbb\xbf",3);
+     if(state.removed_utf8_bom)raw.remove_prefix(3);
+-    return Parser(raw,state).run();
++    // Explicit LF tracking keeps CR and CRLF diagnostics identical on all hosts.
++    peg::text_view_input<peg::ascii::scan::lf> input(raw.empty()?std::string_view(""):raw);
++    return peg::parse<vdf::Grammar,Action,Control>(input,state);
+ }
+ configuration::Node to_configuration_node(const Node& node,const BinaryIterationOrder& order) {
+     std::vector<std::string> path;return convert(node,order,path);
+ }
+-} // namespace anadius::parser
++} // namespace preloader_l::parser
+--- RE_PACKET/anadius-config-source/configuration.cpp
++++ FIX14/src/configuration/state.cpp
+@@ -1,9 +1,9 @@
+-#include "configuration.hpp"
++#include "src/configuration/state.hpp"
+ #include <algorithm>
+ #include <limits>
+ #include <stdexcept>
+ 
+-namespace anadius::configuration {
++namespace preloader_l::configuration {
+ const Node& Node::child(std::string_view key) const {
+     static const Node absent{};
+     const auto found = children.find(key);
+@@ -226,10 +226,7 @@
+ // 019ad0 outer path, logging, decoded Config2 lookup. Reader and grammar are
+ // required adapters; the source does not parse user CFG using guessed syntax.
+ void load_and_apply(State& state, bool override_pass, Dependencies& deps) {
+-    const auto name = override_pass ? "anadius_override.cfg" : "anadius.cfg";
+-    const auto filename = deps.filesystem_widen_010540(name);
+-    const auto parent = deps.parent_path_019820(state.executable_path);
+-    const auto path = deps.join_016b00(parent, filename);
++    const auto path=deps.runtime_path(override_pass?preloader_l::RuntimeFile::override_config:preloader_l::RuntimeFile::base_config);
+     const auto document = deps.load_document(path);
+     deps.log_config_path(path);
+     apply_config2(state, document.child("Config2"), override_pass, deps);
+@@ -250,30 +247,17 @@
+     state.executable_path = deps.executable_path_03c6d0();
+     passes.load_and_apply(state, false, deps); // 18001c8d1
+     passes.load_and_apply(state, true, deps);  // 18001c8d8
+-    const auto product_component = deps.filesystem_widen_010540("LSX emu");
+-    const auto vendor_component = deps.filesystem_widen_010540("anadius");
+-    state.user_directory = deps.join_016b00(deps.local_app_data_03c6f0(), vendor_component);
+-    state.user_directory = deps.join_016b00(state.user_directory, product_component);
+-    deps.create_directories_018e00(state.user_directory);
+-    state.cookie_path = deps.join_016b00(state.user_directory, deps.filesystem_widen_010540("remid_cookie"));
+-    state.last_profile_path = deps.join_016b00(state.user_directory, deps.filesystem_widen_010540("last_profile"));
+-    state.last_avatar_path = deps.join_016b00(state.user_directory, deps.filesystem_widen_010540("last_avatar"));
+-    const bool default_user_avatar = state.avatar.empty();
+-    if (default_user_avatar)
+-        state.avatar = deps.join_016b00(state.user_directory, deps.filesystem_widen_010540("anadius.png"));
+-    state.default_avatar = deps.join_016b00(state.user_directory, deps.filesystem_widen_010540("default.png"));
+-    if (default_user_avatar)
+-        deps.write_embedded_png_03c020(state.avatar, EmbeddedPng::default_user_1800809d0);
+-    deps.write_embedded_png_03c020(state.default_avatar, EmbeddedPng::default_avatar_180082710);
+-    // Original filesystem enumeration/encoding order belongs to the adapter.
+-    // The exact case-sensitive filename substring check is reconstructed here.
+-    for (const auto& entry : deps.directory_entries(state.user_directory))
+-        if (deps.narrow_path(deps.filename(entry)).find("_AVATAR_") != std::string::npos)
+-            deps.remove_04948c(entry);
++    state.user_directory=deps.runtime_path(preloader_l::RuntimeFile::data_root);
++    state.cookie_path=deps.runtime_path(preloader_l::RuntimeFile::cookie);
++    state.last_profile_path=deps.runtime_path(preloader_l::RuntimeFile::last_profile);
++    state.last_avatar_path=deps.runtime_path(preloader_l::RuntimeFile::last_avatar);
++    state.default_avatar=deps.runtime_path(preloader_l::RuntimeFile::default_avatar);
++    if(state.avatar.empty())state.avatar=state.default_avatar;
++    // Asset materialization is lazy; no cache enumeration/deletion at startup.
+     state.game_attributes["AVAILABLE_VERSION"] = state.game_attributes["INSTALLED_VERSION"];
+     std::replace(state.sdk.begin(), state.sdk.end(), '.', ',');
+     deps.update_achievement_storage_01eb00(state);
+     (void)deps.set_environment_variable("ContentId", state.content_id);
+     (void)deps.set_environment_variable("EAGameLocale", state.game_attributes["INSTALLED_LANGUAGE"]);
+ }
+-} // namespace anadius::configuration
++} // namespace preloader_l::configuration
+--- RE_PACKET/anadius-config-source/configuration.hpp
++++ FIX14/src/configuration/state.hpp
+@@ -1,4 +1,5 @@
+ #pragma once
++#include "src/runtime/path_kind.hpp"
+ #include <cstdint>
+ #include <map>
+ #include <string>
+@@ -7,7 +8,7 @@
+ 
+ // Address-backed C++20 reconstruction. This is an application-logic module,
+ // not the original MSVC object layout or a standalone replacement DLL.
+-namespace anadius::configuration {
++namespace preloader_l::configuration {
+ using Path = std::u16string;
+ struct Node {
+     std::string value;
+@@ -31,9 +32,9 @@
+     std::uint64_t field70;
+ };
+ 
+-// CALLER-SUPPLIED INITIAL STATE. No factory supplies guessed binary defaults.
+-// Tests explicitly seed synthetic zero/old values. Global VAs are documented in
+-// evidence.json; the native/MSVC ABI adapter must populate every real field.
++// Standalone module callers supply state. Application startup uses initial_state()
++// from defaults.hpp, derived from the input 036d20 constructor. Unit models may
++// still seed synthetic values explicitly; this struct is not an MSVC ABI layout.
+ struct State {
+     Path executable_path;                                      // a39e0
+     std::map<std::string, std::string, std::less<>> game_attributes, emulator_attributes;
+@@ -57,7 +58,7 @@
+     Path user_directory, cookie_path, last_profile_path, last_avatar_path, default_avatar;
+ };
+ 
+-enum class EmbeddedPng { default_user_1800809d0, default_avatar_180082710 };
++enum class EmbeddedPng { official_surge };
+ class Dependencies {
+ public:
+     virtual ~Dependencies() = default;
+@@ -70,7 +71,8 @@
+     virtual std::string narrow_path(const Path&) = 0;
+     virtual Path resolve_path_0192d0(std::string_view, const Path& executable, bool relative) = 0;
+     virtual Path program_data_03c920() = 0;
+-    virtual Path local_app_data_03c6f0() = 0;
++    virtual Path local_app_data_03c6f0() = 0; // historical adapter, not a runtime root builder
++    virtual Path runtime_path(preloader_l::RuntimeFile) = 0;
+     // Original file I/O + BOM handling + parser + Config2 document construction.
+     // 019ad0 guards parser result, but retained014310 normal exits return true;
+     // malformed input routes to throw helpers. Plain parse-false was NOT observed.
+@@ -118,4 +120,4 @@
+ };
+ void initialize_configuration(State&, Dependencies&, ConfigurationPass&);
+ void initialize_configuration(State&, Dependencies&);         // 01c870 orchestration
+-} // namespace anadius::configuration
++} // namespace preloader_l::configuration
+--- RE_PACKET/anadius-crypto-source/crypto.cpp
++++ FIX14/src/crypto/crypto.cpp
+@@ -1,11 +1,15 @@
+-#include "crypto.hpp"
+-#include "constants.hpp"
++#include "src/crypto/crypto.hpp"
++#include "src/crypto/constants.hpp"
+ #include <algorithm>
+ #include <bit>
+ #include <limits>
++#ifdef _WIN32
+ #include <windows.h>
++#else
++#include <chrono>
++#endif
+ 
+-namespace anadius::crypto_recovered {
++namespace preloader_l::crypto {
+ namespace {
+ std::uint8_t multiply(std::uint8_t a,std::uint8_t b){
+     std::uint8_t result=0;
+@@ -86,15 +90,20 @@
+     for(auto pos=value.size()-padding;pos<value.size();++pos)if(static_cast<unsigned char>(value[pos])!=padding)return false;
+     value.resize(value.size()-padding);return true;
+ }
+-std::unique_ptr<messages_recovered::Cipher> CryptoFactory::create_0423d0(){return std::make_unique<Cipher>();}
++std::unique_ptr<messages::Cipher> CryptoFactory::create_0423d0(){return std::make_unique<Cipher>();}
+ std::uint32_t Lcg::next_045070()noexcept{state_=state_*0x343fdu+0x269ec3u;return (state_>>16)&0x7fff;}
+ std::int64_t seconds_from_filetime_05eeb8(std::uint64_t ticks){
+     const auto signed_delta=std::bit_cast<std::int64_t>(ticks-0x19db1ded53e8000ull);
+     const auto seconds=signed_delta/10000000;
+     return seconds>0x793582affll?-1:seconds;
+ }
+-std::int64_t WindowsTimeSource::unix_seconds_05eeb8(){FILETIME time{};GetSystemTimeAsFileTime(&time);
+-    return seconds_from_filetime_05eeb8((std::uint64_t(time.dwHighDateTime)<<32)|time.dwLowDateTime);}
++std::int64_t WindowsTimeSource::unix_seconds_05eeb8(){
++#ifdef _WIN32
++    FILETIME time{};GetSystemTimeAsFileTime(&time);return seconds_from_filetime_05eeb8((std::uint64_t(time.dwHighDateTime)<<32)|time.dwLowDateTime);
++#else
++    return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
++#endif
++}
+ Key Random::challenge_bytes_034cf0(){
+     Lcg generator(static_cast<std::uint32_t>(time_.unix_seconds_05eeb8()));Key bytes{};
+     for(auto& byte:bytes)byte=static_cast<std::uint8_t>(generator.next_045070());return bytes;
+--- RE_PACKET/anadius-file-source/binary_io.hpp
++++ FIX14/src/files/binary_io.hpp
+@@ -1,11 +1,12 @@
+ #pragma once
+-#include "../anadius-config-source/configuration.hpp"
++#include "src/configuration/state.hpp"
++#include "src/runtime/runtime_paths.hpp"
+ #include <cstdint>
+ #include <memory>
+ #include <span>
+ #include <string>
+ 
+-namespace anadius::file_recovered {
++namespace preloader_l::files {
+ using Path=configuration::Path;
+ enum class Seek:std::uint32_t {begin=0,end=2};
+ // Stream state/exception behavior belongs to the implementation. The recovered
+@@ -40,8 +41,11 @@
+ // chosen source dependency, not the original MSVC CRT/filebuf implementation.
+ // Default exception mask is zero. Sharing/locale/ABI equality is not established.
+ class NativeFactory final:public Factory {
++    const RuntimePaths* owner_=nullptr;
+ public:
++    NativeFactory()=default; // read-only without an explicit owner
++    explicit NativeFactory(const RuntimePaths& owner):owner_(&owner){}
+     std::unique_ptr<Input> open_input_039f70(const Path&,std::uint32_t mode,std::uint32_t share) override;
+     std::unique_ptr<Output> open_output_03a1a0(const Path&,std::uint32_t mode,std::uint32_t share) override;
+ };
+-} // namespace anadius::file_recovered
++} // namespace preloader_l::file_recovered
+--- RE_PACKET/anadius-file-source/native_io.cpp
++++ FIX14/src/files/native_io.cpp
+@@ -1,11 +1,19 @@
+-#include "binary_io.hpp"
++#include "src/files/binary_io.hpp"
+ #include <filesystem>
++#include "src/files/atomic_io.hpp"
+ #include <fstream>
+ #include <limits>
+ #include <stdexcept>
+ 
+-namespace anadius::file_recovered {
++namespace preloader_l::files {
+ namespace {
++std::filesystem::path native_file_path(const Path& path){
++#ifdef _WIN32
++ return std::filesystem::path(path);
++#else
++ auto copy=path;for(auto& c:copy)if(c==u'\\')c=u'/';return std::filesystem::path(copy);
++#endif
++}
+ std::uint32_t state(std::ios_base::iostate value) {
+     return ((value&std::ios::eofbit)?1U:0U)|((value&std::ios::failbit)?2U:0U)|((value&std::ios::badbit)?4U:0U);
+ }
+@@ -19,7 +27,7 @@
+ }
+ class NativeInput final:public Input {
+ public:
+-    explicit NativeInput(const Path& path):stream_(std::filesystem::path(path),std::ios::in|std::ios::binary){}
++    explicit NativeInput(const Path& path):stream_(native_file_path(path),std::ios::in|std::ios::binary){}
+     std::uint32_t initial_state()const override{return state(stream_.rdstate());}
+     void seek_03b610(std::int64_t offset,Seek origin)override {
+         stream_.seekg(static_cast<std::streamoff>(offset),origin==Seek::end?std::ios::end:std::ios::beg);
+@@ -39,18 +47,18 @@
+ private:std::ifstream stream_;
+ };
+ class NativeOutput final:public Output {
++ std::filesystem::path path_;const RuntimePaths* owner_;std::string bytes_;
+ public:
+-    explicit NativeOutput(const Path& path):stream_(std::filesystem::path(path),std::ios::out|std::ios::binary|std::ios::trunc){}
+-    std::uint32_t initial_state()const override{return state(stream_.rdstate());}
+-    void write_03be80(std::string_view value)override{stream_.write(value.data(),count(value.size()));}
+-    void close_03ae70()override{stream_.close();}
+-private:std::ofstream stream_;
++ NativeOutput(const Path& path,const RuntimePaths* owner):path_(native_file_path(path)),owner_(owner){if(!owner_)throw std::invalid_argument("native output requires RuntimePaths");owner_->require_write(path_);}
++ std::uint32_t initial_state()const override{return 0;}
++ void write_03be80(std::string_view value)override{bytes_.append(value);}
++ void close_03ae70()override{atomic_write(path_,bytes_,owner_);}
+ };
+ }
+ std::unique_ptr<Input> NativeFactory::open_input_039f70(const Path& path,std::uint32_t mode,std::uint32_t share) {
+-    supported(mode,share);return std::make_unique<NativeInput>(path);
++    supported(mode,share);if(owner_)owner_->require_write(native_file_path(path));return std::make_unique<NativeInput>(path);
+ }
+ std::unique_ptr<Output> NativeFactory::open_output_03a1a0(const Path& path,std::uint32_t mode,std::uint32_t share) {
+-    supported(mode,share);return std::make_unique<NativeOutput>(path);
++    supported(mode,share);return std::make_unique<NativeOutput>(path,owner_);
+ }
+-} // namespace anadius::file_recovered
++} // namespace preloader_l::file_recovered
+--- RE_PACKET/anadius-content-handlers-source/content_handlers.cpp
++++ FIX14/src/handlers/content.cpp
+@@ -1,8 +1,8 @@
+-#include "content_handlers.hpp"
++#include "src/handlers/content.hpp"
+ #include <bit>
+ #include <limits>
+ 
+-namespace anadius::content_handlers_recovered {
++namespace preloader_l::content {
+ namespace {
+ class Guard {
+     Mutex& mutex;
+@@ -116,6 +116,8 @@
+     const auto progress=request.attribute("Progress");
+     const auto increment=progress?effects.atoi_05ee08(*progress):1;
+     Guard guard(s.achievements_mutex_0a3e08);
++    auto previous=s.achievements_0a3e58;bool committed=false;
++    try {
+     auto found=s.achievements_0a3e58.find(*id);
+     if(found==s.achievements_0a3e58.end()) {
+         // For an unknown ID the first requested increment also becomes total.
+@@ -125,24 +127,25 @@
+     if(a.field08<a.field00) {
+         a.field08=wrap_add(a.field08,increment); // ADD EAX,R12D, preserve x86 wrap.
+         a.timestamp=effects.utc_time_041b60(a.field70);
++        std::unique_ptr<PendingEvent> event_commit;std::unique_ptr<Guard> event_guard;
+         if(a.field08>=a.field00) {
+             a.field04=1;a.field08=a.field00;
+             auto event=effects.printer_0019b0();auto& x=event->xml();
+             open(x,"LSX");open(x,"Event");attr(x,"sender","EbisuSDK");
+             achievement_set_header_02bf60(x,s);achievement_element_02c080(x,*id,a);
+             close(x);close(x);close(x);close(x);
+-            Guard event_guard(s.events.mutex_02c620());
+-            if(!s.events.initialized_locked())
+-                s.events.initialize_locked("<LSX><Event sender=\"EbisuSDK\"><IGOEvent State=\"DOWN\"/></Event></LSX>");
+-            s.events.push_locked_034660(event->c_string_without_nul());
++            event_guard=std::make_unique<Guard>(s.events.mutex_02c620());
++            event_commit=s.events.prepare_event("<LSX><Event sender=\"EbisuSDK\"><IGOEvent State=\"DOWN\"/></Event></LSX>",event->c_string_without_nul());
+         }
+-        if(!s.achievement_file_0a3de8.empty()) {
+-            auto document=effects.printer_0019b0();achievement_persistence(document->xml(),s);
+-            effects.write_xml_03c1d0(s.achievement_file_0a3de8,document->c_string_without_nul());
+-        }
+-        effects.save_steam_01f9a0(s.achievements_0a3e58);
++        std::string bytes;
++        if(!s.achievement_file_0a3de8.empty()) {auto document=effects.printer_0019b0();achievement_persistence(document->xml(),s);bytes=document->c_string_without_nul();}
++        effects.persist_achievement(s.achievement_file_0a3de8,bytes,s.achievements_0a3e58);
++        if(event_commit)event_commit->commit();
+     }
++    committed=true;
+     achievement_element_02c080(response,*id,a);return true;
++    }catch(...){if(!committed)s.achievements_0a3e58.swap(previous);throw;}
++
+ }
+ bool query_image_0314f0(const RequestTree& request,Xml& x,StateReferences s,Effects& effects) {
+     const auto width=request.attribute("Width"),height=request.attribute("Height"),id=request.attribute("ImageId");
+@@ -153,21 +156,17 @@
+         const auto owner=id->substr(separator+1);
+         const bool own=owner==s.user_id_0a3c18;
+         if(!own)result=s.default_avatar_0a3ab0;
+-        if(s.online_0a3c3b!=0) {
++        if(s.online_0a3c3b!=0 && !own) {
+             const auto size=effects.atoi_05ee08(*width)/208;
+-            const auto filename="_AVATAR_"+owner+"_"+*width;
+-            const auto cache=effects.path_append_016b50(s.user_directory_0a3a00,effects.filesystem_widen_006d70(filename));
+-            if(effects.online_avatar_virtual_28(cache)) {
++            const auto cache=effects.avatar_cache_path(s.user_directory_0a3a00,owner,*width);
++            if(!cache.empty()&&effects.online_avatar_virtual_28(cache,owner,size)) {
+                 result=cache;
+-                if(own&&s.saved_avatar_size_0a1130<size&&effects.copy_overwrite_048d20(cache,s.last_avatar_0a3a60)) {
+-                    s.saved_avatar_size_0a1130=size;
+-                    effects.log_saved_size_085530(size);
+-                }
++
+             }
+         }
+     }
+     open(x,"QueryImageResponse");open(x,"Image");attr(x,"Width",*width);attr(x,"Height",*height);
+-    attr(x,"ResourcePath",effects.path_to_utf8_031ca0(result));attr(x,"ImageId",*id);
++    attr(x,"ResourcePath",effects.path_to_utf8_031ca0(effects.resolve_image(result)));attr(x,"ImageId",*id);
+     close(x);close(x);return true;
+ }
+-} // namespace anadius::content_handlers_recovered
++} // namespace preloader_l::content_handlers_recovered
+--- RE_PACKET/anadius-content-handlers-source/content_handlers.hpp
++++ FIX14/src/handlers/content.hpp
+@@ -1,14 +1,14 @@
+ #pragma once
+-#include "../anadius-config-source/configuration.hpp"
+-#include "../anadius-handlers-source/handlers.hpp"
++#include "src/configuration/state.hpp"
++#include "src/handlers/information.hpp"
+ #include <memory>
+ #include <optional>
+ #include <set>
+ #include <span>
+ #include <vector>
+ 
+-namespace anadius::content_handlers_recovered {
+-using Xml = handlers_recovered::Xml;
++namespace preloader_l::content {
++using Xml = handlers::Xml;
+ using Path = configuration::Path;
+ using Achievement = configuration::Achievement;
+ using AchievementMap = std::map<std::string,Achievement,std::less<>>;
+@@ -40,6 +40,7 @@
+     // Original copies XMLPrinter's CStr with strlen, excluding its NUL.
+     virtual std::string c_string_without_nul() const = 0;
+ };
++class PendingEvent {public:virtual ~PendingEvent()=default;virtual void commit() noexcept=0;};
+ class EventQueue {
+ public:
+     virtual ~EventQueue() = default;
+@@ -47,6 +48,7 @@
+     virtual bool initialized_locked() const = 0;
+     virtual void initialize_locked(std::string initial_igo_event) = 0;
+     virtual void push_locked_034660(std::string) = 0;
++    virtual std::unique_ptr<PendingEvent> prepare_event(std::string initial,std::string payload) = 0;
+ };
+ class Effects {
+ public:
+@@ -60,10 +62,13 @@
+     virtual void write_xml_03c1d0(const Path&,std::string_view) = 0;
+     // Separate 01f9a0 Steam persistence subsystem, mandatory; not a no-op.
+     virtual void save_steam_01f9a0(const AchievementMap&) = 0;
++    virtual void persist_achievement(const Path& path,std::string_view xml,const AchievementMap& map){if(!path.empty())write_xml_03c1d0(path,xml);save_steam_01f9a0(map);}
+     // 006d70 uses __std_fs_code_page(), not a guessed UTF-8 conversion.
+     virtual Path filesystem_widen_006d70(std::string_view) = 0;
+     virtual Path path_append_016b50(const Path&,const Path&) = 0;
+-    virtual bool online_avatar_virtual_28(const Path& cache_path) = 0;
++    virtual Path avatar_cache_path(const Path&,std::string_view owner,std::string_view width)=0;
++    virtual Path resolve_image(const Path& value){return value;}
++    virtual bool online_avatar_virtual_28(const Path& cache_path,std::string_view owner,std::int32_t size) = 0;
+     // 048d20 mode=2 invokes CopyFileW(source,destination,FALSE).
+     virtual bool copy_overwrite_048d20(const Path& source,const Path& destination) = 0;
+     virtual std::string path_to_utf8_031ca0(const Path&) = 0;
+@@ -72,7 +77,7 @@
+ struct StateReferences {
+     std::span<const configuration::Content> content_0a3d98;
+     std::span<const configuration::Entitlement> entitlements_0a3db0;
+-    handlers_recovered::Attributes& game_0a3d88;
++    handlers::Attributes& game_0a3d88;
+     AchievementMap& achievements_0a3e58;
+     const std::string& achievements_set_0a3dc8;
+     const std::string& content_id_0a3af8;
+@@ -96,4 +101,4 @@
+ bool query_achievements_030d30(const RequestTree&,Xml&,StateReferences);
+ bool grant_achievement_030010(const RequestTree&,Xml&,StateReferences,Effects&);
+ bool query_image_0314f0(const RequestTree&,Xml&,StateReferences,Effects&);
+-} // namespace anadius::content_handlers_recovered
++} // namespace preloader_l::content_handlers_recovered
+--- RE_PACKET/anadius-hash-source/hash.cpp
++++ FIX14/src/hashing/hash.cpp
+@@ -1,9 +1,9 @@
+-#include "hash.hpp"
++#include "src/hashing/hash.hpp"
+ #include <algorithm>
+ #include <bit>
+ #include <stdexcept>
+ 
+-namespace anadius::hash_recovered {
++namespace preloader_l::hashing {
+ void Sha1::transform_043900(const std::array<std::uint8_t,64>& block) {
+     std::array<std::uint32_t,80> w{};
+     // 042aa0 forms each initial word in big-endian byte order.
+@@ -43,7 +43,7 @@
+ DigestWords Sha1::finalize_words_043270() {
+     const auto bits=(block_count_*std::uint64_t{64}+pending_size_)*std::uint64_t{8};
+     pending_[pending_size_++]=0x80;
+-    std::fill(pending_.begin()+pending_size_,pending_.end(),0);
++    std::fill(pending_.begin()+pending_size_,pending_.end(),std::uint8_t{0});
+     if (pending_size_>56) {transform_043900(pending_);pending_.fill(0);}
+     for (std::size_t i=0;i<8;++i)
+         pending_[56+i]=static_cast<std::uint8_t>(bits>>(56-i*8));
+@@ -88,4 +88,4 @@
+     lowercase_03d2c0(expected,text);
+     return expected==actual;
+ }
+-} // namespace anadius::hash_recovered
++} // namespace preloader_l::hash_recovered
+--- RE_PACKET/anadius-network-hook-source/connect.cpp
++++ FIX14/src/hooks/connect.cpp
+@@ -1,6 +1,6 @@
+-#include "connect.hpp"
++#include "src/hooks/connect.hpp"
+ 
+-namespace anadius::network_hook_recovered {
++namespace preloader_l::network_hooks {
+ namespace {
+ std::uint16_t little_word(std::span<std::byte> buffer, std::size_t offset) {
+     if (offset + 2 > buffer.size())
+@@ -29,8 +29,8 @@
+         effects.log_literal_006880("; redirecting to ");
+         effects.log_port_00ad70(state.server_port_0a3c90);
+         effects.log_finish_0088e0();
+-        ++state.attempts_0a3888; // unsigned INC preserves low32 wrap
+-        if (state.attempts_0a3888 == 15) {
++        const auto attempt=effects.increment_attempts(state.attempts_0a3888);
++        if (attempt == 15) {
+             // This is a target UI literal, not operational advice to the user.
+             effects.dialog_038bc0("error",
+                 "The game tried to connect to the crack 15 times already. Most probably your firewall or anti-virus blocks it. Disable them and try again.",
+@@ -44,11 +44,4 @@
+     // Original is an indirect tail JMP: retain its int32 Winsock result.
+     return effects.original_connect_0a3838(socket,address,supplied_length);
+ }
+-void ExecutionEffects::wait_steps_036880(std::int32_t count) {execution_.wait_steps_036880(count);}
+-void ExecutionEffects::log_literal_006880(std::string_view s) {remaining_.log_literal_006880(s);}
+-void ExecutionEffects::log_port_00ad70(std::uint16_t p) {remaining_.log_port_00ad70(p);}
+-void ExecutionEffects::log_finish_0088e0() {remaining_.log_finish_0088e0();}
+-void ExecutionEffects::dialog_038bc0(std::string_view t,std::string_view s,std::uint32_t f) {remaining_.dialog_038bc0(t,s,f);}
+-[[noreturn]] void ExecutionEffects::exit_05cdc0(std::uint32_t c) {remaining_.exit_05cdc0(c);}
+-std::int32_t ExecutionEffects::original_connect_0a3838(Socket s,std::span<std::byte> a,std::int32_t n) {return remaining_.original_connect_0a3838(s,a,n);}
+ }
+--- RE_PACKET/anadius-network-hook-source/connect.hpp
++++ FIX14/src/hooks/connect.hpp
+@@ -1,12 +1,12 @@
+ #pragma once
+-#include "../anadius-execution-source/execution.hpp"
++
+ #include <cstddef>
+ #include <cstdint>
+ #include <span>
+ #include <stdexcept>
+ #include <string_view>
+ 
+-namespace anadius::network_hook_recovered {
++namespace preloader_l::network_hooks {
+ using Socket = std::uintptr_t;
+ struct OutOfEvidenceInput : std::invalid_argument { using std::invalid_argument::invalid_argument; };
+ struct StateRefs {
+@@ -19,6 +19,7 @@
+ public:
+     virtual ~Effects() = default;
+     virtual void wait_steps_036880(std::int32_t count) = 0;
++    virtual std::uint32_t increment_attempts(std::uint32_t&) = 0;
+     virtual void log_literal_006880(std::string_view) = 0;
+     virtual void log_port_00ad70(std::uint16_t) = 0;
+     virtual void log_finish_0088e0() = 0;
+@@ -34,21 +35,4 @@
+ std::int32_t connect_00fd00(StateRefs, Effects&, Socket, std::span<std::byte> address,
+                            std::int32_t supplied_length);
+ 
+-// New composition adapter to the already recovered synchronization core.
+-// All other Effects still come from the caller, never original DLL addresses.
+-class ExecutionEffects final : public Effects {
+-public:
+-    ExecutionEffects(Effects& remaining, execution_recovered::Execution& execution)
+-        : remaining_(remaining), execution_(execution) {}
+-    void wait_steps_036880(std::int32_t) override;
+-    void log_literal_006880(std::string_view) override;
+-    void log_port_00ad70(std::uint16_t) override;
+-    void log_finish_0088e0() override;
+-    void dialog_038bc0(std::string_view, std::string_view, std::uint32_t) override;
+-    [[noreturn]] void exit_05cdc0(std::uint32_t) override;
+-    std::int32_t original_connect_0a3838(Socket, std::span<std::byte>, std::int32_t) override;
+-private:
+-    Effects& remaining_;
+-    execution_recovered::Execution& execution_;
+-};
+ }
+--- RE_PACKET/anadius-host-init-source/host_init.cpp
++++ FIX14/src/hooks/setup.cpp
+@@ -1,15 +1,18 @@
+-#include "host_init.hpp"
+-#include "../anadius-path-source/paths.hpp"
++#include "src/hooks/setup.hpp"
++#include "src/paths/paths.hpp"
+ 
+-namespace anadius::host_init_recovered {
++namespace preloader_l::host {
+ std::int32_t create_named_hook_046970(Effects& effects, std::u16string_view module,
+     std::string_view name, Callback callback, Address& original, Address* target) {
++    effects.trace_hook("resolve begin",name,0);
+     const Address handle = effects.get_module_handle(module);
+-    if (handle == 0) return 11;
++    if (handle == 0) {effects.trace_hook("resolve end",name,11);return 11;}
+     const Address address = effects.get_proc_address(handle, name);
+-    if (address == 0) return 12;
++    if (address == 0) {effects.trace_hook("resolve end",name,12);return 12;}
+     if (target != nullptr) *target = address;
+-    return effects.create_hook_0466e0(address, callback, original);
++    effects.trace_hook("create begin",name,0);
++    const auto status=effects.create_hook_0466e0(address, callback, original);
++    effects.trace_hook("create end",name,status);return status;
+ }
+ 
+ void install_hook_00f120(StateRefs state, Effects& effects, std::u16string_view module,
+@@ -18,12 +21,14 @@
+     std::int32_t status = create_named_hook_046970(effects, module, name, callback,
+                                                 state.originals.at(slot(callback)), &target);
+     if (status == 0) {
+-        status = effects.enable_hook_046a10(target);
++        effects.trace_hook("queue begin",name,0);
++        status = effects.queue_hook_enable(target);
++        effects.trace_hook("queue end",name,status);
+         if (status == 0) {
+             state.enabled_targets_0a3810.push_back(target);
+             return;
+         }
+-        effects.log_text_006880("Enabling hook for ");
++        effects.log_text_006880("Queueing hook for ");
+     } else {
+         effects.log_text_006880("Hooking function ");
+     }
+@@ -49,9 +54,9 @@
+     if (config.language_registry_key.empty()) {
+         config.registry_spoof = 0;
+     } else {
+-        auto parent = path_recovered::parent_path_019820(config.language_registry_key);
++        auto parent = paths::parent_path_019820(config.language_registry_key);
+         values["LanguageKey"] = std::move(parent);
+-        auto filename = path_recovered::filename_00e120(config.language_registry_key);
++        auto filename = paths::filename_00e120(config.language_registry_key);
+         values["LanguageValue"] = std::move(filename);
+         // Original map helper 0084e0 inserts a missing INSTALLED_LANGUAGE as empty.
+         const auto& installed = config.game_attributes["INSTALLED_LANGUAGE"];
+--- RE_PACKET/anadius-host-init-source/host_init.hpp
++++ FIX14/src/hooks/setup.hpp
+@@ -1,5 +1,5 @@
+ #pragma once
+-#include "../anadius-config-source/configuration.hpp"
++#include "src/configuration/state.hpp"
+ #include <array>
+ #include <cstdint>
+ #include <map>
+@@ -7,16 +7,16 @@
+ #include <string_view>
+ #include <vector>
+ 
+-namespace anadius::host_init_recovered {
++namespace preloader_l::host {
+ using Address = std::uintptr_t;
+ using Values = std::map<std::string, std::u16string, std::less<>>;
+ enum class Callback : std::uint8_t {
+     connect_00fd00, reg_open_a_00f800, reg_open_w_00f960,
+     reg_close_00f5b0, reg_query_a_00fac0, reg_query_w_00fb60,
+     create_process_a_00f3f0, create_process_w_00f4d0,
+-    folder_a_00fc00, folder_w_00fc80
++    folder_a_00fc00, folder_w_00fc80, crypt_query_001264
+ };
+-constexpr std::size_t callback_count = 10;
++constexpr std::size_t callback_count = 11;
+ constexpr std::size_t slot(Callback callback) { return static_cast<std::size_t>(callback); }
+ struct StateRefs {
+     configuration::State& configuration;
+@@ -51,7 +51,10 @@
+     // Resolve Callback to a rebuilt callback; never invoke preferred original VAs.
+     // original is a reference: writes made by the backend survive a failed return.
+     virtual std::int32_t create_hook_0466e0(Address target, Callback, Address& original) = 0;
+-    virtual std::int32_t enable_hook_046a10(Address target) = 0;
++    // Integration stages enablement only. The native owner applies all queued
++    // changes after every original slot is bound and its Context lock is released.
++    virtual std::int32_t queue_hook_enable(Address target) = 0;
++    virtual void trace_hook(std::string_view phase,std::string_view name,std::int32_t status) noexcept = 0;
+     virtual void log_text_006880(std::string_view) = 0;
+     virtual void log_integer_00af90(std::int32_t) = 0;
+     virtual void finish_log_0088e0() = 0;
+@@ -60,7 +63,8 @@
+ // it is assigned before the patch-engine call, and untouched for lookup failures.
+ std::int32_t create_named_hook_046970(Effects&, std::u16string_view module,
+     std::string_view name, Callback, Address& original, Address* target);
+-// 18000f120: enable only after successful creation; append only after both succeed.
++// Source 18000f120 adapted to stage-only installation. Append after creation and
++// queue success; this list is not proof of activation. Native owner commits it.
+ void install_hook_00f120(StateRefs, Effects&, std::u16string_view module,
+     std::string_view name, Callback);
+ // 18000e310: application setup between the first and second bootstrap workers.
+--- RE_PACKET/anadius-license-source/literals.hpp
++++ FIX14/src/licensing/literals.hpp
+@@ -1,51 +1,51 @@
+-#pragma once
+-// Static ASCII literals read from the SHA-256-bound input; no user CFG values.
+-namespace anadius::license_recovered::literals {
+-inline constexpr char c_083870[] = "0"; // 0x180083870 / file 0x82070
+-inline constexpr char c_083960[] = "DISPLAY_NAME"; // 0x180083960 / file 0x82160
+-inline constexpr char c_083978[] = "INSTALLED_VERSION"; // 0x180083978 / file 0x82178
+-inline constexpr char c_0839a0[] = "License"; // 0x1800839a0 / file 0x821a0
+-inline constexpr char c_083a08[] = "dbdata.dll"; // 0x180083a08 / file 0x82208
+-inline constexpr char c_084c70[] = "ErrorSuccess"; // 0x180084c70 / file 0x83470
+-inline constexpr char c_084c80[] = "Code"; // 0x180084c80 / file 0x83480
+-inline constexpr char c_084c88[] = "Description"; // 0x180084c88 / file 0x83488
+-inline constexpr char c_0851d8[] = "|"; // 0x1800851d8 / file 0x839d8
+-inline constexpr char c_085570[] = "ClientId"; // 0x180085570 / file 0x83d70
+-inline constexpr char c_085580[] = "You need to be online to get an AuthCode."; // 0x180085580 / file 0x83d80
+-inline constexpr char c_0855b0[] = "-1577058293"; // 0x1800855b0 / file 0x83db0
+-inline constexpr char c_0855c0[] = "AuthCode"; // 0x1800855c0 / file 0x83dc0
+-inline constexpr char c_0855cc[] = "value"; // 0x1800855cc / file 0x83dcc
+-inline constexpr char c_085920[] = "\"DenuvoDllHash\" is missing or invalid. Make sure you have the right \"anadius.cfg\" file."; // 0x180085920 / file 0x84120
+-inline constexpr char c_085978[] = "Bad dll hash"; // 0x180085978 / file 0x84178
+-inline constexpr char c_085990[] = "\"DenuvoDllName\" is missing or invalid. Make sure you have the right \"anadius.cfg\" file."; // 0x180085990 / file 0x84190
+-inline constexpr char c_0859e8[] = "Bad dll name"; // 0x1800859e8 / file 0x841e8
+-inline constexpr char c_085a00[] = "\" file has incorrect hash.\n\nThat usually means you didn't update your game or you didn't update \"not a crack\"/\"fixed exe\"."; // 0x180085a00 / file 0x84200
+-inline constexpr char c_085a7c[] = "\""; // 0x180085a7c / file 0x8427c
+-inline constexpr char c_085a80[] = "RequestTicket"; // 0x180085a80 / file 0x84280
+-inline constexpr char c_085a90[] = "TicketEngine"; // 0x180085a90 / file 0x84290
+-inline constexpr char c_085aa0[] = "\"ContentId\" is missing or set to \"0\". Make sure you have the \"anadius.cfg\" file in the same folder as the game exe."; // 0x180085aa0 / file 0x842a0
+-inline constexpr char c_085b18[] = "Bad content ID"; // 0x180085b18 / file 0x84318
+-inline constexpr char c_085b30[] = "\"DenuvoExeHash\" is missing or invalid. Make sure you have the right \"anadius.cfg\" file."; // 0x180085b30 / file 0x84330
+-inline constexpr char c_085b88[] = "Bad exe hash"; // 0x180085b88 / file 0x84388
+-inline constexpr char c_085ba0[] = "\" file has incorrect hash.\n\nThat usually means you have the new \"not a crack\"/\"fixed exe\" but you opened the wrong exe."; // 0x180085ba0 / file 0x843a0
+-inline constexpr char c_085c18[] = " (v"; // 0x180085c18 / file 0x84418
+-inline constexpr char c_085c1c[] = "; \""; // 0x180085c1c / file 0x8441c
+-inline constexpr char c_085c20[] = "\") is protected by Denuvo.\n\n"; // 0x180085c20 / file 0x84420
+-inline constexpr char c_085c40[] = "exe:"; // 0x180085c40 / file 0x84440
+-inline constexpr char c_085c48[] = ";dll:"; // 0x180085c48 / file 0x84448
+-inline constexpr char c_085c50[] = ";"; // 0x180085c50 / file 0x84450
+-inline constexpr char c_085c54[] = "\n\n"; // 0x180085c54 / file 0x84454
+-inline constexpr char c_085c60[] = "Wine support is bad. Only some games work with this method. Most of them need a new token every time you start the game, so you will never be able to play them like that. This must be because of something Wine does that makes Denuvo think you're on a new machine with each launch.\n\nThat's why I recommend dual booting Windows or installing it in a virtual machine.\n\nDON'T send your ticket to my bot unless you're 100% sure this method works for this game."; // 0x180085c60 / file 0x84460
+-inline constexpr char c_085e28[] = "Wine detected"; // 0x180085e28 / file 0x84628
+-inline constexpr char c_085e38[] = "\n\nDENUVO TICKET ABOVE\n\n"; // 0x180085e38 / file 0x84638
+-inline constexpr char c_085e50[] = "\n\nDENUVO TICKET BELOW\n\n"; // 0x180085e50 / file 0x84650
+-inline constexpr char c_085e68[] = "Denuvo_ticket_"; // 0x180085e68 / file 0x84668
+-inline constexpr char c_085e78[] = ".txt"; // 0x180085e78 / file 0x84678
+-inline constexpr char c_085e80[] = "Your ticket has been saved to:\n"; // 0x180085e80 / file 0x84680
+-inline constexpr char c_085ea0[] = "Ticket saved"; // 0x180085ea0 / file 0x846a0
+-inline constexpr char c_085eb0[] = "At the moment of writing this message you can't copy dialogue text when running the game through Wine by pressing Ctrl+C.\n\nCopy your ticket from the terminal instead."; // 0x180085eb0 / file 0x846b0
+-inline constexpr char c_085f58[] = "Press Ctrl+C to copy this message.\n\n"; // 0x180085f58 / file 0x84758
+-inline constexpr char c_085f80[] = "Token required"; // 0x180085f80 / file 0x84780
+-inline constexpr char c_085f90[] = "RequestLicenseResponse"; // 0x180085f90 / file 0x84790
+-inline constexpr char c_085fa8[] = "License Deleted."; // 0x180085fa8 / file 0x847a8
+-}
++#pragma once
++// Static ASCII literals read from the SHA-256-bound input; no user CFG values.
++namespace preloader_l::licensing::literals {
++inline constexpr char c_083870[] = "0"; // 0x180083870 / file 0x82070
++inline constexpr char c_083960[] = "DISPLAY_NAME"; // 0x180083960 / file 0x82160
++inline constexpr char c_083978[] = "INSTALLED_VERSION"; // 0x180083978 / file 0x82178
++inline constexpr char c_0839a0[] = "License"; // 0x1800839a0 / file 0x821a0
++inline constexpr char c_083a08[] = "dbdata.dll"; // 0x180083a08 / file 0x82208
++inline constexpr char c_084c70[] = "ErrorSuccess"; // 0x180084c70 / file 0x83470
++inline constexpr char c_084c80[] = "Code"; // 0x180084c80 / file 0x83480
++inline constexpr char c_084c88[] = "Description"; // 0x180084c88 / file 0x83488
++inline constexpr char c_0851d8[] = "|"; // 0x1800851d8 / file 0x839d8
++inline constexpr char c_085570[] = "ClientId"; // 0x180085570 / file 0x83d70
++inline constexpr char c_085580[] = "You need to be online to get an AuthCode."; // 0x180085580 / file 0x83d80
++inline constexpr char c_0855b0[] = "-1577058293"; // 0x1800855b0 / file 0x83db0
++inline constexpr char c_0855c0[] = "AuthCode"; // 0x1800855c0 / file 0x83dc0
++inline constexpr char c_0855cc[] = "value"; // 0x1800855cc / file 0x83dcc
++inline constexpr char c_085920[] = "\"DenuvoDllHash\" is missing or invalid. Make sure you have the right \"surge.cfg\" file."; // 0x180085920 / file 0x84120
++inline constexpr char c_085978[] = "Bad dll hash"; // 0x180085978 / file 0x84178
++inline constexpr char c_085990[] = "\"DenuvoDllName\" is missing or invalid. Make sure you have the right \"surge.cfg\" file."; // 0x180085990 / file 0x84190
++inline constexpr char c_0859e8[] = "Bad dll name"; // 0x1800859e8 / file 0x841e8
++inline constexpr char c_085a00[] = "\" file has incorrect hash.\n\nThat usually means you didn't update your game or you didn't update \"not a crack\"/\"fixed exe\"."; // 0x180085a00 / file 0x84200
++inline constexpr char c_085a7c[] = "\""; // 0x180085a7c / file 0x8427c
++inline constexpr char c_085a80[] = "RequestTicket"; // 0x180085a80 / file 0x84280
++inline constexpr char c_085a90[] = "TicketEngine"; // 0x180085a90 / file 0x84290
++inline constexpr char c_085aa0[] = "\"ContentId\" is missing or set to \"0\". Make sure you have the \"surge.cfg\" file in the same folder as the game exe."; // 0x180085aa0 / file 0x842a0
++inline constexpr char c_085b18[] = "Bad content ID"; // 0x180085b18 / file 0x84318
++inline constexpr char c_085b30[] = "\"DenuvoExeHash\" is missing or invalid. Make sure you have the right \"surge.cfg\" file."; // 0x180085b30 / file 0x84330
++inline constexpr char c_085b88[] = "Bad exe hash"; // 0x180085b88 / file 0x84388
++inline constexpr char c_085ba0[] = "\" file has incorrect hash.\n\nThat usually means you have the new \"not a crack\"/\"fixed exe\" but you opened the wrong exe."; // 0x180085ba0 / file 0x843a0
++inline constexpr char c_085c18[] = " (v"; // 0x180085c18 / file 0x84418
++inline constexpr char c_085c1c[] = "; \""; // 0x180085c1c / file 0x8441c
++inline constexpr char c_085c20[] = "\") is protected by Denuvo.\n\n"; // 0x180085c20 / file 0x84420
++inline constexpr char c_085c40[] = "exe:"; // 0x180085c40 / file 0x84440
++inline constexpr char c_085c48[] = ";dll:"; // 0x180085c48 / file 0x84448
++inline constexpr char c_085c50[] = ";"; // 0x180085c50 / file 0x84450
++inline constexpr char c_085c54[] = "\n\n"; // 0x180085c54 / file 0x84454
++inline constexpr char c_085c60[] = "Wine support is bad. Only some games work with this method. Most of them need a new token every time you start the game, so you will never be able to play them like that. This must be because of something Wine does that makes Denuvo think you're on a new machine with each launch.\n\nThat's why I recommend dual booting Windows or installing it in a virtual machine.\n\nDON'T send your ticket to my bot unless you're 100% sure this method works for this game."; // 0x180085c60 / file 0x84460
++inline constexpr char c_085e28[] = "Wine detected"; // 0x180085e28 / file 0x84628
++inline constexpr char c_085e38[] = "\n\nDENUVO TICKET ABOVE\n\n"; // 0x180085e38 / file 0x84638
++inline constexpr char c_085e50[] = "\n\nDENUVO TICKET BELOW\n\n"; // 0x180085e50 / file 0x84650
++inline constexpr char c_085e68[] = "Denuvo_ticket_"; // 0x180085e68 / file 0x84668
++inline constexpr char c_085e78[] = ".txt"; // 0x180085e78 / file 0x84678
++inline constexpr char c_085e80[] = "Your ticket has been saved to:\n"; // 0x180085e80 / file 0x84680
++inline constexpr char c_085ea0[] = "Ticket saved"; // 0x180085ea0 / file 0x846a0
++inline constexpr char c_085eb0[] = "At the moment of writing this message you can't copy dialogue text when running the game through Wine by pressing Ctrl+C.\n\nCopy your ticket from the terminal instead."; // 0x180085eb0 / file 0x846b0
++inline constexpr char c_085f58[] = "Press Ctrl+C to copy this message.\n\n"; // 0x180085f58 / file 0x84758
++inline constexpr char c_085f80[] = "Token required"; // 0x180085f80 / file 0x84780
++inline constexpr char c_085f90[] = "RequestLicenseResponse"; // 0x180085f90 / file 0x84790
++inline constexpr char c_085fa8[] = "License Deleted."; // 0x180085fa8 / file 0x847a8
++}
+--- RE_PACKET/anadius-online-source/online.cpp
++++ FIX14/src/profiles/online.cpp
+@@ -1,6 +1,6 @@
+-#include "online.hpp"
++#include "src/profiles/online.hpp"
+ 
+-namespace anadius::online_recovered {
++namespace preloader_l::online {
+ bool exists_035b00(const Path& path, Effects& effects) {
+     const auto status = effects.status_01ea20(path, 3);
+     const auto kind = static_cast<std::uint32_t>(status.kind);
+@@ -34,7 +34,7 @@
+ 
+ void load_online_035bd0(StateRefs state, Effects& effects) {
+     const auto previous_mode = effects.suppress_errors_0450a0();
+-    const auto library_name = effects.filesystem_widen_006d70("anadius64online.dll");
++    const auto library_name = effects.filesystem_widen_006d70(preloader_l::provider_filename);
+     const auto parent = effects.parent_path_019820(state.executable_path_0a39e0);
+     const auto path = effects.join_016b00(parent, library_name);
+     state.module_0a3a80 = effects.load_copy_0450d0(path);
+@@ -49,7 +49,7 @@
+         return;
+     }
+     if (effects.call_version_check(version) != 2) {
+-        effects.dialog_038bc0("crack error", "Online library version mismatch!", 0x10);
++        effects.dialog_038bc0("SURGE", "Online library version mismatch!", 0x10);
+         log_line(effects, "online library version mismatch!");
+         return;
+     }
+@@ -60,16 +60,14 @@
+     }
+     const Path cookie_copy(state.cookie_0a3a20);
+     state.object_0a3a88 = effects.call_create_online(factory, cookie_copy.c_str());
+-    if (!state.object_0a3a88)
+-        throw OutOfEvidenceInput("035bd0 dereferences a null create_online result");
++    if (!state.object_0a3a88) {log_line(effects,"provider factory rejected");return;}
+     const auto status = effects.status_virtual_08(state.object_0a3a88);
+     if (status != 0) {
+         if (status == 1) effects.log_literal_006880("authentication failed, ");
+         log_line(effects, "starting offline");
+         if (!state.use_last_profile_0a3c38) return;
+         if (!exists_035b00(state.cookie_0a3a20, effects)) return;
+-        if (exists_035b00(state.last_avatar_0a3a60, effects))
+-            state.avatar_0a3a90 = state.last_avatar_0a3a60;
++        // Avatar cache cannot override explicit user or official selection.
+         const auto profile = effects.read_binary_03b3f0(state.last_profile_0a3a40);
+         const auto fields = split_profile_fields_03cf00(profile);
+         if (fields.size() == 3) {
+@@ -85,9 +83,7 @@
+     state.username_0a3bd8 = copy_c_string(effects.username_virtual_10(state.object_0a3a88));
+     state.persona_id_0a3bf8 = copy_c_string(effects.persona_virtual_18(state.object_0a3a88));
+     state.user_id_0a3c18 = copy_c_string(effects.user_id_virtual_20(state.object_0a3a88));
+-    if (exists_035b00(state.cookie_0a3a20, effects) &&
+-        exists_035b00(state.last_avatar_0a3a60, effects))
+-        state.avatar_0a3a90 = state.last_avatar_0a3a60;
++    // Profile identity and avatar selection have separate ownership.
+     if (!state.use_last_profile_0a3c38) return;
+     // String lengths, rather than C-string scans, control the saved profile.
+     std::string saved = state.persona_id_0a3bf8;
+@@ -115,4 +111,4 @@
+     if (!state.online_0a3c3b) cleanup_0366f0(state, effects);
+     effects.finish_flag_036820();
+ }
+-} // namespace anadius::online_recovered
++} // namespace preloader_l::online
+--- RE_PACKET/anadius-startup-source/startup.hpp
++++ FIX14/src/runtime/startup.hpp
+@@ -5,7 +5,7 @@
+ #include <string_view>
+ #include <vector>
+ 
+-namespace anadius::startup_recovered {
++namespace preloader_l::startup {
+ // Bind these references to the same state used by the configuration and server.
+ // No constructor guesses or resets the original globals' initial values.
+ struct StateReferences {
+@@ -55,6 +55,7 @@
+ void setup_console_038760(StateReferences, ConsolePlatform&);
+ 
+ class NativeInputPlatform final : public InputPlatform {
++    std::string environment_value_;
+ public:
+     const char* crt_getenv_05f318(const char*) override;
+     const wchar_t* get_command_line_w() override;
+@@ -71,4 +72,4 @@
+     ConsoleHandle console_window() override;
+     bool move_window(ConsoleHandle, int, int, int, int, bool) override;
+ };
+-} // namespace anadius::startup_recovered
++} // namespace preloader_l::startup
+--- RE_PACKET/anadius-native-source/native_callbacks.cpp
++++ FIX14/src/windows/hook_callbacks.cpp
+@@ -1,10 +1,11 @@
+-#include "native_callbacks.hpp"
++#include "src/windows/hook_callbacks.hpp"
+ #include <bit>
+ #include <mutex>
+ #include <atomic>
+ #include <type_traits>
++#include <utility>
+ 
+-namespace anadius::native_recovered {
++namespace preloader_l::native_callbacks {
+ namespace {
+ std::mutex gate;
+ Context* current{};
+@@ -23,12 +24,16 @@
+     try {
+         Lease lease;
+         invocation_errors=lease.errors; // retain this binding's policy after release
+-        SetLastError(incoming); // binding synchronization adds no API error state
+-        const auto result=f(*lease.context);
+-        const auto outgoing=GetLastError();
++        const auto result=[&]{
++            std::unique_lock<std::recursive_mutex> lock(lease.context->serialization,std::defer_lock);
++            if(callback!=Callback::connect_00fd00&&callback!=Callback::crypt_query_001264)lock.lock();
++            SetLastError(incoming);
++            auto value=f(*lease.context);
++            return std::pair{value,GetLastError()};
++        }();
+         lease.release();
+-        SetLastError(outgoing);
+-        return result;
++        SetLastError(result.second);
++        return result.first;
+     } catch(...) {
+         if(invocation_errors)
+             invocation_errors->callback_exception(callback,std::current_exception());
+@@ -60,45 +65,50 @@
+     return invoke(Callback::connect_00fd00,[&](Context& c){
+         std::size_t extent=0;
+         if(length==c.network.ipv4_length_0a10d0||length==c.network.ipv6_length_0a10d4){
+-            if(!pointer)throw network_hook_recovered::OutOfEvidenceInput("recognized sockaddr length with null pointer");
++            if(!pointer)throw network_hooks::OutOfEvidenceInput("recognized sockaddr length with null pointer");
+             extent=4; // SDK-argument contract: first four bytes readable/writable
+         }
+         auto* bytes=reinterpret_cast<std::byte*>(const_cast<sockaddr*>(pointer));
+-        return network_hook_recovered::connect_00fd00(c.network,c.network_effects,socket,{bytes,extent},length);
++        return network_hooks::connect_00fd00(c.network,c.network_effects,socket,{bytes,extent},length);
+     });
+ }
+ LSTATUS WINAPI reg_open_a_entry(HKEY root,LPCSTR key,DWORD options,REGSAM access,PHKEY result) noexcept {
+-    return invoke(Callback::reg_open_a_00f800,[&](Context& c){return status(registry_recovered::open_a_00f800(c.registry,c.registry_effects,
+-        {address(root),key,options,access,registry_recovered::HandleCell::from_raw(result)}));});
++    return invoke(Callback::reg_open_a_00f800,[&](Context& c){return status(registry::open_a_00f800(c.registry,c.registry_effects,
++        {address(root),key,options,access,registry::HandleCell::from_raw(result)}));});
+ }
+ LSTATUS WINAPI reg_open_w_entry(HKEY root,LPCWSTR key,DWORD options,REGSAM access,PHKEY result) noexcept {
+-    return invoke(Callback::reg_open_w_00f960,[&](Context& c){return status(registry_recovered::open_w_00f960(c.registry,c.registry_effects,
+-        {address(root),reinterpret_cast<const char16_t*>(key),options,access,registry_recovered::HandleCell::from_raw(result)}));});
++    return invoke(Callback::reg_open_w_00f960,[&](Context& c){return status(registry::open_w_00f960(c.registry,c.registry_effects,
++        {address(root),reinterpret_cast<const char16_t*>(key),options,access,registry::HandleCell::from_raw(result)}));});
+ }
+ LSTATUS WINAPI reg_close_entry(HKEY key) noexcept {
+-    return invoke(Callback::reg_close_00f5b0,[&](Context& c){return status(registry_recovered::close_00f5b0(c.registry,c.registry_effects,address(key)));});
++    return invoke(Callback::reg_close_00f5b0,[&](Context& c){return status(registry::close_00f5b0(c.registry,c.registry_effects,address(key)));});
+ }
+ LSTATUS WINAPI reg_query_a_entry(HKEY key,LPCSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size) noexcept {
+-    return invoke(Callback::reg_query_a_00fac0,[&](Context& c){return status(registry_recovered::query_a_00fac0(c.registry,c.registry_effects,
+-        {address(key),name,reserved,registry_recovered::DwordCell::from_raw(type),data,registry_recovered::DwordCell::from_raw(size)}));});
++    return invoke(Callback::reg_query_a_00fac0,[&](Context& c){return status(registry::query_a_00fac0(c.registry,c.registry_effects,
++        {address(key),name,reserved,registry::DwordCell::from_raw(type),data,registry::DwordCell::from_raw(size)}));});
+ }
+ LSTATUS WINAPI reg_query_w_entry(HKEY key,LPCWSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size) noexcept {
+-    return invoke(Callback::reg_query_w_00fb60,[&](Context& c){return status(registry_recovered::query_w_00fb60(c.registry,c.registry_effects,
+-        {address(key),reinterpret_cast<const char16_t*>(name),reserved,registry_recovered::DwordCell::from_raw(type),data,registry_recovered::DwordCell::from_raw(size)}));});
++    return invoke(Callback::reg_query_w_00fb60,[&](Context& c){return status(registry::query_w_00fb60(c.registry,c.registry_effects,
++        {address(key),reinterpret_cast<const char16_t*>(name),reserved,registry::DwordCell::from_raw(type),data,registry::DwordCell::from_raw(size)}));});
+ }
+ BOOL WINAPI process_a_entry(LPCSTR app,LPSTR cmd,LPSECURITY_ATTRIBUTES p,LPSECURITY_ATTRIBUTES t,BOOL inherit,DWORD flags,LPVOID env,LPCSTR cwd,LPSTARTUPINFOA start,LPPROCESS_INFORMATION info) noexcept {
+-    return invoke(Callback::create_process_a_00f3f0,[&](Context& c){return host_callbacks_recovered::create_process_a_00f3f0(c.registry.values,c.host_effects,
++    return invoke(Callback::create_process_a_00f3f0,[&](Context& c){return host_callbacks::create_process_a_00f3f0(c.registry.values,c.host_effects,
+         {app,cmd,address(p),address(t),inherit,flags,address(env),cwd,address(start),address(info)});});
+ }
+ BOOL WINAPI process_w_entry(LPCWSTR app,LPWSTR cmd,LPSECURITY_ATTRIBUTES p,LPSECURITY_ATTRIBUTES t,BOOL inherit,DWORD flags,LPVOID env,LPCWSTR cwd,LPSTARTUPINFOW start,LPPROCESS_INFORMATION info) noexcept {
+-    return invoke(Callback::create_process_w_00f4d0,[&](Context& c){return host_callbacks_recovered::create_process_w_00f4d0(c.registry.values,c.host_effects,
++    return invoke(Callback::create_process_w_00f4d0,[&](Context& c){return host_callbacks::create_process_w_00f4d0(c.registry.values,c.host_effects,
+         {reinterpret_cast<const char16_t*>(app),reinterpret_cast<char16_t*>(cmd),address(p),address(t),inherit,flags,address(env),reinterpret_cast<const char16_t*>(cwd),address(start),address(info)});});
+ }
+ HRESULT WINAPI folder_a_entry(HWND window,int id,HANDLE token,DWORD flags,LPSTR path) noexcept {
+-    return invoke(Callback::folder_a_00fc00,[&](Context& c){return std::bit_cast<HRESULT>(host_callbacks_recovered::folder_a_00fc00(c.registry.values,c.host_effects,{address(window),id,address(token),flags,path}));});
++    return invoke(Callback::folder_a_00fc00,[&](Context& c){return std::bit_cast<HRESULT>(host_callbacks::folder_a_00fc00(c.registry.values,c.host_effects,{address(window),id,address(token),flags,path}));});
+ }
+ HRESULT WINAPI folder_w_entry(HWND window,int id,HANDLE token,DWORD flags,LPWSTR path) noexcept {
+-    return invoke(Callback::folder_w_00fc80,[&](Context& c){return std::bit_cast<HRESULT>(host_callbacks_recovered::folder_w_00fc80(c.registry.values,c.host_effects,{address(window),id,address(token),flags,reinterpret_cast<char16_t*>(path)}));});
++    return invoke(Callback::folder_w_00fc80,[&](Context& c){return std::bit_cast<HRESULT>(host_callbacks::folder_w_00fc80(c.registry.values,c.host_effects,{address(window),id,address(token),flags,reinterpret_cast<char16_t*>(path)}));});
++}
++BOOL WINAPI crypt_query_entry(DWORD type,const void* object,DWORD content,DWORD format,DWORD flags,DWORD* encoding,DWORD* content_type,DWORD* format_type,HCERTSTORE* store,HCRYPTMSG* message,const void** context) noexcept {
++    return invoke(Callback::crypt_query_001264,[&](Context& c){
++        return c.crypt_effects.query(type,object,content,format,flags,encoding,content_type,format_type,store,message,context);
++    });
+ }
+ std::uintptr_t Resolver::rebuilt_address(Callback c){
+     switch(c){
+@@ -112,6 +122,7 @@
+     case Callback::create_process_w_00f4d0:return reinterpret_cast<std::uintptr_t>(&process_w_entry);
+     case Callback::folder_a_00fc00:return reinterpret_cast<std::uintptr_t>(&folder_a_entry);
+     case Callback::folder_w_00fc80:return reinterpret_cast<std::uintptr_t>(&folder_w_entry);
++    case Callback::crypt_query_001264:return reinterpret_cast<std::uintptr_t>(&crypt_query_entry);
+     }
+     throw std::out_of_range("invalid callback enum");
+ }
+@@ -125,5 +136,6 @@
+ static_assert(std::is_convertible_v<decltype(&process_w_entry),decltype(&::CreateProcessW)>);
+ static_assert(std::is_convertible_v<decltype(&folder_a_entry),decltype(&::SHGetFolderPathA)>);
+ static_assert(std::is_convertible_v<decltype(&folder_w_entry),decltype(&::SHGetFolderPathW)>);
++static_assert(std::is_convertible_v<decltype(&crypt_query_entry),decltype(&::CryptQueryObject)>);
+ static_assert(sizeof(DWORD)==4&&sizeof(HKEY)==8&&sizeof(wchar_t)==2&&sizeof(SOCKET)==8);
+ }
+--- RE_PACKET/anadius-native-source/native_callbacks.hpp
++++ FIX14/src/windows/hook_callbacks.hpp
+@@ -8,15 +8,18 @@
+ #include <winsock2.h>
+ #include <windows.h>
+ #include <shlobj.h>
++#include <wincrypt.h>
++#include "src/hooks/crypt_query.hpp"
+ #include <array>
+ #include <exception>
+-#include "../anadius-registry-source/registry.hpp"
+-#include "../anadius-host-callbacks-source/callbacks.hpp"
+-#include "../anadius-network-hook-source/connect.hpp"
+-#include "../hook-engine-source/adapters.hpp"
++#include "src/hooks/registry.hpp"
++#include "src/hooks/host_callbacks.hpp"
++#include "src/hooks/connect.hpp"
++#include "src/hooks/callback_resolver.hpp"
++#include <mutex>
+ 
+-namespace anadius::native_recovered {
+-using Callback=host_init_recovered::Callback;
++namespace preloader_l::native_callbacks {
++using Callback=host::Callback;
+ enum class LifecycleFault { AlreadyBound, Busy, WrongOwner };
+ class Errors {
+ public:
+@@ -26,12 +29,19 @@
+     // translate an unknown exception into a successful Windows API result.
+     [[noreturn]] virtual void callback_exception(Callback,std::exception_ptr) noexcept=0;
+ };
++class CryptOperations {
++public:
++    virtual ~CryptOperations()=default;
++    virtual BOOL query(DWORD,const void*,DWORD,DWORD,DWORD,DWORD*,DWORD*,DWORD*,HCERTSTORE*,HCRYPTMSG*,const void**)=0;
++};
+ struct Context {
+-    registry_recovered::StateRefs registry;
+-    network_hook_recovered::StateRefs network;
+-    registry_recovered::Effects& registry_effects;
+-    host_callbacks_recovered::Effects& host_effects;
+-    network_hook_recovered::Effects& network_effects;
++    registry::StateRefs registry;
++    network_hooks::StateRefs network;
++    registry::Effects& registry_effects;
++    host_callbacks::Effects& host_effects;
++    network_hooks::Effects& network_effects;
++    CryptOperations& crypt_effects;
++    std::recursive_mutex serialization;
+ };
+ // Explicit per-image binding. Errors must outlive all bindings and native entry
+ // attempts. Context/state/effects stay alive and stable until close succeeds.
+@@ -50,7 +60,7 @@
+ };
+ bool is_bound();
+ std::size_t active_calls();
+-class Resolver final : public recovered_hooks::CallbackResolver {
++class Resolver final : public hook_engine::CallbackResolver {
+ public:
+     std::uintptr_t rebuilt_address(Callback) override;
+ };
+@@ -64,29 +74,32 @@
+     virtual int compare_utf16(const void*,const void*)=0;
+     virtual int copy_utf16(void* destination,std::size_t characters,const void* source)=0;
+ };
+-// Loads original SDK-typed trampoline pointers from the same ten slots populated
+-// by HostInitEffects. All allocation/log/wait/narrow/copy/UI effects stay pure.
++// Loads SDK-typed trampoline pointers from ten source host slots and the appended
++// CryptQueryObject slot. Allocation/log/wait/narrow/copy/UI effects stay explicit.
+ // This class is intentionally abstract; no default success backend exists.
+-class OriginalEffects : public registry_recovered::Effects,
+-                        public host_callbacks_recovered::Effects,
+-                        public network_hook_recovered::Effects {
++class OriginalEffects : public registry::Effects,
++                        public host_callbacks::Effects,
++                        public network_hooks::Effects,
++                        public CryptOperations {
+ public:
+-    OriginalEffects(const std::array<std::uintptr_t,10>& originals,WideOperations& wide)
++    OriginalEffects(const std::array<std::uintptr_t,host::callback_count>& originals,WideOperations& wide)
+         : originals_(originals),wide_(wide) {}
+-    registry_recovered::Status original_open_a(const registry_recovered::OpenA&) final;
+-    registry_recovered::Status original_open_w(const registry_recovered::OpenW&) final;
+-    registry_recovered::Status original_query_a(const registry_recovered::QueryA&) final;
+-    registry_recovered::Status original_query_w(const registry_recovered::QueryW&) final;
+-    registry_recovered::Status original_close(registry_recovered::Handle) final;
+-    std::int32_t original_create_process_a(const host_callbacks_recovered::ProcessCall<char>&) final;
+-    std::int32_t original_create_process_w(const host_callbacks_recovered::ProcessCall<char16_t>&) final;
+-    std::uint32_t original_folder_a(const host_callbacks_recovered::FolderCall<char>&) final;
+-    std::uint32_t original_folder_w(const host_callbacks_recovered::FolderCall<char16_t>&) final;
+-    std::int32_t original_connect_0a3838(network_hook_recovered::Socket,std::span<std::byte>,std::int32_t) final;
++    registry::Status original_open_a(const registry::OpenA&) final;
++    registry::Status original_open_w(const registry::OpenW&) final;
++    registry::Status original_query_a(const registry::QueryA&) final;
++    registry::Status original_query_w(const registry::QueryW&) final;
++    registry::Status original_close(registry::Handle) final;
++    std::int32_t original_create_process_a(const host_callbacks::ProcessCall<char>&) final;
++    std::int32_t original_create_process_w(const host_callbacks::ProcessCall<char16_t>&) final;
++    std::uint32_t original_folder_a(const host_callbacks::FolderCall<char>&) final;
++    std::uint32_t original_folder_w(const host_callbacks::FolderCall<char16_t>&) final;
++    std::int32_t original_connect_0a3838(network_hooks::Socket,std::span<std::byte>,std::int32_t) final;
++    BOOL query(DWORD,const void*,DWORD,DWORD,DWORD,DWORD*,DWORD*,DWORD*,HCERTSTORE*,HCRYPTMSG*,const void**) final;
++    virtual void crypt_observed(crypt_query::Selection) noexcept=0;
+     int crt_wcsicmp(const char16_t*,const char16_t*) final;
+     int crt_wcscpy_s(char16_t*,std::size_t,const char16_t*) final;
+ private:
+-    const std::array<std::uintptr_t,10>& originals_;
++    const std::array<std::uintptr_t,host::callback_count>& originals_;
+     WideOperations& wide_;
+     template<class Fn> Fn original(Callback c)const {
+         const auto address=originals_.at(static_cast<std::size_t>(c));
+@@ -105,4 +118,5 @@
+ BOOL WINAPI process_w_entry(LPCWSTR,LPWSTR,LPSECURITY_ATTRIBUTES,LPSECURITY_ATTRIBUTES,BOOL,DWORD,LPVOID,LPCWSTR,LPSTARTUPINFOW,LPPROCESS_INFORMATION) noexcept;
+ HRESULT WINAPI folder_a_entry(HWND,int,HANDLE,DWORD,LPSTR) noexcept;
+ HRESULT WINAPI folder_w_entry(HWND,int,HANDLE,DWORD,LPWSTR) noexcept;
++BOOL WINAPI crypt_query_entry(DWORD,const void*,DWORD,DWORD,DWORD,DWORD*,DWORD*,DWORD*,HCERTSTORE*,HCRYPTMSG*,const void**) noexcept;
+ }
+--- RE_PACKET/anadius-libraries-source/native_system.cpp
++++ FIX14/src/windows/library_calls.cpp
+@@ -1,8 +1,11 @@
+-#include "libraries.hpp"
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/libraries/libraries.hpp"
++#ifndef WIN32_LEAN_AND_MEAN
+ #define WIN32_LEAN_AND_MEAN
++#endif
+ #include <windows.h>
+ 
+-namespace anadius::recovered::libraries {
++namespace preloader_l::libraries {
+ static_assert(sizeof(wchar_t) == 2, "This adapter requires Windows UTF-16 wchar_t");
+ std::uint32_t NativeSystemCalls::get_error_mode() { return GetErrorMode(); }
+ std::uint32_t NativeSystemCalls::set_error_mode(std::uint32_t mode) {
+@@ -23,4 +26,4 @@
+     return result;
+ }
+ std::uint32_t NativeSystemCalls::last_error() { return GetLastError(); }
+-} // namespace anadius::recovered::libraries
++} // namespace preloader_l::libraries
+--- RE_PACKET/anadius-native-source/original_effects.cpp
++++ FIX14/src/windows/original_effects.cpp
+@@ -1,17 +1,40 @@
+-#include "native_callbacks.hpp"
++#include "src/windows/hook_callbacks.hpp"
+ #include <bit>
+-namespace anadius::native_recovered {
+-using namespace registry_recovered;
++#include <limits>
++namespace preloader_l::native_callbacks {
++using namespace registry;
+ Status OriginalEffects::original_open_a(const OpenA& a){return std::bit_cast<Status>(original<decltype(&::RegOpenKeyExA)>(Callback::reg_open_a_00f800)(reinterpret_cast<HKEY>(a.root),a.subkey,a.options,a.access,static_cast<PHKEY>(a.result.raw())));}
+ Status OriginalEffects::original_open_w(const OpenW& a){return std::bit_cast<Status>(original<decltype(&::RegOpenKeyExW)>(Callback::reg_open_w_00f960)(reinterpret_cast<HKEY>(a.root),reinterpret_cast<LPCWSTR>(a.subkey),a.options,a.access,static_cast<PHKEY>(a.result.raw())));}
+ Status OriginalEffects::original_query_a(const QueryA& a){return std::bit_cast<Status>(original<decltype(&::RegQueryValueExA)>(Callback::reg_query_a_00fac0)(reinterpret_cast<HKEY>(a.key),a.name,static_cast<LPDWORD>(a.reserved),static_cast<LPDWORD>(a.type.raw()),static_cast<LPBYTE>(a.data),static_cast<LPDWORD>(a.size.raw())));}
+ Status OriginalEffects::original_query_w(const QueryW& a){return std::bit_cast<Status>(original<decltype(&::RegQueryValueExW)>(Callback::reg_query_w_00fb60)(reinterpret_cast<HKEY>(a.key),reinterpret_cast<LPCWSTR>(a.name),static_cast<LPDWORD>(a.reserved),static_cast<LPDWORD>(a.type.raw()),static_cast<LPBYTE>(a.data),static_cast<LPDWORD>(a.size.raw())));}
+ Status OriginalEffects::original_close(Handle key){return std::bit_cast<Status>(original<decltype(&::RegCloseKey)>(Callback::reg_close_00f5b0)(reinterpret_cast<HKEY>(key)));}
+-std::int32_t OriginalEffects::original_create_process_a(const host_callbacks_recovered::ProcessCall<char>& a){return original<decltype(&::CreateProcessA)>(Callback::create_process_a_00f3f0)(a.application,a.command_line,reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.process_attributes),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.thread_attributes),a.inherit_handles,a.creation_flags,reinterpret_cast<LPVOID>(a.environment),a.current_directory,reinterpret_cast<LPSTARTUPINFOA>(a.startup_info),reinterpret_cast<LPPROCESS_INFORMATION>(a.process_information));}
+-std::int32_t OriginalEffects::original_create_process_w(const host_callbacks_recovered::ProcessCall<char16_t>& a){return original<decltype(&::CreateProcessW)>(Callback::create_process_w_00f4d0)(reinterpret_cast<LPCWSTR>(a.application),reinterpret_cast<LPWSTR>(a.command_line),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.process_attributes),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.thread_attributes),a.inherit_handles,a.creation_flags,reinterpret_cast<LPVOID>(a.environment),reinterpret_cast<LPCWSTR>(a.current_directory),reinterpret_cast<LPSTARTUPINFOW>(a.startup_info),reinterpret_cast<LPPROCESS_INFORMATION>(a.process_information));}
+-std::uint32_t OriginalEffects::original_folder_a(const host_callbacks_recovered::FolderCall<char>& a){return std::bit_cast<std::uint32_t>(original<decltype(&::SHGetFolderPathA)>(Callback::folder_a_00fc00)(reinterpret_cast<HWND>(a.window),a.folder_id,reinterpret_cast<HANDLE>(a.token),a.flags,a.path));}
+-std::uint32_t OriginalEffects::original_folder_w(const host_callbacks_recovered::FolderCall<char16_t>& a){return std::bit_cast<std::uint32_t>(original<decltype(&::SHGetFolderPathW)>(Callback::folder_w_00fc80)(reinterpret_cast<HWND>(a.window),a.folder_id,reinterpret_cast<HANDLE>(a.token),a.flags,reinterpret_cast<LPWSTR>(a.path)));}
+-std::int32_t OriginalEffects::original_connect_0a3838(network_hook_recovered::Socket s,std::span<std::byte> b,std::int32_t n){return original<decltype(&::connect)>(Callback::connect_00fd00)(s,reinterpret_cast<const sockaddr*>(b.data()),n);}
++std::int32_t OriginalEffects::original_create_process_a(const host_callbacks::ProcessCall<char>& a){return original<decltype(&::CreateProcessA)>(Callback::create_process_a_00f3f0)(a.application,a.command_line,reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.process_attributes),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.thread_attributes),a.inherit_handles,a.creation_flags,reinterpret_cast<LPVOID>(a.environment),a.current_directory,reinterpret_cast<LPSTARTUPINFOA>(a.startup_info),reinterpret_cast<LPPROCESS_INFORMATION>(a.process_information));}
++std::int32_t OriginalEffects::original_create_process_w(const host_callbacks::ProcessCall<char16_t>& a){return original<decltype(&::CreateProcessW)>(Callback::create_process_w_00f4d0)(reinterpret_cast<LPCWSTR>(a.application),reinterpret_cast<LPWSTR>(a.command_line),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.process_attributes),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.thread_attributes),a.inherit_handles,a.creation_flags,reinterpret_cast<LPVOID>(a.environment),reinterpret_cast<LPCWSTR>(a.current_directory),reinterpret_cast<LPSTARTUPINFOW>(a.startup_info),reinterpret_cast<LPPROCESS_INFORMATION>(a.process_information));}
++std::uint32_t OriginalEffects::original_folder_a(const host_callbacks::FolderCall<char>& a){return std::bit_cast<std::uint32_t>(original<decltype(&::SHGetFolderPathA)>(Callback::folder_a_00fc00)(reinterpret_cast<HWND>(a.window),a.folder_id,reinterpret_cast<HANDLE>(a.token),a.flags,a.path));}
++std::uint32_t OriginalEffects::original_folder_w(const host_callbacks::FolderCall<char16_t>& a){return std::bit_cast<std::uint32_t>(original<decltype(&::SHGetFolderPathW)>(Callback::folder_w_00fc80)(reinterpret_cast<HWND>(a.window),a.folder_id,reinterpret_cast<HANDLE>(a.token),a.flags,reinterpret_cast<LPWSTR>(a.path)));}
++std::int32_t OriginalEffects::original_connect_0a3838(network_hooks::Socket s,std::span<std::byte> b,std::int32_t n){return original<decltype(&::connect)>(Callback::connect_00fd00)(s,reinterpret_cast<const sockaddr*>(b.data()),n);}
+ int OriginalEffects::crt_wcsicmp(const char16_t* a,const char16_t* b){return wide_.compare_utf16(a,b);}
+ int OriginalEffects::crt_wcscpy_s(char16_t* d,std::size_t n,const char16_t* s){return wide_.copy_utf16(d,n,s);}
++BOOL OriginalEffects::query(DWORD type,const void* object,DWORD content,DWORD format,DWORD flags,DWORD* encoding,DWORD* content_type,DWORD* format_type,HCERTSTORE* store,HCRYPTMSG* message,const void** context){
++    const DWORD incoming=GetLastError();
++    std::u16string path;bool readable=false;
++    if(type==CERT_QUERY_OBJECT_FILE&&object){
++        const auto base=reinterpret_cast<std::uintptr_t>(object);
++        for(std::size_t i=0;;++i){
++            if(i>(std::numeric_limits<std::uintptr_t>::max()-base)/sizeof(char16_t))break;
++            char16_t unit{};SIZE_T copied=0;
++            if(!ReadProcessMemory(GetCurrentProcess(),reinterpret_cast<const void*>(base+i*sizeof(char16_t)),&unit,sizeof unit,&copied)||copied!=sizeof unit)break;
++            if(!unit){readable=true;break;}
++            path.push_back(unit);
++        }
++    }
++    const auto selection=crypt_query::select_object(type,object==nullptr,path,readable);
++    const void* effective=selection==crypt_query::Selection::companion?static_cast<const void*>(crypt_query::companion_filename):object;
++    SetLastError(incoming);
++    // The actual Windows API supplies the result and every output. No synthetic
++    // success, output rewriting, extra trust API, or cached certificate is used.
++    const BOOL result=original<decltype(&::CryptQueryObject)>(Callback::crypt_query_001264)(type,effective,content,format,flags,encoding,content_type,format_type,store,message,context);
++    const DWORD outgoing=GetLastError();crypt_observed(selection);SetLastError(outgoing);
++    return result;
+ }
++}
+--- RE_PACKET/anadius-startup-source/windows_platform.cpp
++++ FIX14/src/windows/startup_platform.cpp
+@@ -1,12 +1,26 @@
+-#include "startup.hpp"
++#include "src/runtime/startup.hpp"
++#ifndef WIN32_LEAN_AND_MEAN
+ #define WIN32_LEAN_AND_MEAN
++#endif
+ #include <windows.h>
+ #include <shellapi.h>
+ #include <cstdlib>
++#include <memory>
++#include <system_error>
+ 
+-namespace anadius::startup_recovered {
++namespace preloader_l::startup {
+ static_assert(sizeof(wchar_t) == 2);
+-const char* NativeInputPlatform::crt_getenv_05f318(const char* name) { return std::getenv(name); }
++const char* NativeInputPlatform::crt_getenv_05f318(const char* name) {
++    // Keep the statically linked CRT environment source, with an owned copy
++    // valid until this adapter's next environment read or destruction.
++    char* value=nullptr;std::size_t size=0;
++    const auto error=::_dupenv_s(&value,&size,name);
++    std::unique_ptr<char,decltype(&std::free)> allocation(value,&std::free);
++    if(error)throw std::system_error(error,std::generic_category(),"CRT environment read failed");
++    if(!value){environment_value_.clear();return nullptr;}
++    environment_value_.assign(value,size?size-1:0);
++    return environment_value_.c_str();
++}
+ const wchar_t* NativeInputPlatform::get_command_line_w() { return GetCommandLineW(); }
+ wchar_t** NativeInputPlatform::command_line_to_argv_w(const wchar_t* command, int* count) {
+     return CommandLineToArgvW(command,count);
+@@ -24,4 +38,4 @@
+ bool NativeConsolePlatform::move_window(ConsoleHandle window, int x, int y, int width, int height, bool repaint) {
+     return MoveWindow(reinterpret_cast<HWND>(window),x,y,width,height,repaint) != 0;
+ }
+-} // namespace anadius::startup_recovered
++} // namespace preloader_l::startup
+--- RE_PACKET/anadius-xml-reader-source/reader.cpp
++++ FIX14/src/xml/reader.cpp
+@@ -1,11 +1,28 @@
+-#include "reader.hpp"
+-#include "vendor/tinyxml2/tinyxml2.h"
++#include "src/xml/reader.hpp"
++#include "third_party/tinyxml2/tinyxml2.h"
+ #include <stdexcept>
+ #include <unordered_map>
+ 
+-namespace anadius::xml_reader_bridge {
++namespace preloader_l::xml_reader {
+ namespace {
+-namespace msg=messages_recovered;
++namespace msg=messages;
++// Keep the source reader's successful-document depth contract outside the
++// pristine upstream dependency. TinyXML2 retains its own independent limit.
++class SourceDepthPolicy final:public tinyxml2::XMLVisitor {
++public:
++    bool VisitEnter(const tinyxml2::XMLElement& element,const tinyxml2::XMLAttribute*) override {
++        if(element.ClosingType()==tinyxml2::XMLElement::OPEN && ++depth_>=100)exceeded_=true;
++        return !exceeded_;
++    }
++    bool VisitExit(const tinyxml2::XMLElement& element) override {
++        if(element.ClosingType()==tinyxml2::XMLElement::OPEN)--depth_;
++        return !exceeded_;
++    }
++    bool exceeded()const{return exceeded_;}
++private:
++    unsigned depth_=1; // XMLDocument::ParseDeep is the first source level.
++    bool exceeded_=false;
++};
+ class Document;
+ class Element final:public msg::XmlNode {
+ public:
+@@ -26,12 +43,25 @@
+ class Document final:public msg::XmlDocument {
+ public:
+     Document():document_(true,tinyxml2::PRESERVE_WHITESPACE){}
+-    int parse(const char* value){return document_.Parse(value,static_cast<std::size_t>(-1));}
+-    bool has_error()const{return document_.Error();}
++    int parse(const char* value){
++        const auto code=document_.Parse(value,static_cast<std::size_t>(-1));
++        if(code!=tinyxml2::XML_SUCCESS)return code;
++        SourceDepthPolicy policy;(void)document_.Accept(&policy);
++        if(policy.exceeded()){
++            source_depth_error_=true;
++            document_.Clear();
++            return tinyxml2::XML_ELEMENT_DEPTH_EXCEEDED;
++        }
++        return code;
++    }
++    bool has_error()const{return source_depth_error_||document_.Error();}
+     const msg::XmlNode* first_element()const override{return wrap(document_.FirstChildElement());}
+     // Historical interface name: original 033fd7 calls ErrorStr (0032d0),
+     // the full diagnostic, rather than tinyxml2::ErrorName.
+-    std::string_view error_name()const override{return document_.ErrorStr();}
++    std::string_view error_name()const override{
++        if(source_depth_error_)return "XML_ELEMENT_DEPTH_EXCEEDED: source reader policy=100 (adapter diagnostic)";
++        return document_.ErrorStr();
++    }
+     const Element* wrap(const tinyxml2::XMLElement* native)const {
+         if(!native)return nullptr;
+         auto found=elements_.find(native);
+@@ -42,6 +72,7 @@
+ private:
+     // Wrappers are destroyed before the upstream document owning native nodes.
+     tinyxml2::XMLDocument document_;
++    bool source_depth_error_=false;
+     mutable std::unordered_map<const tinyxml2::XMLElement*,std::unique_ptr<Element>> elements_;
+ };
+ const msg::XmlNode* Element::first_element()const{return owner_.wrap(native_.FirstChildElement());}
+@@ -52,7 +83,7 @@
+     return *element;
+ }
+ }
+-messages_recovered::ParseResult Backend::parse_c_string(std::string_view value) {
++messages::ParseResult Backend::parse_c_string(std::string_view value) {
+     // Own a terminator even if the supplied view is a slice. Native Parse with
+     // size_t(-1) reads only to its first NUL and copies the parse buffer itself.
+     const std::string owned(value);
+@@ -61,17 +92,17 @@
+     const bool error=document->has_error();
+     return {std::move(document),code,error};
+ }
+-std::unique_ptr<messages_recovered::XmlPrinter> Backend::printer() {
+-    return std::make_unique<xml_recovered::MemoryPrinter>();
++std::unique_ptr<messages::XmlPrinter> Backend::printer() {
++    return std::make_unique<xml::MemoryPrinter>();
+ }
+ std::vector<std::pair<std::string,std::string>> Backend::attributes_in_order(
+-        const messages_recovered::XmlNode& node) {
++        const messages::XmlNode& node) {
+     std::vector<std::pair<std::string,std::string>> result;
+     for(auto* attribute=checked(node).native().FirstAttribute();attribute;attribute=attribute->Next())
+         result.emplace_back(attribute->Name(),attribute->Value());
+     return result;
+ }
+-const char* Backend::text_003860(const messages_recovered::XmlNode& node) {
++const char* Backend::text_003860(const messages::XmlNode& node) {
+     return checked(node).native().GetText();
+ }
+-} // namespace anadius::xml_reader_bridge
++} // namespace preloader_l::xml_reader_bridge

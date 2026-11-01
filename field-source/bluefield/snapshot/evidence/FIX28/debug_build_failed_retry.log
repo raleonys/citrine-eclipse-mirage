@@ -1,0 +1,36 @@
+[ 34%] Built target preloader_l_core
+[ 37%] Built target hooks_test_registry_source
+[ 39%] Built target hooks_test_registry_wait
+[ 42%] Built target paths_test_encoding
+[ 44%] Built target files_test_status
+[ 67%] Built target libraries_test_libraries
+[ 67%] Built target configuration_test_hash_table
+[ 67%] Built target configuration_test_pegtl_differential
+[ 67%] Built target configuration_test_parser
+[ 67%] Built target configuration_test_state
+[ 67%] Built target handlers_test_content
+[ 67%] Built target crypto_test_crypto
+[ 67%] Built target handlers_test_information
+[ 67%] Built target hashing_test_hash
+[ 67%] Built target handlers_test_presence
+[ 67%] Built target hooks_test_crypt_query
+[ 67%] Built target hooks_test_setup_plan
+[ 67%] Built target licensing_test_key_store
+[ 67%] Built target licensing_test_license
+[ 67%] Built target paths_test_module_relative
+[ 67%] Built target paths_test_path
+[ 67%] Linking CXX executable protocol_test_integration
+[ 67%] Built target profiles_test_online
+[ 67%] Built target protocol_test_messages
+[ 68%] Building CXX object CMakeFiles/runtime_test_startup.dir/tests/unit/runtime/test_startup.cpp.o
+/usr/bin/ld: CMakeFiles/protocol_test_integration.dir/tests/unit/protocol/test_integration.cpp.o: in function `(anonymous namespace)::Effects::registered_handler(unsigned int, preloader_l::messages::XmlNode const&, preloader_l::messages::XmlPrinter&)':
+/workspace/scratch/2072698c927d/fix28_work/preloader_l/tests/unit/protocol/test_integration.cpp:164:(.text+0x1592): undefined reference to `preloader_l::dispatch::Router::registered_handler(unsigned int, preloader_l::messages::XmlNode const&, preloader_l::messages::XmlPrinter&)'
+/usr/bin/ld: CMakeFiles/protocol_test_integration.dir/tests/unit/protocol/test_integration.cpp.o: in function `(anonymous namespace)::alias_content_and_errors()':
+/workspace/scratch/2072698c927d/fix28_work/preloader_l/tests/unit/protocol/test_integration.cpp:263:(.text+0x49be): undefined reference to `preloader_l::dispatch::Router::registered_handler(unsigned int, preloader_l::messages::XmlNode const&, preloader_l::messages::XmlPrinter&)'
+collect2: error: ld returned 1 exit status
+gmake[2]: *** [CMakeFiles/protocol_test_integration.dir/build.make:102: protocol_test_integration] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:1853: CMakeFiles/protocol_test_integration.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+[ 68%] Linking CXX executable runtime_test_startup
+[ 68%] Built target runtime_test_startup
+gmake: *** [Makefile:101: all] Error 2

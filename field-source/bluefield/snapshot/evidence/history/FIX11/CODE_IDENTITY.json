@@ -1,0 +1,10 @@
+{
+  "source_digest": "65aa7bc49676a01f6176b4273ad67a43b161b70ea6642e16ecbf3245fb2a1035",
+  "compiled_core_objects": 39,
+  "preloader_l_symbol_mentions": 11471,
+  "old_namespace_mentions": 0,
+  "native_windows_objects": "NOT_RUN",
+  "public_exports": "source definition unchanged: DllMain@1 SURGE@2 DllShutdown@3",
+  "code_state": "BF02_FIX05",
+  "evidence_scope": "historical parent symbol audit; FIX06 uses same namespace; no native acceptance inherited"
+}

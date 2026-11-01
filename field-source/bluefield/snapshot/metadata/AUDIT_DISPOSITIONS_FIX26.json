@@ -1,0 +1,22 @@
+{
+  "before_open": 9,
+  "after_open": 9,
+  "corrected_source_semantic_records": [],
+  "compiler_warning_repair": "Two GCC noreturn warnings",
+  "mapped_but_not_closed": [
+    "D14"
+  ],
+  "remaining_open": [
+    "DEP05",
+    "D02",
+    "D06",
+    "D07",
+    "D13",
+    "D14",
+    "D15",
+    "Q02",
+    "D21"
+  ],
+  "newly_explicit_subdifference": "LIC11 atomic writer exception bypasses source write-false fallback; grouped under existing D14",
+  "native_validation": "NOT_RUN_separate_dimension"
+}

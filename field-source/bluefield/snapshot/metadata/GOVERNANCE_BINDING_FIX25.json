@@ -1,0 +1,25 @@
+{
+  "status": "CURRENT_LIBRARY_VERSION9_RECHECKED_FOR_FIX25",
+  "revision": "2026-10-25.1",
+  "master_md": {
+    "library_file_id": "libfile_b1de5dceb8448191a0d52c120edc5215",
+    "version": 9,
+    "sha256": "8bfe91091fb115ee816d1a7204f2256d837df79d14957e78d332d3602daa981b"
+  },
+  "master_json": {
+    "library_file_id": "libfile_c451831f61c88191a98aa9ab08cc7714",
+    "version": 9,
+    "sha256": "06ab4d5e070a191e40045d681e03f9fbd99bbbed4195c89174f5656d95beb141"
+  },
+  "packaged_projection": {
+    "json": "metadata/GOVERNANCE_APPLICABLE.json",
+    "md": "docs/GOVERNANCE_APPLICABLE.md",
+    "json_sha256": "e59e4c396aa167081e657c04f1379a910958e2b69a23d4da23da73cdb21fa458",
+    "md_sha256": "a4ab7ec790f268c3e7b02b4e7e5c3cf6c38d52a5cb19bc215bb44ec08104afd4",
+    "full_master_mirror": false,
+    "library_only_debt_excluded": true
+  },
+  "independent_authority_limit": "Packaged projection and source checks cannot manufacture user authorization or prove semantic compliance. Latest user instruction wins.",
+  "publication_authorized": false,
+  "scope": "D16 restore QueryImage own-avatar provider/cache effects and conditional successful larger-size copy to last_avatar, then saved-size/log. Preserve visible official/custom avatar selection and lazy resolve; retain online loader omission of obsolete avatar-selection status checks. No vendor/layout/quota/config changes."
+}

@@ -1,0 +1,54 @@
+{
+  "official": {
+    "library_file_id": "libfile_e3d44dd7e6548191a58076c6a002bb01",
+    "source": "user official surge.png; DLL R&D Football/surge.png",
+    "sha256": "606c08b47732a77439776af8e8ab9e5132a31ecceb9fb3e7e21b8f487c50f12b",
+    "bytes": 3653,
+    "dimensions": [
+      208,
+      208
+    ],
+    "color": "RGB",
+    "transformed": false
+  },
+  "historical_removed_arrays": [
+    {
+      "name": "default_user_png",
+      "donor_va": "0x1800809d0",
+      "file_offset": 520656,
+      "bytes": 7488,
+      "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd",
+      "dimensions": [
+        208,
+        208
+      ],
+      "parent_array_sha256_verified": true
+    },
+    {
+      "name": "default_avatar_png",
+      "donor_va": "0x180082710",
+      "file_offset": 528144,
+      "bytes": 3882,
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "dimensions": [
+        208,
+        208
+      ],
+      "parent_array_sha256_verified": true
+    }
+  ],
+  "parent_archive_sha256": "e2edb8fb46341135e7a31afa79e0b7580068623e2d7e8b97cca69a83e785ba67",
+  "old_materialization": {
+    "bluefield.png": "parent startup user image from default_user_png",
+    "default.png": "parent fallback from default_avatar_png",
+    "last_avatar": "parent provider cache override; FIX12 never reads it for avatar selection"
+  },
+  "ownership": {
+    "embedded": "exact user official bytes; create-only missing default SURGE/surge.png",
+    "sidecar": "read-only existing module surge.png; no byte/hash/size requirement",
+    "custom": "explicit path read-only",
+    "provider": "original _AVATAR_UserId_Width filename under SURGE; no invented quotas/nonce/delete-on-unload/PNG validation"
+  },
+  "limits": "No transformation or added runtime image validation. Official embedded bytes are source-pinned, existing user files are not hash-gated.",
+  "classification": "CURRENT_FIX13"
+}

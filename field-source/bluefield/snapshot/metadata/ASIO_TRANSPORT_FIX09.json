@@ -1,0 +1,41 @@
+{
+  "schema": "preloader_l.asio_transport_fix09.v1",
+  "parent_archive_sha256": "cc7a752a1d87c9db4f68b4bd365318fc18ad38f1d0a43a48e1dd73bd0bbcbc6c",
+  "upstream": {
+    "Asio": "1.38.2",
+    "commit": "8806a6803cde7054c3049d3666d3ec36786568c5",
+    "origin_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+    "local_vendor_patches": [],
+    "application_cpp_from_brownfield": false
+  },
+  "active_backend": "Asio async accept/read/write; Windows IOCP required at compile time",
+  "owners": {
+    "io_threads": 1,
+    "handler_pool_threads": 2,
+    "maximum_clients": 32,
+    "per_client_threads": 0,
+    "application_outlives_pending_handlers": true,
+    "greeting_and_handlers_on_pool": true
+  },
+  "retained_contract": [
+    "prepare/hooks/activate readiness order",
+    "SURGE profile, numeric IDs, optional config",
+    "source receive-window and NUL framing",
+    "one request/response per connection, FIFO/cipher order",
+    "public exports and native hook ownership"
+  ],
+  "failure_contract": [
+    "accepted socket and Session allocation inside exception boundary",
+    "single-shot client allocation failure permits later client recovery",
+    "terminal accept-rearm failure closes listener and clears ready",
+    "stop joins IO/pool before destroying callbacks and application"
+  ],
+  "pending": [
+    "Config2/PEGTL engine migration",
+    "filesystem backend decision and path/error parity",
+    "original asynchronous scheduler/ordering equivalence",
+    "Windows IOCP/Native/CRT/actual DLL Golden acceptance",
+    "transport deadlines and global application lock granularity"
+  ],
+  "current_transport_sha256": "ae000219a6d92c6d506cceecef0259bc5fef4c0086621e79183b69796d744993"
+}

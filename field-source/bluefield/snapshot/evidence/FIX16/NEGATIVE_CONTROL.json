@@ -1,0 +1,10 @@
+{
+  "status": "PASS_NEGATIVE_CONTROL",
+  "source_digest": "65ba6c4e1d58148351cfaa888b6ed15b7a961485cf7b2bcc126c9a1c0c476761",
+  "method": "Exact FIX15 service.cpp compiled into throwaway object and linked with unchanged extended real-TCP Asio test. No worktree mutation.",
+  "old_source_sha256": "0d8f9e65810f94afd193508d134ce36e154daefa712ea8ae2dce9e8882cf6b35",
+  "test_source_sha256": "b25c721d05857b15766ef6121a5f227ff647803cf3299229a24fc4f96d78125f",
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "output": "FAIL Asio phase=source accept completion errors checks=53 fault_size=65744: accept completion errors keep the same listener usable\n"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "UNAVAILABLE_ENVIRONMENT",
+  "exit_code": 1,
+  "binary_sha256": "ebcc6ea9b04f94e6ae0ab62603f05cb5ae6711154d97600e8d5a35afc200937a",
+  "source_digest": "5891e7409bc493dbaea8ee516fac7939cf295c073f05c916f3a9b66b2144c925",
+  "scope": "focused original compatibility only, detect_leaks=1",
+  "output": "==14==Can't open /proc/13/task for reading.\n==13==LeakSanitizer has encountered a fatal error.\n==13==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==13==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n"
+}

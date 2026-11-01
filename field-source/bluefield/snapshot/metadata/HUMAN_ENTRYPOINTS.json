@@ -1,0 +1,16 @@
+{
+  "default": "NON_ENTRYPOINT",
+  "entries": [
+    "scripts/build_orchestration/build_production.ps1",
+    "scripts/build_orchestration/build_debug.ps1",
+    "scripts/build_orchestration/build_diagnostic.ps1",
+    "scripts/build_orchestration/test_native.ps1",
+    "scripts/build_orchestration/test_crt.ps1",
+    "scripts/qa/check_pe.py",
+    "scripts/qa/check_source.py",
+    "scripts/qa/test_portable.py",
+    "scripts/qa/package_source.py",
+    "scripts/qa/check_package.py",
+    "scripts/qa/run_golden.py"
+  ]
+}

@@ -1,0 +1,450 @@
+{
+  "source_digest": "5891e7409bc493dbaea8ee516fac7939cf295c073f05c916f3a9b66b2144c925",
+  "rejected_FIX12_sha256": "f182d50ad8fd5632071cb3291a854a054480c625a831bfc2dc2a615f0262e0de",
+  "files": [
+    {
+      "file": "AGENTS.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "41e982ff1b4261db955ef99299440d438f9f57b36e0c1b1b227fce2d315f6688",
+      "FIX13_sha256": "d4b410d598d13b31e0b01c083156456e13448ef41f5ed11b69e2d20bb8a431f0"
+    },
+    {
+      "file": "CMakeLists.txt",
+      "operation": "MODIFY",
+      "FIX12_sha256": "f3691a37cee8105bc4ba44e2bb00d4f7196fbfe47cd1ef18c31bab56c11d0b40",
+      "FIX13_sha256": "e8e5258e654c43a508c1bc66fb819f6160cb97b675a1c8f8abd09eda94c68588"
+    },
+    {
+      "file": "README.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "138a1cf52b5f021c8e7d0397d0ca6d48f2a48e8fbe82740d5948c1a986166df0",
+      "FIX13_sha256": "86899ce0ab318097243c2573cc603a88ad12f9340e69c7565cbbade3963905b9"
+    },
+    {
+      "file": "cmake/sources.cmake",
+      "operation": "MODIFY",
+      "FIX12_sha256": "79300d9264f54c8ceabde3607b536d33a153a692c8a7909bf838f37043200896",
+      "FIX13_sha256": "1b25f1b0909f668d7dbfccb8b445a925b32d1a9a8a089c7a7e5af5ec5eb65f35"
+    },
+    {
+      "file": "docs/ARCHITECTURE.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "36c5c2bfa109daceade565ceb0dd57d88272d35c2100c6c0ca55c843d089c5b1",
+      "FIX13_sha256": "b508663cdc99e8c038e0faba173df88a573f77d9410bff475730ac2f3ffabf04"
+    },
+    {
+      "file": "docs/ASIO_TRANSPORT_FIX09.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "1b91520644d495eee3be395afd228419c3454a693904ea3f5eb11e1ff5296a5d",
+      "FIX13_sha256": "5ef6c5891319e434276088363cce80876b39803bb62212ee8660d939cb70d64e"
+    },
+    {
+      "file": "docs/BEHAVIOR_AUDIT.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "dd9c6f65f9de8656df0a6c73620cb7a603cb87ae9bfb2efb0e45faefa0aa4d28",
+      "FIX13_sha256": "34fc1bda2fc888bf90639290e0d8b136b0d5d7790f29aad98f7d2a02e50f5f32"
+    },
+    {
+      "file": "docs/CFG_QA_AND_GOLDEN_AUDIT.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "ff0bfe8260872d1af96cbf78fe66dd0055fad4cb914063a39f03b7baa2cfece2",
+      "FIX13_sha256": "0106d37bd921046b179694cc3160c3cfbee927483e9111bc4a8e096f3f8d69e7"
+    },
+    {
+      "file": "docs/CONFIG2_PEGTL_FIX10.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "15b702c5c04313b65f3eb120dccbd252649934af8b1a9e93267d41d52faf0b22",
+      "FIX13_sha256": "ea03dc761e9d657bf0de8e045aaff9104a48521f385a123320546e598c701bcf"
+    },
+    {
+      "file": "docs/DEPENDENCIES_FIX08.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "3540f993f011a1d440577dedb9becb14f058ec31b54d6d7bd84c96bf57a8d953",
+      "FIX13_sha256": "b6234b9fb0f8c13d4f108cfc8f5d0ac0435e3b2cc86ca95dd7b6adcfdbe0c064"
+    },
+    {
+      "file": "docs/DEVELOPMENT.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "60c1fd9c59e8bcf0d9f5023453975e79a8c38515e7d0c3fbd3a843b4754a272b",
+      "FIX13_sha256": "2278f1a509f158288b9a68ba9462c9b113ce6789bce835a7467da0ddcb2fee45"
+    },
+    {
+      "file": "docs/FILESYSTEM_CALLS_FIX12.csv",
+      "operation": "DELETE",
+      "FIX12_sha256": "e327e5703e61513a0b7c37b5c7576f136c99853f41776914bb39e0cd91a4e499",
+      "FIX13_sha256": null
+    },
+    {
+      "file": "docs/FILESYSTEM_CALLS_FIX13.csv",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "45a5921b0c756a85785d30d0e8dd2d92d679efd045c7a2ce2affba0e788e5960"
+    },
+    {
+      "file": "docs/FILESYSTEM_FIX11.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "2177d6612b9e6439e99152050fcd03be8c56b8913c22e55dae385c19bd465db5",
+      "FIX13_sha256": "c4310bddc57bf8141e25a264ea89c87628ca4dcae5abe7b7122621f0508271f7"
+    },
+    {
+      "file": "docs/FILESYSTEM_FIX12.md",
+      "operation": "DELETE",
+      "FIX12_sha256": "b71cb9393239f5d9b1dd4205a986b01618654fc6b3650e35072d8cd985b98058",
+      "FIX13_sha256": null
+    },
+    {
+      "file": "docs/FILESYSTEM_FIX13.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "6fd43103d50e37bb7dea9d88f362005320c261ce4d6a84fb00f983b0e069222b"
+    },
+    {
+      "file": "docs/MIGRATION_FIX12.md",
+      "operation": "DELETE",
+      "FIX12_sha256": "877671fd4ec94d4f1287551420465925aa6dbc401f049c3680353a74eb53acb9",
+      "FIX13_sha256": null
+    },
+    {
+      "file": "docs/ORIGINAL_DEVIATION_AUDIT_FIX13.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "a73b23715bcfaa3290bbde2016af60e6f48a3956e6dc3e9b96fdf4b7360340c7"
+    },
+    {
+      "file": "docs/ORIGINAL_MODULE_COVERAGE_FIX13.csv",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "1c6b048dd353ec124c3989764d6ec1803ab4d8f4bca3440f55a10a528485a15d"
+    },
+    {
+      "file": "docs/VALIDATION.md",
+      "operation": "MODIFY",
+      "FIX12_sha256": "08baa34625a0cc895d9d5e6129bd6f875c173df84d47c13159bc794c63675680",
+      "FIX13_sha256": "401959dd7269f4f469a45c4f87d7962029ff9caa63d6e058d1c29828e538f966"
+    },
+    {
+      "file": "docs/WINDOWS_FIX12.md",
+      "operation": "DELETE",
+      "FIX12_sha256": "d892a2c13677f151656c70cae5bbd699f899bf8594f0a3657a19dddfffbeaa63",
+      "FIX13_sha256": null
+    },
+    {
+      "file": "docs/WINDOWS_FIX13.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "8179945337f94f7d745028918d5d1a84f20cdb7c2648d8923220f60e4f4fd44d"
+    },
+    {
+      "file": "docs/history/REJECTED_FIX12/ARCHITECTURE.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "36c5c2bfa109daceade565ceb0dd57d88272d35c2100c6c0ca55c843d089c5b1"
+    },
+    {
+      "file": "docs/history/REJECTED_FIX12/DEVELOPMENT.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "60c1fd9c59e8bcf0d9f5023453975e79a8c38515e7d0c3fbd3a843b4754a272b"
+    },
+    {
+      "file": "docs/history/REJECTED_FIX12/FILESYSTEM_CALLS_FIX12.csv",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "e327e5703e61513a0b7c37b5c7576f136c99853f41776914bb39e0cd91a4e499"
+    },
+    {
+      "file": "docs/history/REJECTED_FIX12/FILESYSTEM_FIX12.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "b71cb9393239f5d9b1dd4205a986b01618654fc6b3650e35072d8cd985b98058"
+    },
+    {
+      "file": "docs/history/REJECTED_FIX12/MIGRATION_FIX12.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "877671fd4ec94d4f1287551420465925aa6dbc401f049c3680353a74eb53acb9"
+    },
+    {
+      "file": "docs/history/REJECTED_FIX12/README.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "138a1cf52b5f021c8e7d0397d0ca6d48f2a48e8fbe82740d5948c1a986166df0"
+    },
+    {
+      "file": "docs/history/REJECTED_FIX12/VALIDATION.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "08baa34625a0cc895d9d5e6129bd6f875c173df84d47c13159bc794c63675680"
+    },
+    {
+      "file": "docs/history/REJECTED_FIX12/WINDOWS_FIX12.md",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "d892a2c13677f151656c70cae5bbd699f899bf8594f0a3657a19dddfffbeaa63"
+    },
+    {
+      "file": "metadata/AVATAR_FIX13.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "573c86dd7125f3c2411065eb62f56e4ad4665ed2460c9fbe831626029f8ba644"
+    },
+    {
+      "file": "metadata/BUILD_GRAPH.json",
+      "operation": "MODIFY",
+      "FIX12_sha256": "57c708ff2445114d500fdc40071070db019453acf291b4d7ebebb35dc20180ff",
+      "FIX13_sha256": "ae572b2db994e4dbfb9a70851718d6501e8caea69797e822fa8ed98afe5134e4"
+    },
+    {
+      "file": "metadata/FILESYSTEM_CALLS_FIX13.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "2e85db9b417bcb7979753fd676f2d2359e6a12445909941944f4e71fb4a13a0f"
+    },
+    {
+      "file": "metadata/FILESYSTEM_TEMPLATES_FIX13.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "961a07b50e08c2d758b90d9fd2f297648f454e826d8fb180a43417c5b0d564d8"
+    },
+    {
+      "file": "metadata/FIX12_STATUS.json",
+      "operation": "DELETE",
+      "FIX12_sha256": "8fb2af161fd9b263b4f0cc738170937d810e6735b52bf8c2858dc2e299aac0bf",
+      "FIX13_sha256": null
+    },
+    {
+      "file": "metadata/FIX13_STATUS.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "1e38b00354f4a8cd7040ceccb302436866868d6571b2b4c05b8f986382c50ec9"
+    },
+    {
+      "file": "metadata/IMPORTS.json",
+      "operation": "MODIFY",
+      "FIX12_sha256": "023d0a66b0e0ebaccf0c75df7c16d3ee79af3f0297243c8a37c35481b74c60ba",
+      "FIX13_sha256": "53c85f7f66a5615f84cbab56997b0a8308c482c2e40a685559177f8fb82aca4a"
+    },
+    {
+      "file": "metadata/ORIGINAL_DEVIATION_AUDIT_FIX13.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "b93cc85c6f468a04a9fa993dffb6233ef537c44e468fb22be65da815aea4a56b"
+    },
+    {
+      "file": "metadata/ORIGINAL_FUNCTION_INDEX_FIX13.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "9ccf4241ad2e93ce7d5513da8c790f53f125e617db9c4e355525acfbc9799c8d"
+    },
+    {
+      "file": "metadata/ORIGINAL_IMPORT_COMPARISON_FIX13.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "423fd4f9974f6608c8c7fa44d257f201c1cca75373cd64560be5e0a7ce88dd51"
+    },
+    {
+      "file": "metadata/ORIGINAL_PACKAGE_FILES_FIX13.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "3613bdae654e70a9604f5f9365b60a818c994c615be48652a02341b6dd17985b"
+    },
+    {
+      "file": "metadata/ORIGINAL_PACKAGE_MODULES_FIX13.json",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "8bd8fcb5e553f1a22cbe499f5c2bbac88f69efbe630627096a12e6dc390d29b5"
+    },
+    {
+      "file": "metadata/PROJECT.json",
+      "operation": "MODIFY",
+      "FIX12_sha256": "8717f88cdc9f615acb74d33f8d1f1785ac59143981244174d479e2355a03c297",
+      "FIX13_sha256": "a165e283a3b378ced291a12d215fc27a66e96ce8c41ace89d43adfd168477b32"
+    },
+    {
+      "file": "scripts/qa/check_source.py",
+      "operation": "MODIFY",
+      "FIX12_sha256": "1c29d7c1e7e32a73c679ed9b4238ef702d84f63f5280d8d0be23a39ccf6bea4e",
+      "FIX13_sha256": "dd827c1a68164aa1eca6ac21421d21107427262db0e237ad5e825cd1d63bb883"
+    },
+    {
+      "file": "scripts/qa/filesystem_inventory.py",
+      "operation": "MODIFY",
+      "FIX12_sha256": "db9ea246b39a0b710f8e663440fe9928e3aabaaf6631ef0722cc6bffadbe7631",
+      "FIX13_sha256": "78e33f437d8aedbfb48dff096722919134ec55e9f0fb5954e537d80343cf1883"
+    },
+    {
+      "file": "scripts/qa/package_source.py",
+      "operation": "MODIFY",
+      "FIX12_sha256": "b4a401f52dbeebce620e4b3dee23491c7b17270bbdd8577f83d619c8f101bdeb",
+      "FIX13_sha256": "23bfa76a8ee604760cb8909c13bf3a95d910321850ccade47bd23ab8dcc6742d"
+    },
+    {
+      "file": "src/achievements/storage.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "8aade5e476e714639b85370a86cda23b1afc037ac6f49b16e0413773a8f9f6c3",
+      "FIX13_sha256": "62bccab3bc9e05db7a0564978cb7ccbbde94dbeca5a1bdeb8b05103a78340d6e"
+    },
+    {
+      "file": "src/achievements/storage.hpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "e500bebdf5db4b9dcee399fff026af7c27919ba81f5d3d6aae41a9f2d250459f",
+      "FIX13_sha256": "a9796c23f348e5a9a496988b28dabbf9ef6e598f443449ff62cf537db0500bf2"
+    },
+    {
+      "file": "src/application/application.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "81ebaefcb75162ce8a469c6f32d131c00e35ed06fda6921889dfa8b94e39968e",
+      "FIX13_sha256": "02cee70d585d062a83464392fffc47cf53a3ed35512cb793e5a44f8884e5875d"
+    },
+    {
+      "file": "src/application/avatars.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "02bbc2f36d128b6730b8ed04c088360110d5dae232fd07537c08c00b5775d089",
+      "FIX13_sha256": "fa581c3bdf8407a55fba25668defb75eb5e6485c86d0fb9373e0fe5511cca111"
+    },
+    {
+      "file": "src/application/avatars.hpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "fb6715f6eecc6df081c2e1d28ef869f7fb9f565a3475b76ba5931924fd598f91",
+      "FIX13_sha256": "6bb0fe8ed477b00f3d6568490694f9536568464eeb7da331278914a9b637c5c3"
+    },
+    {
+      "file": "src/application/environment.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "9fa892021f4e27d36dc68b36fe92561c5a3f381bcc936a29c607cda50e4e8315",
+      "FIX13_sha256": "cd57ca9b38863ec2603dc78d4237e975abb220fe6711eacec8b9118718db3dae"
+    },
+    {
+      "file": "src/application/logging.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "5f799ea3e28a0a8c31ac345fc08f9d1bb778e69249e62c07fa1e77a78ce3f3d2",
+      "FIX13_sha256": "d8e3ebb3980c4dc2711e32d85aef16e27d5fd37ebe97f9ad326289c4a53acd2c"
+    },
+    {
+      "file": "src/application/providers.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "fa10568414d6b954e1afb56ea73a67730233a1e5e2dc3d30b126806f3bceefa4",
+      "FIX13_sha256": "d77a8f0886a12f8a5d0bd5b74a65db8ec124f3100a3d716a57796f9945715587"
+    },
+    {
+      "file": "src/application/providers.hpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "203a03ee262174dd6fed8d0ab2f909de3a3001501a19e98500a4f4196072761e",
+      "FIX13_sha256": "ece7c2a8db5211bb88b3d5188e82e769b41d56aeb1eed3c7f03bc802feabcf87"
+    },
+    {
+      "file": "src/files/atomic_io.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "3a4b28acab1b0d8843357c100f2a5391cad5a8296c8886b04dce48bd96510dfd",
+      "FIX13_sha256": "a8d05febfbeb2150b25d4e21f3aa041ba2b4c3a47dadecfbe1fbab54409c1941"
+    },
+    {
+      "file": "src/files/native_io.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "1493289c9c9ab0cccc8bf279f9ae662cfe7f0d906b252fe536714773776f26da",
+      "FIX13_sha256": "f5f0ceb827a658728b9bdd176c322058a37ccad64f28e7757bf0dedffb032624"
+    },
+    {
+      "file": "src/libraries/libraries.cpp",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "8f6981e055d9bb1b113a4b85a8fee60489b2da9afef68c2103712a78cee8c697"
+    },
+    {
+      "file": "src/libraries/libraries.hpp",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "e07cffbe930eaeb403562712479789e8f7f9f85f0ad538953c3a13b08055a029"
+    },
+    {
+      "file": "src/profiles/online_session.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "a992c47d13b042a6300797fe034b67558869214ba8d2897e390913f302230b6c",
+      "FIX13_sha256": "c06ecc7993be6d15e7d8c09b260cd7d2d343ea3a705399958dca8d424f2069e3"
+    },
+    {
+      "file": "src/runtime/runtime_paths.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "dad662b0d3b6c22a84c05438dd755de859b23ef004d222c0a59aa4eb9472a966",
+      "FIX13_sha256": "2938e1d93e85d8bd3cd31034076498f4d0e4bf5a189b9ec1421755a19311226f"
+    },
+    {
+      "file": "src/runtime/runtime_paths.hpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "c5d145aa814799a14e154643792bc034f8cbf8384c70c94b93bb67fb64bf97fe",
+      "FIX13_sha256": "f2edb097fa7a87955579b99f38056fc31ba853f2a50cfffa641fb33e640d9bb5"
+    },
+    {
+      "file": "src/transport/service.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "7e1925aae018671ea1dd67a186808b48c41582005c48263290116bce6d565dd5",
+      "FIX13_sha256": "0d8f9e65810f94afd193508d134ce36e154daefa712ea8ae2dce9e8882cf6b35"
+    },
+    {
+      "file": "src/windows/dll_entry.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "8a1a8bce69cabc8a66deeb5d699a10838e645f8fb0858bf51a3e013dbf82aea1",
+      "FIX13_sha256": "452d25f0a15850531b988f8100658d593c9c010aa371a9710b9f4f068ff06d4e"
+    },
+    {
+      "file": "src/windows/library_calls.cpp",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "0cc9510cf0b02741d63151bb1c66595063982b3488c2d18e9a516ea4644e2457"
+    },
+    {
+      "file": "src/windows/original_effects.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "cd2916ccb0b4799968987e026f0debeb2bfcd8bc6cb6cb65d918e8405d84ec34",
+      "FIX13_sha256": "3ccb5673103865ad297dd8895db3037e4a60aab9b7766bfbe7dc7fa5b69d4b8f"
+    },
+    {
+      "file": "tests/integration/test_asio_transport.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "02aa40ef16583c47ac7249d4cafd334bab667ec90a769b4112e172a52c46fea0",
+      "FIX13_sha256": "1445f26302067cc8b816092fd3d0a40ac1912936578574ce6d064e5ccd0ec966"
+    },
+    {
+      "file": "tests/integration/test_original_compat.cpp",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "fd1f159223a48b22376ccecd4bae2996cccd8705851fd1242f758d0928ef7663"
+    },
+    {
+      "file": "tests/integration/test_runtime_migration.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "f6507547e9e9827ec2a66651f36426032a3c7c5f1727c946b1462e85d12a525d",
+      "FIX13_sha256": "e055ae1e533dcbeaf0c07d9664c06fd38f7ca2809d8f7c92155acb4d66acfa66"
+    },
+    {
+      "file": "tests/native/test_dll_load.py",
+      "operation": "MODIFY",
+      "FIX12_sha256": "de90be564001aa30d0a24c1d76193c1e18ba7c9b3869ce1f2a1a090468cf3cf1",
+      "FIX13_sha256": "8aefdf416447d3d83149ef495c578916ff4abd96de37d8a11300a0ec8bad33c0"
+    },
+    {
+      "file": "tests/tools/test_source_policy.py",
+      "operation": "MODIFY",
+      "FIX12_sha256": "a976923628aa7bf0d4f428cb5514f9a3b6a0d0586df38682910e4ba48002901d",
+      "FIX13_sha256": "51035ce4740dfec9e60ed763296d7097e5c1e12839ef5c3a7a84037d35f1edf6"
+    },
+    {
+      "file": "tests/unit/configuration/test_state.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "70a353debe0711208bf8e4e34bd70c794bbd547ee3afb059c8c87f209bf2fca2",
+      "FIX13_sha256": "c30feaed5a63e8a474f7d8d56589ba9adba952f8426ef5d425bbf1d205a596ac"
+    },
+    {
+      "file": "tests/unit/hooks/test_crypt_query.cpp",
+      "operation": "MODIFY",
+      "FIX12_sha256": "ad7fd9b97e01a80d842dc482d737a2a8054a3f4cd3f1c254928a97227768d840",
+      "FIX13_sha256": "ea43f175082c577d142bc0f7ecf8e8676b8b6614d6e2f5760807e4b288ac3eea"
+    },
+    {
+      "file": "tests/unit/libraries/test_libraries.cpp",
+      "operation": "ADD",
+      "FIX12_sha256": null,
+      "FIX13_sha256": "2ce818776d79ce80ec03de869c263e8940568c0577f979f97649035d188261a7"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "before_open": 9,
+  "after_open": 9,
+  "whole_findings_closed": [],
+  "corrected_subbranches": [
+    "D14.LIC11.initial_open_failure"
+  ],
+  "binding_corrections": [
+    "D14.LIC11.active_writer_chain"
+  ],
+  "remaining_open": [
+    "DEP05",
+    "D02",
+    "D06",
+    "D07",
+    "D13",
+    "D14",
+    "D15",
+    "Q02",
+    "D21"
+  ],
+  "native_validation": "NOT_RUN_separate_dimension"
+}

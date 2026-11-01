@@ -1,0 +1,139 @@
+{
+  "schema": "preloader_l.dependencies_fix08.v1",
+  "user_request": "Align MinHook/TinyXML2 with BROWNFIELD-pinned upstream; verify original dependency claims",
+  "parent_zip_sha256": "1a6162470b1252e720573e4764a7612da6e6020b9942d4fd57707d1f45fef280",
+  "brown_reference_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "files": [
+    {
+      "destination": "third_party/minhook/LICENSE.txt",
+      "origin": "third_party/minhook/upstream/LICENSE.txt",
+      "sha256": "d5c2224982b0b95a16b098a561335fa93f3eaf4d0aa964b7843edb986df78dc8",
+      "bytes": 4365
+    },
+    {
+      "destination": "third_party/tinyxml2/LICENSE.txt",
+      "origin": "third_party/tinyxml2/LICENSE.txt",
+      "sha256": "9332252e9b9e46db8285d4a3f0bf25f139bf1dca6781b956d57f2302efca6432",
+      "bytes": 808
+    },
+    {
+      "destination": "third_party/tinyxml2/tinyxml2.cpp",
+      "origin": "third_party/tinyxml2/tinyxml2.cpp",
+      "sha256": "07b4e7a1d021256255b91a0844640f26508201b40cfc576b9499b068d981c39b",
+      "bytes": 79136
+    },
+    {
+      "destination": "third_party/tinyxml2/tinyxml2.h",
+      "origin": "third_party/tinyxml2/tinyxml2.h",
+      "sha256": "dc6903d27f5f8ff18f7de98179d979ee3986d12273c495b54f48ac385fcdd7c5",
+      "bytes": 74564
+    },
+    {
+      "destination": "third_party/minhook/src/trampoline.h",
+      "origin": "third_party/minhook/upstream/src/trampoline.h",
+      "sha256": "27426751dde36cdd8346469e61cdcca47950b1056a69f21cc63f4b41743faf6a",
+      "bytes": 3795
+    },
+    {
+      "destination": "third_party/minhook/src/trampoline.c",
+      "origin": "third_party/minhook/upstream/src/trampoline.c",
+      "sha256": "d837f8555681c3762468d712c43f2064ed31dee610e0b02965fd8aa54b88172f",
+      "bytes": 10714
+    },
+    {
+      "destination": "third_party/minhook/src/hook.c",
+      "origin": "third_party/minhook/upstream/src/hook.c",
+      "sha256": "3060d3c42f03a2f11324cbee95d853071757ed0fe4b1bc9eb5f0d8fc9e346a37",
+      "bytes": 26645
+    },
+    {
+      "destination": "third_party/minhook/src/buffer.c",
+      "origin": "third_party/minhook/upstream/src/buffer.c",
+      "sha256": "75a789eb718bd5ed2de039ccd330736a31d0a2d14e43d8e15e6cd2332432482d",
+      "bytes": 9827
+    },
+    {
+      "destination": "third_party/minhook/src/buffer.h",
+      "origin": "third_party/minhook/upstream/src/buffer.h",
+      "sha256": "9769702bd625249e59a19ede05c84365fcc7707e1fa0e5df08df42227cee13e3",
+      "bytes": 1820
+    },
+    {
+      "destination": "third_party/minhook/include/MinHook.h",
+      "origin": "third_party/minhook/upstream/include/MinHook.h",
+      "sha256": "e34bbf7b855c842694f6e3dd78e2d280e99ed9732501e3dc1532a8626a8db8e5",
+      "bytes": 7529
+    },
+    {
+      "destination": "third_party/minhook/src/hde/hde64.h",
+      "origin": "third_party/minhook/upstream/src/hde/hde64.h",
+      "sha256": "84063581e7e2f15262b789283669ecc0984f6497dd40c44ab7abdd7b90776249",
+      "bytes": 2637
+    },
+    {
+      "destination": "third_party/minhook/src/hde/pstdint.h",
+      "origin": "third_party/minhook/upstream/src/hde/pstdint.h",
+      "sha256": "604d1cdf45c5a95bc9cf1bbf39ca05ef83013541101d34971c5cd7577e3d5247",
+      "bytes": 1662
+    },
+    {
+      "destination": "third_party/minhook/src/hde/hde64.c",
+      "origin": "third_party/minhook/upstream/src/hde/hde64.c",
+      "sha256": "35a6596188905a85d21d7d928bbb636e146dadd10c372762486a1c8541d0641d",
+      "bytes": 18759
+    },
+    {
+      "destination": "third_party/minhook/src/hde/table64.h",
+      "origin": "third_party/minhook/upstream/src/hde/table64.h",
+      "sha256": "7b4d49f3733cbf9fb93e678cb6a408c6897bc9fcb33b94740eaded928617a4c1",
+      "bytes": 3577
+    }
+  ],
+  "original_dependency_evidence": {
+    "target_anadius_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "references": [
+      {
+        "path": "anadius-parser-source/README.md",
+        "sha256": "06082f2656bcc86097b67e5ed265713992aec221ac3611fbb497d485858ef149"
+      },
+      {
+        "path": "anadius-parser-source/evidence.json",
+        "sha256": "4d1c2bebedc4bb0bbc7ae1ddb65bc74083f5d0918663d9404a9101acffdce3e9"
+      },
+      {
+        "path": "anadius-type-recovery/README.md",
+        "sha256": "63ebb3ca9a03edaa129d57943283057acde83f63cad130f2db4c9c660b44ea3a"
+      },
+      {
+        "path": "anadius-server-source/README.md",
+        "sha256": "a41dff22ac2687db649aea6764c9304c58945c20702500c465eae371c55d28c7"
+      },
+      {
+        "path": "mac-symbol-comparison/README.md",
+        "sha256": "438c61bb99776b652475cc9cff86094b696709bd9c4fff944952202be52c750b"
+      }
+    ],
+    "asio_iocp": "Windows vftable/type records and server reconstruction confirm; complete async backend/versions not proven",
+    "pegtl_vdf": "Windows tao::pegtl parse_error RTTI and grammar diagnostic labels; Mac vdf::parser::Grammar symbols corroborate; VDF grammar is implemented over PEGTL, not a second alternative parser",
+    "filesystem": "Mac symbols explicitly ghc::filesystem; Windows type recovery contains std::filesystem. Exact Windows ghc use/version not established by these references alone.",
+    "blue_current_choices": {
+      "transport": "owned blocking sockets; partial functional replacement, not original Asio backend",
+      "filesystem": "std::filesystem adapter plus recovered Windows lexical path logic",
+      "config2": "recovered standalone grammar/action/hash model; not linked PEGTL engine"
+    }
+  },
+  "xml_depth_policy": {
+    "vendor_limit": 500,
+    "reader_successful_tree_source_limit": 100,
+    "vendor_modified": false,
+    "implementation": "owned XMLVisitor over successfully parsed tree; OPEN elements enter depth, self-closing do not",
+    "limitations": [
+      "Original early-stop allocation footprint is not reproduced",
+      "Deep malformed-error precedence and exact original diagnostic are not guaranteed",
+      "No original DLL runtime equivalence claim"
+    ]
+  },
+  "safe_freeze": "Brown build-tree patch is separate from upstream. Not adopted in this dependency-only update.",
+  "Windows_native_vendor_acceptance": "NOT_RUN",
+  "allocation_findings_from_comparison": "CMP05/CMP06 remain separate reliability work; not silently bundled into vendor refresh"
+}

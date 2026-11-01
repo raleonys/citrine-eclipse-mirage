@@ -1,0 +1,11 @@
+{
+  "status": "EXPECTED_PARENT_REJECTION",
+  "exit": 1,
+  "output": "FAIL packet provider/copy/log order differs\n",
+  "executable_sha256": "e8cc741262d8cdc97af7fa836898fd63ed8e130c9aa58709c5dfe8134f87a93a",
+  "parent_core_archive_sha256": "8a67668a01ff79ddc69a546c13640b4db41c08f0f43187aa5e324515cacf6eef",
+  "fixture_sha256": "1f9aed8fa7f88419936a28f5c44eccfb27528057fe980de47f928c32af42f84b",
+  "parent_archive_sha256": "9798ea85f37d77e9346948054ad92231a76d44c9026fc4ca45df8c1287c056b0",
+  "parent_runtime_sha256": "a157ab93dd31372ab612886edd64e1ed3552ef62a38161d88a828fc6397d5e30",
+  "current_source_digest": "eddc58b00960228eaf1347d244df56218e2a2d4ecc5f3d8c7df3d80c1d3a9085"
+}

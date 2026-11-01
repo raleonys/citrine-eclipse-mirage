@@ -1,0 +1,11 @@
+{
+  "source_archive_sha256": "522401e1bc48c8e71bb97476f57a4398ab5305ecb93a442417a34b6ddab2a23e",
+  "companion_name": "preloader_l.srg",
+  "bytes": 46840,
+  "sha256": "a9d964beec1a82b13e3172228f9b03cbd661bcd0123eca1fca7bf7ef5fd9ba8b",
+  "format": "PE/MZ",
+  "execution": "NOT_RUN",
+  "interpretation": "separate PE companion present; no new hook scope or inferred loader fix authorized by this observation",
+  "matches_HF19_Golden_metadata_reference": true,
+  "reference_scope": "metadata allowlist, not CFG/game settings authority"
+}

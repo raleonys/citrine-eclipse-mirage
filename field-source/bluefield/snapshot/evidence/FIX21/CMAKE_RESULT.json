@@ -1,0 +1,324 @@
+{
+  "status": "PASS_CMAKE_RELEASE_CTEST_43_OF_43",
+  "source_digest": "9e08d79a04dc77214be645a8b8af73db36fd35aa4067fb8e4d399eec290b4500",
+  "cmake": "cmake version 4.4.4",
+  "compiler": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "profile": "PRODUCTION",
+  "CMAKE_BUILD_TYPE": "Release",
+  "BUILD_TESTING": true,
+  "platform": "Linux",
+  "tests": [
+    {
+      "name": "hooks_test_registry_source",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/hooks_test_registry_source"
+      ],
+      "executable_sha256": "2b1e265e2cad4ea1c89426868fe6f269afbdbf90e570e96143825b756e97121e"
+    },
+    {
+      "name": "hooks_test_registry_wait",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/hooks_test_registry_wait"
+      ],
+      "executable_sha256": "59a0e816bfe024b0269a35cadb2e870babb3001ba0c0d219d124bbdc8b6651a0"
+    },
+    {
+      "name": "paths_test_encoding",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/paths_test_encoding"
+      ],
+      "executable_sha256": "ab92e4f50a0d2937c67921724fc2511fbcf3deb512458df5d3349ddc11beb88b"
+    },
+    {
+      "name": "files_test_status",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/files_test_status"
+      ],
+      "executable_sha256": "ac4e770fb7bfa28e5f97b01c9578bf7f3d3ff734bacbbc128f60461da1e2f66b"
+    },
+    {
+      "name": "libraries_test_libraries",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/libraries_test_libraries"
+      ],
+      "executable_sha256": "0633d19737c980e0c3359ab1a2e3327332145fcf6dfbef51e07de42f669b0f24"
+    },
+    {
+      "name": "configuration_test_hash_table",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/configuration_test_hash_table"
+      ],
+      "executable_sha256": "4bd32573aac7c7efd7096afac07f6db82b3d7d74b0a162fc6efb4cbf0e8e5b66"
+    },
+    {
+      "name": "configuration_test_parser",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/configuration_test_parser"
+      ],
+      "executable_sha256": "f81570e28082883ea4ea4fe128db652da0541128597bd38657bc4f6290565d69"
+    },
+    {
+      "name": "configuration_test_pegtl_differential",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/configuration_test_pegtl_differential"
+      ],
+      "executable_sha256": "cf228c75d88be5e3d66e891e5021b442ba63905950498ded9a43400e3a0ac0ef"
+    },
+    {
+      "name": "configuration_test_state",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/configuration_test_state"
+      ],
+      "executable_sha256": "9bb6a8b7e3a31a22ad126b4ceb6cfaf774ffde5ef896805aa3491bc5e51df25a"
+    },
+    {
+      "name": "crypto_test_crypto",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/crypto_test_crypto"
+      ],
+      "executable_sha256": "152cd90c5d705dcd348804c3657182d327f03dc368f78a71327dec22e515552f"
+    },
+    {
+      "name": "handlers_test_content",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/handlers_test_content"
+      ],
+      "executable_sha256": "07f886c10089645c5c5e9cadd154e2b47aee07cb56c4f6bc8e16f1cadfa42cbe"
+    },
+    {
+      "name": "handlers_test_information",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/handlers_test_information"
+      ],
+      "executable_sha256": "bcc2ab3f5b30bd352f4d34766d1eee724c7b4091f124dcc9df0d6092ccc40875"
+    },
+    {
+      "name": "handlers_test_presence",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/handlers_test_presence"
+      ],
+      "executable_sha256": "51a44af2e8139ba9633f87d5388412d15bd0766a934b7cb52051fbb5cbce5468"
+    },
+    {
+      "name": "hashing_test_hash",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/hashing_test_hash"
+      ],
+      "executable_sha256": "06a6dacb2983f10a37b8413faff8f82308508c7c80252163c0e245c5fd563427"
+    },
+    {
+      "name": "hooks_test_crypt_query",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/hooks_test_crypt_query"
+      ],
+      "executable_sha256": "4da6d5c33085a8dadda11122bae42159254f8cc2a22e9a98e75aa52a2402eb98"
+    },
+    {
+      "name": "hooks_test_setup_plan",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/hooks_test_setup_plan"
+      ],
+      "executable_sha256": "c5f7fb58c438b18b347bfbbac25cb63a5608c0ae6114c656159ec975b39332eb"
+    },
+    {
+      "name": "licensing_test_key_store",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/licensing_test_key_store"
+      ],
+      "executable_sha256": "751bf4713da1b741a7eb3a0f1adc5569ca2ff40c00c4649cda30523534fc048e"
+    },
+    {
+      "name": "licensing_test_license",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/licensing_test_license"
+      ],
+      "executable_sha256": "9634842c2601a5292a925564bb96b9f53ed596731658ee0ff76998bf35bf58c1"
+    },
+    {
+      "name": "paths_test_path",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/paths_test_path"
+      ],
+      "executable_sha256": "b86804a9699fd02aac9b6377f06c15ea8e0b58378089e67dd4925b234e21c439"
+    },
+    {
+      "name": "paths_test_module_relative",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/paths_test_module_relative"
+      ],
+      "executable_sha256": "68b0d99ac073b2fe0af83d25559dbbf85897e407b0f15e951f0a7d32b2e9a141"
+    },
+    {
+      "name": "profiles_test_online",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/profiles_test_online"
+      ],
+      "executable_sha256": "100722efbc4eb4e2b7392123921abc9710b517cc9f611aa8cf47e40d01e761ab"
+    },
+    {
+      "name": "protocol_test_integration",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/protocol_test_integration"
+      ],
+      "executable_sha256": "87f0a02337f66fb4a03dd3ad33a89cfe6fc6b925b0bf2cc19b607dea4aa46832"
+    },
+    {
+      "name": "protocol_test_messages",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/protocol_test_messages"
+      ],
+      "executable_sha256": "1e751cceb717b5552714e31587293e76beda04f9bd11f0cca5a471f0814301da"
+    },
+    {
+      "name": "runtime_test_startup",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/runtime_test_startup"
+      ],
+      "executable_sha256": "9e194866f4c075ef349886974b478d6cc108fda71d2d3ff79a91f93ae845fd9e"
+    },
+    {
+      "name": "time_test_calendar",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/time_test_calendar"
+      ],
+      "executable_sha256": "d28d4d6f459fde45268589650d6e1a92e625df61dc7af900638723a1bcc16c6e"
+    },
+    {
+      "name": "tokens_test_token",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/tokens_test_token"
+      ],
+      "executable_sha256": "d7b1e896a16ecf90a54e30c90d7f4390a5d02a0913f4039f7baf6dfca26cc619"
+    },
+    {
+      "name": "xml_test_printer",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/xml_test_printer"
+      ],
+      "executable_sha256": "90c697f9ce0511503f8defa29efc500bfd30b529c85bd7b990e6e29ffb34ddcc"
+    },
+    {
+      "name": "xml_test_reader",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/xml_test_reader"
+      ],
+      "executable_sha256": "6fffcbd5613353743c667a41eb49d1c51643d52b53ba4f034fff131b9a850050"
+    },
+    {
+      "name": "runtime_tcp_and_persistence",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_runtime"
+      ],
+      "executable_sha256": "14c218bfb3c7b3ca567fb4fb76ba0d27fdcb6fc629214c1c6588aa89f5a499f7"
+    },
+    {
+      "name": "startup_configuration_profile_compat",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_startup_compat"
+      ],
+      "executable_sha256": "de8d045fce1298cfb2845ed3a54ad15163ec28e710e91852f211b76f6a3b8254"
+    },
+    {
+      "name": "test_path_resolution",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_path_resolution"
+      ],
+      "executable_sha256": "9603764c8c90029722d25bd1c73bed39f9155b3f3f64ff6a6a21e83ebec19737"
+    },
+    {
+      "name": "test_configuration_orchestration",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_configuration_orchestration"
+      ],
+      "executable_sha256": "843fc5da9d8946cefb89e47d861a39c195fb9b7367e43d92625b4ae51ba5fb72"
+    },
+    {
+      "name": "test_startup_phases",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_startup_phases"
+      ],
+      "executable_sha256": "d0d860c400a5f07b48f62e8c459fb1026f6f4bc4d93b212c382e12c5a2b407d1"
+    },
+    {
+      "name": "test_brownfield_contracts",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_brownfield_contracts"
+      ],
+      "executable_sha256": "c126adb1f328f14ac7e7ac9d8766a722b798c99489119ee164633a2e73b3f20b"
+    },
+    {
+      "name": "test_supplied_config",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_supplied_config"
+      ],
+      "executable_sha256": "ad88eac98f6d8aa970a1abb31cc62b1bbd432e3e87a8eb7a5290ce29c4e068d1"
+    },
+    {
+      "name": "test_configuration_profile",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_configuration_profile"
+      ],
+      "executable_sha256": "ff18700da3675b0de8c414cb2a0c29cc9dcaaffbe3d0183cb1fa98dfaf5c4aec"
+    },
+    {
+      "name": "test_asio_transport",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_asio_transport"
+      ],
+      "executable_sha256": "56ea7d01c7421e63ea65b8911b31efae09c566f72f35520a70fd641205306856"
+    },
+    {
+      "name": "test_filesystem_config",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_filesystem_config"
+      ],
+      "executable_sha256": "885a257f22b0f5e5a2c8ff986dda485109b5d38201d65710b75daf1cb62461c6"
+    },
+    {
+      "name": "test_runtime_migration",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_runtime_migration"
+      ],
+      "executable_sha256": "2595522e78a99a1536c5bdda06b76c9116245e514f6c893b1f6b8f328841a0a6"
+    },
+    {
+      "name": "test_original_compat",
+      "command": [
+        "/tmp/preloader_l_fix21_cmake_release/test_original_compat"
+      ],
+      "executable_sha256": "dcbcbe7f8f5f9fb1bf76b158a676ab8694bffd5e7c2eda8969bc476222d0220e"
+    },
+    {
+      "name": "golden_protocol_tool_selftests",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/2072698c927d/fix21_work/preloader_l/tools/golden/scripts/test_pe_metadata_tools.py"
+      ],
+      "executable_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    },
+    {
+      "name": "test_golden_pipeline",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/2072698c927d/fix21_work/preloader_l/tests/tools/test_golden_pipeline.py"
+      ],
+      "executable_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    },
+    {
+      "name": "test_golden_link_policy",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "/workspace/scratch/2072698c927d/fix21_work/preloader_l/tests/tools/test_golden_link_policy.py"
+      ],
+      "executable_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    }
+  ],
+  "core_archive_sha256": "bddef7b1ec190047efaecda62980e27449790ad137daa661f96f3ff78e48de40",
+  "warnings": [
+    "/workspace/scratch/2072698c927d/fix21_work/preloader_l/src/licensing/license.cpp:54:1: warning: \u2018noreturn\u2019 function does return",
+    "/workspace/scratch/2072698c927d/fix21_work/preloader_l/src/licensing/license.cpp:106:1: warning: \u2018noreturn\u2019 function does return"
+  ],
+  "Windows_DLL": "NOT_RUN",
+  "junit": "CMAKE_CTEST.xml",
+  "initial_FIX20_probe": "41/42; generated executable execute bit missing, not PASS; preserved separately"
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "result": {
+    "exit": 0,
+    "output": "PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)\n",
+    "command": [
+      "/workspace/scratch/2072698c927d/fix26_helpers/license_sanitized"
+    ]
+  },
+  "scope": "Changed license.cpp and unchanged license unit test instrumented; unchanged parent core not instrumented. Not full-core sanitizer.",
+  "LSan": "NOT_RUN_detect_leaks_0",
+  "current_source_sha256": "4864468689785214efb7a484e72f03eb456ee1e2e93cf746da7d19ac1d169808",
+  "fixture_sha256": "8cccaf9c09c17f55b7a6b7d37bd1b8b127cd9c906cf7fe9da448ba3b859d1bd7",
+  "parent_core_archive_sha256": "519932c7a7d3a8abef1ccb44a0322e8fc6ad93152dd2c751416ba4c8f2266f48",
+  "source_digest": "251519c94014571af00ba5b5af9dfdbd4982d04bd636ace6ec961580a075b9cf"
+}

@@ -1,0 +1,7 @@
+{
+  "date": "2026-10-25",
+  "source": "latest user confirmation in conversation",
+  "tested_version": "FIX07 source delivery before FIX08; exact binary hash not supplied",
+  "startup_and_profile": "PASS_USER_CONFIRMED",
+  "new_FIX08_acceptance_inherited": false
+}

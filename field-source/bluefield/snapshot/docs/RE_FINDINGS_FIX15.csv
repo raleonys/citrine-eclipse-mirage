@@ -1,0 +1,39 @@
+id,status,priority,title,FIX15_resolution,recommended_next_action
+DEP01,KEEP_DOCUMENTED,P3,Asio snapshot güncellemesi,,Koru; güncellemenin regresyon sonuçlarını değerlendir.
+DEP02,KEEP_DOCUMENTED,P3,MinHook upstream pini,,Koru; vendor hashleri ayrı doğrulansın.
+DEP03,KEEP_DOCUMENTED,P3,TinyXML2 upstream pini,,Koru; adapter ile vendoru aynı bulgu sayma.
+DEP04,KEEP_DOCUMENTED,P3,PEGTL üzerinde VDF/Config2 grameri,,Koru; syntax/action farkı iddiasını paketteki karşı örnekle kanıtla. 8766-case differential corpus bağımsız binary oracle değildir.
+DEP05,REVIEW_NO_AUTOMATIC_REVERT,P2,gulrak/filesystem kapsamı kısmi,Known Win status paths now use packet NativeStats; gulrak remains module-sibling-only. Non-Win and packet-unknown status fallback remain std::filesystem.,"Path construction, status, encoding ve IO için ayrı sahiplik/kapsam kararı çıkar."
+U01,KEEP_DOCUMENTED,P3,"Kimlik, namespace ve görünür profil",,Koru; kaynak constructor projeksiyonu ve isimleri birbirine karıştırma.
+U02,KEEP_DOCUMENTED,P3,Veri kökü ve config/provider konumu,,Koru; üç farklı filesystem işlevini tek bir backend iddiasıyla açıklama.
+U03,KEEP_DOCUMENTED,P3,Config olmadan başlangıç ve varsayılanlar,,Koru; defaultları rastgele değiştirme.
+U04,KEEP_DOCUMENTED,P3,Provider adı ve güvenilir yükleme dizini,,Koru; provider factory hatası ve phase wait ayrı bulgulardır.
+U05,KEEP_DOCUMENTED,P3,Production log compile-out ve hassas veri gizliliği,,Koru; log kotası veya CFG switchi yeniden icat etme.
+U06,KEEP_DOCUMENTED,P3,Resmî avatar ve cache override engeli,,İstenen avatar seçimini koru; yan-etki atlama kapsamını ayrı değerlendir.
+U07,KEEP_DOCUMENTED,P2,Atomik dosya/state/event persistence,,Koru; READ guard yetki genişletmesini D09 ile ayır; crash-proof transaction iddiası yapma.
+U08,KEEP_DOCUMENTED,P3,Başlangıçta eski avatarları silmeme ve lazy fallback,,Koru; U06 ile bağlı ama rejected INI delay ile aynı karar değil.
+P01,KEEP_DOCUMENTED,P3,Platform ve derleyici uyarlamaları,,Koru; platform farklı hata dallarını kaynak algoritma bozulması olarak sayma.
+P02,KEEP_DOCUMENTED,P3,Native DLL helper ve include macro koruması,,Koru; raw diff sayısını bug sayısı yapma.
+D01,REVIEW_NO_AUTOMATIC_REVERT,P1,Bootstrap ve ek DLL phase sırası,,Kaynak phase grafiği ile istenen loader-lock disiplinini birlikte değerlendir; otomatik geri alma yok.
+D02,REVIEW_NO_AUTOMATIC_REVERT,P1,IO/handler thread düzeni,,"Kapasite, ownership ve kaynak sırasını incele; uygun karar verilmeksizin değiştirme."
+D03,REVIEW_NO_AUTOMATIC_REVERT,P1,Session okuma/işleme/yazma ardışıklığı,,Çoklu frame ve uzun response senaryolarıyla iki sözleşmeyi karşılaştır.
+D04,REVIEW_NO_AUTOMATIC_REVERT,P1,Accept hatasında servis sonlandırma,,Hata türüne göre retry/terminal ayrımını incele; bu görevde retry eklenmedi.
+D05,REVIEW_NO_AUTOMATIC_REVERT,P2,Hookları tek batch ile etkinleştirme,,Koru/değiştir kararını lifecycle gerekçesiyle değerlendir; vendor patchi diye etiketleme.
+D06,REVIEW_NO_AUTOMATIC_REVERT,P2,Ek global kilitler ve attempt counter senkronizasyonu,,Kilit grafiğini ve callback recursionını ayrı incele; blanket revert yok.
+D07,PARTIAL_SOURCE_RESTORED_PACKET_UNKNOWN_DOMAIN_RETAINED,P1,Dosya status dalları basitleştirilmiş,"Known error/permissions/sharing32/reparse target-query branches now use direct source helpers. Packet explicit unknown flags3 reparse tag remains unresolved; only previous std adapter retained there. Windows native execution is separate, NOT_RUN.",Hangi status alanlarının callerda kullanıldığını belirle; bilinen dallar için adapter kararı çıkar.
+D08,CORRECTED_SOURCE_SCOPE,P1,Encoding kod sayfası ve hata bayrakları,filesystem_path and path_utf8 now bind direct package helpers/Win32 Calls with unchanged source synthetic assertions. utf8_path/config path projection remains in D10; no claim every encoding subsystem is solved.,Önce locale/ANSI/OEM/default-character karar tablosu çıkar; sonra gerekçeli düzeltme değerlendir.
+D09,CORRECTED_SOURCE_SCOPE,P1,Salt okuma işlemlerine require_write denetimi,Write policy removed from NativeFactory input and provider read/status only. All writes and provider output ownership remain checked. External read/rejected-write preimage regression added.,Read/write/status yetkilerini ayıracak en küçük değişikliği planla; bu turda uygulanmadı.
+D10,REVIEW_NO_AUTOMATIC_REVERT,P2,Path çözümleme adapterının farklı API kullanması,,Path kategorisi başına hangi algoritmanın kullanıldığını sabitle; sadece namespace farkı diye kapatma.
+D11,REVIEW_NO_AUTOMATIC_REVERT,P2,Provider factory null sonucu hata yerine return,,Bu durum için istenen hata/yerel profile geçiş sözleşmesini açıklaştır.
+D12,REVIEW_NO_AUTOMATIC_REVERT,P2,Source wait_steps yerine readiness/port kontrolü,,Phase bağımlılıklarını D01 ile birlikte karşılaştır; rastgele sleep ekleme.
+D13,REVIEW_NO_AUTOMATIC_REVERT,P2,Conservative unload ve fault-domain korumaları,,Güvenlik gerekçesiyle ayrı değerlendir; input/cache kota bulgularıyla karıştırma.
+D14,REVIEW_NO_AUTOMATIC_REVERT,P1,Kaynak exit/error etkisinin SessionFailure ile karşılanması,,Hangi hata process/service/session düzeyinde olmalı karar tablosu çıkar. Bu turda handler değiştirilmedi.
+D15,REVIEW_NO_AUTOMATIC_REVERT,P2,XML derinlik denetimi parse sonrasına taşınmış,,Upstream kodunu körlemesine geri alma; adapterın malformed/depth sözleşmesini değerlendir.
+D16,REVIEW_NO_AUTOMATIC_REVERT,P2,Avatar seçim isteğinin provider yan etkilerine uzanması,,Görünür seçim ile cache/download side effect sözleşmesini ayrı değerlendir.
+D17,REVIEW_NO_AUTOMATIC_REVERT,P3,getenv yerine sahipli _dupenv_s kopyası,,Koru/değiştir kararını warning/lifetime gerekçesiyle ele al; kaynak algoritma kaybı diye sayma.
+D18,REVIEW_NO_AUTOMATIC_REVERT,P2,Çift configuration orchestration yolu,,Aktif call graphı ve ortak adımların tek ownershipini değerlendir; sırf TU azaltmak için birleştirme yapma.
+D19,KEEP_DOCUMENTED,P3,CRT/TLS/container/thread alt modellerinin host ile karşılanması,,Host replacement olarak sınıflandır; eksik application feature sayısını şişirme.
+Q01,DOCUMENTED_CURRENT_CROSSWALK,P2,Kümülatif metadata açıklamaları güncel davranışla karışmış,,Güncel otorite olarak bu raporu ve ASIO_UPSTREAM_FIX14ü kullan; geçmiş stage JSONlarını current contract sayma.
+Q02,REVIEW_NO_AUTOMATIC_REVERT,P2,Test oracle bağımsızlığı ve aşırı kaba diagnostic,,"Source-derived unchanged expectations, app-specific tests ve synthetic fixtureları ayrı raporla; nonsecret event sınıflarını değerlendirmeye al."
+D20,CORRECTED_SOURCE_SCOPE,P2,Config hata metni EXE dizinini söylüyor,Existing diagnostic now names the same directory as preloader_l.dll. Search location/CFG semantics unchanged.,Bir sonraki hedefli düzeltmede metni gerçek RuntimePaths sözleşmesine bağla; bu turda runtime literal değiştirilmedi.
+D21,REVIEW_NO_AUTOMATIC_REVERT,P2,Staging ve unload iç algoritma sınırları,,Ürün kabulünü daraltan sınırla iç algoritma bütçesini ayır; kapsam/gerekçe incelemesi yapılmadan hepsini kaldırma.

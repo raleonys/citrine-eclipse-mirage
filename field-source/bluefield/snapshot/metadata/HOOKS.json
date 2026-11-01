@@ -1,0 +1,40 @@
+{
+  "scope": "actual production MinHook surface",
+  "callback_slots": 11,
+  "required": [
+    "connect",
+    "RegOpenKeyExA",
+    "RegOpenKeyExW",
+    "RegCloseKey",
+    "RegQueryValueExA",
+    "RegQueryValueExW",
+    "CryptQueryObject"
+  ],
+  "conditional": {
+    "BlockReruns": [
+      "CreateProcessA",
+      "CreateProcessW"
+    ],
+    "Documents path nonempty": [
+      "SHGetFolderPathA",
+      "SHGetFolderPathW"
+    ]
+  },
+  "installed_count": "7 + (BlockReruns ? 2 : 0) + (Documents nonempty ? 2 : 0)",
+  "new_hook": {
+    "name": "CryptQueryObject",
+    "target": "real CRYPT32 import address",
+    "original_owner": "same eleven-slot owned trampoline table",
+    "execution_gate": "native callback lease includes original invocation",
+    "engine": "existing pinned MinHook, no second engine",
+    "shutdown": "shared disable/drain/external-quiescence/uninitialize before context destruction",
+    "object_selection_origin": "preloader-source/preloader_core.cpp Core::crypt_query RVA 0x1264",
+    "remaining_arguments": "unchanged",
+    "return_and_outputs": "actual Windows API",
+    "LastError": "incoming restored before original; outgoing restored after logging"
+  },
+  "retired_hooks_reintroduced": false,
+  "activation": "Resolve/create/stage every selected hook with all original slots bound; release callback Context serialization; one MH_ApplyQueued; mark committed only on success",
+  "stage_failures": "outer native owner rejects incomplete staging; common disable/drain/uninitialize cleanup remains authoritative",
+  "trace": "per-hook resolve/create/queue begin/end and status, batch apply begin/end/commit; UTC milliseconds/PID/TID and FIX03 startup identity"
+}

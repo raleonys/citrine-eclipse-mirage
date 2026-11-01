@@ -1,0 +1,507 @@
+--- FIX23/src/transport/service.cpp
++++ FIX24/src/transport/service.cpp
+@@ -16,6 +16,7 @@
+ #include <array>
+ #include <atomic>
+ #include <condition_variable>
++#include <deque>
+ #include <mutex>
+ #include <thread>
+ #include <vector>
+@@ -48,7 +49,9 @@
+   Tcp::socket socket;
+   std::unique_ptr<Connection> connection;
+   std::array<char,65536> buffer{};
+-  std::string pending,outgoing;
++  std::string pending;
++  std::deque<std::string> requests,output;
++  bool computing=false,greeting_pending=false; // IO executor only.
+   bool closed=false; // IO thread, or host only after all threads have joined.
+   std::atomic<bool> failed{false};
+   Session(Impl& o,Tcp::socket accepted):owner(o),socket(std::move(accepted)),connection(o.app.connect()){}
+@@ -59,57 +62,82 @@
+    owner.retire(this);
+   }
+   void start(){compute({},true);}
++  void queue_response(std::string response){
++   output.push_back(std::move(response));
++   if(output.size()==1)write();
++  }
+   void write(){
+-   if(owner.stopping.load()){finish();return;}
++   if(closed||owner.stopping.load()||failed.load()){finish();return;}
+    auto self=shared_from_this();
+-   asio::async_write(socket,asio::buffer(outgoing),[self](asio::error_code error,std::size_t count){
++   asio::async_write(socket,asio::buffer(output.front()),[self](asio::error_code error,std::size_t count){
+     try{
+-     if(error||count!=self->outgoing.size()||self->owner.stopping.load()){self->finish();return;}
+-     self->outgoing.clear();self->consume();
++     if(self->closed)return;
++     if(error||count!=self->output.front().size()||self->owner.stopping.load()||self->failed.load()){self->finish();return;}
++     self->output.pop_front();
++     // Preserve greeting-before-read order with cancellable asynchronous IO.
++     if(self->greeting_pending){self->greeting_pending=false;self->consume();}
++     if(!self->output.empty())self->write();
+     }catch(...){self->owner.env.log(LogEvent::dispatch_failed);self->finish();}
+    });
+   }
++  void compute_next(){
++   if(computing||requests.empty()||closed||owner.stopping.load()||failed.load())return;
++   compute(std::move(requests.front()),false);
++   requests.pop_front();computing=true;
++  }
+   void consume(){
+-   if(owner.stopping.load()||failed.load()){finish();return;}
++   if(closed||owner.stopping.load()||failed.load()){finish();return;}
+    for(;;){
+     const auto delimiter=pending.find('\0');
+     if(delimiter==std::string::npos){read();return;}
+-    std::string message=pending.substr(0,delimiter);pending.erase(0,delimiter+1);
+-    if(message.empty())continue;
+-    compute(std::move(message),false);
+-    return;
++    std::string message=pending.substr(0,delimiter);
++    if(!message.empty()){requests.push_back(std::move(message));compute_next();}
++    pending.erase(0,delimiter+1);
++   }
++  }
++  void fail_compute(){
++   failed.store(true,std::memory_order_release);
++   owner.env.log(LogEvent::failure);
++   try{auto self=shared_from_this();asio::post(*owner.io,[self]{self->finish();});}
++   catch(...){
++    // No socket access from a worker now that receive/write may be pending.
++    // If cleanup cannot be posted, stop dispatch and let joined host cleanup
++    // close the sockets; never leave a falsely ready stranded listener.
++    {std::lock_guard lock(owner.ready_mutex);owner.stopping.store(true);owner.ready.store(false);}
++    owner.io->stop();owner.steps.cancel();owner.env.log(LogEvent::dispatch_failed);
+    }
+   }
+   void compute(std::string message,bool greeting){
+     auto self=shared_from_this();
+-    // No socket operation overlaps this computation. One request per session
+-    // is admitted until its response completes, preserving cipher/FIFO order.
++    // Ordered per-session computation retains cipher/request ownership while
++    // receive admission and queued response writes progress independently.
+     asio::post(*owner.handlers,[self,message=std::move(message),greeting]{
+      try{
+       if(self->owner.stopping.load())return;
+       auto response=greeting?self->connection->greeting():self->connection->process(message);
+-      asio::post(*self->owner.io,[self,response=std::move(response)]() mutable {
++      asio::post(*self->owner.io,[self,response=std::move(response),greeting]() mutable {
+        try{
+-        if(self->owner.stopping.load()){self->finish();return;}
+-        self->outgoing=std::move(response);
+-        if(self->outgoing.empty())self->consume();else self->write();
++        if(self->closed||self->owner.stopping.load()||self->failed.load()){self->finish();return;}
++        if(greeting){
++         if(response.empty())self->consume();
++         else{self->greeting_pending=true;self->queue_response(std::move(response));}
++        }else{
++         self->computing=false;
++         if(!response.empty())self->queue_response(std::move(response));
++         self->compute_next();
++        }
+        }catch(...){self->owner.env.log(LogEvent::failure);self->finish();}
+       });
+      }catch(const PersistenceRecoveryRequired&){
+       {std::lock_guard lock(self->owner.ready_mutex);self->owner.stopping.store(true);self->owner.ready.store(false);}
+       self->owner.io->stop();self->owner.steps.cancel();self->owner.env.log(LogEvent::failure);
+      }catch(...){
+-      // Posting can itself fail on OOM. While computing, no socket operation
+-      // is pending; stop joins this pool before touching client sockets. Close
+-      // here without another allocation/post, then reap on the next accept.
+-      asio::error_code ignored;self->socket.close(ignored);
+-      self->failed.store(true,std::memory_order_release);
+-      self->owner.env.log(LogEvent::failure);
++      self->fail_compute();
+      }
+     });
+   }
+   void read(){
+-   if(owner.stopping.load()){finish();return;}
++   if(closed||owner.stopping.load()||failed.load()){finish();return;}
+    const auto count=server::receive_request_size(pending.size(),pending.capacity(),pending.max_size());
+    if(!count){owner.env.log(LogEvent::phase);finish();return;}
+    auto self=shared_from_this();
+@@ -119,7 +147,7 @@
+       // Retained source ordering: commit delivered bytes before testing the
+       // completion error, but do not dispatch a frame from an error completion.
+       if(count)self->pending.append(self->buffer.data(),count);
+-      if(error||count==0||self->owner.stopping.load()){self->finish();return;}
++      if(error||count==0||self->closed||self->owner.stopping.load()||self->failed.load()){self->finish();return;}
+       self->consume();
+      }catch(...){self->owner.env.log(LogEvent::failure);self->finish();}
+     });
+--- FIX23/tests/integration/test_transport_pipeline.cpp
++++ FIX24/tests/integration/test_transport_pipeline.cpp
+@@ -0,0 +1,113 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "tests/support/transport/packet_session.hpp"
++#include "tests/support/io.hpp"
++#include "src/transport/service.hpp"
++#include <atomic>
++#include <chrono>
++#include <filesystem>
++#include <iostream>
++#include <thread>
++#include <vector>
++#if defined(__linux__)
++#include <arpa/inet.h>
++#include <sys/socket.h>
++#include <sys/syscall.h>
++#include <unistd.h>
++#endif
++namespace {
++unsigned checks=0;
++void require(bool value,const char* label){++checks;if(!value)throw std::runtime_error(label);}
++namespace packet=preloader_l::test_packet;
++struct Scheduling:packet::Scheduling {
++ std::deque<std::function<void()>> io,workers,writes;
++ void post_io(std::function<void()> f) override{io.push_back(std::move(f));}
++ void launch_detached(std::function<void()> f) override{workers.push_back(std::move(f));}
++ void dispatch_write(std::function<void()> f) override{writes.push_back(std::move(f));}
++ void log_error(std::string_view,packet::Error) override{throw std::runtime_error("unexpected packet error");}
++ [[noreturn]] void raise_write_error(packet::Error) override{throw std::runtime_error("packet greeting error");}
++ static void one(std::deque<std::function<void()>>& q){require(!q.empty(),"source job queued");auto f=std::move(q.front());q.pop_front();f();}
++};
++struct Handler:packet::Handler {
++ unsigned resets=0;std::vector<std::string> seen;
++ void reset_02bc70() override{++resets;}
++ std::string initial_message_02d540() override{return std::string("HELLO\0",6);}
++ std::string process_message_033d70(std::string_view value) override{seen.emplace_back(value);return "reply:"+std::string(value)+'\0';}
++};
++struct Transport:packet::Transport {
++ std::function<void(packet::Error,std::string)> receive;
++ packet::Completion send;unsigned reads=0,sends=0;std::string bytes;
++ packet::WriteResult synchronous_send(std::span<const char> value) override{return {{},value.size()};}
++ void async_receive(std::size_t,std::function<void(packet::Error,std::string)> f) override{require(!receive,"single packet read");++reads;receive=std::move(f);}
++ void async_send(std::span<const char> value,packet::Completion f) override{require(!send,"single packet write");++sends;bytes.assign(value.data(),value.size());send=std::move(f);}
++ void frame(std::string value){require(bool(receive),"source read rearmed with pending write");auto f=std::move(receive);receive={};value.push_back('\0');f({},std::move(value));}
++ void complete(){require(bool(send),"packet write active");auto f=std::move(send);send={};f({},bytes.size());}
++};
++void source_oracle(){
++ Scheduling q;Transport t;Handler h;packet::Session s{t,q,h};s.start_025720();
++ require(h.resets==2,"packet constructor/start reset sequence");
++ t.frame("one");Scheduling::one(q.io);Scheduling::one(q.workers);Scheduling::one(q.writes);
++ require(s.queued_messages()==1&&t.sends==1,"source first write pending");
++ t.frame("two");Scheduling::one(q.io);Scheduling::one(q.workers);Scheduling::one(q.writes);
++ require(h.seen==std::vector<std::string>({"one","two"}),"source processes second frame before first write completion");
++ require(t.reads==3&&s.queued_messages()==2&&t.sends==1,"source receive/response queues are independent");
++ require(t.bytes==std::string("reply:one\0",10),"source front response stable");t.complete();
++ require(t.sends==2&&t.bytes==std::string("reply:two\0",10),"source output queue preserves dispatch order");t.complete();require(s.queued_messages()==0,"source queue drained");
++}
++#if defined(__linux__)
++std::atomic<unsigned> controlled_accepts{0};std::atomic<int> observed_send_buffer{0};
++struct Client {
++ int socket=-1;std::string pending;
++ explicit Client(unsigned short port){
++  socket=::socket(AF_INET,SOCK_STREAM,0);if(socket<0)throw std::runtime_error("client socket");
++  int buffer=64*1024;require(::setsockopt(socket,SOL_SOCKET,SO_RCVBUF,&buffer,sizeof buffer)==0,"fixture receiver buffer set");
++  timeval timeout{5,0};require(::setsockopt(socket,SOL_SOCKET,SO_RCVTIMEO,&timeout,sizeof timeout)==0,"fixture receive timeout");
++  sockaddr_in a{};a.sin_family=AF_INET;a.sin_addr.s_addr=htonl(INADDR_LOOPBACK);a.sin_port=htons(port);
++  if(::connect(socket,reinterpret_cast<sockaddr*>(&a),sizeof a)!=0){::close(socket);socket=-1;throw std::runtime_error("client connect");}
++ }
++ ~Client(){if(socket>=0)::close(socket);}
++ void send(std::string_view value){while(!value.empty()){const auto n=::send(socket,value.data(),value.size(),MSG_NOSIGNAL);if(n<=0)throw std::runtime_error("client send");value.remove_prefix(static_cast<std::size_t>(n));}}
++ std::string frame(){for(;;){auto n=pending.find('\0');if(n!=std::string::npos){auto result=pending.substr(0,n);pending.erase(0,n+1);return result;}char buffer[65536];const auto got=::recv(socket,buffer,sizeof buffer,0);if(got<=0)throw std::runtime_error("client receive");pending.append(buffer,static_cast<std::size_t>(got));}}
++};
++std::string request(const char* id,const char* body){return "<LSX><Request id=\""+std::string(id)+"\" recipient=\"EbisuSDK\">"+body+"</Request></LSX>"+'\0';}
++void live(const std::filesystem::path& root,bool drain){
++ namespace fs=std::filesystem;using namespace preloader_l;fs::create_directories(root);
++ const std::string large(4*1024*1024,'P');Environment env{RuntimePaths::fixture(root/"fixture.exe",root/"surge.cfg",root,root/"programdata")};
++ write_file(model_path(env.configuration_file),"\"Config2\"{\"Game\"{\"Name\" \""+large+"\"}}");
++ Service service{env};service.start();const auto before=controlled_accepts.load();Client client{service.port()};
++ require(client.frame().find("Challenge")!=std::string::npos,"greeting before application responses");
++ require(controlled_accepts.load()>before&&observed_send_buffer.load()<=65536,"actual accepted socket send buffer constrained");
++ require(!fs::exists(env.paths.default_avatar()),"avatar is lazy before second request");
++ client.send(request("blocked","<GetGameInfo GameInfoId=\"DISPLAY_NAME\"/>")+request("side-effect","<QueryImage Width=\"208\" Height=\"208\" ImageId=\"avatar:1000200030000\"/>")+request("third","<GetProfile index=\"0\"/>"));
++ const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(3);
++ while(!fs::exists(env.paths.default_avatar())&&std::chrono::steady_clock::now()<deadline)std::this_thread::sleep_for(std::chrono::milliseconds(5));
++ require(fs::exists(env.paths.default_avatar()),"second request executes while first TCP response is backpressured");
++ if(drain){
++  const auto first=client.frame();require(first.find("id=\"blocked\"")!=std::string::npos&&first.find(large)!=std::string::npos,"large queued front remains intact");
++  const auto second=client.frame();require(second.find("id=\"side-effect\"")!=std::string::npos&&second.find("ResourcePath")!=std::string::npos,"second response follows front");
++  const auto third=client.frame();require(third.find("id=\"third\"")!=std::string::npos&&third.find("SURGE")!=std::string::npos,"third request/response order retained");
++ }
++ const auto begin=std::chrono::steady_clock::now();service.stop();require(std::chrono::steady_clock::now()-begin<std::chrono::seconds(2),"stop drains backpressured read/write/work owners");
++ require(!service.is_ready(),"stopped service is not ready");
++}
++#endif
++}
++#if defined(__linux__)
++// Test executable only. Actual pinned Asio still accepts/completes real TCP IO.
++extern "C" int accept(int fd,sockaddr* address,socklen_t* length){
++ const auto result=static_cast<int>(::syscall(SYS_accept,fd,address,length));
++ if(result>=0){int size=4096;socklen_t n=sizeof size;if(::setsockopt(result,SOL_SOCKET,SO_SNDBUF,&size,sizeof size)==0&&::getsockopt(result,SOL_SOCKET,SO_SNDBUF,&size,&n)==0){observed_send_buffer.store(size);controlled_accepts.fetch_add(1);}}
++ return result;
++}
++#endif
++int main(){try{
++ source_oracle();
++#if defined(__linux__)
++ namespace fs=std::filesystem;const auto root=fs::temp_directory_path()/("preloader_l_pipeline_"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
++ struct Cleanup{fs::path path;~Cleanup(){std::error_code e;fs::remove_all(path,e);}} cleanup{root};
++ live(root/"drain",true);live(root/"stop",false);
++ std::cout<<"Real TCP backpressure: PASS on Linux; Windows IOCP: NOT_RUN\n";
++#else
++ std::cout<<"Real TCP controlled-send-buffer fixture: NOT_RUN outside Linux\n";
++#endif
++ std::cout<<"PASS transport pipeline checks="<<checks<<"; literal packet session oracle + actual owned Asio transport\n";return 0;
++}catch(const std::exception& error){std::cerr<<"FAIL transport pipeline: "<<error.what()<<'\n';return 1;}}
+--- FIX23/tests/support/transport/packet_session.hpp
++++ FIX24/tests/support/transport/packet_session.hpp
+@@ -0,0 +1,157 @@
++// SPDX-License-Identifier: GPL-3.0-only
++// Test-only literal packet Session projection; no production include/link.
++#pragma once
++#include <algorithm>
++#include <cstdint>
++#include <deque>
++#include <functional>
++#include <span>
++#include <string>
++#include <string_view>
++#include <utility>
++namespace preloader_l::test_packet {
++enum class ErrorCategory { system, asio_misc, other };
++struct Error { int value = 0; ErrorCategory category = ErrorCategory::system; };
++struct Handler {
++    virtual ~Handler() = default;
++    virtual void reset_02bc70() = 0;
++    virtual std::string initial_message_02d540() = 0;
++    virtual std::string process_message_033d70(std::string_view request) = 0;
++};
++using Completion = std::function<void(Error,std::size_t)>;
++struct WriteResult { Error error; std::size_t transferred = 0; };
++struct Transport {
++    virtual ~Transport() = default;
++    virtual WriteResult synchronous_send(std::span<const char>) = 0;
++    // Receive must return <= requested bytes. EOF is an Error, not a successful
++    // zero-byte receive. Buffer/operation ownership must outlive completions.
++    virtual void async_receive(std::size_t requested, std::function<void(Error,std::string)>) = 0;
++    virtual void async_send(std::span<const char>, Completion) = 0;
++};
++struct Scheduling {
++    virtual ~Scheduling() = default;
++    // Must queue IO completion (never call inline). Session lifetime is a caller
++    // obligation; the original detached job also captures a raw session pointer.
++    virtual void post_io(std::function<void()>) = 0;
++    // Must implement the observed CRT launch/detach contract or throw on failure.
++    // See the separately recovered bootstrap thread helper for its error mapping.
++    virtual void launch_detached(std::function<void()>) = 0;
++    // Must serialize writes through the socket executor; may dispatch inline.
++    virtual void dispatch_write(std::function<void()>) = 0;
++    virtual void log_error(std::string_view operation, Error) = 0;
++    [[noreturn]] virtual void raise_write_error(Error) = 0;
++};
++
++class Session {
++public:
++    Session(Transport& transport, Scheduling& scheduling, Handler& handler)
++        : transport_(transport), scheduling_(scheduling), handler_(handler) {handler_.reset_02bc70();}
++    // Accepted-session application portion of025720: second Handler reset,
++    // blocking greeting write-all, then start delimiter reads.
++    void start_025720();
++    void do_read_0280d0();
++    void process_message_028d30(std::string message);
++    void do_write_028270(std::string message);
++    void write_loop_02a500();
++    std::string_view buffered_input() const {return input_;}
++    std::size_t queued_messages() const {return output_.size();}
++    std::size_t written_offset() const {return written_;}
++private:
++    void frame_completed_025480(Error, std::size_t delimiter_bytes);
++    void receive_completed(Error, std::string);
++    void send_completed_0261d0(Error, std::size_t);
++    void write_completed_025a70(Error);
++    void send_next_chunk();
++    void log_unless_eof(std::string_view, Error);
++    Transport& transport_;
++    Scheduling& scheduling_;
++    Handler& handler_;
++    std::string input_;
++    std::deque<std::string> output_;
++    std::size_t written_ = 0;
++};
++std::size_t receive_request_size(std::size_t,std::size_t,std::size_t);
++std::size_t receive_request_size(std::size_t size, std::size_t capacity, std::size_t maximum) {
++    if (size >= maximum) return 0;
++    const auto spare = std::min(capacity, maximum) - size;
++    return std::min({maximum-size, std::size_t{0x10000}, std::max(spare,std::size_t{0x200})});
++}
++void Session::log_unless_eof(std::string_view operation, Error error) {
++    if (error.value != 0 && !(error.category == ErrorCategory::asio_misc && error.value == 2))
++        scheduling_.log_error(operation,error);
++}
++void Session::start_025720() {
++    handler_.reset_02bc70();
++    const auto initial = handler_.initial_message_02d540();
++    std::size_t sent = 0;
++    while (sent < initial.size()) {
++        const auto count = std::min(initial.size()-sent,std::size_t{0x10000});
++        const auto result = transport_.synchronous_send({initial.data()+sent,count});
++        sent += result.transferred;
++        if (result.error.value != 0) scheduling_.raise_write_error(result.error);
++        // Original blocking loop does not synthesize a failure on zero progress.
++    }
++    do_read_0280d0();
++}
++void Session::do_read_0280d0() {
++    const auto delimiter = input_.find('\0');
++    if (delimiter != std::string::npos) {
++        const auto transferred = delimiter+1;
++        scheduling_.post_io([this,transferred]{frame_completed_025480({},transferred);});
++        return;
++    }
++    const auto requested = receive_request_size(input_.size(),input_.capacity(),input_.max_size());
++    if (requested == 0) {
++        scheduling_.post_io([this]{frame_completed_025480({3,ErrorCategory::asio_misc},0);});
++        return;
++    }
++    transport_.async_receive(requested,[this](Error error,std::string bytes){receive_completed(error,std::move(bytes));});
++}
++void Session::receive_completed(Error error, std::string bytes) {
++    input_.append(bytes);
++    if (error.value != 0) {frame_completed_025480(error,0);return;}
++    do_read_0280d0();
++}
++void Session::frame_completed_025480(Error error, std::size_t transferred) {
++    if (error.value != 0) {log_unless_eof("read",error);return;}
++    // Match unsigned param_3-1 then min with input size, including zero count.
++    auto message = input_.substr(0,std::min(transferred-1,input_.size()));
++    scheduling_.launch_detached([this,message=std::move(message)]() mutable {
++        process_message_028d30(std::move(message));
++    });
++    // Launch/detach failures throw before consuming input or rearming reads.
++    input_.erase(0,std::min(transferred,input_.size()));
++    do_read_0280d0();
++}
++void Session::process_message_028d30(std::string message) {
++    if (message.empty()) return;
++    auto response = handler_.process_message_033d70(message);
++    scheduling_.dispatch_write([this,response=std::move(response)]() mutable {do_write_028270(std::move(response));});
++}
++void Session::do_write_028270(std::string message) {
++    output_.push_back(std::move(message));
++    if (output_.size() == 1) write_loop_02a500();
++}
++void Session::write_loop_02a500() {
++    if (output_.empty()) return;
++    written_ = 0;
++    send_next_chunk();
++}
++void Session::send_next_chunk() {
++    const auto& message = output_.front();
++    const auto offset = std::min(written_,message.size());
++    transport_.async_send({message.data()+offset,std::min(message.size()-offset,std::size_t{0x10000})},
++                         [this](Error error,std::size_t transferred){send_completed_0261d0(error,transferred);});
++}
++void Session::send_completed_0261d0(Error error, std::size_t transferred) {
++    written_ += transferred;
++    if (error.value != 0 || transferred == 0 || written_ >= output_.front().size()) {
++        write_completed_025a70(error);
++    } else send_next_chunk();
++}
++void Session::write_completed_025a70(Error error) {
++    if (error.value != 0) {log_unless_eof("write",error);return;}
++    output_.pop_front();
++    write_loop_02a500();
++}
++}
+--- FIX23/CMakeLists.txt
++++ FIX24/CMakeLists.txt
+@@ -112,7 +112,7 @@
+   target_link_libraries(test_startup_compat PRIVATE preloader_l_core)
+   add_test(NAME startup_configuration_profile_compat COMMAND test_startup_compat)
+   set_tests_properties(startup_configuration_profile_compat PROPERTIES TIMEOUT 60)
+-  foreach(source IN ITEMS tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
++  foreach(source IN ITEMS tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
+     get_filename_component(name "${source}" NAME_WE)
+     add_executable(${name} "${source}")
+     target_link_libraries(${name} PRIVATE preloader_l_core)
+--- FIX23/metadata/BUILD_GRAPH.json
++++ FIX24/metadata/BUILD_GRAPH.json
+@@ -102,7 +102,8 @@
+     "tests/integration/test_startup_phases.cpp",
+     "tests/integration/test_configuration_orchestration.cpp",
+     "tests/integration/test_path_resolution.cpp",
+-    "tests/integration/test_path_effects.cpp"
++    "tests/integration/test_path_effects.cpp",
++    "tests/integration/test_transport_pipeline.cpp"
+   ],
+   "windows_core": [
+     "src/windows/startup_platform.cpp",
+--- FIX23/scripts/qa/check_source.py
++++ FIX24/scripts/qa/check_source.py
+@@ -16,18 +16,18 @@
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX23 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX24 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX23.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX24.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX23 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX24 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX23 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX23')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX23.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX24 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX24')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX24.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX23 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX24 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -131,6 +131,16 @@
+  if 'if (!state.object_0a3a88)\n        throw OutOfEvidenceInput("035bd0 dereferences a null create_online result");' not in online or 'provider factory rejected' in online:fail(2,'null provider guard replaced by silent completion')
+  fixture=(root/'tests/unit/profiles/test_online.cpp').read_text()
+  if 'CHECK(state.object==0);CHECK(state.module==41);CHECK(state.online==0);CHECK(!m.called("auth-status"));CHECK(!m.called("finish"));' not in fixture:fail(2,'original null-factory oracle weakened')
++ # D03 source receive/write queue separation; worker socket operations stay on IO.
++ for term in ['std::deque<std::string> requests,output;','asio::buffer(output.front())','self->output.pop_front();','void queue_response(','void compute_next()','self->fail_compute();']:
++  if term not in transport:fail(2,'missing independent transport queue owner: '+term)
++ completed=transport.split('if(greeting){',1)[-1].split('}catch(const PersistenceRecoveryRequired&)',1)[0]
++ if 'if(self->output.empty())self->compute_next();' in completed or 'self->compute_next();' not in completed:fail(2,'compute completion waits for socket write')
++ worker=transport.split('void compute(std::string message,bool greeting)',1)[-1].split('  void read(){',1)[0]
++ if 'socket.close(' in worker:fail(2,'worker closes socket with overlapping async IO')
++ if 'tests/integration/test_transport_pipeline.cpp' not in graph['integration_tests'] or 'tests/integration/test_transport_pipeline.cpp' not in cmake:fail(2,'pipeline test not integrated')
++ oracle=json.loads((root/'metadata/PACKET_SESSION_ORACLE_FIX24.json').read_text())
++ if sha(root/oracle['destination'])!=oracle['destination_sha256']:fail(2,'literal source session oracle drift')
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -221,7 +231,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX23.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX24.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX23/tests/tools/test_source_policy.py
++++ FIX24/tests/tools/test_source_policy.py
+@@ -76,6 +76,8 @@
+   modify('src/application/environment.hpp',lambda b:b.replace(b'using PathEffects=paths::WindowsEffects;',b'using PathEffects=WrongWindowsOwner;'),'Windows lexical owner bypass')
+   modify('src/application/providers.hpp',lambda b:b.replace(b'return PathEffects::join(a,b);',b'return model_path(native_path(a)/native_path(b));'),'application lexical join bypass')
+   modify('src/profiles/online.cpp',lambda b:b.replace(b'throw OutOfEvidenceInput("035bd0 dereferences a null create_online result");',b'return;'),'silent null-factory completion restored')
++  modify('src/transport/service.cpp',lambda b:b.replace(b'self->compute_next();',b'if(self->output.empty())self->compute_next();'),'response write gates next computation')
++  modify('src/transport/service.cpp',lambda b:b.replace(b'self->fail_compute();',b'asio::error_code ignored;self->socket.close(ignored);'),'worker closes socket during async IO')
+   assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())

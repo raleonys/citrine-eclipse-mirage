@@ -1,0 +1,6 @@
+{
+  "status": "PASS_FOCUSED_REAL_TCP_AND_LITERAL_PACKET_ORACLE",
+  "exit": 0,
+  "output": "Real TCP backpressure: PASS on Linux; Windows IOCP: NOT_RUN\nPASS transport pipeline checks=41; literal packet session oracle + actual owned Asio transport\n",
+  "scope": "Current changed service TU + unchanged parent core; preliminary before final source freeze"
+}

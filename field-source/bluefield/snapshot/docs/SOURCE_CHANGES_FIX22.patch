@@ -1,0 +1,333 @@
+--- FIX21/src/profiles/online_session.hpp
++++ FIX22/src/profiles/online_session.hpp
+@@ -26,8 +26,8 @@
+     std::uint32_t suppress_errors_0450a0() override;
+     void restore_error_mode(std::uint32_t) override;
+     Path filesystem_widen_006d70(std::string_view s) override{return filesystem_path(s);}
+-    Path parent_path_019820(const Path& p) override{return model_path(native_path(p).parent_path());}
+-    Path join_016b00(const Path& a,const Path& b) override{return model_path(native_path(a)/native_path(b));}
++    Path parent_path_019820(const Path& p) override{return PathEffects::parent(p);}
++    Path join_016b00(const Path& a,const Path& b) override{return PathEffects::join(a,b);}
+     online::Module load_copy_0450d0(const Path&) override;
+     online::Procedure get_proc_address(online::Module,std::string_view) override;
+     std::int32_t call_version_check(online::Procedure) override;
+--- FIX21/src/paths/paths.hpp
++++ FIX22/src/paths/paths.hpp
+@@ -22,4 +22,17 @@
+     OutOfEvidenceAliasing();
+ };
+ Path& append_016b50(Path& left, const Path& right);
++
++// Common application-effect binding for the packet's Windows lexical bodies.
++// Conversion and filesystem I/O remain caller-owned boundaries.
++struct WindowsEffects {
++    static Path parent(const Path& value) { return parent_path_019820(value); }
++    static Path filename(const Path& value) { return filename_00e120(value); }
++    static Path join(const Path& left, const Path& right) { return join_016b00(left, right); }
++    static Path resolve(const Path& value, const Path& executable, bool relative) {
++        if (relative && !is_absolute_0195b0(value))
++            return join_016b00(parent_path_019820(executable), value);
++        return value;
++    }
++};
+ }
+--- FIX21/src/application/providers.cpp
++++ FIX22/src/application/providers.cpp
+@@ -13,7 +13,7 @@
+ status_recovered::Status StorageEffects::status_01ea20(const Path& p,std::uint32_t flags){return file_status(p,flags);}
+ [[noreturn]] void StorageEffects::filesystem_error_018130(std::string_view op,std::uint32_t n,const Path&){throw SessionFailure(std::string(op)+" failed: "+std::to_string(n));}
+ Path ConfigurationEffects::resolve_path_0192d0(std::string_view value,const Path& executable,bool relative){
+- auto p=native_path(utf8_path(value));if(relative&&p.is_relative())p=native_path(executable).parent_path()/p;return model_path(p);
++ return PathEffects::resolve(utf8_path(value),executable,relative);
+ }
+ configuration::Node ConfigurationEffects::load_document(const Path& path){
+  parser::State parsed;const auto bytes=read_file(path,true);(void)parser::parse(bytes,parsed);
+--- FIX21/src/application/environment.hpp
++++ FIX22/src/application/environment.hpp
+@@ -4,6 +4,7 @@
+ #include "src/runtime/runtime_paths.hpp"
+ #include "src/application/logging.hpp"
+ #include "src/contracts/status.hpp"
++#include "src/paths/paths.hpp"
+ #include <filesystem>
+ #include <mutex>
+ #include <string>
+@@ -29,4 +30,16 @@
+ status_recovered::Status file_status(const Path&,std::uint32_t flags=3);
+ std::string read_file(const Path&,bool required=false);
+ void publish_environment(std::string_view,std::string_view);
++#ifdef _WIN32
++using PathEffects=paths::WindowsEffects;
++#else
++// Preserve the existing POSIX fixture projection. It is not a Windows oracle.
++struct HostPathEffects {
++    static Path parent(const Path&);
++    static Path filename(const Path&);
++    static Path join(const Path&,const Path&);
++    static Path resolve(const Path&,const Path&,bool);
++};
++using PathEffects=HostPathEffects;
++#endif
+ }
+--- FIX21/src/application/providers.hpp
++++ FIX22/src/application/providers.hpp
+@@ -29,8 +29,8 @@
+ public:
+     ConfigurationEffects(configuration::State& s,Environment& e,achievement_storage::Storage& storage):achievement_storage::ConfigurationDependencies(storage),state_(s),env_(e){}
+     Path executable_path_03c6d0() override{return model_path(env_.executable);}
+-    Path parent_path_019820(const Path& p) override{return model_path(native_path(p).parent_path());}
+-    Path join_016b00(const Path& a,const Path& b) override{return model_path(native_path(a)/native_path(b));}
++    Path parent_path_019820(const Path& p) override{return PathEffects::parent(p);}
++    Path join_016b00(const Path& a,const Path& b) override{return PathEffects::join(a,b);}
+     Path widen_0145d0(std::string_view s) override{return utf8_path(s);}
+     Path filesystem_widen_010540(std::string_view s) override{return filesystem_path(s);}
+     std::string narrow_path(const Path& p) override{return path_utf8(p);}
+@@ -46,7 +46,7 @@
+     void create_directories_018e00(const Path& p) override{env_.paths.require_write(native_path(p)/".directory-check");std::filesystem::create_directories(native_path(p));}
+     void write_embedded_png_03c020(const Path&,configuration::EmbeddedPng) override;
+     std::vector<Path> directory_entries(const Path&) override;
+-    Path filename(const Path& p) override{return model_path(native_path(p).filename());}
++    Path filename(const Path& p) override{return PathEffects::filename(p);}
+     void remove_04948c(const Path& p) override{env_.paths.require_write(native_path(p));throw std::logic_error("automatic runtime cleanup is disabled");}
+     bool set_environment_variable(std::string_view k,std::string_view v) override{publish_environment(k,v);return true;}
+ };
+@@ -57,7 +57,7 @@
+     std::int32_t atoi_05ee08(std::string_view s) override{return std::atoi(std::string(s).c_str());}
+     void unknown_entitlement_field(std::string_view) override{env_.log(LogEvent::unknown_field);}
+     Path filesystem_widen_006d70(std::string_view s) override{return filesystem_path(s);}
+-    Path path_append_016b50(const Path& a,const Path& b) override{return model_path(native_path(a)/native_path(b));}
++    Path path_append_016b50(const Path& a,const Path& b) override{return PathEffects::join(a,b);}
+     bool online_avatar_virtual_28(const Path&,std::string_view,std::int32_t) override;
+     Path avatar_cache_path(const Path&,std::string_view owner,std::string_view width) override{return model_path(env_.paths.avatar_cache(owner,width));}
+     Path resolve_image(const Path& p) override{return avatars_.resolve(p);}
+@@ -83,9 +83,9 @@
+     bool file_hash_matches_042d20(const Path&,std::string) override;
+     std::string load_token_02afa0(const Path&) override;
+     Path filesystem_widen_006d70(std::string_view s) override{return filesystem_path(s);}
+-    Path filename_00e120(const Path& p) override{return model_path(native_path(p).filename());}
+-    Path parent_path_019820(const Path& p) override{return model_path(native_path(p).parent_path());}
+-    Path join_016b00(const Path& a,const Path& b) override{return model_path(native_path(a)/native_path(b));}
++    Path filename_00e120(const Path& p) override{return PathEffects::filename(p);}
++    Path parent_path_019820(const Path& p) override{return PathEffects::parent(p);}
++    Path join_016b00(const Path& a,const Path& b) override{return PathEffects::join(a,b);}
+     std::string path_utf8_01e3f0(const Path& p) override{return path_utf8(p);}
+     std::string current_time_041b60_null_true() override{return achievement_runtime::utc_time_041b60(clock_,formatter_,nullptr,1);}
+     bool wine_detected_045010() override;
+--- FIX21/src/application/environment.cpp
++++ FIX22/src/application/environment.cpp
+@@ -22,6 +22,14 @@
+ #endif
+ }
+ Path model_path(const std::filesystem::path& path){return path.u16string();}
++#ifndef _WIN32
++Path HostPathEffects::parent(const Path& value){return model_path(native_path(value).parent_path());}
++Path HostPathEffects::filename(const Path& value){return model_path(native_path(value).filename());}
++Path HostPathEffects::join(const Path& left,const Path& right){return model_path(native_path(left)/native_path(right));}
++Path HostPathEffects::resolve(const Path& value,const Path& executable,bool relative){
++ auto p=native_path(value);if(relative&&p.is_relative())p=native_path(executable).parent_path()/p;return model_path(p);
++}
++#endif
+ Path utf8_path(std::string_view text){return std::filesystem::path(std::u8string(reinterpret_cast<const char8_t*>(text.data()),text.size())).u16string();}
+ Path filesystem_path(std::string_view text){
+ #ifdef _WIN32
+--- FIX21/tests/integration/test_path_effects.cpp
++++ FIX22/tests/integration/test_path_effects.cpp
+@@ -0,0 +1,84 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/application/providers.hpp"
++#include "src/configuration/defaults.hpp"
++#include "src/profiles/online_session.hpp"
++#include "src/xml/reader.hpp"
++#include <iostream>
++#include <type_traits>
++#include <vector>
++namespace {
++using namespace preloader_l;
++using Windows=paths::WindowsEffects;
++unsigned checks=0;
++void require(bool value,const char* label){++checks;if(!value)throw std::runtime_error(label);}
++void lexical(){
++ struct Part {Path value,parent,name;};
++ const std::vector<Part> parts={
++  {u"",u"",u""},{u"a",u"",u"a"},{u"a/../b",u"a/..",u"b"},
++  {uR"(C:\a\b\)",uR"(C:\a\b)",u""},
++  {uR"(\\server\share\x)",uR"(\\server\share)",u"x"},
++  {uR"(\\?\C:\a\..\f)",uR"(\\?\C:\a\..)",u"f"},
++  {uR"(\??\C:\a)",uR"(\??\C:)",u"a"},
++  {u"C:relative",u"C:",u"relative"},{uR"(\rooted)",uR"(\)",u"rooted"},
++  {u"//server",u"//server",u""},{u"///a",u"///",u"a"},
++  {Path{char16_t(0xd800),u'\\',u'x'},Path{char16_t(0xd800)},u"x"},
++  {Path{u'a',0,u'b',u'\\',u'x'},Path{u'a',0,u'b'},u"x"}
++ };
++ for(const auto& c:parts){require(Windows::parent(c.value)==c.parent,"Windows parent literal");require(Windows::filename(c.value)==c.name,"Windows filename literal");}
++ struct Join {Path left,right,result;};
++ const std::vector<Join> joins={
++  {uR"(C:\base)",u"child",uR"(C:\base\child)"},
++  {uR"(C:\base)",u"C:child",uR"(C:\base\child)"},
++  {uR"(C:\base)",u"c:child",u"c:child"},
++  {uR"(C:\base)",uR"(D:\x)",uR"(D:\x)"},
++  {uR"(C:\base)",uR"(\x)",uR"(C:\x)"},
++  {uR"(\\srv\share)",u"/x",uR"(\\srv/x)"},
++  {u"C:",u"",u"C:"},{uR"(\\srv)",u"",uR"(\\srv\)"},
++  {u"",u"C:relative",u"C:relative"},{u"a",u"a",uR"(a\a)"}
++ };
++ for(const auto& c:joins)require(Windows::join(c.left,c.right)==c.result,"Windows join literal");
++ const Path exe=uR"(C:\game\fixture.exe)";
++ struct Resolve {Path value,result;};
++ const std::vector<Resolve> resolutions={
++  {u"a/../b",uR"(C:\game\a/../b)"},{u"C:child",uR"(C:\game\child)"},
++  {u"c:child",u"c:child"},{uR"(\rooted)",uR"(C:\rooted)"},
++  {uR"(C:\abs)",uR"(C:\abs)"},{uR"(\\server)",uR"(\\server)"},
++  {uR"(\\?\C:\a)",uR"(\\?\C:\a)"},{u"",uR"(C:\game\)"},
++  {u".",uR"(C:\game\.)"},{u"/rooted",u"C:/rooted"},
++  {u"D:leaf",u"D:leaf"},{Path{u'a',0,u'b'},Path(uR"(C:\game\)")+Path{u'a',0,u'b'}}
++ };
++ for(const auto& c:resolutions){require(Windows::resolve(c.value,exe,true)==c.result,"Windows resolver literal");require(Windows::resolve(c.value,exe,false)==c.value,"Windows resolver false leaves code units intact");}
++}
++void callers(){
++#ifdef _WIN32
++ static_assert(std::is_same_v<PathEffects,Windows>);
++#else
++ static_assert(std::is_same_v<PathEffects,HostPathEffects>);
++#endif
++ namespace fs=std::filesystem;const auto root=fs::temp_directory_path()/"preloader_l_path_effects_no_io";
++ Environment env{RuntimePaths::fixture(root/"base"/"fixture.exe",root/"base"/"surge.cfg",root/"data",root/"programdata")};
++ auto state=configuration::initial_state();achievement_storage::Paths paths;
++ xml_reader::Backend xml;achievement_storage::HostCrtNumbers numbers;timestamps::ClassicIso parser;
++ StorageEffects storage_effects{parser,env.paths};files::NativeFactory files{env.paths};
++ achievement_storage::Storage storage{paths,xml,numbers,storage_effects,files};ConfigurationEffects config{state,env,storage};
++ std::uint8_t flag=0;OnlineSession online{state,env,flag};achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;
++ AvatarStore avatars{env.paths};ContentEffects content{state,paths,clock,formatter,storage_effects,files,env,online,avatars};LicenseEffects license{env,clock,formatter,online};
++ const Path value=model_path(root/"left"/"a"/"b");const Path parent=model_path(root/"left"/"a");
++ const Path joined=model_path(root/"left"/"a"/".."/"x");
++ const Path tail=model_path(fs::path("..")/"x");
++ require(config.parent_path_019820(value)==parent,"Configuration parent uses common owner");
++ require(config.filename(value)==u"b","Configuration filename uses common owner");
++ require(config.join_016b00(parent,tail)==joined,"Configuration join uses common owner");
++ require(license.parent_path_019820(value)==parent,"License parent uses common owner");
++ require(license.filename_00e120(value)==u"b","License filename uses common owner");
++ require(license.join_016b00(parent,tail)==joined,"License join uses common owner");
++ require(content.path_append_016b50(parent,tail)==joined,"Content join uses common owner");
++ require(online.parent_path_019820(value)==parent,"Online parent uses common owner");
++ require(online.join_016b00(parent,tail)==joined,"Online join uses common owner");
++ require(config.resolve_path_0192d0("a/../b",model_path(env.executable),true)==model_path(root/"base"/fs::path("a/../b")),"Configuration resolver retains dot spelling");
++#ifndef _WIN32
++ require(PathEffects::resolve(u"/absolute",model_path(env.executable),true)==u"/absolute","POSIX absolute projection retained separately");
++#endif
++}
++}
++int main(){try{lexical();callers();std::cout<<"PASS path effects checks="<<checks<<"; pure source Windows lexical bodies + actual platform-selected callers; no native Windows IO/ABI acceptance\n";return 0;}catch(const std::exception& error){std::cerr<<"FAIL path effects: "<<error.what()<<'\n';return 1;}}
+--- FIX21/CMakeLists.txt
++++ FIX22/CMakeLists.txt
+@@ -112,7 +112,7 @@
+   target_link_libraries(test_startup_compat PRIVATE preloader_l_core)
+   add_test(NAME startup_configuration_profile_compat COMMAND test_startup_compat)
+   set_tests_properties(startup_configuration_profile_compat PROPERTIES TIMEOUT 60)
+-  foreach(source IN ITEMS tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
++  foreach(source IN ITEMS tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
+     get_filename_component(name "${source}" NAME_WE)
+     add_executable(${name} "${source}")
+     target_link_libraries(${name} PRIVATE preloader_l_core)
+--- FIX21/metadata/BUILD_GRAPH.json
++++ FIX22/metadata/BUILD_GRAPH.json
+@@ -101,7 +101,8 @@
+     "tests/integration/test_original_compat.cpp",
+     "tests/integration/test_startup_phases.cpp",
+     "tests/integration/test_configuration_orchestration.cpp",
+-    "tests/integration/test_path_resolution.cpp"
++    "tests/integration/test_path_resolution.cpp",
++    "tests/integration/test_path_effects.cpp"
+   ],
+   "windows_core": [
+     "src/windows/startup_platform.cpp",
+--- FIX21/scripts/qa/check_source.py
++++ FIX22/scripts/qa/check_source.py
+@@ -16,18 +16,18 @@
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX21 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX22 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX21.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX22.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX21 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX22 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX21 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX21')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX21.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX22 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX22')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX22.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX21 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX22 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -110,10 +110,22 @@
+  for term in ['state.user_directory=','storage.update_01eb00(state)','publish_environment("ContentId"']:
+   if term in startup:fail(2,'duplicated configuration orchestration: '+term)
+  if startup.find('configuration::publish_configuration_environment(')<startup.find('router=std::make_unique<dispatch::Router>'):fail(2,'environment publication moved before Application router')
+- # Bounded D10 correction: resolver returns its composed spelling unchanged.
++ # D10: one explicit source Windows owner, with separate POSIX projection.
+  resolver=(root/'src/application/providers.cpp').read_text().split('Path ConfigurationEffects::resolve_path_0192d0',1)[-1].split('configuration::Node ConfigurationEffects::load_document',1)[0]
+- if 'return model_path(p);' not in resolver or 'lexically_normal' in resolver:fail(2,'configuration resolver adds lexical normalization')
+- if 'tests/integration/test_path_resolution.cpp' not in graph['integration_tests'] or 'tests/integration/test_path_resolution.cpp' not in cmake:fail(2,'path resolution fixture missing from build graph')
++ if 'return PathEffects::resolve(utf8_path(value),executable,relative);' not in resolver or 'lexically_normal' in resolver:fail(2,'configuration resolver bypasses source owner/normalizes')
++ env_header=(root/'src/application/environment.hpp').read_text()
++ if '#ifdef _WIN32\nusing PathEffects=paths::WindowsEffects;' not in env_header or 'using PathEffects=HostPathEffects;' not in env_header:fail(2,'Windows/host lexical owner selection differs')
++ for name,counts in [('src/application/providers.hpp',{'parent':2,'filename':2,'join':3}),('src/profiles/online_session.hpp',{'parent':1,'join':1})]:
++  body=(root/name).read_text()
++  for method,count in counts.items():
++   if body.count('return PathEffects::'+method+'(')!=count:fail(2,'lexical caller bypasses common owner: '+name+'/'+method)
++ lexical=(root/'src/paths/paths.hpp').read_text().split('struct WindowsEffects',1)[-1]
++ for term in ['return parent_path_019820(value);','return filename_00e120(value);','return join_016b00(left, right);','relative && !is_absolute_0195b0(value)','return join_016b00(parent_path_019820(executable), value);','return value;']:
++  if term not in lexical:fail(2,'source lexical owner body missing: '+term)
++ host=(root/'src/application/environment.cpp').read_text().split('Path HostPathEffects::parent',1)[-1].split('Path utf8_path',1)[0]
++ if 'lexically_normal' in host:fail(2,'host resolver normalization reintroduced')
++ for name in ['test_path_resolution.cpp','test_path_effects.cpp']:
++  if 'tests/integration/'+name not in graph['integration_tests'] or 'tests/integration/'+name not in cmake:fail(2,'path fixture missing from build graph: '+name)
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -204,7 +216,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX21.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX22.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX21/tests/tools/test_source_policy.py
++++ FIX22/tests/tools/test_source_policy.py
+@@ -13,7 +13,7 @@
+    p=root/name;before=p.read_bytes();p.write_bytes(change(before))
+    errors=check(root);p.write_bytes(before)
+    assert errors,label;cases.append(label)
+-  modify('src/application/providers.cpp',lambda b:b.replace(b'return model_path(p);',b'return model_path(p.lexically_normal());'),'resolver normalization restored')
++  modify('src/application/providers.cpp',lambda b:b.replace(b'return PathEffects::resolve(utf8_path(value),executable,relative);',b'return model_path(native_path(PathEffects::resolve(utf8_path(value),executable,relative)).lexically_normal());'),'resolver normalization restored')
+   modify('src/configuration/state.cpp',lambda b:b+b'\n// mutation\n','import alteration')
+   modify('src/application/application.cpp',lambda b:b+b'\n#include "absent_header.hpp"\n','broken dependency')
+   modify('src/application/application.cpp',lambda b:b+b'\nnamespace bluefield {}\n','wrong module namespace')
+@@ -73,6 +73,8 @@
+   modify('src/hooks/callback_lock.hpp',lambda b:b.replace(b'frame->lock_.unlock();',b'/* no unlock */'),'registry wait keeps recursive locks')
+   modify('src/application/application.cpp',lambda b:b.replace(b'configuration::apply_configuration_layers(state,configuration_effects,passes)',b'unbound_configuration(state)'),'active shared configuration owner removed')
+   modify('src/application/application.cpp',lambda b:b.replace(b'configuration::apply_configuration_layers(state,configuration_effects,passes);',b'configuration::apply_configuration_layers(state,configuration_effects,passes);storage.update_01eb00(state);'),'duplicated post-configuration storage replay')
++  modify('src/application/environment.hpp',lambda b:b.replace(b'using PathEffects=paths::WindowsEffects;',b'using PathEffects=WrongWindowsOwner;'),'Windows lexical owner bypass')
++  modify('src/application/providers.hpp',lambda b:b.replace(b'return PathEffects::join(a,b);',b'return model_path(native_path(a)/native_path(b));'),'application lexical join bypass')
+   assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())

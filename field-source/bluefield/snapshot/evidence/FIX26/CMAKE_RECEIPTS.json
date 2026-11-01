@@ -1,0 +1,482 @@
+{
+  "production": {
+    "source_digest": "251519c94014571af00ba5b5af9dfdbd4982d04bd636ace6ec961580a075b9cf",
+    "status": "PASS_46_OF_46",
+    "platform": "Linux_GCC13",
+    "tests": [
+      {
+        "name": "hooks_test_registry_source",
+        "status": "run",
+        "output": "Windows ABI body NOT_RUN; registry-source: 957 checks passed\n"
+      },
+      {
+        "name": "hooks_test_registry_wait",
+        "status": "run",
+        "output": "PASS registry wait checks=51; real recursive mutex/phase CV + unmodified source registry algorithm; Win32 API and native lease boundary NOT_RUN\n"
+      },
+      {
+        "name": "paths_test_encoding",
+        "status": "run",
+        "output": "PASS: 48 encoding checks; real Win32 only on synthetic strings, original targets not executed\n"
+      },
+      {
+        "name": "files_test_status",
+        "status": "run",
+        "output": "PASS 9295 status checks\n"
+      },
+      {
+        "name": "libraries_test_libraries",
+        "status": "run",
+        "output": "PASS: 157 checks; mocks only; no DLL loaded or freed\n"
+      },
+      {
+        "name": "configuration_test_hash_table",
+        "status": "run",
+        "output": "PASS: 4929 Config2 growth/copy/positional-reuse checks\n"
+      },
+      {
+        "name": "configuration_test_parser",
+        "status": "run",
+        "output": "PASS: 115 synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.\n"
+      },
+      {
+        "name": "configuration_test_pegtl_differential",
+        "status": "run",
+        "output": "PASS: 8766 frozen FIX09 Config2 comparisons (tree, actions, errors, BOM).\n"
+      },
+      {
+        "name": "configuration_test_state",
+        "status": "run",
+        "output": "PASS: 148 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.\n"
+      },
+      {
+        "name": "crypto_test_crypto",
+        "status": "run",
+        "output": "PASS: 135410 deterministic crypto checks (NIST vectors, padding, mutation, state, PRNG/time); target DLL/EXE not executed\n"
+      },
+      {
+        "name": "handlers_test_content",
+        "status": "run",
+        "output": "PASS: 963 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.\n"
+      },
+      {
+        "name": "handlers_test_information",
+        "status": "run",
+        "output": "PASS: 628 checks; synthetic XML/profile state; no target execution\n"
+      },
+      {
+        "name": "handlers_test_presence",
+        "status": "run",
+        "output": "PASS: 288 synthetic checks; 18 handler bodies; original execution none\n"
+      },
+      {
+        "name": "hashing_test_hash",
+        "status": "run",
+        "output": "6899 deterministic hash checks PASS\n"
+      },
+      {
+        "name": "hooks_test_crypt_query",
+        "status": "run",
+        "output": "PASS crypt-query UTF16/null/type/case/suffix selection checks=1538\n"
+      },
+      {
+        "name": "hooks_test_setup_plan",
+        "status": "run",
+        "output": "PASS source hook stage-only plan, optional surfaces, partial create/queue and missing target checks=76; no native engine executed\n"
+      },
+      {
+        "name": "licensing_test_key_store",
+        "status": "run",
+        "output": "PASS key store header/CBC/XML/identity/no-overwrite\n"
+      },
+      {
+        "name": "licensing_test_license",
+        "status": "run",
+        "output": "PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)\n"
+      },
+      {
+        "name": "paths_test_path",
+        "status": "run",
+        "output": "328 deterministic path checks PASS\n"
+      },
+      {
+        "name": "paths_test_module_relative",
+        "status": "run",
+        "output": "PASS module sibling checks=2137 gulrak=554 preserved_native=508; Windows-specific cases require native execution\n"
+      },
+      {
+        "name": "profiles_test_online",
+        "status": "run",
+        "output": "online: 12758 checks passed (synthetic mocks only)\n"
+      },
+      {
+        "name": "protocol_test_integration",
+        "status": "run",
+        "output": "PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed\n"
+      },
+      {
+        "name": "protocol_test_messages",
+        "status": "run",
+        "output": "PASS: 831 checks; synthetic XML/crypto/queue only; no sockets or target execution\n"
+      },
+      {
+        "name": "runtime_test_startup",
+        "status": "run",
+        "output": "PASS: 155 checks; synthetic input/console only; no real environment writes or UI\n"
+      },
+      {
+        "name": "time_test_calendar",
+        "status": "run",
+        "output": "PASS: 31760 calendar arithmetic checks; no original execution or OS time calls\n"
+      },
+      {
+        "name": "tokens_test_token",
+        "status": "run",
+        "output": "579 synthetic token checks PASS\n"
+      },
+      {
+        "name": "xml_test_printer",
+        "status": "run",
+        "output": "PASS: 277 checks; concrete recovered serializer; synthetic readers/random only\n"
+      },
+      {
+        "name": "xml_test_reader",
+        "status": "run",
+        "output": "PASS: 352 actual XML reader checks; selected upstream compatibility source, original target not executed\n"
+      },
+      {
+        "name": "runtime_tcp_and_persistence",
+        "status": "run",
+        "output": "PASS full runtime integration checks=17; concurrent clients=8; profile requests=160\n"
+      },
+      {
+        "name": "startup_configuration_profile_compat",
+        "status": "run",
+        "output": "PASS startup compatibility checks=281; absent/empty/root/partial/override/empty-fields; complete profile/settings/game responses\n"
+      },
+      {
+        "name": "test_avatar_effects",
+        "status": "run",
+        "output": "PASS avatar source effects checks=7755; real provider ABI NOT_RUN\n"
+      },
+      {
+        "name": "test_transport_pipeline",
+        "status": "run",
+        "output": "Real TCP backpressure: PASS on Linux; Windows IOCP: NOT_RUN\nPASS transport pipeline checks=41; literal packet session oracle + actual owned Asio transport\n"
+      },
+      {
+        "name": "test_path_effects",
+        "status": "run",
+        "output": "PASS path effects checks=71; pure source Windows lexical bodies + actual platform-selected callers; no native Windows IO/ABI acceptance\n"
+      },
+      {
+        "name": "test_path_resolution",
+        "status": "run",
+        "output": "POSIX directory-link semantic fixture: PASS; Windows native path/ABI: NOT_RUN\nPASS path resolution checks=26\n"
+      },
+      {
+        "name": "test_configuration_orchestration",
+        "status": "run",
+        "output": "PASS shared configuration orchestration checks=31; source order + actual Application overlays/profile/filesystem/environment failure boundaries; no original binary execution\n"
+      },
+      {
+        "name": "test_startup_phases",
+        "status": "run",
+        "output": "PASS startup phases checks=66; source predicate, actual IO/provider ordering, extra-phase completion, cancellation/failure. Windows provider/hook boundary NOT_RUN unless native fixture executed\n"
+      },
+      {
+        "name": "test_brownfield_contracts",
+        "status": "run",
+        "output": "PASS HF19-derived field ownership/nesting/comment contracts checks=9; no claim of all-HF19 equivalence\n"
+      },
+      {
+        "name": "test_supplied_config",
+        "status": "run",
+        "output": "PASS supplied CFG parser/bindings checks=16; Online UNSUPPORTED; observed HF19 QueryImage/GrantAchievement child shapes rejected; game NOT_RUN\n"
+      },
+      {
+        "name": "test_configuration_profile",
+        "status": "run",
+        "output": "PASS config/profile checks=53; full 14-field response; legacy reproduced; corrected config/default parity; override and non-sensitive diagnostics\n"
+      },
+      {
+        "name": "test_asio_transport",
+        "status": "run",
+        "output": "Native accept fault regression injected=3 platform=Linux; Win32 boundary NOT_RUN\nAsio fault campaign attempts=1 terminal=1 dispatch=0 rearm=0 recovery=0\nPASS Asio transport checks=59; fragmentation/FIFO/300k-write/fault recovery/cancel/repeated lifecycle; native IOCP requires Windows\n"
+      },
+      {
+        "name": "test_filesystem_config",
+        "status": "run",
+        "output": "PASS filesystem/config integration checks=52; Unicode module/override/cwd isolation/no-config/profile/native binary IO\n"
+      },
+      {
+        "name": "test_runtime_migration",
+        "status": "run",
+        "output": "PASS FIX13 rollback checks=80; disk_diagnostics=0\n"
+      },
+      {
+        "name": "test_original_compat",
+        "status": "run",
+        "output": "PASS original-package compatibility counterexamples=9; not original binary execution\n"
+      },
+      {
+        "name": "golden_protocol_tool_selftests",
+        "status": "run",
+        "output": "GOLDEN_PROTOCOL_TOOL_SELFTEST: PASS\n"
+      },
+      {
+        "name": "test_golden_pipeline",
+        "status": "run",
+        "output": "PASS real five-stage Golden orchestration SYNTHETIC cases=14; Windows DLL execution NOT_RUN\n"
+      },
+      {
+        "name": "test_golden_link_policy",
+        "status": "run",
+        "output": "MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS (21/21)\n"
+      }
+    ],
+    "core_archive_sha256": "eb9f0b1bb97145e4ece02cc4c0c70ead2504a2fbe81e8e0c1b66f8730d3485d6",
+    "warnings": [],
+    "native_Windows_DLL_provider": "NOT_RUN"
+  },
+  "debug": {
+    "source_digest": "251519c94014571af00ba5b5af9dfdbd4982d04bd636ace6ec961580a075b9cf",
+    "status": "PASS_46_OF_46",
+    "platform": "Linux_GCC13",
+    "tests": [
+      {
+        "name": "hooks_test_registry_source",
+        "status": "run",
+        "output": "Windows ABI body NOT_RUN; registry-source: 957 checks passed\n"
+      },
+      {
+        "name": "hooks_test_registry_wait",
+        "status": "run",
+        "output": "PASS registry wait checks=51; real recursive mutex/phase CV + unmodified source registry algorithm; Win32 API and native lease boundary NOT_RUN\n"
+      },
+      {
+        "name": "paths_test_encoding",
+        "status": "run",
+        "output": "PASS: 48 encoding checks; real Win32 only on synthetic strings, original targets not executed\n"
+      },
+      {
+        "name": "files_test_status",
+        "status": "run",
+        "output": "PASS 9295 status checks\n"
+      },
+      {
+        "name": "libraries_test_libraries",
+        "status": "run",
+        "output": "PASS: 157 checks; mocks only; no DLL loaded or freed\n"
+      },
+      {
+        "name": "configuration_test_hash_table",
+        "status": "run",
+        "output": "PASS: 4929 Config2 growth/copy/positional-reuse checks\n"
+      },
+      {
+        "name": "configuration_test_parser",
+        "status": "run",
+        "output": "PASS: 115 synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.\n"
+      },
+      {
+        "name": "configuration_test_pegtl_differential",
+        "status": "run",
+        "output": "PASS: 8766 frozen FIX09 Config2 comparisons (tree, actions, errors, BOM).\n"
+      },
+      {
+        "name": "configuration_test_state",
+        "status": "run",
+        "output": "PASS: 148 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.\n"
+      },
+      {
+        "name": "crypto_test_crypto",
+        "status": "run",
+        "output": "PASS: 135410 deterministic crypto checks (NIST vectors, padding, mutation, state, PRNG/time); target DLL/EXE not executed\n"
+      },
+      {
+        "name": "handlers_test_content",
+        "status": "run",
+        "output": "PASS: 963 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.\n"
+      },
+      {
+        "name": "handlers_test_information",
+        "status": "run",
+        "output": "PASS: 628 checks; synthetic XML/profile state; no target execution\n"
+      },
+      {
+        "name": "handlers_test_presence",
+        "status": "run",
+        "output": "PASS: 288 synthetic checks; 18 handler bodies; original execution none\n"
+      },
+      {
+        "name": "hashing_test_hash",
+        "status": "run",
+        "output": "6899 deterministic hash checks PASS\n"
+      },
+      {
+        "name": "hooks_test_crypt_query",
+        "status": "run",
+        "output": "PASS crypt-query UTF16/null/type/case/suffix selection checks=1538\n"
+      },
+      {
+        "name": "hooks_test_setup_plan",
+        "status": "run",
+        "output": "PASS source hook stage-only plan, optional surfaces, partial create/queue and missing target checks=76; no native engine executed\n"
+      },
+      {
+        "name": "licensing_test_key_store",
+        "status": "run",
+        "output": "PASS key store header/CBC/XML/identity/no-overwrite\n"
+      },
+      {
+        "name": "licensing_test_license",
+        "status": "run",
+        "output": "PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)\n"
+      },
+      {
+        "name": "paths_test_path",
+        "status": "run",
+        "output": "328 deterministic path checks PASS\n"
+      },
+      {
+        "name": "paths_test_module_relative",
+        "status": "run",
+        "output": "PASS module sibling checks=2137 gulrak=554 preserved_native=508; Windows-specific cases require native execution\n"
+      },
+      {
+        "name": "profiles_test_online",
+        "status": "run",
+        "output": "online: 12758 checks passed (synthetic mocks only)\n"
+      },
+      {
+        "name": "protocol_test_integration",
+        "status": "run",
+        "output": "PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed\n"
+      },
+      {
+        "name": "protocol_test_messages",
+        "status": "run",
+        "output": "PASS: 831 checks; synthetic XML/crypto/queue only; no sockets or target execution\n"
+      },
+      {
+        "name": "runtime_test_startup",
+        "status": "run",
+        "output": "PASS: 155 checks; synthetic input/console only; no real environment writes or UI\n"
+      },
+      {
+        "name": "time_test_calendar",
+        "status": "run",
+        "output": "PASS: 31760 calendar arithmetic checks; no original execution or OS time calls\n"
+      },
+      {
+        "name": "tokens_test_token",
+        "status": "run",
+        "output": "579 synthetic token checks PASS\n"
+      },
+      {
+        "name": "xml_test_printer",
+        "status": "run",
+        "output": "PASS: 277 checks; concrete recovered serializer; synthetic readers/random only\n"
+      },
+      {
+        "name": "xml_test_reader",
+        "status": "run",
+        "output": "PASS: 352 actual XML reader checks; selected upstream compatibility source, original target not executed\n"
+      },
+      {
+        "name": "runtime_tcp_and_persistence",
+        "status": "run",
+        "output": "PASS full runtime integration checks=17; concurrent clients=8; profile requests=160\n"
+      },
+      {
+        "name": "startup_configuration_profile_compat",
+        "status": "run",
+        "output": "PASS startup compatibility checks=281; absent/empty/root/partial/override/empty-fields; complete profile/settings/game responses\n"
+      },
+      {
+        "name": "test_avatar_effects",
+        "status": "run",
+        "output": "PASS avatar source effects checks=7755; real provider ABI NOT_RUN\n"
+      },
+      {
+        "name": "test_transport_pipeline",
+        "status": "run",
+        "output": "Real TCP backpressure: PASS on Linux; Windows IOCP: NOT_RUN\nPASS transport pipeline checks=41; literal packet session oracle + actual owned Asio transport\n"
+      },
+      {
+        "name": "test_path_effects",
+        "status": "run",
+        "output": "PASS path effects checks=71; pure source Windows lexical bodies + actual platform-selected callers; no native Windows IO/ABI acceptance\n"
+      },
+      {
+        "name": "test_path_resolution",
+        "status": "run",
+        "output": "POSIX directory-link semantic fixture: PASS; Windows native path/ABI: NOT_RUN\nPASS path resolution checks=26\n"
+      },
+      {
+        "name": "test_configuration_orchestration",
+        "status": "run",
+        "output": "PASS shared configuration orchestration checks=31; source order + actual Application overlays/profile/filesystem/environment failure boundaries; no original binary execution\n"
+      },
+      {
+        "name": "test_startup_phases",
+        "status": "run",
+        "output": "PASS startup phases checks=66; source predicate, actual IO/provider ordering, extra-phase completion, cancellation/failure. Windows provider/hook boundary NOT_RUN unless native fixture executed\n"
+      },
+      {
+        "name": "test_brownfield_contracts",
+        "status": "run",
+        "output": "PASS HF19-derived field ownership/nesting/comment contracts checks=9; no claim of all-HF19 equivalence\n"
+      },
+      {
+        "name": "test_supplied_config",
+        "status": "run",
+        "output": "PASS supplied CFG parser/bindings checks=16; Online UNSUPPORTED; observed HF19 QueryImage/GrantAchievement child shapes rejected; game NOT_RUN\n"
+      },
+      {
+        "name": "test_configuration_profile",
+        "status": "run",
+        "output": "PASS config/profile checks=53; full 14-field response; legacy reproduced; corrected config/default parity; override and non-sensitive diagnostics\n"
+      },
+      {
+        "name": "test_asio_transport",
+        "status": "run",
+        "output": "Native accept fault regression injected=3 platform=Linux; Win32 boundary NOT_RUN\nAsio fault campaign attempts=1 terminal=1 dispatch=0 rearm=0 recovery=0\nPASS Asio transport checks=59; fragmentation/FIFO/300k-write/fault recovery/cancel/repeated lifecycle; native IOCP requires Windows\n"
+      },
+      {
+        "name": "test_filesystem_config",
+        "status": "run",
+        "output": "PASS filesystem/config integration checks=52; Unicode module/override/cwd isolation/no-config/profile/native binary IO\n"
+      },
+      {
+        "name": "test_runtime_migration",
+        "status": "run",
+        "output": "PASS FIX13 rollback checks=80; disk_diagnostics=1\n"
+      },
+      {
+        "name": "test_original_compat",
+        "status": "run",
+        "output": "PASS original-package compatibility counterexamples=9; not original binary execution\n"
+      },
+      {
+        "name": "golden_protocol_tool_selftests",
+        "status": "run",
+        "output": "GOLDEN_PROTOCOL_TOOL_SELFTEST: PASS\n"
+      },
+      {
+        "name": "test_golden_pipeline",
+        "status": "run",
+        "output": "PASS real five-stage Golden orchestration SYNTHETIC cases=14; Windows DLL execution NOT_RUN\n"
+      },
+      {
+        "name": "test_golden_link_policy",
+        "status": "run",
+        "output": "MSVC_SHIPPING_LINK_POLICY_SELF_TEST: PASS (21/21)\n"
+      }
+    ],
+    "core_archive_sha256": "af71a81ccb063212e19a29b26ee3ee5287622ee06d2d910a9cfd65b476070045",
+    "warnings": [],
+    "native_Windows_DLL_provider": "NOT_RUN"
+  }
+}

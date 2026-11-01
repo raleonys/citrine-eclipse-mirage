@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "functions": [
+    {
+      "original": "anadius-encoding-source/encoding_tests.cpp",
+      "current": "tests/unit/paths/test_encoding.cpp",
+      "function": "synthetic",
+      "identical_body_sha256": "0da4416dc960f3b1d4da78fd1b7b4d197f9d8547a2e4f673f5d51d1dd2826752"
+    },
+    {
+      "original": "anadius-status-source/status_tests.cpp",
+      "current": "tests/unit/files/test_status.cpp",
+      "function": "mapping",
+      "identical_body_sha256": "e0a6dfabbf33f7c61b4b7107ce75a175dc59b1e955362136116b5b45ac1e47d9"
+    },
+    {
+      "original": "anadius-status-source/status_tests.cpp",
+      "current": "tests/unit/files/test_status.cpp",
+      "function": "route",
+      "identical_body_sha256": "c8df60446192be86e391177900902103083df5627cd8b5287a8a066a2815519b"
+    }
+  ],
+  "native_sections": "retained but Windows-only; NOT_RUN on Linux",
+  "source_digest": "2ac1916047aa4a33757eea2e09527d6ee9b9cbd4f2d7445a2bb64527a80c71d5"
+}

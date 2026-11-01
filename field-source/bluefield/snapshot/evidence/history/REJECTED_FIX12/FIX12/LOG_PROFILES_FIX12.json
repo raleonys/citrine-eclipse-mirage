@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "profiles": [
+    {
+      "profile": "PRODUCTION",
+      "disk_macro": "0",
+      "cmake_configure": "NOT_RUN_CMAKE_UNAVAILABLE",
+      "profile_definition_source_check": "PASS",
+      "actual_logger_compile_and_execute": "PASS",
+      "disk_observed": false,
+      "disabled_logger_no_file_io_symbols": "PASS",
+      "scope": "Linux static CMake profile definitions + real logger; Windows MSVC/CRT NOT_RUN"
+    },
+    {
+      "profile": "DEBUG",
+      "disk_macro": "1",
+      "cmake_configure": "NOT_RUN_CMAKE_UNAVAILABLE",
+      "profile_definition_source_check": "PASS",
+      "actual_logger_compile_and_execute": "PASS",
+      "disk_observed": true,
+      "disabled_logger_no_file_io_symbols": "NOT_APPLICABLE",
+      "scope": "Linux static CMake profile definitions + real logger; Windows MSVC/CRT NOT_RUN"
+    },
+    {
+      "profile": "NATIVE",
+      "disk_macro": "0",
+      "cmake_configure": "NOT_RUN_CMAKE_UNAVAILABLE",
+      "profile_definition_source_check": "PASS",
+      "actual_logger_compile_and_execute": "PASS",
+      "disk_observed": false,
+      "disabled_logger_no_file_io_symbols": "PASS",
+      "scope": "Linux static CMake profile definitions + real logger; Windows MSVC/CRT NOT_RUN"
+    },
+    {
+      "profile": "CRT",
+      "disk_macro": "0",
+      "cmake_configure": "NOT_RUN_CMAKE_UNAVAILABLE",
+      "profile_definition_source_check": "PASS",
+      "actual_logger_compile_and_execute": "PASS",
+      "disk_observed": false,
+      "disabled_logger_no_file_io_symbols": "PASS",
+      "scope": "Linux static CMake profile definitions + real logger; Windows MSVC/CRT NOT_RUN"
+    },
+    {
+      "profile": "DIAGNOSTIC",
+      "disk_macro": "1",
+      "cmake_configure": "NOT_RUN_CMAKE_UNAVAILABLE",
+      "profile_definition_source_check": "PASS",
+      "actual_logger_compile_and_execute": "PASS",
+      "disk_observed": true,
+      "disabled_logger_no_file_io_symbols": "NOT_APPLICABLE",
+      "scope": "Linux static CMake profile definitions + real logger; Windows MSVC/CRT NOT_RUN"
+    }
+  ],
+  "concurrent_debug_logging": {
+    "status": "PASS",
+    "processes": 4,
+    "attempted_events": 48000,
+    "bytes_at_bound": 262128,
+    "bounded": true,
+    "complete_safe_event_lines": true,
+    "existing_oversize_log_preserved": true
+  },
+  "source_digest": "4c8131b903dcbf1983fe15fd06395f4a9dd897d199192eb618ed732ca5cfa654"
+}

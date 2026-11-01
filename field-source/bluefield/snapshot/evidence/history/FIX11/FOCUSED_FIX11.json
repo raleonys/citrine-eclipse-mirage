@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "scope": "focused new-code smoke before final metadata; final full-source acceptance is separate",
+  "outputs": {
+    "test_asio_transport": "Asio fault campaign attempts=1 terminal=1 dispatch=1 rearm=0 recovery=0\nPASS Asio transport checks=53; fragmentation/FIFO/300k-write/fault recovery/cancel/repeated lifecycle; native IOCP requires Windows\n",
+    "test_module_relative": "PASS module sibling checks=2137 gulrak=554 preserved_native=508; Windows-specific cases require native execution\n",
+    "test_filesystem_config": "PASS filesystem/config integration checks=47; Unicode module/override/cwd isolation/no-config/profile/native binary IO\n"
+  }
+}

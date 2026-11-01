@@ -1,0 +1,34 @@
+[
+  {
+    "packet_file": "anadius-all-functions.pseudo.c",
+    "packet_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "source_line": 21341,
+    "function": "0192d0",
+    "slice_file": "0192d0.pseudo.c",
+    "slice_sha256": "76a88dbac3e02d83d84d3b00a2fb806a32e832b659426156f13d72b94d3a1a53"
+  },
+  {
+    "packet_file": "anadius-all-functions.asm.txt",
+    "packet_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "source_line": 26321,
+    "function": "0192d0",
+    "slice_file": "0192d0.asm.txt",
+    "slice_sha256": "96c74e75b641e260f8d1c21a75f88e1e11a895f6162fcaedae776bca3bc4c049"
+  },
+  {
+    "packet_file": "anadius-all-functions.pseudo.c",
+    "packet_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "source_line": 17041,
+    "function": "0145d0",
+    "slice_file": "0145d0.pseudo.c",
+    "slice_sha256": "2cc1123281f3ef093a9e99a4cb44ac232ea70d3197a415264a0a4c660553f9d3"
+  },
+  {
+    "packet_file": "anadius-all-functions.asm.txt",
+    "packet_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "source_line": 21156,
+    "function": "0145d0",
+    "slice_file": "0145d0.asm.txt",
+    "slice_sha256": "574d210c0b3745a2b066df44bfddc73346a56707f91a682d39064aa362ceae8f"
+  }
+]

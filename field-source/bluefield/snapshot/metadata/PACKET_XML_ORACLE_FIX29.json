@@ -1,0 +1,29 @@
+{
+  "archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "role": "TEST_ONLY_PACKET_SELECTED_COMPATIBILITY_SOURCE_NOT_RECOVERED_ORIGINAL_DLL",
+  "files": [
+    {
+      "origin": "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp",
+      "destination": "tests/support/xml/packet/tinyxml2.cpp",
+      "original_sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554",
+      "current_sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554",
+      "production_linked": false
+    },
+    {
+      "origin": "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.h",
+      "destination": "tests/support/xml/packet/tinyxml2.h",
+      "original_sha256": "aed790f764e4663f6cb99839648dd642c7e7a730d12c67d3ab7ca075f0ac67c0",
+      "current_sha256": "aed790f764e4663f6cb99839648dd642c7e7a730d12c67d3ab7ca075f0ac67c0",
+      "production_linked": false
+    },
+    {
+      "origin": "anadius-xml-reader-source/vendor/tinyxml2/LICENSE.txt",
+      "destination": "tests/support/xml/packet/LICENSE.txt",
+      "original_sha256": "9332252e9b9e46db8285d4a3f0bf25f139bf1dca6781b956d57f2302efca6432",
+      "current_sha256": "9332252e9b9e46db8285d4a3f0bf25f139bf1dca6781b956d57f2302efca6432",
+      "production_linked": false
+    }
+  ],
+  "adaptation": "Archived tinyxml2.cpp/h/license bytes copied exactly. Only a separate owned test TU privately renames namespace and global depth symbol; archived files themselves unchanged. Source header already has documented depth=100 alteration.",
+  "limit": "Source packet selected tinyxml2 11.0.0 compatibility parser, not proof of original binary release. Current upstream security/entity fixes are retained; differential domain is ordinary structural XML/depth/error precedence."
+}

@@ -1,0 +1,41 @@
+{
+  "schema": "preloader_l.filesystem_fix11.v1",
+  "parent_archive_sha256": "8d1efc5957f55132c0dddbd2bad9c9479d4d6f99f3bcad37caba056ab607a677",
+  "upstream": {
+    "name": "gulrak/filesystem",
+    "version": "1.5.17",
+    "commit": "3812f8a6f31ed67d32272ac33fe2b85c6b2c947e",
+    "reference_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+    "files": 8,
+    "local_patches": [],
+    "brownfield_application_cpp_copied": false
+  },
+  "active_paths": [
+    "owned module -> surge.cfg",
+    "base config -> adjacent surge_override.cfg"
+  ],
+  "mismatch_policy": "preserve FIX10 raw native result, unlike HF19 fail-closed mismatch",
+  "unchanged": [
+    "native IO/status/error-code/code-page/UTF-16",
+    "source Windows lexical algorithms",
+    "profile/cache/avatar/provider and config defaults/order",
+    "C exports and third-party Asio/PEGTL/MinHook/TinyXML2 pins"
+  ],
+  "additional_QA_repair": "unexpected Asio dispatch exception clears ready, closes listener and stops io; no automatic recovery claim",
+  "tests": {
+    "linux_path_checks": 2137,
+    "unicode_config_checks": 47,
+    "cpp_groups": 30,
+    "tool_groups": 3,
+    "Asio_campaign": "bounded arbitrary fault attempts; result-specific counts",
+    "Windows": "NOT_RUN"
+  },
+  "owned_files": {
+    "src/paths/module_relative.cpp": "107579f0262557db2771212e2360daa45ad247799136ece4eb1280f3ad3db2ca",
+    "src/paths/module_relative.hpp": "c0ed666a01e331e7ff919d6e70ded2de146d04959f4501ee35eeb7e003b903c8",
+    "src/windows/dll_entry.cpp": "761c379b8b6b2027c0bc80ae601f16c2292895281f1614db863196344f48473e",
+    "src/application/application.cpp": "04b4bc85dd432d4183207d272a9124d58b699f8b69f8216f099fe23d8193260e",
+    "src/transport/service.cpp": "df6cc7bc4bcb87fbf2cf4ac1d86d6f900135690fb584ef3bcbfb11118a4539d6",
+    "src/transport/service.hpp": "3ae8b35bd9d75f880476e13eec13e00b8a23bb5f7dec5a2d9c0e4c02229bad8f"
+  }
+}

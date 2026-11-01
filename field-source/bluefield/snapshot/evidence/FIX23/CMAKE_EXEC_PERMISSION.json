@@ -1,0 +1,17 @@
+{
+  "scope": "Generated owned test ELF outputs only; bytes unchanged",
+  "repairs": [
+    {
+      "file": "/workspace/scratch/2072698c927d/fix23_qa/cmake_release/hooks_test_setup_plan",
+      "sha256": "c5f7fb58c438b18b347bfbbac25cb63a5608c0ae6114c656159ec975b39332eb",
+      "before_mode": "0o644",
+      "after_mode": "0o755"
+    },
+    {
+      "file": "/workspace/scratch/2072698c927d/fix23_qa/cmake_release/test_startup_phases",
+      "sha256": "3952300e598f95acf761c3beec08d21e17a4024ede41e3108478e856782715b8",
+      "before_mode": "0o644",
+      "after_mode": "0o755"
+    }
+  ]
+}

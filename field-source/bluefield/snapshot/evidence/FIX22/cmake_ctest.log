@@ -1,0 +1,93 @@
+Test project /workspace/scratch/2072698c927d/fix22_qa/cmake_release
+      Start  1: hooks_test_registry_source
+ 1/44 Test  #1: hooks_test_registry_source ..............   Passed    0.00 sec
+      Start  2: hooks_test_registry_wait
+ 2/44 Test  #2: hooks_test_registry_wait ................   Passed    0.10 sec
+      Start  3: paths_test_encoding
+ 3/44 Test  #3: paths_test_encoding .....................   Passed    0.00 sec
+      Start  4: files_test_status
+ 4/44 Test  #4: files_test_status .......................   Passed    0.00 sec
+      Start  5: libraries_test_libraries
+ 5/44 Test  #5: libraries_test_libraries ................   Passed    0.00 sec
+      Start  6: configuration_test_hash_table
+ 6/44 Test  #6: configuration_test_hash_table ...........   Passed    0.08 sec
+      Start  7: configuration_test_parser
+ 7/44 Test  #7: configuration_test_parser ...............   Passed    0.00 sec
+      Start  8: configuration_test_pegtl_differential
+ 8/44 Test  #8: configuration_test_pegtl_differential ...   Passed    0.08 sec
+      Start  9: configuration_test_state
+ 9/44 Test  #9: configuration_test_state ................   Passed    0.00 sec
+      Start 10: crypto_test_crypto
+10/44 Test #10: crypto_test_crypto ......................   Passed    0.05 sec
+      Start 11: handlers_test_content
+11/44 Test #11: handlers_test_content ...................   Passed    0.00 sec
+      Start 12: handlers_test_information
+12/44 Test #12: handlers_test_information ...............   Passed    0.00 sec
+      Start 13: handlers_test_presence
+13/44 Test #13: handlers_test_presence ..................   Passed    0.00 sec
+      Start 14: hashing_test_hash
+14/44 Test #14: hashing_test_hash .......................   Passed    0.05 sec
+      Start 15: hooks_test_crypt_query
+15/44 Test #15: hooks_test_crypt_query ..................   Passed    0.00 sec
+      Start 16: hooks_test_setup_plan
+16/44 Test #16: hooks_test_setup_plan ...................   Passed    0.00 sec
+      Start 17: licensing_test_key_store
+17/44 Test #17: licensing_test_key_store ................   Passed    0.00 sec
+      Start 18: licensing_test_license
+18/44 Test #18: licensing_test_license ..................   Passed    0.00 sec
+      Start 19: paths_test_path
+19/44 Test #19: paths_test_path .........................   Passed    0.00 sec
+      Start 20: paths_test_module_relative
+20/44 Test #20: paths_test_module_relative ..............   Passed    0.00 sec
+      Start 21: profiles_test_online
+21/44 Test #21: profiles_test_online ....................   Passed    0.00 sec
+      Start 22: protocol_test_integration
+22/44 Test #22: protocol_test_integration ...............   Passed    0.00 sec
+      Start 23: protocol_test_messages
+23/44 Test #23: protocol_test_messages ..................   Passed    0.00 sec
+      Start 24: runtime_test_startup
+24/44 Test #24: runtime_test_startup ....................   Passed    0.00 sec
+      Start 25: time_test_calendar
+25/44 Test #25: time_test_calendar ......................   Passed    0.00 sec
+      Start 26: tokens_test_token
+26/44 Test #26: tokens_test_token .......................   Passed    0.00 sec
+      Start 27: xml_test_printer
+27/44 Test #27: xml_test_printer ........................   Passed    0.00 sec
+      Start 28: xml_test_reader
+28/44 Test #28: xml_test_reader .........................   Passed    0.00 sec
+      Start 29: runtime_tcp_and_persistence
+29/44 Test #29: runtime_tcp_and_persistence .............   Passed    0.06 sec
+      Start 30: startup_configuration_profile_compat
+30/44 Test #30: startup_configuration_profile_compat ....   Passed    0.02 sec
+      Start 31: test_path_effects
+31/44 Test #31: test_path_effects .......................   Passed    0.00 sec
+      Start 32: test_path_resolution
+32/44 Test #32: test_path_resolution ....................   Passed    0.00 sec
+      Start 33: test_configuration_orchestration
+33/44 Test #33: test_configuration_orchestration ........   Passed    0.01 sec
+      Start 34: test_startup_phases
+34/44 Test #34: test_startup_phases .....................   Passed    0.16 sec
+      Start 35: test_brownfield_contracts
+35/44 Test #35: test_brownfield_contracts ...............   Passed    0.01 sec
+      Start 36: test_supplied_config
+36/44 Test #36: test_supplied_config ....................   Passed    0.01 sec
+      Start 37: test_configuration_profile
+37/44 Test #37: test_configuration_profile ..............   Passed    0.01 sec
+      Start 38: test_asio_transport
+38/44 Test #38: test_asio_transport .....................   Passed    3.38 sec
+      Start 39: test_filesystem_config
+39/44 Test #39: test_filesystem_config ..................   Passed    0.01 sec
+      Start 40: test_runtime_migration
+40/44 Test #40: test_runtime_migration ..................   Passed    0.05 sec
+      Start 41: test_original_compat
+41/44 Test #41: test_original_compat ....................   Passed    0.07 sec
+      Start 42: golden_protocol_tool_selftests
+42/44 Test #42: golden_protocol_tool_selftests ..........   Passed    0.08 sec
+      Start 43: test_golden_pipeline
+43/44 Test #43: test_golden_pipeline ....................   Passed    8.10 sec
+      Start 44: test_golden_link_policy
+44/44 Test #44: test_golden_link_policy .................   Passed    0.03 sec
+
+100% tests passed out of 44
+
+Total Test time (real) =  12.43 sec

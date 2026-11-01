@@ -1,0 +1,325 @@
+--- FIX29/src/files/atomic_io.cpp
++++ FIX30/src/files/atomic_io.cpp
+@@ -53,7 +53,7 @@
+ #endif
+    return;
+   }
+-  throw std::runtime_error("atomic temporary quota");
++  throw std::system_error(std::make_error_code(std::errc::file_exists),"atomic temporary names exhausted");
+  }
+  Stage(const fs::path& target,std::string_view bytes):Stage(target){
+   try{write(bytes);finish();}catch(...){close_noexcept();cleanup();throw;}
+--- FIX29/tests/integration/test_ticket_output.cpp
++++ FIX30/tests/integration/test_ticket_output.cpp
+@@ -108,9 +108,9 @@
+ }
+ #if defined(__linux__)
+ static void controlled_failures(const fs::path& root){
+-    for(bool first:{false,true})for(bool second:{false,true}){
++    for(auto opening_fault:{Fault::open,Fault::collision})for(bool first:{false,true})for(bool second:{false,true}){
+         Fixture v(root/(std::string(first?"w":"n")+(second?"w":"n")));v.effects.first_wine=first;v.effects.second_wine=second;put(v.ticket(),"OLD-TICKET");
+-        {FaultScope inject(Fault::open);try{v.run();check(false,"open failure must end via source exit");}catch(const Exit& e){check(e.code==-1,"failure source exit code");}check(open_attempts==1,"open-error branch was controlled");}
++        {FaultScope inject(opening_fault);try{v.run();check(false,"open failure must end via source exit");}catch(const Exit& e){check(e.code==-1,"failure source exit code");}check(open_attempts==(opening_fault==Fault::collision?100u:1u),"open-error branch and retained retry count were controlled");}
+         const std::vector<std::string> expected=first?std::vector<std::string>{"Wine detected",second?"Wine detected":"Token required"}:std::vector<std::string>{second?"Wine detected":"Token required"};
+         check(v.effects.dialogs==expected,"source false-result fallback dialog");check(v.effects.wine_calls==2,"source false-result wine predicate order");check(v.effects.trace.back()=="exit:-1","fallback must precede exit");check(get(v.ticket())=="OLD-TICKET"&&no_stages(v.ticket().parent_path()),"open failure preserves ticket");
+     }
+@@ -119,9 +119,9 @@
+         {FaultScope inject(fault_kind);try{v.run();}catch(const std::system_error&){failed=true;}}
+         check(failed,"post-open IO must propagate");check(v.effects.dialogs.empty(),"post-open failure must not become initial false fallback");check(get(v.ticket())=="OLD"&&no_stages(v.ticket().parent_path()),"post-open failure preserves target and cleans stage");
+     }
+-    for(auto fault_kind:{Fault::allocation,Fault::recovery,Fault::collision}){
++    for(auto fault_kind:{Fault::allocation,Fault::recovery}){
+         Fixture v(root/"non_io");bool propagated=false;
+-        {FaultScope inject(fault_kind);try{(void)v.bound.write_ticket_03c1d0(v.ticket().u16string(),"payload");}catch(const std::bad_alloc&){propagated=fault_kind==Fault::allocation;}catch(const preloader_l::PersistenceRecoveryRequired&){propagated=fault_kind==Fault::recovery;}catch(const std::runtime_error&){propagated=fault_kind==Fault::collision;}if(fault_kind==Fault::collision)check(open_attempts==100,"retained staging budget");}
++        {FaultScope inject(fault_kind);try{(void)v.bound.write_ticket_03c1d0(v.ticket().u16string(),"payload");}catch(const std::bad_alloc&){propagated=fault_kind==Fault::allocation;}catch(const preloader_l::PersistenceRecoveryRequired&){propagated=fault_kind==Fault::recovery;}}
+         check(propagated,"non-system open error masked");check(no_stages(v.ticket().parent_path()),"non-system failure stage leak");
+     }
+     Fixture v(root/"poison");put(v.ticket(),"OLD");std::unique_ptr<f::Output> output;
+--- FIX29/tests/integration/test_atomic_stage_collision.cpp
++++ FIX30/tests/integration/test_atomic_stage_collision.cpp
+@@ -0,0 +1,81 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/application/environment.hpp"
++#include "src/files/atomic_io.hpp"
++#include "src/files/binary_io.hpp"
++#include "tests/support/files/packet_binary_io.hpp"
++#include <chrono>
++#include <fstream>
++#include <iostream>
++#include <stdexcept>
++#include <system_error>
++#ifdef _WIN32
++#include <windows.h>
++#else
++#include <unistd.h>
++#endif
++namespace fs=std::filesystem;
++namespace current=preloader_l::files;
++namespace packet=preloader_l::test_packet_binary_io;
++static unsigned checks=0;
++static void check(bool ok,const char* why){++checks;if(!ok)throw std::runtime_error(why);}
++static void put(const fs::path& p,std::string_view text){fs::create_directories(p.parent_path());std::ofstream out(p,std::ios::binary);out.write(text.data(),text.size());check(bool(out),"fixture write failed");}
++static std::string get(const fs::path& p){std::ifstream in(p,std::ios::binary);return {std::istreambuf_iterator<char>(in),{}};}
++struct PacketOutput final:packet::Output {
++ std::vector<std::string>& trace;unsigned state;
++ PacketOutput(std::vector<std::string>& t,unsigned s):trace(t),state(s){}
++ ~PacketOutput(){trace.push_back("destroy");}
++ unsigned initial_state()const override{trace.push_back("initial");return state;}
++ void write_03be80(std::string_view)override{trace.push_back("write");}
++ void close_03ae70()override{trace.push_back("close");}
++};
++struct PacketFactory final:packet::Factory {
++ std::vector<std::string> trace;unsigned state=2;
++ std::unique_ptr<packet::Input> open_input_039f70(const packet::Path&,unsigned,unsigned)override{throw std::logic_error("unused input");}
++ std::unique_ptr<packet::Output> open_output_03a1a0(const packet::Path&,unsigned mode,unsigned share)override{check(mode==0x20&&share==0x40,"packet mode/share");trace.push_back("open");return std::make_unique<PacketOutput>(trace,state);}
++};
++struct TracedOutput final:current::Output {
++ std::unique_ptr<current::Output> real;std::vector<std::string>& trace;
++ TracedOutput(std::unique_ptr<current::Output> r,std::vector<std::string>& t):real(std::move(r)),trace(t){}
++ ~TracedOutput(){trace.push_back("destroy");}
++ unsigned initial_state()const override{trace.push_back("initial");return real->initial_state();}
++ void write_03be80(std::string_view value)override{trace.push_back("write");real->write_03be80(value);}
++ void close_03ae70()override{trace.push_back("close");real->close_03ae70();}
++};
++struct TracedFactory final:current::Factory {
++ current::NativeFactory native;std::vector<std::string> trace;
++ explicit TracedFactory(const preloader_l::RuntimePaths& owner):native(owner){}
++ std::unique_ptr<current::Input> open_input_039f70(const current::Path&,unsigned,unsigned)override{throw std::logic_error("unused input");}
++ std::unique_ptr<current::Output> open_output_03a1a0(const current::Path& p,unsigned mode,unsigned share)override{trace.push_back("open");return std::make_unique<TracedOutput>(native.open_output_03a1a0(p,mode,share),trace);}
++};
++int main(){try{
++ auto root=fs::temp_directory_path()/("preloader_l_collision_"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
++ struct Cleanup{fs::path p;~Cleanup(){std::error_code e;fs::remove_all(p,e);}}cleanup{root};
++ auto owner=preloader_l::RuntimePaths::from_system(root/"module/preloader_l.dll",root/"game/game.exe",root/"local",root/"program");
++#ifdef _WIN32
++ const auto pid=GetCurrentProcessId();
++#else
++ const auto pid=getpid();
++#endif
++ const auto target=owner.data()/"output.bin";put(target,"OLD");
++ auto stage=[&](unsigned n){return target.parent_path()/(".preloader_l-"+std::to_string(pid)+"-"+std::to_string(n)+".tmp");};
++ auto occupy=[&](unsigned begin,unsigned end){for(unsigned n=begin;n<end;++n)put(stage(n),"PREEXISTING-"+std::to_string(n));};
++ // This executable has not used any AtomicFileWriter yet, so its private
++ // sequence starts at zero. Real exclusive-create collisions, no syscall mock.
++ occupy(0,100);bool failed=false;
++ try{preloader_l::AtomicFileWriter out(target,&owner);}catch(const std::system_error& e){failed=true;check(e.code()==std::errc::file_exists,"exhaustion must identify existing stage names");}
++ check(failed,"initial stage exhaustion escaped IO error classification");check(get(target)=="OLD","failed direct setup changed target");
++ occupy(100,200);current::NativeFactory native(owner);
++ {auto stream=native.open_output_03a1a0(target.u16string(),0x20,0x40);check(stream->initial_state()==2,"collision setup must report source failbit2");}
++ occupy(200,300);PacketFactory expected;TracedFactory actual(owner);
++ const auto expected_result=packet::write_binary_03c1d0(target.u16string(),"PAYLOAD",expected);
++ const auto actual_result=current::write_binary_03c1d0(target.u16string(),"PAYLOAD",actual);
++ check(!expected_result&&actual_result==expected_result,"real collision output must match packet initial-failure false branch");
++ check(actual.trace==expected.trace,"initial failure unexpectedly wrote/closed payload");check(get(target)=="OLD","failed binary output changed target");
++ // A free final attempt still succeeds: the retained budget is not shortened.
++ occupy(300,399);expected.trace.clear();expected.state=0;actual.trace.clear();
++ check(current::write_binary_03c1d0(target.u16string(),"NEW",actual)==packet::write_binary_03c1d0(target.u16string(),"NEW",expected),"last permitted attempt lost success");
++ check(actual.trace==expected.trace&&get(target)=="NEW","success source trace or commit bytes differ");
++ check(!fs::exists(stage(399)),"committed owned stage leaked");
++ for(unsigned n=0;n<399;++n)check(get(stage(n))=="PREEXISTING-"+std::to_string(n),"unowned collision file altered");
++ std::cout<<"PASS real stage collision/source caller checks="<<checks<<";399 preexisting files preserved; Windows execution NOT_RUN unless run there\n";return 0;
++}catch(const std::exception& e){std::cerr<<"FAIL "<<e.what()<<'\n';return 1;}}
+--- FIX29/tests/support/files/packet_binary_io.hpp
++++ FIX30/tests/support/files/packet_binary_io.hpp
+@@ -0,0 +1,47 @@
++#pragma once
++#include "src/configuration/state.hpp"
++#include <cstdint>
++#include <memory>
++#include <span>
++#include <string>
++
++namespace preloader_l::test_packet_binary_io {
++using Path=configuration::Path;
++enum class Seek:std::uint32_t {begin=0,end=2};
++// Stream state/exception behavior belongs to the implementation. The recovered
++// application bodies only inspect the initial state and explicitly close.
++class Input {
++public:
++    virtual ~Input()=default;
++    virtual std::uint32_t initial_state()const=0;
++    virtual void seek_03b610(std::int64_t offset,Seek)=0;
++    virtual std::uint64_t position_sum_03ba50()=0;
++    virtual std::int32_t peek_043790()=0;
++    virtual std::size_t read_03b2a0(std::span<std::uint8_t>)=0;
++    virtual void close_03ae70()=0;
++};
++class Output {
++public:
++    virtual ~Output()=default;
++    virtual std::uint32_t initial_state()const=0;
++    virtual void write_03be80(std::string_view)=0;
++    virtual void close_03ae70()=0;
++};
++class Factory {
++public:
++    virtual ~Factory()=default;
++    virtual std::unique_ptr<Input> open_input_039f70(const Path&,std::uint32_t mode,std::uint32_t share)=0;
++    virtual std::unique_ptr<Output> open_output_03a1a0(const Path&,std::uint32_t mode,std::uint32_t share)=0;
++};
++std::string read_binary_03b3f0(const Path&,Factory&);
++bool write_binary_03c1d0(const Path&,std::string_view,Factory&);
++
++// Working Windows/LLVM-MinGW std::fstream compatibility backend. This is a
++// chosen source dependency, not the original MSVC CRT/filebuf implementation.
++// Default exception mask is zero. Sharing/locale/ABI equality is not established.
++class NativeFactory final:public Factory {
++public:
++    std::unique_ptr<Input> open_input_039f70(const Path&,std::uint32_t mode,std::uint32_t share) override;
++    std::unique_ptr<Output> open_output_03a1a0(const Path&,std::uint32_t mode,std::uint32_t share) override;
++};
++} // namespace preloader_l::test_packet_binary_io
+--- FIX29/tests/support/files/packet_binary_io.cpp
++++ FIX30/tests/support/files/packet_binary_io.cpp
+@@ -0,0 +1,28 @@
++#include "tests/support/files/packet_binary_io.hpp"
++#include <stdexcept>
++
++namespace preloader_l::test_packet_binary_io {
++std::string read_binary_03b3f0(const Path& path,Factory& factory) {
++    std::string result;
++    auto stream=factory.open_input_039f70(path,0x20,0x40);
++    if(!stream)throw std::invalid_argument("Input factory returned null (integration contract)");
++    if(stream->initial_state()!=0)return result;
++    stream->seek_03b610(0,Seek::end);
++    result.resize(stream->position_sum_03ba50(),'\0');
++    stream->seek_03b610(0,Seek::begin);
++    // Original ignores gcount and keeps the requested length on a short read.
++    (void)stream->read_03b2a0({reinterpret_cast<std::uint8_t*>(result.data()),result.size()});
++    stream->close_03ae70();
++    return result;
++}
++bool write_binary_03c1d0(const Path& path,std::string_view value,Factory& factory) {
++    auto stream=factory.open_output_03a1a0(path,0x20,0x40);
++    if(!stream)throw std::invalid_argument("Output factory returned null (integration contract)");
++    if(stream->initial_state()!=0)return false;
++    stream->write_03be80(value);
++    stream->close_03ae70();
++    // Success reflects the original initial-state branch, not a new post-write
++    // validation. A stream with exceptions enabled can still throw above.
++    return true;
++}
++} // namespace preloader_l::test_packet_binary_io
+--- FIX29/CMakeLists.txt
++++ FIX30/CMakeLists.txt
+@@ -112,7 +112,7 @@
+   target_link_libraries(test_startup_compat PRIVATE preloader_l_core)
+   add_test(NAME startup_configuration_profile_compat COMMAND test_startup_compat)
+   set_tests_properties(startup_configuration_profile_compat PROPERTIES TIMEOUT 60)
+-  foreach(source IN ITEMS tests/integration/test_xml_depth_source_oracle.cpp tests/integration/test_config2_source_oracle.cpp tests/integration/test_failure_diagnostics.cpp tests/integration/test_ticket_output.cpp tests/integration/test_avatar_effects.cpp tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
++  foreach(source IN ITEMS tests/integration/test_atomic_stage_collision.cpp tests/integration/test_xml_depth_source_oracle.cpp tests/integration/test_config2_source_oracle.cpp tests/integration/test_failure_diagnostics.cpp tests/integration/test_ticket_output.cpp tests/integration/test_avatar_effects.cpp tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
+     get_filename_component(name "${source}" NAME_WE)
+     add_executable(${name} "${source}")
+     if(name STREQUAL "test_config2_source_oracle")
+@@ -120,6 +120,9 @@
+     endif()
+     if(name STREQUAL "test_xml_depth_source_oracle")
+       target_sources(${name} PRIVATE tests/support/xml/packet_oracle.cpp)
++    endif()
++    if(name STREQUAL "test_atomic_stage_collision")
++      target_sources(${name} PRIVATE tests/support/files/packet_binary_io.cpp)
+     endif()
+     target_link_libraries(${name} PRIVATE preloader_l_core)
+     add_test(NAME ${name} COMMAND ${name})
+--- FIX29/metadata/BUILD_GRAPH.json
++++ FIX30/metadata/BUILD_GRAPH.json
+@@ -108,7 +108,8 @@
+     "tests/integration/test_ticket_output.cpp",
+     "tests/integration/test_config2_source_oracle.cpp",
+     "tests/integration/test_failure_diagnostics.cpp",
+-    "tests/integration/test_xml_depth_source_oracle.cpp"
++    "tests/integration/test_xml_depth_source_oracle.cpp",
++    "tests/integration/test_atomic_stage_collision.cpp"
+   ],
+   "windows_core": [
+     "src/windows/startup_platform.cpp",
+@@ -139,6 +140,9 @@
+     ],
+     "tests/integration/test_xml_depth_source_oracle.cpp": [
+       "tests/support/xml/packet_oracle.cpp"
++    ],
++    "tests/integration/test_atomic_stage_collision.cpp": [
++      "tests/support/files/packet_binary_io.cpp"
+     ]
+   },
+   "included_implementation_sources": {
+--- FIX29/scripts/qa/check_source.py
++++ FIX30/scripts/qa/check_source.py
+@@ -16,18 +16,18 @@
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX29 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX30 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX29.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX30.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX29 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX30 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX29 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX29')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX29.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX30 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX30')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX30.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX29 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX30 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -164,7 +164,7 @@
+  if graph['test_support_sources'].get('tests/integration/test_config2_source_oracle.cpp')!=['tests/support/configuration/packet_parser.cpp'] or 'target_sources(${name} PRIVATE tests/support/configuration/packet_parser.cpp)' not in cmake:fail(2,'source parser oracle test-only target binding lost')
+  entry=(root/'src/windows/dll_entry.cpp').read_text()
+  if entry.count('LogEvent::startup_failed')!=2 or entry.count('LogEvent::shutdown_failed')!=1:fail(2,'wrong native lifecycle failure event')
+- for row in json.loads((root/'metadata/TEST_ORACLE_ROLES_FIX29.json').read_text())['files']:
++ for row in json.loads((root/'metadata/TEST_ORACLE_ROLES_FIX30.json').read_text())['files']:
+   if sha(root/row['file'])!=row['sha256']:fail(2,'test role binding drift')
+  # D15: parse-time source depth via the sole pinned upstream implementation TU.
+  wrapper=(root/'src/xml/upstream_parser.cpp').read_text()
+@@ -179,6 +179,14 @@
+  for row in xml_oracle['files']:
+   if sha(root/row['destination'])!=row['current_sha256']:fail(2,'packet XML oracle bytes drift')
+  if graph['test_support_sources'].get('tests/integration/test_xml_depth_source_oracle.cpp')!=['tests/support/xml/packet_oracle.cpp'] or 'target_sources(${name} PRIVATE tests/support/xml/packet_oracle.cpp)' not in cmake:fail(2,'XML reference test-only target binding lost')
++ # D14/D21 initial stage collision classification; no catch broadening.
++ atomic=(root/'src/files/atomic_io.cpp').read_text()
++ if 'throw std::system_error(std::make_error_code(std::errc::file_exists),"atomic temporary names exhausted");' not in atomic or 'attempt<100' not in atomic:fail(2,'initial stage collision class/budget differs')
++ if 'catch(const std::exception&)' in (root/'src/files/native_io.cpp').read_text():fail(2,'initial output masks non-system failure')
++ binary_oracle=json.loads((root/'metadata/PACKET_BINARY_IO_ORACLE_FIX30.json').read_text())
++ for row in binary_oracle['files']:
++  if sha(root/row['destination'])!=row['current_sha256']:fail(2,'packet binary caller oracle bytes drift')
++ if graph['test_support_sources'].get('tests/integration/test_atomic_stage_collision.cpp')!=['tests/support/files/packet_binary_io.cpp'] or 'target_sources(${name} PRIVATE tests/support/files/packet_binary_io.cpp)' not in cmake:fail(2,'binary caller oracle test-only target lost')
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -269,7 +277,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX29.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX30.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX29/tests/tools/test_source_policy.py
++++ FIX30/tests/tools/test_source_policy.py
+@@ -89,6 +89,8 @@
+   modify('src/xml/upstream_parser.cpp',lambda b:b.replace(b'TINYXML2_MAX_ELEMENT_DEPTH=100;',b'TINYXML2_MAX_ELEMENT_DEPTH=500;'),'source parse depth removed')
+   modify('cmake/sources.cmake',lambda b:b.replace(b'src/xml/upstream_parser.cpp',b'third_party/tinyxml2/tinyxml2.cpp'),'source depth compile adapter bypassed')
+   modify('tests/support/xml/packet/tinyxml2.h',lambda b:b+b'\n// mutation\n','packet XML reference tamper')
++  modify('src/files/atomic_io.cpp',lambda b:b.replace(b'throw std::system_error(std::make_error_code(std::errc::file_exists),"atomic temporary names exhausted");',b'throw std::runtime_error("atomic temporary quota");'),'initial collision failure class regressed')
++  modify('tests/support/files/packet_binary_io.cpp',lambda b:b+b'\n// mutation\n','literal binary caller oracle tamper')
+   assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())

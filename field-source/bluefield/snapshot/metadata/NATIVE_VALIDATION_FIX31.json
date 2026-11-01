@@ -1,0 +1,13 @@
+{
+  "status": "NOT_RUN",
+  "not_counted_as_source_defects": true,
+  "scope": [
+    "Windows/MSVC DLL compile/link",
+    "Native hooks/CRT/environment/IOCP/provider",
+    "Actual Windows path/IO/error/ABI execution",
+    "Original DLL null factory exception behavior is unknown"
+  ],
+  "game_evidence": "NOT_REQUIRED_NON_RELEASE_NOT_RUN",
+  "source_closure_does_not_imply_native_PASS": true,
+  "changed_surface": "unload_guard.cpp whole-region budget refusal. Actual production body/model effects executed on Linux; native SDK/SEH/thread/DLL Windows tests NOT_RUN. MSVC real memory scanner fixture included for later execution."
+}

@@ -1,0 +1,13 @@
+{
+  "status": "FAIL",
+  "source_digest": "9e08d79a04dc77214be645a8b8af73db36fd35aa4067fb8e4d399eec290b4500",
+  "error": "==356==Can't open /proc/355/task for reading.\n==355==LeakSanitizer has encountered a fatal error.\n==355==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==355==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n",
+  "tests": [
+    {
+      "test": "configuration_test_hash_table",
+      "exit_code": 1,
+      "sha256": "8889267d6d7bb889895d7d7a85ba3de73cbad7b01254e30f0120239375f32f0e",
+      "output": "==356==Can't open /proc/355/task for reading.\n==355==LeakSanitizer has encountered a fatal error.\n==355==HINT: For debugging, try setting environment variable LSAN_OPTIONS=verbosity=1:log_threads=1\n==355==HINT: LeakSanitizer does not work under ptrace (strace, gdb, etc)\n"
+    }
+  ]
+}

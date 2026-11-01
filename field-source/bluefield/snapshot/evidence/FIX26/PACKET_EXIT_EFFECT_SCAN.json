@@ -1,0 +1,324 @@
+{
+  "archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "scanned_extensions": [
+    ".cpp",
+    ".hpp",
+    ".h"
+  ],
+  "scanned_file_count": 628,
+  "matches": [
+    {
+      "file": "anadius-crt-termination-source/termination_tests.cpp",
+      "line": 265,
+      "text": "    try {t::exit_05cdc0(10,h.state,h);} catch(const Exit&) {}",
+      "sha256": "fc3d2124ceccc55312632cd4b8a957e0ddd8c4f701ee73a74f275daff96464d9"
+    },
+    {
+      "file": "anadius-crt-termination-source/termination.cpp",
+      "line": 88,
+      "text": "void exit_05cdc0(std::uint32_t status,State& state,Effects& effects) {",
+      "sha256": "d06c707dfe7daefadba5d890f2b6745f75ba1c089743800462759df2f11c3e5d"
+    },
+    {
+      "file": "anadius-crt-termination-source/termination.hpp",
+      "line": 57,
+      "text": "void exit_05cdc0(std::uint32_t status,State&,Effects&);",
+      "sha256": "fabc301738df4612c11c194169e92c96d407e81d88eda792e726924eb9cab0fa"
+    },
+    {
+      "file": "anadius-dispatch-source/integration_tests.cpp",
+      "line": 112,
+      "text": "    [[noreturn]] void throw_no_response_02bcd0_04d228()override{throw NoResponseSignal{};}",
+      "sha256": "7749626b4a0acc3d1998c1401b549f3126f0719a9eacf8014e6dec556686a1e2"
+    },
+    {
+      "file": "anadius-dispatch-source/integration_tests.cpp",
+      "line": 142,
+      "text": "    [[noreturn]] void exit_05cdc0(std::int32_t)override{unused();}",
+      "sha256": "7749626b4a0acc3d1998c1401b549f3126f0719a9eacf8014e6dec556686a1e2"
+    },
+    {
+      "file": "anadius-dispatch-source/integration_tests.cpp",
+      "line": 143,
+      "text": "    [[noreturn]] void no_response_02bcd0_04d228()override{throw NoResponseSignal{};}",
+      "sha256": "7749626b4a0acc3d1998c1401b549f3126f0719a9eacf8014e6dec556686a1e2"
+    },
+    {
+      "file": "anadius-dispatch-source/integration_tests.cpp",
+      "line": 164,
+      "text": "    [[noreturn]] void invalid_message_02bd30_04d228()override{throw InvalidMessage{};}",
+      "sha256": "7749626b4a0acc3d1998c1401b549f3126f0719a9eacf8014e6dec556686a1e2"
+    },
+    {
+      "file": "anadius-event-queue-source/integration_tests.cpp",
+      "line": 83,
+      "text": "    [[noreturn]]void invalid_message_02bd30_04d228()override{unused();}",
+      "sha256": "255d7a94c53c9913293db03c34437bbae5e9aaef0fee5997a04f4f10264553f9"
+    },
+    {
+      "file": "anadius-file-source/license_files_tests.cpp",
+      "line": 47,
+      "text": "    [[noreturn]] void exit_05cdc0(std::int32_t)override{unused();}",
+      "sha256": "eec1e8fff558fa40940ee9720493d7cf571a030b6a485537372e05b16374f075"
+    },
+    {
+      "file": "anadius-file-source/license_files_tests.cpp",
+      "line": 48,
+      "text": "    [[noreturn]] void no_response_02bcd0_04d228()override{throw NoResponse{};}",
+      "sha256": "eec1e8fff558fa40940ee9720493d7cf571a030b6a485537372e05b16374f075"
+    },
+    {
+      "file": "anadius-file-source/license_files.cpp",
+      "line": 77,
+      "text": "[[noreturn]] void LicenseFiles::exit_05cdc0(std::int32_t code){remaining_.exit_05cdc0(code);std::terminate();}",
+      "sha256": "bc4d9250aeba6abf3feb55408f812a2f6efe58e79e9524bcf84d8972682db371"
+    },
+    {
+      "file": "anadius-file-source/license_files.cpp",
+      "line": 78,
+      "text": "[[noreturn]] void LicenseFiles::no_response_02bcd0_04d228(){remaining_.no_response_02bcd0_04d228();std::terminate();}",
+      "sha256": "bc4d9250aeba6abf3feb55408f812a2f6efe58e79e9524bcf84d8972682db371"
+    },
+    {
+      "file": "anadius-file-source/license_files.hpp",
+      "line": 38,
+      "text": "    [[noreturn]] void exit_05cdc0(std::int32_t)override;",
+      "sha256": "5984806f93a8a3d2980ece6e9da8504f79241109168a447408624077c4474340"
+    },
+    {
+      "file": "anadius-file-source/license_files.hpp",
+      "line": 39,
+      "text": "    [[noreturn]] void no_response_02bcd0_04d228()override;",
+      "sha256": "5984806f93a8a3d2980ece6e9da8504f79241109168a447408624077c4474340"
+    },
+    {
+      "file": "anadius-license-source/license_tests.cpp",
+      "line": 133,
+      "text": "    [[noreturn]] void exit_05cdc0(std::int32_t code) override { called(\"exit:\"+std::to_string(code)); throw Exit{code}; }",
+      "sha256": "04b17b1a2e424857c5709aca0aab60c9eb82eac3f5c7de87416f97e19a2f8c20"
+    },
+    {
+      "file": "anadius-license-source/license_tests.cpp",
+      "line": 134,
+      "text": "    [[noreturn]] void no_response_02bcd0_04d228() override { called(\"no_response\"); throw NoResponse{}; }",
+      "sha256": "04b17b1a2e424857c5709aca0aab60c9eb82eac3f5c7de87416f97e19a2f8c20"
+    },
+    {
+      "file": "anadius-license-source/license.cpp",
+      "line": 53,
+      "text": "    effects_.exit_05cdc0(code);",
+      "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+    },
+    {
+      "file": "anadius-license-source/license.cpp",
+      "line": 105,
+      "text": "    effects_.exit_05cdc0(-1);",
+      "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+    },
+    {
+      "file": "anadius-license-source/license.cpp",
+      "line": 108,
+      "text": "    if(state_.blocked_0a39c0) effects_.no_response_02bcd0_04d228();",
+      "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+    },
+    {
+      "file": "anadius-license-source/license.hpp",
+      "line": 55,
+      "text": "    [[noreturn]] virtual void exit_05cdc0(std::int32_t code) = 0;",
+      "sha256": "a949a169740b5bce16398f18f39a8f13a9d9065e343509c3791dca9e03816c36"
+    },
+    {
+      "file": "anadius-license-source/license.hpp",
+      "line": 56,
+      "text": "    [[noreturn]] virtual void no_response_02bcd0_04d228() = 0;",
+      "sha256": "a949a169740b5bce16398f18f39a8f13a9d9065e343509c3791dca9e03816c36"
+    },
+    {
+      "file": "anadius-messages-source/messages_tests.cpp",
+      "line": 109,
+      "text": "    [[noreturn]]void invalid_message_02bd30_04d228()override{++invalids;throw Invalid{};}",
+      "sha256": "9056a292b59f6363dd94cc761b2b61e7d721184c6d365f13d47f9cee6173251e"
+    },
+    {
+      "file": "anadius-messages-source/messages.cpp",
+      "line": 87,
+      "text": "    if(!root || root->name()!=\"LSX\")effects.invalid_message_02bd30_04d228();",
+      "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+    },
+    {
+      "file": "anadius-messages-source/messages.cpp",
+      "line": 90,
+      "text": "        effects.invalid_message_02bd30_04d228();",
+      "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+    },
+    {
+      "file": "anadius-messages-source/messages.cpp",
+      "line": 94,
+      "text": "    if(!id || !recipient || !command)effects.invalid_message_02bd30_04d228();",
+      "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+    },
+    {
+      "file": "anadius-messages-source/messages.cpp",
+      "line": 98,
+      "text": "    if(!selected && command->name()!=\"ChallengeResponse\")effects.invalid_message_02bd30_04d228();",
+      "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+    },
+    {
+      "file": "anadius-messages-source/messages.cpp",
+      "line": 105,
+      "text": "    if(!accepted)effects.invalid_message_02bd30_04d228();",
+      "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+    },
+    {
+      "file": "anadius-messages-source/messages.hpp",
+      "line": 76,
+      "text": "    [[noreturn]] virtual void invalid_message_02bd30_04d228() = 0;",
+      "sha256": "42a33b619026a7a3201adbff54d853252d46a18d8d2252b7804c39929d4f54d4"
+    },
+    {
+      "file": "anadius-misc-handlers-source/misc_handlers_tests.cpp",
+      "line": 40,
+      "text": "    [[noreturn]] void throw_no_response_02bcd0_04d228() override {record(\"noresponse\");throw Failure{};}",
+      "sha256": "b835781a8526dbd16e22785562137c097512cb9cd64391604c0f089245037579"
+    },
+    {
+      "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+      "line": 66,
+      "text": "    effect.throw_no_response_02bcd0_04d228();",
+      "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151"
+    },
+    {
+      "file": "anadius-misc-handlers-source/misc_handlers.hpp",
+      "line": 37,
+      "text": "    [[noreturn]] virtual void throw_no_response_02bcd0_04d228() = 0;",
+      "sha256": "6d8adccf80a5f81656a69c02821eadb6497459aa10c2e88b4d99b2dad02a2cf3"
+    },
+    {
+      "file": "anadius-native-source/native_tests.cpp",
+      "line": 78,
+      "text": "    [[noreturn]]void exit_05cdc0(std::uint32_t)override{throw std::runtime_error(\"unexpected exit\");}",
+      "sha256": "2cd1e2e3c1a546dbab772d955004334b251902ad868ae5957f22ebf601d797f0"
+    },
+    {
+      "file": "anadius-network-hook-source/connect.cpp",
+      "line": 38,
+      "text": "            effects.exit_05cdc0(0xffffffffu);",
+      "sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f"
+    },
+    {
+      "file": "anadius-network-hook-source/connect.cpp",
+      "line": 52,
+      "text": "[[noreturn]] void ExecutionEffects::exit_05cdc0(std::uint32_t c) {remaining_.exit_05cdc0(c);}",
+      "sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f"
+    },
+    {
+      "file": "anadius-network-hook-source/connect.hpp",
+      "line": 27,
+      "text": "    [[noreturn]] virtual void exit_05cdc0(std::uint32_t) = 0;",
+      "sha256": "f6afcdaf8d2437c1dbb1b71d0d6496a3b653c445619baa60646268be828bafc4"
+    },
+    {
+      "file": "anadius-network-hook-source/connect.hpp",
+      "line": 48,
+      "text": "    [[noreturn]] void exit_05cdc0(std::uint32_t) override;",
+      "sha256": "f6afcdaf8d2437c1dbb1b71d0d6496a3b653c445619baa60646268be828bafc4"
+    },
+    {
+      "file": "anadius-network-hook-source/hook_tests.cpp",
+      "line": 40,
+      "text": "    [[noreturn]] void exit_05cdc0(std::uint32_t c) override {event(\"exit\");throw Exit{c};}",
+      "sha256": "6a88808475d66d6df4d42e4cd9003f00408c42cfd99ac27f7c5c2d54555c3dc0"
+    },
+    {
+      "file": "anadius-session-source/handler_tests.cpp",
+      "line": 40,
+      "text": "    [[noreturn]]void invalid_message_02bd30_04d228()override{throw Invalid{};}",
+      "sha256": "80288f3d34d46f362ad32f8e117ee3866e9a266923d4c40db6325cfcaec6a11c"
+    },
+    {
+      "file": "anadius-session-source/session_tests.cpp",
+      "line": 67,
+      "text": "struct NoResponse final:misc::NoResponse {[[noreturn]]void throw_no_response_02bcd0_04d228()override{unused();}};",
+      "sha256": "c7c0154294107dcfc066ec28103aaa7551d41a61d1ee3873cd6b726ffa14d80e"
+    },
+    {
+      "file": "anadius-session-source/session_tests.cpp",
+      "line": 78,
+      "text": "    [[noreturn]]void invalid_message_02bd30_04d228()override{unused();}",
+      "sha256": "c7c0154294107dcfc066ec28103aaa7551d41a61d1ee3873cd6b726ffa14d80e"
+    },
+    {
+      "file": "anadius-socket-source/message_core_bridge_test_fixture.hpp",
+      "line": 39,
+      "text": "    [[noreturn]]void invalid_message_02bd30_04d228()override{throw Failure{66};}[[noreturn]]void thread_error_04a648(int code)override{throw Failure{code};}",
+      "sha256": "0f3258a77c42be5db377b0627212caaa412fa1daeaf4b575c996b222cb982c7c"
+    },
+    {
+      "file": "anadius-socket-source/message_dispatch_integration_tests.cpp",
+      "line": 53,
+      "text": "    [[noreturn]]void invalid_message_02bd30_04d228()override{throw Failure{66};}[[noreturn]]void thread_error_04a648(int)override{r::unexpected();}",
+      "sha256": "0f7a35999e69a4472158eac7a4bf8f2b27266b72a604e96d4babde04a00c8d6f"
+    },
+    {
+      "file": "anadius-socket-source/native_dispatch_test_fixture.hpp",
+      "line": 56,
+      "text": "    [[noreturn]]void invalid_message_02bd30_04d228()override{event(\"invalid\");throw core_test::Failure{66};}",
+      "sha256": "a7ca9a188a081f3cbd0cc3b2a4de57cc67d5cbcf14a122397e284a30b10a54ef"
+    },
+    {
+      "file": "anadius-socket-source/native_dispatch.cpp",
+      "line": 39,
+      "text": "    if(invalid)effects.invalid_message_02bd30_04d228();",
+      "sha256": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b"
+    },
+    {
+      "file": "anadius-socket-source/native_dispatch.cpp",
+      "line": 47,
+      "text": "    if(!accepted)effects.invalid_message_02bd30_04d228();",
+      "sha256": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b"
+    },
+    {
+      "file": "anadius-socket-source/native_dispatch.hpp",
+      "line": 28,
+      "text": "    [[noreturn]]virtual void invalid_message_02bd30_04d228()=0;",
+      "sha256": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440"
+    },
+    {
+      "file": "anadius-windows-source/windows_effects.cpp",
+      "line": 27,
+      "text": "[[noreturn]] void WindowsEffects::exit_05cdc0(std::int32_t code){remaining_.exit_05cdc0(code);std::terminate();}",
+      "sha256": "e391116f9528d6106829ae5c55262f399f596a1675ad1aeb4dc347b0f38c8438"
+    },
+    {
+      "file": "anadius-windows-source/windows_effects.cpp",
+      "line": 28,
+      "text": "[[noreturn]] void WindowsEffects::no_response_02bcd0_04d228(){remaining_.no_response_02bcd0_04d228();std::terminate();}",
+      "sha256": "e391116f9528d6106829ae5c55262f399f596a1675ad1aeb4dc347b0f38c8438"
+    },
+    {
+      "file": "anadius-windows-source/windows_effects.hpp",
+      "line": 33,
+      "text": "    [[noreturn]] void exit_05cdc0(std::int32_t)override;",
+      "sha256": "57f275316ecd1d78bcb21b0a93da54c26eacfdf3bceaa66370edc84631d4a19f"
+    },
+    {
+      "file": "anadius-windows-source/windows_effects.hpp",
+      "line": 34,
+      "text": "    [[noreturn]] void no_response_02bcd0_04d228()override;",
+      "sha256": "57f275316ecd1d78bcb21b0a93da54c26eacfdf3bceaa66370edc84631d4a19f"
+    },
+    {
+      "file": "anadius-windows-source/windows_tests.cpp",
+      "line": 41,
+      "text": "    [[noreturn]] void exit_05cdc0(std::int32_t)override{unused();}",
+      "sha256": "0922560108d38d78525e0130e92e42d75259632228e230cd4d36a08a6059facb"
+    },
+    {
+      "file": "anadius-windows-source/windows_tests.cpp",
+      "line": 42,
+      "text": "    [[noreturn]] void no_response_02bcd0_04d228()override{throw NoResponse{};}",
+      "sha256": "0922560108d38d78525e0130e92e42d75259632228e230cd4d36a08a6059facb"
+    }
+  ],
+  "limit": "Symbol scan, not proof that indirect/different-named implementations do not exist."
+}

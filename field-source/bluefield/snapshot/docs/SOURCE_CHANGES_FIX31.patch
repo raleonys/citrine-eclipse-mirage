@@ -1,0 +1,374 @@
+--- FIX30/src/windows/unload_guard.cpp
++++ FIX31/src/windows/unload_guard.cpp
+@@ -24,6 +24,8 @@
+   if(region.AllocationBase!=allocation)return true;
+   const auto limit=reinterpret_cast<std::uint64_t>(region.BaseAddress)+region.RegionSize;
+   if(limit<=cursor)return false;
++  // Refuse a region exceeding the remaining scan budget; never infer it safe.
++  if(limit-cursor>64ULL*1024*1024-scanned)return false;
+   if(region.State!=MEM_COMMIT||(region.Protect&(PAGE_NOACCESS|PAGE_GUARD)))return false;
+   __try {
+    for(auto address=cursor;address+sizeof(std::uint64_t)<=limit;address+=sizeof(std::uint64_t)){
+--- FIX30/tests/integration/test_unload_scan.cpp
++++ FIX31/tests/integration/test_unload_scan.cpp
+@@ -0,0 +1,190 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include <windows.h>
++#include <tlhelp32.h>
++#include <cstdint>
++#include <cstring>
++#include <iostream>
++#include <stdexcept>
++#include <string>
++#include <vector>
++#ifndef _WIN32
++// Syntax adapter only: C++ exceptions do not emulate Windows access violations.
++#define __try try
++#define __except(value) catch(...)
++#endif
++#ifndef PRELOADER_L_UNLOAD_SOURCE
++#define PRELOADER_L_UNLOAD_SOURCE "src/windows/unload_guard.cpp"
++#endif
++// Sole body under test is the production implementation, not a copied scanner.
++#include PRELOADER_L_UNLOAD_SOURCE
++#ifndef _WIN32
++#undef __try
++#undef __except
++#endif
++namespace {
++int checks=0;
++void require(bool yes,const char* reason){++checks;if(!yes)throw std::runtime_error(reason);}
++constexpr std::uint64_t budget=64ULL*1024*1024;
++}
++#ifdef _WIN32
++namespace {
++struct Memory {
++ void* data=VirtualAlloc(nullptr,budget+65536,MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
++ Memory(){require(data!=nullptr,"native VirtualAlloc");}
++ ~Memory(){if(data)VirtualFree(data,0,MEM_RELEASE);}
++};
++void native_scan(){
++ Memory memory;CONTEXT context{};context.Rsp=reinterpret_cast<std::uint64_t>(memory.data);
++ const auto module_begin=reinterpret_cast<std::uint64_t>(&native_scan),module_end=module_begin+1;
++ // Allocation is bigger than the retained budget: reject without calling it safe.
++ require(!preloader_l::scan_stack(context,module_begin,module_end),"native over-budget allocation rejected");
++ DWORD old=0;require(VirtualProtect(memory.data,budget,PAGE_READONLY,&old)!=FALSE,"native protect budget prefix");
++ require(!preloader_l::scan_stack(context,module_begin,module_end),"native exact-budget prefix remains conservative");
++ require(VirtualProtect(memory.data,budget,PAGE_READWRITE,&old)!=FALSE,"restore writable prefix");
++ *static_cast<std::uint64_t*>(memory.data)=module_begin;
++ require(!preloader_l::scan_stack(context,module_begin,module_end),"native module value cannot report safe");
++ context.Rip=module_begin;
++ require(!preloader_l::scan_stack(context,module_begin,module_end),"native module instruction pointer rejected");
++ // Exercise successful same-allocation scan with an actual small VirtualAlloc.
++ SYSTEM_INFO system{};GetSystemInfo(&system);
++ auto* small=VirtualAlloc(nullptr,system.dwAllocationGranularity,MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
++ require(small!=nullptr,"native small allocation");context={};context.Rsp=reinterpret_cast<std::uint64_t>(small);
++ const bool outside=preloader_l::scan_stack(context,module_begin,module_end);
++ *static_cast<std::uint64_t*>(small)=module_begin;
++ require(!preloader_l::scan_stack(context,module_begin,module_end),"native small allocation module word rejected");
++ require(VirtualFree(small,0,MEM_RELEASE)!=FALSE,"native small release");
++ require(outside,"native small allocation scans to allocation boundary");
++}
++}
++#else
++namespace model {
++struct Region {std::uintptr_t begin;std::size_t bytes;std::uintptr_t allocation;DWORD state=MEM_COMMIT,protect=4;};
++std::vector<Region> regions;
++std::vector<std::string> trace;
++std::vector<THREADENTRY32> threads;
++std::size_t index=0,queries=0,fail_query=0,read_calls=0;
++std::uintptr_t watched_begin=0,watched_end=0;
++DWORD error=0,open_error=0,suspend_error=0,resume_error=0,enumeration_end=ERROR_NO_MORE_FILES;
++bool module_ok=true,snapshot_ok=true,first_ok=true,context_ok=true;
++CONTEXT context{};
++alignas(IMAGE_NT_HEADERS64) unsigned char image[256]{};
++HANDLE snapshot=reinterpret_cast<HANDLE>(1),thread=reinterpret_cast<HANDLE>(2);
++void reset(){
++ regions.clear();trace.clear();threads.clear();index=queries=fail_query=read_calls=0;
++ watched_begin=watched_end=0;error=open_error=suspend_error=resume_error=0;
++ enumeration_end=ERROR_NO_MORE_FILES;module_ok=snapshot_ok=first_ok=context_ok=true;context={};
++ std::memset(image,0,sizeof image);auto* dos=reinterpret_cast<IMAGE_DOS_HEADER*>(image);dos->e_lfanew=64;
++ reinterpret_cast<IMAGE_NT_HEADERS64*>(image+64)->OptionalHeader.SizeOfImage=sizeof image;
++ preloader_l::set_shutdown_caller(0);
++}
++void stack(std::vector<std::uint64_t>& memory){
++ const auto address=reinterpret_cast<std::uintptr_t>(memory.data());context.Rsp=address;
++ regions={{address,memory.size()*8,address},{address+memory.size()*8,8,address+memory.size()*8}};
++ watched_begin=address;watched_end=address+memory.size()*8;
++}
++void one_thread(){threads={{sizeof(THREADENTRY32),11,7}};}
++bool scan(std::uint64_t begin=0x100000,std::uint64_t end=0x100100){return preloader_l::scan_stack(context,begin,end);}
++bool external(){return preloader_l::external_threads_outside_module();}
++bool has(const char* item){for(const auto& x:trace)if(x==item)return true;return false;}
++}
++extern "C" void* __real_memcpy(void*,const void*,std::size_t);
++extern "C" void* __wrap_memcpy(void* target,const void* source,std::size_t size){
++ const auto address=reinterpret_cast<std::uintptr_t>(source);
++ if(model::watched_begin<=address&&address<model::watched_end)++model::read_calls;
++ return __real_memcpy(target,source,size);
++}
++std::size_t VirtualQuery(const void* pointer,MEMORY_BASIC_INFORMATION* result,std::size_t size){
++ ++model::queries;if(model::queries==model::fail_query)return 0;
++ if(size!=sizeof(*result))return 0;
++ const auto address=reinterpret_cast<std::uintptr_t>(pointer);
++ for(const auto& r:model::regions)if(address>=r.begin&&address<r.begin+r.bytes){
++  *result={reinterpret_cast<void*>(r.begin),reinterpret_cast<void*>(r.allocation),r.bytes,r.state,r.protect};return size;
++ }
++ return 0;
++}
++BOOL GetModuleHandleExW(DWORD flags,LPCWSTR,HMODULE* module){
++ model::trace.push_back("module");require(flags==(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT),"module lookup does not acquire a new ref");
++ if(!model::module_ok)return FALSE;*module=model::image;return 1;
++}
++DWORD GetCurrentThreadId(){return 10;}DWORD GetCurrentProcessId(){return 7;}DWORD GetLastError(){return model::error;}
++HANDLE CreateToolhelp32Snapshot(DWORD flags,DWORD process){
++ model::trace.push_back("snapshot");require(flags==TH32CS_SNAPTHREAD&&process==0,"thread snapshot arguments");return model::snapshot_ok?model::snapshot:INVALID_HANDLE_VALUE;
++}
++BOOL Thread32First(HANDLE handle,THREADENTRY32* entry){
++ model::trace.push_back("first");require(handle==model::snapshot&&entry->dwSize==sizeof(*entry),"first snapshot contract");
++ if(!model::first_ok||model::threads.empty())return FALSE;*entry=model::threads[0];model::index=0;return 1;
++}
++BOOL Thread32Next(HANDLE handle,THREADENTRY32* entry){
++ model::trace.push_back("next");require(handle==model::snapshot,"next snapshot owner");
++ if(++model::index>=model::threads.size()){model::error=model::enumeration_end;return FALSE;}
++ *entry=model::threads[model::index];return 1;
++}
++HANDLE OpenThread(DWORD flags,BOOL inherit,DWORD id){
++ model::trace.push_back("open");require(flags==(THREAD_SUSPEND_RESUME|THREAD_GET_CONTEXT|THREAD_QUERY_INFORMATION)&&inherit==FALSE&&id==11,"thread open contract");
++ model::error=model::open_error;return model::open_error?nullptr:model::thread;
++}
++DWORD SuspendThread(HANDLE handle){
++ model::trace.push_back("suspend");require(handle==model::thread,"suspend owner");model::error=model::suspend_error;return model::suspend_error?DWORD(-1):0;
++}
++BOOL GetThreadContext(HANDLE handle,CONTEXT* context){
++ model::trace.push_back("context");require(handle==model::thread&&context->ContextFlags==CONTEXT_FULL,"context request flags");
++ if(!model::context_ok)return FALSE;*context=model::context;return 1;
++}
++DWORD ResumeThread(HANDLE handle){
++ model::trace.push_back("resume");require(handle==model::thread,"resume owner");return model::resume_error?DWORD(-1):1;
++}
++BOOL CloseHandle(HANDLE handle){model::trace.push_back(handle==model::snapshot?"close_snapshot":"close_thread");return 1;}
++namespace {
++void scan_cases(){
++ using namespace model;
++ std::vector<std::uint64_t> memory(4);
++ reset();stack(memory);require(scan(),"small allocation outside module");require(read_calls==4,("actual production memcpy read trace: "+std::to_string(read_calls)).c_str());
++ reset();stack(memory);memory[2]=0x100040;require(!scan(),"stack module pointer rejected");require(read_calls==3,"scan stops at observed module value");memory[2]=0;
++ for(auto member:{&CONTEXT::Rip,&CONTEXT::Rax,&CONTEXT::Rbx,&CONTEXT::Rcx,&CONTEXT::Rdx,&CONTEXT::Rsi,&CONTEXT::Rdi,&CONTEXT::Rbp,&CONTEXT::R8,&CONTEXT::R9,&CONTEXT::R10,&CONTEXT::R11,&CONTEXT::R12,&CONTEXT::R13,&CONTEXT::R14,&CONTEXT::R15}){
++  reset();stack(memory);context.*member=0x100080;require(!scan(),"register module pointer rejected");require(queries==0&&read_calls==0,"register rejection precedes stack query");
++ }
++ reset();stack(memory);context.Rip=0x100100;require(scan(),"module end exclusive");
++ for(auto failure:{std::size_t(1),std::size_t(2)}){reset();stack(memory);fail_query=failure;require(!scan(),"VirtualQuery failure refused");require(read_calls==0,"query failure before memory read");}
++ for(auto protection:{PAGE_GUARD,PAGE_NOACCESS}){reset();stack(memory);regions[0].protect=protection;require(!scan(),"unreadable/guard page refused");require(read_calls==0,"guard page not scanned");}
++ reset();stack(memory);regions[0].state=0;require(!scan(),"uncommitted region refused");require(read_calls==0,"uncommitted region not scanned");
++ // Independent actual-read observation: the over-budget region's first word
++ // is valid memory and is an in-module value. Parent reads it; fixed body must
++ // reject the region before even that first read. No invalid address is read.
++ reset();stack(memory);memory[0]=0x100001;regions[0].bytes=budget+8;
++ require(!scan(),"oversize region refused");require(read_calls==0,"over-budget region was read before refusal");memory[0]=0;
++ // Scan-budget boundaries execute the same source body, including its memcpy.
++ std::vector<std::uint64_t> large(budget/8+2,0);const auto address=reinterpret_cast<std::uintptr_t>(large.data());
++ reset();stack(large);regions={{address,budget,address},{address+budget,8,address+budget}};
++ require(!scan(),"exact-budget exhaustion is conservative, not safe");require(read_calls==budget/8,"exact budget read count");
++ reset();stack(large);regions={{address,budget-8,address},{address+budget-8,16,address},{address+budget+8,8,address+budget+8}};
++ large[budget/8-1]=0x100001;require(!scan(),"over-budget second region refused");require(read_calls==(budget-8)/8,"second region overshoots remaining bytes");large[budget/8-1]=0;
++ reset();stack(large);regions={{address,budget-8,address},{address+budget-8,8,address},{address+budget,8,address+budget}};
++ require(!scan(),"last permitted eight bytes consume exact budget");require(read_calls==budget/8,"last permitted region not lost");
++}
++void enumeration_cases(){
++ using namespace model;std::vector<std::uint64_t> memory(4);
++ auto setup=[&]{reset();stack(memory);one_thread();};
++ setup();require(external(),"normal external thread outside module");
++ require(trace==std::vector<std::string>{"module","snapshot","first","open","suspend","context","resume","close_thread","next","close_snapshot"},"suspend/context/resume/close sequence");
++ setup();module_ok=false;require(!external()&&!has("snapshot"),"module lookup failure stops");
++ setup();snapshot_ok=false;require(!external()&&!has("close_snapshot"),"invalid snapshot is not closed");
++ setup();first_ok=false;require(!external()&&has("close_snapshot")&&!has("open"),"first enumeration failure closes snapshot");
++ setup();threads={{sizeof(THREADENTRY32),10,7},{sizeof(THREADENTRY32),12,7},{sizeof(THREADENTRY32),13,8}};preloader_l::set_shutdown_caller(12);
++ require(external()&&!has("open"),"current worker, shutdown caller and other process excluded");
++ for(auto failure:{ERROR_INVALID_PARAMETER,DWORD(5)}){setup();open_error=failure;const auto result=external();require(result==(failure==ERROR_INVALID_PARAMETER),"open failure classification");require(!has("suspend")&&has("close_snapshot"),"open failure cleanup");}
++ for(auto failure:{ERROR_INVALID_HANDLE,ERROR_INVALID_PARAMETER,DWORD(5)}){setup();suspend_error=failure;const auto result=external();require(result==(failure!=5),"suspend failure classification");require(has("close_thread")&&!has("resume")&&!has("context"),"failed suspend cleanup");}
++ setup();context_ok=false;require(!external()&&has("resume")&&has("close_thread"),"context failure still resumes and closes");
++ setup();resume_error=5;require(!external()&&has("close_thread")&&has("close_snapshot"),"resume failure never reports safe");
++ setup();enumeration_end=5;require(!external(),"unexpected enumeration termination refused");
++ setup();context.Rip=reinterpret_cast<std::uintptr_t>(image);require(!external()&&has("resume")&&has("close_thread"),"unsafe register still resumes and closes");
++}
++}
++#endif
++int main(){try{
++#ifdef _WIN32
++ native_scan();std::cout<<"PASS unload native scanner fixture checks="<<checks<<"; actual VirtualQuery/VirtualAlloc; concurrent thread/DLL unload proof NOT_RUN\n";
++#else
++ scan_cases();enumeration_cases();std::cout<<"PASS unload production-body model checks="<<checks<<"; actual memcpy observation + test-only SDK declarations/API effects; native SDK ABI/SEH/Windows thread suspension NOT_RUN\n";
++#endif
++ return 0;
++}catch(const std::exception& error){std::cerr<<"FAIL unload scan: "<<error.what()<<'\n';return 1;}}
+--- FIX30/tests/support/unload/winshim/windows.h
++++ FIX31/tests/support/unload/winshim/windows.h
+@@ -0,0 +1,29 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#pragma once
++// Test-only declaration subset. No Windows ABI/layout or SEH emulation claim.
++#include <cstddef>
++#include <cstdint>
++using DWORD=std::uint32_t;using BOOL=int;using HANDLE=void*;using HMODULE=void*;
++using LPCWSTR=const wchar_t*;
++inline const HANDLE INVALID_HANDLE_VALUE=reinterpret_cast<HANDLE>(std::intptr_t(-1));
++inline constexpr BOOL FALSE=0;
++inline constexpr DWORD GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS=4;
++inline constexpr DWORD GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT=2;
++inline constexpr DWORD MEM_COMMIT=0x1000,PAGE_NOACCESS=1,PAGE_GUARD=0x100;
++inline constexpr DWORD THREAD_SUSPEND_RESUME=2,THREAD_GET_CONTEXT=8,THREAD_QUERY_INFORMATION=0x40;
++inline constexpr DWORD ERROR_INVALID_PARAMETER=87,ERROR_INVALID_HANDLE=6,ERROR_NO_MORE_FILES=18;
++inline constexpr DWORD CONTEXT_FULL=0x10000b;
++struct CONTEXT {
++ std::uint64_t Rip{},Rax{},Rbx{},Rcx{},Rdx{},Rsi{},Rdi{},Rbp{},R8{},R9{},R10{},R11{},R12{},R13{},R14{},R15{},Rsp{};
++ DWORD ContextFlags{};
++};
++struct MEMORY_BASIC_INFORMATION {
++ void* BaseAddress{};void* AllocationBase{};std::size_t RegionSize{};DWORD State{},Protect{};
++};
++struct IMAGE_DOS_HEADER {std::int32_t e_lfanew{};};
++struct IMAGE_NT_HEADERS64 {struct {DWORD SizeOfImage{};} OptionalHeader;};
++std::size_t VirtualQuery(const void*,MEMORY_BASIC_INFORMATION*,std::size_t);
++BOOL GetModuleHandleExW(DWORD,LPCWSTR,HMODULE*);
++DWORD GetCurrentThreadId();DWORD GetCurrentProcessId();DWORD GetLastError();
++HANDLE OpenThread(DWORD,BOOL,DWORD);DWORD SuspendThread(HANDLE);
++BOOL GetThreadContext(HANDLE,CONTEXT*);DWORD ResumeThread(HANDLE);BOOL CloseHandle(HANDLE);
+--- FIX30/tests/support/unload/winshim/tlhelp32.h
++++ FIX31/tests/support/unload/winshim/tlhelp32.h
+@@ -0,0 +1,7 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#pragma once
++#include <windows.h>
++inline constexpr DWORD TH32CS_SNAPTHREAD=4;
++struct THREADENTRY32 {DWORD dwSize{},th32ThreadID{},th32OwnerProcessID{};};
++HANDLE CreateToolhelp32Snapshot(DWORD,DWORD);
++BOOL Thread32First(HANDLE,THREADENTRY32*);BOOL Thread32Next(HANDLE,THREADENTRY32*);
+--- FIX30/CMakeLists.txt
++++ FIX31/CMakeLists.txt
+@@ -112,7 +112,7 @@
+   target_link_libraries(test_startup_compat PRIVATE preloader_l_core)
+   add_test(NAME startup_configuration_profile_compat COMMAND test_startup_compat)
+   set_tests_properties(startup_configuration_profile_compat PROPERTIES TIMEOUT 60)
+-  foreach(source IN ITEMS tests/integration/test_atomic_stage_collision.cpp tests/integration/test_xml_depth_source_oracle.cpp tests/integration/test_config2_source_oracle.cpp tests/integration/test_failure_diagnostics.cpp tests/integration/test_ticket_output.cpp tests/integration/test_avatar_effects.cpp tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
++  foreach(source IN ITEMS tests/integration/test_unload_scan.cpp tests/integration/test_atomic_stage_collision.cpp tests/integration/test_xml_depth_source_oracle.cpp tests/integration/test_config2_source_oracle.cpp tests/integration/test_failure_diagnostics.cpp tests/integration/test_ticket_output.cpp tests/integration/test_avatar_effects.cpp tests/integration/test_transport_pipeline.cpp tests/integration/test_path_effects.cpp tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
+     get_filename_component(name "${source}" NAME_WE)
+     add_executable(${name} "${source}")
+     if(name STREQUAL "test_config2_source_oracle")
+@@ -123,6 +123,12 @@
+     endif()
+     if(name STREQUAL "test_atomic_stage_collision")
+       target_sources(${name} PRIVATE tests/support/files/packet_binary_io.cpp)
++    endif()
++    if(name STREQUAL "test_unload_scan" AND NOT WIN32)
++      target_include_directories(${name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/tests/support/unload/winshim")
++      # Test-only linker observation of production memcpy; no shipping flags change.
++      target_compile_options(${name} PRIVATE -fno-builtin-memcpy -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0)
++      target_link_options(${name} PRIVATE "-Wl,--wrap=memcpy")
+     endif()
+     target_link_libraries(${name} PRIVATE preloader_l_core)
+     add_test(NAME ${name} COMMAND ${name})
+--- FIX30/metadata/BUILD_GRAPH.json
++++ FIX31/metadata/BUILD_GRAPH.json
+@@ -109,7 +109,8 @@
+     "tests/integration/test_config2_source_oracle.cpp",
+     "tests/integration/test_failure_diagnostics.cpp",
+     "tests/integration/test_xml_depth_source_oracle.cpp",
+-    "tests/integration/test_atomic_stage_collision.cpp"
++    "tests/integration/test_atomic_stage_collision.cpp",
++    "tests/integration/test_unload_scan.cpp"
+   ],
+   "windows_core": [
+     "src/windows/startup_platform.cpp",
+@@ -151,6 +152,9 @@
+     ],
+     "tests/support/xml/packet_oracle.cpp": [
+       "tests/support/xml/packet/tinyxml2.cpp"
++    ],
++    "tests/integration/test_unload_scan.cpp": [
++      "src/windows/unload_guard.cpp"
+     ]
+   }
+ }
+--- FIX30/scripts/qa/check_source.py
++++ FIX31/scripts/qa/check_source.py
+@@ -16,18 +16,18 @@
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX30 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX31 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX30.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX31.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX30 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX31 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX30 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX30')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX30.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX31 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX31')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX31.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX30 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX31 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -164,7 +164,7 @@
+  if graph['test_support_sources'].get('tests/integration/test_config2_source_oracle.cpp')!=['tests/support/configuration/packet_parser.cpp'] or 'target_sources(${name} PRIVATE tests/support/configuration/packet_parser.cpp)' not in cmake:fail(2,'source parser oracle test-only target binding lost')
+  entry=(root/'src/windows/dll_entry.cpp').read_text()
+  if entry.count('LogEvent::startup_failed')!=2 or entry.count('LogEvent::shutdown_failed')!=1:fail(2,'wrong native lifecycle failure event')
+- for row in json.loads((root/'metadata/TEST_ORACLE_ROLES_FIX30.json').read_text())['files']:
++ for row in json.loads((root/'metadata/TEST_ORACLE_ROLES_FIX31.json').read_text())['files']:
+   if sha(root/row['file'])!=row['sha256']:fail(2,'test role binding drift')
+  # D15: parse-time source depth via the sole pinned upstream implementation TU.
+  wrapper=(root/'src/xml/upstream_parser.cpp').read_text()
+@@ -187,6 +187,14 @@
+  for row in binary_oracle['files']:
+   if sha(root/row['destination'])!=row['current_sha256']:fail(2,'packet binary caller oracle bytes drift')
+  if graph['test_support_sources'].get('tests/integration/test_atomic_stage_collision.cpp')!=['tests/support/files/packet_binary_io.cpp'] or 'target_sources(${name} PRIVATE tests/support/files/packet_binary_io.cpp)' not in cmake:fail(2,'binary caller oracle test-only target lost')
++ # Actual production unload body is included only by its explicit test target.
++ scan=(root/'src/windows/unload_guard.cpp').read_text()
++ if 'if(limit-cursor>64ULL*1024*1024-scanned)return false;' not in scan:fail(2,'whole-region scan budget refusal lost')
++ if scan.find('if(limit-cursor>64ULL*1024*1024-scanned)')>scan.find('std::memcpy(&value,'):fail(2,'scan budget checked after read')
++ test='tests/integration/test_unload_scan.cpp'
++ if graph['included_implementation_sources'].get(test)!=['src/windows/unload_guard.cpp'] or test not in cmake:fail(2,'actual unload body test binding lost')
++ for term in ['if(name STREQUAL "test_unload_scan" AND NOT WIN32)','-fno-builtin-memcpy -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0','-Wl,--wrap=memcpy']:
++  if term not in cmake:fail(2,'test-only unload read observation binding lost: '+term)
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -277,7 +285,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX30.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX31.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX30/tests/tools/test_source_policy.py
++++ FIX31/tests/tools/test_source_policy.py
+@@ -91,6 +91,10 @@
+   modify('tests/support/xml/packet/tinyxml2.h',lambda b:b+b'\n// mutation\n','packet XML reference tamper')
+   modify('src/files/atomic_io.cpp',lambda b:b.replace(b'throw std::system_error(std::make_error_code(std::errc::file_exists),"atomic temporary names exhausted");',b'throw std::runtime_error("atomic temporary quota");'),'initial collision failure class regressed')
+   modify('tests/support/files/packet_binary_io.cpp',lambda b:b+b'\n// mutation\n','literal binary caller oracle tamper')
++  modify('src/windows/unload_guard.cpp',lambda b:b.replace(b'if(limit-cursor>64ULL*1024*1024-scanned)return false;',b'/* guard removed */'),'scan region budget removed')
++  modify('src/windows/unload_guard.cpp',lambda b:b.replace(b'if(limit-cursor>64ULL*1024*1024-scanned)return false;',b'if(limit-cursor>64ULL*1024*1024-scanned)return true;'),'over-budget scan falsely reports safe')
++  modify('CMakeLists.txt',lambda b:b.replace(b'if(name STREQUAL "test_unload_scan" AND NOT WIN32)',b'if(name STREQUAL "test_unload_scan")'),'test shim target leaks to native build')
++  modify('CMakeLists.txt',lambda b:b.replace(b'-Wl,--wrap=memcpy',b'-Wl,--no-wrap'),'scan read observation removed')
+   assert not check(root),'restored baseline' 
+  print('PASS source policy: '+str(len(cases))+' negative mutations + restored baseline');return 0
+ if __name__=='__main__':sys.exit(main())

@@ -1,0 +1,36 @@
+{
+  "authority": "OPERATIONAL_BELOW_USER_AND_LIBRARY_MASTER",
+  "master_binding": "metadata/GOVERNANCE_BINDING_FIX31.json",
+  "documents": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "600c3cf06d565caa6b8fb1169e474a96e199b86c70bbab4b4787c16110161f02",
+      "scope": "Current BLUEFIELD operational documentation; does not authorize new behavior"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "ac7162a3dbac402732d889a63ace56c672d948d2914469c52c60011563182185",
+      "scope": "Current BLUEFIELD operational documentation; does not authorize new behavior"
+    },
+    {
+      "path": "docs/DEVELOPMENT.md",
+      "sha256": "d6b6290081883a78147be1c1bc1cd8522516704ea9aa35bdd75bdcfdb274d614",
+      "scope": "Current BLUEFIELD operational documentation; does not authorize new behavior"
+    },
+    {
+      "path": "docs/VALIDATION.md",
+      "sha256": "9e75908ea9411cf6ddbc3073c88ac19c2aa6da3c0b18f6cc2c7a6a8ab0463799",
+      "scope": "Current BLUEFIELD operational documentation; does not authorize new behavior"
+    },
+    {
+      "path": "docs/RELEASE_PROCESS.md",
+      "sha256": "d65df0882ed1807fe87376b93aac41a5fbf6d8520c2f3880432795559d1bfcd0",
+      "scope": "Current BLUEFIELD operational documentation; does not authorize new behavior"
+    },
+    {
+      "path": "docs/THIRD_PARTY.md",
+      "sha256": "ce3791b3f7282a73d15e64e19d91ad746287bc3eb4fb7831c738581947925466",
+      "scope": "Current BLUEFIELD operational documentation; does not authorize new behavior"
+    }
+  ]
+}

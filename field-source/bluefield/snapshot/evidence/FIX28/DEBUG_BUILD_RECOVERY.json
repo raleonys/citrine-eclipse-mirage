@@ -1,0 +1,87 @@
+{
+  "status": "GENERATED_ARTIFACT_RECOVERY_PASS_FULL_CTEST_PENDING",
+  "observed_failure": "Debug linker missing Router::registered_handler; generated router.cpp.o was zero bytes despite preceding successful build step",
+  "cause": "UNDETERMINED_BUILD_ARTIFACT_FAILURE",
+  "source_changes": false,
+  "removed_generated_empty_objects": [
+    "CMakeFiles/preloader_l_core.dir/src/protocol/router.cpp.o",
+    "CMakeFiles/protocol_test_messages.dir/tests/unit/protocol/test_messages.cpp.o"
+  ],
+  "failed_retry": "Removing zero-byte objects then ordinary incremental build did not regenerate them; repeated link failure preserved in debug_build_failed_retry.log",
+  "forced_generated_rules": [
+    {
+      "command": [
+        "/usr/bin/gmake",
+        "-B",
+        "-f",
+        "CMakeFiles/preloader_l_core.dir/build.make",
+        "CMakeFiles/preloader_l_core.dir/src/protocol/router.cpp.o"
+      ],
+      "exit_code": 0,
+      "object": "CMakeFiles/preloader_l_core.dir/src/protocol/router.cpp.o",
+      "bytes": 706840
+    },
+    {
+      "command": [
+        "/usr/bin/gmake",
+        "-B",
+        "-f",
+        "CMakeFiles/protocol_test_messages.dir/build.make",
+        "CMakeFiles/protocol_test_messages.dir/tests/unit/protocol/test_messages.cpp.o"
+      ],
+      "exit_code": 0,
+      "object": "CMakeFiles/protocol_test_messages.dir/tests/unit/protocol/test_messages.cpp.o",
+      "bytes": 2321456
+    }
+  ],
+  "empty_executable_relinks": [
+    {
+      "target": "configuration_test_pegtl_differential",
+      "previous_bytes": 0,
+      "relink_command": [
+        "/usr/bin/c++",
+        "-g",
+        "-Wl,--dependency-file=CMakeFiles/configuration_test_pegtl_differential.dir/link.d",
+        "CMakeFiles/configuration_test_pegtl_differential.dir/tests/unit/configuration/test_pegtl_differential.cpp.o",
+        "-o",
+        "configuration_test_pegtl_differential",
+        "libpreloader_l_core.a"
+      ],
+      "exit_code": 0,
+      "bytes": 1852000,
+      "sha256": "a36ee7a0af6b4eca396b53ef9537b9a293f01bdef7dd98f9a6a1047da80dd8ce"
+    },
+    {
+      "target": "xml_test_reader",
+      "previous_bytes": 0,
+      "relink_command": [
+        "/usr/bin/c++",
+        "-g",
+        "-Wl,--dependency-file=CMakeFiles/xml_test_reader.dir/link.d",
+        "CMakeFiles/xml_test_reader.dir/tests/unit/xml/test_reader.cpp.o",
+        "-o",
+        "xml_test_reader",
+        "libpreloader_l_core.a"
+      ],
+      "exit_code": 0,
+      "bytes": 899872,
+      "sha256": "cc4c7e3bb668ddb6243634e2fc32d9f9e3f4b0f117240e3a78f3d1b8a3204e6e"
+    }
+  ],
+  "additional_invalid_ELF_relink": {
+    "file": "test_path_effects",
+    "observed_bytes": 6189124,
+    "previous_header_hex": "00000000000000000000000000000000",
+    "command": [
+      "/usr/bin/c++",
+      "-g",
+      "-Wl,--dependency-file=CMakeFiles/test_path_effects.dir/link.d",
+      "CMakeFiles/test_path_effects.dir/tests/integration/test_path_effects.cpp.o",
+      "-o",
+      "test_path_effects",
+      "libpreloader_l_core.a"
+    ],
+    "exit_code": 0,
+    "sha256": "371c309c8d0812b7f34081c911804c8971a804970cdada942696a2a54b6ec444"
+  }
+}

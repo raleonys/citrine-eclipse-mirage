@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "source_digest": "8780173346e9cddf32f055c624448a1694f8711fca301959b225638e9698c644",
+  "source_policy_negative_mutations": 38,
+  "synthetic_PE_positive": 1,
+  "synthetic_PE_negative": 8,
+  "Golden_pipeline_synthetic_cases": 14,
+  "link_selftest_cases": 21,
+  "path_checks": 2137,
+  "Unicode_config_checks": 47,
+  "Config2_FIX09_cases": 8766,
+  "Python_syntax_files": 20,
+  "Windows_FIX11": "NOT_RUN"
+}

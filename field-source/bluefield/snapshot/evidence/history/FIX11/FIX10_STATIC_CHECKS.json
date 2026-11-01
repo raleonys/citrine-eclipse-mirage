@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "scope": "current pristine dependency and unchanged non-parser runtime files, exact-byte static comparison",
+  "PEGTL": {
+    "commit": "3b075432e94f6f906425350b43d03cd9cebfa4f1",
+    "pristine_headers": 361,
+    "files_including_license_and_pin": 363,
+    "reference": "comparison_hf19/third_party/pegtl/upstream/include"
+  },
+  "unchanged_from_FIX09": [
+    "surge.cfg.example",
+    "src/configuration/apply.cpp",
+    "src/configuration/defaults.cpp",
+    "src/configuration/hash_table.cpp",
+    "src/application/application.cpp",
+    "src/transport/service.cpp"
+  ],
+  "linux_stack_probe": {
+    "status": "PASS",
+    "stack_bytes": 1048576,
+    "compiler": "g++ -std=c++20 -O0",
+    "nested_object_depths": [
+      64,
+      127,
+      128,
+      129
+    ],
+    "scope": "Linux probe only, not Windows default-stack/CRT evidence"
+  },
+  "source_policy": {
+    "status": "PASS",
+    "negative_cases": 31
+  },
+  "PE_verifier": {
+    "status": "PASS",
+    "positive_cases": 1,
+    "negative_cases": 8
+  }
+}

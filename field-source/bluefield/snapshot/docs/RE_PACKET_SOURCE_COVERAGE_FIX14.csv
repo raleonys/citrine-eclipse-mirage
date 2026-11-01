@@ -1,0 +1,388 @@
+original_file,sha256,module_classification,direct_imports,finding_ids,not_directly_imported_is_not_automatic_bug
+anadius-achievement-runtime-source/runtime.cpp,5ec1e7c2fc2dced97d781450ad15058bc9cc2c9f5486d7ff3c35fe81bfd9e2b7,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/achievements/persistence.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-achievement-runtime-source/runtime.hpp,d28eb0121de0efa000ea2179f3d8934d4aaf212a36407146b5078116844ea400,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/achievements/persistence.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-achievement-runtime-source/utc.cpp,7684a1ffe3dfbb52585c893eb23c53c1ec7f272862cb258cb99b52f84d9f7cbe,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/achievements/utc.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-achievement-runtime-source/utc.hpp,75f907fe609da71eeb4c7737da137ed0a53574fac251c820a4007b19c5214373,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/achievements/utc.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-achievement-storage-source/storage.cpp,2a2f23e278f35e8920047c2a9444e1fd150220d01bb2d727d1f3378a43684d13,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/achievements/storage.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-achievement-storage-source/storage.hpp,54e040d5b54eb6846a849ac5e128681de5adc2e17258b2ed39fc40ff51c9403a,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/achievements/storage.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-achievement-writer-source/writer.cpp,20bd58a3fb48d3db046725fa6c154da475072c9dbd29f21e7c6a34c617319b87,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/achievements/ini_writer.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-achievement-writer-source/writer.hpp,3c2b5bf57369279c5d484c4435b33157a0af6b363e798f3852a70a40b6691f9b,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/achievements/ini_writer.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-bootstrap-native-source/native_entries.cpp,624447b6c93172343368d8162fbc8964b9339ac03f1f4b12d4253bdf4499c3ed,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-bootstrap-native-source/native_entries.hpp,3236b76f45c43f277ac17f03dde98cbbd88462ff6f93f384737fa8cb85582d5d,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-calendar-source/calendar.cpp,ef95920c0c8c4a3056cb8878931ec6733a4c3262b7fb1d96ff5352c9ffbcda0f,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/time/calendar.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-calendar-source/calendar.hpp,e46c9ed16d357d6c225aae29afb799ad2d41ce26160749e3ea25eeb762b685b4,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/time/calendar.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-config-application-source/application.cpp,27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/configuration/apply.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-config-application-source/application.hpp,9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/configuration/apply.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-config-hash-source/hash_table.cpp,15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/configuration/hash_table.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-config-hash-source/hash_table.hpp,d05e54e5232dda1b8cb9e3aabe46677135cf60483939bee7b2801f489025e2bf,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/configuration/hash_table.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-config-order-source/order.cpp,70af2d1c3e948d6b1d2eca3e4339d19869ee731216dae2b85258e77cf33dd719,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""tests/support/configuration/order.cpp"", ""role"": ""TEST_ONLY""}]",[],True
+anadius-config-order-source/order.hpp,1e9f2b46e6a1cece859dc193ecb5573df3dc4bbee94ec00490d5264cedf7345f,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""tests/support/configuration/order.hpp"", ""role"": ""TEST_ONLY""}]",[],True
+anadius-config-pipeline-source/pipeline.cpp,018c61c3354ae541b7e4e7506b7fcfb12600689772b9e54e2d99122065c54378,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-config-pipeline-source/pipeline.hpp,c8b1b863abbabe7480c5d6f0ed4051964194333c65d9a08fe93ecb5aef379b8e,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-config-source/configuration.cpp,ab1c09e52c3b4f8a8a24070b057d9eb4da72d6b24722cba931d80a5f92a9a05a,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/configuration/state.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-config-source/configuration.hpp,036eea42c74731b9c4e5bbe574e2c953b8010c2e626f5f5caf84f2029aab3f24,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/configuration/state.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-config-startup-source/startup.cpp,de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-config-startup-source/startup.hpp,324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-content-handlers-source/content_handlers.cpp,3cd0a086a6fb9451d87cf63470877e8be72264ca29894dcb009785dedbc0eab3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/handlers/content.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-content-handlers-source/content_handlers.hpp,3d7e56eac5fe80d0a76cec2baa7a160dc7a2e32d06b1d2fb18ff006cdc514ba7,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/handlers/content.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-crt-argv-bridge-source/argv_bridge.cpp,d178b2649b48fcb971bb2d99c6138b461d23be4f5f47c5178248e5dbf31687d2,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-argv-bridge-source/argv_bridge.hpp,83c3eb4264abb2b49db92dd88727600a616231edfa7fcb733e9c0fc56be2b076,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-argv-parser-source/parse.cpp,51079d3bd82066b2c9508453f54a60947d0f6eb94ff536a20c31dd6e53d231e1,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-argv-parser-source/parse.hpp,31c0ddfdf238dba9204d1fb6af1dc12692d4d7a16ea9d69bef82ee25c632bcc6,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-argv-source/argv.cpp,f36423b9120efc8feef27da66b9f473a002366b3fe98ccf5c57cd5dada4ffa6e,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-argv-source/argv.hpp,94c038a8aebdb66fdc0c4e79a96d1556e25ab98fcfdd21424bd4057a683e22ab,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-atomic-native-source/atomic.cpp,d13c18cc364775c8e5ce50f23984af8b72d4d7e6a2f420e34cd0b2caf4d32e3d,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-atomic-native-source/atomic.hpp,2af4cf8f37588aff808b4fed25e0c000a66aacb6a497f7a811b99340e053998d,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-byteclass-source/byteclass.cpp,e599636c790f7e9600e4263b731486ac92df7a10ba6f10b61dabb4e48fd1da77,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-byteclass-source/byteclass.hpp,f11493f494325cde53e772aaf5cee2eee61f2b6b8ac9be6fd450a1aa99765586,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-cache-source/cache.cpp,613f2667b0bf0c068f7f4a04e0144e15272b13cec03cb53b26f3eb41ad75a9de,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-cache-source/cache.hpp,333e6ba19bb623cf798e67c402ef65a5c58ae43717aa562a6c2c824aa803c756,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-conversion-api-source/api.cpp,ab3f870e83416c100db185af6d22c29b5e72016b8788d80ba772bd42323e759e,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-conversion-api-source/api.hpp,13025005784cb3ffd2f893c0e1c23d8a3de71c15b2f1fdbd875d91cb6b5e9f83,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-conversion-bridge-source/bridge.cpp,82300abafc9807963c40d30b15ca33056844cbcd1185b9ba46cb8263ce43ca9a,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-conversion-bridge-source/bridge.hpp,a9aca1e1acb5ca5f096e68f19193f660cf6c5cf90bd8ae683064726617a7d4e3,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-conversion-source/conversion.cpp,1e8c56c0fe21c1b020a20e87da3840b4949bc63f79e8e8250e10b02d7323ac65,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-conversion-source/conversion.hpp,72f85448cdf6957f98ba6ab92f589a6d08d0c76853e33a164cf14f3badb4dabf,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-counter-native-source/counters.cpp,044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-counter-native-source/counters.hpp,f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-cpu-source/cpu.cpp,0363b28d66323aa27b73f5a6bab114ccadaed1aa5ab0db886e897afc816215c1,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-cpu-source/cpu.hpp,fd9168d96bbf8f5f30af22de6c0635986b126d92b4a6de2381e4f73238d69641,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-entry-source/entry.cpp,035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-entry-source/entry.hpp,3f38209152eb1a83471e1f1a08b183cad4a54381113ec0fd870413ecc5b27358,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-environment-cleanup-source/environment_cleanup.cpp,5541b20bd7f67869bc2bb5a625db9dd36224396b12c803c92a553328432b816e,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-environment-cleanup-source/environment_cleanup.hpp,6fa4d9263b44cd07a0d1431b16f6e4519f6ff1309ce9277ea83a57b21d9a8cbe,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-environment-source/environment.cpp,fd5b246f6f2ee676a0ac92f2dd9a6db0f9b410c92021c52cc8669a9002731132,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-environment-source/environment.hpp,f76125336b93848a9c091f5238a9d05ede9c76f33efbd9d952c70ee84a27a683,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-error-source/errors.cpp,927a0bcd444d11370ae99b1a7025dc58c5f6e510332e436c4175c78890741fa1,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-error-source/errors.hpp,a35a12520e233f1a545cb46c32284570535899a9ab8630302ca7c597706ad38b,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-find-bridge-source/bridge.cpp,0e1a2eb3e5a08e4a4881231ccf24efe0456d7eae95e5fd989e01bccba45ebde4,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-find-bridge-source/bridge.hpp,07179a6efed22721345529a9dc3edbd1a0d032747b1090aa46b3ac3c4ae0da87,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-find-native-source/find_native.cpp,1944ad4f9ff93f6fb5fafd01840b49c3b9adad36ca6fd838d29964161601e416,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-find-native-source/find_native.hpp,f91639a154df18331bc0d1c1763e47a2fb559ff87ee691e6c68dd2e925d3af2c,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-fls-native-source/fls.cpp,a243b8c1c12009769b85482dd38b270348ecc601d2fb0f3a5b9b0a4fdfa65d99,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-fls-native-source/fls.hpp,f06b04d897f24177a76c281fb4bbcd47b295ad862f7e91e24d37ad6a535a9cd8,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-glue-source/crt_glue.cpp,b880c863eb26775ee3de243ef68e8e9a2dc78a3ada7bfa7b1a2de8d2223942ca,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-glue-source/crt_glue.hpp,d9dd2b7385850820a614600f51ff103f1929c85178b8bd065c38db661257710e,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-heap-native-bridge-source/bridge.cpp,a710e793fba3dac27bfea23fca263c0041ac013c01bbdb7f7c601f386c1c5527,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-heap-native-bridge-source/bridge.hpp,111cc299960ac585e047a4c3edd741f2dddd1bc16b3861a56ec515a53b7420d6,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-heap-native-source/native_api.cpp,e14c7e4c338d4a703d65c9e2cba9dab88b289348eff8fa61f19b661b28627289,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-heap-native-source/native_api.hpp,2487bd65de259016d6232c6ed39dd1ad096f6ef927e10fbe19f7fb6b055d1b42,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-heap-source/heap.cpp,01f2df7ddf1c41d0390982d4b484541c2de1a47c2f7458366ebfbe3c8a08b6ca,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-heap-source/heap.hpp,a67a56d560357695d9b6025236e9148c819a7ac48a5843646021e7181dc4b956,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-initial-locale-source/initial_locale_data.cpp,ac9db7a7e7e3bbe1292ebb0f408e86efa19d6bac0c5abc3bf2e5472e91be25f3,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-initial-locale-source/initial_locale_data.hpp,7fba827e4f129c53d4d79b5f1b9aac9ac29e6dfead3b3534e6f58471045aedb4,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-initial-multibyte-source/initial_mb.cpp,bc2ad14d71f56922b8425b8815a641d830df4627ff91405a634ead504074339a,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-initial-multibyte-source/initial_mb.hpp,d69491ef05381d0dcf1ce75199dbb07d586fe3edec680cab57c57bce0ea0d1a6,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-initial-state-source/initial_state.cpp,0331798d8f552c3dbea10b92697cb1b43dde5ff90290ffa63bc190d72cea8279,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-initial-state-source/initial_state.hpp,052618a576469a8d3a17d4d5610230fc03761fcc32cdaacab00ea39e77e3016c,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-initializers-source/initializers.cpp,dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-initializers-source/initializers.hpp,a9e1effcf75bf8baa9c4909a90ce187dc7a39259d73a32cfc3c25ef34ed0fa0b,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-invalid-source/invalid.cpp,76fe81b5eff2556fd25b14d77179787957101826b692beb58317137343922965,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-invalid-source/invalid.hpp,f2d09c991ff3aba1906e62870099d5156e67521946a2e7bd368e967faecebf95,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lcmap-source/lcmap.cpp,7fd1210aa06fffe1b8b706bb499d600b9e32887f0457a09ed91fae4ab34de3f1,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lcmap-source/lcmap.hpp,eb1ffff0fcbc80edd0945f8d2000ebc63766b5ec0fb1e933d400d64792c2c50c,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lifecycle-callbacks-source/callbacks.cpp,6a4debca2b0cce025b6ec731f032ad60d6bcab41d4e9e9f682281a653fadbf57,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lifecycle-callbacks-source/callbacks.hpp,3cd7e846c0922c30bdb67c1c20504747d7ba512c08e2cce3a415c2dacf46622d,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-bridge-source/bridge.cpp,1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-bridge-source/bridge.hpp,e49856d6172275d730081348414f4104c89f3e3f88684ed592343cadfbcbc118,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-free-source/locale_free.cpp,e00c5504c2335087319fd21eb04654653aa87687b4c805b403d72b3d6134c931,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-free-source/locale_free.hpp,5c591a2967d1d8045468cfd46e17a7c95fb89338b6f6c919bfd4b4d99f351327,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-names-source/locale_names.cpp,246da46cd2fff8e5298bb386a5fe87deae6d7d2cfd0a72ec49dfa4924fd500f1,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-names-source/locale_names.hpp,92550032c01f1c179724248399cf0ca28ce31c1d3e7cab83bbf57f131cb01810,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-native-source/native.cpp,6d8421431b7ef2462c8b640d25d57894b59bc97bdf512df1d0f167e05c852f10,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-native-source/native.hpp,2a8a00a85ab883f1d98d9dadf0c9159881cac4a14c3a49c16a8b3a2614c43102,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-ref-source/locale_ref.cpp,762f527d38d310e84ec5b07bc0257563a50da500210367002ac50f5c04837d2e,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-ref-source/locale_ref.hpp,b5a6815488ff5565a33a82e65bbc6ce195eca59f0d410581ed780ac38b43637d,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-resource-bridge-source/bridge.cpp,6980577c496eab1dc32bad66f07d57e840ef113fb920bd0dd786e089be3008fa,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-resource-bridge-source/bridge.hpp,614e7104746d22778cbe7d393266ff6c840e44a2989ab23a2aad9d965fbcc53c,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-startup-source/locale_startup.cpp,443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-startup-source/locale_startup.hpp,e247e38439cbf09bcb1ca165e4df21b8ba91671d5ccdc985abab4db03eacadcb,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-thread-source/locale_thread.cpp,94056806d91af6a462f4ffc63086ca10960c4e189d7bc9342aa5c7cfd19bfd4c,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-thread-source/locale_thread.hpp,536621923d516eeffb2e5fc4b835f30a668655b06ffa7e1c0c8f67ed237f6bdc,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-update-source/locale_update.cpp,05bf4170ced404a2137cba5f33528ead4338684695330ddcec409fb3d1221fa0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-locale-update-source/locale_update.hpp,ad4e873fbb0e2809967fa4beed216640c52f9dafd37a34d14d78bc959c3ffa55,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lock-native-source/native.cpp,5a1f87915482b0e6ec5f4f7d8fd38c3e282e503870c85905ffd8ce7f2614d5d8,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lock-native-source/native.hpp,92bcfcb150d71b3740e5751ba105a99a8e79ecd87f1360e1360ec52ccff1d772,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lock-source/locks.cpp,fe0849d9c97c241c4dcd7639dbc41ca8dba7a89ac176b316791a1be30d24d81f,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lock-source/locks.hpp,7d6a5c84580cb8ac817e464d52b0e096ee88caf636da2986a391c31f85075c89,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp,20dc724fe4e0c7efddaef7e0fa7087e5fed9f07adb31554827661ff2104b5d5b,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-lowio-lifecycle-source/lowio_lifecycle.hpp,a1b92b3286d2774ff45db0aa0b04ad7a12dc14b98df19db2e2ad0aedb3228670,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-module-path-source/module_path.cpp,793dec3fbfa6c487412bb812c7c29298ad91a6f7d39e6914a1ef81c1f29b1b45,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-module-path-source/module_path.hpp,b75d7901f29e1d4eec6154e530fde17440018d33461b9385615c3a424feaf2b6,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-bridge-source/bridge.cpp,ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-bridge-source/bridge.hpp,83696a8c10727955f7185a8221d460d433a782650c37540ac845bb7e7fd2a522,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-builder-source/multibyte_builder.cpp,8bfa8035b80634d324059b6919cd320c520ad326fa4da5fd657629c4a4f82e93,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-builder-source/multibyte_builder.hpp,77e1586526f1cfee56a5cc145a4cb10f72bf65815889c2ca2ca58f4b4739074b,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-control-source/multibyte_control.cpp,9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-control-source/multibyte_control.hpp,064bc605e53cbd603cd0802998fd4ee950e8671f583967e28fa8bd6719704b45,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-record-bridge-source/bridge.cpp,0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-record-bridge-source/bridge.hpp,0b4c1afe8bb5de097bf331b043ee6eaa97f3e2b5df51e1846bb57ec5a6a57f77,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-support-source/multibyte_support.cpp,59c1645aa5e8fe79ed0b81d4c99e9bb261138bab562b7c01856f7e857030a8fd,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-support-source/multibyte_support.hpp,29f3790e2d2c196e639ae47132795fba07794e05c0ee2be2d8cf2749622faa7f,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-tables-source/multibyte_tables.cpp,6dd5376b4ec71a68a5dbf594e32e6be955bfd2d354794a4c109a237fe33c2c73,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-multibyte-tables-source/multibyte_tables.hpp,b89913e38fdb4e41a59fdc19f0b032171bc0b7d3c9c7af7939fdadf7a087954c,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-bridge-source/bridge.cpp,54bffb176961a0949c3699f331642fa3f3110e4bd0e958db5d5d287563a83216,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-bridge-source/bridge.hpp,18fe2cb45e1a2893fee5fbdaa2f572a5ee21fb0f367703bfdfd582a68ae40e60,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-dispatch-bridge-source/bridge.cpp,c497d3349bdb737af6793bde4dc26c59c0ee68c9bf7f793ec069e0a19403dabd,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-dispatch-bridge-source/bridge.hpp,8635582ac4e25ffd3365291d1df414354064222cbe462b7af2c8802754b3c281,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-dispatch-native-source/native.cpp,6ce7261947cbc4e332984756286cf31e8dcacf9828fb14fb2d3a82706cdbfa35,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-dispatch-native-source/native.hpp,7fb0d1e02a858154f7d49530d7b199272de0871463da1b99c01177b1e72fa800,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-dispatch-source/nls_dispatch.cpp,0bb0cc2cb502452946f6177fa7686f280e5f25273b88421ad9cb4be7600c7e93,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-dispatch-source/nls_dispatch.hpp,8090f255a6584328186405c7eeb400e66485d19618ba65aa5c93f039c0422c34,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-native-bridge-source/bridge.cpp,a8d9c02ee615afd7a3b353b5541f491239e3d69090ee34e3d4474eb5b2c9aa9d,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-native-bridge-source/bridge.hpp,4b1ae73df1b430718e486d46425374a6527ab67962f9b391b66c28fc5de7d4f3,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-native-source/native_api.cpp,9b066a5bd518ae8df9dbeaa7153bcf28b6b77c97b0a759ebd5a499d85a8de260,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-nls-native-source/native_api.hpp,ed5c68f8f968122d7daf1fe70cc7ac9735e53bad212afe191d855a3043fb25f2,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-onexit-source/onexit.cpp,96e60bcef164e4080021377ecb9d743125939664e349e82ddf7debfd0aecb547,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-onexit-source/onexit.hpp,a219b3b518a1080824933947daa031c8047e85e32699bfc9f4bc908be6398e9e,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-pair-bindings-source/bindings.cpp,63b018adebe37d4c7a9f17ca1b2ee407e3a59cd43be291e4d2f95b9609fc4c68,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-pair-bindings-source/bindings.hpp,726405a5c3f56fecee42c6c7aa6ff8b1d97a6a114710c0dedf789c73ab9c1d51,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-pair-leaves-source/pair_leaves.cpp,db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-pair-leaves-source/pair_leaves.hpp,4c05549af135b8bb56515e56a5e9180c7fc90e9bd08f798d852aab145233019e,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-ptd-data-source/ptd_data.cpp,a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-ptd-data-source/ptd_data.hpp,25d5f6fb41a9991cc200fd2ceb5131df693d70883afbe3f5c15c316bdb65c21e,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-ptd-source/ptd.cpp,10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-ptd-source/ptd.hpp,ed059fd795ee661fdd539d2a706a9cf74deb419320da976ed628c431cb32ab73,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-realloc-source/realloc.cpp,f991c7f8786e6f01580afe0b47adc6b6b4b08772b62da41b2547e69ca09f3f47,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-realloc-source/realloc.hpp,b1cc51f93423aa11d7e5ef8761cc8ffdd7ec2ee3d82b846130c1b972bdbbf6b2,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-recalloc-bridge-source/bridge.cpp,1b0dc0977573659ea1d5de8cf1401c9ccec72d68f51ef93df2073e4a9b446c87,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-recalloc-bridge-source/bridge.hpp,44cfd079f18629d0b25f435ea3d863952e045adb82425ec1730973757cdd53d7,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-recalloc-source/recalloc.cpp,3569042ac08b500859183bc62bbaa33092beca248f5b25de06dc7421cd4ed10f,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-recalloc-source/recalloc.hpp,30a12d22315aff19a2aa5e91cf0eff7cc9005e4dfd436707e6b27044a1436dea,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-runtime-source/runtime.cpp,a8cd16ab68458525e519e6d7b97321e2a9da532e914f47fd46f5d076831b8beb,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-runtime-source/runtime.hpp,5ef66b7441704a28df50afd555f3a2cb17678ec232fbf69d6f250ffa151bce7d,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-sort-source/sort.cpp,18eb6b55d287677caf35b7a9e6ba07709bd5e332db71752ce0d10d3bb58d4f7a,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-sort-source/sort.hpp,8dab826024780cd02f7f11004a123b8dba02dd0ea71c34c362cc45cdca840fb0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-startup-bridge-source/startup_bridge.cpp,b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-startup-bridge-source/startup_bridge.hpp,071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-string-type-source/string_type.cpp,f24b170510a875c9197468f51ac6ff322cb4af456f42e3fe8990caa2909c69bb,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-string-type-source/string_type.hpp,18b9dbf34241ec4fea5a56c1cf8c83cd2dc9dcd24b0481a4aadeb2d3a9675ce7,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-support-source/support.cpp,9e3725e170ef1e0ebc989bfffaa7f816a925fb8fd4acf19b02fe21785fea5716,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-support-source/support.hpp,c3fb51e8edf0de8f9d5cbb4d1daee93c77999b384f1077bb9ef1b0119f846210,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-sync-bridge-source/bridge.cpp,3c7f7d1a236e9699485c5756ac0c7c86581a479053088bba5b877537fe21551d,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-sync-bridge-source/bridge.hpp,e6e751c498fbfd5d47b76d29eb843ac2aab007e6ef339cf1d8fcc7dfcc6b11ed,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-termination-source/termination.cpp,d06c707dfe7daefadba5d890f2b6745f75ba1c089743800462759df2f11c3e5d,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-termination-source/termination.hpp,fabc301738df4612c11c194169e92c96d407e81d88eda792e726924eb9cab0fa,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-wildcard-search-source/search.cpp,ae987abfc21a6d941794ac3ffef8fa2aa6c70fa4599e525b110b993a2cc8819b,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-wildcard-search-source/search.hpp,bb6929c82044abd608371fb1cecb532c2630dfd9e7c4880e18b8483885295644,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-wildcard-source/wildcard.cpp,a286fe75ea38d3a579f540a37fa748cf8268bd77c0aa60f97aa946818bb01340,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-wildcard-source/wildcard.hpp,9436b61288792aa1d185f50492d773e43a6ff1592f00fc66b9de7a479bc59403,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-wildcard-storage-source/storage.cpp,beacfcc8fa91ea0a883efea8d1dfa765e6e12972bc4b68157a86bb38997b9e8b,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crt-wildcard-storage-source/storage.hpp,4ec7aab64302a5ea6ba4027573669be9b77a5a3c6b226b7289ebd2f600cdb091,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-crypto-source/constants.hpp,05b802de2ac78f93c1fdf8abed0ea50ef2f9b284a6a5cefef2f4188b0f4b56b2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/crypto/constants.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-crypto-source/crypto.cpp,cd493597464ba22c7c11557c36f033387770e0cc62d4fbbaefc1676bbfabd436,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/crypto/crypto.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-crypto-source/crypto.hpp,33ae57c39012534dc5b8321199e0ef2c82ac77455c17632df28a74a27ac2fa77,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/crypto/crypto.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-dispatch-source/router.cpp,64fbd0a5403f624f1d204617fb3eb80e188d27b86de74418d02b56d916f73801,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/protocol/router.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-dispatch-source/router.hpp,f451f93d8095218650405d2c8c471efcf4cc26df72ee6358d11378282aef0492,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/protocol/router.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-encoding-source/encoding.cpp,391b6868d4604a86becb5a53493194937cb804340ae981ca21e1466401194b38,SOURCE_BRANCHES_NOT_FULLY_BOUND,[],"[""D08""]",True
+anadius-encoding-source/encoding.hpp,b65c3fda414a4b679d59ff130bcf620dc5ea5d8ee38bd9f4de4c082e2b8683b7,SOURCE_BRANCHES_NOT_FULLY_BOUND,[],"[""D08""]",True
+anadius-encoding-source/native_encoding.cpp,5022dff63bc6ca4471ca367747dfe8e8a3a9cdf071bbe2310d1f4bc86fe2b003,SOURCE_BRANCHES_NOT_FULLY_BOUND,[],"[""D08""]",True
+anadius-event-queue-source/adapters.cpp,36a4911d3c17f73dd6435305c20b879052e31c1bb05c05aa39b448fdf609dcc5,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-event-queue-source/adapters.hpp,2da19cd733b237ab75a136289b9b93816d58b3b7d0573313c6091af50a327f52,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-event-queue-source/queue.cpp,88da967fa48cdf5d2a5c99b50aa50e479fdd0011712ede86b6c53c344c9e69d8,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-event-queue-source/queue.hpp,b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-execution-source/execution.cpp,85b026aca0ea79f297c9b7a8b1c58ab008644cad04fab1b3503ca58b61bf393d,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-execution-source/execution.hpp,af96b642cb8d454a293c7ed9e249be65432e7078f738ef2a937429704431a3ca,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-execution-source/windows_platform.cpp,a233cd7b06bcb00906a39d83a4f0b833d2a87e0598ce6512c9123ff01f97ebbf,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-execution-source/windows_platform.hpp,6ac5ac5c565692ee65455a7c98f24fe72560e322a00b55b549de99c435f0ad37,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-file-source/binary_io.cpp,f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/files/binary_io.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-file-source/binary_io.hpp,5a1ef9c90437e70677458e559488d8c340de0dfcff4b74157254bf391889f7b4,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/files/binary_io.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-file-source/license_files.cpp,bc4d9250aeba6abf3feb55408f812a2f6efe58e79e9524bcf84d8972682db371,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/files/license_files.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-file-source/license_files.hpp,5984806f93a8a3d2980ece6e9da8504f79241109168a447408624077c4474340,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/files/license_files.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-file-source/native_io.cpp,e786fbd46741d172eca7d9a2f511e9757703d738f9998a857306665b316792ca,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/files/native_io.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-handlers-source/handlers.cpp,8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/handlers/information.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-handlers-source/handlers.hpp,e393944f178db370cac993d9f11e91508112e4ef9e7b16872360c0211ef61aed,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/handlers/information.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-hash-source/hash.cpp,c9e6e2836f5a2763551b6e05699d124c2c3ba720f63f6c26a0b30bbaf6a35186,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hashing/hash.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-hash-source/hash.hpp,1719714ed038c7bfa8cb1cbda94927d3cd34fac3783b54fff6a880a8bee771c7,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hashing/hash.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-host-callbacks-source/callbacks.cpp,a21e66575abe057fcaf05b2f4782593c4a537fb01d707ec77b07c4ec634330a1,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/host_callbacks.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-host-callbacks-source/callbacks.hpp,1fc379d622ae3480bd9d441f181454703735bacb7832f80206bf79d0d863f0bf,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/host_callbacks.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-host-init-source/host_init.cpp,ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/setup.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-host-init-source/host_init.hpp,0ef5afbf19ad7452ddfc4ed54ed1dd0789f6c42eb9a47bc9dbccc1aa4cc35ba7,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/setup.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-libraries-source/libraries.cpp,e31b948aef40abd8510e16324389a80f81edbedf27fbfdfb6357073d2497960f,SOURCE_LOADER_REUSED_PHASE_DIFFERS,"[{""destination"": ""src/libraries/libraries.cpp"", ""role"": ""APPLICATION_SOURCE""}]","[""D01""]",True
+anadius-libraries-source/libraries.hpp,711dd108523bc0ea5b3a0ceab3c9f3f2afb507837866a78f554d7dfab4fdb4f1,SOURCE_LOADER_REUSED_PHASE_DIFFERS,"[{""destination"": ""src/libraries/libraries.hpp"", ""role"": ""APPLICATION_SOURCE""}]","[""D01""]",True
+anadius-libraries-source/native_system.cpp,07d0334288981264b83b6832dcf3bb79276ee11f1d9313c60a29638d6ede53ad,SOURCE_LOADER_REUSED_PHASE_DIFFERS,"[{""destination"": ""src/windows/library_calls.cpp"", ""role"": ""APPLICATION_SOURCE""}]","[""D01""]",True
+anadius-license-source/license.cpp,3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/licensing/license.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-license-source/license.hpp,a949a169740b5bce16398f18f39a8f13a9d9065e343509c3791dca9e03816c36,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/licensing/license.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-license-source/literals.hpp,bcd245a5d73798417e4e13533b013e811b873f2710a8e517a71cfdd003c3f6f1,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/licensing/literals.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-messages-source/messages.cpp,58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/protocol/messages.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-messages-source/messages.hpp,42a33b619026a7a3201adbff54d853252d46a18d8d2252b7804c39929d4f54d4,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/protocol/messages.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-misc-handlers-source/misc_handlers.cpp,8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/handlers/presence.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-misc-handlers-source/misc_handlers.hpp,6d8adccf80a5f81656a69c02821eadb6497459aa10c2e88b4d99b2dad02a2cf3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/handlers/presence.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-native-source/native_callbacks.cpp,06521178fbe3a611e8af29706bf4c1d07974e299c0f044a382656330ef6c7d52,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/windows/hook_callbacks.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-native-source/native_callbacks.hpp,43f76b04c2dda924a2b10b8a7e956d08fe724f7b7d0c7ae398b8515886ecbf95,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/windows/hook_callbacks.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-native-source/original_effects.cpp,44e5dadee6249de342ff7c31c8beeb38a5109b0992c823156ed202aae23b0cf1,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/windows/original_effects.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-network-hook-source/connect.cpp,28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/connect.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-network-hook-source/connect.hpp,f6afcdaf8d2437c1dbb1b71d0d6496a3b653c445619baa60646268be828bafc4,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/connect.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-network-hook-source/hook_cleanup.cpp,a0dc1b5726b78abad8066537f1b4abc45e0a9245da9bdac425a0aafa30da050b,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/hook_cleanup.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-network-hook-source/hook_cleanup.hpp,d940ec9b265188b0cd10230a2e79bd1ded28a88f28646de52ca3170cc80bc997,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/hook_cleanup.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-online-source/online.cpp,81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/profiles/online.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-online-source/online.hpp,51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/profiles/online.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-online-source/recovered_effects.cpp,07ca212e276421f44ec0d3c109ff0a23b35c01266d9a97349b61396944729ef3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[],True
+anadius-online-source/recovered_effects.hpp,7259015541eb690bd45e9a7dab99afe4637fd2a1774051454ad230ee7e890bdd,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[],True
+anadius-parser-source/parser.cpp,700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2,PEGTL_VDF_BACKEND_ADAPTATION,"[{""destination"": ""src/configuration/parser.cpp"", ""role"": ""APPLICATION_SOURCE""}]","[""DEP04""]",True
+anadius-parser-source/parser.hpp,9e09d6bd1c3f900462c94d7e3bc5acdb141ef1045b6a1ac4e37e25fc1973bdd1,PEGTL_VDF_BACKEND_ADAPTATION,"[{""destination"": ""src/configuration/parser.hpp"", ""role"": ""APPLICATION_SOURCE""}]","[""DEP04""]",True
+anadius-path-source/paths.cpp,303335a49823dcc91aeea53d3b593d7be3c64c21136c0478d90f043ed127f67e,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/paths/paths.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-path-source/paths.hpp,32b694932082aa94d0014e366965c2687afdb7eeeefd2730af957093e32225dc,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/paths/paths.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-registry-source/abi_cells.hpp,4fd3d0a6169f8feb22d60f982b94194c3d4b47f2eee1478444e3767070a92351,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/abi_cells.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-registry-source/registry.cpp,757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/registry.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-registry-source/registry.hpp,f3393a359bbafe7feef5725aae73967f18e65814cafd0726792b51fbe5716d34,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/registry.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-server-source/server.cpp,bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,"[{""destination"": ""src/transport/read_window.cpp"", ""role"": ""DERIVED_APPLICATION_SOURCE""}]","[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-server-source/server.hpp,97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-session-source/handler.cpp,2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/sessions/handler.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-session-source/handler.hpp,270aa21281852e2698983e312b3ebf347cafdc1da2deda94b80ced295addb8c0,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/sessions/handler.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-session-source/routing.cpp,c8063ea3fd9789e1d0d15b5daa08cddf1b8e72070af1c073911dd65c6dc9bc3c,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[],True
+anadius-session-source/routing.hpp,6e263e02419da2148feeecc7a3ce95d34faaa439ffe5a9e67b672a9c1b409f8c,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[],True
+anadius-socket-source/acceptor_native.cpp,ba1f75d01e93011e9bb712754d3625a8f9852957a1acfa1df973e79d9e71bedb,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/acceptor_native.hpp,fc82c54de4d79713bc0207a6ab3429dbc8d77cd1d16e4142100e66a696aa026c,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/acceptor.cpp,c9a5c8a034daf5381d718f1985e8e3f58a530856982fff194fceed77299aea3a,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/acceptor.hpp,5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/append_growth.cpp,db4311e05b8d893e7833d004dd9078ffcc3aa566f2100f1fad7be48b5b4f7eca,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/append_growth.hpp,3e0d8e657f77895ff3a6927d162dfc6a42836c781ed63747673381f767c6a6eb,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/async_receive.cpp,6d215e4abc6d25a72240b7938b1c91ba1326dfffd8de367be75e9778602f454f,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/async_receive.hpp,4ec52308070b4d7dc017dcc2b2cabb61af4cd34c743b8499b9114ae7da344d35,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/cancellation_native.cpp,d1a8ad5506c6683f1a080950d253766bd902dce4086a843f599f4c6b414b293e,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/cancellation_native.hpp,91ac34a057aec4e6aec647c5a046f3e98138ccdeb23a1f268083defae5493f39,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/cancellation.cpp,8b9590f3ae91bad807107a79e9f04391b9470f885b599725a21fb80a8dec098c,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/cancellation.hpp,590aba7ccc16c44dd332481bd79cc2f6760b7fa81be773f5dbceaa7efebef1ff,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/cipher_session.cpp,62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/cipher_session.hpp,3fa624b7443d7fa1ab3eb86f9567e5b98323014166b98be43328360c272af412,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/close.cpp,44b17eec8a2cb5cc62ae7c2b17e027b5ebd5b10ba18785bf886bad90d56082b2,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/close.hpp,28fb856c232dcec8d1cca60016a7e0f8beed7ead11631fae25548c8eb66a55ef,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/closing.cpp,9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/closing.hpp,10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/completion_dispatcher_native.cpp,1d031ba931aac7a2daac70c54bc81d7c2eac0599a821d220a5330db1c7a405ef,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/completion_dispatcher_native.hpp,7dd0296e59451095d528515d50d97f6052ad956c000858b7e4af68e0922a387b,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/completion_dispatcher.cpp,16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/completion_dispatcher.hpp,fc956c1b9be86b46934afe11bfdc380e9c5c5264d773756cb09f5db331431955,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/composed_read.cpp,9e6ab5c28329fe1b867f4c4c683194ca852f1c5d813f22274210d65a7f9f0037,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/composed_read.hpp,11dad087e4f8f08fcbc16ef5ad42a02e313f2ae0a2734b4c7feab8f07baa94a5,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/composed_write_native.cpp,0aa0b7fa775156f28f18c16a7c5314979ef112c765de13d695996e3d3c5f454e,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/composed_write_native.hpp,23f85015f11ef464ffd2b6501c5a70ee21b8d5f9cbc016e3e7cfd7c2bdc060cb,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/composed_write.cpp,ae72cf24ff9e0ff0f4c0ecd93061f6e0538cbefda526cc945b7aed47c10b6e48,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/composed_write.hpp,12adee25325e0a9b56dc229ced9cf56768de2ec0f35312ee173c8a6293e9ef08,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/document_clear.cpp,88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/document_clear.hpp,f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/environment_constructor.cpp,bc47e1f2fbc9bc30e0142d0d97c872b66c1aa17247889af38355eb2966f55d88,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/environment_constructor.hpp,cec032a7f42a07bb852319cd0bf5639fe7243cd7fd6b8bb9b25bbd6cfe2bd050,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/frame_read.cpp,18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/frame_read.hpp,ea9adf5bd04a872d8e78173c5bdf9bf053deecdd6cc90665e4674efbf72d4111,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/handler_dispatch_bridge.cpp,522fd1b8e79025a8cd6e80791ba292216d0b69826f9dfbb660261ac1e6716602,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/handler_dispatch_bridge.hpp,a0c012878ee191fe53b22d7bace89ade87308c9e3702c81ca9cdd905f9887646,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/handler_dispatch.cpp,bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/handler_dispatch.hpp,0fec1cbf13941617daf61b0bf4a144c3e660bd976f4c65f8ebad184e198b3f64,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/io_completion_dispatch.cpp,bb85580acd56f40b4e9c32e06a615aba3af36c37f6adc51ccc1184ec3c96a9a1,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/io_completion_dispatch.hpp,43e4ab5404a7805e689232622ebc2a7471bd851532cdb952338dc0bce08074c2,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/io_completion.cpp,48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/io_completion.hpp,85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/iocp_constructor_native.cpp,ef64c81fee9b3460c62bb7a3e3a6676ef32b82e49e5701461656af9ce2969455,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/iocp_constructor_native.hpp,53bf32bd986d221473ded1fb814f83676b6591dc584dc02fbbadfdfb75c48142,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/iocp_constructor.cpp,4b9e91d2cab45972f188319246adc4d6e784ddb8be19946d408c5ac12fc20254,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/iocp_constructor.hpp,c82705d8734e98d5df368faeb20d202a08c04d70092f6dd4e858d617e9112725,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/lifecycle_native.cpp,3d93ea529a65f84e009a80caebd6032606c65f60d2de281a6885a84c94d99996,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/lifecycle_native.hpp,ef0f5c9621106f565d4b65b39666e2ee258f13e0638644051c543d1e63bf8f52,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/lifecycle.cpp,6f5f684e1fb3224a5a9fd92ebf51f4b495effecf0f5ee7aad7fa7bc92fbb52c8,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/lifecycle.hpp,081bf08e4214bdaaa2252c6e1abcb6ce6acad75c2805656cec5dee6e9eeee898,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/message_core_bridge.cpp,a70a08445f81d56ae6a3a25137f090dd120244f7ce0e72e71822a8a09f7324cc,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/message_core_bridge.hpp,952d090d21149bbda432065d168c058fd254f10cf867f1add78de0168b629368,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/message_dispatch.cpp,a8ca45a775c0fcd6bd485075ad3d459f8fd208a4922ade32e521c37bc2870014,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/message_dispatch.hpp,e29de315e311d2d5bf8129db745102415609fb140de1f74ea121150efa142e01,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/native_dispatch.cpp,ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/native_dispatch.hpp,0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/native_document.cpp,922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/native_document.hpp,d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/native_message.cpp,9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/native_message.hpp,6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/native.cpp,2a608ec00e43aa90eb7b4e964214818a4d7b6e89f2b5f171048c36375e0a9048,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/native.hpp,5a091dca8902e1116073bdc1fd44952191f53bbe0ff3a2a592b37d6ba3d57066,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/node_delete.cpp,29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/node_delete.hpp,416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/operations.cpp,63bc7fd32801a6f310492f1ff3f9a4bcc8f95a1f73b837d2bff81774ccea8ae7,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/operations.hpp,a3b2c6b21d6a2d7b19f9f3245d08d5a450caa2bc8b95285fc19c9c94bdb833e2,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/owned_response.cpp,a9125c30bf6d551a3eb32435ab088c8266a60f421e545e5e211c4fd34a7c821c,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/owned_response.hpp,0c1a23789740ac7948bfda66bcac00040c99eae0589db6bf8cacf1471b6f1b56,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/pool_release.cpp,bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/pool_release.hpp,1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/posted_operation_dispatch.cpp,3d4685cafeeacc2b2a404c2277a1049d1dc9c3aa347430ae77e8fe51679734b1,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/posted_operation_dispatch.hpp,045fc8fbcc9f6f3aa010c26a5e2365a83b147b91af0a98ff5ca864d882557bab,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/posted_operation.cpp,4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/posted_operation.hpp,a64463108f00dd71fe71c9ac577c73d857e4a8fd67e56d7bb65313536e3c8aff,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/prefix_cipher.cpp,62b58f613895dbb9fcdc7d184496aa22c5dea328448140a02c5017e2cc2ce48d,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/prefix_cipher.hpp,51a2f555d3b9b589922d14bdc96fe464fe4f512b49bebe73003897dd8047fb5f,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/queued_write.cpp,8aec35f671804e86544701065a8c510b0b3c5632b0baf13cf31f6679fbd88211,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/queued_write.hpp,7a205cbc34118c9181f829feeb474478dedd10eb21d37780af966018e3f6cc7a,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/receive_buffer.cpp,022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/receive_buffer.hpp,709ca59766fc42bf2fbc7d1f4f033987b590e42874ff566b39f975ac43ed1e56,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/recycle_storage.cpp,cc08df14c064dd41f2fdd4a0f3752869b57f01d9955ff25efc83fc0e0fd9ea5e,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/recycle_storage.hpp,e39f05d8b3bcf95985e64149561b8d3158f3865aee4cabea0e2d151d80351560,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/recycle.cpp,aeb139759f836963ee7216d1a95e4eb2149f41c9f29463f4d2712be416d2836d,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/recycle.hpp,027923db8624434cf98274a27d667ff2fb2aec082a65e0998f1200c81efeb60f,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/request_growth.cpp,40667442f868a21494379830b95c6ce790babba2900c44842e11e84af04a9311,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/request_growth.hpp,b4870a3caf86e5abcb6e6703eba65ef41a46a802f69035850e063cd9314f1922,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/request_mutation.cpp,9226b59ea65c735564c0fa22dc460509e23d44b2ce958b66f40222f07960980e,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/request_mutation.hpp,fa25d13bec2e915557cabff3bf03b9707f55005441b27e736e7fa314c857ee8d,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/response_containers.cpp,c1108f7835ac8e21ca3e05735e93ca55f4859127b556f6a5ff13644381ab0eb8,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/response_containers.hpp,87a57bb2b3e5c7a10d944329719045724a6aa235dacf6bb143e41177c944e667,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/response_dispatch.cpp,9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/response_dispatch.hpp,95068d4638a48bf8b215da58455c684d25da2042dab987ad9b45265de37bf648,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/response_hex.cpp,a3afa7e8621353d8667b5c773bdffe3aab35089a0e8dd6d90314cd723f4f4a4f,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/response_hex.hpp,c82c322e3ed3f9a257e84472c50d8614a0102d5734a32faab80c475140f10361,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/scheduler_registry.cpp,dd435dd06297b628a8a101effc1c1d4263a281299d04f8517ee16368de4c64ac,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/scheduler_registry.hpp,15682596994c9dad200822f868694ac5ecd5c1b892989ec9f661493f44ea68d9,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/service_constructor_native.cpp,9bc4cac66954bcb9583fea697cfa1e9ebae2daac3284a5ac8cd33781495a19aa,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/service_constructor_native.hpp,4dfe0aebd535f22fd9cf264c13508055b79bcbaab62aaf9c8bcec2b6bdb24702,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/service_constructor.cpp,e4125fb99d7cbf61c29fd82ac5b7027f5face09a92e77890c66da96a8ec74413,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/service_constructor.hpp,3e03015e00752ec4f3020bdaa6559eb89e3c311b25877198a296361ef4a19365,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/service_registry.cpp,663e6f4799e9173722e0af62b05d7a4e96d069f4f0dc55b6777cc46e037cbc02,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/service_registry.hpp,5584fc37f54fa847efee7aa350fb51d2f82033d8826cca762f8e6e9f27752525,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/worker_run_native.cpp,df0d743263b53d4845456d78766e86daa47c9bf4358f51b91ff25f8dcda3ec38,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/worker_run_native.hpp,0abeed67dba180b8506005ecaade1093b1e966e847953a094cb8855e13c76d93,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/worker_run.cpp,1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/worker_run.hpp,191ac2548f32bd8828d5d3d12b9ce41f99716e1f9028ae554e2d483fab06df0f,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/worker_startup_native.cpp,7b67d379aa49a2133dd58c6ffd0d553419b2bf8105162fc1ad32c97c0fead8c9,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/worker_startup_native.hpp,3a9dd32ae720496c9e9239f8840542487b9c88f431defb1569545a6c8796ee2e,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/worker_startup.cpp,c195e934d656aa572de2656f7d80cf2257fbbc9d4c8aa80accd233bc08ecb565,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/worker_startup.hpp,699eb51446551906d51c069c00d95f6fbd2d9a2cb706d28021695990d01fa87e,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/write_finish.cpp,b13efb4696b7a8fd89e94e5d14d22d0b7da93d7da820fcaf212241807918667e,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-socket-source/write_finish.hpp,c9e341de1a667ba2f17c1861aed4800243d2ebff022f3b9df47cdf6e48c2f6ba,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,[],"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]",True
+anadius-source/bootstrap.cpp,630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-source/bootstrap.hpp,26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-startup-source/startup.cpp,87bcd90892dcea301fc3c1aceb589d1097875d9400d3bd69b64570d008740dea,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/runtime/startup.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-startup-source/startup.hpp,fc915cf189761a78bea8b0d7ac083722881893bf4d2007fa343986484c95f5e9,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/runtime/startup.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-startup-source/windows_platform.cpp,d765091c8a8b4ee121a425860c59d558eff918d75e7e7c87114d117ee65b5ef9,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/windows/startup_platform.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-status-source/native_status.cpp,785adfeb5e1cbcc383f7ebbe2249f89e36f39eb82b0709f9ef32804c21238d35,SOURCE_BRANCHES_NOT_FULLY_BOUND,[],"[""D07""]",True
+anadius-status-source/status.cpp,c2c842ecea2ce9704658f834da34d823881747429cf8f9b897b05efa9123f670,SOURCE_BRANCHES_NOT_FULLY_BOUND,[],"[""D07""]",True
+anadius-status-source/status.hpp,db4f36d8804eb75ab63497b47efe33e5ebaf77529dd5cdd33cfa31aee2b1fe81,SOURCE_BRANCHES_NOT_FULLY_BOUND,"[{""destination"": ""src/contracts/status.hpp"", ""role"": ""APPLICATION_SOURCE""}]","[""D07""]",True
+anadius-thread-native-source/win32_effects.cpp,5cb6fe9d2b81e50e50813521b76d24aa098489c8ebf108191a5e9bdd610f6bf2,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-thread-native-source/win32_effects.hpp,1d0baba064b509a8cbb8cc58751f064148321a8639e8a85dcbab7620dac0fc48,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-thread-source/threads.cpp,3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-thread-source/threads.hpp,ab28bd3937e109ff088fe40344af2491c8f8f5c6d69891d62fdfd331356824c8,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-timestamp-source/timestamp.cpp,443dc4a0dea62b717d4513f6d8432f84f8d51ff6edf3bc26bd12f6578c02e52c,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/time/timestamp.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-timestamp-source/timestamp.hpp,bdf47aadc38b11393e9317ed9c2e4b43067f8c81c02256a4001289da31ba017e,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/time/timestamp.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-token-source/constants.hpp,5ca7807f6b219ffa2f5d8b1af084495cbe5ac602bc8a93f14ef9a39274dbce3e,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/tokens/constants.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-token-source/token.cpp,fba652fd5f6027ac2d0988237bac10f4cefc9a74fceecc2554667b8484fee020,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/tokens/token.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-token-source/token.hpp,7a5735cf9198ec8aa18e94a3f339721e12e3b6603efb9933e21a78ef4c8eea4d,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/tokens/token.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-vcrt-api-source/api.cpp,ce23cd356e8346f5c849757bf45a8b43fd8a7e40fa3fce5be99cfec9ff9b3f85,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-vcrt-api-source/api.hpp,dcd287690abf9e3dc2c3b40818294d783e79207c4a0fa03ae1a91fa7c3ab33c1,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-vcrt-bridge-source/bridge.cpp,85f1591f4b8e265cea036badadaf0c3de43fdd6bd16c2a1be910aaf4137526bf,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-vcrt-bridge-source/bridge.hpp,eac77edf09d6d38d5d33651f9a7c58ebec6dd46abb3db28b283a95140af598e3,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-vcrt-ptd-source/vcrt_ptd.cpp,2acfb1ff8678493678288dc0a806b8c27946e100ebc223409c867264b9b5e307,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-vcrt-ptd-source/vcrt_ptd.hpp,e4f1a934221d94f592e37afaa8a9d6ced5dcab08d38e98cdfb080fc9245a14bf,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,[],"[""D19""]",True
+anadius-windows-source/windows_effects.cpp,e391116f9528d6106829ae5c55262f399f596a1675ad1aeb4dc347b0f38c8438,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-windows-source/windows_effects.hpp,57f275316ecd1d78bcb21b0a93da54c26eacfdf3bceaa66370edc84631d4a19f,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+anadius-xml-reader-source/reader.cpp,0c80c24764ad925ada9ca2c485a984ba490f07d7a596db1eb12c2f18af817d66,UPSTREAM_TINYXML2_ADAPTER,"[{""destination"": ""src/xml/reader.cpp"", ""role"": ""APPLICATION_SOURCE""}]","[""DEP03"", ""D15""]",True
+anadius-xml-reader-source/reader.hpp,f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e,UPSTREAM_TINYXML2_ADAPTER,"[{""destination"": ""src/xml/reader.hpp"", ""role"": ""APPLICATION_SOURCE""}]","[""DEP03"", ""D15""]",True
+anadius-xml-source/memory_printer.cpp,0b15eda57fe5396438869e00b5de5d17ce117af9ab29ccd49335b9ca30414e05,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/xml/memory_printer.cpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+anadius-xml-source/memory_printer.hpp,3980f07002c4375413d3d9b517f6bb4ce9c53fa034ec6eba5c7d16d9ed39c6af,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/xml/memory_printer.hpp"", ""role"": ""APPLICATION_SOURCE""}]",[],True
+hook-engine-source/adapters.cpp,c43e3fc13ceb60833324c880725d7e6ed6b0f668ed82e077b9b28d4f47a7ac5d,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,[],"[""DEP02"", ""D05""]",True
+hook-engine-source/adapters.hpp,757f5f0ee47e19fe2611072dab96b72c21b57d8d64e49c23a16d7f67ab9d8862,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,[],"[""DEP02"", ""D05""]",True
+hook-engine-source/api.cpp,f0342452f7a1e379903472f48937281ceddad0920ddc152b7615dc3e9c98eadc,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,[],"[""DEP02"", ""D05""]",True
+hook-engine-source/api.hpp,ff489c6112295848f0632537c2012d3c756242f43f95d25464474f1336a07a45,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,[],"[""DEP02"", ""D05""]",True
+hook-engine-source/preloader_engine.cpp,7f73897a95261bebc448c8b54fb0700ccb89ef03acb7115457ac05516c9f51db,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,[],"[""DEP02"", ""D05""]",True
+hook-engine-source/testing/fake_state.hpp,c090f3eb0dd036322b4eecc543092c1bf915e5acf920eb2ac968c731b8c429f5,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,[],"[""DEP02"", ""D05""]",True
+hook-engine-source/testing/fake_win32.cpp,fb4af05fde27ad258eabf834dfb397ed3cbed872ac97784e6a5247466b3b0c8f,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,[],"[""DEP02"", ""D05""]",True
+hook-engine-source/testing/fake_win32.h,b1f387766f6dacd32f03c6e8f317042ff7e173f49740f780accd6fd20a96dee1,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,[],"[""DEP02"", ""D05""]",True
+preloader-native-source/native_shims.cpp,d18a7a813f907b8b8cd5e6d9481096e919e411b13ed6300ea7913c94a9815b2c,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+preloader-native-source/native_shims.hpp,c8fca5044079e9b08638d79feab405f1d25ab4f9378675e0f9d563976f227848,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True
+preloader-source/preloader_core.cpp,61e1b948bd7461194ef86099de7ea4ecdacafd1627fe701a5bdd04de85435de9,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,"[{""destination"": ""src/hooks/crypt_query.hpp"", ""role"": ""DERIVED_APPLICATION_SOURCE""}, {""destination"": ""src/hooks/crypt_query.cpp"", ""role"": ""DERIVED_APPLICATION_SOURCE""}]",[],True
+preloader-source/preloader_core.hpp,eb17bae0b5b6dd9edcb58722fb7eb2d4408e3bb88d68951b83e2e43dcd9d8001,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[],True
+version-rebuild/loader.cpp,5da3a9fce911abdc7d4ca0fd1f99d0f7d545608ed5f6bff427643692def2f18a,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],[],True

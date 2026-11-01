@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "scope": "pristine dependency and unchanged path/IO/profile/parser/ABI source bytes; not native runtime equivalence",
+  "pristine_gulrak_headers": 6,
+  "vendor_files_with_license_and_pin": 8,
+  "unchanged_from_FIX10": [
+    "surge.cfg.example",
+    "src/application/environment.cpp",
+    "src/application/providers.cpp",
+    "src/application/providers.hpp",
+    "src/files/native_io.cpp",
+    "src/profiles/online_session.cpp",
+    "src/configuration/apply.cpp",
+    "src/configuration/defaults.cpp",
+    "src/configuration/parser.cpp",
+    "src/configuration/hash_table.cpp",
+    "src/paths/paths.cpp",
+    "src/paths/paths.hpp",
+    "exports/preloader_l.def",
+    "exports/production.def"
+  ],
+  "source_policy_negatives": 38,
+  "PE_positive": 1,
+  "PE_negative": 8,
+  "Python_syntax_files": 20
+}

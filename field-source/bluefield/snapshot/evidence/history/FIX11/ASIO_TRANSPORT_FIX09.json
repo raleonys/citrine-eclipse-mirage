@@ -1,0 +1,12 @@
+{
+  "source_digest": "61e898fcbf29ac6828827dbdbb3b1f3edee2c51791f318e1f5d4a15e4c562394",
+  "status": "PASS_PORTABLE",
+  "focused_checks": 49,
+  "output": "PASS Asio transport checks=49; fragmentation/FIFO/300k-write/fault recovery/cancel/repeated lifecycle; native IOCP requires Windows\n",
+  "allocation_case": "one background allocation failure contained; subsequent client profile response verified",
+  "backend": "active pinned Asio source; IOCP required in Windows compile branch",
+  "original_native_Asio_equivalence": "NOT_CLAIMED",
+  "Windows_IOCP_Native_CRT": "NOT_RUN",
+  "LSan": "ENVIRONMENT_BLOCKED",
+  "ASan_UBSan": "PASS 30 groups, detect_leaks=0"
+}

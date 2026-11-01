@@ -1,0 +1,14 @@
+{
+  "profile": "debug",
+  "source_digest": "459db9aac948a242e06c309c60a58b642679c9799ae5907e27b2f16b7f729375",
+  "configure": {
+    "exit_code": 0,
+    "seconds": 2.138,
+    "log": "fix31_helpers/debug_configure.log"
+  },
+  "build": {
+    "exit_code": 0,
+    "seconds": 86.668,
+    "log": "fix31_helpers/debug_build.log"
+  }
+}

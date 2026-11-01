@@ -1,0 +1,8 @@
+{
+  "status": "NEGATIVE_CONTROL_REJECTED",
+  "scope": "same focused core/test, only old io run catch loop restored in scratch translation unit",
+  "exit_code": 1,
+  "output": "FAIL Asio phase=arbitrary dispatch allocation checks=52 fault_size=143: arbitrary failure recovers or explicitly clears readiness\n",
+  "negative_service_sha256": "a883bf2709802f309e996508dd5368dc1741b3d0aaab9704876cdc6cc0b0e9a9",
+  "binary_sha256": "e27538f6caa1734351e20df21e903e1f347f07904ad8657f2aa7a10e0a3a98ff"
+}

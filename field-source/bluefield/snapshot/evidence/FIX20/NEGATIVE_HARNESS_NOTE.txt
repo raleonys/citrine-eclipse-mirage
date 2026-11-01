@@ -1,0 +1,1 @@
+The early-publication mutation was rejected at the earlier shared source post-configuration sequence assertion. The control initially expected the later environment-empty assertion. Only the external control diagnostic expectation was aligned; production code and fixture assertions were unchanged.

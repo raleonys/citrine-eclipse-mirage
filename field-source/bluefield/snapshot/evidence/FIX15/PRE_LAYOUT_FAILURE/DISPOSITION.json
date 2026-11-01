@@ -1,0 +1,7 @@
+{
+  "finding": "FALCION rejects new root governance directory",
+  "status": "CORRECTED_BEFORE_FINAL_VALIDATION",
+  "correction": "Move normative projection to existing docs/metadata layout; no Golden tool/policy byte change",
+  "failed_source_digest": "42f85516b0b409edc7684c1ca16e69d32c2480375f424a91f362d5edf6eadd02",
+  "never_reported_as_PASS": true
+}

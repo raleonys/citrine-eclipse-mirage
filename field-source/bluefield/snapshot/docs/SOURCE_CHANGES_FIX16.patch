@@ -1,0 +1,76 @@
+--- FIX15/src/transport/service.cpp
++++ FIX16/src/transport/service.cpp
+@@ -202,9 +202,8 @@
+  listener->async_accept([this](asio::error_code error,Tcp::socket socket){
+   if(error&&!stopping.load()){
+    env.log(LogEvent::phase);
+-   asio::error_code ignored;listener->close(ignored);
+-   {std::lock_guard lock(ready_mutex);stopping.store(true);ready.store(false);}
+-   ready_condition.notify_all();return;
++   // Source accept_completion_025720 logs the completion error and rearms
++   // accept. Keep terminal dispatch/rearm exceptions on their existing paths.
+   }
+   try{
+    clients.erase(std::remove_if(clients.begin(),clients.end(),[](const auto& p){return p->failed.load(std::memory_order_acquire);}),clients.end());
+--- FIX15/tests/integration/test_asio_transport.cpp
++++ FIX16/tests/integration/test_asio_transport.cpp
+@@ -20,11 +20,17 @@
+ #include <sys/socket.h>
+ #include <arpa/inet.h>
+ #include <unistd.h>
++#if defined(__linux__)
++#include <sys/syscall.h>
++#endif
+ using Socket=int;constexpr Socket invalid_socket=-1;
+ void close_socket(Socket s){::close(s);}
+ #endif
+ namespace {
+ std::atomic<bool> fail_next_background{false},session_allocations_only{true};std::atomic<unsigned> injected{0};std::atomic<std::size_t> fault_size{0};std::thread::id main_thread;
++#if defined(__linux__)
++std::atomic<unsigned> accept_faults_remaining{0},accept_errors{0};
++#endif
+ int checks=0;const char* phase="initialize";
+ struct FrameClosed:std::runtime_error{FrameClosed():std::runtime_error("fixture EOF") {}};
+ void require(bool value,const char* reason){++checks;if(!value)throw std::runtime_error(reason);}
+@@ -63,6 +69,20 @@
+  void message(std::string text){text.push_back('\0');send(text);}
+ };
+ }
++#if defined(__linux__)
++// Test-executable-only native boundary fault. The production source/vendor tree
++// has no selector or hook for this: actual Asio completions and TCP frames run.
++extern "C" int accept(int socket,sockaddr* address,socklen_t* length){
++ auto remaining=accept_faults_remaining.load();
++ while(remaining&&!accept_faults_remaining.compare_exchange_weak(remaining,remaining-1)){}
++ if(remaining){accept_errors.fetch_add(1);errno=EMFILE;return -1;}
++#if defined(SYS_accept)
++ return static_cast<int>(::syscall(SYS_accept,socket,address,length));
++#else
++ return static_cast<int>(::syscall(SYS_accept4,socket,address,length,0));
++#endif
++}
++#endif
+ void* operator new(std::size_t n){
+  // Session contains a fixed 64 KiB buffer: fault that owned allocation in
+  // the recovery test, not arbitrary internals of the Asio dispatcher.
+@@ -105,6 +125,20 @@
+   {Client excess(service.port());require(excess.frame().find("Challenge")!=std::string::npos,"source accepts beyond invented client cap");}
+   const auto begin=std::chrono::steady_clock::now();service.stop();require(std::chrono::steady_clock::now()-begin<std::chrono::seconds(2),"stop drains live async sessions");
+  }
++#if defined(__linux__)
++ {
++  phase="source accept completion errors";preloader_l::Service service(env);service.start();const auto port=service.port();
++  accept_faults_remaining.store(3);bool response=false;
++  try{Client client(port);(void)client.frame();client.message(request(101));response=client.frame().find("GetProfileResponse")!=std::string::npos;}catch(...){}
++  accept_faults_remaining.store(0);
++  require(accept_errors.load()!=0,"native accept error was actually injected");
++  require(response&&service.is_ready()&&service.port()==port,"accept completion errors keep the same listener usable");
++  require(accept_errors.load()==3,"three consecutive native accept errors were rearmed");
++  Client next(port);(void)next.frame();next.message(request(102));require(next.frame().find("SURGE")!=std::string::npos,"later client after native accept failures");
++  service.stop();require(!service.is_ready(),"explicit stop still clears readiness after accept recovery");
++  std::cout<<"Native accept fault regression injected="<<accept_errors.load()<<" platform=Linux; Win32 boundary NOT_RUN\n";
++ }
++#endif
+  phase="arbitrary dispatch allocation";unsigned attempts=0,terminal=0,recovered=0,dispatch=0,rearm=0;
+  session_allocations_only.store(false);
+  // Bounded campaign; accepting a terminal failure does not mean recovery.

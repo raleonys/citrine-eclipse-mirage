@@ -1,0 +1,24 @@
+{
+  "before_open": 11,
+  "after_open": 10,
+  "corrected": [
+    "D03"
+  ],
+  "retained_within_D03": [
+    "ordered owned per-session compute",
+    "cancellable asynchronous greeting before reads"
+  ],
+  "remaining_open": [
+    "DEP05",
+    "D02",
+    "D06",
+    "D07",
+    "D13",
+    "D14",
+    "D15",
+    "D16",
+    "Q02",
+    "D21"
+  ],
+  "native_validation": "NOT_RUN_separate_dimension"
+}

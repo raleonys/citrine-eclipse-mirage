@@ -1,0 +1,109 @@
+Test project /workspace/scratch/2072698c927d/fix31_qa/production
+      Start  1: hooks_test_registry_source
+      Start  2: hooks_test_registry_wait
+ 1/52 Test  #1: hooks_test_registry_source ..............   Passed    0.00 sec
+      Start  3: paths_test_encoding
+ 2/52 Test  #3: paths_test_encoding .....................   Passed    0.00 sec
+      Start  4: files_test_status
+ 3/52 Test  #4: files_test_status .......................   Passed    0.00 sec
+      Start  5: libraries_test_libraries
+ 4/52 Test  #5: libraries_test_libraries ................   Passed    0.00 sec
+      Start  6: configuration_test_hash_table
+ 5/52 Test  #2: hooks_test_registry_wait ................   Passed    0.11 sec
+      Start  7: configuration_test_parser
+ 6/52 Test  #7: configuration_test_parser ...............   Passed    0.00 sec
+      Start  8: configuration_test_pegtl_differential
+ 7/52 Test  #6: configuration_test_hash_table ...........   Passed    0.11 sec
+      Start  9: configuration_test_state
+ 8/52 Test  #9: configuration_test_state ................   Passed    0.01 sec
+      Start 10: crypto_test_crypto
+ 9/52 Test  #8: configuration_test_pegtl_differential ...   Passed    0.10 sec
+      Start 11: handlers_test_content
+10/52 Test #11: handlers_test_content ...................   Passed    0.00 sec
+      Start 12: handlers_test_information
+11/52 Test #12: handlers_test_information ...............   Passed    0.00 sec
+      Start 13: handlers_test_presence
+12/52 Test #13: handlers_test_presence ..................   Passed    0.00 sec
+      Start 14: hashing_test_hash
+13/52 Test #10: crypto_test_crypto ......................   Passed    0.10 sec
+      Start 15: hooks_test_crypt_query
+14/52 Test #15: hooks_test_crypt_query ..................   Passed    0.01 sec
+      Start 16: hooks_test_setup_plan
+15/52 Test #16: hooks_test_setup_plan ...................   Passed    0.01 sec
+      Start 17: licensing_test_key_store
+16/52 Test #17: licensing_test_key_store ................   Passed    0.01 sec
+      Start 18: licensing_test_license
+17/52 Test #18: licensing_test_license ..................   Passed    0.00 sec
+      Start 19: paths_test_path
+18/52 Test #19: paths_test_path .........................   Passed    0.00 sec
+      Start 20: paths_test_module_relative
+19/52 Test #20: paths_test_module_relative ..............   Passed    0.00 sec
+      Start 21: profiles_test_online
+20/52 Test #21: profiles_test_online ....................   Passed    0.01 sec
+      Start 22: protocol_test_integration
+21/52 Test #22: protocol_test_integration ...............   Passed    0.00 sec
+      Start 23: protocol_test_messages
+22/52 Test #23: protocol_test_messages ..................   Passed    0.00 sec
+      Start 24: runtime_test_startup
+23/52 Test #14: hashing_test_hash .......................   Passed    0.06 sec
+      Start 25: time_test_calendar
+24/52 Test #24: runtime_test_startup ....................   Passed    0.00 sec
+      Start 26: tokens_test_token
+25/52 Test #25: time_test_calendar ......................   Passed    0.00 sec
+      Start 27: xml_test_printer
+26/52 Test #26: tokens_test_token .......................   Passed    0.00 sec
+      Start 28: xml_test_reader
+27/52 Test #27: xml_test_printer ........................   Passed    0.00 sec
+      Start 29: runtime_tcp_and_persistence
+28/52 Test #28: xml_test_reader .........................   Passed    0.01 sec
+      Start 30: startup_configuration_profile_compat
+29/52 Test #30: startup_configuration_profile_compat ....   Passed    0.03 sec
+      Start 31: test_unload_scan
+30/52 Test #29: runtime_tcp_and_persistence .............   Passed    0.08 sec
+      Start 32: test_atomic_stage_collision
+31/52 Test #32: test_atomic_stage_collision .............   Passed    0.04 sec
+      Start 33: test_xml_depth_source_oracle
+32/52 Test #31: test_unload_scan ........................   Passed    0.19 sec
+      Start 34: test_config2_source_oracle
+33/52 Test #33: test_xml_depth_source_oracle ............   Passed    0.18 sec
+      Start 35: test_failure_diagnostics
+34/52 Test #35: test_failure_diagnostics ................   Passed    0.00 sec
+      Start 36: test_ticket_output
+35/52 Test #36: test_ticket_output ......................   Passed    0.02 sec
+      Start 37: test_avatar_effects
+36/52 Test #37: test_avatar_effects .....................   Passed    0.03 sec
+      Start 38: test_transport_pipeline
+37/52 Test #38: test_transport_pipeline .................   Passed    0.29 sec
+      Start 39: test_path_effects
+38/52 Test #39: test_path_effects .......................   Passed    0.00 sec
+      Start 40: test_path_resolution
+39/52 Test #40: test_path_resolution ....................   Passed    0.01 sec
+      Start 41: test_configuration_orchestration
+40/52 Test #41: test_configuration_orchestration ........   Passed    0.01 sec
+      Start 42: test_startup_phases
+41/52 Test #42: test_startup_phases .....................   Passed    0.17 sec
+      Start 43: test_brownfield_contracts
+42/52 Test #43: test_brownfield_contracts ...............   Passed    0.01 sec
+      Start 44: test_supplied_config
+43/52 Test #44: test_supplied_config ....................   Passed    0.01 sec
+      Start 45: test_configuration_profile
+44/52 Test #45: test_configuration_profile ..............   Passed    0.02 sec
+      Start 46: test_asio_transport
+45/52 Test #34: test_config2_source_oracle ..............   Passed    1.10 sec
+      Start 47: test_filesystem_config
+46/52 Test #47: test_filesystem_config ..................   Passed    0.02 sec
+      Start 48: test_runtime_migration
+47/52 Test #48: test_runtime_migration ..................   Passed    0.07 sec
+      Start 49: test_original_compat
+48/52 Test #49: test_original_compat ....................   Passed    0.12 sec
+      Start 50: golden_protocol_tool_selftests
+49/52 Test #50: golden_protocol_tool_selftests ..........   Passed    0.16 sec
+      Start 51: test_golden_pipeline
+50/52 Test #46: test_asio_transport .....................   Passed    3.36 sec
+      Start 52: test_golden_link_policy
+51/52 Test #52: test_golden_link_policy .................   Passed    0.07 sec
+52/52 Test #51: test_golden_pipeline ....................   Passed   20.22 sec
+
+100% tests passed out of 52
+
+Total Test time (real) =  22.21 sec

@@ -1,0 +1,38 @@
+{
+  "status": "PASS_TARGETED_NEGATIVE_CONTROLS",
+  "source_digest": "f9ef440541789d2a5452b3da1c145ef988b111b0431a73bf7370c33f19630c7b",
+  "test_sha256": "0b9725d7caa35abb45a3941c271d45c17aac31dd4452da922517f93f6aa10f0d",
+  "note": "Only temporary copies were mutated. Current shipping source and test expectations unchanged. Existing validated core objects were reused; each replaced TU and new test were freshly compiled/linked.",
+  "cases": [
+    {
+      "case": "native_call_under_state_lock",
+      "file": "src/application/application.cpp",
+      "current_sha256": "11b416d0451927098f247ed9e887d3aaa2faf6ef14ef07fd98f9535a68d1462a",
+      "mutated_sha256": "dcecd9831a31ecf8daffc465acf15615007b1c57527bc615f144ca2d0b1ee0fb",
+      "mutation": {
+        "before": "auto result=online_session.initialize();",
+        "after": "auto result=[&]{std::lock_guard hold(state_mutex);return online_session.initialize();}();"
+      },
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_assertion": "test receive",
+      "output": "FAIL startup phases: test receive\n",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    },
+    {
+      "case": "worker_skips_provider_phase",
+      "file": "src/transport/service.cpp",
+      "current_sha256": "262e833008ff3878e1b9af26d52b6b8d783b8757258ace6fbefb34456d20317c",
+      "mutated_sha256": "85a1b0a856a59d4da069d31ca4a25e7e0b7b7e3a10c0436cb6e1d70d65d7eb1a",
+      "mutation": {
+        "before": "if(!steps.wait(2))return;",
+        "after": "if(!steps.wait(1))return;"
+      },
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "expected_assertion": "worker extras do not start before provider completes",
+      "output": "FAIL startup phases: worker extras do not start before provider completes\n",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    }
+  ]
+}

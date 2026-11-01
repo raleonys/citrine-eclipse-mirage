@@ -1,0 +1,389 @@
+{
+  "scope": "All owned file contracts plus explicit external/provider boundaries. No native runtime trace or exhaustive provider binary implementation claim.",
+  "templates": [
+    {
+      "id": "app_root",
+      "path_template": "%LOCALAPPDATA%/SURGE",
+      "creator": {
+        "source": "src/runtime/runtime_paths.cpp",
+        "function_or_locator": "RuntimePaths::RuntimePaths",
+        "line": 25
+      },
+      "operation": "Create (lazy)",
+      "condition": "First actual app write, not path construction",
+      "owner": "RuntimePaths",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Relocate",
+      "verification": "migration no-config no eager files"
+    },
+    {
+      "id": "config",
+      "path_template": "<module>/surge.cfg, <module>/surge_override.cfg",
+      "creator": {
+        "source": "src/application/application.cpp",
+        "function_or_locator": "void apply(",
+        "line": 96
+      },
+      "operation": "Read",
+      "condition": "Optional startup base then override",
+      "owner": "ConfigurationEffects/RuntimePaths",
+      "production_necessity": "Optional",
+      "hf19_delta": "Same",
+      "decision": "Keep",
+      "verification": "startup_compat; filesystem_config; frozen Config2 corpus"
+    },
+    {
+      "id": "avatar_sidecar",
+      "path_template": "<module>/surge.png",
+      "creator": {
+        "source": "src/application/avatars.cpp",
+        "function_or_locator": "Path AvatarStore::resolve",
+        "line": 11
+      },
+      "operation": "Read",
+      "condition": "Only exact official bytes; unsealed file left untouched",
+      "owner": "AvatarStore",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Keep",
+      "verification": "migration sidecar exact/collision/readonly"
+    },
+    {
+      "id": "avatar_default",
+      "path_template": "%LOCALAPPDATA%/SURGE/assets/<official-SHA256>/surge.png",
+      "creator": {
+        "source": "src/application/avatars.cpp",
+        "function_or_locator": "Path AvatarStore::resolve",
+        "line": 11
+      },
+      "operation": "Read/Create",
+      "condition": "First default QueryImage, valid sidecar absent; create-only",
+      "owner": "AvatarStore",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Relocate",
+      "verification": "migration exact official bytes/lazy/collision"
+    },
+    {
+      "id": "avatar_custom",
+      "path_template": "<explicit Config2 User.Avatar resolved path>",
+      "creator": {
+        "source": "src/application/avatars.cpp",
+        "function_or_locator": "Path AvatarStore::resolve",
+        "line": 11
+      },
+      "operation": "Read",
+      "condition": "Explicit user-selected image; no app overwrite, no cache override",
+      "owner": "User/AvatarStore",
+      "production_necessity": "Optional",
+      "hf19_delta": "Same",
+      "decision": "Keep",
+      "verification": "content unit; migration custom readonly; startup_compat"
+    },
+    {
+      "id": "avatar_provider",
+      "path_template": "%LOCALAPPDATA%/SURGE/avatars/provider-v2/session-<nonce>-<counter>/_AVATAR_<UserId>_<Width>",
+      "creator": {
+        "source": "src/application/providers.cpp",
+        "function_or_locator": "ContentEffects::online_avatar_virtual_28",
+        "line": 37
+      },
+      "operation": "Create/Read/Delete",
+      "condition": "Online other-user query; own user never provider. ≤64 files, ≤8MiB each, ≤32MiB total; owned files removed on failure/destruction",
+      "owner": "ContentEffects session lease",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Relocate",
+      "verification": "content unit; path negatives; native provider fixture NOT_RUN"
+    },
+    {
+      "id": "cookie",
+      "path_template": "%LOCALAPPDATA%/SURGE/cache/provider-v2/remid_cookie",
+      "creator": {
+        "source": "src/profiles/online_session.cpp",
+        "function_or_locator": "OnlineSession::call_create_online",
+        "line": 76
+      },
+      "operation": "Read/Write (provider-owned indirect)",
+      "condition": "Only compatible version2 factory; provider receives stable borrowed wchar path",
+      "owner": "OnlineSession/provider",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Relocate",
+      "verification": "profile model tests; cache negatives; real provider I/O behavior Unknown/NOT_RUN"
+    },
+    {
+      "id": "profile_cache",
+      "path_template": "%LOCALAPPDATA%/SURGE/cache/provider-v2/last_profile",
+      "creator": {
+        "source": "src/profiles/online_session.cpp",
+        "function_or_locator": "OnlineSession::read_binary_03b3f0",
+        "line": 104
+      },
+      "operation": "Read/Write/Atomic replace",
+      "condition": "UseLastOnlineProfile, provider online saves or auth-failed/cookie present reads; missing provider does not broaden old semantics",
+      "owner": "OnlineSession",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Relocate",
+      "verification": "profile unit/cache malformed UTF8/overflow/fields negatives"
+    },
+    {
+      "id": "retired_avatar_cache",
+      "path_template": "%LOCALAPPDATA%/SURGE/cache/provider-v2/last_avatar (reserved only)",
+      "creator": {
+        "source": "src/runtime/runtime_paths.cpp",
+        "function_or_locator": "RuntimePaths::file",
+        "line": 43
+      },
+      "operation": "No active file I/O",
+      "condition": "Historical state field retained; never avatar selection/read/write",
+      "owner": "RuntimePaths logical schema",
+      "production_necessity": "Unnecessary",
+      "hf19_delta": "Different",
+      "decision": "Disable",
+      "verification": "content own-avatar isolation; source policy"
+    },
+    {
+      "id": "achievement_xml",
+      "path_template": "%LOCALAPPDATA%/SURGE/achievement-<safe-set>.xml",
+      "creator": {
+        "source": "src/application/providers.cpp",
+        "function_or_locator": "ContentEffects::persist_achievement",
+        "line": 80
+      },
+      "operation": "Read/Write/Atomic replace",
+      "condition": "Startup reads if configured; grant writes with INI transaction; no eager manufacturing",
+      "owner": "Storage/ContentEffects",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Relocate",
+      "verification": "runtime persistence/reload; migration failure rollback"
+    },
+    {
+      "id": "achievement_ini",
+      "path_template": "%LOCALAPPDATA%/SURGE/achievement_watcher/<safe-SteamAppId>/achievements.ini",
+      "creator": {
+        "source": "src/application/providers.cpp",
+        "function_or_locator": "ContentEffects::persist_achievement",
+        "line": 80
+      },
+      "operation": "Write/Atomic replace",
+      "condition": "SteamAppId configured and actual grant mutation; no startup empty INI",
+      "owner": "ContentEffects",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Relocate",
+      "verification": "runtime XML/INI; migration no partial INI; external Watcher NOT_RUN"
+    },
+    {
+      "id": "log",
+      "path_template": "%LOCALAPPDATA%/SURGE/surge.log",
+      "creator": {
+        "source": "src/application/logging.cpp",
+        "function_or_locator": "void Environment::log",
+        "line": 22
+      },
+      "operation": "Create/Append",
+      "condition": "Debug/Diagnostic only; fixed event enum; stop append at ≤256KiB, no rotation/delete",
+      "owner": "Environment diagnostics",
+      "production_necessity": "Unnecessary",
+      "hf19_delta": "Different",
+      "decision": "Disable",
+      "verification": "migration Debug/Production; compile macro and object symbol check"
+    },
+    {
+      "id": "license",
+      "path_template": "%PROGRAMDATA%/Electronic Arts/EA Services/License/<ContentId>.dlf",
+      "creator": {
+        "source": "src/licensing/key_store.cpp",
+        "function_or_locator": "store_cipher_key",
+        "line": 8
+      },
+      "operation": "Read/Create-only",
+      "condition": "Explicit configured key storage; existing file preserved; header/cipher format unchanged",
+      "owner": "External license contract/key_store",
+      "production_necessity": "Optional",
+      "hf19_delta": "Not Applicable",
+      "decision": "Keep",
+      "verification": "key_store roundtrip/no-overwrite; actual EA consumer NOT_RUN"
+    },
+    {
+      "id": "license_cached",
+      "path_template": "%PROGRAMDATA%/Electronic Arts/EA Services/License/<ContentId>_cached.dlf",
+      "creator": {
+        "source": "src/licensing/license.cpp",
+        "function_or_locator": "cached",
+        "line": 55
+      },
+      "operation": "Read/Write/Atomic replace",
+      "condition": "Existing license handler path, configured content; external filename/format retained",
+      "owner": "External license contract/LicenseFiles",
+      "production_necessity": "Optional",
+      "hf19_delta": "Not Applicable",
+      "decision": "Keep",
+      "verification": "licensing/file unit tests; actual external consumer NOT_RUN"
+    },
+    {
+      "id": "ticket",
+      "path_template": "<game-EXE-dir>/Denuvo_ticket_<timestamp>.txt",
+      "creator": {
+        "source": "src/application/providers.hpp",
+        "function_or_locator": "write_ticket_03c1d0",
+        "line": 98
+      },
+      "operation": "Create/Write/Atomic replace",
+      "condition": "Existing explicit ticket handling; external path/format unchanged",
+      "owner": "External ticket contract/LicenseEffects",
+      "production_necessity": "Optional",
+      "hf19_delta": "Not Applicable",
+      "decision": "Keep",
+      "verification": "licensing unit templates/RuntimePaths external allowlist; native consumer NOT_RUN"
+    },
+    {
+      "id": "hash_inputs",
+      "path_template": "<game EXE>, <explicit configured Denuvo DLL>",
+      "creator": {
+        "source": "src/application/providers.cpp",
+        "function_or_locator": "LicenseEffects::file_hash_matches_042d20",
+        "line": 60
+      },
+      "operation": "Read",
+      "condition": "Existing configured hash checks; readonly unowned NativeFactory",
+      "owner": "LicenseFiles/external input",
+      "production_necessity": "Optional",
+      "hf19_delta": "Not Applicable",
+      "decision": "Keep",
+      "verification": "file/crypto/license unit; exact original parity remains open"
+    },
+    {
+      "id": "provider_dll",
+      "path_template": "<module>/preloader_l_online.dll",
+      "creator": {
+        "source": "src/profiles/online_session.cpp",
+        "function_or_locator": "OnlineSession::load_copy_0450d0",
+        "line": 57
+      },
+      "operation": "Read/Load/Unload",
+      "condition": "Exact basename, absolute trusted module dir; no EXE/cwd/old fallback",
+      "owner": "OnlineSession",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Rename",
+      "verification": "model version2/export/vtable tests; real Windows ABI NOT_RUN"
+    },
+    {
+      "id": "extra_dlls",
+      "path_template": "<explicit Config2 extra DLL paths>",
+      "creator": {
+        "source": "src/windows/dll_entry.cpp",
+        "function_or_locator": "void load(",
+        "line": 42
+      },
+      "operation": "Read/Load/Unload",
+      "condition": "Explicit existing configuration only; independent from provider policy",
+      "owner": "ExtraModules",
+      "production_necessity": "Optional",
+      "hf19_delta": "Not Applicable",
+      "decision": "Keep",
+      "verification": "source inspection; Windows NOT_RUN"
+    },
+    {
+      "id": "stages",
+      "path_template": "<target-parent>/.preloader_l-<pid>-<seq>.tmp",
+      "creator": {
+        "source": "src/files/atomic_io.cpp",
+        "function_or_locator": "struct Stage",
+        "line": 29
+      },
+      "operation": "Create/Write/Rename/Delete",
+      "condition": "Exclusive sibling stage and preimage; flush before commit; cleanup owned only. Incomplete rollback retains backups",
+      "owner": "atomic_io RAII",
+      "production_necessity": "Optional",
+      "hf19_delta": "Different",
+      "decision": "Keep",
+      "verification": "migration second commit failure/new target rollback/preimage retained"
+    },
+    {
+      "id": "console",
+      "path_template": "CONIN$, CONOUT$ device streams",
+      "creator": {
+        "source": "src/application/application.cpp",
+        "function_or_locator": "reopen_05f024",
+        "line": 40
+      },
+      "operation": "Open device",
+      "condition": "Existing explicit console setting; device streams not diagnostic disk log",
+      "owner": "StartupPlatform console adapter",
+      "production_necessity": "Optional",
+      "hf19_delta": "Not Applicable",
+      "decision": "Keep",
+      "verification": "source inspection; Windows NOT_RUN"
+    },
+    {
+      "id": "build_outputs",
+      "path_template": "<source>/build/<profile>/**, dist/<profile>/**, build/reports/**",
+      "creator": {
+        "source": "scripts/build_orchestration/build_driver.ps1",
+        "function_or_locator": "$profileRoot=",
+        "line": 6
+      },
+      "operation": "Create/Read/Write/Copy/Delete",
+      "condition": "Explicit operator build/test/Golden; never application startup; canonical pointers unchanged",
+      "owner": "Build/QA",
+      "production_necessity": "Unnecessary",
+      "hf19_delta": "Different",
+      "decision": "Keep",
+      "verification": "Golden synthetic fail-closed orchestration; MSVC NOT_RUN"
+    },
+    {
+      "id": "source_package",
+      "path_template": "<source>/dist/preloader_l_BF02_FIX12_APPLICATION_SOURCE_NOT_RELEASE.zip[.sha256], metadata/*MANIFEST.json",
+      "creator": {
+        "source": "scripts/qa/package_source.py",
+        "function_or_locator": "def main",
+        "line": 7
+      },
+      "operation": "Create/Read/Write/Rename",
+      "condition": "Explicit source sealing only; pending archive closed before publish",
+      "owner": "Build/QA",
+      "production_necessity": "Unnecessary",
+      "hf19_delta": "Different",
+      "decision": "Rename",
+      "verification": "package integrity/6 negative mutations/clean replay"
+    },
+    {
+      "id": "qa_temp",
+      "path_template": "<OS temp>/<synthetic test root>/**, <explicit --build-root>/<profile>/**",
+      "creator": {
+        "source": "scripts/qa/test_portable.py",
+        "function_or_locator": "def main",
+        "line": 6
+      },
+      "operation": "Create/Read/Write/Delete",
+      "condition": "Only explicitly invoked tests/portable compiler; synthetic cleanup confined to fixture roots",
+      "owner": "Build/QA",
+      "production_necessity": "Unnecessary",
+      "hf19_delta": "Not Applicable",
+      "decision": "Keep",
+      "verification": "portable suites and clean replay"
+    },
+    {
+      "id": "retired_files",
+      "path_template": "old BLUEFIELD/anadius/LSX emu roots, bluefield.png/default.png/bluefield.log",
+      "creator": {
+        "source": "src/runtime/runtime_paths.cpp",
+        "function_or_locator": "RuntimePaths::require_write",
+        "line": 59
+      },
+      "operation": "None",
+      "condition": "Never searched, migrated, overwritten or deleted; old literals appear only evidence/negative cases",
+      "owner": "User historical data",
+      "production_necessity": "Unnecessary",
+      "hf19_delta": "Different",
+      "decision": "Disable",
+      "verification": "source policy + migration unowned-root rejection and old data intact"
+    }
+  ]
+}

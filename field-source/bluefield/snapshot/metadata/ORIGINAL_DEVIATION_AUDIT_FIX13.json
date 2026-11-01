@@ -1,0 +1,381 @@
+{
+  "classification": "NON_RELEASE_STATIC_PACKET_WIDE_AUDIT",
+  "full_native_equivalence": "NOT_ESTABLISHED",
+  "archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "archive_files": 2951,
+  "module_or_payload_groups": 151,
+  "first_party_source": 387,
+  "packet_tests": 233,
+  "decompiler_sources": 16,
+  "lexical_function_locators": 4247,
+  "direct_first_party_src_imports": 82,
+  "normalization_limit": "Includes/namespaces/comments normalized while string literals preserved; match is not native behavior/ABI/reachability proof. Function index is conservative lexical, not exhaustive semantic AST proof.",
+  "corrected_findings": [
+    {
+      "id": "R01",
+      "prior_behavior": "Invented assets/<hash>, cache/provider-v2 and avatar nonce/session dirs",
+      "FIX13_behavior": "Plain SURGE/surge.png, remid_cookie, last_profile, last_avatar and original _AVATAR_UserId_Width spelling",
+      "current_source": {
+        "file": "src/runtime/runtime_paths.cpp",
+        "function_or_locator": "RuntimePaths::default_avatar",
+        "line": 35
+      },
+      "original_packet_evidence": "Source original filenames + user-requested SURGE root; exact old root not restored",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original-compatibility / migration regressions",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R02",
+      "prior_behavior": "Existing module/default image required official byte seal, otherwise ignored/error",
+      "FIX13_behavior": "Existing file/sidecar is read-only and accepted without hash gate; embedded official bytes only missing-file fallback",
+      "current_source": {
+        "file": "src/application/avatars.cpp",
+        "function_or_locator": "AvatarStore::resolve",
+        "line": 6
+      },
+      "original_packet_evidence": "User explicitly rejected hash gate; source asset bytes remain pinned",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original-compatibility / migration regressions",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R03",
+      "prior_behavior": "4KiB/raw-field/uint64/UTF8/control acceptance filter on profile cache",
+      "FIX13_behavior": "Source raw-byte reader; original split/application branch decides fields",
+      "current_source": {
+        "file": "src/profiles/online_session.cpp",
+        "function_or_locator": "OnlineSession::read_binary_03b3f0",
+        "line": 101
+      },
+      "original_packet_evidence": "anadius-online-source/online.cpp; anadius-file-source/binary_io.cpp",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original-compatibility / migration regressions",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R04",
+      "prior_behavior": "128-char/ASCII identifier restriction and Width normalization",
+      "FIX13_behavior": "No invented component/length/width rule; source filename text and OS path behavior",
+      "current_source": {
+        "file": "src/runtime/runtime_paths.cpp",
+        "function_or_locator": "RuntimePaths::avatar_cache",
+        "line": 39
+      },
+      "original_packet_evidence": "anadius-content-handlers-source/content_handlers.cpp; anadius-achievement-storage-source/storage.cpp",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original-compatibility / migration regressions",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R05",
+      "prior_behavior": "Missing achievement INI creation deferred until grant",
+      "FIX13_behavior": "Original startup status/missing-INI write branch restored",
+      "current_source": {
+        "file": "src/achievements/storage.cpp",
+        "function_or_locator": "if(status.kind!=2)",
+        "line": 102
+      },
+      "original_packet_evidence": "anadius-achievement-storage-source/storage.cpp",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original-compatibility / migration regressions",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R06",
+      "prior_behavior": "256KiB log cutoff; 64 avatar files/8MiB each/32MiB total, PNG/IHDR gating and destroy cleanup",
+      "FIX13_behavior": "No replacement quota/cutoff/nonce/delete/PNG policy; direct provider path. Production disk logging stays compiled out",
+      "current_source": {
+        "file": "src/application/providers.cpp",
+        "function_or_locator": "ContentEffects::online_avatar_virtual_28",
+        "line": 37
+      },
+      "original_packet_evidence": "FIX12 user-rejected additions; original provider forwarding + latest user log decision",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original-compatibility / migration regressions",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R07",
+      "prior_behavior": "1MiB config / 128 nesting application pre-parser, present already in FIX03",
+      "FIX13_behavior": "No secondary scanner; original Config2 parser sees the full bytes",
+      "current_source": {
+        "file": "src/application/application.cpp",
+        "function_or_locator": "auto bytes=",
+        "line": 91
+      },
+      "original_packet_evidence": "anadius-parser-source/parser.cpp; anadius-config-pipeline-source/pipeline.cpp",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original-compatibility / migration regressions",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R08",
+      "prior_behavior": "1MiB frame receive and Connection::process guard, present already in FIX03",
+      "FIX13_behavior": "Source pending.max_size() boundary; duplicate message guard removed",
+      "current_source": {
+        "file": "src/transport/service.cpp",
+        "function_or_locator": "pending.max_size()",
+        "line": 111
+      },
+      "original_packet_evidence": "anadius-server-source/server.cpp Session::read_0250e0 uses input_.max_size()",
+      "status": "CORRECTED_SOURCE",
+      "verification": "real >1MiB loopback frame and parser response",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R09",
+      "prior_behavior": "32 live-client rejection present in FIX03 and carried into Asio rewrite",
+      "FIX13_behavior": "No invented client count cap",
+      "current_source": {
+        "file": "src/transport/service.cpp",
+        "function_or_locator": "if(!error&&!stopping.load())",
+        "line": 211
+      },
+      "original_packet_evidence": "anadius-server-source/server.cpp accept path has no 32-client condition",
+      "status": "CORRECTED_SOURCE",
+      "verification": "40 live clients plus another accepted client, stop/drain",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R10",
+      "prior_behavior": "64MiB general read/output/preimage caps",
+      "FIX13_behavior": "No custom file-size caps; natural stream/string representation/allocation limits remain",
+      "current_source": {
+        "file": "src/application/environment.cpp",
+        "function_or_locator": "if(n<0)",
+        "line": 44
+      },
+      "original_packet_evidence": "anadius-file-source/native_io.cpp and binary_io.cpp",
+      "status": "CORRECTED_SOURCE",
+      "verification": "64MiB+1 real file read; source checks for other caps",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R11",
+      "prior_behavior": "FIX12 NativeInput threw on short read",
+      "FIX13_behavior": "Source returns gcount and keeps caller zero-filled requested tail",
+      "current_source": {
+        "file": "src/files/native_io.cpp",
+        "function_or_locator": "stream_.gcount()",
+        "line": 44
+      },
+      "original_packet_evidence": "anadius-file-source/native_io.cpp read_03b2a0; binary_io.cpp ignores gcount",
+      "status": "CORRECTED_SOURCE",
+      "verification": "real file truncation between seek and read",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R12",
+      "prior_behavior": "Game.KeyForLicense side effect stored pending until final/online profile",
+      "FIX13_behavior": "Runs at source Config2 Game application call point before later User keys",
+      "current_source": {
+        "file": "src/application/providers.cpp",
+        "function_or_locator": "store_cipher_key(state_",
+        "line": 31
+      },
+      "original_packet_evidence": "anadius-config-source/configuration.cpp call order; anadius-all-functions.pseudo.c FUN_18002a830",
+      "status": "CORRECTED_SOURCE",
+      "verification": "actual synthetic file exists before online stage, decrypted source-order UserId",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R13",
+      "prior_behavior": "Extra DLL failure aborted startup; changed loader/error-mode/unload order",
+      "FIX13_behavior": "Original libraries.cpp + NativeSystemCalls used: dialog-and-continue, LoadLibraryW, process mode, forward unload",
+      "current_source": {
+        "file": "src/windows/dll_entry.cpp",
+        "function_or_locator": "class ExtraModules",
+        "line": 41
+      },
+      "original_packet_evidence": "anadius-libraries-source/libraries.cpp, libraries.hpp, native_system.cpp",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original unchanged libraries_tests.cpp expectations; Windows body NOT_RUN",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R14",
+      "prior_behavior": "Provider suppressed thread error mode instead of source process mode",
+      "FIX13_behavior": "Imported source suppress_errors_0450a0 and SetErrorMode restoration",
+      "current_source": {
+        "file": "src/profiles/online_session.cpp",
+        "function_or_locator": "libraries::suppress_errors_0450a0",
+        "line": 37
+      },
+      "original_packet_evidence": "anadius-libraries-source/libraries.cpp get_error_mode/set_error_mode",
+      "status": "CORRECTED_SOURCE",
+      "verification": "original loader policy model; native provider/error-mode NOT_RUN",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R15",
+      "prior_behavior": "Crypt object reader stopped after 32768 code units",
+      "FIX13_behavior": "Read-until-terminator with natural address-overflow/readability bounds; no invented string cutoff",
+      "current_source": {
+        "file": "src/windows/original_effects.cpp",
+        "function_or_locator": "for(std::size_t i=0;;",
+        "line": 23
+      },
+      "original_packet_evidence": "preloader-source/preloader_core.cpp crypt_query scans to NUL",
+      "status": "CORRECTED_SOURCE",
+      "verification": "long UTF16 selection + static native reader inspection; Windows pointer reader NOT_RUN",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R16",
+      "prior_behavior": "Application bypassed imported WindowsTimeSource with chrono-only wrapper",
+      "FIX13_behavior": "Imported WindowsTimeSource used for protocol time",
+      "current_source": {
+        "file": "src/application/application.cpp",
+        "function_or_locator": "crypto::WindowsTimeSource time",
+        "line": 145
+      },
+      "original_packet_evidence": "anadius-crypto-source/crypto.cpp WindowsTimeSource",
+      "status": "CORRECTED_SOURCE",
+      "verification": "existing crypto/session regressions; Win32 clock call NOT_RUN",
+      "native_status": "NOT_RUN"
+    },
+    {
+      "id": "R17",
+      "prior_behavior": "FIX12 version-mismatch dialog was silently suppressed by native adapter",
+      "FIX13_behavior": "Original Win32 MessageBoxA restored; negative version case requires manual dialog acknowledgement in native operator flow",
+      "current_source": {
+        "file": "src/profiles/online_session.cpp",
+        "function_or_locator": "OnlineSession::dialog_038bc0",
+        "line": 89
+      },
+      "original_packet_evidence": "anadius-online-source/online.cpp dialog effect; FIX11 native adapter",
+      "status": "CORRECTED_SOURCE",
+      "verification": "model version-mismatch callback + source inspection; Windows modal dialog NOT_RUN",
+      "native_status": "NOT_RUN"
+    }
+  ],
+  "authorized_differences_kept": [
+    {
+      "decision": "SURGE names/root/official embedded asset/new provider basename/trusted module directory",
+      "authority": "explicit user migration contract"
+    },
+    {
+      "decision": "Production/Native/CRT log compile-out and fixed event privacy",
+      "authority": "explicit user migration contract; user later rejected invented cap values"
+    },
+    {
+      "decision": "No legacy cache/root automatic migration/deletion and no last_avatar override of official/custom choice",
+      "authority": "explicit user data/avatar protection; intentionally differs from packet old-path/cache behavior"
+    },
+    {
+      "decision": "Grant failure-atomic files/memory/prepared-event commit",
+      "authority": "explicit failed-write consistency/atomic write requirement; error-path semantics intentionally differ from original"
+    },
+    {
+      "decision": "Pinned Asio/PEGTL/MinHook/TinyXML2/gulrak and public ABI",
+      "authority": "earlier explicit user dependency/public ABI requests; native parity remains separate"
+    }
+  ],
+  "remaining_differences_and_uncertainties": [
+    {
+      "id": "OPEN_BOOTSTRAP",
+      "status": "OPEN_NATIVE_EQUIVALENCE",
+      "finding": "Original Bootstrap starts detached workers and has a synchronous from-main load then a waited worker load; candidate has a controlled bootstrap worker/prepare/hooks/activate and loads extra lists after activation. DLL lifetime, atexit/terminate and phase/timing are structurally different. Extra list per-file load/unload decisions are corrected; full phase schedule is not claimed identical.",
+      "sources": [
+        "anadius-source/bootstrap.cpp",
+        "anadius-config-startup-source/startup.cpp",
+        "anadius-thread-source/thread.cpp",
+        "src/windows/dll_entry.cpp",
+        "src/transport/service.cpp"
+      ]
+    },
+    {
+      "id": "OPEN_FILESYSTEM",
+      "status": "OPEN_SOURCE_MODEL_BOUNDARY",
+      "finding": "Owned status adapter uses std::filesystem for native queries instead of the packet UsedStats/NativeStats Win32 path. Permissions, reparse/sharing/error behavior is not established equal. Packet UsedStats itself has an explicit unknown reparse-tag domain; blindly copying that research guard into production is not a completed native reconstruction.",
+      "sources": [
+        "anadius-status-source/status.cpp",
+        "anadius-status-source/status.hpp",
+        "src/application/providers.cpp",
+        "src/profiles/online_session.cpp"
+      ]
+    },
+    {
+      "id": "OPEN_ENCODING",
+      "status": "OPEN_NATIVE_EQUIVALENCE",
+      "finding": "filesystem_widen uses AreFileApisANSI/MultiByteToWideChar; general UTF8/path conversions use std::filesystem. Packet conversion retry/default-character/error/locale branches are not all wired or validated against native original.",
+      "sources": [
+        "anadius-encoding-source/encoding.cpp",
+        "anadius-encoding-source/native_encoding.cpp",
+        "src/application/environment.cpp"
+      ]
+    },
+    {
+      "id": "OPEN_CRT_THREADS",
+      "status": "HOST_LIBRARY_SUBSTITUTION",
+      "finding": "CRT/VCRT/thread models are replaced by MSVC static CRT/std threading and modern ownership; packet allocator/locale/TLS/exception/cleanup binary behavior is not all reconstructed. These are cataloged dependencies, not automatically missing application features.",
+      "sources": [
+        "ORIGINAL_PACKAGE_MODULES_FIX13.json",
+        "src/windows/startup_platform.cpp",
+        "src/application/events.hpp"
+      ]
+    },
+    {
+      "id": "OPEN_ASIO_EXECUTION",
+      "status": "OPEN_NATIVE_EQUIVALENCE",
+      "finding": "Socket/execution/server packet models are implemented with requested pinned Asio. FIFO/cancel/OOM/stop are tested, but worker counts, scheduler timing, completion/error/allocator and original native interleavings are not fully equivalent by proof. No unsupported byte/client cap remains.",
+      "sources": [
+        "anadius-socket-source/*",
+        "anadius-execution-source/*",
+        "anadius-server-source/*",
+        "src/transport/service.cpp"
+      ]
+    },
+    {
+      "id": "OPEN_XML_ERRORS",
+      "status": "OPEN_DIAGNOSTIC_EQUIVALENCE",
+      "finding": "Upstream TinyXML2 is kept pristine as requested. Successful-tree original depth=100 is retained in adapter; malformed/deep error precedence and all diagnostic strings are not proven same. The depth 100 is present in the original packet vendor; it is not an arbitrary FIX12 rule.",
+      "sources": [
+        "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.h",
+        "src/xml/reader.cpp"
+      ]
+    },
+    {
+      "id": "OPEN_PROVIDER_ABI",
+      "status": "NOT_RUN",
+      "finding": "Version2 exports/vtable/synthetic model are not real renamed-provider native ABI acceptance; arbitrary provider-internal filesystem side effects remain Unknown.",
+      "sources": [
+        "src/profiles/online_session.cpp",
+        "tests/native/online_fixture.cpp"
+      ]
+    },
+    {
+      "id": "OPEN_INVALID_DOMAINS",
+      "status": "EXPLICIT_MODEL_DIFFERENCE",
+      "finding": "Unreadable/invalid UTF16 forwarding, exception types, abstract OutOfEvidence guards and safe unload scans are owned model choices outside established ordinary input parity. No assertion that invalid/native fault behavior matches the original.",
+      "sources": [
+        "src/hooks/crypt_query.cpp",
+        "src/windows/original_effects.cpp",
+        "src/windows/unload_guard.cpp"
+      ]
+    },
+    {
+      "id": "OPEN_PACKET_PROJECTION",
+      "status": "NOT_FULL_BINARY_REBUILD",
+      "finding": "Only part of the packet is direct source reuse. Scoped pseudocode/asm projections, constants, headers and renamed bridges are distinct from complete original memory-layout/global-state reconstruction. Unimported modules and function token mapping are listed, not silently treated as implemented.",
+      "sources": [
+        "ORIGINAL_IMPORT_COMPARISON_FIX13.json",
+        "ORIGINAL_FUNCTION_INDEX_FIX13.json"
+      ]
+    },
+    {
+      "id": "OPEN_NATIVE_ACCEPTANCE",
+      "status": "NOT_RUN",
+      "finding": "Windows/MSVC/IOCP/CRT/actual DLL Golden/provider/consumer/Watcher acceptance not run in Linux. Static catalog and portable test counts are not substitutes.",
+      "sources": [
+        "docs/WINDOWS_FIX13.md"
+      ]
+    }
+  ],
+  "evidence_not_invented": {
+    "MachineHash_1_and_2024_license_dates": "present in original FUN_18002a830; deliberately retained",
+    "XML_depth_100": "present in original packet vendor; upstream pin remains pristine"
+  },
+  "all_deviations_claim": "No claim all possible semantic/native deviations are closed; all packet files categorized and discovered differences/coverage gaps exposed."
+}

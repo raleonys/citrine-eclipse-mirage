@@ -1,0 +1,26 @@
+{
+  "status": "PASS_TARGETED_NEGATIVE_CONTROLS",
+  "source_digest": "c8f5666a3acd69a72d714979552c2e48589b61c7f0a321726c830ccf42f47a90",
+  "service_sha256": "ff08ec8a5d02f5c42133aa1d3ccaadbaa85620cb44a989b915f06fd0a1eb0a88",
+  "test_sha256": "aaf6353bfde3b3a063f3f17a0573b440a0b7a27e237e4a3b7048b9a89d4e8a04",
+  "unchanged_linked_core_sha256": "3f273b672fc0da97641b2a9ad461db05e463cc1c19c84211013247ac50667e19",
+  "scope": "Each temporary changed service TU/test freshly compiled and linked with unchanged parent core. Shipping source/test unchanged. Actual Linux TCP counterexample, not only structural hash checks.",
+  "cases": [
+    {
+      "case": "write_completion_gates_compute",
+      "actual_exit": 1,
+      "expected_assertion": "second request executes while first TCP response is backpressured",
+      "output": "FAIL transport pipeline: second request executes while first TCP response is backpressured\n",
+      "mutated_TU_sha256": "bbed1568a0039fc776a9fc2eddc2b3cda39a7951e54a962efb9b016448b4a483",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    },
+    {
+      "case": "second_response_dropped",
+      "actual_exit": 1,
+      "expected_assertion": "second response follows front",
+      "output": "FAIL transport pipeline: second response follows front\n",
+      "mutated_TU_sha256": "0ad21c396b5a77ab3ef6eab06a9e1d9eb8cbf2ab35f3657f68fb1fc30bf340d9",
+      "verdict": "PASS_EXPECTED_REJECTION"
+    }
+  ]
+}

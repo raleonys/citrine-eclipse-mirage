@@ -1,0 +1,22 @@
+{
+  "archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "role": "TEST_ONLY_LITERAL_RE_BINARY_IO_CALLER",
+  "files": [
+    {
+      "origin": "anadius-file-source/binary_io.hpp",
+      "destination": "tests/support/files/packet_binary_io.hpp",
+      "original_sha256": "5a1ef9c90437e70677458e559488d8c340de0dfcff4b74157254bf391889f7b4",
+      "current_sha256": "d3194276170b5493fd9efb717b0e522d7e1ba1e308bcad0b1d844497b8cd413c",
+      "production_linked": false
+    },
+    {
+      "origin": "anadius-file-source/binary_io.cpp",
+      "destination": "tests/support/files/packet_binary_io.cpp",
+      "original_sha256": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222",
+      "current_sha256": "b94089f25d72d4a6c8fb4471768ed0114ad43a938c2435f06dc359bdb7bf0630",
+      "production_linked": false
+    }
+  ],
+  "adaptation": "Namespace/include relocation only, exact byte reversal verified. Parser-independent stream types come from original packet; only Path alias uses current configuration type.",
+  "limit": "Independent source consumer branch, not original CRT/filebuf/OS implementation. Stage failure is injected through actual owned filesystem collisions, not shared synthetic expected writer behavior."
+}

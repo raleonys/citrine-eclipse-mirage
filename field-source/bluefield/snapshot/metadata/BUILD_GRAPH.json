@@ -1,0 +1,160 @@
+{
+  "core": [
+    "src/achievements/ini_writer.cpp",
+    "src/achievements/persistence.cpp",
+    "src/achievements/storage.cpp",
+    "src/achievements/utc.cpp",
+    "src/application/application.cpp",
+    "src/application/environment.cpp",
+    "src/application/providers.cpp",
+    "src/configuration/apply.cpp",
+    "src/configuration/defaults.cpp",
+    "src/configuration/hash_table.cpp",
+    "src/configuration/parser.cpp",
+    "src/configuration/state.cpp",
+    "src/crypto/crypto.cpp",
+    "src/files/binary_io.cpp",
+    "src/files/license_files.cpp",
+    "src/files/native_io.cpp",
+    "src/handlers/content.cpp",
+    "src/handlers/information.cpp",
+    "src/handlers/presence.cpp",
+    "src/hashing/hash.cpp",
+    "src/hooks/crypt_query.cpp",
+    "src/hooks/setup.cpp",
+    "src/licensing/key_store.cpp",
+    "src/licensing/license.cpp",
+    "src/paths/paths.cpp",
+    "src/profiles/online.cpp",
+    "src/profiles/online_session.cpp",
+    "src/protocol/messages.cpp",
+    "src/protocol/router.cpp",
+    "src/runtime/startup.cpp",
+    "src/sessions/handler.cpp",
+    "src/time/calendar.cpp",
+    "src/time/timestamp.cpp",
+    "src/tokens/token.cpp",
+    "src/transport/read_window.cpp",
+    "src/transport/service.cpp",
+    "src/xml/memory_printer.cpp",
+    "src/xml/reader.cpp",
+    "src/xml/upstream_parser.cpp",
+    "src/paths/module_relative.cpp",
+    "src/runtime/runtime_paths.cpp",
+    "src/files/atomic_io.cpp",
+    "src/application/logging.cpp",
+    "src/application/avatars.cpp",
+    "src/libraries/libraries.cpp",
+    "src/paths/encoding.cpp",
+    "src/files/status.cpp"
+  ],
+  "windows": [
+    "src/hooks/connect.cpp",
+    "src/hooks/hook_cleanup.cpp",
+    "src/hooks/host_callbacks.cpp",
+    "src/hooks/registry.cpp",
+    "src/windows/dll_entry.cpp",
+    "src/windows/hook_callbacks.cpp",
+    "src/windows/hooks.cpp",
+    "src/windows/original_effects.cpp",
+    "src/windows/unload_guard.cpp"
+  ],
+  "unit_tests": [
+    "tests/unit/configuration/test_hash_table.cpp",
+    "tests/unit/configuration/test_parser.cpp",
+    "tests/unit/configuration/test_pegtl_differential.cpp",
+    "tests/unit/configuration/test_state.cpp",
+    "tests/unit/crypto/test_crypto.cpp",
+    "tests/unit/handlers/test_content.cpp",
+    "tests/unit/handlers/test_information.cpp",
+    "tests/unit/handlers/test_presence.cpp",
+    "tests/unit/hashing/test_hash.cpp",
+    "tests/unit/hooks/test_crypt_query.cpp",
+    "tests/unit/hooks/test_setup_plan.cpp",
+    "tests/unit/licensing/test_key_store.cpp",
+    "tests/unit/licensing/test_license.cpp",
+    "tests/unit/paths/test_path.cpp",
+    "tests/unit/profiles/test_online.cpp",
+    "tests/unit/protocol/test_integration.cpp",
+    "tests/unit/protocol/test_messages.cpp",
+    "tests/unit/runtime/test_startup.cpp",
+    "tests/unit/time/test_calendar.cpp",
+    "tests/unit/tokens/test_token.cpp",
+    "tests/unit/xml/test_printer.cpp",
+    "tests/unit/xml/test_reader.cpp",
+    "tests/unit/paths/test_module_relative.cpp",
+    "tests/unit/libraries/test_libraries.cpp",
+    "tests/unit/paths/test_encoding.cpp",
+    "tests/unit/files/test_status.cpp",
+    "tests/unit/hooks/test_registry_source.cpp",
+    "tests/unit/hooks/test_registry_wait.cpp"
+  ],
+  "integration_tests": [
+    "tests/integration/test_runtime.cpp",
+    "tests/integration/test_startup_compat.cpp",
+    "tests/integration/test_brownfield_contracts.cpp",
+    "tests/integration/test_supplied_config.cpp",
+    "tests/integration/test_configuration_profile.cpp",
+    "tests/integration/test_asio_transport.cpp",
+    "tests/integration/test_filesystem_config.cpp",
+    "tests/integration/test_runtime_migration.cpp",
+    "tests/integration/test_original_compat.cpp",
+    "tests/integration/test_startup_phases.cpp",
+    "tests/integration/test_configuration_orchestration.cpp",
+    "tests/integration/test_path_resolution.cpp",
+    "tests/integration/test_path_effects.cpp",
+    "tests/integration/test_transport_pipeline.cpp",
+    "tests/integration/test_avatar_effects.cpp",
+    "tests/integration/test_ticket_output.cpp",
+    "tests/integration/test_config2_source_oracle.cpp",
+    "tests/integration/test_failure_diagnostics.cpp",
+    "tests/integration/test_xml_depth_source_oracle.cpp",
+    "tests/integration/test_atomic_stage_collision.cpp",
+    "tests/integration/test_unload_scan.cpp"
+  ],
+  "windows_core": [
+    "src/windows/startup_platform.cpp",
+    "src/windows/library_calls.cpp",
+    "src/windows/encoding_calls.cpp",
+    "src/windows/status_calls.cpp"
+  ],
+  "vendor_c": [
+    "third_party/minhook/src/hook.c",
+    "third_party/minhook/src/buffer.c",
+    "third_party/minhook/src/trampoline.c",
+    "third_party/minhook/src/hde/hde64.c"
+  ],
+  "tool_tests": [
+    "tools/golden/scripts/test_pe_metadata_tools.py",
+    "tests/tools/test_golden_pipeline.py",
+    "tests/tools/test_golden_link_policy.py"
+  ],
+  "test_support_sources": {
+    "tests/unit/hooks/test_registry_source.cpp": [
+      "src/hooks/registry.cpp"
+    ],
+    "tests/unit/hooks/test_registry_wait.cpp": [
+      "src/hooks/registry.cpp"
+    ],
+    "tests/integration/test_config2_source_oracle.cpp": [
+      "tests/support/configuration/packet_parser.cpp"
+    ],
+    "tests/integration/test_xml_depth_source_oracle.cpp": [
+      "tests/support/xml/packet_oracle.cpp"
+    ],
+    "tests/integration/test_atomic_stage_collision.cpp": [
+      "tests/support/files/packet_binary_io.cpp"
+    ]
+  },
+  "included_implementation_sources": {
+    "src/xml/upstream_parser.cpp": [
+      "third_party/tinyxml2/tinyxml2.cpp"
+    ],
+    "tests/support/xml/packet_oracle.cpp": [
+      "tests/support/xml/packet/tinyxml2.cpp"
+    ],
+    "tests/integration/test_unload_scan.cpp": [
+      "src/windows/unload_guard.cpp"
+    ]
+  }
+}

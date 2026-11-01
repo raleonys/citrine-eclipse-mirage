@@ -1,0 +1,29 @@
+{
+  "before_open": 8,
+  "after_open": 7,
+  "closed_bounded_records": [
+    "D15"
+  ],
+  "corrections": [
+    "Parse-time source XML depth100 instead of post-success visitor",
+    "Source error precedence/full ErrorStr instead of invented adapter diagnostic"
+  ],
+  "reviewed_retained": [
+    "Pinned current upstream fixes and public header constant500; depth configured inside implementation TU only"
+  ],
+  "remaining_open": [
+    "DEP05",
+    "D02",
+    "D06",
+    "D07",
+    "D13",
+    "D14",
+    "D21"
+  ],
+  "not_claimed": [
+    "Full XML binary equivalence",
+    "Native Windows/MSVC execution",
+    "Other upstream behavior rolled back"
+  ],
+  "native_validation": "NOT_RUN_separate_dimension"
+}

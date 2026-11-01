@@ -1,0 +1,82 @@
+# BLUEFIELD uygulama geliştirme sözleşmesi
+
+- Kullanıcının talebi tam, bağımsız DLL uygulama kaynak paketidir. BF01 reddedildi.
+- Config-only kütüphane veya recovered/reference araştırma dökümü teslim etme.
+- Kod atası metadata/IMPORTS.json içindeki 0734efcc... hashli kullanıcı paketidir.
+- BROWNFIELD yalnız çalışma disiplini, public ABI ve araç/QA bağlamı sağlar.
+- Üretim hedefi preloader_l.dll; DllMain@1, SURGE@2, DllShutdown@3 korunur.
+- Her üretim .cpp açık BUILD_GRAPH listesine bağlı olmalı; test/vendor rolleri ayrıdır.
+- Config, shared state, transport, profil, dispatcher, hook ve shutdown gerçek
+  sahiplik üzerinden bağlanır. Eksik etkileri başarılı no-op ile kapatma.
+- Yeni imported uyarlamada origin SHA, destination SHA ve somut değişikliği kaydet.
+- Yerel MSVC/debug/test işlemini G0/yayın iznine bağlama.
+- Portable/static/manifest PASS, Windows DLL veya oyun PASS'i değildir.
+- Native DLL testleri sentetik alt süreç/klasör kullanır; gerçek oyun/hesap yüklemez.
+- DllShutdown sıfır dönmeden modül unload edilemez; timeout kaynakları canlı tutar.
+- Same-stem CMD yalnız HUMAN_ENTRYPOINTS allowlist'i içindir. Helper/vendor CMD ekleme.
+- Snapshot kümülatiftir. Resmî release/CURRENT_ARTIFACT bu iş kapsamında değişmez.
+- Kullanıcının kaldırdığı hook'ları eksik kabul etme veya tekrar etkinleştirme.
+- BF02 FIX03 kapsamı erken per-hook enable yerine tek queued aktivasyon ve
+  zaman/PID/faz kaydıdır; mevcut hook davranışı ve kullanıcı kapsamı korunur.
+- Callback Context kilidi MH_ApplyQueued sırasında tutulamaz. Tam staging ve
+  batch commit olmadan kurulum başarılı/ready ilan edilemez.
+
+- FIX04: constructor defaults -> CLI -> optional base -> optional override sırası.
+- Config yokluğu veya eksik Config2 kökü tek başına startup failure değildir.
+- Profile XML'in 14 alanı, settings ve game varsayılanları birlikte doğrulanır.
+- Native profile cache özgün anadius/LSX emu konumundadır; bağımsız log root'u
+  ile karıştırma. Provider yokken cache kullanımını kaynak dışı biçimde genişletme.
+
+- FIX05 user identity: all owned C++ root namespaces are preloader_l. BLUEFIELD
+  remains a project/package label, never a substitute code namespace.
+- C4702 is repaired at its source and enforced with /we4702, not suppressed.
+- HF19 test/tool selftests do not imply all-HF19, 8/8, native or Golden DLL PASS.
+- Emulator.Online is an observed unsupported dialect key; log the gap and do
+  not guess a mapping to provider authentication or fake-auth flags.
+
+- FIX06 PRODUCTION must run MSVC -> URSYNEX -> ARYRA -> MUSTAVEX -> CORVEXON
+  -> FALCION before publishing the staged DLL. Any gate failure stops publication.
+- URSYNEX may alter only the staged copy. Other gates must leave DLL bytes intact.
+- FALCION validates the sealed source manifest and LOCAL_BUILD payload; it cannot
+  reseal sources or claim official release/game acceptance. Record native NOT_RUN
+  separately from real-tool synthetic orchestration results.
+- This change is build/QA infrastructure only; do not invent config/runtime rules.
+
+- FIX07 user selected SURGE as default display name; preserve original numeric IDs.
+- Corrected config must match working no-config state; no invented SDK/game IDs.
+- Config path/selected-key/online-change logs must not disclose profile values.
+- Parent no-config launch/profile success is USER_CONFIRMED, not independent native
+  or exact-hash Golden evidence. FIX07 Windows execution remains NOT_RUN.
+
+- FIX08 user requested exact BROWNFIELD upstream MinHook/TinyXML2 files. Keep
+  vendor pristine; successful-tree XML policy belongs to the owned adapter.
+- Original Asio/IOCP and PEGTL/VDF identification is evidenced. Distinguish it
+  from this project's replacement backends and from full native equivalence.
+- Do not conflate Mac ghc symbols with complete Windows filesystem version proof.
+- SAFE-FREEZE is a separate local patch, not upstream identity. No implicit
+  transport/parser rewrite or CMP05/CMP06 fix is bundled into vendor alignment.
+
+- FIX09 continuation authorizes real Asio transport integration. Keep profile/config
+  and public ABI stable. Do not copy BROWNFIELD application C++ into this codebase.
+- Require IOCP on Windows; portable Asio acceptance is not Windows IOCP acceptance.
+- All sockets/completion buffers/handler tasks must be owned through stop/drain.
+- Do not add config switches or transport backends to bypass the active path.
+- PEGTL/filesystem work remains separate; retain CMP06 as a BROWNFIELD finding.
+
+- FIX10 continuation authorizes real pinned PEGTL Config2/VDF integration. Preserve
+  byte grammar, duplicate subtree replacement, cursor/action rewind distinction,
+  owned diagnostics, optional config/defaults, UTF-8 BOM policy and SURGE profile.
+- Frozen FIX09 differential data is regression evidence, not an original native
+  oracle. Do not regenerate expected results from the new parser to hide drift.
+- No BROWNFIELD application parser or new config/encoding rules are introduced.
+- Filesystem remains a separate stage; Windows/actual DLL Golden is NOT_RUN here.
+
+- FIX11: pristine HF19 gulrak is used for module-adjacent config paths only. Raw
+  native spelling must match FIX10; preserve native result on normalization mismatch.
+  No filesystem status/IO/error-code replacement or new config switch is authorized.
+- Keep source Windows lexical algorithms, optional config/profile defaults/cache.
+- QA uncovered an Asio dispatch exception that may strand the listener. Publish
+  terminal stopping/ready=false and close listener; never keep a false-ready accept.
+- Distinguish targeted Session OOM recovery from arbitrary Asio dispatch/rearm
+  terminal failure. Assert actual readiness, not just a log string; preserve failures.
+- Windows/native/actual Golden and full original filesystem equivalence are separate.

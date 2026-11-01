@@ -1,0 +1,32 @@
+{
+  "source_digest": "eddc58b00960228eaf1347d244df56218e2a2d4ecc5f3d8c7df3d80c1d3a9085",
+  "current_source_sha256": "b3f1c14c6fe28888f46302af85a826a9f7da727ac95b33cfac2d6cb27ee03e35",
+  "fixture_sha256": "1f9aed8fa7f88419936a28f5c44eccfb27528057fe980de47f928c32af42f84b",
+  "unchanged_parent_core_archive_sha256": "8a67668a01ff79ddc69a546c13640b4db41c08f0f43187aa5e324515cacf6eef",
+  "cases": [
+    {
+      "name": "suppress_own",
+      "rejected": true,
+      "exit": 1,
+      "output": "FAIL packet provider/copy/log order differs\n",
+      "mutated_source_sha256": "5dbfe718576d206bac64fba8eb45addd3d20cad91e2a7cfc9a2bcadcf3892ff4",
+      "executable_sha256": "e8cf49978921f7a4db2bca92fe4653a1ce81baf037c67425913907e4c35ae6e3"
+    },
+    {
+      "name": "equal_size_copy",
+      "rejected": true,
+      "exit": 1,
+      "output": "FAIL packet provider/copy/log order differs\n",
+      "mutated_source_sha256": "2a83d38490aa4138711f508d027b0a45e8402cc629e77f2eddd6edea9f8b9dae",
+      "executable_sha256": "9c6112e1d6f953a496473b3f87a6a91ed81bb8e49d838c18c91a204684d90173"
+    },
+    {
+      "name": "override_selection",
+      "rejected": true,
+      "exit": 1,
+      "output": "FAIL visible selection differs\n",
+      "mutated_source_sha256": "8a8bf3ce0653784fa2837726c98dcaf8ecdf0c580a96df4adc1906da2dff3e75",
+      "executable_sha256": "489f5f0b8d717ed6bcd45ee182f0fb18ea148951aa8bc82f22d9494d0d74e51a"
+    }
+  ]
+}

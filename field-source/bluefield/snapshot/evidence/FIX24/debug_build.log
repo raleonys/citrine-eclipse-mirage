@@ -1,0 +1,186 @@
+[  1%] Building CXX object CMakeFiles/preloader_l_core.dir/src/files/status.cpp.o
+[  2%] Building CXX object CMakeFiles/preloader_l_core.dir/src/paths/encoding.cpp.o
+[  3%] Building CXX object CMakeFiles/preloader_l_core.dir/src/libraries/libraries.cpp.o
+[  3%] Building CXX object CMakeFiles/preloader_l_core.dir/src/runtime/runtime_paths.cpp.o
+[  4%] Building CXX object CMakeFiles/preloader_l_core.dir/src/files/atomic_io.cpp.o
+[  5%] Building CXX object CMakeFiles/preloader_l_core.dir/src/application/logging.cpp.o
+[  6%] Building CXX object CMakeFiles/preloader_l_core.dir/src/application/avatars.cpp.o
+[  6%] Building CXX object CMakeFiles/preloader_l_core.dir/src/achievements/ini_writer.cpp.o
+[  7%] Building CXX object CMakeFiles/preloader_l_core.dir/src/achievements/persistence.cpp.o
+[  8%] Building CXX object CMakeFiles/preloader_l_core.dir/src/achievements/storage.cpp.o
+[  9%] Building CXX object CMakeFiles/preloader_l_core.dir/src/achievements/utc.cpp.o
+[  9%] Building CXX object CMakeFiles/preloader_l_core.dir/src/application/application.cpp.o
+[ 10%] Building CXX object CMakeFiles/preloader_l_core.dir/src/application/environment.cpp.o
+[ 11%] Building CXX object CMakeFiles/preloader_l_core.dir/src/application/providers.cpp.o
+[ 11%] Building CXX object CMakeFiles/preloader_l_core.dir/src/configuration/apply.cpp.o
+[ 12%] Building CXX object CMakeFiles/preloader_l_core.dir/src/configuration/defaults.cpp.o
+[ 13%] Building CXX object CMakeFiles/preloader_l_core.dir/src/configuration/hash_table.cpp.o
+[ 14%] Building CXX object CMakeFiles/preloader_l_core.dir/src/configuration/parser.cpp.o
+[ 14%] Building CXX object CMakeFiles/preloader_l_core.dir/src/configuration/state.cpp.o
+[ 15%] Building CXX object CMakeFiles/preloader_l_core.dir/src/crypto/crypto.cpp.o
+[ 16%] Building CXX object CMakeFiles/preloader_l_core.dir/src/files/binary_io.cpp.o
+[ 17%] Building CXX object CMakeFiles/preloader_l_core.dir/src/files/license_files.cpp.o
+[ 17%] Building CXX object CMakeFiles/preloader_l_core.dir/src/files/native_io.cpp.o
+[ 18%] Building CXX object CMakeFiles/preloader_l_core.dir/src/handlers/content.cpp.o
+[ 19%] Building CXX object CMakeFiles/preloader_l_core.dir/src/handlers/information.cpp.o
+[ 20%] Building CXX object CMakeFiles/preloader_l_core.dir/src/handlers/presence.cpp.o
+[ 20%] Building CXX object CMakeFiles/preloader_l_core.dir/src/hashing/hash.cpp.o
+[ 21%] Building CXX object CMakeFiles/preloader_l_core.dir/src/hooks/crypt_query.cpp.o
+[ 22%] Building CXX object CMakeFiles/preloader_l_core.dir/src/hooks/setup.cpp.o
+[ 23%] Building CXX object CMakeFiles/preloader_l_core.dir/src/licensing/key_store.cpp.o
+[ 23%] Building CXX object CMakeFiles/preloader_l_core.dir/src/licensing/license.cpp.o
+/workspace/scratch/2072698c927d/fix24_work/preloader_l/src/licensing/license.cpp: In member function ‘void preloader_l::licensing::Handlers::fatal(std::string_view, std::string_view, int32_t)’:
+/workspace/scratch/2072698c927d/fix24_work/preloader_l/src/licensing/license.cpp:54:1: warning: ‘noreturn’ function does return
+   54 | }
+      | ^
+/workspace/scratch/2072698c927d/fix24_work/preloader_l/src/licensing/license.cpp: In member function ‘void preloader_l::licensing::Handlers::ticket_required(const char*, const char*)’:
+/workspace/scratch/2072698c927d/fix24_work/preloader_l/src/licensing/license.cpp:106:1: warning: ‘noreturn’ function does return
+  106 | }
+      | ^
+[ 24%] Building CXX object CMakeFiles/preloader_l_core.dir/src/paths/paths.cpp.o
+[ 25%] Building CXX object CMakeFiles/preloader_l_core.dir/src/paths/module_relative.cpp.o
+[ 26%] Building CXX object CMakeFiles/preloader_l_core.dir/src/profiles/online.cpp.o
+[ 26%] Building CXX object CMakeFiles/preloader_l_core.dir/src/profiles/online_session.cpp.o
+[ 27%] Building CXX object CMakeFiles/preloader_l_core.dir/src/protocol/messages.cpp.o
+[ 28%] Building CXX object CMakeFiles/preloader_l_core.dir/src/protocol/router.cpp.o
+[ 29%] Building CXX object CMakeFiles/preloader_l_core.dir/src/runtime/startup.cpp.o
+[ 29%] Building CXX object CMakeFiles/preloader_l_core.dir/src/sessions/handler.cpp.o
+[ 30%] Building CXX object CMakeFiles/preloader_l_core.dir/src/time/calendar.cpp.o
+[ 31%] Building CXX object CMakeFiles/preloader_l_core.dir/src/time/timestamp.cpp.o
+[ 31%] Building CXX object CMakeFiles/preloader_l_core.dir/src/tokens/token.cpp.o
+[ 32%] Building CXX object CMakeFiles/preloader_l_core.dir/src/transport/read_window.cpp.o
+[ 33%] Building CXX object CMakeFiles/preloader_l_core.dir/src/transport/service.cpp.o
+[ 34%] Building CXX object CMakeFiles/preloader_l_core.dir/src/xml/memory_printer.cpp.o
+[ 34%] Building CXX object CMakeFiles/preloader_l_core.dir/src/xml/reader.cpp.o
+[ 35%] Building CXX object CMakeFiles/preloader_l_core.dir/third_party/tinyxml2/tinyxml2.cpp.o
+[ 36%] Linking CXX static library libpreloader_l_core.a
+[ 36%] Built target preloader_l_core
+[ 37%] Building CXX object CMakeFiles/hooks_test_registry_wait.dir/tests/unit/hooks/test_registry_wait.cpp.o
+[ 37%] Building CXX object CMakeFiles/hooks_test_registry_source.dir/tests/unit/hooks/test_registry_source.cpp.o
+[ 38%] Building CXX object CMakeFiles/hooks_test_registry_source.dir/src/hooks/registry.cpp.o
+[ 39%] Linking CXX executable hooks_test_registry_source
+[ 39%] Built target hooks_test_registry_source
+[ 40%] Building CXX object CMakeFiles/paths_test_encoding.dir/tests/unit/paths/test_encoding.cpp.o
+[ 40%] Building CXX object CMakeFiles/hooks_test_registry_wait.dir/src/hooks/registry.cpp.o
+[ 40%] Linking CXX executable paths_test_encoding
+[ 41%] Linking CXX executable hooks_test_registry_wait
+[ 41%] Built target paths_test_encoding
+[ 41%] Building CXX object CMakeFiles/files_test_status.dir/tests/unit/files/test_status.cpp.o
+[ 41%] Built target hooks_test_registry_wait
+[ 42%] Building CXX object CMakeFiles/libraries_test_libraries.dir/tests/unit/libraries/test_libraries.cpp.o
+[ 43%] Linking CXX executable files_test_status
+[ 43%] Built target files_test_status
+[ 43%] Building CXX object CMakeFiles/configuration_test_hash_table.dir/tests/unit/configuration/test_hash_table.cpp.o
+[ 44%] Linking CXX executable libraries_test_libraries
+[ 44%] Built target libraries_test_libraries
+[ 44%] Building CXX object CMakeFiles/configuration_test_parser.dir/tests/unit/configuration/test_parser.cpp.o
+[ 45%] Building CXX object CMakeFiles/configuration_test_hash_table.dir/tests/support/configuration/order.cpp.o
+[ 46%] Linking CXX executable configuration_test_parser
+[ 46%] Built target configuration_test_parser
+[ 47%] Building CXX object CMakeFiles/configuration_test_pegtl_differential.dir/tests/unit/configuration/test_pegtl_differential.cpp.o
+[ 48%] Linking CXX executable configuration_test_hash_table
+[ 48%] Built target configuration_test_hash_table
+[ 48%] Building CXX object CMakeFiles/configuration_test_state.dir/tests/unit/configuration/test_state.cpp.o
+[ 49%] Linking CXX executable configuration_test_pegtl_differential
+[ 49%] Built target configuration_test_pegtl_differential
+[ 50%] Building CXX object CMakeFiles/crypto_test_crypto.dir/tests/unit/crypto/test_crypto.cpp.o
+[ 51%] Linking CXX executable crypto_test_crypto
+[ 51%] Built target crypto_test_crypto
+[ 52%] Building CXX object CMakeFiles/handlers_test_content.dir/tests/unit/handlers/test_content.cpp.o
+[ 53%] Linking CXX executable configuration_test_state
+[ 53%] Built target configuration_test_state
+[ 53%] Building CXX object CMakeFiles/handlers_test_information.dir/tests/unit/handlers/test_information.cpp.o
+[ 54%] Linking CXX executable handlers_test_information
+[ 54%] Built target handlers_test_information
+[ 55%] Building CXX object CMakeFiles/handlers_test_presence.dir/tests/unit/handlers/test_presence.cpp.o
+[ 56%] Linking CXX executable handlers_test_content
+[ 56%] Built target handlers_test_content
+[ 56%] Building CXX object CMakeFiles/hashing_test_hash.dir/tests/unit/hashing/test_hash.cpp.o
+[ 57%] Linking CXX executable handlers_test_presence
+[ 58%] Linking CXX executable hashing_test_hash
+[ 58%] Built target handlers_test_presence
+[ 58%] Built target hashing_test_hash
+[ 59%] Building CXX object CMakeFiles/hooks_test_crypt_query.dir/tests/unit/hooks/test_crypt_query.cpp.o
+[ 60%] Building CXX object CMakeFiles/hooks_test_setup_plan.dir/tests/unit/hooks/test_setup_plan.cpp.o
+[ 61%] Linking CXX executable hooks_test_crypt_query
+[ 61%] Built target hooks_test_crypt_query
+[ 62%] Building CXX object CMakeFiles/licensing_test_key_store.dir/tests/unit/licensing/test_key_store.cpp.o
+[ 62%] Linking CXX executable hooks_test_setup_plan
+[ 62%] Built target hooks_test_setup_plan
+[ 63%] Building CXX object CMakeFiles/licensing_test_license.dir/tests/unit/licensing/test_license.cpp.o
+[ 63%] Linking CXX executable licensing_test_key_store
+[ 63%] Built target licensing_test_key_store
+[ 64%] Building CXX object CMakeFiles/paths_test_path.dir/tests/unit/paths/test_path.cpp.o
+[ 65%] Linking CXX executable licensing_test_license
+[ 65%] Built target licensing_test_license
+[ 66%] Building CXX object CMakeFiles/paths_test_module_relative.dir/tests/unit/paths/test_module_relative.cpp.o
+[ 66%] Linking CXX executable paths_test_path
+[ 66%] Built target paths_test_path
+[ 67%] Building CXX object CMakeFiles/profiles_test_online.dir/tests/unit/profiles/test_online.cpp.o
+[ 68%] Linking CXX executable paths_test_module_relative
+[ 68%] Built target paths_test_module_relative
+[ 69%] Building CXX object CMakeFiles/protocol_test_integration.dir/tests/unit/protocol/test_integration.cpp.o
+[ 69%] Linking CXX executable profiles_test_online
+[ 69%] Built target profiles_test_online
+[ 70%] Building CXX object CMakeFiles/protocol_test_messages.dir/tests/unit/protocol/test_messages.cpp.o
+[ 71%] Linking CXX executable protocol_test_integration
+[ 71%] Built target protocol_test_integration
+[ 72%] Building CXX object CMakeFiles/runtime_test_startup.dir/tests/unit/runtime/test_startup.cpp.o
+[ 72%] Linking CXX executable protocol_test_messages
+[ 72%] Built target protocol_test_messages
+[ 72%] Building CXX object CMakeFiles/time_test_calendar.dir/tests/unit/time/test_calendar.cpp.o
+[ 73%] Linking CXX executable runtime_test_startup
+[ 73%] Built target runtime_test_startup
+[ 74%] Building CXX object CMakeFiles/tokens_test_token.dir/tests/unit/tokens/test_token.cpp.o
+[ 75%] Linking CXX executable tokens_test_token
+[ 75%] Built target tokens_test_token
+[ 76%] Linking CXX executable time_test_calendar
+[ 76%] Building CXX object CMakeFiles/xml_test_printer.dir/tests/unit/xml/test_printer.cpp.o
+[ 76%] Built target time_test_calendar
+[ 77%] Building CXX object CMakeFiles/xml_test_reader.dir/tests/unit/xml/test_reader.cpp.o
+[ 78%] Linking CXX executable xml_test_reader
+[ 79%] Linking CXX executable xml_test_printer
+[ 79%] Built target xml_test_reader
+[ 79%] Building CXX object CMakeFiles/test_runtime.dir/tests/integration/test_runtime.cpp.o
+[ 79%] Built target xml_test_printer
+[ 79%] Building CXX object CMakeFiles/test_startup_compat.dir/tests/integration/test_startup_compat.cpp.o
+[ 80%] Linking CXX executable test_runtime
+[ 81%] Linking CXX executable test_startup_compat
+[ 81%] Built target test_runtime
+[ 82%] Building CXX object CMakeFiles/test_transport_pipeline.dir/tests/integration/test_transport_pipeline.cpp.o
+[ 82%] Built target test_startup_compat
+[ 82%] Building CXX object CMakeFiles/test_path_effects.dir/tests/integration/test_path_effects.cpp.o
+[ 83%] Linking CXX executable test_path_effects
+[ 83%] Built target test_path_effects
+[ 84%] Building CXX object CMakeFiles/test_path_resolution.dir/tests/integration/test_path_resolution.cpp.o
+[ 85%] Linking CXX executable test_transport_pipeline
+[ 85%] Built target test_transport_pipeline
+[ 86%] Building CXX object CMakeFiles/test_configuration_orchestration.dir/tests/integration/test_configuration_orchestration.cpp.o
+[ 87%] Linking CXX executable test_path_resolution
+[ 87%] Built target test_path_resolution
+[ 88%] Building CXX object CMakeFiles/test_startup_phases.dir/tests/integration/test_startup_phases.cpp.o
+[ 88%] Linking CXX executable test_configuration_orchestration
+[ 88%] Built target test_configuration_orchestration
+[ 89%] Building CXX object CMakeFiles/test_brownfield_contracts.dir/tests/integration/test_brownfield_contracts.cpp.o
+[ 90%] Linking CXX executable test_brownfield_contracts
+[ 91%] Linking CXX executable test_startup_phases
+[ 91%] Built target test_startup_phases
+[ 91%] Building CXX object CMakeFiles/test_supplied_config.dir/tests/integration/test_supplied_config.cpp.o
+[ 91%] Built target test_brownfield_contracts
+[ 92%] Building CXX object CMakeFiles/test_configuration_profile.dir/tests/integration/test_configuration_profile.cpp.o
+[ 93%] Linking CXX executable test_configuration_profile
+[ 94%] Linking CXX executable test_supplied_config
+[ 94%] Built target test_configuration_profile
+[ 95%] Building CXX object CMakeFiles/test_asio_transport.dir/tests/integration/test_asio_transport.cpp.o
+[ 95%] Built target test_supplied_config
+[ 96%] Building CXX object CMakeFiles/test_filesystem_config.dir/tests/integration/test_filesystem_config.cpp.o
+[ 96%] Linking CXX executable test_asio_transport
+[ 96%] Linking CXX executable test_filesystem_config
+[ 96%] Built target test_asio_transport
+[ 97%] Building CXX object CMakeFiles/test_runtime_migration.dir/tests/integration/test_runtime_migration.cpp.o
+[ 97%] Built target test_filesystem_config
+[ 98%] Building CXX object CMakeFiles/test_original_compat.dir/tests/integration/test_original_compat.cpp.o
+[ 99%] Linking CXX executable test_original_compat
+[ 99%] Built target test_original_compat
+[100%] Linking CXX executable test_runtime_migration
+[100%] Built target test_runtime_migration

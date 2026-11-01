@@ -1,0 +1,13 @@
+{
+  "status": "OBSERVED_PRIOR_EXECUTION_TRANSCRIPT_ONLY",
+  "raw_receipt_available": false,
+  "initial_debug_output": "integration_test_asio_transport FAIL; FAIL Asio: fixture EOF/timeout",
+  "binary_sha256_from_tool_output": "1fd67c281fb2a26db53fff3d0e042af3d3361c3ec873c4dc61f42b0ddd3ab545",
+  "log_excerpt_from_tool_output": [
+    "Asio completion exception contained at IO thread boundary",
+    "LSX service stopped"
+  ],
+  "initial_sanitizer_before_dispatch_fix": "33/33 PASS, original receipt unavailable",
+  "scope": "prior working snapshot before dispatch repair; not current final-source QA",
+  "diagnostic_campaign_failure": "arbitrary failure must recover or explicitly stop listener; log-only classification replaced by actual is_ready observation"
+}

@@ -1,0 +1,7 @@
+{
+  "scope": "Scratch-only CTest orchestration, not product source",
+  "initial_error": "TypeError: dict object is not callable; receipt variable shadowed preflight function",
+  "correction": "Rename receipt variable before invoking preflight",
+  "tests_executed_before_error": 0,
+  "product_source_changes": false
+}

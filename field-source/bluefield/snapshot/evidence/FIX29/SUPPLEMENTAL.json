@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "source_digest": "2f7a8c5d75326c6f3e03bd0069ba669168ae21520777b467cf6ff4584c86465b",
+  "negative_controls": [
+    {
+      "label": "parent_rejection",
+      "exit_code": 1,
+      "seconds": 0.156,
+      "output": "FAIL XML source mismatch case=3543 expected_code=18 actual_code=14 expected_error=Error=XML_ELEMENT_DEPTH_EXCEEDED ErrorID=18 (0x12) Line number=1: Element nesting is too deep. actual_error=Error=XML_ERROR_MISMATCHED_ELEMENT ErrorID=14 (0xe) Line number=1: XMLElement name=bad\n",
+      "log": "parent_rejection.log"
+    },
+    {
+      "label": "depth500_rejection",
+      "exit_code": 1,
+      "seconds": 0.225,
+      "output": "FAIL XML source mismatch case=3543 expected_code=18 actual_code=14 expected_error=Error=XML_ELEMENT_DEPTH_EXCEEDED ErrorID=18 (0x12) Line number=1: Element nesting is too deep. actual_error=Error=XML_ERROR_MISMATCHED_ELEMENT ErrorID=14 (0xe) Line number=1: XMLElement name=bad\n",
+      "log": "depth500_rejection.log"
+    },
+    {
+      "label": "adapter_bypass_rejection",
+      "exit_code": 1,
+      "seconds": 0.117,
+      "output": "FAIL XML source mismatch case=3543 expected_code=18 actual_code=14 expected_error=Error=XML_ELEMENT_DEPTH_EXCEEDED ErrorID=18 (0x12) Line number=1: Element nesting is too deep. actual_error=Error=XML_ERROR_MISMATCHED_ELEMENT ErrorID=14 (0xe) Line number=1: XMLElement name=bad\n",
+      "log": "adapter_bypass_rejection.log"
+    }
+  ],
+  "sanitizers": [
+    {
+      "label": "xml_focused_sanitizer",
+      "exit_code": 0,
+      "seconds": 1.825,
+      "output": "PASS live packet XML depth oracle cases=4284 checks=17138; full diagnostics/tree compared; packet selected compatibility source, original DLL NOT_RUN\n",
+      "log": "xml_focused_sanitizer.log",
+      "instrumented_translation_units": [
+        "src/xml/reader.cpp",
+        "src/xml/upstream_parser.cpp",
+        "tests/support/xml/packet_oracle.cpp",
+        "tests/integration/test_xml_depth_source_oracle.cpp"
+      ],
+      "included_implementations_instrumented": [
+        "third_party/tinyxml2/tinyxml2.cpp",
+        "tests/support/xml/packet/tinyxml2.cpp"
+      ],
+      "uninstrumented_archive": "fix29_qa/production/libpreloader_l_core.a",
+      "full_core": "NOT_RUN",
+      "LSan": "NOT_RUN"
+    }
+  ],
+  "parent_malformed_precedence": {
+    "label": "parent_malformed_precedence",
+    "exit_code": 0,
+    "seconds": 0.003,
+    "output": "7 Error=XML_ERROR_PARSING_ATTRIBUTE ErrorID=7 (0x7) Line number=1: XMLElement name=bad\n",
+    "log": "parent_malformed_precedence.log"
+  }
+}

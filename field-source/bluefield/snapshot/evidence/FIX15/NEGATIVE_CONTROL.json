@@ -1,0 +1,11 @@
+{
+  "status": "PASS_NEGATIVE_CONTROL",
+  "source_digest": "2ac1916047aa4a33757eea2e09527d6ee9b9cbd4f2d7445a2bb64527a80c71d5",
+  "method": "Exact rejected FIX14 read-side guard reintroduced into throwaway NativeInput object; unchanged new filesystem integration test fails before this guard is removed. No worktree mutation.",
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "output": "FAIL: unowned runtime write\n",
+  "parent_guard": "    supported(mode,share);if(owner_)owner_->require_write(native_file_path(path));return std::make_unique<NativeInput>(path);",
+  "test_source_sha256": "868c0a9225e6974ec6a09fec0792a79992b44f38e4be9cf64d5045a38cbeab5c",
+  "mutated_source_sha256": "f5f0ceb827a658728b9bdd176c322058a37ccad64f28e7757bf0dedffb032624"
+}

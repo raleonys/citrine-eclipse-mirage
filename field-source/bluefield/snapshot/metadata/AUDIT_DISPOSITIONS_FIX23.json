@@ -1,0 +1,153 @@
+{
+  "comparison_target": "USER_RE_SOURCE_PACKET_NOT_NATIVE_BINARY_EQUIVALENCE",
+  "before_open": 15,
+  "after_open": 11,
+  "accounting": {
+    "runtime_source_guard_repaired": [
+      "D11"
+    ],
+    "completed_prior_source_scope_closed": [
+      "D10"
+    ],
+    "reviewed_retained_choices": [
+      "D05",
+      "D17"
+    ],
+    "still_open": [
+      "DEP05",
+      "D02",
+      "D03",
+      "D06",
+      "D07",
+      "D13",
+      "D14",
+      "D15",
+      "D16",
+      "Q02",
+      "D21"
+    ],
+    "native_validation": "NOT_RUN_separate_dimension_no_native_PASS"
+  },
+  "records": [
+    {
+      "id": "DEP05",
+      "title": "gulrak/filesystem kapsamı kısmi",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Path construction, status, encoding ve IO için ayrı sahiplik/kapsam kararı çıkar."
+    },
+    {
+      "id": "D02",
+      "title": "IO/handler thread düzeni",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Kapasite, ownership ve kaynak sırasını incele; uygun karar verilmeksizin değiştirme."
+    },
+    {
+      "id": "D03",
+      "title": "Session okuma/işleme/yazma ardışıklığı",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Çoklu frame ve uzun response senaryolarıyla iki sözleşmeyi karşılaştır."
+    },
+    {
+      "id": "D05",
+      "title": "Hookları tek batch ile etkinleştirme",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "KEEP_REVIEWED_ACTIVATION_STAGING",
+      "decision": "Review complete: retain queued activation after full callback context/original-slot staging. This is an owned integration choice, not MinHook necessity or source parity. Partial apply/cleanup native acceptance remains separate.",
+      "next_action": "Keep recorded ordering and incomplete-staging regressions. Native activation/rollback validation remains NOT_RUN; conservative cleanup policy remains D13."
+    },
+    {
+      "id": "D06",
+      "title": "Ek global kilitler ve attempt counter senkronizasyonu",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Kilit grafiğini ve callback recursionını ayrı incele; blanket revert yok."
+    },
+    {
+      "id": "D07",
+      "title": "Dosya status dalları basitleştirilmiş",
+      "before": "PARTIAL_SOURCE_RESTORED_PACKET_UNKNOWN_DOMAIN_RETAINED",
+      "after": "PARTIAL_SOURCE_RESTORED_PACKET_UNKNOWN_DOMAIN_RETAINED",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Hangi status alanlarının callerda kullanıldığını belirle; bilinen dallar için adapter kararı çıkar."
+    },
+    {
+      "id": "D10",
+      "title": "Path çözümleme adapterının farklı API kullanması",
+      "before": "PARTIAL_SOURCE_LEXICAL_BINDING_RESTORED_NATIVE_BOUNDARIES_OPEN",
+      "after": "CLOSED_SOURCE_LEXICAL_BINDING",
+      "decision": "Completed FIX21 normalization removal and FIX22 source lexical caller binding close the original D10 source gap. Native IO/encoding/ABI execution is separately NOT_RUN; it is not a new source defect requiring D10 to stay open.",
+      "next_action": "Retain source lexical regressions. Record actual Windows execution separately; residual backend scope remains DEP05, status domain D07 and encoding/native validation ledger."
+    },
+    {
+      "id": "D11",
+      "title": "Provider factory null sonucu hata yerine return",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "CORRECTED_PACKET_NULL_FACTORY_GUARD",
+      "decision": "Restored exact packet OutOfEvidenceInput null-factory guard and original source fixture. Parent failed that fixture; repaired module passes. Absent module and normal provider branches unchanged.",
+      "next_action": "Retain original null-factory oracle and worker-no-finish/module-ownership checks. Native original null-factory behavior remains unknown; no binary exception parity claim."
+    },
+    {
+      "id": "D13",
+      "title": "Conservative unload ve fault-domain korumaları",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Güvenlik gerekçesiyle ayrı değerlendir; input/cache kota bulgularıyla karıştırma."
+    },
+    {
+      "id": "D14",
+      "title": "Kaynak exit/error etkisinin SessionFailure ile karşılanması",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Hangi hata process/service/session düzeyinde olmalı karar tablosu çıkar. Bu turda handler değiştirilmedi."
+    },
+    {
+      "id": "D15",
+      "title": "XML derinlik denetimi parse sonrasına taşınmış",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Upstream kodunu körlemesine geri alma; adapterın malformed/depth sözleşmesini değerlendir."
+    },
+    {
+      "id": "D16",
+      "title": "Avatar seçim isteğinin provider yan etkilerine uzanması",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Görünür seçim ile cache/download side effect sözleşmesini ayrı değerlendir."
+    },
+    {
+      "id": "D17",
+      "title": "getenv yerine sahipli _dupenv_s kopyası",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "KEEP_REVIEWED_CRT_OWNERSHIP",
+      "decision": "Review complete: retain owned CRT environment copy for warning/lifetime adaptation. Unique ownership frees through matching CRT; caller immediately copies. Extra allocation/system_error behavior is explicitly retained, not hidden or called source parity.",
+      "next_action": "Keep CRT-origin/copy/error ownership documented. Native CRT/OOM execution remains NOT_RUN; do not replace with Win32 environment reads or global warning suppression."
+    },
+    {
+      "id": "Q02",
+      "title": "Test oracle bağımsızlığı ve aşırı kaba diagnostic",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Source-derived unchanged expectations, app-specific tests ve synthetic fixtureları ayrı raporla; nonsecret event sınıflarını değerlendirmeye al."
+    },
+    {
+      "id": "D21",
+      "title": "Staging ve unload iç algoritma sınırları",
+      "before": "REVIEW_NO_AUTOMATIC_REVERT",
+      "after": "REVIEW_NO_AUTOMATIC_REVERT",
+      "decision": "Unfinished; retained open without an invented resolution.",
+      "next_action": "Ürün kabulünü daraltan sınırla iç algoritma bütçesini ayır; kapsam/gerekçe incelemesi yapılmadan hepsini kaldırma."
+    }
+  ]
+}

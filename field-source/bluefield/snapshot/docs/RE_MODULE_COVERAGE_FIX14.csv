@@ -1,0 +1,152 @@
+module,source_files,archive_files,direct_imports,classification,finding_ids,not_directly_imported
+DLL-ANALIZ-RAPORU.md,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+KAYNAK-DURUMU.md,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+KOD-REHBERI.md,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+TAMAMLANMA-TAHMINI.md,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+YOL-HARITASI.md,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+anadius-achievement-runtime-source,4,30,4,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-achievement-storage-source,2,21,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-achievement-writer-source,2,17,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-all-functions.asm.txt,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+anadius-all-functions.pseudo.c,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+anadius-archive-evidence.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+anadius-bootstrap-native-source,2,12,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""anadius-bootstrap-native-source/native_entries.cpp"", ""anadius-bootstrap-native-source/native_entries.hpp""]"
+anadius-calendar-source,2,14,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-callgraph.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+anadius-config-application-source,2,18,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-config-hash-source,2,16,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-config-order-source,2,17,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-config-pipeline-source,2,18,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""anadius-config-pipeline-source/pipeline.cpp"", ""anadius-config-pipeline-source/pipeline.hpp""]"
+anadius-config-source,2,12,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-config-startup-source,2,19,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""anadius-config-startup-source/startup.cpp"", ""anadius-config-startup-source/startup.hpp""]"
+anadius-content-handlers-source,2,11,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-crt-argv-bridge-source,2,15,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-argv-bridge-source/argv_bridge.cpp"", ""anadius-crt-argv-bridge-source/argv_bridge.hpp""]"
+anadius-crt-argv-parser-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-argv-parser-source/parse.cpp"", ""anadius-crt-argv-parser-source/parse.hpp""]"
+anadius-crt-argv-source,2,15,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-argv-source/argv.cpp"", ""anadius-crt-argv-source/argv.hpp""]"
+anadius-crt-atomic-native-source,2,13,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-atomic-native-source/atomic.cpp"", ""anadius-crt-atomic-native-source/atomic.hpp""]"
+anadius-crt-byteclass-source,2,13,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-byteclass-source/byteclass.cpp"", ""anadius-crt-byteclass-source/byteclass.hpp""]"
+anadius-crt-cache-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-cache-source/cache.cpp"", ""anadius-crt-cache-source/cache.hpp""]"
+anadius-crt-conversion-api-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-conversion-api-source/api.cpp"", ""anadius-crt-conversion-api-source/api.hpp""]"
+anadius-crt-conversion-bridge-source,2,10,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-conversion-bridge-source/bridge.cpp"", ""anadius-crt-conversion-bridge-source/bridge.hpp""]"
+anadius-crt-conversion-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-conversion-source/conversion.cpp"", ""anadius-crt-conversion-source/conversion.hpp""]"
+anadius-crt-counter-native-source,2,13,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-counter-native-source/counters.cpp"", ""anadius-crt-counter-native-source/counters.hpp""]"
+anadius-crt-cpu-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-cpu-source/cpu.cpp"", ""anadius-crt-cpu-source/cpu.hpp""]"
+anadius-crt-entry-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-entry-source/entry.cpp"", ""anadius-crt-entry-source/entry.hpp""]"
+anadius-crt-environment-cleanup-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-environment-cleanup-source/environment_cleanup.cpp"", ""anadius-crt-environment-cleanup-source/environment_cleanup.hpp""]"
+anadius-crt-environment-source,2,13,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-environment-source/environment.cpp"", ""anadius-crt-environment-source/environment.hpp""]"
+anadius-crt-error-source,2,10,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-error-source/errors.cpp"", ""anadius-crt-error-source/errors.hpp""]"
+anadius-crt-find-bridge-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-find-bridge-source/bridge.cpp"", ""anadius-crt-find-bridge-source/bridge.hpp""]"
+anadius-crt-find-native-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-find-native-source/find_native.cpp"", ""anadius-crt-find-native-source/find_native.hpp""]"
+anadius-crt-fls-native-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-fls-native-source/fls.cpp"", ""anadius-crt-fls-native-source/fls.hpp""]"
+anadius-crt-glue-source,2,13,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-glue-source/crt_glue.cpp"", ""anadius-crt-glue-source/crt_glue.hpp""]"
+anadius-crt-heap-native-bridge-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-heap-native-bridge-source/bridge.cpp"", ""anadius-crt-heap-native-bridge-source/bridge.hpp""]"
+anadius-crt-heap-native-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-heap-native-source/native_api.cpp"", ""anadius-crt-heap-native-source/native_api.hpp""]"
+anadius-crt-heap-source,2,10,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-heap-source/heap.cpp"", ""anadius-crt-heap-source/heap.hpp""]"
+anadius-crt-initial-locale-source,2,15,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-initial-locale-source/initial_locale_data.cpp"", ""anadius-crt-initial-locale-source/initial_locale_data.hpp""]"
+anadius-crt-initial-multibyte-source,2,17,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-initial-multibyte-source/initial_mb.cpp"", ""anadius-crt-initial-multibyte-source/initial_mb.hpp""]"
+anadius-crt-initial-state-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-initial-state-source/initial_state.cpp"", ""anadius-crt-initial-state-source/initial_state.hpp""]"
+anadius-crt-initializers-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-initializers-source/initializers.cpp"", ""anadius-crt-initializers-source/initializers.hpp""]"
+anadius-crt-invalid-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-invalid-source/invalid.cpp"", ""anadius-crt-invalid-source/invalid.hpp""]"
+anadius-crt-lcmap-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-lcmap-source/lcmap.cpp"", ""anadius-crt-lcmap-source/lcmap.hpp""]"
+anadius-crt-lifecycle-callbacks-source,2,17,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-lifecycle-callbacks-source/callbacks.cpp"", ""anadius-crt-lifecycle-callbacks-source/callbacks.hpp""]"
+anadius-crt-locale-bridge-source,2,10,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-bridge-source/bridge.cpp"", ""anadius-crt-locale-bridge-source/bridge.hpp""]"
+anadius-crt-locale-free-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-free-source/locale_free.cpp"", ""anadius-crt-locale-free-source/locale_free.hpp""]"
+anadius-crt-locale-names-source,2,15,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-names-source/locale_names.cpp"", ""anadius-crt-locale-names-source/locale_names.hpp""]"
+anadius-crt-locale-native-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-native-source/native.cpp"", ""anadius-crt-locale-native-source/native.hpp""]"
+anadius-crt-locale-ref-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-ref-source/locale_ref.cpp"", ""anadius-crt-locale-ref-source/locale_ref.hpp""]"
+anadius-crt-locale-resource-bridge-source,2,10,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-resource-bridge-source/bridge.cpp"", ""anadius-crt-locale-resource-bridge-source/bridge.hpp""]"
+anadius-crt-locale-startup-source,2,19,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-startup-source/locale_startup.cpp"", ""anadius-crt-locale-startup-source/locale_startup.hpp""]"
+anadius-crt-locale-thread-source,2,13,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-thread-source/locale_thread.cpp"", ""anadius-crt-locale-thread-source/locale_thread.hpp""]"
+anadius-crt-locale-update-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-locale-update-source/locale_update.cpp"", ""anadius-crt-locale-update-source/locale_update.hpp""]"
+anadius-crt-lock-native-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-lock-native-source/native.cpp"", ""anadius-crt-lock-native-source/native.hpp""]"
+anadius-crt-lock-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-lock-source/locks.cpp"", ""anadius-crt-lock-source/locks.hpp""]"
+anadius-crt-lowio-lifecycle-source,2,16,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp"", ""anadius-crt-lowio-lifecycle-source/lowio_lifecycle.hpp""]"
+anadius-crt-module-path-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-module-path-source/module_path.cpp"", ""anadius-crt-module-path-source/module_path.hpp""]"
+anadius-crt-multibyte-bridge-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-multibyte-bridge-source/bridge.cpp"", ""anadius-crt-multibyte-bridge-source/bridge.hpp""]"
+anadius-crt-multibyte-builder-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-multibyte-builder-source/multibyte_builder.cpp"", ""anadius-crt-multibyte-builder-source/multibyte_builder.hpp""]"
+anadius-crt-multibyte-control-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-multibyte-control-source/multibyte_control.cpp"", ""anadius-crt-multibyte-control-source/multibyte_control.hpp""]"
+anadius-crt-multibyte-record-bridge-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-multibyte-record-bridge-source/bridge.cpp"", ""anadius-crt-multibyte-record-bridge-source/bridge.hpp""]"
+anadius-crt-multibyte-support-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-multibyte-support-source/multibyte_support.cpp"", ""anadius-crt-multibyte-support-source/multibyte_support.hpp""]"
+anadius-crt-multibyte-tables-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-multibyte-tables-source/multibyte_tables.cpp"", ""anadius-crt-multibyte-tables-source/multibyte_tables.hpp""]"
+anadius-crt-nls-bridge-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-nls-bridge-source/bridge.cpp"", ""anadius-crt-nls-bridge-source/bridge.hpp""]"
+anadius-crt-nls-dispatch-bridge-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-nls-dispatch-bridge-source/bridge.cpp"", ""anadius-crt-nls-dispatch-bridge-source/bridge.hpp""]"
+anadius-crt-nls-dispatch-native-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-nls-dispatch-native-source/native.cpp"", ""anadius-crt-nls-dispatch-native-source/native.hpp""]"
+anadius-crt-nls-dispatch-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-nls-dispatch-source/nls_dispatch.cpp"", ""anadius-crt-nls-dispatch-source/nls_dispatch.hpp""]"
+anadius-crt-nls-native-bridge-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-nls-native-bridge-source/bridge.cpp"", ""anadius-crt-nls-native-bridge-source/bridge.hpp""]"
+anadius-crt-nls-native-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-nls-native-source/native_api.cpp"", ""anadius-crt-nls-native-source/native_api.hpp""]"
+anadius-crt-onexit-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-onexit-source/onexit.cpp"", ""anadius-crt-onexit-source/onexit.hpp""]"
+anadius-crt-pair-bindings-source,2,15,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-pair-bindings-source/bindings.cpp"", ""anadius-crt-pair-bindings-source/bindings.hpp""]"
+anadius-crt-pair-leaves-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-pair-leaves-source/pair_leaves.cpp"", ""anadius-crt-pair-leaves-source/pair_leaves.hpp""]"
+anadius-crt-ptd-data-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-ptd-data-source/ptd_data.cpp"", ""anadius-crt-ptd-data-source/ptd_data.hpp""]"
+anadius-crt-ptd-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-ptd-source/ptd.cpp"", ""anadius-crt-ptd-source/ptd.hpp""]"
+anadius-crt-realloc-source,2,13,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-realloc-source/realloc.cpp"", ""anadius-crt-realloc-source/realloc.hpp""]"
+anadius-crt-recalloc-bridge-source,2,10,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-recalloc-bridge-source/bridge.cpp"", ""anadius-crt-recalloc-bridge-source/bridge.hpp""]"
+anadius-crt-recalloc-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-recalloc-source/recalloc.cpp"", ""anadius-crt-recalloc-source/recalloc.hpp""]"
+anadius-crt-runtime-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-runtime-source/runtime.cpp"", ""anadius-crt-runtime-source/runtime.hpp""]"
+anadius-crt-sort-source,2,16,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-sort-source/sort.cpp"", ""anadius-crt-sort-source/sort.hpp""]"
+anadius-crt-startup-bridge-source,2,15,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-startup-bridge-source/startup_bridge.cpp"", ""anadius-crt-startup-bridge-source/startup_bridge.hpp""]"
+anadius-crt-string-type-source,2,12,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-string-type-source/string_type.cpp"", ""anadius-crt-string-type-source/string_type.hpp""]"
+anadius-crt-support-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-support-source/support.cpp"", ""anadius-crt-support-source/support.hpp""]"
+anadius-crt-sync-bridge-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-sync-bridge-source/bridge.cpp"", ""anadius-crt-sync-bridge-source/bridge.hpp""]"
+anadius-crt-termination-source,2,13,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-termination-source/termination.cpp"", ""anadius-crt-termination-source/termination.hpp""]"
+anadius-crt-wildcard-search-source,2,15,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-wildcard-search-source/search.cpp"", ""anadius-crt-wildcard-search-source/search.hpp""]"
+anadius-crt-wildcard-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-wildcard-source/wildcard.cpp"", ""anadius-crt-wildcard-source/wildcard.hpp""]"
+anadius-crt-wildcard-storage-source,2,14,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-crt-wildcard-storage-source/storage.cpp"", ""anadius-crt-wildcard-storage-source/storage.hpp""]"
+anadius-crypto-source,3,12,3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-dispatch-source,2,8,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-encoding-source,3,9,0,SOURCE_BRANCHES_NOT_FULLY_BOUND,"[""D08""]","[""anadius-encoding-source/encoding.cpp"", ""anadius-encoding-source/encoding.hpp"", ""anadius-encoding-source/native_encoding.cpp""]"
+anadius-event-queue-source,4,22,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""anadius-event-queue-source/adapters.cpp"", ""anadius-event-queue-source/adapters.hpp"", ""anadius-event-queue-source/queue.cpp"", ""anadius-event-queue-source/queue.hpp""]"
+anadius-execution-source,4,12,0,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]","[""anadius-execution-source/execution.cpp"", ""anadius-execution-source/execution.hpp"", ""anadius-execution-source/windows_platform.cpp"", ""anadius-execution-source/windows_platform.hpp""]"
+anadius-file-source,5,19,5,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-handlers-source,2,10,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-hash-source,2,10,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-host-callbacks-source,2,9,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-host-init-source,2,12,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-libraries-source,3,12,3,SOURCE_LOADER_REUSED_PHASE_DIFFERS,"[""D01""]",[]
+anadius-license-source,3,11,3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-messages-source,2,12,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-misc-handlers-source,2,12,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-native-source,3,12,3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-network-hook-source,4,11,4,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-online-source,4,12,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],"[""anadius-online-source/recovered_effects.cpp"", ""anadius-online-source/recovered_effects.hpp""]"
+anadius-parser-source,2,11,2,PEGTL_VDF_BACKEND_ADAPTATION,"[""DEP04""]",[]
+anadius-path-source,2,10,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-rea-evidence.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+anadius-recovery-index.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+anadius-registry-source,3,11,3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-server-source,2,10,1,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]","[""anadius-server-source/server.hpp""]"
+anadius-session-source,4,22,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],"[""anadius-session-source/routing.cpp"", ""anadius-session-source/routing.hpp""]"
+anadius-socket-source,112,724,0,UPSTREAM_ASIO_AND_OWNED_TRANSPORT,"[""DEP01"", ""D02"", ""D03"", ""D04"", ""D12""]","[""anadius-socket-source/acceptor_native.cpp"", ""anadius-socket-source/acceptor_native.hpp"", ""anadius-socket-source/acceptor.cpp"", ""anadius-socket-source/acceptor.hpp"", ""anadius-socket-source/append_growth.cpp"", ""anadius-socket-source/append_growth.hpp"", ""anadius-socket-source/async_receive.cpp"", ""anadius-socket-source/async_receive.hpp"", ""anadius-socket-source/cancellation_native.cpp"", ""anadius-socket-source/cancellation_native.hpp"", ""anadius-socket-source/cancellation.cpp"", ""anadius-socket-source/cancellation.hpp"", ""anadius-socket-source/cipher_session.cpp"", ""anadius-socket-source/cipher_session.hpp"", ""anadius-socket-source/close.cpp"", ""anadius-socket-source/close.hpp"", ""anadius-socket-source/closing.cpp"", ""anadius-socket-source/closing.hpp"", ""anadius-socket-source/completion_dispatcher_native.cpp"", ""anadius-socket-source/completion_dispatcher_native.hpp"", ""anadius-socket-source/completion_dispatcher.cpp"", ""anadius-socket-source/completion_dispatcher.hpp"", ""anadius-socket-source/composed_read.cpp"", ""anadius-socket-source/composed_read.hpp"", ""anadius-socket-source/composed_write_native.cpp"", ""anadius-socket-source/composed_write_native.hpp"", ""anadius-socket-source/composed_write.cpp"", ""anadius-socket-source/composed_write.hpp"", ""anadius-socket-source/document_clear.cpp"", ""anadius-socket-source/document_clear.hpp"", ""anadius-socket-source/environment_constructor.cpp"", ""anadius-socket-source/environment_constructor.hpp"", ""anadius-socket-source/frame_read.cpp"", ""anadius-socket-source/frame_read.hpp"", ""anadius-socket-source/handler_dispatch_bridge.cpp"", ""anadius-socket-source/handler_dispatch_bridge.hpp"", ""anadius-socket-source/handler_dispatch.cpp"", ""anadius-socket-source/handler_dispatch.hpp"", ""anadius-socket-source/io_completion_dispatch.cpp"", ""anadius-socket-source/io_completion_dispatch.hpp"", ""anadius-socket-source/io_completion.cpp"", ""anadius-socket-source/io_completion.hpp"", ""anadius-socket-source/iocp_constructor_native.cpp"", ""anadius-socket-source/iocp_constructor_native.hpp"", ""anadius-socket-source/iocp_constructor.cpp"", ""anadius-socket-source/iocp_constructor.hpp"", ""anadius-socket-source/lifecycle_native.cpp"", ""anadius-socket-source/lifecycle_native.hpp"", ""anadius-socket-source/lifecycle.cpp"", ""anadius-socket-source/lifecycle.hpp"", ""anadius-socket-source/message_core_bridge.cpp"", ""anadius-socket-source/message_core_bridge.hpp"", ""anadius-socket-source/message_dispatch.cpp"", ""anadius-socket-source/message_dispatch.hpp"", ""anadius-socket-source/native_dispatch.cpp"", ""anadius-socket-source/native_dispatch.hpp"", ""anadius-socket-source/native_document.cpp"", ""anadius-socket-source/native_document.hpp"", ""anadius-socket-source/native_message.cpp"", ""anadius-socket-source/native_message.hpp"", ""anadius-socket-source/native.cpp"", ""anadius-socket-source/native.hpp"", ""anadius-socket-source/node_delete.cpp"", ""anadius-socket-source/node_delete.hpp"", ""anadius-socket-source/operations.cpp"", ""anadius-socket-source/operations.hpp"", ""anadius-socket-source/owned_response.cpp"", ""anadius-socket-source/owned_response.hpp"", ""anadius-socket-source/pool_release.cpp"", ""anadius-socket-source/pool_release.hpp"", ""anadius-socket-source/posted_operation_dispatch.cpp"", ""anadius-socket-source/posted_operation_dispatch.hpp"", ""anadius-socket-source/posted_operation.cpp"", ""anadius-socket-source/posted_operation.hpp"", ""anadius-socket-source/prefix_cipher.cpp"", ""anadius-socket-source/prefix_cipher.hpp"", ""anadius-socket-source/queued_write.cpp"", ""anadius-socket-source/queued_write.hpp"", ""anadius-socket-source/receive_buffer.cpp"", ""anadius-socket-source/receive_buffer.hpp"", ""anadius-socket-source/recycle_storage.cpp"", ""anadius-socket-source/recycle_storage.hpp"", ""anadius-socket-source/recycle.cpp"", ""anadius-socket-source/recycle.hpp"", ""anadius-socket-source/request_growth.cpp"", ""anadius-socket-source/request_growth.hpp"", ""anadius-socket-source/request_mutation.cpp"", ""anadius-socket-source/request_mutation.hpp"", ""anadius-socket-source/response_containers.cpp"", ""anadius-socket-source/response_containers.hpp"", ""anadius-socket-source/response_dispatch.cpp"", ""anadius-socket-source/response_dispatch.hpp"", ""anadius-socket-source/response_hex.cpp"", ""anadius-socket-source/response_hex.hpp"", ""anadius-socket-source/scheduler_registry.cpp"", ""anadius-socket-source/scheduler_registry.hpp"", ""anadius-socket-source/service_constructor_native.cpp"", ""anadius-socket-source/service_constructor_native.hpp"", ""anadius-socket-source/service_constructor.cpp"", ""anadius-socket-source/service_constructor.hpp"", ""anadius-socket-source/service_registry.cpp"", ""anadius-socket-source/service_registry.hpp"", ""anadius-socket-source/worker_run_native.cpp"", ""anadius-socket-source/worker_run_native.hpp"", ""anadius-socket-source/worker_run.cpp"", ""anadius-socket-source/worker_run.hpp"", ""anadius-socket-source/worker_startup_native.cpp"", ""anadius-socket-source/worker_startup_native.hpp"", ""anadius-socket-source/worker_startup.cpp"", ""anadius-socket-source/worker_startup.hpp"", ""anadius-socket-source/write_finish.cpp"", ""anadius-socket-source/write_finish.hpp""]"
+anadius-source,2,9,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""anadius-source/bootstrap.cpp"", ""anadius-source/bootstrap.hpp""]"
+anadius-startup-source,3,12,3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-status-source,3,10,1,SOURCE_BRANCHES_NOT_FULLY_BOUND,"[""D07""]","[""anadius-status-source/native_status.cpp"", ""anadius-status-source/status.cpp""]"
+anadius-thread-native-source,2,12,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""anadius-thread-native-source/win32_effects.cpp"", ""anadius-thread-native-source/win32_effects.hpp""]"
+anadius-thread-source,2,9,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-thread-source/threads.cpp"", ""anadius-thread-source/threads.hpp""]"
+anadius-timestamp-source,2,21,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-token-source,3,11,3,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+anadius-type-recovery,0,4,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+anadius-vcrt-api-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-vcrt-api-source/api.cpp"", ""anadius-vcrt-api-source/api.hpp""]"
+anadius-vcrt-bridge-source,2,15,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-vcrt-bridge-source/bridge.cpp"", ""anadius-vcrt-bridge-source/bridge.hpp""]"
+anadius-vcrt-ptd-source,2,11,0,HOST_CRT_RUNTIME_SUBSTITUTION_REVIEW_BY_CALLER,"[""D19""]","[""anadius-vcrt-ptd-source/vcrt_ptd.cpp"", ""anadius-vcrt-ptd-source/vcrt_ptd.hpp""]"
+anadius-windows-source,2,9,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""anadius-windows-source/windows_effects.cpp"", ""anadius-windows-source/windows_effects.hpp""]"
+anadius-xml-reader-source,2,11,2,UPSTREAM_TINYXML2_ADAPTER,"[""DEP03"", ""D15""]",[]
+anadius-xml-source,2,12,2,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],[]
+hook-engine-source,8,42,0,UPSTREAM_MINHOOK_AND_OWNED_INSTALLATION,"[""DEP02"", ""D05""]","[""hook-engine-source/adapters.cpp"", ""hook-engine-source/adapters.hpp"", ""hook-engine-source/api.cpp"", ""hook-engine-source/api.hpp"", ""hook-engine-source/preloader_engine.cpp"", ""hook-engine-source/testing/fake_state.hpp"", ""hook-engine-source/testing/fake_win32.cpp"", ""hook-engine-source/testing/fake_win32.h""]"
+host-compatibility,0,5,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+integrity-final.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+mac-symbol-comparison,0,3,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+package-manifest.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+package-omissions.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+preloader-analysis,0,8,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+preloader-native-source,2,11,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""preloader-native-source/native_shims.cpp"", ""preloader-native-source/native_shims.hpp""]"
+preloader-source,2,9,1,DIRECT_SOURCE_REUSE_WITH_CURRENT_CROSSWALK,[],"[""preloader-source/preloader_core.hpp""]"
+reconstruction-inventory,0,20,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+source-workspace,0,539,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+version-all-functions.asm.txt,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+version-all-functions.pseudo.c,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+version-build-verification,0,5,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+version-pe-tables.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+version-rea-evidence.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+version-rebuild,1,23,0,NOT_DIRECTLY_IMPORTED_NO_AUTOMATIC_MISSING_FEATURE_CLAIM,[],"[""version-rebuild/loader.cpp""]"
+version-reconstruction-input.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]
+version-resource-evidence.json,0,1,0,EVIDENCE_OR_PAYLOAD_NOT_APPLICATION_MODULE,[],[]

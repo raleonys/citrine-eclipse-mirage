@@ -1,0 +1,23 @@
+{
+  "schema": "preloader_l.golden_local_build.v1",
+  "classification": "LOCAL_BUILD",
+  "stages": [
+    "MSVC",
+    "URSYNEX",
+    "ARYRA",
+    "MUSTAVEX",
+    "CORVEXON",
+    "FALCION"
+  ],
+  "driver": "scripts/build_orchestration/build_driver.ps1",
+  "orchestrator": "scripts/qa/run_golden.py",
+  "native_acceptance": "NOT_RUN",
+  "official_release_acceptance": false,
+  "falcion_adapter": {
+    "origin_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+    "origin": "scripts/check_falcion_golden_cleaning.py",
+    "origin_sha256": "e2268ffda5572a96404e6c426e83183f8c47a5027814723a5fc338687d75196b",
+    "destination": "tools/golden/scripts/check_falcion_golden_cleaning.py",
+    "adaptation": "New LOCAL_BUILD source-layout adapter; retains source/payload hygiene principles and sensitive patterns; uses this project sealed manifest/root allowlist instead of HF19-specific filenames and official release checks; not byte-identical and not official HF19 release acceptance."
+  }
+}

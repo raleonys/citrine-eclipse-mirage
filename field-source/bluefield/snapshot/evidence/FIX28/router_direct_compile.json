@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/usr/bin/c++",
+    "-DPRELOADER_L_DISK_DIAGNOSTICS=1",
+    "-I/workspace/scratch/2072698c927d/fix28_work/preloader_l",
+    "-g",
+    "-std=c++20",
+    "-fPIC",
+    "-c",
+    "/workspace/scratch/2072698c927d/fix28_work/preloader_l/src/protocol/router.cpp",
+    "-o",
+    "/workspace/scratch/2072698c927d/fix28_qa/debug/router_recovery.o"
+  ],
+  "returncode": 0,
+  "bytes": 706808,
+  "stderr": ""
+}

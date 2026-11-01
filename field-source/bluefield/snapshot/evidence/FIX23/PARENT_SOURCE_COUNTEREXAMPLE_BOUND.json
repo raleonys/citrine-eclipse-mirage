@@ -1,0 +1,10 @@
+{
+  "status": "PASS_EXPECTED_PARENT_REJECTION",
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "output": "Check failed at line 19: caught\n",
+  "scope": "Unchanged FIX22 runtime linked to literal original RE null-factory fixture, before repair",
+  "parent_runtime_sha256": "42bdb53574806059f9fb05230cb99e6584d8418b020790279cce8dd0d46ce71a",
+  "literal_restored_fixture_block_sha256": "f9abe310008175773d0fe344ec2068cacc6f48367b3fbe14eb6618173bc33643",
+  "current_test_sha256": "f967dd8a61d09f72efb9aae433b35f510dec1384707297d65228ba6adfda1bfb"
+}

@@ -1,0 +1,161 @@
+--- FIX20/src/application/providers.cpp
++++ FIX21/src/application/providers.cpp
+@@ -13,7 +13,7 @@
+ status_recovered::Status StorageEffects::status_01ea20(const Path& p,std::uint32_t flags){return file_status(p,flags);}
+ [[noreturn]] void StorageEffects::filesystem_error_018130(std::string_view op,std::uint32_t n,const Path&){throw SessionFailure(std::string(op)+" failed: "+std::to_string(n));}
+ Path ConfigurationEffects::resolve_path_0192d0(std::string_view value,const Path& executable,bool relative){
+- auto p=native_path(utf8_path(value));if(relative&&p.is_relative())p=native_path(executable).parent_path()/p;return model_path(p.lexically_normal());
++ auto p=native_path(utf8_path(value));if(relative&&p.is_relative())p=native_path(executable).parent_path()/p;return model_path(p);
+ }
+ configuration::Node ConfigurationEffects::load_document(const Path& path){
+  parser::State parsed;const auto bytes=read_file(path,true);(void)parser::parse(bytes,parsed);
+--- FIX20/tests/integration/test_path_resolution.cpp
++++ FIX21/tests/integration/test_path_resolution.cpp
+@@ -0,0 +1,58 @@
++// SPDX-License-Identifier: GPL-3.0-only
++#include "src/application/providers.hpp"
++#include "src/configuration/defaults.hpp"
++#include "src/xml/reader.hpp"
++#include "tests/support/io.hpp"
++#include <chrono>
++#include <iostream>
++
++// The packet's 0192d0 body converts UTF-8, optionally joins the executable's
++// parent, and returns that path. It never lexically removes dot components.
++// This fixture isolates that spelling contract; it is not a Windows ABI oracle.
++namespace {
++using namespace preloader_l;
++namespace fs=std::filesystem;
++unsigned checks=0;
++void require(bool value,const char* label){++checks;if(!value)throw std::runtime_error(label);}
++std::string utf8(const fs::path& path){const auto s=path.u8string();return {reinterpret_cast<const char*>(s.data()),s.size()};}
++struct Cleanup {fs::path root;~Cleanup(){std::error_code error;fs::remove_all(root,error);}};
++}
++int main(){try{
++ const auto root=fs::temp_directory_path()/("preloader_l_resolve_"+std::to_string(std::chrono::steady_clock::now().time_since_epoch().count()));
++ Cleanup cleanup{root};fs::create_directories(root/"base");
++ Environment env{RuntimePaths::fixture(root/"base"/"fixture.exe",root/"base"/"surge.cfg",root/"data",root/"programdata")};
++ auto state=configuration::initial_state();achievement_storage::Paths paths;
++ xml_reader::Backend xml;achievement_storage::HostCrtNumbers numbers;
++ timestamps::ClassicIso parser;StorageEffects storage_effects{parser,env.paths};files::NativeFactory files{env.paths};
++ achievement_storage::Storage storage{paths,xml,numbers,storage_effects,files};ConfigurationEffects effects{state,env,storage};
++ const auto exe=model_path(env.executable);
++ for(const std::string value:{"a/./b/../target.txt","./target.txt","a/../target.txt","../outside/./target.txt","a/./",".","..","plain.txt",""}){
++  const auto expected_relative=model_path(root/"base"/fs::path(value));
++  require(effects.resolve_path_0192d0(value,exe,true)==expected_relative,"relative path spelling retained");
++  require(effects.resolve_path_0192d0(value,exe,false)==model_path(fs::path(value)),"non-relative mode retains input spelling");
++ }
++ const auto absolute=root/"outside"/"."/"a"/".."/"target.txt";
++ for(bool relative:{false,true})require(effects.resolve_path_0192d0(utf8(absolute),exe,relative)==model_path(absolute),"absolute path spelling retained");
++ const std::string unicode="a/../\xC3\xA7\xC4\xB1\xC4\x9F/./file.txt";
++ require(effects.resolve_path_0192d0(unicode,exe,false)==utf8_path(unicode),"UTF-8 spelling retained");
++ const std::string nul{"a\0b/../file",11};
++ require(effects.resolve_path_0192d0(nul,exe,false)==utf8_path(nul),"explicit-length input unchanged");
++#ifdef _WIN32
++ for(const std::string value:{"C:\\a\\.\\b\\..\\file","\\\\server\\share\\a\\..\\file","\\\\?\\C:\\a\\..\\file","C:/a/./file"})
++  require(effects.resolve_path_0192d0(value,u"C:\\base\\fixture.exe",true)==utf8_path(value),"Windows absolute spelling retained");
++ std::cout<<"Windows directory-link semantic fixture: NOT_RUN (no privilege assumption)\n";
++#else
++ // A real filesystem counterexample: link/.. follows the link target's parent.
++ // Removing those components before the read selects a different existing file.
++ fs::create_directories(root/"outside"/"child");fs::create_directory_symlink(root/"outside"/"child",root/"base"/"link");
++ write_file(model_path(root/"outside"/"picked.txt"),"SOURCE_TARGET");
++ write_file(model_path(root/"base"/"picked.txt"),"NORMALIZED_TARGET");
++ const auto resolved=effects.resolve_path_0192d0("link/../picked.txt",exe,true);
++ require(read_file(resolved,true)=="SOURCE_TARGET","link-parent read selects source target");
++ require(read_file(model_path(native_path(resolved).lexically_normal()),true)=="NORMALIZED_TARGET","normalization counterexample is discriminating");
++ require(fs::equivalent(native_path(resolved),root/"outside"/"picked.txt"),"resolved path reaches target parent");
++ require(!fs::equivalent(native_path(resolved),root/"base"/"picked.txt"),"resolved path differs from normalized target");
++ std::cout<<"POSIX directory-link semantic fixture: PASS; Windows native path/ABI: NOT_RUN\n";
++#endif
++ std::cout<<"PASS path resolution checks="<<checks<<'\n';return 0;
++}catch(const std::exception& error){std::cerr<<"FAIL path resolution: "<<error.what()<<'\n';return 1;}}
+--- FIX20/CMakeLists.txt
++++ FIX21/CMakeLists.txt
+@@ -112,7 +112,7 @@
+   target_link_libraries(test_startup_compat PRIVATE preloader_l_core)
+   add_test(NAME startup_configuration_profile_compat COMMAND test_startup_compat)
+   set_tests_properties(startup_configuration_profile_compat PROPERTIES TIMEOUT 60)
+-  foreach(source IN ITEMS tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
++  foreach(source IN ITEMS tests/integration/test_path_resolution.cpp tests/integration/test_configuration_orchestration.cpp tests/integration/test_startup_phases.cpp tests/integration/test_brownfield_contracts.cpp tests/integration/test_supplied_config.cpp tests/integration/test_configuration_profile.cpp tests/integration/test_asio_transport.cpp tests/integration/test_filesystem_config.cpp tests/integration/test_runtime_migration.cpp tests/integration/test_original_compat.cpp)
+     get_filename_component(name "${source}" NAME_WE)
+     add_executable(${name} "${source}")
+     target_link_libraries(${name} PRIVATE preloader_l_core)
+--- FIX20/metadata/BUILD_GRAPH.json
++++ FIX21/metadata/BUILD_GRAPH.json
+@@ -100,7 +100,8 @@
+     "tests/integration/test_runtime_migration.cpp",
+     "tests/integration/test_original_compat.cpp",
+     "tests/integration/test_startup_phases.cpp",
+-    "tests/integration/test_configuration_orchestration.cpp"
++    "tests/integration/test_configuration_orchestration.cpp",
++    "tests/integration/test_path_resolution.cpp"
+   ],
+   "windows_core": [
+     "src/windows/startup_platform.cpp",
+--- FIX20/scripts/qa/check_source.py
++++ FIX21/scripts/qa/check_source.py
+@@ -16,18 +16,18 @@
+  if any('tests/' in n for n in expected):fail(0,'test source in production graph')
+  for name in ['reference','recovered','unintegrated']:
+   if any(p.is_dir() and p.name==name for p in root.rglob('*')):fail(0,'research dump directory in application: '+name)
+- # FIX20 scope is bound to the retained exact parent, not inferred from PASS.
++ # FIX21 scope is bound to the retained exact parent, not inferred from PASS.
+  # This checks file scope/hashes, not the semantic validity of authorization.
+  try:
+-  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX20.json').read_text())
++  scope=json.loads((root/'metadata/CHANGE_AUTHORITY_FIX21.json').read_text())
+   before=scope['parent_runtime_files'];allowed=scope['runtime_changes']
+   current={p.relative_to(root).as_posix():sha(p) for p in (root/'src').rglob('*') if p.is_file()}
+   changed={n for n in set(before)|set(current) if before.get(n)!=current.get(n)}
+-  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX20 scope')
++  if changed!=set(allowed):fail(0,'runtime changes exceed recorded FIX21 scope')
+   for name,row in allowed.items():
+-   if current.get(name)!=row['current_sha256']:fail(0,'FIX20 scope hash mismatch: '+name)
+-  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX20')
+-  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX20.json').read_text())
++   if current.get(name)!=row['current_sha256']:fail(0,'FIX21 scope hash mismatch: '+name)
++  if sha(root/'metadata/THIRD_PARTY.json')!=scope['dependency_manifest_sha256']:fail(0,'unrequested dependency metadata change in FIX21')
++  binding=json.loads((root/'metadata/GOVERNANCE_BINDING_FIX21.json').read_text())
+   projection=binding['packaged_projection']
+   for kind in ['json','md']:
+    if sha(root/projection[kind])!=projection[kind+'_sha256']:fail(0,'governance projection hash mismatch')
+@@ -40,7 +40,7 @@
+   dependency_doc=(root/'docs/THIRD_PARTY.md').read_text()
+   for dependency in json.loads((root/'metadata/THIRD_PARTY.json').read_text())['upstream']:
+    if dependency['commit'] not in dependency_doc:fail(0,'stale dependency documentation: '+dependency['name'])
+- except Exception as error:fail(0,'FIX20 scope/governance binding unavailable: '+type(error).__name__)
++ except Exception as error:fail(0,'FIX21 scope/governance binding unavailable: '+type(error).__name__)
+  # 1: current imported/adapted file identities
+  imports=json.loads((root/'metadata/IMPORTS.json').read_text())
+  for row in imports['files']:
+@@ -110,6 +110,10 @@
+  for term in ['state.user_directory=','storage.update_01eb00(state)','publish_environment("ContentId"']:
+   if term in startup:fail(2,'duplicated configuration orchestration: '+term)
+  if startup.find('configuration::publish_configuration_environment(')<startup.find('router=std::make_unique<dispatch::Router>'):fail(2,'environment publication moved before Application router')
++ # Bounded D10 correction: resolver returns its composed spelling unchanged.
++ resolver=(root/'src/application/providers.cpp').read_text().split('Path ConfigurationEffects::resolve_path_0192d0',1)[-1].split('configuration::Node ConfigurationEffects::load_document',1)[0]
++ if 'return model_path(p);' not in resolver or 'lexically_normal' in resolver:fail(2,'configuration resolver adds lexical normalization')
++ if 'tests/integration/test_path_resolution.cpp' not in graph['integration_tests'] or 'tests/integration/test_path_resolution.cpp' not in cmake:fail(2,'path resolution fixture missing from build graph')
+  # 3: loader entry stays bounded; heavy work lives in actual native worker
+  entry=(root/'src/windows/dll_entry.cpp').read_text();dllmain=entry[entry.index('extern "C" BOOL WINAPI DllMain'):]
+  for term in ['WaitForSingleObject','Service(','hooks->install','read_file(']:
+@@ -200,7 +204,7 @@
+  # All known direct and indirect I/O calls are enumerated; a new surface requires review.
+  try:
+   from filesystem_inventory import scan_calls
+-  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX20.json').read_text())['calls']
++  recorded=json.loads((root/'metadata/FILESYSTEM_CALLS_FIX21.json').read_text())['calls']
+   actual=scan_calls(root)
+   if [(x['source'],x['line'],x['code_sha256']) for x in actual]!=[(x['source'],x['line'],x['code_sha256']) for x in recorded]:fail(7,'filesystem call inventory differs from source')
+  except Exception:fail(7,'filesystem call inventory unavailable')
+--- FIX20/tests/tools/test_source_policy.py
++++ FIX21/tests/tools/test_source_policy.py
+@@ -13,6 +13,7 @@
+    p=root/name;before=p.read_bytes();p.write_bytes(change(before))
+    errors=check(root);p.write_bytes(before)
+    assert errors,label;cases.append(label)
++  modify('src/application/providers.cpp',lambda b:b.replace(b'return model_path(p);',b'return model_path(p.lexically_normal());'),'resolver normalization restored')
+   modify('src/configuration/state.cpp',lambda b:b+b'\n// mutation\n','import alteration')
+   modify('src/application/application.cpp',lambda b:b+b'\n#include "absent_header.hpp"\n','broken dependency')
+   modify('src/application/application.cpp',lambda b:b+b'\nnamespace bluefield {}\n','wrong module namespace')

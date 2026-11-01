@@ -1,0 +1,229 @@
+{
+  "status": "FAIL",
+  "source_digest": "42f85516b0b409edc7684c1ca16e69d32c2480375f424a91f362d5edf6eadd02",
+  "error": "          ^^^^^^\n  File \"/workspace/scratch/2072698c927d/fix15_work/preloader_l/tests/tools/test_golden_pipeline.py\", line 68, in main\n    rc,data=run();assert rc==0 and data['published'] and [s['name'] for s in data['stages']]==['URSYNEX','ARYRA','MUSTAVEX','CORVEXON','FALCION'],data;cases+=1\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'classification': 'LOCAL_BUILD', 'status': 'FAIL', 'published': False, 'stages': [{'name': 'URSYNEX', 'exit_code': 0, 'sha256_before': 'da3dc773164d6838547182aa85b247a8407f4bd01466bd2c8807abaddf16d3b4', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'URSYNEX_GOLDEN_FINALIZER: PASS\\n TimeDateStamp=0xCD268EB1\\n LinkerVersion=14.0\\n RichHeader=ALREADY_ABSENT\\n PECheckSum=0x000039AE\\n RSDS/REPRO=ABSENT (precondition)\\n', 'status': 'PASS'}, {'name': 'ARYRA', 'exit_code': 0, 'sha256_before': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'ARYRA_GOLDEN_LAYOUT: PASS\\n machine: AMD64\\n format: PE32+\\n sections: .text .rdata .data .pdata .rsrc .reloc\\n exact RVA/size/offset parity: NOT ENFORCED\\n', 'status': 'PASS'}, {'name': 'MUSTAVEX', 'exit_code': 0, 'sha256_before': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'MUSTAVEX_GOLDEN_METADATA: PASS\\n curio: #1 #2 #3 #5 #6 #7 #10 #11 #18 #36\\n stripped: #13 RSDS, #14 REPRO; COFF symbols absent\\n excluded: Authenticode/certificate and non-allowlisted recovery targets\\n', 'status': 'PASS'}, {'name': 'CORVEXON', 'exit_code': 0, 'sha256_before': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'CORVEXON_GOLDEN_TRAIL: PASS\\n mode: READ_ONLY_FAIL_CLOSED_POST_FINALIZATION_ACCEPTANCE\\n F1411-001: CLOSED_BY_FINAL_BINARY_ACCEPTANCE_GATE\\n sha256_immutable: 19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc\\n exports: DllMain@1 SURGE@2 DllShutdown@3\\n entrypoint: executable CRT startup in .text; distinct from exported DllMain@1\\n imports: CRYPT32.DLL KERNEL32.DLL WS2_32.DLL\\n/GS LoadConfig SecurityCookie: VALID WRITABLE .text RVA=0x1700\\n PE CheckSum: VALID 0x000039AE (URSYNEX-owned; CORVEXON read-only verified)\\n upstream: ARYRA PASS; MUSTAVEX PASS; MSVC shipping link policy PASS\\n', 'status': 'PASS'}, {'name': 'FALCION', 'exit_code': 1, 'sha256_before': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'FALCION_GOLDEN_CLEANING: FAIL (LOCAL_BUILD source + flat DLL payload)\\n - unexpected source root directory\\n', 'status': 'FAIL'}], 'game_acceptance': 'NOT_RUN', 'official_release_acceptance': False, 'input_sha256': 'da3dc773164d6838547182aa85b247a8407f4bd01466bd2c8807abaddf16d3b4', 'source_digest': '42f85516b0b409edc7684c1ca16e69d32c2480375f424a91f362d5edf6eadd02', 'output': 'dist/production/preloader_l.dll', 'policy_sha256': {'ARYRA_GOLDEN_LAYOUT.json': 'ed8a238401570703639df1890b38ce87a45bb4db4ffcb158095a7a6555814245', 'CORVEXON_GOLDEN_TRAIL.json': 'bf40efa4e75d104ee617f5725ea90cd999a62b23393354960350635408ef7588', 'CRT_STATIC_CONTRACT.json': 'b6b9673252faf7edd5e4a7c356d86feefdce8e6f6c4e98822cfdcfeee0faa937', 'MUSTAVEX_GOLDEN_METADATA.json': '99e08f4352a4ba31eca610c7cddede065af07de92864e50e751204e3c26f657a', 'URSYNEX_GOLDEN_FINALIZER.json': 'ca89b8771b37d7c34dec2a51bea89085a466e0bb8a1427bf93fe72b51ae8128b', 'FALCION_GOLDEN_CLEANING.json': '6f39dfd76890ec7c1546eaded2212e6fd52998669905364f05d162a01f37fe57'}, 'error': 'FALCION failed: FALCION_GOLDEN_CLEANING: FAIL (LOCAL_BUILD source + flat DLL payload)\\n - unexpected source root directory\\n'}\n",
+  "tests": [
+    {
+      "test": "configuration_test_hash_table",
+      "exit_code": 0,
+      "sha256": "0bcebc8a8e4dd88f3fb2a470dfc49b2d78ac559743580f487a5ffbd76ca87229",
+      "output": "PASS: 4929 Config2 growth/copy/positional-reuse checks\n"
+    },
+    {
+      "test": "configuration_test_parser",
+      "exit_code": 0,
+      "sha256": "60c44403ca6650d64a2bda8426d67b11ca18b3271c3df3844bd7a7fbb5709f60",
+      "output": "PASS: 115 synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.\n"
+    },
+    {
+      "test": "configuration_test_pegtl_differential",
+      "exit_code": 0,
+      "sha256": "d8286c9dd75071ad8cf98eefed2522886b78beaae941612f60448696a2393971",
+      "output": "PASS: 8766 frozen FIX09 Config2 comparisons (tree, actions, errors, BOM).\n"
+    },
+    {
+      "test": "configuration_test_state",
+      "exit_code": 0,
+      "sha256": "0ef217c2ab529867aa9d3de6a45f80684e73bb881f67d464735a45032a37ac1c",
+      "output": "PASS: 148 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.\n"
+    },
+    {
+      "test": "crypto_test_crypto",
+      "exit_code": 0,
+      "sha256": "9e1eae183bbd12bae7765417a7c0872f074440eed31b48705eb980f050ce9f74",
+      "output": "PASS: 135410 deterministic crypto checks (NIST vectors, padding, mutation, state, PRNG/time); target DLL/EXE not executed\n"
+    },
+    {
+      "test": "handlers_test_content",
+      "exit_code": 0,
+      "sha256": "101202bea893cd286a5b6f38dde3921f764438df54ed3c961ede69dce18d3e28",
+      "output": "PASS: 963 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.\n"
+    },
+    {
+      "test": "handlers_test_information",
+      "exit_code": 0,
+      "sha256": "9d51a69e4cd7e55f59704ef14c24fa324aa5dfe3d4ab83f40afed7135a50a5c6",
+      "output": "PASS: 628 checks; synthetic XML/profile state; no target execution\n"
+    },
+    {
+      "test": "handlers_test_presence",
+      "exit_code": 0,
+      "sha256": "de5d708aea4a8296c2b988f58acc9d94b9e0a8ed130395407e0c6d74a940c799",
+      "output": "PASS: 288 synthetic checks; 18 handler bodies; original execution none\n"
+    },
+    {
+      "test": "hashing_test_hash",
+      "exit_code": 0,
+      "sha256": "88bc8bf45c6f7d68d71f170a51871e281cf3837a9dbe97228e4fd69686aae760",
+      "output": "6899 deterministic hash checks PASS\n"
+    },
+    {
+      "test": "hooks_test_crypt_query",
+      "exit_code": 0,
+      "sha256": "5f2adaebbdaa04a1f6b535a3950d41a7987dd7f8023347982f40eb32b75af2e6",
+      "output": "PASS crypt-query UTF16/null/type/case/suffix selection checks=1538\n"
+    },
+    {
+      "test": "hooks_test_setup_plan",
+      "exit_code": 0,
+      "sha256": "b48358fb0105b1f7dbcb2001c118794f6b8aa5dba7851c8f58192e9741ed1b63",
+      "output": "PASS source hook stage-only plan, optional surfaces, partial create/queue and missing target checks=76; no native engine executed\n"
+    },
+    {
+      "test": "licensing_test_key_store",
+      "exit_code": 0,
+      "sha256": "ee282da9fa049184e8677463f16c8b6963eef6fe066c0d493d871ee8152b55b3",
+      "output": "PASS key store header/CBC/XML/identity/no-overwrite\n"
+    },
+    {
+      "test": "licensing_test_license",
+      "exit_code": 0,
+      "sha256": "d631f92074d8fe08351a4e55d383503cb93dec3025e43f7de97adf4a832d3cea",
+      "output": "PASS 992 deterministic licensing checks (synthetic dependencies; original targets not executed)\n"
+    },
+    {
+      "test": "paths_test_path",
+      "exit_code": 0,
+      "sha256": "0a0a8548c53a62e3fddc8ddd9a339297425c1f215044fe5e94243341b70948bc",
+      "output": "328 deterministic path checks PASS\n"
+    },
+    {
+      "test": "profiles_test_online",
+      "exit_code": 0,
+      "sha256": "3df10f2cb0d8539ef6ed3efad02d85dd4c47235c8cf981a473a1021e1fbc7436",
+      "output": "online: 12758 checks passed (synthetic mocks only)\n"
+    },
+    {
+      "test": "protocol_test_integration",
+      "exit_code": 0,
+      "sha256": "8f6c1a8249b59f27a6d032ec943e7c34e166f0906207b643bf7aeb86cd9c3ef9",
+      "output": "PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed\n"
+    },
+    {
+      "test": "protocol_test_messages",
+      "exit_code": 0,
+      "sha256": "fa3134daee4a3175cda7dc12a2804f86477e4002478d1247b31933cea8f0fc66",
+      "output": "PASS: 831 checks; synthetic XML/crypto/queue only; no sockets or target execution\n"
+    },
+    {
+      "test": "runtime_test_startup",
+      "exit_code": 0,
+      "sha256": "9ca611eb8ebdf1c1a168d4d1f8539063dcc85362042f55823bfc9f3b94e128c2",
+      "output": "PASS: 155 checks; synthetic input/console only; no real environment writes or UI\n"
+    },
+    {
+      "test": "time_test_calendar",
+      "exit_code": 0,
+      "sha256": "003a91d21ddb0fb9e6f74445b5fe1f5ddbaa323d4746adeb651dfc19f5a42a7b",
+      "output": "PASS: 31760 calendar arithmetic checks; no original execution or OS time calls\n"
+    },
+    {
+      "test": "tokens_test_token",
+      "exit_code": 0,
+      "sha256": "47c97299af6362f4c3d737fe9acbe8172e55140e8502f7193e6f3f11800a1cc7",
+      "output": "579 synthetic token checks PASS\n"
+    },
+    {
+      "test": "xml_test_printer",
+      "exit_code": 0,
+      "sha256": "6a0d7e2a5c703979dc2eb03ca4866cfe30a3c90593a5a5831e1bd979e1498ad9",
+      "output": "PASS: 277 checks; concrete recovered serializer; synthetic readers/random only\n"
+    },
+    {
+      "test": "xml_test_reader",
+      "exit_code": 0,
+      "sha256": "a7c14ac59727aeda41a2ae36d8335f18ca8d451c84790225f3ccc3111534429a",
+      "output": "PASS: 352 actual XML reader checks; selected upstream compatibility source, original target not executed\n"
+    },
+    {
+      "test": "paths_test_module_relative",
+      "exit_code": 0,
+      "sha256": "e2579f1f59e8a42d0c96a2cee2e7752d69fdaef9751e8da14f3a003b23b21469",
+      "output": "PASS module sibling checks=2137 gulrak=554 preserved_native=508; Windows-specific cases require native execution\n"
+    },
+    {
+      "test": "libraries_test_libraries",
+      "exit_code": 0,
+      "sha256": "28997b36d9987694283c143ba5e51a11303ca5acd4c64dfc8cc3a4683abddcfe",
+      "output": "PASS: 157 checks; mocks only; no DLL loaded or freed\n"
+    },
+    {
+      "test": "paths_test_encoding",
+      "exit_code": 0,
+      "sha256": "5934a9783642a33f888229bb1a1fc09cdeaf7a30cc60692c27639fe61909b390",
+      "output": "PASS: 48 encoding checks; real Win32 only on synthetic strings, original targets not executed\n"
+    },
+    {
+      "test": "files_test_status",
+      "exit_code": 0,
+      "sha256": "380cb6b62334f74dd8885168628ce1ee6641082c10ab63bd1d7c1acc3541672c",
+      "output": "PASS 9295 status checks\n"
+    },
+    {
+      "test": "integration_test_runtime",
+      "exit_code": 0,
+      "sha256": "81dd2fb5d28cb4eaab7f9e6f44ca494ff56e5e78ff23552db43513820232f80b",
+      "output": "PASS full runtime integration checks=17; concurrent clients=8; profile requests=160\n"
+    },
+    {
+      "test": "integration_test_startup_compat",
+      "exit_code": 0,
+      "sha256": "1b115724ecbccbff4a8f8f47f704c3e7629b23792af47c2fa2bdf3b3f4c26da4",
+      "output": "PASS startup compatibility checks=281; absent/empty/root/partial/override/empty-fields; complete profile/settings/game responses\n"
+    },
+    {
+      "test": "integration_test_brownfield_contracts",
+      "exit_code": 0,
+      "sha256": "6a11762df785d5213c5f020f6700e98f7e1e908f9c970175c31428c15df62c43",
+      "output": "PASS HF19-derived field ownership/nesting/comment contracts checks=9; no claim of all-HF19 equivalence\n"
+    },
+    {
+      "test": "integration_test_supplied_config",
+      "exit_code": 0,
+      "sha256": "f532b220b6ca80ccafc0fb314c32c505989a30c945df6129d9d9c0d057ee4fb3",
+      "output": "PASS supplied CFG parser/bindings checks=16; Online UNSUPPORTED; observed HF19 QueryImage/GrantAchievement child shapes rejected; game NOT_RUN\n"
+    },
+    {
+      "test": "integration_test_configuration_profile",
+      "exit_code": 0,
+      "sha256": "4c1e2a387aba58114293bca6e2a75b31bef1e1e7ed721041de043c6a43aabd94",
+      "output": "PASS config/profile checks=53; full 14-field response; legacy reproduced; corrected config/default parity; override and non-sensitive diagnostics\n"
+    },
+    {
+      "test": "integration_test_asio_transport",
+      "exit_code": 0,
+      "sha256": "124baa3b10c76db061a6ce016b2e01d4fdada3dbba0d129f64f33facbc9e195f",
+      "output": "Asio fault campaign attempts=1 terminal=1 dispatch=0 rearm=0 recovery=0\nPASS Asio transport checks=54; fragmentation/FIFO/300k-write/fault recovery/cancel/repeated lifecycle; native IOCP requires Windows\n"
+    },
+    {
+      "test": "integration_test_filesystem_config",
+      "exit_code": 0,
+      "sha256": "0758dd7ce9e457a66669288b567294fb1fd5a580812f52ff688536ef95e12de8",
+      "output": "PASS filesystem/config integration checks=52; Unicode module/override/cwd isolation/no-config/profile/native binary IO\n"
+    },
+    {
+      "test": "integration_test_runtime_migration",
+      "exit_code": 0,
+      "sha256": "8bb17c10e2c035f89c7128440011c47bc006ea56ba02c7e3d88284ac25317309",
+      "output": "PASS FIX13 rollback checks=80; disk_diagnostics=0\n"
+    },
+    {
+      "test": "integration_test_original_compat",
+      "exit_code": 0,
+      "sha256": "7370fabd81a636f32747fa90a0d340783b00c9edfb9fa383f4f4e600df62c059",
+      "output": "PASS original-package compatibility counterexamples=9; not original binary execution\n"
+    },
+    {
+      "test": "tools/golden/scripts/test_pe_metadata_tools.py",
+      "exit_code": 0,
+      "sha256": "720e270db1ad89e0bb8e3a802027af20a66c6f6074c67e3048198d12a90ad045",
+      "output": "GOLDEN_PROTOCOL_TOOL_SELFTEST: PASS\n"
+    },
+    {
+      "test": "tests/tools/test_golden_pipeline.py",
+      "exit_code": 1,
+      "sha256": "a46a420cd2322003f26cd9f6a619c4e81b7cdd3fe3651ab972e4af3031b7b3ef",
+      "output": "Traceback (most recent call last):\n  File \"/workspace/scratch/2072698c927d/fix15_work/preloader_l/tests/tools/test_golden_pipeline.py\", line 101, in <module>\n    if __name__=='__main__':sys.exit(main())\n                                     ^^^^^^\n  File \"/workspace/scratch/2072698c927d/fix15_work/preloader_l/tests/tools/test_golden_pipeline.py\", line 68, in main\n    rc,data=run();assert rc==0 and data['published'] and [s['name'] for s in data['stages']]==['URSYNEX','ARYRA','MUSTAVEX','CORVEXON','FALCION'],data;cases+=1\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'classification': 'LOCAL_BUILD', 'status': 'FAIL', 'published': False, 'stages': [{'name': 'URSYNEX', 'exit_code': 0, 'sha256_before': 'da3dc773164d6838547182aa85b247a8407f4bd01466bd2c8807abaddf16d3b4', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'URSYNEX_GOLDEN_FINALIZER: PASS\\n TimeDateStamp=0xCD268EB1\\n LinkerVersion=14.0\\n RichHeader=ALREADY_ABSENT\\n PECheckSum=0x000039AE\\n RSDS/REPRO=ABSENT (precondition)\\n', 'status': 'PASS'}, {'name': 'ARYRA', 'exit_code': 0, 'sha256_before': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'ARYRA_GOLDEN_LAYOUT: PASS\\n machine: AMD64\\n format: PE32+\\n sections: .text .rdata .data .pdata .rsrc .reloc\\n exact RVA/size/offset parity: NOT ENFORCED\\n', 'status': 'PASS'}, {'name': 'MUSTAVEX', 'exit_code': 0, 'sha256_before': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'MUSTAVEX_GOLDEN_METADATA: PASS\\n curio: #1 #2 #3 #5 #6 #7 #10 #11 #18 #36\\n stripped: #13 RSDS, #14 REPRO; COFF symbols absent\\n excluded: Authenticode/certificate and non-allowlisted recovery targets\\n', 'status': 'PASS'}, {'name': 'CORVEXON', 'exit_code': 0, 'sha256_before': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'CORVEXON_GOLDEN_TRAIL: PASS\\n mode: READ_ONLY_FAIL_CLOSED_POST_FINALIZATION_ACCEPTANCE\\n F1411-001: CLOSED_BY_FINAL_BINARY_ACCEPTANCE_GATE\\n sha256_immutable: 19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc\\n exports: DllMain@1 SURGE@2 DllShutdown@3\\n entrypoint: executable CRT startup in .text; distinct from exported DllMain@1\\n imports: CRYPT32.DLL KERNEL32.DLL WS2_32.DLL\\n/GS LoadConfig SecurityCookie: VALID WRITABLE .text RVA=0x1700\\n PE CheckSum: VALID 0x000039AE (URSYNEX-owned; CORVEXON read-only verified)\\n upstream: ARYRA PASS; MUSTAVEX PASS; MSVC shipping link policy PASS\\n', 'status': 'PASS'}, {'name': 'FALCION', 'exit_code': 1, 'sha256_before': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'sha256_after': '19f1ffde62aa314d6c3db04e80eb2b2d62e7380ddfe5e3d1a511f404d6a91fcc', 'output': 'FALCION_GOLDEN_CLEANING: FAIL (LOCAL_BUILD source + flat DLL payload)\\n - unexpected source root directory\\n', 'status': 'FAIL'}], 'game_acceptance': 'NOT_RUN', 'official_release_acceptance': False, 'input_sha256': 'da3dc773164d6838547182aa85b247a8407f4bd01466bd2c8807abaddf16d3b4', 'source_digest': '42f85516b0b409edc7684c1ca16e69d32c2480375f424a91f362d5edf6eadd02', 'output': 'dist/production/preloader_l.dll', 'policy_sha256': {'ARYRA_GOLDEN_LAYOUT.json': 'ed8a238401570703639df1890b38ce87a45bb4db4ffcb158095a7a6555814245', 'CORVEXON_GOLDEN_TRAIL.json': 'bf40efa4e75d104ee617f5725ea90cd999a62b23393354960350635408ef7588', 'CRT_STATIC_CONTRACT.json': 'b6b9673252faf7edd5e4a7c356d86feefdce8e6f6c4e98822cfdcfeee0faa937', 'MUSTAVEX_GOLDEN_METADATA.json': '99e08f4352a4ba31eca610c7cddede065af07de92864e50e751204e3c26f657a', 'URSYNEX_GOLDEN_FINALIZER.json': 'ca89b8771b37d7c34dec2a51bea89085a466e0bb8a1427bf93fe72b51ae8128b', 'FALCION_GOLDEN_CLEANING.json': '6f39dfd76890ec7c1546eaded2212e6fd52998669905364f05d162a01f37fe57'}, 'error': 'FALCION failed: FALCION_GOLDEN_CLEANING: FAIL (LOCAL_BUILD source + flat DLL payload)\\n - unexpected source root directory\\n'}\n"
+    }
+  ]
+}

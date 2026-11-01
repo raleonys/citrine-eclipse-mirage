@@ -1,0 +1,471 @@
+--- FIX14/src/application/environment.cpp
++++ FIX15/src/application/environment.cpp
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-3.0-only
+ #include "src/application/environment.hpp"
++#include "src/paths/encoding.hpp"
+ #include <fstream>
+ #include "src/files/atomic_io.hpp"
+ #include <stdexcept>
+@@ -24,19 +25,36 @@
+ Path utf8_path(std::string_view text){return std::filesystem::path(std::u8string(reinterpret_cast<const char8_t*>(text.data()),text.size())).u16string();}
+ Path filesystem_path(std::string_view text){
+ #ifdef _WIN32
+- if(text.empty())return {};
+- if(text.size()>static_cast<size_t>(INT_MAX))throw std::length_error("filesystem path");
+- UINT cp=AreFileApisANSI()?CP_ACP:CP_OEMCP;
+- int n=MultiByteToWideChar(cp,0,text.data(),static_cast<int>(text.size()),nullptr,0);
+- if(n<=0)throw std::runtime_error("filesystem path conversion failed");
+- std::wstring wide(static_cast<size_t>(n),L'\0');
+- if(MultiByteToWideChar(cp,0,text.data(),static_cast<int>(text.size()),wide.data(),n)!=n)throw std::runtime_error("filesystem path fill failed");
+- return Path(wide.begin(),wide.end());
++ encoding::NativeCalls calls;encoding::PortableErrors errors;
++ return encoding::filesystem_widen_006d70(text,calls,errors);
+ #else
+  return utf8_path(text);
+ #endif
+ }
+-std::string path_utf8(const Path& path){auto bytes=native_path(path).u8string();return {reinterpret_cast<const char*>(bytes.data()),bytes.size()};}
++std::string path_utf8(const Path& path){
++#ifdef _WIN32
++ encoding::NativeCalls calls;encoding::PortableErrors errors;
++ return encoding::path_utf8_01e3f0(path,calls,errors);
++#else
++ auto bytes=native_path(path).u8string();return {reinterpret_cast<const char*>(bytes.data()),bytes.size()};
++#endif
++}
++status_recovered::Status file_status(const Path& path,std::uint32_t flags){
++ if(flags!=3)throw std::invalid_argument("status flags");
++#ifdef _WIN32
++ status_recovered::NativeStats stats;
++ try{return status_recovered::status_01ea20(path,flags,stats);}
++ catch(const status_recovered::OutOfEvidenceStatus&){
++  // The packet leaves flags=3 reparse-tag data explicitly unknown. Preserve
++  // the previous adapter only in that domain; do not invent a tag or turn a
++  // research-domain guard into a new production rejection policy.
++ }
++#endif
++ std::error_code error;auto status=std::filesystem::status(native_path(path),error);
++ if(status.type()==std::filesystem::file_type::not_found)return {1,0,static_cast<std::uint32_t>(error.value())};
++ if(error)return {0,0,static_cast<std::uint32_t>(error.value())};
++ return {std::filesystem::is_regular_file(status)?2:std::filesystem::is_directory(status)?3:9,0,0};
++}
+ std::string read_file(const Path& path,bool required){
+  std::ifstream in(native_path(path),std::ios::binary);
+  if(!in){if(required)throw std::runtime_error("required file cannot be opened: "+path_utf8(path));return {};}
+--- FIX14/src/application/environment.hpp
++++ FIX15/src/application/environment.hpp
+@@ -3,6 +3,7 @@
+ #include "src/configuration/state.hpp"
+ #include "src/runtime/runtime_paths.hpp"
+ #include "src/application/logging.hpp"
++#include "src/contracts/status.hpp"
+ #include <filesystem>
+ #include <mutex>
+ #include <string>
+@@ -25,6 +26,7 @@
+ Path utf8_path(std::string_view);
+ Path filesystem_path(std::string_view);
+ std::string path_utf8(const Path&);
++status_recovered::Status file_status(const Path&,std::uint32_t flags=3);
+ std::string read_file(const Path&,bool required=false);
+ void publish_environment(std::string_view,std::string_view);
+ }
+--- FIX14/src/application/providers.cpp
++++ FIX15/src/application/providers.cpp
+@@ -10,15 +10,7 @@
+ #include <windows.h>
+ #endif
+ namespace preloader_l {
+-namespace {
+-status_recovered::Status file_status(const Path& path){
+- std::error_code error;auto status=std::filesystem::status(native_path(path),error);
+- if(status.type()==std::filesystem::file_type::not_found)return {1,0,static_cast<uint32_t>(error.value())};
+- if(error)return {0,0,static_cast<uint32_t>(error.value())};
+- return {std::filesystem::is_regular_file(status)?2:std::filesystem::is_directory(status)?3:9,0,0};
+-}
+-}
+-status_recovered::Status StorageEffects::status_01ea20(const Path& p,std::uint32_t flags){if(flags!=3)throw std::invalid_argument("status flags");return file_status(p);}
++status_recovered::Status StorageEffects::status_01ea20(const Path& p,std::uint32_t flags){return file_status(p,flags);}
+ [[noreturn]] void StorageEffects::filesystem_error_018130(std::string_view op,std::uint32_t n,const Path&){throw SessionFailure(std::string(op)+" failed: "+std::to_string(n));}
+ Path ConfigurationEffects::resolve_path_0192d0(std::string_view value,const Path& executable,bool relative){
+  auto p=native_path(utf8_path(value));if(relative&&p.is_relative())p=native_path(executable).parent_path()/p;return model_path(p.lexically_normal());
+@@ -41,7 +33,7 @@
+ }
+ 
+ const char* LicenseEffects::online_auth_virtual_30(const char* client){return online_.auth(client);}
+-licensing::FileStatus LicenseEffects::status_01ea20(const Path& path,std::uint32_t flags){if(flags!=3)throw std::invalid_argument("status flags");auto status=file_status(path);return {status.kind,static_cast<int32_t>(status.error)};}
++licensing::FileStatus LicenseEffects::status_01ea20(const Path& path,std::uint32_t flags){auto status=file_status(path,flags);return {status.kind,static_cast<int32_t>(status.error)};}
+ [[noreturn]] void LicenseEffects::filesystem_error_018130(std::string_view op,std::int32_t n,const Path&){throw SessionFailure(std::string(op)+" failed: "+std::to_string(n));}
+ bool LicenseEffects::file_hash_matches_042d20(const Path& path,std::string expected){files::NativeFactory f;files::NativeTextEnvironment text;files::LicenseFiles actual(*this,f,text);return actual.file_hash_matches_042d20(path,std::move(expected));}
+ std::string LicenseEffects::load_token_02afa0(const Path& path){files::NativeFactory f{env_.paths};files::NativeTextEnvironment text;files::LicenseFiles actual(*this,f,text);return actual.load_token_02afa0(path);}
+--- FIX14/src/contracts/status.hpp
++++ FIX15/src/contracts/status.hpp
+@@ -1,8 +1,64 @@
+-// SPDX-License-Identifier: GPL-3.0-only
+ #pragma once
++#include "src/configuration/state.hpp"
+ #include <cstdint>
++#include <optional>
++#include <stdexcept>
++
+ namespace preloader_l::status_recovered {
+-// Logical status contract consumed by the imported persistence algorithms.
+-// Native filesystem queries are implemented in application/providers.cpp.
+-struct Status {std::int32_t kind;std::uint32_t permissions;std::uint32_t error;};
++using Path = configuration::Path;
++struct OutOfEvidenceStatus : std::runtime_error { using std::runtime_error::runtime_error; };
++struct Status { std::int32_t kind; std::uint32_t permissions; std::uint32_t error; };
++struct StatsResult {
++    std::uint32_t error = 0;
++    std::uint32_t attributes = 0;
++    // 049104 does not initialize tag for flags=3. A provider may supply one
++    // only if its actual provenance is known; never synthesize tag zero.
++    std::optional<std::uint32_t> reparse_tag;
++};
++struct Stats { virtual ~Stats() = default; virtual StatsResult query(const Path&, std::uint32_t flags) = 0; };
++Status status_01ea20(const Path&, std::uint32_t flags, Stats&);
++
++using Handle = std::intptr_t;
++inline constexpr Handle invalid_handle = -1;
++struct Metadata { std::uint32_t attributes = 0; std::uint64_t last_write = 0, size = 0; };
++struct OpenResult { Handle handle; std::uint32_t error; };
++struct FindResult { Handle handle; std::uint32_t error; Metadata data; };
++struct SystemCalls {
++    virtual ~SystemCalls() = default;
++    virtual std::uint32_t attributes_ex(const Path&, Metadata&) = 0;
++    virtual FindResult find_first(const Path&) = 0;
++    virtual bool find_close(Handle) = 0;
++    virtual OpenResult open_attributes(const Path&, std::uint32_t access,
++                                       std::uint32_t share, std::uint32_t disposition,
++                                       std::uint32_t flags) = 0;
++    virtual std::uint32_t basic_information(Handle, Metadata&) = 0;
++    virtual bool close(Handle) = 0;
++    [[noreturn]] virtual void abort_close_failure_05f03c() = 0;
++};
++// Bounded 049104 domain: flags 3, cached attributes -1. Other flags throw a
++// reconstruction-domain exception, not an invented original return code.
++class UsedStats final : public Stats {
++public:
++    explicit UsedStats(SystemCalls& system) : system_(system) {}
++    StatsResult query(const Path&, std::uint32_t flags) override;
++private: SystemCalls& system_;
++};
++class NativeSystemCalls final : public SystemCalls {
++public:
++    std::uint32_t attributes_ex(const Path&, Metadata&) override;
++    FindResult find_first(const Path&) override;
++    bool find_close(Handle) override;
++    OpenResult open_attributes(const Path&, std::uint32_t, std::uint32_t,
++                              std::uint32_t, std::uint32_t) override;
++    std::uint32_t basic_information(Handle, Metadata&) override;
++    bool close(Handle) override;
++    [[noreturn]] void abort_close_failure_05f03c() override;
++};
++// Owns the native boundary and bounded policy; no target DLL is loaded.
++class NativeStats final : public Stats {
++public: StatsResult query(const Path& path, std::uint32_t flags) override {
++    UsedStats policy(system_); return policy.query(path, flags);
+ }
++private: NativeSystemCalls system_;
++};
++}
+--- FIX14/src/files/native_io.cpp
++++ FIX15/src/files/native_io.cpp
+@@ -56,7 +56,7 @@
+ };
+ }
+ std::unique_ptr<Input> NativeFactory::open_input_039f70(const Path& path,std::uint32_t mode,std::uint32_t share) {
+-    supported(mode,share);if(owner_)owner_->require_write(native_file_path(path));return std::make_unique<NativeInput>(path);
++    supported(mode,share);return std::make_unique<NativeInput>(path);
+ }
+ std::unique_ptr<Output> NativeFactory::open_output_03a1a0(const Path& path,std::uint32_t mode,std::uint32_t share) {
+     supported(mode,share);return std::make_unique<NativeOutput>(path,owner_);
+--- /dev/null
++++ FIX15/src/files/status.cpp
+@@ -0,0 +1,45 @@
++#include "src/contracts/status.hpp"
++namespace preloader_l::status_recovered {
++Status status_01ea20(const Path& path, std::uint32_t flags, Stats& stats) {
++    const auto raw = stats.query(path, flags);
++    Status result{0, 0xffff, raw.error};
++    if (raw.error) {
++        if (raw.error == 2 || raw.error == 3 || raw.error == 53 || raw.error == 123) result.kind = 1;
++        return result;
++    }
++    result.permissions = (raw.attributes & 1) ? 0x16d : 0x1ff;
++    if (raw.attributes & 0x400) {
++        if (!raw.reparse_tag) throw OutOfEvidenceStatus("01ea20 would read an uninitialized 049104 tag for this flags=3 result");
++        if (*raw.reparse_tag == 0xa000000c) { result.kind = 4; return result; }
++        if (*raw.reparse_tag == 0xa0000003) { result.kind = 10; return result; }
++    }
++    result.kind = static_cast<std::int32_t>(((raw.attributes >> 4) & 1) + 2);
++    return result;
++}
++StatsResult UsedStats::query(const Path& path, std::uint32_t flags) {
++    if (flags != 3) throw OutOfEvidenceStatus("UsedStats only reconstructs 049104 flags=3, cached attributes=-1");
++    Metadata data;
++    auto error = system_.attributes_ex(path, data);
++    if (error) {
++        if (error != 32) return {error, 0, {}};
++        const auto found = system_.find_first(path);
++        if (found.handle == invalid_handle) return {found.error, 0, {}};
++        (void)system_.find_close(found.handle); // Original ignores this result.
++        data = found.data;
++    }
++    if (!(data.attributes & 0x400)) return {0, data.attributes, {}};
++    // Follow the reparse target: FILE_READ_ATTRIBUTES, all three share modes,
++    // OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS (no OPEN_REPARSE_POINT).
++    const auto opened = system_.open_attributes(path, 0x80, 7, 3, 0x02000000);
++    if (opened.error) {
++        if (opened.handle != invalid_handle && !system_.close(opened.handle)) system_.abort_close_failure_05f03c();
++        return {opened.error, 0, {}};
++    }
++    error = system_.basic_information(opened.handle, data);
++    if (opened.handle != invalid_handle && !system_.close(opened.handle)) system_.abort_close_failure_05f03c();
++    if (error) return {error, 0, {}};
++    // Flags 3 consumes FileBasicInfo only; neither FileAttributeTagInfo nor
++    // FileStandardInfo is queried, and tag remains explicitly unknown.
++    return {0, data.attributes, {}};
++}
++}
+--- FIX14/src/licensing/literals.hpp
++++ FIX15/src/licensing/literals.hpp
+@@ -23,7 +23,7 @@
+ inline constexpr char c_085a7c[] = "\""; // 0x180085a7c / file 0x8427c
+ inline constexpr char c_085a80[] = "RequestTicket"; // 0x180085a80 / file 0x84280
+ inline constexpr char c_085a90[] = "TicketEngine"; // 0x180085a90 / file 0x84290
+-inline constexpr char c_085aa0[] = "\"ContentId\" is missing or set to \"0\". Make sure you have the \"surge.cfg\" file in the same folder as the game exe."; // 0x180085aa0 / file 0x842a0
++inline constexpr char c_085aa0[] = "\"ContentId\" is missing or set to \"0\". Make sure you have the \"surge.cfg\" file in the same folder as preloader_l.dll."; // Source message adapted to the module-adjacent config contract.
+ inline constexpr char c_085b18[] = "Bad content ID"; // 0x180085b18 / file 0x84318
+ inline constexpr char c_085b30[] = "\"DenuvoExeHash\" is missing or invalid. Make sure you have the right \"surge.cfg\" file."; // 0x180085b30 / file 0x84330
+ inline constexpr char c_085b88[] = "Bad exe hash"; // 0x180085b88 / file 0x84388
+--- /dev/null
++++ FIX15/src/paths/encoding.cpp
+@@ -0,0 +1,63 @@
++#include "src/paths/encoding.hpp"
++#include <climits>
++#include <exception>
++#include <system_error>
++
++namespace preloader_l::encoding {
++std::uint32_t filesystem_codepage_048ac0(Calls& calls) {
++    if(calls.locale_codepage_0629ec()==65001)return 65001;
++    return calls.are_file_apis_ansi()?0U:1U;
++}
++Result convert_narrow_048ae8(Calls& calls,std::uint32_t cp,const char* input,int size,char16_t* output,int capacity) {
++    const int count=calls.multi_byte_to_wide(cp,8,input,size,output,capacity);
++    return {count,count==0?calls.last_error():0U};
++}
++Result convert_wide_048b30(Calls& calls,std::uint32_t cp,const char16_t* input,int size,char* output,int capacity) {
++    int count;
++    if(cp==65001||cp==54936)count=calls.wide_to_multi_byte(cp,0x80,input,size,output,capacity,nullptr);
++    else {
++        bool used_default=false;
++        count=calls.wide_to_multi_byte(cp,0x400,input,size,output,capacity,&used_default);
++        if(used_default)return {0,0x459};
++    }
++    auto error=count==0?calls.last_error():0U;
++    if(error==0x3ec) {
++        count=calls.wide_to_multi_byte(cp,0,input,size,output,capacity,nullptr);
++        error=count==0?calls.last_error():0U;
++    }
++    return {count,error};
++}
++namespace {
++void verify(Result result,Errors& errors) {
++    if(result.error){errors.filesystem_00cdb0(result.error);std::terminate();}
++}
++void length(std::size_t size,Errors& errors) {
++    if(size>INT_MAX){errors.runtime_00cd70(22);std::terminate();}
++}
++}
++Path filesystem_widen_006d70(std::string_view value,Calls& calls,Errors& errors) {
++    // Original selects the file code page even for an empty input view.
++    const auto cp=filesystem_codepage_048ac0(calls);
++    if(value.empty())return {};
++    length(value.size(),errors);
++    const auto required=convert_narrow_048ae8(calls,cp,value.data(),static_cast<int>(value.size()),nullptr,0);
++    verify(required,errors);
++    Path output(static_cast<std::size_t>(required.count),u'\0');
++    verify(convert_narrow_048ae8(calls,cp,value.data(),static_cast<int>(value.size()),output.data(),required.count),errors);
++    return output; // length remains first-pass count even if second count differs
++}
++std::string narrow_006e60(std::u16string_view value,std::uint32_t cp,Calls& calls,Errors& errors) {
++    if(value.empty())return {};
++    length(value.size(),errors);
++    const auto required=convert_wide_048b30(calls,cp,value.data(),static_cast<int>(value.size()),nullptr,0);
++    verify(required,errors);
++    std::string output(static_cast<std::size_t>(required.count),'\0');
++    verify(convert_wide_048b30(calls,cp,value.data(),static_cast<int>(value.size()),output.data(),required.count),errors);
++    return output;
++}
++std::string path_utf8_01e3f0(const Path& path,Calls& calls,Errors& errors) {
++    return narrow_006e60(path,65001,calls,errors);
++}
++[[noreturn]] void PortableErrors::runtime_00cd70(int code){throw std::system_error(code,std::generic_category());}
++[[noreturn]] void PortableErrors::filesystem_00cdb0(std::uint32_t code){throw std::system_error(static_cast<int>(code),std::system_category());}
++} // namespace preloader_l::encoding
+--- /dev/null
++++ FIX15/src/paths/encoding.hpp
+@@ -0,0 +1,48 @@
++#pragma once
++#include "src/configuration/state.hpp"
++#include <cstdint>
++#include <string>
++#include <string_view>
++
++namespace preloader_l::encoding {
++using Path=configuration::Path;
++struct Result {int count;std::uint32_t error;};
++class Calls {
++public:
++    virtual ~Calls()=default;
++    virtual std::uint32_t locale_codepage_0629ec()=0;
++    virtual bool are_file_apis_ansi()=0;
++    virtual int multi_byte_to_wide(std::uint32_t cp,std::uint32_t flags,const char*,int,char16_t*,int)=0;
++    virtual int wide_to_multi_byte(std::uint32_t cp,std::uint32_t flags,const char16_t*,int,char*,int,bool* used_default)=0;
++    virtual std::uint32_t last_error()=0;
++};
++class Errors {
++public:
++    virtual ~Errors()=default;
++    [[noreturn]] virtual void runtime_00cd70(int code)=0;
++    [[noreturn]] virtual void filesystem_00cdb0(std::uint32_t code)=0;
++};
++std::uint32_t filesystem_codepage_048ac0(Calls&);
++Result convert_narrow_048ae8(Calls&,std::uint32_t,const char*,int,char16_t*,int);
++Result convert_wide_048b30(Calls&,std::uint32_t,const char16_t*,int,char*,int);
++Path filesystem_widen_006d70(std::string_view,Calls&,Errors&);
++std::string narrow_006e60(std::u16string_view,std::uint32_t codepage,Calls&,Errors&);
++std::string path_utf8_01e3f0(const Path&,Calls&,Errors&);
++
++// Genuine Win32 conversion calls; linked CRT locale belongs to this rebuilt
++// process. Original static CRT/thread locale/exception ABI equality is unproven.
++class NativeCalls final:public Calls {
++public:
++    std::uint32_t locale_codepage_0629ec()override;
++    bool are_file_apis_ansi()override;
++    int multi_byte_to_wide(std::uint32_t,std::uint32_t,const char*,int,char16_t*,int)override;
++    int wide_to_multi_byte(std::uint32_t,std::uint32_t,const char16_t*,int,char*,int,bool*)override;
++    std::uint32_t last_error()override;
++};
++// Selected portable std::system_error representation, NOT original MSVC EH ABI.
++class PortableErrors final:public Errors {
++public:
++    [[noreturn]] void runtime_00cd70(int)override;
++    [[noreturn]] void filesystem_00cdb0(std::uint32_t)override;
++};
++} // namespace preloader_l::encoding
+--- FIX14/src/profiles/online_session.cpp
++++ FIX15/src/profiles/online_session.cpp
+@@ -80,10 +80,7 @@
+ #endif
+ }
+ status_recovered::Status OnlineSession::status_01ea20(const Path& p,std::uint32_t flags){
+- env_.paths.require_write(native_path(p));
+- if(flags!=3)throw std::invalid_argument("online status flags");std::error_code e;auto s=std::filesystem::status(native_path(p),e);
+- if(s.type()==std::filesystem::file_type::not_found)return {1,0,static_cast<std::uint32_t>(e.value())};
+- if(e)return {0,0,static_cast<std::uint32_t>(e.value())};return {std::filesystem::is_regular_file(s)?2:std::filesystem::is_directory(s)?3:9,0,0};
++ return file_status(p,flags);
+ }
+ [[noreturn]] void OnlineSession::filesystem_error_018130(std::string_view op,std::uint32_t n,const Path&){throw SessionFailure(std::string(op)+": "+std::to_string(n));}
+ void OnlineSession::dialog_038bc0(std::string_view title,std::string_view text,std::uint32_t flags){
+@@ -99,7 +96,6 @@
+ 
+ namespace preloader_l {
+ std::string OnlineSession::read_binary_03b3f0(const Path& p){
+- env_.paths.require_write(native_path(p));
+  // The source reader returns raw bytes. Parsing remains in online.cpp.
+  return read_file(p);
+ }
+--- /dev/null
++++ FIX15/src/windows/encoding_calls.cpp
+@@ -0,0 +1,45 @@
++#include "src/paths/encoding.hpp"
++#ifndef WIN32_LEAN_AND_MEAN
++#define WIN32_LEAN_AND_MEAN
++#endif
++#include <windows.h>
++#include <locale.h>
++#include <cstring>
++#include <stdexcept>
++
++namespace preloader_l::encoding {
++static_assert(sizeof(wchar_t)==2);
++std::uint32_t NativeCalls::locale_codepage_0629ec(){return ___lc_codepage_func();}
++bool NativeCalls::are_file_apis_ansi(){return AreFileApisANSI()!=FALSE;}
++std::uint32_t NativeCalls::last_error(){return GetLastError();}
++int NativeCalls::multi_byte_to_wide(std::uint32_t cp,std::uint32_t flags,const char* input,int size,char16_t* output,int capacity) {
++    if(size<0||capacity<0)throw std::invalid_argument("Native conversion adapter supports the evidenced nonnegative-length route");
++    int count;DWORD saved;const DWORD entry_error=GetLastError();
++    {
++        std::wstring buffer;
++        if(output&&capacity) {
++            buffer.resize(static_cast<std::size_t>(capacity));
++            std::memcpy(buffer.data(),output,static_cast<std::size_t>(capacity)*sizeof(char16_t));
++        }
++        SetLastError(entry_error);
++        count=MultiByteToWideChar(cp,flags,input,size,buffer.empty()?nullptr:buffer.data(),capacity);
++        saved=GetLastError();
++        if(output&&capacity)std::memcpy(output,buffer.data(),static_cast<std::size_t>(capacity)*sizeof(char16_t));
++    }
++    // Preserve API error across compatibility-buffer allocation/destruction.
++    SetLastError(saved);return count;
++}
++int NativeCalls::wide_to_multi_byte(std::uint32_t cp,std::uint32_t flags,const char16_t* input,int size,char* output,int capacity,bool* used_default) {
++    if(size<0||capacity<0)throw std::invalid_argument("Native conversion adapter supports the evidenced nonnegative-length route");
++    int count;DWORD saved;BOOL replaced=FALSE;const DWORD entry_error=GetLastError();
++    {
++        std::wstring buffer;
++        if(input)buffer.assign(input,input+size);
++        SetLastError(entry_error);
++        count=WideCharToMultiByte(cp,flags,input?buffer.data():nullptr,size,output,capacity,nullptr,used_default?&replaced:nullptr);
++        saved=GetLastError();
++    }
++    if(used_default)*used_default=replaced!=FALSE;
++    SetLastError(saved);return count;
++}
++} // namespace preloader_l::encoding
+--- /dev/null
++++ FIX15/src/windows/status_calls.cpp
+@@ -0,0 +1,39 @@
++#include "src/contracts/status.hpp"
++#ifndef WIN32_LEAN_AND_MEAN
++#define WIN32_LEAN_AND_MEAN
++#endif
++#include <windows.h>
++#include <cstdlib>
++namespace preloader_l::status_recovered {
++namespace {
++const wchar_t* wide(const Path& path) { static_assert(sizeof(wchar_t) == sizeof(char16_t)); return reinterpret_cast<const wchar_t*>(path.c_str()); }
++HANDLE handle(Handle value) { return reinterpret_cast<HANDLE>(value); }
++std::uint64_t time_value(FILETIME time) { return (std::uint64_t(time.dwHighDateTime) << 32) | time.dwLowDateTime; }
++}
++std::uint32_t NativeSystemCalls::attributes_ex(const Path& path, Metadata& out) {
++    WIN32_FILE_ATTRIBUTE_DATA data;
++    if (!GetFileAttributesExW(wide(path), GetFileExInfoStandard, &data)) return GetLastError();
++    out = {data.dwFileAttributes, time_value(data.ftLastWriteTime), (std::uint64_t(data.nFileSizeHigh) << 32) | data.nFileSizeLow};
++    return 0;
++}
++FindResult NativeSystemCalls::find_first(const Path& path) {
++    WIN32_FIND_DATAW data;
++    const auto found = FindFirstFileW(wide(path), &data);
++    if (found == INVALID_HANDLE_VALUE) return {invalid_handle, GetLastError(), {}};
++    return {reinterpret_cast<Handle>(found), 0, {data.dwFileAttributes, time_value(data.ftLastWriteTime), (std::uint64_t(data.nFileSizeHigh) << 32) | data.nFileSizeLow}};
++}
++bool NativeSystemCalls::find_close(Handle value) { return FindClose(handle(value)) != FALSE; }
++OpenResult NativeSystemCalls::open_attributes(const Path& path, std::uint32_t access, std::uint32_t share, std::uint32_t disposition, std::uint32_t flags) {
++    const auto opened = CreateFileW(wide(path), access, share, nullptr, disposition, flags, nullptr);
++    return {reinterpret_cast<Handle>(opened), opened == INVALID_HANDLE_VALUE ? GetLastError() : 0};
++}
++std::uint32_t NativeSystemCalls::basic_information(Handle value, Metadata& out) {
++    FILE_BASIC_INFO info;
++    if (!GetFileInformationByHandleEx(handle(value), FileBasicInfo, &info, 0x28)) return GetLastError();
++    out.attributes = info.FileAttributes;
++    out.last_write = static_cast<std::uint64_t>(info.LastWriteTime.QuadPart);
++    return 0;
++}
++bool NativeSystemCalls::close(Handle value) { return CloseHandle(handle(value)) != FALSE; }
++[[noreturn]] void NativeSystemCalls::abort_close_failure_05f03c() { std::abort(); }
++}

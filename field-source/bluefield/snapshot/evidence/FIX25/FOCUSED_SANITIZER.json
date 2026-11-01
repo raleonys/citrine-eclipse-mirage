@@ -1,0 +1,11 @@
+{
+  "source_digest": "eddc58b00960228eaf1347d244df56218e2a2d4ecc5f3d8c7df3d80c1d3a9085",
+  "exit": 0,
+  "output": "PASS avatar source effects checks=7755; real provider ABI NOT_RUN\n",
+  "scope": "Changed content.cpp TU and new test instrumented; linked unchanged FIX24 core uninstrumented. Not full-core sanitizer.",
+  "LSan": "NOT_RUN_detect_leaks_0",
+  "source_sha256": "b3f1c14c6fe28888f46302af85a826a9f7da727ac95b33cfac2d6cb27ee03e35",
+  "fixture_sha256": "1f9aed8fa7f88419936a28f5c44eccfb27528057fe980de47f928c32af42f84b",
+  "executable_sha256": "338fbc8bfff22f3f8edc547c5ae107c386dd61ff4d245df79a2965de927015bb",
+  "parent_core_archive_sha256": "8a67668a01ff79ddc69a546c13640b4db41c08f0f43187aa5e324515cacf6eef"
+}

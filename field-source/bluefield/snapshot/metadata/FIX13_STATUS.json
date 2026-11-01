@@ -1,0 +1,8 @@
+{
+  "stage": "SOURCE_CANDIDATE_NON_RELEASE",
+  "rejected_FIX12": "NOT_ACCEPTED_BY_USER",
+  "native": "NOT_RUN",
+  "original_full_equivalence": "NOT_ESTABLISHED",
+  "release_pointer_changed": false,
+  "user_requested": "rollback six choices and expose all original-packet deviations, including unintegrated/replaced modules"
+}

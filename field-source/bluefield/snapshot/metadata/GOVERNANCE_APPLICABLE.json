@@ -1,0 +1,263 @@
+{
+  "scope": "Applicable normative subset, not a byte-identical full master mirror. Library-only debt/release-history fields excluded.",
+  "master_revision": "2026-10-25.1",
+  "master_library_path": "/DLL R&D Football/governance/PROJECT_RULES_MASTER.json",
+  "master_json_sha256": "06ab4d5e070a191e40045d681e03f9fbd99bbbed4195c89174f5656d95beb141",
+  "master_md_sha256": "8bfe91091fb115ee816d1a7204f2256d837df79d14957e78d332d3602daa981b",
+  "precedence": [
+    "newest_explicit_user_decision",
+    "library_project_rules_master",
+    "current_official_release_packaged_governance",
+    "release_specific_state_and_provenance",
+    "historical_governance_and_evidence"
+  ],
+  "bluefield_workstream": {
+    "status": "AUTHORIZED_NON_RELEASE_DEVELOPMENT",
+    "name": "BLUEFIELD",
+    "decision_date": "2026-10-25",
+    "code_parent_archive": "dll-reverse-engineering(6).zip",
+    "code_parent_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+    "ownership_root": "/DLL R&D Football/BLUEFIELD/",
+    "brownfield_reuse": "working discipline, QA and tooling requirements; not application-code ancestry",
+    "other_project_application_imports": "not implicitly authorized or performed",
+    "source_adoption": "per-file origin/hash/notices and explicit integration status",
+    "validation_separation": [
+      "source presence",
+      "compile/link integration",
+      "native/runtime/ABI acceptance"
+    ],
+    "infrastructure": [
+      "cumulative snapshots",
+      "focused executable regressions",
+      "isolated build/debug/native/CRT profiles",
+      "SHA/manifest/ZIP integrity",
+      "clean-extract replay",
+      "negative tests",
+      "registered same-stem CMD launchers",
+      "truthful acceptance ledger"
+    ],
+    "golden_pipeline": "Section 15 intended order; no inherited implementation or PASS",
+    "local_builds": "allowed without publication gate under 0.0.1",
+    "mandatory_game_acceptance": "FINAL_RELEASE only",
+    "publication_authorized": false,
+    "existing_current_pointers": "unchanged",
+    "yellowfield_start_condition": "unchanged; BLUEFIELD development separately authorized"
+  },
+  "third_party_dependency_policy": "exact-pin + user-triggered upstream review/update; no automatic polling/refresh/stale-pin blocker; dependency source/version/commit byte changes require explicit user authorization and invalidated validation",
+  "nonrelease_work_rule": "Local compilation, debug/production binary builds, developer/native/CRT tests and bounded non-release packages do not require independent G0 identity approval or complete release metadata. Retain actual compiler/test/integrity failures and truthful NOT_RELEASE classification. The G0/G1/G2/G4 chain is mandatory before canonical release promotion, not before local build.",
+  "scope_correction_2026_10_18": "The older rule that G0 precedes EVERY builder, non-release packaging and QA dispatcher is SUPERSEDED for local development; no G0 before compilation. Official release promotion remains fail-closed.",
+  "rule_sets": [
+    {
+      "anti_false_closure": "intent/plans/assertions/partial implementation do not close debt",
+      "debt_ownership": "LIBRARY_MASTER_ONLY",
+      "id": "GOVERNANCE_DEBT_MIRROR_EXCLUSION_AND_POST_RELEASE_RECONCILIATION",
+      "normative_rules_still_mirrored": true,
+      "post_release_check": {
+        "bind_to_exact_published_artifact_and_sha256": true,
+        "closed_item_action": "update Library master, remove/close debt entry, bump revision and re-hash",
+        "closure_requires_evidence": true,
+        "published_release_mirror": "IMMUTABLE",
+        "required_after_every_official_release": true,
+        "unproven_item_action": "retain debt unchanged"
+      },
+      "release_machine_invariants_inclusion": "FORBIDDEN",
+      "release_mirror_inclusion": "FORBIDDEN",
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "id": "CHANGE_AUTHORIZATION_MATRIX",
+      "status": "ACTIVE",
+      "values": [
+        "RESEARCH_ONLY",
+        "DOC_ONLY",
+        "QA_ONLY",
+        "ARCHITECTURE_ONLY",
+        "BEHAVIOR_FIX"
+      ]
+    },
+    {
+      "id": "CLEAN_MINIMAL_FIX_STANDARD",
+      "status": "ACTIVE",
+      "summary": "smallest complete clean fix; no unrelated refactor/churn/features; explicit non-goals; required QA/provenance included"
+    },
+    {
+      "automation_separation": {
+        "automation_calls_underlying_authoritative_target_directly": true,
+        "human_cmd_is_automation_entrypoint": false,
+        "underlying_tool_unconditional_pause_forbidden": true
+      },
+      "classification": {
+        "default": "NON_ENTRYPOINT",
+        "mode": "POSITIVE_ALLOWLIST_DEFAULT_DENY",
+        "sources": [
+          "machine-readable human-entrypoint registry/allowlist",
+          "direct maintained successor of established canonical operator entrypoint"
+        ]
+      },
+      "id": "HUMAN_INVOCABLE_SCRIPT_LAUNCHER_CONTRACT",
+      "interactive_completion": {
+        "automatic_close_forbidden": true,
+        "capture_exit_before_hold": true,
+        "explicit_operator_dismissal_required": true,
+        "show": [
+          "PASS/FAIL",
+          "exact child exit status",
+          "relevant report/log/evidence/output location when applicable"
+        ]
+      },
+      "launcher": {
+        "arbitrary_caller_cwd": true,
+        "direct_authoritative_target": true,
+        "extension": ".cmd",
+        "forward_all_args_unchanged": true,
+        "generic_dispatchers_forbidden": [
+          "launcher.cmd",
+          "run.cmd",
+          "start.cmd",
+          "execute.cmd"
+        ],
+        "launcher_of_launcher_forbidden": true,
+        "parallel_bat_forbidden": true,
+        "preserve_exact_child_exit": true,
+        "resolve_relative_to_launcher": true,
+        "safe_path_quoting": true,
+        "same_directory": true,
+        "same_semantic_stem": true,
+        "thin_wrapper_only": true
+      },
+      "launcher_forbidden_by_default": [
+        "internal helpers",
+        "subordinate orchestration",
+        "library/module scripts",
+        "generated tooling",
+        "test implementation helpers",
+        "dependency bootstrap helpers",
+        "scripts invoked only by another script",
+        "vendored/third-party ownership boundaries"
+      ],
+      "qa": {
+        "authoritative_inventory": "human-entrypoint registry/allowlist",
+        "fail_closed_on_missing_required": true,
+        "fail_closed_on_unauthorized_extra": true,
+        "unauthorized_examples": [
+          "helper/vendor launcher",
+          "generic dispatcher",
+          "orphan/stale launcher",
+          "launcher-of-launcher",
+          "misnamed/path-broken launcher",
+          "broken argument forwarding",
+          "exit-code collapse",
+          "auto-closing human launcher",
+          "unapproved UI redesign"
+        ]
+      },
+      "status": "ACTIVE_FAIL_CLOSED",
+      "ui_compatibility": {
+        "baseline": "3.2.3 MELOTRIX Production/Native Acceptance/CRT Acceptance/Debug presentation family",
+        "byte_identity_required": false,
+        "preserve": [
+          "title/banner structure",
+          "separators/layout",
+          "spacing",
+          "operation-description style",
+          "PASS/FAIL presentation",
+          "exit-code/result presentation",
+          "operator interaction flow"
+        ],
+        "protected_surface": true,
+        "redesign_requires_explicit_user_authorization": true
+      }
+    },
+    {
+      "id": "VENDORED_DEPENDENCY_EXACT_PIN_AND_USER_TRIGGERED_REFRESH_CONTRACT",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "exact_pin_required": true,
+      "floating_dependency_forbidden": true,
+      "automatic_upstream_polling": false,
+      "automatic_refresh": false,
+      "newer_upstream_revision_is_automatic_release_blocker": false,
+      "review_trigger": "explicit user request to check/update dependency or explicit vendor-refresh scope",
+      "required_record_fields": [
+        "canonical upstream repository/tracked branch",
+        "exact pinned commit/revision",
+        "source hash/provenance",
+        "reported upstream version/tag when available",
+        "usage classification",
+        "local integration patches/backports",
+        "last user-requested review state/date if any",
+        "integration/validation status"
+      ],
+      "check_only_behavior": "report latest resolved upstream revision and delta; do not mutate vendor bytes",
+      "authorized_update_behavior": "refresh to selected upstream revision; freeze exact commit/hash; preserve license/provenance; reconcile local integration; rerun invalidated validation",
+      "semantic_version_not_exact_revision_identity": true,
+      "supersedes": "prior automatic/release-preparation freshness review and indefinite-stale-pin prohibition"
+    },
+    {
+      "circular_retention_forbidden": "legacy exists -> QA checks legacy -> legacy must remain",
+      "id": "NO_SELF_JUSTIFYING_LEGACY_LAYER_CONTRACT",
+      "independent_current_function_required": [
+        "product correctness",
+        "build correctness",
+        "release validation",
+        "protocol/ABI contract",
+        "active migration safety"
+      ],
+      "legacy_checker_and_metadata_reviewed_together_when_no_independent_requirement": true,
+      "qa_must_not_manufacture_current_authority_for_dead_history": true,
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "id": "CANONICAL_PROJECT_DOCUMENTATION_AND_AGENT_CONTEXT_CONTRACT",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "authority_class": "OPERATIONAL_BELOW_GOVERNANCE_AND_MACHINE_CONTRACTS",
+      "canonical_files": [
+        "AGENTS.md",
+        "docs/ARCHITECTURE.md",
+        "docs/DEVELOPMENT.md",
+        "docs/VALIDATION.md",
+        "docs/RELEASE_PROCESS.md",
+        "docs/THIRD_PARTY.md",
+        "metadata/DOCUMENTATION_OWNERSHIP.json"
+      ],
+      "shadow_variants_forbidden": true,
+      "historical_design_location": [
+        "CHANGELOG.md",
+        "immutable Library provenance"
+      ],
+      "conflict_policy": "higher authority wins; stale canonical doc must be corrected",
+      "freshness_policy": "same-change update for materially affected canonical doc",
+      "next_official_release_source_mirror_required": true,
+      "published_hf19_retroactive_mutation_forbidden": true,
+      "source_mirror_qa": [
+        "canonical files present at exact paths",
+        "no shadow canonical variants",
+        "internal references resolve",
+        "documentation ownership registry valid",
+        "current release identity consistent",
+        "specialist documents do not silently contradict canonical current topology"
+      ],
+      "library_project_root_target": "/DLL R&D Football/",
+      "library_root_files": [
+        "AGENTS.md",
+        "ARCHITECTURE.md",
+        "DEVELOPMENT.md",
+        "VALIDATION.md",
+        "RELEASE_PROCESS.md",
+        "THIRD_PARTY.md"
+      ],
+      "library_metadata_path": "metadata/DOCUMENTATION_OWNERSHIP.json",
+      "temporary_verified_authority_root": "/DLL R&D Football/governance/canonical_docs/",
+      "relocation_status": "PENDING_CURRENT_SESSION_GENERATED_BASENAME_COLLISION",
+      "source_mirror_paths": [
+        "AGENTS.md",
+        "docs/ARCHITECTURE.md",
+        "docs/DEVELOPMENT.md",
+        "docs/VALIDATION.md",
+        "docs/RELEASE_PROCESS.md",
+        "docs/THIRD_PARTY.md",
+        "metadata/DOCUMENTATION_OWNERSHIP.json"
+      ],
+      "package_docs_layout_unchanged": true
+    }
+  ]
+}

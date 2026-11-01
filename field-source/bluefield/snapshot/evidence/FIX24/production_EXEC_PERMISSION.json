@@ -1,0 +1,11 @@
+{
+  "scope": "Generated owned test ELF only; bytes unchanged",
+  "repairs": [
+    {
+      "file": "/workspace/scratch/2072698c927d/fix24_qa/production/test_runtime",
+      "sha256": "41b650e1af142a9af277e1abfc11fe14375bffc68d2b3b6be55af73c129c6ef4",
+      "before_mode": "0o644",
+      "after_mode": "0o755"
+    }
+  ]
+}

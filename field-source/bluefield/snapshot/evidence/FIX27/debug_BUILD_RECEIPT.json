@@ -1,0 +1,31 @@
+{
+  "source_digest": "a99eedbf72d52d2a987079266f783a8b5472bff29c7893531d472ff8c8833d35",
+  "steps": [
+    {
+      "command": [
+        "/workspace/scratch/2072698c927d/fix23_qa/runtime/cmake/data/bin/cmake",
+        "-S",
+        "/workspace/scratch/2072698c927d/fix27_work/preloader_l",
+        "-B",
+        "/workspace/scratch/2072698c927d/fix27_qa/debug",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DPRELOADER_L_PROFILE=DEBUG",
+        "-DBUILD_TESTING=ON"
+      ],
+      "exit": 0,
+      "log": "debug_configure.log"
+    },
+    {
+      "command": [
+        "/workspace/scratch/2072698c927d/fix23_qa/runtime/cmake/data/bin/cmake",
+        "--build",
+        "/workspace/scratch/2072698c927d/fix27_qa/debug",
+        "--parallel",
+        "2"
+      ],
+      "exit": 0,
+      "log": "debug_build.log"
+    }
+  ],
+  "duration_seconds": 52.94521296400035
+}

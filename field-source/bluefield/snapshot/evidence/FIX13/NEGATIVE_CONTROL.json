@@ -1,0 +1,11 @@
+{
+  "status": "PASS_NEGATIVE_CONTROL",
+  "base_source_digest": "5891e7409bc493dbaea8ee516fac7939cf295c073f05c916f3a9b66b2144c925",
+  "mutation": "Exact rejected FIX12 configuration precheck reintroduced into current Application in a throwaway object; production source unchanged",
+  "expected_failure": true,
+  "observed_exit": 1,
+  "output": "configuration exceeds 1 MiB\n",
+  "mutated_source_sha256": "65825409bc088c7a677b34da5172b2c06ad5d9f8a1cba2594892322d413004c2",
+  "test": "unchanged FIX13 original compatibility counterexamples",
+  "scope": "demonstrates test catches the old invented cap; not original/native DLL execution"
+}

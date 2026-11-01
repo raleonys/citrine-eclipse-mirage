@@ -1,0 +1,69 @@
+{
+  "classification": "BEHAVIOR_FIX",
+  "authority": "user input archive; constructor and existing reader/config/online/handler bodies",
+  "input_archive_sha256": "0734efcca48a69871e7af080fb9e08f3b16525fb7cc577686e6134a6d3dfd0f9",
+  "donor_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "constructor_va": "0x180036d20",
+  "constructor_pseudo_sha256": "012dcad82f88ef385c5851ee5e58c0b8fc8846e9153c5bae209b308d6144bb19",
+  "constructor_asm_sha256": "b2ec9af6a05aaf2c7d1bdc0f96eb306631b8a18630837e6836fd2110d611dad7",
+  "pointer_literals": {
+    "0x180083888": "0000-00-00T00:00:00",
+    "0x18008394c": "Game",
+    "0x1800865ec": "16",
+    "0x18007f7cc": "true",
+    "0x1800865ac": "en_US"
+  },
+  "default_profile": [
+    "anadius",
+    "1144668899",
+    "1000200030000",
+    "US",
+    "USD",
+    "true",
+    "false",
+    "2",
+    "false"
+  ],
+  "sdk": "10,5,96,47512",
+  "maps": {
+    "emulator_count": 6,
+    "game_count": 14
+  },
+  "scope_limits": [
+    "static constructor projection; original DLL not executed",
+    "native/Consumer NOT_RUN",
+    "static license cipher key outside current configuration::State is not projected; licensing parity remains open",
+    "BROWNFIELD C++ application code not imported"
+  ],
+  "avatar_assets": [
+    {
+      "name": "default_user_png",
+      "donor_va": "0x1800809d0",
+      "file_offset": 520656,
+      "bytes": 7488,
+      "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd",
+      "dimensions": [
+        208,
+        208
+      ]
+    },
+    {
+      "name": "default_avatar_png",
+      "donor_va": "0x180082710",
+      "file_offset": 528144,
+      "bytes": 3882,
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "dimensions": [
+        208,
+        208
+      ]
+    }
+  ],
+  "fix07_product_adaptation": {
+    "authorization": "User selected SURGE as no-config default display name",
+    "source_default_username": "anadius",
+    "current_default_username": "SURGE",
+    "numeric_profile_ids": "unchanged",
+    "historical_constructor_evidence": "preserved; branding change is explicitly separate"
+  }
+}
