@@ -393,12 +393,18 @@ struct AsioService::Impl::Client final:Transport,Scheduling,std::enable_shared_f
     [[noreturn]] void raise_write_error(Error e) override {socket_error(e,"greeting");}
 };
 void AsioService::Impl::async_accept_021b00() {
-    // Signal startup once the listening socket is bound. In deferred mode
-    // the OS backlog holds early connections without creating a Handler.
-    if(!start_signalled){start_signalled=true;started.set_value();}
-    if(stopping||!accept_enabled||active_sessions>=policy.max_sessions)return;
+    if(stopping||active_sessions>=policy.max_sessions)return;
+    if(!accept_enabled) {
+        // Application startup waits only for a bound listener; early sockets
+        // remain in the OS backlog until provider/profile readiness is published.
+        if(!start_signalled){start_signalled=true;started.set_value();}
+        return;
+    }
+    // Retain the original immediate mode ordering: failed accept submission
+    // must fail startup, rather than signalling success before the operation.
     queue_accept(acceptor,0);
     if(acceptor_v6)queue_accept(*acceptor_v6,1);
+    if(!start_signalled){start_signalled=true;started.set_value();}
 }
 void AsioService::Impl::queue_accept(asio::ip::tcp::acceptor& listener,std::size_t index) {
     if(stopping||accept_pending[index]||active_sessions>=policy.max_sessions)return;
