@@ -102,8 +102,8 @@
       "sha256": "505907a2f55298b75f9f319adc07d74452c1b468416299c905d6bfcb2f728bee"
     },
     "include/preloader_l/net/asio_service.hpp": {
-      "bytes": 1464,
-      "sha256": "32d37af5ef934e7276cfaf116aa4c9183d7000c0fef1dab42e57ad7adaad3532"
+      "bytes": 1684,
+      "sha256": "38fe99b712ad0fd7bac73368237f759200101a57c01df741f4099f7313d3f04a"
     },
     "include/preloader_l/net/handler_policy.hpp": {
       "bytes": 253,
@@ -630,8 +630,8 @@
       "sha256": "78314b17933b96446d50b0d7cf22540059c2b8e2d56c57cbcde763094e022cfa"
     },
     "src/net/asio_service.cpp": {
-      "bytes": 23736,
-      "sha256": "5d1e2476b1c8d28fbf22850001354ef5fac75283a62eda03de01e13e9977ae7b"
+      "bytes": 24542,
+      "sha256": "71f4b5543d630ca721d486df1b02f545386e5172c6aa7a5297ca38920fc886a3"
     },
     "src/net/server.cpp": {
       "bytes": 8512,
@@ -974,8 +974,8 @@
       "sha256": "d4018b757421f9638861a4ac889f4a2393eb79d689860ba26710b8b2f2c9a605"
     },
     "src/runtime/application.cpp": {
-      "bytes": 28380,
-      "sha256": "a79fbad8b52083da1b7f94342eacef737f06cf79f050217f1e12a37537752989"
+      "bytes": 28582,
+      "sha256": "c5ca61ec358277c1df4814c4c49765f12137bd508de852737cdde4a6f63bde30"
     },
     "src/runtime/application_defaults.cpp": {
       "bytes": 2261,
@@ -1266,8 +1266,8 @@
       "sha256": "0950867e3d13ce44d7f66965bb2383e5711a483a4e0f22ecd0d9079f04b5d79c"
     },
     "tests/native/startup_publication_tests.cpp": {
-      "bytes": 3406,
-      "sha256": "37a84d0805a1091b47e774a1ec81d25e6075889673f911fc9903debb731e766c"
+      "bytes": 5378,
+      "sha256": "95843b1407fe6e8439ba6816db5bb85187641c07a71d714600eb0ceacf6f4b6b"
     },
     "tests/native/timer_failure_tests.cpp": {
       "bytes": 5300,
