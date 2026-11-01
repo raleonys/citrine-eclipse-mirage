@@ -1174,8 +1174,8 @@
       "sha256": "2286ef8c2a00ade400c18e50e5e6b54ba906c9382380d6186732a93c3b0873f8"
     },
     "tests/infrastructure/test_weekly_release.py": {
-      "bytes": 17390,
-      "sha256": "f787b913f39f38e2ea3c304ef8fc4006229288261f26c06776d4ceca43cb7b12"
+      "bytes": 17821,
+      "sha256": "d730d1c492fe3215aca942ad5e60967244bb550e31fd8ae6bf57397f3e52a3f1"
     },
     "tests/infrastructure/test_wine_runner.py": {
       "bytes": 1640,
@@ -11695,7 +11695,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
+    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },
