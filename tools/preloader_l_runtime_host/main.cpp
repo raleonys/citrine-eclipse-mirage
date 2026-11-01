@@ -3,6 +3,8 @@
 #include "preloader_l/runtime/control.h"
 #include "../runtime_probe.hpp"
 #include <chrono>
+#include <iphlpapi.h>
+#include <vector>
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -16,6 +18,46 @@ void require_status(DWORD result,const char* message) {
 }
 using Wait=DWORD(WINAPI*)(DWORD);
 using Marker=void(*)();
+// Snapshot the listener owner for attribution only; no failure is suppressed.
+std::string ipv4_listener_owners(unsigned short port) {
+    const HMODULE module=LoadLibraryExW(L"iphlpapi.dll",nullptr,LOAD_LIBRARY_SEARCH_SYSTEM32);
+    if(!module)return "iphlpapi_load_failed="+std::to_string(GetLastError());
+    const auto query=reinterpret_cast<decltype(&::GetExtendedTcpTable)>(
+        GetProcAddress(module,"GetExtendedTcpTable"));
+    std::string result;
+    if(!query) {
+        result="owner_api_missing="+std::to_string(GetLastError());
+    }else{
+        ULONG bytes=0;
+        const DWORD probe=query(nullptr,&bytes,FALSE,AF_INET,TCP_TABLE_OWNER_PID_LISTENER,0);
+        if(probe!=ERROR_INSUFFICIENT_BUFFER||bytes<sizeof(DWORD)){
+            result="owner_size_probe="+std::to_string(probe);
+        }else{
+            std::vector<unsigned char> storage(bytes);
+            const DWORD status=query(storage.data(),&bytes,FALSE,AF_INET,
+                                     TCP_TABLE_OWNER_PID_LISTENER,0);
+            if(status!=NO_ERROR||bytes<sizeof(DWORD)){
+                result="owner_query="+std::to_string(status);
+            }else{
+                const auto* table=reinterpret_cast<const MIB_TCPTABLE_OWNER_PID*>(storage.data());
+                const auto capacity=(bytes-sizeof(DWORD))/sizeof(MIB_TCPROW_OWNER_PID);
+                result="owner_pids=";
+                bool found=false;
+                for(DWORD n=0;n<table->dwNumEntries&&n<capacity;++n) {
+                    const auto& row=table->table[n];
+                    if(row.dwState!=MIB_TCP_STATE_LISTEN||
+                       ntohs(static_cast<u_short>(row.dwLocalPort))!=port)continue;
+                    if(found)result+=",";
+                    result+=std::to_string(row.dwOwningPid);
+                    found=true;
+                }
+                if(!found)result+="none";
+            }
+        }
+    }
+    FreeLibrary(module);
+    return result;
+}
 struct Module {
     HMODULE image=nullptr;
     Wait shutdown=nullptr;
@@ -68,16 +110,31 @@ void cycle(const wchar_t* path,unsigned index) {
     std::string request="<LSX><Request id='public-dll' recipient='EbisuSDK'><GetProfile index='0'/></Request></LSX>";
     request.push_back('\0');asio::write(socket,asio::buffer(request));socket.non_blocking(true);
     require(preloader_l::tools::frame(socket,buffered).find("GetProfileResponse")!=std::string::npos,"missing real profile response");
+    const auto listener_before=ipv4_listener_owners(static_cast<unsigned short>(bound));
+    auto complete_shutdown=[&](const char* failure) {
+        const DWORD result=shutdown(20000);
+        if(result!=DLL_SHUTDOWN_OK)
+            std::cerr<<"SHUTDOWN_LISTENER_OWNER_DIAGNOSTIC status="<<result
+                     <<" port="<<bound<<" caller_pid="<<GetCurrentProcessId()
+                     <<" before={"<<listener_before<<"}"
+                     <<" after={"<<ipv4_listener_owners(static_cast<unsigned short>(bound))<<"}\n";
+        require_status(result,failure);
+    };
     if(index==0) {
         const auto immediate=shutdown(0);
         std::cout<<"zero-timeout shutdown status: "<<immediate<<'\n';
         require(immediate==DLL_SHUTDOWN_OK||immediate==DLL_SHUTDOWN_TIMEOUT,
                 "unexpected immediate shutdown status");
         // Keep the caller lease and all function pointers on a timeout.
-        require_status(shutdown(20000),"shutdown retry failed");
-    }else require_status(shutdown(20000),"shutdown failed");
+        complete_shutdown("shutdown retry failed");
+    }else complete_shutdown("shutdown failed");
     asio::ip::tcp::socket stopped(io);asio::error_code stopped_error;
     stopped.connect({asio::ip::address_v4::loopback(),bound},stopped_error);
+    if(!stopped_error)
+        std::cerr<<"SHUTDOWN_LISTENER_OWNER_DIAGNOSTIC unexpected_connect"
+                 <<" port="<<bound<<" caller_pid="<<GetCurrentProcessId()
+                 <<" before={"<<listener_before<<"}"
+                 <<" after={"<<ipv4_listener_owners(static_cast<unsigned short>(bound))<<"}\n";
     require(bool(stopped_error),"stopped service still accepts connections");
     require(shutdown(0)==DLL_SHUTDOWN_OK,"completed shutdown is not idempotent");
     asio::error_code ignored;socket.close(ignored);
