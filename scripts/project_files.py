@@ -81,14 +81,73 @@ def alias_payload(path, target):
     return data
 
 
+def verify_reference_sources(root):
+    """Verify immutable research imports before excluding them from the product.
+
+    The separate snapshots are Git research inputs, not first-party application
+    files or release-package members. Unknown prefixes and any byte drift fail
+    closed; the application manifest pins the registry that authorizes them.
+    """
+    root = Path(root)
+    base = root / 'field-source'
+    if not base.exists() and not base.is_symlink():
+        return
+    if base.is_symlink() or not base.is_dir():
+        raise ValueError('Unsafe research source root')
+    policy = json.loads((root / 'docs/FIELD_SOURCE_IMPORT_POLICY.json').read_text(encoding='utf-8'))
+    if policy.get('schema') != 'cem.field-source-import-policy.v1':
+        raise ValueError('Unsupported research source registry')
+    fields = policy['fields']
+    for field_root in base.iterdir():
+        field = field_root.name
+        if field not in fields or field_root.is_symlink() or not field_root.is_dir():
+            raise ValueError('Unregistered research source field: ' + field)
+        spec = fields[field]
+        actual = {}
+        for path in field_root.rglob('*'):
+            if path.is_symlink():
+                raise ValueError('Research source symlink: ' + str(path))
+            if path.is_file():
+                actual[safe_member(path.relative_to(field_root).as_posix())] = path
+        readme = actual.get('README.md')
+        if not readme:
+            raise ValueError('Missing research source provenance: ' + field)
+        if set(actual) == {'README.md'}:
+            if digest(readme.read_bytes()) != spec['pending_readme_sha256']:
+                raise ValueError('Research source scaffold differs: ' + field)
+            continue
+        records = {'README.md': spec['imported_readme_sha256'],
+                   'SOURCE_FILE_HASHES.json': spec['file_manifest_sha256'],
+                   'SOURCE_IMPORT_RECEIPT.json': spec['receipt_sha256']}
+        for name, expected in records.items():
+            if name not in actual or digest(actual[name].read_bytes()) != expected:
+                raise ValueError('Research source record differs: ' + field + '/' + name)
+        manifest = json.loads(actual['SOURCE_FILE_HASHES.json'].read_text(encoding='utf-8'))
+        if (manifest.get('field') != field or
+                manifest.get('source_archive_sha256') != spec['archive_sha256'] or
+                len(manifest['files']) != spec['file_count']):
+            raise ValueError('Research source identity mismatch: ' + field)
+        expected_paths = set(records)
+        for name, entry in manifest['files'].items():
+            rel = 'snapshot/' + safe_member(name)
+            expected_paths.add(rel)
+            path = actual.get(rel)
+            if (not path or path.stat().st_size != entry['bytes'] or
+                    digest(path.read_bytes()) != entry['sha256']):
+                raise ValueError('Research source bytes differ: ' + field + '/' + rel)
+        if set(actual) != expected_paths:
+            raise ValueError('Research source inventory differs: ' + field)
+
+
 def source_files(root):
     root = Path(root).resolve()
     files, folded = {}, {}
     allowed_links=vendor_symlinks(root)
+    verify_reference_sources(root)
     seen_links=set()
     for path in sorted(root.rglob('*')):
         rel = path.relative_to(root)
-        if rel.parts[0] in TRANSIENT:
+        if rel.parts[0] in TRANSIENT or rel.parts[0] == 'field-source':
             continue
         if rel.as_posix() in allowed_links:
             alias_payload(path, allowed_links[rel.as_posix()])

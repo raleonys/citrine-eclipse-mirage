@@ -15,6 +15,7 @@ These were exact owner-retained archives whose local ZIP CRC and SHA-256 have be
 
 ## Scope and preservation
 
+- `docs/FIELD_SOURCE_IMPORT_POLICY.json` pins the four allowed archive inventories and their exact provenance records. `scripts/project_files.py` verifies every present research snapshot byte before keeping `field-source/` outside the active application inventory and release source package. Missing, extra, altered or symlinked reference files fail source QA. This boundary does not remove the snapshots from Git or merge them into application targets.
 - Existing Citrine Eclipse Mirage production code remains authoritative; do not bulk merge FIELD source snapshots or rewrite public C ABI/vendor/CRT/runtime policy without a narrow PR.
 - **Brownfield** is the canonical 3.2.5 SQUALERIS HOTFIX 19 source, archive `preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip` (SHA-256 `c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab`, 3,971,740 bytes, 1,898 ZIP entries). This identity is backed by the official HF19 publication receipt and Library CURRENT_ARTIFACT pointer.
 - **Yellowfield**, not Brownfield: 3.2.6 TALVOR R18 (`preloader_l_3.2.6_TALVOR_R18_source.zip`, SHA-256 `1f2a6581a08dbafa940031353c8723e1947e00f0a4681f3bceb1d9f65e3d509e`) is a distinct NOT_RELEASE development/research line. Its `SOURCE_REVISION.md` explicitly says Yellowfield. Do not import TALVOR R18 into the Brownfield branch.

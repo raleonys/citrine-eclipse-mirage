@@ -15,7 +15,7 @@
     ".github/workflows/weekly-release.yml": "efcf35209c3798257089eb9048d726218bbd4427457fda8369628a645d579d2d",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "978593d1e4a8599798082508b1b77e1731fe06a065e8b6f82d14e446d5a4047c",
-    "CHANGELOG.md": "715c12d5d281d1519d7def4637e292c739f7c9fb77676550430bb0cc2dc0f082",
+    "CHANGELOG.md": "6e0be12ab1f40b20be03255b8fd0bb43c2f338e18755840a959caefbcc293eef",
     "cmake/BuildPartition.cmake": "bb3a9c833c694256250d04be258c5f6a9315ea10189198185ae4fba58b281882",
     "cmake/InfrastructureChecks.cmake": "1e4ec0c5319403be3dfe5db904fb188a3edde069236d794a69e6e4bfb564634b",
     "cmake/PatchHookFreeze.cmake": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
@@ -386,7 +386,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "2403d829c98174d3cf7caa0d382d6478457d22f4d74e162194372d66c8894b66",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "6a0799c62dd9fcba984035ab48a06c078e0b7958ed778e2641e44124726b0ce9",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "a27d0cd84fc6ab05cf5b321bafce23cde6b887dc374c715ee9fa8553c97d45c6",
-    "metadata/SOURCE_FILES.json": "616f355277fd8df073d316ea478924fee1101570bf83b6b794024a6d78d08732",
+    "metadata/SOURCE_FILES.json": "522b9d9e9709a98070acf122931c3d945af0c3321ca9dfed095f7abcac1502cb",
     "metadata/SOURCE_INPUTS.json": "fb5b29dad4e05eed197e57a98c30803f48ed0e9c30c92d4b05afb9c3751c5513",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "c413071a0a78fb8fbfc4eeabf1e970dfde51b31a870852f50bc175b4a2f4f765",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -425,7 +425,7 @@
     "scripts/check_metadata_ownership.py": "11b001730953c19eb98fd56a44917fcd942c9274c48452f8eca67b1d19143089",
     "scripts/check_msvc_build_evidence.py": "8acff807b217c1976e2a3507e7feb4aa32c409f1c41f6190ccfdad637474536c",
     "scripts/check_msvc_shipping_link_command.py": "d82fdabbdc9fe3209dee321999751f986a16938a295df0320533a5cf72107f79",
-    "scripts/check_repository_contract.py": "9fe76130d60267ec0a5afe9700c5ac2d53e6aa76895dbddc807d1ce9889f62df",
+    "scripts/check_repository_contract.py": "97e689cb0f9e9032261b0ff92a180e195fc311dc4d53cb623d90bd2597da6c5d",
     "scripts/check_source_identity_license.py": "ac0f30121e8171a0e71e1f13c203f12248f1ad23012460030c0a64d43fd0475c",
     "scripts/clear_tool_python_cache.py": "849a61c2ca62a7f0a8134d5a1c0d0134cac678f37d6cf96eaa38bce71e3d46a1",
     "scripts/collect_size_evidence.py": "f8ffd8d2e5bff58f1a74bc3bf3e1d6f97659f78f91bd545101a0ea15a7320ec5",
@@ -436,7 +436,7 @@
     "scripts/package_source.py": "45d77270001639c093bb51a36b7641c2314bb2c437fcc0777ce527d95d12b988",
     "scripts/pe_resources.py": "9e8a581dc0e294629b3701f4ee2ca3aff1f139758532740580a6c7a6852c21cf",
     "scripts/prepare_hook_engine.py": "21257a4e78e5fbb0baccea38f303937c671dbfd8d0e977cd4598e9ffca69414c",
-    "scripts/project_files.py": "ab0d8d6762688d4bde9f3bd75f611930bf9eddeb88218abea4cd17d1d5ecd8fe",
+    "scripts/project_files.py": "bdfb7011d7e60971337ca95ecb02385aa27027e273c34d90690a1999ea6ac9a3",
     "scripts/restore_vendor_links.py": "60cd17c302d158b820f1d55bc45dae113a85dcd0506125601e035466761ea62a",
     "scripts/run_golden_pipeline.py": "9bd25692139d60867a7bd8c6360e6de29e28f2993a5e659dbf8209a594c94b85",
     "scripts/run_source_qa.py": "1680e678ec5c509dfec39bfe98348a1b37b947e5d9d36f03dcfc3c2dbcfa98bf",
@@ -595,7 +595,7 @@
     "tests/infrastructure/test_corvexon_mswsock_imports.py": "e2b2cad669df9c09b9f730432f06874f9aa8dbf2408eedebb919c717a0f1f508",
     "tests/infrastructure/test_cpp_type_identities.py": "cc0202bc5acf2a5847d5ddd07c998da2c768a71c4ffa7ad594199885f48534e9",
     "tests/infrastructure/test_english_only_audit.py": "d5b6c41e67b42e8fb3c298efc0434251efa3c93283c9bc19b8cb2ebd3a7d6d2b",
-    "tests/infrastructure/test_infrastructure.py": "26f812931e3ebb407a338d96019c39d959164b02a6961de325586c4fbea54c2a",
+    "tests/infrastructure/test_infrastructure.py": "4b4d2861bc9769d8458a5433cd8acd87e0e73108029d13922b0cc05a70859c75",
     "tests/infrastructure/test_pe_metadata_tools.py": "b56152ae1abe3b6c43416127f8d99fbd27ccfb89560c102727c7150b9d9b1981",
     "tests/infrastructure/test_public_abi.py": "a62a0ff644cc5e9a990d1d7c1b306d4de8423e6c24bfd14b33167c66ff2d7272",
     "tests/infrastructure/test_requirements.py": "20e5b259e169a05d15d9ccdfd852d0067e13397552d28e6b929767759387816c",
@@ -3686,6 +3686,7 @@
     ".github/workflows/msvc-hook-disable.yml": "7dd818eacdb8344fb0ee608638d771c3803af796fc3c57692936a67da5a74b66",
     "tests/infrastructure/test_hook_disable_action.py": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771",
     ".github/workflows/msvc-environment-diagnostics.yml": "46026f582e9f8b2df80cc0e40a8dd2720cd1e44b7348869ba33330ca83cf59f3",
-    "docs/FIELD_RETIREMENT_REVIEW.md": "2c050781a0f273336b6104db13d8708c4aa7df45e209dc2b084d047716f0c6c4"
+    "docs/FIELD_RETIREMENT_REVIEW.md": "bb5559bc7be465e03b115c5214a19b1eb1b6790fdff17456eac8438acd7dd9fd",
+    "docs/FIELD_SOURCE_IMPORT_POLICY.json": "31065aba3eb33d1723f4b920792a39d5fb6648754889c60cab493e8e12b3ae15"
   }
 }

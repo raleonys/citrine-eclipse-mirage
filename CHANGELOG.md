@@ -8,7 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
-- Track four independent FIELD retirement research source branches and the owner-approved, pending hash-pinned source import. This review does not import alternative runtimes, complete native acceptance or approve a release.
+- Track four independent FIELD retirement research source branches and the owner-approved, pending hash-pinned source import. Verify complete reference inventories and provenance before excluding them from the application source package. This review does not import alternative runtimes, complete native acceptance or approve a release.
 
 - Audit C36-F003: keep unknown-entitlement diagnostics nonmodal and redacted, repair native test namespace scope, and cover Debug output plus Release preservation of existing logs. Add focused Windows MSVC Debug/Release acceptance; fresh native execution remains pending.
 
