@@ -46,7 +46,7 @@ struct AsyncReceiveContext {
 };
 void start_async_receive_021d10(AsyncReceiveService&,ReceiveSocketImplementation&,ReceiveBufferSlice&,
     std::uint32_t flags,ReceiveHandler&,std::uintptr_t allocator_identity,AsyncReceiveContext&);
-// Uses the actual recovered023dd0 constructor with explicit live source identities.
+// Uses the 023dd0 constructor contract with explicit live source identities.
 // Projection, native factory/query/move/destroy and lifetime providers stay required.
 class AsyncReceiveEffects:public AsyncReceiveEffects {
 public:

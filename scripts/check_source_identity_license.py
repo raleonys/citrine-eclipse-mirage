@@ -16,6 +16,8 @@ SCRIPT = {'.py', '.sh', '.bash', '.ps1', '.cmake', '.yml', '.yaml', '.cmd'}
 LEGACY = re.compile(r'\b(?:[A-Za-z_]\w*_recovered|Recovered[A-Z]\w*)\b|\b(?:namespace\s+preloader_l::recovered|recovered::)')
 IDENTIFIER = re.compile(r'(?mi)^\s*(?:#|//|/\*+|\*|REM|;)\s*SPDX-License-Identifier:\s*([A-Za-z0-9.+-]+)\s*(?:\*/)?\s*$')
 
+RECOVERY_WORDING = re.compile(r'recovered', re.I)
+
 
 def candidates(root):
     for prefix in OWNED_TOP:
@@ -53,6 +55,8 @@ def inspect(root=ROOT):
             errors.append(f'Expected exactly one GPL-3.0-only SPDX header: {rel} {ids}')
         if path.suffix.lower() in C_FAMILY and LEGACY.search(data):
             errors.append('Legacy recovery-derived C++ identity: ' + rel)
+        if rel.startswith(('src/', 'include/')) and RECOVERY_WORDING.search(data):
+            errors.append('Legacy recovery wording in active source: ' + rel)
     return checked, errors
 
 

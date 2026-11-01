@@ -10,6 +10,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 - Add an isolated Windows MSVC Debug configuration-defaults diagnostic workflow and test-only stage breadcrumbs; this is investigation tooling, not a production or release correction.
 
+- Replace 58 research-era labels in first-party `src/` and `include/` comments and five diagnostic messages with technical wording; enforce a terminology regression check without modifying runtime control flow, file names or ABI identifiers.
+
 - Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
 
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.

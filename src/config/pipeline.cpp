@@ -8,7 +8,7 @@ configuration::Node DocumentPipeline::read(const configuration::Path& path) cons
     // parse already removes exactly ONE UTF-8 BOM. Do not pre-strip or decode.
     const auto bytes = file::read_binary_03b3f0(path, files_);
     parser::State parsed; // Never reuse a previous document's parser actions.
-    (void)parser::parse(bytes, parsed); // Current recovered grammar returns true or throws.
+    (void)parser::parse(bytes, parsed); // Parser returns true or throws.
     configuration::Node selected;
     if (const auto* config = parsed.root.find("Config2"))
         selected = parser::to_configuration_node(*config, order_);
