@@ -1,0 +1,2007 @@
+{
+  "schema": "cem.archive11-module-triage.v1",
+  "scope": "199 top-level directories plus root-file group. Status records review depth, never test acceptance. Unassigned modules remain pending.",
+  "archive_sha256": "db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da",
+  "modules": [
+    {
+      "module": "<root>",
+      "files": 21,
+      "bytes": 57291965,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-accept-helpers-source",
+      "files": 21,
+      "bytes": 179844,
+      "current_snapshot_sources": 6,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-accept-source",
+      "files": 19,
+      "bytes": 241671,
+      "current_snapshot_sources": 6,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-accept-stop-source",
+      "files": 12,
+      "bytes": 231356,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "initial_document_and_test_review",
+      "tracking_item": "A11-05",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-achievement-runtime-source",
+      "files": 21,
+      "bytes": 304144,
+      "current_snapshot_sources": 7,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-achievement-storage-source",
+      "files": 19,
+      "bytes": 152695,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-achievement-writer-source",
+      "files": 13,
+      "bytes": 113827,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-application-admission-source",
+      "files": 10,
+      "bytes": 184219,
+      "current_snapshot_sources": 2,
+      "cpp_test_files": 2,
+      "review_status": "initial_document_and_test_review",
+      "tracking_item": "A11-04",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-application-effects-source",
+      "files": 5,
+      "bytes": 82922,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-application-graph-source",
+      "files": 12,
+      "bytes": 252798,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-application-io-source",
+      "files": 2,
+      "bytes": 4925,
+      "current_snapshot_sources": 2,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-application-worker-source",
+      "files": 12,
+      "bytes": 253250,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-bootstrap-backend-source",
+      "files": 12,
+      "bytes": 126588,
+      "current_snapshot_sources": 7,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-bootstrap-native-source",
+      "files": 10,
+      "bytes": 36446,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-bootstrap-owner-source",
+      "files": 10,
+      "bytes": 72626,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-bootstrap-policies-source",
+      "files": 15,
+      "bytes": 115727,
+      "current_snapshot_sources": 7,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-bootstrap-providers-source",
+      "files": 12,
+      "bytes": 69308,
+      "current_snapshot_sources": 7,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-bootstrap-runtime-source",
+      "files": 17,
+      "bytes": 128725,
+      "current_snapshot_sources": 10,
+      "cpp_test_files": 3,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-calendar-source",
+      "files": 11,
+      "bytes": 22043,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-callback-admission-source",
+      "files": 13,
+      "bytes": 184878,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-callback-identity-source",
+      "files": 12,
+      "bytes": 100602,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-callback-policy-source",
+      "files": 15,
+      "bytes": 200557,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-callback-provider-source",
+      "files": 12,
+      "bytes": 193003,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-application-source",
+      "files": 14,
+      "bytes": 70272,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-defaults-source",
+      "files": 25,
+      "bytes": 338561,
+      "current_snapshot_sources": 7,
+      "cpp_test_files": 3,
+      "review_status": "initial_source_comparison",
+      "tracking_item": "A11-03",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-hash-source",
+      "files": 13,
+      "bytes": 121411,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-iteration-source",
+      "files": 15,
+      "bytes": 105246,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-logging-source",
+      "files": 14,
+      "bytes": 67169,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-order-source",
+      "files": 14,
+      "bytes": 109158,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-pipeline-source",
+      "files": 14,
+      "bytes": 63244,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-source",
+      "files": 10,
+      "bytes": 92511,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-startup-source",
+      "files": 14,
+      "bytes": 64521,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-config-storage-source",
+      "files": 19,
+      "bytes": 225006,
+      "current_snapshot_sources": 8,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-configuration-factory-source",
+      "files": 13,
+      "bytes": 215121,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-content-effects-source",
+      "files": 4,
+      "bytes": 44774,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-content-handlers-source",
+      "files": 8,
+      "bytes": 64966,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-argv-bridge-source",
+      "files": 13,
+      "bytes": 46247,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-argv-parser-source",
+      "files": 12,
+      "bytes": 40117,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-argv-source",
+      "files": 12,
+      "bytes": 58937,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-atomic-native-source",
+      "files": 10,
+      "bytes": 20229,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-byteclass-source",
+      "files": 11,
+      "bytes": 20018,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-cache-source",
+      "files": 10,
+      "bytes": 36924,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-conversion-api-source",
+      "files": 12,
+      "bytes": 38652,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-conversion-bridge-source",
+      "files": 8,
+      "bytes": 49730,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-conversion-source",
+      "files": 12,
+      "bytes": 44691,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-counter-native-source",
+      "files": 10,
+      "bytes": 21675,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-cpu-source",
+      "files": 12,
+      "bytes": 28561,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-entry-source",
+      "files": 10,
+      "bytes": 48016,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-environment-cleanup-source",
+      "files": 10,
+      "bytes": 42841,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-environment-source",
+      "files": 11,
+      "bytes": 41720,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-error-source",
+      "files": 8,
+      "bytes": 24580,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-find-bridge-source",
+      "files": 9,
+      "bytes": 55509,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-find-native-source",
+      "files": 12,
+      "bytes": 53163,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-fls-native-source",
+      "files": 9,
+      "bytes": 38975,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-glue-source",
+      "files": 11,
+      "bytes": 42040,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-heap-native-bridge-source",
+      "files": 9,
+      "bytes": 75940,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-heap-native-source",
+      "files": 10,
+      "bytes": 24761,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-heap-source",
+      "files": 8,
+      "bytes": 23800,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-initial-locale-source",
+      "files": 13,
+      "bytes": 225686,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-initial-multibyte-source",
+      "files": 15,
+      "bytes": 50126,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-initial-state-source",
+      "files": 10,
+      "bytes": 27638,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-initializers-source",
+      "files": 12,
+      "bytes": 64927,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-invalid-source",
+      "files": 9,
+      "bytes": 34537,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-lcmap-source",
+      "files": 9,
+      "bytes": 47715,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-lifecycle-callbacks-source",
+      "files": 15,
+      "bytes": 214120,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-bridge-source",
+      "files": 8,
+      "bytes": 64876,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-free-source",
+      "files": 12,
+      "bytes": 50446,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-names-source",
+      "files": 13,
+      "bytes": 206596,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-native-source",
+      "files": 9,
+      "bytes": 49821,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-ref-source",
+      "files": 12,
+      "bytes": 39373,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-resource-bridge-source",
+      "files": 8,
+      "bytes": 64678,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-startup-source",
+      "files": 17,
+      "bytes": 289930,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-thread-source",
+      "files": 11,
+      "bytes": 35752,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-locale-update-source",
+      "files": 10,
+      "bytes": 37960,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-lock-native-source",
+      "files": 10,
+      "bytes": 26624,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-lock-source",
+      "files": 9,
+      "bytes": 31650,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-lowio-lifecycle-source",
+      "files": 14,
+      "bytes": 63034,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-module-path-source",
+      "files": 12,
+      "bytes": 48518,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-multibyte-bridge-source",
+      "files": 9,
+      "bytes": 83102,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-multibyte-builder-source",
+      "files": 10,
+      "bytes": 49159,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-multibyte-control-source",
+      "files": 9,
+      "bytes": 39389,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-multibyte-record-bridge-source",
+      "files": 9,
+      "bytes": 89840,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-multibyte-support-source",
+      "files": 9,
+      "bytes": 39239,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-multibyte-tables-source",
+      "files": 9,
+      "bytes": 36360,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-nls-bridge-source",
+      "files": 9,
+      "bytes": 98245,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-nls-dispatch-bridge-source",
+      "files": 9,
+      "bytes": 101873,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-nls-dispatch-native-source",
+      "files": 9,
+      "bytes": 25570,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-nls-dispatch-source",
+      "files": 9,
+      "bytes": 28744,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-nls-native-bridge-source",
+      "files": 9,
+      "bytes": 69115,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-nls-native-source",
+      "files": 10,
+      "bytes": 31820,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-onexit-source",
+      "files": 9,
+      "bytes": 31269,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-pair-bindings-source",
+      "files": 13,
+      "bytes": 258442,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-pair-leaves-source",
+      "files": 10,
+      "bytes": 38388,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-ptd-data-source",
+      "files": 10,
+      "bytes": 37485,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-ptd-source",
+      "files": 9,
+      "bytes": 34029,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-realloc-source",
+      "files": 11,
+      "bytes": 30323,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-recalloc-bridge-source",
+      "files": 8,
+      "bytes": 39212,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-recalloc-source",
+      "files": 12,
+      "bytes": 30998,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-runtime-source",
+      "files": 9,
+      "bytes": 44064,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-sort-source",
+      "files": 14,
+      "bytes": 47015,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-startup-bridge-source",
+      "files": 13,
+      "bytes": 43105,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-string-type-source",
+      "files": 10,
+      "bytes": 34234,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-support-source",
+      "files": 12,
+      "bytes": 26313,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-sync-bridge-source",
+      "files": 9,
+      "bytes": 43843,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-termination-source",
+      "files": 11,
+      "bytes": 52036,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-wildcard-search-source",
+      "files": 12,
+      "bytes": 91697,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-wildcard-source",
+      "files": 12,
+      "bytes": 56523,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crt-wildcard-storage-source",
+      "files": 12,
+      "bytes": 33449,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-crypto-source",
+      "files": 9,
+      "bytes": 55127,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-dispatch-source",
+      "files": 7,
+      "bytes": 43583,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-encoding-source",
+      "files": 8,
+      "bytes": 24229,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-event-queue-source",
+      "files": 19,
+      "bytes": 169237,
+      "current_snapshot_sources": 6,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-execution-source",
+      "files": 9,
+      "bytes": 38592,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-file-source",
+      "files": 12,
+      "bytes": 60169,
+      "current_snapshot_sources": 7,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-foreign-callback-source",
+      "files": 16,
+      "bytes": 235625,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-handlers-source",
+      "files": 7,
+      "bytes": 37151,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-hash-source",
+      "files": 7,
+      "bytes": 35402,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-host-callbacks-source",
+      "files": 8,
+      "bytes": 34659,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-host-init-source",
+      "files": 9,
+      "bytes": 41887,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-host-platform-source",
+      "files": 23,
+      "bytes": 218091,
+      "current_snapshot_sources": 12,
+      "cpp_test_files": 3,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-information-effects-source",
+      "files": 4,
+      "bytes": 27425,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-initial-cells-source",
+      "files": 22,
+      "bytes": 340391,
+      "current_snapshot_sources": 7,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-io-memory-source",
+      "files": 11,
+      "bytes": 168052,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-libraries-source",
+      "files": 8,
+      "bytes": 32326,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-library-effects-source",
+      "files": 19,
+      "bytes": 86333,
+      "current_snapshot_sources": 11,
+      "cpp_test_files": 3,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-license-source",
+      "files": 17,
+      "bytes": 127595,
+      "current_snapshot_sources": 9,
+      "cpp_test_files": 3,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-licensing-effects-source",
+      "files": 4,
+      "bytes": 83779,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-messages-source",
+      "files": 10,
+      "bytes": 55704,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-misc-handlers-source",
+      "files": 9,
+      "bytes": 97893,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-module-reference-source",
+      "files": 6,
+      "bytes": 70073,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-native-context-source",
+      "files": 14,
+      "bytes": 86899,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-native-profile-source",
+      "files": 12,
+      "bytes": 215388,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-native-source",
+      "files": 11,
+      "bytes": 68338,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-network-hook-source",
+      "files": 10,
+      "bytes": 30412,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-no-response-source",
+      "files": 5,
+      "bytes": 254832,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-online-factory-source",
+      "files": 13,
+      "bytes": 250559,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-online-object-source",
+      "files": 12,
+      "bytes": 136610,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-online-platform-source",
+      "files": 14,
+      "bytes": 94656,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-online-query-source",
+      "files": 16,
+      "bytes": 159682,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 3,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-online-source",
+      "files": 11,
+      "bytes": 67024,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-online-version-source",
+      "files": 11,
+      "bytes": 108550,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-original-checkpoint-source",
+      "files": 11,
+      "bytes": 101547,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-original-provider-source",
+      "files": 11,
+      "bytes": 105043,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-owned-deque-source",
+      "files": 12,
+      "bytes": 181051,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-owned-environment-source",
+      "files": 12,
+      "bytes": 213460,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-owned-jobs-source",
+      "files": 12,
+      "bytes": 209201,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-owned-server-source",
+      "files": 14,
+      "bytes": 168523,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-parser-source",
+      "files": 8,
+      "bytes": 134395,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-path-source",
+      "files": 7,
+      "bytes": 20568,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-permanent-errors-source",
+      "files": 5,
+      "bytes": 64691,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-pre-unload-source",
+      "files": 5,
+      "bytes": 69570,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-registry-source",
+      "files": 9,
+      "bytes": 44921,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-resources-factory-source",
+      "files": 7,
+      "bytes": 154916,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-server-runtime-source",
+      "files": 14,
+      "bytes": 210967,
+      "current_snapshot_sources": 6,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-server-source",
+      "files": 8,
+      "bytes": 56153,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-services-completion-source",
+      "files": 16,
+      "bytes": 90980,
+      "current_snapshot_sources": 7,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-services-factory-source",
+      "files": 13,
+      "bytes": 229003,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-session-dispose-source",
+      "files": 21,
+      "bytes": 126785,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-session-flow-source",
+      "files": 22,
+      "bytes": 223568,
+      "current_snapshot_sources": 6,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-session-memory-source",
+      "files": 11,
+      "bytes": 144737,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-session-owner-source",
+      "files": 21,
+      "bytes": 147940,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-session-policy-source",
+      "files": 12,
+      "bytes": 238128,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-session-profile-source",
+      "files": 14,
+      "bytes": 243627,
+      "current_snapshot_sources": 6,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-session-source",
+      "files": 19,
+      "bytes": 186714,
+      "current_snapshot_sources": 6,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-session-stop-source",
+      "files": 10,
+      "bytes": 212872,
+      "current_snapshot_sources": 2,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-shared-log-source",
+      "files": 14,
+      "bytes": 202387,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-socket-move-source",
+      "files": 22,
+      "bytes": 166960,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-socket-source",
+      "files": 806,
+      "bytes": 10974582,
+      "current_snapshot_sources": 275,
+      "cpp_test_files": 106,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-source",
+      "files": 7,
+      "bytes": 34732,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-startup-publication-source",
+      "files": 14,
+      "bytes": 95318,
+      "current_snapshot_sources": 5,
+      "cpp_test_files": 2,
+      "review_status": "initial_source_comparison",
+      "tracking_item": "A11-02",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-startup-source",
+      "files": 8,
+      "bytes": 33284,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-status-source",
+      "files": 8,
+      "bytes": 23894,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-thread-domain-source",
+      "files": 19,
+      "bytes": 196077,
+      "current_snapshot_sources": 12,
+      "cpp_test_files": 3,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-thread-native-source",
+      "files": 10,
+      "bytes": 35715,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-thread-source",
+      "files": 8,
+      "bytes": 31971,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-timestamp-source",
+      "files": 16,
+      "bytes": 287396,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-token-source",
+      "files": 8,
+      "bytes": 40793,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-type-recovery",
+      "files": 4,
+      "bytes": 325007,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-unknown-message-source",
+      "files": 3,
+      "bytes": 194657,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-vcrt-api-source",
+      "files": 9,
+      "bytes": 34625,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-vcrt-bridge-source",
+      "files": 13,
+      "bytes": 45062,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-vcrt-ptd-source",
+      "files": 9,
+      "bytes": 37629,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "reference_only_private_crt_not_adoptable",
+      "tracking_item": "A11-08",
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-windows-source",
+      "files": 6,
+      "bytes": 18034,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-worker-handoff-source",
+      "files": 12,
+      "bytes": 201977,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 2,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-xml-reader-source",
+      "files": 10,
+      "bytes": 172846,
+      "current_snapshot_sources": 4,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "anadius-xml-source",
+      "files": 9,
+      "bytes": 43903,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "delivery",
+      "files": 8,
+      "bytes": 627142,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "dll-critical-path",
+      "files": 10,
+      "bytes": 83543,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "dll-integration-audit",
+      "files": 168,
+      "bytes": 18598470,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "dll-link-gate-source",
+      "files": 144,
+      "bytes": 1898479,
+      "current_snapshot_sources": 2,
+      "cpp_test_files": 0,
+      "review_status": "supplied_blocker_review",
+      "tracking_item": "A11-01",
+      "implementation_imported": false
+    },
+    {
+      "module": "hook-engine-source",
+      "files": 43,
+      "bytes": 1789454,
+      "current_snapshot_sources": 23,
+      "cpp_test_files": 3,
+      "review_status": "pending_source_comparison",
+      "tracking_item": "A11-07",
+      "implementation_imported": false
+    },
+    {
+      "module": "host-compatibility",
+      "files": 5,
+      "bytes": 366091,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "mac-symbol-comparison",
+      "files": 3,
+      "bytes": 11544217,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "preloader-analysis",
+      "files": 8,
+      "bytes": 911738,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "preloader-native-source",
+      "files": 9,
+      "bytes": 42191,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "preloader-source",
+      "files": 7,
+      "bytes": 40728,
+      "current_snapshot_sources": 3,
+      "cpp_test_files": 1,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "reconstruction-inventory",
+      "files": 22,
+      "bytes": 10344452,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "source-workspace",
+      "files": 891,
+      "bytes": 623601432,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "integrity_and_supplied_build_record_review",
+      "tracking_item": "A11-00",
+      "implementation_imported": false
+    },
+    {
+      "module": "version-build-verification",
+      "files": 5,
+      "bytes": 1069232,
+      "current_snapshot_sources": 0,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    },
+    {
+      "module": "version-rebuild",
+      "files": 15,
+      "bytes": 576912,
+      "current_snapshot_sources": 1,
+      "cpp_test_files": 0,
+      "review_status": "not_reviewed",
+      "tracking_item": null,
+      "implementation_imported": false
+    }
+  ]
+}

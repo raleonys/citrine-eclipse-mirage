@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Establish a hash-pinned review tracker for the owner's eight-part reconstruction archive 11, with all 4,266 file identities, module triage and a prioritized test-transfer ledger. Independently verify package/source/build-artifact consistency; keep supplied test claims and the blocked donor production DLL link distinct from current product acceptance. No donor implementation or binary is installed.
+
 - Make the native CreateProcessA argument-forwarding fixture use explicit caller buffers for pointer identity, removing its dependence on string-literal pooling in MSVC Debug while retaining all ten argument assertions. Production callbacks and connect behavior are unchanged; fresh native Debug/Release validation remains pending.
 
 - Guard native connect address inspection with a bounded readable snapshot, forwarding malformed addresses to Winsock with their original pointer/length and error behavior. Preserve exact loopback redirection, add portable snapshot/no-listener checks, and register focused Windows Debug/Release callback and real Winsock equivalence coverage; native validation remains pending.
