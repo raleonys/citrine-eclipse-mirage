@@ -1,0 +1,122 @@
+{
+  "schema": "event-queue.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x18002c620",
+      "pseudo_evidence": "ev_0e415284624e38d46c3199e2803819e3710cab686ae0325f3d0446636fa42c9d",
+      "assembly_evidence": "ev_f3d62ed2c858e85fd60711534757a15f5b1c757ed963ea527e961154296f1cd8"
+    },
+    {
+      "address": "0x18002c400",
+      "pseudo_evidence": "ev_8a31862931ad4a3cf8f80e4584226c396cdf07e3d33f8c2981f44e90db73bcd0",
+      "assembly_evidence": "ev_992d7a1ed7c4d433e484c79367b7dd1f74c462ca9b896b914dd622e7e16a5d9a"
+    },
+    {
+      "address": "0x180034660",
+      "pseudo_evidence": "ev_a447821546f363a4126e95ca66d6841d683859f2b0b981752b0fccdc88ccc51e",
+      "assembly_evidence": "ev_b088feaa7dad5f8accdad214e7ee10f829380ff3efbe8a693e5e3897af32624a"
+    },
+    {
+      "address": "0x180026670",
+      "pseudo_evidence": "ev_3d6aa3960069fd2dc5266edc94873bd68670d91db15a6be056e5ebe2cd802224",
+      "assembly_evidence": "ev_c82cd695a879356cda7f2d9c3a22053f0bdb56fe12a828093c27c41a31cd7e32"
+    },
+    {
+      "address": "0x180009eb0",
+      "pseudo_evidence": "ev_f67735e2b612684e0244695b1a0f40290b2f78851c8f9840ca9495121e3e2d83",
+      "assembly_evidence": "ev_259f1a5cdb8c805a3e600239e02920086e76456c0ff5fea954f866d0b28e9777"
+    },
+    {
+      "address": "0x180030010",
+      "pseudo_evidence": "ev_8e0c6e33949acd640bbdc56b56ceea86f8bb373eca849ee8c6a34d8a0ac1b175",
+      "assembly_evidence": "ev_62f5fc49da4ec38f00325c7e0b857c87556da27030afd17618aec1e4238cb16c"
+    },
+    {
+      "address": "0x180032b10",
+      "pseudo_evidence": "ev_91196662eb3fd450e8c602b238d0876b7596738c737f63ce4707318feab10bc8",
+      "assembly_evidence": "ev_4c836ad1a44251a54bc1e32b8ebf17ba7b0256f3e8ba7e76205239331b70900f"
+    },
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "queue.hpp": "b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d",
+    "queue.cpp": "88da967fa48cdf5d2a5c99b50aa50e479fdd0011712ede86b6c53c344c9e69d8",
+    "adapters.hpp": "2da19cd733b237ab75a136289b9b93816d58b3b7d0573313c6091af50a327f52",
+    "adapters.cpp": "36a4911d3c17f73dd6435305c20b879052e31c1bb05c05aa39b448fdf609dcc5",
+    "queue_tests.cpp": "163a33b99e8a67d0b266634387855346ab8ceca813a2b0d6179fc3197b1ff84c",
+    "integration_tests.cpp": "255d7a94c53c9913293db03c34437bbae5e9aaef0fee5997a04f4f10264553f9",
+    "build.ps1": "84a06f882142dc44f6e777ac8901a393832916914b895fe60aaf0cb049ecc5bb",
+    "CMakeLists.txt": "8b437cef127aaa9bcb1a6118e8a0b067b1d24819af8e9e6304de0a0f647cb85b",
+    "README.md": "c7265816f0e9a05f690ea0c245b593d7870421ccec053717c59f6e6d386682bd"
+  },
+  "support_hashes": {
+    "evidence.pseudo.c.txt": "ae194da5c32434fb32b015961c62a180ed182659c365444876ef07fa47129944",
+    "evidence.asm.txt": "ad0a9b61154af78402d75f3809f9148b2b998304e94094c9d5d283a30fcd0a3b",
+    "flow-audit.md": "b4c6d1bf9586d203ed0e07dcdd9fafd62c610067309484d4d3096b1e4678b69f",
+    "flow-audit.json": "4e04d7e0a216408c24d82787a2c6587860eeb1b2c5470ea779fca882fe742a8f",
+    "review.md": "b5b5f96b94a3891e263209d4aab2eedd6fa909a15aa065c6ad8e7fd528a519fd",
+    "review.json": "f48861fb7741870e7bf792afa79ef985fa6f05e609a4a9ef4bc22b106810bd9c",
+    "rea-session.json": "38b78f49875dc6e65f179895fb37ccb39c6c45fcaf41acfc23dfa75e3d67a997"
+  },
+  "normal_source_procedures_added": [
+    "0x18002c620",
+    "0x18002c400"
+  ],
+  "new_composition": "ContentQueue/IgoQueue/MessageQueue over one Context, not separate original procedures",
+  "getter_scope": "Signed epoch/header/recheck/construct-or-seed/ignored-atexit/footer/reference return; native construction internals remain mandatory providers",
+  "claims": [
+    {
+      "addresses": [
+        "0x18002c620",
+        "0x18002c400"
+      ],
+      "finding": "Two independent guards; signed TLS epoch comparison; header recheck; flags2/seed copy; atexit result ignored; footer"
+    },
+    {
+      "addresses": [
+        "0x180032b75",
+        "0x180032ba0",
+        "0x180032c10"
+      ],
+      "finding": "Cold IGO mutex first, initialDOWN then explicitDOWN"
+    },
+    {
+      "addresses": [
+        "0x180030778",
+        "0x18003078b",
+        "0x1800307cd"
+      ],
+      "finding": "Cold grant mutex first, initialDOWN then achievementevent under existing locks"
+    },
+    {
+      "addresses": [
+        "0x180034223",
+        "0x1800342f4",
+        "0x180034307",
+        "0x1800343c2",
+        "0x1800344bf",
+        "0x180034573"
+      ],
+      "finding": "Encrypted response success gates lazy queue access beforemutex; at mostoneevent; falseeventencrypt stillpops; caller-dependent cleanup registration order"
+    }
+  ],
+  "independent_production_review": "PASS; review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "selected_compatibility": "OwnedStorage std::deque/string/atomic count; not native ring-map/allocator/SSO/ABI or failure/lifecycle equivalence",
+  "unproven": [
+    "Native CRT TLS/static guard/abort/footer/concurrency internals",
+    "Native deque growth/proxy/string/allocator and partial construction failures",
+    "Actual atexit cleanup execution/global lifetime/native SEH/ABI/full DLL"
+  ]
+}

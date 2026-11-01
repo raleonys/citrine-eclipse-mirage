@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "49622f69ba331734fdd90102766c57c65d568387c28a1bcfa0c01e15c6482ddf",
+  "test_results": [
+    {
+      "module": "socket_owned_response",
+      "result": "PASS",
+      "output": "PASS: 317 socket owned response checks; actual020cb0/021900/022280/0219d0, early destruction, cache reuse, byte flags, independent copy and residual cleanup",
+      "executable_sha256": "c4357d1b6273c987e8d161b8578295a3fd19b1cae4e522ad32a3c6396567a182"
+    },
+    {
+      "module": "socket_owned_response_integration",
+      "result": "PASS",
+      "output": "PASS: 120 socket owned response integration checks; actual028d30/021420/020cb0/021900/022280/0219d0/028270/02a500/021fd0/021a80/0261d0/025a70 source; controlled string copy/constructor/completion and injected send",
+      "executable_sha256": "4b0f5215e44f87d12e854dcf67ecb28514dd034fe79d497f942697f65e564064"
+    }
+  ],
+  "core_checks": 317,
+  "integration_checks": 120,
+  "original_procedures_added": 3,
+  "execution_scope": "020cb0/022280/0219d0 normal bodies; actual021900 and N1/N2/queued-write/send/composed/finish; controlled009eb0 COPY,026670 growth,033d70/023dd0 and completion adapter; injected AsyncSendApi",
+  "not_executed_by_new_tests": [
+    "native009eb0/026670 bodies",
+    "real033d70/023dd0 provider bodies",
+    "native027a20/IOCP routing and handler scheduling",
+    "027c10/outer worker",
+    "SDK WSASend/real thread/socket/network or original DLL/game"
+  ],
+  "core_callee_injection": "Explicit isolated022280 invoker/0219d0 write callback parameters; recovered factory/slot bridge uses actual defaults",
+  "previous_local_records": "26 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x180020cb0",
+    "0x180022280",
+    "0x1800219d0"
+  ],
+  "independent_review_complete": false
+}

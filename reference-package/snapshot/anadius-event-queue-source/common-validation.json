@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_results": [
+    {
+      "module": "event_queue",
+      "result": "PASS",
+      "output": "PASS: 2054 event queue checks; synthetic guards and chosen FIFO only",
+      "executable_sha256": "9cbcf1ab90b931f89868e6e2e93fd60f7e1701cd7a9584e0aae750d5e3b1aca3"
+    },
+    {
+      "module": "event_queue_integration",
+      "result": "PASS",
+      "output": "PASS: 133 event queue integration checks; shared synthetic guards and controlled cipher only",
+      "executable_sha256": "0f49cd61d84e0fb4fea12a5faaba7348ebbf4d0efef4953d4aa69d93df9b514f"
+    }
+  ],
+  "sources": [
+    {
+      "path": "anadius-event-queue-source/adapters.cpp",
+      "sha256": "36a4911d3c17f73dd6435305c20b879052e31c1bb05c05aa39b448fdf609dcc5"
+    },
+    {
+      "path": "anadius-event-queue-source/adapters.hpp",
+      "sha256": "2da19cd733b237ab75a136289b9b93816d58b3b7d0573313c6091af50a327f52"
+    },
+    {
+      "path": "anadius-event-queue-source/integration_tests.cpp",
+      "sha256": "255d7a94c53c9913293db03c34437bbae5e9aaef0fee5997a04f4f10264553f9"
+    },
+    {
+      "path": "anadius-event-queue-source/queue_tests.cpp",
+      "sha256": "163a33b99e8a67d0b266634387855346ab8ceca813a2b0d6179fc3197b1ff84c"
+    },
+    {
+      "path": "anadius-event-queue-source/queue.cpp",
+      "sha256": "88da967fa48cdf5d2a5c99b50aa50e479fdd0011712ede86b6c53c344c9e69d8"
+    },
+    {
+      "path": "anadius-event-queue-source/queue.hpp",
+      "sha256": "b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d"
+    }
+  ],
+  "execution_scope": "02c620/02c400 normal getter control over mandatory Initialization/Storage; shared Content/IGO/Message adapters with actual recovered caller bodies and selected OwnedStorage FIFO",
+  "selected_compatibility": "Owned std::deque/string/atomic count; controlled epoch/header/footer/mutex/cleanup providers; native ring-map/SSO/allocator/guard/EH/teardown not established",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven"
+}

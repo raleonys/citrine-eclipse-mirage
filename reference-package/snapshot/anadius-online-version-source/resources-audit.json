@@ -1,0 +1,45 @@
+{
+  "schema": "owned-online-version-binding.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "CodeLease must actually retain selected module/code lifetime; metadata token alone is not module pin/address provenance proof",
+    "Binding tracks exact own load result; procedure only published after nonzero version lookup plus nonnull lease",
+    "Code stays owned through active export/free calls; code and factory captures retire outside mutex with active reservation held",
+    "Binding destruction requires no in-flight managed operation and never calls raw module FreeLibrary or foreign object destroy"
+  ],
+  "boundaries": [
+    "All4managed operations reject active overlap/reentry before lower; snapshots allowed while gate released across provider calls",
+    "Resolved address and loaded module must exactly match; raw handle/address reuse ABA and arbitrary external unload remain unsupported",
+    "Lookup/lease failure preserves loaded coremodule and no callable binding; lease bookkeeping preserves lookupLastError",
+    "Synchronous version exception preserves exact identity/error/binding, no automatic retry",
+    "NormalTRUE/FALSEfree invalidatesbeforelower andclearslogicalmodule afterreturn;FALSEisnot unloadsuccess",
+    "Unknownload/freethrowpoisons futuremanaged effects; observed module/code prefixretained, no blind retry",
+    "Original035bd0/035b60/0366f0algorithms unchanged; other6foreigncalls mandatorylower anddefault7path preserved",
+    "SelectedWindowsx64zero-inputlow32callshape is caller evidence, not full foreignformalprototype/ABI equivalence"
+  ],
+  "open": [
+    "create_online andobjectlifecycle/5virtualcalls",
+    "actualmodulepin/addressprovenance",
+    "external unload/rawhandleABA",
+    "fullforeignprototype/EH/ABI",
+    "configuration/license/legacy document",
+    "B10historicalreviewdebt",
+    "actualhooks/nativeCRT/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "efeca0c6e704eee8818d7e261e5315db9801a3d8a0c84202e278d50fcdb31eb4",
+      "after_sha256": "9dce0a0bb9ae5cf55a486e93c1d165a811183e9e457387485f025545bf76842a",
+      "reason": "Bind selected load/version resolution/call/free to exact module/code owner with LastError-safe lower callback construction"
+    },
+    {
+      "path": "anadius-online-platform-source/platform.hpp",
+      "before_sha256": "e3fc3c73340ba1bca1b2ffb8746fe311d91c9c53d58e14b0b80c7c4df47d57b1",
+      "after_sha256": "a60c1cb2d1746b1b2e86726e0695e3df309874ab4b8b1dd721570d9fd78c6f01",
+      "reason": "Optional owned typed version binding; default7lower forwards preserved, selected6remain lower; source ABI extension"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "dll-work-plan.v1",
+  "baseline": "B54",
+  "automatic_B55_factory_sequence_superseded": true,
+  "requested_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "entry_goal": "Preserve the observed synchronous application attach ordering. Deferred startup must not be silently substituted. Compiler CRT runs once; do not invoke the recovered outer CRT around it.",
+  "entry_implementation_status": "Undecided pending per-operation loader-context and aggregate lifetime mapping; this is a goal, not a claim of loader safety.",
+  "completed_now": [
+    "Separate actual missing code/bindings from behavior unknowns",
+    "Verify exact 07e0c0 tail transfer to037f70 with fresh native evidence",
+    "Implement02a830 normal body and pass42focused checks in6.922seconds; nofullbuild/link/package",
+    "Bind02a830 to actual RuntimeOwner state; focused50/42/170/96 checks pass; nofullbuild/link/package",
+    "Bind native+408 XML/+4a8 INI cells across Runtime/Persistence/Worker;42new and affected checks PASS in26.297seconds; nofullbuild/link/package",
+    "Own native+138 authentication cell and bind SourceBackend->Worker->native Handlers;four focused suites PASS in19.453seconds; nofullbuild/link/package",
+    "Own native+428 achievement mutex; bind Backend->Worker->Graph and use recoveredlock/unlock/countcell;threefocused suitesPASS in22.109seconds; nofullbuild/link/package",
+    "Implement owner-only normal037f70 host storage order after allproviders retire;60actual frees observed and5focused suitesPASS in26.594seconds; nofullbuild/link/package",
+    "Bind observed036d20 configuration/runtime defaults to actual owning Runtime with mandatory outside cells and passiveCFpathpreflight;4focused suitesPASS in24.969seconds; nofullbuild/link/package",
+    "Implement online slots28avatar/30auth andrepair031aad lostowner/size throughContent/Graph;5focused suitesPASS in28.672seconds; nofullbuild/link/package",
+    "Implement concrete Content all12Effects+completeavatar with actualOnline, memoryXML/INI/UTC andperprimitiveGraphchecks;5suitesPASS in31.75s plus3.094stest-onlyamendment;2rawfileretentionchildrenpass; nofullbuild/link/package",
+    "Implement concrete Information2Effects/perprimitiveGraphchecks andownedauth propagation throughactualWindows/LicenseFiles/Handlers;5suitesPASS aftertest-onlyGraphcasecorrection;24.406s+7.609s; nofullbuild/link/package",
+    "Implement concrete Licensing18Effects+authbound3Handlers using actualOnlinecopy_auth/SHA1/AES/status/files/UTC/paths; share retainedfileowner layer withContent;6focusedsuitesPASS in34.813s; nofullbuild/link/package",
+    "Compose actual Info/Content/Licensing on Worker against Backend-ownedOnline; stablePaths/auth+explicitattemptowner; persistentpartialoutput and failure-safeSettingsownership;6suites214/353/77/686/59/47PASS,3fresh+19verifiedobjects; nofullbuild/link/package",
+    "Select common Resources install: sameDomainNativeThreads/Remainingmemory/Worker,realRemaining/Online/BoundLibrary+3concreteGraphproviders;Libraryphasebindinglowerclosed;actualRuntime3workers/3requestsPASS55 plus14/39/274/686;3fresh+21verifiedobjects; nofullbuild/link/package",
+    "Recover033d70FH4 exactNoResponsecatch[340bf,341b1)->07be90->345da; implementtyped/semanticcatch+admittedCore/Graph/Nativecontrol; actual5requestsameSession wireNoResponse2+normal3;7suites60/841/1749/381/52/753/55PASS in30.297s;7fresh+20verifiedobjects; nofullbuild/link/package",
+    "Implement adjacent UnknownMessage07bd70 diagnostic/catch in semantic+typed033d70, checked Graph/Native/Core/Handlers; exact log2flush/ownedUI/currentResponse; same-session6requests3responses;7suites65/862/1816/479/58/753/55PASS;7fresh+20verifiedobjects then27reused; nofullbuild/link/package",
+    "Add owning install_host paired concreteHost/Cleanup/nativeResolver/exactBackendoriginals/sameDomainContext+publication; actualResourcesRuntime3workers+foreigncallback+externaldrainretry;5groups89/184/16/24/42PASS,13fresh+27verifiedobjects then40reused; newunitregistered; nofullbuild/link/package",
+    "Bind callback-first owning SourceStop: sealnewcallbacks→externalcancellationevenwhileactive→memoizedtrue+active-drainrecheck; stickyunknown/reentry+LastError; actualRuntimecachedApplicationfalse/stopretry/cleanupretention;4groups17/95/274/42PASS15.219s,2fresh+39verifiedobjects; nofullbuild/link/package",
+    "Verify9freshREAstaticrecords/65bytes+3retainedctors+independentPEtailmapping; bindfreshcallback3sets/lengths16,28/connect0+licenseattempt0/block0; atomicnooverwrite;actualforeignIPv4/6andlicensingfirst/cache/block;4groups16/97/58/30PASS15.688s,1fresh+41verifiedobjects; nofullbuild/link/package",
+    "VerifyoutsideRuntime3freshREA/128initializedvirtualzerobytes+001010/04a824retainedcode+independentPEQPFimport; addfreshoutsidefactory+combinedobservedowningRuntime; actual3workerResourcesusesfactory;4groups55/98/274/10201PASS11.703s,1fresh+42verifiedobjects; nofullbuild/link/package",
+    "Verifya1130file-backedffffffff=-1/fresh2REA+signedQueryImagebranch; selectWorkerfreshstateinsteadmanual0; actual8requestsmallavatarfail/retry/skip/upgrade3copies+savedlogs0/2;4groups25/119/1034/214PASS15.297s,1fresh+43verifiedobjects; nofullbuild/link/package",
+    "SelectconcretenativekeyConfiguration+CompilerConsole withcompletepreflight/passive2providercommit; actualRuntime3workers8requests nowFilePass/parser/hash/PNG/XML/INI/sharedPaths/console3reopens;4groups136/170/96/53PASS12.281s aftertestfixtureexpectationfixes;3fresh+44verifiedthen47reusedobjects; nofullbuild/link/package",
+    "Addselectedexact-baseWin32module-referenceCodeLease;allocatebeforeacquire/sharedaliasrelease/LastError/backing/failstop;actualOWNfixtureDLLretention/unload+Bindingobjectlifecycle;actualResourcesselectsprovider;3groups39/138/77PASS11.141s;1fresh+47verifiedobjects; nofullcommonbuild/productionlink/package",
+    "AddexplicitpermanentcompilerabortErrorsfornative+Bootstrap;alignedstaticplacementstorage/noautomaticdestructor/stabletypedbases/LastError;actualResourcesselectsboth;actualContext+RuntimeOwnerretirement/12isolatedterminalcachedpostclosethrowduplicateandordinaryatexit;2groups30/138PASS8.735s;1fresh+48verifiedobjects; nofullcommonbuild/productionlink/package",
+    "AddowninginitiallocaleDomainfactorywith21SDKpreflight/explicitpolicy/singleuse/opaquePTDidentity+backingretention;actualResourcesselectsroot;actualPTD/memory/initFLScloseretries/aliasretirement;3groups113/138/101PASS8.843s after2testfixturefailures;1fresh+49verifiedthen50reusedidenticalproductionobjects; nofullcommonbuild/productionlink/package",
+    "Adduniqueownedhookengine+sameAPIcodeownerselector/actualcleanupstatusANDexternalproofpostcheck;actualResourcesfaileduninitretainsContext/explicitknownrepair/noreplayedcleanup;reviewfixorderedconstructor+borrowingfactory3allocationprefixes+Retiring;3groups36/141/184PASS12.11s,2fresh+50verifiedobjects;V1compilefailureandV2V3limitedPASSretained; norealhooks/fullcommonbuild/productionlink/package",
+    "Auditloaderperoperation/primaryWindowsdocs:038970createsdetachedworkerswithoutjoin,main035850truebypasseswait; addcooperativeBOOLWINAPIcontextshutdownRuntimeclose->destruct->Domainclosewithretainedretries/lockfreeboundedreceipt;3groups13/142/274PASS10.828s,1fresh+52verifiedobjects; noexports/loaderhook/timingchange/fullbuild/link/package"
+  ],
+  "next_native_code_target": {
+    "scope": "Resolve production image startup/unload contract using loader-context-map: supported synchronous attach profile, export/context/mapped-code ownership for cooperative pre-unload, and failed-attach/process-termination/CRT thunk policy. Actual unregistered source/SDK/foreign cancellation/completion still requires real producer evidence.",
+    "validation": "Prioritize actual image integration or a concrete missing completion path. Do not count callback/test totals as completed DLL or add generic resource factories, fake successful loader hooks, unchanged failed links or silent deferred startup.",
+    "closed_before_this_target": [
+      "actual source resource/host/worker/initialDomain/ownedEngine assembly",
+      "same-engine cleanup status and external proof guard",
+      "cooperative managed Runtime retirement then Domain pre-unload callback",
+      "per-operation source/Windows loader constraint map"
+    ]
+  },
+  "parallel_critical_question": "Production startup/unload policy and concrete external/CRT/image lifetime proof; cooperative callback implemented but not PE/export/loader wired.",
+  "validation_policy": {
+    "full_build_on_every_step": false,
+    "full_link_on_every_step": false,
+    "repackage_on_every_step": false,
+    "development_checks": "Only changed translation units and dependency consumers, plus focused tests; rebuild affected consumers for header/ABI changes. Do not reuse stale binary interfaces.",
+    "full_regression_triggers": [
+      "A coherent production integration milestone",
+      "A discovered regression affecting broader modules"
+    ],
+    "link_triggers": [
+      "Production loader hook definitions or actual entry assembly changes",
+      "A change to required link dependencies"
+    ],
+    "package_trigger": "Reviewed milestone with an actual useful deliverable",
+    "progress_metric": "Concrete missing algorithm or production dependency closed; test counts do not measure DLL completion."
+  },
+  "do_not_count_as_completion": [
+    "Repeated unchanged failed link",
+    "More test assertions or report files",
+    "Replacing undefined hooks with null/success stubs"
+  ],
+  "current_production_sources_changed": true,
+  "last_code_result": {
+    "status": "SELECTED_COOPERATIVE_PRE_UNLOAD_CALLBACK_PASS",
+    "evidence": "outputs/anadius-pre-unload-source/evidence.json"
+  },
+  "delivery_milestone_pending": "Fresh full common-build and current-source ZIP delivery complete; production DLL/image integration remains blocked by missing loader contracts.",
+  "delivery_status": {
+    "updated_at": "2026-11-01T18:35:16.689528+00:00",
+    "scope": "Fresh clean full common build + current sources + whole-archive blocked DLL link diagnostic",
+    "full_common_build_run": true,
+    "objects": 296,
+    "normal_groups": 356,
+    "framework_terminal_cases": 19,
+    "production_DLL_link_attempted": true,
+    "production_DLL_link_succeeded": false,
+    "full_build_proof": "source-workspace/full-build-verification.json",
+    "link_proof": "dll-link-gate-source/current-full-link.json"
+  }
+}

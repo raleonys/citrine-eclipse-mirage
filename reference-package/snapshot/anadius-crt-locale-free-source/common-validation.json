@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locale_free",
+    "result": "PASS",
+    "output": "locale_free: 17297 checks PASS",
+    "executable_sha256": "c9c432b8a75121ea7178723197f38a4485100aa9766660d442d5515fad55f38f"
+  },
+  "execution_scope": "Six nested locale/lconv/ctype/time/category cleanup bodies; bounded synthetic memory/free/default identity providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-locale-free-source/locale_free_tests.cpp",
+      "sha256": "bfd4833f44839bdf38b20fcaaa006bd0f6926789bb3751c3cdf9ca7dcb5f63f0"
+    },
+    {
+      "path": "anadius-crt-locale-free-source/locale_free.cpp",
+      "sha256": "e00c5504c2335087319fd21eb04654653aa87687b4c805b403d72b3d6134c931"
+    },
+    {
+      "path": "anadius-crt-locale-free-source/locale_free.hpp",
+      "sha256": "5c591a2967d1d8045468cfd46e17a7c95fb89338b6f6c919bfd4b4d99f351327"
+    }
+  ]
+}

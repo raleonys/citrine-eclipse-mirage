@@ -1,0 +1,80 @@
+/* 0x180021b00 FUN_180021b00; Evidence ev_a149b71384626f27cb42ef4a0d78bd5f24f458b6ae8a30390ee1056ed43a8672 */
+
+void FUN_180021b00(longlong param_1,SOCKET *param_2,PVOID param_3,ULONG_PTR param_4,
+                  ULONG_PTR *param_5,longlong param_6)
+
+{
+  int *piVar1;
+  ULONG_PTR UVar2;
+  longlong lVar3;
+  ULONG_PTR *pUVar4;
+  BOOL BVar5;
+  DWORD DVar6;
+  LPOVERLAPPED lpOverlapped;
+  SOCKET SVar7;
+  DWORD local_58 [2];
+  undefined **local_50;
+  LPOVERLAPPED local_38;
+  
+  pUVar4 = param_5;
+  lpOverlapped = (LPOVERLAPPED)FUN_1800269b0(0x1d8);
+  SVar7 = param_2[1];
+  UVar2 = *param_2;
+  lpOverlapped[1].Internal = 0;
+  lpOverlapped[1].InternalHigh = (ULONG_PTR)FUN_1800271a0;
+  lpOverlapped->Internal = 0;
+  lpOverlapped->InternalHigh = 0;
+  (lpOverlapped->u).Pointer = (PVOID)0x0;
+  lpOverlapped->hEvent = (HANDLE)0x0;
+  lpOverlapped[1].u.s.Offset = 0;
+  lpOverlapped[1].hEvent = (HANDLE)(param_1 + 0x28);
+  lpOverlapped[2].Internal = UVar2;
+  lpOverlapped[2].InternalHigh = 0xffffffffffffffff;
+  lpOverlapped[2].u.Pointer = param_3;
+  *(int *)&lpOverlapped[2].hEvent = (int)param_2[7];
+  lpOverlapped[3].Internal = param_4;
+  *(byte *)&lpOverlapped[0xc].InternalHigh = (byte)SVar7 >> 2 & 1;
+  lpOverlapped[0xc].u.Pointer = (PVOID)0x0;
+  lpOverlapped[0xc].hEvent = (HANDLE)0x0;
+  lpOverlapped[0xd].Internal = *pUVar4;
+  FUN_180023dd0((longlong)&lpOverlapped[0xd].InternalHigh,0,0,param_6);
+  SVar7 = param_2[7];
+  lVar3 = *(longlong *)((longlong)param_3 + 8);
+  LOCK();
+  piVar1 = (int *)(*(longlong *)(param_1 + 0x30) + 0x30);
+  *piVar1 = *piVar1 + 1;
+  UNLOCK();
+  local_38 = lpOverlapped;
+  if (*param_2 == 0xffffffffffffffff) {
+    FUN_180028b50(*(longlong *)(param_1 + 0x30),lpOverlapped,0x2719,0);
+  }
+  else if (lVar3 == -1) {
+    local_58[0] = 0;
+    local_50 = &PTR_vftable_1800a10f8;
+    SVar7 = FUN_180029df0((ulonglong)(uint)SVar7,1,6,(undefined8 *)local_58);
+    FUN_180029590(&lpOverlapped[2].InternalHigh);
+    lpOverlapped[2].InternalHigh = SVar7;
+    if (SVar7 == 0xffffffffffffffff) {
+      FUN_180028ab0(*(longlong *)(param_1 + 0x30),lpOverlapped,local_58,0);
+    }
+    else {
+      param_5._0_4_ = 0;
+      BVar5 = AcceptEx(*param_2,SVar7,&lpOverlapped[3].InternalHigh,0,0x90,0x90,(LPDWORD)&param_5,
+                       lpOverlapped);
+      DVar6 = WSAGetLastError();
+      if ((BVar5 == 0) && (DVar6 != 0x3e5)) {
+        FUN_180028b50(*(longlong *)(param_1 + 0x30),lpOverlapped,DVar6,0);
+      }
+      else {
+        FUN_180028c00(*(longlong *)(param_1 + 0x30),lpOverlapped);
+      }
+    }
+  }
+  else {
+    FUN_180028b50(*(longlong *)(param_1 + 0x30),lpOverlapped,1,0);
+  }
+  return;
+}
+
+
+

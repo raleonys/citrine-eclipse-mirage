@@ -1,0 +1,63 @@
+{
+  "schema": "callback-admission.resources-audit.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Owner admission member constructed before Context and destroyed after Binding/Context/effects",
+    "Context pointer remains immutable while binding is published",
+    "Permanent Errors outlive all future native entry attempts",
+    "Policy/ApplicationMemory/domain lease and streambuf ownership retain B16 contracts"
+  ],
+  "control": [
+    "factory create/consume/publish/close on same controller",
+    "Controller gate is held only for state bookkeeping",
+    "all ten native entry lambdas begin after admission",
+    "success/unwind leave occurs before binding Lease release",
+    "foreign/native reentry/stopped attempts fail through permanent Errors; no fake successful API result"
+  ],
+  "failure_prefix": [
+    "false/throw proof leaves previous gate state unchanged",
+    "if a previous successful proof stopped admission but final native close remained busy, later false proof does not reopen it",
+    "active admission makes stop return false; later quiescent retry may stop",
+    "source workerjoin/exitdrain/disabledhooks prefixes and failed exit registration remain unchanged"
+  ],
+  "open": [
+    "foreign host-thread PTD admission",
+    "general concurrent callback success",
+    "shared state used by other workers",
+    "direct core/effect calls",
+    "external streambuf/stream users",
+    "actual hooks and external quiescence",
+    "7online foreign calls",
+    "configuration/license/legacy document",
+    "B10 independent review debt",
+    "native CRT/ABI/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-native-context-source/context.cpp",
+      "before_sha256": "63aa2ced7084c6ade0e6c27d830b42b812f835682ed224c019c316424591724e",
+      "after_sha256": "b1e57dd7c7f34b51939be467514e3b2c7242353b9c716356c6f345f8875e8fa0",
+      "reason": "Carry unique Admission through shared one-shot factory State into Owner and Context; no publication or stop side effects at construction"
+    },
+    {
+      "path": "anadius-native-context-source/context.hpp",
+      "before_sha256": "bc1f880669c46aca71e368385c33ff60b8afcb9630237b6576344345f4983b28",
+      "after_sha256": "fe2745d872c4c9758c6a86258a9b5fff4dd192df12db0cf4f50d3cc2c534fdc9",
+      "reason": "Own optional stable Admission before Context and expose defaulted constructor/factory source extension"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.cpp",
+      "before_sha256": "06521178fbe3a611e8af29706bf4c1d07974e299c0f044a382656330ef6c7d52",
+      "after_sha256": "e3da2e8c5aca2d0d768adb48238db45dc4f71c232fb281a8ebdb9b96c22de1e8",
+      "reason": "Enter admission after binding lease and before all callback body accesses; release admission before binding lease on success and unwind; preserve LastError"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "before_sha256": "ee943bb8e5aef8eeedd7ccd1747457575766f24cf0dc85e792668b166b0f455a",
+      "after_sha256": "1fa193f9161cc5621aea4520be809ff8983d260ea8190a352500eb4bf4cb43a2",
+      "reason": "Append optional source Admission interface/pointer to Context; SDK entry types unchanged; full Context consumer rebuild required"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

@@ -1,0 +1,329 @@
+{
+  "schema": "online-factory-object-lifetime.evidence.v1",
+  "source_package": "B26",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_function_records": [
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180035b60",
+      "evidence_id": "ev_f2254ea855134db4962d20dde46b3686ce230f94b3578001b0c25fc3400e4387",
+      "line": 43123,
+      "normalized_record_sha256": "0eb1d90211a44efe9391717039e8226d29f2336773a9cea308a9ba33beffe99a"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180035bd0",
+      "evidence_id": "ev_01da19447a43bf9f2a4a248ddc7f93acc033773f2f55e70da7f7fc84fd393c99",
+      "line": 43146,
+      "normalized_record_sha256": "7e2a6e9652d3b88fe48594e419b56b1bfb96eb21ac8d493314cb5951fcd2f875"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800366f0",
+      "evidence_id": "ev_a10737dd11c06584a1d8bfb25cfe4eb94945bdc1d2b23aca89b5fddc0066d5f4",
+      "line": 43611,
+      "normalized_record_sha256": "eefeec991a6d9fa09792995be79654ca0fb3edb04a5c971917ab347411786ad6"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800450a0",
+      "evidence_id": "ev_95e8b1d3b9dc5cf9d10bb5a22fe226f8f0559f0a01cc335ba051ffff8d5620df",
+      "line": 55035,
+      "normalized_record_sha256": "b86c0c15c15acde229b9ee0c3effb527a6a18e1df67f1b26f77e09a0e7123ff1"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800450d0",
+      "evidence_id": "ev_c3841d77e553245d8f5dd6e61b0a3e573f5c3c13be4ac1bf1bf0121deaefc275",
+      "line": 55049,
+      "normalized_record_sha256": "d05c67b309b5538d4a8d786ea5e4613c84cdf6135608a101583adae38f4e7f60"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180035b60",
+      "evidence_id": "ev_d120db083716acb73a3aab91edb94f7ae2910ca33f5cd2a7baa1d1e72b62a030",
+      "line": 54561,
+      "normalized_record_sha256": "e73e8ba8e4cb82aae5264b43c15c4a9648cbbd5e4a99b17e21145198dbce6e08"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180035bd0",
+      "evidence_id": "ev_42d4b70085bbc786efef3d59635d848e062d1ecab79b8bd4e827ea88833cf586",
+      "line": 54584,
+      "normalized_record_sha256": "62b96ecacfa40f72e0189b631d8c4e504b969358047d75169196817b428ff0fb"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800366f0",
+      "evidence_id": "ev_1fcea4b34ce7b7c2ba51c2e17ba2693f4d7fdb691fc078637e4d3b78e8cf139f",
+      "line": 55247,
+      "normalized_record_sha256": "eadd68f1b621dfb33b4577a9b4b8410ff4310f99a935b960ac21d44ce13e7693"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800450a0",
+      "evidence_id": "ev_9a546f3826f323b9e15c5954c944e3051bbfe1114897967b4c21eb6b0b188df0",
+      "line": 71206,
+      "normalized_record_sha256": "5561c6e4b8647e3bedd0a1a516fa5b7c047e802617043a30c11205b20a512db4"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800450d0",
+      "evidence_id": "ev_65e0e4834d2c1c0ea7b6859e2e77c457e679e94556ac682b9c9c05ab9c74540e",
+      "line": 71219,
+      "normalized_record_sha256": "374e801546fd9135d1fe9e5609437c134665c9a11c8e6a2b66ceb7731fd25ab1"
+    }
+  ],
+  "foreign_call_inventory": [
+    {
+      "name": "version_check",
+      "observed_shape": "No explicit input preparation; CALL RAX then CMP EAX,2",
+      "status": "SELECTED_TYPED_SOURCE_BINDING",
+      "anchors": [
+        {
+          "address": "0x180035e8c",
+          "line": 54756,
+          "instruction": "0x180035e8c: CALL RAX"
+        },
+        {
+          "address": "0x180035e8e",
+          "line": 54757,
+          "instruction": "0x180035e8e: CMP EAX, 0x2"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "create_online",
+      "observed_shape": "RCX local UTF16 cookie pointer; RAX object",
+      "status": "SELECTED_TYPED_SOURCE_BINDING",
+      "anchors": [
+        {
+          "address": "0x180035fac",
+          "line": 54814,
+          "instruction": "0x180035fac: CALL RBX"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "status_virtual_08",
+      "observed_shape": "RCX object; vptr+08; low32 status",
+      "status": "MANDATORY_LOWER_WITH_ADOPTED_OBJECT_GUARD",
+      "anchors": [
+        {
+          "address": "0x180036002",
+          "line": 54834,
+          "instruction": "0x180036002: CALL qword ptr [RAX + 0x8]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "username_virtual_10",
+      "observed_shape": "RCX object; vptr+10; RAX NUL byte string",
+      "status": "MANDATORY_LOWER_WITH_ADOPTED_OBJECT_GUARD",
+      "anchors": [
+        {
+          "address": "0x180036039",
+          "line": 54845,
+          "instruction": "0x180036039: CALL qword ptr [RAX + 0x10]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "persona_virtual_18",
+      "observed_shape": "RCX object; vptr+18; RAX NUL byte string",
+      "status": "MANDATORY_LOWER_WITH_ADOPTED_OBJECT_GUARD",
+      "anchors": [
+        {
+          "address": "0x18003606c",
+          "line": 54857,
+          "instruction": "0x18003606c: CALL qword ptr [RAX + 0x18]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "user_id_virtual_20",
+      "observed_shape": "RCX object; vptr+20; RAX NUL byte string",
+      "status": "MANDATORY_LOWER_WITH_ADOPTED_OBJECT_GUARD",
+      "anchors": [
+        {
+          "address": "0x180036098",
+          "line": 54868,
+          "instruction": "0x180036098: CALL qword ptr [RAX + 0x20]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "destroy_virtual_00",
+      "observed_shape": "RCX object; vptr+00; no added EDX flags; result unused",
+      "status": "SELECTED_TYPED_SOURCE_BINDING",
+      "anchors": [
+        {
+          "address": "0x180035b8c",
+          "line": 54573,
+          "instruction": "0x180035b8c: CALL qword ptr [RAX]"
+        },
+        {
+          "address": "0x180036703",
+          "line": 55253,
+          "instruction": "0x180036703: CALL qword ptr [RAX]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    }
+  ],
+  "factory_cookie_destroy_anchors": [
+    {
+      "address": "0x180035f9e",
+      "line": 54811,
+      "instruction": "0x180035f9e: LEA RCX, [RBP + -0x39]"
+    },
+    {
+      "address": "0x180035fac",
+      "line": 54814,
+      "instruction": "0x180035fac: CALL RBX"
+    },
+    {
+      "address": "0x180035fb1",
+      "line": 54816,
+      "instruction": "0x180035fb1: MOV qword ptr [0x1800a3a88], RAX"
+    },
+    {
+      "address": "0x180035ff3",
+      "line": 54831,
+      "instruction": "0x180035ff3: CALL 0x18004b0f8"
+    },
+    {
+      "address": "0x180036002",
+      "line": 54834,
+      "instruction": "0x180036002: CALL qword ptr [RAX + 0x8]"
+    },
+    {
+      "address": "0x1800366f4",
+      "line": 55249,
+      "instruction": "0x1800366f4: MOV RCX, qword ptr [0x1800a3a88]"
+    },
+    {
+      "address": "0x180036700",
+      "line": 55252,
+      "instruction": "0x180036700: MOV RAX, qword ptr [RCX]"
+    },
+    {
+      "address": "0x180036703",
+      "line": 55253,
+      "instruction": "0x180036703: CALL qword ptr [RAX]"
+    }
+  ],
+  "asm_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "prior_evidence_path": "outputs/anadius-online-version-source/source-evidence.json",
+  "prior_evidence_sha256": "9681cb83524f39f96f3a3177921750ccc5d48a35fa253b74972de4754370a647",
+  "unchanged_core_source_hashes": {
+    "anadius-online-source/online.hpp": "51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b",
+    "anadius-online-source/recovered_effects.cpp": "07ca212e276421f44ec0d3c109ff0a23b35c01266d9a97349b61396944729ef3"
+  },
+  "cookie_lifetime_correction": {
+    "path": "anadius-online-source/online.cpp",
+    "before_sha256": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c",
+    "after_sha256": "af99d95b0e88ea2cacd93a4f01237a8d2362cb44bdc3d7b2961c91c5fc9b1ca5",
+    "order": "factory -> commit global object35fb1 -> release temporary cookie35ff3 -> null/status36002",
+    "negative_record": "cookie-negative-control.json",
+    "negative_record_sha256": "959a6638f30a2bad4ec1d23f8a0c86ec7ed82ea72a95861c3ae2e5b19a2c2a12",
+    "negative_result": "EXPECTED_FAILURE_ON_OLD_COOKIE_SCOPE, cleanexit1 after normalcleanup, notPASS",
+    "positive": "Long2048exactfactorybuffer deallocatedonce after objectcommit; firststatus seesrelease+commit withfactoryLastError preserved; no freedbyte read",
+    "original_interrupted_common_build": "work/b26-common-build-interrupted.log, interrupted exit1 before lifetime correction; not authoritative PASS"
+  },
+  "new_original_data_bytes_read": 0,
+  "new_native_decompilation": false,
+  "retained_session": {
+    "path": "outputs/anadius-callback-provider-source/rea-session.json",
+    "sha256": "20a203aaa2cef97f49fabe365e38c2d3b4c6ae4fcaaf0614f3da95f40205b83f",
+    "scope": "B22 REA6.5.0/Ghidra12.1.4 session retained; B26 source-only, no target open/new original query"
+  },
+  "source_extensions": [
+    "SAME B25Binding gate/module/code state now owns exact factory export, adopted object and unknown-object hold",
+    "Factory uses observed UTF16pointerRCX/ObjectRAX shape; destroy bytecopies objectvptr/slot0 and calls void(this) only; readableadoptedobject/table/callablecode required",
+    "Factory/destroy mark unknown before ownership mutation; normal object/null commit before reservation ends; unknownthrow/invalidvptr poison retainsmodule/object/code",
+    "Live/unknown object blocks version/factory rebind and modulefree BEFORElower; unresolvedlastowner failstops after releasing gate and before dropping owners",
+    "Four queryroutes staymandatorylower but use exact-object/same-module lifetime guard; borrowed strings require caller serialization until copy",
+    "Factory and version code owners retire outsidegate whileactive stillheld; freeTRUE/FALSE logicalzero and unknownfreethrow prefixes retained",
+    "Core035bd0temporarycookie scope corrected to retainedrelease-before-status; other recovered algorithm order preserved"
+  ],
+  "quick_results": [
+    {
+      "path": "work/b26-core-quick-results.json",
+      "sha256": "bc3f8ac047a3646437c158111d7b045b3bf185d988bdd8495d8de9c620518905",
+      "checks": 39,
+      "execution_by": "root core; integration author /root/b22_integration, final positive executed by root and integration author; independent reviewer hashes, no reviewer rerun"
+    },
+    {
+      "path": "work/b26-integration-quick-results.json",
+      "sha256": "70e6819272a41e073ce0863918abfa3269b60701a08294c7263f0964ac46b9dd",
+      "checks": 52,
+      "execution_by": "root core; integration author /root/b22_integration, final positive executed by root and integration author; independent reviewer hashes, no reviewer rerun"
+    }
+  ],
+  "source_hashes": {
+    "object.hpp": "c52d2f495135e30ec1e19a651517080c96c26c7920b141308292e8e800145d25",
+    "object.cpp": "917a7503768e47250f94df059b2ad98fec03a022c264aa2a0566e9ae36dfce78",
+    "object_tests.cpp": "3614ebf3bc8bc1af186afc9c5b659d6c966aedbc0331a08a32c129cf37151f5f",
+    "object_integration_tests.cpp": "25c52a421f801b75bf08d99d3f3799956b07b749bab168f5634f4950db682906",
+    "../anadius-online-platform-source/platform.cpp": "40e54887e2102763bb147c28c3ef42506bccdda89ead94636bb1e861a9e41499",
+    "../anadius-online-platform-source/platform.hpp": "82ae373e513da2be64cf3522421f699d757099e1b7f325b33fa485e828176f91",
+    "../anadius-online-source/online.cpp": "af99d95b0e88ea2cacd93a4f01237a8d2362cb44bdc3d7b2961c91c5fc9b1ca5",
+    "../anadius-online-version-source/version.cpp": "328443d0ac8d3bae0b5f12878c955087cf99a402beecf7e6879b345e16e9c7d0",
+    "../anadius-online-version-source/version.hpp": "85005c17066d7746f9f13a043f9ec098ea4f379b9461e385cdeb5d092ad72da0"
+  },
+  "prior_source_changes": [
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "9dce0a0bb9ae5cf55a486e93c1d165a811183e9e457387485f025545bf76842a",
+      "after_sha256": "40e54887e2102763bb147c28c3ef42506bccdda89ead94636bb1e861a9e41499",
+      "reason": "Route selected factory/destroy to typed shared binding, guard four remaining lower queries without altering core algorithms"
+    },
+    {
+      "path": "anadius-online-platform-source/platform.hpp",
+      "before_sha256": "a60c1cb2d1746b1b2e86726e0695e3df309874ab4b8b1dd721570d9fd78c6f01",
+      "after_sha256": "82ae373e513da2be64cf3522421f699d757099e1b7f325b33fa485e828176f91",
+      "reason": "Optional native_objects requires existing same module binding; source ABI extension, default paths preserved"
+    },
+    {
+      "path": "anadius-online-source/online.cpp",
+      "before_sha256": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c",
+      "after_sha256": "af99d95b0e88ea2cacd93a4f01237a8d2362cb44bdc3d7b2961c91c5fc9b1ca5",
+      "reason": "Match retained factory -> object commit -> cookie-copy release -> status order by narrowing temporary cookie scope"
+    },
+    {
+      "path": "anadius-online-version-source/version.cpp",
+      "before_sha256": "d41f7517c6d400527ecab8fcf70cda675823fc175019166369ee5fc686baec42",
+      "after_sha256": "328443d0ac8d3bae0b5f12878c955087cf99a402beecf7e6879b345e16e9c7d0",
+      "reason": "Retain both code owners; reject live/unknown rebind/free; release metadata lock then fail-stop before owner release"
+    },
+    {
+      "path": "anadius-online-version-source/version.hpp",
+      "before_sha256": "03f6be33f071e13a20dcaea5b5208b40197d16428d3c028c73b793e5882ee0cf",
+      "after_sha256": "85005c17066d7746f9f13a043f9ec098ea4f379b9461e385cdeb5d092ad72da0",
+      "reason": "Extend same module reservation with factory/adopted object/unknown state and guarded mandatory lower queries"
+    }
+  ],
+  "terminal_evidence": "Core181live-dtor armed state witness thenabort;182..185 andintegration221..224 exacttypedstate/prefix/owner predicates; integration destroys/readability-fault page thenPAGE_NOACCESS before retries. Genericabort239 notPASS.",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "actual_foreign_DLL_executed": false,
+  "original_execution": false,
+  "original_modification": false
+}

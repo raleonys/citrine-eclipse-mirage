@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_startup_bridge",
+    "result": "PASS",
+    "output": "PASS 1732 CRT startup/termination/environment composition checks",
+    "executable_sha256": "e350d79829f9d644799f60fe6d8d6ce1fd86b50412d20ccbe5855a900bd151b5"
+  },
+  "execution_scope": "Actual recovered Entry/VCRT/ACRT/PTD/CPU/environment/cexit/onexit/SList/support composition; rebuilt mutable termination spans, synthetic remaining providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-startup-bridge-source/startup_bridge_tests.cpp",
+      "sha256": "16ae1812b2dec40dc3d6482e4f502d162674b793e525fdaa2cf06b08d6adf3c5"
+    },
+    {
+      "path": "anadius-crt-startup-bridge-source/startup_bridge.cpp",
+      "sha256": "b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c"
+    },
+    {
+      "path": "anadius-crt-startup-bridge-source/startup_bridge.hpp",
+      "sha256": "071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19"
+    },
+    {
+      "path": "anadius-crt-startup-bridge-source/test_fixtures.hpp",
+      "sha256": "451c4824666e7a2349f0e042ede8219c7d856c1329398a7577b30768889d1a9f"
+    }
+  ]
+}

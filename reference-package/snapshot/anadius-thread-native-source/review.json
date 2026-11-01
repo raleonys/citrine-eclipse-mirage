@@ -1,0 +1,29 @@
+{
+  "reviewer": "Independent bootstrap-native agent",
+  "scope": "win32_effects.hpp/cpp and win32_tests.cpp",
+  "result": "No outstanding correctness findings",
+  "verified": [
+    "Exact SDK signatures including DECLSPEC_NORETURN pointer types",
+    "DWORD/HMODULE output cells copied without aliasing",
+    "Module output copied even on FALSE",
+    "CreateThread ID copied only on success, matching core consumption",
+    "No Context access after successful creation",
+    "Caller retains wrapper/Effects binding for pending/suspended workers"
+  ],
+  "limitations": "Static source review; native Win32 thread/module APIs not invoked; original CRT ABI equivalence unproven",
+  "composition_review": {
+    "reviewer": "Independent CRT error mapping agent",
+    "scope": "RecoveredWin32Effects and test_recovered_composition",
+    "result": "No outstanding correctness findings",
+    "method": "Static source and contract review; no additional execution",
+    "verified": [
+      "All five overrides delegate to actual recovered runtime/error bodies without substitute success",
+      "errno write performs one optional-PTD lookup; OS mapping preserves two independent lookups and DOS-before-errno ordering",
+      "uint32 policy and signed int mode preserve all 32 bits via bit_cast; HRESULT returns unchanged",
+      "Provider and state references remain borrowed; no hidden PTD/heap ownership or native CRT state created",
+      "Heap/PTD/invocation/invalid-parameter policies remain abstract and mandatory",
+      "Synthetic composition covers successful worker runtime init/uninit, cache reuse, thread failure mapping and invalid-entry errno path"
+    ],
+    "limitations": "Provider/TLS domain and lifetime consistency are explicit caller requirements; real Win32 threading, FLS/CRT lifetime and SEH ABI remain unproven"
+  }
+}

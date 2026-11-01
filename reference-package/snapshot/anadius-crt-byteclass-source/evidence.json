@@ -1,0 +1,21 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source": "Retained REA/Ghidra function evidence, no new active target",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "functions": [
+    {
+      "va": "0x18006f934",
+      "assembly_evidence": "ev_897df764d5e1c5680d926c7bca5dafd6e5d9ff44b5a2653ca581b271f015906e",
+      "pseudocode_evidence": "ev_14211fdce7a436fae722ca508f4d624934972e4e6666a1df1d1c86372c7c95b9"
+    },
+    {
+      "va": "0x18006f9a8",
+      "assembly_evidence": "ev_f2846867977ea9f41f1872ef4ce3b526805d199ddcc3b585fcc0d74fe5c8a503",
+      "pseudocode_evidence": "ev_bd47811fa73f8afa69cc8cf9ba2ce5f506cb1850390c1b48351c41b63e4333d9"
+    }
+  ],
+  "scope": "Bounded normal-flow source reconstruction and separately labeled new composition",
+  "target_execution": "none",
+  "runtime_equivalence": "not established"
+}

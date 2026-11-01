@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "config_application",
+    "result": "PASS",
+    "output": "PASS: 95 Config2 application checks; no original execution or real user CFG",
+    "executable_sha256": "44db6e4b6199d2e3fcc50830d55888a4efe7559788f6951e5b7fc4c50ca27649"
+  },
+  "execution_scope": "Actual file/parser/generalhash/helper sources;95checks;6mutable section copies and separate recordreuse,final collection order,callback and partialerrors;OSeffects controlled,own generatedCFG only;explicitnewentry notglobalstartupredirect",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-config-application-source/application_tests.cpp",
+      "sha256": "e9cbfd16d396dca7fe68174772ac7c385aa3855bbb4ec6c7bd0042c10ea917b9"
+    },
+    {
+      "path": "anadius-config-application-source/application.cpp",
+      "sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb"
+    },
+    {
+      "path": "anadius-config-application-source/application.hpp",
+      "sha256": "9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2"
+    }
+  ]
+}

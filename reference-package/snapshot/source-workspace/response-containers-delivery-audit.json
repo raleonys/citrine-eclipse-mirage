@@ -1,0 +1,66 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T13:25:31.842396+00:00",
+  "prior_package_sha256": "1c0a0d4bb37b715de8495a54f18bd911447b39d003d9820d067f9934cd1076e5",
+  "prior_source_count": 561,
+  "unchanged_prior_sources": 561,
+  "added_sources": [
+    "anadius-socket-source/response_containers.cpp",
+    "anadius-socket-source/response_containers.hpp",
+    "anadius-socket-source/response_containers_integration_tests.cpp",
+    "anadius-socket-source/response_containers_test_fixture.hpp",
+    "anadius-socket-source/response_containers_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 566,
+  "current_documents": 218,
+  "native_objects": 185,
+  "cpp_objects": 181,
+  "c_objects": 4,
+  "normal_test_groups": 183,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 56,
+  "new_checks": 1904,
+  "new_tests": [
+    {
+      "module": "socket_response_containers",
+      "result": "PASS",
+      "output": "PASS: 1556 socket response container checks; actual009eb0/026670, independent copy/NUL/alignment, pointer permutation and zero oracle, cached/live fields and terminal prefixes",
+      "executable_sha256": "7c870ded4c99e7706dd3fc0b4e8995bf50c111b39cf8f78761066b59b0234daf"
+    },
+    {
+      "module": "socket_response_containers_integration",
+      "result": "PASS",
+      "output": "PASS: 348 socket response containers integration checks; actual009eb0/026670 plus N1/N2/N3/queued-send/finish source;13-message FIFO, two map growths; controlled allocation/constructor/completion and injected send",
+      "executable_sha256": "04651fca037f2ee83e186bd2489d463da45ea19e0d086aca4fbd733cb781437d"
+    }
+  ],
+  "validation_mirror_pairs": 28,
+  "historical_module_records_preserved": 27,
+  "historical_config_references_preserved": 54,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "e3c5364cde9182f72f2f725c4d32704736a11a42743308bffb5e0b971f104edb",
+  "inventory_data_checks": 7203,
+  "normal_source_procedures_added": [
+    "0x180009eb0",
+    "0x180026670"
+  ],
+  "new_original_procedures": 2,
+  "closed_provider": "RecoveredResponseContainersApi::copy_response_009eb0 + RecoveredResponseQueueApi::grow_deque_026670",
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual009eb0/026670 plus N1/N2/N3/queued-send/composed/finish;13-message FIFO,two map growths; controlled lower allocation/byte-slot compatibility/constructor/completion and injected AsyncSendApi; no native027a20/IOCP/worker",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N5 existing033d70 message/router semantic source to caller string/state bridge; do not count existing body as new"
+}

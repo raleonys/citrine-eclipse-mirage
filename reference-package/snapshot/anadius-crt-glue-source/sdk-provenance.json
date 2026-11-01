@@ -1,0 +1,21 @@
+{
+  "kind": "Local compiler SDK headers used as primary type declarations; no remote source",
+  "files": [
+    {
+      "name": "windows.h",
+      "sha256": "e931bc163a9980e71982a522879073f41f934c3d94b423d489ee9f387093899f"
+    },
+    {
+      "name": "winnt.h",
+      "sha256": "bc318d60f2c55e8cc39bf2c207fb0fa688ac6c4e5eb8d854d7545ae9802a4321"
+    },
+    {
+      "name": "fibersapi.h",
+      "sha256": "10ac48000b0ba52a070f234350050219fdef9d76df40fd6fcefd514e1a22b19e"
+    },
+    {
+      "name": "errhandlingapi.h",
+      "sha256": "fbbc422008445e0f0977984361d9fce142330474a833bce97d051c9b7825f466"
+    }
+  ]
+}

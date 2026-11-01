@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locale_native",
+    "result": "PASS",
+    "output": "PASS 750 native locale/ref/deep-free/FLS source integration checks",
+    "executable_sha256": "873512dd32bc751d9441358d83f4f0925d76cdb859f490fc21fa39a235e9e6c9"
+  },
+  "execution_scope": "Actual recovered locale ref/free/resource/PTD/global-and-thread replacement bodies, nativeCS/typedLONG/FLS/heap and4workers;133uniqueownedblocks/18treecounterbindings, quiescent unbind before free; modern/fallbacklock routes; controlled source-offset fixture/global/default identities not original initialization/type proof, no complete runtime/ABI/SEH equivalence; zero new original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-locale-native-source/native_tests.cpp",
+      "sha256": "11e60f80eb3ec7a46f5c299053a2a9526fc48b12f126ae332a8ef653f16c40f5"
+    },
+    {
+      "path": "anadius-crt-locale-native-source/native.cpp",
+      "sha256": "6d8421431b7ef2462c8b640d25d57894b59bc97bdf512df1d0f167e05c852f10"
+    },
+    {
+      "path": "anadius-crt-locale-native-source/native.hpp",
+      "sha256": "2a8a00a85ab883f1d98d9dadf0c9159881cac4a14c3a49c16a8b3a2614c43102"
+    }
+  ]
+}

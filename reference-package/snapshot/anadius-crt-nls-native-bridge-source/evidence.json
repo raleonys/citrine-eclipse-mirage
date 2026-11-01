@@ -1,0 +1,51 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "New native SDK composition adapter; not a newly recovered original function body",
+  "recovered_function_bodies_added": 0,
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "addresses": [
+    "0x18006e210",
+    "0x18006cc30",
+    "0x18006c8fc",
+    "0x180063168",
+    "0x18006ccc8",
+    "0x18006cd58",
+    "0x1800671d4",
+    "0x1800672c0",
+    "0x1800669b0",
+    "0x18007310c",
+    "0x1800736d4",
+    "0x18006f674",
+    "0x18006f050",
+    "0x18006f0e8"
+  ],
+  "evidence_links": [
+    "../anadius-crt-nls-native-source/evidence.json",
+    "../anadius-crt-nls-dispatch-native-source/evidence.json",
+    "../anadius-crt-nls-dispatch-bridge-source/evidence.json",
+    "../anadius-crt-nls-bridge-source/evidence.json",
+    "../anadius-crt-multibyte-record-bridge-source/evidence.json"
+  ],
+  "static_evidence_reused": "Retained complete Ghidra listings and address-linked previous module evidence for the same target SHA256; no new target open or analysis",
+  "native_test_scope": "Own compiled C++ fixtures; actual Windows NLS APIs on synthetic strings; only fixed system modules loaded; controlled other contexts",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "runtime_equivalence": "not established",
+  "native_global_FLS_heap_lock_ABI_SEH": "not established",
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "404283d7493bab84772a9dd8e43c22962bbe14ff001d1997d7c04adde0202c66"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "a8d9c02ee615afd7a3b353b5541f491239e3d69090ee34e3d4474eb5b2c9aa9d"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "4b1ae73df1b430718e486d46425374a6527ab67962f9b391b66c28fc5de7d4f3"
+    }
+  ]
+}

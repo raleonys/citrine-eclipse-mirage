@@ -1,0 +1,271 @@
+{
+  "kind": "local-source-reconstruction-anchor-index-not-new-REA-evidence",
+  "original_sha256": "36e775ed97b7a41c4f0cb98b94ee8edb74fab5cfe17d5fa8cfed265228301846",
+  "enclosing_rea_evidence_id": "ev_157c446e2c1bce1a022bed8f576a7cc535fa15c41a6478fc2ef751d2902f97a5",
+  "retained_analysis": "../preloader-analysis/ghidra-analysis.json",
+  "retained_analysis_sha256": "02c6bc6d9371053bddce8a922e755ef4dfd99f84122bb26efd165cc1ac3d6c73",
+  "producer": "Ghidra headless 12.1.4 direct script (not REA MCP)",
+  "functions": [
+    {
+      "address": "0x180001000",
+      "name": "DllMain",
+      "original_decompiler_signature": "undefined8 __fastcall DllMain(HMODULE param_1, int param_2)",
+      "signature_warning": "The CryptQuery decompiler signature omits preserved stack arguments. SDK decltype supplies the 11-argument wrapper type; callback ends in JMP RAX.",
+      "anchors": [
+        {
+          "address": "180001005",
+          "instruction": "CMP EDX,0x1",
+          "refs": []
+        },
+        {
+          "address": "180001024",
+          "instruction": "LEA R8,[0x180001229]",
+          "refs": [
+            "180001229 DATA"
+          ]
+        },
+        {
+          "address": "180001042",
+          "instruction": "MOV qword ptr [0x1800072c8],RAX",
+          "refs": [
+            "1800072c8 WRITE"
+          ]
+        },
+        {
+          "address": "180001050",
+          "instruction": "LEA R8,[0x180001139]",
+          "refs": [
+            "180001139 DATA"
+          ]
+        },
+        {
+          "address": "18000106e",
+          "instruction": "MOV qword ptr [0x1800072c0],RAX",
+          "refs": [
+            "1800072c0 WRITE"
+          ]
+        },
+        {
+          "address": "18000107c",
+          "instruction": "LEA R8,[0x180001264]",
+          "refs": [
+            "180001264 DATA"
+          ]
+        },
+        {
+          "address": "18000109a",
+          "instruction": "MOV qword ptr [0x1800072d0],RAX",
+          "refs": [
+            "1800072d0 WRITE"
+          ]
+        },
+        {
+          "address": "1800010ad",
+          "instruction": "MOV EAX,0x1",
+          "refs": []
+        }
+      ]
+    },
+    {
+      "address": "0x180001139",
+      "name": "FUN_180001139",
+      "original_decompiler_signature": "undefined __fastcall FUN_180001139(undefined8 * * param_1)",
+      "signature_warning": "The CryptQuery decompiler signature omits preserved stack arguments. SDK decltype supplies the 11-argument wrapper type; callback ends in JMP RAX.",
+      "anchors": [
+        {
+          "address": "180001146",
+          "instruction": "MOV EAX,dword ptr [0x180007010]",
+          "refs": [
+            "180007010 READ"
+          ]
+        },
+        {
+          "address": "180001162",
+          "instruction": "MOV EAX,dword ptr [0x180007018]",
+          "refs": [
+            "180007018 READ"
+          ]
+        },
+        {
+          "address": "18000116c",
+          "instruction": "MOV RAX,qword ptr [0x1800072c0]",
+          "refs": [
+            "1800072c0 READ"
+          ]
+        },
+        {
+          "address": "18000117b",
+          "instruction": "CALL RAX",
+          "refs": []
+        },
+        {
+          "address": "1800011ab",
+          "instruction": "CALL 0x180003f8f",
+          "refs": [
+            "180003f8f UNCONDITIONAL_CALL"
+          ]
+        },
+        {
+          "address": "1800011f7",
+          "instruction": "CALL 0x180003f8f",
+          "refs": [
+            "180003f8f UNCONDITIONAL_CALL"
+          ]
+        }
+      ]
+    },
+    {
+      "address": "0x180001229",
+      "name": "FUN_180001229",
+      "original_decompiler_signature": "int __fastcall FUN_180001229(undefined8 param_1, longlong param_2)",
+      "signature_warning": "The CryptQuery decompiler signature omits preserved stack arguments. SDK decltype supplies the 11-argument wrapper type; callback ends in JMP RAX.",
+      "anchors": [
+        {
+          "address": "18000122f",
+          "instruction": "MOV RAX,qword ptr [0x1800072c8]",
+          "refs": [
+            "1800072c8 READ"
+          ]
+        },
+        {
+          "address": "18000123e",
+          "instruction": "CALL RAX",
+          "refs": []
+        },
+        {
+          "address": "18000124b",
+          "instruction": "CALL qword ptr [0x180005018]",
+          "refs": [
+            "180005018 READ",
+            "EXTERNAL:00000002 COMPUTED_CALL"
+          ]
+        },
+        {
+          "address": "180001251",
+          "instruction": "CMP dword ptr [RSI + 0x8],EAX",
+          "refs": []
+        },
+        {
+          "address": "180001256",
+          "instruction": "MOV dword ptr [RSI + 0x20],EAX",
+          "refs": []
+        },
+        {
+          "address": "180001259",
+          "instruction": "MOV EAX,EDI",
+          "refs": []
+        }
+      ]
+    },
+    {
+      "address": "0x180001264",
+      "name": "FUN_180001264",
+      "original_decompiler_signature": "undefined __fastcall FUN_180001264(int param_1, wchar_t * param_2, undefined4 param_3, undefined4 param_4)",
+      "signature_warning": "The CryptQuery decompiler signature omits preserved stack arguments. SDK decltype supplies the 11-argument wrapper type; callback ends in JMP RAX.",
+      "anchors": [
+        {
+          "address": "1800014ea",
+          "instruction": "CMP RAX,0xf",
+          "refs": []
+        },
+        {
+          "address": "1800014f8",
+          "instruction": "LEA RCX,[0x1800052c0]",
+          "refs": [
+            "1800052c0 DATA"
+          ]
+        },
+        {
+          "address": "18000150c",
+          "instruction": "LEA RAX,[0x1800052d0]",
+          "refs": [
+            "1800052d0 DATA"
+          ]
+        },
+        {
+          "address": "180001513",
+          "instruction": "CMOVZ RBX,RAX",
+          "refs": []
+        },
+        {
+          "address": "18000153a",
+          "instruction": "MOV RAX,qword ptr [0x1800072d0]",
+          "refs": [
+            "1800072d0 READ"
+          ]
+        },
+        {
+          "address": "180001544",
+          "instruction": "JZ 0x1800015fd",
+          "refs": [
+            "1800015fd CONDITIONAL_JUMP"
+          ]
+        },
+        {
+          "address": "18000154a",
+          "instruction": "MOV ECX,EBP",
+          "refs": []
+        },
+        {
+          "address": "18000154c",
+          "instruction": "MOV RDX,RBX",
+          "refs": []
+        },
+        {
+          "address": "18000154f",
+          "instruction": "MOV R8D,EDI",
+          "refs": []
+        },
+        {
+          "address": "180001552",
+          "instruction": "MOV R9D,ESI",
+          "refs": []
+        },
+        {
+          "address": "180001555",
+          "instruction": "ADD RSP,0x58",
+          "refs": []
+        },
+        {
+          "address": "180001565",
+          "instruction": "JMP RAX",
+          "refs": []
+        },
+        {
+          "address": "1800015fd",
+          "instruction": "UD2",
+          "refs": []
+        }
+      ]
+    }
+  ],
+  "sdk_headers": [
+    {
+      "path": "work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/include/wincrypt.h",
+      "line": 4755,
+      "sha256": "bddf1b4f0134cbb90f75a21e9f8ef3436659e0ec9db9bdad45d5b0e650df870f",
+      "prototype": "WINBOOL WINAPI CryptQueryObject(DWORD,const void*,DWORD,DWORD,DWORD,DWORD*,DWORD*,DWORD*,HCERTSTORE*,HCRYPTMSG*,const void**)",
+      "role": "compile-time prototype, not evidence of original compiler or CRT"
+    },
+    {
+      "path": "work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/include/tlhelp32.h",
+      "line": 78,
+      "sha256": "560fa6d73164159ef7b08148c3f07b2c63ab5ea0b3dcaaa4a152207ab9496c05",
+      "prototype": "WINBOOL WINAPI Process32NextW(HANDLE,LPPROCESSENTRY32W)"
+    }
+  ],
+  "new_integration_only": [
+    "immutable process-wide required error policy",
+    "process-wide exclusive Binding(Core&,Errors&)",
+    "active-call leases and CallsInFlight close rejection",
+    "noexcept SDK free functions with mandatory terminal exception policy",
+    "no actual DLL export or CRT entry point"
+  ],
+  "unresolved": [
+    "original MSVC/SEH behavior",
+    "original msvcp140 mutex layout and runtime identity",
+    "actual Win32 Host binding",
+    "safe hook disable/uninstall and complete DLL lifecycle",
+    "tail-jump stack/prolog equivalence"
+  ]
+}

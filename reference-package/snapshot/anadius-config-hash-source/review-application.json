@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "reviewer": "config_hash_growth independent read-only cross-review",
+  "reviewed_at": "2026-10-21T02:30:07.2027639Z",
+  "files": [
+    {
+      "path": "outputs/anadius-config-application-source/application.hpp",
+      "sha256": "9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2"
+    },
+    {
+      "path": "outputs/anadius-config-application-source/application.cpp",
+      "sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb"
+    },
+    {
+      "path": "outputs/anadius-config-application-source/application_tests.cpp",
+      "sha256": "e9cbfd16d396dca7fe68174772ac7c385aa3855bbb4ec6c7bd0042c10ea917b9"
+    },
+    {
+      "path": "outputs/anadius-config-application-source/build.ps1",
+      "sha256": "c580295d1b3d6d5cd6335766ae8455a61fd4a4ad793e4e6a9d6e99adc34849f5"
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/hash_table.hpp",
+      "sha256": "d05e54e5232dda1b8cb9e3aabe46677135cf60483939bee7b2801f489025e2bf"
+    },
+    {
+      "path": "outputs/anadius-config-hash-source/hash_table.cpp",
+      "sha256": "15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f"
+    },
+    {
+      "path": "work/config-consumer-audit.md",
+      "sha256": "e3a1a36d44f78a19e171a40c6276084c9f10355207a8b2bb835df66c28edfb88"
+    }
+  ],
+  "findings": [],
+  "source_test_record": "Application standalone95checks reported PASS; source and recorded validation inspected, no independent test rerun",
+  "retained_evidence": [
+    "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd",
+    "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+    "ev_8975dcb6850d9f73375de19ac628dbf270d8f0722bae94ba4b3ff22c3a9af0f9"
+  ],
+  "scope": "Owned file/parser first-copy; mutable section/record reuse; ordered consumers; override; callback-visible language flag; partial failure timing in logical source",
+  "limits": [
+    "No original native execution",
+    "No user CFG content",
+    "Allocator/fault/SEH/ABI equality not established",
+    "Remaining OS/provider dependencies caller-supplied"
+  ],
+  "production_edits": false
+}

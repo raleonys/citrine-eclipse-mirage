@@ -1,0 +1,167 @@
+{
+  "schema": "selected-callback-provider-inventory.v1",
+  "source_package": "B20",
+  "selected_writer_clusters": [
+    {
+      "file": "anadius-services-completion-source/completion.cpp",
+      "sha256": "26a7a0a659088938eaed6b2981056c17041f4bf8d38b696fc8ca12042f447b64",
+      "methods": [
+        {
+          "method": "BootstrapLogger::insert",
+          "lines": [
+            25
+          ]
+        },
+        {
+          "method": "BootstrapLogger::finish",
+          "lines": [
+            35
+          ]
+        }
+      ],
+      "scope": "same selected shared_log::Stream only; plain legacy/bypass users excluded"
+    },
+    {
+      "file": "anadius-config-logging-source/logging.cpp",
+      "sha256": "114dd5a158d479ec7bed5e3e382c46ba19878a5174df0345c72b549df0aa6da2",
+      "methods": [
+        {
+          "method": "ConfigurationLogging::log_config_path",
+          "lines": [
+            25
+          ]
+        }
+      ],
+      "scope": "same selected shared_log::Stream only; plain legacy/bypass users excluded"
+    },
+    {
+      "file": "anadius-library-effects-source/effects.cpp",
+      "sha256": "4817011c56a72114d178e7b535a2b6c61ec3026c65ecbc226faed597ca3adb54",
+      "methods": [
+        {
+          "method": "LibraryEffects::begin_load_log_0863e0",
+          "lines": [
+            14
+          ]
+        },
+        {
+          "method": "LibraryEffects::append_log_path_and_flush",
+          "lines": [
+            15
+          ]
+        }
+      ],
+      "scope": "same selected shared_log::Stream only; plain legacy/bypass users excluded"
+    },
+    {
+      "file": "anadius-online-platform-source/platform.cpp",
+      "sha256": "efeca0c6e704eee8818d7e261e5315db9801a3d8a0c84202e278d50fcdb31eb4",
+      "methods": [
+        {
+          "method": "OnlinePlatform::log_literal_006880",
+          "lines": [
+            60
+          ]
+        },
+        {
+          "method": "OnlinePlatform::log_finish_0088e0",
+          "lines": [
+            61
+          ]
+        }
+      ],
+      "scope": "same selected shared_log::Stream only; plain legacy/bypass users excluded"
+    },
+    {
+      "file": "anadius-host-platform-source/platform.cpp",
+      "sha256": "6f56ff3d99b288f1280602a00951328ea2f4b0dd6fc0739d21039ce8492f59b0",
+      "methods": [
+        {
+          "method": "Domain::text",
+          "lines": [
+            58
+          ]
+        },
+        {
+          "method": "Domain::integer",
+          "lines": [
+            59
+          ]
+        },
+        {
+          "method": "Domain::finish",
+          "lines": [
+            60
+          ]
+        }
+      ],
+      "scope": "same selected shared_log::Stream only; plain legacy/bypass users excluded"
+    },
+    {
+      "file": "anadius-callback-policy-source/policy.cpp",
+      "sha256": "1cec6448ec1e9b2e4e2f0a3f4014a115f7a037372e68d136e6b128943f4b889e",
+      "methods": [
+        {
+          "method": "Policy::log_literal_006880",
+          "lines": [
+            115,
+            118
+          ]
+        },
+        {
+          "method": "Policy::log_text_007990",
+          "lines": [
+            116
+          ]
+        },
+        {
+          "method": "Policy::finish_log_0088e0",
+          "lines": [
+            117
+          ]
+        },
+        {
+          "method": "Policy::log_port_00ad70",
+          "lines": [
+            123
+          ]
+        }
+      ],
+      "scope": "same selected shared_log::Stream only; plain legacy/bypass users excluded"
+    }
+  ],
+  "shared_fallback_distinctions": [
+    {
+      "path": "anadius-crt-error-source/errors.hpp",
+      "fact": "Recovered plain errno_fallback/dos_fallback cells are separate from compiler CRT errno",
+      "sha256": "a35a12520e233f1a545cb46c32284570535899a9ab8630302ca7c597706ad38b"
+    },
+    {
+      "path": "anadius-crt-error-source/errors.cpp",
+      "fact": "Recovered fallback selected only when optional PTD lookup returns null",
+      "sha256": "927a0bcd444d11370ae99b1a7025dc58c5f6e510332e436c4175c78890741fa1"
+    },
+    {
+      "path": "anadius-crt-glue-source/crt_glue.cpp",
+      "fact": "Heap error slot uses optional recovered PTD; stable admitted FLS PTD directs errno to PTD+0x20",
+      "sha256": "b880c863eb26775ee3de243ef68e8e9a2dc78a3ada7bfa7b1a2de8d2223942ca"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "fact": "Callback setup/cleanup raw root operations bypass lazy PTD/errno fallback; actual FLS identity and provider effects still constrained",
+      "sha256": "7e56567bd85815ed10d54515fbb5b9df01913dbe418871e074c4da99ce5360a4"
+    },
+    {
+      "path": "anadius-encoding-source/native_encoding.cpp",
+      "fact": "NativeCalls uses linked compiler locale codepage, process File-API ANSI/OEM choice and Win32 last error, not recovered fallback",
+      "sha256": "5022dff63bc6ca4471ca367747dfe8e8a3a9cdf071bbe2310d1f4bc86fe2b003"
+    }
+  ],
+  "findings": [
+    "Only these six concrete compiler-ostream clusters are covered; abstract/lower providers may log independently",
+    "Valid stable admitted recovered FLS PTD avoids shared recovered fallback for callback heap-error writes; external PTD/worker/FLS failures remain open",
+    "Compiler CRT locale/invalid-handler and process ANSI/OEM mode are separate state domains; source initial locale does not prove them frozen"
+  ],
+  "new_original_bytes_read": 0,
+  "original_execution": false
+}

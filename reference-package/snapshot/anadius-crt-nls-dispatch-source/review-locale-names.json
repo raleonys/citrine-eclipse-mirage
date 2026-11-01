@@ -1,0 +1,51 @@
+{
+  "reviewer": "crt_locale_names",
+  "result": "PASS",
+  "checked_at": "2026-10-19T13:36:35.6488190Z",
+  "scope": "Independent source and synthetic test review against exact retained assembly; independent read-only PE candidate/name byte mapping",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    "0x1800671d4",
+    "0x1800672c0"
+  ],
+  "assembly_ids": [
+    "ev_e7801c8d9ac101f2c7950531bc35d290fcd5f7f97efa9316bf63c17270c6629d",
+    "ev_0307916adc6800facce0c0454e3b85c9029f027c6ea1b0e19a95d74edd98c1a7"
+  ],
+  "candidate_proof": [
+    {
+      "va": "0x18008b9e0",
+      "file_offset": "0x8a1e0",
+      "bytes_hex": "0300000010000000",
+      "ascii_name": "LCMapStringEx",
+      "terminating_zero_file_offset": "0x8a1f5"
+    },
+    {
+      "va": "0x18008ba18",
+      "file_offset": "0x8a218",
+      "bytes_hex": "0300000010000000",
+      "ascii_name": "LocaleNameToLCID",
+      "terminating_zero_file_offset": "0x8a230"
+    }
+  ],
+  "source_hashes": {
+    "nls_dispatch.hpp": "8090f255a6584328186405c7eeb400e66485d19618ba65aa5c93f039c0422c34",
+    "nls_dispatch.cpp": "0bb0cc2cb502452946f6177fa7686f280e5f25273b88421ad9cb4be7600c7e93",
+    "nls_dispatch_tests.cpp": "7d0fec65dae84db868f75c4602d97d0adf11ca39b53acf5a995e5ce07a846695",
+    "selected-evidence.json": "e6246ee7550f9c23f3f6dd8739853b7328ed1e565cc1095af42648dd7eeb15fd",
+    "README.md": "e6ca6732f527a739a27790698f189412292e72c1646d857e78f5f1ccd215d2c1",
+    "validation.json": "333801c934fe7b57da8e4ba12ed4640d659dec255fbedcd8648972e3a7bf93b4"
+  },
+  "findings": [
+    "0671d4 resolver id0x11 and candidates {3,16}; all nine Ex arguments preserve widths/order.",
+    "Native Ex zero return is returned directly without W retry; resolver NULL invokes locale conversion flags0 then W six arguments.",
+    "0672c0 resolver id0x13; native flags preserved; fallback receives name only; full 32-bit result preserved on both paths.",
+    "Epilog leaves EAX intact despite void pseudocode; source int32/u32 logical returns match observed assembly.",
+    "Tests exercise all dispatch branches, full result bits/counts, native0 and candidate order; fixture exceptions are explicitly not SEH proof."
+  ],
+  "issues": [],
+  "limitations": [
+    "No original DLL or real Windows NLS API execution.",
+    "Resolver cache/FLS/native/CFG and original ABI equivalence outside this module proof."
+  ]
+}

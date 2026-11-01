@@ -1,0 +1,77 @@
+{
+  "scope": "Independent complete retained six normal posted-operation procedures",
+  "reviewer": "posted_operation_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "full_listing_hashes_match": true,
+  "functions": [
+    {
+      "pseudo_evidence": "ev_c2dbc60d3e6cbfc1dd46b28a5bd060319ea97dd547e51623a7efe3600615dc5d",
+      "assembly_evidence": "ev_f188724ed6018eaae49e0f50dc25352b97a82d7bc3110aa0c4c4718c5859a1c7",
+      "address": "0x180021820"
+    },
+    {
+      "pseudo_evidence": "ev_d38542a13780f219fb0e307cf5b4109d2b00fd32203172d5cb94abee72dc87b5",
+      "assembly_evidence": "ev_b280a42bef0b98cc4995df7dad235db7dde4f6f02ea710797ed1a2e13cbb02f4",
+      "address": "0x180021ac0"
+    },
+    {
+      "pseudo_evidence": "ev_817921bf6b2b7cff9b7bfa05757a80e5b23013e0f55449083b1eda46585cf003",
+      "assembly_evidence": "ev_a55c67428f81178a2bfe1efc4911ef34fe4cbe9a10951302e31f72f84d942971",
+      "address": "0x180022e40"
+    },
+    {
+      "pseudo_evidence": "ev_f425c8ac24472b602819c82c310740e2fc88d5f4a60e58154736736724d66c5e",
+      "assembly_evidence": "ev_75294ba7f94d4cf020f10912d553ed6a112dfa627904e4b1488719f67c5bf925",
+      "address": "0x180027120"
+    },
+    {
+      "pseudo_evidence": "ev_42ec7e831abcb5ab3f2ff84f793201026931158ab216047bd4e981225e47c4aa",
+      "assembly_evidence": "ev_3f2d026da45ec09918bf4c21b0e0d8baa5778c400ec1b239be06237c3da0e704",
+      "address": "0x180028ca0"
+    },
+    {
+      "pseudo_evidence": "ev_a7a887990cbabaffabcf3b1632bc78f305c6499c9a629f167b22cedfda97d43c",
+      "assembly_evidence": "ev_48d391ee0a2a878dad4603c15e86ec508fc9871a114cfd50691885ccffc8b734",
+      "address": "0x180028fd0"
+    }
+  ],
+  "rules": {
+    "allocation": "Unsigned64(requested+3)>>2; first2 eligible headerbyte then rawaddress alignment DIV; zeroalignment faultonlyeligible; hitclearbeforeheaderread/markerwrite; missclearfirstnonemptybeforefree; allocunits*4+1; markerunits<=255else0; unusedRCXtag",
+    "consume": "Move cachedfunctor; clearlocalslotbeforeflag1tailcall; no inventedunwind",
+    "executor": "Flagbit0skipinline; cacheschedulerkeybeforeTLS; firstmatchingstate0break; allocatorsecondTLSgetliveindex; entryexecutorlowbytetag; request0x48/alignment1; initthenmovesourceclear; publishliveexecutor.scheduler; flagbit1ignoredbycallee; finalcleanupframe8and10zero",
+    "callback": "Moveobject38tolocal/thenclear; actualcleanupBEFOREfunctorinvoke; ownernonzeroonlyconsume; localreloadthenflag0; secondcleanupnormalonly",
+    "enqueue": "Lockincwork32/queued1beforeliveportpost0,0,op; failureCSenterclearopnext/livequeueappend/wakeexchange1/leave; noGetLastError",
+    "cleanup": "Objectfunctorliveflag0thenobjectslotzero; allocationreloadAFTERcallback/cacheRBX; oneTLSgetcurrentstateonly; first2cacheempty marker48to0/cachewrite/framealloczero; fullornoTLSfreecachedallocationthenframealloczeroevenmutated"
+  },
+  "normal_source_procedures_added": [
+    "0x180021820",
+    "0x180021ac0",
+    "0x180022e40",
+    "0x180027120",
+    "0x180028ca0",
+    "0x180028fd0"
+  ],
+  "new_original_procedures": 6,
+  "providers_not_recovered": [
+    "04b0bc allocator",
+    "04b788 deallocator",
+    "functor slot00 implementation and native lifetime",
+    "Native ABI and executable binding",
+    "Native exception SEH unwind and concurrency"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Six normal procedures only",
+    "Existing CRT production unchanged",
+    "Rawstorage provenance separated from typed SDK operation",
+    "Bounded UnsupportedInput guards not native faults",
+    "No full DLL equivalence claimed"
+  ],
+  "report_sha256": "686f4c03d848aecc358b2e75a8fbc8b1d6a919e7ed3bb799523f5e7ebf97c51b"
+}

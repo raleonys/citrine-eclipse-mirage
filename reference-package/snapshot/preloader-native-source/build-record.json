@@ -1,0 +1,17 @@
+{
+  "kind": "local-compilation-and-synthetic-tests-not-original-execution",
+  "production_objects": 1,
+  "suites": 1,
+  "boundary_subprocess_cases": 8,
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "object_sha256": "6ae60eddbcc425f00dd1435191a6a62df78fd031e467cce2f5112d56866974c0",
+  "test_sha256": "93b2f79c1af62f5e2e339f20f47169b988ba7aa43851199428158dd85ff4a695",
+  "execution": "Only this synthetic test executable; no original/rebuilt DLL, hooks, generated trampolines or real certificate/mutex/module APIs."
+}

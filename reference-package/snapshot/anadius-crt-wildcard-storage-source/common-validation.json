@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_wildcard_storage",
+    "result": "PASS",
+    "output": "PASS: 14148 wildcard storage fixture checks",
+    "executable_sha256": "bee4d76d1d2b10a528537256fd0b99521a8590a1a6584d62fdc38ec4a209138c"
+  },
+  "execution_scope": "Wildcard string/prefix append, 4-slot vector and doubling capacity; bounded synthetic storage primitives",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-wildcard-storage-source/storage_tests.cpp",
+      "sha256": "8f105ec175634f00d04ac17f326f49983f7f4bd011928073bab1251e65162366"
+    },
+    {
+      "path": "anadius-crt-wildcard-storage-source/storage.cpp",
+      "sha256": "beacfcc8fa91ea0a883efea8d1dfa765e6e12972bc4b68157a86bb38997b9e8b"
+    },
+    {
+      "path": "anadius-crt-wildcard-storage-source/storage.hpp",
+      "sha256": "4ec7aab64302a5ea6ba4027573669be9b77a5a3c6b226b7289ebd2f600cdb091"
+    }
+  ]
+}

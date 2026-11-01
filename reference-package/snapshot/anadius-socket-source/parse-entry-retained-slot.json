@@ -1,0 +1,105 @@
+{
+  "schema": "parse-entry.retained-slot.v1",
+  "stage": "N23 retained metadata correction; no fresh read or body recovery",
+  "authority": "historical-reference",
+  "confidence": "derived",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "parent_file": "outputs/anadius-rea-evidence.json",
+  "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "parent_file_bytes": 34457189,
+  "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "parent_authority": "shipped-artifact",
+  "parent_operation": "read_bytes",
+  "provider": {
+    "id": "ghidra",
+    "name": "Ghidra",
+    "version": "12.1.4"
+  },
+  "analysis_profile": {
+    "digest": "dcc676845881c04a2d22833fb35d26569462e033daee5e99a95edac5aa61ac05",
+    "parameters": {
+      "analyzer_preset": "ghidra-default",
+      "annotation_policy": "atomic-function-entry-metadata-v1",
+      "architecture": "x86_64",
+      "available_architectures": [
+        "x86_64"
+      ],
+      "call_relationship_coverage": "function-body-call-coverage-v5",
+      "compiler_spec_id": "auto-default",
+      "decompiler_jump_loads": true,
+      "executable_role": "shared-library",
+      "function_body_evidence": "complete-inclusive-ranges-v1",
+      "function_boundary_observations": "ghidra-function-boundary-limitations-v3",
+      "function_dossier_coverage": "observed-facets-and-call-relationships-v1",
+      "function_references": "complete-body-and-entry-reference-manager-v2",
+      "import_mode": "ephemeral-source-immutable",
+      "instruction_flow_evidence": "decoded-return-pcode-v1",
+      "instruction_references": "exact-address-incoming-v1",
+      "jump_table_evidence": "typed-case-default-blocks-v1",
+      "language_id": "auto-from-header",
+      "load_image_observations": "source-mappings-entry-context-v2",
+      "loader": "auto-from-header",
+      "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+      "managed": false,
+      "native_aot_metadata": {
+        "contract_revision": "rtr-9.1-x64-pe-read-only-v3",
+        "report_bytes": 4194304,
+        "source_bytes": 134217728,
+        "work_units": 67108864,
+        "working_memory_bytes": 67108864
+      },
+      "no_return_repair": "disabled-windows-p0",
+      "pdb_observations": "program-info-v1",
+      "procedure_file_offset_resolution": "address-first-unique-target-source-mapping-v2",
+      "process_launch": "official-headless-script-v1",
+      "string_inventory_evidence": "defined-data-coverage-v1",
+      "target_format": "pe",
+      "target_kind": "executable"
+    },
+    "provider": {
+      "id": "ghidra",
+      "name": "Ghidra",
+      "version": "12.1.4"
+    }
+  },
+  "parent_read": {
+    "address": "0x18007f000",
+    "requested_bytes": 138752,
+    "returned_bytes": 138752,
+    "complete": true,
+    "last_address": "0x1800a0dff",
+    "decoded_bytes_sha256": "655444c3892927b2730fc34482c65d246ac9314bba13aef6267b0c87d58cc982"
+  },
+  "extract": {
+    "address": "0x18007ff48",
+    "parent_offset": 3912,
+    "bytes": 8,
+    "bytes_hex": "7049008001000000",
+    "little_endian_qword": "0x180004970",
+    "document_vtable": "0x18007fec8",
+    "slot_offset": "0x80"
+  },
+  "narrow_read": {
+    "file": "node-delete-next-vtables.json",
+    "sha256": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a",
+    "evidence_id": "ev_6f833c2318f756f405188b1d9c7ac22f59489362ca3ee1f71598ed665f9f3e33",
+    "address": "0x18007fec8",
+    "returned_bytes": 128,
+    "complete": true,
+    "last_table_byte_offset": "0x7f",
+    "covers_parse_slot": false,
+    "first128_bytes_match_broad_parent": true
+  },
+  "finding": "The narrow128-byte document-table read excludes slot+80; the older complete broad retained read proves the selected shipped document-table slot07ff48 contains004970. Its implementation and other dynamic table identities remain separate unknowns.",
+  "new_original_read_performed": false,
+  "new_source_bodies_claimed": 0,
+  "target_004970_implementation_recovered": false,
+  "generic_fixture_target_identity_is_native_evidence": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "limitations": [
+    "Bytes are retained initialized Ghidra analysis memory including loader fixups, not runtime pointer observation.",
+    "This metadata extraction does not implement004970,prove another node vtable,or close parser/DOM/ABI/EH/concurrency behavior.",
+    "No new REA read or original artifact access was performed; parent whole-file hash and decoded range bounds are verified before extraction."
+  ]
+}

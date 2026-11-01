@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T15:15:36.8932814Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-sort-source\\sort_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-sort-source\\build\\sort.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-sort-source\\build\\sort_tests.exe"
+  ],
+  "tests": "PASS 4831748 checks: recovered generic qsort and unsigned slot-address comparator",
+  "scope": "Synthetic bounded byte storage and comparators only; no target loading or execution",
+  "sources": [
+    {
+      "name": "sort_tests.cpp",
+      "sha256": "c88960da38eda14d86916b968dadf0f4cfba7f5dbf08e1cf6ec503ee9abc2989"
+    },
+    {
+      "name": "sort.cpp",
+      "sha256": "18eb6b55d287677caf35b7a9e6ba07709bd5e332db71752ce0d10d3bb58d4f7a"
+    },
+    {
+      "name": "sort.hpp",
+      "sha256": "8dab826024780cd02f7f11004a123b8dba02dd0ea71c34c362cc45cdca840fb0"
+    }
+  ],
+  "executable_sha256": "1206430d430d019d72fdd7ffe4196f390946b891ffaf78d2fb413035d387f6ab"
+}

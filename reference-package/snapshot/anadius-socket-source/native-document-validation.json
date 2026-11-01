@@ -1,0 +1,54 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "0f73a96e8371b96ac6914cc21fb747196cb26877a74afa43b3e4d4280d45e023",
+  "test_results": [
+    {
+      "module": "socket_native_document",
+      "result": "PASS",
+      "output": "PASS: 567 native document checks;49 assembly anchored stores/holes/failure prefixes, live buffer/status, cleanup order and coherent final bindings; native lower providers/ABI/EH remain open",
+      "executable_sha256": "678d6227b1a2545ebe928400728b2f1d1582ed3d3aee9d0d7c0fe458266e9278"
+    },
+    {
+      "module": "socket_native_document_integration",
+      "result": "PASS",
+      "output": "PASS: 15264 socket native document integration checks; final ctor/parse/destructor and dispatch/cipher/append sources to queue/send/finish; lower clear/parser/nodes/pools/allocator/vtable and native ABI/EH remain open",
+      "executable_sha256": "1469ff0b00d94deccd390ac24f35c3184bc58cc31859973d14b9c2765fa03aa0"
+    }
+  ],
+  "core_checks": 567,
+  "integration_checks": 15264,
+  "source_hashes": {
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "native_document_test_fixture.hpp": "a3fbffccc988bc26659d4f3e65e2f46bb33c08ec97d504e7a501688035eca935",
+    "native_document_tests.cpp": "bef069d15f6927d106375d53f429552a12cb1c4ac7f3c4d6181c54044a0ca1f8",
+    "native_document_integration_tests.cpp": "10e6b1033b214eab780992cd6eb6623a9ad76c29a43e7b2b1a09bfa8e403fe44",
+    "build.ps1": "096da48da95ac5abe2771cba967744d86279f06293a15c8945dc85493947b301",
+    "CMakeLists.txt": "c77d9ce90d9d351652ff99e8cf9b96ba0c6ad33cfaa680fe78a1e44db5944891"
+  },
+  "original_procedures_added": 3,
+  "new_source_bridges": 3,
+  "new_unique_source_mapped_addresses": 3,
+  "execution_scope": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory",
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Bounded raw memory projection and supplied vtable identity values; no actual native vtable/function/global/object-layout/lifecycle/ABI equivalence established",
+    "Constructor preserves unaddressed bytes;0x308 is the minimum touched extent, not independent proof of complete object size",
+    "NativeMessageDocument.error_6c aliases the bound memory error cell directly; no copied error-state synchronization",
+    "004280 is the parse wrapper normal flow;0041b0 parser engine and002e60 document clear remain mandatory lower providers",
+    "003110 node removal, all pool clear/destructor helpers,001ea0 base destructor,04b100 allocation and04b0f8 free remain mandatory; no generic CRT bodies added",
+    "04b0f8 call defines only RCX in this destructor; no invented sized-free argument or native allocator recovery",
+    "Normal failure prefixes retain committed effects without invented catch/rollback/unwind cleanup; fixture teardown is not native EH evidence",
+    "Upstream XML compatibility backend used on synthetic inputs is not proof of original tinyxml version, layout or native memory-pool behavior",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity checks are separate; CRT unchanged and paused"
+  ],
+  "previous_local_records": "37 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

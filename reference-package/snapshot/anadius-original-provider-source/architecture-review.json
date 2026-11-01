@@ -1,0 +1,198 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T13:37:01.590115+00:00",
+  "review_scope": "B23 selected exact-slot-bound original provider/code-owner retention, controller setup and seal publication, sticky changed-slot rejection, actual source native dispatch/drain and synthetic tests",
+  "reviewed_source_hashes": {
+    "originals.hpp": "16fdd05304bae761dad4c2f491f1ac82b5842118eccbeb644a18f639bd4b6d94",
+    "originals.cpp": "36b2db119c7a96c02afe7dcf97385ca940f7af5f8588ece79b894c999c23f71a",
+    "originals_tests.cpp": "83374bd4fc5cbe5f16f19d5d1d39f14f80d822f54895207a0766b29f78d24e0a",
+    "originals_integration_tests.cpp": "812734fd0b55ce80c2b23ede7c102314f30f1d894f3db9836bdc868e6da0a855",
+    "../anadius-callback-policy-source/policy.cpp": "cbbca7a385d0f4093ab0404cc9e7b1a58073e6078f777290fd584e97344a9f9f",
+    "../anadius-callback-policy-source/policy.hpp": "52ae7404d7d5bacb2aff324752214f5d44529a2bdf5070b3da54badae6c06199",
+    "../anadius-native-context-source/context.cpp": "68fad4a9c382b271219656736216c15b304e51d0bb18b57306acbb2810d6f3f6",
+    "../anadius-native-source/native_callbacks.hpp": "be650df275f531ffdec490a3c1a038c9a9b65fde624ab5f28ac00111fc100f63",
+    "../anadius-native-source/original_effects.cpp": "420fedbd6aa1d5b30a4c97a3af0b71339cfdf86c49fb3f39a770fbf37b32b520"
+  },
+  "quick_results": [
+    {
+      "path": "work/b23-core-quick-results.json",
+      "sha256": "dc8fabe82322bd08d902bc95d7ede10a971fbacf975441cc7209b1a5eb762c1d",
+      "checks": 41,
+      "executable_path": "work/b23-core-test.exe",
+      "executable_sha256": "dfb2d2dedff30cf31c8c0dc24ceeecc16c0562d8d51131eb066566e0ea383385",
+      "execution_by": "/root; independent reviewer read nine frozen sources and verified recorded source/EXE hashes; did not rerun"
+    },
+    {
+      "path": "work/b23-integration-quick-results.json",
+      "sha256": "596e8c0ac1cda3610eda64d43e5efae77ba92fb12aa1b7632a0e0cf6860a019b",
+      "checks": 24,
+      "executable_path": "work/b23-integration-test.exe",
+      "executable_sha256": "3aa9d7a4192ca2891411d5d6956bc353fb57931bc06f1240808145236d7d6031",
+      "execution_by": "/root/b22_integration (root delegated); independent reviewer read nine frozen sources and verified recorded source/EXE hashes; did not rerun"
+    }
+  ],
+  "root_checks": 65,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "baseline_package_sha256": "d26e010200ba3ffbc346f577f5a438b4b558cae300db7872bf256136d974fca4",
+  "prior_source_files": 814,
+  "prior_sources_preserved": 809,
+  "current_source_files": 818,
+  "source_inventory_counts_basis": "Reviewer independently verified B22 ZIP identity and all814 manifest entries against current sources: exactly809 unchanged and five declared before/after modifications. Four new source paths reviewed; common build counts are planned, not passed evidence.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "c6217769d167a1827f3bf7fdc1ba63761b5f256b5182175ba0fb5223b11ca6c1",
+      "after_sha256": "cbbca7a385d0f4093ab0404cc9e7b1a58073e6078f777290fd584e97344a9f9f",
+      "reason": "Construct retained exact-slot original provider and pass to final OriginalEffects base"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "19b7be706f26423cdd9b30c92a55246847c8e28b93ef5679cb832c89aea9762c",
+      "after_sha256": "52ae7404d7d5bacb2aff324752214f5d44529a2bdf5070b3da54badae6c06199",
+      "reason": "Optional original-provider factory constructed after RuntimeSeed reaches stable owner"
+    },
+    {
+      "path": "anadius-native-context-source/context.cpp",
+      "before_sha256": "991fc1b7f1df9eed1c84ff23aa517210a8092dc8d75e51f2743d04f689f8fb81",
+      "after_sha256": "68fad4a9c382b271219656736216c15b304e51d0bb18b57306acbb2810d6f3f6",
+      "reason": "Order original begin/seal/stop with admission and binding drain; retain code owner through failed close"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "before_sha256": "af1ff2398168e0c3d6c92ebcd99dcabf11b996b27852a5461e9ddad64378c090",
+      "after_sha256": "be650df275f531ffdec490a3c1a038c9a9b65fde624ab5f28ac00111fc100f63",
+      "reason": "Optional exact-slot OriginalProvider retained by final OriginalEffects, identity and resolved-address checks"
+    },
+    {
+      "path": "anadius-native-source/original_effects.cpp",
+      "before_sha256": "44e5dadee6249de342ff7c31c8beeb38a5109b0992c823156ed202aae23b0cf1",
+      "after_sha256": "420fedbd6aa1d5b30a4c97a3af0b71339cfdf86c49fb3f39a770fbf37b32b520",
+      "reason": "Explicit out-of-line destructor releases optional original provider through virtual base destruction"
+    }
+  ],
+  "prior_changes_record_sha256": "78319a66584c6c2528d92fe4e8538eedc30462f6d3420f8c02fe06472780b25d",
+  "findings": [
+    {
+      "topic": "Exact-slot provider and explicit retained code owner",
+      "result": "PASS",
+      "evidence": [
+        "originals.hpp:5-20",
+        "originals.cpp:10-19,44-50",
+        "../anadius-callback-policy-source/policy.hpp:45-60",
+        "../anadius-callback-policy-source/policy.cpp:69-80",
+        "../anadius-native-source/native_callbacks.hpp:97-151"
+      ],
+      "observation": "The selected factory retains its explicitly supplied code-lifetime owner and binds after RuntimeSeed reaches its stable owner. Resources factory constructs Bound using the exact final OriginalSlots array; Storage and OriginalEffects retain that provider. Selected factory returning null rejects instead of falling back to legacy. OriginalEffects constructor rejects another array even when slot values equal; each selected dispatch also compares returned address with the live requested slot before the SDK cast. Optional legacy behavior remains. A generic nonnull owner does not itself validate executable code, pin a module or prove a trampoline belongs to the hook engine."
+    },
+    {
+      "topic": "Delayed setup and seal before foreign publication",
+      "result": "PASS",
+      "evidence": [
+        "originals.cpp:20-41",
+        "../anadius-native-context-source/context.cpp:41-50",
+        "originals_tests.cpp:11-42",
+        "originals_integration_tests.cpp:63-76,93-115"
+      ],
+      "observation": "Created refuses loads. Setup permits only construction controller loads of current nonzero slots, so controller callbacks can see engine writes before setup completes. Setup_complete is controller-only and seals all ten values, including empty/unselected slots, then publishes Ready under the provider mutex. Owner seals before admission host_setup_complete can run its foreign readiness proof. Integration proof performs a foreign metadata load and therefore distinguishes Ready from Setup. Setup is one-use with no reseal/reset. No native initialization success is inferred from snapshot publication."
+    },
+    {
+      "topic": "Sticky rejection of published slot changes",
+      "result": "PASS",
+      "evidence": [
+        "originals.cpp:20-29",
+        "../anadius-native-source/native_callbacks.hpp:145-150",
+        "originals_tests.cpp:28-42,58-63",
+        "originals_integration_tests.cpp:78-91,171-196"
+      ],
+      "observation": "Ready compares the selected live slot with its sealed value before the zero check. An observed changed nonzero value or cleared formerly-nonzero slot enters Stopped before throwing, and restoration cannot reopen later loads. An unchanged sealed empty slot is uncallable but does not stop unrelated unchanged selected slots. Invalid enum is rejected before array access. Native changed/zero children prove original and replacement stubs remain uncalled while transient admission/PTD and native binding leases drain. Provider Stopped is a provider state, not automatic ForeignDomain poison."
+    },
+    {
+      "topic": "Lifecycle retention and in-flight drain",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-native-context-source/context.cpp:51-68",
+        "../anadius-native-source/original_effects.cpp:4",
+        "originals_tests.cpp:66-86",
+        "originals_integration_tests.cpp:93-139"
+      ],
+      "observation": "Owner stops the selected provider after successful admission pause and zero native calls. Failed pause with an in-flight original leaves provider callable so that the admitted call can finish. False quiescence or active close retains binding, provider and code owner. After successful binding close, provider stops but code ownership remains until Context/effects destruction. OriginalEffects has an explicit out-of-line virtual destructor. Own blocked SDK stub, actual source binding counts, fresh PTD cleanup and weak/destruction counts verify retention and single final token release. The lifetime test explicitly clears the moved-from std::function capture before asserting absence of external owners; no weak-symbol/ODR failure cause is claimed."
+    },
+    {
+      "topic": "SDK call boundary and metadata error state",
+      "result": "PASS",
+      "evidence": [
+        "originals.cpp:7,20-43",
+        "../anadius-native-source/original_effects.cpp:6-15",
+        "originals_integration_tests.cpp:35-43,102-128"
+      ],
+      "observation": "Provider metadata gates preserve WinLastError and are released before returning the SDK address; no mutex spans actual original invocation. The own folder SDK stub re-enters provider metadata successfully, observes exact incoming arguments/error, writes its output prefix and returns the exact HRESULT with outgoing error. Existing ten typed OriginalEffects routes still use SDK signatures; this source-level type routing is not original native ABI/executable-provenance proof. New selected original calls do not gain lower PTD pre/post checks."
+    },
+    {
+      "topic": "Failed hook output is not readiness or hook success",
+      "result": "PASS",
+      "evidence": [
+        "originals_integration_tests.cpp:140-167",
+        "../hook-engine-source/adapters.cpp:9-17",
+        "../anadius-host-init-source/host_init.cpp:17-40"
+      ],
+      "observation": "Controlled create failure8 preserves the nonzero original-output prefix transferred by the existing adapter, skips enable and leaves enabled-target publication empty. Provider may seal/read that integer as metadata while an independent readiness proof remains false. A foreign admission is rejected before attempting to execute the synthetic address. Neither nonzero slot nor owner retention is treated as hook success or valid code. Cleanup succeeds only using a separately supplied synthetic external-quiescence proof."
+    },
+    {
+      "topic": "Independent source/hash review and test attribution",
+      "result": "PASS",
+      "evidence": [
+        "originals_tests.cpp",
+        "originals_integration_tests.cpp:78-91,171-209",
+        "work/b23-core-quick-results.json",
+        "work/b23-integration-quick-results.json"
+      ],
+      "observation": "Reviewer authored neither production nor core/integration tests and did not rerun passed quick tests. Root executed41 core checks; /root/b22_integration executed24 integration checks. Source and executable SHA-256 values were independently verified. Three own child success codes231/233/234 require typed warming/mismatch/zero rejection predicates plus no stub execution and drained actual source leases. Generic abort239 and unexpected return230 cannot count as success. Test data, heap/FLS, SDK stubs and engine are synthetic source fixtures; no original/rebuilt target DLL, game, real hook operation, real process creation, network or user contents were used."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Only explicitly selected Resources.originals uses this provider; legacy/raw original slots remain supported outside the selected path. The real runtime array must stay alive at its stable address through provider users and Context shutdown.",
+    "The supplied shared code owner must actually keep selected code/trampolines callable. Nonnull generic ownership, sealed integers and SDK casts do not validate code provenance, original ABI, hook installation or DLL equivalence; no module is loaded/pinned and explicit engine uninitialize/unload is not prevented.",
+    "Caller must serialize slot writes to controller Setup and keep Ready slots immutable. Provider metadata locking cannot make unsynchronized raw writes safe. Raw pointer ABA, arbitrary provider/SDK reentry or temporary mutation restored between observations remain unsupported.",
+    "Setup_begin/setup_complete are single-use. If sealing succeeds but foreign remaining-provider proof throws, normal retry is the existing ForeignDomain.activate_foreign after its proof is corrected, not resealing Owner.host_setup_complete.",
+    "Provider Stopped prevents its future original loads but does not automatically mark ForeignDomain poisoned or deny unrelated spoofed callback branches. External policy must handle failed original dispatch; no global corruption recovery is supplied.",
+    "Original SDK routes receive slot ownership/publication checks but no new lower-call PTD pre/post wrapper. B18-B22 admission, actual-FLS, one-Execution, managed stream and selected compiler-provider contracts continue; wider provider and fallback synchronization remains a caller obligation.",
+    "Stopping provider loads, zero active-call counts and retained ownership are not proof that hooks are disabled or cached native callback entries cannot recur. External quiescence remains independently required before binding close and code teardown.",
+    "Seven online foreign calls, configuration/license/legacy document ownership, B10 historical debt, generic CRT, native ABI, hooks/unload and final PE/DLL proof remain open. There are zero new native bodies/closures.",
+    "The planned full common build241objects/237CPP/277groups plus19 framework terminal scenarios was still running at review time and is not reviewed or counted PASS here. Class layout changed and a full rebuild of consumers is mandatory."
+  ],
+  "claim": {
+    "selected_original_provider_retains_code_owner": true,
+    "exact_runtime_original_slots_identity_bound": true,
+    "controller_setup_uses_current_slots": true,
+    "all_ten_slots_sealed_before_foreign_activation": true,
+    "observed_sealed_slot_mismatch_stops_future_loads": true,
+    "changed_to_zero_also_stops": true,
+    "failed_hook_output_prefix_preserved": true,
+    "nonzero_slot_proves_hook_success": false,
+    "generic_token_proves_executable_code_or_module_pin": false,
+    "original_SDK_lower_PTD_pre_post_checks": false,
+    "external_quiescence_automatically_proven": false,
+    "legacy_provider_removed": false,
+    "original_DLL_or_game_execution": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Only architecture-review.json and architecture-review.md were written by this reviewer.",
+    "Core41 was run by /root; integration24 was run by /root/b22_integration. Reviewer independently checked records and source/EXE hashes without rerunning.",
+    "Earlier nonsticky mismatch observation is superseded by frozen implementation: Ready mismatch transitions to Stopped before zero validation, and restored slots remain denied.",
+    "The explicit out-of-line destructor is present. No speculative weak-inline destructor or ODR explanation is treated as established evidence."
+  ]
+}

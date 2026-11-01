@@ -1,0 +1,81 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B33",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B33",
+  "latest_dll_link_attempt": "B33",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B33 concreteSessionMemoryDomain owns a dedicated realApplicationMemory/sharedheapPTD lease,typedcontrol/proxy/block/map/rawbuffers,nonoverlappingboundedregions,stableconstructorScratch andprovidercontext lifetime. Native requestsrouteactualhostsizeof+alignedarrayprovenance. Whole-callOperation serializesregistry/checksthread,fiber,capturedPTD;pre/posteffectandexitidentity+stickyphasechecksretainviolations. Typeddestructorsonce,rawretryonlyconfirmedLive backingownership;unknownoutcomespoison. Retiringclosesadmissionbeforeownedproviderdeleters;mandatoryCloseddestructor. Two priorreadonlyobservationedits/850otherssame+4new=856;250objects/295groups;56+45=101checks.0newnativebody/ABIclosure;494mapped/498eligible/131normal/52historical unchanged. Realserver/IOoperation/executor/accept/rawjob/loader/foreignABI remainopen;genericCRTpaused.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "IO operation/handler bellek sahibi ve üretim server sağlayıcı bağlantısı",
+      "owned_session_memory_domain_available": "B33"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B34",
+    "priority": 1,
+    "title": "IO operation/handler bellek sahibi ve üretim server sağlayıcı bağlantısı",
+    "requirements": [
+      "Bind actual IO operation/handler allocation, projection and release to one owning production domain; preserve operation buffer and owner strong references through completion/cancellation",
+      "Reuse B33 SessionMemoryDomain and B30/B32 actual factory/disposal/read/message bodies; do not replace controlled scheduler tests with claims of kernel/async drain",
+      "Advance concrete ServerBackend/Transport/Scheduling andactualaccept021b00/0271a0 resource ownership; retainunknownselected0228c0 withoutrepeataudit or inventednativebody",
+      "KeepB31attach/detachfactoryhooks undefined until actualResources/loadercontext/rollback/quiescence policy exists; licensing/foreignABI remainexplicit;genericCRTpaused"
+    ],
+    "exit_criteria": "A real owned IO storage/provider edge is source-bound and tested on the existing session graph, with borrowed kernel/raw-job lifetimes explicitly retained."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": []
+}

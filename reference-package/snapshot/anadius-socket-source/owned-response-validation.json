@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "49622f69ba331734fdd90102766c57c65d568387c28a1bcfa0c01e15c6482ddf",
+  "test_results": [
+    {
+      "module": "socket_owned_response",
+      "result": "PASS",
+      "output": "PASS: 317 socket owned response checks; actual020cb0/021900/022280/0219d0, early destruction, cache reuse, byte flags, independent copy and residual cleanup",
+      "executable_sha256": "c4357d1b6273c987e8d161b8578295a3fd19b1cae4e522ad32a3c6396567a182"
+    },
+    {
+      "module": "socket_owned_response_integration",
+      "result": "PASS",
+      "output": "PASS: 120 socket owned response integration checks; actual028d30/021420/020cb0/021900/022280/0219d0/028270/02a500/021fd0/021a80/0261d0/025a70 source; controlled string copy/constructor/completion and injected send",
+      "executable_sha256": "4b0f5215e44f87d12e854dcf67ecb28514dd034fe79d497f942697f65e564064"
+    }
+  ],
+  "core_checks": 317,
+  "integration_checks": 120,
+  "source_hashes": {
+    "owned_response.hpp": "0c1a23789740ac7948bfda66bcac00040c99eae0589db6bf8cacf1471b6f1b56",
+    "owned_response.cpp": "a9125c30bf6d551a3eb32435ab088c8266a60f421e545e5e211c4fd34a7c821c",
+    "owned_response_test_fixture.hpp": "ea548f4dcb1ba2890d2a7fcb87359a7816817d75034e23fb13a564946ea57c01",
+    "owned_response_tests.cpp": "77fb307cf79f5b503bc136c45e30ee2091e89d72e114382b07871bfa80a2ee2e",
+    "owned_response_integration_tests.cpp": "4567e708abc1e5fa2ded80a3b632952df72ccd236f808ab1444cd2896349d9a6",
+    "build.ps1": "938e8aa82aa367a5d7e323e03d45636896e9af85a2ef36566843e61f220fd867",
+    "CMakeLists.txt": "9b879ec2ec7fe3cdbe1f52419fe4ddc281a5cac1ef1b8091dab8337926d5c536"
+  },
+  "original_procedures_added": 3,
+  "execution_scope": "020cb0/022280/0219d0 normal bodies; actual021900 and N1/N2/queued-write/send/composed/finish; controlled009eb0 COPY,026670 growth,033d70/023dd0 and completion adapter; injected AsyncSendApi",
+  "not_executed_by_new_tests": [
+    "native009eb0/026670 bodies",
+    "real033d70/023dd0 provider bodies",
+    "native027a20/IOCP routing and handler scheduling",
+    "027c10/outer worker",
+    "SDK WSASend/real thread/socket/network or original DLL/game"
+  ],
+  "core_callee_injection": "Explicit isolated022280 invoker/0219d0 write callback parameters; recovered factory/slot bridge uses actual defaults",
+  "previous_local_records": "26 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

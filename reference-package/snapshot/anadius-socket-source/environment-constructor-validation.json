@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 544,
+  "integration_checks": 626,
+  "output": "PASS: 544 socket environment constructor core checks; actual023dd0, zero and signed nonzero comparator, wrapped type identity, cached factory despite executor deletion, live moves and guard cleanup, exact exception prefixes and bounded registries\nPASS: 626 socket environment constructor integration checks; actual023dd0/021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends",
+  "source_hashes": {
+    "environment_constructor.hpp": "cec032a7f42a07bb852319cd0bf5639fe7243cd7fd6b8bb9b25bbd6cfe2bd050",
+    "environment_constructor.cpp": "bc47e1f2fbc9bc30e0142d0d97c872b66c1aa17247889af38355eb2966f55d88",
+    "environment_constructor_tests.cpp": "b58724f0cbf01c6e0179a324cd0dcfbe1fe2de5f551649438f3089f79f6afd43",
+    "environment_constructor_integration_tests.cpp": "1b805ae057592bb9fd0552e11b1b666d2300551c9a618a2cb6a24cf25f5f53a8",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 1,
+  "execution_scope": "023dd0 retained normal body with existing023cb0: exact type-query/opaque type+8 comparator sequence, zero and signed nonzero branches, address wrap, default sentinels, cached slot58 factory before source query deleting native executor projection, two defined-field moves with live operations/state/schedule/executor order, conditional first and unconditional final live destroy, exact callback exception prefixes, bounded missing/ambiguous registries; actualRecoveredConstructedWriteEffects/023dd0/021fd0/0261d0/027c10/0298b0/027a20/recovered handler scheduler three-chunk composition, early key2 completion and key0 fallback metadata replacement, borrowed/owned paths, allocator reuse and synthetic lifetime ends",
+  "required_providers": "04d2d0 CRT comparator remains an injected required provider, native type-query/factory58/move/destroy/prepare40/scheduler/weak deletion,025a70 application finish/025c40 receive,04b0bc allocation/04b788 free,GS TLS/guard CRT/exception storage and ABI ownership remain required; CRT production unchanged and paused",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; typed identities, temporary payload placeholders and defined-field callbacks do not reconstruct native vtable/ABI/heap/SEH or concurrency; exception tests assert normal sequence prefixes only and do not invent native unwind cleanup; no original/game/real SDK socket/network/TLS/IOCP/event/thread/wait or user cfg/token/achievement execution/read"
+}

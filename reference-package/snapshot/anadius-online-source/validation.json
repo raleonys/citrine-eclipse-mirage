@@ -1,0 +1,38 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-17T19:38:19.8136561Z",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)",
+  "tests": "online: 12869 checks passed (synthetic mocks only)",
+  "executable_sha256": "ea780355d7eab6201ccf882afdcf058344da0e51fafe5c27e97d589f2bdb7cb6",
+  "sources": [
+    {
+      "path": "online_tests.cpp",
+      "sha256": "63b11d362aaefae64143e3a8642193285456420dcd9ef1f4c8d1cef7877b7428"
+    },
+    {
+      "path": "online.cpp",
+      "sha256": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c"
+    },
+    {
+      "path": "online.hpp",
+      "sha256": "51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b"
+    },
+    {
+      "path": "recovered_effects.cpp",
+      "sha256": "07ca212e276421f44ec0d3c109ff0a23b35c01266d9a97349b61396944729ef3"
+    },
+    {
+      "path": "recovered_effects.hpp",
+      "sha256": "7259015541eb690bd45e9a7dab99afe4637fd2a1774051454ad230ee7e890bdd"
+    }
+  ],
+  "dependency_sources": [
+    "..\\anadius-libraries-source\\libraries.cpp",
+    "..\\anadius-path-source\\paths.cpp",
+    "..\\anadius-status-source\\status.cpp",
+    "..\\anadius-encoding-source\\encoding.cpp",
+    "..\\anadius-file-source\\binary_io.cpp"
+  ],
+  "execution_scope": "Synthetic in-memory mocks only; no native DLL load, user profile IO, provider call, original target or rebuilt target DLL executed",
+  "runtime_equivalence": "not established"
+}

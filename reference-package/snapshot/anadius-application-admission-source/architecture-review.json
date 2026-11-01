@@ -1,0 +1,257 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "stage": "B51",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T23:44:54.232272+00:00",
+  "review_mode": "Independent static production/lifetime/test review and read-only source/proof/log/EXE/compiler/archive/baseline verification. Reviewer executed no EXE/build/probe/helper mutator.",
+  "reviewed_source_hashes": {
+    "admission_tests.cpp": "75c3fd2ff53f65966b18da309ce8d1be8727dc3e1aee490fe986b235c530ac78",
+    "admission_integration_tests.cpp": "a51340c165d8d0449a98741fea9f07bf8becacb3d68bb16dc06e5f226cb8ecd1",
+    "../anadius-bootstrap-native-source/native_entries.hpp": "fc50135b8fa2678743544c8728e25d6ef94837dfd5956f77cb736ea7bf899674",
+    "../anadius-bootstrap-native-source/native_entries.cpp": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85",
+    "../anadius-bootstrap-owner-source/owner.cpp": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+    "../anadius-bootstrap-owner-source/owner_integration_tests.cpp": "49b1854edfe087c551429aaed06124ff190d88becf70a1e665eea23050823def"
+  },
+  "code_freeze": {
+    "path": "work/b51-code-freeze.json",
+    "sha256": "2ea58cb376ffdf964b780400a7c3a71957cc682699a79859430ac79fac75af29",
+    "all_six_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "path": "work/b51-core-quick-results.json",
+      "sha256": "5930f07892ce07ca0eb40b22bcb1b98b16ffeba07e99717f0777ecbe3de0e951",
+      "checks": 72,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b51-core-agent-results.json",
+        "sha256": "5095d924fc32cd5e770969083b3cfd95a6b395f7c334929a5b2bf5eed95af233"
+      },
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b51-core-agent.log",
+      "log_sha256": "4239ba9c1dc5e80b1cd2e3d4c06240295edc629b423e0c2aac0167b54f4a1920",
+      "executable_path": "work/b51-core-agent.exe",
+      "executable_sha256": "c97e384052e3602f0ee7f68644c52b140509909caedf8d6d46067fa345a4e301",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "archive_path": "work/b51-baseline-core.a",
+      "archive_sha256": "c782e1e3a05b80c2ed9e02d8e2651198a6dfb7968ee81ba8dea26a04008ead08",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "actual_used_source_hash_count": 7,
+      "actual_used_source_hashes": {
+        "admission_tests.cpp": "75c3fd2ff53f65966b18da309ce8d1be8727dc3e1aee490fe986b235c530ac78",
+        "../anadius-bootstrap-native-source/native_entries.hpp": "fc50135b8fa2678743544c8728e25d6ef94837dfd5956f77cb736ea7bf899674",
+        "../anadius-bootstrap-native-source/native_entries.cpp": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85",
+        "../anadius-bootstrap-owner-source/owner.hpp": "f12f284f5f23e27ebc320e9c5ac24fa016b5116dcbd615a566790568ca78e003",
+        "../anadius-bootstrap-owner-source/owner.cpp": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+        "../anadius-source/bootstrap.hpp": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210",
+        "../anadius-thread-source/threads.hpp": "ab28bd3937e109ff088fe40344af2491c8f8f5c6d69891d62fdfd331356824c8"
+      },
+      "source_scope": "Fresh modified native_entries.cpp and RuntimeOwner owner.cpp plus new admission_tests.cpp with selected actual-use interface headers. Immutable canonical B50 archive supplies prior Bootstrap source. This core directly exercises Binding/native entry trampolines and actual Bootstrap methods; RuntimeOwner close integration is compiled but its full backend integration is separately verified, not claimed here. A real own std-thread Application blocks in a selected provider behind real Win32 events. Sticky pause reports false until that existing Application lease drains while all new cached Application calls/reasons return FALSE with no Bootstrap/dependency/Errors admission or LastError change. Existing actual NoArgument worker lease remains live when pause becomes true, so Binding.close still rejects general Busy. Selected queued startup-thread lower owns actual payloads and later invokes reconstructed NoArgument/Boolean trampolines; no original CRT thread wrapper is substituted or claimed. Old Application and worker finish, all payloads and leases balance; Exit remains live, failed duplicate never unseals, old closed Binding cannot affect a distinct fresh binding, and fresh binding resets its own seal with no ABA guarantee. Main count excludes four exact-exit child policies: Application exception releases both counts before Errors, Terminate remains admitted while Application sealed, and prebinding/closed calls preserve prior error/terminate behavior. No original/rebuilt DLL, game, network, user configuration/token/license contents, loader/DllMain ABI, all-source quiescence or ABA protection is claimed.",
+      "isolated_children": [
+        {
+          "mode": "application",
+          "expected_exit": 1101,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "terminate",
+          "expected_exit": 1102,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "unbound",
+          "expected_exit": 1103,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "closed",
+          "expected_exit": 1104,
+          "observed_exit_verified_by_parent": true
+        }
+      ],
+      "root_normalization_only": true,
+      "reviewer_executed": false
+    },
+    {
+      "path": "work/b51-integration-quick-results.json",
+      "sha256": "d1ec91ac52c7b09ae9ae1e0e2ecfaa83ec36571c0b8deb2613d6ecc7397faab7",
+      "checks": 96,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b51-integration-agent-results.json",
+        "sha256": "4e976b488165ff62eeaed41bf42dee0c7e2d6e49c64edf7e97b7314695dc0c97"
+      },
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b51-integration-agent-results.log",
+      "log_sha256": "5e0be5848785d5d619d8c811ccec4c2910b9f18a5e07e463b72a29191764c21b",
+      "executable_path": "work/b51-integration-v2.exe",
+      "executable_sha256": "749f5300239a1f927ce0d90827faad696125785009fd198a48053f480e0f4cf4",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "archive_path": "work/b51-baseline-core.a",
+      "archive_sha256": "c782e1e3a05b80c2ed9e02d8e2651198a6dfb7968ee81ba8dea26a04008ead08",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "actual_used_source_hash_count": 4,
+      "actual_used_source_hashes": {
+        "admission_integration_tests.cpp": "a51340c165d8d0449a98741fea9f07bf8becacb3d68bb16dc06e5f226cb8ecd1",
+        "../anadius-bootstrap-native-source/native_entries.hpp": "fc50135b8fa2678743544c8728e25d6ef94837dfd5956f77cb736ea7bf899674",
+        "../anadius-bootstrap-native-source/native_entries.cpp": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85",
+        "../anadius-bootstrap-owner-source/owner.cpp": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887"
+      },
+      "source_scope": "ActualRuntimeOwner/SourceBackend+ApplicationWorker realaccept-onlypipe/IOCP/defaultCancel995/rootSourcecleanup, THREEactualDomainNativeThreads bootstrapworkers PLUSfourthsameDomain NativeThreads Application caller. ExistingApplicationpreadmitted/blocked inprovider guard afterbootstrap3workers andother2payloadscompleted. Controllerclose mustsetStopping+sealApplication butreturnfalseBEFOREbackendstop/join/request/cancel. CachedApplication(allreasons) false/LastErrorpreserved/noProvider/Erroreffects whileoldactive, andagainINSIDEgenuineStopSources callback afteroldAppreturns/realouterjoin. PreadmittedoldAppreturnsTRUE, genuineworkers/registeredNativeEXITcleanup remainadmitted andactuallyjoin/FLS; laterBindingunbindsallcalls0. Configuration/statecellsreadonlyAFTERoldAppjoin; providertracebeforejoinstableviaexplicitblocked-guardhappens-before. Otheraccept-onlydrainproofstillREQUIREDcallerprerequisite, notfullrawjob/foreign/kernel/unload/nativeABI/Resourcesloaderproof. NoOriginalDLL/game/usercontents/realnetwork/syntheticterminal/manualcounter. OwnsyntheticEXE only.",
+      "isolated_children": [],
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "immutable_authoritative_execution_record": {
+        "path": "work/b51-integration-v2-results.json",
+        "sha256": "4e976b488165ff62eeaed41bf42dee0c7e2d6e49c64edf7e97b7314695dc0c97"
+      },
+      "immutable_log": {
+        "path": "work/b51-integration-v2-results.log",
+        "sha256": "5e0be5848785d5d619d8c811ccec4c2910b9f18a5e07e463b72a29191764c21b"
+      },
+      "main_is_exact_immutable_copy": true,
+      "watched_source_hash_count": 6,
+      "watched_source_hashes": {
+        "admission_integration_tests.cpp": "a51340c165d8d0449a98741fea9f07bf8becacb3d68bb16dc06e5f226cb8ecd1",
+        "../anadius-bootstrap-native-source/native_entries.hpp": "fc50135b8fa2678743544c8728e25d6ef94837dfd5956f77cb736ea7bf899674",
+        "../anadius-bootstrap-native-source/native_entries.cpp": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85",
+        "../anadius-bootstrap-owner-source/owner.cpp": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+        "admission_tests.cpp": "75c3fd2ff53f65966b18da309ce8d1be8727dc3e1aee490fe986b235c530ac78",
+        "../anadius-bootstrap-owner-source/owner_integration_tests.cpp": "49b1854edfe087c551429aaed06124ff190d88becf70a1e665eea23050823def"
+      },
+      "watched_core_test_is_metadata_only": true,
+      "watched_legacy_regression_test_is_metadata_only": true
+    }
+  ],
+  "main_checks_total": 168,
+  "additional_isolated_children": 4,
+  "integration_isolated_children": 0,
+  "baseline": {
+    "zip_path": "outputs/dll-reverse-engineering.zip",
+    "zip_sha256": "fe48e06e9ede2600eff6ca1407202676d73f76d03fba15f34979d30eb3a76621",
+    "bytes": 284088748,
+    "entries": 6248,
+    "all_932_prior_snapshot_preimages_verified": true,
+    "prior_unchanged": 928,
+    "prior_modified": 4,
+    "production_sources_modified": 3,
+    "legacy_regression_tests_modified": 1,
+    "prior_modified_paths": [
+      "anadius-bootstrap-native-source/native_entries.cpp",
+      "anadius-bootstrap-native-source/native_entries.hpp",
+      "anadius-bootstrap-owner-source/owner.cpp",
+      "anadius-bootstrap-owner-source/owner_integration_tests.cpp"
+    ],
+    "prior_source_hashes": {
+      "anadius-bootstrap-native-source/native_entries.cpp": "624447b6c93172343368d8162fbc8964b9339ac03f1f4b12d4253bdf4499c3ed",
+      "anadius-bootstrap-native-source/native_entries.hpp": "3236b76f45c43f277ac17f03dde98cbbd88462ff6f93f384737fa8cb85582d5d",
+      "anadius-bootstrap-owner-source/owner_integration_tests.cpp": "6eb7b8956f98fda99a1f6097774fe92ceb4c157bc63d241b30014cbb1f6a9072",
+      "anadius-bootstrap-owner-source/owner.cpp": "6cb82edd31ac5617f6679f97a0d1eb04fce10644b802ed314950fca6cc16d9c3"
+    },
+    "new_sources": 2,
+    "new_sources_are_tests_only": true,
+    "production_sources_added": 0,
+    "total_sources": 934,
+    "baseline_archive_member_sha256": "c782e1e3a05b80c2ed9e02d8e2651198a6dfb7968ee81ba8dea26a04008ead08",
+    "archive_member_equals_actual_used_archive": true
+  },
+  "findings_resolved": [
+    "Lease checks current binding before the Application seal. A still-bound paused Application attempt returns FALSE without Bootstrap/provider/Errors invocation or source lease, preserving LastError. Old prebinding/closed error behavior is retained.",
+    "Admitted Application increments global and app-only counters under one gate; normal return and source exception unwind release both. pause atomically seals, checks exact owner and returns app_count==0 without waiting or blocking worker/exit/terminate admissions.",
+    "RuntimeOwner.close enters Stopping then pauses before backend stop/join. False retains binding/providers and permits the already-admitted startup to finish creating/registering its work; retry then uses actual backend shutdown.",
+    "Failed duplicate Binding cannot reopen the seal. Closed old Binding pause does not affect a distinct owner. Successful later binding resets admission only under pre-existing external quiescence; cached pointer rebind/ABA is explicitly not solved.",
+    "One prior owner integration test changed only the intended nested-close expectation from backend-stop/Busy to false/no-backend-stop, preserving later normal retry/drain. It is reviewed source metadata here and is verified by full common separately."
+  ],
+  "selected_scope": "Sticky Application-only HOST admission policy in existing native Binding and RuntimeOwner. No new production unit or native body. Counter covers Bootstrap source invocation through normal return/exception unwind, not permanent Errors callback, rejected-entry epilogue or full machine-entry lifetime.",
+  "native_accounting": {
+    "new_native_bodies": 0,
+    "new_ABI_closures": 0,
+    "mapped_canonical": 501,
+    "eligible_tags": 505,
+    "normal_native_claims": 139,
+    "historical_closed_providers": 52,
+    "last_native_body_stage": "B38"
+  },
+  "common_validation": {
+    "status": "PENDING_AS_OF_REVIEW",
+    "log_path": "work/b51-common-final-build.log",
+    "reviewer_claims_common_PASS": false,
+    "production_objects": 271,
+    "cpp_objects": 267,
+    "c_objects": 4,
+    "normal_groups": 331,
+    "terminal_groups": 19,
+    "composition_files": 111,
+    "composition_objects": 55,
+    "compiler_observations": 98,
+    "new_trait_values": []
+  },
+  "registration_role": {
+    "path": "work/b51-register.py",
+    "sha256": "aa40124185bed33e0e25bc3886c8c87e6cf3763a3c9ba89887cfc0626554443f",
+    "preview_author": "/root/b22_provider_audit",
+    "strict_read_only_preview": "PASS before root applied",
+    "applied_record": {
+      "path": "work/b51-registration-result.json",
+      "sha256": "075ebf9e762d182d976a139ac1160f1379abf2ee8f82b33796fc3c41c5d56b34"
+    },
+    "applied_record_mode": "APPLIED",
+    "applied_by_root": true,
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "helpers_prepared_only": [
+      {
+        "path": "work/b51-freeze-quick.py",
+        "sha256": "8b54485fe1f44e893188d8d01f6b5f96861093c3677653f6cf7cba486008e614"
+      },
+      {
+        "path": "work/b51-object-freeze.py",
+        "sha256": "5df8e75e89018e2944d9c0edd5be7c26ab5bc9ca69b2ee0559f0c7e88d14a464"
+      },
+      {
+        "path": "work/b51-link-context.py",
+        "sha256": "f77700455faf311b2594ee5c8c3ef9474d27847a70ad4c8e1a7250967a1d9d66"
+      },
+      {
+        "path": "work/b51-deliver.ps1",
+        "sha256": "e40fafe869f96b37fc6032c57b80e6d4b2240070c516baacfcd1eb3fbcee3a47"
+      },
+      {
+        "path": "work/b51-final-audit.py",
+        "sha256": "b5dba9fbc7118717685c59ac450424a2661cc55ede1a6bc117b2fc34759b4ab8"
+      }
+    ],
+    "metadata_author": "/root",
+    "metadata_docs_read_only_reviewed": true,
+    "helper_mutators_executed_by_reviewer": false
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "Application count covers only admitted Bootstrap SOURCE invocation. Original invoke releases source lease before permanent Errors.callback_exception; that opaque callback and rejected-thunk epilogue/full machine-entry execution are outside this counter. Errors/code/backing lifetime and external quiescence remain required.",
+    "One serialized control thread owns Binding/RuntimeOwner lifecycle. Pause does not stop existing worker/exit/terminate admissions or arbitrary external/foreign/rawjob/deferred/hook sources; backend stopper, tracked joins, hook/callback and SessionIo drain contracts remain.",
+    "Cached function pointers have no per-owner epoch. Rebind/ABA and whole-image unload safety remain unproven; a later successful Binding may expose the same static thunk to a different owner.",
+    "Core uses actual Bootstrap/native entry with controlled dependency callbacks, manually queued source worker payloads and own std-thread barriers; four isolated children validate source-exception, Terminate, unbound and closed policy only.",
+    "Integration uses actual RuntimeOwner/SourceBackend and FOUR real same-Domain NativeThreads: old Application caller plus three Bootstrap workers. Controller close refuses before backend stop while old source call is blocked; cached attempts all reasons have no effects. After old real join, existing accept-only real named-pipe CancelIoEx995/source cleanup/exit/three joins/FLS retire normally. Other Resources/lower SDK/policy providers remain selected and explicit.",
+    "Real pipe kernel compatibility is not network/AcceptEx/WSA interoperability. No early startup/pre-firstReady unknown ownership recovery, original native ABI/EH/concurrent scheduling or loader-lock attach/detach equivalence.",
+    "No new production unit or class layout change. Fresh native_entries.cpp/owner.cpp and matching headers override immutable B50 archive. Legacy owner integration test source change is metadata-only in these two new EXEs; full common must validate it.",
+    "Reviewer executed no EXE/build/probe/helper mutator. No original/rebuilt DLL/game, real network, CFG/token content, fresh REA/target bytes or security-block retry. IntegrationV1 historical, immutableV2 authoritative.",
+    "Common/object-freeze PENDING at review. Full Resources factory and external rawjob/foreign/hook lifecycle/loader hooks remain open. DLL BLOCKED; no whole-DLL completion percentage."
+  ]
+}

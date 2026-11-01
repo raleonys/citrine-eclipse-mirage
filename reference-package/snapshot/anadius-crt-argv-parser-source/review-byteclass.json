@@ -1,0 +1,44 @@
+{
+  "result": "PASS",
+  "reviewer": "independent argv_byteclass_review agent",
+  "checked_at": "2026-10-18T14:42:59.5198078Z",
+  "findings": [],
+  "scope": "Static independent review against retained 0x1800636c0 assembly and parser test/validation sources; no new test run or native/target execution.",
+  "binary_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "evidence": [
+    {
+      "address": "0x1800636c0",
+      "assembly": "ev_ed00e9744f46469e25bb27fb3ebac38f987cac9513a6ef9442c3389e0e6d9aa1"
+    }
+  ],
+  "checks": [
+    "The characters count is cleared before the pointer count is initialized to 1, and the program argument pointer is published before copying.",
+    "Program-name quote toggling, SPACE/TAB separation and terminator overwrite match 0x180063708..0x180063778; program-name quotes are not emitted.",
+    "Program-name provider call follows count increment and byte copy, including the NUL byte. MOVSX semantics are preserved by bit_cast<int8_t>.",
+    "DBCS trail bytes are copied as opaque data; syntax tests use the original lead byte. Provider nonzero tests use the full 32-bit result.",
+    "Subsequent arguments implement 32-bit backslash counts, even/odd quote escaping, paired quote behavior only when already quoted, and ordinary SPACE/TAB separation.",
+    "Later-argument character count increments occur after the provider call, with the extra DBCS count increment before trail copy; argument pointers/counts and final null sentinel follow the original order.",
+    "Empty output spans independently model null pointer outputs; declared span/input/trail/output exceptions are new bounded-model guards and are not claimed to be original exceptions.",
+    "Provider immutability and stable, disjoint storage are explicit contracts. Exception unwinding/SEH and native command-line acquisition remain outside this normal-flow source.",
+    "Inspected vectors cover argv0 special handling, empty/unmatched quotes, quote/backslash runs, DBCS syntax-looking trails, signed bytes, all four output modes, inverse-encoder properties, order observations and explicit guard cases."
+  ],
+  "validation_inspected": "validation.json: PASS 57718 checks",
+  "sources": [
+    {
+      "name": "parse.hpp",
+      "sha256": "31c0ddfdf238dba9204d1fb6af1dc12692d4d7a16ea9d69bef82ee25c632bcc6"
+    },
+    {
+      "name": "parse.cpp",
+      "sha256": "51079d3bd82066b2c9508453f54a60947d0f6eb94ff536a20c31dd6e53d231e1"
+    },
+    {
+      "name": "parser_tests.cpp",
+      "sha256": "27237c9ae6e1f65f262f9a54e1b8249b9a4916e004104b547bf2f1b3a961f2b1"
+    }
+  ],
+  "limitations": [
+    "Fixtures do not establish native locale selection or runtime DLL equivalence. The finite property corpus is not an exhaustive proof for all command lines."
+  ]
+}

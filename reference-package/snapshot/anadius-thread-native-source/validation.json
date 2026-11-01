@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T04:09:47.4876875Z",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-native-source\\win32_effects.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-native-source\\build\\win32_effects.o"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-native-source\\win32_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-native-source\\build\\win32_effects.o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-native-source\\..\\anadius-thread-source\\threads.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-native-source\\..\\anadius-crt-runtime-source\\runtime.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-native-source\\..\\anadius-crt-error-source\\errors.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-thread-native-source\\build\\win32_tests.exe"
+      ]
+    }
+  ],
+  "output": "PASS 367 synthetic Win32 thread bridge checks",
+  "target_execution": "none",
+  "native_execution": "Imported API addresses observed only; all seven API calls replaced by typed test fixtures",
+  "sources": [
+    {
+      "name": "win32_effects.cpp",
+      "sha256": "5cb6fe9d2b81e50e50813521b76d24aa098489c8ebf108191a5e9bdd610f6bf2"
+    },
+    {
+      "name": "win32_effects.hpp",
+      "sha256": "1d0baba064b509a8cbb8cc58751f064148321a8639e8a85dcbab7620dac0fc48"
+    },
+    {
+      "name": "win32_tests.cpp",
+      "sha256": "30ef2483f3d41f8c579a3be457e41117315764c3d1ce62df9e1399db4e7e3acf"
+    }
+  ],
+  "executable_sha256": "6707098d6ab3c161caa7bf6cc9b017347aaec6d891d702a60ffbb91b51409831"
+}

@@ -1,0 +1,77 @@
+{
+  "schema": "retained-bootstrap-logging.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_bundle": "outputs/anadius-rea-evidence.json",
+  "retained_bundle_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "read_bytes_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "stream_identity": "0x1800a4130",
+  "stream_identity_policy": "Opaque observed preferred-image identity; original stream bytes are not adopted or dereferenced.",
+  "literals": [
+    {
+      "va": "0x180083cd8",
+      "text": "LSX emu",
+      "bytes_hex": "4c535820656d75",
+      "nul_terminated": true,
+      "bytes_sha256": "2f10c128f7cac8685d1b316f4bbd66d7952cf6495b02bcc6df77758e8b576b96"
+    },
+    {
+      "va": "0x180086720",
+      "text": " version ",
+      "bytes_hex": "2076657273696f6e20",
+      "nul_terminated": true,
+      "bytes_sha256": "3e96ada11da2b6122a6b135b5807f71655536f6bd2e78f1d6f4a74f44b69b603"
+    },
+    {
+      "va": "0x180086718",
+      "text": "2.0.1.0",
+      "bytes_hex": "322e302e312e30",
+      "nul_terminated": true,
+      "bytes_sha256": "deed1a50746ebe40ce2ae9fd5ecff8bba75eec26b7de8d497b8fefb5e26cc0c1"
+    },
+    {
+      "va": "0x180086700",
+      "text": "Unhandled exception",
+      "bytes_hex": "556e68616e646c656420657863657074696f6e",
+      "nul_terminated": true,
+      "bytes_sha256": "f785c1b8a8bf5e413f0a2539929d8e581fc911e4ac27a043b3238cf77782e578"
+    }
+  ],
+  "retained_function_records": [
+    {
+      "va": "0x180006880",
+      "pseudo_evidence_id": "ev_fbcd6dd7e3f40d8a0949ddad6acfeb50aac3210ec0b8ffe4e7905d1397f3bb36",
+      "line": 4788,
+      "normalized_text_sha256": "c9bf2b910072de3653e12f54dab6be2cf31c7b51dfa9cef34e1fca9b8b7f1569"
+    },
+    {
+      "va": "0x1800088e0",
+      "pseudo_evidence_id": "ev_e32e8e2eddad4e3ec7d392028d39ca1acab03d86ac509c1bbffe7e88089f5f5a",
+      "line": 6578,
+      "normalized_text_sha256": "fe1e1c5a40a12c0eba448e25f5717ae028e208963dd9363f41c59984d176a9ee"
+    },
+    {
+      "va": "0x180038890",
+      "pseudo_evidence_id": "ev_fa9e792ca1dc6003fa08b9f989066ed017af372bde3045f31207ef552c7e855b",
+      "line": 44857,
+      "normalized_text_sha256": "6ae3c6df3b9b03c82350f9f6b283132a0125517b67b58f1ad37ad9590534b4e1"
+    },
+    {
+      "va": "0x180038920",
+      "pseudo_evidence_id": "ev_b35c015816e9d434a8d5dbb8a0296baf874922ffb138fb566a634535a3c178d3",
+      "line": 44900,
+      "normalized_text_sha256": "9b2c277e7f140ab94b19f21f5250822a91d3c26dac69e888a8de5d1183f1be56"
+    },
+    {
+      "va": "0x180038970",
+      "pseudo_evidence_id": "ev_e66705fdaa9bdd88fb50be13d22e354939026d931f472329e0f14e17c9fb4fbd",
+      "line": 44928,
+      "normalized_text_sha256": "b311dd60c90daf18da21c6fdcf90b7fa03afd44a90536a10d753d51330d35889"
+    }
+  ],
+  "selected_stream_policy": "Explicit owned compiler std::ostream, formatted C-string insertion and widened newline/put/flush via std::endl.",
+  "native_MSVC_stream_EH_ABI_equivalent": false,
+  "unexpected_return_policy": "Unconditional compiler abort differs from original INT3/debugger semantics.",
+  "original_inputs_read_by_author": false,
+  "original_execution": false,
+  "original_modification": false
+}

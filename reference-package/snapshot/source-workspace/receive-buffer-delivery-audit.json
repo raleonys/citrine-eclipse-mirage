@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T19:50:24.869026+00:00",
+  "prior_package_sha256": "f295f4c069495eb9c01b8215a44de5dc10fbe1db6a6d25d515d060f15fc3ca11",
+  "prior_source_count": 531,
+  "unchanged_prior_sources": 531,
+  "added_sources": [
+    "anadius-socket-source/receive_buffer.cpp",
+    "anadius-socket-source/receive_buffer.hpp",
+    "anadius-socket-source/receive_buffer_integration_tests.cpp",
+    "anadius-socket-source/receive_buffer_test_fixture.hpp",
+    "anadius-socket-source/receive_buffer_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 536,
+  "current_documents": 212,
+  "native_objects": 179,
+  "cpp_objects": 175,
+  "c_objects": 4,
+  "normal_test_groups": 171,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 44,
+  "new_checks": 4661,
+  "new_tests": [
+    {
+      "module": "socket_receive_buffer",
+      "result": "PASS",
+      "output": "PASS: 3977 receive buffer core checks; actual010040/008350, independent byte payload oracle, explicit growth anchors, alignment/header/free, symbolic max arithmetic and exact failure prefixes; no original CRT body claim",
+      "executable_sha256": "b1e1a37fe60a35d5588d2545d35c79c828d9ef876b31107db7d1e1e9f3b2d7aa"
+    },
+    {
+      "module": "socket_receive_buffer_integration",
+      "result": "PASS",
+      "output": "PASS: 684 receive buffer integration checks; actual010040/008350 byte storage with021d10/023dd0/injected SDK/027710/021a40; controlled prepare/commit caller, embedded NUL/EOF/error/owned cleanup;025c40 remains open",
+      "executable_sha256": "4690901b7154e053811c27de68f05ff19458dfc7d504bc2b374afc26dbabcc69"
+    }
+  ],
+  "validation_mirror_pairs": 22,
+  "historical_module_records_preserved": 21,
+  "historical_config_references_verified": 42,
+  "module_standalone_script_executed": false,
+  "inventory_data_checks": 7120,
+  "master_build_sha256": "fed49f4ca9c707a60034ad634cc5cd5679013ee4255ec4ff4c6cbf1606dd7466",
+  "normal_source_procedures_added": [
+    "0x180010040",
+    "0x180008350"
+  ],
+  "new_original_procedures": 2,
+  "original_CRT_byte_bodies_added": 0,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "R3 025c40 composed receive"
+}

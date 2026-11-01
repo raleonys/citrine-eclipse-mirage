@@ -1,0 +1,51 @@
+{
+  "reviewer": "crt_locale_native_audit",
+  "checked_at": "2026-10-20T13:27:32.1672718Z",
+  "result": "PASS",
+  "sources": [
+    {
+      "name": "native_tests.cpp",
+      "sha256": "11e60f80eb3ec7a46f5c299053a2a9526fc48b12f126ae332a8ef653f16c40f5"
+    },
+    {
+      "name": "native.cpp",
+      "sha256": "6d8421431b7ef2462c8b640d25d57894b59bc97bdf512df1d0f167e05c852f10"
+    },
+    {
+      "name": "native.hpp",
+      "sha256": "2a8a00a85ab883f1d98d9dadf0c9159881cac4a14c3a49c16a8b3a2614c43102"
+    }
+  ],
+  "build_script_sha256": "e89a68ce2983e634902fe2992b664bdf405b61c2822cce248ec4aa2ad1578a80",
+  "source_validation_hashes_match": true,
+  "repeated_executable_result": "PASS 750 native locale/ref/deep-free/FLS source integration checks",
+  "executable_sha256": "7be2ad824a4f87c92e46e96ee644431b1da547458f960ad565f5523880e42338",
+  "original_target_execution": "none",
+  "findings": [],
+  "reviewed_contracts": [
+    "Production Resources delegates lock/unlock through actual recovered ACRT entry points and atomic fetch-add through known registered typed LONG identities; inherited locale/resource methods remain actual recovered source.",
+    "Locale, Time and Lconv test objects have actual C++ lifetimes from construct_at, exact consumed offsets asserted, and actual LONG subobjects at locale10/time15c; these are declared fixture schemas rather than complete original recovered types.",
+    "Unique owned resource tree consists of133heapblocks and18counterbindings;87time pointer leaves and18lconv leaves match consumed source loops, with categoryname/extratext intentional single-free alias.",
+    "HeapFree observation unbinds all counters before native free while LONG objects remain alive; failed native free branch rebinds stilllive references. No source counter is dereferenced after successful free.",
+    "Counters map stays immutable throughout4worker execution: worker PTD blocks contain no registered inline counters and global plusmain references keep sharedtree alive until quiescent replacement.",
+    "Worker shared check counter is atomic, Memory block map uses mutex, per-worker success slots are distinct, and barrier holds4PTDs alive for main peak inspection. Globals/pointerfields/identities remain immutable until allworkersjoin.",
+    "Dynamic ref levels1global->2withmain->6withworkers->2afterjoin->1afterglobalreplacement->0aftermainrefresh are checked for all18counters; initial refs0->1->2->1->0 follow source replacement and explicit final global-owner release.",
+    "Source deep-free133blocks completes before postfree registry contains checks over numeric addresses; no reference to dead LONG object is formed. Initial refs and multibyte are unbound before fixture destruction.",
+    "FLS uninitialize occurs before VCRT/ACRT bank teardown; alljoinedworker callbacks and resource accesses complete while binding, heap, memory, counters and bank dependencies remain alive.",
+    "Modern and forcedmissing-export critical-section paths run via actual recovered ACRT/VCRT resolver/lifecycle sources; system loader fixture accepts onlyfixedWindowsmodule names."
+  ],
+  "limits": [
+    "Source-offset fixture construction does not establish original image-global initialization, full object types, private ABI or binary runtime equivalence.",
+    "Registry mutation requires quiescence of all users, including other counters; this fixture deliberately defers registered tree frees until workerjoin.",
+    "Unique resource graph does not prove arbitrary alias/double-free safety or behavior under concurrent global mutation/shutdown.",
+    "Native HeapFree failure restoration branch is reviewed but not exercised by an injected failure in this integration; C++ allocation exception rollback, SEH/unwind and complete DLL lifecycle remain unproven.",
+    "Reviewer reran existing own testEXE and compared its digest plus3sources to root fresh validation; root owns master-build verification."
+  ],
+  "retained_evidence": [
+    "../anadius-crt-locale-ref-source/evidence.json",
+    "../anadius-crt-locale-free-source/evidence.json",
+    "../anadius-crt-locale-resource-bridge-source/evidence.json",
+    "../anadius-crt-locale-thread-source/evidence.json",
+    "../anadius-crt-ptd-data-source/evidence.json"
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "schema": "callback-actual-PTD-checkpoints.v1",
+  "source_package": "B21",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_function_records": [
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180006d70",
+      "evidence_id": "ev_ddea68d70083a15fe46d222afc8aab9746f91c7339b12ef8b6ebddb7afb88461",
+      "line": 5055,
+      "normalized_record_sha256": "6279a820a8a41a419dd8c6056dc41834b9779a8ce7ea18db35b87c0c0555f096"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180006e60",
+      "evidence_id": "ev_28b7703e322b706cbfe3029aaed27c764c42157a56e1f9692d25ccebd462b652",
+      "line": 5115,
+      "normalized_record_sha256": "17bfd329f725ccac0ff87a6b2b8a5aec9c93cd1d3fc1f923f7e7b5a96c756fad"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18000fc00",
+      "evidence_id": "ev_1be83f0e2e6326ed3aaa979aebb8a627e3ac45c9fcf38a2bc9ae747c28d831a5",
+      "line": 12983,
+      "normalized_record_sha256": "51b8fe415666e702c08c9b79f485d5dcf7d7626085ac50d53a702518a7bb9e98"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180048ac0",
+      "evidence_id": "ev_8b2dc9f074fbdd6a4d17949cc0f5e7f7b1b6698739e0379880745e73aee71e7d",
+      "line": 58767,
+      "normalized_record_sha256": "fab9848d7eaaf874b2a2b9c0fa6335eeaa4196d0f36bf70cabd2dcb905d34707"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180048b30",
+      "evidence_id": "ev_cc136fc17c5651bb6cd83407898550fadae17e266eeea174bb81d623185640d0",
+      "line": 58818,
+      "normalized_record_sha256": "a0c9daccebc9c78f909c63c1d338fd9d034bfbffbeefca84f33bd45e504c99f6"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18005d724",
+      "evidence_id": "ev_36d45aaa708512542a5ccd22b34065cce5860aeb9d01348c8ff0423039bea225",
+      "line": 81286,
+      "normalized_record_sha256": "9e13135b6ebf50be760a94d73528332ecd4139c141cb0933abee16aa1c51b1c4"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800648fc",
+      "evidence_id": "ev_5b39f111b222558bd8e52132523a2e361a941261e916883af37f3e602c09927b",
+      "line": 88827,
+      "normalized_record_sha256": "884c0cd00752109577618569d698b3bfdd0848b3a2a4232394b471d3412a56ae"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800649ec",
+      "evidence_id": "ev_23ece12ba558d0057c31265d9b8efd21dd1a29b0ade68bd61f6fd47b3fd82e96",
+      "line": 88884,
+      "normalized_record_sha256": "89d41960e49f7072d3a39ca7a54b93675ffe33c5808d305420f7c46e3bef59ee"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180064b4c",
+      "evidence_id": "ev_417e90806543d688e3aec172b715642fa83a50b4501cb0ce6909f8f23989bc25",
+      "line": 88958,
+      "normalized_record_sha256": "33914cf80f7f072054b4f1bbcecce485b67c448e449c30298b6cbb1160f84856"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180064d08",
+      "evidence_id": "ev_b53da828b2289325d82d050c08eb43670664faf07979fcc96800099802656494",
+      "line": 89070,
+      "normalized_record_sha256": "3a51a3ccd65b74b3807e80df0f9c76fb7c21d9caaa2791dc5943f5d9444367c6"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180006d70",
+      "evidence_id": "ev_a90dd26ad44c137577375ab38fd9ea5ba5da887f91d92b8a40029d704ee4f3db",
+      "line": 6414,
+      "normalized_record_sha256": "2c3c4da7be0d424b9f5eb372c5e4aaa0ae633197177fccd7bb0ff11e91d42e3a"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180006e60",
+      "evidence_id": "ev_b89eafb79c34eb12205fa70d4a14ffd476ddc4142f32c7d7eddb8e4c36d34297",
+      "line": 6484,
+      "normalized_record_sha256": "ff46064e94aa6b53f26bcf3f9c814b33e1ed65624bef914e8fa4555332bdaedd"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18000fc00",
+      "evidence_id": "ev_cefeadeb04ff875f14ebe8ffb73e6b4101cdfa082866db164d1a986ad55a2388",
+      "line": 16077,
+      "normalized_record_sha256": "b3cd0996e2c556669a4f1cdfb4aa66d4277f021bfe5f267de44677718d7b6279"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180048ac0",
+      "evidence_id": "ev_046b69ab0ad56e98d17f76263401000e7ec281ad5fd617847876462c0cbbeff9",
+      "line": 75245,
+      "normalized_record_sha256": "64f25253fc2df1514e9a38a3caf1a7167551c377aa00d40b433292295957b1c0"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180048b30",
+      "evidence_id": "ev_9261beaef45db73e50b6eca26833fe4fbc6e4a09863942eba65958c4fd04f7bc",
+      "line": 75279,
+      "normalized_record_sha256": "2e8c6a5ec7f888ae4eb73388a277db299b45ce59162cc34e507e532741763ae1"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18005d724",
+      "evidence_id": "ev_791468a44befd8407f73024c9a6fb936102bd285151cbb6e7629fb185dfddd72",
+      "line": 98916,
+      "normalized_record_sha256": "4c3189896699270a02583d305cc589f01d57b5f8dcbcbb991a9b6285f9548a36"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800648fc",
+      "evidence_id": "ev_88186886d4677768f1851ce8c092179c1504315e64f8e6ad9343fe9070c85996",
+      "line": 107310,
+      "normalized_record_sha256": "880a915bb0b3360f4a315cdf59d0ee9ba56790b7c3c6c57a4dacf0535add738b"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800649ec",
+      "evidence_id": "ev_ba3d48f4843ba885cca4d5f43b70157e29051f4310beb85118c84f5d82a9ef87",
+      "line": 107373,
+      "normalized_record_sha256": "f0c218b1e517a0705b361aac8d4cb86dc6b276b188699c1f3006e79bdcd4fa46"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180064b4c",
+      "evidence_id": "ev_4e604ba0d5a58864500375177f08b08ad79324458b88be38464c17ffaac4a598",
+      "line": 107464,
+      "normalized_record_sha256": "0da131bf57747265bb56da59dcfe2c0a4effa9444338b4df32195f9b87f42593"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180064d08",
+      "evidence_id": "ev_a0be4a11487767600e7fb447b80cb439aa5721a79f67c30653bdbc6784555f1d",
+      "line": 107596,
+      "normalized_record_sha256": "b7ffdf6445c4be56e548992ed5d73e48ca36b070d77f7bac2d158159a6cd7448"
+    }
+  ],
+  "prior_evidence_path": "outputs/anadius-shared-log-source/source-evidence.json",
+  "prior_evidence_sha256": "6df3620ab562e623e913deb196c11e2fe5f6bdd03739a67896bdc3b2be79c4cc",
+  "new_original_data_bytes_read": 0,
+  "new_native_decompilation": false,
+  "retained_session": {
+    "path": "outputs/anadius-shared-log-source/rea-session.json",
+    "sha256": "0e75d3ae18b21406fc49384f6014d67fe8d7d75ad677f1cc676aa7fdbabd2bec",
+    "scope": "B20 binary_session verified REA6.5.0/Ghidra12.1.4 available; B21 source-only, no target open/query"
+  },
+  "source_extensions": [
+    "Actual expected FLS pointer checked before fresh snapshot dereference; borrowed contents not inspected/adopted",
+    "Metadata reservation releases both CallbackThreads and outer ForeignDomain mutex before provider get",
+    "Caught same-owner permission-probe reentry leaves sticky poison; wrong-owner query rejects without poisoning",
+    "Cleanup start permanently ends body permission, even known detach false with LastError0; explicit cleanup retry retained",
+    "Native admission validates PTD after attach before body/original access",
+    "Foreign factory wraps owned encoding: pre/post permission around all five lower virtual routes, no mutex across lower call",
+    "Valid lower exception rethrown unchanged; invalid postcondition takes priority, output prefixes not rolled back",
+    "Compiler CRT locale/codepage/handler remains separate and unfrozen; raw free/ABA/arbitrary provider reentry excluded"
+  ],
+  "quick_results": [
+    {
+      "path": "work/b21-core-quick-results.json",
+      "sha256": "651962b411e6e35c23317d4e5a73fdd91e91e8c465a2fc37e4b3bb0956baed6d",
+      "checks": 25,
+      "execution_by": "root; independent reviewer verifies source and EXE hashes, no reviewer rerun claimed"
+    },
+    {
+      "path": "work/b21-integration-quick-results.json",
+      "sha256": "1f79f38e5ee3d0819041e1f455b0bb5540a2b2ada1ca7da8cfb46b89e6b02bfd",
+      "checks": 27,
+      "execution_by": "root; independent reviewer verifies source and EXE hashes, no reviewer rerun claimed"
+    }
+  ],
+  "source_hashes": {
+    "identity.hpp": "c1f52ba7f8fe43cc5f41cf759bded2e3e2b06cc0257f56d689815920eb448c04",
+    "identity.cpp": "5a59449cd280841acd77883629b2dd7d702f571f458691833f7dcdfa913bd8c8",
+    "identity_tests.cpp": "b320e814b5fbbf97e2fde70b6cdc1ad63127e8673f4be23cc6e3a62c0db53363",
+    "identity_integration_tests.cpp": "d0f47a58cfcef518a788d14790952d0588f0700e2d477bd12cd343d664c46079",
+    "identity_test_fixture.hpp": "aac1923704da483cb2f2ef6d35bf7847477a7f575e9a9d4336bff49f3e7fbb14",
+    "../anadius-thread-domain-source/domain.hpp": "37bf2a7947afee97bf3a7fa12dabf6e64124eaeb84ae6c40f2d6731c84926276",
+    "../anadius-thread-domain-source/domain.cpp": "0fd55b040243e7f88b6401ffaa73cebe8b8dc5d38441662f0b7aa811d2dcaf9c",
+    "../anadius-foreign-callback-source/foreign.hpp": "353327a7367fe9579e5207c97394f64c64426a70f3365136719305e3722cc992",
+    "../anadius-foreign-callback-source/foreign.cpp": "c4f85a5a76e2443f2474a3160cffefb4849d8b5267b293a9984c215ae2b8ed03"
+  },
+  "prior_source_changes": [
+    {
+      "path": "anadius-foreign-callback-source/foreign.cpp",
+      "before_sha256": "78d03ca7164949e04364689293c45c5e5a190ed134dcb2e39b45f9801e31fc84",
+      "after_sha256": "c4f85a5a76e2443f2474a3160cffefb4849d8b5267b293a9984c215ae2b8ed03",
+      "reason": "Release Domain mutex before actual PTD probe; check admission before body; wrap owned encoding pre/post lower calls with same permission"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.hpp",
+      "before_sha256": "24508bb44cab0b5b553593d3a294ad99eaab5b959a16ba7215fa9347d1160d9d",
+      "after_sha256": "353327a7367fe9579e5207c97394f64c64426a70f3365136719305e3722cc992",
+      "reason": "Declare const permission poison/publication bookkeeping without changing field order"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before_sha256": "7e56567bd85815ed10d54515fbb5b9df01913dbe418871e074c4da99ce5360a4",
+      "after_sha256": "0fd55b040243e7f88b6401ffaa73cebe8b8dc5d38441662f0b7aa811d2dcaf9c",
+      "reason": "Probe actual FLS identity without metadata mutex; retain sticky caught-reentry poison and cleanup-start exclusion, preserving known cleanup retry"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.hpp",
+      "before_sha256": "46258112cabee4a0e831f0a8f978cfde9a95f91bad48f2696e67baa97ee262e5",
+      "after_sha256": "37bf2a7947afee97bf3a7fa12dabf6e64124eaeb84ae6c40f2d6731c84926276",
+      "reason": "Document actual-FLS/fresh-snapshot body permission, retained unknown outcomes and sticky cleanup exclusion"
+    }
+  ],
+  "test_authorship": {
+    "production_and_core": "root",
+    "integration": "/root/b18_state_audit; root added zero-original-call prebody predicate",
+    "independent_review": "/root/b18_ptd_audit"
+  },
+  "terminal_evidence": "Core170..175 and integration211..215 are exact state/typed predicates followed by own TerminateProcess; generic abort239/unexpected return230 cannot PASS.",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

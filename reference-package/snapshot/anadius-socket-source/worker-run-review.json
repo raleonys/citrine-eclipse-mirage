@@ -1,0 +1,47 @@
+{
+  "result": "PASS",
+  "reviewer": "worker_run_audit",
+  "scope": "Independent frozen four-source review against complete retained026320/029890/0298b0/02a190 assembly and pseudocode",
+  "sources": {
+    "outputs/anadius-socket-source/worker_run.hpp": "191ac2548f32bd8828d5d3d12b9ce41f99716e1f9028ae554e2d483fab06df0f",
+    "outputs/anadius-socket-source/worker_run.cpp": "1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4",
+    "outputs/anadius-socket-source/worker_run_native.hpp": "0abeed67dba180b8506005ecaade1093b1e966e847953a094cb8855e13c76d93",
+    "outputs/anadius-socket-source/worker_run_native.cpp": "df0d743263b53d4845456d78766e86daa47c9bf4358f51b91ff25f8dcda3ec38"
+  },
+  "report_sha256": "16f882745ed6b96367df3cb47f8b69ef62ab4aedd981b3aab0165081e3a0dcca",
+  "audit_report_sha256": "65bc98f81489a761c1a18c939d3a883beb22a46154bb641e7cd7ba608e920643",
+  "audit_json_sha256": "ff36a15a5c46aa46726a78bb7c0911766182d2badcfc4ffe83f484ca07c9f93e",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180026320",
+    "0x180029890",
+    "0x1800298b0",
+    "0x18002a190"
+  ],
+  "new_original_procedures": 4,
+  "core_contract": "Atomic low32 work fetch_add0; zero branch actualstop then logicalsuccess/categoryA10F8 with unknownnativepadding; activecount0/pair0 then04a240 then10cachezero; frame portaddress/state/previous; freshindex get/install/restore; required027c10(INFINITE,state,result) loop with uint64saturation; restoreLIVEframe.previous; ascendingLIVEslot04b788;04a2cc last; no invented unwind",
+  "stop_contract": "Required low32 stop34 exchange1 then prior0only wake38 exchange1; prior0only liveport post(0,0,null); failurecachedLastError/categoryALWAYS/nonzeroonlyraise028240 opaque084530; noflagrollback",
+  "function_contract": "029890 scheduler18/actual0298b0/localresultdiscard;026320 cachedthisidentity/table0844b8/lowflagbit conditional04b0f8(this,32)/noaccessafterdelete",
+  "composition": "RecoveredWorkerFunctionEffects joins actual startup/old05e8e0/entry/run/deleting slots; four SDK import adapter injectable/no constructor calls",
+  "providers_not_recovered": [
+    "027c10 dispatcher",
+    "04a240 / 04a2cc / 049be0 CRT effects",
+    "04b0f8 / 04b788 native allocation ownership and lifetime",
+    "Native low32 atomic storage and concurrency",
+    "Native exception/SEH/unwind",
+    "Executable vtable binding and complete DLL ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Typed live projections are not native stack/memory or ABI overlays",
+    "Native status and state padding undefined; logical defined fields only",
+    "Null scheduler unsupported explicit host guard",
+    "Live frame.previous mutation remains visible on restore",
+    "Existing CRT production unchanged and required providers are not counted as recovery",
+    "No complete original DLL equivalence claim"
+  ]
+}

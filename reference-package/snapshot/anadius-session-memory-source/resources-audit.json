@@ -1,0 +1,32 @@
+{
+  "schema": "owned-session-memory.resources.v1",
+  "result": "OWNED_SOURCE_PROVIDER_WITH_EXPLICIT_RUNTIME_BOUNDARIES",
+  "owns": [
+    "dedicatedApplicationMemory and its sourceDomainStorage lease",
+    "LifecycleEffects owningservice root",
+    "typedcontrol/proxy/block/map andrawbufferallocationtickets",
+    "nonoverlappingregionregistry",
+    "stableactualpartialConstructionScratch",
+    "retiredrawfreetickets andstickyfailurestate"
+  ],
+  "does_not_own_or_prove": [
+    "pendingkernelIO/OperationStorage/FrameClosure testallocations",
+    "externalpendingSocketObject lifecycle",
+    "arbitrarydetachedrawjobdrain",
+    "actual0228c0executorbody",
+    "fullServerBackend/Transport/Scheduling",
+    "loader-safeDllMain/startup/unload",
+    "nativeMSVC/STL/classlayout/foreignABI/EHrollback"
+  ],
+  "failure_rules": [
+    "Reserve ledger+regioncapacity beforebackingeffect",
+    "Placement-inittypedpointerarray,distinguishnativefreebytes fromhostextent",
+    "Typeddestructoroncebeforephysicalfree;retriableLive rawonly,neverretryMissing/Busy/Unknown",
+    "ObservedPTDmismatchsticks aftercallerrestore;pre/posteffect/exitchecks coverthisprovideredge,not arbitrary transientABA orfreeofPTD",
+    "Closefalse retainsownership,doesnotstopallocation;successfulclose needs externaldrain,Retiring admission beforedeleters",
+    "Partialconstructorscratchretainedwithoutinventedrollback;ownchildtests intentionallyretain failedprocessstate andterminateownprocess withoutunsafeC++cleanup"
+  ],
+  "last_error_scope": "Read-only backing getters preserveLastError. WholeOperation/mutex-wide LastError preservation is not claimed.",
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0
+}

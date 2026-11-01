@@ -1,0 +1,383 @@
+{
+  "kind": "16-pair typed binding ledger only; no production dispatcher",
+  "checked_at": "2026-10-20T19:33:05.804Z",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "report": "work/acrt-pair-bindings-audit.md",
+  "pairs": [
+    {
+      "index": 0,
+      "initialize": {
+        "va": "0x180064468",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x0",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "locale_startup.initialize_locale_064468",
+      "recommended_uninitialize": null
+    },
+    {
+      "index": 1,
+      "initialize": {
+        "va": "0x1800644b0",
+        "symbol": "FUN_1800644b0",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x0",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "cache.initialize_encoded_globals_0644b0",
+      "recommended_uninitialize": null
+    },
+    {
+      "index": 2,
+      "initialize": {
+        "va": "0x180067538",
+        "symbol": "FUN_180067538",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x18006755c",
+        "symbol": "__acrt_uninitialize_winapi_thunks",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "cache.initialize_thunks_067538",
+      "recommended_uninitialize": "cache.uninitialize_thunks_06755c(low8 argument)"
+    },
+    {
+      "index": 3,
+      "initialize": {
+        "va": "0x180006500",
+        "symbol": "FUN_180006500",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x180006500",
+        "symbol": "FUN_180006500",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "noop006500",
+      "recommended_uninitialize": "noop006500"
+    },
+    {
+      "index": 4,
+      "initialize": {
+        "va": "0x1800625b0",
+        "symbol": "__acrt_initialize_locks",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x180062614",
+        "symbol": "__acrt_uninitialize_locks",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "locks.initialize_acrt_0625b0",
+      "recommended_uninitialize": "locks.uninitialize_acrt_062614"
+    },
+    {
+      "index": 5,
+      "initialize": {
+        "va": "0x1800704cc",
+        "symbol": "FUN_1800704cc",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x1800704e8",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "heap.initialize_heap_0704cc",
+      "recommended_uninitialize": "leaf0704e8:sharedheap handle=0"
+    },
+    {
+      "index": 6,
+      "initialize": {
+        "va": "0x0",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x1800644f0",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": null,
+      "recommended_uninitialize": "leaf0644f0:vcrt.uninitialize_04d5a8(shared,0)"
+    },
+    {
+      "index": 7,
+      "initialize": {
+        "va": "0x180064e90",
+        "symbol": "__acrt_initialize_ptd",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x180064ecc",
+        "symbol": "__acrt_uninitialize_ptd",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "ptd.initialize_064e90",
+      "recommended_uninitialize": "ptd.uninitialize_064ecc"
+    },
+    {
+      "index": 8,
+      "initialize": {
+        "va": "0x180067890",
+        "symbol": "__acrt_initialize_lowio",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x1800678cc",
+        "symbol": "__acrt_uninitialize_lowio",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "mandatory lowio067890",
+      "recommended_uninitialize": "mandatory lowio0678cc"
+    },
+    {
+      "index": 9,
+      "initialize": {
+        "va": "0x18006f9bc",
+        "symbol": "FUN_18006f9bc",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x180006500",
+        "symbol": "FUN_180006500",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "commandline06f9bc:shared A/W views",
+      "recommended_uninitialize": "noop006500"
+    },
+    {
+      "index": 10,
+      "initialize": {
+        "va": "0x18006f5f8",
+        "symbol": "__acrt_initialize_multibyte",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x0",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "multibyte.initialize_multibyte_06f5f8",
+      "recommended_uninitialize": null
+    },
+    {
+      "index": 11,
+      "initialize": {
+        "va": "0x0",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x180006500",
+        "symbol": "FUN_180006500",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": null,
+      "recommended_uninitialize": "noop006500"
+    },
+    {
+      "index": 12,
+      "initialize": {
+        "va": "0x0",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x180064538",
+        "symbol": "FUN_180064538",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": null,
+      "recommended_uninitialize": "argv_bridge.cleanup_064538"
+    },
+    {
+      "index": 13,
+      "initialize": {
+        "va": "0x0",
+        "symbol": null,
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x1800644f8",
+        "symbol": "FUN_1800644f8",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": null,
+      "recommended_uninitialize": "lifecycle_callbacks.uninitialize_multibyte_0644f8"
+    },
+    {
+      "index": 14,
+      "initialize": {
+        "va": "0x180006500",
+        "symbol": "FUN_180006500",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x1800644a0",
+        "symbol": "FUN_1800644a0",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "noop006500",
+      "recommended_uninitialize": "environment_cleanup.uninitialize_callback_0644a0"
+    },
+    {
+      "index": 15,
+      "initialize": {
+        "va": "0x18006447c",
+        "symbol": "FUN_18006447c",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "uninitialize": {
+        "va": "0x180006500",
+        "symbol": "FUN_180006500",
+        "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+      },
+      "recommended_initialize": "lifecycle_callbacks.initialize_onexit_tables_06447c",
+      "recommended_uninitialize": "noop006500"
+    }
+  ],
+  "signature_requirements": [
+    "boolean initializer returned uint64 is tested only in low AL;067538 must not require full value1",
+    "uninitializer uint32 argument forwarded as uint8 for06755c, not bool(argument)",
+    "0644f0 forcibly passes0 to VCRT shutdown",
+    "void/int/C++ initializer signature domains remain distinct from pair bool/uninit",
+    "Opaque rebuilt bindings only; original VA never callable",
+    "Fixed live mutable16entry storage; walker rereads reached entries"
+  ],
+  "walker_semantics": {
+    "normal_reverse": "uninit nonnull sufficient; argument0",
+    "rollback": "prior entries only and initialize+uninitialize bothnonnull; argument0",
+    "terminating_true": "0645cc skips callbackwalker"
+  },
+  "critical_aliases": [
+    "runtime State shared between cache init/resolver/uninit; immutablecookie selected before construction",
+    "termination encoded callback ref aliases EncodedGlobals.a4f10",
+    "heap encoded handler must be coherent with EncodedGlobals.a5178 despitebyvaluefields",
+    "invalid global handler provider aliases EncodedGlobals.a4f00",
+    "Entry application Table==onexit.application==termination.onexit.application;pair15 initializes CRT+CRTquick,notapplicationquick",
+    "Heap State shared across all alloc/free;0704e8 clears same handlecell",
+    "Native lock bank/State shared with resource/lowio/onexit/heap consumers",
+    "ACRT PTD shared with MB/locale/error;VCRT PTD separate but sharedbetweenpair6 andouterVCRT",
+    "Locale Globals/MB slot/identities shared acrossinitialization andshutdown",
+    "CommandLine narrow view aliases argv.command_line;widecmdline is separate fromwideenv/wideargv",
+    "CleanupState.argv aliases configureargv State",
+    "Environment cleanup narrow State aliasesStartupBridge environment State"
+  ],
+  "borrowed_lifetimes": [
+    "All state/providers/tablebacking survive Entry andlateFLS callbacks",
+    "Owned ImageState identities and realLONG/nativeCS lifetime cover everyeffect",
+    "Heap vectors/argv/environmentstorage remain valid untilorderedfree",
+    "A/W commandlineview bounds covercompleteNULterminatedborrowedstrings",
+    "Registry/lifetime mutations serialized;no thunk resolution racesduringmodulecleanup"
+  ],
+  "mandatory_remaining_at_snapshot": [
+    "lowio067890/0678cc corebinding",
+    "commandline06f9bc publicationbinding",
+    "leaf0704e8/0644f0/006500 namedsourcewrappers",
+    "nativeFLS/heap/locks/CP andlowerproviders"
+  ],
+  "root_next_phase": {
+    "planned_new_bodies": [
+      "0704e8",
+      "0644f0",
+      "006500",
+      "06f9bc",
+      "067890",
+      "0678cc",
+      "073258"
+    ],
+    "lowio_lower_providers_stay_mandatory": [
+      "ensure0732a8",
+      "inherited067698",
+      "stdhandles067788"
+    ],
+    "production_dispatcher": "not part of this audit"
+  },
+  "local_PE_derived_leaves": [
+    {
+      "va": "0x1800644f0",
+      "file_offset": "0x638f0",
+      "size": 7,
+      "bytes": "33c9e9b190feff",
+      "flow": "XOR ECX,ECX;JMP04D5A8",
+      "new_REA_evidence": false,
+      "LLVM_static_disassembly": true
+    },
+    {
+      "va": "0x1800704e8",
+      "file_offset": "0x6f8e8",
+      "size": 11,
+      "bytes": "4883252055030000b001c3",
+      "flow": "ANDQWORD[A5A10],0;MOVAL1;RET",
+      "new_REA_evidence": false,
+      "LLVM_static_disassembly": true
+    }
+  ],
+  "retained_REA": {
+    "0x180006500": {
+      "assembly_evidence": "ev_7aa1369cf378dd2a27dfe2889ccd4ee811bc8a4bcd493839a800aafcdb1a3ca8",
+      "pseudocode_evidence": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39"
+    },
+    "0x18006f9bc": {
+      "assembly_evidence": "ev_f982a4dda060da7a853b1f36a75fc3c662105e9e36030e6e8b3e780a2431f629",
+      "pseudocode_evidence": "ev_cb04deda8279ea5da978b8d3f7665657943754d816dbbd7841edab6a7c7f9d93"
+    },
+    "0x180067890": {
+      "assembly_evidence": "ev_d4ff041951255b8c23252f658fec937c4ccb3f09609eb7d04f434471c1391b71",
+      "pseudocode_evidence": "ev_53596e1106f3183bdc899f798d5c824609c85d32af2b256dbfff07a0f6d395dd"
+    },
+    "0x1800678cc": {
+      "assembly_evidence": "ev_a557e408da4ff53f1bcd1ce9cf3f55354c86eb2f0bcbb40e3c234db0563ffd0a",
+      "pseudocode_evidence": "ev_ee05528565d8f723446d2a4a90a5fdd8a2d6afeef615c9f1adf559539e7a1576"
+    }
+  },
+  "source_hashes": {
+    "outputs/anadius-crt-initializers-source/initializers.hpp": "a9e1effcf75bf8baa9c4909a90ce187dc7a39259d73a32cfc3c25ef34ed0fa0b",
+    "outputs/anadius-crt-initializers-source/initializers.cpp": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79",
+    "outputs/anadius-crt-initializers-source/initializer-tables.json": "c5af6f3fa9b7d798359499309555146029ff94ad03b82ac217141dbe9e6c6682",
+    "outputs/anadius-crt-locale-startup-source/locale_startup.hpp": "e247e38439cbf09bcb1ca165e4df21b8ba91671d5ccdc985abab4db03eacadcb",
+    "outputs/anadius-crt-cache-source/cache.hpp": "333e6ba19bb623cf798e67c402ef65a5c58ae43717aa562a6c2c824aa803c756",
+    "outputs/anadius-crt-cache-source/cache.cpp": "613f2667b0bf0c068f7f4a04e0144e15272b13cec03cb53b26f3eb41ad75a9de",
+    "outputs/anadius-crt-runtime-source/runtime.hpp": "5ef66b7441704a28df50afd555f3a2cb17678ec232fbf69d6f250ffa151bce7d",
+    "outputs/anadius-crt-lock-source/locks.hpp": "7d6a5c84580cb8ac817e464d52b0e096ee88caf636da2986a391c31f85075c89",
+    "outputs/anadius-crt-lock-native-source/native.hpp": "92bcfcb150d71b3740e5751ba105a99a8e79ecd87f1360e1360ec52ccff1d772",
+    "outputs/anadius-crt-heap-source/heap.hpp": "a67a56d560357695d9b6025236e9148c819a7ac48a5843646021e7181dc4b956",
+    "outputs/anadius-crt-ptd-source/ptd.hpp": "ed059fd795ee661fdd539d2a706a9cf74deb419320da976ed628c431cb32ab73",
+    "outputs/anadius-crt-ptd-source/ptd.cpp": "10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe",
+    "outputs/anadius-vcrt-ptd-source/vcrt_ptd.cpp": "2acfb1ff8678493678288dc0a806b8c27946e100ebc223409c867264b9b5e307",
+    "outputs/anadius-vcrt-bridge-source/bridge.hpp": "eac77edf09d6d38d5d33651f9a7c58ebec6dd46abb3db28b283a95140af598e3",
+    "outputs/anadius-crt-entry-source/entry.hpp": "3f38209152eb1a83471e1f1a08b183cad4a54381113ec0fd870413ecc5b27358",
+    "outputs/anadius-crt-onexit-source/onexit.hpp": "a219b3b518a1080824933947daa031c8047e85e32699bfc9f4bc908be6398e9e",
+    "outputs/anadius-crt-termination-source/termination.hpp": "fabc301738df4612c11c194169e92c96d407e81d88eda792e726924eb9cab0fa",
+    "outputs/anadius-crt-lifecycle-callbacks-source/callbacks.hpp": "3cd7e846c0922c30bdb67c1c20504747d7ba512c08e2cce3a415c2dacf46622d",
+    "outputs/anadius-crt-lifecycle-callbacks-source/callbacks.cpp": "6a4debca2b0cce025b6ec731f032ad60d6bcab41d4e9e9f682281a653fadbf57",
+    "outputs/anadius-crt-multibyte-bridge-source/bridge.hpp": "83696a8c10727955f7185a8221d460d433a782650c37540ac845bb7e7fd2a522",
+    "outputs/anadius-crt-locale-bridge-source/bridge.hpp": "e49856d6172275d730081348414f4104c89f3e3f88684ed592343cadfbcbc118",
+    "outputs/anadius-crt-multibyte-control-source/multibyte_control.hpp": "064bc605e53cbd603cd0802998fd4ee950e8671f583967e28fa8bd6719704b45",
+    "outputs/anadius-crt-argv-source/argv.hpp": "94c038a8aebdb66fdc0c4e79a96d1556e25ab98fcfdd21424bd4057a683e22ab",
+    "outputs/anadius-crt-argv-bridge-source/argv_bridge.hpp": "83c3eb4264abb2b49db92dd88727600a616231edfa7fcb733e9c0fc56be2b076",
+    "outputs/anadius-crt-argv-bridge-source/argv_bridge.cpp": "d178b2649b48fcb971bb2d99c6138b461d23be4f5f47c5178248e5dbf31687d2",
+    "outputs/anadius-crt-environment-cleanup-source/environment_cleanup.hpp": "6fa4d9263b44cd07a0d1431b16f6e4519f6ff1309ce9277ea83a57b21d9a8cbe",
+    "outputs/anadius-crt-startup-bridge-source/startup_bridge.hpp": "071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19",
+    "outputs/anadius-crt-startup-bridge-source/startup_bridge.cpp": "b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c"
+  },
+  "report_sha256": "e0e9dc14d883d4e361d8ffa060110fdcbfd52ce11515393dbb7c31cfbfe78efe",
+  "original_execution": false,
+  "original_modification": false,
+  "production_edits": false,
+  "new_original_bodies": 0,
+  "unknown": [
+    "NativefullABI/SEH",
+    "lowioOSinheritanceandhandlecontracts",
+    "Complete DLLruntimeequivalence"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "kind": "new source composition, not original class ABI or another recovered binary entry",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "references": [
+    "../anadius-crt-locale-ref-source/evidence.json",
+    "../anadius-crt-locale-free-source/evidence.json",
+    "../anadius-crt-locale-bridge-source/evidence.json"
+  ],
+  "chains": [
+    "actual locale update/thread/PTD sources -> Resources -> add/release070634/0708c0 -> time070838/070898",
+    "dynamic replaced locale -> actual0709d8 -> release0708c0 -> free0706c0 -> monetary/numeric/ctype/time/category cleanup source bodies",
+    "time cleanup -> actual070860/071730/0713bc,87 member pointers -> actual0668c0 shared heap",
+    "same live memory address space and caller-provided coherent static identities/default pointer values"
+  ],
+  "checks": 9280,
+  "review": "../anadius-crt-locale-free-source/review-refs-bridge.json",
+  "limits": [
+    "Lock/atomic/FLS/native Heap and SDK conversion endpoints remain controlled fixtures",
+    "Whole owned tree test proves cleanup for its constructed valid unique allocations, not all original object/alias states",
+    "Globals/defaults/identity initialization and synchronization remain caller contracts",
+    "No original dangling-pointer/double-free/SEH/unwind or full binary ABI equivalence claim",
+    "No original/rebuilt DLL/game execution or input mutation"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T14:12:21.216103+00:00",
+  "prior_package_sha256": "def54f4853444f263dd0d9f0cbfdfbb9bb80da211fdd75d1bab13a61848d9b13",
+  "prior_source_count": 576,
+  "unchanged_prior_sources": 576,
+  "added_sources": [
+    "anadius-socket-source/request_growth.cpp",
+    "anadius-socket-source/request_growth.hpp",
+    "anadius-socket-source/request_growth_integration_tests.cpp",
+    "anadius-socket-source/request_growth_test_fixture.hpp",
+    "anadius-socket-source/request_growth_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 581,
+  "current_documents": 221,
+  "native_objects": 188,
+  "cpp_objects": 184,
+  "c_objects": 4,
+  "normal_test_groups": 189,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 62,
+  "new_checks": 6448,
+  "new_tests": [
+    {
+      "module": "socket_request_growth",
+      "result": "PASS",
+      "output": "PASS: 5304 socket request growth checks; actual02b940 and034730 provider closure, binary/alias oracle, metadata-before-COPY, sized-free-before-pointer, alignment and failure prefixes",
+      "executable_sha256": "60ce8c3dca9c1105aaa330b30ac863b6771792db1f7a974a23791052608f0adc"
+    },
+    {
+      "module": "socket_request_growth_integration",
+      "result": "PASS",
+      "output": "PASS: 1144 socket request growth integration checks; actual034730/02b940 provider closure, external/self source and aligned growth before controlled caller and N1-N6/send/finish; native033d70 orchestration remains open",
+      "executable_sha256": "efde4cae317061255a81d7b15bf7132fc1fbb36f6e9110c91dc05607842c07f2"
+    }
+  ],
+  "validation_mirror_pairs": 31,
+  "historical_module_records_preserved": 30,
+  "historical_config_references_preserved": 60,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "3750cb25b51f5123036ce03d91cda959f2e3654aadd9ba78eb2d00fc1187bcdc",
+  "inventory_data_checks": 7230,
+  "normal_source_procedures_added": [
+    "0x18002b940"
+  ],
+  "new_original_procedures": 1,
+  "closed_provider": "RecoveredRequestGrowthApi::grow_replace_02b940",
+  "new_source_bridges": 1,
+  "prior_native_source_closures_preserved": 13,
+  "N5_selected_compatibility_providers_preserved": 1,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual02b940/034730 source closure before controlled caller plus N1-N6/send/finish;13-message FIFO,two map growths,external/self source and aligned large input; full native033d70/N5 gap open; no native027a20/IOCP/worker",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N8 native03d190 response hex-encode and typed-prefix core composition dependency; CRT stays paused"
+}

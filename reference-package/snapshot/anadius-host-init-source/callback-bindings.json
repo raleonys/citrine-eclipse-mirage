@@ -1,0 +1,82 @@
+{
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "Static binding map only; not executable callback addresses",
+  "state": "Native ABI shims, real original trampoline pointers and patch engine remain required",
+  "bindings": [
+    {
+      "callback_enum": "connect_00fd00",
+      "original_va": "0x18000fd00",
+      "original_pointer_global": "0x1800a3838",
+      "source": "anadius-network-hook-source/connect.cpp",
+      "source_function": "connect_00fd00"
+    },
+    {
+      "callback_enum": "reg_open_a_00f800",
+      "original_va": "0x18000f800",
+      "original_pointer_global": "0x1800a3840",
+      "source": "anadius-registry-source/registry.cpp",
+      "source_function": "open_a_00f800"
+    },
+    {
+      "callback_enum": "reg_open_w_00f960",
+      "original_va": "0x18000f960",
+      "original_pointer_global": "0x1800a3848",
+      "source": "anadius-registry-source/registry.cpp",
+      "source_function": "open_w_00f960"
+    },
+    {
+      "callback_enum": "reg_close_00f5b0",
+      "original_va": "0x18000f5b0",
+      "original_pointer_global": "0x1800a3850",
+      "source": "anadius-registry-source/registry.cpp",
+      "source_function": "close_00f5b0"
+    },
+    {
+      "callback_enum": "reg_query_a_00fac0",
+      "original_va": "0x18000fac0",
+      "original_pointer_global": "0x1800a3858",
+      "source": "anadius-registry-source/registry.cpp",
+      "source_function": "query_a_00fac0"
+    },
+    {
+      "callback_enum": "reg_query_w_00fb60",
+      "original_va": "0x18000fb60",
+      "original_pointer_global": "0x1800a3860",
+      "source": "anadius-registry-source/registry.cpp",
+      "source_function": "query_w_00fb60"
+    },
+    {
+      "callback_enum": "create_process_a_00f3f0",
+      "original_va": "0x18000f3f0",
+      "original_pointer_global": "0x1800a3868",
+      "source": "anadius-host-callbacks-source/callbacks.cpp",
+      "source_function": "create_process_a_00f3f0"
+    },
+    {
+      "callback_enum": "create_process_w_00f4d0",
+      "original_va": "0x18000f4d0",
+      "original_pointer_global": "0x1800a3870",
+      "source": "anadius-host-callbacks-source/callbacks.cpp",
+      "source_function": "create_process_w_00f4d0"
+    },
+    {
+      "callback_enum": "folder_a_00fc00",
+      "original_va": "0x18000fc00",
+      "original_pointer_global": "0x1800a3878",
+      "source": "anadius-host-callbacks-source/callbacks.cpp",
+      "source_function": "folder_a_00fc00"
+    },
+    {
+      "callback_enum": "folder_w_00fc80",
+      "original_va": "0x18000fc80",
+      "original_pointer_global": "0x1800a3880",
+      "source": "anadius-host-callbacks-source/callbacks.cpp",
+      "source_function": "folder_w_00fc80"
+    }
+  ],
+  "cleanup": {
+    "va": "0x1800102b0",
+    "source": "anadius-network-hook-source/hook_cleanup.cpp",
+    "source_function": "cleanup_hooks_0102b0"
+  }
+}

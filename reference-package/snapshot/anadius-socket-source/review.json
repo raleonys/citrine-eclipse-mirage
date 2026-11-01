@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "reviewer": "socket_ops_audit",
+  "scope": "Independent final production source review against retained028690/02a200/028620 normal-flow contracts; declared logical/provider/SDK output domain",
+  "sources": {
+    "outputs/anadius-socket-source/operations.hpp": "a3b2c6b21d6a2d7b19f9f3245d08d5a450caa2bc8b95285fc19c9c94bdb833e2",
+    "outputs/anadius-socket-source/operations.cpp": "63bc7fd32801a6f310492f1ff3f9a4bcc8f95a1f73b837d2bff81774ccea8ae7",
+    "outputs/anadius-socket-source/native.hpp": "5a091dca8902e1116073bdc1fd44952191f53bbe0ff3a2a592b37d6ba3d57066",
+    "outputs/anadius-socket-source/native.cpp": "2a608ec00e43aa90eb7b4e964214818a4d7b6e89f2b5f171048c36375e0a9048"
+  },
+  "report_sha256": "c6f52ac96eb1b4f0e72c69da782c7d83f8b361aeda2fad89db952ee2c39050a6",
+  "audit_report_sha256": "0450cbc023152e66e5a80c83919b0d61d6e0384160e0fec2a2d0d68f8ddca742",
+  "audit_json_sha256": "b45be625c8ac336208c4fc317a3e17855513c5466a014a6b5c16127957640c0c",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180028690",
+    "0x18002a200"
+  ],
+  "category_028620_internals": "mandatory provider; analyzed not recovered here",
+  "adapter_LastError_review": "No temporary buffer vector cleanup after WSASend; StringToAddressW uses caller-owned mutable Conversion.text; category hook is retained before last-error reads",
+  "tests_executed_by_reviewer": false,
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "production_edited": false,
+  "network_socket_WSAStartup_execution": "none",
+  "limitations": [
+    "Native CRT category guard/atexit/singleton internals remain mandatory",
+    "Undefined conversion scratch, partial sockaddr writes and native error padding excluded",
+    "Native full64 address return extension/dynamic stack/allocator/Post-call LastError ABI not established",
+    "Native ASIO/IOCP/socket lifecycle/concurrency/SEH/full DLL equality unproven",
+    "SDK output validity domain and explicit UnsupportedInput guards are not original native error ABI"
+  ],
+  "sdk_layout_guards": "Final native.cpp compile-time Socket/SOCKET64, wchar16, DWORD32, families2/23, sockaddr storage128 and SDK sockaddr size/field offsets reviewed",
+  "caller_025720_binding": "Flags0 confirmed by EBP zero at02574b through0258a4; count1, actual WSABUF and live state/socket at0258a8/ae/b3/b7 before0258bb"
+}

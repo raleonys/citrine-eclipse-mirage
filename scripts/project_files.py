@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+from reference_package import REFERENCE_ROOT, verify_reference_package
 
 MANIFEST = 'metadata/ACTIVE_SOURCE_MANIFEST.json'
 ALIAS_STORAGE = 'locked-relative-target-descriptors-v1'
@@ -85,10 +86,11 @@ def source_files(root):
     root = Path(root).resolve()
     files, folded = {}, {}
     allowed_links=vendor_symlinks(root)
+    verify_reference_package(root, safe_member)
     seen_links=set()
     for path in sorted(root.rglob('*')):
         rel = path.relative_to(root)
-        if rel.parts[0] in TRANSIENT:
+        if rel.parts[0] in TRANSIENT or rel.parts[0] == REFERENCE_ROOT:
             continue
         if rel.as_posix() in allowed_links:
             alias_payload(path, allowed_links[rel.as_posix()])

@@ -1,0 +1,15 @@
+# Config2 dosya / parser bağlantısı
+
+CRT çalışmasına ara verilerek uygulama koduna geçildi. Bu modül, mevcut gerçek `read_binary_03b3f0` ve parser kaynaklarını Config2'nun ilk kopyasına bağlar. `DocumentPipeline::read` ham dosyayı okur, yeni parser state kullanır, yalnız seçilen `Config2` alt ağacını zorunlu sıra sağlayıcısıyla sahip olunan bir yapılandırma ağacına dönüştürür. Dönen kökteki tek `Config2` çocuğu mantıksal API sarmalayıcısıdır; özgün kök container'ın bellek düzeni değildir.
+
+Tek UTF-8 BOM işlemi mevcut parser'a bırakılır. ANSI/UTF16 dönüşümü, satır normalizasyonu, NUL kırpma veya hata yakalayıp boş belge üretme eklenmez. İlk stream state nonzero ise mevcut okuma gövdesi boş string verir; boş parser girdisi başarılıdır. Kısa okumada sıfır tail korunur. Parser, stream ve sıra sağlayıcısı hataları log ve ayar uygulamasından önce yayılır. Eksik Config2'nun boş değeri korunur; özgün default insertion'ın root mutation/allocator etkileri taklit edilmez.
+
+`ScalarDependencies`, yalnız `load_document` metodunu tamamlar; bütün path/encoding/locale/log/OS/lisans/persistence bağımlılıkları caller tarafından sağlanır. Testler mevcut `configuration::load_and_apply` üzerinden base ve override dosya seçimini ve scalar ayarları uygular. KeyForLicense işleme veya lisans mekanizmasının iç kodu bu aşamanın kapsamı değildir.
+
+**Sınır:** ilk Config2 kopyasındaki sıra, `019ad0` içindeki daha sonraki section-copy tüketim sırası değildir. Tekrar kullanılan local section container'ın kapasitesi, eksik anahtar lookup'larıyla büyüyebilir. Bu geçmiş henüz modellenmedi. Scalar bridge, Content/Entitlements veya AchievementNames/AchievementTotals/SteamIdOverrides içinde çocuk bulunan belgeleri açık `UnsupportedCollectionOrder` ile reddeder. Bu, özgün parser'ın girdiyi reddettiği iddiası değildir; yeni bağlantının destek sınırıdır. Guard override geçişinde de aynı ölçüde muhafazakârdır. Böyle belgeler `DocumentPipeline` ile ilk kopya aşamasına kadar incelenebilir; tam uygulama eşitliği iddia edilmez.
+
+Mevcut `anadius-config-order-source::SelectedCopyOrder` yalnız her container'da en çok 8 farklı anahtar için kanıtlanan yolu destekler; daha büyük container açık hata verir. Başka bir sağlayıcı kullanılması kanıt yükümlülüğünü kaldırmaz. Koleksiyon sırası yerine lexical/source/std::unordered_map sırası kullanılmaz.
+
+Derleme: bu klasördeki `build.ps1` veya ortak `../source-workspace/build.ps1`. C++20, LLVM-MinGW, `-O2 -Wall -Wextra -Werror`. Ortak CMake tarifi de eklenir; bu teslimde CMake ayrıca çalıştırılmamıştır. Testler sentetik memory stream'leri ve yalnız kendi oluşturdukları `config-pipeline-generated-fixture.cfg` dosyasını kullanır. Gerçek kullanıcı CFG/token içeriği okunmaz; özgün DLL/oyun çalıştırılmaz veya değiştirilmez.
+
+Adresler ve REA kanıtları `evidence.json`, dosya sınırı denetimi `file-pipeline-audit.md/json`, bağımsız inceleme `review.md/json`, derleme sonucu `validation.json` içindedir. Bu source composition yeni tamamlanmış özgün yordam sayısını artırmaz; tüm DLL veya özgün MSVC ABI/SEH/allocator eşitliği değildir.

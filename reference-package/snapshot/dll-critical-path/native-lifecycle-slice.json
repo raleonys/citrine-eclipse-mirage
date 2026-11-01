@@ -1,0 +1,67 @@
+{
+  "schema": "native-lifecycle-slice.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "historical_parent": {
+    "path": "outputs/anadius-rea-evidence.json",
+    "sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495"
+  },
+  "retained_evidence_ids": {
+    "initializer": "ev_efabeb808ec83eafa7cf73d31a8eea8067c2a2ba4230bcadb12e84dfb1c8f66e",
+    "aggregate_constructor": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+    "aggregate_destructor": "ev_c03fec66056719abadb29e535fb59a20827bd1c74e0bbe959590c8170e39714b",
+    "application_entry": "ev_0a232e746d99beddba99fe362a4f132625939b77bd747e39ad749975c6f32a06",
+    "application_exit": "ev_cfa69b2b4a15d114d9202339fcf5fbbd77988ffeb6ed350e33b89f550b3d9c65",
+    "license_key": "ev_f896d1d300fedafcee6570b765c7cecc78a5c0ae23182cea35a454ec6d0199a7"
+  },
+  "new_evidence": {
+    "path": "outputs/dll-critical-path/startup-cleanup-evidence.json",
+    "sha256": "e9b6267e137cc74417a73f3daa9cfebf4435a144fb129e8aa2cb7a87d1f2827e",
+    "ids": [
+      "ev_3bf2de2668cf32e3693c5f436a9fb7c3605c10e2e156d7677e097b17e4cf9385",
+      "ev_262fefda1a9086083fd93c5a094187f2c72a4a791a2c2826c21e3842ee0b40aa"
+    ]
+  },
+  "observed_edges": [
+    {
+      "from": "0x180001390",
+      "to": "0x180036d20",
+      "kind": "construct-global",
+      "argument": "0x1800a39e0",
+      "evidence": "ev_efabeb808ec83eafa7cf73d31a8eea8067c2a2ba4230bcadb12e84dfb1c8f66e"
+    },
+    {
+      "from": "0x180001390",
+      "to": "0x18007e0c0",
+      "kind": "atexit-registration-address",
+      "evidence": "ev_efabeb808ec83eafa7cf73d31a8eea8067c2a2ba4230bcadb12e84dfb1c8f66e"
+    },
+    {
+      "from": "0x18007e0c0",
+      "to": "0x1800a39e0",
+      "kind": "LEA RCX",
+      "bytes": "488d0d19590200",
+      "evidence": "ev_3bf2de2668cf32e3693c5f436a9fb7c3605c10e2e156d7677e097b17e4cf9385"
+    },
+    {
+      "from": "0x18007e0c7",
+      "to": "0x180037f70",
+      "kind": "unconditional-tail-transfer",
+      "mnemonic": "JMP",
+      "provider_flow_kind": "call",
+      "bytes": "e9a49efbff",
+      "evidence": "ev_262fefda1a9086083fd93c5a094187f2c72a4a791a2c2826c21e3842ee0b40aa"
+    }
+  ],
+  "supersedes_unknown": "B28 source-evidence scope: 07e0c0->037f70 exactroute not proven",
+  "still_unknown": [
+    "Full aggregate reconstruction and native/portable destruction correspondence",
+    "Registration failure consequences and complete failure/unwind paths",
+    "Safe loader-context production assembly and supported unload contract"
+  ],
+  "new_native_function_definitions": 0,
+  "new_original_bytes_observed": 12,
+  "original_executed": false,
+  "original_modified": false,
+  "function_count_increase": 0,
+  "limitation": "The queried exit label has no containing Ghidra procedure; two decoded instructions establish this transfer, not a new canonical function or complete teardown proof."
+}

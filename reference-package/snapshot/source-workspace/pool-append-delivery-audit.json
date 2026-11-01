@@ -1,0 +1,97 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-25T14:11:38.205300+00:00",
+  "prior_package_sha256": "3326fe2319a8cfa46bd39901aa6c0e55797d4653347a4a6ab057f1645ca37d0e",
+  "prior_source_count": 636,
+  "unchanged_prior_sources": 636,
+  "added_sources": [
+    "anadius-socket-source/pool_append.cpp",
+    "anadius-socket-source/pool_append.hpp",
+    "anadius-socket-source/pool_append_integration_tests.cpp",
+    "anadius-socket-source/pool_append_test_fixture.hpp",
+    "anadius-socket-source/pool_append_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 641,
+  "current_documents": 233,
+  "native_objects": 200,
+  "cpp_objects": 196,
+  "c_objects": 4,
+  "normal_test_groups": 213,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 86,
+  "new_checks": 22823,
+  "new_tests": [
+    {
+      "module": "socket_pool_append",
+      "result": "PASS",
+      "output": "PASS: 87 pool pointer-array core checks; inline/heap growth, raw signed arithmetic and saturated sizing, live lower-effect mutations, aliases, mapped null and exact failure prefixes; heap/copy/free/ABI/EH remain supplied",
+      "executable_sha256": "4280f0b433458bd258e24844929a912b5a1fc90eaf6a0ec388e1d89c82ee26f8"
+    },
+    {
+      "module": "socket_pool_append_integration",
+      "result": "PASS",
+      "output": "PASS: 22736 pool pointer-array integration checks; four source allocators scalar/SIMD, seven blocks with inline-to-heap/heap-to-heap growth, track/release/reuse and committed failures; lower allocation/fill/copy/free supplied, no parser/DOM/nativeABI/EH claim",
+      "executable_sha256": "b033261aba2fb539f7d9ec28f8834015a1e182a41d3a771dfea3d13c8b822287"
+    }
+  ],
+  "validation_mirror_pairs": 43,
+  "historical_module_records_preserved": 42,
+  "historical_config_references_preserved": 84,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "44dc986affdf6b1e71b95388d725cbc4fd7c0a4900f3131f967033989b24c25f",
+  "inventory_data_checks": 7435,
+  "normal_source_procedures_added": [
+    "0x180005440"
+  ],
+  "new_original_procedures": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/pool_append.cpp",
+      "base": "PoolAllocationEffects::append_block_005440",
+      "body": "append_pool_block_005440",
+      "closure": "RecoveredPoolAppendEffects::append_block_005440",
+      "address": "0x180005440",
+      "native_abi_complete": false,
+      "scope": "005440 normal block-pointer-array append/growth projection plus one final PoolAllocationEffects::append_block_005440 source bridge; existing four allocator and release/track sources compose on bounded shared storage; block allocation04b0bc/fill0793d0,array allocation04b100/copy078d30/free04b0f8 and native pool/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory"
+    }
+  ],
+  "new_source_bridges": 1,
+  "new_source_allocation_adapters": 0,
+  "native_typed_providers_newly_closed": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "prior_native_source_closures_preserved": 33,
+  "current_native_source_closures": 34,
+  "semantic_session_source_adapters_preserved": 2,
+  "separate_pool_allocation_source_adapters_preserved": 1,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "005440 normal block-pointer-array append/growth projection plus one final PoolAllocationEffects::append_block_005440 source bridge; existing four allocator and release/track sources compose on bounded shared storage; block allocation04b0bc/fill0793d0,array allocation04b100/copy078d30/free04b0f8 and native pool/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_contents_read": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "N20 pool lifecycle inventory/contracts selected from retained evidence; no new source body claimed by that inventory; generic CRT remains paused",
+  "bridge_variant_is_additional_native_body": false,
+  "tagged_definition_variants_per_new_target": 2,
+  "dependency_evidence_files": 115,
+  "new_native_analysis": false
+}

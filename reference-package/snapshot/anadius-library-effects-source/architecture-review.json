@@ -1,0 +1,83 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b12_ui_error_audit",
+  "review_mode": "independent",
+  "reviewed_source_hashes": {
+    "dialog.hpp": "21b17edb02cc215bcd569c0caf520b134b8f17760d0a4d0a8515a041df58b11d",
+    "dialog.cpp": "c5078be51fca032bc21cdb0d01c068b250ee3e09f14b20ddf98036d6e9e8e7a5",
+    "effects.hpp": "93a722ce616f93a3b92f77a660a6e45a1bb3060a45115b958d29dce171138884",
+    "effects.cpp": "ec076488dac818a6ef3bc056ba9350100554b3ce2255a18c95eb39a109cf8092",
+    "effects_tests.cpp": "870f37e83230e49334e1a8ff0e8c6e0d42b3b25b5018a07b7af5212600b55e6a",
+    "effects_integration_tests.cpp": "1a570826c78763524fa4181d70be58eb4409626fcd27b69ca174989c540e9225",
+    "effects_test_fixture.hpp": "e74fc09cc92225f671d97db54e72c117ec022b3177125cc6449f584ddc440fb8"
+  },
+  "quick_results": [
+    {
+      "path": "work/b12-core-quick-results.json",
+      "sha256": "5dac2147c3ef27424fe77f6b8508d8640a2b0fd1aa8e486b1b1ccb871fafe152",
+      "checks": 53,
+      "execution_by": "root; independent reviewer validated source/executable hashes, did not rerun tests"
+    },
+    {
+      "path": "work/b12-integration-quick-results.json",
+      "sha256": "bdaabfb2710a9c9a80d8d3e5b52ad29fa5d5c4c7b8d8c66cd36396783f9e0037",
+      "checks": 39,
+      "execution_by": "root; independent reviewer validated source/executable hashes, did not rerun tests"
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "topic": "prefix",
+      "conclusion": "Independent retained-byte review confirms exact Loading plus trailing space at0863e0. Existing035260 writes prefix before UTF8 and counted insertion/endl."
+    },
+    {
+      "id": 2,
+      "topic": "dialog",
+      "conclusion": "038bc0 calls title conversion038bfc, body038c09, MessageBoxW038c2f with null owner/body/caption/flags. Existing library void interface discards return mapping."
+    },
+    {
+      "id": 3,
+      "topic": "conversion",
+      "conclusion": "0452d0 uses CP65001 flags0; empty skips calls; nonempty query0 still causes second call; results are ignored and first query length retained. Strict8 helper would be different."
+    },
+    {
+      "id": 4,
+      "topic": "domain",
+      "conclusion": "INT_MAX rejection and impossible negative SDK count are explicit selected domain guards. Original low32 truncation/huge memory domain is not claimed; no invalid huge string_view was fabricated for tests."
+    },
+    {
+      "id": 5,
+      "topic": "errors",
+      "conclusion": "Reuse existing compiler PortableErrors generic/system selection; native category singleton/name/message/locale/RTTI/EH identity is not established."
+    },
+    {
+      "id": 6,
+      "topic": "ownership",
+      "conclusion": "All five selected policies bypass lower. Two phase methods forward to owned lower; B3 intercepts them into real shared Execution/ready source paths. Lower dies before stream/dialog/error owners."
+    },
+    {
+      "id": 7,
+      "topic": "tests",
+      "conclusion": "53core/39integration captured by root; independent reviewer verified all7source and2EXE hashes, did not rerun. Runtime uses controlled OS/join/callback fixtures; no real module/UI/native concurrent-worker equality."
+    },
+    {
+      "id": 8,
+      "topic": "integrity",
+      "conclusion": "Independent reviewer verified all758 prior source bytes against B11 archive. New work does not close full Resources or B10 review debt."
+    }
+  ],
+  "limits": [
+    "Static independent review; root test execution with reviewer-verified hashes.",
+    "Compiler stream/errors and explicit-int dialog domain, not native ABI equality.",
+    "Controlled modules/UI/join/callbacks; no real loading or MessageBox.",
+    "B10 independent review remains outstanding."
+  ],
+  "production_dll_readiness": "BLOCKED",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

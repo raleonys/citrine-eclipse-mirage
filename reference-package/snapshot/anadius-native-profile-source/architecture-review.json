@@ -1,0 +1,257 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T16:18:34.143407+00:00",
+  "review_mode": "Independent full source/lifetime audit, then frozen8 source/test hashes and immutable author records/logs/EXEs/archive reviewed read-only. No reviewer executable run.",
+  "reviewed_source_hashes": {
+    "native.hpp": "29055e78e5c3c72aa007556f3bbaef4fa717b6364da451f11ec1097e84b4584b",
+    "native.cpp": "7f80c20e2caa9474cce396d4237bf3d132354ba46817878ef63e9320a5bf299b",
+    "native_tests.cpp": "2dc521b5cca6f7964a621fb7ae18c660b17e7e2eee02621ed40e364f17418fdf",
+    "native_integration_tests.cpp": "7c919c64f2d0a3c4064f01736f62702349555dee8dab84fdb488528fb7ac116f",
+    "../anadius-session-profile-source/profile.cpp": "b784af3e251db5b3b1eb3483daa76ef8d2d860580c4a800376afde96fd8e9c03",
+    "../anadius-session-profile-source/strings.hpp": "69210feb138eb968601beebcf546336fe475259bc34b94beabf9e3b4b7102297",
+    "../anadius-dispatch-source/router.hpp": "68b9ecbbc18841c857daa4378e3a9a3132cefd1c7e57e2acd6a77dac421a19d6",
+    "../anadius-dispatch-source/router.cpp": "79ee7f693ca49e584c04b36984f33782cef867f4fa2c023cf41d06cfeaa32b9d"
+  },
+  "code_freeze": {
+    "path": "work/b41-code-freeze.json",
+    "sha256": "d8f52354ca879570c05304721d291d8d308bb97bcf15557bc0381d059fefb824",
+    "all_eight_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 333,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b41-core-agent-v3.exe",
+      "executable_sha256": "ba181870b996fd8c8d5c414fb43cde9cc001de9ebf4b4b5662efec7ea50f23e6",
+      "archive_path": "work/b41-baseline-core.a",
+      "archive_sha256": "75db97cc59ce79eb1e0d75a0f6f7953cc390da47ecc4aac3a8674eb7de444568",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b41-core-agent-results.json",
+        "sha256": "fe150e9eaf3b3502428888cdeb795aece1d8304c0314f7b75903a7fee0eacc4f"
+      },
+      "path": "work/b41-core-quick-results.json",
+      "sha256": "355ca0dc65a30b78bd51b6ea7706609e7f3f1e13e016de8538662e1d12fd11e9",
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b41-core-agent-v3.log",
+      "log_sha256": "7f292f288b013488d1cc72f266c52496854087da770af97a7ebbe016e9dac466",
+      "actual_used_source_hash_count": 11,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh native.cpp, prior router.cpp and core test with11 selected actual-use source/header hashes; modified Profile.cpp and integration test not compiled by this invocation. Parent333 excludes nine retained child assertion bodies; exact exits231..239 checked by parent. Controlled own-EXE new failure is used in child235 (printer proxy allocation after adoption) and child239 (fresh node wrapper allocation); the earlier only-child235 wording in proof source_scope is narrow metadata wording, not the actual final test scope.",
+      "isolated_children": [
+        {
+          "mode": "unknown",
+          "expected_exit": 231,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "self",
+          "expected_exit": 232,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "dispatchguard",
+          "expected_exit": 233,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "nested",
+          "expected_exit": 234,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "metadata",
+          "expected_exit": 235,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "unlock",
+          "expected_exit": 236,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "lock",
+          "expected_exit": 237,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "greetguard",
+          "expected_exit": 238,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "nodemetadata",
+          "expected_exit": 239,
+          "observed_exit_verified_by_parent": true
+        }
+      ]
+    },
+    {
+      "checks": 99,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b41-integration-v4.exe",
+      "executable_sha256": "a49ff216289a696c34b8c61f8cf788e924929043cb6a94227a123ca72ee9350f",
+      "archive_path": "work/b41-baseline-core.a",
+      "archive_sha256": "75db97cc59ce79eb1e0d75a0f6f7953cc390da47ecc4aac3a8674eb7de444568",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b41-integration-v4-results.json",
+        "sha256": "ea68a2fe7223eac05b0844f92b1ed6cd9aa7e54ecd6d33503d1a939de6d6f4d4"
+      },
+      "path": "work/b41-integration-quick-results.json",
+      "sha256": "e5c0452868f740e8f206028a0080065aa24b02d85316d1b16b83c1d0369f0f8b",
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b41-integration-v4-results.log",
+      "log_sha256": "88fb7c9a669a44098135f24e8386dff1954c760060acd480bdd6b0955bccc461",
+      "actual_used_source_hash_count": 7,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "watched_source_hash_count": 8,
+      "source_scope": "Fresh native.cpp, modified prior profile.cpp/router.cpp and integration test;7 selected actual-use hashes,8 watched adds metadata-only core test. Real Router QueryEntitlements/GetConfig; one exact wrong-generation retained child237. No fixture handler bypass."
+    }
+  ],
+  "quick_checks_total": 432,
+  "core_agent_checks": 333,
+  "integration_agent_checks": 99,
+  "root_checks": 0,
+  "root_execution_note": "Root normalized immutable agent execution records only; no root/reviewer EXE replacement or rerun. Earlier core/integration candidates are historical/superseded, not current proof.",
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING at review; authoritative quick PASS is not full common PASS.",
+  "common_build_targets": {
+    "production_objects": 263,
+    "cpp_units": 259,
+    "c_units": 4,
+    "ordinary_groups": 311,
+    "framework_terminal_groups": 19,
+    "status": "planned registration, not reviewed as executed"
+  },
+  "baseline_package_sha256": "517848795b79a7f0bc0897fdd53b67516256d24ba09f246e2e62dba17b1099ac",
+  "baseline_source_files": 894,
+  "prior_sources_preserved": 890,
+  "modified_prior_sources": 4,
+  "modified_prior_source_paths": [
+    "anadius-dispatch-source/router.cpp",
+    "anadius-dispatch-source/router.hpp",
+    "anadius-session-profile-source/profile.cpp",
+    "anadius-session-profile-source/strings.hpp"
+  ],
+  "new_source_files": 4,
+  "current_source_files": 898,
+  "baseline_scope": "All894 archived source members match preimages; current890 unchanged and exact4 allowed prior modifications verified.",
+  "archive_proof": {
+    "path": "work/b41-baseline-core.a",
+    "sha256": "75db97cc59ce79eb1e0d75a0f6f7953cc390da47ecc4aac3a8674eb7de444568",
+    "matches_B40_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "verified": true
+  },
+  "composition_count_basis": {
+    "baseline_files": 93,
+    "baseline_objects": 46,
+    "new_composition_files": [
+      "anadius-native-profile-source/native.hpp",
+      "anadius-native-profile-source/native.cpp"
+    ],
+    "expected_files": 95,
+    "expected_objects": 47
+  },
+  "findings": [
+    {
+      "id": "typed-source-route",
+      "result": "PASS",
+      "details": "Profile selects Logic automatically for guarded greeting and same request/output prefixes; semantic stdstring route remains default for other SessionLogic types. Existing typed033d70, hex, string growth and prefix AES bodies are composed, not recovered again."
+    },
+    {
+      "id": "exact-session-and-domain",
+      "result": "PASS",
+      "details": "Profile greeting and message paths require exact owner plus slot/generation. Logic verifies matching Strings parent, actual domain-owned live HOST SessionControl.object pairing and weakself identity; no native overlay. Same owner cipher/native schedule and encrypted flag are used."
+    },
+    {
+      "id": "memory-and-headers",
+      "result": "PASS",
+      "details": "Per-invocation inline/output/request/event windows merge with refreshed live Parent regions; complete aliases are not duplicated, partial/ambiguous overlaps reject. Allocation/free and opaque checkpoints refresh the view. Native growth/prefix mutation ordering is preserved. Large-header metadata tracks known-live prefixes; free preclears metadata; stale freed event temporary is not blanket-tracked."
+    },
+    {
+      "id": "opaque-and-nested-admission",
+      "result": "PASS",
+      "details": "Document/node/printer/cipher/factory/random/effects and event boundaries check source admission before/after. Nested lower exceptions, node-wrapper allocation failure and direct Logic reentry set sticky poison, so a caller swallowing the exception cannot resume the outer typed source. Terminal adapters seal before opaque terminal call."
+    },
+    {
+      "id": "opaque-object-ownership",
+      "result": "PASS",
+      "details": "Pools reserve metadata BEFORE opaque factory/parse return, then adopt unique ownership without allocation; proxy allocation failure retains raw object. Raw objects retire under admission only after known-normal invocation, as explicit delayed HOST policy. Unknown outcomes retain and reject reuse; no guessed native EH cleanup."
+    },
+    {
+      "id": "rich-router-compatibility",
+      "result": "PASS",
+      "details": "GuardedPrinterAccess preserves compact open/close/text/CDATA without exposing raw printer. GuardedNodeAccess invokes configured NodeAccess on raw backing inside the guarded proxy, preserving ordered attributes/GetText. Router default MemoryPrinter/Element path remains. Guarded rich printer route requires actual recovered MemoryPrinter backing."
+    },
+    {
+      "id": "events-and-retirement",
+      "result": "PASS",
+      "details": "Native source retains live queue-front reload and cached mutex identity, one-event consumption and normal unlock order. Unknown lock/unlock outcome is not retried or rolled back. Logic seals Retiring and destroys moved dependencies while members remain alive; entry rejects before provider access."
+    },
+    {
+      "id": "execution-proof",
+      "result": "PASS",
+      "details": "Current core V3=333 and integration V4=99 records, source hashes, logs, EXEs and immutable canonical B40 archive bytes verified read-only. Integration uses actual concrete Profile/Runtime/native frame/worker/disposal and real Router for overlapping plain/AES sessions, live request callback visibility, event append and deferred EOF job retention."
+    }
+  ],
+  "resolved_review_blockers": [
+    "Opaque callback guards did not cover nested proxy calls, greeting or caught nested exceptions.",
+    "Opaque-owner pool growth could destroy just-returned children on allocation failure; reserve-before-callback fixes adoption.",
+    "Node-wrapper metadata allocation failure outside lower catch could be swallowed without sticky poison.",
+    "Same-domain validation alone permitted a NativeLogic bound to another session/generation.",
+    "Concrete Router MemoryPrinter/Element casts rejected native proxies; narrow guarded rich serialization/node access now preserves real Router path.",
+    "Foreign provider member teardown could reenter after Logic members were destroyed; explicit Retiring and early moved-dependency retirement added."
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0,
+  "native_mapped_addresses_unchanged": 501,
+  "native_eligible_compiled_tags_unchanged": 505,
+  "explicit_normal_body_claims_unchanged": 139,
+  "historical_native_closures_unchanged": 52,
+  "last_native_body_stage": "B38",
+  "compiler_observations_expected": 82,
+  "new_compiler_trait_values_expected": [
+    0,
+    1
+  ],
+  "registration_role": {
+    "script": "work/b41-register.py",
+    "sha256": "6fdbae0a67b89fb26bcffb71acfba688b0cfe4fd2e2fa486c7c66db3974a1c9f",
+    "preview_author": "/root/b22_provider_audit",
+    "applied_by": "root only after reviewing staged plan; not executed by reviewer",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "scope": "Reviewer-authored read-only strict/AST registration preview; production and both test authors are independent. No generator/build/probe/test by reviewer."
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "No original/rebuilt DLL/game execution, network traffic, user configuration/token read, AV retry, fresh target query or binary read; reviewer executed no tests.",
+    "Whole Parent Operation and same bound worker/fiber remain required; no detached native job concurrency, kernel drain, rawjob cancellation proof or loader-lock safety is established.",
+    "XMLReader/semantic032d00 Router, document/printer/registry allocation/layout and opaque disposal timing are selected C++ compatibility lower policies, not native DOM/class/stream ABI or full intermediate native EH equivalence.",
+    "Raw document/printer/cipher destruction is deliberately delayed to normal invocation end. Unknown prefixes retain ownership descriptors and fail closed; request/output stack references may dangle after unwind and are never dereferenced or resumed. Retention does not pin stack lifetimes.",
+    "Borrowed XML node/string_view/printer proxy references must not escape the synchronous callback or outlive their selected backing. Events owns stable queue slots/prefixes for the entire invocation, in the same admitted memory domain.",
+    "Guarding exported selected lower interfaces does not instrument arbitrary internal callbacks of Router information/content/licensing/IGO providers; their lower lifetime/admission contracts remain explicit.",
+    "Default semantic SessionLogic retains its prior normal-return writeback behavior. B41 does not newly close033d70 or any native function/provider/ABI; historical native501/505/139 and52closures remain.",
+    "Full production Resources/providers, real kernel/rawjob drain and undefined B31 loader attach/detach hooks remain open; production DLL readiness BLOCKED."
+  ]
+}

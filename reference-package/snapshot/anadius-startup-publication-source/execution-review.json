@@ -1,0 +1,104 @@
+{
+  "schema": "b19.execution-independent-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b18_ptd_audit",
+  "reviewed_at_utc": "2026-10-29T18:48:51.774428+00:00",
+  "review_scope": "Same-Execution source guards, LastError, native failure prefixes, polling/observer release, clock cache, milestone release/acquire publication and bounded Runtime integration; primary architecture review remains separate",
+  "reviewed_source_hashes": {
+    "publication.hpp": "516975cfb72c687d23d2e1253608a63dde70243e8026bb4ba738bb4b8257a3e4",
+    "publication.cpp": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+    "publication_tests.cpp": "72ecae626427fd8176937cd6490975243652b168809e456cdad3ee2e12564082",
+    "publication_integration_tests.cpp": "8237e950c20c318e72fb3483ba8602ee0f1da7c341a2d312457a71646845bf37",
+    "publication_test_fixture.hpp": "d74c8e9b9e495725be81f1b390d04876b454ef581e155b9edf2eec98cb1c2d01",
+    "../anadius-bootstrap-backend-source/backend.cpp": "e145a8a1b99ed7b3e5ca2ba2a1f5cced2263207a6d8cbcaa5ec7fee13468c98d",
+    "../anadius-bootstrap-backend-source/backend.hpp": "d60af87a481bc8bc4f40a770808dab6f0c31cb2f7ae9a7e6bd10fb43ad8530d4",
+    "../anadius-execution-source/execution.cpp": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+    "../anadius-execution-source/execution.hpp": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62"
+  },
+  "quick_results": [
+    {
+      "path": "work/b19-core-quick-results.json",
+      "sha256": "bdb81493f215943b9e9d3146f463310cd3181cb07c05edaf25ac4bda113e7508",
+      "checks": 19,
+      "executable_sha256": "eb28f173081c4a8dd45f9e39324c012de6c68193fe16ed140ab4e3b0675f7c8d",
+      "execution_by": "root; independent Execution reviewer verified current source/EXE hashes and inspected tests, did not rerun"
+    },
+    {
+      "path": "work/b19-integration-quick-results.json",
+      "sha256": "c6bbbe7a5f43400ac8fff38fcbd710eca3e2e2bfa1b89a98a768532b07f56bf0",
+      "checks": 16,
+      "executable_sha256": "7499816b2d969f7739dd16a39303eb9e97d1b8a4fb8bd3e34f4c76286d5ba172",
+      "execution_by": "root; independent Execution reviewer verified current source/EXE hashes and inspected tests, did not rerun"
+    }
+  ],
+  "root_checks": 35,
+  "reviewer_test_rerun": false,
+  "findings": [
+    {
+      "topic": "guard granularity",
+      "result": "PASS",
+      "observation": "One recursive source gate protects acquire_checked/native owner-count/flag-or-predicate/unlock as one short operation. A separate short clock call protects frequency cache and QPF/QPC. Polling Sleep and observer calls occur after source guard release."
+    },
+    {
+      "topic": "LastError",
+      "result": "PASS",
+      "observation": "SourceGuard preserves Windows LastError around its lock/unlock operations. It leaves OS/Platform effects visible, while optional observer bookkeeping has its own PreserveError."
+    },
+    {
+      "topic": "failure prefixes",
+      "result": "PASS",
+      "observation": "The new source guard never invents native unlock or rollback. Error5/error6 and overflow count adjustment remain before flag publication; a release exception retains flag/native count writes but emits no event. Unknown native outcomes are outside retry contract."
+    },
+    {
+      "topic": "clock concurrency",
+      "result": "PASS",
+      "observation": "Eight own threads take800 clock samples through one wrapper; root quick result confirms one frequency query and coherent cache. Source gate excludes timer calls while native flag lock is held in the supported method paths."
+    },
+    {
+      "topic": "polling progress",
+      "result": "PASS",
+      "observation": "A separate finisher thread completes while waiter Sleep is blocked under an independent test CV. Observer can wait for another Execution clock caller, proving source guard is released before observer invocation."
+    },
+    {
+      "topic": "mapping and identity",
+      "result": "PASS",
+      "observation": "Exact flag addresses map Server/Online/Libraries; unrelated flag still receives recovered write but emits no event. Preseeded1 flags do not publish, duplicates cannot fill missing bits, aliased references/reused observer are rejected, and foreign issuer invalidates readiness."
+    },
+    {
+      "topic": "payload publication",
+      "result": "PASS",
+      "observation": "Atomic acq_rel fetch_or events form an RMW synchronization chain; all-bits acquire makes ordinary payload writes before the three worker event releases visible. Core test reads payload after observed_all and before thread joins."
+    },
+    {
+      "topic": "milestone meaning",
+      "result": "PASS",
+      "observation": "Host event is recorded only after normal host source return, before attachment completion. It is not engine success. Server event precedes async_accept/run_context and is not worker completion. Library/online events publish their completed initialization prefixes only."
+    },
+    {
+      "topic": "binding and lifetime",
+      "result": "PASS",
+      "observation": "Resources strongly retains Publication until after Execution destruction; matched foreign factory verifies exact CallbackStateView Execution identity. Execution is immovable and observer cannot be rebound/reset for another owner. By-value Resources consumers and Execution owners require complete rebuild."
+    }
+  ],
+  "coverage_notes": {
+    "new_error5_and_unlock_exception_tests": true,
+    "error6_prefix_source_reviewed": true,
+    "new_quick_error6_case": false,
+    "legacy_execution_suite_common_build_pending_at_review": true,
+    "observer_production_contract": "published is noexcept atomic bookkeeping; arbitrary observer callbacks that throw or violate lifetime are unsupported",
+    "new_native_bodies": 0,
+    "new_native_closures": 0
+  },
+  "limits": [
+    "One Execution wrapper must own all concurrent access to its MutexState, flag references and frequency cache; raw helpers/outside plain mutation/second wrapper remain outside coverage",
+    "OS lock and QPC boundaries must be short, non-reentrant and follow nonthrowing native SDK contracts; recursive source mutex is not general provider-reentry support",
+    "An unexpected native lock/unlock/QPC exception does not gain retry or safe rollback semantics",
+    "Milestones publish initialization prefixes, not engine health, worker/FLS quiescence, joins, hook state or image unload",
+    "Remaining shared streams, provider state, fallback/OOM and foreign concurrency constraints still require explicit caller proof; milestones never activate callbacks from worker threads",
+    "Original CRT/native mutex ABI, native callback general overlap/reentry, external hooks and full DLL equivalence remain unproven"
+  ],
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false
+}

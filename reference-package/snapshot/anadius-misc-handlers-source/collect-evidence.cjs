@@ -1,0 +1,25 @@
+const fs=require('fs'),crypto=require('crypto'),cp=require('child_process'),path=require('path');
+const root=process.cwd(),out=path.join(root,'outputs/anadius-misc-handlers-source');
+const binary='C:/Users/Skysect/Downloads/anadius64.dll';
+const bytes=fs.readFileSync(binary),sha=b=>crypto.createHash('sha256').update(b).digest('hex');
+if(sha(bytes)!=='9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c')throw Error('identity');
+const pseudo=fs.readFileSync('outputs/anadius-all-functions.pseudo.c','utf8'),asm=fs.readFileSync('outputs/anadius-all-functions.asm.txt','utf8');
+const ids=['02ffb0','02f4e0','02f330','031ef0','02f270','030cd0','030eb0','02d720','0314a0','02e5a0','02da30','02ff60','032ab0','02d9e0','02fea0','032b10','032ca0','031ec0'];
+const allRefs=new Set(['18007f7cc','180085778','180085798','1800857a8','180085818','180085830','180085838']);
+const records=ids.map(id=>{const p=pseudo.match(new RegExp('/\\* 0x180'+id+' [\\s\\S]*?(?=/\\* 0x180|$)'))?.[0]||'';const a=asm.match(new RegExp('; 0x180'+id+' [\\s\\S]*?(?=; 0x180|$)'))?.[0]||'';for(const m of p.matchAll(/(?:0x|DAT_)(1800[78][0-9a-f]{4})/g))allRefs.add(m[1]);return {va:'0x180'+id,pseudocode_evidence:p.match(/ev_[a-f0-9]{64}/)?.[0]||null,assembly_evidence:a.match(/ev_[a-f0-9]{64}/)?.[0]||null,pseudocode:p,assembly:a};});
+for(const id of ['02d720','0314a0']) {const r=records.find(x=>x.va==='0x180'+id);const end=id==='02d720'?'02d7dd':'0314e4';r.independent_static_disassembly=cp.execFileSync('work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/bin/llvm-objdump.exe',['--disassemble','--start-address=0x180'+id,'--stop-address=0x180'+end,binary],{encoding:'utf8'});for(const m of r.independent_static_disassembly.matchAll(/# 0x(1800[78][0-9a-f]{4})/g))allRefs.add(m[1]);}
+const pe=bytes.readUInt32LE(0x3c),sections=[];let pos=pe+24+bytes.readUInt16LE(pe+20);for(let i=0;i<bytes.readUInt16LE(pe+6);i++,pos+=40)sections.push({rva:bytes.readUInt32LE(pos+12),size:bytes.readUInt32LE(pos+16),raw:bytes.readUInt32LE(pos+20)});
+const literals=[...allRefs].sort().map(va=>{const rva=Number(BigInt('0x'+va)-0x180000000n),s=sections.find(s=>rva>=s.rva&&rva<s.rva+s.size);if(!s)throw Error(va);const off=rva-s.rva+s.raw;let end=off;while(bytes[end]&&end-off<256)end++;if(bytes[end])throw Error('literal');return {va:'0x'+va,file_offset:'0x'+off.toString(16),text:bytes.subarray(off,end).toString('utf8'),hex:bytes.subarray(off,end+1).toString('hex')};});
+const helperIds=['02bcd0','003300','003fe0','003860','0056b0','005560','0052c0','02c400','02c620','034660'];
+const helpers=helperIds.map(id=>{const p=pseudo.match(new RegExp('/\\* 0x180'+id+' [\\s\\S]*?(?=/\\* 0x180|$)'))?.[0]||'';const a=asm.match(new RegExp('; 0x180'+id+' [\\s\\S]*?(?=; 0x180|$)'))?.[0]||'';return {va:'0x180'+id,pseudocode_evidence:p.match(/ev_[a-f0-9]{64}/)?.[0]||null,assembly_evidence:a.match(/ev_[a-f0-9]{64}/)?.[0]||null,pseudocode:p};});
+const registry=fs.readFileSync('outputs/anadius-messages-source/messages.cpp','utf8');
+const covered=[...registry.matchAll(/\{"([^\"]+)",0x([a-f0-9]{6})\}/g)].filter(m=>ids.includes(m[2])).map(m=>({request:m[1],rva:'0x'+m[2]}));
+if(covered.length!==24)throw Error('registration coverage');
+const source=fs.readFileSync(path.join(out,'misc_handlers.cpp'),'utf8');
+const missing=literals.filter(x=>x.text&& !source.includes(JSON.stringify(x.text))).map(x=>x.text);
+if(missing.length)throw Error('source literals missing: '+missing.join(','));
+const event='<LSX><Event sender="EbisuSDK"><IGOEvent State="DOWN"/></Event></LSX>';
+const eventOffset=bytes.indexOf(Buffer.from(event+'\0'));
+if(eventOffset<0)throw Error('event');
+const data={provenance:'Retained REA pseudocode/assembly with original Evidence IDs; omitted LAB bodies and literal bytes independently inspected statically, not new REA Evidence',target_sha256:sha(bytes),original_executed:false,original_modified:false,retained_rdata_evidence:'ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082',functions:records,helpers,literals,covered_registrations:covered,source_literal_presence_audit:{result:'PASS',literals:literals.length,scope:'Exact quoted nonempty literal presence only; call order separately tested',event:{file_offset:'0x'+eventOffset.toString(16),bytes:Buffer.byteLength(event),text:event},display_key:'Original little-endian packed constants 0x5f59414c50534944 and 0x454d414e form DISPLAY_NAME'},limitations:['18 selected handler bodies; not a complete DLL or ABI binding','02d720 and 0314a0 are bounded independently disassembled LAB bodies, not new REA procedure Evidence','Mandatory XML, time, IGO queue/mutex and typed exception contracts remain integration dependencies','No original/runtime differential equivalence claim','Allocator/SSO/SEH and unwinding after dependency exceptions remain unproved']};
+fs.writeFileSync(path.join(out,'evidence.json'),JSON.stringify(data,null,2)+'\n');console.log('PASS: '+records.length+' handler bodies, '+covered.length+' registrations, '+literals.length+' literal records, '+helpers.length+' helper evidence records');

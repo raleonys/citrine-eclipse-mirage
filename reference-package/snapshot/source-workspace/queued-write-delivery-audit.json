@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T14:03:43.2970222Z",
+  "prior_package_sha256": "cd62756a4d886d4b51ca208bc18530c7a6378bedf417891b53552ac276c1810f",
+  "prior_source_count": 522,
+  "unchanged_prior_sources": 522,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/queued_write_integration_tests.cpp",
+    "anadius-socket-source/queued_write_tests.cpp",
+    "anadius-socket-source/queued_write.cpp",
+    "anadius-socket-source/queued_write.hpp"
+  ],
+  "current_sources": 526,
+  "current_documents": 206,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 18,
+  "validation_mirror_pairs": 20,
+  "native_objects": 177,
+  "cpp_objects": 173,
+  "c_objects": 4,
+  "normal_test_groups": 167,
+  "terminal_cases": 19,
+  "socket_groups": 40,
+  "new_checks": 2601,
+  "new_tests": [
+    {
+      "module": "socket_queued_write",
+      "result": "PASS",
+      "output": "PASS: 1004 socket queued write core checks; actual02a500 empty and bad weak terminal, independent inline/heap/null/full64/masked head oracle, real low32 CAS wrap and bounded synthetic host contention, exact owner member identities and handler fields, residual ownership cached across mutation, heap lifetime ends, bounded registries and normal exception prefixes",
+      "executable_sha256": "345ce51bb17c5cff766decd8ac2c6446e90a65ab867877c05a6e69ce462ec931"
+    },
+    {
+      "module": "socket_queued_write_integration",
+      "result": "PASS",
+      "output": "PASS: 1597 socket queued write integration checks; actual02a500/021fd0/0261d0/025a70/02a500 cycle for two distinct messages, 64KiB slices, shared owner transfer and release, borrowed/owned scheduling, zero second item, cache reuse, early key2 and fallback key0 evidence semantics, mapped errors and category suppression; injected SDK only, actual synthetic heap lifetime ends",
+      "executable_sha256": "1e70b9c56634ff7907bae0ca6c6947b834d9d4635a1f8ce4d3376a155db26259"
+    }
+  ],
+  "master_build_sha256": "b851892144e11c1a92950c20d95eb375a30cce6e46687866604c04b1ba24e862",
+  "common_build_script_sha256": "2dab96052f7ee1f40e232156e4f813d42181faa86833c4be912f5334be14c7c1",
+  "cmake_sha256": "efef39d2d380d5309d67a95376d841d67cf5f280c5bb82fb0fa58ac7fee2e60c",
+  "normal_source_procedures_added": [
+    "0x18002a500"
+  ],
+  "new_original_procedures": 1,
+  "new_composition": "RecoveredQueuedWriteApi closes025a70 next-write provider withactual02a500 ->021fd0 ->0261d0 ->025a70 cycle; low32 strongCAS,masked head,64KiBinitialslice,owner+10/+78 identity,local residual cleanup; default source callee with direct-only synthetic boundary tests",
+  "independent_review": "PASS two frozen sources; separate test author",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "required_providers": "026860terminal/025c40;native allocator/categorymessage/log/stream;polymorphic/RTTI/reference/global/lifetime/concurrency/SEH/ABI/fullDLL",
+  "native_equivalence": "not established; typed unique identities and bounded string/header/map projections; normal callback sequence only; injected SDKs and synthetic owned fixtures; no original target execution"
+}

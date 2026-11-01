@@ -1,0 +1,18 @@
+{
+  "scope": "Outer version.dll reconstruction only; embedded PE is original machine code, not recovered source",
+  "wrapper_count": 197,
+  "export_count": 198,
+  "winmm_wrappers": 180,
+  "kernel32_wrappers": 2,
+  "cached_version_wrappers": 15,
+  "translated_wrapper_instructions": 6556,
+  "verified_internal_branches": 424,
+  "embedded_bytes": 21504,
+  "embedded_sha256": "36e775ed97b7a41c4f0cb98b94ee8edb74fab5cfe17d5fa8cfed265228301846",
+  "embedded_evidence": "ev_157c446e2c1bce1a022bed8f576a7cc535fa15c41a6478fc2ef751d2902f97a5",
+  "dllmain_evidence": "ev_dfd20118a4db8cf9932db18a1fc7452d57fcbee254114f5d52c1988eaa8b92f5",
+  "pe_header_evidence": "ev_13b4368c7e6bd415810e14d335b39a540c563ec7d53fe5591ce2fbb27672d41e",
+  "pe_rdata_evidence": "ev_157c446e2c1bce1a022bed8f576a7cc535fa15c41a6478fc2ef751d2902f97a5",
+  "binary_compilation": "Generation does not compile; see build-llvm/build-record.json for separate successful compilation evidence",
+  "runtime_validation": "Not performed: original and reconstructed DLLs were not loaded or executed"
+}

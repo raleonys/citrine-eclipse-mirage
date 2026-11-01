@@ -1,0 +1,169 @@
+{
+  "schema": "node-base.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180001ea0",
+      "pseudo_evidence": "ev_e7c4be9c1717eb0483ad0b59aaf3cbeb61047a721af9832aa8b1d49694e9dd87",
+      "assembly_evidence": "ev_21355add25b8123d7a7643cd6b01256197966701b4c2309f7557a5cdd95d7192",
+      "newly_recovered": true,
+      "recovery_scope": "Normal001ea0 node-base destructor projection+final NativeDocumentEffects bridge;pointer-only free/native node/parser/DOM/vtable ABI/EH remain open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180001ea0"
+  ],
+  "new_original_procedures": 1,
+  "new_source_bridges": 1,
+  "new_source_allocation_adapters": 0,
+  "new_unique_source_mapped_addresses": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/node_base.cpp",
+      "base": "NativeDocumentEffects::destroy_node_base_001ea0",
+      "body": "destroy_native_node_base_001ea0",
+      "closure": "RecoveredNodeBaseEffects::destroy_node_base_001ea0",
+      "address": "0x180001ea0",
+      "native_abi_complete": false,
+      "scope": "001ea0 normal node-base destructor projection+one final NativeDocumentEffects::destroy_node_base_001ea0 source bridge;publish07fa98 immediate identity,call existing003110,read live parent and ordered own-unlink only if nonnull,then live flagged pointer-only free and exact DWORD/QWORD value-storage resets;native free,node virtual/parser/DOM/global/vtable ABI/EH/concurrency remain open"
+    }
+  ],
+  "native_typed_providers_newly_closed": 1,
+  "source_allocation_adapters_added": [],
+  "existing_source_allocation_adapters_preserved": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "pointer_only_free_interface_preserved": true,
+  "immediate_node_base_vtable_identity": "0x18007fa98",
+  "new_vtable_data_acquisition": false,
+  "existing_delete_nodes_003110_source_reused": true,
+  "own_unlink_reuses_remove_parent_003030": false,
+  "null_parent_preserves_own_sibling_fields": true,
+  "node_object_deallocated": false,
+  "new_native_analysis": false,
+  "reused_complete_data_evidence": [
+    {
+      "file": "pool-allocation-simd-data.json",
+      "sha256": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+      "new_read_performed": false,
+      "new_source_bodies_claimed_by_data_read": 0
+    },
+    {
+      "file": "node-delete-next-vtables.json",
+      "sha256": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a",
+      "new_read_performed": false,
+      "new_source_bodies_claimed_by_data_read": 0
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x180001e00",
+      "pseudo_evidence": "ev_310b19c5bb059cd1c7953ed5ff55dac04b85c180edb01c590a4176041e650755",
+      "assembly_evidence": "ev_b1ea754068b65d01028de2c76b93bcfaf0dca2608322419cc6418811342f3097",
+      "newly_recovered": false,
+      "context_scope": "existing normal source context only"
+    },
+    {
+      "address": "0x180003110",
+      "pseudo_evidence": "ev_1309c5f52e5b3d9c95ec97c721c6a49f19fcded8db1c04d21e5faf6c6874beb4",
+      "assembly_evidence": "ev_635328ecb5bc687965c6bb53ce282983fd334bc548208011ed74d62e645db5bf",
+      "newly_recovered": false,
+      "context_scope": "existing normal source context only"
+    },
+    {
+      "address": "0x18004b0f8",
+      "pseudo_evidence": "ev_4b68e7012c821e22c8f38d541b6e4e613a7e14ea81822e58a96efac29dd593ef",
+      "assembly_evidence": "ev_c742d3bdc5602e2293140e3408473befa826c5e7f02f988ef02afb1709aa3adf",
+      "newly_recovered": false,
+      "context_scope": "mandatory boundary only,no new normal free body"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "node_base.hpp": "7f3272fc864edc0b070b05145f5f18a5af5d2ea68cc5b9a9bfd915de570ccd01",
+    "node_base.cpp": "f3e5ee01a2311060f53adef39b5323c11a1dc55662f3500b69dbb1020ab94418",
+    "node_base_test_fixture.hpp": "20dcb916325344801f7879b8872dfd3c20582c5d59fd5212554931eb72305aca",
+    "node_base_tests.cpp": "7a1172f89f7175bcbca3136d20ddf1169ed651369dc1359b30058b631246d188",
+    "node_base_integration_tests.cpp": "6492bc02ef9d2e9f075f9b451632d45057624c1bce16eb6883ec3bdd73bd4de0",
+    "build.ps1": "43b7d2d5d09139c0203516d42ce11cf298a05c7a178178843ed3b8d9d67c715e",
+    "CMakeLists.txt": "5b7306d73f48f30f4d8968e3788731759b8d48f3d959b4610123e8be90359ed2",
+    "README.md": "8de4aa4d52920e6560b5af2e09dd59cb23cb1db670d9674192f3c2e1b389fc8a"
+  },
+  "reused_source_hashes": {
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "document_clear.hpp": "f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb",
+    "document_clear.cpp": "88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4",
+    "pool_clear.hpp": "4fe3d1f5b73f8bbde7d02b049382dedec07548aebae9adaced5794c965d094b1",
+    "pool_clear.cpp": "126eb5ed1e17ea2c51ada009be36cb3db3800d4a75a043888f89dba919dd7208",
+    "pool_destruct.hpp": "0f2951e2d60116d9986a0e615e49fcce70439cccf3ecbcb8484bc4d703cdf89c",
+    "pool_destruct.cpp": "3bebee2c224523e72a12ce338521dad7a0c2786d36aacc810227fb32f207ef35",
+    "node_delete.hpp": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a",
+    "node_delete.cpp": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3"
+  },
+  "support_hashes": {
+    "node-base-evidence.pseudo.c.txt": "cc3ed7a8a8bb8ca10ade7b914275b9728a24508e904637f2a06a62227833df8a",
+    "node-base-evidence.asm.txt": "dd7000ab03987adf7ccc2e620e47ee1ff2cfa3c28b6056bff00de2fd23f535a4",
+    "node-base-context.pseudo.c.txt": "20861e66dc489fe3028c08e12eddc04633d056148225b30b4ae5b3021ef912ed",
+    "node-base-context.asm.txt": "c74d437f04cc78a619a65d14072889df49e39bb482ef4e21f43978ec8702dcca",
+    "node-base-flow-audit.md": "dedcf6756802de070bbc02591b8ccc4b0275f663811e9ee513cab6dc51933432",
+    "node-base-rea-session.json": "2249470d555cbe35f5de16488b3e4b631c4b5770af5255bfff881943776ff333",
+    "node-base-source-review.json": "500f45b382dc4143782f8ba390dec4a78e562989da168545a983d91b46e47fdd",
+    "pool-allocation-simd-data.json": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+    "node-delete-next-vtables.json": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a"
+  },
+  "prior_target_presence": {
+    "0x180001ea0": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 78,
+  "integration_checks": 97,
+  "new_checks": 175,
+  "execution_scope": "001ea0 normal node-base destructor projection+one final NativeDocumentEffects::destroy_node_base_001ea0 source bridge;publish07fa98 immediate identity,call existing003110,read live parent and ordered own-unlink only if nonnull,then live flagged pointer-only free and exact DWORD/QWORD value-storage resets;native free,node virtual/parser/DOM/global/vtable ABI/EH/concurrency remain open",
+  "limitations": [
+    "001ea0 normal node-base destructor projection+one final NativeDocumentEffects::destroy_node_base_001ea0 source bridge;publish07fa98 immediate identity,call existing003110,read live parent and ordered own-unlink only if nonnull,then live flagged pointer-only free and exact DWORD/QWORD value-storage resets;native free,node virtual/parser/DOM/global/vtable ABI/EH/concurrency remain open",
+    "Store base-node identity07fa98 before existing003110 child deletion;read parent/string flags/storage live only after that source returns;no new003110 body or table-byte acquisition",
+    "Nonnull cached parent alone enables head/tail/live previous-next fixups and own QWORD zero stores+50,+48,+10;null parent preserves own sibling fields",
+    "Head→tail→previous→next updates retain instruction-order rereads under aliases;003030 is not reused because it has registry/virtual-destroy/pool-release effects absent here",
+    "Live flags DWORD+18 bit0x200 selects pointer-only04b0f8(live node+20) with no null guard;then exact DWORD+18,QWORD+20,QWORD+28 zero stores preserve padding+1c..1f",
+    "This value/string-storage cleanup does not free a pool pointer-array,reset capacity,deallocate the node object or release its pool item",
+    "One final source bridge closes one historical NativeDocumentEffects provider (41→42);normal+bridge are two definitions for one native entry,not two native functions",
+    "Prior two semantic session adapters,one separate allocation dispatcher and four pool-destructor source bridges remain preserved",
+    "Existing003110 child node virtual probe/destructor/pool boundaries and native allocation/fill/copy/free/lifecycle/parser/DOM/global/vtable ABI/EH/concurrency remain open",
+    "No synthetic rollback/native unwind recovery added;lower-effect/bounded-map failures preserve committed publication/unlink/reset prefix",
+    "No new native import/data read;retained listings and prior complete data reused unchanged;REA checkpoint verifies identity/availability only",
+    "Originals never executed/modified;actual CFG/token/achievement contents never read;hash-only integrity separate;blocked version.dll/generated artifact never retried",
+    "CRT unchanged and paused;full native DLL incomplete,total completion percentage unmeasured"
+  ],
+  "native_node_base_fully_closed": false,
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "node-base-source-review.json",
+      "reviewer": "/root/allocation_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N23 remaining node virtual destruction inventory/contracts from retained evidence;no new source body claimed by that preparation;generic CRT remains paused"
+}

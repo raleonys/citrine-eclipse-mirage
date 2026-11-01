@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_entry",
+    "result": "PASS",
+    "output": "PASS 914 recovered CRT entry checks",
+    "executable_sha256": "0211844982c1bbf82cbe2bae6ce04b07775e8362801e4c7176c4b90e07932d24"
+  },
+  "execution_scope": "Static-UCRT outer DLL entry normal flow, counter/state/rollback/TLS-slot decisions; mandatory lower CRT/app effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-entry-source/entry_tests.cpp",
+      "sha256": "4449fb8796247a13e908e1b9adc1423023d634e371ede50462fa7a8e7060eb23"
+    },
+    {
+      "path": "anadius-crt-entry-source/entry.cpp",
+      "sha256": "035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47"
+    },
+    {
+      "path": "anadius-crt-entry-source/entry.hpp",
+      "sha256": "3f38209152eb1a83471e1f1a08b183cad4a54381113ec0fd870413ecc5b27358"
+    }
+  ]
+}

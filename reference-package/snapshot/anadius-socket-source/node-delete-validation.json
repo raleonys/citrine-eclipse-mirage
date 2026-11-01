@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "2e380ba55990feb89a587bd7693a352b3537834ae5da2a12f5987b05173d2482",
+  "test_results": [
+    {
+      "module": "socket_node_delete",
+      "result": "PASS",
+      "output": "PASS: 386 node delete checks; parent positions/mismatch, standalone null/link preservation, full64 probe, signed tracking/swap/dead slots, alias reloads, live targets and bounded/throw prefixes; native vtable/DOM/pool/ABI/EH remain open",
+      "executable_sha256": "6d7bed55b0d838066bf3623b67cc604876df743d21eedcb1182c418b990a5a97"
+    },
+    {
+      "module": "socket_node_delete_integration",
+      "result": "PASS",
+      "output": "PASS: 40107 socket node delete integration checks; actual003030/003240 plus coherent clear/document/cipher/dispatch/queue/send chain on3controlled root projections; nativevirtual/parser/fullDOM/pool/heap/ABI/EH remain open",
+      "executable_sha256": "64fc5d79501682018ba8774f7391ce329dd276d3f8266a1e9dfbd65b4f3dfc4c"
+    }
+  ],
+  "core_checks": 386,
+  "integration_checks": 40107,
+  "source_hashes": {
+    "node_delete.hpp": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a",
+    "node_delete.cpp": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3",
+    "node_delete_test_fixture.hpp": "ebe06e5f33d827ed3f58c472176d5a8970ab3c67c9a667144138442eae51ff51",
+    "node_delete_tests.cpp": "8e6a8ef571907441a643a385eb3a3a7af9651d38f7e56295323128f481086a89",
+    "node_delete_integration_tests.cpp": "a84a3dac0a685797ad7edc3b4af1ce459bd47b74ff75a2810e9ec338a89d3cb9",
+    "build.ps1": "801716301754057b7644ac58e6a9cc48164a6471e982d3729693b94d7b7799a4",
+    "CMakeLists.txt": "2e8804a114bf654fd9e7be8543739706991ee1c9dd7039919bb5598ba9338449"
+  },
+  "original_procedures_added": 2,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "execution_scope": "003030 parent/node unlink and003240 standalone node deletion bounded raw-memory normal projections and2 final NativeNodeClearEffects source bridges; native node probe/destructor,pool release/track,parser/DOM/vtable/allocator/ABI/EH providers remain mandatory",
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Bounded raw-memory normal projections; no native DOM/object/global/vtable/lifecycle/ABI/EH/concurrency equivalence established",
+    "Node virtual slots+0x38/+0x78 and pool virtual slots+0x20/+0x18 remain mandatory lower effects; raw supplied target values do not implement native virtual calls",
+    "003030 captures node vtable before node+0x50/+0x48/+0x10 resets; probe target load follows resets and full64-bit result controls tracking",
+    "003030 search bound/table cached; match uses live uint32 count zero-extension for last slot;003240 uses cached signed count for bound and last slot; both decrement live DWORD after swap-store",
+    "003240 null node returns without memory/virtual effects and does not unlink/reset sibling or parent fields for nonnull nodes",
+    "Cached pool before destructor and live cached-pool vtable/target after destructor preserve explicit release(pool,node) arguments",
+    "003030 terminal tail JMP versus003240 CALL/RET native ABI/unwind distinctions remain open; source normal effect order is projected only",
+    "No synthetic corrupted-graph recovery,rollback,catch or native unwind cleanup; finite mapped normal domains mandatory and fixture teardown is not EH evidence",
+    "0041b0 parser engine,remaining pool helpers,DOM materialization,native allocator/free/vtable and final replacement DLL link remain open",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity checks separate; known blocked version.dll is never retried; CRT unchanged and paused"
+  ],
+  "previous_local_records": "39 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

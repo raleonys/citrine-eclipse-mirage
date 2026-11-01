@@ -1,0 +1,84 @@
+{
+  "scope": "Independent retained static normal-flow audit; composition only",
+  "new_original_procedures": 0,
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "address": "0x180023000",
+      "pseudo_evidence": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "assembly_evidence": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575"
+    },
+    {
+      "address": "0x180025720",
+      "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa"
+    },
+    {
+      "address": "0x180025480",
+      "pseudo_evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "assembly_evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31"
+    },
+    {
+      "address": "0x180028d30",
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66"
+    },
+    {
+      "address": "0x18002d540",
+      "pseudo_evidence": "ev_53566f426581ee5026cc02fda62aabed3b9849f460e2d315566e5aada6038d6a",
+      "assembly_evidence": "ev_9c9910a30623d16a8bddbbae7955111290e62a76144a36de16d5e4249e105c0d"
+    },
+    {
+      "address": "0x18002bc70",
+      "pseudo_evidence": "ev_d6716c5d525f5e8e2eb566ef802896e45423abc1be5b6a78f2da5f052740c118",
+      "assembly_evidence": "ev_4fa4de12d674eff8476f9cf6f72bdef77e52de8ef76d04cd9a0e596bd21a0db1"
+    },
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6"
+    },
+    {
+      "address": "0x180032d00",
+      "pseudo_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "assembly_evidence": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224"
+    }
+  ],
+  "rules": {
+    "first_reset": "0x1800230e2",
+    "second_reset": "0x180025777 temporary then copy into session+0xf0",
+    "new_Handler_constructor_reset": false,
+    "cipher_construct": "0x18002bc79",
+    "flag_zero": "0x18002bc81 offsetc4/c5",
+    "greeting": "0x180025810",
+    "greeting_preserves_explicit_NUL": true,
+    "read_after_write": "0x180025919",
+    "version_live": "0x18002d5ca..0x18002d5d9 global0x1800a3c98",
+    "launch": "0x180025556",
+    "detach": "0x18002557f",
+    "consume_rearm_after_launch_detach": true,
+    "frame_delimiter_excluded": true,
+    "empty_request_guard": "0x180028d62..0x180028d67",
+    "process": "0x180028d99",
+    "dispatch_write": "0x180028e7d",
+    "empty_response_still_dispatches": true,
+    "input_mutable_owned_copy_required_by_string_view_adapter": true,
+    "Router_forwarding_preserves_objects_and_errors": true
+  },
+  "material_findings": [],
+  "report_sha256": "e14630a73b4501d9070e9570dc6ac015a6284d39217d0c240a6129da0082653d",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "production_edited": false,
+  "unproven": [
+    "Native ASIO/socket/IOCP and accepted socket move",
+    "Native shared_ptr/allocator/string/deque/layout ABI",
+    "Raw callback lifetime/concurrency and shutdown",
+    "Native reset-local-copy allocation and exception semantics",
+    "CRT/SEH/unwind and full DLL/runtime equality"
+  ]
+}

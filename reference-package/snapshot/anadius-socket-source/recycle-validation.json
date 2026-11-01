@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "recycle_checks": 5564,
+  "storage_checks": 10400,
+  "output": "PASS: 5564 socket recycler checks; retained0283c0 contracts and offline initialized graphs only\nPASS: 10400 socket recycler storage checks; selected host storage and actual source chain with injected effects only",
+  "source_hashes": {
+    "recycle.hpp": "027923db8624434cf98274a27d667ff2fb2aec082a65e0998f1200c81efeb60f",
+    "recycle.cpp": "aeb139759f836963ee7216d1a95e4eb2149f41c9f29463f4d2712be416d2836d",
+    "recycle_storage.hpp": "e39f05d8b3bcf95985e64149561b8d3158f3865aee4cabea0e2d151d80351560",
+    "recycle_storage.cpp": "cc08df14c064dd41f2fdd4a0f3752869b57f01d9955ff25efc83fc0e0fd9ea5e",
+    "recycle_tests.cpp": "850ff073df71fdd5dd8c430e2d2ee0b3a335e0954af285be947e26a4c817d461",
+    "recycle_storage_tests.cpp": "d4e12d318e147d7411e1423bf496326ee92fc392341db20daa52357f96428d6a",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "execution_scope": "0283c0 normal bucket/list transfer, equality-limit partial mutation and unsigned counts; explicitly selected host owned storage/reuse, actual acceptor/lifecycle/closing/cancellation source chain with controlled imports",
+  "original_procedures_added": 1,
+  "native_constructor_insert_rehash_allocator_ABI_exception": "not established; owned storage is a selected host backend, required047fc4 remains a nonreturning effect; no original, socket, network or IOCP execution"
+}

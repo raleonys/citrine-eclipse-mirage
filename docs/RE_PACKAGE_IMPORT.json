@@ -1,0 +1,11 @@
+{
+  "schema": "cem.reference-package.v1",
+  "project_branch": "research/reconstruction-package",
+  "delivery_label": "archive-11",
+  "archive_sha256": "db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da",
+  "archive_bytes": 209091682,
+  "inventory": "docs/RE_PACKAGE_FILES.json",
+  "inventory_sha256": "4fe8ea501a9283a407347f1d869b06a7dffc5692207edb0326132fcdf21f5668",
+  "snapshot_files": 4266,
+  "product_adoption": "Each confirmed finding is handled in a separate focused PR."
+}

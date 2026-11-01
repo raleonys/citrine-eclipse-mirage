@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_initial_locale",
+    "result": "PASS",
+    "output": "PASS: 96 regions, 116 bounded unique relocation slots, 3546 bytes; synthetic rebase, self/category identities, scalar/refcount/May alias/table checks",
+    "executable_sha256": "6276db2e14b7aa589799732bcc20a6eac612186a9dcada008b70a8ccbe585b54"
+  },
+  "execution_scope": "Hash-bound PE initial C locale graph:96regions/116DIR64relocations/3546bytes;94rawregions+2explicitloaderzero-fillleaves;normalizedpointerbytes and syntheticrebase;boundedtableextent inference, no initializers or original execution;zero new original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-initial-locale-source/initial_locale_data_tests.cpp",
+      "sha256": "65c06f3a08df0592f009796c60f9b7059610304ad9ebb28015a68a20a9d1ad2a"
+    },
+    {
+      "path": "anadius-crt-initial-locale-source/initial_locale_data.cpp",
+      "sha256": "ac9db7a7e7e3bbe1292ebb0f408e86efa19d6bac0c5abc3bf2e5472e91be25f3"
+    },
+    {
+      "path": "anadius-crt-initial-locale-source/initial_locale_data.hpp",
+      "sha256": "7fba827e4f129c53d4d79b5f1b9aac9ac29e6dfead3b3534e6f58471045aedb4"
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "stage": "B46",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T20:12:19.220680+00:00",
+  "review_mode": "Independent complete production/lifetime/test source audit; frozen4, author/normalized proofs, logs, compiler, EXEs, canonical archive and all prior source bytes verified read-only. Reviewer ran no tests.",
+  "reviewed_source_hashes": {
+    "graph.hpp": "465c99ed13dabb23478e9e0dbfc9db8313602c4dd459a3b1dcaf0db65cd4efbd",
+    "graph.cpp": "b2368216a50e8af0c2472868e1da4a5ab1db0573d97573646320768802a32091",
+    "graph_tests.cpp": "d9d4141c3b6b7cac2b398f5730b26ddee93d544f55f2f4767b116430cf8caff7",
+    "graph_integration_tests.cpp": "fea7a9cc1f625e426c614d43eedeb261338e3674f9459177c34352eaab0e7703"
+  },
+  "code_freeze": {
+    "path": "work/b46-code-freeze.json",
+    "sha256": "81f8778720384241169f60e23ceea325c65fb954daed12e37a391697115ccdcc",
+    "all_four_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 503,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b46-core-agent.exe",
+      "executable_sha256": "4f5dc6d7e005bd6dde068648e9f153f5b6ecbdcc8aed5c55ffe519398642a60f",
+      "archive_path": "work/b46-baseline-core.a",
+      "archive_sha256": "dec343d5e93a4fba14200565b4ab2a0aed04b0268524c56a809c02eb515bc4ab",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "path": "work/b46-core-quick-results.json",
+      "sha256": "37eebb6b11f5ff9580a1474986c97536c32517d6e1133a1c58efde2f992a6299",
+      "execution_record": {
+        "path": "work/b46-core-agent-results.json",
+        "sha256": "2053e2e79216b67d1e4596359a529fb2fa46e9970d02b27d51129c52b5cdfc04"
+      },
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b46-core-agent.log",
+      "log_sha256": "3b84c382f4c26be95f0f8051889ccb9aec2ebc0e0e166d80ed5796cac2cc0115",
+      "actual_used_source_hash_count": 10,
+      "actual_used_source_hashes": {
+        "graph.hpp": "465c99ed13dabb23478e9e0dbfc9db8313602c4dd459a3b1dcaf0db65cd4efbd",
+        "graph.cpp": "b2368216a50e8af0c2472868e1da4a5ab1db0573d97573646320768802a32091",
+        "graph_tests.cpp": "d9d4141c3b6b7cac2b398f5730b26ddee93d544f55f2f4767b116430cf8caff7",
+        "../anadius-thread-domain-source/domain_test_fixture.hpp": "9f6063f2d7de5cc797f950e0d3c8d07860eab54ad90c8d7506efb139106d9a9f",
+        "../anadius-socket-source/worker_run_native.hpp": "0abeed67dba180b8506005ecaade1093b1e966e847953a094cb8855e13c76d93",
+        "../anadius-socket-source/message_core_bridge.hpp": "952d090d21149bbda432065d168c058fd254f10cf867f1add78de0168b629368",
+        "../anadius-config-source/configuration.hpp": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6",
+        "../anadius-xml-reader-source/reader.hpp": "f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e",
+        "../anadius-event-queue-source/queue.hpp": "b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d",
+        "../anadius-config-iteration-source/thread_error.hpp": "625dc0bd861e388c899467854fb614ed5656364bceeba6033465c6fe4454ae38"
+      },
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "source_scope": "Fresh graph.cpp and graph_tests.cpp with selected actual interface headers/prior domain fixture. Immutable canonical B45 archive supplies prior production objects. Integration test is not compiled or claimed. Main checks exclude twelve independent exact-exit children. Actual default Graph/Profile/Policy/NativeLogic/XMLReader/Router/SessionCipher/Random source runs on one original controller/worker with real own heap/FLS/TLS/IOCP and injected network SDK signatures only. Encrypted test explicitly prepares fixed cipher key and encrypted flag1; native autodetection is not claimed. Graph creates/maps/consumes Parent-backed FIFO events and retires known pending events only after explicit selected external proof. A real unrelated Parent allocation makes the first genuine true proof leave Graph Drained/Profile Closing; actual free followed by a second genuine proof closes all providers without cached attestation or double event/header free. No actual socket/network, original target, user configuration, native detached scheduling, MSVC ABI, complete bootstrap factory or kernel quiescence inference is claimed.",
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "isolated_children": [
+        {
+          "mode": "false",
+          "expected_exit": 601,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "external",
+          "expected_exit": 602,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "prepare",
+          "expected_exit": 603,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "log",
+          "expected_exit": 604,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "overflow",
+          "expected_exit": 605,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "update",
+          "expected_exit": 606,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "reentry",
+          "expected_exit": 607,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "fiber",
+          "expected_exit": 608,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "information",
+          "expected_exit": 609,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "content",
+          "expected_exit": 610,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "time",
+          "expected_exit": 611,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "stream",
+          "expected_exit": 612,
+          "observed_exit_verified_by_parent": true
+        }
+      ],
+      "watched_metadata_hash_count": 0,
+      "watched_hashes_differing_from_current": []
+    },
+    {
+      "checks": 325,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b46-integration-v3.exe",
+      "executable_sha256": "9c87e5e02ae64d857d89a40cd7836d6c5ab1523e9588c965c0bc2ba91d1ec37c",
+      "archive_path": "work/b46-baseline-core.a",
+      "archive_sha256": "dec343d5e93a4fba14200565b4ab2a0aed04b0268524c56a809c02eb515bc4ab",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "path": "work/b46-integration-quick-results.json",
+      "sha256": "6b9c74d840813dde7d4e99471c5b403c7408377762cb3255ff66b2270b2f6229",
+      "execution_record": {
+        "path": "work/b46-integration-agent-results.json",
+        "sha256": "9e9d04840e96b52428555a58dcd0916a455ee563c1093521fa54a5e64f667fef"
+      },
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b46-integration-v3-results.log",
+      "log_sha256": "d59ed2c43d3001250dca71bba4ced67a94210a14c027d0bc03b20d57775c899f",
+      "actual_used_source_hash_count": 3,
+      "actual_used_source_hashes": {
+        "graph.hpp": "465c99ed13dabb23478e9e0dbfc9db8313602c4dd459a3b1dcaf0db65cd4efbd",
+        "graph.cpp": "b2368216a50e8af0c2472868e1da4a5ab1db0573d97573646320768802a32091",
+        "graph_integration_tests.cpp": "fea7a9cc1f625e426c614d43eedeb261338e3674f9459177c34352eaab0e7703"
+      },
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "source_scope": "Three selected as-used hashes: fresh graph.cpp/integration test and graph.hpp. Four watched hashes include metadata-only core test; core was not compiled by integration. Current watched hashes were compared read-only; unchanged transitive includes are not exhaustively listed.",
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "isolated_children": [],
+      "watched_metadata_hash_count": 4,
+      "watched_hashes_differing_from_current": [],
+      "immutable_execution_record": {
+        "path": "work/b46-integration-v3-results.json",
+        "sha256": "9e9d04840e96b52428555a58dcd0916a455ee563c1093521fa54a5e64f667fef"
+      }
+    }
+  ],
+  "checks": 828,
+  "core_checks": 503,
+  "integration_checks": 325,
+  "core_isolated_children": 12,
+  "integration_isolated_children": 0,
+  "child_assertions_added_to_main_count": false,
+  "root_checks": 0,
+  "root_normalization_only": true,
+  "reviewer_executed_tests": false,
+  "baseline": {
+    "path": "outputs/dll-reverse-engineering.zip",
+    "sha256": "6472aa581ad8346c9cd39bb399e898251665a0922c9b9d32811667225526f2dd",
+    "stage": "B45",
+    "source_count": 914,
+    "unchanged": 914,
+    "modified": 0,
+    "new": 4,
+    "total": 918,
+    "all_prior_zip_source_hashes_verified": true,
+    "modified_prior_sources": [],
+    "used_archive_matches_zip_member": "source-workspace/build/anadius_core_partial.a",
+    "used_archive_sha256": "dec343d5e93a4fba14200565b4ab2a0aed04b0268524c56a809c02eb515bc4ab"
+  },
+  "findings": [
+    "Concrete same-thread factory owns Policy/Profile/NativeLogic/XMLReader/Router/SessionCipherFactory/Random/event ring assembly; caller supplies narrow information/content/license, SDK/TLS/executor and observed lifecycle decisions, not a whole SessionLogic/context factory.",
+    "Live StateView objects are borrowed through explicit pinned backing; Router recreates state views/spans per dispatch so serialized vector replacement is observed without stale persistent spans. Concurrent online-worker mutation is outside this selected scope.",
+    "Fixed event prefixes/map own lazy exact DOWN seed, SSO/heap/aligned/embedded-NUL FIFO payloads; existing Native033d70 copies/frees/resets exactly one observed head. Unlock validates reset/count/offset, unknown prefixes retain lock/state/lease. Content/Igo adapters share this queue.",
+    "Narrow information/content/license/clock/document-writer/XML providers have pre/post sticky admission. Raw writers are reserved/adopted before postchecks and explicitly retired after known normal handlers; stream primitives use short separate leases/checks before later text/newline/flush/observer.",
+    "Completed unpublished server is held in pending_server before final throwing admission; unknown install prefixes retain it. Normal wrapper/Core/Profile/Policy weak ownership avoids a permanent cycle; normal destruction releases all outside owners.",
+    "Wrapper validates original worker/fiber before SDK source entry; explicit close_unstarted closes only a known Constructed backend. Destructor seals Retiring and retires Random/guarded clock/raw clock/XML/cipher/Options while metadata remains alive, outside mutex.",
+    "False/throwing external proof retains event/Parent ownership. True proof reaps all live sessions/jobs, releases known queued strings and graph lease. Drained admits repeated genuine proof after later Profile provider close returned false: real unrelated73-byte allocation survives first proof, is explicitly freed, then second proof closes graph without double free."
+  ],
+  "native_accounting": {
+    "new_native_bodies": 0,
+    "new_ABI_closures": 0,
+    "mapped_canonical": 501,
+    "eligible_tags": 505,
+    "normal_native_claims": 139,
+    "historical_closed_providers": 52,
+    "last_native_body_stage": "B38"
+  },
+  "planned_common_build": {
+    "status": "PENDING_RUNNING_AT_REVIEW",
+    "reviewer_claims_common_PASS": false,
+    "production_objects": 268,
+    "cpp_objects": 264,
+    "c_objects": 4,
+    "normal_groups": 321,
+    "terminal_groups": 19,
+    "composition_files": 105,
+    "composition_objects": 52,
+    "compiler_observations": 92,
+    "new_trait_values": [
+      0,
+      0
+    ]
+  },
+  "registration_role": {
+    "path": "work/b46-register.py",
+    "sha256": "3d35ca75318a29183523b9b6dc99414596033707c159a3498954ad84d2a802f0",
+    "preview_author": "/root/b22_provider_audit",
+    "strict_read_only_preview": "PASS",
+    "applied_by": "/root after separate plan/source review",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "Reviewer executed no EXE/test; no original/rebuilt DLL/game/network socket/config/token access, fresh REA target query/bytes, or AV retry.",
+    "This is SAME original controller/worker/fiber construction/use/close/destruction outside loader lock. It is not a controller-spawned bootstrap factory. DomainStorage provider factories are controller-only; Policy/exit registry are original-worker-bound. Two-phase bootstrap integration remains B47.",
+    "Explicit lifetime tokens do not prove arbitrary pointed StateView cells/import code/backing are owned. Exact stable configuration references and external serialization remain prerequisites; concurrent online/global mutation and module unload are not established.",
+    "Encrypted tests prepare fixed key/encrypted flag through optional prepare_session. They exercise actual typed NativeLogic/AES/event paths but do not prove full default challenge-response/XML-error8 autodetection handshake.",
+    "XMLReader/version choice, bounded host ring/std::mutex, host logger/category/guard/zero exception context and inline jobs do not establish native DOM/deque/mutex/stream/MSVC EH/GS/CRT/thread ABI or arbitrary malformed-input/concurrency equivalence.",
+    "Opaque raw writer destruction is delayed until known normal handler completion, a selected ownership policy; no intermediate native EH rollback is inferred. Unknown outcomes poison/retain; descriptors do not pin caller stack or escaped borrowed node/XML/writer/source views.",
+    "Unknown unpublished installation may intentionally retain a facade/server/Core ownership cycle. No automatic cancel/unwind/retry is claimed for partial or unknown installed prefixes. Normal closed paths have verified weak-owner expiry.",
+    "Observed completion owner/backpressure/terminal packet/stop relay/worker return/external drain remain mandatory selected hooks. Source counters, empty queues and returned flags alone are not kernel/rawjob finality.",
+    "Full common rebuild is PENDING/RUNNING at review time. Other bootstrap Resources/config/domain/foreign/host/callback choices and loader attach/detach remain open; no production DLL readiness or new native closure is claimed."
+  ]
+}

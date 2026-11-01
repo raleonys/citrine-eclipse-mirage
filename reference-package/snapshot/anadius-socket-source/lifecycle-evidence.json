@@ -1,0 +1,135 @@
+{
+  "schema": "socket-lifetime.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x1800211b0",
+      "pseudo_evidence": "ev_0a99c668ad187f12ba22bcb5a084965bb3619bfa398a64dd105f65647c8a7c33",
+      "assembly_evidence": "ev_632ecefa1757518f06b13606a94918118593165c553357228e6939dd09997b9d"
+    },
+    {
+      "address": "0x1800237f0",
+      "pseudo_evidence": "ev_9d032f90b7525b7ede209b0cd270417daa9266d8e3a7a8c00e1c70cc49a616d6",
+      "assembly_evidence": "ev_de485f776e49d7ff2d789f8827fe4b134f48db3815f521d6d4cde097753b314c"
+    },
+    {
+      "address": "0x180024db0",
+      "pseudo_evidence": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3",
+      "assembly_evidence": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357"
+    },
+    {
+      "address": "0x180026fb0",
+      "pseudo_evidence": "ev_4ffe8b68e27a849ee81d94fa3520491aa59f139532cc5e31294d1bee89c8c4b4",
+      "assembly_evidence": "ev_949e26c04afda34fe45f482346b1b127456e1debcf6ba15190922608977a89d9"
+    },
+    {
+      "address": "0x1800239c0",
+      "pseudo_evidence": "ev_c935d546ffcfd9a015759eba276b6b86808a598ce42947d5ddbe6ef939153abb",
+      "assembly_evidence": "ev_245079b916f12d89c98287073bb82e89b00650e14f7fa967621e26699d2344a4"
+    },
+    {
+      "address": "0x18004b0bc",
+      "pseudo_evidence": "ev_9c975496fb48d4e6fca6f8c0535c16fa44feb14e8dafa92ef6b45a98915fa0ec",
+      "assembly_evidence": "ev_4b9d54867bdd71cc2cd07945df16f49f84fdecaa3c3535386e97bd20f64624ec"
+    },
+    {
+      "address": "0x180020e20",
+      "pseudo_evidence": "ev_3c0f133878db1fec30ab6ef19ef7b2595fed8a0ba99ea8e0ec75a708ab5925af",
+      "assembly_evidence": "ev_ff338f1411812fb5f0cbb9ad6393b0698c2c0a40146ad6aab6f4aaeffaf2bfea"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "lifecycle.hpp": "081bf08e4214bdaaa2252c6e1abcb6ce6acad75c2805656cec5dee6e9eeee898",
+    "lifecycle.cpp": "6f5f684e1fb3224a5a9fd92ebf51f4b495effecf0f5ee7aad7fa7bc92fbb52c8",
+    "lifecycle_native.hpp": "ef0f5c9621106f565d4b65b39666e2ee258f13e0638644051c543d1e63bf8f52",
+    "lifecycle_native.cpp": "3d93ea529a65f84e009a80caebd6032606c65f60d2de281a6885a84c94d99996",
+    "lifecycle_tests.cpp": "5222c62232015e59f3aa8c9477b28701411d3654294cc7bca18644b7caef6408",
+    "lifecycle_native_tests.cpp": "2759211a1dd016ac79fbcbed36e686e4a6f8b8b91cc3bf3ffba0991517061d31",
+    "build.ps1": "5900a6835701f77504aa0c0bbc2c38804689539c5754525f71e13439e75dab90",
+    "CMakeLists.txt": "b1fe5db7abac51ebfadceb50ba71512c49c1d3ada62c07d4eaf725cde331cb2b",
+    "README.md": "5b0eaea6d394b9ddeb44aa42db4a5b29c6d5607ef75c8a2d0f38090170db95fe"
+  },
+  "support_hashes": {
+    "lifecycle-evidence.pseudo.c.txt": "6878a21dc4e0d5f68881f0ceb6f4b4d75515fbd0a2bfdd955c1a4b0873db9720",
+    "lifecycle-evidence.asm.txt": "490ba9b2fa51ec0c42a1b9077a2e1c4e91bcae19cd57edebd69e1ce36ee68c80",
+    "lifecycle-flow-audit.md": "130335a16738b9d30c7e0ac36842202020f622cfe4be6c40b3f60d31f267eeb5",
+    "lifecycle-flow-audit.json": "075d0bc3e22a845de02ff547138733547c4bed021e4621adb2b9ef9a65a88d14",
+    "lifecycle-review.md": "95900060ef39a5cfe172de08457b52919a68301106f19f61efa1586793a4e555",
+    "lifecycle-review.json": "56956d6a8ceedcbf3f07466f15e6fba4058e9a86c57c6995b1e35db1813128b2",
+    "lifecycle-rea-session.json": "55bb30403ac54374d1776e7b58974feaa7956565ae0c4419b2fb53dc4a415fda"
+  },
+  "normal_source_procedures_added": [
+    "0x1800211b0",
+    "0x1800237f0",
+    "0x180024db0"
+  ],
+  "new_original_procedures": 3,
+  "required_providers": [
+    "0239c0 service resolution",
+    "026fb0 low-level cancellation/socket-close",
+    "Executor cleanup",
+    "Native04b0bc allocation/new-handler/exception effects",
+    "Category/exception runtime"
+  ],
+  "claims": [
+    {
+      "finding": "Resolve then selected fields/pair zero; late control reload alreadyNULL; gate-protected head insertion",
+      "addresses": [
+        "0x1800211d1",
+        "0x1800211e2",
+        "0x1800211eb",
+        "0x180021249",
+        "0x180021281",
+        "0x1800212a8"
+      ]
+    },
+    {
+      "finding": "Allocate24/initstrongweak1/resource; publish resource then read live old control/store fresh; allocation reentry preserved",
+      "addresses": [
+        "0x180023805",
+        "0x180023821",
+        "0x180023828",
+        "0x180023836",
+        "0x180023839",
+        "0x18002383d"
+      ]
+    },
+    {
+      "finding": "Strongfetch_sub old1 callsdestroy then weakfetch_sub old1 callsdelete; no weak decrement when strong old!=1",
+      "addresses": [
+        "0x18002384d",
+        "0x18002385d",
+        "0x18002385f",
+        "0x18002386f"
+      ]
+    },
+    {
+      "finding": "Cache service before requiredclose, unlink under same gate/resetlinks, cleanup then late control read/finalrelease without slotclear",
+      "addresses": [
+        "0x180024dc7",
+        "0x180024dd5",
+        "0x180024de4",
+        "0x180024e16",
+        "0x180024e22",
+        "0x180024e33",
+        "0x180024e36"
+      ]
+    }
+  ],
+  "selected_host_factory": "OwnedNoopControlFactory new(nothrow), noop resource destruction; not recovered04b0bc malloc/new-handler/retry/throw behavior",
+  "independent_production_review": "PASS; lifecycle-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "SDK_execution": "Injected borrowed CRITICAL_SECTION imports; no real socket/network",
+  "unproven": [
+    "Native service/list/sharedref/executor memory ABI",
+    "Actual04b0bc allocation/new-handler/exception behavior",
+    "ASIO/IOCP/socket cancel/close ownership/lifecycle/concurrency",
+    "Native global/allocator/SEH/ABI and full DLL/runtime differential"
+  ]
+}

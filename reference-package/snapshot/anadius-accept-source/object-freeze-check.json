@@ -1,0 +1,114 @@
+{
+  "result": "PASS",
+  "source_package": "B36",
+  "build_record_sha256": "1e46898f0c14b4baae7f4f4c997e26c1de90820533b2fe25ecd465ee35bc2ca3",
+  "frozen_source_hashes": {
+    "accept.hpp": "8f1196a1506ee63a05d2d215091766fe607ba2f53269e0422ce2d034f2a85485",
+    "accept.cpp": "3483ad9075706413543407f75c4ec02333d124f3a5a39ddb25f1e51572b11a22",
+    "owned.hpp": "837fe33f9a97020c0aeac604cb09166e6db40eea3ef79414830512e2cfbd4cca",
+    "owned.cpp": "ca0b1e0bf4e6c22c320f09c4794052051307e8df268cc6b155b924bba5c57a26",
+    "accept_tests.cpp": "ead34d0ea512b571478b2a1869328e936e2c57b200cd9a315e97fb5f62faa503",
+    "accept_integration_tests.cpp": "92f6e1fd6329bb869d5a35f29bd40aa8012b8465bdd9be17eddec475f2902b28",
+    "../anadius-session-memory-source/memory.hpp": "37dadb1a7708e36c079ae9bfe2e755014c4127ffa923c6bebc9257dc0fa512d9",
+    "../anadius-session-memory-source/memory.cpp": "fc54b2449bdf8d4f5a2eb8161dd02f0e576ec7b8994e0f750c711bfce1d030f9"
+  },
+  "objects": [
+    {
+      "object": "outputs/source-workspace/build/native_async_accept.o",
+      "source": "anadius-accept-source/accept.cpp",
+      "source_sha256": "3483ad9075706413543407f75c4ec02333d124f3a5a39ddb25f1e51572b11a22",
+      "production_sha256": "b45666dfe9078ab4b9b81bfef048b3efed86aa3e002573f092c48f5821f29bc8",
+      "fresh_path": "work/b36-freeze-native_async_accept.o",
+      "fresh_sha256": "6f3fdd64034f3c307391127fbfbbb7d0e5d4541d97d37483e0847e2cdda88e7c",
+      "normalized_sha256": "8331684ef14e888e3b4f78f32cc10a17921d6bc4f4a49981f427d17dd1068015",
+      "fresh_normalized_sha256": "8331684ef14e888e3b4f78f32cc10a17921d6bc4f4a49981f427d17dd1068015",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-accept-source\\accept.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b36-freeze-native_async_accept.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    },
+    {
+      "object": "outputs/source-workspace/build/owned_accept.o",
+      "source": "anadius-accept-source/owned.cpp",
+      "source_sha256": "ca0b1e0bf4e6c22c320f09c4794052051307e8df268cc6b155b924bba5c57a26",
+      "production_sha256": "17e660800289a54dbc71f0adf92a90c7bfae719233a51dcd039816f7baec754c",
+      "fresh_path": "work/b36-freeze-owned_accept.o",
+      "fresh_sha256": "6f7057a2c4f8e68cd2e29e45a8327becbdf8a211c56b625fea58c31c0646831f",
+      "normalized_sha256": "aa4463e9e7764ec688b13180eb1c7564a60970a20d6bbbf6b8bd709b1e62291f",
+      "fresh_normalized_sha256": "aa4463e9e7764ec688b13180eb1c7564a60970a20d6bbbf6b8bd709b1e62291f",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-accept-source\\owned.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b36-freeze-owned_accept.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    },
+    {
+      "object": "outputs/source-workspace/build/session_memory.o",
+      "source": "anadius-session-memory-source/memory.cpp",
+      "source_sha256": "fc54b2449bdf8d4f5a2eb8161dd02f0e576ec7b8994e0f750c711bfce1d030f9",
+      "production_sha256": "7af4a909e81e9f8dbc72b1340b028f7536ff0789e789e4dbe5acceae998ae152",
+      "fresh_path": "work/b36-freeze-session_memory.o",
+      "fresh_sha256": "328323f8a448b578cee444ee0fc1a58b7397fa3eba4182626fde687f0e51d0e7",
+      "normalized_sha256": "6d6947f848e83fefa51c52c76313d404b9299fae69cbc6d72b0cd7b163fbb2be",
+      "fresh_normalized_sha256": "6d6947f848e83fefa51c52c76313d404b9299fae69cbc6d72b0cd7b163fbb2be",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-memory-source\\memory.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b36-freeze-session_memory.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "scope": "Fresh identical-command final-source production compile; all bytes except COFF header timestamp equal."
+}

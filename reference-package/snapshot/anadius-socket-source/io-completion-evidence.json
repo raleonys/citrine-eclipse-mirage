@@ -1,0 +1,259 @@
+{
+  "schema": "io-completion.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180027710",
+      "pseudo_evidence": "ev_7da3b743355f442a593ae330a5db5226466c68b92f7b80398a37115ffdb0ad0e",
+      "assembly_evidence": "ev_875f068c4cc67a67b326e00dd8beda8a6e4921fdd8deb40f82ad55921e27dfea"
+    },
+    {
+      "address": "0x180027a20",
+      "pseudo_evidence": "ev_ac8acca2b33bd760e4ba5f3d9ec5784ef473a66bd1f78d4aeb47033d2bcbc4d9",
+      "assembly_evidence": "ev_c7fd45e2d65c3e1f508706bdf6dc9e7561b9d896d56095bbebac7e82853f4463"
+    },
+    {
+      "address": "0x1800293f0",
+      "pseudo_evidence": "ev_3ae73ab0a728103ea5b1dac7b8823e06a3f850d5f744b5739526298c54b3491c",
+      "assembly_evidence": "ev_2952336be67b99eb58841e45901763cbb9ef1cf6777392aa3dc5e2afedf21b2d"
+    },
+    {
+      "address": "0x1800294c0",
+      "pseudo_evidence": "ev_65f668a0be45b449bda8c6a2bc7797385aa0abce15e0adb2a8dadafd5662c982",
+      "assembly_evidence": "ev_a2a0dd4fb182338fda3cd1fb10e418daad741f70f824c2ba41a04cc7e29b9207"
+    },
+    {
+      "address": "0x180023cb0",
+      "pseudo_evidence": "ev_104fb6d87cffb0a02e61c0173403243f305305ffcf18a5fdb95e886f36fb27d1",
+      "assembly_evidence": "ev_5393cd5463f3a87b8f294c63f701e30396bb840e2ae1f35dd015b1a5c38fa588"
+    },
+    {
+      "address": "0x180021a40",
+      "pseudo_evidence": "ev_2813b701e157524c76c3c175e1e4795ed10e26d16e0955b5f685f67a27510182",
+      "assembly_evidence": "ev_b996de0c468259782b9b186759ef39599a24b4235b486e5a9b14b6b440666c64"
+    },
+    {
+      "address": "0x180021a80",
+      "pseudo_evidence": "ev_d1d2adb6238cbcaf27e3ab93bece0d5f0e77e0232fd449c89af2dca7e1d5c9c4",
+      "assembly_evidence": "ev_1885151718031ab7575010f99ce914706c41cfcc12bb3cac3783572526122b07"
+    },
+    {
+      "address": "0x180026a00",
+      "pseudo_evidence": "ev_a8b18ff702d64aed8451a717a422d725d685b92d5849bd81eb6aa8526be6d678",
+      "assembly_evidence": "ev_d3743b3c9d3a490dde77749b691735b3cc7d664db9f3f79d931983343ce15a5d"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "io_completion.hpp": "85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32",
+    "io_completion.cpp": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90",
+    "io_completion_dispatch.hpp": "43e4ab5404a7805e689232622ebc2a7471bd851532cdb952338dc0bce08074c2",
+    "io_completion_dispatch.cpp": "bb85580acd56f40b4e9c32e06a615aba3af36c37f6adc51ccc1184ec3c96a9a1",
+    "io_completion_tests.cpp": "7e49da73697f313385ef6651aeddcc30028b0ab8c06dbacaf42a3409149b87ee",
+    "io_completion_integration_tests.cpp": "941a84316b7955a5145088bed56ad5bfb755984fbe6111fb6b95a2ba469ae111",
+    "build.ps1": "1ae6fedecc0ac37b7c4cfcd3f11105b71056d90c3523d45446f76fe8ab232b00",
+    "CMakeLists.txt": "d534ceb78e082aee1ff6ce7d554a8cd5f0dc3fbb9e710e912ee86490bee86989",
+    "README.md": "49ab5c5250b0be7318f2a3a6aec013bc88a9d115427588d365b215a1fe51fec0"
+  },
+  "support_hashes": {
+    "io-completion-evidence.pseudo.c.txt": "81df847511187877edf6a16c1fe702bf9a8811184b9a776007e5d79792741aaf",
+    "io-completion-evidence.asm.txt": "69836d80ebb17154d9b05dc3cdc8ff7f1656dd3d79460025a7cbdc6910aa458a",
+    "io-completion-flow-audit.md": "77cf229537e6f5281e5d8b6d6d61748bd99bfc5af2289380d3cec7af34aa8f8e",
+    "io-completion-flow-audit.json": "575a717c1298b4a6607ba56a9a5a3aef9deb0e7781a7833312c39b8776400e69",
+    "io-completion-review.md": "2aae92dd0c4c24a27c23d62f31d936881627208e54c3c3cea26cc1d17c6c5d94",
+    "io-completion-review.json": "574ceca64ce271cb4b920495978f2095bb49a501094ee4d09106e9aa64594be1",
+    "io-completion-rea-session.json": "6293f4a2693ca8a8e9f072ac07cf8778dee6137f26df31d6159615476923094a"
+  },
+  "normal_source_procedures_added": [
+    "0x180027710",
+    "0x180027a20",
+    "0x1800293f0",
+    "0x1800294c0",
+    "0x180023cb0",
+    "0x180021a40",
+    "0x180021a80",
+    "0x180026a00"
+  ],
+  "new_original_procedures": 8,
+  "required_providers": [
+    "04b788 deallocator unchanged",
+    "Native polymorphic operations00/10/18 and executor40 implementations/lifetime",
+    "0229d0 send scheduling,022c60 receive scheduling,025c40 receive handler,0261d0 send handler",
+    "Stable raw identity/binding/typedprojection with accessible bounded allocation span",
+    "Existing WorkerRunApi TLS/DispatcherApi SDK posting; native reference control lifetime and bindings",
+    "Native GS-cookie/exception/SEH/unwind/concurrency/ABI and full DLL integration"
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x180023cc0",
+        "0x180023cd0",
+        "0x180023ce6",
+        "0x180023cee",
+        "0x180023cf1",
+        "0x180023cf9",
+        "0x180023d08"
+      ],
+      "finding": "Move copies table10/20; resets source10/20 sentinels; live destination10.slot10 callback; clearsource18 AFTER callback; live source28copy/reset; payload00/state18 transfer delegated to native slot10"
+    },
+    {
+      "addresses": [
+        "0x18002774c",
+        "0x18002776a",
+        "0x180027779",
+        "0x180027782",
+        "0x180027788",
+        "0x1800277a9",
+        "0x1800277ce",
+        "0x1800277ec",
+        "0x1800277fa",
+        "0x18002780f",
+        "0x18002782d"
+      ],
+      "finding": "Input error snapshot BEFORE envmove; mapping after;code64->system995 forNULL/strong0 else10054;1234->system10061;receive10040/234 clearcodeonly,noEOF;original0+bytes0+flag10+requestednonzero->misc2"
+    },
+    {
+      "addresses": [
+        "0x180027a56",
+        "0x180027a6d",
+        "0x180027a90",
+        "0x180027a9f",
+        "0x180027ab5",
+        "0x180027abd",
+        "0x180027ac2"
+      ],
+      "finding": "Send mapping64/1234 same code/category; scratch+4 neverinitialized, mapped send error padding INDETERMINATE; typed Error projects value/category only"
+    },
+    {
+      "addresses": [
+        "0x180027837",
+        "0x180027896",
+        "0x1800278a1",
+        "0x1800278b7",
+        "0x1800278c5",
+        "0x180027ac7",
+        "0x180027b00",
+        "0x180027b0d",
+        "0x180027b23",
+        "0x180027b2f"
+      ],
+      "finding": "Typed bounded originalfield payload copied after mapping;receive original60local0/send original60local8(dummy prefixuninitialized);moveownedpair a0/a8 or90/98 then clearoriginal;actualcleanup/cache/free BEFORE ownergated invocation"
+    },
+    {
+      "addresses": [
+        "0x1800278ec",
+        "0x1800278f0",
+        "0x1800278f8",
+        "0x180027900",
+        "0x18002790f",
+        "0x180027912",
+        "0x180027924",
+        "0x180027949",
+        "0x18002794b",
+        "0x180027950",
+        "0x180027960",
+        "0x180027965",
+        "0x180027974",
+        "0x18002797e",
+        "0x180027989",
+        "0x18002799a"
+      ],
+      "finding": "Explicit receive nested sequence:cache actualfactoryfunction28.slot40 BEFORE query10.slot18;factory(temp,query,opaqueuninitializedscratch);copytemp10/20/reset;cachedmove10callback;temp18zero;livetemp28copy/reset;livetempdestroy skipsiff017a30functionidentity;022c60 then unconditional livenesteddestroy"
+    },
+    {
+      "addresses": [
+        "0x1800278e2",
+        "0x180027b48",
+        "0x180027b4f",
+        "0x180027b53",
+        "0x180027b57",
+        "0x180027b5b",
+        "0x180021a53",
+        "0x180021a57",
+        "0x180021a68",
+        "0x180021a93",
+        "0x180021a97",
+        "0x180021aa8"
+      ],
+      "finding": "Direct021a40 and021a80 private logicalerrorsnapshot/bytes/flag0 call required025c40/0261d0;sendpoly0229d0 nativeRDX/R8aliases samehandler; providers not newly recovered"
+    },
+    {
+      "addresses": [
+        "0x180029407",
+        "0x18002941e",
+        "0x180029421",
+        "0x180029434",
+        "0x180029444",
+        "0x180029448",
+        "0x180029458",
+        "0x18002945b",
+        "0x180029464",
+        "0x180029474",
+        "0x18002947c",
+        "0x180029491",
+        "0x180029496",
+        "0x1800294d7",
+        "0x1800294ee",
+        "0x1800294f1",
+        "0x18002952b",
+        "0x180029544",
+        "0x18002954c",
+        "0x180029561",
+        "0x180029566"
+      ],
+      "finding": "Cachedobject acrossenvironmentdestroy; liveownedcontrol readAFTERdestroy;strong low32 XADD(-1) old1dispose thenweakold1delete;liveweakcontrol readAFTERstrong callbacks;clearframeobject;readallocationAFTERallobjectcallbacks;026a00cachedallocation;clearframeallocationafterTLS/free despitecallbackmutation"
+    },
+    {
+      "addresses": [
+        "0x180026a10",
+        "0x180026a16",
+        "0x180026a1c",
+        "0x180026a2a",
+        "0x180026a33",
+        "0x180026a44",
+        "0x180026a51",
+        "0x180026a60",
+        "0x180026a65",
+        "0x180026a69",
+        "0x180026a6e"
+      ],
+      "finding": "Cacheallocation/size;oneTLSgetliveindex BEFOREsizecheck;currentframe.stateonly;unsignedsize<=1020;first2cachefirstempty;marker[size]to0 thenidentity;else04b788tailcall;R8/R9hintunused"
+    },
+    {
+      "addresses": [
+        "0x18002799e",
+        "0x1800279ae",
+        "0x1800279be",
+        "0x1800279c0",
+        "0x1800279d0",
+        "0x1800279d4",
+        "0x1800279df",
+        "0x1800279e7",
+        "0x180027b62",
+        "0x180027b72",
+        "0x180027b82",
+        "0x180027b84",
+        "0x180027b94",
+        "0x180027b98",
+        "0x180027ba3",
+        "0x180027baa"
+      ],
+      "finding": "Reloadlocalownedcontrol AFTERhandler;strong32old1dispose/weak32old1delete;wrap0withoutguard;thenLIVEenvironmentdestroy;secondcleanupnormalonly;ownerNULLskipinvoke,butretainrelease/destroy;nooriginaloperationaccessafterearlycleanup"
+    }
+  ],
+  "independent_production_review": "PASS; io-completion-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Eight actual normal caller procedures compose receive/send error mapping, moved handler environment, explicit nested polymorphic setup, refcount release and early storage return; typed callback router into existing posted/027c10 dispatcher/0298b0 worker; injected API effects only; no original/network execution",
+  "storage_contract": "Bounded raw allocation distinct from typed SDK/handler projections; bindings coherent while borrowed; free may end operation lifetime; callback may mutate exposed live fields; no post-free operation access; Error value/category projection excludes native padding; send dummy prefix and uninitialized factory scratch contents absent",
+  "unproven": [
+    "Native table-slot implementations,0229d0/022c60/025c40/0261d0 algorithms",
+    "04b788/native allocator provenance/control-block lifetime",
+    "Native ABI/GS-cookie/exception/SEH/unwind/concurrency",
+    "Complete DLL integration and original runtime differential"
+  ]
+}

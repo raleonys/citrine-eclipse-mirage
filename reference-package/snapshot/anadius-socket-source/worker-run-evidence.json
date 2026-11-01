@@ -1,0 +1,215 @@
+{
+  "schema": "worker-run.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180026320",
+      "pseudo_evidence": "ev_a5b1ddc59703eac49757a284109778592c0ff620184c9ec7cb170cafa588bd6e",
+      "assembly_evidence": "ev_c1d7725a414b7f64b770058dc15e8db4aa9f6c4d09b025ad2e0f0eb9cf84911b"
+    },
+    {
+      "address": "0x180029890",
+      "pseudo_evidence": "ev_521cfdbca7541399b8af5c4f7bdc5ceb096310c502b3436053fdfcd22e970ec5",
+      "assembly_evidence": "ev_450a3eec4ce1b268df9350871ff8b463b49cd06620c715153ee431acdf313130"
+    },
+    {
+      "address": "0x1800298b0",
+      "pseudo_evidence": "ev_e6bbbaa1780b6df4e1edc25150c1c8a939c0d5fb937afed734d4f8c641d88539",
+      "assembly_evidence": "ev_4b20e2442cb7d601c8177ba4b68acc8c09a8cce81580892199e78a5d0f00c319"
+    },
+    {
+      "address": "0x18002a190",
+      "pseudo_evidence": "ev_e826697a7d9543338d9741906c5ce25c29a36806fd701f2178a335f314f7fee2",
+      "assembly_evidence": "ev_28baeec203ffe1abf8bab8af7907605b09a6dfb72018fcd7ea4ffbca8955f680"
+    },
+    {
+      "address": "0x18002a4a0",
+      "pseudo_evidence": "ev_326989fa8214581db6a42e9ea6032da072a9887b4b3666295c91af39e968d292",
+      "assembly_evidence": "ev_a156da50becb7358bbfc13525d003f388046ac1b32fde8dc694fec79d90d8a53"
+    },
+    {
+      "address": "0x18002a000",
+      "pseudo_evidence": "ev_5e78eef88f702baed2927d9748d4a109ac08003daafc401dcb7edab1bb2b2aab",
+      "assembly_evidence": "ev_9bb61c1aa2239aa4ceaa3b76b45ca58ddf61af660271bf12e342b874b7583917"
+    },
+    {
+      "address": "0x180024990",
+      "pseudo_evidence": "ev_3a626f8100eb1bf7ba0b9677a33b1b1418e250dde536cb3a9f122c32790a3442",
+      "assembly_evidence": "ev_87052282e1951ed15719d13023b5cd5cfdf7a65dcbff15d2354f8ee4cff08aad"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "worker_run.hpp": "191ac2548f32bd8828d5d3d12b9ce41f99716e1f9028ae554e2d483fab06df0f",
+    "worker_run.cpp": "1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4",
+    "worker_run_native.hpp": "0abeed67dba180b8506005ecaade1093b1e966e847953a094cb8855e13c76d93",
+    "worker_run_native.cpp": "df0d743263b53d4845456d78766e86daa47c9bf4358f51b91ff25f8dcda3ec38",
+    "worker_run_tests.cpp": "efb829595c45a096e3852ab5f284299649d896469d9c33f95834abc62ccc8367",
+    "worker_run_native_tests.cpp": "bd6c2e393143a5616fb6f09e42bbf6d5521e973023052cfcedc47738e387d197",
+    "build.ps1": "96e338cf28d62319c0d5bf08b84efc7ade6cf9fc0491a4f29aa5efd1be0c1369",
+    "CMakeLists.txt": "280a052e7f3ccbf0efd9c0f6a1413c45231f774d92433b0144c91478ad36003e",
+    "README.md": "15df007cd2232de14d501b5a59252b6db145a8b3df5fe500b9440dfc2e989f36"
+  },
+  "support_hashes": {
+    "worker-run-evidence.pseudo.c.txt": "28c299e4864b10910450ed83bf4d9f4e46aa07f5b5a78d9a17f8b2f17d814146",
+    "worker-run-evidence.asm.txt": "d755bccb5df384fdf461cb21935322b7c2b29c370a29e7f52028f12e040ec170",
+    "worker-run-flow-audit.md": "65bc98f81489a761c1a18c939d3a883beb22a46154bb641e7cd7ba608e920643",
+    "worker-run-flow-audit.json": "ff36a15a5c46aa46726a78bb7c0911766182d2badcfc4ffe83f484ca07c9f93e",
+    "worker-run-review.md": "16f882745ed6b96367df3cb47f8b69ef62ab4aedd981b3aab0165081e3a0dcca",
+    "worker-run-review.json": "fdc04b0032f047149b0ebb93162701c1d8ebe5c7a943584e5890ad48c33be995",
+    "worker-run-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x180026320",
+    "0x180029890",
+    "0x1800298b0",
+    "0x18002a190"
+  ],
+  "new_original_procedures": 4,
+  "required_providers": [
+    "027c10 dispatcher",
+    "Exact low32 stop34/wake38 interlocked exchanges and native storage",
+    "Unchanged CRT04a240 initialization/04a2cc cleanup/049be0 support",
+    "04b0f8 sized deallocator and04b788 cache free/native ownership",
+    "Actual thread effects and native lifetime/concurrency",
+    "Generic category objectA10F8 logical mapping; system category/028240 exception effects"
+  ],
+  "claims": [
+    {
+      "finding": "Cache original this identity; store opaque table0844b8 before flagbit0 test; oddflags only04b0f8(this,32); return cached primitive identity with no object access after deletion",
+      "addresses": [
+        "0x180026326",
+        "0x18002632d",
+        "0x180026330",
+        "0x180026333",
+        "0x180026338",
+        "0x18002633d",
+        "0x180026342"
+      ]
+    },
+    {
+      "finding": "Read function scheduler18 and call actual0298b0 with local result; discard count and logical status; null scheduler host guard does not claim supported native null execution",
+      "addresses": [
+        "0x180029894",
+        "0x180029898",
+        "0x18002989d"
+      ]
+    },
+    {
+      "finding": "Locked low32 work count fetch_add0; zero work calls actual02a190 before logical success value0/category constant objectA10F8; mapping supplied as logical Category, not native category object VA in name-function identity; native status padding excluded",
+      "addresses": [
+        "0x1800298ca",
+        "0x1800298cc",
+        "0x1800298d1",
+        "0x1800298d5",
+        "0x1800298da",
+        "0x1800298de",
+        "0x1800298e5",
+        "0x1800298ef"
+      ]
+    },
+    {
+      "finding": "Active path sets local count90 uint32zero and pair98/A0 zero; required unchanged CRT04a240 runs before ten cache slots zero; native padding unspecified and not projected as ABI bytes",
+      "addresses": [
+        "0x1800298f9",
+        "0x180029900",
+        "0x180029908",
+        "0x180029918",
+        "0x180029920",
+        "0x180029925",
+        "0x18002992a",
+        "0x18002992f",
+        "0x180029934"
+      ]
+    },
+    {
+      "finding": "Install TLS frame containing port-address identity, state and prior getter return; reload global TLS index before getter/install/restore; restore LIVE frame.previous after dispatch; ignore SDK setter results",
+      "addresses": [
+        "0x18002993c",
+        "0x180029947",
+        "0x180029951",
+        "0x180029956",
+        "0x18002995c",
+        "0x180029962",
+        "0x18002996c",
+        "0x180029972",
+        "0x1800299c9",
+        "0x1800299ce",
+        "0x1800299d4"
+      ]
+    },
+    {
+      "finding": "Required027c10 called with INFINITE/state/result; every nonzero return increments uint64 count once with saturation at max; zero ends; no wrapper-created active status write",
+      "addresses": [
+        "0x180029979",
+        "0x180029981",
+        "0x180029989",
+        "0x18002998e",
+        "0x1800299a0",
+        "0x1800299a4",
+        "0x1800299a8",
+        "0x1800299ac",
+        "0x1800299b7",
+        "0x1800299bf",
+        "0x1800299c4"
+      ]
+    },
+    {
+      "finding": "TLS restoration precedes ten ascending live cache-slot reads; each nonnull pointer exact04b788; earlier callbacks may mutate later slots; no slot resets; required CRT04a2cc last then return count; no invented RAII cleanup on throwing effects",
+      "addresses": [
+        "0x1800299c9",
+        "0x1800299d4",
+        "0x1800299db",
+        "0x1800299e5",
+        "0x1800299e8",
+        "0x1800299ed",
+        "0x1800299f2",
+        "0x1800299fa",
+        "0x1800299fc",
+        "0x180029a04",
+        "0x180029a09"
+      ]
+    },
+    {
+      "finding": "Stop low32 atomic exchange1; only prior0 exchanges wake low32 with1; only priorwake0 posts live port with bytes0/key0/null operation; upper wake32 preserved; exact atomic effects remain providers",
+      "addresses": [
+        "0x18002a194",
+        "0x18002a19b",
+        "0x18002a19e",
+        "0x18002a1a2",
+        "0x18002a1a5",
+        "0x18002a1a9",
+        "0x18002a1ad",
+        "0x18002a1b0",
+        "0x18002a1b3"
+      ]
+    },
+    {
+      "finding": "Nonzero Post return succeeds; failure caches uint32 LastError before categoryALWAYS evenerror0; only cached nonzero raises028240 opaque084530; no flag rollback",
+      "addresses": [
+        "0x18002a1b9",
+        "0x18002a1c2",
+        "0x18002a1c8",
+        "0x18002a1ca",
+        "0x18002a1ce",
+        "0x18002a1d3",
+        "0x18002a1e6",
+        "0x18002a1f2"
+      ]
+    }
+  ],
+  "independent_production_review": "PASS; worker-run-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Actual029890/026320 slots plus0298b0 loop/02a190 stop joined to prior024990/02a000/02a4a0 and unchanged old05e8e0; controlled dispatcher, low32 atomic, CRT and allocator effects; injected SDK TLS/IOCP imports; no original execution or real worker thread/network",
+  "unproven": [
+    "Native027c10 dispatcher; actual atomic storage/concurrency and executable vtable binding",
+    "04b0f8/04b788 allocation/ownership/teardown and CRT04a240/04a2cc/049be0 behavior",
+    "Native typed layout, error padding, globals, exception/SEH/unwind and ABI",
+    "Complete DLL integration and original runtime differential"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema": "cem.reference-findings.v1",
+  "master_branch": "research/reconstruction-package",
+  "master_pr": null,
+  "master_pr_status": "Creation pending GitHub API availability; do not invent a PR number.",
+  "closure": "Owner decision after detailed file reviews and resolution of linked findings/child PRs.",
+  "findings": [
+    {
+      "id": "RPK-0001",
+      "classification": "observed_contract_difference",
+      "status": "open_requirement_and_caller_review",
+      "summary": "Donor serializes frequency and counter calls and asserts one cold frequency query; current product explicitly tests two racing queries with atomic cache publication.",
+      "product_defect_confirmed": false,
+      "donor_archive_sha256": "db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da",
+      "donor_files": [
+        {
+          "path": "anadius-execution-source/execution.hpp",
+          "bytes": 4346,
+          "sha256": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62"
+        },
+        {
+          "path": "anadius-execution-source/execution.cpp",
+          "bytes": 6721,
+          "sha256": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43"
+        },
+        {
+          "path": "anadius-startup-publication-source/publication_tests.cpp",
+          "bytes": 7114,
+          "sha256": "72ecae626427fd8176937cd6490975243652b168809e456cdad3ee2e12564082"
+        }
+      ],
+      "product_baseline_commit": "d9c860d17769738fd6f03a58a7f3c4b9f875b067",
+      "product_files": [
+        {
+          "path": "include/preloader_l/runtime/execution.hpp",
+          "sha256": "4e24c96e9fe16443c2780b5b869fafec22a7a6978a9a334e3f94394d2ea7729f"
+        },
+        {
+          "path": "src/runtime/execution.cpp",
+          "sha256": "9f3d96c4b58c813f7fafad1d25d5c5ebaa3f2a8f36c28af6935fbcb20ee4e1bf"
+        },
+        {
+          "path": "tests/unit/execution/concurrency_tests.cpp",
+          "sha256": "24ff1f6d64c12cfe0d205656ad8571f092517b78f8a2fd00f7ac336cf2ecfff0"
+        }
+      ],
+      "comparison": "docs/RE_PACKAGE_COMPARISONS.md",
+      "child_pr": null,
+      "resolution": null,
+      "validation": "Source comparison only; no donor native tests rerun. Detailed caller/error/requirement review remains open."
+    }
+  ]
+}

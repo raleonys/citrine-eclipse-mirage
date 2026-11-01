@@ -1,0 +1,160 @@
+{
+  "schema": "source-provider.focused-validation.v1",
+  "status": "SELECTED_INFORMATION_AND_OWNED_AUTH_PROPAGATION_PASS",
+  "source_hashes": {
+    "outputs/anadius-license-source/license_tests.cpp": "bd61a59d1a4e7dafda8e30d1128b34cf18cec8870c222f0c275283d8ac4490ad",
+    "outputs/anadius-information-effects-source/effects.cpp": "810ee2ec4b9a31d8289496bd89afc160788c0e9aa14d0f9d9c0334209bac37d7",
+    "outputs/anadius-windows-source/windows_effects.cpp": "7422d9d6c38b8b76e3749f49b732c6e285a266b0ccbde1a5c85831d193899d6b",
+    "outputs/anadius-information-effects-source/effects.hpp": "9142250131c5a8b4f2ce6ef639db459bfa32c5c7032fa8edeb01d43df0db2a8b",
+    "outputs/anadius-application-graph-source/graph.cpp": "95f05837e4ddaec6d63859085b68882cdb000b951eb412ab648f52e5144a0f5b",
+    "outputs/anadius-information-effects-source/effects_tests.cpp": "c069657527bf25724eae0e6d93958ea8f247c5cb419c97b17b35a4d88d5ca5e5",
+    "outputs/anadius-license-source/license.hpp": "21da0faefca86f6c3ea18a49fc0624be8f7f636bce72b528e8577036d31684ec",
+    "outputs/anadius-license-source/license.cpp": "87ea1eebab23fa2bbaff52689e4a076428e5cd8f292e028fbba985d4ce4376c0",
+    "outputs/anadius-file-source/license_files.hpp": "49b9ecf70c3e092115e638bc69fcbe2a7bea4634bdf9c4cb287866385e5bcff0",
+    "outputs/anadius-application-graph-source/graph.hpp": "b5bd0d35be5a225c5741c17a0afd2e98f68a100ea150ebdefd29fd9808041eb9",
+    "outputs/anadius-file-source/license_files.cpp": "817ab7fe5c1a0a758dddd06cba489372fc0ace52cf0d55505f22da12859d67c1",
+    "outputs/anadius-windows-source/windows_effects.hpp": "45642399b017ba223638a1ca14cc60c57947c3b54459063d6632777acd8aa320",
+    "outputs/anadius-content-handlers-source/content_handlers.hpp": "d8c867fc747aaf955a5a66c8a60659ba4092b8882a323aece701e1e130f299e6",
+    "outputs/anadius-application-graph-source/graph_tests.cpp": "678c72f8dbbfb8501d2c8c113b311a48af092122a4003bcd5aac9208d4742ce4"
+  },
+  "new_native_definitions_this_change": 0,
+  "native_evidence": {
+    "parent": "outputs/anadius-rea-evidence.json",
+    "profile_pseudo": "ev_11dd60d55d88b95820aef3b8180dcbda9897dfb99616ab5c1180348775bb947b",
+    "profile_assembly": "ev_30a74e5482cbeacf458c1aa2acd61a8ba4d3e865a2089ca0403183a0db113e74",
+    "all_game_info_pseudo": "ev_04c1b397cbbba90babf41cb8d096376c9a1f5de2aa6f4411179497b9021845d4",
+    "literal_inventory": "ev_c97664560efc0e5cf3207e174b0defd0b96f84c49fdf20bd0644ce960d07d716",
+    "profile_prefix": {
+      "VA": "0x180084f48",
+      "value": "profile name: ",
+      "byte_length_including_NUL": 15
+    },
+    "profile_order": "006880 prefix->007990 countedusername->0088e0 newline/flush beforefirstXML",
+    "system_time_mode": "041b60(timestampoutput=nullptr, filename_mode=0)"
+  },
+  "implementation": [
+    "Concrete Information owns stream/Clock/Formatter and implements both actual Effects methods; UTC reuses existing helper with nullptr epoch and normal format, including empty gmtime-failure result.",
+    "Null-first construction and attached Retiring retirement protect opaque owner callbacks. Original worker/fiber, nonreentrant sticky admission and per-primitive caller checkpoints cover stream/Clock/Formatter work.",
+    "Graph shares its synchronous EffectScope with Information2 and Content13 lower routes, without changing existing base Effects vtables.",
+    "Optional OwnedAuthEffects preserves owned auth results through WindowsEffects and LicenseFiles into actual Handlers. Fallback is copied before query; first NUL and empty fallback retain native observed behavior.",
+    "Raw legacy providers retain immediate compatibility copying and require external lifetime/serialization. The owned protocol is not an actual native Online LicensingCore implementation."
+  ],
+  "focused_basis": {
+    "path": "work/information-auth-v1-results.json",
+    "sha256": "15a9a3708126ca266b972a4b443764c2378aeccdfe34cc995b4f24146d107410",
+    "seconds": 24.406,
+    "result": "FAIL_HISTORICAL_TEST_ASSERTION",
+    "qualification": "Production compiled; first Info31/licensing1024 suites passed. New Graph test wrongly required positive Info calls in encrypted GetConfig/ShowIGO-only scenario. Failed result remains preserved."
+  },
+  "focused_completion": {
+    "path": "work/information-auth-v2-results.json",
+    "sha256": "bbfbd3aec1a1944b6b549b7889b573c634abe5019fe0f13b97892ececa5fcf33",
+    "seconds": 7.609,
+    "only_source_changed": {
+      "path": "outputs/anadius-application-graph-source/graph_tests.cpp",
+      "sha256": "678c72f8dbbfb8501d2c8c113b311a48af092122a4003bcd5aac9208d4742ce4"
+    },
+    "effective_tests": [
+      {
+        "name": "information_effects",
+        "exit_code": 0,
+        "stdout": "PASS: 31 Information effects checks; own handlers/XML/clock and bounded admission/retirement only\n",
+        "stderr": "",
+        "executable": "work/information-auth-check-v1/information_effects_tests.exe",
+        "executable_sha256": "54dd8ae05e65cbe9b7ef7a870133c872279c8b510f031d6840d4640a2fb535d7"
+      },
+      {
+        "name": "licensing",
+        "exit_code": 0,
+        "stdout": "PASS 1024 deterministic licensing checks (synthetic dependencies; original targets not executed)\n",
+        "stderr": "",
+        "executable": "work/information-auth-check-v1/licensing_tests.exe",
+        "executable_sha256": "cacbbd85fe59cbebd0fc7f69ca3bf21eb4ae9b16b5707c39dc1d98e367a0bfb7"
+      },
+      {
+        "name": "application_graph",
+        "executable": "work/information-auth-check-v2/application_graph_tests.exe",
+        "executable_sha256": "ec39b032daffb6c29ca279afefc4926739e8d88217b70a847657afdf1c4a67c4",
+        "stdout": "PASS: 660 application-graph core checks\n",
+        "exit_code": 0
+      },
+      {
+        "name": "content_effects",
+        "executable": "work/information-auth-check-v2/content_effects_tests.exe",
+        "executable_sha256": "b43190ca3ba1b70d51c6d2c1d3818b2d952a034b20ec49d74408d0b31dada58b",
+        "stdout": "PASS: 32 content effects checks; own slot28/memory persistence and 2 retained-prefix children\n",
+        "exit_code": 0
+      },
+      {
+        "name": "dispatch_integration",
+        "executable": "work/information-auth-check-v2/dispatch_integration_tests.exe",
+        "executable_sha256": "649ffd05602f83c7acada7a673b6ac674cfc4d6067495786f396170ef645ec31",
+        "stdout": "PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed\n",
+        "exit_code": 0
+      }
+    ],
+    "qualification": "Only Graph test assertion changed; production objects unchanged. Recompiled/reran Graph plus two previously unrun affected suites. Encrypted expectszero, plain GetProfile expectspositive; both require equalbind/clear counts."
+  },
+  "total_targeted_seconds": 32.015,
+  "fresh_production_units": {
+    "license_files": "outputs/anadius-file-source/license_files.cpp",
+    "windows_effects": "outputs/anadius-windows-source/windows_effects.cpp",
+    "observed_runtime": "outputs/anadius-bootstrap-runtime-source/observed_runtime.cpp",
+    "bootstrap_backend": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+    "aggregate_teardown": "outputs/anadius-config-defaults-source/teardown.cpp",
+    "application_graph": "outputs/anadius-application-graph-source/graph.cpp",
+    "application_worker": "outputs/anadius-application-worker-source/worker.cpp",
+    "licensing": "outputs/anadius-license-source/license.cpp",
+    "configuration_filesystem": "outputs/anadius-config-storage-source/filesystem.cpp",
+    "configuration_persistence": "outputs/anadius-config-storage-source/persistence.cpp",
+    "configuration_factory": "outputs/anadius-configuration-factory-source/factory.cpp",
+    "key_processor": "outputs/anadius-license-source/key_processor.cpp",
+    "bootstrap_factory": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+    "online_query": "outputs/anadius-online-query-source/query.cpp",
+    "online_factory": "outputs/anadius-online-factory-source/factory.cpp",
+    "content_handlers": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+    "content_effects": "outputs/anadius-content-effects-source/effects.cpp",
+    "achievement_runtime": "outputs/anadius-achievement-runtime-source/runtime.cpp",
+    "information_effects": "outputs/anadius-information-effects-source/effects.cpp"
+  },
+  "build_registration_hashes": {
+    "outputs/source-workspace/build.ps1": "620b4838779b13283b776c1c947615b186546611d3d6208c9c0f8e9becbc347e",
+    "outputs/source-workspace/CMakeLists.txt": "7c00f56562297f92b5ac28b61205311fe19f362c45eb1de174da75fd4b23856d"
+  },
+  "powershell_registration_parser_errors": 0,
+  "ABI_scope": {
+    "existing_Effects_vtables_changed": false,
+    "concrete_WindowsEffects_LicenseFiles_layout_RTTI_changed": true,
+    "affected_production_consumers_fresh": true,
+    "Information_new_class": true
+  },
+  "independent_review": {
+    "author": "/root/b22_provider_audit",
+    "production_and_combined_proof": "PASS",
+    "historical_FAIL_retained": true,
+    "unchanged_source_header_hashes_verified": 202,
+    "current_Graph_test_hash_verified": true,
+    "reused_production_objects_verified": 19,
+    "effective_executables_verified": 5,
+    "reviewer_execution": false
+  },
+  "validation_scope": [
+    "Actual GetProfile/GetAllGameInfo through MemoryPrinter/HandlerWriter: counted-NUL name log, flushbeforefirstXML, normalUTC/nullgmtime. Checkpoint denial/reentry/worker+fiber/attachedRetiring leaves covered.",
+    "Actual WindowsEffects->LicenseFiles->Handlers with ownedlower tests long/empty/firstNUL/leadingNUL output and mutationduringquery; asserts pre-callfallback and no raw downgrade. Legacy raw route remains tested separately.",
+    "Graph Information lending/clearing, unchanged Content source/retained-file children and XML/AES/dispatcher integration pass."
+  ],
+  "limits": [
+    "Info source and Graph checkpoint handshake are compositional; one complete Graph+concrete Information+Content+native foreign pipeline not executed.",
+    "OwnedAuthEffects producer is responsible for holding its actual reservation through copy. Legacy raw compatibility remains externally serialized; no foreign lifetime proof.",
+    "Complete concrete LicensingCore/Online bridge, process-global attempt/block cells, final Resources/root selection and loader attach/detach remain open.",
+    "Selected host CRT/stream/SDK/exception behavior is not native MSVC layout/EH equivalence.",
+    "B54 common inventory/source snapshot/ZIP remain historical; new Informationunit/test registered; nofullbuild/DLLlink/package."
+  ],
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "real_network": false
+}

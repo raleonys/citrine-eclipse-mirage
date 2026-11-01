@@ -1,0 +1,567 @@
+cmake_minimum_required(VERSION 3.20)
+project(recovered_native_modules LANGUAGES C CXX)
+set(CMAKE_C_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(NOT WIN32 OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+  message(FATAL_ERROR "Recovered modules require a Windows x64 target")
+endif()
+set(OUT "${CMAKE_CURRENT_LIST_DIR}/..")
+set(MH "${OUT}/hook-engine-source/vendor/minhook/src")
+set(MH_C_SOURCES "${MH}/hook.c" "${MH}/buffer.c" "${MH}/trampoline.c" "${MH}/hde/hde64.c")
+add_library(hook_engine_compat STATIC "${OUT}/hook-engine-source/api.cpp" ${MH_C_SOURCES})
+target_link_libraries(hook_engine_compat PUBLIC kernel32)
+add_library(anadius_core_partial STATIC
+  "${OUT}/anadius-source/bootstrap.cpp"
+  "${OUT}/anadius-thread-source/threads.cpp"
+  "${OUT}/anadius-crt-runtime-source/runtime.cpp"
+  "${OUT}/anadius-crt-error-source/errors.cpp"
+  "${OUT}/anadius-crt-ptd-source/ptd.cpp"
+  "${OUT}/anadius-crt-ptd-data-source/ptd_data.cpp"
+  "${OUT}/anadius-crt-heap-source/heap.cpp"
+  "${OUT}/anadius-crt-realloc-source/realloc.cpp"
+  "${OUT}/anadius-crt-recalloc-source/recalloc.cpp"
+  "${OUT}/anadius-crt-recalloc-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-conversion-source/conversion.cpp"
+  "${OUT}/anadius-crt-conversion-api-source/api.cpp"
+  "${OUT}/anadius-crt-conversion-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-module-path-source/module_path.cpp"
+  "${OUT}/anadius-crt-find-native-source/find_native.cpp"
+  "${OUT}/anadius-crt-find-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-locale-update-source/locale_update.cpp"
+  "${OUT}/anadius-crt-locale-thread-source/locale_thread.cpp"
+  "${OUT}/anadius-crt-locale-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-locale-ref-source/locale_ref.cpp"
+  "${OUT}/anadius-crt-locale-free-source/locale_free.cpp"
+  "${OUT}/anadius-crt-locale-resource-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-multibyte-support-source/multibyte_support.cpp"
+  "${OUT}/anadius-crt-multibyte-control-source/multibyte_control.cpp"
+  "${OUT}/anadius-crt-multibyte-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-multibyte-tables-source/multibyte_tables.cpp"
+  "${OUT}/anadius-crt-multibyte-builder-source/multibyte_builder.cpp"
+  "${OUT}/anadius-crt-multibyte-record-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-string-type-source/string_type.cpp"
+  "${OUT}/anadius-crt-lcmap-source/lcmap.cpp"
+  "${OUT}/anadius-crt-nls-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-locale-names-source/locale_names.cpp"
+  "${OUT}/anadius-crt-nls-dispatch-source/nls_dispatch.cpp"
+  "${OUT}/anadius-crt-nls-dispatch-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-nls-native-source/native_api.cpp"
+  "${OUT}/anadius-crt-nls-dispatch-native-source/native.cpp"
+  "${OUT}/anadius-crt-nls-native-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-heap-native-source/native_api.cpp"
+  "${OUT}/anadius-crt-heap-native-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-fls-native-source/fls.cpp"
+  "${OUT}/anadius-crt-lock-native-source/native.cpp"
+  "${OUT}/anadius-crt-atomic-native-source/atomic.cpp"
+  "${OUT}/anadius-crt-sync-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-counter-native-source/counters.cpp"
+  "${OUT}/anadius-crt-locale-native-source/native.cpp"
+  "${OUT}/anadius-crt-initial-locale-source/initial_locale_data.cpp"
+  "${OUT}/anadius-crt-initial-multibyte-source/initial_mb.cpp"
+  "${OUT}/anadius-crt-initial-state-source/initial_state.cpp"
+  "${OUT}/anadius-crt-locale-startup-source/locale_startup.cpp"
+  "${OUT}/anadius-crt-environment-cleanup-source/environment_cleanup.cpp"
+  "${OUT}/anadius-crt-lifecycle-callbacks-source/callbacks.cpp"
+  "${OUT}/anadius-crt-pair-leaves-source/pair_leaves.cpp"
+  "${OUT}/anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp"
+  "${OUT}/anadius-crt-pair-bindings-source/bindings.cpp"
+  "${OUT}/anadius-crt-invalid-source/invalid.cpp"
+  "${OUT}/anadius-crt-glue-source/crt_glue.cpp"
+  "${OUT}/anadius-crt-cache-source/cache.cpp"
+  "${OUT}/anadius-crt-onexit-source/onexit.cpp"
+  "${OUT}/anadius-crt-entry-source/entry.cpp"
+  "${OUT}/anadius-crt-initializers-source/initializers.cpp"
+  "${OUT}/anadius-vcrt-ptd-source/vcrt_ptd.cpp"
+  "${OUT}/anadius-vcrt-api-source/api.cpp"
+  "${OUT}/anadius-crt-lock-source/locks.cpp"
+  "${OUT}/anadius-crt-cpu-source/cpu.cpp"
+  "${OUT}/anadius-vcrt-bridge-source/bridge.cpp"
+  "${OUT}/anadius-crt-support-source/support.cpp"
+  "${OUT}/anadius-crt-environment-source/environment.cpp"
+  "${OUT}/anadius-crt-termination-source/termination.cpp"
+  "${OUT}/anadius-crt-startup-bridge-source/startup_bridge.cpp"
+  "${OUT}/anadius-crt-argv-parser-source/parse.cpp"
+  "${OUT}/anadius-crt-argv-source/argv.cpp"
+  "${OUT}/anadius-crt-byteclass-source/byteclass.cpp"
+  "${OUT}/anadius-crt-argv-bridge-source/argv_bridge.cpp"
+  "${OUT}/anadius-crt-wildcard-storage-source/storage.cpp"
+  "${OUT}/anadius-crt-wildcard-search-source/search.cpp"
+  "${OUT}/anadius-crt-sort-source/sort.cpp"
+  "${OUT}/anadius-crt-wildcard-source/wildcard.cpp"
+  "${OUT}/anadius-thread-native-source/win32_effects.cpp"
+  "${OUT}/anadius-bootstrap-native-source/native_entries.cpp"
+  "${OUT}/anadius-bootstrap-owner-source/owner.cpp"
+  "${OUT}/anadius-bootstrap-backend-source/backend.cpp"
+  "${OUT}/anadius-bootstrap-backend-source/tracked_threads.cpp"
+  "${OUT}/anadius-bootstrap-runtime-source/callbacks.cpp"
+  "${OUT}/anadius-bootstrap-runtime-source/factory.cpp"
+  "${OUT}/anadius-bootstrap-providers-source/providers.cpp"
+  "${OUT}/anadius-bootstrap-providers-source/native_threads.cpp"
+  "${OUT}/anadius-thread-domain-source/domain.cpp"
+  "${OUT}/anadius-thread-domain-source/initial_locale.cpp"
+  "${OUT}/anadius-thread-domain-source/runtime.cpp"
+  "${OUT}/anadius-bootstrap-policies-source/services.cpp"
+  "${OUT}/anadius-bootstrap-policies-source/config_platform.cpp"
+  "${OUT}/anadius-config-storage-source/filesystem.cpp"
+  "${OUT}/anadius-config-storage-source/persistence.cpp"
+  "${OUT}/anadius-config-iteration-source/thread_error.cpp"
+  "${OUT}/anadius-services-completion-source/exit_wait.cpp"
+  "${OUT}/anadius-services-completion-source/completion.cpp"
+  "${OUT}/anadius-config-logging-source/logging.cpp"
+  "${OUT}/anadius-library-effects-source/dialog.cpp"
+  "${OUT}/anadius-library-effects-source/effects.cpp"
+  "${OUT}/anadius-online-platform-source/platform.cpp"
+  "${OUT}/anadius-host-platform-source/platform.cpp"
+  "${OUT}/anadius-native-context-source/context.cpp"
+  "${OUT}/anadius-callback-policy-source/policy.cpp"
+  "${OUT}/anadius-callback-admission-source/admission.cpp"
+  "${OUT}/anadius-foreign-callback-source/foreign.cpp"
+  "${OUT}/anadius-startup-publication-source/publication.cpp"
+  "${OUT}/anadius-shared-log-source/stream.cpp"
+  "${OUT}/anadius-callback-identity-source/identity.cpp"
+  "${OUT}/anadius-callback-provider-source/provider.cpp"
+  "${OUT}/anadius-original-provider-source/originals.cpp"
+  "${OUT}/anadius-original-checkpoint-source/checkpoint.cpp"
+  "${OUT}/anadius-online-version-source/version.cpp"
+  "${OUT}/anadius-online-object-source/object.cpp"
+  "${OUT}/anadius-online-query-source/query.cpp"
+  "${OUT}/anadius-config-defaults-source/defaults.cpp"
+  "${OUT}/anadius-socket-move-source/move.cpp"
+  "${OUT}/anadius-session-owner-source/owner.cpp"
+  "${OUT}/anadius-host-init-source/host_init.cpp"
+  "${OUT}/hook-engine-source/adapters.cpp"
+  "${OUT}/anadius-registry-source/registry.cpp"
+  "${OUT}/anadius-native-source/native_callbacks.cpp"
+  "${OUT}/anadius-native-source/original_effects.cpp"
+  "${OUT}/anadius-host-callbacks-source/callbacks.cpp"
+  "${OUT}/anadius-network-hook-source/connect.cpp"
+  "${OUT}/anadius-network-hook-source/hook_cleanup.cpp"
+  "${OUT}/anadius-online-source/online.cpp"
+  "${OUT}/anadius-online-source/recovered_effects.cpp"
+  "${OUT}/anadius-config-source/configuration.cpp"
+  "${OUT}/anadius-execution-source/execution.cpp"
+  "${OUT}/anadius-execution-source/windows_platform.cpp"
+  "${OUT}/anadius-libraries-source/libraries.cpp"
+  "${OUT}/anadius-libraries-source/native_system.cpp"
+  "${OUT}/anadius-startup-source/startup.cpp"
+  "${OUT}/anadius-startup-source/windows_platform.cpp"
+  "${OUT}/anadius-parser-source/parser.cpp"
+  "${OUT}/anadius-config-order-source/order.cpp"
+  "${OUT}/anadius-config-pipeline-source/pipeline.cpp"
+  "${OUT}/anadius-config-hash-source/hash_table.cpp"
+  "${OUT}/anadius-config-application-source/application.cpp"
+  "${OUT}/anadius-config-startup-source/startup.cpp"
+  "${OUT}/anadius-achievement-writer-source/writer.cpp"
+  "${OUT}/anadius-achievement-storage-source/storage.cpp"
+  "${OUT}/anadius-calendar-source/calendar.cpp"
+  "${OUT}/anadius-timestamp-source/timestamp.cpp"
+  "${OUT}/anadius-achievement-runtime-source/utc.cpp"
+  "${OUT}/anadius-achievement-runtime-source/runtime.cpp"
+  "${OUT}/anadius-event-queue-source/queue.cpp"
+  "${OUT}/anadius-event-queue-source/adapters.cpp"
+  "${OUT}/anadius-session-source/handler.cpp"
+  "${OUT}/anadius-session-source/routing.cpp"
+  "${OUT}/anadius-socket-source/operations.cpp"
+  "${OUT}/anadius-socket-source/native.cpp"
+  "${OUT}/anadius-socket-source/acceptor.cpp"
+  "${OUT}/anadius-socket-source/acceptor_native.cpp"
+  "${OUT}/anadius-socket-source/lifecycle.cpp"
+  "${OUT}/anadius-socket-source/lifecycle_native.cpp"
+  "${OUT}/anadius-socket-source/close.cpp"
+  "${OUT}/anadius-socket-source/closing.cpp"
+  "${OUT}/anadius-socket-source/cancellation.cpp"
+  "${OUT}/anadius-socket-source/cancellation_native.cpp"
+  "${OUT}/anadius-socket-source/recycle.cpp"
+  "${OUT}/anadius-socket-source/recycle_storage.cpp"
+  "${OUT}/anadius-socket-source/service_registry.cpp"
+  "${OUT}/anadius-socket-source/service_constructor.cpp"
+  "${OUT}/anadius-socket-source/service_constructor_native.cpp"
+  "${OUT}/anadius-socket-source/scheduler_registry.cpp"
+  "${OUT}/anadius-socket-source/iocp_constructor.cpp"
+  "${OUT}/anadius-socket-source/iocp_constructor_native.cpp"
+  "${OUT}/anadius-socket-source/worker_startup.cpp"
+  "${OUT}/anadius-socket-source/worker_startup_native.cpp"
+  "${OUT}/anadius-socket-source/worker_run.cpp"
+  "${OUT}/anadius-socket-source/worker_run_native.cpp"
+  "${OUT}/anadius-socket-source/completion_dispatcher.cpp"
+  "${OUT}/anadius-socket-source/completion_dispatcher_native.cpp"
+  "${OUT}/anadius-socket-source/posted_operation.cpp"
+  "${OUT}/anadius-socket-source/posted_operation_dispatch.cpp"
+  "${OUT}/anadius-socket-source/io_completion.cpp"
+  "${OUT}/anadius-socket-source/io_completion_dispatch.cpp"
+  "${OUT}/anadius-socket-source/handler_dispatch.cpp"
+  "${OUT}/anadius-socket-source/handler_dispatch_bridge.cpp"
+  "${OUT}/anadius-socket-source/composed_write.cpp"
+  "${OUT}/anadius-socket-source/composed_write_native.cpp"
+  "${OUT}/anadius-socket-source/environment_constructor.cpp"
+  "${OUT}/anadius-socket-source/write_finish.cpp"
+  "${OUT}/anadius-socket-source/queued_write.cpp"
+  "${OUT}/anadius-socket-source/async_receive.cpp"
+  "${OUT}/anadius-socket-source/receive_buffer.cpp"
+  "${OUT}/anadius-socket-source/composed_read.cpp"
+  "${OUT}/anadius-socket-source/frame_read.cpp"
+  "${OUT}/anadius-socket-source/message_dispatch.cpp"
+  "${OUT}/anadius-socket-source/response_dispatch.cpp"
+  "${OUT}/anadius-socket-source/owned_response.cpp"
+  "${OUT}/anadius-socket-source/response_containers.cpp"
+  "${OUT}/anadius-socket-source/message_core_bridge.cpp"
+  "${OUT}/anadius-socket-source/request_mutation.cpp"
+  "${OUT}/anadius-socket-source/request_growth.cpp"
+  "${OUT}/anadius-socket-source/response_hex.cpp"
+  "${OUT}/anadius-socket-source/native_message.cpp"
+  "${OUT}/anadius-socket-source/append_growth.cpp"
+  "${OUT}/anadius-socket-source/prefix_cipher.cpp"
+  "${OUT}/anadius-socket-source/cipher_session.cpp"
+  "${OUT}/anadius-socket-source/native_dispatch.cpp"
+  "${OUT}/anadius-socket-source/native_document.cpp"
+  "${OUT}/anadius-socket-source/document_clear.cpp"
+  "${OUT}/anadius-socket-source/node_delete.cpp"
+  "${OUT}/anadius-socket-source/pool_release.cpp"
+  "${OUT}/anadius-socket-source/pool_allocate.cpp"
+  "${OUT}/anadius-socket-source/pool_append.cpp"
+  "${OUT}/anadius-socket-source/pool_clear.cpp"
+  "${OUT}/anadius-socket-source/pool_destruct.cpp"
+  "${OUT}/anadius-socket-source/node_base.cpp"
+  "${OUT}/anadius-socket-source/parse_entry.cpp"
+  "${OUT}/anadius-socket-source/document_error.cpp"
+  "${OUT}/anadius-socket-source/node_parse.cpp"
+  "${OUT}/anadius-socket-source/node_identify.cpp"
+  "${OUT}/anadius-socket-source/node_constructors.cpp"
+  "${OUT}/anadius-socket-source/node_insertion.cpp"
+  "${OUT}/anadius-socket-source/node_string.cpp"
+  "${OUT}/anadius-server-source/server.cpp"
+  "${OUT}/anadius-messages-source/messages.cpp"
+  "${OUT}/anadius-handlers-source/handlers.cpp"
+  "${OUT}/anadius-crypto-source/crypto.cpp"
+  "${OUT}/anadius-xml-source/memory_printer.cpp"
+  "${OUT}/anadius-xml-reader-source/reader.cpp"
+  "${OUT}/anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp"
+  "${OUT}/anadius-license-source/license.cpp"
+  "${OUT}/anadius-hash-source/hash.cpp"
+  "${OUT}/anadius-token-source/token.cpp"
+  "${OUT}/anadius-file-source/binary_io.cpp"
+  "${OUT}/anadius-file-source/native_io.cpp"
+  "${OUT}/anadius-file-source/license_files.cpp"
+  "${OUT}/anadius-status-source/status.cpp"
+  "${OUT}/anadius-status-source/native_status.cpp"
+  "${OUT}/anadius-path-source/paths.cpp"
+  "${OUT}/anadius-encoding-source/encoding.cpp"
+  "${OUT}/anadius-encoding-source/native_encoding.cpp"
+  "${OUT}/anadius-windows-source/windows_effects.cpp"
+  "${OUT}/anadius-content-handlers-source/content_handlers.cpp"
+  "${OUT}/anadius-misc-handlers-source/misc_handlers.cpp"
+  "${OUT}/anadius-dispatch-source/router.cpp")
+target_link_libraries(anadius_core_partial PUBLIC kernel32 user32 shell32 ws2_32 hook_engine_compat)
+add_library(preloader_core_partial STATIC "${OUT}/preloader-source/preloader_core.cpp" "${OUT}/hook-engine-source/preloader_engine.cpp" "${OUT}/preloader-native-source/native_shims.cpp")
+target_link_libraries(preloader_core_partial PUBLIC hook_engine_compat)
+enable_testing()
+function(add_mock_test name source library)
+  add_executable(${name} "${OUT}/${source}")
+  target_link_libraries(${name} PRIVATE ${library})
+  add_test(NAME ${name} COMMAND ${name} ${ARGN})
+endfunction()
+add_mock_test(bootstrap_contracts "anadius-source/bootstrap_tests.cpp" anadius_core_partial)
+add_mock_test(crt_thread_contracts "anadius-thread-source/thread_tests.cpp" anadius_core_partial)
+add_mock_test(crt_runtime_contracts "anadius-crt-runtime-source/runtime_tests.cpp" anadius_core_partial)
+add_mock_test(crt_error_contracts "anadius-crt-error-source/error_tests.cpp" anadius_core_partial)
+add_mock_test(crt_ptd_contracts "anadius-crt-ptd-source/ptd_tests.cpp" anadius_core_partial)
+add_mock_test(crt_ptd_data_contracts "anadius-crt-ptd-data-source/ptd_data_tests.cpp" anadius_core_partial)
+add_mock_test(crt_heap_contracts "anadius-crt-heap-source/heap_tests.cpp" anadius_core_partial)
+add_mock_test(crt_realloc_contracts "anadius-crt-realloc-source/realloc_tests.cpp" anadius_core_partial)
+add_mock_test(crt_recalloc_contracts "anadius-crt-recalloc-source/recalloc_tests.cpp" anadius_core_partial)
+add_mock_test(crt_recalloc_bridge_integration "anadius-crt-recalloc-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_conversion_contracts "anadius-crt-conversion-source/conversion_tests.cpp" anadius_core_partial)
+add_mock_test(crt_conversion_api_contracts "anadius-crt-conversion-api-source/api_tests.cpp" anadius_core_partial)
+add_mock_test(crt_conversion_bridge_integration "anadius-crt-conversion-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_module_path_contracts "anadius-crt-module-path-source/module_path_tests.cpp" anadius_core_partial)
+add_mock_test(crt_find_native_contracts "anadius-crt-find-native-source/find_native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_find_bridge_integration "anadius-crt-find-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_update_contracts "anadius-crt-locale-update-source/locale_update_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_thread_contracts "anadius-crt-locale-thread-source/locale_thread_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_bridge_integration "anadius-crt-locale-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_ref_contracts "anadius-crt-locale-ref-source/locale_ref_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_free_contracts "anadius-crt-locale-free-source/locale_free_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_resource_bridge_integration "anadius-crt-locale-resource-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_multibyte_support_contracts "anadius-crt-multibyte-support-source/multibyte_support_tests.cpp" anadius_core_partial)
+add_mock_test(crt_multibyte_control_contracts "anadius-crt-multibyte-control-source/multibyte_control_tests.cpp" anadius_core_partial)
+add_mock_test(crt_multibyte_bridge_integration "anadius-crt-multibyte-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_multibyte_tables_contracts "anadius-crt-multibyte-tables-source/multibyte_tables_tests.cpp" anadius_core_partial)
+add_mock_test(crt_multibyte_builder_contracts "anadius-crt-multibyte-builder-source/multibyte_builder_tests.cpp" anadius_core_partial)
+add_mock_test(crt_multibyte_record_bridge_integration "anadius-crt-multibyte-record-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_string_type_contracts "anadius-crt-string-type-source/string_type_tests.cpp" anadius_core_partial)
+add_mock_test(crt_lcmap_contracts "anadius-crt-lcmap-source/lcmap_tests.cpp" anadius_core_partial)
+add_mock_test(crt_nls_bridge_integration "anadius-crt-nls-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_names_contracts "anadius-crt-locale-names-source/locale_names_tests.cpp" anadius_core_partial)
+add_mock_test(crt_nls_dispatch_contracts "anadius-crt-nls-dispatch-source/nls_dispatch_tests.cpp" anadius_core_partial)
+add_mock_test(crt_nls_dispatch_bridge_integration "anadius-crt-nls-dispatch-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_nls_native_contracts "anadius-crt-nls-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_nls_dispatch_native_contracts "anadius-crt-nls-dispatch-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_nls_native_bridge_integration "anadius-crt-nls-native-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_heap_native_contracts "anadius-crt-heap-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_heap_native_bridge_integration "anadius-crt-heap-native-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_fls_native_lifecycle "anadius-crt-fls-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_lock_native_banks "anadius-crt-lock-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_atomic_native_cells "anadius-crt-atomic-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_sync_bridge_parallel "anadius-crt-sync-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_counter_native_registry "anadius-crt-counter-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_native_resources "anadius-crt-locale-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_initial_locale_data "anadius-crt-initial-locale-source/initial_locale_data_tests.cpp" anadius_core_partial)
+add_mock_test(crt_initial_multibyte_data "anadius-crt-initial-multibyte-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_initial_state_graph "anadius-crt-initial-state-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_locale_startup "anadius-crt-locale-startup-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_environment_cleanup "anadius-crt-environment-cleanup-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_lifecycle_callbacks "anadius-crt-lifecycle-callbacks-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_pair_leaves "anadius-crt-pair-leaves-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_lowio_lifecycle "anadius-crt-lowio-lifecycle-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(crt_pair_bindings "anadius-crt-pair-bindings-source/bindings_tests.cpp" anadius_core_partial)
+add_mock_test(crt_invalid_contracts "anadius-crt-invalid-source/invalid_tests.cpp" anadius_core_partial)
+add_mock_test(crt_glue_integration "anadius-crt-glue-source/glue_tests.cpp" anadius_core_partial)
+add_mock_test(crt_cache_contracts "anadius-crt-cache-source/cache_tests.cpp" anadius_core_partial)
+add_mock_test(crt_onexit_contracts "anadius-crt-onexit-source/onexit_tests.cpp" anadius_core_partial)
+add_mock_test(crt_entry_contracts "anadius-crt-entry-source/entry_tests.cpp" anadius_core_partial)
+add_mock_test(crt_initializer_integration "anadius-crt-initializers-source/initializer_tests.cpp" anadius_core_partial)
+add_mock_test(vcrt_ptd_contracts "anadius-vcrt-ptd-source/vcrt_ptd_tests.cpp" anadius_core_partial)
+add_mock_test(vcrt_api_contracts "anadius-vcrt-api-source/api_tests.cpp" anadius_core_partial)
+add_mock_test(crt_lock_contracts "anadius-crt-lock-source/lock_tests.cpp" anadius_core_partial)
+add_mock_test(crt_cpu_contracts "anadius-crt-cpu-source/cpu_tests.cpp" anadius_core_partial)
+add_mock_test(vcrt_bridge_integration "anadius-vcrt-bridge-source/bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_support_contracts "anadius-crt-support-source/support_tests.cpp" anadius_core_partial)
+add_mock_test(crt_environment_contracts "anadius-crt-environment-source/environment_tests.cpp" anadius_core_partial)
+add_mock_test(crt_termination_contracts "anadius-crt-termination-source/termination_tests.cpp" anadius_core_partial)
+add_mock_test(crt_startup_bridge_integration "anadius-crt-startup-bridge-source/startup_bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_argv_parser_contracts "anadius-crt-argv-parser-source/parser_tests.cpp" anadius_core_partial)
+add_mock_test(crt_argv_contracts "anadius-crt-argv-source/argv_tests.cpp" anadius_core_partial)
+add_mock_test(crt_byteclass_contracts "anadius-crt-byteclass-source/byteclass_tests.cpp" anadius_core_partial)
+add_mock_test(crt_argv_bridge_integration "anadius-crt-argv-bridge-source/argv_bridge_tests.cpp" anadius_core_partial)
+add_mock_test(crt_wildcard_storage_contracts "anadius-crt-wildcard-storage-source/storage_tests.cpp" anadius_core_partial)
+add_mock_test(crt_wildcard_search_contracts "anadius-crt-wildcard-search-source/search_tests.cpp" anadius_core_partial)
+add_mock_test(crt_sort_contracts "anadius-crt-sort-source/sort_tests.cpp" anadius_core_partial)
+add_mock_test(crt_wildcard_integration "anadius-crt-wildcard-source/wildcard_tests.cpp" anadius_core_partial)
+add_mock_test(thread_native_contracts "anadius-thread-native-source/win32_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_native_contracts "anadius-bootstrap-native-source/native_entry_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_owner_contracts "anadius-bootstrap-owner-source/owner_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_owner_integration_contracts "anadius-bootstrap-owner-source/owner_integration_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_backend_contracts "anadius-bootstrap-backend-source/backend_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_backend_integration_contracts "anadius-bootstrap-backend-source/backend_integration_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_callback_contracts "anadius-bootstrap-runtime-source/callbacks_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_factory_contracts "anadius-bootstrap-runtime-source/factory_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_provider_contracts "anadius-bootstrap-providers-source/providers_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_provider_integration_contracts "anadius-bootstrap-providers-source/providers_integration_tests.cpp" anadius_core_partial)
+add_mock_test(thread_domain_contracts "anadius-thread-domain-source/domain_tests.cpp" anadius_core_partial)
+add_mock_test(thread_domain_integration_contracts "anadius-thread-domain-source/domain_integration_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_policies_contracts "anadius-bootstrap-policies-source/policies_tests.cpp" anadius_core_partial)
+add_mock_test(bootstrap_policies_integration_contracts "anadius-bootstrap-policies-source/policies_integration_tests.cpp" anadius_core_partial)
+add_mock_test(config_storage_contracts "anadius-config-storage-source/storage_tests.cpp" anadius_core_partial)
+add_mock_test(config_storage_integration_contracts "anadius-config-storage-source/storage_integration_tests.cpp" anadius_core_partial)
+add_mock_test(config_iteration_contracts "anadius-config-iteration-source/iteration_tests.cpp" anadius_core_partial)
+add_mock_test(config_iteration_integration_contracts "anadius-config-iteration-source/iteration_integration_tests.cpp" anadius_core_partial)
+add_mock_test(services_completion_contracts "anadius-services-completion-source/completion_tests.cpp" anadius_core_partial)
+add_mock_test(services_completion_integration_contracts "anadius-services-completion-source/completion_integration_tests.cpp" anadius_core_partial)
+add_mock_test(config_logging_contracts "anadius-config-logging-source/logging_tests.cpp" anadius_core_partial)
+add_mock_test(config_logging_integration_contracts "anadius-config-logging-source/logging_integration_tests.cpp" anadius_core_partial "${OUT}/source-workspace/build/b11-fixtures")
+add_mock_test(library_effects_contracts "anadius-library-effects-source/effects_tests.cpp" anadius_core_partial)
+add_mock_test(library_effects_integration_contracts "anadius-library-effects-source/effects_integration_tests.cpp" anadius_core_partial)
+add_mock_test(online_platform_contracts "anadius-online-platform-source/platform_tests.cpp" anadius_core_partial)
+add_mock_test(online_platform_integration_contracts "anadius-online-platform-source/platform_integration_tests.cpp" anadius_core_partial)
+add_mock_test(host_platform_contracts "anadius-host-platform-source/platform_tests.cpp" anadius_core_partial)
+add_mock_test(host_platform_integration_contracts "anadius-host-platform-source/platform_integration_tests.cpp" anadius_core_partial)
+add_mock_test(native_context_contracts "anadius-native-context-source/context_tests.cpp" anadius_core_partial)
+add_mock_test(native_context_integration_contracts "anadius-native-context-source/context_integration_tests.cpp" anadius_core_partial)
+add_mock_test(callback_policy_contracts "anadius-callback-policy-source/policy_tests.cpp" anadius_core_partial)
+add_mock_test(callback_policy_integration_contracts "anadius-callback-policy-source/policy_integration_tests.cpp" anadius_core_partial)
+add_mock_test(callback_admission_contracts "anadius-callback-admission-source/admission_tests.cpp" anadius_core_partial)
+add_mock_test(callback_admission_integration_contracts "anadius-callback-admission-source/admission_integration_tests.cpp" anadius_core_partial)
+add_mock_test(foreign_callback_contracts "anadius-foreign-callback-source/foreign_tests.cpp" anadius_core_partial)
+add_mock_test(foreign_callback_integration_contracts "anadius-foreign-callback-source/foreign_integration_tests.cpp" anadius_core_partial)
+add_mock_test(startup_publication_contracts "anadius-startup-publication-source/publication_tests.cpp" anadius_core_partial)
+add_mock_test(startup_publication_integration_contracts "anadius-startup-publication-source/publication_integration_tests.cpp" anadius_core_partial)
+add_mock_test(shared_log_contracts "anadius-shared-log-source/stream_tests.cpp" anadius_core_partial)
+add_mock_test(shared_log_integration_contracts "anadius-shared-log-source/stream_integration_tests.cpp" anadius_core_partial)
+add_mock_test(callback_identity_contracts "anadius-callback-identity-source/identity_tests.cpp" anadius_core_partial)
+add_mock_test(callback_identity_integration_contracts "anadius-callback-identity-source/identity_integration_tests.cpp" anadius_core_partial)
+add_mock_test(callback_provider_contracts "anadius-callback-provider-source/provider_tests.cpp" anadius_core_partial)
+add_mock_test(callback_provider_integration_contracts "anadius-callback-provider-source/provider_integration_tests.cpp" anadius_core_partial)
+add_mock_test(original_provider_contracts "anadius-original-provider-source/originals_tests.cpp" anadius_core_partial)
+add_mock_test(original_provider_integration_contracts "anadius-original-provider-source/originals_integration_tests.cpp" anadius_core_partial)
+add_mock_test(original_checkpoint_contracts "anadius-original-checkpoint-source/checkpoint_tests.cpp" anadius_core_partial)
+add_mock_test(original_checkpoint_integration_contracts "anadius-original-checkpoint-source/checkpoint_integration_tests.cpp" anadius_core_partial)
+add_mock_test(online_version_contracts "anadius-online-version-source/version_tests.cpp" anadius_core_partial)
+add_mock_test(online_version_integration_contracts "anadius-online-version-source/version_integration_tests.cpp" anadius_core_partial)
+add_mock_test(online_object_contracts "anadius-online-object-source/object_tests.cpp" anadius_core_partial)
+add_mock_test(online_object_integration_contracts "anadius-online-object-source/object_integration_tests.cpp" anadius_core_partial)
+add_mock_test(online_query_contracts "anadius-online-query-source/query_tests.cpp" anadius_core_partial)
+add_mock_test(online_query_integration_contracts "anadius-online-query-source/query_integration_tests.cpp" anadius_core_partial)
+add_mock_test(config_defaults_contracts "anadius-config-defaults-source/defaults_tests.cpp" anadius_core_partial)
+add_mock_test(config_defaults_integration_contracts "anadius-config-defaults-source/defaults_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_move_contracts "anadius-socket-move-source/move_tests.cpp" anadius_core_partial)
+add_mock_test(socket_move_integration_contracts "anadius-socket-move-source/move_integration_tests.cpp" anadius_core_partial)
+add_mock_test(session_owner_contracts "anadius-session-owner-source/owner_tests.cpp" anadius_core_partial)
+add_mock_test(session_owner_integration_contracts "anadius-session-owner-source/owner_integration_tests.cpp" anadius_core_partial)
+add_mock_test(host_init_contracts "anadius-host-init-source/host_init_tests.cpp" anadius_core_partial)
+add_mock_test(registry_contracts "anadius-registry-source/registry_tests.cpp" anadius_core_partial)
+add_mock_test(native_callback_contracts "anadius-native-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(preloader_native_contracts "preloader-native-source/mock_tests.cpp" preloader_core_partial)
+add_mock_test(host_callback_contracts "anadius-host-callbacks-source/callbacks_tests.cpp" anadius_core_partial)
+add_mock_test(network_hook_contracts "anadius-network-hook-source/hook_tests.cpp" anadius_core_partial)
+add_mock_test(online_contracts "anadius-online-source/online_tests.cpp" anadius_core_partial)
+add_mock_test(configuration_contracts "anadius-config-source/configuration_tests.cpp" anadius_core_partial)
+add_mock_test(execution_contracts "anadius-execution-source/execution_tests.cpp" anadius_core_partial)
+add_mock_test(libraries_contracts "anadius-libraries-source/libraries_tests.cpp" anadius_core_partial)
+add_mock_test(startup_contracts "anadius-startup-source/startup_tests.cpp" anadius_core_partial)
+add_mock_test(parser_contracts "anadius-parser-source/parser_tests.cpp" anadius_core_partial)
+add_mock_test(config_order_contracts "anadius-config-order-source/order_tests.cpp" anadius_core_partial)
+add_mock_test(config_pipeline_contracts "anadius-config-pipeline-source/pipeline_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/config-pipeline-fixtures")
+add_mock_test(config_hash_contracts "anadius-config-hash-source/hash_table_tests.cpp" anadius_core_partial)
+add_mock_test(config_application_contracts "anadius-config-application-source/application_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/config-application-fixtures")
+add_mock_test(config_startup_contracts "anadius-config-startup-source/startup_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/config-startup-fixtures")
+add_mock_test(achievement_writer_contracts "anadius-achievement-writer-source/writer_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/achievement-writer-fixtures")
+add_mock_test(achievement_storage_contracts "anadius-achievement-storage-source/storage_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/achievement-storage-fixtures")
+add_mock_test(calendar_contracts "anadius-calendar-source/calendar_tests.cpp" anadius_core_partial)
+add_mock_test(timestamp_contracts "anadius-timestamp-source/timestamp_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/timestamp-fixtures")
+add_mock_test(utc_contracts "anadius-achievement-runtime-source/utc_tests.cpp" anadius_core_partial)
+add_mock_test(achievement_runtime_contracts "anadius-achievement-runtime-source/runtime_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/achievement-runtime-fixtures")
+add_mock_test(event_queue_contracts "anadius-event-queue-source/queue_tests.cpp" anadius_core_partial)
+add_mock_test(event_queue_integration_contracts "anadius-event-queue-source/integration_tests.cpp" anadius_core_partial)
+add_mock_test(session_handler_contracts "anadius-session-source/handler_tests.cpp" anadius_core_partial)
+add_mock_test(session_integration_contracts "anadius-session-source/session_tests.cpp" anadius_core_partial)
+add_mock_test(socket_operations_contracts "anadius-socket-source/operations_tests.cpp" anadius_core_partial)
+add_mock_test(socket_native_contracts "anadius-socket-source/native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_acceptor_contracts "anadius-socket-source/acceptor_tests.cpp" anadius_core_partial)
+add_mock_test(socket_acceptor_native_contracts "anadius-socket-source/acceptor_native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_lifecycle_contracts "anadius-socket-source/lifecycle_tests.cpp" anadius_core_partial)
+add_mock_test(socket_lifecycle_native_contracts "anadius-socket-source/lifecycle_native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_close_contracts "anadius-socket-source/close_tests.cpp" anadius_core_partial)
+add_mock_test(socket_closing_contracts "anadius-socket-source/closing_tests.cpp" anadius_core_partial)
+add_mock_test(socket_cancellation_contracts "anadius-socket-source/cancellation_tests.cpp" anadius_core_partial)
+add_mock_test(socket_cancellation_native_contracts "anadius-socket-source/cancellation_native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_recycle_contracts "anadius-socket-source/recycle_tests.cpp" anadius_core_partial)
+add_mock_test(socket_recycle_storage_contracts "anadius-socket-source/recycle_storage_tests.cpp" anadius_core_partial)
+add_mock_test(socket_service_registry_contracts "anadius-socket-source/service_registry_tests.cpp" anadius_core_partial)
+add_mock_test(socket_service_registry_integration_contracts "anadius-socket-source/service_registry_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_service_constructor_contracts "anadius-socket-source/service_constructor_tests.cpp" anadius_core_partial)
+add_mock_test(socket_service_constructor_native_contracts "anadius-socket-source/service_constructor_native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_scheduler_registry_contracts "anadius-socket-source/scheduler_registry_tests.cpp" anadius_core_partial)
+add_mock_test(socket_scheduler_registry_integration_contracts "anadius-socket-source/scheduler_registry_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_iocp_constructor_contracts "anadius-socket-source/iocp_constructor_tests.cpp" anadius_core_partial)
+add_mock_test(socket_iocp_constructor_native_contracts "anadius-socket-source/iocp_constructor_native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_worker_startup_contracts "anadius-socket-source/worker_startup_tests.cpp" anadius_core_partial)
+add_mock_test(socket_worker_startup_native_contracts "anadius-socket-source/worker_startup_native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_worker_run_contracts "anadius-socket-source/worker_run_tests.cpp" anadius_core_partial)
+add_mock_test(socket_worker_run_native_contracts "anadius-socket-source/worker_run_native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_completion_dispatcher_contracts "anadius-socket-source/completion_dispatcher_tests.cpp" anadius_core_partial)
+add_mock_test(socket_completion_dispatcher_native_contracts "anadius-socket-source/completion_dispatcher_native_tests.cpp" anadius_core_partial)
+add_mock_test(socket_posted_operation_contracts "anadius-socket-source/posted_operation_tests.cpp" anadius_core_partial)
+add_mock_test(socket_posted_operation_integration_contracts "anadius-socket-source/posted_operation_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_io_completion_contracts "anadius-socket-source/io_completion_tests.cpp" anadius_core_partial)
+add_mock_test(socket_io_completion_integration_contracts "anadius-socket-source/io_completion_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_handler_dispatch_contracts "anadius-socket-source/handler_dispatch_tests.cpp" anadius_core_partial)
+add_mock_test(socket_handler_dispatch_integration_contracts "anadius-socket-source/handler_dispatch_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_composed_write_contracts "anadius-socket-source/composed_write_tests.cpp" anadius_core_partial)
+add_mock_test(socket_composed_write_integration_contracts "anadius-socket-source/composed_write_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_environment_constructor_contracts "anadius-socket-source/environment_constructor_tests.cpp" anadius_core_partial)
+add_mock_test(socket_environment_constructor_integration_contracts "anadius-socket-source/environment_constructor_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_write_finish_contracts "anadius-socket-source/write_finish_tests.cpp" anadius_core_partial)
+add_mock_test(socket_write_finish_integration_contracts "anadius-socket-source/write_finish_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_queued_write_contracts "anadius-socket-source/queued_write_tests.cpp" anadius_core_partial)
+add_mock_test(socket_queued_write_integration_contracts "anadius-socket-source/queued_write_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_async_receive_contracts "anadius-socket-source/async_receive_tests.cpp" anadius_core_partial)
+add_mock_test(socket_async_receive_integration_contracts "anadius-socket-source/async_receive_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_receive_buffer_contracts "anadius-socket-source/receive_buffer_tests.cpp" anadius_core_partial)
+add_mock_test(socket_receive_buffer_integration_contracts "anadius-socket-source/receive_buffer_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_composed_read_contracts "anadius-socket-source/composed_read_tests.cpp" anadius_core_partial)
+add_mock_test(socket_composed_read_integration_contracts "anadius-socket-source/composed_read_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_frame_read_contracts "anadius-socket-source/frame_read_tests.cpp" anadius_core_partial)
+add_mock_test(socket_frame_read_integration_contracts "anadius-socket-source/frame_read_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_message_dispatch_contracts "anadius-socket-source/message_dispatch_tests.cpp" anadius_core_partial)
+add_mock_test(socket_message_dispatch_integration_contracts "anadius-socket-source/message_dispatch_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_response_dispatch_contracts "anadius-socket-source/response_dispatch_tests.cpp" anadius_core_partial)
+add_mock_test(socket_response_dispatch_integration_contracts "anadius-socket-source/response_dispatch_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_owned_response_contracts "anadius-socket-source/owned_response_tests.cpp" anadius_core_partial)
+add_mock_test(socket_owned_response_integration_contracts "anadius-socket-source/owned_response_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_response_containers_contracts "anadius-socket-source/response_containers_tests.cpp" anadius_core_partial)
+add_mock_test(socket_response_containers_integration_contracts "anadius-socket-source/response_containers_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_message_core_bridge_contracts "anadius-socket-source/message_core_bridge_tests.cpp" anadius_core_partial)
+add_mock_test(socket_message_core_bridge_integration_contracts "anadius-socket-source/message_core_bridge_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_request_mutation_contracts "anadius-socket-source/request_mutation_tests.cpp" anadius_core_partial)
+add_mock_test(socket_request_mutation_integration_contracts "anadius-socket-source/request_mutation_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_request_growth_contracts "anadius-socket-source/request_growth_tests.cpp" anadius_core_partial)
+add_mock_test(socket_request_growth_integration_contracts "anadius-socket-source/request_growth_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_response_hex_contracts "anadius-socket-source/response_hex_tests.cpp" anadius_core_partial)
+add_mock_test(socket_response_hex_integration_contracts "anadius-socket-source/response_hex_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_native_message_contracts "anadius-socket-source/native_message_tests.cpp" anadius_core_partial)
+add_mock_test(socket_native_message_integration_contracts "anadius-socket-source/native_message_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_append_growth_contracts "anadius-socket-source/append_growth_tests.cpp" anadius_core_partial)
+add_mock_test(socket_append_growth_integration_contracts "anadius-socket-source/append_growth_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_prefix_cipher_contracts "anadius-socket-source/prefix_cipher_tests.cpp" anadius_core_partial)
+add_mock_test(socket_prefix_cipher_integration_contracts "anadius-socket-source/prefix_cipher_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_cipher_session_contracts "anadius-socket-source/cipher_session_tests.cpp" anadius_core_partial)
+add_mock_test(socket_cipher_session_integration_contracts "anadius-socket-source/cipher_session_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_native_dispatch_contracts "anadius-socket-source/native_dispatch_tests.cpp" anadius_core_partial)
+add_mock_test(socket_native_dispatch_integration_contracts "anadius-socket-source/native_dispatch_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_native_document_contracts "anadius-socket-source/native_document_tests.cpp" anadius_core_partial)
+add_mock_test(socket_native_document_integration_contracts "anadius-socket-source/native_document_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_document_clear_contracts "anadius-socket-source/document_clear_tests.cpp" anadius_core_partial)
+add_mock_test(socket_document_clear_integration_contracts "anadius-socket-source/document_clear_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_delete_contracts "anadius-socket-source/node_delete_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_delete_integration_contracts "anadius-socket-source/node_delete_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_release_contracts "anadius-socket-source/pool_release_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_release_integration_contracts "anadius-socket-source/pool_release_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_allocate_contracts "anadius-socket-source/pool_allocate_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_allocate_integration_contracts "anadius-socket-source/pool_allocate_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_append_contracts "anadius-socket-source/pool_append_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_append_integration_contracts "anadius-socket-source/pool_append_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_clear_contracts "anadius-socket-source/pool_clear_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_clear_integration_contracts "anadius-socket-source/pool_clear_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_destruct_contracts "anadius-socket-source/pool_destruct_tests.cpp" anadius_core_partial)
+add_mock_test(socket_pool_destruct_integration_contracts "anadius-socket-source/pool_destruct_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_base_contracts "anadius-socket-source/node_base_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_base_integration_contracts "anadius-socket-source/node_base_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_parse_entry_contracts "anadius-socket-source/parse_entry_tests.cpp" anadius_core_partial)
+add_mock_test(socket_parse_entry_integration_contracts "anadius-socket-source/parse_entry_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_document_error_contracts "anadius-socket-source/document_error_tests.cpp" anadius_core_partial)
+add_mock_test(socket_document_error_integration_contracts "anadius-socket-source/document_error_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_parse_contracts "anadius-socket-source/node_parse_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_parse_integration_contracts "anadius-socket-source/node_parse_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_identify_contracts "anadius-socket-source/node_identify_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_identify_integration_contracts "anadius-socket-source/node_identify_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_constructors_contracts "anadius-socket-source/node_constructors_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_constructors_integration_contracts "anadius-socket-source/node_constructors_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_insertion_contracts "anadius-socket-source/node_insertion_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_insertion_integration_contracts "anadius-socket-source/node_insertion_integration_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_string_contracts "anadius-socket-source/node_string_tests.cpp" anadius_core_partial)
+add_mock_test(socket_node_string_integration_contracts "anadius-socket-source/node_string_integration_tests.cpp" anadius_core_partial)
+add_mock_test(server_contracts "anadius-server-source/server_tests.cpp" anadius_core_partial)
+add_mock_test(messages_contracts "anadius-messages-source/messages_tests.cpp" anadius_core_partial)
+add_mock_test(handlers_contracts "anadius-handlers-source/handlers_tests.cpp" anadius_core_partial)
+add_mock_test(crypto_contracts "anadius-crypto-source/crypto_tests.cpp" anadius_core_partial)
+add_mock_test(xml_printer_contracts "anadius-xml-source/printer_tests.cpp" anadius_core_partial)
+add_mock_test(xml_reader_contracts "anadius-xml-reader-source/reader_tests.cpp" anadius_core_partial)
+add_mock_test(licensing_contracts "anadius-license-source/license_tests.cpp" anadius_core_partial)
+add_mock_test(hash_contracts "anadius-hash-source/hash_tests.cpp" anadius_core_partial)
+add_mock_test(token_contracts "anadius-token-source/token_tests.cpp" anadius_core_partial)
+add_mock_test(file_io_contracts "anadius-file-source/binary_io_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/file-io-fixtures")
+add_mock_test(license_file_integration "anadius-file-source/license_files_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/file-io-fixtures")
+add_mock_test(status_contracts "anadius-status-source/status_tests.cpp" anadius_core_partial)
+add_mock_test(path_contracts "anadius-path-source/path_tests.cpp" anadius_core_partial)
+add_mock_test(encoding_contracts "anadius-encoding-source/encoding_tests.cpp" anadius_core_partial)
+add_mock_test(windows_effects_integration "anadius-windows-source/windows_tests.cpp" anadius_core_partial "${CMAKE_CURRENT_BINARY_DIR}/windows-fixtures")
+add_mock_test(content_handlers_contracts "anadius-content-handlers-source/content_handlers_tests.cpp" anadius_core_partial)
+add_mock_test(misc_handlers_contracts "anadius-misc-handlers-source/misc_handlers_tests.cpp" anadius_core_partial)
+add_mock_test(dispatch_integration "anadius-dispatch-source/integration_tests.cpp" anadius_core_partial)
+add_mock_test(preloader_contracts "preloader-source/mock_tests.cpp" preloader_core_partial)
+add_mock_test(hook_adapter_integration "hook-engine-source/adapter_tests.cpp" anadius_core_partial)
+target_link_libraries(hook_adapter_integration PRIVATE preloader_core_partial hook_engine_compat)
+# Test-only recompile of unmodified C source. Never link native engine objects
+# into this fixture executable; its Win32 call sites are redirected at compile.
+add_library(hook_engine_fixture_objects OBJECT ${MH_C_SOURCES})
+if(MSVC)
+  target_compile_options(hook_engine_fixture_objects PRIVATE "/FI${OUT}/hook-engine-source/testing/fake_win32.h")
+else()
+  target_compile_options(hook_engine_fixture_objects PRIVATE -include "${OUT}/hook-engine-source/testing/fake_win32.h")
+endif()
+add_executable(hook_engine_fixture_tests "${OUT}/hook-engine-source/fixture_tests.cpp" "${OUT}/hook-engine-source/testing/fake_win32.cpp" $<TARGET_OBJECTS:hook_engine_fixture_objects>)
+add_test(NAME hook_engine_fixtures COMMAND hook_engine_fixture_tests)
+# Terminal boundary scenarios are verified with exact exit codes by build.ps1.
+# CTest entries exercise the normal synthetic suites; terminal cases use PS1.

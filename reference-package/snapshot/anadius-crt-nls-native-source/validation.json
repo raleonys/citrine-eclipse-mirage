@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T13:51:06.6622615Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-nls-native-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-nls-native-source\\build\\native_api.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-nls-native-source\\build\\native_tests.exe"
+  ],
+  "tests": "PASS 143 checks; typed WINAPI fixtures and bounded synthetic native NLS calls",
+  "scope": "SDK typed native API adapter. Typed WINAPI fixture calls and real Windows NLS calls on bounded synthetic strings/CP info only. No original DLL/game execution, files, registry, hooks or threads.",
+  "sources": [
+    {
+      "name": "native_api.cpp",
+      "sha256": "9b066a5bd518ae8df9dbeaa7153bcf28b6b77c97b0a759ebd5a499d85a8de260"
+    },
+    {
+      "name": "native_api.hpp",
+      "sha256": "ed5c68f8f968122d7daf1fe70cc7ac9735e53bad212afe191d855a3043fb25f2"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "f0063faa8e94b84b164c24bb014cbab36f65ce3c41e57abe39f6bbca992da513"
+    }
+  ],
+  "executable_sha256": "1eb9e75a7a8e94a82f71f9b4e49c6ad3f1017c8d358b4540b3a8ba1130c2ef2d"
+}

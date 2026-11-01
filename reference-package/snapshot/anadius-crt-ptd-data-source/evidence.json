@@ -1,0 +1,49 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Reused retained REA/Ghidra assembly and pseudocode; no new analysis target execution",
+  "functions": [
+    {
+      "va": "0x1800647d4",
+      "assembly_evidence": "ev_fa8f38d07bfd2492030ba19a46c94a80574b1dba417df94697621779061facf7",
+      "pseudocode_evidence": "ev_2d71977052fa0a6ea8f8e28a2042644c075b7734379d8562288ce0902ed7e170"
+    },
+    {
+      "va": "0x180064814",
+      "assembly_evidence": "ev_ad0a4aa76a3add4adb40d2b90dee9ceb8ebfb9e2f8252b09aba19b105934116e",
+      "pseudocode_evidence": "ev_d7fded49dc84b1acb0676fd50afc779079ffe3955db33718e1f0f27c42642e8c"
+    },
+    {
+      "va": "0x180064854",
+      "assembly_evidence": "ev_a9d2835700b730a73a7d432d97e39811181b3f1a37dbcf481b6fa1148276b9da",
+      "pseudocode_evidence": "ev_63aa75c4f841434c70053c3cfbebfd2b76496a5ecd350368246f3de0a6296847"
+    },
+    {
+      "va": "0x18006489c",
+      "assembly_evidence": "ev_d4925fdd83a756dd03f058472a57d4a1e72599699c45e333abde975cd747cc1e",
+      "pseudocode_evidence": "ev_555832449e782628299643c9ec795a697f0f983393ff919f3c4d7bcfef5d5e3b"
+    },
+    {
+      "va": "0x1800648fc",
+      "assembly_evidence": "ev_88186886d4677768f1851ce8c092179c1504315e64f8e6ad9343fe9070c85996",
+      "pseudocode_evidence": "ev_5b39f111b222558bd8e52132523a2e361a941261e916883af37f3e602c09927b"
+    },
+    {
+      "va": "0x1800649cc",
+      "assembly_evidence": "ev_d3e40b41f510be320532cd1ac0f507f195acb1a3a9b6b31cf0a98fd52dec2677",
+      "pseudocode_evidence": "ev_2f68beb438ece936d2c426ccfea03da3a96c7696419ca3d29a00b4d7b88fdcb8"
+    },
+    {
+      "va": "0x1800649ec",
+      "assembly_evidence": "ev_ba3d48f4843ba885cca4d5f43b70157e29051f4310beb85118c84f5d82a9ef87",
+      "pseudocode_evidence": "ev_23ece12ba558d0057c31265d9b8efd21dd1a29b0ade68bd61f6fd47b3fd82e96"
+    },
+    {
+      "va": "0x180064ae4",
+      "assembly_evidence": "ev_b2f93290bbaca2c9422c76726982593cce243cb3b2016b991ca7770d3f9de7ed",
+      "pseudocode_evidence": "ev_92b8daddd81c92b4fe46e87487caa8a205216f5ff975ebf45f5f72ff68938768"
+    }
+  ],
+  "scope": "Eight normal-flow bodies; captured chains specialized into source APIs; MSVC SEH/unwind/callable ABI not recovered",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+}

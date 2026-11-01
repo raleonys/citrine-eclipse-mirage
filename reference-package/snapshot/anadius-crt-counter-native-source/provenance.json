@@ -1,0 +1,44 @@
+{
+  "kind": "New support source; zero additional recovered bodies",
+  "source_inputs": [
+    {
+      "path": "../anadius-crt-locale-ref-source/evidence.json",
+      "sha256": "91541d94f17ba3eb59677043dd768360e0be917d3014594fb352e56a5b92c380"
+    },
+    {
+      "path": "../anadius-crt-ptd-data-source/evidence.json",
+      "sha256": "414d5d1804765bc1a444edcaab1544c194f2213b3085916189d5da4e50a3910f"
+    }
+  ],
+  "compiler": {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+    "sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+    "flags": [
+      "-std=c++20",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror"
+    ],
+    "test_link": "-static"
+  },
+  "sources": [
+    {
+      "name": "counters.cpp",
+      "sha256": "044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25"
+    },
+    {
+      "name": "counters.hpp",
+      "sha256": "f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "61fe364a99aff62e2797dcd80135a5f0dc21c7a546c333499566aa02d973c6c0"
+    }
+  ],
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "whole_binary_reconstruction": "incomplete",
+  "original_ABI_SEH_runtime_equivalence": "not established"
+}

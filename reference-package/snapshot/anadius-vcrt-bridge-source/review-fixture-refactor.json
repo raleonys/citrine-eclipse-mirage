@@ -1,0 +1,29 @@
+{
+  "reviewer": "primary agent follow-up",
+  "result": "PASS",
+  "checked_at": "2026-10-18T14:34:03.3856976Z",
+  "change": "Existing synthetic fixtures moved into test_fixtures.hpp with inline named namespace; check adds source_location diagnostics; production bridge.cpp/hpp unchanged",
+  "existing_suite": "443 checks PASS in final common build",
+  "new_shared_suite": "1732 startup/environment/termination checks PASS",
+  "historical_reviews": "Prior independent hashes identify earlier test layout; they are preserved rather than rewritten",
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "cc8c0e50e5cccf6180869599e3fc7efd4c40c15ea3b557e4f0376ab3f513b577"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "85f1591f4b8e265cea036badadaf0c3de43fdd6bd16c2a1be910aaf4137526bf"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "eac77edf09d6d38d5d33651f9a7c58ebec6dd46abb3db28b283a95140af598e3"
+    },
+    {
+      "name": "test_fixtures.hpp",
+      "sha256": "882faee73336d78f500675eea11b9aa95b35e81d958f7b0a132959da5744026b"
+    }
+  ],
+  "target_execution": "none",
+  "runtime_equivalence": "not established"
+}

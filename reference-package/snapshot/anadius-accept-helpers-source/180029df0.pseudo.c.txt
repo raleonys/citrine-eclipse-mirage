@@ -1,0 +1,32 @@
+/* 0x180029df0 FUN_180029df0; Evidence ev_124d6968b78c1e94e3f42b6749d985f4fa733e8a9e0be5737deaee9a379948cb */
+
+SOCKET FUN_180029df0(undefined8 param_1,undefined8 param_2,undefined8 param_3,undefined8 *param_4)
+
+{
+  int iVar1;
+  SOCKET s;
+  undefined **ppuVar2;
+  char local_28 [12];
+  undefined4 uStack_1c;
+  
+  s = WSASocketW(param_1,param_2,param_3,0,0,1);
+  if (s != 0xffffffffffffffff) {
+    *(undefined4 *)param_4 = 0;
+    if ((int)param_1 == 0x17) {
+      local_28[0] = '\0';
+      local_28[1] = '\0';
+      local_28[2] = '\0';
+      local_28[3] = '\0';
+      setsockopt(s,0x29,0x1b,local_28,4);
+    }
+    return s;
+  }
+  ppuVar2 = FUN_180028620();
+  iVar1 = WSAGetLastError();
+  *param_4 = CONCAT44(uStack_1c,iVar1);
+  param_4[1] = ppuVar2;
+  return 0xffffffffffffffff;
+}
+
+
+

@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "timestamp",
+    "result": "PASS",
+    "output": "PASS: 192 timestamp checks; classic ASCII native branch plus explicit host compatibility; own fixtures only",
+    "executable_sha256": "8fd3c40415ed325b35dba41d2971086146676f23694a6864451e76ffc7fec650"
+  },
+  "execution_scope": "041e10 zero9tm/native state6 wrapper, recovered fixed ISO classic ASCII branch plus explicit host compatibility; actual calendar/XML/file/path/storage/INI chain on generated fixtures; arbitrary locale/nativeSTL ABI/SEH unproven",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-timestamp-source/timestamp_tests.cpp",
+      "sha256": "5b0eb2b9a72fa135a49adf87ac06a8467ac6492905317b8328adbcb2f04af6e5"
+    },
+    {
+      "path": "anadius-timestamp-source/timestamp.cpp",
+      "sha256": "443dc4a0dea62b717d4513f6d8432f84f8d51ff6edf3bc26bd12f6578c02e52c"
+    },
+    {
+      "path": "anadius-timestamp-source/timestamp.hpp",
+      "sha256": "bdf47aadc38b11393e9317ed9c2e4b43067f8c81c02256a4001289da31ba017e"
+    }
+  ]
+}

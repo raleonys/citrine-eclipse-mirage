@@ -1,0 +1,86 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T23:54:13.127448+00:00",
+  "prior_package_sha256": "398aacce19dd833fed3915e271b822a74b24040cc1a360820d766ad7f2ffeb37",
+  "prior_source_count": 606,
+  "unchanged_prior_sources": 606,
+  "added_sources": [
+    "anadius-socket-source/native_dispatch.cpp",
+    "anadius-socket-source/native_dispatch.hpp",
+    "anadius-socket-source/native_dispatch_integration_tests.cpp",
+    "anadius-socket-source/native_dispatch_test_fixture.hpp",
+    "anadius-socket-source/native_dispatch_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 611,
+  "current_documents": 227,
+  "native_objects": 194,
+  "cpp_objects": 190,
+  "c_objects": 4,
+  "normal_test_groups": 201,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 74,
+  "new_checks": 9828,
+  "new_tests": [
+    {
+      "module": "socket_native_dispatch",
+      "result": "PASS",
+      "output": "PASS: 850 native dispatch checks;39 commands, validation, live callbacks, signed count/reloads, output/free order and failure prefixes; native lower providers remain open",
+      "executable_sha256": "727ad28839451451a8f256ed56397e501702900ff2806286ff8562267b9b8c00"
+    },
+    {
+      "module": "socket_native_dispatch_integration",
+      "result": "PASS",
+      "output": "PASS: 8978 socket native dispatch integration checks; final032d00 source, owned session ChallengeResponse and native cipher/append to queue/send/finish; registry/DOM/printer/handler/string lower providers and native ABI/EH remain open",
+      "executable_sha256": "0a9ea16a23c9ca4af8aedfda512207c881363d02f380202414273aeb5eadcb6e"
+    }
+  ],
+  "validation_mirror_pairs": 37,
+  "historical_module_records_preserved": 36,
+  "historical_config_references_preserved": 72,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "40ec5e3750b1072c6f2228df6f662fcf45874a8ead72355495f1ac7627b3b415",
+  "inventory_data_checks": 7345,
+  "normal_source_procedures_added": [
+    "0x180032d00"
+  ],
+  "new_original_procedures": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/native_dispatch.cpp",
+      "base": "NativeMessageApi::dispatch_032d00",
+      "body": "dispatch_native_032d00",
+      "closure": "RecoveredMessageDispatchApi::dispatch_032d00",
+      "address": "0x180032d00",
+      "native_abi_complete": false,
+      "scope": "032d00 per-call normal projection and final NativeMessageApi dispatch source bridge; live lookup/handler, validation and normal scratch/output/printer order; original registry/DOM/document/printer/string/handler/exception lower providers mandatory"
+    }
+  ],
+  "new_source_bridges": 1,
+  "native_typed_providers_newly_closed": 1,
+  "new_unique_source_mapped_addresses": 0,
+  "prior_native_source_closures_preserved": 23,
+  "current_native_source_closures": 24,
+  "semantic_session_source_adapters_preserved": 2,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "032d00 per-call normal projection and final NativeMessageApi dispatch source bridge; live lookup/handler, validation and normal scratch/output/printer order; original registry/DOM/document/printer/string/handler/exception lower providers mandatory",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N14 document001830/004280/001e00 ctor/parse/destroy source contracts; registry TLS/RB-tree and DOM/printer/string lower backends remain open; CRT stays paused"
+}

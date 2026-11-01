@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "22de357f7a234c28cab38098692ae6b6ae6cd7b5699542dc84c6323f1c2d13b1",
+  "test_results": [
+    {
+      "module": "socket_document_clear",
+      "result": "PASS",
+      "output": "PASS: 169 document clear checks; child graph unlink/tracking/virtual targets, cached and live callback fields, exact reset/free order and failure prefixes; native DOM/pool lower bodies and ABI/EH remain open",
+      "executable_sha256": "1d44961ee104ea3f96f7fc376a841a831de97a2bd22bee913175d3bf314bef44"
+    },
+    {
+      "module": "socket_document_clear_integration",
+      "result": "PASS",
+      "output": "PASS: 17117 socket document clear integration checks; actual clear/node source and coherent document/cipher/dispatch/queue/send chain on controlled one-root projections; parser/full DOM/node virtual/helper/pool/heap/ABI/EH remain open",
+      "executable_sha256": "d438f0d95cf9ec035014422256635ad8dc1f4ccc563260ce4f30b7b080c5171d"
+    }
+  ],
+  "core_checks": 169,
+  "integration_checks": 17117,
+  "original_procedures_added": 2,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "execution_scope": "002e60/003110 normal document clear and child-node cleanup projections and2 final NativeDocumentEffects source bridges; raw-memory unlink/tracking/live pointer/cached vtable and normal cleanup order;003030/003240 and node/pool virtual operations,free/parser/pool/vtable/ABI/EH lower providers mandatory",
+  "native_document_clear_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Bounded raw-memory normal projections; no native DOM/object/global/vtable/lifecycle/ABI/EH/concurrency equivalence established",
+    "003030 parent/node helper and003240 standalone-node deletion remain mandatory; these helper bodies are not recovered here",
+    "Node virtual slots+0x38/+0x78 and pool virtual slots+0x20/+0x18 remain mandatory lower effects; supplied vtable identity values do not implement native virtual calls",
+    "003110 probe uses full64-bit result; signed tracking count/read/reload and cached table/pool contract remain bounded memory observations",
+    "04b0f8 free defines only pointer argument in002e60; no invented sized-free argument or native allocator/CRT recovery",
+    "No synthetic iteration cutoff or undocumented corrupted-graph recovery is claimed; caller must supply live mapped finite normal domains",
+    "Error/line zeroing precedes free callbacks; callback mutations to earlier fields are retained unless native writes occur later; no full-object reset",
+    "Normal failure prefixes retain committed effects without invented catch/rollback/unwind cleanup; fixture teardown is not native EH evidence",
+    "0041b0 parser engine,remaining pool helpers,DOM materialization,native allocator/free/vtable and final replacement DLL link remain open",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity checks separate; CRT unchanged and paused"
+  ],
+  "previous_local_records": "38 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x180002e60",
+    "0x180003110"
+  ],
+  "independent_review_complete": false
+}

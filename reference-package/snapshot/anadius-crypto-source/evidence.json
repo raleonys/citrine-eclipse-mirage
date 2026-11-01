@@ -1,0 +1,328 @@
+{
+  "input": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "evidence_type": "retained Ghidra static assembly/pseudocode plus raw constant byte verification",
+  "target_execution": "none",
+  "runtime_equivalence": "unverified",
+  "source_evidence": [
+    {
+      "file": "anadius-rea-evidence.json",
+      "sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    }
+  ],
+  "functions": [
+    {
+      "va": "0x1800423d0",
+      "rva": "0x423d0",
+      "role": "Constructor/reset: mode=0, 192 bytes of schedule and IV zeroed",
+      "assembly_evidence": "ev_1a5eecedd9b2929ae9f1e885705987927e1309cc6991de8c01925d839d99ad34",
+      "pseudocode_evidence": "ev_5faa15cdd4a0e251b11f4a4b841a7d36cb933d79a06a0a53b3bd926fb86c2613",
+      "listing_body_sha256": "0c363e871d65e0f5562d3b51b3e9acf067e3e8c51d09edc08887e0786dfaabd0"
+    },
+    {
+      "va": "0x180042480",
+      "rva": "0x42480",
+      "role": "Decrypt string extent; validate and remove PKCS#7 padding after mutation",
+      "assembly_evidence": "ev_d0fccb2775fdb815d1a580c813946b1cdefdb26fb8590bbb2b2a03d7b562e8e4",
+      "pseudocode_evidence": "ev_e27b923a47363280bcc0e8f0d5f1d84d309c13cbcf938d944e3bf4f18460fe56",
+      "listing_body_sha256": "4ecde49db6faeb5a11fcd5c6c16a0ffca10162437fd2951e9f45266c06f14c33"
+    },
+    {
+      "va": "0x180042610",
+      "rva": "0x42610",
+      "role": "Append PKCS#7 padding and encrypt string extent",
+      "assembly_evidence": "ev_46790ff61e14371172a73e53871ee23da992983094393729fe2474de81caee15",
+      "pseudocode_evidence": "ev_84196222f2218d2b0a060bb317b12da12a77b2f964a5902100ed78e154eb8375",
+      "listing_body_sha256": "171f3409f0bca0e5f69c81a14039e2c42a23a1641a338719bafdca2cb833c147"
+    },
+    {
+      "va": "0x180042760",
+      "rva": "0x42760",
+      "role": "Expand key, set IV, mode=1 (CBC)",
+      "assembly_evidence": "ev_997fe5368937536a0756fb50ee6f4d70854abb04ae62c70396ae16dedd5bbafd",
+      "pseudocode_evidence": "ev_b7191ccefe4f94753ba7877dd859eb4a7530a22a4d086b700584ccf2da34de7e",
+      "listing_body_sha256": "dceb55f68cbee53cffb586f6d41d899677b391e93f89716a4b6886de926b5736"
+    },
+    {
+      "va": "0x180042780",
+      "rva": "0x42780",
+      "role": "Expand key, mode=2 (ECB), preserve IV",
+      "assembly_evidence": "ev_0c01cb3386957026020066a6feefbf7a41b6111237a7001393542ccc8e6732b7",
+      "pseudocode_evidence": "ev_2d855481c04f0ce9821269ccf7945fb9c438f9de1000b64bfab4cca8c180c6ce",
+      "listing_body_sha256": "14dc1829211cfe6ce9c3892d2a3ef24913275d188023ccfbcc769d70c73712f4"
+    },
+    {
+      "va": "0x1800454e0",
+      "rva": "0x454e0",
+      "role": "CBC decryption helper and IV update",
+      "assembly_evidence": "ev_ec8e488c9470bfc5a91fa0eb4a8a7ce7b044f0c6f346c6515836286e71443ef3",
+      "pseudocode_evidence": "ev_2f22af2c88e0c02db0783988bf6b8d67eb469b0f6802fb5ec641d0c0ad0d06f0",
+      "listing_body_sha256": "8ee379a2a788cb4675ec68f1d465f2ecde247f8c3926e72081fd06210602e668"
+    },
+    {
+      "va": "0x180045580",
+      "rva": "0x45580",
+      "role": "CBC encryption helper and IV update",
+      "assembly_evidence": "ev_feb0127f5eb8c794b4ad41840bc3118c7f03d5d3a9188b8d0179c3c959bb262b",
+      "pseudocode_evidence": "ev_d09002f392ba53373ac77b1c1cbf192b7033a4e4bfa093ba2c3bf57670891ee4",
+      "listing_body_sha256": "60c7d1881c04e0972fb063347b659f50c4b8e4d868d73f06663beba5cbcd0d37"
+    },
+    {
+      "va": "0x180045620",
+      "rva": "0x45620",
+      "role": "ECB decrypt argument-reordering tail wrapper",
+      "assembly_evidence": "ev_91602a126449722f4c42c22e772d9d2afdcaf65714aa5b88b89077d4bfdfca4f",
+      "pseudocode_evidence": "ev_9c4ae0650cc1a802bb9b81a7408ddd7ccd1c43b7f78ee86dfaf95e0bcbb01969",
+      "listing_body_sha256": "e57215bd4e3b7c61c633f3d21a270f0ee650a6acc595112b9d0174e0a73271de"
+    },
+    {
+      "va": "0x180045630",
+      "rva": "0x45630",
+      "role": "ECB encrypt argument-reordering tail wrapper",
+      "assembly_evidence": "ev_aa0732814e7f08faa575592800a67bc9f2448f5e541cab2d933d9a7ad44b619e",
+      "pseudocode_evidence": "ev_ce515a04c612b867ced7f7d2522cebb5b74ec98b99de8507bd0fe7aec9d70fa5",
+      "listing_body_sha256": "0f55c7bb0b744d516f50bd4565622a75f571c95c3245f16888915d9396dac42b"
+    },
+    {
+      "va": "0x180045640",
+      "rva": "0x45640",
+      "role": "Key expansion tail wrapper",
+      "assembly_evidence": "ev_329e053c52fde05733ae5f2ae56ce2939e58f62b6560c0a887d7740c510c54f1",
+      "pseudocode_evidence": "ev_ed4a2a0a979c825362a5375eefb3e3066c80a4bf9197fb0c0d035e6b8c99607c",
+      "listing_body_sha256": "21bd6ce564da02ff84f6bb157719b99b23d1f422dc29d884d43727a40e2db368"
+    },
+    {
+      "va": "0x180045650",
+      "rva": "0x45650",
+      "role": "Expand key and copy IV at schedule+0xb0",
+      "assembly_evidence": "ev_9eaf8764d60c1c824f6852786f8e8e97fd558adfab10b6066e5e1859b886bae2",
+      "pseudocode_evidence": "ev_6fbfb0dd705ab95934d41aeb756756269cc4b473308e4cc3abcd013142f54823",
+      "listing_body_sha256": "3360476f875260bac554bb25e0aa1ec4c0f3a989e70beba70455e53950dac86a"
+    },
+    {
+      "va": "0x180045670",
+      "rva": "0x45670",
+      "role": "AES-128 forward block transformation, 10 rounds",
+      "assembly_evidence": "ev_57fc2c678ac5428c83d3c09571e2449cbc67b6826e9ae9240db55827891cde82",
+      "pseudocode_evidence": "ev_9cdd2cd4e35fcff6137c548a5352bf598d4e9661031cb6ab2a48c87b92a8bf8a",
+      "listing_body_sha256": "2ffe3dc0b8ae5fe477aa347ccd1bebbf34b615e89489c99501fcb2a0a2cd912f"
+    },
+    {
+      "va": "0x1800458d0",
+      "rva": "0x458d0",
+      "role": "AES-128 inverse block transformation, 10 rounds",
+      "assembly_evidence": "ev_6b0cf3ddecb4f04b080c732d7da582fea1d1a5b028dc5491bcc3700d5921db8e",
+      "pseudocode_evidence": "ev_7fa7ecd45c02a8c9e18aa7d499d6cab3010a807c80619e0d78598cd98b97f54c",
+      "listing_body_sha256": "a3cc919e24c3819e80a7978c14d608f1070bb661408e27a7ef8c9b05a16601de"
+    },
+    {
+      "va": "0x180045a50",
+      "rva": "0x45a50",
+      "role": "Inverse MixColumns; collapsed into generic finite-field source helper",
+      "assembly_evidence": "ev_a7ada44ea87889dc3aab5c342c5f5ef214fce440c3d9808af114a33cb42164c2",
+      "pseudocode_evidence": "ev_a35afcfc73c5c6553e1c9c8df8c980168e110e997d42199f5cc062d064dd8c81",
+      "listing_body_sha256": "e8fd6714c94d110bdf8c8151cdccf1310ab15e9c78da69ce8bdafbf9f4d8a68b"
+    },
+    {
+      "va": "0x180045ce0",
+      "rva": "0x45ce0",
+      "role": "128-bit key expansion to 44 words / 176 bytes",
+      "assembly_evidence": "ev_41196d3d2b28e1b52fc7af7717131396a66c12bb5e6ce939e944314a9f799a91",
+      "pseudocode_evidence": "ev_a0aeaf2ef7c58b85418e98c39743c159d20a3452f4d355d56f300bf94ab67e79",
+      "listing_body_sha256": "050431ca0d7ec4126b81c2a3b8e7c1df55edb960b19e5c325e0bc12c05b2af8c"
+    },
+    {
+      "va": "0x180045050",
+      "rva": "0x45050",
+      "role": "Construct local 32-bit PRNG state",
+      "assembly_evidence": "ev_bbcec471294c7eef2ab63fa89e160ab9bb9f0b3235bcd5df21a2eaa8a368cbf5",
+      "pseudocode_evidence": "ev_c7d3c22417a467d96140fad7726df73352bc963761ad09c7d8aaa926d3baa402",
+      "listing_body_sha256": "d7f991f3aea9cd7d5f9be57e4b3b7d82b30be1a6df47a02c6381c979d1cdf3df"
+    },
+    {
+      "va": "0x180045060",
+      "rva": "0x45060",
+      "role": "Replace local 32-bit PRNG seed",
+      "assembly_evidence": "ev_cbc19fbd1bb4e0fd7e2be3feef129c78eba60babb3923f1330e0718e6b48e8bc",
+      "pseudocode_evidence": "ev_c57198b165296fe691b4049c8e143b6da1f371458178794302ad1cc6c64f8d50",
+      "listing_body_sha256": "05d32f4d56d1e145c03de3376a4e9b2c3727784d0a6bcebfe36dddf37aa7807b"
+    },
+    {
+      "va": "0x180045070",
+      "rva": "0x45070",
+      "role": "LCG update, return bits16..30",
+      "assembly_evidence": "ev_b754e55552719088c44746338daa208d0549e840cec0375945c9241d689d915f",
+      "pseudocode_evidence": "ev_10f1661bdb0fc3bbe2318df00302a4069a175c85132a369aa5228610cc3af0a6",
+      "listing_body_sha256": "4fcd5ffe1535ed8290bb928d681df051b9429e006db0d58aa34620b3cc15c0f4"
+    },
+    {
+      "va": "0x180034c30",
+      "rva": "0x34c30",
+      "role": "Response first two signed bytes, reseed and produce 16 low result bytes",
+      "assembly_evidence": "ev_a2d44de76b1f36d43c69a61a37f8be0041e16d5cc858db07d098194391164ab0",
+      "pseudocode_evidence": "ev_5f20ce94b6a641740f78ab38c80064dc65fea9e0d9c897af06b24bef8f8b2d0b",
+      "listing_body_sha256": "1b33244cb0857c408170f687de226b07e3651615ce665d3353a07b4d0db560b6"
+    },
+    {
+      "va": "0x180034cf0",
+      "rva": "0x34cf0",
+      "role": "Time-seeded 16 low result bytes followed by lower-case hexadecimal conversion",
+      "assembly_evidence": "ev_947f1c2ad1513d2c702331b9501becbbeebeda26329fb754161419aae3efb063",
+      "pseudocode_evidence": "ev_4fab18fcac92110149151ce89486bab8893108a4acf7a067b91e53c13866d114",
+      "listing_body_sha256": "ebe796fd28109e419f291d7899d224a0fa3afd8805ef033668416d8c6aadfc20"
+    },
+    {
+      "va": "0x18005eeb8",
+      "rva": "0x5eeb8",
+      "role": "FILETIME to signed Unix seconds and upper-bound check; optional output-pointer ABI omitted",
+      "assembly_evidence": "ev_677ab8daf2d2f2a198a069d7c03e2aa7aedc1f4f8651a40b5493ae544fa31c5c",
+      "pseudocode_evidence": "ev_f640d6385296f66ae9cf3d87fc288bddcc21482993714bc690f3a5632f66b5c7",
+      "listing_body_sha256": "e987678bdf985d6b229c92564b1909b61e8e4e7ae519ced3faefb27df17dbfd7"
+    },
+    {
+      "va": "0x18003d190",
+      "rva": "0x3d190",
+      "role": "Hex encoding support; implementation remains in messages.cpp",
+      "assembly_evidence": "ev_7cc933e3f97d44f4cb2932484a7fc51fedeb38e403d3a0c8eedad13c1eaea6b2",
+      "pseudocode_evidence": "ev_52ce061acb986f9fe9ccdcaeedc30b80c6a1bf7335b59d2f3c6e82743e888599",
+      "listing_body_sha256": "896b534c4cddcabef4873c1ab02874c97e0f85942bb698138adc30cbe98e06c9"
+    }
+  ],
+  "instruction_anchors": [
+    {
+      "va": "0x1800423e9",
+      "instruction": "MOV R8D, 0xc0",
+      "supports": "Constructor clears 192 bytes: 176-byte schedule plus 16-byte IV"
+    },
+    {
+      "va": "0x180042772",
+      "instruction": "MOV dword ptr [RBX], 0x1",
+      "supports": "CBC mode value"
+    },
+    {
+      "va": "0x180042792",
+      "instruction": "MOV dword ptr [RBX], 0x2",
+      "supports": "ECB mode value"
+    },
+    {
+      "va": "0x18004264a",
+      "instruction": "MOV EBP, 0x10",
+      "supports": "Padding computed as 16 minus extent length modulo16"
+    },
+    {
+      "va": "0x180042525",
+      "instruction": "MOVSX R8, byte ptr [RDX + R8*0x1 + -0x1]",
+      "supports": "Padding read occurs after block decryption, including zero-extent path"
+    },
+    {
+      "va": "0x180042567",
+      "instruction": "JNZ 0x180042601",
+      "supports": "Bad padding returns false after in-place mutation"
+    },
+    {
+      "va": "0x180045553",
+      "instruction": "MOVUPS xmmword ptr [RBP + 0xb0], XMM0",
+      "supports": "CBC decryption IV becomes the original ciphertext block"
+    },
+    {
+      "va": "0x18004560c",
+      "instruction": "MOVUPS xmmword ptr [RSI + 0xb0], XMM0",
+      "supports": "CBC encryption IV becomes the last ciphertext block"
+    },
+    {
+      "va": "0x180034c55",
+      "instruction": "MOVSX EBX, byte ptr [RAX]",
+      "supports": "First response byte is signed"
+    },
+    {
+      "va": "0x180034c5b",
+      "instruction": "MOVSX EAX, byte ptr [RDX + 0x1]",
+      "supports": "Second response byte is signed; no source length check"
+    },
+    {
+      "va": "0x180034c61",
+      "instruction": "MOV EDX, 0x7",
+      "supports": "Initial response-key PRNG seed=7"
+    },
+    {
+      "va": "0x180045070",
+      "instruction": "IMUL EAX, dword ptr [RCX], 0x343fd",
+      "supports": "32-bit LCG multiplier214013"
+    },
+    {
+      "va": "0x180045076",
+      "instruction": "ADD EAX, 0x269ec3",
+      "supports": "LCG increment2531011"
+    },
+    {
+      "va": "0x180045080",
+      "instruction": "AND EAX, 0x7fff",
+      "supports": "15-bit PRNG result after logical shift16"
+    },
+    {
+      "va": "0x180034dc1",
+      "instruction": "CALL 0x18003d190",
+      "supports": "Original challenge helper includes the final hex conversion"
+    },
+    {
+      "va": "0x18005eecc",
+      "instruction": "CALL qword ptr [0x18007f3d8]",
+      "supports": "GetSystemTimeAsFileTime call, import identity retained in anadius-callgraph.json"
+    },
+    {
+      "va": "0x18005ef02",
+      "instruction": "MOV RAX, 0x793582aff",
+      "supports": "Signed Unix seconds upper bound"
+    }
+  ],
+  "raw_constants": [
+    {
+      "name": "fixed_key",
+      "va": "0x180084c98",
+      "file_offset": 537752,
+      "length": 16,
+      "sha256": "be45cb2605bf36bebde684841a28f0fd43c69850a3dce5fedba69928ee3a8991",
+      "verified": "exact raw input bytes"
+    },
+    {
+      "name": "sbox",
+      "va": "0x180086ae0",
+      "file_offset": 545504,
+      "length": 256,
+      "sha256": "c2d8e5eed6cbebd8625fc18f81486a7733c04f9b0129ffbe974c68b90308b4f2",
+      "verified": "exact raw input bytes"
+    },
+    {
+      "name": "inverse_sbox",
+      "va": "0x180086be0",
+      "file_offset": 545760,
+      "length": 256,
+      "sha256": "93631b0726f6fe6629daa743ee51b49f4477ed07391b68eeea0672a4a90018aa",
+      "verified": "exact raw input bytes"
+    },
+    {
+      "name": "rcon",
+      "va": "0x180086ce0",
+      "file_offset": 546016,
+      "length": 11,
+      "sha256": "1cde739bed8c2aeb8e356400e39fbb91032ad734956f201370b37703d46dcb94",
+      "verified": "exact raw input bytes"
+    }
+  ],
+  "semantics_notes": [
+    "Mode state is private and has only values0/1/2 in the reconstructed API; arbitrary corrupted mode bytes are outside the source model.",
+    "The original challenge helper returns 32 hex characters. Random::challenge_bytes_034cf0 returns its raw16-byte intermediate so messages.cpp applies 03d190 exactly once; challenge_hex_034cf0 returns the complete original helper result.",
+    "Response-key input has an explicit one-character trailing-NUL emulation; empty input reads an unspecified source byte and is rejected by the reconstruction only.",
+    "OutOfEvidenceInput is a source integration exception, not a recovered binary exception type.",
+    "C++ class layout, allocation, MSVC exception ABI, original std::string capacity and raw pointer preconditions are not reproduced."
+  ]
+}

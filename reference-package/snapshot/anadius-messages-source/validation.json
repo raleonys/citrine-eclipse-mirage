@@ -1,0 +1,60 @@
+{
+  "checked_at": "2026-10-17T02:19:56.0326773Z",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "mock_tests": "PASS: 831 checks; synthetic XML/crypto/queue only; no sockets or target execution",
+  "native_adapter_present": false,
+  "original_target_execution": "none",
+  "runtime_equivalence": "unverified",
+  "retained_evidence_files": [
+    {
+      "file": "../anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "file": "../anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    }
+  ],
+  "sources": [
+    {
+      "file": "build.ps1",
+      "sha256": "bdc77c1674cfa602ced63f5c739c4d97984688dd274860939bf445b5f8daea4f"
+    },
+    {
+      "file": "evidence.json",
+      "sha256": "c12464e1b33d5ec6e89e23ac0555454f803d54acbb5511a8b654d4c9fa0047e9"
+    },
+    {
+      "file": "messages_tests.cpp",
+      "sha256": "9056a292b59f6363dd94cc761b2b61e7d721184c6d365f13d47f9cee6173251e"
+    },
+    {
+      "file": "messages.cpp",
+      "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2"
+    },
+    {
+      "file": "messages.hpp",
+      "sha256": "42a33b619026a7a3201adbff54d853252d46a18d8d2252b7804c39929d4f54d4"
+    },
+    {
+      "file": "README.md",
+      "sha256": "29cd1f7b1ce010077568988d3d20dbfa7a5fb6ed40e4c412148a59e1edf7fa2c"
+    },
+    {
+      "file": "registry-validation.json",
+      "sha256": "4ae607b6e0495c39c411b95f0c60e7346e2fd93db7d211d9d7399cec65273815"
+    },
+    {
+      "file": "validate-registry.cjs",
+      "sha256": "8ef1e414cb85331bc6a77f0fa61cc953a9747ad698b314398e05efbae0a643a6"
+    }
+  ]
+}

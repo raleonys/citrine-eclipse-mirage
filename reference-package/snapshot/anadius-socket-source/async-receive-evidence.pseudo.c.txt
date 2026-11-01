@@ -1,0 +1,133 @@
+/* 0x180021d10 FUN_180021d10; Evidence ev_d716892e207f1ae8230bf4ba5b7cce514f147811c107c7c9812d3b205fe10abf */
+
+void FUN_180021d10(longlong param_1,longlong *param_2,_union_540 *param_3,undefined4 param_4,
+                  ULONG_PTR *param_5,longlong param_6)
+
+{
+  int *piVar1;
+  longlong *plVar2;
+  _union_540 _Var3;
+  ULONG_PTR *pUVar4;
+  longlong lVar5;
+  int iVar6;
+  DWORD DVar7;
+  LPOVERLAPPED p_Var8;
+  longlong *plVar9;
+  longlong *plVar10;
+  undefined4 local_res8 [2];
+  DWORD local_68 [2];
+  _union_540 local_60;
+  PVOID local_58;
+  ULONG_PTR *local_50;
+  undefined8 local_48;
+  undefined8 local_40;
+  
+  pUVar4 = param_5;
+  local_50 = param_5;
+  p_Var8 = (LPOVERLAPPED)FUN_1800269b0(0xe0);
+  plVar2 = (longlong *)param_2[3];
+  plVar9 = (longlong *)0x0;
+  plVar10 = plVar9;
+  if (plVar2 != (longlong *)0x0) {
+    plVar9 = (longlong *)param_2[2];
+    LOCK();
+    *(int *)((longlong)plVar2 + 0xc) = *(int *)((longlong)plVar2 + 0xc) + 1;
+    UNLOCK();
+    plVar10 = plVar2;
+  }
+  lVar5 = param_2[1];
+  p_Var8[1].Internal = 0;
+  p_Var8[1].InternalHigh = (ULONG_PTR)FUN_180027710;
+  p_Var8->Internal = 0;
+  p_Var8->InternalHigh = 0;
+  (p_Var8->u).Pointer = (PVOID)0x0;
+  p_Var8->hEvent = (HANDLE)0x0;
+  p_Var8[1].u.s.Offset = 0;
+  *(char *)&p_Var8[1].hEvent = (char)lVar5;
+  p_Var8[2].Internal = 0;
+  p_Var8[2].InternalHigh = 0;
+  if (plVar10 != (longlong *)0x0) {
+    p_Var8[2].Internal = (ULONG_PTR)plVar9;
+    p_Var8[2].InternalHigh = (ULONG_PTR)plVar10;
+    LOCK();
+    *(int *)((longlong)plVar10 + 0xc) = *(int *)((longlong)plVar10 + 0xc) + 1;
+    UNLOCK();
+  }
+  _Var3 = param_3[1];
+  p_Var8[2].u = *param_3;
+  p_Var8[2].hEvent = (HANDLE)_Var3;
+  p_Var8[3].Internal = *pUVar4;
+  p_Var8[3].InternalHigh = pUVar4[1];
+  p_Var8[3].u = *(_union_540 *)(pUVar4 + 2);
+  p_Var8[3].hEvent = (HANDLE)pUVar4[3];
+  *(char *)&p_Var8[4].Internal = (char)pUVar4[4];
+  *(undefined4 *)((longlong)&p_Var8[4].Internal + 4) = *(undefined4 *)((longlong)pUVar4 + 0x24);
+  p_Var8[4].InternalHigh = pUVar4[5];
+  p_Var8[4].u = *(_union_540 *)(pUVar4 + 6);
+  p_Var8[4].hEvent = (HANDLE)pUVar4[7];
+  p_Var8[5].Internal = 0;
+  p_Var8[5].InternalHigh = 0;
+  p_Var8[5].Internal = pUVar4[8];
+  p_Var8[5].InternalHigh = pUVar4[9];
+  pUVar4[8] = 0;
+  pUVar4[9] = 0;
+  FUN_180023dd0((longlong)&p_Var8[5].u,0,0,param_6);
+  pUVar4 = param_5;
+  if (plVar10 != (longlong *)0x0) {
+    LOCK();
+    piVar1 = (int *)((longlong)plVar10 + 0xc);
+    iVar6 = *piVar1;
+    *piVar1 = *piVar1 + -1;
+    UNLOCK();
+    if (iVar6 == 1) {
+      (**(code **)(*plVar10 + 8))(plVar10);
+      pUVar4 = param_5;
+    }
+  }
+  param_5._4_4_ = (undefined4)((ulonglong)pUVar4 >> 0x20);
+  local_60 = *param_3;
+  local_68[0] = param_3[1].s.Offset;
+  local_58 = param_3[1].Pointer;
+  param_5 = pUVar4;
+  if (((*(byte *)(param_2 + 1) & 0x10) == 0) || (local_58 != (PVOID)0x0)) {
+    LOCK();
+    piVar1 = (int *)(*(longlong *)(param_1 + 8) + 0x30);
+    *piVar1 = *piVar1 + 1;
+    UNLOCK();
+    if (*param_2 == -1) {
+      FUN_180028b50(*(longlong *)(param_1 + 8),p_Var8,0x2719,0);
+    }
+    else {
+      param_5._0_4_ = 0;
+      local_res8[0] = param_4;
+      iVar6 = WSARecv(*param_2,local_68,1,&param_5,local_res8,p_Var8,0);
+      DVar7 = WSAGetLastError();
+      if (DVar7 == 0x40) {
+        DVar7 = 0x2746;
+      }
+      else if (DVar7 == 0x4d2) {
+        DVar7 = 0x274d;
+      }
+      if ((iVar6 == 0) || (DVar7 == 0x3e5)) {
+        FUN_180028c00(*(longlong *)(param_1 + 8),p_Var8);
+      }
+      else {
+        FUN_180028b50(*(longlong *)(param_1 + 8),p_Var8,DVar7,(DWORD)param_5);
+      }
+    }
+  }
+  else {
+    LOCK();
+    piVar1 = (int *)(*(longlong *)(param_1 + 8) + 0x30);
+    *piVar1 = *piVar1 + 1;
+    UNLOCK();
+    FUN_180028b50(*(longlong *)(param_1 + 8),p_Var8,0,0);
+  }
+  local_40 = 0;
+  local_48 = 0;
+  FUN_1800293f0((longlong)&local_50);
+  return;
+}
+
+
+

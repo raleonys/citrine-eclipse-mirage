@@ -1,0 +1,66 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T13:55:06.0769976Z",
+  "prior_package_sha256": "b338158dae10d763c4f696f073ab8549b7f2d4dc3abead6e71a8990adc0fd717",
+  "prior_source_count": 353,
+  "unchanged_prior_sources": 353,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-crt-locale-startup-source/locale_startup.cpp",
+    "anadius-crt-locale-startup-source/locale_startup.hpp",
+    "anadius-crt-locale-startup-source/native_tests.cpp"
+  ],
+  "current_sources": 356,
+  "current_documents": 126,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "reviews": [
+    {
+      "path": "anadius-crt-locale-startup-source/review-locale-startup.json",
+      "result": "PASS",
+      "source_hashes_verified": 4
+    }
+  ],
+  "master_build_sha256": "0466c41e722480a1be2bbfe8fdae8779ed932b127a4efd28b7fd5b0649c86f67",
+  "native_objects": 122,
+  "cpp_objects": 118,
+  "c_objects": 4,
+  "normal_test_groups": 107,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "crt_locale_startup",
+      "result": "PASS",
+      "output": "PASS 117 locale startup/reset/owned native FLS checks;4 own workers",
+      "executable_sha256": "416e959978522e35cc5be46847ed13e4e7c88b07e2cd7452f55e0a7668c8c95b"
+    }
+  ],
+  "initializer_byte_proof": {
+    "result": "PASS",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "evidence_id": "ev_5e35d3129089836990868a249972c775d324e7f7cfd11a9b99b60e24b9b481ff",
+    "read_address": "0x180064468",
+    "read_length": 20,
+    "body_length": 17,
+    "file_offset": 407656,
+    "body_hex": "488d0571d303004889056a0e0400b001c3",
+    "body_sha256": "8d265e915e5a2ec7b24a9e6e0c9007b1341541ed60e4895b7395ba156609c554",
+    "read_sha256": "d4b57ba2cb1d991094f391ea57fcb72e3b9d90d19c526a5155203d5b6a60ddbf",
+    "lea_target": "0x1800a17e0",
+    "mov_target": "0x1800a52e0",
+    "boolean_result": true,
+    "initial_ref_increment": false,
+    "initializer_pair_index": 0,
+    "objdump_sha256": "c21f18afa9d9679941df90e957f584c50762e03505dcfbe1be1736d5a494277d",
+    "assembly_sha256": "ad77bd3c4bae0ceffdf33af2fcfbd07fec3342cdd883d8e49f61f53c4b1d0c77",
+    "limitations": [
+      "Function body is local static decode of a table-referenced 17-byte leaf; Ghidra inventory omitted this function. REA Evidence establishes bytes, not new Ghidra function classification.",
+      "Return recovered as boolean low AL only; upper register bits unspecified.",
+      "No original target execution, writes, or ABI/SEH equivalence test."
+    ]
+  },
+  "recovered_original_bodies_added": 3,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

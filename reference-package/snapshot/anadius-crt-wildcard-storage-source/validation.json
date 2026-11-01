@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T15:13:57.9487637Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-wildcard-storage-source\\storage_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-wildcard-storage-source\\build\\storage.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-wildcard-storage-source\\build\\storage_tests.exe"
+  ],
+  "tests": "PASS: 14148 wildcard storage fixture checks",
+  "scope": "Synthetic bounded storage, allocation, copy and fatal-policy fixtures only; no original/rebuilt DLL or game execution and no OS provider",
+  "sources": [
+    {
+      "name": "storage_tests.cpp",
+      "sha256": "8f105ec175634f00d04ac17f326f49983f7f4bd011928073bab1251e65162366"
+    },
+    {
+      "name": "storage.cpp",
+      "sha256": "beacfcc8fa91ea0a883efea8d1dfa765e6e12972bc4b68157a86bb38997b9e8b"
+    },
+    {
+      "name": "storage.hpp",
+      "sha256": "4ec7aab64302a5ea6ba4027573669be9b77a5a3c6b226b7289ebd2f600cdb091"
+    }
+  ],
+  "executable_sha256": "b63cf88befd10bc0f4f10338168afcc39c5883e93ade70a5d6a78e969ddedc29"
+}

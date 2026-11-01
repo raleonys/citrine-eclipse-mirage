@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "reviewed_at": "2026-10-18T19:27:19.2565191Z",
+  "reviewer": "crt_realloc_core independent static bridge review",
+  "source_files": [
+    {
+      "path": "outputs\\anadius-crt-recalloc-bridge-source\\bridge.hpp",
+      "sha256": "44cfd079f18629d0b25f435ea3d863952e045adb82425ec1730973757cdd53d7"
+    },
+    {
+      "path": "outputs\\anadius-crt-recalloc-bridge-source\\bridge.cpp",
+      "sha256": "1b0dc0977573659ea1d5de8cf1401c9ccec72d68f51ef93df2073e4a9b446c87"
+    },
+    {
+      "path": "outputs\\anadius-crt-recalloc-bridge-source\\bridge_tests.cpp",
+      "sha256": "691c45b78c54ab36d2cfeaa4287793f01a9162a7d32520ad17e90249e159b809"
+    }
+  ],
+  "material_findings": [],
+  "checks": [
+    "Allocator methods dispatch to actual calloc066848,recalloc070434 andfree0668c0 using one shared State/Effects pair",
+    "WildcardHeapEffects/OnexitHeapEffects final overrides prevent replacement by the previous synthetic recalloc implementation in derived fixtures",
+    "All remaining memory/error/locale/callback providers remain mandatory; production contains no success stub or original-address dispatch",
+    "Pointer/address conversion is confined to provider-owned live allocations under the existing x64 width contract",
+    "Shared wildcard and onexit fixtures use identical heapState/backend with allocation tracking, bounds checks and error state",
+    "Wildcard argv mode1->mode2 integration exercises multiple vector growths with both moved and in-place fixture reallocation and actual recovered expansion/search/storage cores",
+    "Wildcard allocation/reallocation failures preserve published argv and release transient allocations/handles",
+    "Onexit growth failure exercises main and fallback allocation failures while preserving table ownership; execution subsequently frees it",
+    "Reentrant onexit registration yields LIFO65,1000,64..1 and recursive lock depth2",
+    "Capacity-padding tests check that only range beyond reported capacity is zeroed and old allocation survives failed recalloc",
+    "Copy Watson fixture intentionally retains allocations on exception; fixture destructor cleans them without attributing invented cleanup to target"
+  ],
+  "validation_observed": {
+    "result": "PASS",
+    "tests": "PASS 5483 wildcard/argv/onexit/actual recalloc shared-heap composition checks"
+  },
+  "limits": [
+    "Static review of the supplied already-passing suite; no additional target or native API execution",
+    "Provider instances, allocator and borrowed states must outlive adapter use; caller must use the same provider domain for addresses and operations",
+    "Reentrant insertion is exercised within existing capacity; arbitrary callback-driven table growth remains covered by the separate onexit source suite rather than claimed by this bridge review",
+    "Live storage and typed argv publication remain explicit provider obligations; native concurrency/heap semantics and full DLL equivalence are unproven"
+  ]
+}

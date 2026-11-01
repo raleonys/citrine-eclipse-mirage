@@ -1,0 +1,233 @@
+{
+  "schema": "owned-callback-compiler-provider.evidence.v1",
+  "source_package": "B22",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_function_records": [
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180006d70",
+      "evidence_id": "ev_ddea68d70083a15fe46d222afc8aab9746f91c7339b12ef8b6ebddb7afb88461",
+      "line": 5055,
+      "normalized_record_sha256": "6279a820a8a41a419dd8c6056dc41834b9779a8ce7ea18db35b87c0c0555f096"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180006e60",
+      "evidence_id": "ev_28b7703e322b706cbfe3029aaed27c764c42157a56e1f9692d25ccebd462b652",
+      "line": 5115,
+      "normalized_record_sha256": "17bfd329f725ccac0ff87a6b2b8a5aec9c93cd1d3fc1f923f7e7b5a96c756fad"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18000fc00",
+      "evidence_id": "ev_1be83f0e2e6326ed3aaa979aebb8a627e3ac45c9fcf38a2bc9ae747c28d831a5",
+      "line": 12983,
+      "normalized_record_sha256": "51b8fe415666e702c08c9b79f485d5dcf7d7626085ac50d53a702518a7bb9e98"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180048ac0",
+      "evidence_id": "ev_8b2dc9f074fbdd6a4d17949cc0f5e7f7b1b6698739e0379880745e73aee71e7d",
+      "line": 58767,
+      "normalized_record_sha256": "fab9848d7eaaf874b2a2b9c0fa6335eeaa4196d0f36bf70cabd2dcb905d34707"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180048b30",
+      "evidence_id": "ev_cc136fc17c5651bb6cd83407898550fadae17e266eeea174bb81d623185640d0",
+      "line": 58818,
+      "normalized_record_sha256": "a0c9daccebc9c78f909c63c1d338fd9d034bfbffbeefca84f33bd45e504c99f6"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18005d724",
+      "evidence_id": "ev_36d45aaa708512542a5ccd22b34065cce5860aeb9d01348c8ff0423039bea225",
+      "line": 81286,
+      "normalized_record_sha256": "9e13135b6ebf50be760a94d73528332ecd4139c141cb0933abee16aa1c51b1c4"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800648fc",
+      "evidence_id": "ev_5b39f111b222558bd8e52132523a2e361a941261e916883af37f3e602c09927b",
+      "line": 88827,
+      "normalized_record_sha256": "884c0cd00752109577618569d698b3bfdd0848b3a2a4232394b471d3412a56ae"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800649ec",
+      "evidence_id": "ev_23ece12ba558d0057c31265d9b8efd21dd1a29b0ade68bd61f6fd47b3fd82e96",
+      "line": 88884,
+      "normalized_record_sha256": "89d41960e49f7072d3a39ca7a54b93675ffe33c5808d305420f7c46e3bef59ee"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180064b4c",
+      "evidence_id": "ev_417e90806543d688e3aec172b715642fa83a50b4501cb0ce6909f8f23989bc25",
+      "line": 88958,
+      "normalized_record_sha256": "33914cf80f7f072054b4f1bbcecce485b67c448e449c30298b6cbb1160f84856"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180064d08",
+      "evidence_id": "ev_b53da828b2289325d82d050c08eb43670664faf07979fcc96800099802656494",
+      "line": 89070,
+      "normalized_record_sha256": "3a51a3ccd65b74b3807e80df0f9c76fb7c21d9caaa2791dc5943f5d9444367c6"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180006d70",
+      "evidence_id": "ev_a90dd26ad44c137577375ab38fd9ea5ba5da887f91d92b8a40029d704ee4f3db",
+      "line": 6414,
+      "normalized_record_sha256": "2c3c4da7be0d424b9f5eb372c5e4aaa0ae633197177fccd7bb0ff11e91d42e3a"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180006e60",
+      "evidence_id": "ev_b89eafb79c34eb12205fa70d4a14ffd476ddc4142f32c7d7eddb8e4c36d34297",
+      "line": 6484,
+      "normalized_record_sha256": "ff46064e94aa6b53f26bcf3f9c814b33e1ed65624bef914e8fa4555332bdaedd"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18000fc00",
+      "evidence_id": "ev_cefeadeb04ff875f14ebe8ffb73e6b4101cdfa082866db164d1a986ad55a2388",
+      "line": 16077,
+      "normalized_record_sha256": "b3cd0996e2c556669a4f1cdfb4aa66d4277f021bfe5f267de44677718d7b6279"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180048ac0",
+      "evidence_id": "ev_046b69ab0ad56e98d17f76263401000e7ec281ad5fd617847876462c0cbbeff9",
+      "line": 75245,
+      "normalized_record_sha256": "64f25253fc2df1514e9a38a3caf1a7167551c377aa00d40b433292295957b1c0"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180048b30",
+      "evidence_id": "ev_9261beaef45db73e50b6eca26833fe4fbc6e4a09863942eba65958c4fd04f7bc",
+      "line": 75279,
+      "normalized_record_sha256": "2e8c6a5ec7f888ae4eb73388a277db299b45ce59162cc34e507e532741763ae1"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18005d724",
+      "evidence_id": "ev_791468a44befd8407f73024c9a6fb936102bd285151cbb6e7629fb185dfddd72",
+      "line": 98916,
+      "normalized_record_sha256": "4c3189896699270a02583d305cc589f01d57b5f8dcbcbb991a9b6285f9548a36"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800648fc",
+      "evidence_id": "ev_88186886d4677768f1851ce8c092179c1504315e64f8e6ad9343fe9070c85996",
+      "line": 107310,
+      "normalized_record_sha256": "880a915bb0b3360f4a315cdf59d0ee9ba56790b7c3c6c57a4dacf0535add738b"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800649ec",
+      "evidence_id": "ev_ba3d48f4843ba885cca4d5f43b70157e29051f4310beb85118c84f5d82a9ef87",
+      "line": 107373,
+      "normalized_record_sha256": "f0c218b1e517a0705b361aac8d4cb86dc6b276b188699c1f3006e79bdcd4fa46"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180064b4c",
+      "evidence_id": "ev_4e604ba0d5a58864500375177f08b08ad79324458b88be38464c17ffaac4a598",
+      "line": 107464,
+      "normalized_record_sha256": "0da131bf57747265bb56da59dcfe2c0a4effa9444338b4df32195f9b87f42593"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180064d08",
+      "evidence_id": "ev_a0be4a11487767600e7fb447b80cb439aa5721a79f67c30653bdbc6784555f1d",
+      "line": 107596,
+      "normalized_record_sha256": "b7ffdf6445c4be56e548992ed5d73e48ca36b070d77f7bac2d158159a6cd7448"
+    }
+  ],
+  "prior_evidence_path": "outputs/anadius-callback-identity-source/source-evidence.json",
+  "prior_evidence_sha256": "a3c60a0ab565e5275d4d3ed9db7726427970a664343fd8fdf8cbd7a1fce51836",
+  "new_original_data_bytes_read": 0,
+  "new_native_decompilation": false,
+  "session": {
+    "path": "outputs/anadius-callback-provider-source/rea-session.json",
+    "sha256": "20a203aaa2cef97f49fabe365e38c2d3b4c6ae4fcaaf0614f3da95f40205b83f",
+    "scope": "B22 binary_session REA6.5.0/Ghidra12.1.4 available, no target open or new target query"
+  },
+  "source_extensions": [
+    "Optional shared CrtProvider context retained by Resources/ByteWide/factory; legacy CrtApi unchanged",
+    "_create_locale/_free_locale owner with explicit name and required handler; _stricmp_l/_wcsicmp_l never receive null inputs",
+    "Owned copy supports readable NUL inputs and nonoverlap/capacity<=INT_MAX; valid destination first element cleared before invalid notification; no debug fill",
+    "Returning invalid handler sets compiler errno to EINVAL/ERANGE; throwing handler preserves exception/error/prefix without rollback",
+    "Foreign factory checks all four lower CRT routes before/after actual PTD permission; invalid postcondition wins; ByteWide staging/preclear precedes lower checkpoint",
+    "NumericEncoding immutable synthetic selector returns65001/0/1 then resolves0/1 at conversion boundary to explicit validated numeric pages",
+    "Query/fill share immutable numerical resolution; flags/counts/used-default retained; alias65001 is not silently upgraded to UTF8 flags",
+    "Selection explicit before factory/publication; compiler locale, recovered PTD initial locale and filesystem selector distinct"
+  ],
+  "quick_results": [
+    {
+      "path": "work/b22-core-quick-results.json",
+      "sha256": "984e075e57e45c372d5cbc89cb06921f4b9588a44ed779439f75f083f581c1de",
+      "checks": 60,
+      "execution_by": "root or integration author, independent reviewer verifies hashes; no reviewer rerun claimed"
+    },
+    {
+      "path": "work/b22-integration-quick-results.json",
+      "sha256": "278f9fc7c62f4a90a4d12954a8cf2cc794cfdc9b5c467fed76b75715138233ab",
+      "checks": 20,
+      "execution_by": "root or integration author, independent reviewer verifies hashes; no reviewer rerun claimed"
+    }
+  ],
+  "source_hashes": {
+    "provider.hpp": "dc29efe58ce8483df8474e434e3c99e7f26a8b6ca31c8835001cf45e3b238d12",
+    "provider.cpp": "99cdda12ce4ee60fdc895860ec494015b1d743c7d5662efd0df31438f65a4f73",
+    "provider_tests.cpp": "52bb5f3bfbc63942123a2b77d7395355012f461a82b3feed6fd4d902b215d989",
+    "provider_integration_tests.cpp": "348fab578405d055dd29a9ccc8fab590202114694350576aba5a20b7661750de",
+    "../anadius-callback-policy-source/policy.cpp": "c6217769d167a1827f3bf7fdc1ba63761b5f256b5182175ba0fb5223b11ca6c1",
+    "../anadius-callback-policy-source/policy.hpp": "19b7be706f26423cdd9b30c92a55246847c8e28b93ef5679cb832c89aea9762c",
+    "../anadius-foreign-callback-source/foreign.cpp": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4"
+  },
+  "prior_source_changes": [
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "1cec6448ec1e9b2e4e2f0a3f4014a115f7a037372e68d136e6b128943f4b889e",
+      "after_sha256": "c6217769d167a1827f3bf7fdc1ba63761b5f256b5182175ba0fb5223b11ca6c1",
+      "reason": "Dispatch selected owned CRT in narrow and byte-safe wide routes; retain lower exception LastError"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "276262274aee1a3ce4ce130e10637ce26675f4fcd7268c1c4d294c38314b5542",
+      "after_sha256": "19b7be706f26423cdd9b30c92a55246847c8e28b93ef5679cb832c89aea9762c",
+      "reason": "Optional owned context-aware CrtProvider retained by Resources and ByteWide; legacy table remains"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.cpp",
+      "before_sha256": "c4f85a5a76e2443f2474a3160cffefb4849d8b5267b293a9984c215ae2b8ed03",
+      "after_sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+      "reason": "Wrap selected owned or legacy CRT lower calls in same actual PTD pre/post permission as encoding"
+    }
+  ],
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

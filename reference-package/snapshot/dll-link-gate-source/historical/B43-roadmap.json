@@ -1,0 +1,114 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B43",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B43",
+  "latest_dll_link_attempt": "B43",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B43 supplies a Profile-owned default environment/type/executor/scheduling provider when every Environment field is empty. Callers no longer supply session/accept environment overrides, vtables, type-query/factory thunks, handler/response schedules or copy callbacks on this default route. Explicit legacy configurations remain supported; missing required legacy pieces are not mixed with defaults. Context-free callbacks resolve monotonic owner/projection capabilities through a weak Control registry; no raw token-to-object cast or current/TLS singleton. Registry node allocation/retirement occurs outside its gate. Copies register new projection references, moves transfer exact address/capability, destroy releases; empty sentinels never read unspecified payloads. Native move partial-prefix checks preserve source executor validity. Nested source work is admitted during task invocation, but admission-probe recursion and lifecycle reentry poison permanently. Owned handler slots are consumed before inline same-worker invocation; responses use existing022e40 with host force-post1, not reconstructed native0228c0/RTTI/vtable/concurrency. Profile retains the completed pending Application before throwing bind operations and destroys slot environments before observer weak drop. Close requires trusted external drain plus zero envrefs/active calls and actual Parent/IO/accept/work/queues; refs0 does not prove deferred posted functor finality. The Parent lease and callback backing retire before Runtime drain. 900prior sources unchanged+2explicitly modified+4new=906;265objects261CPP/4C;315normalgroups+19terminal;200core+244integration=444newchecks. Native bodies0/ABIclosures0;501mapped/505eligible/139normal and52historicalclosures unchanged. Remaining concrete configuration/message/event/error/SDK/job providers, full Resources, actual rawjob/kernel shutdown and loader hooks. GenericCRT remains paused.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Somut hata, SDK ve iş sağlayıcıları ile kaynak kurulumu",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36",
+      "native_full_accept_session_flow_available": "B37",
+      "coherent_accept_IO_cache_available": "B37",
+      "native_accept_helpers_available": "B38",
+      "concrete_owned_runtime_available": "B39",
+      "server_resources_component_factory_available": "B39",
+      "concrete_session_profile_available": "B40",
+      "typed_native_message_profile_available": "B41",
+      "owned_response_deque_provider_available": "B42",
+      "owned_environment_provider_available": "B43"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B44",
+    "priority": 1,
+    "title": "Somut hata, SDK ve iş sağlayıcıları ile kaynak kurulumu",
+    "requirements": [
+      "Select remaining concrete configuration/message-domain/event/error/SDK/job providers into the full bootstrap Resources graph; default owned environments do not supply application-specific providers.",
+      "Complete truthful raw-job/kernel finality and worker accounting before real loader attach/detach hooks; source counters, empty environment rows and cancellation intent are insufficient.",
+      "Keep native0228c0 executor, owning early-cancel/alternate retry and native ABI/EH/concurrency gaps explicit; genericCRT remains paused."
+    ],
+    "exit_criteria": "One tested concrete provider/resource boundary; no placeholder DLL hook, unsafe raw-table lifetime claim or invented completion percentage."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "source_normal_bodies_added_in_B37": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ],
+  "source_normal_bodies_added_in_B38": [
+    "0x180029df0",
+    "0x180029590",
+    "0x180029660"
+  ],
+  "source_normal_bodies_added_in_B39": [],
+  "source_normal_bodies_added_in_B40": [],
+  "source_normal_bodies_added_in_B41": [],
+  "source_normal_bodies_added_in_B42": [],
+  "source_normal_bodies_added_in_B43": []
+}

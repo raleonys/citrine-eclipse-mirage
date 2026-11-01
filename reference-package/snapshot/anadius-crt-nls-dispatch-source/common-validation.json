@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_nls_dispatch",
+    "result": "PASS",
+    "output": "PASS NLS dispatch: 12581 checks; typed synthetic endpoints only",
+    "executable_sha256": "b7fffa002d7ea7f44591787d0b981a228b59848e0b701c9ba2809c092beaa919"
+  },
+  "execution_scope": "Recovered0671d4/0672c0 API dispatch, exact{3,16} candidates, all raw arguments/full32-bit returns; synthetic resolver/native/fallback effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-nls-dispatch-source/nls_dispatch_tests.cpp",
+      "sha256": "7d0fec65dae84db868f75c4602d97d0adf11ca39b53acf5a995e5ce07a846695"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-source/nls_dispatch.cpp",
+      "sha256": "0bb0cc2cb502452946f6177fa7686f280e5f25273b88421ad9cb4be7600c7e93"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-source/nls_dispatch.hpp",
+      "sha256": "8090f255a6584328186405c7eeb400e66485d19618ba65aa5c93f039c0422c34"
+    }
+  ]
+}

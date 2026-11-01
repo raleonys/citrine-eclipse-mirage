@@ -1,0 +1,39 @@
+{
+  "result": "PASS",
+  "reviewer": "socket_close_audit",
+  "scope": "Independent frozen source review against retained026e50/026fb0 normal-flow contracts and declared typed provider domain",
+  "sources": {
+    "outputs/anadius-socket-source/close.hpp": "28fb856c232dcec8d1cca60016a7e0f8beed7ead11631fae25548c8eb66a55ef",
+    "outputs/anadius-socket-source/close.cpp": "44b17eec8a2cb5cc62ae7c2b17e027b5ebd5b10ba18785bf886bad90d56082b2",
+    "outputs/anadius-socket-source/closing.hpp": "10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5",
+    "outputs/anadius-socket-source/closing.cpp": "9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669"
+  },
+  "report_sha256": "d64ddb7e6c6290a79d8f097f958c2d7778f72338a728080b1b70eb1478156db6",
+  "audit_report_sha256": "baccec2ba0baea66db77a61dc79a19506cee4b86e9154c67e1d6f0e6a76e04d5",
+  "audit_json_sha256": "086f4d0a556f6bbe1e9e843cc573fab83c73121adab53b81a1319527e0536e82",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180026e50",
+    "0x180026fb0"
+  ],
+  "new_original_procedures": 2,
+  "close_contract": "Invalid no-op; ignored linger with required error-call effects; raw close status; success only value0; name identity10035/1237; ioctl thenlive state&FC thenretry",
+  "engine_contract": "Actual atomic pointer strongCAS expectedNULL/desireNULL; cached engine/socket for cancellation, socket reloaded after gate for close",
+  "reset_contract": "State/resource reset thenlatecontrolread/clear thenstrong callback andliveweak decrement; no new allocation",
+  "composition": "ClosingLifecycleEffects binds previous close boundary to actual026fb0+026e50; resolver/executor remain abstract; bound service/context guard",
+  "providers_not_recovered": [
+    "026aa0 cancellation map/operation completion/IOCP/wake",
+    "Native category singleton/CRT guard",
+    "Native global/allocator/lifetime/EH ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Typed logical fields and opaque name-function tokens, not native memory/vtable overlay",
+    "Discarded local generic Error category/padding not byte ABI",
+    "Native exception unwind/general concurrency/ASIO/full DLL equivalence unproven"
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "schema": "source-provider.focused-validation.v1",
+  "status": "SELECTED_CONCRETE_CONTENT_EFFECTS_PASS",
+  "concrete_effect_methods": 12,
+  "complete_avatar_request": true,
+  "new_native_bodies_this_change": 0,
+  "source_hashes": {
+    "outputs/anadius-content-handlers-source/content_handlers.hpp": "5128a1edd11ad417157c2ba386c3ad7271a335bbefb5d4f92034dfef97cd52fd",
+    "outputs/anadius-application-graph-source/graph.cpp": "915edc30219646e51c72f1abb931cf2feeff6f302e0966724d85f2d9ece99686",
+    "outputs/anadius-config-storage-source/filesystem.cpp": "3852c1810d5247be2e4f540c4d129389d68697572f6695e5c6207cd02004d950",
+    "outputs/anadius-application-graph-source/graph.hpp": "b5bd0d35be5a225c5741c17a0afd2e98f68a100ea150ebdefd29fd9808041eb9",
+    "outputs/anadius-achievement-runtime-source/utc.hpp": "75f907fe609da71eeb4c7737da137ed0a53574fac251c820a4007b19c5214373",
+    "outputs/anadius-content-effects-source/effects.hpp": "b265873a5ed74589253de3f5c3311c399c2b50e798aa4e6a266d975f1b199486",
+    "outputs/anadius-achievement-runtime-source/runtime.hpp": "5c58782ceace1038176122b899689d60d83be661cb6adc8464f4c632d563b8aa",
+    "outputs/anadius-achievement-runtime-source/runtime.cpp": "5ec1e7c2fc2dced97d781450ad15058bc9cc2c9f5486d7ff3c35fe81bfd9e2b7",
+    "outputs/anadius-content-effects-source/effects.cpp": "a2b985928de992a764c7ee6da1ef006999e8c8b6a7b2f5c1a70bef370774f9f4",
+    "outputs/anadius-achievement-runtime-source/mutex_binding.hpp": "5a304da80e5da4e7fac12121c455ca0cc055c7aec8443f6c46a9104769c5c92e",
+    "outputs/anadius-content-effects-source/effects_tests.cpp": "961ded529a986ff2d25f9820d9fbde01e0beef634fa305e46c47ee572eac67b9",
+    "outputs/anadius-config-storage-source/filesystem.hpp": "a4fa165383efd9ddf5e48a66dbf1ca7162ae299226dae9bca0f2129eb0500ce3"
+  },
+  "native_evidence": {
+    "parent": "outputs/anadius-rea-evidence.json",
+    "unknown_entitlement_parser_pseudo": "ev_5db895996d1502285c3beeaeb91cbdda51e8c0539679fd15a5ad77bf5f5a2d6b",
+    "image_pseudo": "ev_2e2e94933ee58f5567373dbd0e0d2f7bcd6173760dd3b9b93dbd5f4724cbc149",
+    "image_assembly": "ev_31746c7a08ee6365a0b89c854db82827a51d981edbfb8c90015f80a205f267a3",
+    "literal_inventory": "ev_c97664560efc0e5cf3207e174b0defd0b96f84c49fdf20bd0644ce960d07d716",
+    "saved_size_literal": {
+      "VA": "0x180085530",
+      "value": "saved size: ",
+      "native_byte_length_including_NUL": 13
+    },
+    "unknown_diagnostic_order": "counted007990->0088e0 newline/flush->038bc0 UNKNOWN MESSAGE/flags0x10"
+  },
+  "implementation": [
+    "Concrete Content owns file/clock/formatter/encoding/filesystem/dialog/stream resources, requires exact Online.matches(Runtime view), and borrows authoritative const Paths/live State/Online with explicit lifetimes. No giant Effects lower or seed factory.",
+    "Existing PersistenceEffects supplies real UTC, document printer, XML03c1d0 and Steam INI01f9a0 bodies; remaining methods use recovered path/encoding, host CRT atoi through NUL-terminated owned input, CopyFileW(FALSE), counted logs and concrete typed Online avatar28 call.",
+    "Graph lends a synchronous CheckedCalls checkpoint around all13 content lower routes. Concrete provider checks it before/after each selected opaque clock/formatter/encoding/file/directory/stream/dialog/SDK primitive. Filesystem recursive prefix SDK calls accept same checkpoint; default existing path uses empty checkpoint.",
+    "Public facade rejects unattached/Retiring/reentrant/foreign-worker-fiber use. Options retirement occurs with Impl attached and source sealed; exceptions poison further provider admission.",
+    "File wrappers allocate before opaque open. Returned raw owners are adopted into Impl pending slots before postcheck; wrappers borrow. Known failed initial state or completed close permits attached guarded retirement. Unknown prefixes retain raw ownership; provider destruction refuses pending owners.",
+    "Legacy single-path avatar rejects missing owner/size; AvatarRequest passes actual state.online_object/cache/owner/signed size to concrete Online."
+  ],
+  "focused_record": {
+    "path": "work/content-effects-v1-results.json",
+    "sha256": "21a592cc423dd21c01f2deb7b810ecac1c722cbb013f0a3387abbddceb6d7ecd",
+    "seconds": 31.75,
+    "historical_test_version": "31Contentchecks/1child; current test replaced by amendment"
+  },
+  "test_amendment": {
+    "path": "work/content-effects-v2-results.json",
+    "sha256": "0c1c1986fd8963ff402fd743d133361334f5e14c74e2a0ff5de9cbcd0abca187",
+    "seconds": 3.094,
+    "only_changed_test": {
+      "path": "outputs/anadius-content-effects-source/effects_tests.cpp",
+      "sha256": "961ded529a986ff2d25f9820d9fbde01e0beef634fa305e46c47ee572eac67b9"
+    },
+    "effective_tests": [
+      {
+        "name": "content_effects",
+        "executable": "work/content-effects-check-v2/content_effects_tests.exe",
+        "executable_sha256": "08354532855bbd3e9023c4ae21a8b56ec7b3c58733413d5d2c671ddbe753932e",
+        "stdout": "PASS: 32 content effects checks; own slot28/memory persistence and 2 retained-prefix children\n"
+      },
+      {
+        "name": "application_graph",
+        "exit_code": 0,
+        "stdout": "PASS: 656 application-graph core checks\n",
+        "stderr": "",
+        "executable": "work/content-effects-check-v1/application_graph_tests.exe",
+        "executable_sha256": "69dca2c5786212929bbea3f0178e796bb255da7a791c9eeb8655a9d57c390229"
+      },
+      {
+        "name": "content_handlers",
+        "exit_code": 0,
+        "stdout": "PASS: 1034 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.\n",
+        "stderr": "",
+        "executable": "work/content-effects-check-v1/content_handlers_tests.exe",
+        "executable_sha256": "0760efed917ab0eed8adadd879ef4be5e41fbabd61f812960a8cd894e6574f8d"
+      },
+      {
+        "name": "configuration_factory_integration",
+        "exit_code": 0,
+        "stdout": "PASS: 96 configuration-factory integration checks; lowerfreeROOTfactory all19selectedroutes+2narroweffects+streamingvisitor, actualBootstrapConfiguration/FilePass/parser/hash/XML/timestamp/INI/PNG/managedloggingprefixes; onlysyntheticMemoryFiles/typedSDKspies, unrelatedbootstrapworkers explicitlysynchronousTESTpolicy; no originals/userfiles/network/OSworkerjoin/nativeABI/loaderclaim\n",
+        "stderr": "",
+        "executable": "work/content-effects-check-v1/configuration_factory_integration_tests.exe",
+        "executable_sha256": "95e93e76c292dd896d9e78dd63ee2277fe0ac28efe08e42fbe708d618c83b8ea"
+      },
+      {
+        "name": "key_processor",
+        "exit_code": 0,
+        "stdout": "PASS: 42 key-processor checks; synthetic status/SDK/memory files, actual AES header/XML and existing Config2 call order\n",
+        "stderr": "",
+        "executable": "work/content-effects-check-v1/key_processor_tests.exe",
+        "executable_sha256": "704167b9fac82bb2dfb7a247399f293e7745bef32ae1a87a1f6642f1425fb5c9"
+      }
+    ]
+  },
+  "total_targeted_seconds": 34.844,
+  "fresh_production_units": {
+    "observed_runtime": "outputs/anadius-bootstrap-runtime-source/observed_runtime.cpp",
+    "bootstrap_backend": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+    "aggregate_teardown": "outputs/anadius-config-defaults-source/teardown.cpp",
+    "application_graph": "outputs/anadius-application-graph-source/graph.cpp",
+    "application_worker": "outputs/anadius-application-worker-source/worker.cpp",
+    "licensing": "outputs/anadius-license-source/license.cpp",
+    "license_files": "outputs/anadius-file-source/license_files.cpp",
+    "windows_effects": "outputs/anadius-windows-source/windows_effects.cpp",
+    "configuration_filesystem": "outputs/anadius-config-storage-source/filesystem.cpp",
+    "configuration_persistence": "outputs/anadius-config-storage-source/persistence.cpp",
+    "configuration_factory": "outputs/anadius-configuration-factory-source/factory.cpp",
+    "key_processor": "outputs/anadius-license-source/key_processor.cpp",
+    "bootstrap_factory": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+    "online_query": "outputs/anadius-online-query-source/query.cpp",
+    "online_factory": "outputs/anadius-online-factory-source/factory.cpp",
+    "content_handlers": "outputs/anadius-content-handlers-source/content_handlers.cpp",
+    "content_effects": "outputs/anadius-content-effects-source/effects.cpp",
+    "achievement_runtime": "outputs/anadius-achievement-runtime-source/runtime.cpp"
+  },
+  "build_registration_hashes": {
+    "outputs/source-workspace/build.ps1": "e2d40aff91eb303fc22bc8eb978288944a023ccbf71a513f6f4a22c24bf51fb4",
+    "outputs/source-workspace/CMakeLists.txt": "0a720376f25521c098d1c6e3ef101becd6026297044aa212b201a37970d464f9"
+  },
+  "powershell_registration_parser_errors": 0,
+  "independent_review": {
+    "author": "/root/b22_provider_audit",
+    "production_result": "PASS after null-first construction and raw-file adoption corrections",
+    "focused_proof_result": "PASS_V1_PLUS_V2_AMENDMENT",
+    "unchanged_source_header_hashes_verified": 204,
+    "current_changed_test_hash_verified": true,
+    "reused_production_objects_verified": 18,
+    "effective_executables_verified": 5,
+    "reviewer_execution": false
+  },
+  "validation_scope": [
+    "Actual QueryImage->Content->Online->own EXE slot28 passes path/owner/signed size and AL80; CopyFile FALSE flag/false result and successful saved-size update/log tested.",
+    "Actual UTC/printer/escaped XML/counted-NUL output/INI memory helpers, live authoritative Paths and map identity, diagnostic log-before-dialog order, lifetime/passivity/exact view/affinity tested.",
+    "Direct primitive denial blocks stream-before-newline/dialog, time-before-gmtime and directory-before-next-prefix. Isolated children171/172 separately prove initial-state and open-return denial retain raw output with no write/close/destructor.",
+    "Actual Graph tests verify checkpoint lending/clearing and forwarding; inherited Content handler/configuration integration/key/filesystem behavior passes."
+  ],
+  "ABI_scope": {
+    "existing_Effects_vtables_changed": false,
+    "existing_public_object_layouts_changed": false,
+    "new_optional_CheckedCalls_interface": true,
+    "PersistenceEffects_paths_reference": "const authoritativePaths; affected implementation freshly compiled"
+  },
+  "limits": [
+    "Graph checkpoint handshake and concrete Content->Online own-slot execution are compositional tests; one complete actual Graph+concrete Content+foreign module pipeline remains untested.",
+    "Production root Resources assembly, Information/licensing providers, actual module/code pin and foreign quiescence, loader attach/detach remain open.",
+    "SDK/file/CRT/stream compatibility contracts remain selected host behavior, not native MSVC ABI/EH equivalence. File ownership after unknown result is retained/fail-stop; no fabricated rollback or unload proof.",
+    "Read-side guarded File proxy is not reached by current Content operations; no broader file IO closure claim.",
+    "Native default adapters were not used on real user files or original DLLs; only own EXE code and synthetic memory/SDK boundaries execute.",
+    "B54 common inventory/source snapshot/ZIP remain historical; new unit/test registrations present, no full build/link/package."
+  ],
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "real_network": false
+}

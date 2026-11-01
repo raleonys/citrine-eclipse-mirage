@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_heap_native",
+    "result": "PASS",
+    "output": "PASS: 169 native heap API checks (typed fixtures + own real allocations)",
+    "executable_sha256": "1ca08b5145b8c518175cd94931bafc7a89f79f961b02ec3ea1dc0440fa777de5"
+  },
+  "execution_scope": "New typed SDK process-heap/alloc/realloc/free/size/error API adapter; injected WINAPI forwarding edge tests and small own valid real heap blocks; zero newly recovered bodies; no ownership/destruction or lifecycle claims",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-heap-native-source/native_api.cpp",
+      "sha256": "e14c7e4c338d4a703d65c9e2cba9dab88b289348eff8fa61f19b661b28627289"
+    },
+    {
+      "path": "anadius-crt-heap-native-source/native_api.hpp",
+      "sha256": "2487bd65de259016d6232c6ed39dd1ad096f6ef927e10fbe19f7fb6b055d1b42"
+    },
+    {
+      "path": "anadius-crt-heap-native-source/native_tests.cpp",
+      "sha256": "1cbc079f4700a4020b9efbf4ec04dc9d7af7127830a335864243144cc25e5d78"
+    }
+  ]
+}

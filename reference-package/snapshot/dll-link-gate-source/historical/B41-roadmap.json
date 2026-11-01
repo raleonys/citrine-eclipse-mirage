@@ -1,0 +1,110 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B41",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B41",
+  "latest_dll_link_attempt": "B41",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B41 adds concrete native_profile::Logic selected by the existing Profile for guarded typed greeting and direct live-prefix033d70 processing. The existing typed033d70,03ce30,03d190,034730,02b940,012350,007e30 and prefix042480/042610 sources run on the actual owned session cipher/flag and bounded parent/local/event memory projection. No deferred semantic whole-message stdstring writeback occurs on this optional route. Existing legacy SessionLogic is preserved. XML/parser/document/printer/registry/032d00 remain explicitly selected C++ semantic lowers; event queue/mutex is a mandatory typed owning provider. Nested provider entry/exit guards refresh parent regions and enforce sticky admission, including swallowed failures and direct reentry. Returned opaque objects are adopted without post-return inventory allocation and retained through unknown unwind; selected host policy delays raw opaque destruction until known-normal invocation completion. Unknown invocation descriptors may reference unwound caller prefixes and are never dereferenced, retried or generically cleaned; destruction fails closed. Greeting scratch is invocation-owned. Profile routing, Strings domain identity and Router guarded rich XML/node interfaces are four explicit hashed prior changes;890prior sources preserved+4modified+4new=898;263objects259CPP/4C;311normalgroups+19terminal. 333core+99integration=432newchecks. New native bodies0/ABIclosures0;501mapped/505eligible/139normal and52historicalclosures unchanged. Remaining: concrete production domain/configuration/event/environment/scheduler/queue/error/SDK/job selection, full bootstrap Resources, truthful raw-job/kernel drain and loader hooks. Native EH/ABI/concurrency and0228c0 remain open; genericCRT paused.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Üretim sağlayıcı seçimi ve başlatma/kapatma bağlantıları",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36",
+      "native_full_accept_session_flow_available": "B37",
+      "coherent_accept_IO_cache_available": "B37",
+      "native_accept_helpers_available": "B38",
+      "concrete_owned_runtime_available": "B39",
+      "server_resources_component_factory_available": "B39",
+      "concrete_session_profile_available": "B40",
+      "typed_native_message_profile_available": "B41"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B42",
+    "priority": 1,
+    "title": "Üretim sağlayıcı seçimi ve başlatma/kapatma bağlantıları",
+    "requirements": [
+      "Select concrete configuration/message-domain/event and remaining environment/scheduler/queue-growth/error/SDK providers for full bootstrap Resources; the selected native-prefix route does not supply those external application inputs.",
+      "Supply truthful raw-job and kernel finality with worker accounting; same-worker deferred tests and cancellation intent are not native asynchronous shutdown proof.",
+      "Bind loader attach/detach only after real Resources and shutdown providers exist; preserve early-cancel/alternate retry and0228c0 gaps and paused genericCRT."
+    ],
+    "exit_criteria": "One concrete production-provider/resource boundary tested; no placeholder lifecycle hook or inflated whole-DLL percentage."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "source_normal_bodies_added_in_B37": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ],
+  "source_normal_bodies_added_in_B38": [
+    "0x180029df0",
+    "0x180029590",
+    "0x180029660"
+  ],
+  "source_normal_bodies_added_in_B39": [],
+  "source_normal_bodies_added_in_B40": [],
+  "source_normal_bodies_added_in_B41": []
+}

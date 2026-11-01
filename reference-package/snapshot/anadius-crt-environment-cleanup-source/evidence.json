@@ -1,0 +1,225 @@
+{
+  "provenance": "Retained REA static evidence plus local read-only PE metadata; no new REA session or evidence ID",
+  "input": {
+    "target": "C:/Users/Skysect/Downloads/anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_original_bodies": 4,
+  "functions": [
+    {
+      "va": "0x180063f60",
+      "pseudocode_evidence": "ev_cb8ca7892098f7f3ed73fa8c246c4a48071c13dc4a0b645015773733507fbc42",
+      "assembly_evidence": "ev_45909095802cf95dbd2cfcad1f52acd5f57c0d0b449b27e6d92d24a434c6c523",
+      "pseudocode": "/* 0x180063f60 uninitialize_environment_internal<>; Evidence ev_cb8ca7892098f7f3ed73fa8c246c4a48071c13dc4a0b645015773733507fbc42 */\n\n/* Library Function - Multiple Matches With Same Base Name\n    void __cdecl uninitialize_environment_internal<char>(char * __ptr64 * __ptr64 & __ptr64)\n    void __cdecl uninitialize_environment_internal<wchar_t>(wchar_t * __ptr64 * __ptr64 & __ptr64)\n   \n   Libraries: Visual Studio 2015 Release, Visual Studio 2017 Release, Visual Studio 2019 Release */\n\nvoid uninitialize_environment_internal<>(undefined8 *param_1)\n\n{\n  if ((undefined8 *)*param_1 != DAT_1800a52a0) {\n    free_environment<>((undefined8 *)*param_1);\n  }\n  return;\n}",
+      "assembly": "; 0x180063f60 uninitialize_environment_internal<>; Evidence ev_45909095802cf95dbd2cfcad1f52acd5f57c0d0b449b27e6d92d24a434c6c523\n0x180063f60: SUB RSP, 0x28\n0x180063f64: MOV RCX, qword ptr [RCX]\n0x180063f67: CMP RCX, qword ptr [0x1800a52a0]\n0x180063f6e: JZ 0x180063f75\n0x180063f70: CALL 0x180063d80\n0x180063f75: ADD RSP, 0x28\n0x180063f79: RET"
+    },
+    {
+      "va": "0x180063f7c",
+      "pseudocode_evidence": "ev_d97e90946aaa3a4d4c1ad3f918aeaf2efb51622e2c7c682a9b5aabff1d776359",
+      "assembly_evidence": "ev_ef3db86b9ad42a49d22e5c230f4732db627b2f3d188b026a805eb965ec6a7f17",
+      "pseudocode": "/* 0x180063f7c uninitialize_environment_internal<>; Evidence ev_d97e90946aaa3a4d4c1ad3f918aeaf2efb51622e2c7c682a9b5aabff1d776359 */\n\n/* Library Function - Multiple Matches With Same Base Name\n    void __cdecl uninitialize_environment_internal<char>(char * __ptr64 * __ptr64 & __ptr64)\n    void __cdecl uninitialize_environment_internal<wchar_t>(wchar_t * __ptr64 * __ptr64 & __ptr64)\n   \n   Libraries: Visual Studio 2015 Release, Visual Studio 2017 Release, Visual Studio 2019 Release */\n\nvoid uninitialize_environment_internal<>(undefined8 *param_1)\n\n{\n  if ((undefined8 *)*param_1 != DAT_1800a5298) {\n    free_environment<>((undefined8 *)*param_1);\n  }\n  return;\n}",
+      "assembly": "; 0x180063f7c uninitialize_environment_internal<>; Evidence ev_ef3db86b9ad42a49d22e5c230f4732db627b2f3d188b026a805eb965ec6a7f17\n0x180063f7c: SUB RSP, 0x28\n0x180063f80: MOV RCX, qword ptr [RCX]\n0x180063f83: CMP RCX, qword ptr [0x1800a5298]\n0x180063f8a: JZ 0x180063f91\n0x180063f8c: CALL 0x180063d80\n0x180063f91: ADD RSP, 0x28\n0x180063f95: RET"
+    },
+    {
+      "va": "0x180064010",
+      "pseudocode_evidence": "ev_8bdab41324ff9abd7c07cd2c01a58e4840567c365da4c83513d93105afa40e15",
+      "assembly_evidence": "ev_83a40e63197fa95c4b0d57a113d092a561e7a91b4b385715e10307f652f55714",
+      "pseudocode": "/* 0x180064010 FUN_180064010; Evidence ev_8bdab41324ff9abd7c07cd2c01a58e4840567c365da4c83513d93105afa40e15 */\n\nvoid FUN_180064010(void)\n\n{\n  uninitialize_environment_internal<>(&DAT_1800a5288);\n  uninitialize_environment_internal<>(&DAT_1800a5290);\n  free_environment<>(DAT_1800a52a0);\n  free_environment<>(DAT_1800a5298);\n  return;\n}",
+      "assembly": "; 0x180064010 FUN_180064010; Evidence ev_83a40e63197fa95c4b0d57a113d092a561e7a91b4b385715e10307f652f55714\n0x180064010: SUB RSP, 0x38\n0x180064014: MOV qword ptr [RSP + 0x20], -0x2\n0x18006401d: LEA RCX, [0x1800a5288]\n0x180064024: CALL 0x180063f60\n0x180064029: NOP\n0x18006402a: LEA RCX, [0x1800a5290]\n0x180064031: CALL 0x180063f7c\n0x180064036: NOP\n0x180064037: MOV RCX, qword ptr [0x1800a52a0]\n0x18006403e: CALL 0x180063d80\n0x180064043: MOV RCX, qword ptr [0x1800a5298]\n0x18006404a: ADD RSP, 0x38\n0x18006404e: JMP 0x180063d80"
+    },
+    {
+      "va": "0x1800644a0",
+      "pseudocode_evidence": "ev_895d3b00175388a1f4e86f9d3cbe5e41334c5ceb94b2d65a7184fc3bda4b565c",
+      "assembly_evidence": "ev_49e2bcb83b452cd122ceb24cbdd673081334f88fc1b3e46bdb5bf8b271934d89",
+      "pseudocode": "/* 0x1800644a0 FUN_1800644a0; Evidence ev_895d3b00175388a1f4e86f9d3cbe5e41334c5ceb94b2d65a7184fc3bda4b565c */\n\nundefined1 FUN_1800644a0(void)\n\n{\n  FUN_180064010();\n  return 1;\n}",
+      "assembly": "; 0x1800644a0 FUN_1800644a0; Evidence ev_49e2bcb83b452cd122ceb24cbdd673081334f88fc1b3e46bdb5bf8b271934d89\n0x1800644a0: SUB RSP, 0x28\n0x1800644a4: CALL 0x180064010\n0x1800644a9: MOV AL, 0x1\n0x1800644ab: ADD RSP, 0x28\n0x1800644af: RET"
+    }
+  ],
+  "reused_core": {
+    "va": "0x180063d80",
+    "pseudocode_evidence": "ev_f42efb4c2c6e01d2ccbccaad3bc18cbd1905fc5983659e54ccb9222181231f9c",
+    "assembly_evidence": "ev_6ab86bc75eb9a6d0f54716af111b953c09d1853d933ae64ec912cc87684e5dd3",
+    "pseudocode": "/* 0x180063d80 free_environment<>; Evidence ev_f42efb4c2c6e01d2ccbccaad3bc18cbd1905fc5983659e54ccb9222181231f9c */\n\n/* Library Function - Multiple Matches With Same Base Name\n    void __cdecl free_environment<char>(char * __ptr64 * __ptr64 const)\n    void __cdecl free_environment<wchar_t>(wchar_t * __ptr64 * __ptr64 const)\n   \n   Libraries: Visual Studio 2015 Release, Visual Studio 2017 Release, Visual Studio 2019 Release */\n\nvoid free_environment<>(undefined8 *param_1)\n\n{\n  LPVOID pvVar1;\n  undefined8 *puVar2;\n  \n  if (param_1 != (undefined8 *)0x0) {\n    pvVar1 = (LPVOID)*param_1;\n    puVar2 = param_1;\n    while (pvVar1 != (LPVOID)0x0) {\n      FUN_1800668c0(pvVar1);\n      puVar2 = puVar2 + 1;\n      pvVar1 = (LPVOID)*puVar2;\n    }\n    FUN_1800668c0(param_1);\n  }\n  return;\n}",
+    "assembly": "; 0x180063d80 free_environment<>; Evidence ev_6ab86bc75eb9a6d0f54716af111b953c09d1853d933ae64ec912cc87684e5dd3\n0x180063d80: TEST RCX, RCX\n0x180063d83: JZ 0x180063dc0\n0x180063d85: MOV qword ptr [RSP + 0x8], RBX\n0x180063d8a: PUSH RDI\n0x180063d8b: SUB RSP, 0x20\n0x180063d8f: MOV RAX, qword ptr [RCX]\n0x180063d92: MOV RBX, RCX\n0x180063d95: MOV RDI, RCX\n0x180063d98: JMP 0x180063da9\n0x180063d9a: MOV RCX, RAX\n0x180063d9d: CALL 0x1800668c0\n0x180063da2: LEA RDI, [RDI + 0x8]\n0x180063da6: MOV RAX, qword ptr [RDI]\n0x180063da9: TEST RAX, RAX\n0x180063dac: JNZ 0x180063d9a\n0x180063dae: MOV RCX, RBX\n0x180063db1: CALL 0x1800668c0\n0x180063db6: MOV RBX, qword ptr [RSP + 0x30]\n0x180063dbb: ADD RSP, 0x20\n0x180063dbf: POP RDI\n0x180063dc0: RET"
+  },
+  "adjacent_callback_evidence": {
+    "va": "0x18006447c",
+    "pseudocode_evidence": "ev_128dcdbd118a6380a4750ff1e54271f936ddb311b7b3557f4bfaca02a8a8e7d5",
+    "assembly_evidence": "ev_0d879587dbd892a79fb6497849d2aae2767615e668da0a192514697e97897869",
+    "pseudocode": "/* 0x18006447c FUN_18006447c; Evidence ev_128dcdbd118a6380a4750ff1e54271f936ddb311b7b3557f4bfaca02a8a8e7d5 */\n\nundefined8 FUN_18006447c(void)\n\n{\n  undefined8 uVar1;\n  \n  _initialize_onexit_table((longlong *)&DAT_1800a52a8);\n  uVar1 = _initialize_onexit_table((longlong *)&DAT_1800a52c0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}",
+    "assembly": "; 0x18006447c FUN_18006447c; Evidence ev_0d879587dbd892a79fb6497849d2aae2767615e668da0a192514697e97897869\n0x18006447c: SUB RSP, 0x28\n0x180064480: LEA RCX, [0x1800a52a8]\n0x180064487: CALL 0x1800643f8\n0x18006448c: LEA RCX, [0x1800a52c0]\n0x180064493: CALL 0x1800643f8\n0x180064498: MOV AL, 0x1\n0x18006449a: ADD RSP, 0x28\n0x18006449e: RET"
+  },
+  "image_globals": [
+    {
+      "name": "current_narrow",
+      "va": "0x1800a5288",
+      "size": 8,
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "bytes_hex": "0000000000000000"
+    },
+    {
+      "name": "current_wide",
+      "va": "0x1800a5290",
+      "size": 8,
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "bytes_hex": "0000000000000000"
+    },
+    {
+      "name": "initial_wide",
+      "va": "0x1800a5298",
+      "size": 8,
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "bytes_hex": "0000000000000000"
+    },
+    {
+      "name": "initial_narrow",
+      "va": "0x1800a52a0",
+      "size": 8,
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "bytes_hex": "0000000000000000"
+    },
+    {
+      "name": "normal_onexit",
+      "va": "0x1800a52a8",
+      "size": 24,
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 24,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "bytes_hex": "000000000000000000000000000000000000000000000000"
+    },
+    {
+      "name": "quick_onexit",
+      "va": "0x1800a52c0",
+      "size": 24,
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 24,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "bytes_hex": "000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "initializer_table_callback_slots": [
+    {
+      "va": "0x18008ab48",
+      "size": 8,
+      "file_offset": "0x89348",
+      "raw_backed_bytes": 8,
+      "loader_zero_fill_bytes": 0,
+      "section": {
+        "name": ".rdata",
+        "rva": 520192,
+        "virtual_size": 138308,
+        "raw_size": 138752,
+        "raw_offset": 514048
+      },
+      "bytes_hex": "a044068001000000",
+      "value": "0x1800644a0",
+      "relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xab48",
+        "entry_file_offset": "0xa8f04"
+      }
+    },
+    {
+      "va": "0x18008ab50",
+      "size": 8,
+      "file_offset": "0x89350",
+      "raw_backed_bytes": 8,
+      "loader_zero_fill_bytes": 0,
+      "section": {
+        "name": ".rdata",
+        "rva": 520192,
+        "virtual_size": 138308,
+        "raw_size": 138752,
+        "raw_offset": 514048
+      },
+      "bytes_hex": "7c44068001000000",
+      "value": "0x18006447c",
+      "relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xab50",
+        "entry_file_offset": "0xa8f06"
+      }
+    }
+  ],
+  "shared_source": {
+    "path": "../anadius-crt-environment-source/environment.cpp",
+    "sha256": "fd5b246f6f2ee676a0ac92f2dd9a6db0f9b410c92021c52cc8669a9002731132",
+    "symbol": "free_environment_063d80",
+    "used_unchanged": true
+  },
+  "source_hashes": {
+    "environment_cleanup.cpp": "5541b20bd7f67869bc2bb5a625db9dd36224396b12c803c92a553328432b816e",
+    "environment_cleanup.hpp": "6fa4d9263b44cd07a0d1431b16f6e4519f6ff1309ce9277ea83a57b21d9a8cbe",
+    "native_tests.cpp": "715be254572184850faf7aec38d623b9bb480512d012a1b79e96250e9fb802c5"
+  },
+  "normal_flow": [
+    "063f60 loads selected current pointer and compares to fresh narrow-initial pointer; free only when different.",
+    "063f7c does the same against wide-initial pointer.",
+    "064010 invokes narrow-current helper, wide-current helper, then freshly reads/frees narrow-initial and freshly reads/frees wide-initial. Last call is an assembly tail jump; no global is cleared.",
+    "0644a0 invokes064010 then returns AL1, regardless of absence of environments.",
+    "Free core rereads subsequent pointer-array entries after every free effect and finally frees the vector itself."
+  ],
+  "onexit_composition_note": "06447c initializes distinct actual normal and quick tables using same cookie. Existing shared objects are termination.State.onexit.crt_0a52a8 and termination.State.quick_table_a52c0; copying onexit.State would break normal-table identity. Environment cleanup is the uninitializer at pair14;06447c is initializer at pair15.",
+  "limits": [
+    "Normal flow only; original SEH/exceptional unwind and full ABI equivalence are unproven.",
+    "Wide cleanup uses bounded live char* pointer-vector objects with opaque UTF16 payload bytes; does not accept/reinterpret native char16_t**.",
+    "Original globals remain stale after frees. Provider effects and state may mutate later identities, so fields are not prefetched.",
+    "Tests use only owned synthetic memory and existing rebuilt source; no user environment is acquired or modified."
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

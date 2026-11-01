@@ -1,0 +1,60 @@
+{
+  "schema": "online-factory-object-lifetime.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Native object mode requires existing SAMEversionBinding; no independent object/free gate or arbitrary incoming-object adoption",
+    "Factory lease retains code while exact adoptedobject alive; live/unknown object forbids rebind/free and unresolvedlastowner aborts beforeownerrelease",
+    "Version+factory leases andfactorycaptures retireoutsidegate withsharedactive reservation kept; noimplicitobjectdestroy/rawmodulefree"
+  ],
+  "boundaries": [
+    "Factorycookie readableNULUTF16 pointer borrowedonlyduringcall; copy destroyedafterobjectcommit/beforestatus per retainedASM",
+    "Unknownfactory/destroyownershipoutcome orinvalidvptr poisons; no blindretry, repair,secondread/free",
+    "Four lowerqueries are synchronousguardedcalls; borrowedreturnedstrings need caller serialization untilconsumer copy",
+    "Factory-adoptedobject first8 andvptrfirst8 mustbereadable/callable; bytecopies avoidaliasing butdoNOTprovearbitrarypointervalidity",
+    "Cookieheapobserver exactlongbuffer CAS-disarmsbeforefree, reads onlylivecoreobjectslot, preservesLastError; oldscope expectedFAILnotPASS",
+    "Knownnullfactory preservescoreerror/moduleprefix; normaldestroy object0 precedesfree; normalFALSEfree logicalzero notunloadsuccess"
+  ],
+  "open": [
+    "fouractualstatus/getterforeignroutes",
+    "fullforeignformalprototype/classABI/readability/modulepin",
+    "rawhandle/objectABA/externalunload",
+    "arbitraryproviderreentry/asyncborrowedstrings",
+    "configuration/license/legacydocument",
+    "B10historicalreviewdebt",
+    "actualhooks/nativeCRT/EH/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "9dce0a0bb9ae5cf55a486e93c1d165a811183e9e457387485f025545bf76842a",
+      "after_sha256": "40e54887e2102763bb147c28c3ef42506bccdda89ead94636bb1e861a9e41499",
+      "reason": "Route selected factory/destroy to typed shared binding, guard four remaining lower queries without altering core algorithms"
+    },
+    {
+      "path": "anadius-online-platform-source/platform.hpp",
+      "before_sha256": "a60c1cb2d1746b1b2e86726e0695e3df309874ab4b8b1dd721570d9fd78c6f01",
+      "after_sha256": "82ae373e513da2be64cf3522421f699d757099e1b7f325b33fa485e828176f91",
+      "reason": "Optional native_objects requires existing same module binding; source ABI extension, default paths preserved"
+    },
+    {
+      "path": "anadius-online-source/online.cpp",
+      "before_sha256": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c",
+      "after_sha256": "af99d95b0e88ea2cacd93a4f01237a8d2362cb44bdc3d7b2961c91c5fc9b1ca5",
+      "reason": "Match retained factory -> object commit -> cookie-copy release -> status order by narrowing temporary cookie scope"
+    },
+    {
+      "path": "anadius-online-version-source/version.cpp",
+      "before_sha256": "d41f7517c6d400527ecab8fcf70cda675823fc175019166369ee5fc686baec42",
+      "after_sha256": "328443d0ac8d3bae0b5f12878c955087cf99a402beecf7e6879b345e16e9c7d0",
+      "reason": "Retain both code owners; reject live/unknown rebind/free; release metadata lock then fail-stop before owner release"
+    },
+    {
+      "path": "anadius-online-version-source/version.hpp",
+      "before_sha256": "03f6be33f071e13a20dcaea5b5208b40197d16428d3c028c73b793e5882ee0cf",
+      "after_sha256": "85005c17066d7746f9f13a043f9ec098ea4f379b9461e385cdeb5d092ad72da0",
+      "reason": "Extend same module reservation with factory/adopted object/unknown state and guarded mandatory lower queries"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

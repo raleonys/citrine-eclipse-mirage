@@ -1,0 +1,57 @@
+{
+  "reviewer": "crt_lcmap",
+  "result": "PASS",
+  "checked_at": "2026-10-19T13:23:38.3253959Z",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source_assembly": "outputs/anadius-all-functions.asm.txt",
+  "source_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "evidence_id": "ev_ff659bc38c0cecbd6049ae735ce486d23e30ad115dccbbb5d59e32f94f015a52",
+  "functions": [
+    "0x18006e210"
+  ],
+  "files": [
+    {
+      "path": "string_type.cpp",
+      "sha256": "f24b170510a875c9197468f51ac6ff322cb4af456f42e3fe8990caa2909c69bb"
+    },
+    {
+      "path": "string_type.hpp",
+      "sha256": "18b9dbf34241ec4fea5a56c1cf8c83cd2dc9dcd24b0481a4aadeb2d3a9675ce7"
+    },
+    {
+      "path": "string_type_tests.cpp",
+      "sha256": "74ac42912c7a20a98c55f136fa9fc88316f684bc00c2249b238c6e81163a1649"
+    },
+    {
+      "path": "README.md",
+      "sha256": "4dbf48276c7e037cab8e0ce533d27db00f300ba4022b9c727857f2e7142ceefe"
+    },
+    {
+      "path": "evidence.json",
+      "sha256": "8df147f8e499da3f2751ba3a40958a0ad83c098ab4759f04dfa59da755666276"
+    },
+    {
+      "path": "validation.json",
+      "sha256": "797c42997136b5c10cee6532be5841d85c38a92fce76b1d6993d5465dcd174a3"
+    }
+  ],
+  "findings": [],
+  "checks": [
+    "Locale constructor precedes CP read; CP=0 uses locale_info+0xc; explicit CP bypasses that read",
+    "Query flags preserve strict nonzero ->9, fill fixed1; raw signed source count preserved",
+    "MOVSXD query*2 modulo64 +16 unsigned carry guard matches source, including negative provider returns",
+    "Total<=1024 stack504 / heap505 and 16-byte rounded scratch match assembly; marker write precedes wrapped payload NULL check",
+    "zero_bytes covers queried WCHAR payload exactly before fill; native count is second conversion result, not queried count",
+    "Native GetStringTypeW full DWORD BOOL preserved including noncanonical and high-bit results",
+    "Cleanup rereads marker after callbacks and frees marker base only for DDDD; mutable flags reread and owned bit2 clear after cleanup",
+    "No invented provider fallback, target execution, actual stack probe/security-cookie/SEH equivalence claim"
+  ],
+  "independent_execution": "PASS string type: 70165 checks; sparse address and API fixtures, no native API or target execution",
+  "independent_execution_kind": "Previously built module fixture executable only; source/test hashes recorded",
+  "test_executable_sha256": "41b52bdd7b76eca8c9a04302e1b15abd73eafba9665c6644cac3b1d209a2ff1f",
+  "limits": [
+    "No original/native DLL execution",
+    "Sparse arithmetic fixtures may accept huge synthetic allocation requests; real heap/stack failure behavior remains a provider dependency",
+    "No full ABI/concurrency/global initialization/SEH equivalence proven"
+  ]
+}

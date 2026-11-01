@@ -1,0 +1,50 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "Ghidra 12.1.4",
+  "analysis": "Retained static evidence reuse; no target opened, loaded, executed or modified in this subtask",
+  "function_count": 1,
+  "function": {"address": "0x18006e800", "recovered": "append_06e800", "assembly_last": "0x18006e97e"},
+  "retained_sources": [
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_999960970cdc0fd0cc4b8b4da9e25ec80a7dbef743721e1fbe2b8e20b0f5d341",
+      "selected": "selected.asm.txt",
+      "selected_sha256": "345d7285fbd819606564dbcb509db85ce638ee3bc76629bea5affb35eec6c014"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_d8c082ef9cc46a88c8ca7108849cd9ca5994c23f3db429686f83a36658a6d7ff",
+      "selected": "selected.pseudo.c",
+      "selected_sha256": "876b902371ca798e53a36e96de2eb15852a61ea8a18d21bb6f18bd41234ddfa7"
+    }
+  ],
+  "claims": [
+    {"range": "0x18006e82e-0x18006e848", "type": "observed assembly", "claim": "NUL-inclusive source count; unsigned count > ~prefix guard returns EAX 12 before allocation"},
+    {"range": "0x18006e86a-0x18006e8b1", "type": "observed assembly", "claim": "calloc(prefix+NUL-inclusive-source+1,1); unchecked NULL text allocation; optional prefix copy then mandatory source copy; each nonzero EAX goes to Watson"},
+    {"range": "0x18006e8b7-0x18006e8f7", "type": "observed assembly", "claim": "Full vector with begin zero allocates 4x8 bytes; begin stored before free(NULL), reloaded afterward, then end/capacity initialized"},
+    {"range": "0x18006e8f9-0x18006e951", "type": "observed assembly", "claim": "Wrapping SUB then SAR3 yields count; unsigned JA INT64_MAX guards; recalloc doubles count with size8; failure frees NULL then text; success publishes vector before free(NULL)"},
+    {"range": "0x18006e956-0x18006e968", "type": "observed assembly", "claim": "Store text at end, increment end8, free(NULL), return EAX0; failures free text then final NULL and return EAX12"},
+    {"range": "0x18006e96f-0x18006e97e", "type": "observed assembly", "claim": "Nonreturning Watson receives zero arguments; no explicit allocation cleanup on that edge"}
+  ],
+  "mandatory_effects": [
+    {"address": "0x180066848", "role": "calloc"},
+    {"address": "0x180070434", "role": "recalloc"},
+    {"address": "0x1800668c0", "role": "free, including visible NULL calls"},
+    {"address": "0x1800767fc", "role": "memcpy_s, 32-bit result"},
+    {"address": "0x18005c9a4", "role": "nonreturning Watson fatal policy"}
+  ],
+  "reconstruction_choices": [
+    "Opaque uint64 addresses and pure virtual bounded storage effects replace host pointer casts",
+    "C++20 bit_cast plus signed right shift models the original SAR; unsigned arithmetic retains wrapping",
+    "read_word is a shared vector-facade operation for consumers and is not called by append",
+    "No invented native providers, RAII cleanup, SEH reconstruction or additional vector-shape guards"
+  ],
+  "limitations": [
+    "Static source-model reconstruction, not original source recovery or demonstrated binary equivalence",
+    "Allocator, native copy, Watson and final DLL ABI/provider binding remain external",
+    "Fixtures use generated storage or explicit opaque arithmetic probes; no original or rebuilt DLL/game execution"
+  ]
+}

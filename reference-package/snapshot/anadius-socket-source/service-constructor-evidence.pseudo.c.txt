@@ -1,0 +1,187 @@
+/* 0x1800228e0 FUN_1800228e0; Evidence ev_22c4bffe54fe0b986545326a4020802e4e98041a480e8cafc64b603ecd05d1ef */
+
+undefined8 * FUN_1800228e0(undefined8 *param_1)
+
+{
+  DWORD DVar1;
+  undefined8 *puVar2;
+  undefined8 *puVar3;
+  DWORD local_18 [2];
+  undefined **local_10;
+  
+  puVar2 = (undefined8 *)FUN_18004b0bc(0x80);
+  puVar3 = (undefined8 *)0x0;
+  if (puVar2 != (undefined8 *)0x0) {
+    puVar2[1] = 0;
+    puVar2[2] = 0;
+    puVar2[3] = param_1;
+    puVar2[4] = 0;
+    *puVar2 = asio::detail::
+              execution_context_service_base<asio::detail::win_iocp_socket_service<asio::ip::tcp>_>
+              ::vftable;
+    puVar2[5] = param_1;
+    puVar3 = FUN_180023b30((LPCRITICAL_SECTION)*param_1);
+    puVar2[6] = puVar3;
+    puVar2[7] = 0;
+    puVar2[8] = 0;
+    puVar2[9] = 0;
+    DVar1 = FUN_180027be0((LPCRITICAL_SECTION)(puVar2 + 10));
+    local_10 = FUN_180028620();
+    if (DVar1 != 0) {
+      local_18[0] = DVar1;
+                    /* WARNING: Subroutine does not return */
+      FUN_180028240((undefined8 *)local_18,(undefined8 *)"mutex");
+    }
+    puVar2[0xf] = 0;
+    *puVar2 = asio::detail::win_iocp_socket_service<asio::ip::tcp>::vftable;
+    puVar3 = puVar2;
+  }
+  return puVar3;
+}
+
+
+
+/* 0x180027be0 FUN_180027be0; Evidence ev_948db36a6b6838994310cbdd3ff325ea9d6c875b61a63f92c9c0d1ce03fdbe85 */
+
+DWORD FUN_180027be0(LPCRITICAL_SECTION param_1)
+
+{
+  BOOL BVar1;
+  DWORD DVar2;
+  
+  BVar1 = InitializeCriticalSectionAndSpinCount(param_1,0x80000000);
+  if (BVar1 == 0) {
+    DVar2 = GetLastError();
+    return DVar2;
+  }
+  return 0;
+}
+
+
+
+/* 0x1800239c0 FUN_1800239c0; Evidence ev_c935d546ffcfd9a015759eba276b6b86808a598ce42947d5ddbe6ef939153abb */
+
+undefined8 * FUN_1800239c0(LPCRITICAL_SECTION param_1,undefined8 *param_2)
+
+{
+  longlong lVar1;
+  longlong lVar2;
+  uint uVar3;
+  undefined8 *puVar4;
+  undefined8 *puVar5;
+  undefined8 local_28;
+  undefined8 uStack_20;
+  LPCRITICAL_SECTION local_18;
+  undefined1 local_10;
+  
+  local_28 = 0;
+  uStack_20 = 0;
+  FUN_180022fa0(&local_28);
+  local_18 = param_1;
+  EnterCriticalSection(param_1);
+  lVar2 = uStack_20;
+  lVar1 = local_28;
+  local_10 = 1;
+  for (puVar5 = *(undefined8 **)&param_1[1].LockCount; puVar5 != (undefined8 *)0x0;
+      puVar5 = (undefined8 *)puVar5[4]) {
+    if ((((puVar5[2] != 0) && (lVar2 != 0)) && (puVar5[2] == lVar2)) ||
+       (((puVar5[1] != 0 && (lVar1 != 0)) &&
+        (uVar3 = __std_type_info_compare(puVar5[1] + 8,lVar1 + 8), uVar3 == 0))))
+    goto LAB_180023b17;
+  }
+  LeaveCriticalSection(param_1);
+  local_10 = 0;
+  puVar4 = FUN_1800228e0(param_2);
+  *(undefined4 *)(puVar4 + 1) = (undefined4)local_28;
+  *(undefined4 *)((longlong)puVar4 + 0xc) = local_28._4_4_;
+  *(undefined4 *)(puVar4 + 2) = (undefined4)uStack_20;
+  *(undefined4 *)((longlong)puVar4 + 0x14) = uStack_20._4_4_;
+  EnterCriticalSection(param_1);
+  puVar5 = *(undefined8 **)&param_1[1].LockCount;
+  while( true ) {
+    if (puVar5 == (undefined8 *)0x0) {
+      puVar4[4] = *(undefined8 *)&param_1[1].LockCount;
+      *(undefined8 **)&param_1[1].LockCount = puVar4;
+      LeaveCriticalSection(param_1);
+      return puVar4;
+    }
+    if ((((puVar5[2] != 0) && (lVar2 != 0)) && (puVar5[2] == lVar2)) ||
+       (((puVar5[1] != 0 && (lVar1 != 0)) &&
+        (uVar3 = __std_type_info_compare(puVar5[1] + 8,lVar1 + 8), uVar3 == 0)))) break;
+    puVar5 = (undefined8 *)puVar5[4];
+  }
+  (**(code **)*puVar4)(puVar4,1);
+LAB_180023b17:
+  LeaveCriticalSection(param_1);
+  return puVar5;
+}
+
+
+
+/* 0x180023b30 FUN_180023b30; Evidence ev_e19c4187c6fd93eed1f7799ea815833381b3dbe02527496c06be2e73f9fd1811 */
+
+undefined8 * FUN_180023b30(LPCRITICAL_SECTION param_1)
+
+{
+  PRTL_CRITICAL_SECTION_DEBUG p_Var1;
+  longlong lVar2;
+  longlong lVar3;
+  uint uVar4;
+  undefined8 *puVar5;
+  undefined8 *puVar6;
+  undefined8 local_38;
+  undefined8 uStack_30;
+  LPCRITICAL_SECTION local_28;
+  undefined1 local_20;
+  
+  local_38 = 0;
+  uStack_30 = 0;
+  FUN_180022fd0(&local_38);
+  p_Var1 = param_1[1].DebugInfo;
+  local_28 = param_1;
+  EnterCriticalSection(param_1);
+  lVar3 = uStack_30;
+  lVar2 = local_38;
+  local_20 = 1;
+  for (puVar5 = *(undefined8 **)&param_1[1].LockCount; puVar5 != (undefined8 *)0x0;
+      puVar5 = (undefined8 *)puVar5[4]) {
+    if ((((puVar5[2] != 0) && (lVar3 != 0)) && (puVar5[2] == lVar3)) ||
+       (((puVar5[1] != 0 && (lVar2 != 0)) &&
+        (uVar4 = __std_type_info_compare(puVar5[1] + 8,lVar2 + 8), uVar4 == 0))))
+    goto LAB_180023c99;
+  }
+  LeaveCriticalSection(param_1);
+  local_20 = 0;
+  puVar5 = (undefined8 *)FUN_18004b0bc(0xb0);
+  if (puVar5 == (undefined8 *)0x0) {
+    puVar6 = (undefined8 *)0x0;
+  }
+  else {
+    puVar6 = FUN_180024990(puVar5,p_Var1,0xffffffff,'\x01');
+  }
+  *(undefined4 *)(puVar6 + 1) = (undefined4)local_38;
+  *(undefined4 *)((longlong)puVar6 + 0xc) = local_38._4_4_;
+  *(undefined4 *)(puVar6 + 2) = (undefined4)uStack_30;
+  *(undefined4 *)((longlong)puVar6 + 0x14) = uStack_30._4_4_;
+  EnterCriticalSection(param_1);
+  puVar5 = *(undefined8 **)&param_1[1].LockCount;
+  while( true ) {
+    if (puVar5 == (undefined8 *)0x0) {
+      puVar6[4] = *(undefined8 *)&param_1[1].LockCount;
+      *(undefined8 **)&param_1[1].LockCount = puVar6;
+      LeaveCriticalSection(param_1);
+      return puVar6;
+    }
+    if ((((puVar5[2] != 0) && (lVar3 != 0)) && (puVar5[2] == lVar3)) ||
+       (((puVar5[1] != 0 && (lVar2 != 0)) &&
+        (uVar4 = __std_type_info_compare(puVar5[1] + 8,lVar2 + 8), uVar4 == 0)))) break;
+    puVar5 = (undefined8 *)puVar5[4];
+  }
+  (**(code **)*puVar6)(puVar6,1);
+LAB_180023c99:
+  LeaveCriticalSection(param_1);
+  return puVar5;
+}
+
+
+

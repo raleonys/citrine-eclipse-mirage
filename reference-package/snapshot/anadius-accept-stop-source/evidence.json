@@ -1,0 +1,95 @@
+{
+  "schema": "accept-stop.source-composition.v1",
+  "source_package": "B49",
+  "evidence_type": "Worker-only accept cancellation and real physical/source-retirement receipts",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-accept-source/accept.cpp",
+      "sha256": "3483ad9075706413543407f75c4ec02333d124f3a5a39ddb25f1e51572b11a22",
+      "scope": "Existing saved source or additive accept metadata/stop composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-accept-source/owned.cpp",
+      "sha256": "aaa6e0c1cb126a1ac6b6515a5062a75a4c1f4cfa38bf2e7debccc8941732324c",
+      "scope": "Existing saved source or additive accept metadata/stop composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-accept-source/owned.hpp",
+      "sha256": "011cf682eb0f9ffb30575ded5a184ca366ea88bf605421ee24eda5cfb72c74f9",
+      "scope": "Existing saved source or additive accept metadata/stop composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/graph.cpp",
+      "sha256": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c",
+      "scope": "Fresh unchanged quick-build dependency for Runtime::Dependencies HOST by-value layout."
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "sha256": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+      "scope": "Fresh unchanged quick-build dependency for Runtime::Dependencies HOST by-value layout."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/resources.cpp",
+      "sha256": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2",
+      "scope": "Fresh unchanged quick-build dependency for Runtime::Dependencies HOST by-value layout."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/runtime.cpp",
+      "sha256": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b",
+      "scope": "Existing saved source or additive accept metadata/stop composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/runtime.hpp",
+      "sha256": "c4a7ab815196c513b46d8312888a6210b78818f8aa77284eb013e655a3365ac0",
+      "scope": "Existing saved source or additive accept metadata/stop composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913",
+      "scope": "Existing saved source or additive accept metadata/stop composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-socket-source/completion_dispatcher.cpp",
+      "sha256": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952",
+      "scope": "Existing saved source or additive accept metadata/stop composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-socket-source/worker_run.cpp",
+      "sha256": "1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4",
+      "scope": "Existing saved source or additive accept metadata/stop composition; no fresh original bytes."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b49-core-quick-results.json",
+      "sha256": "8413c75fe35b1fbc1b365ba03f3d7ae9d0ee6d63b79064bffc2ebcbc925f22b7",
+      "checks": 317,
+      "executable_sha256": "b24d0b025673093f498b7f6113a35b715793e2fe90b17df3d2a90242273bad4d",
+      "archive_sha256_as_used": "176dc269907d3396c456b8f23c16c1cbbb7e8b5d088f77bb9dd1cca55d6dbeaa",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh stop.cpp, modified Runtime.cpp and OwnedAcceptMemory owned.cpp, unchanged Runtime resources.cpp, application Graph.cpp and Worker.cpp host-layout dependents, plus stop_tests.cpp with selected actual-use headers. The unchanged dependents must be rebuilt because appended Runtime Dependencies fields cross by-value host interfaces; no source modification to them is claimed. Immutable canonical B48 archive supplies remaining prior objects. No integration test or full Bootstrap execution is compiled/claimed here. Real own Domain NativeThreads/PTD/FLS/heap and actual local PIPE_REJECT_REMOTE_CLIENTS named-pipe overlapped ReadFile into authoritative288byte/realOV accept storage, attached to actual own IOCP, form an explicitly selected ACCEPT-SDK-compatibility READ loan. This is NOT AcceptEx interoperability or a network socket. Real CancelIoEx produces actual observed GQCS995; separately injected TRUE-without-cancel and ERROR_NOT_FOUND do not end the real read loan before an independent local peer produces actual SUCCESS. Software FALSE1234 dispatch never invokes CancelIoEx or supplies kernel proof. Genuine other-work callback remains mandatory; early/prerequisite-false/coalesced controller wakes, exact worker/listener/OV and private nullwake, forced owner0, actual source acknowledgement, closed post seal and capture-retiring no-resurrection are checked. A separate genuine normal-success/lower-owner0 route then holds worker_returned after its route lease ends: a late controller request closes normally from Requested under genuine Runtime proof with no cancel, fabricated journal or further physical get, and the own nullwake is observed still queued until actual IOCP close. Main count excludes nine exact-exit retained-prefix children: foreign access, unknown Cancel SDK outcome, kernel-key2 and arbitrary foreign key, unknown receipt, stale raw packet, normal active-route exclusion, whole-route/proof epoch race using a genuine normal pipe SUCCESS, and duplicate receipt attempt on the same authoritative live normal operation without guessing a nonce. Isolated faults do not claim cleanup/unload safety; no original artifact, user config, game, actual network, recovered loader/DLL ABI, arbitrary thread admission or fabricated kernel terminal/finality is used."
+    },
+    {
+      "path": "work/b49-integration-quick-results.json",
+      "sha256": "889cb67324fe41264bd237b884f5c0999675584208a1ff15c1e4e673c262f5d6",
+      "checks": 162,
+      "executable_sha256": "afab57707543a0cfe1613211fb4a7b06ae46aa2e0f02c1590dbd98bb22f7119e",
+      "archive_sha256_as_used": "176dc269907d3396c456b8f23c16c1cbbb7e8b5d088f77bb9dd1cca55d6dbeaa",
+      "execution_author": "/root/b22_integration",
+      "note": "Two actualRuntimeOwner/SourceBackend THREErealDomainNativeThreads scenarios with concreteApplicationWorker-ownedGraph: accept-onlynoSession/noRecvSend/rawjob/foreignAdmission independentlyclosed byconstruction, other_work_drained REQUIREDexternalprerequisite. InjectedAcceptSDK issues actualReadFile into authoritative288byte acceptregion/EXACTownedOV onOWNconnectedOVERLAPPEDNAMEDPIPEhandle attachedactualIOCP; selectedpipe/ownEvent socketTOKENS are NOTAcceptEx/WSASOCKET interoperability. Stop DEFAULTimports CancelIoEx/PostQueuedCompletionStatus, controllerpostsONLYNULLwake, originalworker cancels exactkernelborrow, actualGQCS995 andactualSUCCESS/ERROR_NOT_FOUND race(sourcewake→ownWriteFile→readDone LOWBIT0event→resumephysicalget). Heapledger independentlyprovesbufferretaineduntilobservedpacket/sourceack. RuntimeStop forcesowner0/skipslowerselect ontrackedstop, actual0271a0/cachefree/nativeworkcountnaturally0/Graphclosed, real3join/FLS/controllerfinish. No syntheticterminalpost/manualcounterdecrement/fakeGetresult. RealHost+Online milestones despitepreseededflags andexactRuntimeOwner refs preserved. ScopeACCEPTONLY, notfullreceive/send/foreign/kernel/rawjob/unloadproof. NoOriginalDLL/game/usercontents/realnetwork/nativeABI/fullResourcesLoaderclaim. ABI-dependent unchangedresources/graph/worker CPPs explicitlycompiledfresh, NOTproductionedits."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition only.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "selected_HOST_accept_drop_on_observed_stop_completion": true,
+  "actual_pipe_kernel_compatibility_is_AcceptEx_interoperability": false,
+  "fresh_unchanged_Resources_Graph_Worker_CPPs_required_for_RuntimeDependencies_by_value_HOST_ABI": true
+}

@@ -1,0 +1,135 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B53",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B53",
+  "latest_dll_link_attempt": "B53",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B53 adds independent RemainingPolicies with eleven source routes and one explicit close lifecycle operation, preserving the existing Services17 vtable and legacy path. SourceBackend already supplies six worker/host/exit bodies; Runtime registry supplies two registrar routes; nine covered memory/logger/exit-wait/thread-error/actual RET/fatal policies are owned by concrete services_factory::Remaining without a giant Services lower or unused-method stubs. One appended Resources.remaining_factory is resolved exactly once against Runtime own CallbackRegistry; the result is adopted before opaque factory-capture retirement and passive registry state is checked. Prepared/Selection/Impl keep narrow ownership before Resources, and Resources retire before attached narrow metadata. Old NativeExecution class stays unchanged; a private narrow execution adapter reuses actual SDK query helpers. Successful source stop/join, exit drain, attachment close and registry finish are cached milestones, so a late known false narrow close retries without repeating completed opaque cleanup. Normal opaque returns recheck Open admission while the active lease remains; swallowed poison cannot return an allocation for later startup. Source methods allow legitimate nested calls and same-Domain worker use; control close/destruction stays on controller/fiber. Known false preflight permits explicit deallocate/wait cleanup retry; unknown states retain. Successful close seals source routes and actually closes known-drained ExitWaitRegistry but retains all leaf owners until Resources destruction. ApplicationMemory has no close method: actual tracking/empty checks precede releasing its shared owner on controller; external aliases retain their own Domain lease. Unused, actually empty, unpublished construction prefixes may close owned waits; live/unknown inputs require retained aliases, no guessed rollback. Actual libc++ small-buffer function move may clone donor captures; take_resources consumes all21 fields with a guaranteed-prvalue aggregate and clears each callable donor while the receiving owner remains alive. The supported owning entry is make_runtime(Resources&), which directly uses new Runtime with a take_resources prvalue; direct stack/new sinks can use take_resources explicitly. Arbitrary make_unique forwarding adds another by-value donor and is not promised constructor-failure safety. Internal Prepared&& and Selection&& sinks consume actual forwarding temporaries. Failed internal V4/V5 and public-forwarder V7 experiments remain retained; the final supported path has its own positive evidence. Selected quick integration recompiles all actually used Resources construction/transfer consumers including unchanged worker.cpp; full common rebuild separately covers optional binders. Synthetic evidence and exact scopes are in quick records; no original/user files or original DLL execution. 938old sources:934unchanged4modified+4new=942;273objects269CPP/4C;335normalgroups+19frameworkterminals;68core+208integration=276main checks; isolated core cases separate. Failed DLL diagnostic verifies both explicit frozen configuration_factory.o and services_factory.o; CMake is configured, not executed. Native501/505/139 and52 historical closures unchanged, new native/ABI0,lastB38. Full remaining Resources, external rawjob/foreign/hook finality, permanent Errors/thunk epilogue, early startup unknown ownership, native ABI/EH and loader-lock attach/detach remain open. GenericCRT paused; no fresh original analysis bytes/REA session.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Kalan online/host/foreign Resources bileşimi",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36",
+      "native_full_accept_session_flow_available": "B37",
+      "coherent_accept_IO_cache_available": "B37",
+      "native_accept_helpers_available": "B38",
+      "concrete_owned_runtime_available": "B39",
+      "server_resources_component_factory_available": "B39",
+      "concrete_session_profile_available": "B40",
+      "typed_native_message_profile_available": "B41",
+      "owned_response_deque_provider_available": "B42",
+      "owned_environment_provider_available": "B43",
+      "owned_inline_jobs_provider_available": "B44",
+      "concrete_session_policy_available": "B45",
+      "application_graph_available": "B46",
+      "prepared_worker_memory_handoff_available": "B47",
+      "source_backend_application_worker_available": "B48",
+      "accept_only_stop_provider_available": "B49",
+      "session_io_stop_provider_available": "B50",
+      "application_entry_admission_gate_available": "B52",
+      "owning_configuration_factory_available": "B52",
+      "owning_remaining_services_factory_available": "B53"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B54",
+    "priority": 1,
+    "title": "Kalan online/host/foreign Resources bileşimi",
+    "requirements": [
+      "Audit remaining actual Resources routes and implement one bounded owning source provider using existing concrete leaves; preserve explicit narrow effects and avoid fixture production providers or success/unused-method stubs.",
+      "Preserve B53 narrow policies, controller retirement after real joins/registry cleanup, consumed Resources transfers, B52 configuration and required license/legacy effects.",
+      "Keep B51 Application source-admission and permanent Errors scope separate; rawjob/foreign/hook external admission and early-startup unknown ownership need real independent proof.",
+      "Keep compiler CRT once, explicit diagnostic object selection and loader-lock attach/detach restrictions; priority1,2,3,5,4, genericCRT paused."
+    ],
+    "exit_criteria": "One remaining concrete Resources component with actual source-backed ownership and meaningful synthetic integration; final DLL readiness remains actual-link evidence, no percentage from source/test counts."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "source_normal_bodies_added_in_B37": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ],
+  "source_normal_bodies_added_in_B38": [
+    "0x180029df0",
+    "0x180029590",
+    "0x180029660"
+  ],
+  "source_normal_bodies_added_in_B39": [],
+  "source_normal_bodies_added_in_B40": [],
+  "source_normal_bodies_added_in_B41": [],
+  "source_normal_bodies_added_in_B42": [],
+  "source_normal_bodies_added_in_B43": [],
+  "source_normal_bodies_added_in_B44": [],
+  "source_normal_bodies_added_in_B45": [],
+  "source_normal_bodies_added_in_B46": [],
+  "source_normal_bodies_added_in_B47": [],
+  "source_normal_bodies_added_in_B48": [],
+  "source_normal_bodies_added_in_B49": [],
+  "source_normal_bodies_added_in_B50": [],
+  "source_normal_bodies_added_in_B51": [],
+  "source_normal_bodies_added_in_B52": [],
+  "source_normal_bodies_added_in_B53": []
+}

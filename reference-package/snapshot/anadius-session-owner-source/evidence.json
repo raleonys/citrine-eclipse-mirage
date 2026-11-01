@@ -1,0 +1,128 @@
+{
+  "schema": "session-owner-constructor.normal-source.evidence.v1",
+  "source_package": "B30",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_original_procedures": 1,
+  "normal_source_procedures_added": [
+    "0x180023000"
+  ],
+  "functions": [
+    {
+      "address": "0x180023000",
+      "source_presence": "module_record_only",
+      "pseudo_evidence": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "assembly_evidence": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+      "definitions": [],
+      "newly_recovered": true
+    }
+  ],
+  "retained_function_records": [
+    {
+      "address": "0x180023000",
+      "evidence_id": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 28542,
+      "retained_record": "180023000.pseudo.c.txt",
+      "record_sha256": "d6a96abcf6d51175f506b5aab767c99f31d04fca1c9389d62206a79606179d75"
+    },
+    {
+      "address": "0x180026570",
+      "evidence_id": "ev_569927c89e98051d661b466fccfa8c6436572a263f3441c01721f2793942f5d5",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 31886,
+      "retained_record": "180026570.pseudo.c.txt",
+      "record_sha256": "b485bdcbe41724c4709d9c4059bc7776c96f302d1e34b7c3b44697741d36cb31"
+    },
+    {
+      "address": "0x180017420",
+      "evidence_id": "ev_47a23a1547e1e17db86b3c8bae1e5ebefeb62279c087c44967b4df46a6292967",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 19622,
+      "retained_record": "180017420.pseudo.c.txt",
+      "record_sha256": "ab94a06546e28e8d2ba8900a5c63b4a15634474472a196d72903f092a65204a4"
+    },
+    {
+      "address": "0x180026290",
+      "evidence_id": "ev_d5253fe30c46ce5fd234147de8a63cebe2795f47f7d74f84a7b036d7d67a0d9d",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 31730,
+      "retained_record": "180026290.pseudo.c.txt",
+      "record_sha256": "9ed594c3233d87aeb5e8c18ffc4da36d3e4ec3d58711c40a15ad6b4005f26d8a"
+    },
+    {
+      "address": "0x180023000",
+      "evidence_id": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 35816,
+      "retained_record": "180023000.asm.txt",
+      "record_sha256": "9c7159182ebb41608241349d8b9a621b8eee7633c701c143387cf46c6389e70b"
+    },
+    {
+      "address": "0x180026570",
+      "evidence_id": "ev_4721f071259f0f08eb60d96ed3bd1f1b2603864a224a766c2493f1fa35280260",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 39405,
+      "retained_record": "180026570.asm.txt",
+      "record_sha256": "0e5f95d661b6374d3d78d60e976afcf302a0aca7e3b6302bdefa095dbe04c649"
+    },
+    {
+      "address": "0x180017420",
+      "evidence_id": "ev_bf03878c45fa709dc9c54b26bb21d0f065a1b3b3a7d7dcb2141c0c268f8ca8f7",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 24232,
+      "retained_record": "180017420.asm.txt",
+      "record_sha256": "ae0e19a2357f861665fc8e367c41bc4baef6898f22d470c668bb549b526d3015"
+    },
+    {
+      "address": "0x180026290",
+      "evidence_id": "ev_7d65dd1db58e08d08433ac751b1a2544c4010a23f857d377e111e588fa8a55a4",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 39206,
+      "retained_record": "180026290.asm.txt",
+      "record_sha256": "e510daa2f3816493bfc43c2d8c8d07072033faae090362cf377fa9447f33152a"
+    }
+  ],
+  "source_audit": {
+    "path": "source-audit.json",
+    "sha256": "09ad8c3537c6707889103a09a8c6ded873a986273c7f3f067ed5bd6a63b4febc"
+  },
+  "required_remaining_targets": [
+    "0x180026570",
+    "0x180017420",
+    "0x180026290",
+    "0x1800228c0"
+  ],
+  "session": {
+    "path": "outputs/anadius-config-defaults-source/rea-session.json",
+    "sha256": "4c169c238e8e3f7ff3ece518191fcf21e7e5ac9a9e0d49b6a9f97dd7f602ce33",
+    "reuse_retained_session": true,
+    "new_target_queries": 0
+  },
+  "quick": [
+    {
+      "path": "work/b30-core-quick-results.json",
+      "sha256": "8029448b231d2b8dc2fc75b0032bb652ea3fb998ddf3da8499717616438fa459",
+      "checks": 34,
+      "execution_by": "Root standard quick; independent integration author /root/b22_integration; reviewer inspected frozen sources/records/EXEs without rerun"
+    },
+    {
+      "path": "work/b30-integration-quick-results.json",
+      "sha256": "1c7ee661b71af35343e57ff76b243bede8a1b3473d4b29388a218227e043c9a1",
+      "checks": 32,
+      "execution_by": "Root standard quick; independent integration author /root/b22_integration; reviewer inspected frozen sources/records/EXEs without rerun"
+    }
+  ],
+  "new_original_bytes_queried_via_REA": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "scope": "One023000normaltypedalgorithm. NativeControl084750 is an identity token; dispose/delete remain explicit live IoReference providers. Persistent scratch/allocator lifetime protect partial source construction, not native EH/SEH rollback. No native classlayout, allocatorABI, arbitrary reentry/concurrency or detached-job quiescence proof."
+}

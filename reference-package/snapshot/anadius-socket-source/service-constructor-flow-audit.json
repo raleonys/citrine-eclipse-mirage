@@ -1,0 +1,37 @@
+{
+  "scope": "Independent retained static 0228e0 socket-service constructor and 027be0 critical-section helper normal-flow audit",
+  "reviewer": "service_constructor_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {"address":"0x1800228e0","pseudo_evidence":"ev_22c4bffe54fe0b986545326a4020802e4e98041a480e8cafc64b603ecd05d1ef","assembly_evidence":"ev_cccd315f694dc43aeae87a61fc8912482989a03586a119141e1b2a2d8f2bdd7b"},
+    {"address":"0x180027be0","pseudo_evidence":"ev_948db36a6b6838994310cbdd3ff325ea9d6c875b61a63f92c9c0d1ce03fdbe85","assembly_evidence":"ev_ebd0f0654f2c3bac442e8d0023199cc155873bebe20cb19ded69b206149bb469"}
+  ],
+  "rules": {
+    "context_identity":"Cache original context argument before mandatory allocation",
+    "allocation":"04b0bc request0x80; null returns null without any later callback/store",
+    "pre_scheduler_stores":"key type0,id0; context+18=cached; next+20=0; base table084590; impl context+28=cached",
+    "scheduler":"Read live context[0] after allocation/initial stores; call required023b30; store result+30 before zeroing+38/+40/+48",
+    "gate":"027be0 on borrowed native+50 critical-section projection; InitializeCriticalSectionAndSpinCount spin0x80000000",
+    "gate_result":"BOOL nonzero=>status0 and no GetLastError; BOOL0=>GetLastError unchanged including zero",
+    "category":"Required028620 always after027be0; preserve cached32status across category callback",
+    "failure":"Nonzero cached status invokes required nonreturning028240 with status/category pair and mutex identity180084428; no head/final table writes",
+    "success":"head+78=0 then final table0845b0 then return allocation",
+    "cleanup":"No invented automatic cleanup, rollback or native allocator/destructor proof"
+  },
+  "normal_source_procedures_added":["0x1800228e0","0x180027be0"],
+  "new_original_procedures":2,
+  "original_execution":"none",
+  "real_network_execution":"none",
+  "real_user_files_read":false,
+  "limitations":[
+    "Typed borrowed context, entry, critical-section and service projections are not native memory overlays",
+    "04b0bc allocator,023b30 scheduler,028620 category,028240 error raise and deleting destructor remain required providers",
+    "04d2d0 CRT RTTI comparison implementation remains deferred",
+    "Native exception/SEH/unwind, allocation failure cleanup, gate destructor and registry teardown remain unproven",
+    "Native dispatcher, executor, entry/export ABI and full DLL equivalence remain unproven"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "encoding",
+    "result": "PASS",
+    "output": "PASS: 57 encoding checks; real Win32 only on synthetic strings, original targets not executed",
+    "executable_sha256": "ac7961baa621fe7fee75bb0a0fca4b20a398f9a19d86310ee8c81b4d2cfe9f96"
+  },
+  "actual_native_scope": "Synthetic strings; linked CRT locale query and actual Win32 conversions",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "sources": [
+    {
+      "path": "anadius-encoding-source/encoding_tests.cpp",
+      "sha256": "ab99d6f54d33e92031eabcfe8c8c534fdf504a799f9ccb99de62f5064211f480"
+    },
+    {
+      "path": "anadius-encoding-source/encoding.cpp",
+      "sha256": "391b6868d4604a86becb5a53493194937cb804340ae981ca21e1466401194b38"
+    },
+    {
+      "path": "anadius-encoding-source/encoding.hpp",
+      "sha256": "b65c3fda414a4b679d59ff130bcf620dc5ea5d8ee38bd9f4de4c082e2b8683b7"
+    },
+    {
+      "path": "anadius-encoding-source/native_encoding.cpp",
+      "sha256": "5022dff63bc6ca4471ca367747dfe8e8a3a9cdf071bbe2310d1f4bc86fe2b003"
+    }
+  ]
+}

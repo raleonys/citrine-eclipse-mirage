@@ -1,0 +1,193 @@
+{
+  "schema": "node-insertion.retained-data.v1",
+  "authority": "historical-reference",
+  "confidence": "derived",
+  "parent_file": "outputs/anadius-rea-evidence.json",
+  "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "parent_file_bytes": 34457189,
+  "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "parent_authority": "shipped-artifact",
+  "parent_operation": "read_bytes",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": {
+    "id": "ghidra",
+    "version": "12.1.4"
+  },
+  "analysis_profile_digest": "dcc676845881c04a2d22833fb35d26569462e033daee5e99a95edac5aa61ac05",
+  "parent_read": {
+    "address": "0x18007f000",
+    "requested_bytes": 138752,
+    "returned_bytes": 138752,
+    "complete": true,
+    "last_address": "0x1800a0dff",
+    "decoded_bytes_sha256": "655444c3892927b2730fc34482c65d246ac9314bba13aef6267b0c87d58cc982"
+  },
+  "pool_track_slots": [
+    {
+      "pool_vtable": "0x18007fe08",
+      "slot_address": "0x18007fe28",
+      "slot_offset": "0x20",
+      "parent_offset": 3624,
+      "bytes": 8,
+      "bytes_hex": "205a008001000000",
+      "little_endian_qword": "0x180005a20",
+      "new_read_performed": false
+    },
+    {
+      "pool_vtable": "0x18007fe38",
+      "slot_address": "0x18007fe58",
+      "slot_offset": "0x20",
+      "parent_offset": 3672,
+      "bytes": 8,
+      "bytes_hex": "205a008001000000",
+      "little_endian_qword": "0x180005a20",
+      "new_read_performed": false
+    },
+    {
+      "pool_vtable": "0x18007fe68",
+      "slot_address": "0x18007fe88",
+      "slot_offset": "0x20",
+      "parent_offset": 3720,
+      "bytes": 8,
+      "bytes_hex": "205a008001000000",
+      "little_endian_qword": "0x180005a20",
+      "new_read_performed": false
+    },
+    {
+      "pool_vtable": "0x18007fe98",
+      "slot_address": "0x18007feb8",
+      "slot_offset": "0x20",
+      "parent_offset": 3768,
+      "bytes": 8,
+      "bytes_hex": "205a008001000000",
+      "little_endian_qword": "0x180005a20",
+      "new_read_performed": false
+    }
+  ],
+  "listings": {
+    "pseudo": {
+      "file": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "functions": {
+        "0x180003aa0": {
+          "evidence_id": "ev_ce74b4f983309d2cc1be9c243fc3798203afe86b437ad9ffead5aaaad8d7c3cb",
+          "section_file": "work/node-insertion-003aa0.pseudo.txt",
+          "section_sha256": "0b3f652de756187f0cdb236db64de016e63c7b576878c4f77106dc74d2d24fb7",
+          "complete_function_section": true
+        },
+        "0x180003030": {
+          "evidence_id": "ev_f0d8f947ec8be75ff8f8d98756eef10381d18d179adac4a13a2b449556abbc64",
+          "section_file": "work/node-insertion-003030.pseudo.txt",
+          "section_sha256": "cfa47f0d8e5bdfbdbd96e57b18ad4ab52b9e8979e93588b4d0b45af810e9dd11",
+          "complete_function_section": true
+        },
+        "0x180005a20": {
+          "evidence_id": "ev_df5bc8292ee95a900d1b02c812064d25be2cc214ec36d768fec18c3da8b9e8c8",
+          "section_file": "work/node-insertion-005a20.pseudo.txt",
+          "section_sha256": "b4dce8f98da997bba0082b3363ca47e8f85650b7d5cf26a6dcbbc128c70db147",
+          "complete_function_section": true
+        },
+        "0x180004970": {
+          "evidence_id": "ev_01d06f0d09c426e84edfc80412a5b90481296b9b16734298cadd2cf8fceab53d",
+          "section_file": "work/node-insertion-004970.pseudo.txt",
+          "section_sha256": "a8689c093ce9b7e3755ce6b2405a49544cee1e74c6ae3ed7448158838894817c",
+          "complete_function_section": true
+        }
+      }
+    },
+    "assembly": {
+      "file": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "functions": {
+        "0x180003aa0": {
+          "evidence_id": "ev_0b08898f12f5db24f44abc354495178632463f25a053f9ce71e2a4157571b4ef",
+          "section_file": "work/node-insertion-003aa0.asm.txt",
+          "section_sha256": "28fe5b89541ed14dc56d747ba4280b2cfdbada17603c60b31024af5fdf4a506c",
+          "complete_function_section": true
+        },
+        "0x180003030": {
+          "evidence_id": "ev_62653814fe73bda4ddc3c13653105d5eae5d8b8e23438a418eb6eb770c525aad",
+          "section_file": "work/node-insertion-003030.asm.txt",
+          "section_sha256": "eafe9288b8f3b69531ca805ed22fc4251bf91d755b7dd2ecc1a06c9013b76fbf",
+          "complete_function_section": true
+        },
+        "0x180005a20": {
+          "evidence_id": "ev_fc5e2131422789819e9bf0acf480c663ab946afa810969adb78f817d69d2ffb2",
+          "section_file": "work/node-insertion-005a20.asm.txt",
+          "section_sha256": "d35c80e6c90fc8116e32587e9da3ad538804bc519ccfa758c60c6f3d27b709ec",
+          "complete_function_section": true
+        },
+        "0x180004970": {
+          "evidence_id": "ev_bab15aa72d1d1d2cb34f0a417872877e60c9e43b5b9530ac83290c1bbc58da0a",
+          "section_file": "work/node-insertion-004970.asm.txt",
+          "section_sha256": "4607f882217c81dfae269649c4ea153c3769f7486c9f4a4c12a5f3d7ccc1fa84",
+          "complete_function_section": true
+        }
+      }
+    }
+  },
+  "instruction_anchors": [
+    "0x180003aa0: MOV RCX, qword ptr [RDX + 0x10]",
+    "0x180003abe: MOV qword ptr [RCX + 0x38], RAX",
+    "0x180003ac2: MOV RAX, qword ptr [RCX + 0x40]",
+    "0x180003ae0: MOV qword ptr [RCX + 0x50], RAX",
+    "0x180003aed: MOV R9, qword ptr [RDX + 0x50]",
+    "0x180003b03: MOV qword ptr [RDX + 0x50], RCX",
+    "0x180003b07: MOV qword ptr [RDX + 0x48], RCX",
+    "0x180003b0b: MOV qword ptr [R8], RCX",
+    "0x180003b15: MOVSXD RAX, dword ptr [R9 + 0x104]",
+    "0x180003b27: MOV R10, RAX",
+    "0x180003b3b: CMP RAX, R10",
+    "0x180003b4b: MOV EAX, dword ptr [R9 + 0x104]",
+    "0x180003b52: MOVSXD RCX, ECX",
+    "0x180003b5a: MOV qword ptr [R8 + RCX*0x8], RAX",
+    "0x180003b5e: DEC dword ptr [R9 + 0x104]",
+    "0x180003b65: MOV RCX, qword ptr [RDX + 0x60]",
+    "0x180003b69: MOV RAX, qword ptr [RCX]",
+    "0x180003b6c: JMP qword ptr [RAX + 0x20]"
+  ],
+  "linked_branch": {
+    "requested_owner_ignored": true,
+    "parent_cached_from_child_offset": "0x10",
+    "ordered_final_zero_fields": [
+      "0x50",
+      "0x48",
+      "0x10"
+    ],
+    "vector_bookkeeping_performed": false,
+    "pool_track_performed": false,
+    "node_destroy_or_release_performed": false
+  },
+  "unlinked_branch": {
+    "document_offset": "0x8",
+    "count_offset": "0x104",
+    "entries_offset": "0xa8",
+    "initial_loop_bound": "cached signed32 extended to64",
+    "replacement_tail_count": "live unsigned32 zero-extended to64 by MOV EAX",
+    "matched_index": "signed32 extended to64",
+    "count_decrement": "live DWORD after swap store",
+    "pool_offset": "0x60",
+    "pool_track_slot": "0x20",
+    "all_normal_unlinked_paths_track": true
+  },
+  "return_projection": "void source projection;004970 ignores native return;no invented common success value",
+  "reused_source_hashes": {
+    "pool_release.hpp": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5",
+    "pool_release.cpp": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5",
+    "node_parse.hpp": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a",
+    "node_parse.cpp": "c3f99be72328132e6917da81939cfb97fe8cff41bf246cdb33746af0defd5461",
+    "node_delete.hpp": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a",
+    "node_delete.cpp": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3"
+  },
+  "new_original_read_performed": false,
+  "new_native_analysis": false,
+  "new_source_bodies_claimed": 0,
+  "original_execution": "none",
+  "original_modification": false,
+  "limitations": [
+    "Slot bytes are retained initialized static Ghidra memory,not runtime dispatch observations.",
+    "Four selected pool track identities do not prove arbitrary pool targets or native pool/object/stack/return ABI.",
+    "003030 destroys/releases after unlink and is not a substitute for003aa0 detach-only source.",
+    "Existing005a20 source reuse adds no new native body or source closure;heap/DOM/EH/concurrency remain open."
+  ]
+}

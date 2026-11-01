@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T14:51:08.3406808Z",
+  "prior_package_sha256": "e3d81f73343a41ff07a05e21351c83100c5550ce53d860cbc29141c76440db6b",
+  "prior_source_count": 466,
+  "unchanged_prior_sources": 466,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/iocp_constructor_native_tests.cpp",
+    "anadius-socket-source/iocp_constructor_native.cpp",
+    "anadius-socket-source/iocp_constructor_native.hpp",
+    "anadius-socket-source/iocp_constructor_tests.cpp",
+    "anadius-socket-source/iocp_constructor.cpp",
+    "anadius-socket-source/iocp_constructor.hpp"
+  ],
+  "current_sources": 472,
+  "current_documents": 186,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 160,
+  "cpp_objects": 156,
+  "c_objects": 4,
+  "normal_test_groups": 147,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_iocp_constructor",
+      "result": "PASS",
+      "output": "PASS: 1872 socket IOCP constructor checks; retained024990 ordering/partial failure/live callback boundaries with controlled providers only",
+      "executable_sha256": "aa191874827b1a84a7b5797b667601606b14254a82766faea4168fd90c0612c9"
+    },
+    {
+      "module": "socket_iocp_constructor_native",
+      "result": "PASS",
+      "output": "PASS: 527 socket IOCP constructor native checks; five SDK-typed injected imports and actual024990/023b30/0228e0/acceptor/cancellation/recycler source integration only",
+      "executable_sha256": "4425e0a358fd0e4e2eca271a4ce083c86a0931769620ee8e03d7c63528835768"
+    }
+  ],
+  "new_checks": 2399,
+  "master_build_sha256": "cd2a3e73791938d97e27658090064fa7e85e64d3e46073da72ee37ca228b8734",
+  "common_build_script_sha256": "e16dc26b8ceefeeceac350dbc49d88998bf6a1484da77f5f51480d9fa5376ca6",
+  "cmake_sha256": "1cb03997b502a00428ed511f7e03f9b481043785b69802156cd5b0d638a99e5c",
+  "normal_source_procedures_added": [
+    "0x180024990"
+  ],
+  "new_original_procedures": 1,
+  "new_composition": "Actual024990 IOCP/version/gate/worker normal construction with injected SDK APIs and required worker effects",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

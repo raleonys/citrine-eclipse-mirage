@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "reviewer": "primary independent retained-static source review",
+  "reviewed_sources": {
+    "order.hpp": "1e9f2b46e6a1cece859dc193ecb5573df3dc4bbee94ec00490d5264cedf7345f",
+    "order.cpp": "70af2d1c3e948d6b1d2eca3e4339d19869ee731216dae2b85258e77cf33dd719",
+    "order_tests.cpp": "b57a2d69163754478de59841496a25a14a98a9bf1586e84d8e901d4a04394f33",
+    "build.ps1": "06dd0f13eef7a22e27365cbe84fb472f41a49f22b96b438e78a6be3f88929194",
+    "CMakeLists.txt": "666de3fe55ce4968822fc04d8d6a039466a317cdde37aa993376fa1034c9a085",
+    "evidence.json": "b0da23a1e1b1911795d4e87eb844b55b9bfbac7cf9a291810bf9d030ca7c5c0f"
+  },
+  "scope": "8bucket FNV, unique insertion, duplicate/move stability, firstcopy rebuilding and recursive descendant insertion",
+  "retained_evidence": "../anadius-config-order-source/evidence.json",
+  "conclusion": "matches bounded unique-key path; no full function or finalcollection parity claimed",
+  "test_record": "2185 standalone checks and final common build PASS in ../source-workspace/build-record.json",
+  "findings": [],
+  "original_execution": "none"
+}

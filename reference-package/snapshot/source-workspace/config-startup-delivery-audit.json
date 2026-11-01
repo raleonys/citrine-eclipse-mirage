@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T13:27:36.6868927Z",
+  "prior_package_sha256": "2b3cc36872ee36381a233d26724fe4494eaadd774f337d1e9dd1685985f5d319",
+  "prior_source_count": 383,
+  "unchanged_prior_sources": 381,
+  "changed_prior_sources": [
+    "anadius-config-source/configuration.cpp",
+    "anadius-config-source/configuration.hpp"
+  ],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-config-startup-source/startup_tests.cpp",
+    "anadius-config-startup-source/startup.cpp",
+    "anadius-config-startup-source/startup.hpp"
+  ],
+  "current_sources": 386,
+  "current_documents": 147,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_hashes_verified": 21,
+  "unchanged_configuration_prefix": true,
+  "unchanged_post_configuration_body": true,
+  "header_change_only_ConfigurationPass_interface": true,
+  "native_objects": 132,
+  "cpp_objects": 128,
+  "c_objects": 4,
+  "normal_test_groups": 117,
+  "terminal_cases": 19,
+  "legacy_and_startup_tests": [
+    {
+      "module": "configuration",
+      "result": "PASS",
+      "output": "PASS: 150 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.",
+      "executable_sha256": "328526e43cfb72df22cdcfb002ecb91ed228cfd0d3a00b1a261908298e03d484"
+    },
+    {
+      "module": "config_startup",
+      "result": "PASS",
+      "output": "PASS: 335 Config2 startup checks; own generated files, all other OS/worker effects controlled",
+      "executable_sha256": "38848c6cd8f81db7635bcf78bbd60b2e4a2c01fe4589efa9334124442daa7688"
+    }
+  ],
+  "master_build_sha256": "a232596fb35aaa0cf634fe120cb787ca30649b37e1b270f060bde892fc2f6a7a",
+  "full_unique_original_bodies_added": 0,
+  "original_execution": "none",
+  "real_user_cfg_read": false,
+  "CRT_production": "unchanged",
+  "startup_source_bridge": "BootstrapConfiguration -> FilePass -> shared01c870 -> mutable Config2 source path",
+  "native_ABI_SEH_global_runtime": "not established"
+}

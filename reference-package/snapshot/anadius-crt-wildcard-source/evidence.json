@@ -1,0 +1,42 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source": "Retained REA/Ghidra function evidence, no new active target",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "functions": [
+    {
+      "va": "0x18006e5bc",
+      "assembly_evidence": "ev_b207a32e305b7f0357dc3aafe93146fdfcd51323afefa6a2797a4aa8a055a17e",
+      "pseudocode_evidence": "ev_242154d524758909ae1bf27f832fa29004efcdc84cc70fbf55f3ba429e4cd025"
+    },
+    {
+      "va": "0x18006ecd4",
+      "assembly_evidence": "ev_a74ec17be0d55042470d3e04b516fee50575e35099136098a442c0aedc914c93",
+      "pseudocode_evidence": "ev_23b605fdceb24b68e4bdd689e67a23287cf47d9b413234278129e0c24340c30b"
+    },
+    {
+      "va": "0x180077170",
+      "assembly_evidence": "ev_f0d86780972e5e90c47c062a912115fa540d28e11e54c9c0be6ba90508b18661",
+      "pseudocode_evidence": "ev_e48edbb0f797d101801263cb90ccce146475d6ab2f83eed2972fd6c5f4674fab"
+    },
+    {
+      "va": "0x180077168",
+      "assembly_evidence": "ev_191d0da4c56aa0e09e5f9e6b0d5b4917cd7debdaafaf43537ec6d6d7cc2d3fc6",
+      "pseudocode_evidence": "ev_b78a72bba02f423f64ed320651045264b55c90c7f9a282e6a8ad902600c7a2b4"
+    }
+  ],
+  "scope": "Bounded normal-flow source reconstruction and separately labeled new composition",
+  "target_execution": "none",
+  "runtime_equivalence": "not established",
+  "composition_evidence": [
+    "../anadius-crt-wildcard-storage-source/evidence.json",
+    "../anadius-crt-wildcard-search-source/evidence.json",
+    "../anadius-crt-sort-source/evidence.json",
+    "../anadius-crt-sort-source/comparator-offline-evidence.json",
+    "../anadius-crt-argv-source/evidence.json",
+    "../anadius-crt-byteclass-source/evidence.json",
+    "../anadius-crt-argv-bridge-source/evidence.json"
+  ],
+  "inline_region": "Codepage selection extracted from06e984 retained source/assembly, including06ea5a..06eac4 and repeated filename region; not an additional original function",
+  "semantic_adapter": "first_wildcard is a bounded bytewise semantic adapter for the constant set *? at06e624; 076da0 CPU/SIMD selection and speculative footprint are not reconstructed"
+}

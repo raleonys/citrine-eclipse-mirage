@@ -1,0 +1,41 @@
+{
+  "result": "PASS",
+  "reviewer": "independent crt_support_review agent",
+  "review_scope": "Static comparison of seven reconstructed normal-flow functions and synthetic tests with retained REA/Ghidra listing and pseudocode. No production or test source changed; no target or native API executed; existing fixture validation inspected, not rerun.",
+  "target": {
+    "name": "anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "reviewed_sources": [
+    {"name": "support.hpp", "sha256": "c3fb51e8edf0de8f9d5cbb4d1daee93c77999b384f1077bb9ef1b0119f846210"},
+    {"name": "support.cpp", "sha256": "9e3725e170ef1e0ebc989bfffaa7f816a925fb8fd4acf19b02fe21785fea5716"},
+    {"name": "support_tests.cpp", "sha256": "0f1fb7167991fda7a6accf359abfbac27a1eec707b8c3466a7d9c3c317410316"}
+  ],
+  "retained_evidence": [
+    {"name": "../anadius-all-functions.asm.txt", "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"},
+    {"name": "../anadius-all-functions.pseudo.c", "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"}
+  ],
+  "functions": [
+    {"va": "0x1800067e0", "assembly_evidence": "ev_33ce79efbcc93b2d037d6f319b367efed6b4582af68bb46bb21dba2d98959403", "finding": "Returns stable reconstructed printf option cell corresponding to original A37D0 identity."},
+    {"va": "0x1800067f0", "assembly_evidence": "ev_77f239cb7d154b5850ccf5ac8894e57f22a53960e602811663bbb8496d7c1056", "finding": "Returns separate stable scanf option cell corresponding to original A37D8 identity."},
+    {"va": "0x18004c1e0", "assembly_evidence": "ev_d954ab7c7c8df868317f38b7de8d6f99bb29ff20a901f7881cbdf3364c54c5fd", "finding": "Forwards the selected head token once to required initialization provider; original fixed head identity is A4D70."},
+    {"va": "0x18004c1f0", "assembly_evidence": "ev_f34f4e8fc5aa094bd49b2f84a6e7d45b007f3724c288b5903b7355d26b760848", "finding": "Delegates release for the selected shared head; original tail jump targets 04D2F8."},
+    {"va": "0x18004c1fc", "assembly_evidence": "ev_5d7826f0f1558163dd902bd43d73b3165b4e7901fd66472355802cc82dee8bd6", "finding": "Preserves qword width and ordering: printf OR 0x24, then scanf OR 2; other bits retained."},
+    {"va": "0x18004c218", "assembly_evidence": "ev_6f25e4cd41a2099038d48511d95fa3c0a2782ce1bc0009e91803b4eb28d12ad4", "finding": "Returns the callback slot address, not its contents; source slot remains stable across value changes."},
+    {"va": "0x18004d2f8", "assembly_evidence": "ev_8bb82305f0c7380e146aaae1a1ed9a1146df7863695e732c3c0f7c5d70195ea6", "finding": "Flushes exactly once and saves pointer-sized Next from offset zero before each free. Traverses returned snapshot; no second flush, invented cleanup, or re-read of freed node."}
+  ],
+  "tests_inspected": {
+    "validation": "validation.json",
+    "validation_sha256": "429d825cc442fd3fd0c0546f0b14b6873ff34060bcb835071c80d5eec0329efe",
+    "reported_result": "PASS 4438 CRT support checks",
+    "coverage": "Eight 64-bit option seeds, repeated initialization, stable callback slot, list lengths zero through 64, exact event order, mutation during free, snapshot insertion, and exception propagation without invented cleanup. Source hashes agree with validation record."
+  },
+  "actionable_defects": [],
+  "limits": [
+    "Provider tokens are rebuilt identities rather than original image addresses or native SList ABI. Integrator must consistently map initialization and release to the same live head, preserve provider and storage lifetime, and expose live nodes until free.",
+    "Interlocked behavior, lock-free concurrency, native SList alignment and memory ordering are required provider contracts; fixture tests do not establish them.",
+    "State cells are new source storage; default zero values do not independently establish original PE initial bytes, relocation layout, or cross-module alias binding.",
+    "Provider exceptions are a synthetic normal-flow boundary; original SEH/unwind semantics are not reconstructed.",
+    "No assertion of original source identity, binary equivalence, or complete DLL behavior follows from this bounded review."
+  ]
+}

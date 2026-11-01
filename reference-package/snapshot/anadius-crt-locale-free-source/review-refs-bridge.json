@@ -1,0 +1,70 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T02:09:06.2120786Z",
+  "reviewer": "independent locale-free source worker",
+  "scope": "Four locale/time reference bodies against retained exact-target assembly plus new locale resource composition and integrated tests",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "findings": [],
+  "reviewed_files": [
+    {
+      "path": "outputs/anadius-crt-locale-ref-source/locale_ref.hpp",
+      "sha256": "b5a6815488ff5565a33a82e65bbc6ce195eca59f0d410581ed780ac38b43637d"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-ref-source/locale_ref.cpp",
+      "sha256": "762f527d38d310e84ec5b07bc0257563a50da500210367002ac50f5c04837d2e"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-ref-source/locale_ref_tests.cpp",
+      "sha256": "9397c79749bd201ad9977c70685853c89a8c7aa1c32153bb7b0d9d8a57c20087"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-resource-bridge-source/bridge.hpp",
+      "sha256": "614e7104746d22778cbe7d393266ff6c840e44a2989ab23a2aad9d965fbcc53c"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-resource-bridge-source/bridge.cpp",
+      "sha256": "6980577c496eab1dc32bad66f07d57e840ef113fb920bd0dd786e089be3008fa"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-resource-bridge-source/bridge_tests.cpp",
+      "sha256": "a3020cefe0612774b615bef065d4d6ba0ea7b7d8053461659d89c87ac9f580d4"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-ref-source/build/locale_ref_tests.exe",
+      "sha256": "9eccef2d91316f6211ccc46465573cd2b08cf9c2177b97e34cef2fe6234c464a"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-resource-bridge-source/build/bridge_tests.exe",
+      "sha256": "d9dbbec87165f4b2cdbf3d2a504f99b87e5cf5c9c0a71088dd81ff6588655d98"
+    }
+  ],
+  "anchors": [
+    "070634 INC.LOCK locale+10 before e0/f0/e8/100 loads;0708c0 NULL release guard and same ordered ADD.LOCK -1 sequence.",
+    "070674..0706b1 and070916..070955: exactly six category slots at38+i*20, sentinel-10/counter+0 and narrow guard-18/counter-8. Time loaded120 after counter effects.",
+    "070838/070898: NULL or initial_time returns INT_MAX; dynamic+15c full DWORD XADD increment/decrement with modulo32 new return, signed bits preserved.",
+    "Resources delegates read_address/read_u32 to same borrowed Memory; refs use actual source with *this; deep free uses actual locale_free; final0668c0 uses same recovered heap State/Effects as allocator.",
+    "Harness member lifetimes exceed bridges; identities/defaults are borrowed references initialized before use. Category/time identity fields are assigned identically in ref and free configs; initial_lconv pointer defaults and storage are both zeroed.",
+    "Owned-tree test allocates distinct common/monetary/numeric/ctype references and strings, biased ctype storage,87 time member allocations and six category records, then verifies both heap registries empty.",
+    "Aliased-counter test performs16 component increments and decrements plus time count without attempting to deep-free deliberately aliased ownership records; dynamic replacement exercises old owned locale ref1 to0 and frees exactly old heap object."
+  ],
+  "test_runs": [
+    {
+      "command": "outputs/anadius-crt-locale-ref-source/build/locale_ref_tests.exe",
+      "exit_code": 0,
+      "output": "locale_ref: 6212 checks PASS"
+    },
+    {
+      "command": "outputs/anadius-crt-locale-resource-bridge-source/build/bridge_tests.exe",
+      "exit_code": 0,
+      "output": "PASS 9280 locale/resources/deep-free/PTD/argv/find/heap composition checks"
+    }
+  ],
+  "limits": [
+    "No original DLL loaded or executed. Only already built synthetic fixture executables rerun.",
+    "Atomic provider fixture is serialized read/write storage under modeled locks, not a native concurrency proof; production atomic and locking providers remain abstract.",
+    "FLS/native find/encoding/heap providers in integration are synthetic. Native ABI, exception/SEH unwind and native access-fault equality remain unproven.",
+    "New composition requires callers to keep reference identities and free defaults consistent and supplied storage live in the common heap domain; this is a contract, not an automatic native wiring step.",
+    "This review does not establish a complete independently loadable DLL or quantify total reverse-engineering completion."
+  ]
+}

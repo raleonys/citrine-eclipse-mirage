@@ -1,0 +1,118 @@
+{
+  "schema": "service-constructor.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x1800228e0",
+      "pseudo_evidence": "ev_22c4bffe54fe0b986545326a4020802e4e98041a480e8cafc64b603ecd05d1ef",
+      "assembly_evidence": "ev_cccd315f694dc43aeae87a61fc8912482989a03586a119141e1b2a2d8f2bdd7b"
+    },
+    {
+      "address": "0x180027be0",
+      "pseudo_evidence": "ev_948db36a6b6838994310cbdd3ff325ea9d6c875b61a63f92c9c0d1ce03fdbe85",
+      "assembly_evidence": "ev_ebd0f0654f2c3bac442e8d0023199cc155873bebe20cb19ded69b206149bb469"
+    },
+    {
+      "address": "0x1800239c0",
+      "pseudo_evidence": "ev_c935d546ffcfd9a015759eba276b6b86808a598ce42947d5ddbe6ef939153abb",
+      "assembly_evidence": "ev_245079b916f12d89c98287073bb82e89b00650e14f7fa967621e26699d2344a4"
+    },
+    {
+      "address": "0x180023b30",
+      "pseudo_evidence": "ev_e19c4187c6fd93eed1f7799ea815833381b3dbe02527496c06be2e73f9fd1811",
+      "assembly_evidence": "ev_5bd06ce10f718331325ac29108e8afe82981dcdd81da85e580033f641b8dae7c"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "service_constructor.hpp": "3e03015e00752ec4f3020bdaa6559eb89e3c311b25877198a296361ef4a19365",
+    "service_constructor.cpp": "e4125fb99d7cbf61c29fd82ac5b7027f5face09a92e77890c66da96a8ec74413",
+    "service_constructor_native.hpp": "4dfe0aebd535f22fd9cf264c13508055b79bcbaab62aaf9c8bcec2b6bdb24702",
+    "service_constructor_native.cpp": "9bc4cac66954bcb9583fea697cfa1e9ebae2daac3284a5ac8cd33781495a19aa",
+    "service_constructor_tests.cpp": "474658871c1b4ffc9bc005a09c3e8ead13fe2c8cd57af8592c7beebfb20e10d9",
+    "service_constructor_native_tests.cpp": "97c6ac67550c3a3e8c60604420bb2f798a23834f87820f2547d379ef1beaf0b2",
+    "build.ps1": "eb1fd07c012aacffeee3147c493707f181cddaf8586dbe602a365f1dd6a35ea2",
+    "CMakeLists.txt": "6fcaa59c3957f1edecceff15b7cf562f2f6a8ca3fa934ff1a8e70d6c9a5d31ad",
+    "README.md": "05754ea8563dc44fbae15f871c8e2017e623bd42275df8885058c048baea3af4"
+  },
+  "support_hashes": {
+    "service-constructor-evidence.pseudo.c.txt": "78a56aae0bcae868098f77458ff97c4a6b2e2dbe3d0107fd3c063c3fe326ccaf",
+    "service-constructor-evidence.asm.txt": "b522e1d20babc6e6c69553e772dde12eea27e67a7947a18ee8ef03c1bc536060",
+    "service-constructor-flow-audit.md": "c2b2f1b85e254d0de669deacd0e713ac54100bbd9727cb54a2ba71ea41020f48",
+    "service-constructor-flow-audit.json": "6e66d6357a8acac60edcd604f169df3d95b91e45465cc5db1a0df753ae683484",
+    "service-constructor-review.md": "4873f0799603acee339857d2d0583e003bbde436bb9d74e0c2ddf5818929c024",
+    "service-constructor-review.json": "2192bfa95d677503527d35b12d64c3d2622b1b91ba93cb481386957acca79d0c",
+    "service-constructor-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x1800228e0",
+    "0x180027be0"
+  ],
+  "new_original_procedures": 2,
+  "required_providers": [
+    "04b0bc native allocator",
+    "023b30 scheduler resolver/construction",
+    "04d2d0 native CRT RTTI comparator",
+    "Executor/global/category/raise/dispatcher effects"
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x1800228ef",
+        "0x1800228f2",
+        "0x1800228f7",
+        "0x180022909",
+        "0x18002290b",
+        "0x180022922",
+        "0x180022925"
+      ],
+      "finding": "Cache context identity before native80 allocation; null returnsnull without remaining effects; key/context/next/basevtable/implementation-context order"
+    },
+    {
+      "addresses": [
+        "0x180022929",
+        "0x18002292c",
+        "0x180022931",
+        "0x180022935",
+        "0x18002293d"
+      ],
+      "finding": "Read registry projection live after header writes; required023b30 before scheduler assignment and zero38/40/48"
+    },
+    {
+      "addresses": [
+        "0x180027be4",
+        "0x180027be9",
+        "0x180027bef",
+        "0x180027bf3"
+      ],
+      "finding": "SDK InitializeCriticalSectionAndSpinCount with80000000; any nonzeroBOOL=>0, zeroBOOL=>GetLastError including0"
+    },
+    {
+      "addresses": [
+        "0x180022945",
+        "0x18002294a",
+        "0x18002294c",
+        "0x18002295a",
+        "0x18002295e",
+        "0x180022969",
+        "0x180022984",
+        "0x180022990"
+      ],
+      "finding": "Cache gate status across always-called category; nonzero raise028240 mutex before final stores; zero clears head then installs finalvtable; no invented rollback/teardown"
+    }
+  ],
+  "independent_production_review": "PASS; service-constructor-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Actual recovered constructor/registry source composition with injected SDK init/GetLastError and controlled scheduler/allocator/category effects; no real network/IOCP",
+  "unproven": [
+    "04b0bc allocator,023b30 scheduler construction,04d2d0 CRT comparator and native layout/ownership/teardown",
+    "Native ASIO layout/dispatcher/service/container/allocator/lifetime/concurrency",
+    "Native error padding/vtable/global/SEH/unwind/ABI",
+    "Full DLL integration and original runtime differential"
+  ]
+}

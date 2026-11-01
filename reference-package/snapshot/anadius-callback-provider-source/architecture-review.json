@@ -1,0 +1,166 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T13:12:27.539747+00:00",
+  "review_scope": "B22 selected owned compiler locale/invalid-call provider, numerical encoding policy, actual foreign factory CRT pre/post checkpoints, byte-safe bridge error/prefix behavior and synthetic tests",
+  "reviewed_source_hashes": {
+    "provider.hpp": "dc29efe58ce8483df8474e434e3c99e7f26a8b6ca31c8835001cf45e3b238d12",
+    "provider.cpp": "99cdda12ce4ee60fdc895860ec494015b1d743c7d5662efd0df31438f65a4f73",
+    "provider_tests.cpp": "52bb5f3bfbc63942123a2b77d7395355012f461a82b3feed6fd4d902b215d989",
+    "provider_integration_tests.cpp": "348fab578405d055dd29a9ccc8fab590202114694350576aba5a20b7661750de",
+    "../anadius-callback-policy-source/policy.cpp": "c6217769d167a1827f3bf7fdc1ba63761b5f256b5182175ba0fb5223b11ca6c1",
+    "../anadius-callback-policy-source/policy.hpp": "19b7be706f26423cdd9b30c92a55246847c8e28b93ef5679cb832c89aea9762c",
+    "../anadius-foreign-callback-source/foreign.cpp": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4"
+  },
+  "quick_results": [
+    {
+      "path": "work/b22-core-quick-results.json",
+      "sha256": "984e075e57e45c372d5cbc89cb06921f4b9588a44ed779439f75f083f581c1de",
+      "checks": 60,
+      "executable_path": "work/b22-core-test.exe",
+      "executable_sha256": "69f304819c95c32ece9fafb7d0ba4022d044175651dbc5be03b22f3007403aed",
+      "execution_by": "Root (core); independent reviewer read seven frozen sources and verified recorded source/EXE hashes; did not rerun"
+    },
+    {
+      "path": "work/b22-integration-quick-results.json",
+      "sha256": "278f9fc7c62f4a90a4d12954a8cf2cc794cfdc9b5c467fed76b75715138233ab",
+      "checks": 20,
+      "executable_path": "work/b22-integration-test.exe",
+      "executable_sha256": "ba5b69ebb8dd58d3939b3dbe6da9486584b15d92f481ba90f038fbe40bc72292",
+      "execution_by": "/root/b22_integration (integration; root delegated); independent reviewer read seven frozen sources and verified recorded source/EXE hashes; did not rerun"
+    }
+  ],
+  "root_checks": 80,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "baseline_package_sha256": "a0e3af87286e7bf116b96f30b2407eb4470197b6a2c2faa2a901a03271b63fac",
+  "prior_source_files": 810,
+  "prior_sources_preserved": 807,
+  "current_source_files": 814,
+  "source_inventory_counts_basis": "Reviewer independently verified B21 ZIP identity, all810 manifest source entries against current files, exactly807 unchanged and the declared3 modifications; four new source paths are reviewed. Planned common object/group counts are not a passed-build claim.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "1cec6448ec1e9b2e4e2f0a3f4014a115f7a037372e68d136e6b128943f4b889e",
+      "after_sha256": "c6217769d167a1827f3bf7fdc1ba63761b5f256b5182175ba0fb5223b11ca6c1",
+      "reason": "Dispatch selected owned CRT in narrow and byte-safe wide routes; retain lower exception LastError"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "276262274aee1a3ce4ce130e10637ce26675f4fcd7268c1c4d294c38314b5542",
+      "after_sha256": "19b7be706f26423cdd9b30c92a55246847c8e28b93ef5679cb832c89aea9762c",
+      "reason": "Optional owned context-aware CrtProvider retained by Resources and ByteWide; legacy table remains"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.cpp",
+      "before_sha256": "c4f85a5a76e2443f2474a3160cffefb4849d8b5267b293a9984c215ae2b8ed03",
+      "after_sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+      "reason": "Wrap selected owned or legacy CRT lower calls in same actual PTD pre/post permission as encoding"
+    }
+  ],
+  "prior_changes_record_sha256": "3ba3b288217125ddbdd94a8457f5a516876ba0966c4adc306cbc803be9cfcca6",
+  "findings": [
+    {
+      "topic": "Owned locale and explicit invalid-call policy",
+      "result": "PASS",
+      "evidence": [
+        "provider.cpp:16-47",
+        "provider_tests.cpp:35-70"
+      ],
+      "observation": "OwnedCrt creates an explicit nonempty NUL-free compiler locale with _create_locale, frees it at final ownership release, and compares through _stricmp_l/_wcsicmp_l. Null comparisons are handled before CRT entry. The owned returning/throwing invalid handler receives explicit operation/reason/error metadata; invalid copy clears valid output before notification. Returning handler sets compiler errno to EINVAL/ERANGE. Overlap and capacity above INT_MAX are excluded domains. No global/thread locale or invalid-handler setters are used. German and C comparisons, handler lifetime, NUL, capacity and untouched-tail checks support the selected policy, not original static CRT equivalence."
+    },
+    {
+      "topic": "Owned context dispatch and lifetime",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-callback-policy-source/policy.hpp:18-31,38-53",
+        "../anadius-callback-policy-source/policy.cpp:37-75,94-95",
+        "provider_integration_tests.cpp:91-122"
+      ],
+      "observation": "Resources and ByteWide retain the shared virtual CrtProvider; an owned-only ByteWide no longer requires unused legacy function pointers. Narrow and inherited final wide routes dispatch to that same provider. Legacy complete-table behavior remains available. Actual foreign factory copies retain handler context through consumption; native Context ownership releases it after explicit pause/close. Resources precedes ByteWide in Storage, so the wide frontend is destroyed before its backing Resources owner. No ownership cycle was found."
+    },
+    {
+      "topic": "All four lower CRT checkpoint routes",
+      "result": "PASS",
+      "evidence": [
+        "provider.cpp:48-61",
+        "../anadius-foreign-callback-source/foreign.cpp:86-96",
+        "provider_tests.cpp:81-99",
+        "provider_integration_tests.cpp:123-151,175-199"
+      ],
+      "observation": "The foreign factory wraps either selected owned CRT or complete legacy table using the same actual Domain permission as encoding. All four virtual operations check before and after the lower invocation, without a metadata mutex spanning provider calls. Checks separately preserve WinLastError. Valid exceptional postchecks rethrow the identical exception; invalid postcondition wins and prevents the next lower call. Manual actual-PTD integration verifies fresh scope cleanup after handled invalid-copy exception, and poisoned retention after handler FLS mutation."
+    },
+    {
+      "topic": "Byte-safe bridge prefixes and exceptional error",
+      "result": "PASS",
+      "evidence": [
+        "provider.hpp:13-16",
+        "../anadius-callback-policy-source/policy.cpp:41-69",
+        "provider_integration_tests.cpp:123-151,152-199"
+      ],
+      "observation": "ByteWide retains actual wchar_t staging and memcpy-only borrowed UTF16 access. Normal and throwing lower routes capture outgoing WinLastError before staging destruction. Actual output first unit remains cleared before a throwing invalid-copy handler while unused tail remains untouched. Staging and invalid-output preclear occur BEFORE the lower CRT checkpoint, as explicitly documented; this is not an effect-free guard at the entire wide bridge entry. No blind output rollback or provider retry was introduced."
+    },
+    {
+      "topic": "Numeric encoding without selector/flag conflation",
+      "result": "PASS",
+      "evidence": [
+        "provider.hpp:17-31",
+        "provider.cpp:62-88",
+        "provider_tests.cpp:100-132",
+        "provider_integration_tests.cpp:41-55,91-122"
+      ],
+      "observation": "NumericEncoding owns its lower Calls and immutable explicit selector plus validated numerical ANSI/OEM pages. It does not consult ambient compiler locale or AreFileApisANSI. Recovered helpers select 65001/0/1 and conversion flags first; only lower cp0/cp1 are resolved to explicit numeric pages. Other values pass through except ambient aliases2/3, which reject. UTF8 aliases do not silently receive UTF8-specific flags. Existing used-default, invalid-flags retry, counted NUL, query/fill length and tail/error behavior is retained. Native Win32 UTF8 and1252 conversions are tested. select constructs both replacements before mutation and documents prepublication use before foreign make_factory."
+    },
+    {
+      "topic": "Evidence attribution and bounded synthetic tests",
+      "result": "PASS",
+      "evidence": [
+        "provider_tests.cpp",
+        "provider_integration_tests.cpp:78-89,152-210",
+        "work/b22-core-quick-results.json",
+        "work/b22-integration-quick-results.json"
+      ],
+      "observation": "The reviewer independently read all seven frozen sources and verified the root-run core record and /root/b22_integration-run integration record and executable/source hashes without rerunning. Core has60 PASS checks, integration20. Integration drives own source native A/W folder and process wrappers, exact four CRT route counts and four numerical query/fill conversions. Own children exit221 only after identical provider exception plus PTD/binding drain predicate, or222 only after retained poison/prefix and next-lower rejection predicate. Generic abort239 and unexpected return230 are distinct. No original/rebuilt DLL/game, actual user content, actual original process creation or network was exercised."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Owned locale, handler and numerical encoding apply only when explicitly selected. Legacy/default CrtApi and NativeCalls remain ambient outside this selected path; no process-wide freezing is claimed.",
+    "Compiler locale, compiler errno and recovered PTD initial locale/errno domains remain distinct. No original static CRT layout, invalid-handler, debug-fill, exception ABI or DLL equivalence is proved.",
+    "Wide staging and invalid-output preclear precede lower CRT permission checks; a denied call is not guaranteed effect-free at the wide bridge entrance. Unreadable/non-NUL inputs, overlapping copies and capacities above INT_MAX remain excluded.",
+    "IsValidCodePage does not guarantee every retained flag combination is valid for every numeric page. Aliases resolving to UTF8 retain pre-resolution flags/used-default arguments and may return the original-style conversion error; no silent flag upgrade is performed.",
+    "Arbitrary provider/handler reentry, raw PTD free/ABA, temporary mutation restored between checks and inaccurate FLS getters remain outside the supported single-active domain.",
+    "B18 admission/PTD ownership, B19 one-Execution publication, B20 exact shared-stream gate and B21 actual-FLS identity obligations continue. Remaining worker/fallback/provider synchronization and external quiescence are not automatically proved.",
+    "Seven online foreign calls, configuration/license/legacy document ownership, B10 historical review debt, generic CRT, native ABI, hooks/unload and final PE/DLL proof remain open.",
+    "The planned full common build240objects/236CPP/275groups plus19 framework terminal scenarios is pending at review time and was not reviewed or claimed passed here."
+  ],
+  "claim": {
+    "selected_owned_compiler_locale": true,
+    "selected_owned_invalid_handler": true,
+    "selected_numerical_ANSI_OEM_resolution": true,
+    "recovered_flags_selected_before_alias_resolution": true,
+    "all_four_lower_CRT_routes_pre_post_checked": true,
+    "inherited_wide_lower_CRT_per_call_checked": true,
+    "whole_wide_bridge_effect_free_entry_guard": false,
+    "process_global_locale_or_handler_frozen": false,
+    "legacy_ambient_provider_removed": false,
+    "arbitrary_provider_reentry_supported": false,
+    "original_DLL_or_game_execution": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Only architecture-review.json and architecture-review.md were written by this reviewer.",
+    "The reviewer authored neither production nor core/integration tests, and did not rerun passed quick tests.",
+    "Early owned-only fallback validation defect was fixed; lower-checkpoint/preclear scope and select prepublication order are explicitly documented."
+  ]
+}

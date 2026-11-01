@@ -1,0 +1,257 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "Read-only frozen source, retained selected-function pseudocode/ASM, execution-record and archive/hash audit; no reviewer executable execution.",
+  "reviewed_at_utc": "2026-10-30T22:33:30.452074+00:00",
+  "reviewed_source_hashes": {
+    "accept.hpp": "8f1196a1506ee63a05d2d215091766fe607ba2f53269e0422ce2d034f2a85485",
+    "accept.cpp": "3483ad9075706413543407f75c4ec02333d124f3a5a39ddb25f1e51572b11a22",
+    "owned.hpp": "837fe33f9a97020c0aeac604cb09166e6db40eea3ef79414830512e2cfbd4cca",
+    "owned.cpp": "ca0b1e0bf4e6c22c320f09c4794052051307e8df268cc6b155b924bba5c57a26",
+    "accept_tests.cpp": "ead34d0ea512b571478b2a1869328e936e2c57b200cd9a315e97fb5f62faa503",
+    "accept_integration_tests.cpp": "92f6e1fd6329bb869d5a35f29bd40aa8012b8465bdd9be17eddec475f2902b28",
+    "../anadius-session-memory-source/memory.hpp": "37dadb1a7708e36c079ae9bfe2e755014c4127ffa923c6bebc9257dc0fa512d9",
+    "../anadius-session-memory-source/memory.cpp": "fc54b2449bdf8d4f5a2eb8161dd02f0e576ec7b8994e0f750c711bfce1d030f9"
+  },
+  "code_freeze": {
+    "path": "work/b36-code-freeze.json",
+    "sha256": "266817e6c237e57aa1be4f662d423f3a3e574584215c94d8057ea93e820c37af",
+    "all_eight_current_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 2045,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b36-core-agent-tests.exe",
+      "executable_sha256": "345860f0bd2efa80d1fddbedaf86ff2eb2a2ecb92ee5d9d08234c50816b804c6",
+      "archive_path": "work/b36-baseline-core.a",
+      "archive_sha256": "a6075742edd1fb2d80744cbc5476f01abd3e6a51827f920bc91b6628c583a3ad",
+      "archive_unchanged_through_run": true,
+      "path": "work/b36-core-quick-results.json",
+      "sha256": "2c368c29c8cc01c3d98902fa32c44533e4acfd753c730ea4f2bcd97fbb3d468f",
+      "execution_by": "/root/acceptor_tests (actual immutable core execution; /root normalized the quick record)",
+      "test_author": "/root/acceptor_tests",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "archive_hash_independently_verified": true,
+      "reviewer_executed": false,
+      "actual_execution_record": {
+        "path": "work/b36-core-agent-results.json",
+        "sha256": "c214ed1bd23478383cc6adb63447d16fcfd07d1f92ab948a8e9d3cb49f5e8192",
+        "actual_executable_verified": true
+      }
+    },
+    {
+      "checks": 177,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b36-integration-final-tests.exe",
+      "executable_sha256": "af62e4ef7d278e8a3fa4c5bdd2063576d5aefc59fb002f487ae2e4884becee3b",
+      "archive_path": "work/b36-baseline-core.a",
+      "archive_sha256": "a6075742edd1fb2d80744cbc5476f01abd3e6a51827f920bc91b6628c583a3ad",
+      "archive_unchanged_through_run": true,
+      "path": "work/b36-integration-quick-results.json",
+      "sha256": "3aefe9f78ca9a3cf0cb2f7bee37c0f9de399e73310fc72a5c6711475d68342c7",
+      "execution_by": "/root (fresh final execution of the integration author source)",
+      "test_author": "/root/b22_integration",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "archive_hash_independently_verified": true,
+      "reviewer_executed": false,
+      "sources_unchanged_through_run": true,
+      "fresh_production_units": [
+        "accept.cpp",
+        "owned.cpp",
+        "../anadius-session-memory-source/memory.cpp"
+      ]
+    }
+  ],
+  "quick_checks_total": 2222,
+  "root_checks": 177,
+  "core_agent_checks": 2045,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING at review; quick PASS is not full common-build PASS.",
+  "common_build_targets": {
+    "production_objects": 254,
+    "cpp_units": 250,
+    "c_units": 4,
+    "ordinary_groups": 301,
+    "framework_terminal_groups": 19,
+    "status": "planned; not verified as executed by this review"
+  },
+  "baseline_package_sha256": "fdfb32d264ebbafb1093594c17c0946470feb4ce0f2719bdd2d19722e57b2da6",
+  "baseline_source_files": 864,
+  "prior_sources_preserved": 862,
+  "modified_prior_sources": 2,
+  "new_source_files": 6,
+  "current_source_files": 870,
+  "prior_source_changes": {
+    "record": "work/b36-prior-sources.json",
+    "sha256": "2da778fe2aaf2b2fa99c630a276bfacf96669b30e2515b1541bb0acac5fd1b29",
+    "baseline_hashes_verified": true,
+    "exact_diff": "Only declaration/comment and implementation of acquire_provider_lease_from_operation; existing idle factory, heap allocation/free and CRT behavior unchanged.",
+    "paths": [
+      "anadius-session-memory-source/memory.hpp",
+      "anadius-session-memory-source/memory.cpp"
+    ]
+  },
+  "archive_proof": {
+    "path": "work/b36-baseline-core.a",
+    "sha256": "a6075742edd1fb2d80744cbc5476f01abd3e6a51827f920bc91b6628c583a3ad",
+    "matches_B35_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "zip_member_hash_verified": true,
+    "immutable_as_used_in_both_current_quick_records": true
+  },
+  "composition_count_basis": {
+    "baseline_excluded_files_verified": 79,
+    "baseline_composition_objects_verified": 39,
+    "new_composition_files": [
+      "anadius-accept-source/owned.hpp",
+      "anadius-accept-source/owned.cpp"
+    ],
+    "expected_excluded_files": 81,
+    "expected_composition_objects": 40,
+    "native_accept_hpp_cpp_not_composition_excluded": true,
+    "inventory_registration_and_full_common_not_reviewed_as_completed": true
+  },
+  "retained_inventory": {
+    "baseline_both_targets_no_definition_mapping": true,
+    "selected_functions_only": [
+      {
+        "address": "0x180021b00",
+        "pseudo_record": "work/b35-021b00-retained.c.txt",
+        "pseudo_evidence": "ev_a149b71384626f27cb42ef4a0d78bd5f24f458b6ae8a30390ee1056ed43a8672",
+        "assembly_record": "outputs/anadius-all-functions.asm.txt",
+        "assembly_evidence": "ev_3e1adf0b22ddd69df648bc167a468ae3dc0439774ffee7a880c1b01662fb16f7",
+        "assembly_instruction_lines_reviewed": 129
+      },
+      {
+        "address": "0x1800271a0",
+        "pseudo_record": "work/b35-0271a0-retained.c.txt",
+        "pseudo_evidence": "ev_e0843c9e600cc82f01f59ed34fef7543a3e0905c4dab527560f57ec519bad916",
+        "assembly_record": "outputs/anadius-all-functions.asm.txt",
+        "assembly_evidence": "ev_e1f30bf5f3acc0ca59cfd163294f54e6ec1708b6eed7dae23fff37f0ee710b44",
+        "assembly_instruction_lines_reviewed": 336
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "native-021b00",
+      "result": "PASS",
+      "details": "Complete supported normal producer: 0x1d8 request/473 physical bytes; field capture before environment construction; live protocol/pending reload and scheduler work increment afterward; invalid listener 2719/system and occupied pending 1/system; selected fresh socket/reset; live listener at AcceptEx; unconditional immediate WSA error including BOOL true; true/997 publication versus copied factory error or immediate status publication. No added normal tail cleanup."
+    },
+    {
+      "id": "native-0271a0-error-retry",
+      "result": "PASS",
+      "details": "Entry error copied; owner-zero cleanup-only path; endpoint 28-byte default, signed length widened then unsigned <=28; oversized 2726 can be cleared by successful setsockopt; cached listener/accepted; setsockopt failure category before WSA error; unconditional category comparison; retry flag is native +188. Retry resets actual OVERLAPPED and logical packet/queued metadata, preserves native +20 next, reloads alternate and returns without cleanup/output/callback."
+    },
+    {
+      "id": "native-0271a0-transfer-cleanup",
+      "result": "PASS",
+      "details": "Live accepted/pending reload after category callback; scheduler required only for invalid destination socket; occupied destination gives misc1. NULL IOCP +GetLastError0 still transfers. State0x10 precedes reset237f0; protocol live afterward; endpoint flag/28 bytes then accepted INVALID. Optional output copied even on error. Environment move then raw-server snapshot, source destruction, live accepted close, original storage release BEFORE handler/query/schedule. No old operation use after release."
+    },
+    {
+      "id": "native-0271a0-scheduling",
+      "result": "PASS",
+      "details": "Executor factory cached before query; nested move/conditional temporary destruction; live borrowed slot18 priority; otherwise owned publish cached before TLS/allocation, local handler captured before TLS, mutable returned task slot handled. Live nested and outer destructors on normal flow. Host task22520 is untagged composition, not recovered native body."
+    },
+    {
+      "id": "owned-lifetime",
+      "result": "PASS",
+      "details": "Distinct typed sidecars/real OVERLAPPED and authoritative physical473 extent; checked inert Posted base reservation before accept binding, old binding cleared before variant destruction. Own raw+68/288 validation in submit, retry arm and completion before loan retirement rejects foreign/sibling-row ranges. Full473 SDK pin ends only on observed completion; cancel intent retains it. Submission guard rejects inline completion; active guards and poison handling cover lower forwards and task callbacks. After native free/cache/reprojection no old row/projection reads."
+    },
+    {
+      "id": "close-and-parent",
+      "result": "PASS",
+      "details": "Base snapshot before Retiring seal and outside Accept gate avoids reverse Base/Accept lock ordering and premature callback rejection; own counters rechecked before seal. Lease drop outside gate. New parent factory requires existing Operation/thread/fiber/PTD admission and uses existing metadata lease lifetime; no native heap behavior change."
+    },
+    {
+      "id": "proof",
+      "result": "PASS",
+      "details": "Verified all eight frozen source hashes, exact two parent diffs against all864 archived sources, immutable archive member/file SHA, actual core execution record/EXE and final177 integration quick record/EXE. Source/EXE records were inspected, not executed by reviewer."
+    }
+  ],
+  "resolved_review_blockers": [
+    "Occupied pending/null scheduler path",
+    "Accept-to-Base gate inversion and premature Retiring seal",
+    "Asynchronous host task missing activity/poison guard",
+    "Public mutable span used as SDK authority",
+    "Sibling live row accepted as wrong operation buffer",
+    "Old base binding surviving accept sidecar lifetime",
+    "Base pending receive/send projection bypass"
+  ],
+  "new_native_bodies": 2,
+  "normal_body_certification": {
+    "addresses": [
+      "0x180021b00",
+      "0x1800271a0"
+    ],
+    "scope": "Complete supported typed normal algorithms against retained pseudocode and ASM; mandatory selected helper contracts remain. Not original layout, native ABI, fault/EH or dependency closure proof.",
+    "new_native_body_22520": false,
+    "new_native_body_028ab0": false
+  },
+  "native_mapped_addresses_before": 494,
+  "native_mapped_addresses_expected_after": 496,
+  "native_eligible_compiled_tags_before": 498,
+  "native_eligible_compiled_tags_expected_after": 500,
+  "explicit_normal_body_claims_before": 131,
+  "explicit_normal_body_claims_expected_after": 133,
+  "new_native_ABI_provider_closures": 0,
+  "historical_native_closures_unchanged": 52,
+  "scoped_helper_boundaries": [
+    {
+      "addresses": [
+        "0x180029df0",
+        "0x180029590",
+        "0x180029660",
+        "0x180021a10"
+      ],
+      "status": "Required AcceptLower selection; native helper bodies/production policy not recovered by B36."
+    },
+    {
+      "address": "0x1800237f0",
+      "status": "Existing mapped normal body is preserved; production ControlFactory/domain selection remains explicit. Integration binds existing replace_owner_0237f0. Not reopened as an unmapped body."
+    },
+    {
+      "address": "0x180022520",
+      "status": "Original remains unmapped; guarded host task implementation is composition only."
+    },
+    {
+      "address": "0x180028ab0",
+      "status": "Selected untagged copied-error publication boundary; no new native body claim."
+    }
+  ],
+  "production_dll_readiness": "BLOCKED; B31 require_loader_* link hooks remain undefined. Source normal-body PASS is not a production DLL claim.",
+  "limitations": [
+    "Original 16-byte Error padding at +4, native raw/class layout and full foreign prototypes are not represented/proven. Typed sidecars do not overlay native storage.",
+    "No original/rebuilt DLL, game or actual kernel AcceptEx/network execution; imported AcceptEx/address/context calls were injected. Own process heap/FLS/IOCP integration is recorded, not executed by reviewer.",
+    "Unknown lower exceptions retain/poison; original Native EH rollback and safe recovery are not invented. Source helper bodies and correct future retry29660/kernel submission completion are mandatory external contracts.",
+    "Parent Operation serialization, single admitted worker, controller thread/fiber/PTD preparation, borrowed contexts/provider lifetimes, router use, cancellation final-observation and external drain/admission attestation remain caller obligations. Generation is controller identity, not kernel ABA proof.",
+    "Owned accept must route all shared raw storage and packet/cache lifecycle through the selected adapter and composite accept-first dispatcher. Inert Posted is host bookkeeping only. Direct Base bypass is outside this profile.",
+    "Original context0241b0, selected executor0228c0, full native concurrency/unload/quiescence and PE loader-safe production composition are not closed by B36. Existing recovered bodies are not counted again.",
+    "Full common build and final registration/package checks were pending when this review was written."
+  ],
+  "historical_execution_records": [
+    {
+      "path": "work/b36-integration-agent-results.json",
+      "status": "Historical earlier173 candidate; does not certify final177 test/source freeze and is not counted as current. No additional author rerun is required by this review."
+    }
+  ],
+  "original_inputs_read": false,
+  "original_bytes_or_target_queries": false,
+  "original_or_rebuilt_DLL_game_execution": false,
+  "actual_user_cfg_token_contents_read": false,
+  "production_or_test_sources_modified_by_reviewer": false,
+  "reviewer_writes": [
+    "outputs/anadius-accept-source/architecture-review.json",
+    "outputs/anadius-accept-source/architecture-review.md"
+  ]
+}

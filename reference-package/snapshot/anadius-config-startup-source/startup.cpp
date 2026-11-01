@@ -1,0 +1,28 @@
+#include "startup.hpp"
+
+namespace anadius::config_startup {
+void FilePass::load_and_apply(configuration::State& state,bool override_pass,configuration::Dependencies& deps) {
+    config_application::load_and_apply(state,override_pass,deps,files_);
+}
+void initialize_configuration(configuration::State& state,configuration::Dependencies& deps,file_recovered::Factory& files) {
+    FilePass passes(files);
+    configuration::initialize_configuration(state,deps,passes);
+}
+BootstrapConfiguration::BootstrapConfiguration(configuration::State& state,configuration::Dependencies& deps,
+    file_recovered::Factory& files,ConsoleFlags flags,startup_recovered::InputPlatform& input,
+    startup_recovered::ConsolePlatform& console)
+    :state_(state),dependencies_(deps),files_(files),flags_(flags),input_(input),console_(console) {}
+startup_recovered::StateReferences BootstrapConfiguration::references() const {
+    return {state_.language_from_arguments,state_.registry_spoof,
+        flags_.show_lsx,flags_.show_console,flags_.no_console,state_.game_attributes};
+}
+void BootstrapConfiguration::setup_environment_019910() {
+    startup_recovered::setup_environment_019910(references(),input_);
+}
+void BootstrapConfiguration::setup_console_038760() {
+    startup_recovered::setup_console_038760(references(),console_);
+}
+void BootstrapConfiguration::load_configuration_01c870() {
+    config_startup::initialize_configuration(state_,dependencies_,files_);
+}
+} // namespace anadius::config_startup

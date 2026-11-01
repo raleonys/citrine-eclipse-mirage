@@ -1,0 +1,41 @@
+{
+  "result": "EXPECTED_FAILURE_ON_OLD_COOKIE_SCOPE",
+  "compile_exit": 0,
+  "run_exit": 1,
+  "expected_failed_predicate": "Actual long cookie buffer must be freed after object commit and before first lower status call",
+  "stdout": "",
+  "stderr": "FAILED: Actual long cookie buffer must be freed after object commit and before first lower status call\nActual long cookie buffer must be freed after object commit and before first lower status call\n",
+  "source_hashes": {
+    "outputs/anadius-online-object-source/object_integration_tests.cpp": "25c52a421f801b75bf08d99d3f3799956b07b749bab168f5634f4950db682906",
+    "outputs/anadius-online-object-source/object.cpp": "917a7503768e47250f94df059b2ad98fec03a022c264aa2a0566e9ae36dfce78",
+    "outputs/anadius-online-version-source/version.cpp": "328443d0ac8d3bae0b5f12878c955087cf99a402beecf7e6879b345e16e9c7d0",
+    "outputs/anadius-online-platform-source/platform.cpp": "40e54887e2102763bb147c28c3ef42506bccdda89ead94636bb1e861a9e41499",
+    "outputs/anadius-online-source/online.cpp": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c"
+  },
+  "executable_sha256": "29060f2e315a31b1d0113080aabc40d36a5dfbe23e697e0f30228957b3818c7f",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-online-object-source\\object_integration_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-online-object-source\\object.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-online-version-source\\version.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-online-platform-source\\platform.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-online-source\\online.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-lws2_32",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b26-cookie-negative-test.exe"
+  ],
+  "compile_output": "",
+  "fresh_online_source_compiled": true,
+  "clean_exit_after_explicit_normal_object_and_module_cleanup": true,
+  "negative_control_not_a_PASS": true,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_data_read": false
+}

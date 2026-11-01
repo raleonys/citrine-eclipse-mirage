@@ -1,0 +1,35 @@
+{
+  "source_package": "B54",
+  "scope": "Source composition; final execution and common-build records are separate",
+  "required_Effects_methods": 24,
+  "owned_copy_methods": 3,
+  "existing_core_operations": 10,
+  "platform_boundaries": 5,
+  "selected_foreign_operations": 7,
+  "actual_backend_phase_operations": 2,
+  "giant_Effects_lower_required": false,
+  "existing_Effects_vtable_preserved": true,
+  "delegated_operation_exception_policy": "Conservative Poisoned retention; Binding-alone known-exception retry behavior is not preserved. Explicit filesystem_error construction is separate.",
+  "required_contracts": [
+    "Passive factory, exact stable configuration/runtime/Execution identity and empty initial online state",
+    "Owned CodeLease actually retains selected code/module; arbitrary tokens do not prove provenance",
+    "Serialized admitted source users; constructor controller thread and fiber for close and physical retirement",
+    "External stop/ownership must exclude and drain foreign object users before cleanup destroy/free; a late close attestation cannot retroactively protect object cleanup",
+    "Actual source joins and cleanup precede known-empty Binding and Runtime module/object checks",
+    "Explicit external foreign admission stop and completion attestation; metadata counts are insufficient",
+    "Consuming Options/Resources named sinks; arbitrary forwarding is outside constructor-failure safety scope"
+  ],
+  "retirement": "Closed leaf owners remain through Resources opaque destruction; attached Retiring precedes physical release",
+  "not_proven": [
+    "Free FALSE means successful module unload",
+    "Global foreign jobs/callback finality or external code provenance from a snapshot/token",
+    "Complete foreign prototype, native C++ ABI or EH equivalence",
+    "Host setup-thread handoff, controller activation, disabled-hooks and external cached thunk lifetime",
+    "Whole Resources, permanent Errors/thunk epilogue, rawjob/kernel drain or loader-lock lifecycle",
+    "Successful complete DLL link or Runtime factory invocation from the loader"
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_closures": 0,
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null
+}

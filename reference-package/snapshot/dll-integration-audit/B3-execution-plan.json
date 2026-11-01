@@ -1,0 +1,173 @@
+{
+  "schema": "reconstruction.execution-plan.v2",
+  "date": "2026-10-27",
+  "requested_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "selection_source": "Direct human request in this chat; same numbers now name the five reprioritized work packages, not the older inventory/receive/native phase labels.",
+  "packages": [
+    {
+      "priority": 1,
+      "id": "dll-critical-path",
+      "title": "DLL üretiminin kritik bağlantıları",
+      "exit": "PE entry/export/TLS sözleşmesi, tek üretim owner/facade tasarımı ve eksik somut sağlayıcıların sıralı listesi; gerçek DLL link hedefi yalnız bu köklere bağlı olduğunda hazır sayılır."
+    },
+    {
+      "priority": 2,
+      "id": "message-chain",
+      "title": "Mesaj zincirini tek somut uygulamada birleştirme",
+      "exit": "Ortak sahipli session/receive/message/handler/response akışı kaynaklardan sınanır; test fixture sağlayıcıları üretim bileşiminde kullanılmaz."
+    },
+    {
+      "priority": 3,
+      "id": "xml-functional-packages",
+      "title": "XML parser işlevsel paketleri",
+      "exit": "Mesaj zincirinin gerektirdiği parser/numeric/DOM/probe/destructor parçaları bağlantılı paketler halinde kapanır; her küçük yordam ayrı teslim yapılmaz."
+    },
+    {
+      "priority": 5,
+      "id": "selective-crt",
+      "title": "CRT eksiklerine seçici dönüş",
+      "exit": "Kritik yolun gerçekten gerektirdiği runtime/global/initializer/lowio/ABI engelleri somut listeyle kapatılır; genel leaf kuyruğu kendiliğinden açılmaz."
+    },
+    {
+      "priority": 4,
+      "id": "version-preloader",
+      "title": "version.dll bağımsız preloader",
+      "exit": "21504 özgün gömülü bayt bağımlılığı kaynaklı build ile kaldırılır;198 export/ordinal ve kaynak sözleşmesi korunur."
+    }
+  ],
+  "active_package": {
+    "id": "B3",
+    "priority": 1,
+    "title": "Somut kaynak backend ve worker/join bağlantıları",
+    "source_status": "PASS",
+    "production_dll_readiness": "BLOCKED",
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "new_concrete_backends": 1,
+    "new_thread_trackers": 1,
+    "services_routes_bound": 6,
+    "existing_source_algorithms_routed": 7,
+    "remaining_service_policies": 11,
+    "new_virtual_provider_interfaces": 0
+  },
+  "next_package": {
+    "id": "B4",
+    "priority": 1,
+    "title": "Üretim Resources factory ve callback/registrar kapanış bağlantıları",
+    "requirements": [
+      "Select concrete existing OS/config/server/online providers and one shared state graph",
+      "Implement cancellable exit/terminate/hook admission and explicit post-join application cleanup",
+      "Wire the selected compiler-CRT entry to application layer once; do not invoke recovered outer CRT entry twice",
+      "Retain foreign-provider ABI and loader-lock constraints as explicit gates"
+    ],
+    "exit_criteria": "A production resource factory can construct SourceBackend with actual provider provenance and complete registrar/shutdown policy; root PE entry remains gated until this proof exists."
+  },
+  "deferred_numeric_work": {
+    "previous_label": "N30",
+    "address": "0x1800033c0",
+    "priority": 3,
+    "status": "Deferred; useful retained preparation remains in work/node-numeric-next-scope.md; not the automatic next implementation."
+  },
+  "workflow": {
+    "unit": "Connected functional package; function count is not the scheduling unit",
+    "during_package": "Compile changed code and affected dependencies; run relevant bounded/integration checks",
+    "at_source_package_end": "Run the required common regression once after source freeze",
+    "packaging": "Refresh ZIP at functional delivery milestones or explicit request; audit documents alone do not trigger recompilation/repackaging",
+    "progress_metrics": [
+      "concrete mandatory providers closed",
+      "source-owned integrated scenarios passed",
+      "remaining DLL-entry/link/lifetime blockers"
+    ],
+    "completion_percentage": null
+  },
+  "source_baseline": {
+    "package": "B3",
+    "source_files": 703,
+    "native_objects": 213,
+    "normal_test_groups": 237,
+    "terminal_scenarios": 19,
+    "anadius_mapped_entries": 487,
+    "historical_source_closures": 52,
+    "full_dll_ready": false
+  },
+  "evidence": [
+    {
+      "path": "outputs/dll-integration-audit/entry-roots.json",
+      "sha256": "b0d251e730975fd79d5186619603e700877af6ee09ee2bb4f237ae4543e5ff0d"
+    },
+    {
+      "path": "outputs/dll-integration-audit/provider-blockers.json",
+      "sha256": "c05839c92bcee87f97801727343c1d11f7e9e62b8fd8a6436a8f4c46750d6020"
+    },
+    {
+      "path": "outputs/dll-integration-audit/rea-session.json",
+      "sha256": "c8886e28efe633ba4f5f8d90149d9df8040fc1e0ad114f68d4f656fb7d620ac4"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-owner-source/architecture-review.json",
+      "sha256": "cf3ddb7bbceea394c55d2063b95f6b62e3b988cf0d0915dbc0791fc1124cdcbf"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-owner-source/validation.json",
+      "sha256": "00d5a76119179c4626ad5205331675c18f86026922645d0a352d2d6d9a03ed99"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/architecture-review.json",
+      "sha256": "633a9ab39a6668260662e33c194372aa5bc718753e900c25a74d9fb6e4d5043b"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/validation.json",
+      "sha256": "e975cf18488767cf8740289a0988be23bec4d393280c8adc273dda1c2ca91d9f"
+    },
+    {
+      "path": "outputs/dll-integration-audit/readiness.json",
+      "sha256": "aabd0a30e4b2f83987d35ac03f0e160c5bf8ec9674efc13b3862a5b70dbc5066"
+    }
+  ],
+  "constraints": {
+    "original_execution": false,
+    "original_modification": false,
+    "actual_cfg_token_achievement_contents_read": false,
+    "blocked_version_input_or_generated_dll_retry": false,
+    "generic_crt_production": "paused except future explicitly selected critical requirements"
+  },
+  "completed_work_packages": [
+    {
+      "id": "B1",
+      "scope": "PE roots and bounded provider/readiness audit",
+      "new_native_bodies": 0
+    },
+    {
+      "id": "B2",
+      "scope": "Single-base facade,owned config/backend/application binding and explicit close control",
+      "new_checks": 204,
+      "new_native_bodies": 0,
+      "new_native_closures": 0
+    },
+    {
+      "id": "B3",
+      "scope": "Concrete SourceBackend routes six Services methods through seven existing application algorithms; same Execution flags, leased worker routes and duplicate-handle thread joins. Eleven policies, actual lower provider factory and cancellable registrar/cleanup contracts remain open.",
+      "new_checks": 229,
+      "new_native_bodies": 0,
+      "new_native_closures": 0,
+      "new_concrete_backends": 1,
+      "new_thread_trackers": 1,
+      "services_routes_bound": 6,
+      "existing_source_algorithms_routed": 7,
+      "remaining_service_policies": 11,
+      "new_virtual_provider_interfaces": 0
+    }
+  ],
+  "entry_strategy": {
+    "selected_route": "Compiler CRT for rebuilt image,then application layer once",
+    "recovered_outer_crt_invoked_by_backend": false,
+    "production_pe_entry_installed": false,
+    "limits": "Actual resource factory/registrar,foreign ABI and loader-lock proof remain required; current source/backend tests do not install a DLL entry."
+  }
+}

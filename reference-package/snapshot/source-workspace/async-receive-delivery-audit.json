@@ -1,0 +1,61 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T19:31:18.768555+00:00",
+  "prior_package_sha256": "584801eea708514265086b6e9ef859ba316d141e6ca64d45f92c85eb8310d196",
+  "prior_source_count": 526,
+  "unchanged_prior_sources": 526,
+  "added_sources": [
+    "anadius-socket-source/async_receive.cpp",
+    "anadius-socket-source/async_receive.hpp",
+    "anadius-socket-source/async_receive_integration_tests.cpp",
+    "anadius-socket-source/async_receive_test_fixture.hpp",
+    "anadius-socket-source/async_receive_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 531,
+  "current_documents": 211,
+  "native_objects": 178,
+  "cpp_objects": 174,
+  "c_objects": 4,
+  "normal_test_groups": 169,
+  "terminal_cases": 19,
+  "socket_groups": 42,
+  "new_checks": 1961,
+  "new_tests": [
+    {
+      "module": "socket_async_receive",
+      "result": "PASS",
+      "output": "PASS: 691 async receive core checks; actual021d10 normal paths, receive-only64 mapping, full64 reloads, ownership/weak/cache/publication, injected exact SDK WSARecv/GetLastError and actual lifetime ends",
+      "executable_sha256": "48b35972301227a0e836848dd6de0581064adfcdb12369e4369f9dd170141538"
+    },
+    {
+      "module": "socket_async_receive_integration",
+      "result": "PASS",
+      "output": "PASS: 1270 async receive integration checks; actual023dd0 constructor and021d10 initiation, dispatcher IO route/027710/021a40, EOF/error normalization, retained owner/weak, actual cache/free lifetime;025c40 remains required boundary",
+      "executable_sha256": "3488142de209efa196c2fc3062aab571d7a3a52f07f4f352372bb7d67a1fcb42"
+    }
+  ],
+  "validation_mirror_pairs": 21,
+  "inventory_data_checks": 7111,
+  "master_build_sha256": "eccd5c67ec684d75ce02701aca46c48878a66ed9d35afcce14f19cd9b73d0d95",
+  "new_original_procedures": 1,
+  "normal_source_procedures_added": [
+    "0x180021d10"
+  ],
+  "independent_review_complete": false,
+  "review_scope": "Same-agent assembly/source comparison and synthetic core/integration tests",
+  "CRT_production": "unchanged and paused",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "R1 010040/008350 buffer contract; then025c40"
+}

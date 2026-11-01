@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "config_hash",
+    "result": "PASS",
+    "output": "PASS: 4929 Config2 growth/copy/positional-reuse checks",
+    "executable_sha256": "07cabca029172c98180467369232cb1b517af4713a2cd1b6be38dd9ab27b088e"
+  },
+  "execution_scope": "General factor1 unique-key hash/list capacity model;4929checks;incremental versus bulk copy and recursive positional reuse;native allocator/ABI/fault/SEH unproven",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-config-hash-source/hash_table_tests.cpp",
+      "sha256": "5cafe744cc5d8b6dfa356a4c378d289ef2c3717b04be3b4dd4e16e7f3db00360"
+    },
+    {
+      "path": "anadius-config-hash-source/hash_table.cpp",
+      "sha256": "15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f"
+    },
+    {
+      "path": "anadius-config-hash-source/hash_table.hpp",
+      "sha256": "d05e54e5232dda1b8cb9e3aabe46677135cf60483939bee7b2801f489025e2bf"
+    }
+  ]
+}

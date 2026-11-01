@@ -1,0 +1,134 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B52",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B52",
+  "latest_dll_link_attempt": "B52",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B52 provides an owning concrete configuration::Dependencies component, implementing21 required methods plus streaming visitation without an entire abstract lower Dependencies. Nineteen covered routes reuse extracted lower-free Core13, filesystem3, persistence2 and logging1 source leaves; two mandatory owned narrow effects supply license application and explicitly scoped legacy document reading. No guessed native license implementation or full legacy collection-order equivalence is invented. Existing SourceFilePass retains the actual full hash/parser application and bypasses legacy load_document. Existing decorators delegate to shared real bodies while preserving public virtual interfaces and HOST fields; legacy ConfigurationPersistence keeps its original nested Impl declaration and one State allocation through a thin shared-state bridge. Exact selected signed-tolower guard, filesystem/UTF8 separation,0x104 SDK growth/LastError/first-pass count, streaming processing/removal before FindNext, Parsing prefix-before-conversion with shared lease released during conversion and PNG ignored-false behavior remain. Constructor validates mandatory resources before constructing Persistence, publishes nothing and performs no I/O. Paths are caller-seeded; subsequent actual Storage mutations remain source behavior. Calls are serialized without creator-thread affinity. Destructor keeps Impl attached and marked Retiring through every opaque effect, persistence and Inputs destructor; all methods refuse retirement probes while legitimate normal visitor filename/remove reentry remains allowed. Narrow captures own their state or use backing lifetime; destruction/concurrent use outside that contract and arbitrary whole-image admission remain unproved. Synthetic tests use actual SourceFilePass/hash/BootstrapConfiguration, selected source/compiler policies and controlled memory files/SDK/narrow effects with scopes retained in quick records; no user data or original DLL execution. 934old sources:926unchanged8modified+4new=938;272objects268CPP/4C;333normalgroups+19frameworkterminals;170core+96integration=266main checks. The failed DLL diagnostic explicitly selects the common frozen configuration_factory.o and verifies its command/source/hash/verbose consumption; this is not loader factory invocation, runtime reachability or PE success. Native501/505/139 and52 historical closures unchanged; new native/ABI0,lastB38. Remaining Services/fullResources, narrow license/legacy effects, rawjob/foreign/hook finality, early startup unknown ownership and loader attach/detach remain open. GenericCRT paused; no fresh original analysis bytes/REA session.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Sahipli RemainingPolicies Services factory",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36",
+      "native_full_accept_session_flow_available": "B37",
+      "coherent_accept_IO_cache_available": "B37",
+      "native_accept_helpers_available": "B38",
+      "concrete_owned_runtime_available": "B39",
+      "server_resources_component_factory_available": "B39",
+      "concrete_session_profile_available": "B40",
+      "typed_native_message_profile_available": "B41",
+      "owned_response_deque_provider_available": "B42",
+      "owned_environment_provider_available": "B43",
+      "owned_inline_jobs_provider_available": "B44",
+      "concrete_session_policy_available": "B45",
+      "application_graph_available": "B46",
+      "prepared_worker_memory_handoff_available": "B47",
+      "source_backend_application_worker_available": "B48",
+      "accept_only_stop_provider_available": "B49",
+      "session_io_stop_provider_available": "B50",
+      "application_entry_admission_gate_available": "B51",
+      "owning_configuration_factory_available": "B52"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B53",
+    "priority": 1,
+    "title": "Sahipli RemainingPolicies Services factory",
+    "requirements": [
+      "Compose a separate eleven-method RemainingPolicies seam from two Runtime registry routes plus nine existing SourceServices/CompletionServices leaves; preserve the current seventeen-method Services vtable and legacy remaining path, without unused-method stubs. Append only an explicit mutually-exclusive Resources option.",
+      "Keep B52 owning configuration with required LicenseEffects/LegacyDocumentReader; do not fabricate success stubs, native license semantics, full legacy collection traversal or giant lower Dependencies.",
+      "Preserve B51 Application source-admission seal, B50 SessionIo source retirement, actual worker/FLS joins, separate permanent Errors lifetime and explicit rawjob/foreign/hook finality.",
+      "Retain compiler CRT once and separate loader-lock attach/detach contracts. No callback activation/user configuration/token access or original DLL fallback; priority1,2,3,5,4, genericCRT paused.",
+      "Resources by-value HOST layout changes in B53 require every constructing/transferring TU fresh in quick proofs; retain controller ApplicationMemory/ExitWaitRegistry retirement after actual joins and registry drain. Same-Domain serialized outer Application use remains allowed."
+    ],
+    "exit_criteria": "One concrete remaining source-backed Resources component with precise narrow effects and meaningful synthetic integration; actual linker readiness stays honest and no total percentage is inferred from source/test counts."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "source_normal_bodies_added_in_B37": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ],
+  "source_normal_bodies_added_in_B38": [
+    "0x180029df0",
+    "0x180029590",
+    "0x180029660"
+  ],
+  "source_normal_bodies_added_in_B39": [],
+  "source_normal_bodies_added_in_B40": [],
+  "source_normal_bodies_added_in_B41": [],
+  "source_normal_bodies_added_in_B42": [],
+  "source_normal_bodies_added_in_B43": [],
+  "source_normal_bodies_added_in_B44": [],
+  "source_normal_bodies_added_in_B45": [],
+  "source_normal_bodies_added_in_B46": [],
+  "source_normal_bodies_added_in_B47": [],
+  "source_normal_bodies_added_in_B48": [],
+  "source_normal_bodies_added_in_B49": [],
+  "source_normal_bodies_added_in_B50": [],
+  "source_normal_bodies_added_in_B51": [],
+  "source_normal_bodies_added_in_B52": []
+}

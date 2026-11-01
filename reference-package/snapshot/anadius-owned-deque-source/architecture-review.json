@@ -1,0 +1,242 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T17:04:03.243874+00:00",
+  "review_mode": "Independent complete production/lifetime/source-test audit, then frozen9 and immutable actual-agent/normalized records/log/EXE/archive verification. No reviewer execution.",
+  "reviewed_source_hashes": {
+    "deque.hpp": "8a1321d225469fdd1fd29c0f7a31f5fc0c1da79a270dc822421ade972b3bc3d0",
+    "deque.cpp": "459121324082f143c42cb6d70a95fa2eb9e44558a0e1487163a6400aa9545219",
+    "deque_tests.cpp": "fe2e4f4f28d14f35414aed42829fa8ed8a05e7e64e3d7b4b0f53b9d88d753c1b",
+    "deque_integration_tests.cpp": "a9e8058cbb4f3b435bd03ad1c154c6a28a54e0ad0823a85df4bd6520ce163873",
+    "../anadius-session-memory-source/memory.hpp": "16e37f438a1df1a525cf8acfb22e15954d98b9a9a9f5d38128411ba6fb0ea9f2",
+    "../anadius-session-memory-source/memory.cpp": "b136dc6c6fca9a0ce2805660a2036af0f6644e934623a4c32adb11f1aa669653",
+    "../anadius-session-profile-source/profile.hpp": "405bb5a88203fdaca82ca3f6cb347707e501992b14357fdde8a7f05f5c4b0c20",
+    "../anadius-session-profile-source/profile.cpp": "cbe51793f437456a3507a70d3d2fbf968082ada4efc970857ee78a8ce7d8aa88",
+    "../anadius-socket-source/response_containers.hpp": "11c480e63a8bd5bb40624ecd320381df4f3ccb8253fd3772cb799da57637dd87"
+  },
+  "code_freeze": {
+    "path": "work/b42-code-freeze.json",
+    "sha256": "ea2cf47ac4013910ba060873ba018de1e58cc051f27c050b0770a1a7624f1481",
+    "all_nine_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 159,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b42-core-agent.exe",
+      "executable_sha256": "086cffdcca856f2901e2c67fba7990a7dd0e92342cac441eb9049d082bb2e3aa",
+      "archive_path": "work/b42-baseline-core.a",
+      "archive_sha256": "380ffcbf8b0ad851fdeda23518127d423097b82cc96d5601c756c7877d9d0b2c",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b42-core-agent-results.json",
+        "sha256": "d529c28863c92a0f554f02735da57ffd036c72b8ff957df1fa21ae1d0045ad6a"
+      },
+      "path": "work/b42-core-quick-results.json",
+      "sha256": "69b6f046cbfbf96475862d3f194b6af3fc07178b5cfb0de2ab5fadb1a1cec5a1",
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b42-core-agent.log",
+      "log_sha256": "dd02d4e0bd59e97361b4ca38b402914aa5f56c433d0adf7c28201e2fb8c98367",
+      "actual_used_source_hash_count": 8,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh deque.cpp, modified memory.cpp, unchanged response_containers.cpp and core test;8 selected actual-use hashes including prior fixture. Modified Profile integration is not compiled by core. Main159 excludes eight retained child bodies; parent checks exact exits251..258.",
+      "isolated_children": [
+        {
+          "mode": "reentry",
+          "expected_exit": 251,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "close",
+          "expected_exit": 252,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "allocation",
+          "expected_exit": 253,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "freefalse",
+          "expected_exit": 254,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "freethrow",
+          "expected_exit": 255,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "freereentry",
+          "expected_exit": 256,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "checkpoint",
+          "expected_exit": 257,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "length",
+          "expected_exit": 258,
+          "observed_exit_verified_by_parent": true
+        }
+      ]
+    },
+    {
+      "checks": 244,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b42-integration-v2.exe",
+      "executable_sha256": "9a2955391b9fcb04d7f1735755afe76a5dab0c3d41fe556622f5376192440014",
+      "archive_path": "work/b42-baseline-core.a",
+      "archive_sha256": "380ffcbf8b0ad851fdeda23518127d423097b82cc96d5601c756c7877d9d0b2c",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b42-integration-v2-results.json",
+        "sha256": "eec29a7730d94a6a325322ff1c44862018d34c26f2d531c1a455d71ad8acd8fd"
+      },
+      "path": "work/b42-integration-quick-results.json",
+      "sha256": "463ed6d2af7d779aca842b3483cd16bdd69543d1be7bdd1e2ecab86f0b3804fa",
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b42-integration-v2-results.log",
+      "log_sha256": "72d9b9e47f5e431d0cc15c1fc14d6fc8c6ba3869bb3efb4e6975e970fb906c64",
+      "actual_used_source_hash_count": 9,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh deque.cpp, memory.cpp, profile.cpp, response_containers.cpp and integration test;9 actual-use hashes and10 watched adds metadata-only core test. Actual concrete Profile queues stress17plain+1AES requests,59nativepackets and FIFO after wrapped8to16 growth. No integration child or fixture growth override.",
+      "watched_source_hash_count": 10,
+      "isolated_children": []
+    }
+  ],
+  "quick_checks_total": 403,
+  "core_agent_checks": 159,
+  "integration_agent_checks": 244,
+  "root_checks": 0,
+  "root_execution_note": "Root only normalized authoritative agent proofs, without EXE replacement or rerun. Core parent159 excludes eight exact child bodies251..258; integration244 has no child. First integration FAIL is historical/superseded; current V2 record is referenced directly.",
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING at review; quick PASS is not common PASS.",
+  "common_build_targets": {
+    "production_objects": 264,
+    "cpp_units": 260,
+    "c_units": 4,
+    "ordinary_groups": 313,
+    "framework_terminal_groups": 19,
+    "status": "planned registration/common, not reviewed as executed"
+  },
+  "baseline_package_sha256": "576efb5d5021acb2f8d5dccb7e011b5fb9df6362a76b4ddb3d2e3cc915e72803",
+  "baseline_source_files": 898,
+  "prior_sources_preserved": 893,
+  "modified_prior_sources": 5,
+  "modified_prior_source_paths": [
+    "anadius-session-memory-source/memory.cpp",
+    "anadius-session-memory-source/memory.hpp",
+    "anadius-session-profile-source/profile.cpp",
+    "anadius-session-profile-source/profile.hpp",
+    "anadius-socket-source/response_containers.hpp"
+  ],
+  "new_source_files": 4,
+  "current_source_files": 902,
+  "baseline_scope": "All898 archive source preimages verified; current893 unchanged/exact5 prior modifications. Four new module sources bring902.",
+  "archive_proof": {
+    "path": "work/b42-baseline-core.a",
+    "sha256": "380ffcbf8b0ad851fdeda23518127d423097b82cc96d5601c756c7877d9d0b2c",
+    "matches_B41_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "verified": true
+  },
+  "composition_count_basis": {
+    "baseline_files": 95,
+    "baseline_objects": 47,
+    "new_composition_files": [
+      "anadius-owned-deque-source/deque.hpp",
+      "anadius-owned-deque-source/deque.cpp"
+    ],
+    "expected_files": 97,
+    "expected_objects": 48
+  },
+  "findings": [
+    {
+      "id": "concrete-growth-route",
+      "result": "PASS",
+      "details": "Profile Queue invokes owned Deques and existing typed026670; Policy.grow_deque remains virtual with explicit throwing default for legacy overrides but is no longer required or called by Profile. Initial maps and output blocks remain actual Parent allocations."
+    },
+    {
+      "id": "authoritative-map-ledger",
+      "result": "PASS",
+      "details": "Parent owns actual typed pointer arrays, physical raw extent/header and LIVE map metadata. No independent stale private registry persists in Deques. Registry capacity reserves before opaque allocation; refresh removes retired/destroyed maps before backing free, including direct026880 disposal. Borrowed metadata is refreshed after allocator/free and never cached across mutation."
+    },
+    {
+      "id": "normal-source-order",
+      "result": "PASS",
+      "details": "Small and aligned native allocation requests are decoded into exact power-of-two Parent map counts; raw header/alignment/full extent validated. Bounded slot-copy/zero operate on live typed spans without foreign calls. Existing026670 old-map free occurs before new pointer publication and live map_size reload; wrapper does not normalize, roll back or prematurely publish source fields."
+    },
+    {
+      "id": "admission-and-failure",
+      "result": "PASS",
+      "details": "Exact live real control output queue plus coherent bounded prefix required. Same worker/fiber, whole Parent Operation and checkpoint required. Growing/active reentry poisons even if lower catches; pre/post callback checks reject poisoned admission. Unknown allocation/free/checkpoint/terminal outcomes fail closed and retain Parent ownership/lease; no native EH rollback or growth retry."
+    },
+    {
+      "id": "lifetime-and-integration",
+      "result": "PASS",
+      "details": "Deques holds mandatory Parent lease, requires explicit close and has metadata-only snapshot. Profile constructs it LAST after other potentially throwing context construction, and closes after external proof/reap/all sessions/jobs zero before Runtime lease accounting. Retained checkpoint reset is followed by sticky check; no promise that a descriptor survives final host callback-target retirement, while ownership/poison remain."
+    },
+    {
+      "id": "execution-proof",
+      "result": "PASS",
+      "details": "Final core159/eight exact retained children and integration244/no child current records, hashes, logs, EXEs and immutable B41 archive verified read-only. Integration uses production Profile/NativeLogic/Router/frame/response/send/disposal; synthetic send backpressure creates head5/count2 then8to16 growth/backlog12 and validates17 physical FIFO IDs plus overlapping AES/event session. No fixture growth implementation or manual source workcounter."
+    }
+  ],
+  "resolved_design_risks": [
+    "A grow-only local registry would leave stale bindings when direct026880 disposal frees a map; authoritative Parent LIVE map ledger covers all paths.",
+    "Mandatory-open Deques construction before later allocating context setup could fail closed on ordinary constructor unwind; provider is constructed LAST.",
+    "Queue growth and legacy Policy dependency are replaced by concrete typed-source composition without duplicate native recovery."
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0,
+  "native_mapped_addresses_unchanged": 501,
+  "native_eligible_compiled_tags_unchanged": 505,
+  "explicit_normal_body_claims_unchanged": 139,
+  "historical_native_closures_unchanged": 52,
+  "last_native_body_stage": "B38",
+  "compiler_observations_expected": 84,
+  "new_compiler_trait_values_expected": [
+    0,
+    1
+  ],
+  "registration_role": {
+    "script": "work/b42-register.py",
+    "sha256": "4bcc26d0a68fff041d0e2c5b1de455bf38275bb33a44836334b88cd13ce5f990",
+    "preview_author": "/root/b22_provider_audit",
+    "applied_by": "root only after separate staged-plan review; reviewer did not apply",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "scope": "Read-only strict/AST preview author disclosed; production and both test authors independent. No generator/build/probe/test run by reviewer."
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "No reviewer executable/test run; no original/rebuilt DLL/game execution, network traffic, user config/token read, AV retry, fresh REA query or binary read.",
+    "Same bound worker/fiber and whole Parent Operation required. Borrowed map metadata span expires on the next allocation/free attempt; const binding metadata does not make the underlying pointer-array slots immutable. No exported stable map view or kernel/address ABA proof.",
+    "Map prefix validation defines the supported coherent typed projection; native MSVC deque layout, corrupted pointer faults, CRT allocation/free exception payload and native EH/unwind equivalence remain unproved.",
+    "Any attempted source-growth failure after admission, including known Parent HeapFree FALSE, poisons Deques. Parent retired-raw retry does not resume the failed growth; no automatic owner/map rollback, close or disposal is invented.",
+    "A retained source descriptor may contain dangling caller references after unwind and is never resumed. A final checkpoint-target retirement failure may destroy the descriptor but still retains provider lease/Parent allocation ownership and sticky poison.",
+    "Deques does not own output maps or establish cancellation/kernel/rawjob drain. Parent owns map lifetimes; explicit external Profile quiescence plus prior Runtime/SDK/environment/message providers remain mandatory.",
+    "All relevant units must use the changed DequeMapMemory header in clean common rebuild. Quick EXEs explicitly fresh-compile response_containers.cpp; quick PASS is not full common PASS.",
+    "No new canonical body/tag or native ABI/provider closure. Full production Resources, loader context/attach/detach and rawjob/kernel quiescence remain open; DLL readiness BLOCKED."
+  ]
+}

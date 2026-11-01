@@ -1,0 +1,15 @@
+# B17 bağımsız tasarım incelemesi
+
+**PASS.** Reviewer `/root/b17_admission_audit` üretim kodunun yazarı değildir. Beş yeni ve dört açıkça güncellenmiş önceki kaynak/test dosyası okundu; dokuz source hash ile iki EXE hash, root tarafından çalıştırılan **40 çekirdek +33 entegrasyon =73 PASS** kaydına karşı doğrulandı. Reviewer testleri yeniden çalıştırmadı. Core sayısına14 kendi terminal alt süreci dahildir. B16 ZIP içindeki785 takipli kaynağın781 tanesi aynı; yalnız bildirilen dört değişiklik vardır.
+
+Bütün on SDK girişi ortak invoke üzerinden AdmissionLease alır. Admission, binding Lease sonrasında ve callback lambda/state/buffer erişiminden önce kurulur. Başarı yolunda admission.release binding lease.release öncesindedir; exception unwind da aynı yaşam sırasını korur. enter başarısızsa leave yapılmaz; başarılı admission tam bir kez bırakılır. LastError ve nullable legacy yol testlerle doğrulanır. Leave devam ederken active binding lease korunur.
+
+Controller yalnız gate bookkeeping boyunca mutex tutar; original/provider/Execution wait veya callback gövdesi kilit altında çalışmaz. Controller dışındaki thread, callback reentry ve stopped entry reddedilir. Bu, B16 controller-only/no-reentry kapsamını native girişte uygular; foreign-thread PTD veya genel eşzamanlı native çalışma desteği sağlamaz. Direct core/Effects çağrıları ile dış worker/map/config/stream erişimi bu korumanın dışında kalır.
+
+Admission Owner içinde Context öncesinde kurulur ve Binding/Context/effects kapanışından sonra yıkılır. Kopyalanan factory nesneleri aynı tek tüketim kaydını paylaşır. Context alanı ve Owner/factory source ABI değişmiştir; bütün tüketiciler yeniden derlenmelidir. SDK entry imzaları korunur.
+
+Başarısız veya exception atan quiescence proof gate state değiştirmez. Önceden durmuş gate yeniden açılmaz. Seçilen normal yolda false/throw proof henüz stop yapılmadan gerçekleştiği için callback kabulü korunur; başarılı proof sonrasında kalıcı stop ve native close gelir. Active callback sırasında stop false döner. Stop, hooks-disabled/external quiescence veya worker join kanıtı değildir. Gate stop edildikten sonra final close tamamlanamayan genel/unsupported in-flight yollar için rollback/reopen iddiası yoktur.
+
+Terminal testler10 girişte erişilemez body buffer depolamasından önce admission reddini; foreign connect, reentry folderW, unwind ve wrong-leave sınırlarını doğrular. Entegrasyon, gerçek yeniden oluşturulmuş B4 Runtime+B16 Policy+B14 fake engine ve kendi same-domain ApplicationMemory ile moved state kimliğini, typed shim/original zincirini, fabricated handle yaşamını, timeout, proof throw, başarısız exit registration, açık cleanup ve retry sırasını kapsar.
+
+Reviewer kodu değiştirmedi; orijinal veya yeniden oluşturulmuş DLL çalıştırılmadı. Gerçek hook/registry/socket/process/UI/foreignmodule veya kullanıcı CFG/token/profile/achievement içeriği kullanılmadı. Yeni native gövde/kapanış0; tam DLL, foreign thread/CRT/ABI/unload/PE sınırları ve B10 review borcu açık kalır.

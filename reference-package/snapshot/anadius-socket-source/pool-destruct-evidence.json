@@ -1,0 +1,258 @@
+{
+  "schema": "pool-destruct.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180001bb0",
+      "pseudo_evidence": "ev_092ecbcf8771634efb8602a3d6cd0c898285159da964af33c3c60fc8ea0d6f6e",
+      "assembly_evidence": "ev_7f94b4e17d4fc968551742e8037bd685c0d16490f0e4a589eb7b722000771cb7",
+      "newly_recovered": true,
+      "recovery_scope": "Normal pool destructor projection+final NativeDocumentEffects bridge;pointer-only free and native lifecycle/global/ABI/EH remain open"
+    },
+    {
+      "address": "0x180001c30",
+      "pseudo_evidence": "ev_b0d1ec372d4b8ad00df52da43c93679046facd73ad4d9f5863369ece94248459",
+      "assembly_evidence": "ev_f88b02234b39e4be1d70ef9f1d8f69cb3447507b0a25e2a40a9d178765b573e3",
+      "newly_recovered": true,
+      "recovery_scope": "Normal pool destructor projection+final NativeDocumentEffects bridge;pointer-only free and native lifecycle/global/ABI/EH remain open"
+    },
+    {
+      "address": "0x180001cb0",
+      "pseudo_evidence": "ev_443260d7e20484b82b22a88a38d81ed81dc3b6284636a4b11009555f363f64cd",
+      "assembly_evidence": "ev_1fec953cfb59eb28d532eb735335cff7cbee4916e7cbf4c23a119a7c379197f5",
+      "newly_recovered": true,
+      "recovery_scope": "Normal pool destructor projection+final NativeDocumentEffects bridge;pointer-only free and native lifecycle/global/ABI/EH remain open"
+    },
+    {
+      "address": "0x180001d30",
+      "pseudo_evidence": "ev_586172bc5ef241fce0e41a4d51bfd926c1ba166521c02a285dba1e7337c7c816",
+      "assembly_evidence": "ev_9e9eabb75164aad26441c55c6926835ef60fd2bf0461f0bf1fd1f4c442db8975",
+      "newly_recovered": true,
+      "recovery_scope": "Normal pool destructor projection+final NativeDocumentEffects bridge;pointer-only free and native lifecycle/global/ABI/EH remain open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180001bb0",
+    "0x180001c30",
+    "0x180001cb0",
+    "0x180001d30"
+  ],
+  "new_original_procedures": 4,
+  "new_source_bridges": 4,
+  "new_source_allocation_adapters": 0,
+  "new_unique_source_mapped_addresses": 4,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/pool_destruct.cpp",
+      "base": "NativeDocumentEffects::destroy_pool_001bb0",
+      "body": "destroy_native_pool_001bb0",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001bb0",
+      "address": "0x180001bb0",
+      "native_abi_complete": false,
+      "scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_destruct.cpp",
+      "base": "NativeDocumentEffects::destroy_pool_001c30",
+      "body": "destroy_native_pool_001c30",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001c30",
+      "address": "0x180001c30",
+      "native_abi_complete": false,
+      "scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_destruct.cpp",
+      "base": "NativeDocumentEffects::destroy_pool_001cb0",
+      "body": "destroy_native_pool_001cb0",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001cb0",
+      "address": "0x180001cb0",
+      "native_abi_complete": false,
+      "scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_destruct.cpp",
+      "base": "NativeDocumentEffects::destroy_pool_001d30",
+      "body": "destroy_native_pool_001d30",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001d30",
+      "address": "0x180001d30",
+      "native_abi_complete": false,
+      "scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory"
+    }
+  ],
+  "native_typed_providers_newly_closed": 4,
+  "source_allocation_adapters_added": [],
+  "existing_source_allocation_adapters_preserved": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "pointer_only_free_interface_preserved": true,
+  "caller_edx_block_size_hints": {
+    "0x180001bb0": 4080,
+    "0x180001c30": 4056,
+    "0x180001cb0": 4032,
+    "0x180001d30": 4080
+  },
+  "array_free_callsite_only_rcx_defined": true,
+  "immediate_type_vtable_identities": {
+    "0x180001bb0": "0x18007fe38",
+    "0x180001c30": "0x18007fe98",
+    "0x180001cb0": "0x18007fe68",
+    "0x180001d30": "0x18007fe08"
+  },
+  "immediate_base_vtable_identity": "0x18007fa18",
+  "new_vtable_data_acquisition": false,
+  "initial_count_test_cached_before_type_vtable_store": true,
+  "new_native_analysis": false,
+  "reused_complete_data_evidence": [
+    {
+      "file": "pool-allocation-simd-data.json",
+      "sha256": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+      "new_read_performed": false,
+      "new_source_bodies_claimed_by_data_read": 0
+    },
+    {
+      "file": "node-delete-next-vtables.json",
+      "sha256": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a",
+      "new_read_performed": false,
+      "new_source_bodies_claimed_by_data_read": 0
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x180001830",
+      "pseudo_evidence": "ev_abf6ead481323ed34418e13f343856b36f0183b4a90796a24f1a890f0dad1914",
+      "assembly_evidence": "ev_de11d55b943716ed390775f77e60b3f24b2c5f17431bc50f1f7fc7eca335c9c9",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001e00",
+      "pseudo_evidence": "ev_310b19c5bb059cd1c7953ed5ff55dac04b85c180edb01c590a4176041e650755",
+      "assembly_evidence": "ev_b1ea754068b65d01028de2c76b93bcfaf0dca2608322419cc6418811342f3097",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002d70",
+      "pseudo_evidence": "ev_4e130f68563bb04de14fda1c456fd436f3dacd767dd331b62bdd0b7ec1bc4588",
+      "assembly_evidence": "ev_06bc5dbb4ccc0a7c9ef5555e3b2c6beb617304d7002256a26cc3451fe1233c49",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002dc0",
+      "pseudo_evidence": "ev_360a8ebddaae1ee10f83511de53328b963e4dbf5369444c578f3841fda48606d",
+      "assembly_evidence": "ev_942cee8f39a202985f358368870006d179df8d801e7c5ee6524b718b6cf62afb",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002e10",
+      "pseudo_evidence": "ev_d3753f429cb0573b35a6d038b49b7e94ccd954fe6542385b4948667e48fd523a",
+      "assembly_evidence": "ev_ffc8268becf2220ca2eeb649c6420381de74df66a6cf841c3f750d90fa5692ac",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "pool_destruct.hpp": "0f2951e2d60116d9986a0e615e49fcce70439cccf3ecbcb8484bc4d703cdf89c",
+    "pool_destruct.cpp": "3bebee2c224523e72a12ce338521dad7a0c2786d36aacc810227fb32f207ef35",
+    "pool_destruct_test_fixture.hpp": "186d654dc62b7d0ca07717a66e43f88855c373b9eab2be23e615049165d051af",
+    "pool_destruct_tests.cpp": "30ba14145d2f2b9de8c4594d1f6360bca5a2f820811903456fb4f817f10fdb70",
+    "pool_destruct_integration_tests.cpp": "858c7a8019e31cccb7d72fbf22a1cbbe8b021a73c94d910f6f661065284f6fb5",
+    "build.ps1": "542b5606cc857bab11bd23e65d87cccb27e67da3ac747c98f2b3993a90c7df26",
+    "CMakeLists.txt": "a16265de830785b3187acb40db46300d296acaeee6d8af1b68073229d1824f7d",
+    "README.md": "012c00eb0b87662c1d396c82c1928e6aafece2787eabfe547b5950643ddb60f9"
+  },
+  "reused_source_hashes": {
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "document_clear.hpp": "f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb",
+    "document_clear.cpp": "88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4",
+    "pool_clear.hpp": "4fe3d1f5b73f8bbde7d02b049382dedec07548aebae9adaced5794c965d094b1",
+    "pool_clear.cpp": "126eb5ed1e17ea2c51ada009be36cb3db3800d4a75a043888f89dba919dd7208",
+    "pool_allocate.hpp": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757",
+    "pool_allocate.cpp": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf",
+    "pool_append.hpp": "ce74e47337ce1627e1d8183b6e227d47bdf68eeb2aa44818de3ebdfae24fef66",
+    "pool_append.cpp": "26b55defe78e1de75967a39487ddd41def17c74bf536089ae4cf5c08ba161235",
+    "pool_release.hpp": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5",
+    "pool_release.cpp": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5"
+  },
+  "support_hashes": {
+    "pool-destruct-evidence.pseudo.c.txt": "644bf8ac4315062db9ee801b48ffc9d476ff9eb3aef6c1fa07655bb11c34d78a",
+    "pool-destruct-evidence.asm.txt": "bc8b100165d539b664a8c73e83404cdfd323d94c0e1bd435b40eb5fe923b08da",
+    "pool-destruct-context.pseudo.c.txt": "8e658b0a6c4f4374a2112fceecce6dcc07587956cf20f142f28fd0fa57dab9ae",
+    "pool-destruct-context.asm.txt": "965debf747b2926eb620e5b49a22f82aea43f245fd8d43f3bb135123807be64a",
+    "pool-destruct-flow-audit.md": "d5a2b651aeaa9e4fa8b95be51eb19091bb3bd9fd4505eff53822c9f198381833",
+    "pool-destruct-rea-session.json": "2249470d555cbe35f5de16488b3e4b631c4b5770af5255bfff881943776ff333",
+    "pool-destruct-source-review.json": "2e1c51ffc242c9032d2f632fce1056c9775e3e6a038028bde8861873e0680ff9",
+    "pool-allocation-simd-data.json": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+    "node-delete-next-vtables.json": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a"
+  },
+  "prior_target_presence": {
+    "0x180001bb0": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180001c30": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180001cb0": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180001d30": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 204,
+  "integration_checks": 10580,
+  "new_checks": 10784,
+  "execution_scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory",
+  "limitations": [
+    "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory",
+    "Initial raw count+64 nonzero test is cached before type-vtable store at pool+0;entry decision retains old CMP flags even when mapped alias changes count during store",
+    "Entered block loop is do/while:read live count,cache signed old index,decrement raw32 before live data/slot read;free block then test live count again;no positive clamp or artificial iteration cap",
+    "Pointer-only04b0f8 remains mandatory;block callerEDX hints4080/4056/4032/4080 are static facts,not a sizedfree ABI;array free has only RCX definitely defined and receives no invented size",
+    "After loop,three QWORD resets+68/+70/+78 precede live array pointer reload;if noninline data!=pool+10,free(data);basevtable07fa18 store comes only after that lower call",
+    "Preserve data pointer,capacity,inline bytes/stale entries;do not reset data toinline or introduce rollback;free/bounds failures leave committed prefix and skip later stores",
+    "Type vtables07fe38/07fe98/07fe68/07fe08 and base07fa18 are retained immediate code operands;no new table-byte acquisition;identities are never callable host pointers",
+    "Four final bridges close four historical NativeDocumentEffects destroy_pool providers (37→41);normal+bridge source variants are two definitions per one native address",
+    "Prior two semantic session adapters and one separate allocation dispatcher remain unchanged;document constructor/destructor and three pool clear routines are context only",
+    "Previous composition still requires block04b0bc allocation/0793d0 fill plus array04b100 allocation/078d30 copy/04b0f8 free;no additional lower CRT provider recovered",
+    "No new native import/data read;retained listings and prior complete data reused unchanged;REA checkpoint verifies identity/availability only",
+    "Originals never executed/modified;actual CFG/token/achievement contents never read;hash-only integrity separate;blocked version.dll/generated artifact never retried",
+    "CRT unchanged and paused;native free,node/parser/DOM/base lifecycle/global/vtable ABI/EH/concurrency open;full DLL incomplete,total percentage unmeasured"
+  ],
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "pool-destruct-source-review.json",
+      "reviewer": "/root/allocation_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N22 remaining document/node-base lifecycle inventory/contracts from retained evidence; no new source body claimed by that preparation; generic CRT remains paused"
+}

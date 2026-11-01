@@ -1,0 +1,96 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "method": "Static inspection of retained hash-bound REA/Ghidra assembly and pseudocode; no new native target session or execution",
+  "retained": {
+    "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "pseudo_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+  },
+  "functions": [
+    {
+      "address": "0x18006e984",
+      "role": "reconstructed",
+      "assembly_evidence": "ev_6cea0a61974294918c3ea08f45c00073e8eac70ff3dc2c8d4bacd2c87cb5cc92",
+      "pseudo_evidence": "ev_9d4e1a037001a99805dd5060b51fa408366c82fd37bce78d84abd290a4f8c5bf"
+    },
+    {
+      "address": "0x18006e800",
+      "role": "dependency-only",
+      "assembly_evidence": "ev_999960970cdc0fd0cc4b8b4da9e25ec80a7dbef743721e1fbe2b8e20b0f5d341",
+      "pseudo_evidence": "ev_d8c082ef9cc46a88c8ca7108849cd9ca5994c23f3db429686f83a36658a6d7ff"
+    },
+    {
+      "address": "0x180077168",
+      "role": "dependency-only",
+      "assembly_evidence": "ev_191d0da4c56aa0e09e5f9e6b0d5b4917cd7debdaafaf43537ec6d6d7cc2d3fc6",
+      "pseudo_evidence": "ev_b78a72bba02f423f64ed320651045264b55c90c7f9a282e6a8ad902600c7a2b4"
+    },
+    {
+      "address": "0x18006004c",
+      "role": "dependency-only",
+      "assembly_evidence": "ev_0f868b243528eb75903d77bdfb66e3303bf8d2174f87294221c11b1f06aa0fd7",
+      "pseudo_evidence": "ev_aa349c9216c41ac8dea8ae5d6fc7bbf415dae87fad22a0dd46e42c3c4b12afdd"
+    },
+    {
+      "address": "0x18006e430",
+      "role": "dependency-only",
+      "assembly_evidence": "ev_636585e8124a1c4234b9fb4d7565bfe6d78d499ce4383afc63edbf9c099f5308",
+      "pseudo_evidence": "ev_0c5fa8e629e638482c473e609ec82154e276302a8a8a8c537d9195f0748e365d"
+    },
+    {
+      "address": "0x1800768f0",
+      "role": "dependency-only",
+      "assembly_evidence": "ev_f8ca5d27bc8124fbc68d7326b0ab5ec2b1519dd624c428419824a40cc3e691d5",
+      "pseudo_evidence": "ev_ddd047a534971f5bc45280c21436c6d3be13b02fb9c0f924fa04a2fbf3e1aeba"
+    },
+    {
+      "address": "0x180058b04",
+      "role": "dependency-only",
+      "assembly_evidence": "ev_3dddc827b53aec64fea684a552b8365c6961552ab4bf972fa6fc4de5a99f1558",
+      "pseudo_evidence": "ev_501f23caf4f9aac0df80c205bbf5648208032a7b2446340b76eb98be234c6383"
+    },
+    {
+      "address": "0x180066c1c",
+      "role": "dependency-only",
+      "assembly_evidence": "ev_1d636bbaee00f8ee747e6d99e5a2a2d3d277679f3fed4291ec81b38cb35db71e",
+      "pseudo_evidence": "ev_9eec0ac9cfd859ebdf7fadf5438403822349fa6b1ece7b56f77e74ccf70a9ca3"
+    }
+  ],
+  "decisive_instructions": [
+    "06e9c4..06e9e4: backward scan calls DBCS previous helper until start or separator bitmask 0x200000000801 over unsigned byte minus 0x2f",
+    "06e9e6..06ea08: colon is accepted only at pattern+1; other colon positions immediately append the literal pattern",
+    "06ea29..06ea52: separator prefix includes separator byte; nonseparator prefix length is zero",
+    "06ea61..06eac1 and 06eb58..06ebb4: separate LocaleUpdate and 066c1c decision/cleanup regions before both conversion directions",
+    "06eadf/06eaeb/06eaf4: conversion full-EAX failure selects NULL then calls FindFirstFileExW with remaining arguments all zero",
+    "06eafd..06eb28: INVALID_HANDLE_VALUE falls back to actual append, then owned wide allocation is freed",
+    "06eb2d..06eb36: initial vector length is signed (end-begin) SAR 3",
+    "06ebcf/06ebd4/06ebd8: conversion failure selects NULL, then immediately dereferences it; fault recovery is not reconstructed",
+    "06ebd8..06ebfa: skip exactly dot and dotdot; no file attribute filter",
+    "06ec05..06ec1e: actual append receives filename, original pattern and preserved prefix; owned narrow result is freed after success",
+    "06ec85..06ecad: append failure frees owned narrow result, closes handle, frees owned wide result, returns low DWORD error",
+    "06ec2a/06ec33: FindNextFileW tests full EAX; zero ends enumeration irrespective of LastError",
+    "06ec3b..06ec62: if count changed, sort only appended slots using actual comparator identity 06e41c, width 8",
+    "06ec67..06ec83: sort precedes FindClose, followed by owned wide free and return zero"
+  ],
+  "dependencies": [
+    "Actual append_06e800 from sibling wildcard storage source",
+    "Mandatory DBCS previous_077168",
+    "Mandatory complete inlined locale selection/cleanup region",
+    "Mandatory conversions 06004c and 06e430",
+    "Mandatory FindFirstFileExW/FindNextFileW/FindClose providers",
+    "Mandatory sort 0768f0 with comparator 06e41c; no lexical sorting assumption"
+  ],
+  "source_choices": [
+    "Opaque uint64 addresses in provider-owned storage instead of forging host pointers",
+    "Nonprogressing or out-of-range previous provider and narrow NULL fault domain throw domain_error; no original error return or cleanup invented",
+    "Search source stores explicit Conversion data/owned/status instead of compiler stack-buffer layout"
+  ],
+  "limitations": [
+    "Normal-flow reconstruction only; SEH, cookie checking and exact original ABI/layout are not reconstructed",
+    "Locale, conversions, DBCS previous, find APIs and sort remain mandatory providers in this module",
+    "No native enumeration, filesystem changes, original or rebuilt DLL execution",
+    "Fixture sort records boundaries only, does not establish lexical order or reconstruct the sorting algorithm",
+    "Tests establish model invariants, not binary runtime equivalence"
+  ]
+}

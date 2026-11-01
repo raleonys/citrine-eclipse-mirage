@@ -1,0 +1,206 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T17:11:29.690827+00:00",
+  "review_scope": "B29 actual023d20/028950 typed normal bodies, exact selected executor boundary, callback-sensitive control/list ordering, actual two-move/destructor chain, sole025720 greeting lifetime fix and caller-retained real message integration with canonical negative control",
+  "reviewed_source_hashes": {
+    "move.hpp": "5322308f915fdae733183bcdea2adfe860cee02002686a1744dbd07feb0cfb59",
+    "move.cpp": "af73b49ea83cfc61bead66a631dcc65580657281d648b7535329de2598a85a92",
+    "move_tests.cpp": "fdbdd1d69bef9b179f879d4ca6340dc45a042d2a62f05e60512f289bf81e0807",
+    "move_integration_tests.cpp": "ae1298a3cb68888032c6e44b5caa65ba3f229441e6c471d7c8d6062505cbfe1e",
+    "../anadius-server-source/server.cpp": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda"
+  },
+  "quick_results": [
+    {
+      "path": "work/b29-core-quick-results.json",
+      "sha256": "276b091919a212f858133482dbe5d52bdc66336371a7879508d784d2cb38c91f",
+      "checks": 29,
+      "executable_path": "work/b29-core-test.exe",
+      "executable_sha256": "8df7b8033aabbefe22c252dfb7511144e500f965b14fdce36696c94a4e1d974d",
+      "execution_by": "/root standard quick run; production/core authored by /root and integration authored by /root/b22_integration. Reviewer independently read frozen sources and checked source/record/EXE hashes; did not rerun."
+    },
+    {
+      "path": "work/b29-integration-quick-results.json",
+      "sha256": "6861753a133d97956b1323dca434c8ce5c91b4a0f7c25e691c3568b8a537be12",
+      "checks": 21,
+      "executable_path": "work/b29-integration-test.exe",
+      "executable_sha256": "a8e07a2c4df1408ca1e5fab4cd333f22ad1535845df7ddd94c8462307e3ee7ba",
+      "execution_by": "/root standard quick run; production/core authored by /root and integration authored by /root/b22_integration. Reviewer independently read frozen sources and checked source/record/EXE hashes; did not rerun."
+    }
+  ],
+  "root_checks": 50,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING / unreviewed; no common-build PASS claim",
+  "pipeline_native_delta_support_reviewed": false,
+  "baseline_package_sha256": "2345b4ed217aa24a64bd02758183e34af3eea6228dece99b54f45599c3190940",
+  "prior_source_files": 838,
+  "prior_sources_preserved": 837,
+  "current_source_files": 842,
+  "source_inventory_counts_basis": "Independently verified838 B28 snapshot source entries against archived bytes and package-manifest hashes, then compared current hashes:837 unchanged, declared server.cpp greeting scope changed, four new source files.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-server-source/server.cpp",
+      "before_sha256": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0",
+      "after_sha256": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda",
+      "reason": "Narrow greeting temporary scope to match native heap release25911 before initial read25919; preserve reset/send/error/zero-progress order."
+    }
+  ],
+  "negative_control": {
+    "path": "work/b29-greeting-negative-results.json",
+    "sha256": "8705c788cd8da4ccc94743c53cc22c99f80454df3ac964a0e0eedb0cb14fcfae",
+    "expected_compile_exit": 0,
+    "expected_run_exit": 1,
+    "negative_not_PASS": true,
+    "executable_sha256": "70eccf9aeb3eb492b1eaaf99128daead50b733b37be37b2f58140085113f0360",
+    "log_sha256": "f8cc0dfc468bfc66f95fb1eb1ba236635d5699b6ea7d23cb0986844a7d7ce889",
+    "canonical_static_library_sha256_verified": "69c99952a01f79d4a627a43410f8b26a725e033eda8610edb6e48b79ac28ecb1",
+    "execution_by": "/root/b22_integration authored and executed separate negative control; reviewer verified without execution"
+  },
+  "retained_research": {
+    "path": "work/b29-accepted-source-audit.json",
+    "sha256": "51f9362086c8354abb8a37f7ea02abb1101566bdc5c1bbc26058fc0540d1b66f"
+  },
+  "classification": {
+    "new_normal_typed_body_addresses": [
+      "0x180023d20",
+      "0x180028950"
+    ],
+    "expected_mapped_functions": [
+      487,
+      489
+    ],
+    "expected_eligible_functions": [
+      491,
+      493
+    ],
+    "expected_normal_body_claims": [
+      124,
+      126
+    ],
+    "expected_existing_closed_native_functions_unchanged": 52,
+    "new_native_ABI_or_provider_closures": 0,
+    "counts_are_final_pipeline_verified": false,
+    "reason": "Two normal observed caller algorithms are implemented. Required selected executor operation and existing callbacks remain lower dependencies. Do not count header, helper,025720 fix or full023000 as extra bodies."
+  },
+  "findings": [
+    {
+      "topic": "Two actual missing typed normal algorithms",
+      "result": "PASS",
+      "evidence": [
+        "move.cpp:18-44,45-65",
+        "work/b29-accepted-source-audit.json",
+        "retained023d20 ASM ev_6635266dde9dfb6632465ffcfddef88dc684468dc2261cecc5081598c9f31c93",
+        "retained028950 ASM ev_9c247d8443f8d438e254883e524aeb8acfa47b08146d979682aab7097bd60ae5"
+      ],
+      "observation": "023d20 now implements observed service/cancellation/protocol initialization, exact executor dependency call, live table90 and actual028950 transfer. 028950 implements socket/state invalidation, control ownership/reloads, intrusive head insertion and post-gate protocol/options transfer. These are two substantive observed source algorithms, not merely delegated wrappers. Exactly these two canonical addresses support new normal typed source body mappings; no full native ABI/provider closure follows."
+    },
+    {
+      "topic": "Precise executor dependency and supported storage domain",
+      "result": "PASS",
+      "evidence": [
+        "move.hpp:5-18",
+        "move.cpp:5-8,45-64",
+        "move_tests.cpp:66-78",
+        "retained read_bytes ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082"
+      ],
+      "observation": "Distinct objects and distinct AcceptorState backing references are checked before effects. Constructor move requires fresh/unlinked destination, valid source service/table and callback. It writes only observed executor tables; payload context/zero74/self-reference remain the selected lower responsibility. Selected table78 identity is passed by value to a real function/context callback operating on actual destination/source ExecutorFields. Source table90 is read after callback, proven with mutation. Retained initialized084928 slot8 is token0228c0, whose body remains unavailable; the synthetic callback verifies routing, not actual0228c0 behavior or code provenance."
+    },
+    {
+      "topic": "Callback-sensitive control, service and list semantics",
+      "result": "PASS",
+      "evidence": [
+        "move.cpp:9-43",
+        "move_tests.cpp:45-64,80-98"
+      ],
+      "observation": "Source control strong increments before pair assignment. Cached old destination control releases strong, invokes dispose on last strong and reloads weak after callback. Source pair/control is then reloaded, cleared and released; a destructor-driven source-control replacement is observed by the core probe. Passed service remains cached through callbacks even if object.service changes. Gate covers destination head insertion only; source is not unlinked, though its previous link naturally changes when it is old head. Protocol/options copy/reset runs after leave. Core checks gate-before-protocol ordering and full field values; live post-gate loads were source-reviewed, without claiming a separate dynamic protocol-mutation test."
+    },
+    {
+      "topic": "Failures preserve bounded source prefixes",
+      "result": "PASS",
+      "evidence": [
+        "move.cpp:5-8,18-22,45-64",
+        "move_tests.cpp:66-78"
+      ],
+      "observation": "Invalid same-object/shared-state/missing-provider/nonfresh metadata rejects before native-algorithm effects in the supported projection. Executor throw rethrows the same exception after service/default/table78/table88 writes, before table90/control/list transfer. Partially initialized destination is not blindly retried. This is source normal control flow and the tested synthetic failure prefix; native EH funclets, allocator rollback, corruption cases and arbitrary concurrent/reentrant mutation are not recovered."
+    },
+    {
+      "topic": "Two moves reuse actual temporary destruction",
+      "result": "PASS",
+      "evidence": [
+        "move_tests.cpp:45-64",
+        "move_integration_tests.cpp:47-92",
+        "../anadius-socket-source/lifecycle.cpp:58-71"
+      ],
+      "observation": "Actual initialization, pending-to-temporary move and temporary-to-owned move leave owned/temporary/pending nodes linked while only owned retains the live64-bit socket and one cancellation owner. Existing024db0 removes only invalid temporary and repairs links. Explicit final destruction closes the transferred socket once and releases resource/control once. SDK close/cancel and executor cleanup remain injected lower effects; no new whole023000 shared-owner factory is implied."
+    },
+    {
+      "topic": "Greeting destruction matches native read boundary",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-server-source/server.cpp:60-77",
+        "move_integration_tests.cpp:15-29,140-150,167-185",
+        "retained025720 ASM ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa"
+      ],
+      "observation": "The sole prior-source change scopes greeting and its blocking partial-send loop before do_read, matching native greeting free25911 then read25919. Reset, bytes-before-error accounting, zero-progress behavior and no-read-on-write-error remain intact. Own-EXE allocator observer identifies the exact long greeting buffer, records its retirement before first receive and preserves synthetic final write LastError4040, without reading freed storage."
+    },
+    {
+      "topic": "Caller-retained semantic integration uses real message algorithms",
+      "result": "PASS",
+      "evidence": [
+        "move_integration_tests.cpp:107-185,192-199",
+        "work/b29-integration-quick-results.json"
+      ],
+      "observation": "Integration retains moved SocketChain plus Session and all references while synthetic transport queues run. Existing MessageHandler, coherent SessionCipher, XML reader/printer, Router and content serializer process actual ChallengeResponse and AES-encrypted QueryContent with partial sends. The first constructor reset and second accepted-start reset hit the same cipher. Explicit EOF drains I/O/worker/write callbacks before final socket cleanup. Accept error logs/reaccepts without moving; greeting write error keeps completed prefix and submits no read. This is a caller-retained semantic graph using injected transport/scheduling, not native raw-worker ownership or real network concurrency proof."
+    },
+    {
+      "topic": "Canonical old-source negative control and provenance",
+      "result": "PASS",
+      "evidence": [
+        "work/b29-greeting-negative-results.json",
+        "work/b29-greeting-negative.py",
+        "work/b29-greeting-negative.log",
+        "move_integration_tests.cpp:178-185"
+      ],
+      "observation": "The negative source is byte-identical to canonical B28 server.cpp, not a fabricated alternate change. Negative compile0/run1 fails only the precise greeting-retired-before-first-receive predicate after real AES/content work, partial-send drain, EOF and explicit final cleanup. Old source, EXE, log, recorded current five-source hashes and B28 archived static-library hash were verified. Expected negative failure is not counted among50PASS checks. All838 prior snapshot sources were verified against archive bytes/manifest:837 unchanged and only declared server.cpp modified; four new files yield842total. Common build/pipeline counts remain pending/unreviewed."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Selected executor table78 slot8 must implement actual payload operation with valid lifetimes;084928->0228c0 token is evidence of selected entry, not recovered0228c0 code, executable provenance or module pin. Image VAs are not invoked.",
+    "Typed SocketObject/AcceptorState/control/gate projections require disjoint backing, fresh/unlinked destination and serialized coherent source/service/provider state. This is not a native ASIO/MSVC overlay, arbitrary alias/corruption support or general concurrency/reentry guarantee.",
+    "Control callbacks must retain the control allocation through the following weak decrement; source normal prefixes do not recover native EH/unwind or full callback lifetime/code provenance.",
+    "Full023000 block/proxy allocations, exact output publication before weak-self callbacks, session-owner weak/strong setup, native owner disposal and allocator/EH remain deferred. No new host shared_ptr policy or complete accepted-session factory was added.",
+    "Actual detached frame workers still capture raw owner. Pending read/weak-self does not prove worker quiescence. Integration deliberately retains and drains the caller-owned semantic Session; future owned native graph must prove all asynchronous job/operation and code lifetimes before cleanup.",
+    "No original DLL/game execution, real network operation or user CFG/token/profile/license contents were used. B18-B28 PTD/publication/original/code-owner and generic CRT/licensing/native ABI/unload/PE obligations remain open.",
+    "Common full build, refreshed compiled inventory and native-body-delta pipeline are pending/unreviewed. Expected489mapped/493eligible/126normal and52unchanged closed-native count require root final gates; this review confirms the two source-body classifications only."
+  ],
+  "claim": {
+    "new_normal_typed_source_bodies": 2,
+    "new_native_bodies": 2,
+    "native_body_claim_scope": "Normal typed source algorithms023d20 and028950 only; no native ABI/provider closure",
+    "new_native_closures": 0,
+    "new_native_ABI_or_provider_closures": 0,
+    "actual_two_moves_and_existing_temporary_destructor_tested": true,
+    "source_control_reload_and_postcallback_table90_tested": true,
+    "greeting_retired_before_read_tested": true,
+    "canonical_old_source_negative_expected_failure": true,
+    "actual_message_cipher_router_with_caller_retention_tested": true,
+    "full023000_owner_factory_or_raw_worker_quiescence_proven": false,
+    "full_native_ABI_or_original_executor_recovered": false,
+    "original_DLL_or_game_execution": false,
+    "actual_user_content_read": false,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Only independent research/review reports were written by reviewer. No production, tests or pipeline edits and no EXE execution.",
+    "Standard quick core29 and integration21 were executed by /root; integration authored by /root/b22_integration. Separate canonical old-source negative was executed by integration author.",
+    "The greeting lifetime gap was identified in independent retained ASM/source review and fixed by production author; canonical negative substantiates this exact correction."
+  ]
+}

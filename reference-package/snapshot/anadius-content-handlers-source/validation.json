@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-10-17T13:23:30.8706050Z",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "tests": "PASS: 1023 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "original_execution": "none",
+  "runtime_equivalence": "unverified",
+  "files": [
+    {
+      "file": "build.ps1",
+      "sha256": "380b1f3adae4c7ee41b6febde12d1d31fe4970a27950df81ddbb827e294fb581"
+    },
+    {
+      "file": "constants.json",
+      "sha256": "47fc913fa8dcda453d3b777336647b31598392b93d622f9c75d1850b469e9c52"
+    },
+    {
+      "file": "content_handlers_tests.cpp",
+      "sha256": "23c2ed7eb48ef81a93fef084c4f3f2982ec30a5721a9c6a2b05307cd7602c517"
+    },
+    {
+      "file": "content_handlers.cpp",
+      "sha256": "3cd0a086a6fb9451d87cf63470877e8be72264ca29894dcb009785dedbc0eab3"
+    },
+    {
+      "file": "content_handlers.hpp",
+      "sha256": "3d7e56eac5fe80d0a76cec2baa7a160dc7a2e32d06b1d2fb18ff006cdc514ba7"
+    },
+    {
+      "file": "evidence.json",
+      "sha256": "9085a82ee13d9f3237fd5bef03ea15ea317be6688bae19265f25964feae75433"
+    },
+    {
+      "file": "README.md",
+      "sha256": "1fab35da1619550e421903acaddda91a100469d24994126bbad57cc8261a874d"
+    }
+  ]
+}

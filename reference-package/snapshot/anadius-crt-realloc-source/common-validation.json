@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_realloc",
+    "result": "PASS",
+    "output": "PASS 800 malloc/realloc checks",
+    "executable_sha256": "492d0b54326e9d1c58058087c4813f1a265cba8168758d7da8f71eba27ea9fcc"
+  },
+  "execution_scope": "Actual malloc/realloc normal control flow with existing heap/free/new-handler source; synthetic owned Heap API providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-realloc-source/realloc_tests.cpp",
+      "sha256": "f4cdb73d80610b5bef4557d7cfa86fa045f0c7cc0a11ffa8be6754a39de7bb1c"
+    },
+    {
+      "path": "anadius-crt-realloc-source/realloc.cpp",
+      "sha256": "f991c7f8786e6f01580afe0b47adc6b6b4b08772b62da41b2547e69ca09f3f47"
+    },
+    {
+      "path": "anadius-crt-realloc-source/realloc.hpp",
+      "sha256": "b1cc51f93423aa11d7e5ef8761cc8ffdd7ec2ee3d82b846130c1b972bdbbf6b2"
+    }
+  ]
+}

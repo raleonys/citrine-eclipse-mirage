@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_conversion_bridge",
+    "result": "PASS",
+    "output": "PASS 7440 wildcard/argv/onexit/conversion/API/resolver/heap/error composition checks",
+    "executable_sha256": "61f7c305b78d3eb8e23735a4d04603a66bd03d9e1e4d553e07597296245f1fcf"
+  },
+  "execution_scope": "Actual wildcard/argv/conversion/API/runtime resolver/heap/error/onexit source composition; synthetic ASCII native conversion, find/locale/Heap API providers; fallback/PTD error cells",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-conversion-bridge-source/bridge_tests.cpp",
+      "sha256": "8e61b69540fa87003e8fdade0521a27ed170545667fca0a7a9a2c1c03bf0ede8"
+    },
+    {
+      "path": "anadius-crt-conversion-bridge-source/bridge.cpp",
+      "sha256": "82300abafc9807963c40d30b15ca33056844cbcd1185b9ba46cb8263ce43ca9a"
+    },
+    {
+      "path": "anadius-crt-conversion-bridge-source/bridge.hpp",
+      "sha256": "a9aca1e1acb5ca5f096e68f19193f660cf6c5cf90bd8ae683064726617a7d4e3"
+    }
+  ]
+}

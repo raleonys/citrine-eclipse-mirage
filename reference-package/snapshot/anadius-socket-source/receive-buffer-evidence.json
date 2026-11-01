@@ -1,0 +1,114 @@
+{
+  "schema": "receive-buffer.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180010040",
+      "pseudo_evidence": "ev_8b172ce1ae7a2a8f6e7d19d9433d0f9681d58a8e0fba88dbe42da06deb17bac4",
+      "assembly_evidence": "ev_4eed657fe242e320b79de3469b4ff268d87d2033487b16f14133e304afc75ba1",
+      "newly_recovered": true
+    },
+    {
+      "address": "0x180008350",
+      "pseudo_evidence": "ev_8f414a470d18574ce283ec7f9d33a326dcabef0214a8d5a54fdfd5f5b9bba010",
+      "assembly_evidence": "ev_36491f90ef8a29d2fb8edd6b1735250524629ef5f6e005c31809a72ed253a8f3",
+      "newly_recovered": true
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180010040",
+    "0x180008350"
+  ],
+  "new_original_procedures": 2,
+  "context_functions": [
+    {
+      "address": "0x18004b0bc",
+      "pseudo_evidence": "ev_9c975496fb48d4e6fca6f8c0535c16fa44feb14e8dafa92ef6b45a98915fa0ec",
+      "assembly_evidence": "ev_4b9d54867bdd71cc2cd07945df16f49f84fdecaa3c3535386e97bd20f64624ec",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18004b0f8",
+      "pseudo_evidence": "ev_4b68e7012c821e22c8f38d541b6e4e613a7e14ea81822e58a96efac29dd593ef",
+      "assembly_evidence": "ev_c742d3bdc5602e2293140e3408473befa826c5e7f02f988ef02afb1709aa3adf",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180078d30",
+      "pseudo_evidence": "ev_981e059a6aefb99a5138b705432dfd5dd39c0ad1e7f77e341629c3e6b125f351",
+      "assembly_evidence": "ev_dd2b435485c7c775d5d8b7b0079176d82fb625f3930d10af7b505aa142d0936c",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800793d0",
+      "pseudo_evidence": "ev_89ebd0a550c9d731c8ab3523a3e481e6c6c2c9f8580a17dd7c6b9cf1158779a6",
+      "assembly_evidence": "ev_1248927392fa1608aaf45af45ee263a28787deadc5baa3075ef6ec2e1fa41ecb",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18000ce80",
+      "pseudo_evidence": "ev_20c217fa3d41668df76b7df7d79c2300baf98aa313a53d0244aaf5ffd1a80041",
+      "assembly_evidence": "ev_6060a6a7e8848e3bb2030bc6c20b014f6c85f0d0ddc540fe62f3e9046e5aa66f",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18000cd30",
+      "pseudo_evidence": "ev_135872b5c6eae98e2228082f8211d30b39d7a9c7a571ddb36099ce0e0ba6302e",
+      "assembly_evidence": "ev_b2ccd4a6ba5b6a5d63e567b3bcd49c2af9deb6f7b271872249e7005709f59892",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18005c974",
+      "pseudo_evidence": "ev_beb7d474b3449dcc8d1a7bea37addb851d6068cc527e7c67deceff1bd7582f01",
+      "assembly_evidence": "ev_2f6b40ea804fc67f9240bcfa789647f002fa4d611c9629a3b56c9863aa392402",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021d10",
+      "pseudo_evidence": "ev_d716892e207f1ae8230bf4ba5b7cce514f147811c107c7c9812d3b205fe10abf",
+      "assembly_evidence": "ev_cb69360436ddc454d9ea6ddc971cd6cbc8fa39ab9ec36acaba00a999bd388274",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "receive_buffer.hpp": "709ca59766fc42bf2fbc7d1f4f033987b590e42874ff566b39f975ac43ed1e56",
+    "receive_buffer.cpp": "022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0",
+    "receive_buffer_test_fixture.hpp": "b05cb2045732658f58294eff33b3181e49d1a8d2501bdf151f6a88c53eb8e82e",
+    "receive_buffer_tests.cpp": "b7d2316ff24b370d25bb2556d48c97a201720fb8f50f153b2b8ad169a4309844",
+    "receive_buffer_integration_tests.cpp": "6c2d50f94cd113120ad1fc7877d20afaf076bb3a7973cb5f198f08830ca0c0a8",
+    "build.ps1": "fd09058fa1bdc33cd32bc83d882e64e3629a711ded8d0f5b4243f7e893343ed5",
+    "CMakeLists.txt": "65f6a52bcc1b0d9ef122bd53d9b6f6ee56a442bea7bc56a70a0ce54ea5c436f2",
+    "README.md": "9905ce41891134b3f275c2f703321f1f649627679829aeb45b0baf0baf65a0b4"
+  },
+  "support_hashes": {
+    "receive-buffer-evidence.pseudo.c.txt": "3a04f0229ebbc4a3dbe47918e8628a5e7fa5a37232da0987be0350ca41be9b93",
+    "receive-buffer-evidence.asm.txt": "4d0719786b746817bfe5cfe588a80cf911191cad8f495601cee1ffffb92a7f66",
+    "receive-buffer-context.pseudo.c.txt": "a8d5d1362f218f4cd9ef631e2843ab6091ce928f6348f5ecef2b0ab046f25aad",
+    "receive-buffer-context.asm.txt": "8daea8a9a59288edc34b091a1399a0b0cd9ed5c9954b53b790419987905823d9",
+    "receive-buffer-flow-audit.md": "7bc8509599c612a2d00734a417d0f450457f32a7019bba2ddd14090682428180",
+    "receive-buffer-rea-session.json": "dd969de1a18a0bd6b8e3d80b54ed5401db07a76d605485a0fa05e3bd5b02e735"
+  },
+  "core_checks": 3977,
+  "integration_checks": 684,
+  "new_checks": 4661,
+  "selected_byte_contracts": {
+    "0x180078d30": "BoundedReceiveBufferApi.copy_bytes",
+    "0x1800793d0": "BoundedReceiveBufferApi.fill_bytes",
+    "original_instruction_bodies_added": false
+  },
+  "review": {
+    "scope": "Same-agent retained assembly/source comparison and synthetic tests",
+    "independent_review_complete": false
+  },
+  "scope": "Normal flows; pointer-width unsigned arithmetic; pure bounded mappings; actual owned byte stores except explicitly symbolic huge arithmetic fixtures",
+  "CRT_production": "unchanged and paused",
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "native_equivalence": "not established; native allocator/terminal/STL/EH/SEH/concurrency/ABI/fullDLL remain open",
+  "next_package": "R3 0x180025c40 composed receive"
+}

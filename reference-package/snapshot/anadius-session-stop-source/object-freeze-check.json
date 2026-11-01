@@ -1,0 +1,80 @@
+{
+  "result": "PASS",
+  "source_package": "B50",
+  "build_record_sha256": "eb2b50b5b1740e9e0d89a06feb406a543e207cf9d615feb272884729c430a6e2",
+  "frozen_source_hashes": {
+    "session_stop_tests.cpp": "6e5464f90473bd77762b9ec05c777a815901e7641baf3085c211c22c5ab39a34",
+    "session_stop_integration_tests.cpp": "f7c980579ab0b3617af50f6c872f369d4c850b22a49dacf3f462091a2a6fbd9a",
+    "../anadius-accept-stop-source/stop.hpp": "6d4854d3640568c5ec08eaa23b4abbb4b40d5c529be3bc6825f017f62702a94b",
+    "../anadius-accept-stop-source/stop.cpp": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+    "../anadius-io-memory-source/io_memory.hpp": "6106cfff8df2cafac2f2570b54f78ef921204ffb9f45c6943bf1894c776d2847",
+    "../anadius-io-memory-source/io_memory.cpp": "669a2b098f2496266ff330e1efccd4a6a29b8d55a10f01b752bec51b39a509fd"
+  },
+  "objects": [
+    {
+      "object": "outputs/source-workspace/build/accept_stop.o",
+      "source": "anadius-accept-stop-source/stop.cpp",
+      "source_sha256": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+      "production_sha256": "430a19e7e723bc38a004787fb1db396d88be46bea8e40cea9b6788e12289b467",
+      "fresh_path": "work/b50-freeze-accept_stop.o",
+      "fresh_sha256": "d6e902e1457c8399c2a3266769b0e28f163378246f60b1c1feb3790490a43162",
+      "normalized_sha256": "d7f6aea6acb054942387126684d62c44842dcaabe5eadeb444f75a5032d99aa0",
+      "fresh_normalized_sha256": "d7f6aea6acb054942387126684d62c44842dcaabe5eadeb444f75a5032d99aa0",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-accept-stop-source\\stop.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b50-freeze-accept_stop.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    },
+    {
+      "object": "outputs/source-workspace/build/io_memory.o",
+      "source": "anadius-io-memory-source/io_memory.cpp",
+      "source_sha256": "669a2b098f2496266ff330e1efccd4a6a29b8d55a10f01b752bec51b39a509fd",
+      "production_sha256": "bc3c4523516ea7f99ba9f0e5f29c5732031f1d09235befb5c19a72e8143208d0",
+      "fresh_path": "work/b50-freeze-io_memory.o",
+      "fresh_sha256": "ea2fa655e0c21d7812ee881947e3bbb29e279c39caf250c8da6896b03398339c",
+      "normalized_sha256": "c4ca5a5b6ed833bb7a836a19dbcbca2378f3e6c45009d520578f0c9461ca4a16",
+      "fresh_normalized_sha256": "c4ca5a5b6ed833bb7a836a19dbcbca2378f3e6c45009d520578f0c9461ca4a16",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-io-memory-source\\io_memory.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b50-freeze-io_memory.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "scope": "Fresh identical-command final-source production compile; all bytes except COFF header timestamp equal."
+}

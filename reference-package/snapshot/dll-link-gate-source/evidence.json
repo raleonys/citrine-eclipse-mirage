@@ -1,0 +1,62 @@
+{
+  "schema": "dll-link-gate.retained-evidence.v1",
+  "package": "B31",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "fresh_original_reads": false,
+  "new_original_procedures": 0,
+  "new_native_ABI_provider_closures": 0,
+  "retained_entry_audit": {
+    "path": "dll-integration-audit/entry-roots.json",
+    "sha256": "b0d251e730975fd79d5186619603e700877af6ee09ee2bb4f237ae4543e5ff0d"
+  },
+  "retained_original_entry": "0x18004bcfc",
+  "retained_original_exports": [
+    {
+      "ordinal": 1,
+      "name": "CDX",
+      "rva": "0x17a30",
+      "address": "0x180017a30",
+      "forwarder": null,
+      "name_pointer": "0x18009fa24",
+      "eat_slot_address": "0x18009f9f8"
+    },
+    {
+      "ordinal": 2,
+      "name": "RUNE",
+      "rva": "0x17a30",
+      "address": "0x180017a30",
+      "forwarder": null,
+      "name_pointer": "0x18009fa28",
+      "eat_slot_address": "0x18009f9fc"
+    },
+    {
+      "ordinal": 3,
+      "name": "anadius",
+      "rva": "0x17a30",
+      "address": "0x180017a30",
+      "forwarder": null,
+      "name_pointer": "0x18009fa2d",
+      "eat_slot_address": "0x18009fa00"
+    }
+  ],
+  "retained_leaf_observation": "RET0;no explicit return-value assignment or work at017a30,not a functional application entry",
+  "candidate_export_leaf": {
+    "original_address": "0x180017a30",
+    "compiled_instruction_hex": "c3",
+    "canonical_normal_body_claim_added": false,
+    "final_PE_alias_addresses_verified": false
+  },
+  "observed_static_link": {
+    "validation_sha256": "299042716765d719587d133092be1ab19d2cd4ab77263c4594cef78c3e1bfdd2",
+    "source_verification_sha256": "4c3e9ebe3eb80a845e2b6f04fa20534bb20a14a6c2de605e36aabf5b8764bbd7"
+  },
+  "architecture_choice": "Compiler CRT once plus application layer; not a native ABI equivalence claim",
+  "production_factory_and_loader_lifecycle_implemented": false,
+  "final_PE_export_TLS_import_unwind_verified": false,
+  "native_inventory_metrics_unchanged": {
+    "mapped": 490,
+    "eligible": 494,
+    "normal_body_claims": 127,
+    "historical_closures": 52
+  }
+}

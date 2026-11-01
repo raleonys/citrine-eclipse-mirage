@@ -1,0 +1,74 @@
+{
+  "artifact": {
+    "file": "anadius64.dll",
+    "size": 694272,
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "image_base": "0x180000000"
+  },
+  "evidence_type": "retained REA Ghidra static assembly/pseudocode; bounded hash-verified .rdata literal reads; no target execution",
+  "retained_sources": [
+    {"file": "../anadius-all-functions.asm.txt", "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"},
+    {"file": "../anadius-all-functions.pseudo.c", "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"}
+  ],
+  "functions": [
+    {
+      "va": "0x18000e310",
+      "source": "initialize_host_00e310",
+      "pseudocode_evidence": "ev_e0ad68524e1fb1bd42a4fd73d652ce3551d160f25f3ce2b356c55f753c938bfd",
+      "assembly_evidence": "ev_7935b0600e6f04cb19a2f105fc6329c34f44324b20f112ecb93a694fe741a29b",
+      "anchors": [
+        {"va": "0x18000e363..0x18000e373", "observation": "clear tree rooted a3828 then reset count a3830"},
+        {"va": "0x18000e4a2..0x18000e9b0", "observation": "insert keys before filesystem widening of the three fixed literals"},
+        {"va": "0x18000e9b0..0x18000ea50", "observation": "ClientPath copied from a39e0 with explicit length"},
+        {"va": "0x18000ea50..0x18000ed37", "observation": "language registry key a3ad8/a3ae8 absent disables a3ad1; otherwise split path and convert game-map INSTALLED_LANGUAGE"},
+        {"va": "0x18000ec80..0x18000ecf6", "observation": "lookup/insert INSTALLED_LANGUAGE before insertion of Language; conversion follows Language insertion"},
+        {"va": "0x18000ed3c..0x18000ed4c", "observation": "reset vector end a3818 to begin a3810 without unhooking"},
+        {"va": "0x18000ed53..0x18000edd1", "observation": "284-byte zeroed OSVERSIONINFOEXW request, major6/minor2/servicepack0, mask chain types2/1/32 condition3, VerifyVersionInfo type35"},
+        {"va": "0x18000edda..0x18000ee1d", "observation": "initialize046a20, log succeeded only for EAX0, skip hook setup on nonzero"},
+        {"va": "0x18000ee49..0x18000ef26", "observation": "connect then five registry hooks; KernelBase on nonzero VerifyVersionInfo return, otherwise advapi32"},
+        {"va": "0x18000ef30..0x18000efa0", "observation": "a3c92 nonzero enables CreateProcess A/W; KernelBase or Kernel32 chosen by same result"},
+        {"va": "0x18000efa5..0x18000f0a5", "observation": "nonempty documents length a3f08 adds map value, log, two shell32 hooks"}
+      ]
+    },
+    {
+      "va": "0x18000f120",
+      "source": "install_hook_00f120",
+      "pseudocode_evidence": "ev_b69befa3513de4367b8adb6baab5427a9ba3819e6ab65c5cd07e392e8cd9be7d",
+      "assembly_evidence": "ev_3c9fe00be9b342c0b2f9445e63540b31112e2dc755e950925baa45d01c1ec8c2",
+      "observations": ["target local initially zero", "046970 create status checked before 046a10 enable", "enable EAX checked despite pseudocode helper void signature", "append resolved target only after both statuses zero", "distinct Hooking function / Enabling hook for log prefixes and signed status", "no rollback for failures"]
+    },
+    {
+      "va": "0x180046970",
+      "source": "create_named_hook_046970",
+      "pseudocode_evidence": "ev_65359cd6681f204cfdc6097c39b7def4f988dd38f184168c0b11ce9dc5c1dec3",
+      "assembly_evidence": "ev_bdcaa45091a582cd892e2c31388181c0dfcc29d0643a57d5dd2bb8ebc0962574",
+      "observations": ["GetModuleHandleW failure ->11; no LoadLibrary", "GetProcAddress failure ->12", "optional target output assigned before 0466e0", "original pointer passed through to engine by reference"]
+    },
+    {"va": "0x1800084e0", "role": "supporting game-attribute operator[]", "pseudocode_evidence": "ev_a0ba6481e8edda1c1a65d1e65c57eeee73df2afcf4367a556ad71cdb2973e63b", "observation": "missing key inserted with empty narrow value"},
+    {"va": "0x18000b1a0", "role": "supporting wide-value operator[]", "pseudocode_evidence": "ev_07cefec9970fef74b6167d13a85b1ed0a670f11c586d7e511d80f8279faf7685", "observation": "missing key inserted with empty wide value"},
+    {"va": "0x180046a20", "role": "mandatory external initialization boundary", "pseudocode_evidence": "ev_28989e17db618b3e4b704409b2d5af7295b820e8bde96710b37d6ba5dc862188", "observations": ["spin lock, heap creation", "existing heap returns1; heap creation failure9", "actual engine remains unresolved"]}
+  ],
+  "literals": [
+    {"va": "0x180080578", "raw_offset": "0x7ed78", "length": 27, "value": "SOFTWARE\\Wow6432Node\\Origin"},
+    {"va": "0x1800805a8", "raw_offset": "0x7eda8", "length": 35, "value": "SOFTWARE\\Electronic Arts\\EA Desktop"},
+    {"va": "0x180080558", "raw_offset": "0x7ed58", "length": 10, "value": "ClientPath"},
+    {"va": "0x180080630", "raw_offset": "0x7ee30", "value": "MinHook initialization "},
+    {"va": "0x180080758", "raw_offset": "0x7ef58", "value": "hooking special folders"},
+    {"va": "0x180080420", "raw_offset": "0x7ec20", "value": " failed; error "}
+  ],
+  "hook_slots": [
+    {"slot": 0, "global_va": "0x1800a3838", "replacement_va": "0x18000fd00", "name": "connect"},
+    {"slot": 1, "global_va": "0x1800a3840", "replacement_va": "0x18000f800", "name": "RegOpenKeyExA"},
+    {"slot": 2, "global_va": "0x1800a3848", "replacement_va": "0x18000f960", "name": "RegOpenKeyExW"},
+    {"slot": 3, "global_va": "0x1800a3850", "replacement_va": "0x18000f5b0", "name": "RegCloseKey"},
+    {"slot": 4, "global_va": "0x1800a3858", "replacement_va": "0x18000fac0", "name": "RegQueryValueExA"},
+    {"slot": 5, "global_va": "0x1800a3860", "replacement_va": "0x18000fb60", "name": "RegQueryValueExW"},
+    {"slot": 6, "global_va": "0x1800a3868", "replacement_va": "0x18000f3f0", "name": "CreateProcessA"},
+    {"slot": 7, "global_va": "0x1800a3870", "replacement_va": "0x18000f4d0", "name": "CreateProcessW"},
+    {"slot": 8, "global_va": "0x1800a3878", "replacement_va": "0x18000fc00", "name": "SHGetFolderPathA"},
+    {"slot": 9, "global_va": "0x1800a3880", "replacement_va": "0x18000fc80", "name": "SHGetFolderPathW"}
+  ],
+  "implementation_choices": ["new StateRefs binds shared configuration State and externally supplied map/vector/original slots", "existing pure Windows path module reused", "Callback enum requires backend resolution to rebuilt functions, never preferred original addresses", "Effects pure virtual boundaries have no success defaults"],
+  "unresolved": ["patch/trampoline engine", "ten callbacks", "real Win32 and log adapters", "MSVC container/string/allocator/exception ABI", "original allocation failure equivalence", "global initialization and thread ownership", "runtime equivalence"],
+  "validation": "6013 deterministic synthetic checks; one production object; one test suite; original DLL and game not executed"
+}

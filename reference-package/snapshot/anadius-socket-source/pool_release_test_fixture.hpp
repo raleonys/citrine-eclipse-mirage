@@ -1,0 +1,64 @@
+#pragma once
+#include "pool_release.hpp"
+#include "node_delete_test_fixture.hpp"
+
+namespace pool_test {
+namespace s=anadius::socket_recovered;
+using clear_test::Graph;using document_test::State;using document_test::Failure;
+using response_test::check;using response_test::checks;
+struct Pools {
+    Graph& graph;std::array<std::array<std::uint8_t,0x80>,4> bytes{};
+    std::optional<std::pair<std::size_t,std::size_t>> omitted;unsigned omitted_pool=0;
+    explicit Pools(Graph& g):graph(g){reset();}
+    void refresh(){graph.refresh();for(unsigned i=0;i<4;++i){const auto slot=467+i*4;graph.state.regions[slot]={};if(!omitted||i!=omitted_pool)graph.state.regions[slot]={Graph::pool(i),bytes[i]};else{const auto [at,n]=*omitted;if(at)graph.state.regions[490+i*2]={Graph::pool(i),std::span(bytes[i]).first(at)};if(at+n<0x80)graph.state.regions[491+i*2]={Graph::pool(i)+at+n,std::span(bytes[i]).subspan(at+n)};}}}
+    void reset(){for(auto& b:bytes)b.fill(0);omitted.reset();refresh();for(unsigned i=0;i<4;++i){graph.set(Graph::pool(i),Graph::pooltable(i));graph.set(Graph::pooltable(i)+0x18,0x1800033a0ULL);graph.set(Graph::pooltable(i)+0x20,0x180005a20ULL);}}
+    std::uint64_t get(unsigned i,std::size_t at,unsigned width=8){return graph.get(Graph::pool(i)+at,width);}
+    void set(unsigned i,std::size_t at,std::uint64_t value,unsigned width=8){graph.set(Graph::pool(i)+at,value,width);}
+    void seed(unsigned i,bool untracked){reset();set(i,0x70,1,4);set(i,0x7c,unsigned(untracked),4);graph.set(Graph::node()+0x60,Graph::pool(i));}
+};
+struct Nodes:s::RecoveredPoolReleaseEffects {
+    clear_test::Nodes lower;Graph& graph;Pools& pools;
+    std::function<void(std::string)>& hook=lower.hook;std::function<void()>& after_destroy=lower.after_destroy;
+    std::uint64_t& probe_result=lower.probe_result;
+    unsigned& probes=lower.probes;unsigned& destroys=lower.destroys;unsigned& releases=lower.releases;
+    unsigned& tracks=lower.tracks;unsigned& parents=lower.parents;unsigned& deletes=lower.deletes;
+    std::vector<clear_test::Nodes::Call>& calls=lower.calls;std::vector<std::string>& trace=lower.trace;
+    Nodes(Graph& g,Pools& p,s::PoolTargetIdentities targets={}):RecoveredPoolReleaseEffects(g.state.memory,targets),lower(g),graph(g),pools(p){}
+    std::uint64_t node_probe(std::uintptr_t target,std::uintptr_t node)override{return lower.node_probe(target,node);}
+    void node_destroy(std::uintptr_t target,std::uintptr_t node,std::uint32_t flags)override{lower.node_destroy(target,node,flags);}
+};
+struct Docs:s::RecoveredDocumentClearEffects {
+    State& state;Nodes& nodes;Pools& pools;document_test::Effects lower;
+    // Supplied compatibility-parser allocation projection, not native pool
+    // allocation or full DOM materialization. Only release/track are source-bound.
+    unsigned projection_mode=1,pool_index=0;
+    Docs(State& s,Nodes& n,Pools& p,native_message_test::Fixture* native=nullptr):RecoveredDocumentClearEffects(s.memory,n),state(s),nodes(n),pools(p),lower(s,native){nodes.after_destroy=[this](){lower.reset_parsed();};}
+    void set_error_005820(std::uintptr_t p,std::int32_t a,std::uint32_t b,std::uintptr_t c)override{lower.set_error_005820(p,a,b,c);}
+    std::uintptr_t allocate_04b100(std::uint64_t n)override{const auto p=lower.allocate_04b100(n);pools.refresh();return p;}
+    void copy_078d30(std::uintptr_t to,std::uintptr_t from,std::uint64_t n)override{lower.copy_078d30(to,from,n);pools.refresh();}
+    void parse_0041b0(std::uintptr_t p)override{
+        lower.parse_0041b0(p);const auto* parsed=lower.native?lower.native->api.document.get():lower.parsed.get();
+        if(!parsed||!parsed->first_element())return;
+        nodes.graph.install();nodes.probe_result=projection_mode?0:1;pools.seed(pool_index,projection_mode==1);
+        if(!projection_mode)return;
+        state.put(0x38,0);state.put(0x40,0);state.put(0x104,1,4);state.put(0xa8,Graph::tracking());
+        nodes.graph.set(Graph::tracking(),Graph::node());nodes.graph.set(Graph::node()+0x10,0);
+        if(projection_mode==2){const auto parent=Graph::node(15);nodes.graph.set(parent+0x38,Graph::node());nodes.graph.set(parent+0x40,Graph::node());nodes.graph.set(Graph::node()+0x10,parent);}
+    }
+    void clear_pool_002d70(std::uintptr_t p)override{lower.clear_pool_002d70(p);}
+    void clear_pool_002e10(std::uintptr_t p)override{lower.clear_pool_002e10(p);}
+    void clear_pool_002dc0(std::uintptr_t p)override{lower.clear_pool_002dc0(p);}
+    void destroy_pool_001c30(std::uintptr_t p)override{lower.destroy_pool_001c30(p);}
+    void destroy_pool_001cb0(std::uintptr_t p)override{lower.destroy_pool_001cb0(p);}
+    void destroy_pool_001bb0(std::uintptr_t p)override{lower.destroy_pool_001bb0(p);}
+    void destroy_pool_001d30(std::uintptr_t p)override{lower.destroy_pool_001d30(p);}
+    void free_04b0f8(std::uintptr_t p)override{lower.free_04b0f8(p);pools.refresh();}
+    void destroy_node_base_001ea0(std::uintptr_t p)override{lower.destroy_node_base_001ea0(p);lower.reset_parsed();}
+};
+struct Fixture {
+    s::NativeMessageDocument document;State state{document};Graph graph{state};Pools pools{graph};Nodes nodes{graph,pools};Docs docs{state,nodes,pools};s::NativeDocumentContext document_context{state.memory,docs};
+    void construct(){(void)s::construct_native_document_001830(State::base,1,0,document_context);}
+    void release(std::uintptr_t pool,std::uintptr_t item){nodes.pool_release(0x1800033a0ULL,pool,item);}
+    void track(std::uintptr_t pool){nodes.pool_track(0x180005a20ULL,pool);}
+};
+} // namespace pool_test

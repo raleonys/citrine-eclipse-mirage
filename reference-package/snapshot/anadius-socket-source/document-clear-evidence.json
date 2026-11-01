@@ -1,0 +1,190 @@
+{
+  "schema": "document-clear.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180002e60",
+      "pseudo_evidence": "ev_d444b1fc601d178931a7e8d2639ae1302147db0aa91a4ac0ba78524478cc9132",
+      "assembly_evidence": "ev_85978582117bd9f341daf92a73488d66e6901ef09a94b8f6c42e4e4a594b75a6",
+      "newly_recovered": true,
+      "recovery_scope": "new raw-memory normal clear/child cleanup projection and final source bridge;003030/003240,virtual and native ABI lower providers open"
+    },
+    {
+      "address": "0x180003110",
+      "pseudo_evidence": "ev_1309c5f52e5b3d9c95ec97c721c6a49f19fcded8db1c04d21e5faf6c6874beb4",
+      "assembly_evidence": "ev_635328ecb5bc687965c6bb53ce282983fd334bc548208011ed74d62e645db5bf",
+      "newly_recovered": true,
+      "recovery_scope": "new raw-memory normal clear/child cleanup projection and final source bridge;003030/003240,virtual and native ABI lower providers open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180002e60",
+    "0x180003110"
+  ],
+  "new_original_procedures": 2,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/document_clear.cpp",
+      "base": "NativeDocumentEffects::clear_002e60",
+      "body": "clear_native_document_002e60",
+      "closure": "RecoveredDocumentClearEffects::clear_002e60",
+      "address": "0x180002e60",
+      "native_abi_complete": false,
+      "scope": "002e60/003110 normal document clear and child-node cleanup projections and2 final NativeDocumentEffects source bridges; raw-memory unlink/tracking/live pointer/cached vtable and normal cleanup order;003030/003240 and node/pool virtual operations,free/parser/pool/vtable/ABI/EH lower providers mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/document_clear.cpp",
+      "base": "NativeDocumentEffects::delete_nodes_003110",
+      "body": "delete_native_nodes_003110",
+      "closure": "RecoveredDocumentClearEffects::delete_nodes_003110",
+      "address": "0x180003110",
+      "native_abi_complete": false,
+      "scope": "002e60/003110 normal document clear and child-node cleanup projections and2 final NativeDocumentEffects source bridges; raw-memory unlink/tracking/live pointer/cached vtable and normal cleanup order;003030/003240 and node/pool virtual operations,free/parser/pool/vtable/ABI/EH lower providers mandatory"
+    }
+  ],
+  "native_typed_providers_newly_closed": 2,
+  "context_functions": [
+    {
+      "address": "0x180003030",
+      "pseudo_evidence": "ev_f0d8f947ec8be75ff8f8d98756eef10381d18d179adac4a13a2b449556abbc64",
+      "assembly_evidence": "ev_62653814fe73bda4ddc3c13653105d5eae5d8b8e23438a418eb6eb770c525aad",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180003240",
+      "pseudo_evidence": "ev_85f5d40be5f36d1fa85d93ac5e561c5df22a3923879f0ddc4fbe2ef681ff3a04",
+      "assembly_evidence": "ev_66a8781816232d9983f66d11708eff8ac7b7af8864cb6b8663030e90b072427d",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001830",
+      "pseudo_evidence": "ev_abf6ead481323ed34418e13f343856b36f0183b4a90796a24f1a890f0dad1914",
+      "assembly_evidence": "ev_de11d55b943716ed390775f77e60b3f24b2c5f17431bc50f1f7fc7eca335c9c9",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180004280",
+      "pseudo_evidence": "ev_783e89582f054f61046e9c06b28ad2145076dbd6721a32cd6bfe2c615e85ff20",
+      "assembly_evidence": "ev_795f6b99b0b687dd3ceffca4901b4e92f2721869b41c336f72e0ba4c670d4a4f",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001e00",
+      "pseudo_evidence": "ev_310b19c5bb059cd1c7953ed5ff55dac04b85c180edb01c590a4176041e650755",
+      "assembly_evidence": "ev_b1ea754068b65d01028de2c76b93bcfaf0dca2608322419cc6418811342f3097",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800041b0",
+      "pseudo_evidence": "ev_d4270b9a2ca885be4b12cfa24f257c4c48568ce7a4cbd3234c71d483394ca0de",
+      "assembly_evidence": "ev_0161e7e54c7c2f628bb6bbf99adff0b97b85e09b7c8528365aa858c02fdd4a08",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002d70",
+      "pseudo_evidence": "ev_4e130f68563bb04de14fda1c456fd436f3dacd767dd331b62bdd0b7ec1bc4588",
+      "assembly_evidence": "ev_06bc5dbb4ccc0a7c9ef5555e3b2c6beb617304d7002256a26cc3451fe1233c49",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002e10",
+      "pseudo_evidence": "ev_d3753f429cb0573b35a6d038b49b7e94ccd954fe6542385b4948667e48fd523a",
+      "assembly_evidence": "ev_ffc8268becf2220ca2eeb649c6420381de74df66a6cf841c3f750d90fa5692ac",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002dc0",
+      "pseudo_evidence": "ev_360a8ebddaae1ee10f83511de53328b963e4dbf5369444c578f3841fda48606d",
+      "assembly_evidence": "ev_942cee8f39a202985f358368870006d179df8d801e7c5ee6524b718b6cf62afb",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001ea0",
+      "pseudo_evidence": "ev_e7c4be9c1717eb0483ad0b59aaf3cbeb61047a721af9832aa8b1d49694e9dd87",
+      "assembly_evidence": "ev_21355add25b8123d7a7643cd6b01256197966701b4c2309f7557a5cdd95d7192",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "document_clear.hpp": "f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb",
+    "document_clear.cpp": "88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4",
+    "document_clear_test_fixture.hpp": "3ea2d649379aa6d213fd2cdac68b06dedb75867eed37fc71cc7e64919b8b4fa5",
+    "document_clear_tests.cpp": "550c99e8894c491d2e2bd05c074cb19f6e5d8664243955b125ddf4ed763dfd41",
+    "document_clear_integration_tests.cpp": "0201d5348e59e316a5f0c823fc19615dd0f5f4c435bd425802d3522abc822ce1",
+    "build.ps1": "449244d1f38b9e59e3b31bde418efe82b1f585461eebe5f039055ae108af704c",
+    "CMakeLists.txt": "b4b6ad115915db45db3e9a57c1e19772a7d60b45ab54476a39c68202f28a5c86",
+    "README.md": "cba57db541347301dd4fdba920862ba11405020dbe947cec9718da871871f73f"
+  },
+  "reused_source_hashes": {
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "native_message.hpp": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c",
+    "native_message.cpp": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+    "native_dispatch.hpp": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440",
+    "native_dispatch.cpp": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b"
+  },
+  "support_hashes": {
+    "document-clear-evidence.pseudo.c.txt": "0d07904c499b3003b68a099f6f0c653a8ffacd24d6c0e85e88cd12218cfc6a15",
+    "document-clear-evidence.asm.txt": "8432c066634913e102ce0d35ecf070c6f08dbe6111b5c43c93d476b01e8dfcfc",
+    "document-clear-context.pseudo.c.txt": "e344f7e7f90cfd1caf9d8b38cb3291c6b26aa5153deb9216bad7c1f7b6ff7e88",
+    "document-clear-context.asm.txt": "28bfd0caa99f8d6a4b42efea95a8de80826ed5bb6eca63618377ea85235fcffe",
+    "document-clear-flow-audit.md": "33fd087118c0b340919feffebdf4aa607532c1d91a2f8ad5aaf049ac7e391dcd",
+    "document-clear-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788",
+    "document-clear-source-review.json": "24628eda6f2029c8267256944c7b1259fb3c1bf7c75c177032cd2b6ae3c35dac"
+  },
+  "prior_target_presence": {
+    "0x180002e60": {
+      "source_presence": "module_record_only",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180003110": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 169,
+  "integration_checks": 17117,
+  "new_checks": 17286,
+  "execution_scope": "002e60/003110 normal document clear and child-node cleanup projections and2 final NativeDocumentEffects source bridges; raw-memory unlink/tracking/live pointer/cached vtable and normal cleanup order;003030/003240 and node/pool virtual operations,free/parser/pool/vtable/ABI/EH lower providers mandatory",
+  "limitations": [
+    "Bounded raw-memory normal projections; no native DOM/object/global/vtable/lifecycle/ABI/EH/concurrency equivalence established",
+    "003030 parent/node helper and003240 standalone-node deletion remain mandatory; these helper bodies are not recovered here",
+    "Node virtual slots+0x38/+0x78 and pool virtual slots+0x20/+0x18 remain mandatory lower effects; supplied vtable identity values do not implement native virtual calls",
+    "003110 probe uses full64-bit result; signed tracking count/read/reload and cached table/pool contract remain bounded memory observations",
+    "04b0f8 free defines only pointer argument in002e60; no invented sized-free argument or native allocator/CRT recovery",
+    "No synthetic iteration cutoff or undocumented corrupted-graph recovery is claimed; caller must supply live mapped finite normal domains",
+    "Error/line zeroing precedes free callbacks; callback mutations to earlier fields are retained unless native writes occur later; no full-object reset",
+    "Normal failure prefixes retain committed effects without invented catch/rollback/unwind cleanup; fixture teardown is not native EH evidence",
+    "0041b0 parser engine,remaining pool helpers,DOM materialization,native allocator/free/vtable and final replacement DLL link remain open",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity checks separate; CRT unchanged and paused"
+  ],
+  "native_document_clear_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Addressed assembly/source and synthetic byte/lifetime/failure-prefix oracles; independent bounded source review is separate from full native equivalence review",
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "document-clear-source-review.json",
+      "reviewer": "/root/native_doc_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N16 parent/node unlink003030 and standalone deletion003240 normal source contracts; node/pool virtual effects,0041b0 parser and native backend remain open; CRT stays paused"
+}

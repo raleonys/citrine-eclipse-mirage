@@ -1,0 +1,28 @@
+# B31 bağımsız production root incelemesi
+
+**İnceleme PASS_WITH_LIMITATIONS; DLL üretimi BLOCKED.** Compiler CRT tek kez başlatılmalı, ardından mevcut uygulama katmanı kullanılmalıdır. Recovered dış CRT tekrar çağrılmamalıdır. İki undefined sembol iki iş kaldığı anlamına gelmez.
+
+Son normal-build kaydında entry/leaf compile0, gerçek clang link exit1: tam iki require_loader_* eksik. Beş gerçek uygulama kökü ve 25 core archive üyesi çekilmiş; DllMainCRTStartup seçilmiş, crt_entry.o çekilmemiştir. DLL/map yoktur. Yedi gate kaynağı, parent CMake, log/objeler, 846 eski kaynak ve iki archive hashleri bağımsız doğrulandı. CMake hedefi çalıştırılmadı; bu tur ortak testler tekrarlanmadı.
+
+B1’in owner/facade/backend/native gateway/registry yokluğu kapanmıştır. Seçili 17 Services davranışı 6+2+4+5 kaynak grubuyla vardır; mandatory lower-tail production assembly ayrı iştir. Gerçek FilePass, configuration defaults ve native policy yapı taşları yeniden açık algoritmalar sayılmamalıdır.
+
+Runtime ve DomainStorage kontrolü loader lock dışındadır. Constructor’ı DllMain veya statik C++ initializer içine taşımak bu sözleşmeyi çözmez. Yeni attach factory bu yüzden tanımsızdır. Nonnull Bound runtime vaat eder; null ancak tam rollback sonrasında FALSE verir. Detach FreeLibrary/process termination/failed attach ayrımını ve önceden drain edilmiş yaşam süresini kanıtlamalı; loader altında join/close yapılmamalıdır. Recovered Entry ayrıca vcrt/acrt, initializer, stdio/environment/TLS ve cleanup çalıştırır; aynı compiler graph çevresinde çift başlatma/sonlandırma riski vardır. Ayrı application PTD/FLS DomainStorage dış CRT’yi çalıştırmaz.
+
+| Açık provider/contract | Gerekli bağ | Kaynak |
+|---|---|---|
+| P0 Loader-aware attach/detach factory | Current Runtime requires outside-loader control. Nonnull attach must return live Bound runtime; null only after full rollback. Detach must distinguish FreeLibrary/process termination/failed attach without loader-lock joins. | `outputs/dll-link-gate-source/production_image.hpp:17` |
+| P1 Stable per-image Resource owner and seeds | Own all real providers, DomainStorage/Memory, configuration defaults, remaining Runtime/Callback/Domain seeds, permanent Errors, streambuf and code/module lifetimes. No test fixture or success provider. | `outputs/anadius-bootstrap-backend-source/backend.hpp:46` |
+| P2 Concrete server/accept/session/response graph | Supply real ServerBackend context/accept/run/stop/destruction and connect existing native socket/IOCP/session/message sources. Partial AcceptorBackend and controlled schedulers do not complete this graph. | `outputs/anadius-server-source/server.hpp:31` |
+| P3 Session allocation/dispose/delete and executor provider | B30 normal constructor is available. Real SessionAllocator, partial-scratch retention, SessionControl cleanup/delete, selected0228c0 executor and raw-job lifetime still require actual production implementations. | `outputs/anadius-session-owner-source/owner.hpp:20` |
+| P4 Licensing and terminal configuration assembly | Actual02a830 remains required for nonempty KeyForLicense. FilePass bypasses legacy load_document; do not reopen parser recovery. Wrapper lower tails need a real concrete aggregate. | `outputs/anadius-config-source/configuration.hpp:93` |
+| P5 Terminal Services/library/online policy assembly | All17 selected Services behaviors exist. Mandatory lower-object construction is still a production binding task, not17 missing algorithms; no synthetic tail. | `outputs/anadius-services-completion-source/completion.cpp:49` |
+| P6 Same-domain hooks/callback/original-slot ownership | Actual NativeApi/wrappers/Context/checked PTD policies exist. Select them with real original code owners and readiness/external-quiescence proof; bounded sequential admission is not general concurrency. | `outputs/anadius-native-context-source/context.hpp:22` |
+| P7 Online code/module owner | All7 selected typed routes exist; select native_objects/native_queries and real CodeLease retaining callable code/dependencies. A token is not a real module pin or foreign class ABI proof. | `outputs/anadius-online-version-source/version.hpp:15` |
+| P8 Shared output/compiler policy lifetime | Retain ostream and streambuf, select supported locale/codepages/invalid-handler and meet serialized/frozen state obligations across workers/callbacks. | `outputs/anadius-services-completion-source/completion.hpp:13` |
+| P9 Stop/drain/unload/permanent error policy | stop_sources must actually exclude new application/worker/hook/late callbacks while allowing existing work to finish. Drain server/session raw jobs as well as bootstrap workers, then pause/join/exits/hook quiescence/unbind outside loader lock. | `outputs/anadius-bootstrap-backend-source/backend.hpp:67` |
+
+Factory gerçek Resources, kalıcı error politikaları, streambuf/code/module sahipleri ve stop/drain state’ini aynı image için sahiplenmelidir. Test scheduler’ları, başarı stubları ve her zaman true quiescence kabul edilmez. Mevcut session constructor veya typed online çağrılar bütün server/raw-job/foreign-module ömrünü kendiliğinden çözmez.
+
+Leaf objesi tek C3 retq içerir; üç .def alias ordinal 1/2/3 olarak kaynakta doğrulandı. Retained 017a30 RET dışında dönüş tipi/değeri veya argüman uydurulmadı. Henüz final PE export/import/TLS/unwind tablosu yoktur.
+
+B30 kanonik ZIP değişmedi. Bu inceleme yalnız iki production-root-review dosyasını yazdı. Orijinal/yeniden DLL veya oyun yürütülmedi; yeni byte/decompile sorgusu ve kullanıcı içeriği okuması yapılmadı. Yeni native ABI/provider kapanışı 0; toplam tamamlanma yüzdesi ölçülmemiştir.

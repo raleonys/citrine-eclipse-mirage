@@ -1,0 +1,33 @@
+{
+  "source_package": "B46",
+  "result": "CONCRETE_SAME_THREAD_APPLICATION_SERVER_COMPONENT",
+  "owned": [
+    "Policy/Profile/default contexts and concrete per-slot NativeLogic factory",
+    "XMLReader/Router/crypto/random and guarded clock",
+    "fixed native-prefix event ring/SSO/Parent heap/header ownership and actual DOWN seed",
+    "per-effect/stream/writer/XML guarded source boundaries",
+    "stable live state owner and fresh Router views",
+    "source Parent lease"
+  ],
+  "required": [
+    "exact StateView backing, serialized same-worker updates",
+    "narrow information/content/license effects and explicit socket/dispatcher/accept/cancel/executor/TLS SDK backing",
+    "four real lifecycle decisions, stop/join and observed kernel/raw-job proof",
+    "one original controller-worker/fiber outside loader lock"
+  ],
+  "selected_limits": [
+    "No caller-built SessionLogic, XML, Router, event/context implementation; no full bootstrap Resources claim.",
+    "Controller Domain/provider/memory creation and Policy worker-affinity need explicit future two-phase handoff.",
+    "Fixed bounded HOST event ring is not native deque allocator/class/concurrency ABI.",
+    "Opaque writers retire at known-normal dispatch return; unknown prefixes retain adopted backing.",
+    "Unknown installation may intentionally retain an unpublished backend/facade owner cycle; successful close is cycle-free.",
+    "External true permits retirement of known owned queue contents after actual reap; counters alone are not proof.",
+    "Drained retries rerun mandatory external proof before Profile/provider retirement.",
+    "Encrypted integration peer explicitly starts with prepared key/flag; not full handshake/autodetection coverage."
+  ],
+  "native_ABI_or_concurrency_proven": false,
+  "full_bootstrap_resources": false,
+  "loader_hooks_bound": false,
+  "real_network_tested": false,
+  "original_loaded": false
+}

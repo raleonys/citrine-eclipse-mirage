@@ -1,0 +1,9 @@
+51 preloader native shim mock checks passed
+--unconfigured: required terminal policy exit 94 PASS
+--unbound-next: required terminal policy exit 70 PASS
+--unbound-mutex: required terminal policy exit 70 PASS
+--unbound-query: required terminal policy exit 70 PASS
+--unbound-entry: required terminal policy exit 70 PASS
+--escaped: required terminal policy exit 93 PASS
+--rebind: required terminal policy exit 71 PASS
+--closed: required terminal policy exit 70 PASS

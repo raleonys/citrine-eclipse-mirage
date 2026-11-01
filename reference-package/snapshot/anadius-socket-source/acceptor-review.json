@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "reviewer": "acceptor_flow_audit",
+  "scope": "Independent frozen production source review against retained020e20/025310 normal-flow contracts and explicit typed-input/provider domain",
+  "sources": {
+    "outputs/anadius-socket-source/acceptor.hpp": "5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b",
+    "outputs/anadius-socket-source/acceptor.cpp": "c9a5c8a034daf5381d718f1985e8e3f58a530856982fff194fceed77299aea3a",
+    "outputs/anadius-socket-source/acceptor_native.hpp": "fc82c54de4d79713bc0207a6ab3429dbc8d77cd1d16e4142100e66a696aa026c",
+    "outputs/anadius-socket-source/acceptor_native.cpp": "ba1f75d01e93011e9bb712754d3625a8f9852957a1acfa1df973e79d9e71bedb"
+  },
+  "report_sha256": "ae9599a16a04a3e344ae33e2aac4a1c1761f935599c365534da9e40f5352a12a",
+  "audit_report_sha256": "7dbccc3cdef3539b1e8d373dd587b465ed2729e64eaebe0da98e7cc6dcb1d7bc",
+  "audit_json_sha256": "d3cfe7d49a37a9ca362e64f34cbfcbfc44ff3b0c8dbd874a5b423ecdcbd952ba",
+  "context_proof_sha256": "24038d03d8ad7eb090084acb01e04efe5c5d3d4480c8c58a3e6dedfb77d1f704",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180020e20",
+    "0x180025310"
+  ],
+  "new_original_procedures": 2,
+  "service_liveness": "Caches AcceptorService identity after initializer, before create; reads completion_port later at attach after optional ignored IPv6 option",
+  "LastError_order": "WSA category then WSA error; IOCP Win32 error then category; no post-call buffer cleanup API/destructor inserted",
+  "category_identity": "Opaque+8 tokens, not category object pointer; getter call order retained",
+  "native_api": "SDK typed replaceable imports; construction invokes no API",
+  "providers_not_recovered": [
+    "0211b0 service/intrusive-list constructor",
+    "0237f0 allocation/refcount cancellation owner",
+    "028620/0285b0 CRT lazy singleton categories",
+    "028240 MSVC exception"
+  ],
+  "tests_executed_by_reviewer": false,
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "production_edited": false,
+  "context_static_bytes": "All4 context literals independently verified through baseline hash and PE section VA/raw mapping; distinct from REA string inventory",
+  "limitations": [
+    "Native service/scheduler memory layout not reconstructed; logical selected-field projection",
+    "Short endpoint/null service UnsupportedInput is outside native defined-memory domain, not native WSA ABI",
+    "Native EH unwind, allocator/sharedref lifetime, concurrency, actual IOCP/socket ownership unproven",
+    "Full DLL/runtime/ABI equality unproven"
+  ]
+}

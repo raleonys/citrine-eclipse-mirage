@@ -1,0 +1,31 @@
+{
+  "source_package": "B49",
+  "result": "ACCEPT_ONLY_WORKER_CANCEL_PHYSICAL_PACKET_SOURCE_ACK",
+  "owned": [
+    "Controller coalesced NULL wake and port-post lifetime lease",
+    "Original worker-only native cancellation of exact listener and owned OVERLAPPED",
+    "Authoritative submission kind and sequence independent of storage generation",
+    "Physical key0/status/bytes/OV receipt and successful source/after-reap acknowledgement",
+    "Normal route lifetime/epoch around external proof and explicit retiring ownership"
+  ],
+  "required_contracts": [
+    "Independent thread-safe receive/send/session/rawjob/foreign admission and drain proof",
+    "No worker-only Parent/raw view access from controller proof callback",
+    "Native cancel/post imports are nonthrowing/nonblocking and never call source callbacks inline",
+    "Runtime binds matching owned accept context and exact physical dispatcher route",
+    "Unknown outcomes retain the entire source graph; no blind cancel/cleanup retry",
+    "All Runtime::Dependencies by-value consumers use the same newly rebuilt HOST layout"
+  ],
+  "not_proven": [
+    "Receive/send or existing-session cancellation/drain implementation",
+    "Full early startup failure recovery, foreign callback/rawjob finality or production Resources",
+    "Real AcceptEx/socket network interoperability from own named-pipe read compatibility",
+    "Unforgeable packet origin for arbitrary injected/malicious SDK providers",
+    "Queue emptiness from a NULL wake or cancellation return code",
+    "Native ABI/EH/original concurrent scheduling/full handshake or loader unload equivalence"
+  ],
+  "native_body_delta": 0,
+  "native_ABI_closure_delta": 0,
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null
+}

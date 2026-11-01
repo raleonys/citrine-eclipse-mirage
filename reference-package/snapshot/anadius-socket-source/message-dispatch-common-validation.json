@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "b72ec00752f898e0e76d197bf5be380c4efa6ebca9e74781bf004a88327e3a2e",
+  "test_results": [
+    {
+      "module": "socket_message_dispatch",
+      "result": "PASS",
+      "output": "PASS: 621 socket message dispatch core checks; actual021770/028d30 normal bodies, two executor copies, live delete target, precise string/control/closure ownership and bounded call-prefix tests",
+      "executable_sha256": "9cede9bbfd6aef24f33a5eb14395ff9e3f39cba1c4b90dcca2b7a9d2476454ab"
+    },
+    {
+      "module": "socket_message_dispatch_integration",
+      "result": "PASS",
+      "output": "PASS: 199 socket message dispatch integration checks; actual025480/05e8e0/05e7a8/021770/028d30/033d70 source, compatibility XML parser/serializer, immediate and deferred synthetic thread, owned021420 response adapter",
+      "executable_sha256": "e961782395c674c79650fe25680d2918ea99736cd609adc52612ec25bbaf89fb"
+    }
+  ],
+  "core_checks": 621,
+  "integration_checks": 199,
+  "original_procedures_added": 2,
+  "execution_scope": "021770/028d30 normal bodies; actual025480 and unchanged05e8e0/05e7a8 plus existing033d70; synthetic immediate/deferred thread, selected normal-return string/XML compatibility, controlled021420 owned response consumer",
+  "not_executed_by_new_tests": [
+    "021420 native body",
+    "028270 native write queue",
+    "025c40/R1/R2",
+    "027710 and handler scheduling",
+    "027c10/outer worker",
+    "original DLL/game or real OS threads/network"
+  ],
+  "core_callee_injection": "Explicit isolated021770 invoker parameter only; recovered token router uses actual028d30",
+  "previous_local_records": "24 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x180021770",
+    "0x180028d30"
+  ],
+  "independent_review_complete": false
+}

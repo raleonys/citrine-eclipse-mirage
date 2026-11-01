@@ -1,0 +1,62 @@
+{
+  "scope": "Independent retained static0283c0 normal-flow audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "address": "0x1800283c0",
+      "pseudo_evidence": "ev_9f53a74fdc3280f360d1ce5770b00ecf0d27721d1f88cc316eeb303a6ea950b8",
+      "assembly_evidence": "ev_1c51eada2fac2491b445eaad1ca3641ce117107dbab6a3a71dd6a7392dc453bc"
+    }
+  ],
+  "rules": {
+    "hash": "unsigned64 socket modulo nonzero bucket count",
+    "bucket_sole": "last=activeSentinel then first=last",
+    "bucket_first": "first=first.next",
+    "bucket_last": "last=last.previous",
+    "bucket_interior": "unchanged",
+    "clear_key_before_failure": true,
+    "freeFirst_and_after_captured_before_failure": true,
+    "self_splice_branch": "unreachable comparison of distinct inline field addresses; sentinel pointer equality does not skip counts",
+    "length_failure": "freeSize == 0x0666666666666666 only; above-max values accepted modulo64",
+    "failure_provider": "nonreturning047fc4 with token0x1800846b8",
+    "failure_partial_effects": "bucket changes and key0 retained; counts and links not yet changed",
+    "counter_order": [
+      "freeSize++ modulo64",
+      "activeSize-- modulo64",
+      "six ordered link stores",
+      "mapSize-- modulo64"
+    ],
+    "link_sequence": [
+      "previous=node.previous; previous.next=after",
+      "afterPrevious=after.previous; afterPrevious.next=freeFirst",
+      "freePrevious=freeFirst.previous; freePrevious.next=node",
+      "freeFirst.previous=afterPrevious",
+      "after.previous=previous",
+      "node.previous=freePrevious"
+    ],
+    "allocation_or_free_in_body": false,
+    "operation_fifo_mutation_in_body": false,
+    "free_pool_order": "Insert immediately before old freeSentinel.next, making node the new head; host remove-head reuse is LIFO; operation FIFO is separate"
+  },
+  "context_evidence": [
+    {
+      "address": "0x180026aa0",
+      "pseudo_evidence": "ev_d4f71cf8b783578dcbaae1a45c68bba3e631d5381f8102b4c3d6ec82db60b419",
+      "assembly_evidence": "ev_5263c2b7208ef28e3ec671a729ee180d773d5dcd6ba45d16972e7ebef04cba21"
+    }
+  ],
+  "new_original_procedures": 1,
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Typed map/node metadata are borrowed initialized projections, not native ASIO overlays",
+    "Host-owned storage/constructor/insert/reuse are reconstruction design, not recovered original procedures",
+    "047fc4 native CRT exception construction and unwind remain required effects",
+    "Native allocator/rehash/lifetime/concurrency/entry/export and full DLL equivalence not established"
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "stage": "B47",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T20:43:47.112254+00:00",
+  "review_mode": "Independent source/lifetime/test audit; exact12 freeze and authoritative author/normalized records, logs, EXEs, compiler/archive and prior source preimages verified read-only. Reviewer executed no EXE.",
+  "reviewed_source_hashes": {
+    "handoff.hpp": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+    "handoff.cpp": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+    "handoff_tests.cpp": "6da9b872b45ab2a1ca8bf7ad5ba69183142908e6f77baafb54878645989be65f",
+    "handoff_integration_tests.cpp": "4bf2ea25fb3d2468852a797a711643a3ee677931e4070133c6d4cbbeb1065d75",
+    "../anadius-session-memory-source/memory.hpp": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+    "../anadius-session-memory-source/memory.cpp": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+    "../anadius-owned-server-source/server.hpp": "8122afc2c001e9c97d945200419b1fc5067908a7d83278130c738e6ae0969134",
+    "../anadius-owned-server-source/server.cpp": "110fc90931f0f7cb7b4d0ae003a7488529533c31c254e0e0992e243a1f9d449d",
+    "../anadius-server-runtime-source/resources.hpp": "3270b8d3576541dffffe7ab193a9d5ad6c8b0ab1d81c0ea0020ab771eb8d3244",
+    "../anadius-server-runtime-source/resources.cpp": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2",
+    "../anadius-application-graph-source/graph.hpp": "bc983d04c601b5abb9b2dacd11abecb64df6b62fbca06213bb89470933f61e53",
+    "../anadius-application-graph-source/graph.cpp": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c"
+  },
+  "code_freeze": {
+    "path": "work/b47-code-freeze.json",
+    "sha256": "ee9b72c6d0ce83fad1e11d6ba84ad6186be6b5460c43e0f9dcf4c62335aa2fc2",
+    "all_twelve_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 112,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b47-core-agent.exe",
+      "executable_sha256": "b9dd060df4bae04e56feaa0fed4b923ca077e0660d739edec811ad0def41a2d1",
+      "archive_path": "work/b47-baseline-core.a",
+      "archive_sha256": "47539aab1825b0764f30db2a4b3abdaf652e75837ffb3813e11cc12b3360b0a7",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "path": "work/b47-core-quick-results.json",
+      "sha256": "01410560bf50771a0bbfc35429545bc7f0b82a034a9c71dba5403c80d99cd833",
+      "execution_record": {
+        "path": "work/b47-core-agent-results.json",
+        "sha256": "248b4276f2c9241fce51a43b56abef212e7d206b2bc5c30134f7304e4f4f4bd0"
+      },
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b47-core-agent.log",
+      "log_sha256": "d360865487c89b0e19d141b6fa8f23656098e5cf8faf51ccfe26ceb9d9fe8829",
+      "actual_used_source_hash_count": 7,
+      "actual_used_source_hashes": {
+        "handoff.hpp": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+        "handoff.cpp": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+        "handoff_tests.cpp": "6da9b872b45ab2a1ca8bf7ad5ba69183142908e6f77baafb54878645989be65f",
+        "../anadius-session-memory-source/memory.hpp": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+        "../anadius-session-memory-source/memory.cpp": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+        "../anadius-thread-domain-source/domain.hpp": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+        "../anadius-bootstrap-providers-source/native_threads.hpp": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7"
+      },
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "source_scope": "Fresh handoff.cpp, modified SessionMemoryDomain memory.cpp, and handoff_tests.cpp with selected actual interface headers. Immutable canonical B46 archive supplies prior DomainStorage/NativeThreads/heap/FLS/Parent algorithms. No integration test, Graph/Policy/server/runtime source recompilation or complete application/bootstrap execution is claimed. Real own native threads use actual recovered NativeThreads source wrapper and actual native PTD/FLS/heap. One worker borrows sole controller-owned ApplicationMemory without shared_ptr aliasing; Parent Borrow&& overload enforces controller/sibling rejection for enter/idle close/provider-lease mutations. Known live allocation prevents retire until actual free. Returned source capability while worker is held on an event does not substitute for OS/FLS exit: zero-timeout close retains it, then duplicated actual self-handle join verifies exit. Parent and raw ApplicationMemory cases balance all tracked heap and locale baselines. Main count excludes one isolated child whose abandoned actual37-byte borrow remains poisoned/retained. No original artifact, real socket/network, foreign ABI, arbitrary controller/worker migration, unknown cleanup rollback or two-worker shared-memory admission is claimed.",
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "isolated_children": [
+        {
+          "mode": "abandoned",
+          "expected_exit": 701,
+          "observed_exit_verified_by_parent": true
+        }
+      ],
+      "watched_metadata_hash_count": 0,
+      "watched_hashes_differing_from_current": []
+    },
+    {
+      "checks": 343,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b47-integration-v3.exe",
+      "executable_sha256": "ce741350ea5d5811902433142ef5ce01dba61b7fd37b82d739025c867b8eb7c2",
+      "archive_path": "work/b47-baseline-core.a",
+      "archive_sha256": "47539aab1825b0764f30db2a4b3abdaf652e75837ffb3813e11cc12b3360b0a7",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "path": "work/b47-integration-quick-results.json",
+      "sha256": "f51325fa4bcb0828a10b1bd7310b55fd01a91e57415d31193a5134a8c18537a4",
+      "execution_record": {
+        "path": "work/b47-integration-agent-results.json",
+        "sha256": "9948b614d7d40d2ad1df8d0081e6d15c3159446b34815e08fba02a9c37451eac"
+      },
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b47-integration-v3-results.log",
+      "log_sha256": "b65f9e131b5496a53761592cef342e49c5aeda2c3448fc1eafe61c49f72b7bf3",
+      "actual_used_source_hash_count": 11,
+      "actual_used_source_hashes": {
+        "handoff.hpp": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+        "handoff.cpp": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+        "handoff_integration_tests.cpp": "4bf2ea25fb3d2468852a797a711643a3ee677931e4070133c6d4cbbeb1065d75",
+        "../anadius-session-memory-source/memory.hpp": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+        "../anadius-session-memory-source/memory.cpp": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+        "../anadius-owned-server-source/server.hpp": "8122afc2c001e9c97d945200419b1fc5067908a7d83278130c738e6ae0969134",
+        "../anadius-owned-server-source/server.cpp": "110fc90931f0f7cb7b4d0ae003a7488529533c31c254e0e0992e243a1f9d449d",
+        "../anadius-server-runtime-source/resources.hpp": "3270b8d3576541dffffe7ab193a9d5ad6c8b0ab1d81c0ea0020ab771eb8d3244",
+        "../anadius-server-runtime-source/resources.cpp": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2",
+        "../anadius-application-graph-source/graph.hpp": "bc983d04c601b5abb9b2dacd11abecb64df6b62fbca06213bb89470933f61e53",
+        "../anadius-application-graph-source/graph.cpp": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c"
+      },
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "source_scope": "Eleven selected actual-use hashes:6 fresh CPPs and5 headers, versus12 reviewed/watched hashes. Core test is metadata-only and not compiled by integration; current watched hashes separately compared. Transitive includes not exhaustively listed. Actual distinct NativeThreads worker constructs/runs/destroys Graph before controller native join/FLS then memory/provider/domain retirement.",
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "isolated_children": [],
+      "watched_metadata_hash_count": 12,
+      "watched_hashes_differing_from_current": [],
+      "immutable_execution_record": {
+        "path": "work/b47-integration-v3-results.json",
+        "sha256": "9948b614d7d40d2ad1df8d0081e6d15c3159446b34815e08fba02a9c37451eac"
+      }
+    }
+  ],
+  "checks": 455,
+  "core_checks": 112,
+  "integration_checks": 343,
+  "core_isolated_children": 1,
+  "integration_isolated_children": 0,
+  "child_assertions_added_to_main_count": false,
+  "root_checks": 0,
+  "root_normalization_only": true,
+  "reviewer_executed_tests": false,
+  "baseline": {
+    "path": "outputs/dll-reverse-engineering.zip",
+    "sha256": "629668e1f101eaaf4fc5823b442063a8deb05a4a122fa31900073fe10e5aaad1",
+    "stage": "B46",
+    "source_count": 918,
+    "unchanged": 910,
+    "modified": 8,
+    "new": 4,
+    "total": 922,
+    "all_prior_zip_source_hashes_verified": true,
+    "modified_prior_sources": [
+      {
+        "path": "anadius-application-graph-source/graph.cpp",
+        "before_sha256": "b2368216a50e8af0c2472868e1da4a5ab1db0573d97573646320768802a32091",
+        "after_sha256": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c"
+      },
+      {
+        "path": "anadius-application-graph-source/graph.hpp",
+        "before_sha256": "465c99ed13dabb23478e9e0dbfc9db8313602c4dd459a3b1dcaf0db65cd4efbd",
+        "after_sha256": "bc983d04c601b5abb9b2dacd11abecb64df6b62fbca06213bb89470933f61e53"
+      },
+      {
+        "path": "anadius-owned-server-source/server.cpp",
+        "before_sha256": "037e9514f62a932c2e861afd461175afbb17daa356a2db921af8b134c0cf7496",
+        "after_sha256": "110fc90931f0f7cb7b4d0ae003a7488529533c31c254e0e0992e243a1f9d449d"
+      },
+      {
+        "path": "anadius-owned-server-source/server.hpp",
+        "before_sha256": "7b00bf0302466e051860dd57e7b02f8fb6ffa1ae4cc932cf5a2aa6e8d416025d",
+        "after_sha256": "8122afc2c001e9c97d945200419b1fc5067908a7d83278130c738e6ae0969134"
+      },
+      {
+        "path": "anadius-server-runtime-source/resources.cpp",
+        "before_sha256": "52b6c48eecaf6c01e371b1f9356fcaedc307ae9304cb2b822678058a9738e2e0",
+        "after_sha256": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2"
+      },
+      {
+        "path": "anadius-server-runtime-source/resources.hpp",
+        "before_sha256": "7fe86deb6d113698b3a8eed01debe7dfdba145bbb09a11301821c97f83c41a16",
+        "after_sha256": "3270b8d3576541dffffe7ab193a9d5ad6c8b0ab1d81c0ea0020ab771eb8d3244"
+      },
+      {
+        "path": "anadius-session-memory-source/memory.cpp",
+        "before_sha256": "b136dc6c6fca9a0ce2805660a2036af0f6644e934623a4c32adb11f1aa669653",
+        "after_sha256": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4"
+      },
+      {
+        "path": "anadius-session-memory-source/memory.hpp",
+        "before_sha256": "16e37f438a1df1a525cf8acfb22e15954d98b9a9a9f5d38128411ba6fb0ea9f2",
+        "after_sha256": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d"
+      }
+    ],
+    "used_archive_matches_zip_member": "source-workspace/build/anadius_core_partial.a",
+    "used_archive_sha256": "47539aab1825b0764f30db2a4b3abdaf652e75837ffb3813e11cc12b3360b0a7"
+  },
+  "findings": [
+    "PreparedMemory keeps the actual dedicated ApplicationMemory and unsynchronized Domain provider-lease retirement on its original controller; worker receives a move-only Borrow rather than an alias that defeats legacy sole-owner checks.",
+    "Acquire checks distinct thread/fiber, exact same-Domain FLS/PTD and source thread-context marker, reserves Acquiring before actual DuplicateHandle, then rechecks reservation/PTD. Known failure restores Prepared only while reservation remains valid; poison cannot be overwritten, successful unknown reservation retains actual handle.",
+    "Worker memory access/retire and new Parent construction/Operation/backing/close/provider-lease paths recheck Borrow. Controller/sibling admission rejects before backing effects. Legacy sole-shared-owner path is preserved.",
+    "Source clean return and OS/FLS exit are separate: returned Borrow retains actual duplicated self-thread handle; zero-timeout wait retains owner while worker is deliberately alive, then native thread signal permits controller-only final memory/provider release. Known never-borrowed cancel is explicit.",
+    "Additive OwnedServer/server_runtime/Graph prepared routes validate exact Domain identity and use precreated memory; Graph/Policy/Profile/Runtime/Resources aliases are destroyed on actual same-Domain NativeThreads worker before its source entry returns. Controller retains only ticket and copied result/shared backing, then joins/releases providers/Domain.",
+    "Core exercises actual heap/PTD/FLS and moved/returned/foreign/sibling/controller rejection, live-block retire false, empty Parent close, LastError preservation, duplicated handle independent of caller original handle, and exact abandoned37-byte child701 retention.",
+    "Integration exercises real distinct worker59-packet Graph/NativeLogic/XML/Router/selected-AES/DOWN/response ring8to16/FIFO17; source graph destructor observed before event-gated native exit, native Context/PTD/FLS cleanup before controller provider release, and balanced actual heap/locale references."
+  ],
+  "native_accounting": {
+    "new_native_bodies": 0,
+    "new_ABI_closures": 0,
+    "mapped_canonical": 501,
+    "eligible_tags": 505,
+    "normal_native_claims": 139,
+    "historical_closed_providers": 52,
+    "last_native_body_stage": "B38"
+  },
+  "planned_common_build": {
+    "status": "PENDING_NOT_YET_CLAIMED_AT_REVIEW",
+    "reviewer_claims_common_PASS": false,
+    "production_objects": 269,
+    "cpp_objects": 265,
+    "c_objects": 4,
+    "normal_groups": 323,
+    "terminal_groups": 19,
+    "composition_files": 107,
+    "composition_objects": 53,
+    "compiler_observations": 94,
+    "new_trait_values": [
+      0,
+      0
+    ]
+  },
+  "registration_role": {
+    "path": "work/b47-register.py",
+    "sha256": "2854be0490503f813f28e47a134f6465eb80bbdb5064be3c76f8f3929dcb1e5a",
+    "preview_author": "/root/b22_provider_audit",
+    "strict_preview_and_apply": "Root verified strict preview then applied once; reviewer did not apply. A later reviewer preview encountered already-preserved B46 history and was not reapplied.",
+    "applied_record": {
+      "path": "work/b47-registration-result.json",
+      "sha256": "ee09dec72de924e52ca30b5e2f701aac3d03424ddccb2f5063793e711171c152"
+    },
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "helper_scripts_prepared_only": [
+      {
+        "path": "work/b47-metadata.py",
+        "sha256": "63e1f539a66f764014c951bf2ee144a1f48c5947861b77e8b3b210d3f9a4e3b1"
+      },
+      {
+        "path": "work/b47-freeze-quick.py",
+        "sha256": "b878a383b59efcac91ea485e0fa512bb6edea395427c818938029708b7ac62ab"
+      },
+      {
+        "path": "work/b47-object-freeze.py",
+        "sha256": "eae982903308df8426d2e2a8fdc4d36cc135496365825336c9f75e18ac0a222c"
+      },
+      {
+        "path": "work/b47-link-context.py",
+        "sha256": "c4aa98849395bdbdeed96e3fe550fa372d618c4f387b8b15b4b4349ff3ca55a3"
+      },
+      {
+        "path": "work/b47-deliver.ps1",
+        "sha256": "cb9153b43ade484f12b70b0356162c7bc3531b7044e417eaf4275498793f500e"
+      },
+      {
+        "path": "work/b47-final-audit.py",
+        "sha256": "265bcde6537ca35e576f69a8d650fca1abf2c3209286f5892c20372a5dd1b3b0"
+      }
+    ],
+    "metadata_adopted_by_root": true,
+    "helper_mutators_executed_by_reviewer": false
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "No reviewer EXE/test/build/generator execution; no original/rebuilt DLL/game/network/config/token access, fresh target REA query/bytes, or AV retry.",
+    "PreparedMemory does not launch threads, assemble a full application worker/bootstrap Resources factory, or implement stop/kernel/raw-job drain. Caller uses actual same-Domain NativeThreads and retains controller root/provider ownership through real worker/FLS join.",
+    "Admission checks real FLS/PTD/source context in the selected trusted source profile, not arbitrary tampered/forged FLS/Ptd/code provenance. Actual handle duplication proves OS thread identity/wait, not socket/job drain or native ABI.",
+    "Borrowed ApplicationMemory references and cached byte/source views must not escape lifetime/same-worker permission. Metadata observations and counters are not authority to use them on another worker.",
+    "Unknown/abandoned borrow, failed native wait/close or changed PTD poisons and retains. No guessed cleanup/rollback/retry or replacement worker. Retained descriptors do not preserve caller stack lifetimes; parent snapshot alone is not the ticket admission proof.",
+    "Worker Graph/Policy/API aliases must retire on worker; only copied immutable result metadata is safe for controller observation. Shared StateView cells stay alive/frozen or explicitly synchronized until final join; online/config concurrency remains outside the tested single worker profile.",
+    "Integration uses SDK socket tokens and own real heap/FLS/IOCP, with explicit packet/backpressure/terminal-owner/stop-relay/external-drain hooks. Prepared AES key/flag is selected; full default handshake/autodetection is not proven.",
+    "Legacy selected DOM/ring/mutex/stream/guard/inline-job/EH/native class/CRT/loader limitations remain. Compiler CRT still starts once; no recovered outer CRT or loader attach/detach implementation is supplied.",
+    "Full clean common build is PENDING at review; five new/modified production object freeze probes and final common validation remain root execution steps. Native counts and production DLL readiness do not advance from this composition alone."
+  ]
+}

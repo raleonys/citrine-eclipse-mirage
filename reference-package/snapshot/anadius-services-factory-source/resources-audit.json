@@ -1,0 +1,37 @@
+{
+  "source_package": "B53",
+  "result": "OWNING_NARROW_REMAINING_POLICIES_AFTER_SOURCE_JOIN_AND_REGISTRY_CLEANUP",
+  "source_routes": 11,
+  "explicit_close_operations": 1,
+  "Services17_vtable_preserved": true,
+  "SourceBackend_intercepted_routes": 6,
+  "Runtime_registry_routes": 2,
+  "existing_core_policies": 9,
+  "giant_Services_lower_required": false,
+  "owned": [
+    "Actual ApplicationMemory, BootstrapLogger, ExitWaitRegistry and backing lifetime",
+    "Remaining factory result adopted before opaque factory capture retirement",
+    "Active source lease postchecks, explicit known retry and unknown retention",
+    "Cached real stop/join/exit/attachment/registry milestones before narrow close",
+    "Closed metadata/owners retained through Resources destruction; attached controller retirement afterwards",
+    "Consuming Resources transfer for internal and tested caller sinks; explicit two-factory link diagnostic selection"
+  ],
+  "required_contracts": [
+    "Factory passive and returned provider owns all captures; no constructor callback/thread publication",
+    "New owning callers use make_runtime(Resources&) direct-new consumption, or direct stack/new sinks with take_resources; arbitrary make_unique by-value forwarders are outside the constructor-failure guarantee",
+    "Same-Domain admitted source use; controller/fiber creation, close and retirement",
+    "Real external admission stop, actual worker/FLS joins, registry cleanup and no future opaque users before retirement",
+    "Live/unknown invalid inputs require retained aliases; no inferred cleanup"
+  ],
+  "not_proven": [
+    "External moved-from caller capture lifetime when bypassing consuming transfer or adding arbitrary make_unique by-value forwarding",
+    "Optional binder HOST layout compatibility from bounded quick proofs alone",
+    "Whole Resources, rawjob/foreign/hook finality, permanent Errors/thunk epilogue or unload",
+    "Original native ABI/EH/concurrency or loader-lock attach/detach",
+    "Successful complete DLL link or Runtime loader factory invocation"
+  ],
+  "native_body_delta": 0,
+  "native_ABI_closure_delta": 0,
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null
+}

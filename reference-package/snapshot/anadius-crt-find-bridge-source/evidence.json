@@ -1,0 +1,25 @@
+{
+  "kind": "new SDK/source composition; not original class ABI or an extra recovered binary function",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "references": [
+    "../anadius-crt-module-path-source/evidence.json",
+    "../anadius-crt-find-native-source/evidence.json",
+    "../anadius-crt-conversion-bridge-source/evidence.json"
+  ],
+  "chains": [
+    "argv0638e8 -> Policy -> module_filename06ecdc -> typed GetModuleFileNameW + fixed_to_narrow0601c8 -> conversionAPI06cd58/errors05d698/05d724",
+    "module codepage -> actual select_code_page_region -> locale provider + AreFileApisANSI resolver source",
+    "argv mode2 -> wildcard/search06e984 -> WildcardEffects -> typed SDK Session first/next/close -> required API table",
+    "find cFileName reads -> bounded live 520-byte WCHAR filename storage, actual conversion buffers/API policy/heap/error sources"
+  ],
+  "source_review": "../anadius-crt-find-native-source/review-path-bridge.json",
+  "checks": 8664,
+  "limits": [
+    "SDK bindings point to real imports by default but tests inject all find/module-path functions",
+    "No native directory enumeration, actual GetModuleFileNameW, target/rebuilt DLL or game execution",
+    "Scratch and destination lifetimes/address domains are required; overlapping path calls need separate scratch or serialization",
+    "Supported nonzero module path is NUL terminated; original nonterminated/truncation overread is not emulated",
+    "Native conversion remains an ASCII fixture and locale/Heap/resolver effects are synthetic",
+    "No original stack/cookie/SEH/unwind/full DLL runtime equivalence claim"
+  ]
+}

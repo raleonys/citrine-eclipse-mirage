@@ -1,0 +1,38 @@
+/* 0x180001ea0 FUN_180001ea0; Evidence ev_e7c4be9c1717eb0483ad0b59aaf3cbeb61047a721af9832aa8b1d49694e9dd87 */
+
+void FUN_180001ea0(undefined8 *param_1)
+
+{
+  longlong lVar1;
+  
+  *param_1 = tinyxml2::XMLNode::vftable;
+  FUN_180003110((longlong)param_1);
+  lVar1 = param_1[2];
+  if (lVar1 != 0) {
+    if (param_1 == *(undefined8 **)(lVar1 + 0x38)) {
+      *(undefined8 *)(lVar1 + 0x38) = (*(undefined8 **)(lVar1 + 0x38))[10];
+    }
+    if (param_1 == *(undefined8 **)(lVar1 + 0x40)) {
+      *(undefined8 *)(lVar1 + 0x40) = (*(undefined8 **)(lVar1 + 0x40))[9];
+    }
+    if (param_1[9] != 0) {
+      *(undefined8 *)(param_1[9] + 0x50) = param_1[10];
+    }
+    if (param_1[10] != 0) {
+      *(undefined8 *)(param_1[10] + 0x48) = param_1[9];
+    }
+    param_1[10] = 0;
+    param_1[9] = 0;
+    param_1[2] = 0;
+  }
+  if ((*(uint *)(param_1 + 3) & 0x200) != 0) {
+    thunk_FUN_18005caec((LPVOID)param_1[4]);
+  }
+  *(undefined4 *)(param_1 + 3) = 0;
+  param_1[4] = 0;
+  param_1[5] = 0;
+  return;
+}
+
+
+

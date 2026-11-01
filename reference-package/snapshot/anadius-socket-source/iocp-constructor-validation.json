@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 1872,
+  "native_checks": 527,
+  "output": "PASS: 1872 socket IOCP constructor checks; retained024990 ordering/partial failure/live callback boundaries with controlled providers only\nPASS: 527 socket IOCP constructor native checks; five SDK-typed injected imports and actual024990/023b30/0228e0/acceptor/cancellation/recycler source integration only",
+  "source_hashes": {
+    "iocp_constructor.hpp": "c82705d8734e98d5df368faeb20d202a08c04d70092f6dd4e858d617e9112725",
+    "iocp_constructor.cpp": "4b9e91d2cab45972f188319246adc4d6e784ddb8be19946d408c5ac12fc20254",
+    "iocp_constructor_native.hpp": "53bf32bd986d221473ded1fb814f83676b6591dc584dc02fbbadfdfb75c48142",
+    "iocp_constructor_native.cpp": "ef64c81fee9b3460c62bb7a3e3a6676ef32b82e49e5701461656af9ce2969455",
+    "iocp_constructor_tests.cpp": "e7a5afd91bf55a457112833fac17bd1e1d688ef5c403e1616f19e1016b55c4c7",
+    "iocp_constructor_native_tests.cpp": "383ea7f06acecb8464e2b4f27c9de53bb1b3244e16980ca8ad73ce9dc6f077c0",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 1,
+  "execution_scope": "024990 retained normal construction, version/gate/port/error/worker callback ordering, exact partial writes, unsigned low32 work wrap; five SDK-typed injected imports and actual shared registry/0228e0/acceptor/lifecycle/closing/026aa0/0283c0 chain using IocpSchedulerEntry.completion itself",
+  "required_providers": "04b0bc/04b0f8 allocator/free,02a000 worker-event-thread start,028240 exception,04d2d0 CRT comparison and scalar deletion remain required controlled effects; socket-service completion_port remains an explicit caller-selected projection",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; null function tests observe only required-call boundary and do not claim native successful null execution; no original/game/real socket/network/IOCP/worker/thread/critical-section or user cfg/token/achievement execution/read"
+}

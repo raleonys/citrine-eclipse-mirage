@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T19:23:30.8948247Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-environment-cleanup-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-environment-cleanup-source\\build\\environment_cleanup.o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-environment-cleanup-source\\build\\environment_cleanup_tests.exe"
+  ],
+  "tests": "PASS 447 environment cleanup checks;25 narrow/wide alias pairs;owned pointer vectors and mutation ordering",
+  "partial_archive_sha256": "284940dacfa4bc9fa45f4e2c5e30f90a969e44f4824738e7251594ac663b180b",
+  "source_hashes": {
+    "environment_cleanup.cpp": "5541b20bd7f67869bc2bb5a625db9dd36224396b12c803c92a553328432b816e",
+    "environment_cleanup.hpp": "6fa4d9263b44cd07a0d1431b16f6e4519f6ff1309ce9277ea83a57b21d9a8cbe",
+    "native_tests.cpp": "715be254572184850faf7aec38d623b9bb480512d012a1b79e96250e9fb802c5"
+  },
+  "recovered_bodies": 4,
+  "scope": "Four cleanup normal-flow bodies;actual existing bounded free_environment core;owned live char-pointer vectors only;UTF16 payload cleanup views are not native wide ABI;no original execution or user environment access"
+}

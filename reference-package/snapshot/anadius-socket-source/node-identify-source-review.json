@@ -1,0 +1,83 @@
+{
+  "schema": "node-identify.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-26",
+  "reviewer": "/root/identify_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent complete retained0038b0 assembly/pseudocode and exact new production CPP/HPP review. One bounded byte-state Identify body and one existing typed provider source bridge. No reviewer tests, original reads, native analysis or full parser/ABI claim.",
+  "reviewed_source_hashes": {
+    "node_identify.hpp": "f28ce49a02dc391e64cfb6e112dff4885579c2c694c60689533ab1089dcb4bf3",
+    "node_identify.cpp": "15d5b6eac661b0047f46e4b6f72cdbc15e243dc73598231b571b646eaa9b3053"
+  },
+  "addresses": [
+    "0x1800038b0"
+  ],
+  "assembly_evidence": "ev_e46dfd93352ef14c6e16936e419152588cc3aae4c071f99fdc01fe8f8145aae9",
+  "pseudo_evidence": "ev_16c4bf124a34657d7d2d217f79a017802a074ddf7e1c559929f47750b79fdee5",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 1,
+  "prior_source_presence": "module_record_only",
+  "closed_providers": [
+    {
+      "address": "0x1800038b0",
+      "base": "NativeNodeParseEffects::identify_0038b0",
+      "closure": "RecoveredNodeIdentifyEffects::identify_0038b0",
+      "body": "identify_node_0038b0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "new_selected_source_adapters": 0,
+  "existing_selected_node_parse_adapter_preserved": true,
+  "findings": [
+    "Document+a0 address and initial DWORD line are cached before first input-byte access. Input cursor remains separately cached from the candidate cursor. There is no invented input-null guard or entry out-node reset.",
+    "Each skip iteration reads current candidate byte. High-bit bytes bypass classifier; otherwise unsigned0..127 including NUL is forwarded to mandatory classifier051fc0. A nonzero classification result gates cached nonzero line address and a fresh callback-after byte read for LF; live DWORD line increments with32-bit wrapping.",
+    "After skip termination, a fresh candidate byte decides NUL. The NUL path writes exactly out-node QWORD0,returns trimmed candidate,and performs no token-table/constructor access or initial-line rewind.",
+    "Reached token slots0a10a8/0a10b0/0a10b8/0a10c0/0a10c8 are loaded individually in source order. Their identities are fixed selected configuration values cached at entry; token pointer CONTENTS are not prefetched before lower callbacks.",
+    "Each candidate==token pointer identity bypasses mandatory compare05c550. Otherwise exact unsigned limits2,4,9,2,1 are used,zero means match,and nonzero advances to the next live slot. No hardcoded token strings,starts_with or extra bounds/NULL checks substitute the native compare boundary.",
+    "Five matched branches call separate mandatory constructors:1610(document,document+288),1590(document,document+288),1720(document,document+208),17b0(document,document+288),1690(document,document+108). Fallback calls1720(document,document+208). No constructor body or pool/heap ABI is recovered by this stage.",
+    "All constructor results are cached values,including explicit zero. Native does not guard a zero constructor return before node+30 writes. Bounded missing mappings remain source-projection failures rather than native fault evidence.",
+    "Postconstructor line is read live at cached document+a0. Ordinary matches store node+30 DWORD then publish out-node QWORD and return cached candidate+advance. Advancing the cached integer after stores introduces no additional effect or reread.",
+    "CDATA third match caches the live line BEFORE BYTE node+68=1,then stores node+30 using that cached line and publishes out-node. Only one byte of flag is written; aliasing flag and document line preserves the native ordering.",
+    "Fallback stores live line at node+30 BEFORE restoring document+a0 to entry snapshot. It publishes node only after this rewind and returns ORIGINAL input,including skipped whitespace. Node/line/out-node physical aliases retain ordered effects.",
+    "Identify contains no BOM recognition or document+68 BOM-flag pass. The optional BYTE node+68 CDATA write is distinct from the earlier0041b0 document BOM behavior.",
+    "RecoveredNodeIdentifyEffects preserves N25 selected-target dispatch and earlier source bridges while closing exactly NativeNodeParseEffects::identify_0038b0. Existing classifier and compare interfaces are reused; five constructors and generic parser primitives remain mandatory.",
+    "One normal0038b0 function and one numeric final override create two tagged definitions for one native address. Existing N25 selected source adapter is preserved,not counted as another new adapter or generic virtual closure.",
+    "Token slot addresses and comparison limits have complete assembly-operand evidence. Their raw pointer slots0a10a8..0a10cf are beyond retained broad read end0a0dff; fixture pointers and semantic token roles are not promoted to shipped raw token-value evidence.",
+    "Lower/mapping failures preserve committed byte-state prefixes. No rollback,RAII free,synthetic line rewind on failure,native unwind or thread/concurrency equivalence is invented."
+  ],
+  "limitations": [
+    "Bounded normal byte-state projection only; native object/register/caller-stack/variadic/heap/fault/EH/concurrency equivalence remains unproven.",
+    "Constructor helpers1590/1610/1690/1720/17b0,classifier051fc0,compare05c550 and heterogeneous child parsing/GetStr/prepare/probe/destructor/pool/formatting remain separately mandatory or incomplete.",
+    "Token pointer-slot values and exact token identities are not newly acquired in this record. The bounded retained-range gap does not establish absence from every other retained evidence file.",
+    "Normal source review and reconstructed fixture tests do not prove original binary execution or complete replacement-DLL behavior. No total DLL completion percentage is derived."
+  ],
+  "retained_data": {
+    "file": "node-identify-retained-data.json",
+    "sha256": "2fe1b0f913d40be4c0295b0ba85bae248bf7b6908f5072c86c767dac1d32c778",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "token_slot_count": 5,
+    "raw_token_slot_bytes_acquired": false,
+    "new_original_read_performed": false
+  },
+  "full_native_equivalence_review_complete": false,
+  "native_node_identify_normal_body_ready": true,
+  "native_node_identify_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "generic_virtual_parse_closed": false,
+  "native_variadic_abi_established": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false,
+  "new_native_analysis": false,
+  "CRT_production": "unchanged and paused"
+}

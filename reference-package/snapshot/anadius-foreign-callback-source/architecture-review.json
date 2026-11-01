@@ -1,0 +1,157 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b18_state_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-29T14:07:59.985122+00:00",
+  "reviewed_source_hashes": {
+    "foreign.hpp": "24508bb44cab0b5b553593d3a294ad99eaab5b959a16ba7215fa9347d1160d9d",
+    "foreign.cpp": "78d03ca7164949e04364689293c45c5e5a190ed134dcb2e39b45f9801e31fc84",
+    "foreign_tests.cpp": "459be79d037c4ab86f15752eeaea59514f610bd53a4473bb8d5116ef0b2d8282",
+    "foreign_integration_tests.cpp": "5f2aecf7c756c5c237d257ee016fde21ec4ab73a9614fc9f841623a655609953",
+    "foreign_test_fixture.hpp": "8a5d457cf5f5cedebca7e28281713a247fc72dd2aef2cff46fec533890a8fd45",
+    "../anadius-bootstrap-backend-source/backend.cpp": "2a9eb5586a115adb803f0fcb498ec88339065a95ad8eaf20ff1b1e6547290df5",
+    "../anadius-bootstrap-backend-source/backend.hpp": "b861b529c9551d6302107ebf57e2e6f0eec4881d7e6087b6921d0f641bcaf892",
+    "../anadius-callback-policy-source/policy.cpp": "3dc9831dd9289bcce05a4f2e50b0e7cb38dc4a312752e3dc92d262c4326b5427",
+    "../anadius-callback-policy-source/policy.hpp": "276262274aee1a3ce4ce130e10637ce26675f4fcd7268c1c4d294c38314b5542",
+    "../anadius-native-context-source/context.cpp": "991fc1b7f1df9eed1c84ff23aa517210a8092dc8d75e51f2743d04f689f8fb81",
+    "../anadius-native-context-source/context.hpp": "2db86f5b03ca300179a8042e5a287a3b80299b416af4a72b33adcf719b3ce9e3",
+    "../anadius-native-source/native_callbacks.hpp": "af1ff2398168e0c3d6c92ebcd99dcabf11b996b27852a5461e9ddad64378c090",
+    "../anadius-thread-domain-source/domain.cpp": "7e56567bd85815ed10d54515fbb5b9df01913dbe418871e074c4da99ce5360a4",
+    "../anadius-thread-domain-source/domain.hpp": "46258112cabee4a0e831f0a8f978cfde9a95f91bad48f2696e67baa97ee262e5"
+  },
+  "quick_results": [
+    {
+      "path": "work/b18-core-quick-results.json",
+      "sha256": "bf08daad9836890b86016cf2dc8c24382bb7d038f216b63b33b512b5381114fb",
+      "checks": 42,
+      "executable_sha256": "fbcb4a101d958f62f3e18f39313b644843d5c79bee991ce9d3410cab521f2693",
+      "execution_by": "root; independent reviewer verified source/executable hashes and reviewed code/tests, did not rerun"
+    },
+    {
+      "path": "work/b18-integration-quick-results.json",
+      "sha256": "70efddc9b9c3c64085f29997792f4c55ed78abbeca055f9ef421f5af2f13ab08",
+      "checks": 35,
+      "executable_sha256": "fd9c337cfe3317cea669eb9de1a005a6dd8297a745d787955b4361abae1ea040",
+      "execution_by": "root; independent reviewer verified source/executable hashes and reviewed code/tests, did not rerun"
+    }
+  ],
+  "root_checks": 77,
+  "tests_rerun_by_reviewer": false,
+  "prior_source_files": 790,
+  "prior_sources_preserved": 781,
+  "modified_prior_sources": [
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "b37355b48739483d30ed4536f5a31796bc1b5f4d7e548b901985460259d7db24",
+      "after_sha256": "2a9eb5586a115adb803f0fcb498ec88339065a95ad8eaf20ff1b1e6547290df5",
+      "reason": "Bracket host initialization and check callback pause/native drain before joins and exit cleanup, including stopped retries"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.hpp",
+      "before_sha256": "0486fc7c6d0a97ccd631b23a1462cc1b374ae1a33a4b0c0bbf81677ffc66aceb",
+      "after_sha256": "b861b529c9551d6302107ebf57e2e6f0eec4881d7e6087b6921d0f641bcaf892",
+      "reason": "Add default lifecycle checkpoints for host mutation publication and pre-cleanup drain"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "c3e25afae59c2ef07e3017644c011b870aba4823307d20693b2f66cff9754110",
+      "after_sha256": "3dc9831dd9289bcce05a4f2e50b0e7cb38dc4a312752e3dc92d262c4326b5427",
+      "reason": "Require explicit admitted PTD permission when selected, preserving empty controller-only legacy path"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "4853874e12ac8104726c48b21943fd4f886d4d5456637f3e00d433f0e917af2e",
+      "after_sha256": "276262274aee1a3ce4ce130e10637ce26675f4fcd7268c1c4d294c38314b5542",
+      "reason": "Append optional explicit active callback scope permission to Resources; Policy/Storage ABI requires full rebuild"
+    },
+    {
+      "path": "anadius-native-context-source/context.cpp",
+      "before_sha256": "b1e57dd7c7f34b51939be467514e3b2c7242353b9c716356c6f345f8875e8fa0",
+      "after_sha256": "991fc1b7f1df9eed1c84ff23aa517210a8092dc8d75e51f2743d04f689f8fb81",
+      "reason": "Delegate host setup and pre-cleanup pause; require native active_calls zero before backend cleanup admission"
+    },
+    {
+      "path": "anadius-native-context-source/context.hpp",
+      "before_sha256": "fe2745d872c4c9758c6a86258a9b5fff4dd192df12db0cf4f50d3cc2c534fdc9",
+      "after_sha256": "2db86f5b03ca300179a8042e5a287a3b80299b416af4a72b33adcf719b3ce9e3",
+      "reason": "Expose owned Admission lifecycle checkpoint overrides"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "before_sha256": "1fa193f9161cc5621aea4520be809ff8983d260ea8190a352500eb4bf4cb43a2",
+      "after_sha256": "af1ff2398168e0c3d6c92ebcd99dcabf11b996b27852a5461e9ddad64378c090",
+      "reason": "Append three default source Admission lifecycle methods; SDK entries unchanged; vtable consumers rebuild"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before_sha256": "950687d7bfb66deecd6fb96bf6425ca8c33713afc00afaeb63bf824a9e5e7bcd",
+      "after_sha256": "7e56567bd85815ed10d54515fbb5b9df01913dbe418871e074c4da99ce5360a4",
+      "reason": "Implement borrowed/fresh same-thread/fiber scopes with checked sentinel, destroy-once, observed raw free and retained known/poisoned outcomes; no shared errno fallback allocation"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.hpp",
+      "before_sha256": "d4eb8f8f57f3ba6ee9a0673d4b547e4f6e04549a4d86e7a0d8f1ebfddb7903ec",
+      "after_sha256": "46258112cabee4a0e831f0a8f978cfde9a95f91bad48f2696e67baa97ee262e5",
+      "reason": "Declare explicit leased callback PTD provider and allocator domain identity; no generic foreign-thread API contract"
+    }
+  ],
+  "findings": [
+    {
+      "topic": "foreign gate and publication",
+      "result": "PASS",
+      "observation": "Single-active thread/fiber ownership establishes sequential callback handoff. No gate mutex is retained across PTD operations, callback body, original, provider or wait. Foreign ready phase requires completed host setup plus explicit frozen-state/provider proof. Proof-time control reentry is rejected before body."
+    },
+    {
+      "topic": "policy and memory identity",
+      "result": "PASS",
+      "observation": "New factory requires exact ApplicationMemory DomainStorage identity and refuses replacing an existing permission. Policy overrides require current admitted PTD scope; inherited final routes are covered by the native wrapper guard. Direct core/Effects calls remain outside that guard."
+    },
+    {
+      "topic": "PTD ownership and retry",
+      "result": "PASS",
+      "observation": "Borrowed existing PTD remains intact. Fresh initial-locale scope is checked and detached/destroyed/raw-freed/slot-cleared before admission release. Known cleanup stages retain retry state without repeated destruction or raw free. Unknown outcomes and disallowed PTD mutation retain poisoned scope. Metadata observers hide operating-state fields; known_clean catch rollback is committed under the scope mutex."
+    },
+    {
+      "topic": "pre-cleanup drain",
+      "result": "PASS",
+      "observation": "SourceBackend now invokes pause_before_cleanup after external source stop and BEFORE joins/exit hook cleanup. Owner also checks native binding leases. Active foreign original keeps Context/providers and engine/trampolines alive; current permission survives closing so the active callback can finish. Retry/timeout/failed-registration prefixes remain explicit."
+    },
+    {
+      "topic": "native lifecycle and ABI",
+      "result": "PASS",
+      "observation": "B17 admission-leave then binding-lease-release order is preserved. New optional virtual checkpoints and Resources permission require all consumers to rebuild. Quick compile refreshes changed units plus unchanged B17 admission/native/runtime consumers to avoid stale vtables. No original virtual ABI or PE entry is claimed."
+    },
+    {
+      "topic": "death test evidence correction",
+      "result": "PASS",
+      "observation": "Earlier case-specific SIGABRT fallback could have made unrelated teardown abort look successful. Final reviewed tests instead use direct TerminateProcess of their own child only after the poison predicate or typed rejection matches; generic SIGABRT exits239 and wrong paths230/231/232. Native cleanup child uses thread-local denied-raw-free marker before accepting abort163, and any callback return exits230. Final captured stderr has no old FLS teardown failures."
+    },
+    {
+      "topic": "actual source integration boundary",
+      "result": "PASS",
+      "observation": "Own B4 Runtime/B16 Policy/B14 fake engine integration runs fake worker jobs ONCE on controller before ready proof; later joins release metadata. Different own std::threads perform native W open/query/close through same Runtime state and memory. Held foreign original prevents B4 cleanup before drain. These are synthetic own-process tests, not original DLL/game, actual hooks, foreign module, registry/socket/process/UI execution."
+    }
+  ],
+  "limitations": [
+    "Sequential foreign callback success only; overlap and same-thread reentry are rejected rather than serialized into successful concurrent operations.",
+    "External ready proof must establish immutable host maps/original slots/config/server port and safe Execution/cache/worker/fallback/stream/provider use for the whole admitted phase. This stage does not prove general worker/callback concurrency.",
+    "CallbackThreads supports initial-locale PTD with errno/doserrno changes only. Fiber/identity changes, other PTD mutation and unknown outcomes require retention/terminal handling.",
+    "Native leave treats failed PTD cleanup as terminal; direct CallbackThreads known-failure retry is distinct from SDK callback behavior.",
+    "External disabled-hooks/cached-entry quiescence and image unload remain separate. Gate pause and zero active snapshot are not proof of original hook engine equivalence.",
+    "Compiler CRT/EH/locale/secure-copy/streambuf and native ABI limits remain;7online foreign calls,configuration/license/legacy document,B10 review debt and full DLL/PE entry remain open."
+  ],
+  "diagnostic_artifacts": [
+    {
+      "path": "own-cleanup-debugger.txt",
+      "sha256": "3dd31b034c0445ba13eeebf0ea4b51dd63cbcc4b44bf720de79ba8bba23161ba",
+      "scope": "Historical root-owned LLDB observation of own test child Domain::leave -> abort, before final signal observer correction; not a final-EXE runtime capture."
+    }
+  ],
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false
+}

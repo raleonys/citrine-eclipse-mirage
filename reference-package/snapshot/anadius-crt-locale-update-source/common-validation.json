@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locale_update",
+    "result": "PASS",
+    "output": "PASS locale update: 399644 checks",
+    "executable_sha256": "feb0003fbc5de685e64c7da3523a1741db6ec4b6d3fa2c4cf6018db0ecf125f9"
+  },
+  "execution_scope": "LocaleUpdate constructor and two nonindexed refresh helpers, exact fast paths/bit2 ownership; bounded synthetic globals/PTD/refresh providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-locale-update-source/locale_update_tests.cpp",
+      "sha256": "7524fd3cddfdf5d05c4fe27c8658556fd5ab565db703abf3562703e786e8ace6"
+    },
+    {
+      "path": "anadius-crt-locale-update-source/locale_update.cpp",
+      "sha256": "05bf4170ced404a2137cba5f33528ead4338684695330ddcec409fb3d1221fa0"
+    },
+    {
+      "path": "anadius-crt-locale-update-source/locale_update.hpp",
+      "sha256": "ad4e873fbb0e2809967fa4beed216640c52f9dafd37a34d14d78bc959c3ffa55"
+    }
+  ]
+}

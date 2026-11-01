@@ -1,0 +1,161 @@
+{
+  "schema": "source-resources.static-audit.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "scope": "Existing source assembly only; not runtime observation or original target execution",
+  "fields": [
+    {
+      "name": "state_lifetime",
+      "observation": "optional owned backing lifetime; not a factory"
+    },
+    {
+      "name": "configuration",
+      "observation": "B5/B7/B8/B9/B11 selected19/21; legacy document and KeyForLicense remain"
+    },
+    {
+      "name": "files",
+      "observation": "Runtime default NativeFactory when null; original MSVC file/EH ABI remains unproven"
+    },
+    {
+      "name": "input",
+      "observation": "Runtime default NativeInputPlatform when null; not exercised in B11"
+    },
+    {
+      "name": "console",
+      "observation": "B5 CompilerConsole available via explicit binder; caller must supply before SourceBackend"
+    },
+    {
+      "name": "threads",
+      "observation": "B5/B6 NativeThreads/NativeRuntime available; caller must assemble shared domain and lifetime"
+    },
+    {
+      "name": "remaining",
+      "observation": "mandatory caller Services; B3/B4/B7/B9/B10 selected composition17/17 does not supply all lower foreign resources"
+    },
+    {
+      "name": "execution",
+      "observation": "Runtime default NativeExecution when null; native mutex/cache/concurrency contract remains"
+    },
+    {
+      "name": "server",
+      "observation": "mandatory ServerBackend; SourceBackend executes server algorithms but is not a concrete complete lower network backend"
+    },
+    {
+      "name": "online",
+      "observation": "B13 binds15selected platform policies through10existing core methods+5boundaries.7foreign calls remain mandatory lower;2phase methods intercepted by B3. No foreign provider bodies or complete Resources factory."
+    },
+    {
+      "name": "library_os",
+      "observation": "Runtime default NativeSystemCalls when null; module loading must not be executed in this investigation"
+    },
+    {
+      "name": "library_effects",
+      "observation": "B12 supplies5selected log/dialog/compiler-error policies; B3 binds2phase routes. Wrapper still owns mandatory lower phase Effects; no full production factory or native equality."
+    },
+    {
+      "name": "host",
+      "observation": "mandatory host-init Effects including callback/original/provider domain; wrapper does not implement missing foreign ABI"
+    },
+    {
+      "name": "hook_cleanup",
+      "observation": "mandatory lower hook cleanup Effects; source cleanup algorithm and pinned engine fixtures do not install production hooks"
+    },
+    {
+      "name": "stop_sources",
+      "observation": "mandatory external admission stopper; callback wrapper additionally pauses registry but does not stop all source admissions by itself"
+    },
+    {
+      "name": "join_api",
+      "observation": "Runtime chooses native_join_api only if entirely empty; partial API rejected"
+    },
+    {
+      "name": "join_timeout_ms",
+      "observation": "explicit caller policy; no inferred binary default"
+    },
+    {
+      "name": "RuntimeSeed and InitialState",
+      "observation": "all source globals/native defaults caller supplied; no complete shipped image seed or PE entry installed"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "sha256": "7073712738416083f0a41da7fa88ae050762791cdec5f51201b8dcebda7677db"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "c144112d064589d28a4b6e761f43861ab05e3f4cc48b6f9b8310789bb7720a2e"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.hpp",
+      "sha256": "a447a80b1f9caa32d682804207e551431b8d4308cc530c0a176df5256a31b443"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "e193a43bb78ecc81bcf21764a18cb30a17a424138f79a86eb0a51de97154d749"
+    },
+    {
+      "path": "outputs/anadius-config-startup-source/startup.cpp",
+      "sha256": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88"
+    },
+    {
+      "path": "outputs/anadius-config-application-source/application.cpp",
+      "sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb"
+    },
+    {
+      "path": "outputs/anadius-libraries-source/libraries.hpp",
+      "sha256": "711dd108523bc0ea5b3a0ceab3c9f3f2afb507837866a78f554d7dfab4fdb4f1"
+    },
+    {
+      "path": "outputs/anadius-library-effects-source/dialog.hpp",
+      "sha256": "21b17edb02cc215bcd569c0caf520b134b8f17760d0a4d0a8515a041df58b11d"
+    },
+    {
+      "path": "outputs/anadius-library-effects-source/dialog.cpp",
+      "sha256": "c5078be51fca032bc21cdb0d01c068b250ee3e09f14b20ddf98036d6e9e8e7a5"
+    },
+    {
+      "path": "outputs/anadius-library-effects-source/effects.hpp",
+      "sha256": "93a722ce616f93a3b92f77a660a6e45a1bb3060a45115b958d29dce171138884"
+    },
+    {
+      "path": "outputs/anadius-library-effects-source/effects.cpp",
+      "sha256": "ec076488dac818a6ef3bc056ba9350100554b3ce2255a18c95eb39a109cf8092"
+    },
+    {
+      "path": "outputs/anadius-online-platform-source/platform.hpp",
+      "sha256": "e3fc3c73340ba1bca1b2ffb8746fe311d91c9c53d58e14b0b80c7c4df47d57b1"
+    },
+    {
+      "path": "outputs/anadius-online-platform-source/platform.cpp",
+      "sha256": "0a462c34636fcc22f348f48795ca60dba2114d1845b84ff30183cef99f5db10b"
+    }
+  ],
+  "runtime_default_fields": [
+    "files",
+    "input",
+    "library_os",
+    "execution",
+    "join_api"
+  ],
+  "complete_production_factory": false,
+  "pe_entry_installed": false,
+  "configuration_routes_bound": 19,
+  "legacy_document_bypassed_by_filepass": true,
+  "configuration_license_subsystem_complete": false,
+  "b10_independent_review_outstanding": true,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "source_package": "B13",
+  "new_selected_library_policies": 5,
+  "actual_resource_factory_complete": false,
+  "phase_routes": "B3 LibraryExecution overrides wait2/finish into its existing shared state; standalone wrapper still requires an explicit owned phase provider",
+  "new_selected_online_policies": 15,
+  "online_recovered_core_reused": 10,
+  "online_foreign_calls_remaining": 7,
+  "online_phase_routes": "B3 OnlineExecution binds2phase methods into existing shared Execution; wrapper still retains owned lower contract"
+}

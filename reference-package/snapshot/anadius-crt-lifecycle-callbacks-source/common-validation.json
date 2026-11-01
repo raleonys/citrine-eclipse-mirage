@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_lifecycle_callbacks",
+    "result": "PASS",
+    "output": "PASS 105 lifecycle onexit/multibyte callback checks;owned native heap/counters",
+    "executable_sha256": "815729f5a67b1960350868178096463f881e7568e7204dd540295119a6cc056f"
+  },
+  "execution_scope": "2normalflow bodies06447c/0644f8;105checks,actualsharednormal/quickonexitinit/register/execute,nativerecalloc/heap/counterbindings,refwrap/skip/dynamiclastref/freefailure and secondload/free/poststore;fixtureCS/addresscallbacks,nofullCRT/MBstartup/ABI/SEHequivalence",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-lifecycle-callbacks-source/callbacks.cpp",
+      "sha256": "6a4debca2b0cce025b6ec731f032ad60d6bcab41d4e9e9f682281a653fadbf57"
+    },
+    {
+      "path": "anadius-crt-lifecycle-callbacks-source/callbacks.hpp",
+      "sha256": "3cd7e846c0922c30bdb67c1c20504747d7ba512c08e2cce3a415c2dacf46622d"
+    },
+    {
+      "path": "anadius-crt-lifecycle-callbacks-source/native_tests.cpp",
+      "sha256": "c4288c5588250bcfaceecf2c2befb2bac3ecb1d2f2c05ab42c51a0061fddd6f7"
+    }
+  ]
+}

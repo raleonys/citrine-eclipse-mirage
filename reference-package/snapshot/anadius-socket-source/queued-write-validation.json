@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 1004,
+  "integration_checks": 1597,
+  "output": "PASS: 1004 socket queued write core checks; actual02a500 empty and bad weak terminal, independent inline/heap/null/full64/masked head oracle, real low32 CAS wrap and bounded synthetic host contention, exact owner member identities and handler fields, residual ownership cached across mutation, heap lifetime ends, bounded registries and normal exception prefixes\nPASS: 1597 socket queued write integration checks; actual02a500/021fd0/0261d0/025a70/02a500 cycle for two distinct messages, 64KiB slices, shared owner transfer and release, borrowed/owned scheduling, zero second item, cache reuse, early key2 and fallback key0 evidence semantics, mapped errors and category suppression; injected SDK only, actual synthetic heap lifetime ends",
+  "source_hashes": {
+    "queued_write.hpp": "7a205cbc34118c9181f829feeb474478dedd10eb21d37780af966018e3f6cc7a",
+    "queued_write.cpp": "8aec35f671804e86544701065a8c510b0b3c5632b0baf13cf31f6679fbd88211",
+    "queued_write_tests.cpp": "df41028cd6f2b0626ffc7138ed4bbbab32a8fe8616b2c4d5d9d561d6175fa257",
+    "queued_write_integration_tests.cpp": "8e2a542808da4e9ca8cd76fbf943a85dcd1b9173e562d5ad29ed4549eccae119",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 1,
+  "execution_scope": "02a500 retained normal body: empty queue before all effects, null/expired strong owner terminal, real low32 CAS nonzero acquire and max-to-zero wrap plus bounded synthetic host contention; independent mask/inline/heap/zero/full64 oracle, literal owner+10 and+78 identities, defined initial handler fields, direct actual021fd0 by default; explicit callee boundary only for isolated caller residual cleanup, same cached strong/weak control across mutation, actual synthetic owner/queue/stream/control lifetime ends, bounded registries and normal exception prefixes; actualRecoveredQueuedWriteApi/02a500/021fd0/0261d0/025a70/02a500 cycle for two distinct queued messages, initial owner retention through borrowed/owned scheduler and chunk continuations, 64KiB slices and zero second item, cache reuse, early key2 preservation and key0 fallback replacement, mapped errors and suppression",
+  "required_providers": "026860 terminal, native owner/deque/string/stream projections, category/logger/free providers, native factory/query/move/destroy/scheduler and allocator/free/ref disposal,025c40 receive,GS TLS/guard CRT/exception storage and ABI ownership remain required; CRT production unchanged and paused",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; typed sidecars and deterministic injected SDK callbacks are not native ABI/table/heap/SEH or concurrency equivalence; bounded host thread test proves reconstructed CAS source only; explicit core callee injection does not claim original runtime behavior, integration uses direct actual021fd0; exception prefixes do not invent unwind cleanup; no original/game/real SDK socket/network/TLS/IOCP/event/wait or user cfg/token/achievement execution/read"
+}

@@ -1,0 +1,17 @@
+# Tarih ayrıştırma ve achievement kalıcılığı
+
+`timestamp_to_epoch_041e10`, özgün yordamın normal kontrol akışını korur: dokuz tm alanını sıfırlar, uzunluğu belirtilmiş girdiyi `%Y-%m-%dT%H:%M:%S` biçimiyle ayrıştırıcıya verir ve native durum bitlerinde `state & 6` denetimini uygular. Fail2 veya bad4 varsa 0 döner; EOF1 kabul edilir. Başarıda gerçek `calendar_recovered::epoch_041ff0` kaynağı çağrılır. Girdinin tamamının tüketilmesi şart değildir; zaman dilimi veya sonek doğrulaması eklenmez. Epoch 0 ile ayrıştırma hatasının 0 sonucu ayrı anlamlardır; gerektiğinde `Parser` durumunu inceleyin.
+
+`ClassicIso`, statik kanıttan çıkarılan sabit biçim dalını açık **klasik ASCII / temel facet** varsayımıyla uygular. Başlangıç boşlukları atlanır; her alanın sayısal sınırı ve azami genişliği özgün kuralları izler. Alan içindeki boşluklar genişliği tüketir, işaret tüketmez. Sıfır veya boşluk tüketimi, özgün geçici sayısal tamponda sıfır üretebilir. Başarısız alan hedefini değiştirmez; birleşik takvim tarihi doğrulaması yoktur. Küçük `t` kabul edilir. Son alandan sonraki NUL dahil ASCII baytlar tüketilmeden kalabilir.
+
+Önemli EOF davranışı: `2024`, `2024-02`, `2024-02-03T04:05` gibi geçerli sayısal alandan sonra biten önekler kabul edilir. Alan EOF1 üretir; `041760` kalan biçimi okumadan çıkar ve `041e10` bunu başarı sayar. Buna karşılık `2024-` veya `2024-02-03T` gibi ayırıcıdan sonra biten girdi EOF|fail3 üretir. Bu sonuçlar özgün DLL çalıştırılarak ölçülmedi; retained assembly/pseudocode dallarından çıkarıldı.
+
+`ClassicIso` yalnız bu biçimi ve bütün baytları 0x80'den küçük girdileri destekler; başka biçim veya ASCII dışı bayt `std::invalid_argument` üretir. Sondaki ASCII dışı bayt da bu açık alanın dışındadır. Özgün stream locale'inin her çağrıda classic olduğu kanıtlanmadı. Özel locale/facet, genel time_get, stream iterator, allocation/exception ABI ve SEH eşitliği iddia edilmez. Genel STL/CRT yeniden yazılmadı; önceki CRT kaynakları değişmedi.
+
+`Parser` sınırı korunur. `HostGetTime`, ayrıca seçilebilen mevcut standart kütüphane uyumluluk backend'idir. Global C++ locale'i kullanır; host EOF/fail/bad bitleri native 1/2/4 değerlerine ayrı ayrı çevrilir. Bunun bozuk girdi ve locale davranışı özgün MSVC facet eşitliği sayılmaz. Backend istisnaları wrapper tarafından yutulmaz.
+
+`StorageEffects`, achievement Storage'ın tarih metodunu seçilen parser, wrapper ve gerçek takvim kaynağına bağlar. Diğer dosya/status/encoding/mkdir/error metotları abstract kalır. Entegrasyon testi, `ClassicIso` ile gerçek XML reader/file/path/INI writer kaynaklarını kullanır: Grant → epoch → field70 → UnlockTime baytları doğrulanır. Negatif epoch uint64 bit deseniyle saklanır. Dosya I/O yalnız testin ürettiği XML/INI klasöründedir; gerçek kullanıcı dosyaları veya özgün DLL/oyun kullanılmaz.
+
+**192 timestamp kontrolü** geçti: wrapper durum maskesi ve dokuz alan, bağımsız statik alan/durum beklentileri, EOF önekleri, işaret/boşluk/genişlik/sınırlar, kısmi alan yazımı, açık alan retleri, host uyumluluk seçimi ve gerçek kalıcılık zinciri. Takvim modülünün ayrıca **31.760 kontrolü** vardır. Bunlar tam DLL eşdeğerliği oranı değildir.
+
+Derleme: `build.ps1`, C++20/LLVM-MinGW `-O2 -Wall -Wextra -Werror`; ortak giriş `../source-workspace/build.ps1`. CMake tarifi ayrıca sağlanır; burada ayrıca çalıştırılmış sayılmaz. Kanıtlar: `parse-audit.md/json`, `evidence.asm.txt`, `evidence.pseudo.c.txt`, `evidence.json`, `rea-session.json`. İnceleme kapsamı `review.md/json`; testler `validation.json` ve `common-validation.json` içindedir.

@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T18:38:29.5814018Z",
+  "prior_package_sha256": "54c2390ea13b375ce2f972ffd32408b546f289779e6c14d855cdeed0d0368650",
+  "prior_source_count": 392,
+  "unchanged_prior_sources": 392,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-calendar-source/calendar_tests.cpp",
+    "anadius-calendar-source/calendar.cpp",
+    "anadius-calendar-source/calendar.hpp",
+    "anadius-timestamp-source/timestamp_tests.cpp",
+    "anadius-timestamp-source/timestamp.cpp",
+    "anadius-timestamp-source/timestamp.hpp"
+  ],
+  "current_sources": 398,
+  "current_documents": 156,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 46,
+  "native_objects": 136,
+  "cpp_objects": 132,
+  "c_objects": 4,
+  "normal_test_groups": 121,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "calendar",
+      "result": "PASS",
+      "output": "PASS: 31760 calendar arithmetic checks; no original execution or OS time calls",
+      "executable_sha256": "3404fe1edb42c3280fae20c60f00ba5576dd09add74bd5263776c429b5e11353"
+    },
+    {
+      "module": "timestamp",
+      "result": "PASS",
+      "output": "PASS: 192 timestamp checks; classic ASCII native branch plus explicit host compatibility; own fixtures only",
+      "executable_sha256": "a3a82bb83191c85d9c558baf751e3cfbc75639e91ab1673e93cae6e5d0a8b1ae"
+    }
+  ],
+  "new_checks": 31952,
+  "master_build_sha256": "5ddf4ef6bf0378c61b117de1220d8796b65a0428c77d8b661f26d1a987f076f2",
+  "common_build_script_sha256": "8247bfa747ca4ca9c255335c0424423c39c7ca283f442f23e2127c4ebb7656a3",
+  "cmake_sha256": "bf41eb9d651e7de677f13b58664bd3e124bf6a76ba4d0ac1ac4b6b2b7eda320c",
+  "normal_source_procedures_added": [
+    "0x180041e10",
+    "0x180041ff0"
+  ],
+  "bounded_parser_branch": "03d310/041760/03f190/03d8f0/03ef80 fixed ISO classic ASCII subset, not five whole native ABI procedures",
+  "independent_final_code_review": false,
+  "review": "Root source-to-evidence review plus independently authored pre-implementation parser branch audit",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "arbitrary_locale_STL_native_ABI_SEH_global_runtime": "not established",
+  "other_runtime_XMLsave": "outside these procedures"
+}

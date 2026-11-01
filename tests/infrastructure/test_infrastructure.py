@@ -26,6 +26,8 @@ import generate_avatar_data as avatar_data
 import clear_tool_python_cache as tool_cache
 import check_repository_contract as repository
 import verify_sources as source_verification
+import reference_package as reference
+import update_reference_package as reference_update
 from golden_policy import load_target, PolicyPending
 
 
@@ -512,6 +514,154 @@ class ToolCacheTests(unittest.TestCase):
                 for name in children:self.assertTrue((scripts/name).with_suffix('.ran').is_file())
                 self.assertEqual(expect_cache,cache.exists())
                 for name in children:(scripts/name).with_suffix('.ran').unlink()
+
+
+class PreservedResearchPackageTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.base = Path(self.temp.name)
+        self.root = self.base / 'repo'
+        (self.root / 'docs').mkdir(parents=True)
+        (self.root / 'docs/IDENTIFIER_POLICY.md').write_bytes((ROOT / 'docs/IDENTIFIER_POLICY.md').read_bytes())
+        self.archive = self.base / 'input.zip'
+        self.members = {'module/source.cpp': b'original source\r\n',
+                        'module/test.cpp': b'original test\n',
+                        'build/fixture.exe': b'PE fixture data, never executed'}
+        self.write_archive(self.members)
+        reference_update.import_package(self.root, self.archive, 'initial', apply=True)
+
+    def write_archive(self, members):
+        with zipfile.ZipFile(self.archive, 'w') as archive:
+            for name, data in members.items():
+                archive.writestr(name, data)
+
+    def test_only_expanded_bodies_are_preserved_outside_product_inputs(self):
+        base = self.root / reference.REFERENCE_ROOT
+        for name, data in self.members.items():
+            self.assertEqual(data, (base / 'snapshot' / name).read_bytes())
+        self.assertEqual({'snapshot'}, {path.name for path in base.iterdir()})
+        files = inventory.source_files(self.root)
+        self.assertIn(reference.POLICY, files)
+        self.assertFalse(any(name.startswith(reference.REFERENCE_ROOT + '/') for name in files))
+        self.assertEqual([], repository.check_active_identifiers(self.root))
+
+    def test_missing_changed_and_extra_snapshot_bytes_fail_closed(self):
+        base = self.root / reference.REFERENCE_ROOT
+        for name in ['snapshot/module/source.cpp', 'snapshot/build/fixture.exe']:
+            path = base / name
+            original = path.read_bytes()
+            path.write_bytes(b'tamper')
+            with self.assertRaises(ValueError): inventory.source_files(self.root)
+            with self.assertRaises(ValueError): repository.check_active_identifiers(self.root)
+            path.unlink()
+            with self.assertRaises(ValueError): inventory.source_files(self.root)
+            path.write_bytes(original)
+        (base / 'extra.bin').write_bytes(b'unregistered')
+        with self.assertRaises(ValueError): inventory.source_files(self.root)
+
+    def test_inventory_and_registry_are_pinned(self):
+        path = self.root / reference_update.INDEX
+        original = path.read_bytes()
+        path.write_bytes(original + b' ')
+        with self.assertRaises(ValueError): inventory.source_files(self.root)
+        path.write_bytes(original)
+        (self.root / reference.POLICY).unlink()
+        with self.assertRaises(OSError): inventory.source_files(self.root)
+
+    def test_symlink_body_cannot_borrow_outside_bytes(self):
+        path = self.root / reference.REFERENCE_ROOT / 'snapshot/module/source.cpp'
+        path.unlink()
+        try: path.symlink_to(self.root / reference_update.INDEX)
+        except (OSError, NotImplementedError): self.skipTest('Symlink creation unavailable')
+        with self.assertRaises(ValueError): inventory.source_files(self.root)
+
+    def test_absent_payload_is_allowed_in_product_package_but_not_registered_checkout(self):
+        import shutil
+        shutil.rmtree(self.root / reference.REFERENCE_ROOT)
+        inventory.source_files(self.root)
+        (self.root / '.git').mkdir()
+        with self.assertRaisesRegex(ValueError, 'missing from checkout'):
+            inventory.source_files(self.root)
+
+    def test_updated_and_new_files_reopen_review_and_prior_findings_survive(self):
+        path = self.root / reference_update.REVIEWS
+        reviews = json.loads(path.read_text())
+        for row in reviews['files']:
+            row['status'] = 'reviewed'
+            row['finding_ids'] = ['CASE-1']
+        path.write_bytes(reference_update.encoded(reviews))
+        changed = dict(self.members)
+        changed['module/source.cpp'] = b'new source'
+        changed['module/new.cpp'] = b'new unit'
+        del changed['build/fixture.exe']
+        self.write_archive(changed)
+        result = reference_update.import_package(self.root, self.archive, 'next', apply=True)
+        self.assertEqual(['module/source.cpp'], result['delta']['changed'])
+        self.assertEqual(['module/new.cpp'], result['delta']['added'])
+        self.assertEqual(['build/fixture.exe'], result['delta']['removed'])
+        rows = {row['path']: row for row in json.loads(path.read_text())['files']}
+        self.assertEqual('pending', rows['module/source.cpp']['status'])
+        self.assertEqual(['CASE-1'], rows['module/source.cpp']['prior_reviews'][0]['finding_ids'])
+        self.assertEqual('pending', rows['module/new.cpp']['status'])
+        self.assertEqual('reviewed', rows['module/test.cpp']['status'])
+
+    def test_dry_run_does_not_change_payload_or_review_records(self):
+        before = (self.root / reference_update.INDEX).read_bytes()
+        self.write_archive({'other.cpp': b'new'})
+        result = reference_update.import_package(self.root, self.archive, 'dry-run')
+        self.assertFalse(result['applied'])
+        self.assertEqual(before, (self.root / reference_update.INDEX).read_bytes())
+        inventory.source_files(self.root)
+
+    def test_unsafe_zip_member_does_not_replace_prior_snapshot(self):
+        before = (self.root / reference_update.INDEX).read_bytes()
+        for name in ['../escape.cpp', '/escape.cpp', 'C:/escape.cpp', 'bad\\path.cpp']:
+            self.write_archive({name: b'bad'})
+            with self.assertRaises(ValueError):
+                reference_update.import_package(self.root, self.archive, 'bad', apply=True)
+            self.assertEqual(before, (self.root / reference_update.INDEX).read_bytes())
+
+    def test_failed_record_write_restores_prior_payload_and_records(self):
+        before = (self.root / reference_update.INDEX).read_bytes()
+        self.write_archive({'new.cpp': b'replacement'})
+        write_bytes = Path.write_bytes
+        failed = False
+        def fail_once(path, data):
+            nonlocal failed
+            if path == self.root / reference.POLICY and not failed:
+                failed = True
+                raise OSError('injected registry write failure')
+            return write_bytes(path, data)
+        with patch.object(Path, 'write_bytes', fail_once), self.assertRaises(OSError):
+            reference_update.import_package(self.root, self.archive, 'fails', apply=True)
+        self.assertTrue(failed)
+        self.assertEqual(before, (self.root / reference_update.INDEX).read_bytes())
+        inventory.source_files(self.root)
+
+    def test_case_collision_and_symlink_zip_members_do_not_replace_snapshot(self):
+        import stat
+        before = (self.root / reference_update.INDEX).read_bytes()
+        self.write_archive({'Same.cpp': b'one', 'same.cpp': b'two'})
+        with self.assertRaises(ValueError):
+            reference_update.import_package(self.root, self.archive, 'collision', apply=True)
+        entry = zipfile.ZipInfo('link.cpp')
+        entry.create_system = 3
+        entry.external_attr = (stat.S_IFLNK | 0o777) << 16
+        with zipfile.ZipFile(self.archive, 'w') as archive:
+            archive.writestr(entry, '../outside')
+        with self.assertRaises(ValueError):
+            reference_update.import_package(self.root, self.archive, 'symlink', apply=True)
+        self.assertEqual(before, (self.root / reference_update.INDEX).read_bytes())
+
+    def test_crc_failure_does_not_replace_snapshot(self):
+        before = (self.root / reference_update.INDEX).read_bytes()
+        raw = self.archive.read_bytes()
+        self.assertIn(b'original source', raw)
+        self.archive.write_bytes(raw.replace(b'original source', b'corrupt! source', 1))
+        with self.assertRaises(zipfile.BadZipFile):
+            reference_update.import_package(self.root, self.archive, 'bad-crc', apply=True)
+        self.assertEqual(before, (self.root / reference_update.INDEX).read_bytes())
 
 
 if __name__ == '__main__':

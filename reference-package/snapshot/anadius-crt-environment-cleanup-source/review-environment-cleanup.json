@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "reviewer": "initial_multibyte_data independent sibling",
+  "reviewed_at": "2026-10-20T19:23:57.741Z",
+  "source_hashes": {
+    "environment_cleanup.cpp": "5541b20bd7f67869bc2bb5a625db9dd36224396b12c803c92a553328432b816e",
+    "environment_cleanup.hpp": "6fa4d9263b44cd07a0d1431b16f6e4519f6ff1309ce9277ea83a57b21d9a8cbe",
+    "native_tests.cpp": "715be254572184850faf7aec38d623b9bb480512d012a1b79e96250e9fb802c5",
+    "build.ps1": "b19cc23243c1a6f95cb056c0370c445624128574341fbaefd7151e9c7dcccb2f",
+    "../anadius-crt-environment-source/environment.cpp": "fd5b246f6f2ee676a0ac92f2dd9a6db0f9b410c92021c52cc8669a9002731132",
+    "../anadius-crt-environment-source/environment.hpp": "f76125336b93848a9c091f5238a9d05ede9c76f33efbd9d952c70ee84a27a683"
+  },
+  "checks": [
+    "All four new bodies compared with bounded retained asm and pseudo:063f60/063f7c snapshot selected pointer once, compare only address identity with current initial pointer, call existing063d80 only if unequal.",
+    "064010 order exact:current narrow helper, current wide helper, freshly read initial narrow free, freshly read initial wide tail-free. Later values are not snapshotted before earlier effects.",
+    "0644a0 invokes064010 and returns only recovered boolean true/AL1; no high-register ABI claim.",
+    "No source writes clear or reset any of four global Environment views.",
+    "Existing bounded063d80 null handling, entry order, fresh later-slot reads after each free, then pointer-array free match normal assembly; slots metadata enforces explicit unsupported unterminated domain.",
+    "Identity alias skips ignore differing slots metadata; actual bounded core is linked from partial archive and tests include later-slot/initial-view mutation.",
+    "25 narrow/wide alias pair scenarios plus mutation, null, and bounded rejection paths pass447checks.",
+    "Wide cleanup uses live char* pointer-vector objects whose payload bytes may beUTF16. No native char16_t** reinterpretation or wide ABI claim.",
+    "Fixture owns payloads/vectors until teardown; free provider records identity and rejects double free. Callback-induced later reads have live storage. Production provider must preserve storage until each required read and use correct heap domain.",
+    "Read-only source review and own fixture build only; no original DLL execution or user environment access."
+  ],
+  "findings": [],
+  "retained_REA": {
+    "0x180063f60": {
+      "assembly_evidence": "ev_45909095802cf95dbd2cfcad1f52acd5f57c0d0b449b27e6d92d24a434c6c523",
+      "pseudocode_evidence": "ev_cb8ca7892098f7f3ed73fa8c246c4a48071c13dc4a0b645015773733507fbc42"
+    },
+    "0x180063f7c": {
+      "assembly_evidence": "ev_ef3db86b9ad42a49d22e5c230f4732db627b2f3d188b026a805eb965ec6a7f17",
+      "pseudocode_evidence": "ev_d97e90946aaa3a4d4c1ad3f918aeaf2efb51622e2c7c682a9b5aabff1d776359"
+    },
+    "0x180064010": {
+      "assembly_evidence": "ev_83a40e63197fa95c4b0d57a113d092a561e7a91b4b385715e10307f652f55714",
+      "pseudocode_evidence": "ev_8bdab41324ff9abd7c07cd2c01a58e4840567c365da4c83513d93105afa40e15"
+    },
+    "0x1800644a0": {
+      "assembly_evidence": "ev_49e2bcb83b452cd122ceb24cbdd673081334f88fc1b3e46bdb5bf8b271934d89",
+      "pseudocode_evidence": "ev_895d3b00175388a1f4e86f9d3cbe5e41334c5ceb94b2d65a7184fc3bda4b565c"
+    },
+    "0x180063d80": {
+      "assembly_evidence": "ev_6ab86bc75eb9a6d0f54716af111b953c09d1853d933ae64ec912cc87684e5dd3",
+      "pseudocode_evidence": "ev_f42efb4c2c6e01d2ccbccaad3bc18cbd1905fc5983659e54ccb9222181231f9c"
+    }
+  },
+  "listing_sha256": {
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "pseudocode": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+  },
+  "run": {
+    "command": "./outputs/anadius-crt-environment-cleanup-source/build.ps1",
+    "result": "PASS 447 environment cleanup checks;25 narrow/wide alias pairs;owned pointer vectors and mutation ordering"
+  },
+  "new_recovered_bodies": 4,
+  "scope_limits": [
+    "Normal flow only; no reconstructed original SEH/unwind.",
+    "Synthetic bounds and cleanup address-vector API are not native original ABI.",
+    "Fixture logical frees retain backing memory; this validates effects/order without invoking real heap-free lifetime faults.",
+    "Cross-domain or payload alias double-free behavior is not silently deduplicated; caller must provide supported live inputs."
+  ],
+  "original_execution": false,
+  "production_edits": false
+}

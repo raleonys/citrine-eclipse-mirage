@@ -1,0 +1,3077 @@
+{
+  "scope": "Files actually read by offline generator, relative to outputs; original inputs never read",
+  "files": {
+    "source-workspace/build-record.json": {
+      "sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+      "bytes": 637910
+    },
+    "source-workspace/source-snapshot.json": {
+      "sha256": "021ac211f3da983b6fcebaa4c29407536facde4b045414a06c28e03f7e408a8c",
+      "bytes": 154705
+    },
+    "anadius-recovery-index.json": {
+      "sha256": "727160403cf8c16009b69507ba747363abdc17a299f693b584d1a4baab63ec73",
+      "bytes": 5402294
+    },
+    "anadius-callgraph.json": {
+      "sha256": "4a6a57d0a27f1f0e068d7f5d417a00f9eea9793b322378eb62c29ffdcba5dfef",
+      "bytes": 2818042
+    },
+    "anadius-all-functions.pseudo.c": {
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "bytes": 3320290
+    },
+    "anadius-all-functions.asm.txt": {
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "bytes": 4467796
+    },
+    "version-reconstruction-input.json": {
+      "sha256": "780a2ef3d0346c266e9f78a1cbd6af4aec62808cc593cf17144313bd0f433a58",
+      "bytes": 2122961
+    },
+    "preloader-analysis/ghidra-analysis.json": {
+      "sha256": "02c6bc6d9371053bddce8a922e755ef4dfd99f84122bb26efd165cc1ac3d6c73",
+      "bytes": 758913
+    },
+    "version-rebuild/export-evidence.json": {
+      "sha256": "2e6341221068e7b582abf35f7195c654943172c26f67cdb32505f8f958c8e633",
+      "bytes": 92773
+    },
+    "reconstruction-inventory/object-symbols.txt": {
+      "sha256": "5b676bed1e47bfa87113805cdc5ff40b40d5f5d381f995138a4766e604e43574",
+      "bytes": 1664842
+    },
+    "anadius-accept-helpers-source/bindings.cpp": {
+      "sha256": "3539b32933b51054a0265e7ec13fcbfde05a04ba73d3d309991376148825bae8",
+      "bytes": 1882
+    },
+    "anadius-accept-helpers-source/bindings.hpp": {
+      "sha256": "70c13e1772170a77515dd268a8ec3fec16791c447a146419a7e9506e6e118e1b",
+      "bytes": 2084
+    },
+    "anadius-accept-helpers-source/helpers.cpp": {
+      "sha256": "683ac8124b602c25ddb5d29f9429a476c9d92e71d4b1bae882b090f3347642c0",
+      "bytes": 5402
+    },
+    "anadius-accept-helpers-source/helpers.hpp": {
+      "sha256": "2e5c24c07d42c961bcd3740afaa04e71338e1ebadb93295e50762d4085b538ab",
+      "bytes": 2537
+    },
+    "anadius-accept-source/accept.cpp": {
+      "sha256": "3483ad9075706413543407f75c4ec02333d124f3a5a39ddb25f1e51572b11a22",
+      "bytes": 11009
+    },
+    "anadius-accept-source/accept.hpp": {
+      "sha256": "8f1196a1506ee63a05d2d215091766fe607ba2f53269e0422ce2d034f2a85485",
+      "bytes": 4800
+    },
+    "anadius-accept-source/owned.cpp": {
+      "sha256": "aaa6e0c1cb126a1ac6b6515a5062a75a4c1f4cfa38bf2e7debccc8941732324c",
+      "bytes": 17786
+    },
+    "anadius-accept-source/owned.hpp": {
+      "sha256": "011cf682eb0f9ffb30575ded5a184ca366ea88bf605421ee24eda5cfb72c74f9",
+      "bytes": 5523
+    },
+    "anadius-accept-stop-source/stop.cpp": {
+      "sha256": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+      "bytes": 18099
+    },
+    "anadius-accept-stop-source/stop.hpp": {
+      "sha256": "6d4854d3640568c5ec08eaa23b4abbb4b40d5c529be3bc6825f017f62702a94b",
+      "bytes": 3327
+    },
+    "anadius-achievement-runtime-source/runtime.cpp": {
+      "sha256": "5ec1e7c2fc2dced97d781450ad15058bc9cc2c9f5486d7ff3c35fe81bfd9e2b7",
+      "bytes": 2441
+    },
+    "anadius-achievement-runtime-source/runtime.hpp": {
+      "sha256": "d28eb0121de0efa000ea2179f3d8934d4aaf212a36407146b5078116844ea400",
+      "bytes": 1831
+    },
+    "anadius-achievement-runtime-source/utc.cpp": {
+      "sha256": "7684a1ffe3dfbb52585c893eb23c53c1ec7f272862cb258cb99b52f84d9f7cbe",
+      "bytes": 1606
+    },
+    "anadius-achievement-runtime-source/utc.hpp": {
+      "sha256": "75f907fe609da71eeb4c7737da137ed0a53574fac251c820a4007b19c5214373",
+      "bytes": 1465
+    },
+    "anadius-achievement-storage-source/storage.cpp": {
+      "sha256": "2a2f23e278f35e8920047c2a9444e1fd150220d01bb2d727d1f3378a43684d13",
+      "bytes": 4988
+    },
+    "anadius-achievement-storage-source/storage.hpp": {
+      "sha256": "54e040d5b54eb6846a849ac5e128681de5adc2e17258b2ed39fc40ff51c9403a",
+      "bytes": 2528
+    },
+    "anadius-achievement-writer-source/writer.cpp": {
+      "sha256": "20bd58a3fb48d3db046725fa6c154da475072c9dbd29f21e7c6a34c617319b87",
+      "bytes": 1715
+    },
+    "anadius-achievement-writer-source/writer.hpp": {
+      "sha256": "3c2b5bf57369279c5d484c4435b33157a0af6b363e798f3852a70a40b6691f9b",
+      "bytes": 900
+    },
+    "anadius-application-graph-source/graph.cpp": {
+      "sha256": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c",
+      "bytes": 38273
+    },
+    "anadius-application-graph-source/graph.hpp": {
+      "sha256": "bc983d04c601b5abb9b2dacd11abecb64df6b62fbca06213bb89470933f61e53",
+      "bytes": 4942
+    },
+    "anadius-application-worker-source/worker.cpp": {
+      "sha256": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+      "bytes": 12740
+    },
+    "anadius-application-worker-source/worker.hpp": {
+      "sha256": "2427178f3d630c2cc4ba132d52e82777eca6c2006a5f318825dca4259ef2dfdc",
+      "bytes": 2723
+    },
+    "anadius-bootstrap-backend-source/backend.cpp": {
+      "sha256": "72713547523dcf06f2e9824778d89965e7b86d67b0a6c14222eaf0b71448f7da",
+      "bytes": 21358
+    },
+    "anadius-bootstrap-backend-source/backend.hpp": {
+      "sha256": "72c0dcdf15bbdae395e17a6089277b5635bd2ef8334e1025dacab35f2646b838",
+      "bytes": 10439
+    },
+    "anadius-bootstrap-backend-source/tracked_threads.cpp": {
+      "sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+      "bytes": 6507
+    },
+    "anadius-bootstrap-backend-source/tracked_threads.hpp": {
+      "sha256": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+      "bytes": 2998
+    },
+    "anadius-bootstrap-native-source/native_entries.cpp": {
+      "sha256": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85",
+      "bytes": 6315
+    },
+    "anadius-bootstrap-native-source/native_entries.hpp": {
+      "sha256": "fc50135b8fa2678743544c8728e25d6ef94837dfd5956f77cb736ea7bf899674",
+      "bytes": 3098
+    },
+    "anadius-bootstrap-owner-source/owner.cpp": {
+      "sha256": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+      "bytes": 5764
+    },
+    "anadius-bootstrap-owner-source/owner.hpp": {
+      "sha256": "f12f284f5f23e27ebc320e9c5ac24fa016b5116dcbd615a566790568ca78e003",
+      "bytes": 5751
+    },
+    "anadius-bootstrap-policies-source/config_platform.cpp": {
+      "sha256": "312238a5246e1d1ef126cd146eeb40fb12bd26ed2627d28f6356c11ff46ad28c",
+      "bytes": 7821
+    },
+    "anadius-bootstrap-policies-source/config_platform.hpp": {
+      "sha256": "2d6e9b1628ab4afc6c5f60d065cfeaa4c9f0221ee58b1bc8367aa622a6910e9e",
+      "bytes": 4331
+    },
+    "anadius-bootstrap-policies-source/services.cpp": {
+      "sha256": "e4262048223e68e64734a7687501e24e2e3741f300a71b9ac2c59b76f335de76",
+      "bytes": 2197
+    },
+    "anadius-bootstrap-policies-source/services.hpp": {
+      "sha256": "bca6b591d3038dcffd5d05e3ad2d4e952d7c44a598f0551d77bc4e8ab12ff4c3",
+      "bytes": 1958
+    },
+    "anadius-bootstrap-providers-source/native_threads.cpp": {
+      "sha256": "dab4d5f9d641817eec45245cf4859a6f288af475aad4fec2b1bba4b91ac5feb9",
+      "bytes": 4576
+    },
+    "anadius-bootstrap-providers-source/native_threads.hpp": {
+      "sha256": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+      "bytes": 3007
+    },
+    "anadius-bootstrap-providers-source/providers.cpp": {
+      "sha256": "a4e52f6553c0acf8c45e6d095e4ab6c861344ebc438b0e9a628688364d30f87e",
+      "bytes": 6633
+    },
+    "anadius-bootstrap-providers-source/providers.hpp": {
+      "sha256": "46208924795ae2edf09474b54153739b031913e2135b0706557c28e1d741870c",
+      "bytes": 5057
+    },
+    "anadius-bootstrap-runtime-source/callbacks.cpp": {
+      "sha256": "9d78696ae360140c0fcb30a185671a5755532e22c2aa15e128f5b09fa5ee426c",
+      "bytes": 9795
+    },
+    "anadius-bootstrap-runtime-source/callbacks.hpp": {
+      "sha256": "0f15b4031dc4e71f32e52c0ef6b7061fb1ec8c9e0b2c7df424f0ee4fd72d13e4",
+      "bytes": 3042
+    },
+    "anadius-bootstrap-runtime-source/factory.cpp": {
+      "sha256": "3828d09fbccad14dc04882726eb5bc7d60c76e452814c2e09f5b492c6c90f289",
+      "bytes": 8501
+    },
+    "anadius-bootstrap-runtime-source/factory.hpp": {
+      "sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "bytes": 4283
+    },
+    "anadius-calendar-source/calendar.cpp": {
+      "sha256": "ef95920c0c8c4a3056cb8878931ec6733a4c3262b7fb1d96ff5352c9ffbcda0f",
+      "bytes": 1752
+    },
+    "anadius-calendar-source/calendar.hpp": {
+      "sha256": "e46c9ed16d357d6c225aae29afb799ad2d41ce26160749e3ea25eeb762b685b4",
+      "bytes": 654
+    },
+    "anadius-callback-admission-source/admission.cpp": {
+      "sha256": "a077ac5a7d81ea5f3a096a797a627a00ea30a4f475ce1c0017a1f51d266afa8b",
+      "bytes": 2537
+    },
+    "anadius-callback-admission-source/admission.hpp": {
+      "sha256": "3d58639d92afe76d020831c4beadb0769211f0c8417fd9f27c3c48f2bd86442d",
+      "bytes": 2109
+    },
+    "anadius-callback-identity-source/identity.cpp": {
+      "sha256": "5a59449cd280841acd77883629b2dd7d702f571f458691833f7dcdfa913bd8c8",
+      "bytes": 2058
+    },
+    "anadius-callback-identity-source/identity.hpp": {
+      "sha256": "c1f52ba7f8fe43cc5f41cf759bded2e3e2b06cc0257f56d689815920eb448c04",
+      "bytes": 1539
+    },
+    "anadius-callback-policy-source/policy.cpp": {
+      "sha256": "fafe5f4fc734029058a3a039887db58dd3a0f9d8b2ad42b075512187945f10ad",
+      "bytes": 8718
+    },
+    "anadius-callback-policy-source/policy.hpp": {
+      "sha256": "44d32c453c03618eff2f4abe83addffc1662efbde0ef5db44850109a4a761f02",
+      "bytes": 5203
+    },
+    "anadius-callback-provider-source/provider.cpp": {
+      "sha256": "99cdda12ce4ee60fdc895860ec494015b1d743c7d5662efd0df31438f65a4f73",
+      "bytes": 6545
+    },
+    "anadius-callback-provider-source/provider.hpp": {
+      "sha256": "dc29efe58ce8483df8474e434e3c99e7f26a8b6ca31c8835001cf45e3b238d12",
+      "bytes": 2193
+    },
+    "anadius-config-application-source/application.cpp": {
+      "sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb",
+      "bytes": 8432
+    },
+    "anadius-config-application-source/application.hpp": {
+      "sha256": "9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2",
+      "bytes": 1235
+    },
+    "anadius-config-defaults-source/defaults.cpp": {
+      "sha256": "4ae57170b870bcde9f3a6c0c1ee0f5f2e5ee48e631fc1876a6256fbb6fb7d6c8",
+      "bytes": 1992
+    },
+    "anadius-config-defaults-source/defaults.hpp": {
+      "sha256": "8bbc25f4e3eb45469a653cb8746465adfe7d3b6365b5612d157ebec0fa4c9ef8",
+      "bytes": 528
+    },
+    "anadius-config-hash-source/hash_table.cpp": {
+      "sha256": "15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f",
+      "bytes": 6956
+    },
+    "anadius-config-hash-source/hash_table.hpp": {
+      "sha256": "d05e54e5232dda1b8cb9e3aabe46677135cf60483939bee7b2801f489025e2bf",
+      "bytes": 1819
+    },
+    "anadius-config-iteration-source/thread_error.cpp": {
+      "sha256": "d924c479eb925aa18c10ce81157bb3d78ab8fdad46dac5768016bfb59899551e",
+      "bytes": 1165
+    },
+    "anadius-config-iteration-source/thread_error.hpp": {
+      "sha256": "625dc0bd861e388c899467854fb614ed5656364bceeba6033465c6fe4454ae38",
+      "bytes": 652
+    },
+    "anadius-config-logging-source/logging.cpp": {
+      "sha256": "c2c850b2caac4c6a12d2f64b5f305d656f2fb49e16ce078fdd4eddae2406f527",
+      "bytes": 4901
+    },
+    "anadius-config-logging-source/logging.hpp": {
+      "sha256": "23b8fab945496c69a70377a52046df5937765999cbff9869a1ab00ba80fd5b24",
+      "bytes": 3783
+    },
+    "anadius-config-order-source/order.cpp": {
+      "sha256": "70af2d1c3e948d6b1d2eca3e4339d19869ee731216dae2b85258e77cf33dd719",
+      "bytes": 2186
+    },
+    "anadius-config-order-source/order.hpp": {
+      "sha256": "1e9f2b46e6a1cece859dc193ecb5573df3dc4bbee94ec00490d5264cedf7345f",
+      "bytes": 1536
+    },
+    "anadius-config-pipeline-source/pipeline.cpp": {
+      "sha256": "018c61c3354ae541b7e4e7506b7fcfb12600689772b9e54e2d99122065c54378",
+      "bytes": 2117
+    },
+    "anadius-config-pipeline-source/pipeline.hpp": {
+      "sha256": "c8b1b863abbabe7480c5d6f0ed4051964194333c65d9a08fe93ecb5aef379b8e",
+      "bytes": 1726
+    },
+    "anadius-config-source/configuration.cpp": {
+      "sha256": "a2a2fa7980ddeeaece163b705213bdc5adfff48ae149ec39a122850032e25f6c",
+      "bytes": 15659
+    },
+    "anadius-config-source/configuration.hpp": {
+      "sha256": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6",
+      "bytes": 7222
+    },
+    "anadius-config-startup-source/startup.cpp": {
+      "sha256": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+      "bytes": 1489
+    },
+    "anadius-config-startup-source/startup.hpp": {
+      "sha256": "324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e",
+      "bytes": 1703
+    },
+    "anadius-config-storage-source/embedded_png_data.hpp": {
+      "sha256": "51684e590f953318154330e7dd91197274a285c708a2bed2c6acd56d797ad40b",
+      "bytes": 60633
+    },
+    "anadius-config-storage-source/filesystem.cpp": {
+      "sha256": "06db2ed2205c84837b2f409c2b019557f2eebda24e933dad447302415a799c3f",
+      "bytes": 15058
+    },
+    "anadius-config-storage-source/filesystem.hpp": {
+      "sha256": "c2658e29bffeec397d93762f496d32122de521c7eee01fe26b607a5986ee5d77",
+      "bytes": 3949
+    },
+    "anadius-config-storage-source/persistence.cpp": {
+      "sha256": "45a3d81e2c3f3e632f72d13cd7c1b9aa0c6f1da4171d0d963d88b14a3da98cf3",
+      "bytes": 7949
+    },
+    "anadius-config-storage-source/persistence.hpp": {
+      "sha256": "cb7a2809522d1dc054f811a0b9be77a8278dc8af7e10f80e2f6607d4ffb78212",
+      "bytes": 5407
+    },
+    "anadius-configuration-factory-source/factory.cpp": {
+      "sha256": "cec5205f7e29bd7e212f71632e2e7f7437800f02d8387f353d22ef2763249dbf",
+      "bytes": 6614
+    },
+    "anadius-configuration-factory-source/factory.hpp": {
+      "sha256": "c6955bc02755c4eed6e003d9698ea8aa01abb87615f6b86afcc523e528fda1ea",
+      "bytes": 4766
+    },
+    "anadius-content-handlers-source/content_handlers.cpp": {
+      "sha256": "3cd0a086a6fb9451d87cf63470877e8be72264ca29894dcb009785dedbc0eab3",
+      "bytes": 8822
+    },
+    "anadius-content-handlers-source/content_handlers.hpp": {
+      "sha256": "3d7e56eac5fe80d0a76cec2baa7a160dc7a2e32d06b1d2fb18ff006cdc514ba7",
+      "bytes": 4264
+    },
+    "anadius-crt-argv-bridge-source/argv_bridge.cpp": {
+      "sha256": "d178b2649b48fcb971bb2d99c6138b461d23be4f5f47c5178248e5dbf31687d2",
+      "bytes": 2864
+    },
+    "anadius-crt-argv-bridge-source/argv_bridge.hpp": {
+      "sha256": "83c3eb4264abb2b49db92dd88727600a616231edfa7fcb733e9c0fc56be2b076",
+      "bytes": 2758
+    },
+    "anadius-crt-argv-parser-source/parse.cpp": {
+      "sha256": "51079d3bd82066b2c9508453f54a60947d0f6eb94ff536a20c31dd6e53d231e1",
+      "bytes": 3124
+    },
+    "anadius-crt-argv-parser-source/parse.hpp": {
+      "sha256": "31c0ddfdf238dba9204d1fb6af1dc12692d4d7a16ea9d69bef82ee25c632bcc6",
+      "bytes": 810
+    },
+    "anadius-crt-argv-source/argv.cpp": {
+      "sha256": "f36423b9120efc8feef27da66b9f473a002366b3fe98ccf5c57cd5dada4ffa6e",
+      "bytes": 5142
+    },
+    "anadius-crt-argv-source/argv.hpp": {
+      "sha256": "94c038a8aebdb66fdc0c4e79a96d1556e25ab98fcfdd21424bd4057a683e22ab",
+      "bytes": 2506
+    },
+    "anadius-crt-atomic-native-source/atomic.cpp": {
+      "sha256": "d13c18cc364775c8e5ce50f23984af8b72d4d7e6a2f420e34cd0b2caf4d32e3d",
+      "bytes": 951
+    },
+    "anadius-crt-atomic-native-source/atomic.hpp": {
+      "sha256": "2af4cf8f37588aff808b4fed25e0c000a66aacb6a497f7a811b99340e053998d",
+      "bytes": 865
+    },
+    "anadius-crt-byteclass-source/byteclass.cpp": {
+      "sha256": "e599636c790f7e9600e4263b731486ac92df7a10ba6f10b61dabb4e48fd1da77",
+      "bytes": 1206
+    },
+    "anadius-crt-byteclass-source/byteclass.hpp": {
+      "sha256": "f11493f494325cde53e772aaf5cee2eee61f2b6b8ac9be6fd450a1aa99765586",
+      "bytes": 1440
+    },
+    "anadius-crt-cache-source/cache.cpp": {
+      "sha256": "613f2667b0bf0c068f7f4a04e0144e15272b13cec03cb53b26f3eb41ad75a9de",
+      "bytes": 2942
+    },
+    "anadius-crt-cache-source/cache.hpp": {
+      "sha256": "333e6ba19bb623cf798e67c402ef65a5c58ae43717aa562a6c2c824aa803c756",
+      "bytes": 2508
+    },
+    "anadius-crt-conversion-api-source/api.cpp": {
+      "sha256": "ab3f870e83416c100db185af6d22c29b5e72016b8788d80ba772bd42323e759e",
+      "bytes": 2045
+    },
+    "anadius-crt-conversion-api-source/api.hpp": {
+      "sha256": "13025005784cb3ffd2f893c0e1c23d8a3de71c15b2f1fdbd875d91cb6b5e9f83",
+      "bytes": 1503
+    },
+    "anadius-crt-conversion-bridge-source/bridge.cpp": {
+      "sha256": "82300abafc9807963c40d30b15ca33056844cbcd1185b9ba46cb8263ce43ca9a",
+      "bytes": 2849
+    },
+    "anadius-crt-conversion-bridge-source/bridge.hpp": {
+      "sha256": "a9aca1e1acb5ca5f096e68f19193f660cf6c5cf90bd8ae683064726617a7d4e3",
+      "bytes": 2621
+    },
+    "anadius-crt-conversion-source/conversion.cpp": {
+      "sha256": "1e8c56c0fe21c1b020a20e87da3840b4949bc63f79e8e8250e10b02d7323ac65",
+      "bytes": 3172
+    },
+    "anadius-crt-conversion-source/conversion.hpp": {
+      "sha256": "72f85448cdf6957f98ba6ab92f589a6d08d0c76853e33a164cf14f3badb4dabf",
+      "bytes": 1550
+    },
+    "anadius-crt-counter-native-source/counters.cpp": {
+      "sha256": "044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25",
+      "bytes": 1825
+    },
+    "anadius-crt-counter-native-source/counters.hpp": {
+      "sha256": "f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011",
+      "bytes": 952
+    },
+    "anadius-crt-cpu-source/cpu.cpp": {
+      "sha256": "0363b28d66323aa27b73f5a6bab114ccadaed1aa5ab0db886e897afc816215c1",
+      "bytes": 1886
+    },
+    "anadius-crt-cpu-source/cpu.hpp": {
+      "sha256": "fd9168d96bbf8f5f30af22de6c0635986b126d92b4a6de2381e4f73238d69641",
+      "bytes": 635
+    },
+    "anadius-crt-entry-source/entry.cpp": {
+      "sha256": "035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47",
+      "bytes": 5595
+    },
+    "anadius-crt-entry-source/entry.hpp": {
+      "sha256": "3f38209152eb1a83471e1f1a08b183cad4a54381113ec0fd870413ecc5b27358",
+      "bytes": 4415
+    },
+    "anadius-crt-environment-cleanup-source/environment_cleanup.cpp": {
+      "sha256": "5541b20bd7f67869bc2bb5a625db9dd36224396b12c803c92a553328432b816e",
+      "bytes": 1297
+    },
+    "anadius-crt-environment-cleanup-source/environment_cleanup.hpp": {
+      "sha256": "6fa4d9263b44cd07a0d1431b16f6e4519f6ff1309ce9277ea83a57b21d9a8cbe",
+      "bytes": 927
+    },
+    "anadius-crt-environment-source/environment.cpp": {
+      "sha256": "fd5b246f6f2ee676a0ac92f2dd9a6db0f9b410c92021c52cc8669a9002731132",
+      "bytes": 4584
+    },
+    "anadius-crt-environment-source/environment.hpp": {
+      "sha256": "f76125336b93848a9c091f5238a9d05ede9c76f33efbd9d952c70ee84a27a683",
+      "bytes": 1829
+    },
+    "anadius-crt-error-source/errors.cpp": {
+      "sha256": "927a0bcd444d11370ae99b1a7025dc58c5f6e510332e436c4175c78890741fa1",
+      "bytes": 1759
+    },
+    "anadius-crt-error-source/errors.hpp": {
+      "sha256": "a35a12520e233f1a545cb46c32284570535899a9ab8630302ca7c597706ad38b",
+      "bytes": 1299
+    },
+    "anadius-crt-find-bridge-source/bridge.cpp": {
+      "sha256": "0e1a2eb3e5a08e4a4881231ccf24efe0456d7eae95e5fd989e01bccba45ebde4",
+      "bytes": 3197
+    },
+    "anadius-crt-find-bridge-source/bridge.hpp": {
+      "sha256": "07179a6efed22721345529a9dc3edbd1a0d032747b1090aa46b3ac3c4ae0da87",
+      "bytes": 3006
+    },
+    "anadius-crt-find-native-source/find_native.cpp": {
+      "sha256": "1944ad4f9ff93f6fb5fafd01840b49c3b9adad36ca6fd838d29964161601e416",
+      "bytes": 4176
+    },
+    "anadius-crt-find-native-source/find_native.hpp": {
+      "sha256": "f91639a154df18331bc0d1c1763e47a2fb559ff87ee691e6c68dd2e925d3af2c",
+      "bytes": 1704
+    },
+    "anadius-crt-fls-native-source/fls.cpp": {
+      "sha256": "a243b8c1c12009769b85482dd38b270348ecc601d2fb0f3a5b9b0a4fdfa65d99",
+      "bytes": 2646
+    },
+    "anadius-crt-fls-native-source/fls.hpp": {
+      "sha256": "f06b04d897f24177a76c281fb4bbcd47b295ad862f7e91e24d37ad6a535a9cd8",
+      "bytes": 2141
+    },
+    "anadius-crt-glue-source/crt_glue.cpp": {
+      "sha256": "b880c863eb26775ee3de243ef68e8e9a2dc78a3ada7bfa7b1a2de8d2223942ca",
+      "bytes": 5533
+    },
+    "anadius-crt-glue-source/crt_glue.hpp": {
+      "sha256": "d9dd2b7385850820a614600f51ff103f1929c85178b8bd065c38db661257710e",
+      "bytes": 4585
+    },
+    "anadius-crt-heap-native-bridge-source/bridge.cpp": {
+      "sha256": "a710e793fba3dac27bfea23fca263c0041ac013c01bbdb7f7c601f386c1c5527",
+      "bytes": 2211
+    },
+    "anadius-crt-heap-native-bridge-source/bridge.hpp": {
+      "sha256": "111cc299960ac585e047a4c3edd741f2dddd1bc16b3861a56ec515a53b7420d6",
+      "bytes": 2024
+    },
+    "anadius-crt-heap-native-source/native_api.cpp": {
+      "sha256": "e14c7e4c338d4a703d65c9e2cba9dab88b289348eff8fa61f19b661b28627289",
+      "bytes": 1612
+    },
+    "anadius-crt-heap-native-source/native_api.hpp": {
+      "sha256": "2487bd65de259016d6232c6ed39dd1ad096f6ef927e10fbe19f7fb6b055d1b42",
+      "bytes": 1075
+    },
+    "anadius-crt-heap-source/heap.cpp": {
+      "sha256": "01f2df7ddf1c41d0390982d4b484541c2de1a47c2f7458366ebfbe3c8a08b6ca",
+      "bytes": 1611
+    },
+    "anadius-crt-heap-source/heap.hpp": {
+      "sha256": "a67a56d560357695d9b6025236e9148c819a7ac48a5843646021e7181dc4b956",
+      "bytes": 1703
+    },
+    "anadius-crt-initial-locale-source/initial_locale_data.cpp": {
+      "sha256": "ac9db7a7e7e3bbe1292ebb0f408e86efa19d6bac0c5abc3bf2e5472e91be25f3",
+      "bytes": 34341
+    },
+    "anadius-crt-initial-locale-source/initial_locale_data.hpp": {
+      "sha256": "7fba827e4f129c53d4d79b5f1b9aac9ac29e6dfead3b3534e6f58471045aedb4",
+      "bytes": 686
+    },
+    "anadius-crt-initial-multibyte-source/initial_mb.cpp": {
+      "sha256": "bc2ad14d71f56922b8425b8815a641d830df4627ff91405a634ead504074339a",
+      "bytes": 6355
+    },
+    "anadius-crt-initial-multibyte-source/initial_mb.hpp": {
+      "sha256": "d69491ef05381d0dcf1ce75199dbb07d586fe3edec680cab57c57bce0ea0d1a6",
+      "bytes": 865
+    },
+    "anadius-crt-initial-state-source/initial_state.cpp": {
+      "sha256": "0331798d8f552c3dbea10b92697cb1b43dde5ff90290ffa63bc190d72cea8279",
+      "bytes": 5007
+    },
+    "anadius-crt-initial-state-source/initial_state.hpp": {
+      "sha256": "052618a576469a8d3a17d4d5610230fc03761fcc32cdaacab00ea39e77e3016c",
+      "bytes": 1668
+    },
+    "anadius-crt-initializers-source/initializers.cpp": {
+      "sha256": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79",
+      "bytes": 4112
+    },
+    "anadius-crt-initializers-source/initializers.hpp": {
+      "sha256": "a9e1effcf75bf8baa9c4909a90ce187dc7a39259d73a32cfc3c25ef34ed0fa0b",
+      "bytes": 2809
+    },
+    "anadius-crt-invalid-source/invalid.cpp": {
+      "sha256": "76fe81b5eff2556fd25b14d77179787957101826b692beb58317137343922965",
+      "bytes": 3690
+    },
+    "anadius-crt-invalid-source/invalid.hpp": {
+      "sha256": "f2d09c991ff3aba1906e62870099d5156e67521946a2e7bd368e967faecebf95",
+      "bytes": 3030
+    },
+    "anadius-crt-lcmap-source/lcmap.cpp": {
+      "sha256": "7fd1210aa06fffe1b8b706bb499d600b9e32887f0457a09ed91fae4ab34de3f1",
+      "bytes": 3495
+    },
+    "anadius-crt-lcmap-source/lcmap.hpp": {
+      "sha256": "eb1ffff0fcbc80edd0945f8d2000ebc63766b5ec0fb1e933d400d64792c2c50c",
+      "bytes": 1991
+    },
+    "anadius-crt-lifecycle-callbacks-source/callbacks.cpp": {
+      "sha256": "6a4debca2b0cce025b6ec731f032ad60d6bcab41d4e9e9f682281a653fadbf57",
+      "bytes": 888
+    },
+    "anadius-crt-lifecycle-callbacks-source/callbacks.hpp": {
+      "sha256": "3cd7e846c0922c30bdb67c1c20504747d7ba512c08e2cce3a415c2dacf46622d",
+      "bytes": 1041
+    },
+    "anadius-crt-locale-bridge-source/bridge.cpp": {
+      "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+      "bytes": 3764
+    },
+    "anadius-crt-locale-bridge-source/bridge.hpp": {
+      "sha256": "e49856d6172275d730081348414f4104c89f3e3f88684ed592343cadfbcbc118",
+      "bytes": 3497
+    },
+    "anadius-crt-locale-free-source/locale_free.cpp": {
+      "sha256": "e00c5504c2335087319fd21eb04654653aa87687b4c805b403d72b3d6134c931",
+      "bytes": 4746
+    },
+    "anadius-crt-locale-free-source/locale_free.hpp": {
+      "sha256": "5c591a2967d1d8045468cfd46e17a7c95fb89338b6f6c919bfd4b4d99f351327",
+      "bytes": 950
+    },
+    "anadius-crt-locale-names-source/locale_names.cpp": {
+      "sha256": "246da46cd2fff8e5298bb386a5fe87deae6d7d2cfd0a72ec49dfa4924fd500f1",
+      "bytes": 12730
+    },
+    "anadius-crt-locale-names-source/locale_names.hpp": {
+      "sha256": "92550032c01f1c179724248399cf0ca28ce31c1d3e7cab83bbf57f131cb01810",
+      "bytes": 971
+    },
+    "anadius-crt-locale-native-source/native.cpp": {
+      "sha256": "6d8421431b7ef2462c8b640d25d57894b59bc97bdf512df1d0f167e05c852f10",
+      "bytes": 839
+    },
+    "anadius-crt-locale-native-source/native.hpp": {
+      "sha256": "2a8a00a85ab883f1d98d9dadf0c9159881cac4a14c3a49c16a8b3a2614c43102",
+      "bytes": 1201
+    },
+    "anadius-crt-locale-ref-source/locale_ref.cpp": {
+      "sha256": "762f527d38d310e84ec5b07bc0257563a50da500210367002ac50f5c04837d2e",
+      "bytes": 2512
+    },
+    "anadius-crt-locale-ref-source/locale_ref.hpp": {
+      "sha256": "b5a6815488ff5565a33a82e65bbc6ce195eca59f0d410581ed780ac38b43637d",
+      "bytes": 841
+    },
+    "anadius-crt-locale-resource-bridge-source/bridge.cpp": {
+      "sha256": "6980577c496eab1dc32bad66f07d57e840ef113fb920bd0dd786e089be3008fa",
+      "bytes": 1179
+    },
+    "anadius-crt-locale-resource-bridge-source/bridge.hpp": {
+      "sha256": "614e7104746d22778cbe7d393266ff6c840e44a2989ab23a2aad9d965fbcc53c",
+      "bytes": 1538
+    },
+    "anadius-crt-locale-startup-source/locale_startup.cpp": {
+      "sha256": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba",
+      "bytes": 1805
+    },
+    "anadius-crt-locale-startup-source/locale_startup.hpp": {
+      "sha256": "e247e38439cbf09bcb1ca165e4df21b8ba91671d5ccdc985abab4db03eacadcb",
+      "bytes": 1733
+    },
+    "anadius-crt-locale-thread-source/locale_thread.cpp": {
+      "sha256": "94056806d91af6a462f4ffc63086ca10960c4e189d7bc9342aa5c7cfd19bfd4c",
+      "bytes": 2521
+    },
+    "anadius-crt-locale-thread-source/locale_thread.hpp": {
+      "sha256": "536621923d516eeffb2e5fc4b835f30a668655b06ffa7e1c0c8f67ed237f6bdc",
+      "bytes": 1425
+    },
+    "anadius-crt-locale-update-source/locale_update.cpp": {
+      "sha256": "05bf4170ced404a2137cba5f33528ead4338684695330ddcec409fb3d1221fa0",
+      "bytes": 1961
+    },
+    "anadius-crt-locale-update-source/locale_update.hpp": {
+      "sha256": "ad4e873fbb0e2809967fa4beed216640c52f9dafd37a34d14d78bc959c3ffa55",
+      "bytes": 1216
+    },
+    "anadius-crt-lock-native-source/native.cpp": {
+      "sha256": "5a1f87915482b0e6ec5f4f7d8fd38c3e282e503870c85905ffd8ce7f2614d5d8",
+      "bytes": 3535
+    },
+    "anadius-crt-lock-native-source/native.hpp": {
+      "sha256": "92bcfcb150d71b3740e5751ba105a99a8e79ecd87f1360e1360ec52ccff1d772",
+      "bytes": 1998
+    },
+    "anadius-crt-lock-source/locks.cpp": {
+      "sha256": "fe0849d9c97c241c4dcd7639dbc41ca8dba7a89ac176b316791a1be30d24d81f",
+      "bytes": 2829
+    },
+    "anadius-crt-lock-source/locks.hpp": {
+      "sha256": "7d6a5c84580cb8ac817e464d52b0e096ee88caf636da2986a391c31f85075c89",
+      "bytes": 2468
+    },
+    "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp": {
+      "sha256": "20dc724fe4e0c7efddaef7e0fa7087e5fed9f07adb31554827661ff2104b5d5b",
+      "bytes": 1404
+    },
+    "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.hpp": {
+      "sha256": "a1b92b3286d2774ff45db0aa0b04ad7a12dc14b98df19db2e2ad0aedb3228670",
+      "bytes": 1599
+    },
+    "anadius-crt-module-path-source/module_path.cpp": {
+      "sha256": "793dec3fbfa6c487412bb812c7c29298ad91a6f7d39e6914a1ef81c1f29b1b45",
+      "bytes": 2503
+    },
+    "anadius-crt-module-path-source/module_path.hpp": {
+      "sha256": "b75d7901f29e1d4eec6154e530fde17440018d33461b9385615c3a424feaf2b6",
+      "bytes": 1000
+    },
+    "anadius-crt-multibyte-bridge-source/bridge.cpp": {
+      "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+      "bytes": 3646
+    },
+    "anadius-crt-multibyte-bridge-source/bridge.hpp": {
+      "sha256": "83696a8c10727955f7185a8221d460d433a782650c37540ac845bb7e7fd2a522",
+      "bytes": 3939
+    },
+    "anadius-crt-multibyte-builder-source/multibyte_builder.cpp": {
+      "sha256": "8bfa8035b80634d324059b6919cd320c520ad326fa4da5fd657629c4a4f82e93",
+      "bytes": 4408
+    },
+    "anadius-crt-multibyte-builder-source/multibyte_builder.hpp": {
+      "sha256": "77e1586526f1cfee56a5cc145a4cb10f72bf65815889c2ca2ca58f4b4739074b",
+      "bytes": 1275
+    },
+    "anadius-crt-multibyte-control-source/multibyte_control.cpp": {
+      "sha256": "9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb",
+      "bytes": 2667
+    },
+    "anadius-crt-multibyte-control-source/multibyte_control.hpp": {
+      "sha256": "064bc605e53cbd603cd0802998fd4ee950e8671f583967e28fa8bd6719704b45",
+      "bytes": 1310
+    },
+    "anadius-crt-multibyte-record-bridge-source/bridge.cpp": {
+      "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1",
+      "bytes": 3164
+    },
+    "anadius-crt-multibyte-record-bridge-source/bridge.hpp": {
+      "sha256": "0b4c1afe8bb5de097bf331b043ee6eaa97f3e2b5df51e1846bb57ec5a6a57f77",
+      "bytes": 3895
+    },
+    "anadius-crt-multibyte-support-source/multibyte_support.cpp": {
+      "sha256": "59c1645aa5e8fe79ed0b81d4c99e9bb261138bab562b7c01856f7e857030a8fd",
+      "bytes": 3290
+    },
+    "anadius-crt-multibyte-support-source/multibyte_support.hpp": {
+      "sha256": "29f3790e2d2c196e639ae47132795fba07794e05c0ee2be2d8cf2749622faa7f",
+      "bytes": 1714
+    },
+    "anadius-crt-multibyte-tables-source/multibyte_tables.cpp": {
+      "sha256": "6dd5376b4ec71a68a5dbf594e32e6be955bfd2d354794a4c109a237fe33c2c73",
+      "bytes": 3498
+    },
+    "anadius-crt-multibyte-tables-source/multibyte_tables.hpp": {
+      "sha256": "b89913e38fdb4e41a59fdc19f0b032171bc0b7d3c9c7af7939fdadf7a087954c",
+      "bytes": 2134
+    },
+    "anadius-crt-nls-bridge-source/bridge.cpp": {
+      "sha256": "54bffb176961a0949c3699f331642fa3f3110e4bd0e958db5d5d287563a83216",
+      "bytes": 5296
+    },
+    "anadius-crt-nls-bridge-source/bridge.hpp": {
+      "sha256": "18fe2cb45e1a2893fee5fbdaa2f572a5ee21fb0f367703bfdfd582a68ae40e60",
+      "bytes": 4798
+    },
+    "anadius-crt-nls-dispatch-bridge-source/bridge.cpp": {
+      "sha256": "c497d3349bdb737af6793bde4dc26c59c0ee68c9bf7f793ec069e0a19403dabd",
+      "bytes": 3252
+    },
+    "anadius-crt-nls-dispatch-bridge-source/bridge.hpp": {
+      "sha256": "8635582ac4e25ffd3365291d1df414354064222cbe462b7af2c8802754b3c281",
+      "bytes": 3369
+    },
+    "anadius-crt-nls-dispatch-native-source/native.cpp": {
+      "sha256": "6ce7261947cbc4e332984756286cf31e8dcacf9828fb14fb2d3a82706cdbfa35",
+      "bytes": 4523
+    },
+    "anadius-crt-nls-dispatch-native-source/native.hpp": {
+      "sha256": "7fb0d1e02a858154f7d49530d7b199272de0871463da1b99c01177b1e72fa800",
+      "bytes": 1334
+    },
+    "anadius-crt-nls-dispatch-source/nls_dispatch.cpp": {
+      "sha256": "0bb0cc2cb502452946f6177fa7686f280e5f25273b88421ad9cb4be7600c7e93",
+      "bytes": 1271
+    },
+    "anadius-crt-nls-dispatch-source/nls_dispatch.hpp": {
+      "sha256": "8090f255a6584328186405c7eeb400e66485d19618ba65aa5c93f039c0422c34",
+      "bytes": 1696
+    },
+    "anadius-crt-nls-native-bridge-source/bridge.cpp": {
+      "sha256": "a8d9c02ee615afd7a3b353b5541f491239e3d69090ee34e3d4474eb5b2c9aa9d",
+      "bytes": 1780
+    },
+    "anadius-crt-nls-native-bridge-source/bridge.hpp": {
+      "sha256": "4b1ae73df1b430718e486d46425374a6527ab67962f9b391b66c28fc5de7d4f3",
+      "bytes": 2350
+    },
+    "anadius-crt-nls-native-source/native_api.cpp": {
+      "sha256": "9b066a5bd518ae8df9dbeaa7153bcf28b6b77c97b0a759ebd5a499d85a8de260",
+      "bytes": 5140
+    },
+    "anadius-crt-nls-native-source/native_api.hpp": {
+      "sha256": "ed5c68f8f968122d7daf1fe70cc7ac9735e53bad212afe191d855a3043fb25f2",
+      "bytes": 1617
+    },
+    "anadius-crt-onexit-source/onexit.cpp": {
+      "sha256": "96e60bcef164e4080021377ecb9d743125939664e349e82ddf7debfd0aecb547",
+      "bytes": 4598
+    },
+    "anadius-crt-onexit-source/onexit.hpp": {
+      "sha256": "a219b3b518a1080824933947daa031c8047e85e32699bfc9f4bc908be6398e9e",
+      "bytes": 1690
+    },
+    "anadius-crt-pair-bindings-source/bindings.cpp": {
+      "sha256": "63b018adebe37d4c7a9f17ca1b2ee407e3a59cd43be291e4d2f95b9609fc4c68",
+      "bytes": 5565
+    },
+    "anadius-crt-pair-bindings-source/bindings.hpp": {
+      "sha256": "726405a5c3f56fecee42c6c7aa6ff8b1d97a6a114710c0dedf789c73ab9c1d51",
+      "bytes": 3810
+    },
+    "anadius-crt-pair-leaves-source/pair_leaves.cpp": {
+      "sha256": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87",
+      "bytes": 781
+    },
+    "anadius-crt-pair-leaves-source/pair_leaves.hpp": {
+      "sha256": "4c05549af135b8bb56515e56a5e9180c7fc90e9bd08f798d852aab145233019e",
+      "bytes": 1101
+    },
+    "anadius-crt-ptd-data-source/ptd_data.cpp": {
+      "sha256": "a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea",
+      "bytes": 3337
+    },
+    "anadius-crt-ptd-data-source/ptd_data.hpp": {
+      "sha256": "25d5f6fb41a9991cc200fd2ceb5131df693d70883afbe3f5c15c316bdb65c21e",
+      "bytes": 2362
+    },
+    "anadius-crt-ptd-source/ptd.cpp": {
+      "sha256": "10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe",
+      "bytes": 2661
+    },
+    "anadius-crt-ptd-source/ptd.hpp": {
+      "sha256": "ed059fd795ee661fdd539d2a706a9cf74deb419320da976ed628c431cb32ab73",
+      "bytes": 1952
+    },
+    "anadius-crt-realloc-source/realloc.cpp": {
+      "sha256": "f991c7f8786e6f01580afe0b47adc6b6b4b08772b62da41b2547e69ca09f3f47",
+      "bytes": 1229
+    },
+    "anadius-crt-realloc-source/realloc.hpp": {
+      "sha256": "b1cc51f93423aa11d7e5ef8761cc8ffdd7ec2ee3d82b846130c1b972bdbbf6b2",
+      "bytes": 671
+    },
+    "anadius-crt-recalloc-bridge-source/bridge.cpp": {
+      "sha256": "1b0dc0977573659ea1d5de8cf1401c9ccec72d68f51ef93df2073e4a9b446c87",
+      "bytes": 1161
+    },
+    "anadius-crt-recalloc-bridge-source/bridge.hpp": {
+      "sha256": "44cfd079f18629d0b25f435ea3d863952e045adb82425ec1730973757cdd53d7",
+      "bytes": 1539
+    },
+    "anadius-crt-recalloc-source/recalloc.cpp": {
+      "sha256": "3569042ac08b500859183bc62bbaa33092beca248f5b25de06dc7421cd4ed10f",
+      "bytes": 1335
+    },
+    "anadius-crt-recalloc-source/recalloc.hpp": {
+      "sha256": "30a12d22315aff19a2aa5e91cf0eff7cc9005e4dfd436707e6b27044a1436dea",
+      "bytes": 941
+    },
+    "anadius-crt-runtime-source/runtime.cpp": {
+      "sha256": "a8cd16ab68458525e519e6d7b97321e2a9da532e914f47fd46f5d076831b8beb",
+      "bytes": 5761
+    },
+    "anadius-crt-runtime-source/runtime.hpp": {
+      "sha256": "5ef66b7441704a28df50afd555f3a2cb17678ec232fbf69d6f250ffa151bce7d",
+      "bytes": 3458
+    },
+    "anadius-crt-sort-source/sort.cpp": {
+      "sha256": "18eb6b55d287677caf35b7a9e6ba07709bd5e332db71752ce0d10d3bb58d4f7a",
+      "bytes": 4123
+    },
+    "anadius-crt-sort-source/sort.hpp": {
+      "sha256": "8dab826024780cd02f7f11004a123b8dba02dd0ea71c34c362cc45cdca840fb0",
+      "bytes": 1036
+    },
+    "anadius-crt-startup-bridge-source/startup_bridge.cpp": {
+      "sha256": "b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c",
+      "bytes": 2453
+    },
+    "anadius-crt-startup-bridge-source/startup_bridge.hpp": {
+      "sha256": "071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19",
+      "bytes": 2513
+    },
+    "anadius-crt-string-type-source/string_type.cpp": {
+      "sha256": "f24b170510a875c9197468f51ac6ff322cb4af456f42e3fe8990caa2909c69bb",
+      "bytes": 1927
+    },
+    "anadius-crt-string-type-source/string_type.hpp": {
+      "sha256": "18b9dbf34241ec4fea5a56c1cf8c83cd2dc9dcd24b0481a4aadeb2d3a9675ce7",
+      "bytes": 1299
+    },
+    "anadius-crt-support-source/support.cpp": {
+      "sha256": "9e3725e170ef1e0ebc989bfffaa7f816a925fb8fd4acf19b02fe21785fea5716",
+      "bytes": 951
+    },
+    "anadius-crt-support-source/support.hpp": {
+      "sha256": "c3fb51e8edf0de8f9d5cbb4d1daee93c77999b384f1077bb9ef1b0119f846210",
+      "bytes": 1112
+    },
+    "anadius-crt-sync-bridge-source/bridge.cpp": {
+      "sha256": "3c7f7d1a236e9699485c5756ac0c7c86581a479053088bba5b877537fe21551d",
+      "bytes": 930
+    },
+    "anadius-crt-sync-bridge-source/bridge.hpp": {
+      "sha256": "e6e751c498fbfd5d47b76d29eb843ac2aab007e6ef339cf1d8fcc7dfcc6b11ed",
+      "bytes": 1528
+    },
+    "anadius-crt-termination-source/termination.cpp": {
+      "sha256": "d06c707dfe7daefadba5d890f2b6745f75ba1c089743800462759df2f11c3e5d",
+      "bytes": 4032
+    },
+    "anadius-crt-termination-source/termination.hpp": {
+      "sha256": "fabc301738df4612c11c194169e92c96d407e81d88eda792e726924eb9cab0fa",
+      "bytes": 2752
+    },
+    "anadius-crt-wildcard-search-source/search.cpp": {
+      "sha256": "ae987abfc21a6d941794ac3ffef8fa2aa6c70fa4599e525b110b993a2cc8819b",
+      "bytes": 3241
+    },
+    "anadius-crt-wildcard-search-source/search.hpp": {
+      "sha256": "bb6929c82044abd608371fb1cecb532c2630dfd9e7c4880e18b8483885295644",
+      "bytes": 1906
+    },
+    "anadius-crt-wildcard-source/wildcard.cpp": {
+      "sha256": "a286fe75ea38d3a579f540a37fa748cf8268bd77c0aa60f97aa946818bb01340",
+      "bytes": 5312
+    },
+    "anadius-crt-wildcard-source/wildcard.hpp": {
+      "sha256": "9436b61288792aa1d185f50492d773e43a6ff1592f00fc66b9de7a479bc59403",
+      "bytes": 2619
+    },
+    "anadius-crt-wildcard-storage-source/storage.cpp": {
+      "sha256": "beacfcc8fa91ea0a883efea8d1dfa765e6e12972bc4b68157a86bb38997b9e8b",
+      "bytes": 2508
+    },
+    "anadius-crt-wildcard-storage-source/storage.hpp": {
+      "sha256": "4ec7aab64302a5ea6ba4027573669be9b77a5a3c6b226b7289ebd2f600cdb091",
+      "bytes": 1170
+    },
+    "anadius-crypto-source/constants.hpp": {
+      "sha256": "05b802de2ac78f93c1fdf8abed0ea50ef2f9b284a6a5cefef2f4188b0f4b56b2",
+      "bytes": 3192
+    },
+    "anadius-crypto-source/crypto.cpp": {
+      "sha256": "cd493597464ba22c7c11557c36f033387770e0cc62d4fbbaefc1676bbfabd436",
+      "bytes": 6771
+    },
+    "anadius-crypto-source/crypto.hpp": {
+      "sha256": "33ae57c39012534dc5b8321199e0ef2c82ac77455c17632df28a74a27ac2fa77",
+      "bytes": 2555
+    },
+    "anadius-dispatch-source/router.cpp": {
+      "sha256": "79ee7f693ca49e584c04b36984f33782cef867f4fa2c023cf41d06cfeaa32b9d",
+      "bytes": 6618
+    },
+    "anadius-dispatch-source/router.hpp": {
+      "sha256": "68b9ecbbc18841c857daa4378e3a9a3132cefd1c7e57e2acd6a77dac421a19d6",
+      "bytes": 3033
+    },
+    "anadius-encoding-source/encoding.cpp": {
+      "sha256": "391b6868d4604a86becb5a53493194937cb804340ae981ca21e1466401194b38",
+      "bytes": 3087
+    },
+    "anadius-encoding-source/encoding.hpp": {
+      "sha256": "b65c3fda414a4b679d59ff130bcf620dc5ea5d8ee38bd9f4de4c082e2b8683b7",
+      "bytes": 2106
+    },
+    "anadius-encoding-source/native_encoding.cpp": {
+      "sha256": "5022dff63bc6ca4471ca367747dfe8e8a3a9cdf071bbe2310d1f4bc86fe2b003",
+      "bytes": 2197
+    },
+    "anadius-event-queue-source/adapters.cpp": {
+      "sha256": "36a4911d3c17f73dd6435305c20b879052e31c1bb05c05aa39b448fdf609dcc5",
+      "bytes": 1751
+    },
+    "anadius-event-queue-source/adapters.hpp": {
+      "sha256": "2da19cd733b237ab75a136289b9b93816d58b3b7d0573313c6091af50a327f52",
+      "bytes": 1732
+    },
+    "anadius-event-queue-source/queue.cpp": {
+      "sha256": "88da967fa48cdf5d2a5c99b50aa50e479fdd0011712ede86b6c53c344c9e69d8",
+      "bytes": 2603
+    },
+    "anadius-event-queue-source/queue.hpp": {
+      "sha256": "b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d",
+      "bytes": 2381
+    },
+    "anadius-execution-source/execution.cpp": {
+      "sha256": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+      "bytes": 6721
+    },
+    "anadius-execution-source/execution.hpp": {
+      "sha256": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62",
+      "bytes": 4346
+    },
+    "anadius-execution-source/windows_platform.cpp": {
+      "sha256": "a233cd7b06bcb00906a39d83a4f0b833d2a87e0598ce6512c9123ff01f97ebbf",
+      "bytes": 1195
+    },
+    "anadius-execution-source/windows_platform.hpp": {
+      "sha256": "6ac5ac5c565692ee65455a7c98f24fe72560e322a00b55b549de99c435f0ad37",
+      "bytes": 829
+    },
+    "anadius-file-source/binary_io.cpp": {
+      "sha256": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222",
+      "bytes": 1303
+    },
+    "anadius-file-source/binary_io.hpp": {
+      "sha256": "5a1ef9c90437e70677458e559488d8c340de0dfcff4b74157254bf391889f7b4",
+      "bytes": 1901
+    },
+    "anadius-file-source/license_files.cpp": {
+      "sha256": "bc4d9250aeba6abf3feb55408f812a2f6efe58e79e9524bcf84d8972682db371",
+      "bytes": 4695
+    },
+    "anadius-file-source/license_files.hpp": {
+      "sha256": "5984806f93a8a3d2980ece6e9da8504f79241109168a447408624077c4474340",
+      "bytes": 2368
+    },
+    "anadius-file-source/native_io.cpp": {
+      "sha256": "e786fbd46741d172eca7d9a2f511e9757703d738f9998a857306665b316792ca",
+      "bytes": 2661
+    },
+    "anadius-foreign-callback-source/foreign.cpp": {
+      "sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+      "bytes": 6308
+    },
+    "anadius-foreign-callback-source/foreign.hpp": {
+      "sha256": "353327a7367fe9579e5207c97394f64c64426a70f3365136719305e3722cc992",
+      "bytes": 2785
+    },
+    "anadius-handlers-source/handlers.cpp": {
+      "sha256": "8180eb0f47bca1708c05ec2f6c72ef4e54da67a832cbcc5ad4b482e46a09c400",
+      "bytes": 5839
+    },
+    "anadius-handlers-source/handlers.hpp": {
+      "sha256": "e393944f178db370cac993d9f11e91508112e4ef9e7b16872360c0211ef61aed",
+      "bytes": 1585
+    },
+    "anadius-hash-source/hash.cpp": {
+      "sha256": "c9e6e2836f5a2763551b6e05699d124c2c3ba720f63f6c26a0b30bbaf6a35186",
+      "bytes": 3648
+    },
+    "anadius-hash-source/hash.hpp": {
+      "sha256": "1719714ed038c7bfa8cb1cbda94927d3cd34fac3783b54fff6a880a8bee771c7",
+      "bytes": 3052
+    },
+    "anadius-host-callbacks-source/callbacks.cpp": {
+      "sha256": "a21e66575abe057fcaf05b2f4782593c4a537fb01d707ec77b07c4ec634330a1",
+      "bytes": 2253
+    },
+    "anadius-host-callbacks-source/callbacks.hpp": {
+      "sha256": "1fc379d622ae3480bd9d441f181454703735bacb7832f80206bf79d0d863f0bf",
+      "bytes": 2269
+    },
+    "anadius-host-init-source/host_init.cpp": {
+      "sha256": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b",
+      "bytes": 4813
+    },
+    "anadius-host-init-source/host_init.hpp": {
+      "sha256": "0ef5afbf19ad7452ddfc4ed54ed1dd0789f6c42eb9a47bc9dbccc1aa4cc35ba7",
+      "bytes": 3515
+    },
+    "anadius-host-platform-source/platform.cpp": {
+      "sha256": "6f56ff3d99b288f1280602a00951328ea2f4b0dd6fc0739d21039ce8492f59b0",
+      "bytes": 7412
+    },
+    "anadius-host-platform-source/platform.hpp": {
+      "sha256": "cb7e7bc72b71cc5a62e47bd49aa218ab4b6b57936b1c6d18ba09817204a002b8",
+      "bytes": 4353
+    },
+    "anadius-io-memory-source/io_memory.cpp": {
+      "sha256": "669a2b098f2496266ff330e1efccd4a6a29b8d55a10f01b752bec51b39a509fd",
+      "bytes": 23426
+    },
+    "anadius-io-memory-source/io_memory.hpp": {
+      "sha256": "6106cfff8df2cafac2f2570b54f78ef921204ffb9f45c6943bf1894c776d2847",
+      "bytes": 7049
+    },
+    "anadius-libraries-source/libraries.cpp": {
+      "sha256": "e31b948aef40abd8510e16324389a80f81edbedf27fbfdfb6357073d2497960f",
+      "bytes": 4152
+    },
+    "anadius-libraries-source/libraries.hpp": {
+      "sha256": "711dd108523bc0ea5b3a0ceab3c9f3f2afb507837866a78f554d7dfab4fdb4f1",
+      "bytes": 2827
+    },
+    "anadius-libraries-source/native_system.cpp": {
+      "sha256": "07d0334288981264b83b6832dcf3bb79276ee11f1d9313c60a29638d6ede53ad",
+      "bytes": 1190
+    },
+    "anadius-library-effects-source/dialog.cpp": {
+      "sha256": "c5078be51fca032bc21cdb0d01c068b250ee3e09f14b20ddf98036d6e9e8e7a5",
+      "bytes": 1499
+    },
+    "anadius-library-effects-source/dialog.hpp": {
+      "sha256": "21b17edb02cc215bcd569c0caf520b134b8f17760d0a4d0a8515a041df58b11d",
+      "bytes": 1114
+    },
+    "anadius-library-effects-source/effects.cpp": {
+      "sha256": "4817011c56a72114d178e7b535a2b6c61ec3026c65ecbc226faed597ca3adb54",
+      "bytes": 1982
+    },
+    "anadius-library-effects-source/effects.hpp": {
+      "sha256": "93a722ce616f93a3b92f77a660a6e45a1bb3060a45115b958d29dce171138884",
+      "bytes": 1967
+    },
+    "anadius-license-source/license.cpp": {
+      "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152",
+      "bytes": 6637
+    },
+    "anadius-license-source/license.hpp": {
+      "sha256": "a949a169740b5bce16398f18f39a8f13a9d9065e343509c3791dca9e03816c36",
+      "bytes": 3672
+    },
+    "anadius-license-source/literals.hpp": {
+      "sha256": "bcd245a5d73798417e4e13533b013e811b873f2710a8e517a71cfdd003c3f6f1",
+      "bytes": 5210
+    },
+    "anadius-messages-source/messages.cpp": {
+      "sha256": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2",
+      "bytes": 8342
+    },
+    "anadius-messages-source/messages.hpp": {
+      "sha256": "42a33b619026a7a3201adbff54d853252d46a18d8d2252b7804c39929d4f54d4",
+      "bytes": 4204
+    },
+    "anadius-misc-handlers-source/misc_handlers.cpp": {
+      "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+      "bytes": 5083
+    },
+    "anadius-misc-handlers-source/misc_handlers.hpp": {
+      "sha256": "6d8adccf80a5f81656a69c02821eadb6497459aa10c2e88b4d99b2dad02a2cf3",
+      "bytes": 2234
+    },
+    "anadius-native-context-source/context.cpp": {
+      "sha256": "68fad4a9c382b271219656736216c15b304e51d0bb18b57306acbb2810d6f3f6",
+      "bytes": 4577
+    },
+    "anadius-native-context-source/context.hpp": {
+      "sha256": "2db86f5b03ca300179a8042e5a287a3b80299b416af4a72b33adcf719b3ce9e3",
+      "bytes": 2766
+    },
+    "anadius-native-profile-source/native.cpp": {
+      "sha256": "7f80c20e2caa9474cce396d4237bf3d132354ba46817878ef63e9320a5bf299b",
+      "bytes": 21286
+    },
+    "anadius-native-profile-source/native.hpp": {
+      "sha256": "29055e78e5c3c72aa007556f3bbaef4fa717b6364da451f11ec1097e84b4584b",
+      "bytes": 2452
+    },
+    "anadius-native-source/native_callbacks.cpp": {
+      "sha256": "e3da2e8c5aca2d0d768adb48238db45dc4f71c232fb281a8ebdb9b96c22de1e8",
+      "bytes": 9344
+    },
+    "anadius-native-source/native_callbacks.hpp": {
+      "sha256": "6b8ca61ae92cafd0a218f042f97c9b10110125e42924546bde7d5c6823ea0e5f",
+      "bytes": 8002
+    },
+    "anadius-native-source/original_effects.cpp": {
+      "sha256": "2f8ec2eae9ce6463eed8871a8f5f01660c806744a94a22fbcd392b329496a898",
+      "bytes": 3892
+    },
+    "anadius-network-hook-source/connect.cpp": {
+      "sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f",
+      "bytes": 3071
+    },
+    "anadius-network-hook-source/connect.hpp": {
+      "sha256": "f6afcdaf8d2437c1dbb1b71d0d6496a3b653c445619baa60646268be828bafc4",
+      "bytes": 2411
+    },
+    "anadius-network-hook-source/hook_cleanup.cpp": {
+      "sha256": "a0dc1b5726b78abad8066537f1b4abc45e0a9245da9bdac425a0aafa30da050b",
+      "bytes": 567
+    },
+    "anadius-network-hook-source/hook_cleanup.hpp": {
+      "sha256": "d940ec9b265188b0cd10230a2e79bd1ded28a88f28646de52ca3170cc80bc997",
+      "bytes": 730
+    },
+    "anadius-online-factory-source/factory.cpp": {
+      "sha256": "8ba38abf0cd4a7aad9c483d1c2af057ff4e891badc63c5468ddc73e8faa376a2",
+      "bytes": 12885
+    },
+    "anadius-online-factory-source/factory.hpp": {
+      "sha256": "938c8409d9d345d6571a4d1c9768af5bed24a7a42f4d6037c6221cc8079161e4",
+      "bytes": 5286
+    },
+    "anadius-online-object-source/object.cpp": {
+      "sha256": "917a7503768e47250f94df059b2ad98fec03a022c264aa2a0566e9ae36dfce78",
+      "bytes": 4053
+    },
+    "anadius-online-object-source/object.hpp": {
+      "sha256": "c52d2f495135e30ec1e19a651517080c96c26c7920b141308292e8e800145d25",
+      "bytes": 691
+    },
+    "anadius-online-platform-source/platform.cpp": {
+      "sha256": "f7098acfa6d90d052f19fc54da71ace54bc6369bef4b256e8af6858ac9ccde0e",
+      "bytes": 9217
+    },
+    "anadius-online-platform-source/platform.hpp": {
+      "sha256": "4b5b157491c3fa63a4390c1fbe41f5219c88810aae3e970e28bc5d95cb09bf54",
+      "bytes": 4932
+    },
+    "anadius-online-query-source/query.cpp": {
+      "sha256": "efadfeef5fb5739ffeb538bc1c3f0bfbfb4b33ff17dc83686b6652707603a10d",
+      "bytes": 3000
+    },
+    "anadius-online-query-source/query.hpp": {
+      "sha256": "1b2de83de5af1232a5da74cdb1afc63987a4cb57284ecabaa06d48006047cdb6",
+      "bytes": 641
+    },
+    "anadius-online-source/online.cpp": {
+      "sha256": "00020732bf6e36d53b9bfafe80d6cb85f303b8b329624562d45991f916e50cb8",
+      "bytes": 5382
+    },
+    "anadius-online-source/online.hpp": {
+      "sha256": "47adf8b6426476a64b76a6b7d0f82875778f5795f9662a3bdd923219f3bdd6a2",
+      "bytes": 3599
+    },
+    "anadius-online-source/recovered_effects.cpp": {
+      "sha256": "0bbd7c694762d968b6e509f1df851a46288bbd692fc7a1783c27eb45f11bfbd2",
+      "bytes": 3730
+    },
+    "anadius-online-source/recovered_effects.hpp": {
+      "sha256": "f0a8da1dd760c10ae263adb3a91998642d84bb62f270d2c6565147fe28f5993a",
+      "bytes": 2696
+    },
+    "anadius-online-version-source/version.cpp": {
+      "sha256": "328443d0ac8d3bae0b5f12878c955087cf99a402beecf7e6879b345e16e9c7d0",
+      "bytes": 4597
+    },
+    "anadius-online-version-source/version.hpp": {
+      "sha256": "9493df88f46bf2050eccec5930b68c10910da5de4686757e17001925fda805b8",
+      "bytes": 3659
+    },
+    "anadius-original-checkpoint-source/checkpoint.cpp": {
+      "sha256": "3d6fef228c9b824fa658547a8a204149c60b9d3d5263ebe745322982a81842a9",
+      "bytes": 639
+    },
+    "anadius-original-checkpoint-source/checkpoint.hpp": {
+      "sha256": "9c5c09e8bffec21826adb0f2d9a0240a403510c09f58978cba7bdfffac18ee57",
+      "bytes": 775
+    },
+    "anadius-original-provider-source/originals.cpp": {
+      "sha256": "36b2db119c7a96c02afe7dcf97385ca940f7af5f8588ece79b894c999c23f71a",
+      "bytes": 2713
+    },
+    "anadius-original-provider-source/originals.hpp": {
+      "sha256": "16fdd05304bae761dad4c2f491f1ac82b5842118eccbeb644a18f639bd4b6d94",
+      "bytes": 1349
+    },
+    "anadius-owned-deque-source/deque.cpp": {
+      "sha256": "459121324082f143c42cb6d70a95fa2eb9e44558a0e1487163a6400aa9545219",
+      "bytes": 7912
+    },
+    "anadius-owned-deque-source/deque.hpp": {
+      "sha256": "8a1321d225469fdd1fd29c0f7a31f5fc0c1da79a270dc822421ade972b3bc3d0",
+      "bytes": 1324
+    },
+    "anadius-owned-environment-source/environment.cpp": {
+      "sha256": "9585e1894d5e3752bb00522388557082b058bbe274c93212167eb11095a98ec8",
+      "bytes": 18791
+    },
+    "anadius-owned-environment-source/environment.hpp": {
+      "sha256": "e44cded137e816436a5ffc2ddd5ee68c230c9501212f0711f94a7f7f26af09c3",
+      "bytes": 1707
+    },
+    "anadius-owned-jobs-source/jobs.cpp": {
+      "sha256": "e096445632dae1b9796387547ee1180991bd646a2c2be0350fbd0b2cf0cb4d07",
+      "bytes": 9957
+    },
+    "anadius-owned-jobs-source/jobs.hpp": {
+      "sha256": "f7669fbfdec697920811a17b289c88316f80c250f3ae7c2012ddbc26234be58b",
+      "bytes": 1337
+    },
+    "anadius-owned-server-source/server.cpp": {
+      "sha256": "110fc90931f0f7cb7b4d0ae003a7488529533c31c254e0e0992e243a1f9d449d",
+      "bytes": 24006
+    },
+    "anadius-owned-server-source/server.hpp": {
+      "sha256": "8122afc2c001e9c97d945200419b1fc5067908a7d83278130c738e6ae0969134",
+      "bytes": 6194
+    },
+    "anadius-parser-source/parser.cpp": {
+      "sha256": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2",
+      "bytes": 7427
+    },
+    "anadius-parser-source/parser.hpp": {
+      "sha256": "9e09d6bd1c3f900462c94d7e3bc5acdb141ef1045b6a1ac4e37e25fc1973bdd1",
+      "bytes": 1853
+    },
+    "anadius-path-source/paths.cpp": {
+      "sha256": "303335a49823dcc91aeea53d3b593d7be3c64c21136c0478d90f043ed127f67e",
+      "bytes": 3307
+    },
+    "anadius-path-source/paths.hpp": {
+      "sha256": "32b694932082aa94d0014e366965c2687afdb7eeeefd2730af957093e32225dc",
+      "bytes": 857
+    },
+    "anadius-registry-source/abi_cells.hpp": {
+      "sha256": "4fd3d0a6169f8feb22d60f982b94194c3d4b47f2eee1478444e3767070a92351",
+      "bytes": 1572
+    },
+    "anadius-registry-source/registry.cpp": {
+      "sha256": "757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5",
+      "bytes": 6415
+    },
+    "anadius-registry-source/registry.hpp": {
+      "sha256": "f3393a359bbafe7feef5725aae73967f18e65814cafd0726792b51fbe5716d34",
+      "bytes": 3525
+    },
+    "anadius-server-runtime-source/resources.cpp": {
+      "sha256": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2",
+      "bytes": 1936
+    },
+    "anadius-server-runtime-source/resources.hpp": {
+      "sha256": "3270b8d3576541dffffe7ab193a9d5ad6c8b0ab1d81c0ea0020ab771eb8d3244",
+      "bytes": 939
+    },
+    "anadius-server-runtime-source/runtime.cpp": {
+      "sha256": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b",
+      "bytes": 23892
+    },
+    "anadius-server-runtime-source/runtime.hpp": {
+      "sha256": "c4a7ab815196c513b46d8312888a6210b78818f8aa77284eb013e655a3365ac0",
+      "bytes": 5403
+    },
+    "anadius-server-source/server.cpp": {
+      "sha256": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda",
+      "bytes": 6567
+    },
+    "anadius-server-source/server.hpp": {
+      "sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+      "bytes": 5534
+    },
+    "anadius-services-completion-source/completion.cpp": {
+      "sha256": "26a7a0a659088938eaed6b2981056c17041f4bf8d38b696fc8ca12042f447b64",
+      "bytes": 4305
+    },
+    "anadius-services-completion-source/completion.hpp": {
+      "sha256": "d851377aaea26330f5cd3de4cd06be8931cc4ec70e53104297959c4caf12ec2a",
+      "bytes": 3051
+    },
+    "anadius-services-completion-source/exit_wait.cpp": {
+      "sha256": "814af5ec8e30a72a9e76dedfb0ab5a1adb950df735efe7a89f865fa426524eaf",
+      "bytes": 8505
+    },
+    "anadius-services-completion-source/exit_wait.hpp": {
+      "sha256": "2006f77a0540db8b8c285020e3a28b2402114ed1db8eee46859888b8bf5e7392",
+      "bytes": 3089
+    },
+    "anadius-services-factory-source/factory.cpp": {
+      "sha256": "54fcab347b6568b60ad58044fd009914806f2cf400994459ff9e46adb00e1e32",
+      "bytes": 7773
+    },
+    "anadius-services-factory-source/factory.hpp": {
+      "sha256": "ce10dc938796b91f37341937008feb02238fa59b93157ac413b8d27a4955941f",
+      "bytes": 3076
+    },
+    "anadius-session-dispose-source/dispose.cpp": {
+      "sha256": "4e8f1484343975650b289cdcc87316105928611e995e70bd8acaff87d318620d",
+      "bytes": 4446
+    },
+    "anadius-session-dispose-source/dispose.hpp": {
+      "sha256": "256def5d449e2356e87317567034692af019ebcbebae0cf59e23a5385f7462ea",
+      "bytes": 2289
+    },
+    "anadius-session-flow-source/coherent_io.cpp": {
+      "sha256": "b3d570b3a8772b44f331a1e023d2eca4c98402910529a12939521aca8833198e",
+      "bytes": 3786
+    },
+    "anadius-session-flow-source/coherent_io.hpp": {
+      "sha256": "4ba31f7e680f504cebc50de5fb48314ee461ee30645bce6e69e2eb3a800626f9",
+      "bytes": 3782
+    },
+    "anadius-session-flow-source/flow.cpp": {
+      "sha256": "2b16e9ddb52775ef43c5293d4d555439eeb9ad6a0d5985718bba6a4f71e926d8",
+      "bytes": 5447
+    },
+    "anadius-session-flow-source/flow.hpp": {
+      "sha256": "8352a6176b09b5ed990632cf8663c27ad79a029da2be23fa6f0a9f954a76d42e",
+      "bytes": 2995
+    },
+    "anadius-session-memory-source/memory.cpp": {
+      "sha256": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+      "bytes": 23492
+    },
+    "anadius-session-memory-source/memory.hpp": {
+      "sha256": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+      "bytes": 5575
+    },
+    "anadius-session-owner-source/owner.cpp": {
+      "sha256": "31b749d9bbe830e42dd13b7d04be651fb5ce1237f27d2e2ba9a4fe39ab232f3c",
+      "bytes": 3444
+    },
+    "anadius-session-owner-source/owner.hpp": {
+      "sha256": "f923c9548bf30fbc024ad691680d52c183a4e9ddbcd09481aeb0a13aa3123f90",
+      "bytes": 3109
+    },
+    "anadius-session-policy-source/policy.cpp": {
+      "sha256": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24",
+      "bytes": 23025
+    },
+    "anadius-session-policy-source/policy.hpp": {
+      "sha256": "06e2d9033ae8307ea2d87be0267d48e33bb353b87c4f23d34ec56abcfb5f41e2",
+      "bytes": 4858
+    },
+    "anadius-session-profile-source/profile.cpp": {
+      "sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913",
+      "bytes": 41700
+    },
+    "anadius-session-profile-source/profile.hpp": {
+      "sha256": "b6a4412bc258ef7d47f63cfe8f889ec8ddd18170b1c334e6f127dd93ab1a2bef",
+      "bytes": 7195
+    },
+    "anadius-session-profile-source/strings.cpp": {
+      "sha256": "19df7511fa66bb9383eb9dee64b6bc86b7c33881e5dbd9652dac7069d7ca1e64",
+      "bytes": 4576
+    },
+    "anadius-session-profile-source/strings.hpp": {
+      "sha256": "69210feb138eb968601beebcf546336fe475259bc34b94beabf9e3b4b7102297",
+      "bytes": 1171
+    },
+    "anadius-session-source/handler.cpp": {
+      "sha256": "2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42",
+      "bytes": 841
+    },
+    "anadius-session-source/handler.hpp": {
+      "sha256": "270aa21281852e2698983e312b3ebf347cafdc1da2deda94b80ced295addb8c0",
+      "bytes": 1406
+    },
+    "anadius-session-source/routing.cpp": {
+      "sha256": "c8063ea3fd9789e1d0d15b5daa08cddf1b8e72070af1c073911dd65c6dc9bc3c",
+      "bytes": 309
+    },
+    "anadius-session-source/routing.hpp": {
+      "sha256": "6e263e02419da2148feeecc7a3ce95d34faaa439ffe5a9e67b672a9c1b409f8c",
+      "bytes": 640
+    },
+    "anadius-shared-log-source/stream.cpp": {
+      "sha256": "2e2fc657fff9bf6bed5c19428a5f8c11f22d704ee12b22337a3f6e2eec5265d4",
+      "bytes": 2304
+    },
+    "anadius-shared-log-source/stream.hpp": {
+      "sha256": "1585d2079532695ff5565ed6f74357eddbf4a79504a2af54500e7c6739cdacbf",
+      "bytes": 2243
+    },
+    "anadius-socket-move-source/move.cpp": {
+      "sha256": "af73b49ea83cfc61bead66a631dcc65580657281d648b7535329de2598a85a92",
+      "bytes": 3548
+    },
+    "anadius-socket-move-source/move.hpp": {
+      "sha256": "5322308f915fdae733183bcdea2adfe860cee02002686a1744dbd07feb0cfb59",
+      "bytes": 1051
+    },
+    "anadius-socket-source/acceptor_native.cpp": {
+      "sha256": "ba1f75d01e93011e9bb712754d3625a8f9852957a1acfa1df973e79d9e71bedb",
+      "bytes": 1942
+    },
+    "anadius-socket-source/acceptor_native.hpp": {
+      "sha256": "fc82c54de4d79713bc0207a6ab3429dbc8d77cd1d16e4142100e66a696aa026c",
+      "bytes": 1438
+    },
+    "anadius-socket-source/acceptor.cpp": {
+      "sha256": "c9a5c8a034daf5381d718f1985e8e3f58a530856982fff194fceed77299aea3a",
+      "bytes": 5454
+    },
+    "anadius-socket-source/acceptor.hpp": {
+      "sha256": "5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b",
+      "bytes": 2861
+    },
+    "anadius-socket-source/append_growth.cpp": {
+      "sha256": "db4311e05b8d893e7833d004dd9078ffcc3aa566f2100f1fad7be48b5b4f7eca",
+      "bytes": 4162
+    },
+    "anadius-socket-source/append_growth.hpp": {
+      "sha256": "3e0d8e657f77895ff3a6927d162dfc6a42836c781ed63747673381f767c6a6eb",
+      "bytes": 1042
+    },
+    "anadius-socket-source/async_receive.cpp": {
+      "sha256": "6d215e4abc6d25a72240b7938b1c91ba1326dfffd8de367be75e9778602f454f",
+      "bytes": 5517
+    },
+    "anadius-socket-source/async_receive.hpp": {
+      "sha256": "4ec52308070b4d7dc017dcc2b2cabb61af4cd34c743b8499b9114ae7da344d35",
+      "bytes": 3043
+    },
+    "anadius-socket-source/cancellation_native.cpp": {
+      "sha256": "d1a8ad5506c6683f1a080950d253766bd902dce4086a843f599f4c6b414b293e",
+      "bytes": 348
+    },
+    "anadius-socket-source/cancellation_native.hpp": {
+      "sha256": "91ac34a057aec4e6aec647c5a046f3e98138ccdeb23a1f268083defae5493f39",
+      "bytes": 646
+    },
+    "anadius-socket-source/cancellation.cpp": {
+      "sha256": "8b9590f3ae91bad807107a79e9f04391b9470f885b599725a21fb80a8dec098c",
+      "bytes": 3040
+    },
+    "anadius-socket-source/cancellation.hpp": {
+      "sha256": "590aba7ccc16c44dd332481bd79cc2f6760b7fa81be773f5dbceaa7efebef1ff",
+      "bytes": 2535
+    },
+    "anadius-socket-source/cipher_session.cpp": {
+      "sha256": "62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2",
+      "bytes": 4249
+    },
+    "anadius-socket-source/cipher_session.hpp": {
+      "sha256": "c8b54d806823845482009cbd211f3b9923497d471b29d98729ce12ea364a1fc2",
+      "bytes": 2298
+    },
+    "anadius-socket-source/close.cpp": {
+      "sha256": "44b17eec8a2cb5cc62ae7c2b17e027b5ebd5b10ba18785bf886bad90d56082b2",
+      "bytes": 1346
+    },
+    "anadius-socket-source/close.hpp": {
+      "sha256": "28fb856c232dcec8d1cca60016a7e0f8beed7ead11631fae25548c8eb66a55ef",
+      "bytes": 462
+    },
+    "anadius-socket-source/closing.cpp": {
+      "sha256": "9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669",
+      "bytes": 1655
+    },
+    "anadius-socket-source/closing.hpp": {
+      "sha256": "10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5",
+      "bytes": 1516
+    },
+    "anadius-socket-source/completion_dispatcher_native.cpp": {
+      "sha256": "1d031ba931aac7a2daac70c54bc81d7c2eac0599a821d220a5330db1c7a405ef",
+      "bytes": 1157
+    },
+    "anadius-socket-source/completion_dispatcher_native.hpp": {
+      "sha256": "7dd0296e59451095d528515d50d97f6052ad956c000858b7e4af68e0922a387b",
+      "bytes": 1096
+    },
+    "anadius-socket-source/completion_dispatcher.cpp": {
+      "sha256": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952",
+      "bytes": 6810
+    },
+    "anadius-socket-source/completion_dispatcher.hpp": {
+      "sha256": "fc956c1b9be86b46934afe11bfdc380e9c5c5264d773756cb09f5db331431955",
+      "bytes": 4280
+    },
+    "anadius-socket-source/composed_read.cpp": {
+      "sha256": "9e6ab5c28329fe1b867f4c4c683194ca852f1c5d813f22274210d65a7f9f0037",
+      "bytes": 6230
+    },
+    "anadius-socket-source/composed_read.hpp": {
+      "sha256": "11dad087e4f8f08fcbc16ef5ad42a02e313f2ae0a2734b4c7feab8f07baa94a5",
+      "bytes": 2473
+    },
+    "anadius-socket-source/composed_write_native.cpp": {
+      "sha256": "0aa0b7fa775156f28f18c16a7c5314979ef112c765de13d695996e3d3c5f454e",
+      "bytes": 673
+    },
+    "anadius-socket-source/composed_write_native.hpp": {
+      "sha256": "23f85015f11ef464ffd2b6501c5a70ee21b8d5f9cbc016e3e7cfd7c2bdc060cb",
+      "bytes": 669
+    },
+    "anadius-socket-source/composed_write.cpp": {
+      "sha256": "ae72cf24ff9e0ff0f4c0ecd93061f6e0538cbefda526cc945b7aed47c10b6e48",
+      "bytes": 7372
+    },
+    "anadius-socket-source/composed_write.hpp": {
+      "sha256": "12adee25325e0a9b56dc229ced9cf56768de2ec0f35312ee173c8a6293e9ef08",
+      "bytes": 4145
+    },
+    "anadius-socket-source/document_clear.cpp": {
+      "sha256": "88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4",
+      "bytes": 4348
+    },
+    "anadius-socket-source/document_clear.hpp": {
+      "sha256": "f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb",
+      "bytes": 1847
+    },
+    "anadius-socket-source/document_error.cpp": {
+      "sha256": "b3968b14cf10b3a1d82f6db2073bd592783c70a14da6c36d31514e588fad8c14",
+      "bytes": 3052
+    },
+    "anadius-socket-source/document_error.hpp": {
+      "sha256": "504d941b18a12857808ef04f06339146757c1c3de382ae99f78a38643c39b732",
+      "bytes": 2284
+    },
+    "anadius-socket-source/environment_constructor.cpp": {
+      "sha256": "bc47e1f2fbc9bc30e0142d0d97c872b66c1aa17247889af38355eb2966f55d88",
+      "bytes": 3997
+    },
+    "anadius-socket-source/environment_constructor.hpp": {
+      "sha256": "cec032a7f42a07bb852319cd0bf5639fe7243cd7fd6b8bb9b25bbd6cfe2bd050",
+      "bytes": 3010
+    },
+    "anadius-socket-source/frame_read.cpp": {
+      "sha256": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+      "bytes": 6593
+    },
+    "anadius-socket-source/frame_read.hpp": {
+      "sha256": "ea9adf5bd04a872d8e78173c5bdf9bf053deecdd6cc90665e4674efbf72d4111",
+      "bytes": 2768
+    },
+    "anadius-socket-source/handler_dispatch_bridge.cpp": {
+      "sha256": "522fd1b8e79025a8cd6e80791ba292216d0b69826f9dfbb660261ac1e6716602",
+      "bytes": 491
+    },
+    "anadius-socket-source/handler_dispatch_bridge.hpp": {
+      "sha256": "a0c012878ee191fe53b22d7bace89ade87308c9e3702c81ca9cdd905f9887646",
+      "bytes": 1102
+    },
+    "anadius-socket-source/handler_dispatch.cpp": {
+      "sha256": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac",
+      "bytes": 10907
+    },
+    "anadius-socket-source/handler_dispatch.hpp": {
+      "sha256": "0fec1cbf13941617daf61b0bf4a144c3e660bd976f4c65f8ebad184e198b3f64",
+      "bytes": 3598
+    },
+    "anadius-socket-source/io_completion_dispatch.cpp": {
+      "sha256": "bb85580acd56f40b4e9c32e06a615aba3af36c37f6adc51ccc1184ec3c96a9a1",
+      "bytes": 913
+    },
+    "anadius-socket-source/io_completion_dispatch.hpp": {
+      "sha256": "43e4ab5404a7805e689232622ebc2a7471bd851532cdb952338dc0bce08074c2",
+      "bytes": 1372
+    },
+    "anadius-socket-source/io_completion.cpp": {
+      "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90",
+      "bytes": 7871
+    },
+    "anadius-socket-source/io_completion.hpp": {
+      "sha256": "85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32",
+      "bytes": 5123
+    },
+    "anadius-socket-source/iocp_constructor_native.cpp": {
+      "sha256": "ef64c81fee9b3460c62bb7a3e3a6676ef32b82e49e5701461656af9ce2969455",
+      "bytes": 1002
+    },
+    "anadius-socket-source/iocp_constructor_native.hpp": {
+      "sha256": "53bf32bd986d221473ded1fb814f83676b6591dc584dc02fbbadfdfb75c48142",
+      "bytes": 1281
+    },
+    "anadius-socket-source/iocp_constructor.cpp": {
+      "sha256": "4b9e91d2cab45972f188319246adc4d6e784ddb8be19946d408c5ac12fc20254",
+      "bytes": 3046
+    },
+    "anadius-socket-source/iocp_constructor.hpp": {
+      "sha256": "c82705d8734e98d5df368faeb20d202a08c04d70092f6dd4e858d617e9112725",
+      "bytes": 3472
+    },
+    "anadius-socket-source/lifecycle_native.cpp": {
+      "sha256": "3d93ea529a65f84e009a80caebd6032606c65f60d2de281a6885a84c94d99996",
+      "bytes": 282
+    },
+    "anadius-socket-source/lifecycle_native.hpp": {
+      "sha256": "ef0f5c9621106f565d4b65b39666e2ee258f13e0638644051c543d1e63bf8f52",
+      "bytes": 750
+    },
+    "anadius-socket-source/lifecycle.cpp": {
+      "sha256": "6f5f684e1fb3224a5a9fd92ebf51f4b495effecf0f5ee7aad7fa7bc92fbb52c8",
+      "bytes": 3751
+    },
+    "anadius-socket-source/lifecycle.hpp": {
+      "sha256": "081bf08e4214bdaaa2252c6e1abcb6ce6acad75c2805656cec5dee6e9eeee898",
+      "bytes": 3285
+    },
+    "anadius-socket-source/message_core_bridge.cpp": {
+      "sha256": "a70a08445f81d56ae6a3a25137f090dd120244f7ce0e72e71822a8a09f7324cc",
+      "bytes": 2496
+    },
+    "anadius-socket-source/message_core_bridge.hpp": {
+      "sha256": "952d090d21149bbda432065d168c058fd254f10cf867f1add78de0168b629368",
+      "bytes": 2359
+    },
+    "anadius-socket-source/message_dispatch.cpp": {
+      "sha256": "a8ca45a775c0fcd6bd485075ad3d459f8fd208a4922ade32e521c37bc2870014",
+      "bytes": 6749
+    },
+    "anadius-socket-source/message_dispatch.hpp": {
+      "sha256": "e29de315e311d2d5bf8129db745102415609fb140de1f74ea121150efa142e01",
+      "bytes": 3035
+    },
+    "anadius-socket-source/native_dispatch.cpp": {
+      "sha256": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b",
+      "bytes": 4143
+    },
+    "anadius-socket-source/native_dispatch.hpp": {
+      "sha256": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440",
+      "bytes": 2854
+    },
+    "anadius-socket-source/native_document.cpp": {
+      "sha256": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+      "bytes": 6051
+    },
+    "anadius-socket-source/native_document.hpp": {
+      "sha256": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+      "bytes": 3085
+    },
+    "anadius-socket-source/native_message.cpp": {
+      "sha256": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+      "bytes": 7053
+    },
+    "anadius-socket-source/native_message.hpp": {
+      "sha256": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c",
+      "bytes": 3438
+    },
+    "anadius-socket-source/native.cpp": {
+      "sha256": "2a608ec00e43aa90eb7b4e964214818a4d7b6e89f2b5f171048c36375e0a9048",
+      "bytes": 3269
+    },
+    "anadius-socket-source/native.hpp": {
+      "sha256": "5a091dca8902e1116073bdc1fd44952191f53bbe0ff3a2a592b37d6ba3d57066",
+      "bytes": 1499
+    },
+    "anadius-socket-source/node_base.cpp": {
+      "sha256": "f3e5ee01a2311060f53adef39b5323c11a1dc55662f3500b69dbb1020ab94418",
+      "bytes": 2267
+    },
+    "anadius-socket-source/node_base.hpp": {
+      "sha256": "7f3272fc864edc0b070b05145f5f18a5af5d2ea68cc5b9a9bfd915de570ccd01",
+      "bytes": 873
+    },
+    "anadius-socket-source/node_constructors.cpp": {
+      "sha256": "0241d535309cad4803283cb802dada02b24dfbebe30ea495f761f4909ebbf331",
+      "bytes": 3237
+    },
+    "anadius-socket-source/node_constructors.hpp": {
+      "sha256": "afc6e9e9e4fd1b12ca3ea785a844c4b42072a9c74f78a603927fb252112a53a4",
+      "bytes": 2461
+    },
+    "anadius-socket-source/node_delete.cpp": {
+      "sha256": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3",
+      "bytes": 4501
+    },
+    "anadius-socket-source/node_delete.hpp": {
+      "sha256": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a",
+      "bytes": 1202
+    },
+    "anadius-socket-source/node_identify.cpp": {
+      "sha256": "15d5b6eac661b0047f46e4b6f72cdbc15e243dc73598231b571b646eaa9b3053",
+      "bytes": 2802
+    },
+    "anadius-socket-source/node_identify.hpp": {
+      "sha256": "f28ce49a02dc391e64cfb6e112dff4885579c2c694c60689533ab1089dcb4bf3",
+      "bytes": 1998
+    },
+    "anadius-socket-source/node_insertion.cpp": {
+      "sha256": "26a363ed547f52d84f293acd1ab0bd61365acaac62b38ac19503529081fefe9f",
+      "bytes": 2602
+    },
+    "anadius-socket-source/node_insertion.hpp": {
+      "sha256": "7bc92143f7ae1869f371cc7a7c102bc5cb7572523455c00a14826c2903aebb87",
+      "bytes": 1256
+    },
+    "anadius-socket-source/node_parse.cpp": {
+      "sha256": "c3f99be72328132e6917da81939cfb97fe8cff41bf246cdb33746af0defd5461",
+      "bytes": 8515
+    },
+    "anadius-socket-source/node_parse.hpp": {
+      "sha256": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a",
+      "bytes": 3222
+    },
+    "anadius-socket-source/node_string.cpp": {
+      "sha256": "8223d33eaac0d77296479981108a205458e1f440d212bd163590fb5783a60080",
+      "bytes": 4596
+    },
+    "anadius-socket-source/node_string.hpp": {
+      "sha256": "2f571d0db438b452e0ecb0df5950db66c9579fee476275da9bf2d3c62c45dfe3",
+      "bytes": 1792
+    },
+    "anadius-socket-source/operations.cpp": {
+      "sha256": "63bc7fd32801a6f310492f1ff3f9a4bcc8f95a1f73b837d2bff81774ccea8ae7",
+      "bytes": 4095
+    },
+    "anadius-socket-source/operations.hpp": {
+      "sha256": "a3b2c6b21d6a2d7b19f9f3245d08d5a450caa2bc8b95285fc19c9c94bdb833e2",
+      "bytes": 2981
+    },
+    "anadius-socket-source/owned_response.cpp": {
+      "sha256": "a9125c30bf6d551a3eb32435ab088c8266a60f421e545e5e211c4fd34a7c821c",
+      "bytes": 4909
+    },
+    "anadius-socket-source/owned_response.hpp": {
+      "sha256": "0c1a23789740ac7948bfda66bcac00040c99eae0589db6bf8cacf1471b6f1b56",
+      "bytes": 2107
+    },
+    "anadius-socket-source/parse_entry.cpp": {
+      "sha256": "2c905d087fb298433bac02721822c5eafa183def3b61a0b96405994159c23c31",
+      "bytes": 2217
+    },
+    "anadius-socket-source/parse_entry.hpp": {
+      "sha256": "b6d7e9ad9613b738068ae51ec3aeac7ee094937356712dfd80b6ee94a1830734",
+      "bytes": 1413
+    },
+    "anadius-socket-source/pool_allocate.cpp": {
+      "sha256": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf",
+      "bytes": 5342
+    },
+    "anadius-socket-source/pool_allocate.hpp": {
+      "sha256": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757",
+      "bytes": 2360
+    },
+    "anadius-socket-source/pool_append.cpp": {
+      "sha256": "26b55defe78e1de75967a39487ddd41def17c74bf536089ae4cf5c08ba161235",
+      "bytes": 2762
+    },
+    "anadius-socket-source/pool_append.hpp": {
+      "sha256": "ce74e47337ce1627e1d8183b6e227d47bdf68eeb2aa44818de3ebdfae24fef66",
+      "bytes": 1286
+    },
+    "anadius-socket-source/pool_clear.cpp": {
+      "sha256": "126eb5ed1e17ea2c51ada009be36cb3db3800d4a75a043888f89dba919dd7208",
+      "bytes": 2317
+    },
+    "anadius-socket-source/pool_clear.hpp": {
+      "sha256": "4fe3d1f5b73f8bbde7d02b049382dedec07548aebae9adaced5794c965d094b1",
+      "bytes": 1210
+    },
+    "anadius-socket-source/pool_destruct.cpp": {
+      "sha256": "3bebee2c224523e72a12ce338521dad7a0c2786d36aacc810227fb32f207ef35",
+      "bytes": 3087
+    },
+    "anadius-socket-source/pool_destruct.hpp": {
+      "sha256": "0f2951e2d60116d9986a0e615e49fcce70439cccf3ecbcb8484bc4d703cdf89c",
+      "bytes": 1170
+    },
+    "anadius-socket-source/pool_release.cpp": {
+      "sha256": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5",
+      "bytes": 1693
+    },
+    "anadius-socket-source/pool_release.hpp": {
+      "sha256": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5",
+      "bytes": 1017
+    },
+    "anadius-socket-source/posted_operation_dispatch.cpp": {
+      "sha256": "3d4685cafeeacc2b2a404c2277a1049d1dc9c3aa347430ae77e8fe51679734b1",
+      "bytes": 585
+    },
+    "anadius-socket-source/posted_operation_dispatch.hpp": {
+      "sha256": "045fc8fbcc9f6f3aa010c26a5e2365a83b147b91af0a98ff5ca864d882557bab",
+      "bytes": 1026
+    },
+    "anadius-socket-source/posted_operation.cpp": {
+      "sha256": "4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d",
+      "bytes": 6444
+    },
+    "anadius-socket-source/posted_operation.hpp": {
+      "sha256": "a64463108f00dd71fe71c9ac577c73d857e4a8fd67e56d7bb65313536e3c8aff",
+      "bytes": 2391
+    },
+    "anadius-socket-source/prefix_cipher.cpp": {
+      "sha256": "62b58f613895dbb9fcdc7d184496aa22c5dea328448140a02c5017e2cc2ce48d",
+      "bytes": 4378
+    },
+    "anadius-socket-source/prefix_cipher.hpp": {
+      "sha256": "51a2f555d3b9b589922d14bdc96fe464fe4f512b49bebe73003897dd8047fb5f",
+      "bytes": 2605
+    },
+    "anadius-socket-source/queued_write.cpp": {
+      "sha256": "8aec35f671804e86544701065a8c510b0b3c5632b0baf13cf31f6679fbd88211",
+      "bytes": 3842
+    },
+    "anadius-socket-source/queued_write.hpp": {
+      "sha256": "7a205cbc34118c9181f829feeb474478dedd10eb21d37780af966018e3f6cc7a",
+      "bytes": 1928
+    },
+    "anadius-socket-source/receive_buffer.cpp": {
+      "sha256": "022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0",
+      "bytes": 5628
+    },
+    "anadius-socket-source/receive_buffer.hpp": {
+      "sha256": "709ca59766fc42bf2fbc7d1f4f033987b590e42874ff566b39f975ac43ed1e56",
+      "bytes": 2360
+    },
+    "anadius-socket-source/recycle_storage.cpp": {
+      "sha256": "cc08df14c064dd41f2fdd4a0f3752869b57f01d9955ff25efc83fc0e0fd9ea5e",
+      "bytes": 1728
+    },
+    "anadius-socket-source/recycle_storage.hpp": {
+      "sha256": "e39f05d8b3bcf95985e64149561b8d3158f3865aee4cabea0e2d151d80351560",
+      "bytes": 1183
+    },
+    "anadius-socket-source/recycle.cpp": {
+      "sha256": "aeb139759f836963ee7216d1a95e4eb2149f41c9f29463f4d2712be416d2836d",
+      "bytes": 2431
+    },
+    "anadius-socket-source/recycle.hpp": {
+      "sha256": "027923db8624434cf98274a27d667ff2fb2aec082a65e0998f1200c81efeb60f",
+      "bytes": 1317
+    },
+    "anadius-socket-source/request_growth.cpp": {
+      "sha256": "40667442f868a21494379830b95c6ce790babba2900c44842e11e84af04a9311",
+      "bytes": 3506
+    },
+    "anadius-socket-source/request_growth.hpp": {
+      "sha256": "b4870a3caf86e5abcb6e6703eba65ef41a46a802f69035850e063cd9314f1922",
+      "bytes": 899
+    },
+    "anadius-socket-source/request_mutation.cpp": {
+      "sha256": "9226b59ea65c735564c0fa22dc460509e23d44b2ce958b66f40222f07960980e",
+      "bytes": 3515
+    },
+    "anadius-socket-source/request_mutation.hpp": {
+      "sha256": "fa25d13bec2e915557cabff3bf03b9707f55005441b27e736e7fa314c857ee8d",
+      "bytes": 1003
+    },
+    "anadius-socket-source/response_containers.cpp": {
+      "sha256": "c1108f7835ac8e21ca3e05735e93ca55f4859127b556f6a5ff13644381ab0eb8",
+      "bytes": 7379
+    },
+    "anadius-socket-source/response_containers.hpp": {
+      "sha256": "11c480e63a8bd5bb40624ecd320381df4f3ccb8253fd3772cb799da57637dd87",
+      "bytes": 2341
+    },
+    "anadius-socket-source/response_dispatch.cpp": {
+      "sha256": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0",
+      "bytes": 8485
+    },
+    "anadius-socket-source/response_dispatch.hpp": {
+      "sha256": "95068d4638a48bf8b215da58455c684d25da2042dab987ad9b45265de37bf648",
+      "bytes": 3538
+    },
+    "anadius-socket-source/response_hex.cpp": {
+      "sha256": "a3afa7e8621353d8667b5c773bdffe3aab35089a0e8dd6d90314cd723f4f4a4f",
+      "bytes": 1022
+    },
+    "anadius-socket-source/response_hex.hpp": {
+      "sha256": "c82c322e3ed3f9a257e84472c50d8614a0102d5734a32faab80c475140f10361",
+      "bytes": 521
+    },
+    "anadius-socket-source/scheduler_registry.cpp": {
+      "sha256": "dd435dd06297b628a8a101effc1c1d4263a281299d04f8517ee16368de4c64ac",
+      "bytes": 2378
+    },
+    "anadius-socket-source/scheduler_registry.hpp": {
+      "sha256": "15682596994c9dad200822f868694ac5ecd5c1b892989ec9f661493f44ea68d9",
+      "bytes": 2839
+    },
+    "anadius-socket-source/service_constructor_native.cpp": {
+      "sha256": "9bc4cac66954bcb9583fea697cfa1e9ebae2daac3284a5ac8cd33781495a19aa",
+      "bytes": 364
+    },
+    "anadius-socket-source/service_constructor_native.hpp": {
+      "sha256": "4dfe0aebd535f22fd9cf264c13508055b79bcbaab62aaf9c8bcec2b6bdb24702",
+      "bytes": 802
+    },
+    "anadius-socket-source/service_constructor.cpp": {
+      "sha256": "e4125fb99d7cbf61c29fd82ac5b7027f5face09a92e77890c66da96a8ec74413",
+      "bytes": 1600
+    },
+    "anadius-socket-source/service_constructor.hpp": {
+      "sha256": "3e03015e00752ec4f3020bdaa6559eb89e3c311b25877198a296361ef4a19365",
+      "bytes": 2760
+    },
+    "anadius-socket-source/service_registry.cpp": {
+      "sha256": "663e6f4799e9173722e0af62b05d7a4e96d069f4f0dc55b6777cc46e037cbc02",
+      "bytes": 2960
+    },
+    "anadius-socket-source/service_registry.hpp": {
+      "sha256": "5584fc37f54fa847efee7aa350fb51d2f82033d8826cca762f8e6e9f27752525",
+      "bytes": 2963
+    },
+    "anadius-socket-source/worker_run_native.cpp": {
+      "sha256": "df0d743263b53d4845456d78766e86daa47c9bf4358f51b91ff25f8dcda3ec38",
+      "bytes": 611
+    },
+    "anadius-socket-source/worker_run_native.hpp": {
+      "sha256": "0abeed67dba180b8506005ecaade1093b1e966e847953a094cb8855e13c76d93",
+      "bytes": 819
+    },
+    "anadius-socket-source/worker_run.cpp": {
+      "sha256": "1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4",
+      "bytes": 3038
+    },
+    "anadius-socket-source/worker_run.hpp": {
+      "sha256": "191ac2548f32bd8828d5d3d12b9ce41f99716e1f9028ae554e2d483fab06df0f",
+      "bytes": 3796
+    },
+    "anadius-socket-source/worker_startup_native.cpp": {
+      "sha256": "7b67d379aa49a2133dd58c6ffd0d553419b2bf8105162fc1ad32c97c0fead8c9",
+      "bytes": 1088
+    },
+    "anadius-socket-source/worker_startup_native.hpp": {
+      "sha256": "3a9dd32ae720496c9e9239f8840542487b9c88f431defb1569545a6c8796ee2e",
+      "bytes": 1238
+    },
+    "anadius-socket-source/worker_startup.cpp": {
+      "sha256": "c195e934d656aa572de2656f7d80cf2257fbbc9d4c8aa80accd233bc08ecb565",
+      "bytes": 2971
+    },
+    "anadius-socket-source/worker_startup.hpp": {
+      "sha256": "699eb51446551906d51c069c00d95f6fbd2d9a2cb706d28021695990d01fa87e",
+      "bytes": 2634
+    },
+    "anadius-socket-source/write_finish.cpp": {
+      "sha256": "b13efb4696b7a8fd89e94e5d14d22d0b7da93d7da820fcaf212241807918667e",
+      "bytes": 4861
+    },
+    "anadius-socket-source/write_finish.hpp": {
+      "sha256": "c9e341de1a667ba2f17c1861aed4800243d2ebff022f3b9df47cdf6e48c2f6ba",
+      "bytes": 3848
+    },
+    "anadius-source/bootstrap.cpp": {
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+      "bytes": 4337
+    },
+    "anadius-source/bootstrap.hpp": {
+      "sha256": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210",
+      "bytes": 4920
+    },
+    "anadius-startup-publication-source/publication.cpp": {
+      "sha256": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+      "bytes": 3763
+    },
+    "anadius-startup-publication-source/publication.hpp": {
+      "sha256": "516975cfb72c687d23d2e1253608a63dde70243e8026bb4ba738bb4b8257a3e4",
+      "bytes": 2119
+    },
+    "anadius-startup-source/startup.cpp": {
+      "sha256": "87bcd90892dcea301fc3c1aceb589d1097875d9400d3bd69b64570d008740dea",
+      "bytes": 4563
+    },
+    "anadius-startup-source/startup.hpp": {
+      "sha256": "fc915cf189761a78bea8b0d7ac083722881893bf4d2007fa343986484c95f5e9",
+      "bytes": 3383
+    },
+    "anadius-startup-source/windows_platform.cpp": {
+      "sha256": "d765091c8a8b4ee121a425860c59d558eff918d75e7e7c87114d117ee65b5ef9",
+      "bytes": 1479
+    },
+    "anadius-status-source/native_status.cpp": {
+      "sha256": "785adfeb5e1cbcc383f7ebbe2249f89e36f39eb82b0709f9ef32804c21238d35",
+      "bytes": 2227
+    },
+    "anadius-status-source/status.cpp": {
+      "sha256": "c2c842ecea2ce9704658f834da34d823881747429cf8f9b897b05efa9123f670",
+      "bytes": 2315
+    },
+    "anadius-status-source/status.hpp": {
+      "sha256": "db4f36d8804eb75ab63497b47efe33e5ebaf77529dd5cdd33cfa31aee2b1fe81",
+      "bytes": 2938
+    },
+    "anadius-thread-domain-source/domain.cpp": {
+      "sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "bytes": 24334
+    },
+    "anadius-thread-domain-source/domain.hpp": {
+      "sha256": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+      "bytes": 6814
+    },
+    "anadius-thread-domain-source/initial_locale.cpp": {
+      "sha256": "8de4aa12e2490351f79d5a0bd6b283f8d7d0d87e66ac22c83233c56b7760f083",
+      "bytes": 3004
+    },
+    "anadius-thread-domain-source/initial_locale.hpp": {
+      "sha256": "7c52caba8e183965e9858e0f0aabf8da5dde9a4b01eae77aebf28196a10f55f8",
+      "bytes": 2925
+    },
+    "anadius-thread-domain-source/runtime.cpp": {
+      "sha256": "91b633102c8d0163703fd77a32d7242f8fcc4c37ad6de173cec2c6ccd15d95c9",
+      "bytes": 8976
+    },
+    "anadius-thread-domain-source/runtime.hpp": {
+      "sha256": "821d42591cd76ca0261a76c4a64968893030c1b5e2c362903af58976f57ab605",
+      "bytes": 3054
+    },
+    "anadius-thread-native-source/win32_effects.cpp": {
+      "sha256": "5cb6fe9d2b81e50e50813521b76d24aa098489c8ebf108191a5e9bdd610f6bf2",
+      "bytes": 4086
+    },
+    "anadius-thread-native-source/win32_effects.hpp": {
+      "sha256": "1d0baba064b509a8cbb8cc58751f064148321a8639e8a85dcbab7620dac0fc48",
+      "bytes": 3068
+    },
+    "anadius-thread-source/threads.cpp": {
+      "sha256": "3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9",
+      "bytes": 3215
+    },
+    "anadius-thread-source/threads.hpp": {
+      "sha256": "ab28bd3937e109ff088fe40344af2491c8f8f5c6d69891d62fdfd331356824c8",
+      "bytes": 3377
+    },
+    "anadius-timestamp-source/timestamp.cpp": {
+      "sha256": "443dc4a0dea62b717d4513f6d8432f84f8d51ff6edf3bc26bd12f6578c02e52c",
+      "bytes": 4964
+    },
+    "anadius-timestamp-source/timestamp.hpp": {
+      "sha256": "bdf47aadc38b11393e9317ed9c2e4b43067f8c81c02256a4001289da31ba017e",
+      "bytes": 2027
+    },
+    "anadius-token-source/constants.hpp": {
+      "sha256": "5ca7807f6b219ffa2f5d8b1af084495cbe5ac602bc8a93f14ef9a39274dbce3e",
+      "bytes": 490
+    },
+    "anadius-token-source/token.cpp": {
+      "sha256": "fba652fd5f6027ac2d0988237bac10f4cefc9a74fceecc2554667b8484fee020",
+      "bytes": 2238
+    },
+    "anadius-token-source/token.hpp": {
+      "sha256": "7a5735cf9198ec8aa18e94a3f339721e12e3b6603efb9933e21a78ef4c8eea4d",
+      "bytes": 1001
+    },
+    "anadius-vcrt-api-source/api.cpp": {
+      "sha256": "ce23cd356e8346f5c849757bf45a8b43fd8a7e40fa3fce5be99cfec9ff9b3f85",
+      "bytes": 3375
+    },
+    "anadius-vcrt-api-source/api.hpp": {
+      "sha256": "dcd287690abf9e3dc2c3b40818294d783e79207c4a0fa03ae1a91fa7c3ab33c1",
+      "bytes": 2518
+    },
+    "anadius-vcrt-bridge-source/bridge.cpp": {
+      "sha256": "85f1591f4b8e265cea036badadaf0c3de43fdd6bd16c2a1be910aaf4137526bf",
+      "bytes": 4977
+    },
+    "anadius-vcrt-bridge-source/bridge.hpp": {
+      "sha256": "eac77edf09d6d38d5d33651f9a7c58ebec6dd46abb3db28b283a95140af598e3",
+      "bytes": 4697
+    },
+    "anadius-vcrt-ptd-source/vcrt_ptd.cpp": {
+      "sha256": "2acfb1ff8678493678288dc0a806b8c27946e100ebc223409c867264b9b5e307",
+      "bytes": 3750
+    },
+    "anadius-vcrt-ptd-source/vcrt_ptd.hpp": {
+      "sha256": "e4f1a934221d94f592e37afaa8a9d6ced5dcab08d38e98cdfb080fc9245a14bf",
+      "bytes": 2243
+    },
+    "anadius-windows-source/windows_effects.cpp": {
+      "sha256": "e391116f9528d6106829ae5c55262f399f596a1675ad1aeb4dc347b0f38c8438",
+      "bytes": 2550
+    },
+    "anadius-windows-source/windows_effects.hpp": {
+      "sha256": "57f275316ecd1d78bcb21b0a93da54c26eacfdf3bceaa66370edc84631d4a19f",
+      "bytes": 2167
+    },
+    "anadius-worker-handoff-source/handoff.cpp": {
+      "sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+      "bytes": 7007
+    },
+    "anadius-worker-handoff-source/handoff.hpp": {
+      "sha256": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+      "bytes": 2637
+    },
+    "anadius-xml-reader-source/reader.cpp": {
+      "sha256": "0c80c24764ad925ada9ca2c485a984ba490f07d7a596db1eb12c2f18af817d66",
+      "bytes": 3689
+    },
+    "anadius-xml-reader-source/reader.hpp": {
+      "sha256": "f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e",
+      "bytes": 861
+    },
+    "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp": {
+      "sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554",
+      "bytes": 78553
+    },
+    "anadius-xml-source/memory_printer.cpp": {
+      "sha256": "0b15eda57fe5396438869e00b5de5d17ce117af9ab29ccd49335b9ca30414e05",
+      "bytes": 2786
+    },
+    "anadius-xml-source/memory_printer.hpp": {
+      "sha256": "3980f07002c4375413d3d9b517f6bb4ce9c53fa034ec6eba5c7d16d9ed39c6af",
+      "bytes": 2413
+    },
+    "hook-engine-source/adapters.cpp": {
+      "sha256": "c43e3fc13ceb60833324c880725d7e6ed6b0f668ed82e077b9b28d4f47a7ac5d",
+      "bytes": 2199
+    },
+    "hook-engine-source/adapters.hpp": {
+      "sha256": "757f5f0ee47e19fe2611072dab96b72c21b57d8d64e49c23a16d7f67ab9d8862",
+      "bytes": 2587
+    },
+    "preloader-native-source/native_shims.cpp": {
+      "sha256": "d18a7a813f907b8b8cd5e6d9481096e919e411b13ed6300ea7913c94a9815b2c",
+      "bytes": 3826
+    },
+    "preloader-native-source/native_shims.hpp": {
+      "sha256": "c8fca5044079e9b08638d79feab405f1d25ab4f9378675e0f9d563976f227848",
+      "bytes": 3159
+    },
+    "preloader-source/preloader_core.cpp": {
+      "sha256": "61e1b948bd7461194ef86099de7ea4ecdacafd1627fe701a5bdd04de85435de9",
+      "bytes": 11307
+    },
+    "preloader-source/preloader_core.hpp": {
+      "sha256": "eb17bae0b5b6dd9edcb58722fb7eb2d4408e3bb88d68951b83e2e43dcd9d8001",
+      "bytes": 4978
+    },
+    "version-rebuild/loader.cpp": {
+      "sha256": "5da3a9fce911abdc7d4ca0fd1f99d0f7d545608ed5f6bff427643692def2f18a",
+      "bytes": 6293
+    },
+    "anadius-accept-helpers-source/evidence.json": {
+      "sha256": "243773e4f774d62d18f6431538fc69c01fc0c505cd02400904dc1ad44fed917e",
+      "bytes": 7076
+    },
+    "anadius-accept-source/evidence.json": {
+      "sha256": "2732a87ba1be0616dfedbdfc608b08731f736649c1142ef5945196d288a683e5",
+      "bytes": 5510
+    },
+    "anadius-accept-stop-source/evidence.json": {
+      "sha256": "a36c19522571258dcf11902609f1542ec0047c1797c6719af7c5786b2d785bb8",
+      "bytes": 8447
+    },
+    "anadius-achievement-runtime-source/evidence.json": {
+      "sha256": "30f4422e0df16afad12463a15369bba86bf765b17d3cc47802567373906b22ff",
+      "bytes": 5636
+    },
+    "anadius-achievement-storage-source/evidence.json": {
+      "sha256": "095080cf03a17feb14bb055888557d51810e9392ed24dbf409ca7ba5445cd5cd",
+      "bytes": 4711
+    },
+    "anadius-achievement-writer-source/evidence.json": {
+      "sha256": "8ad943c8df3c371746aa04101c3ecb9b4a622dd760d2b71fbd7a307c57bd3cf5",
+      "bytes": 3933
+    },
+    "anadius-application-admission-source/evidence.json": {
+      "sha256": "32ac7e5bb95682b7e879c3d164083d925cd9c6aacb2c0d77fbc956ea60bd56b5",
+      "bytes": 6799
+    },
+    "anadius-application-graph-source/evidence.json": {
+      "sha256": "529abebcf2900ea933737f250e589dd713e73591afff87cd7d2e1e3d4666811a",
+      "bytes": 6814
+    },
+    "anadius-application-worker-source/evidence.json": {
+      "sha256": "73bebc5f534af8898b16f1b76b41e7e3db55a81fe6071927b02a02f806a23d03",
+      "bytes": 7493
+    },
+    "anadius-bootstrap-native-source/evidence.json": {
+      "sha256": "67fc03108b6a5e07e896d842977fc3c8942aa07b5736ecc29d4dfe678cde7cb5",
+      "bytes": 1992
+    },
+    "anadius-bootstrap-policies-source/source-evidence.json": {
+      "sha256": "b7bcd7358c66755176686770650377d3d2d63829a5eb21e7d00cc7b8b8624400",
+      "bytes": 14404
+    },
+    "anadius-calendar-source/evidence.json": {
+      "sha256": "2cffd72c6c1ce4b240fbb9597fd385a724a6b8373f63e40a05ed6f951407b7cd",
+      "bytes": 2479
+    },
+    "anadius-callback-admission-source/source-evidence.json": {
+      "sha256": "a4b0eb6d48ea344ebd9b37b2f22d1a0e532d5fc0c4dbfab7f37b03623c5598f8",
+      "bytes": 23259
+    },
+    "anadius-callback-identity-source/source-evidence.json": {
+      "sha256": "a3c60a0ab565e5275d4d3ed9db7726427970a664343fd8fdf8cbd7a1fce51836",
+      "bytes": 13516
+    },
+    "anadius-callback-policy-source/literals-file-evidence.json": {
+      "sha256": "e46f8f3399f5df98fef0563c109f6ebda4fc5f6ae0f98147deedde3a695a7c4e",
+      "bytes": 1885
+    },
+    "anadius-callback-policy-source/rea-literal-evidence.json": {
+      "sha256": "05b059b1e8e5bc313376403f0bc508ce6fe2bdffdb96e10a6ec94e4eb6d2e269",
+      "bytes": 15816
+    },
+    "anadius-callback-policy-source/source-evidence.json": {
+      "sha256": "88aeccad182f20a7c2a9db65122271aca9a6850cf27a73168cd72389c470755d",
+      "bytes": 21110
+    },
+    "anadius-callback-provider-source/source-evidence.json": {
+      "sha256": "a7d29860da53f3650b7a39cffeb43ad5e0e1eac95cc244296e0805fa790939a8",
+      "bytes": 12673
+    },
+    "anadius-config-application-source/evidence.json": {
+      "sha256": "59e44488a1d29bf99302a490df2d8991235d1eda3859407701365a7aa74b5441",
+      "bytes": 6991
+    },
+    "anadius-config-defaults-source/source-evidence.json": {
+      "sha256": "6a63421bf6234776c1bd787afcba4d6ca0e9170057764c2441341cde3c5deb7a",
+      "bytes": 4811
+    },
+    "anadius-config-hash-source/evidence.json": {
+      "sha256": "a9be1466a3f195c7e99fdceaa4455f5943dfe870e9e6f411a23bd890c8ed7c54",
+      "bytes": 8321
+    },
+    "anadius-config-iteration-source/category-evidence.json": {
+      "sha256": "9bb7dfed0984253d3b34c9ba7fdb9790ae6ab3b7b08eb244f33edfaac3c7164a",
+      "bytes": 4537
+    },
+    "anadius-config-iteration-source/source-evidence.json": {
+      "sha256": "73aadf4062692b7619a024899547a625fb0bb7eab2050e10836fb155860503c2",
+      "bytes": 7921
+    },
+    "anadius-config-iteration-source/thread-error-evidence.json": {
+      "sha256": "6d2acebcaa25fb69fc10e2f1e3ec3df44e4e59e1795c6b3a18b7d98b5dfd2d7f",
+      "bytes": 5108
+    },
+    "anadius-config-logging-source/source-evidence.json": {
+      "sha256": "c244cd6de89df1f3e0df6f2613ce290aa74ef5439a71109a7829c3dc824d0cde",
+      "bytes": 7771
+    },
+    "anadius-config-order-source/evidence.json": {
+      "sha256": "b0da23a1e1b1911795d4e87eb844b55b9bfbac7cf9a291810bf9d030ca7c5c0f",
+      "bytes": 7051
+    },
+    "anadius-config-pipeline-source/evidence.json": {
+      "sha256": "e48980f89bdd742ce827eee65e202ebc7d69f760ce645caaf9672b62cd3b7881",
+      "bytes": 6536
+    },
+    "anadius-config-source/evidence.json": {
+      "sha256": "b8397cc8ce6fd2b2c85650c0435de0bde3a0ea5e468cdf457d1068064cf99ea9",
+      "bytes": 26494
+    },
+    "anadius-config-startup-source/evidence.json": {
+      "sha256": "f61c3e0f6502a0e02207e5bbb77692da81c0eb998bcd0c51330bad27d5530416",
+      "bytes": 4130
+    },
+    "anadius-config-storage-source/embedded-png-evidence.json": {
+      "sha256": "69c5d20837459c643e2ab9ca17dbcd53685dcfc17cc8824df5dfd91e6c64f261",
+      "bytes": 2612
+    },
+    "anadius-config-storage-source/png-count-evidence.json": {
+      "sha256": "25e2b1ffd91707611ef61f236c65fff9ba4c6d996cbef5a427e5bc311b89a9fb",
+      "bytes": 4537
+    },
+    "anadius-config-storage-source/source-evidence.json": {
+      "sha256": "c5f04211fe1ff4111ddc6ddb46c627c683eda50bc8a2707c3c5196f7761a38a3",
+      "bytes": 18128
+    },
+    "anadius-configuration-factory-source/evidence.json": {
+      "sha256": "d9d09306220970fd62b942f3eff75e35ba3972d1df64010f125eae19edabbb95",
+      "bytes": 10331
+    },
+    "anadius-content-handlers-source/evidence.json": {
+      "sha256": "9085a82ee13d9f3237fd5bef03ea15ea317be6688bae19265f25964feae75433",
+      "bytes": 11211
+    },
+    "anadius-crt-argv-bridge-source/evidence.json": {
+      "sha256": "50d9103747e345fa273f143545f20632c41ab3dc469e4e04c33b3ecd3f824249",
+      "bytes": 1343
+    },
+    "anadius-crt-argv-parser-source/evidence.json": {
+      "sha256": "ff15a0e1285a484accb92bad43c0c487b237e11896f70174e06b1aa55edd3536",
+      "bytes": 2794
+    },
+    "anadius-crt-argv-source/evidence.json": {
+      "sha256": "76736e1e79a51072d0840e5046333ef6e508ae27bdaee5068998d7e70fcf63f6",
+      "bytes": 4063
+    },
+    "anadius-crt-atomic-native-source/evidence.json": {
+      "sha256": "82213d4ae94a57ec96a1ca21f6095a814af486395cc541e523a092408ee29625",
+      "bytes": 2350
+    },
+    "anadius-crt-byteclass-source/evidence.json": {
+      "sha256": "8153917913d3206882c787f4d0853243d8600a4d6784da1b5503f3d6ab5d2d21",
+      "bytes": 1030
+    },
+    "anadius-crt-cache-source/evidence.json": {
+      "sha256": "954b2395e3535c123ebb996fbfabfd3e6c7302671d30b19133edb6765acc34b0",
+      "bytes": 4316
+    },
+    "anadius-crt-conversion-api-source/evidence.json": {
+      "sha256": "203f418053024bca683eefd159f6c004c616f046140910ca2c9e9324bf1d236c",
+      "bytes": 2369
+    },
+    "anadius-crt-conversion-bridge-source/evidence.json": {
+      "sha256": "6d1a46c75317f138b9796e9562698a25a8277600e1589e997dc44067f5589f25",
+      "bytes": 1636
+    },
+    "anadius-crt-conversion-source/evidence.json": {
+      "sha256": "02105384ecdb15bed03bfb2386810dbff3e7ae10ed3e44b0e6d398520bbd1437",
+      "bytes": 3237
+    },
+    "anadius-crt-counter-native-source/evidence.json": {
+      "sha256": "30fb326f8d12df2289d0021b6ff24e5833012a7f927aa33dac7d96ff18d90661",
+      "bytes": 1738
+    },
+    "anadius-crt-cpu-source/evidence.json": {
+      "sha256": "a158604ad2e72e0f91ad3f58a3fcd0a3ccf58c52daf23785ab8c4a9b938b7471",
+      "bytes": 966
+    },
+    "anadius-crt-entry-source/evidence.json": {
+      "sha256": "198dc196fd6caf2b332343acb3f0b2f002efe5d601ec23d6ff94aa6da98c1a7e",
+      "bytes": 8471
+    },
+    "anadius-crt-environment-cleanup-source/evidence.json": {
+      "sha256": "ba49f797ed39f5266368a88395fcafdd6ed08f579dcd0025cc8a4a1abcab65cd",
+      "bytes": 13420
+    },
+    "anadius-crt-environment-source/evidence.json": {
+      "sha256": "4c22f0a8c89916d6e37b3b113a25e17423b242418809ef6c932619f5b53196fc",
+      "bytes": 2802
+    },
+    "anadius-crt-error-source/evidence.json": {
+      "sha256": "f3a3ac3492977e09d35130681f2b0159fdf81e31994a8843e9f58bb448e90d53",
+      "bytes": 6463
+    },
+    "anadius-crt-find-bridge-source/evidence.json": {
+      "sha256": "3f4aed3b5a85d3f3a602b74be5e9790ba6fae1eb701f66a9a7533e1062e52ca0",
+      "bytes": 1660
+    },
+    "anadius-crt-find-native-source/evidence.json": {
+      "sha256": "1829f84f039766469d63e5931bb883ad2715ae6dbe779deb1037435eca7479cb",
+      "bytes": 3415
+    },
+    "anadius-crt-fls-native-source/evidence.json": {
+      "sha256": "bb7219d197d85a828be58fd33481b035d88831d5faac16cee4708ce79bac0e49",
+      "bytes": 4246
+    },
+    "anadius-crt-glue-source/evidence.json": {
+      "sha256": "c83e5a179b1ab9cef671c91b634496677feba610a11798ccb85a54d489be8af0",
+      "bytes": 909
+    },
+    "anadius-crt-heap-native-bridge-source/evidence.json": {
+      "sha256": "8782216f2824808503427df31280ee9ad239618fed7d6f4a718532c6d5f32fd3",
+      "bytes": 2674
+    },
+    "anadius-crt-heap-native-source/evidence.json": {
+      "sha256": "71cf4862f42249caf0c3d5da90ae15da6015283f223ee914374b213312d2d5e1",
+      "bytes": 2269
+    },
+    "anadius-crt-heap-source/evidence.json": {
+      "sha256": "b8a2ed8b278d57cbaaed60c492a73a5d1f2e931ab8859e457b0157f5aee14e81",
+      "bytes": 2865
+    },
+    "anadius-crt-initial-multibyte-source/evidence.json": {
+      "sha256": "3f7cf2cedb0962b45287eaef1dc26f5b6715a067752eeadf411ff9587127fb6a",
+      "bytes": 4513
+    },
+    "anadius-crt-initializers-source/evidence.json": {
+      "sha256": "34fd4dadccb07fe64aea394dcf8529d98071c87f3c5cf6c3525ed1e69bef9c67",
+      "bytes": 2844
+    },
+    "anadius-crt-invalid-source/evidence.json": {
+      "sha256": "807e7948e8e7ee9bd89c77f03ccb6036b6dba4579e0d6a457a5154ca942aa380",
+      "bytes": 3169
+    },
+    "anadius-crt-lcmap-source/selected-evidence.json": {
+      "sha256": "d16bc4852107e381e3834884096eb3e28dc678645c0c62271a46d58cc9505b08",
+      "bytes": 19779
+    },
+    "anadius-crt-lifecycle-callbacks-source/evidence.json": {
+      "sha256": "e9cbe09104800966a1d4f056a9ccef256157253cbb42e66bb2f9f8124ffe90cf",
+      "bytes": 1857
+    },
+    "anadius-crt-locale-bridge-source/evidence.json": {
+      "sha256": "fa5034394f7ee21f51f2d6cc59dfdf3a07745f4b0d222c6f9130da3e2dc16f85",
+      "bytes": 1606
+    },
+    "anadius-crt-locale-free-source/evidence.json": {
+      "sha256": "62a3334e681c2939d27d19fcc84a46baaeede371355fe5c8376ad34cc3353986",
+      "bytes": 2866
+    },
+    "anadius-crt-locale-names-source/selected-evidence.json": {
+      "sha256": "4ee3f18dd0da22986cf181df6aecb4ba620f220bb3cfa78715fe922aa7605c1e",
+      "bytes": 5992
+    },
+    "anadius-crt-locale-native-source/evidence.json": {
+      "sha256": "481d332285c36492eb2740095724d9ddadab34b47a506608df2ec9696dda9b97",
+      "bytes": 4555
+    },
+    "anadius-crt-locale-ref-source/evidence.json": {
+      "sha256": "91541d94f17ba3eb59677043dd768360e0be917d3014594fb352e56a5b92c380",
+      "bytes": 2469
+    },
+    "anadius-crt-locale-resource-bridge-source/evidence.json": {
+      "sha256": "cc18be4797f1f9834e7d89e4d552dd22e0547d93c38bb99d74cb65192ec2b6ab",
+      "bytes": 1423
+    },
+    "anadius-crt-locale-startup-source/rea-evidence.json": {
+      "sha256": "94a231b7243b3efedbdbe0c8c145a539b3fc7acb9ba65cff49df7de09f6c03cc",
+      "bytes": 181003
+    },
+    "anadius-crt-locale-thread-source/evidence.json": {
+      "sha256": "91b9a6ecf0e39a847f632d0d02c06a80733ec9d595a5cc1efb592b8d4fa79844",
+      "bytes": 2181
+    },
+    "anadius-crt-locale-update-source/evidence.json": {
+      "sha256": "82a5457a5919615c1b7c5a079ab49c6ad91050ba0b92aca7162ce2cc7fb9b5f2",
+      "bytes": 7149
+    },
+    "anadius-crt-lock-native-source/evidence.json": {
+      "sha256": "4c6ef1b664fb41b79b626fee9953378deefc59b7e539acdce58cd485063e323b",
+      "bytes": 1987
+    },
+    "anadius-crt-lock-source/evidence.json": {
+      "sha256": "e5c44c0cfd86d45aaff14e3d0773c7100add15a7d46832232c5b12fe9ef69e14",
+      "bytes": 2987
+    },
+    "anadius-crt-lowio-lifecycle-source/evidence.json": {
+      "sha256": "adcce7480d7d59763734e1c9a913cc99b3961fb889be8058491e5c99a351a5c8",
+      "bytes": 2558
+    },
+    "anadius-crt-module-path-source/evidence.json": {
+      "sha256": "ba0b79a416cd0b0117f901a9ceaa197accbacd2a6c003db538953a3b6776135c",
+      "bytes": 3873
+    },
+    "anadius-crt-multibyte-bridge-source/evidence.json": {
+      "sha256": "5dc3130a10043a6af20641eb65882d444bd3d940e94a78b9f570ad514b148aae",
+      "bytes": 2979
+    },
+    "anadius-crt-multibyte-builder-source/evidence.json": {
+      "sha256": "deda8441aca12f89236bd7d07ee7f02e87cb6ea0d5caad5142be2545f18820a4",
+      "bytes": 18760
+    },
+    "anadius-crt-multibyte-control-source/evidence.json": {
+      "sha256": "23d7ca242d88bc5d9d41cbe2af4e9567648776ad2d8a78dd4bd70a6e4416a763",
+      "bytes": 14015
+    },
+    "anadius-crt-multibyte-record-bridge-source/evidence.json": {
+      "sha256": "da1b8540825829096022174d85ec62295abb831d3b85b2da4597cb7c8bcb3a39",
+      "bytes": 3824
+    },
+    "anadius-crt-multibyte-support-source/selected-evidence.json": {
+      "sha256": "1b34feb3562926290bd3494f364075ea73bd069f9863057fd68e7dad73720b77",
+      "bytes": 13295
+    },
+    "anadius-crt-multibyte-tables-source/selected-evidence.json": {
+      "sha256": "efc1ce60793e477a96d08e3534783725cd07c500c82dac2c6ea8b98d1286ef34",
+      "bytes": 10442
+    },
+    "anadius-crt-nls-bridge-source/evidence.json": {
+      "sha256": "bb95e2727e4aa0ed2ca5b938422641ac08cfca717dff56781bdbeae6edbb32b1",
+      "bytes": 3946
+    },
+    "anadius-crt-nls-dispatch-bridge-source/evidence.json": {
+      "sha256": "337e60c77ae4b0fc61aef1821d5a1ff5b5fb1810bc00935d8410bbc226ca1da0",
+      "bytes": 4426
+    },
+    "anadius-crt-nls-dispatch-native-source/evidence.json": {
+      "sha256": "ca3a06d788616d8e306c141f9a4d366e26c301d323dee2f4d5066ea43b17872b",
+      "bytes": 1528
+    },
+    "anadius-crt-nls-dispatch-source/selected-evidence.json": {
+      "sha256": "e6246ee7550f9c23f3f6dd8739853b7328ed1e565cc1095af42648dd7eeb15fd",
+      "bytes": 7158
+    },
+    "anadius-crt-nls-native-bridge-source/evidence.json": {
+      "sha256": "0189cb1193a9379219334f55232f9e1c1faa4c0981885ee644449c0e6f239892",
+      "bytes": 2024
+    },
+    "anadius-crt-nls-native-source/evidence.json": {
+      "sha256": "efed591b535689f914ac792b01de3c6930e6b299f8f8d1ccba58903b38613270",
+      "bytes": 2687
+    },
+    "anadius-crt-onexit-source/evidence.json": {
+      "sha256": "3e7f752f3113fffa4c15b7a08da48656257fe420c17863f9883ba41d20047129",
+      "bytes": 3714
+    },
+    "anadius-crt-pair-bindings-source/evidence.json": {
+      "sha256": "3347d8e936b2c3a47ec793d01aabb43505b195293e1bb45f5bb1ef5efbba88c2",
+      "bytes": 22419
+    },
+    "anadius-crt-pair-leaves-source/evidence.json": {
+      "sha256": "ecb486ee0b08757ad79de2d54a5b981da2a1b186ae9c717657335534a3bcbc22",
+      "bytes": 11158
+    },
+    "anadius-crt-ptd-data-source/evidence.json": {
+      "sha256": "414d5d1804765bc1a444edcaab1544c194f2213b3085916189d5da4e50a3910f",
+      "bytes": 2465
+    },
+    "anadius-crt-ptd-source/evidence.json": {
+      "sha256": "3a14814e0403bdd0b4300b558615b71f09f9aed9365068611d190e9ead5d8bdb",
+      "bytes": 3592
+    },
+    "anadius-crt-realloc-source/evidence.json": {
+      "sha256": "c21683d8f3028dbfdf25adcf6999c57b4656df8e4caf2c12a52381d14f4c33ef",
+      "bytes": 2531
+    },
+    "anadius-crt-recalloc-bridge-source/evidence.json": {
+      "sha256": "65ec5cdf4c1e081de464a6679d54e123336bf235ce9992be403ee55a0fa17c58",
+      "bytes": 1492
+    },
+    "anadius-crt-recalloc-source/evidence.json": {
+      "sha256": "01c371ba46f93190700166a97960b680211c8935628b723fbb56686648e7f515",
+      "bytes": 2127
+    },
+    "anadius-crt-runtime-source/evidence.json": {
+      "sha256": "29cd7471ab82a839c868b98e60421d39b0a67cfc789ebe88190c4afd0172a18e",
+      "bytes": 3902
+    },
+    "anadius-crt-sort-source/comparator-offline-evidence.json": {
+      "sha256": "a857f2bc22760e9ff80b17f7e3d28e872d740d806db761a53e687533056b2cf2",
+      "bytes": 1256
+    },
+    "anadius-crt-sort-source/evidence.json": {
+      "sha256": "867ca7f31770c3964c6528c09e2def1403b21853c5a763c07736ebab82f6914d",
+      "bytes": 2830
+    },
+    "anadius-crt-startup-bridge-source/evidence.json": {
+      "sha256": "40d9bd30f2d390fbd674df5544a96411a99c9cea87efbcd144c5772d69dfd6a0",
+      "bytes": 1055
+    },
+    "anadius-crt-string-type-source/evidence.json": {
+      "sha256": "8df147f8e499da3f2751ba3a40958a0ad83c098ab4759f04dfa59da755666276",
+      "bytes": 7748
+    },
+    "anadius-crt-support-source/evidence.json": {
+      "sha256": "86fb066f05f172e9adcc021bce55e6f02c361c73a73a6b742f0a934d7533b7ae",
+      "bytes": 2340
+    },
+    "anadius-crt-sync-bridge-source/evidence.json": {
+      "sha256": "4e24953d81619a89962108d3c941246277a9591ce3ed84ae411331a572dd3300",
+      "bytes": 4102
+    },
+    "anadius-crt-termination-source/evidence.json": {
+      "sha256": "db4dbcdf7884fc99d9812c5b202f9a559aa25ba61f9e2b3c50daa26ea8d0e61a",
+      "bytes": 4651
+    },
+    "anadius-crt-wildcard-search-source/evidence.json": {
+      "sha256": "564cfcc45cae82365b46267ec5f34efdc9a74899e701fde828f3447f810afcc4",
+      "bytes": 5663
+    },
+    "anadius-crt-wildcard-source/evidence.json": {
+      "sha256": "47a0777aeb24e36faad66f178ee206a5b5333dac0ac8aad23c03d13ff957370a",
+      "bytes": 2312
+    },
+    "anadius-crt-wildcard-storage-source/evidence.json": {
+      "sha256": "0e61c1baa4c02dba2dd37a1ef81e7f2a6523a86c46329c866b5612395d7066fa",
+      "bytes": 3549
+    },
+    "anadius-crypto-source/constant-evidence.json": {
+      "sha256": "727f033307fa243254d8dad966ac437141a68353f2f608fbd8919d8689e912f6",
+      "bytes": 7815
+    },
+    "anadius-crypto-source/evidence.json": {
+      "sha256": "f028a45f03f32c3ca9ba9e6b9a1a47db9f5901f9ada0f9b5859e8765ed269aee",
+      "bytes": 14925
+    },
+    "anadius-encoding-source/evidence.json": {
+      "sha256": "c151249805f141a21a9f426483d595aa74bc267a15a70927ffe2c16bad0953aa",
+      "bytes": 3234
+    },
+    "anadius-event-queue-source/evidence.json": {
+      "sha256": "d5085f335026eedf8d08305d07d80f23943fe0d6c45e893e8fa0f3888cb48b2c",
+      "bytes": 5764
+    },
+    "anadius-file-source/io-evidence.json": {
+      "sha256": "0f3b57ac675411b4154b1fef27bbb9b951397088e5abf0d1e3e036700c6995ec",
+      "bytes": 13787
+    },
+    "anadius-foreign-callback-source/source-evidence.json": {
+      "sha256": "33cb2f2ce2afe0df3b2814bbd49e5d0df5435c347683956cbf6894fc50e283c9",
+      "bytes": 38849
+    },
+    "anadius-handlers-source/evidence.json": {
+      "sha256": "49538c9ba8cc5fda42826efdd06fd3409a37f4913abe7a23091c4cc738b2dcc2",
+      "bytes": 14920
+    },
+    "anadius-hash-source/evidence.json": {
+      "sha256": "31927c03394264c8a3f84cce585a43f6bd01a84c27c60b0ec25f8ea025adfede",
+      "bytes": 11335
+    },
+    "anadius-host-callbacks-source/evidence.json": {
+      "sha256": "aa085d3f3cf1268d0ec0729cedfb1e16287b56306a412e092c3e352c56b39c01",
+      "bytes": 4339
+    },
+    "anadius-host-init-source/evidence.json": {
+      "sha256": "56d5664e2e99306d15c8d2225c3b349ebf42338baaee1962bc50000943a222c6",
+      "bytes": 6751
+    },
+    "anadius-host-platform-source/source-evidence.json": {
+      "sha256": "6f1f375f83e351b9114536ffe689232a62d42fcd8d985b4fde3a6359b9e815bb",
+      "bytes": 19320
+    },
+    "anadius-io-memory-source/evidence.json": {
+      "sha256": "2d4426dc4ff96927c784fb4153cbe4abd68933efe83c7dc319295c90183a6eb1",
+      "bytes": 3976
+    },
+    "anadius-library-effects-source/source-evidence.json": {
+      "sha256": "3425568fd36905268fa2184809720c347e2684676be853c44695a374989d2380",
+      "bytes": 13266
+    },
+    "anadius-license-source/evidence.json": {
+      "sha256": "cec9ec9244645a5abe24e653aa47052e79d3723f457fe16afce68c501c8ec66b",
+      "bytes": 23858
+    },
+    "anadius-messages-source/evidence.json": {
+      "sha256": "c12464e1b33d5ec6e89e23ac0555454f803d54acbb5511a8b654d4c9fa0047e9",
+      "bytes": 4645
+    },
+    "anadius-misc-handlers-source/evidence.json": {
+      "sha256": "ac11c1dccc7ca23368df84bd888a0cd963ddb0e467e544b623e4f3ad983f7644",
+      "bytes": 64604
+    },
+    "anadius-native-context-source/source-evidence.json": {
+      "sha256": "b818d0e99fc09d704d86a1ff3b8365b78caf3af7376741685e0c9b624a6539c8",
+      "bytes": 9377
+    },
+    "anadius-native-profile-source/evidence.json": {
+      "sha256": "6ff2e07c632f301a16e7eae5241368ecf8981a2a901bf84ff9c674c9d1e9ac98",
+      "bytes": 6773
+    },
+    "anadius-native-source/evidence.json": {
+      "sha256": "f22333faaa3d2b1d0f952518aa770420462c5039009fe3b9e27d4a2a02c9d3b5",
+      "bytes": 5926
+    },
+    "anadius-network-hook-source/evidence.json": {
+      "sha256": "3ee3cecfbd72fa7d01e8f20f4dbba343122ca88b8074d28d49cbe7a283b1142b",
+      "bytes": 3166
+    },
+    "anadius-online-factory-source/evidence.json": {
+      "sha256": "f6353ab22201947b55816cc024815ed8a557ad7c55cc2e97762edf37eaf88cf8",
+      "bytes": 9486
+    },
+    "anadius-online-object-source/source-evidence.json": {
+      "sha256": "dca695a8ed41aee36d226f733ed3a8304ea54012b3b10804733b271f1d402eb3",
+      "bytes": 15578
+    },
+    "anadius-online-platform-source/source-evidence.json": {
+      "sha256": "ef7f1b72776144455ab3d33c29b0ff18db8d0908ec4a75cc77dc013645aa8941",
+      "bytes": 15721
+    },
+    "anadius-online-query-source/source-evidence.json": {
+      "sha256": "b66d5305a624c7dc451065d307c5d89cf40db0f58165ce26c30e08a0571392dd",
+      "bytes": 15460
+    },
+    "anadius-online-source/evidence.json": {
+      "sha256": "ef5a7a66026753c824f4b6560694f92a380f3bb28c2b0d4341047e22d7e6d99d",
+      "bytes": 12219
+    },
+    "anadius-online-version-source/source-evidence.json": {
+      "sha256": "9681cb83524f39f96f3a3177921750ccc5d48a35fa253b74972de4754370a647",
+      "bytes": 11809
+    },
+    "anadius-original-checkpoint-source/source-evidence.json": {
+      "sha256": "ac1b604a232c364428d6a8cc9b44db9e03cb6697b75175f65ec6b989b3962743",
+      "bytes": 17985
+    },
+    "anadius-original-provider-source/source-evidence.json": {
+      "sha256": "1a4f58a4e1c0f360da0cd639980a8aadc241c09c715ed951e832df0b5e5c02de",
+      "bytes": 18392
+    },
+    "anadius-owned-deque-source/evidence.json": {
+      "sha256": "9307f67c6b8329a7114c647baae83f3d71575c2a409f06d9202a01042008a007",
+      "bytes": 4421
+    },
+    "anadius-owned-environment-source/evidence.json": {
+      "sha256": "250c8a0397e164438370cc5d2352040d34cc86ad7e83ef1c9d5f65ec077edf6a",
+      "bytes": 5081
+    },
+    "anadius-owned-jobs-source/evidence.json": {
+      "sha256": "701890adeb7638c9de0f246a4d574c368217afe998631c76031907c736e3a313",
+      "bytes": 4703
+    },
+    "anadius-owned-server-source/evidence.json": {
+      "sha256": "fbf83797c592240854ddd80c4baa9ac1624dcdd883a5c62b0bfbbf9c3659d5d5",
+      "bytes": 3461
+    },
+    "anadius-parser-source/evidence.json": {
+      "sha256": "4d1c2bebedc4bb0bbc7ae1ddb65bc74083f5d0918663d9404a9101acffdce3e9",
+      "bytes": 104335
+    },
+    "anadius-path-source/evidence.json": {
+      "sha256": "ab62816c0719acd6701bb6dc7927be4a09a79bb8f4980c36f182ffbb3d302c6c",
+      "bytes": 4466
+    },
+    "anadius-registry-source/evidence.json": {
+      "sha256": "41a9aed632f1da199a3bd635bb1334353229e82385d2146f5fdb434aea927422",
+      "bytes": 6838
+    },
+    "anadius-server-runtime-source/evidence.json": {
+      "sha256": "00cd3a9c8071725379e9db5c4022e9209479ee3c475f602c26ee1fc334cb47ad",
+      "bytes": 3670
+    },
+    "anadius-server-source/evidence-map.json": {
+      "sha256": "58f4cd2b2977a04ad8b243685c5cd58aa8d395e530ddf7a8e1693ef74bb998a6",
+      "bytes": 9140
+    },
+    "anadius-services-completion-source/logging-evidence.json": {
+      "sha256": "bbfb3c6561ee5c4f6006a41b7e224f2fb819d7fd9517bc0a5d38dd0deb0afc77",
+      "bytes": 3314
+    },
+    "anadius-services-completion-source/source-evidence.json": {
+      "sha256": "e78c3e6dd79a3224677f901213eb123943031668b2ffb551d37c59090208d803",
+      "bytes": 8745
+    },
+    "anadius-services-factory-source/evidence.json": {
+      "sha256": "40eeff924cadf0d2b04fc240c3e897abb60e36f74bcbe292fe80c29b4cbc4ebb",
+      "bytes": 10832
+    },
+    "anadius-session-dispose-source/evidence.json": {
+      "sha256": "c3aeb6fc97f0fb44becdb9676ddd75bd097e21a9c8d6c102acdf84d9ebb8b4eb",
+      "bytes": 7543
+    },
+    "anadius-session-flow-source/evidence.json": {
+      "sha256": "bfb2d7abae2c5793322c78ff2c23f9fe7b5b92269aa4f9f9bf34707dc1aa3539",
+      "bytes": 8832
+    },
+    "anadius-session-memory-source/evidence.json": {
+      "sha256": "3adaa94c58a6c556f69316ecca18b3df051c7c05bbb1abde2853255c0a35b56f",
+      "bytes": 3594
+    },
+    "anadius-session-owner-source/evidence.json": {
+      "sha256": "2ed47df47d12dfb1c4d554a39f0cf1a47cbc833090497738c3319d6f8a6e8471",
+      "bytes": 6111
+    },
+    "anadius-session-policy-source/evidence.json": {
+      "sha256": "56cf44ffea57ae9125c761b812af5f01f72ab787d6e67ecebd36fcd6b4338cf8",
+      "bytes": 5757
+    },
+    "anadius-session-profile-source/evidence.json": {
+      "sha256": "1802cbbd26fe14e0e45e01c4152ef860f0f9cedd698ddca876eb87efa2b59143",
+      "bytes": 3642
+    },
+    "anadius-session-source/evidence.json": {
+      "sha256": "f6c9f150e8d4ffc52fe7abe18d51086bf972901105879ee4ce3636ed2f6288f9",
+      "bytes": 5576
+    },
+    "anadius-session-stop-source/evidence.json": {
+      "sha256": "16f16986f54f842000755a7574eb85654955e0720fe0b31a610cfd2fcb85bfca",
+      "bytes": 7760
+    },
+    "anadius-shared-log-source/source-evidence.json": {
+      "sha256": "6df3620ab562e623e913deb196c11e2fe5f6bdd03739a67896bdc3b2be79c4cc",
+      "bytes": 12579
+    },
+    "anadius-socket-move-source/evidence.json": {
+      "sha256": "e4e7db1037a35928882b271108cf52601db6d58d35268d285393efcd6812f040",
+      "bytes": 10890
+    },
+    "anadius-socket-source/acceptor-evidence.json": {
+      "sha256": "c164a9f54e056486786f3a61f599f359d648e210980c7c91743d55b701b93cd8",
+      "bytes": 6556
+    },
+    "anadius-socket-source/append-growth-evidence.json": {
+      "sha256": "b00ed364ebf864f4e6cc6f3663455f508707bc8bdd93ef8fef353fb02dea6c9e",
+      "bytes": 7992
+    },
+    "anadius-socket-source/async-receive-evidence.json": {
+      "sha256": "cafc410ed4a38bf5d74e45e922644134e0e60664f76db3b2659ea844cb42b408",
+      "bytes": 4671
+    },
+    "anadius-socket-source/cancellation-evidence.json": {
+      "sha256": "c28fb7cb510459c539b35ca07ac74fcb22a8a68c97ce978e46a62c75bf5e45f2",
+      "bytes": 5577
+    },
+    "anadius-socket-source/cipher-session-evidence.json": {
+      "sha256": "644e227271aac3c531e181d914a4bcbea40626c4f0e37288c7f6454b971e28c8",
+      "bytes": 10217
+    },
+    "anadius-socket-source/close-evidence.json": {
+      "sha256": "488c86d4cca1bddd557b9996ac3e016ddc872ac2461fd78be37f0ad24dd3b52e",
+      "bytes": 5352
+    },
+    "anadius-socket-source/completion-dispatcher-evidence.json": {
+      "sha256": "d11df92166732971c7d37be6351a763a0ebc85fe5a7a0b81a6ab2d36be0990a9",
+      "bytes": 10351
+    },
+    "anadius-socket-source/composed-read-evidence.json": {
+      "sha256": "1582fdbf08d9adecbe33ccf583c6864dcf88f74500613b4c9c7919b6722dca67",
+      "bytes": 6803
+    },
+    "anadius-socket-source/composed-write-evidence.json": {
+      "sha256": "7de5a3b27fcc4dc75438b8dffb886f3031ee821b78bdb81339477cbada8b257d",
+      "bytes": 10416
+    },
+    "anadius-socket-source/document-clear-evidence.json": {
+      "sha256": "f4f48d974b32481bf9700e22444e434784ecf856e1fb39a12ea3e5739a3c7a8d",
+      "bytes": 11112
+    },
+    "anadius-socket-source/document-error-evidence.json": {
+      "sha256": "879284b9306d3584d4286e342209b91d355b74576378124a97a97448e6e94651",
+      "bytes": 11423
+    },
+    "anadius-socket-source/environment-constructor-evidence.json": {
+      "sha256": "96e38cc7d8e18321e1336705c0088813b4fdd541bb9f21b6ac569b2e303a921d",
+      "bytes": 6193
+    },
+    "anadius-socket-source/evidence.json": {
+      "sha256": "f6dedbaaa00bd106de4d9a11a9b28630799d273afe0cee5936e5735dc31f712d",
+      "bytes": 4941
+    },
+    "anadius-socket-source/frame-read-evidence.json": {
+      "sha256": "684c895517a84e1f5592197010ce770c186ea15b781a2df424805a6d42f2ced3",
+      "bytes": 6441
+    },
+    "anadius-socket-source/handler-dispatch-evidence.json": {
+      "sha256": "bbb8e44a390a162c1caafc46e81955cae118fc3753a7e24bb47cba6bd8be19f1",
+      "bytes": 10773
+    },
+    "anadius-socket-source/io-completion-evidence.json": {
+      "sha256": "22ecfc4fc48c5bf32f4f14347cc1c7951f4172c18d3b47626f5759c1309d051f",
+      "bytes": 11170
+    },
+    "anadius-socket-source/iocp-constructor-evidence.json": {
+      "sha256": "5cc41bf4cf23fb7be6afced73ae42c6f067f31afbd9f8533c87f9de24c32dcbd",
+      "bytes": 5739
+    },
+    "anadius-socket-source/lifecycle-evidence.json": {
+      "sha256": "53d577f9d89190d936ff7e66f00d4742c027ad8b685b79639a18894e75a4c600",
+      "bytes": 6062
+    },
+    "anadius-socket-source/message-core-bridge-evidence.json": {
+      "sha256": "7b6bc1831ce5e40a33883d220ee8eee1d6809bdc6880d9e3a0cd8e9af4a5b464",
+      "bytes": 7300
+    },
+    "anadius-socket-source/message-dispatch-evidence.json": {
+      "sha256": "fe47c533b23748f5ca322a5439ef089508419121b1c6fee57c5e517dba94b3a2",
+      "bytes": 6931
+    },
+    "anadius-socket-source/native-dispatch-evidence.json": {
+      "sha256": "1d786c7e1586ecdf2aed20f99dc18757e50382380c78619bf53541b19805d443",
+      "bytes": 8261
+    },
+    "anadius-socket-source/native-document-evidence.json": {
+      "sha256": "d613294438d6ec1ca046f5678350f548a345b3b1c8714d48c26093e65c235815",
+      "bytes": 12726
+    },
+    "anadius-socket-source/native-message-evidence.json": {
+      "sha256": "e4577a1ba3109a151de8738a401b7947cbdb622af52f875d2f5b6a5ba3250ef1",
+      "bytes": 7506
+    },
+    "anadius-socket-source/node-base-evidence.json": {
+      "sha256": "c69fbed66ca4665809ec903c2d4c58c7fd9bc744bf643e9bdbe57a95648a0a35",
+      "bytes": 10815
+    },
+    "anadius-socket-source/node-constructors-evidence.json": {
+      "sha256": "6585c7cb0c42d038c1e9f232d08d7966367baf1e4ad25c1de42e639228435664",
+      "bytes": 18849
+    },
+    "anadius-socket-source/node-delete-evidence.json": {
+      "sha256": "e02dfe71c0d5c7d742b4d2591d4f3f2caf66a11ef67f7b82b1e893f502415fd2",
+      "bytes": 10255
+    },
+    "anadius-socket-source/node-identify-evidence.json": {
+      "sha256": "bed9953642096ae9aeef96539efffb1edc604b4f9d9a906bc08d0a5df156e781",
+      "bytes": 12625
+    },
+    "anadius-socket-source/node-insertion-evidence.json": {
+      "sha256": "82b73f4da0ce0c4c313811c1a9f781175c32786f6a94d1f2b50cc9338670a12e",
+      "bytes": 12081
+    },
+    "anadius-socket-source/node-parse-evidence.json": {
+      "sha256": "b43b12bf73abbfc603a1d741b932e817c730cc3cbd5bcebd04c54f0c21bac358",
+      "bytes": 13174
+    },
+    "anadius-socket-source/node-string-evidence.json": {
+      "sha256": "fb74efd6ec96db81ce993664ace5a16febdcb27c8f30cd8ab6806cae25d7161c",
+      "bytes": 11533
+    },
+    "anadius-socket-source/owned-response-evidence.json": {
+      "sha256": "e82c28b23689b514929cc9eaf0fdd49caba50c093c3615dae6dc304499f81d1f",
+      "bytes": 7183
+    },
+    "anadius-socket-source/parse-entry-evidence.json": {
+      "sha256": "3cda998ed23f24bf9eb3740822b48120692c1e3cb1fb49478c622201eb8b63f4",
+      "bytes": 12975
+    },
+    "anadius-socket-source/pool-allocation-evidence.json": {
+      "sha256": "9f468fbf6c6cd85e41f2725fe96faca0a70d7ee6f1ce0fb57a977d09ebcda860",
+      "bytes": 12146
+    },
+    "anadius-socket-source/pool-append-evidence.json": {
+      "sha256": "bd23278a63e05caedc1d62444714f55470914ef1ca6df9e69c1a8a68c6a5655c",
+      "bytes": 10478
+    },
+    "anadius-socket-source/pool-clear-evidence.json": {
+      "sha256": "534e0634317f3ecd89ede5f7b98d57853c3d554047457a2fbc6c22ac03f672b2",
+      "bytes": 14211
+    },
+    "anadius-socket-source/pool-destruct-evidence.json": {
+      "sha256": "56f8d1a8926d65019c4c332f3490df7519ec3fb454920a929e4aa13e572ea00e",
+      "bytes": 15986
+    },
+    "anadius-socket-source/pool-release-evidence.json": {
+      "sha256": "289a3b1f6f8daaaef81bc2329df5edc62d634ada81ef6475ecd880e915ad8c7c",
+      "bytes": 11468
+    },
+    "anadius-socket-source/posted-operation-evidence.json": {
+      "sha256": "c16db83a077634d153d9c59260ade758ceaeb01db63772797bec7a5c37bbb1f8",
+      "bytes": 9056
+    },
+    "anadius-socket-source/prefix-cipher-evidence.json": {
+      "sha256": "db605f1458104cad3e080ea8ede1c510fa5d3b5f13ee41ab971db769eb370b93",
+      "bytes": 12385
+    },
+    "anadius-socket-source/queued-write-evidence.json": {
+      "sha256": "2a45d115d99922dc82d0841634820347014c4780820bd86a3a573ef93f042d19",
+      "bytes": 7327
+    },
+    "anadius-socket-source/receive-buffer-evidence.json": {
+      "sha256": "81c15d1d9df17c4a289f0aeaffebbffecd09ce92eb3196564428d480d6f75a3b",
+      "bytes": 5665
+    },
+    "anadius-socket-source/recycle-evidence.json": {
+      "sha256": "cb203638e674191aaa9891eb030c243cac879d06d21e187adf9a47381ba96eaa",
+      "bytes": 4852
+    },
+    "anadius-socket-source/request-growth-evidence.json": {
+      "sha256": "2ebe75cbc0734572fa8d80b9f1977247134c41dd2f5db9175d788c99fb5ce703",
+      "bytes": 6900
+    },
+    "anadius-socket-source/request-mutation-evidence.json": {
+      "sha256": "441a1243546e34d7205df91c5b48b6c1d0c0e5b2d218a625ac63e4e39f2e1456",
+      "bytes": 6973
+    },
+    "anadius-socket-source/response-containers-evidence.json": {
+      "sha256": "3330309bbd8a5b0df18d16eb9c04a0a25f3415d787d7d0e084eb621808dcab8f",
+      "bytes": 7425
+    },
+    "anadius-socket-source/response-dispatch-evidence.json": {
+      "sha256": "7fa8e9ab0aa5afabd10fbe78f29475af3f23f4746f976056fa4e9c48127e1fd3",
+      "bytes": 7092
+    },
+    "anadius-socket-source/response-hex-evidence.json": {
+      "sha256": "6897299089acfde83810bb515f894d2fe8531ead630ca1af0a2d35d1b72c9a85",
+      "bytes": 6848
+    },
+    "anadius-socket-source/scheduler-registry-evidence.json": {
+      "sha256": "5669040a048b143039d4b7fdf9e725be67821b7ab1fb8d3bdc6d2ec80b69348c",
+      "bytes": 5258
+    },
+    "anadius-socket-source/service-constructor-evidence.json": {
+      "sha256": "0c68e158f423fe2ba7e1ff01fbee0768deb1b6e01723ea868cacd787dec37e7a",
+      "bytes": 5526
+    },
+    "anadius-socket-source/service-registry-evidence.json": {
+      "sha256": "ca5766af75b16292e528b9f32c7136700aca5e55128dbf1ac31198a5e7a316e2",
+      "bytes": 5060
+    },
+    "anadius-socket-source/worker-run-evidence.json": {
+      "sha256": "66720a8af3ee484b271e7a0fa4c52077db992c4ddfe2d485cdb8d4731675b447",
+      "bytes": 9316
+    },
+    "anadius-socket-source/worker-startup-evidence.json": {
+      "sha256": "1f85bdf27d2a10826c26ac2699f99472e52caa4239f27f8297ef2bc781369cb6",
+      "bytes": 6650
+    },
+    "anadius-socket-source/write-finish-evidence.json": {
+      "sha256": "402a6553b121605ee7dcd34b3725b7f73eb73e1db4e64bf9d0a999827bebe99b",
+      "bytes": 6312
+    },
+    "anadius-startup-publication-source/source-evidence.json": {
+      "sha256": "d8634499fd0d3836fdecc122134426e079c0ec03677496343185ae476a637793",
+      "bytes": 12111
+    },
+    "anadius-startup-source/evidence.json": {
+      "sha256": "38960ed6e797f48701a80694dfe55873b6d68d1e56311168fbb7ebaaee390378",
+      "bytes": 4696
+    },
+    "anadius-status-source/evidence.json": {
+      "sha256": "898b28206430d69854d66d9cb835c2062dd6911b96aba9d70d8d14abe6415b98",
+      "bytes": 3364
+    },
+    "anadius-thread-native-source/evidence.json": {
+      "sha256": "3b9bf545da26fcbd216403963a8a0eb5a0fd2eb35bc68d74a102b23abd00932b",
+      "bytes": 1528
+    },
+    "anadius-thread-source/evidence.json": {
+      "sha256": "cb4f734a49e75e94007a07cd06c768d96706552fa8b3b3d02451e25333729d5a",
+      "bytes": 3633
+    },
+    "anadius-timestamp-source/evidence.json": {
+      "sha256": "7da5df9fa880b9f023c6b442f19ac3ee52e3c2898e8027f8d7ef429628cc2bba",
+      "bytes": 5362
+    },
+    "anadius-token-source/evidence.json": {
+      "sha256": "25d362ae1c88583855ffcdb433622c491ecf2b1cd6208b3c18e502d1e392d377",
+      "bytes": 23524
+    },
+    "anadius-vcrt-api-source/evidence.json": {
+      "sha256": "b3a4520f6004fc4314e2906e1648bcd246cd40f6da7911d7072b2fd064a3d091",
+      "bytes": 5110
+    },
+    "anadius-vcrt-bridge-source/evidence.json": {
+      "sha256": "061b013c9db4e37a4dec42f9cef898f6dbd8491e78392a6df6948b101d2691f9",
+      "bytes": 1312
+    },
+    "anadius-vcrt-ptd-source/evidence.json": {
+      "sha256": "7dab76affb6e16e23201a6cd9bb9676c47025377f799e97e025e21b2992f4bde",
+      "bytes": 6158
+    },
+    "anadius-worker-handoff-source/evidence.json": {
+      "sha256": "4438ebc17892311924df266071dd5d13bfc994c3179610055bca6c281a8ea12c",
+      "bytes": 7337
+    },
+    "anadius-xml-source/evidence.json": {
+      "sha256": "2d2b57579dfd3e48b00aa1f13d792bc22f0e8536fe3910c8f55ec98471b08ce5",
+      "bytes": 3410
+    },
+    "anadius-xml-source/reader-evidence.json": {
+      "sha256": "bf57eecb81da3dda53f944393e3b701446486d477b87fafc43344528d92f7c58",
+      "bytes": 16525
+    },
+    "preloader-native-source/evidence.json": {
+      "sha256": "ad17b385a86bb312079401f871514aa00124e5cdea9126fc89ca48e106515b77",
+      "bytes": 8543
+    },
+    "version-rebuild/wrappers.asm": {
+      "sha256": "0585c09242dcafeac87c9d1d3375843349adadbae7a159adfd4ab6d768dea1c7",
+      "bytes": 294269
+    }
+  }
+}

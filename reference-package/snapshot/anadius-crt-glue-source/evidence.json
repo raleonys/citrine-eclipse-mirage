@@ -1,0 +1,17 @@
+{
+  "kind": "New source composition, not additional recovered function",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "evidence_sources": [
+    "../anadius-crt-ptd-source/evidence.json",
+    "../anadius-crt-ptd-data-source/evidence.json",
+    "../anadius-crt-heap-source/evidence.json",
+    "../anadius-crt-error-source/evidence.json",
+    "../anadius-crt-invalid-source/evidence.json",
+    "../anadius-crt-runtime-source/evidence.json",
+    "../anadius-thread-source/evidence.json",
+    "../anadius-thread-native-source/evidence.json"
+  ],
+  "sdk_typing": "Local Windows SDK; six exact decltype function pointers; native addresses observed but not invoked",
+  "native_execution": "none for FLS/heap/thread/module/provider APIs",
+  "limits": "Borrowed lifetime and callback binding required; native concurrency, SEH and DLL equivalence unproven"
+}

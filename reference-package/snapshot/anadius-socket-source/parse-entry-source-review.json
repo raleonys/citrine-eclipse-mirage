@@ -1,0 +1,94 @@
+{
+  "schema": "parse-entry.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/allocation_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent retained complete0041b0 assembly/pseudocode and exact new production-source review, with subsequently discovered complete historical raw document-slot extraction; one normal parse-entry byte-state projection and one existing-provider source binding. No original-file reads, target execution or reviewer tests.",
+  "reviewed_source_hashes": {
+    "parse_entry.hpp": "b6d7e9ad9613b738068ae51ec3aeac7ee094937356712dfd80b6ee94a1830734",
+    "parse_entry.cpp": "2c905d087fb298433bac02721822c5eafa183def3b61a0b96405994159c23c31"
+  },
+  "addresses": [
+    "0x1800041b0"
+  ],
+  "assembly_evidence": "ev_0161e7e54c7c2f628bb6bbf99adff0b97b85e09b7c8528365aa858c02fdd4a08",
+  "pseudo_evidence": "ev_d4270b9a2ca885be4b12cfa24f257c4c48568ce7a4cbd3234c71d483394ca0de",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 1,
+  "prior_source_presence": "module_record_only",
+  "closed_providers": [
+    {
+      "address": "0x1800041b0",
+      "base": "NativeDocumentEffects::parse_0041b0",
+      "closure": "RecoveredParseEntryEffects::parse_0041b0",
+      "body": "parse_document_entry_0041b0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "retained_document_table_limit": {
+    "file": "node-delete-next-vtables.json",
+    "sha256": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a",
+    "evidence_id": "ev_6f833c2318f756f405188b1d9c7ac22f59489362ca3ee1f71598ed665f9f3e33",
+    "start": "0x18007fec8",
+    "returned_bytes": 128,
+    "last_covered_table_byte_offset": "0x7f",
+    "parse_slot": "0x80",
+    "parse_slot_target_observed": false,
+    "new_read_performed": false,
+    "scope": "Narrow128-byte record only; excludes slot+80. A broader retained record separately proves the selected shipped document target004970."
+  },
+  "findings": [
+    "Buffer cursor from document+98 is cached before DWORD line-counter+a0=1 and DWORD document+30=1 stores; byte-state aliases preserve native ordering.",
+    "Each whitespace iteration reads the cursor byte; high-bit bytes stop without classifier. Otherwise the mandatory classifier receives the unsigned byte0..127, including NUL, and its signed32 result is tested for nonzero.",
+    "After nonzero classification, cached nonzero line-counter address gates a fresh cursor-byte read; LF triggers live wrapping DWORD increment. Lower effects may mutate input,line state or document buffer fields while the cached cursor remains unchanged.",
+    "BOM BYTE+68 reset precedes fresh current-byte lookup; EF/BB/BF checks use lazy ordered lookahead. A mismatch retains cachedEF and original cursor, making later byte-zero test false without another input read before virtual dispatch.",
+    "A complete BOM caches advanced cursor+3 before BYTE BOMflag1 publication and reads the advanced byte only after that store; no second whitespace pass or extra null guard is added.",
+    "Ordinary or complete-BOM zero-byte path calls existing set_error005820(document,13,0,0) and returns without vtable lookup. The mandatory error provider is not implemented by this stage.",
+    "Nonempty or partial-BOM paths read live document vtable and QWORD slot+80, forwarding identity plus observed document,cursor,zero,line-counter arguments to mandatory parse_virtual. No original image pointer is cast or invoked.",
+    "The void normal-entry projection discards the tail target return; its effect signature does not claim recovered native callee ABI. The narrow128-byte table read excludes slot+80; a separately hash-verified complete historical broad read proves selected shipped document target004970, whose implementation remains mandatory.",
+    "RecoveredParseEntryEffects retains earlier document/node/pool source bridges and closes exactly existing parse_0041b0; classifier051fc0,set_error005820 and virtual parsing stay mandatory lower effects.",
+    "One tagged normal body plus one tagged final override gives two source variants for one native address. Existing module-record-only target becomes a new normal source mapping; no whole parser,DOM or generic node-virtual closure is implied.",
+    "Metadata correction uses exact8-byte extraction07ff48->004970 from complete historical read ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082; production hashes and bounded source-equivalence verdict are unchanged. Generic dynamic/fixture identities are not promoted to native evidence."
+  ],
+  "limitations": [
+    "Bounded byte-state normal source projection only; native register/fault/object ABI, tail-return/unwind/EH and concurrency equivalence remain unproven.",
+    "No locale/CRT classifier body, error formatting/storage body, virtual parse+80 implementation, DOM materialization or native heap/copy/fill/free behavior is recovered.",
+    "Retained document-only virtual targets do not establish other child-node vtables or generic node probe/destructor coverage; fixture target identities are not shipped evidence.",
+    "Bounded mapping failures and reconstructed tests do not prove original binary execution or native fault semantics. Full DLL completion remains open."
+  ],
+  "full_native_equivalence_review_complete": false,
+  "native_parse_entry_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false,
+  "retained_document_parse_slot": {
+    "file": "parse-entry-retained-slot.json",
+    "sha256": "31a5f8d21eafaead10938997bc79ca50b7a3c2af9dbb242213dd77d717ec95a6",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "address": "0x18007ff48",
+    "bytes_hex": "7049008001000000",
+    "target": "0x180004970",
+    "shipped_target_identity_observed": true,
+    "target_implementation_recovered": false,
+    "new_original_read_performed": false
+  },
+  "metadata_correction": {
+    "reason": "Complete historical broad read discovered after initial narrow-table review",
+    "production_hashes_unchanged": true,
+    "new_original_reads": false,
+    "new_source_bodies": 0,
+    "full_native_equivalence_review_complete": false
+  }
+}

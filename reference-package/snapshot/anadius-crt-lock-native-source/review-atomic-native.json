@@ -1,0 +1,38 @@
+{
+  "reviewer": "crt_atomic_native peer worker",
+  "result": "PASS",
+  "checked_at": "2026-10-20T02:24:58.4417053Z",
+  "scope": "Independent source review and standalone build rerun of peer typed native lock banks",
+  "findings": [],
+  "reviewed_contracts": [
+    "All native CRITICAL_SECTION objects are owned actual SDK objects; invalid bank/index and foreign/misaligned pointer are rejected before native call",
+    "Object arrays are stable; class is noncopyable/nonmovable; init/delete/lifetime externally serialized; worker reads initialized bits without concurrent mutation",
+    "Full signed BOOL exposed at raw SDK endpoints, uint32 zero extension preserved by recovered uint64 platform endpoints; negative nonzero BOOL marks initialized",
+    "Duplicate init and uninitialized enter/leave/delete throw; destructor terminates if initialized object remains, terminal case confirms boundary",
+    "Dynamic Ex address must be valid callable SDK/injected proc supplied by trusted resolver; nonzero arbitrary address safety is caller contract, not proven by pointer cast",
+    "Real native recursive enter/leave and two joined workers produce40000 protected increments; injected fixtures validate calls, fields, range/ownership and full return bits"
+  ],
+  "build": {
+    "script": "build.ps1",
+    "exit_code": 0,
+    "output": "PASS: 145 native lock checks",
+    "terminal_case": "--live-bank exit88PASS"
+  },
+  "sources": [
+    {
+      "name": "native_tests.cpp",
+      "sha256": "1785f29e9c4a2efdd1ef13b8c8a081a5bbc0478b1283022b7a1b01545e758ec4"
+    },
+    {
+      "name": "native.cpp",
+      "sha256": "5a1f87915482b0e6ec5f4f7d8fd38c3e282e503870c85905ffd8ce7f2614d5d8"
+    },
+    {
+      "name": "native.hpp",
+      "sha256": "92bcfcb150d71b3740e5751ba105a99a8e79ecd87f1360e1360ec52ccff1d772"
+    }
+  ],
+  "target_execution": "none",
+  "peer_code_changed": false,
+  "limitations": "No original DLL/global layout/runtime equivalence, lifetime race model checking or ABI/SEH proof"
+}

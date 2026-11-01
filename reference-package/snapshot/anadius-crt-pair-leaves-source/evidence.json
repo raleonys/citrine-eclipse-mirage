@@ -1,0 +1,287 @@
+{
+  "provenance": "Hash-bound local PE and LLVM audit plus retained REA bodies and root-managed fresh REA byte corroboration; this worker opened no REA session",
+  "target": {
+    "path": "C:/Users/Skysect/Downloads/anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "retained": {
+    "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "audit": {
+    "path": "../../work/acrt-pair-gaps-audit.json",
+    "sha256": "3736972558212db4af46efa6e1b24e9e6f3fcd8c5b65990f5f5a4d9dedfb49a5"
+  },
+  "new_original_bodies": 4,
+  "raw_gap_leaves": [
+    {
+      "va": "0x1800704e8",
+      "size": 11,
+      "raw_backed_bytes": 11,
+      "loader_zero_fill_bytes": 0,
+      "file_offset": "0x6f8e8",
+      "section": ".text",
+      "bytes_hex": "4883252055030000b001c3",
+      "sha256": "a8a791a7544670cb92dd9a0391591c72bf7efb25949f6dc6f3c0b6eb60467494",
+      "evidence_id": null,
+      "instructions": [
+        "0x1800704e8: AND qword ptr[0x1800a5a10],0",
+        "0x1800704f0: MOV AL,1",
+        "0x1800704f2: RET"
+      ],
+      "normal_flow": "Non-LOCK qword read/modify/write clearing heap global; no HeapDestroy/free/call. Only low AL becomes1; incoming RAX high bits are unchanged."
+    },
+    {
+      "va": "0x1800644f0",
+      "size": 7,
+      "raw_backed_bytes": 7,
+      "loader_zero_fill_bytes": 0,
+      "file_offset": "0x638f0",
+      "section": ".text",
+      "bytes_hex": "33c9e9b190feff",
+      "sha256": "7655465ba32b287de56825a84e3f6b6561c5b5b0f5ac3a2883f2a8825d224e8c",
+      "evidence_id": null,
+      "instructions": [
+        "0x1800644f0: XOR ECX,ECX",
+        "0x1800644f2: JMP0x18004d5a8"
+      ],
+      "normal_flow": "Zero RCX argument and tail-jump to existing __vcrt_uninitialize(false), propagating callee return. No independent MOV AL,1."
+    }
+  ],
+  "retained_success_leaf": {
+    "va": "0x180006500",
+    "size": 3,
+    "raw_backed_bytes": 3,
+    "loader_zero_fill_bytes": 0,
+    "file_offset": "0x5900",
+    "section": ".text",
+    "bytes_hex": "b001c3",
+    "sha256": "e18aacce29affcdddaa5f641ac1ec12552e0fe9d066e6408941b1792818b8619",
+    "pseudocode_evidence": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39",
+    "assembly_evidence": "ev_7aa1369cf378dd2a27dfe2889ccd4ee811bc8a4bcd493839a800aafcdb1a3ca8",
+    "pseudocode": "/* 0x180006500 FUN_180006500; Evidence ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39 */\n\nundefined1 FUN_180006500(void)\n\n{\n  return 1;\n}",
+    "assembly": "; 0x180006500 FUN_180006500; Evidence ev_7aa1369cf378dd2a27dfe2889ccd4ee811bc8a4bcd493839a800aafcdb1a3ca8\n0x180006500: MOV AL, 0x1\n0x180006502: RET"
+  },
+  "command_line_body": {
+    "va": "0x18006f9bc",
+    "pseudocode_evidence": "ev_cb04deda8279ea5da978b8d3f7665657943754d816dbbd7841edab6a7c7f9d93",
+    "assembly_evidence": "ev_f982a4dda060da7a853b1f36a75fc3c662105e9e36030e6e8b3e780a2431f629",
+    "pseudocode": "/* 0x18006f9bc FUN_18006f9bc; Evidence ev_cb04deda8279ea5da978b8d3f7665657943754d816dbbd7841edab6a7c7f9d93 */\n\n/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */\n\nundefined1 FUN_18006f9bc(void)\n\n{\n  DAT_1800a5a00 = GetCommandLineA();\n  _DAT_1800a5a08 = GetCommandLineW();\n  return 1;\n}",
+    "assembly": "; 0x18006f9bc FUN_18006f9bc; Evidence ev_f982a4dda060da7a853b1f36a75fc3c662105e9e36030e6e8b3e780a2431f629\n0x18006f9bc: SUB RSP, 0x28\n0x18006f9c0: CALL qword ptr [0x18007f048]\n0x18006f9c6: MOV qword ptr [0x1800a5a00], RAX\n0x18006f9cd: CALL qword ptr [0x18007f198]\n0x18006f9d3: MOV qword ptr [0x1800a5a08], RAX\n0x18006f9da: MOV AL, 0x1\n0x18006f9dc: ADD RSP, 0x28\n0x18006f9e0: RET"
+  },
+  "reused_vcrt_callee": {
+    "va": "0x18004d5a8",
+    "pseudocode_evidence": "ev_f8fed0bd891049cefd3aeae0efa37e5a905e99d53e397d5c7a6d539e3fe04251",
+    "assembly_evidence": "ev_5f02379d31997a4e7173838fb0420c588dd9f16fcfc6725e74863b7f4a2133e1",
+    "pseudocode": "/* 0x18004d5a8 __vcrt_uninitialize; Evidence ev_f8fed0bd891049cefd3aeae0efa37e5a905e99d53e397d5c7a6d539e3fe04251 */\n\n/* Library Function - Single Match\n    __vcrt_uninitialize\n   \n   Library: Visual Studio 2019 Release */\n\nundefined8 __vcrt_uninitialize(char param_1)\n\n{\n  undefined8 in_RAX;\n  \n  if (param_1 == '\\0') {\n    __vcrt_uninitialize_ptd();\n    in_RAX = __vcrt_uninitialize_locks();\n  }\n  return CONCAT71((int7)((ulonglong)in_RAX >> 8),1);\n}",
+    "assembly": "; 0x18004d5a8 __vcrt_uninitialize; Evidence ev_5f02379d31997a4e7173838fb0420c588dd9f16fcfc6725e74863b7f4a2133e1\n0x18004d5a8: SUB RSP, 0x28\n0x18004d5ac: TEST CL, CL\n0x18004d5ae: JNZ 0x18004d5ba\n0x18004d5b0: CALL 0x18004d7b0\n0x18004d5b5: CALL 0x180050984\n0x18004d5ba: MOV AL, 0x1\n0x18004d5bc: ADD RSP, 0x28\n0x18004d5c0: RET"
+  },
+  "fresh_REA": {
+    "path": "../source-workspace/pair-leaves.snapshot.json",
+    "sha256": "1352688bb0ff2dca30a8b9315f02d40bb28d7165b86dda7da19237c8c6f6e018",
+    "comparisons": [
+      {
+        "va": "0x1800704e8",
+        "evidence_id": "ev_26b0e54af8729b48978b321830da453af248a6390a76dabde0a737eb5e348d5e",
+        "bytes_hex": "4883252055030000b001c3",
+        "complete": true
+      },
+      {
+        "va": "0x1800644f0",
+        "evidence_id": "ev_396089764fe78d606badcf63a55ffd8db3f53083ffba29d057c662c397dcb735",
+        "bytes_hex": "33c9e9b190feff",
+        "complete": true
+      }
+    ]
+  },
+  "imports": [
+    {
+      "iat_va": "0x18007f048",
+      "module": "KERNEL32.dll",
+      "name": "GetCommandLineA"
+    },
+    {
+      "iat_va": "0x18007f198",
+      "module": "KERNEL32.dll",
+      "name": "GetCommandLineW"
+    }
+  ],
+  "image_globals": [
+    {
+      "name": "heap",
+      "va": "0x1800a5a10",
+      "size": 8,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "file_offset": null,
+      "section": ".data",
+      "bytes_hex": "0000000000000000",
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "name": "command_A",
+      "va": "0x1800a5a00",
+      "size": 8,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "file_offset": null,
+      "section": ".data",
+      "bytes_hex": "0000000000000000",
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    {
+      "name": "command_W",
+      "va": "0x1800a5a08",
+      "size": 8,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "file_offset": null,
+      "section": ".data",
+      "bytes_hex": "0000000000000000",
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    }
+  ],
+  "pair_slots": [
+    {
+      "index": 3,
+      "slot": "0x18008aa90",
+      "initialize": "0x180006500",
+      "uninitialize": "0x180006500",
+      "initialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xaa90",
+        "entry_file_offset": "0xa8ee0"
+      },
+      "uninitialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xaa98",
+        "entry_file_offset": "0xa8ee2"
+      }
+    },
+    {
+      "index": 5,
+      "slot": "0x18008aab0",
+      "initialize": "0x1800704cc",
+      "uninitialize": "0x1800704e8",
+      "initialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xaab0",
+        "entry_file_offset": "0xa8ee8"
+      },
+      "uninitialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xaab8",
+        "entry_file_offset": "0xa8eea"
+      }
+    },
+    {
+      "index": 6,
+      "slot": "0x18008aac0",
+      "initialize": "0x0",
+      "uninitialize": "0x1800644f0",
+      "initialize_relocation": null,
+      "uninitialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xaac8",
+        "entry_file_offset": "0xa8eec"
+      }
+    },
+    {
+      "index": 9,
+      "slot": "0x18008aaf0",
+      "initialize": "0x18006f9bc",
+      "uninitialize": "0x180006500",
+      "initialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xaaf0",
+        "entry_file_offset": "0xa8ef6"
+      },
+      "uninitialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xaaf8",
+        "entry_file_offset": "0xa8ef8"
+      }
+    },
+    {
+      "index": 11,
+      "slot": "0x18008ab10",
+      "initialize": "0x0",
+      "uninitialize": "0x180006500",
+      "initialize_relocation": null,
+      "uninitialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xab18",
+        "entry_file_offset": "0xa8efc"
+      }
+    },
+    {
+      "index": 14,
+      "slot": "0x18008ab40",
+      "initialize": "0x180006500",
+      "uninitialize": "0x1800644a0",
+      "initialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xab40",
+        "entry_file_offset": "0xa8f02"
+      },
+      "uninitialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xab48",
+        "entry_file_offset": "0xa8f04"
+      }
+    },
+    {
+      "index": 15,
+      "slot": "0x18008ab50",
+      "initialize": "0x18006447c",
+      "uninitialize": "0x180006500",
+      "initialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xab50",
+        "entry_file_offset": "0xa8f06"
+      },
+      "uninitialize_relocation": {
+        "type": 10,
+        "page_rva": "0x8a000",
+        "entry_word": "0xab58",
+        "entry_file_offset": "0xa8f08"
+      }
+    }
+  ],
+  "source_hashes": {
+    "pair_leaves.cpp": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87",
+    "pair_leaves.hpp": "4c05549af135b8bb56515e56a5e9180c7fc90e9bd08f798d852aab145233019e",
+    "native_tests.cpp": "1ae3a7571080b0ad67d3dfc97052f38f8f103411a81e62f94abd69639025e7bb",
+    "build.ps1": "229858154a0f649ea2522272a5a4f3cdeeef4dc345f07d7b963a30b7bb1a6af0"
+  },
+  "reused_sources": [
+    {
+      "path": "../anadius-vcrt-ptd-source/vcrt_ptd.cpp",
+      "sha256": "2acfb1ff8678493678288dc0a806b8c27946e100ebc223409c867264b9b5e307"
+    },
+    {
+      "path": "../anadius-crt-argv-source/argv.cpp",
+      "sha256": "f36423b9120efc8feef27da66b9f473a002366b3fe98ccf5c57cd5dada4ffa6e"
+    }
+  ],
+  "limits": [
+    "Only normal flow and low AL bool contract. Original flags/RAX high bits/SEH/machine read-modify-write fault behavior are not modeled.",
+    "Heap state is cleared;process heap is not destroyed and no allocations are freed by0704e8.",
+    "Borrowed spans are bounds metadata,not native commandline ABI;provider maintains ownership and lifetime. No default OS/user commandline acquisition.",
+    "Actual existing VCRT and argv source algorithms are reused;shared State references prevent shadow cells.",
+    "Raw missing retained function records are corroborated by root-managed fresh bytes;byte evidence does not invent a new decompiler body record."
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

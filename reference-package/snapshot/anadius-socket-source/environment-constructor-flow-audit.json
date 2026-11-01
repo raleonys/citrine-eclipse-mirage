@@ -1,0 +1,73 @@
+{
+  "scope": "Independent complete retained 023dd0 normal environment-constructor audit",
+  "reviewer": "environment_constructor_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "full_listing_hashes_match": true,
+  "functions": [
+    {
+      "address": "0x180023dd0",
+      "pseudo_evidence": "ev_d162fd99180d0294652d44b39fe2cceaf384a9996b3bae0f40e08fd0e2ac7f82",
+      "assembly_evidence": "ev_747feac84362fbb739d9c68cee8e8fbc51d55c081309ddaa794f2c19a13f7fac",
+      "newly_recovered": true
+    },
+    {
+      "address": "0x180023cb0",
+      "pseudo_evidence": "ev_104fb6d87cffb0a02e61c0173403243f305305ffcf18a5fdb95e886f36fb27d1",
+      "assembly_evidence": "ev_5393cd5463f3a87b8f294c63f701e30396bb840e2ae1f35dd015b1a5c38fa588",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021fd0",
+      "pseudo_evidence": "ev_cb8feee93f61ab1f79de415f7b58cf399d0febb87fbce65a9c6f749925ed1724",
+      "assembly_evidence": "ev_6326ebb30e495078e0ed47d7346de01edd7f346608c3d5c91890ce2c1637533e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180027a20",
+      "pseudo_evidence": "ev_ac8acca2b33bd760e4ba5f3d9ec5784ef473a66bd1f78d4aeb47033d2bcbc4d9",
+      "assembly_evidence": "ev_c7fd45e2d65c3e1f508706bdf6dc9e7561b9d896d56095bbebac7e82853f4463",
+      "newly_recovered": false
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180023dd0"
+  ],
+  "new_original_procedures": 1,
+  "rules": {
+    "type_selection": "Source live schedule+0 no-this query; returned type+8 passed to required04d2d0 against1800a25c8; exactly zero selects empty",
+    "empty": "Initialize ops/state/schedule/executor sentinel fields only; actual023cb0; live temp guard destroy",
+    "prepare": "Cache actual executor+58 FUNCTION before live operations+18 query; call cached function destination/query/uninitialized scratch token; no executor-this",
+    "first_move": "Ops/schedule copy; first source ops/schedule sentinel BEFORE move callback; state0 AFTER callback; source live executor copy thenreset",
+    "first_destroy": "Reload source live operations and destroy identity AFTER callback; invoke only not017a30",
+    "second_move": "Actual existing023cb0 into destination; no old destination destructor",
+    "final_destroy": "Reload second temporary live ops after second move; unconditional destroy even017a30",
+    "return": "Original destination returned; no invented exception cleanup",
+    "caller": "Existing021fd0 owned-pair clear before023dd0, weak-release/buffer reread afterwards",
+    "completion": "Existing027a20 moves environment through023cb0 and live unconditionally destroys local after handler"
+  },
+  "providers_not_recovered": [
+    "Source schedule type-query implementation",
+    "04d2d0 CRT RTTI comparison body and actual RTTI bytes",
+    "Executor native slot58 preparation implementation",
+    "Native operations move/query/destroy methods and sentinels",
+    "025a70 completion and025c40 receive application bodies",
+    "Native allocation/vtables/ABI/exception/SEH/unwind/concurrency/full DLL equivalence"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "limitations": [
+    "One normal original body only",
+    "Fresh exclusively writable stable destination required",
+    "Typed logical fields and opaque address identities are not native memory overlays",
+    "Unspecified native payload/scratch/padding not meaningful initialized zeros",
+    "Existing IoHandlerEnvironment/IoHandlerSentinels/move API preserved",
+    "No full DLL equivalence claim"
+  ],
+  "report_sha256": "82252fba410e6f40c2e2ad2351fd1a4e3956819c0c7ef07b0e6ce4e0903ecad2"
+}

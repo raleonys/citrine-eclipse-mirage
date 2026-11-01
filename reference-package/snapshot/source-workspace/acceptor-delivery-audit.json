@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T02:16:43.7699248Z",
+  "prior_package_sha256": "862b645150c01e802d1388ca1e9304b2fbe15e6af1e0fe3d2b5a0a83d6b6676c",
+  "prior_source_count": 422,
+  "unchanged_prior_sources": 422,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/acceptor_native_tests.cpp",
+    "anadius-socket-source/acceptor_native.cpp",
+    "anadius-socket-source/acceptor_native.hpp",
+    "anadius-socket-source/acceptor_tests.cpp",
+    "anadius-socket-source/acceptor.cpp",
+    "anadius-socket-source/acceptor.hpp"
+  ],
+  "current_sources": 428,
+  "current_documents": 170,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 29,
+  "native_objects": 146,
+  "cpp_objects": 142,
+  "c_objects": 4,
+  "normal_test_groups": 131,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_acceptor",
+      "result": "PASS",
+      "output": "PASS: 364 acceptor operation checks; controlled runtime and socket APIs only",
+      "executable_sha256": "edbf124fb4f3bef318b1e03357f902f5a44515e1545c7409fdea4dd898140240"
+    },
+    {
+      "module": "socket_acceptor_native",
+      "result": "PASS",
+      "output": "PASS: 308 acceptor native checks; injected SDK imports only",
+      "executable_sha256": "89c8254eef315dd4c00d0970c2762a715ce906765784fa4d306620b5868be713"
+    }
+  ],
+  "new_checks": 672,
+  "master_build_sha256": "29917eb161853fcca8ddbef6f2d6bdd3cb413937f91598b88bdd8b593cbc9453",
+  "common_build_script_sha256": "4e74a5ebb619020e190c12fd29c254d971ed49912f2d7c3351ef4b36be514bbf",
+  "cmake_sha256": "ae3fbb905d1adca8c84f82e023fc6eb7d80d16d7e55a143a52118e35530ee0b2",
+  "normal_source_procedures_added": [
+    "0x180020e20",
+    "0x180025310"
+  ],
+  "new_original_procedures": 2,
+  "new_composition": "Typed SDK acceptor import adapter plus partial AcceptorBackend bridge",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

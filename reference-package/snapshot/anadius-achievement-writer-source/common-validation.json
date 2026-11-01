@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "achievement_writer",
+    "result": "PASS",
+    "output": "PASS: 36 achievement INI writer checks; own fixture only",
+    "executable_sha256": "4fd23eb10191bec1f020b9c0323810b670773dd040977c1ea0ac36842d947873"
+  },
+  "execution_scope": "01f9a0 normalINIbytewriter;36checks;actualpath/file sources andcontrolledmkdir,ownNativeFactoryfixture;notXMLsave/nativeABIproof",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-achievement-writer-source/writer_tests.cpp",
+      "sha256": "434fdb579aacb86ca876fae4d5a3b9a5338a23cd4ac744134cd8fa8d75445b6a"
+    },
+    {
+      "path": "anadius-achievement-writer-source/writer.cpp",
+      "sha256": "20bd58a3fb48d3db046725fa6c154da475072c9dbd29f21e7c6a34c617319b87"
+    },
+    {
+      "path": "anadius-achievement-writer-source/writer.hpp",
+      "sha256": "3c2b5bf57369279c5d484c4435b33157a0af6b363e798f3852a70a40b6691f9b"
+    }
+  ]
+}

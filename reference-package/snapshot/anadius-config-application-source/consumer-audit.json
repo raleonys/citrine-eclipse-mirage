@@ -1,0 +1,185 @@
+{
+  "schema": "config2.consumer.timeline.static.v1",
+  "result": "PASS",
+  "scope": "Read-only retained static evidence; no production edits",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "address_suffix_format": "key addresses are hexadecimal VA suffixes under0x180000000",
+  "retained_evidence": {
+    "consumer_pseudo": "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd",
+    "consumer_asm": "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+    "table_assign_asm": "ev_8975dcb6850d9f73375de19ac628dbf270d8f0722bae94ba4b3ff22c3a9af0f9",
+    "node_assign_asm": "ev_9610f1adb392b14497e277699d3612412deb9c5d518bb165cc368beb516e0452",
+    "lookup_asm": "ev_ec3231ec9c4b07657e7692ea897d1cc2c48f2e46ef88e34a54727e8ad2d91e65"
+  },
+  "tables": [
+    {
+      "section": "Game",
+      "lookup": "0x180019e04",
+      "copy": "0x180019e14",
+      "keys": [
+        "Name",
+        "Version",
+        "ContentId",
+        "DenuvoToken",
+        "DenuvoExeHash",
+        "DenuvoDllHash",
+        "DenuvoDllName",
+        "KeyForLicense",
+        "Languages",
+        "LanguageRegistryKey",
+        "Language",
+        "LanguageRegistrySpoof"
+      ],
+      "key_lookup_addresses": [
+        "019e4c",
+        "019eb8",
+        "019f24",
+        "01a0a5",
+        "01a100",
+        "01a14b",
+        "01a196",
+        "01a219",
+        "01a27b",
+        "01a2e7",
+        "01a32c",
+        "01a398"
+      ],
+      "guards": "first3 base only;last2 language_from_arguments==0;other7 unconditional normal continuation"
+    },
+    {
+      "section": "Emulator",
+      "lookup": "0x18001a3da",
+      "copy": "0x18001a3ea",
+      "keys": [
+        "Documents",
+        "ServerPort",
+        "PretendConnected",
+        "FakeAuth",
+        "SDK",
+        "Language",
+        "BlockReruns",
+        "LoadExtraDLLsFromMain",
+        "LoadExtraDLLs"
+      ],
+      "key_lookup_addresses": [
+        "01a438",
+        "01a4ac",
+        "01a589",
+        "01a5f5",
+        "01a637",
+        "01a676",
+        "01a6e2",
+        "01a724",
+        "01a763"
+      ],
+      "guards": "all unconditional normal continuation"
+    },
+    {
+      "section": "User",
+      "lookup": "0x18001a7a2",
+      "copy": "0x18001a7b2",
+      "keys": [
+        "Username",
+        "PersonaId",
+        "UserId",
+        "Avatar",
+        "UseLastOnlineProfile",
+        "Country",
+        "Currency",
+        "IsSubscriber",
+        "IsSteamSubscriber",
+        "SubscriberLevel",
+        "IsUnderAge"
+      ],
+      "key_lookup_addresses": [
+        "01a7e1",
+        "01a820",
+        "01a85f",
+        "01a89e",
+        "01a8e0",
+        "01a922",
+        "01a961",
+        "01a9a0",
+        "01a9df",
+        "01aa1e",
+        "01aa5d"
+      ],
+      "guards": "all unconditional normal continuation"
+    },
+    {
+      "section": "Content",
+      "lookup": "0x18001aaa5",
+      "copy": "0x18001aab5",
+      "record_copy": "0x18001ac26",
+      "record_keys": [
+        "Name",
+        "Version",
+        "State"
+      ],
+      "record_key_lookup_addresses": [
+        "01ad06",
+        "01adbe",
+        "01ae51"
+      ],
+      "guards": "base only"
+    },
+    {
+      "section": "Entitlements",
+      "lookup": "0x18001b295",
+      "copy": "0x18001b2a9",
+      "record_copy": "0x18001b406",
+      "record_keys": [
+        "Group",
+        "Version",
+        "Type",
+        "EntitlementTag"
+      ],
+      "record_key_lookup_addresses": [
+        "01b553",
+        "01b627",
+        "01b6e1",
+        "01b7b7"
+      ],
+      "guards": "base only"
+    },
+    {
+      "section": "Achievements",
+      "lookup": "0x18001bcdf",
+      "copy": "0x18001bcf3",
+      "keys": [
+        "AchievementIDs",
+        "AchievementsSet",
+        "AchievementNames",
+        "AchievementTotals",
+        "SteamAppId",
+        "SteamIdPrefix",
+        "SteamIdOverrides"
+      ],
+      "key_lookup_addresses": [
+        "01bd67",
+        "01bdce",
+        "01be69",
+        "01c042",
+        "01c158",
+        "01c23c",
+        "01c5b3"
+      ],
+      "guards": "base only;SteamIdPrefix if retained/assignedglobalSteamAppId nonempty"
+    }
+  ],
+  "copy_rule": "same local428 reuses old traversal positions; overwrite key then recursivepayloadassign;overflowclone;desttaildelete;retain parent/descendant capacities thenrehash",
+  "record_rule": "separate reused local288/local248;mutations do not feedlocal428",
+  "achievement_rule": "3childtables traversed directly aftersectioncopy;nothirdcopy;IDs lookupbeforeSet",
+  "source_hashes": {
+    "anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "anadius-config-order-source/evidence.json": "b0da23a1e1b1911795d4e87eb844b55b9bfbac7cf9a291810bf9d030ca7c5c0f",
+    "anadius-config-source/configuration.cpp": "04d93a3a71f57a9d34bb4e0f3806c7ac532a2c0a1cdaef1e36ad6654c02620f9",
+    "anadius-config-source/evidence.json": "b8397cc8ce6fd2b2c85650c0435de0bde3a0ea5e468cdf457d1068064cf99ea9"
+  },
+  "original_execution": "none",
+  "user_cfg_read": false,
+  "production_modified": false,
+  "runtime_equivalence": "not established"
+}

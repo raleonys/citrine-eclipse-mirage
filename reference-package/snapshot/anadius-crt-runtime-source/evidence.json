@@ -1,0 +1,82 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "retained REA/Ghidra; no new target opening or execution",
+  "functions": [
+    {
+      "address": "0x1800669b0",
+      "pseudocode_evidence_id": "ev_9ae3f403dcf95833478523a00a507dd5c1e2ad50b2875ca38c52f2c1d3da4234",
+      "assembly_evidence_id": "ev_c65960fa7cf7628a937584908e0254b32cd7aedbb6a00f7df2dcf04334b4afc9"
+    },
+    {
+      "address": "0x180066bc4",
+      "pseudocode_evidence_id": "ev_207284f453007f1c05801314a58f19138e57d17b4bf536be1dc197ce8c3f343a",
+      "assembly_evidence_id": "ev_f40182cf5e974b9cbb0a6b054ac6527a10cb8b9a0fd7c19e5676d2c3f126808d"
+    },
+    {
+      "address": "0x180067320",
+      "pseudocode_evidence_id": "ev_3dd33a790de07ede22def197e409457906401558d7a27db73cdd00634ae21ca4",
+      "assembly_evidence_id": "ev_a91383541aa1bc60514f4d731c7cc19deb7cdc1cb73f336dd36372c4365cc119"
+    },
+    {
+      "address": "0x18006736c",
+      "pseudocode_evidence_id": "ev_1d4b8d9a74f23f1fd0532053c2ff54764641159f56eaedff2d23a153dd1f596b",
+      "assembly_evidence_id": "ev_f898e24c39ebcbf4bae69dbf3882c589d04613de81c21e58c5b283523545abb6"
+    },
+    {
+      "address": "0x18006c0b8",
+      "pseudocode_evidence_id": "ev_7dbfc821430301df3910efe7a2cead3e183fcd4fd7a9a329bff39c08b412ccda",
+      "assembly_evidence_id": "ev_04890e6cda7bbbec57e4fecc2332b4c81bdfd793aa0392e8a44767875822a622"
+    },
+    {
+      "address": "0x18006c0d0",
+      "pseudocode_evidence_id": "ev_c2ea8dc17525b2b3a8dd4f72a9ed92b2a47441b788109d3fb92c138cfdb3ef95",
+      "assembly_evidence_id": "ev_c4dfb45408679f0dac3829d3294b1359ddcfd1f0a62ce96ec4dd984e4e6d146d"
+    }
+  ],
+  "retained_assembly_file": "anadius-all-functions.asm.txt",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "retained_pseudocode_file": "anadius-all-functions.pseudo.c",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "bounded_rdata_read": {
+    "target_hash_verified": true,
+    "section_va": "0x18007f000",
+    "section_raw_offset": "0x7d800",
+    "section_size": "0x21e00",
+    "module_table_va": "0x18008b3a0",
+    "entries": [
+      {
+        "candidate_va": "0x18008ba34",
+        "index": 9,
+        "module_name_va": "0x18008b680",
+        "name": "api-ms-win-core-winrt-l1-1-0"
+      },
+      {
+        "candidate_va": "0x18008ba48",
+        "index": 9,
+        "module_name_va": "0x18008b680",
+        "name": "api-ms-win-core-winrt-l1-1-0"
+      },
+      {
+        "candidate_va": "0x18008ba90",
+        "index": 19,
+        "module_name_va": "0x18008b890",
+        "name": "api-ms-win-appmodel-runtime-l1-1-2"
+      }
+    ],
+    "provenance": "Local bounded file reads after SHA-256 match; not a newly generated REA Evidence ID"
+  },
+  "scope": "Six original bodies with reconstructed C++ state and required dependency interfaces; no native loader or live PEB adapter supplied",
+  "limitations": [
+    "CRT cache initialization and uninitialization and all module names now recovered separately in anadius-crt-cache-source; complete loader lifecycle composition remains open",
+    "Required loader effects are never replaced with successful native stubs",
+    "CFG/XFG and SEH/EH ABI equivalence remain unproven",
+    "ThreadRuntimeBridge is new source composition, not an original binary function"
+  ],
+  "prefix_comparison_helper": {
+    "address": "0x1800646a0",
+    "pseudocode_evidence_id": "ev_c1aad12cef14f2013c4c460022a8d309ea2669275095ff301760fdde310aebd9",
+    "assembly_evidence_id": "ev_aa336d2ff167e7f2dcebd5a796efd29f1f35dc2c41f3a8d841cf94caff127c53",
+    "semantics": "wcsncmp of seven UTF-16 code units, case-sensitive and stops on NUL; generic body not reconstructed in this module"
+  }
+}

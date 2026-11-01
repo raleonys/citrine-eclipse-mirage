@@ -1,0 +1,167 @@
+{
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "procedure": "0x180032d00",
+  "pseudocode_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+  "result": "PASS",
+  "count": 39,
+  "source_matches_retained_initializer": true,
+  "entries": [
+    {
+      "name": "GetConfig",
+      "rva": "0x02e5f0"
+    },
+    {
+      "name": "GetProfile",
+      "rva": "0x02f530"
+    },
+    {
+      "name": "GetInternetConnectedState",
+      "rva": "0x02f2d0"
+    },
+    {
+      "name": "GetSetting",
+      "rva": "0x02f7c0"
+    },
+    {
+      "name": "GetSettings",
+      "rva": "0x02fa60"
+    },
+    {
+      "name": "QueryContent",
+      "rva": "0x030ee0"
+    },
+    {
+      "name": "QueryEntitlements",
+      "rva": "0x031030"
+    },
+    {
+      "name": "QueryOffers",
+      "rva": "0x031ec0"
+    },
+    {
+      "name": "GetGameInfo",
+      "rva": "0x02efd0"
+    },
+    {
+      "name": "GetAllGameInfo",
+      "rva": "0x02da90"
+    },
+    {
+      "name": "QueryImage",
+      "rva": "0x0314f0"
+    },
+    {
+      "name": "GoOnline",
+      "rva": "0x02ffb0"
+    },
+    {
+      "name": "GetAuthCode",
+      "rva": "0x02e3b0"
+    },
+    {
+      "name": "ShowIGO",
+      "rva": "0x032b10"
+    },
+    {
+      "name": "ShowIGOWindow",
+      "rva": "0x032b10"
+    },
+    {
+      "name": "GetUTCTime",
+      "rva": "0x02fea0"
+    },
+    {
+      "name": "StartDownload",
+      "rva": "0x032ca0"
+    },
+    {
+      "name": "SetPresenceVisibility",
+      "rva": "0x02ffb0"
+    },
+    {
+      "name": "SetPresence",
+      "rva": "0x02ffb0"
+    },
+    {
+      "name": "GetPresenceVisibility",
+      "rva": "0x02f4e0"
+    },
+    {
+      "name": "GetPresence",
+      "rva": "0x02f330"
+    },
+    {
+      "name": "QueryPresence",
+      "rva": "0x031ef0"
+    },
+    {
+      "name": "GetGroupInfo",
+      "rva": "0x02f270"
+    },
+    {
+      "name": "IsProgressiveInstallationAvailable",
+      "rva": "0x030cd0"
+    },
+    {
+      "name": "QueryChunkStatus",
+      "rva": "0x030eb0"
+    },
+    {
+      "name": "AreChunksInstalled",
+      "rva": "0x02d720"
+    },
+    {
+      "name": "SetDownloaderUtilization",
+      "rva": "0x02ffb0"
+    },
+    {
+      "name": "QueryAchievements",
+      "rva": "0x030d30"
+    },
+    {
+      "name": "GrantAchievement",
+      "rva": "0x030010"
+    },
+    {
+      "name": "QueryFriends",
+      "rva": "0x0314a0"
+    },
+    {
+      "name": "GetBlockList",
+      "rva": "0x02e5a0"
+    },
+    {
+      "name": "GetVoipStatus",
+      "rva": "0x02da30"
+    },
+    {
+      "name": "EnableVoip",
+      "rva": "0x02da30"
+    },
+    {
+      "name": "SelectStore",
+      "rva": "0x02ffb0"
+    },
+    {
+      "name": "GetWalletBalance",
+      "rva": "0x02ff60"
+    },
+    {
+      "name": "RestartGame",
+      "rva": "0x032ab0"
+    },
+    {
+      "name": "CheckPermission",
+      "rva": "0x02d9e0"
+    },
+    {
+      "name": "RequestLicense",
+      "rva": "0x0320c0"
+    },
+    {
+      "name": "InvalidateLicense",
+      "rva": "0x030c50"
+    }
+  ],
+  "coverage": "Registry name/RVA only. Parsed static retained pseudocode as data; handler bodies and MSVC initialization ABI not validated."
+}

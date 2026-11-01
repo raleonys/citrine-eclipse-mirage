@@ -1,0 +1,398 @@
+{
+  "schema": "anadius-minhook-static-comparison-v1",
+  "artifact": {
+    "path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "preferred_base": "0x180000000"
+  },
+  "sources": {
+    "pseudocode": "../anadius-all-functions.pseudo.c",
+    "assembly": "../anadius-all-functions.asm.txt",
+    "official_repository": "https://github.com/TsudaKageyu/minhook",
+    "selected_commit": "c3fcafdc10146beb5919319d0683e44e3c30d537",
+    "selected_tag": "v1.3.4",
+    "original_version_proven": false,
+    "saved_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "saved_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "scope": {
+    "method": "retained REA pseudocode plus targeted assembly comparison to pinned official source; one hash-bound PE data comparison",
+    "execution": "none: no original/upstream DLL, target bytes, hook installation, thread suspension or network operation executed",
+    "start": "0x1800460e0",
+    "last_function": "0x180047540",
+    "function_count": 21
+  },
+  "mappings": [
+    {
+      "address": "0x1800460e0",
+      "rva": "0x0460e0",
+      "name": "EnableAllHooksLL",
+      "prototype": "MH_STATUS (BOOL enable)",
+      "evidence_id": "ev_3bbc6625b25df14b1ae9b4cc540dc44a1c3a8874e7283778561ea8e51844ce64",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "442-478",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046230",
+      "rva": "0x046230",
+      "name": "EnableHook",
+      "prototype": "MH_STATUS (void* target, BOOL enable)",
+      "evidence_id": "ev_ab81934d26669368477d32a75b4b14c507a19c5530535a301e3d37de99d4d592",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "722-770",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046350",
+      "rva": "0x046350",
+      "name": "EnableHookLL",
+      "prototype": "MH_STATUS (UINT index, BOOL enable)",
+      "evidence_id": "ev_f7dd208211b525e1d48489a12934bada25883ba9dabcd9da00ec480871a2c9d9",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "393-440",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046460",
+      "rva": "0x046460",
+      "name": "EnumerateThreads",
+      "prototype": "BOOL (FROZEN_THREADS*)",
+      "evidence_id": "ev_e33ca0b42fb13cf5f08b193e9696ab5ea92407c2bbaa424568e5bef9b674b265",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "263-326",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x1800465d0",
+      "rva": "0x0465d0",
+      "name": "Freeze",
+      "prototype": "MH_STATUS (FROZEN_THREADS*, UINT index, UINT action)",
+      "evidence_id": "ev_2c57dca513ba771e5fe17831510d8ceca686d680feba6f03965ac6aaf993ef14",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "328-367",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x1800466e0",
+      "rva": "0x0466e0",
+      "name": "MH_CreateHook",
+      "prototype": "MH_STATUS (void* target, void* detour, void** original)",
+      "evidence_id": "ev_42bb00fe2103750198f2cf8bc6b46bcc7048914b441fe65ffa650589ab734636",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "579-675",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046970",
+      "rva": "0x046970",
+      "name": "MH_CreateHookApiEx",
+      "prototype": "MH_STATUS (const wchar_t* module, const char* name, void* detour, void** original, void** target)",
+      "evidence_id": "ev_65359cd6681f204cfdc6097c39b7def4f988dd38f184168c0b11ce9dc5c1dec3",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "884-904",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046a00",
+      "rva": "0x046a00",
+      "name": "MH_DisableHook",
+      "prototype": "MH_STATUS (void* target)",
+      "evidence_id": "ev_f6f6a261416d20da263da65675436293eb0d2818e2780d98104cbefd380c9874",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "778-782",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046a10",
+      "rva": "0x046a10",
+      "name": "MH_EnableHook",
+      "prototype": "MH_STATUS (void* target)",
+      "evidence_id": "ev_5890fe35b1ca31d888bf60d578194890b357f11e4ff99a55af2351e1162b2df2",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "772-776",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046a20",
+      "rva": "0x046a20",
+      "name": "MH_Initialize",
+      "prototype": "MH_STATUS ()",
+      "evidence_id": "ev_28989e17db618b3e4b704409b2d5af7295b820e8bde96710b37d6ba5dc862188",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "510-538",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046ac0",
+      "rva": "0x046ac0",
+      "name": "MH_Uninitialize",
+      "prototype": "MH_STATUS ()",
+      "evidence_id": "ev_54d05e47c8115759b0a787752d7f30c707451ea9551f91e26703d1f84ce5d31a",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "540-577",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046b80",
+      "rva": "0x046b80",
+      "name": "ProcessThreadIPs (+ FindOldIP/FindNewIP inlined)",
+      "prototype": "void (HANDLE thread, UINT index, UINT action)",
+      "evidence_id": "ev_ef251cd8a2c4d976624b3fb299e8a6166d982bf408214a6fa4dfd13e8f269855",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "163-261",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046d30",
+      "rva": "0x046d30",
+      "name": "Unfreeze",
+      "prototype": "void (FROZEN_THREADS*)",
+      "evidence_id": "ev_124ed75eb5503ff2c43a5af317ec2f1dd433018dd1e96f96320b56cfb3491dab",
+      "upstream_file": "src/hook.c",
+      "upstream_lines": "369-391",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046db0",
+      "rva": "0x046db0",
+      "name": "AllocateBuffer",
+      "prototype": "void* (void* origin)",
+      "evidence_id": "ev_e1a72fd75dc675d6c0630e9b0a0b0a1463ac0a2bdc2658dd231db7b79e1cd386",
+      "upstream_file": "src/buffer.c",
+      "upstream_lines": "247-264",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046de0",
+      "rva": "0x046de0",
+      "name": "FreeBuffer",
+      "prototype": "void (void* buffer)",
+      "evidence_id": "ev_972e498ae3eee50715723bb13add70aa57312a74c86afb6cd7eb2ffdd57f74a9",
+      "upstream_file": "src/buffer.c",
+      "upstream_lines": "266-304",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180046e60",
+      "rva": "0x046e60",
+      "name": "GetMemoryBlock (+ FindPrevFreeRegion/FindNextFreeRegion inlined)",
+      "prototype": "MEMORY_BLOCK* (void* origin)",
+      "evidence_id": "ev_d6ad0505f97cdf07310add830cbc5393816a5c4a078f1db374e32f23f77ed2ce",
+      "upstream_file": "src/buffer.c",
+      "upstream_lines": "89-245",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x1800470c0",
+      "rva": "0x0470c0",
+      "name": "IsExecutableAddress",
+      "prototype": "BOOL (void* address)",
+      "evidence_id": "ev_7d43a176f055cce5be2307ef8b87a4736938b6774fb90f1de689e08e754a7060",
+      "upstream_file": "src/buffer.c",
+      "upstream_lines": "306-312",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180047100",
+      "rva": "0x047100",
+      "name": "UninitializeBuffer",
+      "prototype": "void ()",
+      "evidence_id": "ev_00ae8e16381e42a8d8c9e1953417527b50e0000ba785a1a01829802ca0b44c27",
+      "upstream_file": "src/buffer.c",
+      "upstream_lines": "74-86",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180047150",
+      "rva": "0x047150",
+      "name": "CreateTrampolineFunction",
+      "prototype": "BOOL (TRAMPOLINE*)",
+      "evidence_id": "ev_0a525d7badb74c559af7e9edb527c614ab9543e37412f464811df6724beb334b",
+      "upstream_file": "src/trampoline.c",
+      "upstream_lines": "77-320",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180047500",
+      "rva": "0x047500",
+      "name": "IsCodePadding",
+      "prototype": "BOOL (const uint8_t* address, UINT length)",
+      "evidence_id": "ev_bb14f4cdba34d40125fe128878c9481d14f7f1f75d41c03e074aee2801311e16",
+      "upstream_file": "src/trampoline.c",
+      "upstream_lines": "61-75",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    },
+    {
+      "address": "0x180047540",
+      "rva": "0x047540",
+      "name": "hde64_disasm",
+      "prototype": "unsigned int (const void* code, hde64s* decoded)",
+      "evidence_id": "ev_e71e4a03f83356da85155d7b440540452f110878dd96bf2bd96a95795bf24746",
+      "upstream_file": "src/hde/hde64.c",
+      "upstream_lines": "14-334",
+      "classification": "static semantic correspondence; original symbol/version unproven"
+    }
+  ],
+  "record_layout": {
+    "size": 56,
+    "fields": [
+      [
+        "pTarget",
+        0,
+        8
+      ],
+      [
+        "pRelay",
+        8,
+        8
+      ],
+      [
+        "pTrampoline",
+        16,
+        8
+      ],
+      [
+        "backup",
+        24,
+        8
+      ],
+      [
+        "flags_patchAbove_isEnabled_queueEnable",
+        32,
+        1
+      ],
+      [
+        "nIP_low_nibble",
+        36,
+        4
+      ],
+      [
+        "oldIPs",
+        40,
+        8
+      ],
+      [
+        "newIPs",
+        48,
+        8
+      ]
+    ],
+    "global_lock": "0x1800a3f50",
+    "global_heap": "0x1800a3f58",
+    "global_block_head": "0x1800a5a50",
+    "global_entries": "0x1800a5a60",
+    "global_capacity": "0x1800a5a68",
+    "global_count": "0x1800a5a6c"
+  },
+  "status_values": {
+    "OK": 0,
+    "ALREADY_INITIALIZED": 1,
+    "NOT_INITIALIZED": 2,
+    "ALREADY_CREATED": 3,
+    "NOT_CREATED": 4,
+    "ENABLED": 5,
+    "DISABLED": 6,
+    "NOT_EXECUTABLE": 7,
+    "UNSUPPORTED_FUNCTION": 8,
+    "MEMORY_ALLOC": 9,
+    "MEMORY_PROTECT": 10,
+    "MODULE_NOT_FOUND": 11,
+    "FUNCTION_NOT_FOUND": 12
+  },
+  "table_comparison": {
+    "va": "0x1800a1140",
+    "file_offset": "0x9f740",
+    "length": 529,
+    "target_and_upstream_sha256": "a35a7be4500f9100d6e014c666513cbb7ba52e4f7010eb230baefb638eac5033",
+    "equal": true,
+    "upstream_source": "vendor/minhook/src/hde/table64.h"
+  },
+  "findings": [
+    {
+      "id": "single_target_freeze",
+      "result": "matches_pinned_source",
+      "addresses": [
+        "0x1800462ef",
+        "0x1800462f9"
+      ],
+      "evidence_ids": [
+        "ev_58ec25b3623b400a9a6229dc204b2316245fb88510d6875095865b6748224dc5"
+      ],
+      "detail": "R14D=1 is copied to R8D before Freeze regardless of enable argument. Upstream EnableHook also passes ACTION_ENABLE for single-target disable. Do not replace with a guessed ACTION_DISABLE fix."
+    },
+    {
+      "id": "freeze_errors",
+      "result": "matches_pinned_source",
+      "addresses": [
+        "0x1800465f8",
+        "0x180046670",
+        "0x180046695"
+      ],
+      "evidence_ids": [
+        "ev_1b4a11efc59bd5cc080a34d2788331cf63392a3b0c7e9646ffad607ec64ea412"
+      ],
+      "detail": "Enumeration failure returns9. OpenThread/SuspendThread failure marks ID0 and continues with overall success; Get/SetThreadContext failures do not change MH_STATUS."
+    },
+    {
+      "id": "buffer_range",
+      "result": "matches_pinned_source",
+      "addresses": [
+        "0x180046e89",
+        "0x180046e92",
+        "0x180046ea7",
+        "0x180046eb5"
+      ],
+      "evidence_ids": [
+        "ev_e3d393c9e8e4afd15dc6f438d135712742122ecc05a0fd642eed597b80fbff1f"
+      ],
+      "detail": "Origin plus/minus0x40000000 BYTES, clamped to system bounds; max-=0xfff. Pseudocode pointer arithmetic plus/minus0x8000000 on 8-byte elements describes the same1GiB range."
+    },
+    {
+      "id": "hde_table",
+      "result": "exact_bytes",
+      "addresses": [
+        "0x1800a1140"
+      ],
+      "evidence_ids": [
+        "ev_e71e4a03f83356da85155d7b440540452f110878dd96bf2bd96a95795bf24746"
+      ],
+      "detail": "529-byte target decoder table equals the parsed pinned upstream hde64_table byte-for-byte. Static read with full target SHA256 verified first."
+    },
+    {
+      "id": "selected_divergences",
+      "result": "none_identified_in_bounded_manual_review",
+      "addresses": [
+        "0x1800460e0",
+        "0x180047540"
+      ],
+      "evidence_ids": [],
+      "detail": "No concrete behavior-changing divergence found in selected hook/buffer/trampoline/decoder paths. This is not exhaustive opcode equivalence, compiler equivalence, actual hook testing, or proof of MinHook version."
+    },
+    {
+      "id": "upstream_extra_api",
+      "result": "extra_compatibility_surface",
+      "addresses": [],
+      "evidence_ids": [],
+      "detail": "RemoveHook, QueueEnableHook, QueueDisableHook, ApplyQueued, StatusToString and four-argument CreateHookApi bodies not identified in this bounded retained block. Shipping upstream definitions adds functionality, not evidence of recovered original bodies."
+    },
+    {
+      "id": "decompiler_type_differences",
+      "result": "not_behavioral_divergences",
+      "addresses": [
+        "0x180046a00",
+        "0x180046a10",
+        "0x180046db0",
+        "0x180047540"
+      ],
+      "evidence_ids": [],
+      "detail": "Retained void prototypes on status-returning tail wrappers/AllocateBuffer and byte return on hde64_disasm are decompiler type artifacts. Assembly tail-jumps preserve status return; AllocateBuffer returns slot in RAX; decoder ABI/source return unsigned int."
+    }
+  ],
+  "limitations": [
+    "Original exact MinHook release/commit and build settings not established.",
+    "Selected upstream source is a compatibility dependency, not original source recovered from this DLL.",
+    "No machine-code equivalence, exhaustive instruction corpus comparison or native hook execution.",
+    "Windows x64 behavior only; upstream x86 APIs and other unused API bodies outside comparison."
+  ]
+}

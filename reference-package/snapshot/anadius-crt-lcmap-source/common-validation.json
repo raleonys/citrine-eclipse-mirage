@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_lcmap",
+    "result": "PASS",
+    "output": "lcmap: 4892 checks PASS",
+    "executable_sha256": "dd8bce5d0c011285810d2aed40d0ae142b526fbde0bfd3fc80a2bb8aa46e89e0"
+  },
+  "execution_scope": "Recovered 06c8fc/06cc30/063168 with sort-key/query/fill/marker/count logic; synthetic native0671d4, conversions and scratch providers; no stack ABI or SEH reconstruction",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-lcmap-source/lcmap_tests.cpp",
+      "sha256": "e0d4eaa50ccfe7a0275d3957b626c1b8d5cc9ddcf8aedb7c4173aa82c5cb5b54"
+    },
+    {
+      "path": "anadius-crt-lcmap-source/lcmap.cpp",
+      "sha256": "7fd1210aa06fffe1b8b706bb499d600b9e32887f0457a09ed91fae4ab34de3f1"
+    },
+    {
+      "path": "anadius-crt-lcmap-source/lcmap.hpp",
+      "sha256": "eb1ffff0fcbc80edd0945f8d2000ebc63766b5ec0fb1e933d400d64792c2c50c"
+    }
+  ]
+}

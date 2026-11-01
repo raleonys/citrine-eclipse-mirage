@@ -1,0 +1,62 @@
+{
+  "result": "PASS",
+  "reviewer": "initial_multibyte_data independent sibling",
+  "reviewed_at": "2026-10-20T19:34:11.031Z",
+  "source_hashes": {
+    "lowio_lifecycle.cpp": "20dc724fe4e0c7efddaef7e0fa7087e5fed9f07adb31554827661ff2104b5d5b",
+    "lowio_lifecycle.hpp": "a1b92b3286d2774ff45db0aa0b04ad7a12dc14b98df19db2e2ad0aedb3228670",
+    "native_tests.cpp": "e55d4a3c4cdc2c6b1e73ca8f5885202b2a8b2884dcea015f511143e1c6814bcc",
+    "build.ps1": "5f7d24567ebe752de5064a2b8b05a767415e5561c2f78b1535ec8678dde7e07d"
+  },
+  "checks": [
+    "067890 exact normal order lock7, ensure0732a8(0), TEST full EAX, success-only inherited067698 then standard067788, unlock7, AL boolean. Upper RAX ignored; nonzero EAX with AL0 remains failure.",
+    "0678cc visits exactly128 QWORD slots/0x400 bytes; each later slot is read only when reached. Nonnull entry destructor is followed by unconditional zero store of that current slot, preserving effect mutation ordering.",
+    "Capacity DWORD A58A0 lies immediately after table and is never reset. Table walker has no added lifecycle lock.",
+    "073258 null returns without provider calls; nonnull deletes64 CS at base+i*0x48, then free(base); exact span0x1200. No CloseHandle or other file-handle cleanup added.",
+    "ArrayEffects supplies actual recovered destructor to table core; three lower creation/inheritance/standard providers remain pure mandatory dependencies.",
+    "Native Record contains actual SDK CRITICAL_SECTION at offset0, sizeof40; padding yields stride72; std::array<Record,64> size4608 checked statically. Heap allocation aligned for Array, construct_at starts all record/CS object lifetimes; InitializeCriticalSection sets each SDK object.",
+    "Deletion provider validates address bounds, stride, actual typed object address and alive bit before calling native DeleteCriticalSection. All64 deleted before destroy_at(Array) then actual owned HeapFree. No byte buffer cast to live CS.",
+    "Fixture lock7 is actual recursive CRITICAL_SECTION; ensure enters recursively under outer lock and lower callbacks execute while outer lock is held.",
+    "Trace fixture covers EAX-vs-AL-vs-upper64 matrix, null array, capacity preservation, later-slot mutation and post-call zero overwriting current-slot mutation.",
+    "Build rerun PASS639checks;192 native CS deletions and3 owned heap arrays freed; repeated cleanup adds no deletes/frees.",
+    "Production source untouched; own fixture only, no original DLL execution or file-handle APIs."
+  ],
+  "findings": [],
+  "run": {
+    "command": "./outputs/anadius-crt-lowio-lifecycle-source/build.ps1",
+    "result": "PASS 639 lowio lifecycle checks;192 typed native CS deletions;3 owned arrays"
+  },
+  "retained_REA": {
+    "0x180067890": {
+      "assembly_evidence": "ev_d4ff041951255b8c23252f658fec937c4ccb3f09609eb7d04f434471c1391b71",
+      "pseudocode_evidence": "ev_53596e1106f3183bdc899f798d5c824609c85d32af2b256dbfff07a0f6d395dd"
+    },
+    "0x1800678cc": {
+      "assembly_evidence": "ev_a557e408da4ff53f1bcd1ce9cf3f55354c86eb2f0bcbb40e3c234db0563ffd0a",
+      "pseudocode_evidence": "ev_ee05528565d8f723446d2a4a90a5fdd8a2d6afeef615c9f1adf559539e7a1576"
+    },
+    "0x180073258": {
+      "assembly_evidence": "ev_bb59c9105078651b551ef9d45b6aa2ac9526d722af4141b8ecb59dad65fc7e5b",
+      "pseudocode_evidence": "ev_a7cb4d754d283c1b2fff6be4e638fc62084f29cfd9a493afa9daed336a4a03ab"
+    }
+  },
+  "listing_sha256": {
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "pseudocode": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+  },
+  "bounds": {
+    "table_slots": 128,
+    "table_bytes": 1024,
+    "records": 64,
+    "stride": 72,
+    "array_bytes": 4608
+  },
+  "limitations": [
+    "Normal flow only; no original SEH/unwind, OS file-handle initialization or complete lowio/CRT/ABI equivalence.",
+    "Lower ensure/inherited/standard semantics remain provider obligations.",
+    "Address arithmetic/native object lifetimes require supported bounded live provider domain and external lifecycle serialization."
+  ],
+  "new_recovered_bodies": 3,
+  "original_execution": false,
+  "production_edits": false
+}

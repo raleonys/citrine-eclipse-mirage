@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "reviewer": "dispatcher_audit",
+  "scope": "Independent frozen four-source review against complete retained027c10 assembly and pseudocode plus boundary helper bodies",
+  "sources": {
+    "outputs/anadius-socket-source/completion_dispatcher.hpp": "fc956c1b9be86b46934afe11bfdc380e9c5c5264d773756cb09f5db331431955",
+    "outputs/anadius-socket-source/completion_dispatcher.cpp": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952",
+    "outputs/anadius-socket-source/completion_dispatcher_native.hpp": "7dd0296e59451095d528515d50d97f6052ad956c000858b7e4af68e0922a387b",
+    "outputs/anadius-socket-source/completion_dispatcher_native.cpp": "1d031ba931aac7a2daac70c54bc81d7c2eac0599a821d220a5330db1c7a405ef"
+  },
+  "report_sha256": "4b61ebcd0e5620ce0a024906014a53555a990bbe716cab35e5932de443eb0d53",
+  "audit_report_sha256": "db9748737e9c535a88e22b88573f9757f39afcd7c07c99619ae866514aa76f8f",
+  "audit_json_sha256": "3f49e0a78b3c7d2424a0680855534496c17f4024145b36817faff2fa8c73c0e0",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180027c10"
+  ],
+  "new_original_procedures": 1,
+  "core_contract": "GateCAS1to0,recursivecriticalpostfailure/livesharedqueue,nextafterservicecallback,NEG32wrapsignextendtimes10,zerooutputs/SetLastError0/livetimeoutUnsignedMin/GQCS/GetLastErrorALWAYS,key2packetreads/non2metadatawrites,CAS0to1butcallbackonlyold1,callbacklifetimeboundary,signedpending/clear/two024100copies/terminal029880,logicalsuccessbeforeworkdecrement/actualstopprior1",
+  "stop_contract": "nullsuccessfulkey1retrywithoutflags; otherkeywakeexchange0/stopfetchadd0; stop0retry; wakeexchange1 prior0onlylivepost; cacheerror/categoryALWAYSeven0,return0; upperwakewordpreserved",
+  "native_contract": "Five injected SDK APIs exact forwarding; constructor callsnone; rawGQCSoutputs scalarcopy only beforeGetLastError; no mapping callback or originalcodecall",
+  "composition": "RecoveredDispatcherWorkerEffects connects actual027c10 to existing0298b0 and exactboundentry; packetmetadata separated cancellationreason; cachedSDKidentity capturedwhileoperationlive prevents later expiredobjectmemberaddress lookup; rebindupdatesidentityandoperation; typedborrowedservice/timer projections; no nativeoverlay",
+  "providers_not_recovered": [
+    "CRT guard04b838/04b770/04b7cc",
+    "Exceptioncopy024100/refcount/lifetime/terminalrethrow029880",
+    "Native GS TLS and low32atomic storage",
+    "Native exception/SEH/unwind/concurrency",
+    "Native ABI/executable vtables and full DLL"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "One normal original procedure only",
+    "Existing CRT production unchanged and required helpers notcounted",
+    "Logical Error excludes unspecified nativepadding",
+    "Borrowedspan/service/timer mappings requirelifetime/coherency",
+    "Native GSslot pointer stacktemporary overwriteaftercallback hasno normal laterread because returnor terminal",
+    "No full original DLL equivalence claimed"
+  ]
+}

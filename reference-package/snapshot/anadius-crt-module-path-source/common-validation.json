@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_module_path",
+    "result": "PASS",
+    "output": "PASS: 3469 module-path checks",
+    "executable_sha256": "97844d408d3791d27decf4d247a30f87c1542868a8aa68574f4fda6c67009af2"
+  },
+  "execution_scope": "Recovered fixed UTF16-to-narrow and module-path normal flows; synthetic path/conversion/error/locale providers and borrowed buffers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-module-path-source/module_path_tests.cpp",
+      "sha256": "4a33bab86af79ccc280045b166ef28d49be924aa750244023e97b0cd3e210cbe"
+    },
+    {
+      "path": "anadius-crt-module-path-source/module_path.cpp",
+      "sha256": "793dec3fbfa6c487412bb812c7c29298ad91a6f7d39e6914a1ef81c1f29b1b45"
+    },
+    {
+      "path": "anadius-crt-module-path-source/module_path.hpp",
+      "sha256": "b75d7901f29e1d4eec6154e530fde17440018d33461b9385615c3a424feaf2b6"
+    }
+  ]
+}

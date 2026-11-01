@@ -1,0 +1,85 @@
+{
+  "schema": "source-composition.common-validation.v1",
+  "result": "PASS",
+  "source_package": "B7",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "909ff98045f61619523019d48d0734ba05ff26424aadfda37a578a0aa654406e",
+  "test_results": [
+    {
+      "module": "bootstrap_policies",
+      "result": "PASS",
+      "output": "PASS: 92 bootstrap-policy core checks; fixed-step SDK paths, source encoding/resolution, same-domain operator new/delete and explicit release/error policies; original targets never executed",
+      "executable_sha256": "1ddf84bde7e1c71382306f1bfd2bc90a39349e44257aeba908e175d2761c2774"
+    },
+    {
+      "module": "bootstrap_policies_integration",
+      "result": "PASS",
+      "output": "PASS: 96 bootstrap-policy integration checks; simultaneous same-domain application-memory workers, actual B4 Runtime/source parser/config routes, worker payload deletion and join-timeout retry; only own test workers executed",
+      "executable_sha256": "696757487aef2f6be567863ef49c655d74877c6246fe901bd23f4bb7cf54463d"
+    }
+  ],
+  "core_checks": 92,
+  "integration_checks": 96,
+  "new_checks": 188,
+  "production_objects": 2,
+  "new_source_files": 7,
+  "modified_prior_sources": [
+    {
+      "path": "anadius-thread-domain-source/domain.hpp",
+      "before_sha256": "7e8af84f9728f73d5c277300effaf3ecb693f05e5e45f6db851bd5d9df24d246",
+      "after_sha256": "d4eb8f8f57f3ba6ee9a0673d4b547e4f6e04549a4d86e7a0d8f1ebfddb7903ec",
+      "reason": "B7 explicit ApplicationMemory factory/provider lease and same-domain tracked allocation/free; prior B6 algorithms otherwise retained"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before_sha256": "dd861d1299775b45520b4d1f77a75f49e7e121b0aaf0f858be46e05c438f5416",
+      "after_sha256": "950687d7bfb66deecd6fb96bf6425ca8c33713afc00afaeb63bf824a9e5e7bcd",
+      "reason": "B7 explicit ApplicationMemory factory/provider lease and same-domain tracked allocation/free; prior B6 algorithms otherwise retained"
+    }
+  ],
+  "source_hashes": {
+    "services.hpp": "75c7e609ed81eb1717341d3e49f95298d9bf8394ec4993d761aca36180ad87de",
+    "services.cpp": "0ab6e39bc0b71372734698453702f0053c0be7274564bb9d32b5930065aa70e1",
+    "config_platform.hpp": "44640be6f888b9b1a13aca82a36cc4991a15fcf4ee185b543ea57c427e566ef4",
+    "config_platform.cpp": "d88fae4c51975e88196008413f167027326fcc4de3f270211c7a3b9a50922b7c",
+    "policies_tests.cpp": "c6a6a55b205fc865d5029e9d514a5fb53e1360f51bd1fa3bad80d130a3789ce0",
+    "policies_integration_tests.cpp": "df3e25b5634ddaa07100e5840116453d374e106d7e9948eb9227c5dce82547e8",
+    "policies_test_fixture.hpp": "677994f228b88a38d7fe4965cfb8cfd4f74f04109eb66e2fa8b8d75c710778e9",
+    "README.md": "c07d042d0b4cd436792a37086d0528812565653991aa5486360f0bcd376eb0d0"
+  },
+  "architecture_review_sha256": "a0454125b29060c33f54ce14e2099c24782b0eca5bbb80e14a4f7241f62cf1d3",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_concrete_backends": 0,
+  "new_thread_trackers": 0,
+  "new_callback_registries": 0,
+  "new_runtime_assemblies": 0,
+  "new_configuration_adapters": 1,
+  "new_compiler_console_adapters": 0,
+  "new_per_launch_thread_adapters": 0,
+  "new_thread_domain_owners": 0,
+  "new_initial_locale_adapters": 0,
+  "new_native_runtime_adapters": 0,
+  "new_application_memory_providers": 1,
+  "new_services_adapters": 1,
+  "owned_initial_locale_domain_present": true,
+  "actual_thread_factory_path_exercised": true,
+  "same_domain_application_memory_present": true,
+  "configuration_routes_bound": 13,
+  "configuration_policies_remaining": 8,
+  "services_routes_bound": 11,
+  "existing_source_algorithms_routed": 7,
+  "remaining_service_policies": 6,
+  "new_virtual_provider_interfaces": 0,
+  "controlled_callback_shutdown_implemented": true,
+  "actual_shared_thread_domain_complete": false,
+  "full_native_CRT_domain_equivalence": false,
+  "dynamic_locale_supported": false,
+  "actual_provider_backend_complete": false,
+  "production_pe_entry_installed": false,
+  "module_standalone_build_executed": false,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false,
+  "scope": "Three selected Services routes use tracked actual same-domain application heap/new-handler/error state and observed RET guard. Six configuration routes reuse retained path/encoding algorithms and typed module/environment SDK APIs. New ownership/failure/exception policies are explicit, not native ABI equivalence. Eight configuration and six Services policies remain open."
+}

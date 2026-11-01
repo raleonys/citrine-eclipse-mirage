@@ -1,0 +1,48 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T02:34:04.9939137Z",
+  "prior_package_sha256": "fcbb6ee77c63c9e40cffd9894594fd39d2fd62b60c7fd200402c71804febddf9",
+  "prior_source_count": 377,
+  "unchanged_prior_sources": 377,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-config-application-source/application_tests.cpp",
+    "anadius-config-application-source/application.cpp",
+    "anadius-config-application-source/application.hpp",
+    "anadius-config-hash-source/hash_table_tests.cpp",
+    "anadius-config-hash-source/hash_table.cpp",
+    "anadius-config-hash-source/hash_table.hpp"
+  ],
+  "current_sources": 383,
+  "current_documents": 144,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 34,
+  "native_objects": 131,
+  "cpp_objects": 127,
+  "c_objects": 4,
+  "normal_test_groups": 116,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "config_hash",
+      "result": "PASS",
+      "output": "PASS: 4929 Config2 growth/copy/positional-reuse checks",
+      "executable_sha256": "80b1f5e035c1ffc2f009679350e30e43633cf77ea6552c97093078df18d9d9da"
+    },
+    {
+      "module": "config_application",
+      "result": "PASS",
+      "output": "PASS: 95 Config2 application checks; no original execution or real user CFG",
+      "executable_sha256": "88a8f60a0949a71b1342cfbdfca951354979004127b19ec3a843dabdf32358d5"
+    }
+  ],
+  "master_build_sha256": "8db25e49fdb317fcae7adfa746733678ae1303c96fd5f45d4b0d0a259b8814e1",
+  "full_unique_original_bodies_added": 0,
+  "original_execution": "none",
+  "real_user_cfg_read": false,
+  "CRT_production": "unchanged",
+  "startup_redirect": "not yet wired",
+  "native_ABI_SEH_runtime_equivalence": "not established"
+}

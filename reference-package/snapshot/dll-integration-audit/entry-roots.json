@@ -1,0 +1,380 @@
+{
+  "schema": "dll-entry-roots.retained-audit.v1",
+  "result": "PASS",
+  "date": "2026-10-27",
+  "scope": "Independent original entry/export/TLS identities and source root mapping;not a successful DLL build or runtime-equivalence claim",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_parent": {
+    "path": "outputs/anadius-rea-evidence.json",
+    "sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "bytes": 34457189
+  },
+  "retained_reads": [
+    {
+      "evidence_id": "ev_2cea32399a52e1a29ae7452d90c668df761c6b65247345e0e6a095b1d77ac812",
+      "address": "0x180000000",
+      "complete": true,
+      "bytes": 1024,
+      "sha256": "90673e90591546d0932fa211d0128c90bdc2bc54f613d76ac991cb4c3ce96000",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "profile_digest": "dcc676845881c04a2d22833fb35d26569462e033daee5e99a95edac5aa61ac05"
+    },
+    {
+      "evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+      "address": "0x18007f000",
+      "complete": true,
+      "bytes": 138752,
+      "sha256": "655444c3892927b2730fc34482c65d246ac9314bba13aef6267b0c87d58cc982",
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": "12.1.4"
+      },
+      "profile_digest": "dcc676845881c04a2d22833fb35d26569462e033daee5e99a95edac5aa61ac05"
+    }
+  ],
+  "recovery_index": {
+    "path": "outputs/anadius-recovery-index.json",
+    "sha256": "727160403cf8c16009b69507ba747363abdc17a299f693b584d1a4baab63ec73"
+  },
+  "listings": {
+    "assembly": {
+      "path": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    "pseudo": {
+      "path": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    }
+  },
+  "image_base": "0x180000000",
+  "entry_rva": "0x4bcfc",
+  "entry_address": "0x18004bcfc",
+  "export_count": 3,
+  "exports": [
+    {
+      "ordinal": 1,
+      "name": "CDX",
+      "rva": "0x17a30",
+      "address": "0x180017a30",
+      "forwarder": null,
+      "name_pointer": "0x18009fa24",
+      "eat_slot_address": "0x18009f9f8"
+    },
+    {
+      "ordinal": 2,
+      "name": "RUNE",
+      "rva": "0x17a30",
+      "address": "0x180017a30",
+      "forwarder": null,
+      "name_pointer": "0x18009fa28",
+      "eat_slot_address": "0x18009f9fc"
+    },
+    {
+      "ordinal": 3,
+      "name": "anadius",
+      "rva": "0x17a30",
+      "address": "0x180017a30",
+      "forwarder": null,
+      "name_pointer": "0x18009fa2d",
+      "eat_slot_address": "0x18009fa00"
+    }
+  ],
+  "export_aliases_share_one_body": true,
+  "export_body_observation": "RET0;no explicit return-value assignment or work at017a30,not a functional application entry",
+  "proposed_def_contract": [
+    "CDX=<single_ret_guard_symbol> @1",
+    "RUNE=<single_ret_guard_symbol> @2",
+    "anadius=<single_ret_guard_symbol> @3"
+  ],
+  "export_def_not_written": true,
+  "tls": {
+    "directory": "0x180092080",
+    "directory_bytes_hex": "b859098001000000c059098001000000e8470a800100000020f70780010000000000000000003000",
+    "template_start": "0x1800959b8",
+    "template_end": "0x1800959c0",
+    "template_bytes": 8,
+    "template_bytes_hex": "0000000000000080",
+    "index_cell": "0x1800a47e8",
+    "callback_array": "0x18007f720",
+    "first_callback_qword_hex": "0000000000000000",
+    "loader_callbacks": [],
+    "zero_fill_bytes": 0,
+    "characteristics": "0x300000",
+    "crt_dynamic_callback_slot": "0x1800a5a70",
+    "crt_dynamic_callback_slot_initial": "zero-filled virtual data according to hashed static-image-facts.json; not the PE loader TLS callback array"
+  },
+  "imports": {
+    "iat_slots": 174,
+    "libraries": {
+      "WS2_32.dll": 19,
+      "KERNEL32.dll": 150,
+      "USER32.dll": 2,
+      "SHELL32.dll": 1,
+      "MSWSOCK.dll": 2
+    },
+    "delay_imports": [],
+    "caveat": "IAT slot count174 is not the external-procedure inventory denominator170"
+  },
+  "root_chain": [
+    "0x18004bcfc",
+    "0x18004bbc8",
+    "0x180038870",
+    "0x180038970"
+  ],
+  "roots": [
+    {
+      "address": "0x18004bcfc",
+      "role": "PE loader entry",
+      "source": "outputs/anadius-crt-entry-source/entry.cpp",
+      "source_symbol_or_boundary": "Entry::entry_04bcfc",
+      "source_sha256": "035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47",
+      "native_equivalence_established": false,
+      "assembly": {
+        "evidence_id": "ev_8c1f796882e9adedddeabccc013a2b180fe88ebe4f34a0ac71c91ebe7468bc93",
+        "listing_line": 78936,
+        "section_sha256": "a1cbebfe608c7605531cdded6641f8c6a8c6294e84a2643cf6a7b700eba57317"
+      },
+      "pseudo": {
+        "evidence_id": "ev_8c9eaca13417fb0a0392fd376e2a142a535909f3b4b52ff1071a2675a6e59a34",
+        "listing_line": 62277,
+        "section_sha256": "2e57d77f00c62b870c6be7f6ac3f8eb7eea9f010dc1254d2d03d4c890ec1fa75"
+      }
+    },
+    {
+      "address": "0x18004bbc8",
+      "role": "CRT dispatcher",
+      "source": "outputs/anadius-crt-entry-source/entry.cpp",
+      "source_symbol_or_boundary": "Entry::dispatch_04bbc8",
+      "source_sha256": "035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47",
+      "native_equivalence_established": false,
+      "assembly": {
+        "evidence_id": "ev_8a4fcef44115565710b6684a71424833dbc39067b1acfa4284be158f1b0a4630",
+        "listing_line": 78839,
+        "section_sha256": "6681b25edeeb4dc8f34c6646bd623b75ce7c41c5de9d0591f5ad0f5ce59cd518"
+      },
+      "pseudo": {
+        "evidence_id": "ev_91e8bcee0b250a2874d0a05b4c68a1b1f88ae3412e43503f48e378bfefef7bc9",
+        "listing_line": 62231,
+        "section_sha256": "8a61f90f555c13fe039dd9e4ca351f46d992c9baa81565702600af358e384a0f"
+      }
+    },
+    {
+      "address": "0x18004b9e0",
+      "role": "CRT reason dispatch",
+      "source": "outputs/anadius-crt-entry-source/entry.cpp",
+      "source_symbol_or_boundary": "Entry::crt_reason_04b9e0",
+      "source_sha256": "035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47",
+      "native_equivalence_established": false,
+      "assembly": {
+        "evidence_id": "ev_14275c8735da0d792f1a57803773b974be6d9f92b190fabb9089a5b31f489c71",
+        "listing_line": 78707,
+        "section_sha256": "44383baecc120e01f14418dba2e1165e4d030dc82f991af9ee1765994a721ae4"
+      },
+      "pseudo": {
+        "evidence_id": "ev_8d1fa77bcddd0eb58c0f3d1e7f8490c49640d9be72cd8a44223093f1aff2aaf2",
+        "listing_line": 62119,
+        "section_sha256": "3a539c8b4391a19713e2499a161606dcd802e12d31e7a73bee97fc6666e9c8de"
+      }
+    },
+    {
+      "address": "0x18004ba30",
+      "role": "CRT process attach",
+      "source": "outputs/anadius-crt-entry-source/entry.cpp",
+      "source_symbol_or_boundary": "Entry::process_attach_04ba30",
+      "source_sha256": "035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47",
+      "native_equivalence_established": false,
+      "assembly": {
+        "evidence_id": "ev_e313cdf981deab3b2e56b180e7becbd1b6a3095a19b2b7eeb786758fe475a6b1",
+        "listing_line": 78734,
+        "section_sha256": "48dbe4ef3738f5cf56fcab54a53d4fdc53a7b3295d7605f9f6351cbb19d31fad"
+      },
+      "pseudo": {
+        "evidence_id": "ev_969fa08f3000af55fdfbefaf21047d6514908cf7dfb8ad03cc181894922a872d",
+        "listing_line": 62149,
+        "section_sha256": "d1e3a3cd7ad0fa74dc8332636774f6cc68891c061c9b57ddfc7ccd062686796f"
+      }
+    },
+    {
+      "address": "0x180038870",
+      "role": "Application DllMain",
+      "source": "outputs/anadius-source/bootstrap.cpp",
+      "source_symbol_or_boundary": "Bootstrap::application_dll_main",
+      "source_sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+      "native_equivalence_established": false,
+      "assembly": {
+        "evidence_id": "ev_e22c193077e36533a0c4bdeab829161a9788ca97925356612bcaeadbc0285619",
+        "listing_line": 57032,
+        "section_sha256": "1a3a21377ab60c20af4d94031d02b43b11d502a97086d2575ec2002f522ef5f7"
+      },
+      "pseudo": {
+        "evidence_id": "ev_0a232e746d99beddba99fe362a4f132625939b77bd747e39ad749975c6f32a06",
+        "listing_line": 44844,
+        "section_sha256": "3ae44c010078f729f48ab9fb44a52e08d58d7863497e42a6f62ecb75b51926ec"
+      }
+    },
+    {
+      "address": "0x180038970",
+      "role": "Application bootstrap",
+      "source": "outputs/anadius-source/bootstrap.cpp",
+      "source_symbol_or_boundary": "Bootstrap::initialize",
+      "source_sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+      "native_equivalence_established": false,
+      "assembly": {
+        "evidence_id": "ev_77887ea2e7b744e62e52eaf81cb8a07abf2a4f50498001ba81b2fcf2496e8789",
+        "listing_line": 57095,
+        "section_sha256": "ecdfc05b44b904b3b64ad776db186650e348d18f5600e521f6c795437cf128fe"
+      },
+      "pseudo": {
+        "evidence_id": "ev_e66705fdaa9bdd88fb50be13d22e354939026d931f472329e0f14e17c9fb4fbd",
+        "listing_line": 44928,
+        "section_sha256": "b311dd60c90daf18da21c6fdcf90b7fa03afd44a90536a10d753d51330d35889"
+      }
+    },
+    {
+      "address": "0x180017a30",
+      "role": "All three export aliases",
+      "source": "outputs/anadius-source/bootstrap.hpp",
+      "source_symbol_or_boundary": "BootstrapDependencies::guard_return_017a30 is mandatory; no concrete export definition in reviewed sources",
+      "source_sha256": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210",
+      "native_equivalence_established": false,
+      "assembly": {
+        "evidence_id": "ev_4ef5a2bb53b7728331fdd5c8debedafc4f7ebcce78b3dd4a30154920bfc23a9d",
+        "listing_line": 24654,
+        "section_sha256": "e67084b89c30d510f49dea99125c9520b434a4efe8721ba0605498838847af54"
+      },
+      "pseudo": {
+        "evidence_id": "ev_65a0768e0262bcd69986dc65459dfa05d4319318660f7f66a3afe68b19c6b1e9",
+        "listing_line": 19979,
+        "section_sha256": "ec35bfebdc91059e6cafd02e4622510ce423b651e56ebcb3b462e886ccf9f846"
+      }
+    },
+    {
+      "address": "0x18004c218",
+      "role": "Dynamic CRT TLS slot getter",
+      "source": "outputs/anadius-crt-startup-bridge-source/startup_bridge.cpp",
+      "source_symbol_or_boundary": "StartupBridge::tls_callback_slot_04c218",
+      "source_sha256": "b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c",
+      "native_equivalence_established": false,
+      "assembly": {
+        "evidence_id": "ev_6f25e4cd41a2099038d48511d95fa3c0a2782ce1bc0009e91803b4eb28d12ad4",
+        "listing_line": 79255,
+        "section_sha256": "96d6717dd4189588d738505e6f031b4ed9b103c8a0e5a7bb866dd2c36c7832ea"
+      },
+      "pseudo": {
+        "evidence_id": "ev_f78fb82d7b506b79ffb2dfb120bd9a7cca20d5d45151b6f7322c16e719bd88e1",
+        "listing_line": 62637,
+        "section_sha256": "9b9a931721440b5e818fa038f6f0e1e1dd492a0fcbb5a63a8c7c305cfdbe20d2"
+      }
+    }
+  ],
+  "instruction_anchors": [
+    {
+      "function": "0x18004bcfc",
+      "instruction": "0x18004bd18: CALL 0x18004c134"
+    },
+    {
+      "function": "0x18004bcfc",
+      "instruction": "0x18004bd34: JMP 0x18004bbc8"
+    },
+    {
+      "function": "0x18004bbc8",
+      "instruction": "0x18004bc37: CALL 0x18004b9e0"
+    },
+    {
+      "function": "0x18004bbc8",
+      "instruction": "0x18004bc52: CALL 0x180038870"
+    },
+    {
+      "function": "0x180038870",
+      "instruction": "0x180038879: CALL 0x180038970"
+    },
+    {
+      "function": "0x180017a30",
+      "instruction": "0x180017a30: RET 0x0"
+    },
+    {
+      "function": "0x18004c218",
+      "instruction": "0x18004c218: LEA RAX, [0x1800a5a70]"
+    }
+  ],
+  "source_root_limits": [
+    {
+      "path": "outputs/anadius-bootstrap-native-source/native_entries.hpp",
+      "sha256": "3236b76f45c43f277ac17f03dde98cbbd88462ff6f93f384737fa8cb85582d5d",
+      "finding": "Binding/Resolver provide compiled SDK-typed entry callbacks but explicitly do not register callbacks,start threads,or install DLL entry."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-native-source/native_entries.cpp",
+      "sha256": "624447b6c93172343368d8162fbc8964b9339ac03f1f4b12d4253bdf4499c3ed",
+      "finding": "application_entry uses invoke/Lease requiring pre-existing process-global Binding and mutex;forwards reason only. It is not standalone initial loader entry and cannot construct its own missing root."
+    },
+    {
+      "path": "outputs/anadius-crt-entry-source/entry.hpp",
+      "sha256": "3f38209152eb1a83471e1f1a08b183cad4a54381113ec0fd870413ecc5b27358",
+      "finding": "Entry has real recovered root algorithms but needs caller-owned State/onexit table/Effects. Pure declarations may be satisfied by later bridges and are not all globally unresolved."
+    },
+    {
+      "path": "outputs/anadius-crt-pair-bindings-source/bindings.hpp",
+      "sha256": "726405a5c3f56fecee42c6c7aa6ff8b1d97a6a114710c0dedf789c73ab9c1d51",
+      "finding": "Existing16pair dispatch class still leaves invoke_void_initializer,invoke_int_initializer,common_flush_all mandatory."
+    }
+  ],
+  "genuine_link_target_requirements": [
+    "Entry symbol must reach recovered CRT dispatch and actual Bootstrap object;export aliases alone reach only017a30 RET and cannot demonstrate application integration.",
+    "Use one concrete root composition owning stable CRT/onexit/cookie/PTD/global/application objects and actual required lower providers before callbacks;no success stubs or fixture policy.",
+    "Resolve lifecycle cycle: bootstrap native application_entry requires Binding before admission,so it is not the constructor that can create the root Binding itself.",
+    "Link recovered application root with explicit root references/whole-archive diagnostic as appropriate;a default linker entry with unused static archives is not meaningful.",
+    "Define actual rebuilt initializer/termination callback tables,thread entries and compatible TLS policy;never invoke retained image VAs as pointers.",
+    "Statically inspect resultingPE entry/three names+ordinals/aliasEAT/TLS/imports/map and referenced source closure.",
+    "Native loader-lock/reentrancy,EH/unwind,thread shutdown and original behavior remain separate validation gates."
+  ],
+  "version_outer": {
+    "export_count": 198,
+    "assembly_wrappers": 197,
+    "cpp_loader_entry_original": "0x180005469",
+    "def_file": "outputs/version-rebuild/version.def",
+    "def_sha256": "b6ec04c064d8ac781dff346f8207c969608494376f006a8723dd03a09490f06f",
+    "loader_source": "outputs/version-rebuild/loader.cpp",
+    "loader_source_sha256": "5da3a9fce911abdc7d4ca0fd1f99d0f7d545608ed5f6bff427643692def2f18a",
+    "embedded_original_bytes": 21504,
+    "embedded_original_sha256": "36e775ed97b7a41c4f0cb98b94ee8edb74fab5cfe17d5fa8cfed265228301846",
+    "embedded_outer_va": "0x180006d80",
+    "embedded_preferred_entry": "0x180003338",
+    "embedded_application_export": "0x180001000",
+    "embedded_export": "DllMain @1",
+    "embedded_TLS_directory": "absent according to retained pe-layout/README",
+    "independence_blocker": "loader.cpp still includes embedded_original_machine_code.inc;core/preloader callback sources are not yet an independently sourced embedded DLL",
+    "known_unavailable": "Original version.dll and historical generated version DLL are blocked;not read/retried in this audit"
+  },
+  "new_source_bodies": 0,
+  "new_source_bridges": 0,
+  "new_typed_closures": 0,
+  "new_native_analysis": false,
+  "original_read_performed": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "existing_cpp_hpp_modified": false,
+  "limits": [
+    "Retained initialized Ghidra memory/static initial-image facts;no loader execution observed.",
+    "Named export ABI has no argument/result contract inferable beyond the observed leaf RET;avoid a C++ default return-value assumption.",
+    "This audit does not assert every 174 import remains necessary in a rebuilt binary or that all current partial classes can compose without further work.",
+    "No original or regenerated DLL read,copy,recovery,load,or protection bypass;no rawCFG/token/achievement content read."
+  ],
+  "canonical_export_root_checkpoint": {
+    "file": "outputs/reconstruction-inventory/functions.json",
+    "file_sha256": "8d2290dc24ec78608906bd1bef1a604381fa536d63e1396b57232cba8b52bf46",
+    "address": "0x180017a30",
+    "name": "_guard_check_icall",
+    "source_presence": "no_definition_mapping",
+    "definition_variants": 0,
+    "compiled_symbol_correlated": false,
+    "native_incoming_edge_count": 5,
+    "assembly_evidence": "ev_4ef5a2bb53b7728331fdd5c8debedafc4f7ebcce78b3dd4a30154920bfc23a9d",
+    "canonical_entry": true
+  }
+}

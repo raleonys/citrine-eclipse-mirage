@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "bootstrap_native",
+    "result": "PASS",
+    "output": "PASS 70 checks: rebuilt Bootstrap entry/resolver/CRT bridge and owned synthetic worker; no target execution",
+    "executable_sha256": "f055ca97de67b8bcaac657017abca4df39688abb7afe648e414081444219171b"
+  },
+  "execution_scope": "Compiled bootstrap thread/exit/terminate/application entries and recovered CRT core; synthetic dependencies and own worker metadata",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [
+    {
+      "suite": "bootstrap_native",
+      "mode": "--unconfigured",
+      "expected_exit": 84,
+      "actual_exit": 84,
+      "result": "PASS"
+    },
+    {
+      "suite": "bootstrap_native",
+      "mode": "--closed",
+      "expected_exit": 83,
+      "actual_exit": 83,
+      "result": "PASS"
+    },
+    {
+      "suite": "bootstrap_native",
+      "mode": "--throw-worker",
+      "expected_exit": 83,
+      "actual_exit": 83,
+      "result": "PASS"
+    },
+    {
+      "suite": "bootstrap_native",
+      "mode": "--terminate",
+      "expected_exit": 83,
+      "actual_exit": 83,
+      "result": "PASS"
+    }
+  ],
+  "sources": [
+    {
+      "path": "anadius-bootstrap-native-source/native_entries.cpp",
+      "sha256": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85"
+    },
+    {
+      "path": "anadius-bootstrap-native-source/native_entries.hpp",
+      "sha256": "fc50135b8fa2678743544c8728e25d6ef94837dfd5956f77cb736ea7bf899674"
+    },
+    {
+      "path": "anadius-bootstrap-native-source/native_entry_tests.cpp",
+      "sha256": "a1d48430e7ee19f36245727d7ebdc41417c460fdd09c0a8a92a3d8cb01d3c1c9"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "scope": "Independent complete retained nine normal handler-dispatch procedures",
+  "reviewer": "handler_dispatch_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "full_listing_hashes_match": true,
+  "functions": [
+    {
+      "address": "0x180021900",
+      "pseudo_evidence": "ev_038473cd7809c719aee7d5cec218de4f9f5c0bcc6087442d05e3ffe6da2b7e07",
+      "assembly_evidence": "ev_1196f0abade9438adb0f73215263e3a82b6ebe3ec7b068d06364771288bdd212"
+    },
+    {
+      "address": "0x180022640",
+      "pseudo_evidence": "ev_04a9d210e8adc443ff8899c39272d7e3c0db47dc01f290a73392125542da3d10",
+      "assembly_evidence": "ev_35566019b7c1b2cbbaafc71741571aeaa6677d5555afa573e964b75d7baaeffe"
+    },
+    {
+      "address": "0x180022670",
+      "pseudo_evidence": "ev_46bd821aedf112a5f8d266f7be0bcb5b5a2a499accd194cb494201e2dba4a372",
+      "assembly_evidence": "ev_e29f2b21d7fd9b342851a734b4dee14f086eb31686c820fa771ff18ad6b5b77d"
+    },
+    {
+      "address": "0x180022780",
+      "pseudo_evidence": "ev_684316d74274628f1b9b794bd8c607bec049458ccbdfd591f1f9b73bd633d99c",
+      "assembly_evidence": "ev_d7ce23d47f9801dd482481985c5d4429f62f977eb103987f8d97fe596d78ffa8"
+    },
+    {
+      "address": "0x1800227b0",
+      "pseudo_evidence": "ev_ead3f32874728680e3099f8b671b6a2b279ed04f72baaad983351e7d0393e8b5",
+      "assembly_evidence": "ev_9f15f424365d9770dd05fc845db6d504b75128ee5020d46706ccf53777ad20d2"
+    },
+    {
+      "address": "0x1800229d0",
+      "pseudo_evidence": "ev_315563175da61992f336b7c7cbb76989dfdbd437f1c430ccd8a5974a78071eee",
+      "assembly_evidence": "ev_0f552091c23d20874629c304e7e2c165166c4ed19d14468f50a421033500c607"
+    },
+    {
+      "address": "0x180022c60",
+      "pseudo_evidence": "ev_3a401c192826d6c38a2feead942b0163280eec076d8b0d34b654c27a492fbafe",
+      "assembly_evidence": "ev_401457b9451487d7f920b34697bef11e79385969366d32a0b355b7c00179e0b4"
+    },
+    {
+      "address": "0x1800291c0",
+      "pseudo_evidence": "ev_52421cf2a12a2d6699238fcb5d733e0c050181193adca7761405671e5dc7a79e",
+      "assembly_evidence": "ev_69264e6a252fbf914cbcd59f67d6045d2a4fa76cc656e78ba8f16adeb194a49c"
+    },
+    {
+      "address": "0x1800292a0",
+      "pseudo_evidence": "ev_e1ec8c5d5836634556cb2b7a3165483ee624f68fccd0fb8eb8166d0b93013600",
+      "assembly_evidence": "ev_bc982b0c377896faf08ce17db3747261b53ae6088fc21deb5fef382d78cd02bb"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180021900",
+    "0x180022640",
+    "0x180022670",
+    "0x180022780",
+    "0x1800227b0",
+    "0x1800229d0",
+    "0x180022c60",
+    "0x1800291c0",
+    "0x1800292a0"
+  ],
+  "new_original_procedures": 9,
+  "rules": {
+    "pool": "021900/0291c0/0292a0 cache onlyslots4/5;capacity/alignment qualify;firstoneeviction;markers78recv/70send;tagunused",
+    "owned_move": "Cache low8flag;copydefinedfields;clearoriginalownedpair BEFOREerror16/bytes64 snapshots;cleanup/cache/freeoriginal BEFORE invoke;live localcontrol reload/release AFTERhandler;secondcleanup",
+    "cleanup": "Cacheframeobject;readlivecontrol;release strong old1dispose thenweakold1delete;unconditionalclearobject AFTERcallbacks;readliveallocation AFTERobjectcallbacks then cacheacrossTLS/free;clearallocation AFTERcallbacks",
+    "borrowed": "022640recv/022780send error16+bytes64 cache;025c40/0261d0 flag0;sameborrowedhandler",
+    "receive_schedule": "Cachetable.slot18 or slot10 BEFOREsourcecopy/TLS/allocate;borrowedstacktask or ownedmutabletaskslot;originalownedpairzero BEFOREerror/bytes;uninitializedtagunused",
+    "send_prepare": "Cacheactualfactoryfunction BEFOREquery;factorytemporary;copy10/20reset;cachedmove10;temp18zero AFTERmove;LIVEtemp28copy/reset;LIVEtemp0destroy skipiff017a30;LIVE nested schedule read;final LIVE nested0destroy unconditional;GScheck",
+    "mutable_task": "Aftercachedslot10 returns reload taskslot;nonnull replacement/current task livecallback0(flag0);no consumedtask dereference",
+    "indeterminate": "Receive allocator tag uninitialized;sendfactoryscratch opaque;senddummy prefixuninitialized;none projected as recovereddefineddata"
+  },
+  "providers_not_recovered": [
+    "04b0bc/04b788 CRT allocation/free",
+    "Native factory/query/move/destroy/schedule algorithms and lifetimes",
+    "025c40 receive and0261d0 send application bodies",
+    "Native raw allocation/closure ABI/bindings/control lifecycle",
+    "GS-cookie/SEH/unwind/concurrency/full DLL equivalence"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Nine normal caller procedures only",
+    "Existing CRT production unchanged",
+    "Bounded raw storage separate from typed SDK/handler/closure projection",
+    "Uninitialized native bytes remain unspecified",
+    "No full DLL equivalence claimed"
+  ],
+  "report_sha256": "7e508f122b2dbc8459b0330a28187d3608d8575e5f979fcfafdac7b67f79b1e0"
+}

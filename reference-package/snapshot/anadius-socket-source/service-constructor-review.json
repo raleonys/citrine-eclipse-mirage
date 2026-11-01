@@ -1,0 +1,44 @@
+{
+  "result": "PASS",
+  "reviewer": "service_constructor_audit",
+  "scope": "Independent frozen four-source review against retained0228e0+027be0 normal-flow contract and selected ConstructorRegistryEffects/SDK import composition",
+  "sources": {
+    "outputs/anadius-socket-source/service_constructor.hpp": "3e03015e00752ec4f3020bdaa6559eb89e3c311b25877198a296361ef4a19365",
+    "outputs/anadius-socket-source/service_constructor.cpp": "e4125fb99d7cbf61c29fd82ac5b7027f5face09a92e77890c66da96a8ec74413",
+    "outputs/anadius-socket-source/service_constructor_native.hpp": "4dfe0aebd535f22fd9cf264c13508055b79bcbaab62aaf9c8bcec2b6bdb24702",
+    "outputs/anadius-socket-source/service_constructor_native.cpp": "9bc4cac66954bcb9583fea697cfa1e9ebae2daac3284a5ac8cd33781495a19aa"
+  },
+  "report_sha256": "4873f0799603acee339857d2d0583e003bbde436bb9d74e0c2ddf5818929c024",
+  "audit_report_sha256": "c2b2f1b85e254d0de669deacd0e713ac54100bbd9727cb54a2ba71ea41020f48",
+  "audit_json_sha256": "6e66d6357a8acac60edcd604f169df3d95b91e45465cc5db1a0df753ae683484",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x1800228e0",
+    "0x180027be0"
+  ],
+  "new_original_procedures": 2,
+  "core_contract": "Cached context before128allocation; null immediate return; ordered key/context/next/base/implementation stores; live registry read for023b30; returned scheduler thenzero38/40/48; initialize spin80000000; BOOLnonzero=>0 noGetLastError,BOOLzero=>DWORDunchanged; categoryalways; cachedstatus32; requirednonreturning028240 mutex; successhead0 thenfinalvtable845b0",
+  "composition": "Selected live typed entry/service/borrowedSDKsection; ConstructorRegistryEffects invokes actual0228e0 while keeping CRTcompare abstract; injectable SDKimports forward exactsection/spin/DWORD and callnothing onconstruction",
+  "providers_not_recovered": [
+    "04b0bc native allocator and deallocator",
+    "023b30 scheduler resolution and downstream024990",
+    "028620 category provider and028240 exception internals",
+    "04d2d0 CRT RTTI comparator",
+    "Native scalar deleting destructor and registry teardown",
+    "Native constructor exception/SEH/unwind cleanup,dispatcher,executor and DLL entry/export ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Allocator returns fresh unlinked exclusively writable already-live dynamic SocketServiceEntry",
+    "Entry,context,SDKsection,gate and bindings remain stable and caller-owned",
+    "Typed logical fields and opaque table identities are not native memory or ABI overlays",
+    "Caller-bound completion_port projection is preserved and is not an original0228e0 field store",
+    "Callback failures and SDK invalid inputs do not establish native unwind or cleanup guarantees",
+    "Only two original normal procedures counted; SDKadapters and composition are not extra originals",
+    "No complete original DLL equivalence claim"
+  ]
+}

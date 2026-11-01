@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "reviewer": "crt_argv_parser",
+  "checked_at": "2026-10-18T14:47:04.1179191Z",
+  "scope": "Independent static production review against retained 063888/0638e8 disassembly; no target execution",
+  "sources": [
+    {
+      "file": "argv.hpp",
+      "sha256": "94c038a8aebdb66fdc0c4e79a96d1556e25ab98fcfdd21424bd4057a683e22ab"
+    },
+    {
+      "file": "argv.cpp",
+      "sha256": "f36423b9120efc8feef27da66b9f473a002366b3fe98ccf5c57cd5dada4ffa6e"
+    }
+  ],
+  "assembly": "selected-assembly.txt",
+  "assembly_sha256": "a2302ad83c3707b8056658881bed47a14341278a7ccf3b08bc0ab24b5dedd3c1",
+  "findings": [],
+  "checked": [
+    "Unsigned allocation guard equality boundaries, first guard before DIV fault domain, total calloc(bytes,1) and post-call free(NULL).",
+    "Mode0 no effects; invalid mode writes errno22 then invalid-parameter handler.",
+    "Multibyte and filename calls, ignored filename status, command-line fallback, two actual parser calls and allocation ownership.",
+    "Allocation failure errno12 plus additional free(NULL); mode1 argv-before-argc low DWORD publication and trailing free(NULL).",
+    "Mode2 mandatory expansion, lowDWORD status propagation, failure free(partial) before free(parse), success bounded terminator scan then argc/argv publication before free(NULL) and free(parse).",
+    "New bounded-provider/domain guards and placement-array lifetime model explicitly separate from original memory fault behavior."
+  ],
+  "limitations": [
+    "This is static source review, not runtime equivalence or SEH/unwind validation.",
+    "Production providers remain external and must satisfy declared storage, expansion lifetime and zeroing contracts."
+  ]
+}

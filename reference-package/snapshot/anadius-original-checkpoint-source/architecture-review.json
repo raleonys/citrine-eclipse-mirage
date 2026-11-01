@@ -1,0 +1,173 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T13:57:15.050346+00:00",
+  "review_scope": "B24 selected original resolver/SDK actual-PTD checkpoints, all ten typed original methods, owned/raw factory integration, preserved error/output prefixes and synthetic failure retention",
+  "reviewed_source_hashes": {
+    "checkpoint.hpp": "9c5c09e8bffec21826adb0f2d9a0240a403510c09f58978cba7bdfffac18ee57",
+    "checkpoint.cpp": "3d6fef228c9b824fa658547a8a204149c60b9d3d5263ebe745322982a81842a9",
+    "checkpoint_tests.cpp": "95f3408c7ec1f15211cac5045d0c8718099f63353258734023519e23bdf41e5b",
+    "checkpoint_integration_tests.cpp": "361eddc1bd3062f74e7c6c7ffd6bb7e156212cfb016722b6d3a6c58b430b3754",
+    "../anadius-callback-policy-source/policy.cpp": "fafe5f4fc734029058a3a039887db58dd3a0f9d8b2ad42b075512187945f10ad",
+    "../anadius-callback-policy-source/policy.hpp": "44d32c453c03618eff2f4abe83addffc1662efbde0ef5db44850109a4a761f02",
+    "../anadius-native-source/native_callbacks.hpp": "6b8ca61ae92cafd0a218f042f97c9b10110125e42924546bde7d5c6823ea0e5f",
+    "../anadius-native-source/original_effects.cpp": "2f8ec2eae9ce6463eed8871a8f5f01660c806744a94a22fbcd392b329496a898"
+  },
+  "quick_results": [
+    {
+      "path": "work/b24-core-quick-results.json",
+      "sha256": "e336b1bc511ea07bffab5526af5269904675ee99a63a22ccc4f173e3dc45f630",
+      "checks": 56,
+      "executable_path": "work/b24-core-test.exe",
+      "executable_sha256": "eb766b35bd122d955b2821d93ada255f2c4f1e852765998a0eb102360d408057",
+      "execution_by": "/root; independent reviewer read eight frozen sources and verified recorded source/EXE hashes; did not rerun"
+    },
+    {
+      "path": "work/b24-integration-quick-results.json",
+      "sha256": "d14057922ec5cb80f033c31345d3526f908f5d832940faa0bf2bca5ac6f7da5c",
+      "checks": 28,
+      "executable_path": "work/b24-integration-test.exe",
+      "executable_sha256": "4645df4554a6127fc145087ac0a27d9df701fe43fbb326879def4768315c3b57",
+      "execution_by": "/root/b22_integration (root delegated); independent reviewer read eight frozen sources and verified recorded source/EXE hashes; did not rerun"
+    }
+  ],
+  "root_checks": 84,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "baseline_package_sha256": "2714f9333de1ce696deaa409bbb98ed61ad3f13896d79c49aa0b9d9122fd635a",
+  "prior_source_files": 818,
+  "prior_sources_preserved": 814,
+  "current_source_files": 822,
+  "source_inventory_counts_basis": "Reviewer independently verified B23 ZIP identity and all818 manifest source entries:814 unchanged, four declared before/after changes, four new reviewed source files. Common build counts remain planned/unreviewed.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "cbbca7a385d0f4093ab0404cc9e7b1a58073e6078f777290fd584e97344a9f9f",
+      "after_sha256": "fafe5f4fc734029058a3a039887db58dd3a0f9d8b2ad42b075512187945f10ad",
+      "reason": "Auto-create original Boundary from callback_scope for both owned and raw original providers"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "52ae7404d7d5bacb2aff324752214f5d44529a2bdf5070b3da54badae6c06199",
+      "after_sha256": "44d32c453c03618eff2f4abe83addffc1662efbde0ef5db44850109a4a761f02",
+      "reason": "Retain selected original PTD Boundary alongside B23 original code owner"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "before_sha256": "be650df275f531ffdec490a3c1a038c9a9b65fde624ab5f28ac00111fc100f63",
+      "after_sha256": "6b8ca61ae92cafd0a218f042f97c9b10110125e42924546bde7d5c6823ea0e5f",
+      "reason": "Optional owned PTD Boundary and typed original_call helper checks before resolver, before SDK and after SDK"
+    },
+    {
+      "path": "anadius-native-source/original_effects.cpp",
+      "before_sha256": "420fedbd6aa1d5b30a4c97a3af0b71339cfdf86c49fb3f39a770fbf37b32b520",
+      "after_sha256": "2f8ec2eae9ce6463eed8871a8f5f01660c806744a94a22fbcd392b329496a898",
+      "reason": "Route all10 SDK-typed original methods through checked scalar-call helper, preserving bit casts and arguments"
+    }
+  ],
+  "prior_changes_record_sha256": "b3896162cb17c4f15289a55312213db92cb9c6bf77002f4a4ce0c771ffc82138",
+  "findings": [
+    {
+      "topic": "Owned scalar SDK boundary",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint.hpp:4-20",
+        "checkpoint.cpp:10-16",
+        "checkpoint_tests.cpp:11-31"
+      ],
+      "observation": "Boundary owns the explicit permission closure and rejects an empty permission. Each verify saves and restores WinLastError on normal return, false permission and permission exception. invoke checks before the scalar lower call and after normal/throwing return; a valid exceptional postcheck rethrows the identical lower exception, while failed postcheck takes precedence. No mutex spans lower calls, no lower retry or output rollback occurs. The documented interface is scalar-value returning, matching the selected SDK routes."
+    },
+    {
+      "topic": "Three checkpoints close normal-return resolver mutation gap",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-native-source/native_callbacks.hpp:130-143",
+        "checkpoint_tests.cpp:75-96",
+        "checkpoint_integration_tests.cpp:124-140,153-190"
+      ],
+      "observation": "Selected original_call verifies before touching the virtual provider/raw slot. Resolution runs inside its own try/catch; a throwing resolver receives an exceptional permission check before identical rethrow or invalid-postcondition priority. After successful resolution, Boundary.invoke checks again immediately before SDK invocation and after SDK normal/throwing completion. The middle check is outside SDK try, so a failure never calls SDK and does not execute a redundant SDK postcheck. A resolver that changes FLS and returns normally is rejected before SDK. Actual clean sequences are G,R,G,S,G with owner or G,G,S,G with raw slots, with exactly three FLS reads excluding attach/cleanup."
+    },
+    {
+      "topic": "All ten SDK-typed routes and exact prefixes",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-native-source/original_effects.cpp:6-15",
+        "checkpoint_tests.cpp:32-67"
+      ],
+      "observation": "Every existing final original route calls the typed helper: connect, five registry calls, two process calls and two folder calls. Original SDK pointer/integer arguments, in/out storage, capacities and return bitcasts remain intact. Core drives one own SDK stub per each route, verifies exact argument pointers/scalars and32-bit result0x87654321, incoming/outgoing error and three probes, with visible open/query/process/folder output prefixes and untouched tails. No string staging, repair or buffer copy is introduced before original SDK entry."
+    },
+    {
+      "topic": "Policy auto-binds both owned and raw original paths",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-callback-policy-source/policy.hpp:54-62",
+        "../anadius-callback-policy-source/policy.cpp:68-78",
+        "checkpoint_tests.cpp:95-96",
+        "checkpoint_integration_tests.cpp:109-140"
+      ],
+      "observation": "Storage creates the shared Boundary whenever Resources.callback_scope is present and passes it to OriginalEffects independently of optional B23 OriginalProvider selection. The existing foreign factory already installs the exact Domain permission, so owned and raw original slots both receive automatic checks. Direct no-scope legacy policy remains unchanged. Storage and final base retain the boundary/permission owner; no ownership cycle was found. B23 exact-array/return-address checks and retained code owner remain inside the checked resolution phase."
+    },
+    {
+      "topic": "Actual native exception drain versus poisoned retention",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint_integration_tests.cpp:97-108,142-190"
+      ],
+      "observation": "One actual native source factory child writes SDK output then throws a pre-created exception under valid PTD. Its terminal Errors predicate requires the identical exception, exact args/prefix/error, retained code owner, inactive/ready Domain, null FLS and zero native leases before exit201. Five separately manual-admitted children cover SDK null FLS, fresh snapshot mutation, resolver normal-null, resolver throw-null and raw SDK-null. They require poisoned active/not-ready retention, unchanged memory block/free/destruction counts, intact prefix or untouched resolver output, no FLS restoration, no extra read/resolver/SDK call on next rejected invocation and exact error, then exit202..206. These manual poisoned cases do not claim successful cleanup through the native wrapper."
+    },
+    {
+      "topic": "Independent evidence and distinct terminal success",
+      "result": "PASS",
+      "evidence": [
+        "checkpoint_tests.cpp",
+        "checkpoint_integration_tests.cpp:193-205",
+        "work/b24-core-quick-results.json",
+        "work/b24-integration-quick-results.json"
+      ],
+      "observation": "Reviewer authored neither production nor tests and did not rerun passed quick tests. Root core56 and /root/b22_integration integration28 records, all eight source hashes and both EXE hashes were independently checked. Six own child codes201..206 are conditioned on specific exception/PTD/prefix/retention predicates; generic abort239, bad predicate237 and unexpected return230 cannot pass. Only own source Context/native SDK stubs and own heap/FLS were exercised. No target DLL/game, real original API/hook/network/process operation or user data was used."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Boundary applies when callback_scope is explicitly selected, automatically for the current foreign factory. Direct no-scope legacy/custom Context routes remain outside this checkpoint policy.",
+    "Permission checkpoints observe actual FLS identity and the fresh snapshot through the existing B21 contract, not continuous state. Raw PTD free/ABA, inaccurate getters, temporary mutation restored between checks and arbitrary provider/SDK reentry remain unsupported.",
+    "An invalid PTD postcondition retains poisoned resources. Manual-admitted poisoned tests terminate after state verification; they do not prove the full native wrapper can unwind unknown PTD into successful cleanup or a normal API return.",
+    "B23 code-owner retention, slot seal/identity, controller-only setup and sticky mismatch stop remain necessary. Generic shared token and slot integers do not prove code provenance, module pinning, hook success, original ABI or protection from explicit engine uninitialize/unload.",
+    "No checkpoint holds a mutex across original SDK execution. Existing single-active admission, same-Execution publication, exact managed shared stream and owned compiler-provider constraints still apply; remaining provider/fallback synchronization is not inferred.",
+    "Boundary template is documented for scalar value-returning routes. No generic void/reference/nontrivial-result provider interface is promised by these tests.",
+    "Stop/admission counts and code lifetime are not disabled-hook/external-quiescence proof; cached native callback entries and provider unloading still require separate caller guarantees.",
+    "Seven online foreign calls, configuration/license/legacy document ownership, B10 historical debt, generic CRT, native ABI, hooks/unload and final PE/DLL proof remain open. New native body/closure count is zero.",
+    "Full common build242objects/238CPP/279groups plus19 framework terminal scenarios was running at review time and is not reviewed or counted PASS here. OriginalEffects/Storage layout changes require rebuilding every consumer."
+  ],
+  "claim": {
+    "before_original_resolution_permission": true,
+    "after_resolution_before_SDK_permission": true,
+    "after_SDK_normal_or_throw_permission": true,
+    "resolver_throw_postcondition_checked": true,
+    "all_ten_SDK_typed_original_routes_checked": true,
+    "selected_foreign_owned_and_raw_originals_checked": true,
+    "valid_lower_exception_identity_preserved": true,
+    "invalid_postcondition_wins_without_prefix_rollback": true,
+    "no_scope_legacy_unchanged": true,
+    "continuous_PTD_freeze_or_arbitrary_reentry_supported": false,
+    "native_poisoned_cleanup_success_proven": false,
+    "code_provenance_engine_unload_or_external_quiescence_proven": false,
+    "original_DLL_or_game_execution": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Only architecture-review.json and architecture-review.md were written by this reviewer.",
+    "Core56 was executed by /root; integration28 by /root/b22_integration. Records and source/EXE hashes independently checked without rerunning.",
+    "Early audit identified resolver-normal-return PTD mutation gap in a two-check combined boundary. Frozen implementation uses three checks and tests both normal-return and throwing resolver mutation before SDK."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "checks": 31760,
+  "output": "PASS: 31760 calendar arithmetic checks; no original execution or OS time calls",
+  "source_hashes": {
+    "calendar.hpp": "e46c9ed16d357d6c225aae29afb799ad2d41ce26160749e3ea25eeb762b685b4",
+    "calendar.cpp": "ef95920c0c8c4a3056cb8878931ec6733a4c3262b7fb1d96ff5352c9ffbcda0f",
+    "calendar_tests.cpp": "dd058d7ff7d156149bd4cd3a178173d121c4f1f8d366d2daded290fde6419e8b",
+    "build.ps1": "468a6e3a5bc222c8667f5c39fae42edc09ec46c733edd2f542c17d91d7152bcc",
+    "CMakeLists.txt": "adea2df96a6aa02388879c08acb5b4eeb5221614d982de38b24d38712d019864"
+  },
+  "original_execution": "none",
+  "OS_time_calls": "none",
+  "native_ABI_equality": "not established",
+  "scope": "All32-bit input cells, logical exact recorded integer arithmetic; C++chrono valid positive-year dates and independent register instruction oracle"
+}

@@ -1,0 +1,106 @@
+{
+  "schema": "native-async-accept.normal-source.evidence.v1",
+  "source_package": "B36",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_original_procedures": 2,
+  "normal_source_procedures_added": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "functions": [
+    {
+      "address": "0x180021b00",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered": true,
+      "pseudo_evidence": "ev_a149b71384626f27cb42ef4a0d78bd5f24f458b6ae8a30390ee1056ed43a8672",
+      "assembly_evidence": "ev_3e1adf0b22ddd69df648bc167a468ae3dc0439774ffee7a880c1b01662fb16f7"
+    },
+    {
+      "address": "0x1800271a0",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered": true,
+      "pseudo_evidence": "ev_e0843c9e600cc82f01f59ed34fef7543a3e0905c4dab527560f57ec519bad916",
+      "assembly_evidence": "ev_e1f30bf5f3acc0ca59cfd163294f54e6ec1708b6eed7dae23fff37f0ee710b44"
+    }
+  ],
+  "retained_function_records": [
+    {
+      "address": "0x180021b00",
+      "evidence_id": "ev_a149b71384626f27cb42ef4a0d78bd5f24f458b6ae8a30390ee1056ed43a8672",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 27391,
+      "retained_record": "180021b00.pseudo.c.txt",
+      "record_sha256": "af5b369f440d92f0bdc60499a4f012112812e86d83b7b68acb71dc962bac52f2"
+    },
+    {
+      "address": "0x1800271a0",
+      "evidence_id": "ev_e0843c9e600cc82f01f59ed34fef7543a3e0905c4dab527560f57ec519bad916",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 32552,
+      "retained_record": "1800271a0.pseudo.c.txt",
+      "record_sha256": "de9ec73c7573a41b367b31d2861515c9976acaa1f6e0b6698a306a8b94a7d48d"
+    },
+    {
+      "address": "0x180021b00",
+      "evidence_id": "ev_3e1adf0b22ddd69df648bc167a468ae3dc0439774ffee7a880c1b01662fb16f7",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 34452,
+      "retained_record": "180021b00.asm.txt",
+      "record_sha256": "6fab521eb29efba6b0b7a17bca277dc6ea94139fb5747b249204cb676d5c3ecd"
+    },
+    {
+      "address": "0x1800271a0",
+      "evidence_id": "ev_e1f30bf5f3acc0ca59cfd163294f54e6ec1708b6eed7dae23fff37f0ee710b44",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 40226,
+      "retained_record": "1800271a0.asm.txt",
+      "record_sha256": "4ccf682e8c206764b29e672fa89ad6c915da3d6cc776803b44370456b122c458"
+    }
+  ],
+  "modified_prior_sources": [
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "before_sha256": "7dc425c7b8329e5fe3c4c2f4e1d9a61b71766a03387aaf3f16b2f9e4d053fc54",
+      "after_sha256": "fc54b2449bdf8d4f5a2eb8161dd02f0e576ec7b8994e0f750c711bfce1d030f9",
+      "reason": "Add nonvirtual provider-lease acquisition under an already admitted parent Operation; preserve existing idle-only acquisition and class layout."
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "before_sha256": "97b3434ee2fd1950e8f5e382574c0f880ec5477e2b8da4ffcac3f1981989c452",
+      "after_sha256": "37dadb1a7708e36c079ae9bfe2e755014c4127ffa923c6bebc9257dc0fa512d9",
+      "reason": "Add nonvirtual provider-lease acquisition under an already admitted parent Operation; preserve existing idle-only acquisition and class layout."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b36-core-quick-results.json",
+      "sha256": "2c368c29c8cc01c3d98902fa32c44533e4acfd753c730ea4f2bcd97fbb3d468f",
+      "checks": 2045,
+      "executable_sha256": "345860f0bd2efa80d1fddbedaf86ff2eb2a2ecb92ee5d9d08234c50816b804c6",
+      "archive_sha256_as_used": "a6075742edd1fb2d80744cbc5476f01abd3e6a51827f920bc91b6628c583a3ad",
+      "note": "Native accept source compiled explicitly before immutable canonical B35 archive; integration also compiles final owned adapter and changed parent memory.cpp. Archive is not inferred from a later common build."
+    },
+    {
+      "path": "work/b36-integration-quick-results.json",
+      "sha256": "3aefe9f78ca9a3cf0cb2f7bee37c0f9de399e73310fc72a5c6711475d68342c7",
+      "checks": 177,
+      "executable_sha256": "af62e4ef7d278e8a3fa4c5bdd2063576d5aefc59fb002f487ae2e4884becee3b",
+      "archive_sha256_as_used": "a6075742edd1fb2d80744cbc5476f01abd3e6a51827f920bc91b6628c583a3ad",
+      "note": "Native accept source compiled explicitly before immutable canonical B35 archive; integration also compiles final owned adapter and changed parent memory.cpp. Archive is not inferred from a later common build."
+    }
+  ],
+  "source_claim": "Exactly two typed normal native bodies; bounds/profile guards and owning adapter are host composition, no native class ABI/EH/provider closure.",
+  "retained_REA_session": {
+    "path": "outputs/anadius-accept-source/rea-session-summary.json",
+    "sha256": "6314470a4de56f124e5df8cf247c6c1bad14c035a2c9f8169afc4291ff6c5043",
+    "fresh_target_queries": 0
+  },
+  "original_execution": false,
+  "original_modification": false,
+  "new_original_bytes_queried": 0,
+  "actual_user_content_analysis": false
+}

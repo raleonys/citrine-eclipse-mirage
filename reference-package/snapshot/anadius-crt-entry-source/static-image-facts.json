@@ -1,0 +1,87 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source": "Supplemental bounded read-only PE parser, not new REA evidence",
+  "facts": [
+    {
+      "name": "raw_DllMain_hook_088040",
+      "va": "0x180088040",
+      "rva": "0x88040",
+      "bytes": 8,
+      "section": ".rdata",
+      "section_characteristics": "0x40000040",
+      "source": "file-backed",
+      "file_offset": "0x86840",
+      "initial_hex": "0000000000000000"
+    },
+    {
+      "name": "static_UCRT_flag_0a5a78",
+      "va": "0x1800a5a78",
+      "rva": "0xa5a78",
+      "bytes": 4,
+      "section": ".data",
+      "section_characteristics": "0xc0000040",
+      "source": "PE zero-filled virtual tail",
+      "file_offset": null,
+      "initial_hex": "00000000"
+    },
+    {
+      "name": "TLS_callback_slot_0a5a70",
+      "va": "0x1800a5a70",
+      "rva": "0xa5a70",
+      "bytes": 8,
+      "section": ".data",
+      "section_characteristics": "0xc0000040",
+      "source": "PE zero-filled virtual tail",
+      "file_offset": null,
+      "initial_hex": "0000000000000000"
+    },
+    {
+      "name": "startup_state_0a4790",
+      "va": "0x1800a4790",
+      "rva": "0xa4790",
+      "bytes": 4,
+      "section": ".data",
+      "section_characteristics": "0xc0000040",
+      "source": "PE zero-filled virtual tail",
+      "file_offset": null,
+      "initial_hex": "00000000"
+    },
+    {
+      "name": "startup_lock_0a4798",
+      "va": "0x1800a4798",
+      "rva": "0xa4798",
+      "bytes": 8,
+      "section": ".data",
+      "section_characteristics": "0xc0000040",
+      "source": "PE zero-filled virtual tail",
+      "file_offset": null,
+      "initial_hex": "0000000000000000"
+    },
+    {
+      "name": "DLL_and_onexit_flags_0a47a0",
+      "va": "0x1800a47a0",
+      "rva": "0xa47a0",
+      "bytes": 2,
+      "section": ".data",
+      "section_characteristics": "0xc0000040",
+      "source": "PE zero-filled virtual tail",
+      "file_offset": null,
+      "initial_hex": "0000"
+    },
+    {
+      "name": "attach_count_0a47ec",
+      "va": "0x1800a47ec",
+      "rva": "0xa47ec",
+      "bytes": 4,
+      "section": ".data",
+      "section_characteristics": "0xc0000040",
+      "source": "PE zero-filled virtual tail",
+      "file_offset": null,
+      "initial_hex": "00000000"
+    }
+  ],
+  "limitations": [
+    "Initial image values only. Runtime writes, injection, callbacks and races are not observed.",
+    "Retained assembly mentions 0a5a78 once (read only) and no direct write; this is not a proof against arbitrary indirect modification."
+  ]
+}

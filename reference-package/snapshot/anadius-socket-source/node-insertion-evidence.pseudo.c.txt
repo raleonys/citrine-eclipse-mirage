@@ -1,0 +1,56 @@
+/* 0x180003aa0 FUN_180003aa0; Evidence ev_ce74b4f983309d2cc1be9c243fc3798203afe86b437ad9ffead5aaaad8d7c3cb */
+
+void FUN_180003aa0(undefined8 param_1,longlong param_2)
+
+{
+  longlong lVar1;
+  longlong lVar2;
+  ulonglong uVar3;
+  ulonglong uVar4;
+  
+  lVar1 = *(longlong *)(param_2 + 0x10);
+  if (lVar1 != 0) {
+    if (param_2 == *(longlong *)(lVar1 + 0x38)) {
+      *(undefined8 *)(lVar1 + 0x38) = *(undefined8 *)(*(longlong *)(lVar1 + 0x38) + 0x50);
+    }
+    if (param_2 == *(longlong *)(lVar1 + 0x40)) {
+      *(undefined8 *)(lVar1 + 0x40) = *(undefined8 *)(*(longlong *)(lVar1 + 0x40) + 0x48);
+    }
+    if (*(longlong *)(param_2 + 0x48) != 0) {
+      *(undefined8 *)(*(longlong *)(param_2 + 0x48) + 0x50) = *(undefined8 *)(param_2 + 0x50);
+    }
+    if (*(longlong *)(param_2 + 0x50) != 0) {
+      *(undefined8 *)(*(longlong *)(param_2 + 0x50) + 0x48) = *(undefined8 *)(param_2 + 0x48);
+    }
+    *(undefined8 *)(param_2 + 0x50) = 0;
+    *(undefined8 *)(param_2 + 0x48) = 0;
+    *(undefined8 *)(param_2 + 0x10) = 0;
+    return;
+  }
+  lVar1 = *(longlong *)(param_2 + 8);
+  uVar3 = 0;
+  if (0 < *(int *)(lVar1 + 0x104)) {
+    lVar2 = *(longlong *)(lVar1 + 0xa8);
+    uVar4 = uVar3;
+    while (param_2 != *(longlong *)(lVar2 + uVar3 * 8)) {
+      uVar4 = (ulonglong)((int)uVar4 + 1);
+      uVar3 = uVar3 + 1;
+      if ((longlong)*(int *)(lVar1 + 0x104) <= (longlong)uVar3) {
+                    /* WARNING: Could not recover jumptable at 0x000180003b47. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+        (**(code **)(**(longlong **)(param_2 + 0x60) + 0x20))();
+        return;
+      }
+    }
+    *(undefined8 *)(lVar2 + (longlong)(int)uVar4 * 8) =
+         *(undefined8 *)(lVar2 + -8 + (ulonglong)*(uint *)(lVar1 + 0x104) * 8);
+    *(int *)(lVar1 + 0x104) = *(int *)(lVar1 + 0x104) + -1;
+  }
+                    /* WARNING: Could not recover jumptable at 0x000180003b6c. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  (**(code **)(**(longlong **)(param_2 + 0x60) + 0x20))();
+  return;
+}
+
+
+

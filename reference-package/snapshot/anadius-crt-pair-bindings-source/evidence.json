@@ -1,0 +1,740 @@
+{
+  "kind": "New rebuilt callback-binding composition;zero new original function bodies",
+  "input": {
+    "target": "C:/Users/Skysect/Downloads/anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "original_pair_table": {
+    "begin": "0x18008aa60",
+    "end": "0x18008ab60",
+    "file_offset": "0x89260",
+    "size": 256,
+    "sha256": "d22926452d26f622350a0455a67df28c9d050fa64329f25c73ab3256f9e4a2e0",
+    "raw_hex": "68440680010000000000000000000000b044068001000000000000000000000038750680010000005c7506800100000000650080010000000065008001000000b0250680010000001426068001000000cc04078001000000e8040780010000000000000000000000f044068001000000904e068001000000cc4e0680010000009078068001000000cc78068001000000bcf90680010000000065008001000000f8f5068001000000000000000000000000000000000000000065008001000000000000000000000038450680010000000000000000000000f8440680010000000065008001000000a0440680010000007c440680010000000065008001000000",
+    "pairs": [
+      {
+        "index": 0,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aa60",
+          "slot_file_offset": "0x89260",
+          "preferred_callback_va": "0x180064468",
+          "opaque_id": 1,
+          "opaque_name": "locale_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaa60",
+            "entry_file_offset": "0xa8ed8"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aa68",
+          "slot_file_offset": "0x89268",
+          "preferred_callback_va": "0x0",
+          "opaque_id": 0,
+          "opaque_name": "none",
+          "relocation": null
+        }
+      },
+      {
+        "index": 1,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aa70",
+          "slot_file_offset": "0x89270",
+          "preferred_callback_va": "0x1800644b0",
+          "opaque_id": 2,
+          "opaque_name": "encoded_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaa70",
+            "entry_file_offset": "0xa8eda"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aa78",
+          "slot_file_offset": "0x89278",
+          "preferred_callback_va": "0x0",
+          "opaque_id": 0,
+          "opaque_name": "none",
+          "relocation": null
+        }
+      },
+      {
+        "index": 2,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aa80",
+          "slot_file_offset": "0x89280",
+          "preferred_callback_va": "0x180067538",
+          "opaque_id": 3,
+          "opaque_name": "thunks_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaa80",
+            "entry_file_offset": "0xa8edc"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aa88",
+          "slot_file_offset": "0x89288",
+          "preferred_callback_va": "0x18006755c",
+          "opaque_id": 12,
+          "opaque_name": "thunks_uninitialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaa88",
+            "entry_file_offset": "0xa8ede"
+          }
+        }
+      },
+      {
+        "index": 3,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aa90",
+          "slot_file_offset": "0x89290",
+          "preferred_callback_va": "0x180006500",
+          "opaque_id": 4,
+          "opaque_name": "success",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaa90",
+            "entry_file_offset": "0xa8ee0"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aa98",
+          "slot_file_offset": "0x89298",
+          "preferred_callback_va": "0x180006500",
+          "opaque_id": 4,
+          "opaque_name": "success",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaa98",
+            "entry_file_offset": "0xa8ee2"
+          }
+        }
+      },
+      {
+        "index": 4,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aaa0",
+          "slot_file_offset": "0x892a0",
+          "preferred_callback_va": "0x1800625b0",
+          "opaque_id": 5,
+          "opaque_name": "locks_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaaa0",
+            "entry_file_offset": "0xa8ee4"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aaa8",
+          "slot_file_offset": "0x892a8",
+          "preferred_callback_va": "0x180062614",
+          "opaque_id": 13,
+          "opaque_name": "locks_uninitialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaaa8",
+            "entry_file_offset": "0xa8ee6"
+          }
+        }
+      },
+      {
+        "index": 5,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aab0",
+          "slot_file_offset": "0x892b0",
+          "preferred_callback_va": "0x1800704cc",
+          "opaque_id": 6,
+          "opaque_name": "heap_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaab0",
+            "entry_file_offset": "0xa8ee8"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aab8",
+          "slot_file_offset": "0x892b8",
+          "preferred_callback_va": "0x1800704e8",
+          "opaque_id": 14,
+          "opaque_name": "heap_uninitialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaab8",
+            "entry_file_offset": "0xa8eea"
+          }
+        }
+      },
+      {
+        "index": 6,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aac0",
+          "slot_file_offset": "0x892c0",
+          "preferred_callback_va": "0x0",
+          "opaque_id": 0,
+          "opaque_name": "none",
+          "relocation": null
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aac8",
+          "slot_file_offset": "0x892c8",
+          "preferred_callback_va": "0x1800644f0",
+          "opaque_id": 15,
+          "opaque_name": "vcrt_uninitialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaac8",
+            "entry_file_offset": "0xa8eec"
+          }
+        }
+      },
+      {
+        "index": 7,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aad0",
+          "slot_file_offset": "0x892d0",
+          "preferred_callback_va": "0x180064e90",
+          "opaque_id": 7,
+          "opaque_name": "ptd_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaad0",
+            "entry_file_offset": "0xa8eee"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aad8",
+          "slot_file_offset": "0x892d8",
+          "preferred_callback_va": "0x180064ecc",
+          "opaque_id": 16,
+          "opaque_name": "ptd_uninitialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaad8",
+            "entry_file_offset": "0xa8ef0"
+          }
+        }
+      },
+      {
+        "index": 8,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aae0",
+          "slot_file_offset": "0x892e0",
+          "preferred_callback_va": "0x180067890",
+          "opaque_id": 8,
+          "opaque_name": "lowio_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaae0",
+            "entry_file_offset": "0xa8ef2"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aae8",
+          "slot_file_offset": "0x892e8",
+          "preferred_callback_va": "0x1800678cc",
+          "opaque_id": 17,
+          "opaque_name": "lowio_uninitialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaae8",
+            "entry_file_offset": "0xa8ef4"
+          }
+        }
+      },
+      {
+        "index": 9,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008aaf0",
+          "slot_file_offset": "0x892f0",
+          "preferred_callback_va": "0x18006f9bc",
+          "opaque_id": 9,
+          "opaque_name": "command_lines_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaaf0",
+            "entry_file_offset": "0xa8ef6"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008aaf8",
+          "slot_file_offset": "0x892f8",
+          "preferred_callback_va": "0x180006500",
+          "opaque_id": 4,
+          "opaque_name": "success",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xaaf8",
+            "entry_file_offset": "0xa8ef8"
+          }
+        }
+      },
+      {
+        "index": 10,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008ab00",
+          "slot_file_offset": "0x89300",
+          "preferred_callback_va": "0x18006f5f8",
+          "opaque_id": 10,
+          "opaque_name": "multibyte_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xab00",
+            "entry_file_offset": "0xa8efa"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008ab08",
+          "slot_file_offset": "0x89308",
+          "preferred_callback_va": "0x0",
+          "opaque_id": 0,
+          "opaque_name": "none",
+          "relocation": null
+        }
+      },
+      {
+        "index": 11,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008ab10",
+          "slot_file_offset": "0x89310",
+          "preferred_callback_va": "0x0",
+          "opaque_id": 0,
+          "opaque_name": "none",
+          "relocation": null
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008ab18",
+          "slot_file_offset": "0x89318",
+          "preferred_callback_va": "0x180006500",
+          "opaque_id": 4,
+          "opaque_name": "success",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xab18",
+            "entry_file_offset": "0xa8efc"
+          }
+        }
+      },
+      {
+        "index": 12,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008ab20",
+          "slot_file_offset": "0x89320",
+          "preferred_callback_va": "0x0",
+          "opaque_id": 0,
+          "opaque_name": "none",
+          "relocation": null
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008ab28",
+          "slot_file_offset": "0x89328",
+          "preferred_callback_va": "0x180064538",
+          "opaque_id": 19,
+          "opaque_name": "argv_cleanup",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xab28",
+            "entry_file_offset": "0xa8efe"
+          }
+        }
+      },
+      {
+        "index": 13,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008ab30",
+          "slot_file_offset": "0x89330",
+          "preferred_callback_va": "0x0",
+          "opaque_id": 0,
+          "opaque_name": "none",
+          "relocation": null
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008ab38",
+          "slot_file_offset": "0x89338",
+          "preferred_callback_va": "0x1800644f8",
+          "opaque_id": 20,
+          "opaque_name": "multibyte_uninitialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xab38",
+            "entry_file_offset": "0xa8f00"
+          }
+        }
+      },
+      {
+        "index": 14,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008ab40",
+          "slot_file_offset": "0x89340",
+          "preferred_callback_va": "0x180006500",
+          "opaque_id": 4,
+          "opaque_name": "success",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xab40",
+            "entry_file_offset": "0xa8f02"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008ab48",
+          "slot_file_offset": "0x89348",
+          "preferred_callback_va": "0x1800644a0",
+          "opaque_id": 18,
+          "opaque_name": "environment_uninitialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xab48",
+            "entry_file_offset": "0xa8f04"
+          }
+        }
+      },
+      {
+        "index": 15,
+        "initialize": {
+          "domain": "initialize",
+          "slot_va": "0x18008ab50",
+          "slot_file_offset": "0x89350",
+          "preferred_callback_va": "0x18006447c",
+          "opaque_id": 11,
+          "opaque_name": "onexit_initialize",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xab50",
+            "entry_file_offset": "0xa8f06"
+          }
+        },
+        "uninitialize": {
+          "domain": "uninitialize",
+          "slot_va": "0x18008ab58",
+          "slot_file_offset": "0x89358",
+          "preferred_callback_va": "0x180006500",
+          "opaque_id": 4,
+          "opaque_name": "success",
+          "relocation": {
+            "type": 10,
+            "page_rva": "0x8a000",
+            "entry_word": "0xab58",
+            "entry_file_offset": "0xa8f08"
+          }
+        }
+      }
+    ]
+  },
+  "compiled_table": {
+    "result": "PASS",
+    "scope": "16 compiled own rebuilt_pairs() entries compared to PE-derived opaque mapping;original target never executed",
+    "entries": [
+      {
+        "initialize": 1,
+        "uninitialize": 0
+      },
+      {
+        "initialize": 2,
+        "uninitialize": 0
+      },
+      {
+        "initialize": 3,
+        "uninitialize": 12
+      },
+      {
+        "initialize": 4,
+        "uninitialize": 4
+      },
+      {
+        "initialize": 5,
+        "uninitialize": 13
+      },
+      {
+        "initialize": 6,
+        "uninitialize": 14
+      },
+      {
+        "initialize": 0,
+        "uninitialize": 15
+      },
+      {
+        "initialize": 7,
+        "uninitialize": 16
+      },
+      {
+        "initialize": 8,
+        "uninitialize": 17
+      },
+      {
+        "initialize": 9,
+        "uninitialize": 4
+      },
+      {
+        "initialize": 10,
+        "uninitialize": 0
+      },
+      {
+        "initialize": 0,
+        "uninitialize": 4
+      },
+      {
+        "initialize": 0,
+        "uninitialize": 19
+      },
+      {
+        "initialize": 0,
+        "uninitialize": 20
+      },
+      {
+        "initialize": 4,
+        "uninitialize": 18
+      },
+      {
+        "initialize": 11,
+        "uninitialize": 4
+      }
+    ],
+    "executable_sha256": "22fa245e20bbffdafabc2d4738008dc28e45375ce816e36a08ef4d25272c2b62"
+  },
+  "opaque_identities": [
+    {
+      "name": "none",
+      "id": 0,
+      "preferred_va": "0x0"
+    },
+    {
+      "name": "locale_initialize",
+      "id": 1,
+      "preferred_va": "0x180064468"
+    },
+    {
+      "name": "encoded_initialize",
+      "id": 2,
+      "preferred_va": "0x1800644b0"
+    },
+    {
+      "name": "thunks_initialize",
+      "id": 3,
+      "preferred_va": "0x180067538"
+    },
+    {
+      "name": "success",
+      "id": 4,
+      "preferred_va": "0x180006500"
+    },
+    {
+      "name": "locks_initialize",
+      "id": 5,
+      "preferred_va": "0x1800625b0"
+    },
+    {
+      "name": "heap_initialize",
+      "id": 6,
+      "preferred_va": "0x1800704cc"
+    },
+    {
+      "name": "ptd_initialize",
+      "id": 7,
+      "preferred_va": "0x180064e90"
+    },
+    {
+      "name": "lowio_initialize",
+      "id": 8,
+      "preferred_va": "0x180067890"
+    },
+    {
+      "name": "command_lines_initialize",
+      "id": 9,
+      "preferred_va": "0x18006f9bc"
+    },
+    {
+      "name": "multibyte_initialize",
+      "id": 10,
+      "preferred_va": "0x18006f5f8"
+    },
+    {
+      "name": "onexit_initialize",
+      "id": 11,
+      "preferred_va": "0x18006447c"
+    },
+    {
+      "name": "thunks_uninitialize",
+      "id": 12,
+      "preferred_va": "0x18006755c"
+    },
+    {
+      "name": "locks_uninitialize",
+      "id": 13,
+      "preferred_va": "0x180062614"
+    },
+    {
+      "name": "heap_uninitialize",
+      "id": 14,
+      "preferred_va": "0x1800704e8"
+    },
+    {
+      "name": "vcrt_uninitialize",
+      "id": 15,
+      "preferred_va": "0x1800644f0"
+    },
+    {
+      "name": "ptd_uninitialize",
+      "id": 16,
+      "preferred_va": "0x180064ecc"
+    },
+    {
+      "name": "lowio_uninitialize",
+      "id": 17,
+      "preferred_va": "0x1800678cc"
+    },
+    {
+      "name": "environment_uninitialize",
+      "id": 18,
+      "preferred_va": "0x1800644a0"
+    },
+    {
+      "name": "argv_cleanup",
+      "id": 19,
+      "preferred_va": "0x180064538"
+    },
+    {
+      "name": "multibyte_uninitialize",
+      "id": 20,
+      "preferred_va": "0x1800644f8"
+    }
+  ],
+  "source_hashes": {
+    "bindings.hpp": "726405a5c3f56fecee42c6c7aa6ff8b1d97a6a114710c0dedf789c73ab9c1d51",
+    "bindings.cpp": "63b018adebe37d4c7a9f17ca1b2ee407e3a59cd43be291e4d2f95b9609fc4c68",
+    "build.ps1": "55929a7cfb203cfe85d4362472702472b7742c0088a8343ba589484ef3b78673",
+    "collect-evidence.cjs": "8ead4e33f2a526309976970f10d754b3c45f2f141e63c845c602b3ac4df93a0a",
+    "bindings_tests.cpp": "9971728dfacfabc045a696702a21360c704135edd02d2ac350e21f1007071940"
+  },
+  "actual_reused_sources": [
+    {
+      "path": "../anadius-crt-locale-startup-source/locale_startup.cpp",
+      "sha256": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba"
+    },
+    {
+      "path": "../anadius-crt-cache-source/cache.cpp",
+      "sha256": "613f2667b0bf0c068f7f4a04e0144e15272b13cec03cb53b26f3eb41ad75a9de"
+    },
+    {
+      "path": "../anadius-crt-lock-source/locks.cpp",
+      "sha256": "fe0849d9c97c241c4dcd7639dbc41ca8dba7a89ac176b316791a1be30d24d81f"
+    },
+    {
+      "path": "../anadius-crt-heap-source/heap.cpp",
+      "sha256": "01f2df7ddf1c41d0390982d4b484541c2de1a47c2f7458366ebfbe3c8a08b6ca"
+    },
+    {
+      "path": "../anadius-crt-pair-leaves-source/pair_leaves.cpp",
+      "sha256": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87"
+    },
+    {
+      "path": "../anadius-vcrt-ptd-source/vcrt_ptd.cpp",
+      "sha256": "2acfb1ff8678493678288dc0a806b8c27946e100ebc223409c867264b9b5e307"
+    },
+    {
+      "path": "../anadius-crt-ptd-source/ptd.cpp",
+      "sha256": "10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe"
+    },
+    {
+      "path": "../anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp",
+      "sha256": "20dc724fe4e0c7efddaef7e0fa7087e5fed9f07adb31554827661ff2104b5d5b"
+    },
+    {
+      "path": "../anadius-crt-multibyte-control-source/multibyte_control.cpp",
+      "sha256": "9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb"
+    },
+    {
+      "path": "../anadius-crt-argv-bridge-source/argv_bridge.cpp",
+      "sha256": "d178b2649b48fcb971bb2d99c6138b461d23be4f5f47c5178248e5dbf31687d2"
+    },
+    {
+      "path": "../anadius-crt-environment-cleanup-source/environment_cleanup.cpp",
+      "sha256": "5541b20bd7f67869bc2bb5a625db9dd36224396b12c803c92a553328432b816e"
+    },
+    {
+      "path": "../anadius-crt-lifecycle-callbacks-source/callbacks.cpp",
+      "sha256": "6a4debca2b0cce025b6ec731f032ad60d6bcab41d4e9e9f682281a653fadbf57"
+    }
+  ],
+  "composition_guards": [
+    "Constructor requires equal runtime.cookie,heap.cookie_0a1580,and termination.onexit.cookie_0a1580.",
+    "Constructor requires termination.encoded_callback_a4f10 reference the same actual cell as encoded.a4f10.",
+    "Constructor requires CommandLines.narrow and argvCleanup.argv reference the same actual argv State."
+  ],
+  "projection": {
+    "source": "encoded.a5178",
+    "target": "heap.encoded_handler_0a5178",
+    "when": "Immediately after each actual initialize_encoded_globals_0644b0 call,one init-only projection;no independent future synchronization",
+    "limitation": "Existing value fields cannot alias. This module does not claim canonical native globals;caller maintains later cookie/handler coherence."
+  },
+  "dispatch_contract": [
+    "Success uses one opaque ID in both initializer and uninitializer domains.",
+    "Thunk initializer forwards full uint64 result;other source bool contracts expose AL semantics.",
+    "Thunk uninitializer consumes low8 bits of uint32 argument;VCRT wrapper always forces0 through actual0644f0.",
+    "Unknown IDs,NULL-ID direct dispatch and known wrong-domain IDs throw invalid_argument.",
+    "Void/int initializer and flush methods remain pure mandatory provider policies.",
+    "Fixed-size live mutable array16 is read by existing walker lazily;callbacks may change later entries."
+  ],
+  "original_execution": false,
+  "original_modification": false,
+  "new_original_bodies": 0,
+  "limits": [
+    "Borrowed dependency/provider global/heap/lock/PTD agreement beyond public constructor checks is caller responsibility.",
+    "No canonical native object graph,whole CRT startup,MSVC SEH or original ABI equivalence claimed.",
+    "Lowio creation/inheritance/standard handle providers and remaining non-pair policies stay mandatory."
+  ]
+}

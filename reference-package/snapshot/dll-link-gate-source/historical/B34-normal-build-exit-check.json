@@ -1,0 +1,9 @@
+{
+  "scope": "B34 frozen source/archive link revalidation",
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "result": "PASS",
+  "log": "work/b34-link-gate.log",
+  "common_log": "work/b34-common-final-build.log",
+  "common_log_sha256": "72971def0f8b50e7de8e769d83d7f5835649e33eb2bc622f955ae718d5612698"
+}

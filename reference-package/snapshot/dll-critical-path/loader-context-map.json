@@ -1,0 +1,230 @@
+{
+  "schema": "loader-context.source-audit.v1",
+  "status": "SYNCHRONOUS_ATTACH_AND_IMAGE_TEARDOWN_STILL_OPEN",
+  "authority": "Current source-path audit and primary Windows contracts; not target runtime observation or new native function recovery.",
+  "REA_live_session_observation": {
+    "tool": "binary_session",
+    "server_name": "rea",
+    "package_version": "6.5.0",
+    "server_command": "C:/Users/Skysect/AppData/Roaming/npm/node_modules/rea-agents/scripts/rea.mjs",
+    "target_open": false,
+    "ghidra_available": true,
+    "ghidra_install": "C:/tools/ghidra_12.1.4_PUBLIC",
+    "ghidra_version_reported_by_availability": "12.1.4",
+    "analysis_started": false,
+    "original_file_access": false,
+    "qualification": "Selected metadata transcribed from observed live session result; no raw-session hash is claimed."
+  },
+  "primary_documents": {
+    "dllmain": "https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain",
+    "guidance": "https://learn.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-best-practices",
+    "atexit": "https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/atexit",
+    "module_reference": "https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandleexw",
+    "thread_exit": "https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-freelibraryandexitthread"
+  },
+  "observed_source_entry_addresses": [
+    "0x180038870",
+    "0x180038970",
+    "0x180035850",
+    "0x180038950"
+  ],
+  "fresh_native_queries": 0,
+  "operations": [
+    {
+      "operation": "synchronous attach ordering",
+      "finding": "Reason1 calls038970 synchronously. Three workers are created/detached without join; synchronous035850(true) bypasses its worker-phase wait. Worker creation alone is not proof of inevitable attach deadlock. No milestone wait may silently be inserted.",
+      "refs": [
+        {
+          "path": "outputs/anadius-source/bootstrap.cpp",
+          "line": 7,
+          "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+          "anchor": "if (reason == 1) initialize()"
+        },
+        {
+          "path": "outputs/anadius-source/bootstrap.cpp",
+          "line": 16,
+          "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+          "anchor": "void Bootstrap::start_detached"
+        },
+        {
+          "path": "outputs/anadius-source/bootstrap.cpp",
+          "line": 43,
+          "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+          "anchor": "deps_.boolean_worker_035850()(true)"
+        },
+        {
+          "path": "outputs/anadius-libraries-source/libraries.cpp",
+          "line": 78,
+          "sha256": "e31b948aef40abd8510e16324389a80f81edbedf27fbfdfb6357073d2497960f",
+          "anchor": "if (!from_main) effects.wait_steps_036880(2)"
+        }
+      ],
+      "documents": [
+        "https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain",
+        "https://learn.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-best-practices"
+      ]
+    },
+    {
+      "operation": "synchronous operations needing loader profile",
+      "finding": "Nonempty main library list calls real LoadLibraryW synchronously; selected console uses User32/stdio and selected hook enable/disable freezes threads. Existing general Runtime/Domain contract is outside-loader-lock. These paths cannot be certified merely by defining missing attach symbol.",
+      "refs": [
+        {
+          "path": "outputs/anadius-libraries-source/native_system.cpp",
+          "line": 12,
+          "sha256": "07d0334288981264b83b6832dcf3bb79276ee11f1d9313c60a29638d6ede53ad",
+          "anchor": "LoadLibraryW(path)"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-providers-source/providers.cpp",
+          "line": 52,
+          "sha256": "a4e52f6553c0acf8c45e6d095e4ab6c861344ebc438b0e9a628688364d30f87e",
+          "anchor": "ConsoleApi native_console_api"
+        },
+        {
+          "path": "outputs/hook-engine-source/vendor/minhook/src/hook.c",
+          "line": 328,
+          "sha256": "edcce4c81985d7dd5b73feae96d6498c8f749b1bca4c3d2d9926ea9a17a84755",
+          "anchor": "static MH_STATUS Freeze"
+        },
+        {
+          "path": "outputs/hook-engine-source/vendor/minhook/src/hook.c",
+          "line": 348,
+          "sha256": "edcce4c81985d7dd5b73feae96d6498c8f749b1bca4c3d2d9926ea9a17a84755",
+          "anchor": "SuspendThread(hThread)"
+        },
+        {
+          "path": "outputs/dll-link-gate-source/production_image.hpp",
+          "line": 11,
+          "sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+          "anchor": "OUTSIDE loader lock"
+        }
+      ],
+      "documents": [
+        "https://learn.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-best-practices"
+      ]
+    },
+    {
+      "operation": "failed attach",
+      "finding": "Failures after a created worker cannot assert complete rollback via joining inside failed DllMain. Current abort policy is terminal; it is not successful attach rollback. Null attach return still requires real complete rollback.",
+      "refs": [
+        {
+          "path": "outputs/anadius-source/bootstrap.cpp",
+          "line": 40,
+          "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+          "anchor": "auto* second ="
+        },
+        {
+          "path": "outputs/dll-link-gate-source/production_image.hpp",
+          "line": 15,
+          "sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+          "anchor": "complete attach rollback"
+        }
+      ],
+      "documents": [
+        "https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain",
+        "https://learn.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-best-practices"
+      ]
+    },
+    {
+      "operation": "pre-unload stop and owner retirement",
+      "finding": "Runtime close stops sources/joins, drains exit cleanup and retires providers. New cooperative callback closes/destroys Runtime then closes Domain before final image release, outside loader lock. Closed managed roots alone do not prove external entry/code/CRT lifetime.",
+      "refs": [
+        {
+          "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+          "line": 80,
+          "sha256": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+          "anchor": "if(!backend_->stop_and_join())"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+          "line": 99,
+          "sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+          "anchor": "s.api.wait(handle,timeout_ms)"
+        },
+        {
+          "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+          "line": 96,
+          "sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+          "anchor": "::WaitForSingleObject(handle,timeout)"
+        },
+        {
+          "path": "outputs/anadius-pre-unload-source/shutdown.cpp",
+          "line": 38,
+          "sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+          "anchor": "const bool stopped=runtime_->close()"
+        },
+        {
+          "path": "outputs/anadius-pre-unload-source/shutdown.cpp",
+          "line": 45,
+          "sha256": "50193ac5c84e279207831100ae38bfa480626892cf237ddc401e7ca61eef1893",
+          "anchor": "const bool stopped=domain_->close()"
+        }
+      ],
+      "documents": [
+        "https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain",
+        "https://learn.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-best-practices"
+      ]
+    },
+    {
+      "operation": "worker image references",
+      "finding": "Thread context asks FROM_ADDRESS for entry code and may release reference on thread exit. Thread-handle duplication does not pin image code. Worker pins can prevent detach notification from being a shutdown trigger while workers still run.",
+      "refs": [
+        {
+          "path": "outputs/anadius-thread-source/threads.cpp",
+          "line": 11,
+          "sha256": "3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9",
+          "anchor": "e.get_module_handle_ex_w(4, entry"
+        },
+        {
+          "path": "outputs/anadius-thread-source/threads.cpp",
+          "line": 47,
+          "sha256": "3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9",
+          "anchor": "e.free_library_and_exit_thread(context->module, code)"
+        }
+      ],
+      "documents": [
+        "https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandleexw",
+        "https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-freelibraryandexitthread"
+      ]
+    },
+    {
+      "operation": "process termination and CRT callbacks",
+      "finding": "Non-null reserved differs from FreeLibrary/failed load. Process termination can leave other threads and locks unusable. CallbackRegistry.finish clears logical state but cannot unregister real atexit thunk positions; exit_dispatch takes Hub lock before seeing finished state. Ordinary Controller shutdown is not a termination handler, nor proof of LLVM-MinGW CRT teardown ordering.",
+      "refs": [
+        {
+          "path": "outputs/anadius-bootstrap-runtime-source/callbacks.cpp",
+          "line": 99,
+          "sha256": "9d78696ae360140c0fcb30a185671a5755532e22c2aa15e128f5b09fa5ee426c",
+          "anchor": "state->api.at_exit(&exit_dispatch)"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-runtime-source/callbacks.cpp",
+          "line": 34,
+          "sha256": "9d78696ae360140c0fcb30a185671a5755532e22c2aa15e128f5b09fa5ee426c",
+          "anchor": "void exit_dispatch() noexcept"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-runtime-source/callbacks.cpp",
+          "line": 147,
+          "sha256": "9d78696ae360140c0fcb30a185671a5755532e22c2aa15e128f5b09fa5ee426c",
+          "anchor": "bool CallbackRegistry::finish()"
+        }
+      ],
+      "documents": [
+        "https://learn.microsoft.com/en-us/windows/win32/dlls/dllmain",
+        "https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/atexit"
+      ]
+    }
+  ],
+  "implemented_without_startup_change": "Bounded BOOL WINAPI(void*) noexcept cooperative pre-unload Controller; no named export/ordinal/DllMain wiring yet.",
+  "remaining_actual_decisions": [
+    "Supported loader-context profile for synchronous startup, or an explicitly approved change of initialization timing; no deferred worker startup silently selected.",
+    "Production host-cooperation/export/context/image lifetime contract before explicit FreeLibrary; existing observed RET ordinals are not repurposed.",
+    "Unclosed process termination and failed-attach policy, accounting for real CRT callbacks and existing live workers."
+  ],
+  "required_hooks_still_undefined": [
+    "require_loader_attach_runtime",
+    "require_loader_detach_quiescence"
+  ],
+  "independent_read_only_audit": "/root/b22_provider_audit; source+primary-doc review, no edits/builds/target access"
+}

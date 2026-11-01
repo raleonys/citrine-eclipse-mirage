@@ -1,0 +1,37 @@
+{
+  "kind": "New source composition; not additional recovered original functions",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "lifecycle_targets": [
+    "0x18004b26c",
+    "0x18004d55c",
+    "0x18004d5a8",
+    "0x18004d584",
+    "0x18004d598",
+    "0x18004d5c4"
+  ],
+  "provenance": [
+    "../anadius-vcrt-ptd-source/evidence.json",
+    "../anadius-vcrt-api-source/evidence.json",
+    "../anadius-crt-lock-source/evidence.json",
+    "../anadius-crt-cpu-source/evidence.json",
+    "../anadius-crt-entry-source/evidence.json",
+    "../anadius-crt-initializers-source/evidence.json",
+    "../anadius-crt-heap-source/evidence.json",
+    "../anadius-crt-runtime-source/evidence.json"
+  ],
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "022ac1bbc309a9c9472d99c7ba9ee8ea081ce3a5a29048b3522a328ead5ce0e4"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "85f1591f4b8e265cea036badadaf0c3de43fdd6bd16c2a1be910aaf4137526bf"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "eac77edf09d6d38d5d33651f9a7c58ebec6dd46abb3db28b283a95140af598e3"
+    }
+  ],
+  "limits": "Mandatory provider storage/callback lifetime, native OS/SEH/global binding and runtime equivalence remain open; no target execution"
+}

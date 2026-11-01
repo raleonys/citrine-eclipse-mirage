@@ -1,0 +1,256 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "Complete new production source/lifetime review, finalv3 frozen sources/tests, immutable author execution proofs/logs/EXEs/archive and all882 baseline source hashes; no reviewer EXE run.",
+  "reviewed_at_utc": "2026-10-31T14:22:12.200716+00:00",
+  "reviewed_source_hashes": {
+    "runtime.hpp": "dbc693a43c2fb83db0ca4a9b3e9299077b582dcb890cc63e0fc1036f02e1ba69",
+    "runtime.cpp": "ea5239d5222bfc89c507261d075ffa011677c632c0c9aa566f34861e624095b0",
+    "resources.hpp": "7fe86deb6d113698b3a8eed01debe7dfdba145bbb09a11301821c97f83c41a16",
+    "resources.cpp": "52b6c48eecaf6c01e371b1f9356fcaedc307ae9304cb2b822678058a9738e2e0",
+    "runtime_tests.cpp": "424320937e3da6836ef41bb7d454b01a2d19e0debda114afa7818b4d1e25e691",
+    "runtime_integration_tests.cpp": "94eaa0a38c45e87f2d9b5c8fe0fa0b1eb4b70db58a7b86728882a70f4382418d"
+  },
+  "code_freeze": {
+    "path": "work/b39-code-freeze.json",
+    "sha256": "4a57ad87f60af9c99c431afe735b0b8cd3541a199c9fcd62bd6582bf3fcd780c",
+    "revision": "authoritative v3 provider-retirement",
+    "all_six_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 184,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b39-core-retirement.exe",
+      "executable_sha256": "9f68be32b8ca103cf102968bbc5aa89ef22b4b85ac0588e73c13b515d7597282",
+      "archive_path": "work/b39-baseline-core.a",
+      "archive_sha256": "18519d44054e8b7ca57a9b1c593a3d25f4445b90c3accc92f77ba3496fb364b0",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b39-core-retirement-results.json",
+        "sha256": "7513bf462ab206fe0a020c57b1c4f65c211f26f42f8c13844d67001625252947"
+      },
+      "path": "work/b39-core-quick-results.json",
+      "sha256": "675cc3e238e2505cd6aafe9b08b870834ca34d68c1e3e60f5f203b5ddd7aa7c8",
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b39-core-retirement.log",
+      "log_sha256": "297b917f174f35617c5283bb86ee7aac247f90f45d3e76e7fc28d54d2e2ca6d3",
+      "actual_used_source_hash_count": 6,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh runtime.cpp/resources.cpp and core test, runtime/resources headers plus unchanged prior domain_test_fixture.hpp. Not integration test execution.",
+      "isolated_children": [
+        {
+          "mode": "reentry",
+          "expected_exit": 241,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "bindings",
+          "expected_exit": 242,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "tls",
+          "expected_exit": 243,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "control",
+          "expected_exit": 244,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "quiescent",
+          "expected_exit": 245,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "backend",
+          "expected_exit": 246,
+          "observed_exit_verified_by_parent": true
+        }
+      ]
+    },
+    {
+      "checks": 179,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b39-integration-retirement.exe",
+      "executable_sha256": "4d27c6802b0b8d7ecc23925606bcd2a6bfa4f00e7fe7d3bf15ac64a7ce01ec6c",
+      "archive_path": "work/b39-baseline-core.a",
+      "archive_sha256": "18519d44054e8b7ca57a9b1c593a3d25f4445b90c3accc92f77ba3496fb364b0",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b39-integration-retirement-results.json",
+        "sha256": "389168c0eda8369f034f5dc3f83f02506896edb7e4984a54408637768c4f015c"
+      },
+      "path": "work/b39-integration-quick-results.json",
+      "sha256": "ee0cc8c11a566a84ad44dd89cc9ea45edf6963bec014c65a17baea2ecfe329cc",
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b39-integration-retirement-results.log",
+      "log_sha256": "69f991ccb2076dc707d850a7371c417960c42dda8d4e3bde5d665a431b9385d0",
+      "actual_used_source_hash_count": 5,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "watched_source_hash_count": 6,
+      "source_scope": "Fresh runtime.cpp/resources.cpp and integration test, runtime/resources headers:5 actual-use records. Watched6 additionally includes core test as metadata only."
+    }
+  ],
+  "quick_checks_total": 363,
+  "core_agent_checks": 184,
+  "integration_agent_checks": 179,
+  "root_checks": 0,
+  "root_execution_note": "Root normalized actual immutable authoritative v3 author proofs only; no root/reviewer rerun or EXE replacement. Historical v1/v2 records are not final-code evidence.",
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING; no common build had started at authoritative v3 review.",
+  "common_build_targets": {
+    "production_objects": 260,
+    "cpp_units": 256,
+    "c_units": 4,
+    "ordinary_groups": 307,
+    "framework_terminal_groups": 19,
+    "status": "registered/planned, not reviewed as executed"
+  },
+  "baseline_package_sha256": "8dd4573a41cadd863cbfc24e5e7bc53e7d6e0cf90ac53158d8bcc88e5d6c6e9b",
+  "baseline_source_files": 882,
+  "prior_sources_preserved": 882,
+  "modified_prior_sources": 0,
+  "new_source_files": 6,
+  "current_source_files": 888,
+  "baseline_scope": "Every882 archived source member SHA matched snapshot and current file; no prior source modifications.",
+  "archive_proof": {
+    "path": "work/b39-baseline-core.a",
+    "sha256": "18519d44054e8b7ca57a9b1c593a3d25f4445b90c3accc92f77ba3496fb364b0",
+    "matches_B38_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "verified": true
+  },
+  "composition_count_basis": {
+    "baseline_files": 85,
+    "baseline_objects": 42,
+    "new_composition_files": [
+      "anadius-server-runtime-source/runtime.hpp",
+      "anadius-server-runtime-source/runtime.cpp",
+      "anadius-server-runtime-source/resources.hpp",
+      "anadius-server-runtime-source/resources.cpp"
+    ],
+    "expected_files": 89,
+    "expected_objects": 44
+  },
+  "findings": [
+    {
+      "id": "actual-runtime",
+      "result": "PASS",
+      "details": "Concrete Runtime implements all3 B35 mandatory methods through existing actual0270e0/021a10/025720, recovered socket helpers, OwnedAcceptMemory, DomainFlowApi, CoherentIoMemory and actual0298b0/027c10 worker. Application profile supplies explicit remaining contexts/policies, not submit/run/complete algorithms. ServerView is copied with borrowed references; full8-part bound identity and initial capacity/context validation precede publication."
+    },
+    {
+      "id": "staged-ownership",
+      "result": "PASS",
+      "details": "Empty stable Graph is published before opaque profile creation/mandatory-close providers; later failure retains graph without constructor-unwind cleanup invention. Same-scope context/storage/read/write checks; unknown effects poison. Run-local admitted and dispatcher/worker objects have scoped proxy binding/unbinding including throw paths; graph does not retain stack admitted references."
+    },
+    {
+      "id": "admission-guards",
+      "result": "PASS",
+      "details": "Run-start checkpoint now lies inside poison catch. Opaque guard/worker/TLS/completion policy calls have pre/post checkpoints preserving LastError around metadata. Guarded admitted physical get checkpoints after SDK return before native packet lookup. Backend-only poison is independently checked after Binding callbacks, all Ready/Running checkpoints and external quiescence; restoring a pointer/index cannot resume poison. Completion policy uses cached generation/packet/OV validation before routing and no old operation touch after actual completion."
+    },
+    {
+      "id": "quiescence",
+      "result": "PASS",
+      "details": "External truthful attestation outside Parent Operation, followed by Parent/Base/Own allocations/pending/active/loan/lease and work/queue checks. Runtime accept closes while Base remains Open; flow/application retire, lease1 recheck, graph reset breaks Core-Runtime-Parent cycle. Base/Parent close stays B35. False attestation and nonzero counters retain graph; counters do not prove external drain."
+    },
+    {
+      "id": "provider-retirement",
+      "result": "PASS",
+      "details": "Fresh and Closed Runtime destructor seals Retiring under live gate, moves Dependencies to local retirement outside mutex, destroys all shared providers/state while Impl/proxies/gate remain alive, then lets empty moved-from deps destruct. Lifecycle reentry denies before provider reads, metadata snapshot remains valid. Core verifies last-owned Profile/Worker/state callbacks in both paths."
+    },
+    {
+      "id": "resources-component",
+      "result": "PASS",
+      "details": "Cold make_server validates matching errors/sockets/dispatcher/capacity and unbound runtime, creates real Runtime/OwnedServerBackend. install_server rejects an occupied slot before replacing anything; only Resources.server is installed, not the complete bootstrap Resources or PE entry."
+    },
+    {
+      "id": "proof",
+      "result": "PASS",
+      "details": "Finalv3 six-source/q/actual records/logs/EXEs/archive verified;184 core includes6 exact child predicates241-246 and retirement callbacks,179 integration uses actual install/server Runtime transport worker/factory/flow/disposal. Historical two frozen revisions retained and hash-verified, not counted as current. Reviewer authored no production/test and executed no executable."
+    }
+  ],
+  "resolved_review_blockers": [
+    "Run-start checkpoint was outside poison catch, permitting TLS restore/resume.",
+    "Opaque guard/worker/physical-get callbacks could swallow lifecycle reentry and proceed before post-check.",
+    "Backend-only poison could leave Parent/Base/Own Open and bypass Runtime checkpoint.",
+    "Default Impl destruction destroyed mutex before owned provider destructors; explicit sealed retirement now keeps gate alive."
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0,
+  "native_mapped_addresses_unchanged": 501,
+  "native_eligible_compiled_tags_unchanged": 505,
+  "explicit_normal_body_claims_unchanged": 139,
+  "historical_native_closures_unchanged": 52,
+  "last_native_body_stage": "B38",
+  "compiler_observations_expected": 78,
+  "new_compiler_trait_values_expected": [
+    0,
+    1
+  ],
+  "superseded_execution_proofs": [
+    {
+      "path": "work/b39-pre-backend-guard/superseded-proof.json",
+      "sha256": "c3fe2aab18882f5ca5e9a782bb5066f67b784f4832128843fa6c475f0208036b",
+      "artifact_count": 15,
+      "all_preserved_hashes_verified": true,
+      "counted_as_current": false
+    },
+    {
+      "path": "work/b39-pre-provider-retirement/superseded-proof.json",
+      "sha256": "a186ac1e5b2aa1ad3d7b2636a1f13248d49b4666208716368bb38732f1898302",
+      "artifact_count": 12,
+      "all_preserved_hashes_verified": true,
+      "counted_as_current": false
+    }
+  ],
+  "registration_role": {
+    "script": "work/b39-register.py",
+    "sha256": "19e33e9897bd1ef850374d0738bf9ac83a7db35654962918e94cf0e393544ef2",
+    "preview_author": "/root/b22_provider_audit",
+    "applied_by": "/root after independent review of staged plan, as reported by root",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "scope": "Read-only AST/preimage/count preview; no build/generator/probe/test by reviewer."
+  },
+  "production_dll_readiness": "BLOCKED; full bootstrap Resources/application profile and B31 require_loader_* hooks remain unresolved.",
+  "limitations": [
+    "Factory/B35 route supplies matching AdmittedDispatcherApi by construction; direct public Runtime.run still requires caller-supplied SAME B35 admission instance. No new native parent/ABI identity proof is claimed.",
+    "Pure completion_owner must not consume/mutate/free/reproject work. Generation/packet guards catch lifetime transitions; they are not general policy isolation, in-place mutation detection, kernel ABA or multiple-packet finality proof.",
+    "Profile owns coherent same-domain contexts, stable multi-session slot/observer bindings, application/log/category/exception/environment/atomic providers and actual raw-job/kernel stop/drain obligations. Observer weak can preserve control storage, not session resource/raw-job strong lifetime.",
+    "One admitted worker, prepared controller PTD and selected disabled timer/service-collector context are bounded host policy. External attestation is trusted precondition, not inferred from zero counts or compiler concreteness.",
+    "Integration uses N5 CompatibleMessageCoreApi NORMAL-return messaging plus existing MessageHandler/Router; it does not establish native033d70 intermediate-prefix/EH equivalence. Raw jobs/scheduler/shutdown policy remain explicitly selected.",
+    "Unknown prefixes retain/poison; no worker exception/EH rollback, run-local TLS recovery, safe resume, general concurrency/unload or module pin proof. Poisoned chains must not be reused.",
+    "No new native body/ABI closure; B38 primary/context0 retry restriction,0241b0/0228c0 and full Resources/loader/runtime equivalence remain open. SDK networking calls are injected; own heap/FLS/IOCP execution is not original/rebuilt DLL/game or real network/kernel AcceptEx execution.",
+    "Common build, final regenerated inventory/link gate and delivery package are pending at review."
+  ],
+  "original_inputs_read": false,
+  "original_bytes_or_target_queries": false,
+  "original_or_rebuilt_DLL_game_execution": false,
+  "actual_user_cfg_token_contents_read": false,
+  "production_or_test_sources_modified_by_reviewer": false,
+  "reviewer_writes": [
+    "work/b39-register.py",
+    "outputs/anadius-server-runtime-source/architecture-review.json",
+    "outputs/anadius-server-runtime-source/architecture-review.md"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_argv",
+    "result": "PASS",
+    "output": "PASS argv configure/allocation: 6777 checks",
+    "executable_sha256": "4ce9c79d9c0c3273b8b027b7d2a2d0682e4b25adceae795acfef9e716d875458"
+  },
+  "execution_scope": "Actual argv parser, strict allocation guards and configure modes; native module path/wildcard/multibyte effects synthetic",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-argv-source/argv_tests.cpp",
+      "sha256": "5027a28f902a3555df1dd7a7fd9c6b52df995fa3537d349e0d2303a39e66a60a"
+    },
+    {
+      "path": "anadius-crt-argv-source/argv.cpp",
+      "sha256": "f36423b9120efc8feef27da66b9f473a002366b3fe98ccf5c57cd5dada4ffa6e"
+    },
+    {
+      "path": "anadius-crt-argv-source/argv.hpp",
+      "sha256": "94c038a8aebdb66fdc0c4e79a96d1556e25ab98fcfdd21424bd4057a683e22ab"
+    }
+  ]
+}

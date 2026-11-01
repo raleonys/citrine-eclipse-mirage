@@ -1,0 +1,84 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "New abstract native synchronization composition of existing recovered bodies",
+  "recovered_original_bodies_added": 0,
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "evidence_links": [
+    "../anadius-crt-lock-source/evidence.json",
+    "../anadius-vcrt-api-source/evidence.json",
+    "../anadius-vcrt-bridge-source/evidence.json",
+    "../anadius-crt-ptd-data-source/evidence.json",
+    "../anadius-crt-fls-native-source/evidence.json",
+    "../anadius-crt-lock-native-source/evidence.json",
+    "../anadius-crt-atomic-native-source/evidence.json"
+  ],
+  "lock_functions": [
+    {
+      "address": "0x1800625b0",
+      "pseudocode_evidence_id": "ev_0f77a2faa4ce96a4772e24821af0610aa87b98b6d14ee2e1a366f1742c38a007",
+      "assembly_evidence_id": "ev_d39bc3572866a8838c46bfad0d5b0e95926f42da409913c263ffcccd96f91bc5"
+    },
+    {
+      "address": "0x1800625f8",
+      "pseudocode_evidence_id": "ev_3eaaf083289c79d1ec1dc7617a91f499ae18e8308bc16043f25674c85d39075f",
+      "assembly_evidence_id": "ev_ab7686ba7abc562c511aaf49317ee14d818bd8f6a6c3d09d60e59918709862a7"
+    },
+    {
+      "address": "0x180062614",
+      "pseudocode_evidence_id": "ev_9d4a13971ff88e40e8d9954f61a4ab3412e680ab50b5359b68d9f09299abc802",
+      "assembly_evidence_id": "ev_b35fd0231eeada9b8ce6b27a9fdb3210c190e7302f4c27bb1b0b01fb5780158e"
+    },
+    {
+      "address": "0x18006264c",
+      "pseudocode_evidence_id": "ev_349afdb94e6ccde985f29f2ac149c3bda3e4af2b7e23bec1270a2b9f2ab7b710",
+      "assembly_evidence_id": "ev_2b686f90815f0a360d36f8aedccdeac29b8c75950763252760d90cdf33df9816"
+    },
+    {
+      "address": "0x18005093c",
+      "pseudocode_evidence_id": "ev_7c55b214bd7fee9fd6802bf7cd2d5fee60dcadd23e1ab44be933c957753d510d",
+      "assembly_evidence_id": "ev_e7beb48a250a325782abca2c7d260b79303758e847b728490746455dd40bb37d"
+    },
+    {
+      "address": "0x180050984",
+      "pseudocode_evidence_id": "ev_de2049f8c289514442080ceda97ecd487ac270cf27486430e2622e889fb079f1",
+      "assembly_evidence_id": "ev_9850f39676109af903f2f6200669d8bd80d37396e25f2de65c58acedbbca07a0"
+    },
+    {
+      "address": "0x18006707c",
+      "pseudocode_evidence_id": "ev_9058b7c0706124cb51eae876f3e94d1150c1fd4177e60e4fa9149da0989459f5",
+      "assembly_evidence_id": "ev_f0c1421f9b5476388f4731846e5c97061cb1c3a11a261ab8cfdbaf975b3cfa50"
+    }
+  ],
+  "routes": [
+    "ACRT slot15 encoded resolver0669b0 candidates7/16 ->typedEx/nativeSpin fallback",
+    "VCRT slot4 plain resolver0509bc candidates1/2 ->sameownedVCRTbank Ex/Spin fallback",
+    "PTD-data lock4/5 and atomic retain/release ->typed CS and owned LONG Cell32"
+  ],
+  "test_scope": "120 checks; realCS/Interlocked/FLS/processheap and4simultaneous ownworkers, barrier peak/main+workers, distinctPTD/errno/LastError and join/callback ref cleanup; partial nativebank initialization rollback",
+  "limits": [
+    "Owned global/locale identities immutable and minimal resource effects controlled",
+    "VCRTLockCalls andPtdSyncEffects remain abstract for mandatory other boundaries",
+    "Native bank cell stride notoriginalbank ABI; no originalVA executed",
+    "No arbitrary raw byte/global pointer adopted as LONG",
+    "No complete CRT concurrency/dynamicglobals/locale/ABI/SEH/shutdown equivalence"
+  ],
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "runtime_equivalence": "not established",
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "185fe6280697abc84360895be0d62a43ff6036c0482a3e46c2b686ee24b01a63"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "3c7f7d1a236e9699485c5756ac0c7c86581a479053088bba5b877537fe21551d"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "e6e751c498fbfd5d47b76d29eb843ac2aab007e6ef339cf1d8fcc7dfcc6b11ed"
+    }
+  ]
+}

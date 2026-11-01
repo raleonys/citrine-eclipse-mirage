@@ -1,0 +1,76 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T15:47:50.681918+00:00",
+  "prior_package_sha256": "1a9cb4b9604b1af34d6528bd5ff5cc3f59a6938723161b2920f76dae15cd8f95",
+  "prior_source_count": 591,
+  "unchanged_prior_sources": 591,
+  "added_sources": [
+    "anadius-socket-source/append_growth.cpp",
+    "anadius-socket-source/append_growth.hpp",
+    "anadius-socket-source/append_growth_integration_tests.cpp",
+    "anadius-socket-source/append_growth_test_fixture.hpp",
+    "anadius-socket-source/append_growth_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 596,
+  "current_documents": 224,
+  "native_objects": 191,
+  "cpp_objects": 187,
+  "c_objects": 4,
+  "normal_test_groups": 195,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 68,
+  "new_checks": 5500,
+  "new_tests": [
+    {
+      "module": "socket_append_growth",
+      "result": "PASS",
+      "output": "PASS: 3461 socket append growth checks; actual012350/007e30 distinct payload/extra semantics, external/self binary oracle, metadata/copy/tail/free/pointer order and bounded failure prefixes",
+      "executable_sha256": "1f6f3aaa0463dc92ff81878dbda92a03e2191d98ec3f8f3a1ac74309bf32531a"
+    },
+    {
+      "module": "socket_append_growth_integration",
+      "result": "PASS",
+      "output": "PASS: 2039 socket append growth integration checks; actual012350/007e30 final source bridges in033d70 and N1-N9 queue/send/finish; lower XML/cipher/log/allocator providers and native ABI/EH remain open",
+      "executable_sha256": "fff11a2a256c11b97c3a6f138db8d86eff12998925b2f006d907868c060124ec"
+    }
+  ],
+  "validation_mirror_pairs": 34,
+  "historical_module_records_preserved": 33,
+  "historical_config_references_preserved": 66,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "331756a509e3ed0655e3c6140f8f033e5237d07da23882632c6bce43473e2909",
+  "inventory_data_checks": 7260,
+  "normal_source_procedures_added": [
+    "0x180012350",
+    "0x180007e30"
+  ],
+  "new_original_procedures": 2,
+  "closed_providers": [
+    "RecoveredMessageAppendApi::grow_nul_012350",
+    "RecoveredMessageAppendApi::grow_append_007e30"
+  ],
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "prior_native_source_closures_preserved": 15,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual012350/007e30 final grow sources in actual033d70/N1-N9 queue/send/finish; controlled XML/032d00/cipher/log and native allocator effects; native ABI/EH/IOCP/worker open",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N11 native042480/042610 live-prefix cipher normal flow and source bindings; CRT stays paused"
+}

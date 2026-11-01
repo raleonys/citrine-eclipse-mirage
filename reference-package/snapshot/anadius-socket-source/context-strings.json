@@ -1,0 +1,30 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source": "Direct read-only PE section mapping, distinct from retained REA strings evidence",
+  "items": [
+    {
+      "address": "0x180084728",
+      "file_offset": "0x82f28",
+      "value": "open",
+      "hex": "6F70656E00"
+    },
+    {
+      "address": "0x180084604",
+      "file_offset": "0x82e04",
+      "value": "bind",
+      "hex": "62696E6400"
+    },
+    {
+      "address": "0x180084730",
+      "file_offset": "0x82f30",
+      "value": "set_option",
+      "hex": "7365745F6F7074696F6E00"
+    },
+    {
+      "address": "0x18008473c",
+      "file_offset": "0x82f3c",
+      "value": "listen",
+      "hex": "6C697374656E00"
+    }
+  ]
+}

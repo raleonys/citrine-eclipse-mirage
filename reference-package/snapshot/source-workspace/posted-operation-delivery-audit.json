@@ -1,0 +1,63 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T19:44:07.6164455Z",
+  "prior_package_sha256": "826dc0480c5739ae31fd542ecf08c289a292b5198ed9d36738b1015ef34c2460",
+  "prior_source_count": 490,
+  "unchanged_prior_sources": 490,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/posted_operation_dispatch.cpp",
+    "anadius-socket-source/posted_operation_dispatch.hpp",
+    "anadius-socket-source/posted_operation_integration_tests.cpp",
+    "anadius-socket-source/posted_operation_tests.cpp",
+    "anadius-socket-source/posted_operation.cpp",
+    "anadius-socket-source/posted_operation.hpp"
+  ],
+  "current_sources": 496,
+  "current_documents": 194,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 168,
+  "cpp_objects": 164,
+  "c_objects": 4,
+  "normal_test_groups": 155,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_posted_operation",
+      "result": "PASS",
+      "output": "PASS: 4336 socket posted operation checks; six normal bodies, two-slot storage cache, source ownership, live TLS/scheduler and actual operation/functor lifetime ends",
+      "executable_sha256": "065c52ea29148b3fde93ef655d909148a681229d47b23bf079ee0d3b410491f4"
+    },
+    {
+      "module": "socket_posted_operation_integration",
+      "result": "PASS",
+      "output": "PASS: 110 socket posted operation integration checks; actual executor/dispatcher/worker/TLS-cache source chain, existing injected SDK adapters, unknown callback forwarding and heap lifetime ends",
+      "executable_sha256": "f15df29f3728a44438d3aafe002aed1769c5ba0cc148a8f30ffcc6dd0d699aa6"
+    }
+  ],
+  "new_checks": 4446,
+  "master_build_sha256": "fcb14ee8c93d201edbe07dae887397afc312fd2679c452d5cdff1f42112381f6",
+  "common_build_script_sha256": "0da9260816a38ac2a85a619203eba1c020096e361bdfbd63dc65a5469f50965f",
+  "cmake_sha256": "f2c0dc5937eccf8984dd81422fbd38f7b57669f9d7ebfd46b16f0ff4867287c6",
+  "normal_source_procedures_added": [
+    "0x180021820",
+    "0x180021ac0",
+    "0x180022e40",
+    "0x180027120",
+    "0x180028ca0",
+    "0x180028fd0"
+  ],
+  "new_original_procedures": 6,
+  "new_composition": "Actual021820 cacheallocator/021ac0 consume/022e40 executor/027120 callback/028ca0 enqueue/028fd0 cleanup; typedpostedcallback bridge into existing027c10 dispatcher and0298b0 worker; existing injected SDK APIs and required allocator/functor/lifetime providers",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "storage_contract": "Stable raw allocation identity/binding/typedprojection; bounded byte storage separate SDK OVERLAPPED; native fault guards modeled UnsupportedInput; no post-freeoperation access",
+  "allocation_and_functor_providers": "04b0bc/04b788/slot00 and native provenance remain required",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

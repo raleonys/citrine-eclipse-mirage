@@ -1,0 +1,63 @@
+{
+  "result": "PASS",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Hash-bound raw PE and retained exact REA assembly/pseudocode identities;no original execution;full implementation of lower handle providers excluded",
+  "bodies": [
+    {
+      "address": "0x180067890",
+      "end": "0x1800678ca",
+      "length": 59,
+      "file_offset": 421008,
+      "sha256": "137f8eb67ef8af58d7b420c123f816cdf15630f83697da2c409c8c7053161b7c",
+      "bytes_hex": "40534883ec20b907000000e858adffff33db33c9e8ffb9000085c0750ce8e6fdffffe8d1feffffb301b907000000e889adffff8ac34883c4205bc3",
+      "assembly_evidence_id": "ev_d4ff041951255b8c23252f658fec937c4ccb3f09609eb7d04f434471c1391b71",
+      "pseudo_evidence_id": "ev_53596e1106f3183bdc899f798d5c824609c85d32af2b256dbfff07a0f6d395dd",
+      "role": "initialize",
+      "pair": {
+        "index": 8,
+        "slot_va": "0x18008aae0",
+        "file_offset": 561888
+      }
+    },
+    {
+      "address": "0x1800678cc",
+      "end": "0x18006790b",
+      "length": 64,
+      "file_offset": 421068,
+      "sha256": "39dcfe5ad1edec2456875fa7bf56506b8fb119adf684ea492106e9be5a6268f9",
+      "bytes_hex": "48895c2408574883ec2033db488d3dc1db0300488b0c3b4885c9740ae86bb900004883243b004883c3084881fb0004000072d9488b5c2430b0014883c4205fc3",
+      "assembly_evidence_id": "ev_a557e408da4ff53f1bcd1ce9cf3f55354c86eb2f0bcbb40e3c234db0563ffd0a",
+      "pseudo_evidence_id": "ev_ee05528565d8f723446d2a4a90a5fdd8a2d6afeef615c9f1adf559539e7a1576",
+      "role": "uninitialize",
+      "pair": {
+        "index": 8,
+        "slot_va": "0x18008aae8",
+        "file_offset": 561896
+      }
+    },
+    {
+      "address": "0x180073258",
+      "end": "0x1800732a7",
+      "length": 80,
+      "file_offset": 468568,
+      "sha256": "bde3e2b42a2caf692be72b2482d10341315a413fed76a3d847cbca933b56fc33",
+      "bytes_hex": "4885c9744a48895c24084889742410574883ec20488db100120000488bd9488bf9483bce7412488bcfff1571be00004883c748483bfe75ee488bcbe82836ffff488b5c2430488b7424384883c4205fc3",
+      "assembly_evidence_id": "ev_bb59c9105078651b551ef9d45b6aa2ac9526d722af4141b8ecb59dad65fc7e5b",
+      "pseudo_evidence_id": "ev_a7cb4d754d283c1b2fff6be4e638fc62084f29cfd9a493afa9daed336a4a03ab",
+      "role": "array-destructor"
+    }
+  ],
+  "lower_provider_addresses": [
+    "0x1800732a8",
+    "0x180067698",
+    "0x180067788"
+  ],
+  "layout": {
+    "table_slots": 128,
+    "table_extent": 1024,
+    "array_records": 64,
+    "record_stride": 72,
+    "array_extent": 4608,
+    "capacity_reset": false
+  }
+}

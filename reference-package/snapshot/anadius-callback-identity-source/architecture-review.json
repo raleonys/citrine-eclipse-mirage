@@ -1,0 +1,167 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b18_ptd_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T02:17:04.698326+00:00",
+  "review_scope": "B21 actual callback PTD permission, retained cleanup/reentry boundaries, checked encoding lower pre/post checkpoints, foreign factory/native entry integration and synthetic tests",
+  "reviewed_source_hashes": {
+    "identity.hpp": "c1f52ba7f8fe43cc5f41cf759bded2e3e2b06cc0257f56d689815920eb448c04",
+    "identity.cpp": "5a59449cd280841acd77883629b2dd7d702f571f458691833f7dcdfa913bd8c8",
+    "identity_tests.cpp": "b320e814b5fbbf97e2fde70b6cdc1ad63127e8673f4be23cc6e3a62c0db53363",
+    "identity_integration_tests.cpp": "d0f47a58cfcef518a788d14790952d0588f0700e2d477bd12cd343d664c46079",
+    "identity_test_fixture.hpp": "aac1923704da483cb2f2ef6d35bf7847477a7f575e9a9d4336bff49f3e7fbb14",
+    "../anadius-thread-domain-source/domain.hpp": "37bf2a7947afee97bf3a7fa12dabf6e64124eaeb84ae6c40f2d6731c84926276",
+    "../anadius-thread-domain-source/domain.cpp": "0fd55b040243e7f88b6401ffaa73cebe8b8dc5d38441662f0b7aa811d2dcaf9c",
+    "../anadius-foreign-callback-source/foreign.hpp": "353327a7367fe9579e5207c97394f64c64426a70f3365136719305e3722cc992",
+    "../anadius-foreign-callback-source/foreign.cpp": "c4f85a5a76e2443f2474a3160cffefb4849d8b5267b293a9984c215ae2b8ed03"
+  },
+  "quick_results": [
+    {
+      "path": "work/b21-core-quick-results.json",
+      "sha256": "651962b411e6e35c23317d4e5a73fdd91e91e8c465a2fc37e4b3bb0956baed6d",
+      "checks": 25,
+      "executable_path": "work/b21-core-test.exe",
+      "executable_sha256": "b4b4137bb743b32bf4c586654e50a741810a33e47a03d1a5906b7a3b3384cf27",
+      "execution_by": "root; independent reviewer read all nine listed sources and verified source/EXE hashes, did not rerun"
+    },
+    {
+      "path": "work/b21-integration-quick-results.json",
+      "sha256": "1f79f38e5ee3d0819041e1f455b0bb5540a2b2ada1ca7da8cfb46b89e6b02bfd",
+      "checks": 27,
+      "executable_path": "work/b21-integration-test.exe",
+      "executable_sha256": "e7d0bbde4daa25d7d2d3e056fdda89d5aede9714a157f1108db11ea3ea46281b",
+      "execution_by": "root; independent reviewer read all nine listed sources and verified source/EXE hashes, did not rerun"
+    }
+  ],
+  "root_checks": 52,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "baseline_package_sha256": "365d692b601f9f7c68cb46b32ac0d02d95aa081cd56e39fac2fa94a566793e5a",
+  "prior_source_files": 805,
+  "prior_sources_preserved": 801,
+  "current_source_files": 810,
+  "source_inventory_counts_basis": "Parent frozen source inventory; complete preservation/count/common build belongs to final delivery audit. Reviewer independently checked all four declared before hashes from B20 archive source entries and their current after hashes.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-foreign-callback-source/foreign.cpp",
+      "before_sha256": "78d03ca7164949e04364689293c45c5e5a190ed134dcb2e39b45f9801e31fc84",
+      "after_sha256": "c4f85a5a76e2443f2474a3160cffefb4849d8b5267b293a9984c215ae2b8ed03",
+      "reason": "Release Domain mutex before actual PTD probe; check admission before body; wrap owned encoding pre/post lower calls with same permission"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.hpp",
+      "before_sha256": "24508bb44cab0b5b553593d3a294ad99eaab5b959a16ba7215fa9347d1160d9d",
+      "after_sha256": "353327a7367fe9579e5207c97394f64c64426a70f3365136719305e3722cc992",
+      "reason": "Declare const permission poison/publication bookkeeping without changing field order"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before_sha256": "7e56567bd85815ed10d54515fbb5b9df01913dbe418871e074c4da99ce5360a4",
+      "after_sha256": "0fd55b040243e7f88b6401ffaa73cebe8b8dc5d38441662f0b7aa811d2dcaf9c",
+      "reason": "Probe actual FLS identity without metadata mutex; retain sticky caught-reentry poison and cleanup-start exclusion, preserving known cleanup retry"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.hpp",
+      "before_sha256": "46258112cabee4a0e831f0a8f978cfde9a95f91bad48f2696e67baa97ee262e5",
+      "after_sha256": "37bf2a7947afee97bf3a7fa12dabf6e64124eaeb84ae6c40f2d6731c84926276",
+      "reason": "Document actual-FLS/fresh-snapshot body permission, retained unknown outcomes and sticky cleanup exclusion"
+    }
+  ],
+  "prior_changes_record_sha256": "91fa80dcde74f3b1dae9f6bf6481f7d4f93289a4743e6244c1a04cba4c79e592",
+  "findings": [
+    {
+      "topic": "actual identity permission reservation",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-thread-domain-source/domain.cpp:209-247",
+        "identity_tests.cpp:5-26,49-59"
+      ],
+      "observation": "Permission reserves operating/checking under CallbackThreads metadata gate, then queries the exact domain FLS slot with no CallbackThreads or foreign Domain gate held. Lifecycle operations cannot change this scope during the reservation. The provider can synchronously query active/poison/failure and foreign Domain metadata without deadlock. Wrong-thread/fiber or inactive requests return false before querying FLS and do not poison the active owner. LastError is preserved on normal and exceptional paths."
+    },
+    {
+      "topic": "identity, contents and sticky reentry",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-thread-domain-source/domain.cpp:222-247",
+        "identity_tests.cpp:9-22,60-84"
+      ],
+      "observation": "The returned slot must equal expected PTD and current thread/fiber must still match. Null, construction sentinel and another PTD are never adopted or dereferenced. Only owned fresh PTD bytes are compared with the initial snapshot, except errno/DOS bytes 0x20 through 0x27; borrowed PTD contents are neither snapshotted nor repaired. A getter exception, mismatch or invalid fresh snapshot poisons and retains the scope. A same-owner nested permission probe marks sticky poison, so a provider catching its false result cannot make the outer probe succeed. Raw free/ABA and untrusted external mutation remain excluded."
+    },
+    {
+      "topic": "cleanup is not body permission",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-thread-domain-source/domain.cpp:288-316",
+        "identity_tests.cpp:27-48"
+      ],
+      "observation": "cleanup_started becomes sticky at first leave, before an FLS/provider call. Therefore known detach false with error zero, destroyed-root/raw-free failure and freed-root/final-clear failure all deny body permission without querying FLS. Existing same-thread known cleanup retry remains possible and repeats neither destructor nor successful root free. A later distinct scope resets the marker only after complete prior cleanup. Unknown/poisoned outcomes retain resources."
+    },
+    {
+      "topic": "foreign admission and factory binding",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-foreign-callback-source/foreign.cpp:19-29,57-89",
+        "identity_integration_tests.cpp:164-251"
+      ],
+      "observation": "Foreign Domain releases its own gate before CallbackThreads probing and propagates poison to ready=false. Admission checks actual permission after attachment and before returning to the native wrapper body; an initial failure retains active poisoned resources rather than attempting blind cleanup. The actual foreign factory automatically wraps its owned encoding provider with the same Domain permission. The native initial-rejection child uses a fallback folder id and an own SDK-typed original stub counter; success requires both lower encoding and original calls to remain zero."
+    },
+    {
+      "topic": "checked encoding pre/post boundary",
+      "result": "PASS",
+      "evidence": [
+        "identity.hpp:7-13",
+        "identity.cpp:15-34",
+        "identity_integration_tests.cpp:97-162,223-285"
+      ],
+      "observation": "All five lower Calls routes have one permission check before and after each actual lower invocation, including last_error. No metadata gate spans the lower call. Arguments, explicit counts, output pointers, flags, used-default pointer, returned values, embedded NUL and output tails pass through. Each check separately preserves LastError, retaining the lower incoming/outgoing values. A valid exceptional postcheck rethrows the identical lower exception; invalid postcondition takes precedence over a lower exception. Output prefixes remain visible and the next lower invocation is prevented, without retry, rollback, implicit buffer clearing or FLS restoration."
+    },
+    {
+      "topic": "test attribution and bounded claim",
+      "result": "PASS",
+      "evidence": [
+        "identity_tests.cpp:60-89",
+        "identity_integration_tests.cpp:23-25,188-209,243-294",
+        "work/b21-core-quick-results.json",
+        "work/b21-integration-quick-results.json"
+      ],
+      "observation": "Root quick records compile changed production CPPs plus the new identity unit fresh. Six core children exit 170..175 only after retained poison/specific state predicates. Five integration children exit 211..215 only after typed rejection or exact original-exception/drain predicates; generic SIGABRT is distinct 239 and an unexpected return is 230. Integration invokes own source native wrapper/factory objects and synthetic SDK stub/provider data, not an original or rebuilt DLL. These tests support checkpoints and retained failure semantics, not general native concurrency or continuously frozen state."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Compiler CRT locale, errno domain, invalid-parameter handlers, process File-API mode/codepage and ambient global configuration are not pinned or frozen by pointer permission checkpoints; a separate numeric/frozen provider policy is deferred.",
+    "OriginalEffects inherited final wide operations and original SDK trampolines do not receive a new per-call identity check. Native start and leave checks remain; selected Policy overrides check through callback_scope and selected encoding lower calls gain pre/post checks.",
+    "Arbitrary lower-provider reentry, raw PTD free, pointer ABA, external/fiber mutation and a malicious getter returning an inaccurate slot cannot be made safe by this guard. A provider that temporarily changes state and restores it before a checkpoint is not continuously observed.",
+    "Only fresh PTD contents are restricted to the initial snapshot plus errno/DOS changes. Borrowed existing PTD is identity-checked without adoption or content enforcement. FLS/provider lease lifetime and no raw-free assumptions remain mandatory.",
+    "B18 single-active sequential callback admission, B19 one-Execution publication, B20 exact same managed stream ownership and remaining worker/fallback/provider proof still apply. No new overlap/reentry, engine-health, worker-join, cleanup/unload or hook quiescence guarantee is inferred.",
+    "Configuration/license/legacy document and seven online foreign-call ownership, B10 historical review debt, generic CRT, native ABI, hooks/unload and final PE/DLL equivalence remain open."
+  ],
+  "claim": {
+    "actual_FLS_permission_checked": true,
+    "fresh_snapshot_except_errno_DOS": true,
+    "borrowed_identity_only": true,
+    "cleanup_started_permanently_denies_body": true,
+    "same_owner_nested_probe_poison_sticky": true,
+    "encoding_all_five_routes_pre_post_checked": true,
+    "compiler_locale_or_invalid_handler_frozen": false,
+    "arbitrary_provider_reentry_supported": false,
+    "raw_free_ABA_supported": false,
+    "inherited_wide_per_call_checked": false,
+    "original_DLL_or_game_execution": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Only architecture-review.json and architecture-review.md were written by this reviewer.",
+    "Final 25 core and 27 integration PASS records are root executions; source and executable hashes were independently verified without rerunning.",
+    "Frozen production includes both early audit requirements: no outer Domain gate across FLS lookup and explicit cleanup-start exclusion independent of failure code."
+  ]
+}

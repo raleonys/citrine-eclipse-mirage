@@ -1,0 +1,581 @@
+{
+  "provenance": "Retained REA pseudocode/assembly with original Evidence IDs; omitted LAB bodies and literal bytes independently inspected statically, not new REA Evidence",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "original_executed": false,
+  "original_modified": false,
+  "retained_rdata_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "functions": [
+    {
+      "va": "0x18002ffb0",
+      "pseudocode_evidence": "ev_e860ae843dde5b1c7a059481e475fd333e43ba8b443bb6a0e8e6984f67bac4e7",
+      "assembly_evidence": "ev_ee606ce302449e8bb6d334e8cd88f139bc12364c3a87741ac31c513a6353216e",
+      "pseudocode": "/* 0x18002ffb0 FUN_18002ffb0; Evidence ev_e860ae843dde5b1c7a059481e475fd333e43ba8b443bb6a0e8e6984f67bac4e7 */\n\nundefined8 FUN_18002ffb0(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180084c70,'\\0');\n  FUN_180005560(param_2,0x180084c80,&DAT_180083870);\n  FUN_180005560(param_2,0x180084c88,&DAT_180080097);\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002ffb0 FUN_18002ffb0; Evidence ev_ee606ce302449e8bb6d334e8cd88f139bc12364c3a87741ac31c513a6353216e\n0x18002ffb0: PUSH RBX\n0x18002ffb2: SUB RSP, 0x20\n0x18002ffb6: MOV RBX, RDX\n0x18002ffb9: XOR R8D, R8D\n0x18002ffbc: MOV RCX, RBX\n0x18002ffbf: LEA RDX, [0x180084c70]\n0x18002ffc6: CALL 0x180004080\n0x18002ffcb: LEA R8, [0x180083870]\n0x18002ffd2: MOV RCX, RBX\n0x18002ffd5: LEA RDX, [0x180084c80]\n0x18002ffdc: CALL 0x180005560\n0x18002ffe1: LEA R8, [0x180080097]\n0x18002ffe8: MOV RCX, RBX\n0x18002ffeb: LEA RDX, [0x180084c88]\n0x18002fff2: CALL 0x180005560\n0x18002fff7: MOV RAX, qword ptr [RBX]\n0x18002fffa: XOR EDX, EDX\n0x18002fffc: MOV RCX, RBX\n0x18002ffff: CALL qword ptr [RAX + 0x48]\n0x180030002: MOV AL, 0x1\n0x180030004: ADD RSP, 0x20\n0x180030008: POP RBX\n0x180030009: RET\n\n"
+    },
+    {
+      "va": "0x18002f4e0",
+      "pseudocode_evidence": "ev_ddfc95f5f6f0b99d7f4810767440aa0faf66b553feb2291737534a84083d8cfa",
+      "assembly_evidence": "ev_bc72c8d3c506ebd6bc4c0d55ab26cc6464ece55187b984c223f164e877ebcc37",
+      "pseudocode": "/* 0x18002f4e0 FUN_18002f4e0; Evidence ev_ddfc95f5f6f0b99d7f4810767440aa0faf66b553feb2291737534a84083d8cfa */\n\nundefined8 FUN_18002f4e0(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180085620,'\\0');\n  FUN_180005560(param_2,0x180085640,(byte *)\"false\");\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002f4e0 FUN_18002f4e0; Evidence ev_bc72c8d3c506ebd6bc4c0d55ab26cc6464ece55187b984c223f164e877ebcc37\n0x18002f4e0: PUSH RBX\n0x18002f4e2: SUB RSP, 0x20\n0x18002f4e6: MOV RBX, RDX\n0x18002f4e9: XOR R8D, R8D\n0x18002f4ec: MOV RCX, RBX\n0x18002f4ef: LEA RDX, [0x180085620]\n0x18002f4f6: CALL 0x180004080\n0x18002f4fb: LEA R8, [0x18007f7d4]\n0x18002f502: MOV RCX, RBX\n0x18002f505: LEA RDX, [0x180085640]\n0x18002f50c: CALL 0x180005560\n0x18002f511: MOV RAX, qword ptr [RBX]\n0x18002f514: XOR EDX, EDX\n0x18002f516: MOV RCX, RBX\n0x18002f519: CALL qword ptr [RAX + 0x48]\n0x18002f51c: MOV AL, 0x1\n0x18002f51e: ADD RSP, 0x20\n0x18002f522: POP RBX\n0x18002f523: RET\n\n"
+    },
+    {
+      "va": "0x18002f330",
+      "pseudocode_evidence": "ev_5937ef11f9a7152216c80b1fc217f1786767461a89fb5237bf9866b431c22b45",
+      "assembly_evidence": "ev_15533cdd942abdc8384a4b4f14092e85b8aade2e05b7b06e40c128e132434f0f",
+      "pseudocode": "/* 0x18002f330 FUN_18002f330; Evidence ev_5937ef11f9a7152216c80b1fc217f1786767461a89fb5237bf9866b431c22b45 */\n\n/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */\n\nundefined8 FUN_18002f330(undefined8 param_1,longlong *param_2)\n\n{\n  byte *pbVar1;\n  undefined8 uVar2;\n  LPVOID pvVar3;\n  undefined1 auStack_58 [32];\n  LPVOID local_38;\n  undefined8 uStack_30;\n  undefined8 local_28;\n  ulonglong uStack_20;\n  ulonglong local_18;\n  \n  local_18 = DAT_1800a1580 ^ (ulonglong)auStack_58;\n  FUN_180004080(param_2,0x180085648,'\\0');\n  FUN_180005560(param_2,0x18008565c,&DAT_180080097);\n  FUN_180005560(param_2,0x180085668,&DAT_180080097);\n  FUN_180005560(param_2,0x180085678,&DAT_180080097);\n  FUN_180005560(param_2,0x180085688,&DAT_180080097);\n  FUN_180005560(param_2,0x180085690,&DAT_180080097);\n  FUN_180005560(param_2,0x1800856a0,(byte *)\"INGAME\");\n  FUN_180005560(param_2,0x1800856b0,&DAT_180080097);\n  FUN_180005560(param_2,0x180083c10,&DAT_180080097);\n  local_28 = 0xc;\n  uStack_20 = 0xf;\n  local_38 = (LPVOID)0x5f59414c50534944;\n  uStack_30 = 0x454d414e;\n  pbVar1 = (byte *)FUN_180016ab0(&DAT_1800a3d88,(longlong *)&local_38);\n  if (0xf < *(ulonglong *)(pbVar1 + 0x18)) {\n    pbVar1 = *(byte **)pbVar1;\n  }\n  FUN_180005560(param_2,0x1800856c0,pbVar1);\n  if (0xf < uStack_20) {\n    pvVar3 = local_38;\n    if ((0xfff < uStack_20 + 1) &&\n       (pvVar3 = *(LPVOID *)((longlong)local_38 + -8),\n       0x1f < (ulonglong)((longlong)local_38 + (-8 - (longlong)pvVar3)))) {\n                    /* WARNING: Subroutine does not return */\n      FUN_18005c974();\n    }\n    thunk_FUN_18005caec(pvVar3);\n  }\n  FUN_180005560(param_2,0x180083b3c,&DAT_180083870);\n  uVar2 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar2 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002f330 FUN_18002f330; Evidence ev_15533cdd942abdc8384a4b4f14092e85b8aade2e05b7b06e40c128e132434f0f\n0x18002f330: PUSH RBX\n0x18002f332: SUB RSP, 0x50\n0x18002f336: MOV RAX, qword ptr [0x1800a1580]\n0x18002f33d: XOR RAX, RSP\n0x18002f340: MOV qword ptr [RSP + 0x40], RAX\n0x18002f345: MOV RBX, RDX\n0x18002f348: XOR R8D, R8D\n0x18002f34b: LEA RDX, [0x180085648]\n0x18002f352: MOV RCX, RBX\n0x18002f355: CALL 0x180004080\n0x18002f35a: LEA R8, [0x180080097]\n0x18002f361: LEA RDX, [0x18008565c]\n0x18002f368: MOV RCX, RBX\n0x18002f36b: CALL 0x180005560\n0x18002f370: LEA R8, [0x180080097]\n0x18002f377: LEA RDX, [0x180085668]\n0x18002f37e: MOV RCX, RBX\n0x18002f381: CALL 0x180005560\n0x18002f386: LEA R8, [0x180080097]\n0x18002f38d: LEA RDX, [0x180085678]\n0x18002f394: MOV RCX, RBX\n0x18002f397: CALL 0x180005560\n0x18002f39c: LEA R8, [0x180080097]\n0x18002f3a3: LEA RDX, [0x180085688]\n0x18002f3aa: MOV RCX, RBX\n0x18002f3ad: CALL 0x180005560\n0x18002f3b2: LEA R8, [0x180080097]\n0x18002f3b9: LEA RDX, [0x180085690]\n0x18002f3c0: MOV RCX, RBX\n0x18002f3c3: CALL 0x180005560\n0x18002f3c8: LEA R8, [0x180085698]\n0x18002f3cf: LEA RDX, [0x1800856a0]\n0x18002f3d6: MOV RCX, RBX\n0x18002f3d9: CALL 0x180005560\n0x18002f3de: LEA R8, [0x180080097]\n0x18002f3e5: LEA RDX, [0x1800856b0]\n0x18002f3ec: MOV RCX, RBX\n0x18002f3ef: CALL 0x180005560\n0x18002f3f4: LEA R8, [0x180080097]\n0x18002f3fb: LEA RDX, [0x180083c10]\n0x18002f402: MOV RCX, RBX\n0x18002f405: CALL 0x180005560\n0x18002f40a: XORPS XMM0, XMM0\n0x18002f40d: MOVUPS xmmword ptr [RSP + 0x20], XMM0\n0x18002f412: MOVDQA XMM1, xmmword ptr [0x180084110]\n0x18002f41a: MOVDQU xmmword ptr [RSP + 0x30], XMM1\n0x18002f420: MOVSD XMM0, qword ptr [0x180083960]\n0x18002f428: MOVSD qword ptr [RSP + 0x20], XMM0\n0x18002f42e: MOV EAX, dword ptr [0x180083968]\n0x18002f434: MOV dword ptr [RSP + 0x28], EAX\n0x18002f438: MOV byte ptr [RSP + 0x2c], 0x0\n0x18002f43d: LEA RDX, [RSP + 0x20]\n0x18002f442: LEA RCX, [0x1800a3d88]\n0x18002f449: CALL 0x180016ab0\n0x18002f44e: CMP qword ptr [RAX + 0x18], 0xf\n0x18002f453: JBE 0x18002f458\n0x18002f455: MOV RAX, qword ptr [RAX]\n0x18002f458: MOV R8, RAX\n0x18002f45b: LEA RDX, [0x1800856c0]\n0x18002f462: MOV RCX, RBX\n0x18002f465: CALL 0x180005560\n0x18002f46a: NOP\n0x18002f46b: MOV RDX, qword ptr [RSP + 0x38]\n0x18002f470: CMP RDX, 0xf\n0x18002f474: JBE 0x18002f4a4\n0x18002f476: INC RDX\n0x18002f479: MOV RCX, qword ptr [RSP + 0x20]\n0x18002f47e: MOV RAX, RCX\n0x18002f481: CMP RDX, 0x1000\n0x18002f488: JC 0x18002f49f\n0x18002f48a: ADD RDX, 0x27\n0x18002f48e: MOV RCX, qword ptr [RCX + -0x8]\n0x18002f492: SUB RAX, RCX\n0x18002f495: ADD RAX, -0x8\n0x18002f499: CMP RAX, 0x1f\n0x18002f49d: JA 0x18002f4da\n0x18002f49f: CALL 0x18004b0f8\n0x18002f4a4: LEA R8, [0x180083870]\n0x18002f4ab: LEA RDX, [0x180083b3c]\n0x18002f4b2: MOV RCX, RBX\n0x18002f4b5: CALL 0x180005560\n0x18002f4ba: MOV RAX, qword ptr [RBX]\n0x18002f4bd: XOR EDX, EDX\n0x18002f4bf: MOV RCX, RBX\n0x18002f4c2: CALL qword ptr [RAX + 0x48]\n0x18002f4c5: MOV AL, 0x1\n0x18002f4c7: MOV RCX, qword ptr [RSP + 0x40]\n0x18002f4cc: XOR RCX, RSP\n0x18002f4cf: CALL 0x18004b220\n0x18002f4d4: ADD RSP, 0x50\n0x18002f4d8: POP RBX\n0x18002f4d9: RET\n0x18002f4da: CALL 0x18005c974\n\n"
+    },
+    {
+      "va": "0x180031ef0",
+      "pseudocode_evidence": "ev_03d922bdc9e6f3c0e926aaa64b91996ccf005a9fb19a9abcb5f8a47a556b5248",
+      "assembly_evidence": "ev_9c6ddaecd1c33a2706fd6dffebbbccd615e13c680734e23f82e3e80d12edec7e",
+      "pseudocode": "/* 0x180031ef0 FUN_180031ef0; Evidence ev_03d922bdc9e6f3c0e926aaa64b91996ccf005a9fb19a9abcb5f8a47a556b5248 */\n\nundefined8 FUN_180031ef0(longlong param_1,longlong *param_2)\n\n{\n  longlong *plVar1;\n  byte *pbVar2;\n  undefined8 uVar3;\n  \n  FUN_180004080(param_2,0x1800856d0,'\\0');\n  for (plVar1 = FUN_180003300(param_1,(char *)0x0); plVar1 != (longlong *)0x0;\n      plVar1 = FUN_180003fe0((longlong)plVar1,(char *)0x0)) {\n    FUN_180004080(param_2,0x1800856e8,'\\0');\n    FUN_180005560(param_2,0x180084fc8,&DAT_180080097);\n    FUN_180005560(param_2,0x18008565c,&DAT_180080097);\n    FUN_180005560(param_2,0x180085688,&DAT_180080097);\n    FUN_180005560(param_2,0x180085678,&DAT_180080097);\n    FUN_180005560(param_2,0x180085690,&DAT_180080097);\n    FUN_180005560(param_2,0x1800856a0,(byte *)\"UNKNOWN\");\n    FUN_180005560(param_2,0x180083b30,&DAT_180083870);\n    FUN_180005560(param_2,0x1800856b0,&DAT_180080097);\n    FUN_180005560(param_2,0x180083c10,&DAT_180080097);\n    pbVar2 = (byte *)&DAT_1800a3bd8;\n    if (0xf < DAT_1800a3bf0) {\n      pbVar2 = DAT_1800a3bd8;\n    }\n    FUN_180005560(param_2,0x180084f98,pbVar2);\n    FUN_180005560(param_2,0x1800856c0,&DAT_180080097);\n    pbVar2 = (byte *)FUN_180003860((longlong)plVar1);\n    FUN_180005560(param_2,0x180083b3c,pbVar2);\n    FUN_180005560(param_2,0x180083bdc,&DAT_1800856f8);\n    (**(code **)(*param_2 + 0x48))(param_2);\n  }\n  uVar3 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar3 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x180031ef0 FUN_180031ef0; Evidence ev_9c6ddaecd1c33a2706fd6dffebbbccd615e13c680734e23f82e3e80d12edec7e\n0x180031ef0: MOV qword ptr [RSP + 0x10], RBX\n0x180031ef5: PUSH RDI\n0x180031ef6: SUB RSP, 0x20\n0x180031efa: MOV RBX, RDX\n0x180031efd: MOV RDI, RCX\n0x180031f00: MOV RCX, RBX\n0x180031f03: LEA RDX, [0x1800856d0]\n0x180031f0a: XOR R8D, R8D\n0x180031f0d: CALL 0x180004080\n0x180031f12: XOR EDX, EDX\n0x180031f14: MOV RCX, RDI\n0x180031f17: CALL 0x180003300\n0x180031f1c: MOV RDI, RAX\n0x180031f1f: TEST RAX, RAX\n0x180031f22: JZ 0x1800320a6\n0x180031f28: MOV qword ptr [RSP + 0x30], RSI\n0x180031f2d: LEA RSI, [0x1800a3bd8]\n0x180031f34: NOP dword ptr [RAX]\n0x180031f38: NOP dword ptr [RAX + RAX*0x1]\n0x180031f40: XOR R8D, R8D\n0x180031f43: LEA RDX, [0x1800856e8]\n0x180031f4a: MOV RCX, RBX\n0x180031f4d: CALL 0x180004080\n0x180031f52: LEA R8, [0x180080097]\n0x180031f59: MOV RCX, RBX\n0x180031f5c: LEA RDX, [0x180084fc8]\n0x180031f63: CALL 0x180005560\n0x180031f68: LEA R8, [0x180080097]\n0x180031f6f: MOV RCX, RBX\n0x180031f72: LEA RDX, [0x18008565c]\n0x180031f79: CALL 0x180005560\n0x180031f7e: LEA R8, [0x180080097]\n0x180031f85: MOV RCX, RBX\n0x180031f88: LEA RDX, [0x180085688]\n0x180031f8f: CALL 0x180005560\n0x180031f94: LEA R8, [0x180080097]\n0x180031f9b: MOV RCX, RBX\n0x180031f9e: LEA RDX, [0x180085678]\n0x180031fa5: CALL 0x180005560\n0x180031faa: LEA R8, [0x180080097]\n0x180031fb1: MOV RCX, RBX\n0x180031fb4: LEA RDX, [0x180085690]\n0x180031fbb: CALL 0x180005560\n0x180031fc0: LEA R8, [0x1800856f0]\n0x180031fc7: MOV RCX, RBX\n0x180031fca: LEA RDX, [0x1800856a0]\n0x180031fd1: CALL 0x180005560\n0x180031fd6: LEA R8, [0x180083870]\n0x180031fdd: MOV RCX, RBX\n0x180031fe0: LEA RDX, [0x180083b30]\n0x180031fe7: CALL 0x180005560\n0x180031fec: LEA R8, [0x180080097]\n0x180031ff3: MOV RCX, RBX\n0x180031ff6: LEA RDX, [0x1800856b0]\n0x180031ffd: CALL 0x180005560\n0x180032002: LEA R8, [0x180080097]\n0x180032009: MOV RCX, RBX\n0x18003200c: LEA RDX, [0x180083c10]\n0x180032013: CALL 0x180005560\n0x180032018: CMP qword ptr [0x1800a3bf0], 0xf\n0x180032020: LEA RDX, [0x180084f98]\n0x180032027: MOV R8, RSI\n0x18003202a: MOV RCX, RBX\n0x18003202d: CMOVA R8, qword ptr [0x1800a3bd8]\n0x180032035: CALL 0x180005560\n0x18003203a: LEA R8, [0x180080097]\n0x180032041: MOV RCX, RBX\n0x180032044: LEA RDX, [0x1800856c0]\n0x18003204b: CALL 0x180005560\n0x180032050: MOV RCX, RDI\n0x180032053: CALL 0x180003860\n0x180032058: MOV R8, RAX\n0x18003205b: LEA RDX, [0x180083b3c]\n0x180032062: MOV RCX, RBX\n0x180032065: CALL 0x180005560\n0x18003206a: LEA R8, [0x1800856f8]\n0x180032071: MOV RCX, RBX\n0x180032074: LEA RDX, [0x180083bdc]\n0x18003207b: CALL 0x180005560\n0x180032080: MOV RAX, qword ptr [RBX]\n0x180032083: XOR EDX, EDX\n0x180032085: MOV RCX, RBX\n0x180032088: CALL qword ptr [RAX + 0x48]\n0x18003208b: XOR EDX, EDX\n0x18003208d: MOV RCX, RDI\n0x180032090: CALL 0x180003fe0\n0x180032095: MOV RDI, RAX\n0x180032098: TEST RAX, RAX\n0x18003209b: JNZ 0x180031f40\n0x1800320a1: MOV RSI, qword ptr [RSP + 0x30]\n0x1800320a6: MOV RAX, qword ptr [RBX]\n0x1800320a9: XOR EDX, EDX\n0x1800320ab: MOV RCX, RBX\n0x1800320ae: CALL qword ptr [RAX + 0x48]\n0x1800320b1: MOV RBX, qword ptr [RSP + 0x38]\n0x1800320b6: MOV AL, 0x1\n0x1800320b8: ADD RSP, 0x20\n0x1800320bc: POP RDI\n0x1800320bd: RET\n\n"
+    },
+    {
+      "va": "0x18002f270",
+      "pseudocode_evidence": "ev_edd07a4a1178ceab2c5015849e9d7eb93798ab1f446318317b669f7cc3a56611",
+      "assembly_evidence": "ev_6aa2a6f552671bfcc8a013d81b5b9296446a65c4e2b22fdfee470234ee127ccb",
+      "pseudocode": "/* 0x18002f270 FUN_18002f270; Evidence ev_edd07a4a1178ceab2c5015849e9d7eb93798ab1f446318317b669f7cc3a56611 */\n\nundefined8 FUN_18002f270(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180084c70,'\\0');\n  FUN_180005560(param_2,0x180084c80,(byte *)\"-1577058296\");\n  FUN_180005560(param_2,0x180084c88,(byte *)\"User not in a party, create one.\");\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002f270 FUN_18002f270; Evidence ev_6aa2a6f552671bfcc8a013d81b5b9296446a65c4e2b22fdfee470234ee127ccb\n0x18002f270: PUSH RBX\n0x18002f272: SUB RSP, 0x20\n0x18002f276: MOV RBX, RDX\n0x18002f279: XOR R8D, R8D\n0x18002f27c: MOV RCX, RBX\n0x18002f27f: LEA RDX, [0x180084c70]\n0x18002f286: CALL 0x180004080\n0x18002f28b: LEA R8, [0x180085728]\n0x18002f292: MOV RCX, RBX\n0x18002f295: LEA RDX, [0x180084c80]\n0x18002f29c: CALL 0x180005560\n0x18002f2a1: LEA R8, [0x180085700]\n0x18002f2a8: MOV RCX, RBX\n0x18002f2ab: LEA RDX, [0x180084c88]\n0x18002f2b2: CALL 0x180005560\n0x18002f2b7: MOV RAX, qword ptr [RBX]\n0x18002f2ba: XOR EDX, EDX\n0x18002f2bc: MOV RCX, RBX\n0x18002f2bf: CALL qword ptr [RAX + 0x48]\n0x18002f2c2: MOV AL, 0x1\n0x18002f2c4: ADD RSP, 0x20\n0x18002f2c8: POP RBX\n0x18002f2c9: RET\n\n"
+    },
+    {
+      "va": "0x180030cd0",
+      "pseudocode_evidence": "ev_3fb164ee3ab5b6a91a35c41d816e1e2a481c89dbd27b68918ecd847eefd2ba68",
+      "assembly_evidence": "ev_dec97d850975d988bf7750249c5caf0f87387a7bbe9ef564bc971e8845249f6a",
+      "pseudocode": "/* 0x180030cd0 FUN_180030cd0; Evidence ev_3fb164ee3ab5b6a91a35c41d816e1e2a481c89dbd27b68918ecd847eefd2ba68 */\n\nundefined8 FUN_180030cd0(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180085738,'\\0');\n  FUN_180005560(param_2,0x1800851d0,&DAT_180080097);\n  FUN_180005560(param_2,0x180085768,(byte *)\"false\");\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x180030cd0 FUN_180030cd0; Evidence ev_dec97d850975d988bf7750249c5caf0f87387a7bbe9ef564bc971e8845249f6a\n0x180030cd0: PUSH RBX\n0x180030cd2: SUB RSP, 0x20\n0x180030cd6: MOV RBX, RDX\n0x180030cd9: XOR R8D, R8D\n0x180030cdc: MOV RCX, RBX\n0x180030cdf: LEA RDX, [0x180085738]\n0x180030ce6: CALL 0x180004080\n0x180030ceb: LEA R8, [0x180080097]\n0x180030cf2: MOV RCX, RBX\n0x180030cf5: LEA RDX, [0x1800851d0]\n0x180030cfc: CALL 0x180005560\n0x180030d01: LEA R8, [0x18007f7d4]\n0x180030d08: MOV RCX, RBX\n0x180030d0b: LEA RDX, [0x180085768]\n0x180030d12: CALL 0x180005560\n0x180030d17: MOV RAX, qword ptr [RBX]\n0x180030d1a: XOR EDX, EDX\n0x180030d1c: MOV RCX, RBX\n0x180030d1f: CALL qword ptr [RAX + 0x48]\n0x180030d22: MOV AL, 0x1\n0x180030d24: ADD RSP, 0x20\n0x180030d28: POP RBX\n0x180030d29: RET\n\n"
+    },
+    {
+      "va": "0x180030eb0",
+      "pseudocode_evidence": "ev_e0a7ec897e62a81b5e8affe737c4064db360858fc3d1f3fa1e5d0b06351e9a7d",
+      "assembly_evidence": "ev_9bdf2c855bc4a312bcc44bf39cd06f0d25023c2539203314ac6c56975ae01156",
+      "pseudocode": "/* 0x180030eb0 FUN_180030eb0; Evidence ev_e0a7ec897e62a81b5e8affe737c4064db360858fc3d1f3fa1e5d0b06351e9a7d */\n\nvoid FUN_180030eb0(void)\n\n{\n  longlong local_28 [5];\n  \n  local_28[0] = 0;\n  local_28[1] = 0;\n  local_28[2] = 0;\n  FUN_18002bcd0(local_28);\n                    /* WARNING: Subroutine does not return */\n  FUN_18004d228(local_28,&DAT_18009f768);\n}\n\n\n\n",
+      "assembly": "; 0x180030eb0 FUN_180030eb0; Evidence ev_9bdf2c855bc4a312bcc44bf39cd06f0d25023c2539203314ac6c56975ae01156\n0x180030eb0: SUB RSP, 0x48\n0x180030eb4: XORPS XMM0, XMM0\n0x180030eb7: LEA RCX, [RSP + 0x20]\n0x180030ebc: XOR EAX, EAX\n0x180030ebe: MOVUPS xmmword ptr [RSP + 0x20], XMM0\n0x180030ec3: MOV qword ptr [RSP + 0x30], RAX\n0x180030ec8: CALL 0x18002bcd0\n0x180030ecd: LEA RDX, [0x18009f768]\n0x180030ed4: LEA RCX, [RSP + 0x20]\n0x180030ed9: CALL 0x18004d228\n\n"
+    },
+    {
+      "va": "0x18002d720",
+      "pseudocode_evidence": null,
+      "assembly_evidence": null,
+      "pseudocode": "",
+      "assembly": "",
+      "independent_static_disassembly": "\nC:/Users/Skysect/Downloads/anadius64.dll:\tfile format coff-x86-64\n\nDisassembly of section .text:\n\n0000000180017a30 <anadius>:\n18002d720: 48 89 5c 24 08              \tmovq\t%rbx, 0x8(%rsp)\n18002d725: 57                          \tpushq\t%rdi\n18002d726: 48 83 ec 20                 \tsubq\t$0x20, %rsp\n18002d72a: 48 8b da                    \tmovq\t%rdx, %rbx\n18002d72d: 48 8b f9                    \tmovq\t%rcx, %rdi\n18002d730: 48 8b cb                    \tmovq\t%rbx, %rcx\n18002d733: 48 8d 15 3e 80 05 00        \tleaq\t0x5803e(%rip), %rdx     # 0x180085778\n18002d73a: 45 33 c0                    \txorl\t%r8d, %r8d\n18002d73d: e8 3e 69 fd ff              \tcallq\t0x180004080 <.text+0x3080>\n18002d742: 4c 8d 05 4e 29 05 00        \tleaq\t0x5294e(%rip), %r8      # 0x180080097\n18002d749: 48 8b cb                    \tmovq\t%rbx, %rcx\n18002d74c: 48 8d 15 7d 7a 05 00        \tleaq\t0x57a7d(%rip), %rdx     # 0x1800851d0\n18002d753: e8 08 7e fd ff              \tcallq\t0x180005560 <.text+0x4560>\n18002d758: 4c 8d 05 6d 20 05 00        \tleaq\t0x5206d(%rip), %r8      # 0x18007f7cc\n18002d75f: 48 8b cb                    \tmovq\t%rbx, %rcx\n18002d762: 48 8d 15 2f 80 05 00        \tleaq\t0x5802f(%rip), %rdx     # 0x180085798\n18002d769: e8 f2 7d fd ff              \tcallq\t0x180005560 <.text+0x4560>\n18002d76e: 33 d2                       \txorl\t%edx, %edx\n18002d770: 48 8b cf                    \tmovq\t%rdi, %rcx\n18002d773: e8 88 5b fd ff              \tcallq\t0x180003300 <.text+0x2300>\n18002d778: 48 8b f8                    \tmovq\t%rax, %rdi\n18002d77b: 48 85 c0                    \ttestq\t%rax, %rax\n18002d77e: 74 45                       \tje\t0x18002d7c5 <anadius+0x15d95>\n18002d780: 45 33 c0                    \txorl\t%r8d, %r8d\n18002d783: 48 8d 15 1e 80 05 00        \tleaq\t0x5801e(%rip), %rdx     # 0x1800857a8\n18002d78a: 48 8b cb                    \tmovq\t%rbx, %rcx\n18002d78d: e8 ee 68 fd ff              \tcallq\t0x180004080 <.text+0x3080>\n18002d792: 48 8b cf                    \tmovq\t%rdi, %rcx\n18002d795: e8 c6 60 fd ff              \tcallq\t0x180003860 <.text+0x2860>\n18002d79a: 48 8b d0                    \tmovq\t%rax, %rdx\n18002d79d: 45 33 c0                    \txorl\t%r8d, %r8d\n18002d7a0: 48 8b cb                    \tmovq\t%rbx, %rcx\n18002d7a3: e8 08 7f fd ff              \tcallq\t0x1800056b0 <.text+0x46b0>\n18002d7a8: 48 8b 03                    \tmovq\t(%rbx), %rax\n18002d7ab: 33 d2                       \txorl\t%edx, %edx\n18002d7ad: 48 8b cb                    \tmovq\t%rbx, %rcx\n18002d7b0: ff 50 48                    \tcallq\t*0x48(%rax)\n18002d7b3: 33 d2                       \txorl\t%edx, %edx\n18002d7b5: 48 8b cf                    \tmovq\t%rdi, %rcx\n18002d7b8: e8 23 68 fd ff              \tcallq\t0x180003fe0 <.text+0x2fe0>\n18002d7bd: 48 8b f8                    \tmovq\t%rax, %rdi\n18002d7c0: 48 85 c0                    \ttestq\t%rax, %rax\n18002d7c3: 75 bb                       \tjne\t0x18002d780 <anadius+0x15d50>\n18002d7c5: 48 8b 03                    \tmovq\t(%rbx), %rax\n18002d7c8: 33 d2                       \txorl\t%edx, %edx\n18002d7ca: 48 8b cb                    \tmovq\t%rbx, %rcx\n18002d7cd: ff 50 48                    \tcallq\t*0x48(%rax)\n18002d7d0: 48 8b 5c 24 30              \tmovq\t0x30(%rsp), %rbx\n18002d7d5: b0 01                       \tmovb\t$0x1, %al\n18002d7d7: 48 83 c4 20                 \taddq\t$0x20, %rsp\n18002d7db: 5f                          \tpopq\t%rdi\n18002d7dc: c3                          \tretq\n"
+    },
+    {
+      "va": "0x1800314a0",
+      "pseudocode_evidence": null,
+      "assembly_evidence": null,
+      "pseudocode": "",
+      "assembly": "",
+      "independent_static_disassembly": "\nC:/Users/Skysect/Downloads/anadius64.dll:\tfile format coff-x86-64\n\nDisassembly of section .text:\n\n0000000180017a30 <anadius>:\n1800314a0: 40 53                       \tpushq\t%rbx\n1800314a2: 48 83 ec 20                 \tsubq\t$0x20, %rsp\n1800314a6: 48 8b da                    \tmovq\t%rdx, %rbx\n1800314a9: 45 33 c0                    \txorl\t%r8d, %r8d\n1800314ac: 48 8b cb                    \tmovq\t%rbx, %rcx\n1800314af: 48 8d 15 62 43 05 00        \tleaq\t0x54362(%rip), %rdx     # 0x180085818\n1800314b6: e8 c5 2b fd ff              \tcallq\t0x180004080 <.text+0x3080>\n1800314bb: 4c 8d 05 6e 43 05 00        \tleaq\t0x5436e(%rip), %r8      # 0x180085830\n1800314c2: 48 8b cb                    \tmovq\t%rbx, %rcx\n1800314c5: 48 8d 15 6c 43 05 00        \tleaq\t0x5436c(%rip), %rdx     # 0x180085838\n1800314cc: e8 8f 40 fd ff              \tcallq\t0x180005560 <.text+0x4560>\n1800314d1: 48 8b 03                    \tmovq\t(%rbx), %rax\n1800314d4: 33 d2                       \txorl\t%edx, %edx\n1800314d6: 48 8b cb                    \tmovq\t%rbx, %rcx\n1800314d9: ff 50 48                    \tcallq\t*0x48(%rax)\n1800314dc: b0 01                       \tmovb\t$0x1, %al\n1800314de: 48 83 c4 20                 \taddq\t$0x20, %rsp\n1800314e2: 5b                          \tpopq\t%rbx\n1800314e3: c3                          \tretq\n"
+    },
+    {
+      "va": "0x18002e5a0",
+      "pseudocode_evidence": "ev_7285670777c8aa9cc11ec542935ae351b5e2e0521896afb3789dfac5e3258f64",
+      "assembly_evidence": "ev_581e36dbeac5a20302f8358a6dc8343caba84499b22faedc0f7f3196ddf9c3c2",
+      "pseudocode": "/* 0x18002e5a0 FUN_18002e5a0; Evidence ev_7285670777c8aa9cc11ec542935ae351b5e2e0521896afb3789dfac5e3258f64 */\n\nundefined8 FUN_18002e5a0(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180085840,'\\0');\n  FUN_180005560(param_2,0x180085838,(byte *)\"Success\");\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002e5a0 FUN_18002e5a0; Evidence ev_581e36dbeac5a20302f8358a6dc8343caba84499b22faedc0f7f3196ddf9c3c2\n0x18002e5a0: PUSH RBX\n0x18002e5a2: SUB RSP, 0x20\n0x18002e5a6: MOV RBX, RDX\n0x18002e5a9: XOR R8D, R8D\n0x18002e5ac: MOV RCX, RBX\n0x18002e5af: LEA RDX, [0x180085840]\n0x18002e5b6: CALL 0x180004080\n0x18002e5bb: LEA R8, [0x180085830]\n0x18002e5c2: MOV RCX, RBX\n0x18002e5c5: LEA RDX, [0x180085838]\n0x18002e5cc: CALL 0x180005560\n0x18002e5d1: MOV RAX, qword ptr [RBX]\n0x18002e5d4: XOR EDX, EDX\n0x18002e5d6: MOV RCX, RBX\n0x18002e5d9: CALL qword ptr [RAX + 0x48]\n0x18002e5dc: MOV AL, 0x1\n0x18002e5de: ADD RSP, 0x20\n0x18002e5e2: POP RBX\n0x18002e5e3: RET\n\n"
+    },
+    {
+      "va": "0x18002da30",
+      "pseudocode_evidence": "ev_2045042d6e2095c2c972f6b6af16e1c651b92882100bf4186cb9df5c7072a688",
+      "assembly_evidence": "ev_7959e07ebbc7c1049aa569d05eebabcd128ff87147681b8ffb2134a46797d319",
+      "pseudocode": "/* 0x18002da30 FUN_18002da30; Evidence ev_2045042d6e2095c2c972f6b6af16e1c651b92882100bf4186cb9df5c7072a688 */\n\nundefined8 FUN_18002da30(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180084c70,'\\0');\n  FUN_180005560(param_2,0x180084c80,(byte *)\"-1593835518\");\n  FUN_180005560(param_2,0x180084c88,(byte *)\"The function you are calling is not implemented.\");\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002da30 FUN_18002da30; Evidence ev_7959e07ebbc7c1049aa569d05eebabcd128ff87147681b8ffb2134a46797d319\n0x18002da30: PUSH RBX\n0x18002da32: SUB RSP, 0x20\n0x18002da36: MOV RBX, RDX\n0x18002da39: XOR R8D, R8D\n0x18002da3c: MOV RCX, RBX\n0x18002da3f: LEA RDX, [0x180084c70]\n0x18002da46: CALL 0x180004080\n0x18002da4b: LEA R8, [0x180085890]\n0x18002da52: MOV RCX, RBX\n0x18002da55: LEA RDX, [0x180084c80]\n0x18002da5c: CALL 0x180005560\n0x18002da61: LEA R8, [0x180085858]\n0x18002da68: MOV RCX, RBX\n0x18002da6b: LEA RDX, [0x180084c88]\n0x18002da72: CALL 0x180005560\n0x18002da77: MOV RAX, qword ptr [RBX]\n0x18002da7a: XOR EDX, EDX\n0x18002da7c: MOV RCX, RBX\n0x18002da7f: CALL qword ptr [RAX + 0x48]\n0x18002da82: MOV AL, 0x1\n0x18002da84: ADD RSP, 0x20\n0x18002da88: POP RBX\n0x18002da89: RET\n\n"
+    },
+    {
+      "va": "0x18002ff60",
+      "pseudocode_evidence": "ev_1ca56fcd080b624edd63816c027c0994098dca805aaa7920d9c82c84c7c9dc0e",
+      "assembly_evidence": "ev_262d054c45564917939ff5208c14d0242d6cbf307984d4f3385a6a00b8d4501f",
+      "pseudocode": "/* 0x18002ff60 FUN_18002ff60; Evidence ev_1ca56fcd080b624edd63816c027c0994098dca805aaa7920d9c82c84c7c9dc0e */\n\nundefined8 FUN_18002ff60(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x1800858a0,'\\0');\n  FUN_180005560(param_2,0x1800858c0,&DAT_180083870);\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002ff60 FUN_18002ff60; Evidence ev_262d054c45564917939ff5208c14d0242d6cbf307984d4f3385a6a00b8d4501f\n0x18002ff60: PUSH RBX\n0x18002ff62: SUB RSP, 0x20\n0x18002ff66: MOV RBX, RDX\n0x18002ff69: XOR R8D, R8D\n0x18002ff6c: MOV RCX, RBX\n0x18002ff6f: LEA RDX, [0x1800858a0]\n0x18002ff76: CALL 0x180004080\n0x18002ff7b: LEA R8, [0x180083870]\n0x18002ff82: MOV RCX, RBX\n0x18002ff85: LEA RDX, [0x1800858c0]\n0x18002ff8c: CALL 0x180005560\n0x18002ff91: MOV RAX, qword ptr [RBX]\n0x18002ff94: XOR EDX, EDX\n0x18002ff96: MOV RCX, RBX\n0x18002ff99: CALL qword ptr [RAX + 0x48]\n0x18002ff9c: MOV AL, 0x1\n0x18002ff9e: ADD RSP, 0x20\n0x18002ffa2: POP RBX\n0x18002ffa3: RET\n\n"
+    },
+    {
+      "va": "0x180032ab0",
+      "pseudocode_evidence": "ev_e91a8e28935e64fecf5a7ccbf790cfc092f7a948e597239c6524c18e6a0081a5",
+      "assembly_evidence": "ev_47e68165cd58eb1f9bc10c4cd4b2c41abeac34ab3797b7a724d8369dbb74db26",
+      "pseudocode": "/* 0x180032ab0 FUN_180032ab0; Evidence ev_e91a8e28935e64fecf5a7ccbf790cfc092f7a948e597239c6524c18e6a0081a5 */\n\nundefined8 FUN_180032ab0(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180084c70,'\\0');\n  FUN_180005560(param_2,0x180084c80,&DAT_18008386c);\n  FUN_180005560(param_2,0x180084c88,(byte *)\"Origin is waiting for the game to shutdown.\");\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x180032ab0 FUN_180032ab0; Evidence ev_47e68165cd58eb1f9bc10c4cd4b2c41abeac34ab3797b7a724d8369dbb74db26\n0x180032ab0: PUSH RBX\n0x180032ab2: SUB RSP, 0x20\n0x180032ab6: MOV RBX, RDX\n0x180032ab9: XOR R8D, R8D\n0x180032abc: MOV RCX, RBX\n0x180032abf: LEA RDX, [0x180084c70]\n0x180032ac6: CALL 0x180004080\n0x180032acb: LEA R8, [0x18008386c]\n0x180032ad2: MOV RCX, RBX\n0x180032ad5: LEA RDX, [0x180084c80]\n0x180032adc: CALL 0x180005560\n0x180032ae1: LEA R8, [0x1800858c8]\n0x180032ae8: MOV RCX, RBX\n0x180032aeb: LEA RDX, [0x180084c88]\n0x180032af2: CALL 0x180005560\n0x180032af7: MOV RAX, qword ptr [RBX]\n0x180032afa: XOR EDX, EDX\n0x180032afc: MOV RCX, RBX\n0x180032aff: CALL qword ptr [RAX + 0x48]\n0x180032b02: MOV AL, 0x1\n0x180032b04: ADD RSP, 0x20\n0x180032b08: POP RBX\n0x180032b09: RET\n\n"
+    },
+    {
+      "va": "0x18002d9e0",
+      "pseudocode_evidence": "ev_530bab620bd1316d3d5e4e599142bcdba5456059f83ba5d15512843884dc27a1",
+      "assembly_evidence": "ev_0aaf942061c8272ddefb5438b6397f86be6de16c9eff85c5c9b16a57c3b7aaf4",
+      "pseudocode": "/* 0x18002d9e0 FUN_18002d9e0; Evidence ev_530bab620bd1316d3d5e4e599142bcdba5456059f83ba5d15512843884dc27a1 */\n\nundefined8 FUN_18002d9e0(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x1800858f8,'\\0');\n  FUN_180005560(param_2,0x180085918,(byte *)\"GRANTED\");\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002d9e0 FUN_18002d9e0; Evidence ev_0aaf942061c8272ddefb5438b6397f86be6de16c9eff85c5c9b16a57c3b7aaf4\n0x18002d9e0: PUSH RBX\n0x18002d9e2: SUB RSP, 0x20\n0x18002d9e6: MOV RBX, RDX\n0x18002d9e9: XOR R8D, R8D\n0x18002d9ec: MOV RCX, RBX\n0x18002d9ef: LEA RDX, [0x1800858f8]\n0x18002d9f6: CALL 0x180004080\n0x18002d9fb: LEA R8, [0x180085910]\n0x18002da02: MOV RCX, RBX\n0x18002da05: LEA RDX, [0x180085918]\n0x18002da0c: CALL 0x180005560\n0x18002da11: MOV RAX, qword ptr [RBX]\n0x18002da14: XOR EDX, EDX\n0x18002da16: MOV RCX, RBX\n0x18002da19: CALL qword ptr [RAX + 0x48]\n0x18002da1c: MOV AL, 0x1\n0x18002da1e: ADD RSP, 0x20\n0x18002da22: POP RBX\n0x18002da23: RET\n\n"
+    },
+    {
+      "va": "0x18002fea0",
+      "pseudocode_evidence": "ev_d073d4f4198a8578f4a80ace4e1efd1ee9eae68f17d44bec0b1d825ea012b4bb",
+      "assembly_evidence": "ev_8a849956def7b756298fb510437b7e8bcebf66f674e59cc9cb62f603cf44ab83",
+      "pseudocode": "/* 0x18002fea0 FUN_18002fea0; Evidence ev_d073d4f4198a8578f4a80ace4e1efd1ee9eae68f17d44bec0b1d825ea012b4bb */\n\n/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */\n\nundefined8 FUN_18002fea0(undefined8 param_1,longlong *param_2)\n\n{\n  byte *pbVar1;\n  undefined8 uVar2;\n  LPVOID pvVar3;\n  undefined1 auStack_58 [32];\n  LPVOID local_38 [3];\n  ulonglong local_20;\n  ulonglong local_18;\n  \n  local_18 = DAT_1800a1580 ^ (ulonglong)auStack_58;\n  FUN_180004080(param_2,0x1800855d8,'\\0');\n  pbVar1 = (byte *)FUN_180041b60((longlong *)local_38,(longlong *)0x0,'\\0');\n  if (0xf < *(ulonglong *)(pbVar1 + 0x18)) {\n    pbVar1 = *(byte **)pbVar1;\n  }\n  FUN_180005560(param_2,0x1800855ec,pbVar1);\n  if (0xf < local_20) {\n    pvVar3 = local_38[0];\n    if ((0xfff < local_20 + 1) &&\n       (pvVar3 = *(LPVOID *)((longlong)local_38[0] + -8),\n       0x1f < (ulonglong)((longlong)local_38[0] + (-8 - (longlong)pvVar3)))) {\n                    /* WARNING: Subroutine does not return */\n      FUN_18005c974();\n    }\n    thunk_FUN_18005caec(pvVar3);\n  }\n  uVar2 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar2 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18002fea0 FUN_18002fea0; Evidence ev_8a849956def7b756298fb510437b7e8bcebf66f674e59cc9cb62f603cf44ab83\n0x18002fea0: PUSH RBX\n0x18002fea2: SUB RSP, 0x50\n0x18002fea6: MOV RAX, qword ptr [0x1800a1580]\n0x18002fead: XOR RAX, RSP\n0x18002feb0: MOV qword ptr [RSP + 0x40], RAX\n0x18002feb5: MOV RBX, RDX\n0x18002feb8: XOR R8D, R8D\n0x18002febb: LEA RDX, [0x1800855d8]\n0x18002fec2: MOV RCX, RBX\n0x18002fec5: CALL 0x180004080\n0x18002feca: XOR R8D, R8D\n0x18002fecd: XOR EDX, EDX\n0x18002fecf: LEA RCX, [RSP + 0x20]\n0x18002fed4: CALL 0x180041b60\n0x18002fed9: NOP\n0x18002feda: CMP qword ptr [RAX + 0x18], 0xf\n0x18002fedf: JBE 0x18002fee4\n0x18002fee1: MOV RAX, qword ptr [RAX]\n0x18002fee4: MOV R8, RAX\n0x18002fee7: LEA RDX, [0x1800855ec]\n0x18002feee: MOV RCX, RBX\n0x18002fef1: CALL 0x180005560\n0x18002fef6: NOP\n0x18002fef7: MOV RDX, qword ptr [RSP + 0x38]\n0x18002fefc: CMP RDX, 0xf\n0x18002ff00: JBE 0x18002ff30\n0x18002ff02: INC RDX\n0x18002ff05: MOV RCX, qword ptr [RSP + 0x20]\n0x18002ff0a: MOV RAX, RCX\n0x18002ff0d: CMP RDX, 0x1000\n0x18002ff14: JC 0x18002ff2b\n0x18002ff16: ADD RDX, 0x27\n0x18002ff1a: MOV RCX, qword ptr [RCX + -0x8]\n0x18002ff1e: SUB RAX, RCX\n0x18002ff21: ADD RAX, -0x8\n0x18002ff25: CMP RAX, 0x1f\n0x18002ff29: JA 0x18002ff50\n0x18002ff2b: CALL 0x18004b0f8\n0x18002ff30: MOV RAX, qword ptr [RBX]\n0x18002ff33: XOR EDX, EDX\n0x18002ff35: MOV RCX, RBX\n0x18002ff38: CALL qword ptr [RAX + 0x48]\n0x18002ff3b: MOV AL, 0x1\n0x18002ff3d: MOV RCX, qword ptr [RSP + 0x40]\n0x18002ff42: XOR RCX, RSP\n0x18002ff45: CALL 0x18004b220\n0x18002ff4a: ADD RSP, 0x50\n0x18002ff4e: POP RBX\n0x18002ff4f: RET\n0x18002ff50: CALL 0x18005c974\n\n"
+    },
+    {
+      "va": "0x180032b10",
+      "pseudocode_evidence": "ev_91196662eb3fd450e8c602b238d0876b7596738c737f63ce4707318feab10bc8",
+      "assembly_evidence": "ev_4c836ad1a44251a54bc1e32b8ebf17ba7b0256f3e8ba7e76205239331b70900f",
+      "pseudocode": "/* 0x180032b10 FUN_180032b10; Evidence ev_91196662eb3fd450e8c602b238d0876b7596738c737f63ce4707318feab10bc8 */\n\n/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */\n\nundefined8 FUN_180032b10(undefined8 param_1,longlong *param_2)\n\n{\n  int iVar1;\n  uint *puVar2;\n  undefined8 *puVar3;\n  undefined8 uVar4;\n  char *pcVar5;\n  undefined1 auStack_58 [32];\n  uint *local_38;\n  char *local_30;\n  undefined8 uStack_28;\n  undefined8 local_20;\n  ulonglong uStack_18;\n  ulonglong local_10;\n  \n  local_10 = DAT_1800a1580 ^ (ulonglong)auStack_58;\n  FUN_180004080(param_2,0x180084c70,'\\0');\n  FUN_180005560(param_2,0x180084c80,&DAT_180083870);\n  FUN_180005560(param_2,0x180084c88,&DAT_180080097);\n  (**(code **)(*param_2 + 0x48))(param_2,0);\n  puVar2 = (uint *)FUN_18002c620();\n  local_38 = puVar2;\n  iVar1 = FUN_18004a6ac(puVar2);\n  if (iVar1 != 0) {\n                    /* WARNING: Subroutine does not return */\n    FUN_18004a648(5);\n  }\n  if (puVar2[0x13] != 0x7fffffff) {\n    puVar3 = FUN_18002c400();\n    local_30 = (char *)0x0;\n    uStack_28 = 0;\n    local_30 = (char *)FUN_18004b0bc(0x50);\n    local_20 = 0x44;\n    uStack_18 = 0x4f;\n    builtin_strncpy(local_30,\n                    \"<LSX><Event sender=\\\"EbisuSDK\\\"><IGOEvent State=\\\"DOWN\\\"/></Event></LSX>\",0x45)\n    ;\n    FUN_180034660((longlong)puVar3,&local_30);\n    if (0xf < uStack_18) {\n      pcVar5 = local_30;\n      if ((0xfff < uStack_18 + 1) &&\n         (pcVar5 = *(char **)(local_30 + -8), (char *)0x1f < local_30 + (-8 - (longlong)pcVar5))) {\n                    /* WARNING: Subroutine does not return */\n        FUN_18005c974();\n      }\n      thunk_FUN_18005caec(pcVar5);\n    }\n    uVar4 = FUN_18004a6b4((longlong)puVar2);\n    return CONCAT71((int7)((ulonglong)uVar4 >> 8),1);\n  }\n  puVar2[0x13] = 0x7ffffffe;\n                    /* WARNING: Subroutine does not return */\n  FUN_18004a648(6);\n}\n\n\n\n",
+      "assembly": "; 0x180032b10 FUN_180032b10; Evidence ev_4c836ad1a44251a54bc1e32b8ebf17ba7b0256f3e8ba7e76205239331b70900f\n0x180032b10: MOV qword ptr [RSP + 0x8], RBX\n0x180032b15: PUSH RDI\n0x180032b16: SUB RSP, 0x50\n0x180032b1a: MOV RAX, qword ptr [0x1800a1580]\n0x180032b21: XOR RAX, RSP\n0x180032b24: MOV qword ptr [RSP + 0x48], RAX\n0x180032b29: MOV RBX, RDX\n0x180032b2c: XOR R8D, R8D\n0x180032b2f: LEA RDX, [0x180084c70]\n0x180032b36: MOV RCX, RBX\n0x180032b39: CALL 0x180004080\n0x180032b3e: LEA R8, [0x180083870]\n0x180032b45: LEA RDX, [0x180084c80]\n0x180032b4c: MOV RCX, RBX\n0x180032b4f: CALL 0x180005560\n0x180032b54: LEA R8, [0x180080097]\n0x180032b5b: LEA RDX, [0x180084c88]\n0x180032b62: MOV RCX, RBX\n0x180032b65: CALL 0x180005560\n0x180032b6a: MOV RAX, qword ptr [RBX]\n0x180032b6d: XOR EDX, EDX\n0x180032b6f: MOV RCX, RBX\n0x180032b72: CALL qword ptr [RAX + 0x48]\n0x180032b75: CALL 0x18002c620\n0x180032b7a: MOV RBX, RAX\n0x180032b7d: MOV qword ptr [RSP + 0x20], RAX\n0x180032b82: MOV RCX, RAX\n0x180032b85: CALL 0x18004a6ac\n0x180032b8a: TEST EAX, EAX\n0x180032b8c: JNZ 0x180032c78\n0x180032b92: MOV EAX, dword ptr [RBX + 0x4c]\n0x180032b95: CMP EAX, 0x7fffffff\n0x180032b9a: JZ 0x180032c83\n0x180032ba0: CALL 0x18002c400\n0x180032ba5: MOV RDI, RAX\n0x180032ba8: XORPS XMM0, XMM0\n0x180032bab: MOVUPS xmmword ptr [RSP + 0x28], XMM0\n0x180032bb0: MOV ECX, 0x50\n0x180032bb5: CALL 0x18004b0bc\n0x180032bba: MOV RCX, RAX\n0x180032bbd: MOV qword ptr [RSP + 0x28], RAX\n0x180032bc2: MOVDQA XMM0, xmmword ptr [0x1800863d0]\n0x180032bca: MOVDQU xmmword ptr [RSP + 0x38], XMM0\n0x180032bd0: MOVAPS XMM1, xmmword ptr [0x180084c10]\n0x180032bd7: MOVUPS xmmword ptr [RAX], XMM1\n0x180032bda: MOVAPS XMM0, xmmword ptr [0x180084c20]\n0x180032be1: MOVUPS xmmword ptr [RAX + 0x10], XMM0\n0x180032be5: MOVAPS XMM1, xmmword ptr [0x180084c30]\n0x180032bec: MOVUPS xmmword ptr [RAX + 0x20], XMM1\n0x180032bf0: MOVAPS XMM0, xmmword ptr [0x180084c40]\n0x180032bf7: MOVUPS xmmword ptr [RAX + 0x30], XMM0\n0x180032bfb: MOV EAX, dword ptr [0x180084c50]\n0x180032c01: MOV dword ptr [RCX + 0x40], EAX\n0x180032c04: MOV byte ptr [RCX + 0x44], 0x0\n0x180032c08: LEA RDX, [RSP + 0x28]\n0x180032c0d: MOV RCX, RDI\n0x180032c10: CALL 0x180034660\n0x180032c15: NOP\n0x180032c16: MOV RDX, qword ptr [RSP + 0x40]\n0x180032c1b: CMP RDX, 0xf\n0x180032c1f: JBE 0x180032c50\n0x180032c21: INC RDX\n0x180032c24: MOV RCX, qword ptr [RSP + 0x28]\n0x180032c29: MOV RAX, RCX\n0x180032c2c: CMP RDX, 0x1000\n0x180032c33: JC 0x180032c4a\n0x180032c35: ADD RDX, 0x27\n0x180032c39: MOV RCX, qword ptr [RCX + -0x8]\n0x180032c3d: SUB RAX, RCX\n0x180032c40: ADD RAX, -0x8\n0x180032c44: CMP RAX, 0x1f\n0x180032c48: JA 0x180032c72\n0x180032c4a: CALL 0x18004b0f8\n0x180032c4f: NOP\n0x180032c50: MOV RCX, RBX\n0x180032c53: CALL 0x18004a6b4\n0x180032c58: MOV AL, 0x1\n0x180032c5a: MOV RCX, qword ptr [RSP + 0x48]\n0x180032c5f: XOR RCX, RSP\n0x180032c62: CALL 0x18004b220\n0x180032c67: MOV RBX, qword ptr [RSP + 0x60]\n0x180032c6c: ADD RSP, 0x50\n0x180032c70: POP RDI\n0x180032c71: RET\n0x180032c72: CALL 0x18005c974\n0x180032c78: MOV ECX, 0x5\n0x180032c7d: CALL 0x18004a648\n0x180032c83: DEC EAX\n0x180032c85: MOV dword ptr [RBX + 0x4c], EAX\n0x180032c88: MOV ECX, 0x6\n0x180032c8d: CALL 0x18004a648\n\n"
+    },
+    {
+      "va": "0x180032ca0",
+      "pseudocode_evidence": "ev_ecc6bebb2c025175f937226ef29f9610b92480e6134fe109d8a330fd8df852a2",
+      "assembly_evidence": "ev_94912e73fcc55c18b8f5fcb4b6996599c175ce4af0fa806c469221677c98632b",
+      "pseudocode": "/* 0x180032ca0 FUN_180032ca0; Evidence ev_ecc6bebb2c025175f937226ef29f9610b92480e6134fe109d8a330fd8df852a2 */\n\nundefined8 FUN_180032ca0(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180084c70,'\\0');\n  FUN_180005560(param_2,0x180084c80,&DAT_180083870);\n  FUN_180005560(param_2,0x180084c88,(byte *)\"Requested a download of a DLC offer.\");\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x180032ca0 FUN_180032ca0; Evidence ev_94912e73fcc55c18b8f5fcb4b6996599c175ce4af0fa806c469221677c98632b\n0x180032ca0: PUSH RBX\n0x180032ca2: SUB RSP, 0x20\n0x180032ca6: MOV RBX, RDX\n0x180032ca9: XOR R8D, R8D\n0x180032cac: MOV RCX, RBX\n0x180032caf: LEA RDX, [0x180084c70]\n0x180032cb6: CALL 0x180004080\n0x180032cbb: LEA R8, [0x180083870]\n0x180032cc2: MOV RCX, RBX\n0x180032cc5: LEA RDX, [0x180084c80]\n0x180032ccc: CALL 0x180005560\n0x180032cd1: LEA R8, [0x1800855f8]\n0x180032cd8: MOV RCX, RBX\n0x180032cdb: LEA RDX, [0x180084c88]\n0x180032ce2: CALL 0x180005560\n0x180032ce7: MOV RAX, qword ptr [RBX]\n0x180032cea: XOR EDX, EDX\n0x180032cec: MOV RCX, RBX\n0x180032cef: CALL qword ptr [RAX + 0x48]\n0x180032cf2: MOV AL, 0x1\n0x180032cf4: ADD RSP, 0x20\n0x180032cf8: POP RBX\n0x180032cf9: RET\n\n"
+    },
+    {
+      "va": "0x180031ec0",
+      "pseudocode_evidence": "ev_1bb65ff46cc704e9b2482ce97518d22ccb07f0b15a6364d70c71f02de7d49932",
+      "assembly_evidence": "ev_a5c4cfc3684a863b30ad7ad00ea71eb2fc0ed28c6bf5b9712570997fad04c153",
+      "pseudocode": "/* 0x180031ec0 FUN_180031ec0; Evidence ev_1bb65ff46cc704e9b2482ce97518d22ccb07f0b15a6364d70c71f02de7d49932 */\n\nundefined8 FUN_180031ec0(undefined8 param_1,longlong *param_2)\n\n{\n  undefined8 uVar1;\n  \n  FUN_180004080(param_2,0x180085310,'\\0');\n  uVar1 = (**(code **)(*param_2 + 0x48))(param_2,0);\n  return CONCAT71((int7)((ulonglong)uVar1 >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x180031ec0 FUN_180031ec0; Evidence ev_a5c4cfc3684a863b30ad7ad00ea71eb2fc0ed28c6bf5b9712570997fad04c153\n0x180031ec0: PUSH RBX\n0x180031ec2: SUB RSP, 0x20\n0x180031ec6: MOV RBX, RDX\n0x180031ec9: XOR R8D, R8D\n0x180031ecc: MOV RCX, RBX\n0x180031ecf: LEA RDX, [0x180085310]\n0x180031ed6: CALL 0x180004080\n0x180031edb: MOV RAX, qword ptr [RBX]\n0x180031ede: XOR EDX, EDX\n0x180031ee0: MOV RCX, RBX\n0x180031ee3: CALL qword ptr [RAX + 0x48]\n0x180031ee6: MOV AL, 0x1\n0x180031ee8: ADD RSP, 0x20\n0x180031eec: POP RBX\n0x180031eed: RET\n\n"
+    }
+  ],
+  "helpers": [
+    {
+      "va": "0x18002bcd0",
+      "pseudocode_evidence": "ev_f1d57da325e98e0c0d7a9a460a7dd974d257026f179d33dfd6805e0f47affe61",
+      "assembly_evidence": "ev_dc048d0d99c56abf29525d5ba838fe3da5a390701657585a73e83a3874a9f06e",
+      "pseudocode": "/* 0x18002bcd0 FUN_18002bcd0; Evidence ev_f1d57da325e98e0c0d7a9a460a7dd974d257026f179d33dfd6805e0f47affe61 */\n\nundefined8 * FUN_18002bcd0(undefined8 *param_1)\n\n{\n  param_1[1] = 0;\n  param_1[2] = 0;\n  *param_1 = _anon_911F7926::NoResponseRequiredError::vftable;\n  return param_1;\n}\n\n\n\n"
+    },
+    {
+      "va": "0x180003300",
+      "pseudocode_evidence": "ev_2b9ae733c4696a460d18422d904a61e94f68bba9d01f78f9c74ab34a9d9a7d2b",
+      "assembly_evidence": "ev_97c85e6b551a582122ac38baae3187c74252574ea40efea6bbc759a72d3e777f",
+      "pseudocode": "/* 0x180003300 FUN_180003300; Evidence ev_2b9ae733c4696a460d18422d904a61e94f68bba9d01f78f9c74ab34a9d9a7d2b */\n\nlonglong * FUN_180003300(longlong param_1,char *param_2)\n\n{\n  undefined8 *puVar1;\n  int iVar2;\n  longlong *plVar3;\n  longlong lVar4;\n  char *_Str1;\n  \n  puVar1 = *(undefined8 **)(param_1 + 0x38);\n  do {\n    if (puVar1 == (undefined8 *)0x0) {\n      return (longlong *)0x0;\n    }\n    plVar3 = (longlong *)(**(code **)*puVar1)(puVar1);\n    if (plVar3 != (longlong *)0x0) {\n      if (param_2 == (char *)0x0) {\n        return plVar3;\n      }\n      lVar4 = (**(code **)(*plVar3 + 0x30))(plVar3);\n      if (lVar4 == 0) {\n        _Str1 = (char *)FUN_1800035e0((uint *)(plVar3 + 3));\n        if (_Str1 == param_2) {\n          return plVar3;\n        }\n      }\n      else {\n        _Str1 = (char *)0x0;\n      }\n      iVar2 = strncmp(_Str1,param_2,0x7fffffff);\n      if (iVar2 == 0) {\n        return plVar3;\n      }\n    }\n    puVar1 = (undefined8 *)puVar1[10];\n  } while( true );\n}\n\n\n\n"
+    },
+    {
+      "va": "0x180003fe0",
+      "pseudocode_evidence": "ev_5a4ee3061bf80f9191155c457738974b0c0d2160921b7c9c5fc76fe9cf3f9f5b",
+      "assembly_evidence": "ev_4f318251ed66a4ef0e88aca85960887d7849b2fb61fcd9dbbcf06295d4dbc296",
+      "pseudocode": "/* 0x180003fe0 FUN_180003fe0; Evidence ev_5a4ee3061bf80f9191155c457738974b0c0d2160921b7c9c5fc76fe9cf3f9f5b */\n\nlonglong * FUN_180003fe0(longlong param_1,char *param_2)\n\n{\n  undefined8 *puVar1;\n  int iVar2;\n  longlong *plVar3;\n  longlong lVar4;\n  char *_Str1;\n  \n  puVar1 = *(undefined8 **)(param_1 + 0x50);\n  do {\n    if (puVar1 == (undefined8 *)0x0) {\n      return (longlong *)0x0;\n    }\n    plVar3 = (longlong *)(**(code **)*puVar1)(puVar1);\n    if (plVar3 != (longlong *)0x0) {\n      if (param_2 == (char *)0x0) {\n        return plVar3;\n      }\n      lVar4 = (**(code **)(*plVar3 + 0x30))(plVar3);\n      if (lVar4 == 0) {\n        _Str1 = (char *)FUN_1800035e0((uint *)(plVar3 + 3));\n        if (_Str1 == param_2) {\n          return plVar3;\n        }\n      }\n      else {\n        _Str1 = (char *)0x0;\n      }\n      iVar2 = strncmp(_Str1,param_2,0x7fffffff);\n      if (iVar2 == 0) {\n        return plVar3;\n      }\n    }\n    puVar1 = (undefined8 *)puVar1[10];\n  } while( true );\n}\n\n\n\n"
+    },
+    {
+      "va": "0x180003860",
+      "pseudocode_evidence": "ev_f8f7dd0db1fa0f0f7047f86e233904393c7eba366636ef83cc065ae7ad3b2452",
+      "assembly_evidence": "ev_79d3d2b1e745d320196fb161510a30090691c2811916e47c19ab578b724ab4af",
+      "pseudocode": "/* 0x180003860 FUN_180003860; Evidence ev_f8f7dd0db1fa0f0f7047f86e233904393c7eba366636ef83cc065ae7ad3b2452 */\n\nundefined8 FUN_180003860(longlong param_1)\n\n{\n  longlong *plVar1;\n  longlong lVar2;\n  undefined8 uVar3;\n  \n  plVar1 = *(longlong **)(param_1 + 0x38);\n  while( true ) {\n    if (plVar1 == (longlong *)0x0) {\n      return 0;\n    }\n    lVar2 = (**(code **)(*plVar1 + 0x20))(plVar1);\n    if (lVar2 == 0) break;\n    plVar1 = (longlong *)plVar1[10];\n  }\n  lVar2 = (**(code **)(*plVar1 + 0x10))(plVar1);\n  if (lVar2 == 0) {\n    return 0;\n  }\n  uVar3 = FUN_180006260(plVar1);\n  return uVar3;\n}\n\n\n\n"
+    },
+    {
+      "va": "0x1800056b0",
+      "pseudocode_evidence": "ev_aef89108ef7b9648f2ea85dd8c7143695e8e948a3d47df48537f89e04f6845a7",
+      "assembly_evidence": "ev_5a7cd602d448321e7f7167b16801110c91aa45bddf47c57cdeae0ffadb6cfef9",
+      "pseudocode": "/* 0x1800056b0 FUN_1800056b0; Evidence ev_aef89108ef7b9648f2ea85dd8c7143695e8e948a3d47df48537f89e04f6845a7 */\n\nvoid FUN_1800056b0(longlong *param_1,byte *param_2,char param_3)\n\n{\n  longlong lVar1;\n  \n  *(int *)((longlong)param_1 + 0x84) = (int)param_1[0x10] + -1;\n  if ((char)param_1[1] != '\\0') {\n    *(undefined1 *)(param_1 + 1) = 0;\n    (**(code **)(*param_1 + 0x70))(param_1,0x3e);\n  }\n  if (param_3 != '\\0') {\n    (**(code **)(*param_1 + 0x68))(param_1,\"<![CDATA[\",9);\n    lVar1 = -1;\n    do {\n      lVar1 = lVar1 + 1;\n    } while (param_2[lVar1] != 0);\n    (**(code **)(*param_1 + 0x68))(param_1,param_2);\n                    /* WARNING: Could not recover jumptable at 0x000180005745. Too many branches */\n                    /* WARNING: Treating indirect jump as call */\n    (**(code **)(*param_1 + 0x68))(param_1,&DAT_18008002c,3);\n    return;\n  }\n  FUN_1800052c0(param_1,param_2,1);\n  return;\n}\n\n\n\n"
+    },
+    {
+      "va": "0x180005560",
+      "pseudocode_evidence": "ev_394a605604d13589b8727247da9740500488e4e830ecc24191d9ad81dbaedb63",
+      "assembly_evidence": "ev_ce8a68d6974b136583eeaf997f5aee1b2531f47e7ecca3012c760365aafd5dd6",
+      "pseudocode": "/* 0x180005560 FUN_180005560; Evidence ev_394a605604d13589b8727247da9740500488e4e830ecc24191d9ad81dbaedb63 */\n\nvoid FUN_180005560(longlong *param_1,longlong param_2,byte *param_3)\n\n{\n  longlong lVar1;\n  \n  (**(code **)(*param_1 + 0x70))(param_1,0x20);\n  lVar1 = -1;\n  do {\n    lVar1 = lVar1 + 1;\n  } while (*(char *)(param_2 + lVar1) != '\\0');\n  (**(code **)(*param_1 + 0x68))(param_1,param_2);\n  (**(code **)(*param_1 + 0x68))(param_1,&DAT_1800800c4);\n  FUN_1800052c0(param_1,param_3,0);\n                    /* WARNING: Could not recover jumptable at 0x0001800055de. Too many branches */\n                    /* WARNING: Treating indirect jump as call */\n  (**(code **)(*param_1 + 0x70))(param_1,0x22);\n  return;\n}\n\n\n\n"
+    },
+    {
+      "va": "0x1800052c0",
+      "pseudocode_evidence": "ev_043c027870a38179a8d82ab35f875a5d50b196b78e211180dbbe4626b9d864d3",
+      "assembly_evidence": "ev_bf15950286b3b8ad056a5e7885b537d947fab8b8fa75150ccad4bc07a02e3627",
+      "pseudocode": "/* 0x1800052c0 FUN_1800052c0; Evidence ev_043c027870a38179a8d82ab35f875a5d50b196b78e211180dbbe4626b9d864d3 */\n\nvoid FUN_1800052c0(longlong *param_1,byte *param_2,byte param_3)\n\n{\n  int iVar1;\n  byte *pbVar2;\n  byte bVar3;\n  byte *pbVar4;\n  longlong lVar5;\n  \n  if ((char)param_1[0x11] == '\\0') {\n    lVar5 = -1;\n    do {\n      lVar5 = lVar5 + 1;\n    } while (param_2[lVar5] != 0);\n                    /* WARNING: Could not recover jumptable at 0x000180005432. Too many branches */\n                    /* WARNING: Treating indirect jump as call */\n    (**(code **)(*param_1 + 0x68))();\n    return;\n  }\n  bVar3 = *param_2;\n  pbVar4 = param_2;\n  if (bVar3 != 0) {\n    do {\n      if (((byte)(bVar3 - 1) < 0x3f) &&\n         (*(char *)((longlong)param_1 + (ulonglong)bVar3 + 0x8a + (ulonglong)param_3 * 0x40) != '\\0'\n         )) {\n        for (; param_2 < pbVar4; param_2 = param_2 + iVar1) {\n          iVar1 = (int)((longlong)pbVar4 - (longlong)param_2);\n          if (0x7fffffff < (ulonglong)((longlong)pbVar4 - (longlong)param_2)) {\n            iVar1 = 0x7fffffff;\n          }\n          (**(code **)(*param_1 + 0x68))(param_1,param_2,(longlong)iVar1);\n        }\n        lVar5 = 0;\n        pbVar2 = &DAT_18007f76c;\n        do {\n          if (*pbVar2 == *pbVar4) {\n            (**(code **)(*param_1 + 0x70))(param_1,0x26);\n            (**(code **)(*param_1 + 0x68))\n                      (param_1,(&PTR_DAT_18007f760)[lVar5 * 2],\n                       (longlong)(int)(&DAT_18007f768)[lVar5 * 4]);\n            (**(code **)(*param_1 + 0x70))(param_1,0x3b);\n            break;\n          }\n          lVar5 = lVar5 + 1;\n          pbVar2 = pbVar2 + 0x10;\n        } while ((longlong)pbVar2 < 0x18007f7bc);\n        param_2 = param_2 + 1;\n      }\n      bVar3 = pbVar4[1];\n      pbVar4 = pbVar4 + 1;\n    } while (bVar3 != 0);\n    if (param_2 < pbVar4) {\n      iVar1 = (int)((longlong)pbVar4 - (longlong)param_2);\n      if (0x7fffffff < (ulonglong)((longlong)pbVar4 - (longlong)param_2)) {\n        iVar1 = 0x7fffffff;\n      }\n      (**(code **)(*param_1 + 0x68))(param_1,param_2,(longlong)iVar1);\n    }\n  }\n  return;\n}\n\n\n\n"
+    },
+    {
+      "va": "0x18002c400",
+      "pseudocode_evidence": "ev_8a31862931ad4a3cf8f80e4584226c396cdf07e3d33f8c2981f44e90db73bcd0",
+      "assembly_evidence": "ev_992d7a1ed7c4d433e484c79367b7dd1f74c462ca9b896b914dd622e7e16a5d9a",
+      "pseudocode": "/* 0x18002c400 FUN_18002c400; Evidence ev_8a31862931ad4a3cf8f80e4584226c396cdf07e3d33f8c2981f44e90db73bcd0 */\n\n/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */\n\nundefined8 * FUN_18002c400(void)\n\n{\n  ulonglong uVar1;\n  longlong lVar2;\n  undefined8 uVar3;\n  undefined1 auStack_78 [32];\n  undefined1 local_58 [8];\n  undefined8 *local_50;\n  undefined8 *local_48;\n  undefined1 *local_40;\n  char *local_38;\n  undefined8 uStack_30;\n  undefined8 local_28;\n  undefined8 uStack_20;\n  ulonglong local_18;\n  \n  local_18 = DAT_1800a1580 ^ (ulonglong)auStack_78;\n  if ((*(int *)(*(longlong *)((longlong)ThreadLocalStoragePointer + (ulonglong)_tls_index * 8) + 4)\n       < DAT_1800a39a0) && (FUN_18004b838(&DAT_1800a39a0), DAT_1800a39a0 == -1)) {\n    local_38 = (char *)0x0;\n    uStack_30 = 0;\n    local_28 = 0;\n    uStack_20 = 0;\n    local_38 = (char *)FUN_18004b0bc(0x50);\n    local_28 = 0x44;\n    uStack_20 = 0x4f;\n    builtin_strncpy(local_38,\n                    \"<LSX><Event sender=\\\"EbisuSDK\\\"><IGOEvent State=\\\"DOWN\\\"/></Event></LSX>\",0x45)\n    ;\n    DAT_1800a3978 = (undefined8 *)0x0;\n    DAT_1800a3980 = 0;\n    DAT_1800a3988 = 0;\n    DAT_1800a3990 = 0;\n    DAT_1800a3998 = 0;\n    local_40 = local_58;\n    DAT_1800a3978 = (undefined8 *)FUN_18004b0bc(0x10);\n    *DAT_1800a3978 = &DAT_1800a3978;\n    DAT_1800a3978[1] = 0;\n    local_50 = &DAT_1800a3978;\n    local_48 = DAT_1800a3978;\n    if (DAT_1800a3988 <= DAT_1800a3998 + 1U) {\n      FUN_180026670(0x1800a3978,1);\n    }\n    DAT_1800a3990 = DAT_1800a3990 & DAT_1800a3988 - 1;\n    uVar1 = DAT_1800a3990 + DAT_1800a3998;\n    lVar2 = (DAT_1800a3988 - 1 & uVar1) * 8;\n    if (*(longlong *)(lVar2 + DAT_1800a3980) == 0) {\n      uVar3 = FUN_18004b0bc(0x20);\n      *(undefined8 *)(lVar2 + DAT_1800a3980) = uVar3;\n    }\n    FUN_180009eb0(*(undefined8 **)(DAT_1800a3980 + (DAT_1800a3988 - 1 & uVar1) * 8),&local_38);\n    DAT_1800a3998 = DAT_1800a3998 + 1;\n    _eh_vector_destructor_iterator_(&local_38,0x20,1,FUN_18000aa50);\n    atexit(FUN_18007e000);\n    _Init_thread_footer(&DAT_1800a39a0);\n  }\n  return &DAT_1800a3978;\n}\n\n\n\n"
+    },
+    {
+      "va": "0x18002c620",
+      "pseudocode_evidence": "ev_0e415284624e38d46c3199e2803819e3710cab686ae0325f3d0446636fa42c9d",
+      "assembly_evidence": "ev_f3d62ed2c858e85fd60711534757a15f5b1c757ed963ea527e961154296f1cd8",
+      "pseudocode": "/* 0x18002c620 FUN_18002c620; Evidence ev_0e415284624e38d46c3199e2803819e3710cab686ae0325f3d0446636fa42c9d */\n\nundefined * FUN_18002c620(void)\n\n{\n  if (*(int *)(*(longlong *)((longlong)ThreadLocalStoragePointer + (ulonglong)_tls_index * 8) + 4) <\n      DAT_1800a3970) {\n    FUN_18004b838(&DAT_1800a3970);\n    if (DAT_1800a3970 == -1) {\n      FUN_18004a698((undefined4 *)&DAT_1800a3920,2);\n      atexit((_func_5014 *)&LAB_18007e030);\n      _Init_thread_footer(&DAT_1800a3970);\n      return &DAT_1800a3920;\n    }\n  }\n  return &DAT_1800a3920;\n}\n\n\n\n"
+    },
+    {
+      "va": "0x180034660",
+      "pseudocode_evidence": "ev_a447821546f363a4126e95ca66d6841d683859f2b0b981752b0fccdc88ccc51e",
+      "assembly_evidence": "ev_b088feaa7dad5f8accdad214e7ee10f829380ff3efbe8a693e5e3897af32624a",
+      "pseudocode": "/* 0x180034660 FUN_180034660; Evidence ev_a447821546f363a4126e95ca66d6841d683859f2b0b981752b0fccdc88ccc51e */\n\nvoid FUN_180034660(longlong param_1,undefined8 *param_2)\n\n{\n  longlong lVar1;\n  undefined8 *puVar2;\n  undefined8 uVar3;\n  ulonglong uVar4;\n  ulonglong uVar5;\n  \n  if (*(ulonglong *)(param_1 + 0x10) <= *(longlong *)(param_1 + 0x20) + 1U) {\n    FUN_180026670(param_1,1);\n  }\n  uVar4 = *(longlong *)(param_1 + 0x10) - 1;\n  *(ulonglong *)(param_1 + 0x18) = *(ulonglong *)(param_1 + 0x18) & uVar4;\n  uVar5 = *(longlong *)(param_1 + 0x18) + *(longlong *)(param_1 + 0x20);\n  lVar1 = (uVar4 & uVar5) * 8;\n  if (*(longlong *)(lVar1 + *(longlong *)(param_1 + 8)) == 0) {\n    uVar3 = FUN_18004b0bc(0x20);\n    *(undefined8 *)(lVar1 + *(longlong *)(param_1 + 8)) = uVar3;\n  }\n  puVar2 = *(undefined8 **)\n            (*(longlong *)(param_1 + 8) + (*(longlong *)(param_1 + 0x10) - 1U & uVar5) * 8);\n  *puVar2 = 0;\n  puVar2[1] = 0;\n  puVar2[2] = 0;\n  puVar2[3] = 0;\n  uVar3 = param_2[1];\n  *puVar2 = *param_2;\n  puVar2[1] = uVar3;\n  uVar3 = param_2[3];\n  puVar2[2] = param_2[2];\n  puVar2[3] = uVar3;\n  param_2[2] = 0;\n  param_2[3] = 0xf;\n  *(undefined1 *)param_2 = 0;\n  *(longlong *)(param_1 + 0x20) = *(longlong *)(param_1 + 0x20) + 1;\n  return;\n}\n\n\n\n"
+    }
+  ],
+  "literals": [
+    {
+      "va": "0x18007f7cc",
+      "file_offset": "0x7dfcc",
+      "text": "true",
+      "hex": "7472756500"
+    },
+    {
+      "va": "0x180080097",
+      "file_offset": "0x7e897",
+      "text": "",
+      "hex": "00"
+    },
+    {
+      "va": "0x18008386c",
+      "file_offset": "0x8206c",
+      "text": "1",
+      "hex": "3100"
+    },
+    {
+      "va": "0x180083870",
+      "file_offset": "0x82070",
+      "text": "0",
+      "hex": "3000"
+    },
+    {
+      "va": "0x180083b30",
+      "file_offset": "0x82330",
+      "text": "PersonaId",
+      "hex": "506572736f6e61496400"
+    },
+    {
+      "va": "0x180083b3c",
+      "file_offset": "0x8233c",
+      "text": "UserId",
+      "hex": "55736572496400"
+    },
+    {
+      "va": "0x180083bdc",
+      "file_offset": "0x823dc",
+      "text": "State",
+      "hex": "537461746500"
+    },
+    {
+      "va": "0x180083c10",
+      "file_offset": "0x82410",
+      "text": "Group",
+      "hex": "47726f757000"
+    },
+    {
+      "va": "0x180084c70",
+      "file_offset": "0x83470",
+      "text": "ErrorSuccess",
+      "hex": "4572726f725375636365737300"
+    },
+    {
+      "va": "0x180084c80",
+      "file_offset": "0x83480",
+      "text": "Code",
+      "hex": "436f646500"
+    },
+    {
+      "va": "0x180084c88",
+      "file_offset": "0x83488",
+      "text": "Description",
+      "hex": "4465736372697074696f6e00"
+    },
+    {
+      "va": "0x180084f98",
+      "file_offset": "0x83798",
+      "text": "Persona",
+      "hex": "506572736f6e6100"
+    },
+    {
+      "va": "0x180084fc8",
+      "file_offset": "0x837c8",
+      "text": "AvatarId",
+      "hex": "417661746172496400"
+    },
+    {
+      "va": "0x1800851d0",
+      "file_offset": "0x839d0",
+      "text": "ItemId",
+      "hex": "4974656d496400"
+    },
+    {
+      "va": "0x180085310",
+      "file_offset": "0x83b10",
+      "text": "QueryOffersResponse",
+      "hex": "51756572794f6666657273526573706f6e736500"
+    },
+    {
+      "va": "0x1800855d8",
+      "file_offset": "0x83dd8",
+      "text": "GetUTCTimeResponse",
+      "hex": "47657455544354696d65526573706f6e736500"
+    },
+    {
+      "va": "0x1800855ec",
+      "file_offset": "0x83dec",
+      "text": "Time",
+      "hex": "54696d6500"
+    },
+    {
+      "va": "0x180085620",
+      "file_offset": "0x83e20",
+      "text": "GetPresenceVisibilityResponse",
+      "hex": "47657450726573656e63655669736962696c697479526573706f6e736500"
+    },
+    {
+      "va": "0x180085640",
+      "file_offset": "0x83e40",
+      "text": "Visible",
+      "hex": "56697369626c6500"
+    },
+    {
+      "va": "0x180085648",
+      "file_offset": "0x83e48",
+      "text": "GetPresenceResponse",
+      "hex": "47657450726573656e6365526573706f6e736500"
+    },
+    {
+      "va": "0x18008565c",
+      "file_offset": "0x83e5c",
+      "text": "Title",
+      "hex": "5469746c6500"
+    },
+    {
+      "va": "0x180085668",
+      "file_offset": "0x83e68",
+      "text": "SessionId",
+      "hex": "53657373696f6e496400"
+    },
+    {
+      "va": "0x180085678",
+      "file_offset": "0x83e78",
+      "text": "MultiplayerId",
+      "hex": "4d756c7469706c61796572496400"
+    },
+    {
+      "va": "0x180085688",
+      "file_offset": "0x83e88",
+      "text": "GroupId",
+      "hex": "47726f7570496400"
+    },
+    {
+      "va": "0x180085690",
+      "file_offset": "0x83e90",
+      "text": "TitleId",
+      "hex": "5469746c65496400"
+    },
+    {
+      "va": "0x1800856a0",
+      "file_offset": "0x83ea0",
+      "text": "Presence",
+      "hex": "50726573656e636500"
+    },
+    {
+      "va": "0x1800856b0",
+      "file_offset": "0x83eb0",
+      "text": "GamePresence",
+      "hex": "47616d6550726573656e636500"
+    },
+    {
+      "va": "0x1800856c0",
+      "file_offset": "0x83ec0",
+      "text": "RichPresence",
+      "hex": "5269636850726573656e636500"
+    },
+    {
+      "va": "0x1800856d0",
+      "file_offset": "0x83ed0",
+      "text": "QueryPresenceResponse",
+      "hex": "517565727950726573656e6365526573706f6e736500"
+    },
+    {
+      "va": "0x1800856e8",
+      "file_offset": "0x83ee8",
+      "text": "Friend",
+      "hex": "467269656e6400"
+    },
+    {
+      "va": "0x1800856f8",
+      "file_offset": "0x83ef8",
+      "text": "NONE",
+      "hex": "4e4f4e4500"
+    },
+    {
+      "va": "0x180085738",
+      "file_offset": "0x83f38",
+      "text": "IsProgressiveInstallationAvailableResponse",
+      "hex": "497350726f6772657373697665496e7374616c6c6174696f6e417661696c61626c65526573706f6e736500"
+    },
+    {
+      "va": "0x180085768",
+      "file_offset": "0x83f68",
+      "text": "Available",
+      "hex": "417661696c61626c6500"
+    },
+    {
+      "va": "0x180085778",
+      "file_offset": "0x83f78",
+      "text": "AreChunksInstalledResponse",
+      "hex": "4172654368756e6b73496e7374616c6c6564526573706f6e736500"
+    },
+    {
+      "va": "0x180085798",
+      "file_offset": "0x83f98",
+      "text": "Installed",
+      "hex": "496e7374616c6c656400"
+    },
+    {
+      "va": "0x1800857a8",
+      "file_offset": "0x83fa8",
+      "text": "ChunkIds",
+      "hex": "4368756e6b49647300"
+    },
+    {
+      "va": "0x180085818",
+      "file_offset": "0x84018",
+      "text": "QueryFriendsResponse",
+      "hex": "5175657279467269656e6473526573706f6e736500"
+    },
+    {
+      "va": "0x180085830",
+      "file_offset": "0x84030",
+      "text": "Success",
+      "hex": "5375636365737300"
+    },
+    {
+      "va": "0x180085838",
+      "file_offset": "0x84038",
+      "text": "Return",
+      "hex": "52657475726e00"
+    },
+    {
+      "va": "0x180085840",
+      "file_offset": "0x84040",
+      "text": "GetBlockListResponse",
+      "hex": "476574426c6f636b4c697374526573706f6e736500"
+    },
+    {
+      "va": "0x1800858a0",
+      "file_offset": "0x840a0",
+      "text": "GetWalletBalanceResponse",
+      "hex": "47657457616c6c657442616c616e6365526573706f6e736500"
+    },
+    {
+      "va": "0x1800858c0",
+      "file_offset": "0x840c0",
+      "text": "Balance",
+      "hex": "42616c616e636500"
+    },
+    {
+      "va": "0x1800858f8",
+      "file_offset": "0x840f8",
+      "text": "CheckPermissionResponse",
+      "hex": "436865636b5065726d697373696f6e526573706f6e736500"
+    },
+    {
+      "va": "0x180085918",
+      "file_offset": "0x84118",
+      "text": "Access",
+      "hex": "41636365737300"
+    }
+  ],
+  "covered_registrations": [
+    {
+      "request": "QueryOffers",
+      "rva": "0x031ec0"
+    },
+    {
+      "request": "GoOnline",
+      "rva": "0x02ffb0"
+    },
+    {
+      "request": "ShowIGO",
+      "rva": "0x032b10"
+    },
+    {
+      "request": "ShowIGOWindow",
+      "rva": "0x032b10"
+    },
+    {
+      "request": "GetUTCTime",
+      "rva": "0x02fea0"
+    },
+    {
+      "request": "StartDownload",
+      "rva": "0x032ca0"
+    },
+    {
+      "request": "SetPresenceVisibility",
+      "rva": "0x02ffb0"
+    },
+    {
+      "request": "SetPresence",
+      "rva": "0x02ffb0"
+    },
+    {
+      "request": "GetPresenceVisibility",
+      "rva": "0x02f4e0"
+    },
+    {
+      "request": "GetPresence",
+      "rva": "0x02f330"
+    },
+    {
+      "request": "QueryPresence",
+      "rva": "0x031ef0"
+    },
+    {
+      "request": "GetGroupInfo",
+      "rva": "0x02f270"
+    },
+    {
+      "request": "IsProgressiveInstallationAvailable",
+      "rva": "0x030cd0"
+    },
+    {
+      "request": "QueryChunkStatus",
+      "rva": "0x030eb0"
+    },
+    {
+      "request": "AreChunksInstalled",
+      "rva": "0x02d720"
+    },
+    {
+      "request": "SetDownloaderUtilization",
+      "rva": "0x02ffb0"
+    },
+    {
+      "request": "QueryFriends",
+      "rva": "0x0314a0"
+    },
+    {
+      "request": "GetBlockList",
+      "rva": "0x02e5a0"
+    },
+    {
+      "request": "GetVoipStatus",
+      "rva": "0x02da30"
+    },
+    {
+      "request": "EnableVoip",
+      "rva": "0x02da30"
+    },
+    {
+      "request": "SelectStore",
+      "rva": "0x02ffb0"
+    },
+    {
+      "request": "GetWalletBalance",
+      "rva": "0x02ff60"
+    },
+    {
+      "request": "RestartGame",
+      "rva": "0x032ab0"
+    },
+    {
+      "request": "CheckPermission",
+      "rva": "0x02d9e0"
+    }
+  ],
+  "source_literal_presence_audit": {
+    "result": "PASS",
+    "literals": 44,
+    "scope": "Exact quoted nonempty literal presence only; call order separately tested",
+    "event": {
+      "file_offset": "0x83410",
+      "bytes": 68,
+      "text": "<LSX><Event sender=\"EbisuSDK\"><IGOEvent State=\"DOWN\"/></Event></LSX>"
+    },
+    "display_key": "Original little-endian packed constants 0x5f59414c50534944 and 0x454d414e form DISPLAY_NAME"
+  },
+  "limitations": [
+    "18 selected handler bodies; not a complete DLL or ABI binding",
+    "02d720 and 0314a0 are bounded independently disassembled LAB bodies, not new REA procedure Evidence",
+    "Mandatory XML, time, IGO queue/mutex and typed exception contracts remain integration dependencies",
+    "No original/runtime differential equivalence claim",
+    "Allocator/SSO/SEH and unwinding after dependency exceptions remain unproved"
+  ]
+}

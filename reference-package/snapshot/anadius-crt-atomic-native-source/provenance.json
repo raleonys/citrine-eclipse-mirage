@@ -1,0 +1,40 @@
+{
+  "kind": "New support source, zero additional original recovered bodies",
+  "source_inputs": [
+    {
+      "path": "../anadius-crt-ptd-data-source/evidence.json",
+      "sha256": "414d5d1804765bc1a444edcaab1544c194f2213b3085916189d5da4e50a3910f"
+    }
+  ],
+  "compiler": {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+    "sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+    "flags": [
+      "-std=c++20",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror"
+    ],
+    "test_link": "-static"
+  },
+  "sources": [
+    {
+      "name": "atomic.cpp",
+      "sha256": "d13c18cc364775c8e5ce50f23984af8b72d4d7e6a2f420e34cd0b2caf4d32e3d"
+    },
+    {
+      "name": "atomic.hpp",
+      "sha256": "2af4cf8f37588aff808b4fed25e0c000a66aacb6a497f7a811b99340e053998d"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "4ac21f290c120fbdb130ef107158f298d5f0fa1d9e36c3d00e6e06a706431891"
+    }
+  ],
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "whole_binary_reconstruction": "incomplete",
+  "original_ABI_SEH_runtime_equivalence": "not established"
+}

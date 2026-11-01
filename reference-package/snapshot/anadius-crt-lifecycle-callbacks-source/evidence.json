@@ -1,0 +1,47 @@
+{
+  "result": "PASS",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Retained actual REA assembly/pseudocode IDs and direct hash-bound raw PE/relocation proof. No new provider query or original execution.",
+  "bodies": [
+    {
+      "address": "0x18006447c",
+      "length": 35,
+      "file_offset": 407676,
+      "bytes_hex": "4883ec28488d0d210e0400e86cffffff488d0d2d0e0400e860ffffffb0014883c428c3",
+      "sha256": "aae29fca18b33dc727f217d8b05e7f28fbf7757b0824a753abe14066ef30eeac",
+      "assembly_evidence_id": "ev_0d879587dbd892a79fb6497849d2aae2767615e668da0a192514697e97897869",
+      "pseudo_evidence_id": "ev_128dcdbd118a6380a4750ff1e54271f936ddb311b7b3557f4bfaca02a8a8e7d5",
+      "pair": {
+        "index": 15,
+        "kind": "initialize",
+        "slot_va": "0x18008ab50",
+        "file_offset": 562000,
+        "relocation_proof": {
+          "block_file_offset": 691920,
+          "entry_file_offset": 691974,
+          "entry_word": 43856
+        }
+      }
+    },
+    {
+      "address": "0x1800644f8",
+      "length": 64,
+      "file_offset": 407800,
+      "bytes_hex": "40534883ec20488b0dcb14040083c8fff00fc10183f801751f488b0db8140400488d1d51d70300483bcb740ce89723000048891da0140400b0014883c4205bc3",
+      "sha256": "9090cd2c644c6958a7820c5b152b1a43172407a8307bee5e7d89d03d6136f0c3",
+      "assembly_evidence_id": "ev_0d023431ffc05119eee470b5ea148ad58ce9683f6c60cd3468df0b71bac082d7",
+      "pseudo_evidence_id": "ev_82ed5c1b2273a1b6458c896c47a7f737a42930c9a261f3be55551ef4e056625a",
+      "pair": {
+        "index": 13,
+        "kind": "uninitialize",
+        "slot_va": "0x18008ab38",
+        "file_offset": 561976,
+        "relocation_proof": {
+          "block_file_offset": 691920,
+          "entry_file_offset": 691968,
+          "entry_word": 43832
+        }
+      }
+    }
+  ]
+}

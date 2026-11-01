@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "thread_native",
+    "result": "PASS",
+    "output": "PASS 367 synthetic Win32 thread bridge checks",
+    "executable_sha256": "06daa84e1fccc5de8667601c8fac95932797d9ce09629ea1a1c25a16314dcada"
+  },
+  "execution_scope": "Seven typed SDK API call sites and actual recovered thread core; native import identities only, all calls use fixtures",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-thread-native-source/win32_effects.cpp",
+      "sha256": "5cb6fe9d2b81e50e50813521b76d24aa098489c8ebf108191a5e9bdd610f6bf2"
+    },
+    {
+      "path": "anadius-thread-native-source/win32_effects.hpp",
+      "sha256": "1d0baba064b509a8cbb8cc58751f064148321a8639e8a85dcbab7620dac0fc48"
+    },
+    {
+      "path": "anadius-thread-native-source/win32_tests.cpp",
+      "sha256": "30ef2483f3d41f8c579a3be457e41117315764c3d1ce62df9e1399db4e7e3acf"
+    }
+  ]
+}

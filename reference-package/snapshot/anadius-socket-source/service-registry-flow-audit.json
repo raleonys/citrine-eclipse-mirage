@@ -1,0 +1,57 @@
+{
+  "scope": "Independent retained static 022fa0 fixed-key and 0239c0 registry normal-flow audit",
+  "reviewer": "service_registry_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "address": "0x1800239c0",
+      "pseudo_evidence": "ev_c935d546ffcfd9a015759eba276b6b86808a598ce42947d5ddbe6ef939153abb",
+      "assembly_evidence": "ev_245079b916f12d89c98287073bb82e89b00650e14f7fa967621e26699d2344a4"
+    },
+    {
+      "address": "0x180022fa0",
+      "pseudo_evidence": "ev_a9b75f1a923d0914dee2554ddc6d7d96c4d1579172c994ac25615f02b63b747b",
+      "assembly_evidence": "ev_a68b9b82503b9c9f1b9172f2e3d616c2b12fc05a0e32ab0ac818548e3209af0a"
+    }
+  ],
+  "rules": {
+    "fixed_key": {"type": "0x1800a2620", "id": 0},
+    "identity_fast_path": "Unreachable for fixed zero request ID in both searches",
+    "type_compare": "Required 04d2d0(entry.type+8, fixed.type+8); low EAX == 0 means match; skip if entry.type is zero",
+    "next_link": "Read live after comparison returns",
+    "first_match": "Leave registry gate then return cached winner",
+    "factory": "Mandatory 0228e0 outside registry gate on first miss",
+    "factory_null": "Native candidate+8 key store faults; host explicit unsupported boundary allowed but no native null success invented",
+    "candidate_key": "Copy both fixed key fields before second registry enter",
+    "second_search": "Read current registry head after second enter and perform same search",
+    "insert": "After final failed comparison read current registry.head, assign candidate.next, publish candidate, leave, return cached candidate",
+    "duplicate": "Call candidate deleting slot0 with uint32 flag1 under second gate; leave; return cached winner regardless of head mutation"
+  },
+  "context_evidence": [
+    {
+      "address": "0x1800228e0",
+      "pseudo_evidence": "ev_22c4bffe54fe0b986545326a4020802e4e98041a480e8cafc64b603ecd05d1ef",
+      "assembly_evidence": "ev_cccd315f694dc43aeae87a61fc8912482989a03586a119141e1b2a2d8f2bdd7b"
+    },
+    {
+      "address": "0x1800211b0",
+      "pseudo_evidence": "ev_0a99c668ad187f12ba22bcb5a084965bb3619bfa398a64dd105f65647c8a7c33",
+      "assembly_evidence": "ev_632ecefa1757518f06b13606a94918118593165c553357228e6939dd09997b9d"
+    }
+  ],
+  "normal_source_procedures_added": ["0x180022fa0", "0x1800239c0"],
+  "new_original_procedures": 2,
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Typed borrowed registry/entry/service projections are not native memory overlays",
+    "0228e0 native constructor and 04d2d0 native RTTI comparator remain mandatory providers",
+    "Native factory/comparator/deleting/gate exception and SEH/unwind paths unproven",
+    "Native allocator, dispatcher, executor, export/entry ABI and full DLL equivalence unproven"
+  ]
+}

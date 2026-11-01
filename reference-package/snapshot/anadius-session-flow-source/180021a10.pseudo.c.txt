@@ -1,0 +1,16 @@
+/* 0x180021a10 FUN_180021a10; Evidence ev_e06fa20bfb3984fd9d6818ba3758d4f3fd4e6b252450f8e675c7ccdb881c70e8 */
+
+void FUN_180021a10(longlong *param_1)
+
+{
+  longlong local_18;
+  longlong lStack_10;
+  
+  local_18 = param_1[1];
+  lStack_10 = param_1[2];
+  FUN_180025720(param_1,(int *)&local_18);
+  return;
+}
+
+
+

@@ -1,0 +1,35 @@
+{
+  "schema": "socket-move.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "domain": [
+    "TypedSocketObject andAcceptorState storage disjoint/live;destinationfresh/unlinked,source/service/control/callback lifetimeandserializationcaller-owned",
+    "ExecutorMove mustperformselectedtable78slot8effect onlivepayloads;084928->0228c0 targetknown,bodyunknown;noimageVAexecution",
+    "Socket/cancellation/list/protocol algorithmsareactualnormalbodies;compileratomics/gateprovidersdonotprovenativeABI/concurrency",
+    "Source node remainslinked invalid;temporary mustbeexplicitlydestroyedoncewith024db0 beforefinalownedclose",
+    "Arbitrarythrow/reentry/metadatarepair notpromised;returnedexceptionprefixnotautomaticrollback orblindcleanup"
+  ],
+  "scope": [
+    "ExistingSessionremainscaller-owned/rawcallbacklifetimeobligation;nogenerated023000ownerfactoryclaim",
+    "Existinggreetingrelease correctionpreservesreset/send/error/zeroprogress order,onlynarrowsheaplifetime",
+    "NooriginalDLL/game/userfiles/network;sentheticsocket/import/effects andownEXEs only"
+  ],
+  "open": [
+    "0230001c8owner/16dequeproxyallocation andweakself/outputpublication",
+    "0228c0selectedexecutorbody",
+    "nativeaccepted-session owner/asyncdetachedquiescence",
+    "accept021b00/0271a0",
+    "licensing/nativeABI/unload/PE"
+  ],
+  "new_normal_bodies": 2,
+  "new_native_ABI_provider_closures": 0,
+  "modified_prior_sources": [
+    {
+      "path": "anadius-server-source/server.cpp",
+      "before_sha256": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0",
+      "after_sha256": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda",
+      "reason": "Narrow greeting temporary scope to match native heap release25911 before initial read25919; preserve reset/send/error/zero-progress order."
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

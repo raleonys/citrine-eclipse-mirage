@@ -1,0 +1,29 @@
+{
+  "schema": "session-owner-constructor.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "lifetime": [
+    "Fresh stable typed SessionControl embedsOwner;IoReferencecontrol separatefromcancellationControl;identity/offsets are routingtokens not native overlays",
+    "Caller retains serializedAllocator/Executor/Lifecycle/Scratch lifetimes;Scratch cannotcopy/move andremainsliveuntilsuccessorseparatecleanup",
+    "Allocator retains partialallocationsacrossthrow; lowerunknownoutcome requiresindependentcleanup,notblindretry or automaticnativeEHrollback",
+    "Scratchphaseflags recordnormalcompletedsteps only;allocationpointercanbedanglingafterfinalcachedstrong/dispose/delete;completeisnotalivenessorquiescenceproof",
+    "Outputplainconstructionslot overwriteswithoutreleasingpriorcontrol; publication remainsvisibleifoldweakdeletecallbackthrows",
+    "RequiredIoReference dispose cleansactualresourcesandownedselfweak beforeimplicitweak release; selectedhostprovider integrationisnot026570/017420/026290recovery"
+  ],
+  "boundaries": [
+    "Nativeallocationrequests1c8/16arenotsizeofhostsidecar;nullisout-of-contractbad_allocdiagnostic,nousablenullsuccess",
+    "C++sidecarCipher islive typedstoragebeforebody;observedNative02bc70 resetoccursafterproxysetupatitsactualphase",
+    "No stdshared_ptr facade, implicitglobal/DLL startup, originalVMexecution orunproven rawdetached pin"
+  ],
+  "open": [
+    "Recover026570 resource dispose atCONTROLbase, includingdeque/input/socket and ownedselfweak release beforeouterimplicitweak;do not substituteownerbase",
+    "Recover017420 slot08 dispatch toslot10(flags1),then026290table restore/sizedfree1c8 onlywhenflags&1;keepallocatorprovenance explicit",
+    "Reuse023000factory+023d20/028950andexistingframe/message/write paths;then025720acceptedstartownerlifetime/greetingread prefix",
+    "NativeEH/SEHrollback,rawdetached quiescence,0228c0executor,accept021b00/0271a0,licensing/nativeABI/unload/PEremainexplicit;genericCRTpaused"
+  ],
+  "prior_sources_preserved": 842,
+  "modified_prior_sources": [],
+  "new_normal_bodies": 1,
+  "new_native_ABI_provider_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

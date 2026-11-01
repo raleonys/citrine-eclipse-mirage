@@ -1,0 +1,61 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T15:31:23.9548966Z",
+  "prior_package_sha256": "c6a0d1f254a0bd33a36c9df97370cc9953794b63713a3d67624b2b0100ac38eb",
+  "prior_source_count": 478,
+  "unchanged_prior_sources": 478,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/worker_run_native_tests.cpp",
+    "anadius-socket-source/worker_run_native.cpp",
+    "anadius-socket-source/worker_run_native.hpp",
+    "anadius-socket-source/worker_run_tests.cpp",
+    "anadius-socket-source/worker_run.cpp",
+    "anadius-socket-source/worker_run.hpp"
+  ],
+  "current_sources": 484,
+  "current_documents": 190,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 164,
+  "cpp_objects": 160,
+  "c_objects": 4,
+  "normal_test_groups": 151,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_worker_run",
+      "result": "PASS",
+      "output": "PASS: 795 socket worker run checks; retained026320/029890/0298b0/02a190 logical status, low32 effects, TLS ordering, dispatch saturation, live cache cleanup and lifetime",
+      "executable_sha256": "5ba02a1e1d5fe08dbbd870f3eb93393f2ea80b20e971004dcb334a2d84ab7b84"
+    },
+    {
+      "module": "socket_worker_run_native",
+      "result": "PASS",
+      "output": "PASS: 577 socket worker run native checks; four injected SDK imports and actual024990/02a000/05e8e0/02a4a0/029890/0298b0/02a190/026320 source composition with controlled dispatcher and lifetime",
+      "executable_sha256": "98cdf5ef50c9c06fb657585b684cb5b1339a1a9eef38abe1103a40c5581c2818"
+    }
+  ],
+  "new_checks": 1372,
+  "master_build_sha256": "8afa70f5f3dacc6ad64fcd874969354235d2443ec39a6f1b2cb5b97d1a1c27e0",
+  "common_build_script_sha256": "9ca676d17c25a1a78c7a68b2c9da4087287098ed7364ea607c2961a22a5474b7",
+  "cmake_sha256": "f3aff9946912df071e38b6a40a433eb60a34db251d23ce8e3c3854358ddbffc8",
+  "normal_source_procedures_added": [
+    "0x180026320",
+    "0x180029890",
+    "0x1800298b0",
+    "0x18002a190"
+  ],
+  "new_original_procedures": 4,
+  "new_composition": "Actual029890 run and026320 deleting slots with0298b0 loop/02a190 stop joined to prior startup/entry source; injected TLS/IOCP SDK and required dispatch/atomic/CRT/lifetime effects",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "logical_native_status": "optional meaningful Error fields; native padding excluded; generic constant-object mapping supplied",
+  "TLS_restoration": "LIVE context.previous and fresh TLS index; ascending live cache reads",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

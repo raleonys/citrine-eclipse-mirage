@@ -1,0 +1,36 @@
+{
+  "result": "PASS_WITH_DECLARED_BOUNDARIES",
+  "checked_at": "2026-10-19T02:34:24.0637199Z",
+  "reviewer": "/root/crt_mb_tables",
+  "source_hashes": [
+    {
+      "file": "bridge.hpp",
+      "sha256": "0b4c1afe8bb5de097bf331b043ee6eaa97f3e2b5df51e1846bb57ec5a6a57f77"
+    },
+    {
+      "file": "bridge.cpp",
+      "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1"
+    },
+    {
+      "file": "bridge_tests.cpp",
+      "sha256": "c90f2bef34c8b565426cef4150cb5b931a1c810a276c009949764ef2c8179827"
+    }
+  ],
+  "checks": [
+    "RecordNative binds actual recovered06f674,06f050,06f0e8 bodies, rather than forwarding the builder to a synthetic provider. Memory read/write8/16/32/address forwards directly to the shared Memory domain.",
+    "SystemCP resolves through the explicitly bound actual support source; system-CP fallback flag reads the same mb::Globals object that prior mb::Effects writes. Unbound use throws a wiring boundary before source execution; rebind to another support object is rejected.",
+    "Initial MB identity and four locale-name pointer values are live reads from borrowed Identities. Source callers must keep the same initial MB identity across prior control bridge and this record bridge; fixture aligns them explicitly.",
+    "GetACP/GetOEMCP/exchange/IsValidCodePage/GetCPInfo forward to mandatory native providers; GetStringType and LCMap wrappers forward all arguments and tracked output spans with no zero initialization or status reinterpretation.",
+    "Fixture source composition inspected: actual locale update/thread/PTD/heap/error/invalid/ref/deepfree bodies retained; cached FLS, lock/atomic, native CP APIs, lower wrappers, find and conversion endpoints remain synthetic. Context flag ownership is handled by actual shared support/update bodies.",
+    "Strict validation PASS12032 confirmed against all three current source hashes. Tests cover builtin/dynamic/UTF8/SBCS paths, copied UTF8 retained flags, initial raw-PTD last-error effect, publication/refcounts/heap cleanup, failed CP rollback, true system-CP fallback, ignored lower-wrapper status0 with defined outputs, undefined-output and unbound-wiring boundaries."
+  ],
+  "findings": [],
+  "boundaries": [
+    "No original DLL or game execution, native locale behavior, original ABI equality, SEH/security cookie behavior or concurrent correctness established.",
+    "Identities/global/provider references are borrowed and must remain alive in one synchronized domain. bind_system_cp checks object identity only, not consistency of all borrowed domains.",
+    "06e210/06cc30 remain unrecovered mandatory provider bodies; CPInfo and ASCII case outputs here are synthetic test evidence.",
+    "Fixture static CP1252 record intentionally has synthetic lead bytes; it does not establish exact shipped initial-table contents. Explicit test teardown and pair metadata restoration are not a recovered process shutdown/global initialization sequence.",
+    "README/evidence documentation was being authored by root concurrently and is excluded from immutable reviewed source hashes."
+  ],
+  "source_changes": "none"
+}

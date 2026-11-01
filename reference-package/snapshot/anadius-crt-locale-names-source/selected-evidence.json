@@ -1,0 +1,56 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "source_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "provider": "Ghidra 12.1.4",
+  "REA": "6.5.0",
+  "mode": "Retained exact-digest static evidence; aligned closed session verified by root; no target execution",
+  "selected_functions": [
+    "0x18007310c",
+    "0x1800736d4"
+  ],
+  "pseudocode": "/* 0x18007310c FUN_18007310c; Evidence ev_38903404049953dae5f478e768c17c886f504afa7cfa464ec0311c9895b5acec */\n\nundefined4 FUN_18007310c(ushort *param_1)\n\n{\n  int iVar1;\n  int iVar2;\n  int iVar3;\n  int iVar4;\n  \n  if (param_1 != (ushort *)0x0) {\n    iVar3 = 0;\n    iVar4 = 0xe3;\n    do {\n      iVar1 = (iVar4 + iVar3) / 2;\n      iVar2 = __ascii_wcsnicmp(param_1,(ushort *)(&PTR_DAT_18008ea10)[(longlong)iVar1 * 2],0x55);\n      if (iVar2 == 0) {\n        iVar3 = *(int *)(&DAT_18008ea18 + (longlong)iVar1 * 0x10);\n        if (iVar3 < 0) {\n          return 0;\n        }\n        if (0xe3 < (ulonglong)(longlong)iVar3) {\n          return 0;\n        }\n        return *(undefined4 *)(&DAT_18008cfc0 + (longlong)iVar3 * 0x10);\n      }\n      if (iVar2 < 0) {\n        iVar4 = iVar1 + -1;\n      }\n      else {\n        iVar3 = iVar1 + 1;\n      }\n    } while (iVar3 <= iVar4);\n  }\n  return 0;\n}\n\n\n\n\n/* 0x1800736d4 __ascii_wcsnicmp; Evidence ev_7211a2b4d5d7bb16be2304a2abc00591044e134d17bfd0dd7c196e1277bc1e5f */\n\n/* Library Function - Single Match\n    __ascii_wcsnicmp\n   \n   Library: Visual Studio 2019 Release */\n\nint __ascii_wcsnicmp(ushort *param_1,ushort *param_2,longlong param_3)\n\n{\n  ushort uVar1;\n  ushort uVar2;\n  uint uVar3;\n  uint uVar4;\n  \n  if (param_3 == 0) {\n    return 0;\n  }\n  do {\n    uVar1 = *param_1;\n    param_1 = param_1 + 1;\n    uVar2 = *param_2;\n    param_2 = param_2 + 1;\n    uVar3 = uVar1 + 0x20;\n    if (0x19 < uVar1 - 0x41) {\n      uVar3 = (uint)uVar1;\n    }\n    uVar4 = uVar2 + 0x20;\n    if (0x19 < uVar2 - 0x41) {\n      uVar4 = (uint)uVar2;\n    }\n  } while (((uVar3 - uVar4 == 0) && (uVar3 != 0)) && (param_3 = param_3 + -1, param_3 != 0));\n  return uVar3 - uVar4;\n}\n\n\n\n",
+  "assembly": "; 0x18007310c FUN_18007310c; Evidence ev_e4f8c851164f85a6117aa2727aaaba0305c422ec0a508466c0245c07f957c985\n0x18007310c: MOV qword ptr [RSP + 0x8], RBX\n0x180073111: MOV qword ptr [RSP + 0x10], RBP\n0x180073116: MOV qword ptr [RSP + 0x18], RSI\n0x18007311b: PUSH RDI\n0x18007311c: PUSH R14\n0x18007311e: PUSH R15\n0x180073120: SUB RSP, 0x20\n0x180073124: MOV RBP, RCX\n0x180073127: TEST RCX, RCX\n0x18007312a: JZ 0x180073173\n0x18007312c: XOR EBX, EBX\n0x18007312e: LEA R15, [0x180000000]\n0x180073135: MOV EDI, 0xe3\n0x18007313a: LEA EAX, [RDI + RBX*0x1]\n0x18007313d: MOV R8D, 0x55\n0x180073143: CDQ\n0x180073144: MOV RCX, RBP\n0x180073147: SUB EAX, EDX\n0x180073149: SAR EAX, 0x1\n0x18007314b: MOVSXD RSI, EAX\n0x18007314e: MOV R14, RSI\n0x180073151: ADD R14, R14\n0x180073154: MOV RDX, qword ptr [R15 + R14*0x8 + 0x8ea10]\n0x18007315c: CALL 0x1800736d4\n0x180073161: TEST EAX, EAX\n0x180073163: JZ 0x18007318e\n0x180073165: JNS 0x18007316c\n0x180073167: LEA EDI, [RSI + -0x1]\n0x18007316a: JMP 0x18007316f\n0x18007316c: LEA EBX, [RSI + 0x1]\n0x18007316f: CMP EBX, EDI\n0x180073171: JLE 0x18007313a\n0x180073173: XOR EAX, EAX\n0x180073175: MOV RBX, qword ptr [RSP + 0x40]\n0x18007317a: MOV RBP, qword ptr [RSP + 0x48]\n0x18007317f: MOV RSI, qword ptr [RSP + 0x50]\n0x180073184: ADD RSP, 0x20\n0x180073188: POP R15\n0x18007318a: POP R14\n0x18007318c: POP RDI\n0x18007318d: RET\n0x18007318e: MOVSXD RAX, dword ptr [R15 + R14*0x8 + 0x8ea18]\n0x180073196: TEST EAX, EAX\n0x180073198: JS 0x180073173\n0x18007319a: CMP RAX, 0xe4\n0x1800731a0: JNC 0x180073173\n0x1800731a2: ADD RAX, RAX\n0x1800731a5: MOV EAX, dword ptr [R15 + RAX*0x8 + 0x8cfc0]\n0x1800731ad: JMP 0x180073175\n\n\n; 0x1800736d4 __ascii_wcsnicmp; Evidence ev_b22886e4d0a536b26d33de57cf801990a38311d78f898b4b371b721bf8a0d1d3\n0x1800736d4: MOV R11, RDX\n0x1800736d7: MOV R10, RCX\n0x1800736da: TEST R8, R8\n0x1800736dd: JNZ 0x1800736e2\n0x1800736df: XOR EAX, EAX\n0x1800736e1: RET\n0x1800736e2: MOVZX ECX, word ptr [R10]\n0x1800736e6: LEA R10, [R10 + 0x2]\n0x1800736ea: MOVZX EDX, word ptr [R11]\n0x1800736ee: LEA R11, [R11 + 0x2]\n0x1800736f2: LEA EAX, [RCX + -0x41]\n0x1800736f5: CMP EAX, 0x19\n0x1800736f8: LEA R9D, [RCX + 0x20]\n0x1800736fc: LEA EAX, [RDX + -0x41]\n0x1800736ff: CMOVA R9D, ECX\n0x180073703: CMP EAX, 0x19\n0x180073706: LEA ECX, [RDX + 0x20]\n0x180073709: MOV EAX, R9D\n0x18007370c: CMOVA ECX, EDX\n0x18007370f: SUB EAX, ECX\n0x180073711: JNZ 0x18007371e\n0x180073713: TEST R9D, R9D\n0x180073716: JZ 0x18007371e\n0x180073718: SUB R8, 0x1\n0x18007371c: JNZ 0x1800736e2\n0x18007371e: RET\n\n",
+  "tables": {
+    "names": {
+      "va": "0x18008ea10",
+      "offset": 578064,
+      "bytes": 3648,
+      "sha256": "477758760a6b04a3b7f198874408f4fc9156795260b28f26da940c5686a4b9f6"
+    },
+    "lcids": {
+      "va": "0x18008cfc0",
+      "offset": 571328,
+      "bytes": 3648,
+      "sha256": "12c490beaf37c4da406d63ec5c041966e63975a7221100893416a85475497245"
+    },
+    "complete_raw_records": "extracted-tables.json"
+  },
+  "observed_static_ordering_inversions": [
+    [
+      129,
+      130
+    ]
+  ],
+  "statically_unreachable_name_rows": [
+    {
+      "ordinal": 128,
+      "name": "kok",
+      "row": null,
+      "lcid": 0
+    },
+    {
+      "ordinal": 129,
+      "name": "kok-in",
+      "row": null,
+      "lcid": 0
+    }
+  ],
+  "limits": [
+    "Original x64 ABI equality unproven; typed logical effects/view interface.",
+    "Original static data mutation outside supported domain.",
+    "Static data has valid 0..227 indices, so rejection branches are retained but unreachable without data mutation.",
+    "No original DLL or native Windows locale API execution."
+  ]
+}

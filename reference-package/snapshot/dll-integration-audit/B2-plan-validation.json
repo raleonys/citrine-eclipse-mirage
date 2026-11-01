@@ -1,0 +1,23 @@
+{
+  "result": "PASS",
+  "source_package": "B2",
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "B3",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_concrete_facades": 1,
+  "new_application_owners": 1,
+  "production_dll_readiness": "BLOCKED",
+  "backend_complete": false,
+  "pe_entry_installed": false,
+  "source_count": 696,
+  "execution_plan_sha256": "4db21111365890f6ad9355ab069481efa46dcf356aaf2b4cb44cf166cf76b28e",
+  "readiness_sha256": "9b279dc1b3b284b88c356b577e0571363ff8aaabf3cde637d17a4f5fe02841b2",
+  "dependency_file_sha256": "a0cee04e7ab3ebc8071a456e5fd3c43997ce86f121fd8770ea69f614da8f5b1e"
+}

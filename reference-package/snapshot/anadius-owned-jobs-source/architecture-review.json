@@ -1,0 +1,325 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T18:37:27.952034+00:00",
+  "review_mode": "Independent production/lifetime/test review plus exact three-lambda legacy constructor-contract adjustment; frozen7 and unchanged authoritative quick records/logs/EXEs/archive verified read-only. Reviewer executed no test.",
+  "reviewed_source_hashes": {
+    "jobs.hpp": "f7669fbfdec697920811a17b289c88316f80c250f3ae7c2012ddbc26234be58b",
+    "jobs.cpp": "e096445632dae1b9796387547ee1180991bd646a2c2be0350fbd0b2cf0cb4d07",
+    "jobs_tests.cpp": "d1dc3d4b8e7d183e16cd414641d43e6aca8dba5601eefc6d02129e1f1d3e0a55",
+    "jobs_integration_tests.cpp": "32e1b3d74cece5a1062de4d55773ce96807177fe09f1e6515c4be57a159565a6",
+    "../anadius-session-profile-source/profile.hpp": "b6a4412bc258ef7d47f63cfe8f889ec8ddd18170b1c334e6f127dd93ab1a2bef",
+    "../anadius-session-profile-source/profile.cpp": "46bc37efaa83a728e2fecd9b5b97446237e4e85f174834174a5df6f31e870335",
+    "../anadius-session-profile-source/profile_tests.cpp": "60884c7e7e9b3aa495e9eea32db00486ec9debd8e73d9c37800bb07c0ca51b6b"
+  },
+  "code_freeze": {
+    "path": "work/b44-code-freeze.json",
+    "sha256": "06c6747a1b5073c17ebbd0585310c5b81f12a1b01813a7f3334c7d729a69d2aa",
+    "all_seven_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 230,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b44-core-agent.exe",
+      "executable_sha256": "f1f607fddbb3f957ac0abbac653cd8e34a6e4180d135c57f3212a62db6965277",
+      "archive_path": "work/b44-baseline-core.a",
+      "archive_sha256": "a51da34b255dfca68e105c0ba0161d02e62511d64728eb60d544321c10542c35",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b44-core-agent-results.json",
+        "sha256": "caf5575eddb59d1daf8671394221d0f135923effc808768109bc7d83ef016168"
+      },
+      "path": "work/b44-core-quick-results.json",
+      "sha256": "eb0b4cb1d9ede59879f4c2fd3460b0a161c9fa3b7f62aff4f1b1bc1a4fa87119",
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b44-core-agent.log",
+      "log_sha256": "16a8edbcb5c94e21806852807177f037ffbbab08219cf1ed9c960d07c9713ef9",
+      "actual_used_source_hash_count": 6,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh jobs.cpp, modified profile.cpp and core test plus selected headers/prior fixture:6 actual-use hashes distinct from7 reviewed freeze files. Legacy profile_tests.cpp and integration test are not compiled by core. Main230 excludes14 retained child bodies; parent verifies exact exits401..414. Passive SDK selection tests invoke no imports. Synthetic ticket identities never passed to OS APIs.",
+      "isolated_children": [
+        {
+          "mode": "startreentry",
+          "expected_exit": 401,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "earlydetach",
+          "expected_exit": 402,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "close",
+          "expected_exit": 403,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "unknown",
+          "expected_exit": 404,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "invalidslot",
+          "expected_exit": 405,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "stale",
+          "expected_exit": 406,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "occupied",
+          "expected_exit": 407,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "forged",
+          "expected_exit": 408,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "duplicate",
+          "expected_exit": 409,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "targetdestructor",
+          "expected_exit": 410,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "probe",
+          "expected_exit": 411,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "unknownprobe",
+          "expected_exit": 412,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "retirecheckpoint",
+          "expected_exit": 413,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "donor",
+          "expected_exit": 414,
+          "observed_exit_verified_by_parent": true
+        }
+      ]
+    },
+    {
+      "checks": 298,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b44-integration-v1.exe",
+      "executable_sha256": "5600ee177e38f141364df74136eb1a0c69d2b1daf404c61446a177bf2a1c2fd2",
+      "archive_path": "work/b44-baseline-core.a",
+      "archive_sha256": "a51da34b255dfca68e105c0ba0161d02e62511d64728eb60d544321c10542c35",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b44-integration-v1-results.json",
+        "sha256": "bb022850bf5ae78889079b3e50ffeba157029eb42344cce34533e8856656881a"
+      },
+      "path": "work/b44-integration-quick-results.json",
+      "sha256": "fefc8459fe9be8b3fbde368125f7377daf8d57ae83275b4882919febbfd106fe",
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b44-integration-v1-results.log",
+      "log_sha256": "76a44a09a8c7dbfb3af1f30d760128bf419e6dd3bce8c804c922d2bf676f144b",
+      "actual_used_source_hash_count": 5,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh jobs.cpp, modified profile.cpp and integration test with selected headers:5 actual-use hashes all current. Six watched observations include one historical noncompiled core test; authoritative final core verified by its separate record/freeze. No caller Jobs/AsyncReceive/AsyncSend/Environment implementation. Exact typed injected SDK imports execute through default Native adapters,18inline frame jobs/59nativepackets. Integration has no child.",
+      "watched_source_hash_count": 6,
+      "watched_current_source_hash_count": 5,
+      "historical_noncompiled_watched_sources": [
+        {
+          "path": "jobs_tests.cpp",
+          "recorded_sha256": "5110fcd20cf4eeb9ffbb024ef3011f074d1986d0b1e7598f3aba940d2359046d",
+          "current_sha256": "d1dc3d4b8e7d183e16cd414641d43e6aca8dba5601eefc6d02129e1f1d3e0a55",
+          "compiled_by_this_execution": false,
+          "classification": "historical metadata-only core test observation; final core verified independently"
+        }
+      ],
+      "isolated_children": []
+    }
+  ],
+  "quick_checks_total": 528,
+  "core_agent_checks": 230,
+  "integration_agent_checks": 298,
+  "root_checks": 0,
+  "root_execution_note": "Root normalized the immutable authoritative core/integration quick records without replacing/rerunning those EXEs. Separately root reports a fresh targeted existing profile regression PASS403 after three-lambda adjustment; it is supplemental, not part of new quick total528. Reviewer did not execute tests or independently observe that targeted run.",
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "INITIAL COMMON FAILED on obsolete legacy null-provider rejection expectations, as reported by root. Exact test contract adjustment reviewed; full common rerun PENDING at this review.",
+  "common_build_targets": {
+    "production_objects": 266,
+    "cpp_units": 262,
+    "c_units": 4,
+    "ordinary_groups": 317,
+    "framework_terminal_groups": 19,
+    "status": "planned/common not reviewed as executed"
+  },
+  "baseline_package_sha256": "4bca50f5dbc67cdd7e7baff61382f645f3716fd2de2757c96a3443bd80230547",
+  "baseline_source_files": 906,
+  "prior_sources_preserved": 903,
+  "modified_prior_sources": 3,
+  "modified_prior_source_paths": [
+    "anadius-session-profile-source/profile.cpp",
+    "anadius-session-profile-source/profile.hpp",
+    "anadius-session-profile-source/profile_tests.cpp"
+  ],
+  "new_source_files": 4,
+  "current_source_files": 910,
+  "baseline_scope": "All906 archived source preimages verified; current903 unchanged and exact3 prior modifications (Profile.hpp/cpp plus three-lambda legacy profile_tests.cpp adjustment). Four new module sources bring910.",
+  "archive_proof": {
+    "path": "work/b44-baseline-core.a",
+    "sha256": "a51da34b255dfca68e105c0ba0161d02e62511d64728eb60d544321c10542c35",
+    "matches_B43_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "verified": true
+  },
+  "composition_count_basis": {
+    "baseline_files": 99,
+    "baseline_objects": 49,
+    "new_composition_files": [
+      "anadius-owned-jobs-source/jobs.hpp",
+      "anadius-owned-jobs-source/jobs.cpp"
+    ],
+    "expected_files": 101,
+    "expected_objects": 50
+  },
+  "findings": [
+    {
+      "id": "default-selection",
+      "result": "PASS",
+      "details": "Empty jobs selects owned InlineJobs with Profile jobs_capacity. Empty receive/send select existing NativeAsyncReceive/NativeAsyncSend with appended exact typed import records; missing selected imports reject. Explicit provided Jobs/SDK adapters remain untouched and unused null import values are ignored for those overrides. Constructors are passive."
+    },
+    {
+      "id": "ticket-and-row-lifecycle",
+      "result": "PASS",
+      "details": "Global monotonic nonzero uint32 source ticket values, fixed rows keyed by JobToken.slot and strictly increasing generation; no OS HANDLE/thread identity claim. Row reserved before exact-once inline runner; normal completion/start-return recorded; callback retained until exact completed detach. Retiring target destruction outside gate precedes empty/reusable row. Profile strong/tombstone ownership is not duplicated."
+    },
+    {
+      "id": "callable-ownership",
+      "result": "PASS",
+      "details": "Active seal established before incoming argument validation/target retirement. Incoming and row callable moved-from donors explicitly cleared outside gate while metadata live; unknown runner/probe/donor/target outcomes poison and retain applicable row/incoming/Parent ownership without retry. Final retirement failures may have already destroyed a target; retained-state claim is not unconditional callback immortality."
+    },
+    {
+      "id": "admission-and-lifetime",
+      "result": "PASS",
+      "details": "Nonreentrant start/detach/lifecycle, checkpoint-only checking seal and phase guards reject swallowed recursive source entry, early detach and active close before another execution. Stable Ports/Parent lease and one-use bind; Profile keeps completed pending Application before binds. snapshot metadata safe during callbacks. Explicit close requires trusted external drain and real Parent/IO/Accept/queue/work emptiness, then checkpoint retirement/lease drop before Runtime drained2."
+    },
+    {
+      "id": "actual-sdk-composition",
+      "result": "PASS",
+      "details": "Existing native SDK adapters preserve exact WSARecv/WSASend arguments and unconditional immediate WSAGetLastError, with private receive flags. Integration injects typed SDK imports through these default adapter classes, not caller transport implementations. No real network/socket lifecycle or worker backend is supplied by their constructors."
+    },
+    {
+      "id": "proof",
+      "result": "PASS",
+      "details": "Current core230/14 exact retained children and integration298/no child immutable records/log/EXE/archive and seven frozen source hashes (legacy test diff separately reviewed) verified read-only. Integration defaults jobs/receive/send/environment and exercises actual NativeLogic/Router18inline frame jobs/59packets/wrapped8to16/FIFO17 plus AES/event and full source disposal."
+    },
+    {
+      "id": "legacy-contract-migration",
+      "result": "PASS",
+      "details": "Exact B43 baseline file changed by only3 intended replacements, byte-for-byte no other edits. Defaults changed the old invalid null-only contract; missing selected import and zero default-job capacity remain genuine invalid cases. This is an intended test expectation migration, not evidence of a production regression. Unchanged quick proofs do not compile this legacy test; full common rerun remains required."
+    }
+  ],
+  "resolved_design_risks": [
+    "Provider-external caller Jobs requirement replaced with a concrete bounded same-worker source backend without duplicating Profile ownership.",
+    "Callback/donor retirement must occur outside mutex under active/retiring seals before row reuse.",
+    "Completed tickets alone cannot permit source-memory retirement; strict graph drain and external attestation remain necessary."
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0,
+  "native_mapped_addresses_unchanged": 501,
+  "native_eligible_compiled_tags_unchanged": 505,
+  "explicit_normal_body_claims_unchanged": 139,
+  "historical_native_closures_unchanged": 52,
+  "last_native_body_stage": "B38",
+  "compiler_observations_expected": 88,
+  "new_compiler_trait_values_expected": [
+    0,
+    1
+  ],
+  "registration_role": {
+    "script": "work/b44-register.py",
+    "sha256": "670c426f288b8cffcf9719292843256350a3c004dd4e9c2e3b0efa0d55300694",
+    "preview_author": "/root/b22_provider_audit",
+    "applied_by": "root after separate staged-plan review; reviewer did not apply",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "scope": "Original read-only strict/AST preview for two production prior edits, authored by reviewer and applied by root. Three-lambda legacy test migration is a later explicitly reviewed third prior edit; original script was not rerun/reapplied. Production/test authors independent; reviewer performed no build/probe/test."
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "Reviewer ran no executables/tests; no original/rebuilt DLL/game execution, network traffic, user configuration/token contents, AV retry, fresh REA query or binary read.",
+    "InlineJobs is a selected nonreentrant same-worker/fiber HOST policy under whole Parent Operation. Tickets are source-only identities, not OS HANDLEs/thread IDs, and uint32 ticket exhaustion explicitly rejects. No CRT05e8e0/04a458/native detached-thread/EH/scheduling ABI equivalence.",
+    "Backend adds no session strong/weak ownership. Existing Profile strong/tombstone policy remains authoritative. Generic runner callable provenance and arbitrary raw-job execution are not inferred from token shape.",
+    "Any admitted unsupported/unknown start/detach/callback/probe/retirement outcome poisons; no automatic reschedule, retry, detach, discard or native rollback. Retained descriptors do not pin caller stack lifetimes or guarantee a target already retired on a failure still exists.",
+    "Completed/detached rows and backend Returned/Quiescing flags alone are not kernel/worker/raw-job finality. close also relies on trusted external attestation and actual source graph drain; module unload proof remains absent.",
+    "Native SDK imports require valid function-code/backing lifetime. Defaults do not perform WSAStartup, own sockets, supply IOCP/CRT worker/source error/log/shutdown policy or establish actual network interoperability.",
+    "Legacy explicitly provided providers retain their own binding/execution responsibilities. Defaults are selected only for empty dependency pointers and do not silently rebind caller objects.",
+    "Integration watched metadata-only core hash5110fcd... predates final core; it was not compiled by integration. All5 integration actual-use hashes are current; final core d1dc3d... is separately verified through authoritative core record/freeze. No all-watched-current claim.",
+    "All relevant source units still require clean full common rebuild. Full Resources, socket/CRT worker, real kernel/rawjob drain and B31 loader attach/detach remain open. Production DLL readiness BLOCKED.",
+    "Initial common failure and targeted403 PASS are attributed to root reports. Targeted existing profile suite is not counted as528 new B44 quick checks; current seven-source approval does not claim final common PASS."
+  ],
+  "root_checks_scope": "root_checks=0 refers only to authoritative new B44 quick-record checks; root-targeted legacy regression is recorded separately and not added to528.",
+  "root_targeted_legacy_regression_checks_reported": 403,
+  "legacy_profile_regression_adjustment": {
+    "path": "anadius-session-profile-source/profile_tests.cpp",
+    "before_sha256": "e017d5dfa6742441fc43735a3b7d9fbbf7cf7bfbe2360ba7f0c23f573caebfad",
+    "after_sha256": "60884c7e7e9b3aa495e9eea32db00486ec9debd8e73d9c37800bb07c0ca51b6b",
+    "exact_byte_replacements": 3,
+    "added_bytes": 80,
+    "no_other_changes": true,
+    "reason": "Empty receive/send/jobs are intended valid defaults; negatives now combine empty selected receive/send with missing respective import and empty jobs with zero capacity. Existing positive defaults covered by new immutable quick tests.",
+    "adjustment_record": {
+      "path": "work/b44-profile-regression-adjustment.json",
+      "sha256": "d9a97fb0d12bf5e1f1cdc631e5824cbebf05814a223ecc68e01053d22a64a5d3"
+    },
+    "targeted_result_reported_by": "/root",
+    "targeted_checks_reported": 403,
+    "targeted_executable_artifact": {
+      "path": "work/b44-profile-regression.exe",
+      "sha256": "c1ded1a17c7595ec522aba8d50d91c34c36fbae33c84e877ac974c6644ed5753"
+    },
+    "targeted_execution_independently_verified": false,
+    "targeted_execution_limit": "Root reports fresh compile and PASS403 in tool stdout. Reviewer independently verified source diff and executable artifact, not an unprovided persisted run record.",
+    "common_full_rerun_required": true,
+    "compiled_by_authoritative_core_or_integration_quick": false
+  },
+  "superseded_six_source_review": {
+    "json": {
+      "path": "work/b44-architecture-review-six-before-profile-regression.json",
+      "sha256": "5f6621d3ff82436469ac7645d34238f5a8a6c219320729732838256ab1146a83"
+    },
+    "markdown": {
+      "path": "work/b44-architecture-review-six-before-profile-regression.md",
+      "sha256": "c4f6e81532061ea907b1a900103e59cd4cbc677a45600bd141eed2730e8952cc"
+    },
+    "freeze": {
+      "path": "work/b44-code-freeze-six-before-profile-regression.json",
+      "sha256": "4e4e5dca4576c7b95b6b1027808a533c1dc71f0b078ca2e1142f9fbdbfc71787"
+    },
+    "status": "historical six-source review superseded by current seven-source review; authoritative core/integration execution proof unchanged"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "new C++ source composition of three retained Ghidra bodies",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "complete_selected_evidence": [
+    "../anadius-crt-multibyte-builder-source/evidence.json",
+    "../anadius-crt-multibyte-tables-source/selected-evidence.json"
+  ],
+  "function_evidence": [
+    {
+      "address": "0x18006f674",
+      "pseudo": "ev_82ac27f350ea82c6784171d9bc987418729f2f2712ec6c95b83fdb20a2058881",
+      "assembly": "ev_d4c04fc86da4968083b43e855ee7c4f116d7b038613a196501c9c0b65b7e59c5"
+    },
+    {
+      "address": "0x18006f050",
+      "pseudo": "ev_98c874613f33ebfe1fbaa1dc64f8c1138db71b88cc4495aaa1908ae212078128",
+      "assembly": "ev_4b4e4b9441d418cfe45f12e0661d6c7c4a3ea803a561a2ae2cfc73737e436abd"
+    },
+    {
+      "address": "0x18006f0e8",
+      "pseudo": "ev_3581a6fc19371e8b53e5a7e0d68688916a3c105e6d6c6d857352fd3b3db4619c",
+      "assembly": "ev_0faf58abb94133d2fae75ea705dde26a55177a33ca3a17eee20fb12de583a54d"
+    }
+  ],
+  "constant_proof": {
+    "va": "0x1800a20c0",
+    "file_offset": "0xa06c0",
+    "bytes": 240,
+    "sha256": "bdb03f7a145976f2c290206ebd8efd878e013c5bb058b02cfc9c01b1a1fa3970",
+    "flags_va": "0x1800a20b0",
+    "flags_file_offset": "0xa06b0",
+    "flags_hex": "01020408",
+    "codepages": [
+      932,
+      936,
+      949,
+      950,
+      1361
+    ],
+    "domain": "exact shipped initial values; runtime mutation of original .data rows is outside this source contract"
+  },
+  "connections": [
+    {
+      "from": "previous multibyte bridge Effects::build_multibyte_06f674",
+      "to": "RecordNative::build_multibyte_06f674 -> actual recovered builder"
+    },
+    {
+      "from": "builder systemCP effect",
+      "to": "actual 06efd0 on the explicitly bound live support interface",
+      "state": "same multibyte Globals.system_cp_flag_0a59d8"
+    },
+    {
+      "from": "builder reset/case effects",
+      "to": [
+        "actual 06f050 reset_sbcs",
+        "actual 06f0e8 build_case_tables"
+      ]
+    },
+    {
+      "from": "case native callbacks",
+      "to": [
+        "MANDATORY unrecovered 06e210 GetStringType wrapper",
+        "MANDATORY unrecovered 06cc30 LCMapStringA wrapper"
+      ],
+      "note": "Return status ignored by original; consumed output cells require known bytes, never invented zero-fill."
+    }
+  ],
+  "proof_points": [
+    {
+      "address": "0x18006f6f8..06f716",
+      "finding": "UTF8 updates QWORD+4, pointer+220, DWORD+18, WORD+1c, six WORD+c; other type bytes retained."
+    },
+    {
+      "address": "0x18006f1aa/06f1dd/06f216",
+      "finding": "ctype/map callback statuses ignored; case loop later consumes original uninitialized output arrays."
+    },
+    {
+      "address": "0x18006f23f/06f24e",
+      "finding": "Lower/upper output byte read at the same character index."
+    },
+    {
+      "address": "0x18006f69c",
+      "finding": "Builder calls actual systemCP even after setter already resolved the request. Positive resolved CP resets the flag."
+    }
+  ],
+  "validation": "12032 actual source integration checks; tests retain previous argv/find/path/heap/locale/deep-free flows and add actual builder/case transitions. Synthetic lower/native providers and synthetic initial record are explicitly bounded.",
+  "remaining": [
+    "06e210 and 06cc30 lower CRT wrappers",
+    "Native CP/Heap/FLS/atomic/lock providers and complete image global initialization/lifetime",
+    "Original stack/cookie/SEH/unwind/concurrency/ABI and full standalone DLL equality"
+  ],
+  "target_execution": "none",
+  "original_files_modified": false
+}

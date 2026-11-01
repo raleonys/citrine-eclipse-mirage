@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "output": "PASS: 36 achievement INI writer checks; own fixture only",
+  "checks": 36,
+  "source_hashes": {
+    "writer.hpp": "3c2b5bf57369279c5d484c4435b33157a0af6b363e798f3852a70a40b6691f9b",
+    "writer.cpp": "20bd58a3fb48d3db046725fa6c154da475072c9dbd29f21e7c6a34c617319b87",
+    "writer_tests.cpp": "434fdb579aacb86ca876fae4d5a3b9a5338a23cd4ac744134cd8fa8d75445b6a",
+    "build.ps1": "9508a32223d9708370d8b75750ae5e7badad6747a3d0f8835e4e147cce3e3c0e",
+    "CMakeLists.txt": "907a376543cfce1e312d213928d20a9a0438873876b539862c84330c07b58e12",
+    "README.md": "1038afa07bc3e36c0ec116b0352b7a6579f57f3385d8bff1170c2996d424997c"
+  },
+  "original_target_execution": "none",
+  "real_user_cfg_read": false,
+  "native_scope": "Own generated INI file via existing compatibility backend; mkdir and other effects controlled",
+  "runtime_equivalence": "not established"
+}

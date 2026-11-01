@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_find_bridge",
+    "result": "PASS",
+    "output": "PASS 8664 wildcard/argv/SDK-find/module-path/conversion/heap/error composition checks",
+    "executable_sha256": "b34a21ae156fbdd5b1e1261ad629971cf0f965d5c9c9e5f8b944a4981c4c6a52"
+  },
+  "execution_scope": "Actual argv/wildcard/conversion/module-path/heap/error sources plus typed find/GetModuleFileNameW bridge; owned scratch/records, injected Win32 fixtures, remaining conversion/locale/Heap APIs synthetic",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-find-bridge-source/bridge_tests.cpp",
+      "sha256": "774d8b1ca6ef34ca4d976e8aee2633f877a4c215548c908a7d247e64221ac781"
+    },
+    {
+      "path": "anadius-crt-find-bridge-source/bridge.cpp",
+      "sha256": "0e1a2eb3e5a08e4a4881231ccf24efe0456d7eae95e5fd989e01bccba45ebde4"
+    },
+    {
+      "path": "anadius-crt-find-bridge-source/bridge.hpp",
+      "sha256": "07179a6efed22721345529a9dc3edbd1a0d032747b1090aa46b3ac3c4ae0da87"
+    }
+  ]
+}

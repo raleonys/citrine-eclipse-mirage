@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "xml_reader",
+    "result": "PASS",
+    "output": "PASS: 241 actual XML reader checks; selected upstream compatibility source, original target not executed",
+    "executable_sha256": "bb1d47a55e2c24c5899563522f3612bc7278de2a431dffd11f61b3f504d09c95"
+  },
+  "reader": "actual pinned upstream source compatibility adapter",
+  "original_version_match": "unproven",
+  "target_execution": "none",
+  "runtime_equivalence": "not established",
+  "sources": [
+    {
+      "path": "anadius-xml-reader-source/reader_tests.cpp",
+      "sha256": "750b046372b025ad5e6f3abe130e20a3760be732a35b0c86d29fd641aabcbb30"
+    },
+    {
+      "path": "anadius-xml-reader-source/reader.cpp",
+      "sha256": "0c80c24764ad925ada9ca2c485a984ba490f07d7a596db1eb12c2f18af817d66"
+    },
+    {
+      "path": "anadius-xml-reader-source/reader.hpp",
+      "sha256": "f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e"
+    },
+    {
+      "path": "anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp",
+      "sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554"
+    }
+  ],
+  "provenance": "upstream-provenance.json; altered tinyxml2.h depth=100"
+}

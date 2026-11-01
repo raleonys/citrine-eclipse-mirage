@@ -1,0 +1,296 @@
+{
+  "schema": "node-string.retained-data.v1",
+  "authority": "historical-reference",
+  "confidence": "derived",
+  "parent_file": "outputs/anadius-rea-evidence.json",
+  "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "parent_file_bytes": 34457189,
+  "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "parent_authority": "shipped-artifact",
+  "parent_operation": "read_bytes",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": {
+    "id": "ghidra",
+    "version": "12.1.4"
+  },
+  "analysis_profile_digest": "dcc676845881c04a2d22833fb35d26569462e033daee5e99a95edac5aa61ac05",
+  "parent_read": {
+    "address": "0x18007f000",
+    "requested_bytes": 138752,
+    "returned_bytes": 138752,
+    "complete": true,
+    "last_address": "0x1800a0dff",
+    "decoded_bytes_sha256": "655444c3892927b2730fc34482c65d246ac9314bba13aef6267b0c87d58cc982"
+  },
+  "entity_table": {
+    "address": "0x18007f760",
+    "exclusive_end": "0x18007f7b0",
+    "record_stride": 16,
+    "record_count": 5,
+    "parent_offset": 1888,
+    "bytes": 80,
+    "bytes_hex": "b0f70780010000000400000022000000b8f70780010000000300000026000000bcf70780010000000400000027000000c4f7078001000000020000003c000000c8f7078001000000020000003e000000",
+    "sha256": "2f95e69e4e56392cad524e29c11fcebb53c93132d7bf4eb8c98cab2918c8d3db",
+    "rows": [
+      {
+        "index": 0,
+        "record_address": "0x18007f760",
+        "parent_offset": 1888,
+        "record_bytes": 16,
+        "record_bytes_hex": "b0f70780010000000400000022000000",
+        "name_pointer": "0x18007f7b0",
+        "name_parent_offset": 1968,
+        "name_bytes": 5,
+        "name_bytes_hex": "71756f7400",
+        "name_ascii": "quot",
+        "length_offset": "0x8",
+        "length_bytes": 4,
+        "length_signed32": 4,
+        "replacement_offset": "0xc",
+        "replacement_byte": 34,
+        "replacement_character": "\"",
+        "new_read_performed": false
+      },
+      {
+        "index": 1,
+        "record_address": "0x18007f770",
+        "parent_offset": 1904,
+        "record_bytes": 16,
+        "record_bytes_hex": "b8f70780010000000300000026000000",
+        "name_pointer": "0x18007f7b8",
+        "name_parent_offset": 1976,
+        "name_bytes": 4,
+        "name_bytes_hex": "616d7000",
+        "name_ascii": "amp",
+        "length_offset": "0x8",
+        "length_bytes": 4,
+        "length_signed32": 3,
+        "replacement_offset": "0xc",
+        "replacement_byte": 38,
+        "replacement_character": "&",
+        "new_read_performed": false
+      },
+      {
+        "index": 2,
+        "record_address": "0x18007f780",
+        "parent_offset": 1920,
+        "record_bytes": 16,
+        "record_bytes_hex": "bcf70780010000000400000027000000",
+        "name_pointer": "0x18007f7bc",
+        "name_parent_offset": 1980,
+        "name_bytes": 5,
+        "name_bytes_hex": "61706f7300",
+        "name_ascii": "apos",
+        "length_offset": "0x8",
+        "length_bytes": 4,
+        "length_signed32": 4,
+        "replacement_offset": "0xc",
+        "replacement_byte": 39,
+        "replacement_character": "'",
+        "new_read_performed": false
+      },
+      {
+        "index": 3,
+        "record_address": "0x18007f790",
+        "parent_offset": 1936,
+        "record_bytes": 16,
+        "record_bytes_hex": "c4f7078001000000020000003c000000",
+        "name_pointer": "0x18007f7c4",
+        "name_parent_offset": 1988,
+        "name_bytes": 3,
+        "name_bytes_hex": "6c7400",
+        "name_ascii": "lt",
+        "length_offset": "0x8",
+        "length_bytes": 4,
+        "length_signed32": 2,
+        "replacement_offset": "0xc",
+        "replacement_byte": 60,
+        "replacement_character": "<",
+        "new_read_performed": false
+      },
+      {
+        "index": 4,
+        "record_address": "0x18007f7a0",
+        "parent_offset": 1952,
+        "record_bytes": 16,
+        "record_bytes_hex": "c8f7078001000000020000003e000000",
+        "name_pointer": "0x18007f7c8",
+        "name_parent_offset": 1992,
+        "name_bytes": 3,
+        "name_bytes_hex": "677400",
+        "name_ascii": "gt",
+        "length_offset": "0x8",
+        "length_bytes": 4,
+        "length_signed32": 2,
+        "replacement_offset": "0xc",
+        "replacement_byte": 62,
+        "replacement_character": ">",
+        "new_read_performed": false
+      }
+    ],
+    "new_read_performed": false
+  },
+  "listings": {
+    "pseudo": {
+      "file": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "functions": {
+        "0x1800035e0": {
+          "evidence_id": "ev_5e71fdafa86c9cb6c66ad0d57972845920ad9cc67d23951b21164d5b586a0c01",
+          "section_file": "work/node-string-0035e0.pseudo.txt",
+          "section_sha256": "9680e26fa4a56d02deac825d378eb17759af584cfdf470725b0f0ebc5808b303",
+          "complete_function_section": true,
+          "new_source_claimed": false
+        },
+        "0x1800033c0": {
+          "evidence_id": "ev_7211c09f4e3acada2bf0a092a4d0b4db261a922633cd960791de3ac1b75d3e93",
+          "section_file": "work/node-string-0033c0.pseudo.txt",
+          "section_sha256": "b79c1c8922940dddd4dc4699e24826989911b66125e5ed4d194375e6d7ca9b82",
+          "complete_function_section": true,
+          "new_source_claimed": false
+        },
+        "0x180004970": {
+          "evidence_id": "ev_01d06f0d09c426e84edfc80412a5b90481296b9b16734298cadd2cf8fceab53d",
+          "section_file": "work/node-string-004970.pseudo.txt",
+          "section_sha256": "a8689c093ce9b7e3755ce6b2405a49544cee1e74c6ae3ed7448158838894817c",
+          "complete_function_section": true,
+          "new_source_claimed": false
+        }
+      }
+    },
+    "assembly": {
+      "file": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "functions": {
+        "0x1800035e0": {
+          "evidence_id": "ev_704e716e4fcf7eead3762f34f5b8e311ff9f14a674ad542b9c79429b3efad5e0",
+          "section_file": "work/node-string-0035e0.asm.txt",
+          "section_sha256": "4b21237d988ca5b2387dba6bfc8081b0fbb34c531dd1ec87f7b3ba5b9a1d6a82",
+          "complete_function_section": true,
+          "new_source_claimed": false
+        },
+        "0x1800033c0": {
+          "evidence_id": "ev_6e7800e9effc9462e86aa57c8979765dab860606e1cbea5663041f63cbc1a54e",
+          "section_file": "work/node-string-0033c0.asm.txt",
+          "section_sha256": "7ec1a1ac1430859e061f650051a11bde680e6947b5257df35cb4b1a419283778",
+          "complete_function_section": true,
+          "new_source_claimed": false
+        },
+        "0x180004970": {
+          "evidence_id": "ev_bab15aa72d1d1d2cb34f0a417872877e60c9e43b5b9530ac83290c1bbc58da0a",
+          "section_file": "work/node-string-004970.asm.txt",
+          "section_sha256": "4607f882217c81dfae269649c4ea153c3769f7486c9f4a4c12a5f3d7ccc1fa84",
+          "complete_function_section": true,
+          "new_source_claimed": false
+        }
+      }
+    }
+  },
+  "instruction_anchors": [
+    "0x1800035f8: TEST dword ptr [RCX], 0x100",
+    "0x180003613: MOV byte ptr [RAX], 0x0",
+    "0x180003616: XOR dword ptr [RCX], 0x100",
+    "0x18000361c: JZ 0x180003777",
+    "0x180003658: MOV ECX, dword ptr [R14]",
+    "0x18000365b: TEST CL, 0x2",
+    "0x180003699: TEST CL, 0x1",
+    "0x1800036cf: CALL 0x1800033c0",
+    "0x1800036d9: MOVSXD RBX, dword ptr [RSP + 0x20]",
+    "0x1800036ec: CALL 0x180078d30",
+    "0x180003700: MOVSXD R8, dword ptr [RBX + 0x8]",
+    "0x18000370b: CALL 0x18005c550",
+    "0x180003714: MOVSXD RAX, dword ptr [RBX + 0x8]",
+    "0x180003718: CMP byte ptr [RAX + RDI*0x1 + 0x1], 0x3b",
+    "0x180003728: JMP 0x180003745",
+    "0x18000372a: MOVZX EAX, byte ptr [RBX + 0xc]",
+    "0x180003733: MOV EAX, dword ptr [RBX + 0x8]",
+    "0x180003736: ADD EAX, 0x2",
+    "0x180003739: CDQE",
+    "0x180003740: MOVZX EAX, byte ptr [RDI]",
+    "0x180003743: MOV byte ptr [RSI], AL",
+    "0x180003745: INC RDI",
+    "0x180003748: INC RSI",
+    "0x18000374b: CMP RDI, qword ptr [R14 + 0x10]",
+    "0x18000376c: MOV byte ptr [RSI], 0x0",
+    "0x180003777: TEST byte ptr [R14], 0x4",
+    "0x180003790: MOVZX ECX, byte ptr [RBX]",
+    "0x18000379b: JNZ 0x1800037ab",
+    "0x18000379d: CALL 0x180051fc0",
+    "0x1800037ab: MOV qword ptr [R14 + 0x8], RBX",
+    "0x1800037cd: CALL 0x180051fc0",
+    "0x1800037ed: CALL 0x180051fc0",
+    "0x1800037fb: CMP byte ptr [RBX], 0x0",
+    "0x180003806: MOVZX ECX, byte ptr [RBX]",
+    "0x18000381b: AND dword ptr [R14], 0x200",
+    "0x180003822: MOV RAX, qword ptr [R14 + 0x8]",
+    "0x180003844: MOV RAX, qword ptr [RCX + 0x8]"
+  ],
+  "entry_and_flags": {
+    "pair_flags_offset": "0x0",
+    "pair_start_offset": "0x8",
+    "pair_end_offset": "0x10",
+    "flag100_clear": "Return live start only;do not read end,write terminator or clear flags",
+    "flag100_set": "Read end,store BYTE0 at cached end,then live DWORD XOR100",
+    "post_xor_zero": "Skip first pass including start/end reads and output terminator",
+    "first_pass_iteration_flags": "One cached DWORD used for both bit2 newline and bit1 entity checks",
+    "first_pass_loop_end": "Live pair.end reread after each iteration",
+    "whitespace_gate": "Live BYTE flags bit4",
+    "completion_flags": "Live DWORD AND200;return live pair.start"
+  },
+  "first_pass": {
+    "newline_pairs": [
+      "CRLF -> LF",
+      "LFCR -> LF",
+      "CR -> LF",
+      "LF -> LF"
+    ],
+    "named_entity_order": [
+      "quot",
+      "amp",
+      "apos",
+      "lt",
+      "gt"
+    ],
+    "named_entity_compare_count": "Always5 maximum;no pointer-equality shortcut",
+    "compare_length": "Live table signed32 ->64 before call",
+    "semicolon_length": "Reload table signed32 after successful comparison",
+    "matched_advance": "Reload table DWORD after replacement store,ADD EAX2 modulo32,then CDQE",
+    "unknown_named_entity": "Increment input and output without any output store;stale destination retained after prior compaction",
+    "numeric_output_buffer": "Ten zero bytes initialized before each0033c0 call",
+    "numeric_output_length": "DWORD0 before call;successful return length signed32 ->64 for mandatory078d30 copy",
+    "numeric_decode_failure": "Return0 from0033c0 triggers fresh ordinary source-byte copy",
+    "output_termination": "BYTE0 at cached output after loop when postXOR flags nonzero;pair.end not rewritten"
+  },
+  "whitespace": {
+    "high_bit": "Bytes80..FF skip051fc0 classifier",
+    "classifier_argument": "Zero-extended source byte",
+    "leading_classifier_includes_zero": true,
+    "leading_publication": "Store cached cursor to pair.start,then load source byte fresh",
+    "outer_byte": "Cached across classifier call;inner loop reloads same source byte,so duplicate classifier calls preserved",
+    "inner_exit": "Check fresh byte for0 after classifier loop",
+    "copy_after_space": "Write ASCII20 only for nonzero fresh inner-exit byte,then reload source byte before copy",
+    "pair_end_used_as_bound": false
+  },
+  "context_only_addresses": [
+    "0x1800033c0",
+    "0x180004970"
+  ],
+  "mandatory_lower_providers": [
+    "0033c0 numeric entity decoder",
+    "078d30 memory copy",
+    "05c550 bounded compare",
+    "051fc0 byte classifier"
+  ],
+  "new_original_read_performed": false,
+  "new_native_analysis": false,
+  "new_source_bodies_claimed": 0,
+  "original_execution": "none",
+  "original_modification": false,
+  "limitations": [
+    "Raw rows/names are retained initialized static Ghidra memory,not runtime observations.",
+    "Exact table bytes establish five shipped selected records only;arbitrary modified native globals are not established.",
+    "0033c0,078d30,05c550 and051fc0 remain mandatory sources/providers;this report claims no new source body.",
+    "Security-cookie04b220,stack layout,native exceptions/concurrency,original CRT locale and full DLL ABI equivalence remain open.",
+    "No original DLL/EXE/CFG/token/achievement contents read by this extraction;blocked original/generated version.dll never retried."
+  ]
+}

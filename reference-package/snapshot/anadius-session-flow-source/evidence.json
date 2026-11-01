@@ -1,0 +1,161 @@
+{
+  "schema": "session-flow.normal-source.evidence.v1",
+  "source_package": "B37",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_original_procedures": 3,
+  "normal_source_procedures_added": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ],
+  "new_canonical_mapped_entries": 2,
+  "functions": [
+    {
+      "address": "0x180021a10",
+      "source_presence_before": "no_definition_mapping",
+      "prior_definition_variants": 0,
+      "newly_recovered_normal_body": true,
+      "pseudo_evidence": "ev_e06fa20bfb3984fd9d6818ba3758d4f3fd4e6b252450f8e675c7ccdb881c70e8",
+      "assembly_evidence": "ev_3c4d2a421e5c3d8bae808dc3fd289a0a76a9ae2ed355d78a344fa56da80061e9"
+    },
+    {
+      "address": "0x180025720",
+      "source_presence_before": "source_definition_mapped",
+      "prior_definition_variants": 2,
+      "newly_recovered_normal_body": true,
+      "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa"
+    },
+    {
+      "address": "0x1800270e0",
+      "source_presence_before": "no_definition_mapping",
+      "prior_definition_variants": 0,
+      "newly_recovered_normal_body": true,
+      "pseudo_evidence": "ev_21eb9ae0b32f1f5ae22d1de13650c6541b60242f69f8b4ba3920aab1c162b1b4",
+      "assembly_evidence": "ev_7c297e7649382584bfeea23d03522ec0b534b3dd9e8bed7a47b591d22d6fe64c"
+    }
+  ],
+  "retained_function_records": [
+    {
+      "address": "0x180021a10",
+      "evidence_id": "ev_e06fa20bfb3984fd9d6818ba3758d4f3fd4e6b252450f8e675c7ccdb881c70e8",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 27323,
+      "retained_record": "180021a10.pseudo.c.txt",
+      "record_sha256": "9acd74c0acab0cfacef8169cec58a334680fb8f78c2266777aa93473632a86c7"
+    },
+    {
+      "address": "0x180025720",
+      "evidence_id": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 31078,
+      "retained_record": "180025720.pseudo.c.txt",
+      "record_sha256": "19cdf416c8d425c7e7640227e93eead3159bb1c1edc771aa0b46010f90e11900"
+    },
+    {
+      "address": "0x1800270e0",
+      "evidence_id": "ev_21eb9ae0b32f1f5ae22d1de13650c6541b60242f69f8b4ba3920aab1c162b1b4",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 32508,
+      "retained_record": "1800270e0.pseudo.c.txt",
+      "record_sha256": "5b745e311b77b5bd796e84b424c8a9aa36a05a04b3211cb89f6771d3c5ce5353"
+    },
+    {
+      "address": "0x180021a10",
+      "evidence_id": "ev_3c4d2a421e5c3d8bae808dc3fd289a0a76a9ae2ed355d78a344fa56da80061e9",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 34396,
+      "retained_record": "180021a10.asm.txt",
+      "record_sha256": "b53051f11ba2be9150120364a41ff48d808d9ede7c5bdbcde6b76167400980d2"
+    },
+    {
+      "address": "0x180025720",
+      "evidence_id": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 38441,
+      "retained_record": "180025720.asm.txt",
+      "record_sha256": "30672726aa06fd752f2ec98e042cf9c27e77cebca19b0634f17c3f41a17cad2b"
+    },
+    {
+      "address": "0x1800270e0",
+      "evidence_id": "ev_7c297e7649382584bfeea23d03522ec0b534b3dd9e8bed7a47b591d22d6fe64c",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 40177,
+      "retained_record": "1800270e0.asm.txt",
+      "record_sha256": "c3993a259751e63d7b706b1b8355d05e779703723c8de3436c14c9f3ae08740b"
+    }
+  ],
+  "modified_prior_sources": [
+    {
+      "path": "anadius-accept-source/owned.cpp",
+      "before_sha256": "ca0b1e0bf4e6c22c320f09c4794052051307e8df268cc6b155b924bba5c57a26",
+      "after_sha256": "16b71225e0d036abccf3b401ead592253b7c34b46d3c6e5acb6fa98a5e0fccc6",
+      "reason": "Add checked accept-sidecar retirement before cross-kind projections, including native41-byte handler allocations; reject pending loans and preserve unrelated base packet bindings."
+    },
+    {
+      "path": "anadius-accept-source/owned.hpp",
+      "before_sha256": "837fe33f9a97020c0aeac604cb09166e6db40eea3ef79414830512e2cfbd4cca",
+      "after_sha256": "cc1507df19d58f58b2b3d934da5d18dc063780506876affa803ef43c4c61f8fa",
+      "reason": "Add checked accept-sidecar retirement before cross-kind projections, including native41-byte handler allocations; reject pending loans and preserve unrelated base packet bindings."
+    },
+    {
+      "path": "anadius-io-memory-source/io_memory.cpp",
+      "before_sha256": "78e32fbe9049fa8636962d74b0a35dc1a6920cb5c1424a5c4ff8455b28bf5793",
+      "after_sha256": "95294bcd3424ba717eed4fdb369f55a79c07d7b6453c5a7d8e2141b674bc11eb",
+      "reason": "Add completion entry points accepting coherent source memory while retaining generation/observed-loan/poison guards; existing entry points delegate with the original base-memory default."
+    },
+    {
+      "path": "anadius-io-memory-source/io_memory.hpp",
+      "before_sha256": "10a8d278f64a4f114791e1446f8a8a7c3c4366d8352becb43d90e30eaa0d928b",
+      "after_sha256": "29424a26545c256ecac9be6ebc27903d25f60d2c47cedbb15d246a6b1d72b95c",
+      "reason": "Add completion entry points accepting coherent source memory while retaining generation/observed-loan/poison guards; existing entry points delegate with the original base-memory default."
+    },
+    {
+      "path": "anadius-socket-source/cipher_session.hpp",
+      "before_sha256": "3fa624b7443d7fa1ab3eb86f9567e5b98323014166b98be43328360c272af412",
+      "after_sha256": "c8b54d806823845482009cbd211f3b9923497d471b29d98729ce12ea364a1fc2",
+      "reason": "Add friend declaration for defined cipher-field copy preserving destination own schedule reference, with no class data/vptr layout change."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b37-core-quick-results.json",
+      "sha256": "27a1f7889a5cfa82b8c9b39fcf383fa8651eecd81483732f596d2a837606d5ed",
+      "checks": 546,
+      "executable_sha256": "e19d2722f7a5877ae1a237e83930c93ed1fa92c8e2ad3aa0006d33781f9e1904",
+      "archive_sha256_as_used": "dc34c18e42ebaaa58f3ca7a7fc1fe57ee49afc589a4b0f42d630511872b0c4ee",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Core compiles fresh flow.cpp and four as-used source/header files; integration explicitly compiles fresh flow/coherent/owned/base IO cpp before immutable canonical B36 archive. Full common build is separately required."
+    },
+    {
+      "path": "work/b37-integration-quick-results.json",
+      "sha256": "40a9f93368263f565dd5e7817917ff164d42f1e573118ed3acd2aca66d803813",
+      "checks": 179,
+      "executable_sha256": "32e5bdf9177549fa1ea4b9774a7b1dc4f563d6f10bc3218118e8af2486cbe60d",
+      "archive_sha256_as_used": "dc34c18e42ebaaa58f3ca7a7fc1fe57ee49afc589a4b0f42d630511872b0c4ee",
+      "execution_author": "/root/b22_integration",
+      "note": "Core compiles fresh flow.cpp and four as-used source/header files; integration explicitly compiles fresh flow/coherent/owned/base IO cpp before immutable canonical B36 archive. Full common build is separately required."
+    }
+  ],
+  "source_claim": "Three typed normal bodies; preserve two coarse025720 definitions. Defined cipher copy covers198 bytes, padding2/native class ABI/EH remain unclaimed.",
+  "retained_REA_session": {
+    "path": "outputs/anadius-session-flow-source/rea-session-summary.json",
+    "sha256": "c80d44f1198343785841a32cb7529050c0e57ccece2f93df36e679455da1fb38",
+    "fresh_target_queries": 0
+  },
+  "guard_negative_control": {
+    "path": "outputs/anadius-session-flow-source/coherent-guard-negative-control.json",
+    "sha256": "73aa31f5ad7da158f478aa5499ab5739030eedc6f130ae18e8dcb9e6574d2bd3",
+    "scope": "Copied reconstructed source omitting final Base phase guard; expected clean failure, no original target"
+  },
+  "original_execution": false,
+  "original_modification": false,
+  "new_original_bytes_queried": 0,
+  "actual_user_content_analysis": false
+}

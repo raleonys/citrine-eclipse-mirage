@@ -1,0 +1,62 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T09:21:17.1956409Z",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\crt_glue.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\build\\crt_glue.o"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\glue_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-crt-ptd-source\\ptd.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-crt-ptd-data-source\\ptd_data.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-crt-heap-source\\heap.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-crt-error-source\\errors.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-crt-invalid-source\\invalid.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-crt-runtime-source\\runtime.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-thread-native-source\\win32_effects.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-thread-source\\threads.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\..\\anadius-source\\bootstrap.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\build\\crt_glue.o",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-glue-source\\build\\glue_tests.exe"
+      ]
+    }
+  ],
+  "output": "PASS 202 integrated CRT/PTD/FLS/heap/thread checks",
+  "target_execution": "none",
+  "scope": "Real recovered CRT algorithms plus typed SDK fixtures; raw storage from owned operator-new test heap; simulated thread exit/FLS callback; no native FLS/heap/thread/module APIs",
+  "sources": [
+    {
+      "name": "crt_glue.cpp",
+      "sha256": "b880c863eb26775ee3de243ef68e8e9a2dc78a3ada7bfa7b1a2de8d2223942ca"
+    },
+    {
+      "name": "crt_glue.hpp",
+      "sha256": "d9dd2b7385850820a614600f51ff103f1929c85178b8bd065c38db661257710e"
+    },
+    {
+      "name": "glue_tests.cpp",
+      "sha256": "750f23db0ab7755cb6c70a58fe3276ff92d1b0aa73dcb7180bde4e9ae61dac74"
+    }
+  ],
+  "executable_sha256": "964117382690d2ac46941d3f557a105d6ca678921caf2fb9cd68abc37b343945"
+}

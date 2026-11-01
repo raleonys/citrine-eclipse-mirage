@@ -1,0 +1,28 @@
+/* 0x180023d20 FUN_180023d20; Evidence ev_6cc121a29050e5e059f62f9f48170fa0366704c46376ab9043b965b45f7da214 */
+
+longlong * FUN_180023d20(longlong *param_1,longlong *param_2)
+
+{
+  longlong lVar1;
+  
+  *param_1 = *param_2;
+  param_1[3] = 0;
+  param_1[4] = 0;
+  *(undefined4 *)(param_1 + 8) = 2;
+  *(undefined1 *)((longlong)param_1 + 0x44) = 0;
+  param_1[9] = 0;
+  param_1[10] = 0;
+  param_1[0xb] = 0;
+  *(undefined4 *)(param_1 + 0xc) = 0;
+  param_1[9] = 2;
+  lVar1 = param_2[0xf];
+  param_1[0xf] = lVar1;
+  param_1[0x11] = param_2[0x11];
+  (**(code **)(lVar1 + 8))(param_1 + 0xd,param_2 + 0xd);
+  param_1[0x12] = param_2[0x12];
+  FUN_180028950(*param_1,param_1 + 1,param_2 + 1);
+  return param_1;
+}
+
+
+

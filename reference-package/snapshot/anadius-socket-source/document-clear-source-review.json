@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/native_doc_audit",
+  "independent_from_production_author": true,
+  "scope": "Read-only retained assembly versus two bounded normal clear/node source projections and two final bindings; no test execution by reviewer",
+  "reviewed_source_hashes": {
+    "document_clear.cpp": "88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4",
+    "document_clear.hpp": "f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb"
+  },
+  "addresses": [
+    "0x180002e60",
+    "0x180003110"
+  ],
+  "findings": [
+    "Unlink loads/stores and captured node vtable before link resets match003140-003189; slot38 target loaded after resets and full64-bit result preserved",
+    "Tracking search bound/table cached; signed count reloaded at match; fresh DWORD decrement after swap store",
+    "Live node vtable then cached pool before destructor; live cached-pool vtable/slot18 after destructor; explicit node second argument",
+    "Clear uses direct003110 source and live tracking count/table/first-node loop with distinct attached and standalone lower helpers",
+    "Seven exact reset fields; earlier error/line writes not repeated after callbacks; buffer free called even null",
+    "Final context binds same NativeDocumentEffects receiver for free; copying/moving self-referential adapter disabled"
+  ],
+  "limitations": [
+    "003030/003240 and node/pool virtual effects remain mandatory providers",
+    "Full native DOM/parser/pool/allocator/free and native vtable/object lifecycle are not established",
+    "No native fault/unwind/EH/SEH/concurrency/runtime equivalence or full DLL completion claim"
+  ],
+  "full_native_equivalence_review_complete": false,
+  "original_execution": "none",
+  "original_modification": false
+}

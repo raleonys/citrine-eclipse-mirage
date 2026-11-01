@@ -1,0 +1,35 @@
+{
+  "kind": "new typed Windows SDK heap adapter; not a recovered binary body",
+  "recovered_function_bodies_added": 0,
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "existing_callsite_evidence": [
+    "../anadius-crt-heap-source/evidence.json",
+    "../anadius-crt-realloc-source/evidence.json"
+  ],
+  "existing_addresses": ["0x1800704cc", "0x180066848", "0x1800668c0", "0x18006a308", "0x18006e3a0"],
+  "anchors": [
+    "0x1800704cc: existing source initializes caller-owned heap state from GetProcessHeap",
+    "0x180066848: existing calloc calls HeapAlloc with flag8 after size/product/retry handling",
+    "0x1800668c0: existing free calls HeapFree flag0 and maps GetLastError on failure",
+    "0x18006a33a..0x18006a346: existing malloc HeapAlloc IAT0x18007f208, flag0",
+    "0x18006e3fe..0x18006e40d: existing realloc HeapReAlloc IAT0x18007f210, flag0"
+  ],
+  "native_contract_source": "Local llvm-mingw Windows SDK heapapi.h declarations47..51, errhandlingapi.h GetLastError declaration; hashes retained in provenance.json",
+  "implementation_contracts": [
+    "SDK decltype function pointer types retain WINAPI and width; Api copied by value",
+    "All six API entries checked for NULL before use",
+    "Direct exact forwarding with no staging, normalization, ownership or LastError rewriting",
+    "HeapFree SDK BOOL normalized with !=0; zero and arbitrary nonzero fixture returns checked",
+    "HeapSize preserves full SIZE_T including UINT64_MAX failure sentinel",
+    "No HeapCreate or HeapDestroy production API and no automatic allocation cleanup"
+  ],
+  "validation": "169 checks; typed WINAPI fixtures plus GetProcessHeap and modest own real allocations32/realloc96/shrink16/size/free only",
+  "limitations": [
+    "No original or rebuilt DLL/game load, execution or mutation",
+    "Native invalid-pointer, invalid-heap, huge allocation, SEH and flag exception paths not executed",
+    "HeapSize API supplied for existing consumer boundaries; no new original HeapSize callsite body recovered here",
+    "Global initialization, new-handler, lock, FLS/PTD, DLL lifecycle and ABI/SEH equivalence remain separate",
+    "Not a complete independent DLL or recovered original source"
+  ]
+}

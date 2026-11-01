@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 2493,
+  "integration_checks": 639,
+  "output": "PASS: 2493 socket write finish core checks; actual025a70 mask/pop, saved strings/owner and live callback mutations, size/alignment boundaries and terminal, exact category/code suppression and log stream order, wrapped signed virtual offset, heap lifetime ends, bounded projections and callback exception prefixes\nPASS: 639 socket write finish integration checks; actual025a70/023dd0/021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends",
+  "source_hashes": {
+    "write_finish.hpp": "c9e341de1a667ba2f17c1861aed4800243d2ebff022f3b9df47cdf6e48c2f6ba",
+    "write_finish.cpp": "b13efb4696b7a8fd89e94e5d14d22d0b7da93d7da820fcaf212241807918667e",
+    "write_finish_tests.cpp": "74bc4a4b373a3e99fe3048e107d91e90dde669961d20e6df5504ac069484cd88",
+    "write_finish_integration_tests.cpp": "57872f220d0b977a22993c887f2e99a0fefb89a80cccb44ef687e211108ce945",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 1,
+  "execution_scope": "025a70 retained normal body: masked deque index and saved owner/string, live fields after free and current owner token before next; inline/heap capacity15/16/4094/4095/max and unsigned size/alignment boundaries including terminal; cached code before misc, category after misc cached across log begin, exact code2/category identity suppression; constructed string pointer/length, returned append stream, signed32 virtual offset wrap, widen/put/flush and live message destruction; callback mutation/lifetime ends, required exception prefixes and bounded missing/ambiguous projections; actualRecoveredFinishedWriteEffects/025a70/023dd0/021fd0/0261d0/027c10/0298b0/027a20 recovered scheduler chain, borrowed/owned three-chunk sends, early completion/fallback, queue reset/pop/required next and mapped error logging/suppression",
+  "required_providers": "02a500 next write, native deque/string/category/vtable object projections,006880/007990/01e510/00fe90/00e1e0 logging,04b0f8 free/05c974 terminal,025c40 receive and native factory/TLS/guard/ABI ownership remain required; CRT production unchanged and paused",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; bounded typed map/string/category/stream tokens and deterministic injected SDK callbacks do not establish native ABI/table ownership/heap/SEH/concurrency or full DLL equivalence; exception prefixes do not invent native unwind cleanup; no original/game/real SDK socket/network/TLS/IOCP/event/thread/wait or user cfg/token/achievement execution/read"
+}

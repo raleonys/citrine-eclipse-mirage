@@ -1,0 +1,48 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "source_package": "B5",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b5_source_review",
+  "scope": "Independent bounded static review of four B5 production files, three test files and B3/B4 ownership/shutdown contracts. No original targets opened, executed or modified; no actual user CFG/token/achievement contents read. Full common build not run by reviewer.",
+  "reviewed_source_hashes": {
+    "providers.hpp": "9b403c5c89ae5a1d34717e8e7e9d82230b36199d5f359398348e2dd66712f3e1",
+    "providers.cpp": "7ff5991f38d1b88e120300d9109fd6862f88a47a93de91966fa8aaee3c0a7f04",
+    "native_threads.hpp": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+    "native_threads.cpp": "dab4d5f9d641817eec45245cf4859a6f288af475aad4fec2b1bba4b91ac5feb9"
+  },
+  "prior_sources_preserved": 710,
+  "prior_source_preservation_evidence": "Independently compared every B4 source-snapshot entry from the prior delivery ZIP against current file SHA-256; all 710 entries identical.",
+  "findings": [
+    {"id": 1, "topic": "configuration_routes", "conclusion": "Seven selected Dependencies methods bind recovered parent/join/filename/filesystem encoding and explicit compiler-CRT predicates/Win32 environment call. Fourteen application/OS policies remain owned and delegated; no full default configuration provider is claimed."},
+    {"id": 2, "topic": "encoding_domains", "conclusion": "filesystem_widen_010540 uses the existing filesystem code-page algorithm. Unestablished UTF-8 widen, narrow-path and relative-resolution policies stay delegated rather than being guessed."},
+    {"id": 3, "topic": "ctype_domain", "conclusion": "isspace receives an unsigned byte; tolower admits only unsigned-char values or EOF. Negative non-EOF signed-byte inputs fail before invoking C-library undefined behavior. This is an explicit reconstruction domain bound, not original multibyte/locale equivalence."},
+    {"id": 4, "topic": "console_identity", "conclusion": "CompilerConsole is immovable, so opaque tokens into its three FILE* slots remain stable. Reopen validates equal observed source/output identities and never treats a foreign token as a FILE record."},
+    {"id": 5, "topic": "console_crt_policy", "conclusion": "freopen_s receives a separate valid FILE* output cell and the existing FILE* value. No original 0x58-byte MSVC FILE layout is aliased, copied or dereferenced. Closed/null slots after a failed compiler reopen are rejected on reuse; source API failure codes remain visible."},
+    {"id": 6, "topic": "construction", "conclusion": "bind_configuration_and_console constructs source providers before publication and retains an explicitly selected console. Construction does not invoke application entry, open a console, load target DLLs or change environment state."},
+    {"id": 7, "topic": "launch_ownership", "conclusion": "Each create operation allocates its envelope before the SDK CreateThread call. The native callback copies provider/context identities and deletes the envelope before entering recovered thread_entry_05e7a8, avoiding reliance on C++ destructors after ExitThread."},
+    {"id": 8, "topic": "successful_create", "conclusion": "After successful CreateThread, the creator uses only returned handle/ID and never rereads the envelope or Context, which a fast worker may already have released."},
+    {"id": 9, "topic": "failed_create", "conclusion": "Normal SDK failure deletes the unconsumed envelope, preserves the failure LastError and leaves caller ID untouched. The recovered begin-thread body remains responsible for Context failure cleanup."},
+    {"id": 10, "topic": "unknown_create_outcome", "conclusion": "An injected CreateThread exception with unknown worker outcome intentionally does not free the envelope. B3 TrackingThreads marks the attempt poisoned and cannot establish successful shutdown; no fabricated rollback or worker quiescence is inferred."},
+    {"id": 11, "topic": "calling_conventions", "conclusion": "The SDK callback has DWORD WINAPI(void*) and exact CreateThread function-pointer type. Application invocation remains the existing unsigned __stdcall(void*) route; stack size and source operands retain the Windows x64 widths."},
+    {"id": 12, "topic": "thread_domain_factory", "conclusion": "make_recovered_threads constructs the existing concrete crt_glue::ThreadEffects and the outer launch wrapper, with explicit referenced runtime/PTD/heap/error/invalid state and a mandatory shared lifetime owner. The private lower create method is replaced by the outer method that builds Launch envelopes; no per-image provider router is introduced."},
+    {"id": 13, "topic": "destruction_order", "conclusion": "NativeThreads keeps its shared domain owner alive through lower-provider destruction. Joined-worker/FLS completion remains mandatory before destroying the outer provider. B3/B4 controlled close supplies this ordering for correctly admitted/tracked workers."},
+    {"id": 14, "topic": "tests", "conclusion": "Core source tests cover explicit path/encoding/ctype failures, observed console branches, stream identity rejection and native worker callback entry/exit. Integration uses three own Win32 workers started serially during synthetic join, memory-only config inputs and injected console/encoding/provider effects. Counter checks occur before ResumeThread or after WaitForSingleObject, excluding concurrent mutation of the shared non-atomic test counter."},
+    {"id": 15, "topic": "scope_and_metrics", "conclusion": "This package assembles existing source algorithms with new ownership/adapter code. It adds no recovered native body, native provider closure or PE entry. Nine remaining Bootstrap Services policies are unchanged; compiler-console completion does not close foreign CRT/FILE ABI equivalence."}
+  ],
+  "limits": [
+    "No independently executed test run or full common build is claimed by this static reviewer; parent reported 53 core and 110 integration quick checks. Authoritative common validation must capture actual final counts and frozen source hashes.",
+    "The complete actual CRT ThreadDomain graph and its FLS teardown are supplied by the caller. make_recovered_threads construction/type selection is statically reviewed; the new integration test executes NativeThreads with a controlled lower provider rather than a complete original-native CRT domain.",
+    "The raw NativeThreads provider has no implicit join or safe active-worker destructor. B3 TrackingThreads or its caller must exclude future entries and join all pending/suspended workers plus FLS teardown before provider destruction.",
+    "Launch bookkeeping uses the real current-thread Win32 GetLastError/SetLastError domain. Injected create functions and the lower provider's last_error must use that same domain for equivalent error propagation.",
+    "An unknown throwing CreateThread provider may leave an envelope retained permanently; that failure is fail-closed via B3 poison, not a recoverable successful teardown.",
+    "CompilerConsole is an explicitly selected rebuilt compiler-CRT policy. Original MSVC FILE memory layout, aliasing side effects, invalid-parameter behavior and failure cleanup ABI are not proved equivalent. Stream use and external CRT stream mutations must be serialized by the caller.",
+    "Compiler C locale and original static CRT locale/multibyte behavior may differ. Negative non-EOF signed-char tolower input is deliberately outside this adapter's supported domain.",
+    "The configuration bridge still requires fourteen lower configuration policies, including licensing, persistence and actual filesystem effects. Source providers must obey their own lifetime and synchronization contracts.",
+    "General concurrent native Execution behavior, foreign STL/EH/SEH/object ABI, actual provider completeness, loader-lock-safe shutdown, image unload and PE-entry wiring remain open B3/B4 gates.",
+    "No original binary execution, original file modification, real user configuration content read or complete DLL runtime equivalence is established."
+  ],
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "production_dll_readiness": "BLOCKED"
+}

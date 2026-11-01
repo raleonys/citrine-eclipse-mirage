@@ -1,0 +1,241 @@
+/* 0x180021820 FUN_180021820; Evidence ev_c2dbc60d3e6cbfc1dd46b28a5bd060319ea97dd547e51623a7efe3600615dc5d */
+
+byte * FUN_180021820(undefined8 param_1,undefined8 *param_2,longlong param_3,ulonglong param_4)
+
+{
+  LPVOID pvVar1;
+  ulonglong uVar2;
+  byte *pbVar3;
+  byte bVar4;
+  uint uVar5;
+  ulonglong uVar6;
+  ulonglong uVar7;
+  ulonglong uVar8;
+  undefined8 *puVar9;
+  
+  uVar2 = 0;
+  uVar8 = param_3 + 3U >> 2;
+  uVar6 = uVar2;
+  puVar9 = param_2;
+  if (param_2 != (undefined8 *)0x0) {
+    do {
+      pbVar3 = (byte *)*puVar9;
+      if (((pbVar3 != (byte *)0x0) && (uVar8 <= *pbVar3)) && ((ulonglong)pbVar3 % param_4 == 0)) {
+        param_2[(int)uVar6] = 0;
+        pbVar3[param_3] = *pbVar3;
+        return pbVar3;
+      }
+      uVar5 = (int)uVar6 + 1;
+      uVar7 = uVar2;
+      uVar6 = (ulonglong)uVar5;
+      puVar9 = puVar9 + 1;
+    } while ((int)uVar5 < 2);
+    do {
+      pvVar1 = (LPVOID)param_2[uVar2];
+      if (pvVar1 != (LPVOID)0x0) {
+        param_2[(int)uVar7] = 0;
+        thunk_FUN_18005caec(pvVar1);
+        break;
+      }
+      uVar2 = uVar2 + 1;
+      uVar7 = (ulonglong)((int)uVar7 + 1);
+    } while ((longlong)uVar2 < 2);
+  }
+  pbVar3 = (byte *)FUN_18004b0bc(uVar8 * 4 + 1);
+  bVar4 = (byte)uVar8;
+  if (0xff < uVar8) {
+    bVar4 = 0;
+  }
+  pbVar3[param_3] = bVar4;
+  return pbVar3;
+}
+
+
+
+/* 0x180021ac0 FUN_180021ac0; Evidence ev_d38542a13780f219fb0e307cf5b4109d2b00fd32203172d5cb94abee72dc87b5 */
+
+void FUN_180021ac0(longlong *param_1)
+
+{
+  undefined8 *puVar1;
+  
+  puVar1 = (undefined8 *)*param_1;
+  if (puVar1 != (undefined8 *)0x0) {
+    *param_1 = 0;
+                    /* WARNING: Could not recover jumptable at 0x000180021aeb. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    (*(code *)*puVar1)(puVar1,1);
+    return;
+  }
+  return;
+}
+
+
+
+/* 0x180022e40 FUN_180022e40; Evidence ev_817921bf6b2b7cff9b7bfa05757a80e5b23013e0f55449083b1eda46585cf003 */
+
+void FUN_180022e40(longlong *param_1,undefined8 *param_2)
+
+{
+  longlong *plVar1;
+  LPVOID pvVar2;
+  LPOVERLAPPED p_Var3;
+  undefined8 *puVar4;
+  undefined8 *puVar5;
+  undefined8 *local_res18 [2];
+  longlong *local_38;
+  undefined8 local_30;
+  undefined8 local_28;
+  
+  puVar4 = (undefined8 *)0x0;
+  if ((*(byte *)((longlong)param_1 + 0xc) & 1) == 0) {
+    puVar5 = (undefined8 *)(*(longlong *)(*param_1 + 0x10) + 0x28);
+    if (*(longlong *)(*param_1 + 0x10) == 0) {
+      puVar5 = puVar4;
+    }
+    for (plVar1 = TlsGetValue(DAT_1800a38f0); plVar1 != (longlong *)0x0;
+        plVar1 = (longlong *)plVar1[2]) {
+      if ((undefined8 *)*plVar1 == puVar5) {
+        if (plVar1[1] != 0) {
+          local_res18[0] = (undefined8 *)*param_2;
+          *param_2 = 0;
+          FUN_180021ac0((longlong *)local_res18);
+          if (local_res18[0] == (undefined8 *)0x0) {
+            return;
+          }
+          (*(code *)*local_res18[0])(local_res18[0],0);
+          return;
+        }
+        break;
+      }
+    }
+  }
+  local_38 = param_1 + 1;
+  pvVar2 = TlsGetValue(DAT_1800a38f0);
+  if (pvVar2 != (LPVOID)0x0) {
+    puVar4 = *(undefined8 **)((longlong)pvVar2 + 8);
+  }
+  p_Var3 = (LPOVERLAPPED)FUN_180021820((ulonglong)param_1 & 0xff,puVar4,0x48,1);
+  p_Var3[1].Internal = 0;
+  p_Var3[1].InternalHigh = (ULONG_PTR)FUN_180027120;
+  p_Var3->Internal = 0;
+  p_Var3->InternalHigh = 0;
+  (p_Var3->u).Pointer = (PVOID)0x0;
+  p_Var3->hEvent = (HANDLE)0x0;
+  p_Var3[1].u.s.Offset = 0;
+  p_Var3[1].hEvent = (HANDLE)*param_2;
+  *param_2 = 0;
+  FUN_180028ca0(*(longlong *)(*param_1 + 0x10),p_Var3);
+  local_28 = 0;
+  local_30 = 0;
+  FUN_180028fd0((longlong)&local_38);
+  return;
+}
+
+
+
+/* 0x180027120 FUN_180027120; Evidence ev_f425c8ac24472b602819c82c310740e2fc88d5f4a60e58154736736724d66c5e */
+
+void FUN_180027120(longlong param_1,longlong param_2)
+
+{
+  undefined1 local_res8 [8];
+  undefined8 *local_res10 [3];
+  undefined1 *local_28;
+  longlong local_20;
+  longlong local_18;
+  
+  local_28 = local_res8;
+  local_res10[0] = *(undefined8 **)(param_2 + 0x38);
+  *(undefined8 *)(param_2 + 0x38) = 0;
+  local_20 = param_2;
+  local_18 = param_2;
+  FUN_180028fd0((longlong)&local_28);
+  if (param_1 != 0) {
+    FUN_180021ac0((longlong *)local_res10);
+  }
+  if (local_res10[0] != (undefined8 *)0x0) {
+    (*(code *)*local_res10[0])(local_res10[0],0);
+  }
+  FUN_180028fd0((longlong)&local_28);
+  return;
+}
+
+
+
+/* 0x180028ca0 FUN_180028ca0; Evidence ev_42ec7e831abcb5ab3f2ff84f793201026931158ab216047bd4e981225e47c4aa */
+
+void FUN_180028ca0(longlong param_1,LPOVERLAPPED param_2)
+
+{
+  BOOL BVar1;
+  
+  LOCK();
+  *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + 1;
+  UNLOCK();
+  param_2[1].u.s.Offset = 1;
+  BVar1 = PostQueuedCompletionStatus(*(HANDLE *)(param_1 + 0x28),0,0,param_2);
+  if (BVar1 == 0) {
+    EnterCriticalSection((LPCRITICAL_SECTION)(param_1 + 0x60));
+    param_2[1].Internal = 0;
+    if (*(longlong *)(param_1 + 0x98) == 0) {
+      *(LPOVERLAPPED *)(param_1 + 0x90) = param_2;
+    }
+    else {
+      *(LPOVERLAPPED *)(*(longlong *)(param_1 + 0x98) + 0x20) = param_2;
+    }
+    *(LPOVERLAPPED *)(param_1 + 0x98) = param_2;
+    LOCK();
+    *(undefined4 *)(param_1 + 0x58) = 1;
+    UNLOCK();
+    LeaveCriticalSection((LPCRITICAL_SECTION)(param_1 + 0x60));
+  }
+  return;
+}
+
+
+
+/* 0x180028fd0 FUN_180028fd0; Evidence ev_a7a887990cbabaffabcf3b1632bc78f305c6499c9a629f167b22cedfda97d43c */
+
+void FUN_180028fd0(longlong param_1)
+
+{
+  undefined8 *puVar1;
+  undefined1 *puVar2;
+  longlong lVar3;
+  LPVOID pvVar4;
+  longlong lVar5;
+  int iVar6;
+  
+  if (*(longlong *)(param_1 + 0x10) != 0) {
+    puVar1 = *(undefined8 **)(*(longlong *)(param_1 + 0x10) + 0x38);
+    if (puVar1 != (undefined8 *)0x0) {
+      (*(code *)*puVar1)(puVar1,0);
+    }
+    *(undefined8 *)(param_1 + 0x10) = 0;
+  }
+  puVar2 = *(undefined1 **)(param_1 + 8);
+  if (puVar2 != (undefined1 *)0x0) {
+    pvVar4 = TlsGetValue(DAT_1800a38f0);
+    if ((pvVar4 != (LPVOID)0x0) && (lVar3 = *(longlong *)((longlong)pvVar4 + 8), lVar3 != 0)) {
+      iVar6 = 0;
+      lVar5 = 0;
+      do {
+        if (*(longlong *)(lVar3 + lVar5 * 8) == 0) {
+          *puVar2 = puVar2[0x48];
+          *(undefined1 **)(lVar3 + (longlong)iVar6 * 8) = puVar2;
+          *(undefined8 *)(param_1 + 8) = 0;
+          return;
+        }
+        iVar6 = iVar6 + 1;
+        lVar5 = lVar5 + 1;
+      } while (lVar5 < 2);
+    }
+    thunk_FUN_18005caec(puVar2);
+    *(undefined8 *)(param_1 + 8) = 0;
+  }
+  return;
+}
+
+
+

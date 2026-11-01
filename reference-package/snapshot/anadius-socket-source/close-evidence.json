@@ -1,0 +1,124 @@
+{
+  "schema": "socket-cancel-close.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180026e50",
+      "pseudo_evidence": "ev_e5ca5d521290c32a902e6ea9d557bdbb884ee65f15251bad3fcda5c36edc21e6",
+      "assembly_evidence": "ev_5ba7cb4cd92f8a6b1a046387bb51dc6220269ea452ead106f538b767ff1fe6a7"
+    },
+    {
+      "address": "0x180026fb0",
+      "pseudo_evidence": "ev_4ffe8b68e27a849ee81d94fa3520491aa59f139532cc5e31294d1bee89c8c4b4",
+      "assembly_evidence": "ev_949e26c04afda34fe45f482346b1b127456e1debcf6ba15190922608977a89d9"
+    },
+    {
+      "address": "0x180026aa0",
+      "pseudo_evidence": "ev_d4f71cf8b783578dcbaae1a45c68bba3e631d5381f8102b4c3d6ec82db60b419",
+      "assembly_evidence": "ev_5263c2b7208ef28e3ec671a729ee180d773d5dcd6ba45d16972e7ebef04cba21"
+    },
+    {
+      "address": "0x180024db0",
+      "pseudo_evidence": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3",
+      "assembly_evidence": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357"
+    },
+    {
+      "address": "0x180020e20",
+      "pseudo_evidence": "ev_3c0f133878db1fec30ab6ef19ef7b2595fed8a0ba99ea8e0ec75a708ab5925af",
+      "assembly_evidence": "ev_ff338f1411812fb5f0cbb9ad6393b0698c2c0a40146ad6aab6f4aaeffaf2bfea"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "close.hpp": "28fb856c232dcec8d1cca60016a7e0f8beed7ead11631fae25548c8eb66a55ef",
+    "close.cpp": "44b17eec8a2cb5cc62ae7c2b17e027b5ebd5b10ba18785bf886bad90d56082b2",
+    "closing.hpp": "10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5",
+    "closing.cpp": "9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669",
+    "close_tests.cpp": "0c4e959653ba655a2ce6695b9a17d4c01f3c07b464b372061de1a131077fc146",
+    "closing_tests.cpp": "0ef67ff44a57ea0a0fdee04d786f74a32455a9a87e8bd74c9daa2a3872b4674c",
+    "build.ps1": "1c375a1c6c772f2a684320d28b25b60c9b4b49e4268309cbbd05f8621c9976fd",
+    "CMakeLists.txt": "68179d611d2f9ceeec078645c2977577299c6a5f19704b6e05701b3c1a6a3768",
+    "README.md": "131f62013221fc7985b3bb2503156629ede7bc160cd1f6c5e791f4e8deaea897"
+  },
+  "support_hashes": {
+    "close-evidence.pseudo.c.txt": "fa500d85c4b15256ca96bdfbf7e8158706016adc94f0fb7b58b21897538c0091",
+    "close-evidence.asm.txt": "36f54e0b944c6c239c336c68d8fb9bc62be40733f1672de0b1c719ca69cb7346",
+    "close-flow-audit.md": "baccec2ba0baea66db77a61dc79a19506cee4b86e9154c67e1d6f0e6a76e04d5",
+    "close-flow-audit.json": "086f4d0a556f6bbe1e9e843cc573fab83c73121adab53b81a1319527e0536e82",
+    "close-review.md": "d64ddb7e6c6290a79d8f097f958c2d7778f72338a728080b1b70eb1478156db6",
+    "close-review.json": "d2242d95ddf103e62aa84342af114fcb287ae51fce373fc4f10b3cfbafa2a53f",
+    "close-rea-session.json": "55bb30403ac54374d1776e7b58974feaa7956565ae0c4419b2fb53dc4a415fda"
+  },
+  "normal_source_procedures_added": [
+    "0x180026e50",
+    "0x180026fb0"
+  ],
+  "new_original_procedures": 2,
+  "required_providers": [
+    "026aa0 cancellation queue",
+    "0239c0 service resolution",
+    "Executor cleanup",
+    "Native allocation/category/exception effects"
+  ],
+  "claims": [
+    {
+      "finding": "Invalid socket untouched; destroying/state8 linger option ignored but failure samples category/error; success only clears value",
+      "addresses": [
+        "0x180026e69",
+        "0x180026e80",
+        "0x180026ea6",
+        "0x180026eb0",
+        "0x180026ece"
+      ]
+    },
+    {
+      "finding": "Name identity retry10035/second1237, ioctl ignored, live state&FC, second raw status/error retained",
+      "addresses": [
+        "0x180026efa",
+        "0x180026f14",
+        "0x180026f40",
+        "0x180026f46",
+        "0x180026f4d",
+        "0x180026f79"
+      ]
+    },
+    {
+      "finding": "CASexpected0desired0 keeps engine installed; cached socket before engine gate, cancel995/category, then re-read socket for close",
+      "addresses": [
+        "0x180026fdc",
+        "0x180026fe7",
+        "0x180026ff6",
+        "0x180027001",
+        "0x180027029",
+        "0x180027058"
+      ]
+    },
+    {
+      "finding": "Reset socket/state/resource then read/clear owner before strong-destroy-weak-delete; invalidinitial still resets/releases",
+      "addresses": [
+        "0x18002706d",
+        "0x180027070",
+        "0x180027073",
+        "0x180027077",
+        "0x18002707b",
+        "0x180027086",
+        "0x180027096",
+        "0x180027098"
+      ]
+    }
+  ],
+  "independent_production_review": "PASS; close-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Controlled cancellation and engine gate; injected existing SDK adapter, no real socket/network/IOCP",
+  "unproven": [
+    "026aa0 operation queue/PostQueuedCompletionStatus/wakeup",
+    "Native scheduler/IOCP/global/allocator/lifetime/concurrency",
+    "Native error padding/category object/SEH/unwind/ABI",
+    "Full DLL integration and original runtime differential"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "source_package": "B46",
+  "build_record_sha256": "a28250867c006804163db199711b0ca6deb19413cad2a5eb221646aa81dcf988",
+  "frozen_source_hashes": {
+    "graph.hpp": "465c99ed13dabb23478e9e0dbfc9db8313602c4dd459a3b1dcaf0db65cd4efbd",
+    "graph.cpp": "b2368216a50e8af0c2472868e1da4a5ab1db0573d97573646320768802a32091",
+    "graph_tests.cpp": "d9d4141c3b6b7cac2b398f5730b26ddee93d544f55f2f4767b116430cf8caff7",
+    "graph_integration_tests.cpp": "fea7a9cc1f625e426c614d43eedeb261338e3674f9459177c34352eaab0e7703"
+  },
+  "objects": [
+    {
+      "object": "outputs/source-workspace/build/application_graph.o",
+      "source": "anadius-application-graph-source/graph.cpp",
+      "source_sha256": "b2368216a50e8af0c2472868e1da4a5ab1db0573d97573646320768802a32091",
+      "production_sha256": "f549ab2a0b87f5e69d2de78adbad371198580f8663e1c81be81aaa96b1a13ccb",
+      "fresh_path": "work/b46-freeze-application_graph.o",
+      "fresh_sha256": "3affd11a63523b32b22edaada36bc96deca09c338a19714cd6e87ddb06b45b91",
+      "normalized_sha256": "ce20094cde70f88a81509544799cb2b32fd6acfc7bc15815a87ff6daf9a486b9",
+      "fresh_normalized_sha256": "ce20094cde70f88a81509544799cb2b32fd6acfc7bc15815a87ff6daf9a486b9",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-graph-source\\graph.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b46-freeze-application_graph.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "scope": "Fresh identical-command final-source production compile; all bytes except COFF header timestamp equal."
+}

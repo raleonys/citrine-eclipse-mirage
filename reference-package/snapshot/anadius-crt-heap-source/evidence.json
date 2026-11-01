@@ -1,0 +1,61 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "analysis": "Retained REA/Ghidra static evidence reused; no target or native heap API execution",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "functions": [
+    {
+      "va": "0x180066848",
+      "assembly_evidence": "ev_1450ddb57ebe72cc0eec6a97ac27f15160d7e9bb8a513207974af8eb721e8925",
+      "pseudocode_evidence": "ev_e8f27ed487378800fc697d753b2dee89496706663828d5ac5b5b109b046fb19b",
+      "anchors": [
+        "06685b..066865: maximum quotient and carry comparison",
+        "066867..066873: product and zero-to-one normalization",
+        "066879..06689d: new-mode/handler retry and HeapAlloc flag 8",
+        "0668aa..0668af: error accessor and value 12"
+      ]
+    },
+    {
+      "va": "0x1800668c0",
+      "assembly_evidence": "ev_c99f204c542cccdad396d7bc71515f1b5731e73657cfccf84d0a121761e73e4a",
+      "pseudocode_evidence": "ev_7e8b870bd7ea201db70f354b0219883b98336ad5bae46d7d22dfbd1bae7df875",
+      "anchors": [
+        "0668c0..0668c3: null no-op",
+        "0668cd..0668d6: HeapFree flags zero",
+        "0668e0..0668f4: GetLastError,05d650 mapping,05d724 store"
+      ]
+    },
+    {
+      "va": "0x1800634b0",
+      "assembly_evidence": "ev_feeb37c1659fa2ad6ed36fb2e17ad1622a1893e7adb59a2a704c97c32c5c11ba",
+      "pseudocode_evidence": "ev_175a4e59f0f62ca348f45967bc37777281cff05acfbf8675b3dcc8dc235d175d"
+    },
+    {
+      "va": "0x1800634f0",
+      "assembly_evidence": "ev_bd63950c742cd0dfce52108a1396a19159ce9247492be9732523b3a729579220",
+      "pseudocode_evidence": "ev_903f835a32a2593a02947546a68e464fc28594fc6bdea7974ae06cc193df60e3",
+      "anchors": [
+        "0634f6..0634f8: lock index 0",
+        "0634fe..063514: cookie/encoded handler load,XOR,ROR",
+        "063517..06351e: unlock before snapshot return"
+      ]
+    },
+    {
+      "va": "0x18007301c",
+      "assembly_evidence": "ev_764198f6bc99d308a01ef9363c4cd4d47ed86e4f9d6c7ab8fc5cd19e9c05abef",
+      "pseudocode_evidence": "ev_50596cb1122e23ae075263841acd2eab6f7b86c5e9e20bc5af234d4e17a8a787"
+    },
+    {
+      "va": "0x1800704cc",
+      "assembly_evidence": "ev_18b17f459a74ff0620456fefb4825e60439a2f2e713c2a02ac55ceb0e018d943",
+      "pseudocode_evidence": "ev_b6c4736f154dc16ac5e368c7b8d569dca1c7238dd8704175a00636d5f9c23649"
+    }
+  ],
+  "limits": [
+    "Original runtime behavior not observed",
+    "Real heap/lock/error/PTD providers mandatory",
+    "Cookie/encoded handler initialization not recovered here",
+    "Typed Context/PTD live object and cleanup ownership remains provider boundary",
+    "No malloc/realloc/operator new/CRT initialization completeness claim"
+  ]
+}

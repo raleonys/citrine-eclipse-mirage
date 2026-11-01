@@ -1,0 +1,122 @@
+{
+  "schema": "source-binding.focused-validation.v1",
+  "status": "SELECTED_OBSERVED_CONSTRUCTOR_RUNTIME_BINDING_PASS",
+  "native_constructor": "0x180036d20",
+  "initializer_reference": "0x180001390",
+  "native_constructor_pseudo_id": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+  "native_constructor_asm_id": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9",
+  "native_field_map": "outputs/anadius-config-defaults-source/field-map.json",
+  "selected_source_bindings_added": 1,
+  "new_native_bodies_this_change": 0,
+  "implementation": [
+    "make_observed_runtime_036d20 selects existing41-field configuration defaults and zero console cells, initializes ready/online/module/object to observed zeros and execution mutex with actual04a698(type2), with empty native loaded-module and host path vectors.",
+    "Exactly four mandatory OutsideConstructorState inputs supply RuntimeSeed cells outside036d20: frequency_cache,registry_values,enabled_targets,originals. No default constructor; all supplied values reach actual Backend unchanged.",
+    "Backend already owns observed authentication, XML/INI and achievement-mutex cells; existing consuming make_runtime(Resources&) sink performs stable actual State binding and capture retirement.",
+    "Known native Configuration must have fresh unused/unborrowed/unbound empty XML/INI cells. Passive preflight never calls paths(); seeded or nonfresh cells reject before default construction or Resources consumption. Ordinary make_runtime preserves explicit path seed behavior.",
+    "Default configuration construction completes before Resources consumption; factory remains passive and does not publish, register native01390 atexit, start workers or install DLL entry."
+  ],
+  "focused_record": {
+    "path": "work/observed-runtime-v1-results.json",
+    "sha256": "5223a912df0b530845afc38b5828fc0a96e80bc4528f60e3951e0943a9a3daef",
+    "seconds": 24.969,
+    "tests": [
+      {
+        "name": "observed_runtime",
+        "exit_code": 0,
+        "stdout": "PASS: 41 observed-runtime checks; actual source assembly with controlled external service/thread boundaries\n",
+        "stderr": "",
+        "executable": "work/observed-runtime-check-v1/observed_runtime_tests.exe",
+        "executable_sha256": "4b27fca41756065cc48b200a52e5b080ce534edf4d41ce457c7fe6b954161fe3"
+      },
+      {
+        "name": "shared_global_bindings",
+        "exit_code": 0,
+        "stdout": "PASS: 59 shared achievement-path checks; actual Runtime/Storage aliasing and Prepared Worker guards, controlled external worker boundaries\n",
+        "stderr": "",
+        "executable": "work/observed-runtime-check-v1/shared_global_bindings_tests.exe",
+        "executable_sha256": "45b198e9207b37058b6f4eb3404c9867737a638955cd4374ef92ebdf72245f6a"
+      },
+      {
+        "name": "configuration_factory",
+        "exit_code": 0,
+        "stdout": "PASS: 170 configuration-factory core checks; all21 required routes and streaming, owned synthetic effects, passive validation, prefix/errors and serialized cross-thread lifetime; original targets never loaded\n",
+        "stderr": "",
+        "executable": "work/observed-runtime-check-v1/configuration_factory_tests.exe",
+        "executable_sha256": "27bac15f865eab63706d6d280e9d941d7633b48376db51c0970f16a1a8cdf444"
+      },
+      {
+        "name": "bootstrap_factory",
+        "exit_code": 0,
+        "stdout": "PASS: 274 bootstrap-runtime factory integration checks; actual B2/B3 source graph, post-join callback cleanup, stop/timeout retry, concrete adapter selection and SDK execution boundaries; lower foreign providers and PE entry remain explicit/open\n",
+        "stderr": "",
+        "executable": "work/observed-runtime-check-v1/bootstrap_factory_tests.exe",
+        "executable_sha256": "cc4863245455b0f1635a02e8f4895f871e4120039a605b5fd6fab2729aef3c41"
+      }
+    ]
+  },
+  "fresh_production_units": {
+    "observed_runtime": "outputs/anadius-bootstrap-runtime-source/observed_runtime.cpp",
+    "bootstrap_backend": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+    "aggregate_teardown": "outputs/anadius-config-defaults-source/teardown.cpp",
+    "application_graph": "outputs/anadius-application-graph-source/graph.cpp",
+    "application_worker": "outputs/anadius-application-worker-source/worker.cpp",
+    "licensing": "outputs/anadius-license-source/license.cpp",
+    "license_files": "outputs/anadius-file-source/license_files.cpp",
+    "windows_effects": "outputs/anadius-windows-source/windows_effects.cpp",
+    "configuration_filesystem": "outputs/anadius-config-storage-source/filesystem.cpp",
+    "configuration_persistence": "outputs/anadius-config-storage-source/persistence.cpp",
+    "configuration_factory": "outputs/anadius-configuration-factory-source/factory.cpp",
+    "key_processor": "outputs/anadius-license-source/key_processor.cpp",
+    "bootstrap_factory": "outputs/anadius-bootstrap-runtime-source/factory.cpp"
+  },
+  "source_hashes": {
+    "outputs/anadius-config-storage-source/persistence.cpp": "6ffbee117646ae15491c5e22383cd8d3adb351a1137991c14a060f2d0371967b",
+    "outputs/anadius-bootstrap-runtime-source/observed_runtime.hpp": "046c57f60258215b2f1883c224b3accda3290490581fac1f4dafe1b37ade336f",
+    "outputs/anadius-achievement-storage-source/path_binding_tests.cpp": "4365b53a7d26a9ee7164f28e332a24df9a1ad3940fcd942ae12f471d37340e26",
+    "outputs/anadius-config-storage-source/persistence.hpp": "e3b7167f45394b7cb9b9a4f697909f05ce9e1f9ffa04664da8dfce51dba6f9ce",
+    "outputs/anadius-bootstrap-runtime-source/observed_runtime_tests.cpp": "6d644716af8be8237d47250534d2a95d3e1b45e1f90516084cd5c3ae1871487b",
+    "outputs/anadius-configuration-factory-source/factory.hpp": "b2e47a4e9ccc13b6081011b36e5533df9a007c84da5d75ae5173b27abafde0d7",
+    "outputs/anadius-bootstrap-runtime-source/observed_runtime.cpp": "3e3897158c0020525d1a3265c51dda924ddb3ebb910148ae3cdad328b58d0a64",
+    "outputs/anadius-configuration-factory-source/factory.cpp": "19a164fe401cf4c32680219e94aa7290e1eed853abacb95c85291063eb7bed63"
+  },
+  "build_registration_hashes": {
+    "outputs/source-workspace/build.ps1": "1498f71e1ce54323d21c6bee22c10eb2bc83d49c183f96f612f51d44da6fba01",
+    "outputs/source-workspace/CMakeLists.txt": "e29b3e249a5651200127570f30fde58b301d0f791faf899020435b80986cd4aa"
+  },
+  "powershell_registration_parser_errors": 0,
+  "ABI_scope": {
+    "existing_public_layouts_changed": false,
+    "existing_vtables_changed": false,
+    "new_nonvirtual_passive_preflight_methods": true
+  },
+  "independent_review": {
+    "author": "/root/b22_provider_audit",
+    "production_result": "PASS",
+    "focused_proof_result": "PASS",
+    "verified_source_header_hashes": 182,
+    "verified_executables": 4,
+    "fresh_translation_units": 17,
+    "reviewer_execution": false
+  },
+  "validation_scope": [
+    "Actual Runtime/SourceBackend StateView/defaults/mandatory outside values, two independent inputs, no effects before publication, donor consumption, controlled partial-CFG startup/three queued workers and normal close/provider lifetime.",
+    "Native Configuration rejects each preseeded XML/INI route without consuming resources or effects, and successful empty preflight permits actual subsequent binding.",
+    "Existing configuration methods and explicit Runtime constructor/close remain covered by affected tests."
+  ],
+  "limits": [
+    "Four outside fields complete only current RuntimeSeed, not all process-global state: saved-avatar, license attempts/blocked and other provider cells remain explicit Resources/Worker contracts.",
+    "Supplied custom providers must preserve passive binding; arbitrary provider mutation cannot be certified by this wrapper.",
+    "Host MutexState{} defines reserved04 as zero, unlike native constructor which leaves it untouched; no native memory-layout equality.",
+    "Full036d20 body/MSVC containers/EH, initializer01390 native atexit registration, production Resources assembly and loader attach/detach are not closed.",
+    "Published B54 inventory/source snapshot/ZIP remain historical; newunit/test registration present, common build not run."
+  ],
+  "full_constructor_closed": false,
+  "initializer_01390_closed": false,
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "network": false
+}

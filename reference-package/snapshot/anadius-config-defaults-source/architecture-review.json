@@ -1,0 +1,167 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T16:40:34.643405+00:00",
+  "review_scope": "B28 explicit factory for all41 modeled configuration State fields and20 map-pair post-construction defaults; retained constructor evidence, source ownership/unwind, actual configuration and serialized handler integration, unchanged834-source baseline and frozen quick evidence",
+  "reviewed_source_hashes": {
+    "defaults.hpp": "8bbc25f4e3eb45469a653cb8746465adfe7d3b6365b5612d157ebec0fa4c9ef8",
+    "defaults.cpp": "4ae57170b870bcde9f3a6c0c1ee0f5f2e5ee48e631fc1876a6256fbb6fb7d6c8",
+    "defaults_tests.cpp": "3f33c443d3eae2de0dc02612e4368b3a16481e93433a2de5c30d387306e15d00",
+    "defaults_integration_tests.cpp": "12128fd80e70961aaf27281a00cbfabc294a74eb129c7b03b33f7f65ee4e5828"
+  },
+  "quick_results": [
+    {
+      "path": "work/b28-core-quick-results.json",
+      "sha256": "a16631134ef9d3b194ac4e5b153453d74534fc60c79c2422e86e7718ab8cc2f8",
+      "checks": 39,
+      "executable_path": "work/b28-core-test.exe",
+      "executable_sha256": "55b3b551fe73c5ee22c4f7d3852bafe474d42eba29152a09a9afc1dd17c560ee",
+      "execution_by": "/root standard quick run; core authored by /root, integration authored by /root/b22_integration. Independent reviewer read sources and verified final-header record/source/EXE hashes without rerunning."
+    },
+    {
+      "path": "work/b28-integration-quick-results.json",
+      "sha256": "4f39c36d30f2871351d880ad345a5df8abc7095281f483e7503702d884a31ccb",
+      "checks": 24,
+      "executable_path": "work/b28-integration-test.exe",
+      "executable_sha256": "cc3a878353629209f912697f40ae6427b143605850bbb7d3dd2bb339681d5a27",
+      "execution_by": "/root standard quick run; core authored by /root, integration authored by /root/b22_integration. Independent reviewer read sources and verified final-header record/source/EXE hashes without rerunning."
+    }
+  ],
+  "root_checks": 63,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING / unreviewed; planned246 production objects,242CPP+4C,287test groups and19 framework terminal scenarios are not PASS claims in this report",
+  "baseline_package_sha256": "0b51d92974dbf97f88953b5d9f4b045bb3f3920e3b16d4ab22f40e54ec4cbe3d",
+  "prior_source_files": 834,
+  "prior_sources_preserved": 834,
+  "current_source_files": 838,
+  "source_inventory_counts_basis": "Independently verified all834 B27 snapshot entries against ZIP bytes/package-manifest hashes and identical current source files. Four new reviewed files; no prior source modifications. Full refreshed snapshot/common build remain outside this review.",
+  "modified_prior_sources": [],
+  "field_map": {
+    "path": "work/b28-configuration-defaults-field-map.json",
+    "sha256": "72ebef6b49136b210089b2f5cf6a60fdc9efe337dd6ff11cf80ecbe31082ff0f",
+    "state_fields": 41,
+    "outside_constructor_state_fields": 0,
+    "emulator_pairs": 6,
+    "game_pairs": 14,
+    "languages_bytes": 179
+  },
+  "companion_audits": [
+    {
+      "path": "work/b28-application-scope-audit.json",
+      "sha256": "e1baf649804a49c70ed0239977c4cadd5c78d1d91f359a47a2fd37023384064b"
+    },
+    {
+      "path": "work/b28-application-scope-audit.md",
+      "sha256": "a53fc9f18a91e926ac33b51472b0c8e06ef55d853bea78bbdb990566c199abd3"
+    },
+    {
+      "path": "work/b28-message-chain-gap-audit.json",
+      "sha256": "d0b3cd41160e7c4b0adf809e67f225a339ec4b1175c1045912fb6f7d85e88b37"
+    },
+    {
+      "path": "work/b28-message-chain-gap-audit.md",
+      "sha256": "89b295936cf4fc6bcde5e9168e714f80b5283bf47cbc2b081f765452dc3b0bbe"
+    }
+  ],
+  "findings": [
+    {
+      "topic": "Evidence-backed complete modeled State projection",
+      "result": "PASS",
+      "evidence": [
+        "defaults.cpp:4-41",
+        "defaults_tests.cpp:30-44",
+        "work/b28-configuration-defaults-field-map.json",
+        "outputs/anadius-all-functions.asm.txt; constructor evidence ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9"
+      ],
+      "observation": "All41 current State fields map to globals inside the aggregate starting0x1800a39e0, and each has constructor writes. State{} supplies only proven empty paths/strings/containers and zero scalars; explicit assignments reproduce all nonzero/nonempty defaults. Packed37047 writes00010100 at+258: use_last_online_profile0, fake_auth1, pretend_connected1. Server port at+2b0 is explicitly zeroed at3708c, block_reruns at+2b2 at37093. SDK text is10,5,96,47512; profile values and textual subscription values match retained native immediates. No outside-constructor State field is needed."
+    },
+    {
+      "topic": "Twenty exact attribute pairs and counted languages",
+      "result": "PASS",
+      "evidence": [
+        "defaults.cpp:17-40",
+        "defaults_tests.cpp:37-43",
+        "work/b28-configuration-defaults-field-map.json literal_proofs"
+      ],
+      "observation": "Factory maps exactly match the independent retained-evidence map: six emulator and fourteen game pairs. Production strings were statically compared byte-for-byte with field-map values, including the entire179-byte LANGUAGES sequence. Retained read_bytes evidence ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082 resolves counted Game, true, expiration0000-00-00T00:00:00,16 and en_US literals. No user input or new original-byte query was used."
+    },
+    {
+      "topic": "Fresh ownership and partial construction cleanup",
+      "result": "PASS",
+      "evidence": [
+        "defaults.hpp:5-9",
+        "defaults.cpp:7-41",
+        "defaults_tests.cpp:9-26,46-62",
+        "work/b28-core-quick-results.json"
+      ],
+      "observation": "Factory returns a fresh owning value with no static mutable State, supplied caller mutation or global publication. Two simultaneous results remain independent under string/map/vector changes. Own-EXE allocation replacement tracks real factory allocations through partial-result destruction; the39-check captured run covers22 failing allocation points, one successful completion and a fresh retry, with tracked live allocations zero after each attempt. This verifies source C++ ownership and unwind for the selected compiler; it does not reproduce native constructor allocation counts or EH timing."
+    },
+    {
+      "topic": "Actual configuration/parser and serialized response integration",
+      "result": "PASS",
+      "evidence": [
+        "defaults_integration_tests.cpp:23-40,49-105",
+        "work/b28-integration-quick-results.json"
+      ],
+      "observation": "Tests explicitly pass factory State into existing apply_config2, selected FilePass and initialize_configuration paths. In-memory base/override documents traverse real file/parser/hash/configuration bodies. Real profile/settings/game/connected handlers and MemoryPrinter produce serialized responses with final NUL and escaped explicit ampersands. Missing values preserve native defaults; nonempty/empty overrides, low16 port conversion, SDK normalization and invalid-boolean fallback retain existing source behavior. A second live State remains independent after complete first-instance initialization. Profile projection and time/path/OS/persistence/environment providers are explicit synthetic dependencies; this does not prove full RuntimeOwner/server or real filesystem integration."
+    },
+    {
+      "topic": "Opt-in semantics and native closure accounting",
+      "result": "PASS",
+      "evidence": [
+        "defaults.hpp:5-9",
+        "outputs/reconstruction-inventory/generate_inventory.py:92-93",
+        "work/b28-application-scope-audit.json",
+        "work/b28-message-chain-gap-audit.json"
+      ],
+      "observation": "No prior source is changed and no current caller automatically selects the factory. It is a completed-State semantic projection rather than the full036d20 aggregate body; both new production files are explicitly composition-only in inventory policy. The61-function window contains32mapped definitions,22unmapped and7module-only;19of22unmapped are library/container/mutex helpers. The substantive app candidates are036d20 policy construction,037f70 aggregate cleanup and038920 fatal logging/abort. Companion audit by /root/b22_integration identifies023000 accepted-session ownership with025720 accept assembly and023d20 socket move as a next concrete app gap; that report is scope guidance, not a new body proof by this review."
+    },
+    {
+      "topic": "Frozen source and evidence provenance",
+      "result": "PASS",
+      "evidence": [
+        "B27 package-manifest.json and source-workspace/source-snapshot.json",
+        "work/b28-core-quick-results.json",
+        "work/b28-integration-quick-results.json"
+      ],
+      "observation": "Reviewer independently verified B27 ZIP identity, all834 archived source bytes against snapshot plus package-manifest hashes, and identical current files. Exactly four new source files yield838total. Final header-only wording correction is included in both fresh quick records; all recorded source and EXE hashes match current files. Root executed standard core39 and integration24; integration was authored by /root/b22_integration. Reviewer authored neither production nor tests and did not rerun EXEs. Common build remains pending/unreviewed."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "This factory models only normal completed values of the41 currently declared State fields. It does not implement the complete native036d20 aggregate, original MSVC string/map/vector layout, native mutex/runtime storage or unmodeled40-byte static field role.",
+    "Native01390 global initialization/atexit registration, cleanup thunk07e0c0, exact037f70 registration linkage and aggregate destruction remain open. At least0x538 bytes of constructor storage writes does not establish full native sizeof.",
+    "No automatic source RuntimeOwner default selection, full server/session graph, image entry, hooks, unload safety or final PE/DLL readiness is established. Explicit callers must still provide all non-State runtime/OS/provider contracts.",
+    "Allocation failure tests prove selected source compiler cleanup/retry behavior, not native allocation/EH/CRT timing or ABI equivalence. Integration uses own memory data and synthetic lower effects; no user profile/license/token/CFG, network or original DLL/game was accessed.",
+    "B18-B27 callback/PTD, original binding/checkpoint, actual code-owner/module pin, adopted-object readability and external quiescence obligations remain. Generic CRT work remains paused; licensing and historical source/native proof debt remain open.",
+    "Full common build and refreshed inventory/package gates are still pending and unreviewed. No new original native body or closure is added by this semantic projection."
+  ],
+  "claim": {
+    "modeled_configuration_state_fields": 41,
+    "configuration_pairs": 20,
+    "languages_exact_bytes": 179,
+    "fresh_independent_states": true,
+    "explicit_opt_in_only": true,
+    "actual_config_parser_FilePass_and_serialized_handlers_tested": true,
+    "full_native_constructor_or_MSVCAggregate_reconstructed": false,
+    "native_initializer_atexit_or_teardown_reconstructed": false,
+    "original_DLL_or_game_execution": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Reviewer wrote only independent audit files in work plus architecture-review.json/.md; no production/tests/pipeline edits.",
+    "All63 quick checks are captured executions by /root, with integration authored by /root/b22_integration. Reviewer independently checked final frozen sources/records/EXEs and did not execute tests.",
+    "Independent constructor field-map work predates production; current production was checked against retained ASM/pseudocode and literal evidence, not accepted solely because tests passed."
+  ]
+}

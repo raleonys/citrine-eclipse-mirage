@@ -1,0 +1,100 @@
+{
+  "result": "PASS",
+  "reviewer": "initial_multibyte_data independent sibling",
+  "reviewed_at": "2026-10-20T19:50:53.628Z",
+  "source_hashes": {
+    "bindings.hpp": "726405a5c3f56fecee42c6c7aa6ff8b1d97a6a114710c0dedf789c73ab9c1d51",
+    "bindings.cpp": "63b018adebe37d4c7a9f17ca1b2ee407e3a59cd43be291e4d2f95b9609fc4c68",
+    "bindings_tests.cpp": "9971728dfacfabc045a696702a21360c704135edd02d2ac350e21f1007071940",
+    "build.ps1": "55929a7cfb203cfe85d4362472702472b7742c0088a8343ba589484ef3b78673",
+    "collect-evidence.cjs": "8ead4e33f2a526309976970f10d754b3c45f2f141e63c845c602b3ac4df93a0a"
+  },
+  "sharedfixturehashes": {
+    "../anadius-crt-argv-bridge-source/test_fixtures.hpp": "bbbddad6bfa524030794bce1280bdf1484f91cb93ff25a7df9625c72083f27c1",
+    "../anadius-crt-startup-bridge-source/test_fixtures.hpp": "451c4824666e7a2349f0e042ede8219c7d856c1329398a7577b30768889d1a9f",
+    "../anadius-vcrt-bridge-source/test_fixtures.hpp": "882faee73336d78f500675eea11b9aa95b35e81d958f7b0a132959da5744026b"
+  },
+  "checks": [
+    "All16 default pairs correspond to original bounded PE table; compiled rebuilt_pairs() output independently matches opaque mapping for20 nonzero source-only identities. No preferred VA callable, enum IDs dispatched by typed switch.",
+    "Every pair callback path calls actual existing recovered source cores. Composition adds zero original bodies. Shared runtime,locks,heap,ACRT/VCRT PTD,argv/environment/onexit references are borrowed; private provider-domain agreement remains caller obligation.",
+    "Ctor compares runtime/heap/onexit cookies, actual reference address termination.A4F10==encoded.A4F10, and CommandLines.narrow==CleanupState.argv. It invokes no dependency provider before rejecting invalid identities.",
+    "Encoded initialize calls actual0644b0 then copies encoded.A5178 into heap handler as explicitly init-only projection; no false bidirectional/canonical-state alias claim.",
+    "Bool domain preserves full067538 uint64 cookie bits while existing walker tests lowAL; wrong-domain/unknown/nativeVA/zero-ID dispatch rejected. Uninit06755c forwards uint8(argument), including0x100 cleanup and0x101 skip;0644f0 actual core forcesVCRT0.",
+    "Void/int/flush policies remain abstract mandatory boundaries; production Effects stays abstract and nonmoving. Array16 backing remains live/mutable and span points directly to owned pair storage.",
+    "Actual generic initialize/reverse/rollback walkers used. Four failures at locks4/heap5/PTD7/lowio8 exercise excluding failed entry and null-init rollback skips; normal reverse includes uninit-only callbacks.",
+    "Mutable later initializer changed during commandlineW and later uninitializer changed after environment callback are seen by actual walkers. terminating0645cc bypasses reverse callbacks and invokes configured flush only.",
+    "Fixture explicitly prepares outer VCRT first; shared System FLS callback pointers and Memory/Platform/Data owners survive cleanup. Arrays/command buffers/env vectors and argv allocation are owned and live for their required reads and freed before owner teardown.",
+    "Real MB control source takes controlled lower malloc failure before builder, sets initialized1 despite failure; subsequent reverse decrements fixture MB refs and PTD cleanup intentionally yieldsFFFFFFFF. This proves dispatch/failure semantics, not native image/global/counter graph.",
+    "Lowio lower ensure/inherited/standard remain injected; table is empty here. Native CS/heap-array evidence is separately validated in lowio module, not claimed by synthetic pair fixture.",
+    "Shared f::Platform/f::System/f::Data use synthetic lock/FLS/ref models and bounded heap backing; no native fullCRT startup, usercommandline/environment, originalDLL execution or SEH recovery claimed.",
+    "Rerun own build PASS1088 checks plus compiled16pair comparison; production CPP/HPP/tests unchanged."
+  ],
+  "findings": [],
+  "run": {
+    "command": "./outputs/anadius-crt-pair-bindings-source/build.ps1",
+    "result": "PASS 1088 typed16-pair source composition checks;4 rollback points;normal reverse/mutable/low8/domain/alias",
+    "compiled_pair_table": "PASS",
+    "pairs": 16,
+    "unique_nonzero_ids": 20
+  },
+  "original_pair_table_sha256": "d22926452d26f622350a0455a67df28c9d050fa64329f25c73ab3256f9e4a2e0",
+  "reused_source_hashes": [
+    {
+      "path": "../anadius-crt-locale-startup-source/locale_startup.cpp",
+      "sha256": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba"
+    },
+    {
+      "path": "../anadius-crt-cache-source/cache.cpp",
+      "sha256": "613f2667b0bf0c068f7f4a04e0144e15272b13cec03cb53b26f3eb41ad75a9de"
+    },
+    {
+      "path": "../anadius-crt-lock-source/locks.cpp",
+      "sha256": "fe0849d9c97c241c4dcd7639dbc41ca8dba7a89ac176b316791a1be30d24d81f"
+    },
+    {
+      "path": "../anadius-crt-heap-source/heap.cpp",
+      "sha256": "01f2df7ddf1c41d0390982d4b484541c2de1a47c2f7458366ebfbe3c8a08b6ca"
+    },
+    {
+      "path": "../anadius-crt-pair-leaves-source/pair_leaves.cpp",
+      "sha256": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87"
+    },
+    {
+      "path": "../anadius-vcrt-ptd-source/vcrt_ptd.cpp",
+      "sha256": "2acfb1ff8678493678288dc0a806b8c27946e100ebc223409c867264b9b5e307"
+    },
+    {
+      "path": "../anadius-crt-ptd-source/ptd.cpp",
+      "sha256": "10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe"
+    },
+    {
+      "path": "../anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp",
+      "sha256": "20dc724fe4e0c7efddaef7e0fa7087e5fed9f07adb31554827661ff2104b5d5b"
+    },
+    {
+      "path": "../anadius-crt-multibyte-control-source/multibyte_control.cpp",
+      "sha256": "9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb"
+    },
+    {
+      "path": "../anadius-crt-argv-bridge-source/argv_bridge.cpp",
+      "sha256": "d178b2649b48fcb971bb2d99c6138b461d23be4f5f47c5178248e5dbf31687d2"
+    },
+    {
+      "path": "../anadius-crt-environment-cleanup-source/environment_cleanup.cpp",
+      "sha256": "5541b20bd7f67869bc2bb5a625db9dd36224396b12c803c92a553328432b816e"
+    },
+    {
+      "path": "../anadius-crt-lifecycle-callbacks-source/callbacks.cpp",
+      "sha256": "6a4debca2b0cce025b6ec731f032ad60d6bcab41d4e9e9f682281a653fadbf57"
+    }
+  ],
+  "scope_limits": [
+    "Provider private shared domains cannot be introspected by constructor.",
+    "A5178 projection is initial copying; later callers maintain cookie/handler coherence.",
+    "No canonical global graph, original ABI, entire native CRT execution or complete C/C++ table policies.",
+    "Lowio lower providers, OS/FLS/heap native deployment and remaining non-pair policies are mandatory."
+  ],
+  "new_original_bodies": 0,
+  "original_execution": false,
+  "production_edits": false
+}

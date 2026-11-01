@@ -1,0 +1,58 @@
+Own synthetic B18 test EXE only; no original/rebuilt target DLL/game execution.
+Historical diagnostic before final test expectation update; production cleanup path unchanged.
+(lldb) target create "work/b18-integration-test.exe"
+Current executable set to 'C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\b18-integration-test.exe' (x86_64).
+(lldb) settings set -- target.run-args  "--cleanup-failure"
+(lldb) breakpoint set -n abort
+Breakpoint 1: where = b18-integration-test.exe`abort, address = 0x00000001400ea9d0
+(lldb) run
+1 location added to breakpoint 1
+(lldb) 1 location added to breakpoint 1
+own cleanup thread entry
+own denied heap release
+Process 6988 launched: 'C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\b18-integration-test.exe' (x86_64)
+Process 6988 stopped
+* thread #5, stop reason = breakpoint 1.1
+      frame #0: 0x00007ff72f09a9d0 b18-integration-test.exe`abort
+b18-integration-test.exe`abort:
+->  0x7ff72f09a9d0 <+0>: jmpq   *0x24eba(%rip)            ; __imp_abort
+    0x7ff72f09a9d6 <+6>: int3   
+    0x7ff72f09a9d7 <+7>: int3   
+    0x7ff72f09a9d8 <+8>: int3
+(lldb) thread backtrace all
+  thread #1
+      frame #0: 0x00007ff968581dd4 ntdll.dll`NtWaitForSingleObject + 20
+      frame #1: 0x00007ff965d3be9f KernelBase.dll`WaitForSingleObjectEx + 175
+      frame #2: 0x00007ff72f051389 b18-integration-test.exe`std::__1::__libcpp_thread_join(void**) + 25
+      frame #3: 0x00007ff72f0509b9 b18-integration-test.exe`std::__1::thread::join() + 25
+      frame #4: 0x00007ff72efb60d6 b18-integration-test.exe`b18_test::in_thread(std::__1::function<void ()> const&) + 54
+      frame #5: 0x00007ff72efb19ca b18-integration-test.exe`main + 1242
+      frame #6: 0x00007ff72efb110d b18-integration-test.exe`__tmainCRTStartup at crtexe.c:271:11
+      frame #7: 0x00007ff967dfdda7 kernel32.dll`BaseThreadInitThunk + 23
+      frame #8: 0x00007ff96849ee4c ntdll.dll`RtlUserThreadStart + 44
+  thread #2
+      frame #0: 0x00007ff968585a24 ntdll.dll`NtWaitForWorkViaWorkerFactory + 20
+      frame #1: 0x00007ff968444d0e ntdll.dll`TpCallbackMayRunLong + 6670
+      frame #2: 0x00007ff967dfdda7 kernel32.dll`BaseThreadInitThunk + 23
+      frame #3: 0x00007ff96849ee4c ntdll.dll`RtlUserThreadStart + 44
+  thread #4
+      frame #0: 0x00007ff968585a24 ntdll.dll`NtWaitForWorkViaWorkerFactory + 20
+      frame #1: 0x00007ff968444d0e ntdll.dll`TpCallbackMayRunLong + 6670
+      frame #2: 0x00007ff967dfdda7 kernel32.dll`BaseThreadInitThunk + 23
+      frame #3: 0x00007ff96849ee4c ntdll.dll`RtlUserThreadStart + 44
+  thread #3
+      frame #0: 0x00007ff968585a24 ntdll.dll`NtWaitForWorkViaWorkerFactory + 20
+      frame #1: 0x00007ff968444d0e ntdll.dll`TpCallbackMayRunLong + 6670
+      frame #2: 0x00007ff967dfdda7 kernel32.dll`BaseThreadInitThunk + 23
+      frame #3: 0x00007ff96849ee4c ntdll.dll`RtlUserThreadStart + 44
+* thread #5, stop reason = breakpoint 1.1
+  * frame #0: 0x00007ff72f09a9d0 b18-integration-test.exe`abort
+    frame #1: 0x00007ff72efce8d2 b18-integration-test.exe`anadius::foreign_callback::Domain::leave(anadius::host_init_recovered::Callback) + 146
+    frame #2: 0x00007ff72efda1ef b18-integration-test.exe`anadius::native_recovered::reg_close_entry(HKEY__*) + 175
+    frame #3: 0x00007ff72efb584c b18-integration-test.exe`std::__1::__function::__func<(anonymous namespace)::child(std::__1::basic_string_view<char, std::__1::char_traits<char>>)::$_1, void ()>::operator()[abi:nqe230103]() + 60
+    frame #4: 0x00007ff72efcd84b b18-integration-test.exe`std::__1::__invoke_result_impl<void, b18_test::in_thread(std::__1::function<void ()> const&)::'lambda'()>::type std::__1::__invoke[abi:nqe230103]<b18_test::in_thread(std::__1::function<void ()> const&)::'lambda'()>(b18_test::in_thread(std::__1::function<void ()> const&)::'lambda'()&&) + 27
+    frame #5: 0x00007ff72efcd78d b18-integration-test.exe`void* std::__1::__thread_proxy[abi:nqe230103]<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct>>, b18_test::in_thread(std::__1::function<void ()> const&)::'lambda'()>>(void*) + 45
+    frame #6: 0x00007ff9657ccd30 ucrtbase.dll`wcsrchr + 336
+    frame #7: 0x00007ff967dfdda7 kernel32.dll`BaseThreadInitThunk + 23
+    frame #8: 0x00007ff96849ee4c ntdll.dll`RtlUserThreadStart + 44
+

@@ -1,0 +1,61 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T14:42:28.6885873Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\startup_bridge_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-support-source\\support.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-environment-source\\environment.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-termination-source\\termination.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-onexit-source\\onexit.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-cache-source\\cache.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-vcrt-bridge-source\\bridge.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-cpu-source\\cpu.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-vcrt-ptd-source\\vcrt_ptd.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-vcrt-api-source\\api.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-lock-source\\locks.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-entry-source\\entry.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-initializers-source\\initializers.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-ptd-source\\ptd.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-ptd-data-source\\ptd_data.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-heap-source\\heap.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-glue-source\\crt_glue.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-error-source\\errors.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-invalid-source\\invalid.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-crt-runtime-source\\runtime.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-thread-native-source\\win32_effects.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-thread-source\\threads.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\..\\anadius-source\\bootstrap.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\build\\startup_bridge.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\build\\startup_bridge_tests.exe"
+  ],
+  "tests": "PASS 1732 CRT startup/termination/environment composition checks",
+  "scope": "Actual recovered Entry/VCRT/ACRT/locks/PTD/CPU/environment/cexit/onexit/support cores with synthetic providers; FLS/TLS and environment failures; shared synthetic VCRT fixtures; no target/native environment execution",
+  "sources": [
+    {
+      "name": "startup_bridge_tests.cpp",
+      "sha256": "16ae1812b2dec40dc3d6482e4f502d162674b793e525fdaa2cf06b08d6adf3c5"
+    },
+    {
+      "name": "startup_bridge.cpp",
+      "sha256": "b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c"
+    },
+    {
+      "name": "startup_bridge.hpp",
+      "sha256": "071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19"
+    },
+    {
+      "name": "test_fixtures.hpp",
+      "sha256": "451c4824666e7a2349f0e042ede8219c7d856c1329398a7577b30768889d1a9f"
+    }
+  ],
+  "shared_fixture_sha256": "882faee73336d78f500675eea11b9aa95b35e81d958f7b0a132959da5744026b",
+  "executable_sha256": "7aa6f76a978875bf44bad328d9b4f034f16557f0a9b7ccf34b9596deb7a8df2a"
+}

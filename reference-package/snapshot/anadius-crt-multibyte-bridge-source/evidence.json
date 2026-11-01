@@ -1,0 +1,70 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "new source composition; retained static evidence only",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "complete_selected_evidence": [
+    "../anadius-crt-multibyte-support-source/selected-evidence.json",
+    "../anadius-crt-multibyte-control-source/evidence.json"
+  ],
+  "connections": [
+    {
+      "caller": "0x1800638e8 argv configure",
+      "new_source": "Policy::initialize_multibyte_06f5f8",
+      "callee": "0x18006f5f8 actual recovered initializer"
+    },
+    {
+      "caller": "0x18006f5f8",
+      "callees": [
+        "0x180064c64 actual required_raw PTD",
+        "0x18006f2d0 actual recovered setter"
+      ],
+      "note": "Only AL=true is guaranteed. Setter failure is ignored before initialized byte=1."
+    },
+    {
+      "caller": "0x18006f2d0",
+      "callees": [
+        "0x18006f540 actual thread refresh",
+        "0x18006efd0 actual getSystemCP",
+        "0x18006a308 actual malloc_base",
+        "0x18006f674 MANDATORY UNRECOVERED BUILDER",
+        "0x18006532c actual atomic-mark source",
+        "0x18006ee00 actual publish",
+        "0x1800668c0 actual free"
+      ],
+      "record_bytes": 552,
+      "note": "Complete 69-qword snapshot before destination writes. Only full EAX FFFFFFFF builder result fails."
+    },
+    {
+      "caller": "0x18006efd0",
+      "callee": "0x180058b04 actual LocaleUpdate",
+      "proof": "0x18006efda context=RSP+20; 0x18006f020 reads [RSP+28]; 0x18006f02f reads [RAX+c]; context+8 is locale_info. -4 must not use multibyte_info."
+    },
+    {
+      "caller": "0x18006ee00",
+      "record_fields": {
+        "ptd_multibyte": "+0x88",
+        "type": "+0x18 (257 bytes)",
+        "case": "+0x119 (256 bytes)",
+        "references": "+0 DWORD"
+      },
+      "globals": [
+        "0x1800a59c0 type table",
+        "0x1800a59c8 case table",
+        "0x1800a59d0 shared current-record pointer",
+        "0x1800a52d8 locale-changed DWORD",
+        "0x1800a1940 initial-pair multibyte pointer"
+      ],
+      "note": "Global slot is the live locale Globals member shared by thread/updater; no shadow cached record pointer."
+    }
+  ],
+  "remaining": [
+    "06f674 builder and nested SBCS/ctype/case table production",
+    "Native CP/FLS/Heap/lock/atomic providers, complete global initialization and lifetime",
+    "SEH/unwind, original vector fault footprint and native concurrency",
+    "Complete independent DLL source/ABI/behavioral equivalence"
+  ],
+  "test_scope": "10,377 checks using actual recovered source composition on owned synthetic storage. Builder/CP/Heap/FLS/lock/atomic/native APIs are deterministic controlled fixtures. Original or rebuilt DLLs and game are never loaded or executed.",
+  "original_inputs_modified": false
+}

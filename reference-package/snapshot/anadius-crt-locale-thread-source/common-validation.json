@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locale_thread",
+    "result": "PASS",
+    "output": "PASS: 15204 locale-thread checks",
+    "executable_sha256": "c374c305c161e72537fe6fccd13c11ee8d8b1feb0f8cffe0681b62d881172061"
+  },
+  "execution_scope": "Four locale/multibyte refresh bodies with exact lock/refcount/return flow; bounded synthetic memory/PTD/resource providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-locale-thread-source/locale_thread_tests.cpp",
+      "sha256": "8025f8137d3d086b785cce789f2d8e5daa5c18efa2e3f0aa7914ef21d3b71bd4"
+    },
+    {
+      "path": "anadius-crt-locale-thread-source/locale_thread.cpp",
+      "sha256": "94056806d91af6a462f4ffc63086ca10960c4e189d7bc9342aa5c7cfd19bfd4c"
+    },
+    {
+      "path": "anadius-crt-locale-thread-source/locale_thread.hpp",
+      "sha256": "536621923d516eeffb2e5fc4b835f30a668655b06ffa7e1c0c8f67ed237f6bdc"
+    }
+  ]
+}

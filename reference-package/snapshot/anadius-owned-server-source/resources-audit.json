@@ -1,0 +1,34 @@
+{
+  "schema": "owned-server.resources.v1",
+  "result": "OWNED_SOURCE_PROVIDER_WITH_MANDATORY_ACCEPT_RUNTIME_BOUNDARIES",
+  "owns": [
+    "Core dependency state retained after providers",
+    "native service/scheduler gates",
+    "own selected IOCP port and WSA scope",
+    "actual source scheduler/service and acceptor/pending socket sidecars",
+    "shared SessionMemoryDomain and OwnedIoMemory",
+    "whole-worker admitted API provider lease and ROOT scope"
+  ],
+  "does_not_own_or_prove": [
+    "native0241b0 context/class layout",
+    "missing native021b00/0271a0 accept algorithm/endpoint/kernel borrowers",
+    "truthfulness of Runtime quiescence lower",
+    "arbitrary native concurrency/global ABI/kernel/raw-job drain",
+    "full Transport/Scheduling classes and Resources factory",
+    "selected0228c0 original body",
+    "B31 loader factory, image unload, native EH"
+  ],
+  "failure_rules": [
+    "Stop backend admission before trusted external quiescence callback outside ROOT Operation",
+    "Require both lower attestation and zero source allocations/pins/queues/work plus exact acceptor/pending service list",
+    "Caught nested poison cannot become true attestation; check sticky phase before native destroy and before attested flag",
+    "Seal nonexclusive callback admission once attested; exclusive source ordered teardown remains allowed",
+    "Admitted API checks parent PTD/phase before every SDK call and marks every lower throw unknown",
+    "Physical get alone releases ROOT; immediate SDK error captured before ROOT reentry; packet/queued/callback/cache source accesses remain admitted",
+    "Unknown kernel/native/lower prefix retains fail-stop state; no guessed EH rollback",
+    "Mandatory Closed before backend/domain destructors"
+  ],
+  "integration_scope": "Real own IOCP/gates/WSA/heap/FLS/TLS; synthetic socket/accept lower, actual native posted worker/completion and session disposal; no network/original DLL/game",
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0
+}

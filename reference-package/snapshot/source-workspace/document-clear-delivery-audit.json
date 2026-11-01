@@ -1,0 +1,97 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-25T08:06:30.732140+00:00",
+  "prior_package_sha256": "287f556bb1e20fcd1ffb55fe371990bb31b213d1ed65c1a5406b212d37c870e2",
+  "prior_source_count": 616,
+  "unchanged_prior_sources": 616,
+  "added_sources": [
+    "anadius-socket-source/document_clear.cpp",
+    "anadius-socket-source/document_clear.hpp",
+    "anadius-socket-source/document_clear_integration_tests.cpp",
+    "anadius-socket-source/document_clear_test_fixture.hpp",
+    "anadius-socket-source/document_clear_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 621,
+  "current_documents": 229,
+  "native_objects": 196,
+  "cpp_objects": 192,
+  "c_objects": 4,
+  "normal_test_groups": 205,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 78,
+  "new_checks": 17286,
+  "new_tests": [
+    {
+      "module": "socket_document_clear",
+      "result": "PASS",
+      "output": "PASS: 169 document clear checks; child graph unlink/tracking/virtual targets, cached and live callback fields, exact reset/free order and failure prefixes; native DOM/pool lower bodies and ABI/EH remain open",
+      "executable_sha256": "1d44961ee104ea3f96f7fc376a841a831de97a2bd22bee913175d3bf314bef44"
+    },
+    {
+      "module": "socket_document_clear_integration",
+      "result": "PASS",
+      "output": "PASS: 17117 socket document clear integration checks; actual clear/node source and coherent document/cipher/dispatch/queue/send chain on controlled one-root projections; parser/full DOM/node virtual/helper/pool/heap/ABI/EH remain open",
+      "executable_sha256": "d438f0d95cf9ec035014422256635ad8dc1f4ccc563260ce4f30b7b080c5171d"
+    }
+  ],
+  "validation_mirror_pairs": 39,
+  "historical_module_records_preserved": 38,
+  "historical_config_references_preserved": 76,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "22de357f7a234c28cab38098692ae6b6ae6cd7b5699542dc84c6323f1c2d13b1",
+  "inventory_data_checks": 7381,
+  "normal_source_procedures_added": [
+    "0x180002e60",
+    "0x180003110"
+  ],
+  "new_original_procedures": 2,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/document_clear.cpp",
+      "base": "NativeDocumentEffects::clear_002e60",
+      "body": "clear_native_document_002e60",
+      "closure": "RecoveredDocumentClearEffects::clear_002e60",
+      "address": "0x180002e60",
+      "native_abi_complete": false,
+      "scope": "002e60/003110 normal document clear and child-node cleanup projections and2 final NativeDocumentEffects source bridges; raw-memory unlink/tracking/live pointer/cached vtable and normal cleanup order;003030/003240 and node/pool virtual operations,free/parser/pool/vtable/ABI/EH lower providers mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/document_clear.cpp",
+      "base": "NativeDocumentEffects::delete_nodes_003110",
+      "body": "delete_native_nodes_003110",
+      "closure": "RecoveredDocumentClearEffects::delete_nodes_003110",
+      "address": "0x180003110",
+      "native_abi_complete": false,
+      "scope": "002e60/003110 normal document clear and child-node cleanup projections and2 final NativeDocumentEffects source bridges; raw-memory unlink/tracking/live pointer/cached vtable and normal cleanup order;003030/003240 and node/pool virtual operations,free/parser/pool/vtable/ABI/EH lower providers mandatory"
+    }
+  ],
+  "new_source_bridges": 2,
+  "native_typed_providers_newly_closed": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "prior_native_source_closures_preserved": 27,
+  "current_native_source_closures": 29,
+  "semantic_session_source_adapters_preserved": 2,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "002e60/003110 normal document clear and child-node cleanup projections and2 final NativeDocumentEffects source bridges; raw-memory unlink/tracking/live pointer/cached vtable and normal cleanup order;003030/003240 and node/pool virtual operations,free/parser/pool/vtable/ABI/EH lower providers mandatory",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_contents_read": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N16 parent/node unlink003030 and standalone deletion003240 normal source contracts; node/pool virtual effects,0041b0 parser and native backend remain open; CRT stays paused"
+}

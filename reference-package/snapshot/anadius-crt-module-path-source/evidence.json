@@ -1,0 +1,54 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "origin": "Bounded extraction of retained REA/Ghidra static evidence; current server/provider readiness confirmed by parent. No new target opening or execution.",
+  "functions": [
+    {
+      "va": "0x1800601c8",
+      "name": "fixed_to_narrow",
+      "assembly_evidence": "ev_3770c1e410c6f7fca4f6a360a2ea3413fc4145b136f7cbc22bae4cc85006bbda",
+      "pseudocode_evidence": "ev_f394a3b3e76d5df14ffe24f362ebf67bbc6be0a2f4c48f3238b3b6dc2e667511",
+      "anchors": [
+        "0601e7..060202: NULL clears pointer/capacity/length/ownership with no free",
+        "060207..06023e: empty string either writes one zero byte or status34 and stale pointer/length",
+        "060240..060268: flags0/-1/defaultNULL sizing query; MOVSXD and zero test",
+        "06026a..06027e: GetLastError -> map05d698 -> errno05d724 load",
+        "060280..060293 and06021c..060232: unsigned capacity check then ownership clear, errno34, capacity0; data/length unchanged",
+        "060295..0602c6: low-DWORD signed fill capacity, zero maps error, CDQE/DEC RAX result length"
+      ]
+    },
+    {
+      "va": "0x18006ecdc",
+      "name": "module_filename",
+      "assembly_evidence": "ev_b0e7a6fb5b3f787449bf1dba57777704d0e294deb1e375a3a5e05507fb6c50f0",
+      "pseudocode_evidence": "ev_4388496131ddca2fa75787b26dc498b203bf5efa22e94b0d7de11a482055d865",
+      "anchors": [
+        "06ed07..06ed17: capture destination capacity lowDWORD; GetModuleFileNameW with capacity0x105=261",
+        "06ed1d..06ed30: onlyzero count check; failure GetLastError/map then return0",
+        "06ed35..06ed59: local Buffer length0/owned0, borrowed destination and lowDWORD capacity",
+        "06ed5e..06edbf: inline LocaleUpdate, UTF8 else file-ANSI0/1 codepage and locale cleanup",
+        "06edc2..06edd5: call0601c8, ignore status, return lowDWORD of local length",
+        "06ecf6..06ed00 and06edd9..06ede3: original cookie region explicitly outside reconstructed normal-flow ABI"
+      ]
+    }
+  ],
+  "selected_assembly_sha256": "1a255f1212e0a4355f9cd186e10bf099fa988ee8dd7a8b057e063fb2e76ced06",
+  "selected_pseudocode_sha256": "ae70d02307c4e0151b9231e5adf640822892fd6927984791e44d8483e76156bb",
+  "observations": [
+    "0601c8 performs no allocation or free even if owned is nonzero",
+    "Capacity failure stores errno34, clears ownership and capacity, retains old data/length",
+    "Nonzero signed query is signextended before unsigned capacity comparison; negative fill accepted and signextended then decremented",
+    "NULL source clears four represented fields; empty source writes NUL only if capacity is nonzero",
+    "06ecdc calls GetModuleFileNameW with261 WCHAR capacity independently from narrow destination capacity; onlyzero API result is checked",
+    "06ecdc destination capacity truncates to32bits, conversion status ignored, length lowDWORD returned",
+    "05d724 is errno accessor despite misleading decompiler __doserrno label"
+  ],
+  "limitations": [
+    "Typed Buffer omits original full object/stack layout and unused third conversion parameter",
+    "WideResult is a new provider-owned scratch facade, not original stack ABI; successful provider data must remain valid and NULterminated for conversion",
+    "choose_code_page models inline locale/file-ANSI selection including cleanup; root composition supplies existing source helper",
+    "Native GetModuleFileNameW and encoding APIs remain abstract effects; no original or native provider execution",
+    "Original security cookie and SEH/unwind ABI not reconstructed; only supported normal flow claimed"
+  ]
+}

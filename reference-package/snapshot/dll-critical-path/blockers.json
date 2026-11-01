@@ -1,0 +1,582 @@
+{
+  "schema": "dll-critical-path.v1",
+  "baseline_package": "B54",
+  "baseline_zip_sha256": "daff8d56dd9d59b347a167c49af561c12f7c86479a365b7419b8c29f4df93fb4",
+  "supersedes_automatic_stage_sequence": true,
+  "scope": "Bounded audit of actual entry/Resources/native gaps, not an exhaustive list of all unimplemented native functions. Behavior unknowns are separate from missing code; they do not all represent undefined linker symbols.",
+  "items": [
+    {
+      "id": "entry-lifecycle",
+      "class": "missing_binding",
+      "description_tr": "İki require_loader hook tanımı hâlâ yok. Senkron startup worker beklemiyor; main-library/console/hook işlemlerinin loader profili, kısmi attach rollback ve termination/CRT ömrü çözülmeli. Loader dışı pre-unload callback mevcut; export/DllMain bağlantısı tamamlanmış değil.",
+      "status": "OPEN",
+      "blocks": "actual-DLL-link",
+      "depends_on": [
+        "aggregate-lifetime",
+        "resource-assembly",
+        "host-startup"
+      ],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/dll-link-gate-source/production_image.hpp",
+          "line": 5,
+          "sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+          "anchor": "REQUIRED production definitions"
+        },
+        {
+          "path": "outputs/dll-link-gate-source/entry.cpp",
+          "line": 8,
+          "sha256": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+          "anchor": "if (reason == DLL_PROCESS_ATTACH)"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-runtime-source/factory.hpp",
+          "line": 46,
+          "sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+          "anchor": "outside"
+        }
+      ],
+      "selected_progress": {
+        "pre_unload_evidence": "outputs/anadius-pre-unload-source/evidence.json",
+        "loader_context_audit": "outputs/dll-critical-path/loader-context-map.json",
+        "closed_scope": "Callable cooperative managed Runtime.close/destruction->Domain.close with retained retries; no startup timing change.",
+        "remaining": "Production export/context/image wiring, supported synchronous attach profile, real pre-detach external/code/CRT proof, failed-attach and unclosed process-termination policy; both required hooks undefined."
+      }
+    },
+    {
+      "id": "aggregate-lifetime",
+      "class": "missing_algorithm_or_model",
+      "description_tr": "036d20 yalnız 41 configuration alanına projekte edilmiş; çevre aggregate, mutex/module/storage ve tam 037f70 yıkımı kurulmuş değil. 07e0c0→037f70 bağı bu incelemede iki talimatla doğrulandı.",
+      "status": "OPEN",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [
+        "0x180001390",
+        "0x180036d20",
+        "0x18007e0c0",
+        "0x180037f70"
+      ],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-config-defaults-source/defaults.hpp",
+          "line": 7,
+          "sha256": "8bbc25f4e3eb45469a653cb8746465adfe7d3b6365b5612d157ebec0fa4c9ef8",
+          "anchor": "enclosing MSVC aggregate"
+        },
+        {
+          "path": "outputs/anadius-config-defaults-source/README.md",
+          "line": 33,
+          "sha256": "f9735922ac987c94ae642b84394ccab29509a16805aea65620a5d6b786c0edd3",
+          "anchor": "Enclosing MSVC aggregate"
+        }
+      ],
+      "selected_progress": {
+        "map": "outputs/dll-critical-path/aggregate-map.json",
+        "path_binding_evidence": "outputs/anadius-achievement-storage-source/path_binding.evidence.json",
+        "closed_scope": "+138 authentication,+408/+4a8 paths,+428 mutex bindings; selected normal037f70 storage order and observed036d20 defaults into actual owning Runtime",
+        "remaining": "Full native aggregate/object/CRT/EH ABI and actual production provider/foreign/module/loader lifetime; selected owning default Runtime roots/storage/normal teardown paths remain bounded source projections.",
+        "authentication_binding_evidence": "outputs/anadius-license-source/auth_state.evidence.json",
+        "mutex_binding_evidence": "outputs/anadius-achievement-runtime-source/mutex_binding.evidence.json",
+        "normal_teardown_evidence": "outputs/anadius-config-defaults-source/teardown.evidence.json",
+        "observed_constructor_binding_evidence": "outputs/anadius-bootstrap-runtime-source/observed_runtime.evidence.json",
+        "fresh_outside_runtime_evidence": "outputs/anadius-initial-cells-source/runtime.evidence.json"
+      }
+    },
+    {
+      "id": "configuration-key",
+      "class": "missing_algorithm",
+      "description_tr": "02a830 gövdesi ve native Configuration üzerinden gerçek Runtime State bağlantısı odaklı testte geçti. Native ABI/loader ve tüm Resources kurulumu kapanmış sayılmaz.",
+      "status": "CLOSED_IN_SELECTED_SOURCE_ROUTE",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [
+        "0x18002a830"
+      ],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-configuration-factory-source/factory.hpp",
+          "line": 13,
+          "sha256": "d612623742cb5d32c50246b5d274a66275f139d9789439e3d3869e6908cda5c5",
+          "anchor": "virtual void apply"
+        },
+        {
+          "path": "outputs/anadius-config-source/configuration.cpp",
+          "line": 149,
+          "sha256": "a2a2fa7980ddeeaece163b705213bdc5adfff48ae149ec39a122850032e25f6c",
+          "anchor": "deps.apply_license_key_02a830"
+        },
+        {
+          "path": "outputs/anadius-token-source/token.cpp",
+          "line": 28,
+          "sha256": "fba652fd5f6027ac2d0988237bac10f4cefc9a74fceecc2554667b8484fee020",
+          "anchor": "cipher.set_key_and_iv_042760"
+        }
+      ],
+      "implementation_evidence": "outputs/anadius-license-source/key_binding.evidence.json"
+    },
+    {
+      "id": "legacy-config",
+      "class": "missing_binding",
+      "description_tr": "LegacyDocumentReader zorunlu constructor girdisi; aktif FilePass bu legacy rotayı atlıyor. Parser yokluğu olarak sayılmamalı.",
+      "status": "OPEN",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-configuration-factory-source/factory.hpp",
+          "line": 18,
+          "sha256": "d612623742cb5d32c50246b5d274a66275f139d9789439e3d3869e6908cda5c5",
+          "anchor": "virtual configuration::Node read"
+        },
+        {
+          "path": "outputs/anadius-config-startup-source/startup.cpp",
+          "line": 4,
+          "sha256": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+          "anchor": "FilePass"
+        }
+      ],
+      "selected_progress": {
+        "configuration_console_evidence": "outputs/anadius-resources-factory-source/configuration.evidence.json",
+        "closed_scope": "Concrete active FilePass/Configuration/Persistence/CompilerConsole selected in actual Runtime; legacy reader remains explicit and was not invoked.",
+        "remaining": "Legacy document reader selection/implementation for callers choosing the older direct document route; not a missing active FilePass parser."
+      }
+    },
+    {
+      "id": "library-phases",
+      "class": "missing_binding",
+      "description_tr": "BoundLibrary tüm7 Effects metodunu lower olmadan sağlıyor; Backend aynı Execution/libraries_ready referanslarını bağlıyor. Mevcut LibraryExecution path-sync sırası korunuyor. Legacy wrapper yolu ayrıca destekleniyor.",
+      "status": "CLOSED_IN_SELECTED_SOURCE_ROUTE",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-library-effects-source/effects.cpp",
+          "line": 11,
+          "sha256": "4817011c56a72114d178e7b535a2b6c61ec3026c65ecbc226faed597ca3adb54",
+          "anchor": "!lower_"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+          "line": 59,
+          "sha256": "72713547523dcf06f2e9824778d89965e7b86d67b0a6c14222eaf0b71448f7da",
+          "anchor": "execution_.wait_steps_036880(c);sync_paths"
+        }
+      ],
+      "implementation_evidence": "outputs/anadius-resources-factory-source/factory.evidence.json"
+    },
+    {
+      "id": "resource-assembly",
+      "class": "missing_binding",
+      "description_tr": "Ortak Resources/host/stop/Runtime/Worker, somut configuration/persistence/compiler-console, ek modül referansı, kalıcı hata politikası ve sahip olunan initial-locale Domain kurulumu mevcut. Gerçek API/handler/host-code kökeni, foreign drain ve loader bağlantısı açık.",
+      "status": "OPEN",
+      "blocks": "production-composition",
+      "depends_on": [
+        "configuration-key",
+        "legacy-config",
+        "library-phases",
+        "graph-leaves",
+        "online-lifetime"
+      ],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+          "line": 94,
+          "sha256": "72c0dcdf15bbdae395e17a6089277b5635bd2ef8334e1025dacab35f2646b838",
+          "anchor": "struct Resources"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+          "line": 62,
+          "sha256": "3828d09fbccad14dc04882726eb5bc7d60c76e452814c2e09f5b492c6c90f289",
+          "anchor": "Prepared prepare"
+        },
+        {
+          "path": "outputs/anadius-thread-domain-source/domain.hpp",
+          "line": 43,
+          "sha256": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+          "anchor": "class DomainStorage"
+        }
+      ],
+      "selected_progress": {
+        "evidence": "outputs/anadius-resources-factory-source/factory.evidence.json",
+        "closed_scope": "Actual common Resources installer and real Runtime/3Domainworkers/concrete3provider pipeline with explicit synthetic configuration/host/socket boundaries",
+        "remaining": "Actual external source/SDK/IO admission/cancellation/drain, actual executable/CRT code lifetime and production loader-context profile. Cooperative managed Runtime->retirement->Domain pre-unload callback is implemented but not production-image wired.",
+        "host_assembly_evidence": "outputs/anadius-host-platform-source/assembly.evidence.json",
+        "source_stop_evidence": "outputs/anadius-host-platform-source/source_stop.evidence.json",
+        "native_initial_cells_evidence": "outputs/anadius-initial-cells-source/defaults.evidence.json",
+        "fresh_runtime_defaults_evidence": "outputs/anadius-initial-cells-source/runtime.evidence.json",
+        "worker_native_defaults_evidence": "outputs/anadius-initial-cells-source/worker.evidence.json",
+        "configuration_console_evidence": "outputs/anadius-resources-factory-source/configuration.evidence.json",
+        "module_reference_evidence": "outputs/anadius-module-reference-source/evidence.json",
+        "permanent_errors_evidence": "outputs/anadius-permanent-errors-source/evidence.json",
+        "initial_domain_factory_evidence": "outputs/anadius-thread-domain-source/factory.evidence.json",
+        "owned_engine_evidence": "outputs/hook-engine-source/owned.evidence.json",
+        "pre_unload_evidence": "outputs/anadius-pre-unload-source/evidence.json"
+      }
+    },
+    {
+      "id": "graph-leaves",
+      "class": "missing_binding_or_algorithm",
+      "description_tr": "Üç somut sağlayıcı Resources/Runtime akışında mevcut; native NoResponse ve UnknownMessage yakalama yolları aynı oturum testinde çalışıyor. Genel EH/gerçek dış yaşam döngüsü açık.",
+      "status": "OPEN",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-application-graph-source/graph.hpp",
+          "line": 31,
+          "sha256": "bc983d04c601b5abb9b2dacd11abecb64df6b62fbca06213bb89470933f61e53",
+          "anchor": "std::shared_ptr<handlers_recovered::Effects> information"
+        },
+        {
+          "path": "outputs/anadius-content-handlers-source/content_handlers.hpp",
+          "line": 66,
+          "sha256": "3d7e56eac5fe80d0a76cec2baa7a160dc7a2e32d06b1d2fb18ff006cdc514ba7",
+          "anchor": "online_avatar_virtual_28"
+        },
+        {
+          "path": "outputs/anadius-license-source/license.hpp",
+          "line": 34,
+          "sha256": "a949a169740b5bce16398f18f39a8f13a9d9065e343509c3791dca9e03816c36",
+          "anchor": "online_auth_virtual_30"
+        }
+      ],
+      "selected_progress": {
+        "evidence": "outputs/anadius-online-query-source/application_calls.evidence.json",
+        "closed_scope": "Concrete provider bodies plus actual Worker post-configure composition, automatic Backend owned-Online binding, root paths/auth references and worker facade retirement",
+        "remaining": "Actual production foreign/module/loader lifetime and general EH; selected callback/license/Worker avatar fresh state is evidenced and bound.",
+        "content_provider_evidence": "outputs/anadius-content-effects-source/effects.evidence.json",
+        "information_and_owned_auth_evidence": "outputs/anadius-information-effects-source/effects.evidence.json",
+        "licensing_provider_evidence": "outputs/anadius-licensing-effects-source/effects.evidence.json",
+        "worker_composition_evidence": "outputs/anadius-application-effects-source/factory.evidence.json",
+        "resources_runtime_evidence": "outputs/anadius-resources-factory-source/factory.evidence.json",
+        "no_response_control_evidence": "outputs/anadius-no-response-source/control.evidence.json",
+        "unknown_message_control_evidence": "outputs/anadius-unknown-message-source/control.evidence.json",
+        "native_attempt_defaults_evidence": "outputs/anadius-initial-cells-source/defaults.evidence.json",
+        "worker_avatar_defaults_evidence": "outputs/anadius-initial-cells-source/worker.evidence.json"
+      }
+    },
+    {
+      "id": "online-lifetime",
+      "class": "external_contract_unverified",
+      "description_tr": "Online için gerçek Win32 ek-modül-referans sağlayıcısı seçilebilir ve kendi sentetik DLL üzerinde doğrulandı. Forwarded/vtable kod kökeni, gerçek foreign drain ve loader bağlamı hâlâ dış sözleşme.",
+      "status": "OPEN",
+      "blocks": "production-behavior-and-unload",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-online-factory-source/factory.hpp",
+          "line": 20,
+          "sha256": "938c8409d9d345d6571a4d1c9768af5bed24a7a42f4d6037c6221cc8079161e4",
+          "anchor": "online_version::CodeLease code_lease"
+        },
+        {
+          "path": "outputs/anadius-online-factory-source/factory.hpp",
+          "line": 27,
+          "sha256": "938c8409d9d345d6571a4d1c9768af5bed24a7a42f4d6037c6221cc8079161e4",
+          "anchor": "foreign_quiescent"
+        }
+      ],
+      "selected_progress": {
+        "module_reference_evidence": "outputs/anadius-module-reference-source/evidence.json",
+        "closed_scope": "Concrete exact-base FROM_ADDRESS reference provider; real OWN fixture retention/unload+Binding object lifecycle; actual Resources uses selected provider with controlled SDK.",
+        "remaining": "Real procedure/vtable/engine executable-code provenance; foreign/IO drain BEFORE destroy/source free/uninitialize; outside-loader-lock use and no-self-unload. Selected engine owner/cleanup guard exists but does not prove actual mapping/drain.",
+        "owned_engine_evidence": "outputs/hook-engine-source/owned.evidence.json"
+      }
+    },
+    {
+      "id": "host-startup",
+      "class": "missing_binding",
+      "description_tr": "Somut host/callback kurulumu ve aynı motor/code sahibi mevcut. Yeni guard başarısız motor temizliği sonrasında dış true sözüne rağmen Context kapanışını engelliyor. Gerçek mapped-code kökeni, foreign drain, activation scheduling ve loader bağlamı açık.",
+      "status": "OPEN",
+      "blocks": "production-composition",
+      "depends_on": [],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+          "line": 30,
+          "sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+          "anchor": "void Domain::begin()"
+        },
+        {
+          "path": "outputs/anadius-foreign-callback-source/foreign.cpp",
+          "line": 38,
+          "sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+          "anchor": "(void)activate_foreign();"
+        },
+        {
+          "path": "outputs/anadius-startup-publication-source/publication.cpp",
+          "line": 13,
+          "sha256": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+          "anchor": "void Milestones::published"
+        },
+        {
+          "path": "outputs/anadius-source/bootstrap.cpp",
+          "line": 39,
+          "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+          "anchor": "deps_.between_workers_00e310()"
+        }
+      ],
+      "selected_progress": {
+        "evidence": "outputs/anadius-host-platform-source/assembly.evidence.json",
+        "closed_scope": "Selected owning Resources host/hook/native callback pairing, real sameDomain callback and cleanup retry test.",
+        "remaining": "Actual mapped-code provenance, excluded/drained trampoline users before uninit, external IO/foreign completion and controller activation scheduling/loader reconciliation; selected owner and logical cleanup guard implemented.",
+        "source_stop_evidence": "outputs/anadius-host-platform-source/source_stop.evidence.json",
+        "native_initial_cells_evidence": "outputs/anadius-initial-cells-source/defaults.evidence.json",
+        "owned_engine_evidence": "outputs/hook-engine-source/owned.evidence.json"
+      }
+    },
+    {
+      "id": "detach-and-hooks",
+      "class": "external_contract_unverified",
+      "description_tr": "Cleanup dönüşü hooks-disabled kanıtı değil. FreeLibrary, process termination ve başarısız attach ayrı ele alınmalı; kaynak lease sıfırı Errors/thunk epilogue ömrünü kanıtlamaz.",
+      "status": "OPEN",
+      "blocks": "production-behavior-and-unload",
+      "depends_on": [
+        "entry-lifecycle",
+        "host-startup"
+      ],
+      "native_addresses": [],
+      "source_evidence": [
+        {
+          "path": "outputs/anadius-network-hook-source/hook_cleanup.cpp",
+          "line": 3,
+          "sha256": "a0dc1b5726b78abad8066537f1b4abc45e0a9245da9bdac425a0aafa30da050b",
+          "anchor": "cleanup_hooks_0102b0"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+          "line": 71,
+          "sha256": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+          "anchor": "bool RuntimeOwner::close()"
+        },
+        {
+          "path": "outputs/anadius-bootstrap-runtime-source/callbacks.hpp",
+          "line": 23,
+          "sha256": "0f15b4031dc4e71f32e52c0ef6b7061fb1ec8c9e0b2c7df424f0ee4fd72d13e4",
+          "anchor": "class CallbackRegistry"
+        }
+      ]
+    }
+  ],
+  "native_selection": [
+    {
+      "address": "0x18002a830",
+      "definitions": [],
+      "pseudo_evidence": "ev_f896d1d300fedafcee6570b765c7cecc78a5c0ae23182cea35a454ec6d0199a7",
+      "assembly_evidence": "ev_15aca81fc2f57a75ce4a92b8ce30822f78fa1d0cee3366522019ef53c167e64e",
+      "presence_at_B54": "no_definition_mapping",
+      "current_pending_presence": "body_implemented_and_target_compiled",
+      "current_pending_definition": "anadius-license-source/key_processor.cpp"
+    },
+    {
+      "address": "0x18002af30",
+      "presence": "source_definition_mapped",
+      "definitions": [
+        {
+          "file": "anadius-license-source/license.cpp",
+          "symbol": "Handlers::token_path_02af30"
+        }
+      ],
+      "pseudo_evidence": "ev_a3e5ae032e3e308b95adb084795bc14e06bb970454ba2a3735f6cfe2057a72cd",
+      "assembly_evidence": "ev_b045aa79b4f2c1fabb580b482f52edf099392dda05721838cf45876772a166ec"
+    },
+    {
+      "address": "0x180036d20",
+      "presence": "no_definition_mapping",
+      "definitions": [],
+      "pseudo_evidence": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+      "assembly_evidence": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9"
+    },
+    {
+      "address": "0x180037f70",
+      "presence": "no_definition_mapping",
+      "definitions": [],
+      "pseudo_evidence": "ev_c03fec66056719abadb29e535fb59a20827bd1c74e0bbe959590c8170e39714b",
+      "assembly_evidence": "ev_2ec7531b888601db062b01ddc9b261926b0bb2a9c39cf12579c0999519e4bb42"
+    },
+    {
+      "address": "0x1800423d0",
+      "presence": "source_definition_mapped",
+      "definitions": [
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "symbol": "CryptoFactory::create_0423d0"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "construct_session_cipher_0423d0"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "SessionCipherFactory::create_0423d0"
+        }
+      ],
+      "pseudo_evidence": "ev_5faa15cdd4a0e251b11f4a4b841a7d36cb933d79a06a0a53b3bd926fb86c2613",
+      "assembly_evidence": "ev_1a5eecedd9b2929ae9f1e885705987927e1309cc6991de8c01925d839d99ad34"
+    },
+    {
+      "address": "0x180042610",
+      "presence": "source_definition_mapped",
+      "definitions": [
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "symbol": "Cipher::encrypt_042610"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "SessionCipher::encrypt_042610"
+        },
+        {
+          "file": "anadius-socket-source/prefix_cipher.cpp",
+          "symbol": "encrypt_prefix_042610"
+        },
+        {
+          "file": "anadius-socket-source/prefix_cipher.cpp",
+          "symbol": "RecoveredMessageCipherApi::encrypt_042610"
+        }
+      ],
+      "pseudo_evidence": "ev_84196222f2218d2b0a060bb317b12da12a77b2f964a5902100ed78e154eb8375",
+      "assembly_evidence": "ev_46790ff61e14371172a73e53871ee23da992983094393729fe2474de81caee15"
+    },
+    {
+      "address": "0x180042760",
+      "presence": "source_definition_mapped",
+      "definitions": [
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "symbol": "Cipher::set_key_and_iv_042760"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "set_session_key_iv_042760"
+        },
+        {
+          "file": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "SessionCipher::set_key_and_iv_042760"
+        }
+      ],
+      "pseudo_evidence": "ev_b7191ccefe4f94753ba7877dd859eb4a7530a22a4d086b700584ccf2da34de7e",
+      "assembly_evidence": "ev_997fe5368937536a0756fb50ee6f4d70854abb04ae62c70396ae16dedd5bbafd"
+    }
+  ],
+  "preserve_existing": [
+    "B52 Configuration covered routes",
+    "B53 Remaining eleven routes",
+    "B54 Online twenty-seven routes",
+    "Domain/native threads/default adapters",
+    "Execution phase bodies",
+    "Parser/hash/FilePass",
+    "Tracked IO cancellation/completion"
+  ],
+  "workflow": {
+    "full_build_on_every_step": false,
+    "full_link_on_every_step": false,
+    "repackage_on_every_step": false,
+    "development_checks": "Only changed translation units and dependency consumers, plus focused tests; rebuild affected consumers for header/ABI changes. Do not reuse stale binary interfaces.",
+    "full_regression_triggers": [
+      "A coherent production integration milestone",
+      "A discovered regression affecting broader modules"
+    ],
+    "link_triggers": [
+      "Production loader hook definitions or actual entry assembly changes",
+      "A change to required link dependencies"
+    ],
+    "package_trigger": "Reviewed milestone with an actual useful deliverable",
+    "progress_metric": "Concrete missing algorithm or production dependency closed; test counts do not measure DLL completion."
+  },
+  "first_analysis_completed": "startup-cleanup label relation resolved in native-lifecycle-slice.json",
+  "next_code_candidate": {
+    "blocker_groups": [
+      "graph-leaves",
+      "resource-assembly"
+    ],
+    "reason": "Concrete Content/Information exist; implement real LicensingCore and live state binding, not another setup wrapper.",
+    "validation": "Focused concrete owned-auth and license/file/token paths; no unchanged failed link."
+  },
+  "production_sources_changed": true,
+  "full_build_run": false,
+  "link_run": false,
+  "package_rebuilt": false,
+  "overall_completion_percentage": null,
+  "version_blocked_input_not_accessed": true,
+  "pending_source_delta": {
+    "new_files": [
+      "anadius-config-source/state_binding.hpp",
+      "anadius-license-source/key_processor.hpp",
+      "anadius-license-source/key_processor.cpp",
+      "anadius-license-source/key_processor_tests.cpp",
+      "anadius-license-source/key_binding_tests.cpp",
+      "anadius-achievement-storage-source/path_binding.hpp",
+      "anadius-achievement-storage-source/path_binding_tests.cpp",
+      "anadius-license-source/auth_state.hpp",
+      "anadius-achievement-runtime-source/mutex_binding.hpp",
+      "anadius-config-defaults-source/teardown.hpp",
+      "anadius-config-defaults-source/teardown.cpp",
+      "anadius-config-defaults-source/teardown_tests.cpp",
+      "anadius-bootstrap-runtime-source/observed_runtime.hpp",
+      "anadius-bootstrap-runtime-source/observed_runtime.cpp",
+      "anadius-bootstrap-runtime-source/observed_runtime_tests.cpp",
+      "anadius-online-query-source/application_queries_tests.cpp",
+      "anadius-content-effects-source/effects.hpp",
+      "anadius-content-effects-source/effects.cpp",
+      "anadius-content-effects-source/effects_tests.cpp",
+      "anadius-information-effects-source/effects.hpp",
+      "anadius-information-effects-source/effects.cpp",
+      "anadius-information-effects-source/effects_tests.cpp"
+    ],
+    "modified_prior_sources": [
+      "anadius-achievement-runtime-source/runtime.hpp",
+      "anadius-application-graph-source/graph_tests.cpp",
+      "anadius-application-graph-source/graph.cpp",
+      "anadius-application-graph-source/graph.hpp",
+      "anadius-application-worker-source/worker_tests.cpp",
+      "anadius-application-worker-source/worker.cpp",
+      "anadius-application-worker-source/worker.hpp",
+      "anadius-bootstrap-backend-source/backend.cpp",
+      "anadius-bootstrap-backend-source/backend.hpp",
+      "anadius-bootstrap-runtime-source/factory_tests.cpp",
+      "anadius-bootstrap-runtime-source/factory.cpp",
+      "anadius-config-storage-source/filesystem.cpp",
+      "anadius-config-storage-source/filesystem.hpp",
+      "anadius-config-storage-source/persistence.cpp",
+      "anadius-config-storage-source/persistence.hpp",
+      "anadius-configuration-factory-source/factory.cpp",
+      "anadius-configuration-factory-source/factory.hpp",
+      "anadius-content-handlers-source/content_handlers_tests.cpp",
+      "anadius-content-handlers-source/content_handlers.cpp",
+      "anadius-content-handlers-source/content_handlers.hpp",
+      "anadius-file-source/license_files.cpp",
+      "anadius-file-source/license_files.hpp",
+      "anadius-license-source/license_tests.cpp",
+      "anadius-license-source/license.cpp",
+      "anadius-license-source/license.hpp",
+      "anadius-online-factory-source/factory_tests.cpp",
+      "anadius-online-factory-source/factory.cpp",
+      "anadius-online-factory-source/factory.hpp",
+      "anadius-online-query-source/query_tests.cpp",
+      "anadius-online-query-source/query.cpp",
+      "anadius-online-query-source/query.hpp",
+      "anadius-online-version-source/version.hpp",
+      "anadius-windows-source/windows_effects.cpp",
+      "anadius-windows-source/windows_effects.hpp"
+    ],
+    "local_native_body_added": 1,
+    "published_B54_inventory_rebuilt": false,
+    "package_rebuilt": false,
+    "new_binding_files": [
+      "anadius-config-source/state_binding.hpp",
+      "anadius-license-source/key_binding_tests.cpp"
+    ],
+    "build_registration_pending_delivery": true,
+    "planned_production_objects": 279,
+    "planned_normal_groups": 345
+  }
+}

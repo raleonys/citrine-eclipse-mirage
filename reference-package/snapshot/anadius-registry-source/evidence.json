@@ -1,0 +1,144 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "evidence_type": "retained Ghidra static pseudocode plus assembly",
+  "functions": [
+    {
+      "address": "0x1800086b0",
+      "pseudocode_evidence": "ev_afebe607a4512f5d64c7183bf91373244a28c564d6f777859e95f90a91240565",
+      "assembly_evidence": "ev_74b901828d532ca810925ee8115733c679958a4136c3b3f61bb8ef7f7353abc2"
+    },
+    {
+      "address": "0x1800087f0",
+      "pseudocode_evidence": "ev_ddbac61865c097a192a0176d086c1c1dde58f749b80c47eaad27a2e8294fb83a",
+      "assembly_evidence": "ev_b5ea38e151fee51be883351024b585cdab1d5e18a8357c30bab9ec7495f41931"
+    },
+    {
+      "address": "0x180008980",
+      "pseudocode_evidence": "ev_c722c69251a253b36c86a2007c131f27dbc76d405b6b0abb3d2f3f2f61674ca3",
+      "assembly_evidence": "ev_3c09da4690d66390ea66b08998a2eb0011264936b3589f0ea01578e999127c10"
+    },
+    {
+      "address": "0x180008b80",
+      "pseudocode_evidence": "ev_aba0d6549e02daffdf8c7086bb022c97c14ad20a935a705be7b243f5cf1daff5",
+      "assembly_evidence": "ev_87198cd04885336e788b24d002b231e048f4a68d136a3868a86413b5dbfc7b20"
+    },
+    {
+      "address": "0x180008cb0",
+      "pseudocode_evidence": "ev_2d4a1f4e7e255c5b273186f52ec2baad13cc23d1f919b32fb243921bfa82e8a4",
+      "assembly_evidence": "ev_5e266653000bfd9055208cc584998493476e5715a8f54bf3b81af272c3f73bcf"
+    },
+    {
+      "address": "0x1800091a0",
+      "pseudocode_evidence": "ev_768ad42d1de35965f74016b7a3ec3e82596870c0c26cef408d9f90ae88798e3e",
+      "assembly_evidence": "ev_3365410940e8551f57b0a8ef047d7365bdf1c3276ef05e7fa366b7cebea34a83"
+    },
+    {
+      "address": "0x1800093a0",
+      "pseudocode_evidence": "ev_ca807ccbb7765e49e287cfa81ccb720121a56539a1e164eb1212c45a09074578",
+      "assembly_evidence": "ev_8f21bec15c236a8d15ad5773a844f26b9ac56832ffb4831b24c1a5d965c8bc70"
+    },
+    {
+      "address": "0x180009520",
+      "pseudocode_evidence": "ev_4b4de074eb4dc3003307632a5a4583af79377888546f1abd182e345e79bf67c8",
+      "assembly_evidence": "ev_3212e7c2c8fdee85ed1db12c901993c28dc210836f8d88df7cbad6a33bbbf603"
+    },
+    {
+      "address": "0x180009850",
+      "pseudocode_evidence": "ev_a9f13cb91744d98d135015962ce63a840d3b0f3f8b81f1390ac897af6d1f0794",
+      "assembly_evidence": "ev_ae2f6017d27a2eed46638343257118cce03b14d05e9b506953ee48d8f388fb81"
+    },
+    {
+      "address": "0x18000f5b0",
+      "pseudocode_evidence": "ev_385cc03034934006ca0e36401489e4b1d18c500a814fd3a6dfbb062150413eef",
+      "assembly_evidence": "ev_8fa994584b07065f191017b1f34d729381ddc085b7e29cba1eb8a2d105e2aa23"
+    },
+    {
+      "address": "0x18000f800",
+      "pseudocode_evidence": "ev_e5741a3a50bb245206711a7ed39cff88fc883bb6a5dcc3ffa681719e34abf8aa",
+      "assembly_evidence": "ev_27cec8e8e0471003e3103224b9e66c72e335493f48f21cdb1f928b5f4fa1f65b"
+    },
+    {
+      "address": "0x18000f960",
+      "pseudocode_evidence": "ev_5cc710fc823ef4b907ba499fd6b4989a5581c02f69389c4863a2bf92cec05030",
+      "assembly_evidence": "ev_0b71cbc0c0230a05f138d043fcf6abefdc0eef94cd9f55a584cb17421f1d1f1d"
+    },
+    {
+      "address": "0x18000fac0",
+      "pseudocode_evidence": "ev_711c0da52803bf972d99544226fdb38b0d1a84762ff3db0eb2c38022d4106673",
+      "assembly_evidence": "ev_53d11b8198b200f713684c36c617cb030636ca403c61c933980e59286dad34d8"
+    },
+    {
+      "address": "0x18000fb60",
+      "pseudocode_evidence": "ev_0d82c7516cbb3e01806271f005f8a611512f6a42dbac0acde3ec3d61f62709e0",
+      "assembly_evidence": "ev_ebbb7ad9250d167def51ef4468bbed5f25c93352faaa29c2455505ace59ccf9d"
+    },
+    {
+      "address": "0x180010170",
+      "pseudocode_evidence": "ev_db954c0f69d9875d0f3dcd7893449539ed1f94302f040f2247ddd79dde255cbc",
+      "assembly_evidence": "ev_c17c1608a7f1236a1072263a7188477e1a6933e89822a75d358c00ad76d4c9c3"
+    }
+  ],
+  "anchors": [
+    {
+      "address": "0x18000f823",
+      "finding": "original RegOpenKeyExA called before key comparisons"
+    },
+    {
+      "address": "0x18000f983",
+      "finding": "original RegOpenKeyExW called before key comparisons"
+    },
+    {
+      "address": "0x18000faed",
+      "finding": "incoming query byte capacity copied into EDI before original"
+    },
+    {
+      "address": "0x18000fb01",
+      "finding": "original A query executes before override helper"
+    },
+    {
+      "address": "0x18000fb35",
+      "finding": "A override helper receives captured capacity"
+    },
+    {
+      "address": "0x1800091dd",
+      "finding": "captured capacity restored through caller size pointer"
+    },
+    {
+      "address": "0x1800091fa",
+      "finding": "caller capacity re-read after filesystem conversion"
+    },
+    {
+      "address": "0x180009208",
+      "finding": "required byte count including NUL written before data pointer check"
+    },
+    {
+      "address": "0x1800092b8",
+      "finding": "64-bit required byte size compared against captured 32-bit capacity"
+    },
+    {
+      "address": "0x1800092ce",
+      "finding": "strcpy_s destination size is full required byte count"
+    }
+  ],
+  "search_boundary": "Five registry callbacks, value map lookup/comparison, override selection, size/copy helpers, fabricated allocation, logical handle set membership. No actual registry operations, target execution, original MSVC node or exception ABI reconstruction.",
+  "status": "partial recompilable application core",
+  "new_abi_storage_bridge": {
+    "source": "abi_cells.hpp",
+    "provenance": "Independent C++ compatibility infrastructure; no claim that ScalarCell was an original DLL type",
+    "handle_bytes": 8,
+    "dword_bytes": 4,
+    "access": "Immediate memcpy load/store on borrowed raw storage; no type-punned scalar pointer, initialization, cached output or deferred writeback",
+    "capacity_order": "Explicit value snapshot before original operation; restored capacity reread after conversion exactly as the retained assembly anchors require",
+    "validation": "991 module checks including actual SDK DWORD/HKEY objects, preserved addresses, unaligned/null cells, scalar snapshots, immediate writes and synthetic callback failure/throw retention; no native registry calls",
+    "limits": "Caller-owned accessible storage and selected Windows x64 scalar representation required; overlapping callback argument buffers and original invalid-pointer exception ABI remain unproven"
+  },
+  "unresolved": [
+    "actual registry original forwarding backend",
+    "static CRT locale and secure-copy invalid-parameter policy",
+    "native hook trampoline ABI",
+    "MSVC tree node allocation/iterator ABI and allocation failure side effects",
+    "thread safety and full runtime equivalence"
+  ]
+}

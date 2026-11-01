@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 244,
+  "integration_checks": 838,
+  "output": "PASS: 244 socket scheduler registry checks; retained022fd0/023b30 normal flow with controlled allocation/024990/RTTI only\nPASS: 838 socket scheduler registry integration checks; shared nested socket/scheduler registry and actual constructor-to-acceptor-to-recycler chain with controlled effects only",
+  "source_hashes": {
+    "scheduler_registry.hpp": "15682596994c9dad200822f868694ac5ecd5c1b892989ec9f661493f44ea68d9",
+    "scheduler_registry.cpp": "dd435dd06297b628a8a101effc1c1d4263a281299d04f8517ee16368de4c64ac",
+    "scheduler_registry_tests.cpp": "4c478a57097c720b2cd2a938b8026602eed882584d30fac819b7e5090c656e54",
+    "scheduler_registry_integration_tests.cpp": "3416f9fb342e744de978060d09d7dcce8d07019f1ae3bb4eb1e3a9a95d701ba7",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 2,
+  "execution_scope": "022fd0/023b30 retained normal flow, cached owner before enter, constructor return identity, live two-pass scans and publication/deletion; shared socket/scheduler registry through actual0228e0/acceptor/lifecycle/closing/queue/recycler with controlled effects",
+  "required_providers": "04b0bc native allocator,024990 scheduler constructor,04d2d0 RTTI comparator,scalar deletion remain controlled providers; normal flow only",
+  "native_ASIO_IOCP_allocator_ABI_SEH": "not established; no original DLL/game or actual socket/network/IOCP/critical-section execution; no real cfg/token/achievement reads"
+}

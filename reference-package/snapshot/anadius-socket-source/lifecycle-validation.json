@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "lifecycle_checks": 244,
+  "native_checks": 165,
+  "output": "PASS: 244 socket lifecycle checks; controlled service/list/owner providers only\nPASS: 165 socket lifecycle native checks; injected SDK gate imports only",
+  "source_hashes": {
+    "lifecycle.hpp": "081bf08e4214bdaaa2252c6e1abcb6ce6acad75c2805656cec5dee6e9eeee898",
+    "lifecycle.cpp": "6f5f684e1fb3224a5a9fd92ebf51f4b495effecf0f5ee7aad7fa7bc92fbb52c8",
+    "lifecycle_native.hpp": "ef0f5c9621106f565d4b65b39666e2ee258f13e0638644051c543d1e63bf8f52",
+    "lifecycle_native.cpp": "3d93ea529a65f84e009a80caebd6032606c65f60d2de281a6885a84c94d99996",
+    "lifecycle_tests.cpp": "5222c62232015e59f3aa8c9477b28701411d3654294cc7bca18644b7caef6408",
+    "lifecycle_native_tests.cpp": "2759211a1dd016ac79fbcbed36e686e4a6f8b8b91cc3bf3ffba0991517061d31",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "execution_scope": "Typed logical service/list/owner fields with controlled resolver/close/cancel/executor effects; injected SDK gate imports and selected own-host noop control allocation",
+  "native_ASIO_IOCP_allocator_ABI_SEH": "not established; no original DLL, WSAStartup, sockets, network or real critical-section APIs executed"
+}

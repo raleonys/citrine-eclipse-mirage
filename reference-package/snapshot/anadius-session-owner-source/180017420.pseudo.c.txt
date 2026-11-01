@@ -1,0 +1,16 @@
+/* 0x180017420 FUN_180017420; Evidence ev_47a23a1547e1e17db86b3c8bae1e5ebefeb62279c087c44967b4df46a6292967 */
+
+void FUN_180017420(longlong *param_1)
+
+{
+  if (param_1 != (longlong *)0x0) {
+                    /* WARNING: Could not recover jumptable at 0x00018001742d. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+    (**(code **)(*param_1 + 0x10))(param_1,1);
+    return;
+  }
+  return;
+}
+
+
+

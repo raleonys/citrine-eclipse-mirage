@@ -1,0 +1,41 @@
+{
+  "result": "PASS",
+  "reviewer": "root",
+  "independent_final_code_review": false,
+  "independent_input": "parse-audit.md/json: separate agent pre-implementation static branch analysis",
+  "source_hashes": {
+    "timestamp.hpp": "bdf47aadc38b11393e9317ed9c2e4b43067f8c81c02256a4001289da31ba017e",
+    "timestamp.cpp": "443dc4a0dea62b717d4513f6d8432f84f8d51ff6edf3bc26bd12f6578c02e52c",
+    "timestamp_tests.cpp": "5b0eb2b9a72fa135a49adf87ac06a8467ac6492905317b8328adbcb2f04af6e5",
+    "build.ps1": "c5bcbb361b1c2bbd6225c167024c439a7ec555afbb98c98fc2031da7b9dd677c",
+    "CMakeLists.txt": "ba4d0d0b123c885ec24fff8a8a1006b012e9ada6a55309e381f182919023e492",
+    "README.md": "88028baba72ebaf1111b1249a3aa5f2f938bac6421beb5be00e2c742150495a5"
+  },
+  "support_hashes": {
+    "evidence.pseudo.c.txt": "3ac9da90685e630285d5cd2652697cbf0f0fca97b6209fcf12e7835ee571a519",
+    "evidence.asm.txt": "70de3172c5e027ea2d4844da394a28d61fc984ba920cecfb5ddd9adcca36d998",
+    "parse-audit.md": "e1fdfdfb39f7c27b3bef9601a50228fd21d3f3a444273bdd128c623b8c25aec6",
+    "parse-audit.json": "5b87c0d12e853b5f168a2d3d46ea318df553acc7f6637c635b371b3609b544b5",
+    "rea-session.json": "38b78f49875dc6e65f179895fb37ccb39c6c45fcaf41acfc23dfa75e3d67a997",
+    "review.md": "bda198b4d3d9c70471074c238f9626719b4fb03a4de7557ff213d4763c9a6355"
+  },
+  "calendar_review": [
+    {
+      "path": "../anadius-calendar-source/calendar.cpp",
+      "sha256": "ef95920c0c8c4a3056cb8878931ec6733a4c3262b7fb1d96ff5352c9ffbcda0f"
+    },
+    {
+      "path": "../anadius-calendar-source/calendar.hpp",
+      "sha256": "e46c9ed16d357d6c225aae29afb799ad2d41ce26160749e3ea25eeb762b685b4"
+    },
+    {
+      "path": "../anadius-calendar-source/calendar_tests.cpp",
+      "sha256": "dd058d7ff7d156149bd4cd3a178173d121c4f1f8d366d2daded290fde6419e8b"
+    },
+    {
+      "path": "../anadius-calendar-source/evidence.asm.txt",
+      "sha256": "c80a3d827212ed1c93f53f2c0e006329b53737de0b33549fd5b4447796dea1b3"
+    }
+  ],
+  "scope": "Root source-to-evidence review; not runtime differential or complete native equivalence"
+}

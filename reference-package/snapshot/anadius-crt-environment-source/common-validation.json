@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_environment",
+    "result": "PASS",
+    "output": "PASS 27951 environment checks",
+    "executable_sha256": "1b5fada6a33d7b519e0a2b935f17cb70f122b056e0806e379992ffe25863f589"
+  },
+  "execution_scope": "Five narrow environment construction/conversion/init/free entries; live bounded byte/pointer storage with synthetic native effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-environment-source/environment_tests.cpp",
+      "sha256": "6ce25a3b49e599350867e19881d185ace7d74ef4d1c24bd98e4e234e1140e3cb"
+    },
+    {
+      "path": "anadius-crt-environment-source/environment.cpp",
+      "sha256": "fd5b246f6f2ee676a0ac92f2dd9a6db0f9b410c92021c52cc8669a9002731132"
+    },
+    {
+      "path": "anadius-crt-environment-source/environment.hpp",
+      "sha256": "f76125336b93848a9c091f5238a9d05ede9c76f33efbd9d952c70ee84a27a683"
+    }
+  ]
+}

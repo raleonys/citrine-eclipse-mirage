@@ -1,0 +1,105 @@
+{
+  "kind": "Independent typed16pair dispatch design audit only",
+  "report": "work/pair-dispatch-design-audit.md",
+  "checked_at": "2026-10-20T19:45:08.667Z",
+  "constructor_checks": [
+    {
+      "test": "address(termination.encoded_callback_a4f10)==address(encoded.a4f10)",
+      "meaning": "True reference alias; value equality insufficient"
+    },
+    {
+      "test": "runtime.cookie==heap.cookie_0a1580==termination.onexit.cookie_0a1580",
+      "meaning": "Cookie selected before construction; remains coherent throughout lifetime"
+    },
+    {
+      "test": "address(command_lines.narrow)==address(argv_cleanup.argv)",
+      "meaning": "Same argv State, not equal copied views"
+    },
+    {
+      "test": "address(environment_cleanup.narrow)==address(startup_environment)",
+      "condition": "Only if both concrete references are constructor inputs"
+    },
+    {
+      "test": "address(entry.onexit_table)==address(termination.onexit.application_0a47a8)",
+      "condition": "Only if both Entry/table references are constructor inputs"
+    },
+    {
+      "test": "pair span size16",
+      "condition": "If caller supplies borrowed span"
+    }
+  ],
+  "constructor_must_not": [
+    "Call Effects providers for eager validation",
+    "Initialize native locks/FLS/heap",
+    "Acquire commandlines",
+    "Require encoded.a5178==cookie before pair1 initialization"
+  ],
+  "a5178_projection": {
+    "real_alias": false,
+    "when": "Immediately after each dispatched actual initialize_encoded_globals_0644b0 call",
+    "assignment": "heap.encoded_handler_0a5178=encoded.a5178",
+    "scope": "One-time initialization projection for each initializer invocation",
+    "not_claimed": [
+      "Bidirectional synchronization",
+      "New-handler setter/mutation emulation",
+      "Single global cell identity"
+    ]
+  },
+  "dispatch_contract": [
+    "Opaque rebuilt IDs; original VAs are metadata only and never callable",
+    "Boolean domain preserves067538 uint64; generic walker consumes AL",
+    "Thunk uninit receives uint8(argument), not bool(argument)",
+    "0644f0 leaf forces VCRT argument0",
+    "Wrong-domain/unknown IDs rejected;006500 deliberately allowed in bool/uninit domains",
+    "C/C++ void/int domains delegated separately or rejected explicitly",
+    "Actual existing normal/reverse/rollback walkers retain mutable entry rereads"
+  ],
+  "provider_identity_limits": [
+    "Private provider references cannot be validated by constructor without observable callbacks",
+    "MB init/shutdown require shared mutable slot, identities, counters and heap domain by caller contract",
+    "Same ACRT FLS domain reused across MB/locale/errors, distinct from VCRT domain",
+    "Lowio lower providers stay mandatory and share same128slot State and recursive7 lock"
+  ],
+  "borrowed_lifetimes": [
+    "State/Effects/encoded refs outlive dispatch and late FLS callbacks",
+    "Pair array backing stays fixed/live; callbacks can mutate future entries",
+    "Commandline terminated bounded storage lives while published and parsed",
+    "Native LONG/CS/heap object lifetime and registry changes externally serialized"
+  ],
+  "minimal_fixtures": [
+    "Alias/cookie rejection before any provider call",
+    "All16 pairs using actual recovered cores and real generic walkers",
+    "a5178 initialization projection separately labeled as copying",
+    "AL cookie high bits and uint8 argument0/1/0x100/0x101",
+    "forced VCRT0 and wrong-domain/unknown IDs",
+    "Later-entry mutation and null-init rollback skip",
+    "Shared heap/argv/environment/onexit changes visible through aliases"
+  ],
+  "scope_exclusions": [
+    "Production dispatcher implementation in this audit",
+    "Full C/C++ table binding unless explicitly added",
+    "Native lower provider deployment",
+    "SEH/completeCRT/DLL ABI equality"
+  ],
+  "source_hashes": {
+    "outputs/anadius-crt-pair-leaves-source/pair_leaves.cpp": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87",
+    "outputs/anadius-crt-pair-leaves-source/pair_leaves.hpp": "4c05549af135b8bb56515e56a5e9180c7fc90e9bd08f798d852aab145233019e",
+    "outputs/anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp": "20dc724fe4e0c7efddaef7e0fa7087e5fed9f07adb31554827661ff2104b5d5b",
+    "outputs/anadius-crt-lowio-lifecycle-source/lowio_lifecycle.hpp": "a1b92b3286d2774ff45db0aa0b04ad7a12dc14b98df19db2e2ad0aedb3228670",
+    "outputs/anadius-crt-initializers-source/initializers.cpp": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79",
+    "outputs/anadius-crt-initializers-source/initializers.hpp": "a9e1effcf75bf8baa9c4909a90ce187dc7a39259d73a32cfc3c25ef34ed0fa0b",
+    "outputs/anadius-crt-cache-source/cache.hpp": "333e6ba19bb623cf798e67c402ef65a5c58ae43717aa562a6c2c824aa803c756",
+    "outputs/anadius-crt-cache-source/cache.cpp": "613f2667b0bf0c068f7f4a04e0144e15272b13cec03cb53b26f3eb41ad75a9de",
+    "outputs/anadius-crt-heap-source/heap.hpp": "a67a56d560357695d9b6025236e9148c819a7ac48a5843646021e7181dc4b956",
+    "outputs/anadius-crt-runtime-source/runtime.hpp": "5ef66b7441704a28df50afd555f3a2cb17678ec232fbf69d6f250ffa151bce7d",
+    "outputs/anadius-crt-termination-source/termination.hpp": "fabc301738df4612c11c194169e92c96d407e81d88eda792e726924eb9cab0fa",
+    "outputs/anadius-crt-argv-bridge-source/argv_bridge.hpp": "83c3eb4264abb2b49db92dd88727600a616231edfa7fcb733e9c0fc56be2b076",
+    "outputs/anadius-crt-environment-cleanup-source/environment_cleanup.hpp": "6fa4d9263b44cd07a0d1431b16f6e4519f6ff1309ce9277ea83a57b21d9a8cbe",
+    "outputs/anadius-crt-lifecycle-callbacks-source/callbacks.hpp": "3cd7e846c0922c30bdb67c1c20504747d7ba512c08e2cce3a415c2dacf46622d",
+    "outputs/anadius-crt-startup-bridge-source/startup_bridge.hpp": "071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19"
+  },
+  "report_sha256": "3b8c1ed27ca998835d0763c8dd515520378b8509c4efb73e44be57dc6bc47c80",
+  "original_execution": false,
+  "production_edits": false,
+  "new_original_bodies": 0
+}

@@ -1,0 +1,63 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "9e9b181af31bc6d77a014c753efef128dea23b4a675f350e13de8edcefb086ae",
+  "test_results": [
+    {
+      "module": "socket_pool_allocate",
+      "result": "PASS",
+      "output": "PASS: 515 pool allocation core checks; four literal layouts, scalar/vector initialized images, recycled bypass, signed maxima/raw counters, ordered lower/mapping failures, shared aliases and raw SIMD lanes; native heap/append body/ABI/EH remain open",
+      "executable_sha256": "ad8197a65ad2e6973b4e9a670ab08071c31509b1ec812245264f2ff02f5021e9"
+    },
+    {
+      "module": "socket_pool_allocate_integration",
+      "result": "PASS",
+      "output": "PASS: 8720 pool allocation integration checks; four exact item extents across three blocks, source tracking/release/LIFO reuse, payload retention and committed failed-growth prefix; lower heap/fill/append supplied, no parser/DOM/nativeABI/EH claim",
+      "executable_sha256": "b2a19f16cdca9cf94b66d00a0465977e6dd21d5309105711e5cd0eb04e3b3af4"
+    }
+  ],
+  "core_checks": 515,
+  "integration_checks": 8720,
+  "source_hashes": {
+    "pool_allocate.hpp": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757",
+    "pool_allocate.cpp": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf",
+    "pool_allocate_test_fixture.hpp": "c7b6e0de3174348fe93d61d99d31afb093a029c2fb5b0c65860f47073e197424",
+    "pool_allocate_tests.cpp": "12a26f15e09c86a5f12bb2eba883ab3ba0c4b30f6adafe17b57908d36cd69ba7",
+    "pool_allocate_integration_tests.cpp": "a1108afe6f7281900deeb598b8b8e9ccb1f86b96d07bd778fd67012bd22c03f7",
+    "build.ps1": "500fa683411cd92244ceda9449c842f334f824828b3d47781d3ccc737d0037cc",
+    "CMakeLists.txt": "ba9772a3f4a91fc6b039378a7387828920486abe409dd298a45cae4bc4d9e2db"
+  },
+  "original_procedures_added": 4,
+  "new_source_bridges": 1,
+  "new_source_allocation_adapters": 1,
+  "native_typed_providers_newly_closed": 0,
+  "new_unique_source_mapped_addresses": 4,
+  "tagged_definition_variants_per_new_target": 1,
+  "target_dispatch_guards_are_native_bodies": false,
+  "execution_scope": "Four normal pool allocation projections preserve free-list pop, fresh-block allocation/fill/append/link ordering and live DWORD counters; one new bounded exact-target source allocation dispatcher, not four historical NativeNodeClearEffects provider closures; allocator/fill/block-array append/node virtual/parser/DOM/pool lifecycle/ABI/EH/concurrency remain open",
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Four normal pool allocation projections preserve free-list pop, fresh-block allocation/fill/append/link ordering and live DWORD counters; one new bounded exact-target source allocation dispatcher, not four historical NativeNodeClearEffects provider closures; allocator/fill/block-array append/node virtual/parser/DOM/pool lifecycle/ABI/EH/concurrency remain open",
+    "Raw64-bit pointer arithmetic and DWORD wrapping counter projections on explicitly mapped memory; no native MSVC object/fault/unwind/concurrency equivalence",
+    "Recycled free-list root skips allocation/fill/append/CPU mode and link initialization; returned item retains first-word link/payload",
+    "Fresh allocation null skips fill but still calls005440 append and proceeds; no invented safe-null return, rollback or recovery",
+    "Signed DWORD CPU mode selects scalar below6 or SIMD store projection at/above6; exact96-byte shipped constants are bound separately; CPU detection itself is not executed",
+    "Current+70 increments modulo32 then signed compares with live max+78; total+74 and untracked+7c are live reads/writes in instruction order",
+    "Block allocation04b0bc, fill0793d0 and pointer-array append005440 remain mandatory lower effects; no generic CRT production bodies added",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity separate; blocked version.dll and generated version DLL never retried",
+    "Integration uses explicitly owned mapped pool blocks; controlled document projections do not prove native parser/DOM materialization or node virtual lifecycle",
+    "Existing33 historical source closures and2 semantic session adapters are preserved; one new allocation dispatcher is recorded separately; guards are not new native bodies",
+    "CRT unchanged and paused; full DLL incomplete; completion percentage unmeasured"
+  ],
+  "previous_local_records": "41 earlier local records retain exact bytes and historical configuration hashes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

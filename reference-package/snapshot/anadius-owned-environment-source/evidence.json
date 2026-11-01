@@ -1,0 +1,86 @@
+{
+  "schema": "owned-environment.source-composition.v1",
+  "source_package": "B43",
+  "evidence_type": "existing typed environment/move/handler/response/posted/accept source composition with selected host capability and scheduling policy",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "reused_addresses": [
+    "0x180023dd0",
+    "0x180023cb0",
+    "0x180022c60",
+    "0x1800229d0",
+    "0x180021420",
+    "0x180022e40",
+    "0x1800271a0"
+  ],
+  "source_references": [
+    {
+      "path": "outputs/anadius-socket-source/io_completion.cpp",
+      "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90",
+      "scope": "Existing recovered source/evidence reused; no new original bytes queried."
+    },
+    {
+      "path": "outputs/anadius-socket-source/handler_dispatch.cpp",
+      "sha256": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac",
+      "scope": "Existing recovered source/evidence reused; no new original bytes queried."
+    },
+    {
+      "path": "outputs/anadius-socket-source/environment_constructor.cpp",
+      "sha256": "bc47e1f2fbc9bc30e0142d0d97c872b66c1aa17247889af38355eb2966f55d88",
+      "scope": "Existing recovered source/evidence reused; no new original bytes queried."
+    },
+    {
+      "path": "outputs/anadius-socket-source/response_dispatch.cpp",
+      "sha256": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0",
+      "scope": "Existing recovered source/evidence reused; no new original bytes queried."
+    },
+    {
+      "path": "outputs/anadius-socket-source/posted_operation.cpp",
+      "sha256": "4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d",
+      "scope": "Existing recovered source/evidence reused; no new original bytes queried."
+    },
+    {
+      "path": "outputs/anadius-accept-source/accept.cpp",
+      "sha256": "3483ad9075706413543407f75c4ec02333d124f3a5a39ddb25f1e51572b11a22",
+      "scope": "Existing recovered source/evidence reused; no new original bytes queried."
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/evidence.json",
+      "sha256": "6ff2e07c632f301a16e7eae5241368ecf8981a2a901bf84ff9c674c9d1e9ac98",
+      "scope": "Existing recovered source/evidence reused; no new original bytes queried."
+    },
+    {
+      "path": "outputs/anadius-owned-deque-source/evidence.json",
+      "sha256": "9307f67c6b8329a7114c647baae83f3d71575c2a409f06d9202a01042008a007",
+      "scope": "Existing recovered source/evidence reused; no new original bytes queried."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b43-core-quick-results.json",
+      "sha256": "eeec703eae53c49cae49f7fc3f80121793001628909d40e9ef7d7cf3ec96923d",
+      "checks": 200,
+      "executable_sha256": "f1ce612e4a5454d6f6e851102560c84cdcaf43446912cd12bebb42cd3282c718",
+      "archive_sha256_as_used": "4cdb330f0dcd2cbe3cb109b87294bb80f27bf0ab42f25d7b3c9f02ccda200b60",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh environment.cpp, modified Profile.cpp and environment_tests.cpp with selected actual headers/prior domain fixture. Immutable canonical B42 archive supplies other prior production objects. Integration test is not compiled or claimed. These six selected as-used files differ from six frozen production/integration files. Main count excludes nine independent retained-prefix children whose exact exits301..309 are verified. The strict-drain post-return probe creates one unpublished real PostedOperation, then calls actual owner0 cleanup using the controlled raw worker API; it neither submits a kernel operation nor claims native external drain."
+    },
+    {
+      "path": "work/b43-integration-quick-results.json",
+      "sha256": "4c664174cd0554f4960bac9c98ad670fb9d3e9024b5040c20748de9f98cf03a4",
+      "checks": 244,
+      "executable_sha256": "2c34cfc6ec44b8b901776dba806db39fe9671805afb89985ad52cd88b1adab7c",
+      "archive_sha256_as_used": "4cdb330f0dcd2cbe3cb109b87294bb80f27bf0ab42f25d7b3c9f02ccda200b60",
+      "execution_author": "/root/b22_integration",
+      "note": "Actual Profile DEFAULTowned Environment with ALL environment configuration EMPTY and no fixtureTypes/Table/factory/query/schedule/copy thunks or Policy environment overrides. RealNativeLogic/Router twooverlap/deferredjobEOF and17plain+AESrequest/event,59nativepackets and wrappedowneddeque8to16/FIFO17 under realParentheap/FLS/ownIOCP. No manualnativework/context/observer/grow code. RemainingSDK/message/log/CRTworker/job/shutdown/externaldrain policiesexplicit; selectedownedC++environment does not claim native0228c0/RTTI/vtable/Win64ABI/nativeconcurrency/globalquiescence."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition; no fresh shipped-artifact claim.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false
+}

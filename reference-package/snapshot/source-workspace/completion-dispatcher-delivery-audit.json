@@ -1,0 +1,59 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T19:21:07.2004193Z",
+  "prior_package_sha256": "2ce219dfa73c2585682f0493f76be50b5ea8544f582466dd73523bcf0d04f7c9",
+  "prior_source_count": 484,
+  "unchanged_prior_sources": 484,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/completion_dispatcher_native_tests.cpp",
+    "anadius-socket-source/completion_dispatcher_native.cpp",
+    "anadius-socket-source/completion_dispatcher_native.hpp",
+    "anadius-socket-source/completion_dispatcher_tests.cpp",
+    "anadius-socket-source/completion_dispatcher.cpp",
+    "anadius-socket-source/completion_dispatcher.hpp"
+  ],
+  "current_sources": 490,
+  "current_documents": 192,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 166,
+  "cpp_objects": 162,
+  "c_objects": 4,
+  "normal_test_groups": 153,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_completion_dispatcher",
+      "result": "PASS",
+      "output": "PASS: 1970 socket completion dispatcher checks; full027c10 queue/timer/TLS/metadata/CAS/exception/status/stop flow and actual cancellation/worker source integration",
+      "executable_sha256": "9574b0d2805bcd465da0ca3e6d40bce9dc5dd87469604bdd3df7ed7fa5d64b8b"
+    },
+    {
+      "module": "socket_completion_dispatcher_native",
+      "result": "PASS",
+      "output": "PASS: 845 socket completion dispatcher native checks; five injected SDK imports and actual024990/02a000/05e8e0/02a4a0/029890/0298b0/027c10/02a190/026320 source composition",
+      "executable_sha256": "f1d0a6ac2e936366bf00e6976ddbf267efcc238aca00eb0556db3935a73127b6"
+    }
+  ],
+  "new_checks": 2815,
+  "master_build_sha256": "f29e0ffb66925331a4923e2ff3894f01c9946baa2fe1d6117b85b881c4bdfbea",
+  "common_build_script_sha256": "e07ef0567aff1a7230eae63ec3750c957e5ff2fc7cf1f7afb227d18e34fa53ce",
+  "cmake_sha256": "2cb0fb90e63970d3399fc23e46bd00b0967e80c59d3081e1342030659d0b4f4b",
+  "normal_source_procedures_added": [
+    "0x180027c10"
+  ],
+  "new_original_procedures": 1,
+  "new_composition": "Actual027c10 dispatcher bridge in existing0298b0 worker loop/02a190 stop and shared completion queues; injected five SDK imports; required native GS TLS/low32atomic/operationcallback/CRT/exception-copy-terminalrethrow/lifetime effects",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "logical_native_status": "optional meaningful Error fields; native padding excluded; generic/system constant-object mapping supplied",
+  "packet_metadata": "Borrowed packet error/bytes at native0/10/14 distinct from CancelOperation cancellationreason38; no original OVERLAPPED overlay",
+  "native_tls_guard": "Cached native GS slot address/liveepoch; unchanged required CRT providers",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

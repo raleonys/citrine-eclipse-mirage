@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_pair_bindings",
+    "result": "PASS",
+    "output": "PASS 1088 typed16-pair source composition checks;4 rollback points;normal reverse/mutable/low8/domain/alias",
+    "executable_sha256": "561ef8c8fe044cf1dbf8bb26faee34febc2dddbdacf24bdb0d2ca874dfad12d8"
+  },
+  "execution_scope": "New composition zero originalbodies;16mutablefixedsize opaqueID pairs20identities match rawPE/compiled table;1088checks actual existing callback/walker sources,4rollback points/fullreverse/mutable/terminating/AL/low8/domains/alias;controlled existingSystem/Platform/Memory/locale/MBmallocfailure/emptylowio providers;one-timeA5178projection,nocanonicalnativegraph/wholeCRT/ABI/SEHequivalence",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-pair-bindings-source/bindings_tests.cpp",
+      "sha256": "9971728dfacfabc045a696702a21360c704135edd02d2ac350e21f1007071940"
+    },
+    {
+      "path": "anadius-crt-pair-bindings-source/bindings.cpp",
+      "sha256": "63b018adebe37d4c7a9f17ca1b2ee407e3a59cd43be291e4d2f95b9609fc4c68"
+    },
+    {
+      "path": "anadius-crt-pair-bindings-source/bindings.hpp",
+      "sha256": "726405a5c3f56fecee42c6c7aa6ff8b1d97a6a114710c0dedf789c73ab9c1d51"
+    }
+  ]
+}

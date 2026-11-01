@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 12382,
+  "integration_checks": 128,
+  "output": "PASS: 12382 socket IO completion checks; eight retained normal bodies, defined-field error mapping, live environment/reference mutations, unsigned counters, two-slot storage and polymorphic factory sequencing\nPASS: 128 socket IO completion integration checks; actual dispatcher/worker/IO/posted source composition, injected existing native SDK adapters, mixed size-class cache reuse, mandatory unknown routing and heap lifetime ends",
+  "source_hashes": {
+    "io_completion.hpp": "85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32",
+    "io_completion.cpp": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90",
+    "io_completion_dispatch.hpp": "43e4ab5404a7805e689232622ebc2a7471bd851532cdb952338dc0bce08074c2",
+    "io_completion_dispatch.cpp": "bb85580acd56f40b4e9c32e06a615aba3af36c37f6adc51ccc1184ec3c96a9a1",
+    "io_completion_tests.cpp": "7e49da73697f313385ef6651aeddcc30028b0ab8c06dbacaf42a3409149b87ee",
+    "io_completion_integration_tests.cpp": "941a84316b7955a5145088bed56ad5bfb755984fbe6111fb6b95a2ba469ae111",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 8,
+  "execution_scope": "027710/027a20/0293f0/0294c0/023cb0/021a40/021a80/026a00 retained normal bodies: receive/send defined-field error mapping and EOF branch exclusion, live environment moves, cached factory function with actual executor deletion during query, temporary live guard and unconditional nested destroy, early cleanup, unsigned32 strong/weak decrement and live pointer reloads, TLS-first bounded two-slot marker cache; actual028ca0/0298b0/027c10/IO routing plus reentrant022e40/027120 mixed callback integration, reused IO storage for posted job, existing injected NativeWorkerRunApi/NativeDispatcherApi, post-failure fallback and actual operation/storage/control heap lifetime ends",
+  "required_providers": "04b788 free/04b0bc allocation, native polymorphic move/query/factory/destroy implementations,025c40/0261d0/0229d0/022c60 bodies, reference dispose/delete,GS TLS/guard CRT/exception storage and native ABI ownership remain required effects; CRT production unchanged and paused",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; Error represents defined code/category only, send remapped padding and dummy prefix unspecified, native factory scratch contents opaque; bounded raw storage and separate typed SDK OVERLAPPED do not prove native layout/heap/SEH/concurrency or binary equivalence; no original/game/real SDK TLS/IOCP/socket/network/event/thread/wait or user cfg/token/achievement execution/read"
+}

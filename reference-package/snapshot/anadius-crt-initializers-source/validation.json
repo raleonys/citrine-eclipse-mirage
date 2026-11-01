@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T09:34:50.9395009Z",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\initializers.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\build\\initializers.o"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\initializer_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\..\\anadius-crt-entry-source\\entry.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\..\\anadius-crt-onexit-source\\onexit.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\..\\anadius-crt-cache-source\\cache.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\..\\anadius-crt-runtime-source\\runtime.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\..\\anadius-crt-ptd-source\\ptd.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\..\\anadius-thread-source\\threads.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\..\\anadius-source\\bootstrap.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\build\\initializers.o",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initializers-source\\build\\initializer_tests.exe"
+      ]
+    }
+  ],
+  "output": "PASS 904 initializer/outer-CRT/onexit composition checks",
+  "target_execution": "none",
+  "scope": "Recovered table walks/outer CRT/cookie/cache/onexit and PTD cores; owned opaque table/storage fixtures; synthetic app/VCRT/CPU/argv/environment/OS effects",
+  "sources": [
+    {
+      "name": "initializer_tests.cpp",
+      "sha256": "52078425e865f289ddf397643ef24cf90fc2ffbc83c5224ee7fda4ecc22e4771"
+    },
+    {
+      "name": "initializers.cpp",
+      "sha256": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79"
+    },
+    {
+      "name": "initializers.hpp",
+      "sha256": "a9e1effcf75bf8baa9c4909a90ce187dc7a39259d73a32cfc3c25ef34ed0fa0b"
+    }
+  ],
+  "executable_sha256": "2e9884ed067ccf569afcc1766bcd00f6f28224de3c8a480f0c60244a0a7dad06"
+}

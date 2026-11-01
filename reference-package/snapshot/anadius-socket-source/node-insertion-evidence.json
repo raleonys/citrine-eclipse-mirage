@@ -1,0 +1,200 @@
+{
+  "schema": "node-insertion.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180003aa0",
+      "pseudo_evidence": "ev_ce74b4f983309d2cc1be9c243fc3798203afe86b437ad9ffead5aaaad8d7c3cb",
+      "assembly_evidence": "ev_0b08898f12f5db24f44abc354495178632463f25a053f9ce71e2a4157571b4ef",
+      "newly_recovered": true,
+      "recovery_scope": "003aa0 normal insertion-preparation byte-state body and final existing prepare source bridge;incoming owner ignored,linked detach-only ordering or unlinked vector removal with cached signed bound/live unsigned tail/live decrement,then live pool track;known005a20 source reused;generic pool/heap/parser/ABI/EH remain open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180003aa0"
+  ],
+  "new_original_procedures": 1,
+  "new_source_bridges": 1,
+  "native_typed_providers_newly_closed": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "new_source_allocation_adapters": 0,
+  "new_node_parse_source_adapters": 0,
+  "existing_node_parse_source_adapters_preserved": 1,
+  "existing_source_allocation_adapters_preserved": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/node_insertion.cpp",
+      "base": "NativeNodeParseEffects::prepare_003aa0",
+      "body": "prepare_native_insertion_003aa0",
+      "closure": "RecoveredNodeInsertionEffects::prepare_003aa0",
+      "address": "0x180003aa0",
+      "native_abi_complete": false,
+      "scope": "003aa0 normal insertion-preparation byte-state body and final existing prepare source bridge;incoming owner ignored,linked detach-only ordering or unlinked vector removal with cached signed bound/live unsigned tail/live decrement,then live pool track;known005a20 source reused;generic pool/heap/parser/ABI/EH remain open"
+    }
+  ],
+  "source_allocation_adapters_added": [],
+  "pointer_only_free_interface_preserved": true,
+  "native_prepare_003aa0_recovered": true,
+  "native_prepare_003aa0_normal_body_ready": true,
+  "native_node_constructors_recovered": true,
+  "native_node_constructor_normal_bodies_ready": true,
+  "native_node_constructor_count": 5,
+  "native_identify_0038b0_recovered": true,
+  "native_node_parse_004970_normal_body_ready": true,
+  "known_004970_source_dispatch_ready": true,
+  "native_indirect_parse_body_recovered": false,
+  "track_005a20_source_reused": true,
+  "native_pool_virtual_abi_established": false,
+  "native_materialize_0035e0_recovered": false,
+  "native_classifier_051fc0_recovered": false,
+  "native_compare_05c550_recovered": false,
+  "new_vtable_data_acquisition": false,
+  "new_native_analysis": false,
+  "native_variadic_abi_established": false,
+  "native_stack_scratch_established": false,
+  "prior_source_presence_transition": "no_definition_mapping -> source_definition_mapped",
+  "context_functions": [
+    {
+      "address": "0x180003030",
+      "pseudo_evidence": "ev_f0d8f947ec8be75ff8f8d98756eef10381d18d179adac4a13a2b449556abbc64",
+      "assembly_evidence": "ev_62653814fe73bda4ddc3c13653105d5eae5d8b8e23438a418eb6eb770c525aad",
+      "newly_recovered": false,
+      "context_scope": "Existing deletion/tracking/parser context;no new normal body"
+    },
+    {
+      "address": "0x180003240",
+      "pseudo_evidence": "ev_85f5d40be5f36d1fa85d93ac5e561c5df22a3923879f0ddc4fbe2ef681ff3a04",
+      "assembly_evidence": "ev_66a8781816232d9983f66d11708eff8ac7b7af8864cb6b8663030e90b072427d",
+      "newly_recovered": false,
+      "context_scope": "Existing deletion/tracking/parser context;no new normal body"
+    },
+    {
+      "address": "0x180003110",
+      "pseudo_evidence": "ev_1309c5f52e5b3d9c95ec97c721c6a49f19fcded8db1c04d21e5faf6c6874beb4",
+      "assembly_evidence": "ev_635328ecb5bc687965c6bb53ce282983fd334bc548208011ed74d62e645db5bf",
+      "newly_recovered": false,
+      "context_scope": "Existing deletion/tracking/parser context;no new normal body"
+    },
+    {
+      "address": "0x180005a20",
+      "pseudo_evidence": "ev_df5bc8292ee95a900d1b02c812064d25be2cc214ec36d768fec18c3da8b9e8c8",
+      "assembly_evidence": "ev_fc5e2131422789819e9bf0acf480c663ab946afa810969adb78f817d69d2ffb2",
+      "newly_recovered": false,
+      "context_scope": "Existing deletion/tracking/parser context;no new normal body"
+    },
+    {
+      "address": "0x180004970",
+      "pseudo_evidence": "ev_01d06f0d09c426e84edfc80412a5b90481296b9b16734298cadd2cf8fceab53d",
+      "assembly_evidence": "ev_bab15aa72d1d1d2cb34f0a417872877e60c9e43b5b9530ac83290c1bbc58da0a",
+      "newly_recovered": false,
+      "context_scope": "Existing deletion/tracking/parser context;no new normal body"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "node_insertion.hpp": "7bc92143f7ae1869f371cc7a7c102bc5cb7572523455c00a14826c2903aebb87",
+    "node_insertion.cpp": "26a363ed547f52d84f293acd1ab0bd61365acaac62b38ac19503529081fefe9f",
+    "node_insertion_test_fixture.hpp": "0b07305fbc991123019575db0a3edbf6424fa42f65c38472875b97c51173ad4a",
+    "node_insertion_tests.cpp": "477ca41adcc00bbb154f31e5287430800d50e4267b5f25a39cc6a5d1ace37641",
+    "node_insertion_integration_tests.cpp": "2bd330ad5bece0e52d46096e0ce6647d7711d579caec5c1d9789ae9e17f57f86",
+    "build.ps1": "809e24676ea08e0d5381007bf4bafdd989e2fd9b7343b86b2e75b97ed3b6cfe2",
+    "CMakeLists.txt": "1f19f59c2352f713270beedfe61a67c9d1ad9a9bbfca1aac7d811ba823fa47fa",
+    "README.md": "877984705b7b378e7e18b5673065c22233e6e064cf7bd3a9670fe516f4ffa473"
+  },
+  "reused_source_hashes": {
+    "node_constructors.hpp": "afc6e9e9e4fd1b12ca3ea785a844c4b42072a9c74f78a603927fb252112a53a4",
+    "node_constructors.cpp": "0241d535309cad4803283cb802dada02b24dfbebe30ea495f761f4909ebbf331",
+    "node_parse.hpp": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a",
+    "node_parse.cpp": "c3f99be72328132e6917da81939cfb97fe8cff41bf246cdb33746af0defd5461",
+    "node_delete.hpp": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a",
+    "node_delete.cpp": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3",
+    "pool_release.hpp": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5",
+    "pool_release.cpp": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5"
+  },
+  "support_hashes": {
+    "node-insertion-evidence.pseudo.c.txt": "0b3f652de756187f0cdb236db64de016e63c7b576878c4f77106dc74d2d24fb7",
+    "node-insertion-evidence.asm.txt": "28fe5b89541ed14dc56d747ba4280b2cfdbada17603c60b31024af5fdf4a506c",
+    "node-insertion-context.pseudo.c.txt": "ff5ad97372b93a431e715ead08f62c0b2b2f32b93998e9ddefcbf5956eac9858",
+    "node-insertion-context.asm.txt": "83eb2fd0850900a3535529f60380bfffefb91a89330d52cbd1ceb745ab3aa69e",
+    "node-insertion-flow-audit.md": "6bdaa06ed651116d14f8fc0ace5591e8c3da5ea45411bf4d0a6ae17dd9b84a51",
+    "node-insertion-rea-session.json": "254076308828f01c76d7df9fe221413ba2e59f32b5498dd83fa4043aefac1666",
+    "node-insertion-source-review.json": "88781d2eff3db4b13d4223cab8521343538bdccbe46f66c3f0f82d9c87bcc889",
+    "node-insertion-retained-data.json": "28dd4d8f13cc5e2b14ac431e4cfc2d432f9a51fcb90fde17bcacfa3ab71bd222",
+    "pool-allocation-simd-data.json": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1"
+  },
+  "reused_retained_data_evidence": {
+    "file": "node-insertion-retained-data.json",
+    "sha256": "28dd4d8f13cc5e2b14ac431e4cfc2d432f9a51fcb90fde17bcacfa3ab71bd222",
+    "parent_file": "outputs/anadius-rea-evidence.json",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "new_read_performed": false,
+    "new_source_bodies_claimed_by_data_read": 0,
+    "pool_track_slot_count": 4,
+    "new_track_source_claimed": false
+  },
+  "prior_target_presence": {
+    "0x180003aa0": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 71,
+  "integration_checks": 108,
+  "new_checks": 179,
+  "execution_scope": "003aa0 normal insertion-preparation byte-state body and final existing prepare source bridge;incoming owner ignored,linked detach-only ordering or unlinked vector removal with cached signed bound/live unsigned tail/live decrement,then live pool track;known005a20 source reused;generic pool/heap/parser/ABI/EH remain open",
+  "limitations": [
+    "003aa0 normal insertion-preparation byte-state body and final existing prepare source bridge;incoming owner ignored,linked detach-only ordering or unlinked vector removal with cached signed bound/live unsigned tail/live decrement,then live pool track;known005a20 source reused;generic pool/heap/parser/ABI/EH remain open",
+    "Incoming owner argument is ignored;parent is cached from child+10",
+    "Linked branch detaches first/last/previous/next in native order,then clears child+50,+48,+10;no vector/probe/track/destroy/release/free occurs",
+    "Unlinked branch caches signed initial count/search bound;matched replacement tail rereads ZERO-extended live DWORD;DEC rereads after swapstore",
+    "Unlinked branch always loads live child pool/vtable+20 target after search and delegates track;child links remain untouched",
+    "Void projection preserves caller004970 use;no native tail-return/object/stack ABI claim",
+    "Existing005a20 source may supply selected track;no new005a20 body/provider/adapter claimed",
+    "No added owner/null guards,rollback,node destruction/free or RAII;bounded failures preserve committed prefix only",
+    "One new native address has normal+final two numeric variants;unique native count1,not2",
+    "Prior no_definition_mapping becomes source_definition_mapped;module_record_only unchanged",
+    "50->51 historical typed source closures;N25 selected node-parse adapter1,semantic session adapters2 and allocation adapter1 preserved",
+    "Previous681 source files including CRT remain byte-identical;CRT paused;total DLL completion percentage unmeasured",
+    "Original DLL/game never executed/modified;actual CFG/token/achievement contents never read;blocked version input/generated DLL never retried"
+  ],
+  "native_node_insertion_fully_closed": false,
+  "native_node_constructors_fully_closed": false,
+  "native_node_identify_fully_closed": false,
+  "native_node_parse_fully_closed": false,
+  "generic_virtual_parse_fully_closed": false,
+  "native_document_error_fully_closed": false,
+  "native_parse_entry_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "native_node_base_fully_closed": false,
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "node-insertion-source-review.json",
+      "reviewer": "/root/insertion_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N29 retained0035e0 GetStr inventory/contracts;no new primitive source claimed by preparation;generic CRT remains paused"
+}

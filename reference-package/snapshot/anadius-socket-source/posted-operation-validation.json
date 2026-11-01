@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 4336,
+  "integration_checks": 110,
+  "output": "PASS: 4336 socket posted operation checks; six normal bodies, two-slot storage cache, source ownership, live TLS/scheduler and actual operation/functor lifetime ends\nPASS: 110 socket posted operation integration checks; actual executor/dispatcher/worker/TLS-cache source chain, existing injected SDK adapters, unknown callback forwarding and heap lifetime ends",
+  "source_hashes": {
+    "posted_operation.hpp": "a64463108f00dd71fe71c9ac577c73d857e4a8fd67e56d7bb65313536e3c8aff",
+    "posted_operation.cpp": "4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d",
+    "posted_operation_dispatch.hpp": "045fc8fbcc9f6f3aa010c26a5e2365a83b147b91af0a98ff5ca864d882557bab",
+    "posted_operation_dispatch.cpp": "3d4685cafeeacc2b2a404c2277a1049d1dc9c3aa347430ae77e8fe51679734b1",
+    "posted_operation_tests.cpp": "66bcf6f0c2df218a12da7ef257caa7f328a0952a39609858bb9f787670a23920",
+    "posted_operation_integration_tests.cpp": "0195b957f13af6356a65b2c24a27183f9dd5c8f2491d6d69f601951d346d9070",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 6,
+  "execution_scope": "021820/021ac0/022e40/027120/028ca0/028fd0 retained normal bodies: bounded two-slot allocator/cache marker, source transfer, inline TLS first-match and fresh queued TLS, live scheduler, work32/post/fallback gate, callback free-before-invoke and live cleanup mutations; actual022e40/028ca0/0298b0/027c10/027120/028fd0/021ac0 integration with existing injected NativeWorkerRunApi/NativeDispatcherApi and cache reuse for reentrant posted job; actual operation/storage/functor heap lifetime ends",
+  "required_providers": "04b0bc native allocator,04b788 free,functor slot00 callable/deletion,GS TLS/guard CRT/exception storage,SDK imports and ABI ownership remain mandatory effects; CRT production unchanged",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; bounded raw byte spans and SDK OVERLAPPED are separate projections, not native0x48 overlay; fabricated storage identities and deterministic allocator/free fixtures do not establish native heap/SEH/concurrency or binary equivalence; no original/game/real SDK TLS/IOCP/event/thread/wait/network or user cfg/token/achievement execution/read"
+}

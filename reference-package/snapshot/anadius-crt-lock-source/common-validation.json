@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locks",
+    "result": "PASS",
+    "output": "PASS 1024 checks",
+    "executable_sha256": "0d58eedd01b89328018cc9ad9fa83013bba1bdd89604573332e75f0527baab54"
+  },
+  "execution_scope": "ACRT14/VCRT1 lock-bank lifecycle, signed index and separate initialization wrappers; no native critical sections",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-lock-source/lock_tests.cpp",
+      "sha256": "b87bcebde02b71db07134a287e0c7c6ad893064a9d4ca7ff8811dff08ca2bf27"
+    },
+    {
+      "path": "anadius-crt-lock-source/locks.cpp",
+      "sha256": "fe0849d9c97c241c4dcd7639dbc41ca8dba7a89ac176b316791a1be30d24d81f"
+    },
+    {
+      "path": "anadius-crt-lock-source/locks.hpp",
+      "sha256": "7d6a5c84580cb8ac817e464d52b0e096ee88caf636da2986a391c31f85075c89"
+    }
+  ]
+}

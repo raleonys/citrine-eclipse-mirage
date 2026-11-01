@@ -1,0 +1,664 @@
+{
+  "schema": "cfg-static-analysis-v1",
+  "source": {
+    "comments_treated_as_data": true,
+    "read_only": true,
+    "sha256": "e57119ea43b67450edc56f864086b9e6912f787162be9eb65639b88d9404d460",
+    "bytes": 2079,
+    "path": "C:\\Users\\Skysect\\Downloads\\anadius.cfg"
+  },
+  "format": "quoted key/value and brace blocks (Valve KeyValues-like; observed Config2 root)",
+  "root": "Config2",
+  "section_count": 6,
+  "leaf_count": 38,
+  "sections": [
+    {
+      "path": "Config2",
+      "line": 1
+    },
+    {
+      "path": "Config2/Game",
+      "line": 3
+    },
+    {
+      "path": "Config2/Emulator",
+      "line": 15
+    },
+    {
+      "path": "Config2/User",
+      "line": 21
+    },
+    {
+      "path": "Config2/Achievements",
+      "line": 28
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames",
+      "line": 31
+    }
+  ],
+  "entries": [
+    {
+      "path": "Config2/Game/Name",
+      "key": "Name",
+      "line": 5,
+      "present": true,
+      "length": 13,
+      "value_policy": "non-secret-static-setting",
+      "value": "Madden NFL 27"
+    },
+    {
+      "path": "Config2/Game/Version",
+      "key": "Version",
+      "line": 6,
+      "present": true,
+      "length": 13,
+      "value_policy": "non-secret-static-setting",
+      "value": "1.0.140.41856"
+    },
+    {
+      "path": "Config2/Game/ContentId",
+      "key": "ContentId",
+      "line": 8,
+      "present": true,
+      "length": 8,
+      "value_policy": "non-secret-static-setting",
+      "value": "16425895"
+    },
+    {
+      "path": "Config2/Game/Languages",
+      "key": "Languages",
+      "line": 10,
+      "present": true,
+      "length": 5,
+      "value_policy": "non-secret-static-setting",
+      "value": "en_US"
+    },
+    {
+      "path": "Config2/Game/Language",
+      "key": "Language",
+      "line": 11,
+      "present": true,
+      "length": 5,
+      "value_policy": "non-secret-static-setting",
+      "value": "en_US"
+    },
+    {
+      "path": "Config2/Game/LanguageRegistryKey",
+      "key": "LanguageRegistryKey",
+      "line": 12,
+      "present": true,
+      "length": 39,
+      "value_policy": "non-secret-static-setting",
+      "value": "SOFTWARE\\EA Sports\\Madden NFL 27\\Locale"
+    },
+    {
+      "path": "Config2/Emulator/PretendConnected",
+      "key": "PretendConnected",
+      "line": 17,
+      "present": true,
+      "length": 5,
+      "value_policy": "non-secret-static-setting",
+      "value": "false"
+    },
+    {
+      "path": "Config2/Emulator/FakeAuth",
+      "key": "FakeAuth",
+      "line": 18,
+      "present": true,
+      "length": 5,
+      "value_policy": "non-secret-static-setting",
+      "value": "false"
+    },
+    {
+      "path": "Config2/User/Username",
+      "key": "Username",
+      "line": 23,
+      "present": true,
+      "length": 7,
+      "value_policy": "redacted-personal-identifier",
+      "value": "[REDACTED]"
+    },
+    {
+      "path": "Config2/User/PersonaId",
+      "key": "PersonaId",
+      "line": 24,
+      "present": true,
+      "length": 10,
+      "value_policy": "redacted-personal-identifier",
+      "value": "[REDACTED]"
+    },
+    {
+      "path": "Config2/User/UserId",
+      "key": "UserId",
+      "line": 25,
+      "present": true,
+      "length": 13,
+      "value_policy": "redacted-personal-identifier",
+      "value": "[REDACTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementsSet",
+      "key": "AchievementsSet",
+      "line": 30,
+      "present": true,
+      "length": 20,
+      "value_policy": "non-secret-static-setting",
+      "value": "50311_16425895_50844"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/1",
+      "key": "1",
+      "line": 33,
+      "present": true,
+      "length": 9,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/2",
+      "key": "2",
+      "line": 34,
+      "present": true,
+      "length": 10,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/3",
+      "key": "3",
+      "line": 35,
+      "present": true,
+      "length": 16,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/4",
+      "key": "4",
+      "line": 36,
+      "present": true,
+      "length": 18,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/5",
+      "key": "5",
+      "line": 37,
+      "present": true,
+      "length": 17,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/6",
+      "key": "6",
+      "line": 38,
+      "present": true,
+      "length": 16,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/7",
+      "key": "7",
+      "line": 39,
+      "present": true,
+      "length": 12,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/8",
+      "key": "8",
+      "line": 40,
+      "present": true,
+      "length": 15,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/9",
+      "key": "9",
+      "line": 41,
+      "present": true,
+      "length": 23,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/10",
+      "key": "10",
+      "line": 42,
+      "present": true,
+      "length": 11,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/11",
+      "key": "11",
+      "line": 43,
+      "present": true,
+      "length": 11,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/12",
+      "key": "12",
+      "line": 44,
+      "present": true,
+      "length": 9,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/13",
+      "key": "13",
+      "line": 45,
+      "present": true,
+      "length": 3,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/14",
+      "key": "14",
+      "line": 46,
+      "present": true,
+      "length": 4,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/15",
+      "key": "15",
+      "line": 47,
+      "present": true,
+      "length": 9,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/16",
+      "key": "16",
+      "line": 48,
+      "present": true,
+      "length": 13,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/17",
+      "key": "17",
+      "line": 49,
+      "present": true,
+      "length": 16,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/18",
+      "key": "18",
+      "line": 50,
+      "present": true,
+      "length": 16,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/19",
+      "key": "19",
+      "line": 51,
+      "present": true,
+      "length": 22,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/20",
+      "key": "20",
+      "line": 52,
+      "present": true,
+      "length": 16,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/21",
+      "key": "21",
+      "line": 53,
+      "present": true,
+      "length": 17,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/22",
+      "key": "22",
+      "line": 54,
+      "present": true,
+      "length": 22,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/23",
+      "key": "23",
+      "line": 55,
+      "present": true,
+      "length": 22,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/AchievementNames/24",
+      "key": "24",
+      "line": 56,
+      "present": true,
+      "length": 21,
+      "value_policy": "value-omitted",
+      "value": "[OMITTED]"
+    },
+    {
+      "path": "Config2/Achievements/SteamAppId",
+      "key": "SteamAppId",
+      "line": 58,
+      "present": true,
+      "length": 7,
+      "value_policy": "non-secret-static-setting",
+      "value": "3940610"
+    },
+    {
+      "path": "Config2/Achievements/SteamIdPrefix",
+      "key": "SteamIdPrefix",
+      "line": 59,
+      "present": true,
+      "length": 18,
+      "value_policy": "non-secret-static-setting",
+      "value": "Achievement_GOSCC_"
+    }
+  ],
+  "sensitive_present": [],
+  "personal_identifiers": [
+    {
+      "path": "Config2/User/Username",
+      "key": "Username",
+      "line": 23,
+      "present": true,
+      "length": 7,
+      "value_policy": "redacted-personal-identifier",
+      "value": "[REDACTED]"
+    },
+    {
+      "path": "Config2/User/PersonaId",
+      "key": "PersonaId",
+      "line": 24,
+      "present": true,
+      "length": 10,
+      "value_policy": "redacted-personal-identifier",
+      "value": "[REDACTED]"
+    },
+    {
+      "path": "Config2/User/UserId",
+      "key": "UserId",
+      "line": 25,
+      "present": true,
+      "length": 13,
+      "value_policy": "redacted-personal-identifier",
+      "value": "[REDACTED]"
+    }
+  ],
+  "parser_mapping": [
+    {
+      "target": "DISPLAY_NAME in map 0x1800a3d88",
+      "condition": "base pass only",
+      "pseudo_line": 22006,
+      "path": "Config2/Game/Name"
+    },
+    {
+      "target": "INSTALLED_VERSION in map 0x1800a3d88",
+      "condition": "base pass only",
+      "pseudo_line": 22013,
+      "path": "Config2/Game/Version"
+    },
+    {
+      "target": "0x1800a3af8",
+      "condition": "base pass only",
+      "pseudo_line": 22020,
+      "path": "Config2/Game/ContentId"
+    },
+    {
+      "target": "LANGUAGES in map 0x1800a3d88",
+      "pseudo_line": 22078,
+      "path": "Config2/Game/Languages"
+    },
+    {
+      "target": "0x18001e0c0 -> flag 0x1800a3ad1 and path 0x1800a3ad8",
+      "pseudo_line": 22085,
+      "path": "Config2/Game/LanguageRegistryKey"
+    },
+    {
+      "target": "INSTALLED_LANGUAGE in map 0x1800a3d88",
+      "condition": "only if command-line language flag 0x1800a3ad0 is zero",
+      "pseudo_line": 22090,
+      "path": "Config2/Game/Language"
+    },
+    {
+      "target": "0x1800a3c3a",
+      "call_va": "0x18001a59f",
+      "helper_va": "0x18001de40",
+      "pseudo_line": 22156,
+      "path": "Config2/Emulator/PretendConnected"
+    },
+    {
+      "target": "0x1800a3c39",
+      "call_va": "0x18001a608",
+      "helper_va": "0x18001de40",
+      "pseudo_line": 22166,
+      "path": "Config2/Emulator/FakeAuth"
+    },
+    {
+      "target": "0x1800a3bd8",
+      "pseudo_line": 22197,
+      "path": "Config2/User/Username"
+    },
+    {
+      "target": "0x1800a3bf8",
+      "pseudo_line": 22201,
+      "path": "Config2/User/PersonaId"
+    },
+    {
+      "target": "0x1800a3c18",
+      "pseudo_line": 22205,
+      "path": "Config2/User/UserId"
+    },
+    {
+      "target": "0x18001da80 -> 0x1800a3dc8 / achievement map 0x1800a3e58",
+      "condition": "base pass only",
+      "pseudo_line": 22886,
+      "path": "Config2/Achievements/AchievementsSet"
+    },
+    {
+      "target": "achievement map 0x1800a3e58",
+      "condition": "base pass only",
+      "pseudo_line": 22902,
+      "path": "Config2/Achievements/AchievementNames/*"
+    },
+    {
+      "target": "0x1800a3e68",
+      "pseudo_line": 22977,
+      "condition": "base pass only",
+      "callsite_near": "0x18001c16d",
+      "path": "Config2/Achievements/SteamAppId"
+    },
+    {
+      "target": "prefix composed into achievement records",
+      "condition": "base pass only and SteamAppId not empty",
+      "pseudo_line": 23001,
+      "path": "Config2/Achievements/SteamIdPrefix"
+    }
+  ],
+  "optional_settings": [
+    {
+      "target": "0x1800a3c90",
+      "interpretation": "If nonempty: default -> 0xc90 (3216), random -> 0, otherwise numeric parser 0x18001d6c0. Absence does not write this field.",
+      "present": false,
+      "path": "Config2/Emulator/ServerPort"
+    },
+    {
+      "target": "0x1800a3ef8",
+      "interpretation": "Path option absent; command/environment and original defaults not inferred from absence.",
+      "present": false,
+      "path": "Config2/Emulator/Documents"
+    },
+    {
+      "target": "0x1800a3c98",
+      "interpretation": "SDK string option absent.",
+      "present": false,
+      "path": "Config2/Emulator/SDK"
+    },
+    {
+      "target": "LANGUAGE in map 0x1800a3d78",
+      "interpretation": "Distinct from Game/Language.",
+      "present": false,
+      "path": "Config2/Emulator/Language"
+    },
+    {
+      "target": "0x1800a3c92",
+      "interpretation": "Boolean helper leaves current field unchanged for empty input.",
+      "present": false,
+      "path": "Config2/Emulator/BlockReruns"
+    },
+    {
+      "interpretation": "Comma-separated paths via 0x18001df60; true phase uses this vector.",
+      "target": "0x1800a3ea8",
+      "parser_call_va": "0x18001a734",
+      "path": "Config2/Emulator/LoadExtraDLLsFromMain",
+      "present": false,
+      "consumer_va": "0x180035850"
+    },
+    {
+      "interpretation": "Comma-separated paths via 0x18001df60; false phase uses this vector.",
+      "target": "0x1800a3ec0",
+      "parser_call_va": "0x18001a773",
+      "path": "Config2/Emulator/LoadExtraDLLs",
+      "present": false,
+      "consumer_va": "0x180035850"
+    },
+    {
+      "target": "0x1800a3c38",
+      "interpretation": "Absent; online/profile workflow can depend on original defaults, other inputs and optional module.",
+      "present": false,
+      "path": "Config2/User/UseLastOnlineProfile"
+    },
+    {
+      "sensitive": true,
+      "present": false,
+      "path": "Config2/Game/DenuvoToken"
+    },
+    {
+      "sensitive": true,
+      "present": false,
+      "path": "Config2/Game/KeyForLicense"
+    },
+    {
+      "path": "Config2/Game/DenuvoExeHash",
+      "present": false
+    },
+    {
+      "path": "Config2/Game/DenuvoDllHash",
+      "present": false
+    },
+    {
+      "path": "Config2/Game/DenuvoDllName",
+      "present": false
+    },
+    {
+      "path": "Config2/Achievements/SteamIdOverrides",
+      "present": false
+    },
+    {
+      "path": "Config2/Achievements/AchievementTotals",
+      "present": false
+    }
+  ],
+  "retained_evidence": [
+    {
+      "va": "0x180019ad0",
+      "evidence_id": "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd",
+      "role": "CFG parser and per-section application"
+    },
+    {
+      "va": "0x18001c870",
+      "evidence_id": "ev_78a1faedf06f56d422e6ecc197bbe90ce7f34af0e9b01420eef8b6b8827bf25e",
+      "role": "Base plus override load, per-user state paths"
+    },
+    {
+      "va": "0x18001de40",
+      "evidence_id": "ev_841789359663bcf3e1c72535a4b8e1f7e0ba973419df5a9100eeaa5edf0f8c91",
+      "role": "Boolean setting parser; false/0 -> 0, true/1 -> 1; empty preserves current; invalid uses supplied fallback"
+    },
+    {
+      "va": "0x18001df60",
+      "evidence_id": "ev_0f777f53f1cbc552d32785f34f043481962889f43845ae957c842fe7023469fa",
+      "role": "Comma-separated DLL path list parser"
+    },
+    {
+      "va": "0x180035850",
+      "evidence_id": "ev_d5d3e61cde489d598497e64bdf0815edb2f5dad56bbdf21b307457be7c105987",
+      "role": "Two-phase extra DLL loading"
+    },
+    {
+      "va": "0x180035260",
+      "evidence_id": "ev_f5a7f6ea7a36d70a346d1cf3fe8fe7bd18447ff25b921910cd36a9c4441782cd",
+      "role": "Load path vectors and retain module handles"
+    },
+    {
+      "va": "0x180035bd0",
+      "evidence_id": "ev_01da19447a43bf9f2a4a248ddc7f93acc033773f2f55e70da7f7fc84fd393c99",
+      "role": "Optional anadius64online.dll loader"
+    },
+    {
+      "va": "0x18002e3b0",
+      "evidence_id": "ev_33624c87853573a8e7b3efe065f830b8be05beda34cb0c9af0879cf7456993d4",
+      "role": "AuthCode response; offline plus FakeAuth false produces error -1577058293"
+    },
+    {
+      "va": "0x18002f2d0",
+      "evidence_id": "ev_b41f62dc5d99caf4a8270a002c9ba194875600615292d07b03df8f58787bc408",
+      "role": "Connection state response uses online flag OR PretendConnected"
+    }
+  ],
+  "features": {
+    "online_module_presence_checked": false,
+    "configured_pretend_connected": false,
+    "online_module": "anadius64online.dll",
+    "achievement_name_entries": 24,
+    "configured_server_port": null,
+    "configured_extra_dll_paths": [],
+    "online_abi": "version_check() == 2; create_online",
+    "configured_fake_auth": false,
+    "online_runtime_success": "unknown",
+    "online_module_attempt": "independent loader path 0x180035b60 -> 0x180035bd0 -> 0x1800450d0/LoadLibraryW"
+  },
+  "precedence": {
+    "override_file_inspected": false,
+    "registry_read_or_modified": false,
+    "override_call": "0x18001c8d8: 0x180019ad0(true) -> anadius_override.cfg",
+    "runtime_effective_state_verified": false,
+    "external_environment_inspected": false,
+    "base_call": "0x18001c8d1: 0x180019ad0(false) -> anadius.cfg",
+    "process_arguments_inspected": false
+  },
+  "limitations": [
+    "Effective features mean declared options and statically established branches, not verified runtime state.",
+    "Original DLL and host EXE were not loaded, executed, edited or patched.",
+    "No registry, environment, cookies or adjacent files were inspected.",
+    "Missing keys are not interpreted as proof of globally disabled behavior.",
+    "No credential values or raw CFG comments are copied into this report."
+  ],
+  "original_dll_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+}

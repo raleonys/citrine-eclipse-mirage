@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_invalid",
+    "result": "PASS",
+    "output": "PASS: 1583 invalid-parameter checks",
+    "executable_sha256": "033ee3393a8db7aed853f4911083b79dc501984c2b119e517238d02a29aa1577"
+  },
+  "execution_scope": "Seven invalid-parameter/context helpers and scoped cleanup; controlled PTD/locale/handler/terminal effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-invalid-source/invalid_tests.cpp",
+      "sha256": "42af17f9f2065664267ab4d0f953870bbb40d1447b2760970d90e11c63dc2ef0"
+    },
+    {
+      "path": "anadius-crt-invalid-source/invalid.cpp",
+      "sha256": "76fe81b5eff2556fd25b14d77179787957101826b692beb58317137343922965"
+    },
+    {
+      "path": "anadius-crt-invalid-source/invalid.hpp",
+      "sha256": "f2d09c991ff3aba1906e62870099d5156e67521946a2e7bd368e967faecebf95"
+    }
+  ]
+}

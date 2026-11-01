@@ -1,0 +1,441 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "target_executed": false,
+  "target_modified": false,
+  "method": "Independent focused audit of retained REA/Ghidra static assembly/pseudocode and read-only PE constant bytes; no target session mutation",
+  "retained_pseudo_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_asm_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "functions": [
+    {
+      "va": "0x180001830",
+      "role": "XMLDocument constructor: entities/whitespace",
+      "pseudocode_evidence": "ev_abf6ead481323ed34418e13f343856b36f0183b4a90796a24f1a890f0dad1914",
+      "assembly_evidence": "ev_de11d55b943716ed390775f77e60b3f24b2c5f17431bc50f1f7fc7eca335c9c9"
+    },
+    {
+      "va": "0x180002cc0",
+      "role": "XMLElement Attribute lookup",
+      "pseudocode_evidence": "ev_4437a2d110adf6d57481c865c0e762963005b8eef643e4542413ec6cc2bc0bff",
+      "assembly_evidence": "ev_34b8b94ad8b8ed59eb73289567bac285bc087cb20da24e7377119922c230ea02"
+    },
+    {
+      "va": "0x180002e60",
+      "role": "XMLDocument Clear",
+      "pseudocode_evidence": "ev_d444b1fc601d178931a7e8d2639ae1302147db0aa91a4ac0ba78524478cc9132",
+      "assembly_evidence": "ev_85978582117bd9f341daf92a73488d66e6901ef09a94b8f6c42e4e4a594b75a6"
+    },
+    {
+      "va": "0x1800032d0",
+      "role": "XMLDocument ErrorStr (not ErrorName)",
+      "pseudocode_evidence": "ev_23f6b0f44e18072ea0230c3c15b749692bfc25a3d535933a4dfa2ef8f045467a",
+      "assembly_evidence": "ev_6909458d6bd192ab1c4ed1ec075828feae6b8ac03eaed677d8fed7b036c685a3"
+    },
+    {
+      "va": "0x180003300",
+      "role": "XMLNode FirstChildElement",
+      "pseudocode_evidence": "ev_2b9ae733c4696a460d18422d904a61e94f68bba9d01f78f9c74ab34a9d9a7d2b",
+      "assembly_evidence": "ev_97c85e6b551a582122ac38baae3187c74252574ea40efea6bbc759a72d3e777f"
+    },
+    {
+      "va": "0x1800033c0",
+      "role": "XMLUtil GetCharacterRef",
+      "pseudocode_evidence": "ev_7211c09f4e3acada2bf0a092a4d0b4db261a922633cd960791de3ac1b75d3e93",
+      "assembly_evidence": "ev_6e7800e9effc9462e86aa57c8979765dab860606e1cbea5663041f63cbc1a54e"
+    },
+    {
+      "va": "0x1800035e0",
+      "role": "StrPair GetStr",
+      "pseudocode_evidence": "ev_5e71fdafa86c9cb6c66ad0d57972845920ad9cc67d23951b21164d5b586a0c01",
+      "assembly_evidence": "ev_704e716e4fcf7eead3762f34f5b8e311ff9f14a674ad542b9c79429b3efad5e0"
+    },
+    {
+      "va": "0x180003860",
+      "role": "XMLElement GetText",
+      "pseudocode_evidence": "ev_f8f7dd0db1fa0f0f7047f86e233904393c7eba366636ef83cc065ae7ad3b2452",
+      "assembly_evidence": "ev_79d3d2b1e745d320196fb161510a30090691c2811916e47c19ab578b724ab4af"
+    },
+    {
+      "va": "0x1800038b0",
+      "role": "XMLDocument Identify",
+      "pseudocode_evidence": "ev_16c4bf124a34657d7d2d217f79a017802a074ddf7e1c559929f47750b79fdee5",
+      "assembly_evidence": "ev_e46dfd93352ef14c6e16936e419152588cc3aae4c071f99fdc01fe8f8145aae9"
+    },
+    {
+      "va": "0x180003fe0",
+      "role": "XMLNode NextSiblingElement",
+      "pseudocode_evidence": "ev_5a4ee3061bf80f9191155c457738974b0c0d2160921b7c9c5fc76fe9cf3f9f5b",
+      "assembly_evidence": "ev_4f318251ed66a4ef0e88aca85960887d7849b2fb61fcd9dbbcf06295d4dbc296"
+    },
+    {
+      "va": "0x1800041b0",
+      "role": "XMLDocument internal Parse",
+      "pseudocode_evidence": "ev_d4270b9a2ca885be4b12cfa24f257c4c48568ce7a4cbd3234c71d483394ca0de",
+      "assembly_evidence": "ev_0161e7e54c7c2f628bb6bbf99adff0b97b85e09b7c8528365aa858c02fdd4a08"
+    },
+    {
+      "va": "0x180004280",
+      "role": "XMLDocument Parse string/count",
+      "pseudocode_evidence": "ev_783e89582f054f61046e9c06b28ad2145076dbd6721a32cd6bfe2c615e85ff20",
+      "assembly_evidence": "ev_795f6b99b0b687dd3ceffca4901b4e92f2721869b41c336f72e0ba4c670d4a4f"
+    },
+    {
+      "va": "0x180004370",
+      "role": "XMLElement ParseAttributes",
+      "pseudocode_evidence": "ev_5921cc7d8fe8dfc2c573bb7141fbd3a580d042ac7ef3b5c4f00dc98245a7330b",
+      "assembly_evidence": "ev_a9128fcc03e4a48ffea8f28bda3da7a4f9642d0e51a3b967b468325245b9c454"
+    },
+    {
+      "va": "0x180004750",
+      "role": "XMLComment ParseDeep",
+      "pseudocode_evidence": "ev_12b133465117e418f4702eb6bbe04a5bfb000521e0b14534baa6dbe47315434e",
+      "assembly_evidence": "ev_43340249f41aeb12e385f544802d999c3cd098f26110d3fae4c3d08581f34ae8"
+    },
+    {
+      "va": "0x180004800",
+      "role": "XMLDeclaration ParseDeep",
+      "pseudocode_evidence": "ev_13e1aa601ac2829ed9a611e393e80933b704414feed8710c0533a843323fb49d",
+      "assembly_evidence": "ev_5efa2ebd26c2b86f3258cc873ff491e1b0ec63bf3b4b1b360849cc21ceeb2287"
+    },
+    {
+      "va": "0x1800048b0",
+      "role": "XMLElement ParseDeep",
+      "pseudocode_evidence": "ev_0e2719915fdbd5914919a9bb206ad755eb0ce97d2a4a75da9585094093a577b5",
+      "assembly_evidence": "ev_2b5ba916bea861c918d17d731c0b88fc2b56bd11bcf00434f4a4f09b1c102832"
+    },
+    {
+      "va": "0x180004970",
+      "role": "XMLNode ParseDeep / depth guard",
+      "pseudocode_evidence": "ev_01d06f0d09c426e84edfc80412a5b90481296b9b16734298cadd2cf8fceab53d",
+      "assembly_evidence": "ev_bab15aa72d1d1d2cb34f0a417872877e60c9e43b5b9530ac83290c1bbc58da0a"
+    },
+    {
+      "va": "0x180004ea0",
+      "role": "XMLText ParseDeep",
+      "pseudocode_evidence": "ev_8894fa33f668ba260530ad1e288f04105a78845c509fd308d31daf4fd3274f06",
+      "assembly_evidence": "ev_d485999d6869d2df39863dd39be690e11e6ac7e37e8da60f84400315dbcdb3e2"
+    },
+    {
+      "va": "0x180005030",
+      "role": "XMLUnknown ParseDeep",
+      "pseudocode_evidence": "ev_a870401c250995149f08a8589b1ad1f06271db62ac361d1ddcb801490439fc0a",
+      "assembly_evidence": "ev_6539b55f7a903e3a6fd10e78e3a6843d2ba833d2ac8b5d79dab940454d0979c5"
+    },
+    {
+      "va": "0x180005820",
+      "role": "XMLDocument SetError",
+      "pseudocode_evidence": "ev_188aa01332032bd7a9db079cf67ce66428557de9e6be37670dd091066a5e2ce8",
+      "assembly_evidence": "ev_37353162f9f968089bd3417314183c72cd998b61cac28d808f7e0959bf88f494"
+    },
+    {
+      "va": "0x180006260",
+      "role": "XMLNode Value",
+      "pseudocode_evidence": "ev_2b34da746bc3fcbdc825260a1c5dcc3aeb6cb6eb00b55064a25da52e74993119",
+      "assembly_evidence": "ev_307027a596ca914b9a4abe6e2a4bd334d75b59e3f8a92ebf4fee26df67ad12d4"
+    },
+    {
+      "va": "0x180033d70",
+      "role": "message decrypt/parse/retry/log pipeline",
+      "pseudocode_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6"
+    }
+  ],
+  "instruction_anchors": [
+    "0x180033dab: XOR R8D, R8D",
+    "0x180033dae: MOV DL, 0x1",
+    "0x180033db5: CALL 0x180001830",
+    "0x180033e1a: MOV R8, -0x1",
+    "0x180033e26: CALL 0x180004280",
+    "0x180033e2b: CMP dword ptr [RSP + 0xdc], 0x0",
+    "0x180033e39: CMP EAX, 0x8",
+    "0x18000499e: INC dword ptr [RBX + 0xa4]",
+    "0x1800049a4: CMP dword ptr [RBX + 0xa4], 0x64",
+    "0x1800049bb: MOV EDX, 0x12",
+    "0x180003876: CALL qword ptr [RAX + 0x20]",
+    "0x18000387e: MOV RBX, qword ptr [RBX + 0x50]",
+    "0x180003895: CALL qword ptr [RAX + 0x10]",
+    "0x180003728: JMP 0x180003745",
+    "0x180003745: INC RDI",
+    "0x180003748: INC RSI"
+  ],
+  "parser_contract": {
+    "process_entities": true,
+    "whitespace_value": 0,
+    "parse_count": "size_t(-1), stop at first NUL",
+    "input_owned_copy": true,
+    "clear_before_each_parse": true,
+    "depth_error_at_counter": 100,
+    "depth_includes_document_parse": true,
+    "error_str_not_enum_name": true,
+    "get_text": "Skip leading comments; first remaining child must be XMLText; return only its Value or null",
+    "attributes": "Case-sensitive exact lookup, missing null distinct from empty; ordered linked list; duplicate parse error 7"
+  },
+  "error_name_table": {
+    "va": "0x1800a1010",
+    "file_offset": "0x9f610",
+    "entry_width": 8,
+    "count": 19,
+    "entries": [
+      {
+        "id": 0,
+        "pointer_va": "0x1800a1010",
+        "pointer_file_offset": "0x9f610",
+        "string_va": "0x18007f7e0",
+        "string_file_offset": "0x7dfe0",
+        "name": "XML_SUCCESS"
+      },
+      {
+        "id": 1,
+        "pointer_va": "0x1800a1018",
+        "pointer_file_offset": "0x9f618",
+        "string_va": "0x18007f7f0",
+        "string_file_offset": "0x7dff0",
+        "name": "XML_NO_ATTRIBUTE"
+      },
+      {
+        "id": 2,
+        "pointer_va": "0x1800a1020",
+        "pointer_file_offset": "0x9f620",
+        "string_va": "0x18007f808",
+        "string_file_offset": "0x7e008",
+        "name": "XML_WRONG_ATTRIBUTE_TYPE"
+      },
+      {
+        "id": 3,
+        "pointer_va": "0x1800a1028",
+        "pointer_file_offset": "0x9f628",
+        "string_va": "0x18007f828",
+        "string_file_offset": "0x7e028",
+        "name": "XML_ERROR_FILE_NOT_FOUND"
+      },
+      {
+        "id": 4,
+        "pointer_va": "0x1800a1030",
+        "pointer_file_offset": "0x9f630",
+        "string_va": "0x18007f848",
+        "string_file_offset": "0x7e048",
+        "name": "XML_ERROR_FILE_COULD_NOT_BE_OPENED"
+      },
+      {
+        "id": 5,
+        "pointer_va": "0x1800a1038",
+        "pointer_file_offset": "0x9f638",
+        "string_va": "0x18007f870",
+        "string_file_offset": "0x7e070",
+        "name": "XML_ERROR_FILE_READ_ERROR"
+      },
+      {
+        "id": 6,
+        "pointer_va": "0x1800a1040",
+        "pointer_file_offset": "0x9f640",
+        "string_va": "0x18007f890",
+        "string_file_offset": "0x7e090",
+        "name": "XML_ERROR_PARSING_ELEMENT"
+      },
+      {
+        "id": 7,
+        "pointer_va": "0x1800a1048",
+        "pointer_file_offset": "0x9f648",
+        "string_va": "0x18007f8b0",
+        "string_file_offset": "0x7e0b0",
+        "name": "XML_ERROR_PARSING_ATTRIBUTE"
+      },
+      {
+        "id": 8,
+        "pointer_va": "0x1800a1050",
+        "pointer_file_offset": "0x9f650",
+        "string_va": "0x18007f8d0",
+        "string_file_offset": "0x7e0d0",
+        "name": "XML_ERROR_PARSING_TEXT"
+      },
+      {
+        "id": 9,
+        "pointer_va": "0x1800a1058",
+        "pointer_file_offset": "0x9f658",
+        "string_va": "0x18007f8e8",
+        "string_file_offset": "0x7e0e8",
+        "name": "XML_ERROR_PARSING_CDATA"
+      },
+      {
+        "id": 10,
+        "pointer_va": "0x1800a1060",
+        "pointer_file_offset": "0x9f660",
+        "string_va": "0x18007f900",
+        "string_file_offset": "0x7e100",
+        "name": "XML_ERROR_PARSING_COMMENT"
+      },
+      {
+        "id": 11,
+        "pointer_va": "0x1800a1068",
+        "pointer_file_offset": "0x9f668",
+        "string_va": "0x18007f920",
+        "string_file_offset": "0x7e120",
+        "name": "XML_ERROR_PARSING_DECLARATION"
+      },
+      {
+        "id": 12,
+        "pointer_va": "0x1800a1070",
+        "pointer_file_offset": "0x9f670",
+        "string_va": "0x18007f940",
+        "string_file_offset": "0x7e140",
+        "name": "XML_ERROR_PARSING_UNKNOWN"
+      },
+      {
+        "id": 13,
+        "pointer_va": "0x1800a1078",
+        "pointer_file_offset": "0x9f678",
+        "string_va": "0x18007f960",
+        "string_file_offset": "0x7e160",
+        "name": "XML_ERROR_EMPTY_DOCUMENT"
+      },
+      {
+        "id": 14,
+        "pointer_va": "0x1800a1080",
+        "pointer_file_offset": "0x9f680",
+        "string_va": "0x18007f980",
+        "string_file_offset": "0x7e180",
+        "name": "XML_ERROR_MISMATCHED_ELEMENT"
+      },
+      {
+        "id": 15,
+        "pointer_va": "0x1800a1088",
+        "pointer_file_offset": "0x9f688",
+        "string_va": "0x18007f9a0",
+        "string_file_offset": "0x7e1a0",
+        "name": "XML_ERROR_PARSING"
+      },
+      {
+        "id": 16,
+        "pointer_va": "0x1800a1090",
+        "pointer_file_offset": "0x9f690",
+        "string_va": "0x18007f9b8",
+        "string_file_offset": "0x7e1b8",
+        "name": "XML_CAN_NOT_CONVERT_TEXT"
+      },
+      {
+        "id": 17,
+        "pointer_va": "0x1800a1098",
+        "pointer_file_offset": "0x9f698",
+        "string_va": "0x18007f9d8",
+        "string_file_offset": "0x7e1d8",
+        "name": "XML_NO_TEXT_NODE"
+      },
+      {
+        "id": 18,
+        "pointer_va": "0x1800a10a0",
+        "pointer_file_offset": "0x9f6a0",
+        "string_va": "0x18007f9f0",
+        "string_file_offset": "0x7e1f0",
+        "name": "XML_ELEMENT_DEPTH_EXCEEDED"
+      }
+    ]
+  },
+  "raw_constants": [
+    {
+      "va": "0x180080068",
+      "file_offset": "0x7e868",
+      "text": "Error=%s ErrorID=%d (0x%x) Line number=%d"
+    },
+    {
+      "va": "0x180080094",
+      "file_offset": "0x7e894",
+      "text": ": "
+    },
+    {
+      "va": "0x180080098",
+      "file_offset": "0x7e898",
+      "text": "Element nesting is too deep."
+    },
+    {
+      "va": "0x180080018",
+      "file_offset": "0x7e818",
+      "text": "XMLElement name=%s"
+    },
+    {
+      "va": "0x180080000",
+      "file_offset": "0x7e800",
+      "text": "XMLDeclaration value=%s"
+    }
+  ],
+  "mac_symbol_support": [
+    {
+      "name": "__ZNK8tinyxml27XMLNode17FirstChildElementEPKc",
+      "demangled": "tinyxml2::XMLNode::FirstChildElement(char const*) const",
+      "address": "0x5c60"
+    },
+    {
+      "name": "__ZNK8tinyxml27XMLNode18NextSiblingElementEPKc",
+      "demangled": "tinyxml2::XMLNode::NextSiblingElement(char const*) const",
+      "address": "0x5d50"
+    },
+    {
+      "name": "__ZNK8tinyxml210XMLElement9AttributeEPKcS2_",
+      "demangled": "tinyxml2::XMLElement::Attribute(char const*, char const*) const",
+      "address": "0x7370"
+    },
+    {
+      "name": "__ZNK8tinyxml210XMLElement7GetTextEv",
+      "demangled": "tinyxml2::XMLElement::GetText() const",
+      "address": "0x7480"
+    },
+    {
+      "name": "__ZN8tinyxml211XMLDocumentC2EbNS_10WhitespaceE",
+      "demangled": "tinyxml2::XMLDocument::XMLDocument(bool, tinyxml2::Whitespace)",
+      "address": "0x7d20"
+    },
+    {
+      "name": "__ZN8tinyxml211XMLDocumentC1EbNS_10WhitespaceE",
+      "demangled": "tinyxml2::XMLDocument::XMLDocument(bool, tinyxml2::Whitespace)",
+      "address": "0x7fb0"
+    },
+    {
+      "name": "__ZN8tinyxml211XMLDocument5ParseEv",
+      "demangled": "tinyxml2::XMLDocument::Parse()",
+      "address": "0x8310"
+    },
+    {
+      "name": "__ZN8tinyxml211XMLDocument5ParseEPKcm",
+      "demangled": "tinyxml2::XMLDocument::Parse(char const*, unsigned long)",
+      "address": "0x8410"
+    },
+    {
+      "name": "__ZNK8tinyxml211XMLDocument8ErrorStrEv",
+      "demangled": "tinyxml2::XMLDocument::ErrorStr() const",
+      "address": "0x8740"
+    },
+    {
+      "name": "__ZN8tinyxml27XMLNode17FirstChildElementEPKc",
+      "demangled": "tinyxml2::XMLNode::FirstChildElement(char const*)",
+      "address": "0x39360"
+    },
+    {
+      "name": "__ZN8tinyxml27XMLNode18NextSiblingElementEPKc",
+      "demangled": "tinyxml2::XMLNode::NextSiblingElement(char const*)",
+      "address": "0x39520"
+    }
+  ],
+  "compatibility_comparison": {
+    "dependency": "official tinyxml2 11.0.0",
+    "commit": "9148bdf719e997d1f474be6bcc7943881046dba1",
+    "selected_semantics_match": [
+      "Parse C-string/count copy and cleanup",
+      "GetText comment skipping",
+      "StrPair GetStr selected normalization/entity branches",
+      "ErrorStr formatter",
+      "PushDepth equality check"
+    ],
+    "required_depth_override": "500 -> 100",
+    "original_tinyxml2_version": "unproven",
+    "original_source_commit": "unproven",
+    "complete_equivalence": false,
+    "abi_equivalence": false
+  },
+  "limitations": [
+    "No original execution or differential runtime test",
+    "Selected call paths only, not full XML implementation instruction equivalence",
+    "Mac symbols establish library/function names but not cross-platform address equivalence or exact source version",
+    "Numeric reference malformed/overflow/invalid-Unicode edge cases not exhaustively compared",
+    "Wrapper allocation, pointer identity, errors/exceptions and MSVC ABI require separate analysis"
+  ]
+}

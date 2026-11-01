@@ -1,0 +1,98 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B37",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B37",
+  "latest_dll_link_attempt": "B37",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B37 adds full normal025720 accepted-session body,021a10 private Error copy shim and0270e0 live server rearm from retained Ghidra C/ASM. The two historical025720 coarse definitions remain; only its normal-body claim is new, while the two previously unmapped helpers add mapped/eligible entries. DomainFlowApi calls actual023000 factory/B36 accept start. Normal025720 copies198 bytes of defined reset-cipher state into own session schedule, snapshots returned greeting data/length, sends actual02a200 cap65536 with live socket/state, frees LOCAL greeting before actual0280d0, loads local control after read and releases cached strong/weak before live handler.server rearm. Error rendering preserves begin/category/message/stream/free order. CoherentIoMemory retires accept sidecars before receive/send/task/response projections including41-byte closures; shared cache evictions and native completion use one memory adapter while preserving Base observed SDK loans/generation/poison. Both providers are checked before/after opaque environment construction. 865 prior sources preserved+5declared nonvirtual/friend edits+6new=876;256objects(252CPP+4C)/303normalgroups+19frameworkterminal;546+179=725checks. 498mapped/502eligible/136normal;3newnormal bodies,0newnativeABI/providerclosures,52historicalpreserved. Integration runs real own IOCP/heap/FLS and injected socket SDKs through actual factory/frame/message-thread/owned-response/send/disposal, plaintext and independently decrypted encrypted responses. Message core is N5 normal-return compatibility writeback, not N9 native-prefix callback/EH equivalence. Raw frame jobs are selected synchronous execution under live handler strong; observed second-accept terminal owner0 is a selected shutdown policy, not recovered native kernel quiescence. Native200-byte copy has198 defined fields; padding2, class/vptr ABI, nativeEH/arbitraryconcurrency remain unproven. Required029df0factory/029590reset/029660retry, native-prefix message binding, fullRuntime/Transport/Scheduling/Resources/loader remain open; genericCRT paused.",
+  "source_algorithms_native_inventory_unchanged": false,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Socket factory, holder reset ve accept retry alt sınırlarının tamamlanması",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36",
+      "native_full_accept_session_flow_available": "B37",
+      "coherent_accept_IO_cache_available": "B37"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B38",
+    "priority": 1,
+    "title": "Socket factory, holder reset ve accept retry alt sınırlarının tamamlanması",
+    "requirements": [
+      "Recover actual029df0 socket factory,029590 holder reset and029660 retry from retained evidence and bind their precise error/lifetime contracts",
+      "Use the now-present full021a10/025720/0270e0 source when filling production Runtime/Resources; preserve coherent cache and observed packet ownership",
+      "Keep N5 normal-return message bridge distinct from full native-prefix033d70 callback/exception binding, and retain explicit raw-job/context shutdown obligations",
+      "Do not invent0228c0 or expand paused genericCRT; keep loader hooks undefined until complete Resources and truthful loader/unload quiescence exist"
+    ],
+    "exit_criteria": "Factory/reset/retry normal sources and their concrete resource bindings are explicit, with valid pending socket/kernel lifetime and error order; source composition is measured separately from native ABI/provider closure."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "source_normal_bodies_added_in_B37": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source": "Retained REA/Ghidra function evidence plus separately labeled bounded PE table reads",
+  "scope": "Nine normal-flow bodies; AL/EAX contracts; new source bridge does not add original functions",
+  "functions": [
+    {
+      "va": "0x1800704f4",
+      "assembly_evidence": "ev_570cf4dfaee26fdaf2212b8111ffe28b5e707fb31fb6df7c7ce2b49510798dc3",
+      "pseudocode_evidence": "ev_1bb82bc295d907c6e8f931a7531deb4b8331a10bc4394046075c6de17a4847ec"
+    },
+    {
+      "va": "0x180070588",
+      "assembly_evidence": "ev_843f430b66c5d28888ef0ed88d02257634affdf201a96016cbe3c71a1ab1b016",
+      "pseudocode_evidence": "ev_29c893fe7b78238876a2c41a9fc8d95b4ae700e7ba3688ad8af740850972f567"
+    },
+    {
+      "va": "0x180064614",
+      "assembly_evidence": "ev_9db292af08a5935c9ea1770203044e37dc4ee9439454178adf306f44360f68b4",
+      "pseudocode_evidence": "ev_d3385bc6670ce172cf01545c87b7fb8b2b1601d79878e7016455aedca6c70b19"
+    },
+    {
+      "va": "0x180064658",
+      "assembly_evidence": "ev_9381e3462206defabebd4c4c775e366d745393cd96f82cd24887f4d23f13cce2",
+      "pseudocode_evidence": "ev_f332e7e71c82b4e0058257b05416a54983ac2e677718b090a53a9299ccb310ca"
+    },
+    {
+      "va": "0x180064594",
+      "assembly_evidence": "ev_c261f9d193ecba0feea0d82b3e509f0325e808be7ee44747df5ff43ca54b3854",
+      "pseudocode_evidence": "ev_4c4000380c4a53edea511642b32e097f25502bb72da15a9bafd80659fe65471a"
+    },
+    {
+      "va": "0x1800645cc",
+      "assembly_evidence": "ev_48c0d2c6c4fb5bb2db5fbb7118062241e0238031b58b87518f9fcb602127b75f",
+      "pseudocode_evidence": "ev_7977c1b8cbacbc4e0db38d16a8172b02c7e3889ff363748f877fdf857a74a9f8"
+    },
+    {
+      "va": "0x1800645a8",
+      "assembly_evidence": "ev_66d0fc33ccfd84040e181d83e93d4d200397d8315561271cab9728ce8b861c0f",
+      "pseudocode_evidence": "ev_c49d00607b29ffdb362402aaa26a410afc2fa8c53f7cee0db6eeaad35526e9a7"
+    },
+    {
+      "va": "0x1800645bc",
+      "assembly_evidence": "ev_5ae11127a8bca223c54f6c4c3ce35d33c56b6338e827ee7ef0a0753e637df9e0",
+      "pseudocode_evidence": "ev_551d78fc7af99bffe06f573e63d5395129528ada746e81a38087c32af41534b8"
+    },
+    {
+      "va": "0x180064604",
+      "assembly_evidence": "ev_68d24e5b69092ea5dd857e680d7434111d1c7d14464580f2fe54ab530bbe36c2",
+      "pseudocode_evidence": "ev_0c26190d0add358f6b7dca10c7586ea43572aca4205585d2a54d804cdfa0e873"
+    }
+  ],
+  "table_file": "initializer-tables.json",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "remaining": "Actual full callback bindings, VCRT and other CRT bodies, native loader/SEH/unwind/ABI equality"
+}

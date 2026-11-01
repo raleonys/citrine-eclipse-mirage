@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_counter_native",
+    "result": "PASS",
+    "output": "PASS 94 borrowed native LONG counter checks",
+    "executable_sha256": "5a15e4016759b85adf8d294970f8358c05a773256333d1c3e6178ef4829dcf1b"
+  },
+  "execution_scope": "Borrowed typed LONG counter registry, Interlocked bit/wrap/load/exchange and4worker tests; immutable map during concurrent access and quiescent bind/unbind; no raw pointer adoption or object ownership; zero new original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-counter-native-source/counters.cpp",
+      "sha256": "044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25"
+    },
+    {
+      "path": "anadius-crt-counter-native-source/counters.hpp",
+      "sha256": "f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011"
+    },
+    {
+      "path": "anadius-crt-counter-native-source/native_tests.cpp",
+      "sha256": "61fe364a99aff62e2797dcd80135a5f0dc21c7a546c333499566aa02d973c6c0"
+    }
+  ]
+}

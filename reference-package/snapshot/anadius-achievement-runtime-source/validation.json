@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "utc_checks": 76,
+  "runtime_checks": 163,
+  "output": "PASS: 76 UTC wrapper checks; fixed providers and explicit host compatibility\nPASS: 163 achievement runtime integration checks; own fixtures and controlled clock/locks/events only",
+  "source_hashes": {
+    "utc.hpp": "75f907fe609da71eeb4c7737da137ed0a53574fac251c820a4007b19c5214373",
+    "utc.cpp": "7684a1ffe3dfbb52585c893eb23c53c1ec7f272862cb258cb99b52f84d9f7cbe",
+    "runtime.hpp": "d28eb0121de0efa000ea2179f3d8934d4aaf212a36407146b5078116844ea400",
+    "runtime.cpp": "5ec1e7c2fc2dced97d781450ad15058bc9cc2c9f5486d7ff3c35fe81bfd9e2b7",
+    "utc_tests.cpp": "8bbe7fbc16ca3555643772f6d89a3e3425435c69e50eb87eb2026d792837fd31",
+    "runtime_tests.cpp": "c0aed1b2c906e692de730cbf24e92ea761eda865fc950cc92b37ece96d956c27",
+    "build.ps1": "98b700b49a4000c2183d59b381a3c4a151d53374fdf29c37353c0ecbd87f1582",
+    "CMakeLists.txt": "de8e1ec32d9d75e978c675a1eede4c159529886e435c8a8b03fddc83ad61954b"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "native_scope": "Own generated XML and INI only; clock/locks/events and non-achievement providers controlled",
+  "host_clock_formatter": "Explicit selected-runtime compatibility, not original CRT/locale/STL ABI equality",
+  "runtime_equivalence": "not established"
+}

@@ -1,0 +1,43 @@
+{
+  "reviewer": "Independent crt_heap_core worker",
+  "result": "No actionable correctness finding in reviewed scope",
+  "method": "Static source review against recovered heap, PTD, PTD-data, error, invalid-parameter and thread interfaces; existing test result inspected, not rerun by reviewer",
+  "sources": [
+    {
+      "name": "crt_glue.hpp",
+      "sha256": "d9dd2b7385850820a614600f51ff103f1929c85178b8bd065c38db661257710e"
+    },
+    {
+      "name": "crt_glue.cpp",
+      "sha256": "b880c863eb26775ee3de243ef68e8e9a2dc78a3ada7bfa7b1a2de8d2223942ca"
+    },
+    {
+      "name": "glue_tests.cpp",
+      "sha256": "750f23db0ab7755cb6c70a58fe3276ff92d1b0aa73dcb7180bde4e9ae61dac74"
+    }
+  ],
+  "observations": [
+    "construct_at with no arguments establishes live value-initialized Ptd and Context in suitably aligned provider-owned storage; zero/null field semantics match the Windows x64 record domain",
+    "Ptd and Context are trivially destructible; successful storage release ends their lifetime without a required destructor call, while HeapFree failure retains storage and object lifetime",
+    "HeapErrors preserves the recovered mapping/address contracts and composes the actual errno cell selection rather than writing a substitute TLS cell",
+    "Recursive allocation-failure errno lookup reaches the recovered FLS construction sentinel, returns fallback storage and terminates recursion; errno_fallback=12 and dos_fallback=8 match their initial state",
+    "FLS API fields use SDK declaration-derived function pointer types; allocation maps the one supported recovered destructor token to a caller-supplied rebuilt callback",
+    "The actual application entry call uses the recovered unsigned __stdcall(void*) domain; supplied entry addresses must denote correctly typed rebuilt functions",
+    "Production native_fls_api only takes six SDK API addresses; synthetic fixtures invoke supplied replacements rather than real FLS operations"
+  ],
+  "required_contracts": [
+    "Heap provider supplies sufficient storage with alignment for Ptd and Context",
+    "All borrowed states, Identities, providers and rebuilt callbacks outlive adapter use and every FLS/worker callback",
+    "The callback's caller-owned binding dispatches to the same PTD/data/heap ownership domain",
+    "Raw original binary addresses and incorrectly typed function addresses are outside the entry invocation contract",
+    "Real native heap/FLS/CRT loader lifecycle, concurrent shutdown and original runtime equivalence remain unverified"
+  ],
+  "minor_hygiene_note": "glue_tests.cpp uses std::find/count through transitive includes; reviewer suggested a direct algorithm header include to the parent worker",
+  "findings": [],
+  "primary_followup": {
+    "change": "Added explicit <algorithm> include to glue_tests.cpp as suggested; no production semantic change",
+    "historical_review_hashes": "Preserved for reviewed revision",
+    "current_test_source_sha256": "166a8589317966bd223519691b8ff301b05fa7fdfc8f39c947e1f4632f07c151",
+    "final_validation": "../source-workspace/build-record.json"
+  }
+}

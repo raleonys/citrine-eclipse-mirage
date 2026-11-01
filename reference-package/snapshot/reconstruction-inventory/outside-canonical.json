@@ -1,0 +1,1023 @@
+[
+  {
+    "artifact": "anadius64",
+    "address": "0x18002d720",
+    "definitions": [
+      {
+        "address": "0x18002d720",
+        "symbol": "chunks_installed_02d720",
+        "line": 70,
+        "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+        "artifact": "anadius64",
+        "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+            "symbol": "anadius::misc_handlers_recovered::chunks_installed_02d720(unsigned long long, anadius::handlers_recovered::Xml&, anadius::misc_handlers_recovered::Elements&)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": [
+          "0x180003300",
+          "0x180003860",
+          "0x180003fe0",
+          "0x180004080",
+          "0x180005560",
+          "0x1800056b0"
+        ]
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800314a0",
+    "definitions": [
+      {
+        "address": "0x1800314a0",
+        "symbol": "query_friends_0314a0",
+        "line": 83,
+        "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+        "artifact": "anadius64",
+        "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+            "symbol": "anadius::misc_handlers_recovered::query_friends_0314a0(anadius::handlers_recovered::Xml&)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x180064468",
+    "definitions": [
+      {
+        "address": "0x180064468",
+        "symbol": "initialize_locale_064468",
+        "line": 3,
+        "file": "anadius-crt-locale-startup-source/locale_startup.cpp",
+        "artifact": "anadius64",
+        "sha256": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-startup-source/locale_startup.cpp",
+            "symbol": "anadius::crt_locale_startup_recovered::initialize_locale_064468(anadius::crt_locale_startup_recovered::Effects&)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": [
+          "0x1800a17e0",
+          "0x1800a52e0"
+        ]
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800644f0",
+    "definitions": [
+      {
+        "address": "0x1800644f0",
+        "symbol": "uninitialize_vcrt_0644f0",
+        "line": 8,
+        "file": "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+        "artifact": "anadius64",
+        "sha256": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+            "symbol": "anadius::crt_pair_leaves_recovered::uninitialize_vcrt_0644f0(anadius::vcrt_ptd_recovered::State&, anadius::vcrt_ptd_recovered::Effects&)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": [
+          "0x18004d5a8"
+        ]
+      }
+    ],
+    "explicit_gap_claims": [
+      {
+        "artifact": "anadius64",
+        "address": "0x1800644f0",
+        "evidence": "anadius-crt-pair-leaves-source/evidence.json",
+        "size": 7,
+        "bytes_sha256": "7655465ba32b287de56825a84e3f6b6561c5b5b0f5ac3a2883f2a8825d224e8c",
+        "status": "explicit_gap_body_claim_outside_canonical_if_not_listed"
+      }
+    ],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x18006e41c",
+    "definitions": [
+      {
+        "address": "0x18006e41c",
+        "symbol": "compare_slot_addresses_06e41c",
+        "line": 20,
+        "file": "anadius-crt-sort-source/sort.cpp",
+        "artifact": "anadius64",
+        "sha256": "18eb6b55d287677caf35b7a9e6ba07709bd5e332db71752ce0d10d3bb58d4f7a",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-sort-source/sort.cpp",
+            "symbol": "anadius::crt_sort_recovered::compare_slot_addresses_06e41c(unsigned long long, unsigned long long)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800704e8",
+    "definitions": [
+      {
+        "address": "0x1800704e8",
+        "symbol": "uninitialize_heap_0704e8",
+        "line": 3,
+        "file": "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+        "artifact": "anadius64",
+        "sha256": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+            "symbol": "anadius::crt_pair_leaves_recovered::uninitialize_heap_0704e8(anadius::crt_heap_recovered::State&)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [
+      {
+        "artifact": "anadius64",
+        "address": "0x1800704e8",
+        "evidence": "anadius-crt-pair-leaves-source/evidence.json",
+        "size": 11,
+        "bytes_sha256": "a8a791a7544670cb92dd9a0391591c72bf7efb25949f6dc6f3c0b6eb60467494",
+        "status": "explicit_gap_body_claim_outside_canonical_if_not_listed"
+      }
+    ],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x180084c98",
+    "definitions": [
+      {
+        "address": "0x180084c98",
+        "symbol": "Cipher::set_fixed_key_084c98",
+        "line": 46,
+        "file": "anadius-crypto-source/crypto.cpp",
+        "artifact": "anadius64",
+        "sha256": "cd493597464ba22c7c11557c36f033387770e0cc62d4fbbaefc1676bbfabd436",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crypto-source/crypto.cpp",
+            "symbol": "anadius::crypto_recovered::Cipher::set_fixed_key_084c98()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": [
+          "0x180042780"
+        ]
+      },
+      {
+        "address": "0x180084c98",
+        "symbol": "SessionCipher::set_fixed_key_084c98",
+        "line": 25,
+        "file": "anadius-socket-source/cipher_session.cpp",
+        "artifact": "anadius64",
+        "sha256": "62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-socket-source/cipher_session.cpp",
+            "symbol": "anadius::socket_recovered::SessionCipher::set_fixed_key_084c98()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": [
+          "0x180042780"
+        ]
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x18008bf70",
+    "definitions": [
+      {
+        "address": "0x18008bf70",
+        "symbol": "RecordNative::locale_name_08bf70",
+        "line": 32,
+        "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_record_bridge::RecordNative::locale_name_08bf70()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "non-virtual thunk to anadius::crt_multibyte_record_bridge::RecordNative::locale_name_08bf70()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x18008bf78",
+    "definitions": [
+      {
+        "address": "0x18008bf78",
+        "symbol": "RecordNative::locale_name_08bf78",
+        "line": 33,
+        "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_record_bridge::RecordNative::locale_name_08bf78()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "non-virtual thunk to anadius::crt_multibyte_record_bridge::RecordNative::locale_name_08bf78()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x18008bf80",
+    "definitions": [
+      {
+        "address": "0x18008bf80",
+        "symbol": "RecordNative::locale_name_08bf80",
+        "line": 34,
+        "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_record_bridge::RecordNative::locale_name_08bf80()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "non-virtual thunk to anadius::crt_multibyte_record_bridge::RecordNative::locale_name_08bf80()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x18008bf88",
+    "definitions": [
+      {
+        "address": "0x18008bf88",
+        "symbol": "RecordNative::locale_name_08bf88",
+        "line": 35,
+        "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_record_bridge::RecordNative::locale_name_08bf88()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "non-virtual thunk to anadius::crt_multibyte_record_bridge::RecordNative::locale_name_08bf88()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a17e0",
+    "definitions": [
+      {
+        "address": "0x1800a17e0",
+        "symbol": "ThreadEffects::initial_locale_0a17e0",
+        "line": 12,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::ThreadEffects::initial_locale_0a17e0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a17e0",
+        "symbol": "SourceEffects::initial_locale_0a17e0",
+        "line": 28,
+        "file": "anadius-crt-locale-startup-source/locale_startup.cpp",
+        "artifact": "anadius64",
+        "sha256": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-startup-source/locale_startup.cpp",
+            "symbol": "anadius::crt_locale_startup_recovered::SourceEffects::initial_locale_0a17e0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a1938",
+    "definitions": [
+      {
+        "address": "0x1800a1938",
+        "symbol": "UpdateEffects::global_pair_0a1938",
+        "line": 28,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::UpdateEffects::global_pair_0a1938()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a1940",
+    "definitions": [
+      {
+        "address": "0x1800a1940",
+        "symbol": "Effects::set_initial_pair_multibyte_0a1940",
+        "line": 37,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::set_initial_pair_multibyte_0a1940(unsigned long long)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a1c6c",
+    "definitions": [
+      {
+        "address": "0x1800a1c6c",
+        "symbol": "ThreadEffects::locale_mask_0a1c6c",
+        "line": 9,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::ThreadEffects::locale_mask_0a1c6c()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::UpdateEffects::locale_mask_0a1c6c()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a1c6c",
+        "symbol": "UpdateEffects::locale_mask_0a1c6c",
+        "line": 32,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::ThreadEffects::locale_mask_0a1c6c()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::UpdateEffects::locale_mask_0a1c6c()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a1c6c",
+        "symbol": "Effects::locale_mask_0a1c6c",
+        "line": 38,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::locale_mask_0a1c6c()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a1c70",
+    "definitions": [
+      {
+        "address": "0x1800a1c70",
+        "symbol": "ThreadEffects::initial_multibyte_0a1c70",
+        "line": 13,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::ThreadEffects::initial_multibyte_0a1c70()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a1c70",
+        "symbol": "Effects::initial_multibyte_0a1c70",
+        "line": 20,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::initial_multibyte_0a1c70()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a1c70",
+        "symbol": "RecordNative::initial_multibyte_0a1c70",
+        "line": 29,
+        "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_record_bridge::RecordNative::initial_multibyte_0a1c70()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "non-virtual thunk to anadius::crt_multibyte_record_bridge::RecordNative::initial_multibyte_0a1c70()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a3838",
+    "definitions": [
+      {
+        "address": "0x1800a3838",
+        "symbol": "OriginalEffects::original_connect_0a3838",
+        "line": 15,
+        "file": "anadius-native-source/original_effects.cpp",
+        "artifact": "anadius64",
+        "sha256": "2f8ec2eae9ce6463eed8871a8f5f01660c806744a94a22fbcd392b329496a898",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-native-source/original_effects.cpp",
+            "symbol": "anadius::native_recovered::OriginalEffects::original_connect_0a3838(unsigned long long, std::__1::span<std::byte, 18446744073709551615ull>, int)",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-native-source/original_effects.cpp",
+            "symbol": "non-virtual thunk to anadius::native_recovered::OriginalEffects::original_connect_0a3838(unsigned long long, std::__1::span<std::byte, 18446744073709551615ull>, int)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a3838",
+        "symbol": "ExecutionEffects::original_connect_0a3838",
+        "line": 53,
+        "file": "anadius-network-hook-source/connect.cpp",
+        "artifact": "anadius64",
+        "sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-network-hook-source/connect.cpp",
+            "symbol": "anadius::network_hook_recovered::ExecutionEffects::original_connect_0a3838(unsigned long long, std::__1::span<std::byte, 18446744073709551615ull>, int)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": [
+          "0x1800a3838"
+        ]
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a52d8",
+    "definitions": [
+      {
+        "address": "0x1800a52d8",
+        "symbol": "UpdateEffects::locale_changed_0a52d8",
+        "line": 27,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::UpdateEffects::locale_changed_0a52d8()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a52d8",
+        "symbol": "Effects::exchange_locale_changed_0a52d8",
+        "line": 27,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::exchange_locale_changed_0a52d8(unsigned int)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a52e0",
+    "definitions": [
+      {
+        "address": "0x1800a52e0",
+        "symbol": "ThreadEffects::current_locale_0a52e0",
+        "line": 10,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::ThreadEffects::current_locale_0a52e0()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::UpdateEffects::current_locale_0a52e0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a52e0",
+        "symbol": "UpdateEffects::current_locale_0a52e0",
+        "line": 30,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::ThreadEffects::current_locale_0a52e0()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::UpdateEffects::current_locale_0a52e0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a52e0",
+        "symbol": "Resources::current_locale_0a52e0",
+        "line": 10,
+        "file": "anadius-crt-locale-resource-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "6980577c496eab1dc32bad66f07d57e840ef113fb920bd0dd786e089be3008fa",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-resource-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_resource_bridge::Resources::current_locale_0a52e0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a52e0",
+        "symbol": "SourceEffects::current_locale_slot_0a52e0",
+        "line": 27,
+        "file": "anadius-crt-locale-startup-source/locale_startup.cpp",
+        "artifact": "anadius64",
+        "sha256": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-startup-source/locale_startup.cpp",
+            "symbol": "anadius::crt_locale_startup_recovered::SourceEffects::current_locale_slot_0a52e0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a59c0",
+    "definitions": [
+      {
+        "address": "0x1800a59c0",
+        "symbol": "Effects::type_table_0a59c0",
+        "line": 18,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::type_table_0a59c0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a59c0",
+        "symbol": "Effects::set_type_table_0a59c0",
+        "line": 34,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::set_type_table_0a59c0(unsigned long long)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a59c8",
+    "definitions": [
+      {
+        "address": "0x1800a59c8",
+        "symbol": "Effects::case_table_0a59c8",
+        "line": 19,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::case_table_0a59c8()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a59c8",
+        "symbol": "Effects::set_case_table_0a59c8",
+        "line": 35,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::set_case_table_0a59c8(unsigned long long)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a59d0",
+    "definitions": [
+      {
+        "address": "0x1800a59d0",
+        "symbol": "ThreadEffects::current_multibyte_slot_0a59d0",
+        "line": 11,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::ThreadEffects::current_multibyte_slot_0a59d0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a59d0",
+        "symbol": "UpdateEffects::current_multibyte_0a59d0",
+        "line": 31,
+        "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-locale-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_locale_bridge::UpdateEffects::current_multibyte_0a59d0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a59d0",
+        "symbol": "Effects::current_multibyte_slot_0a59d0",
+        "line": 36,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::current_multibyte_slot_0a59d0()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a59d8",
+    "definitions": [
+      {
+        "address": "0x1800a59d8",
+        "symbol": "Effects::write_system_cp_flag_0a59d8",
+        "line": 17,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::write_system_cp_flag_0a59d8(unsigned int)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a59d8",
+        "symbol": "RecordNative::system_cp_flag_0a59d8",
+        "line": 26,
+        "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_record_bridge::RecordNative::system_cp_flag_0a59d8()",
+            "kind": "T"
+          },
+          {
+            "file": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+            "symbol": "non-virtual thunk to anadius::crt_multibyte_record_bridge::RecordNative::system_cp_flag_0a59d8()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  },
+  {
+    "artifact": "anadius64",
+    "address": "0x1800a59dc",
+    "definitions": [
+      {
+        "address": "0x1800a59dc",
+        "symbol": "Effects::initialized_0a59dc",
+        "line": 32,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::initialized_0a59dc()",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      },
+      {
+        "address": "0x1800a59dc",
+        "symbol": "Effects::set_initialized_0a59dc",
+        "line": 33,
+        "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+        "artifact": "anadius64",
+        "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+        "compiled_unit": true,
+        "compiled_symbol_candidates": [
+          {
+            "file": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+            "symbol": "anadius::crt_multibyte_bridge::Effects::set_initialized_0a59dc(unsigned char)",
+            "kind": "T"
+          }
+        ],
+        "mapping_basis": "address_suffix_on_function_definition",
+        "tagged_calls": []
+      }
+    ],
+    "explicit_gap_claims": [],
+    "interpretation": "outside_canonical_not_added_to_function_denominator"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T19:52:49.9254673Z",
+  "previous_package_sha256": "cb858601c1dc7dd30f5509de39639c71c4d31560578f1e48f92cae4c210664f6",
+  "source_files_unchanged": 536,
+  "changed_documents": [
+    "YOL-HARITASI.md"
+  ],
+  "correction": "Roadmap now matches current source_presence partition:437 source,6 adapter,129 module-only,1504 unmapped",
+  "CXX_tests_rerun": false,
+  "build_record_sha256": "fed49f4ca9c707a60034ad634cc5cd5679013ee4255ec4ff4c6cbf1606dd7466"
+}

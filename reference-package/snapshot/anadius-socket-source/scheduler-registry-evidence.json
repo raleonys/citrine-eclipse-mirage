@@ -1,0 +1,118 @@
+{
+  "schema": "scheduler-registry.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180022fd0",
+      "pseudo_evidence": "ev_1ff0395466a0d3686d30b1880c706f664cb34e113230aabead84f67e5dfc1ac5",
+      "assembly_evidence": "ev_c66e0df033cecbf820b73605aa1591d589004974c15b6c62ae45785d57699bb8"
+    },
+    {
+      "address": "0x180023b30",
+      "pseudo_evidence": "ev_e19c4187c6fd93eed1f7799ea815833381b3dbe02527496c06be2e73f9fd1811",
+      "assembly_evidence": "ev_5bd06ce10f718331325ac29108e8afe82981dcdd81da85e580033f641b8dae7c"
+    },
+    {
+      "address": "0x1800228e0",
+      "pseudo_evidence": "ev_22c4bffe54fe0b986545326a4020802e4e98041a480e8cafc64b603ecd05d1ef",
+      "assembly_evidence": "ev_cccd315f694dc43aeae87a61fc8912482989a03586a119141e1b2a2d8f2bdd7b"
+    },
+    {
+      "address": "0x180024990",
+      "pseudo_evidence": "ev_3a626f8100eb1bf7ba0b9677a33b1b1418e250dde536cb3a9f122c32790a3442",
+      "assembly_evidence": "ev_87052282e1951ed15719d13023b5cd5cfdf7a65dcbff15d2354f8ee4cff08aad"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "scheduler_registry.hpp": "15682596994c9dad200822f868694ac5ecd5c1b892989ec9f661493f44ea68d9",
+    "scheduler_registry.cpp": "dd435dd06297b628a8a101effc1c1d4263a281299d04f8517ee16368de4c64ac",
+    "scheduler_registry_tests.cpp": "4c478a57097c720b2cd2a938b8026602eed882584d30fac819b7e5090c656e54",
+    "scheduler_registry_integration_tests.cpp": "3416f9fb342e744de978060d09d7dcce8d07019f1ae3bb4eb1e3a9a95d701ba7",
+    "build.ps1": "2dd18d7e0d15a15320d8533e939a6adcb2428bd3aeb4453f61797301251872d8",
+    "CMakeLists.txt": "d689d4f9b8c020d77461c7c3c623fe54715ae4c50900f9caa356074a54da0477",
+    "README.md": "486eee9879d68a690328239ce0ffd1f80e4485cd856c9e4078b8fdf1185b13f5"
+  },
+  "support_hashes": {
+    "scheduler-registry-evidence.pseudo.c.txt": "ea24a973857113437879ed8add899e5470b160bc9996771e53994223deafddcb",
+    "scheduler-registry-evidence.asm.txt": "924f5f5dc600fc2e6133765a1998288d36f36d246314f87d877c43585ab75a54",
+    "scheduler-registry-flow-audit.md": "9c6c2e8bb7f4769e12ed8f3eb28700c4118b2b0f39db425504fd0518f8c4249a",
+    "scheduler-registry-flow-audit.json": "399b7fd6a22594eae03cd1b6d5ab031cfbdc807e1a8f4a4e8179ff3c9cac78c8",
+    "scheduler-registry-review.md": "f0d87a1eda69007975c4224c76661765be9b5daff0fbb0b65d98dc9641a2e8a3",
+    "scheduler-registry-review.json": "835114780c9a8eab7865addb5b15a6b9f7422ac0b90fe4fc0cc2eebaeaceff64",
+    "scheduler-registry-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x180022fd0",
+    "0x180023b30"
+  ],
+  "new_original_procedures": 2,
+  "required_providers": [
+    "04b0bc native allocator",
+    "024990 scheduler initialization",
+    "04d2d0 native CRT RTTI comparator",
+    "Executor/global/category/raise/dispatcher effects"
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x180022fd5",
+        "0x180022fe6",
+        "0x180022fe9",
+        "0x180023b55",
+        "0x180023b5a",
+        "0x180023b66"
+      ],
+      "finding": "Fixed scheduler type1800a2540/id0; owner registry+28 captured before first gate; ID shortcut unreachable"
+    },
+    {
+      "addresses": [
+        "0x180023bb1",
+        "0x180023bbe",
+        "0x180023bca",
+        "0x180023bd5",
+        "0x180023bda",
+        "0x180023be9",
+        "0x180023bf8"
+      ],
+      "finding": "RTTI EAXzero and live next; first miss leaves gate; allocateB0 and required024990(cachedowner,FFFFFFFF,1) outside gate"
+    },
+    {
+      "addresses": [
+        "0x180023bfd",
+        "0x180023c02",
+        "0x180023c0a",
+        "0x180023c12",
+        "0x180023c4a",
+        "0x180023c53"
+      ],
+      "finding": "Use constructor return as candidate; null allocation skips constructor then native null-key fault; key copy before second gate; second scan live links"
+    },
+    {
+      "addresses": [
+        "0x180023c5c",
+        "0x180023c60",
+        "0x180023c64",
+        "0x180023c8d",
+        "0x180023c95",
+        "0x180023c9c",
+        "0x180023ca2"
+      ],
+      "finding": "Live head publication; duplicate candidate scalar-delete1 under gate; return cached winner after deletion/leave callbacks"
+    }
+  ],
+  "independent_production_review": "PASS; scheduler-registry-review.json frozen2file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Actual nested socket/scheduler registry composition with controlled allocator/024990/RTTI/SDK effects; no real network/IOCP",
+  "unproven": [
+    "04b0bc allocator,024990 scheduler initialization,04d2d0 CRT comparator and native layout/ownership/teardown",
+    "Native ASIO layout/dispatcher/service/container/allocator/lifetime/concurrency",
+    "Native error padding/vtable/global/SEH/unwind/ABI",
+    "Full DLL integration and original runtime differential"
+  ]
+}

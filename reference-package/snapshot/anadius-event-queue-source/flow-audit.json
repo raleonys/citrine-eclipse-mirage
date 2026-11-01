@@ -1,0 +1,46 @@
+{
+  "scope": "Retained static normal-flow audit; no original execution or new REA analysis",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "getters": [
+    {"address":"0x18002c620","object":"0x1800a3920","guard":"0x1800a3970","ctor_flags":2,"cleanup":"0x18007e030","pseudo_evidence":"ev_0e415284624e38d46c3199e2803819e3710cab686ae0325f3d0446636fa42c9d","assembly_evidence":"ev_f3d62ed2c858e85fd60711534757a15f5b1c757ed963ea527e961154296f1cd8"},
+    {"address":"0x18002c400","object":"0x1800a3978","guard":"0x1800a39a0","cleanup":"0x18007e000","pseudo_evidence":"ev_8a31862931ad4a3cf8f80e4584226c396cdf07e3d33f8c2981f44e90db73bcd0","assembly_evidence":"ev_992d7a1ed7c4d433e484c79367b7dd1f74c462ca9b896b914dd622e7e16a5d9a"}
+  ],
+  "getter_rules": {
+    "outer_condition":"signed32 thread_epoch < guard",
+    "header":"0x18004b838",
+    "recheck_after_header":"guard == -1",
+    "footer":"0x18004b7cc",
+    "atexit":"0x18004b770",
+    "atexit_return_ignored":true,
+    "constructor_then_atexit_then_footer":true,
+    "same_global_reference_returned":true,
+    "no_guessed_guard_or_TLS_defaults":true,
+    "native_abort_unwind_retry_proven":false
+  },
+  "queue_seed": {
+    "bytes":"<LSX><Event sender=\"EbisuSDK\"><IGOEvent State=\"DOWN\"/></Event></LSX>",
+    "length":68,
+    "temporary_allocation":80,
+    "temporary_capacity":79,
+    "deque_reset_qwords":5,
+    "proxy_allocation":16,
+    "growth":"0x180026670(queue,1)",
+    "block_allocation":32,
+    "string_copy":"0x180009eb0",
+    "moves_seed":false,
+    "temporary_destroyed_before_atexit":true
+  },
+  "callers": {
+    "igo":{"address":"0x180032b10","mutex_getter":"0x180032b75","queue_getter":"0x180032ba0","append":"0x180032c10","cold_events":["DOWN seed","DOWN request"],"holds_event_lock":true},
+    "grant":{"address":"0x180030010","mutex_getter":"0x180030778","queue_getter":"0x18003078b","append":"0x1800307cd","cold_completion_events":["DOWN seed","achievement event"],"holds_event_and_achievement_locks":true},
+    "message":{"address":"0x180033d70","response_encrypt":"0x180034223","queue_getter":"0x1800342f4","mutex_getter":"0x180034307","queue_initialization_precedes_mutex":true,"encrypted_response_success_required":true,"unencrypted_skips_queue":true,"locked_recheck":"0x180034332","event_encrypt":"0x1800343c2","failed_event_encrypt_reaches_pop":"0x1800344bf","events_consumed_per_response_max":1,"event_encrypt_false_still_consumes":true,"unlock":"0x180034573"}
+  },
+  "limitations":["Native CRT guard/TLS/header/footer/concurrency internals remain providers","Native deque/growth/SSO/allocator layout and failures not recovered by a host FIFO backend","Atexit cleanup callback identities do not imply callbacks executed or lifecycle fully modeled","Native EH/static abort/retry/unwind and whole DLL ABI remain unproven","Host atomics/storage synchronization are explicit compatibility choices"],
+  "original_execution":"none",
+  "real_user_files_read":false,
+  "production_edited":false
+}

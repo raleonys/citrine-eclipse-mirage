@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_multibyte_support",
+    "result": "PASS",
+    "output": "3544 multibyte support checks passed",
+    "executable_sha256": "3e452e89d6fbf8d1bd53bd899469fdb120e4b88df363600a7efc0b15c00d714c"
+  },
+  "execution_scope": "Three system-codepage/table-publication/atomic-mark normal-flow bodies; bounded mutable storage and CP/atomic/lock/invalid providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-multibyte-support-source/multibyte_support_tests.cpp",
+      "sha256": "20924b4669af2cc3b6ee037a11b4f4f743423de9ae4a09f713e1c5c053433f24"
+    },
+    {
+      "path": "anadius-crt-multibyte-support-source/multibyte_support.cpp",
+      "sha256": "59c1645aa5e8fe79ed0b81d4c99e9bb261138bab562b7c01856f7e857030a8fd"
+    },
+    {
+      "path": "anadius-crt-multibyte-support-source/multibyte_support.hpp",
+      "sha256": "29f3790e2d2c196e639ae47132795fba07794e05c0ee2be2d8cf2749622faa7f"
+    }
+  ]
+}

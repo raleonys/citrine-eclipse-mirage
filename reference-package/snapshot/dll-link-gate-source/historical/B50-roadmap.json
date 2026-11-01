@@ -1,0 +1,129 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B50",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B50",
+  "latest_dll_link_attempt": "B50",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B50 extends existing Stop and OwnedIoMemory without a new production unit. Default AcceptOnly stays selected unless Scope::SessionIo is explicitly supplied. Typed SDK wrappers record exact socket, private OVERLAPPED/op, source-control and buffer range before effect; result0 or997 is Kernel, known other error Software, legacy two-argument arms Unclassified. Post-SDK owner/buffer/binding mutation or unknown outcome retains. Private projection is authoritative; altered public receive/send binding poisons before cancel; active private Posted work cannot disappear by clearing its public binding. Only a proven actual OwnedAccept same-slot reservation alias is skipped. Controller still requires thread-safe independent new application/foreign/rawjob admission stopped and raw/deferred jobs drained; it posts only its own NULL wake. Original worker serializes cancel on exact SDK operands; TRUE/FALSE/NOT_FOUND is never finality. Actual key0 physical packet, matching generation/submission and native source owner0 cleanup plus after/reap acknowledge retirement. Posted is source flag0 software cleanup, never canceled or kernel proof. After uses fresh metadata without old operation/control dereference. Tests use real own named-pipe ReadFile/WriteFile/CancelIoEx/IOCP, no network: core manual driver boundary is explicit; full integration uses actual SourceBackend/Runtime,3 real Domain threads, native-created session, simultaneous pending accept/read/write, partial-terminal remaining pin/strong witness and last-source actual control disposal/Profile reap. 930old sources:926unchanged4modified+2newtests=932;271objects267CPP/4C;329normalgroups+19frameworkterminals;213core+139integration=352main checks. Native501/505/139 and52 historical closures unchanged; new native/ABI0,lastB38. Whole-server external admission/foreign/rawjob proof, fullResources and loader hooks remain open; pipe kernel compatibility is not WSA/AcceptEx/native ABI/EH equivalence. No fresh original bytes or original execution; genericCRT paused.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Application-entry admission kapısı ve kalan Resources",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36",
+      "native_full_accept_session_flow_available": "B37",
+      "coherent_accept_IO_cache_available": "B37",
+      "native_accept_helpers_available": "B38",
+      "concrete_owned_runtime_available": "B39",
+      "server_resources_component_factory_available": "B39",
+      "concrete_session_profile_available": "B40",
+      "typed_native_message_profile_available": "B41",
+      "owned_response_deque_provider_available": "B42",
+      "owned_environment_provider_available": "B43",
+      "owned_inline_jobs_provider_available": "B44",
+      "concrete_session_policy_available": "B45",
+      "application_graph_available": "B46",
+      "prepared_worker_memory_handoff_available": "B47",
+      "source_backend_application_worker_available": "B49",
+      "accept_only_stop_provider_available": "B49",
+      "session_io_stop_provider_available": "B50"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B51",
+    "priority": 1,
+    "title": "Application-entry admission kapısı ve kalan Resources",
+    "requirements": [
+      "First implement owner-controlled sealing of NEW Application entries before RuntimeOwner backend stop/join; cached application thunks currently admit solely while Binding.current is nonnull. Count already-admitted Application calls separately and return false/retry before backend stop/join until they finish. Keep existing worker/exit cleanup routes admitted.",
+      "Next Resources candidate is an owning concrete configuration factory joining existing path/encoding/filesystem/persistence/logging source providers; retain genuinely unresolved narrow effects explicitly, never success stubs. Use saved sources before new binary queries.",
+      "Independent rawjob/deferred/foreign/hook admission proof, interrupted/pre-firstReady startup and unknown ownership remain required; selected SessionIo counters and an application gate do not prove whole-server quiescence.",
+      "Preserve actual worker-source receipt, thread/FLS join and native ABI/EH/loader restrictions; sealing application admission does not solve loader-lock attach/detach. Priority order1,2,3,5,4; genericCRT paused."
+    ],
+    "exit_criteria": "After the application-entry seal, a cached application pointer creates no new worker/provider side effects; an already-admitted Application call may finish before stop/join; existing SessionIo/join/FLS source routes remain valid. Rebind/ABA, fullResources/foreign/rawjob/loader stay explicit. No total percentage inferred from test counts."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "source_normal_bodies_added_in_B37": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ],
+  "source_normal_bodies_added_in_B38": [
+    "0x180029df0",
+    "0x180029590",
+    "0x180029660"
+  ],
+  "source_normal_bodies_added_in_B39": [],
+  "source_normal_bodies_added_in_B40": [],
+  "source_normal_bodies_added_in_B41": [],
+  "source_normal_bodies_added_in_B42": [],
+  "source_normal_bodies_added_in_B43": [],
+  "source_normal_bodies_added_in_B44": [],
+  "source_normal_bodies_added_in_B45": [],
+  "source_normal_bodies_added_in_B46": [],
+  "source_normal_bodies_added_in_B47": [],
+  "source_normal_bodies_added_in_B48": [],
+  "source_normal_bodies_added_in_B49": [],
+  "source_normal_bodies_added_in_B50": []
+}

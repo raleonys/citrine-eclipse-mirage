@@ -1,0 +1,23 @@
+# B39 bağımsız inceleme — authoritative v3
+
+**PASS — reusable concrete Runtime ve Resources.server bileşimi. Common PENDING; üretim DLL BLOCKED.** Production/core/integration yazarlarından bağımsız reviewer hiçbir EXE çalıştırmadı, production/test kaynağı değiştirmedi.
+
+Altı frozen source hash'i, current normalized quick referansları, actual author kayıt/log/EXE/archive hash'leri doğrulandı. B38 ZIP `8dd4573a41cadd863cbfc24e5e7bc53e7d6e0cf90ac53158d8bcc88e5d6c6e9b` içindeki882 kaynak snapshot/current ile aynı;6 yeni kaynakla888, prior edit0. Immutable archive `work/b39-baseline-core.a` SHA `18519d44054e8b7ca57a9b1c593a3d25f4445b90c3accc92f77ba3496fb364b0` ZIP üyesiyle eşleşir.
+
+**184 core +179 integration =363 PASS.** Gerçek execution `/root/acceptor_tests` ve `/root/b22_integration`; root yalnız immutable v3 kayıtları normalize etti. Core6 actual-use kaydı yeni runtime/resources CPP+test/header ve değişmeyen prior domain fixture içerir. Integration5 actual-use kaynak/header,6 watched hash kaydeder; core test burada metadata-only'dir. Reviewer koşmadı. Current q/actual/log/EXE tam SHA'ları JSON'dadır.
+
+İki superseded v1/v2 manifest ve toplam27 preserved artifact hash'i doğrulandı; eski freeze/q/proof/log/EXE/source bytes current kanıt sayılmaz. Bu revizyonlardan sonra common hiç başlamamıştı. Core6 own child241–246 ve Fresh/Closed final-owned Profile/Worker/state retirement callback'lerini kapsar.
+
+Concrete Runtime, B35'in üç mandatory metodunu actual accepted-flow/helpers/coherent-memory ve actual0298b0/027c10 ile uygular. Profile remaining application/frame/read/write/message/environment/error/guard/stop-job sağlayıcılarını verir; submit/run/complete algoritması profile'a delege edilmez. Stable boş Graph önce publish edilir; sonraki başarısız prefix retain/poison olur. ServerView değer olarak saklanır; bütün8 identity bileşeni/capacity/context doğrulanır. Admitted dispatcher run-local kalır, stable proxy exception dahil unbind edilir.
+
+Dört inceleme bulgusu kapandı: run-start checkpoint poison catch içine alındı; opaque worker/guard/TLS/completion forward'larına pre/post checkpoint eklendi; physical SDK get dönüşü native lookup öncesi denetleniyor; Parent/Base/Own Open kalsa bile **B35 Backend-only Poisoned** hemen reddediliyor. Completion policy sonrası cached generation/packet/OV kimliği doğrulanır; actual callback eski operation'ı bitirdikten sonra ona dokunulmaz.
+
+Quiescent dış job/kernel attestation'ını Root Operation dışında ister; ardından tüm source allocation/pending/active/loan/lease/work/queue koşulları denetlenir. Accept, Base Open iken kapanır; flow/application retire edilir, lease1 yeniden kontrol edilir, Graph reset Core→Runtime→Parent döngüsünü kırar. Base/Parent teardown B35'te kalır. False attestation veya dolu sayaç graph'ı tutar; sıfır sayaç external drain kanıtı değildir.
+
+Son destructor açığı da kapandı: Fresh ve Closed Runtime gate canlıyken **Retiring** seal kurar; Dependencies local'e taşınıp mutex dışında, Impl/proxy/gate hâlâ canlıyken tamamen yok edilir. Metadata snapshot çalışır; lifecycle reentry moved provider'a erişmeden reddedilir. Moved-from deps gate sonrasında boş kalır. Core last-owned Profile/Worker/state destructor callback'lerini her iki durumda doğrular.
+
+Cold factory gerçek OwnedServerBackend+Runtime kurar; install yalnız boş Resources.server slotuna yazar, eski slotu korur. Diğer Resources sağlayıcıları, profile ve loader entry kurulmuş sayılmaz. **Yeni native body0 /ABI closure0**;501 mapped/505 eligible/139 normal/52 tarihsel closure değişmez; son native-body stage B38.
+
+Sınırlar: direct public run için same-B35 Admitted instance caller contract'tır. Pure completion_owner operation'ı consume/mutate etmemelidir; generation kontrolü genel izolasyon/kernel ABA değildir. Same-domain contexts, stable session slot/observer registries, raw-job strong/lifetime ve gerçek stop/drain profile yükümlülüğüdür. Tek admitted worker ve disabled timer/service-collector context seçilmiş host politikasıdır. N5 mesaj köprüsü native033d70 ara-prefix/EH kanıtı değildir. Unknown worker exception için TLS/EH recovery veya resume iddiası yoktur; poisoned chain tekrar kullanılamaz. B38 primary/context0 retry,0241b0/0228c0, module/unload ve B31 loader hook sınırları açıktır. SDK networking injected; original/rebuilt DLL/game/network çalıştırılmadı.
+
+Planned common260 object(256CPP+4C),307 ordinary+19 terminal; composition89 dosya/44 object, traits78 ve yeni[0,1]. Bunlar common PASS olarak raporlanmaz. Reviewer registration preview scriptini yazdı; ROOT kendi incelemesi sonrası apply etti. Pipeline yazarlığından bağımsızlık iddia edilmez; production/test bağımsızlığı korunur. Reviewer apply/build/generator/probe/test yapmadı.

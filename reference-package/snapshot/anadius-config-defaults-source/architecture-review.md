@@ -1,0 +1,17 @@
+# B28 independent architecture review — PASS
+
+The explicit `make_configuration_defaults_036d20()` factory reproduces all 41 currently modeled State fields and 20 attribute pairs as a fresh owning value. No blocker was found in the frozen production or tests.
+
+The independent retained ASM field map confirms every State field lies inside the native aggregate beginning at `0x1800a39e0`. `server_port` is zeroed at `18003708c` (`+0x2b0`); packed `00010100` at `180037047` gives last-profile 0, fake-auth 1 and pretend-connected 1. All nonempty profile/SDK/subscription values and six emulator plus fourteen game pairs match evidence, including the entire 179-byte LANGUAGES string. No additional outside-constructor State seed is needed.
+
+`State{}` is used only for proven empty or zero modeled fields. The factory owns its maps/strings/vectors, publishes no global state, and leaves existing callers unchanged. Two simultaneously live results remain independent. Captured core checks exhaust 22 actual own-EXE allocation failure points, release each partial construction, then complete and retry successfully. This proves source ownership for the selected compiler, not native allocation or exception timing.
+
+Integration explicitly supplies factory values to real configuration apply, selected FilePass/parser/hash and complete source initialization paths. Real profile/settings/game/connected handlers serialize defaults and configured overrides, preserve the final NUL, escape ampersands and maintain per-instance isolation. File/path/time/OS/persistence/environment dependencies use own memory data and synthetic providers. It is not full RuntimeOwner/server or real filesystem integration.
+
+The reviewer independently verified the B27 ZIP hash `0b51d92974dbf97f88953b5d9f4b045bb3f3920e3b16d4ab22f40e54ec4cbe3d` and all 834 archived source entries against snapshot and manifest hashes, then confirmed identical current files. Four new files give 838 total. The four reviewed source hashes and current quick-record/EXE hashes are recorded in JSON. Final header-only wording is included.
+
+Root standard quick executions report **39 core + 24 integration = 63 PASS checks**. Root authored production/core; `/root/b22_integration` authored integration. This reviewer authored neither production nor tests, verified the evidence without rerunning EXEs, and is independent of both authors. The full common build remains **pending and unreviewed**; planned 246 objects / 242 CPP + 4 C / 287 groups plus 19 framework terminal scenarios are not PASS claims here.
+
+The application scope audit found 61 functions in the reviewed window: 32 mapped, 22 unmapped and 7 module-only. Nineteen unmapped functions are library/container/mutex helpers. Genuine application candidates include constructor policy `036d20`, aggregate cleanup `037f70` and fatal log/abort `038920`. The companion message-chain audit by `/root/b22_integration` recommends accepted-session ownership `023000`, accept assembly `025720` and socket move `023d20` as the next concrete application gap.
+
+This is a completed-State semantic projection, explicitly excluded from native body counts. The enclosing native aggregate, mutex/runtime storage, unmodeled 40-byte static field role, original MSVC ABI, `01390` static initialization/atexit and cleanup remain open. There are **zero new native bodies or closures**; the full DLL remains blocked. No original DLL/game execution, original input modification, user CFG/profile/token read or new target query was performed.

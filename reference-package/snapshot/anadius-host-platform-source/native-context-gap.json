@@ -1,0 +1,32 @@
+{
+  "schema": "runtime-state-identity-gap.v1",
+  "status": "OPEN",
+  "source_package": "B14",
+  "observation": "SourceBackend moves RuntimeSeed into private Impl::state. initialize_host writes that originals/map/target state. Native OriginalEffects and Context require references to the same array/map/flags, not a pre-move seed or copies. B4 Runtime does not expose a binding factory/access to the exact inner state.",
+  "retention_is_identity_proof": false,
+  "native_context_automatically_published": false,
+  "actual_callbacks_exercised": false,
+  "next_package": "B15",
+  "source_files": [
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "sha256": "7073712738416083f0a41da7fa88ae050762791cdec5f51201b8dcebda7677db"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "c144112d064589d28a4b6e761f43861ab05e3f4cc48b6f9b8310789bb7720a2e"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.hpp",
+      "sha256": "a447a80b1f9caa32d682804207e551431b8d4308cc530c0a176df5256a31b443"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "e193a43bb78ecc81bcf21764a18cb30a17a424138f79a86eb0a51de97154d749"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.hpp",
+      "sha256": "43f76b04c2dda924a2b10b8a7e956d08fe724f7b7d0c7ae398b8515886ecbf95"
+    }
+  ]
+}

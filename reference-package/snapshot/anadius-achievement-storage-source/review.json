@@ -1,0 +1,71 @@
+{
+  "schema": "achievement.storage.independent-review.v1",
+  "result": "PASS",
+  "reviewer": "achievement_storage_audit independent read-only worker",
+  "reviewed_at": "2026-10-21T13:44:28.4653918Z",
+  "source_hashes": {
+    "storage.hpp": "54e040d5b54eb6846a849ac5e128681de5adc2e17258b2ed39fc40ff51c9403a",
+    "storage.cpp": "2a2f23e278f35e8920047c2a9444e1fd150220d01bb2d727d1f3378a43684d13",
+    "storage_tests.cpp": "fb2d609018393bac9a51924d3aa7c7f5ca688fcd1ea8d98ed556c0b47d5094be",
+    "build.ps1": "60b323568d6c2e7387690ea6385703505056ebeab89b723cff22de2112fac364",
+    "CMakeLists.txt": "72df82cdf0316c327f3f3044879afd0e2cd06aa4e7d649c972a29de0aad96985",
+    "README.md": "3954991c683824c6345afe3d1dd2d78ff8b711f9117a673e6004fcfe50e147fc"
+  },
+  "support_hashes": {
+    "../anadius-achievement-writer-source/writer.hpp": "3c2b5bf57369279c5d484c4435b33157a0af6b363e798f3852a70a40b6691f9b",
+    "../anadius-achievement-writer-source/writer.cpp": "20bd58a3fb48d3db046725fa6c154da475072c9dbd29f21e7c6a34c617319b87",
+    "../anadius-achievement-writer-source/writer_tests.cpp": "434fdb579aacb86ca876fae4d5a3b9a5338a23cd4ac744134cd8fa8d75445b6a",
+    "../anadius-achievement-writer-source/README.md": "1038afa07bc3e36c0ec116b0352b7a6579f57f3385d8bff1170c2996d424997c",
+    "../anadius-xml-reader-source/reader.hpp": "f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e",
+    "../anadius-xml-reader-source/reader.cpp": "0c80c24764ad925ada9ca2c485a984ba490f07d7a596db1eb12c2f18af817d66",
+    "../anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554",
+    "../anadius-path-source/paths.hpp": "32b694932082aa94d0014e366965c2687afdb7eeeefd2730af957093e32225dc",
+    "../anadius-path-source/paths.cpp": "303335a49823dcc91aeea53d3b593d7be3c64c21136c0478d90f043ed127f67e",
+    "../anadius-file-source/binary_io.hpp": "5a1ef9c90437e70677458e559488d8c340de0dfcff4b74157254bf391889f7b4",
+    "../anadius-file-source/binary_io.cpp": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222",
+    "../anadius-file-source/native_io.cpp": "e786fbd46741d172eca7d9a2f511e9757703d738f9998a857306665b316792ca",
+    "../anadius-config-source/configuration.hpp": "036eea42c74731b9c4e5bbe574e2c953b8010c2e626f5f5caf84f2029aab3f24",
+    "../anadius-config-source/configuration.cpp": "ab1c09e52c3b4f8a8a24070b057d9eb4da72d6b24722cba931d80a5f92a9a05a",
+    "../anadius-config-startup-source/startup.hpp": "324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e",
+    "../anadius-config-startup-source/startup.cpp": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+    "../anadius-config-application-source/application.cpp": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb",
+    "../anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "../anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "storage-audit.md": "16461c44dde143717c4c17d74b58d7b744ee3b861d6657b90295f6a70eddfedf",
+    "storage-audit.json": "f94126dd71b3fabcade2af5abd4a52f7c5bc26cca28f4e300af775de1b380e14"
+  },
+  "recorded_storage_checks": 116,
+  "recorded_writer_checks": 36,
+  "storage_validation_observed_sha256": "a7aef84faef88ef3dfdb9a6cb07b70fbb1575918afd787f7c938f60fdfb85288",
+  "writer_validation_observed_sha256": "c58d2b18f0b36b0ac63c04202b3044f06ffc22915e44d8925e65a9ddcfdd9757",
+  "independent_test_rerun": false,
+  "retained_evidence": [
+    "ev_bd10a5a82a8307f47db504ea903686ef7b68be9597de0c3a48f59707493363e8",
+    "ev_153cf06313c36f9169a114330dd971a4060d7bdad38bd9feb6ce7a51c21c35fd",
+    "ev_552cb0956e43cd64cc074aec655e5b62d6d6e16d40ead43e9b99b12f5369d9ec",
+    "ev_488d569fd12cfa9fe60d4d35d04b56c9d44b52396427f3060d14d2a7e0125a5a"
+  ],
+  "raw_PE_constants": "work/achievement-storage-audit.json: %d/%x and default timestamp proof",
+  "findings": [],
+  "verified": [
+    "Caller-owned persistent path cells and stale path preservation",
+    "Document error guard distinct from returncode",
+    "Any-name direct XML children and C-string attrs",
+    "Signed Count/Progress selector and default rules",
+    "Empty/missing/duplicate Id and Grant/Name mutation rules",
+    "Lexical epoch/status/error-mask/write gate",
+    "Actual startup persistence delegation before environment",
+    "INI exact byte/source writer normal semantics"
+  ],
+  "limits": [
+    "Host CRT scanner compatibility, original static CRT locale/overflow unproven",
+    "Timestamp get_time original stream/locale remains mandatory Effects boundary",
+    "Pinned XML backend not proof of original version/malformed input parity",
+    "Native allocator/layout/fault/OS/SEH/global/full DLL equivalence unproven",
+    "Only own generated file IO, other effects controlled"
+  ],
+  "production_edits": false,
+  "test_edits": false,
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_read": false
+}

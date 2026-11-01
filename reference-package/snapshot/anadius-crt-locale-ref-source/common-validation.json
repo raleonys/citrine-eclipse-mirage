@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locale_ref",
+    "result": "PASS",
+    "output": "locale_ref: 6212 checks PASS",
+    "executable_sha256": "67b1edd8e85e9ef0183f8baf906188fc9d6394d3f7d209e511c55477a57c001d"
+  },
+  "execution_scope": "Four locale/LC_TIME reference bodies with exact shared nested counters; bounded synthetic memory/atomic providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-locale-ref-source/locale_ref_tests.cpp",
+      "sha256": "9397c79749bd201ad9977c70685853c89a8c7aa1c32153bb7b0d9d8a57c20087"
+    },
+    {
+      "path": "anadius-crt-locale-ref-source/locale_ref.cpp",
+      "sha256": "762f527d38d310e84ec5b07bc0257563a50da500210367002ac50f5c04837d2e"
+    },
+    {
+      "path": "anadius-crt-locale-ref-source/locale_ref.hpp",
+      "sha256": "b5a6815488ff5565a33a82e65bbc6ce195eca59f0d410581ed780ac38b43637d"
+    }
+  ]
+}

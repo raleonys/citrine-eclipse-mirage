@@ -1,0 +1,43 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Direct bounded read-only PE mapping after exact SHA check; not new REA Evidence",
+  "fields": [
+    {
+      "name": "printf_options",
+      "va": "0x1800a37d0",
+      "size": 8,
+      "section": ".data",
+      "file_offset": 662992,
+      "mapping": "initialized file bytes",
+      "little_endian_hex": "0000000000000000"
+    },
+    {
+      "name": "scanf_options",
+      "va": "0x1800a37d8",
+      "size": 8,
+      "section": ".data",
+      "file_offset": 663000,
+      "mapping": "initialized file bytes",
+      "little_endian_hex": "0000000000000000"
+    },
+    {
+      "name": "slist_header",
+      "va": "0x1800a4d70",
+      "size": 16,
+      "section": ".data",
+      "file_offset": null,
+      "mapping": "PE virtual zero-fill; no file bytes",
+      "little_endian_hex": "00000000000000000000000000000000"
+    },
+    {
+      "name": "tls_callback",
+      "va": "0x1800a5a70",
+      "size": 8,
+      "section": ".data",
+      "file_offset": null,
+      "mapping": "PE virtual zero-fill; no file bytes",
+      "little_endian_hex": "0000000000000000"
+    }
+  ],
+  "scope": "Image initialization before loader/CRT writes"
+}

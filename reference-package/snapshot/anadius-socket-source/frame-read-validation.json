@@ -1,0 +1,45 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "4d53d046abcdb71a32d8d72dc3852d71d3d144a7ea01dd99aed813564e9ed91b",
+  "test_results": [
+    {
+      "module": "socket_frame_read",
+      "result": "PASS",
+      "output": "PASS: 1216 socket frame read core checks; addressed025480/0280d0 normal flow, independent payload/error/ownership oracles and controlled provider/lifetime mutations",
+      "executable_sha256": "8a59d5f274d63bcf4890c6d91dad71a0ed2f6a3ce9818c8a4d3cb99feb14c21f"
+    },
+    {
+      "module": "socket_frame_read_integration",
+      "result": "PASS",
+      "output": "PASS: 315 socket frame read integration checks; actual025480/0280d0/025c40/010040/008350/021d10/021a40 source loop, synthetic thread and controlled completion/environment adapters",
+      "executable_sha256": "744a5146c73d29710706c85dfabc910c30ea66bc2e2032fa093b4ab04ff85b81"
+    }
+  ],
+  "core_checks": 1216,
+  "integration_checks": 315,
+  "source_hashes": {
+    "frame_read.hpp": "ea9adf5bd04a872d8e78173c5bdf9bf053deecdd6cc90665e4674efbf72d4111",
+    "frame_read.cpp": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+    "frame_read_test_fixture.hpp": "d123fad53cee8cc873797f63b0c6f3c5e76e7da5034ce71d82685be19263304d",
+    "frame_read_tests.cpp": "55317b8f89d5565383f0252c722b9499dfd88129910c1b4d8eb372e946ac15a9",
+    "frame_read_integration_tests.cpp": "91780b9f4c05ef1c67a96af3a98ec24595c58cfb49b3006767873c9685ada6b0",
+    "build.ps1": "d59a1d49e1d97fdad7f878080f7a9b27c3388536563876a1232356821688bd48",
+    "CMakeLists.txt": "09f64001bda59229ad2decc0e84ec12230260e5b814ff906c2866bba9588ba36"
+  },
+  "original_procedures_added": 2,
+  "execution_scope": "025480/0280d0 normal bodies; actual R3/R1/R2/021a40 frame loop; synthetic thread and controlled environment/completion consumption adapters",
+  "not_executed_by_new_tests": [
+    "027710",
+    "023dd0",
+    "borrowed/owned scheduling",
+    "027c10/outer worker"
+  ],
+  "core_callee_injection": "Explicit isolated test parameter only; recovered frame bridge calls actual defaults",
+  "previous_local_records": "23 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

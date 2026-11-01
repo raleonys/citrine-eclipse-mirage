@@ -1,0 +1,72 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T15:04:54.961800+00:00",
+  "prior_package_sha256": "e48889a64f9d9e083add4f25fbbf2861770ce1d8f6f13b67a43ecf60e03e9fc1",
+  "prior_source_count": 586,
+  "unchanged_prior_sources": 586,
+  "added_sources": [
+    "anadius-socket-source/native_message.cpp",
+    "anadius-socket-source/native_message.hpp",
+    "anadius-socket-source/native_message_integration_tests.cpp",
+    "anadius-socket-source/native_message_test_fixture.hpp",
+    "anadius-socket-source/native_message_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 591,
+  "current_documents": 223,
+  "native_objects": 190,
+  "cpp_objects": 186,
+  "c_objects": 4,
+  "normal_test_groups": 193,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 66,
+  "new_checks": 3726,
+  "new_tests": [
+    {
+      "module": "socket_native_message",
+      "result": "PASS",
+      "output": "PASS: 1713 socket native message checks; typed033d70 request/cipher/parser retries, output codec/move, live event front and normal failure prefixes; lower providers/ABI/EH remain open",
+      "executable_sha256": "a628b7ff8f84c53a0ee88299c988eba2e9a15de4c294a0f8e3bb8e280e3c1fbd"
+    },
+    {
+      "module": "socket_native_message_integration",
+      "result": "PASS",
+      "output": "PASS: 2013 socket native message integration checks; actual033d70 final source bridge, native request retries/response codec/events to N1-N8 queue/send/finish; lower XML/cipher/growth/log providers and native ABI/EH remain open",
+      "executable_sha256": "18dd6cda10e2cd3658334aedd94894060cd7e0d5f24bd40c9f03ae70929c2a38"
+    }
+  ],
+  "validation_mirror_pairs": 33,
+  "historical_module_records_preserved": 32,
+  "historical_config_references_preserved": 64,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "e222419fc1ede72d1c397d67e548de14fc5fbe91d9ff30ea4d590f5136c94742",
+  "inventory_data_checks": 7245,
+  "normal_source_procedures_added": [
+    "0x180033d70"
+  ],
+  "new_original_procedures": 1,
+  "closed_provider": "RecoveredNativeMessageApi::process_message_033d70",
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 0,
+  "prior_native_source_closures_preserved": 14,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual033d70 selected instead of N5 deferred adapter, controlled XML/032d00/cipher/log/append lower providers; native request retries/codec/events to N1-N8/send/finish; native ABI/EH/IOCP/worker open",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N10 native012350/007e30 append growth and033d70 lower source-provider closure; CRT stays paused"
+}

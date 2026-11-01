@@ -1,0 +1,28 @@
+{
+  "source_package": "B42",
+  "result": "CONCRETE_RESPONSE_DEQUE_GROWTH_PROVIDER",
+  "owned": [
+    "provider Parent lease and sticky admission state",
+    "per-growth call descriptor while applicable",
+    "Parent authoritative typed-map ledger and pre-free retirement"
+  ],
+  "not_owned_by_provider": [
+    "output queue/map lifetime (owned by Parent/session)",
+    "SDK jobs and kernel requests"
+  ],
+  "required": [
+    "bound worker/fiber and whole Parent Operation",
+    "live exact Parent-owned output queue",
+    "nonmutating complete source-admission checkpoint",
+    "external shutdown attestation before Profile close"
+  ],
+  "metadata_scope": "const binding records; mutable constructed pointer-array slots; no cached borrowed span across allocation/free attempts",
+  "unknown_scope": "No native source retry or guessed cleanup. Lease/maps retained; call descriptor may already have retired when checkpoint-target destruction poisons admission. Caller stack-prefix lifetime is not pinned.",
+  "terminal018460": "Selected std::length_error compatibility payload, not native exception object/EH ABI.",
+  "full_bootstrap_resources": false,
+  "loader_hooks_bound": false,
+  "kernel_rawjob_finality_proven": false,
+  "native_ABI_EH_proven": false,
+  "original_loaded": false,
+  "real_network": false
+}

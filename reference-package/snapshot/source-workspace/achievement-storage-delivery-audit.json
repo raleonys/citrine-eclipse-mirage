@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T13:46:39.9222608Z",
+  "prior_package_sha256": "d791a792998ccbfc7057252b6a501bfd6b2b8bd32101ad3202e3b63a3fae7212",
+  "prior_source_count": 386,
+  "unchanged_prior_sources": 386,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-achievement-storage-source/storage_tests.cpp",
+    "anadius-achievement-storage-source/storage.cpp",
+    "anadius-achievement-storage-source/storage.hpp",
+    "anadius-achievement-writer-source/writer_tests.cpp",
+    "anadius-achievement-writer-source/writer.cpp",
+    "anadius-achievement-writer-source/writer.hpp"
+  ],
+  "current_sources": 392,
+  "current_documents": 152,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 52,
+  "native_objects": 134,
+  "cpp_objects": 130,
+  "c_objects": 4,
+  "normal_test_groups": 119,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "achievement_writer",
+      "result": "PASS",
+      "output": "PASS: 36 achievement INI writer checks; own fixture only",
+      "executable_sha256": "968fcc2def2a84d29017cd9d2a8276fb6e0195fe2147119cb3b29a73536d5d64"
+    },
+    {
+      "module": "achievement_storage",
+      "result": "PASS",
+      "output": "PASS: 116 achievement storage checks; own fixtures only, no original execution",
+      "executable_sha256": "dcfb9b5e90fcd45fc5a9796a6b5b09c1aec8d39254d0739e5cdb2f710ca393f0"
+    }
+  ],
+  "master_build_sha256": "360707e01b60b309f6667a6499fb30dc00d329241528038f83ab790fe47cd147",
+  "normal_source_procedures_added": [
+    "0x18001eb00",
+    "0x18001f9a0"
+  ],
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "timestamp041e10": "mandatory provider",
+  "runtimeXMLsave": "outside these procedures",
+  "native_ABI_SEH_global_runtime": "not established"
+}

@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "windows_effects",
+    "result": "PASS",
+    "output": "PASS: 23 Windows/license integration checks; actual status/path/conversion/IO/hash/CBC/XML on generated fixtures; remaining application effects controlled",
+    "executable_sha256": "8d8444584f66f31c3d7975ea979770b4434caab2592be6a77fe5ce40aa6b3e45"
+  },
+  "actual_native_scope": "Generated source-workspace/build/windows-fixtures; actual Win32 status/path/conversion/IO/hash/CBC/XML",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "sources": [
+    {
+      "path": "anadius-windows-source/windows_effects.cpp",
+      "sha256": "e391116f9528d6106829ae5c55262f399f596a1675ad1aeb4dc347b0f38c8438"
+    },
+    {
+      "path": "anadius-windows-source/windows_effects.hpp",
+      "sha256": "57f275316ecd1d78bcb21b0a93da54c26eacfdf3bceaa66370edc84631d4a19f"
+    },
+    {
+      "path": "anadius-windows-source/windows_tests.cpp",
+      "sha256": "0922560108d38d78525e0130e92e42d75259632228e230cd4d36a08a6059facb"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "acceptor_checks": 364,
+  "native_checks": 308,
+  "output": "PASS: 364 acceptor operation checks; controlled runtime and socket APIs only\nPASS: 308 acceptor native checks; injected SDK imports only",
+  "source_hashes": {
+    "acceptor.hpp": "5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b",
+    "acceptor.cpp": "c9a5c8a034daf5381d718f1985e8e3f58a530856982fff194fceed77299aea3a",
+    "acceptor_native.hpp": "fc82c54de4d79713bc0207a6ab3429dbc8d77cd1d16e4142100e66a696aa026c",
+    "acceptor_native.cpp": "ba1f75d01e93011e9bb712754d3625a8f9852957a1acfa1df973e79d9e71bedb",
+    "acceptor_tests.cpp": "1351d7c838b7289b849dbbac2743818b704cf32c7837322e07d25707d3fc8f2f",
+    "acceptor_native_tests.cpp": "dac8b385f9f7dd0ea2377f547eefd6952014862430d3b58dba293d2648b9c286",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "native_scope": "Injected SDK imports and controlled service/ownership/category/runtime providers only; no WSAStartup, sockets, network or original DLL execution"
+}

@@ -1,0 +1,45 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T15:14:58.5733736Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-wildcard-search-source\\search_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-wildcard-search-source\\build\\search.o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-wildcard-search-source\\build\\storage.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-wildcard-search-source\\build\\search_tests.exe"
+  ],
+  "tests": "PASS 2022 wildcard enumeration checks",
+  "scope": "Opaque-address synthetic allocation, conversion, locale, find and sort providers; no target execution, filesystem enumeration, native API calls or original writes",
+  "sources": [
+    {
+      "name": "search_tests.cpp",
+      "sha256": "1e74aa410e1e1860df2c9f972d3a8b72755d83cd45c94132e49f1cec32dc4897"
+    },
+    {
+      "name": "search.cpp",
+      "sha256": "ae987abfc21a6d941794ac3ffef8fa2aa6c70fa4599e525b110b993a2cc8819b"
+    },
+    {
+      "name": "search.hpp",
+      "sha256": "bb6929c82044abd608371fb1cecb532c2630dfd9e7c4880e18b8483885295644"
+    }
+  ],
+  "storage_sources": [
+    {
+      "name": "storage.hpp",
+      "sha256": "4ec7aab64302a5ea6ba4027573669be9b77a5a3c6b226b7289ebd2f600cdb091"
+    },
+    {
+      "name": "storage.cpp",
+      "sha256": "beacfcc8fa91ea0a883efea8d1dfa765e6e12972bc4b68157a86bb38997b9e8b"
+    }
+  ],
+  "executable_sha256": "6563c15517ea015e6e51161a2ed191dd2c21d200d2db8cb452cf011906e91506"
+}

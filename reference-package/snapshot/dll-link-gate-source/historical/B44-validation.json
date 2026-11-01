@@ -1,0 +1,123 @@
+{
+  "schema": "dll-link-gate.validation.v1",
+  "package": "B31",
+  "checked_at": "2026-10-31T18:50:22.9348903Z",
+  "invocation_mode": "normal-build",
+  "diagnostic_validation": "PASS_EXPECTED_BLOCKER",
+  "production_dll_readiness": "BLOCKED",
+  "dll_link_attempted": true,
+  "dll_link_succeeded": false,
+  "link_exit_code": 1,
+  "dll_created": false,
+  "dll_loaded_or_executed": false,
+  "originals_accessed": false,
+  "frozen_source_files_verified": 910,
+  "common_test_groups_rerun": 0,
+  "baseline_common_build_record_sha256": "376d5f714ea23e4df8842b75834f2568d5eac74718152852c8df4a94c53579c4",
+  "baseline_source_snapshot_sha256": "24388aca09b097091ec6c63cad1370c305cd781c60c6c8c256a1290831af4777",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "source_hashes": {
+    "production_image.hpp": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+    "entry.cpp": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+    "export_leaf.S": "f9f864181cc17d774e6be441d7321bcac6c8472793a4f377795c1eb0617e7a08",
+    "anadius64.def": "8a6cba4f2cf4b893c3a22ac312f675e9a68d3049ded9882dafe4232dbc2e46fe",
+    "target.cmake": "698500e948e3b192f609343fc26f6639b245d9c519a61c4be249c6f40cf10634",
+    "build-link-gate.ps1": "7fc2bddff1d7488f90a1a7931f7b766eae3ffcb663aa1610edf590fa4f5a4175",
+    "verify-link-gate.py": "bc8828d09f1032566c2eb1b21e580ca05300d83fa9f1237e20f1b14bc32507c0"
+  },
+  "archive_hashes": [
+    {
+      "file": "anadius_core_partial.a",
+      "bytes": 5516646,
+      "sha256": "3027c3d2d472439adb979379211807ef04d4a1510b4459038b91817920980ab8"
+    },
+    {
+      "file": "hook_engine_compat.a",
+      "bytes": 24418,
+      "sha256": "3149023912ad054f93d10f034712e86a4ac77ed37a02bfd871f97d3b98843cad"
+    }
+  ],
+  "undefined_symbols": [
+    "anadius::dll_link_gate::require_loader_attach_runtime(HINSTANCE__*, void*)",
+    "anadius::dll_link_gate::require_loader_detach_quiescence(HINSTANCE__*, void*)"
+  ],
+  "expected_missing_production_hooks": [
+    "require_loader_attach_runtime",
+    "require_loader_detach_quiescence"
+  ],
+  "candidate_entry_strategy": "compiler CRT once, then recovered application layer; production loader-context implementation absent",
+  "new_native_ABI_provider_closures": 0,
+  "overall_completion_percentage": null,
+  "run_directory": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z",
+  "map_created": false,
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\entry.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z\\entry.o"
+      ],
+      "exit_code": 0,
+      "log": "entry-compile.log"
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\export_leaf.S",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z\\export_leaf.o"
+      ],
+      "exit_code": 0,
+      "log": "leaf-compile.log"
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\llvm-objdump.exe",
+      "arguments": [
+        "-d",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z\\export_leaf.o"
+      ],
+      "exit_code": 0,
+      "log": "export-leaf-disassembly.txt"
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\llvm-nm.exe",
+      "arguments": [
+        "--undefined-only",
+        "--demangle",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z\\entry.o"
+      ],
+      "exit_code": 0,
+      "log": "entry-undefined-symbols.txt"
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-shared",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z\\entry.o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z\\export_leaf.o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\anadius64.def",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\hook_engine_compat.a",
+        "-lkernel32",
+        "-luser32",
+        "-lshell32",
+        "-lws2_32",
+        "-Wl,--exclude-all-symbols,--no-insert-timestamp,--verbose",
+        "-Wl,-Map,C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z\\anadius64.reconstruction.map",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261031T1850217768708Z\\anadius64.reconstruction.dll"
+      ],
+      "exit_code": 1,
+      "log": "link.log"
+    }
+  ]
+}

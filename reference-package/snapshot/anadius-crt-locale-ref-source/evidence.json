@@ -1,0 +1,42 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "origin": "Bounded extraction of previously retained REA/Ghidra static function evidence. Parent confirmed current aligned REA6.5.0 server and available Ghidra12.1.4; no new target analysis or execution.",
+  "functions": [
+    {
+      "va": "0x180070634",
+      "assembly_evidence": "ev_77f695edd5451bde6e9220a665b85ce2647c70006e5b1c643d0727609441c463",
+      "pseudocode_evidence": "ev_4c7bd63877446371e9ecc0412fbf4e43fe650933c9f1d2dfe330bf561f9641b8"
+    },
+    {
+      "va": "0x1800708c0",
+      "assembly_evidence": "ev_9c95848f8f6a91e252706f125cacfaf868c4dc8dee673b5c7d83fae3485017ab",
+      "pseudocode_evidence": "ev_6e8c564095a499a20216fd199b09fc5f62d639fb6b1ff50ce6cd2b78d4bcb131"
+    },
+    {
+      "va": "0x180070838",
+      "assembly_evidence": "ev_1acb6fb183dd077c6b24999d4a1f0d73649c4b36d8dcf71d1b3a2f776ef98890",
+      "pseudocode_evidence": "ev_368259d864d360c34ed34d1b0151f5ec9d94303ceeff455921a31b8b8f2b8e32"
+    },
+    {
+      "va": "0x180070898",
+      "assembly_evidence": "ev_1a1a3802a8a6c04eebd9514449c2d8b96aa242f9feda4d739459c1afabe4056b",
+      "pseudocode_evidence": "ev_cf0bf2e9d47f97708c91ba3425c1364ff1a71244b99ed68e943c14773184b110"
+    }
+  ],
+  "selected_assembly_sha256": "f95141ce397b41e367f2a57ffb2ca950728e372f99d5b7107d4003a56f05a368",
+  "selected_pseudocode_sha256": "b9281e28c96ce7507ef1c148c2d586f5ae117ff9dfa52c82dd6b59fb190a6b4d",
+  "anchors": [
+    "070634..070674 / 0708d1..070916: first +10, optional e0/f0/e8/100 reference order",
+    "070674..0706b1 / 070916..070955: six records, cursor+38, sentinel cursor-10, narrow cursor-18, counter cursor-8, stride20",
+    "0706b3..0706ba / 070957..07095e: load time+120 after prior counter effects",
+    "070838..07085e / 070898..0708bc: NULL/static identity INT_MAX, XADD +15c, full32-bit new return"
+  ],
+  "limits": [
+    "Original source/compiler/runtime/ABI equality unproven",
+    "Atomic storage and address providers remain abstract and must uphold live-address and atomic ordering semantics",
+    "No heap free, native locale, target execution or SEH/unwind recovery claim",
+    "add locale NULL is an original fault-domain input, not a new null no-op"
+  ]
+}

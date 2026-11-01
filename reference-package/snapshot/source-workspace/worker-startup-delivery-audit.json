@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T15:12:26.6402158Z",
+  "prior_package_sha256": "4f61d13ade8de9d6f5df18917bb425f55ca9ae0db39bd16cbed947b60c09fb01",
+  "prior_source_count": 472,
+  "unchanged_prior_sources": 472,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/worker_startup_native_tests.cpp",
+    "anadius-socket-source/worker_startup_native.cpp",
+    "anadius-socket-source/worker_startup_native.hpp",
+    "anadius-socket-source/worker_startup_tests.cpp",
+    "anadius-socket-source/worker_startup.cpp",
+    "anadius-socket-source/worker_startup.hpp"
+  ],
+  "current_sources": 478,
+  "current_documents": 188,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 162,
+  "cpp_objects": 158,
+  "c_objects": 4,
+  "normal_test_groups": 149,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_worker_startup",
+      "result": "PASS",
+      "output": "PASS: 616 socket worker startup checks; retained02a000/02a4a0 callbacks, cached errors/handles, controlled lifetime and unchanged recovered05e8e0 bridge",
+      "executable_sha256": "281792ca5cf613cb4f8c1b3c5081dd7cce05d7774ab84599c475af08aad4292f"
+    },
+    {
+      "module": "socket_worker_startup_native",
+      "result": "PASS",
+      "output": "PASS: 821 socket worker startup native checks; six injected SDK imports and actual02a000/02a4a0/024990/shared registry/acceptor/cancellation/recycler source integration only",
+      "executable_sha256": "f11e3667f990cc8c95f85faa069f5343a0e318aed07a382d15e4639246775fd6"
+    }
+  ],
+  "new_checks": 1437,
+  "master_build_sha256": "619ea20ce543199fb8fdf4ef5158bc3d5b07d40eadb64b4c9a49c6d044ca592d",
+  "common_build_script_sha256": "4041cac10560fcfea3c80c32635de7e8bbf24851e4572c98bf8ccab5cd3a1d7b",
+  "cmake_sha256": "372c795d02670d5b4e5310e6cbfdf107c151f4d4448a995f3fad5b39f409e03d",
+  "normal_source_procedures_added": [
+    "0x18002a000",
+    "0x18002a4a0"
+  ],
+  "new_original_procedures": 2,
+  "new_composition": "Actual02a000 startup/02a4a0 entry with024990 and unchanged actual05e8e0 source; injected event/wait SDK and required run/delete/thread effects",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

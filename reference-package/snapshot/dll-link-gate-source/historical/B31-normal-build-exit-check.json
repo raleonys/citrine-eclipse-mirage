@@ -1,0 +1,7 @@
+{
+  "scope": "Normal DLL build correctly fails while production hooks are undefined",
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "result": "PASS",
+  "log": "work/b31-normal-build.log"
+}

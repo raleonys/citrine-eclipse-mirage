@@ -1,0 +1,79 @@
+{
+  "input_path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+  "input_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "evidence_type": "retained static Ghidra assembly and pseudocode",
+  "functions": [
+    {
+      "pseudocode_evidence": "ev_08b3a5fcbdaae83bab62fdfbc023bf1fcede2ebac6761d234774ae93461a8086",
+      "function": "status_01ea20",
+      "observations": [
+        "01ea62 calls 049104 with flags from caller and cached attrs ffffffff",
+        "01ea77/01ea80 readonly permissions 16d vs 1ff",
+        "01ea93/01eaa1 compare tags a000000c/a0000003",
+        "01eaba..01ead5 errors 2/3/53/123 map kind 1"
+      ],
+      "assembly_evidence": "ev_b2ed2f94d1e70182e9c643a28823161406f5467cb3c96081b5325e82fd10f8e8",
+      "va": "0x18001ea20"
+    },
+    {
+      "va": "0x180049104",
+      "function": "UsedStats::query",
+      "pseudocode_evidence": "ev_005bb220a469430c8acd184c5ceaace3b27a578b843f9774e9842a86fcdb9122",
+      "domain": "flags=3, cached attributes=ffffffff only",
+      "assembly_evidence": "ev_5c914d480dd2ba111f50296dae9a6904e1fc7b536ca1f76e0d57f5d3ea3b24fc",
+      "observations": [
+        "0491b1 GetFileAttributesExW; 0491c1 compare error32; 0491d2 FindFirstFileW; 0491ec FindClose return ignored",
+        "04921f..04925b fast attributes route",
+        "049261..04927f opens readattrs80/share7/open3/backup2000000 following reparse target",
+        "0492c9 FileBasicInfo; 0492fe clears bits22 leaving zero for flags3; 049310 skips tag query",
+        "0493cc CloseHandle; 049419 abort on failed close",
+        "For flags3 tag +14 is never written; attrs still-reparse makes outer tag read uninitialized"
+      ]
+    },
+    {
+      "pseudocode_evidence": "ev_55280ecfb3c34265727e88d7f2e18fcda8dc52b6f97e2bc017c934ac978d90b4",
+      "function": "NativeSystemCalls::open_attributes",
+      "observations": [
+        "04945b disposition3; 049463 share7; 049467 CreateFileW; 049470 invalid-handle check; 049476 GetLastError"
+      ],
+      "assembly_evidence": "ev_7b745f5e76486d9818cd43f80a889202153ab46ab790662f974a21f9ab121c1b",
+      "va": "0x180049434"
+    }
+  ],
+  "scope": "bounded application status + Win32 flags3 route, no original target execution",
+  "unresolved": [
+    "general 049104 flags and complete stats ABI",
+    "original uninitialized tag result",
+    "MSVC string/exception/binary ABI"
+  ],
+  "source_files": [
+    {
+      "name": "build.ps1",
+      "sha256": "9f4b19d529f8623cde4d8cb1da11711cb1e4f22291fbe17c7c3ebfecc293dc07"
+    },
+    {
+      "name": "native_status.cpp",
+      "sha256": "785adfeb5e1cbcc383f7ebbe2249f89e36f39eb82b0709f9ef32804c21238d35"
+    },
+    {
+      "name": "README.md",
+      "sha256": "e968693a6b50b0a753381e40818bd820de0e705c2794b4c5658123e5d9172ba7"
+    },
+    {
+      "name": "status_tests.cpp",
+      "sha256": "315a5e01a90b2936d9ad40f63322940b0c2fac058c051925ac4961d43b469f05"
+    },
+    {
+      "name": "status.cpp",
+      "sha256": "c2c842ecea2ce9704658f834da34d823881747429cf8f9b897b05efa9123f670"
+    },
+    {
+      "name": "status.hpp",
+      "sha256": "db4f36d8804eb75ab63497b47efe33e5ebaf77529dd5cdd33cfa31aee2b1fe81"
+    },
+    {
+      "name": "validation.json",
+      "sha256": "987460404c995c0f69b8d1112f7b2c96600b7c6a7b0606a5c532b7652d158346"
+    }
+  ]
+}

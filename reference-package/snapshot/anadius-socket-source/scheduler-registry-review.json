@@ -1,0 +1,41 @@
+{
+  "result": "PASS",
+  "reviewer": "scheduler_registry_audit",
+  "scope": "Independent frozen two-source review against retained022fd0+023b30 normal-flow contract and selected SchedulerConstructionEffects borrowed registry/identity composition",
+  "sources": {
+    "outputs/anadius-socket-source/scheduler_registry.hpp": "15682596994c9dad200822f868694ac5ecd5c1b892989ec9f661493f44ea68d9",
+    "outputs/anadius-socket-source/scheduler_registry.cpp": "dd435dd06297b628a8a101effc1c1d4263a281299d04f8517ee16368de4c64ac"
+  },
+  "report_sha256": "f0d87a1eda69007975c4224c76661765be9b5daff0fbb0b65d98dc9641a2e8a3",
+  "audit_report_sha256": "9c6c2e8bb7f4769e12ed8f3eb28700c4118b2b0f39db425504fd0518f8c4249a",
+  "audit_json_sha256": "399b7fd6a22594eae03cd1b6d5ab031cfbdc807e1a8f4a4e8179ff3c9cac78c8",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180022fd0",
+    "0x180023b30"
+  ],
+  "new_original_procedures": 2,
+  "core_contract": "Fixedschedulerkey1800a2540/id0; ownercachedbeforefirstEnter; comparator(entrytype+8,requesttype+8) EAX0 only; livelinksaftercompare; firstmissLeave then176allocation outsidegate; 024990 returnscandidate withcachedowner/FFFFFFFF/1; keycopybeforesecondEnter; livesecondheadscan/publication; scalar_deleteflag1 undergate; cachedwinner/candidateacrossLeave",
+  "composition": "Selected shared mixed ServiceRegistry plus borrowedregistryidentity andentryidentitytables calls actual023b30 from socket0228e0; no eagerconstruction, allocation ownership, nativeportprojection or teardown",
+  "providers_not_recovered": [
+    "04b0bc native allocator and deallocator",
+    "024990 scheduler constructor and underlying IOCP/thread implementation",
+    "04d2d0 CRT RTTI comparator",
+    "Native scalar deleting destructor and registry teardown",
+    "Native exception/SEH/unwind cleanup,dispatcher/executor and DLL entry/export ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Allocator/constructor returns fresh exclusively writable live unlinked candidate; constructor returned pointer may differ in selected synthetic model",
+    "Entries,registry,gate,and borrowed stable bindings remain live through normal callbacks and selected return",
+    "Typed logical fields and opaque identities are not native memory or ABI overlays",
+    "Null allocation/constructor key-store fault is selected UnsupportedInput boundary before secondEnter,not a proven native valid nullreturn",
+    "Callbacks throwing do not establish native unwind or cleanup guarantees",
+    "Only two original normal procedures counted; source helpers and typed composition add no originals",
+    "No complete original DLL equivalence claim"
+  ]
+}

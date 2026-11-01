@@ -1,0 +1,23 @@
+{
+  "source_package": "B44",
+  "result": "CONCRETE_INLINE_JOBS_AND_DEFAULT_NATIVE_TRANSPORT",
+  "owned": [
+    "bounded job records/generations/source tickets",
+    "active incoming/callable and retirement state",
+    "source admission and Parent lease"
+  ],
+  "selected_policy": "Nonreentrant inline on the bound worker; source-only ticket values never passed to OS thread/handle APIs.",
+  "SDK_defaults": "Existing native receive/send adapters, typed configurable imports, no constructor SDK calls; real networking is not executed by tests.",
+  "required": [
+    "bound worker/fiber and whole Parent Operation",
+    "nonmutating source admission",
+    "external drain plus actual returned-worker/Parent/IO/Accept/work/queue proof",
+    "remaining error/log/worker/domain/config/event providers"
+  ],
+  "unknown_scope": "Retain record/callable when still present and Parent lease; no repeat execution/discard/rollback. Callable may already have retired when its destructor poisons admission.",
+  "native_thread_ABI_or_concurrency_proven": false,
+  "full_bootstrap_resources": false,
+  "loader_hooks_bound": false,
+  "real_network": false,
+  "original_loaded": false
+}

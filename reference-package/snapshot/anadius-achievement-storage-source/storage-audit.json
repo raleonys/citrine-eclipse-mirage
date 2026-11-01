@@ -1,0 +1,221 @@
+{
+  "schema": "achievement.storage.static-audit.v1",
+  "result": "PASS",
+  "checked_at": "2026-10-21T13:36:55.5400480Z",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "evidence_type": "Retained REA assembly/pseudocode plus explicitly marked local raw PE constants",
+  "functions": [
+    {
+      "address": "0x18001eb00",
+      "pseudo": "ev_f7cbf2f5b9d3d17681ffb7f9a17c6ed5cf2952ce07087685262cb3dccfe53b3e",
+      "assembly": "ev_bd10a5a82a8307f47db504ea903686ef7b68be9597de0c3a48f59707493363e8"
+    },
+    {
+      "address": "0x180003b70",
+      "pseudo": "ev_56cb76adb60b08dd04b08ed6fce95b42976a383eca0e2b7761c7afcb1ca37415",
+      "assembly": "ev_153cf06313c36f9169a114330dd971a4060d7bdad38bd9feb6ce7a51c21c35fd"
+    },
+    {
+      "address": "0x180006190",
+      "pseudo": "ev_df86694acc6f6bf1570d4ca7b7f4eb7502b5899619e5c3f7a9e0dbfb8411ba5c",
+      "assembly": "ev_552cb0956e43cd64cc074aec655e5b62d6d6e16d40ead43e9b99b12f5369d9ec"
+    },
+    {
+      "address": "0x180041e10",
+      "pseudo": "ev_80df4678956b9b7658e3d0b5553defdaa1244bbcda5a6974597668481318d415",
+      "assembly": "ev_c6b31cf960ca4a4bf60c21d21f3719c757a8a088e5e42c6c5b0a0784d2fc858d"
+    },
+    {
+      "address": "0x180041ff0",
+      "pseudo": "ev_89a838df3190068a41d3c5907aec78720d14c6645ae91440bd77f92778e164dc",
+      "assembly": "ev_9d8c05e7881ace56f5053a11d8c9b6148320e73c05a8db0fd152a3ad78b0619c"
+    },
+    {
+      "address": "0x18001ea20",
+      "pseudo": "ev_08b3a5fcbdaae83bab62fdfbc023bf1fcede2ebac6761d234774ae93461a8086",
+      "assembly": "ev_b2ed2f94d1e70182e9c643a28823161406f5467cb3c96081b5325e82fd10f8e8"
+    },
+    {
+      "address": "0x18001f9a0",
+      "pseudo": "ev_62b9a1da24b690b13ccc9ef87ff538b194425801a3a0857c3220da35a50c024f",
+      "assembly": "ev_488d569fd12cfa9fe60d4d35d04b56c9d44b52396427f3060d14d2a7e0125a5a"
+    }
+  ],
+  "callsites": [
+    {
+      "at": "0x18001eb50",
+      "operation": "If set empty retain prior XMLpath"
+    },
+    {
+      "at": "0x18001ed44",
+      "operation": "Filesystem widen achievement-set filename"
+    },
+    {
+      "at": "0x18001ed7f",
+      "operation": "Append under user_directory"
+    },
+    {
+      "at": "0x18001ee4b",
+      "operation": "Read only if resulting or retained XMLpath nonempty"
+    },
+    {
+      "at": "0x18001ee77",
+      "operation": "read_binary03b3f0"
+    },
+    {
+      "at": "0x18001ee96",
+      "operation": "Parse c-string size_t(-1); returncode ignored"
+    },
+    {
+      "at": "0x18001eedd",
+      "operation": "Document ErrorID==0 guard"
+    },
+    {
+      "at": "0x18001eeee",
+      "operation": "First root element any name"
+    },
+    {
+      "at": "0x18001ef01",
+      "operation": "First direct child any name"
+    },
+    {
+      "at": "0x18001ef2d",
+      "operation": "Id attribute; absent skip, presentempty allowed"
+    },
+    {
+      "at": "0x18001f603",
+      "operation": "Count IntAttribute default0 ->field04"
+    },
+    {
+      "at": "0x18001f619",
+      "operation": "Progress IntAttribute default0 ->field08"
+    },
+    {
+      "at": "0x18001f62f",
+      "operation": "Grant optional, presentempty replaces"
+    },
+    {
+      "at": "0x18001f66d",
+      "operation": "Name optional only currentdisplay_name empty"
+    },
+    {
+      "at": "0x18001f69b",
+      "operation": "NextSiblingElement any name"
+    },
+    {
+      "at": "0x18001f6be",
+      "operation": "SteamAppId nonempty guard"
+    },
+    {
+      "at": "0x18001f815",
+      "operation": "Assign userdir/achievement_watcher/app/achievements.ini"
+    },
+    {
+      "at": "0x18001f884",
+      "operation": "All map timestamps to041e10 andfield70"
+    },
+    {
+      "at": "0x18001f8f7",
+      "operation": "status_01ea20 INI flags3"
+    },
+    {
+      "at": "0x18001f919",
+      "operation": "Throw iff error!=0 and ((uint32(kind)-1)&0xfffffff7)!=0"
+    },
+    {
+      "at": "0x18001f91e",
+      "operation": "kind2 skip writer"
+    },
+    {
+      "at": "0x18001f920",
+      "operation": "writer01f9a0 otherwise"
+    }
+  ],
+  "globals": {
+    "user_directory": "0x1800a3a00",
+    "achievements_set": "0x1800a3dc8",
+    "xml_path": "0x1800a3de8",
+    "achievements": "0x1800a3e58",
+    "steam_app_id": "0x1800a3e68",
+    "ini_path": "0x1800a3e88"
+  },
+  "raw_PE_constants": [
+    {
+      "rva": "0x7ffd0",
+      "file_offset": "0x7e7d0",
+      "ascii": "%d"
+    },
+    {
+      "rva": "0x7ffd4",
+      "file_offset": "0x7e7d4",
+      "ascii": "%x"
+    },
+    {
+      "rva": "0x83888",
+      "file_offset": "0x82088",
+      "ascii": "0000-00-00T00:00:00"
+    },
+    {
+      "rva": "0x841c4",
+      "file_offset": "0x829c4",
+      "ascii": ".xml"
+    }
+  ],
+  "numeric_contract": "Signed IntAttribute-style %d or0x-prefix%x; low32 field04/08; missing/invaliddefault0, notToUnsigned%u",
+  "record_default": {
+    "field00": 1,
+    "field04": 0,
+    "field08": 0,
+    "timestamp": "0000-00-00T00:00:00",
+    "display_name": "",
+    "steam_id": "",
+    "field70": 0
+  },
+  "source_hashes": [
+    {
+      "path": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    },
+    {
+      "path": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "path": "outputs/anadius-config-source/configuration.hpp",
+      "sha256": "036eea42c74731b9c4e5bbe574e2c953b8010c2e626f5f5caf84f2029aab3f24"
+    },
+    {
+      "path": "outputs/anadius-config-source/evidence.json",
+      "sha256": "b8397cc8ce6fd2b2c85650c0435de0bde3a0ea5e468cdf457d1068064cf99ea9"
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/reader.cpp",
+      "sha256": "0c80c24764ad925ada9ca2c485a984ba490f07d7a596db1eb12c2f18af817d66"
+    },
+    {
+      "path": "outputs/anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp",
+      "sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554"
+    },
+    {
+      "path": "outputs/anadius-status-source/status.hpp",
+      "sha256": "db4f36d8804eb75ab63497b47efe33e5ebaf77529dd5cdd33cfa31aee2b1fe81"
+    },
+    {
+      "path": "work/achievement-storage-01eb00.pseudo.txt",
+      "sha256": "c21ca365ff4cbd89d98c08940b08f764c0817034373dee828964aa18c09d597a"
+    },
+    {
+      "path": "work/achievement-storage-01eb00.asm.txt",
+      "sha256": "f2d409396634d82898403498af6a677868c6c5bd294e30a0b63382c26a4a978b"
+    }
+  ],
+  "unresolved": [
+    "Full writer01f9a0 internals separate scope",
+    "Pinned upstream malformed XML/CRTlocale/overflow equivalence",
+    "Native allocator/layout/stream/SEH/global/filesystem/DLL parity"
+  ],
+  "production_edits": false,
+  "original_execution": "none",
+  "user_cfg_or_achievement_contents_read": false,
+  "REA_operations": "none; retained evidence reused"
+}

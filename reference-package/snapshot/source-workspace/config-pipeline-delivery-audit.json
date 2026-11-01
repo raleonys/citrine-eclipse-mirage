@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T02:12:35.4922643Z",
+  "prior_package_sha256": "1fe67fccdca8c84c9d9eacca18e3c0025d7a862e70205af7923a75e897a2cbc4",
+  "prior_source_count": 371,
+  "unchanged_prior_sources": 371,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-config-order-source/order_tests.cpp",
+    "anadius-config-order-source/order.cpp",
+    "anadius-config-order-source/order.hpp",
+    "anadius-config-pipeline-source/pipeline_tests.cpp",
+    "anadius-config-pipeline-source/pipeline.cpp",
+    "anadius-config-pipeline-source/pipeline.hpp"
+  ],
+  "current_sources": 377,
+  "current_documents": 139,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_hashes_verified": 26,
+  "master_build_sha256": "416b9293531454439bafc8fa8b6faa135da1a9a7866847f0ab77586af5df7314",
+  "native_objects": 129,
+  "cpp_objects": 125,
+  "c_objects": 4,
+  "normal_test_groups": 114,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "config_order",
+      "result": "PASS",
+      "output": "PASS: 2185 Config2 hash/list first-copy checks",
+      "executable_sha256": "05499a3acfa0d1551f11c26231ea3ee83016b61677014842e2d1a0612c68b7e5"
+    },
+    {
+      "module": "config_pipeline",
+      "result": "PASS",
+      "output": "PASS: 189 Config2 pipeline checks; generated fixture only; original targets never executed",
+      "executable_sha256": "75cdb41f58688a0d41b1cb3ae4dae5a7dccb5e21908c73753104bf7f1f132790"
+    }
+  ],
+  "full_original_bodies_added": 0,
+  "CRT_implementation": "paused; all prior source hashes unchanged",
+  "bounds": [
+    "First Config2 copy <=8unique percontainer",
+    "Scalar application only;5ordered consumers rejected",
+    "Growth/reused section-copy history unresolved"
+  ],
+  "original_execution": "none",
+  "runtime_equivalence": "not established",
+  "raw_user_cfg_read": false
+}

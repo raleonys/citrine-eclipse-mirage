@@ -1,0 +1,15 @@
+# Başlangıç bağlantısı bağımsız kaynak incelemesi
+
+Sonuç: **PASS**. Donmuş startup/header/test/build/CMake/README kaynakları, değiştirilmiş configuration arayüzü ve mevcut retained REA kanıtları incelendi. Kayıtlı **335 kontrol PASS** sonucu ve bu kaydın kaynak hash'leri doğrulandı; bağımsız tekrar derleme yapılmadı.
+
+`BootstrapConfiguration` üç final metotta gerçek environment, console ve configuration kaynaklarını çağırır. Language/registry byte referansları ile game_attributes doğrudan aynı `configuration::State` nesnesinden üretilir. Konsol bayrakları ve platformlar zorunlu referanslardır. Diğer BootstrapDependencies metotları abstract kalır; gizli başarılı provider veya yeni native varsayılan eklenmez.
+
+`FilePass` factory'yi ödünç alır ve yeni mutable file/parser/hash/application girişine aktarır. Üç argümanlı configuration initializer mevcut tek post-configuration gövdesini kullanır. Eski iki argümanlı giriş yerel DocumentPass üzerinden eski load_document yoluna delegasyon yapar. Önceki ZIP SHA256 `2b3cc36872ee36381a233d26724fe4494eaadd774f337d1e9dd1685985f5d319` ile karşılaştırmada configuration.cpp'nin initializer öncesi kısmı ve product_component'ten dosya sonuna kadar post-configuration gövdesi **tam metin olarak aynı** bulundu. Arayüz kaynak bileşimi olarak belgelenir; özgün virtual ABI iddiası yoktur.
+
+Testler mevcut Bootstrap::initialize'ı yeni bridge ile yürütür. CLI dil kilidinin iki CFG geçişinde korunması, konsolun shared noConsole/showConsole bayraklarını kullanması, base/override ve büyüyen koleksiyon, avatar varsayılan/custom ayrımı, cleanup, SDK/AVAILABLE_VERSION, persistence sonrası environment değerleri ve ilk worker öncesi bütün bu aşamaların bitmesi kapsanır. Worker payload'ları test sınırında sahip olunan bloklar olarak tüketilir; gerçek worker/thread çalıştırılması iddia edilmez. NativeFactory yalnız testin oluşturduğu base/override CFG dosyalarını okur. Windows fixture yol karşılaştırması lexical path normalization ile doğru biçimde yapılır.
+
+Base/override parser hatası, mkdir/PNG/enumerate/remove/persistence ve environment source-contract exception'ları sonraki worker tahsisini engeller; base'in önceki değişiklikleri geri alınmaz. Normal false environment BOOL sonuçları sonraki çağrıyı engellemez. Eski configuration testleri ortak regression'da ayrıca çalıştırılmalıdır; burada bunların tekrar çalıştırıldığı iddia edilmez.
+
+Açık engelleyici bulgu yok. Native OS/provider/persistence/logger gerçekleştirimleri, genel shared globals/loader/export/CRT/FILE/allocator/SEH ve bütün DLL runtime eşdeğerliği tamamlanmış sayılmaz. Directory enumeration toplu vector arayüzüdür; özgün iterator'ın remove ile iç içe ilerlerken verebileceği ara OS hatası/mutation zamanlaması kanıtlanmaz. Bu sınırlar README ile uyumludur.
+
+Hash'ler, önceki ZIP karşılaştırması ve CRT kaynak bütünlüğü denetimi `review.json` içindedir. İnceleme sırasında üretim veya test kodu değiştirilmedi; gerçek kullanıcı CFG/token okunmadı, özgün dosyalar çalıştırılmadı.

@@ -1,0 +1,132 @@
+{
+  "schema": "request-growth.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x18002b940",
+      "pseudo_evidence": "ev_f221fb3cc36fe09dd9caa0f3215baa048e64812b380d8145aa83469378390c26",
+      "assembly_evidence": "ev_30e5199683fa1f5ae0a663c2aaf7a0d7e9b025a364160464f517665e10ac75f2",
+      "newly_recovered": true
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x18002b940"
+  ],
+  "new_original_procedures": 1,
+  "new_source_bridges": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/request_growth.cpp",
+      "base": "RequestMutationApi::grow_replace_02b940",
+      "body": "grow_replace_request_02b940",
+      "closure": "RecoveredRequestGrowthApi::grow_replace_02b940",
+      "address": "0x18002b940",
+      "native_abi_complete": false
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x180034730",
+      "pseudo_evidence": "ev_79c5bb775604e465f8a4a96c8523886a2042e896365181bcb9796c1b687361de",
+      "assembly_evidence": "ev_a8b95492c2d53d260f7dfda3766b34547d4ae2a025fc29e358a10599135608d9",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18003ce30",
+      "pseudo_evidence": "ev_133ad329397d833d572bf37cfc559a97e5cc1d655e776ff3b426ed2f69869b99",
+      "assembly_evidence": "ev_80f220817eb9f3aaedd370919dd41b31eff96692957601bd8e30baf3951ce863",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180010040",
+      "pseudo_evidence": "ev_8b172ce1ae7a2a8f6e7d19d9433d0f9681d58a8e0fba88dbe42da06deb17bac4",
+      "assembly_evidence": "ev_4eed657fe242e320b79de3469b4ff268d87d2033487b16f14133e304afc75ba1",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180008350",
+      "pseudo_evidence": "ev_8f414a470d18574ce283ec7f9d33a326dcabef0214a8d5a54fdfd5f5b9bba010",
+      "assembly_evidence": "ev_36491f90ef8a29d2fb8edd6b1735250524629ef5f6e005c31809a72ed253a8f3",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180028d30",
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021420",
+      "pseudo_evidence": "ev_03285e4590c59bdfef637bd131232ec356cb691047dceda259799e10be2eb802",
+      "assembly_evidence": "ev_485e1499aa6085002207d4e979d89f21170510588cb32527b4e03d79fecdcc79",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180009eb0",
+      "pseudo_evidence": "ev_f67735e2b612684e0244695b1a0f40290b2f78851c8f9840ca9495121e3e2d83",
+      "assembly_evidence": "ev_259f1a5cdb8c805a3e600239e02920086e76456c0ff5fea954f866d0b28e9777",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180026670",
+      "pseudo_evidence": "ev_3d6aa3960069fd2dc5266edc94873bd68670d91db15a6be056e5ebe2cd802224",
+      "assembly_evidence": "ev_c82cd695a879356cda7f2d9c3a22053f0bdb56fe12a828093c27c41a31cd7e32",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180022280",
+      "pseudo_evidence": "ev_aee2bbff62610fd4201cd8b319dcbe44a5029af250478152c37f614dc4ef29a2",
+      "assembly_evidence": "ev_0d15462c57e626a6aa35528fa9a1522cd22044e4aa0b557ec5517d7fcd32d39b",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "request_growth.hpp": "b4870a3caf86e5abcb6e6703eba65ef41a46a802f69035850e063cd9314f1922",
+    "request_growth.cpp": "40667442f868a21494379830b95c6ce790babba2900c44842e11e84af04a9311",
+    "request_growth_test_fixture.hpp": "9d587b0332194718d5ba3c864eb973d6195e39fc20c156a08181e8b15797e6b3",
+    "request_growth_tests.cpp": "02424ffdc0a8684002750d23cc254309eca3c7f89d33ba1ab8dd514c15b90dbb",
+    "request_growth_integration_tests.cpp": "63a17cd536978336566deb19b2d9e388bdc49d9467c07e4f92dc6faa5002315b",
+    "build.ps1": "c9e1368412a1a024326376e3581cf7af33dd31c92707fd9d1a06308960779acc",
+    "CMakeLists.txt": "17a7f737ef3fe31ddd2e54dcb4bd366af5bac4b5631078c776e23216163e908b",
+    "README.md": "f11beed8dc6203a42c384c448d537c7df602a668e5277bc35d46b0d2b344c2b0"
+  },
+  "support_hashes": {
+    "request-growth-evidence.pseudo.c.txt": "87303672b574036c907523ffe7fdb2eaffdc8c9080e7c77041967c1a59c9d0ec",
+    "request-growth-evidence.asm.txt": "6408898ad73897cf7bd955dd174edff69990dac881b9028fd3ab1d2e26c29782",
+    "request-growth-context.pseudo.c.txt": "77fcc5220fb688f9674ff808ccb449b620402892ec575ee599bb875006cb1b4c",
+    "request-growth-context.asm.txt": "05e3c07c5b48b393312d52a05652c67ea67262fcaef368856a57c04670b928bf",
+    "request-growth-flow-audit.md": "fc274b7e3d188cbd5cab205c26017092db913b0b3996e4dd1a375b210287e507",
+    "request-growth-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788"
+  },
+  "core_checks": 5304,
+  "integration_checks": 1144,
+  "new_checks": 6448,
+  "execution_scope": "02b940 normal body and final RequestMutationApi growth source bridge; actual034730 before controlled caller and N1-N6/send/finish; external/self source, aligned large input, request lifetime and metadata/copy/free/pointer prefixes; native033d70 remains open",
+  "limitations": [
+    "Typed normal projection only, no native MSVC/allocator/global/ABI/EH/SEH/concurrency/fault equivalence",
+    "Allocator/free/terminal/078d30 native bodies remain providers; bounded byte COPY compatibility only",
+    "Symbolic maximum arithmetic/failure prefix, not real huge allocation;00cd30 valid-state reachability not asserted",
+    "Controlled caller preparation and N5 semantic adapter, not full native033d70/042480 orchestration; N5 gap unchanged",
+    "Controlled response constructor/handler/cipher/023dd0/completion/injected send; no new027a20/IOCP/027c10 worker or real SDK/network/original execution"
+  ],
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Same-agent addressed assembly/source and synthetic independent payload/lifetime/failure-prefix checks",
+    "independent_review_complete": false
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N8 native03d190 response hex-encode and typed-prefix core composition dependency; CRT stays paused"
+}

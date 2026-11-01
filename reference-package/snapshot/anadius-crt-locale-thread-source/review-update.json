@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "reviewer": "crt_locale_thread",
+  "checked_at": "2026-10-18T19:55:39.3747501Z",
+  "scope": "Independent static comparison of locale update source/header/tests with bounded original retained assembly; existing rebuilt synthetic test executable rerun; optional bridge source binding review.",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "files": [
+    {
+      "path": "outputs/anadius-crt-locale-update-source/locale_update.hpp",
+      "sha256": "ad4e873fbb0e2809967fa4beed216640c52f9dafd37a34d14d78bc959c3ffa55"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-update-source/locale_update.cpp",
+      "sha256": "05bf4170ced404a2137cba5f33528ead4338684695330ddcec409fb3d1221fa0"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-update-source/locale_update_tests.cpp",
+      "sha256": "7524fd3cddfdf5d05c4fe27c8658556fd5ab565db703abf3562703e786e8ace6"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-update-source/build/locale_update_tests.exe",
+      "sha256": "3f13566384775bec4efcda67abb555b54cdb90fc698e31300b6605c504efa2a5"
+    }
+  ],
+  "tests": "PASS locale update: 399644 checks",
+  "findings": [],
+  "verified": [
+    "058b13 clears only ownership byte before pair reads; explicit/global fast paths preserve out.ptd.",
+    "058b23/058b31 MOVUPS then058b38 MOVDQU: both pair values captured before destination stores; overlapping source/output synthetic test covers ordered snapshot semantics.",
+    "058b43 stores required PTD; first field store precedes second field load, then064ef0 receives captured initial PTD.",
+    "058b66 and058b72 reload out.ptd after helper effects for the second helper and final guard.",
+    "064ef6/064f62 read current globals before field comparison; equality skips flags/mask; flags loaded before full32 mask.",
+    "058b75 full DWORD snapshot; TEST AL2 guards OR EAX2 and DWORD store; nested constructor owns cleanup flag while outer retains zero.",
+    "Bridge uses actual recovered required PTD, thread locale/multibyte and heap free bodies; remaining deep locale lifecycle providers stay mandatory."
+  ],
+  "limits": [
+    "No native/original execution or mutation.",
+    "Pair providers preserve source-level ordered snapshot and overlap semantics, not atomic 16-byte concurrency or precise fault footprints.",
+    "Constructor helper API returns void; original RAX=this ABI is deliberately outside source helper interface, not a claimed ABI replacement.",
+    "No original SEH/unwind or full DLL runtime equivalence claim."
+  ]
+}

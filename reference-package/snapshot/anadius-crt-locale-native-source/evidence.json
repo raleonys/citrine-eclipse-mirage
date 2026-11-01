@@ -1,0 +1,91 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "New native locale-resource provider composition of existing retained source bodies",
+  "recovered_original_bodies_added": 0,
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "evidence_links": [
+    "../anadius-crt-locale-resource-bridge-source/evidence.json",
+    "../anadius-crt-locale-ref-source/evidence.json",
+    "../anadius-crt-locale-free-source/evidence.json",
+    "../anadius-crt-locale-thread-source/evidence.json",
+    "../anadius-crt-ptd-data-source/evidence.json",
+    "../anadius-crt-counter-native-source/evidence.json"
+  ],
+  "reused_ref_functions": [
+    {
+      "va": "0x180070634",
+      "assembly_evidence": "ev_77f695edd5451bde6e9220a665b85ce2647c70006e5b1c643d0727609441c463",
+      "pseudocode_evidence": "ev_4c7bd63877446371e9ecc0412fbf4e43fe650933c9f1d2dfe330bf561f9641b8"
+    },
+    {
+      "va": "0x1800708c0",
+      "assembly_evidence": "ev_9c95848f8f6a91e252706f125cacfaf868c4dc8dee673b5c7d83fae3485017ab",
+      "pseudocode_evidence": "ev_6e8c564095a499a20216fd199b09fc5f62d639fb6b1ff50ce6cd2b78d4bcb131"
+    },
+    {
+      "va": "0x180070838",
+      "assembly_evidence": "ev_1acb6fb183dd077c6b24999d4a1f0d73649c4b36d8dcf71d1b3a2f776ef98890",
+      "pseudocode_evidence": "ev_368259d864d360c34ed34d1b0151f5ec9d94303ceeff455921a31b8b8f2b8e32"
+    },
+    {
+      "va": "0x180070898",
+      "assembly_evidence": "ev_1a1a3802a8a6c04eebd9514449c2d8b96aa242f9feda4d739459c1afabe4056b",
+      "pseudocode_evidence": "ev_cf0bf2e9d47f97708c91ba3425c1364ff1a71244b99ed68e943c14773184b110"
+    }
+  ],
+  "reused_free_functions": [
+    {
+      "va": "0x1800706c0",
+      "assembly_evidence": "ev_b900b3842ed91b97d2155b79a612527034131c53e02592bf02e338b4266cc6cb",
+      "pseudocode_evidence": "ev_dfb45e5c4c5e242c804d70a9dd43ed27cd4aba8a1f6518c86bb9428749bf90c1"
+    },
+    {
+      "va": "0x180070a40",
+      "assembly_evidence": "ev_0e724ec79256b6de892dd1e723bb73bdc2f2e8b521abe4989ec69c03bcb885cf",
+      "pseudocode_evidence": "ev_668ecd85f87cd9f3c4f0756fd946d4c21aa937a6318609791d886b29b4a1f14f"
+    },
+    {
+      "va": "0x180071068",
+      "assembly_evidence": "ev_e50e77874a452134ed6970138a4ffc6b6546a72fe5d606168374792e262afe83",
+      "pseudocode_evidence": "ev_72ebac3df15852c23bd9c9b2b2fe06b6585d8a0b1dbab04999111e35298ff0a5"
+    },
+    {
+      "va": "0x180070860",
+      "assembly_evidence": "ev_c979cfa9054f0fbe5894a6227014c2f5609daaec89157c22ef013d431b2d4547",
+      "pseudocode_evidence": "ev_a093efa34b4b095fb071a2dc5f786e694ffd291dd53fe42f0eca522834c662d3"
+    },
+    {
+      "va": "0x180071730",
+      "assembly_evidence": "ev_8ae879d4089ba71f7ff7a6308282c75b8951658711b3fb94bb1f7ef0cb3197b9",
+      "pseudocode_evidence": "ev_84c78024a6b69ee549cee89a3c5592e0313838a821f514cb0fbd5c2a705f42b7"
+    },
+    {
+      "va": "0x1800713bc",
+      "assembly_evidence": "ev_0cf15411078b07984a4aa15da62c988511ee97407a1e52b164e84923241d1bb1",
+      "pseudocode_evidence": "ev_5efc80503c52cf75419b8050eb9dcfc5425cdf145bbe40e476853af6f9286e27"
+    }
+  ],
+  "stage": "Actual retained ref/deepfree/global-thread replacement through realCS/typedLONG/Interlocked/FLS/heap; modern/forcedlockfallback,4ownworkers,133uniqueblocks/18treecounterbindings",
+  "identity_boundary": "Typed consumed-offset fixture schemas and initial/default/global identities; not new original image/type/initialization evidence",
+  "lifecycle": "Globalowner1/main2/4workers6/join2/globalreplace1/mainrefresh0 ->133deepfree; registry unbind occurs before nativeHeapFree and onlyquiescent; PTDfreecontainsnoregistryobjectswhileworkers",
+  "tools": "REA temporarily absent then restored; identity/provider verified, retained exactSHA evidence reused, no config changes/new target analysis",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "runtime_equivalence": "not established",
+  "sources": [
+    {
+      "name": "native_tests.cpp",
+      "sha256": "11e60f80eb3ec7a46f5c299053a2a9526fc48b12f126ae332a8ef653f16c40f5"
+    },
+    {
+      "name": "native.cpp",
+      "sha256": "6d8421431b7ef2462c8b640d25d57894b59bc97bdf512df1d0f167e05c852f10"
+    },
+    {
+      "name": "native.hpp",
+      "sha256": "2a8a00a85ab883f1d98d9dadf0c9159881cac4a14c3a49c16a8b3a2614c43102"
+    }
+  ]
+}

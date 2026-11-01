@@ -1,0 +1,37 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T19:23:39.2821170Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lifecycle-callbacks-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lifecycle-callbacks-source\\build\\callbacks.o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lifecycle-callbacks-source\\build\\callback_tests.exe"
+  ],
+  "tests": "PASS 105 lifecycle onexit/multibyte callback checks;owned native heap/counters",
+  "partial_archive_sha256": "284940dacfa4bc9fa45f4e2c5e30f90a969e44f4824738e7251594ac663b180b",
+  "sources": [
+    {
+      "name": "callbacks.cpp",
+      "sha256": "6a4debca2b0cce025b6ec731f032ad60d6bcab41d4e9e9f682281a653fadbf57"
+    },
+    {
+      "name": "callbacks.hpp",
+      "sha256": "3cd7e846c0922c30bdb67c1c20504747d7ba512c08e2cce3a415c2dacf46622d"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "c4288c5588250bcfaceecf2c2befb2bac3ecb1d2f2c05ab42c51a0061fddd6f7"
+    }
+  ],
+  "recovered_bodies": 2,
+  "scope": "Actual shared normal/quick onexit initialization/register/execute + native owned recalloc/heap;multibyte counter branches including ref0wrap/initialskip/dynamiclastref/freefailure,secondload/free/poststore;fixtureCS/addresscallbacks,fullCRT/MBstartup/ABI/SEHexcluded",
+  "original_target_execution": "none"
+}

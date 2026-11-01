@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 616,
+  "native_checks": 821,
+  "output": "PASS: 616 socket worker startup checks; retained02a000/02a4a0 callbacks, cached errors/handles, controlled lifetime and unchanged recovered05e8e0 bridge\nPASS: 821 socket worker startup native checks; six injected SDK imports and actual02a000/02a4a0/024990/shared registry/acceptor/cancellation/recycler source integration only",
+  "source_hashes": {
+    "worker_startup.hpp": "699eb51446551906d51c069c00d95f6fbd2d9a2cb706d28021695990d01fa87e",
+    "worker_startup.cpp": "c195e934d656aa572de2656f7d80cf2257fbbc9d4c8aa80accd233bc08ecb565",
+    "worker_startup_native.hpp": "3a9dd32ae720496c9e9239f8840542487b9c88f431defb1569545a6c8796ee2e",
+    "worker_startup_native.cpp": "7b67d379aa49a2133dd58c6ffd0d553419b2bf8105162fc1ad32c97c0fead8c9",
+    "worker_startup_tests.cpp": "5f4b2481e437b8825736a8475a5d20d8f99e38711031b927ec0dbf567ab2df74",
+    "worker_startup_native_tests.cpp": "a5181f58faf1bf7563daba966db93fd07fdfefda849494dfa83abd7f2da9d521",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 2,
+  "execution_scope": "02a000/02a4a0 retained normal event/thread handshake, cached status/entry, live exit reload, zeroerror repeated deletion/close with live projections; six SDK injected wrappers; unchanged05e8e0 source bridge and actual024990/shared registry/acceptor/closing/cancellation/0283c0 controlled integration",
+  "required_providers": "04b0bc/04b0f8 allocation and free, function slot08 scheduler body and slot00 deletion,028240 exception,04d2d0 CRT comparison remain required providers; original entry VA is opaque data",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; no original/game/real socket/network/IOCP/events/threads/waits/sleep/critical-section or user cfg/token/achievement execution/read; source fixtures do not establish native concurrency or binary equivalence"
+}

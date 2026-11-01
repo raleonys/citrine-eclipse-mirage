@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "e64eb9e290341ec39183c0c9ff70c9fe1a2163891b04457d6abc90000a623442",
+  "test_results": [
+    {
+      "module": "socket_response_hex",
+      "result": "PASS",
+      "output": "PASS: 1876 socket response hex checks; actual03d190 and reused resize/grow, all byte values, binary/backward overlap oracle, exact empty no-op, live prefix and failure/wrap states",
+      "executable_sha256": "a9e02ee9e18bee786245593aad40de3481fe6974b8388bfa7e1f502b6497c59d"
+    },
+    {
+      "module": "socket_response_hex_integration",
+      "result": "PASS",
+      "output": "PASS: 834 socket response hex integration checks; actual03d190 with controlled plain-response preparation, original response allocation pool, N1-N7 queue/send/finish and deferred lifetime; native033d70 orchestration remains open",
+      "executable_sha256": "f4d1856b176941e8803e93f27466db1c24e2148af40fb06b63c2662015344e00"
+    }
+  ],
+  "core_checks": 1876,
+  "integration_checks": 834,
+  "source_hashes": {
+    "response_hex.hpp": "c82c322e3ed3f9a257e84472c50d8614a0102d5734a32faab80c475140f10361",
+    "response_hex.cpp": "a3afa7e8621353d8667b5c773bdffe3aab35089a0e8dd6d90314cd723f4f4a4f",
+    "response_hex_test_fixture.hpp": "9c3eedec2224cd0e11664ce041e848e2e18b219f9c1a708a0e987eaae7fb6234",
+    "response_hex_tests.cpp": "fced1897567d7b6247e7be78ea32ea0f3e892a413ee8d13311383ce5e549d38c",
+    "response_hex_integration_tests.cpp": "7d1d8899e0556a04ff14926a70d24608a4cf8c72b7af9b3c074f79791121e311",
+    "build.ps1": "6916e30618f89debe49107d747c490c612d0b858b71af554b0fcc13d5ebb9be2",
+    "CMakeLists.txt": "2a4d1544592cd8cb541e75115017defa827c7ad60605fabb1f9dbfe82252931e"
+  },
+  "original_procedures_added": 1,
+  "new_source_bridges": 0,
+  "new_unique_source_mapped_addresses": 0,
+  "execution_scope": "03d190 typed-prefix normal body reusing existing010040/008350 resize source; controlled plain semantic response preparation before N1-N7 queue/send/finish; exact empty no-op, cached count/live pointer, low-before-high writes and allocation/fill/free failure prefixes; native033d70 remains open",
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Typed normal projection only, no native MSVC/allocator/global/ABI/EH/SEH/concurrency/fault equivalence",
+    "Native03d190 has direct0793d0/008350 calls; reuse010040 is equivalent inline resize composition, not a native CALL edge",
+    "0793d0/078d30 bounded fill/COPY compatibility only; allocator/free/terminal native bodies remain providers",
+    "Symbolic overflow/failure prefixes, not real huge allocation or native fault equivalence",
+    "Controlled plain semantic producer/constructor wrapper, not native033d70 response-local orchestration; N5 adapter and gap unchanged",
+    "Controlled handler/cipher/023dd0/completion/injected send; no new027a20/IOCP/027c10 worker, real SDK/network or original execution"
+  ],
+  "previous_local_records": "31 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

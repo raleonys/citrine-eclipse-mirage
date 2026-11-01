@@ -1,0 +1,197 @@
+{
+  "schema": "source-resources.static-audit.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "scope": "Existing source assembly only; not runtime observation or original target execution",
+  "fields": [
+    {
+      "name": "state_lifetime",
+      "observation": "B15 attachment is constructed once from exact moved RuntimeSeed/config/Execution refs; its owned callback sets/counters/Context outlive active native leases. Optional factory does not supply complete production policies."
+    },
+    {
+      "name": "configuration",
+      "observation": "B5/B7/B8/B9/B11 selected19/21; legacy document and KeyForLicense remain"
+    },
+    {
+      "name": "files",
+      "observation": "Runtime default NativeFactory when null; original MSVC file/EH ABI remains unproven"
+    },
+    {
+      "name": "input",
+      "observation": "Runtime default NativeInputPlatform when null; not exercised in B11"
+    },
+    {
+      "name": "console",
+      "observation": "B5 CompilerConsole available via explicit binder; caller must supply before SourceBackend"
+    },
+    {
+      "name": "threads",
+      "observation": "B5/B6 NativeThreads/NativeRuntime available; caller must assemble shared domain and lifetime"
+    },
+    {
+      "name": "remaining",
+      "observation": "mandatory caller Services; B3/B4/B7/B9/B10 selected composition17/17 does not supply all lower foreign resources"
+    },
+    {
+      "name": "execution",
+      "observation": "Runtime default NativeExecution when null; native mutex/cache/concurrency contract remains"
+    },
+    {
+      "name": "server",
+      "observation": "mandatory ServerBackend; SourceBackend executes server algorithms but is not a concrete complete lower network backend"
+    },
+    {
+      "name": "online",
+      "observation": "B13 binds15selected platform policies through10existing core methods+5boundaries.7foreign calls remain mandatory lower;2phase methods intercepted by B3. No foreign provider bodies or complete Resources factory."
+    },
+    {
+      "name": "library_os",
+      "observation": "Runtime default NativeSystemCalls when null; module loading must not be executed in this investigation"
+    },
+    {
+      "name": "library_effects",
+      "observation": "B12 supplies5selected log/dialog/compiler-error policies; B3 binds2phase routes. Wrapper still owns mandatory lower phase Effects; no full production factory or native equality."
+    },
+    {
+      "name": "host",
+      "observation": "B14 host11routes retained. B15 native Context publishes before host initialization; original-array identity checked against final moved state; real native callback policies still caller supplied."
+    },
+    {
+      "name": "hook_cleanup",
+      "observation": "B14 HookCleanup4routes shares same Domain/engine with host, reuses2existing engine routes plus2log methods. Caller must disable and obtain callback quiescence before native Binding.close; retention token is not proof."
+    },
+    {
+      "name": "stop_sources",
+      "observation": "Legacy admission stop/join precedes source exit drain. B15 then separately requires disabled-hooks/no-new-native-callback promise and active-lease gate before binding close. Empty drain after failed exit registration is not cleanup proof."
+    },
+    {
+      "name": "join_api",
+      "observation": "Runtime chooses native_join_api only if entirely empty; partial API rejected"
+    },
+    {
+      "name": "join_timeout_ms",
+      "observation": "explicit caller policy; no inferred binary default"
+    },
+    {
+      "name": "RuntimeSeed and InitialState",
+      "observation": "all source globals/native defaults caller supplied; no complete shipped image seed or PE entry installed"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "sha256": "0486fc7c6d0a97ccd631b23a1462cc1b374ae1a33a4b0c0bbf81677ffc66aceb"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "b37355b48739483d30ed4536f5a31796bc1b5f4d7e548b901985460259d7db24"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.hpp",
+      "sha256": "a447a80b1f9caa32d682804207e551431b8d4308cc530c0a176df5256a31b443"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "aefcaeaedf61d3646bc17e4a52763606f2e9de4634ab63fb14ec876262547aec"
+    },
+    {
+      "path": "outputs/anadius-config-startup-source/startup.cpp",
+      "sha256": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88"
+    },
+    {
+      "path": "outputs/anadius-config-application-source/application.cpp",
+      "sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb"
+    },
+    {
+      "path": "outputs/anadius-libraries-source/libraries.hpp",
+      "sha256": "711dd108523bc0ea5b3a0ceab3c9f3f2afb507837866a78f554d7dfab4fdb4f1"
+    },
+    {
+      "path": "outputs/anadius-library-effects-source/dialog.hpp",
+      "sha256": "21b17edb02cc215bcd569c0caf520b134b8f17760d0a4d0a8515a041df58b11d"
+    },
+    {
+      "path": "outputs/anadius-library-effects-source/dialog.cpp",
+      "sha256": "c5078be51fca032bc21cdb0d01c068b250ee3e09f14b20ddf98036d6e9e8e7a5"
+    },
+    {
+      "path": "outputs/anadius-library-effects-source/effects.hpp",
+      "sha256": "93a722ce616f93a3b92f77a660a6e45a1bb3060a45115b958d29dce171138884"
+    },
+    {
+      "path": "outputs/anadius-library-effects-source/effects.cpp",
+      "sha256": "ec076488dac818a6ef3bc056ba9350100554b3ce2255a18c95eb39a109cf8092"
+    },
+    {
+      "path": "outputs/anadius-online-platform-source/platform.hpp",
+      "sha256": "e3fc3c73340ba1bca1b2ffb8746fe311d91c9c53d58e14b0b80c7c4df47d57b1"
+    },
+    {
+      "path": "outputs/anadius-online-platform-source/platform.cpp",
+      "sha256": "0a462c34636fcc22f348f48795ca60dba2114d1845b84ff30183cef99f5db10b"
+    },
+    {
+      "path": "outputs/anadius-host-platform-source/platform.hpp",
+      "sha256": "cb7e7bc72b71cc5a62e47bd49aa218ab4b6b57936b1c6d18ba09817204a002b8"
+    },
+    {
+      "path": "outputs/anadius-host-platform-source/platform.cpp",
+      "sha256": "ab2108b42aba68effcc6e37ab2887a662eed7f06d4110d95483cfd7634ea2b8e"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.hpp",
+      "sha256": "ee943bb8e5aef8eeedd7ccd1747457575766f24cf0dc85e792668b166b0f455a"
+    },
+    {
+      "path": "outputs/hook-engine-source/adapters.hpp",
+      "sha256": "757f5f0ee47e19fe2611072dab96b72c21b57d8d64e49c23a16d7f67ab9d8862"
+    },
+    {
+      "path": "outputs/hook-engine-source/adapters.cpp",
+      "sha256": "c43e3fc13ceb60833324c880725d7e6ed6b0f668ed82e077b9b28d4f47a7ac5d"
+    },
+    {
+      "path": "outputs/anadius-native-context-source/context.hpp",
+      "sha256": "bc1f880669c46aca71e368385c33ff60b8afcb9630237b6576344345f4983b28"
+    },
+    {
+      "path": "outputs/anadius-native-context-source/context.cpp",
+      "sha256": "63aa2ced7084c6ade0e6c27d830b42b812f835682ed224c019c316424591724e"
+    }
+  ],
+  "runtime_default_fields": [
+    "files",
+    "input",
+    "library_os",
+    "execution",
+    "join_api"
+  ],
+  "complete_production_factory": false,
+  "pe_entry_installed": false,
+  "configuration_routes_bound": 19,
+  "legacy_document_bypassed_by_filepass": true,
+  "configuration_license_subsystem_complete": false,
+  "b10_independent_review_outstanding": true,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "source_package": "B15",
+  "new_selected_library_policies": 5,
+  "actual_resource_factory_complete": false,
+  "phase_routes": "B3 LibraryExecution overrides wait2/finish into its existing shared state; standalone wrapper still requires an explicit owned phase provider",
+  "new_selected_online_policies": 15,
+  "online_recovered_core_reused": 10,
+  "online_foreign_calls_remaining": 7,
+  "online_phase_routes": "B3 OnlineExecution binds2phase methods into existing shared Execution; wrapper still retains owned lower contract",
+  "host_routes_bound": 11,
+  "cleanup_routes_bound": 4,
+  "existing_engine_adapter_routes_reused": 5,
+  "native_callback_runtime_original_identity_bound": true,
+  "callback_lifetime_token_proves_native_binding": false,
+  "identity_scope": "Optional selected source attachment; production policy factory and external quiescence still mandatory",
+  "external_quiescence_automatically_proven": false,
+  "native_callback_production_policies_complete": false
+}

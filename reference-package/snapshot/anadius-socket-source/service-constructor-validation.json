@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 339,
+  "native_checks": 212,
+  "output": "PASS: 339 socket service constructor checks; retained0228e0/027be0 normal flow and controlled effects only\nPASS: 212 socket service constructor native checks; SDK-injected027be0 and actual constructor-to-acceptor-to-recycler chain only",
+  "source_hashes": {
+    "service_constructor.hpp": "3e03015e00752ec4f3020bdaa6559eb89e3c311b25877198a296361ef4a19365",
+    "service_constructor.cpp": "e4125fb99d7cbf61c29fd82ac5b7027f5face09a92e77890c66da96a8ec74413",
+    "service_constructor_native.hpp": "4dfe0aebd535f22fd9cf264c13508055b79bcbaab62aaf9c8bcec2b6bdb24702",
+    "service_constructor_native.cpp": "9bc4cac66954bcb9583fea697cfa1e9ebae2daac3284a5ac8cd33781495a19aa",
+    "service_constructor_tests.cpp": "474658871c1b4ffc9bc005a09c3e8ead13fe2c8cd57af8592c7beebfb20e10d9",
+    "service_constructor_native_tests.cpp": "97c6ac67550c3a3e8c60604420bb2f798a23834f87820f2547d379ef1beaf0b2",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "execution_scope": "0228e0/027be0 normal allocation/header/scheduler/gate/category/failure/finalization order; SDK typed injected InitializeCriticalSectionAndSpinCount/GetLastError; real registry/acceptor/lifecycle/closing/cancellation/0283c0 source chain",
+  "original_procedures_added": 2,
+  "native_scheduler_allocator_category_exception_unwind_destructor_ABI": "not established; 023b30,04b0bc,028620,028240 and scalar deletion remain required providers; no original/socket/network/IOCP/real critical-section execution"
+}

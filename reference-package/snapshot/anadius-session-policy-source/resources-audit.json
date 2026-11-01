@@ -1,0 +1,31 @@
+{
+  "source_package": "B45",
+  "result": "CONCRETE_SELECTED_SESSION_POLICY",
+  "owned": [
+    "stable category/catalog/NativeApi aliases",
+    "managed stream and explicit host prefixes",
+    "dedicated empty source exit-wait registry",
+    "guard/zero-worker-exception metadata",
+    "bounded Parent-backed error string construction and one-message snapshot",
+    "source admission and Parent lease"
+  ],
+  "required": [
+    "same worker/fiber and whole Parent Operation",
+    "same stable zero-seeded guard epoch cell used by Runtime",
+    "four explicit lifecycle decisions with valid backing lifetime",
+    "actual external packet/raw-job/kernel proof and returned source graph drain"
+  ],
+  "selected_limits": [
+    "Short lease per stream primitive; no lock across formatter; no line-level atomicity/native ostream ABI claim.",
+    "Owned message snapshot is identified by exact active prefix address/count, never blind raw SSO dereference.",
+    "Zero-only source exception context support; nonzero pending transfer/rethrow is not reconstructed.",
+    "Wake updates actualuint64 field under serialized same-worker metadata mutex, preserving high32; not a forgeduint32/atomic64/native interlocked claim.",
+    "Exit registry belongs only to selected inline jobs; compilerCRT/bootstrap registries untouched.",
+    "Exported NativeApi aliases remain usable Fresh/postClosed for parent-independent SDK work and retain catalog owner."
+  ],
+  "native_ABI_or_concurrency_proven": false,
+  "full_bootstrap_resources": false,
+  "loader_hooks_bound": false,
+  "real_network_tested": false,
+  "original_loaded": false
+}

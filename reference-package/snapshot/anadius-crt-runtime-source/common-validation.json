@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_runtime",
+    "result": "PASS",
+    "output": "PASS 3688 synthetic checks",
+    "executable_sha256": "e8b8e94f473dee4a0a0692ae5fc1944694fadf77a720abe9496d43b4e37e9851"
+  },
+  "execution_scope": "Six recovered runtime/resolver functions and CRT thread integration; synthetic module/PEB/provider calls",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-runtime-source/runtime_tests.cpp",
+      "sha256": "0e37869c5da201ec6440fa93960d1e43d8d2a3a95823c5befd1742fec2105f1c"
+    },
+    {
+      "path": "anadius-crt-runtime-source/runtime.cpp",
+      "sha256": "a8cd16ab68458525e519e6d7b97321e2a9da532e914f47fd46f5d076831b8beb"
+    },
+    {
+      "path": "anadius-crt-runtime-source/runtime.hpp",
+      "sha256": "5ef66b7441704a28df50afd555f3a2cb17678ec232fbf69d6f250ffa151bce7d"
+    }
+  ]
+}

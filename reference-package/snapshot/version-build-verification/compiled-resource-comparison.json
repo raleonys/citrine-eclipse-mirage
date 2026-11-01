@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "type": 16,
+  "id": 1,
+  "language": 1033,
+  "code_page": 0,
+  "reserved": 0,
+  "rebuilt_payload_rva": "0x12060",
+  "rebuilt_payload_file_offset": 56928,
+  "original_payload_file_offset": 53336,
+  "payload_bytes": 560,
+  "sha256": "d61413c8dfa84eb63f499c0f3b5bc63e198538db28e9a793d86ac64403799f26",
+  "comparison": "Exact payload length and SHA-256 equality with retained original resource evidence",
+  "source": "version-rebuild/version.rc",
+  "evidence_id": "ev_f8081bd25ceeaf6de9090e01f1b9c4f3991b000a05038b0823ef7b8f60b3ed93"
+}

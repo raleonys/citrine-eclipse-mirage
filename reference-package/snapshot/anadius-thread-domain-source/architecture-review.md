@@ -1,0 +1,34 @@
+# B6 bağımsız kaynak incelemesi
+
+İnceleyen: `/root/b6_architecture_review`. Sonuç **PASS**. Altı üretim dosyasının hash’leri, 17 bulgu ve açık sınırlar JSON kaydında. Önceki B5 ZIP snapshot’ındaki **717 kaynak dosyası bağımsız karşılaştırıldı; hepsi aynı**. Testleri bu inceleyen çalıştırmadı; test yazarlarının yakalanmış **168 çekirdek + 101 entegrasyon PASS** sonuçları ve dosya hash’leri kontrol edildi.
+
+İncelemede bulunan somut hata: doğrudan SDK critical-section başarı sonucunun yalnız düşük byte’ı okunuyordu. Tam BOOL sonucu kontrol edilecek şekilde düzeltildi. Gerçek initialized critical section için geçerli `0x100` başarı dönüşü ve tam kapanış regresyonu geçti.
+
+- **owned_graph:** DomainStorage owns one runtime/error/heap/FLS/initial-locale graph. Reverse destruction keeps Seed/exception backing, heap providers, ImageState and lock storage alive through FLS Binding destruction.
+- **constructor_cycle:** The one-time ErrorProxy and Invalid policy links bind after the exact FLS Binding exists and before any initialization. No unbound-success fallback or second outer CRT initialization is added.
+- **native_bool_regression:** Independent audit found low-byte truncation of direct SDK BOOL success in lock initialization. Root corrected the full-result test; a real initialized critical section returning legal BOOL 0x100 now initializes and closes successfully in the core regression.
+- **lock_prefixes:** Only ACRT locks 0/4/5 are initialized. Normal FALSE failure cleans up the completed prefix in reverse order; successful current lock is counted before later failures. Native SDK callbacks retain their declared nonthrowing outcome precondition.
+- **fls_identity:** Every ThreadDomain route uses binding.state(), not a copied index/state. Normal allocation/publication failures release the slot and heap prefix. Failed native release remains distinct from the source-invalidated index.
+- **retry:** First close invokes recovered uninitialize once and preserves a failed native slot. Later close calls retry_release without silently repeating source cleanup. Data, heap and locks remain retained until actual release succeeds.
+- **poison:** Unknown exception during published PTD construction poisons the owner rather than fabricating rollback of partial lock/reference effects. Unknown native module load/release outcome similarly preserves its ticket and prevents successful close.
+- **provider_lease:** make_threads calls the actual B5 make_recovered_threads factory with the same runtime/errors/PTD/heap/invalid objects. Its shared provider anchor owns DomainStorage without a strong self-cycle. close returns false while a provider remains alive.
+- **worker_lifetime:** B3/B4 must stop admission, join all workers and their FLS callbacks, and drain application cleanup before Runtime/provider destruction. Provider destruction releases the anchor; only then may DomainStorage release main/domain FLS and modules.
+- **locale:** InitialLocale owns relocated ImageState and actual LONG/Interlocked counters. Existing source locale-reference bodies are reused under actual owned ACRT4/5 locks. Foreign/dynamic locale/MB access and deep free are rejected rather than advertised as supported.
+- **handler_policy:** New/invalid callbacks are explicitly selected rebuilt callback ABIs and coherent cookie encodings. No selected invalid callback resolves to the explicit compiler abort policy; this does not reconstruct native MSVC Watson/EH behavior.
+- **module_tickets:** NativeRuntime reserves stable per-load reference tickets before native loading, including duplicate HMODULE values. Release consumes only successful prefixes and retains failures for retry. SDK/foreign calls execute outside the bookkeeping mutex.
+- **module_concurrency_boundary:** Runtime header now explicitly restricts worker-time free_library to extra duplicate refs while an independently retained cache reference keeps code mapped. Last-reference release is serialized with all lookups/RO calls and occurs only at whole-domain quiescence. Ownership checks are not per-procedure lifetime leases.
+- **sdk_abi:** Load/procedure/release pointers use exact SDK types. RO calls use actual decltype SDK callback types. AppPolicy output bits transfer bytewise both ways, including failure, without forged int32_t/enum aliases. Current-process PEB prefix reading is a stated x64 platform boundary.
+- **core_tests:** Captured core PASS168 covers real heap/FLS/locks, normal constructor prefixes, explicit FLS-release retry, module-reference failure prefixes, typed API/source policy paths, actual system-only module loading, unsupported locale rejection and terminal children.
+- **integration_tests:** Captured integration PASS101 exercises actual make_recovered_threads/ThreadEffects through three simultaneous own worker PTDs and the full B3/B4 queued bootstrap graph. Heap observations are locked, worker observations use atomics, and shared test counters are not concurrently mutated.
+- **proof_scope:** The restricted owned initial-locale worker domain is concretely assembled and exercised. Full mutable/global CRT, original EH/Watson/FILE ABI, foreign providers, general Execution concurrency and PE/image-unload gates remain open. No native body/closure or DLL completion percentage is added.
+
+## Açık sınırlar
+
+- All control methods and raw PTD/phase/index observations require the original controller or whole-domain quiescence. Borrowed cells/pointers expire before FLS release.
+- A NativeThreads provider must not be destroyed with pending/suspended/unjoined workers. B3 tracking and caller admission policy establish that precondition; a provider anchor alone is not a worker join.
+- Native SDK callbacks must obey Win32 nonthrowing outcome contracts. Arbitrary exception/SEH and concurrent OOM/shared fallback-state equivalence are not established.
+- Initial-locale-only selection is a new explicit source policy; ImageState data is not silently declared a fully initialized original CRT image. Exception identity/backing lifetime is explicit caller input and is not native exception-table ABI proof.
+- free_library during workers is limited to duplicate-reference release with an independently retained code-mapping reference. The recovered missing-cache/concurrent-unload edge remains unproven.
+- Containing image must remain mapped through all worker and FLS callbacks regardless of Context module pin. Loader-lock/DLL-unload/PE-entry proof remains separate.
+- Core policy source tests inject typed API exports; integration explicitly seeds thread_policy=1 to isolate the PTD/heap/lock graph. This is not an observed original or default production policy value.
+- Compiler abort and selected rebuilt handler ABIs are compatibility policies, not recovered MSVC Watson/EH behavior. Full native CRT-domain equivalence and production DLL readiness remain false.

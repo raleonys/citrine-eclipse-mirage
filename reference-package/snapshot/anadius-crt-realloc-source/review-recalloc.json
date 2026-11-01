@@ -1,0 +1,45 @@
+{
+  "result": "PASS",
+  "reviewed_at": "2026-10-18T19:24:51.6302869Z",
+  "reviewer": "crt_realloc_core independent static peer review",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source_files": [
+    {
+      "path": "outputs\\anadius-crt-recalloc-source\\recalloc.hpp",
+      "sha256": "30a12d22315aff19a2aa5e91cf0eff7cc9005e4dfd436707e6b27044a1436dea"
+    },
+    {
+      "path": "outputs\\anadius-crt-recalloc-source\\recalloc.cpp",
+      "sha256": "3569042ac08b500859183bc62bbaa33092beca248f5b25de06dc7421cd4ed10f"
+    },
+    {
+      "path": "outputs\\anadius-crt-recalloc-source\\recalloc_tests.cpp",
+      "sha256": "1d20a10c982fa4271cf46ccccc7f1e25b870ef94902b307530b464f929a49c30"
+    },
+    {
+      "path": "outputs\\anadius-crt-recalloc-source\\selected-assembly.txt",
+      "sha256": "3be66729db78af77ab07c314a9e923792a45b7129dcd02eb25bd64ad17db29dd"
+    }
+  ],
+  "reviewed_functions": [
+    "0x180070434",
+    "0x1800773bc"
+  ],
+  "material_findings": [],
+  "checks": [
+    "Unsigned max/count overflow predicate matches DIV/CMP/JNC and precedes HeapSize or allocation",
+    "Non-null pointer queries HeapSize once before product and realloc, including zero-byte/free branch",
+    "HeapSize -1 passes through unchanged; unsigned capacity comparison suppresses zeroing without synthetic errno",
+    "Zeroing starts at capacity, not logical previous requested length, only after non-null successful result",
+    "Growth condition old_capacity<bytes plus bytes<=PTRDIFF_MAX guards offset conversion and addition within provider-owned live byte array",
+    "NULL zero-size allocates one byte through malloc but zeros no bytes",
+    "New-handler retry reuses recovered realloc and does not repeat HeapSize",
+    "Tests cover matrix preserving old bytes, overflow neighbors, HeapSize -1, provider order, retry and declared extent boundary"
+  ],
+  "limits": [
+    "PTRDIFF_MAX guard is an explicit new supported-domain boundary and remains documented as non-original",
+    "Live byte-array extent and preservation semantics remain provider obligations; static code cannot infer them",
+    "Provider exception propagation does not establish original SEH/unwind equivalence",
+    "No target, native heap API, original DLL or game execution; review did not rerun the already-passing standalone suite"
+  ]
+}

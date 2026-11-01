@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_heap_native_bridge",
+    "result": "PASS",
+    "output": "PASS 2193 native heap/realloc/recalloc/error/NLS source integration checks",
+    "executable_sha256": "da0824577ad3d8aa6057a018439c5b5954fd0bc92e30fc1584fed88739cf54fa"
+  },
+  "execution_scope": "Real Win32 heap through recovered malloc/calloc/realloc/msize/recalloc/error/NLS source chain; owned small byte arrays, observed SDK wrappers with injected failures/new-handler; pre-API PTRDIFF_MAX support guard; controlled FLS/locks/atomic/scratch/global contexts, no typed PTD/Context or full DLL ABI/SEH equality; zero newly recovered bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-heap-native-bridge-source/bridge_tests.cpp",
+      "sha256": "7977889cdba2201435411a7396e768fca68295621aa456aceeac06e8deef0bbe"
+    },
+    {
+      "path": "anadius-crt-heap-native-bridge-source/bridge.cpp",
+      "sha256": "a710e793fba3dac27bfea23fca263c0041ac013c01bbdb7f7c601f386c1c5527"
+    },
+    {
+      "path": "anadius-crt-heap-native-bridge-source/bridge.hpp",
+      "sha256": "111cc299960ac585e047a4c3edd741f2dddd1bc16b3861a56ec515a53b7420d6"
+    }
+  ]
+}

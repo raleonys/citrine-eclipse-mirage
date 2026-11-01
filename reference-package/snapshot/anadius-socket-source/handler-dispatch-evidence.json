@@ -1,0 +1,250 @@
+{
+  "schema": "handler-dispatch.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180021900",
+      "pseudo_evidence": "ev_038473cd7809c719aee7d5cec218de4f9f5c0bcc6087442d05e3ffe6da2b7e07",
+      "assembly_evidence": "ev_1196f0abade9438adb0f73215263e3a82b6ebe3ec7b068d06364771288bdd212"
+    },
+    {
+      "address": "0x180022640",
+      "pseudo_evidence": "ev_04a9d210e8adc443ff8899c39272d7e3c0db47dc01f290a73392125542da3d10",
+      "assembly_evidence": "ev_35566019b7c1b2cbbaafc71741571aeaa6677d5555afa573e964b75d7baaeffe"
+    },
+    {
+      "address": "0x180022670",
+      "pseudo_evidence": "ev_46bd821aedf112a5f8d266f7be0bcb5b5a2a499accd194cb494201e2dba4a372",
+      "assembly_evidence": "ev_e29f2b21d7fd9b342851a734b4dee14f086eb31686c820fa771ff18ad6b5b77d"
+    },
+    {
+      "address": "0x180022780",
+      "pseudo_evidence": "ev_684316d74274628f1b9b794bd8c607bec049458ccbdfd591f1f9b73bd633d99c",
+      "assembly_evidence": "ev_d7ce23d47f9801dd482481985c5d4429f62f977eb103987f8d97fe596d78ffa8"
+    },
+    {
+      "address": "0x1800227b0",
+      "pseudo_evidence": "ev_ead3f32874728680e3099f8b671b6a2b279ed04f72baaad983351e7d0393e8b5",
+      "assembly_evidence": "ev_9f15f424365d9770dd05fc845db6d504b75128ee5020d46706ccf53777ad20d2"
+    },
+    {
+      "address": "0x1800229d0",
+      "pseudo_evidence": "ev_315563175da61992f336b7c7cbb76989dfdbd437f1c430ccd8a5974a78071eee",
+      "assembly_evidence": "ev_0f552091c23d20874629c304e7e2c165166c4ed19d14468f50a421033500c607"
+    },
+    {
+      "address": "0x180022c60",
+      "pseudo_evidence": "ev_3a401c192826d6c38a2feead942b0163280eec076d8b0d34b654c27a492fbafe",
+      "assembly_evidence": "ev_401457b9451487d7f920b34697bef11e79385969366d32a0b355b7c00179e0b4"
+    },
+    {
+      "address": "0x1800291c0",
+      "pseudo_evidence": "ev_52421cf2a12a2d6699238fcb5d733e0c050181193adca7761405671e5dc7a79e",
+      "assembly_evidence": "ev_69264e6a252fbf914cbcd59f67d6045d2a4fa76cc656e78ba8f16adeb194a49c"
+    },
+    {
+      "address": "0x1800292a0",
+      "pseudo_evidence": "ev_e1ec8c5d5836634556cb2b7a3165483ee624f68fccd0fb8eb8166d0b93013600",
+      "assembly_evidence": "ev_bc982b0c377896faf08ce17db3747261b53ae6088fc21deb5fef382d78cd02bb"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "handler_dispatch.hpp": "0fec1cbf13941617daf61b0bf4a144c3e660bd976f4c65f8ebad184e198b3f64",
+    "handler_dispatch.cpp": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac",
+    "handler_dispatch_bridge.hpp": "a0c012878ee191fe53b22d7bace89ade87308c9e3702c81ca9cdd905f9887646",
+    "handler_dispatch_bridge.cpp": "522fd1b8e79025a8cd6e80791ba292216d0b69826f9dfbb660261ac1e6716602",
+    "handler_dispatch_tests.cpp": "0e4912363139ad94bd0cf8cc8efb56590e0d4d6f2c690eea989ae7441372c692",
+    "handler_dispatch_integration_tests.cpp": "c07d965ea88a165c463ab4848c4d0305a6e7febe6a9adb8f6801350924fa04c7",
+    "build.ps1": "5834fe6820bdf77a748c0b332b8e855583a4df8f2525e8e6f3599874b2897692",
+    "CMakeLists.txt": "6009e611406dc6a582ce63e9460e3d56846051980aed5002056dfb939815c404",
+    "README.md": "9f35849bb414a6dfffeae84aac70f661b3ae509bfba0b115ab5be0894a11b9b6"
+  },
+  "support_hashes": {
+    "handler-dispatch-evidence.pseudo.c.txt": "0cdd38200691295da1e7df0a35ddfce716c640554586db1af42205ef5d6791e4",
+    "handler-dispatch-evidence.asm.txt": "e77c4e8942500533fcda1270ce801ae24ab2fa9e85869f59043d8bffec14b576",
+    "handler-dispatch-flow-audit.md": "7e508f122b2dbc8459b0330a28187d3608d8575e5f979fcfafdac7b67f79b1e0",
+    "handler-dispatch-flow-audit.json": "1f9135c05a4b8f0c00bc6df6438a1a40652cb47381961705b9ee8d805999a510",
+    "handler-dispatch-review.md": "0c71ca358b00004b09aa681502fb3eab4d16f379b8c4c906d201e1711a45240c",
+    "handler-dispatch-review.json": "33b45aa304be5d3795daf73d24071ac49e8d5aaf0312b60d04f525c4773d6515",
+    "handler-dispatch-rea-session.json": "6293f4a2693ca8a8e9f072ac07cf8778dee6137f26df31d6159615476923094a"
+  },
+  "normal_source_procedures_added": [
+    "0x180021900",
+    "0x180022640",
+    "0x180022670",
+    "0x180022780",
+    "0x1800227b0",
+    "0x1800229d0",
+    "0x180022c60",
+    "0x1800291c0",
+    "0x1800292a0"
+  ],
+  "new_original_procedures": 9,
+  "required_providers": [
+    "04b0bc/04b788 allocation/deallocator unchanged",
+    "Native polymorphic query/move/destroy/schedule slots and executor40 implementations/lifetime",
+    "025c40 receive handler,0261d0 send handler",
+    "Stable raw identity/binding/typedprojection with accessible bounded allocation span",
+    "Existing WorkerRunApi TLS/DispatcherApi SDK posting; native reference control lifetime and bindings",
+    "Native GS-cookie/exception/SEH/unwind/concurrency/ABI and full DLL integration"
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x180021929",
+        "0x18002193e",
+        "0x18002194c",
+        "0x180021979",
+        "0x18002198d",
+        "0x180021999",
+        "0x1800219b4"
+      ],
+      "finding": "021900 cacheonlyslots4/5;units=(requested+3wrap)>>2;capacity-beforeDIV-alignment;fitclearbeforemarker;firstoneevictionclearbeforefree;allocateunits*4+1;markerunits<=255else0;tagunused"
+    },
+    {
+      "addresses": [
+        "0x180022644",
+        "0x180022648",
+        "0x180022659",
+        "0x180022784",
+        "0x180022788",
+        "0x180022799"
+      ],
+      "finding": "Borrowed022640/022780 cacheerror16 andbytes64 theninvoke025c40/0261d0 flag0;samehandler;noownershiptransfer"
+    },
+    {
+      "addresses": [
+        "0x1800226ee",
+        "0x1800226f2",
+        "0x1800226f6",
+        "0x180022703",
+        "0x18002270c",
+        "0x180022810",
+        "0x180022814",
+        "0x180022818",
+        "0x180022825",
+        "0x18002282e"
+      ],
+      "finding": "Owned022670/0227b0 copydefinedfields+moveownedpair;clearoriginalownedpair BEFOREerror/bytes snapshot;actualcleanup/cache/freeoriginal BEFOREflag-gatedinvoke;nooriginaldereferenceaftercleanup"
+    },
+    {
+      "addresses": [
+        "0x180022725",
+        "0x180022739",
+        "0x180022749",
+        "0x18002274b",
+        "0x18002275b",
+        "0x180022764",
+        "0x180022847",
+        "0x18002285b",
+        "0x18002286b",
+        "0x18002286d",
+        "0x18002287d",
+        "0x180022886"
+      ],
+      "finding": "Afterhandler reloadLIVE localcontrol;stronglow32old1dispose thenweaklow32old1delete;wrapunchecked;finalnormalcleanup"
+    },
+    {
+      "addresses": [
+        "0x1800291ca",
+        "0x1800291d6",
+        "0x180029215",
+        "0x18002921d",
+        "0x18002922c",
+        "0x180029240",
+        "0x180029259",
+        "0x180029261",
+        "0x180029274",
+        "0x18002927d",
+        "0x1800292aa",
+        "0x1800292b6",
+        "0x1800292f5",
+        "0x1800292fd",
+        "0x18002930c",
+        "0x180029320",
+        "0x180029339",
+        "0x180029341",
+        "0x180029354",
+        "0x18002935d"
+      ],
+      "finding": "Cleanupreadliveobjectcontrol;release/unconditionalclearobjectAFTERcallbacks;THENreadallocation/cachedacrossTLSfree;currentframeonly;slots4/5firstempty;markeroffset78recv/70sendtobyte0;clearallocationAFTERfree/cache"
+    },
+    {
+      "addresses": [
+        "0x180022c7d",
+        "0x180022c81",
+        "0x180022ca0",
+        "0x180022ca7",
+        "0x180022d01",
+        "0x180022d05",
+        "0x180022d09",
+        "0x180022d15",
+        "0x180022d27",
+        "0x180022d45",
+        "0x180022d49",
+        "0x180022dcd",
+        "0x180022e11",
+        "0x180022e15",
+        "0x180022e23"
+      ],
+      "finding": "Receive022c60 cacheactualslot18or10 beforecopy/TLS;borrowedstackthunk or ownedclosure0x78 alignment1;uninitializedunusedallocatortag;clearoriginalownedbeforeerror/bytes;callbackpublishedafterpayload;afterownedslot10reloadmutabletaskpointerandcallitslivecallback0(flag0)ifnonnull"
+    },
+    {
+      "addresses": [
+        "0x1800229fe",
+        "0x180022a0e",
+        "0x180022a1d",
+        "0x180022a20",
+        "0x180022a32",
+        "0x180022a4a",
+        "0x180022a57",
+        "0x180022a59",
+        "0x180022a5e",
+        "0x180022a6e",
+        "0x180022a73",
+        "0x180022a85",
+        "0x180022a8c"
+      ],
+      "finding": "Send0229d0cachefactoryFUNCTIONbeforequery;factory(temp,query,opaqueuninitializedscratch);copy10/20reset;cachedmove10;temp18zeroAFTERmove;LIVEtemp28copy/reset;LIVEtemp0destroy skipiff017a30"
+    },
+    {
+      "addresses": [
+        "0x180022a8f",
+        "0x180022a93",
+        "0x180022ab6",
+        "0x180022abd",
+        "0x180022afa",
+        "0x180022afe",
+        "0x180022b02",
+        "0x180022b0a",
+        "0x180022b22",
+        "0x180022b40",
+        "0x180022b45",
+        "0x180022bad",
+        "0x180022bf4",
+        "0x180022bf7",
+        "0x180022c06",
+        "0x180022c09",
+        "0x180022c14",
+        "0x180022c1e"
+      ],
+      "finding": "SendLIVE nestedscheduletableaftertempdestroy;cacheactualslot18or10;borrowedtask or owned0x70 align1;clearoriginalownedBEFOREerror/bytes;factoryscratchlowbyteignored;senddummyprefixunspecified;mutablereturntaskslotdiscardcurrentnonnulltask;LIVEfinalenvironmentdestroyunconditional;GScheck"
+    }
+  ],
+  "independent_production_review": "PASS; handler-dispatch-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Nine actual normal caller procedures compose borrowed/owned handler scheduling, closure callbacks, slots4/5 allocator/cache and strong/weak cleanup; bridge feeds existing completion dispatch through existing0229d0/022c60 provider boundary; injected API effects only; no original/network execution",
+  "storage_contract": "Bounded raw allocation distinct from typed SDK/handler projections; bindings coherent while borrowed; free may end operation lifetime; callback may mutate exposed live fields; no post-free operation access; Error value/category projection excludes native padding; send dummy prefix and uninitialized receive allocator tag/send factory scratch contents absent",
+  "unproven": [
+    "Native table-slot implementations and025c40/0261d0 application algorithms",
+    "04b0bc/04b788/native allocator provenance/control-block lifetime",
+    "Native ABI/GS-cookie/exception/SEH/unwind/concurrency",
+    "Complete DLL integration and original runtime differential"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "checked_at": "2026-10-18T09:25:31.343Z",
+  "open": false,
+  "server_identity": {
+    "package": {
+      "name": "rea-agents",
+      "version": "6.5.0",
+      "root_path": "C:\\Users\\Skysect\\AppData\\Roaming\\npm\\node_modules\\rea-agents",
+      "build_commit": null
+    },
+    "server": {
+      "name": "rea",
+      "version": "6.5.0",
+      "started_at": "2026-10-18T03:33:00.080Z",
+      "command_path": "C:\\Users\\Skysect\\AppData\\Roaming\\npm\\node_modules\\rea-agents\\scripts\\rea.mjs"
+    },
+    "sdk": {
+      "server": "2.3.1",
+      "client_test": "2.3.1",
+      "core": "2.3.1"
+    },
+    "negotiated_protocol_version": "2025-06-18",
+    "client": {
+      "name": "codex-mcp-client",
+      "version": "0.163.0-alpha.10.2"
+    },
+    "skill": {
+      "name": "reverse-engineer-anything",
+      "expected_version": "42"
+    },
+    "catalog": {
+      "counts": {
+        "cli_commands": 153,
+        "mcp_tools": 207,
+        "mcp_prompts": 6
+      },
+      "digests": {
+        "tools_sha256": "805433f17bb4f709558ff20c04f96fe561fca2938fd0f459b1f8cc0f6b438ded",
+        "prompts_sha256": "7152916ab48bd2a9677a5ad9cdbde0a51dc53c113934952ad096e93f5f18aa7e",
+        "combined_sha256": "405725e736ec8dc8483435b970acbf20f9f26b9f1fd25203b992f5ab4cd2a4f4"
+      }
+    },
+    "protocol_features": {
+      "progress": true,
+      "cancellation": true,
+      "elicitation": false
+    },
+    "alignment": {
+      "state": "aligned",
+      "reasons": [],
+      "remediation": null
+    }
+  },
+  "providers": [
+    {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": null
+      },
+      "availability": "available",
+      "version": "12.1.4"
+    },
+    {
+      "provider": {
+        "id": "hopper",
+        "name": "Hopper Disassembler",
+        "version": null
+      },
+      "availability": "unavailable"
+    },
+    {
+      "provider": {
+        "id": "ida",
+        "name": "IDA MCP adapter",
+        "version": "1"
+      },
+      "availability": "unavailable"
+    }
+  ],
+  "workflow": "Reused retained hash-bound REA/Ghidra static evidence. No target opened, loaded or executed.",
+  "stage": "CRT PTD/FLS, heap, invalid parameter and source composition"
+}

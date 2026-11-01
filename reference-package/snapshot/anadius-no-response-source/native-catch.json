@@ -1,0 +1,152 @@
+{
+  "schema": "no-response.fh4-native-derivation.v1",
+  "authority": "analyst-derived from retained shipped-artifact bytes",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "REA_bundle": {
+    "path": "outputs/anadius-no-response-source/rea-evidence.json",
+    "sha256": "32ecde5bb524d3f91cf455dc681846022ec3f44a4d4b3fce11665b7dc693ca0e",
+    "records": 22
+  },
+  "function": {
+    "begin": "0x180033d70",
+    "end_exclusive": "0x18003465e",
+    "unwind": "0x18009a624",
+    "exception_handler": "0x18004b184",
+    "FuncInfo4": "0x18009a648"
+  },
+  "table_RVAs": {
+    "unwind": "0x9a655",
+    "try": "0x9a677",
+    "IP_state": "0x9a698"
+  },
+  "try": {
+    "count": 1,
+    "low": 2,
+    "high": 2,
+    "catch_high": 3,
+    "interval_start_inclusive": "0x1800340bf",
+    "interval_end_exclusive": "0x1800341b1"
+  },
+  "catches": [
+    {
+      "row_rva": "0x9a680",
+      "header": "0x13",
+      "adjectives": 8,
+      "type_descriptor_rva": "0xa2728",
+      "funclet_rva": "0x7bd70",
+      "continuation_offset": "0x86a",
+      "continuation_rva": "0x345da",
+      "native_type_name": ".?AVUnknownMessageError@?A0x911f7926@@"
+    },
+    {
+      "row_rva": "0x9a68c",
+      "header": "0x13",
+      "adjectives": 8,
+      "type_descriptor_rva": "0xa26e8",
+      "funclet_rva": "0x7be90",
+      "continuation_offset": "0x86a",
+      "continuation_rva": "0x345da",
+      "native_type_name": ".?AVNoResponseRequiredError@?A0x911f7926@@"
+    }
+  ],
+  "IP_states": [
+    {
+      "ip": "0x180033db5",
+      "state": -1
+    },
+    {
+      "ip": "0x180033df2",
+      "state": 1
+    },
+    {
+      "ip": "0x180034020",
+      "state": 0
+    },
+    {
+      "ip": "0x18003405c",
+      "state": 1
+    },
+    {
+      "ip": "0x1800340bf",
+      "state": 2
+    },
+    {
+      "ip": "0x1800341b1",
+      "state": 1
+    },
+    {
+      "ip": "0x180034246",
+      "state": 0
+    },
+    {
+      "ip": "0x18003429a",
+      "state": 1
+    },
+    {
+      "ip": "0x180034332",
+      "state": 4
+    },
+    {
+      "ip": "0x18003435e",
+      "state": 5
+    },
+    {
+      "ip": "0x18003452c",
+      "state": 4
+    },
+    {
+      "ip": "0x1800345d0",
+      "state": 1
+    },
+    {
+      "ip": "0x180034613",
+      "state": -1
+    },
+    {
+      "ip": "0x18003463c",
+      "state": 1
+    },
+    {
+      "ip": "0x180034652",
+      "state": 5
+    }
+  ],
+  "used_byte_evidence": {
+    "0x180000000": "ev_2cea32399a52e1a29ae7452d90c668df761c6b65247345e0e6a095b1d77ac812",
+    "0x1800a6000": "ev_0dd56ef03e2fa7d5ab7173f4af563490b7ceeaf5b59dc03ae9ccf036e731b772",
+    "0x18009a624": "ev_c55920bfd7ce85222aea685762dc5c05301a9bcadb44c8ee2ddd7cbfc09f1c86",
+    "0x18009a648": "ev_c1ce920d541052f9f1394d57989c4fa8955b1356fded32bac12d2259a6d2d67b",
+    "0x18009a677": "ev_4187694956b14400914e1a3ef37799547e2fb979da3a98d88a7fcac43080ccf4",
+    "0x180088060": "ev_7456911601da7c7007bfada71722f21e896bea7cf803e4c872dbfb67b0fe27de",
+    "0x1800a2728": "ev_fd31f6c6ecd32f1d528e0a55514c52cd55c3e38d0fcd7ad2d264782ed122a7dc",
+    "0x1800a26e8": "ev_d080bc1d7328a0531ee0db1ce5d2a56579cce63f9a75e1a37c643cd9e4ef2bf1",
+    "0x18009f768": "ev_e66e8765bc97dadeb55f51a3527ef77f3be7bacf2b1b5ed14ed0137571b9275e",
+    "0x18009f788": "ev_8a152fea20ada35320cc88220697f96ef1dff18e454a4b1274217bf760e5eb1d",
+    "0x18009f7a0": "ev_97eb5396677a9f12b26d161344d024d32f82df9af673ee3c99b16b5be324f4ee",
+    "0x1800345d0": "ev_f23d70d0468399bb8345880a32548664c3a78232f8c430539cf64878fa584fcb"
+  },
+  "retained_decoder_evidence": {
+    "parent": "outputs/anadius-rea-evidence.json",
+    "parent_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "FuncInfo_decoder": "ev_1912a52c820037b96932a6ad4c0f95a14188db9c1fcbfb54fcd129f388031279",
+    "TryMap_decoder_ASM": "ev_d93cf0b4f632f995c17c3d7c6cf72430a006874b6d606516f260d89246454663",
+    "IP_state_decoder_ASM": "ev_1b1512bfdd69eb8745029dc0ab373973f88f051e93b5436bdb0b229fc5cd8309",
+    "NoResponse_funclet_ASM": "ev_cc11ffc3b46e0ab343256f2beb6623b6115d07bfea03edc2270aba6f64b65ec8"
+  },
+  "interpretation": "Only state2 dispatch032d00/response move/temp destruction is caught; NoResponse07be90 transfers current response and returns continuation selector0.0345da resets moved local,0345fe destroys document,034603 loads output. No response logging/NUL/encryption/event dequeue.",
+  "decoder_qualification": "Try states stored directly (no decrement), IP states decoded minus1. Ghidra Listing does not decode continuation0345da; observed REA bytes independently decoded by LLVM objdump, original SHA unchanged before/after.",
+  "secondary_format_reference": "https://devblogs.microsoft.com/cppblog/making-cpp-exception-handling-smaller-x64/",
+  "LLVM_continuation": {
+    "path": "outputs/anadius-no-response-source/continuation.objdump.txt",
+    "sha256": "64b09a97383d9186bdc8138ad2229fcb1f16fd46c0f9e93e9d42a024bef3c3fa",
+    "receipt_sha256": "a1b0a400fa4e80fc0f145b7dd8547aadcbe0101bddc07f49b40584e104285b29"
+  },
+  "limits": [
+    "Static metadata/control-flow derivation, not observed target execution.",
+    "UnknownMessage row located but not implemented by selected source change.",
+    "No original MSVC EH/type/layout or arbitrary unwind equivalence."
+  ],
+  "decoder_script_sha256": "f51b3838f162a7eee8522ee2f07940064a86e6034eac4b90f71045a2715d7331",
+  "original_execution": false,
+  "original_modification": false
+}

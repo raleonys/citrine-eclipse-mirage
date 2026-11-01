@@ -1,0 +1,106 @@
+{
+  "schema": "configuration-constructor-projection.evidence.v1",
+  "source_package": "B28",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "constructor": {
+    "address": "0x180036d20",
+    "pseudo_evidence": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+    "assembly_evidence": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9",
+    "source_presence": "no_definition_mapping"
+  },
+  "global_initializer": {
+    "address": "0x180001390",
+    "pseudo_evidence": "ev_efabeb808ec83eafa7cf73d31a8eea8067c2a2ba4230bcadb12e84dfb1c8f66e",
+    "assembly_evidence": "ev_0be5e645d47133bd7d6749009f622c7d1df581fcd58a83efcf8747149599fbbb",
+    "source_presence": "no_definition_mapping"
+  },
+  "retained_function_records": [
+    {
+      "address": "0x180036d20",
+      "evidence_id": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 43881,
+      "retained_record": "constructor.pseudo.c.txt",
+      "record_sha256": "3946b5785446d25565464041d85937e8c706cd8fa6e66acd8691d03161759d81"
+    },
+    {
+      "address": "0x180001390",
+      "evidence_id": "ev_efabeb808ec83eafa7cf73d31a8eea8067c2a2ba4230bcadb12e84dfb1c8f66e",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 244,
+      "retained_record": "initializer.pseudo.c.txt",
+      "record_sha256": "e06124e3f6e476c261942d74cb08cf798465f28628023b04c1019739d9aa7ec2"
+    },
+    {
+      "address": "0x180036d20",
+      "evidence_id": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 55644,
+      "retained_record": "constructor.asm.txt",
+      "record_sha256": "2e483c2c3dca57726d5be58388c4943bb12699b00b0c83e37ae6dc3bc74c5027"
+    },
+    {
+      "address": "0x180001390",
+      "evidence_id": "ev_0be5e645d47133bd7d6749009f622c7d1df581fcd58a83efcf8747149599fbbb",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 182,
+      "retained_record": "initializer.asm.txt",
+      "record_sha256": "cd61d23dedf03c7549f5d30ec1dcd164b42b428285f88064ab765d3c71f7dedd"
+    }
+  ],
+  "field_map": {
+    "path": "field-map.json",
+    "sha256": "72ebef6b49136b210089b2f5cf6a60fdc9efe337dd6ff11cf80ecbe31082ff0f",
+    "modeled_fields": 41,
+    "emulator_pairs": 6,
+    "game_pairs": 14,
+    "outside_modeled_fields": 0
+  },
+  "audit_reports": [
+    {
+      "path": "application-gap-audit.json",
+      "sha256": "e1baf649804a49c70ed0239977c4cadd5c78d1d91f359a47a2fd37023384064b"
+    },
+    {
+      "path": "application-gap-audit.md",
+      "sha256": "a53fc9f18a91e926ac33b51472b0c8e06ef55d853bea78bbdb990566c199abd3"
+    },
+    {
+      "path": "message-chain-gap-audit.json",
+      "sha256": "d0b3cd41160e7c4b0adf809e67f225a339ec4b1175c1045912fb6f7d85e88b37"
+    },
+    {
+      "path": "message-chain-gap-audit.md",
+      "sha256": "89b295936cf4fc6bcde5e9168e714f80b5283bf47cbc2b081f765452dc3b0bbe"
+    }
+  ],
+  "session": {
+    "path": "rea-session.json",
+    "sha256": "4c169c238e8e3f7ff3ece518191fcf21e7e5ac9a9e0d49b6a9f97dd7f602ce33",
+    "fresh_binary_session_only": true,
+    "new_target_queries": 0
+  },
+  "quick": [
+    {
+      "path": "work/b28-core-quick-results.json",
+      "sha256": "a16631134ef9d3b194ac4e5b153453d74534fc60c79c2422e86e7718ab8cc2f8",
+      "checks": 39,
+      "execution_by": "Root standard quick run; independent integration author /root/b22_integration; reviewer inspected records/source/EXE hashes without rerun"
+    },
+    {
+      "path": "work/b28-integration-quick-results.json",
+      "sha256": "4f39c36d30f2871351d880ad345a5df8abc7095281f483e7503702d884a31ccb",
+      "checks": 24,
+      "execution_by": "Root standard quick run; independent integration author /root/b22_integration; reviewer inspected records/source/EXE hashes without rerun"
+    }
+  ],
+  "new_original_bytes_queried_via_REA": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "scope": "All41modeled configuration State postconstruction values, not whole native036d20aggregate, MSVCstorage/mutexes, initializer01390, atexitregistration orcleanup thunk. 07e0c0->037f70 exactroute not proven."
+}

@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/pool_audit",
+  "independent_from_production_author": true,
+  "scope": "Read-only retained assembly/pseudocode, complete shipped-vtable evidence and two bounded normal pool bodies plus generic final bindings; no reviewer tests or original input reads",
+  "reviewed_source_hashes": {
+    "pool_release.cpp": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5",
+    "pool_release.hpp": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5"
+  },
+  "addresses": [
+    "0x1800033a0",
+    "0x180005a20"
+  ],
+  "findings": [
+    "Null release item returns without pool access",
+    "Cached pool+68 root precedes DWORD+70 decrement; cached root to item then item published to pool root",
+    "Tracking changes only DWORD+7c; both counters wrap modulo2^32",
+    "Generic final dispatch validates supplied known identities before body effects on same live memory",
+    "No original-address function-pointer casts,HeapFree,extra native-body guards or allocator implementation"
+  ],
+  "limitations": [
+    "Bounded raw-memory normal projections only",
+    "Native DOM/pool allocation/node virtual/destructor/ABI/EH/concurrency remain unproven",
+    "Target selection guards are interface boundaries, not additional recovered native bodies"
+  ],
+  "full_native_equivalence_review_complete": false,
+  "original_execution": "none",
+  "original_modification": false
+}

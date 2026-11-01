@@ -1,0 +1,187 @@
+{
+  "schema": "Config2.file-parser-first-copy.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "evidence_type": "Retained REA static evidence plus own source fixture tests; no original execution",
+  "retained_REA": {
+    "0x180019ad0": {
+      "assembly_evidence": "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+      "pseudocode_evidence": "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd"
+    },
+    "0x18003b3f0": {
+      "assembly_evidence": "ev_cb304cf806c8f77471c7aad5e5d42745fb5c6a321687823f1a11e5a06a733148",
+      "pseudocode_evidence": "ev_ad6cc2139952e6a5b4801ee44818938562b836f6b702e7924bc854bcd3096820"
+    },
+    "0x18001e200": {
+      "assembly_evidence": "ev_ebcf07c8f87fd0d72e7c4d1861631263a7251b5cae424c7f5a2b26909dbf5e4e",
+      "pseudocode_evidence": "ev_6b98bc82afa780f2cbc82f62b5f7f01cb3e1c01ed6b187472b5d681ff60e12df"
+    },
+    "0x180019260": {
+      "assembly_evidence": "ev_b39fa02a7f1888a0f409d24f784ee68e729dab9643a6664dd9e9fe9b20ed3c7f",
+      "pseudocode_evidence": "ev_853e24f3a3d35a57facca75f8f9b99731d1984948ab7ddf2585ca2d8343a756a"
+    },
+    "0x180010430": {
+      "assembly_evidence": "ev_e26476a15b24d5f4cf5b6ac5f693149fad890cdbb2ab8c1c168c903a47515d84",
+      "pseudocode_evidence": "ev_3e5063534865424f6924f3dcac16a8cf4527bfdd089090adaa05221e529e814c"
+    },
+    "0x180009eb0": {
+      "assembly_evidence": "ev_259f1a5cdb8c805a3e600239e02920086e76456c0ff5fea954f866d0b28e9777",
+      "pseudocode_evidence": "ev_f67735e2b612684e0244695b1a0f40290b2f78851c8f9840ca9495121e3e2d83"
+    },
+    "0x180014310": {
+      "assembly_evidence": "ev_54aed552de213f2f9d79c3681124bcd87de63cf8d64ef23c4a0915effd04c303",
+      "pseudocode_evidence": "ev_99422feca877e9a1163ea80688e0a0aba6aa617bc8e7bf32c62a480005fdd3b8"
+    },
+    "0x180016ad0": {
+      "assembly_evidence": "ev_ec3231ec9c4b07657e7692ea897d1cc2c48f2e46ef88e34a54727e8ad2d91e65",
+      "pseudocode_evidence": "ev_737fbd61f403fe78a7feea29489111d4b472650f49c00660456fb1100ca6d26b"
+    },
+    "0x1800165c0": {
+      "assembly_evidence": "ev_9610f1adb392b14497e277699d3612412deb9c5d518bb165cc368beb516e0452",
+      "pseudocode_evidence": "ev_227e0d7893d052061da350d003ffc9bce5422bd90460e0f26e214ef7fc1ec995"
+    },
+    "0x1800162f0": {
+      "assembly_evidence": "ev_8975dcb6850d9f73375de19ac628dbf270d8f0722bae94ba4b3ff22c3a9af0f9",
+      "pseudocode_evidence": "ev_eb165761bebee321d429869fbc04c4978b3a68c8f4111e91216a899887c12c29"
+    },
+    "0x180019820": {
+      "assembly_evidence": "ev_2c6c74d0802815891eaf3ede8e5f2639d1c48d079d566969fb1629ae54500fe7",
+      "pseudocode_evidence": "ev_99245712414cad2dc0f40f8e24c135ff69b46245d499ebddd8a2fcc0dfd29995"
+    },
+    "0x180016b00": {
+      "assembly_evidence": "ev_d700d96a5ed12b8bcdef8901c7afb999852d17e3ea353695486c17a84e225e6e",
+      "pseudocode_evidence": "ev_b91a74cb8fab9bce0f5c77c83454c94d7877d70d76cb86a6cb00b109b717ec8b"
+    }
+  },
+  "callsite_sequence": [
+    [
+      "019b7b",
+      "filesystem widen010540"
+    ],
+    [
+      "019b8d",
+      "parent019820"
+    ],
+    [
+      "019ba3",
+      "join016b00"
+    ],
+    [
+      "019bce",
+      "read_binary03b3f0"
+    ],
+    [
+      "019bec",
+      "substring01e200(0,3)"
+    ],
+    [
+      "019bfb",
+      "compare BOM0108b0"
+    ],
+    [
+      "019c23",
+      "conditional erase019260(0,3)"
+    ],
+    [
+      "019c85",
+      "owned parser input010430"
+    ],
+    [
+      "019d1a",
+      "parse014310"
+    ],
+    [
+      "019d1f",
+      "lowAL guard"
+    ],
+    [
+      "019d42",
+      "lookupConfig2 via016ad0"
+    ],
+    [
+      "019d52",
+      "deepcopy0165c0/0162f0"
+    ],
+    [
+      "019d6b",
+      "destroy parser result015c40"
+    ],
+    [
+      "019d79",
+      "destroy parser input015a30"
+    ],
+    [
+      "019d8d..019dc7",
+      "path log after parse/copy"
+    ],
+    [
+      "019e04..019e14",
+      "Game lookup/copy before apply"
+    ]
+  ],
+  "claims": [
+    {
+      "claim": "03b3f0 -> 014310 -> selected Config2 -> owned first-copy value",
+      "addresses": [
+        "0x180019bce",
+        "0x180019d1a",
+        "0x180019d42",
+        "0x180019d52",
+        "0x180019d6b",
+        "0x180019d79"
+      ],
+      "status": "implemented logical source composition",
+      "limits": "No MSVC allocator/SEH/ABI equality"
+    },
+    {
+      "claim": "Single BOM, initial state empty, short-read zero tail, true-or-throw grammar",
+      "addresses": [
+        "0x18003b3f0",
+        "0x180019bec",
+        "0x180019c23",
+        "0x180014310"
+      ],
+      "status": "implemented existing cores connected",
+      "tests": "189 pipeline fixture checks; actual native stream on own generated file only"
+    },
+    {
+      "claim": "First selected Config2 copy order",
+      "addresses": [
+        "0x180014a90",
+        "0x180011970",
+        "0x180012820",
+        "0x1800162f0",
+        "0x180017570",
+        "0x180011ba0"
+      ],
+      "status": "bounded: <=8 unique children per converted container",
+      "tests": "2185 synthetic order checks",
+      "limits": "More than8 is UnsupportedOrder"
+    },
+    {
+      "claim": "Later section-copy order and reused capacity",
+      "addresses": [
+        "0x180019ad0",
+        "0x1800165c0",
+        "0x1800162f0",
+        "0x180017440",
+        "0x180017570"
+      ],
+      "status": "unresolved",
+      "policy": "ScalarDependencies rejects all5 populated ordered consumers before log/application, including override; deliberate integration bound, not original parser error"
+    }
+  ],
+  "full_original_bodies_added": 0,
+  "CRT_implementation": "paused; prior sources unchanged",
+  "source_hashes": {
+    "pipeline.hpp": "c8b1b863abbabe7480c5d6f0ed4051964194333c65d9a08fe93ecb5aef379b8e",
+    "pipeline.cpp": "018c61c3354ae541b7e4e7506b7fcfb12600689772b9e54e2d99122065c54378",
+    "pipeline_tests.cpp": "78949acfd8b16e372f01108cea80a55c7253524bbeb1d9a424eb49773c3dcc30",
+    "build.ps1": "d22e970277f6482a5ff2e22e44bc4645b3c6519d94997ec2c892aa054009161b",
+    "CMakeLists.txt": "251b104cf94ab72c894a8eedb78083d39eece287ec7e0d45cc861b2c4675cf45"
+  },
+  "runtime_equivalence": "not established",
+  "original_execution": "none",
+  "user_cfg_contents_read": false,
+  "real_OS_scope": "Own generated config-pipeline fixture only; existing compatibility stream backend"
+}

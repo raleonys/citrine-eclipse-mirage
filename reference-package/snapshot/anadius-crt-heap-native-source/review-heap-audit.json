@@ -1,0 +1,41 @@
+{
+  "reviewer": "crt_heap_native_audit",
+  "checked_at": "2026-10-19T14:09:22.5579891Z",
+  "result": "PASS",
+  "sources": [
+    {
+      "name": "native_api.hpp",
+      "sha256": "2487bd65de259016d6232c6ed39dd1ad096f6ef927e10fbe19f7fb6b055d1b42"
+    },
+    {
+      "name": "native_api.cpp",
+      "sha256": "e14c7e4c338d4a703d65c9e2cba9dab88b289348eff8fa61f19b661b28627289"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "1cbc079f4700a4020b9efbf4ec04dc9d7af7127830a335864243144cc25e5d78"
+    }
+  ],
+  "source_validation_hashes_match": true,
+  "repeated_executable_result": "PASS: 169 native heap API checks (typed fixtures + own real allocations)",
+  "reviewed_contracts": [
+    "SDK decltype APIs preserve WINAPI, pointer and integer widths, including full SIZE_T values and UINT64_MAX failure sentinel.",
+    "API table is copied and all six pointers are checked before use; production allocation/free/size methods forward directly without hidden allocation records, normalization, error rewriting or ownership.",
+    "HeapFree normalizes using full BOOL !=0; GetLastError is directly exposed without pretending HeapAlloc/ReAlloc/Size failures set it.",
+    "Opaque invalid handles and pointers exist only in injected typed fixtures; real calls use GetProcessHeap and owned modest blocks with valid flags.",
+    "Real fixture establishes non-value-initialized unsigned char array lifetime after each successful native allocation/reallocation32/96/16 before indexing and validates prefix preservation/initialzero.",
+    "Documentation correctly limits new module to SDK bindings with zero newly recovered binary bodies and no target runtime equivalence."
+  ],
+  "findings": [],
+  "resolved_findings": [
+    {
+      "issue": "Initial SDK real_calls fixture indexed HeapAlloc/ReAlloc storage without explicit C++ byte-array lifetime establishment.",
+      "resolution": "Peer added placement new unsigned char[32/96/16] without value initialization after each successful native result, preserving bytes; narrow rebuild and reviewer repeat PASS169."
+    }
+  ],
+  "limitations": [
+    "Native wrapper does not start typed or byte-array object lifetimes itself; callers provide lifetime establishment as the root recovered Effects bridge does.",
+    "Native invalid pointers/heaps, huge allocations, exception flags/SEH, concurrency and target DLL/game execution are outside executed scope.",
+    "Reviewer inspected source and reran existing own test executable; peer validation supplies fresh compiler and executable hashes."
+  ]
+}

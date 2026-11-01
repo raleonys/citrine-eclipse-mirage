@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "reviewer": "initial_locale_data independent worker",
+  "reviewed_at": "2026-10-20T19:24:04.978Z",
+  "source_hashes": {
+    "callbacks.cpp": "6a4debca2b0cce025b6ec731f032ad60d6bcab41d4e9e9f682281a653fadbf57",
+    "callbacks.hpp": "3cd7e846c0922c30bdb67c1c20504747d7ba512c08e2cce3a415c2dacf46622d",
+    "native_tests.cpp": "c4288c5588250bcfaceecf2c2befb2bac3ecb1d2f2c05ab42c51a0061fddd6f7",
+    "build.ps1": "e70a4c4ed47685889e11c73e84b3bfe261c4c2186fe5bd1d413cac56de78a930"
+  },
+  "recovered_bodies_reviewed": [
+    "0x18006447c",
+    "0x1800644f8"
+  ],
+  "checks": [
+    {
+      "area": "06447c exact two-table composition",
+      "result": "PASS",
+      "assembly_evidence": "ev_0d879587dbd892a79fb6497849d2aae2767615e668da0a192514697e97897869",
+      "detail": "Calls existing initialize_onexit_table_0643f8 first on termination.State.onexit.crt_0a52a8, then State.quick_table_a52c0, sharing actual onexit cookie; ignores core return values and returns low-byte true. No shadow table or State copy. Begin==capacity condition remains in actual shared core."
+    },
+    {
+      "area": "0644f8 decrement and branch ordering",
+      "result": "PASS",
+      "assembly_evidence": "ev_0d023431ffc05119eee470b5ea148ad58ce9683f6c60cd3468df0b71bac082d7",
+      "detail": "Exactly one first current load and atomic modulo32 decrement. Only prior==1 causes second current load; captured initial identity then comparison; second loaded pointer is exact free argument without a third load. After normal free return, stored initial identity overwrites any intervening current mutation. No null/initialized guard, lock5, type/case reset or extra retain."
+    },
+    {
+      "area": "Counter/object lifetimes",
+      "result": "PASS",
+      "detail": "Own records create actual aligned LONG objects with construct_at, register native counter domain and unbind before freeing. Heap failure restores registration to still-live counter. Immutable image counter uses existing owned initial data lifetime domain. Shared onexit table fields are actual live Table objects."
+    },
+    {
+      "area": "Native owned fixture and callbacks",
+      "result": "PASS",
+      "detail": "Actual existing registration/execution/recalloc/heap sources tested with owned native heap and recursive fixture CRITICAL_SECTION; callback12 registers13 during execution and order12,13,11 preserved. Quick table independent and freed afterward. Bound reads/writes use owned block lookup and memcpy; original address callbacks are never invoked."
+    },
+    {
+      "area": "Branch/failure coverage and independent rebuild",
+      "result": "PASS",
+      "detail": "PASS 105 lifecycle onexit/multibyte callback checks;owned native heap/counters",
+      "partial_archive_sha256": "284940dacfa4bc9fa45f4e2c5e30f90a969e44f4824738e7251594ac663b180b",
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe"
+    }
+  ],
+  "findings": [],
+  "notes": [
+    "Source recovers normal flow and low AL success only; no original ABI high-register return bits or MSVC SEH equivalence claim.",
+    "Fixture CS accepts locks0 and2 using one recursive native CS. This validates required fixture reentry, not complete distinct original global lock topology or arbitrary concurrent CRT lifecycle use.",
+    "No whole CRT initializer sequence or full multibyte initialization equivalence claimed. API requires live current-counter storage and lifecycle ordering; original has no null guard.",
+    "Authorized independent build modified only build outputs/validation plus this review JSON; production/test sources unchanged.",
+    "Environment cleanup worker audit of onexit table aliases confirms these are the actual shared normal/quick state fields, with no need for image-relative adjacency."
+  ],
+  "original_target_executed": false,
+  "original_target_modified": false
+}

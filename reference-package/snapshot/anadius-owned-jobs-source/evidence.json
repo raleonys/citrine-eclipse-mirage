@@ -1,0 +1,73 @@
+{
+  "schema": "owned-jobs.source-composition.v1",
+  "source_package": "B44",
+  "evidence_type": "selected inline job execution policy composed with existing frame/message/SDK source",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "reused_addresses": [
+    "0x180025480",
+    "0x180021770",
+    "0x180021d10",
+    "0x180021fd0"
+  ],
+  "source_references": [
+    {
+      "path": "outputs/anadius-socket-source/frame_read.cpp",
+      "sha256": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+      "scope": "Existing recovered source/SDK adapters reused; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-socket-source/message_dispatch.cpp",
+      "sha256": "a8ca45a775c0fcd6bd485075ad3d459f8fd208a4922ade32e521c37bc2870014",
+      "scope": "Existing recovered source/SDK adapters reused; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-socket-source/async_receive.cpp",
+      "sha256": "6d215e4abc6d25a72240b7938b1c91ba1326dfffd8de367be75e9778602f454f",
+      "scope": "Existing recovered source/SDK adapters reused; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-socket-source/composed_write_native.cpp",
+      "sha256": "0aa0b7fa775156f28f18c16a7c5314979ef112c765de13d695996e3d3c5f454e",
+      "scope": "Existing recovered source/SDK adapters reused; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-owned-environment-source/evidence.json",
+      "sha256": "250c8a0397e164438370cc5d2352040d34cc86ad7e83ef1c9d5f65ec077edf6a",
+      "scope": "Existing recovered source/SDK adapters reused; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-owned-deque-source/evidence.json",
+      "sha256": "9307f67c6b8329a7114c647baae83f3d71575c2a409f06d9202a01042008a007",
+      "scope": "Existing recovered source/SDK adapters reused; no new original byte query."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b44-core-quick-results.json",
+      "sha256": "eb0b4cb1d9ede59879f4c2fd3460b0a161c9fa3b7f62aff4f1b1bc1a4fa87119",
+      "checks": 230,
+      "executable_sha256": "f1f607fddbb3f957ac0abbac653cd8e34a6e4180d135c57f3212a62db6965277",
+      "archive_sha256_as_used": "a51da34b255dfca68e105c0ba0161d02e62511d64728eb60d544321c10542c35",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh jobs.cpp, modified Profile.cpp and jobs_tests.cpp with selected actual headers/prior domain fixture; immutable canonical B43 archive supplies other prior production objects. Integration test is not compiled or claimed. These six selected as-used files differ from six frozen module/integration/prior files. Main count excludes fourteen independent retained-prefix children, exact exits401..414 verified. FrameThreadHandle values returned by InlineJobs are synthetic source-execution tickets and are never passed to OS handle APIs. Passive Profile SDK provider construction/default/null-import/override cases make zero SDK import calls. Small-donor retirement is verified against the pinned compiler/libc++ ABI rather than asserted as a native CRT/thread ABI."
+    },
+    {
+      "path": "work/b44-integration-quick-results.json",
+      "sha256": "fefc8459fe9be8b3fbde368125f7377daf8d57ae83275b4882919febbfd106fe",
+      "checks": 298,
+      "executable_sha256": "5600ee177e38f141364df74136eb1a0c69d2b1daf404c61446a177bf2a1c2fd2",
+      "archive_sha256_as_used": "a51da34b255dfca68e105c0ba0161d02e62511d64728eb60d544321c10542c35",
+      "execution_author": "/root/b22_integration",
+      "note": "Actual DEFAULT Profile-owned InlineJobs with jobs=null and defaultNativeAsyncReceive/Send APIs with receive/send=null, onlyexacttyped WSARecv/WSASend/get_error imports. NOfixtureJobs backend,transportAPIclasses,environmenttables orcontextgraph;18nativeframe jobs runinlineonadmittedworker, notOSthreads. SDKcallbacksvalidateonebuffer/flags/privateDWORD/OV/nullcompletion andimmediateunconditionalLastError onbothsuccess0(non997error) andpending997. FullNativeLogic/Router17plain+AES/event,59nativepackets/wrapped8to16/FIFO17 underrealheap/FLS/ownIOCP. Remainingmessage/log/worker/shutdown/externalobserveddrain policiesexplicit; jobcompletioncounts doNOTestablishkernel/rawjobunload/concurrency/nativeABI proof."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition; no fresh shipped-artifact claim.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false
+}

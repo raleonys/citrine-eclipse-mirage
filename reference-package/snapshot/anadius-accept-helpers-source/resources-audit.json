@@ -1,0 +1,23 @@
+{
+  "source_package": "B38",
+  "result": "SELECTED_OWNED_RETRY_BINDING_WITH_EXPLICIT_UNSUPPORTED_PROFILES",
+  "resources": {
+    "factory": "NativeSocketFactoryApi with injectable WSASocketW",
+    "reset": "existing typed AcceptorApi close/ioctl and Api category/error",
+    "retry": "RetryEngine live scheduler, explicit API/cancel/packet bindings",
+    "owning_retry": "primary selected packet, null cancellation, exact0x90 endpoints, checked prearmed owner API"
+  },
+  "unsupported": [
+    "owning early cancellation duplicate publication/kernel finality",
+    "alternate packet ownership",
+    "native category object mutation/vtable ABI",
+    "native EH rollback",
+    "arbitrary concurrent callbacks"
+  ],
+  "native_033d70_binding_complete": false,
+  "production_runtime_resources_complete": false,
+  "loader_hooks_bound": false,
+  "original_dll_loaded": false,
+  "real_network": false,
+  "config_or_token_contents_read": false
+}

@@ -1,0 +1,41 @@
+{
+  "reviewer": "crt_environment independent worker",
+  "review_type": "Static source and fixture review against retained hash-bound Ghidra assembly; no test or target execution",
+  "result": "PASS",
+  "checked_at": "2026-10-18T14:25:49.5438124Z",
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "retained_pseudo_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "sources": [
+    {
+      "name": "termination.hpp",
+      "sha256": "fabc301738df4612c11c194169e92c96d407e81d88eda792e726924eb9cab0fa"
+    },
+    {
+      "name": "termination.cpp",
+      "sha256": "d06c707dfe7daefadba5d890f2b6745f75ba1c089743800462759df2f11c3e5d"
+    },
+    {
+      "name": "termination_tests.cpp",
+      "sha256": "fc3d2124ceccc55312632cd4b8a957e0ddd8c4f701ee73a74f275daff96464d9"
+    }
+  ],
+  "findings": [],
+  "verified": [
+    "05cb38 completion guard tests full byte nonzero; begun uses DWORD XCHG before all callbacks; cexit leaves persistent completion unset and begun set",
+    "Encoded callback compares encoded cell to cookie before ROR decode and dispatches three zero DWORD arguments",
+    "Mode selection uses full DWORD; mode reread after onexit callbacks controls preterm range; full return DWORD reread after both ranges controls two byte stores",
+    "Range selectors are exact half-open 18007f728..18007f748 and 18007f750..18007f758; no execution of metadata VAs",
+    "Onexit state and encoded callback are borrowed by reference, not copied; mutation and rescan fixtures cover shared global table changes",
+    "05cc04 PE checks preserve read order, WORD/DWORD widths, signed e_lfanew addition, unsigned directory-count >14 test, DWORD CLR directory nonzero test",
+    "05cc04 skips PE inspection when returning, and reruns termination helper when return DWORD remains zero after guarded call",
+    "05cd24 frees nonzero output handle even when GetModuleHandleEx fails; success can dispatch callback then rereads output handle",
+    "05cd00 distinguishes full EAX ==1 from low AL ==0; terminate helper continues after returning TerminateProcess",
+    "Only normal control flow recovered; synthetic exception fixture deliberately does not invent unlock or finally semantics"
+  ],
+  "limits": [
+    "No original ABI, runtime equivalence, SEH/CFG implementation or native provider claim",
+    "Global state other than atomic begun requires external compatible recursive lock serialization",
+    "Historical standalone validation was inspected but not rerun during this static review"
+  ]
+}

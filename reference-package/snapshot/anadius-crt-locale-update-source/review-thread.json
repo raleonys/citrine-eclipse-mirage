@@ -1,0 +1,78 @@
+{
+  "result": "PASS_STATIC_REVIEW",
+  "reviewed_at": "2026-10-18T19:55:25.7602953Z",
+  "scope": "Independent static source/assembly review only. Existing standalone validation inspected; no tests or original/native code executed by this review.",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "functions": [
+    {
+      "va": "0x18006f540",
+      "evidence_id": "ev_d589fedbeb516727ecf25d4765c3c807019361721e6aa77059f7aae92f689e46",
+      "checks": [
+        "Mask read precedes PTD flag read; locale pointer is read only when masked flags nonzero",
+        "Pinned nonnull locale selects PTD multibyte pointer; null selected result aborts without lock",
+        "Lock 5 protects reread, compare, previous-count atomic decrement, non-static free, current-slot reread, PTD store, increment",
+        "Current pointer reread after free and captured result retained across unlock; previous refcount 1 alone can free",
+        "Changed path with current null reaches atomic address zero; documented unsupported fault domain has no invented guard/unwind cleanup"
+      ]
+    },
+    {
+      "va": "0x18006f658",
+      "evidence_id": "ev_33df403939b5a2d5416620bfb29c25b664753ef741a6f07e480456f3a850eae6",
+      "checks": [
+        "Required PTD precedes obtaining live current multibyte cell identity; return preserved"
+      ]
+    },
+    {
+      "va": "0x180070968",
+      "evidence_id": "ev_6b72fe2c82e157036e8e8bc074656951773c9bb6f8ad0239a0750312bd32403e",
+      "checks": [
+        "Required PTD then flags then mask; PTD locale read only on masked flags",
+        "Lock 4 precedes global locale read and helper; helper result captured across unlock",
+        "Null result aborts after unlock; pinned nonnull result skips update"
+      ]
+    },
+    {
+      "va": "0x1800709d8",
+      "evidence_id": "ev_289f44c550d338f639178fc8d8c2b59c8712a4078351c5f269749c1adc78b7b6",
+      "checks": [
+        "Replacement-null checked before destination-null; invalid/equal cases skip mutation",
+        "Captured old pointer; store replacement before add; release old before count reload; free only zero-count non-static old",
+        "Returns captured replacement despite destination mutations; no internal lock or added exception cleanup"
+      ]
+    }
+  ],
+  "bridge_spot_checks": [
+    "ThreadEffects required PTD delegates actual required_preserve_error_064b90 body",
+    "Heap free delegates actual free_0668c0 body; locks/reference deep bodies remain explicit data effects",
+    "Global multibyte accessor supplies live caller-owned field address; memory provider must bind same address domain",
+    "UpdateEffects delegates actual thread refresh cores; wildcard constructor uses recovered locale update and clear flag gates unused fast-path PTD metadata"
+  ],
+  "material_defects": [],
+  "reviewed_files": [
+    {
+      "path": "outputs/anadius-crt-locale-thread-source/locale_thread.hpp",
+      "sha256": "536621923d516eeffb2e5fc4b835f30a668655b06ffa7e1c0c8f67ed237f6bdc"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-thread-source/locale_thread.cpp",
+      "sha256": "94056806d91af6a462f4ffc63086ca10960c4e189d7bc9342aa5c7cfd19bfd4c"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-thread-source/locale_thread_tests.cpp",
+      "sha256": "8025f8137d3d086b785cce789f2d8e5daa5c18efa2e3f0aa7914ef21d3b71bd4"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-thread-source/README.md",
+      "sha256": "9bf91666f540dda42002ced2d36961641e1ae665de21fd2efc9a929bf9e21646"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-bridge-source/bridge.hpp",
+      "sha256": "e49856d6172275d730081348414f4104c89f3e3f88684ed592343cadfbcbc118"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-bridge-source/bridge.cpp",
+      "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59"
+    }
+  ]
+}

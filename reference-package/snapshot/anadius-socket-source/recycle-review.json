@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "reviewer": "recycler_audit",
+  "scope": "Independent frozen four-source review against retained0283c0 normal-flow contract and host storage correctness within initialized borrowed graph domain",
+  "sources": {
+    "outputs/anadius-socket-source/recycle.hpp": "027923db8624434cf98274a27d667ff2fb2aec082a65e0998f1200c81efeb60f",
+    "outputs/anadius-socket-source/recycle.cpp": "aeb139759f836963ee7216d1a95e4eb2149f41c9f29463f4d2712be416d2836d",
+    "outputs/anadius-socket-source/recycle_storage.hpp": "e39f05d8b3bcf95985e64149561b8d3158f3865aee4cabea0e2d151d80351560",
+    "outputs/anadius-socket-source/recycle_storage.cpp": "cc08df14c064dd41f2fdd4a0f3752869b57f01d9955ff25efc83fc0e0fd9ea5e"
+  },
+  "report_sha256": "3941872732feee3f49ece0f8b11f6b2872d3afb65ff49e783c18ac1f1a2ab48b",
+  "audit_report_sha256": "2d6e90288b883cf76a65e49d0c2421471ffc88b530386a1e1449900d461ed045",
+  "audit_json_sha256": "1412e9d9f6b62dc73bf2f127b2d85fcef3be6b2ad47cbb3cd4076d450923de18",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x1800283c0"
+  ],
+  "new_original_procedures": 1,
+  "core_contract": "Unsigned key modulo buckets; sole/first/last/interior bucket cases; key0 and freeFirst/after captured before equality-only limit; mandatory nonreturning047fc4 token0846b8; free++ active-- modulo64; exact six stores/live intervening reads; mapSize-- last; no alloc/free/FIFO changes; free-head insertion before old freeSentinel.next",
+  "composition": "RecoveredCancellationRecycler binds logical storage identity (bucket data pointer, size, active sentinel); copied CancelMap projections share live metadata/counters; mismatched storage rejected before writes; no second engine gate",
+  "host_storage": "Explicit reconstruction design; stable unique_ptr nodes; circular sentinels; contiguous per-bucket insertion; duplicate-key lookup; free-head removal means LIFO reuse; deleted copy/move; borrowed operations",
+  "providers_not_recovered": [
+    "047fc4 native CRT exception construction/unwind",
+    "Native ASIO map construction/insertion/rehash/allocator/layout",
+    "Native lifetime/concurrency/DLL entry/export ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Initialized borrowed finite graph domain; invalid native pointers/aliases outside that domain not proven",
+    "Host callers serialize mutation and do not corrupt exposed map/metadata",
+    "Borrowed operations appended only when unlinked and drained before recycle/reuse",
+    "Host storage helpers are not counted as original procedures",
+    "Native ABI/unwind and full DLL/live IOCP equivalence unproven",
+    "One metadata binding per logical storage identity; conflicting duplicate bindings outside valid domain"
+  ]
+}

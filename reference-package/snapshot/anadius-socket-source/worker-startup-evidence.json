@@ -1,0 +1,142 @@
+{
+  "schema": "worker-startup.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x18002a000",
+      "pseudo_evidence": "ev_5e78eef88f702baed2927d9748d4a109ac08003daafc401dcb7edab1bb2b2aab",
+      "assembly_evidence": "ev_9bb61c1aa2239aa4ceaa3b76b45ca58ddf61af660271bf12e342b874b7583917"
+    },
+    {
+      "address": "0x18002a4a0",
+      "pseudo_evidence": "ev_326989fa8214581db6a42e9ea6032da072a9887b4b3666295c91af39e968d292",
+      "assembly_evidence": "ev_a156da50becb7358bbfc13525d003f388046ac1b32fde8dc694fec79d90d8a53"
+    },
+    {
+      "address": "0x180024990",
+      "pseudo_evidence": "ev_3a626f8100eb1bf7ba0b9677a33b1b1418e250dde536cb3a9f122c32790a3442",
+      "assembly_evidence": "ev_87052282e1951ed15719d13023b5cd5cfdf7a65dcbff15d2354f8ee4cff08aad"
+    },
+    {
+      "address": "0x18005e8e0",
+      "pseudo_evidence": "ev_06d02d032bc19f80b5602d3d24b5ce1d432c5a742d8014e2c0f45f08f084deea",
+      "assembly_evidence": "ev_b2508bf2d6430c3f029f1f6090cadaa12d2315a853312d93ad48f42602adfb0e"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "worker_startup.hpp": "699eb51446551906d51c069c00d95f6fbd2d9a2cb706d28021695990d01fa87e",
+    "worker_startup.cpp": "c195e934d656aa572de2656f7d80cf2257fbbc9d4c8aa80accd233bc08ecb565",
+    "worker_startup_native.hpp": "3a9dd32ae720496c9e9239f8840542487b9c88f431defb1569545a6c8796ee2e",
+    "worker_startup_native.cpp": "7b67d379aa49a2133dd58c6ffd0d553419b2bf8105162fc1ad32c97c0fead8c9",
+    "worker_startup_tests.cpp": "5f4b2481e437b8825736a8475a5d20d8f99e38711031b927ec0dbf567ab2df74",
+    "worker_startup_native_tests.cpp": "a5181f58faf1bf7563daba966db93fd07fdfefda849494dfa83abd7f2da9d521",
+    "build.ps1": "667bc405433283fc950bf155ae02f3f81e5d963ea3ff85b470a1991c71045ac6",
+    "CMakeLists.txt": "c4d7d5525f6e1cedb5c93e0aa6f78d15c5f787b33aa87171c770a47b6e44d3d5",
+    "README.md": "b52d7993fba14c46008c4798f79ce38c3848bdc9b77405f9b21a7a8eb51f8dbd"
+  },
+  "support_hashes": {
+    "worker-startup-evidence.pseudo.c.txt": "643bc816f2c455c2259472132a8ed080010153404fe47a06a3a06cf1f150cefd",
+    "worker-startup-evidence.asm.txt": "70437cc91cea2eff0c9e3ed868d9ffc428f62db9e1d58308130e8b8b39f1ba7a",
+    "worker-startup-flow-audit.md": "65d132d26b0bc50b77d0d5809a937f6b303a97c6ac724586e835eb104c50009c",
+    "worker-startup-flow-audit.json": "410acea0185962a33a3330ca6466cd0676c5e1f5bfb6c14c7fff05240a602b50",
+    "worker-startup-review.md": "5ff21ef18168297d6c7dce90f0964480d16a33862aa211acda44fd84ef076358",
+    "worker-startup-review.json": "e8e742cbdf55d81b0dfe1bd40d2ac0b460534808cb76192d910de859750368e4",
+    "worker-startup-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x18002a000",
+    "0x18002a4a0"
+  ],
+  "new_original_procedures": 2,
+  "required_providers": [
+    "04b0bc native allocator and04b0f8 deallocator",
+    "Function virtual run08 and scalar deleting slot00",
+    "Actual thread effects and native lifetime/concurrency",
+    "Category/028240 exception/dispatcher effects"
+  ],
+  "claims": [
+    {
+      "finding": "CreateEventW(0,1,0,0) precedes function access; nullfunction host guard after first API without cleanup; store function08/cache entry; failure caches error before delete1, category ALWAYS after delete, only nonzero raises0844c8; zeroerror continuation requires live host projection",
+      "addresses": [
+        "0x18002a027",
+        "0x18002a02d",
+        "0x18002a031",
+        "0x18002a039",
+        "0x18002a048",
+        "0x18002a04a",
+        "0x18002a051",
+        "0x18002a05b",
+        "0x18002a165"
+      ]
+    },
+    {
+      "finding": "Second event sameargs; store worker10 then function10, test LIVE worker10; error cached before delete1, category ALWAYS, nonzeroonly0844e0raise",
+      "addresses": [
+        "0x18002a06f",
+        "0x18002a075",
+        "0x18002a079",
+        "0x18002a07d",
+        "0x18002a084",
+        "0x18002a097",
+        "0x18002a09e",
+        "0x18002a177"
+      ]
+    },
+    {
+      "finding": "Zero local ID before05e8e0(0,cacheduint32stack,opaque02a4a0,function,0,&id); store worker08 then test RETURN handle; existing unchanged recovered05e8e0 reused, no new CRT body",
+      "addresses": [
+        "0x18002a0bc",
+        "0x18002a0ca",
+        "0x18002a0cd",
+        "0x18002a0d1",
+        "0x18002a0d6",
+        "0x18002a0da"
+      ]
+    },
+    {
+      "finding": "Threadfailure caches error before delete1, closes cachedentry then reloads LIVE worker10 after firstclose and closes it; category ALWAYS after cleanup; nonzeroonly0844f4raise; tail waits INFINITE then closes cachedentry; error0 can cause secondclose; no extra GetLastError/rollback",
+      "addresses": [
+        "0x18002a0df",
+        "0x18002a0f0",
+        "0x18002a0f2",
+        "0x18002a0fd",
+        "0x18002a103",
+        "0x18002a10c",
+        "0x18002a116",
+        "0x18002a122",
+        "0x18002a153",
+        "0x18002a131",
+        "0x18002a13a"
+      ]
+    },
+    {
+      "finding": "Signal liveentry08; invoke run08; cacheexit10 AFTERrun; delete1; signal CACHEDexit with no function access after delete; SleepEx(INFINITE,TRUE) once; ignored API results; return0",
+      "addresses": [
+        "0x18002a4b2",
+        "0x18002a4b6",
+        "0x18002a4c2",
+        "0x18002a4c5",
+        "0x18002a4d4",
+        "0x18002a4d9",
+        "0x18002a4e9",
+        "0x18002a4f0"
+      ]
+    }
+  ],
+  "independent_production_review": "PASS; worker-startup-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Actual02a000 startup and02a4a0 entry source composition with024990 and unchanged recovered05e8e0; injected SDK event/wait/handle APIs and controlled run/delete/thread/allocator/category effects; no real event/thread/network/IOCP",
+  "unproven": [
+    "04b0bc/04b0f8 allocation, run08/deleting00 implementations and native object layout/ownership/teardown",
+    "Native ASIO dispatcher/allocator/lifetime/real thread concurrency",
+    "Zero-error continuation after delete does not establish native lifetime safety",
+    "Native error padding/vtable/global/SEH/unwind/ABI",
+    "Full DLL integration and original runtime differential"
+  ]
+}

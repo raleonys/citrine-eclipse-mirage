@@ -1,0 +1,84 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "New single-domain native FLS callback binding; reused existing recovered bodies",
+  "recovered_original_bodies_added": 0,
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "evidence_links": [
+    "../anadius-crt-ptd-source/evidence.json",
+    "../anadius-crt-ptd-data-source/evidence.json",
+    "../anadius-crt-glue-source/evidence.json",
+    "../anadius-crt-heap-native-bridge-source/evidence.json"
+  ],
+  "ptd_functions": [
+    {
+      "va": "0x180064b4c",
+      "pseudocode_evidence": "ev_417e90806543d688e3aec172b715642fa83a50b4501cb0ce6909f8f23989bc25",
+      "assembly_evidence": "ev_4e604ba0d5a58864500375177f08b08ad79324458b88be38464c17ffaac4a598",
+      "scope": "full recovered normal control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x180064b90",
+      "pseudocode_evidence": "ev_77d592b0d3adaa912877418cb0685fa1d0c61fb88a798ab65afd0e57687606cf",
+      "assembly_evidence": "ev_7fd4dc26997bdff556f5d1f415f92dcc17b9a1d680bf1ee52fd5e3d5da0c8d0b",
+      "scope": "full recovered normal control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x180064c64",
+      "pseudocode_evidence": "ev_61b5b31cde4b9171aa1c70ed02891a666a04bf9c49a6ed679f13a98ff40af11c",
+      "assembly_evidence": "ev_298198c276b007333c8cbff65a3cb67d9965ba716936ec649c82c4c370a9cf2b",
+      "scope": "full recovered normal control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x180064d08",
+      "pseudocode_evidence": "ev_b53da828b2289325d82d050c08eb43670664faf07979fcc96800099802656494",
+      "assembly_evidence": "ev_a0be4a11487767600e7fb447b80cb439aa5721a79f67c30653bdbc6784555f1d",
+      "scope": "full recovered normal control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x180064dd0",
+      "pseudocode_evidence": "ev_cecd50ab06d296cf56149fd89964ecfb7a11378b97d75fc7891c5d7ad1e8814b",
+      "assembly_evidence": "ev_ba682c595a53274f7d0fe7fb7e42b5ea8f913872fbc1ce427ffd2f71fd5c36fe",
+      "scope": "state index zero only"
+    },
+    {
+      "va": "0x180064e90",
+      "pseudocode_evidence": "ev_9e333e33a4960b2fa42317907dca8150dff6c829e4d2a8ac893f096a103d7ce7",
+      "assembly_evidence": "ev_5ed7b96fbbda943b1bd2245697639ed8fc1b17d8c96f0de32d484e7b0c450bd9",
+      "scope": "full recovered normal control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x180064ecc",
+      "pseudocode_evidence": "ev_548f2fca0b7a721cc982f98265afacc70e59e6f00fb0dfe28f5871f282ad6b5a",
+      "assembly_evidence": "ev_214f3473d0636c01579dc4a64df9a4465a1f3d1a4d008d4cde67b6e603452785",
+      "scope": "full recovered normal control flow; mandatory Effects dependencies"
+    }
+  ],
+  "source_anchors": [
+    "0x180064bd1..064c38: sentinel,calloc,publish,construct",
+    "0x180064edb..064ee0: ignored release BOOL then invalidate",
+    "0x1800649cc: destroy body then free",
+    "0x1800649ec: field3c0 free before multibyte/locale release"
+  ],
+  "new_binding_contract": "Single active domain; own State only; quiescent release; separate native index retained on failed release; callback noexcept catchall and sentinel rejection; no silent unbind; new support/ownership checks not original guards",
+  "test_scope": "127 own-fixture checks plus3 own-process fatal cases; real FLS/process heap and joined stdthread; injected failures; controlled locale refs/lock/atomic/global providers",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "runtime_equivalence": "not established",
+  "parallel_workers_ABI_SEH": "unproven",
+  "sources": [
+    {
+      "name": "fls.cpp",
+      "sha256": "a243b8c1c12009769b85482dd38b270348ecc601d2fb0f3a5b9b0a4fdfa65d99"
+    },
+    {
+      "name": "fls.hpp",
+      "sha256": "f06b04d897f24177a76c281fb4bbcd47b295ad862f7e91e24d37ad6a535a9cd8"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "4a4ae8dc6cb1c67e0c61517ae9cc2e2903769b37c477ddf96e1713f5ea18be34"
+    }
+  ]
+}

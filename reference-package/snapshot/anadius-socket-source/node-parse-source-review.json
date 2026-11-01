@@ -1,0 +1,87 @@
+{
+  "schema": "node-parse.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-26",
+  "reviewer": "/root/node_parse_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent complete retained004970 assembly/pseudocode and exact current CPP/HPP review; one bounded byte-state body and a selected known-target source dispatcher. No generic virtual parser closure, native stack/ABI equivalence, original reads, reviewer tests or new native analysis.",
+  "reviewed_source_hashes": {
+    "node_parse.hpp": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a",
+    "node_parse.cpp": "c3f99be72328132e6917da81939cfb97fe8cff41bf246cdb33746af0defd5461"
+  },
+  "addresses": [
+    "0x180004970"
+  ],
+  "assembly_evidence": "ev_bab15aa72d1d1d2cb34f0a417872877e60c9e43b5b9530ac83290c1bbc58da0a",
+  "pseudo_evidence": "ev_01d06f0d09c426e84edfc80412a5b90481296b9b16734298cadd2cf8fceab53d",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 1,
+  "new_source_bridges": 0,
+  "new_selected_source_adapters": 1,
+  "historical_typed_providers_newly_closed": 0,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 1,
+  "prior_source_presence": "module_record_only",
+  "closed_providers": [],
+  "selected_source_adapter": {
+    "class": "RecoveredNodeParseEffects",
+    "entry_method": "parse_virtual",
+    "recursive_method": "parse_child_virtual",
+    "body": "parse_node_004970",
+    "known_target": "0x180004970",
+    "other_targets": "mandatory parse_other_virtual",
+    "workspace": "mandatory caller-owned acquire_parse_scratch before source-body entry",
+    "generic_virtual_provider_closed": false,
+    "native_abi_complete": false
+  },
+  "findings": [
+    "Entry caches owner+8 as original document, increments its live DWORD+a4 with32-bit wrap, rereads it for equality100 only, and reports depth error18 with that cached document and live+a0. Normal epilogue decrements the live DWORD+a4 at the original cached document; no RAII unwind rollback is invented.",
+    "The first live owner document.error+6c check precedes null-cursor and byte checks. Main accepted-child backedge checks only the current byte; it does not repeat error+6c or null checks. Ordinary initial error/null/NUL,Identify-null and EOF exits return0; mode2 closing path returns nextCursor.",
+    "Identify receives live owner+8,cached cursor and explicitly mapped out-node slot after QWORD0 store. Its cursor result is separate from loaded child output. Child line DWORD is cached and then written over lowDWORD of out-node,retaining its upper4bytes.",
+    "Local closing pair initializes DWORDflags and two QWORDstart/end fields in order while preserving padding. Child parser receives live vtable+80 identity,node,identified cursor,local pair and original line-counter address. No target identity is cast to an original host function pointer.",
+    "Declaration probe+48 result is an object pointer used for later value probe/GetStr. Validity checks preserve owner probe+38,first-child presence/probe+48,last-child presence/probe+48 short circuits; first==0 accepts without reading last.",
+    "Illegal declaration captures live owner+8 before probe+30/GetStr of the returned declaration object and reports error11 using cached child line and explicit pointer-vararg transport. It then uses cached-tail cleanup and local-pair free.",
+    "Element probe+08 result is a pointer whose modeDWORD+68 distinguishes mode2. For other modes,local pair end is read before start. Empty closing pair with mode0 and nonempty pair with nonzero mode mismatch immediately,using cached child line.",
+    "Mode0 nonempty comparison probes/materializes element name,materializes local closing name,skips compare on pointer identity,otherwise calls compare05c550(closing,element,0x7fffffff). Only nonzero compare path rereads saved lineDWORD from mapped out-node before error14.",
+    "Mismatch captures live owner+8 before the second element probe/GetStr,forwards explicit pointer argument with error14,and uses live-tail cleanup. Callback changes to owner.document or saved line are preserved according to the exact native cache/read boundaries.",
+    "Accepted child compares live owner/child document identities before prepare003aa0. Append reads owner.last after preparation and rereads owner.last after writing previousLast.next; empty-list writes last,first,child.previous in native order,then child.next and parent. This preserves mapped write aliases.",
+    "Mode2 closing output transfer skips null or exact source-address alias. Otherwise it conditionally frees live output.start,zeros flags/start/end,loads/stores source fields separately,then zeros source fields; no string copy or padding reset is introduced.",
+    "Mode2 pool track+20 runs before cleanup and is followed by a fresh child probe+38. All cleanup variants use cached initial positive signed32 count as scan bound and separate32-bit index/sign-extension for found-slot publication.",
+    "Failed-parse and declaration cleanup use cached initial count for replacement tail; mismatch and mode2 cleanup reload signed live count only for replacement tail. Count decrement rereads live DWORD after the swap store. Existing generic delete helpers are not blindly substituted.",
+    "Every cleanup caches child.pool before loading child vtable/destructor+78(0); after destruction it reads live cached-pool vtable/release+18. Failed-parse cleanup checks live owner.document.error before optional error15 with cached child line; local pair is conditionally freed before normal depth epilogue.",
+    "Known-target entry and recursive dispatcher select the normal004970 source body only when identity matches configured known target. Other targets and caller-owned invocation scratch remain mandatory lower effects. Two dispatcher methods do not create extra numeric004970 definitions or close a generic virtual engine.",
+    "NativeNodeParseError explicitly labels presence/value of the one pointer variadic argument for error11/error14. The inherited N24 four-argument error bridge is not assumed to capture native stack data; report_error remains mandatory and must establish argument transport before calling any N24 source helper.",
+    "Three exact error-format constants and selected document slot07ff48→004970 are verified against the old complete initialized Ghidra read. These bytes do not prove heterogeneous child vtables,parser primitives or runtime target execution."
+  ],
+  "limitations": [
+    "Bounded normal byte-state projection with explicitly supplied mapped scratch and mandatory lower effects. Native register/object/stack/variadic/fault/EH/concurrency equivalence remains unproven.",
+    "Identify0038b0,GetStr0035e0,prepare003aa0,compare05c550,heterogeneous virtual parsing,probes/destruction/pool effects and native allocation/free/formatting/DOM remain mandatory or separately incomplete.",
+    "Caller-owned scratch represents local-slot identities only; acquire_parse_scratch is a source integration boundary,not recovered native heap or stack lifetime behavior. Missing mapping/lower failures retain committed source prefixes without synthetic cleanup.",
+    "Selected004970 dispatch is not generic NativeParseEntryEffects or NativeNodeParseEffects completion. Historical typed source closure count is unchanged by this adapter.",
+    "Source review and fixture tests cannot prove original-binary execution or a complete replacement DLL. No total DLL completion percentage is derived."
+  ],
+  "retained_data": {
+    "file": "node-parse-retained-data.json",
+    "sha256": "8ccf7de0156d6bf482d649575bb0730d46a249feb182ed9f1a98784dd873434a",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "format_constants_count": 3,
+    "selected_document_slot_target": "0x180004970",
+    "new_original_read_performed": false
+  },
+  "full_native_equivalence_review_complete": false,
+  "native_node_parse_normal_body_ready": true,
+  "native_node_parse_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "generic_virtual_parse_closed": false,
+  "native_variadic_abi_established": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false,
+  "new_native_analysis": false,
+  "CRT_production": "unchanged and paused"
+}

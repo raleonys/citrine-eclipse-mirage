@@ -1,0 +1,132 @@
+{
+  "schema": "frame-read.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180025480",
+      "pseudo_evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "assembly_evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31",
+      "newly_recovered": true
+    },
+    {
+      "address": "0x1800280d0",
+      "pseudo_evidence": "ev_dcc519a12be00908ae90c988173ae9147418f1eb4771d95b34d3148914b0d9a2",
+      "assembly_evidence": "ev_36d45e7ea060ccb9497a038a4fa3e7d55641d30c79a68da3da5ae7ff42e69c99",
+      "newly_recovered": true
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180025480",
+    "0x1800280d0"
+  ],
+  "new_original_procedures": 2,
+  "context_functions": [
+    {
+      "address": "0x180025c40",
+      "pseudo_evidence": "ev_987f9b5735e7f43bac4690a5614f3bbd07f7463da6bc2081c7fff428c7a9fce8",
+      "assembly_evidence": "ev_92dfa0f4b810ad3afcfb9df2b941fd14b2290a6abc953cfaa54c553b58d910e9",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180006b30",
+      "pseudo_evidence": "ev_c752870e47c512ffbdb9313f94aae8b98db2407b681a8db0e487a8c9b957bcdd",
+      "assembly_evidence": "ev_341581b10af329008e58d88ed528bd861c449f22efdc7ed9099aa5d675b37bc7",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021770",
+      "pseudo_evidence": "ev_f4884fc6f81199da63c2b34f733cd982fc0fada865bc01fed690b3c71bce8d8a",
+      "assembly_evidence": "ev_267ad2fba0da2ea44cbb89f4ef891512c4b721af9c7a6c38b4be9571c4a1bc19",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180028d30",
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18004a458",
+      "pseudo_evidence": "ev_2e68524111a1e29475abef1aa83bba75cb1f00208122da452ed55831a4b7f283",
+      "assembly_evidence": "ev_218bf3eda319b5a7858921c077bd0fd00cadc3c2d550d8952be3eef945886923",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18005e8e0",
+      "pseudo_evidence": "ev_06d02d032bc19f80b5602d3d24b5ce1d432c5a742d8014e2c0f45f08f084deea",
+      "assembly_evidence": "ev_b2508bf2d6430c3f029f1f6090cadaa12d2315a853312d93ad48f42602adfb0e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180026860",
+      "pseudo_evidence": "ev_772eb911cd97eca73ea169c26cb870bf3d6053a81e1784f919f5749a8844cf8f",
+      "assembly_evidence": "ev_950eee1fe00640b3798abaac65e3679112bda2f987b12255d382501c5dd6dba5",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800285b0",
+      "pseudo_evidence": "ev_0d416758bef1cb136be764bc42d61b6806ad330bc40b244b4ca7798197b53f2e",
+      "assembly_evidence": "ev_7504fc233bdbccda061b68f98284e32855d51c5f9468d39aa085eb40520e1f77",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180025a70",
+      "pseudo_evidence": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8",
+      "assembly_evidence": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002a500",
+      "pseudo_evidence": "ev_74e713f6d63b5db2c8594c89965baf991c280377ff6f5607819938f99daa863f",
+      "assembly_evidence": "ev_7b4a354660d536700feb53ad52ca0a2f961ca2042dbeb3a635143135bd1fe188",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "frame_read.hpp": "ea9adf5bd04a872d8e78173c5bdf9bf053deecdd6cc90665e4674efbf72d4111",
+    "frame_read.cpp": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+    "frame_read_test_fixture.hpp": "d123fad53cee8cc873797f63b0c6f3c5e76e7da5034ce71d82685be19263304d",
+    "frame_read_tests.cpp": "55317b8f89d5565383f0252c722b9499dfd88129910c1b4d8eb372e946ac15a9",
+    "frame_read_integration_tests.cpp": "91780b9f4c05ef1c67a96af3a98ec24595c58cfb49b3006767873c9685ada6b0",
+    "build.ps1": "d59a1d49e1d97fdad7f878080f7a9b27c3388536563876a1232356821688bd48",
+    "CMakeLists.txt": "09f64001bda59229ad2decc0e84ec12230260e5b814ff906c2866bba9588ba36",
+    "README.md": "2a3222fd35020ffb19bf2fc64987e30c839609834d15bf6a7dd52eafa6cbde25"
+  },
+  "support_hashes": {
+    "frame-read-evidence.pseudo.c.txt": "ece0aeaa07578458f1828cf91b6f5ac9d7f48ecebf131f394aad1060a37e2022",
+    "frame-read-evidence.asm.txt": "e3a7e76f98a9b440f790d9c1b5c42c757259c80b46a7cfd7efcb9f68a453c432",
+    "frame-read-context.pseudo.c.txt": "f60943205dc855f189c8330074bc47866bc64d08a7999afa86e637a38d3b0d77",
+    "frame-read-context.asm.txt": "a9c78ea934f598f7a0b0de0e369717a1099149ba19ceda3f7ba39e643444089c",
+    "frame-read-flow-audit.md": "c6fb8ab5de765560cc404dd857188038677681e2474eaaac5f6e35622ec3f1b4",
+    "frame-read-rea-session.json": "dd969de1a18a0bd6b8e3d80b54ed5401db07a76d605485a0fa05e3bd5b02e735"
+  },
+  "closed_provider": {
+    "base": "ComposedReadApi::finish_frame_025480",
+    "closure": "RecoveredFrameReadApi::finish_frame_025480",
+    "native_abi_complete": false
+  },
+  "core_checks": 1216,
+  "integration_checks": 315,
+  "new_checks": 1531,
+  "review": {
+    "scope": "Same-agent addressed assembly/source comparison and synthetic tests",
+    "independent_review_complete": false
+  },
+  "limitations": [
+    "Normal typed projection only",
+    "Native006b30/021770/028d30 and closure/owner bindings remain open",
+    "New integration uses controlled environment/completion adapters;027710/scheduling/worker not run by new tests",
+    "Existing R3 completion/scheduling tests are separate; no inferred full worker/frame composition",
+    "025480 security cookie epilogue not reconstructed here",
+    "Native category/exception/allocator/global/polymorphic/STL/EH/SEH/concurrency/ABI/fullDLL unproven"
+  ],
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N1 021770/028d30 native message dispatch and owner/closure binding audit"
+}

@@ -1,0 +1,269 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "stage": "B52",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-11-01T00:24:30.085111+00:00",
+  "review_mode": "Static production/lifetime/test review plus read-only hash/proof/log/EXE/compiler/archive verification. No EXE/build/probe/helper mutator executed by reviewer.",
+  "reviewed_source_hashes": {
+    "factory.hpp": "c6955bc02755c4eed6e003d9698ea8aa01abb87615f6b86afcc523e528fda1ea",
+    "factory.cpp": "cec5205f7e29bd7e212f71632e2e7f7437800f02d8387f353d22ef2763249dbf",
+    "factory_tests.cpp": "bc50fcd58014aa1660780c18e369549486ed507543a1a0c3e5361dcb839a2d30",
+    "factory_integration_tests.cpp": "978361d09068881a91bd31a66208df27d90a6bf27912c1981ee32ace30283bc8",
+    "../anadius-bootstrap-providers-source/providers.hpp": "46208924795ae2edf09474b54153739b031913e2135b0706557c28e1d741870c",
+    "../anadius-bootstrap-providers-source/providers.cpp": "a4e52f6553c0acf8c45e6d095e4ab6c861344ebc438b0e9a628688364d30f87e",
+    "../anadius-bootstrap-policies-source/config_platform.hpp": "2d6e9b1628ab4afc6c5f60d065cfeaa4c9f0221ee58b1bc8367aa622a6910e9e",
+    "../anadius-bootstrap-policies-source/config_platform.cpp": "312238a5246e1d1ef126cd146eeb40fb12bd26ed2627d28f6356c11ff46ad28c",
+    "../anadius-config-storage-source/persistence.hpp": "cb7a2809522d1dc054f811a0b9be77a8278dc8af7e10f80e2f6607d4ffb78212",
+    "../anadius-config-storage-source/persistence.cpp": "45a3d81e2c3f3e632f72d13cd7c1b9aa0c6f1da4171d0d963d88b14a3da98cf3",
+    "../anadius-config-logging-source/logging.hpp": "23b8fab945496c69a70377a52046df5937765999cbff9869a1ab00ba80fd5b24",
+    "../anadius-config-logging-source/logging.cpp": "c2c850b2caac4c6a12d2f64b5f305d656f2fb49e16ce078fdd4eddae2406f527"
+  },
+  "code_freeze": {
+    "path": "work/b52-code-freeze.json",
+    "sha256": "9783408aba2a4f573ba240893210ccef09127d6e4a87376a44e3122b8bf00c5c",
+    "all_twelve_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "path": "work/b52-core-quick-results.json",
+      "sha256": "6ea86b8e00f9df55d40873f3f361d03a0b404d98f75fe0d406d76cb33319e1fe",
+      "checks": 170,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b52-core-agent-results.json",
+        "sha256": "a3413946378c9895a625b86d7c1674a51b013d28bddfb957ec6b45f208303da7"
+      },
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log": {
+        "path": "work/b52-core-agent.log",
+        "sha256": "fb994dc654e17653af5f706315b9ee0f923d6c638800d28357c1e27d3b76c288"
+      },
+      "reviewer_executed": false,
+      "actual_used_source_hashes": {
+        "factory.hpp": "c6955bc02755c4eed6e003d9698ea8aa01abb87615f6b86afcc523e528fda1ea",
+        "factory.cpp": "cec5205f7e29bd7e212f71632e2e7f7437800f02d8387f353d22ef2763249dbf",
+        "factory_tests.cpp": "bc50fcd58014aa1660780c18e369549486ed507543a1a0c3e5361dcb839a2d30",
+        "../anadius-bootstrap-providers-source/providers.hpp": "46208924795ae2edf09474b54153739b031913e2135b0706557c28e1d741870c",
+        "../anadius-bootstrap-providers-source/providers.cpp": "a4e52f6553c0acf8c45e6d095e4ab6c861344ebc438b0e9a628688364d30f87e",
+        "../anadius-bootstrap-policies-source/config_platform.hpp": "2d6e9b1628ab4afc6c5f60d065cfeaa4c9f0221ee58b1bc8367aa622a6910e9e",
+        "../anadius-bootstrap-policies-source/config_platform.cpp": "312238a5246e1d1ef126cd146eeb40fb12bd26ed2627d28f6356c11ff46ad28c",
+        "../anadius-config-storage-source/persistence.hpp": "cb7a2809522d1dc054f811a0b9be77a8278dc8af7e10f80e2f6607d4ffb78212",
+        "../anadius-config-storage-source/persistence.cpp": "45a3d81e2c3f3e632f72d13cd7c1b9aa0c6f1da4171d0d963d88b14a3da98cf3",
+        "../anadius-config-logging-source/logging.hpp": "23b8fab945496c69a70377a52046df5937765999cbff9869a1ab00ba80fd5b24",
+        "../anadius-config-logging-source/logging.cpp": "c2c850b2caac4c6a12d2f64b5f305d656f2fb49e16ce078fdd4eddae2406f527",
+        "../anadius-config-storage-source/filesystem.hpp": "c2658e29bffeec397d93762f496d32122de521c7eee01fe26b607a5986ee5d77",
+        "../anadius-config-source/configuration.hpp": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6",
+        "../anadius-encoding-source/encoding.hpp": "b65c3fda414a4b679d59ff130bcf620dc5ea5d8ee38bd9f4de4c082e2b8683b7",
+        "../anadius-path-source/paths.hpp": "32b694932082aa94d0014e366965c2687afdb7eeeefd2730af957093e32225dc",
+        "../anadius-shared-log-source/stream.hpp": "1585d2079532695ff5565ed6f74357eddbf4a79504a2af54500e7c6739cdacbf",
+        "../anadius-achievement-storage-source/storage.hpp": "54e040d5b54eb6846a849ac5e128681de5adc2e17258b2ed39fc40ff51c9403a",
+        "../anadius-bootstrap-backend-source/backend.hpp": "145a94c58ed9880211d7315465c0c226eed982b33aef6cd5635f24c822069a23"
+      },
+      "actual_used_source_hash_count": 18,
+      "watched_source_hash_count": 0,
+      "isolated_children": [],
+      "executable_path": "work/b52-core-agent.exe",
+      "executable_sha256": "df9234d2bf8a3e236d61baf44aad117954827fe2fb11d11958837c144bcc1238",
+      "archive_path": "work/b52-baseline-core.a",
+      "archive_sha256": "9d187f5c20389aa1916bb9204a6847d9c6e6431a3f0ab82521d1b6196d24e974",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_hash_verified": true
+    },
+    {
+      "path": "work/b52-integration-quick-results.json",
+      "sha256": "3a89fa1d488c24d32133043fd7f9fd5baca975baf67d3f21bf469c577fb296bd",
+      "checks": 96,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b52-integration-agent-results.json",
+        "sha256": "c5d25ab3b5d6ee3c32bedaf7f44f766eff2cf7dd32f72b004d45fe2bf3875986"
+      },
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log": {
+        "path": "work/b52-integration-agent-results.log",
+        "sha256": "b68fb8376b6a1f8962d9897bb8fd8f55ec37833749c521211419d9eba5efb3a2"
+      },
+      "reviewer_executed": false,
+      "actual_used_source_hashes": {
+        "factory.hpp": "c6955bc02755c4eed6e003d9698ea8aa01abb87615f6b86afcc523e528fda1ea",
+        "factory.cpp": "cec5205f7e29bd7e212f71632e2e7f7437800f02d8387f353d22ef2763249dbf",
+        "factory_integration_tests.cpp": "978361d09068881a91bd31a66208df27d90a6bf27912c1981ee32ace30283bc8",
+        "../anadius-bootstrap-providers-source/providers.hpp": "46208924795ae2edf09474b54153739b031913e2135b0706557c28e1d741870c",
+        "../anadius-bootstrap-providers-source/providers.cpp": "a4e52f6553c0acf8c45e6d095e4ab6c861344ebc438b0e9a628688364d30f87e",
+        "../anadius-bootstrap-policies-source/config_platform.hpp": "2d6e9b1628ab4afc6c5f60d065cfeaa4c9f0221ee58b1bc8367aa622a6910e9e",
+        "../anadius-bootstrap-policies-source/config_platform.cpp": "312238a5246e1d1ef126cd146eeb40fb12bd26ed2627d28f6356c11ff46ad28c",
+        "../anadius-config-storage-source/persistence.hpp": "cb7a2809522d1dc054f811a0b9be77a8278dc8af7e10f80e2f6607d4ffb78212",
+        "../anadius-config-storage-source/persistence.cpp": "45a3d81e2c3f3e632f72d13cd7c1b9aa0c6f1da4171d0d963d88b14a3da98cf3",
+        "../anadius-config-logging-source/logging.hpp": "23b8fab945496c69a70377a52046df5937765999cbff9869a1ab00ba80fd5b24",
+        "../anadius-config-logging-source/logging.cpp": "c2c850b2caac4c6a12d2f64b5f305d656f2fb49e16ce078fdd4eddae2406f527"
+      },
+      "actual_used_source_hash_count": 11,
+      "watched_source_hash_count": 12,
+      "isolated_children": [],
+      "executable_path": "work/b52-integration-v3.exe",
+      "executable_sha256": "b12b9a9a3d87fd45f3aa660285d566cb3549776fad5c16c2d9202e8151754e05",
+      "archive_path": "work/b52-baseline-core.a",
+      "archive_sha256": "9d187f5c20389aa1916bb9204a6847d9c6e6431a3f0ab82521d1b6196d24e974",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_hash_verified": true
+    }
+  ],
+  "normal_checks_total": 266,
+  "isolated_children_total": 0,
+  "baseline": {
+    "path": "outputs/dll-reverse-engineering.zip",
+    "sha256": "b0f466f9ac962684b5442da3448d4e2aa1659e53fcd89e70e98d03a87743643c",
+    "stage": "B51",
+    "prior_sources": 934,
+    "unchanged_sources": 926,
+    "modified_sources": [
+      "anadius-bootstrap-policies-source/config_platform.cpp",
+      "anadius-bootstrap-policies-source/config_platform.hpp",
+      "anadius-bootstrap-providers-source/providers.cpp",
+      "anadius-bootstrap-providers-source/providers.hpp",
+      "anadius-config-logging-source/logging.cpp",
+      "anadius-config-logging-source/logging.hpp",
+      "anadius-config-storage-source/persistence.cpp",
+      "anadius-config-storage-source/persistence.hpp"
+    ],
+    "new_sources": [
+      "anadius-configuration-factory-source/factory.cpp",
+      "anadius-configuration-factory-source/factory.hpp",
+      "anadius-configuration-factory-source/factory_integration_tests.cpp",
+      "anadius-configuration-factory-source/factory_tests.cpp"
+    ],
+    "current_sources": 938,
+    "archive_member_sha256_verified": "9d187f5c20389aa1916bb9204a6847d9c6e6431a3f0ab82521d1b6196d24e974"
+  },
+  "registration": {
+    "path": "work/b52-registration-result.json",
+    "sha256": "94b12f613a36b382521725d9f47123d9b735a1bd7fcf725c2eb957290b17ffa1",
+    "mode": "APPLIED",
+    "applied_by": "/root",
+    "reviewer_did_not_apply": true
+  },
+  "reviewed_gate_auxiliary_hashes": {
+    "dll-link-gate-source/build-link-gate.ps1": "e3c97d2e9c927ef436da58e9251d5930af28668036181c295e569c5b919afa06",
+    "dll-link-gate-source/target.cmake": "b1c4b88534643ff90a166802617b7ee861e91a3585b5a49797e9cdabd8394b60",
+    "dll-link-gate-source/verify-link-gate.py": "378ac8b220426d2c567f01a5b346af2a47d4bfe92da23d3bf4d14b83864259fa"
+  },
+  "gate_auxiliary": {
+    "independent_root_review": {
+      "path": "outputs/anadius-configuration-factory-source/gate-auxiliary-review.json",
+      "sha256": "96e8de8f39088ea741703dbc2f65e0cc859d8a55ecb07481677c4c429efa78b0"
+    },
+    "preimages_and_applied_hashes_verified": true,
+    "changes": [
+      {
+        "path": "dll-link-gate-source/build-link-gate.ps1",
+        "before_sha256": "7fc2bddff1d7488f90a1a7931f7b766eae3ffcb663aa1610edf590fa4f5a4175",
+        "after_sha256": "e3c97d2e9c927ef436da58e9251d5930af28668036181c295e569c5b919afa06",
+        "reason": "B52 diagnostic explicit production factory object selection; not loader Resources reachability or DLL success.",
+        "stage_author": "/root/b22_provider_audit",
+        "independent_root_review_required": true
+      },
+      {
+        "path": "dll-link-gate-source/target.cmake",
+        "before_sha256": "698500e948e3b192f609343fc26f6639b245d9c519a61c4be249c6f40cf10634",
+        "after_sha256": "b1c4b88534643ff90a166802617b7ee861e91a3585b5a49797e9cdabd8394b60",
+        "reason": "B52 diagnostic explicit production factory object selection; not loader Resources reachability or DLL success.",
+        "stage_author": "/root/b22_provider_audit",
+        "independent_root_review_required": true
+      },
+      {
+        "path": "dll-link-gate-source/verify-link-gate.py",
+        "before_sha256": "bc8828d09f1032566c2eb1b21e580ca05300d83fa9f1237e20f1b14bc32507c0",
+        "after_sha256": "378ac8b220426d2c567f01a5b346af2a47d4bfe92da23d3bf4d14b83864259fa",
+        "reason": "B52 diagnostic explicit production factory object selection; not loader Resources reachability or DLL success.",
+        "stage_author": "/root/b22_provider_audit",
+        "independent_root_review_required": true
+      }
+    ],
+    "stage_author": "/root/b22_provider_audit",
+    "gate_reviewer": "/root",
+    "diagnostic_selection_only": true,
+    "actual_execution": "PENDING_AS_OF_REVIEW",
+    "cmake_target_executed": false,
+    "loader_factory_reachability_proven": false
+  },
+  "findings": [
+    "All21 required Dependencies methods and streaming visit have concrete routes:19 compose existing source;2 mandatory owned narrow effects are LicenseEffects and LegacyDocumentReader. No giant Dependencies lower or covered-route success/throwing stub.",
+    "Passive construction adopts backing/effects before validation and builds Engine after validation. Attached Retiring seal covers every public method including paths/pure helpers; effects/persistence retire before Inputs. Normal visitor/conversion reentry remains permitted; arbitrary concurrent use is outside profile.",
+    "Signed tolower/codepages/path growth/LastError/error-prefix behavior retained. Managed logging releases leases before opaque conversion and preserves counted strings. Streaming removal precedes FindNext. Actual XML/numeric/timestamp/INI/PNG; false PNG write remains ignored. Achievement Paths are caller-seeded.",
+    "Exact legacy nested Impl declaration restored through single-allocation derived State bridge; two pointer members/delegation/destruction order retained.",
+    "Core170 includes9 opaque destruction phases/60 caught Retiring probes. IntegrationV3 actual96 uses FilePass/BootstrapConfiguration/parser/hash/XML/INI/PNG/logging. Unrelated workers are synchronous TEST policy, not OS join evidence.",
+    "Gate selects frozen common factory object with source/object/common-command/link-argv/nm/verbose-consumption checks and preserves5 old archive roots/compiler CRT. Diagnostic inclusion only, not loader invocation."
+  ],
+  "proof_scope": {
+    "core_actual_used_sources": 18,
+    "integration_actual_used_sources": 11,
+    "integration_watched_sources": 12,
+    "watched_core_test_not_compiled_by_integration": true,
+    "authoritative_integration": "work/b52-integration-v3-results.json",
+    "prior_fixture_failure": "V1 preserved historical; finalV3 authoritative.",
+    "compatibility": "Separate author storage174/logging103 plus old terminal policies; not part of B52 main266; no reviewer execution."
+  },
+  "authorship_disclosure": {
+    "production_authors": [
+      "/root",
+      "/root/acceptor_tests",
+      "/root/b22_integration"
+    ],
+    "reviewer_authored_production_or_tests": false,
+    "reviewer_authored_pipeline_and_gate_staging": true,
+    "pipeline_independence_claimed": false,
+    "gate_independent_reviewer": "/root"
+  },
+  "common_build": {
+    "status": "PENDING_AS_OF_REVIEW",
+    "log": "work/b52-common-final-build.log",
+    "planned_production_objects": 272,
+    "planned_cpp_objects": 268,
+    "planned_c_objects": 4,
+    "planned_normal_groups": 333,
+    "planned_terminal_groups": 19
+  },
+  "counts": {
+    "source_files": 938,
+    "composition_files": 113,
+    "composition_objects": 56,
+    "compiler_observations": 99,
+    "mapped_canonical": 501,
+    "eligible_tags": 505,
+    "normal_native_claims": 139,
+    "historical_closed_providers": 52,
+    "new_native_bodies": 0,
+    "new_ABI_closures": 0,
+    "last_native_body_stage": "B38"
+  },
+  "remaining_limits": [
+    "License02a830 and legacy collection/nativeDOM ABI remain explicit prerequisites; selected FilePass bypasses legacy read.",
+    "Persistent provider/streambuf/import backing, serialized use and retirement after callback/join quiescence remain caller contracts; no unknown-prefix rollback.",
+    "Selected compiler/source policies and seeded Paths do not prove full native layout/CRT/EH/concurrency.",
+    "Full Resources/loader-lock-safe attach-detach/module pin-unload remain open; factory inclusion is not loader reachability."
+  ],
+  "original_or_rebuilt_DLL_executed": false,
+  "fresh_target_queries": 0,
+  "user_configuration_or_license_contents_read": false,
+  "production_readiness": "BLOCKED",
+  "DLL_ready": false
+}

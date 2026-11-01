@@ -1,0 +1,118 @@
+{
+  "schema": "pool-destruct.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/allocation_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent retained complete assembly/pseudocode and exact new production-source review for four normal pool-destructor byte-state projections and four existing-provider source bindings. No original-file reads, original execution or reviewer tests.",
+  "reviewed_source_hashes": {
+    "pool_destruct.hpp": "0f2951e2d60116d9986a0e615e49fcce70439cccf3ecbcb8484bc4d703cdf89c",
+    "pool_destruct.cpp": "3bebee2c224523e72a12ce338521dad7a0c2786d36aacc810227fb32f207ef35"
+  },
+  "addresses": [
+    "0x180001bb0",
+    "0x180001c30",
+    "0x180001cb0",
+    "0x180001d30"
+  ],
+  "assembly_and_pseudocode_evidence": {
+    "0x180001bb0": {
+      "pseudo": "ev_092ecbcf8771634efb8602a3d6cd0c898285159da964af33c3c60fc8ea0d6f6e",
+      "assembly": "ev_7f94b4e17d4fc968551742e8037bd685c0d16490f0e4a589eb7b722000771cb7"
+    },
+    "0x180001c30": {
+      "pseudo": "ev_b0d1ec372d4b8ad00df52da43c93679046facd73ad4d9f5863369ece94248459",
+      "assembly": "ev_f88b02234b39e4be1d70ef9f1d8f69cb3447507b0a25e2a40a9d178765b573e3"
+    },
+    "0x180001cb0": {
+      "pseudo": "ev_443260d7e20484b82b22a88a38d81ed81dc3b6284636a4b11009555f363f64cd",
+      "assembly": "ev_1fec953cfb59eb28d532eb735335cff7cbee4916e7cbf4c23a119a7c379197f5"
+    },
+    "0x180001d30": {
+      "pseudo": "ev_586172bc5ef241fce0e41a4d51bfd926c1ba166521c02a285dba1e7337c7c816",
+      "assembly": "ev_9e9eabb75164aad26441c55c6926835ef60fd2bf0461f0bf1fd1f4c442db8975"
+    }
+  },
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "type_table_identities": {
+    "0x180001bb0": "0x18007fe38",
+    "0x180001c30": "0x18007fe98",
+    "0x180001cb0": "0x18007fe68",
+    "0x180001d30": "0x18007fe08"
+  },
+  "base_table_identity": "0x18007fa18",
+  "base_table_evidence_kind": "Retained LEA immediate identity; no new base-table bytes or runtime pointer observation",
+  "caller_EDX_block_hints": {
+    "0x180001bb0": 4080,
+    "0x180001c30": 4056,
+    "0x180001cb0": 4032,
+    "0x180001d30": 4080
+  },
+  "EDX_hints_are_sized_free_ABI": false,
+  "new_normal_source_bodies": 4,
+  "new_source_bridges": 4,
+  "new_unique_source_mapped_addresses": 4,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 4,
+  "closed_providers": [
+    {
+      "address": "0x180001bb0",
+      "base": "NativeDocumentEffects::destroy_pool_001bb0",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001bb0",
+      "body": "destroy_native_pool_001bb0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x180001c30",
+      "base": "NativeDocumentEffects::destroy_pool_001c30",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001c30",
+      "body": "destroy_native_pool_001c30",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x180001cb0",
+      "base": "NativeDocumentEffects::destroy_pool_001cb0",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001cb0",
+      "body": "destroy_native_pool_001cb0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x180001d30",
+      "base": "NativeDocumentEffects::destroy_pool_001d30",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001d30",
+      "body": "destroy_native_pool_001d30",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "findings": [
+    "Each wrapper selects the exact observed type-table immediate:001bb0->07fe38,001c30->07fe98,001cb0->07fe68,001d30->07fe08.",
+    "Raw DWORD count+64 is tested before the initial QWORD type-table publication; the cached entry flag controls if/do-while entry, preserving original CMP flags when aliased backing lets the vtable store change live count.",
+    "An entered loop immediately rereads signed old count, stores wrapping DWORD old-1, then loads live array data+8 and block slot using cached signed64 old_index*8-8 with modulo64 address arithmetic.",
+    "Lower pointer-only free is followed by live raw count nonzero test; negative values and callback changes to count,data,slots or vptr are not sanitized or rolled back.",
+    "Three ordered QWORD zero stores reset+68,+70,+78 before any array-pointer lookup, retaining access width and completed prefixes.",
+    "Array data is loaded live after loop/resets and freed only when unequal to pool+10, forwarding null or mutated noninline pointers without invented guard.",
+    "The final QWORD base-table identity07fa18 store occurs after optional array-free returns; no resetting data pointer,capacity,count,inline bytes or stale entries and no object deallocation is added.",
+    "Block EDX4080/4056/4032/4080 observations remain static facts; array-free callsites define only RCX. Existing pointer-only free interface is retained without sized-free/register ABI claims.",
+    "RecoveredPoolDestructEffects retains inherited document/node/pool-clear bindings and closes exactly four existing NativeDocumentEffects destructor providers on shared bounded memory.",
+    "One tagged normal body plus one tagged final bridge per target gives two definition variants; four wrappers and four bridges do not imply eight native functions. Immediate table values are never dereferenced or called."
+  ],
+  "limitations": [
+    "Bounded byte-state normal source projection only; native register/fault/object ABI, unwind/EH and concurrency equivalence remain unproven.",
+    "Free04b0f8 remains a mandatory lower effect; heap/CRT bodies, allocation provenance and native lifetime correctness are not established.",
+    "Node virtual/base destruction, parser/DOM materialization and full document/pool lifecycle or whole-DLL equivalence remain open.",
+    "Bounded mapping exceptions and fixture effects are source-interface behavior, not native fault or execution proof."
+  ],
+  "full_native_equivalence_review_complete": false,
+  "native_pool_destruct_fully_closed": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false
+}

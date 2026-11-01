@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_nls_dispatch_bridge",
+    "result": "PASS",
+    "output": "PASS 27943 actual-dispatch/locale-table/resolver/NLS/record/PTD/argv composition checks",
+    "executable_sha256": "738cacf4c1b9e1ab271cf2a328c93596a12ba6a3ce8d5de6114c646c5c4cff1b"
+  },
+  "execution_scope": "Actual dispatch/locale-table/shared-runtime-resolver/NLS/record/PTD/heap/argv composition; synthetic Ex/W/LCID/GetStringTypeW/conversion/CP/native endpoints; nested callback scratch/output/PTD restoration tested, native concurrency/ABI unproven",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-nls-dispatch-bridge-source/bridge_tests.cpp",
+      "sha256": "67ee9eb64a75de090a362fc4c9f42c4348080df756e7234b683afc496df13950"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-bridge-source/bridge.cpp",
+      "sha256": "c497d3349bdb737af6793bde4dc26c59c0ee68c9bf7f793ec069e0a19403dabd"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-bridge-source/bridge.hpp",
+      "sha256": "8635582ac4e25ffd3365291d1df414354064222cbe462b7af2c8802754b3c281"
+    }
+  ]
+}

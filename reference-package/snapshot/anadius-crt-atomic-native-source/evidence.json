@@ -1,0 +1,45 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "New owned typed Windows Interlocked cell; reusable native provider endpoint",
+  "recovered_original_bodies_added": 0,
+  "reused_evidence": "../anadius-crt-ptd-data-source/evidence.json",
+  "existing_source_requirement": [
+    {
+      "va": "0x1800647d4",
+      "source": "../anadius-crt-ptd-data-source/ptd_data.cpp",
+      "requirement": "retain calls Effects.atomic_fetch_add_32(multibyte_identity,1)",
+      "assembly_evidence": "ev_fa8f38d07bfd2492030ba19a46c94a80574b1dba417df94697621779061facf7",
+      "pseudocode_evidence": "ev_2d71977052fa0a6ea8f8e28a2042644c075b7734379d8562288ce0902ed7e170"
+    },
+    {
+      "va": "0x18006489c",
+      "source": "../anadius-crt-ptd-data-source/ptd_data.cpp",
+      "requirement": "release calls Effects.atomic_fetch_add_32(multibyte_identity,0xffffffff), uses previous value",
+      "assembly_evidence": "ev_d4925fdd83a756dd03f058472a57d4a1e72599699c45e333abde975cd747cc1e",
+      "pseudocode_evidence": "ev_555832449e782628299643c9ec795a697f0f983393ff919f3c4d7bcfef5d5e3b"
+    }
+  ],
+  "new_implementation": {
+    "storage": "owned mutable alignas(4) LONG; no arbitrary record pointer conversion",
+    "fetch_add": "Windows InterlockedExchangeAdd; uint32/LONG bit_cast conversions",
+    "exchange": "Windows InterlockedExchange; previous full32 result",
+    "load": "Windows InterlockedCompareExchange(cell,0,0); logical const RMW",
+    "identity": "address of owned LONG only, no adoption API",
+    "last_error": "not rewritten",
+    "lifetime": "all concurrent users must complete before destruction"
+  },
+  "new_object_evidence": {
+    "artifact": "build/atomic.o",
+    "listing": "build/atomic.disasm.txt",
+    "scope": "own compiled object offsets, not original binary VAs",
+    "fetch_add_offset": "0x10; lock xaddl at0x12",
+    "exchange_offset": "0x20; memory xchgl at0x22",
+    "load_offset": "0x30; lock cmpxchgl at0x34"
+  },
+  "test_scope": "88 own fixture checks; real native Interlocked on owned cells; eight joined stdthreads with50000 additions/decrements each",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "original_runtime_equivalence": "not established",
+  "original_global_record_layout_ABI_SEH": "not established"
+}

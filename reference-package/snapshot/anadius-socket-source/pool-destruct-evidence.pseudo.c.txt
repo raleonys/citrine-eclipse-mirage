@@ -1,0 +1,111 @@
+/* 0x180001bb0 FUN_180001bb0; Evidence ev_092ecbcf8771634efb8602a3d6cd0c898285159da964af33c3c60fc8ea0d6f6e */
+
+void FUN_180001bb0(undefined8 *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)((longlong)param_1 + 100);
+  *param_1 = tinyxml2::MemPoolT<80>::vftable;
+  while (iVar1 != 0) {
+    iVar1 = *(int *)((longlong)param_1 + 100);
+    *(int *)((longlong)param_1 + 100) = iVar1 + -1;
+    thunk_FUN_18005caec(*(LPVOID *)(param_1[1] + -8 + (longlong)iVar1 * 8));
+    iVar1 = *(int *)((longlong)param_1 + 100);
+  }
+  param_1[0xd] = 0;
+  param_1[0xe] = 0;
+  param_1[0xf] = 0;
+  if ((undefined8 *)param_1[1] != param_1 + 2) {
+    thunk_FUN_18005caec((undefined8 *)param_1[1]);
+  }
+  *param_1 = tinyxml2::MemPool::vftable;
+  return;
+}
+
+
+
+
+/* 0x180001c30 FUN_180001c30; Evidence ev_b0d1ec372d4b8ad00df52da43c93679046facd73ad4d9f5863369ece94248459 */
+
+void FUN_180001c30(undefined8 *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)((longlong)param_1 + 100);
+  *param_1 = tinyxml2::MemPoolT<104>::vftable;
+  while (iVar1 != 0) {
+    iVar1 = *(int *)((longlong)param_1 + 100);
+    *(int *)((longlong)param_1 + 100) = iVar1 + -1;
+    thunk_FUN_18005caec(*(LPVOID *)(param_1[1] + -8 + (longlong)iVar1 * 8));
+    iVar1 = *(int *)((longlong)param_1 + 100);
+  }
+  param_1[0xd] = 0;
+  param_1[0xe] = 0;
+  param_1[0xf] = 0;
+  if ((undefined8 *)param_1[1] != param_1 + 2) {
+    thunk_FUN_18005caec((undefined8 *)param_1[1]);
+  }
+  *param_1 = tinyxml2::MemPool::vftable;
+  return;
+}
+
+
+
+
+/* 0x180001cb0 FUN_180001cb0; Evidence ev_443260d7e20484b82b22a88a38d81ed81dc3b6284636a4b11009555f363f64cd */
+
+void FUN_180001cb0(undefined8 *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)((longlong)param_1 + 100);
+  *param_1 = tinyxml2::MemPoolT<112>::vftable;
+  while (iVar1 != 0) {
+    iVar1 = *(int *)((longlong)param_1 + 100);
+    *(int *)((longlong)param_1 + 100) = iVar1 + -1;
+    thunk_FUN_18005caec(*(LPVOID *)(param_1[1] + -8 + (longlong)iVar1 * 8));
+    iVar1 = *(int *)((longlong)param_1 + 100);
+  }
+  param_1[0xd] = 0;
+  param_1[0xe] = 0;
+  param_1[0xf] = 0;
+  if ((undefined8 *)param_1[1] != param_1 + 2) {
+    thunk_FUN_18005caec((undefined8 *)param_1[1]);
+  }
+  *param_1 = tinyxml2::MemPool::vftable;
+  return;
+}
+
+
+
+
+/* 0x180001d30 FUN_180001d30; Evidence ev_586172bc5ef241fce0e41a4d51bfd926c1ba166521c02a285dba1e7337c7c816 */
+
+void FUN_180001d30(undefined8 *param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = *(int *)((longlong)param_1 + 100);
+  *param_1 = tinyxml2::MemPoolT<120>::vftable;
+  while (iVar1 != 0) {
+    iVar1 = *(int *)((longlong)param_1 + 100);
+    *(int *)((longlong)param_1 + 100) = iVar1 + -1;
+    thunk_FUN_18005caec(*(LPVOID *)(param_1[1] + -8 + (longlong)iVar1 * 8));
+    iVar1 = *(int *)((longlong)param_1 + 100);
+  }
+  param_1[0xd] = 0;
+  param_1[0xe] = 0;
+  param_1[0xf] = 0;
+  if ((undefined8 *)param_1[1] != param_1 + 2) {
+    thunk_FUN_18005caec((undefined8 *)param_1[1]);
+  }
+  *param_1 = tinyxml2::MemPool::vftable;
+  return;
+}
+
+
+

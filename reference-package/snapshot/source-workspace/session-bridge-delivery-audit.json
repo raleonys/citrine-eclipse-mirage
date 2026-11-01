@@ -1,0 +1,54 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T19:15:58.0868700Z",
+  "prior_package_sha256": "0ea321cdc43e88b83a8b3d1266c684b2c0a63ea7f180a6ea7c6e512c98614acd",
+  "prior_source_count": 410,
+  "unchanged_prior_sources": 410,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-session-source/handler_tests.cpp",
+    "anadius-session-source/handler.cpp",
+    "anadius-session-source/handler.hpp",
+    "anadius-session-source/routing.cpp",
+    "anadius-session-source/routing.hpp",
+    "anadius-session-source/session_tests.cpp"
+  ],
+  "current_sources": 416,
+  "current_documents": 165,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 142,
+  "cpp_objects": 138,
+  "c_objects": 4,
+  "normal_test_groups": 127,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "session_handler",
+      "result": "PASS",
+      "output": "PASS: 19 session handler checks; actual message core and controlled cipher only",
+      "executable_sha256": "9dbe70f19ff460689069515adab14fc0ea26a885411a71516ebaf2d7a610307b"
+    },
+    {
+      "module": "session_integration",
+      "result": "PASS",
+      "output": "PASS: 1154 session integration checks; actual XML/AES/Router/handlers and memory transport only",
+      "executable_sha256": "1c8edb82bd1780bceb777e96d994e084332bd17cfa91fc680f713941e8002e28"
+    }
+  ],
+  "new_checks": 1173,
+  "master_build_sha256": "3eb48b55923c0f55e40ab74fc73b1bceeb6e3d279288efbd7a198ec9ea671f4e",
+  "common_build_script_sha256": "874c8d490d4ed67fa60b5ebaaa8a921fa2fb5eeb819af623572776808984f5ce",
+  "cmake_sha256": "257e06a9d5a192f01edc1862ecee2bd6312f993ee2261daeed84a021809089ad",
+  "normal_source_procedures_added": [],
+  "new_original_procedures": 0,
+  "new_composition": "MessageHandler/RoutedEffects bind actual Session/messages/XML/AES/router/handlers/event sources; no new original procedures",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; in-memory transport/scheduler and caller-owned lifetimes",
+  "native_ABI_SEH_global_runtime": "not established"
+}

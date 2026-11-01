@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "checks": 4929,
+  "output": "PASS: 4929 Config2 growth/copy/positional-reuse checks",
+  "original_execution": "none",
+  "user_cfg_read": false,
+  "full_original_bodies_added": 0,
+  "scope": "Factor1 logical hash/list growth, inherited clone, destination-retained assignment, recursive positional reuse; synthetic inputs only",
+  "ABI_equivalence": "not established"
+}

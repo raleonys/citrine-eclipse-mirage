@@ -1,0 +1,73 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T19:45:40.4111176Z",
+  "scope": "Independent static source review of recovered 0601c8/06ecdc versus retained assembly and typed module-path/find source composition. Peer files were read only; no target or real native APIs executed.",
+  "source_files": [
+    {
+      "path": "anadius-crt-module-path-source/module_path.hpp",
+      "sha256": "b75d7901f29e1d4eec6154e530fde17440018d33461b9385615c3a424feaf2b6"
+    },
+    {
+      "path": "anadius-crt-module-path-source/module_path.cpp",
+      "sha256": "793dec3fbfa6c487412bb812c7c29298ad91a6f7d39e6914a1ef81c1f29b1b45"
+    },
+    {
+      "path": "anadius-crt-module-path-source/module_path_tests.cpp",
+      "sha256": "4a33bab86af79ccc280045b166ef28d49be924aa750244023e97b0cd3e210cbe"
+    },
+    {
+      "path": "anadius-crt-module-path-source/selected.asm.txt",
+      "sha256": "1a255f1212e0a4355f9cd186e10bf099fa988ee8dd7a8b057e063fb2e76ced06"
+    },
+    {
+      "path": "anadius-crt-module-path-source/selected.pseudo.c",
+      "sha256": "ae70d02307c4e0151b9231e5adf640822892fd6927984791e44d8483e76156bb"
+    },
+    {
+      "path": "anadius-crt-module-path-source/README.md",
+      "sha256": "c2b86da3e63225e4c9a49898a2f7f423093916552f1f108029ab63278814b424"
+    },
+    {
+      "path": "anadius-crt-find-bridge-source/bridge.hpp",
+      "sha256": "07179a6efed22721345529a9dc3edbd1a0d032747b1090aa46b3ac3c4ae0da87"
+    },
+    {
+      "path": "anadius-crt-find-bridge-source/bridge.cpp",
+      "sha256": "0e1a2eb3e5a08e4a4881231ccf24efe0456d7eae95e5fd989e01bccba45ebde4"
+    },
+    {
+      "path": "anadius-crt-find-bridge-source/bridge_tests.cpp",
+      "sha256": "774d8b1ca6ef34ca4d976e8aee2633f877a4c215548c908a7d247e64221ac781"
+    }
+  ],
+  "evidence": {
+    "original_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "fixed_assembly": "ev_3770c1e410c6f7fca4f6a360a2ea3413fc4145b136f7cbc22bae4cc85006bbda",
+    "module_assembly": "ev_b0e7a6fb5b3f787449bf1dba57777704d0e294deb1e375a3a5e05507fb6c50f0"
+  },
+  "observed_checks": [
+    "0601c8 NULL branch clears four represented fields without free; empty nonzero-capacity branch writes exactly one narrow NUL and clears length",
+    "0601c8 insufficient-capacity branch clears ownership before errno accessor, writes errno 34, clears capacity, preserves data and stale length, and never allocates/frees",
+    "0601c8 query MOVSXD and unsigned comparison, low DWORD signed fill capacity, zero-only result tests, signextended result-minus-one length and GetLastError/map/read-errno order match assembly",
+    "06ecdc forwards module and requests 261 WCHAR while rebuilt argv destination is 260 bytes; only zero API count is failure; failure maps LastError and does not select locale or write destination",
+    "06ecdc initializes borrowed fixed buffer with low DWORD capacity and zero length; discards fixed converter status; returns low DWORD length",
+    "PathEffects uses actual select_code_page_region, preserving UTF8 fast path/full-BOOL ANSI versus OEM decision and conditional PTD flag cleanup; module path has a mandatory explicit provider",
+    "SdkPathProvider uses decltype(GetModuleFileNameW) and caller-owned live 264-WCHAR span, default import binding and injected WINAPI test; it preserves count/full module bits and rejects NULL getter or capacity beyond its span",
+    "WildcardEffects delegates to actual typed SDK Session while inherited conversion and heap bridges call real recovered cores, not stand-in recalloc or conversion implementations",
+    "Integrated fixture lower reads include only provider-owned heap/borrowed live storage and live find filename spans; path scratch registered for both conversion passes; independent ownership and explicit find close maintained",
+    "Composition tests cover 3 codepage variants, actual mode1/mode2 argv publication and preserved failure state, wildcard dot skipping and no attribute filtering, no-match and failed-pattern conversion fallback, 0x100 FindNext success, heap/onexit growth/failure, error PTD and module fallback/capacity failure"
+  ],
+  "validation_observed": {
+    "path_result": "PASS",
+    "path_tests": "PASS: 3469 module-path checks",
+    "bridge_result": "PASS",
+    "bridge_tests": "PASS 8664 wildcard/argv/SDK-find/module-path/conversion/heap/error composition checks",
+    "note": "Existing standalone receipts inspected; review did not rerun peer tests or execute native providers."
+  },
+  "findings": [],
+  "limitations": [
+    "Normal-flow source reconstruction only; original ABI, SEH, uninitialized/truncated scratch behavior and complete DLL equivalence remain unproven",
+    "Production requires genuine memory, locale, conversion, heap/runtime providers and serialized access per scratch/session. Integrated native function pointers are fixtures; native OS enumeration/module-path calls were not executed",
+    "Direct negative tests for SdkPathProvider NULL getter and capacity-over-264 are absent in inspected root test version; code implements both explicit domains and this is not a behavior mismatch"
+  ]
+}

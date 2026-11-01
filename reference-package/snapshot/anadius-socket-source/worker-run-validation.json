@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 795,
+  "native_checks": 577,
+  "output": "PASS: 795 socket worker run checks; retained026320/029890/0298b0/02a190 logical status, low32 effects, TLS ordering, dispatch saturation, live cache cleanup and lifetime\nPASS: 577 socket worker run native checks; four injected SDK imports and actual024990/02a000/05e8e0/02a4a0/029890/0298b0/02a190/026320 source composition with controlled dispatcher and lifetime",
+  "source_hashes": {
+    "worker_run.hpp": "191ac2548f32bd8828d5d3d12b9ce41f99716e1f9028ae554e2d483fab06df0f",
+    "worker_run.cpp": "1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4",
+    "worker_run_native.hpp": "0abeed67dba180b8506005ecaade1093b1e966e847953a094cb8855e13c76d93",
+    "worker_run_native.cpp": "df0d743263b53d4845456d78766e86daa47c9bf4358f51b91ff25f8dcda3ec38",
+    "worker_run_tests.cpp": "efb829595c45a096e3852ab5f284299649d896469d9c33f95834abc62ccc8367",
+    "worker_run_native_tests.cpp": "bd6c2e393143a5616fb6f09e42bbf6d5521e973023052cfcedc47738e387d197",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 4,
+  "execution_scope": "026320/029890/0298b0/02a190 retained normal bodies, logical optional status, low32 field effects, live TLS indices/previous/cache reads, dispatch count saturation and cache cleanup; four SDK injected wrappers; actual024990/02a000/unchanged05e8e0/02a4a0/029890/0298b0/02a190/026320 controlled source composition with actual safe heap deletion",
+  "required_providers": "027c10 dispatcher,04b0f8 native allocation lifetime,04b788 cache free,04a240/04a2cc CRT pair and028240 exception remain required providers; CRT production unchanged and paused; image addresses are opaque data",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; serialized typed low32 fixture writes do not prove native atomics/concurrency; no original/game/real TLS/port/post/event/thread/wait/sleep/network or user cfg/token/achievement execution/read"
+}

@@ -1,0 +1,159 @@
+{
+  "schema": "source-composition.common-validation.v1",
+  "result": "PASS",
+  "source_package": "B9",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "cc55d1551c0791656212a33219553673b3b9a323e0b3933e1764478894536884",
+  "test_results": [
+    {
+      "module": "config_iteration",
+      "result": "PASS",
+      "output": "PASS: 110 live-iteration core checks; callback-before-increment, retained failure prefixes, LastError/reentry/default-vector paths and indexed thread errors; no original target execution",
+      "executable_sha256": "ad8fad7751a421ac3599c82eb39845f7a772d1893bf74e40a861fd5988435748"
+    },
+    {
+      "module": "config_iteration_integration",
+      "result": "PASS",
+      "output": "PASS: 64 live-iteration integration checks; real own file deletion before injected increment/conversion/remove failures, four-wrapper FilePass routes and Bootstrap indexed thread errors; no original execution",
+      "executable_sha256": "fdf25cf9c772b292f755433644e0543a006f7fd6011106d3c4fd3b5fd85a6c7b"
+    }
+  ],
+  "core_checks": 110,
+  "integration_checks": 64,
+  "new_checks": 174,
+  "production_objects": 1,
+  "new_source_files": 5,
+  "modified_prior_sources": [
+    {
+      "path": "anadius-bootstrap-policies-source/config_platform.cpp",
+      "before_sha256": "d88fae4c51975e88196008413f167027326fcc4de3f270211c7a3b9a50922b7c",
+      "after_sha256": "f64ab5960b32262c1926cb7f9a0284e2c6043be3c69c134650ed567dba2284b7",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-bootstrap-policies-source/config_platform.hpp",
+      "before_sha256": "44640be6f888b9b1a13aca82a36cc4991a15fcf4ee185b543ea57c427e566ef4",
+      "after_sha256": "ef1c9c417d3bda6e844084c0892b34531c31581dc14876e965ce25a5deb0d6cf",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-bootstrap-policies-source/policies_tests.cpp",
+      "before_sha256": "c6a6a55b205fc865d5029e9d514a5fb53e1360f51bd1fa3bad80d130a3789ce0",
+      "after_sha256": "703954ac3c116e9b76089767d6f61c8650d35322d1ada8f95e249761a3bee144",
+      "reason": "B9 retained thread error table binding and compatible test assertion"
+    },
+    {
+      "path": "anadius-bootstrap-policies-source/services.cpp",
+      "before_sha256": "0ab6e39bc0b71372734698453702f0053c0be7274564bb9d32b5930065aa70e1",
+      "after_sha256": "e4262048223e68e64734a7687501e24e2e3741f300a71b9ac2c59b76f335de76",
+      "reason": "B9 retained thread error table binding and compatible test assertion"
+    },
+    {
+      "path": "anadius-bootstrap-policies-source/services.hpp",
+      "before_sha256": "75c7e609ed81eb1717341d3e49f95298d9bf8394ec4993d761aca36180ad87de",
+      "after_sha256": "bca6b591d3038dcffd5d05e3ad2d4e952d7c44a598f0551d77bc4e8ab12ff4c3",
+      "reason": "B9 retained thread error table binding and compatible test assertion"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/providers.cpp",
+      "before_sha256": "7ff5991f38d1b88e120300d9109fd6862f88a47a93de91966fa8aaee3c0a7f04",
+      "after_sha256": "dc8e3547bf876d216cc78f8b94e65fb6921fd1110a082707092d2fd39d163190",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-bootstrap-providers-source/providers.hpp",
+      "before_sha256": "9b403c5c89ae5a1d34717e8e7e9d82230b36199d5f359398348e2dd66712f3e1",
+      "after_sha256": "326d3c4766ddeff3c785cff12a8dfefcf58b0dc6b077f678d64a4862f41b8a90",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-config-source/configuration.cpp",
+      "before_sha256": "ab1c09e52c3b4f8a8a24070b057d9eb4da72d6b24722cba931d80a5f92a9a05a",
+      "after_sha256": "a2a2fa7980ddeeaece163b705213bdc5adfff48ae149ec39a122850032e25f6c",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-config-source/configuration.hpp",
+      "before_sha256": "036eea42c74731b9c4e5bbe574e2c953b8010c2e626f5f5caf84f2029aab3f24",
+      "after_sha256": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-config-storage-source/filesystem.cpp",
+      "before_sha256": "b7c0e64fc90af2ceae3c4c49048815e2534056af5cbe4cbdce511dbdcdaa8692",
+      "after_sha256": "06db2ed2205c84837b2f409c2b019557f2eebda24e933dad447302415a799c3f",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-config-storage-source/filesystem.hpp",
+      "before_sha256": "7943c562258b108d6005ea77314c93803697a4095e9454c57eb080f15e7ba1dd",
+      "after_sha256": "c2658e29bffeec397d93762f496d32122de521c7eee01fe26b607a5986ee5d77",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-config-storage-source/persistence.cpp",
+      "before_sha256": "216d13210878bc2a755a871c4e4f9394a6c6c190e424066cba48b358dfb2736c",
+      "after_sha256": "7087f484841f84f8f2856e39e310ede577e589fd13090003482eeaccb040468f",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    },
+    {
+      "path": "anadius-config-storage-source/persistence.hpp",
+      "before_sha256": "b2b81212eae0c5bf4a97dbbdf609734f77dbc10084c7c08d8a678686a5b7245d",
+      "after_sha256": "c6e0900a36e74f3f2a162ec387e935c2b39986f6918aa3d2eede7580f253aaac",
+      "reason": "B9 live directory visitor declaration/forwarding/normal-flow ordering"
+    }
+  ],
+  "source_hashes": {
+    "thread_error.hpp": "625dc0bd861e388c899467854fb614ed5656364bceeba6033465c6fe4454ae38",
+    "thread_error.cpp": "d924c479eb925aa18c10ce81157bb3d78ab8fdad46dac5768016bfb59899551e",
+    "iteration_tests.cpp": "fbc2a0ebde844ce71ccf1bb09cc10f34e83097816565315068034786939d80c8",
+    "iteration_integration_tests.cpp": "11b3caa586aa01316213ebeeefe5d6eb3adc8f9da7f0ac19e9d1827dbc90d9e7",
+    "iteration_test_fixture.hpp": "07f95f8115d32d46c3bf0f24d3ef3269d92edadcf48a4771161e3a69540950d0",
+    "README.md": "65654b19e8bb27b06373a1e9dbf794e13f65675d11c16072237502acc40e2714"
+  },
+  "architecture_review_sha256": "9378de88776ef05ffd7bfa75dd99d7bddb823290e65dc6ea3b668408cb942d1c",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_concrete_backends": 0,
+  "new_thread_trackers": 0,
+  "new_callback_registries": 0,
+  "new_runtime_assemblies": 0,
+  "new_configuration_adapters": 0,
+  "new_compiler_console_adapters": 0,
+  "new_per_launch_thread_adapters": 0,
+  "new_thread_domain_owners": 0,
+  "new_initial_locale_adapters": 0,
+  "new_native_runtime_adapters": 0,
+  "new_application_memory_providers": 0,
+  "new_services_adapters": 0,
+  "owned_initial_locale_domain_present": true,
+  "actual_thread_factory_path_exercised": true,
+  "same_domain_application_memory_present": true,
+  "configuration_routes_bound": 18,
+  "configuration_policies_remaining": 3,
+  "services_routes_bound": 12,
+  "existing_source_algorithms_routed": 7,
+  "remaining_service_policies": 5,
+  "new_virtual_provider_interfaces": 0,
+  "controlled_callback_shutdown_implemented": true,
+  "actual_shared_thread_domain_complete": false,
+  "full_native_CRT_domain_equivalence": false,
+  "dynamic_locale_supported": false,
+  "new_filesystem_helpers": 0,
+  "new_owned_persistence_graphs": 0,
+  "exact_embedded_png_assets": 2,
+  "eager_directory_projection_native_prefix_equivalence": false,
+  "static_original_data_bytes_read": 8,
+  "new_thread_error_policies": 1,
+  "configuration_uses_live_directory_visit": true,
+  "live_directory_failure_prefix_verified": true,
+  "full_native_directory_iterator_equivalence": false,
+  "new_optional_virtual_methods": 1,
+  "actual_provider_backend_complete": false,
+  "production_pe_entry_installed": false,
+  "module_standalone_build_executed": false,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false,
+  "scope": "Concrete configuration visits each directory entry before advancing FindNext, preserving tested removal/error prefixes across all four wrappers. One appended optional source-only visitor retains vector fallback. Thread error uses exact retained seven code/context pairs and observed generic category name with selected compiler exceptions. Full native iterator/EH/ABI and remaining policies stay open."
+}

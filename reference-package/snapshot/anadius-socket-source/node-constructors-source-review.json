@@ -1,0 +1,138 @@
+{
+  "schema": "node-constructors.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-27",
+  "reviewer": "/root/constructors_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent complete retained assembly/pseudocode for five node constructors and exact new production CPP/HPP review. Five bounded normal byte-state bodies plus five existing Identify constructor-provider source bridges;existing selected allocator and005440 append source reused. No reviewer original reads,native analysis or tests.",
+  "reviewed_source_hashes": {
+    "node_constructors.hpp": "afc6e9e9e4fd1b12ca3ea785a844c4b42072a9c74f78a603927fb252112a53a4",
+    "node_constructors.cpp": "0241d535309cad4803283cb802dada02b24dfbebe30ea495f761f4909ebbf331"
+  },
+  "addresses": [
+    "0x180001590",
+    "0x180001610",
+    "0x180001690",
+    "0x180001720",
+    "0x1800017b0"
+  ],
+  "assembly_evidence": {
+    "0x180001590": "ev_d14f1ca8857a6516e3114a07ab617f85b94c2e35e86a666c733f01c1b1c3acb1",
+    "0x180001610": "ev_2eab9384f16c5b13a4b652633ba683cfa41611b72b6d6b1860260ccc8991f468",
+    "0x180001690": "ev_b910340ad99765cccbf54b933ec9bcfcc95ff70467547ec0530ed6c23fcc5369",
+    "0x180001720": "ev_3db5ca48ca8ff595eaf2d0c7b0f657215eaa65e76dab9d67699fff373d3eba91",
+    "0x1800017b0": "ev_1b5aaa6c52bcca8a9ba686d59a6b2574a2b1b4ae8210b95a11b91e44324d0645"
+  },
+  "pseudo_evidence": {
+    "0x180001590": "ev_59fe8f6f63b5d539fa34d2e7ab472bb07f2eac9ddbe19463ceda5cd58807aa7d",
+    "0x180001610": "ev_f70ca376682c01eea491392250432e20b7b1f8b38988e7cff27d1035ae136543",
+    "0x180001690": "ev_aa306639682fe19727d4575e228f9b77edd69edc194f91bf0b4d0573b268c3f0",
+    "0x180001720": "ev_ec0b7b64a4ba841a7ab271ca18723be88c8dddb85944eec7ad7b33fa07a8487f",
+    "0x1800017b0": "ev_411d958c38112d47a20416edd1170e0a920b6607d6b2f500d92c7d5014be885a"
+  },
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 5,
+  "new_source_bridges": 5,
+  "new_unique_source_mapped_addresses": 5,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 5,
+  "prior_source_presence": {
+    "0x180001590": "no_definition_mapping",
+    "0x180001610": "no_definition_mapping",
+    "0x180001690": "no_definition_mapping",
+    "0x180001720": "no_definition_mapping",
+    "0x1800017b0": "no_definition_mapping"
+  },
+  "closed_providers": [
+    {
+      "address": "0x180001590",
+      "base": "NativeNodeIdentifyEffects::construct_001590",
+      "closure": "RecoveredNodeConstructorEffects::construct_001590",
+      "body": "construct_node_001590",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x180001610",
+      "base": "NativeNodeIdentifyEffects::construct_001610",
+      "closure": "RecoveredNodeConstructorEffects::construct_001610",
+      "body": "construct_node_001610",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x180001690",
+      "base": "NativeNodeIdentifyEffects::construct_001690",
+      "closure": "RecoveredNodeConstructorEffects::construct_001690",
+      "body": "construct_node_001690",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x180001720",
+      "base": "NativeNodeIdentifyEffects::construct_001720",
+      "closure": "RecoveredNodeConstructorEffects::construct_001720",
+      "body": "construct_node_001720",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x1800017b0",
+      "base": "NativeNodeIdentifyEffects::construct_0017b0",
+      "closure": "RecoveredNodeConstructorEffects::construct_0017b0",
+      "body": "construct_node_0017b0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "new_selected_source_adapters": 0,
+  "existing_selected_node_parse_adapter_preserved": true,
+  "existing_selected_pool_allocation_adapter_preserved": true,
+  "new_append_005440_body_or_closure_claimed": false,
+  "findings": [
+    "Every public address-tagged constructor selects one fixed internal kind. The helper reads the live pool vtable and QWORD slot+10 target before invoking abstract PoolAllocationDispatch::pool_allocate(target,pool). Original-image pointer values are identities only and never host function pointers.",
+    "Document,pool and returned node values are cached across lower allocation and source append calls. Lower mutations of mapped fields do not cause a different document,pool or return pointer to be reloaded. Selected constructor type identities are configuration snapshots representing fixed native LEA operands.",
+    "1590,1610,1720 and17b0 publish node+8 document FIRST,then QWORD+10,DWORD+18,QWORD+20/+28,DWORD+30,QWORD+38/+40/+48/+50/+58,all zero,in native order.",
+    "1690 element is intentionally different: it zeros those base fields BEFORE document+8. It then writes DWORD+68 and QWORD+70,then the type vtable,then cached pool+60. Source does not merge this into an incorrect document-first initialization.",
+    "1720 text publishes its vtable,then only BYTE+68=0,then cached pool+60. Bytes+69 onward are preserved unless separately touched by another declared field. The text flag is not widened to DWORD.",
+    "1590/1610/17b0 write their respective type vtable values followed immediately by cached pool+60. Type identities match complete assembly operands07fbb8/07fc48/07fcd8;element07fd78 and text07fb28 are separately selected.",
+    "Store widths preserve padding+1c..1f,+34..37,and element+6c..6f. Each memory view/store commits in native order;no struct-wide memset or extra initialization changes untouched bytes.",
+    "Node memory may alias mapped document,pool,vtable or vector bytes. Cached arguments/target/node and ordered writes preserve the native source-state effects,including element delayed document and text flag distinctions.",
+    "After all node fields,the helper directly reuses existing append_pool_block_005440(document+a8,cachedNode) with the same ReceiveBufferMemory and caller-supplied PoolAppendEffects. The separate source callee is not duplicated or counted as another recovered005440 body/closure.",
+    "The function returns cachedNode after append. Source append lower effects may mutate node bytes,vector fields or allocator state without changing that return identity.",
+    "RecoveredNodeConstructorEffects retains N26 Identify and N25 selected parser source composition,then closes exactly five existing NativeNodeIdentifyEffects constructor providers with final numeric overrides. Five normal functions plus five overrides map five unique native addresses,not ten.",
+    "Existing abstract pool allocation dispatch can be supplied by the previously recovered selected allocator for observed known targets. Unknown generic targets remain an open boundary;selected-dispatch UnsupportedInput is not claimed as original native behavior. No extra allocator adapter or append closure is added.",
+    "No input,pool,target or allocation-result null guard,synthetic free on append failure,RAII cleanup or rollback is invented. Missing bounded mappings and lower failures retain committed store prefixes;native fault/EH semantics remain unproven.",
+    "Four pool+10 allocation identities are supported by exact eight-byte extracts from the complete historical broad Ghidra read. Constructor type vtable values are supported by LEA/MOV operands. Neither establishes runtime execution,complete native object/vtable ABI or child ParseDeep bodies."
+  ],
+  "limitations": [
+    "Bounded normal byte-state source projection and explicit caller-supplied effects only. Native register/object/vtable/heap/fault/EH/concurrency and replacement-DLL equivalence remain unproven.",
+    "Existing pool allocation and005440 append source are reused with hash-bound identity and observed call arguments;their entire implementations are not independently re-reviewed by this constructor-only pass.",
+    "Generic pool targets,native heap/fill/copy/free,token data,classifier/compare,heterogeneous parsing/GetStr/prepare/probe/destructor/formatter/caller-argument/scratch dependencies remain separately mandatory or incomplete.",
+    "Static initialized-memory slot bytes and source tests do not prove original target execution. No total DLL completion percentage is derived."
+  ],
+  "retained_data": {
+    "file": "node-constructors-retained-data.json",
+    "sha256": "21c7276b268e2895278349159d2ef91088713fb8aa4d84899354b604388d3820",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "constructor_count": 5,
+    "pool_allocator_slot_count": 4,
+    "new_original_read_performed": false
+  },
+  "full_native_equivalence_review_complete": false,
+  "native_node_constructor_normal_bodies_ready": true,
+  "native_node_constructors_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "generic_virtual_parse_closed": false,
+  "native_variadic_abi_established": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false,
+  "new_native_analysis": false,
+  "CRT_production": "unchanged and paused"
+}

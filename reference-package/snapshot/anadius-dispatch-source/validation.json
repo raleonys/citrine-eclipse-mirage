@@ -1,0 +1,38 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "dispatch",
+    "result": "PASS",
+    "output": "PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed",
+    "executable_sha256": "18054c5e68ea748a8470c9b18a7aaf5b4265bc6eb294a75fe6c1cef2929b3eae"
+  },
+  "actual_modules": [
+    "XML compatibility reader",
+    "crypto",
+    "messages",
+    "router",
+    "handlers including licensing",
+    "XML serializer"
+  ],
+  "reader": "actual upstream compatibility source plus synthetic fixtures",
+  "state": "synthetic supplied references; OS/hash/token/provider effects synthetic",
+  "standalone_module_build_script": "also verified locally; common build is the final recorded verification route",
+  "original_execution": "none",
+  "runtime_equivalence": "not established",
+  "sources": [
+    {
+      "path": "anadius-dispatch-source/integration_tests.cpp",
+      "sha256": "7749626b4a0acc3d1998c1401b549f3126f0719a9eacf8014e6dec556686a1e2"
+    },
+    {
+      "path": "anadius-dispatch-source/router.cpp",
+      "sha256": "79ee7f693ca49e584c04b36984f33782cef867f4fa2c023cf41d06cfeaa32b9d"
+    },
+    {
+      "path": "anadius-dispatch-source/router.hpp",
+      "sha256": "68b9ecbbc18841c857daa4378e3a9a3132cefd1c7e57e2acd6a77dac421a19d6"
+    }
+  ]
+}

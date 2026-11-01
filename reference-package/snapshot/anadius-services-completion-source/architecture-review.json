@@ -1,0 +1,98 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS_WITH_SELF_REVIEW_LIMITATION",
+  "source_package": "B10",
+  "independent_from_production_author": false,
+  "review_mode": "single_agent_disclosed",
+  "reviewer": "root; completion logger authored by delegated worker, registry/tests completed by root",
+  "independence_limitation": "Delegated workers returned usage-limit errors. Root completed registry and tests, reviewed the production, and captured executable evidence. No independent full-production review was completed for B10.",
+  "reviewed_source_hashes": {
+    "exit_wait.hpp": "2006f77a0540db8b8c285020e3a28b2402114ed1db8eee46859888b8bf5e7392",
+    "exit_wait.cpp": "814af5ec8e30a72a9e76dedfb0ab5a1adb950df735efe7a89f865fa426524eaf",
+    "completion.hpp": "d851377aaea26330f5cd3de4cd06be8931cc4ec70e53104297959c4caf12ec2a",
+    "completion.cpp": "c7de4b6fa5f5490f78367f1b06ce153bdfe9dec38d437e8020df83f4119204b5",
+    "completion_tests.cpp": "ca262fa0221fe7cafd8e0346c55fa8627c3135e1e8a15393b846669f259c77d6",
+    "completion_integration_tests.cpp": "4350a021f39e0c019adfbfa001e2ca54314a3bbfd1a2561acb408551a4bf260c",
+    "completion_test_fixture.hpp": "3eb9c182fba0f1353281ae3ece4c1c9acf58c139e2555d341ba045f0a346222d"
+  },
+  "prior_sources_preserved": 746,
+  "prior_package_sha256": "724963f86531f51f486cf9e01145603de01add989ef5feeff6e11d85dd75e866",
+  "quick_result_provenance": [
+    {
+      "path": "work/b10-core-quick-results.json",
+      "sha256": "e07dacf83680e31a713443cdea82fb88fb2bab8bcbe2139782fa107766ea63b5",
+      "checks": 73,
+      "execution_by": "root; source authorship and review limitation disclosed"
+    },
+    {
+      "path": "work/b10-integration-quick-results.json",
+      "sha256": "6c2899350e55843a8428330f97aa9e65c4a8fd10269219a66bf292f09b43e214",
+      "checks": 31,
+      "execution_by": "root; source authorship and review limitation disclosed"
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "topic": "registry_seed",
+      "conclusion": "Registry is explicitly newly empty and source-owned. It does not adopt the compiler CRT private list or claim original global defaults."
+    },
+    {
+      "id": 2,
+      "topic": "storage",
+      "conclusion": "Each20slot block retains shared targets before source entry publication. Block/vector allocation precedes publication. Source entries hold known logical MutexState/condition/ready identities only."
+    },
+    {
+      "id": 3,
+      "topic": "typed_lock",
+      "conclusion": "Real typed SRWLOCK is separate from the logical uintptr cell. Private ReleasePlatform maps cell identity and runs existing unlock_04a6b4 on count1 without overlaying an SDK object on integer storage."
+    },
+    {
+      "id": 4,
+      "topic": "source_order",
+      "conclusion": "Existing cleanup_exit_waits obtains thread id before registry CS, then ready/unlock/wake/clear/count order. Other-thread entries remain untouched; consumed references released before registry unlock."
+    },
+    {
+      "id": 5,
+      "topic": "lifetime",
+      "conclusion": "Known live entries make close return false and stop new registration; existing cleanup remains allowed. Final close requires controller and external worker stop/join. CS destruction occurs at quiescent registry destruction. Open registry/locked targets and unknown SDK outcomes terminate."
+    },
+    {
+      "id": 6,
+      "topic": "logger",
+      "conclusion": "Known bootstrap stream/literal identities map to an owned compiler ostream and stable token; no original address dereference. Formatted insertion and endl preserve selected width/fill/stream-state/flush behavior."
+    },
+    {
+      "id": 7,
+      "topic": "terminal",
+      "conclusion": "Fatal route logs retained Unhandled exception and newline/flush then compiler abort. Stream exceptions may propagate before abort. Unconditional unexpected-return abort deliberately differs from original INT3."
+    },
+    {
+      "id": 8,
+      "topic": "core",
+      "conclusion": "73 checks cover full BOOL0x100 CS initialization, failures, ownership, multi-block registration, two actual thread ids, source cleanup order, exact logger bytes and five own terminal children."
+    },
+    {
+      "id": 9,
+      "topic": "integration",
+      "conclusion": "31 checks run full B4/B6/B7 source graph, three actual recovered CRT workers, explicit test registration, cleanup before same-domain payload deletion, FLS cleanup and join timeout/retry. External foreign/network/config effects are controlled. Workers resumed serially."
+    },
+    {
+      "id": 10,
+      "topic": "limits",
+      "conclusion": "17/17 counts selected Services composition routes. Three config policies plus native CRT/Cnd/stream/EH/foreign/general concurrency/image unload/loader-lock/PE entry remain open. No native body/closure increase."
+    }
+  ],
+  "limits": [
+    "Delegated workers returned usage-limit errors. Root completed registry and tests, reviewed the production, and captured executable evidence. No independent full-production review was completed for B10.",
+    "Owned source registrations only; no compiler CRT private registry adoption.",
+    "Count1 nonrecursive mutex and no complete condition-variable wait API.",
+    "Observed bootstrap logger domain only; compiler stream/EH/terminal behavior not full native ABI equivalence.",
+    "B3/B4 stop/join and explicit registry close are mandatory; reference ownership is not a worker join."
+  ],
+  "production_dll_readiness": "BLOCKED",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

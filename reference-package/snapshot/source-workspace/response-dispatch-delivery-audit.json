@@ -1,0 +1,67 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T02:14:58.273160+00:00",
+  "prior_package_sha256": "3dbba851a2c23732c46bd895b9c44abdaa431d452d1ee80baba2c54d2f6233c2",
+  "prior_source_count": 551,
+  "unchanged_prior_sources": 551,
+  "added_sources": [
+    "anadius-socket-source/response_dispatch.cpp",
+    "anadius-socket-source/response_dispatch.hpp",
+    "anadius-socket-source/response_dispatch_integration_tests.cpp",
+    "anadius-socket-source/response_dispatch_test_fixture.hpp",
+    "anadius-socket-source/response_dispatch_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 556,
+  "current_documents": 216,
+  "native_objects": 183,
+  "cpp_objects": 179,
+  "c_objects": 4,
+  "normal_test_groups": 179,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 52,
+  "new_checks": 777,
+  "new_tests": [
+    {
+      "module": "socket_response_dispatch",
+      "result": "PASS",
+      "output": "PASS: 662 socket response dispatch core checks; actual021420/028270/022240 bodies, factory caching/three environment moves, borrowed/owned ownership, deque wrap/live allocation reload and response residual cleanup",
+      "executable_sha256": "345d9ccce3873f17089bb9994f75bddb2e7643c527252cb66ce591dff900d269"
+    },
+    {
+      "module": "socket_response_dispatch_integration",
+      "result": "PASS",
+      "output": "PASS: 115 socket response dispatch integration checks; actual028d30/021420/023cb0/022240/028270/02a500/021fd0/021a80/0261d0/025a70 source, controlled owned functor/string copy/constructor/completion and injected send",
+      "executable_sha256": "d4b6d996f8fb2c86146ffecc4b246f9ec1e3af142f2c17b9db56a6b214ec2594"
+    }
+  ],
+  "validation_mirror_pairs": 26,
+  "historical_module_records_preserved": 25,
+  "historical_config_references_preserved": 50,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "593f6092c5240856b4891ce808371c24617424e578c5827ca2a43d86daf62e65",
+  "inventory_data_checks": 7171,
+  "normal_source_procedures_added": [
+    "0x180021420",
+    "0x180028270",
+    "0x180022240"
+  ],
+  "new_original_procedures": 3,
+  "closed_provider": "RecoveredResponseDispatchApi::dispatch_response_021420",
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual N1/021420/023cb0/022240/028270/queued-send/composed/finish; controlled owned functor/string copy/constructor/completion and injected AsyncSendApi; no native027a20/IOCP/worker",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N3 020cb0 owned-response factory and022280 call/discard bodies"
+}

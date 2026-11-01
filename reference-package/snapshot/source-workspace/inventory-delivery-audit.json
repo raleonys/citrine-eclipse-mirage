@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T19:10:44.712189+00:00",
+  "scope": "Initial address/source inventory and recorded dependency roadmap; no new native bodies",
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "prior_package_sha256": "317e203ab21ccf772d44162ca15547ddf5c145e07a939cfc95f80b4c7bfc6a32",
+  "prior_source_count": 526,
+  "unchanged_prior_sources": 526,
+  "changed_prior_sources": [],
+  "added_sources": [],
+  "removed_sources": [],
+  "current_sources": 526,
+  "current_documents": 210,
+  "changed_documents": [
+    "KAYNAK-DURUMU.md",
+    "TAMAMLANMA-TAHMINI.md"
+  ],
+  "added_documents": [
+    "YOL-HARITASI.md",
+    "reconstruction-inventory/README.md",
+    "reconstruction-inventory/dependency-audit.md",
+    "reconstruction-inventory/mapping-audit.md"
+  ],
+  "production_changes": false,
+  "new_native_bodies": 0,
+  "build_record_sha256": "b851892144e11c1a92950c20d95eb375a30cce6e46687866604c04b1ba24e862",
+  "native_objects": 177,
+  "recorded_normal_groups": 167,
+  "recorded_terminal_groups": 19,
+  "CXX_tests_rerun": false,
+  "validation_mirror_pairs": 20,
+  "canonical_inventory_rows": 2381,
+  "inventory_data_checks": 7102,
+  "dependency_evidence_files_verified": 18,
+  "selected_direct_edges": 49,
+  "independent_scope": "Canonical/object pre-count completed; final generated inventory review pending",
+  "CRT_production": "paused",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "completion_percentage": null,
+  "next_source_target": "0x180021d10 async receive"
+}

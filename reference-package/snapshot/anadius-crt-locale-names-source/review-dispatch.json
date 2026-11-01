@@ -1,0 +1,42 @@
+{
+  "result": "PASS",
+  "independent_static_checks": 3965,
+  "input_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "full_rows_verified": 228,
+  "full_lcid_rows_verified": 228,
+  "original_ordering_inversions": [
+    {
+      "left": 129,
+      "right": 130
+    }
+  ],
+  "original_unreachable_names": [
+    "kok",
+    "kok-in"
+  ],
+  "source_hashes": [
+    {
+      "name": "locale_names_tests.cpp",
+      "sha256": "2e0ccf70c0fe71ec11509b973b1afdfd8cb4db4f2a3b978927e97d5732bd3bb0"
+    },
+    {
+      "name": "locale_names.cpp",
+      "sha256": "246da46cd2fff8e5298bb386a5fe87deae6d7d2cfd0a72ec49dfa4924fd500f1"
+    },
+    {
+      "name": "locale_names.hpp",
+      "sha256": "92550032c01f1c179724248399cf0ca28ce31c1d3e7cab83bbf57f131cb01810"
+    }
+  ],
+  "checked_at": "2026-10-19T13:36:19.8831669Z",
+  "reviewer": "crt_nls_dispatch peer worker",
+  "findings": [
+    "No corrective source findings.",
+    "07310c assembly requires228rows of16bytes, signed index bounds0..227 and indirectLCIDDWORD at18008cfc0+16*index. All bytes of both228-record arrays, allUTF16 name strings/pointers/index and C++constants independently re-read from original SHA-matched file.",
+    "Original kok/kok-in/ko-kr order preserved; independent search confirms onlykok/kok-in unreachable.",
+    "0736d4 compares atmost85 units for caller07310c, folds ASCIIA-Z only, preserves full signed difference, returnswithoutmemoryreadwhen count0; CPP observes unsigned64 address wrap.",
+    "NULLname returns0; emptyname finds row0 index66→LCID127.",
+    "Right-hand strings are immutable static recovered constants and required NUL-readable; public view helper relies on headerprecondition, not arbitraryunterminatedview.",
+    "No original/native target execution. Full nativeABI/SEH/cache/locale semantics outside thismodule."
+  ]
+}

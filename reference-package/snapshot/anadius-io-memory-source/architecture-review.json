@@ -1,0 +1,356 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T20:43:05.009297+00:00",
+  "reviewed_source_hashes": {
+    "io_memory.hpp": "10a8d278f64a4f114791e1446f8a8a7c3c4366d8352becb43d90e30eaa0d928b",
+    "io_memory.cpp": "78e32fbe9049fa8636962d74b0a35dc1a6920cb5c1424a5c4ff8455b28bf5793",
+    "io_memory_tests.cpp": "447fdd073d2009357355bfbfaf78b13d9857e115d08682636962b050c7a727ef",
+    "io_memory_integration_tests.cpp": "2b85b6ff42985102fc3371ab9918a2ed0d2d2c3a64c0c0bd940abf07277f4b5e",
+    "../anadius-session-memory-source/memory.hpp": "97b3434ee2fd1950e8f5e382574c0f880ec5477e2b8da4ffcac3f1981989c452",
+    "../anadius-session-memory-source/memory.cpp": "7dc425c7b8329e5fe3c4c2f4e1d9a61b71766a03387aaf3f16b2f9e4d053fc54"
+  },
+  "quick_results": [
+    {
+      "path": "work/b34-core-quick-results.json",
+      "sha256": "48f2adbf4f14c804fe9738bb6e8310e4deaf1670864a6b2130542b4f8db9babe",
+      "checks": 77,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b34-core-test.exe",
+      "executable_sha256": "cfec0576647bb04103886a7ac66b6172b05abab9b8496859acfa99cad0c25adc",
+      "archive_sha256": "f0f1b83e13746c6c25fc053c4af1ca3b731238c076e87a822e0b8fa660d058ff",
+      "execution_by": "/root standard quick; root production/core, integration authored by /root/b22_integration; reviewer did not execute",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true
+    },
+    {
+      "path": "work/b34-integration-quick-results.json",
+      "sha256": "c23ad3a87322ca42ac5064207379c09ac51c832a5e3ea23b34143ee367cdeecc",
+      "checks": 57,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b34-integration-test.exe",
+      "executable_sha256": "fc2bc0fb4777ce07c84f92998911b9a3ef07e2c807926253c05cad2f766ea73a",
+      "archive_sha256": "f0f1b83e13746c6c25fc053c4af1ca3b731238c076e87a822e0b8fa660d058ff",
+      "execution_by": "/root standard quick; root production/core, integration authored by /root/b22_integration; reviewer did not execute",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true
+    }
+  ],
+  "root_checks": 134,
+  "independent_integration_record": {
+    "status": "HISTORICAL_PREDECESSOR_ONLY_NOT_REQUIRED_FOR_FINAL_REVIEW",
+    "path": "work/b34-integration-agent-results.json",
+    "current_final_source_execution_claimed": false,
+    "checks_counted_in_root134": false,
+    "additional_author_run_required": false,
+    "note": "Earlier integration-author run is historical. Final-source execution proof is the two current /root standard quick records; independent reviewer executed no EXE."
+  },
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING/unreviewed final full rebuild; no full common PASS claim",
+  "common_build_targets": {
+    "source_files": 860,
+    "objects": 251,
+    "cpp_translation_units": 247,
+    "normal_test_groups": 297,
+    "framework_terminal_scenarios": 19,
+    "composition_files": 77,
+    "composition_objects": 38,
+    "counts_are_planned_not_common_PASS": true
+  },
+  "baseline_package_sha256": "4708f33ca32fefaae0b73f344f6d96365c40012755ef05d04eca58137dd4087e",
+  "baseline_source_files": 856,
+  "prior_sources_preserved": 854,
+  "modified_prior_sources": [
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "before_sha256": "c3b6e1f82d2c1040a68a35df3766f51773d4831914c182c31754a70b0ce5a229",
+      "after_sha256": "7dc425c7b8329e5fe3c4c2f4e1d9a61b71766a03387aaf3f16b2f9e4d053fc54"
+    },
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "before_sha256": "0108496f12c34eb4bd54f65f6c7c79650a3aae9958629d24745c25d7fd1cdcd8",
+      "after_sha256": "97b3434ee2fd1950e8f5e382574c0f880ec5477e2b8da4ffcac3f1981989c452"
+    }
+  ],
+  "new_source_files": 4,
+  "current_source_files": 860,
+  "prior_source_hash_record": {
+    "path": "work/b34-prior-sources.json",
+    "sha256": "6eb22708c1c8f7ce6d177f3d97f9a2aa6de083c1ee5cd0863fc4bca0160f542a",
+    "before_hashes_verified_against_B33_zip": true
+  },
+  "archive_proof": {
+    "quick_sha256": "f0f1b83e13746c6c25fc053c4af1ca3b731238c076e87a822e0b8fa660d058ff",
+    "recorded_archive_matched_B33_zip_member": true,
+    "commands_explicitly_compile_fresh_io_memory_cpp_and_parent_memory_cpp": true,
+    "full_rebuild_required_for_parent_host_CPP_layout_change": true,
+    "final_common_archive_not_reviewed": true
+  },
+  "retained_inventory": {
+    "path": "outputs/reconstruction-inventory/functions.json",
+    "sha256": "d5813357ef8ef1fbe131412c4852f9dbf9db5ee9ab4e15ef938059ba42ca81d1",
+    "purpose": "Reference provenance of already-recovered source bodies only; no fresh target/original-byte query or new ABI adjudication",
+    "rows": [
+      {
+        "address": "0x180021820",
+        "pseudo_evidence": "ev_c2dbc60d3e6cbfc1dd46b28a5bd060319ea97dd547e51623a7efe3600615dc5d",
+        "assembly_evidence": "ev_f188724ed6018eaae49e0f50dc25352b97a82d7bc3110aa0c4c4718c5859a1c7",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/posted_operation.cpp",
+            "line": 20,
+            "symbol": "allocate_cached_021820",
+            "sha256": "4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x180021900",
+        "pseudo_evidence": "ev_038473cd7809c719aee7d5cec218de4f9f5c0bcc6087442d05e3ffe6da2b7e07",
+        "assembly_evidence": "ev_1196f0abade9438adb0f73215263e3a82b6ebe3ec7b068d06364771288bdd212",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/handler_dispatch.cpp",
+            "line": 47,
+            "symbol": "allocate_handler_cached_021900",
+            "sha256": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x180021d10",
+        "pseudo_evidence": "ev_d716892e207f1ae8230bf4ba5b7cce514f147811c107c7c9812d3b205fe10abf",
+        "assembly_evidence": "ev_cb69360436ddc454d9ea6ddc971cd6cbc8fa39ab9ec36acaba00a999bd388274",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/async_receive.cpp",
+            "line": 22,
+            "symbol": "start_async_receive_021d10",
+            "sha256": "6d215e4abc6d25a72240b7938b1c91ba1326dfffd8de367be75e9778602f454f"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x1800269b0",
+        "pseudo_evidence": "ev_0c7504dc089c22b188406a74817295196cc8a5422d0c58100e40ce078253ba9c",
+        "assembly_evidence": "ev_586096def6fb76b35ed73eb2537b5179396be2688df8b2b1f3eae25366596e73",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/composed_write.cpp",
+            "line": 30,
+            "symbol": "allocate_io_storage_0269b0",
+            "sha256": "ae72cf24ff9e0ff0f4c0ecd93061f6e0538cbefda526cc945b7aed47c10b6e48"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x180026a00",
+        "pseudo_evidence": "ev_a8b18ff702d64aed8451a717a422d725d685b92d5849bd81eb6aa8526be6d678",
+        "assembly_evidence": "ev_d3743b3c9d3a490dde77749b691735b3cc7d664db9f3f79d931983343ce15a5d",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/io_completion.cpp",
+            "line": 40,
+            "symbol": "release_io_storage_026a00",
+            "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x180027710",
+        "pseudo_evidence": "ev_7da3b743355f442a593ae330a5db5226466c68b92f7b80398a37115ffdb0ad0e",
+        "assembly_evidence": "ev_875f068c4cc67a67b326e00dd8beda8a6e4921fdd8deb40f82ad55921e27dfea",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/io_completion.cpp",
+            "line": 109,
+            "symbol": "complete_receive_027710",
+            "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x180028fd0",
+        "pseudo_evidence": "ev_a7a887990cbabaffabcf3b1632bc78f305c6499c9a629f167b22cedfda97d43c",
+        "assembly_evidence": "ev_48d391ee0a2a878dad4603c15e86ec508fc9871a114cfd50691885ccffc8b734",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/posted_operation.cpp",
+            "line": 52,
+            "symbol": "cleanup_posted_028fd0",
+            "sha256": "4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x1800291c0",
+        "pseudo_evidence": "ev_52421cf2a12a2d6699238fcb5d733e0c050181193adca7761405671e5dc7a79e",
+        "assembly_evidence": "ev_69264e6a252fbf914cbcd59f67d6045d2a4fa76cc656e78ba8f16adeb194a49c",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/handler_dispatch.cpp",
+            "line": 87,
+            "symbol": "cleanup_receive_task_0291c0",
+            "sha256": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x1800292a0",
+        "pseudo_evidence": "ev_e1ec8c5d5836634556cb2b7a3165483ee624f68fccd0fb8eb8166d0b93013600",
+        "assembly_evidence": "ev_bc982b0c377896faf08ce17db3747261b53ae6088fc21deb5fef382d78cd02bb",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/handler_dispatch.cpp",
+            "line": 93,
+            "symbol": "cleanup_send_task_0292a0",
+            "sha256": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x1800293f0",
+        "pseudo_evidence": "ev_3ae73ab0a728103ea5b1dac7b8823e06a3f850d5f744b5739526298c54b3491c",
+        "assembly_evidence": "ev_2952336be67b99eb58841e45901763cbb9ef1cf6777392aa3dc5e2afedf21b2d",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/io_completion.cpp",
+            "line": 56,
+            "symbol": "cleanup_receive_0293f0",
+            "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x1800294c0",
+        "pseudo_evidence": "ev_65f668a0be45b449bda8c6a2bc7797385aa0abce15e0adb2a8dadafd5662c982",
+        "assembly_evidence": "ev_a2a0dd4fb182338fda3cd1fb10e418daad741f70f824c2ba41a04cc7e29b9207",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/io_completion.cpp",
+            "line": 69,
+            "symbol": "cleanup_send_0294c0",
+            "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      },
+      {
+        "address": "0x1800298b0",
+        "pseudo_evidence": "ev_e6bbbaa1780b6df4e1edc25150c1c8a939c0d5fb937afed734d4f8c641d88539",
+        "assembly_evidence": "ev_4b20e2442cb7d601c8177ba4b68acc8c09a8cce81580892199e78a5d0f00c319",
+        "existing_source_definitions": [
+          {
+            "file": "anadius-socket-source/worker_run.cpp",
+            "line": 13,
+            "symbol": "run_worker_0298b0",
+            "sha256": "1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4"
+          }
+        ],
+        "already_normal_body_mapped_before_B34": true
+      }
+    ]
+  },
+  "findings": [
+    {
+      "topic": "Stable ownership, descriptors and actual extents",
+      "result": "PASS",
+      "source": "io_memory.cpp Impl records/index/next_projection; allocate/free; fixed binding accessors",
+      "observation": "Fixed-capacity vectors supply stable full-size span backing before allocation. Unique record metadata exists before raw parent allocation; typed variant sidecars are distinct from native raw bytes. Private original raw+extent are independent of public descriptor, whose pointer/identity/span size are validated before provider use. Free always uses the original extent even after larger receive225->posted73->send209 or handler121->send113->response73 reuse. Generation changes invalidate explicit controller handles; they do not prove kernel ABA safety."
+    },
+    {
+      "topic": "Native cache/free last-use semantics",
+      "result": "PASS",
+      "source": "existing021820/021900/028fd0/0291c0/0292a0/026a00 and io_memory.cpp completion wrappers",
+      "observation": "021820 uses slots0..1 and021900 slots4..5; capacity units=(requested+3)>>2 with marker at requested and allocation units*4+1. Return-to-cache copies marker to byte0. Required normal extents are73/121/113/225/209. Cleanup may free/cache before invoking moved local callbacks; existing source does not access old projection after that point. Wrappers retain only Impl call accounting after canonical completion, copy Error before clearing aliased packet metadata and add no duplicate native reference cleanup. Variant destruction may end a live member-call projection after its last member read. Contexts and coherent cache acquisition remain caller contracts."
+    },
+    {
+      "topic": "Owned parent provider and byte-range leases",
+      "result": "PASS",
+      "source": "../anadius-session-memory-source/memory.hpp/.cpp acquire_provider_lease/pin_buffer/owns_control/free/close/Lease",
+      "observation": "New parent shared ownership and provider counter block parent close until IO provider retires. Pin maps one owned live region, bounds-checks tail length, rejects ambiguous/foreign ranges, increments ticket/global counters with overflow checks and blocks free before typed destruction. Shared-token copies represent one loan; last release is metadata-only under existing parent gate, can run on a foreign thread with no PTD, and does no native free. Parent class layout and Snapshot changed, so a full host C++ rebuild is required. Two prior files are the only changed B33 sources."
+    },
+    {
+      "topic": "SDK borrower compatibility policy",
+      "result": "PASS",
+      "source": "io_memory.cpp arm/observed; PinnedAsyncReceiveApi/PinnedAsyncSendApi",
+      "observation": "Arm verifies actual current typed operation/OVERLAPPED even if mutable packet binding is forged, same-parent live SessionControl, owned buffer range and nonsaturated/nonzero strong before calling lower. It holds byte lease plus EXTRA source strong; failed arming rolls back metadata pin without calling SDK. Cancellation intent does not release anything. Trusted final observation verifies native handler still names pinned owner, drops extra strong only with count>=2 and releases range before canonical native cleanup. This is an explicit compatibility lifetime policy, not native counter equivalence or independent proof that a kernel operation finished."
+    },
+    {
+      "topic": "Lock order, retirement and failure profile",
+      "result": "PASS",
+      "source": "io_memory.cpp Impl::Access/Mutation/Call; close/destructor and SDK wrappers",
+      "observation": "Parent Operation is validated before IO gate acquisition; no nested parent Operation opens. Reentrant raw allocation/free is guarded. Close rejects records/active calls/poison, enters Retiring and releases provider lease outside IO gate; Closed is mandatory for destruction. Once parent allocation/free was attempted, ANY thrown result, including known bad_alloc/HeapFreeFALSE, poisons IO and retains record; native callback exceptions likewise poison. There is no IO reset/recovery or automatic retry, even if parent raw-only retry later reclaims storage. Unknown SDK throw retains pending sidecar/range/extra owner; own child exits with retained state rather than inventing rollback."
+    },
+    {
+      "topic": "Core and integration validation",
+      "result": "PASS",
+      "source": "io_memory_tests.cpp; io_memory_integration_tests.cpp; root quick records",
+      "observation": "77 core checks cover fixed capacity/stable spans, effect-free admission, descriptor forgery/corruption, actual typed OVERLAPPED, real heap/FLS parent loans, cancel retention, nested receive->posted->send and handler->send->heap-response reuse, exact original free extents, saturation/no-SDK rollback, exact buffer ranges, cross-thread metadata unpin and an own retained unknown-SDK child. 57 integration checks replace receive allocation/projection fixture with concrete OwnedIoMemory and execute actual factory/read/completion/frame/message/disposal source, XML/GetConfig and plain/encrypted AES. SDK transport, scheduling and detached publication remain controlled lowers; no real network/IOCP is executed."
+    },
+    {
+      "topic": "Remaining production dispatcher/admission boundary",
+      "result": "PASS_WITH_LIMITS",
+      "source": "OwnedIoDispatcherEffects::complete; completion_dispatcher.cpp; worker_run.cpp",
+      "observation": "New routing bridge was statically inspected and forwards selected posted/receive/send completions through loan-aware wrappers. Root123 predecessor tests are superseded by current134. Current tests drive explicit observed-completion helpers, not full027c10 routing or real IOCP. Old final IoDispatcherEffects/native complete routes bypass loan release and are outside this profile. Caller must establish genuinely terminal completion, coherent cache acquisition and current contexts; cancellation/synthetic status alone is not kernel-quiescence proof. A single parent Operation around blocking0298b0/027c10 would hold global gate during GQCS and can block detached jobs; real worker admission/lock boundaries remain unresolved."
+    }
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0,
+  "native_mapped_addresses_unchanged": 494,
+  "native_eligible_compiled_tags_unchanged": 498,
+  "explicit_normal_body_claims_unchanged": 131,
+  "historical_native_closures_unchanged": 52,
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "Source composition only: no native ASIO layout overlay, original allocator/C++ exception ABI, original class ABI, original executable address invocation or new native closure.",
+    "Extra SDK strong is intentionally observable compatibility policy. Final completion is supplied by a trusted controller; this provider does not authenticate kernel completion, synthetic statuses or stale packets.",
+    "Generation protects controller handles, not raw OVERLAPPED ABA. Mutable descriptors/context/bindings remain coherent caller-owned source inputs; no general security boundary is claimed.",
+    "All contexts and native payload move/destroy providers must outlive their borrowers; normal source cache acquisition/exactly-once task consumption and external stop/cache drain are caller obligations. Worker source does not clear cache words; test terminal adapter clearing is not a native body claim.",
+    "Global parent Operation must not simply surround an indefinitely blocking worker/GQCS loop in the future production graph. Detached-job ownership, cancellation completion provenance, true multiworker IOCP and callback/admission scope design remain open.",
+    "No whole-scope LastError invariant, general opaque callback reentry safety, unknown native EH rollback or recovery from IO Poisoned state is proved.",
+    "Selected executor0228c0, production accept/IOCP/response/context graph, raw detached-job quiescence, code/module ownership, loader-lock-safe startup/unload and B31 require_loader_* hook implementations remain open. DLL readiness stays BLOCKED; full common build not approved here."
+  ],
+  "original_inputs_read": false,
+  "original_bytes_or_target_queries": false,
+  "original_or_rebuilt_DLL_game_execution": false,
+  "actual_user_cfg_token_contents_read": false,
+  "production_or_test_sources_modified_by_reviewer": false,
+  "reviewer_writes": [
+    "architecture-review.json",
+    "architecture-review.md"
+  ],
+  "composition_count_basis": {
+    "archive_member": "reconstruction-inventory/composition-only.json",
+    "member_sha256": "50a76b9e73d61abf1fe21a44aad28fb4aee01476bdf0a29373095c467d11dde6",
+    "baseline_excluded_source_files": 75,
+    "new_excluded_production_sources": [
+      "anadius-io-memory-source/io_memory.hpp",
+      "anadius-io-memory-source/io_memory.cpp"
+    ],
+    "unchanged_exclusion_membership_for_two_modified_parent_files": true,
+    "current_target_excluded_files": 77,
+    "baseline_composition_objects": 37,
+    "new_production_objects": 1,
+    "current_target_composition_objects": 38
+  }
+}

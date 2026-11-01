@@ -1,0 +1,83 @@
+{
+  "schema": "application-admission.source-composition.v1",
+  "source_package": "B51",
+  "evidence_type": "Application-only source admission seal before backend stop/join",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "4bcef4b7421c0c751499d883364625d1ea4a8ff822009a57930a4ee102e76f30",
+      "scope": "Saved source dependency or reviewed existing Binding/owner policy extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "sha256": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+      "scope": "Saved source dependency or reviewed existing Binding/owner policy extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-native-source/native_entries.cpp",
+      "sha256": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85",
+      "scope": "Saved source dependency or reviewed existing Binding/owner policy extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-native-source/native_entries.hpp",
+      "sha256": "fc50135b8fa2678743544c8728e25d6ef94837dfd5956f77cb736ea7bf899674",
+      "scope": "Saved source dependency or reviewed existing Binding/owner policy extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+      "sha256": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+      "scope": "Saved source dependency or reviewed existing Binding/owner policy extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-owner-source/owner_integration_tests.cpp",
+      "sha256": "49b1854edfe087c551429aaed06124ff190d88becf70a1e665eea23050823def",
+      "scope": "Saved source dependency or reviewed existing Binding/owner policy extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "aefcaeaedf61d3646bc17e4a52763606f2e9de4634ab63fb14ec876262547aec",
+      "scope": "Saved source dependency or reviewed existing Binding/owner policy extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-source/bootstrap.cpp",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+      "scope": "Saved source dependency or reviewed existing Binding/owner policy extension; no fresh original bytes."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b51-core-quick-results.json",
+      "sha256": "5930f07892ce07ca0eb40b22bcb1b98b16ffeba07e99717f0777ecbe3de0e951",
+      "checks": 72,
+      "executable_sha256": "c97e384052e3602f0ee7f68644c52b140509909caedf8d6d46067fa345a4e301",
+      "archive_sha256_as_used": "c782e1e3a05b80c2ed9e02d8e2651198a6dfb7968ee81ba8dea26a04008ead08",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh modified native_entries.cpp and RuntimeOwner owner.cpp plus new admission_tests.cpp with selected actual-use interface headers. Immutable canonical B50 archive supplies prior Bootstrap source. This core directly exercises Binding/native entry trampolines and actual Bootstrap methods; RuntimeOwner close integration is compiled but its full backend integration is separately verified, not claimed here. A real own std-thread Application blocks in a selected provider behind real Win32 events. Sticky pause reports false until that existing Application lease drains while all new cached Application calls/reasons return FALSE with no Bootstrap/dependency/Errors admission or LastError change. Existing actual NoArgument worker lease remains live when pause becomes true, so Binding.close still rejects general Busy. Selected queued startup-thread lower owns actual payloads and later invokes reconstructed NoArgument/Boolean trampolines; no original CRT thread wrapper is substituted or claimed. Old Application and worker finish, all payloads and leases balance; Exit remains live, failed duplicate never unseals, old closed Binding cannot affect a distinct fresh binding, and fresh binding resets its own seal with no ABA guarantee. Main count excludes four exact-exit child policies: Application exception releases both counts before Errors, Terminate remains admitted while Application sealed, and prebinding/closed calls preserve prior error/terminate behavior. No original/rebuilt DLL, game, network, user configuration/token/license contents, loader/DllMain ABI, all-source quiescence or ABA protection is claimed."
+    },
+    {
+      "path": "work/b51-integration-quick-results.json",
+      "sha256": "d1ec91ac52c7b09ae9ae1e0e2ecfaa83ec36571c0b8deb2613d6ecc7397faab7",
+      "checks": 96,
+      "executable_sha256": "749f5300239a1f927ce0d90827faad696125785009fd198a48053f480e0f4cf4",
+      "archive_sha256_as_used": "c782e1e3a05b80c2ed9e02d8e2651198a6dfb7968ee81ba8dea26a04008ead08",
+      "execution_author": "/root/b22_integration",
+      "note": "ActualRuntimeOwner/SourceBackend+ApplicationWorker realaccept-onlypipe/IOCP/defaultCancel995/rootSourcecleanup, THREEactualDomainNativeThreads bootstrapworkers PLUSfourthsameDomain NativeThreads Application caller. ExistingApplicationpreadmitted/blocked inprovider guard afterbootstrap3workers andother2payloadscompleted. Controllerclose mustsetStopping+sealApplication butreturnfalseBEFOREbackendstop/join/request/cancel. CachedApplication(allreasons) false/LastErrorpreserved/noProvider/Erroreffects whileoldactive, andagainINSIDEgenuineStopSources callback afteroldAppreturns/realouterjoin. PreadmittedoldAppreturnsTRUE, genuineworkers/registeredNativeEXITcleanup remainadmitted andactuallyjoin/FLS; laterBindingunbindsallcalls0. Configuration/statecellsreadonlyAFTERoldAppjoin; providertracebeforejoinstableviaexplicitblocked-guardhappens-before. Otheraccept-onlydrainproofstillREQUIREDcallerprerequisite, notfullrawjob/foreign/kernel/unload/nativeABI/Resourcesloaderproof. NoOriginalDLL/game/usercontents/realnetwork/syntheticterminal/manualcounter. OwnsyntheticEXE only."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition only.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "selected_HOST_Application_refusal_FALSE_while_bound": true,
+  "production_sources_added": 0,
+  "prior_sources_modified": 4,
+  "new_test_sources": 2,
+  "full_foreign_rawjob_hook_admission_proof": false,
+  "loader_lock_equivalence": false
+}

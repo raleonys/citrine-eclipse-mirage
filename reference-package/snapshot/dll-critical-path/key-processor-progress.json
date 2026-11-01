@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "focused_checks": 42,
+  "elapsed_seconds": 6.922,
+  "new_native_normal_body": 1,
+  "native_ABI_closures": 0,
+  "remaining_Runtime_binding": true,
+  "full_build_or_DLL_link": false,
+  "repackaged": false,
+  "overall_completion_percentage": null
+}

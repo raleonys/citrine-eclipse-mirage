@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "evidence_file_sha256": "fc39b8bdf2d44310e4539f4c444e47fe86c3413fd5c46df97aaffb03f0b57fb1",
+  "checks": [
+    {
+      "address": "0x1800a17e0",
+      "length": 352,
+      "file_offset": 654816,
+      "evidence_id": "ev_52ee69fa3a17ae784148d962f28166130ab1ba7424c5a495411bb61e32a8cad3",
+      "sha256": "9a504a9c346733f84cd38c262c399ad3b9f71c1ecfc2513d791339060db27e44",
+      "matches_raw_file": true
+    },
+    {
+      "address": "0x1800a1c70",
+      "length": 552,
+      "file_offset": 655984,
+      "evidence_id": "ev_8d5f1477ac673d31d958ad405d496c467c752b8f1f9983be85a528c3afc1a78e",
+      "sha256": "2bdf8c788761b060610d20270bb00c2d1d1a9370d6708ba16aa3aa7ad64be4a2",
+      "matches_raw_file": true
+    },
+    {
+      "address": "0x18008ad20",
+      "length": 704,
+      "file_offset": 562464,
+      "evidence_id": "ev_208bceade1f4bc4672ed5d82b435112f21cb7b8082b5d4a8adf28a5bf05b35c0",
+      "sha256": "838945677c00ce1a537f203fff21d263f3f2a72ad158ecd4206c7772ad174aa6",
+      "matches_raw_file": true
+    }
+  ],
+  "scope": "Exact three freshly obtained Ghidra initialized-memory reads compared to hash-bound raw PE ranges. No target execution or writes."
+}

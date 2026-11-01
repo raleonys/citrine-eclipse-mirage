@@ -1,0 +1,66 @@
+{
+  "reviewer": "crt_string_type",
+  "status": "PASS",
+  "checked_at": "2026-10-19T13:23:42.7804864Z",
+  "scope": "Read-only crossreview of lcmap.hpp/lcmap.cpp/lcmap_tests.cpp against exact retained assembly for 063168/06c8fc/06cc30; no CPP modifications or target execution",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "sources": [
+    {
+      "name": "lcmap_tests.cpp",
+      "sha256": "e0d4eaa50ccfe7a0275d3957b626c1b8d5cc9ddcf8aedb7c4173aa82c5cb5b54"
+    },
+    {
+      "name": "lcmap.cpp",
+      "sha256": "7fd1210aa06fffe1b8b706bb499d600b9e32887f0457a09ed91fae4ab34de3f1"
+    },
+    {
+      "name": "lcmap.hpp",
+      "sha256": "eb1ffff0fcbc80edd0945f8d2000ebc63766b5ec0fb1e933d400d64792c2c50c"
+    }
+  ],
+  "findings": [],
+  "confirmed": [
+    {
+      "addresses": "0x18006cc9c-0x18006ccc5",
+      "claim": "Wrapper returns inner low32 EAX unchanged, including after inline owned-flag cleanup; pseudocode void signature correctly rejected"
+    },
+    {
+      "addresses": "0x180063168-0x18006317a",
+      "claim": "strncnt always reads source[0], checks count after byte, and reads source[count] before stop; uint64 addresses wrap without host signed UB"
+    },
+    {
+      "addresses": "0x18006c939-0x18006c951",
+      "claim": "Only positive signed source_count bounded, NUL included when length<count; signed comparison equivalent for bounded result within original positive int32 count"
+    },
+    {
+      "addresses": "0x18006c95a-0x18006c982",
+      "claim": "Locale-info+0xc for CP0; strict query9 versus1; original source address and bounded signedcount"
+    },
+    {
+      "addresses": "0x18006c987-0x18006ca60",
+      "claim": "Signextended queriedwide size, marker+16, <=1024 inclusive, rounded stack; fill flags1, later native sourcecount retains firstquery not fill result; no payload zeroing"
+    },
+    {
+      "addresses": "0x18006ca65-0x18006cac9",
+      "claim": "Sortkey capacity0 returns native query low32, otherwise signed query<=capacity invokes direct fill into original destination; no second allocation or reverse conversion"
+    },
+    {
+      "addresses": "0x18006cace-0x18006cbb8",
+      "claim": "Second allocation uses native queriedcount, second map capacity retains query, reverseconversion sourcecount retains native query ignoring secondfill count except zero; capacity0 forces NULL destination"
+    },
+    {
+      "addresses": "0x18006cbba-0x18006cc05",
+      "claim": "Second then first marker read occurs live at cleanup, free uses base=data-16 only markerdddd; callback mutation of firstheader after secondfree affects nextdecision"
+    },
+    {
+      "addresses": "0x18006cca1-0x18006ccad",
+      "claim": "Only owned locale bit2 cleared using live PTD flags; no invented unwind cleanup"
+    }
+  ],
+  "limitations": [
+    "Native 0671d4 remains explicit provider in this module; parent bridge intends actual recovered dispatch source",
+    "Synthetic fixtures establish control flow only; native locale API/SEH/cookie/stack ABI/concurrent FLS equivalence remains unproven",
+    "Negative pathological statuses preserve unsigned64 allocation arithmetic; fixture denies >8192 rather than allocating huge host buffers"
+  ]
+}

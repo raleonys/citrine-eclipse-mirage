@@ -1,0 +1,385 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "preferred_base": "0x180000000",
+  "evidence_type": "retained REA static assembly and pseudocode plus hash-bound rdata",
+  "sources": [
+    {
+      "file": "../anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "file": "../anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    }
+  ],
+  "rdata": {
+    "va": "0x18007f000",
+    "raw_offset": "0x7d800",
+    "size": "0x21e00",
+    "evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082"
+  },
+  "functions": [
+    {
+      "va": "0x180035b00",
+      "assembly_evidence": "ev_1938a4b0b7d093daeda62b052bd63a5823849aada8b911905b5381b65447c5d0",
+      "pseudocode_evidence": "ev_7f1def6e129a56d2a904e8bdf464af30c49bacfe3ee2cbf85dfb594f2c43ded5"
+    },
+    {
+      "va": "0x180035b60",
+      "assembly_evidence": "ev_d120db083716acb73a3aab91edb94f7ae2910ca33f5cd2a7baa1d1e72b62a030",
+      "pseudocode_evidence": "ev_f2254ea855134db4962d20dde46b3686ce230f94b3578001b0c25fc3400e4387"
+    },
+    {
+      "va": "0x180035bd0",
+      "assembly_evidence": "ev_42d4b70085bbc786efef3d59635d848e062d1ecab79b8bd4e827ea88833cf586",
+      "pseudocode_evidence": "ev_01da19447a43bf9f2a4a248ddc7f93acc033773f2f55e70da7f7fc84fd393c99"
+    },
+    {
+      "va": "0x1800366f0",
+      "assembly_evidence": "ev_1fcea4b34ce7b7c2ba51c2e17ba2693f4d7fdb691fc078637e4d3b78e8cf139f",
+      "pseudocode_evidence": "ev_a10737dd11c06584a1d8bfb25cfe4eb94945bdc1d2b23aca89b5fddc0066d5f4"
+    },
+    {
+      "va": "0x18003cf00",
+      "assembly_evidence": "ev_19bcf15ba615e9b59425d363b0e25771f6d86dec8bea66181a3c28381748b4bb",
+      "pseudocode_evidence": "ev_b7652e6e8f97bddabc3e475f5b45e63136a33d6e9b6a7f0d53a4a7d97e007ddf"
+    },
+    {
+      "va": "0x18003cd30",
+      "assembly_evidence": "ev_7337204edde4fe1acca4867fd2a8065a700d333bf96ceaa8317c59d62d0b330b",
+      "pseudocode_evidence": "ev_00d705658e3778339e7f9a047ca60dcdbb8ff410872efb2e82602665b446d314"
+    }
+  ],
+  "anchors": [
+    {
+      "va": "0x180035b11",
+      "instruction": "0x180035b11: MOV R8D, 0x3",
+      "observation": "status flags 3"
+    },
+    {
+      "va": "0x180035b36",
+      "instruction": "0x180035b36: TEST EAX, 0xfffffff7",
+      "observation": "error kind-minus-one mask excludes 1 and 9"
+    },
+    {
+      "va": "0x180035b3d",
+      "instruction": "0x180035b3d: CMP R8D, 0x2",
+      "observation": "return regular-file kind 2"
+    },
+    {
+      "va": "0x180035b69",
+      "instruction": "0x180035b69: CALL 0x180036880",
+      "observation": "worker wait_steps(1)"
+    },
+    {
+      "va": "0x180035b74",
+      "instruction": "0x180035b74: CMP byte ptr [0x1800a3c3b], 0x0",
+      "observation": "online flag gates normal cleanup"
+    },
+    {
+      "va": "0x180035b8c",
+      "instruction": "0x180035b8c: CALL qword ptr [RAX]",
+      "observation": "destroy object at virtual slot 0"
+    },
+    {
+      "va": "0x180035baa",
+      "instruction": "0x180035baa: MOV qword ptr [0x1800a3a80], 0x0",
+      "observation": "clear module after free returns"
+    },
+    {
+      "va": "0x180035bb5",
+      "instruction": "0x180035bb5: LEA RCX, [0x1800a3c3c]",
+      "observation": "finish flag address a3c3c"
+    },
+    {
+      "va": "0x180035c09",
+      "instruction": "0x180035c09: CALL 0x1800450a0",
+      "observation": "suppress error mode"
+    },
+    {
+      "va": "0x180035c18",
+      "instruction": "0x180035c18: CALL 0x180048ac0",
+      "observation": "filesystem codepage"
+    },
+    {
+      "va": "0x180035c46",
+      "instruction": "0x180035c46: LEA R8D, [R14 + 0x13]",
+      "observation": "literal conversion byte count 0x13"
+    },
+    {
+      "va": "0x180035cd1",
+      "instruction": "0x180035cd1: CALL 0x18000bb30",
+      "observation": "root-name helper in parent calculation"
+    },
+    {
+      "va": "0x180035d84",
+      "instruction": "0x180035d84: CALL 0x180016b50",
+      "observation": "path append"
+    },
+    {
+      "va": "0x180035d8d",
+      "instruction": "0x180035d8d: CALL 0x1800450d0",
+      "observation": "load copied path"
+    },
+    {
+      "va": "0x180035d92",
+      "instruction": "0x180035d92: MOV qword ptr [0x1800a3a80], RAX",
+      "observation": "store module"
+    },
+    {
+      "va": "0x180035e26",
+      "instruction": "0x180035e26: CALL 0x180045090",
+      "observation": "restore mode normal path"
+    },
+    {
+      "va": "0x180035e62",
+      "instruction": "0x180035e62: CALL 0x180045170",
+      "observation": "GetProcAddress version_check"
+    },
+    {
+      "va": "0x180035e8e",
+      "instruction": "0x180035e8e: CMP EAX, 0x2",
+      "observation": "required version 2"
+    },
+    {
+      "va": "0x180035f2d",
+      "instruction": "0x180035f2d: CALL 0x180038bc0",
+      "observation": "mismatch dialog flags 0x10"
+    },
+    {
+      "va": "0x180035f60",
+      "instruction": "0x180035f60: CALL 0x180045170",
+      "observation": "GetProcAddress create_online"
+    },
+    {
+      "va": "0x180035fac",
+      "instruction": "0x180035fac: CALL RBX",
+      "observation": "factory copied cookie argument"
+    },
+    {
+      "va": "0x180035fb1",
+      "instruction": "0x180035fb1: MOV qword ptr [0x1800a3a88], RAX",
+      "observation": "store factory object"
+    },
+    {
+      "va": "0x180036002",
+      "instruction": "0x180036002: CALL qword ptr [RAX + 0x8]",
+      "observation": "status virtual+8"
+    },
+    {
+      "va": "0x18003600d",
+      "instruction": "0x18003600d: MOV byte ptr [0x1800a3c3b], 0x1",
+      "observation": "online flag before all profile callbacks"
+    },
+    {
+      "va": "0x180036039",
+      "instruction": "0x180036039: CALL qword ptr [RAX + 0x10]",
+      "observation": "username virtual+0x10"
+    },
+    {
+      "va": "0x18003606c",
+      "instruction": "0x18003606c: CALL qword ptr [RAX + 0x18]",
+      "observation": "persona virtual+0x18"
+    },
+    {
+      "va": "0x180036098",
+      "instruction": "0x180036098: CALL qword ptr [RAX + 0x20]",
+      "observation": "user ID virtual+0x20"
+    },
+    {
+      "va": "0x1800360c5",
+      "instruction": "0x1800360c5: CALL 0x180035b00",
+      "observation": "live branch cookie file test"
+    },
+    {
+      "va": "0x1800360d8",
+      "instruction": "0x1800360d8: CALL 0x180035b00",
+      "observation": "live branch avatar file test"
+    },
+    {
+      "va": "0x180036107",
+      "instruction": "0x180036107: CMP byte ptr [0x1800a3c38], 0x0",
+      "observation": "save profile flag"
+    },
+    {
+      "va": "0x18003632d",
+      "instruction": "0x18003632d: CALL 0x18003c1d0",
+      "observation": "write profile return ignored"
+    },
+    {
+      "va": "0x18003645a",
+      "instruction": "0x18003645a: CMP EAX, 0x1",
+      "observation": "status 1 adds authentication failed fragment"
+    },
+    {
+      "va": "0x180036488",
+      "instruction": "0x180036488: CALL 0x1800088e0",
+      "observation": "one flush after offline log fragment"
+    },
+    {
+      "va": "0x18003648d",
+      "instruction": "0x18003648d: CMP byte ptr [0x1800a3c38], 0x0",
+      "observation": "cached profile flag"
+    },
+    {
+      "va": "0x1800364a1",
+      "instruction": "0x1800364a1: CALL 0x180035b00",
+      "observation": "cached profile requires cookie regular file"
+    },
+    {
+      "va": "0x180036517",
+      "instruction": "0x180036517: CALL 0x18003b3f0",
+      "observation": "read binary profile"
+    },
+    {
+      "va": "0x18003651d",
+      "instruction": "0x18003651d: XOR R9D, R9D",
+      "observation": "split limit 0"
+    },
+    {
+      "va": "0x18003652b",
+      "instruction": "0x18003652b: CALL 0x18003cf00",
+      "observation": "split helper call"
+    },
+    {
+      "va": "0x180036540",
+      "instruction": "0x180036540: CMP RAX, 0x3",
+      "observation": "only exactly three fields"
+    },
+    {
+      "va": "0x18003656a",
+      "instruction": "0x18003656a: CALL 0x180018b30",
+      "observation": "assign field 0 persona"
+    },
+    {
+      "va": "0x180036594",
+      "instruction": "0x180036594: CALL 0x180018b30",
+      "observation": "assign field 1 user"
+    },
+    {
+      "va": "0x1800365be",
+      "instruction": "0x1800365be: CALL 0x180018b30",
+      "observation": "assign field 2 username"
+    },
+    {
+      "va": "0x180036703",
+      "instruction": "0x180036703: CALL qword ptr [RAX]",
+      "observation": "general cleanup virtual slot 0"
+    },
+    {
+      "va": "0x180036705",
+      "instruction": "0x180036705: MOV qword ptr [0x1800a3a88], 0x0",
+      "observation": "clear object after destroy"
+    },
+    {
+      "va": "0x18003671c",
+      "instruction": "0x18003671c: CALL 0x180045180",
+      "observation": "general cleanup FreeLibrary"
+    },
+    {
+      "va": "0x180036721",
+      "instruction": "0x180036721: MOV qword ptr [0x1800a3a80], 0x0",
+      "observation": "clear module after FreeLibrary"
+    }
+  ],
+  "literals": [
+    {
+      "va": "0x180086400",
+      "raw_offset": "0x84c00",
+      "length": 19,
+      "ascii": "anadius64online.dll"
+    },
+    {
+      "va": "0x180086418",
+      "raw_offset": "0x84c18",
+      "length": 17,
+      "ascii": "online dll found!"
+    },
+    {
+      "va": "0x180086430",
+      "raw_offset": "0x84c30",
+      "length": 13,
+      "ascii": "version_check"
+    },
+    {
+      "va": "0x180086440",
+      "raw_offset": "0x84c40",
+      "length": 26,
+      "ascii": "version function not found"
+    },
+    {
+      "va": "0x180086460",
+      "raw_offset": "0x84c60",
+      "length": 32,
+      "ascii": "Online library version mismatch!"
+    },
+    {
+      "va": "0x180086488",
+      "raw_offset": "0x84c88",
+      "length": 32,
+      "ascii": "online library version mismatch!"
+    },
+    {
+      "va": "0x1800864b0",
+      "raw_offset": "0x84cb0",
+      "length": 13,
+      "ascii": "create_online"
+    },
+    {
+      "va": "0x1800864c0",
+      "raw_offset": "0x84cc0",
+      "length": 26,
+      "ascii": "factory function not found"
+    },
+    {
+      "va": "0x1800864e0",
+      "raw_offset": "0x84ce0",
+      "length": 17,
+      "ascii": "authentication ok"
+    },
+    {
+      "va": "0x1800864f8",
+      "raw_offset": "0x84cf8",
+      "length": 23,
+      "ascii": "authentication failed, "
+    },
+    {
+      "va": "0x180086510",
+      "raw_offset": "0x84d10",
+      "length": 16,
+      "ascii": "starting offline"
+    },
+    {
+      "va": "0x180084698",
+      "raw_offset": "0x82e98",
+      "length": 11,
+      "ascii": "crack error"
+    }
+  ],
+  "conclusions": [
+    {
+      "kind": "observed",
+      "finding": "Four main application function bodies control load, profile cache and normal cleanup",
+      "boundary": "listed functions and anchors"
+    },
+    {
+      "kind": "observed",
+      "finding": "The used split path is semicolon delimiter, unlimited limit=0, exact-three-fields gate and explicit byte lengths",
+      "boundary": "03cd30,03cf00 and 036506..0365be"
+    },
+    {
+      "kind": "inference",
+      "finding": "names username/persona/user ID are semantic field labels from downstream uses; provider virtual ABI is represented by required Effects",
+      "boundary": "virtual+10,+18,+20 calls and globals"
+    },
+    {
+      "kind": "unknown",
+      "finding": "Actual online provider implementation, network behavior, global initialization, MSVC CRT/EH/object ABI and original runtime equivalence remain unresolved",
+      "boundary": "provider module not analyzed or executed"
+    }
+  ],
+  "execution": "No original target, online DLL or rebuilt target DLL executed",
+  "user_data": "No real cookies, profile identities or credentials read",
+  "source_domain": "valid object; valid NUL terminated callback strings; stable caller-owned shared state; finite representable strings; no provider retention of temporary factory argument"
+}

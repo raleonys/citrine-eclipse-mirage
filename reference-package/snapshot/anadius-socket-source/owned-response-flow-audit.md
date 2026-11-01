@@ -1,0 +1,29 @@
+# N3 — owned response kaynak bağlantısı — 24 Ekim 2026
+
+`020cb0`, `022280` ve doğrudan çağırdığı `0219d0` normal gövdeleri `owned_response.hpp/cpp` içinde yeniden yazıldı. Önceki `021900` allocator gövdesi kullanıldı; yeni gövde sayılmadı. `RecoveredOwnedResponseApi`, N2 `ResponseDispatchApi::make_owned_response_020cb0` sağlayıcısını gerçek kaynak gövdesine bağlar. Tam DLL, native ABI veya tüm hata yolları eşdeğerliği kurulmuş değildir.
+
+Kaynak girdi SHA256: `9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c`. Bu aşama aynı girdiye bağlı retained Ghidra assembly/pseudocode dökümlerini kullanır. Yeni REA `binary_session`, 6.5.0 sunucu/katalog eşleşmesini ve Ghidra12.1.4 kullanılabilirliğini doğruladı. Hedef açılmadı, yüklenmedi, çalıştırılmadı veya değiştirilmedi. Gerçek CFG/token/achievement içeriği okunmadı. CRT üretimi beklemede ve önceki kaynakları korunuyor.
+
+| Gövde | Adresli kanıt ve korunan davranış |
+|---|---|
+| `020cb0` | `020cdc..020d07`: canlı TLS index, TLS+8 thread, gerçek021900 request0x48/alignment1. Marker0x48 için en az0x49 bayt gerekir. `020d0f..020d61`: function08, response10, object30,control38 taşınır; kaynak string size0/cap15/ilkbyte0 ve object/control0 olur. `020d65..020d6f`: callback022280 en son atanır ve output slot yayımlanır. `020d72..020dea`: kaynak residual control/string temizliği; ek retain yoktur. Gözlenmeyen padding40..47 için sıfırlama uydurulmaz. |
+| `022280` | `0222ca..022309`: payload yerele taşınır, eski string/pair sıfırlanır. `02231e..022369`: eski residual string cleanup ve payload cleanup pointer temizlenir. `022370..0223b4`: yeni TLS sorgusu, ilk boşcache4/5'e marker48→byte0 ve allocation identity veya free04b788. Callback **bundan sonra** çalışır; closure ve allocation fiziksel olarak silinmiş olabilir. `0223b8..0223c5`: sadece flag'in düşük8 biti nonzero ise0219d0. `0223ca..0223fa`: invocation sonrası local control tekrar okunur; strong/weak/dispose/delete aynı cached control üzerinde. `022405..02244d`: local string sizedfree/reset. |
+| `0219d0` | `0219e5/0219ec`: function00 ve object28 COPY öncesinde saklanır. `0219f5`:009eb0 bağımsız string **COPY**; kaynak taşınmaz. `021a00`: saklanan function(owner,copy). Varsayılan opak token028270 gerçek kaynak queue'ya gider; image adresleri kod olarak çağrılmaz. Native register spill/stack biçimi022240'tan farklıdır; ABI eşitliği varsayılmaz. |
+
+Kanıt dosyaları `owned-response-evidence.asm.txt` ve `owned-response-evidence.pseudo.c.txt` içinde tam gövde sınırlarıyla korunur. Evidence ID'leri sırasıyla:
+
+- 020cb0 asm `ev_b36fa7594efe34d3efeb4b4e23cb47a790e8fbe5de250e2d6ae31b1664bb7f6e`, pseudo `ev_76db67340063d873c32b8f7ebbafcbe561ba061b505c101b0fc8905e0a4f7ef3`.
+- 022280 asm `ev_0d15462c57e626a6aa35528fa9a1522cd22044e4aa0b557ec5517d7fcd32d39b`, pseudo `ev_aee2bbff62610fd4201cd8b319dcbe44a5029af250478152c37f614dc4ef29a2`.
+- 0219d0 asm `ev_82f12a9eb772984162058266620ccb222c907cb6422d046e0c5ccb3d499d1eb6`, pseudo `ev_f72b0d9903304419eabf839390acfb215fdb080382fc2d35f8b8e69c28dd8f78`.
+
+Çekirdek testlerinde **317 kontrol**, entegrasyonda **120 kontrol** vardır. Ortak derleme sonucu `owned-response-validation.json` ve `owned-response-common-validation.json` ile hash üzerinden bağlanır. İlk odaklı derleme aynı kaynakları eski ortak arşivle doğruladı; nihai doğrulama güncel ortak build kaydıdır. Ayrı standalone modül script'i tekrar çalıştırılmış sayılmaz.
+
+Çekirdek kapsamı: factory source reset/publish; native021900 cache hit ve marker; fresh73-byte tahsis; unknown padding korunması; TLS index yeniden okuma; cache4/5/full/null TLS/null state; düşük byte0/1/2/255/256; callback öncesi gerçek unique_ptr/byte-storage yok oluşu; reentrant factory ile aynı allocation'ın/projection'ın değiştirilmesi; independent COPY/embedded NUL; cached function/owner; invocation sonrası canlı control ve dispose/delete hedefinin sabitliği; strong/weak32 wrap; gerçek control silinmesi;16/4094/4095/8192-byte heap cleanup; unsigned header mesafesi8..39; missing/ambiguous header; marker sınırı ve provider hatasında gözlenen prefix. Başarısız provider dönüşlerine yeni RAII/unwind/rollback davranışı eklenmez.
+
+Yeni entegrasyon gerçek `028d30→021420→020cb0→021900→022280→0219d0→028270→02a500→021fd0→021a80→0261d0→025a70→next02a500` normal kaynak zincirini kullanır. NUL içeren8-byte yanıt, boş yanıt ve150001-byte yanıt bağımsız tam-byte FIFO oracle ile karşılaştırılır; son yanıt65536+65536+18929 parçadır. Bekletilmiş owned functor ve yayıncı tarafından alınmayan flag0 discard da sınanır. Aynı shared-control ve queue nesnesi kullanılır. Borrowed022240 yolu regresyon karşılaştırması olarak korunur.
+
+Entegrasyonda009eb0 string COPY,026670 deque büyümesi,033d70 response üretimi,023dd0 send constructor ve completion tüketimi kontrollüdür. AsyncSendApi enjekte edilir; gerçek SDK WSASend/socket/network/thread kullanılmaz. Gerçek026a00 storage release/021a80 çalışır, yeni027a20/IOCP/027c10 worker çalışması iddia edilmez. Yeni owned020cb0/022280 artık test compatibility functor'u değildir; projection/allocator/free/TLS etkileri hâlâ zorunlu typed host sınırıdır.
+
+Normal022280 akışında native cleanup pointer'ları022369 ve0223ad'de sıfırlanır. Bu yüzden02245a'daki024fb0 ve02246a'daki ikinci TLS çağrısı bu tanımlı normal yolda erişilmez; ayrı body/exception cleanup olarak kurtarıldıkları iddia edilmez.020cb0/022280 GS cookie epilogları, SEH/EH, concurrency, allocator/global/vtable/STL/native lifetime/ABI ve bozuk pointer fault davranışları açık kalır. Native0x48 allocation ile C++ projection aynı fiziksel düzen kabul edilmez.
+
+Sıradaki N4:009eb0 bağımsız string COPY ve026670 deque growth alt gövdelerini ele almak; allocation/free/terminal ve native container sınırlarını genel CRT üretimine dönmeden açıkça listelemek. Toplam DLL tamamlanma yüzdesi ölçülmedi; test sayıları veya adres eşleme oranından yüzde hesaplanmaz.

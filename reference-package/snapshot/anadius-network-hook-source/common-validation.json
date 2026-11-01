@@ -1,0 +1,39 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "network_hooks",
+    "result": "PASS",
+    "output": "PASS: 324 connect/cleanup checks; synthetic effects, no sockets/hooks/process exit",
+    "executable_sha256": "62711933b671509b0e09371afd0d423aa2cbaa31a37c85cea1d32897b8092d3a"
+  },
+  "execution_scope": "Connect/cleanup plus actual recovered Execution core under synthetic time and OS effects; no sockets/hooks/UI/exit",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-network-hook-source/connect.cpp",
+      "sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f"
+    },
+    {
+      "path": "anadius-network-hook-source/connect.hpp",
+      "sha256": "f6afcdaf8d2437c1dbb1b71d0d6496a3b653c445619baa60646268be828bafc4"
+    },
+    {
+      "path": "anadius-network-hook-source/hook_cleanup.cpp",
+      "sha256": "a0dc1b5726b78abad8066537f1b4abc45e0a9245da9bdac425a0aafa30da050b"
+    },
+    {
+      "path": "anadius-network-hook-source/hook_cleanup.hpp",
+      "sha256": "d940ec9b265188b0cd10230a2e79bd1ded28a88f28646de52ca3170cc80bc997"
+    },
+    {
+      "path": "anadius-network-hook-source/hook_tests.cpp",
+      "sha256": "6a88808475d66d6df4d42e4cd9003f00408c42cfd99ac27f7c5c2d54555c3dc0"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+/* 0x180005440 FUN_180005440; Evidence ev_3a74ec35882305703da94fdd0e4de6801b34e1449914f6d7d963f4cdd4ea201c */
+
+void FUN_180005440(longlong *param_1,undefined8 param_2)
+
+{
+  undefined1 auVar1 [16];
+  int iVar2;
+  ulonglong uVar3;
+  undefined8 *puVar4;
+  
+  iVar2 = *(int *)((longlong)param_1 + 0x5c) + 1;
+  if ((int)param_1[0xb] < iVar2) {
+    iVar2 = iVar2 * 2;
+    auVar1._8_8_ = 0;
+    auVar1._0_8_ = (longlong)iVar2;
+    uVar3 = SUB168(ZEXT816(8) * auVar1,0);
+    if (SUB168(ZEXT816(8) * auVar1,8) != 0) {
+      uVar3 = 0xffffffffffffffff;
+    }
+    puVar4 = (undefined8 *)thunk_FUN_18004b0bc(uVar3);
+    FUN_180078d30(puVar4,(undefined8 *)*param_1,(longlong)*(int *)((longlong)param_1 + 0x5c) << 3);
+    if ((longlong *)*param_1 != param_1 + 1) {
+      thunk_FUN_18005caec((longlong *)*param_1);
+    }
+    *param_1 = (longlong)puVar4;
+    *(int *)(param_1 + 0xb) = iVar2;
+  }
+  *(undefined8 *)(*param_1 + (longlong)*(int *)((longlong)param_1 + 0x5c) * 8) = param_2;
+  *(int *)((longlong)param_1 + 0x5c) = *(int *)((longlong)param_1 + 0x5c) + 1;
+  return;
+}
+
+
+

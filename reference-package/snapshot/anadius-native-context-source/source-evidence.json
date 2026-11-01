@@ -1,0 +1,181 @@
+{
+  "schema": "exact-runtime-native-context.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "scope": "New source-only ownership/binding extension to preserve original fixed-state identity in a moved C++ Runtime; not recovered native factory/virtual ABI.",
+  "records": [
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18000e310",
+      "evidence_id": "ev_e0ad68524e1fb1bd42a4fd73d652ce3551d160f25f3ce2b356c55f753c938bfd",
+      "line": 11957,
+      "normalized_record_sha256": "b2a7a6b6cd1a0e547e34833adff90b6120633dd008dbc10d1a4802dcc87faba6"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18000f3f0",
+      "evidence_id": "ev_6882329804a6a0f5abb56ae3a32fe4e594ec7e5a987d84eb4af828013f12b95f",
+      "line": 12627,
+      "normalized_record_sha256": "c0e6883eb3229594bbe457b77681dd0f1cbf998b83a62bf59b345f7971ceda0a"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18000f5b0",
+      "evidence_id": "ev_385cc03034934006ca0e36401489e4b1d18c500a814fd3a6dfbb062150413eef",
+      "line": 12675,
+      "normalized_record_sha256": "3ae1769ae12ad14451b1d1481f35ab94ee36fec7cbbb20cafe07b5e7a34ae243"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18000fc00",
+      "evidence_id": "ev_1be83f0e2e6326ed3aaa979aebb8a627e3ac45c9fcf38a2bc9ae747c28d831a5",
+      "line": 12983,
+      "normalized_record_sha256": "51b8fe415666e702c08c9b79f485d5dcf7d7626085ac50d53a702518a7bb9e98"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18000fd00",
+      "evidence_id": "ev_56829116b2c9c143c2c0fe7d3fa88a54fc6499474948b76b08e8cd2740d33c68",
+      "line": 13027,
+      "normalized_record_sha256": "be5d1359b30bff527542118a15cdfba69a8c125079a5d604d0661519df52a7f1"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800102b0",
+      "evidence_id": "ev_00e35447d2de5559a4451e4788fcc72993ba5950a8158522aaa1efb615b7037c",
+      "line": 13338,
+      "normalized_record_sha256": "4e9faf5a27b1e9d15bfa9ea50d9d3d6e0200a2f2a75c549485e297c0914e5324"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180038950",
+      "evidence_id": "ev_cfa69b2b4a15d114d9202339fcf5fbbd77988ffeb6ed350e33b89f550b3d9c65",
+      "line": 44915,
+      "normalized_record_sha256": "33dfc790f0a075a6e456fba93e6395f64e36841672167391cf6c4bbf8d7d2704"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180038970",
+      "evidence_id": "ev_e66705fdaa9bdd88fb50be13d22e354939026d931f472329e0f14e17c9fb4fbd",
+      "line": 44928,
+      "normalized_record_sha256": "b311dd60c90daf18da21c6fdcf90b7fa03afd44a90536a10d753d51330d35889"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18000e310",
+      "evidence_id": "ev_7935b0600e6f04cb19a2f105fc6329c34f44324b20f112ecb93a694fe741a29b",
+      "line": 14594,
+      "normalized_record_sha256": "a74f9c1297b50b09ced522d08a1f8fb759f57a6f6aabd2a952f8703c7739e90d"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18000f3f0",
+      "evidence_id": "ev_835ca84fd8d5ece34462ad08b26d5b8b05836d2bad0b6cb6bab9266d4dded8ae",
+      "line": 15572,
+      "normalized_record_sha256": "6401e965778a4f62959e4fe1859e3b9411c76a792358bfae5923ef8e3780fe88"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18000f5b0",
+      "evidence_id": "ev_8fa994584b07065f191017b1f34d729381ddc085b7e29cba1eb8a2d105e2aa23",
+      "line": 15670,
+      "normalized_record_sha256": "f93ef1e30770dc9acaa0fefe18562d7416729d7691f0bd50fa553449c87f2564"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18000fc00",
+      "evidence_id": "ev_cefeadeb04ff875f14ebe8ffb73e6b4101cdfa082866db164d1a986ad55a2388",
+      "line": 16077,
+      "normalized_record_sha256": "b3cd0996e2c556669a4f1cdfb4aa66d4277f021bfe5f267de44677718d7b6279"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18000fd00",
+      "evidence_id": "ev_fc78699f1bf625a6a948750e048136e362866045ba59de7d4b783d2361c3bee8",
+      "line": 16145,
+      "normalized_record_sha256": "aef5d0e24eec6da36f95f4d91df5424650ebb9cedcae1d94eb8ecfbc9b08b428"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800102b0",
+      "evidence_id": "ev_2177b6a02a33ef123da2f83b0e6a1ee4e1e23cce8de54c8170baf93877a2102f",
+      "line": 16523,
+      "normalized_record_sha256": "70e1b83b4ceb56547238d5a7d399228cb2542895882bbfa366665ccf8ba2c2b3"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180038950",
+      "evidence_id": "ev_9e5bed8eb620590b20a44651d47fd66e0d4d00f7cc3caf952f79bc4a73f22049",
+      "line": 57088,
+      "normalized_record_sha256": "d371f6332395d4b682687d095fd996d1b70547f1e27515463dd84f735e6c9716"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180038970",
+      "evidence_id": "ev_77887ea2e7b744e62e52eaf81cb8a07abf2a4f50498001ba81b2fcf2496e8789",
+      "line": 57095,
+      "normalized_record_sha256": "ecdfc05b44b904b3b64ad776db186650e348d18f5600e521f6c795437cf128fe"
+    }
+  ],
+  "source_refs": [
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "sha256": "0486fc7c6d0a97ccd631b23a1462cc1b374ae1a33a4b0c0bbf81677ffc66aceb"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "b37355b48739483d30ed4536f5a31796bc1b5f4d7e548b901985460259d7db24"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "aefcaeaedf61d3646bc17e4a52763606f2e9de4634ab63fb14ec876262547aec"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.hpp",
+      "sha256": "ee943bb8e5aef8eeedd7ccd1747457575766f24cf0dc85e792668b166b0f455a"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.cpp",
+      "sha256": "06521178fbe3a611e8af29706bf4c1d07974e299c0f044a382656330ef6c7d52"
+    },
+    {
+      "path": "outputs/anadius-native-source/original_effects.cpp",
+      "sha256": "44e5dadee6249de342ff7c31c8beeb38a5109b0992c823156ed202aae23b0cf1"
+    },
+    {
+      "path": "outputs/anadius-host-init-source/callback-bindings.json",
+      "sha256": "3e6a09d7c4f4b266aae8d34b8e308396a1d30057b3b3c65e07a7b42e791b6bbb"
+    }
+  ],
+  "original_state": "Callback globals0a3838..0a3880 and registry map0a3828 are original fixed-image state. Rebuilt SourceBackend moves its logical RuntimeSeed, so native OriginalEffects/Context must reference actual final storage.",
+  "selected_extension_sequence": [
+    "bind_state constructs unpublished owner using exact moved state/config/Execution",
+    "between_workers publishes native Context before host initialize/create/enable",
+    "stop/join",
+    "exit callback drain",
+    "separate hook-disabled/no-new-native-admission promise",
+    "in-flight check and native Binding.close",
+    "registry.finish"
+  ],
+  "failed_registration": "An empty exit queue can mean failed registration; no automatic hook cleanup is invented. False proof retains binding and providers until explicit caller cleanup/quiescence.",
+  "identity_proof": "Accessor rejects equal-valued copied original arrays; fakeenable invokes actual native shim and own fake original through final internal slot; native folder/process/network callbacks observe live map/flag/port mutations.",
+  "test_snapshot_limit": "input_originals is a pre-move VALUE COPY, not a test of moved-from memory. Exact address comparison/copied-array rejection/callback effects establish selected identity.",
+  "new_original_data_read": false,
+  "original_execution": false,
+  "original_modification": false
+}

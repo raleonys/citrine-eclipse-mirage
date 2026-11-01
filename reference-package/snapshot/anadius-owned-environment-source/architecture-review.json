@@ -1,0 +1,249 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T17:53:10.917623+00:00",
+  "review_mode": "Independent complete source/lifetime/test review then frozen6 and immutable actual-agent/normalized records/log/EXE/archive verification. No reviewer execution.",
+  "reviewed_source_hashes": {
+    "environment.hpp": "e44cded137e816436a5ffc2ddd5ee68c230c9501212f0711f94a7f7f26af09c3",
+    "environment.cpp": "9585e1894d5e3752bb00522388557082b058bbe274c93212167eb11095a98ec8",
+    "environment_tests.cpp": "a137384bdf4f4d73dc21db4d096e4c0ebf0b7d3924e3d37565a53d776dc8ef65",
+    "environment_integration_tests.cpp": "64202a8b0f2428ded3ed358c4a9978379e36d0277b7111256f0c9e3833d8155d",
+    "../anadius-session-profile-source/profile.hpp": "53690f50bd0d924ffe3d6f8528463f5b3ed0052b48b8ca3fd58fb24d08804044",
+    "../anadius-session-profile-source/profile.cpp": "3528cc4d9549dd85696050116dbc2a7d4e3bdf6066d9caec7698cfd781ef16c7"
+  },
+  "code_freeze": {
+    "path": "work/b43-code-freeze.json",
+    "sha256": "10e3e072a6b1d4535f224847edec0a9423e284a5acec2030ccfc6191d5b155b0",
+    "all_six_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 200,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b43-core-agent.exe",
+      "executable_sha256": "f1ce612e4a5454d6f6e851102560c84cdcaf43446912cd12bebb42cd3282c718",
+      "archive_path": "work/b43-baseline-core.a",
+      "archive_sha256": "4cdb330f0dcd2cbe3cb109b87294bb80f27bf0ab42f25d7b3c9f02ccda200b60",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b43-core-agent-results.json",
+        "sha256": "b8f87816410ff2484eeb3bc655cd72d49234bda3910aa4a88e75da4388fa885c"
+      },
+      "path": "work/b43-core-quick-results.json",
+      "sha256": "eeec703eae53c49cae49f7fc3f80121793001628909d40e9ef7d7cf3ec96923d",
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b43-core-agent.log",
+      "log_sha256": "2a83d2bd07771afbefbe4688c0161142b5156e9aea62b5d17f91a3fb474fa2b9",
+      "actual_used_source_hash_count": 6,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh environment.cpp, modified profile.cpp and core test, selected headers plus prior domain fixture:6 actual-use hashes, distinct from6 reviewed freeze files. Main200 excludes nine retained child bodies; parent checks exact exits301..309. Actual native source move/factory/handler/posting and strict close probes; no integration test compiled.",
+      "isolated_children": [
+        {
+          "mode": "checkpoint",
+          "expected_exit": 301,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "unknown",
+          "expected_exit": 302,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "owner",
+          "expected_exit": 303,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "executor",
+          "expected_exit": 304,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "address",
+          "expected_exit": 305,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "capacity",
+          "expected_exit": 306,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "handlerclose",
+          "expected_exit": 307,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "handlerthrow",
+          "expected_exit": 308,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "probe",
+          "expected_exit": 309,
+          "observed_exit_verified_by_parent": true
+        }
+      ]
+    },
+    {
+      "checks": 244,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b43-integration-v2.exe",
+      "executable_sha256": "2c34cfc6ec44b8b901776dba806db39fe9671805afb89985ad52cd88b1adab7c",
+      "archive_path": "work/b43-baseline-core.a",
+      "archive_sha256": "4cdb330f0dcd2cbe3cb109b87294bb80f27bf0ab42f25d7b3c9f02ccda200b60",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b43-integration-v2-results.json",
+        "sha256": "8348a9fee6d319251726f3ad5771c1010b6b7f7cb78bb48d6765f7fe8beeda26"
+      },
+      "path": "work/b43-integration-quick-results.json",
+      "sha256": "4c664174cd0554f4960bac9c98ad670fb9d3e9024b5040c20748de9f98cf03a4",
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b43-integration-v2-results.log",
+      "log_sha256": "9666ff5488074a2eff94821931faec79cbb5132079482cb964c2f3207360fd31",
+      "actual_used_source_hash_count": 5,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh environment.cpp, modified profile.cpp and integration test with selected headers:5 actual-use hashes and6 watched adds metadata-only core test. ALL Environment config empty; no caller tables/types/factories/query/schedule/copy or Policy environment override. Actual default provider,59packet backlog/FIFO17/AES/event chain. No integration child.",
+      "watched_source_hash_count": 6,
+      "isolated_children": []
+    }
+  ],
+  "quick_checks_total": 444,
+  "core_agent_checks": 200,
+  "integration_agent_checks": 244,
+  "root_checks": 0,
+  "root_execution_note": "Root only normalized authoritative agent records without EXE replacement/rerun. Core200 excludes nine separate retained-prefix child bodies301..309; integration244 has no child. Earlier candidate/V1 proofs are historical, not current execution evidence.",
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING at review; quick PASS is not full common PASS.",
+  "common_build_targets": {
+    "production_objects": 265,
+    "cpp_units": 261,
+    "c_units": 4,
+    "ordinary_groups": 315,
+    "framework_terminal_groups": 19,
+    "status": "planned/common not reviewed as executed"
+  },
+  "baseline_package_sha256": "457fe8a852e79b7e499e61bb815e39c623e8cc3a0874c18175242b1df6b83fdf",
+  "baseline_source_files": 902,
+  "prior_sources_preserved": 900,
+  "modified_prior_sources": 2,
+  "modified_prior_source_paths": [
+    "anadius-session-profile-source/profile.cpp",
+    "anadius-session-profile-source/profile.hpp"
+  ],
+  "new_source_files": 4,
+  "current_source_files": 906,
+  "baseline_scope": "All902 archive source preimages verified; current900 unchanged and exact2 Profile modifications. Four new module sources bring906.",
+  "archive_proof": {
+    "path": "work/b43-baseline-core.a",
+    "sha256": "4cdb330f0dcd2cbe3cb109b87294bb80f27bf0ab42f25d7b3c9f02ccda200b60",
+    "matches_B42_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "verified": true
+  },
+  "composition_count_basis": {
+    "baseline_files": 97,
+    "baseline_objects": 48,
+    "new_composition_files": [
+      "anadius-owned-environment-source/environment.hpp",
+      "anadius-owned-environment-source/environment.cpp"
+    ],
+    "expected_files": 99,
+    "expected_objects": 49
+  },
+  "findings": [
+    {
+      "id": "default-and-legacy",
+      "result": "PASS",
+      "details": "All-empty Profile.Environment selects owned configuration before State constructor dereferences types. Owned configuration supplies stable type/factory/handler/response/copy/accept bindings. Explicit legacy configurations remain selected as supplied; existing minimal type+sentinel legacy compatibility is preserved, without mixing defaults. Policy session/accept virtuals have explicit throwing legacy defaults."
+    },
+    {
+      "id": "capability-and-registry",
+      "result": "PASS",
+      "details": "Per-owner/projection monotonic capabilities and exact row address/payload/state/table/schedule/executor checks reject copied/forged/stale projections while backing lives. Context-free thunks use registered weak owner resolution and callback shared pins, not uintptr-to-object casts or TLS/current singletons. Per-owner rows fixed capacity; Registry-to-Control lock order, no inverse path. Registry node allocation and weak/node retirement outside Registry gate."
+    },
+    {
+      "id": "native-prefix-counting",
+      "result": "PASS",
+      "details": "Copy creates a new cap/ref; actual023cb0 move transfers row address/ref, validating source empty ops/schedule but original own executor and destination known native ops/schedule without reading unspecified destination payload/state/executor. Empty sentinel move/destroy does not read payload. Destroy removes exact row once. Accept table exported, including state1 scheduling; default state0 accept uses existing direct invoke branch."
+    },
+    {
+      "id": "scheduling-and-probes",
+      "result": "PASS",
+      "details": "Owned handler slot consumed before inline call(1); no old task/environment read after self-destroying callback. Responses invoke actual022e40 with selected force-post1 and stable Ports proxies. Entry/exit checks preserve legitimate nested source operations. Separate checking seal prevents checkpoint query recursion; swallowed lifecycle/probe/handler failures leave sticky poison."
+    },
+    {
+      "id": "binding-and-lifetime",
+      "result": "PASS",
+      "details": "Profile keeps completed pending Application before potentially throwing owned bind; failed bind retains graph. Bind one-use/binding/postchecks and moved-from checkpoint donor retirement precede lease/publication. Reap removes source bindings, explicitly releases slot environment and checks before final observer weak drop. No environment record confers an extra session strong or native ABI lifetime guarantee."
+    },
+    {
+      "id": "strict-retirement",
+      "result": "PASS",
+      "details": "refs0 alone cannot close queued response functors. Trusted external attestation plus actual Parent/IO/Accept/queue/work zeros, refs0/active0 required. Parent lease blocks premature close; Profile closes Deques then owned Environment before Runtime drained2 accounting. Registry unregister precedes checkpoint target retirement/lease drop; post-retirement poison checked. Configuration backing must outlive all borrowed table pointers."
+    },
+    {
+      "id": "execution-proof",
+      "result": "PASS",
+      "details": "Current core200/nine exact children and integration244/no child source/record/log/EXE/archive hashes verified read-only. Integration uses ALL-empty default Environment with no fixture environment implementation through real Profile/NativeLogic/Router/frame/owned response/send/disposal,59nativepackets,wrapped8to16/FIFO17 and overlapping AES/event session."
+    }
+  ],
+  "resolved_review_risks": [
+    "Owned accept scheduling table export was missing; added. Default state0 itself uses direct accept path.",
+    "Partial native move validation skipped source executor; now validates exact partial prefix without unspecified destination reads.",
+    "Source entry through an admission checkpoint could recurse; separate checking/probe seal poisons before second checkpoint.",
+    "Bind/Closing reentry and donor checkpoint retirement could escape phase validation; sticky seals/postchecks and explicit donor clear added.",
+    "Global registry metadata allocation/weak retirement moved outside gate."
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0,
+  "native_mapped_addresses_unchanged": 501,
+  "native_eligible_compiled_tags_unchanged": 505,
+  "explicit_normal_body_claims_unchanged": 139,
+  "historical_native_closures_unchanged": 52,
+  "last_native_body_stage": "B38",
+  "compiler_observations_expected": 86,
+  "new_compiler_trait_values_expected": [
+    0,
+    0
+  ],
+  "registration_role": {
+    "script": "work/b43-register.py",
+    "sha256": "ad40a3bd2e64243023627dbba972f0fd85a0fda7f20a60ff24748f69727af086",
+    "preview_author": "/root/b22_provider_audit",
+    "applied_by": "root after separate staged-plan review; reviewer did not apply",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "scope": "Read-only strict/AST registration preview author disclosed. Production and both test authors independent. No generator/build/probe/test run by reviewer."
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "No reviewer executable/test run; no original/rebuilt DLL/game execution, network traffic, user config/token contents, AV retry, fresh REA query or binary read.",
+    "Selected C++ environment/type/executor/scheduling policy is not recovered0228c0, native RTTI/vtable/object/function ABI, native allocator/EH or concurrency equivalence. Logical type tokens are never dereferenced as RTTI/code.",
+    "Same bound worker/fiber and whole Parent Operation remain required. Owned handlers run inline; responses force-post1. These are explicit HOST policies, not native scheduler/concurrency proof.",
+    "Environment references count projections only. They do not pin session strong ownership, arbitrary copied C++ structs, raw-job/kernel lifetime or module unload. External drain is a trusted provider precondition, not deduced from counters.",
+    "Borrowed configuration/table/executor pointers must not outlive Environment backing. Static thunk stale-cap rejection does not make virtual calls through freed C++ table pointers safe. Raw struct copy is not retain.",
+    "Unknown source/bind/callback outcomes poison and retain graph/lease/known descriptors; no guessed EH rollback, rebind, reschedule or discard. Stack projection references may dangle after unwind and are never resumed.",
+    "Explicit legacy supplied environment behavior remains; missing legacy tables fail when their required route is used. Default selection is only all-empty and never silently mixes caller and owned configuration.",
+    "Arbitrary internals of user SDK/message/job/formatter/policy callbacks and custom global allocation hooks are not universally instrumented. Source admission guards the selected exported interfaces only.",
+    "Full Resources, CRT worker/job backend, socket executor, actual kernel/rawjob drain and B31 loader attach/detach hooks remain required. Production DLL readiness BLOCKED."
+  ]
+}

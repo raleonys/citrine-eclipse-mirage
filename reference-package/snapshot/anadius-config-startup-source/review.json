@@ -1,0 +1,65 @@
+{
+  "schema": "config.startup.independent-review.v1",
+  "result": "PASS",
+  "reviewer": "config_startup_audit independent read-only worker",
+  "reviewed_at": "2026-10-21T13:25:03.3456644Z",
+  "source_hashes": {
+    "startup.hpp": "324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e",
+    "startup.cpp": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+    "startup_tests.cpp": "a8dd34f207ff2912a4cd1e883542766f13ccb2109662d57656f0999ea473d188",
+    "build.ps1": "5df64ad97e5feaf8ad31df266235e5d2a93d147d9c9d60c43fe6af7810abf0dd",
+    "CMakeLists.txt": "f5ded0e394f3307d2f4bebdc4983346dac25d9f2341fe91e028d70f86eedbcb1",
+    "README.md": "59a9ea0063f60ba6870a29720695f1fcdf0dc25feb7c06648e91232040450daa"
+  },
+  "support_hashes": {
+    "../anadius-config-source/configuration.hpp": "036eea42c74731b9c4e5bbe574e2c953b8010c2e626f5f5caf84f2029aab3f24",
+    "../anadius-config-source/configuration.cpp": "ab1c09e52c3b4f8a8a24070b057d9eb4da72d6b24722cba931d80a5f92a9a05a",
+    "../anadius-config-source/README.md": "73b3db9e89a5264eeaba3ef8868a415b74b6b2aa58adca5d50b64f3c3a5e9ec6",
+    "../anadius-source/bootstrap.hpp": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210",
+    "../anadius-source/bootstrap.cpp": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+    "../anadius-startup-source/startup.hpp": "fc915cf189761a78bea8b0d7ac083722881893bf4d2007fa343986484c95f5e9",
+    "../anadius-startup-source/startup.cpp": "87bcd90892dcea301fc3c1aceb589d1097875d9400d3bd69b64570d008740dea",
+    "../anadius-config-application-source/application.hpp": "9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2",
+    "../anadius-config-application-source/application.cpp": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb",
+    "../anadius-config-hash-source/hash_table.hpp": "d05e54e5232dda1b8cb9e3aabe46677135cf60483939bee7b2801f489025e2bf",
+    "../anadius-config-hash-source/hash_table.cpp": "15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f",
+    "../anadius-file-source/binary_io.cpp": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222",
+    "../anadius-file-source/native_io.cpp": "e786fbd46741d172eca7d9a2f511e9757703d738f9998a857306665b316792ca",
+    "../anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "../anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+  },
+  "recorded_checks": 335,
+  "validation_observed_sha256": "7b50da6f710728b369e4420b40b7533ac3e8f91ee8bf4820d15a1aee2d72264e",
+  "independent_test_rerun": false,
+  "prior_package_comparison": {
+    "postconfiguration_characters": 2037,
+    "prior_archive_sha256": "2b3cc36872ee36381a233d26724fe4494eaadd774f337d1e9dd1685985f5d319",
+    "postconfiguration_exact_text_equal": true,
+    "postconfiguration_utf8_sha256": "4112e5068288fac4f2d08d9504ab7959862198e06679881fa888e1836180f78a",
+    "initializer_prefix_before01c870_exact_text_equal": true,
+    "crt_vcrt_thread_source_hashes_unchanged": 234
+  },
+  "retained_evidence": [
+    "ev_42beaf13c42bb51716fcf407bd74587506fbb6acf17bfba9e16c31bdd31f8fba",
+    "ev_77887ea2e7b744e62e52eaf81cb8a07abf2a4f50498001ba81b2fcf2496e8789",
+    "ev_78e7337670570fa2c7c212620f726bd602b090f213f6248c453917219f5023fc",
+    "ev_25fbfd8671a513b4750ab57ccab47ce6ee66118511fe48e1c7c1744914a56238"
+  ],
+  "findings": [],
+  "resolved_review_points": [
+    "Shared language/registry/map references",
+    "Legacy two-argument document delegation",
+    "Single unchanged post-configuration body",
+    "No hidden successful Bootstrap providers",
+    "Native generated fixture lexical path assertion"
+  ],
+  "limits": [
+    "Controlled worker/thread/OS dependencies except own generated file reads",
+    "Native iterator error/mutation timing not represented by vector enumeration",
+    "Native global/loader/allocator/CRT/FILE/SEH/full DLL equality unproven"
+  ],
+  "production_edits": false,
+  "test_edits": false,
+  "original_execution": "none",
+  "real_user_cfg_read": false
+}

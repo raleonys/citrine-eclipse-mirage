@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "331756a509e3ed0655e3c6140f8f033e5237d07da23882632c6bce43473e2909",
+  "test_results": [
+    {
+      "module": "socket_append_growth",
+      "result": "PASS",
+      "output": "PASS: 3461 socket append growth checks; actual012350/007e30 distinct payload/extra semantics, external/self binary oracle, metadata/copy/tail/free/pointer order and bounded failure prefixes",
+      "executable_sha256": "1f6f3aaa0463dc92ff81878dbda92a03e2191d98ec3f8f3a1ac74309bf32531a"
+    },
+    {
+      "module": "socket_append_growth_integration",
+      "result": "PASS",
+      "output": "PASS: 2039 socket append growth integration checks; actual012350/007e30 final source bridges in033d70 and N1-N9 queue/send/finish; lower XML/cipher/log/allocator providers and native ABI/EH remain open",
+      "executable_sha256": "fff11a2a256c11b97c3a6f138db8d86eff12998925b2f006d907868c060124ec"
+    }
+  ],
+  "core_checks": 3461,
+  "integration_checks": 2039,
+  "original_procedures_added": 2,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "execution_scope": "012350/007e30 normal growth bodies and2 final NativeMessageApi lower-source bridges; independent extra/character/count semantics, old cached size/cap with live pointer after allocation, metadata/COPY/tail/free/pointer order; actual033d70/N1-N9 queue/send/finish; allocator/XML/cipher/log/ABI/EH remain open",
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Typed normal projection only; no native MSVC object/global/vtable/allocator/ABI/EH/SEH/concurrency/fault equivalence",
+    "Always allocate;012350 writes only1 character/NUL independent of extra;007e30 appends count/NUL independent of extra; no implicit gap fill",
+    "Allocator/free/terminal/078d30 native bodies remain providers; bounded COPY compatibility only",
+    "Symbolic maximum/failure prefixes, not real huge allocation;00cd30 valid-state reachability not asserted",
+    "033d70 now uses final recovered lower grow sources; document/032d00/cipher/log/mutex native providers stay open",
+    "Normal-only failure prefixes; no invented catch/rollback/unwind cleanup/unlock",
+    "Controlled completion/injected send; no new027a20/IOCP/027c10 worker, real network or original execution"
+  ],
+  "previous_local_records": "33 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x180012350",
+    "0x180007e30"
+  ],
+  "independent_review_complete": false
+}

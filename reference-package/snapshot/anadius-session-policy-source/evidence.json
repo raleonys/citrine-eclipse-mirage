@@ -1,0 +1,91 @@
+{
+  "schema": "session-policy.source-composition.v1",
+  "source_package": "B45",
+  "evidence_type": "concrete selected error/log/worker policy composed with existing source",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "reused_addresses": [
+    "0x180025480",
+    "0x180025a70",
+    "0x180025720",
+    "0x180027c10",
+    "0x1800298b0",
+    "0x18004a648",
+    "0x18004a47c"
+  ],
+  "source_references": [
+    {
+      "path": "outputs/anadius-socket-source/native.cpp",
+      "sha256": "2a608ec00e43aa90eb7b4e964214818a4d7b6e89f2b5f171048c36375e0a9048",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    },
+    {
+      "path": "outputs/anadius-socket-source/frame_read.cpp",
+      "sha256": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    },
+    {
+      "path": "outputs/anadius-socket-source/write_finish.cpp",
+      "sha256": "b13efb4696b7a8fd89e94e5d14d22d0b7da93d7da820fcaf212241807918667e",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    },
+    {
+      "path": "outputs/anadius-socket-source/completion_dispatcher.cpp",
+      "sha256": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    },
+    {
+      "path": "outputs/anadius-socket-source/worker_run.cpp",
+      "sha256": "1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    },
+    {
+      "path": "outputs/anadius-session-flow-source/flow.cpp",
+      "sha256": "2b16e9ddb52775ef43c5293d4d555439eeb9ad6a0d5985718bba6a4f71e926d8",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    },
+    {
+      "path": "outputs/anadius-services-completion-source/exit_wait.cpp",
+      "sha256": "814af5ec8e30a72a9e76dedfb0ab5a1adb950df735efe7a89f865fa426524eaf",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    },
+    {
+      "path": "outputs/anadius-config-iteration-source/thread_error.cpp",
+      "sha256": "d924c479eb925aa18c10ce81157bb3d78ab8fdad46dac5768016bfb59899551e",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    },
+    {
+      "path": "outputs/anadius-shared-log-source/stream.cpp",
+      "sha256": "2e2fc657fff9bf6bed5c19428a5f8c11f22d704ee12b22337a3f6e2eec5265d4",
+      "scope": "Existing recovered source/selected compiler provider reused; no new original bytes or function recovery."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b45-core-quick-results.json",
+      "sha256": "c2d6f9f94bad1be81e37c2d1aa560a02ae567f10d2b2d455c0bb0d36601ffd5f",
+      "checks": 366,
+      "executable_sha256": "0b961f1e4d3d117bcf2b53a6490db48a32bf107f9a14bd3ad6b3e50c8967e30e",
+      "archive_sha256_as_used": "3027c3d2d472439adb979379211807ef04d4a1510b4459038b91817920980ab8",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh policy.cpp, modified Profile.cpp and policy_tests.cpp with selected actual interface headers/prior domain fixture; immutable canonical B44 archive supplies other prior production objects. Integration test is not compiled or claimed. Main count excludes twenty-three independent retained-prefix/terminal children, whose exact listed exits are verified. Policy construction owns an actual dedicated exit-wait CS/registry while making zero configured NativeApi import calls; six requested adapter invocations use injected SDK signatures only. Core worker lifecycle is exercised through actual Profile callback interfaces before an independent controlled source worker drains the shared graph; no native MSVC EH/GS TLS/atexit/ostream ABI, foreign pending exception_ptr, kernel drain or original-target execution is claimed."
+    },
+    {
+      "path": "work/b45-integration-quick-results.json",
+      "sha256": "b920f1443df574ca7a46d098259ee15a07161ee17f301d42b4c9b8526fdca892",
+      "checks": 306,
+      "executable_sha256": "2ae6b3be57ece6db72054c8c06f0abad71f73c2e07670e95bd13e73b7bc49719",
+      "archive_sha256_as_used": "3027c3d2d472439adb979379211807ef04d4a1510b4459038b91817920980ab8",
+      "execution_author": "/root/b22_integration",
+      "note": "Concrete session_policy::Policy+actualNativeApi with exacttyped ACP/WSAStringToAddressW/syncWSASend/select/WSASetLastError/WSAGetLastError imports, managedshared_log stream and dedicated empty-owned ExitWaitRegistry; actualdefault Profile jobs/transport/environment, NativeLogic/Router17plain+AES/event,59nativepackets/wrapped8to16/FIFO17 underrealheap/FLS/ownIOCP. Fixture lifecycle hooks explicitlyretainpacket/backpressure/terminalowner/worker-return/externaldrain decisions; NOTconcreteproductionalgorithms. NooriginalDLL/game/config/token/networksocket; noNativeABI/kernelquiescence/concurrency/globalCRT claim."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition; no fresh shipped-artifact claim.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false
+}

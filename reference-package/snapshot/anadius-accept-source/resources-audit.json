@@ -1,0 +1,38 @@
+{
+  "schema": "accept.resources.v1",
+  "result": "OWNED_SOURCE_PROVIDER_WITH_MANDATORY_HELPER_AND_FINALITY_BOUNDARIES",
+  "owns": [
+    "Distinct typed accept operation and actualOVERLAPPED metadata in fixed bounded rows",
+    "473-byte actual parent allocation/288-byte raw+68 buffer under base IO ownership",
+    "Whole raw region pin from submission/retry until trusted observed terminal packet",
+    "Nonvirtual scoped parent provider lease created under existing Operation",
+    "Selected owned task metadata and accept-first completion routing"
+  ],
+  "failure_rules": [
+    "Cancel intent never releases a kernel borrower",
+    "Compare each operation span to its own authoritative registered raw region before SDK/retry/completion",
+    "Clear fixed packet binding before ending typed accept lifetime",
+    "Native normal completion releases or caches raw storage before invoking copied local handler; do not read old row afterwards",
+    "Unknown lower/source prefixes poison and retain, without guessed native EH rollback",
+    "Check base snapshot outside accept lock and before sealing close; external stop/drain remains mandatory",
+    "Close accept provider before B35 parent/IO teardown"
+  ],
+  "mandatory_lowers": [
+    "029660retry/alternativeOV lifetime",
+    "029590holder-reset",
+    "029df0socketfactory",
+    "0237f0pendingowner-reset",
+    "021a10/025720handler",
+    "environment/executor/schedule/context and genuine packet finality",
+    "coherent shared-cache eviction and accept-sidecar retirement before cross-kind base projections"
+  ],
+  "integration_scope": "Real own IOCP/heap/FLS/TLS and native source allocator/publication/worker/factory/disposal; injected network SDK functions, no actual socket/AcceptEx request",
+  "new_native_bodies": 2,
+  "new_native_ABI_provider_closures": 0,
+  "remaining": [
+    "Compose existing025720 initial session start and request/response sources after actual023000 factory in the B35/B36 owned graph",
+    "Keep pending socket, session/job/IO buffer and callback/context lifetimes explicit through final observed packets and drain; coordinate all shared cache evictions and cross-kind typed projections with accept retirement",
+    "Resolve helper boundaries from retained evidence where necessary without inventing0228c0 or returning to genericCRT",
+    "Keep loader attach/detach hooks undefined until complete Resources factory and truthful loader/unload quiescence are supplied"
+  ]
+}

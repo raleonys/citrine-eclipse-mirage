@@ -1,0 +1,311 @@
+{
+  "schema": "dll-link-gate.production-root-review.v1",
+  "result": "PASS_WITH_LIMITATIONS",
+  "production_dll_readiness": "BLOCKED",
+  "reviewer": "/root/b22_provider_audit",
+  "independent_from_gate_author": true,
+  "reviewed_at_utc": "2026-10-30T18:39:09.208619+00:00",
+  "reviewed_source_hashes": {
+    "production_image.hpp": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+    "entry.cpp": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+    "export_leaf.S": "f9f864181cc17d774e6be441d7321bcac6c8472793a4f377795c1eb0617e7a08",
+    "anadius64.def": "8a6cba4f2cf4b893c3a22ac312f675e9a68d3049ded9882dafe4232dbc2e46fe",
+    "target.cmake": "698500e948e3b192f609343fc26f6639b245d9c519a61c4be249c6f40cf10634",
+    "build-link-gate.ps1": "7fc2bddff1d7488f90a1a7931f7b766eae3ffcb663aa1610edf590fa4f5a4175",
+    "verify-link-gate.py": "bc8828d09f1032566c2eb1b21e580ca05300d83fa9f1237e20f1b14bc32507c0",
+    "../source-workspace/CMakeLists.txt": "2a2840a486352e49721ae08ef4e30bc4f19583bbf31ef96cb72a248755423e87"
+  },
+  "recommendation": "Compiler CRT exactly once, then existing application layer. Preserve the failed link until the actual loader-aware provider factory and detach protocol exist. Never close two undefined symbols with success stubs.",
+  "current_root": "DllMainCRTStartup -> candidate DllMain -> require_loader_attach_runtime -> Runtime::application_entry -> RuntimeOwner/Resolver/native gateway -> Bootstrap application initialize. Factory is deliberately absent; no usable DLL is established.",
+  "crt_loader_findings": [
+    "Recovered Entry additionally initializes vcrt/acrt, initializer ranges, stdio/environment/TLS and teardown. Calling it around this compiler-C++ graph risks double initialization/destruction; it is not selected/extracted.",
+    "DomainStorage provides a separate application heap/PTD/FLS initial-locale graph and explicitly does not run recovered outer CRT. Its availability is not permission to run that outer entry.",
+    "Runtime/DomainStorage control currently requires outside loader lock. Static C++ initialization also occurs during image loading; merely relocating construction there does not resolve this. Deferred/explicit-start would change original attach order and require an explicit host protocol.",
+    "Pointer/null attach permits load failure only after complete rollback. Nonnull must be Bound. DllMain noexcept prevents escaped exceptions; phase misuse is terminal, not native EH equivalence.",
+    "Detach implementation must cover normal FreeLibrary, process termination and failed attach/CRT teardown. No unproven Runtime.close/join under loader lock."
+  ],
+  "closed_B1_items": [
+    "Concrete BootstrapFacade, RuntimeOwner, SourceBackend, native gateway and callback registry are now present; do not repeat B1 missing-owner/backend claims.",
+    "All17 Services behaviors have selected routes:6 SourceBackend methods,2 registrar,4 SourceServices,5 CompletionServices. Required terminal ownership composition remains; behavior recovery is not reopened.",
+    "Real FilePass/config grammar/hash,41 modeled defaults/20pairs, default native file/input/library OS/execution/join and compiler console/config/filesystem/persistence/logging policies are available. Legacy load_document is bypassed in selected bootstrap.",
+    "Hook engine/callback wrappers, thread domain, seven selected online calls and B29/B30 moves/constructor are available building blocks. Their native ABI/provider/whole-lifetime proofs remain distinct."
+  ],
+  "remaining_production_providers": [
+    {
+      "id": "P0",
+      "provider": "Loader-aware attach/detach factory",
+      "required": "Current Runtime requires outside-loader control. Nonnull attach must return live Bound runtime; null only after full rollback. Detach must distinguish FreeLibrary/process termination/failed attach without loader-lock joins.",
+      "reference": {
+        "path": "outputs/dll-link-gate-source/production_image.hpp",
+        "line": 17
+      }
+    },
+    {
+      "id": "P1",
+      "provider": "Stable per-image Resource owner and seeds",
+      "required": "Own all real providers, DomainStorage/Memory, configuration defaults, remaining Runtime/Callback/Domain seeds, permanent Errors, streambuf and code/module lifetimes. No test fixture or success provider.",
+      "reference": {
+        "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+        "line": 46
+      }
+    },
+    {
+      "id": "P2",
+      "provider": "Concrete server/accept/session/response graph",
+      "required": "Supply real ServerBackend context/accept/run/stop/destruction and connect existing native socket/IOCP/session/message sources. Partial AcceptorBackend and controlled schedulers do not complete this graph.",
+      "reference": {
+        "path": "outputs/anadius-server-source/server.hpp",
+        "line": 31
+      }
+    },
+    {
+      "id": "P3",
+      "provider": "Session allocation/dispose/delete and executor provider",
+      "required": "B30 normal constructor is available. Real SessionAllocator, partial-scratch retention, SessionControl cleanup/delete, selected0228c0 executor and raw-job lifetime still require actual production implementations.",
+      "reference": {
+        "path": "outputs/anadius-session-owner-source/owner.hpp",
+        "line": 20
+      }
+    },
+    {
+      "id": "P4",
+      "provider": "Licensing and terminal configuration assembly",
+      "required": "Actual02a830 remains required for nonempty KeyForLicense. FilePass bypasses legacy load_document; do not reopen parser recovery. Wrapper lower tails need a real concrete aggregate.",
+      "reference": {
+        "path": "outputs/anadius-config-source/configuration.hpp",
+        "line": 93
+      }
+    },
+    {
+      "id": "P5",
+      "provider": "Terminal Services/library/online policy assembly",
+      "required": "All17 selected Services behaviors exist. Mandatory lower-object construction is still a production binding task, not17 missing algorithms; no synthetic tail.",
+      "reference": {
+        "path": "outputs/anadius-services-completion-source/completion.cpp",
+        "line": 49
+      }
+    },
+    {
+      "id": "P6",
+      "provider": "Same-domain hooks/callback/original-slot ownership",
+      "required": "Actual NativeApi/wrappers/Context/checked PTD policies exist. Select them with real original code owners and readiness/external-quiescence proof; bounded sequential admission is not general concurrency.",
+      "reference": {
+        "path": "outputs/anadius-native-context-source/context.hpp",
+        "line": 22
+      }
+    },
+    {
+      "id": "P7",
+      "provider": "Online code/module owner",
+      "required": "All7 selected typed routes exist; select native_objects/native_queries and real CodeLease retaining callable code/dependencies. A token is not a real module pin or foreign class ABI proof.",
+      "reference": {
+        "path": "outputs/anadius-online-version-source/version.hpp",
+        "line": 15
+      }
+    },
+    {
+      "id": "P8",
+      "provider": "Shared output/compiler policy lifetime",
+      "required": "Retain ostream and streambuf, select supported locale/codepages/invalid-handler and meet serialized/frozen state obligations across workers/callbacks.",
+      "reference": {
+        "path": "outputs/anadius-services-completion-source/completion.hpp",
+        "line": 13
+      }
+    },
+    {
+      "id": "P9",
+      "provider": "Stop/drain/unload/permanent error policy",
+      "required": "stop_sources must actually exclude new application/worker/hook/late callbacks while allowing existing work to finish. Drain server/session raw jobs as well as bootstrap workers, then pause/join/exits/hook quiescence/unbind outside loader lock.",
+      "reference": {
+        "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+        "line": 67
+      }
+    }
+  ],
+  "source_references": [
+    {
+      "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+      "line": 89
+    },
+    {
+      "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+      "line": 54
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 8
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.hpp",
+      "line": 40
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "line": 35
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/domain.hpp",
+      "line": 32
+    },
+    {
+      "path": "outputs/anadius-crt-entry-source/entry.cpp",
+      "line": 15
+    },
+    {
+      "path": "outputs/anadius-crt-entry-source/entry.cpp",
+      "line": 75
+    },
+    {
+      "path": "outputs/anadius-config-startup-source/startup.cpp",
+      "line": 8
+    },
+    {
+      "path": "outputs/dll-link-gate-source/entry.cpp",
+      "line": 7
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/callbacks.hpp",
+      "line": 23
+    }
+  ],
+  "reviewed_existing_source_hashes": {
+    "outputs/anadius-bootstrap-owner-source/owner.hpp": "f12f284f5f23e27ebc320e9c5ac24fa016b5116dcbd615a566790568ca78e003",
+    "outputs/anadius-bootstrap-owner-source/owner.cpp": "6cb82edd31ac5617f6679f97a0d1eb04fce10644b802ed314950fca6cc16d9c3",
+    "outputs/anadius-bootstrap-backend-source/backend.cpp": "b8339ee3bf5a6a1256f2b1301494278345fc0bc24bccb20c7ab5980228c52153",
+    "outputs/anadius-bootstrap-runtime-source/factory.hpp": "a447a80b1f9caa32d682804207e551431b8d4308cc530c0a176df5256a31b443",
+    "outputs/anadius-bootstrap-runtime-source/factory.cpp": "aefcaeaedf61d3646bc17e4a52763606f2e9de4634ab63fb14ec876262547aec",
+    "outputs/anadius-thread-domain-source/domain.hpp": "37bf2a7947afee97bf3a7fa12dabf6e64124eaeb84ae6c40f2d6731c84926276",
+    "outputs/anadius-crt-entry-source/entry.cpp": "035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47",
+    "outputs/anadius-config-startup-source/startup.cpp": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+    "outputs/dll-link-gate-source/entry.cpp": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+    "outputs/anadius-bootstrap-runtime-source/callbacks.hpp": "0f15b4031dc4e71f32e52c0ef6b7061fb1ec8c9e0b2c7df424f0ee4fd72d13e4",
+    "outputs/dll-link-gate-source/production_image.hpp": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+    "outputs/anadius-bootstrap-backend-source/backend.hpp": "d60af87a481bc8bc4f40a770808dab6f0c31cb2f7ae9a7e6bd10fb43ad8530d4",
+    "outputs/anadius-server-source/server.hpp": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+    "outputs/anadius-session-owner-source/owner.hpp": "f923c9548bf30fbc024ad691680d52c183a4e9ddbcd09481aeb0a13aa3123f90",
+    "outputs/anadius-config-source/configuration.hpp": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6",
+    "outputs/anadius-services-completion-source/completion.cpp": "26a7a0a659088938eaed6b2981056c17041f4bf8d38b696fc8ca12042f447b64",
+    "outputs/anadius-native-context-source/context.hpp": "2db86f5b03ca300179a8042e5a287a3b80299b416af4a72b33adcf719b3ce9e3",
+    "outputs/anadius-online-version-source/version.hpp": "9493df88f46bf2050eccec5930b68c10910da5de4686757e17001925fda805b8",
+    "outputs/anadius-services-completion-source/completion.hpp": "d851377aaea26330f5cd3de4cd06be8931cc4ec70e53104297959c4caf12ec2a"
+  },
+  "minimal_factory_contract": {
+    "must_own": [
+      "Stable Runtime/RuntimeOwner, all Resources and state_lifetime",
+      "InitialState with B28 configuration defaults plus explicit console/runtime/domain/callback seeds",
+      "DomainStorage, real threads/memory and permanent bootstrap/native Errors",
+      "Actual server/session/operation/raw-job and response lifetimes",
+      "Native callback/hook original-code, online module leases, stream and streambuf"
+    ],
+    "required_order": "Construct unpublished real provider graph, bind stable shared state, resolve loader restriction, publish once, then invoke actual application entry. Stop admissions/drain/join/exits/hook quiescence/unbind outside loader lock before unload. Retain on false/unknown; no fake true proof.",
+    "two_symbols_do_not_mean_two_tasks": true
+  },
+  "retained_link_review": {
+    "result": "PASS_EXPECTED_BLOCKER",
+    "executed_by": "/root PowerShell/compiler; reviewer only read/verified retained artifacts",
+    "validation_sha256": "299042716765d719587d133092be1ab19d2cd4ab77263c4594cef78c3e1bfdd2",
+    "source_verification_sha256": "4c3e9ebe3eb80a845e2b6f04fa20534bb20a14a6c2de605e36aabf5b8764bbd7",
+    "normal_build_exit_check_sha256": "ab2f261747e3c989b6e31bf359327828b60988fe26abec1838b1e2d644fb3af2",
+    "normal_build_log_sha256": "494c786b906005b009cf7cdba11fbc7503f0ce32df213cdc4cce9001c35e88e3",
+    "run_directory": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build\\run-20261030T1831228003731Z",
+    "invocation_mode": "normal-build",
+    "entry_and_leaf_compile_exit": 0,
+    "link_exit_code": 1,
+    "undefined_symbols": [
+      "anadius::dll_link_gate::require_loader_attach_runtime(HINSTANCE__*, void*)",
+      "anadius::dll_link_gate::require_loader_detach_quiescence(HINSTANCE__*, void*)"
+    ],
+    "required_root_members": [
+      "bootstrap_factory.o",
+      "bootstrap_owner.o",
+      "bootstrap_native.o",
+      "bootstrap.o",
+      "bootstrap_backend.o"
+    ],
+    "selected_core_member_count": 25,
+    "selected_core_members": [
+      "bootstrap.o",
+      "bootstrap_backend.o",
+      "bootstrap_callbacks.o",
+      "bootstrap_factory.o",
+      "bootstrap_native.o",
+      "bootstrap_owner.o",
+      "bootstrap_tracking.o",
+      "config_application.o",
+      "config_hash.o",
+      "config_startup.o",
+      "configuration.o",
+      "crt_threads.o",
+      "execution.o",
+      "file_io.o",
+      "file_io_native.o",
+      "hook_cleanup.o",
+      "host_init.o",
+      "libraries.o",
+      "libraries_windows.o",
+      "online.o",
+      "parser.o",
+      "paths.o",
+      "server.o",
+      "startup.o",
+      "startup_windows.o"
+    ],
+    "compiler_CRT_entry_verified": true,
+    "recovered_CRT_entry_extracted": false,
+    "log_sha256": "7607116e751350391255831bd8d938772d899c513ee850bf39f4af51d8db234c",
+    "entry_object_sha256": "418a7312f70886d5650613ba17b270e8d63eacddd59cc8915e9732d1568b86f8",
+    "leaf_object_sha256": "2d67c078e067260007f4ebcf44ff5c182d3b64e74896546630ac6b7831e58c8c",
+    "single_generated_C3_retq_verified": true,
+    "declared_export_aliases": [
+      [
+        "CDX",
+        1
+      ],
+      [
+        "RUNE",
+        2
+      ],
+      [
+        "anadius",
+        3
+      ]
+    ],
+    "original_leaf_reference": "Retained017a30 RET, ev_4ef5a2bb53b7728331fdd5c8debedafc4f7ebcce78b3dd4a30154920bfc23a9d; no return value/prototype invented",
+    "dll_created": false,
+    "map_created": false,
+    "final_PE_exports_imports_TLS_unwind_verified": false,
+    "cmake_target_executed": false,
+    "cmake_review": "Opt-in defaultOFF; LLVM-MinGW Clang profile; parent target supplies transitive system/hook libraries. CMake CLI absent in recorded environment; source-reviewed only.",
+    "normal_build_correctly_returns_exit1": true,
+    "common_test_groups_rerun": 0
+  },
+  "baseline_integrity": {
+    "frozen_source_files": 846,
+    "all_unchanged_hash_verified": true,
+    "common_build_record_sha256": "4a25347334a9b15d08497efb83e618d26cccff8259948a4893ac922d12bd4072",
+    "source_snapshot_sha256": "b778554d4eed12c28ef7d90b9245bd5e9662717437e4e0d24cbdb6c964d5b674",
+    "archive_hashes": [
+      {
+        "file": "anadius_core_partial.a",
+        "bytes": 4178876,
+        "sha256": "010c06c19125ffa89a625cf3d54b5478ec12b798d950985604e8082b924cb7df"
+      },
+      {
+        "file": "hook_engine_compat.a",
+        "bytes": 24418,
+        "sha256": "4f3bd79de433a34b9c55385ed00c312783475ed5e69717b473d7dc5c9cbb29cd"
+      }
+    ],
+    "B30_canonical_zip_sha256_unchanged": "0f88d2066473ba25a94b0db64fdaa0f9d79ba5b1f81718188455ebe23ddb71e0",
+    "parent_CMake_opt_in_change_source_reviewed": true
+  },
+  "blockers_to_accepting_diagnostic_review": [],
+  "limits": [
+    "PASS is for source and retained failed-link diagnostic only; production DLL remains BLOCKED.",
+    "Five-root/25-member extraction proves a real application source link chain, not complete provider graph or runtime equivalence.",
+    "Only declared alias text and leaf object are verified; no final PE exists and no original/rebuilt DLL/game was loaded or executed.",
+    "No new target query, original byte/decompile access or user CFG/token/profile read.",
+    "Reviewer executed no compiler/link/test/CMake and edited only production-root-review.json/.md.",
+    "No new native ABI/provider closure; overall completion percentage is not measured."
+  ]
+}

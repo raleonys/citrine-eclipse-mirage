@@ -1,0 +1,233 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "scope": "Five application handlers plus filter/header/element logic. All inputs read-only. Original binaries never loaded/executed.",
+  "evidence_kind": "Retained REA/Ghidra static pseudocode and instruction text; PE bytes for constants",
+  "constant_evidence": "constants.json",
+  "implementation": "content_handlers.cpp",
+  "functions": [
+    {
+      "address": "0x180030010",
+      "role": "grant_achievement_030010",
+      "evidence_id": "ev_8e0c6e33949acd640bbdc56b56ceea86f8bb373eca849ee8c6a34d8a0ac1b175",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 39241,
+      "pseudocode_block_sha256": "f6683e64abda4c6e31219b793ce6a466ebed99352d53aec9f29ffd321acf10e6",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x180031030",
+      "role": "query_entitlements_031030",
+      "evidence_id": "ev_d93b75718d1f6d13cca75161139cf315aecf36b063c8cb965649d324d89b48c6",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 40027,
+      "pseudocode_block_sha256": "4645d3142c150c10466376560097d41d5002ec429aa1e4fc050dd189afc9c618",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x180034660",
+      "role": "event queue push storage boundary",
+      "evidence_id": "ev_a447821546f363a4126e95ca66d6841d683859f2b0b981752b0fccdc88ccc51e",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 42117,
+      "pseudocode_block_sha256": "798a9df1c4765b275652748439a26d045ddcda76b6edaafac6dc5759e7cca824",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x180030ee0",
+      "role": "query_content_030ee0",
+      "evidence_id": "ev_a0a9549401f9822fda2afebad150488cd69d8a58c6f86ecae0c48842b4751608",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 39970,
+      "pseudocode_block_sha256": "a74ebd07b2daba23bafa9f7ea00aa23174200320f3ea30d24bb09f9f6885a694",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x180030d30",
+      "role": "query_achievements_030d30",
+      "evidence_id": "ev_d87af5d8151a7108b80f8af209dde572d444c5bc177dd0a57110f57cd31e8939",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 39868,
+      "pseudocode_block_sha256": "cb72f276d01d877d301997f76cb89bbe6ba3643ffa0fb1dfd3a3fd2d09050431",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x1800314f0",
+      "role": "query_image_0314f0",
+      "evidence_id": "ev_2e2e94933ee58f5567373dbd0e0d2f7bcd6173760dd3b9b93dbd5f4724cbc149",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 40186,
+      "pseudocode_block_sha256": "ecb7b106521b093a652603f5c17ae9368735f85c0bb012e5238f6a6e101a37ca",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x18002c6a0",
+      "role": "parse_entitlement_filters_02c6a0",
+      "evidence_id": "ev_5db895996d1502285c3beeaeb91cbdda51e8c0539679fd15a5ad77bf5f5a2d6b",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 37137,
+      "pseudocode_block_sha256": "51f5f55d64c99421e484d10e75ef986d0f48c58103014592644aef5abe732f32",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x18002bf60",
+      "role": "achievement_set_header_02bf60",
+      "evidence_id": "ev_36f776a4ed15aef209cfd93a967b20d22e5b5534beeef599d92d7e81782bafc4",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 36815,
+      "pseudocode_block_sha256": "7623c510dfc1959ebd81c102e9f0a1bc93e96836ee3c25c4ad231592d48095fe",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x18002c080",
+      "role": "achievement_element_02c080",
+      "evidence_id": "ev_4fc842428bfe64a98f3598f7855afadd8256f6bf34367ad6a37f01d773b61336",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 36863,
+      "pseudocode_block_sha256": "191860ee518648e6e7b96f08d7fa2917e5b714d0492c622bdd688ec60cac2222",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x1800348d0",
+      "role": "signed decimal semantics",
+      "evidence_id": "ev_c8956389f06090304d78bbbaeb7ba946fd58733924c38886a9cab4869d2c9cd2",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 42236,
+      "pseudocode_block_sha256": "c9d466047494265079b219551b7ba26508c9bb74b7c158bd336e0f9d625ab1ca",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x18002bc10",
+      "role": "mutex guard semantics",
+      "evidence_id": "ev_3770b1e11fca877d3ca78e97079ee080b50700e351914b8774dce0912c526a11",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 36642,
+      "pseudocode_block_sha256": "f17ff9ee6ec5783ea3c00cef02e79ce795d0cb662cbd227e1c2c2bc2657e6f89",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x18002c400",
+      "role": "event queue initialization semantics",
+      "evidence_id": "ev_8a31862931ad4a3cf8f80e4584226c396cdf07e3d33f8c2981f44e90db73bcd0",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 37051,
+      "pseudocode_block_sha256": "334dead4d60aa093c109bc9fe0d814be15f2d3a45fb906612c5f75adaab785ab",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x18002c620",
+      "role": "event mutex boundary",
+      "evidence_id": "ev_0e415284624e38d46c3199e2803819e3710cab686ae0325f3d0446636fa42c9d",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 37117,
+      "pseudocode_block_sha256": "8ef6a64e7a7918dc8a6c06d6207533e2cfd3d328f37170789acc0a4859d0f95a",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x180041b60",
+      "role": "UTC time boundary",
+      "evidence_id": "ev_68595116803098f1d28c51d6c2cf79c7ec9e646a902f5a82d68490a03b628239",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 53023,
+      "pseudocode_block_sha256": "a475aca84838ded70caf11f93066694f80573c15f07d80e27eddaf3a2967afc6",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x180006d70",
+      "role": "filesystem-code-page conversion boundary",
+      "evidence_id": "ev_ddea68d70083a15fe46d222afc8aab9746f91c7339b12ef8b6ebddb7afb88461",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 5055,
+      "pseudocode_block_sha256": "6279a820a8a41a419dd8c6056dc41834b9779a8ce7ea18db35b87c0c0555f096",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x180016b50",
+      "role": "filesystem append boundary",
+      "evidence_id": "ev_8023786cbc62baf0b51b776c99ddefaa3c7a58d8525aa337842e17c0ba8d961c",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 19099,
+      "pseudocode_block_sha256": "a3d33fad8f58731107de961ff53246c98987c4991eea9fa0b23347c7f7f44a72",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x180048d20",
+      "role": "overwrite file copy boundary",
+      "evidence_id": "ev_e244599bf6c4c1310ed72cb9f0c8d9238b9ae2df45ab41351b30e1ad15f25218",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 58900,
+      "pseudocode_block_sha256": "d09ec0193d04d56de3e07625c287487d03a626a3b19028cce0650d3d5a276cfd",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    },
+    {
+      "address": "0x18001f9a0",
+      "role": "separate Steam persistence boundary",
+      "evidence_id": "ev_62b9a1da24b690b13ccc9ef87ff538b194425801a3a0857c3220da35a50c024f",
+      "pseudocode_file": "../anadius-all-functions.pseudo.c",
+      "pseudocode_start_line": 25631,
+      "pseudocode_block_sha256": "77d137428bd66705e184f1c3a45659a2da2dc3975d365e5ece7f13a93fcff8d9",
+      "assembly_file": "../anadius-all-functions.asm.txt",
+      "assembly_start_line": null,
+      "assembly_block_sha256": null
+    }
+  ],
+  "application_observations": [
+    "Entitlement row ID increments before filter test. Filters combine with OR. ItemId attribute populates offers set; FilterItems matches tag.",
+    "Achievement node value +0x00 Total, +0x04 Count, +0x08 Progress; native node value starts at +0x40.",
+    "Achievement progress arithmetic observed at 0x180030635 is ADD EAX,R12D; signed comparisons use JLE/JL at 03062f/03066a.",
+    "Achievement XML file includes nonzero Progress, including negative values. Completion writes Count=1 and caps Progress=Total.",
+    "Event serialization uses CStr strlen excluding NUL; queue begins with IGOEvent DOWN.",
+    "Image Width is required but forwarded unchanged; width atoi/208 gates own last-avatar copy, while Height is only forwarded."
+  ],
+  "mandatory_boundaries": [
+    "Native/MSVC ABI and tinyxml2 input snapshot adapter",
+    "Mutex/recursive native count and queue storage",
+    "UTC time/format helper",
+    "XML printer and file writer",
+    "Separate Steam persistence 01f9a0",
+    "Filesystem code-page conversion/path append",
+    "Online avatar virtual method +0x28",
+    "CopyFileW overwrite + UTF-8 path output",
+    "Log and UNKNOWN MESSAGE dialog"
+  ],
+  "limits": [
+    "No original source identity claim",
+    "No standalone DLL or runtime equivalence claim",
+    "Synthetic tests only; no host/network/credential/license operations",
+    "Allocator and MSVC SSO/container layout/failure timing not emulated",
+    "Separate Steam persistence subsystem internal format not reconstructed here"
+  ]
+}

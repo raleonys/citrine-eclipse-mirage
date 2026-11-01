@@ -1,0 +1,173 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "independent_from_integration_author": true,
+  "independent": true,
+  "reviewer": "/root/b18_ptd_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-29T19:16:09.306379+00:00",
+  "review_scope": "B20 bounded shared compiler ostream ownership/gate, all six selected writer clusters, lifetime/reentry/failure semantics and own source tests",
+  "reviewed_source_hashes": {
+    "stream.hpp": "1585d2079532695ff5565ed6f74357eddbf4a79504a2af54500e7c6739cdacbf",
+    "stream.cpp": "2e2fc657fff9bf6bed5c19428a5f8c11f22d704ee12b22337a3f6e2eec5265d4",
+    "stream_tests.cpp": "23d59c41df741f1d4329dd5c7c7768a72df1aa3ff415508b4ba829c6548543f7",
+    "stream_integration_tests.cpp": "03ffedeb50f4810c426948a5aa947ffb00f5e541b1b920646d3a4b384fa1ec8d",
+    "stream_test_fixture.hpp": "c27c73a9f6327aad990d20d6bd54766f3036a30af479d203e1dfe88cc0c284e7",
+    "../anadius-services-completion-source/completion.cpp": "26a7a0a659088938eaed6b2981056c17041f4bf8d38b696fc8ca12042f447b64",
+    "../anadius-config-logging-source/logging.cpp": "114dd5a158d479ec7bed5e3e382c46ba19878a5174df0345c72b549df0aa6da2",
+    "../anadius-library-effects-source/effects.cpp": "4817011c56a72114d178e7b535a2b6c61ec3026c65ecbc226faed597ca3adb54",
+    "../anadius-online-platform-source/platform.cpp": "efeca0c6e704eee8818d7e261e5315db9801a3d8a0c84202e278d50fcdb31eb4",
+    "../anadius-host-platform-source/platform.cpp": "6f56ff3d99b288f1280602a00951328ea2f4b0dd6fc0739d21039ce8492f59b0",
+    "../anadius-callback-policy-source/policy.cpp": "1cec6448ec1e9b2e4e2f0a3f4014a115f7a037372e68d136e6b128943f4b889e"
+  },
+  "quick_results": [
+    {
+      "path": "work/b20-core-quick-results.json",
+      "sha256": "c9390d50cd0786bdd0d6c6f8dc8fb48218a97abe1392bff66798201f9bebb741",
+      "checks": 30,
+      "executable_path": "work/b20-core-test.exe",
+      "executable_sha256": "30e6de7f2dadc637d3b5e76c356f5ec70ebb5e237516062013c3a311ce484185",
+      "execution_by": "root; independent reviewer inspected all listed sources and verified source/EXE hashes, did not rerun"
+    },
+    {
+      "path": "work/b20-integration-quick-results.json",
+      "sha256": "d7dbac117e826d0cbb472c2eca657932876276e1772e852bb567072a458071da",
+      "checks": 39,
+      "executable_path": "work/b20-integration-test.exe",
+      "executable_sha256": "0e9bfdae7d2f71a8428ac6b59ba10c50f790fdc2f817d1ad0ece8cbbe5e761ac",
+      "execution_by": "root; independent reviewer inspected all listed sources and verified source/EXE hashes, did not rerun"
+    }
+  ],
+  "root_checks": 69,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "baseline_package_sha256": "e47bdb0eba40d1ba9f4074034993e73b4667693a04fe4a199f1e762fa51dae87",
+  "prior_source_files": 800,
+  "prior_sources_preserved": 794,
+  "current_source_files": 805,
+  "source_inventory_counts_basis": "Parent-provided frozen B19/B20 source inventory; final common delivery audit is separate. Independent review verified exactly five new and six modified source hashes against both root quick captures.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-services-completion-source/completion.cpp",
+      "after_sha256": "26a7a0a659088938eaed6b2981056c17041f4bf8d38b696fc8ca12042f447b64",
+      "reason": "Enroll selected output operations in the same managed Stream scope; B10 shared gate precedes private gate; configuration conversion stays outside shared scope"
+    },
+    {
+      "path": "anadius-config-logging-source/logging.cpp",
+      "after_sha256": "114dd5a158d479ec7bed5e3e382c46ba19878a5174df0345c72b549df0aa6da2",
+      "reason": "Enroll selected output operations in the same managed Stream scope; B10 shared gate precedes private gate; configuration conversion stays outside shared scope"
+    },
+    {
+      "path": "anadius-library-effects-source/effects.cpp",
+      "after_sha256": "4817011c56a72114d178e7b535a2b6c61ec3026c65ecbc226faed597ca3adb54",
+      "reason": "Enroll selected output operations in the same managed Stream scope; B10 shared gate precedes private gate; configuration conversion stays outside shared scope"
+    },
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "after_sha256": "efeca0c6e704eee8818d7e261e5315db9801a3d8a0c84202e278d50fcdb31eb4",
+      "reason": "Enroll selected output operations in the same managed Stream scope; B10 shared gate precedes private gate; configuration conversion stays outside shared scope"
+    },
+    {
+      "path": "anadius-host-platform-source/platform.cpp",
+      "after_sha256": "6f56ff3d99b288f1280602a00951328ea2f4b0dd6fc0739d21039ce8492f59b0",
+      "reason": "Enroll selected output operations in the same managed Stream scope; B10 shared gate precedes private gate; configuration conversion stays outside shared scope"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "after_sha256": "1cec6448ec1e9b2e4e2f0a3f4014a115f7a037372e68d136e6b128943f4b889e",
+      "reason": "Enroll selected output operations in the same managed Stream scope; B10 shared gate precedes private gate; configuration conversion stays outside shared scope"
+    }
+  ],
+  "findings": [
+    {
+      "topic": "selected stream and buffer lifetime",
+      "result": "PASS",
+      "evidence": [
+        "stream.hpp:9-28",
+        "stream.cpp:26-30,36-45,48-55",
+        "stream_tests.cpp:5-17,76-80"
+      ],
+      "observation": "Stream is final and immovable. The first virtual BufferOwner precedes the virtual basic_ios base in construction and survives its erase callbacks during destruction. Lease obtains a strong shared owner before locking, retains the same Stream and owned streambuf through output and releases its last owner only after unlocking. A selected stack object without a shared lifetime owner is rejected; null factory buffers are rejected. The own erase-event test specifically covers the nonvirtual-owner lifetime regression."
+    },
+    {
+      "topic": "TLS reentry and lock ordering",
+      "result": "PASS",
+      "evidence": [
+        "stream.cpp:16,31-46,48-55",
+        "../anadius-services-completion-source/completion.cpp:25-40",
+        "stream_tests.cpp:19-46"
+      ],
+      "observation": "The thread-local active marker rejects every nested adapter scope before the legacy no-op branch and before any mutex/ostream access, including same Stream, different managed Stream, and legacy adapter reentry from a managed operation. This closes the managed-to-legacy B10 private-gate inversion. B10 acquires the common Stream gate before its private recursive gate and destroys the private lock first. Constructor failures clear the marker and release any acquired gate; the immovable Lease enforces same-thread destruction and terminates on broken owner/TLS identity."
+    },
+    {
+      "topic": "entire persistent compiler ostream state",
+      "result": "PASS",
+      "evidence": [
+        "stream.cpp:39-43",
+        "stream_integration_tests.cpp:113-156,158-186"
+      ],
+      "observation": "All six selected writer clusters enroll around their actual C-string, counted string, numeric and endl operations on the same Stream. One mutex covers sentry, formatting flags/width/locale access, error state and streambuf work rather than merely serializing the buffer. A non-null tie and replacement of the owned buffer fail before selected output under the gate. Format/error state may be configured under Lease. Raw concurrent access, buffer/tie mutation even inside Lease, and another frontend sharing the buffer remain unsupported."
+    },
+    {
+      "topic": "short operations and visible failure prefixes",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-config-logging-source/logging.cpp:25-35",
+        "../anadius-library-effects-source/effects.cpp:14-18",
+        "stream_tests.cpp:47-65",
+        "stream_integration_tests.cpp:188-246"
+      ],
+      "observation": "Configuration commits and releases its prefix operation before filename extraction and the two-pass conversion, then separately acquires for counted suffix and endl. Own integration uses another thread to complete a library writer while conversion is still waiting, proving that conversion does not retain the shared gate. No newly selected lease spans a wait, dialog, original, lower provider, file/native operation or terminal call. Partial output, embedded NUL/zero tail, persistent width/flags, failbit/badbit, chosen exception masks, and endl newline/flush prefixes retain compiler ostream behavior without clearing, rollback or replay. Individual record fragments may interleave."
+    },
+    {
+      "topic": "Windows LastError and exception cleanup",
+      "result": "PASS",
+      "evidence": [
+        "stream.cpp:17-24,31-46,48-55",
+        "stream_tests.cpp:5-16,29-46"
+      ],
+      "observation": "Acquire and release use separate PreserveError instances. Acquire restores entry LastError before output; release captures outgoing body LastError and restores it after mutex, TLS and possible final owner destruction. A whole-body snapshot does not hide legitimate body effects. Failure/unwind releases the gate and marker; streambuf exceptions can be swallowed into badbit according to the existing ostream exception mask, rather than being reported as invented output success."
+    },
+    {
+      "topic": "scope and ABI",
+      "result": "PASS",
+      "evidence": [
+        "stream.hpp:17-40",
+        "stream_integration_tests.cpp:18-19,130-134,154-155",
+        "work/b20-core-quick-results.json",
+        "work/b20-integration-quick-results.json"
+      ],
+      "observation": "This is a compiler C++ source extension using matching RTTI/runtime and all six freshly compiled writer CPPs. It is not a recovered MSVC ostream layout or DLL ABI claim. The integration test uses direct B16 Policy logging on its sole controller thread and five other source writer clusters. It does not execute a native callback or install a hook; source synchronization alone does not prove global callback/provider concurrency."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Caller must give every selected writer the exact same managed Stream object and retain writer/provider owners while calls run. Sharing only a streambuf, a legacy ostream, a different frontend, or a different gate does not satisfy the boundary.",
+    "Raw stream/buffer access and external stream state mutation must be quiescent or excluded. rdbuf/tie changes are unsupported even inside an active Lease; entry checks do not authorize mutation after validation.",
+    "Streambuf/facet/ios callbacks must follow their compiler contracts, perform only bounded work and neither invoke nor wait for another writer. Reentry rejection may become badbit under compiler ostream rules. No arbitrary callback or cross-resource deadlock freedom is claimed.",
+    "Managed leases are same-thread scopes; fiber migration, handing a Lease to another thread and caller destruction of the surrounding adapter while a method runs are unsupported.",
+    "Compiler CRT errno/locale/invalid-parameter handlers and process File-API mode/codepage are distinct from recovered PTD/fallback cells. B20 does not freeze or synchronize those ambient providers.",
+    "Recovered errno_fallback/dos_fallback, initial locale, FLS/heap state, outside worker error paths and external state readers/writers retain their separate proof obligations; a selected stream mutex does not protect them.",
+    "B18 sequential foreign admission/PTD cleanup retention and B19 same-Execution publication remain required. Milestones do not establish engine health, worker completion, provider quiescence or native unload safety.",
+    "Real native callback integration, overlap/reentry support, seven online foreign calls, configuration/license/legacy document ownership, B10 historical review debt, generic CRT, exception ABI, native hook/unload and final PE/DLL equivalence remain outside this PASS."
+  ],
+  "claim": {
+    "all_six_selected_writers_same_managed_stream_serialized": true,
+    "whole_persistent_ostream_state_serialized_during_selected_operations": true,
+    "whole_record_atomicity": false,
+    "plain_legacy_synchronization_added": false,
+    "managed_to_legacy_adapter_reentry_rejected": true,
+    "original_or_native_DLL_executed_by_reviewer": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_configuration_token_profile_achievement_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Core 30 and integration 39 PASS are root-run records, not reviewer reruns. Source/EXE hash verification passed.",
+    "The early nonvirtual buffer-owner regression and managed-to-legacy reentry/buffer replacement gaps are covered by the frozen implementation and final core tests.",
+    "No production or test source was changed by this reviewer; only these two review artifacts were written."
+  ]
+}

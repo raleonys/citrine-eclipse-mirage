@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_wildcard_search",
+    "result": "PASS",
+    "output": "PASS 2022 wildcard enumeration checks",
+    "executable_sha256": "0e1329b7c97d7d63a2d152d0d4925e5c4a953b9dd241ec0fffef0ce7dcd0fc25"
+  },
+  "execution_scope": "Wildcard path-prefix/search iteration with actual append source; owned/borrowed fixture conversion/find effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-wildcard-search-source/search_tests.cpp",
+      "sha256": "1e74aa410e1e1860df2c9f972d3a8b72755d83cd45c94132e49f1cec32dc4897"
+    },
+    {
+      "path": "anadius-crt-wildcard-search-source/search.cpp",
+      "sha256": "ae987abfc21a6d941794ac3ffef8fa2aa6c70fa4599e525b110b993a2cc8819b"
+    },
+    {
+      "path": "anadius-crt-wildcard-search-source/search.hpp",
+      "sha256": "bb6929c82044abd608371fb1cecb532c2630dfd9e7c4880e18b8483885295644"
+    }
+  ]
+}

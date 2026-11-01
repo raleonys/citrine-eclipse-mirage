@@ -1,0 +1,642 @@
+{
+  "schema": "node-constructors.retained-data.v1",
+  "authority": "historical-reference",
+  "confidence": "derived",
+  "parent_file": "outputs/anadius-rea-evidence.json",
+  "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "parent_file_bytes": 34457189,
+  "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "parent_authority": "shipped-artifact",
+  "parent_operation": "read_bytes",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": {
+    "id": "ghidra",
+    "version": "12.1.4"
+  },
+  "analysis_profile_digest": "dcc676845881c04a2d22833fb35d26569462e033daee5e99a95edac5aa61ac05",
+  "parent_read": {
+    "address": "0x18007f000",
+    "requested_bytes": 138752,
+    "returned_bytes": 138752,
+    "complete": true,
+    "last_address": "0x1800a0dff",
+    "decoded_bytes_sha256": "655444c3892927b2730fc34482c65d246ac9314bba13aef6267b0c87d58cc982"
+  },
+  "pool_allocator_slots": [
+    {
+      "pool_vtable": "0x18007fe08",
+      "slot_address": "0x18007fe18",
+      "slot_offset": "0x10",
+      "parent_offset": 3608,
+      "bytes": 8,
+      "bytes_hex": "102b008001000000",
+      "little_endian_qword": "0x180002b10",
+      "source_stride": 120,
+      "new_read_performed": false
+    },
+    {
+      "pool_vtable": "0x18007fe38",
+      "slot_address": "0x18007fe48",
+      "slot_offset": "0x10",
+      "parent_offset": 3656,
+      "bytes": 8,
+      "bytes_hex": "0026008001000000",
+      "little_endian_qword": "0x180002600",
+      "source_stride": 80,
+      "new_read_performed": false
+    },
+    {
+      "pool_vtable": "0x18007fe68",
+      "slot_address": "0x18007fe78",
+      "slot_offset": "0x10",
+      "parent_offset": 3704,
+      "bytes": 8,
+      "bytes_hex": "6029008001000000",
+      "little_endian_qword": "0x180002960",
+      "source_stride": 112,
+      "new_read_performed": false
+    },
+    {
+      "pool_vtable": "0x18007fe98",
+      "slot_address": "0x18007fea8",
+      "slot_offset": "0x10",
+      "parent_offset": 3752,
+      "bytes": 8,
+      "bytes_hex": "b027008001000000",
+      "little_endian_qword": "0x1800027b0",
+      "source_stride": 104,
+      "new_read_performed": false
+    }
+  ],
+  "listings": {
+    "pseudo": {
+      "file": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "functions": {
+        "0x180001590": {
+          "evidence_id": "ev_59fe8f6f63b5d539fa34d2e7ab472bb07f2eac9ddbe19463ceda5cd58807aa7d",
+          "section_file": "work/node-constructor-001590.pseudo.txt",
+          "section_sha256": "41f652b3bc9973beeb06d9e0c05dc4c56c8e0ae62f1a70387605dba3f0741786",
+          "complete_function_section": true
+        },
+        "0x180001610": {
+          "evidence_id": "ev_f70ca376682c01eea491392250432e20b7b1f8b38988e7cff27d1035ae136543",
+          "section_file": "work/node-constructor-001610.pseudo.txt",
+          "section_sha256": "7d423772a09c33c4157ad35a98cbd85066012e2df93463450a6199fb89f7e13e",
+          "complete_function_section": true
+        },
+        "0x180001690": {
+          "evidence_id": "ev_aa306639682fe19727d4575e228f9b77edd69edc194f91bf0b4d0573b268c3f0",
+          "section_file": "work/node-constructor-001690.pseudo.txt",
+          "section_sha256": "e93a0815bde11f7afccb46ee94593881705106dccf46e9763bbc81f879f2838f",
+          "complete_function_section": true
+        },
+        "0x180001720": {
+          "evidence_id": "ev_ec0b7b64a4ba841a7ab271ca18723be88c8dddb85944eec7ad7b33fa07a8487f",
+          "section_file": "work/node-constructor-001720.pseudo.txt",
+          "section_sha256": "b4110b21b0859740edd24c3786930e7d108fda9048d5defe4bb7169580f6cc47",
+          "complete_function_section": true
+        },
+        "0x1800017b0": {
+          "evidence_id": "ev_411d958c38112d47a20416edd1170e0a920b6607d6b2f500d92c7d5014be885a",
+          "section_file": "work/node-constructor-0017b0.pseudo.txt",
+          "section_sha256": "a6c795bc19ae60647a1437a7e497c960da5f5790676ecfc3408fd5097b2c2b61",
+          "complete_function_section": true
+        }
+      }
+    },
+    "assembly": {
+      "file": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "functions": {
+        "0x180001590": {
+          "evidence_id": "ev_d14f1ca8857a6516e3114a07ab617f85b94c2e35e86a666c733f01c1b1c3acb1",
+          "section_file": "work/node-constructor-001590.asm.txt",
+          "section_sha256": "95402ae5cca19e4d5259feb0380ab87e392214d2a864363662a6f83c0577a73f",
+          "complete_function_section": true
+        },
+        "0x180001610": {
+          "evidence_id": "ev_2eab9384f16c5b13a4b652633ba683cfa41611b72b6d6b1860260ccc8991f468",
+          "section_file": "work/node-constructor-001610.asm.txt",
+          "section_sha256": "48d88c83575c02c359bd2af2889aefb38165e408e1c9a606f90cd0f25da355d1",
+          "complete_function_section": true
+        },
+        "0x180001690": {
+          "evidence_id": "ev_b910340ad99765cccbf54b933ec9bcfcc95ff70467547ec0530ed6c23fcc5369",
+          "section_file": "work/node-constructor-001690.asm.txt",
+          "section_sha256": "ae13f69ee2005ccdc5c1193f04e5ccb088026e7b08180d35e25f5534df0a017f",
+          "complete_function_section": true
+        },
+        "0x180001720": {
+          "evidence_id": "ev_3db5ca48ca8ff595eaf2d0c7b0f657215eaa65e76dab9d67699fff373d3eba91",
+          "section_file": "work/node-constructor-001720.asm.txt",
+          "section_sha256": "8005cb938bafa92ae5e2d076ed567a9ff7af62af9277c50816adf91e53c741ac",
+          "complete_function_section": true
+        },
+        "0x1800017b0": {
+          "evidence_id": "ev_1b5aaa6c52bcca8a9ba686d59a6b2574a2b1b4ae8210b95a11b91e44324d0645",
+          "section_file": "work/node-constructor-0017b0.asm.txt",
+          "section_sha256": "352fa6c7c82e9383315d612cdb2d7765c9c0a3b876cc2a207bc94733618abdda",
+          "complete_function_section": true
+        }
+      }
+    }
+  },
+  "constructors": [
+    {
+      "address": "0x180001590",
+      "type_vtable_identity": "0x18007fbb8",
+      "type_vtable_identity_evidence": "complete assembly LEA/MOV operands only;not a host or runtime vtable",
+      "identify_pool_offset": "0x288",
+      "allocation_call": "0x1800015ab",
+      "allocation_vtable_slot": "0x10",
+      "append_call": "0x1800015f5",
+      "append_target": "0x180005440",
+      "append_array_offset": "0xa8",
+      "native_node_field_store_order": [
+        {
+          "instruction": "0x1800015bb",
+          "offset": "0x8",
+          "bytes": 8,
+          "source_register": "RSI"
+        },
+        {
+          "instruction": "0x1800015c1",
+          "offset": "0x10",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015c5",
+          "offset": "0x18",
+          "bytes": 4,
+          "source_register": "EAX"
+        },
+        {
+          "instruction": "0x1800015c8",
+          "offset": "0x20",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015cc",
+          "offset": "0x28",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015d0",
+          "offset": "0x30",
+          "bytes": 4,
+          "source_register": "EAX"
+        },
+        {
+          "instruction": "0x1800015d3",
+          "offset": "0x38",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015d7",
+          "offset": "0x40",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015db",
+          "offset": "0x48",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015df",
+          "offset": "0x50",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015e3",
+          "offset": "0x58",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015ee",
+          "offset": "0x0",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800015f1",
+          "offset": "0x60",
+          "bytes": 8,
+          "source_register": "RDI"
+        }
+      ],
+      "new_source_body_claimed_by_this_record": false
+    },
+    {
+      "address": "0x180001610",
+      "type_vtable_identity": "0x18007fc48",
+      "type_vtable_identity_evidence": "complete assembly LEA/MOV operands only;not a host or runtime vtable",
+      "identify_pool_offset": "0x288",
+      "allocation_call": "0x18000162b",
+      "allocation_vtable_slot": "0x10",
+      "append_call": "0x180001675",
+      "append_target": "0x180005440",
+      "append_array_offset": "0xa8",
+      "native_node_field_store_order": [
+        {
+          "instruction": "0x18000163b",
+          "offset": "0x8",
+          "bytes": 8,
+          "source_register": "RSI"
+        },
+        {
+          "instruction": "0x180001641",
+          "offset": "0x10",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001645",
+          "offset": "0x18",
+          "bytes": 4,
+          "source_register": "EAX"
+        },
+        {
+          "instruction": "0x180001648",
+          "offset": "0x20",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000164c",
+          "offset": "0x28",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001650",
+          "offset": "0x30",
+          "bytes": 4,
+          "source_register": "EAX"
+        },
+        {
+          "instruction": "0x180001653",
+          "offset": "0x38",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001657",
+          "offset": "0x40",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000165b",
+          "offset": "0x48",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000165f",
+          "offset": "0x50",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001663",
+          "offset": "0x58",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000166e",
+          "offset": "0x0",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001671",
+          "offset": "0x60",
+          "bytes": 8,
+          "source_register": "RDI"
+        }
+      ],
+      "new_source_body_claimed_by_this_record": false
+    },
+    {
+      "address": "0x180001690",
+      "type_vtable_identity": "0x18007fd78",
+      "type_vtable_identity_evidence": "complete assembly LEA/MOV operands only;not a host or runtime vtable",
+      "identify_pool_offset": "0x108",
+      "allocation_call": "0x1800016ab",
+      "allocation_vtable_slot": "0x10",
+      "append_call": "0x1800016fc",
+      "append_target": "0x180005440",
+      "append_array_offset": "0xa8",
+      "native_node_field_store_order": [
+        {
+          "instruction": "0x1800016b6",
+          "offset": "0x10",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016ba",
+          "offset": "0x18",
+          "bytes": 4,
+          "source_register": "ECX"
+        },
+        {
+          "instruction": "0x1800016bd",
+          "offset": "0x20",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016c1",
+          "offset": "0x28",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016c5",
+          "offset": "0x30",
+          "bytes": 4,
+          "source_register": "ECX"
+        },
+        {
+          "instruction": "0x1800016c8",
+          "offset": "0x38",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016cc",
+          "offset": "0x40",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016d0",
+          "offset": "0x48",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016d4",
+          "offset": "0x50",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016d8",
+          "offset": "0x58",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016dc",
+          "offset": "0x8",
+          "bytes": 8,
+          "source_register": "RSI"
+        },
+        {
+          "instruction": "0x1800016e7",
+          "offset": "0x68",
+          "bytes": 4,
+          "source_register": "ECX"
+        },
+        {
+          "instruction": "0x1800016ea",
+          "offset": "0x70",
+          "bytes": 8,
+          "source_register": "RCX"
+        },
+        {
+          "instruction": "0x1800016f5",
+          "offset": "0x0",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800016f8",
+          "offset": "0x60",
+          "bytes": 8,
+          "source_register": "RDI"
+        }
+      ],
+      "new_source_body_claimed_by_this_record": false
+    },
+    {
+      "address": "0x180001720",
+      "type_vtable_identity": "0x18007fb28",
+      "type_vtable_identity_evidence": "complete assembly LEA/MOV operands only;not a host or runtime vtable",
+      "identify_pool_offset": "0x208",
+      "allocation_call": "0x18000173b",
+      "allocation_vtable_slot": "0x10",
+      "append_call": "0x180001789",
+      "append_target": "0x180005440",
+      "append_array_offset": "0xa8",
+      "native_node_field_store_order": [
+        {
+          "instruction": "0x18000174b",
+          "offset": "0x8",
+          "bytes": 8,
+          "source_register": "RSI"
+        },
+        {
+          "instruction": "0x180001751",
+          "offset": "0x10",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001755",
+          "offset": "0x18",
+          "bytes": 4,
+          "source_register": "EAX"
+        },
+        {
+          "instruction": "0x180001758",
+          "offset": "0x20",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000175c",
+          "offset": "0x28",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001760",
+          "offset": "0x30",
+          "bytes": 4,
+          "source_register": "EAX"
+        },
+        {
+          "instruction": "0x180001763",
+          "offset": "0x38",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001767",
+          "offset": "0x40",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000176b",
+          "offset": "0x48",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000176f",
+          "offset": "0x50",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001773",
+          "offset": "0x58",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000177e",
+          "offset": "0x0",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001781",
+          "offset": "0x68",
+          "bytes": 1,
+          "source_register": "0x0"
+        },
+        {
+          "instruction": "0x180001785",
+          "offset": "0x60",
+          "bytes": 8,
+          "source_register": "RDI"
+        }
+      ],
+      "new_source_body_claimed_by_this_record": false
+    },
+    {
+      "address": "0x1800017b0",
+      "type_vtable_identity": "0x18007fcd8",
+      "type_vtable_identity_evidence": "complete assembly LEA/MOV operands only;not a host or runtime vtable",
+      "identify_pool_offset": "0x288",
+      "allocation_call": "0x1800017cb",
+      "allocation_vtable_slot": "0x10",
+      "append_call": "0x180001815",
+      "append_target": "0x180005440",
+      "append_array_offset": "0xa8",
+      "native_node_field_store_order": [
+        {
+          "instruction": "0x1800017db",
+          "offset": "0x8",
+          "bytes": 8,
+          "source_register": "RSI"
+        },
+        {
+          "instruction": "0x1800017e1",
+          "offset": "0x10",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800017e5",
+          "offset": "0x18",
+          "bytes": 4,
+          "source_register": "EAX"
+        },
+        {
+          "instruction": "0x1800017e8",
+          "offset": "0x20",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800017ec",
+          "offset": "0x28",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800017f0",
+          "offset": "0x30",
+          "bytes": 4,
+          "source_register": "EAX"
+        },
+        {
+          "instruction": "0x1800017f3",
+          "offset": "0x38",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800017f7",
+          "offset": "0x40",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800017fb",
+          "offset": "0x48",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x1800017ff",
+          "offset": "0x50",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001803",
+          "offset": "0x58",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x18000180e",
+          "offset": "0x0",
+          "bytes": 8,
+          "source_register": "RAX"
+        },
+        {
+          "instruction": "0x180001811",
+          "offset": "0x60",
+          "bytes": 8,
+          "source_register": "RDI"
+        }
+      ],
+      "new_source_body_claimed_by_this_record": false
+    }
+  ],
+  "reused_source_hashes": {
+    "pool_allocate.hpp": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757",
+    "pool_allocate.cpp": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf",
+    "pool_append.hpp": "ce74e47337ce1627e1d8183b6e227d47bdf68eeb2aa44818de3ebdfae24fef66",
+    "pool_append.cpp": "26b55defe78e1de75967a39487ddd41def17c74bf536089ae4cf5c08ba161235"
+  },
+  "new_original_read_performed": false,
+  "new_native_analysis": false,
+  "new_source_bodies_claimed": 0,
+  "original_execution": "none",
+  "original_modification": false,
+  "limitations": [
+    "Pool slot bytes are initialized static Ghidra memory,not observed runtime dispatches.",
+    "Type vtable identities come from exact constructor operands;no complete native vtable/object ABI or child ParseDeep body is established.",
+    "Reusing existing selected allocator and append source does not acquire another native body or close heap/fill/copy/free/ABI/EH/concurrency.",
+    "No original file was read,executed or modified for this extraction."
+  ]
+}

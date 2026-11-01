@@ -1,0 +1,156 @@
+{
+  "evidence_id": "ev_f8081bd25ceeaf6de9090e01f1b9c4f3991b000a05038b0823ef7b8f60b3ed93",
+  "subject": {
+    "name": "version.dll",
+    "digest": {
+      "sha256": "07f4da9e7cd87421cabcf6b3bbb5083760e5eae33b357ef2b019216677b3c543"
+    },
+    "local_path": "C:\\Users\\Skysect\\Downloads\\version.dll",
+    "format": "pe",
+    "architecture": null
+  },
+  "provider": {
+    "id": "rea-pe-resources",
+    "name": "REA PE resource parser",
+    "version": "1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_pe_resources",
+  "parameters": {
+    "path": "C:\\Users\\Skysect\\Downloads\\version.dll",
+    "max_file_bytes": 67108864,
+    "max_entries": 16384
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "artifact": {
+      "path": "C:\\Users\\Skysect\\Downloads\\version.dll",
+      "sha256": "07f4da9e7cd87421cabcf6b3bbb5083760e5eae33b357ef2b019216677b3c543",
+      "bytes": 54272
+    },
+    "format": "pe32-plus",
+    "machine": 34404,
+    "directory": {
+      "rva": 65536,
+      "location": {
+        "offset": 53248,
+        "bytes": 1024
+      },
+      "data_directory_location": {
+        "offset": 352,
+        "bytes": 8
+      }
+    },
+    "directories": [
+      {
+        "location": {
+          "offset": 53248,
+          "bytes": 24
+        },
+        "characteristics": 0,
+        "timestamp": 0,
+        "major_version": 0,
+        "minor_version": 0,
+        "named_entries": 0,
+        "id_entries": 1
+      },
+      {
+        "location": {
+          "offset": 53272,
+          "bytes": 24
+        },
+        "characteristics": 0,
+        "timestamp": 0,
+        "major_version": 0,
+        "minor_version": 0,
+        "named_entries": 0,
+        "id_entries": 1
+      },
+      {
+        "location": {
+          "offset": 53296,
+          "bytes": 24
+        },
+        "characteristics": 0,
+        "timestamp": 0,
+        "major_version": 0,
+        "minor_version": 0,
+        "named_entries": 0,
+        "id_entries": 1
+      }
+    ],
+    "resources": [
+      {
+        "index": 0,
+        "type": {
+          "kind": "id",
+          "id": 16
+        },
+        "name": {
+          "kind": "id",
+          "id": 1
+        },
+        "language": {
+          "kind": "id",
+          "id": 1033
+        },
+        "entry_locations": [
+          {
+            "offset": 53264,
+            "bytes": 8
+          },
+          {
+            "offset": 53288,
+            "bytes": 8
+          },
+          {
+            "offset": 53312,
+            "bytes": 8
+          }
+        ],
+        "data_entry_location": {
+          "offset": 53320,
+          "bytes": 16
+        },
+        "code_page": 0,
+        "reserved": 0,
+        "payload": {
+          "rva": 65624,
+          "location": {
+            "offset": 53336,
+            "bytes": 560
+          },
+          "sha256": "d61413c8dfa84eb63f499c0f3b5bc63e198538db28e9a793d86ac64403799f26"
+        }
+      }
+    ],
+    "icon_groups": [],
+    "coverage": {
+      "status": "complete",
+      "examined_entries": 3,
+      "resources": 1
+    },
+    "limitations": [
+      "Static PE32/PE32+ type/name/language resource inventory; payloads other than RT_GROUP_ICON remain opaque.",
+      "Icon candidates are resource-table relationships. Language fallback, image decoding and actual shell/window loading are not observed.",
+      "Exact shared byte ranges are retained; non-identical overlapping resource structures or payloads are rejected."
+    ]
+  },
+  "confidence": "observed",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Static PE32/PE32+ type/name/language resource inventory; payloads other than RT_GROUP_ICON remain opaque.",
+    "Icon candidates are resource-table relationships. Language fallback, image decoding and actual shell/window loading are not observed.",
+    "Exact shared byte ranges are retained; non-identical overlapping resource structures or payloads are rejected."
+  ],
+  "relationship_coverage": null,
+  "locations": [
+    {
+      "kind": "artifact-path",
+      "path": "C:\\Users\\Skysect\\Downloads\\version.dll"
+    }
+  ],
+  "evidence_links": []
+}

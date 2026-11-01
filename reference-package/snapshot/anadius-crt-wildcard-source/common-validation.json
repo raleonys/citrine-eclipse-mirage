@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_wildcard",
+    "result": "PASS",
+    "output": "PASS 4010 wildcard/configure/storage/search/sort/locale composition checks",
+    "executable_sha256": "1d611520d66cc98e895ed3ba29c68ddcf519fcde48b699b5301dc1494e4411e9"
+  },
+  "execution_scope": "Actual configure mode2, wildcard core/thunk, search/append/qsort/mbsdec/inline-codepage source composition; synthetic remaining find/conversion/locale/recalloc primitives",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-wildcard-source/wildcard_tests.cpp",
+      "sha256": "ee99669059dea364a1dfe70e953bbc8c97e266284e73194ebb2d347392f4ffb2"
+    },
+    {
+      "path": "anadius-crt-wildcard-source/wildcard.cpp",
+      "sha256": "a286fe75ea38d3a579f540a37fa748cf8268bd77c0aa60f97aa946818bb01340"
+    },
+    {
+      "path": "anadius-crt-wildcard-source/wildcard.hpp",
+      "sha256": "9436b61288792aa1d185f50492d773e43a6ff1592f00fc66b9de7a479bc59403"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T14:12:15.8030524Z",
+  "prior_package_sha256": "adf5978096bab7cda994c68b884a03e728f03027f663a8e23cd8f8156e21d25b",
+  "prior_source_count": 320,
+  "unchanged_prior_sources": 320,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-crt-heap-native-bridge-source/bridge_tests.cpp",
+    "anadius-crt-heap-native-bridge-source/bridge.cpp",
+    "anadius-crt-heap-native-bridge-source/bridge.hpp",
+    "anadius-crt-heap-native-source/native_api.cpp",
+    "anadius-crt-heap-native-source/native_api.hpp",
+    "anadius-crt-heap-native-source/native_tests.cpp"
+  ],
+  "current_sources": 326,
+  "current_documents": 114,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "reviews": [
+    {
+      "path": "anadius-crt-heap-native-source/review-heap-audit.json",
+      "result": "PASS",
+      "verified_hashes": 3
+    },
+    {
+      "path": "anadius-crt-heap-native-bridge-source/review-native-bridge.json",
+      "result": "PASS",
+      "verified_hashes": 3
+    }
+  ],
+  "master_build_sha256": "381c00bcf8d36751c5911604ac5b3cb7e118eefeb1349dd142fe42e10eecf2d0",
+  "native_objects": 112,
+  "cpp_objects": 108,
+  "c_objects": 4,
+  "normal_test_groups": 97,
+  "terminal_cases": 15,
+  "new_tests": [
+    {
+      "module": "crt_heap_native",
+      "result": "PASS",
+      "output": "PASS: 169 native heap API checks (typed fixtures + own real allocations)",
+      "executable_sha256": "5502ba3716ef96edc4a76d310ed4b694e0dc6d90e389d7483943341f917965ff"
+    },
+    {
+      "module": "crt_heap_native_bridge",
+      "result": "PASS",
+      "output": "PASS 2193 native heap/realloc/recalloc/error/NLS source integration checks",
+      "executable_sha256": "90e2a67e7ae8fb932a19a73992377f8fc9145b97d6014c13f40bad60f342fda9"
+    }
+  ],
+  "recovered_original_bodies_added": 0,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

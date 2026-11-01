@@ -1,0 +1,366 @@
+{
+  "schema": "b29.accepted-session-source-audit.v1",
+  "reviewer": "/root/b22_provider_audit",
+  "generated_at_utc": "2026-10-30T17:00:24.891244+00:00",
+  "mode": "independent read-only retained evidence research; no production/test authorship",
+  "baseline": "2345b4ed217aa24a64bd02758183e34af3eea6228dece99b54f45599c3190940",
+  "scope_after_root_refinement": "B29 implement actual023d20 and028950 normal typed algorithms and correct existing025720 greeting lifetime. Full023000 owner construction/weak-self/publication deferredB30.",
+  "functions": [
+    {
+      "address": "0x180023d20",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_6cc121a29050e5e059f62f9f48170fa0366704c46376ab9043b965b45f7da214",
+      "assembly_evidence": "ev_6635266dde9dfb6632465ffcfddef88dc684468dc2261cecc5081598c9f31c93",
+      "existing_definitions": []
+    },
+    {
+      "address": "0x180028950",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_28dd5dfe2f74baa668fd9399a25f84bdb97a80401a2dbe436d00ec02ff667eb5",
+      "assembly_evidence": "ev_9c247d8443f8d438e254883e524aeb8acfa47b08146d979682aab7097bd60ae5",
+      "existing_definitions": []
+    },
+    {
+      "address": "0x180023000",
+      "source_presence": "module_record_only",
+      "pseudo_evidence": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "assembly_evidence": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+      "existing_definitions": []
+    },
+    {
+      "address": "0x180025720",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa",
+      "existing_definitions": [
+        {
+          "path": "anadius-server-source/server.cpp",
+          "symbol": "Session::start_025720"
+        },
+        {
+          "path": "anadius-server-source/server.cpp",
+          "symbol": "accept_completion_025720"
+        }
+      ]
+    },
+    {
+      "address": "0x180024db0",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3",
+      "assembly_evidence": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357",
+      "existing_definitions": [
+        {
+          "path": "anadius-socket-source/lifecycle.cpp",
+          "symbol": "destroy_024db0"
+        },
+        {
+          "path": "anadius-socket-source/lifecycle.cpp",
+          "symbol": "LifecycleRuntime::destroy_socket_024db0"
+        }
+      ]
+    },
+    {
+      "address": "0x18002bc70",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_d6716c5d525f5e8e2eb566ef802896e45423abc1be5b6a78f2da5f052740c118",
+      "assembly_evidence": "ev_4fa4de12d674eff8476f9cf6f72bdef77e52de8ef76d04cd9a0e596bd21a0db1",
+      "existing_definitions": [
+        {
+          "path": "anadius-messages-source/messages.cpp",
+          "symbol": "reset_02bc70"
+        },
+        {
+          "path": "anadius-session-source/handler.cpp",
+          "symbol": "MessageHandler::reset_02bc70"
+        },
+        {
+          "path": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "reset_session_cipher_02bc70"
+        }
+      ]
+    },
+    {
+      "address": "0x1800280d0",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_dcc519a12be00908ae90c988173ae9147418f1eb4771d95b34d3148914b0d9a2",
+      "assembly_evidence": "ev_36d45e7ea060ccb9497a038a4fa3e7d55641d30c79a68da3da5ae7ff42e69c99",
+      "existing_definitions": [
+        {
+          "path": "anadius-server-source/server.cpp",
+          "symbol": "Session::do_read_0280d0"
+        },
+        {
+          "path": "anadius-socket-source/frame_read.cpp",
+          "symbol": "start_frame_read_0280d0"
+        }
+      ]
+    },
+    {
+      "address": "0x180025480",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "assembly_evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31",
+      "existing_definitions": [
+        {
+          "path": "anadius-server-source/server.cpp",
+          "symbol": "Session::frame_completed_025480"
+        },
+        {
+          "path": "anadius-socket-source/frame_read.cpp",
+          "symbol": "finish_frame_read_025480"
+        },
+        {
+          "path": "anadius-socket-source/frame_read.cpp",
+          "symbol": "RecoveredFrameReadApi::finish_frame_025480"
+        }
+      ]
+    }
+  ],
+  "socket_move_order": [
+    {
+      "addresses": "23d39..23d45",
+      "effect": "Copy source service first qword; zero destination cancellation object/control at+18/+20."
+    },
+    {
+      "addresses": "23d4e..23d68",
+      "effect": "Initialize destination protocol40=2, byte44=0, slots48/50/58/60={2,0,0,0} before executor callback."
+    },
+    {
+      "addresses": "23d6c..23d7b",
+      "effect": "Copy live source table78 and table88 into destination; cache selected table78 for dispatch."
+    },
+    {
+      "addresses": "23d82..23d8e",
+      "effect": "Invoke selected table78 slot+8 with exactly destination executor payload+68 and source payload+68. No table-this is passed. Required selected lower callback, not a native VA cast."
+    },
+    {
+      "addresses": "23d92..23d99",
+      "effect": "Read source table90 AFTER callback, then store destination table90. Do not cache it before callback."
+    },
+    {
+      "addresses": "23da0..23dab",
+      "effect": "Call028950 with destination service read after callback, destination implementation+8 and source implementation+8; return destination."
+    }
+  ],
+  "implementation_transfer_order": [
+    {
+      "addresses": "28960..28981",
+      "effect": "Copy source socket to destination; cache source state byte; invalidate source socket; write destination state byte; clear source state byte."
+    },
+    {
+      "addresses": "28986..289a3",
+      "effect": "Load source cancellation control and increment strong if nonnull. THEN load old destination control and reload source pair before assigning destination pair."
+    },
+    {
+      "addresses": "289a7..289d2",
+      "effect": "Release cached old destination control: decrement strong; on1 call slot00, then decrement the SAME control weak; on1 slot08. No lock spans callbacks."
+    },
+    {
+      "addresses": "289d5..28a0d",
+      "effect": "Reload CURRENT source control after old destination callbacks; clear source pair, then release this newly cached residual control with same strong/dispose/weak/delete order."
+    },
+    {
+      "addresses": "28a10..28a3b",
+      "effect": "Enter cached service gate; destination.next=live head, destination.previous=null, old head.previous=destination if nonnull, service.head=destination; leave gate. Source is not explicitly unlinked or reset. If source is old head, the normal head.previous store naturally sets source.previous=destination."
+    },
+    {
+      "addresses": "28a41..28a9f",
+      "effect": "Only AFTER leave-gate copy live source protocol40/byte44/slots48/50/58/60; reset source to2,0,{2,0,0,0}. No invented socket close or cancellation destruction beyond explicit reference releases."
+    }
+  ],
+  "future_constructor_order": [
+    {
+      "addresses": "2301b..23054",
+      "effect": "Request456bytes, initialize strong/weak1 and control vtable identity084750."
+    },
+    {
+      "addresses": "23057..23086",
+      "effect": "Owner identity=control+10. First023d20 move source pending socket into temporary; zero owner weak-self; second023d20 move temporary into owner socket at owner+10."
+    },
+    {
+      "addresses": "2308f..230d8",
+      "effect": "Empty input owner+a8: zero inline16 bytes and size, capacity15. Zero five-qword deque header owner+c8, request16-byte proxy, proxy[1]=0, header.proxy=proxy, proxy.owner=header."
+    },
+    {
+      "addresses": "230db..230eb",
+      "effect": "Reset SAME handler owner+f0 via existing02bc70, THEN destroy moved temporary via existing024db0."
+    },
+    {
+      "addresses": "230f5..230fc",
+      "effect": "ONLY after temporary destruction, publish caller output object and control pair."
+    },
+    {
+      "addresses": "23109..23116",
+      "effect": "Perform weak-self setup only when old weak control isnull or its strong count iszero."
+    },
+    {
+      "addresses": "23118..2313f",
+      "effect": "Increment raw control strong, load current published output control, increment that weak; assign weak-self object and control, caching displaced weak control."
+    },
+    {
+      "addresses": "23143..23188",
+      "effect": "Release displaced weak via slot08 on last weak; then decrement cached temporary strong, dispose slot00 and decrement/delete weak on last strong. Output remains published if a later callback throws."
+    }
+  ],
+  "selected_executor_slot": {
+    "table78": "0x180084928",
+    "qwords": [
+      "0x180017a30",
+      "0x1800228c0",
+      "0x1800228c0",
+      "0x180006180"
+    ],
+    "slot08_target_token": "0x1800228c0",
+    "retained_rdata_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "target_body_available": false,
+    "limits": "No canonical0228c0 function body, standalone ASM record or covering saved code-byte record found. Callback must remain exact required lower; no invented payload move implementation or code VA execution."
+  },
+  "existing_reusable_bodies": [
+    {
+      "path": "anadius-socket-source/lifecycle.cpp",
+      "body": "destroy_024db0",
+      "reason": "Reuses close/cancel, intrusive unlink, executor cleanup and cancellation-control release. Do not call it during move; only original constructor destroys moved temporary after handler reset."
+    },
+    {
+      "path": "anadius-socket-source/cipher_session.cpp",
+      "body": "reset_session_cipher_02bc70",
+      "reason": "Actual coherent SessionCipher native+semantic state; reuse SAME owned instance rather than separate reset-only mock or split cipher."
+    },
+    {
+      "path": "anadius-socket-source/frame_read.cpp",
+      "body": "start_frame_read_0280d0 / finish_frame_read_025480",
+      "reason": "Already actual read and raw detached frame source. FrameReadOwner and IoReference can bind future023000 owner weak-self/control."
+    },
+    {
+      "path": "anadius-server-source/server.cpp",
+      "body": "Session::start_025720 / accept_completion_025720",
+      "reason": "Existing semantic greeting/read/reaccept application logic; lifetime scope correction adds no new normal function mapping."
+    }
+  ],
+  "projection_domain": [
+    "SocketObject.state is a reference. Require disjoint source/destination SocketObject AND distinct AcceptorState backing stores; distinct object references alone do not prove disjoint native-equivalent socket storage.",
+    "Destination must be fresh/unlinked and exclusively writable; source service/state/control/executor projections must be valid and coherent. Caller serializes construction and any provider mutation; no concurrent arbitrary mutation or native ABI overlay is supplied.",
+    "023d20 writes only observed fields; context, zero_74 and self_reference_80 are owned by selected executor callback, not invented blanket initialization. Read table90 after callback.",
+    "028950 uses the service argument cached at entry across control callbacks; do not reload a reentered object.service for list gate selection. Atomic control callbacks must preserve control-block lifetime through subsequent weak access; delete only via delete_control."
+  ],
+  "minimal_recommended_API": [
+    "SocketObject& move_construct_023d20(SocketObject& fresh,SocketObject& source,ExecutorMove selected) with function/context callback operating on actual ExecutorFields references and saved source table78 identity; actual function must implement selected slot08.",
+    "void transfer_028950(SocketService& cached_service,SocketObject& destination,SocketObject& source) performs observed state/control/list algorithm using existing SocketObject, AcceptorState, ResourcePair/Control and gate. Not merely a lower transfer hook.",
+    "Future023000 must fill explicit caller output pair by reference at the observed publication point. Reuse IoReference/FrameReadOwner for session-owner strong/weak; cancellation Control is distinct. Explicit456-byte typed block and16-byte deque proxy allocation contracts require nonnull-or-throw. Full owner disposal/allocator/EH/async lifetime remains separate."
+  ],
+  "failure_prefixes": [
+    "Executor callback throw: earlier destination service/cancellation/default protocol/table78/table88 stores remain; table90 and028950 have not run. No rollback/retry is observed in normal ASM.",
+    "Old destination control callback throw: socket/state and destination pair already transferred, source pair not yet cleared; preserve exact prefix. Source pair/control must be reloaded after callbacks on normal continuation.",
+    "Service gate entry occurs only after both control-release stages. Gate-exit failure leaves intrusive insertion already visible, with protocol/option transfer still unexecuted. No guessed RAII rollback is native proof.",
+    "Constructor allocator04b0bc retained body retries malloc/new-handler then terminal throws. Do not turn apparent null branch into normal empty owner: firstnull would publish object0x10/control0 and then dereference low memory; second16-byte allocation is dereferenced without null check.",
+    "023000 normal body has no shown explicit catch. Native EH funclets/full allocation rollback are unproved; source normal prefixes do not establish unwind equivalence. Publication precedes weak replacement/release, so a returned-value-only transaction can hide observable output on callback failure."
+  ],
+  "greeting_lifetime_gap": {
+    "native_anchors": [
+      "0x180025911: CALL0x18004b0f8 frees heap greeting",
+      "0x180025916: MOVRCX,RSI",
+      "0x180025919: CALL0x1800280d0"
+    ],
+    "recommendation": "Scope greeting construction plus entire blocking send loop in an inner block, then start do_read after destruction. No new025720 mapping count; preserve error/no-reaccept prefixes.",
+    "baseline_source_gap": "anadius-server-source/server.cpp Session::start_025720 initial variable currently remains alive through do_read_0280d0",
+    "implemented_fix": "Current server.cpp scopes initial greeting and complete blocking send loop in an inner block; do_read_0280d0 starts after greeting destruction. No new025720 mapping."
+  },
+  "actual_raw_detached_worker_lifetime": {
+    "native_anchors": [
+      "0x18002551f..025522 copies raw owner pointer into closure+20",
+      "0x180025526..02552d stores028d30 function token into closure+28",
+      "0x180025556 begins thread;02557f detaches",
+      "0x180025607 rearms read after detach and input consumption"
+    ],
+    "current_source": "frame_read.cpp finish_frame_read_025480 closure.owner_20 is raw and acquires no owner strong reference; server.cpp uses [this] detached capture likewise",
+    "obligation": "Weak-self installation or another pending read does not prove detached worker quiescence. If read lifetime ends before raw job dispatch, owner can be disposed. Caller must retain all owner/contexts/code until explicit managed jobs and async operations drain; do not add hidden shared_ptr semantics or claim constructor ownership solves this."
+  },
+  "classification_agreement": {
+    "new_normal_typed_source_mappings_supported_if_implemented": [
+      "0x180023d20",
+      "0x180028950"
+    ],
+    "expected_source_mapped_delta": [
+      487,
+      489
+    ],
+    "expected_source_eligible_delta": [
+      491,
+      493
+    ],
+    "expected_normal_body_claim_delta": [
+      124,
+      126
+    ],
+    "new_native_ABI_or_provider_closures": 0,
+    "deferred_native_constructor": "0x180023000",
+    "condition": "Only these two canonical definitions enter mapping delta; exact executor virtual dependency is still mandatory. Header/interface and025720 lifetime fix are not extra bodies."
+  },
+  "unresolved_native_owner_disposal": [
+    {
+      "address": "0x180026570",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_569927c89e98051d661b466fccfa8c6436572a263f3441c01721f2793942f5d5",
+      "assembly_evidence": "ev_4721f071259f0f08eb60d96ed3bd1f1b2603864a224a766c2493f1fa35280260",
+      "existing_definitions": []
+    },
+    {
+      "address": "0x180017420",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_47a23a1547e1e17db86b3c8bae1e5ebefeb62279c087c44967b4df46a6292967",
+      "assembly_evidence": "ev_bf03878c45fa709dc9c54b26bb21d0f065a1b3b3a7d7dcb2141c0c268f8ca8f7",
+      "existing_definitions": []
+    },
+    {
+      "address": "0x180026290",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_d5253fe30c46ce5fd234147de8a63cebe2795f47f7d74f84a7b036d7d67a0d9d",
+      "assembly_evidence": "ev_7d65dd1db58e08d08433ac751b1a2544c4010a23f857d377e111e588fa8a55a4",
+      "existing_definitions": []
+    }
+  ],
+  "reviewed_existing_source_hashes": {
+    "anadius-socket-source/lifecycle.hpp": "081bf08e4214bdaaa2252c6e1abcb6ce6acad75c2805656cec5dee6e9eeee898",
+    "anadius-socket-source/lifecycle.cpp": "6f5f684e1fb3224a5a9fd92ebf51f4b495effecf0f5ee7aad7fa7bc92fbb52c8",
+    "anadius-socket-source/acceptor.hpp": "5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b",
+    "anadius-socket-source/io_completion.hpp": "85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32",
+    "anadius-socket-source/frame_read.hpp": "ea9adf5bd04a872d8e78173c5bdf9bf053deecdd6cc90665e4674efbf72d4111",
+    "anadius-socket-source/frame_read.cpp": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+    "anadius-socket-source/message_dispatch.hpp": "e29de315e311d2d5bf8129db745102415609fb140de1f74ea121150efa142e01",
+    "anadius-socket-source/cipher_session.hpp": "3fa624b7443d7fa1ab3eb86f9567e5b98323014166b98be43328360c272af412",
+    "anadius-socket-source/cipher_session.cpp": "62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2",
+    "anadius-server-source/server.hpp": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+    "anadius-server-source/server.cpp": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda"
+  },
+  "retained_evidence_hashes": {
+    "anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "limits": {
+    "new_target_queries": false,
+    "original_bytes_read": 0,
+    "original_DLL_or_game_execution": false,
+    "production_or_tests_modified": false,
+    "generic_CRT_reopened": false,
+    "full_native_ABI_or_unwind_proven": false
+  },
+  "early_production_review": {
+    "result": "No blocker found in read-only early production review; not final frozen-source/test review",
+    "at_utc": "2026-10-30T17:02:45.777979+00:00",
+    "source_hashes": {
+      "outputs/anadius-socket-move-source/move.hpp": "5322308f915fdae733183bcdea2adfe860cee02002686a1744dbd07feb0cfb59",
+      "outputs/anadius-socket-move-source/move.cpp": "af73b49ea83cfc61bead66a631dcc65580657281d648b7535329de2598a85a92",
+      "outputs/anadius-server-source/server.cpp": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda"
+    },
+    "reviewed_points": [
+      "Exact callback-visible destination initialization before selected executor; source table90 read after callback.",
+      "Distinct objects AND AcceptorState reference backing; fresh/unlinked supported domain.",
+      "Observed strong/pair/release/reload ordering; source pair can change during old-destination control callbacks.",
+      "Cached service gate; new-head insertion; no source node removal; post-gate protocol/options transfer.",
+      "Existing greeting source now frees before read initiation."
+    ],
+    "tests_reviewed": false,
+    "tests_executed": false,
+    "full_common_build_reviewed": false
+  }
+}

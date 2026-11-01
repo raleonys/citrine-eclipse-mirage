@@ -1,0 +1,67 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "New native heap and error-policy composition, not a newly recovered original function body",
+  "recovered_function_bodies_added": 0,
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "addresses": [
+    "0x1800704cc",
+    "0x180066848",
+    "0x1800668c0",
+    "0x18006a308",
+    "0x18006e3a0",
+    "0x180070434",
+    "0x1800773bc",
+    "0x1800634b0",
+    "0x1800634f0",
+    "0x18005d650",
+    "0x18005d724"
+  ],
+  "evidence_links": [
+    "../anadius-crt-heap-source/evidence.json",
+    "../anadius-crt-realloc-source/evidence.json",
+    "../anadius-crt-recalloc-source/evidence.json",
+    "../anadius-crt-error-source/evidence.json",
+    "../anadius-crt-heap-native-source/evidence.json",
+    "../anadius-crt-nls-native-bridge-source/evidence.json"
+  ],
+  "selected_assembly": [
+    {
+      "va": "0x180070434",
+      "id": "ev_7e1624e0b30bf83e9630135e9326fc52509545478e914f4f92ab1946bd09bc8d"
+    },
+    {
+      "va": "0x1800773bc",
+      "id": "ev_75d7961f2f61cf3a76a487e943f4092ac52dd3ebe56702780a872685729102dc"
+    },
+    {
+      "va": "0x18006e3a0",
+      "id": "ev_c7a59e74ef73fcbf1778b456b605fad00bb26dad8d4e51186e7b591e7dfef497"
+    },
+    {
+      "va": "0x1800634b0",
+      "id": "ev_feeb37c1659fa2ad6ed36fb2e17ad1622a1893e7adb59a2a704c97c32c5c11ba"
+    }
+  ],
+  "scope": "Retained Ghidra evidence for unchanged target hash reused; actual Windows heap on small owned blocks and NLS synthetic strings; failure injection in observed SDK table; controlled FLS/lock/scratch/global policies; no new target open/execute",
+  "object_lifetime": "Non-value-init placement std::byte[] on successful allocation/reallocation; raw byte storage only, typed PTD/Context remain caller responsibility",
+  "support_boundary": "PTRDIFF_MAX checked before native alloc/realloc; not asserted to be an original guard",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "runtime_equivalence": "not established",
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "7977889cdba2201435411a7396e768fca68295621aa456aceeac06e8deef0bbe"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "a710e793fba3dac27bfea23fca263c0041ac013c01bbdb7f7c601f386c1c5527"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "111cc299960ac585e047a4c3edd741f2dddd1bc16b3861a56ec515a53b7420d6"
+    }
+  ]
+}

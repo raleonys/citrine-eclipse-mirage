@@ -1,0 +1,20 @@
+{
+  "scope": "new Windows x64 typed native boundary for recovered 0671d4 and 0672c0 dispatch",
+  "new_recovered_binary_functions": 0,
+  "api_types": "decltype(&::LCMapStringW), decltype(&::LCMapStringEx), decltype(&::LocaleNameToLCID), SDK WCHAR/LCID/DWORD/LPARAM",
+  "calls": ["LCMapStringW", "caller-resolved LCMapStringEx", "caller-resolved LocaleNameToLCID", "GetLastError", "SetLastError"],
+  "primary_sources": [
+    "https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-lcmapstringex",
+    "https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-lcmapstringw"
+  ],
+  "tracked_output": "sort-key bytes only; positive-capacity aligned staging; commit exactly successful return count; failure invalidates potentially written cells; tracked queries pass NULL and materialize nothing; negative tracked capacities rejected; impossible successes invalidate possible output before throwing",
+  "last_error": "save before staging, restore immediately pre-call, capture immediately post-call, restore after cleanup",
+  "pointer_domain": "live host SDK function/data pointers only; never original image virtual addresses",
+  "validation": "92 assertions with typed WINAPI fixtures and real Windows synthetic literal input calls",
+  "target_artifact_execution": false,
+  "target_artifact_modification": false,
+  "original_abi_equality": "not claimed",
+  "remaining": ["original startup/global wiring", "SEH and exceptional cleanup equivalence", "concurrent callers", "arbitrary scratch aliasing"]
+}
+
+

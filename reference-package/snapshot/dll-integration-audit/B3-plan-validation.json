@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "source_package": "B3",
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "B4",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_concrete_backends": 1,
+  "new_thread_trackers": 1,
+  "services_routes_bound": 6,
+  "existing_source_algorithms_routed": 7,
+  "remaining_service_policies": 11,
+  "new_virtual_provider_interfaces": 0,
+  "production_dll_readiness": "BLOCKED",
+  "actual_factory_registrar_complete": false,
+  "pe_entry_installed": false,
+  "source_count": 703,
+  "execution_plan_sha256": "86e27b591d802b5378056648ca62039182a0202c3f3fb01007058ed7e92af688",
+  "readiness_sha256": "aabd0a30e4b2f83987d35ac03f0e160c5bf8ec9674efc13b3862a5b70dbc5066",
+  "dependency_file_sha256": "2f94d2998f4acf74557631ea23af9dfc5198979d508c60478bd06f2fd9257802"
+}

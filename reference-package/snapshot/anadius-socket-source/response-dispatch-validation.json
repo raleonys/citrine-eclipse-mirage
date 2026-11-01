@@ -1,0 +1,47 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "593f6092c5240856b4891ce808371c24617424e578c5827ca2a43d86daf62e65",
+  "test_results": [
+    {
+      "module": "socket_response_dispatch",
+      "result": "PASS",
+      "output": "PASS: 662 socket response dispatch core checks; actual021420/028270/022240 bodies, factory caching/three environment moves, borrowed/owned ownership, deque wrap/live allocation reload and response residual cleanup",
+      "executable_sha256": "345d9ccce3873f17089bb9994f75bddb2e7643c527252cb66ce591dff900d269"
+    },
+    {
+      "module": "socket_response_dispatch_integration",
+      "result": "PASS",
+      "output": "PASS: 115 socket response dispatch integration checks; actual028d30/021420/023cb0/022240/028270/02a500/021fd0/021a80/0261d0/025a70 source, controlled owned functor/string copy/constructor/completion and injected send",
+      "executable_sha256": "d4b6d996f8fb2c86146ffecc4b246f9ec1e3af142f2c17b9db56a6b214ec2594"
+    }
+  ],
+  "core_checks": 662,
+  "integration_checks": 115,
+  "source_hashes": {
+    "response_dispatch.hpp": "95068d4638a48bf8b215da58455c684d25da2042dab987ad9b45265de37bf648",
+    "response_dispatch.cpp": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0",
+    "response_dispatch_test_fixture.hpp": "2866b25edc10a643cfd55009227a8d5a9591fce255f6120780e12e1cf1649e86",
+    "response_dispatch_tests.cpp": "c7c7ca0d8158e91185c34b10882a540d4c25e0f0efe4a555b6decdd89f34ea3a",
+    "response_dispatch_integration_tests.cpp": "ba0d9023b8af676e83733b46121d5e217c3fb8917d1ff3445bd4896745047ad1",
+    "build.ps1": "625f0f3fb6f9d40d7791bffb96e67e188e2d60fa8be1ac0fbfab3fa2df935e49",
+    "CMakeLists.txt": "a69021fcb8d86ca04d5f4617eed4727ed4d58c45f01f129604e00b3ca6ae6766"
+  },
+  "original_procedures_added": 3,
+  "execution_scope": "021420/028270/022240 normal bodies; actual028d30/023cb0 and02a500/021fd0/021a80/0261d0/025a70; controlled020cb0/022280 functor,009eb0 string copy,026670 deque grow,033d70/023dd0 and completion adapter; injected AsyncSendApi",
+  "not_executed_by_new_tests": [
+    "native020cb0/022280",
+    "native009eb0/026670",
+    "real033d70/023dd0 provider bodies",
+    "native027a20/IOCP routing and handler scheduling",
+    "027c10/outer worker",
+    "SDK WSASend/real thread/socket/network or original DLL/game"
+  ],
+  "core_callee_injection": "Explicit isolated028270 queued-start and022240 write callee parameters only; recovered bridge uses actual defaults",
+  "previous_local_records": "25 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

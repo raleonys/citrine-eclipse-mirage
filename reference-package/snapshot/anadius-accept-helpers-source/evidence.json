@@ -1,0 +1,134 @@
+{
+  "schema": "accept-helpers.normal-source.evidence.v1",
+  "source_package": "B38",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_original_procedures": 3,
+  "normal_source_procedures_added": [
+    "0x180029df0",
+    "0x180029590",
+    "0x180029660"
+  ],
+  "new_canonical_mapped_entries": 3,
+  "functions": [
+    {
+      "address": "0x180029df0",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered_normal_body": true,
+      "pseudo_evidence": "ev_124d6968b78c1e94e3f42b6749d985f4fa733e8a9e0be5737deaee9a379948cb",
+      "assembly_evidence": "ev_626a3927b71869120ff594a140baa1d83b70aa17bf866952cc77c0e699bd6007"
+    },
+    {
+      "address": "0x180029590",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered_normal_body": true,
+      "pseudo_evidence": "ev_3e481675fefac3c6b802b7a894bc7e2f54ee6ad45bf207904335219da4f12056",
+      "assembly_evidence": "ev_80a786fbbfe0c0731b8ff82855393f1d90e895d258e0c0105ca3cc66eb3ec37f"
+    },
+    {
+      "address": "0x180029660",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered_normal_body": true,
+      "pseudo_evidence": "ev_0c797b4674444bc8c1d32d37d5c3efe7c56b020e323ddda1a5cdbda23e1f8221",
+      "assembly_evidence": "ev_81e3223c44d8ce3f6255511204a7ad810ca9a54a0ab56504fad579e9810984a1"
+    }
+  ],
+  "retained_function_records": [
+    {
+      "address": "0x180029df0",
+      "evidence_id": "ev_124d6968b78c1e94e3f42b6749d985f4fa733e8a9e0be5737deaee9a379948cb",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 35160,
+      "retained_record": "180029df0.pseudo.c.txt",
+      "record_sha256": "7ea84b91bdc8488cc7511313cf8ea9ccaacca2688f94fb9a7cf26e8c969aaf0c"
+    },
+    {
+      "address": "0x180029590",
+      "evidence_id": "ev_3e481675fefac3c6b802b7a894bc7e2f54ee6ad45bf207904335219da4f12056",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 34703,
+      "retained_record": "180029590.pseudo.c.txt",
+      "record_sha256": "301fa9964808d1eff47d99d1ed8391ae5fbe52b8745cd832e7f0df1f8d2a9549"
+    },
+    {
+      "address": "0x180029660",
+      "evidence_id": "ev_0c797b4674444bc8c1d32d37d5c3efe7c56b020e323ddda1a5cdbda23e1f8221",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 34739,
+      "retained_record": "180029660.pseudo.c.txt",
+      "record_sha256": "b547ee600be8fb0291f2c2ae4e6a5ba9b8ae1e1a1f76c436b397a7046cf93767"
+    },
+    {
+      "address": "0x180029df0",
+      "evidence_id": "ev_626a3927b71869120ff594a140baa1d83b70aa17bf866952cc77c0e699bd6007",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 43165,
+      "retained_record": "180029df0.asm.txt",
+      "record_sha256": "3adefe90f33a8f4b618fb152102e237305716f8ec2c866d2c399f5d421467cfc"
+    },
+    {
+      "address": "0x180029590",
+      "evidence_id": "ev_80a786fbbfe0c0731b8ff82855393f1d90e895d258e0c0105ca3cc66eb3ec37f",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 42623,
+      "retained_record": "180029590.asm.txt",
+      "record_sha256": "b9ea2278350b62cd6cd88fb1774b94b05b6fd9e76eea99f0ba35de1503340389"
+    },
+    {
+      "address": "0x180029660",
+      "evidence_id": "ev_81e3223c44d8ce3f6255511204a7ad810ca9a54a0ab56504fad579e9810984a1",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 42672,
+      "retained_record": "180029660.asm.txt",
+      "record_sha256": "196e6d21410c7db9e450e3ed97ff096c2a0ba4e90c508dc080aff9bbdb8db921"
+    }
+  ],
+  "modified_prior_sources": [
+    {
+      "path": "anadius-accept-source/owned.cpp",
+      "before_sha256": "16b71225e0d036abccf3b401ead592253b7c34b46d3c6e5acb6fa98a5e0fccc6",
+      "after_sha256": "1b26a5282a3b939e19059a638748be62718d06014bfd0fe6be3a465ccae7283c",
+      "reason": "Add distinct prearmed retry SDK adapter checking existing owned buffer loan, generation/packet and authoritative region immediately before raw SDK, without a second arm; guard inline completion/free/reuse during full retry prefix; legacy initial pinned API unchanged."
+    },
+    {
+      "path": "anadius-accept-source/owned.hpp",
+      "before_sha256": "cc1507df19d58f58b2b3d934da5d18dc063780506876affa803ef43c4c61f8fa",
+      "after_sha256": "cf2a0ec016fd6c92897f047ee0ba22f7b47638c2d41efb2337849b1658832993",
+      "reason": "Add distinct prearmed retry SDK adapter checking existing owned buffer loan, generation/packet and authoritative region immediately before raw SDK, without a second arm; guard inline completion/free/reuse during full retry prefix; legacy initial pinned API unchanged."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b38-core-quick-results.json",
+      "sha256": "f1f23af7658a6603969c528eb59e677c3e78715eaefdf182f7d67b67375826dc",
+      "checks": 749,
+      "executable_sha256": "260384cc1a831a351dad032e834bc8600bed337b07e864946b96e8632c783791",
+      "archive_sha256_as_used": "586bd348c3070eaa6446656053501a32d65ce990ccf6181ddd1a574ce2a7465b",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh reconstructed helper source and the exact headers listed as used, before immutable B37 archive; integration additionally compiles new bindings and revised owning provider. Full common final-source build separately required."
+    },
+    {
+      "path": "work/b38-integration-quick-results.json",
+      "sha256": "a2b5294409d9edf151a1003bd453b1dbaa93996a7ba4d2756db340985ee3199e",
+      "checks": 197,
+      "executable_sha256": "bfa880fe0de7120ce34e04688725b8aab101096c3a8481fca2421e1545b7cb84",
+      "archive_sha256_as_used": "586bd348c3070eaa6446656053501a32d65ce990ccf6181ddd1a574ce2a7465b",
+      "execution_author": "/root/b22_integration",
+      "note": "Fresh reconstructed helper source and the exact headers listed as used, before immutable B37 archive; integration additionally compiles new bindings and revised owning provider. Full common final-source build separately required."
+    }
+  ],
+  "retained_REA_session": {
+    "path": "outputs/anadius-accept-helpers-source/rea-session-summary.json",
+    "sha256": "d4d42c586da440c82f904979b1907859ee8879acfc3bff680be3f2328d2112a7",
+    "fresh_target_queries": 0
+  },
+  "original_execution": false,
+  "original_modification": false,
+  "new_original_bytes_queried": 0,
+  "actual_user_content_analysis": false
+}

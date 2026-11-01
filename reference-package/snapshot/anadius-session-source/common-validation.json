@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_results": [
+    {
+      "module": "session_handler",
+      "result": "PASS",
+      "output": "PASS: 19 session handler checks; actual message core and controlled cipher only",
+      "executable_sha256": "4fdb1251e95d41821942bf5d99d9e1020636284eb76c999f663d6bf515f8495b"
+    },
+    {
+      "module": "session_integration",
+      "result": "PASS",
+      "output": "PASS: 1154 session integration checks; actual XML/AES/Router/handlers and memory transport only",
+      "executable_sha256": "7f8fc9af95202061934305ce601ee63962bfd5278dca3b62efa5ce25b620f3fe"
+    }
+  ],
+  "sources": [
+    {
+      "path": "anadius-session-source/handler_tests.cpp",
+      "sha256": "80288f3d34d46f362ad32f8e117ee3866e9a266923d4c40db6325cfcaec6a11c"
+    },
+    {
+      "path": "anadius-session-source/handler.cpp",
+      "sha256": "2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42"
+    },
+    {
+      "path": "anadius-session-source/handler.hpp",
+      "sha256": "270aa21281852e2698983e312b3ebf347cafdc1da2deda94b80ced295addb8c0"
+    },
+    {
+      "path": "anadius-session-source/routing.cpp",
+      "sha256": "c8063ea3fd9789e1d0d15b5daa08cddf1b8e72070af1c073911dd65c6dc9bc3c"
+    },
+    {
+      "path": "anadius-session-source/routing.hpp",
+      "sha256": "6e263e02419da2148feeecc7a3ce95d34faaa439ffe5a9e67b672a9c1b409f8c"
+    },
+    {
+      "path": "anadius-session-source/session_tests.cpp",
+      "sha256": "c7c0154294107dcfc066ec28103aaa7551d41a61d1ee3873cd6b726ffa14d80e"
+    }
+  ],
+  "execution_scope": "New MessageHandler/RoutedEffects composition with actual recovered Session/messages/XML/AES/challenge/router/handlers/event queue sources; controlled in-memory transport/scheduler, fixed time and supplied state/providers",
+  "original_procedures_added": 0,
+  "native_socket_ASIO_sharedptr_concurrency_CRT_ABI_SEH": "not established",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

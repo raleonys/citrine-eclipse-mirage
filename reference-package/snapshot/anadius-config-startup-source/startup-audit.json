@@ -1,0 +1,171 @@
+{
+  "schema": "config.startup.static-audit.v1",
+  "result": "PASS",
+  "checked_at": "2026-10-21T13:19:47.5926762Z",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "evidence_type": "Retained REA assembly/pseudocode; current source read only",
+  "functions": [
+    {
+      "pseudo_evidence": "ev_78a1faedf06f56d422e6ecc197bbe90ce7f34af0e9b01420eef8b6b8827bf25e",
+      "assembly_evidence": "ev_42beaf13c42bb51716fcf407bd74587506fbb6acf17bfba9e16c31bdd31f8fba",
+      "entry": "0x18001c870"
+    },
+    {
+      "pseudo_evidence": "ev_e66705fdaa9bdd88fb50be13d22e354939026d931f472329e0f14e17c9fb4fbd",
+      "assembly_evidence": "ev_77887ea2e7b744e62e52eaf81cb8a07abf2a4f50498001ba81b2fcf2496e8789",
+      "entry": "0x180038970"
+    },
+    {
+      "pseudo_evidence": "ev_90684472bf3c11d29dce5129d1c8a0e460e645004eaaef332b7623a91a4f03f3",
+      "assembly_evidence": "ev_78e7337670570fa2c7c212620f726bd602b090f213f6248c453917219f5023fc",
+      "entry": "0x180019910"
+    },
+    {
+      "pseudo_evidence": "ev_443e0c3c2732489164806801392df22b75420bef29996038536b50f1d9fab851",
+      "assembly_evidence": "ev_25fbfd8671a513b4750ab57ccab47ce6ee66118511fe48e1c7c1744914a56238",
+      "entry": "0x180038760"
+    },
+    {
+      "pseudo_evidence": "ev_691d99dfac41c8e1f0484feff33584d6291e41fff99d694fff05e78775aefb04",
+      "assembly_evidence": "ev_10f34c57de95a8ee129e5c91b2dde9842b1f85959f5e9e17d8ba4d9dac40ff3f",
+      "entry": "0x180018480"
+    }
+  ],
+  "timeline": [
+    {
+      "stage": "shared environment arguments",
+      "target": "0x180019910",
+      "callsite": "0x180038990"
+    },
+    {
+      "stage": "shared console flags",
+      "target": "0x180038760",
+      "callsite": "0x180038995"
+    },
+    {
+      "stage": "three log insertions and finish",
+      "target": "006880/0088e0",
+      "callsite": "0x1800389a8/0389b7/0389c6/0389ce"
+    },
+    {
+      "stage": "configuration fully before first worker",
+      "target": "0x18001c870",
+      "callsite": "0x1800389d4"
+    },
+    {
+      "stage": "executable path",
+      "target": "0x18003c6d0",
+      "callsite": "0x18001c8ae"
+    },
+    {
+      "stage": "base false",
+      "target": "0x180019ad0",
+      "callsite": "0x18001c8d1"
+    },
+    {
+      "stage": "override true",
+      "target": "0x180019ad0",
+      "callsite": "0x18001c8d8"
+    },
+    {
+      "stage": "mkdir; error branch01ca43",
+      "target": "0x180018e00",
+      "callsite": "0x18001ca39"
+    },
+    {
+      "stage": "avatar empty guard",
+      "target": "A3AA0",
+      "callsite": "0x18001cc2c"
+    },
+    {
+      "stage": "conditional user PNG",
+      "target": "0x18003c020",
+      "callsite": "0x18001cda0"
+    },
+    {
+      "stage": "default PNG always",
+      "target": "0x18003c020",
+      "callsite": "0x18001cdba"
+    },
+    {
+      "stage": "iterator construct; error check01ce03",
+      "target": "0x180011a40",
+      "callsite": "0x18001cdfc"
+    },
+    {
+      "stage": "case-sensitive AVATAR per-entry cleanup",
+      "target": "memcmp/remove/iterator_increment",
+      "callsite": "0x18001d170/01d26e/01d287"
+    },
+    {
+      "stage": "INSTALLED_VERSION then AVAILABLE_VERSION",
+      "target": "map lookup/copy",
+      "callsite": "0x18001d38a/01d3ff/01d421"
+    },
+    {
+      "stage": "SDK dot to comma",
+      "target": "inline",
+      "callsite": "0x18001d4f0..01d4fe"
+    },
+    {
+      "stage": "achievement persistence",
+      "target": "0x18001eb00",
+      "callsite": "0x18001d500"
+    },
+    {
+      "stage": "ContentId environment",
+      "target": "0x180039d40",
+      "callsite": "0x18001d523"
+    },
+    {
+      "stage": "INSTALLED_LANGUAGE then EAGameLocale environment",
+      "target": "map lookup/039d40",
+      "callsite": "0x18001d592/01d5af"
+    },
+    {
+      "stage": "first worker payload/CRT thread after config return",
+      "target": "04b0bc/05e8e0",
+      "callsite": "0x1800389e3/038a1d"
+    }
+  ],
+  "shared_state": {
+    "show_console": "0x1800a3ef1",
+    "language_flag": "0x1800a3ad0",
+    "word_store": "0x180018540 stores0101",
+    "registry_flag": "0x1800a3ad1",
+    "game_attributes": "0x1800a3d88",
+    "show_lsx": "0x1800a3ef0",
+    "no_console": "0x1800a3ef2"
+  },
+  "source_hashes": {
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-config-source/configuration.hpp": "036eea42c74731b9c4e5bbe574e2c953b8010c2e626f5f5caf84f2029aab3f24",
+    "outputs/anadius-config-source/configuration.cpp": "ab1c09e52c3b4f8a8a24070b057d9eb4da72d6b24722cba931d80a5f92a9a05a",
+    "outputs/anadius-source/bootstrap.hpp": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210",
+    "outputs/anadius-source/bootstrap.cpp": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+    "outputs/anadius-startup-source/startup.hpp": "fc915cf189761a78bea8b0d7ac083722881893bf4d2007fa343986484c95f5e9",
+    "outputs/anadius-startup-source/startup.cpp": "87bcd90892dcea301fc3c1aceb589d1097875d9400d3bd69b64570d008740dea",
+    "outputs/anadius-config-application-source/application.hpp": "9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2",
+    "outputs/anadius-config-application-source/application.cpp": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb"
+  },
+  "failure_policy": [
+    "No rollback of earlier successful configuration mutations",
+    "Exception stops subsequent passes/post work/worker creation",
+    "Ignored SetEnvironmentVariableA BOOL results still allow next call",
+    "Default user PNG only for post-override empty avatar; default PNG always",
+    "Achievement persistence precedes reading final environment values"
+  ],
+  "unresolved": [
+    "Native OS/provider/logger/persistence implementations",
+    "Original CRT FILE/getenv/global/allocator/layout ABI",
+    "EH/SEH/unwind and whole DLL equivalence",
+    "Vector directory_entries cannot prove native per-entry iterator fault/mutation timing"
+  ],
+  "new_original_bodies": 0,
+  "production_edits": false,
+  "original_execution": "none",
+  "real_user_cfg_read": false,
+  "scope": "Five named retained procedures; source-level normal path and composition requirements only",
+  "report": "work/config-startup-audit.md"
+}

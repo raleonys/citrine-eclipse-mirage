@@ -1,0 +1,77 @@
+/* 0x18007310c FUN_18007310c; Evidence ev_38903404049953dae5f478e768c17c886f504afa7cfa464ec0311c9895b5acec */
+
+undefined4 FUN_18007310c(ushort *param_1)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  
+  if (param_1 != (ushort *)0x0) {
+    iVar3 = 0;
+    iVar4 = 0xe3;
+    do {
+      iVar1 = (iVar4 + iVar3) / 2;
+      iVar2 = __ascii_wcsnicmp(param_1,(ushort *)(&PTR_DAT_18008ea10)[(longlong)iVar1 * 2],0x55);
+      if (iVar2 == 0) {
+        iVar3 = *(int *)(&DAT_18008ea18 + (longlong)iVar1 * 0x10);
+        if (iVar3 < 0) {
+          return 0;
+        }
+        if (0xe3 < (ulonglong)(longlong)iVar3) {
+          return 0;
+        }
+        return *(undefined4 *)(&DAT_18008cfc0 + (longlong)iVar3 * 0x10);
+      }
+      if (iVar2 < 0) {
+        iVar4 = iVar1 + -1;
+      }
+      else {
+        iVar3 = iVar1 + 1;
+      }
+    } while (iVar3 <= iVar4);
+  }
+  return 0;
+}
+
+
+
+
+/* 0x1800736d4 __ascii_wcsnicmp; Evidence ev_7211a2b4d5d7bb16be2304a2abc00591044e134d17bfd0dd7c196e1277bc1e5f */
+
+/* Library Function - Single Match
+    __ascii_wcsnicmp
+   
+   Library: Visual Studio 2019 Release */
+
+int __ascii_wcsnicmp(ushort *param_1,ushort *param_2,longlong param_3)
+
+{
+  ushort uVar1;
+  ushort uVar2;
+  uint uVar3;
+  uint uVar4;
+  
+  if (param_3 == 0) {
+    return 0;
+  }
+  do {
+    uVar1 = *param_1;
+    param_1 = param_1 + 1;
+    uVar2 = *param_2;
+    param_2 = param_2 + 1;
+    uVar3 = uVar1 + 0x20;
+    if (0x19 < uVar1 - 0x41) {
+      uVar3 = (uint)uVar1;
+    }
+    uVar4 = uVar2 + 0x20;
+    if (0x19 < uVar2 - 0x41) {
+      uVar4 = (uint)uVar2;
+    }
+  } while (((uVar3 - uVar4 == 0) && (uVar3 != 0)) && (param_3 = param_3 + -1, param_3 != 0));
+  return uVar3 - uVar4;
+}
+
+
+

@@ -1,0 +1,79 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B32",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B32",
+  "latest_dll_link_attempt": "B32",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B32 adds four actual normal bodies026880deque clear,026570CONTROLbase resource dispose,017420nullable virtualslot10flags1dispatch,026290table/sizedfree1c8. ConcreteRecoveredSessionControl bindsactualB30factory toownednormalcleanup beforeimplicitweak;source-cached/livefieldsemanticsandnative sizedrequests retained. 846prior sourcesunchanged plus2B31aux and4B32=852;249objects/293groups;54+43=97checks.494mapped/498eligible/131normal;0ABI/providerclosure. Productionallocator/executor/accept/server/raw-jobquiescence/nativeABI/loaderDLL remainopen;genericCRTpaused.",
+  "source_algorithms_native_inventory_unchanged": false,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Owned SessionAllocator/SessionFreeEffects/context domain and real server/accept/transport/scheduler assembly"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B33",
+    "priority": 1,
+    "title": "Somut session tahsis/free domain sahibi ve server sağlayıcı bağı",
+    "requirements": [
+      "Build a concrete owned sessionallocator/free/context domain sharing actual023000+RecoveredSessionControl, preserving typedallocationprovenance and stableoperation/scratch lifetimes",
+      "Retain selected0228c0 as an explicit required lower: B29 bounded retained-evidence audit already established its body unavailable; do not repeat that audit or invent native semantics",
+      "Advance realaccept021b00/0271a0 andserver/backend/transport/scheduler assembly; preserve existing read/message/response bodies",
+      "KeepB31loaderattach/detachhooks undefined untilvalidloader/rollback/quiescence policy andactualResources factory exist; licensing/foreignABI remainexplicit;genericCRTpaused"
+    ],
+    "exit_criteria": "A required production source/resource edge becomes concrete and owned; no test fixture, successful empty stub or unproven raw-job lifetime."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "44dc986affdf6b1e71b95388d725cbc4fd7c0a4900f3131f967033989b24c25f",
+  "test_results": [
+    {
+      "module": "socket_pool_append",
+      "result": "PASS",
+      "output": "PASS: 87 pool pointer-array core checks; inline/heap growth, raw signed arithmetic and saturated sizing, live lower-effect mutations, aliases, mapped null and exact failure prefixes; heap/copy/free/ABI/EH remain supplied",
+      "executable_sha256": "4280f0b433458bd258e24844929a912b5a1fc90eaf6a0ec388e1d89c82ee26f8"
+    },
+    {
+      "module": "socket_pool_append_integration",
+      "result": "PASS",
+      "output": "PASS: 22736 pool pointer-array integration checks; four source allocators scalar/SIMD, seven blocks with inline-to-heap/heap-to-heap growth, track/release/reuse and committed failures; lower allocation/fill/copy/free supplied, no parser/DOM/nativeABI/EH claim",
+      "executable_sha256": "b033261aba2fb539f7d9ec28f8834015a1e182a41d3a771dfea3d13c8b822287"
+    }
+  ],
+  "core_checks": 87,
+  "integration_checks": 22736,
+  "original_procedures_added": 1,
+  "new_source_bridges": 1,
+  "new_source_allocation_adapters": 0,
+  "native_typed_providers_newly_closed": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "execution_scope": "005440 normal block-pointer-array append/growth projection plus one final PoolAllocationEffects::append_block_005440 source bridge; existing four allocator and release/track sources compose on bounded shared storage; block allocation04b0bc/fill0793d0,array allocation04b100/copy078d30/free04b0f8 and native pool/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory",
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "005440 normal block-pointer-array append/growth projection plus one final PoolAllocationEffects::append_block_005440 source bridge; existing four allocator and release/track sources compose on bounded shared storage; block allocation04b0bc/fill0793d0,array allocation04b100/copy078d30/free04b0f8 and native pool/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory",
+    "Array pointer at+0,count DWORD+5c,capacity DWORD+58,inline storage array+8; caller supplies array=pool+8",
+    "Signed comparison of wrapping32 count+1 against capacity selects growth; doubled32 required count sign-extends before unsigned multiply8 with overflow saturation to UINT64_MAX",
+    "Growth allocates04b100; then reads live count/source pointer and calls078d30 copy; then reads live old pointer and frees04b0f8 unless inline; cached new pointer and doubled capacity publish only afterward",
+    "Final append reloads live count and data,stores cached input pointer at signed index*8,then increments live DWORD count; alias and lower-effect mutation order remain observable",
+    "All five lower effects remain mandatory: block04b0bc allocation and0793d0 fill plus array04b100 allocation/078d30 copy/04b0f8 pointer-only free",
+    "No null allocation guard,retry,synthetic rollback,terminal provider or native fault/unwind behavior added",
+    "One normal tagged body plus one tagged final source bridge map to the same native entry; they are two source variants,not two native functions",
+    "One historical source provider closure added (33→34); existing two semantic session adapters and one separate allocation dispatcher remain unchanged; no four-closure inflation",
+    "Originals are never executed or modified; actual CFG/token/achievement contents never read; hash-only input integrity separate; blocked version.dll/generated artifact never retried",
+    "No new native target import/data read: retained full function listings and previous complete SIMD data are reused unchanged; session verifies identity/availability only",
+    "CRT unchanged and paused; native heap/copy/free/lifecycle/parser/DOM/ABI/EH/concurrency open; full DLL incomplete and total completion percentage unmeasured"
+  ],
+  "previous_local_records": "42 earlier local records retain exact bytes and historical configuration hashes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x180005440"
+  ],
+  "independent_review_complete": false
+}

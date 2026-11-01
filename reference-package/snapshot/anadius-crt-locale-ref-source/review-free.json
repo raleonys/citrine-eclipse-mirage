@@ -1,0 +1,70 @@
+{
+  "result": "PASS",
+  "reviewer": "crt_locale_refs_core independent source reviewer",
+  "reviewed_at": "2026-10-19T02:08:59.8867269Z",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "files": [
+    {
+      "path": "outputs/anadius-crt-locale-free-source/locale_free.hpp",
+      "sha256": "5c591a2967d1d8045468cfd46e17a7c95fb89338b6f6c919bfd4b4d99f351327"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-free-source/locale_free.cpp",
+      "sha256": "e00c5504c2335087319fd21eb04654653aa87687b4c805b403d72b3d6134c931"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-free-source/locale_free_tests.cpp",
+      "sha256": "bfd4833f44839bdf38b20fcaaa006bd0f6926789bb3751c3cdf9ca7dcb5f63f0"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-free-source/selected-functions.asm.txt",
+      "sha256": "8e727988405fc50e3abf0338b04dac2aa49e1f9d993d5998248f12d34a541f2c"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-free-source/selected-functions.pseudo.c",
+      "sha256": "2513ff4e383a1b9100a82cded7f08b06298d16a58b1bed3627687dd10e617820"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-resource-bridge-source/bridge.hpp",
+      "sha256": "614e7104746d22778cbe7d393266ff6c840e44a2989ab23a2aad9d965fbcc53c"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-resource-bridge-source/bridge.cpp",
+      "sha256": "6980577c496eab1dc32bad66f07d57e840ef113fb920bd0dd786e089be3008fa"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-resource-bridge-source/bridge_tests.cpp",
+      "sha256": "a3020cefe0612774b615bef065d4d6ba0ea7b7d8053461659d89c87ac9f580d4"
+    }
+  ],
+  "method": "Read-only independent review of six bounded selected assembly functions against exact-hash retained full assembly, recovered header/source/test fixtures, and root resource bridge source/integration cases. No peer edits or target/native execution; retained test results inspected, not rerun.",
+  "assembly_checks": [
+    "Selected assembly content of all six functions matches corresponding retained full-assembly blocks exactly after trimming separator whitespace",
+    "free_locale initial f8/default-lconv/e0-count guards and monetary f0 then numeric e8 then common e0/f8 free order match 0706d4..070757",
+    "f8/common/ctype member pointers are read again after preceding free calls, matching observable mutation order",
+    "ctype frees bases +108-0xfe, +110-0x80, +118-0x80 and reloaded +100, matching 07076d..0707aa",
+    "six category records use cursor+38, sentinel cursor-10=+28, narrow-data cursor-18=+20, counter cursor-8=+30; extra slots+128 advance8",
+    "numeric5 and monetary13 pointer slots and matching per-slot default values preserve assembly comparisons including NULL unequal-to-default free calls",
+    "time NULL/static/ref15c guard matches 070860; time free helper visits87 pointer slots and excludes packed flags/ref word+158",
+    "pointer-array helper uses full64-bit count and modular endpoint, including count1<<61 zero-iteration and wrapped-address traversal"
+  ],
+  "composition_checks": [
+    "Resources connects recovered add/release/free functions to same memory/identities/defaults globals and recovered heap free body",
+    "atomic/locking effects remain abstract and mandatory; test fixture supplies explicit synchronized synthetic updates",
+    "integration entire_locale_tree allocates full dynamic lconv, four ref counters, biased ctype buffers, LC_TIME87 pointers and six category nodes in same allocator and asserts no remaining heap storage",
+    "dynamic_locale_replacement checks actual thread-locale replacement releases/free old dynamic locale and retains new locale"
+  ],
+  "retained_test_results": [
+    "locale_free:17297 checks PASS",
+    "resource bridge:9280 checks PASS"
+  ],
+  "actionable_findings": [],
+  "nonblocking_test_limitations": [
+    "Leaf/free tests keep read/ref/free logs separate, so exact cross-kind trace order is primarily independently established by source-to-assembly review plus targeted callback mutation tests",
+    "Category729-case loop correlates unicode/narrow modes; independent NULL-reference and targeted mutation cases supplement this but do not enumerate the full cross-product"
+  ],
+  "limits": [
+    "Native atomic/heap/locale provider correctness and arbitrary access faults/SEH remain outside these synthetic tests",
+    "Original ABI/compiler/runtime equivalence and complete DLL reconstruction remain unproven"
+  ]
+}

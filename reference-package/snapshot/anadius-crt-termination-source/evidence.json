@@ -1,0 +1,110 @@
+{
+  "target": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "Retained REA Ghidra analysis, no new target open or execution",
+  "pseudo_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "implemented_function_count": 10,
+  "functions": [
+    {
+      "address": "0x18005cb00",
+      "pseudo_evidence": "ev_420a1e96d05180f4259482d3554df390f84cdf4ea4fc9173d88795435d1127a8",
+      "assembly_evidence": "ev_b904adef287ae887100a726cf800a56191fc357883cbb280033b3bcd1972371e"
+    },
+    {
+      "address": "0x18005cb38",
+      "pseudo_evidence": "ev_d1e199fcbb28ad599e5d05dd9e99b003e173af04f4f4cff1ffbf682311bcd055",
+      "assembly_evidence": "ev_8d7a6665f0711a5b4ed83257f170572dc38442cb62fbbc2237d71f5d32e9d43e"
+    },
+    {
+      "address": "0x18005cc04",
+      "pseudo_evidence": "ev_7a349832acd7de0edd5058b95ded2252a6787a6807b783c7bd1f999bc4951033",
+      "assembly_evidence": "ev_a8c8caab02f0be7173120ac4301d9ca9c49258105f9e2f84a7db1c2eaa58c35a"
+    },
+    {
+      "address": "0x18005cccc",
+      "pseudo_evidence": "ev_f705ae67c18bf90dc48c21d4fdfdcc5988dae40324dcff736f3c7928ead796a5",
+      "assembly_evidence": "ev_635173cd8fc84a9f29137d216e928df4933ebbd54922e7f638bd9d9d0ce59f99"
+    },
+    {
+      "address": "0x18005cd00",
+      "pseudo_evidence": "ev_aae0f008304db15ce13a7a66b59578f7cf4ce8663d8248f617109ad76604b6ca",
+      "assembly_evidence": "ev_d1c770ca0437df03e7d2b1cfb8ffc4c1cb8b5e0afae06a4ca2d59d78fee66a5d"
+    },
+    {
+      "address": "0x18005cd24",
+      "pseudo_evidence": "ev_3908cdf401d4173b3a55da913b396be037c14830e00b494494eda59d68df96fa",
+      "assembly_evidence": "ev_5e6c8b569c42a103d338a828065d010413d3fed7ba51a01eb9d0d4b8b2ebb398"
+    },
+    {
+      "address": "0x18005cd9c",
+      "pseudo_evidence": "ev_a8a2e2a3da033fefa810538a6e3943573c34ae8485b608043ba5bcc131f8765f",
+      "assembly_evidence": "ev_74381e6bbf7d88888c167828455ad0f38e8dc06067dad66372151c115c61841d"
+    },
+    {
+      "address": "0x18005cdac",
+      "pseudo_evidence": "ev_36d5cf22008de36a8eb1c8e9cb8a834a8edf44349f629ede68abef82fe2192f1",
+      "assembly_evidence": "ev_205fa673fbf0587f11aabec01f4eb7375d86c26445c04c377ab33e7eeeee99d0"
+    },
+    {
+      "address": "0x18005cdb8",
+      "pseudo_evidence": "ev_55158cc01d6278f6efc44c7a45e24421786674f168e77f6cae67bffef40c696c",
+      "assembly_evidence": "ev_c4227b26414d4b5fe6a89a4cba9a9cd1bcceebf62253994650a71e9f91e3d806"
+    },
+    {
+      "address": "0x18005cdc0",
+      "pseudo_evidence": "ev_4da3d1a6508c073e95fc5f849944d03628a1fcd5b362f56c5b16b259f6ad8d84",
+      "assembly_evidence": "ev_4c4634731e86a039c3ae999e1f55a28a96db0252401da998f42269f3aa358895"
+    }
+  ],
+  "global_cells": [
+    {
+      "address": "0x1800a4f08",
+      "width": 4,
+      "meaning": "termination begun, exchanged to1 before callbacks, getter returns full DWORD"
+    },
+    {
+      "address": "0x1800a4f10",
+      "width": 8,
+      "meaning": "cookie encoded termination callback borrowed by reference"
+    },
+    {
+      "address": "0x1800a4f18",
+      "width": 1,
+      "meaning": "permanent termination completion, set only when return_to_caller ==0"
+    },
+    {
+      "address": "0x1800a52a8",
+      "width": 24,
+      "meaning": "normal CRT onexit table; existing state referenced"
+    },
+    {
+      "address": "0x1800a52c0",
+      "width": 24,
+      "meaning": "quick CRT onexit table; caller initializes encoded entries"
+    }
+  ],
+  "initializer_ranges": [
+    {
+      "begin": "0x18007f728",
+      "end_exclusive": "0x18007f748",
+      "slots": 4,
+      "condition": "mode reread ==0"
+    },
+    {
+      "begin": "0x18007f750",
+      "end_exclusive": "0x18007f758",
+      "slots": 1,
+      "condition": "every active termination mode"
+    }
+  ],
+  "limitations": [
+    "normal control flow only; original SEH/unwind/CFG checks are not reconstructed",
+    "rebuilt opaque callback identities and range bindings mandatory",
+    "original preferred-image addresses are metadata, never executable callbacks",
+    "bounds-enforced image provider is a source interface, not original memory-fault emulation",
+    "no native module, process termination or target execution",
+    "atomic begun load is a new C++ race avoidance choice, not original object layout proof",
+    "other globals and entire callback execution must be externally serialized under compatible recursive lock2"
+  ]
+}

@@ -1,0 +1,487 @@
+{
+  "provenance": "Analyst source reconstruction/audit against retained REA pseudocode and assembly; literal reads are independent static file inspection",
+  "original_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "original_modified": false,
+  "original_executed": false,
+  "retained_pseudo_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "retained_rdata_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "functions": [
+    {
+      "address": "0x18002e5f0",
+      "source": "get_config_02e5f0",
+      "pseudocode_evidence": "ev_08c9cbb7d94139171f29ba86d86cd51101e76b2d6d913d183d8a51258f2dec5b",
+      "assembly_evidence": "ev_73b6f6da8bb1c590a9fdda96a768e029bbfa302ce7c4ad86a699f43c5e189a8f",
+      "assembly_instruction_count": 559
+    },
+    {
+      "address": "0x18002f530",
+      "source": "get_profile_02f530",
+      "pseudocode_evidence": "ev_11dd60d55d88b95820aef3b8180dcbda9897dfb99616ab5c1180348775bb947b",
+      "assembly_evidence": "ev_30a74e5482cbeacf458c1aa2acd61a8ba4d3e865a2089ca0403183a0db113e74",
+      "assembly_instruction_count": 122
+    },
+    {
+      "address": "0x18002f2d0",
+      "source": "get_connected_02f2d0",
+      "pseudocode_evidence": "ev_b41f62dc5d99caf4a8270a002c9ba194875600615292d07b03df8f58787bc408",
+      "assembly_evidence": "ev_61e376477d5478a034fa98ab09f0f066895fdf1c656d910e8eb30ceb4af48b84",
+      "assembly_instruction_count": 24
+    },
+    {
+      "address": "0x18002f7c0",
+      "source": "get_setting_02f7c0",
+      "pseudocode_evidence": "ev_1b508c22e6541f42d9a3d84a7baa8e9429663fa9564d19f2080abc16619c08eb",
+      "assembly_evidence": "ev_1cf7c6e1bf7e9579e06b3ea1053a10fe9a89d10fad2067525f5fa3364b60728c",
+      "assembly_instruction_count": 184
+    },
+    {
+      "address": "0x18002fa60",
+      "source": "get_settings_02fa60",
+      "pseudocode_evidence": "ev_43da82c04eb58457c7bb8bb746f2ea56e82a26751dfe07349fc109fe011f1194",
+      "assembly_evidence": "ev_64f2e68bd15d99a63aef860a9f7b0a850e8d418f868ce513aa9068929b7a3c05",
+      "assembly_instruction_count": 255
+    },
+    {
+      "address": "0x18002efd0",
+      "source": "get_game_info_02efd0",
+      "pseudocode_evidence": "ev_ef8266017da897f5345aadbbdc4f690c0da75a591445b04cdc14b094c75ab673",
+      "assembly_evidence": "ev_6441801612e57558aea0bcf084af06077d5e71a9715d6a33a31c719f36fb20ea",
+      "assembly_instruction_count": 184
+    },
+    {
+      "address": "0x18002da90",
+      "source": "get_all_game_info_02da90",
+      "pseudocode_evidence": "ev_04c1b397cbbba90babf41cb8d096376c9a1f5de2aa6f4411179497b9021845d4",
+      "assembly_evidence": "ev_0dce494521e2ddd3705eae73c392d3e190e00b2bae850c0b2f06f61019d186ca",
+      "assembly_instruction_count": 547
+    }
+  ],
+  "literals": [
+    {
+      "address": "0x180080097",
+      "file_offset": "0x7e897",
+      "bytes_including_terminator": 1,
+      "text": "",
+      "hex": "00"
+    },
+    {
+      "address": "0x18008386c",
+      "file_offset": "0x8206c",
+      "bytes_including_terminator": 2,
+      "text": "1",
+      "hex": "3100"
+    },
+    {
+      "address": "0x180083870",
+      "file_offset": "0x82070",
+      "bytes_including_terminator": 2,
+      "text": "0",
+      "hex": "3000"
+    },
+    {
+      "address": "0x180083954",
+      "file_offset": "0x82154",
+      "bytes_including_terminator": 5,
+      "text": "Name",
+      "hex": "4e616d6500"
+    },
+    {
+      "address": "0x180083a28",
+      "file_offset": "0x82228",
+      "bytes_including_terminator": 10,
+      "text": "Languages",
+      "hex": "4c616e67756167657300"
+    },
+    {
+      "address": "0x180083a60",
+      "file_offset": "0x82260",
+      "bytes_including_terminator": 9,
+      "text": "Language",
+      "hex": "4c616e677561676500"
+    },
+    {
+      "address": "0x180083acc",
+      "file_offset": "0x822cc",
+      "bytes_including_terminator": 4,
+      "text": "SDK",
+      "hex": "53444b00"
+    },
+    {
+      "address": "0x180083b30",
+      "file_offset": "0x82330",
+      "bytes_including_terminator": 10,
+      "text": "PersonaId",
+      "hex": "506572736f6e61496400"
+    },
+    {
+      "address": "0x180083b3c",
+      "file_offset": "0x8233c",
+      "bytes_including_terminator": 7,
+      "text": "UserId",
+      "hex": "55736572496400"
+    },
+    {
+      "address": "0x180083b68",
+      "file_offset": "0x82368",
+      "bytes_including_terminator": 8,
+      "text": "Country",
+      "hex": "436f756e74727900"
+    },
+    {
+      "address": "0x180083b80",
+      "file_offset": "0x82380",
+      "bytes_including_terminator": 13,
+      "text": "IsSubscriber",
+      "hex": "49735375627363726962657200"
+    },
+    {
+      "address": "0x180083b90",
+      "file_offset": "0x82390",
+      "bytes_including_terminator": 18,
+      "text": "IsSteamSubscriber",
+      "hex": "4973537465616d5375627363726962657200"
+    },
+    {
+      "address": "0x180083ba8",
+      "file_offset": "0x823a8",
+      "bytes_including_terminator": 16,
+      "text": "SubscriberLevel",
+      "hex": "537562736372696265724c6576656c00"
+    },
+    {
+      "address": "0x180083bb8",
+      "file_offset": "0x823b8",
+      "bytes_including_terminator": 11,
+      "text": "IsUnderAge",
+      "hex": "4973556e64657241676500"
+    },
+    {
+      "address": "0x180084ce0",
+      "file_offset": "0x834e0",
+      "bytes_including_terminator": 8,
+      "text": "Service",
+      "hex": "5365727669636500"
+    },
+    {
+      "address": "0x180084ce8",
+      "file_offset": "0x834e8",
+      "bytes_including_terminator": 9,
+      "text": "Facility",
+      "hex": "466163696c69747900"
+    },
+    {
+      "address": "0x180084cf8",
+      "file_offset": "0x834f8",
+      "bytes_including_terminator": 18,
+      "text": "GetConfigResponse",
+      "hex": "476574436f6e666967526573706f6e736500"
+    },
+    {
+      "address": "0x180084d34",
+      "file_offset": "0x83534",
+      "bytes_including_terminator": 5,
+      "text": "XMPP",
+      "hex": "584d505000"
+    },
+    {
+      "address": "0x180084d78",
+      "file_offset": "0x83578",
+      "bytes_including_terminator": 4,
+      "text": "IGO",
+      "hex": "49474f00"
+    },
+    {
+      "address": "0x180084d7c",
+      "file_offset": "0x8357c",
+      "bytes_including_terminator": 5,
+      "text": "MISC",
+      "hex": "4d49534300"
+    },
+    {
+      "address": "0x180084d8c",
+      "file_offset": "0x8358c",
+      "bytes_including_terminator": 5,
+      "text": "EALS",
+      "hex": "45414c5300"
+    },
+    {
+      "address": "0x180084da8",
+      "file_offset": "0x835a8",
+      "bytes_including_terminator": 5,
+      "text": "CHAT",
+      "hex": "4348415400"
+    },
+    {
+      "address": "0x180084f14",
+      "file_offset": "0x83714",
+      "bytes_including_terminator": 3,
+      "text": "PI",
+      "hex": "504900"
+    },
+    {
+      "address": "0x180084f48",
+      "file_offset": "0x83748",
+      "bytes_including_terminator": 15,
+      "text": "profile name: ",
+      "hex": "70726f66696c65206e616d653a2000"
+    },
+    {
+      "address": "0x180084f58",
+      "file_offset": "0x83758",
+      "bytes_including_terminator": 19,
+      "text": "GetProfileResponse",
+      "hex": "47657450726f66696c65526573706f6e736500"
+    },
+    {
+      "address": "0x180084f70",
+      "file_offset": "0x83770",
+      "bytes_including_terminator": 11,
+      "text": "GeoCountry",
+      "hex": "47656f436f756e74727900"
+    },
+    {
+      "address": "0x180084f80",
+      "file_offset": "0x83780",
+      "bytes_including_terminator": 18,
+      "text": "IsTrialSubscriber",
+      "hex": "4973547269616c5375627363726962657200"
+    },
+    {
+      "address": "0x180084f98",
+      "file_offset": "0x83798",
+      "bytes_including_terminator": 8,
+      "text": "Persona",
+      "hex": "506572736f6e6100"
+    },
+    {
+      "address": "0x180084fa0",
+      "file_offset": "0x837a0",
+      "bytes_including_terminator": 16,
+      "text": "CommerceCountry",
+      "hex": "436f6d6d65726365436f756e74727900"
+    },
+    {
+      "address": "0x180084fb0",
+      "file_offset": "0x837b0",
+      "bytes_including_terminator": 17,
+      "text": "CommerceCurrency",
+      "hex": "436f6d6d6572636543757272656e637900"
+    },
+    {
+      "address": "0x180084fc8",
+      "file_offset": "0x837c8",
+      "bytes_including_terminator": 9,
+      "text": "AvatarId",
+      "hex": "417661746172496400"
+    },
+    {
+      "address": "0x180084fd8",
+      "file_offset": "0x837d8",
+      "bytes_including_terminator": 10,
+      "text": "UserIndex",
+      "hex": "55736572496e64657800"
+    },
+    {
+      "address": "0x180084fe8",
+      "file_offset": "0x837e8",
+      "bytes_including_terminator": 23,
+      "text": "InternetConnectedState",
+      "hex": "496e7465726e6574436f6e6e6563746564537461746500"
+    },
+    {
+      "address": "0x180085000",
+      "file_offset": "0x83800",
+      "bytes_including_terminator": 10,
+      "text": "connected",
+      "hex": "636f6e6e656374656400"
+    },
+    {
+      "address": "0x180085020",
+      "file_offset": "0x83820",
+      "bytes_including_terminator": 19,
+      "text": "GetSettingResponse",
+      "hex": "47657453657474696e67526573706f6e736500"
+    },
+    {
+      "address": "0x180085038",
+      "file_offset": "0x83838",
+      "bytes_including_terminator": 8,
+      "text": "Setting",
+      "hex": "53657474696e6700"
+    },
+    {
+      "address": "0x180085040",
+      "file_offset": "0x83840",
+      "bytes_including_terminator": 20,
+      "text": "GetSettingsResponse",
+      "hex": "47657453657474696e6773526573706f6e736500"
+    },
+    {
+      "address": "0x180085068",
+      "file_offset": "0x83868",
+      "bytes_including_terminator": 12,
+      "text": "Environment",
+      "hex": "456e7669726f6e6d656e7400"
+    },
+    {
+      "address": "0x180085090",
+      "file_offset": "0x83890",
+      "bytes_including_terminator": 15,
+      "text": "IsIGOAvailable",
+      "hex": "497349474f417661696c61626c6500"
+    },
+    {
+      "address": "0x1800850b8",
+      "file_offset": "0x838b8",
+      "bytes_including_terminator": 19,
+      "text": "IsTelemetryEnabled",
+      "hex": "497354656c656d65747279456e61626c656400"
+    },
+    {
+      "address": "0x1800850e8",
+      "file_offset": "0x838e8",
+      "bytes_including_terminator": 16,
+      "text": "IsManualOffline",
+      "hex": "49734d616e75616c4f66666c696e6500"
+    },
+    {
+      "address": "0x180085108",
+      "file_offset": "0x83908",
+      "bytes_including_terminator": 13,
+      "text": "IsIGOEnabled",
+      "hex": "497349474f456e61626c656400"
+    },
+    {
+      "address": "0x1800852d8",
+      "file_offset": "0x83ad8",
+      "bytes_including_terminator": 11,
+      "text": "Expiration",
+      "hex": "45787069726174696f6e00"
+    },
+    {
+      "address": "0x180085338",
+      "file_offset": "0x83b38",
+      "bytes_including_terminator": 20,
+      "text": "GetGameInfoResponse",
+      "hex": "47657447616d65496e666f526573706f6e736500"
+    },
+    {
+      "address": "0x180085350",
+      "file_offset": "0x83b50",
+      "bytes_including_terminator": 9,
+      "text": "GameInfo",
+      "hex": "47616d65496e666f00"
+    },
+    {
+      "address": "0x180085360",
+      "file_offset": "0x83b60",
+      "bytes_including_terminator": 23,
+      "text": "GetAllGameInfoResponse",
+      "hex": "476574416c6c47616d65496e666f526573706f6e736500"
+    },
+    {
+      "address": "0x180085378",
+      "file_offset": "0x83b78",
+      "bytes_including_terminator": 12,
+      "text": "DisplayName",
+      "hex": "446973706c61794e616d6500"
+    },
+    {
+      "address": "0x180085388",
+      "file_offset": "0x83b88",
+      "bytes_including_terminator": 17,
+      "text": "InstalledVersion",
+      "hex": "496e7374616c6c656456657273696f6e00"
+    },
+    {
+      "address": "0x1800853a0",
+      "file_offset": "0x83ba0",
+      "bytes_including_terminator": 17,
+      "text": "AvailableVersion",
+      "hex": "417661696c61626c6556657273696f6e00"
+    },
+    {
+      "address": "0x1800853b8",
+      "file_offset": "0x83bb8",
+      "bytes_including_terminator": 9,
+      "text": "UpToDate",
+      "hex": "5570546f4461746500"
+    },
+    {
+      "address": "0x1800853e0",
+      "file_offset": "0x83be0",
+      "bytes_including_terminator": 17,
+      "text": "FullGameReleased",
+      "hex": "46756c6c47616d6552656c656173656400"
+    },
+    {
+      "address": "0x180085410",
+      "file_offset": "0x83c10",
+      "bytes_including_terminator": 20,
+      "text": "FullGameReleaseDate",
+      "hex": "46756c6c47616d6552656c656173654461746500"
+    },
+    {
+      "address": "0x180085440",
+      "file_offset": "0x83c40",
+      "bytes_including_terminator": 18,
+      "text": "FullGamePurchased",
+      "hex": "46756c6c47616d6550757263686173656400"
+    },
+    {
+      "address": "0x180085468",
+      "file_offset": "0x83c68",
+      "bytes_including_terminator": 10,
+      "text": "FreeTrial",
+      "hex": "46726565547269616c00"
+    },
+    {
+      "address": "0x1800854a0",
+      "file_offset": "0x83ca0",
+      "bytes_including_terminator": 18,
+      "text": "EntitlementSource",
+      "hex": "456e7469746c656d656e74536f7572636500"
+    },
+    {
+      "address": "0x1800854c8",
+      "file_offset": "0x83cc8",
+      "bytes_including_terminator": 13,
+      "text": "MaxGroupSize",
+      "hex": "4d617847726f757053697a6500"
+    },
+    {
+      "address": "0x1800854d8",
+      "file_offset": "0x83cd8",
+      "bytes_including_terminator": 18,
+      "text": "InstalledLanguage",
+      "hex": "496e7374616c6c65644c616e677561676500"
+    },
+    {
+      "address": "0x1800854f0",
+      "file_offset": "0x83cf0",
+      "bytes_including_terminator": 14,
+      "text": "HasExpiration",
+      "hex": "48617345787069726174696f6e00"
+    },
+    {
+      "address": "0x180085500",
+      "file_offset": "0x83d00",
+      "bytes_including_terminator": 11,
+      "text": "SystemTime",
+      "hex": "53797374656d54696d6500"
+    }
+  ],
+  "service_table_audit": {
+    "result": "PASS",
+    "pairs": 34,
+    "order_and_exact_strings_match_retained_pseudocode": true
+  },
+  "limitations": [
+    "Seven handlers only; dispatcher/session code is separate",
+    "Xml API/formatting and current_time_041b60 are mandatory dependencies",
+    "Source models low-byte boolean return, not unspecified high register bits",
+    "MSVC allocator/SSO/EH/SEH/global layout and full runtime equivalence are not established",
+    "Profile data comes from caller-supplied state; no original CFG identifiers were copied"
+  ]
+}

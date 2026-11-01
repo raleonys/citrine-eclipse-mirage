@@ -1,0 +1,96 @@
+/* 0x180029660 FUN_180029660; Evidence ev_0c797b4674444bc8c1d32d37d5c3efe7c56b020e323ddda1a5cdbda23e1f8221 */
+
+void FUN_180029660(longlong param_1,HANDLE param_2,SOCKET *param_3,int param_4,undefined4 param_5,
+                  undefined4 param_6,PVOID param_7,DWORD param_8,int *param_9,LPOVERLAPPED param_10)
+
+{
+  int *piVar1;
+  int iVar2;
+  longlong lVar3;
+  HANDLE hFile;
+  int *piVar4;
+  LPOVERLAPPED lpOverlapped;
+  DWORD DVar5;
+  BOOL BVar6;
+  SOCKET s;
+  undefined **ppuVar7;
+  DWORD local_res8 [2];
+  HANDLE local_res10;
+  
+  local_res10 = param_2;
+  FUN_180029590(param_3);
+  lpOverlapped = param_10;
+  piVar4 = param_9;
+  LOCK();
+  piVar1 = (int *)(*(longlong *)(param_1 + 8) + 0x30);
+  *piVar1 = *piVar1 + 1;
+  UNLOCK();
+  if (param_9 != (int *)0x0) {
+    LOCK();
+    iVar2 = *param_9;
+    *param_9 = *param_9;
+    UNLOCK();
+    if (iVar2 == 1) {
+      FUN_180028b50(*(longlong *)(param_1 + 8),param_10,0x3e3,0);
+    }
+  }
+  s = WSASocketW(param_4,param_5,param_6,0,0,1);
+  if (s == 0xffffffffffffffff) {
+    ppuVar7 = FUN_180028620();
+    DVar5 = WSAGetLastError();
+    FUN_180029590(param_3);
+    *param_3 = 0xffffffffffffffff;
+    lVar3 = *(longlong *)(param_1 + 8);
+    lpOverlapped[1].u.s.Offset = 1;
+    lpOverlapped->Internal = (ULONG_PTR)ppuVar7;
+    (lpOverlapped->u).s.Offset = DVar5;
+    (lpOverlapped->u).s.OffsetHigh = 0;
+    BVar6 = PostQueuedCompletionStatus(*(HANDLE *)(lVar3 + 0x28),0,2,lpOverlapped);
+    if (BVar6 == 0) {
+      EnterCriticalSection((LPCRITICAL_SECTION)(lVar3 + 0x60));
+      lpOverlapped[1].Internal = 0;
+      if (*(longlong *)(lVar3 + 0x98) == 0) {
+        *(LPOVERLAPPED *)(lVar3 + 0x90) = lpOverlapped;
+      }
+      else {
+        *(LPOVERLAPPED *)(*(longlong *)(lVar3 + 0x98) + 0x20) = lpOverlapped;
+      }
+      *(LPOVERLAPPED *)(lVar3 + 0x98) = lpOverlapped;
+      LOCK();
+      *(undefined4 *)(lVar3 + 0x58) = 1;
+      UNLOCK();
+      LeaveCriticalSection((LPCRITICAL_SECTION)(lVar3 + 0x60));
+    }
+  }
+  else {
+    if (param_4 == 0x17) {
+      param_9._0_4_ = 0;
+      setsockopt(s,0x29,0x1b,(char *)&param_9,4);
+    }
+    FUN_180029590(param_3);
+    hFile = local_res10;
+    *param_3 = s;
+    local_res8[0] = 0;
+    BVar6 = AcceptEx((SOCKET)local_res10,s,param_7,0,param_8,param_8,local_res8,lpOverlapped);
+    DVar5 = WSAGetLastError();
+    if ((BVar6 == 0) && (DVar5 != 0x3e5)) {
+      FUN_180028b50(*(longlong *)(param_1 + 8),lpOverlapped,DVar5,0);
+    }
+    else {
+      if (piVar4 != (int *)0x0) {
+        LOCK();
+        iVar2 = *piVar4;
+        *piVar4 = *piVar4;
+        UNLOCK();
+        if (iVar2 == 1) {
+          CancelIoEx(hFile,lpOverlapped);
+        }
+      }
+      FUN_180028c00(*(longlong *)(param_1 + 8),lpOverlapped);
+    }
+  }
+  return;
+}
+
+
+

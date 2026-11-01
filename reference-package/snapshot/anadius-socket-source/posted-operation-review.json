@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "reviewer": "posted_operation_audit",
+  "scope": "Independent frozen four-source review against all six complete retained assembly/pseudocode normal procedures",
+  "sources": {
+    "outputs/anadius-socket-source/posted_operation.hpp": "a64463108f00dd71fe71c9ac577c73d857e4a8fd67e56d7bb65313536e3c8aff",
+    "outputs/anadius-socket-source/posted_operation.cpp": "4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d",
+    "outputs/anadius-socket-source/posted_operation_dispatch.hpp": "045fc8fbcc9f6f3aa010c26a5e2365a83b147b91af0a98ff5ca864d882557bab",
+    "outputs/anadius-socket-source/posted_operation_dispatch.cpp": "3d4685cafeeacc2b2a404c2277a1049d1dc9c3aa347430ae77e8fe51679734b1"
+  },
+  "report_sha256": "1ef5459847f9e4ec741bb077d1b0576c7937901d7a65284db58ef773324c583e",
+  "audit_report_sha256": "686f4c03d848aecc358b2e75a8fbc8b1d6a919e7ed3bb799523f5e7ebf97c51b",
+  "audit_json_sha256": "149e79bccdf3cfcb26e7d40da07edaa70f438c1082b1ce4137987764ed9bca91",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180021820",
+    "0x180021ac0",
+    "0x180022e40",
+    "0x180027120",
+    "0x180028ca0",
+    "0x180028fd0"
+  ],
+  "new_original_procedures": 6,
+  "core_contract": "Unsigned64units; header-before-DIV; clear-before-hitread/free; first2cache; request0x48alignment1; cached initial TLS key versus live publication scheduler; firstmatchstate0break; liveTLSindexreload; sourceclearbeforeworkincrement; consume-clear-before-call; earlycleanup-beforeinvoke; live-localreload; cleanup-postcallback-allocationcache",
+  "native_contract": "Reuses WorkerRunApi TLS and DispatcherApi post; real SDK OVERLAPPED separated raw allocation and logical metadata; original tokens data only; no duplicate SDK wrapper",
+  "composition": "PostedDispatcherEffects routes selected typed identity to actual027120, preserving required complete_other for other kinds; shared existing CompletionScheduler queue and actual dispatcher/worker bridges",
+  "providers_not_recovered": [
+    "04b0bc allocator",
+    "04b788 deallocator",
+    "Functor slot00 native implementation and object lifetime",
+    "Native ABI storage allocation provenance",
+    "Native exception SEH unwind concurrency"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Six normal procedures only",
+    "CRT production unchanged",
+    "Stable identity binding projection and accessible byte span required",
+    "Bounded UnsupportedInput guards not native invalid-memory or DIV fault behavior",
+    "No complete DLL original equivalence claimed"
+  ]
+}

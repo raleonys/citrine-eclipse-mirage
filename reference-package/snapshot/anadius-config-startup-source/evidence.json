@@ -1,0 +1,85 @@
+{
+  "schema": "config2.bootstrap-source-composition.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_functions": [
+    {
+      "pseudo_evidence": "ev_78a1faedf06f56d422e6ecc197bbe90ce7f34af0e9b01420eef8b6b8827bf25e",
+      "assembly_evidence": "ev_42beaf13c42bb51716fcf407bd74587506fbb6acf17bfba9e16c31bdd31f8fba",
+      "entry": "0x18001c870"
+    },
+    {
+      "pseudo_evidence": "ev_e66705fdaa9bdd88fb50be13d22e354939026d931f472329e0f14e17c9fb4fbd",
+      "assembly_evidence": "ev_77887ea2e7b744e62e52eaf81cb8a07abf2a4f50498001ba81b2fcf2496e8789",
+      "entry": "0x180038970"
+    },
+    {
+      "pseudo_evidence": "ev_90684472bf3c11d29dce5129d1c8a0e460e645004eaaef332b7623a91a4f03f3",
+      "assembly_evidence": "ev_78e7337670570fa2c7c212620f726bd602b090f213f6248c453917219f5023fc",
+      "entry": "0x180019910"
+    },
+    {
+      "pseudo_evidence": "ev_443e0c3c2732489164806801392df22b75420bef29996038536b50f1d9fab851",
+      "assembly_evidence": "ev_25fbfd8671a513b4750ab57ccab47ce6ee66118511fe48e1c7c1744914a56238",
+      "entry": "0x180038760"
+    },
+    {
+      "pseudo_evidence": "ev_691d99dfac41c8e1f0484feff33584d6291e41fff99d694fff05e78775aefb04",
+      "assembly_evidence": "ev_10f34c57de95a8ee129e5c91b2dde9842b1f85959f5e9e17d8ba4d9dac40ff3f",
+      "entry": "0x180018480"
+    }
+  ],
+  "static_audit": "startup-audit.md/json",
+  "source_hashes": {
+    "startup.hpp": "324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e",
+    "startup.cpp": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+    "startup_tests.cpp": "a8dd34f207ff2912a4cd1e883542766f13ccb2109662d57656f0999ea473d188",
+    "build.ps1": "5df64ad97e5feaf8ad31df266235e5d2a93d147d9c9d60c43fe6af7810abf0dd",
+    "CMakeLists.txt": "f5ded0e394f3307d2f4bebdc4983346dac25d9f2341fe91e028d70f86eedbcb1",
+    "README.md": "59a9ea0063f60ba6870a29720695f1fcdf0dc25feb7c06648e91232040450daa"
+  },
+  "scope": "Actual Bootstrap argument/console/config startup sources; controlled remaining effects",
+  "checklist": [
+    {
+      "question": "Shared CLI and Config2 state",
+      "status": "answered source composition",
+      "evidence": "BootstrapConfiguration::references constructs flags/map from same State;335fixturechecks"
+    },
+    {
+      "question": "File parser/hash base and override through01c870",
+      "status": "answered source composition",
+      "evidence": "FilePass->config_application::load_and_apply;01c8d1/01c8d8"
+    },
+    {
+      "question": "Single common profile/avatar/SDK/persistence/environment continuation",
+      "status": "answered source composition",
+      "evidence": "Three-argumentConfigurationPass initializer;postbody identical to prior source"
+    },
+    {
+      "question": "Legacy two-argument initializer",
+      "status": "preserved;common regression",
+      "evidence": "DocumentPass uses same historical load_and_apply and unchangedpostbody"
+    },
+    {
+      "question": "First worker occurs only after post-configuration",
+      "status": "answered controlledsource boundary",
+      "evidence": "0389d4config before0389e3allocate/038a1dthread;test-ownedpayloads only"
+    },
+    {
+      "question": "Native iterator/allocation/fault/SEH/global/DLL equivalence",
+      "status": "unresolved",
+      "evidence": "Dependencies vectorlisting and external providers do not establish native iterator timing or original execution"
+    }
+  ],
+  "synthetic_checks": 335,
+  "full_unique_original_bodies_added": 0,
+  "modified_existing_source_files": [
+    "../anadius-config-source/configuration.hpp",
+    "../anadius-config-source/configuration.cpp"
+  ],
+  "CRT_production": "unchanged",
+  "original_target_execution": "none",
+  "real_user_cfg_read": false,
+  "native_scope": "Only generated own base/override CFG files via compatibility stream; all other OS/environment/console/worker effects controlled",
+  "runtime_equivalence": "not established",
+  "new_virtual_interface": "Source-level composition interface; not recovered MSVC binary layout"
+}

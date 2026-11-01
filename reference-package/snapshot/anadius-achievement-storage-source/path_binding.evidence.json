@@ -1,0 +1,167 @@
+{
+  "schema": "source-binding.focused-validation.v1",
+  "status": "SELECTED_SHARED_ACHIEVEMENT_PATH_BINDING_PASS",
+  "native_cells": {
+    "0x1800a3de8": "+408 XML path",
+    "0x1800a3e88": "+4a8 INI path"
+  },
+  "new_native_bodies_in_this_change": 0,
+  "full_constructor_closed": false,
+  "full_destructor_closed": false,
+  "implementation": [
+    "Runtime owns stable achievement Paths before Resources; providers and worker retire before these cells.",
+    "Configuration Persistence binds once before operations or borrowed path references; legacy unbound storage remains supported.",
+    "SourceBackend binds Configuration and prepared application Worker to the same cells before publication.",
+    "Worker Graph selects shared XML path directly; conflicting legacy seed and invalid thread/fiber/lifecycle binding are rejected."
+  ],
+  "focused_record": {
+    "path": "work/achievement-path-v1-results.json",
+    "sha256": "a7f7926b614f51008dc7f318e4505cec658c474f18959ee340ad45639a4295e7",
+    "seconds": 26.297,
+    "tests": [
+      {
+        "name": "achievement_path_binding",
+        "exit_code": 0,
+        "stdout": "PASS: 42 shared achievement-path checks; actual Runtime/Storage aliasing and Prepared Worker guards, controlled external worker boundaries\n",
+        "stderr": "",
+        "executable": "work/achievement-path-check-v1/achievement_path_binding_tests.exe",
+        "executable_sha256": "24466a83818af2d1b9b107dba81de1125f548a4992afe307eec8577f4368b87a"
+      },
+      {
+        "name": "key_binding",
+        "exit_code": 0,
+        "stdout": "PASS: 50 key-binding checks; actual Runtime state binding/native configuration and encrypted key output, controlled external worker boundaries\n",
+        "stderr": "",
+        "executable": "work/achievement-path-check-v1/key_binding_tests.exe",
+        "executable_sha256": "5b6ec55c131f14c939a55159b61350b3204a97e10edecbb541f8889a8c6fd5ce"
+      },
+      {
+        "name": "key_processor",
+        "exit_code": 0,
+        "stdout": "PASS: 42 key-processor checks; synthetic status/SDK/memory files, actual AES header/XML and existing Config2 call order\n",
+        "stderr": "",
+        "executable": "work/achievement-path-check-v1/key_processor_tests.exe",
+        "executable_sha256": "b8b68c9b166a7d25a8606b1d67042988f04e7a03197fff0b505bc8562cdc8908"
+      },
+      {
+        "name": "configuration_factory",
+        "exit_code": 0,
+        "stdout": "PASS: 170 configuration-factory core checks; all21 required routes and streaming, owned synthetic effects, passive validation, prefix/errors and serialized cross-thread lifetime; original targets never loaded\n",
+        "stderr": "",
+        "executable": "work/achievement-path-check-v1/configuration_factory_tests.exe",
+        "executable_sha256": "8623c8e2995275bb99dfdc8219115dcc26d3eb22ecdf6a2f95f908e1dda9491e"
+      },
+      {
+        "name": "configuration_factory_integration",
+        "exit_code": 0,
+        "stdout": "PASS: 96 configuration-factory integration checks; lowerfreeROOTfactory all19selectedroutes+2narroweffects+streamingvisitor, actualBootstrapConfiguration/FilePass/parser/hash/XML/timestamp/INI/PNG/managedloggingprefixes; onlysyntheticMemoryFiles/typedSDKspies, unrelatedbootstrapworkers explicitlysynchronousTESTpolicy; no originals/userfiles/network/OSworkerjoin/nativeABI/loaderclaim\n",
+        "stderr": "",
+        "executable": "work/achievement-path-check-v1/configuration_factory_integration_tests.exe",
+        "executable_sha256": "14b18858fde58522f98ce02dd99c474a713da3d7e01bd52e2626ed0fc43ec845"
+      },
+      {
+        "name": "application_worker",
+        "exit_code": 0,
+        "stdout": "PASS: 162 application-worker core checks; actual startup barrier and SourceBackend routes with nine isolated retained prefixes\n",
+        "stderr": "",
+        "executable": "work/achievement-path-check-v1/application_worker_tests.exe",
+        "executable_sha256": "52a183e12d6182916c797cf04ce157918cb3eaa7be42c807f7e9c28693fa6d1d"
+      }
+    ]
+  },
+  "source_hashes": {
+    "outputs/anadius-bootstrap-backend-source/backend.cpp": "78f75fe7a1689ba2d6cde150889cf6a93a8b108d7c260542ae6ebf1dc83deac5",
+    "outputs/anadius-config-storage-source/filesystem.cpp": "bdc5ad0adc778c4f41143595392c6fbf5ea89c6a43d61c3ce5cd06252a549291",
+    "outputs/anadius-config-storage-source/persistence.cpp": "c16d5ff24f0f73ef6660749b66476b82510d8e33b4f3f94455882445435842c3",
+    "outputs/anadius-application-worker-source/worker.cpp": "34c01a063b4f3796e2a9d49807d0d14cb8ba6d5d492c1ff43054529d3752211c",
+    "outputs/anadius-configuration-factory-source/factory.cpp": "0a8be5ec49e37632abf54fe91f9babfeea9ff33a1c58592ad399dc450e76618b",
+    "outputs/anadius-license-source/key_processor.cpp": "47593a5b42db7bb069254fda51b97fd2557a9392cafa3263baf0f6b469e6690b",
+    "outputs/anadius-achievement-storage-source/path_binding_tests.cpp": "45f677dbbdff15b34ab71afafc6f344cde5b4c4c52d9718ad7e535c38fb50ec1",
+    "outputs/anadius-license-source/key_binding_tests.cpp": "51c1627423dd0a15f2df8f7a46e8ba46a485d0a90810647e332b19f710f904c8",
+    "outputs/anadius-license-source/key_processor_tests.cpp": "f80d61f1531799c1198d457e3e4a0e8127ea5041258265e0e9cc59ef1a3b836d",
+    "outputs/anadius-configuration-factory-source/factory_tests.cpp": "bc50fcd58014aa1660780c18e369549486ed507543a1a0c3e5361dcb839a2d30",
+    "outputs/anadius-configuration-factory-source/factory_integration_tests.cpp": "978361d09068881a91bd31a66208df27d90a6bf27912c1981ee32ace30283bc8",
+    "outputs/anadius-application-worker-source/worker_tests.cpp": "93dab88ed2171d4c88ec77c4351b40205fb9372ec14e988b2ccd14f45e06a081",
+    "outputs/anadius-config-source/state_binding.hpp": "c08841ec3c5010d947c4edc164ff6d6dede2a76899a322fe0c683e189fb052c1",
+    "outputs/anadius-license-source/key_processor.hpp": "996e0c2f6b37d841df0299622675d4f3755c17c7fff833ce6f3fbfd4edcbd965",
+    "outputs/anadius-achievement-storage-source/path_binding.hpp": "9743297ac324c8d02b13a40e1e707b3787cc6acac2a35c7fa41c5b0aad5b4ac7"
+  },
+  "modified_baseline_source_hashes": [
+    {
+      "path": "anadius-application-worker-source/worker.cpp",
+      "before_sha256": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+      "after_sha256": "34c01a063b4f3796e2a9d49807d0d14cb8ba6d5d492c1ff43054529d3752211c"
+    },
+    {
+      "path": "anadius-application-worker-source/worker.hpp",
+      "before_sha256": "2427178f3d630c2cc4ba132d52e82777eca6c2006a5f318825dca4259ef2dfdc",
+      "after_sha256": "b341204996c5ef646190d5c08674df9f79c181f8df715697987d901f69f888b0"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "72713547523dcf06f2e9824778d89965e7b86d67b0a6c14222eaf0b71448f7da",
+      "after_sha256": "78f75fe7a1689ba2d6cde150889cf6a93a8b108d7c260542ae6ebf1dc83deac5"
+    },
+    {
+      "path": "anadius-config-storage-source/filesystem.cpp",
+      "before_sha256": "06db2ed2205c84837b2f409c2b019557f2eebda24e933dad447302415a799c3f",
+      "after_sha256": "bdc5ad0adc778c4f41143595392c6fbf5ea89c6a43d61c3ce5cd06252a549291"
+    },
+    {
+      "path": "anadius-config-storage-source/filesystem.hpp",
+      "before_sha256": "c2658e29bffeec397d93762f496d32122de521c7eee01fe26b607a5986ee5d77",
+      "after_sha256": "ac1dd81aa6e95471e2e3391e174fa6bb5f971cf0d28d16584fd30bed6bce87e0"
+    },
+    {
+      "path": "anadius-config-storage-source/persistence.cpp",
+      "before_sha256": "45a3d81e2c3f3e632f72d13cd7c1b9aa0c6f1da4171d0d963d88b14a3da98cf3",
+      "after_sha256": "c16d5ff24f0f73ef6660749b66476b82510d8e33b4f3f94455882445435842c3"
+    },
+    {
+      "path": "anadius-config-storage-source/persistence.hpp",
+      "before_sha256": "cb7a2809522d1dc054f811a0b9be77a8278dc8af7e10f80e2f6607d4ffb78212",
+      "after_sha256": "1d86ce0594980349336f6987a59f2f68017475f5f766cba1a7fb06060baf11e6"
+    },
+    {
+      "path": "anadius-configuration-factory-source/factory.cpp",
+      "before_sha256": "cec5205f7e29bd7e212f71632e2e7f7437800f02d8387f353d22ef2763249dbf",
+      "after_sha256": "0a8be5ec49e37632abf54fe91f9babfeea9ff33a1c58592ad399dc450e76618b"
+    },
+    {
+      "path": "anadius-configuration-factory-source/factory.hpp",
+      "before_sha256": "c6955bc02755c4eed6e003d9698ea8aa01abb87615f6b86afcc523e528fda1ea",
+      "after_sha256": "d612623742cb5d32c50246b5d274a66275f139d9789439e3d3869e6908cda5c5"
+    }
+  ],
+  "fresh_dependency_consumers": [
+    "outputs\\anadius-bootstrap-backend-source\\backend.cpp",
+    "outputs\\anadius-config-storage-source\\filesystem.cpp",
+    "outputs\\anadius-config-storage-source\\persistence.cpp",
+    "outputs\\anadius-application-worker-source\\worker.cpp",
+    "outputs\\anadius-configuration-factory-source\\factory.cpp"
+  ],
+  "build_registration_hashes": {
+    "outputs/source-workspace/build.ps1": "9dbac628d8b6fdd91f834267149abec24ad7f4a758e034129708160cb3407cb7",
+    "outputs/source-workspace/CMakeLists.txt": "0eb1c1d56378066ce1752ade57ae37fc67e5b42016eb133317b6d91bd618afeb"
+  },
+  "powershell_registration_parser_errors": 0,
+  "independent_review": {
+    "author": "/root/b22_provider_audit",
+    "result": "PASS_PRODUCTION_AND_FOCUSED_PROOF",
+    "scope": "Read-only production/test review and source, six EXE, compiler/archive and immutable-record hashes; no reviewer executions.",
+    "provenance_correction": "Assembly file hash was accurate but serialization label ambiguous; separate saved-file and retained normalized-text hashes now recorded."
+  },
+  "limits": [
+    "Shared Graph pointer selection was statically reviewed; full new shared Graph execution was not dynamically tested.",
+    "Synthetic memory configuration and controlled external worker boundaries; no real user files or network.",
+    "Concrete Configuration and Worker host C++ layouts changed; all affected consumers were freshly compiled. This is not original MSVC ABI equivalence.",
+    "Full036d20/037f70 aggregate and loader hook definitions remain open.",
+    "Published B54 common inventory/source snapshot/ZIP remain historical; registrations are present but common build was not run."
+  ],
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false
+}

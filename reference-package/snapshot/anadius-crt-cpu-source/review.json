@@ -1,0 +1,79 @@
+{
+  "reviewer": "independent vcrt_api_fallbacks subagent",
+  "reviewed_at": "2026-10-18T09:48:23.7161966Z",
+  "result": "PASS",
+  "open_findings": [],
+  "history": [
+    {
+      "result": "No production or test changes required",
+      "validation_reused": "PASS 10373 synthetic CPU-dispatch checks",
+      "event": "Independent retained-assembly review of submitted CPU source and test coverage",
+      "validated_source_hashes_match": true
+    }
+  ],
+  "artifact": {
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "name": "anadius64.dll"
+  },
+  "function": "0x18004b26c",
+  "assembly_evidence_id": "ev_4c8b01f035bc41c396a4aa4aca013d8f009f82716778db198ba44b422b71da6d",
+  "pseudocode_evidence_id": "ev_f3773edcf62992a2d8fa4ced76cc2440c73d7627be11988e074de50fc5db9f86",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "source_hashes": [
+    {
+      "name": "cpu.hpp",
+      "sha256": "fd9168d96bbf8f5f30af22de6c0635986b126d92b4a6de2381e4f73238d69641"
+    },
+    {
+      "name": "cpu.cpp",
+      "sha256": "0363b28d66323aa27b73f5a6bab114ccadaed1aa5ab0db886e897afc816215c1"
+    },
+    {
+      "name": "cpu_tests.cpp",
+      "sha256": "114730d13e294967669c078e59ef1eca009bfaffea9da62be45ffe412cea8829"
+    }
+  ],
+  "checks": [
+    {
+      "addresses": "04b281..04b2c3",
+      "topic": "Vendor register ordering and unconditional leaf1",
+      "conclusion": "EBX=756e6547, EDX=49656e69, ECX=6c65746e; CPUID1 always occurs; leaf1 ECX retained for feature checks."
+    },
+    {
+      "addresses": "04b2c5..04b2d2",
+      "topic": "Intel-only qword initialization",
+      "conclusion": "All-one A1560 qword and 0x8000 A1558 qword writes execute only on complete Intel match, in observed order."
+    },
+    {
+      "addresses": "04b2cd..04b30a",
+      "topic": "Model mask and sparse bit test",
+      "conclusion": "EAX mask0x0fff3ff0, uint32 subtraction0x30650, unsigned <=32 guard, 64-bit mask0x100010001 select offsets0/16/32; explicit models106c0/20660/20670 match."
+    },
+    {
+      "addresses": "04b30c..04b353",
+      "topic": "Flags snapshot and signed maximum leaf",
+      "conclusion": "A4788 snapshot precedes CPUID7; bit9 OR2 uses snapshot, signed CMP/JL implemented by bit_cast<int32>; seven EBX starts at zero when query skipped."
+    },
+    {
+      "addresses": "04b36b..04b400",
+      "topic": "XGETBV guards and exact low-byte tests",
+      "conclusion": "Requires leaf1 ECX20/27/28; XGETBV index0; XCR0 low6 then lowe0 masks; leaf7 EBX20 and d0030000 complete mask guard levels3/5/6."
+    },
+    {
+      "addresses": "04b35a..04b40b",
+      "topic": "Widths and return",
+      "conclusion": "A1550/A1554/A4788 DWORDs; A1558/A1560 qwords; level and enabled bits1/2,2/6,3/e,5/2e,6/6e match; zero return."
+    },
+    {
+      "addresses": "cpu_tests.cpp",
+      "topic": "Test coverage and execution boundary",
+      "conclusion": "Recognized models, vendor mismatch per register, signed max-leaf edges, 6x256 XCR0 matrix, individual XGETBV guards, high32-only XCR0 and preCPUID7 snapshot mutation covered. Recovered body only invokes synthetic Effects; no native CPUID/XGETBV implementation exists."
+    }
+  ],
+  "limitations": [
+    "Manual review establishes agreement for the submitted pure-effect function, not native DLL CPU/ABI/runtime equivalence.",
+    "Caller-owned State and Effects are a new source model, not original packed globals or instruction execution.",
+    "Provider exceptions, external concurrent state mutation and native feature discovery integration are outside target behavior claims.",
+    "Existing validated synthetic test run reused because all submitted source hashes match; no redundant rebuild or target execution performed."
+  ]
+}

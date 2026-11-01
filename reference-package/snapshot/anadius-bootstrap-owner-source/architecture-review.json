@@ -1,0 +1,283 @@
+{
+  "schema": "bootstrap-owner.architecture-review.v1",
+  "result": "PASS",
+  "date": "2026-10-27",
+  "reviewer": "/root/b2_architecture_audit",
+  "independent_from_production_author": true,
+  "scope": "Exact frozen B2 CPP/HPP against prior Bootstrap/config/native-binding/thread contracts; bounded static composition/lifetime review, not tests or full native equivalence.",
+  "reviewed_source_hashes": {
+    "owner.hpp": "f12f284f5f23e27ebc320e9c5ac24fa016b5116dcbd615a566790568ca78e003",
+    "owner.cpp": "6cb82edd31ac5617f6679f97a0d1eb04fce10644b802ed314950fca6cc16d9c3"
+  },
+  "prior_source_snapshot_sha256": "6d56137d341b8e07ca8b14bf2e3c5543712e406fe0c1937f667fcc5b4e493dd6",
+  "prior_source_files_preserved": 691,
+  "findings": [
+    {
+      "id": "single_base",
+      "result": "PASS",
+      "finding": "BootstrapFacade derives only BootstrapConfiguration; no second ThreadBridge/BootstrapDependencies subobject.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+        "line": 56,
+        "anchor": "class BootstrapFacade final:public config_startup::BootstrapConfiguration"
+      }
+    },
+    {
+      "id": "config_reuse",
+      "result": "PASS",
+      "finding": "Three inherited final configuration methods use prior startup/config source with the owned state and flags.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 23,
+        "anchor": ":BootstrapConfiguration(state,p.configuration,p.files,flags(console),p.input,p.console)"
+      }
+    },
+    {
+      "id": "thread_reuse",
+      "result": "PASS",
+      "finding": "begin_thread routes through the existing05e8e0 source and rebuilt native Resolver, preserving security0/stack0/flags0 and outputID.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 40,
+        "anchor": "return threads_recovered::begin_thread_05e8e0(nullptr,0"
+      }
+    },
+    {
+      "id": "handle_identity",
+      "result": "PASS",
+      "finding": "Detached-handle closure uses the same cached threads Effects provider.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 43,
+        "anchor": "bool BootstrapFacade::close_handle"
+      }
+    },
+    {
+      "id": "callback_identity",
+      "result": "PASS",
+      "finding": "Exit/terminate enums map to compiled rebuilt callback functions; unsupported selector values fail explicitly.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 24,
+        "anchor": "int BootstrapFacade::register_exit"
+      }
+    },
+    {
+      "id": "mandatory_services",
+      "result": "PASS",
+      "finding": "All remaining Services methods are mandatory forwarding policies; their native implementation/lifetime contracts remain open.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+        "line": 12,
+        "anchor": "class Services"
+      }
+    },
+    {
+      "id": "state_ownership",
+      "result": "PASS",
+      "finding": "RuntimeOwner owns the configuration seed and three console flag bytes; it does not manufacture native initial globals.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+        "line": 103,
+        "anchor": "configuration::State configuration_;ConsoleState console_;"
+      }
+    },
+    {
+      "id": "backend_lifetime",
+      "result": "PASS",
+      "finding": "Backend is uniquely owned and declared after state/flags so reverse destruction keeps referenced state alive during backend destruction.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+        "line": 104,
+        "anchor": "std::unique_ptr<ProviderOwner> backend_;Providers providers_;"
+      }
+    },
+    {
+      "id": "cached_providers",
+      "result": "PASS",
+      "finding": "providers() is called once during construction and the references are reused by one facade.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 57,
+        "anchor": "providers_(checked_providers(backend_))"
+      }
+    },
+    {
+      "id": "null_backend",
+      "result": "PASS",
+      "finding": "A missing provider owner fails before publishing or constructing a live binding.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 8,
+        "anchor": "if(!owner)throw std::invalid_argument"
+      }
+    },
+    {
+      "id": "state_binding",
+      "result": "PASS",
+      "finding": "bind_state receives the final owned state after all facade/bootstrap fields have initialized; its no-publication/no-workers contract is explicit.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 58,
+        "anchor": "backend_->bind_state(configuration_,flags(console_));"
+      }
+    },
+    {
+      "id": "delayed_publication",
+      "result": "PASS",
+      "finding": "publish is allowed only in Constructed; global binding publication happens after the RuntimeOwner constructor has completed.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 67,
+        "anchor": "if(phase_!=Phase::Constructed)throw"
+      }
+    },
+    {
+      "id": "permanent_errors",
+      "result": "PASS",
+      "finding": "Errors is an external borrowed process-lifetime policy and explicitly outlives post-close/post-destruction entry attempts, matching retained native last_errors.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+        "line": 84,
+        "anchor": "// Permanent errors must outlive ALL future native-entry attempts"
+      }
+    },
+    {
+      "id": "stable_address",
+      "result": "PASS",
+      "finding": "Copy and move are both disabled; published Bootstrap/dependency addresses remain stable.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+        "line": 94,
+        "anchor": "RuntimeOwner(RuntimeOwner&&)=delete"
+      }
+    },
+    {
+      "id": "controlled_entry_access",
+      "result": "PASS",
+      "finding": "Owner exposes application entry only in Bound phase and exposes no mutable facade/bootstrap getter.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 83,
+        "anchor": "if(phase_!=Phase::Bound)throw"
+      }
+    },
+    {
+      "id": "quiescence_contract",
+      "result": "PASS",
+      "finding": "stop_and_join must stop all admission and future callbacks, including pending/suspended workers; active_calls0 alone is insufficient.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+        "line": 47,
+        "anchor": "// True promises all admission sources stopped"
+      }
+    },
+    {
+      "id": "failed_close",
+      "result": "PASS",
+      "finding": "False/exception from stop_and_join leaves the backend, bootstrap and binding alive in Stopping for explicit retry; no implicit rollback/free.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 76,
+        "anchor": "if(!backend_->stop_and_join())return false;"
+      }
+    },
+    {
+      "id": "busy_close",
+      "result": "PASS",
+      "finding": "Busy native Binding::close rejection likewise occurs before reset/Closed and retains the published owner.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 77,
+        "anchor": "binding_->close();"
+      }
+    },
+    {
+      "id": "successful_close",
+      "result": "PASS",
+      "finding": "After quiescence and successful native close, the optional binding resets before phase becomes Closed; repeated close is idempotent.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 73,
+        "anchor": "if(phase_==Phase::Closed)return true;"
+      }
+    },
+    {
+      "id": "destructor_contract",
+      "result": "PASS",
+      "finding": "Busy control or Bound/Stopping destruction terminates rather than silently unpublishing or freeing resources whose pending callbacks may still exist.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 63,
+        "anchor": "if(control_busy_||phase_==Phase::Bound||phase_==Phase::Stopping)std::terminate();"
+      }
+    },
+    {
+      "id": "reentrancy_guard",
+      "result": "PASS",
+      "finding": "A control scope rejects reentrant publish/close before changing the phase, preserves the outer busy flag on rejected nested construction, and clears the flag after false returns or exceptions.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 15,
+        "anchor": "if(busy_)throw std::logic_error"
+      }
+    },
+    {
+      "id": "entry_strategy",
+      "result": "PASS",
+      "finding": "This source supplies application-layer composition only: no PE entry, CRT initialization, double-CRT route,export body or native ABI completion is claimed.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.hpp",
+        "line": 81,
+        "anchor": "// Application-layer composition only: no PE entry is installed"
+      }
+    },
+    {
+      "id": "concrete_types",
+      "result": "PASS",
+      "finding": "Compile-time checks require a nonabstract facade/owner, one unambiguous BootstrapDependencies conversion, and stable nonmovable owner.",
+      "source": {
+        "path": "outputs/anadius-bootstrap-owner-source/owner.cpp",
+        "line": 86,
+        "anchor": "static_assert(!std::is_abstract_v<BootstrapFacade>);"
+      }
+    }
+  ],
+  "finding_count": 23,
+  "reused_source_hashes": {
+    "anadius-source/bootstrap.hpp": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210",
+    "anadius-source/bootstrap.cpp": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+    "anadius-config-startup-source/startup.hpp": "324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e",
+    "anadius-config-startup-source/startup.cpp": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+    "anadius-bootstrap-native-source/native_entries.hpp": "3236b76f45c43f277ac17f03dde98cbbd88462ff6f93f384737fa8cb85582d5d",
+    "anadius-bootstrap-native-source/native_entries.cpp": "624447b6c93172343368d8162fbc8964b9339ac03f1f4b12d4253bdf4499c3ed",
+    "anadius-thread-source/threads.hpp": "ab28bd3937e109ff088fe40344af2491c8f8f5c6d69891d62fdfd331356824c8",
+    "anadius-thread-source/threads.cpp": "3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9"
+  },
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_typed_source_closures": 0,
+  "single_bootstrap_dependencies_base": true,
+  "concrete_composition_types": [
+    "anadius::bootstrap_owner::BootstrapFacade",
+    "anadius::bootstrap_owner::RuntimeOwner"
+  ],
+  "mandatory_service_policy_count": 17,
+  "production_backend_instantiation_ready": false,
+  "production_dll_readiness": "BLOCKED",
+  "full_native_equivalence_review_complete": false,
+  "source_role": "New composition and lifecycle policy. Prior source-backed config/thread routing is reused; remaining mandatory policies are not relabeled as recovered bodies.",
+  "limits": [
+    "No concrete OS/application ProviderOwner is supplied. providers/bind_state/quiescence contracts remain required from B3 and later source integration.",
+    "Services forwarding does not close its17 native policy implementations; worker pointers still need rebuilt worker/backend/global state owners.",
+    "stop_and_join must exclude late exit/terminate registration callbacks as well as worker callbacks. Without that concrete guarantee successful close is not established.",
+    "Control lifecycle calls belong to one serialized control thread; reentry is explicitly rejected. The control flag is not a cross-thread lock or synchronization mechanism.",
+    "Compiler/recovered CRT entry strategy, TLS/global startup, physical MSVC object ABI, exceptions/SEH and full DLL lifecycle remain open.",
+    "No native function body, existing typed native provider closure, original-image execution or DLL entry installation is added by this composition."
+  ],
+  "original_read_performed": false,
+  "original_execution": false,
+  "original_modification": false,
+  "reviewer_source_modification": false,
+  "reviewer_test_execution": false
+}

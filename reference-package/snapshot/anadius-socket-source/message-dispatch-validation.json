@@ -1,0 +1,47 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "b72ec00752f898e0e76d197bf5be380c4efa6ebca9e74781bf004a88327e3a2e",
+  "test_results": [
+    {
+      "module": "socket_message_dispatch",
+      "result": "PASS",
+      "output": "PASS: 621 socket message dispatch core checks; actual021770/028d30 normal bodies, two executor copies, live delete target, precise string/control/closure ownership and bounded call-prefix tests",
+      "executable_sha256": "9cede9bbfd6aef24f33a5eb14395ff9e3f39cba1c4b90dcca2b7a9d2476454ab"
+    },
+    {
+      "module": "socket_message_dispatch_integration",
+      "result": "PASS",
+      "output": "PASS: 199 socket message dispatch integration checks; actual025480/05e8e0/05e7a8/021770/028d30/033d70 source, compatibility XML parser/serializer, immediate and deferred synthetic thread, owned021420 response adapter",
+      "executable_sha256": "e961782395c674c79650fe25680d2918ea99736cd609adc52612ec25bbaf89fb"
+    }
+  ],
+  "core_checks": 621,
+  "integration_checks": 199,
+  "source_hashes": {
+    "message_dispatch.hpp": "e29de315e311d2d5bf8129db745102415609fb140de1f74ea121150efa142e01",
+    "message_dispatch.cpp": "a8ca45a775c0fcd6bd485075ad3d459f8fd208a4922ade32e521c37bc2870014",
+    "message_dispatch_test_fixture.hpp": "5303f262fc735dd066d6ce857fe60c051cbafcaaec62210f318dd94e5723e2af",
+    "message_dispatch_tests.cpp": "9708f14c02f4a1171811fb2c715319bf95925aa1cc76d7658a5017475d83107c",
+    "message_dispatch_integration_tests.cpp": "0f7a35999e69a4472158eac7a4bf8f2b27266b72a604e96d4babde04a00c8d6f",
+    "build.ps1": "c18db1e4233ab18e6bd9d4b32b0fe850bd345b63e3ca7e281b0d36d3de299aa6",
+    "CMakeLists.txt": "c84f1f842acf4b898db5263f738b7dec8bec3b6b8f82fca4c9aebf2c04c7b655"
+  },
+  "original_procedures_added": 2,
+  "execution_scope": "021770/028d30 normal bodies; actual025480 and unchanged05e8e0/05e7a8 plus existing033d70; synthetic immediate/deferred thread, selected normal-return string/XML compatibility, controlled021420 owned response consumer",
+  "not_executed_by_new_tests": [
+    "021420 native body",
+    "028270 native write queue",
+    "025c40/R1/R2",
+    "027710 and handler scheduling",
+    "027c10/outer worker",
+    "original DLL/game or real OS threads/network"
+  ],
+  "core_callee_injection": "Explicit isolated021770 invoker parameter only; recovered token router uses actual028d30",
+  "previous_local_records": "24 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

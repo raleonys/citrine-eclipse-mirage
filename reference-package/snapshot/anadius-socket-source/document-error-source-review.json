@@ -1,0 +1,77 @@
+{
+  "schema": "document-error.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-26",
+  "reviewer": "/root/error_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent complete retained005820 assembly/pseudocode, exact current production CPP/HPP, and retained static-data provenance review. One bounded byte-state source body plus one historical provider bridge; native formatting and caller-stack/variadic ABI remain mandatory/unproven. No reviewer original reads, native analysis or tests.",
+  "reviewed_source_hashes": {
+    "document_error.hpp": "504d941b18a12857808ef04f06339146757c1c3de382ae99f78a38643c39b732",
+    "document_error.cpp": "b3968b14cf10b3a1d82f6db2073bd592783c70a14da6c36d31514e588fad8c14"
+  },
+  "addresses": [
+    "0x180005820"
+  ],
+  "assembly_evidence": "ev_37353162f9f968089bd3417314183c72cd998b61cac28d808f7e0959bf88f494",
+  "pseudo_evidence": "ev_188aa01332032bd7a9db079cf67ce66428557de9e6be37670dd091066a5e2ce8",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 1,
+  "prior_source_presence": "module_record_only",
+  "closed_providers": [
+    {
+      "address": "0x180005820",
+      "base": "NativeDocumentEffects::set_error_005820",
+      "closure": "RecoveredDocumentErrorEffects::set_error_005820",
+      "body": "set_document_error_005820",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "findings": [
+    "Signed32 error id is sign-extended for wrapping64 table-slot arithmetic. Raw32 error and line stores at+6c/+90 precede the first ownership phase; caller values remain cached despite lower mutations of document cells.",
+    "First flags+78 bit0x200 test controls pointer-only free of live+80; flags/start/end are cleared in that exact order. No synthetic null/allocation guard, bounds check or sized-free argument is introduced.",
+    "Temporary allocation requests1000bytes before table QWORD lookup. Selected identity constants are values only; original pointer identities are never invoked as host functions.",
+    "Header formatter0060a0 receives destination,1000,header-format,name pointer,error-id decimal,error-id raw32 hex,line raw32. Assembly005880/00588b/00589d supplies stack arguments omitted from pseudocode. Return value is discarded as in native entry.",
+    "Optional nonzero format performs bytewise NUL scan,separator0060a0 attemp+used/capacity1000-used,then a fresh full temporary NUL scan and detail006110 with the caller-supplied opaque tail. Unsigned capacity subtraction and wrapping address/count arithmetic are retained; host va_list behavior is not invented.",
+    "Separator typed projection intentionally contains only its consumed destination/capacity/constant-format operands. Assembly does not reestablish a meaningful additional R9 argument, and the constant colon-space format consumes none.",
+    "Second ownership phase rereads live flags/start after lower formatters. Its optional free may mutate temporary bytes, and final NUL scan correctly follows that free plus all three clear stores.",
+    "Final allocation requests cached-length+1; result is published atdoc+80 before copy. The copy uses cached allocated pointer,temp,length+1. After copy,live doc+80 is reread and end=liveStart+cachedLength is computed before flags0x200 publication/end store.",
+    "Cached temporary pointer is freed last. No RAII cleanup, synthetic rollback or native unwind behavior is added on failed bounded mappings or lower effects.",
+    "RecoveredDocumentErrorEffects retains earlier parse-entry/document/node/pool source bridges, adds exactly finalset_error005820,and requires explicit invocation-tail context. The bridge snapshots externally supplied opaque context rather than capturing native caller-stack arguments.",
+    "One normal tagged function and one final tagged override map one native address; formatting wrappers0060a0/006110 and native variadic capture are context-only,not additional recovered source bodies.",
+    "Two exact formatting constants and19name strings have hash-bound retained raw-byte support. Error pointer slots at0a1010 are outside the broad retained read and remain separately labelled historical focused PE-audit metadata; fixture table bytes are not shipped raw-slot proof."
+  ],
+  "limitations": [
+    "Bounded byte-state source projection with mandatory injected lower effects only. Native register/object/stack/caller-varargs/va_list/fault/EH/concurrency equivalence remains unproven.",
+    "Caller must supply a valid per-invocation argument-tail context and its lifetime. Explicit opaque0 is still caller-supplied data,not proof of valid native argument absence or a recovered native frame.",
+    "Native formatter0060a0/006110 implementations,locale/CRT details,error-name raw pointer-slot acquisition,native allocator/copy/free semantics,parser/DOM and full DLL reconstruction remain open.",
+    "Source tests,formatter fixtures and bounded memory mappings cannot establish original-binary execution or native fault behavior. No total DLL completion percentage is derived."
+  ],
+  "retained_data": {
+    "file": "document-error-retained-data.json",
+    "sha256": "80249602ab08e7a69669252b21051c9d5536c6ae66fcbc041704cd930f47e10b",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "format_constants_count": 2,
+    "verified_name_strings": 19,
+    "pointer_slots_raw_read_bound": false,
+    "new_original_read_performed": false
+  },
+  "full_native_equivalence_review_complete": false,
+  "native_document_error_fully_closed": false,
+  "native_error_formatting_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false,
+  "new_native_analysis": false,
+  "CRT_production": "unchanged and paused"
+}

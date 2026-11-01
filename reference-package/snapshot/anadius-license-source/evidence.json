@@ -1,0 +1,713 @@
+{
+  "artifact": {
+    "path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "image_base": "0x180000000",
+    "rdata_va": "0x18007f000",
+    "rdata_file_offset": "0x7d800"
+  },
+  "evidence_type": "Retained Ghidra assembly/pseudocode plus bounded read-only ASCII literal reads",
+  "target_execution": "none",
+  "functions": [
+    {
+      "va": "0x18002e3b0",
+      "rva": "0x02e3b0",
+      "asm_evidence": "ev_592ffe3ba5103bc35cd252aa302b431fa51364ef65e2a49229ba39bdf25731a6",
+      "pseudo_evidence": "ev_33624c87853573a8e7b3efe065f830b8be05beda34cb0c9af0879cf7456993d4"
+    },
+    {
+      "va": "0x180030c50",
+      "rva": "0x030c50",
+      "asm_evidence": "ev_11169253548ac4c11bc638b18cdcccad4a04c43710db7fe5c0c7af8c4d8fe263",
+      "pseudo_evidence": "ev_d1dc86b5f6657591728da569e088134c9c5dae2ace13ea7bb1fd3cca8a7f42c5"
+    },
+    {
+      "va": "0x1800320c0",
+      "rva": "0x0320c0",
+      "asm_evidence": "ev_f589cb381fc9264d56d27cb114d0044bb60d3c34eddeafa46a7a36ee411e5883",
+      "pseudo_evidence": "ev_5c9367a9fdfab1d294c42fc48cbdb827f0cb9f4e56c3f220270debd2c4ab2732"
+    }
+  ],
+  "supporting_functions": [
+    {
+      "va": "0x18002af30",
+      "asm_evidence": "ev_b045aa79b4f2c1fabb580b482f52edf099392dda05721838cf45876772a166ec",
+      "pseudo_evidence": "ev_a3e5ae032e3e308b95adb084795bc14e06bb970454ba2a3735f6cfe2057a72cd"
+    },
+    {
+      "va": "0x18002a690",
+      "asm_evidence": "ev_b43ef440d36ef94fbca3f4d8d073ec321071735e2500cad8c42d9f2762c4be56",
+      "pseudo_evidence": "ev_6db33fe909a205d25966562e27f56a71646ed2819afe416c1ee650c5120ddc5c"
+    },
+    {
+      "va": "0x180018b30",
+      "asm_evidence": "ev_be1df69c675342becd3b9973974d00ba9f8df66db50a36754773d6b63a48d47d",
+      "pseudo_evidence": "ev_ecec8c894dbb2c2ad0c69942af167263b894a8f71e0298e2f7379fd291c7415a"
+    },
+    {
+      "va": "0x18000e120",
+      "asm_evidence": "ev_daa6edcdc64d142c82b289395237ecf6df6ddc403b22c7dc3c988f869be59611",
+      "pseudo_evidence": "ev_10862633c6e4104753810f9acde38e7bb612799eadefb180ec6aca524a9a7ab3"
+    },
+    {
+      "va": "0x18001e3f0",
+      "asm_evidence": "ev_e03b42b7c273986d5f0ec19b39f0b3ae4ea17a0dcaa96b147ad62f68b91fdd86",
+      "pseudo_evidence": "ev_6f9b270934c4dd6867889982d63e74d4217b99a89ee8cf551a95445bb05785d6"
+    },
+    {
+      "va": "0x180016ab0",
+      "asm_evidence": "ev_ae151539e348bd19097ee8ccaf023025634f42ecfca40b618e35c5b9b236c50a",
+      "pseudo_evidence": "ev_daf792cd6217238dd7a411530cf9c54a1280ee6061f0a68394124f91aea13f7b"
+    },
+    {
+      "va": "0x180018ab0",
+      "asm_evidence": "ev_6a454aad3f211b3e35c913573f9e39c154e70d6f2aa5cd3173638b726c3a4b86",
+      "pseudo_evidence": "ev_a5af7054dabc352a335ac115f1a90322a8a4bfb7a1b588ad1ea4106faf9ddd6b"
+    },
+    {
+      "va": "0x18002b3f0",
+      "asm_evidence": "ev_02722add8acfaaf5f8dfee845d135bb7d079d3bbc3631620cb4ce4e05a86015e",
+      "pseudo_evidence": "ev_57d7e0f9d878bf5b1f86c139d90c8a53c1635ff4ec9c2a162b236cec975b6999"
+    },
+    {
+      "va": "0x18002b3b0",
+      "asm_evidence": "ev_b9747ec5baa765b1d0b48f1bddb0501fe42a05bab90b00a874b0c68ebe491b31",
+      "pseudo_evidence": "ev_d4e9f6f3f23c282b59d83ddf0a34d1a4fbea68acaabd5bc75f894551de723b38"
+    },
+    {
+      "va": "0x180042d20",
+      "asm_evidence": "ev_5affdbb15dd51e3abe55d5492c9818a764b456d08959db245a1d7706ea07b21f",
+      "pseudo_evidence": "ev_623c45d57f05388b470a69f932625a137bf84ac3deeff45fdbe6a041da0d62be"
+    },
+    {
+      "va": "0x18002afa0",
+      "asm_evidence": "ev_a7558f47235b97ae63f5e8f421acdeb244d0f4b2dce270af9d63155d51882ffd",
+      "pseudo_evidence": "ev_04449e8ea04e6070ee6e08f154ab89caf69f6ac8d856f3421b01bb665f27e927"
+    }
+  ],
+  "finding_ledger": [
+    {
+      "claim": "GetAuthCode requires ClientId presence, preserving empty values",
+      "locations": [
+        "0x18002e3cf",
+        "0x18002e3de",
+        "0x18002e3e1"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Online callback nonempty value replaces local fallback; empty leaves it unchanged",
+      "locations": [
+        "0x18002e3e7",
+        "0x18002e413",
+        "0x18002e448",
+        "0x18002e450",
+        "0x18002e468"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "InvalidateLicense only clears in-memory string, then emits literal XML",
+      "locations": [
+        "0x180030c68",
+        "0x180030c88",
+        "0x180030c8b",
+        "0x180030cc4"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Blocked guard precedes DLL hash-length, name, status and actual hash validation",
+      "locations": [
+        "0x1800320ee",
+        "0x1800320fb",
+        "0x180032109",
+        "0x180032129",
+        "0x180032174"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Status error throws only when error!=0 and ((uint32(kind)-1)&0xfffffff7)!=0; kind must equal 2 to continue",
+      "locations": [
+        "0x18003213f",
+        "0x180032143",
+        "0x180032146",
+        "0x180032151",
+        "0x18003286c"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Persistent signed counter loops while <2; normal file at counter 0, cached file for every other counter",
+      "locations": [
+        "0x180032188",
+        "0x180032191",
+        "0x1800321a0",
+        "0x1800321b2",
+        "0x180032228",
+        "0x1800322a7",
+        "0x1800322a9"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "No license sets blocked before both ticket attribute reads; absent attribute returns false without unblocking",
+      "locations": [
+        "0x1800322c6",
+        "0x1800322da",
+        "0x1800322ef",
+        "0x1800322fa",
+        "0x180032303",
+        "0x180032736"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Ticket text is built from configured display/version, path filenames, hash text, and request C strings; no license-success result is synthesized",
+      "locations": [
+        "0x1800323ba",
+        "0x1800323e5",
+        "0x180032431",
+        "0x180032479",
+        "0x1800324c1",
+        "0x1800324e3",
+        "0x180032511",
+        "0x180032577",
+        "0x180032595",
+        "0x1800325b7"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Non-default DLL filename is case-sensitive compared with dbdata.dll and converted twice on mismatch",
+      "locations": [
+        "0x180032502",
+        "0x180032511",
+        "0x180032524",
+        "0x180032540"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Ticket log emits below-marker, full stored-length text, above-marker; save path is parent/prefix plus appended converted timestamp suffix",
+      "locations": [
+        "0x180032613",
+        "0x180032620",
+        "0x18003262f",
+        "0x180032642",
+        "0x180032654",
+        "0x180032665",
+        "0x180032688",
+        "0x1800326a9",
+        "0x1800326cb"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Ticket branch checks Wine once before log and again only on failed save; every successful diagnostic path terminates with exit(-1)",
+      "locations": [
+        "0x1800325bc",
+        "0x1800326d2",
+        "0x1800329a1",
+        "0x180032a05"
+      ],
+      "type": "observed-assembly"
+    },
+    {
+      "claim": "Portable class/Effects interfaces and null-provider diagnostic are reconstruction design, not original source/ABI",
+      "locations": [
+        "license.hpp",
+        "license.cpp"
+      ],
+      "type": "reconstruction-design"
+    }
+  ],
+  "literals": [
+    {
+      "va": "0x180083870",
+      "file_offset": "0x82070",
+      "byte_count_including_nul": 2,
+      "text": "0",
+      "bytes_hex": "3000",
+      "referenced_by": [
+        "0x180030c50",
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180083960",
+      "file_offset": "0x82160",
+      "byte_count_including_nul": 13,
+      "text": "DISPLAY_NAME",
+      "bytes_hex": "444953504c41595f4e414d4500",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180083978",
+      "file_offset": "0x82178",
+      "byte_count_including_nul": 18,
+      "text": "INSTALLED_VERSION",
+      "bytes_hex": "494e5354414c4c45445f56455253494f4e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x1800839a0",
+      "file_offset": "0x821a0",
+      "byte_count_including_nul": 8,
+      "text": "License",
+      "bytes_hex": "4c6963656e736500",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180083a08",
+      "file_offset": "0x82208",
+      "byte_count_including_nul": 11,
+      "text": "dbdata.dll",
+      "bytes_hex": "6462646174612e646c6c00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180084c70",
+      "file_offset": "0x83470",
+      "byte_count_including_nul": 13,
+      "text": "ErrorSuccess",
+      "bytes_hex": "4572726f725375636365737300",
+      "referenced_by": [
+        "0x18002e3b0",
+        "0x180030c50"
+      ]
+    },
+    {
+      "va": "0x180084c80",
+      "file_offset": "0x83480",
+      "byte_count_including_nul": 5,
+      "text": "Code",
+      "bytes_hex": "436f646500",
+      "referenced_by": [
+        "0x18002e3b0",
+        "0x180030c50"
+      ]
+    },
+    {
+      "va": "0x180084c88",
+      "file_offset": "0x83488",
+      "byte_count_including_nul": 12,
+      "text": "Description",
+      "bytes_hex": "4465736372697074696f6e00",
+      "referenced_by": [
+        "0x18002e3b0",
+        "0x180030c50"
+      ]
+    },
+    {
+      "va": "0x1800851d8",
+      "file_offset": "0x839d8",
+      "byte_count_including_nul": 2,
+      "text": "|",
+      "bytes_hex": "7c00",
+      "referenced_by": [
+        "0x1800320c0",
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085570",
+      "file_offset": "0x83d70",
+      "byte_count_including_nul": 9,
+      "text": "ClientId",
+      "bytes_hex": "436c69656e74496400",
+      "referenced_by": [
+        "0x18002e3b0"
+      ]
+    },
+    {
+      "va": "0x180085580",
+      "file_offset": "0x83d80",
+      "byte_count_including_nul": 42,
+      "text": "You need to be online to get an AuthCode.",
+      "bytes_hex": "596f75206e65656420746f206265206f6e6c696e6520746f2067657420616e2041757468436f64652e00",
+      "referenced_by": [
+        "0x18002e3b0"
+      ]
+    },
+    {
+      "va": "0x1800855b0",
+      "file_offset": "0x83db0",
+      "byte_count_including_nul": 12,
+      "text": "-1577058293",
+      "bytes_hex": "2d3135373730353832393300",
+      "referenced_by": [
+        "0x18002e3b0"
+      ]
+    },
+    {
+      "va": "0x1800855c0",
+      "file_offset": "0x83dc0",
+      "byte_count_including_nul": 9,
+      "text": "AuthCode",
+      "bytes_hex": "41757468436f646500",
+      "referenced_by": [
+        "0x18002e3b0"
+      ]
+    },
+    {
+      "va": "0x1800855cc",
+      "file_offset": "0x83dcc",
+      "byte_count_including_nul": 6,
+      "text": "value",
+      "bytes_hex": "76616c756500",
+      "referenced_by": [
+        "0x18002e3b0"
+      ]
+    },
+    {
+      "va": "0x180085920",
+      "file_offset": "0x84120",
+      "byte_count_including_nul": 88,
+      "text": "\"DenuvoDllHash\" is missing or invalid. Make sure you have the right \"anadius.cfg\" file.",
+      "bytes_hex": "2244656e75766f446c6c4861736822206973206d697373696e67206f7220696e76616c69642e204d616b65207375726520796f752068617665207468652072696768742022616e61646975732e636667222066696c652e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085978",
+      "file_offset": "0x84178",
+      "byte_count_including_nul": 13,
+      "text": "Bad dll hash",
+      "bytes_hex": "42616420646c6c206861736800",
+      "referenced_by": [
+        "0x1800320c0",
+        "0x1800320c0",
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085990",
+      "file_offset": "0x84190",
+      "byte_count_including_nul": 88,
+      "text": "\"DenuvoDllName\" is missing or invalid. Make sure you have the right \"anadius.cfg\" file.",
+      "bytes_hex": "2244656e75766f446c6c4e616d6522206973206d697373696e67206f7220696e76616c69642e204d616b65207375726520796f752068617665207468652072696768742022616e61646975732e636667222066696c652e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x1800859e8",
+      "file_offset": "0x841e8",
+      "byte_count_including_nul": 13,
+      "text": "Bad dll name",
+      "bytes_hex": "42616420646c6c206e616d6500",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085a00",
+      "file_offset": "0x84200",
+      "byte_count_including_nul": 123,
+      "text": "\" file has incorrect hash.\n\nThat usually means you didn't update your game or you didn't update \"not a crack\"/\"fixed exe\".",
+      "bytes_hex": "222066696c652068617320696e636f727265637420686173682e0a0a5468617420757375616c6c79206d65616e7320796f75206469646e27742075706461746520796f75722067616d65206f7220796f75206469646e27742075706461746520226e6f74206120637261636b222f22666978656420657865222e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085a7c",
+      "file_offset": "0x8427c",
+      "byte_count_including_nul": 2,
+      "text": "\"",
+      "bytes_hex": "2200",
+      "referenced_by": [
+        "0x1800320c0",
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085a80",
+      "file_offset": "0x84280",
+      "byte_count_including_nul": 14,
+      "text": "RequestTicket",
+      "bytes_hex": "526571756573745469636b657400",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085a90",
+      "file_offset": "0x84290",
+      "byte_count_including_nul": 13,
+      "text": "TicketEngine",
+      "bytes_hex": "5469636b6574456e67696e6500",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085aa0",
+      "file_offset": "0x842a0",
+      "byte_count_including_nul": 116,
+      "text": "\"ContentId\" is missing or set to \"0\". Make sure you have the \"anadius.cfg\" file in the same folder as the game exe.",
+      "bytes_hex": "22436f6e74656e74496422206973206d697373696e67206f722073657420746f202230222e204d616b65207375726520796f752068617665207468652022616e61646975732e636667222066696c6520696e207468652073616d6520666f6c646572206173207468652067616d65206578652e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085b18",
+      "file_offset": "0x84318",
+      "byte_count_including_nul": 15,
+      "text": "Bad content ID",
+      "bytes_hex": "42616420636f6e74656e7420494400",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085b30",
+      "file_offset": "0x84330",
+      "byte_count_including_nul": 88,
+      "text": "\"DenuvoExeHash\" is missing or invalid. Make sure you have the right \"anadius.cfg\" file.",
+      "bytes_hex": "2244656e75766f4578654861736822206973206d697373696e67206f7220696e76616c69642e204d616b65207375726520796f752068617665207468652072696768742022616e61646975732e636667222066696c652e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085b88",
+      "file_offset": "0x84388",
+      "byte_count_including_nul": 13,
+      "text": "Bad exe hash",
+      "bytes_hex": "42616420657865206861736800",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085ba0",
+      "file_offset": "0x843a0",
+      "byte_count_including_nul": 120,
+      "text": "\" file has incorrect hash.\n\nThat usually means you have the new \"not a crack\"/\"fixed exe\" but you opened the wrong exe.",
+      "bytes_hex": "222066696c652068617320696e636f727265637420686173682e0a0a5468617420757375616c6c79206d65616e7320796f75206861766520746865206e657720226e6f74206120637261636b222f22666978656420657865222062757420796f75206f70656e6564207468652077726f6e67206578652e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085c18",
+      "file_offset": "0x84418",
+      "byte_count_including_nul": 4,
+      "text": " (v",
+      "bytes_hex": "20287600",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085c1c",
+      "file_offset": "0x8441c",
+      "byte_count_including_nul": 4,
+      "text": "; \"",
+      "bytes_hex": "3b202200",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085c20",
+      "file_offset": "0x84420",
+      "byte_count_including_nul": 29,
+      "text": "\") is protected by Denuvo.\n\n",
+      "bytes_hex": "22292069732070726f7465637465642062792044656e75766f2e0a0a00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085c40",
+      "file_offset": "0x84440",
+      "byte_count_including_nul": 5,
+      "text": "exe:",
+      "bytes_hex": "6578653a00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085c48",
+      "file_offset": "0x84448",
+      "byte_count_including_nul": 6,
+      "text": ";dll:",
+      "bytes_hex": "3b646c6c3a00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085c50",
+      "file_offset": "0x84450",
+      "byte_count_including_nul": 2,
+      "text": ";",
+      "bytes_hex": "3b00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085c54",
+      "file_offset": "0x84454",
+      "byte_count_including_nul": 3,
+      "text": "\n\n",
+      "bytes_hex": "0a0a00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085c60",
+      "file_offset": "0x84460",
+      "byte_count_including_nul": 456,
+      "text": "Wine support is bad. Only some games work with this method. Most of them need a new token every time you start the game, so you will never be able to play them like that. This must be because of something Wine does that makes Denuvo think you're on a new machine with each launch.\n\nThat's why I recommend dual booting Windows or installing it in a virtual machine.\n\nDON'T send your ticket to my bot unless you're 100% sure this method works for this game.",
+      "bytes_hex": "57696e6520737570706f7274206973206261642e204f6e6c7920736f6d652067616d657320776f726b20776974682074686973206d6574686f642e204d6f7374206f66207468656d206e6565642061206e657720746f6b656e2065766572792074696d6520796f75207374617274207468652067616d652c20736f20796f752077696c6c206e657665722062652061626c6520746f20706c6179207468656d206c696b6520746861742e2054686973206d7573742062652062656361757365206f6620736f6d657468696e672057696e6520646f65732074686174206d616b65732044656e75766f207468696e6b20796f75277265206f6e2061206e6577206d616368696e6520776974682065616368206c61756e63682e0a0a546861742773207768792049207265636f6d6d656e64206475616c20626f6f74696e672057696e646f7773206f7220696e7374616c6c696e6720697420696e2061207669727475616c206d616368696e652e0a0a444f4e27542073656e6420796f7572207469636b657420746f206d7920626f7420756e6c65737320796f75277265203130302520737572652074686973206d6574686f6420776f726b7320666f7220746869732067616d652e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085e28",
+      "file_offset": "0x84628",
+      "byte_count_including_nul": 14,
+      "text": "Wine detected",
+      "bytes_hex": "57696e6520646574656374656400",
+      "referenced_by": [
+        "0x1800320c0",
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085e38",
+      "file_offset": "0x84638",
+      "byte_count_including_nul": 24,
+      "text": "\n\nDENUVO TICKET ABOVE\n\n",
+      "bytes_hex": "0a0a44454e55564f205449434b45542041424f56450a0a00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085e50",
+      "file_offset": "0x84650",
+      "byte_count_including_nul": 24,
+      "text": "\n\nDENUVO TICKET BELOW\n\n",
+      "bytes_hex": "0a0a44454e55564f205449434b45542042454c4f570a0a00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085e68",
+      "file_offset": "0x84668",
+      "byte_count_including_nul": 15,
+      "text": "Denuvo_ticket_",
+      "bytes_hex": "44656e75766f5f7469636b65745f00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085e78",
+      "file_offset": "0x84678",
+      "byte_count_including_nul": 5,
+      "text": ".txt",
+      "bytes_hex": "2e74787400",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085e80",
+      "file_offset": "0x84680",
+      "byte_count_including_nul": 32,
+      "text": "Your ticket has been saved to:\n",
+      "bytes_hex": "596f7572207469636b657420686173206265656e20736176656420746f3a0a00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085ea0",
+      "file_offset": "0x846a0",
+      "byte_count_including_nul": 13,
+      "text": "Ticket saved",
+      "bytes_hex": "5469636b657420736176656400",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085eb0",
+      "file_offset": "0x846b0",
+      "byte_count_including_nul": 167,
+      "text": "At the moment of writing this message you can't copy dialogue text when running the game through Wine by pressing Ctrl+C.\n\nCopy your ticket from the terminal instead.",
+      "bytes_hex": "417420746865206d6f6d656e74206f662077726974696e672074686973206d65737361676520796f752063616e277420636f7079206469616c6f6775652074657874207768656e2072756e6e696e67207468652067616d65207468726f7567682057696e65206279207072657373696e67204374726c2b432e0a0a436f707920796f7572207469636b65742066726f6d20746865207465726d696e616c20696e73746561642e00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085f58",
+      "file_offset": "0x84758",
+      "byte_count_including_nul": 37,
+      "text": "Press Ctrl+C to copy this message.\n\n",
+      "bytes_hex": "5072657373204374726c2b4320746f20636f70792074686973206d6573736167652e0a0a00",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085f80",
+      "file_offset": "0x84780",
+      "byte_count_including_nul": 15,
+      "text": "Token required",
+      "bytes_hex": "546f6b656e20726571756972656400",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085f90",
+      "file_offset": "0x84790",
+      "byte_count_including_nul": 23,
+      "text": "RequestLicenseResponse",
+      "bytes_hex": "526571756573744c6963656e7365526573706f6e736500",
+      "referenced_by": [
+        "0x1800320c0"
+      ]
+    },
+    {
+      "va": "0x180085fa8",
+      "file_offset": "0x847a8",
+      "byte_count_including_nul": 17,
+      "text": "License Deleted.",
+      "bytes_hex": "4c6963656e73652044656c657465642e00",
+      "referenced_by": [
+        "0x180030c50"
+      ]
+    }
+  ],
+  "limitations": [
+    "Three typed application handlers only; no original MSVC ABI/global layout",
+    "Mandatory file/hash/token/provider effects are not implementations",
+    "Synthetic tests do not establish original runtime equivalence",
+    "Null online C-string return is outside observed valid input domain; portable code throws a diagnostic"
+  ]
+}

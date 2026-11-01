@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 3528,
+  "integration_checks": 593,
+  "output": "PASS: 3528 socket composed write core checks; five retained normal bodies, independent slice model, current TLS cache, weak ownership, live buffer reload, wrap arithmetic, early publication, fallback, exceptions and real synthetic heap lifetime ends\nPASS: 593 socket composed write integration checks; actual021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends",
+  "source_hashes": {
+    "composed_write.hpp": "12adee25325e0a9b56dc229ced9cf56768de2ec0f35312ee173c8a6293e9ef08",
+    "composed_write.cpp": "ae72cf24ff9e0ff0f4c0ecd93061f6e0538cbefda526cc945b7aed47c10b6e48",
+    "composed_write_native.hpp": "23f85015f11ef464ffd2b6501c5a70ee21b8d5f9cbc016e3e7cfd7c2bdc060cb",
+    "composed_write_native.cpp": "0aa0b7fa775156f28f18c16a7c5314979ef112c765de13d695996e3d3c5f454e",
+    "composed_write_tests.cpp": "fa3ed9c6ce59fdc02e5daad5b7a240252bac48231d58c6eacbf1de181ae5264c",
+    "composed_write_integration_tests.cpp": "3ba52f504faa2203ad29d24b63773507baadc1e800f3b8622943f241065f2abe",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 5,
+  "execution_scope": "021fd0/0261d0/0269b0/028b50/028c00 retained normal bodies: independent flag/progress/error/64KiB slice matrix and unsigned wrap, current TLS pool0/1 allocation, live buffer reload after constructor and weak release, weak low32 ownership, work32 increment, exact injected WSASend then unconditional immediate WSAGetLastError, status remap, queued CAS and same-gate fallback; actual021fd0/0298b0/027c10/IO routing/027a20/recovered handler scheduler/0261d0 three-chunk continuation, borrowed and owned paths, first2 and4/5 cache reuse, native early completion key2 preservation and key0 fallback metadata replacement, actual heap lifetime ends",
+  "required_providers": "023dd0 environment constructor,025a70 application/deque/log finish,04b0bc allocator/04b788 free, native weak deletion and handler factory/scheduler/move/destroy,GS TLS/guard CRT/exception storage and ABI ownership remain required; CRT production unchanged and paused",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; bounded raw bytes and typed SDK OVERLAPPED/packet/handler projections are separate, not native0xd0 overlay; unspecified allocator tag omitted; deterministic injected SDK calls and synthetic lifetime/race handshake do not prove native concurrency/heap/SEH, binary or full DLL equivalence; no original/game/real SDK socket/network/TLS/IOCP/event/thread/wait or user cfg/token/achievement execution/read"
+}

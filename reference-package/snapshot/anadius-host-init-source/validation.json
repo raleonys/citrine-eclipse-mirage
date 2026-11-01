@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-17T19:39:19.3404293Z",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "result": "PASS",
+  "tests": "PASS 6013 host initialization checks",
+  "target_execution": "none; synthetic dependency mocks only",
+  "runtime_equivalence": "unverified",
+  "sources": [
+    {
+      "file": "build.ps1",
+      "sha256": "0933a26e7b5ab7aa683be05fc67b94998cd2f489333f55830e22872120d6c6a1"
+    },
+    {
+      "file": "evidence.json",
+      "sha256": "56d5664e2e99306d15c8d2225c3b349ebf42338baaee1962bc50000943a222c6"
+    },
+    {
+      "file": "host_init_tests.cpp",
+      "sha256": "00725f7f9ac380694b10800a76503faa82763e8d7244fb9068e774956f741a78"
+    },
+    {
+      "file": "host_init.cpp",
+      "sha256": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b"
+    },
+    {
+      "file": "host_init.hpp",
+      "sha256": "0ef5afbf19ad7452ddfc4ed54ed1dd0789f6c42eb9a47bc9dbccc1aa4cc35ba7"
+    },
+    {
+      "file": "README.md",
+      "sha256": "8d88cfdc05e3b75e2e4dda5596674df5fb01970e238a828d6f8fbf22a0cb7560"
+    }
+  ]
+}

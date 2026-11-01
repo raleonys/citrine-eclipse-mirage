@@ -1,0 +1,26 @@
+{
+  "kind": "new source composition, not another original function/class ABI",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "body_evidence": [
+    "../anadius-crt-locale-update-source/evidence.json",
+    "../anadius-crt-locale-thread-source/evidence.json",
+    "../anadius-crt-find-bridge-source/evidence.json"
+  ],
+  "chains": [
+    "argv/classification/mbsdec/codepage -> actual058b04 -> actual064ef0/064f5c -> actual070968/0709d8 and06f658/06f540",
+    "required PTD -> actual064b90/064d08 source with cached FLS fixture and LastError preservation",
+    "old multibyte free -> actual0668c0 source and existing shared heap State/Effects",
+    "locale add/release/free, locks and atomic refs -> mandatory existing ptd_data Effects provider",
+    "same PTD bytes+88/+90/+3a8 -> existing byteclass/previous/codepage normal cleanup cores"
+  ],
+  "checks": 8553,
+  "review": "../anadius-crt-locale-update-source/review-bridge.json",
+  "limits": [
+    "Global initializers/lifetimes and concurrency are caller contracts, not recovered complete image setup",
+    "Fresh returned Context.ptd=0 on fast paths is new unused metadata; original constructor preserves that field",
+    "Cached FLS and deep locale/lock/atomic/Heap/native API effects are synthetic in this suite",
+    "Optional error PTD provider remains independent; no claim all FLS/error providers are globally unified",
+    "No broad Unicode/ctype-mask integration, indexed state helpers or original SEH/unwind/ABI equivalence claim",
+    "No original/rebuilt DLL/game execution or input mutation"
+  ]
+}

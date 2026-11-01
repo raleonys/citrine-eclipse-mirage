@@ -1,0 +1,12 @@
+/* 0x180001390 FUN_180001390; Evidence ev_efabeb808ec83eafa7cf73d31a8eea8067c2a2ba4230bcadb12e84dfb1c8f66e */
+
+void FUN_180001390(void)
+
+{
+  FUN_180036d20(&DAT_1800a39e0);
+  atexit((_func_5014 *)&LAB_18007e0c0);
+  return;
+}
+
+
+

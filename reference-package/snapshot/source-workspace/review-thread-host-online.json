@@ -1,0 +1,94 @@
+{
+  "reviewed_at": "2026-10-17T19:41:11.2424194Z",
+  "reviewer": "Independent read-only REA skill worker review_thread_core",
+  "evidence": "Retained REA/Ghidra assembly and pseudocode under original artifact SHA2569e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "target_execution": "none",
+  "reviews": [
+    {
+      "folder": "anadius-thread-source",
+      "functions": [
+        "18005e7a8",
+        "18005e818",
+        "18005e87c",
+        "18005e8e0",
+        "18005e9bc",
+        "180038970"
+      ],
+      "result": "No actionable findings",
+      "scope": "Context layout, error/cleanup order, sentinel comparisons, success ownership and bootstrap bridge; actual native CRT/PTD/EH excluded",
+      "followup": "Added early context destruction success scenario after review; no production code changes",
+      "sources": [
+        {
+          "path": "anadius-thread-source/thread_tests.cpp",
+          "sha256": "4116607e2554cae3a4e8de3da495900dfcfac2517feee011d129fb890de471b8"
+        },
+        {
+          "path": "anadius-thread-source/threads.cpp",
+          "sha256": "3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9"
+        },
+        {
+          "path": "anadius-thread-source/threads.hpp",
+          "sha256": "ab28bd3937e109ff088fe40344af2491c8f8f5c6d69891d62fdfd331356824c8"
+        }
+      ]
+    },
+    {
+      "folder": "anadius-host-init-source",
+      "functions": [
+        "18000e310",
+        "18000f120",
+        "180046970"
+      ],
+      "result": "No actionable findings",
+      "scope": "Version request/masks, registry insertion order, hook lookup/create/enable/append, state on exceptions; actual callback/patch engine/native ABI excluded",
+      "sources": [
+        {
+          "path": "anadius-host-init-source/host_init_tests.cpp",
+          "sha256": "00725f7f9ac380694b10800a76503faa82763e8d7244fb9068e774956f741a78"
+        },
+        {
+          "path": "anadius-host-init-source/host_init.cpp",
+          "sha256": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b"
+        },
+        {
+          "path": "anadius-host-init-source/host_init.hpp",
+          "sha256": "0ef5afbf19ad7452ddfc4ed54ed1dd0789f6c42eb9a47bc9dbccc1aa4cc35ba7"
+        }
+      ]
+    },
+    {
+      "folder": "anadius-online-source",
+      "functions": [
+        "180035b00",
+        "180035b60",
+        "180035bd0",
+        "1800366f0",
+        "18003cf00"
+      ],
+      "result": "No actionable findings",
+      "scope": "Status errors, trailing/empty/NUL fields, profile exactly3, online flag/getter ordering, normal-path cleanup, recovered composition; provider/native ABI excluded",
+      "sources": [
+        {
+          "path": "anadius-online-source/online_tests.cpp",
+          "sha256": "63b11d362aaefae64143e3a8642193285456420dcd9ef1f4c8d1cef7877b7428"
+        },
+        {
+          "path": "anadius-online-source/online.cpp",
+          "sha256": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c"
+        },
+        {
+          "path": "anadius-online-source/online.hpp",
+          "sha256": "51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b"
+        },
+        {
+          "path": "anadius-online-source/recovered_effects.cpp",
+          "sha256": "07ca212e276421f44ec0d3c109ff0a23b35c01266d9a97349b61396944729ef3"
+        },
+        {
+          "path": "anadius-online-source/recovered_effects.hpp",
+          "sha256": "7259015541eb690bd45e9a7dab99afe4637fd2a1774051454ad230ee7e890bdd"
+        }
+      ]
+    }
+  ]
+}

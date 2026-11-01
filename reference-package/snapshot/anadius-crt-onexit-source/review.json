@@ -1,0 +1,82 @@
+{
+  "result": "PASS bounded independent static review; no source corrections requested",
+  "reviewer": "cookie_thunk_lifecycle",
+  "reviewed_at": "2026-10-18T09:32:15.8058642Z",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "sources": [
+    {
+      "path": "onexit.cpp",
+      "sha256": "96e60bcef164e4080021377ecb9d743125939664e349e82ddf7debfd0aecb547"
+    },
+    {
+      "path": "onexit.hpp",
+      "sha256": "a219b3b518a1080824933947daa031c8047e85e32699bfc9f4bc908be6398e9e"
+    },
+    {
+      "path": "onexit_tests.cpp",
+      "sha256": "bb38205746ddd50b26f107dcf6e6133c9f942133bbacb7ab2fe238c2e4f4374d"
+    },
+    {
+      "path": "evidence.json",
+      "sha256": "3e7f752f3113fffa4c15b7a08da48656257fe420c17863f9883ba41d20047129"
+    },
+    {
+      "path": "README.md",
+      "sha256": "95f9f9758667a75ab1450f3289f9924dbb60b255b6adccb604515c8aef21fed0"
+    }
+  ],
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "existing_validation": {
+    "sha256": "82ba6319f18b0a67ded270461c0fdb2065a73767b3c0939b1a136f9e8e69f89e",
+    "result": "PASS",
+    "tests": "PASS 15570 checks: onexit table normal flow, opaque storage and rebuilt synthetic callbacks",
+    "independently_rerun": false
+  },
+  "checks": [
+    {
+      "anchors": "064100..064127,0641e4..06425d",
+      "conclusion": "ROL64 encode/ROR64 decode and cookie reloads match normal provider-transparent memory paths"
+    },
+    {
+      "anchors": "064133..064198",
+      "conclusion": "SAR by3 represented as unsigned bit pattern; CMOVA selects512 iff old_count>512; zero growth32; unsigned carry bypasses primary attempt; fallback old_count+4; both allocation paths free nullptr before testing result"
+    },
+    {
+      "anchors": "06419e..0641d3",
+      "conclusion": "Tail fill uses unsigned wrapped ceil(length/8), zeroed when end>limit, with cookie snapshot and post-fill reload"
+    },
+    {
+      "anchors": "0642d2..0642da",
+      "conclusion": "Unsigned (begin-1)>UINT64_MAX-2 excludes exactly decoded begin0 and UINT64_MAX"
+    },
+    {
+      "anchors": "0642e0..064355",
+      "conclusion": "Reverse SUB8/CMPunsigned; original cleared-slot cookie held inR14 across callbacks; callback decode cookie R8/CL reloads; begin/end mutation restarts from current end"
+    },
+    {
+      "anchors": "064357..064389",
+      "conclusion": "Final allocation freed unless current begin==-1; cookie reloaded after free then table reset; initial begin0/-1 early exit preserves table"
+    },
+    {
+      "anchors": "06405c..0640d2,0643b4..064467",
+      "conclusion": "Lock2 before nullable body and unlock2 on normal return; exceptions/unwind explicitly outside scope"
+    },
+    {
+      "anchors": "04b734..04b782",
+      "conclusion": "Raw application begin==-1 selects CRT table; successful _onexit returns supplied callback including0; atexit returns-1 for callback0"
+    },
+    {
+      "anchors": "0642ef..064357",
+      "conclusion": "For valid allocated-empty table begin=end and aligned nonzero begin>=8, subtract8 is below begin; no callback read, allocation is freed then table reset; opaque uint64 arithmetic avoids C++ pointer subtraction UB"
+    }
+  ],
+  "findings": [],
+  "limitations": [
+    "Normal flow only; no native CRT/original DLL execution; no SEH/EH/CFG/XFG equivalence claim",
+    "Callback same-thread registration supported; arbitrary cookie mutation preserving old encodings is not supported",
+    "Malformed storage addresses/span order and callback nested execution that invalidates outer scan remain outside valid lifetime/bounds contract",
+    "Existing synthetic group has no dedicated nonnull allocated-empty table fixture; path was verified against assembly without claiming an executed fixture",
+    "Provider read/write operations must be semantically transparent accesses to valid storage; synthetic effect side effects altering unrelated global state are not original memory semantics"
+  ]
+}

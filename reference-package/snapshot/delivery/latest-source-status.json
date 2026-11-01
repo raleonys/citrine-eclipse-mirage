@@ -1,0 +1,44 @@
+{
+  "schema": "fresh-full-build-delivery.v1",
+  "updated_at": "2026-11-01T18:35:16.689528+00:00",
+  "scope": "Fresh clean full common-build results and source delivery",
+  "full_common_build_run": true,
+  "current_sources": 1017,
+  "objects": 296,
+  "cpp_objects": 292,
+  "c_objects": 4,
+  "normal_groups": 356,
+  "framework_terminal_cases": 19,
+  "full_build_proof": {
+    "path": "source-workspace/full-build-verification.json",
+    "sha256": "9ce48ba8a579fa51f375c1e57240d8c9a2d14088bd26ce90222202ab4626a24d"
+  },
+  "source_snapshot": {
+    "path": "source-workspace/source-snapshot.json",
+    "sha256": "34b84a9f1a12a48e58f886d76524976858def5b5782ebdcd3bfb4eca380e2047"
+  },
+  "production_DLL_link": {
+    "path": "dll-link-gate-source/current-full-link.json",
+    "sha256": "6e835573a5b3b7337621bc222a0ab8debe1624617e6e5b3679b97ea17ad808a8",
+    "whole_archive": true,
+    "readiness": "BLOCKED",
+    "dll_created": false,
+    "undefined_symbols": [
+      "anadius::dll_link_gate::require_loader_attach_runtime(HINSTANCE__*, void*)",
+      "anadius::dll_link_gate::require_loader_detach_quiescence(HINSTANCE__*, void*)"
+    ]
+  },
+  "compiled_artifact_policy": "Only freshly regenerated canonical common build, hook fixture and full-link diagnostic trees are included. Previous per-module build binaries and focused-artifact tree omitted. Historical textual evidence remains dated.",
+  "fresh_artifact_roots": [
+    "source-workspace/build",
+    "hook-engine-source/testing/build",
+    "dll-link-gate-source/build-current-full"
+  ],
+  "removed_old_entries_count": 3499,
+  "historical_B54_records": "source-workspace/history/B54/",
+  "original_inputs_rechecked": false,
+  "original_targets_executed": false,
+  "blocked_version_files_accessed": false,
+  "toolchain_included": false,
+  "synthetic_DLL_note": "owned_reference_fixture.dll is our own TEST fixture, not a production replacement DLL"
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "async-receive.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180021d10",
+      "pseudo_evidence": "ev_d716892e207f1ae8230bf4ba5b7cce514f147811c107c7c9812d3b205fe10abf",
+      "assembly_evidence": "ev_cb69360436ddc454d9ea6ddc971cd6cbc8fa39ab9ec36acaba00a999bd388274",
+      "newly_recovered": true
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180021d10"
+  ],
+  "new_original_procedures": 1,
+  "context_functions": [
+    {
+      "address": "0x1800269b0",
+      "pseudo_evidence": "ev_0c7504dc089c22b188406a74817295196cc8a5422d0c58100e40ce078253ba9c",
+      "assembly_evidence": "ev_586096def6fb76b35ed73eb2537b5179396be2688df8b2b1f3eae25366596e73",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180023dd0",
+      "pseudo_evidence": "ev_d162fd99180d0294652d44b39fe2cceaf384a9996b3bae0f40e08fd0e2ac7f82",
+      "assembly_evidence": "ev_747feac84362fbb739d9c68cee8e8fbc51d55c081309ddaa794f2c19a13f7fac",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180028b50",
+      "pseudo_evidence": "ev_4cd499c90aa2c873056ab0577de3c976776a6225dba31287ff7bb0c5e26fd9c3",
+      "assembly_evidence": "ev_74dbc4b50b84117c1dbbb54892dc26facd77da66434072f8d19653fe28600196",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180028c00",
+      "pseudo_evidence": "ev_68da7f3569738e82ce651786d7b8273c01ff51932b8530ff9e502a18021c2bf6",
+      "assembly_evidence": "ev_4b5ff1e2f1d04186333f6a462ab01c20a6a558a918c5f97ad7456fba5c427db1",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800293f0",
+      "pseudo_evidence": "ev_3ae73ab0a728103ea5b1dac7b8823e06a3f850d5f744b5739526298c54b3491c",
+      "assembly_evidence": "ev_2952336be67b99eb58841e45901763cbb9ef1cf6777392aa3dc5e2afedf21b2d",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180027710",
+      "pseudo_evidence": "ev_7da3b743355f442a593ae330a5db5226466c68b92f7b80398a37115ffdb0ad0e",
+      "assembly_evidence": "ev_875f068c4cc67a67b326e00dd8beda8a6e4921fdd8deb40f82ad55921e27dfea",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "async_receive.hpp": "4ec52308070b4d7dc017dcc2b2cabb61af4cd34c743b8499b9114ae7da344d35",
+    "async_receive.cpp": "6d215e4abc6d25a72240b7938b1c91ba1326dfffd8de367be75e9778602f454f",
+    "async_receive_test_fixture.hpp": "2aa196d2d494c9912494682f3e097a5cfa9fac4e8b877b0ad9855868bc784992",
+    "async_receive_tests.cpp": "d45bf5a1e3c8a0f7b90d855cbe0dabf2b253ffb60691fed35bfa91a85566e9bd",
+    "async_receive_integration_tests.cpp": "69b9ce5be9d4893298e22e864d696058bc7fd27e58d8ccb24f8c4357b0e2509b",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba",
+    "README.md": "6bb58270a686b99ddb76625fbedaf4ed8e4bd06998203eb6c5aeae8167324388"
+  },
+  "support_hashes": {
+    "async-receive-evidence.pseudo.c.txt": "13f7d2c6a59f0e8513ba1662c3e457a6c5b75b8865b14b4846e8d83a3e1e7940",
+    "async-receive-evidence.asm.txt": "dc0b7576e4721e9a98aecb6f2f6a99dc1a08042b98f079aab6b444a15aa189cf",
+    "async-receive-context.pseudo.c.txt": "b6bdc4619b834cee4e271328ea9b466587ce41a215c020434c64586c17f10a62",
+    "async-receive-context.asm.txt": "cbda25ac8b2d11a940a5bee669ff1e296ddbc1a45c727f3fa51611d698a75b91",
+    "async-receive-flow-audit.md": "e131dacd2eea8893c70f2ec89af5cbaae46fa8920b64f8bf5e7bba94f91cec89"
+  },
+  "review": {
+    "scope": "Same-agent retained assembly/source comparison and synthetic tests",
+    "independent_review_complete": false
+  },
+  "REA": {
+    "session_identity_checked": true,
+    "version": "6.5.0",
+    "alignment": "aligned",
+    "ghidra_available": "12.1.4",
+    "new_analysis_started": false,
+    "retained_evidence_reused": true
+  },
+  "normal_flow_only": true,
+  "core_checks": 691,
+  "integration_checks": 1270,
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "remaining": [
+    "010040/008350 buffer contract",
+    "025c40 composed receive and caller connection",
+    "025480/0280d0 native frame bridge",
+    "native storage/vtable/reference/global/RTTI/ABI/concurrency/EH/SEH/fullDLL"
+  ]
+}

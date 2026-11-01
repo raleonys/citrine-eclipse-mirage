@@ -1,0 +1,190 @@
+{
+  "schema": "rea-minhook-upstream-fixture-validation-v1",
+  "result": "PASS",
+  "checks": 379,
+  "upstream": "Official MinHook 1.3.4 compatibility dependency; not recovered original source",
+  "engine_units": [
+    "hook.c",
+    "buffer.c",
+    "trampoline.c",
+    "hde64.c"
+  ],
+  "execution": "Only the synthetic fixture EXE was executed. All selected engine Win32 API call sites redirected at compile time to ReaTest functions. No native hook APIs, real thread enumeration/suspension/context changes, executable allocations or code execution.",
+  "address_scope": "Owned aligned std::array data buffers only; generated trampolines and relays read as bytes, never called",
+  "coverage": [
+    "Lifecycle/status/failures",
+    "5-byte patch/restore and absolute relay",
+    "7-byte hotpatch/restore",
+    "Queued/all hooks",
+    "80-hook table and buffer growth",
+    "Actual HDE64 decoding",
+    "Actual RIP/CALL/Jcc/JMP relocation",
+    "Fake instruction pointer mapping and thread failure paths",
+    "Fake module/symbol resolution"
+  ],
+  "limits": [
+    "No Windows memory protection or real hook execution validation",
+    "No concurrency or real scheduling validation",
+    "Fake VirtualAlloc returns reachable owned aligned pages rather than reserving requested OS addresses",
+    "No claim of original bundled MinHook exact-version equivalence"
+  ],
+  "commands": [
+    {
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang.exe",
+      "arguments": [
+        "-std=c17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-include",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\fake_win32.h",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\vendor\\minhook\\src\\hook.c",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hook.fake.obj"
+      ]
+    },
+    {
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang.exe",
+      "arguments": [
+        "-std=c17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-include",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\fake_win32.h",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\vendor\\minhook\\src\\buffer.c",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\buffer.fake.obj"
+      ]
+    },
+    {
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang.exe",
+      "arguments": [
+        "-std=c17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-include",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\fake_win32.h",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\vendor\\minhook\\src\\trampoline.c",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\trampoline.fake.obj"
+      ]
+    },
+    {
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang.exe",
+      "arguments": [
+        "-std=c17",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-include",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\fake_win32.h",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\vendor\\minhook\\src\\hde\\hde64.c",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hde_hde64.fake.obj"
+      ]
+    },
+    {
+      "executable": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\fixture_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\fake_win32.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hook.fake.obj",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\buffer.fake.obj",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\trampoline.fake.obj",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hde_hde64.fake.obj",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hook-engine-fixture-tests.exe"
+      ]
+    }
+  ],
+  "objects": [
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hook.fake.obj",
+      "sha256": "e9c0dfc0ae9576694760a5790f1fe805faeadfc980cef978fec3a02612726371"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\buffer.fake.obj",
+      "sha256": "c5721c406dbbdd8828d94a8fdc1b07d0d07d075f6e938b875c5982312601d0ce"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\trampoline.fake.obj",
+      "sha256": "efe3360e695d46a4f4f817c328b8bda150a6ae4a06a28004c57ff09be19288ae"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hde_hde64.fake.obj",
+      "sha256": "165b05905be2b2e451e49d951549f6a8de8109e6e4d0adc9dbb3f42445fa331d"
+    }
+  ],
+  "imported_api_symbols_in_fixture_C_objects": [],
+  "undefined_symbols": [
+    "",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hook.fake.obj:",
+    "         U AllocateBuffer",
+    "         U CreateTrampolineFunction",
+    "         U FreeBuffer",
+    "         U InitializeBuffer",
+    "         U IsExecutableAddress",
+    "         U ReaTestCloseHandle",
+    "         U ReaTestCreateToolhelp32Snapshot",
+    "         U ReaTestFlushInstructionCache",
+    "         U ReaTestGetCurrentProcess",
+    "         U ReaTestGetCurrentProcessId",
+    "         U ReaTestGetCurrentThreadId",
+    "         U ReaTestGetLastError",
+    "         U ReaTestGetModuleHandleW",
+    "         U ReaTestGetProcAddress",
+    "         U ReaTestGetThreadContext",
+    "         U ReaTestHeapAlloc",
+    "         U ReaTestHeapCreate",
+    "         U ReaTestHeapDestroy",
+    "         U ReaTestHeapFree",
+    "         U ReaTestHeapReAlloc",
+    "         U ReaTestInterlockedCompareExchange",
+    "         U ReaTestInterlockedExchange",
+    "         U ReaTestOpenThread",
+    "         U ReaTestResumeThread",
+    "         U ReaTestSetThreadContext",
+    "         U ReaTestSleep",
+    "         U ReaTestSuspendThread",
+    "         U ReaTestThread32First",
+    "         U ReaTestThread32Next",
+    "         U ReaTestVirtualProtect",
+    "         U UninitializeBuffer",
+    "",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\buffer.fake.obj:",
+    "         U ReaTestGetSystemInfo",
+    "         U ReaTestVirtualAlloc",
+    "         U ReaTestVirtualFree",
+    "         U ReaTestVirtualQuery",
+    "",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\trampoline.fake.obj:",
+    "         U IsExecutableAddress",
+    "         U hde64_disasm",
+    "         U memcpy",
+    "",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hde_hde64.fake.obj:"
+  ],
+  "executable": {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\hook-engine-source\\testing\\build\\hook-engine-fixture-tests.exe",
+    "sha256": "64b282130f2e69c0e940caa1e6696c75b5516960db886f87dca291460d6eb826"
+  },
+  "output": [
+    "hook_engine_fixture: 379 checks passed; upstream C engine, fake Win32, data buffers only"
+  ]
+}

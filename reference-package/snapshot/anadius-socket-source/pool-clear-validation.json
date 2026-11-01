@@ -1,0 +1,73 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "5b73557656d54cb07ac7b60fdfb434249b20e1a40e7a4299e3ac56a565a95f9d",
+  "test_results": [
+    {
+      "module": "socket_pool_clear",
+      "result": "PASS",
+      "output": "PASS: 117 pool clear core checks; three bodies, LIFO/raw negative counts, live free mutations, decrement aliases, QWORD reset order and bounded failure prefixes; lower free/ABI/EH remain supplied",
+      "executable_sha256": "07223eeb693ee652a4b3fa0c0d63e89d6cc54a2d8befddcb6938fd643cf25190"
+    },
+    {
+      "module": "socket_pool_clear_integration",
+      "result": "PASS",
+      "output": "PASS: 13024 pool clear integration checks; four allocators scalar/SIMD through append/track/release/clear, retained-array reuse/regrowth and004280 four-pool parse-error cleanup; parser/heap/free supplied, nativeDOM/ABI/EH open",
+      "executable_sha256": "465df62e933b5f4b7dabe955989c58715d2331802a1a5cc348498f84ef2436af"
+    }
+  ],
+  "core_checks": 117,
+  "integration_checks": 13024,
+  "source_hashes": {
+    "pool_clear.hpp": "4fe3d1f5b73f8bbde7d02b049382dedec07548aebae9adaced5794c965d094b1",
+    "pool_clear.cpp": "126eb5ed1e17ea2c51ada009be36cb3db3800d4a75a043888f89dba919dd7208",
+    "pool_clear_test_fixture.hpp": "f663b2ff03b9de9003985d1f95fb93ad1ade21c533e5e7d9786bafbe37255c00",
+    "pool_clear_tests.cpp": "10dd1dead694d6c4bdb5f657845a64e5824f4be3428c9027902ecbd85ecf9e10",
+    "pool_clear_integration_tests.cpp": "f2194a276f9f990401a066ebd582e6448b0831298600eb8ddd1ed29bc883ebc3",
+    "build.ps1": "c2abea4d6cd14ae239dd615406cd3105bccfb072caafdab73da3e0e5bde59912",
+    "CMakeLists.txt": "14a072cafabce0c1713b60d18110d0640348237afa99793b1c68a311dc5f8aa0"
+  },
+  "original_procedures_added": 3,
+  "new_source_bridges": 3,
+  "new_source_allocation_adapters": 0,
+  "native_typed_providers_newly_closed": 3,
+  "new_unique_source_mapped_addresses": 3,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "pointer_only_free_interface_preserved": true,
+  "caller_edx_block_size_hints": {
+    "0x180002d70": 4080,
+    "0x180002dc0": 4056,
+    "0x180002e10": 4032
+  },
+  "execution_scope": "Three002d70/002dc0/002e10 normal pool block-clear projections plus three final NativeDocumentEffects clear_pool source bridges; nonzero raw count loop commits decrement before live slot/free and ends with ordered QWORD resets+68/+70/+78; pointer-only04b0f8 free and full pool destructor/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory",
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Three002d70/002dc0/002e10 normal pool block-clear projections plus three final NativeDocumentEffects clear_pool source bridges; nonzero raw count loop commits decrement before live slot/free and ends with ordered QWORD resets+68/+70/+78; pointer-only04b0f8 free and full pool destructor/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory",
+    "Entry/loop tests use raw nonzero DWORD pool+64,including negative values; no signed-positive clamp or artificial loop limit",
+    "Each iteration caches sign-extended old count then stores wrapping32 old-1 before reading live data pointer pool+8 or selected slot; slot address is data+old_signed_count*8-8 modulo64",
+    "Lower04b0f8 receives pointer only; callerEDX4080/4056/4032 are static callsite hints,not a new sizedfree ABI or native allocator recovery",
+    "Previous allocation/append composition still requires block04b0bc allocation/0793d0 fill plus array04b100 allocation/078d30 copy/04b0f8 free; clear recovers no additional lower CRT provider",
+    "After free,the loop rereads live count; data/count/slot mutations by lower effects remain observable; exceptions/bounds failures preserve committed prefix without synthetic rollback",
+    "Successful completion writes three QWORD zero stores in order at pool+68,+70,+78; no separate final writeforces count+64 tozero",
+    "Clear preserves vptr,array data pointer,capacity,inline bytes/stale entries; it neither frees array storage nor resets data toinline nor runs node destructors",
+    "Three final bridges close three historical NativeDocumentEffects providers (34→37);002d70 serves two pools but is counted once; each address has normal+bridge two tagged source variants,not two native functions",
+    "Prior two semantic session adapters and one separate allocation dispatcher remain unchanged; four full pool destructors remain context only",
+    "No new native import/data read; retained listings and complete previous SIMD/vtable evidence reused unchanged; REA checkpoint verifies identity/availability only",
+    "Originals never executed/modified; actual CFG/token/achievement contents never read; hash-only integrity separate; blocked version.dll/generated artifact never retried",
+    "CRT unchanged and paused; native free/pool destruction/node/parser/DOM/lifecycle/ABI/EH/concurrency remain open; full DLL incomplete and total completion percentage unmeasured"
+  ],
+  "previous_local_records": "43 earlier local records retain exact bytes and historical configuration hashes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

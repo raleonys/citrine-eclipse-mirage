@@ -1,0 +1,78 @@
+{
+  "schema": "owned-session-memory.composition-evidence.v1",
+  "source_package": "B33",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "functions": [],
+  "reused_normal_source_evidence": [
+    {
+      "path": "anadius-session-owner-source/evidence.json",
+      "sha256": "2ed47df47d12dfb1c4d554a39f0cf1a47cbc833090497738c3319d6f8a6e8471"
+    },
+    {
+      "path": "anadius-session-dispose-source/evidence.json",
+      "sha256": "c3aeb6fc97f0fb44becdb9676ddd75bd097e21a9c8d6c102acdf84d9ebb8b4eb"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer.cpp",
+      "sha256": "022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0"
+    }
+  ],
+  "reused_source_algorithms": [
+    "023000",
+    "026880",
+    "026570",
+    "017420",
+    "026290",
+    "010040",
+    "008350",
+    "024db0",
+    "027710",
+    "025480",
+    "021770",
+    "028d30"
+  ],
+  "modified_prior_sources": [
+    {
+      "path": "anadius-thread-domain-source/domain.hpp",
+      "before_sha256": "37bf2a7947afee97bf3a7fa12dabf6e64124eaeb84ae6c40f2d6731c84926276",
+      "after_sha256": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+      "reason": "Add enum and two read-only gated LastError-preserving allocation/poison observations so owned session domain never guesses physical-free outcome; existing allocation/free behavior unchanged."
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before_sha256": "0fd55b040243e7f88b6401ffaa73cebe8b8dc5d38441662f0b7aa811d2dcaf9c",
+      "after_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "reason": "Add enum and two read-only gated LastError-preserving allocation/poison observations so owned session domain never guesses physical-free outcome; existing allocation/free behavior unchanged."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b33-core-quick-results.json",
+      "sha256": "9e9f071e00fe68de9429e712f1185c8dd1845bdc90e8ab866758fdb7d99a2534",
+      "checks": 56,
+      "executable_sha256": "78706a6f770161842f08b85ba69648afa0a5a0a6a9fc554fb86ba7dc246b8800",
+      "archive_sha256_as_used": "c7e28bddd205edee8ebdae1bf42ef07663f9c0ccdec3ccd9c7353b912ef47afb",
+      "note": "Fresh memory.cpp and modified domain.cpp compiled explicitly before archive; archive may be historical/rebuilt, not assumed original-source proof"
+    },
+    {
+      "path": "work/b33-integration-quick-results.json",
+      "sha256": "481871c4b5c96b011846760f68c0aa1d8a9860f894e8e498513c8617b7587e98",
+      "checks": 45,
+      "executable_sha256": "8cb154956951ca6040b73e5de82df655fb98dd92fa0d2408ed2746aa40406b00",
+      "archive_sha256_as_used": "c7e28bddd205edee8ebdae1bf42ef07663f9c0ccdec3ccd9c7353b912ef47afb",
+      "note": "Fresh memory.cpp and modified domain.cpp compiled explicitly before archive; archive may be historical/rebuilt, not assumed original-source proof"
+    }
+  ],
+  "source_claim": "new owned source composition only; native suffixes inallocator/free/terminalAPI labeldelegatedcontracts,notadditionalnativefunctions",
+  "retained_REA_session": {
+    "path": "outputs/dll-link-gate-source/rea-session-summary.json",
+    "sha256": "0b5b3ea208e796872f6abb0c4452a1083dc208558b6e12651534121176bff49c",
+    "fresh_target_queries": 0
+  },
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "new_original_bytes_queried": 0
+}

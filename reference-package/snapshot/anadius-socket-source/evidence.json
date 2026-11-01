@@ -1,0 +1,112 @@
+{
+  "schema": "socket-normal-flow.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180028690",
+      "pseudo_evidence": "ev_68e5e01ef5c49226f1e664a3680d60bb8a9a73b30b25570c3b2f281991fabfed",
+      "assembly_evidence": "ev_f5e208e60a00b9e67c6ec94288e3198044cf274f0ddb46a5dd76b7989feb14f3"
+    },
+    {
+      "address": "0x18002a200",
+      "pseudo_evidence": "ev_f742a98635e622694b3ed7e3d308cf9cebd4433c8b26ca837d086ae0e52413eb",
+      "assembly_evidence": "ev_f13b91d447e6018ba93152c0b2fed70292acebd91afbd2c5c5496c6cd93ffe7b"
+    },
+    {
+      "address": "0x180028620",
+      "pseudo_evidence": "ev_fd2098bcb37a61e83ff7f76f095ba6d0fe598933164420bda64f6c6ef3920095",
+      "assembly_evidence": "ev_73535f6dec0ad639cf35346f8021a5b39597a421eb724714a6aec9986996b9f6"
+    },
+    {
+      "address": "0x180025720",
+      "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "operations.hpp": "a3b2c6b21d6a2d7b19f9f3245d08d5a450caa2bc8b95285fc19c9c94bdb833e2",
+    "operations.cpp": "63bc7fd32801a6f310492f1ff3f9a4bcc8f95a1f73b837d2bff81774ccea8ae7",
+    "native.hpp": "5a091dca8902e1116073bdc1fd44952191f53bbe0ff3a2a592b37d6ba3d57066",
+    "native.cpp": "2a608ec00e43aa90eb7b4e964214818a4d7b6e89f2b5f171048c36375e0a9048",
+    "operations_tests.cpp": "dfc890998e82096eccd0220b008825309922839cee2d28b037f0faa36a32f5e7",
+    "native_tests.cpp": "bf9588da4834d6015619440bb7f8fa3f398a0f28ccd21e7bc20f66dc8b52ce96",
+    "build.ps1": "f369b2bbce4ce18612c22a3a3198ffaaf9bcc4063ca6e948b9d46dbc0678aa7a",
+    "CMakeLists.txt": "201e745392a82342458058ba19c7eb94516be42c88e8f83ebae4652cd08757a7",
+    "README.md": "894f84e7734e2d431e7f8ab2c7099051ccc077a98a83e85312068d66ecd9f3a4"
+  },
+  "support_hashes": {
+    "evidence.pseudo.c.txt": "7f3c95fcbe522a1b7a31066e5125249ec5a64a923b459231628db4b1c0eb4e10",
+    "evidence.asm.txt": "f0d8b847bb5cdc8e41243221b07b49d1c2ee397e0928e9e075b929bde5a6e6d3",
+    "flow-audit.md": "0450cbc023152e66e5a80c83919b0d61d6e0384160e0fec2a2d0d68f8ddca742",
+    "flow-audit.json": "b45be625c8ac336208c4fc317a3e17855513c5466a014a6b5c16127957640c0c",
+    "review.md": "c6f52ac96eb1b4f0e72c69da782c7d83f8b361aeda2fad89db952ee2c39050a6",
+    "review.json": "e310dc56c24d9599fec123a12218ad8bb3a71dcb5ebc24c60c555a3348219291",
+    "rea-session.json": "38b78f49875dc6e65f179895fb37ccb39c6c45fcaf41acfc23dfa75e3d67a997"
+  },
+  "normal_source_procedures_added": [
+    "0x180028690",
+    "0x18002a200"
+  ],
+  "new_original_procedures": 2,
+  "category_028620": "Mandatory side-effect provider; no CRT internals newly recovered",
+  "claims": [
+    {
+      "addresses": [
+        "0x180028761",
+        "0x18002877d",
+        "0x180028786",
+        "0x18002878e"
+      ],
+      "finding": "ACP conversion count ignored in core; parse then category factory then LastError; undefined wide scratch excluded by typed adapter"
+    },
+    {
+      "addresses": [
+        "0x1800287cb",
+        "0x1800287d3",
+        "0x1800287d5",
+        "0x1800287f9"
+      ],
+      "finding": "Broadcast parse failure writes4FF then forces10022 and failure; not repaired into success"
+    },
+    {
+      "addresses": [
+        "0x18002a2df",
+        "0x18002a2e7",
+        "0x18002a351",
+        "0x18002a376",
+        "0x18002a390",
+        "0x18002a39e",
+        "0x18002a3d1"
+      ],
+      "finding": "Category-before-error even successful send; signed DWORD; name-function identity; wrapped nfds; select0 retries"
+    },
+    {
+      "addresses": [
+        "0x18002574b",
+        "0x1800258a4",
+        "0x1800258a8",
+        "0x1800258ae",
+        "0x1800258b3",
+        "0x1800258b7",
+        "0x1800258bb"
+      ],
+      "finding": "Caller supplies flags0, one WSABUF and live state/socket; only partial transport bridge recovered"
+    }
+  ],
+  "independent_production_review": "PASS; review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "SDK_execution": "All imports injected in tests; default import addresses typed but no real socket/WSAStartup/network invocation",
+  "unproven": [
+    "Native category singleton/guard/atexit internals",
+    "Undefined conversion scratch/partial SDK output/error padding/full64 address return",
+    "MSVC heap/stack/allocator/SEH/ABI",
+    "Native ASIO/IOCP/socket ownership/lifecycle/concurrency",
+    "Full DLL integration and original runtime differential"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_multibyte_bridge",
+    "result": "PASS",
+    "output": "PASS 10377 multibyte/init/publish/locale/PTD/argv/heap composition checks",
+    "executable_sha256": "76c94fc26a12836440e7bffd9cd06a6cbb71bad5053bfad12f8f11df27a5e7a7"
+  },
+  "execution_scope": "Actual support/control/LocaleUpdate/thread/PTD/heap/errno/invalid/argv composition; mandatory 06f674 builder and CP/FLS/atomic/native providers supplied by synthetic fixtures",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-multibyte-bridge-source/bridge_tests.cpp",
+      "sha256": "a71ecce34c9ae0cd736af49eb4d0d032aa068eb8ed25fc9006db5dc92753ad0c"
+    },
+    {
+      "path": "anadius-crt-multibyte-bridge-source/bridge.cpp",
+      "sha256": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5"
+    },
+    {
+      "path": "anadius-crt-multibyte-bridge-source/bridge.hpp",
+      "sha256": "83696a8c10727955f7185a8221d460d433a782650c37540ac845bb7e7fd2a522"
+    }
+  ]
+}

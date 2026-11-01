@@ -1,0 +1,114 @@
+{
+  "result": "PASS",
+  "source_package": "B49",
+  "build_record_sha256": "8957390acb269c0c68b07f0960b5fa1dd1e0ea4b6f06ae626714ec203448c32f",
+  "frozen_source_hashes": {
+    "stop.hpp": "5719ce2e77c5af5406477d3a62c681a3233ec54323484c805db625dbd259bba2",
+    "stop.cpp": "a503d69c6966b798a22e7ce00370be93905a48ee600839c05186f2cac719ea21",
+    "stop_tests.cpp": "5a48bbf709b6981b26ae0d126939a9ec53c8b1ec3a97ac4b024da4f704084b62",
+    "stop_integration_tests.cpp": "817bc0dc8bcd2590ddf8f54a8a9dc1ee8b04454f48243b76e16266a99b4a6bf2",
+    "../anadius-accept-source/owned.hpp": "011cf682eb0f9ffb30575ded5a184ca366ea88bf605421ee24eda5cfb72c74f9",
+    "../anadius-accept-source/owned.cpp": "aaa6e0c1cb126a1ac6b6515a5062a75a4c1f4cfa38bf2e7debccc8941732324c",
+    "../anadius-server-runtime-source/runtime.hpp": "c4a7ab815196c513b46d8312888a6210b78818f8aa77284eb013e655a3365ac0",
+    "../anadius-server-runtime-source/runtime.cpp": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b"
+  },
+  "objects": [
+    {
+      "object": "outputs/source-workspace/build/accept_stop.o",
+      "source": "anadius-accept-stop-source/stop.cpp",
+      "source_sha256": "a503d69c6966b798a22e7ce00370be93905a48ee600839c05186f2cac719ea21",
+      "production_sha256": "9f3f77d804efcb2fc169f805ec8fce20783b0948190bf5e28d50f99148f5fd98",
+      "fresh_path": "work/b49-freeze-accept_stop.o",
+      "fresh_sha256": "f45e3dd26319a3022105b0a62d8b26426ca193d9c0e890e91f70cb8a04f02dbb",
+      "normalized_sha256": "b66139113df431bdcb816cc4568bf0989e3dbf28b34f404912efcd25f09c4aee",
+      "fresh_normalized_sha256": "b66139113df431bdcb816cc4568bf0989e3dbf28b34f404912efcd25f09c4aee",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-accept-stop-source\\stop.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b49-freeze-accept_stop.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    },
+    {
+      "object": "outputs/source-workspace/build/owned_accept.o",
+      "source": "anadius-accept-source/owned.cpp",
+      "source_sha256": "aaa6e0c1cb126a1ac6b6515a5062a75a4c1f4cfa38bf2e7debccc8941732324c",
+      "production_sha256": "cf666e929ea3188160d18dd31011f80291e4420d6dbaea22eb172906f8faebc4",
+      "fresh_path": "work/b49-freeze-owned_accept.o",
+      "fresh_sha256": "3d6252cf0ee24b9cd5030226cd0f6f72cfe2e423194f81984d70500564b0a7d9",
+      "normalized_sha256": "0064a12bf50c7d949384749f3e3e07af927cb63961bac46f82d2388b494abc94",
+      "fresh_normalized_sha256": "0064a12bf50c7d949384749f3e3e07af927cb63961bac46f82d2388b494abc94",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-accept-source\\owned.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b49-freeze-owned_accept.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    },
+    {
+      "object": "outputs/source-workspace/build/server_runtime.o",
+      "source": "anadius-server-runtime-source/runtime.cpp",
+      "source_sha256": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b",
+      "production_sha256": "229c943252ae2b29f65cc465990e60b302c6db30639379211b92dd8ff234e70c",
+      "fresh_path": "work/b49-freeze-server_runtime.o",
+      "fresh_sha256": "8d57563eb413554dc0f9f3725add6fe8fbd6a567f1cecf72e1c5f11506638a5b",
+      "normalized_sha256": "d45838680ec163ee8bd276565d60066d18a006aef16670e20ecc6e07db0a6cd8",
+      "fresh_normalized_sha256": "d45838680ec163ee8bd276565d60066d18a006aef16670e20ecc6e07db0a6cd8",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-server-runtime-source\\runtime.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b49-freeze-server_runtime.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "scope": "Fresh identical-command final-source production compile; all bytes except COFF header timestamp equal."
+}

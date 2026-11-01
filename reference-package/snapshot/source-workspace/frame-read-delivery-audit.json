@@ -1,0 +1,66 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T20:35:37.532242+00:00",
+  "prior_package_sha256": "fe79803ac0dfd25d1853e4abf3d62cdfc510967307e534b000d9bcbef32e1391",
+  "prior_source_count": 541,
+  "unchanged_prior_sources": 541,
+  "added_sources": [
+    "anadius-socket-source/frame_read.cpp",
+    "anadius-socket-source/frame_read.hpp",
+    "anadius-socket-source/frame_read_integration_tests.cpp",
+    "anadius-socket-source/frame_read_test_fixture.hpp",
+    "anadius-socket-source/frame_read_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 546,
+  "current_documents": 214,
+  "native_objects": 181,
+  "cpp_objects": 177,
+  "c_objects": 4,
+  "normal_test_groups": 175,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 48,
+  "new_checks": 1531,
+  "new_tests": [
+    {
+      "module": "socket_frame_read",
+      "result": "PASS",
+      "output": "PASS: 1216 socket frame read core checks; addressed025480/0280d0 normal flow, independent payload/error/ownership oracles and controlled provider/lifetime mutations",
+      "executable_sha256": "8a59d5f274d63bcf4890c6d91dad71a0ed2f6a3ce9818c8a4d3cb99feb14c21f"
+    },
+    {
+      "module": "socket_frame_read_integration",
+      "result": "PASS",
+      "output": "PASS: 315 socket frame read integration checks; actual025480/0280d0/025c40/010040/008350/021d10/021a40 source loop, synthetic thread and controlled completion/environment adapters",
+      "executable_sha256": "744a5146c73d29710706c85dfabc910c30ea66bc2e2032fa093b4ab04ff85b81"
+    }
+  ],
+  "validation_mirror_pairs": 24,
+  "historical_module_records_preserved": 23,
+  "historical_config_references_preserved": 46,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "4d53d046abcdb71a32d8d72dc3852d71d3d144a7ea01dd99aed813564e9ed91b",
+  "inventory_data_checks": 7141,
+  "normal_source_procedures_added": [
+    "0x180025480",
+    "0x1800280d0"
+  ],
+  "new_original_procedures": 2,
+  "closed_provider": "RecoveredFrameReadApi::finish_frame_025480",
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual R4/R3/R1/R2/021a40 loop; controlled thread/environment/completion consumers; no new027710/scheduling/outerworker execution",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N1 021770/028d30 native message dispatch and owner/closure bindings"
+}

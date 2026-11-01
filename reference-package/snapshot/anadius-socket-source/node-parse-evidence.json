@@ -1,0 +1,214 @@
+{
+  "schema": "node-parse.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180004970",
+      "pseudo_evidence": "ev_01d06f0d09c426e84edfc80412a5b90481296b9b16734298cadd2cf8fceab53d",
+      "assembly_evidence": "ev_bab15aa72d1d1d2cb34f0a417872877e60c9e43b5b9530ac83290c1bbc58da0a",
+      "newly_recovered": true,
+      "recovery_scope": "004970 normal node-parse byte-state body plus selected known004970 dispatch adapter;depth guard,cached original document,local pair,branch-specific cleanup,append/closing ownership and return modes preserved;Identify/GetStr/prepare/compare/heterogeneous child parse/probes/destructor/pool/error transport/scratch/native ABI/EH remain mandatory"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180004970"
+  ],
+  "new_original_procedures": 1,
+  "new_source_bridges": 0,
+  "native_typed_providers_newly_closed": 0,
+  "closed_providers": [],
+  "new_source_allocation_adapters": 0,
+  "new_node_parse_source_adapters": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 1,
+  "adapter_is_additional_native_body": false,
+  "node_parse_source_adapters": [
+    {
+      "file": "outputs/anadius-socket-source/node_parse.cpp",
+      "class": "RecoveredNodeParseEffects",
+      "methods": [
+        "RecoveredNodeParseEffects::parse_virtual",
+        "RecoveredNodeParseEffects::parse_child_virtual"
+      ],
+      "body": "parse_node_004970",
+      "target": "0x180004970",
+      "kind": "selected-known-target-source-dispatch",
+      "historical_typed_provider_closure": false,
+      "generic_virtual_provider_fully_closed": false,
+      "mandatory_other_target_provider": "RecoveredNodeParseEffects::parse_other_virtual",
+      "mandatory_scratch_provider": "RecoveredNodeParseEffects::acquire_parse_scratch",
+      "native_abi_complete": false,
+      "scope": "004970 normal node-parse byte-state body plus selected known004970 dispatch adapter;depth guard,cached original document,local pair,branch-specific cleanup,append/closing ownership and return modes preserved;Identify/GetStr/prepare/compare/heterogeneous child parse/probes/destructor/pool/error transport/scratch/native ABI/EH remain mandatory"
+    }
+  ],
+  "source_allocation_adapters_added": [],
+  "existing_source_allocation_adapters_preserved": 1,
+  "pointer_only_free_interface_preserved": true,
+  "native_node_parse_004970_normal_body_ready": true,
+  "known_004970_source_dispatch_ready": true,
+  "native_indirect_parse_body_recovered": false,
+  "native_identify_0038b0_recovered": false,
+  "native_prepare_003aa0_recovered": false,
+  "native_materialize_0035e0_recovered": false,
+  "native_compare_05c550_recovered": false,
+  "native_variadic_abi_established": false,
+  "native_stack_scratch_established": false,
+  "heterogeneous_child_virtual_targets_closed": false,
+  "new_vtable_data_acquisition": false,
+  "new_native_analysis": false,
+  "prior_source_presence_transition": "module_record_only -> source_definition_mapped",
+  "context_functions": [
+    {
+      "address": "0x1800041b0",
+      "pseudo_evidence": "ev_d4270b9a2ca885be4b12cfa24f257c4c48568ce7a4cbd3234c71d483394ca0de",
+      "assembly_evidence": "ev_0161e7e54c7c2f628bb6bbf99adff0b97b85e09b7c8528365aa858c02fdd4a08",
+      "newly_recovered": false,
+      "context_scope": "Existing source or mandatory parser primitive/error/compare context;no new normal body"
+    },
+    {
+      "address": "0x180004280",
+      "pseudo_evidence": "ev_783e89582f054f61046e9c06b28ad2145076dbd6721a32cd6bfe2c615e85ff20",
+      "assembly_evidence": "ev_795f6b99b0b687dd3ceffca4901b4e92f2721869b41c336f72e0ba4c670d4a4f",
+      "newly_recovered": false,
+      "context_scope": "Existing source or mandatory parser primitive/error/compare context;no new normal body"
+    },
+    {
+      "address": "0x180005820",
+      "pseudo_evidence": "ev_188aa01332032bd7a9db079cf67ce66428557de9e6be37670dd091066a5e2ce8",
+      "assembly_evidence": "ev_37353162f9f968089bd3417314183c72cd998b61cac28d808f7e0959bf88f494",
+      "newly_recovered": false,
+      "context_scope": "Existing source or mandatory parser primitive/error/compare context;no new normal body"
+    },
+    {
+      "address": "0x1800038b0",
+      "pseudo_evidence": "ev_16c4bf124a34657d7d2d217f79a017802a074ddf7e1c559929f47750b79fdee5",
+      "assembly_evidence": "ev_e46dfd93352ef14c6e16936e419152588cc3aae4c071f99fdc01fe8f8145aae9",
+      "newly_recovered": false,
+      "context_scope": "Existing source or mandatory parser primitive/error/compare context;no new normal body"
+    },
+    {
+      "address": "0x180003aa0",
+      "pseudo_evidence": "ev_ce74b4f983309d2cc1be9c243fc3798203afe86b437ad9ffead5aaaad8d7c3cb",
+      "assembly_evidence": "ev_0b08898f12f5db24f44abc354495178632463f25a053f9ce71e2a4157571b4ef",
+      "newly_recovered": false,
+      "context_scope": "Existing source or mandatory parser primitive/error/compare context;no new normal body"
+    },
+    {
+      "address": "0x1800035e0",
+      "pseudo_evidence": "ev_5e71fdafa86c9cb6c66ad0d57972845920ad9cc67d23951b21164d5b586a0c01",
+      "assembly_evidence": "ev_704e716e4fcf7eead3762f34f5b8e311ff9f14a674ad542b9c79429b3efad5e0",
+      "newly_recovered": false,
+      "context_scope": "Existing source or mandatory parser primitive/error/compare context;no new normal body"
+    },
+    {
+      "address": "0x18005c550",
+      "pseudo_evidence": "ev_b80eb899e11d6b702a7ffb321f39385c8243e938100ca0bab91fa50873f2e599",
+      "assembly_evidence": "ev_1265a8105c59cc4cfd5c4df11c8e6dc54d8468c98caac40331272ec9c001ec38",
+      "newly_recovered": false,
+      "context_scope": "Existing source or mandatory parser primitive/error/compare context;no new normal body"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "node_parse.hpp": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a",
+    "node_parse.cpp": "c3f99be72328132e6917da81939cfb97fe8cff41bf246cdb33746af0defd5461",
+    "node_parse_test_fixture.hpp": "e9e6da7046043687a9f1175dd4b9711d1bcc1e23ae95ee7a4a48a4e23a0bb0b7",
+    "node_parse_tests.cpp": "0f8167890ca33fce80f573733154bcdf2ffe7661b49969d9e6f137790e6a6174",
+    "node_parse_integration_tests.cpp": "0ab60a41315624357395274438f64e9808e26701e3f6b78b987a5f8ff364c3e1",
+    "build.ps1": "8e90bc7846c2b04085c784ce5ddebb1fba831873c90f5795c7f38344989600ad",
+    "CMakeLists.txt": "d4523f1fb143a3b7b0258a582650569e4f50c6a7da2064d9b9cf0d5406bfe1d9",
+    "README.md": "ac4f1f06051ed70fc0104b406ced52062d5e75281575acb29edfaa4f8b01279d"
+  },
+  "reused_source_hashes": {
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "document_error.hpp": "504d941b18a12857808ef04f06339146757c1c3de382ae99f78a38643c39b732",
+    "document_error.cpp": "b3968b14cf10b3a1d82f6db2073bd592783c70a14da6c36d31514e588fad8c14",
+    "parse_entry.hpp": "b6d7e9ad9613b738068ae51ec3aeac7ee094937356712dfd80b6ee94a1830734",
+    "parse_entry.cpp": "2c905d087fb298433bac02721822c5eafa183def3b61a0b96405994159c23c31",
+    "node_delete.hpp": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a",
+    "node_delete.cpp": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3"
+  },
+  "support_hashes": {
+    "node-parse-evidence.pseudo.c.txt": "a8689c093ce9b7e3755ce6b2405a49544cee1e74c6ae3ed7448158838894817c",
+    "node-parse-evidence.asm.txt": "4607f882217c81dfae269649c4ea153c3769f7486c9f4a4c12a5f3d7ccc1fa84",
+    "node-parse-context.pseudo.c.txt": "1c60d4148c01cf6644cd4d056884c1e2b23f7f0f4cb98df998426ff7ed4d0072",
+    "node-parse-context.asm.txt": "fe3edab9c20b8a3bd24c6d0b517a6dcc0a4d7e7e7b7485e46220823d0e13a4ba",
+    "node-parse-flow-audit.md": "80c1baaf8bef8a3d7dffa33a177edf7f85430aceb829f652dee1feef1d485cb5",
+    "node-parse-rea-session.json": "97c54524c88746f6f8bbf2176b96935a7a3af286e0ba81f527be5693ae32c4dc",
+    "node-parse-source-review.json": "8c37d64fc6853b1df4cabe55360afac7271c63e595f54c62eb9af5b86a8020d5",
+    "node-parse-retained-data.json": "8ccf7de0156d6bf482d649575bb0730d46a249feb182ed9f1a98784dd873434a",
+    "parse-entry-retained-slot.json": "31a5f8d21eafaead10938997bc79ca50b7a3c2af9dbb242213dd77d717ec95a6",
+    "document-error-retained-data.json": "80249602ab08e7a69669252b21051c9d5536c6ae66fcbc041704cd930f47e10b"
+  },
+  "reused_retained_data_evidence": {
+    "file": "node-parse-retained-data.json",
+    "sha256": "8ccf7de0156d6bf482d649575bb0730d46a249feb182ed9f1a98784dd873434a",
+    "parent_file": "outputs/anadius-rea-evidence.json",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "new_read_performed": false,
+    "new_source_bodies_claimed_by_data_read": 0,
+    "known_document_target": "0x180004970",
+    "other_child_target_identities_proven": false
+  },
+  "prior_target_presence": {
+    "0x180004970": {
+      "source_presence": "module_record_only",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 198,
+  "integration_checks": 42,
+  "new_checks": 240,
+  "execution_scope": "004970 normal node-parse byte-state body plus selected known004970 dispatch adapter;depth guard,cached original document,local pair,branch-specific cleanup,append/closing ownership and return modes preserved;Identify/GetStr/prepare/compare/heterogeneous child parse/probes/destructor/pool/error transport/scratch/native ABI/EH remain mandatory",
+  "limitations": [
+    "004970 normal node-parse byte-state body plus selected known004970 dispatch adapter;depth guard,cached original document,local pair,branch-specific cleanup,append/closing ownership and return modes preserved;Identify/GetStr/prepare/compare/heterogeneous child parse/probes/destructor/pool/error transport/scratch/native ABI/EH remain mandatory",
+    "Pseudocode omits fourth line-counter argument;source forwards address rather than a line-value",
+    "Depth DWORD increment triggers only equality100;normal epilogue decrements cached original document;no synthetic exception rollback",
+    "Initial error check uses live owner document;loop success backedge does not repeat that error check",
+    "Failed/declaration cleanup use cached tail count;mode2/mismatch use live signed tail count;destructor uses cached pool then live pool release target",
+    "Normal EOF/Identify-null/failure return0;mode2 closing returns child next cursor",
+    "N24 error helper does not synthesize native caller varargs;N25 report_error explicitly carries optional pointer argument",
+    "Caller-supplied mapped local scratch is not native stack allocation/ABI evidence",
+    "Selected004970 target routes to source;all other virtual targets require parse_other_virtual;generic parse provider stays open",
+    "One numeric source definition maps one004970 address;separate selected source adapter is not a historical typed provider closure",
+    "Historical44typed closures,2semantic adapters and1allocation adapter remain unchanged;new node_parse_source_adapters list records1selected adapter",
+    "Previous666 source files including CRT remain byte-identical;CRT paused;total DLL completion percentage unmeasured",
+    "Original DLL/game never executed/modified;actual CFG/token/achievement contents never read;blocked version input/generated DLL never retried"
+  ],
+  "native_node_parse_fully_closed": false,
+  "generic_virtual_parse_fully_closed": false,
+  "native_document_error_fully_closed": false,
+  "native_parse_entry_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "native_node_base_fully_closed": false,
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "node-parse-source-review.json",
+      "reviewer": "/root/node_parse_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N26 retained0038b0 Identify inventory/contracts;no new Identify body claimed by preparation;generic CRT remains paused"
+}

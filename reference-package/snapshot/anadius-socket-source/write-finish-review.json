@@ -1,0 +1,28 @@
+{
+  "reviewer": "write_finish_audit",
+  "scope": "Independent two-file source review against complete retained025a70 and0261d0/02a500 context",
+  "result": "PASS",
+  "material_findings": 0,
+  "source_hashes": {
+    "outputs/anadius-socket-source/write_finish.hpp": "c9e341de1a667ba2f17c1861aed4800243d2ebff022f3b9df47cdf6e48c2f6ba",
+    "outputs/anadius-socket-source/write_finish.cpp": "b13efb4696b7a8fd89e94e5d14d22d0b7da93d7da820fcaf212241807918667e"
+  },
+  "flow_audit_md_sha256": "28c952e4bd8d7f766e0f8f97cc1c2e6fdcc16463fdbfe41749c9bfa452bc39da",
+  "flow_audit_json_sha256": "bf4b61f78fe4052191d7f86b109b29a979b9326f0e43a885bef1dee609ea8dbf",
+  "normal_source_procedures_added": [
+    "0x180025a70"
+  ],
+  "new_original_procedures": 1,
+  "production_edited_by_reviewer": false,
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "limitations": [
+    "Bounded uniquely keyed category/owner/header projections required",
+    "One normal body only;02a500 remains required provider",
+    "Provider exceptions preserve modeled completed prefix; native unwind not claimed",
+    "No native ABI, allocation or complete DLL equivalence claim"
+  ],
+  "report_sha256": "2cdeffd4b271c20dc2baa2625e2234a2d085c16ba57d648193f2b1a1be053a4a"
+}

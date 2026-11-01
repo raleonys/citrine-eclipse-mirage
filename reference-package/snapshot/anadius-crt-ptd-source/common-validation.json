@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_ptd",
+    "result": "PASS",
+    "output": "PASS 1510 PTD checks",
+    "executable_sha256": "cd5a88d69cdc456d154aab8a0310bb64ce1f0481b98cf497dbbf2b2f39cf0bb3"
+  },
+  "execution_scope": "Seven PTD/FLS lifecycle bodies, state0 indexed subset; synthetic FLS/heap/construct/destroy/abort effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-ptd-source/ptd_tests.cpp",
+      "sha256": "dca115d0c9777a87f1ace1afa551a007e1c60f8c02d3eb8153d517380334bed3"
+    },
+    {
+      "path": "anadius-crt-ptd-source/ptd.cpp",
+      "sha256": "10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe"
+    },
+    {
+      "path": "anadius-crt-ptd-source/ptd.hpp",
+      "sha256": "ed059fd795ee661fdd539d2a706a9cf74deb419320da976ed628c431cb32ab73"
+    }
+  ]
+}

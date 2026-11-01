@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "output": "PASS: 95 Config2 application checks; no original execution or real user CFG",
+  "original_target_execution": "none",
+  "real_user_cfg_read": false,
+  "scope": "Normal Config2 application with growth, positional reused sections/records and actual scalar helper sources",
+  "native_scope": "Own generated fixture only; compatibility stream",
+  "runtime_equivalence": "not established",
+  "native_allocation_exception_ABI": "unproven"
+}

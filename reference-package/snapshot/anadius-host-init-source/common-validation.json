@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "host_init",
+    "result": "PASS",
+    "output": "PASS 6013 host initialization checks",
+    "executable_sha256": "f5b821c4c4e3314fd6d809cfd11235b5661c7f1a2730ab4c54ab2af29c839b09"
+  },
+  "execution_scope": "Synthetic version/module/engine/log effects; recovered path code; no real hooks",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-host-init-source/host_init_tests.cpp",
+      "sha256": "00725f7f9ac380694b10800a76503faa82763e8d7244fb9068e774956f741a78"
+    },
+    {
+      "path": "anadius-host-init-source/host_init.cpp",
+      "sha256": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b"
+    },
+    {
+      "path": "anadius-host-init-source/host_init.hpp",
+      "sha256": "0ef5afbf19ad7452ddfc4ed54ed1dd0789f6c42eb9a47bc9dbccc1aa4cc35ba7"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b18_state_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-29T18:48:53.112348+00:00",
+  "reviewed_source_hashes": {
+    "publication.hpp": "516975cfb72c687d23d2e1253608a63dde70243e8026bb4ba738bb4b8257a3e4",
+    "publication.cpp": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+    "publication_tests.cpp": "72ecae626427fd8176937cd6490975243652b168809e456cdad3ee2e12564082",
+    "publication_integration_tests.cpp": "8237e950c20c318e72fb3483ba8602ee0f1da7c341a2d312457a71646845bf37",
+    "publication_test_fixture.hpp": "d74c8e9b9e495725be81f1b390d04876b454ef581e155b9edf2eec98cb1c2d01",
+    "../anadius-bootstrap-backend-source/backend.cpp": "e145a8a1b99ed7b3e5ca2ba2a1f5cced2263207a6d8cbcaa5ec7fee13468c98d",
+    "../anadius-bootstrap-backend-source/backend.hpp": "d60af87a481bc8bc4f40a770808dab6f0c31cb2f7ae9a7e6bd10fb43ad8530d4",
+    "../anadius-execution-source/execution.cpp": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+    "../anadius-execution-source/execution.hpp": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62"
+  },
+  "quick_results": [
+    {
+      "path": "work/b19-core-quick-results.json",
+      "sha256": "bdb81493f215943b9e9d3146f463310cd3181cb07c05edaf25ac4bda113e7508",
+      "checks": 19,
+      "executable_sha256": "eb28f173081c4a8dd45f9e39324c012de6c68193fe16ed140ab4e3b0675f7c8d",
+      "execution_by": "root; independent reviewer verified source/executable hashes and read tests, did not rerun"
+    },
+    {
+      "path": "work/b19-integration-quick-results.json",
+      "sha256": "c6bbbe7a5f43400ac8fff38fcbd710eca3e2e2bfa1b89a98a768532b07f56bf0",
+      "checks": 16,
+      "executable_sha256": "7499816b2d969f7739dd16a39303eb9e97d1b8a4fb8bd3e34f4c76286d5ba172",
+      "execution_by": "root; independent reviewer verified source/executable hashes and read tests, did not rerun"
+    }
+  ],
+  "root_checks": 35,
+  "tests_rerun_by_reviewer": false,
+  "prior_source_files": 795,
+  "prior_sources_preserved": 791,
+  "modified_prior_sources": [
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "2a9eb5586a115adb803f0fcb498ec88339065a95ad8eaf20ff1b1e6547290df5",
+      "after_sha256": "e145a8a1b99ed7b3e5ca2ba2a1f5cced2263207a6d8cbcaa5ec7fee13468c98d",
+      "reason": "Bind Execution observer and publish Host only after normal host initialize return, before attachment completion; milestone is not engine success"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.hpp",
+      "before_sha256": "b861b529c9551d6302107ebf57e2e6f0eec4881d7e6087b6921d0f641bcaf892",
+      "after_sha256": "d60af87a481bc8bc4f40a770808dab6f0c31cb2f7ae9a7e6bd10fb43ad8530d4",
+      "reason": "Retain startup publication owner in Resources; all Resources by-value consumers require rebuild"
+    },
+    {
+      "path": "anadius-execution-source/execution.cpp",
+      "before_sha256": "85b026aca0ea79f297c9b7a8b1c58ab008644cad04fab1b3503ca58b61bf393d",
+      "after_sha256": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+      "reason": "Serialize same-wrapper flag/native bookkeeping and clock cache; release source guard before polling Sleep and milestone observer, preserve WinLastError and native failure prefixes"
+    },
+    {
+      "path": "anadius-execution-source/execution.hpp",
+      "before_sha256": "af96b642cb8d454a293c7ed9e249be65432e7078f738ef2a937429704431a3ca",
+      "after_sha256": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62",
+      "reason": "Declare optional source milestone observer and immovable single-wrapper source gate; no recovered native mutex ABI change"
+    }
+  ],
+  "findings": [
+    {
+      "topic": "same-instance source synchronization",
+      "result": "PASS",
+      "observation": "SourceGuard serializes finish flag/native owner-count bookkeeping, each wait predicate check/native unlock, and frequency cache/QPC access through one immutable Execution owner. The gate releases before Sleep and optional publication observer. Windows LastError is preserved by gate bookkeeping. Recovered MutexState layout remains unchanged; Execution source layout is extended."
+    },
+    {
+      "topic": "access and error contract",
+      "result": "PASS",
+      "observation": "Header excludes a second Execution sharing the same referenced state, direct helpers/public predicate or plain outside concurrent reads/writes, and Platform lock/QPC reentry or unknown throwing outcomes. Error5 and unlock-exception tests retain observed partial native write/count prefixes without invented unlock, rollback, safe retry or publication."
+    },
+    {
+      "topic": "atomic publication",
+      "result": "PASS",
+      "observation": "Milestones begins with zero bits, binds one exact Execution issuer and three distinct flag cells, and cannot reset/rebind. finish flag maps exact first/second/third storage to Server/Online/Libraries; unrelated supplied flag still writes but emits no event. Host event is after normal host return and before attachment completion. fetch_or acq_rel and acquire all-bit observation publish the initial prefixes; issuer mismatch/invalid stage poison readiness."
+    },
+    {
+      "topic": "matched observer/context composition",
+      "result": "PASS",
+      "observation": "bind_foreign creates one owned Milestones and one foreign Domain, refuses replacing existing observer/attachment, checks the actual callback view Execution identity, and retains observer/provider owners. Resources lifetime covers the Execution raw observer. The unchanged external hook-quiescence proof remains distinct from source readiness."
+    },
+    {
+      "topic": "concrete source stage meaning",
+      "result": "PASS",
+      "observation": "Source milestones are initial-data prefix completion, not worker completion, hook success, server health, PTD quiescence or join. Server publishes port before async_accept/run_context and remains live in the integration test. Online/Libraries may still perform bootstrap/native thread exit cleanup after finish. Host engine-init failure can return normally and emit Host; the remaining provider proof rejects activation in that case."
+    },
+    {
+      "topic": "own verification scope",
+      "result": "PASS",
+      "observation": "Core uses own real SRW/thread metadata to test wait-sleep release, eight concurrent clock readers with one cache initialization, observer waiting for another Execution call after both gates release, exact mapping/failure prefix and cross-thread plain-payload release/acquire. Integration invokes actual source workers on own threads with controlled providers; a held own server run_context coexists with later source milestones and sequential foreign callbacks. No original/rebuilt DLL/game, real hook/registry/socket/process/UI or foreign module is executed."
+    },
+    {
+      "topic": "source ABI and frozen capture",
+      "result": "PASS",
+      "observation": "Resources gains an optional shared publication owner and Execution gains a source mutex/observer and is explicitly noncopyable/nonmovable. All consumers must rebuild. Quick capture refreshes Execution/backend and Resources by-value factory/host binder consumers; nine frozen source hashes and both EXE hashes match. Before/after changes match four baseline sources;791 other tracked sources are identical."
+    }
+  ],
+  "limitations": [
+    "Synchronization covers one Execution instance and its referenced state only; it is not a process-global registry or protection for arbitrary direct helper/plain-state callers.",
+    "OS lock/QPC boundaries must not reenter or throw unknown outcomes. Recursive mutex does not make arbitrary native SRW reentry safe; partial native error state does not become retryable when the source guard releases.",
+    "Publication is optional nonthrowing bookkeeping, not worker-side controller activation. Foreign activation remains an explicit controller call after all source bits and mandatory remaining proof.",
+    "All bits attest initial source prefixes only. Server work/health, worker exit cleanup, PTD/RO/FLS teardown, actual hook success and worker joins remain separate.",
+    "Provider/stream/fallback ownership, later shared state mutation, PTD policy, actual hook-disabled/cached-entry quiescence and native unload/CRT/EH/ABI/PE equivalence remain required.",
+    "Sequential foreign callback support and overlap/reentry rejection remain B18 scope; general concurrent callback success is not added.7online foreign calls,configuration/license/legacy document and B10 historical review debt remain open."
+  ],
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false
+}

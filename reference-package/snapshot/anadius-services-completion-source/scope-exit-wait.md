@@ -1,0 +1,9 @@
+# B10 owned exit-wait domain
+
+ExitWaitRegistry requires explicit InitialRegistry::empty_owned. It creates a new logical head,20slot blocks and a real owned critical section. It never adopts an original VA, arbitrary native mutex/Cnd pointer or compiler-private registration list. WaitTarget requires explicit mutex type and ready seed; only nonrecursive count1 locking is supported. SDK SRWLOCK and CONDITION_VARIABLE are actual typed objects separate from the recovered logical MutexState.
+
+Registration requires the current owner and retains a strong target before publishing pointers. Any allocation for an additional block occurs first. Existing cleanup_exit_waits and unlock_04a6b4 perform the source ready→unlock→notify→clear/count order. Private pointer lookups admit only owned live targets. GetCurrentThreadId precedes registry critical-section entry. Ready is plain32-bit memory and may only be read under its mutex or after join/quiescence.
+
+Targets may not be reused while registered. The registry retains consumed targets through WakeAll completion, then clears source ownership. close must run on the constructor's controller after external B3/B4 admission stop and joins. False keeps entries and CS live and stops new registration; existing cleanup may finish. Even successful close retains the native CS until quiescent object destruction, preventing an immediate delete while a live object has late callers. Callers must retain owners during calls; destructor with open registry/live target terminates.
+
+Native SDK callbacks obey nonthrowing outcome contracts. An injected unknown native outcome terminates rather than fabricating rollback. Source cleanup exceptions while holding the registry CS terminate. No hidden cancellation, complete condition-variable waiting implementation, compiler thread-exit registration interception, general concurrency or native ABI equality is claimed.

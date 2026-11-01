@@ -1,0 +1,42 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "3750cb25b51f5123036ce03d91cda959f2e3654aadd9ba78eb2d00fc1187bcdc",
+  "test_results": [
+    {
+      "module": "socket_request_growth",
+      "result": "PASS",
+      "output": "PASS: 5304 socket request growth checks; actual02b940 and034730 provider closure, binary/alias oracle, metadata-before-COPY, sized-free-before-pointer, alignment and failure prefixes",
+      "executable_sha256": "60ce8c3dca9c1105aaa330b30ac863b6771792db1f7a974a23791052608f0adc"
+    },
+    {
+      "module": "socket_request_growth_integration",
+      "result": "PASS",
+      "output": "PASS: 1144 socket request growth integration checks; actual034730/02b940 provider closure, external/self source and aligned growth before controlled caller and N1-N6/send/finish; native033d70 orchestration remains open",
+      "executable_sha256": "efde4cae317061255a81d7b15bf7132fc1fbb36f6e9110c91dc05607842c07f2"
+    }
+  ],
+  "core_checks": 5304,
+  "integration_checks": 1144,
+  "original_procedures_added": 1,
+  "new_source_bridges": 1,
+  "execution_scope": "02b940 normal body and final RequestMutationApi growth source bridge; actual034730 before controlled caller and N1-N6/send/finish; external/self source, aligned large input, request lifetime and metadata/copy/free/pointer prefixes; native033d70 remains open",
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Typed normal projection only, no native MSVC/allocator/global/ABI/EH/SEH/concurrency/fault equivalence",
+    "Allocator/free/terminal/078d30 native bodies remain providers; bounded byte COPY compatibility only",
+    "Symbolic maximum arithmetic/failure prefix, not real huge allocation;00cd30 valid-state reachability not asserted",
+    "Controlled caller preparation and N5 semantic adapter, not full native033d70/042480 orchestration; N5 gap unchanged",
+    "Controlled response constructor/handler/cipher/023dd0/completion/injected send; no new027a20/IOCP/027c10 worker or real SDK/network/original execution"
+  ],
+  "previous_local_records": "30 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x18002b940"
+  ],
+  "independent_review_complete": false
+}

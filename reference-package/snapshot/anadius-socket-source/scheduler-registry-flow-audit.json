@@ -1,0 +1,38 @@
+{
+  "scope": "Independent retained static 022fd0 fixed scheduler key and 023b30 scheduler registry normal-flow audit",
+  "reviewer": "scheduler_registry_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {"address":"0x180022fd0","pseudo_evidence":"ev_1ff0395466a0d3686d30b1880c706f664cb34e113230aabead84f67e5dfc1ac5","assembly_evidence":"ev_c66e0df033cecbf820b73605aa1591d589004974c15b6c62ae45785d57699bb8"},
+    {"address":"0x180023b30","pseudo_evidence":"ev_e19c4187c6fd93eed1f7799ea815833381b3dbe02527496c06be2e73f9fd1811","assembly_evidence":"ev_5bd06ce10f718331325ac29108e8afe82981dcdd81da85e580033f641b8dae7c"}
+  ],
+  "rules": {
+    "key":"type identity1800a2540,id0; requested-ID fast path unreachable",
+    "owner":"Cache registry+28 owner before first Enter; retain through all callbacks",
+    "scan":"Live head; nonnulltype comparator(entrytype+8,requestedtype+8); only EAX0 match; next reloaded after callback",
+    "first_hit":"Cache entry; Leave; return cachedentry",
+    "allocation":"First miss Leave then04b0bc(0xb0) outsidegate",
+    "constructor":"Nonnullallocation=>024990(allocation,cachedowner,0xffffffff,1); use constructor RETURN candidate",
+    "null_boundary":"Nullallocation skipsconstructor then native null keywrite; selected UnsupportedInput guard beforesecondEnter, no invented valid nullreturn",
+    "key_copy":"Copy fixed twoqword key beforesecondEnter; no invented preEnter nextinitialization",
+    "second_scan":"Reload livehead; same comparator/order and live next semantics",
+    "publish":"Secondmiss reload livehead aftercallbacks,candidate.next=head,head=candidate; Leave; return cachedcandidate",
+    "duplicate":"Candidate scalar_deleting effect flags1 undergate; cachewinner acrossdelete/Leave thenreturnwinner"
+  },
+  "normal_source_procedures_added":["0x180022fd0","0x180023b30"],
+  "new_original_procedures":2,
+  "original_execution":"none",
+  "real_network_execution":"none",
+  "real_user_files_read":false,
+  "limitations":[
+    "Typed borrowed registry/context/entry/identity bindings are not native memory or ABI overlays",
+    "04b0bc allocator,024990 scheduler constructor,04d2d0 CRT comparison and scalar deleting destructor remain required providers",
+    "Native exception/SEH/unwind, allocation-failure cleanup and registry teardown remain unproven",
+    "Native dispatcher/executor, DLL entry/export ABI and full original DLL equivalence remain unproven",
+    "Only two original normal procedures counted; typed compositions add zero originals"
+  ]
+}

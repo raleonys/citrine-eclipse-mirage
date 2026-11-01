@@ -1,0 +1,21 @@
+# B51 — Kapanışta yeni Application girişlerini durdurma
+
+`Binding::pause_application_admission()` yalnız yeni Application girişlerini mühürler. Aynı native gate altında önce canlı Binding kontrol edilir; mühürlü fakat hâlâ bağlı Application çağrısı `FALSE` döner ve Bootstrap/sağlayıcı/Error callback'ine ulaşmaz. Bağlı olmayan veya kapanmış entry denemelerinin mevcut kalıcı hata politikası korunur. Bu seçili HOST kapanış politikasıdır; yeni native fonksiyon veya özgün ABI eşdeğerliği iddiası değildir.
+
+Kabul edilmiş Application kaynak çağrıları toplam native lease sayacına ve ayrı Application sayacına girer. Normal dönüş ve exception unwind iki sayacı da bırakır. Mühürleme beklemez: eski Application kaynak lease'i sürüyorsa `false`, bittiğinde `true` döner. Yeni girişler mühürden sonra kabul edilmez; eski çağrının kalan startup işi durdurulmaz. Mevcut hata tasarımında kalıcı `Errors.callback_exception`, kaynak lease'i bırakıldıktan sonra çağrılır; bu sayaç onun veya tüm makine entry'sinin dönüşünü kapsamaz. Kalıcı hata politikasının ömrü ve dış quiescence sözleşmesi korunur.
+
+`RuntimeOwner::close()`, Stopping durumuna geçtikten sonra backend stop/join çağrısından **önce** Application kapısını kapatır. Eski başlangıç çağrısı sürüyorsa owner ve Binding korunur, stop/join başlatılmadan `false` döner. Sonraki retry mevcut backend admission/worker join ve exit cleanup akışını çalıştırır. Böylece henüz worker oluşturan bir startup ile backend'in thread admission'ını kapatması yarışmaz. Mevcut NoArgument, Boolean, Exit ve Terminate yolları Application mührünü kullanmaz. Tüm native çağrılar bitmeden Binding kapanamaz.
+
+Başarısız ikinci Binding oluşturma ilk owner'ın mührünü açmaz. Başarıyla kurulan sonraki Binding girişleri yeniden açar; bunun güvenliği önceden var olan dış quiescence sözleşmesine bağlıdır. Eski function pointer'ın yeniden bağlanan başka owner'a ulaşması, ABA ve keyfî foreign çağrılar için çözüm sunulmaz.
+
+Production değişiklikleri üç mevcut dosyadadır: `native_entries.hpp/.cpp` ve bootstrap-owner `owner.cpp`. Ayrıca önceki owner entegrasyon testinin nested-close beklentisi, backend stop sonrası Busy yerine stop öncesinde false/retry olacak şekilde güncellendi. Bu klasördeki iki yeni C++ dosyası testtir; yeni production birimi yoktur.
+
+Çekirdek test gerçek std-thread/Win32 event'lerle Application ve worker lease'lerini birlikte açık tutar; queued bootstrap worker'ların launch sağlayıcısı kontrollüdür. Entegrasyon gerçek RuntimeOwner/SourceBackend ve aynı Domain'de üç bootstrap worker'ı ile dördüncü bir Application caller thread'i kullanır. Application guard'da beklerken ilk close, stop_sources/worker stop/cancel öncesinde false döner. Eski Application thread'i gerçekten join edildikten sonra retry mevcut accept-only CancelIoEx→gerçek IOCP995→native owner0 temizliği, worker join/FLS ve kayıtlı exit temizliğini tamamlar. Sonradan alınan pointer denemeleri hem eski Application açıkken hem gerçek stop_sources içinde sağlayıcı etkisi oluşturmadan reddedilir. Bu yerel pipe uyumluluk testidir; gerçek ağ/AcceptEx/native ABI veya tam production Resources kanıtı değildir. Testlerin gerçek source/SDK ve sentetik alt sağlayıcı sınırları hızlı kanıtlar ve bağımsız incelemede ayrı kaydedilir. Özgün DLL/oyun çalıştırılmaz veya değiştirilmez.
+
+Tam DLL henüz üretilmedi. Application kapısı dış rawjob/deferred/foreign/hook admission ve finality kanıtının tamamı değildir. Tam Resources factory, erken startup hata yolları ve loader-lock attach/detach açık kalır. Sonraki B52, mevcut configuration parçalarını tek sahipli factory'de birleştirmektir. Güvenilir toplam DLL yüzdesi verilmez.
+
+[Kanıt](evidence.json) · [Bağımsız inceleme](architecture-review.md) · [Sınırlar](resources-audit.json)
+
+## B51 ortak doğrulama
+
+**72 çekirdek + 96 entegrasyon = 168 kontrol PASS.** Ortak build 271 nesne (267 C++ / 4 C), 331 normal test grubu ve 19 framework terminal senaryosu içerir. Önceki 928 kaynak aynı; 4 önceki dosya açık hash kaydıyla güncellendi; toplam 934 kaynak. Yeni typed normal gövde 0, yeni native ABI/provider kapanışı0; 501 adres, 505 karşılaştırılabilir derlenmiş etiket ve52tarihsel kapanış. Bileşim ile raw-all defterleri ayrıdır. Gerçek alt sağlayıcılar, foreign ABI, image unload ve PE girişi açık kalır.

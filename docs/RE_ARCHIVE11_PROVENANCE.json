@@ -1,7 +1,7 @@
 {
   "schema": "cem.archive11-review.v1",
   "baseline_commit": "d9c860d",
-  "intake": "Eight owner-uploaded byte-split parts, joined in numeric order. Original parts and merged ZIP retained outside the checkout; preserve uploads for later source access.",
+  "intake": "Initial delivery identity. Expanded file bodies are retained on research/reconstruction-package under reference-package/snapshot/. No split parts or ZIP are committed; later versions are preserved through Git history.",
   "parts": [
     {
       "name": "dll-reverse-engineering(11).zip.001",
@@ -121,7 +121,7 @@
     "independently_reexecuted_here": false
   },
   "adoption_status": "Reference intake and initial triage only. No donor implementation or binary is installed in production.",
-  "tracking_document": "docs/RE_ARCHIVE11_REVIEW.md",
+  "tracking_document": "docs/RE_PACKAGE_PROJECT.md",
   "file_inventory": "docs/RE_ARCHIVE11_FILES.json",
   "module_ledger": "docs/RE_ARCHIVE11_MODULES.json"
 }

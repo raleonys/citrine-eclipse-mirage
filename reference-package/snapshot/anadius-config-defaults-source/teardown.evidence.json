@@ -1,0 +1,131 @@
+{
+  "schema": "source-algorithm.focused-validation.v1",
+  "status": "SELECTED_NORMAL_037F70_HOST_STORAGE_TEARDOWN_PASS",
+  "native_address": "0x180037f70",
+  "native_pseudo_id": "ev_c03fec66056719abadb29e535fb59a20827bd1c74e0bbe959590c8170e39714b",
+  "native_assembly_id": "ev_2ec7531b888601db062b01ddc9b261926b0bb2a9c39cf12579c0999519e4bb42",
+  "native_group_order_map": "outputs/dll-critical-path/aggregate-map.json",
+  "field_groups": 40,
+  "new_selected_source_algorithms": 1,
+  "full_native_037f70_equivalence": false,
+  "full_constructor_closed": false,
+  "implementation": [
+    "ClosingBackend arms ordered storage cleanup only after source stop/join, exits, attachment, registry, online and remaining-policy close all succeed. RuntimeOwner phase rules require successful complete close before normal destruction.",
+    "Every opaque provider/capture retires while bound configuration, paths, auth and mutex cells remain live. Backend retirement is sealed and later member destruction does not repeat opaque retirement.",
+    "Ordinary standalone SourceBackend destruction keeps borrowed configuration unchanged. New explicit owner-only method requires stopped state and live configuration; complete-close/ownership is a caller precondition.",
+    "Storage body follows all40 native field groups. Path elements run forward; Content elements run forward with state/version/name/id; Entitlements forward with tag/type/version/group/id, before backing frees.",
+    "Optional immutable AuthenticationCode is legitimately destroyed at+138 after license path and before content_id; no const_cast or duplicate native destruction.",
+    "Host-only cached library path copies retire separately before native-group storage. FreeLibrary, online destruction, OS mutex destruction, joins and outer CRT are absent from this body.",
+    "Constructor-failure and never-published Runtime destruction preserve existing host cleanup. close() itself preserves configuration until actual owner destruction."
+  ],
+  "focused_record": {
+    "path": "work/aggregate-teardown-v1-results.json",
+    "sha256": "cb5b68d3a0bf751be62f1bf65ec2528657fec213a5a319638aca1fe3978e14dc",
+    "seconds": 26.594,
+    "tests": [
+      {
+        "name": "aggregate_teardown",
+        "exit_code": 0,
+        "stdout": "PASS: 6 aggregate teardown checks; 60 actual allocation frees observed, host ordering only\n",
+        "stderr": "",
+        "executable": "work/aggregate-teardown-check-v1/aggregate_teardown_tests.exe",
+        "executable_sha256": "4482b3a9f023cd4f586e2a3d6d007a8507f4d28a18d5f72b714bbc4779dd53d8"
+      },
+      {
+        "name": "bootstrap_factory",
+        "exit_code": 0,
+        "stdout": "PASS: 274 bootstrap-runtime factory integration checks; actual B2/B3 source graph, post-join callback cleanup, stop/timeout retry, concrete adapter selection and SDK execution boundaries; lower foreign providers and PE entry remain explicit/open\n",
+        "stderr": "",
+        "executable": "work/aggregate-teardown-check-v1/bootstrap_factory_tests.exe",
+        "executable_sha256": "38d3afdbc7279138c525c6b57e6f9ac2956d8ebd8d24bfed8436d671232088a4"
+      },
+      {
+        "name": "backend_integration",
+        "exit_code": 0,
+        "stdout": "PASS: 170 bootstrap-backend integration checks; concrete ProviderOwner with actual config/bootstrap/server/online/library/host/cleanup sources,shared flags,post-wait path reload,duplicate joins and shutdown retry; OS/foreign-provider/registrar/PE-entry remain controlled/open\n",
+        "stderr": "",
+        "executable": "work/aggregate-teardown-check-v1/backend_integration_tests.exe",
+        "executable_sha256": "034b24116400625abb84212b24916c390abdd334cd0e29e3d0a36d3487dc6835"
+      },
+      {
+        "name": "application_worker",
+        "exit_code": 0,
+        "stdout": "PASS: 184 application-worker core checks; actual startup barrier and SourceBackend routes with nine isolated retained prefixes\n",
+        "stderr": "",
+        "executable": "work/aggregate-teardown-check-v1/application_worker_tests.exe",
+        "executable_sha256": "226910a14a68065459f7e0900dba59cd31591d92947103758f5939561fe773f4"
+      },
+      {
+        "name": "shared_global_bindings",
+        "exit_code": 0,
+        "stdout": "PASS: 46 shared achievement-path checks; actual Runtime/Storage aliasing and Prepared Worker guards, controlled external worker boundaries\n",
+        "stderr": "",
+        "executable": "work/aggregate-teardown-check-v1/shared_global_bindings_tests.exe",
+        "executable_sha256": "00583f863ff55bd683993f26e677393718af9fc04c0ef71a252bb8741c0d5546"
+      }
+    ]
+  },
+  "fresh_production_units": {
+    "bootstrap_backend": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+    "aggregate_teardown": "outputs/anadius-config-defaults-source/teardown.cpp",
+    "application_graph": "outputs/anadius-application-graph-source/graph.cpp",
+    "application_worker": "outputs/anadius-application-worker-source/worker.cpp",
+    "licensing": "outputs/anadius-license-source/license.cpp",
+    "license_files": "outputs/anadius-file-source/license_files.cpp",
+    "windows_effects": "outputs/anadius-windows-source/windows_effects.cpp",
+    "configuration_filesystem": "outputs/anadius-config-storage-source/filesystem.cpp",
+    "configuration_persistence": "outputs/anadius-config-storage-source/persistence.cpp",
+    "configuration_factory": "outputs/anadius-configuration-factory-source/factory.cpp",
+    "key_processor": "outputs/anadius-license-source/key_processor.cpp",
+    "bootstrap_factory": "outputs/anadius-bootstrap-runtime-source/factory.cpp"
+  },
+  "source_hashes": {
+    "outputs/anadius-config-defaults-source/teardown_tests.cpp": "fb546887fde7f3d86fb8dd374ee152bd8766605c9a72d6ea0c9bf999719396f2",
+    "outputs/anadius-config-defaults-source/teardown.hpp": "996a2a54311597c1e795c161acf44429c0bf343a387b4cc31f631d3b12976c77",
+    "outputs/anadius-bootstrap-backend-source/backend.cpp": "c96ad3298a7c3e4235547a3c77eca78b2c4c1d61c2ed059e2d5a4c2f7e147c9a",
+    "outputs/anadius-config-defaults-source/teardown.cpp": "7166c7b23b61fa4f00f03451b38d9d39728d65f0865a1d95afe7d038e4983401",
+    "outputs/anadius-bootstrap-backend-source/backend.hpp": "412f8d9432c4822e02002c12db8bf0c5c2d0707371d5ecf984a5032bfc009667",
+    "outputs/anadius-bootstrap-runtime-source/factory.cpp": "be831aeeaf94ab99a75981613a124f522e9cffc8e35590c898ffc8e6af27dcca",
+    "outputs/anadius-bootstrap-runtime-source/factory_tests.cpp": "48218bb10553cfb72fbb3788dc18d6c8c2235062e04fec5ee649b8d8baf711cc"
+  },
+  "build_registration_hashes": {
+    "outputs/source-workspace/build.ps1": "768bd2b7e1721eb7f2911142bb1e3551c62294af98731ad7fcaf16d56a791b38",
+    "outputs/source-workspace/CMakeLists.txt": "73c12ecc57c9991a7ac88cddf06e1690facb36cb148b156a0a9b11df52f2dba8"
+  },
+  "powershell_registration_parser_errors": 0,
+  "validation_scope": [
+    "Own-EXE nonallocating delete observer verified60 actual payload/backing frees, group/member order, empty containers/capacity release, unchanged scalar flags and no second free during ordinary later C++ destruction.",
+    "Factory tests cover published close/retries, provider backing reads before cleanup, explicit owning source route versus ordinary borrowed source destruction, failed constructors and never-published close.",
+    "Backend/Worker/shared Runtime bindings remain covered by freshly compiled affected tests."
+  ],
+  "ABI_scope": {
+    "SourceBackend_public_layout_changed": false,
+    "existing_vtables_changed": false,
+    "Resources_layout_changed": false,
+    "private_Impl_layout_changed": true,
+    "native_STL_node_sentinel_allocator_equivalence": false
+  },
+  "independent_review": {
+    "author": "/root/b22_provider_audit",
+    "production_result": "PASS",
+    "reviewer_execution": false,
+    "focused_proof_result": "PASS",
+    "verified_source_header_hashes": 180,
+    "verified_executables": 5,
+    "fresh_translation_units": 17,
+    "registration_delta": "one aggregate_teardown production unit and one test in both PS/CMake; previous registrations preserved"
+  },
+  "limits": [
+    "C++ host storage normal-order reconstruction; native MSVC tree topology, sentinel allocation, allocator/SSO headers, EH failure prefixes and native memory-layout equality remain outside this closure.",
+    "No loader-lock safety, complete production Resources factory or completed attach/detach hook definition is claimed.",
+    "Public owner-only method relies on caller complete-close contract in addition to its runtime stopped/config checks.",
+    "B54 published source snapshot/inventory/ZIP remain historical; newunit/test registration present, common build not executed."
+  ],
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "network": false
+}

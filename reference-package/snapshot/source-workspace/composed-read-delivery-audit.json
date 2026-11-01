@@ -1,0 +1,64 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T20:18:02.399762+00:00",
+  "prior_package_sha256": "ff63c6cbc4a6369fde7f7a7b2d54fbfa29d860918833cd6e03d0dab2c3ba7b9e",
+  "prior_source_count": 536,
+  "unchanged_prior_sources": 536,
+  "added_sources": [
+    "anadius-socket-source/composed_read.cpp",
+    "anadius-socket-source/composed_read.hpp",
+    "anadius-socket-source/composed_read_integration_tests.cpp",
+    "anadius-socket-source/composed_read_test_fixture.hpp",
+    "anadius-socket-source/composed_read_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 541,
+  "current_documents": 213,
+  "native_objects": 180,
+  "cpp_objects": 176,
+  "c_objects": 4,
+  "normal_test_groups": 173,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 46,
+  "new_checks": 5386,
+  "new_tests": [
+    {
+      "module": "socket_composed_read",
+      "result": "PASS",
+      "output": "PASS: 3672 composed read core checks; actual025c40 with010040/008350, independent delimiter oracle and explicit request anchors, sentinel/flags/commit/error/category reloads/terminal ordering/lifetime; isolated021d10 capture only",
+      "executable_sha256": "9f7a0eb503d69151ba6961f4b6dff46cd41b00ad906bbd805f2563ba8f0f8e9d"
+    },
+    {
+      "module": "socket_composed_read_integration",
+      "result": "PASS",
+      "output": "PASS: 1714 composed read integration checks; recovered025c40 closes actual completion/borrowed/owned scheduling through010040/008350/021d10/023dd0/injected SDK/IO route/027710/021a40; split/embedded-NUL/trailing/EOF/limit/error, early key2/fallback and real IO/task lifetimes;025480 remains required",
+      "executable_sha256": "0db589eb142ae149be9cbb67adf20b525973dadd5597c8299a42781b52a50b6e"
+    }
+  ],
+  "validation_mirror_pairs": 23,
+  "historical_module_records_preserved": 22,
+  "historical_config_references_preserved": 44,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "b3cff7ee88c1c74cd65de167e069aea1b12eff7a81c6829714b1e90a9e659f0e",
+  "inventory_data_checks": 7128,
+  "normal_source_procedures_added": [
+    "0x180025c40"
+  ],
+  "new_original_procedures": 1,
+  "closed_provider": "RecoveredComposedReadEffects::receive_body_025c40",
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "R4 025480/0280d0 native frame completion"
+}

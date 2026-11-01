@@ -1,0 +1,80 @@
+{
+  "result": "PASS",
+  "source_package": "B48",
+  "build_record_sha256": "d01bcbf6e4a6d612f30b6c88ac9e289f4b394ffb676ba19da9fdfe64760adca1",
+  "frozen_source_hashes": {
+    "worker.hpp": "2427178f3d630c2cc4ba132d52e82777eca6c2006a5f318825dca4259ef2dfdc",
+    "worker.cpp": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+    "worker_tests.cpp": "93dab88ed2171d4c88ec77c4351b40205fb9372ec14e988b2ccd14f45e06a081",
+    "worker_integration_tests.cpp": "d61beff5f47d18fd4389680d3760b157746a76469575fdbc041575bb3014dd55",
+    "../anadius-bootstrap-backend-source/backend.hpp": "145a94c58ed9880211d7315465c0c226eed982b33aef6cd5635f24c822069a23",
+    "../anadius-bootstrap-backend-source/backend.cpp": "4bcef4b7421c0c751499d883364625d1ea4a8ff822009a57930a4ee102e76f30"
+  },
+  "objects": [
+    {
+      "object": "outputs/source-workspace/build/application_worker.o",
+      "source": "anadius-application-worker-source/worker.cpp",
+      "source_sha256": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+      "production_sha256": "44a03d0fe5a6aee2cda1c6f9cf7a2e8cabebe835bf3b9ebfdeb045667fee1e7d",
+      "fresh_path": "work/b48-freeze-application_worker.o",
+      "fresh_sha256": "16a7c1374ce9a9ae737822ac7004c39aed8b0d1ae899880bfeb88765f35966f6",
+      "normalized_sha256": "fea1dfc5fea2e644d4e9b9ba2717a7678be6e55bdf1481ca9863a7faaec9fd16",
+      "fresh_normalized_sha256": "fea1dfc5fea2e644d4e9b9ba2717a7678be6e55bdf1481ca9863a7faaec9fd16",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-application-worker-source\\worker.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b48-freeze-application_worker.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    },
+    {
+      "object": "outputs/source-workspace/build/bootstrap_backend.o",
+      "source": "anadius-bootstrap-backend-source/backend.cpp",
+      "source_sha256": "4bcef4b7421c0c751499d883364625d1ea4a8ff822009a57930a4ee102e76f30",
+      "production_sha256": "b22a5b59a1289ce5c5030d01d52472959781b1d037c63ccaeebcf40a488932aa",
+      "fresh_path": "work/b48-freeze-bootstrap_backend.o",
+      "fresh_sha256": "5a3b4216bdb9a92357e1ff0de842f97ce2e37d0dcfbba28c011d3b08e1d0b394",
+      "normalized_sha256": "cf9615b34f580c996ad35346dcabbcaf589fdaddb736996f530954c87f2984f4",
+      "fresh_normalized_sha256": "cf9615b34f580c996ad35346dcabbcaf589fdaddb736996f530954c87f2984f4",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-bootstrap-backend-source\\backend.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b48-freeze-bootstrap_backend.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "scope": "Fresh identical-command final-source production compile; all bytes except COFF header timestamp equal."
+}

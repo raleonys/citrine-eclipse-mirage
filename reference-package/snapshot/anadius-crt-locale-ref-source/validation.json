@@ -1,0 +1,23 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T02:06:30.5896135Z",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-ref-source\\locale_ref.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-ref-source\\locale_ref_tests.cpp",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-ref-source\\build\\locale_ref_tests.exe"
+  ],
+  "tests": "locale_ref: 6212 checks PASS",
+  "scope": "Synthetic address/counter providers, exact effect ordering, 32-bit wrap and fault-domain checks. No target or native locale/atomic execution.",
+  "original_ABI_equality": "unproven",
+  "object_sha256": "9eea95fc58e9257daaf67e2fcb15e17602ce7ff0b766b3ee4d905e0d338d3933",
+  "test_sha256": "9eccef2d91316f6211ccc46465573cd2b08cf9c2177b97e34cef2fe6234c464a"
+}

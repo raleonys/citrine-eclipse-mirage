@@ -1,0 +1,38 @@
+{
+  "reviewer": "crt_locale_native_audit",
+  "checked_at": "2026-10-20T13:23:11.7175117Z",
+  "result": "PASS",
+  "sources": [
+    {
+      "name": "counters.cpp",
+      "sha256": "044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25"
+    },
+    {
+      "name": "counters.hpp",
+      "sha256": "f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "61fe364a99aff62e2797dcd80135a5f0dc21c7a546c333499566aa02d973c6c0"
+    }
+  ],
+  "source_validation_hashes_match": true,
+  "repeated_build": "PASS 94 borrowed native LONG counter checks",
+  "original_target_execution": "none",
+  "findings": [],
+  "reviewed_contracts": [
+    "Counters accepts only live typed LONG references with exact address identity; no byte-array/raw pointer adoption API exists.",
+    "sizeof/alignment assertions and runtime 32-bit alignment check support Interlocked LONG preconditions.",
+    "bind duplicates and unknown unbind/fetch/exchange/load reject before SDK memory access.",
+    "InterlockedExchangeAdd/Exchange/CmpEx preserve full uint32 bits through bit_cast, with no C++ signed arithmetic overflow.",
+    "During workers, the registry map is immutable; find is const and only registered LONG fields are atomically modified.",
+    "Test worker check counters are not shared during workers; per-worker sums distinct, main inspects after join.",
+    "Tests start actual LONG subobjects in standard-layout records at10 and15c; refs stay alive through unbind.",
+    "No original DLL/game or invalid native pointer execution; source adds zero original recovered bodies."
+  ],
+  "limits": [
+    "Caller must ensure whole-registry quiescence for bind/unbind, not merely quiescence of one freed locale.",
+    "Registry lifetime does not own, extend or clean up LONG storage.",
+    "Raw record/source ABI, global initialization and arbitrary free failure recovery remain outside this module."
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T14:16:01.3135292Z",
+  "prior_package_sha256": "c73ecbdc9220e79adff1dcf1b19330098b9ca34e010d106a90fd7dde436dbf10",
+  "prior_source_count": 456,
+  "unchanged_prior_sources": 456,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/service_constructor_native_tests.cpp",
+    "anadius-socket-source/service_constructor_native.cpp",
+    "anadius-socket-source/service_constructor_native.hpp",
+    "anadius-socket-source/service_constructor_tests.cpp",
+    "anadius-socket-source/service_constructor.cpp",
+    "anadius-socket-source/service_constructor.hpp"
+  ],
+  "current_sources": 462,
+  "current_documents": 182,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 157,
+  "cpp_objects": 153,
+  "c_objects": 4,
+  "normal_test_groups": 143,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_service_constructor",
+      "result": "PASS",
+      "output": "PASS: 339 socket service constructor checks; retained0228e0/027be0 normal flow and controlled effects only",
+      "executable_sha256": "955e66f7bf349c6eddf7b5d3f71b6a9690f2b662a9c9594f6b2321a439c129db"
+    },
+    {
+      "module": "socket_service_constructor_native",
+      "result": "PASS",
+      "output": "PASS: 212 socket service constructor native checks; SDK-injected027be0 and actual constructor-to-acceptor-to-recycler chain only",
+      "executable_sha256": "35ae293bce8571847032d52a256ed4e9fed23f17a55894ab3012c0d4c3f41320"
+    }
+  ],
+  "new_checks": 551,
+  "master_build_sha256": "7af2ded4a558725a0a02ae9bca4ba82eb0f4aee58cecdfcffaf5a31d774e5802",
+  "common_build_script_sha256": "20d8ab04325ab81cfe2d761cc6728cd6bd144a723667e302b074133da55e07fe",
+  "cmake_sha256": "201d16010804b9b311a1740ba124e15c6a449de4ee05b827f3f4cce4201dc6d8",
+  "normal_source_procedures_added": [
+    "0x1800228e0",
+    "0x180027be0"
+  ],
+  "new_original_procedures": 2,
+  "new_composition": "Actual0228e0 construction/027be0 gate helper with injected SDK APIs and constructor-backed registry composition",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

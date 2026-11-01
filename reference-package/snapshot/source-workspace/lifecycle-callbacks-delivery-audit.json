@@ -1,0 +1,103 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T19:27:19.5065755Z",
+  "prior_package_sha256": "41b8825760087d188204ac5e9b635a6d9d913703ba8f1bf2cb4c48a9b92aaf60",
+  "prior_source_count": 356,
+  "unchanged_prior_sources": 356,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-crt-environment-cleanup-source/environment_cleanup.cpp",
+    "anadius-crt-environment-cleanup-source/environment_cleanup.hpp",
+    "anadius-crt-environment-cleanup-source/native_tests.cpp",
+    "anadius-crt-lifecycle-callbacks-source/callbacks.cpp",
+    "anadius-crt-lifecycle-callbacks-source/callbacks.hpp",
+    "anadius-crt-lifecycle-callbacks-source/native_tests.cpp"
+  ],
+  "current_sources": 362,
+  "current_documents": 129,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "reviews": [
+    {
+      "path": "anadius-crt-environment-cleanup-source/review-environment-cleanup.json",
+      "result": "PASS",
+      "source_hashes_verified": 6
+    },
+    {
+      "path": "anadius-crt-lifecycle-callbacks-source/review-lifecycle-callbacks.json",
+      "result": "PASS",
+      "source_hashes_verified": 4
+    }
+  ],
+  "master_build_sha256": "374d23d683ceab797bbb06f6f79867e79a0c2e927a3081ac5610e4b773bfff59",
+  "native_objects": 124,
+  "cpp_objects": 120,
+  "c_objects": 4,
+  "normal_test_groups": 109,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "crt_environment_cleanup",
+      "result": "PASS",
+      "output": "PASS 447 environment cleanup checks;25 narrow/wide alias pairs;owned pointer vectors and mutation ordering",
+      "executable_sha256": "bf9787225df82f798cfb51b034897d8656d2054e948ada10ed7556534813e4b4"
+    },
+    {
+      "module": "crt_lifecycle_callbacks",
+      "result": "PASS",
+      "output": "PASS 105 lifecycle onexit/multibyte callback checks;owned native heap/counters",
+      "executable_sha256": "3ce712e085a075a5c2ea3668e8b8970217183a8ec335b7a7d54803e832f36725"
+    }
+  ],
+  "callback_byte_proof": {
+    "result": "PASS",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "method": "Retained actual REA assembly/pseudocode IDs and direct hash-bound raw PE/relocation proof. No new provider query or original execution.",
+    "bodies": [
+      {
+        "address": "0x18006447c",
+        "length": 35,
+        "file_offset": 407676,
+        "bytes_hex": "4883ec28488d0d210e0400e86cffffff488d0d2d0e0400e860ffffffb0014883c428c3",
+        "sha256": "aae29fca18b33dc727f217d8b05e7f28fbf7757b0824a753abe14066ef30eeac",
+        "assembly_evidence_id": "ev_0d879587dbd892a79fb6497849d2aae2767615e668da0a192514697e97897869",
+        "pseudo_evidence_id": "ev_128dcdbd118a6380a4750ff1e54271f936ddb311b7b3557f4bfaca02a8a8e7d5",
+        "pair": {
+          "index": 15,
+          "kind": "initialize",
+          "slot_va": "0x18008ab50",
+          "file_offset": 562000,
+          "relocation_proof": {
+            "block_file_offset": 691920,
+            "entry_file_offset": 691974,
+            "entry_word": 43856
+          }
+        }
+      },
+      {
+        "address": "0x1800644f8",
+        "length": 64,
+        "file_offset": 407800,
+        "bytes_hex": "40534883ec20488b0dcb14040083c8fff00fc10183f801751f488b0db8140400488d1d51d70300483bcb740ce89723000048891da0140400b0014883c4205bc3",
+        "sha256": "9090cd2c644c6958a7820c5b152b1a43172407a8307bee5e7d89d03d6136f0c3",
+        "assembly_evidence_id": "ev_0d023431ffc05119eee470b5ea148ad58ce9683f6c60cd3468df0b71bac082d7",
+        "pseudo_evidence_id": "ev_82ed5c1b2273a1b6458c896c47a7f737a42930c9a261f3be55551ef4e056625a",
+        "pair": {
+          "index": 13,
+          "kind": "uninitialize",
+          "slot_va": "0x18008ab38",
+          "file_offset": 561976,
+          "relocation_proof": {
+            "block_file_offset": 691920,
+            "entry_file_offset": 691968,
+            "entry_word": 43832
+          }
+        }
+      }
+    ]
+  },
+  "recovered_original_bodies_added": 6,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

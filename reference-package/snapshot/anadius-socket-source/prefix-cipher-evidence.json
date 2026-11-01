@@ -1,0 +1,228 @@
+{
+  "schema": "prefix-cipher.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180042480",
+      "pseudo_evidence": "ev_e27b923a47363280bcc0e8f0d5f1d84d309c13cbcf938d944e3bf4f18460fe56",
+      "assembly_evidence": "ev_d0fccb2775fdb815d1a580c813946b1cdefdb26fb8590bbb2b2a03d7b562e8e4",
+      "newly_recovered": true,
+      "recovery_scope": "new typed normal source and final binding; upper2 previously semantic-mapped, lower4 previously module-record-only"
+    },
+    {
+      "address": "0x180042610",
+      "pseudo_evidence": "ev_84196222f2218d2b0a060bb317b12da12a77b2f964a5902100ed78e154eb8375",
+      "assembly_evidence": "ev_46790ff61e14371172a73e53871ee23da992983094393729fe2474de81caee15",
+      "newly_recovered": true,
+      "recovery_scope": "new typed normal source and final binding; upper2 previously semantic-mapped, lower4 previously module-record-only"
+    },
+    {
+      "address": "0x180045620",
+      "pseudo_evidence": "ev_9c4ae0650cc1a802bb9b81a7408ddd7ccd1c43b7f78ee86dfaf95e0bcbb01969",
+      "assembly_evidence": "ev_91602a126449722f4c42c22e772d9d2afdcaf65714aa5b88b89077d4bfdfca4f",
+      "newly_recovered": true,
+      "recovery_scope": "new typed normal source and final binding; upper2 previously semantic-mapped, lower4 previously module-record-only"
+    },
+    {
+      "address": "0x180045630",
+      "pseudo_evidence": "ev_ce515a04c612b867ced7f7d2522cebb5b74ec98b99de8507bd0fe7aec9d70fa5",
+      "assembly_evidence": "ev_aa0732814e7f08faa575592800a67bc9f2448f5e541cab2d933d9a7ad44b619e",
+      "newly_recovered": true,
+      "recovery_scope": "new typed normal source and final binding; upper2 previously semantic-mapped, lower4 previously module-record-only"
+    },
+    {
+      "address": "0x1800454e0",
+      "pseudo_evidence": "ev_2f22af2c88e0c02db0783988bf6b8d67eb469b0f6802fb5ec641d0c0ad0d06f0",
+      "assembly_evidence": "ev_ec8e488c9470bfc5a91fa0eb4a8a7ce7b044f0c6f346c6515836286e71443ef3",
+      "newly_recovered": true,
+      "recovery_scope": "new typed normal source and final binding; upper2 previously semantic-mapped, lower4 previously module-record-only"
+    },
+    {
+      "address": "0x180045580",
+      "pseudo_evidence": "ev_d09002f392ba53373ac77b1c1cbf192b7033a4e4bfa093ba2c3bf57670891ee4",
+      "assembly_evidence": "ev_feb0127f5eb8c794b4ad41840bc3118c7f03d5d3a9188b8d0179c3c959bb262b",
+      "newly_recovered": true,
+      "recovery_scope": "new typed normal source and final binding; upper2 previously semantic-mapped, lower4 previously module-record-only"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180042480",
+    "0x180042610",
+    "0x180045620",
+    "0x180045630",
+    "0x1800454e0",
+    "0x180045580"
+  ],
+  "new_original_procedures": 6,
+  "new_source_bridges": 6,
+  "new_unique_source_mapped_addresses": 4,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/prefix_cipher.cpp",
+      "base": "NativeMessageApi::decrypt_042480",
+      "body": "decrypt_prefix_042480",
+      "closure": "RecoveredMessageCipherApi::decrypt_042480",
+      "address": "0x180042480",
+      "native_abi_complete": false,
+      "binding_role": "closes previously mandatory native message cipher provider"
+    },
+    {
+      "file": "outputs/anadius-socket-source/prefix_cipher.cpp",
+      "base": "NativeMessageApi::encrypt_042610",
+      "body": "encrypt_prefix_042610",
+      "closure": "RecoveredMessageCipherApi::encrypt_042610",
+      "address": "0x180042610",
+      "native_abi_complete": false,
+      "binding_role": "closes previously mandatory native message cipher provider"
+    },
+    {
+      "file": "outputs/anadius-socket-source/prefix_cipher.cpp",
+      "base": "PrefixCipherBlocks::decrypt_ecb_045620",
+      "body": "RecoveredPrefixCipherBlocks::decrypt_ecb_045620",
+      "closure": "RecoveredPrefixCipherBlocks::decrypt_ecb_045620",
+      "address": "0x180045620",
+      "native_abi_complete": false,
+      "binding_role": "new block interface declared and source-bound in N11; same method is one normal body"
+    },
+    {
+      "file": "outputs/anadius-socket-source/prefix_cipher.cpp",
+      "base": "PrefixCipherBlocks::encrypt_ecb_045630",
+      "body": "RecoveredPrefixCipherBlocks::encrypt_ecb_045630",
+      "closure": "RecoveredPrefixCipherBlocks::encrypt_ecb_045630",
+      "address": "0x180045630",
+      "native_abi_complete": false,
+      "binding_role": "new block interface declared and source-bound in N11; same method is one normal body"
+    },
+    {
+      "file": "outputs/anadius-socket-source/prefix_cipher.cpp",
+      "base": "PrefixCipherBlocks::decrypt_cbc_0454e0",
+      "body": "RecoveredPrefixCipherBlocks::decrypt_cbc_0454e0",
+      "closure": "RecoveredPrefixCipherBlocks::decrypt_cbc_0454e0",
+      "address": "0x1800454e0",
+      "native_abi_complete": false,
+      "binding_role": "new block interface declared and source-bound in N11; same method is one normal body"
+    },
+    {
+      "file": "outputs/anadius-socket-source/prefix_cipher.cpp",
+      "base": "PrefixCipherBlocks::encrypt_cbc_045580",
+      "body": "RecoveredPrefixCipherBlocks::encrypt_cbc_045580",
+      "closure": "RecoveredPrefixCipherBlocks::encrypt_cbc_045580",
+      "address": "0x180045580",
+      "native_abi_complete": false,
+      "binding_role": "new block interface declared and source-bound in N11; same method is one normal body"
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x180045670",
+      "pseudo_evidence": "ev_9cdd2cd4e35fcff6137c548a5352bf598d4e9661031cb6ab2a48c87b92a8bf8a",
+      "assembly_evidence": "ev_57fc2c678ac5428c83d3c09571e2449cbc67b6826e9ae9240db55827891cde82",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800458d0",
+      "pseudo_evidence": "ev_7fa7ecd45c02a8c9e18aa7d499d6cab3010a807c80619e0d78598cd98b97f54c",
+      "assembly_evidence": "ev_6b0cf3ddecb4f04b080c732d7da582fea1d1a5b028dc5491bcc3700d5921db8e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180008350",
+      "pseudo_evidence": "ev_8f414a470d18574ce283ec7f9d33a326dcabef0214a8d5a54fdfd5f5b9bba010",
+      "assembly_evidence": "ev_36491f90ef8a29d2fb8edd6b1735250524629ef5f6e005c31809a72ed253a8f3",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180010040",
+      "pseudo_evidence": "ev_8b172ce1ae7a2a8f6e7d19d9433d0f9681d58a8e0fba88dbe42da06deb17bac4",
+      "assembly_evidence": "ev_4eed657fe242e320b79de3469b4ff268d87d2033487b16f14133e304afc75ba1",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18003ce30",
+      "pseudo_evidence": "ev_133ad329397d833d572bf37cfc559a97e5cc1d655e776ff3b426ed2f69869b99",
+      "assembly_evidence": "ev_80f220817eb9f3aaedd370919dd41b31eff96692957601bd8e30baf3951ce863",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18003d190",
+      "pseudo_evidence": "ev_52ce061acb986f9fe9ccdcaeedc30b80c6a1bf7335b59d2f3c6e82743e888599",
+      "assembly_evidence": "ev_7cc933e3f97d44f4cb2932484a7fc51fedeb38e403d3a0c8eedad13c1eaea6b2",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180012350",
+      "pseudo_evidence": "ev_3fbac447ca491496cb5cd50e118f7d13550dafe9739d4478cec4459874537f70",
+      "assembly_evidence": "ev_00bf42becc4f92a8d4b78d914a9566385470f50393b6531e88756e3dd467972a",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180007e30",
+      "pseudo_evidence": "ev_2bb832e12c4c27a1cb7ea8eeacaddf030c000eb99f2042529c2826614681d5f3",
+      "assembly_evidence": "ev_2f324be7d0140daa9db7786faa691d87237a55cdc7aa18602f7d2fa5a7c84549",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180032d00",
+      "pseudo_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "assembly_evidence": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "prefix_cipher.hpp": "51a2f555d3b9b589922d14bdc96fe464fe4f512b49bebe73003897dd8047fb5f",
+    "prefix_cipher.cpp": "62b58f613895dbb9fcdc7d184496aa22c5dea328448140a02c5017e2cc2ce48d",
+    "prefix_cipher_test_fixture.hpp": "f58ccb25c22805aebfaca97628f70c24ce0727a549b31847f023688b7490387b",
+    "prefix_cipher_tests.cpp": "4dcf44596fede11981ce149319359fca74ab00b39fa8bf404a7e47449319022f",
+    "prefix_cipher_integration_tests.cpp": "874a44916c7deb07e5f2fc821f858ee660c729fd7b6f8fee6f9b2e8a4d6a5c9b",
+    "build.ps1": "f6596846cd366bfb33d6101d1bb8b23daf2243aa7db55bed0caa719fb57d22fa",
+    "CMakeLists.txt": "cfea5cef904ec77a3132c7ff7e718773c4b389872e618391f674130138b61adf",
+    "README.md": "17fa4fe52c968ce1e53d42f596115f02a6089463ae5a10cfe37916ab15366858"
+  },
+  "reused_source_hashes": {
+    "../anadius-crypto-source/crypto.hpp": "33ae57c39012534dc5b8321199e0ef2c82ac77455c17632df28a74a27ac2fa77",
+    "../anadius-crypto-source/crypto.cpp": "cd493597464ba22c7c11557c36f033387770e0cc62d4fbbaefc1676bbfabd436",
+    "../anadius-crypto-source/constants.hpp": "05b802de2ac78f93c1fdf8abed0ea50ef2f9b284a6a5cefef2f4188b0f4b56b2"
+  },
+  "support_hashes": {
+    "prefix-cipher-evidence.pseudo.c.txt": "76487994ccb9a7cc8f5d9574d94375ccbb22cce2049681634bad2611db7a168e",
+    "prefix-cipher-evidence.asm.txt": "ab2e8f0df8132d9e1d1dc8f861eabeb4600c5268431e762e7b659fca207277d3",
+    "prefix-cipher-context.pseudo.c.txt": "583f9de5eaa8d9f2d5b1a749979f20be0eb024f8b8ec8f7b516f630323c828e1",
+    "prefix-cipher-context.asm.txt": "f801f33ceb2d3804466bc099acd1ef8000e1ae1cf2609d30d81c4a9c68b75b24",
+    "prefix-cipher-flow-audit.md": "18e7eada0ff0c6a1965f7c955dfc2ca80e269300cc6cb36090f1661ce9a03684",
+    "prefix-cipher-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788"
+  },
+  "core_checks": 5039,
+  "integration_checks": 4224,
+  "new_checks": 9263,
+  "execution_scope": "042480/042610 live-prefix normal cipher plus045620/045630/0454e0/045580 ECB/CBC normal bodies;2 existing NativeMessageApi closures and4 new block-interface source selections using existing AES block sources; real request/response/event IV chain to033d70/N1-N10 queue/send/finish; init/key/session/XML/log/ABI/EH remain open",
+  "limitations": [
+    "Typed mode/IV/schedule projection, not native object layout or global/ABI/EH/SEH/concurrency/fault equivalence",
+    "Existing AES block schedule source reused, not newly recovered rounds; coherent schedule/IV/handler and input-memory lifetime required",
+    "Cipher0423d0/042760/042780 initialization/key/IV and shared session/ChallengeResponse/reset state not bound yet",
+    "Historical NativeMessageApi third uint32 is offset0 in033d70; full uint64 offsets preserved only by direct new bodies, no widening ABI claim",
+    "Raw unsigned offset/size wrap and pre-base padding reads preserved within bounded memory; no std::string prevalidation or rollback added",
+    "CBC encryption final-batch IV store differs from per-block decrypt IV updates; failures retain prior native mutations",
+    "No native CALL010040; existing resize/grow normal source composes native inlined contracts",
+    "XML/032d00/log/getter/mutex/allocator/free/terminal providers/native ABI/EH remain open; no original/network/thread/IOCP execution"
+  ],
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Same-agent addressed assembly/source and synthetic independent payload/lifetime/failure-prefix oracles",
+    "independent_review_complete": false
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N12 cipher0423d0/042760/042780 init/key/IV and coherent session state binding; CRT stays paused"
+}

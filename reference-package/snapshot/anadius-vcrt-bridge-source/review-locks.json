@@ -1,0 +1,20 @@
+{
+  "reviewer_scope": "Independent source review of LockEffects, borrowed bank storage, raw BOOL32 transport, shared lifecycle counters and Entry integration fixture",
+  "reviewed_files": ["bridge.hpp", "bridge.cpp", "bridge_tests.cpp"],
+  "production_findings": [],
+  "conclusions": [
+    "ACRT initialization dispatches through recovered 06707c and encoded runtime resolver; VCRT initialization dispatches through its distinct recovered 050c38 and plain cache",
+    "VCRT result explicitly converts int32 to uint32 before uint64, retaining low EAX without sign extension",
+    "LockPlatform owns or borrows real typed storage; bridge never casts an original VA or fabricates native critical-section storage",
+    "PtdEffects borrows the shared lock State and Effects used by ACRT, preserving separate ACRT and VCRT counters and their real recovered cleanup bodies",
+    "Entry composition fixture exercises process attach, thread attach/detach, process detach, 14 ACRT plus one VCRT locks and corresponding 15 deletions",
+    "No native critical-section operations, target DLL or game execution are introduced"
+  ],
+  "provider_preconditions": [
+    "ACRT InitializeEffects and LockPlatform operations must refer to the same ACRT bank; VCRT API Effects must operate on the bank objects returned by LockPlatform storage",
+    "All borrowed states and provider objects must outlive their bridge and callback use; FLS callback binding must remain valid through final release and late callbacks",
+    "State operations require the external serialization and count domains specified by the recovered lock module"
+  ],
+  "known_fixture_note": "Parent corrected the initial tautological present-cache assertion to explicit procedure index+1 versus missing; independent source inspection confirmed the corrected assertion. Parent reports the recompiled 443 checks pass. Same-bank and borrowed-lifetime documentation clarification is tracked by parent and does not change production behavior.",
+  "limits": "Static independent review; unit test results belong to build validation. Full native ABI, SEH/XFG and runtime equivalence remain unproven."
+}

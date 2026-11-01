@@ -1,0 +1,80 @@
+{
+  "reviewed_at": "2026-10-18T09:34:41.7698145Z",
+  "reviewer": "crt_dll_dispatch",
+  "scope": "Nine selected initializer cores and seven-method AcrtTablesBridge; retained static assembly/pseudocode only, no target execution",
+  "result": "PASS; no outstanding findings in reviewed normal-flow scope",
+  "files": [
+    {
+      "file": "initializers.hpp",
+      "sha256": "a9e1effcf75bf8baa9c4909a90ce187dc7a39259d73a32cfc3c25ef34ed0fa0b"
+    },
+    {
+      "file": "initializers.cpp",
+      "sha256": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79"
+    },
+    {
+      "file": "initializer_tests.cpp",
+      "sha256": "52078425e865f289ddf397643ef24cf90fc2ffbc83c5224ee7fda4ecc22e4771"
+    }
+  ],
+  "findings": [],
+  "verified": [
+    "0704f4 uses AL, excludes failing pair from rollback, rereads previous pairs and requires initializer plus cleanup",
+    "070588 traverses full reverse table and requires cleanup only, passing argument0",
+    "064614 rereads entries, skips null callbacks; 064658 checks EAX and stops at first nonzero32 result",
+    "0645a8 tests optional-preserve-error PTD pointer; 0645bc calls freePTD then returns AL1",
+    "064604 ignores previous PTD uninit result and forces AL1; bridge ignores bool parameter as original has no consumed argument",
+    "AcrtTablesBridge keeps unrecovered lower subsystems abstract; two synthetic pairs are not represented as full original table coverage"
+  ],
+  "limits": [
+    "SEH/unwind/XFG behavior excluded",
+    "Original preferred VA table entries remain metadata; no native callback or original/rebuilt DLL runs",
+    "Combined fixture uses explicit stand-ins for VCRT/CPU/argv/environment/SList, not recovered production completion"
+  ],
+  "original_reviewed_files": [
+    {
+      "file": "initializers.hpp",
+      "sha256": "e24fc8eae17ab4bfd190809dd8084a029ec4e04f584515d7cf33cc947ad73aec"
+    },
+    {
+      "file": "initializers.cpp",
+      "sha256": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79"
+    },
+    {
+      "file": "initializer_tests.cpp",
+      "sha256": "21e2ff6169f643e1429eccd9689564a4a6db2a704edc62e6f3853b93996fa941"
+    }
+  ],
+  "finding_history": [
+    {
+      "priority": 2,
+      "file": "initializers.hpp",
+      "line": 30,
+      "issue": "flush_enabled_0a4ef0 is uint32_t but 1800645d4 compares qword ptr [1800a4ef0] against zero",
+      "effect": "A high-word-only nonzero state must trigger terminating common_flush_all(true); current state cannot represent it",
+      "requested_change": "Use uint64_t and add 0x100000000/high-only terminating tests",
+      "assembly_evidence": "ev_48c0d2c6c4fb5bb2db5fbb7118062241e0238031b58b87518f9fcb602127b75f",
+      "status": "resolved",
+      "resolution": "State now uint64_t; terminating/nonterminating matrix includes 0x100000000 and 0x8000000000000000, preserving qword branch semantics"
+    },
+    {
+      "priority": 3,
+      "file": "initializer_tests.cpp",
+      "line": 62,
+      "issue": "Dependency and check(false) both throw runtime_error inside same try/catch",
+      "effect": "A future swallowed dependency exception can falsely pass this propagation test",
+      "requested_change": "Use a distinct dependency sentinel exception or record catch outside the assertion scope",
+      "status": "resolved",
+      "resolution": "Distinct DependencyException; propagated flag assertion is outside catch and checks actual dependency propagation"
+    }
+  ],
+  "reverified_at": "2026-10-18T09:35:23.5725033Z",
+  "reverification": {
+    "method": "Narrow reread of field type and both test changes; production .cpp unchanged by SHA-256",
+    "validation_output": "PASS 904 initializer/outer-CRT/onexit composition checks",
+    "validation_sources_match": true,
+    "validation_executable_match": true,
+    "executable_sha256": "2e9884ed067ccf569afcc1766bcd00f6f28224de3c8a480f0c60244a0a7dad06",
+    "repeated_test_execution": "not needed: fresh standalone run recorded by parent with exact matching sources and executable"
+  }
+}

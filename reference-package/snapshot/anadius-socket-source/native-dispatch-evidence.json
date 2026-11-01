@@ -1,0 +1,146 @@
+{
+  "schema": "native-dispatch.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180032d00",
+      "pseudo_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "assembly_evidence": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224",
+      "newly_recovered": true,
+      "recovery_scope": "per-call normal dispatch projection; static registry init delegated; previous semantic definition retained"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180032d00"
+  ],
+  "new_original_procedures": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 0,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/native_dispatch.cpp",
+      "base": "NativeMessageApi::dispatch_032d00",
+      "body": "dispatch_native_032d00",
+      "closure": "RecoveredMessageDispatchApi::dispatch_032d00",
+      "address": "0x180032d00",
+      "native_abi_complete": false,
+      "scope": "032d00 per-call normal projection and final NativeMessageApi dispatch source bridge; live lookup/handler, validation and normal scratch/output/printer order; original registry/DOM/document/printer/string/handler/exception lower providers mandatory"
+    }
+  ],
+  "native_typed_providers_newly_closed": 1,
+  "context_functions": [
+    {
+      "address": "0x180001830",
+      "pseudo_evidence": "ev_abf6ead481323ed34418e13f343856b36f0183b4a90796a24f1a890f0dad1914",
+      "assembly_evidence": "ev_de11d55b943716ed390775f77e60b3f24b2c5f17431bc50f1f7fc7eca335c9c9",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180004280",
+      "pseudo_evidence": "ev_783e89582f054f61046e9c06b28ad2145076dbd6721a32cd6bfe2c615e85ff20",
+      "assembly_evidence": "ev_795f6b99b0b687dd3ceffca4901b4e92f2721869b41c336f72e0ba4c670d4a4f",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001e00",
+      "pseudo_evidence": "ev_310b19c5bb059cd1c7953ed5ff55dac04b85c180edb01c590a4176041e650755",
+      "assembly_evidence": "ev_b1ea754068b65d01028de2c76b93bcfaf0dca2608322419cc6418811342f3097",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180009fd0",
+      "pseudo_evidence": "ev_0503da3ca392ad7ae2efca8bff5eaffc818556b093cd19d9d01994025b378d9e",
+      "assembly_evidence": "ev_3d660c0ea41fd3196872defe1835c9b1cc1fe565b6d5180c267fac482fb9f12b",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180006b30",
+      "pseudo_evidence": "ev_c752870e47c512ffbdb9313f94aae8b98db2407b681a8db0e487a8c9b957bcdd",
+      "assembly_evidence": "ev_341581b10af329008e58d88ed528bd861c449f22efdc7ed9099aa5d675b37bc7",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002b300",
+      "pseudo_evidence": "ev_035e10f60a4facdf90b41d0d45af7f9a50b80c7a8ef00061d18d0bf367821008",
+      "assembly_evidence": "ev_c6e8b5a6d0d3ab2570482171169908bbb5063be87626f29ce53cb6b33b656d7b",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180018b30",
+      "pseudo_evidence": "ev_ecec8c894dbb2c2ad0c69942af167263b894a8f71e0298e2f7379fd291c7415a",
+      "assembly_evidence": "ev_be1df69c675342becd3b9973974d00ba9f8df66db50a36754773d6b63a48d47d",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18000b520",
+      "pseudo_evidence": "ev_e25a00cbdac133039ceb4dbf354ef2c04f0a94764a6fe7956ed00fca317e37f6",
+      "assembly_evidence": "ev_6441a0fe9fcce6c04fe8a066da594589f86bf11e390d9db6033e1b88f029cb9e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002d7e0",
+      "pseudo_evidence": "ev_d8a07a5110f0293046c9293210f8e8a5c2b36d5827c2faf62f45f6c5289c48af",
+      "assembly_evidence": "ev_ebef8c484911f6c9c8fbb48fa77128cde1bb83a78e970446241d39b351d4ad30",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "native_dispatch.hpp": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440",
+    "native_dispatch.cpp": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b",
+    "native_dispatch_test_fixture.hpp": "a7ca9a188a081f3cbd0cc3b2a4de57cc67d5cbcf14a122397e284a30b10a54ef",
+    "native_dispatch_tests.cpp": "5fb519c191709a2527772dcadc277634d6af1a57013b8fdc01991ee8028cde1a",
+    "native_dispatch_integration_tests.cpp": "52f9994466103112c006fd0771051eeddbde81f0f031de3233ca21578f961143",
+    "build.ps1": "ee6ebe78f6e97904c3ac4911bc49d5f6ff12a1b1437cb7d8d825394990fc4395",
+    "CMakeLists.txt": "1732724fad32ee6913da423dd934116b7fbb8c4b0a9e8569a92fd1d6588f0402",
+    "README.md": "b60a6d09a8959b6b053acdd7240fe5b0bcb94286da32c9bfc55d21e969634893"
+  },
+  "reused_source_hashes": {
+    "../anadius-messages-source/messages.cpp": "58b869e2b10b75e2a0e97f8f22564b5bb7f0ab11f89e6910414ece0b34a988c2",
+    "../anadius-messages-source/messages.hpp": "42a33b619026a7a3201adbff54d853252d46a18d8d2252b7804c39929d4f54d4",
+    "cipher_session.cpp": "62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2",
+    "cipher_session.hpp": "3fa624b7443d7fa1ab3eb86f9567e5b98323014166b98be43328360c272af412"
+  },
+  "support_hashes": {
+    "native-dispatch-evidence.pseudo.c.txt": "797dc61bd4dfbba39f3318aecb139410b837e3f20e77050faec035e25c8ca926",
+    "native-dispatch-evidence.asm.txt": "3c08bfc4332d40700ec02cdec55af19028c276573eb1e75f64e449de734f5681",
+    "native-dispatch-context.pseudo.c.txt": "da679c912d232c1af93679224f5d5af10ae584b04cda500e60de83fba93f1185",
+    "native-dispatch-context.asm.txt": "0a6d19d867480c65bdb91bd6add2bb60ec6a87fe42de31f4234d7a801386341d",
+    "native-dispatch-flow-audit.md": "f21a54147d83497a9883f8e10c07003dd6b483c32bfe6a7ffd34f5c01e217d91",
+    "native-dispatch-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788"
+  },
+  "core_checks": 850,
+  "integration_checks": 8978,
+  "new_checks": 9828,
+  "execution_scope": "032d00 per-call normal projection and final NativeMessageApi dispatch source bridge; live lookup/handler, validation and normal scratch/output/printer order; original registry/DOM/document/printer/string/handler/exception lower providers mandatory",
+  "limitations": [
+    "Normal typed projection, not native object/global/TLS/tree/DOM/vtable/ABI/EH/concurrency equivalence",
+    "Registry lazy-init and exact lookup remain mandatory providers; old39 registration table reused",
+    "Native001830/004280/001e00 document ctor/parser/destructor still controlled upstream compatibility providers",
+    "006b30/02b300/018b30/009fd0/00b520 helpers and printer helpers remain mandatory lower providers; test models are not recovered native bodies",
+    "Registered handler effects controlled; existing semantic02d7e0/SessionCipher/Factory reused for ChallengeResponse",
+    "Normal invalid/throw prefixes have no invented native cleanup; C++ fixture teardown is not unwind evidence",
+    "Automatic scratch projection must be distinct from output and explicitly mapped in ReceiveBufferMemory",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; CRT unchanged and paused"
+  ],
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Same-agent addressed assembly/source and synthetic independent payload/lifetime/failure-prefix oracles",
+    "independent_review_complete": false
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N14 document001830/004280/001e00 ctor/parse/destroy source contracts; registry TLS/RB-tree and DOM/printer/string lower backends remain open; CRT stays paused"
+}

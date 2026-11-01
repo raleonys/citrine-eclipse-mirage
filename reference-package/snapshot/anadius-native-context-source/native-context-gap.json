@@ -1,0 +1,40 @@
+{
+  "schema": "runtime-state-identity-gap.v2",
+  "status": "CLOSED_FOR_SELECTED_SOURCE_ATTACHMENT",
+  "source_package": "B15",
+  "exact_final_slot_array_enforced": true,
+  "context_live_map_config_refs": true,
+  "native_context_publish_before_host": true,
+  "optional_source_path_only": true,
+  "production_callback_policies_complete": false,
+  "automatic_external_quiescence": false,
+  "failed_exit_registration_keeps_binding_until_separate_proof": true,
+  "actual_hooks_installed": false,
+  "historical_B14_report": "outputs/anadius-host-platform-source/native-context-gap.json",
+  "source_files": [
+    {
+      "path": "outputs/anadius-native-context-source/context.hpp",
+      "sha256": "bc1f880669c46aca71e368385c33ff60b8afcb9630237b6576344345f4983b28"
+    },
+    {
+      "path": "outputs/anadius-native-context-source/context.cpp",
+      "sha256": "63aa2ced7084c6ade0e6c27d830b42b812f835682ed224c019c316424591724e"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "b37355b48739483d30ed4536f5a31796bc1b5f4d7e548b901985460259d7db24"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "sha256": "0486fc7c6d0a97ccd631b23a1462cc1b374ae1a33a4b0c0bbf81677ffc66aceb"
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "aefcaeaedf61d3646bc17e4a52763606f2e9de4634ab63fb14ec876262547aec"
+    },
+    {
+      "path": "outputs/anadius-native-source/native_callbacks.hpp",
+      "sha256": "ee943bb8e5aef8eeedd7ccd1747457575766f24cf0dc85e792668b166b0f455a"
+    }
+  ]
+}

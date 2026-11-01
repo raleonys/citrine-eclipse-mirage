@@ -1,0 +1,69 @@
+{
+  "scope": "Independent complete retained static 026320 / 029890 / 0298b0 / 02a190 normal-flow audit",
+  "reviewer": "worker_run_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "address": "0x180026320",
+      "assembly_evidence": "ev_c1d7725a414b7f64b770058dc15e8db4aa9f6c4d09b025ad2e0f0eb9cf84911b",
+      "pseudo_evidence": "ev_a5b1ddc59703eac49757a284109778592c0ff620184c9ec7cb170cafa588bd6e"
+    },
+    {
+      "address": "0x180029890",
+      "assembly_evidence": "ev_450a3eec4ce1b268df9350871ff8b463b49cd06620c715153ee431acdf313130",
+      "pseudo_evidence": "ev_521cfdbca7541399b8af5c4f7bdc5ceb096310c502b3436053fdfcd22e970ec5"
+    },
+    {
+      "address": "0x1800298b0",
+      "assembly_evidence": "ev_4b20e2442cb7d601c8177ba4b68acc8c09a8cce81580892199e78a5d0f00c319",
+      "pseudo_evidence": "ev_e6bbbaa1780b6df4e1edc25150c1c8a939c0d5fb937afed734d4f8c641d88539"
+    },
+    {
+      "address": "0x18002a190",
+      "assembly_evidence": "ev_28baeec203ffe1abf8bab8af7907605b09a6dfb72018fcd7ea4ffbca8955f680",
+      "pseudo_evidence": "ev_e826697a7d9543338d9741906c5ce25c29a36806fd701f2178a335f314f7fee2"
+    }
+  ],
+  "rules": {
+    "destructor": "Store opaque table0844b8 before flag bit0 test; conditional exact04b0f8(this,32); return original pointer identity without access after deletion",
+    "wrapper": "Read function.scheduler18; call actual0298b0 with local result; discard returned count and status",
+    "zero_work": "Locked low32 fetch_add(0); if zero call actual02a190 before status value0/categoryA10F8 write; status padding unknown; return0",
+    "active_init": "State count90 uint32zero and pair98/A0 zero; call required04a240; THEN zero10pointer cache; native state padding unknown",
+    "tls": "Frame contains address identity scheduler+28, state slots, prior TLS getter return; live globalindex read separately before getter/install/restore; final restore reads LIVE frame.previous after dispatch; ignore setter returns",
+    "dispatch": "Required027c10(INFINITE,state,result); each nonzero return increments uint64 count with saturation; zero ends; no invented result writes",
+    "cleanup": "Restore LIVE frame.previous TLS field first with fresh global index; read10slots ascending live immediately before conditional04b788; do not zero slots; required04a2cc last; no invented exception unwind",
+    "stop": "Low32 atomic stop34 exchange1; only prior0 leads to low32 wake38 exchange1; only prior0 posts live port with zero bytes/key/overlapped; upper wake word preserved",
+    "post_error": "Cache GetLastError before category028620; category ALWAYS includingerror0; nonzero only raises028240 opaque084530; flags remain1"
+  },
+  "normal_source_procedures_added": [
+    "0x180026320",
+    "0x180029890",
+    "0x1800298b0",
+    "0x18002a190"
+  ],
+  "new_original_procedures": 4,
+  "providers_not_recovered": [
+    "027c10 dispatcher",
+    "04b0f8 native sized deallocation",
+    "04b788 native unsized free",
+    "04a240 / 04a2cc / 049be0 CRT providers",
+    "Native allocation and lifetime",
+    "Native exception/SEH/unwind",
+    "Native atomic layout/ABI and actual concurrency",
+    "Executable vtable binding and full DLL ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Typed projections and opaque identities do not implement native memory overlays or executable image addresses",
+    "Native status and state padding unspecified; only meaningful fields projected",
+    "Null scheduler unsupported because first native operation dereferences scheduler+30",
+    "No original DLL behavioral equivalence or actual concurrency proven",
+    "Existing CRT production unchanged; providers and helpers add no original procedure"
+  ]
+}

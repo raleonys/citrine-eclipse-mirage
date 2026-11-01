@@ -1,0 +1,114 @@
+{
+  "scope": "Independent retained static acceptor and socket cleanup normal-flow audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "address": "0x180020e20",
+      "pseudo_evidence": "ev_3c0f133878db1fec30ab6ef19ef7b2595fed8a0ba99ea8e0ec75a708ab5925af",
+      "assembly_evidence": "ev_ff338f1411812fb5f0cbb9ad6393b0698c2c0a40146ad6aab6f4aaeffaf2bfea"
+    },
+    {
+      "address": "0x180025310",
+      "pseudo_evidence": "ev_26632449c219b976e8c944c3f39220e450cf9f69c0bb73f371721826920c0fb4",
+      "assembly_evidence": "ev_2645e8dfee6bdef124f50586c9504ff413676b420d87ddf68f69b549a20cc93c"
+    },
+    {
+      "address": "0x1800211b0",
+      "pseudo_evidence": "ev_0a99c668ad187f12ba22bcb5a084965bb3619bfa398a64dd105f65647c8a7c33",
+      "assembly_evidence": "ev_632ecefa1757518f06b13606a94918118593165c553357228e6939dd09997b9d"
+    },
+    {
+      "address": "0x1800237f0",
+      "pseudo_evidence": "ev_9d032f90b7525b7ede209b0cd270417daa9266d8e3a7a8c00e1c70cc49a616d6",
+      "assembly_evidence": "ev_de485f776e49d7ff2d789f8827fe4b134f48db3815f521d6d4cde097753b314c"
+    }
+  ],
+  "claims": {
+    "constructor_initializer_first": true,
+    "non_family2_maps_socket23_and_bind28": true,
+    "ipv6_dualstack_option_result_ignored": true,
+    "WSA_error_order": "category then WSAGetLastError",
+    "IOCP_error_order": "GetLastError then category",
+    "IOCP_null_zero_error_transfers": true,
+    "socket_invalid_zero_error_resets_protocol_but_no_transfer": true,
+    "protocol_cache_qword48_always2": true,
+    "reuse_bind_listen_nonzero_status_zero_captured_error_continues": true,
+    "post_transfer_explicit_close_on_raise": false,
+    "close_helper_input_slot_unchanged": true,
+    "close_helper_cached_socket": true,
+    "close_helper_retry_errors": [
+      10035,
+      1237
+    ],
+    "close_helper_ioctl_command": "0x8004667e",
+    "close_helper_ioctl_value": 0,
+    "close_helper_ioctl_result_ignored": true,
+    "close_helper_attempt_limit": 2,
+    "close_helper_second_failure_capture_discarded": true
+  },
+  "new_original_procedures_targeted": [
+    "0x180020e20",
+    "0x180025310"
+  ],
+  "providers_not_recovered": [
+    "0211b0 initializer/service/intrusive list",
+    "0237f0 sharedref/allocator",
+    "028620/0285b0 lazy categories",
+    "028240 native exception"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Native EH unwind and destructor cleanup not inferred from normal body",
+    "Native ABI/error padding/allocator/lifetime/concurrency not established"
+  ],
+  "context_string_inventory": {
+    "evidence": "ev_c97664560efc0e5cf3207e174b0defd0b96f84c49fdf20bd0644ce960d07d716",
+    "observed": {
+      "0x180084730": "set_option",
+      "0x18008473c": "listen"
+    },
+    "exact_entries_not_found": [
+      "0x180084728",
+      "0x180084604"
+    ],
+    "bound": "Retained Ghidra-defined-string inventory only; not whole binary absence"
+  },
+  "direct_PE_context_proof": {
+    "path": "work/acceptor-context-strings.json",
+    "sha256": "24038d03d8ad7eb090084acb01e04efe5c5d3d4480c8c58a3e6dedfb77d1f704",
+    "independently_checked": true,
+    "verification": "Baseline DLL hash plus PE section VA/file-offset and exact bounded byte sequences; read-only, not REA evidence",
+    "items": [
+      {
+        "address": "0x180084728",
+        "file_offset": "0x82f28",
+        "value": "open",
+        "hex": "6F70656E00"
+      },
+      {
+        "address": "0x180084604",
+        "file_offset": "0x82e04",
+        "value": "bind",
+        "hex": "62696E6400"
+      },
+      {
+        "address": "0x180084730",
+        "file_offset": "0x82f30",
+        "value": "set_option",
+        "hex": "7365745F6F7074696F6E00"
+      },
+      {
+        "address": "0x18008473c",
+        "file_offset": "0x82f3c",
+        "value": "listen",
+        "hex": "6C697374656E00"
+      }
+    ]
+  }
+}

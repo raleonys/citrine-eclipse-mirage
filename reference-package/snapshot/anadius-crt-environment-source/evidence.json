@@ -1,0 +1,61 @@
+{
+  "artifact": "anadius64.dll",
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "preferred_image_base": "0x180000000",
+  "retained_pseudo_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "method": "Retained REA/Ghidra function evidence; bounded excerpts, no target execution or new analysis session",
+  "entries": [
+    {
+      "va": "0x180063a70",
+      "pseudocode_evidence": "ev_79aa75c3a9394e3359672320ab6cfe65d4d64cc32ff7dbe2ba1e00e90ed4a88f",
+      "assembly_evidence": "ev_b498e6b0ca58b40bfba2d8d0ecda4a314e1a5aa4998620c645a0546617a71ef5"
+    },
+    {
+      "va": "0x180064054",
+      "pseudocode_evidence": "ev_cfb5edcd880c37e1b61cf55a4ff9972021cc153df0b6e4db336282a7fecf10e4",
+      "assembly_evidence": "ev_7729ffa80c433c559954212bdbb14a5f766708c35e72f4bb4edc17306929d89d"
+    },
+    {
+      "va": "0x18006f9e4",
+      "pseudocode_evidence": "ev_4bc8e51d68b820f85cbcd46dafc3ce347a986915045329b1681c0e50f58fc09c",
+      "assembly_evidence": "ev_57a60b8cb350ebc016b24b0c008e12c936e45ee57df6dea058a78ffda45ca1fa"
+    },
+    {
+      "va": "0x180063b54",
+      "pseudocode_evidence": "ev_b0c52b0ab32df9355b83792d6498baa913d33a30d72be97b4cf0306820be8d39",
+      "assembly_evidence": "ev_a74dfe595c9593e940b04f236179fb937b31d9fff95c14c656131fd2e91726ad"
+    },
+    {
+      "va": "0x180063d80",
+      "pseudocode_evidence": "ev_f42efb4c2c6e01d2ccbccaad3bc18cbd1905fc5983659e54ccb9222181231f9c",
+      "assembly_evidence": "ev_6ab86bc75eb9a6d0f54716af111b953c09d1853d933ae64ec912cc87684e5dd3"
+    }
+  ],
+  "globals": [
+    {
+      "va": "0x1800a5288",
+      "width": 8,
+      "meaning": "current narrow environment pointer"
+    },
+    {
+      "va": "0x1800a52a0",
+      "width": 8,
+      "meaning": "initial narrow environment pointer"
+    }
+  ],
+  "important_calls": [
+    "063a70 calls, in branch-dependent order: 06f5f8, 06f9e4, 063b54, 0668c0",
+    "064054 tail JMP 063a70",
+    "06f9e4 -> IAT 07f040 GetEnvironmentStringsW / 06cd58 conversion / 06a308 malloc / 0668c0 / IAT 07f038 FreeEnvironmentStringsW",
+    "063b54 -> 066848 calloc / 05cff0 strcpy_s / 063d80 free_environment / 05c9a4 Watson / 0668c0",
+    "063d80 -> 0668c0"
+  ],
+  "limits": [
+    "Normal control flow only; no SEH/unwind reconstruction",
+    "Bounded metadata and domain guards are reconstruction-only interfaces",
+    "No native environment, conversion, heap or fatal-handler backend provided",
+    "Five local function entries include one tail thunk, not five independent algorithms"
+  ],
+  "selected_assembly_sha256": "5d0c36d4d0e1c0cf3c9979e675371148730420c43df7c5c49f3545c95687d78d"
+}

@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_nls_native_bridge",
+    "result": "PASS",
+    "output": "PASS 2114 actual native-NLS/UTF8/record/source integration checks",
+    "executable_sha256": "7dda0f225e1a3f233a2ef2cc9ebd54995b04b76b957e77074cbb2d193d3eafca"
+  },
+  "execution_scope": "Real SDK CP/conversion/type/Ex/W/LCID and system-only loader on synthetic strings; actual recovered resolver/NLS/record/SBCS/case/systemCP/LocaleUpdate/heap path; controlled PTD/FLS/heap/lock/atomic/scratch/input-tail/global contexts; other linked algorithms not claimed executed; zero newly recovered original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-nls-native-bridge-source/bridge_tests.cpp",
+      "sha256": "404283d7493bab84772a9dd8e43c22962bbe14ff001d1997d7c04adde0202c66"
+    },
+    {
+      "path": "anadius-crt-nls-native-bridge-source/bridge.cpp",
+      "sha256": "a8d9c02ee615afd7a3b353b5541f491239e3d69090ee34e3d4474eb5b2c9aa9d"
+    },
+    {
+      "path": "anadius-crt-nls-native-bridge-source/bridge.hpp",
+      "sha256": "4b1ae73df1b430718e486d46425374a6527ab67962f9b391b66c28fc5de7d4f3"
+    }
+  ]
+}

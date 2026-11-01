@@ -1,0 +1,11 @@
+# Timestamp ve takvim kaynak incelemesi
+
+Son üretim kodunu ana ajan inceledi. Ayrı timestamp_parse_audit ajanı uygulamadan önce retained kanıtın sayısal/EOF/virtual-facet dallarını bağımsız çıkardı; parse-audit.md/json bu incelemedir. Son ClassicIso kodu ve ek testleri ana ajan yazdı; bunlar için ikinci bir tamamlanmış bağımsız kod incelemesi iddia edilmez.
+
+- Wrapper 041e41..041e4e zero9tm; 041f17 explicit-length string; 041f57 mask6; 041f62 calendar çağrısı ile karşılaştırıldı. İstisnalar yutulmaz; wrapper tam tüketim istemez.
+- ClassicIso, 03d8f0 pseudocode ile karşılaştırıldı: width, whitespace/sign/zeros, synthetic zero, signed bounded conversion, fail sırasında hedefin korunması. En büyük geçici sayı 9999 olduğundan bu dalda _Stolx overflow veya saturating buffer davranışı yoktur. Eşdeğer sayısal biriktirme signed overflow üretmez.
+- 041760: nonzero state ile kalan formatın atlanması; numeric EOF1 ile separator sonrası EOF3 farkı; lowercase literal karşılaştırması ve final suffix korunması kontrol edildi. Sabit format dışı ve non-ASCII girdiler açık unsupported-domain exception üretir; native parity olarak sunulmaz.
+- 041ff0 calendar kaynağı doğrudan retained assembly ile incelendi: 042033 wrap-before-divide, signed magic division/truncation, 0420e9/0420ee son wrap32, 0420f1 CDQE, sonraki sign-extended clock alanları. Bağımsız register oracle kaynak bölme ifadelerini tekrarlamaz; chrono yalnız geçerli pozitif yılları doğrular.
+- Testler native state ve kısmi alan beklentilerini host get_time'dan türetmez. HostGetTime ayrı compatibility testidir. StorageEffects entegrasyonu ClassicIso ve gerçek calendar/storage/reader/file/path/writer kaynaklarını kendi oluşturulan XML/INI dosyalarında birleştirir.
+
+PASS kapsamı normal kaynak akışı ve belirtilen ASCII domainidir. Özgün DLL yürütülmedi. Runtime differential, custom locale/facet, native allocation/exception/iterator ABI, SEH, global kurulum ve tüm DLL eşitliği açık kalır. Önceki CRT üretim kaynakları değiştirilmedi.

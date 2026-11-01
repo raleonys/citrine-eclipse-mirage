@@ -1,0 +1,116 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "retained REA/Ghidra 12.1.4; no new target open or execution",
+  "functions": [
+    {
+      "address": "0x1800509bc",
+      "assembly_evidence_id": "ev_e72719e1783ec0a500bbb018de2edababe1c45f3bdd6671047913ece80581c53",
+      "pseudocode_evidence_id": "ev_099e57e80b22c1cb4f2f8ba35df1557491e5241a95cb8bfbbacaadbc2c9ea38f"
+    },
+    {
+      "address": "0x180050b0c",
+      "assembly_evidence_id": "ev_e911f778bafe3c7722a680d219dd6785f40b0a48f01a40d7ea75df4cb7ca1134",
+      "pseudocode_evidence_id": "ev_1f9c56e481142ca098be08333ee9757cc0281cba89b55caa0a340bdfb705dd78"
+    },
+    {
+      "address": "0x180050b54",
+      "assembly_evidence_id": "ev_836ce7171702e3c62fb33f0c7ba17ee129c9916a9db4a34abaa3ab453e5863d5",
+      "pseudocode_evidence_id": "ev_011dc882a8c61338e6f14e560ce59d114474a984db74c30d7e33ec1005a55e60"
+    },
+    {
+      "address": "0x180050b9c",
+      "assembly_evidence_id": "ev_2b92a06c579bce4fd1e0c2822a609847b2bd50a3e36890e9895ce58d61b88933",
+      "pseudocode_evidence_id": "ev_b778fbaac2abf4f11d0877a24e32459c6f4c408b6b76d430794096c48871be9f"
+    },
+    {
+      "address": "0x180050be4",
+      "assembly_evidence_id": "ev_8121c14851da23b2128b5d652a84e737e180058d51e613aaf62ec4fcd7b7c650",
+      "pseudocode_evidence_id": "ev_843e3c1dd5fdc52bd1556a0430362d03b0e6ab4d500eae9b850378f0c6313952"
+    },
+    {
+      "address": "0x180050c38",
+      "assembly_evidence_id": "ev_3deeb8ce6336d128912b09b2e220a0b6b6d0e0c2b8660349334d27ff97f6e501",
+      "pseudocode_evidence_id": "ev_59e912a87306990d82bbe80a74feff6fe5c23234ef991de5a424cc9f8ca8497a"
+    }
+  ],
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "bounded_rdata_read": {
+    "module_table": [
+      {
+        "value": "api-ms-win-core-fibers-l1-1-1",
+        "index": 0,
+        "pointer": "0x180088fa0"
+      },
+      {
+        "value": "api-ms-win-core-synch-l1-2-0",
+        "index": 1,
+        "pointer": "0x180088fe0"
+      },
+      {
+        "value": "kernel32",
+        "index": 2,
+        "pointer": "0x180089020"
+      }
+    ],
+    "candidates": [
+      {
+        "address": "0x180089048",
+        "values": [
+          0,
+          2
+        ]
+      },
+      {
+        "address": "0x180089060",
+        "values": [
+          0,
+          2
+        ]
+      },
+      {
+        "address": "0x180089070",
+        "values": [
+          0,
+          2
+        ]
+      },
+      {
+        "address": "0x180089088",
+        "values": [
+          0,
+          2
+        ]
+      },
+      {
+        "address": "0x1800890a0",
+        "values": [
+          1,
+          2
+        ]
+      }
+    ],
+    "target_hash_verified": true,
+    "section_va": "0x18007f000",
+    "region_hex": "a08f088001000000e08f08800100000020900880010000006100700069002d006d0073002d00770069006e002d0063006f00720065002d006600690062006500720073002d006c0031002d0031002d0031000000000000006100700069002d006d0073002d00770069006e002d0063006f00720065002d00730079006e00630068002d006c0031002d0032002d00300000000000000000006b00650072006e0065006c003300320000000000000000006100700069002d006d0073002d0000000000000002000000466c73416c6c6f6300000000000000000000000002000000466c7346726565000000000002000000466c7347657456616c756500000000000000000002000000466c7353657456616c756500000000000100000002000000496e697469616c697a65437269746963616c53656374696f6e45780000000000000000000000000000060000000000060000000100000000",
+    "section_raw_offset": "0x7d800",
+    "region_length": 344,
+    "region_raw_offset": "0x87788",
+    "region_sha256": "33970a308ede1b339985df8a3c108978bb81b46014f59f6ade5fed2234d4c152"
+  },
+  "anchors": {
+    "missing_export": "050afc JZ 050aa6 negative proc cache, no next candidate",
+    "retry": "050a55 cmp EAX,0x57; 050a61/050a68 case-sensitive wcsncmp 7 literal api-ms-; no ext-ms- exclusion",
+    "cache_width": "0509ee/050a15 qword scale8; module span A4EA8..A4EBF (3); procedure span A4EC0..A4EE7 (5), following global A4EE8 belongs to unrelated CRT table allocator",
+    "races": "050ad7 XCHG; 050ae7 FreeLibrary(new local); 050af3 GetProcAddress(same local)",
+    "arguments": "050b36 restores callback; 050b7b/050bc3 restore DWORD index; 050c12/050c15 restore value/index; 050c6e..050c78 restore section/spin/flags",
+    "returns": "Tailcall/unchanged EAX or RAX in all 5 wrappers; pseudocode void signatures discarded"
+  },
+  "limitations": [
+    "New C++ atomic state and mandatory effect adapters are not original data ABI.",
+    "TLS fallback discards FlsAlloc callback; no synthetic destructor dispatch is added.",
+    "No actual native module, FLS/TLS, critical-section or original binary operation executed.",
+    "Loader/provider exceptions, real concurrent unload, SEH/CFG and original lifecycle integration remain outside verified boundary."
+  ]
+}

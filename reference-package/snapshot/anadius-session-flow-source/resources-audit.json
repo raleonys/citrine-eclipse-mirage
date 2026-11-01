@@ -1,0 +1,32 @@
+{
+  "schema": "session-flow.resources.v1",
+  "result": "COHERENT_TYPED_SOURCE_WITH_EXPLICIT_MESSAGE_AND_SHUTDOWN_LOWER_SCOPE",
+  "owns_or_coordinates": [
+    "Parent-owned actual023000 session and existing cipher/input/output/socket fields",
+    "Defined198-byte cipher state transfer preserving own schedule reference",
+    "One accept/IO/task/response cache retirement/free routing policy",
+    "Observed terminal SDK pins and generation checks through coherent completion memory",
+    "Greeting heap free before actual read submission; copied local control/live server tail order"
+  ],
+  "caller_obligations": [
+    "Borrowed providers/contexts and coherent same-parent references outlive all operations, caches and callbacks",
+    "All FlowServer binding identities correspond to their live server projection",
+    "Single admitted worker/whole-operation policy; actual physical waits alone leave parent scope",
+    "Selected synchronous raw jobs remain under a live source handler strong; other scheduling needs separate lifetime proof",
+    "Observed terminal owner0 shutdown policy is selected host behavior, not inferred native kernel drain"
+  ],
+  "limitations": [
+    "Normal-return N5 message bridge; native-prefixN9 callback/EH binding incomplete",
+    "Cipher native padding2/vptr/class ABI unknown",
+    "Native0241b0/0228c0, required retry/socket helpers, full Runtime/Transport/Scheduling/Resources/loader remain open",
+    "No actual AcceptEx/recv/send network request; SDK injected on owned test memory"
+  ],
+  "new_native_bodies": 3,
+  "new_native_ABI_provider_closures": 0,
+  "remaining": [
+    "Recover actual029df0 socket factory,029590 holder reset and029660 retry from retained evidence and bind their precise error/lifetime contracts",
+    "Use the now-present full021a10/025720/0270e0 source when filling production Runtime/Resources; preserve coherent cache and observed packet ownership",
+    "Keep N5 normal-return message bridge distinct from full native-prefix033d70 callback/exception binding, and retain explicit raw-job/context shutdown obligations",
+    "Do not invent0228c0 or expand paused genericCRT; keep loader hooks undefined until complete Resources and truthful loader/unload quiescence exist"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B31",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B30",
+  "latest_dll_link_attempt": "B31",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "Opt-in DLL target, compiled entry/export sources, failed real link with retained evidence",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B32",
+    "priority": 1,
+    "title": "Üretim Resources grafiği ve server/session yaşam döngüsü engellerini kapatma",
+    "requirements": [
+      "Use the B31 production-root review to select concrete existing adapters and enumerate only the remaining lower factories; do not reopen already solved owner/facade/Services layers",
+      "Close session control026570/017420/026290 on the actual023000 factory path as a required dependency of the production server resource, keeping allocator provenance and implicit/self weak order exact",
+      "Resolve loader-context/attach-rollback/detach lifetime before defining require_loader_*; do not place existing Runtime publish/close under loader lock without proof",
+      "Advance the rooted production dependency graph; no generic CRT leaf backlog or isolated test-count milestone"
+    ],
+    "exit_criteria": "A named production dependency becomes concrete and is exercised through its real owning source graph; B31 link reruns when new definitions materially change it"
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true
+}

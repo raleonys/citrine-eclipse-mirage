@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_results": [
+    {
+      "module": "utc",
+      "result": "PASS",
+      "output": "PASS: 76 UTC wrapper checks; fixed providers and explicit host compatibility",
+      "executable_sha256": "14ee2c1991d603222b13125f095487ed074020ce0f74a1cdca18646fceda16cc"
+    },
+    {
+      "module": "achievement_runtime",
+      "result": "PASS",
+      "output": "PASS: 163 achievement runtime integration checks; own fixtures and controlled clock/locks/events only",
+      "executable_sha256": "e5f3fe49224f9f120c43f7cfdda510d8184ec898680b9fc4eb8f50547399e1f6"
+    }
+  ],
+  "sources": [
+    {
+      "path": "anadius-achievement-runtime-source/runtime_tests.cpp",
+      "sha256": "c0aed1b2c906e692de730cbf24e92ea761eda865fc950cc92b37ece96d956c27"
+    },
+    {
+      "path": "anadius-achievement-runtime-source/runtime.cpp",
+      "sha256": "5ec1e7c2fc2dced97d781450ad15058bc9cc2c9f5486d7ff3c35fe81bfd9e2b7"
+    },
+    {
+      "path": "anadius-achievement-runtime-source/runtime.hpp",
+      "sha256": "d28eb0121de0efa000ea2179f3d8934d4aaf212a36407146b5078116844ea400"
+    },
+    {
+      "path": "anadius-achievement-runtime-source/utc_tests.cpp",
+      "sha256": "8bbe7fbc16ca3555643772f6d89a3e3425435c69e50eb87eb2026d792837fd31"
+    },
+    {
+      "path": "anadius-achievement-runtime-source/utc.cpp",
+      "sha256": "7684a1ffe3dfbb52585c893eb23c53c1ec7f272862cb258cb99b52f84d9f7cbe"
+    },
+    {
+      "path": "anadius-achievement-runtime-source/utc.hpp",
+      "sha256": "75f907fe609da71eeb4c7737da137ed0a53574fac251c820a4007b19c5214373"
+    }
+  ],
+  "execution_scope": "041b60 normal control flow plus shared State/Paths grant/event/XML/INI/source reload; own generated fixtures and controlled clock/mutex/event providers",
+  "selected_host_compatibility": "HostClock and HostFormatter, not original time/gmtime/time_put CRT recovery",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven"
+}

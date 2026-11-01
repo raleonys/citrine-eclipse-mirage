@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locale_startup",
+    "result": "PASS",
+    "output": "PASS 117 locale startup/reset/owned native FLS checks;4 own workers",
+    "executable_sha256": "ad633083a4503adb9f7c9a20f862eaf2882ea42e75908d6b8084f136261d1962"
+  },
+  "execution_scope": "3recovered normalflow bodies064468/065104/065338;17byte table-referenced initializer outside oldGhidrainventory backed byrawPE/REAbytes/staticLLVM;directwrite noextra retain,locktoken/update/redundantwrite/freshunlock;117checks,owned image/nativeFLS/PTD/heap/4ownworkers,fixtureCS/exceptiontable;MBstartup/fullCRT/ABI/SEHexcluded",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-locale-startup-source/locale_startup.cpp",
+      "sha256": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba"
+    },
+    {
+      "path": "anadius-crt-locale-startup-source/locale_startup.hpp",
+      "sha256": "e247e38439cbf09bcb1ca165e4df21b8ba91671d5ccdc985abab4db03eacadcb"
+    },
+    {
+      "path": "anadius-crt-locale-startup-source/native_tests.cpp",
+      "sha256": "0c64ec030eec3c860dcfc8d49abb6f05e62c354d873ec0d36f76a63bb433cfbc"
+    }
+  ]
+}

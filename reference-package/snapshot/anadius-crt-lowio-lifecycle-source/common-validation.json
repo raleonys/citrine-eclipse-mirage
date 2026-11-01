@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_lowio_lifecycle",
+    "result": "PASS",
+    "output": "PASS 639 lowio lifecycle checks;192 typed native CS deletions;3 owned arrays",
+    "executable_sha256": "a75b17e7b58ab48f946b2747ca2e7e690b1fafa2c394ee301e91131f141bbc52"
+  },
+  "execution_scope": "3normalflow bodies067890/0678cc/073258;639checks,fullEAXdecision/recursivefixturelock7/128lazytable/unchangedcapacity/64CSstride48;192actualtypedCSdeletes3ownnativeheaparrays;lowerensure/inherited/standardprovidersmandatory,nohandlesacquired,no complete lowio/CRT/ABI/SEH equivalence",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp",
+      "sha256": "20dc724fe4e0c7efddaef7e0fa7087e5fed9f07adb31554827661ff2104b5d5b"
+    },
+    {
+      "path": "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.hpp",
+      "sha256": "a1b92b3286d2774ff45db0aa0b04ad7a12dc14b98df19db2e2ad0aedb3228670"
+    },
+    {
+      "path": "anadius-crt-lowio-lifecycle-source/native_tests.cpp",
+      "sha256": "e55d4a3c4cdc2c6b1e73ca8f5885202b2a8b2884dcea015f511143e1c6814bcc"
+    }
+  ]
+}

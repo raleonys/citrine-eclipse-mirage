@@ -1,0 +1,142 @@
+{
+  "schema": "composed-read.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180025c40",
+      "pseudo_evidence": "ev_987f9b5735e7f43bac4690a5614f3bbd07f7463da6bc2081c7fff428c7a9fce8",
+      "assembly_evidence": "ev_92dfa0f4b810ad3afcfb9df2b941fd14b2290a6abc953cfaa54c553b58d910e9",
+      "newly_recovered": true
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180025c40"
+  ],
+  "new_original_procedures": 1,
+  "context_functions": [
+    {
+      "address": "0x180010040",
+      "pseudo_evidence": "ev_8b172ce1ae7a2a8f6e7d19d9433d0f9681d58a8e0fba88dbe42da06deb17bac4",
+      "assembly_evidence": "ev_4eed657fe242e320b79de3469b4ff268d87d2033487b16f14133e304afc75ba1",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180008350",
+      "pseudo_evidence": "ev_8f414a470d18574ce283ec7f9d33a326dcabef0214a8d5a54fdfd5f5b9bba010",
+      "assembly_evidence": "ev_36491f90ef8a29d2fb8edd6b1735250524629ef5f6e005c31809a72ed253a8f3",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021d10",
+      "pseudo_evidence": "ev_d716892e207f1ae8230bf4ba5b7cce514f147811c107c7c9812d3b205fe10abf",
+      "assembly_evidence": "ev_cb69360436ddc454d9ea6ddc971cd6cbc8fa39ab9ec36acaba00a999bd388274",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180023dd0",
+      "pseudo_evidence": "ev_d162fd99180d0294652d44b39fe2cceaf384a9996b3bae0f40e08fd0e2ac7f82",
+      "assembly_evidence": "ev_747feac84362fbb739d9c68cee8e8fbc51d55c081309ddaa794f2c19a13f7fac",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180027710",
+      "pseudo_evidence": "ev_7da3b743355f442a593ae330a5db5226466c68b92f7b80398a37115ffdb0ad0e",
+      "assembly_evidence": "ev_875f068c4cc67a67b326e00dd8beda8a6e4921fdd8deb40f82ad55921e27dfea",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021a40",
+      "pseudo_evidence": "ev_2813b701e157524c76c3c175e1e4795ed10e26d16e0955b5f685f67a27510182",
+      "assembly_evidence": "ev_b996de0c468259782b9b186759ef39599a24b4235b486e5a9b14b6b440666c64",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180022c60",
+      "pseudo_evidence": "ev_3a401c192826d6c38a2feead942b0163280eec076d8b0d34b654c27a492fbafe",
+      "assembly_evidence": "ev_401457b9451487d7f920b34697bef11e79385969366d32a0b355b7c00179e0b4",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180022640",
+      "pseudo_evidence": "ev_04a9d210e8adc443ff8899c39272d7e3c0db47dc01f290a73392125542da3d10",
+      "assembly_evidence": "ev_35566019b7c1b2cbbaafc71741571aeaa6677d5555afa573e964b75d7baaeffe",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180022670",
+      "pseudo_evidence": "ev_46bd821aedf112a5f8d266f7be0bcb5b5a2a499accd194cb494201e2dba4a372",
+      "assembly_evidence": "ev_e29f2b21d7fd9b342851a734b4dee14f086eb31686c820fa771ff18ad6b5b77d",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180025480",
+      "pseudo_evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "assembly_evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800285b0",
+      "pseudo_evidence": "ev_0d416758bef1cb136be764bc42d61b6806ad330bc40b244b4ca7798197b53f2e",
+      "assembly_evidence": "ev_7504fc233bdbccda061b68f98284e32855d51c5f9468d39aa085eb40520e1f77",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180024390",
+      "pseudo_evidence": "ev_9994ed66d9fd959247a09c3479777866e7a9618f691d5c7ead20e11e439547ea",
+      "assembly_evidence": "ev_fa4fbb424eec6f97bd60c6e30cf6156cddc04946932afd15869d3e21beaa14dc",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180023930",
+      "pseudo_evidence": "ev_59393f9f547f2c0e83002c4f2711308b1a69ff8f92c08a454f819d95af88e570",
+      "assembly_evidence": "ev_5f8490e76cac74a1db349528c8dc2c25fae1b70a9916a683ddf7b13116e5db1b",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "composed_read.hpp": "11dad087e4f8f08fcbc16ef5ad42a02e313f2ae0a2734b4c7feab8f07baa94a5",
+    "composed_read.cpp": "9e6ab5c28329fe1b867f4c4c683194ca852f1c5d813f22274210d65a7f9f0037",
+    "composed_read_test_fixture.hpp": "bbe4f98f2ad9abc15821ff402d96cf5553907a0f8eb81da9d9098194e9ac7732",
+    "composed_read_tests.cpp": "a07b769d77fb309265f7854c2d05d19839cde32dd8b7c8ab0a73b56ff3185bc0",
+    "composed_read_integration_tests.cpp": "e0040dc259689234eb38f2cb72a024d738b8e599fcc817410f0e755730dc5098",
+    "build.ps1": "9a424550336ede080d66764f158c35ec9ddffaaccccc2eae06887476ec7b8c0c",
+    "CMakeLists.txt": "f44417368949f4d4ed581367f025dddc0c93c48494377b024a68be00c88002ef",
+    "README.md": "1be16f49764b9d4ad9d1f6163e88a33a96de1ea8645f0f998245a1775de6b4de"
+  },
+  "support_hashes": {
+    "composed-read-evidence.pseudo.c.txt": "b82764813cc39f4aea80b2e6c3b4c74e5dcaccfc76ece5f8f86eefe1e5b67b00",
+    "composed-read-evidence.asm.txt": "5444961e19adc52da32b6869f45b2540c810155da686898e6b60775d2245c187",
+    "composed-read-context.pseudo.c.txt": "152599d2ab558b0b4276bf08d78d6c788581f746d541ee3156844324f12eda3a",
+    "composed-read-context.asm.txt": "73b5aaa0f48960a9e0672c0f9afcaf3901c07b2533b9a03f3a3bf5f187a0728a",
+    "composed-read-flow-audit.md": "e36796e3a8ead00e49ac613afa6fdbb239687652bdecf78b9683924a7c1a79f8",
+    "composed-read-rea-session.json": "dd969de1a18a0bd6b8e3d80b54ed5401db07a76d605485a0fa05e3bd5b02e735"
+  },
+  "closed_provider": {
+    "base": "IoCompletionEffects::receive_body_025c40",
+    "closure": "RecoveredComposedReadEffects::receive_body_025c40",
+    "native_abi_complete": false
+  },
+  "core_checks": 3672,
+  "integration_checks": 1714,
+  "new_checks": 5386,
+  "review": {
+    "scope": "Same-agent retained assembly/source comparison and synthetic tests",
+    "independent_review_complete": false
+  },
+  "limitations": [
+    "Normal typed projection only",
+    "Empty range nonzero cursor unsupported",
+    "Outer027c10/worker not run by new integration; existing regressions separate",
+    "R4 frame completion controlled boundary",
+    "Native category/exception/allocator/global/polymorphic/STL/EH/SEH/concurrency/ABI/fullDLL unproven"
+  ],
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "R4 025480/0280d0 native frame completion"
+}

@@ -1,0 +1,12 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source": "Retained REA/Ghidra function evidence plus separately labeled bounded PE global reads",
+  "function_va": "0x18004b26c",
+  "assembly_evidence": "ev_4c8b01f035bc41c396a4aa4aca013d8f009f82716778db198ba44b422b71da6d",
+  "pseudocode_evidence": "ev_f3773edcf62992a2d8fa4ced76cc2440c73d7627be11988e074de50fc5db9f86",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "initial_globals": "initial-globals.json",
+  "scope": "CPUID/XGETBV selection algorithm with mandatory register providers; no host feature probe",
+  "limitations": "Caller-owned State is a new model, not packed target globals. Defaults are zero; original initial values are separately recorded. Native discovery/loader/SEH/ABI equivalence remains unproven."
+}

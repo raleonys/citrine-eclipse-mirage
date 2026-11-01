@@ -1,0 +1,177 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T19:48:21.543897+00:00",
+  "reviewed_source_hashes": {
+    "memory.hpp": "0108496f12c34eb4bd54f65f6c7c79650a3aae9958629d24745c25d7fd1cdcd8",
+    "memory.cpp": "c3b6e1f82d2c1040a68a35df3766f51773d4831914c182c31754a70b0ce5a229",
+    "memory_tests.cpp": "683b48f6d4eb40a00df2b9eec3db4654b461dd5c6dbcc2d4a1aec8d8ab9a5759",
+    "memory_integration_tests.cpp": "91f96a822306da371bb8aa0f1bbb7b58bd1cd5cf72d5a3d61aa5816b861566b1",
+    "../anadius-thread-domain-source/domain.hpp": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+    "../anadius-thread-domain-source/domain.cpp": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a"
+  },
+  "quick_results": [
+    {
+      "path": "work/b33-core-quick-results.json",
+      "sha256": "9e9f071e00fe68de9429e712f1185c8dd1845bdc90e8ab866758fdb7d99a2534",
+      "checks": 56,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b33-core-test.exe",
+      "executable_sha256": "78706a6f770161842f08b85ba69648afa0a5a0a6a9fc554fb86ba7dc246b8800",
+      "archive_sha256": "c7e28bddd205edee8ebdae1bf42ef07663f9c0ccdec3ccd9c7353b912ef47afb",
+      "execution_by": "/root standard quick; production/core authored by root, integration authored by /root/b22_integration; reviewer did not execute",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true
+    },
+    {
+      "path": "work/b33-integration-quick-results.json",
+      "sha256": "481871c4b5c96b011846760f68c0aa1d8a9860f894e8e498513c8617b7587e98",
+      "checks": 45,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b33-integration-test.exe",
+      "executable_sha256": "8cb154956951ca6040b73e5de82df655fb98dd92fa0d2408ed2746aa40406b00",
+      "archive_sha256": "c7e28bddd205edee8ebdae1bf42ef07663f9c0ccdec3ccd9c7353b912ef47afb",
+      "execution_by": "/root standard quick; production/core authored by root, integration authored by /root/b22_integration; reviewer did not execute",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true
+    }
+  ],
+  "root_checks": 101,
+  "independent_integration_record": {
+    "path": "work/b33-integration-agent-results.json",
+    "sha256": "67a62457d864c890aa7376125e06bf32a9ebfb6289358a5ac81b11a344032d23",
+    "checks": 45,
+    "execution_by": "/root/b22_integration own final run; not reviewer",
+    "executable_path": "work/b33-integration-agent-test.exe",
+    "executable_sha256": "fd26912bed4419280f4dbbb0b843c1adc44cdb330f9785c73b1cc9a2dbeec9f3",
+    "log_path": "work/b33-integration-agent-results.log",
+    "log_sha256": "c5c87061cb7f26e170deb16d2206a571741d0f264a3f6ce7d7fd0523e2d1d6da",
+    "sources_unchanged_during_run": true,
+    "final_six_source_hashes_verified": true,
+    "duplicate45_not_added_to_root101": true
+  },
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING/unreviewed final full rebuild after sticky-poison correction; interrupted earlier run is not PASS",
+  "common_build_targets": {
+    "source_files": 856,
+    "objects": 250,
+    "cpp_translation_units": 246,
+    "normal_test_groups": 295,
+    "framework_terminal_scenarios": 19,
+    "composition_files": 75,
+    "composition_objects": 37,
+    "counts_are_planned_not_common_PASS": true
+  },
+  "baseline_package_sha256": "5c22205408691804d9f81f423a9234b824c03523052bdb924b808534c4b72f43",
+  "baseline_source_files": 852,
+  "prior_sources_preserved": 850,
+  "modified_prior_sources": [
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before_sha256": "0fd55b040243e7f88b6401ffaa73cebe8b8dc5d38441662f0b7aa811d2dcaf9c",
+      "after_sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.hpp",
+      "before_sha256": "37bf2a7947afee97bf3a7fa12dabf6e64124eaeb84ae6c40f2d6731c84926276",
+      "after_sha256": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932"
+    }
+  ],
+  "new_source_files": 4,
+  "current_source_files": 856,
+  "prior_source_hash_record": {
+    "path": "work/b33-prior-sources.json",
+    "sha256": "cc724ef40a24b927febc71993580082eb08364dd221929619a31d4d815dd64f3",
+    "before_hashes_verified_against_B32_zip": true
+  },
+  "archive_proof": {
+    "quick_and_independent_agent_sha256": "c7e28bddd205edee8ebdae1bf42ef07663f9c0ccdec3ccd9c7353b912ef47afb",
+    "recorded_archive_bytes_independently_matched_B32_zip_member": true,
+    "quick_commands_explicitly_compile_fresh_memory_cpp_and_domain_cpp": true,
+    "final_common_archive_not_reviewed": true
+  },
+  "findings": [
+    {
+      "topic": "Dedicated owned heap/PTD allocation edge",
+      "result": "PASS",
+      "source": "memory.hpp; memory.cpp constructor and Impl allocation ledger",
+      "observation": "Requires sole-owned clean ApplicationMemory plus owning LifecycleEffects; failed validation does not consume the rvalue-reference provider. Own backing lease retains real DomainStorage. Per-ticket list metadata and region vector capacity are reserved before backing allocation. Actual typed control sizeof is allocated separately from native1c8 free routing; proxy16, block32 and map/raw extents are individually tracked. This implements source composition, not recovered04b0bc/04b0f8 or native class ABI."
+    },
+    {
+      "topic": "Typed/raw lifetime, bounded registry and known retry",
+      "result": "PASS",
+      "source": "memory.cpp Impl::allocate/destroy/retire/refresh; allocate_output_map; Buffer",
+      "observation": "Control/block regions expose only their inline16; map and byte regions cover their own raw storage including large aligned header, avoiding overlapping registrations. Pointer arrays have explicit placement lifetimes. End typed lifetimes exactly once, then retain Retired raw record on a failed free. Retry requires quiescent backing AllocationState::Live; Unknown/Busy/Missing or query failure cannot authorize physical free. A successful physical free followed by PTD/commit failure poisons and is never retried. No failed recovered algorithm is automatically resumed."
+    },
+    {
+      "topic": "Persistent partial-constructor scratch",
+      "result": "PASS",
+      "source": "memory.cpp construct_session; memory_tests.cpp --partial",
+      "observation": "Owned list records contain the actual ConstructionScratch. A source throw after a control is returned retains real temporary/service-list storage and partial allocation. Pre-control allocation failure removes unused scratch only. No stack temporary is left referenced by a service list, no speculative native EH rollback or automatic retry is introduced."
+    },
+    {
+      "topic": "Operation and sticky PTD permission",
+      "result": "PASS",
+      "source": "memory.cpp Impl::Access/require_ptd; Operation; memory_tests.cpp nine own children",
+      "observation": "Recursive whole-call lock serializes registry/source-chain use; Operation rejects nested operation and captures real thread/fiber/native-FLS slot/PTD identity. API entry, pre/post backing effects and scope exit recheck; mismatch poisons without restoring PTD. Final require_ptd first rejects phase!=Open, so nested callbacks cannot catch a violation, restore FLS and make outer typed publication or post-free commit succeed. Final --ptd-restore and --ptd-restore-free regressions cover this corrected review blocker. Entry/post/exit PTD failures, partial constructor and unknown allocation/free outcomes are retained in nine own child processes, reclaimed only by OS process exit."
+    },
+    {
+      "topic": "Retirement and mandatory close",
+      "result": "PASS",
+      "source": "memory.cpp close and destructor; memory_tests.cpp provider_retirement",
+      "observation": "Close refuses active, partial, allocated or poisoned state without disabling valid future allocation. Once empty, sets Retiring before moving providers; lifecycle and backing refs retire outside the domain gate. Reentrant entry rejects, nested close returns false until complete, then phase becomes Closed. Destructor requires successful Closed even if originally empty. Service/context ownership and external async stop/drain remain provider/caller contracts."
+    },
+    {
+      "topic": "Read-only prior provider changes",
+      "result": "PASS",
+      "source": "../anadius-thread-domain-source/domain.hpp and domain.cpp",
+      "observation": "Verified full byte diff against all852 B32 source records: only nested AllocationState enum, two declarations and tracking_poisoned/allocation_state bodies were added. Both observations use existing ticket gate and PreserveError. Unknown has priority over tickets; otherwise exact pointer yields Busy/Live, no match Missing. Existing ApplicationMemory allocation/free implementations and layout are unchanged."
+    },
+    {
+      "topic": "Actual source integration scope",
+      "result": "PASS",
+      "source": "memory_integration_tests.cpp; final root and independent-author records",
+      "observation": "45 checks use real process HeapAlloc/HeapFree and native FLS with sole ApplicationMemory, owning service root, actual023000 factory,026880/026570/017420/026290 disposal,0280d0/025c40/021d10/027710 receive source and025480/021770/028d30 frame/message source. Real XML/GetConfig and plain/encrypted AES response paths run. Transport, detached-thread publication and response scheduling remain explicit controlled lowers; pending read protects raw frame job until message strong acquisition, followed by ordered EOF/job/observer drain. This is a tested source schedule, not native IOCP/executor concurrency proof."
+    }
+  ],
+  "resolved_review_blockers": [
+    {
+      "description": "Caught/restored nested PTD violation could allow outer publication/commit despite sticky Poisoned phase",
+      "resolution": "require_ptd rejects non-Open phase before comparing identity; two own-child allocation/free regression modes; final root56+45 and independent45 records match final code"
+    }
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0,
+  "native_mapped_addresses_unchanged": 494,
+  "native_eligible_compiled_tags_unchanged": 498,
+  "explicit_normal_body_claims_unchanged": 131,
+  "historical_native_closures_unchanged": 52,
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "Source-only owned memory/domain composition; no original allocation ABI, fixed native class layout, original C++ exception ABI or code-module ownership equivalence.",
+    "Operation does not pin async/raw borrowed buffers or establish raw detached-job lifetime. Caller holds it for entire recovered source chain and direct registry views, and drains all borrowers/service nodes before close.",
+    "Guard explicitly rejects backing heap allocation/free effect reentry. It is not a general executor/lifecycle callback reentry proof, PTD ABA/full-content proof or arbitrary concurrent domain/controller safety proof.",
+    "Only named backing state observations and local bookkeeping preservation are reviewed. No whole-Operation LastError invariance is claimed.",
+    "Partial construction/unknown native outcomes intentionally retain state; no native EH rollback or blind destructor/free retry. Child _Exit retention verifies refusal, not production recovery.",
+    "Selected executor0228c0, production accept/IOCP/response graph, async quiescence, full native ABI/provider/code pin and loader-lock/unload composition remain open.",
+    "B31 require_loader_attach_runtime and require_loader_detach_quiescence hooks remain undefined; previous expected linker blocker is not a production DLL. Full common build, PE link and DLL readiness are not approved by this review."
+  ],
+  "original_inputs_read": false,
+  "original_bytes_or_target_queries": false,
+  "original_or_rebuilt_DLL_game_execution": false,
+  "actual_user_cfg_token_contents_read": false,
+  "production_or_test_sources_modified_by_reviewer": false,
+  "reviewer_writes": [
+    "architecture-review.json",
+    "architecture-review.md"
+  ]
+}

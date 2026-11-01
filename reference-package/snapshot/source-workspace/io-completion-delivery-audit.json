@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T20:02:39.9551046Z",
+  "prior_package_sha256": "9fb4bf14114cef70ae3d28f14aaf8cf2b0d6fb9367185afd01e1a76cbecb22bf",
+  "prior_source_count": 496,
+  "unchanged_prior_sources": 496,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/io_completion_dispatch.cpp",
+    "anadius-socket-source/io_completion_dispatch.hpp",
+    "anadius-socket-source/io_completion_integration_tests.cpp",
+    "anadius-socket-source/io_completion_tests.cpp",
+    "anadius-socket-source/io_completion.cpp",
+    "anadius-socket-source/io_completion.hpp"
+  ],
+  "current_sources": 502,
+  "current_documents": 196,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 170,
+  "cpp_objects": 166,
+  "c_objects": 4,
+  "normal_test_groups": 157,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_io_completion",
+      "result": "PASS",
+      "output": "PASS: 12382 socket IO completion checks; eight retained normal bodies, defined-field error mapping, live environment/reference mutations, unsigned counters, two-slot storage and polymorphic factory sequencing",
+      "executable_sha256": "70716a4249a1ff58a77510991f07b968cfaba945ee89d9cc89d5ba538956c4f1"
+    },
+    {
+      "module": "socket_io_completion_integration",
+      "result": "PASS",
+      "output": "PASS: 128 socket IO completion integration checks; actual dispatcher/worker/IO/posted source composition, injected existing native SDK adapters, mixed size-class cache reuse, mandatory unknown routing and heap lifetime ends",
+      "executable_sha256": "1d83f5635a9d3879f60045507d11f476c42b57026edc65d91c98f47abb4781f8"
+    }
+  ],
+  "new_checks": 12510,
+  "master_build_sha256": "06825abd4ea47ebbcc680b1b3d4a74b8c77b14be0f2b794bc2f0601f424bc148",
+  "common_build_script_sha256": "c81ece4fe4a77a21cedcbe4baa397b85b99039a460e7ae4201fa79557971fee1",
+  "cmake_sha256": "f39ecf0a4f189e9f7645831374e52a83e9acc9f36c5f14293ca09f716d5c658b",
+  "normal_source_procedures_added": [
+    "0x180027710",
+    "0x180027a20",
+    "0x1800293f0",
+    "0x1800294c0",
+    "0x180023cb0",
+    "0x180021a40",
+    "0x180021a80",
+    "0x180026a00"
+  ],
+  "new_original_procedures": 8,
+  "new_composition": "Actual027710 receive/027a20 send callback;0293f0/0294c0 earlycleanup;023cb0 environmentmove;021a40/021a80 handler invocation;026a00 TLS cache/free; explicit receive nested polymorphic setup; typed router into existing posted/027c10 dispatcher/0298b0 worker; requirednativeprovider boundaries",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "storage_contract": "Stable raw allocation identity/binding/typedprojection; bounded byte storage separate SDK OVERLAPPED; native fault guards modeled UnsupportedInput; no post-freeoperation access",
+  "allocation_and_functor_providers": "04b788,polymorphic slots,0229d0/022c60/025c40/0261d0 and native provenance remain required",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

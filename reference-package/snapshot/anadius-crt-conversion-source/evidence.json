@@ -1,0 +1,52 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "origin": "Bounded extraction of retained REA/Ghidra static evidence; current server/provider readiness confirmed by parent. No new target opening or execution.",
+  "functions": [
+    {
+      "va": "0x18006004c",
+      "name": "to_wide",
+      "assembly_evidence": "ev_0f868b243528eb75903d77bdfb66e3303bf8d2174f87294221c11b1f06aa0fd7",
+      "pseudocode_evidence": "ev_aa349c9216c41ac8dea8ae5d6fc7bbf415dae87fad22a0dd46e42c3c4b12afdd",
+      "anchors": [
+        "060071..060091: NULL release and clear",
+        "06009a..0600f2: empty string allocation and zero word",
+        "0600f4..060110: flags9/-1 sizing query and MOVSXD",
+        "06012d..060175: unsigned capacity compare, owned free, malloc2*n, status12",
+        "060177..0601a4: low-DWORD capacity, CDQE result, length=result-1",
+        "060117..060129: GetLastError -> map05d698 -> errno05d724 load"
+      ]
+    },
+    {
+      "va": "0x18006e430",
+      "name": "to_narrow",
+      "assembly_evidence": "ev_636585e8124a1c4234b9fb4d7565bfe6d78d499ce4383afc63edbf9c099f5308",
+      "pseudocode_evidence": "ev_0c5fa8e629e638482c473e609ec82154e276302a8a8a8c537d9195f0748e365d",
+      "anchors": [
+        "06e455..06e475: NULL release and clear",
+        "06e47e..06e4d6: empty UTF16 string allocation and zero byte",
+        "06e4d8..06e4fc: flags0/-1/defaultNULL sizing query and MOVSXD",
+        "06e51c..06e563: unsigned capacity compare, owned free, malloc*n, status12",
+        "06e565..06e59a: low-DWORD capacity, CDQE result, length=result-1",
+        "06e503..06e515: GetLastError -> map05d698 -> errno05d724 load"
+      ]
+    }
+  ],
+  "selected_assembly_sha256": "61da50feb036a9075a991ba150678b7c5772ababc7b3ea3a4bddc1cd2fb4cd7c",
+  "selected_pseudocode_sha256": "a21c757686e9a412812d123ecfafbcd2a7f9b1fab91303ffce2df9788f2dc8a4",
+  "observations": [
+    "Original fields +0x10 pointer, +0x18 capacity in destination code units, +0x20 length excluding terminator, +0x28 byte ownership",
+    "Query and fill test only zero; both MOVSXD/CDQE sign-extend result; unsigned query/capacity comparison",
+    "Allocation failure returns12 without mapping or errno lookup and leaves length untouched",
+    "Conversion failure maps current OS error then loads errno at05d724, despite misleading decompiler __doserrno label",
+    "Growth frees owned old buffer before allocation and retains borrowed memory without freeing",
+    "Null clears all four represented fields; empty reuses nonzero capacity or allocates one code unit"
+  ],
+  "limitations": [
+    "Fresh typed Buffer is not full original object layout/ABI; unused third parameter omitted",
+    "Native conversion policy wrappers06ccc8/06cd58 are separate source/provider boundaries",
+    "Memory reads/writes and malloc/free must be bound to valid provider-owned storage",
+    "Normal flow only; no original SEH/unwind claim; no target/native provider execution; not full DLL equivalence"
+  ]
+}

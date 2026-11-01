@@ -1,0 +1,37 @@
+{
+  "reviewer": "crt_heap_native_audit",
+  "checked_at": "2026-10-19T14:08:59.0938459Z",
+  "result": "PASS",
+  "sources": [
+    {
+      "name": "bridge.hpp",
+      "sha256": "111cc299960ac585e047a4c3edd741f2dddd1bc16b3861a56ec515a53b7420d6"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "a710e793fba3dac27bfea23fca263c0041ac013c01bbdb7f7c601f386c1c5527"
+    },
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "7977889cdba2201435411a7396e768fca68295621aa456aceeac06e8deef0bbe"
+    }
+  ],
+  "source_validation_hashes_match": true,
+  "repeated_executable_result": "PASS 2193 native heap/realloc/recalloc/error/NLS source integration checks",
+  "reviewed_contracts": [
+    "Effects inherits recovered recalloc Effects and directly composes typed SDK heap Calls with existing recovered OS-error mapping and error cell selection; rebuilt lock/new-handler/invalid policy remains mandatory.",
+    "Extent guard occurs before any allocation/reallocation, and successful storage starts a non-value-initialized live std::byte array; caller retains allocation/typed-object lifetimes.",
+    "HeapSize value is passed through unchanged, including UINT64_MAX; recovered recalloc determines the zero range using its single pre-reallocation size result.",
+    "Error slot write precedes invalid callback; failed HeapFree uses immediate GetLastError then recovered map/store, without also changing the DOS error cell.",
+    "Real fixture blocks belong to GetProcessHeap and only bounded own allocations are passed to native realloc/size/free. Fake heap0x55 is intercepted by deny_alloc before any native call.",
+    "New-handler sees lock0 released, full int32 nonzero return enables retry, and changed heap identity is read on the retry.",
+    "NLS integration executes actual heap-backed scratch at 505 characters and stack at 504, actual NLS APIs on synthetic strings, and injected allocation denial with scratch/PTD cleanup."
+  ],
+  "findings": [],
+  "limitations": [
+    "No original target execution, binary runtime equivalence, DLL lifecycle, ABI/SEH or multithreaded-lock equivalence demonstrated.",
+    "Typed PTD/Context, FLS/globals/locks and scratch contexts remain supplied; inherited linked fixture code is not claimed as newly executed coverage.",
+    "No native allocation larger than PTRDIFF_MAX or invalid native pointer/heap tested; these are boundary/injected cases.",
+    "Reviewer reran the existing own fixture executable; root standalone compiler validation establishes fresh compilation."
+  ]
+}

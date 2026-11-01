@@ -1,0 +1,28 @@
+{
+  "schema": "configuration-defaults-projection.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Factory returns fresh value owning allstrings/maps/vectors; no hidden mutable globaldefault object",
+    "No existingStateargument ormutation; callerexplicitlychoosesfactory output for config/startup/runtime",
+    "CompilerC++container unwind handles partialallocfailure; allocationsequence/SSO/nativeEH equivalence notclaimed"
+  ],
+  "scope": [
+    "41/41currentconfiguration::State fields havectorwriteevidence; nounknownStatefieldzero-guessed",
+    "Onlysemanticpostconstructionprojection; nativeaggregate includes extra module/object/readyflags/staticbyte-string/mutex/storage outsideState",
+    "No actualLoadLibrary/hooks/registration/network/diskprofile/CFG/token/license processing performed",
+    "Globalinitializer01390andatexit07e0c0 registration notinstalled; exactcleanupthunk->037f70 route notproven"
+  ],
+  "open": [
+    "whole036d20nativeaggregate",
+    "01390globalinitialization/cleanupregistration",
+    "accepted-session023000/025720 and023d20socketownership",
+    "productionServerBackend/Transport/Scheduling",
+    "licensing02a830",
+    "nativeABI/unload/PE",
+    "B10historicalreviewdebt"
+  ],
+  "prior_sources_preserved": 834,
+  "modified_prior_sources": [],
+  "original_execution": false,
+  "original_modification": false
+}

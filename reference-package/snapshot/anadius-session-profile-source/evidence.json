@@ -1,0 +1,77 @@
+{
+  "schema": "session-profile.source-composition.v1",
+  "source_package": "B40",
+  "evidence_type": "composition of existing recovered source and explicit selected host lifetime/string/job policies",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-owned-server-source/evidence.json",
+      "sha256": "fbf83797c592240854ddd80c4baa9ac1624dcdd883a5c62b0bfbbf9c3659d5d5"
+    },
+    {
+      "path": "outputs/anadius-owned-server-source/architecture-review.json",
+      "sha256": "159b0b1cf074f4e1a0dabac7807647111d04f1259454d4f3c4c1cae2cade494b"
+    },
+    {
+      "path": "outputs/anadius-accept-source/evidence.json",
+      "sha256": "2732a87ba1be0616dfedbdfc608b08731f736649c1142ef5945196d288a683e5"
+    },
+    {
+      "path": "outputs/anadius-accept-source/architecture-review.json",
+      "sha256": "3a52d97d7cfe82f0d3df1c6ea70bfa411f361374875a32f181788576b971d317"
+    },
+    {
+      "path": "outputs/anadius-session-flow-source/evidence.json",
+      "sha256": "bfb2d7abae2c5793322c78ff2c23f9fe7b5b92269aa4f9f9bf34707dc1aa3539"
+    },
+    {
+      "path": "outputs/anadius-session-flow-source/architecture-review.json",
+      "sha256": "95d707c6cc1054e178f4884be2d29722ab66010fcec98a3791111d4b3a49f3d4"
+    },
+    {
+      "path": "outputs/anadius-accept-helpers-source/evidence.json",
+      "sha256": "243773e4f774d62d18f6431538fc69c01fc0c505cd02400904dc1ad44fed917e"
+    },
+    {
+      "path": "outputs/anadius-accept-helpers-source/architecture-review.json",
+      "sha256": "8327f858fdac14087cff4498c8cb00ed271701a8c8fdae2fc2d21ba0b8ca5d85"
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/evidence.json",
+      "sha256": "00cd3a9c8071725379e9db5c4022e9209479ee3c475f602c26ee1fc334cb47ad"
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/architecture-review.json",
+      "sha256": "0f9ed9beefd1b0c2fddedfe3d6507394d5231129115cf15241d2da408a832bbb"
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b40-core-quick-results.json",
+      "sha256": "06b180bddd8599178ca9a96f24abd61648b8bc8df395346c3f73a62a1e1a9bbc",
+      "checks": 403,
+      "executable_sha256": "c507c249bec6ccc37f8683380c9a376deb80d871b5b9004bec8376d4cc16e33c",
+      "archive_sha256_as_used": "0d543fbcfef442fbc9d90329df70013efa902c4643ec97769d4f5b36a69d9402",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh profile/strings source with the exact selected sources/headers recorded as used, before immutable B39 archive. Full common final-source build separately required."
+    },
+    {
+      "path": "work/b40-integration-quick-results.json",
+      "sha256": "9dcdac4be81057bd5b7b73f9f6e3051b4d496d3e31b971d5a8a0cacd2cf55f1e",
+      "checks": 85,
+      "executable_sha256": "d4b86483374a043482a4a30eec341129186d6dd5a57f5acdbe2dbc713247f6bb",
+      "archive_sha256_as_used": "0d543fbcfef442fbc9d90329df70013efa902c4643ec97769d4f5b36a69d9402",
+      "execution_author": "/root/b22_integration",
+      "note": "Fresh profile/strings source with the exact selected sources/headers recorded as used, before immutable B39 archive. Full common final-source build separately required."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Source composition only; no fresh shipped-artifact claim or binary session needed.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false
+}

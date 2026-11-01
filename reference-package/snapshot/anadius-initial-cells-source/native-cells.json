@@ -1,0 +1,211 @@
+{
+  "schema": "native-fresh-start-cell-observations.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "independent_PE_mapping": [
+    {
+      "address": "0x1800a10d0",
+      "length": 8,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "file_offset": 653008,
+      "file_backed_bytes": 8,
+      "zero_filled_bytes": 0,
+      "mapping": "file-backed",
+      "bytes_hex": "100000001c000000"
+    },
+    {
+      "address": "0x1800a3888",
+      "length": 4,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "file_offset": null,
+      "file_backed_bytes": 0,
+      "zero_filled_bytes": 4,
+      "mapping": "PE zero-filled virtual tail",
+      "bytes_hex": "00000000"
+    },
+    {
+      "address": "0x1800a39bc",
+      "length": 5,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "file_offset": null,
+      "file_backed_bytes": 0,
+      "zero_filled_bytes": 5,
+      "mapping": "PE zero-filled virtual tail",
+      "bytes_hex": "0000000000"
+    },
+    {
+      "address": "0x1800a37e0",
+      "length": 48,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "file_offset": 663008,
+      "file_backed_bytes": 32,
+      "zero_filled_bytes": 16,
+      "mapping": "file-backed prefix plus PE zero-filled virtual tail",
+      "bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "fresh_REA": {
+    "path": "outputs/anadius-initial-cells-source/rea-evidence.json",
+    "sha256": "cb55acf40f789b85438d1a211e702dee7831be783b3cf9af2932350359e7713e",
+    "records": [
+      {
+        "evidence_id": "ev_044e7c061cb03a81bf2203deaaed0b1401161b485644f4f3e2ebe4b736d27659",
+        "operation": "read_bytes",
+        "parameters": {
+          "address": "0x1800a37e0",
+          "length": 48
+        },
+        "result": {
+          "address": "0x1800a37e0",
+          "bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "complete": true,
+          "requested_bytes": 48,
+          "returned_bytes": 48
+        }
+      },
+      {
+        "evidence_id": "ev_1c38a4a4da724034dd37a1f5e8b9a9b071d59a8eb9ebcde3a5ba7fcec381d274",
+        "operation": "read_bytes",
+        "parameters": {
+          "address": "0x1800a3888",
+          "length": 4
+        },
+        "result": {
+          "address": "0x1800a3888",
+          "bytes_hex": "00000000",
+          "complete": true,
+          "requested_bytes": 4,
+          "returned_bytes": 4
+        }
+      },
+      {
+        "evidence_id": "ev_2cba30ac052756b7b4b182a4b46a6e51a864961aed25b7b6b3a3612568020ba1",
+        "operation": "xrefs",
+        "parameters": {
+          "address": "0x1800a39bc"
+        },
+        "result": [
+          "0x180032188",
+          "0x1800322a1",
+          "0x1800322a9"
+        ]
+      },
+      {
+        "evidence_id": "ev_37ed9fc2ffd9a6bb8b3f4e779622c551286a85e61194961c68400c16c60b88cc",
+        "operation": "xrefs",
+        "parameters": {
+          "address": "0x1800a10d0"
+        },
+        "result": [
+          "0x18000fd1d"
+        ]
+      },
+      {
+        "evidence_id": "ev_429c6d685fcb9e926943f8f2721dd8597e3db35892c2a426b22ed735a0a02f1c",
+        "operation": "read_bytes",
+        "parameters": {
+          "address": "0x1800a39bc",
+          "length": 5
+        },
+        "result": {
+          "address": "0x1800a39bc",
+          "bytes_hex": "0000000000",
+          "complete": true,
+          "requested_bytes": 5,
+          "returned_bytes": 5
+        }
+      },
+      {
+        "evidence_id": "ev_42c272c06f1fa9f1a3c6520f7ac3965e65caa3379a3dd07f3f9fce2e47ad1495",
+        "operation": "read_bytes",
+        "parameters": {
+          "address": "0x1800a10d0",
+          "length": 8
+        },
+        "result": {
+          "address": "0x1800a10d0",
+          "bytes_hex": "100000001c000000",
+          "complete": true,
+          "requested_bytes": 8,
+          "returned_bytes": 8
+        }
+      },
+      {
+        "evidence_id": "ev_47b5f79579812801de30ed4d61dc80b8b2c87d0ab08c84a2448981d10b376e42",
+        "operation": "xrefs",
+        "parameters": {
+          "address": "0x1800a3888"
+        },
+        "result": [
+          "0x18000fdc0",
+          "0x18000fdc8"
+        ]
+      },
+      {
+        "evidence_id": "ev_9c11792d709a9017b7f6d1dd09474e496a577f5734a6f8b64bca200a2ca7f9a9",
+        "operation": "xrefs",
+        "parameters": {
+          "address": "0x1800a39c0"
+        },
+        "result": [
+          "0x1800320ee",
+          "0x1800322c6",
+          "0x18003279f",
+          "0x1800327f0",
+          "0x180032880"
+        ]
+      },
+      {
+        "evidence_id": "ev_f56aee1397ba6d9619bc4d93ad9add894e44e25062bbbb5607db964a329fdc79",
+        "operation": "xrefs",
+        "parameters": {
+          "address": "0x1800a10d4"
+        },
+        "result": [
+          "0x18000fd2c"
+        ]
+      }
+    ]
+  },
+  "retained_constructors": {
+    "path": "outputs/anadius-initial-cells-source/retained-constructors.json",
+    "sha256": "21429a21077237c2fac5d2a83cb5d4bb2bb5e28362566a92bd668f855a971069"
+  },
+  "observations": [
+    "a10d0/a10d4 image dwords are16/28, read by00fd1d/00fd2c length comparisons.",
+    "a3888 image uint32 is0; direct Ghidra references read/increment/write at00fdc0/00fdc8.",
+    "a39bc/a39c0 image cells are0/0; direct Ghidra references belong to0320c0 licensing reads, increment and block writes.",
+    "Three registry roots/counts are initially zero in PE.001050(client)/001090(fabricated)/0010d0(language) each allocate28byte sentinel, self-link three pointers, tag0101, publish root; unchanged zero adjacent count implies empty set projection."
+  ],
+  "limits": [
+    "Image/static initialized bytes are not observed runtime values after arbitrary initialization, calls or mutation. Fresh factory is opt-in and does not reset live state.",
+    "Ghidra direct references and full retained listing search are bounded negative evidence; indirect/unaligned computed writes may be unrecognized.",
+    "Source std::set emptiness matches selected semantics, not original MSVC sentinel storage, initializer registration/allocation failure or CRT/EH ABI."
+  ],
+  "original_execution": false,
+  "original_modification": false,
+  "session_closed": true
+}

@@ -1,0 +1,49 @@
+{
+  "scope": "Independent retained static026aa0/028850 normal-flow audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {"address":"0x180026aa0","pseudo_evidence":"ev_d4f71cf8b783578dcbaae1a45c68bba3e631d5381f8102b4c3d6ec82db60b419","assembly_evidence":"ev_5263c2b7208ef28e3ec671a729ee180d773d5dcd6ba45d16972e7ebef04cba21"},
+    {"address":"0x180028850","pseudo_evidence":"ev_9a1fe4c4ceb75c56791c10e35bd439a1423da6615f0d3dc8d9e7476e88ec498b","assembly_evidence":"ev_095d9853e46b5d31f95097518a09129ccf9b9050adc51fa79c2110be97dd4856"}
+  ],
+  "map_rules": {
+    "map_count":4,"native_start":"engine+0x68","native_stride":56,
+    "hash":"unsigned64 key modulo bucket_count; zero count skips",
+    "range":"bucket.first inclusive through captured bucket.last->next exclusive; sentinel excluded",
+    "first_match_only_per_map":true,
+    "error_copy":"16 native bytes per operation; logical typed Error projection is not byte ABI",
+    "aggregate":"FIFO in map order; each removed next cleared before append",
+    "matched_empty_node":"mandatory recycler and wake still occur",
+    "recycler":"required0283c0 provider; no erase-only substitute or new recovered-procedure claim"
+  },
+  "delivery_rules": {
+    "scheduler_read":"after all four map scans and recycle calls; cached for posting/fallback",
+    "port_handle":"live per attempted post",
+    "post":"clear next, queued=1, PostQueuedCompletionStatus(port,0,0,operation)",
+    "success":"any nonzero BOOL; no last-error read",
+    "first_failure":"append failed plus all remaining to live scheduler FIFO under cached scheduler gate; stop posting",
+    "unattempted_queued_values":"unchanged",
+    "dispatch_flag":"actual atomic exchange1 under gate, not plain store",
+    "wake":"once after delivery/gate leave if any matching node, including empty match",
+    "callback_cleanup026c9d_026ce7":"unreachable all normal paths; must not be reconstructed as ordinary callback"
+  },
+  "wake_rules": {
+    "native_socket":"wake+8","buffer_count":1,"len":1,"payload_byte":0,"flags":0,
+    "overlapped":null,"completion":null,"initial_transferred":0,
+    "status_and_count_ignored":true,
+    "category_before_last_error_always":true,
+    "extra_category_errors":[64,1234],
+    "extra_category_even_on_send_success":true,"retries":0
+  },
+  "context_evidence": [
+    {"address":"0x1800283c0","pseudo_evidence":"ev_9f53a74fdc3280f360d1ce5770b00ecf0d27721d1f88cc316eeb303a6ea950b8","assembly_evidence":"ev_1c51eada2fac2491b445eaad1ca3641ce117107dbab6a3a71dd6a7392dc453bc"},
+    {"address":"0x180026fb0","pseudo_evidence":"ev_4ffe8b68e27a849ee81d94fa3520491aa59f139532cc5e31294d1bee89c8c4b4","assembly_evidence":"ev_949e26c04afda34fe45f482346b1b127456e1debcf6ba15190922608977a89d9"},
+    {"address":"0x180028620","pseudo_evidence":"ev_fd2098bcb37a61e83ff7f76f095ba6d0fe598933164420bda64f6c6ef3920095","assembly_evidence":"ev_73535f6dec0ad639cf35346f8021a5b39597a421eb724714a6aec9986996b9f6"}
+  ],
+  "new_original_procedures":2,
+  "original_execution":"none","real_network_execution":"none","real_user_files_read":false,
+  "limitations":["Typed map/operation/scheduler projections are not native ASIO layouts","SDK OVERLAPPED member does not reproduce original operation allocation layout","Recycler/category/global allocator/scheduler worker remain required providers","Exception/unwind ABI and general concurrency lifetime equivalence not established","Complete DLL and live IOCP behavior not established"]
+}

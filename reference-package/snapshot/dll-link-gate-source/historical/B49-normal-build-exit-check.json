@@ -1,0 +1,9 @@
+{
+  "scope": "B49 frozen source/archive link revalidation",
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "result": "PASS",
+  "log": "work/b49-link-gate.log",
+  "common_log": "work/b49-common-v2-build.log",
+  "common_log_sha256": "5714b0c8b7c7b57643c1dbc5a41eb028a43eee56995cb7dc28bbd5dc05253cfb"
+}

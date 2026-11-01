@@ -1,0 +1,86 @@
+{
+  "target": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source": "Previously retained REA 6.5.0 Ghidra evidence; no target execution or source mutation",
+  "scope": "Normal return flow only; SEH/XFG/unwind/native CRT equivalence unproven",
+  "anchors": [
+    "Table size 24, fields +0/+8/+16",
+    "Cookie global 1800a1580; application table 1800a47a8; CRT table 1800a52a8",
+    "0643cf/06444a establish lock id 2",
+    "064133..06419e growth 32/min(capacity,512)/fallback+4",
+    "0642ef..064355 reverse scan, clear-before-call, restart after begin/end mutation",
+    "04b734 tests raw application begin against UINT64_MAX"
+  ],
+  "functions": [
+    {
+      "va": "0x18006405c",
+      "pseudo_evidence": "ev_fa60c9d460f24f3037056302e07b0824419f313e153cbdb797e7d74f6923bf06",
+      "assembly_evidence": "ev_9c8e03bb423867cc32f4573523d6d1233fd59e229a8ffdddf63b3f2b0820664e",
+      "pseudo_line": 88087,
+      "assembly_line": 106639
+    },
+    {
+      "va": "0x180064098",
+      "pseudo_evidence": "ev_32e6336a1ce5c89a24536817544308aed7646efcf3a40caf8052811735af186a",
+      "assembly_evidence": "ev_3dba61b549b259b6f4e6a5746aa4c38cf46e0631469f0d0a53aa83b365e21dd7",
+      "pseudo_line": 88118,
+      "assembly_line": 106660
+    },
+    {
+      "va": "0x1800640d4",
+      "pseudo_evidence": "ev_b690f3159e80095bde9235bc046b4cc2c0eed2d38ff91949b36bc723c868e4ff",
+      "assembly_evidence": "ev_9458782bcd289c82b5a2502bd6b7dfce515c355287bbe8e8e8096d899aec6af5",
+      "pseudo_line": 88162,
+      "assembly_line": 106681
+    },
+    {
+      "va": "0x180064284",
+      "pseudo_evidence": "ev_a2a45840e0ab4f8e7f6ca6f04aa3b5921ab3cc366bfe35048a90e16c27671b75",
+      "assembly_evidence": "ev_4117cd4b5e3d5565074513d9ebe0fbf7fc820d50475233bbc63c0be7b3b7d9ed",
+      "pseudo_line": 88249,
+      "assembly_line": 106809
+    },
+    {
+      "va": "0x1800643a4",
+      "pseudo_evidence": "ev_27f77b022516f56771cdd0258148501ea51c988851a80f20829db27de097d697",
+      "assembly_evidence": "ev_55cded92a770894556ff3b83a48cf4b96c8aef15965ea67f8151183d57022bac",
+      "pseudo_line": 88321,
+      "assembly_line": 106896
+    },
+    {
+      "va": "0x1800643b4",
+      "pseudo_evidence": "ev_03c0638f67b5e1578ab13d14dd25ce3ec4f2fde6e041c84dcaa47284122b4b3e",
+      "assembly_evidence": "ev_d440ade7070584d8650d426c4cfe340f84bd0dd317d5f53fe0a89aba8b437fb2",
+      "pseudo_line": 88332,
+      "assembly_line": 106901
+    },
+    {
+      "va": "0x1800643f8",
+      "pseudo_evidence": "ev_60291817f49c8420701bf60bbf17186f20bc3ee0d92236d501a52d1862e29bd4",
+      "assembly_evidence": "ev_e3a80bac5a174f60722b597a1f4b7b7c0e527e70572e89bbec15aa6b8dfe5aa6",
+      "pseudo_line": 88355,
+      "assembly_line": 106920
+    },
+    {
+      "va": "0x180064420",
+      "pseudo_evidence": "ev_70a4e03a5e5f361e5e9735370d75293dc389fa933dadb326a2370e7f62edcf0a",
+      "assembly_evidence": "ev_3b425185237177c82ea6eceff45a3aeb4855e8e34f65554f1d7ad35521e30285",
+      "pseudo_line": 88381,
+      "assembly_line": 106935
+    },
+    {
+      "va": "0x18004b734",
+      "pseudo_evidence": "ev_c463ae02c9a7d7745da982d7a7aded49076bd85a3cafec6ce867092277b8a14d",
+      "assembly_evidence": "ev_2da068e371dcc70080c01dd364bbe5cd40a769e0b30bf757137030ecfce80fe7",
+      "pseudo_line": 61908,
+      "assembly_line": 78517
+    },
+    {
+      "va": "0x18004b770",
+      "pseudo_evidence": "ev_c4c061f3285b68160ff8efdb25ea72fe7a99290cc6010b41536dab3e2baf98a0",
+      "assembly_evidence": "ev_146cca3b43a0a9c2a136a22a617517b3a71443b7cf7833398727f50bf720f95b",
+      "pseudo_line": 61936,
+      "assembly_line": 78536
+    }
+  ]
+}

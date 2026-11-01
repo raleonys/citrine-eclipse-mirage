@@ -1,0 +1,29 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "analysis": "Retained REA/Ghidra12.1.4 static assembly/pseudocode, no target execution",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "new_functions": [
+    {
+      "va": "0x18006a308",
+      "name": "malloc_base_06a308",
+      "assembly_evidence": "ev_fec2970bf0d499ba0715ef0f1dd0028bfcd6d27a246fd3e25106a2d5f9825b64",
+      "pseudocode_evidence": "ev_733b89f60b5bf5d34f8160dc7692d178f7d2d6c790f4556df10d2570ca955f76",
+      "anchors": ["06a311..06a315 unsigned CMP/JA maximum 0xffffffffffffffe0", "06a317..06a31f zero becomes one", "06a325..06a338 query mode/call new handler and TEST EAX", "06a33a..06a346 heap reload, requested bytes, flags zero, HeapAlloc IAT07f208", "06a353..06a35e write 12 through 05d724 and null return"]
+    },
+    {
+      "va": "0x18006e3a0",
+      "name": "realloc_base_06e3a0",
+      "assembly_evidence": "ev_c7a59e74ef73fcbf1778b456b605fad00bb26dad8d4e51186e7b591e7dfef497",
+      "pseudocode_evidence": "ev_7c54fe9b60ca5f85c4d4e42b9db81e4c31ab793368c16c009177703537e737ca",
+      "anchors": ["06e3b0..06e3bd null delegates to06a308", "06e3bf..06e3c9 nonnull and size0 calls0668c0", "06e3cb..06e3d6 unsigned CMP/JBE and errno12", "06e3e9..06e3fc mode/handler TEST EAX retry", "06e3fe..06e40d heap reload,original pointer,bytes,flags0,HeapReAlloc IAT07f210"]
+    }
+  ],
+  "reused_functions": [
+    {"va":"0x1800634b0","assembly_evidence":"ev_feeb37c1659fa2ad6ed36fb2e17ad1622a1893e7adb59a2a704c97c32c5c11ba","pseudocode_evidence":"ev_175a4e59f0f62ca348f45967bc37777281cff05acfbf8675b3dcc8dc235d175d","semantics":"Callback full EAX nonzero normalized using SETNZ BL/MOV EAX,EBX. No handler returns zero. Reuse existing crt_heap implementation."},
+    {"va":"0x1800634f0","implementation":"../anadius-crt-heap-source/heap.cpp::get_new_handler_0634f0"},
+    {"va":"0x18007301c","implementation":"../anadius-crt-heap-source/heap.cpp::query_new_mode_07301c"},
+    {"va":"0x1800668c0","implementation":"../anadius-crt-heap-source/heap.cpp::free_0668c0"}
+  ],
+  "limitations": ["Providers are required and synthetic in tests", "No actual heap/native target execution", "No original or rebuilt DLL runtime comparison", "New C++ source ABI is not proven equal to original", "No exception-unwind equivalence assertion", "Two additional local functions, not a complete CRT or DLL"]
+}

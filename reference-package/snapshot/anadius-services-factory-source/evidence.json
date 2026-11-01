@@ -1,0 +1,113 @@
+{
+  "schema": "services-factory.source-composition.v1",
+  "source_package": "B53",
+  "evidence_type": "Owning narrow remaining policies with actual memory/logger/wait/registry lifetimes and explicit consuming Resources transfer",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "sha256": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "007e1bf186d7ed7f441efd4735c60af009d40ce5fcb1ccacc6ebf30fabe943f9",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "sha256": "c8c64d35fc9ec61a5c837334274ec106da0085212bf47c364b58e3743c96ee17",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-policies-source/services.cpp",
+      "sha256": "e4262048223e68e64734a7687501e24e2e3741f300a71b9ac2c59b76f335de76",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/callbacks.cpp",
+      "sha256": "9d78696ae360140c0fcb30a185671a5755532e22c2aa15e128f5b09fa5ee426c",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "b55dce6433cb841d7989aa60403dcab3bd3bf0e24c56777130277773239c42c1",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.hpp",
+      "sha256": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-services-completion-source/completion.cpp",
+      "sha256": "26a7a0a659088938eaed6b2981056c17041f4bf8d38b696fc8ca12042f447b64",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-services-completion-source/exit_wait.cpp",
+      "sha256": "814af5ec8e30a72a9e76dedfb0ab5a1adb950df735efe7a89f865fa426524eaf",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/domain.cpp",
+      "sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "scope": "Saved real source dependency, fresh unchanged selected HOST consumer or reviewed narrow seam; no new original analysis bytes."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b53-core-quick-results.json",
+      "sha256": "ce7e39d4fd691e48a32375ce234fdb7bd8386e436457b87959fbce7dc5341b5c",
+      "checks": 68,
+      "executable_sha256": "e640f4a698f218a873e39bcc13e8d1a99c944fd17c3ae4269e5c33c29f25e6a8",
+      "archive_sha256_as_used": "c28722667a6473ecf0f617c6cca494487b384a655c7694897925dec75a536534",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh modified backend.cpp plus new services_factory Remaining factory.cpp and independent factory_tests.cpp, with selected13 source/interface hashes. Immutable canonical B52 archive supplies existing actual Domain/ApplicationMemory/NativeThreads/TrackingThreads, logger, exit-wait, callback and indexed thread-error algorithms. This core exercises the actual new SourceBackend three-argument constructor only through its known unpublished missing-provider rejection. A sole-owned narrow backing token and SBO shared-capture stop_sources destructor prove receiver/donor resource retirement precedes narrow retirement, with guarded weak-lifetime checks before facade access. Fresh backend.cpp is required for this HOST-layout path; no Runtime assembly or Runtime constructor is used, and full by-value Runtime assembly is separately tested by integration. No giant Services lower or unused worker-method filler is instantiated. Main count excludes inherited fixture setup checks and includes seven exact-child exit verifications. Tests cover all11 narrow routes, passive construction, mandatory inputs, sole-owned invalid empty wait retirement and retained live/unknown invalid input, direct callback registry LIFO/terminate restoration, source logger/token/literal/error operands and all7 actual thread-error specifications. Actual selected Domain heap/free known-failure retry retains a live ticket. Actual recovered NativeThreads worker has its own native PTD/FLS, allocates/frees bytes, logs and legitimately reenters RET from streambuf, registers an exit callback and consumes its own real exit-wait target. A real event blocks its source lease while controller close returns false; actual duplicated-handle join includes FLS completion before provider close. Successful close retains all leaf owners/backing while sealing admission; final actual stream/backing deleter probes the still-attached Retiring facade before physical owner release. External aliases are explicit and retain their own Domain leases; zero snapshots are not global source/kernel quiescence proof. Children separately prove exact fatal abort/log-before-abort, unknown allocation/stream retention, mandatory used-owner close, actual late allocation recheck at retirement and swallowed nested poison stopped by normal-return postcheck. No original/rebuilt DLL, game, network, user cfg/token/license/key contents, full Resources/application integration, native MSVC ABI/loader/unload safety, arbitrary source concurrency or unknown rollback is claimed."
+    },
+    {
+      "path": "work/b53-integration-quick-results.json",
+      "sha256": "0b7be98132b7f802eb36214a2681f45790a788d20d464080937d46754b676908",
+      "checks": 208,
+      "executable_sha256": "b291ef2bcd9a2666c778993aad9f02a7bc6683946bd87964a5184ab97865998a",
+      "archive_sha256_as_used": "c28722667a6473ecf0f617c6cca494487b384a655c7694897925dec75a536534",
+      "execution_author": "/root/b22_integration",
+      "note": "ActualRuntime/RuntimeOwner/SourceBackend FOURactualDomainNativeThreads (outerApplication plusTHREEsourcebootstrapworkers) throughApplicationWorker/Graph, no giantremainingServices lower orfakeunusedroutes. ActualSourceBackend.checked constructorfailure alsoexercises4noexceptcopyable smallstdfunctioncaptures: supportedmake_runtime(Resources&) consumingtransfer clearsALLdonors; no publicmake_unique byvalueforwarding; LASTprobe observesFreshRemaining/Options marker beforeitsretirement, expiredmarker skipsrawread; actualemptyheap/wait/Domaincleanup. Normalandconstructorfailure useSUPPORTEDbr.make_runtime borrowedResources sink, oldpublicRuntimeconstructor ABI preservedbutarbitrarymake_unique/SBOdonors unsupported. OnlyResources.remaining_factory createsnewservices_factory againstRuntimeOWNCallbackRegistry; realApplicationMemory heap8/8/16payloads andactualworkerfrees, BootstrapLogger sourceversionchain, threeactualExitWaitTargets registeredonworkers then04a47c ready/unlock cleanup observedafterjoin, registerexit/installTerminate viaactualCallbackRegistry. ActualBootstrapLoggerstreambuf blocksfirstliteralbeforepayloads; firstOwnerclosefalse sealscachedApplicationbeforeanyStopSources, thenpre-admittedAppcontinues3workers andouterthreadjoins. KnownlatecloseFALSE exercised by separateactualcontroller8allocation afterouterjoin; deallocate/retry mustnotrepeatStop/Exit/registry stages. ControllerstopdefaultCancelIoEx ownnamedpipe pendingReadFile observedactual995 andsuccess/ERROR_NOT_FOUND races then0271a0owner0cleanup, Graphclose/nativejoin/FLS/controllerfinish. OwnpipekernelcompatNOTAcceptEx/WSAinteroperability; explicitOTHERclosedadmissionproof remainsrequired, nofullIOdrain/nativeABI/loader/Resources-completeclaim. Configuration/online/host/hooklowerSDKpolicies remaindeclaredsynthetic. NoOriginalDLL/game/usercontents/realnetwork/manualterminalpost/counters."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition only.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "production_sources_added": 1,
+  "prior_sources_modified": 4,
+  "new_test_sources": 2,
+  "modified_gate_auxiliary": [
+    {
+      "path": "dll-link-gate-source/build-link-gate.ps1",
+      "before_sha256": "e3c97d2e9c927ef436da58e9251d5930af28668036181c295e569c5b919afa06",
+      "after_sha256": "eb185b71f701b928a53fc621a7d49239b699188a9d55d4d58c18f1908f6fa0cb",
+      "reason": "Retain B52 explicit configuration object and additionally select/verify frozen services_factory.o in the actual failed-link diagnostic; CMake configured only, no loader reachability claim."
+    },
+    {
+      "path": "dll-link-gate-source/target.cmake",
+      "before_sha256": "b1c4b88534643ff90a166802617b7ee861e91a3585b5a49797e9cdabd8394b60",
+      "after_sha256": "f7559e056af74a050f74762908f0ffa408ad73e0ffb2184d2b9d579651dcfa54",
+      "reason": "Retain B52 explicit configuration object and additionally select/verify frozen services_factory.o in the actual failed-link diagnostic; CMake configured only, no loader reachability claim."
+    },
+    {
+      "path": "dll-link-gate-source/verify-link-gate.py",
+      "before_sha256": "378ac8b220426d2c567f01a5b346af2a47d4bfe92da23d3bf4d14b83864259fa",
+      "after_sha256": "9364c5b4efd1993e6886306065ae8894d76e799f19f2e3dd37fd63c2e821c580",
+      "reason": "Retain B52 explicit configuration object and additionally select/verify frozen services_factory.o in the actual failed-link diagnostic; CMake configured only, no loader reachability claim."
+    }
+  ],
+  "gate_auxiliary_review_sha256": "44cf082440a8ca10a6bd27fd2e77f67b74e2b090a84caaa6d8ba694b09ee804e",
+  "full_production_Resources_complete": false,
+  "loader_reachability": false
+}

@@ -1,0 +1,257 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T16:04:23.662211+00:00",
+  "review_scope": "B27 selected status/getter typed call shapes, adopted-object QueryUse lifetime through actual owned copy, all forwarding layers, actual SourceBackend/proxy integration and failure/negative controls",
+  "reviewed_source_hashes": {
+    "query.hpp": "1b2de83de5af1232a5da74cdb1afc63987a4cb57284ecabaa06d48006047cdb6",
+    "query.cpp": "efadfeef5fb5739ffeb538bc1c3f0bfbfb4b33ff17dc83686b6652707603a10d",
+    "query_tests.cpp": "80177b12004196fdf6ec0a7ac9a6674429cd1bd6936fc488f38240ea46d3751a",
+    "query_integration_tests.cpp": "a074b290a244dcba323d91116836f020258563056bcddc9c6d48eab86c1f1501",
+    "../anadius-online-source/online.hpp": "47adf8b6426476a64b76a6b7d0f82875778f5795f9662a3bdd923219f3bdd6a2",
+    "../anadius-online-source/online.cpp": "00020732bf6e36d53b9bfafe80d6cb85f303b8b329624562d45991f916e50cb8",
+    "../anadius-online-source/recovered_effects.hpp": "f0a8da1dd760c10ae263adb3a91998642d84bb62f270d2c6565147fe28f5993a",
+    "../anadius-online-platform-source/platform.hpp": "4b5b157491c3fa63a4390c1fbe41f5219c88810aae3e970e28bc5d95cb09bf54",
+    "../anadius-online-source/recovered_effects.cpp": "0bbd7c694762d968b6e509f1df851a46288bbd692fc7a1783c27eb45f11bfbd2",
+    "../anadius-bootstrap-backend-source/backend.cpp": "b8339ee3bf5a6a1256f2b1301494278345fc0bc24bccb20c7ab5980228c52153",
+    "../anadius-online-platform-source/platform.cpp": "f7098acfa6d90d052f19fc54da71ace54bc6369bef4b256e8af6858ac9ccde0e",
+    "../anadius-online-version-source/version.hpp": "9493df88f46bf2050eccec5930b68c10910da5de4686757e17001925fda805b8"
+  },
+  "quick_results": [
+    {
+      "path": "work/b27-core-quick-results.json",
+      "sha256": "bb99c150df0885364d8a5a970cfe58de798335195fccf8202999d7281dae5ee7",
+      "checks": 35,
+      "executable_path": "work/b27-core-test.exe",
+      "executable_sha256": "12165fb5cd91d94eb395ced46c342483dc7a0356e3c763bbcc56ad9cf87a65a7",
+      "execution_by": "/root standard quick run; integration authored by /root/b22_integration; independent reviewer read twelve frozen sources and verified record/source/EXE hashes without rerunning"
+    },
+    {
+      "path": "work/b27-integration-quick-results.json",
+      "sha256": "b27198fa46ebd8eca5d0d79d8587fcf3fd39ca96d9aae164a1df5eac5b439697",
+      "checks": 38,
+      "executable_path": "work/b27-integration-test.exe",
+      "executable_sha256": "db16086789c733b2e15f4b541c7071f142e519e05df057fed00d7994156fecd8",
+      "execution_by": "/root standard quick run; integration authored by /root/b22_integration; independent reviewer read twelve frozen sources and verified record/source/EXE hashes without rerunning"
+    }
+  ],
+  "root_checks": 73,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "baseline_package_sha256": "69c9c0de30ba31f58fc3da4ca8031c5110d6200cf558dec51bf892a4f08dba1d",
+  "prior_source_files": 830,
+  "prior_sources_preserved": 822,
+  "current_source_files": 834,
+  "source_inventory_counts_basis": "Reviewer independently verified B26 ZIP identity and all830 prior manifest source entries:822 unchanged, eight declared before/after changes, four new reviewed source files. Eight production diffs were read against archive. Common build counts remain planned/unreviewed.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-online-source/online.hpp",
+      "before_sha256": "51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b",
+      "after_sha256": "47adf8b6426476a64b76a6b7d0f82875778f5795f9662a3bdd923219f3bdd6a2",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-source/online.cpp",
+      "before_sha256": "af99d95b0e88ea2cacd93a4f01237a8d2362cb44bdc3d7b2961c91c5fc9b1ca5",
+      "after_sha256": "00020732bf6e36d53b9bfafe80d6cb85f303b8b329624562d45991f916e50cb8",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-source/recovered_effects.hpp",
+      "before_sha256": "7259015541eb690bd45e9a7dab99afe4637fd2a1774051454ad230ee7e890bdd",
+      "after_sha256": "f0a8da1dd760c10ae263adb3a91998642d84bb62f270d2c6565147fe28f5993a",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-platform-source/platform.hpp",
+      "before_sha256": "82ae373e513da2be64cf3522421f699d757099e1b7f325b33fa485e828176f91",
+      "after_sha256": "4b5b157491c3fa63a4390c1fbe41f5219c88810aae3e970e28bc5d95cb09bf54",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-source/recovered_effects.cpp",
+      "before_sha256": "07ca212e276421f44ec0d3c109ff0a23b35c01266d9a97349b61396944729ef3",
+      "after_sha256": "0bbd7c694762d968b6e509f1df851a46288bbd692fc7a1783c27eb45f11bfbd2",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "e145a8a1b99ed7b3e5ca2ba2a1f5cced2263207a6d8cbcaa5ec7fee13468c98d",
+      "after_sha256": "b8339ee3bf5a6a1256f2b1301494278345fc0bc24bccb20c7ab5980228c52153",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "40e54887e2102763bb147c28c3ef42506bccdda89ead94636bb1e861a9e41499",
+      "after_sha256": "f7098acfa6d90d052f19fc54da71ace54bc6369bef4b256e8af6858ac9ccde0e",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-version-source/version.hpp",
+      "before_sha256": "85005c17066d7746f9f13a043f9ec098ea4f379b9461e385cdeb5d092ad72da0",
+      "after_sha256": "9493df88f46bf2050eccec5930b68c10910da5de4686757e17001925fda805b8",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    }
+  ],
+  "prior_changes_record_sha256": "b258e2b139ad035b97f083668de35b4b3d440adbc9f976c31e6cc4c694c54723",
+  "retained_evidence": {
+    "source_hashes": [
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      },
+      {
+        "path": "outputs/anadius-all-functions.pseudo.c",
+        "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+      }
+    ],
+    "status_call": "0x180036002",
+    "username_call": "0x180036039",
+    "persona_call": "0x18003606c",
+    "user_id_call": "0x180036098",
+    "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "negative_copy_forward_control": {
+    "path": "work/b27-copy-forward-negative-results.json",
+    "sha256": "e51a89adc7f736e01ca4d4897bcbf919188c046454b4b0d87cc3a92f024b2d26",
+    "result": "EXPECTED_FAILURE_WITHOUT_ONLINE_EXECUTION_COPY_FORWARDS",
+    "compile_exit": 0,
+    "run_exit": 1,
+    "expected_failed_predicate": "Owned-copy reservation spans actual heap allocation and rejects destroy/free reentry before effects",
+    "negative_backend_sha256": "b140c67cc3d974be08ff7d614413b7818d7905b0590829ad2818366ae9be30d6",
+    "real_backend_sha256": "b8339ee3bf5a6a1256f2b1301494278345fc0bc24bccb20c7ab5980228c52153",
+    "test_source_sha256": "a074b290a244dcba323d91116836f020258563056bcddc9c6d48eab86c1f1501",
+    "executable_path": "work/b27-copy-forward-negative-test.exe",
+    "executable_sha256": "8d22a1e867d61a2020419f9c27cfa6cf2ee2fdc598309df5f06441a481671e5c",
+    "log_path": "work/b27-copy-forward-negative.log",
+    "log_sha256": "cbbf41a8bb3714538d689b9f9d76e6971722cb4267928da0507e9dd0fe97ab07",
+    "exactly_three_forward_lines_removed": true,
+    "test_actual_source_backend_worker": true,
+    "clean_exit_after_explicit_normal_cleanup": true,
+    "counted_as_PASS": false,
+    "execution_by": "/root; reviewer verified generated diff, script, record/log/source/EXE hashes without rerunning"
+  },
+  "findings": [
+    {
+      "topic": "Four observed typed query shapes and bytewise slot resolution",
+      "result": "PASS",
+      "evidence": [
+        "query.hpp:5-12",
+        "query.cpp:7-20",
+        "../anadius-all-functions.asm.txt:54832-54878",
+        "query_tests.cpp:63-87"
+      ],
+      "observation": "Retained caller loads RCX object and calls vptr+08 at0x180036002, testing only EAX then comparing EAX with1 on the offline branch. Getter slots+10/+18/+20 at0x180036039/3606c/36098 return RAX pointers scanned bytewise to NUL before ordered username/persona/user-id assignments. Selected StatusFunction int32_t(void*) and GetterFunction const char*(void*) match those observed shapes without a complete foreign header/class ABI claim. query_slot validates the exact four slot offsets and uses memcpy for object/vptr words, supporting readable unaligned own buffers. Wrong/stale adopted-object identity rejects before any foreign memory read."
+    },
+    {
+      "topic": "Shared reservation through SDK and actual owned string copy",
+      "result": "PASS",
+      "evidence": [
+        "query.cpp:33-67",
+        "../anadius-online-version-source/version.hpp:36-39",
+        "query_tests.cpp:89-117",
+        "query_integration_tests.cpp:63-79,177-194"
+      ],
+      "observation": "QueryUse calls begin_object before slot resolution and retains the same B26 module/object/code active reservation through typed status/getter execution. Owned copy additionally constructs the actual NUL-scanned std::string before the guard ends, closing the getter-return to borrowed-copy gap. LastError captured immediately after native getter survives string allocation and then metadata release. Actual long-copy allocations8192/12288/16384 bytes are observed once per field through SourceBackend; snapshots show exact active adopted owner and attempted destroy/free reject before effects. Raw getter returns remain borrowed and require caller serialization after return."
+    },
+    {
+      "topic": "Known query failures versus invalid layout poison",
+      "result": "PASS",
+      "evidence": [
+        "query.cpp:24-67",
+        "query_tests.cpp:89-144",
+        "query_integration_tests.cpp:214-238"
+      ],
+      "observation": "Under the explicit non-owning query contract, SDK exception rethrows identically and leaves known live object available for explicit cleanup. Null raw return stays null; owned copy throws the prior OutOfEvidenceInput without scanning or poisoning. A real std::bad_alloc at persona copy allocation releases only reservation, preserves native outgoing error and earlier username while failing/later fields remain original. Invalid vptr/selected-slot resolution conservatively sets poison+object_unknown and ends active without owner release. Core children191/192 protect object/table page PAGE_NOACCESS after fault and prove all later queries/destroy/free reject without further memory reads or code calls; generic failure cannot pass."
+    },
+    {
+      "topic": "Owned copy forwarding reaches actual worker and proxy",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-online-source/online.hpp:51-55",
+        "../anadius-online-source/online.cpp:34-36,90-92",
+        "../anadius-bootstrap-backend-source/backend.cpp:54-56",
+        "../anadius-online-source/recovered_effects.cpp:41-43",
+        "../anadius-online-platform-source/platform.cpp:85-91",
+        "query_integration_tests.cpp:162-213"
+      ],
+      "observation": "Effects gains three default owned-copy virtuals that retain the old raw-getter/null/string behavior. Core assigns username, persona and user-id via those methods in original order. OnlineExecution and RecoveredEffects explicitly forward all three owned copies, avoiding inherited defaults that would copy after an inner raw getter reservation ended. OnlinePlatform opt-in selects typed owned copies; B26-only object path wraps lower owned-copy override inside object_call; no-object legacy mode honors lower custom owned-copy overrides. Actual backend worker and a focused constructor-only RecoveredEffects proxy both prove real long-string allocation remains guarded, with explicit normal selected destroy/free before assertions. Native proxy dependencies are not invoked."
+    },
+    {
+      "topic": "Negative missing-forward control is meaningful and not PASS",
+      "result": "PASS",
+      "evidence": [
+        "work/b27-copy-forward-negative-results.json",
+        "work/b27-copy-forward-negative.py",
+        "query_integration_tests.cpp:63-79,177-194"
+      ],
+      "observation": "Independent comparison verifies the negative backend copy differs only by removing the three OnlineExecution owned-copy forwards; the real backend is unchanged. Same current integration source compiles this copy and exits1 on the exact active-copy/destroy-free rejection predicate after normal source cleanup. Allocation hook records missing active state but deliberately does not destroy an unguarded object, avoiding a synthetic use-after-free as the negative signal. The hook suppresses recursion for expected rejection exception allocation and restores LastError. Negative record/log/EXE and all recorded source hashes match; this expected failure is not counted as PASS."
+    },
+    {
+      "topic": "Source branch, field and cookie ordering preserved",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-online-source/online.cpp:64-93",
+        "query_integration_tests.cpp:177-194,214-254",
+        "../anadius-all-functions.asm.txt:54829-54878"
+      ],
+      "observation": "The corrected B26 cookie-copy scope still commits object then releases the exact long cookie before native status. Online flag and authentication log precede all profile queries; assignments remain username then persona then user-id, with earlier successes retained on later null/throw/allocation failure. Offline status1 adds authentication-failed prefix;2 and-1 do not. Own status stub deliberately sets nonzero upper RAX bits, and actual SourceBackend still branches using low32 for0/1/2/-1. Worker-ready is published only on normal worker completion; exceptions leave it unset. Own memory-file profile order and normal destroy-before-free behavior remain intact."
+    },
+    {
+      "topic": "Selected mode and bounded evidence attribution",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-online-platform-source/platform.hpp:23-33",
+        "../anadius-online-platform-source/platform.cpp:24-25,83-92",
+        "work/b27-core-quick-results.json",
+        "work/b27-integration-quick-results.json"
+      ],
+      "observation": "native_queries requires native_objects and thus the same version/module owner. Selected path now supplies all seven observed typed source foreign bindings; actual backend integration fails if any foreign call falls through to mandatory lower and observes zero such calls. Default/B25/B26 modes remain available, with explicit owned-copy forwarding extension. Root standard quick runs report35 core and38 integration checks, integration authored independently by /root/b22_integration. Reviewer authored neither production nor tests, did not rerun tests and independently checked twelve frozen source hashes, both EXEs, negative evidence, retained ASM/pseudocode and B26 archive preservation. No original/rebuilt DLL/game, actual target module operation, user contents or network was used."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Selected online source mode now has7of7 typed call-shape bindings, but this is not proof of original DLL native function closure or full executable readiness. Default legacy7, B25-only6 and B26-only4 lower foreign modes remain possible by configuration.",
+    "Caller must provide a factory-adopted readable object/vptr/table and callable selected code. A nonnull getter result must remain readable and NUL-terminated throughout the owned scan/copy; no general memory probe or pointer validity proof is supplied.",
+    "Selected Win64 RCX/RAX/EAX call shapes and bytewise table reads do not recover complete foreign formal prototypes, compiler C++ object layout or native ABI. No actual online DLL was executed.",
+    "Explicit CodeLease must genuinely retain all selected export/vtable code and dependencies. Shared token, exact object or slot values alone are not executable/module-pin provenance and cannot prevent external raw unload or provider mutation.",
+    "Owned copy protects only the same Binding managed lifecycle during synchronous getter and actual scan/allocation/copy. Raw returned pointers still require caller serialization; external/asynchronous object teardown, arbitrary reentry, pointer/module ABA and mutation outside the binding remain unsupported.",
+    "Query exceptions retain known object only under the non-owning query contract. Invalid selected layout poisons/retains unknown object; there is no automatic repair, retry, cleanup or abandonment. Existing B26 live/unknown last-owner fail-stop remains mandatory.",
+    "B18-B26 callback/PTD, original ownership/checkpoints, same-Execution publication, stream, compiler-provider and external-quiescence obligations continue. This query bridge adds no PTD pre/post, hook-disabled or DLL unload proof.",
+    "Configuration/license/legacy document, B10 historical debt, generic CRT, original native ABI, hooks/unload and final PE/DLL proof remain open. New original native body/closure count is0.",
+    "Common build245objects/241CPP/285groups plus19 framework terminal scenarios is running/pending and remains unreviewed, not PASS. Added Effects virtuals and Resources/source class changes require a full rebuild of all consumers; current compiler-trait observations do not establish native ABI."
+  ],
+  "claim": {
+    "selected_status_and_three_getters_typed": true,
+    "status_low32_and_getter_pointer_shapes_preserved": true,
+    "bytewise_vptr_query_slot_resolution": true,
+    "same_binding_reservation_spans_actual_owned_scan_allocation_copy": true,
+    "online_execution_and_recovered_effects_owned_forwards": true,
+    "real_copy_allocation_rejects_destroy_free": true,
+    "known_query_null_badalloc_prefixes_preserved": true,
+    "invalid_query_layout_poison_retention_no_reread": true,
+    "B26_cookie_release_before_status_preserved": true,
+    "selected_typed_source_bindings_total": 7,
+    "remaining_selected_online_foreign_lower_calls": 0,
+    "complete_foreign_prototypes_or_class_ABI_recovered": false,
+    "readability_or_actual_module_pin_proven": false,
+    "object_PTD_or_external_quiescence_proven": false,
+    "original_DLL_or_game_execution": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Only architecture-review.json and architecture-review.md were written by this reviewer.",
+    "Root standard quick runs produced core35 and integration38; /root/b22_integration authored integration. Reviewer did not rerun any EXE or modify production/tests/pipeline.",
+    "Early design review identified missing OnlineExecution/RecoveredEffects owned-copy forwarding hazard; actual backend/proxy allocation probes and a no-forward negative control substantiate the implemented fix."
+  ]
+}

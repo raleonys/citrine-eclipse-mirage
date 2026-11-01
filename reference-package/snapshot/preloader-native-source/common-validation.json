@@ -1,0 +1,88 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "preloader_native",
+    "result": "PASS",
+    "output": "51 preloader native shim mock checks passed",
+    "executable_sha256": "676f8ad292e23cf066fe390bd53f3344fb7b3e12fbfb66ff825abc007391deb7"
+  },
+  "execution_scope": "SDK entry shims to recovered Core, synthetic Host/HookEngine/originals; no certificate/module/mutex/hook APIs",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [
+    {
+      "suite": "preloader_native",
+      "mode": "--unconfigured",
+      "expected_exit": 94,
+      "actual_exit": 94,
+      "result": "PASS"
+    },
+    {
+      "suite": "preloader_native",
+      "mode": "--unbound-next",
+      "expected_exit": 70,
+      "actual_exit": 70,
+      "result": "PASS"
+    },
+    {
+      "suite": "preloader_native",
+      "mode": "--unbound-mutex",
+      "expected_exit": 70,
+      "actual_exit": 70,
+      "result": "PASS"
+    },
+    {
+      "suite": "preloader_native",
+      "mode": "--unbound-query",
+      "expected_exit": 70,
+      "actual_exit": 70,
+      "result": "PASS"
+    },
+    {
+      "suite": "preloader_native",
+      "mode": "--unbound-entry",
+      "expected_exit": 70,
+      "actual_exit": 70,
+      "result": "PASS"
+    },
+    {
+      "suite": "preloader_native",
+      "mode": "--escaped",
+      "expected_exit": 93,
+      "actual_exit": 93,
+      "result": "PASS"
+    },
+    {
+      "suite": "preloader_native",
+      "mode": "--rebind",
+      "expected_exit": 71,
+      "actual_exit": 71,
+      "result": "PASS"
+    },
+    {
+      "suite": "preloader_native",
+      "mode": "--closed",
+      "expected_exit": 70,
+      "actual_exit": 70,
+      "result": "PASS"
+    }
+  ],
+  "sources": [
+    {
+      "path": "preloader-native-source/mock_tests.cpp",
+      "sha256": "a78267037df94607e207bb2c7af23d190d173791841c3585a303f3bc695bb0bd"
+    },
+    {
+      "path": "preloader-native-source/native_shims.cpp",
+      "sha256": "d18a7a813f907b8b8cd5e6d9481096e919e411b13ed6300ea7913c94a9815b2c"
+    },
+    {
+      "path": "preloader-native-source/native_shims.hpp",
+      "sha256": "c8fca5044079e9b08638d79feab405f1d25ab4f9378675e0f9d563976f227848"
+    }
+  ]
+}

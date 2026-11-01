@@ -1,0 +1,44 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "d8711789003ccb6876c9c6415d922a20dd7aad8f9c72c138be729c793b0d43ea",
+  "test_results": [
+    {
+      "module": "socket_request_mutation",
+      "result": "PASS",
+      "output": "PASS: 72025 socket request mutation checks; actual03ce30/010040/034730, exhaustive byte pairs, external and safe alias oracles, raw alias-bound failures, exact lower-growth and cached/live prefixes",
+      "executable_sha256": "45bafb27f8d81e7c183f0a2aa5a18fe35f4ec372e05cab5e7c6c5e3bf191b12f"
+    },
+    {
+      "module": "socket_request_mutation_integration",
+      "result": "PASS",
+      "output": "PASS: 1219 socket request mutation integration checks; actual03ce30/034730/010040 prefix before controlled caller callbacks and N1-N5/send/finish source; native033d70 orchestration and02b940 remain open",
+      "executable_sha256": "2761eafc4c11e25cccf3bffb6b99968806dd7de2bddc831271e2429bb31fa06a"
+    }
+  ],
+  "core_checks": 72025,
+  "integration_checks": 1219,
+  "original_procedures_added": 2,
+  "execution_scope": "03ce30/034730 typed-prefix normal bodies; actual010040 and controlled caller preparation before callback/exception plus N1-N5/queue/send/finish;02b940 growth and full native033d70 orchestration remain required; no SDK/network/original execution",
+  "exhaustive_byte_pairs": 65536,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Normal typed projection, not native MSVC string/allocator/global/ABI/EH/SEH/concurrency/fault equivalence",
+    "02b940 growth/reallocation and00cec0 terminal remain mandatory providers",
+    "Native078d30 body not recovered; bounded COPY compatibility only",
+    "Raw alias arithmetic preserved, including oversized/underflow counts rejected by bounded memory; no native reachability/crash/vulnerability claim",
+    "New integration uses controlled caller preparation, not native033d70/042480 orchestration; N5 normal-return compatibility gap unchanged",
+    "Controlled handler/cipher/response constructor/023dd0/completion/injected send; no new027a20/IOCP/027c10 worker; actual026a00/021a80 used"
+  ],
+  "previous_local_records": "29 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x18003ce30",
+    "0x180034730"
+  ],
+  "independent_review_complete": false
+}

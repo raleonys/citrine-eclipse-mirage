@@ -3,9 +3,10 @@
 This workstream tracks the owner's eight-part `dll-reverse-engineering(11).zip`
 delivery against accepted baseline `d9c860d` (main after PR #23). The owner
 requested PR #82; GitHub assigns the actual number when the PR is created.
-This document is the review entrypoint for subsequent focused test and source
-transfers. Intake is complete; implementation adoption and subsystem review are
-open. Statements inside the delivery are reference claims, not project policy.
+This is the initial intake record. The owner subsequently requested full file
+preservation and detailed review; the active entrypoint is the retained
+[Reconstruction package project](RE_PACKAGE_PROJECT.md). Intake does not complete
+subsystem review. Statements inside the delivery are reference claims, not policy.
 
 ## Source identity and preservation
 
@@ -30,10 +31,10 @@ Another 656 supplied build-artifact records matched their archived bytes:
 one synthetic fixture DLL. These checks establish internal consistency, not
 compiler authenticity, test execution or behavioral equivalence.
 
-Original parts and the combined archive are retained outside the checkout in
-the task's attachment workspace. The repository stores an index, not the source
-payload. Preserve the original uploads or a private archive with the pinned
-digest for future tasks; Git alone cannot recover the indexed source bodies.
+All expanded files are now retained under `reference-package/snapshot/` on
+`research/reconstruction-package`. The owner requested that split parts and the
+combined ZIP remain outside Git. Later updates replace the expanded paths while
+Git preserves earlier versions. Counts in this document describe initial archive 11.
 Generated `.exe`, `.dll`, `.o` and `.a` files were inspected as data and never
 executed or loaded. Original input binaries and a generated historical DLL
 omitted by the supplier are not prerequisites for reviewing this delivery.
@@ -68,19 +69,19 @@ promises to replace a subsystem.
 | A11-00 | P0 / intake complete | Package manifest, source snapshot and fresh build records; full file/module indexes linked above | Retain exact input identity for every later transfer. Recheck any replacement delivery; keep supplied results separate from fresh execution. |
 | A11-01 | P0 / donor blocker confirmed | `dll-link-gate-source/current-full-link.json`; current `src/platform/dll_entry.cpp` and unload recovery contracts | Map the missing donor attach/detach contracts to current loader-safe startup and explicit shutdown ownership. Record gaps before considering any implementation transfer; require genuine Windows lifecycle tests for a behavior change. |
 | A11-02 | P1 / initial source comparison | `anadius-startup-publication-source/publication.cpp`, `publication_tests.cpp`; current `src/runtime/application.cpp`, `tests/native/startup_publication_tests.cpp` | Inventory tests for preseeded flags, duplicate publications, foreign issuers, exceptions before publication and visibility of payloads from separate workers. Current native coverage already pauses extra completion until factory publication. Port only distinct scenarios against the current execution object. |
-| A11-03 | P2 / substantial existing coverage | `anadius-config-defaults-source/defaults.cpp`, defaults tests; current `src/runtime/application_defaults.cpp`, `tests/unit/config_defaults/` | Compare each assertion with existing constructor, allocation-failure and config-to-XML tests. Preserve the accepted SURGE name, current defaults and standard CRT. Donor constructor values are not authorization to overwrite product policy. |
+| A11-03 | P2 / detailed parity review pending | `anadius-config-defaults-source/defaults.cpp`, defaults tests; current `src/runtime/application_defaults.cpp`, `tests/unit/config_defaults/` | Compare each assertion with existing constructor, allocation-failure and config-to-XML tests. Preserve the accepted SURGE name, current defaults and standard CRT. Donor constructor values are not authorization to overwrite product policy. |
 | A11-04 | P1 / document and test review begun | `anadius-application-admission-source/admission_tests.cpp`, `admission_integration_tests.cpp`; current application/DLL worker and callback lifetime guards | Construct a controlled start-versus-shutdown race. Prove new entries are refused after stopping, an accepted in-flight entry retains ownership, and retry occurs only after it returns. First map existing serialization; do not assume the donor Binding API exists here. |
 | A11-05 | P1 / document and test review begun | `anadius-accept-stop-source/stop_tests.cpp`, `stop_integration_tests.cpp`; current `src/net/asio_service.cpp`, socket retirement tests | Compare stale/duplicate completion, cancellation-success races, ERROR_NOT_FOUND and late acknowledgements with current Asio-owned operations. Add missing real Winsock scenarios without replacing the accepted Asio transport with donor IOCP composition. |
 | A11-06 | P1 / pending | Donor aggregate teardown and configuration/services factory modules; current application stop, atomic-file recovery and native shutdown failure tests | Map every resource to its existing owner; distinguish already-drained resources from failed cleanup retained for retry. A test must detect premature release or a repeated release of successfully retired ownership. |
 | A11-07 | P2 / pending | `hook-engine-source/`; current pinned MinHook build-copy fix and eleven-hook contracts | Compare negative cases with existing single-disable IP relocation, rollback and unload tests. Preserve vendor hashes and the reviewed build-copy patch; do not copy an older hook implementation over them. |
-| A11-08 | Reference only / implementation excluded | Private CRT reconstruction modules; current standard compiler CRT and four-vendor contract | Use documented failure scenarios only when they can be expressed against accepted APIs. No custom CRT, allocator/container ABI or donor CRT object imports. |
+| A11-08 | Detailed scenario review pending / standard CRT retained | Private CRT reconstruction modules; current standard compiler CRT and four-vendor contract | Use documented failure scenarios only when they can be expressed against accepted APIs. No custom CRT, allocator/container ABI or donor CRT object imports. |
 | A11-09 | P2 / pending | Remaining modules in the module ledger | Triage by subsystem and link a concrete current source/test path. Deduplicate before proposing code changes; retain unreviewed status until an actual comparison is recorded. |
 | A11-10 | P0 / native execution pending | Any later runtime/test transfer | Bind fresh MSVC Debug/Release and applicable Native/Golden evidence to that exact commit. Record portable, native fixture, production DLL and real Consumer/game outcomes separately. |
 
 The first test-transfer candidate is A11-04, followed by A11-05. Both concern
 ownership at shutdown and need a comparison with the current design before code
-changes. A11-02 offers additional publication test ideas; A11-03 already has a
-substantial product-specific implementation and test suite.
+changes. A11-02 offers additional publication test ideas; A11-03 requires assertion-by-assertion comparison with the
+product-specific implementation and test suite before any equivalence decision.
 
 ## Reproduce intake verification
 

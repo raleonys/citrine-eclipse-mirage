@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "reviewer": "vcrt_ptd_lifecycle",
+  "checked_at": "2026-10-18T09:48:33.5947529Z",
+  "scope": "Independent static review of VCRT PTD bridge, lifecycle overrides, typed allocation/free and combined synthetic fixtures",
+  "files": {
+    "bridge.hpp": "b78e1085b4c16b8ba827ba5b4d7d69a50ac1924fba3d0bbe9d92bca997e87b7f",
+    "bridge.cpp": "85f1591f4b8e265cea036badadaf0c3de43fdd6bd16c2a1be910aaf4137526bf",
+    "bridge_tests.cpp": "022ac1bbc309a9c9472d99c7ba9ee8ea081ce3a5a29048b3522a328ead5ce0e4"
+  },
+  "production_findings": [],
+  "observations": [
+    "PtdEffects delegates all FLS operations to recovered VCRT API wrappers and maps BOOL32 by nonzero",
+    "calloc forwards 1*128 to recovered calloc core before construct_at starts typed Ptd lifetime",
+    "Ptd is trivially destructible; forwarding free via recovered0668c0 needs no nontrivial destructor",
+    "FLS callback pointer is mandatory explicit rebuilt provider; no preferred-base address inferred",
+    "LastError getter and setter share an explicit provider domain contract",
+    "LockEffects converts signed BOOL32 through uint32 before uint64, preserving low32 bits with zeroextension",
+    "All six LifecycleBridge methods call actual recovered CPU/VCRT lifecycle algorithms",
+    "Synthetic tests exercise FLS and TLS fallback, staticPTD versus dynamic128Bworker, explicit thread detach and restored main slots",
+    "No original DLL/game or actual native FLS/heap/loader/provider code executes",
+    "Root corrected present-procedure-cache assertion to expected index+1 addresses; both present and missing cache comparisons independently meaningful"
+  ],
+  "test_followups": [],
+  "limitations": [
+    "Independent static review; no additional target execution",
+    "Runtime equivalence and nativeFLS/SEH not established"
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "schema": "node-identify.retained-data.v1",
+  "authority": "historical-reference",
+  "confidence": "derived",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "address": "0x1800038b0",
+  "listings": {
+    "pseudo": {
+      "file": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "evidence_id": "ev_16c4bf124a34657d7d2d217f79a017802a074ddf7e1c559929f47750b79fdee5",
+      "section_file": "work/node-identify-0038b0.pseudo.txt",
+      "section_sha256": "c3c79a5aba40d76ba928d532513d07cb13ecebf365822ea2898f83eccecaa519",
+      "complete_function_section": true
+    },
+    "assembly": {
+      "file": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "evidence_id": "ev_e46dfd93352ef14c6e16936e419152588cc3aae4c071f99fdc01fe8f8145aae9",
+      "section_file": "work/node-identify-0038b0.asm.txt",
+      "section_sha256": "0ab1531db7cb363a73c2cc102a80c3b22bd4b266de97cd18870874c9b98ba3c8",
+      "complete_function_section": true
+    }
+  },
+  "parent_file": "outputs/anadius-rea-evidence.json",
+  "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "parent_file_bytes": 34457189,
+  "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "parent_authority": "shipped-artifact",
+  "parent_operation": "read_bytes",
+  "provider": {
+    "id": "ghidra",
+    "version": "12.1.4"
+  },
+  "analysis_profile_digest": "dcc676845881c04a2d22833fb35d26569462e033daee5e99a95edac5aa61ac05",
+  "parent_read": {
+    "address": "0x18007f000",
+    "requested_bytes": 138752,
+    "returned_bytes": 138752,
+    "complete": true,
+    "last_address": "0x1800a0dff",
+    "decoded_bytes_sha256": "655444c3892927b2730fc34482c65d246ac9314bba13aef6267b0c87d58cc982"
+  },
+  "token_slots": [
+    {
+      "order": 1,
+      "address": "0x1800a10a8",
+      "slot_load_instruction": "0x18000391b",
+      "compare_call_instruction": "0x180003934",
+      "compare_limit": 2,
+      "constructor": "0x180001610",
+      "constructor_call_instruction": "0x180003a63",
+      "pool_offset": "0x288",
+      "candidate_cursor_advance": 2,
+      "pointer_identity_compare_bypass": true,
+      "loaded_live_when_reached": true,
+      "raw_slot_bytes_covered": false,
+      "native_token_value_claimed": false,
+      "evidence_basis": "Complete retained assembly instruction operands; not a new byte read"
+    },
+    {
+      "order": 2,
+      "address": "0x1800a10b0",
+      "slot_load_instruction": "0x180003941",
+      "compare_call_instruction": "0x18000395a",
+      "compare_limit": 4,
+      "constructor": "0x180001590",
+      "constructor_call_instruction": "0x180003a4e",
+      "pool_offset": "0x288",
+      "candidate_cursor_advance": 4,
+      "pointer_identity_compare_bypass": true,
+      "loaded_live_when_reached": true,
+      "raw_slot_bytes_covered": false,
+      "native_token_value_claimed": false,
+      "evidence_basis": "Complete retained assembly instruction operands; not a new byte read"
+    },
+    {
+      "order": 3,
+      "address": "0x1800a10b8",
+      "slot_load_instruction": "0x180003967",
+      "compare_call_instruction": "0x180003980",
+      "compare_limit": 9,
+      "constructor": "0x180001720",
+      "constructor_call_instruction": "0x180003a2c",
+      "pool_offset": "0x208",
+      "candidate_cursor_advance": 9,
+      "pointer_identity_compare_bypass": true,
+      "loaded_live_when_reached": true,
+      "raw_slot_bytes_covered": false,
+      "native_token_value_claimed": false,
+      "evidence_basis": "Complete retained assembly instruction operands; not a new byte read"
+    },
+    {
+      "order": 4,
+      "address": "0x1800a10c0",
+      "slot_load_instruction": "0x18000398d",
+      "compare_call_instruction": "0x1800039a2",
+      "compare_limit": 2,
+      "constructor": "0x1800017b0",
+      "constructor_call_instruction": "0x180003a1b",
+      "pool_offset": "0x288",
+      "candidate_cursor_advance": 2,
+      "pointer_identity_compare_bypass": true,
+      "loaded_live_when_reached": true,
+      "raw_slot_bytes_covered": false,
+      "native_token_value_claimed": false,
+      "evidence_basis": "Complete retained assembly instruction operands; not a new byte read"
+    },
+    {
+      "order": 5,
+      "address": "0x1800a10c8",
+      "slot_load_instruction": "0x1800039ab",
+      "compare_call_instruction": "0x1800039c0",
+      "compare_limit": 1,
+      "constructor": "0x180001690",
+      "constructor_call_instruction": "0x1800039d3",
+      "pool_offset": "0x108",
+      "candidate_cursor_advance": 1,
+      "pointer_identity_compare_bypass": true,
+      "loaded_live_when_reached": true,
+      "raw_slot_bytes_covered": false,
+      "native_token_value_claimed": false,
+      "evidence_basis": "Complete retained assembly instruction operands; not a new byte read"
+    }
+  ],
+  "token_slot_range": {
+    "first_address": "0x1800a10a8",
+    "last_address": "0x1800a10cf",
+    "bytes": 40,
+    "entry_width": 8,
+    "entries": 5,
+    "covered_by_parent_raw_read": false,
+    "new_raw_slot_acquisition": false,
+    "token_pointer_values_claimed": false,
+    "fixture_values_are_shipped_evidence": false
+  },
+  "fallback": {
+    "constructor": "0x180001720",
+    "constructor_call_instruction": "0x1800039f7",
+    "pool_offset": "0x208",
+    "returns_original_input": true,
+    "rewinds_document_line_to_entry_snapshot": true
+  },
+  "constructor_context": {
+    "newly_recovered": false,
+    "addresses": [
+      "0x180001590",
+      "0x180001610",
+      "0x180001690",
+      "0x180001720",
+      "0x1800017b0"
+    ],
+    "pseudo_evidence": {
+      "0x180001590": "ev_59fe8f6f63b5d539fa34d2e7ab472bb07f2eac9ddbe19463ceda5cd58807aa7d",
+      "0x180001610": "ev_f70ca376682c01eea491392250432e20b7b1f8b38988e7cff27d1035ae136543",
+      "0x180001690": "ev_aa306639682fe19727d4575e228f9b77edd69edc194f91bf0b4d0573b268c3f0",
+      "0x180001720": "ev_ec0b7b64a4ba841a7ab271ca18723be88c8dddb85944eec7ad7b33fa07a8487f",
+      "0x1800017b0": "ev_411d958c38112d47a20416edd1170e0a920b6607d6b2f500d92c7d5014be885a"
+    },
+    "assembly_evidence": {
+      "0x180001590": "ev_d14f1ca8857a6516e3114a07ab617f85b94c2e35e86a666c733f01c1b1c3acb1",
+      "0x180001610": "ev_2eab9384f16c5b13a4b652633ba683cfa41611b72b6d6b1860260ccc8991f468",
+      "0x180001690": "ev_b910340ad99765cccbf54b933ec9bcfcc95ff70467547ec0530ed6c23fcc5369",
+      "0x180001720": "ev_3db5ca48ca8ff595eaf2d0c7b0f657215eaa65e76dab9d67699fff373d3eba91",
+      "0x1800017b0": "ev_1b5aaa6c52bcca8a9ba686d59a6b2574a2b1b4ae8210b95a11b91e44324d0645"
+    }
+  },
+  "bounded_search_scope": "This support record validates the complete retained broad read and exact0038b0 listing. It does not search or establish absence from every other retained evidence file.",
+  "new_original_read_performed": false,
+  "new_native_analysis": false,
+  "new_source_bodies_claimed": 0,
+  "original_execution": "none",
+  "original_modification": false,
+  "limitations": [
+    "Token-slot addresses,order,limits and constructor operands are proven by complete retained assembly. Pointer values and token string identities are not recovered raw-slot data in this record.",
+    "The known broad read ends0a0dff before slot range0a10a8..0a10cf. A fixture or semantic token name does not fill that raw-data gap.",
+    "Initialized Ghidra memory is static analysis evidence,not runtime pointer observation.",
+    "Five constructor helpers,classifier,compare,pool/native ABI/heap/DOM remain separate source boundaries. No new native body is claimed by evidence extraction."
+  ]
+}

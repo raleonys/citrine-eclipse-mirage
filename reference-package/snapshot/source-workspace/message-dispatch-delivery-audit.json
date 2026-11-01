@@ -1,0 +1,66 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T20:53:22.457292+00:00",
+  "prior_package_sha256": "40fbb9a2c68295f8cd47bc1af26bfcc59274dff70067a0b88a7d15494ae1fcb2",
+  "prior_source_count": 546,
+  "unchanged_prior_sources": 546,
+  "added_sources": [
+    "anadius-socket-source/message_dispatch.cpp",
+    "anadius-socket-source/message_dispatch.hpp",
+    "anadius-socket-source/message_dispatch_integration_tests.cpp",
+    "anadius-socket-source/message_dispatch_test_fixture.hpp",
+    "anadius-socket-source/message_dispatch_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 551,
+  "current_documents": 215,
+  "native_objects": 182,
+  "cpp_objects": 178,
+  "c_objects": 4,
+  "normal_test_groups": 177,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 50,
+  "new_checks": 820,
+  "new_tests": [
+    {
+      "module": "socket_message_dispatch",
+      "result": "PASS",
+      "output": "PASS: 621 socket message dispatch core checks; actual021770/028d30 normal bodies, two executor copies, live delete target, precise string/control/closure ownership and bounded call-prefix tests",
+      "executable_sha256": "9cede9bbfd6aef24f33a5eb14395ff9e3f39cba1c4b90dcca2b7a9d2476454ab"
+    },
+    {
+      "module": "socket_message_dispatch_integration",
+      "result": "PASS",
+      "output": "PASS: 199 socket message dispatch integration checks; actual025480/05e8e0/05e7a8/021770/028d30/033d70 source, compatibility XML parser/serializer, immediate and deferred synthetic thread, owned021420 response adapter",
+      "executable_sha256": "e961782395c674c79650fe25680d2918ea99736cd609adc52612ec25bbaf89fb"
+    }
+  ],
+  "validation_mirror_pairs": 25,
+  "historical_module_records_preserved": 24,
+  "historical_config_references_preserved": 48,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "b72ec00752f898e0e76d197bf5be380c4efa6ebca9e74781bf004a88327e3a2e",
+  "inventory_data_checks": 7154,
+  "normal_source_procedures_added": [
+    "0x180021770",
+    "0x180028d30"
+  ],
+  "new_original_procedures": 2,
+  "closed_provider": "RecoveredMessageThreadApi::begin_frame_thread_05e8e0",
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual R4/05e8e0/05e7a8/021770/028d30/033d70 source; controlled OS thread/PTD/exit,normal-return string adapter and021420 consumer; rearm captured,no receive/worker run",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N2 021420 response dispatch/owned closure and028270 write queue connection"
+}

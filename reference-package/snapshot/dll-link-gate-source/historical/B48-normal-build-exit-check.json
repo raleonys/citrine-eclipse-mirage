@@ -1,0 +1,9 @@
+{
+  "scope": "B48 frozen source/archive link revalidation",
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "result": "PASS",
+  "log": "work/b48-link-gate.log",
+  "common_log": "work/b48-common-final-build.log",
+  "common_log_sha256": "acbf7af723768c6befa95590221e09cfb4eb1693bef8b11eec5451ef6f6fc95f"
+}

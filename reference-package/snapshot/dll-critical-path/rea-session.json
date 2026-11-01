@@ -1,0 +1,51 @@
+{
+  "server": {
+    "name": "rea",
+    "version": "6.5.0",
+    "started_at": "2026-10-31T13:03:56.078Z",
+    "command_path": "C:\\Users\\Skysect\\AppData\\Roaming\\npm\\node_modules\\rea-agents\\scripts\\rea.mjs"
+  },
+  "package": {
+    "name": "rea-agents",
+    "version": "6.5.0",
+    "root_path": "C:\\Users\\Skysect\\AppData\\Roaming\\npm\\node_modules\\rea-agents",
+    "build_commit": null
+  },
+  "ghidra": [
+    {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": null
+      },
+      "availability": "available",
+      "version": "12.1.4"
+    },
+    {
+      "provider": {
+        "id": "hopper",
+        "name": "Hopper Disassembler",
+        "version": null
+      },
+      "availability": "unavailable"
+    },
+    {
+      "provider": {
+        "id": "ida",
+        "name": "IDA MCP adapter",
+        "version": "1"
+      },
+      "availability": "unavailable"
+    }
+  ],
+  "observed_before_open": {
+    "open": false
+  },
+  "target": {
+    "path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "target_executed": false,
+  "target_modified": false,
+  "scope": "Only two exact static instruction queries at 0x18007e0c0 and 0x18007e0c7; target closed after export."
+}

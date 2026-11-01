@@ -1,0 +1,81 @@
+{
+  "result": "PASS",
+  "source_package": "B44",
+  "build_record_sha256": "376d5f714ea23e4df8842b75834f2568d5eac74718152852c8df4a94c53579c4",
+  "frozen_source_hashes": {
+    "jobs.hpp": "f7669fbfdec697920811a17b289c88316f80c250f3ae7c2012ddbc26234be58b",
+    "jobs.cpp": "e096445632dae1b9796387547ee1180991bd646a2c2be0350fbd0b2cf0cb4d07",
+    "jobs_tests.cpp": "d1dc3d4b8e7d183e16cd414641d43e6aca8dba5601eefc6d02129e1f1d3e0a55",
+    "jobs_integration_tests.cpp": "32e1b3d74cece5a1062de4d55773ce96807177fe09f1e6515c4be57a159565a6",
+    "../anadius-session-profile-source/profile.hpp": "b6a4412bc258ef7d47f63cfe8f889ec8ddd18170b1c334e6f127dd93ab1a2bef",
+    "../anadius-session-profile-source/profile.cpp": "46bc37efaa83a728e2fecd9b5b97446237e4e85f174834174a5df6f31e870335",
+    "../anadius-session-profile-source/profile_tests.cpp": "60884c7e7e9b3aa495e9eea32db00486ec9debd8e73d9c37800bb07c0ca51b6b"
+  },
+  "objects": [
+    {
+      "object": "outputs/source-workspace/build/owned_jobs.o",
+      "source": "anadius-owned-jobs-source/jobs.cpp",
+      "source_sha256": "e096445632dae1b9796387547ee1180991bd646a2c2be0350fbd0b2cf0cb4d07",
+      "production_sha256": "fde7a5a5b08ec0d3e80c17d65423f3f6ea9add1c506a53ad7d699586b2e93f70",
+      "fresh_path": "work/b44-freeze-owned_jobs.o",
+      "fresh_sha256": "5a5fbbdf6748842e0e81e0b241a0ac599962fe581a81db72b65412c89983b804",
+      "normalized_sha256": "0aa95eb6ffe22bc12206eb204cf5c050a3ca43905607d3a200e976c344464b99",
+      "fresh_normalized_sha256": "0aa95eb6ffe22bc12206eb204cf5c050a3ca43905607d3a200e976c344464b99",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-owned-jobs-source\\jobs.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b44-freeze-owned_jobs.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    },
+    {
+      "object": "outputs/source-workspace/build/session_profile.o",
+      "source": "anadius-session-profile-source/profile.cpp",
+      "source_sha256": "46bc37efaa83a728e2fecd9b5b97446237e4e85f174834174a5df6f31e870335",
+      "production_sha256": "88e4af189dca8a4642347074e91bb1d0cd86bbf5ce14f19a77fc5c5b3ed0fd24",
+      "fresh_path": "work/b44-freeze-session_profile.o",
+      "fresh_sha256": "1728526726a98bf3fe6fd59bddff835f995bc2b8b959243ccf4d419f47523862",
+      "normalized_sha256": "128923a0ae21cd1b38f4c3ddac4ac27d122bda98610b3c179b32eeb24ca3db1d",
+      "fresh_normalized_sha256": "128923a0ae21cd1b38f4c3ddac4ac27d122bda98610b3c179b32eeb24ca3db1d",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-session-profile-source\\profile.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b44-freeze-session_profile.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "scope": "Fresh identical-command final-source production compile; all bytes except COFF header timestamp equal."
+}

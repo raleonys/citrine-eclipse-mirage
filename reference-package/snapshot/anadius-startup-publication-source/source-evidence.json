@@ -1,0 +1,220 @@
+{
+  "schema": "source-startup-publication.v1",
+  "source_package": "B19",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_function_records": [
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x18000e310",
+      "evidence_id": "ev_e0ad68524e1fb1bd42a4fd73d652ce3551d160f25f3ce2b356c55f753c938bfd",
+      "line": 11957,
+      "normalized_record_sha256": "b2a7a6b6cd1a0e547e34833adff90b6120633dd008dbc10d1a4802dcc87faba6"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800102b0",
+      "evidence_id": "ev_00e35447d2de5559a4451e4788fcc72993ba5950a8158522aaa1efb615b7037c",
+      "line": 13338,
+      "normalized_record_sha256": "4e9faf5a27b1e9d15bfa9ea50d9d3d6e0200a2f2a75c549485e297c0914e5324"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180029ea0",
+      "evidence_id": "ev_6cf0254d6c71c9d2e74fabc14f751e84a071e29cca026bf32d866351d4cf2705",
+      "line": 35192,
+      "normalized_record_sha256": "9568763cc2653eb63c6c2fcd9948fe295e7c42f2962a53f196e89034b160e26d"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180035850",
+      "evidence_id": "ev_d5d3e61cde489d598497e64bdf0815edb2f5dad56bbdf21b307457be7c105987",
+      "line": 42986,
+      "normalized_record_sha256": "5bba0e6d6ca72964bc294f728d71b7db43525f8dacd7e5ddf5def6051f4de08f"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180035b60",
+      "evidence_id": "ev_f2254ea855134db4962d20dde46b3686ce230f94b3578001b0c25fc3400e4387",
+      "line": 43123,
+      "normalized_record_sha256": "0eb1d90211a44efe9391717039e8226d29f2336773a9cea308a9ba33beffe99a"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180036740",
+      "evidence_id": "ev_67e0f4aa0acf46d219bb6d32e07ab516c08c3128c694f8dfde6be3aba208a287",
+      "line": 43629,
+      "normalized_record_sha256": "69cb3753943a9385ab44f49bc68761cfad32f5140e00f81650649236e4404963"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180036820",
+      "evidence_id": "ev_4ac4a3dd1038196d1ec3c0e9f21e7f7dffcd31199d35e970cfa37d685424f2ef",
+      "line": 43659,
+      "normalized_record_sha256": "e7d83480dde96ceb437955e1fa8ea67cb68462db382d76291657da3d1c11acf8"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180036880",
+      "evidence_id": "ev_7ab0034e86b1a06965fd9c2b27de15a2af17130282b99b90a4af8fc26cbe2d6c",
+      "line": 43683,
+      "normalized_record_sha256": "9a3dc4806fe9a67829840e0be1d780093947e0056bfb7d87e0c1a98b63230081"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x18000e310",
+      "evidence_id": "ev_7935b0600e6f04cb19a2f105fc6329c34f44324b20f112ecb93a694fe741a29b",
+      "line": 14594,
+      "normalized_record_sha256": "a74f9c1297b50b09ced522d08a1f8fb759f57a6f6aabd2a952f8703c7739e90d"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800102b0",
+      "evidence_id": "ev_2177b6a02a33ef123da2f83b0e6a1ee4e1e23cce8de54c8170baf93877a2102f",
+      "line": 16523,
+      "normalized_record_sha256": "70e1b83b4ceb56547238d5a7d399228cb2542895882bbfa366665ccf8ba2c2b3"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180029ea0",
+      "evidence_id": "ev_67f556e08a5391b12c3e18dee0a1fbf33f14cd0960c392c6c54e9dc2714631e2",
+      "line": 43209,
+      "normalized_record_sha256": "e84715165bd67e89d04a2a523c9fb306037231911809608d39d135c23acf212a"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180035850",
+      "evidence_id": "ev_470b3dc481c525d0c42f0bd10877f4d8c1660c8c0851d2c8f073e021f1add0bf",
+      "line": 54371,
+      "normalized_record_sha256": "bd7948d96d402609a1862c921d08148db46aeee2eb4b04b9e908f56f157fac42"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180035b60",
+      "evidence_id": "ev_d120db083716acb73a3aab91edb94f7ae2910ca33f5cd2a7baa1d1e72b62a030",
+      "line": 54561,
+      "normalized_record_sha256": "e73e8ba8e4cb82aae5264b43c15c4a9648cbbd5e4a99b17e21145198dbce6e08"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180036740",
+      "evidence_id": "ev_be3ae7d8b4897a0ddc71c0b2cd532d595961166dddc6e3c474e298f45d37a109",
+      "line": 55263,
+      "normalized_record_sha256": "4a96ed59d1c45b0fa8cff3104d7cf5a5e27ebb718778184393c8e8e4aa1a0d7d"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180036820",
+      "evidence_id": "ev_629e77f34c0a3e467b712197fa2f04dd95b07ac77b702f01d06b287ca3c7a3a8",
+      "line": 55324,
+      "normalized_record_sha256": "5b3932f14b70dbf1cf90b37131dbedc11b6db9f3e795bfbae2193b918c2fecc0"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180036880",
+      "evidence_id": "ev_e6afa7f145235b765bf1eb49d88b97995634d7aa66bfe0e77febe5f38a52659b",
+      "line": 55345,
+      "normalized_record_sha256": "0c4ada8271a8f63388493a00828910f5ede71e4ecee05ab8de7e8691b166ec9b"
+    }
+  ],
+  "prior_evidence_path": "outputs/anadius-foreign-callback-source/source-evidence.json",
+  "prior_evidence_sha256": "33cb2f2ce2afe0df3b2814bbd49e5d0df5435c347683956cbf6894fc50e283c9",
+  "new_original_data_bytes_read": 0,
+  "new_native_decompilation": false,
+  "provider_status": "Retained B18 session: REA6.5.0/Ghidra12.1.4 available, no target open; B19 source-only, no native target query",
+  "source_observations": [
+    "036820 sets supplied flag and unlocks; worker startup prefixes finish before thread/FLS exit",
+    "029ea0 publishes server port and server flag before async_accept/run_context; event loop may remain alive",
+    "035b60 and035850 publish completion of their initialization prefixes; these are not OS join results",
+    "00e310 normal return may follow engine-init failure; Host event must never replace remaining hook/provider proof",
+    "036740 lazy frequency cache and04a6ac owner/count reads need a C++ same-instance synchronization boundary"
+  ],
+  "source_extensions": [
+    "one Execution recursive source gate for flag/native bookkeeping and clock/cache; preserves WinLastError",
+    "source guard ends before Sleep or observer; native error prefixes receive no rollback/unlock/retry invention",
+    "one-shot exact Execution issuer and distinct flag cells; no initial-flag/reset/unknown-flag inferred publication",
+    "atomic Server/Online/Libraries/Host acq_rel publication; Host follows normal host initialize and precedes host_setup_complete",
+    "matched bind_foreign creates both milestone owner and callback Domain for the actual same Execution",
+    "all milestones AND remaining provider/stream/fallback proof; controller alone activates, never worker events"
+  ],
+  "quick_results": [
+    {
+      "path": "work/b19-core-quick-results.json",
+      "sha256": "bdb81493f215943b9e9d3146f463310cd3181cb07c05edaf25ac4bda113e7508",
+      "checks": 19,
+      "execution_by": "root; reviewers verify captured source and EXE hashes, no reviewer rerun claimed"
+    },
+    {
+      "path": "work/b19-integration-quick-results.json",
+      "sha256": "c6bbbe7a5f43400ac8fff38fcbd710eca3e2e2bfa1b89a98a768532b07f56bf0",
+      "checks": 16,
+      "execution_by": "root; reviewers verify captured source and EXE hashes, no reviewer rerun claimed"
+    }
+  ],
+  "independent_reviews": [
+    {
+      "path": "architecture-review.json",
+      "sha256": "400c9b4330869b15be3b4ab720dde293eabefdc8facd0cfd4fd2b8b0fd783ef0"
+    },
+    {
+      "path": "execution-review.json",
+      "sha256": "d3648ba81fe6f052a601cf6aa6fd316c547825dba3de89f52a2c638b50420f29"
+    }
+  ],
+  "source_hashes": {
+    "publication.hpp": "516975cfb72c687d23d2e1253608a63dde70243e8026bb4ba738bb4b8257a3e4",
+    "publication.cpp": "8b3136826699324edd0f0a44ee9b44927cc5617f180753828be5844c04cbc5bf",
+    "publication_tests.cpp": "72ecae626427fd8176937cd6490975243652b168809e456cdad3ee2e12564082",
+    "publication_integration_tests.cpp": "8237e950c20c318e72fb3483ba8602ee0f1da7c341a2d312457a71646845bf37",
+    "publication_test_fixture.hpp": "d74c8e9b9e495725be81f1b390d04876b454ef581e155b9edf2eec98cb1c2d01",
+    "../anadius-bootstrap-backend-source/backend.cpp": "e145a8a1b99ed7b3e5ca2ba2a1f5cced2263207a6d8cbcaa5ec7fee13468c98d",
+    "../anadius-bootstrap-backend-source/backend.hpp": "d60af87a481bc8bc4f40a770808dab6f0c31cb2f7ae9a7e6bd10fb43ad8530d4",
+    "../anadius-execution-source/execution.cpp": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+    "../anadius-execution-source/execution.hpp": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62"
+  },
+  "prior_source_changes": [
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "2a9eb5586a115adb803f0fcb498ec88339065a95ad8eaf20ff1b1e6547290df5",
+      "after_sha256": "e145a8a1b99ed7b3e5ca2ba2a1f5cced2263207a6d8cbcaa5ec7fee13468c98d",
+      "reason": "Bind Execution observer and publish Host only after normal host initialize return, before attachment completion; milestone is not engine success"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.hpp",
+      "before_sha256": "b861b529c9551d6302107ebf57e2e6f0eec4881d7e6087b6921d0f641bcaf892",
+      "after_sha256": "d60af87a481bc8bc4f40a770808dab6f0c31cb2f7ae9a7e6bd10fb43ad8530d4",
+      "reason": "Retain startup publication owner in Resources; all Resources by-value consumers require rebuild"
+    },
+    {
+      "path": "anadius-execution-source/execution.cpp",
+      "before_sha256": "85b026aca0ea79f297c9b7a8b1c58ab008644cad04fab1b3503ca58b61bf393d",
+      "after_sha256": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+      "reason": "Serialize same-wrapper flag/native bookkeeping and clock cache; release source guard before polling Sleep and milestone observer, preserve WinLastError and native failure prefixes"
+    },
+    {
+      "path": "anadius-execution-source/execution.hpp",
+      "before_sha256": "af96b642cb8d454a293c7ed9e249be65432e7078f738ef2a937429704431a3ca",
+      "after_sha256": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62",
+      "reason": "Declare optional source milestone observer and immovable single-wrapper source gate; no recovered native mutex ABI change"
+    }
+  ],
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

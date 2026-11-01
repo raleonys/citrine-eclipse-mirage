@@ -1,0 +1,142 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T19:38:19.4676853Z",
+  "prior_package_sha256": "b2d4c20403af8a321b2113e4169bb485ce4a4e642d4b64617c843d2e24b5c7ac",
+  "prior_source_count": 362,
+  "unchanged_prior_sources": 362,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp",
+    "anadius-crt-lowio-lifecycle-source/lowio_lifecycle.hpp",
+    "anadius-crt-lowio-lifecycle-source/native_tests.cpp",
+    "anadius-crt-pair-leaves-source/native_tests.cpp",
+    "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+    "anadius-crt-pair-leaves-source/pair_leaves.hpp"
+  ],
+  "current_sources": 368,
+  "current_documents": 132,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "reviews": [
+    {
+      "path": "anadius-crt-pair-leaves-source/review-pair-leaves.json",
+      "result": "PASS",
+      "source_hashes_verified": 6
+    },
+    {
+      "path": "anadius-crt-lowio-lifecycle-source/review-lowio-lifecycle.json",
+      "result": "PASS",
+      "source_hashes_verified": 4
+    }
+  ],
+  "master_build_sha256": "f317a420fe26bc058df93ec7899ff8b1daa30884f812973aab3bb329cbbd5127",
+  "native_objects": 126,
+  "cpp_objects": 122,
+  "c_objects": 4,
+  "normal_test_groups": 111,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "crt_pair_leaves",
+      "result": "PASS",
+      "output": "PASS 140 ACRT pair leaf checks;shared heap/VCRT/argv state;owned command buffers",
+      "executable_sha256": "9ac88d2b21c97c4ff4819a4501b07d922fe129fda7d36d2a533eaf172e85d2b5"
+    },
+    {
+      "module": "crt_lowio_lifecycle",
+      "result": "PASS",
+      "output": "PASS 639 lowio lifecycle checks;192 typed native CS deletions;3 owned arrays",
+      "executable_sha256": "44b44b988d91858068755fe853839befed0d24237c358aa1bbb25aded9ebd14c"
+    }
+  ],
+  "lowio_byte_proof": {
+    "result": "PASS",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "method": "Hash-bound raw PE and retained exact REA assembly/pseudocode identities;no original execution;full implementation of lower handle providers excluded",
+    "bodies": [
+      {
+        "address": "0x180067890",
+        "end": "0x1800678ca",
+        "length": 59,
+        "file_offset": 421008,
+        "sha256": "137f8eb67ef8af58d7b420c123f816cdf15630f83697da2c409c8c7053161b7c",
+        "bytes_hex": "40534883ec20b907000000e858adffff33db33c9e8ffb9000085c0750ce8e6fdffffe8d1feffffb301b907000000e889adffff8ac34883c4205bc3",
+        "assembly_evidence_id": "ev_d4ff041951255b8c23252f658fec937c4ccb3f09609eb7d04f434471c1391b71",
+        "pseudo_evidence_id": "ev_53596e1106f3183bdc899f798d5c824609c85d32af2b256dbfff07a0f6d395dd",
+        "role": "initialize",
+        "pair": {
+          "index": 8,
+          "slot_va": "0x18008aae0",
+          "file_offset": 561888
+        }
+      },
+      {
+        "address": "0x1800678cc",
+        "end": "0x18006790b",
+        "length": 64,
+        "file_offset": 421068,
+        "sha256": "39dcfe5ad1edec2456875fa7bf56506b8fb119adf684ea492106e9be5a6268f9",
+        "bytes_hex": "48895c2408574883ec2033db488d3dc1db0300488b0c3b4885c9740ae86bb900004883243b004883c3084881fb0004000072d9488b5c2430b0014883c4205fc3",
+        "assembly_evidence_id": "ev_a557e408da4ff53f1bcd1ce9cf3f55354c86eb2f0bcbb40e3c234db0563ffd0a",
+        "pseudo_evidence_id": "ev_ee05528565d8f723446d2a4a90a5fdd8a2d6afeef615c9f1adf559539e7a1576",
+        "role": "uninitialize",
+        "pair": {
+          "index": 8,
+          "slot_va": "0x18008aae8",
+          "file_offset": 561896
+        }
+      },
+      {
+        "address": "0x180073258",
+        "end": "0x1800732a7",
+        "length": 80,
+        "file_offset": 468568,
+        "sha256": "bde3e2b42a2caf692be72b2482d10341315a413fed76a3d847cbca933b56fc33",
+        "bytes_hex": "4885c9744a48895c24084889742410574883ec20488db100120000488bd9488bf9483bce7412488bcfff1571be00004883c748483bfe75ee488bcbe82836ffff488b5c2430488b7424384883c4205fc3",
+        "assembly_evidence_id": "ev_bb59c9105078651b551ef9d45b6aa2ac9526d722af4141b8ecb59dad65fc7e5b",
+        "pseudo_evidence_id": "ev_a7cb4d754d283c1b2fff6be4e638fc62084f29cfd9a493afa9daed336a4a03ab",
+        "role": "array-destructor"
+      }
+    ],
+    "lower_provider_addresses": [
+      "0x1800732a8",
+      "0x180067698",
+      "0x180067788"
+    ],
+    "layout": {
+      "table_slots": 128,
+      "table_extent": 1024,
+      "array_records": 64,
+      "record_stride": 72,
+      "array_extent": 4608,
+      "capacity_reset": false
+    }
+  },
+  "fresh_leaf_rea_proof": {
+    "result": "PASS",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "evidence_file_sha256": "6d179e5ccceae148b7b8b83802359e0c4f37c45898c60faf94f43a242bf488ae",
+    "checks": [
+      {
+        "address": "0x1800704e8",
+        "length": 11,
+        "file_offset": 456936,
+        "sha256": "a8a791a7544670cb92dd9a0391591c72bf7efb25949f6dc6f3c0b6eb60467494",
+        "evidence_id": "ev_26b0e54af8729b48978b321830da453af248a6390a76dabde0a737eb5e348d5e",
+        "matches_raw_file": true
+      },
+      {
+        "address": "0x1800644f0",
+        "length": 7,
+        "file_offset": 407792,
+        "sha256": "7655465ba32b287de56825a84e3f6b6561c5b5b0f5ac3a2883f2a8825d224e8c",
+        "evidence_id": "ev_396089764fe78d606badcf63a55ffd8db3f53083ffba29d057c662c397dcb735",
+        "matches_raw_file": true
+      }
+    ]
+  },
+  "recovered_original_bodies_added": 7,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

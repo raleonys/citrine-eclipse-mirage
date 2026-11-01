@@ -1,0 +1,334 @@
+{
+  "schema": "bootstrap-backend.architecture-review.v1",
+  "result": "PASS",
+  "date": "2026-10-27",
+  "reviewer": "/root/b3_audit",
+  "independent_from_production_author": true,
+  "scope": "Complete exact frozen four-file B3 source review against prior bootstrap/worker/execution/provider contracts; no reviewer tests, new native analysis, original read, or full DLL/runtime equivalence claim.",
+  "reviewed_source_hashes": {
+    "backend.hpp": "7073712738416083f0a41da7fa88ae050762791cdec5f51201b8dcebda7677db",
+    "backend.cpp": "c144112d064589d28a4b6e761f43861ab05e3f4cc48b6f9b8310789bb7720a2e",
+    "tracked_threads.hpp": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+    "tracked_threads.cpp": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573"
+  },
+  "prior_source_snapshot_sha256": "5ce0393024f2582da91f4e9b93e32f504a59b3edaeb37ee0daf1fc8c5ec2fea7",
+  "prior_source_files_preserved": 696,
+  "findings": [
+    {
+      "id": "single_concrete_backend",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "line": 50,
+      "anchor": "class SourceBackend final:",
+      "finding": "SourceBackend concretely implements the existing ProviderOwner and Services interfaces; no new virtual provider interface is introduced. Its resource pack still requires actual lower implementations.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "owned_resources",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "line": 25,
+      "anchor": "struct Resources {",
+      "finding": "All provider objects are unique-owned; optional backing state is declared first and therefore outlives dependent providers during reverse destruction.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "caller_seed",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "line": 12,
+      "anchor": "struct RuntimeSeed {",
+      "finding": "Execution mutex/cache/three readiness bytes, online handles/flag, library state, host values/targets/original slots are caller-supplied state; construction invents no original global defaults.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "resource_validation",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 8,
+      "anchor": "Resources checked(Resources r){",
+      "finding": "Every required lower object and stop_sources callable is validated before the implementation is published. JoinApi is validated by TrackingThreads construction.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "shared_execution",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 75,
+      "anchor": "execution(state.execution_mutex,{state.server_ready,state.online_ready,state.libraries_ready}",
+      "finding": "One Execution instance aliases the exact server/online/library readiness bytes and one frequency cache; server completion publishes the same first flag online waits for.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "source_server",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 99,
+      "anchor": "server_recovered::server_start_029ea0(",
+      "finding": "The first worker calls the existing server source using live config.server_port, the shared server-ready byte and shared Execution; actual ServerBackend remains mandatory.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "source_online",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 100,
+      "anchor": "online_recovered::worker_035b60(",
+      "finding": "The second worker calls the existing online source with config path/profile aliases and owned module/object/online state. The wrapper binds wait and finish to the shared Execution and second byte.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "online_aliases",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 94,
+      "anchor": "return {config->executable_path,config->cookie_path",
+      "finding": "Online StateRefs bind the same live executable/cookie/profile/avatar/user fields as the configuration owner, not detached copies.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "library_main_paths",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 102,
+      "anchor": "if(main)sync_paths(v.config,v.state.libraries,true);",
+      "finding": "Synchronous load paths are refreshed from post-configuration state at the actual main load route; the existing library phase source selects and appends loaded handles.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "library_worker_paths",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 34,
+      "anchor": "execution_.wait_steps_036880(c);sync_paths(config_,state_,false);",
+      "finding": "Worker library paths are refreshed after the original wait2 completes, so changes made while prerequisites complete are not copied too early. UTF16-to-wstring conversion is an explicit source compatibility snapshot, not native alias/allocator equivalence.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "source_library_phase",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 103,
+      "anchor": "recovered::libraries::load_phase_035850(",
+      "finding": "The existing main/worker library phase body is reused; only worker=false waits and publishes its third readiness byte. Existing loaded state is retained across phases.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "source_host",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 140,
+      "anchor": "host_init_recovered::initialize_host_00e310(",
+      "finding": "The between-workers hook uses actual host-init source, the same configuration object and owned values/targets/original slots; actual hook effects remain supplied.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "source_cleanup",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 143,
+      "anchor": "void SourceBackend::cleanup_first(){",
+      "finding": "Cleanup routes reuse unload035ab0, onlinecleanup0366f0 and hookcleanup0102b0. Bootstrap.on_exit retains their existing order; unload intentionally does not clear loaded handles.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "remaining_services",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 129,
+      "anchor": "impl_->resources.remaining->install_terminate(h);",
+      "finding": "Six Services methods are source-routed; eleven policies still forward to the required lower Services object. This adds zero native bodies or native provider closures.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "publication_timing",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 128,
+      "anchor": "impl_->bind_routes();return impl_->resources.remaining->register_exit(callback);",
+      "finding": "Worker routes are published only during register_exit after B2 native application binding is established. bind_state merely caches references and cannot publish routes or create jobs.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "shared_state_once",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 110,
+      "anchor": "if(impl_->config||impl_->stopped)",
+      "finding": "bind_state is accepted only once and is rejected after stop. Configuration and console pointers remain owned by the enclosing RuntimeOwner lifetime.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "route_lease",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 82,
+      "anchor": "Lease(){std::lock_guard lock(gate);if(!current)std::terminate();",
+      "finding": "Raw worker function pointers resolve through one per-image gated backend and counted leases; no gate is held while application algorithms execute. An unbound late call terminates without reading the old backend.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "route_owner",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 88,
+      "anchor": "if(current&&current!=this)",
+      "finding": "A second backend cannot take over an existing backend route. routes_published distinguishes a never-published backend from the actual published owner.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "stop_order",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 118,
+      "anchor": "if(!v.resources.stop_sources())return false;",
+      "finding": "stop_sources is mandatory and runs before tracking admission is closed. True must exclude new application/worker/hook/exit/terminate admission while allowing already-created workers to finish, without unloading their providers.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "stop_reentry",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 115,
+      "anchor": "if(v.control_busy)throw std::logic_error",
+      "finding": "SourceBackend guards its own stop callback against lifecycle reentry; RAII restores the control flag on false, exception or successful stop.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "route_unpublish",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 123,
+      "anchor": "if(Impl::calls)return false;",
+      "finding": "Only successful thread drain plus atomically checked route ownership and zero route leases permits unpublish. False/throw leaves backend and B2 native binding live for retry.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "join_api",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.hpp",
+      "line": 13,
+      "anchor": "struct JoinApi {",
+      "finding": "Six exact Win32 SDK function pointer types support duplicate/wait/close and LastError preservation. native_join_api returns rebuilt import addresses without executing a target binary.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "precreation_ticket",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 44,
+      "anchor": "s.tickets.emplace_back();ticket=std::prev(s.tickets.end());",
+      "finding": "A stable list ticket is allocated before possibly starting a worker, preventing post-create tracking allocation loss. Each create owns a separate ticket even if Windows reuses original HANDLE values.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "create_outcome",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 53,
+      "anchor": "// A generic lower Effects may have started a job before throwing.",
+      "finding": "A throwing create has unknown outcome and permanently poisons quiescence instead of erasing its ticket. A returned zero handle safely removes its reservation.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "no_context_read",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 61,
+      "anchor": "// The lower create may already have freed context.",
+      "finding": "After successful lower creation only the returned handle is accessed; no Context field is read or written because the worker may already have freed it.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "duplicate_policy",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 67,
+      "anchor": "&joined,0,FALSE,DUPLICATE_SAME_ACCESS);",
+      "finding": "DuplicateHandle retains a separate same-process join handle without closing or changing the original detached handle. Failure/exception keeps an untracked poisoned ticket and never fabricates safe quiescence.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "last_error",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 14,
+      "anchor": "struct PreserveError {",
+      "finding": "Tracking records the lower create result LastError and restores it after duplicate/bookkeeping; wait/close/control probes similarly preserve the caller error value.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "wait_and_close",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 99,
+      "anchor": "if(s.api.wait(handle,timeout_ms)!=WAIT_OBJECT_0)return false;",
+      "finding": "Waits occur outside the registry mutex; only WAIT_OBJECT_0 followed by successful CloseHandle removes a ticket. Timeout/failure/unexpected result or failed close retain the ticket for retry.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "pending_and_drain",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 84,
+      "anchor": "for(const auto& ticket:s.tickets)if(ticket.pending||ticket.untracked)return false;",
+      "finding": "A not-yet-returned create prevents success, as does poison. New create requests are rejected after stop, while existing worker cleanup methods continue forwarding to their live lower provider.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "destruction",
+      "file": "outputs/anadius-bootstrap-backend-source/tracked_threads.cpp",
+      "line": 34,
+      "anchor": "if(!impl_->tickets.empty()||impl_->poison||impl_->draining)std::terminate();",
+      "finding": "Tracking destruction with retained/unknown jobs or active drain is an explicit terminal lifetime violation. SourceBackend likewise refuses destruction while its route is still published.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "crt_scope",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "line": 86,
+      "anchor": "a future compiler-CRT DLL entry must call only the application layer.",
+      "finding": "Compiler CRT governs new rebuilt C++ bookkeeping once; this source package installs no PE entry and invokes no recovered outer CRT entry. A future compiler-CRT entry must not call the recovered outer CRT initializer too. Full ABI/EH/global equivalence remains unproven.",
+      "evidence_type": "bounded_static_source_review"
+    },
+    {
+      "id": "registrar_limit",
+      "file": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "line": 44,
+      "anchor": "// cancellable registrar. Application exit cleanup remains a separate source",
+      "finding": "std::atexit alone cannot implement cancellation. Actual registrar/stop_sources and application resource-cleanup strategy remain required; joining threads alone does not close late exit/terminate or hook callback lifetime.",
+      "evidence_type": "bounded_static_source_review"
+    }
+  ],
+  "finding_count": 32,
+  "reused_source_hashes": {
+    "anadius-bootstrap-owner-source/owner.hpp": "f12f284f5f23e27ebc320e9c5ac24fa016b5116dcbd615a566790568ca78e003",
+    "anadius-bootstrap-owner-source/owner.cpp": "6cb82edd31ac5617f6679f97a0d1eb04fce10644b802ed314950fca6cc16d9c3",
+    "anadius-source/bootstrap.hpp": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210",
+    "anadius-source/bootstrap.cpp": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6",
+    "anadius-thread-source/threads.hpp": "ab28bd3937e109ff088fe40344af2491c8f8f5c6d69891d62fdfd331356824c8",
+    "anadius-thread-source/threads.cpp": "3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9",
+    "anadius-server-source/server.hpp": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+    "anadius-server-source/server.cpp": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0",
+    "anadius-online-source/online.hpp": "51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b",
+    "anadius-online-source/online.cpp": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c",
+    "anadius-libraries-source/libraries.hpp": "711dd108523bc0ea5b3a0ceab3c9f3f2afb507837866a78f554d7dfab4fdb4f1",
+    "anadius-libraries-source/libraries.cpp": "e31b948aef40abd8510e16324389a80f81edbedf27fbfdfb6357073d2497960f",
+    "anadius-execution-source/execution.hpp": "af96b642cb8d454a293c7ed9e249be65432e7078f738ef2a937429704431a3ca",
+    "anadius-execution-source/execution.cpp": "85b026aca0ea79f297c9b7a8b1c58ab008644cad04fab1b3503ca58b61bf393d",
+    "anadius-host-init-source/host_init.hpp": "0ef5afbf19ad7452ddfc4ed54ed1dd0789f6c42eb9a47bc9dbccc1aa4cc35ba7",
+    "anadius-host-init-source/host_init.cpp": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b",
+    "anadius-network-hook-source/hook_cleanup.hpp": "d940ec9b265188b0cd10230a2e79bd1ded28a88f28646de52ca3170cc80bc997",
+    "anadius-network-hook-source/hook_cleanup.cpp": "a0dc1b5726b78abad8066537f1b4abc45e0a9245da9bdac425a0aafa30da050b"
+  },
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_virtual_interfaces": 0,
+  "new_concrete_provider_owners": 1,
+  "new_tracking_adapters": 1,
+  "source_routed_services": 6,
+  "mandatory_forwarded_services": 11,
+  "services_routes_bound": 6,
+  "existing_source_algorithms_routed": 7,
+  "remaining_service_policies": 11,
+  "application_algorithms_reused": [
+    "server_start_029ea0",
+    "worker_035b60",
+    "load_phase_035850",
+    "initialize_host_00e310",
+    "unload_035ab0",
+    "cleanup_0366f0",
+    "cleanup_hooks_0102b0"
+  ],
+  "execution_sources_reused": [
+    "wait_steps_036880",
+    "finish_flag_036820"
+  ],
+  "actual_lower_providers_complete": false,
+  "production_pe_entry_installed": false,
+  "native_abi_equivalence_established": false,
+  "full_native_equivalence_review_complete": false,
+  "original_read_performed": false,
+  "original_execution": false,
+  "original_modification": false,
+  "limits": [
+    "Actual config/file/console/thread/runtime/server/online/hook/registrar effects are required resources, not reconstructed by this composition.",
+    "stop_sources must truthfully exclude every future admission/registration; actual cancellation/unregistration cannot be inferred from a boolean callback.",
+    "Application exit-resource cleanup is separate from join quiescence; no provider is automatically unloaded before workers finish.",
+    "UTF16 to host wstring conversion introduces compatibility storage/allocation and does not establish original MSVC alias/allocator failure equality.",
+    "Control methods are serialized and non-reentrant; provider synchronization remains mandatory for concurrent shared application fields.",
+    "state_lifetime outlives owned resource components, but arbitrary peer-provider destructor dependencies remain a caller/factory contract; generic provider internals are not proved by this review.",
+    "No PE entry, exact native CRT/ABI/EH/global graph or complete runnable DLL is claimed. Generic CRT leaf work remains deferred."
+  ]
+}

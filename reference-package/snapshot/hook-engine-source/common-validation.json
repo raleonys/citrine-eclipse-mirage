@@ -1,0 +1,117 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_results": [
+    {
+      "module": "hook_adapters",
+      "result": "PASS",
+      "output": "PASS: 472 hook adapter/source integration checks; fake Api, no native hooks",
+      "executable_sha256": "e5a16fe515164e51f33d70bae817bc5aab72b2c8d663d1f19382cff8ce94eb4b"
+    },
+    {
+      "module": "hook_engine_fixtures",
+      "result": "PASS",
+      "output": "hook_engine_fixture: 379 checks passed; upstream C engine, fake Win32, data buffers only",
+      "executable_sha256": "de9423aeee793c5caa143c8fb37a8fa5786b5aa90e8fcca96204b7192e6f6f98",
+      "validation": "../hook-engine-source/fixture-validation.json"
+    }
+  ],
+  "dependency": "Official pinned upstream compatibility source, not recovered original source",
+  "production_archives": [
+    "anadius_core_partial.a",
+    "preloader_core_partial.a",
+    "hook_engine_compat.a"
+  ],
+  "production_objects": 274,
+  "cpp_objects": 270,
+  "c_objects": 4,
+  "execution_scope": "NativeApi construction/RTTI/destruction only; fake Api for adapters; actual upstream C engine uses forced ReaTest Win32 redirection on owned data fixtures; no generated code executed",
+  "target_execution": "none",
+  "original_version_match": "unproven",
+  "runtime_equivalence": "not established",
+  "upstream_provenance_sha256": "6ed67324e46518855e779497bbe97a543653f7ad63dd23477137ec391476aa8f",
+  "sources": [
+    {
+      "path": "hook-engine-source/adapter_tests.cpp",
+      "sha256": "9579b7043389b151f86206142263f35834b63a460a73555075e47bf32d74024c"
+    },
+    {
+      "path": "hook-engine-source/adapters.cpp",
+      "sha256": "c43e3fc13ceb60833324c880725d7e6ed6b0f668ed82e077b9b28d4f47a7ac5d"
+    },
+    {
+      "path": "hook-engine-source/adapters.hpp",
+      "sha256": "757f5f0ee47e19fe2611072dab96b72c21b57d8d64e49c23a16d7f67ab9d8862"
+    },
+    {
+      "path": "hook-engine-source/api.cpp",
+      "sha256": "f0342452f7a1e379903472f48937281ceddad0920ddc152b7615dc3e9c98eadc"
+    },
+    {
+      "path": "hook-engine-source/api.hpp",
+      "sha256": "ff489c6112295848f0632537c2012d3c756242f43f95d25464474f1336a07a45"
+    },
+    {
+      "path": "hook-engine-source/fixture_tests.cpp",
+      "sha256": "49d644dddefb5fef82535d63c5e73e165c0728ab8b72d1717eaf7f83f76b9842"
+    },
+    {
+      "path": "hook-engine-source/preloader_engine.cpp",
+      "sha256": "7f73897a95261bebc448c8b54fb0700ccb89ef03acb7115457ac05516c9f51db"
+    },
+    {
+      "path": "hook-engine-source/testing/fake_state.hpp",
+      "sha256": "c090f3eb0dd036322b4eecc543092c1bf915e5acf920eb2ac968c731b8c429f5"
+    },
+    {
+      "path": "hook-engine-source/testing/fake_win32.cpp",
+      "sha256": "fb4af05fde27ad258eabf834dfb397ed3cbed872ac97784e6a5247466b3b0c8f"
+    },
+    {
+      "path": "hook-engine-source/testing/fake_win32.h",
+      "sha256": "b1f387766f6dacd32f03c6e8f317042ff7e173f49740f780accd6fd20a96dee1"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/include/MinHook.h",
+      "sha256": "62dff05e63155c6bf8135c36a0d79dedbdcaaede9da26fe38daf0bea34323e38"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/buffer.c",
+      "sha256": "0ab484d7870c3a8e7a3a1ee61e2070072cf445ed85b619d4c4207fed34356d99"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/buffer.h",
+      "sha256": "9769702bd625249e59a19ede05c84365fcc7707e1fa0e5df08df42227cee13e3"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/hde/hde64.c",
+      "sha256": "824eafa315322e6da105a7ce4ec1fc0e0adeee0106d32152fbb0b59e709bd15c"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/hde/hde64.h",
+      "sha256": "e99aa4997bda14b534c614c3d8cb78a72c4aca91a1212c8b03ec605d1d75e36e"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/hde/pstdint.h",
+      "sha256": "604d1cdf45c5a95bc9cf1bbf39ca05ef83013541101d34971c5cd7577e3d5247"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/hde/table64.h",
+      "sha256": "b774446d2f110ce954fb0a710f4693c5562ddbd8d56fe84106f2ee80db8b50a2"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/hook.c",
+      "sha256": "edcce4c81985d7dd5b73feae96d6498c8f749b1bca4c3d2d9926ea9a17a84755"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/trampoline.c",
+      "sha256": "f13a169f803ff5a8e45c58ce668b4377a9878c0fc4452369b8a1325065186b2b"
+    },
+    {
+      "path": "hook-engine-source/vendor/minhook/src/trampoline.h",
+      "sha256": "53ed9934492320617a27bfd952ffe7f5b7a4a1d09963d4512447082fe7b727b4"
+    }
+  ]
+}

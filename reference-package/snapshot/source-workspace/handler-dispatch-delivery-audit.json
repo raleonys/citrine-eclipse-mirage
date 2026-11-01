@@ -1,0 +1,66 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T02:04:05.8602727Z",
+  "prior_package_sha256": "8e6d27b6f44b87991906909b5cdaa7c5951ed1654477c34742b208692d5ead79",
+  "prior_source_count": 502,
+  "unchanged_prior_sources": 502,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/handler_dispatch_bridge.cpp",
+    "anadius-socket-source/handler_dispatch_bridge.hpp",
+    "anadius-socket-source/handler_dispatch_integration_tests.cpp",
+    "anadius-socket-source/handler_dispatch_tests.cpp",
+    "anadius-socket-source/handler_dispatch.cpp",
+    "anadius-socket-source/handler_dispatch.hpp"
+  ],
+  "current_sources": 508,
+  "current_documents": 198,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 172,
+  "cpp_objects": 168,
+  "c_objects": 4,
+  "normal_test_groups": 159,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_handler_dispatch",
+      "result": "PASS",
+      "output": "PASS: 3268 socket handler dispatch core checks; slots4/5 allocator and cleanup, borrowed priority, live factory/vtable/owner semantics, mutable publication, early actual closure deletion and exception boundaries",
+      "executable_sha256": "206a7b94f2686c5aeb7411211a8d20e83e7f3f809b51166abacec6119a533ac6"
+    },
+    {
+      "module": "socket_handler_dispatch_integration",
+      "result": "PASS",
+      "output": "PASS: 242 socket handler dispatch integration checks; actual027c10/0298b0/IO routing/handler scheduler composition, borrowed and owned branches, injected SDK adapters, fallback queue, independent pool0/1 plus4/5 reuse and actual heap lifetime ends",
+      "executable_sha256": "8be000a6764a583653b845f9c92b414b7e51a5bcefb1067ace5c676eb76a1545"
+    }
+  ],
+  "new_checks": 3510,
+  "master_build_sha256": "f39f5acf7edaef094c164d5f7a952795577a5feb9ab34ec9b23dda782008c96d",
+  "common_build_script_sha256": "665215ac9ff2c7c9d4441e2724157e1b229cea9ca7f9408f034ee3d2fa9582e0",
+  "cmake_sha256": "3dca38f6f044ea1f2f0891afc6c683afa42f17b1f0f755029d8ce8474d17f0ec",
+  "normal_source_procedures_added": [
+    "0x180021900",
+    "0x180022640",
+    "0x180022670",
+    "0x180022780",
+    "0x1800227b0",
+    "0x1800229d0",
+    "0x180022c60",
+    "0x1800291c0",
+    "0x1800292a0"
+  ],
+  "new_original_procedures": 9,
+  "new_composition": "Actual0229d0 send/022c60 receive schedule;021900 slots4/5 allocator;022640/022780 borrowed thunks;022670/0227b0 owned callbacks;0291c0/0292a0 closurecleanup;fullsendfactory/query/move/destroy/schedule sequence;mutableownedtaskslot;bridge into existingIOcompletion;requirednativeprovider boundaries",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "storage_contract": "Stable raw allocation identity/binding/typedprojection; bounded byte storage separate SDK OVERLAPPED; native fault guards modeled UnsupportedInput; no post-freeoperation access",
+  "allocation_and_functor_providers": "04b0bc/04b788,polymorphicfactory/query/move/destroy/schedule slots,025c40/0261d0 and native provenance remain required",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

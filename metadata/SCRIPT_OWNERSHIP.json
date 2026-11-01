@@ -243,6 +243,16 @@
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "inspect dll",
       "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/reference_package.py": {
+      "owner": "Reconstruction package research project",
+      "purpose": "Fail closed on preserved research file-set or byte drift before product exclusion",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/update_reference_package.py": {
+      "owner": "Reconstruction package research project",
+      "purpose": "Stage and atomically update expanded package files, review states and per-delivery deltas",
+      "role": "PYTHON_TOOL_OR_MODULE"
     }
   }
 }

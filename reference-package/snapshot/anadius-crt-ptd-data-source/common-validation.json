@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_ptd_data",
+    "result": "PASS",
+    "output": "PASS 206 PTD data/lifetime checks",
+    "executable_sha256": "6392e8f075f3e01a3c29f0a1d9e9d3996515e0188028194004e69531763a679d"
+  },
+  "execution_scope": "Eight normal-flow PTD construct/destroy/locale/reference bodies, actual recovered FLS lifecycle with owned context fixtures; no SEH reconstruction",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-ptd-data-source/ptd_data_tests.cpp",
+      "sha256": "31690f132236a30e8773cc76efc532da775fc1f8b865db1c5b8f6c33e888b6bb"
+    },
+    {
+      "path": "anadius-crt-ptd-data-source/ptd_data.cpp",
+      "sha256": "a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea"
+    },
+    {
+      "path": "anadius-crt-ptd-data-source/ptd_data.hpp",
+      "sha256": "25d5f6fb41a9991cc200fd2ceb5131df693d70883afbe3f5c15c316bdb65c21e"
+    }
+  ]
+}

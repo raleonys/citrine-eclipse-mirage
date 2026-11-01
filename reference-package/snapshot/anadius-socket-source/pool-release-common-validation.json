@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "9ea4325eed63b105e6ed78646a2e1e138b6ee34e2fcd0bdd4846f74ca78672fa",
+  "test_results": [
+    {
+      "module": "socket_pool_release",
+      "result": "PASS",
+      "output": "PASS: 613 pool release/track checks; retained vtable defaults, four pools, exact LIFO/full-prefix preservation, raw32 wrapping, root-cache/shared-backing/item aliases, bounded prefixes and selected identities; native allocator/free, ABI and EH remain open",
+      "executable_sha256": "2bb02a481656168bdcd6efa65369e7eea8591d768c0f2521b45dfbc1f3d2e814"
+    },
+    {
+      "module": "socket_pool_release_integration",
+      "result": "PASS",
+      "output": "PASS: 148389 socket pool release integration checks; source release/track on4mapped pool prefixes and3controlled roots through document/cipher/dispatch/queue/send; allocator/nodevirtual/fullDOM/ABI/EH remain open",
+      "executable_sha256": "1007343ead407f69002eda8ffb0497c55c9e98cfaa3f1fc65382bebd32f7d4dc"
+    }
+  ],
+  "core_checks": 613,
+  "integration_checks": 148389,
+  "original_procedures_added": 2,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "tagged_definition_variants_per_new_target": 1,
+  "target_dispatch_guards_are_native_bodies": false,
+  "execution_scope": "0033a0 memory-only pool free-list release and005a20 untracked DWORD decrement normal projections;2 generic final RecoveredPoolReleaseEffects pool_release/pool_track source bridges dispatch only exact shipped target values; native allocation/node probe/destructor/parser/DOM/vtable/ABI/EH remain open",
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Bounded raw-memory normal projections; no native DOM/object/global/vtable/lifecycle/ABI/EH/concurrency equivalence established",
+    "0033a0 null item returns without touching pool; otherwise cache pool+0x68 root, decrement live DWORD pool+0x70, store cached root at item+0, publish item at pool+0x68 in that order",
+    "005a20 decrements DWORD pool+0x7c; both counters wrap modulo2^32 with no positivity/membership/null-pool guard",
+    "Release recycles item storage as free-list link; no HeapFree, external allocator call, new CRT source or native pool allocation implementation",
+    "Generic final pool_release/pool_track guards are bounded dispatch rules for known targets0033a0/005a20; each target has one numeric tagged normal definition, not two",
+    "Four shipped pool vtables share slot+0x18 release and+0x20 track; complete N16 REA data-read evidence is reused unchanged, not a new read; initialized analysis pointers are not runtime pointers",
+    "Integration explicitly maps0x80 pool on same raw memory and uses controlled parser roots; no full native pool allocation or DOM/parser materialization established",
+    "Node virtual+0x38 full64-bit probe/+0x78 destructor,0041b0 parser,002b10/002600/002960/0027b0 pool allocation,remaining pool/DOM/vtable/native lifecycle/ABI/EH mandatory",
+    "No synthetic corrupted-graph recovery,rollback,catch or native unwind cleanup; finite mapped normal domains mandatory and fixture teardown is not EH evidence",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity separate; known blocked version.dll and generated version DLL never retried; CRT unchanged and paused"
+  ],
+  "previous_local_records": "40 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x1800033a0",
+    "0x180005a20"
+  ],
+  "independent_review_complete": false
+}

@@ -1,0 +1,156 @@
+{
+  "schema": "source-algorithm.focused-validation.v1",
+  "status": "SELECTED_ONLINE_APPLICATION_CALLS_AND_AVATAR_ARGUMENT_REPAIR_PASS",
+  "native_call_sites": {
+    "0x180031aad": {
+      "slot": "0x28",
+      "arguments": [
+        "RCX adopted object",
+        "RDX cache UTF16 C string",
+        "R8 ImageId suffix after first colon, narrow C string",
+        "R9D signed atoi(Width)/208"
+      ],
+      "result": "AL byte, nonzero success"
+    },
+    "0x18002e413": {
+      "slot": "0x30",
+      "arguments": [
+        "RCX adopted object",
+        "RDX client ID C string"
+      ],
+      "result": "RAX narrow C string, followed by native NUL scan"
+    }
+  },
+  "native_evidence": {
+    "path": "outputs/anadius-online-query-source/application-calls.native.json",
+    "sha256": "1c4351e809fee3a50ca4e6d195aac778dcb162ef21866f2b47f8ffb8bf264c3e"
+  },
+  "rea_verification": {
+    "path": "outputs/anadius-online-query-source/application-call-session.json",
+    "sha256": "bbf5d48f38c3b6937d36ff9c89061956fc88460cc7b4f29d5617b144c7799f6a"
+  },
+  "implementation": [
+    "Recovered avatar caller supplies four arguments; prior C++ one-path effect omitted owner/size. Optional AvatarRequest carries cache/owner/signed size through query_image and guarded Graph Content without changing original Effects vtable/layout. Explicit legacy one-path providers keep their compatibility route.",
+    "Binding resolves only observed slots using byte-copy access to adopted foreign object/vptr; existing QueryUse retains object/code and denies overlap/stale use. AvatarFunction consumes uint8 AL without assuming canonical C++ bool.",
+    "Auth borrowed result and owned-copy variants pass exact client pointer. copy_auth retains reservation through NUL scan and allocation and preserves outgoing LastError; null owned result is diagnosed as outside observed domain.",
+    "Concrete Online forwards avatar/auth/copy_auth under existing component Call guards. No new Resources/seed factory, DLL load or hidden original fallback."
+  ],
+  "focused_record": {
+    "path": "work/online-application-v1-results.json",
+    "sha256": "b1361ca2aefe4e72df9cd69106e6c5d19a710348dc815ccc1f66599c0be94eaf",
+    "seconds": 28.672,
+    "tests": [
+      {
+        "name": "online_application_queries",
+        "exit_code": 0,
+        "stdout": "PASS: 30 online application-query checks; own EXE slots28/30 only\n",
+        "stderr": "",
+        "executable": "work/online-application-check-v1/online_application_queries_tests.exe",
+        "executable_sha256": "a331d16c1a8058ef8ab934e61440d41e093f72c9bed5ed07fa60d4a2f5d0cd41"
+      },
+      {
+        "name": "online_query",
+        "exit_code": 0,
+        "stdout": "PASS: 35 online typed query core checks\n",
+        "stderr": "",
+        "executable": "work/online-application-check-v1/online_query_tests.exe",
+        "executable_sha256": "b94bc56d39af9fa875f2f927739c2eb4055f3658f4ab36c6ac4f10f83442b06a"
+      },
+      {
+        "name": "online_factory",
+        "exit_code": 0,
+        "stdout": "PASS: 72 online-factory core checks; actual bound Execution/ready, typed own-EXE exports, source cleanup/leases and eight isolated retained prefixes\n",
+        "stderr": "",
+        "executable": "work/online-application-check-v1/online_factory_tests.exe",
+        "executable_sha256": "fea18b4005dc0c85802a14e215b3d683116de0f1d0d6fe404adb106e2d15e21c"
+      },
+      {
+        "name": "content_handlers",
+        "exit_code": 0,
+        "stdout": "PASS: 1034 synthetic content/entitlement/achievement/image checks; original binaries were not loaded or executed.\n",
+        "stderr": "",
+        "executable": "work/online-application-check-v1/content_handlers_tests.exe",
+        "executable_sha256": "e4acbf5f8b6b01b2d03b42c6880ed135507088231fb57483a468d2c4ed3b7696"
+      },
+      {
+        "name": "application_graph",
+        "exit_code": 0,
+        "stdout": "PASS: 649 application-graph core checks\n",
+        "stderr": "",
+        "executable": "work/online-application-check-v1/application_graph_tests.exe",
+        "executable_sha256": "94effd7acbbb8c4e679d1b247e0d38568117c085f59701409402894264834f36"
+      }
+    ]
+  },
+  "fresh_production_units": {
+    "observed_runtime": "outputs/anadius-bootstrap-runtime-source/observed_runtime.cpp",
+    "bootstrap_backend": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+    "aggregate_teardown": "outputs/anadius-config-defaults-source/teardown.cpp",
+    "application_graph": "outputs/anadius-application-graph-source/graph.cpp",
+    "application_worker": "outputs/anadius-application-worker-source/worker.cpp",
+    "licensing": "outputs/anadius-license-source/license.cpp",
+    "license_files": "outputs/anadius-file-source/license_files.cpp",
+    "windows_effects": "outputs/anadius-windows-source/windows_effects.cpp",
+    "configuration_filesystem": "outputs/anadius-config-storage-source/filesystem.cpp",
+    "configuration_persistence": "outputs/anadius-config-storage-source/persistence.cpp",
+    "configuration_factory": "outputs/anadius-configuration-factory-source/factory.cpp",
+    "key_processor": "outputs/anadius-license-source/key_processor.cpp",
+    "bootstrap_factory": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+    "online_query": "outputs/anadius-online-query-source/query.cpp",
+    "online_factory": "outputs/anadius-online-factory-source/factory.cpp",
+    "content_handlers": "outputs/anadius-content-handlers-source/content_handlers.cpp"
+  },
+  "source_hashes": {
+    "outputs/anadius-application-graph-source/graph.cpp": "07ccdb49538ef01811ba5aca38f18f407bea967b6ad9a1d79bd21b97dc5743e2",
+    "outputs/anadius-online-query-source/query_tests.cpp": "da02c93d51c2489f449b53683f1b0e03bb8cf5f8ec9c8122a7f76fc4a499f47b",
+    "outputs/anadius-online-factory-source/factory.cpp": "f56323c68106c0dc01b4797cfee5bebdcba114dc2eefd200fff32cb3e566732c",
+    "outputs/anadius-content-handlers-source/content_handlers.hpp": "698243424b656c1c87d4280f32c5ea0f950463f479e0b0d9a76e4447e8821ffa",
+    "outputs/anadius-application-graph-source/graph_tests.cpp": "0bae5a385bfdb268c71a80905f3b3f30247063e87a36761ef757c54093710526",
+    "outputs/anadius-online-factory-source/factory.hpp": "39f50ca489841921b0d2274b7a4448ef8beb78bd4098c842292c96885dd75194",
+    "outputs/anadius-online-query-source/application_queries_tests.cpp": "18203125070c64209da8bf092d0e9dbdad1d70feed04770cb246777a4c88ec91",
+    "outputs/anadius-online-query-source/query.cpp": "55bf8cf5ffc9ac78dfd6d96956b62bc03cd06e6e0265877a86315d1dc36c36d3",
+    "outputs/anadius-online-factory-source/factory_tests.cpp": "7f55dcd7047daf193eda335e4d646bf6e1a96ccccbb6c5845b9c61f731c89643",
+    "outputs/anadius-content-handlers-source/content_handlers.cpp": "4cb847e398b3a81b4c9149a711fecfe0532265fb5c974f33aed73591700e947f",
+    "outputs/anadius-content-handlers-source/content_handlers_tests.cpp": "c49ab737c6d6bd3af4179b19830d8a372fe4ff9c167991734dbe40ba31278740",
+    "outputs/anadius-online-version-source/version.hpp": "512c3f20766a3fd5691d06933e69c0ca5228aec3a16e5c156eb5cd9d5fa4537b",
+    "outputs/anadius-application-graph-source/graph.hpp": "b5bd0d35be5a225c5741c17a0afd2e98f68a100ea150ebdefd29fd9808041eb9",
+    "outputs/anadius-online-query-source/query.hpp": "22483a841e338c6984803c81e1e1a34a351077ff62d36160dc8d2bba21b75e02"
+  },
+  "build_registration_hashes": {
+    "outputs/source-workspace/build.ps1": "68e6fc1d9c4594c5b74cd22b78e1b459ea544b4e285393ab1de72d27e9f2d3ca",
+    "outputs/source-workspace/CMakeLists.txt": "e2bdbc2dfe7cbf419c1c0919e40934bc32f765a9f676ba2c5b5efcc1f58ee5ea"
+  },
+  "powershell_registration_parser_errors": 0,
+  "independent_review": {
+    "author": "/root/b22_provider_audit",
+    "native_argument_correction": "PASS: raw assembly four-register definitions corroborated independently; initial two-argument prototype was corrected before any compilation/execution",
+    "production_and_focused_proof": "PASS",
+    "verified_source_header_hashes": 196,
+    "verified_executables": 5,
+    "fresh_translation_units": 21,
+    "reviewer_execution": false
+  },
+  "validation_scope": [
+    "Own EXE seven-slot unaligned vtable verifies all avatar arguments, AL0/1/80/ff, signed sizes, UTF16/owner/client C-string boundaries, and borrowed/long/empty/NUL/null auth.",
+    "Allocation observer verifies owned auth allocation occurs with active code/object reservation and outgoing LastError preserved; reentry and bounded concurrent queries/destroy/free are denied before effects.",
+    "Actual Content and Graph QueryImage requests verify negative signed width division, first-colon owner suffix and full path/owner/size forwarding. Concrete Online methods execute against own EXE slots under existing lifetime guards."
+  ],
+  "limits": [
+    "Graph-to-AvatarRequest and Online-to-own-EXE-slot tests are compositional; complete production Graph content/license provider bridge remains open.",
+    "Observed Win64 caller shape does not recover a complete foreign class/header ABI or establish behavior inside the external online DLL. No original or foreign DLL was executed.",
+    "Raw auth result is borrowed after reservation ends and requires caller serialization. Provider C-string readability, lifetime and actual module pin provenance remain external contracts.",
+    "Direct Binding query exception cleanup follows its existing selected profile; Online conservatively poisons unknown exceptions. No native EH/global finality proof.",
+    "Real avatar IO/auth provider/network, loader hooks and full production Resources composition remain untested/open; B54 common snapshot/inventory/ZIP remain historical."
+  ],
+  "new_native_definitions_this_change": 0,
+  "repaired_existing_native_call_sites": 1,
+  "new_typed_foreign_slots": 2,
+  "existing_public_layouts_and_vtables_changed": false,
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "real_network": false
+}

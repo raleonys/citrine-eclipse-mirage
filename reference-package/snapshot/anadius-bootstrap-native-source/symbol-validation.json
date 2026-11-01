@@ -1,0 +1,38 @@
+{
+  "result": "PASS",
+  "object_sha256": "468a20b5949edbfb26314177fd740d4d3266a4107ab2b1f747a1c184b751bdfd",
+  "imports": [
+    "         U __imp_GetLastError",
+    "         U __imp_SetLastError"
+  ],
+  "undefined_symbols": [
+    "         U _Unwind_Resume",
+    "         U _ZN7anadius17threads_recovered21BootstrapThreadBridge19begin_thread_05e8e0ENS_9recovered11ThreadEntryEPvPj",
+    "         U _ZN7anadius9recovered9Bootstrap11run_booleanEPNS0_14BooleanPayloadE",
+    "         U _ZN7anadius9recovered9Bootstrap12on_terminateEv",
+    "         U _ZN7anadius9recovered9Bootstrap15run_no_argumentEPNS0_17NoArgumentPayloadE",
+    "         U _ZN7anadius9recovered9Bootstrap20application_dll_mainEj",
+    "         U _ZN7anadius9recovered9Bootstrap7on_exitEv",
+    "         U _ZNSt11logic_errorC1EPKc",
+    "         U _ZNSt11logic_errorC2EPKc",
+    "         U _ZNSt11logic_errorD1Ev",
+    "         U _ZNSt12out_of_rangeD1Ev",
+    "         U _ZNSt13exception_ptrD1Ev",
+    "         U _ZNSt3__15mutex4lockEv",
+    "         U _ZNSt3__15mutex6unlockEv",
+    "         U _ZSt17current_exceptionv",
+    "         U _ZSt9terminatev",
+    "         U _ZTVN10__cxxabiv117__class_type_infoE",
+    "         U _ZTVN10__cxxabiv120__si_class_type_infoE",
+    "         U _ZTVSt12out_of_range",
+    "         U __cxa_allocate_exception",
+    "         U __cxa_begin_catch",
+    "         U __cxa_free_exception",
+    "         U __cxa_pure_virtual",
+    "         U __cxa_throw",
+    "         U __gxx_personality_seh0",
+    "         U __imp_GetLastError",
+    "         U __imp_SetLastError"
+  ],
+  "scope": "Direct SDK imports in production object limited to own-thread LastError metadata; C++ runtime/synchronization supplied by toolchain"
+}

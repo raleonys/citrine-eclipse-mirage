@@ -1,0 +1,146 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-25T18:56:25.282409+00:00",
+  "prior_package_sha256": "8e339f939dc562a0d60d85f2e34ff05f474e9c479b05500e71531a936581ab5a",
+  "prior_source_count": 646,
+  "unchanged_prior_sources": 646,
+  "added_sources": [
+    "anadius-socket-source/pool_destruct.cpp",
+    "anadius-socket-source/pool_destruct.hpp",
+    "anadius-socket-source/pool_destruct_integration_tests.cpp",
+    "anadius-socket-source/pool_destruct_test_fixture.hpp",
+    "anadius-socket-source/pool_destruct_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 651,
+  "current_documents": 235,
+  "native_objects": 202,
+  "cpp_objects": 198,
+  "c_objects": 4,
+  "normal_test_groups": 217,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 90,
+  "new_checks": 10784,
+  "new_tests": [
+    {
+      "module": "socket_pool_destruct",
+      "result": "PASS",
+      "output": "PASS: 204 pool destructor core checks; four type/base identities,cached entry aliases both directions,LIFO/negative counts,live mutations,ordered resets,array free and exact failure prefixes; lower free/nativeABI/EH supplied",
+      "executable_sha256": "8348309dbd74a80a90b1ec19440b2668a3ef56994b1744edd1ab8815fc86cfd4"
+    },
+    {
+      "module": "socket_pool_destruct_integration",
+      "result": "PASS",
+      "output": "PASS: 10580 pool destructor integration checks; four scalar/SIMD source allocation/append/track/release/clear/destruct chains and001e00 reverse embedded-pool/vector/string cleanup; node-base/heap/free supplied,nativeDOM/ABI/EH open",
+      "executable_sha256": "85a231f8dc626277e6994c8fafb018e4ffdedcd52bc33c01d2656e6fe197b3dc"
+    }
+  ],
+  "validation_mirror_pairs": 45,
+  "historical_module_records_preserved": 44,
+  "historical_config_references_preserved": 88,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "ffdb499a9f672a1006c27eae03cbd1ef165cc7fd85ad5eb699281c214f951a8f",
+  "inventory_data_checks": 7483,
+  "normal_source_procedures_added": [
+    "0x180001bb0",
+    "0x180001c30",
+    "0x180001cb0",
+    "0x180001d30"
+  ],
+  "new_original_procedures": 4,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/pool_destruct.cpp",
+      "base": "NativeDocumentEffects::destroy_pool_001bb0",
+      "body": "destroy_native_pool_001bb0",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001bb0",
+      "address": "0x180001bb0",
+      "native_abi_complete": false,
+      "scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_destruct.cpp",
+      "base": "NativeDocumentEffects::destroy_pool_001c30",
+      "body": "destroy_native_pool_001c30",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001c30",
+      "address": "0x180001c30",
+      "native_abi_complete": false,
+      "scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_destruct.cpp",
+      "base": "NativeDocumentEffects::destroy_pool_001cb0",
+      "body": "destroy_native_pool_001cb0",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001cb0",
+      "address": "0x180001cb0",
+      "native_abi_complete": false,
+      "scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_destruct.cpp",
+      "base": "NativeDocumentEffects::destroy_pool_001d30",
+      "body": "destroy_native_pool_001d30",
+      "closure": "RecoveredPoolDestructEffects::destroy_pool_001d30",
+      "address": "0x180001d30",
+      "native_abi_complete": false,
+      "scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory"
+    }
+  ],
+  "new_source_bridges": 4,
+  "new_source_allocation_adapters": 0,
+  "native_typed_providers_newly_closed": 4,
+  "new_unique_source_mapped_addresses": 4,
+  "prior_native_source_closures_preserved": 37,
+  "current_native_source_closures": 41,
+  "semantic_session_source_adapters_preserved": 2,
+  "separate_pool_allocation_source_adapters_preserved": 1,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_contents_read": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "N22 remaining document/node-base lifecycle inventory/contracts from retained evidence; no new source body claimed by that preparation; generic CRT remains paused",
+  "bridge_variant_is_additional_native_body": false,
+  "tagged_definition_variants_per_new_target": 2,
+  "dependency_evidence_files": 127,
+  "new_native_analysis": false,
+  "pointer_only_free_interface_preserved": true,
+  "caller_edx_block_size_hints": {
+    "0x180001bb0": 4080,
+    "0x180001c30": 4056,
+    "0x180001cb0": 4032,
+    "0x180001d30": 4080
+  },
+  "immediate_type_vtable_identities": {
+    "0x180001bb0": "0x18007fe38",
+    "0x180001c30": "0x18007fe98",
+    "0x180001cb0": "0x18007fe68",
+    "0x180001d30": "0x18007fe08"
+  },
+  "immediate_base_vtable_identity": "0x18007fa18",
+  "new_vtable_data_acquisition": false,
+  "initial_count_test_cached_before_type_vtable_store": true,
+  "array_free_callsite_only_rcx_defined": true
+}

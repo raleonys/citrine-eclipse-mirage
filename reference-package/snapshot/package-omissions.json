@@ -1,0 +1,12 @@
+{
+  "scope": "Explicit unavailable generated output; source/evidence/test delivery continues",
+  "files": [
+    {
+      "path": "version-rebuild/build-llvm/version.dll",
+      "status": "excluded_generated_output",
+      "reason": "Windows antivirus denied reading this generated historical artifact during packaging",
+      "protection_settings_changed": false,
+      "original_input": false
+    }
+  ]
+}

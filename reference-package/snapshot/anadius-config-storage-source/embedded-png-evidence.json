@@ -1,0 +1,80 @@
+{
+  "schema": "retained-png-assets.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_bundle": "outputs/anadius-rea-evidence.json",
+  "retained_bundle_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "read_bytes_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "retained_va": "0x18007f000",
+  "retained_bytes": 138752,
+  "assets": [
+    {
+      "name": "default_user",
+      "va": "0x1800809d0",
+      "retained_offset": 6608,
+      "png_through_iend_bytes": 7488,
+      "sha256": "833d5a6444b352bec759221e1973d7045b88967f4507059c6ffd95aa15cf34dd",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "payload_bytes": 13,
+          "crc32": "f9c67823"
+        },
+        {
+          "type": "IDAT",
+          "payload_bytes": 7431,
+          "crc32": "85f8b1eb"
+        },
+        {
+          "type": "IEND",
+          "payload_bytes": 0,
+          "crc32": "ae426082"
+        }
+      ]
+    },
+    {
+      "name": "default_avatar",
+      "va": "0x180082710",
+      "retained_offset": 14096,
+      "png_through_iend_bytes": 3882,
+      "sha256": "9584cb4afe2734f4b30f0fe30d8390e76dd8703ac603fcf4a13c8f2df11133f5",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "payload_bytes": 13,
+          "crc32": "f9c67823"
+        },
+        {
+          "type": "IDAT",
+          "payload_bytes": 3825,
+          "crc32": "402edff9"
+        },
+        {
+          "type": "IEND",
+          "payload_bytes": 0,
+          "crc32": "ae426082"
+        }
+      ]
+    }
+  ],
+  "original_length_globals_verified": true,
+  "length_globals": [
+    "0x1800a1108",
+    "0x1800a110c"
+  ],
+  "extent_policy": "Exact retained PNG signature/chunk/CRC/IEND extent also equals both original length globals independently read by parent through static Ghidra. No guessed payload or padding.",
+  "original_execution": false,
+  "original_modification": false,
+  "length_globals_evidence": {
+    "evidence_id": "ev_4ef179003503ecb3da7cac478ce0c307d43c59bd64f90052b3e6d3cfc189bf91",
+    "file": "png-count-evidence.json",
+    "sha256": "25e2b1ffd91707611ef61f236c65fff9ba4c6d996cbef5a427e5bc311b89a9fb",
+    "values": [
+      7488,
+      3882
+    ],
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "asset_bytes_read_from_original_this_step": false,
+  "original_length_globals_read_this_step": true,
+  "length_globals_reader": "root via static REA read_bytes, 8 bytes"
+}

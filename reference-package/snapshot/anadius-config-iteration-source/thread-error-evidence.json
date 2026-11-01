@@ -1,0 +1,140 @@
+{
+  "schema": "retained-thread-error-table.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_bundle": "outputs/anadius-rea-evidence.json",
+  "retained_bundle_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "read_bytes_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "retained_va": "0x18007f000",
+  "retained_bytes": 138752,
+  "pointer_table_hex": "70770880010000008878088001000000207a088001000000707a088001000000c87a088001000000787b088001000000987b088001000000",
+  "code_table_hex": "1000000016000000030000000c00000001000000240000000b000000",
+  "entries": [
+    {
+      "index": 0,
+      "code": 16,
+      "context": "device or resource busy",
+      "code_va": "0x180087df0",
+      "pointer_va": "0x180087db8",
+      "context_va": "0x180087770"
+    },
+    {
+      "index": 1,
+      "code": 22,
+      "context": "invalid argument",
+      "code_va": "0x180087df4",
+      "pointer_va": "0x180087dc0",
+      "context_va": "0x180087888"
+    },
+    {
+      "index": 2,
+      "code": 3,
+      "context": "no such process",
+      "code_va": "0x180087df8",
+      "pointer_va": "0x180087dc8",
+      "context_va": "0x180087a20"
+    },
+    {
+      "index": 3,
+      "code": 12,
+      "context": "not enough memory",
+      "code_va": "0x180087dfc",
+      "pointer_va": "0x180087dd0",
+      "context_va": "0x180087a70"
+    },
+    {
+      "index": 4,
+      "code": 1,
+      "context": "operation not permitted",
+      "code_va": "0x180087e00",
+      "pointer_va": "0x180087dd8",
+      "context_va": "0x180087ac8"
+    },
+    {
+      "index": 5,
+      "code": 36,
+      "context": "resource deadlock would occur",
+      "code_va": "0x180087e04",
+      "pointer_va": "0x180087de0",
+      "context_va": "0x180087b78"
+    },
+    {
+      "index": 6,
+      "code": 11,
+      "context": "resource unavailable try again",
+      "code_va": "0x180087e08",
+      "pointer_va": "0x180087de8",
+      "context_va": "0x180087b98"
+    }
+  ],
+  "code_and_context_observed": true,
+  "category_singleton_va": "0x1800a14e0",
+  "category_provenance": {
+    "singleton_va": "0x1800a14e0",
+    "singleton_static_read_evidence": "ev_108796666f1e134d971f55a1f575e33ff47f704541695016fd846180008ca5a9",
+    "singleton_static_read_file": "category-evidence.json",
+    "singleton_static_read_file_sha256": "9bb7dfed0984253d3b34c9ba7fdb9790ae6ab3b7b08eb244f33edfaac3c7164a",
+    "singleton_original_read_bytes": 8,
+    "vtable_va": "0x180080208",
+    "retained_vtable_slots": [
+      "0x18000b450",
+      "0x18000fe60",
+      "0x18000f240",
+      "0x18000d120",
+      "0x18000e0c0",
+      "0x18000e0e0"
+    ],
+    "retained_vtable_bytes_sha256": "06ff336bb4a1885898efde68ff2159a5db29941f53dc8f7f8b8b1b8db7afba1b",
+    "name_slot_index": 1,
+    "name_function_va": "0x18000fe60",
+    "observed_name": "generic",
+    "message_slot_index": 2,
+    "message_function_va": "0x18000f240",
+    "message_lookup_va": "0x1800480d8",
+    "native_name_family_observed": true,
+    "selected_rebuilt_category": "std::generic_category()",
+    "native_category_object_identity_equivalent": false,
+    "native_message_what_locale_EH_ABI_equivalent": false
+  },
+  "original_inputs_read_by_author": false,
+  "original_execution": false,
+  "original_modification": false,
+  "retained_function_records": [
+    {
+      "va": "0x18004a648",
+      "pseudo_evidence_id": "ev_7ab330ead8c2bea23b7bc85894ced40ceef92999f25fb9614951e2c6a2c60454",
+      "line": 60556,
+      "normalized_text_sha256": "4c52b2696c97fb94ae6f08d80bf41457d57c1f47fcf1d09a2258858fa6ddf306"
+    },
+    {
+      "va": "0x18004a690",
+      "pseudo_evidence_id": "ev_5813a327602946a15febc8277e7c112a95b53159b103e9633a7ee959d5888c20",
+      "line": 60573,
+      "normalized_text_sha256": "7104eb65a7cd2d55046d6221484100d58be1c9fda81e338698e87f759defe8e1"
+    },
+    {
+      "va": "0x18004a528",
+      "pseudo_evidence_id": "ev_3f36c1c34438642b5d9e9ba9495050ecae928b16ce836e823af1645df06cdc22",
+      "line": 60502,
+      "normalized_text_sha256": "669bd1a7e47fb570a961159cdc61a1d8410174d9cb72be3e93f1cc0de856fdf3"
+    },
+    {
+      "va": "0x18000fe60",
+      "pseudo_evidence_id": "ev_a4d693e411afb626e5e7c3c3dd130c68e02975e25ba85568d15281ee8de1aa47",
+      "line": 13077,
+      "normalized_text_sha256": "b3963ac157a16e6fbe4b26eba18797db8787832de8b23f6727562da1c8cf6ed0"
+    },
+    {
+      "va": "0x18000f240",
+      "pseudo_evidence_id": "ev_475ddef1f44ad1a4a741c6c7890012d6eca2c25a78e43563132240739ccc3508",
+      "line": 12538,
+      "normalized_text_sha256": "b7d8f961fe54fc795bf71353b7a3f0fbde99236830d5a3a10f64f4177db39c98"
+    },
+    {
+      "va": "0x1800480d8",
+      "pseudo_evidence_id": "ev_4c541d3fe7a28e071c6a579a8abdbfea28aa651cae7a7b40ed71c4bca8fd03ed",
+      "line": 57968,
+      "normalized_text_sha256": "2c566c5883e12a2eda2eefc0099ac328a6ec7a50d58865cc690ef299fb5679b1"
+    }
+  ],
+  "parent_static_original_data_read_bytes": 8
+}

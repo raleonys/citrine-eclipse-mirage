@@ -1,0 +1,26 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source": "Retained REA/Ghidra function evidence, no new active target",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "functions": [
+    {
+      "va": "0x180064538",
+      "assembly_evidence": "ev_4035e19b909f3397348697b76283341920c8140c97f99123123764d4bd4429bb",
+      "pseudocode_evidence": "ev_5ad98d1bcf49e563ce7548264b64029ec2d316d10377d62413db069105093978"
+    }
+  ],
+  "scope": "Bounded normal-flow source reconstruction and separately labeled new composition",
+  "target_execution": "none",
+  "runtime_equivalence": "not established",
+  "composition_evidence": [
+    "../anadius-crt-argv-parser-source/evidence.json",
+    "../anadius-crt-argv-source/evidence.json",
+    "../anadius-crt-byteclass-source/evidence.json",
+    "../anadius-crt-heap-source/evidence.json",
+    "../anadius-crt-error-source/evidence.json",
+    "../anadius-crt-invalid-source/evidence.json",
+    "../anadius-crt-startup-bridge-source/evidence.json"
+  ],
+  "composition_scope": "One original cleanup body; new ArgvEffects and Entry bridge are source adapters, not additional recovered original functions"
+}

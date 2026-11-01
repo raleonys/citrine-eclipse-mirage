@@ -1,0 +1,109 @@
+{
+  "schema": "recycler.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x1800283c0",
+      "pseudo_evidence": "ev_9f53a74fdc3280f360d1ce5770b00ecf0d27721d1f88cc316eeb303a6ea950b8",
+      "assembly_evidence": "ev_1c51eada2fac2491b445eaad1ca3641ce117107dbab6a3a71dd6a7392dc453bc"
+    },
+    {
+      "address": "0x180026aa0",
+      "pseudo_evidence": "ev_d4f71cf8b783578dcbaae1a45c68bba3e631d5381f8102b4c3d6ec82db60b419",
+      "assembly_evidence": "ev_5263c2b7208ef28e3ec671a729ee180d773d5dcd6ba45d16972e7ebef04cba21"
+    },
+    {
+      "address": "0x180047fc4",
+      "pseudo_evidence": "ev_c933bb442723ed2e59dc0e04440f3cd4c75176e6c2b8b14202c189a43adecc25",
+      "assembly_evidence": "ev_44ed081f5076c59faf39bf04bb3bdbc635901950a74d925ff8fbdcb1794ac6a2"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "recycle.hpp": "027923db8624434cf98274a27d667ff2fb2aec082a65e0998f1200c81efeb60f",
+    "recycle.cpp": "aeb139759f836963ee7216d1a95e4eb2149f41c9f29463f4d2712be416d2836d",
+    "recycle_storage.hpp": "e39f05d8b3bcf95985e64149561b8d3158f3865aee4cabea0e2d151d80351560",
+    "recycle_storage.cpp": "cc08df14c064dd41f2fdd4a0f3752869b57f01d9955ff25efc83fc0e0fd9ea5e",
+    "recycle_tests.cpp": "850ff073df71fdd5dd8c430e2d2ee0b3a335e0954af285be947e26a4c817d461",
+    "recycle_storage_tests.cpp": "d4e12d318e147d7411e1423bf496326ee92fc392341db20daa52357f96428d6a",
+    "build.ps1": "e1bd01853b5a63c435b88569267ddb0eda60404b320d989bab4cebde415bdeeb",
+    "CMakeLists.txt": "5cb330c5be2382aaf6c24d0d8501b484b983568317c3a6eec8d45205678d9122",
+    "README.md": "030deeac3b3ffcbb2da8ad13510e646d1c22fd523f46a137e58e0221d2a2a63a"
+  },
+  "support_hashes": {
+    "recycle-evidence.pseudo.c.txt": "7ff1acd82d8736dc5a0e8df2ca49a5c6c377d70fb2b6c7c6f3f49bd5775c8f03",
+    "recycle-evidence.asm.txt": "1b93bd0ea6d7d5e60d8fd510ad272b1b0549692aa0a8b7b4971fcca80da7c5ae",
+    "recycle-flow-audit.md": "2d6e90288b883cf76a65e49d0c2421471ffc88b530386a1e1449900d461ed045",
+    "recycle-flow-audit.json": "1412e9d9f6b62dc73bf2f127b2d85fcef3be6b2ad47cbb3cd4076d450923de18",
+    "recycle-review.md": "3941872732feee3f49ece0f8b11f6b2872d3afb65ff49e783c18ac1f1a2ab48b",
+    "recycle-review.json": "d7273c1fe9b312300b9cb99cbe2d8f3fa709c776da93f0a512f59c25654bcf6b",
+    "recycle-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x1800283c0"
+  ],
+  "new_original_procedures": 1,
+  "required_providers": [
+    "047fc4 native exception construction/unwind",
+    "Native ASIO container/operation layout and completion dispatcher",
+    "Service/executor/global/allocator/category/exception effects"
+  ],
+  "claims": [
+    {
+      "finding": "Original key modulo buckets; sole/head/tail/interior bucket edits",
+      "addresses": [
+        "0x1800283ce",
+        "0x1800283d2",
+        "0x1800283f2",
+        "0x180028409",
+        "0x180028416"
+      ]
+    },
+    {
+      "finding": "Key zero and captured freeFirst/after before equality-only limit;047fc4 opaque token0846b8; partial failure leaves bucket/key edits",
+      "addresses": [
+        "0x18002841e",
+        "0x18002842a",
+        "0x180028434",
+        "0x180028459",
+        "0x180028495",
+        "0x18002849c"
+      ]
+    },
+    {
+      "finding": "Distinct inline list subobjects cannot self-splice; free++ and active-- modulo64",
+      "addresses": [
+        "0x180028437",
+        "0x180028446",
+        "0x18002845f",
+        "0x180028467"
+      ]
+    },
+    {
+      "finding": "Six pointer stores with intervening live loads; insertion before freeFirst makes new free head and LIFO reuse; mapSize decrement last; no allocation/free or operation FIFO reset",
+      "addresses": [
+        "0x18002846f",
+        "0x180028476",
+        "0x18002847d",
+        "0x180028480",
+        "0x180028484",
+        "0x180028488",
+        "0x18002848c"
+      ]
+    }
+  ],
+  "independent_production_review": "PASS; recycle-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Actual recovered recycler with selected host storage and controlled effects; no real network/IOCP",
+  "unproven": [
+    "Native map constructor/insertion/rehash/allocator/teardown",
+    "Native ASIO layout/dispatcher/service/container/allocator/lifetime/concurrency",
+    "Native error padding/vtable/global/SEH/unwind/ABI",
+    "Full DLL integration and original runtime differential"
+  ]
+}

@@ -1,0 +1,27 @@
+/* 0x1800033a0 FUN_1800033a0; Evidence ev_503f4ea3c84034bdcba37c5bab8c21622f3c49f5ed6db330dd2f530060498520 */
+
+void FUN_1800033a0(longlong param_1,undefined8 *param_2)
+
+{
+  if (param_2 != (undefined8 *)0x0) {
+    *(int *)(param_1 + 0x70) = *(int *)(param_1 + 0x70) + -1;
+    *param_2 = *(undefined8 *)(param_1 + 0x68);
+    *(undefined8 **)(param_1 + 0x68) = param_2;
+  }
+  return;
+}
+
+
+
+
+/* 0x180005a20 FUN_180005a20; Evidence ev_df5bc8292ee95a900d1b02c812064d25be2cc214ec36d768fec18c3da8b9e8c8 */
+
+void FUN_180005a20(longlong param_1)
+
+{
+  *(int *)(param_1 + 0x7c) = *(int *)(param_1 + 0x7c) + -1;
+  return;
+}
+
+
+

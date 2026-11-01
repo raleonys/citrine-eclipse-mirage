@@ -1,0 +1,26 @@
+{
+  "tool": "REA binary_session",
+  "queried_in_package": "B35",
+  "open": false,
+  "server_identity": {
+    "package_version": "6.5.0",
+    "server_name": "rea",
+    "server_version": "6.5.0",
+    "command_path": "C:\\Users\\Skysect\\AppData\\Roaming\\npm\\node_modules\\rea-agents\\scripts\\rea.mjs",
+    "started_at": "2026-10-30T12:58:12.797Z",
+    "catalog_digest": "405725e736ec8dc8483435b970acbf20f9f26b9f1fd25203b992f5ab4cd2a4f4",
+    "alignment": "unknown",
+    "alignment_reason": "No external expected identity supplied; live identity was observed, not independently pinned"
+  },
+  "ghidra": {
+    "availability": "available",
+    "provider_version": "12.1.4",
+    "installation": "C:\\tools\\ghidra_12.1.4_PUBLIC",
+    "java": "21.0.12.1"
+  },
+  "target_opened": false,
+  "fresh_target_byte_queries": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "scope": "Compact transcription of current session identity/provider availability; source analysis reuses previously retained Ghidra evidence."
+}

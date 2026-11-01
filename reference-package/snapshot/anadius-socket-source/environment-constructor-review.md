@@ -1,0 +1,17 @@
+# Environment constructor independent source review
+
+Result: **PASS**, no material findings. Reviewer `environment_constructor_audit`, 2026-10-23. Two frozen production files were independently read against the complete retained `0x180023dd0` assembly/pseudocode and the existing `023cb0`, `021fd0`, `027a20` context. This reviewer did not execute tests or original binaries, edit production, access real configuration/tokens, or use a network target.
+
+Reviewed files: `outputs/anadius-socket-source/environment_constructor.hpp` and `environment_constructor.cpp`. The accompanying JSON binds their SHA-256 values and the independent flow-report MD/JSON hashes. Any later source mutation invalidates this review.
+
+`construct_io_environment_023dd0` implements one normal original body. Source schedule identity is resolved through an explicitly bound no-this slot00 type function. Its result plus eight uses address-width unsigned arithmetic and is passed to required `04d2d0` comparison with `0x1800a25c8`; exactly zero selects the sentinel branch. The CRT comparator and the native query implementation are not reconstructed by this source.
+
+The sentinel branch sets only native defined operations/state/schedule/executor fields, invokes actual existing `move_io_environment_023cb0`, and then checks the temporary's live destroy identity before optional destruction. The typed payload's default placeholders do not establish native payload initialization; providers must not inspect unspecified native payload or scratch bytes.
+
+The nonempty branch resolves and caches the slot58 function before the source's live operations query slot18. The cached factory is called with destination/query/scratch and no executor-this argument. It remains the chosen function when the query mutates or invalidates the executor table. Slot58 factory binding is separate from existing executor slot40 preparation.
+
+The existing `023cb0` source is reused twice without modification. Its stores reproduce the first native inline move ordering: copied operations and schedule, source sentinel reset before move callback, state reset afterwards, live executor reload then sentinel reset. The guarded first cleanup resolves prepared temporary's live operations after that callback. The second move targets final destination, then resolves intermediate's live operations and calls destroy unconditionally, including guard identity. There is no premature destruction of destination or automatic exception cleanup.
+
+`RecoveredConstructedWriteEffects` closes the previous mandatory `023dd0` provider by resolving the opaque allocator/member-address token to a stable caller-supplied source environment and invoking actual recovered source. Duplicate/missing/null binding rejection describes unsupported host projections; it is not claimed original control flow. Existing async-send and completion code, IoHandlerEnvironment, IoHandlerSentinels and move API are unchanged. Contexts, callable code and source bindings must remain valid; destination must be fresh, exclusively writable and stable throughout normal execution.
+
+Normal procedure count increase: **one**, `0x180023dd0`. Lookup helpers and source composition are not additional original functions. Mandatory native type query, RTTI comparator, factory58, operations/move/query/destroy implementations, allocator/lifetime/ABI, receive and completion application helpers remain open. Native concurrency, exception/SEH/unwind and full DLL equivalence are outside this PASS. No CRT production changes were made.

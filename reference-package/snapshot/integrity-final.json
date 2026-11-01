@@ -1,0 +1,64 @@
+{
+  "checked_at": "2026-11-01T09:23:48.6679744Z",
+  "targets_executed": false,
+  "targets_modified": false,
+  "scope": "Current DLL reconstruction inputs",
+  "verified_count": 4,
+  "unavailable_count": 1,
+  "inputs": [
+    {
+      "path": "C:\\Users\\Skysect\\Downloads\\version.dll",
+      "sha256": null,
+      "expected_sha256": "07f4da9e7cd87421cabcf6b3bbb5083760e5eae33b357ef2b019216677b3c543",
+      "matches_baseline": null,
+      "status": "unavailable",
+      "reason": "Dosya virüslü olduğundan veya istenmeyebilecek yazılım içerdiğinden işlem başarılı bir şekilde tamamlanmadı. : 'C:\\Users\\Skysect\\Downloads\\version.dll'.",
+      "current_read_attempted": false,
+      "note": "Previously observed antivirus denial; no retry or protection bypass attempted",
+      "prior_record_reference": {
+        "checked_at": "2026-10-24T14:12:30.0718206Z",
+        "sha256": "07f4da9e7cd87421cabcf6b3bbb5083760e5eae33b357ef2b019216677b3c543",
+        "note": "Historical reference only; current input hash was not verified. No protection bypass attempted."
+      }
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+      "bytes": 694272,
+      "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+      "expected_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+      "matches_baseline": true,
+      "status": "verified"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Downloads\\anadius.zip",
+      "bytes": 1742571,
+      "sha256": "25b7f60529bfb43e9881181de5a520bb8835b7b2128b652c7cc2988ae4649bc6",
+      "expected_sha256": "25b7f60529bfb43e9881181de5a520bb8835b7b2128b652c7cc2988ae4649bc6",
+      "matches_baseline": true,
+      "status": "verified"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Downloads\\Madden27.fixed.exe",
+      "bytes": 254177168,
+      "sha256": "85c7d199dd9b63b558eafe8652b2beca87a38fe6183f601c8cb30dd1f36be297",
+      "expected_sha256": "85c7d199dd9b63b558eafe8652b2beca87a38fe6183f601c8cb30dd1f36be297",
+      "matches_baseline": true,
+      "status": "verified"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Downloads\\anadius.cfg",
+      "bytes": 2079,
+      "sha256": "e57119ea43b67450edc56f864086b9e6912f787162be9eb65639b88d9404d460",
+      "expected_sha256": "e57119ea43b67450edc56f864086b9e6912f787162be9eb65639b88d9404d460",
+      "matches_baseline": true,
+      "status": "verified"
+    }
+  ],
+  "prior_separate_investigation": {
+    "path": "C:\\Windows\\System32\\notepad.exe",
+    "baseline_sha256": "3f543719a819a9769d8f138a02544f93af8b53ef1779a96bc2403715d9a55380",
+    "current_sha256": "468ffe129c395abf6b21a09efdf261910a95fb98aa982ead73caa7b2b684577e",
+    "matches_historical_report": false,
+    "note": "Historical notepad report remains bound to its original input digest. Current path was not reanalyzed; cause of any difference is unknown. Agent did not write the input."
+  }
+}

@@ -1,0 +1,170 @@
+[
+  {
+    "index": 0,
+    "pointer_va": "0x18008b3a0",
+    "name_va": "0x18008b450",
+    "raw_offset": 564304,
+    "utf16_bytes_sha256": "347807f4a3c4f7cc918f7617a53a68740dcbe8dedb6180470d50bee4a4c08a76",
+    "name": "api-ms-win-core-datetime-l1-1-1"
+  },
+  {
+    "index": 1,
+    "pointer_va": "0x18008b3a8",
+    "name_va": "0x18008b490",
+    "raw_offset": 564368,
+    "utf16_bytes_sha256": "b5c08b01e79e7a17c3d3287313712f4627da57aa5ea88add0a9fe55abb0a02bf",
+    "name": "api-ms-win-core-file-l1-2-4"
+  },
+  {
+    "index": 2,
+    "pointer_va": "0x18008b3b0",
+    "name_va": "0x18008b4c8",
+    "raw_offset": 564424,
+    "utf16_bytes_sha256": "cff62ecb5d159ba7c271b5cbcd1dc39f09a4f8400d6f527f9314db8a4d324dab",
+    "name": "api-ms-win-core-file-l1-2-2"
+  },
+  {
+    "index": 3,
+    "pointer_va": "0x18008b3b8",
+    "name_va": "0x18008b500",
+    "raw_offset": 564480,
+    "utf16_bytes_sha256": "338eccd1b7052c465a83031ae746196eb09b9f664b909c5ed9e97205939cc1e4",
+    "name": "api-ms-win-core-localization-l1-2-1"
+  },
+  {
+    "index": 4,
+    "pointer_va": "0x18008b3c0",
+    "name_va": "0x18008b550",
+    "raw_offset": 564560,
+    "utf16_bytes_sha256": "f7fc84e3007df790defb5ba64f3242c605e3977d01687bf874ae8e588717f557",
+    "name": "api-ms-win-core-localization-obsolete-l1-2-0"
+  },
+  {
+    "index": 5,
+    "pointer_va": "0x18008b3c8",
+    "name_va": "0x18008b5b0",
+    "raw_offset": 564656,
+    "utf16_bytes_sha256": "e91c6b5d92d63addec017295d5b8479439b2fc0fa93f41a15e80a4cf76183440",
+    "name": "api-ms-win-core-processthreads-l1-1-2"
+  },
+  {
+    "index": 6,
+    "pointer_va": "0x18008b3d0",
+    "name_va": "0x18008b600",
+    "raw_offset": 564736,
+    "utf16_bytes_sha256": "cdbae12581ad2eb098cf4e73b4cc8d101ddd0ee960daca9f276a4838b2a32dfe",
+    "name": "api-ms-win-core-string-l1-1-0"
+  },
+  {
+    "index": 7,
+    "pointer_va": "0x18008b3d8",
+    "name_va": "0x180088fe0",
+    "raw_offset": 554976,
+    "utf16_bytes_sha256": "1eb0a341fdb9b000b922ad4575fa9d0cdb3ddf72ba22ab18adaa0591cba0dda5",
+    "name": "api-ms-win-core-synch-l1-2-0"
+  },
+  {
+    "index": 8,
+    "pointer_va": "0x18008b3e0",
+    "name_va": "0x18008b640",
+    "raw_offset": 564800,
+    "utf16_bytes_sha256": "c0a445239b76e422d2bb59f382b03d3794694870cf7ea2b254b70cf5da593218",
+    "name": "api-ms-win-core-sysinfo-l1-2-1"
+  },
+  {
+    "index": 9,
+    "pointer_va": "0x18008b3e8",
+    "name_va": "0x18008b680",
+    "raw_offset": 564864,
+    "utf16_bytes_sha256": "c9040939a662073e3f969a275f5eadc1612c1652ee6d0f8a36925d2e6d9cc15b",
+    "name": "api-ms-win-core-winrt-l1-1-0"
+  },
+  {
+    "index": 10,
+    "pointer_va": "0x18008b3f0",
+    "name_va": "0x18008b6c0",
+    "raw_offset": 564928,
+    "utf16_bytes_sha256": "f482a76f3cbc4481e711ed52569155c7b606f7a966c247d2778d8acba84402b7",
+    "name": "api-ms-win-core-xstate-l2-1-0"
+  },
+  {
+    "index": 11,
+    "pointer_va": "0x18008b3f8",
+    "name_va": "0x18008b700",
+    "raw_offset": 564992,
+    "utf16_bytes_sha256": "7a1fdf1265de1d8759ba0cf9af409f27f5b6fe5f072a9a5aa817d86421c4d3af",
+    "name": "api-ms-win-rtcore-ntuser-window-l1-1-0"
+  },
+  {
+    "index": 12,
+    "pointer_va": "0x18008b400",
+    "name_va": "0x18008b750",
+    "raw_offset": 565072,
+    "utf16_bytes_sha256": "6455edb0e224a82346bf9e6d00ab123bfbe95751b6d4967ff8be731980627b89",
+    "name": "api-ms-win-security-systemfunctions-l1-1-0"
+  },
+  {
+    "index": 13,
+    "pointer_va": "0x18008b408",
+    "name_va": "0x18008b7b0",
+    "raw_offset": 565168,
+    "utf16_bytes_sha256": "3dff7b7078160af845e3921625275db36860b51f4b4ca16ddc0bdc9e75e623ed",
+    "name": "ext-ms-win-ntuser-dialogbox-l1-1-0"
+  },
+  {
+    "index": 14,
+    "pointer_va": "0x18008b410",
+    "name_va": "0x18008b800",
+    "raw_offset": 565248,
+    "utf16_bytes_sha256": "4ca241f46a69bc9e59d8c1b144e2d612631414f0366e055e0c00211ac417ee46",
+    "name": "ext-ms-win-ntuser-windowstation-l1-1-0"
+  },
+  {
+    "index": 15,
+    "pointer_va": "0x18008b418",
+    "name_va": "0x18008b850",
+    "raw_offset": 565328,
+    "utf16_bytes_sha256": "5e8db5bb57d50747da622272ce225580c1eabea377dd515487c40ad8b345f63b",
+    "name": "advapi32"
+  },
+  {
+    "index": 16,
+    "pointer_va": "0x18008b420",
+    "name_va": "0x180089020",
+    "raw_offset": 555040,
+    "utf16_bytes_sha256": "f13bc601140315bf38eb1acc78fd1e70b10c343142db1ddadc9488f30cd1103f",
+    "name": "kernel32"
+  },
+  {
+    "index": 17,
+    "pointer_va": "0x18008b428",
+    "name_va": "0x18008b868",
+    "raw_offset": 565352,
+    "utf16_bytes_sha256": "4f68fe1d9f1fdec951528b9d401596e8c18f6d50525f2ba16ee93fb86252fcdc",
+    "name": "kernelbase"
+  },
+  {
+    "index": 18,
+    "pointer_va": "0x18008b430",
+    "name_va": "0x18008b880",
+    "raw_offset": 565376,
+    "utf16_bytes_sha256": "766ec0faffa652207aa859a9ec3c6d67bcfc9606ac12b6656d9b1cbc8ea31c10",
+    "name": "ntdll"
+  },
+  {
+    "index": 19,
+    "pointer_va": "0x18008b438",
+    "name_va": "0x18008b890",
+    "raw_offset": 565392,
+    "utf16_bytes_sha256": "b2b2dae933527dc376655632dc6f475a411d770b3a8ad27598950801e6325f38",
+    "name": "api-ms-win-appmodel-runtime-l1-1-2"
+  },
+  {
+    "index": 20,
+    "pointer_va": "0x18008b440",
+    "name_va": "0x18008b8d8",
+    "raw_offset": 565464,
+    "utf16_bytes_sha256": "09e9e46a8875239b947c42ead3eb675e0fc25ec03470ca286e5ad3888b2049eb",
+    "name": "user32"
+  }
+]

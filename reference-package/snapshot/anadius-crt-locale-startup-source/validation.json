@@ -1,0 +1,37 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T13:51:49.5916848Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-startup-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-startup-source\\build\\locale_startup.o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-startup-source\\build\\locale_startup_tests.exe"
+  ],
+  "tests": "PASS 117 locale startup/reset/owned native FLS checks;4 own workers",
+  "partial_archive_sha256": "e4bf37d2b93e5fca628bc9558179f70eef7325e0034d640b474786aab5aeb6d0",
+  "sources": [
+    {
+      "name": "locale_startup.cpp",
+      "sha256": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba"
+    },
+    {
+      "name": "locale_startup.hpp",
+      "sha256": "e247e38439cbf09bcb1ca165e4df21b8ba91671d5ccdc985abab4db03eacadcb"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "0c64ec030eec3c860dcfc8d49abb6f05e62c354d873ec0d36f76a63bb433cfbc"
+    }
+  ],
+  "recovered_bodies": 3,
+  "scope": "Recovered locale direct initialization/reset normal flow;owned image data,actual locale/PTD/FLS/heap sources,4ownworkers;native fixture CS provider,exceptiontablefixture;full CRT initializer sequence/MB startup/ABI/SEH equivalence excluded",
+  "original_target_execution": "none"
+}

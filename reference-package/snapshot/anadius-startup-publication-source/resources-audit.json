@@ -1,0 +1,64 @@
+{
+  "schema": "startup-publication.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Resources retains Publication until Execution/users die; Execution immovable and observer single binding, no reset/reuse",
+    "matched binder constructs Milestones and ForeignDomain together; attachment verifies exact Execution view identity",
+    "provider proof retained by callback Domain; no ownership cycle or worker activation callback",
+    "flags/native MutexState/cache remain caller-owned; all concurrent accesses must use same Execution wrapper"
+  ],
+  "boundaries": [
+    "SourceGuard protects C++ owner/count, flags and lazy QPF/cache; recovered MutexState remains0x50 with original offsets",
+    "recursive source gate does not make native acquire/release/QPC reentry safe; supported OS operations nonreentrant with known outcomes",
+    "release both locks before observer, timing wait or Sleep; WinLastError preserved around added bookkeeping",
+    "acq_rel RMW stage chain publishes prior plain prefix payloads to all-bits acquire reader",
+    "server stage precedes run_context/worker completion; online/library stages precede thread/FLS exit",
+    "Host normal return may be engine-init failure; caller proof must establish actual hook/provider state",
+    "worker publication never schedules activation; controller must explicitly retry after all prefixes",
+    "remaining sharedstream/fallback/PTD/provider safety and other outside writers remain caller proof; final external quiescence unchanged"
+  ],
+  "failure_prefixes": [
+    "native Error5/6 or post-release throw emits no new event; existing native mutations retained, no rollback or retry safety invented",
+    "wrong issuer/invalid stage poisons milestone ledger; alias flag refs and reused issuer binding reject",
+    "initial flag values and unrelated supplied flag do not fabricate publication",
+    "existing observer/attachment cannot be silently replaced; matched attachment rejects wrong Execution identity"
+  ],
+  "open": [
+    "general callback overlap/reentry success",
+    "direct helper/second Execution/plain external state access",
+    "shared stream/fallback/provider concurrency",
+    "dynamic PTD/foreign CRT ABI",
+    "actual hooks/native unload/PE",
+    "7online foreign calls",
+    "configuration/license/legacy document",
+    "B10 historical review debt"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "2a9eb5586a115adb803f0fcb498ec88339065a95ad8eaf20ff1b1e6547290df5",
+      "after_sha256": "e145a8a1b99ed7b3e5ca2ba2a1f5cced2263207a6d8cbcaa5ec7fee13468c98d",
+      "reason": "Bind Execution observer and publish Host only after normal host initialize return, before attachment completion; milestone is not engine success"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.hpp",
+      "before_sha256": "b861b529c9551d6302107ebf57e2e6f0eec4881d7e6087b6921d0f641bcaf892",
+      "after_sha256": "d60af87a481bc8bc4f40a770808dab6f0c31cb2f7ae9a7e6bd10fb43ad8530d4",
+      "reason": "Retain startup publication owner in Resources; all Resources by-value consumers require rebuild"
+    },
+    {
+      "path": "anadius-execution-source/execution.cpp",
+      "before_sha256": "85b026aca0ea79f297c9b7a8b1c58ab008644cad04fab1b3503ca58b61bf393d",
+      "after_sha256": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+      "reason": "Serialize same-wrapper flag/native bookkeeping and clock cache; release source guard before polling Sleep and milestone observer, preserve WinLastError and native failure prefixes"
+    },
+    {
+      "path": "anadius-execution-source/execution.hpp",
+      "before_sha256": "af96b642cb8d454a293c7ed9e249be65432e7078f738ef2a937429704431a3ca",
+      "after_sha256": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62",
+      "reason": "Declare optional source milestone observer and immovable single-wrapper source gate; no recovered native mutex ABI change"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

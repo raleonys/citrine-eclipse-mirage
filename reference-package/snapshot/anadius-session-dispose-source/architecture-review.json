@@ -1,0 +1,156 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T18:56:24.424386+00:00",
+  "reviewed_source_hashes": {
+    "dispose.hpp": "256def5d449e2356e87317567034692af019ebcbebae0cf59e23a5385f7462ea",
+    "dispose.cpp": "4e8f1484343975650b289cdcc87316105928611e995e70bd8acaff87d318620d",
+    "dispose_tests.cpp": "331923a4ea52da333ad9bf3590c211348d5a1bdd09a24ddd20461c447f4a71d1",
+    "dispose_integration_tests.cpp": "f3afa92c4555b369f6f80a824d0168ac211a8af7e549b27673c7b64e716c009b"
+  },
+  "quick_results": [
+    {
+      "path": "work/b32-core-quick-results.json",
+      "sha256": "a1eaf20b4b128c037a773458f249d3f9d39c91b5e185030968190aa849726a18",
+      "checks": 54,
+      "executable_path": "work/b32-core-test.exe",
+      "executable_sha256": "df380e65721a0cd32dc5a5a823268e2815e712586293804fb357a8b78073d76f",
+      "execution_by": "/root standard quick; root production/core, integration authored by /root/b22_integration; reviewer did not execute"
+    },
+    {
+      "path": "work/b32-integration-quick-results.json",
+      "sha256": "390ed2c4232580d45054323b97f4ce28b453c7e99c2fbb06b0eb8c7cd09297bb",
+      "checks": 43,
+      "executable_path": "work/b32-integration-test.exe",
+      "executable_sha256": "108651a5719cdb5d2761f1574c1f3dcb07fec22a633ded31a60d0b4aeadf492a",
+      "execution_by": "/root standard quick; root production/core, integration authored by /root/b22_integration; reviewer did not execute"
+    }
+  ],
+  "root_checks": 97,
+  "independent_integration_record": {
+    "path": "work/b32-integration-agent-results.json",
+    "sha256": "f56482e3d8f613881a736151f9bb08955ea4d7b2f58ad0c9efcbb8de91b4362f",
+    "checks": 43,
+    "execution_by": "/root/b22_integration own run, not reviewer",
+    "executable_sha256": "6dbd8b3283fc6ae12884dbdaae12a38d527a2d6076ff025d5cdc210aff4cd0d0",
+    "log_sha256": "800d6eaa1ce976b72ba5825637fccbb1521ebc1d9016f655144e77bd004d1163",
+    "duplicate43_not_added_to_root97": true,
+    "historical_archive_sha256": "010c06c19125ffa89a625cf3d54b5478ec12b798d950985604e8082b924cb7df",
+    "historical_archive_verified_against_B30_ZIP_member": true,
+    "current_archive_rebuilt_by_common_build": true
+  },
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "RUNNING/PENDING unreviewed;249objects/245CPP/293groups/19terminal target not PASS here",
+  "baseline_package_sha256": "0f88d2066473ba25a94b0db64fdaa0f9d79ba5b1f81718188455ebe23ddb71e0",
+  "baseline_main_source_files": 846,
+  "baseline_main_sources_preserved": 846,
+  "inherited_B31_auxiliary_source_hashes": {
+    "entry.cpp": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+    "production_image.hpp": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866"
+  },
+  "inherited_B31_review_sha256": "c0cc848b029f7e1969019356b6eb64e15f49832d6f13d51d9d4fbd53aa6258ff",
+  "prior_source_files": 848,
+  "prior_sources_preserved": 848,
+  "current_source_files": 852,
+  "modified_prior_sources": [],
+  "source_inventory_counts_basis": "846 B30 ZIP bytes/manifest/current hashes independently matched plus2 B31 auxiliary files checked against prior independent review. Four new sources gives852combined snapshot target; final common/inventory not yet reviewed.",
+  "findings": [
+    {
+      "topic": "026880 exact deque clear",
+      "result": "PASS",
+      "evidence": "ASM ev_6d1aac9f1a3f0e278cf156dd8ecd40d5afb1881cbc1014c22f366b33ab4a8071; pseudo ev_585721b4cf162199c0fd03386d1d3b23345fe6bf552668015f3b6e9bac5b07af",
+      "observation": "Reverse logical index modulo64; selected string cached across free; only size0/cap15/firstbyte0 reset; count reloaded after free. Offset0 only after initially nonempty loop drains. Reverse retained block loop caches map_size with signed JLE/JG equivalent bit_cast<int64_t>, reloads live map each iteration and does not clear slots. Final map/size reload, unsigned size<<3 and final map/size reset match. Nonnull zero-length span differs from null. Core probes live count/map/size mutations, negative bound, threshold/wrap and retained offset."
+    },
+    {
+      "topic": "026570 exact ordered resource disposal",
+      "result": "PASS",
+      "evidence": "ASM ev_4721f071259f0f08eb60d96ed3bd1f1b2603864a224a766c2493f1fa35280260",
+      "observation": "CONTROLbase deque+d8/input+b8/socket+20/selfweak+18 maps to typed owner. Output clear then live proxy load/null BEFORE free16 includingnull. Input cap/address reload after proxy callback; cap+1 modulo64,4096 header+39 and unsigned padding<=31. Only input size/cap/firstbyte reset before actual024db0. Selfweak control loads after socket effects; weak/slot08 retains pointer/identity fields. No object/control access after potentially deleting callback."
+    },
+    {
+      "topic": "017420/026290 virtual deletion and no postdelete access",
+      "result": "PASS",
+      "evidence": "ASM ev_bf03878c45fa709dc9c54b26bb21d0f065a1b3b3a7d7dcb2141c0c268f8ca8f7; ev_7d65dd1db58e08d08433ac751b1a2544c4010a23f857d377e111e588fa8a55a4",
+      "observation": "Nullable017420 performs generic virtualslot10 flags1, tested with a different target type.026290 caches numeric identity, restores084750 before lowbit test, optionally frees1c8 and returns only cached value. Wrappers do not dereference freed object. Flags patterns and postrestore callback mutation are tested; integration performs actual C++ delete through final concrete control."
+    },
+    {
+      "topic": "Failure prefixes and allocator boundaries",
+      "result": "PASS",
+      "evidence": "dispose_tests.cpp ordered_dispose/empty_and_thresholds/live_reloads/failure_prefixes/delete_dispatch",
+      "observation": "54 core checks cover reverse order,4094/4095 boundary, UINT64_MAX cap+1 wrap,512-slot map, signed negative map size, live proxy/input/selfweak replacement, padding32/backwards header and free/socket/weak callback throws. Earlier writes remain and no fabricated rollback/reset/retry is added. Valid bounded typed allocations, not native fault/EH behavior, are the supported domain."
+    },
+    {
+      "topic": "Real constructor-to-disposal integration",
+      "result": "PASS",
+      "evidence": "dispose_integration_tests.cpp Alloc/Free/Factory/factory_read_eof/seed_quiescent_output/factory_frame_message_response",
+      "observation": "Actual023000 allocates final RecoveredSessionControl. Native-shaped read/frame/message source, plain/encrypted real XML/GetConfig and controlled response job drive production026880/026570/017420/026290. Real quiescent queued heap, three32-byte blocks and map free before proxy/input/socket/selfweak/control; last observer weak physically deletes C++ control. Free lower provides provenance only. Response scheduling remains controlled and033d70 lower uses semantic core/prefix writeback. Chosen pending-read/raw-job/EOF order is not general concurrency or full production server/write proof."
+    },
+    {
+      "topic": "Four normal mappings; no provider closure",
+      "result": "PASS",
+      "evidence": "dispose.hpp/.cpp and inherited owner/move/header contracts",
+      "observation": "These four are actual algorithms, not callback forwarding. Necessary026880 is direct disposal dependency. Source mappings can increase490->494, eligible494->498 and normal127->131; closed-native52 unchanged and new ABI/provider closures0. Actual SessionAllocator/free address-domain bridge,0228c0, accept/response/raw-job lifecycle and B31 PE hooks remain open."
+    }
+  ],
+  "blockers": [],
+  "classification": {
+    "new_normal_typed_body_addresses": [
+      "0x180026570",
+      "0x180017420",
+      "0x180026290",
+      "0x180026880"
+    ],
+    "expected_mapped_functions": [
+      490,
+      494
+    ],
+    "expected_eligible_functions": [
+      494,
+      498
+    ],
+    "expected_normal_body_claims": [
+      127,
+      131
+    ],
+    "existing_closed_native_functions_expected_unchanged": 52,
+    "final_inventory_pipeline_verified": false
+  },
+  "remaining_proof_obligations": [
+    "SessionFreeEffects/SessionAllocator must recognize actual projected string/block/map/proxy/control addresses and correct allocation domain, including headers and native byte requests. Existing numeric map-token providers need an explicit compatible address bridge; not every prior container combination is proven.",
+    "Serialized valid bounded typed state and externally established operation/raw-job quiescence are required. No native MSVC/vtable/deque layout, arbitrary invalid-memory faults or general concurrency/reentry proof.",
+    "Free/terminal/callback failures preserve source prefixes but do not authorize rollback, idempotent cleanup or blind retry. Original allocator/EH/SEH ABI remains open.",
+    "Weak slots deliberately retain stale pointer/identity;026290 may return freed numeric identity. No caller/wrapper may dereference after delete or dispose twice.",
+    "Integration response scheduling is controlled and message core is existing semantic lower with explicit writeback. Actual accept021b00/0271a0,0228c0 executor, server/response graph, raw-worker lifetime and unload still require concrete providers/proof.",
+    "B31 loader-aware hooks remain undefined; no new successful DLL link or final PE export/import/TLS/unwind proof is established.",
+    "Common249objects/245CPP/293groups/19terminal and final494mapped/498eligible/131normal/52closed require root final gates; reviewer did not audit common success.",
+    "No original/rebuilt DLL/game execution, new target byte/query, user CFG/token/profile or real network used. B18-B31 code-owner/PTD/publication/native ABI/lifecycle obligations continue."
+  ],
+  "claim": {
+    "new_normal_typed_source_bodies": 4,
+    "new_native_bodies": 4,
+    "native_body_claim_scope": "Four observed normal typed algorithms, not full native ABI/provider closure",
+    "new_native_closures": 0,
+    "new_native_ABI_or_provider_closures": 0,
+    "signed_cached_block_loop_and_live_field_reloads": true,
+    "partial_string_reset_and_retained_weak_slots": true,
+    "generic_slot10_flags1_and_no_postdelete_touch": true,
+    "actual_final_control_constructor_read_frame_message_disposal_tested": true,
+    "real_host_allocation_delete_with_injected_provenance_tested": true,
+    "response_scheduler_controlled": true,
+    "B31_production_hooks_defined": false,
+    "original_DLL_or_game_execution": false,
+    "actual_user_content_read": false,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Reviewer wrote only architecture-review.json/.md in this module, no production/test/pipeline edits and no executable reruns.",
+    "Root54+43=97 and separate author43 records/EXEs verified. Common rebuild changed current archive after quick capture; captured010c06... archive is independently matched to canonical B30 ZIP, preserving historical provenance."
+  ]
+}

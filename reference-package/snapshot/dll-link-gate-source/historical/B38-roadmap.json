@@ -1,0 +1,104 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B38",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B38",
+  "latest_dll_link_attempt": "B38",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B38 recovers typed normal029df0 socket factory,029590 holder reset and029660 retry from retained Ghidra C/ASM. Factory forwards exact low32 family/type/protocol, clears only Error.value before ignored IPv6 option; failure captures category before WSAerror. Reset caches socket and invalidates holder on all normal non-invalid paths after exact category/close/ioctl retry ordering. Generic retry preserves first reset/live scheduler work increment, atomic cancellation==1 status995 publication WITHOUT early return, exact socket/option/second reset, captured error direct post/fallback, unconditional immediate AcceptEx error, late CancelIoEx and028c00. RecoveredAcceptLower binds helpers with explicit typed resource identities; owning composition supports primary packet and null cancellation only. Early-cancel duplicate publication and alternate kernel finality remain unresolved and are rejected, not cast from opaque tokens. Distinct OwnedAcceptMemory.prearmed_api validates the already armed473-byte loan, live own region and packet immediately before SDK; no double arm. 874 prior source files unchanged,2 reviewed additive owned-provider edits,6 new=882 sources;258 objects(254CPP/4C),305 normal groups+19 terminal scenarios. 749 core+197 integration checks;501mapped/505eligible/139normal claims;3 new normal bodies,0 native ABI/provider closures,52 historical closures unchanged. Real own heap/FLS/IOCP and injected SDK only; original DLL/game execution and real network absent. Categories are typed stable identity tokens, native error padding/class ABI/EH/arbitrary concurrency unproven. Full Runtime/Transport/Scheduling/Resources factory, N5 compatibility vs native033d70 prefix binding, rawjob/context/kernel drain and loader entry remain open; genericCRT paused.",
+  "source_algorithms_native_inventory_unchanged": false,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Somut server Runtime ve Resources fabrikasının birleştirilmesi",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36",
+      "native_full_accept_session_flow_available": "B37",
+      "coherent_accept_IO_cache_available": "B37",
+      "native_accept_helpers_available": "B38"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B39",
+    "priority": 1,
+    "title": "Somut server Runtime ve Resources fabrikasının birleştirilmesi",
+    "requirements": [
+      "Assemble B35 owned server, B36 accept, B37 full session/coherent IO and B38 helper bindings into one owned Runtime/resource graph; require stable contexts and constructor ordering",
+      "Choose and document native-prefix033d70 message binding versus N5 normal-return compatibility; retain explicit message/application lower requirements",
+      "Complete truthful worker/raw-job/context/socket packet drain before final loader attach/detach hooks; cancellation intent is not kernel finality",
+      "Keep early-cancel multi-publication/alternate retry profiles unresolved unless independently evidenced; do not invent0228c0 or resume genericCRT"
+    ],
+    "exit_criteria": "A concrete reusable Runtime/Resources graph with explicit remaining policies and tested start/worker/stop lifetimes; loader hooks stay undefined until their real lifecycle obligations are satisfied."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "source_normal_bodies_added_in_B37": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ],
+  "source_normal_bodies_added_in_B38": [
+    "0x180029df0",
+    "0x180029590",
+    "0x180029660"
+  ]
+}

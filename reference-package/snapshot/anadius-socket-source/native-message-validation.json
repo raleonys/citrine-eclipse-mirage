@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "e222419fc1ede72d1c397d67e548de14fc5fbe91d9ff30ea4d590f5136c94742",
+  "test_results": [
+    {
+      "module": "socket_native_message",
+      "result": "PASS",
+      "output": "PASS: 1713 socket native message checks; typed033d70 request/cipher/parser retries, output codec/move, live event front and normal failure prefixes; lower providers/ABI/EH remain open",
+      "executable_sha256": "a628b7ff8f84c53a0ee88299c988eba2e9a15de4c294a0f8e3bb8e280e3c1fbd"
+    },
+    {
+      "module": "socket_native_message_integration",
+      "result": "PASS",
+      "output": "PASS: 2013 socket native message integration checks; actual033d70 final source bridge, native request retries/response codec/events to N1-N8 queue/send/finish; lower XML/cipher/growth/log providers and native ABI/EH remain open",
+      "executable_sha256": "18dd6cda10e2cd3658334aedd94894060cd7e0d5f24bd40c9f03ae70929c2a38"
+    }
+  ],
+  "core_checks": 1713,
+  "integration_checks": 2013,
+  "source_hashes": {
+    "native_message.hpp": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c",
+    "native_message.cpp": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+    "native_message_test_fixture.hpp": "b6b0befc7c8fd82bdf19b7f57956410a36d62b448d3b5be229ac2c5e00b39a04",
+    "native_message_tests.cpp": "5837f59174bd2e2bd202bde3b351fb198042cbb65e20dba90c49ded8f570a997",
+    "native_message_integration_tests.cpp": "dbed7d23e9f5461eff669b76a2c583ff5644babf99eb915be440e639107d7fb1",
+    "build.ps1": "d11b717100136f7dd773ad507b9d7fe845bc73061e75a90daf09e333375cb38d",
+    "CMakeLists.txt": "1550f47e5df0547848d85a51c9dbe0cb129261f7514a237d8c3df3383106c13c"
+  },
+  "original_procedures_added": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 0,
+  "execution_scope": "033d70 typed normal orchestration and final MessageDispatchApi source bridge; actual request decode/erase before parser/cipher/handler callbacks and failures, response/event codec and one-event pop; actual028d30 and N1-N8 queue/send/finish; XML/032d00/cipher/log/append/native ABI/EH providers remain open",
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Typed normal projection only; no native MSVC object/global/vtable/allocator/ABI/EH/SEH/concurrency/fault equivalence",
+    "Explicit per-call locals and coherent string/mutation memory required; bounded mapping failures are not native fault equivalence",
+    "Document XML/032d00/cipher/getters/lock/log providers stay mandatory; log-group internal callback-intermediate ABI not established",
+    "012350/007e30 lower growth providers remain mandatory; controlled fixture composition with008350/02b940 is not recovery of those helpers",
+    "Normal-only failure prefixes; no invented catch/rollback/unwind cleanup/unlock",
+    "New bridge resolves N5 deferred request-writeback gap for selected source; historical N5 adapter remains unchanged as alternate",
+    "Controlled023dd0/completion/injected send; no new027a20/IOCP/027c10 worker, real network or original execution"
+  ],
+  "previous_local_records": "32 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

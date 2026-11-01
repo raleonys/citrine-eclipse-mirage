@@ -1,0 +1,83 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "ffdb499a9f672a1006c27eae03cbd1ef165cc7fd85ad5eb699281c214f951a8f",
+  "test_results": [
+    {
+      "module": "socket_pool_destruct",
+      "result": "PASS",
+      "output": "PASS: 204 pool destructor core checks; four type/base identities,cached entry aliases both directions,LIFO/negative counts,live mutations,ordered resets,array free and exact failure prefixes; lower free/nativeABI/EH supplied",
+      "executable_sha256": "8348309dbd74a80a90b1ec19440b2668a3ef56994b1744edd1ab8815fc86cfd4"
+    },
+    {
+      "module": "socket_pool_destruct_integration",
+      "result": "PASS",
+      "output": "PASS: 10580 pool destructor integration checks; four scalar/SIMD source allocation/append/track/release/clear/destruct chains and001e00 reverse embedded-pool/vector/string cleanup; node-base/heap/free supplied,nativeDOM/ABI/EH open",
+      "executable_sha256": "85a231f8dc626277e6994c8fafb018e4ffdedcd52bc33c01d2656e6fe197b3dc"
+    }
+  ],
+  "core_checks": 204,
+  "integration_checks": 10580,
+  "original_procedures_added": 4,
+  "new_source_bridges": 4,
+  "new_source_allocation_adapters": 0,
+  "native_typed_providers_newly_closed": 4,
+  "new_unique_source_mapped_addresses": 4,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "pointer_only_free_interface_preserved": true,
+  "caller_edx_block_size_hints": {
+    "0x180001bb0": 4080,
+    "0x180001c30": 4056,
+    "0x180001cb0": 4032,
+    "0x180001d30": 4080
+  },
+  "array_free_callsite_only_rcx_defined": true,
+  "immediate_type_vtable_identities": {
+    "0x180001bb0": "0x18007fe38",
+    "0x180001c30": "0x18007fe98",
+    "0x180001cb0": "0x18007fe68",
+    "0x180001d30": "0x18007fe08"
+  },
+  "immediate_base_vtable_identity": "0x18007fa18",
+  "new_vtable_data_acquisition": false,
+  "initial_count_test_cached_before_type_vtable_store": true,
+  "execution_scope": "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory",
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Four001bb0/001c30/001cb0/001d30 normal pool destructor projections plus four final NativeDocumentEffects destroy_pool source bridges; cache initial count test before type-vtable store,retain do/while block-free loop,three QWORD resets,live noninline array free,then base-vtable store;pointer-only04b0f8 and node/parser/DOM/native pool/global/lifecycle/ABI/EH/concurrency remain mandatory",
+    "Initial raw count+64 nonzero test is cached before type-vtable store at pool+0;entry decision retains old CMP flags even when mapped alias changes count during store",
+    "Entered block loop is do/while:read live count,cache signed old index,decrement raw32 before live data/slot read;free block then test live count again;no positive clamp or artificial iteration cap",
+    "Pointer-only04b0f8 remains mandatory;block callerEDX hints4080/4056/4032/4080 are static facts,not a sizedfree ABI;array free has only RCX definitely defined and receives no invented size",
+    "After loop,three QWORD resets+68/+70/+78 precede live array pointer reload;if noninline data!=pool+10,free(data);basevtable07fa18 store comes only after that lower call",
+    "Preserve data pointer,capacity,inline bytes/stale entries;do not reset data toinline or introduce rollback;free/bounds failures leave committed prefix and skip later stores",
+    "Type vtables07fe38/07fe98/07fe68/07fe08 and base07fa18 are retained immediate code operands;no new table-byte acquisition;identities are never callable host pointers",
+    "Four final bridges close four historical NativeDocumentEffects destroy_pool providers (37→41);normal+bridge source variants are two definitions per one native address",
+    "Prior two semantic session adapters and one separate allocation dispatcher remain unchanged;document constructor/destructor and three pool clear routines are context only",
+    "Previous composition still requires block04b0bc allocation/0793d0 fill plus array04b100 allocation/078d30 copy/04b0f8 free;no additional lower CRT provider recovered",
+    "No new native import/data read;retained listings and prior complete data reused unchanged;REA checkpoint verifies identity/availability only",
+    "Originals never executed/modified;actual CFG/token/achievement contents never read;hash-only integrity separate;blocked version.dll/generated artifact never retried",
+    "CRT unchanged and paused;native free,node/parser/DOM/base lifecycle/global/vtable ABI/EH/concurrency open;full DLL incomplete,total percentage unmeasured"
+  ],
+  "previous_local_records": "44 earlier local records retain exact bytes and historical configuration hashes;current common build authoritative",
+  "original_execution": "none",
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x180001bb0",
+    "0x180001c30",
+    "0x180001cb0",
+    "0x180001d30"
+  ],
+  "independent_review_complete": false
+}

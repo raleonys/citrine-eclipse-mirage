@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "e3c5364cde9182f72f2f725c4d32704736a11a42743308bffb5e0b971f104edb",
+  "test_results": [
+    {
+      "module": "socket_response_containers",
+      "result": "PASS",
+      "output": "PASS: 1556 socket response container checks; actual009eb0/026670, independent copy/NUL/alignment, pointer permutation and zero oracle, cached/live fields and terminal prefixes",
+      "executable_sha256": "7c870ded4c99e7706dd3fc0b4e8995bf50c111b39cf8f78761066b59b0234daf"
+    },
+    {
+      "module": "socket_response_containers_integration",
+      "result": "PASS",
+      "output": "PASS: 348 socket response containers integration checks; actual009eb0/026670 plus N1/N2/N3/queued-send/finish source;13-message FIFO, two map growths; controlled allocation/constructor/completion and injected send",
+      "executable_sha256": "04651fca037f2ee83e186bd2489d463da45ea19e0d086aca4fbd733cb781437d"
+    }
+  ],
+  "core_checks": 1556,
+  "integration_checks": 348,
+  "source_hashes": {
+    "response_containers.hpp": "87a57bb2b3e5c7a10d944329719045724a6aa235dacf6bb143e41177c944e667",
+    "response_containers.cpp": "c1108f7835ac8e21ca3e05735e93ca55f4859127b556f6a5ff13644381ab0eb8",
+    "response_containers_test_fixture.hpp": "e2a50bceabd574f154d56cee3086430ec64a5cac754391b95a42633ebb753b7f",
+    "response_containers_tests.cpp": "7c9eeb0a56be5127807b7be66cf3edb7638dbbc787c8eab1b30e17992625c135",
+    "response_containers_integration_tests.cpp": "76c6e946dee1f2eaaee650cb71cfbdb88d2de2ec2226f0ed585726b2a9817547",
+    "build.ps1": "4936eabf585a5f558dd7de6ef83f1c5676c3c3505c8fc10587307ba08a5c8027",
+    "CMakeLists.txt": "cfa03f3a81dec1ae829b74b5d41900cd848bd9000206027d7fc0e7389c209ef5"
+  },
+  "original_procedures_added": 2,
+  "execution_scope": "009eb0 COPY/026670 growth normal bodies and2 final provider closures; actual N1/N2/N3/queue/queued-send/composed/finish;13-message FIFO and map0-to8-to16; controlled native allocation/free/terminal/byte-slot compatibility/033d70/023dd0/completion; injected AsyncSendApi",
+  "not_executed_by_new_tests": [
+    "native078d30/0793d0/allocator/free/terminal instruction bodies",
+    "real033d70/023dd0 provider bodies",
+    "native027a20/IOCP routing and handler scheduling",
+    "027c10/outer worker",
+    "SDK WSASend/real thread/socket/network or original DLL/game"
+  ],
+  "core_callee_injection": "Native lower effects controlled, actual009eb0/026670 and default N1/N2/N3/queue/send bodies are used",
+  "previous_local_records": "27 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

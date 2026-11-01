@@ -1,0 +1,62 @@
+{
+  "schema": "owned-original-provider.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Explicit code_lifetime must actually retain selected code/trampolines; arbitrary nonnull token is not executable validity proof",
+    "Exact runtime array is borrowed for backend lifetime; provider/factory retain code owner; Context binding lease keeps effects stable",
+    "Do not retain whole HostDomain when its callback_lifetime owns Context; dedicated engine/API/code owner avoids such cycles",
+    "Moved-from std::function may retain captured shared owner; tests explicitly clear remaining external factories/resources before final weak expiration check"
+  ],
+  "boundaries": [
+    "Created->Setup(controller live loads)->Ready(sealed10)->Stopped; observed sealed mismatch is sticky even after restoration",
+    "Native Owner completion seals before admission activation; protocol single-use; if remaining ready proof throws, repair proof then use Domain.activate_foreign, not reseal",
+    "No mutex spans original SDK call; retained SDK inputs/results/output-prefix/LastError unchanged",
+    "Pause false on active original keeps provider usable for in-flight callback; stop only after admission/native drain",
+    "False/throwing quiescence close retains binding and code; separate proof is still mandatory",
+    "Failed engine create may write a nonzero original slot; sealing is not a hook-success or readiness declaration"
+  ],
+  "open": [
+    "actual code-address/provenance validation and module pin",
+    "explicit engine uninitialize/unload",
+    "original SDK PTD lower pre/post boundaries",
+    "raw concurrent slot writes/ABA/transient restore",
+    "7online foreign calls",
+    "configuration/license/legacy document",
+    "B10 historical review debt",
+    "actual hooks/native CRT/EH/ABI/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "c6217769d167a1827f3bf7fdc1ba63761b5f256b5182175ba0fb5223b11ca6c1",
+      "after_sha256": "cbbca7a385d0f4093ab0404cc9e7b1a58073e6078f777290fd584e97344a9f9f",
+      "reason": "Construct retained exact-slot original provider and pass to final OriginalEffects base"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "19b7be706f26423cdd9b30c92a55246847c8e28b93ef5679cb832c89aea9762c",
+      "after_sha256": "52ae7404d7d5bacb2aff324752214f5d44529a2bdf5070b3da54badae6c06199",
+      "reason": "Optional original-provider factory constructed after RuntimeSeed reaches stable owner"
+    },
+    {
+      "path": "anadius-native-context-source/context.cpp",
+      "before_sha256": "991fc1b7f1df9eed1c84ff23aa517210a8092dc8d75e51f2743d04f689f8fb81",
+      "after_sha256": "68fad4a9c382b271219656736216c15b304e51d0bb18b57306acbb2810d6f3f6",
+      "reason": "Order original begin/seal/stop with admission and binding drain; retain code owner through failed close"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "before_sha256": "af1ff2398168e0c3d6c92ebcd99dcabf11b996b27852a5461e9ddad64378c090",
+      "after_sha256": "be650df275f531ffdec490a3c1a038c9a9b65fde624ab5f28ac00111fc100f63",
+      "reason": "Optional exact-slot OriginalProvider retained by final OriginalEffects, identity and resolved-address checks"
+    },
+    {
+      "path": "anadius-native-source/original_effects.cpp",
+      "before_sha256": "44e5dadee6249de342ff7c31c8beeb38a5109b0992c823156ed202aae23b0cf1",
+      "after_sha256": "420fedbd6aa1d5b30a4c97a3af0b71339cfdf86c49fb3f39a770fbf37b32b520",
+      "reason": "Explicit out-of-line destructor releases optional original provider through virtual base destruction"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "owned-callback-compiler-provider.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Shared CrtProvider retains locale and explicit invalid handler through Resources/ByteWide/copied one-shot factory",
+    "CheckedCrt retains lower provider and same ForeignDomain permission; no ownership cycle",
+    "NumericEncoding unique owns lower Calls and const selector/numeric pages",
+    "Selection constructs replacements before committing; failure keeps old resources"
+  ],
+  "boundaries": [
+    "select before foreign factory/publication; changing live providers not supported",
+    "No setlocale/_setmbcp/File-API-mode/global or thread invalid-handler setters",
+    "ByteWide invalid-output preclear precedes lower checkpoint, so denied lower call may retain that prefix",
+    "Exception LastError retained across ByteWide staging cleanup; no output rollback",
+    "Compiler C/other explicit locale is distinct from recovered PTD state and filesystem selector",
+    "Only selected four lower CRT calls/encoding calls checkpointed; arbitrary provider reentry and raw PTD ABA remain excluded",
+    "IsValidCodePage is availability validation, not guarantee retained flags accepted; aliases resolving UTF8 may report retained conversion failure"
+  ],
+  "open": [
+    "general concurrent provider state",
+    "7online foreign calls",
+    "configuration/license/legacy document",
+    "B10 historical review debt",
+    "actual hooks/native CRT/EH/ABI/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "1cec6448ec1e9b2e4e2f0a3f4014a115f7a037372e68d136e6b128943f4b889e",
+      "after_sha256": "c6217769d167a1827f3bf7fdc1ba63761b5f256b5182175ba0fb5223b11ca6c1",
+      "reason": "Dispatch selected owned CRT in narrow and byte-safe wide routes; retain lower exception LastError"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "276262274aee1a3ce4ce130e10637ce26675f4fcd7268c1c4d294c38314b5542",
+      "after_sha256": "19b7be706f26423cdd9b30c92a55246847c8e28b93ef5679cb832c89aea9762c",
+      "reason": "Optional owned context-aware CrtProvider retained by Resources and ByteWide; legacy table remains"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.cpp",
+      "before_sha256": "c4f85a5a76e2443f2474a3160cffefb4849d8b5267b293a9984c215ae2b8ed03",
+      "after_sha256": "2518a73bd5cf051c4bbcadef96fc8c2ec43741f68e1b8df812e4282183813ff4",
+      "reason": "Wrap selected owned or legacy CRT lower calls in same actual PTD pre/post permission as encoding"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

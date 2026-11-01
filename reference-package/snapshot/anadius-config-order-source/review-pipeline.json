@@ -1,0 +1,55 @@
+{
+  "schema": "config-pipeline.read-only-cross-review.v1",
+  "result": "PASS",
+  "reviewed_at": "2026-10-21T02:09:07.2251527Z",
+  "reviewer_scope": "Independent source/retained-static evidence review; root tests189checks reported, not rerun",
+  "files": [
+    {
+      "path": "outputs/anadius-config-pipeline-source/pipeline.hpp",
+      "sha256": "c8b1b863abbabe7480c5d6f0ed4051964194333c65d9a08fe93ecb5aef379b8e"
+    },
+    {
+      "path": "outputs/anadius-config-pipeline-source/pipeline.cpp",
+      "sha256": "018c61c3354ae541b7e4e7506b7fcfb12600689772b9e54e2d99122065c54378"
+    },
+    {
+      "path": "outputs/anadius-config-pipeline-source/pipeline_tests.cpp",
+      "sha256": "78949acfd8b16e372f01108cea80a55c7253524bbeb1d9a424eb49773c3dcc30"
+    },
+    {
+      "path": "outputs/anadius-config-order-source/order.hpp",
+      "sha256": "1e9f2b46e6a1cece859dc193ecb5573df3dc4bbee94ec00490d5264cedf7345f"
+    },
+    {
+      "path": "outputs/anadius-config-order-source/order.cpp",
+      "sha256": "70af2d1c3e948d6b1d2eca3e4339d19869ee731216dae2b85258e77cf33dd719"
+    }
+  ],
+  "findings": [],
+  "checked": [
+    "Raw bytes passed to parser exactly once, oneBOM only",
+    "Fresh parser state eachdocument; Config2 selection before conversion",
+    "Owned return survives byte/parser destruction",
+    "I/O,grammar,order failures propagate before log/application",
+    "All five final ordered collection paths rejected by scalar bridge before application",
+    "NativeFactory fixture writes/reads only chosen generated filename",
+    "<=8unique bound per retained container and first-copy stage remain explicit"
+  ],
+  "first_copy_proof": {
+    "move_preservation": "014b10 and0164f0 transfer/swap container;012820 existingkeyreturnswithoutlistmovement",
+    "root_copy": "019d52→0165c0→0162f0→017440→017570; current8,size<=8,load1 gives unchanged8; rehash stillruns",
+    "listing_shas": "See evidence.json; matched retained listings used directly",
+    "evidence_019ad0_asm": "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+    "evidence_019ad0_pseudo": "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd",
+    "destination_initialization": "019c4c calls014a90 for local188, container oflocal1c8",
+    "descendants": "010bc0→0132a0/014970→011ba0 copies sourcebucket8 thenreinsertssource traversal; recursivelyonecopyperchildcontainer"
+  },
+  "remaining_limitations": [
+    "Firstcopy order cannot standinforfinalsectionconsumerorder",
+    "Growth above8 notimplemented",
+    "No originalruntime/ABI/equivalence evidence"
+  ],
+  "production_edits": false,
+  "original_execution": false,
+  "real_user_cfg_read": false
+}

@@ -1,0 +1,32 @@
+{
+  "kind": "new SDK adapter provenance",
+  "checked_at": "2026-10-19T14:08:50.1888426Z",
+  "toolchain": "llvm-mingw-20261006-ucrt-x86_64",
+  "sdk_files": [
+    {
+      "path": "work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\heapapi.h",
+      "sha256": "df14bfc992e90063ac3d84be5ff19c337de70940e98a120483ab6a8b6dd14070"
+    },
+    {
+      "path": "work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\errhandlingapi.h",
+      "sha256": "fbbc422008445e0f0977984361d9fce142330474a833bce97d051c9b7825f466"
+    }
+  ],
+  "declarations": {
+    "heapapi": "HeapAlloc47, HeapReAlloc48, HeapFree49, HeapSize50, GetProcessHeap51"
+  },
+  "source_files": [
+    {
+      "name": "native_api.cpp",
+      "sha256": "e14c7e4c338d4a703d65c9e2cba9dab88b289348eff8fa61f19b661b28627289"
+    },
+    {
+      "name": "native_api.hpp",
+      "sha256": "2487bd65de259016d6232c6ed39dd1ad096f6ef927e10fbe19f7fb6b055d1b42"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "1cbc079f4700a4020b9efbf4ec04dc9d7af7127830a335864243144cc25e5d78"
+    }
+  ]
+}

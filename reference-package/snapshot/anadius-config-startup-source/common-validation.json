@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "config_startup",
+    "result": "PASS",
+    "output": "PASS: 335 Config2 startup checks; own generated files, all other OS/worker effects controlled",
+    "executable_sha256": "f98ed483b4dcc7f4e8a1ec788a54c6fa0aecb7b1a16dc0e5de81ae268f6bf9fd"
+  },
+  "execution_scope": "Actual Bootstrap/startup/configuration/application/hash/file/parser sources with3argConfigurationPass;CLI/configstateidentity,base/override/profile/avatar/cleanup/persistence/env/firstworker ordering;controlledsideeffects and generatedfixture only;nativeABI/OS/global/CRT/SEHexcluded",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-config-startup-source/startup_tests.cpp",
+      "sha256": "a8dd34f207ff2912a4cd1e883542766f13ccb2109662d57656f0999ea473d188"
+    },
+    {
+      "path": "anadius-config-startup-source/startup.cpp",
+      "sha256": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88"
+    },
+    {
+      "path": "anadius-config-startup-source/startup.hpp",
+      "sha256": "324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e"
+    }
+  ]
+}

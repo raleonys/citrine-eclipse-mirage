@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T13:17:26.4129180Z",
+  "prior_package_sha256": "f549b833e8e4455239cc8cb23aeeded8b1e107346537a2a6e52e0bffe31c1240",
+  "prior_source_count": 514,
+  "unchanged_prior_sources": 514,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/environment_constructor_integration_tests.cpp",
+    "anadius-socket-source/environment_constructor_tests.cpp",
+    "anadius-socket-source/environment_constructor.cpp",
+    "anadius-socket-source/environment_constructor.hpp"
+  ],
+  "current_sources": 518,
+  "current_documents": 202,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 20,
+  "validation_mirror_pairs": 18,
+  "native_objects": 175,
+  "cpp_objects": 171,
+  "c_objects": 4,
+  "normal_test_groups": 163,
+  "terminal_cases": 19,
+  "socket_groups": 36,
+  "new_checks": 1170,
+  "new_tests": [
+    {
+      "module": "socket_environment_constructor",
+      "result": "PASS",
+      "output": "PASS: 544 socket environment constructor core checks; actual023dd0, zero and signed nonzero comparator, wrapped type identity, cached factory despite executor deletion, live moves and guard cleanup, exact exception prefixes and bounded registries",
+      "executable_sha256": "546c7d00a4aa14358452cce3fda31b9fafc3b0a1ac174a05e3be9089a39fdd39"
+    },
+    {
+      "module": "socket_environment_constructor_integration",
+      "result": "PASS",
+      "output": "PASS: 626 socket environment constructor integration checks; actual023dd0/021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends",
+      "executable_sha256": "8675a8e22b4bced58917481b69961087c7ed14e583875ecbee0885476bba1ca1"
+    }
+  ],
+  "master_build_sha256": "cdfb84031483314361e94ca2f365617a71687f863acec74106391adc1d6937ff",
+  "common_build_script_sha256": "a2c260afddb12f08d7d2667bed811ed37eed6f16cf2cf143626d43a5bb399ca3",
+  "cmake_sha256": "a9d4eff758ed1f77494fd0aef91093b6c6326c6244884ad00994b45e85f57923",
+  "normal_source_procedures_added": [
+    "0x180023dd0"
+  ],
+  "new_original_procedures": 1,
+  "new_composition": "RecoveredConstructedWriteEffects closes previous023dd0 normal algorithm provider in actual composed-write/async-send chain; first inline-equivalent move and second actual existing023cb0 reused",
+  "independent_review": "PASS two frozen files; separate test author",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "required_providers": "Native slot0 typequery/factory58/move/query/destroy and RTTI04d2d0;025a70/025c40;allocator/reference/global/lifetime/concurrency/SEH/ABI/fullDLL",
+  "native_equivalence": "not established; typed identities and defined-field normal flow, injected SDK effects and synthetic fixtures; no native overlay or runtime differential"
+}

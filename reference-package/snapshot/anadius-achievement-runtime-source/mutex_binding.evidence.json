@@ -1,0 +1,119 @@
+{
+  "schema": "source-binding.focused-validation.v1",
+  "status": "SELECTED_OWNED_ACHIEVEMENT_MUTEX_BINDING_PASS",
+  "native_cell": {
+    "VA": "0x1800a3e08",
+    "offset": "+428",
+    "initializer": "0x180037b20",
+    "type": 2,
+    "writes": "037b20 clears [0,4) and[8,50), leaving reserved04 untouched, then04a698(type2)",
+    "destructor": "037f70 calls017a30 RET; no OS mutex destroy"
+  },
+  "native_evidence": {
+    "map": "outputs/dll-critical-path/aggregate-map.json",
+    "initializer_pseudo_id": "ev_63684b526e2b6b5810fd8bc4fac0b4430530bd981916046b87884e4c9ebae5a7",
+    "destructor_asm_id": "ev_2ec7531b888601db062b01ddc9b261926b0bb2a9c39cf12579c0999519e4bb42"
+  },
+  "implementation": [
+    "Backend owns stable MutexState before Resources and adopted Worker; uses recovered initialize_mutex04a698(type2). Host value initialization defines reserved04 without claiming native byte equality.",
+    "Worker original-controller/fiber Prepared-only one-shot binding selects exact root state and Resources execution Platform; forwards after Graph create and before server installation.",
+    "Graph original-worker/fiber Fresh-only binding accepts initialized idle type2 state, invokes no Platform callback and preserves legacy private std::mutex when unbound.",
+    "Bound achievement adapter invokes recovered04a6ac/04a6b4 with exact root state; count4c is the same uint32 cell viewed through its corresponding signed type, compile-time asserted.",
+    "Every lower Platform callback passes existing opaque pre/post guards outside metadata gates; successful unknown prefixes receive no invented reset/unlock.",
+    "Storage01eb00 receives no new mutex operation: native locking belongs to query030d30 and grant030010, not startup persistence."
+  ],
+  "focused_record": {
+    "path": "work/achievement-mutex-v1-results.json",
+    "sha256": "f1c1aa2ea4f0c640751cac9a047f93f43d8aecae137503d2c0c4a6cd04ddf3b8",
+    "seconds": 22.109,
+    "tests": [
+      {
+        "name": "application_graph",
+        "exit_code": 0,
+        "stdout": "PASS: 585 application-graph core checks\n",
+        "stderr": "",
+        "executable": "work/achievement-mutex-check-v1/application_graph_tests.exe",
+        "executable_sha256": "c162c7807f9d22c3ec379ce5426ee19a15c35fee3e616391c53802c61f92f231"
+      },
+      {
+        "name": "application_worker",
+        "exit_code": 0,
+        "stdout": "PASS: 184 application-worker core checks; actual startup barrier and SourceBackend routes with nine isolated retained prefixes\n",
+        "stderr": "",
+        "executable": "work/achievement-mutex-check-v1/application_worker_tests.exe",
+        "executable_sha256": "926e4979e4a39b942d81d8f9492547a1c683aaa735572d82671090e0f29470bf"
+      },
+      {
+        "name": "shared_global_bindings",
+        "exit_code": 0,
+        "stdout": "PASS: 46 shared achievement-path checks; actual Runtime/Storage aliasing and Prepared Worker guards, controlled external worker boundaries\n",
+        "stderr": "",
+        "executable": "work/achievement-mutex-check-v1/shared_global_bindings_tests.exe",
+        "executable_sha256": "2e088b4b494e9f7143b64557d088bb738a65b9c9e76316a8bbd00e0bf236ca2f"
+      }
+    ]
+  },
+  "production_units_fresh": {
+    "bootstrap_backend": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+    "application_graph": "outputs/anadius-application-graph-source/graph.cpp",
+    "application_worker": "outputs/anadius-application-worker-source/worker.cpp",
+    "licensing": "outputs/anadius-license-source/license.cpp",
+    "license_files": "outputs/anadius-file-source/license_files.cpp",
+    "windows_effects": "outputs/anadius-windows-source/windows_effects.cpp",
+    "configuration_filesystem": "outputs/anadius-config-storage-source/filesystem.cpp",
+    "configuration_persistence": "outputs/anadius-config-storage-source/persistence.cpp",
+    "configuration_factory": "outputs/anadius-configuration-factory-source/factory.cpp",
+    "key_processor": "outputs/anadius-license-source/key_processor.cpp"
+  },
+  "source_hashes": {
+    "outputs/anadius-achievement-storage-source/path_binding_tests.cpp": "b764309b7b46627eac8d42ad1b3b4094802b5aaf6b40aba55c673ddfc8db39ba",
+    "outputs/anadius-application-worker-source/worker.cpp": "0774b52887012db254474256711840a80168405a6baf922f38747e6a744e0f88",
+    "outputs/anadius-application-graph-source/graph_tests.cpp": "d73e51ef4621dcd3b656183516209f01286e1133df056de2aa5aad614dd39579",
+    "outputs/anadius-application-worker-source/worker.hpp": "86b7f1d9d8a08638ff5b1fd75b35458550f11b70f99decdab4a300c7aff44fb9",
+    "outputs/anadius-application-worker-source/worker_tests.cpp": "36c7de9aabaaed243c5755b4c41b6bb665b96cfef9c6ed42262744f8239dd3d2",
+    "outputs/anadius-application-graph-source/graph.cpp": "a80598a052244807496adea45cbb395ea9b7d42ccc15ffb5d3882ec147d76c8b",
+    "outputs/anadius-application-graph-source/graph.hpp": "b5bd0d35be5a225c5741c17a0afd2e98f68a100ea150ebdefd29fd9808041eb9",
+    "outputs/anadius-bootstrap-backend-source/backend.cpp": "387a92f58769d86329eba21a9cc7d62dfd61709f071cc0bcfd9eabc04a3aaff1",
+    "outputs/anadius-achievement-runtime-source/mutex_binding.hpp": "5a304da80e5da4e7fac12121c455ca0cc055c7aec8443f6c46a9104769c5c92e"
+  },
+  "ABI_scope": {
+    "Resources_layout_changed": false,
+    "CallbackStateView_layout_changed": false,
+    "Graph_Options_layout_changed": false,
+    "Graph_StateView_layout_changed": false,
+    "Graph_pimpl_layout_changed": true,
+    "Worker_concrete_layout_changed": true
+  },
+  "test_scope": [
+    "Actual QueryAchievements through Graph/XML/Router uses exact caller root SRW address once for acquire/release, restores idle owner/count and preserves unrelated mutex bytes.",
+    "Graph tests reject nonidle fields, repeated and late binding; successful binding is passive.",
+    "Actual Worker tests exercise original-thread, Prepared/once/idle and late/closed rejection; no-session full worker Graph retirement leaves shared state idle.",
+    "Actual Runtime/SourceBackend binds recording Worker and retains root state/platform through worker destructor.",
+    "These compositional tests do not execute one complete Runtime->Worker->QueryAchievements production route. Query test observes acquire/release boundaries, not held owner/count mid-serialization."
+  ],
+  "independent_review": {
+    "author": "/root/b22_provider_audit",
+    "production_result": "PASS",
+    "reviewer_execution": false,
+    "focused_proof_result": "PASS",
+    "verified_source_header_hashes": 177,
+    "verified_executables": 3,
+    "fresh_translation_units": 13
+  },
+  "limits": [
+    "Existing Graph opaque exception poisoning may deny Guard destruction and retain/terminate; no exception-unlock, broad concurrency or native EH equivalence is claimed.",
+    "Only bound Graph worker may use/mutate this selected state; owner/platform must outlive all consumers and locked prefixes.",
+    "Full native aggregate constructor/destructor ordering and loader hooks remain open; new native body count is zero.",
+    "Published B54 common inventory, snapshot and ZIP remain historical pending a coherent delivery milestone."
+  ],
+  "new_native_bodies_this_change": 0,
+  "full_constructor_closed": false,
+  "full_destructor_closed": false,
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "network": false
+}

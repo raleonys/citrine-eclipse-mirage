@@ -1,0 +1,9 @@
+{
+  "scope": "B35 frozen source/archive link revalidation",
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "result": "PASS",
+  "log": "work/b35-link-gate.log",
+  "common_log": "work/b35-common-final-build.log",
+  "common_log_sha256": "ac2c6a4004128d5e9a5801602562db0aee3055b3fdc6030aeff2ea5acfb93e6c"
+}

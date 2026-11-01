@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_recalloc",
+    "result": "PASS",
+    "output": "recalloc: 65549 checks PASS",
+    "executable_sha256": "f3cd104a4271db266179292d168f11fe95f0a04ec39cbb9dc14096acf39e755e"
+  },
+  "execution_scope": "Actual msize/recalloc normal control flow using recovered realloc; synthetic size/zero/storage/invalid providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-recalloc-source/recalloc_tests.cpp",
+      "sha256": "1d20a10c982fa4271cf46ccccc7f1e25b870ef94902b307530b464f929a49c30"
+    },
+    {
+      "path": "anadius-crt-recalloc-source/recalloc.cpp",
+      "sha256": "3569042ac08b500859183bc62bbaa33092beca248f5b25de06dc7421cd4ed10f"
+    },
+    {
+      "path": "anadius-crt-recalloc-source/recalloc.hpp",
+      "sha256": "30a12d22315aff19a2aa5e91cf0eff7cc9005e4dfd436707e6b27044a1436dea"
+    }
+  ]
+}

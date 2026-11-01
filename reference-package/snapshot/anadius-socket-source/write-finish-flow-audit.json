@@ -1,0 +1,62 @@
+{
+  "scope": "Independent complete retained 025a70 normal write completion audit",
+  "reviewer": "write_finish_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "full_listing_hashes_match": true,
+  "functions": [
+    {
+      "pseudo_evidence": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8",
+      "assembly_evidence": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7",
+      "address": "0x180025a70",
+      "newly_recovered": true
+    },
+    {
+      "pseudo_evidence": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61",
+      "assembly_evidence": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75",
+      "address": "0x1800261d0",
+      "newly_recovered": false
+    },
+    {
+      "pseudo_evidence": "ev_74e713f6d63b5db2c8594c89965baf991c280377ff6f5607819938f99daa863f",
+      "assembly_evidence": "ev_7b4a354660d536700feb53ad52ca0a2f961ca2042dbeb3a635143135bd1fe188",
+      "address": "0x18002a500",
+      "newly_recovered": false
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180025a70"
+  ],
+  "new_original_procedures": 1,
+  "rules": {
+    "caller": "Existing0261d0 private Error copy and tail+30 view; logical word88",
+    "success": "Saved owner and string; index=(map_size-1)&offset; cap>15 free; unsigned64 size+1,+39 and data-base-8 validation; actual04b0f8 call",
+    "advance": "Reset saved string size/cap/byte, decrement saved count, reset or increment saved offset, reload handler owner for02a500",
+    "error": "Cached signed32 code before0285b0; live error category after API; compare object+8 opaque identities and suppress only equal/code2",
+    "message": "Cached category object across006880; live message slot10 after begin;007990 returned stream; signed32 vbase displacement;01e510 newline low8;00fe90;00e1e0",
+    "cleanup": "Live local-message metadata after flush; explicit large-allocation validation/deallocation only; no invented RAII/SEH"
+  },
+  "providers_not_recovered": [
+    "02a500 next-write body",
+    "Category native storage/message slot10",
+    "Global stream helpers006880/007990/01e510/00fe90/00e1e0",
+    "Actual string allocations/header storage and04b0f8 CRT callee",
+    "025c40 receive body",
+    "Native ABI, factory/vtables, lifetime/concurrency/exception/SEH/unwind/full DLL equivalence"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "limitations": [
+    "Exactly one new normal original body",
+    "Typed logical fields and opaque identities are not native memory overlays",
+    "Exceptions model only normal completed prefix",
+    "No next-write provider body counted",
+    "No full DLL equivalence claim"
+  ],
+  "report_sha256": "28c952e4bd8d7f766e0f8f97cc1c2e6fdcc16463fdbfe41749c9bfa452bc39da"
+}

@@ -1,0 +1,67 @@
+/* 0x180023dd0 FUN_180023dd0; Evidence ev_d162fd99180d0294652d44b39fe2cceaf384a9996b3bae0f40e08fd0e2ac7f82 */
+
+/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */
+
+longlong FUN_180023dd0(longlong param_1,undefined8 param_2,undefined8 param_3,longlong param_4)
+
+{
+  code *pcVar1;
+  undefined **ppuVar2;
+  uint uVar3;
+  longlong lVar4;
+  undefined8 uVar5;
+  undefined1 auStack_d8 [32];
+  undefined1 local_b8 [8];
+  undefined1 local_b0 [16];
+  undefined **local_a0;
+  undefined8 local_98;
+  undefined **local_90;
+  undefined **local_88;
+  undefined1 local_80 [16];
+  undefined **local_70;
+  undefined8 local_68;
+  undefined **local_60;
+  undefined **local_58;
+  undefined1 local_50 [16];
+  undefined8 *local_40;
+  undefined8 local_30;
+  undefined8 local_28;
+  ulonglong local_20;
+  
+  local_20 = DAT_1800a1580 ^ (ulonglong)auStack_d8;
+  lVar4 = (*(code *)**(undefined8 **)(param_4 + 0x20))();
+  uVar3 = __std_type_info_compare(lVar4 + 8,0x1800a25c8);
+  if (uVar3 == 0) {
+    local_70 = &PTR__guard_check_icall_1800846c8;
+    local_68 = 0;
+    local_60 = &PTR_LAB_1800846e8;
+    local_58 = &PTR_FUN_180084770;
+    FUN_180023cb0(param_1,(longlong)local_80);
+    if ((code *)*local_70 != _guard_check_icall) {
+      (*(code *)*local_70)(local_80);
+    }
+  }
+  else {
+    pcVar1 = *(code **)(*(longlong *)(param_4 + 0x28) + 0x58);
+    uVar5 = (**(code **)(*(longlong *)(param_4 + 0x10) + 0x18))(param_4);
+    (*pcVar1)(local_b0,uVar5,local_b8);
+    ppuVar2 = local_a0;
+    local_40 = local_a0;
+    local_30 = local_90;
+    local_a0 = &PTR__guard_check_icall_1800846c8;
+    local_90 = &PTR_LAB_1800846e8;
+    (*(code *)ppuVar2[2])(local_50,local_b0);
+    local_98 = 0;
+    local_28 = local_88;
+    local_88 = &PTR_FUN_180084770;
+    if ((code *)*local_a0 != _guard_check_icall) {
+      (*(code *)*local_a0)(local_b0);
+    }
+    FUN_180023cb0(param_1,(longlong)local_50);
+    (*(code *)*local_40)(local_50);
+  }
+  return param_1;
+}
+
+
+

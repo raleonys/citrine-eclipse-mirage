@@ -1,0 +1,189 @@
+{
+  "schema": "pool-release.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x1800033a0",
+      "pseudo_evidence": "ev_503f4ea3c84034bdcba37c5bab8c21622f3c49f5ed6db330dd2f530060498520",
+      "assembly_evidence": "ev_b7d15db3601446cde12580c10ac5ad7d9eb1c2aa6ce5bfb3646f09c3c2800809",
+      "newly_recovered": true,
+      "recovery_scope": "new memory-only pool release/tracking normal projection and generic final source bridge; native allocation/node/parser/ABI providers open"
+    },
+    {
+      "address": "0x180005a20",
+      "pseudo_evidence": "ev_df5bc8292ee95a900d1b02c812064d25be2cc214ec36d768fec18c3da8b9e8c8",
+      "assembly_evidence": "ev_fc5e2131422789819e9bf0acf480c663ab946afa810969adb78f817d69d2ffb2",
+      "newly_recovered": true,
+      "recovery_scope": "new memory-only pool release/tracking normal projection and generic final source bridge; native allocation/node/parser/ABI providers open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x1800033a0",
+    "0x180005a20"
+  ],
+  "new_original_procedures": 2,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/pool_release.cpp",
+      "base": "NativeNodeClearEffects::pool_release",
+      "body": "release_pool_item_0033a0",
+      "closure": "RecoveredPoolReleaseEffects::pool_release",
+      "address": "0x1800033a0",
+      "native_abi_complete": false,
+      "scope": "0033a0 memory-only pool free-list release and005a20 untracked DWORD decrement normal projections;2 generic final RecoveredPoolReleaseEffects pool_release/pool_track source bridges dispatch only exact shipped target values; native allocation/node probe/destructor/parser/DOM/vtable/ABI/EH remain open"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_release.cpp",
+      "base": "NativeNodeClearEffects::pool_track",
+      "body": "track_pool_005a20",
+      "closure": "RecoveredPoolReleaseEffects::pool_track",
+      "address": "0x180005a20",
+      "native_abi_complete": false,
+      "scope": "0033a0 memory-only pool free-list release and005a20 untracked DWORD decrement normal projections;2 generic final RecoveredPoolReleaseEffects pool_release/pool_track source bridges dispatch only exact shipped target values; native allocation/node probe/destructor/parser/DOM/vtable/ABI/EH remain open"
+    }
+  ],
+  "native_typed_providers_newly_closed": 2,
+  "tagged_definition_variants_per_new_target": 1,
+  "target_dispatch_guards_are_native_bodies": false,
+  "reused_complete_vtable_evidence": {
+    "file": "node-delete-next-vtables.json",
+    "sha256": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a",
+    "new_read_performed": false,
+    "pool_read_evidence": "ev_7349a6f3b8db519dad314c7de8d04be1e89ad0c44e1b592d75731e5c20e44706",
+    "four_pool_vtables": [
+      "0x18007fe08",
+      "0x18007fe38",
+      "0x18007fe68",
+      "0x18007fe98"
+    ],
+    "release_target": "0x1800033a0",
+    "track_target": "0x180005a20",
+    "scope": "Complete N16 shipped initialized analysis-memory/loader-fixup read reused; no live runtime pointer observation"
+  },
+  "context_functions": [
+    {
+      "address": "0x180003030",
+      "pseudo_evidence": "ev_f0d8f947ec8be75ff8f8d98756eef10381d18d179adac4a13a2b449556abbc64",
+      "assembly_evidence": "ev_62653814fe73bda4ddc3c13653105d5eae5d8b8e23438a418eb6eb770c525aad",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180003240",
+      "pseudo_evidence": "ev_85f5d40be5f36d1fa85d93ac5e561c5df22a3923879f0ddc4fbe2ef681ff3a04",
+      "assembly_evidence": "ev_66a8781816232d9983f66d11708eff8ac7b7af8864cb6b8663030e90b072427d",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002b10",
+      "pseudo_evidence": "ev_72c7774e42e84de667e4a26375d6ca97e95a9b796b6aebe4122567c82f87ddd6",
+      "assembly_evidence": "ev_69676d992a02bd265c47a247cd170c8815221b7d90825447e0de7a237b156f39",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002600",
+      "pseudo_evidence": "ev_8e78b707d1a781815a1f68f2ca8f27a0af79b54f73e05ef12ae813734373a7c6",
+      "assembly_evidence": "ev_3bcc9c0bf4dcd2c6ec224b64614dac1a2459a19f35b72d0494668d93da66f038",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002960",
+      "pseudo_evidence": "ev_65d179a78369608cf6880a9dfc5d98aa344c97bda474d98972cf18e37663a7c3",
+      "assembly_evidence": "ev_dddd03633007c4bff924f221d212965ad8a9919050036732afd0b85c90e65b0d",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800027b0",
+      "pseudo_evidence": "ev_5dab40953bd8da1662aaa4fb65baf20814ff6e665b9630d23f74417506849903",
+      "assembly_evidence": "ev_1ccec149cea5b273c4134f38d196487eb2915f2905923f86a19a7fd613ca8cc7",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "pool_release.hpp": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5",
+    "pool_release.cpp": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5",
+    "pool_release_test_fixture.hpp": "96a1da1dd78e2bce60401ff26c1e9a2754c8b5c50dc42728208a38a076495ce7",
+    "pool_release_tests.cpp": "2156650413907076ca0a4df2e0fc98d8704e1077a1b7e04b2c94dcfa4cb31de2",
+    "pool_release_integration_tests.cpp": "81d60820c51386c320b8a5672b21223b887a1123561bfaa6bdfc7a242e0f7b3b",
+    "build.ps1": "b97b03ab4b18d5fe4d22a5ae999489ddff40eb06482735bde2f5b27ca23c5477",
+    "CMakeLists.txt": "a499f76b51371fd900f8bc13a3d0de6f4a66a59862b8c6fde8e06b072de77ceb",
+    "README.md": "f5350e76e3ac1ede22018f4f1c80e935c297fa8b0ff8a6aef935efea314f3a02"
+  },
+  "reused_source_hashes": {
+    "node_delete.hpp": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a",
+    "node_delete.cpp": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3",
+    "document_clear.hpp": "f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb",
+    "document_clear.cpp": "88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4",
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "native_message.hpp": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c",
+    "native_message.cpp": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+    "native_dispatch.hpp": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440",
+    "native_dispatch.cpp": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b"
+  },
+  "support_hashes": {
+    "pool-release-evidence.pseudo.c.txt": "b49c7198c1f3afa900d5330e66ac8942cefc09cafffd865bed73dd1b6f1db267",
+    "pool-release-evidence.asm.txt": "8bd3884afe483b68ddedfe6d18607dcacd1760781a7ad8d4ae6ae70417725652",
+    "pool-release-context.pseudo.c.txt": "1bf51228c987d61349b31d3e074ba8691d7eb0b3971459051f1b13c260612bee",
+    "pool-release-context.asm.txt": "5b3a39bb71a86a84fa057b7681560dd0613ebddf56d628281c5691f7090fe788",
+    "pool-release-flow-audit.md": "c37beea315e28decdaeeb6ef1ce08122a0ffaa535f9a8e74eddb6179d6ab3123",
+    "pool-release-rea-session.json": "8c6fcfa57db10aa993379849fc5b0ff2d78a7dbd02f747c158b7983567ef26f4",
+    "pool-release-source-review.json": "83e82f7bc8a0cf965bcb69fcac356d1a67ef4f49601c0d1d8807dc9b755c9d60",
+    "node-delete-next-vtables.json": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a"
+  },
+  "prior_target_presence": {
+    "0x1800033a0": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180005a20": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 613,
+  "integration_checks": 148389,
+  "new_checks": 149002,
+  "execution_scope": "0033a0 memory-only pool free-list release and005a20 untracked DWORD decrement normal projections;2 generic final RecoveredPoolReleaseEffects pool_release/pool_track source bridges dispatch only exact shipped target values; native allocation/node probe/destructor/parser/DOM/vtable/ABI/EH remain open",
+  "limitations": [
+    "Bounded raw-memory normal projections; no native DOM/object/global/vtable/lifecycle/ABI/EH/concurrency equivalence established",
+    "0033a0 null item returns without touching pool; otherwise cache pool+0x68 root, decrement live DWORD pool+0x70, store cached root at item+0, publish item at pool+0x68 in that order",
+    "005a20 decrements DWORD pool+0x7c; both counters wrap modulo2^32 with no positivity/membership/null-pool guard",
+    "Release recycles item storage as free-list link; no HeapFree, external allocator call, new CRT source or native pool allocation implementation",
+    "Generic final pool_release/pool_track guards are bounded dispatch rules for known targets0033a0/005a20; each target has one numeric tagged normal definition, not two",
+    "Four shipped pool vtables share slot+0x18 release and+0x20 track; complete N16 REA data-read evidence is reused unchanged, not a new read; initialized analysis pointers are not runtime pointers",
+    "Integration explicitly maps0x80 pool on same raw memory and uses controlled parser roots; no full native pool allocation or DOM/parser materialization established",
+    "Node virtual+0x38 full64-bit probe/+0x78 destructor,0041b0 parser,002b10/002600/002960/0027b0 pool allocation,remaining pool/DOM/vtable/native lifecycle/ABI/EH mandatory",
+    "No synthetic corrupted-graph recovery,rollback,catch or native unwind cleanup; finite mapped normal domains mandatory and fixture teardown is not EH evidence",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity separate; known blocked version.dll and generated version DLL never retried; CRT unchanged and paused"
+  ],
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Addressed assembly/source and synthetic memory/alias/failure-prefix oracles; independent bounded source review separate from full native equivalence review",
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "pool-release-source-review.json",
+      "reviewer": "/root/pool_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N18 pool allocation002b10/002600/002960/0027b0 inventory/contracts selected from shipped pool vtables; no new bodies claimed yet; remaining node virtual/parser/DOM/allocator/ABI/EH open; CRT stays paused"
+}

@@ -1,0 +1,170 @@
+{
+  "schema": "dll-link-gate.additive-package.v1",
+  "package": "B31",
+  "requires_base_archive": "dll-reverse-engineering.zip",
+  "base_archive_sha256": "0f88d2066473ba25a94b0db64fdaa0f9d79ba5b1f81718188455ebe23ddb71e0",
+  "contains_originals_or_DLLs": false,
+  "common_build_rerun": false,
+  "files": [
+    {
+      "path": "dll-integration-audit/execution-plan.json",
+      "bytes": 247810,
+      "sha256": "db41b6ef94b144e612dcd8ed9c10e524cdf51fa32d71cc90cc49b8f95f5a958e"
+    },
+    {
+      "path": "dll-integration-audit/plan-validation.json",
+      "bytes": 17023,
+      "sha256": "d9fab4919f08c9b1b047d2fa0c67ab4fcd4a14eaba4e688e6ac69971e022cc84"
+    },
+    {
+      "path": "dll-integration-audit/readiness.json",
+      "bytes": 30213,
+      "sha256": "6965b9aebf16f8c5800ba4ce110c937482718d3ce353f9efd2ceab201a498cf7"
+    },
+    {
+      "path": "dll-link-gate-source/anadius64.def",
+      "bytes": 112,
+      "sha256": "8a6cba4f2cf4b893c3a22ac312f675e9a68d3049ded9882dafe4232dbc2e46fe"
+    },
+    {
+      "path": "dll-link-gate-source/baseline/B30-CMakeLists.txt",
+      "bytes": 50866,
+      "sha256": "019ce008122c40034e4d582d855140ced4c820b56bf38c15571b3bd70664991d"
+    },
+    {
+      "path": "dll-link-gate-source/baseline/B30-execution-plan.json",
+      "bytes": 246799,
+      "sha256": "956565f86fec0ff13519bc94ebaf98990156bcb42e442d2b8fd2efc787c013d6"
+    },
+    {
+      "path": "dll-link-gate-source/baseline/B30-plan-validation.json",
+      "bytes": 15940,
+      "sha256": "27b23c81df0afc328696e39ef683b2f90c829451d180b1fe218e522638380cc1"
+    },
+    {
+      "path": "dll-link-gate-source/baseline/B30-readiness.json",
+      "bytes": 29589,
+      "sha256": "b95e7c31c8e4793af1b28502c2f151bf02b7f40fa0665f5d3633dced638241d9"
+    },
+    {
+      "path": "dll-link-gate-source/baseline/B30-source-workspace-README.md",
+      "bytes": 56679,
+      "sha256": "cff07e2a8335fd562765a67656cb419cbfa17202a44fb77f3b1c852a87758519"
+    },
+    {
+      "path": "dll-link-gate-source/build/run-20261030T1831228003731Z/entry-undefined-symbols.txt",
+      "bytes": 346,
+      "sha256": "c54075823846f528d2155caf7a4e401099575f4c21e125e5467b0bbb77aa2262"
+    },
+    {
+      "path": "dll-link-gate-source/build/run-20261030T1831228003731Z/entry.o",
+      "bytes": 1979,
+      "sha256": "418a7312f70886d5650613ba17b270e8d63eacddd59cc8915e9732d1568b86f8"
+    },
+    {
+      "path": "dll-link-gate-source/build/run-20261030T1831228003731Z/export-leaf-disassembly.txt",
+      "bytes": 277,
+      "sha256": "58aeea41e749ff9f53ebf2e03949de5384941fad732ff9bbbe6b3e5d1ec3fa55"
+    },
+    {
+      "path": "dll-link-gate-source/build/run-20261030T1831228003731Z/export_leaf.o",
+      "bytes": 293,
+      "sha256": "2d67c078e067260007f4ebcf44ff5c182d3b64e74896546630ac6b7831e58c8c"
+    },
+    {
+      "path": "dll-link-gate-source/build/run-20261030T1831228003731Z/link.log",
+      "bytes": 314196,
+      "sha256": "7607116e751350391255831bd8d938772d899c513ee850bf39f4af51d8db234c"
+    },
+    {
+      "path": "dll-link-gate-source/build/run-20261030T1831228003731Z/validation.json",
+      "bytes": 6092,
+      "sha256": "299042716765d719587d133092be1ab19d2cd4ab77263c4594cef78c3e1bfdd2"
+    },
+    {
+      "path": "dll-link-gate-source/build-link-gate.ps1",
+      "bytes": 6117,
+      "sha256": "7fc2bddff1d7488f90a1a7931f7b766eae3ffcb663aa1610edf590fa4f5a4175"
+    },
+    {
+      "path": "dll-link-gate-source/entry.cpp",
+      "bytes": 1416,
+      "sha256": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d"
+    },
+    {
+      "path": "dll-link-gate-source/evidence.json",
+      "bytes": 2150,
+      "sha256": "a0c5fc1407aea5e01289c143b95448d6d862b29740728d5eeb7b4f905f65c4f1"
+    },
+    {
+      "path": "dll-link-gate-source/export_leaf.S",
+      "bytes": 411,
+      "sha256": "f9f864181cc17d774e6be441d7321bcac6c8472793a4f377795c1eb0617e7a08"
+    },
+    {
+      "path": "dll-link-gate-source/normal-build-exit-check.json",
+      "bytes": 194,
+      "sha256": "ab2f261747e3c989b6e31bf359327828b60988fe26abec1838b1e2d644fb3af2"
+    },
+    {
+      "path": "dll-link-gate-source/production-root-review.json",
+      "bytes": 17104,
+      "sha256": "c0cc848b029f7e1969019356b6eb64e15f49832d6f13d51d9d4fbd53aa6258ff"
+    },
+    {
+      "path": "dll-link-gate-source/production-root-review.md",
+      "bytes": 5837,
+      "sha256": "928deac4154908305461a1983e4174bbfc97acf5c02389f7d86948a68082b559"
+    },
+    {
+      "path": "dll-link-gate-source/production_image.hpp",
+      "bytes": 1535,
+      "sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866"
+    },
+    {
+      "path": "dll-link-gate-source/rea-session-summary.json",
+      "bytes": 5515,
+      "sha256": "0b5b3ea208e796872f6abb0c4452a1083dc208558b6e12651534121176bff49c"
+    },
+    {
+      "path": "dll-link-gate-source/README.md",
+      "bytes": 4758,
+      "sha256": "618bffcd13eabf5e2148e0fe1831655a2bb2bec436284d1de23b8a8c7188dff6"
+    },
+    {
+      "path": "dll-link-gate-source/roadmap.json",
+      "bytes": 3472,
+      "sha256": "bcaec6953960a27a95cee5f5c40f757094f9e8417cc9f84968cbe966c5c48d44"
+    },
+    {
+      "path": "dll-link-gate-source/source-verification.json",
+      "bytes": 2355,
+      "sha256": "4c3e9ebe3eb80a845e2b6f04fa20534bb20a14a6c2de605e36aabf5b8764bbd7"
+    },
+    {
+      "path": "dll-link-gate-source/target.cmake",
+      "bytes": 1102,
+      "sha256": "698500e948e3b192f609343fc26f6639b245d9c519a61c4be249c6f40cf10634"
+    },
+    {
+      "path": "dll-link-gate-source/validation.json",
+      "bytes": 6092,
+      "sha256": "299042716765d719587d133092be1ab19d2cd4ab77263c4594cef78c3e1bfdd2"
+    },
+    {
+      "path": "dll-link-gate-source/verify-link-gate.py",
+      "bytes": 5238,
+      "sha256": "bc8828d09f1032566c2eb1b21e580ca05300d83fa9f1237e20f1b14bc32507c0"
+    },
+    {
+      "path": "source-workspace/CMakeLists.txt",
+      "bytes": 51061,
+      "sha256": "2a2840a486352e49721ae08ef4e30bc4f19583bbf31ef96cb72a248755423e87"
+    },
+    {
+      "path": "source-workspace/README.md",
+      "bytes": 56948,
+      "sha256": "02c9c1c68f1c0f8523e54a3f6d40eda01697e154bc07df7eef90cf7283759205"
+    }
+  ]
+}

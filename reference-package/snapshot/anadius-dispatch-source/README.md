@@ -1,0 +1,15 @@
+# LSX kaynak modüllerinin bağlantısı
+
+`Router`, özgün `0x180032d00` kayıt tablosundaki 39 komut adının 33 ayrı RVA'sını kaynak işlevlere bağlayan yeni entegrasyon katmanıdır. Ayrı bir özgün fonksiyonun geri kazanıldığı iddia edilmez. `routes.json` her kayıt için hedef modülü ve kaynakta gövde bulunup bulunmadığını gösterir.
+
+33 ayrı kayıtlı işleyicinin gövdesi kaynakta vardır: yedi bilgi/ayar, 18 diğer yanıt, beş içerik/achievement/avatar ve üç lisans işleyicisi. Bunlar 39 kayıtlı komut adını kapsar; bazı komutlar aynı gövdeyi paylaşır. `GetAuthCode` (`0x18002e3b0`), `RequestLicense` (`0x1800320c0`) ve `InvalidateLicense` (`0x180030c50`) için somut `license_recovered::Handlers`, `LicenseHandlers` arayüzünü uygular. Bu gövdelerin dosya/hash/token/online/UI/exit bağımlılıkları hâlâ zorunlu sözleşmelerdir; tüm lisans alt sistemi tamamlanmış sayılmaz.
+
+`NodeAccess`, XML okuyucudan sıralı öznitelikleri ve nullable `GetText` sonucunu alır. `messages::XmlNode` mevcut dar arayüzünde bunlar olmadığı için bu sınır ayrıdır. Writer somut `xml_recovered::MemoryPrinter` olmalıdır; ilgisiz writer veya kayıt dışı RVA entegrasyon hatasıdır. Request handle'ları yalnız bu C++ modelindeki çağıran nesnelere aittir, özgün DLL adresleri değildir. Gerekli string'ler kopyalanır; içerik isteklerinin öznitelik/çocuk ağacı önceden materialize edilir. Özgün allocation, lazy okuma, XMLDocument sahipliği veya MSVC ABI eşitliği ileri sürülmez.
+
+QueryPresence/AreChunksInstalled çocuk metni null ise bu değer writer'a aynen taşınır; otomatik boş metne dönüştürülmez. Özgün PrintString de `0x1800052ef` konumunda pointer'ı kontrol etmeden okur. Bu null yol geçerli/güvenli girdi alanı olarak sunulmaz ve entegrasyon testinde çalıştırılmaz.
+
+Content/Entitlement durum alanları Router kurulurken verilen span'lerdir. Çağıran, bu buffer'ların ömrünü ve adres/boyut kararlılığını korumalı; koleksiyonlar yeniden ayrılır/değişirse Router'ı güncel state ile yeniden kurmalıdır. Bu adapter otomatik global yeniden yükleme veya orijinal vector ABI'si değildir.
+
+`integration_tests.cpp` ve ortak `source-workspace/build.ps1` gerçek XML metni→okuyucu→mesaj döngüsü→yönlendirici→işleyici→yazıcı→AES bağlantısını birlikte test eder. 58 ortak kontrol geçti. Gerçek okuyucu, kanıtla seçilmiş sınırları eşleyen upstream tinyxml2 uyumluluk kaynağıdır; özgün sürüm/semantik eşitliği kanıtı değildir. İlk sentetik ağaç fixture'ları da önceki kontrat testleri olarak korunur. NUL framing, entity kaçışları, child-text filtreleri, error8 şifre algılama, error7 retry/ayrıntılı log, üç somut lisans gövdesi, cached-token doğrulama ve invalidate/blocked state sırası sınanır. Uygulama state'i ve OS/hash/token/provider sonuçları testte sentetiktir. Özgün DLL ile diferansiyel test değildir.
+
+`build.ps1` yalnız bizim sentetik test EXE'mizi çalıştırır. Özgün/yeniden derlenen DLL veya oyun EXE'si yüklenmez. ASIO/socket, gerçek paylaşılan global durum, dosya/persistence, online nesnesi, lisans ve CRT/ABI bağları bu entegrasyonla tamamlanmış sayılmaz. Tam bağımsız DLL üretmez.

@@ -1,0 +1,306 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "scope": "Read-only PE constants; no input execution",
+  "strings": [
+    {
+      "va": "0x180085118",
+      "file_offset": "0x83918",
+      "text": "QueryContentResponse",
+      "bytes_hex": "5175657279436f6e74656e74526573706f6e736500"
+    },
+    {
+      "va": "0x18008394c",
+      "file_offset": "0x8214c",
+      "text": "Game",
+      "bytes_hex": "47616d6500"
+    },
+    {
+      "va": "0x180085130",
+      "file_offset": "0x83930",
+      "text": "progressValue",
+      "bytes_hex": "70726f677265737356616c756500"
+    },
+    {
+      "va": "0x180083870",
+      "file_offset": "0x82070",
+      "text": "0",
+      "bytes_hex": "3000"
+    },
+    {
+      "va": "0x180083888",
+      "file_offset": "0x82088",
+      "text": "0000-00-00T00:00:00",
+      "bytes_hex": "303030302d30302d30305430303a30303a303000"
+    },
+    {
+      "va": "0x180080097",
+      "file_offset": "0x7e897",
+      "text": "",
+      "bytes_hex": "00"
+    },
+    {
+      "va": "0x180085140",
+      "file_offset": "0x83940",
+      "text": "contentID",
+      "bytes_hex": "636f6e74656e74494400"
+    },
+    {
+      "va": "0x180085150",
+      "file_offset": "0x83950",
+      "text": "availableVersion",
+      "bytes_hex": "617661696c61626c6556657273696f6e00"
+    },
+    {
+      "va": "0x180085168",
+      "file_offset": "0x83968",
+      "text": "displayName",
+      "bytes_hex": "646973706c61794e616d6500"
+    },
+    {
+      "va": "0x180085174",
+      "file_offset": "0x83974",
+      "text": "state",
+      "bytes_hex": "737461746500"
+    },
+    {
+      "va": "0x180085180",
+      "file_offset": "0x83980",
+      "text": "installedVersion",
+      "bytes_hex": "696e7374616c6c656456657273696f6e00"
+    },
+    {
+      "va": "0x180085270",
+      "file_offset": "0x83a70",
+      "text": "QueryEntitlementsResponse",
+      "bytes_hex": "5175657279456e7469746c656d656e7473526573706f6e736500"
+    },
+    {
+      "va": "0x180085290",
+      "file_offset": "0x83a90",
+      "text": "Entitlement",
+      "bytes_hex": "456e7469746c656d656e7400"
+    },
+    {
+      "va": "0x1800851d0",
+      "file_offset": "0x839d0",
+      "text": "ItemId",
+      "bytes_hex": "4974656d496400"
+    },
+    {
+      "va": "0x18008529c",
+      "file_offset": "0x83a9c",
+      "text": "Type",
+      "bytes_hex": "5479706500"
+    },
+    {
+      "va": "0x1800852a8",
+      "file_offset": "0x83aa8",
+      "text": "EntitlementId",
+      "bytes_hex": "456e7469746c656d656e74496400"
+    },
+    {
+      "va": "0x180083c18",
+      "file_offset": "0x82418",
+      "text": "EntitlementTag",
+      "bytes_hex": "456e7469746c656d656e7454616700"
+    },
+    {
+      "va": "0x180083c10",
+      "file_offset": "0x82410",
+      "text": "Group",
+      "bytes_hex": "47726f757000"
+    },
+    {
+      "va": "0x1800852b8",
+      "file_offset": "0x83ab8",
+      "text": "ResourceId",
+      "bytes_hex": "5265736f75726365496400"
+    },
+    {
+      "va": "0x1800852c8",
+      "file_offset": "0x83ac8",
+      "text": "UseCount",
+      "bytes_hex": "557365436f756e7400"
+    },
+    {
+      "va": "0x1800852d8",
+      "file_offset": "0x83ad8",
+      "text": "Expiration",
+      "bytes_hex": "45787069726174696f6e00"
+    },
+    {
+      "va": "0x1800852e8",
+      "file_offset": "0x83ae8",
+      "text": "GrantDate",
+      "bytes_hex": "4772616e744461746500"
+    },
+    {
+      "va": "0x1800852f8",
+      "file_offset": "0x83af8",
+      "text": "LastModifiedDate",
+      "bytes_hex": "4c6173744d6f6469666965644461746500"
+    },
+    {
+      "va": "0x180083970",
+      "file_offset": "0x82170",
+      "text": "Version",
+      "bytes_hex": "56657273696f6e00"
+    },
+    {
+      "va": "0x1800857b8",
+      "file_offset": "0x83fb8",
+      "text": "AchievementSets",
+      "bytes_hex": "416368696576656d656e745365747300"
+    },
+    {
+      "va": "0x1800857c8",
+      "file_offset": "0x83fc8",
+      "text": "AchievementSet",
+      "bytes_hex": "416368696576656d656e7453657400"
+    },
+    {
+      "va": "0x1800857d8",
+      "file_offset": "0x83fd8",
+      "text": "GameName",
+      "bytes_hex": "47616d654e616d6500"
+    },
+    {
+      "va": "0x180083954",
+      "file_offset": "0x82154",
+      "text": "Name",
+      "bytes_hex": "4e616d6500"
+    },
+    {
+      "va": "0x1800857e8",
+      "file_offset": "0x83fe8",
+      "text": "Achievement",
+      "bytes_hex": "416368696576656d656e7400"
+    },
+    {
+      "va": "0x1800841e0",
+      "file_offset": "0x829e0",
+      "text": "Id",
+      "bytes_hex": "496400"
+    },
+    {
+      "va": "0x1800857f4",
+      "file_offset": "0x83ff4",
+      "text": "Total",
+      "bytes_hex": "546f74616c00"
+    },
+    {
+      "va": "0x1800841e4",
+      "file_offset": "0x829e4",
+      "text": "Count",
+      "bytes_hex": "436f756e7400"
+    },
+    {
+      "va": "0x1800841f0",
+      "file_offset": "0x829f0",
+      "text": "Progress",
+      "bytes_hex": "50726f677265737300"
+    },
+    {
+      "va": "0x180085520",
+      "file_offset": "0x83d20",
+      "text": "ImageId",
+      "bytes_hex": "496d616765496400"
+    },
+    {
+      "va": "0x180084c88",
+      "file_offset": "0x83488",
+      "text": "Description",
+      "bytes_hex": "4465736372697074696f6e00"
+    },
+    {
+      "va": "0x1800857fc",
+      "file_offset": "0x83ffc",
+      "text": "HowTo",
+      "bytes_hex": "486f77546f00"
+    },
+    {
+      "va": "0x18007f7cc",
+      "file_offset": "0x7dfcc",
+      "text": "true",
+      "bytes_hex": "7472756500"
+    },
+    {
+      "va": "0x180084c58",
+      "file_offset": "0x83458",
+      "text": "LSX",
+      "bytes_hex": "4c535800"
+    },
+    {
+      "va": "0x180084c5c",
+      "file_offset": "0x8345c",
+      "text": "Event",
+      "bytes_hex": "4576656e7400"
+    },
+    {
+      "va": "0x180084c64",
+      "file_offset": "0x83464",
+      "text": "sender",
+      "bytes_hex": "73656e64657200"
+    },
+    {
+      "va": "0x180083c28",
+      "file_offset": "0x82428",
+      "text": "Achievements",
+      "bytes_hex": "416368696576656d656e747300"
+    },
+    {
+      "va": "0x180083990",
+      "file_offset": "0x82190",
+      "text": "ContentId",
+      "bytes_hex": "436f6e74656e74496400"
+    },
+    {
+      "va": "0x1800841fc",
+      "file_offset": "0x829fc",
+      "text": "Grant",
+      "bytes_hex": "4772616e7400"
+    },
+    {
+      "va": "0x180085528",
+      "file_offset": "0x83d28",
+      "text": "_",
+      "bytes_hex": "5f00"
+    },
+    {
+      "va": "0x180085530",
+      "file_offset": "0x83d30",
+      "text": "saved size: ",
+      "bytes_hex": "73617665642073697a653a2000"
+    },
+    {
+      "va": "0x180085540",
+      "file_offset": "0x83d40",
+      "text": "QueryImageResponse",
+      "bytes_hex": "5175657279496d616765526573706f6e736500"
+    },
+    {
+      "va": "0x180085554",
+      "file_offset": "0x83d54",
+      "text": "Image",
+      "bytes_hex": "496d61676500"
+    },
+    {
+      "va": "0x18008550c",
+      "file_offset": "0x83d0c",
+      "text": "Width",
+      "bytes_hex": "576964746800"
+    },
+    {
+      "va": "0x180085514",
+      "file_offset": "0x83d14",
+      "text": "Height",
+      "bytes_hex": "48656967687400"
+    },
+    {
+      "va": "0x180085560",
+      "file_offset": "0x83d60",
+      "text": "ResourcePath",
+      "bytes_hex": "5265736f757263655061746800"
+    }
+  ]
+}

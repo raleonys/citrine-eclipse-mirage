@@ -1,0 +1,32 @@
+{
+  "source_package": "B50",
+  "result": "SELECTED_SESSION_IO_PHYSICAL_PACKET_AND_NATIVE_SOURCE_RETIREMENT",
+  "owned": [
+    "Default AcceptOnly preserved; explicit SessionIo extends existing provider",
+    "Typed exact socket/private OV/source-control/buffer metadata before SDK effect",
+    "Private binding authority and post-SDK operand mutation checks",
+    "Original worker CancelIoEx; actual key0 physical packets and native owner0 source completion",
+    "Owned Posted native flag0 cleanup; fresh metadata only after source disposal",
+    "Actual SourceBackend/Runtime three-worker pending accept/read/write integration"
+  ],
+  "required_contracts": [
+    "Independent thread-safe stopped new application/foreign/rawjob admission and drained raw/deferred jobs",
+    "Controller never borrows worker Parent/raw operation views",
+    "Native cancel/post imports nonthrowing/nonblocking with no inline source callback",
+    "Matched owned source context and actual physical dispatcher route",
+    "Unknown outcomes retain graph; no guessed kernel status or blind retry",
+    "Full current source build uses matching headers"
+  ],
+  "not_proven": [
+    "Whole-server foreign/rawjob admission and finality or complete Resources factory",
+    "Early startup/interrupted/pre-firstReady recovery",
+    "Real WSARecv/WSASend/AcceptEx network interoperability",
+    "Unforgeable kernel origin for arbitrary hostile SDK providers",
+    "Queue emptiness from cancellation or NULL wake",
+    "Full native ABI/EH/concurrent scheduling/loader unload equivalence"
+  ],
+  "native_body_delta": 0,
+  "native_ABI_closure_delta": 0,
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null
+}

@@ -1,0 +1,205 @@
+{
+  "schema": "posted-operation.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180021820",
+      "pseudo_evidence": "ev_c2dbc60d3e6cbfc1dd46b28a5bd060319ea97dd547e51623a7efe3600615dc5d",
+      "assembly_evidence": "ev_f188724ed6018eaae49e0f50dc25352b97a82d7bc3110aa0c4c4718c5859a1c7"
+    },
+    {
+      "address": "0x180021ac0",
+      "pseudo_evidence": "ev_d38542a13780f219fb0e307cf5b4109d2b00fd32203172d5cb94abee72dc87b5",
+      "assembly_evidence": "ev_b280a42bef0b98cc4995df7dad235db7dde4f6f02ea710797ed1a2e13cbb02f4"
+    },
+    {
+      "address": "0x180022e40",
+      "pseudo_evidence": "ev_817921bf6b2b7cff9b7bfa05757a80e5b23013e0f55449083b1eda46585cf003",
+      "assembly_evidence": "ev_a55c67428f81178a2bfe1efc4911ef34fe4cbe9a10951302e31f72f84d942971"
+    },
+    {
+      "address": "0x180027120",
+      "pseudo_evidence": "ev_f425c8ac24472b602819c82c310740e2fc88d5f4a60e58154736736724d66c5e",
+      "assembly_evidence": "ev_75294ba7f94d4cf020f10912d553ed6a112dfa627904e4b1488719f67c5bf925"
+    },
+    {
+      "address": "0x180028ca0",
+      "pseudo_evidence": "ev_42ec7e831abcb5ab3f2ff84f793201026931158ab216047bd4e981225e47c4aa",
+      "assembly_evidence": "ev_3f2d026da45ec09918bf4c21b0e0d8baa5778c400ec1b239be06237c3da0e704"
+    },
+    {
+      "address": "0x180028fd0",
+      "pseudo_evidence": "ev_a7a887990cbabaffabcf3b1632bc78f305c6499c9a629f167b22cedfda97d43c",
+      "assembly_evidence": "ev_48d391ee0a2a878dad4603c15e86ec508fc9871a114cfd50691885ccffc8b734"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "posted_operation.hpp": "a64463108f00dd71fe71c9ac577c73d857e4a8fd67e56d7bb65313536e3c8aff",
+    "posted_operation.cpp": "4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d",
+    "posted_operation_dispatch.hpp": "045fc8fbcc9f6f3aa010c26a5e2365a83b147b91af0a98ff5ca864d882557bab",
+    "posted_operation_dispatch.cpp": "3d4685cafeeacc2b2a404c2277a1049d1dc9c3aa347430ae77e8fe51679734b1",
+    "posted_operation_tests.cpp": "66bcf6f0c2df218a12da7ef257caa7f328a0952a39609858bb9f787670a23920",
+    "posted_operation_integration_tests.cpp": "0195b957f13af6356a65b2c24a27183f9dd5c8f2491d6d69f601951d346d9070",
+    "build.ps1": "aa4e1beb96f6254cd14e7fce23cea6fc5c86354e7a55489531efe18a793d80af",
+    "CMakeLists.txt": "2a7893353258cc6bf01ce98bbaae914f2dfcf208c22a06266cb6cb602da6e94d",
+    "README.md": "97c2bc1d63006ee500410be0409fd5357c0f1751c562128ec1273fff561e3408"
+  },
+  "support_hashes": {
+    "posted-operation-evidence.pseudo.c.txt": "bfaa2c14bb505e1abd31842841e56e513a729dbfb251d1c88962758e88011e89",
+    "posted-operation-evidence.asm.txt": "0da87b059d1384dc76be0546788a9be40caf32c55386497b4594ca5346d6cbbf",
+    "posted-operation-flow-audit.md": "686f4c03d848aecc358b2e75a8fbc8b1d6a919e7ed3bb799523f5e7ebf97c51b",
+    "posted-operation-flow-audit.json": "149e79bccdf3cfcb26e7d40da07edaa70f438c1082b1ce4137987764ed9bca91",
+    "posted-operation-review.md": "1ef5459847f9e4ec741bb077d1b0576c7937901d7a65284db58ef773324c583e",
+    "posted-operation-review.json": "4e076a666b0ec571434838456e844a928404c389b1e90ffe6ea4ebe101845bfe",
+    "posted-operation-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x180021820",
+    "0x180021ac0",
+    "0x180022e40",
+    "0x180027120",
+    "0x180028ca0",
+    "0x180028fd0"
+  ],
+  "new_original_procedures": 6,
+  "required_providers": [
+    "04b0bc allocator and04b788 deallocator unchanged",
+    "PostedFunctor slot00(flag1 invocation / flag0 discard) implementation and native lifetime",
+    "Stable raw identity/binding/typedprojection with accessible bounded allocation span",
+    "Existing WorkerRunApi TLS and DispatcherApi SDK posting; real native TLS/atomic/storage bindings",
+    "Native exception/SEH/unwind/concurrency, native ABI and full DLL integration"
+  ],
+  "claims": [
+    {
+      "finding": "Unsigned64(requested+3)>>2; first2 cache slots headerbyte then moduloalignment; DIV0 only otherwiseeligible; hitclearbeforeheaderreload/markerwrite; missclearfirstnonemptybeforefree; allocunits*4+1; markerunits<=255else0; RCXtag unused",
+      "addresses": [
+        "0x18002182f",
+        "0x180021835",
+        "0x180021858",
+        "0x180021866",
+        "0x18002189c",
+        "0x1800218a0",
+        "0x1800218a4",
+        "0x1800218be",
+        "0x1800218c2",
+        "0x1800218cf",
+        "0x1800218d4",
+        "0x1800218eb"
+      ]
+    },
+    {
+      "finding": "Consume cachedfunctor, clearlocalslot then flag1 tailcall; null no-op",
+      "addresses": [
+        "0x180021ad3",
+        "0x180021adb",
+        "0x180021ae2",
+        "0x180021aeb"
+      ]
+    },
+    {
+      "finding": "Entryexecutor identity saved; bit0 skipsinline; initialscheduler+28key cachedbeforeTLS; firstmatchingstate0break; move-source/clear then consume; live localreload flag0; no later matchinginline",
+      "addresses": [
+        "0x180022e45",
+        "0x180022e5a",
+        "0x180022e63",
+        "0x180022e67",
+        "0x180022e78",
+        "0x180022e83",
+        "0x180022eb1",
+        "0x180022ecd",
+        "0x180022ed4",
+        "0x180022ee3"
+      ]
+    },
+    {
+      "finding": "SecondTLSget liveglobalindex; lowbyte originalentryexecutor tag; 0x48(72) bytes/alignment1; operationinitialized then sourcemove-clear; publication scheduler/flagslive reload; bit1hint ignored by callee; finalcleanup allocation/object zero",
+      "addresses": [
+        "0x180022e9a",
+        "0x180022ea0",
+        "0x180022f0e",
+        "0x180022f14",
+        "0x180022f18",
+        "0x180022f1d",
+        "0x180022f22",
+        "0x180022f2d",
+        "0x180022f44",
+        "0x180022f4a",
+        "0x180022f4e",
+        "0x180022f51",
+        "0x180022f54",
+        "0x180022f62",
+        "0x180022f66",
+        "0x180022f6b",
+        "0x180022f70",
+        "0x180022f7a"
+      ]
+    },
+    {
+      "finding": "Movefunctortolocal then objectnull; actualcleanup/cache/free BEFORE invocation; ownernonzeroonlyconsume; live localreload then flag0; nooperationaccessafterfirstcleanup; secondcleanup normalonly",
+      "addresses": [
+        "0x18002713d",
+        "0x180027141",
+        "0x180027146",
+        "0x180027153",
+        "0x180027158",
+        "0x180027167",
+        "0x18002716e",
+        "0x18002717d",
+        "0x180027185"
+      ]
+    },
+    {
+      "finding": "LOCKincrementwork32/queued1 BEFORE liveportpost(0,0,op); failureenterthen opnext0/livequeueappend/dispatchflagXCHG1/leave; noLastError/category/workrollback; thirdhintunused",
+      "addresses": [
+        "0x180028cb5",
+        "0x180028cc1",
+        "0x180028cc7",
+        "0x180028ccd",
+        "0x180028ce0",
+        "0x180028ce6",
+        "0x180028cee",
+        "0x180028cfa",
+        "0x180028d00",
+        "0x180028d07",
+        "0x180028d12",
+        "0x180028d15"
+      ]
+    },
+    {
+      "finding": "Liveobjectfunctorflag0 then frameobjectnull; allocation readAFTERcallback/cacheRBX acrossTLSget; currentTLSstateonly/first2cache; firstempty marker0x48to0/cacheidentity/frameallocationnull; full/noTLSfreecachedallocation thenframeallocationnull despitecallbackmutation",
+      "addresses": [
+        "0x180028fdd",
+        "0x180028fe6",
+        "0x180028ff4",
+        "0x180028ff7",
+        "0x180028fff",
+        "0x180029008",
+        "0x18002900e",
+        "0x180029019",
+        "0x180029026",
+        "0x18002903b",
+        "0x180029040",
+        "0x180029053",
+        "0x180029057",
+        "0x18002905c",
+        "0x180029060"
+      ]
+    }
+  ],
+  "independent_production_review": "PASS; posted-operation-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Six actual normal procedures compose typed allocator/cache/functor/executor/publication/early-completion-cleanup with existing dispatcher and worker; controlled allocation/lifetime/TLS effects and existing injected SDK APIs; no original binary, worker thread or network execution",
+  "storage_contract": "Raw allocation identity remains stable; bindings and typed projections coherent while borrowed; free provider may end PostedOperation lifetime; no post-free operation access; native invalid-memory/DIV fault boundaries represented by UnsupportedInput guards, not native ABI/SEH behavior",
+  "unproven": [
+    "04b0bc allocator/04b788 deallocator and native allocator provenance",
+    "Functor implementation/native lifetime",
+    "Native TLS/atomics/storage/ABI/exception/SEH/unwind/concurrency",
+    "Complete DLL integration and original runtime differential"
+  ]
+}

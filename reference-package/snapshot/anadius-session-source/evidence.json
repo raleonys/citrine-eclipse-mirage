@@ -1,0 +1,118 @@
+{
+  "schema": "session-message-composition.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180023000",
+      "pseudo_evidence": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "assembly_evidence": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575"
+    },
+    {
+      "address": "0x180025720",
+      "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa"
+    },
+    {
+      "address": "0x180025480",
+      "pseudo_evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "assembly_evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31"
+    },
+    {
+      "address": "0x180028d30",
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66"
+    },
+    {
+      "address": "0x180028270",
+      "pseudo_evidence": "ev_f01c15c5ec6846574a424ff84a94d532bd1a1c4a9f781ad08433a5f12e0f868f",
+      "assembly_evidence": "ev_8a9098273f1cf3fed4bf7cd29a29a081bfa18c0706bf118f25c7907784a35bd5"
+    },
+    {
+      "address": "0x18002bc70",
+      "pseudo_evidence": "ev_d6716c5d525f5e8e2eb566ef802896e45423abc1be5b6a78f2da5f052740c118",
+      "assembly_evidence": "ev_4fa4de12d674eff8476f9cf6f72bdef77e52de8ef76d04cd9a0e596bd21a0db1"
+    },
+    {
+      "address": "0x18002d540",
+      "pseudo_evidence": "ev_53566f426581ee5026cc02fda62aabed3b9849f460e2d315566e5aada6038d6a",
+      "assembly_evidence": "ev_9c9910a30623d16a8bddbbae7955111290e62a76144a36de16d5e4249e105c0d"
+    },
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6"
+    },
+    {
+      "address": "0x180032d00",
+      "pseudo_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "assembly_evidence": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "handler.hpp": "270aa21281852e2698983e312b3ebf347cafdc1da2deda94b80ced295addb8c0",
+    "handler.cpp": "2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42",
+    "routing.hpp": "6e263e02419da2148feeecc7a3ce95d34faaa439ffe5a9e67b672a9c1b409f8c",
+    "routing.cpp": "c8063ea3fd9789e1d0d15b5daa08cddf1b8e72070af1c073911dd65c6dc9bc3c",
+    "handler_tests.cpp": "80288f3d34d46f362ad32f8e117ee3866e9a266923d4c40db6325cfcaec6a11c",
+    "session_tests.cpp": "c7c0154294107dcfc066ec28103aaa7551d41a61d1ee3873cd6b726ffa14d80e",
+    "build.ps1": "238481e7fee5026f5a35c80fd21022e7077bc29375163cb7693525614a277520",
+    "CMakeLists.txt": "f8cabef965a475a0cb7ae418d6dbd6f7ea6b50c3e31ea3f9fd56777880a9e5a1",
+    "README.md": "0a023d92e7becf593cfd489b817dd69c95aa6d9f589fbcecf39ab4f1fdb29247"
+  },
+  "support_hashes": {
+    "evidence.pseudo.c.txt": "b655a41942dd9ebab43e529e805c6c2b384cddcd4d61f03ecba0158fe03690fe",
+    "evidence.asm.txt": "4ba4b310e980b86a4f0bc21074edb35389ebb672a9e0e386f5e175e117185bc4",
+    "flow-audit.md": "e14630a73b4501d9070e9570dc6ac015a6284d39217d0c240a6129da0082653d",
+    "flow-audit.json": "229c2fab87dc20787028092ad9350c5dce9d23e60ad2afdf65d27b5dd6c2440d",
+    "review.md": "bd9d93c9a14a68d3617c01832c6f384c88aca9cf897bf7ae83c315f28d8abacd",
+    "review.json": "fb236aaec274105196c396d336550645f7bfc8342aa507a10a63ec8fa7840a3c",
+    "rea-session.json": "38b78f49875dc6e65f179895fb37ccb39c6c45fcaf41acfc23dfa75e3d67a997"
+  },
+  "normal_source_procedures_added": [],
+  "new_original_procedures": 0,
+  "new_composition": "MessageHandler binds server Handler to actual messages reset/greeting/process; RoutedEffects binds registered calls to actual Router",
+  "claims": [
+    {
+      "finding": "Two caller-owned logical resets; adapter constructor adds none; native temporary-reset-copy is not reproduced as byte ABI",
+      "addresses": [
+        "0x1800230e2",
+        "0x180025777",
+        "0x18002bc79",
+        "0x18002bc81"
+      ]
+    },
+    {
+      "finding": "Greeting preserves BufferSize including NUL, live version read, write-all before read",
+      "addresses": [
+        "0x180025810",
+        "0x180025919",
+        "0x18002d5ca",
+        "0x18002d6be"
+      ]
+    },
+    {
+      "finding": "Frame delimiter excluded, launch/detach before consume/rearm; empty input skipped by Session, empty response still dispatched",
+      "addresses": [
+        "0x180025556",
+        "0x18002557f",
+        "0x180025607",
+        "0x180028d62",
+        "0x180028d99",
+        "0x180028e7d"
+      ]
+    }
+  ],
+  "independent_production_review": "PASS; review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "unproven": [
+    "Native ASIO/socket/IOCP/accepted socket move",
+    "MSVC shared_ptr/allocator/string lifetime/concurrency/cancellation/SEH/ABI",
+    "Full DLL integration and original runtime differential"
+  ]
+}

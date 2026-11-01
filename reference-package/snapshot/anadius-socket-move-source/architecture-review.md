@@ -1,0 +1,19 @@
+# B29 independent architecture review — PASS
+
+No blocker was found in the frozen five-source review. B29 implements two genuinely missing normal typed algorithms: `023d20` socket construction by move and `028950` implementation transfer. They support exactly two new source body mappings; no new native ABI/provider closure follows.
+
+`023d20` initializes observed fields, passes actual executor payload references and selected table78 token to a required callback, then reads table90 live and performs real transfer. Saved rdata proves initialized `084928` slot8 selects token `0228c0`; that target body remains unavailable. The callback is an explicit lower obligation, never an executed image VA. Distinct SocketObjects must also have distinct AcceptorState backing; fresh/unlinked and serialized coherent state are the supported domain.
+
+`028950` preserves source control increment, destination replacement/release, live source-control reload/clear/release and weak reload after disposal. The entry service remains authoritative across callback mutation. Destination is inserted at the gated live head; source is not unlinked, although its previous pointer naturally changes when it was old head. Protocol/options transfer occurs after leaving the gate. Core checks control replacement, weak mutation, cached service, executor table90 mutation, gate order and field values. A separate dynamic protocol-mutation probe is not claimed.
+
+Actual two moves produce owned/temporary/pending nodes with one live socket and cancellation owner. Existing `024db0` removes only the moved temporary and later explicit cleanup closes/releases the final owner once. The sole prior-source change scopes greeting and complete send loop before read initiation, matching native free `025911` before read `025919`.
+
+Integration retains all caller-owned Session/SocketChain references through real MessageHandler, SessionCipher, XML and Router/content processing, including ChallengeResponse, encrypted QueryContent and partial sends. EOF drains synthetic I/O/worker/write queues before socket cleanup. This tests the semantic graph over transferred state with injected transport/scheduling; it does not establish native worker ownership or concurrency.
+
+The exact long greeting-buffer observer records retirement before first receive and preserves synthetic LastError. A separate negative control uses byte-identical canonical B28 `server.cpp`: compile succeeds, run exits1 on that precise lifetime predicate only after encrypted content work, full callback drain and explicit final cleanup. This expected failure is not a PASS count. Source, EXE, log, archived static-library and negative-record hashes match.
+
+B28 ZIP identity and all 838 snapshot sources were independently checked against archived bytes and manifest hashes: 837 unchanged, only declared `server.cpp` modified, four new files, 842 total. Root standard quick records report **29 core + 21 integration = 50 PASS checks**. Root authored production/core; `/root/b22_integration` authored integration and executed the separate negative. Reviewer authored neither production nor tests, did not rerun EXEs, and verified all five frozen source hashes and quick EXE hashes.
+
+The full common build and final inventory/pipeline gates remain **pending and unreviewed**. Expected counts are 489 mapped, 493 eligible and 126 normal-body claims; the existing 52 closed-native count remains unchanged with zero new ABI/provider closures. These are expected classifications awaiting final gates, not an audited pipeline result.
+
+Full `023000` owner allocation/publication/weak-self construction remains deferred. Actual detached frame workers retain a raw owner; this caller-retained test does not prove their quiescence. Original MSVC/ASIO layout, native EH/allocator, code provenance, PTD/unload and DLL/PE readiness remain open. No original DLL/game, real network or user data was accessed. The full DLL remains blocked.

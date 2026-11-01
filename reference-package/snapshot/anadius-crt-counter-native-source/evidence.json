@@ -1,0 +1,43 @@
+{
+  "kind": "New borrowed typed Windows LONG registry; not a recovered original binary body",
+  "recovered_function_bodies_added": 0,
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "existing_callsite_evidence": [
+    "../anadius-crt-locale-ref-source/evidence.json",
+    "../anadius-crt-ptd-data-source/evidence.json"
+  ],
+  "existing_addresses": [
+    "0x180070634",
+    "0x1800708c0",
+    "0x180070838",
+    "0x180070898",
+    "0x1800647d4",
+    "0x18006489c"
+  ],
+  "contracts": [
+    "bind accepts only caller-owned live LONG reference and records its exact address; no arbitrary raw pointer adoption",
+    "all lookups validate registered identity before SDK Interlocked access",
+    "map is immutable throughout concurrent users; bind/unbind and all lifetime changes globally quiescent",
+    "Interlocked add/exchange preserve full prior DWORD and wrap; load uses compare-exchange0",
+    "registry does not own storage or initialize values"
+  ],
+  "validation": "94 own-fixture checks; inline LONG offset10/15c, fullbits/wrap/guards/LastError and4worker100000 increments/decrements",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "runtime_ABI_SEH_equivalence": "not established",
+  "sources": [
+    {
+      "name": "counters.cpp",
+      "sha256": "044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25"
+    },
+    {
+      "name": "counters.hpp",
+      "sha256": "f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "61fe364a99aff62e2797dcd80135a5f0dc21c7a546c333499566aa02d973c6c0"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "reviewer": "crt_nls_native_api",
+  "checked_at": "2026-10-19T13:55:37.6372148Z",
+  "result": "PASS",
+  "sources": [
+    {
+      "name": "bridge.hpp",
+      "sha256": "4b1ae73df1b430718e486d46425374a6527ab67962f9b391b66c28fc5de7d4f3"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "a8d9c02ee615afd7a3b353b5541f491239e3d69090ee34e3d4474eb5b2c9aa9d"
+    },
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "404283d7493bab84772a9dd8e43c22962bbe14ff001d1997d7c04adde0202c66"
+    },
+    {
+      "name": "build.ps1",
+      "sha256": "87d1b9481deea5d9fbf5959d49581ca54625c991ca172a0862b19955c42a005a"
+    }
+  ],
+  "source_validation_hashes_match": true,
+  "repeated_executable_result": "PASS 2114 actual native-NLS/UTF8/record/source integration checks",
+  "reviewed_contracts": [
+    "Backend forwards all CP/conversion/type arguments and tracked spans to typed SDK Calls; context-only scratch/tail/atomic delegation is explicit.",
+    "Uninstalled lc_map_string_0671d4 backend slot throws logic_error and cannot provide fabricated success; outer recovered dispatch is installed for actual tests.",
+    "NativeHarness actual_dispatch -> actual_nls -> actual_record -> actual_multibyte bindings use live borrowed base members with correct construction order.",
+    "Loader only accepts two fixed system module names and exact procedure names; owns reference list and releases after actual dispatch dependencies teardown, preserving LastError around fixture book keeping.",
+    "Context scratch frames supply bounded native storage and explicit synthetic adjacent-byte knowledge; PTD/heap/lock/atomics remain controlled providers, not native ABI/runtime reconstruction claims.",
+    "Tests cover actual UTF8 type/case/sortkey, recovered Ex resolution and forced W/locale fallback, cached native pointer behavior, strict invalid input, 504/505 scratch/heap boundaries, allocation denial and DBCS/UTF8/SBCS record builder.",
+    "build.ps1 validation scope now distinguishes executed native NLS/record/core paths from old fixture code only linked into executable."
+  ],
+  "findings": [],
+  "resolved_findings": [
+    {
+      "issue": "Copied validation.scope overclaimed execution of linked wildcard/configure/init/control/publish and described native calls as synthetic.",
+      "resolution": "Root updated build.ps1 and validation.json scope to enumerate actual called paths and controlled provider boundaries; C++ source unchanged."
+    }
+  ],
+  "limitations": [
+    "No original or rebuilt target DLL/game execution or original global/PTD/SEH/native concurrency equivalence.",
+    "No claim that prior linked argv/wildcard/resource cleanup test groups execute in this new fixture main.",
+    "Only existing synthetic native bridge test executable rerun by reviewer; root owns fresh compiler and common build validation."
+  ]
+}

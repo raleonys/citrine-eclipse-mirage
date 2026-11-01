@@ -1,0 +1,52 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Direct bounded read-only PE mapping after exact SHA check; not new REA Evidence",
+  "tables": [
+    {
+      "name": "preterminators",
+      "begin": "0x18007f728",
+      "end": "0x18007f748",
+      "file_offset": 515880,
+      "bytes": 32,
+      "sha256": "1065d1cc85c0b4ae63331b4bb598ab310c6b8c41afff6b281e2d8da3b04c4aab",
+      "entries": [
+        {
+          "index": 0,
+          "original_va": "0x0",
+          "requires_rebuilt_binding": false
+        },
+        {
+          "index": 1,
+          "original_va": "0x180065338",
+          "requires_rebuilt_binding": true
+        },
+        {
+          "index": 2,
+          "original_va": "0x180077b18",
+          "requires_rebuilt_binding": true
+        },
+        {
+          "index": 3,
+          "original_va": "0x18005224c",
+          "requires_rebuilt_binding": true
+        }
+      ]
+    },
+    {
+      "name": "terminators",
+      "begin": "0x18007f750",
+      "end": "0x18007f758",
+      "file_offset": 515920,
+      "bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "entries": [
+        {
+          "index": 0,
+          "original_va": "0x0",
+          "requires_rebuilt_binding": false
+        }
+      ]
+    }
+  ],
+  "limits": "Original VA metadata only; nonzero entries require rebuilt callback bindings. No original table address is callable."
+}

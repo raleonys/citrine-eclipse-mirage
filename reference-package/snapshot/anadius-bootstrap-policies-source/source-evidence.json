@@ -1,0 +1,262 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_decompilation": false,
+  "records": [
+    {
+      "address": "0x1800145d0",
+      "evidence_id": "ev_b7669ec63c588e3e0c3c3ea478118b765778ea8ceeaac18635081dec14844c4d",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 17041,
+      "normalized_text_block_sha256": "2cc1123281f3ef093a9e99a4cb44ac232ea70d3197a415264a0a4c660553f9d3",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x180017a30",
+      "evidence_id": "ev_65a0768e0262bcd69986dc65459dfa05d4319318660f7f66a3afe68b19c6b1e9",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 19979,
+      "normalized_text_block_sha256": "ec35bfebdc91059e6cafd02e4622510ce423b651e56ebcb3b462e886ccf9f846",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x1800192d0",
+      "evidence_id": "ev_f97924b6178fd1c17ef606a5e5153562cafc5f04e36eecb08e5cdb93f2a31286",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 21341,
+      "normalized_text_block_sha256": "76a88dbac3e02d83d84d3b00a2fb806a32e832b659426156f13d72b94d3a1a53",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x180039bc0",
+      "evidence_id": "ev_72d75fc9fa12d5c38ef034c259adc6d350c8c6000666bab5cd18fc7be06eb529",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 45803,
+      "normalized_text_block_sha256": "d38e67d50629024106ccb611ae0425ef69a3f0a0d1cb6a642d5293e6a6a15279",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18003c6d0",
+      "evidence_id": "ev_ba410f99cd0312ac92597ec449496bc2ce3eecfccc66c8f885b9c05f4b586a2d",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 48072,
+      "normalized_text_block_sha256": "717f10ad8784f1ddebf9e0d7107126ce1c792968602f7e0684739297e62ece50",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18003c6f0",
+      "evidence_id": "ev_cdae4b9b195f2bd0c3b2ecf95a78f67285dadd02ff0b1173c5af0f58698d7f79",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 48083,
+      "normalized_text_block_sha256": "32ff9d712edf3da5e3aefc92abdb58f53b41702171a1dd7c9395e209c2369600",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18003c7b0",
+      "evidence_id": "ev_17ad912a154a63c866cd96d402845c0371db388a41f12981ec499db6cd784d9f",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 48130,
+      "normalized_text_block_sha256": "4bfbc824bfd336e461eb94b53c5bfb0cc8a9f6d52962fb17b8e57e566e96ae48",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18003c920",
+      "evidence_id": "ev_79c12e3986d5d1dafc3ee8c3b30a5bfba0c6175c8706b19219fa84deddd096bc",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 48197,
+      "normalized_text_block_sha256": "b051ff3b0c3ff146265cae9f5cadd0abeda7b9d2d20fd75aa2fc1f46263f5cdf",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18004b0bc",
+      "evidence_id": "ev_9c975496fb48d4e6fca6f8c0535c16fa44feb14e8dafa92ef6b45a98915fa0ec",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 61343,
+      "normalized_text_block_sha256": "7476bf8ca09453c7f791b4aa91c47ba51d2ab4cd0594899019aad6eaff199dd9",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18004b0f8",
+      "evidence_id": "ev_4b68e7012c821e22c8f38d541b6e4e613a7e14ea81822e58a96efac29dd593ef",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 61369,
+      "normalized_text_block_sha256": "b82350146383fcf08e0f7025d305b6523b5eea4a3d36c59456241582e7aa38ef",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18005caec",
+      "evidence_id": "ev_9b87d347938094dc19098153e14b2f75ac5e0cfc65fe8b4b4d8495432ccb6219",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 80101,
+      "normalized_text_block_sha256": "cc24499115ed949038c86f92014ca33f37f9163a70df59c40e7c126274eef14b",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x1800634b0",
+      "evidence_id": "ev_175a4e59f0f62ca348f45967bc37777281cff05acfbf8675b3dcc8dc235d175d",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 87211,
+      "normalized_text_block_sha256": "532d517d88f58f0b24d26997612258c878250906aa9a666e83621e952e4143b3",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x1800668c0",
+      "evidence_id": "ev_7e8b870bd7ea201db70f354b0219883b98336ad5bae46d7d22dfbd1bae7df875",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 90753,
+      "normalized_text_block_sha256": "7345cbdd0acbde3ce9577917be99340181203a620b37402b78bd97d0f3466f6d",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18006a308",
+      "evidence_id": "ev_733b89f60b5bf5d34f8160dc7692d178f7d2d6c790f4556df10d2570ca955f76",
+      "retained_file": "outputs/anadius-all-functions.pseudo.c",
+      "retained_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 94328,
+      "normalized_text_block_sha256": "4768af1591336c9ec2c2145e8a5915786b309f86fcc5962f0c3caee8d4906dc7",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x1800145d0",
+      "evidence_id": "ev_57ba03c192271ff8c347201fe9ae78a51f6632cff0e5a891c609f018940e6aee",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 21156,
+      "normalized_text_block_sha256": "574d210c0b3745a2b066df44bfddc73346a56707f91a682d39064aa362ceae8f",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x180017a30",
+      "evidence_id": "ev_4ef5a2bb53b7728331fdd5c8debedafc4f7ebcce78b3dd4a30154920bfc23a9d",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 24654,
+      "normalized_text_block_sha256": "e67084b89c30d510f49dea99125c9520b434a4efe8721ba0605498838847af54",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x1800192d0",
+      "evidence_id": "ev_aeef0b48642561e9aa088e2e457d40ad95a8159f366b6578e122c959b494e3a0",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 26321,
+      "normalized_text_block_sha256": "96c74e75b641e260f8d1c21a75f88e1e11a895f6162fcaedae776bca3bc4c049",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x180039bc0",
+      "evidence_id": "ev_86ba6440a8aa53a23ef4afa027e52749cacaf3379338fdd6370a3d8d0d08c130",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 58275,
+      "normalized_text_block_sha256": "bd391de15257bbbee2ef8be33bdb7f0388a204462dd0bb6b823eafe279bd153a",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18003c6d0",
+      "evidence_id": "ev_a25bcb6c136d83d915ae0affe5aa508e2c257aaf5193287cbff852b374d11743",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 61201,
+      "normalized_text_block_sha256": "b5e8b218fa2c381a74645839f8a081e829ca7648202e6d73a4f7503dd2d77a80",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18003c6f0",
+      "evidence_id": "ev_651ded00d21fdb7e5a9835dcbdc4f5844ee80600929155f268af3d7f708b137d",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 61212,
+      "normalized_text_block_sha256": "449701d77575eef175f8a82f9badaaf2ff1b579c3ab3dc4e0073b69aa9f4233d",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18003c7b0",
+      "evidence_id": "ev_d8977d7a67dd2c948e4482f0547e26f9d9ef13e7e01747bb0f231017608f506c",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 61261,
+      "normalized_text_block_sha256": "b9737714d9ca720986a91a8cdd6d821d67eb1b9f0f69d9b83feb72282703db09",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18003c920",
+      "evidence_id": "ev_037c4e2de199069d759e25ae4d49959902cb9789a34f27c2ca1cb66d01544094",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 61367,
+      "normalized_text_block_sha256": "1b1eeac1ec7954867651592aa4668d20bc07f924a060b597cef8bc3f8ef9708a",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18004b0bc",
+      "evidence_id": "ev_4b9d54867bdd71cc2cd07945df16f49f84fdecaa3c3535386e97bd20f64624ec",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 78018,
+      "normalized_text_block_sha256": "28a557d3446e7acefb9834c8aa9dd387c42cb14216ee4819bb6154b889805cc7",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18004b0f8",
+      "evidence_id": "ev_c742d3bdc5602e2293140e3408473befa826c5e7f02f988ef02afb1709aa3adf",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 78039,
+      "normalized_text_block_sha256": "b2dd59b6c96092c9a257bcf495dc5f606ed6079b14cfe56682bb1349ee365f30",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18005caec",
+      "evidence_id": "ev_dc2e8860cfa1a06b464563b31c9a5f586dc49fb16cd3579156e95db913e59895",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 98050,
+      "normalized_text_block_sha256": "1140497cd7786ff050bd53ae1b7b4e915d098e0cb2e660b5ae3a86b220632b2a",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x1800634b0",
+      "evidence_id": "ev_feeb37c1659fa2ad6ed36fb2e17ad1622a1893e7adb59a2a704c97c32c5c11ba",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 105720,
+      "normalized_text_block_sha256": "e9dca81a3c74f47503424b5595cbbf266f659d2a5a7c306e089f5d5de7e65082",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x1800668c0",
+      "evidence_id": "ev_c99f204c542cccdad396d7bc71515f1b5731e73657cfccf84d0a121761e73e4a",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 109580,
+      "normalized_text_block_sha256": "9534390f5b8301393334557b2dd8b2ff8224baed864bec20e7746a6119839793",
+      "type": "retained static provider text; no target execution"
+    },
+    {
+      "address": "0x18006a308",
+      "evidence_id": "ev_fec2970bf0d499ba0715ef0f1dd0028bfcd6d27a246fd3e25106a2d5f9825b64",
+      "retained_file": "outputs/anadius-all-functions.asm.txt",
+      "retained_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 113703,
+      "normalized_text_block_sha256": "2303e07f3b300be387dbdc34178eccd81080f6ec83505f4d13ad8c372a9723b7",
+      "type": "retained static provider text; no target execution"
+    }
+  ],
+  "limitations": [
+    "Retained pseudocode/assembly is not original C++ source.",
+    "Composition and selected C++ ownership/EH policies do not prove native ABI equivalence."
+  ]
+}

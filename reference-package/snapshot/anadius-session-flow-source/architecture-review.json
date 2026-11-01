@@ -1,0 +1,243 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "Read-only frozen source, selected retained ASM/pseudocode, baseline archive and execution-proof verification; reviewer executed no EXE.",
+  "reviewed_at_utc": "2026-10-30T23:18:25.664861+00:00",
+  "reviewed_source_hashes": {
+    "flow.hpp": "8352a6176b09b5ed990632cf8663c27ad79a029da2be23fa6f0a9f954a76d42e",
+    "flow.cpp": "2b16e9ddb52775ef43c5293d4d555439eeb9ad6a0d5985718bba6a4f71e926d8",
+    "coherent_io.hpp": "4ba31f7e680f504cebc50de5fb48314ee461ee30645bce6e69e2eb3a800626f9",
+    "coherent_io.cpp": "b3d570b3a8772b44f331a1e023d2eca4c98402910529a12939521aca8833198e",
+    "flow_tests.cpp": "82c9a571e78a9f10c0d5aab111cb5bb594f22b3b9ea8713ff8d40b584b06bd86",
+    "flow_integration_tests.cpp": "f2133e11b3c5bb469051bb52f43d862cfd82ee6acf13baa27a755c71a79f07ec",
+    "../anadius-accept-source/owned.hpp": "cc1507df19d58f58b2b3d934da5d18dc063780506876affa803ef43c4c61f8fa",
+    "../anadius-accept-source/owned.cpp": "16b71225e0d036abccf3b401ead592253b7c34b46d3c6e5acb6fa98a5e0fccc6",
+    "../anadius-io-memory-source/io_memory.hpp": "29424a26545c256ecac9be6ebc27903d25f60d2c47cedbb15d246a6b1d72b95c",
+    "../anadius-io-memory-source/io_memory.cpp": "95294bcd3424ba717eed4fdb369f55a79c07d7b6453c5a7d8e2141b674bc11eb",
+    "../anadius-socket-source/cipher_session.hpp": "c8b54d806823845482009cbd211f3b9923497d471b29d98729ce12ea364a1fc2"
+  },
+  "code_freeze": {
+    "path": "work/b37-code-freeze.json",
+    "sha256": "662e544a86ee6f3a783a9f89708f1ffb703355746cd30d988a5b80f65ced772c",
+    "all_eleven_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 546,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b37-core-agent-tests.exe",
+      "executable_sha256": "e19d2722f7a5877ae1a237e83930c93ed1fa92c8e2ad3aa0006d33781f9e1904",
+      "archive_path": "work/b37-baseline-core.a",
+      "archive_sha256": "dc34c18e42ebaaa58f3ca7a7fc1fe57ee49afc589a4b0f42d630511872b0c4ee",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b37-core-agent-results.json",
+        "sha256": "397ae4194209070d55535de3b31f445c5585abfdaf46da44c03a13335f095d15"
+      },
+      "path": "work/b37-core-quick-results.json",
+      "sha256": "27a1f7889a5cfa82b8c9b39fcf383fa8651eecd81483732f596d2a837606d5ed",
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "root_normalization_only": true,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "archive_hash_independently_verified": true,
+      "reviewer_executed": false,
+      "observed_source_hash_count": 4
+    },
+    {
+      "checks": 179,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b37-integration-agent-test.exe",
+      "executable_sha256": "32e5bdf9177549fa1ea4b9774a7b1dc4f563d6f10bc3218118e8af2486cbe60d",
+      "archive_path": "work/b37-baseline-core.a",
+      "archive_sha256": "dc34c18e42ebaaa58f3ca7a7fc1fe57ee49afc589a4b0f42d630511872b0c4ee",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b37-integration-agent-results.json",
+        "sha256": "42f7be0c4179d21d4590c2f94c00b321458e11ef28e081aa4318cdfa516d5e61"
+      },
+      "path": "work/b37-integration-quick-results.json",
+      "sha256": "40a9f93368263f565dd5e7817917ff164d42f1e573118ed3acd2aca66d803813",
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "root_normalization_only": true,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "archive_hash_independently_verified": true,
+      "reviewer_executed": false,
+      "observed_source_hash_count": 11
+    }
+  ],
+  "quick_checks_total": 725,
+  "core_agent_checks": 546,
+  "integration_agent_checks": 179,
+  "root_checks": 0,
+  "root_execution_note": "Root only normalized immutable agent records; neither current executable was rerun/replaced by root or reviewer. Core observed four relevant sources; integration metadata observed all11, compiling four fresh production CPP units plus integration test.",
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING at review; quick PASS is not common-build PASS.",
+  "common_build_targets": {
+    "production_objects": 256,
+    "cpp_units": 252,
+    "c_units": 4,
+    "ordinary_groups": 303,
+    "framework_terminal_groups": 19,
+    "status": "planned, not reviewed as executed"
+  },
+  "baseline_package_sha256": "08b7eab76e051e8a4672adf31030f22f2ddb492396a24ee2778ba1f90acc5144",
+  "baseline_source_files": 870,
+  "prior_sources_preserved": 865,
+  "modified_prior_sources": 5,
+  "new_source_files": 6,
+  "current_source_files": 876,
+  "prior_source_record": {
+    "path": "work/b37-prior-sources.json",
+    "sha256": "39d4e9ff05d22b42fe0d2b1c91af4ff7226323a7975a832248fed0008e3851c3",
+    "all_five_before_hashes_match_B36_ZIP": true,
+    "all_870_archived_source_hashes_verified": true,
+    "changes": [
+      "OwnedAcceptMemory nonvirtual retire_for_projection; no Base packet clear when no own accept projection.",
+      "OwnedIoMemory three nonvirtual *_with_memory wrappers; old methods delegate using *this and preserve observation, lifetime, generation and catch/poison ordering.",
+      "SessionCipher single friend declaration; no data layout, vptr or virtual API change."
+    ]
+  },
+  "archive_proof": {
+    "path": "work/b37-baseline-core.a",
+    "sha256": "dc34c18e42ebaaa58f3ca7a7fc1fe57ee49afc589a4b0f42d630511872b0c4ee",
+    "matches_B36_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "verified": true
+  },
+  "composition_count_basis": {
+    "baseline_excluded_files_verified": 81,
+    "baseline_composition_objects_verified": 40,
+    "new_composition_files": [
+      "anadius-session-flow-source/coherent_io.hpp",
+      "anadius-session-flow-source/coherent_io.cpp"
+    ],
+    "expected_excluded_files": 83,
+    "expected_composition_objects": 41,
+    "flow_hpp_cpp_native_eligible": true
+  },
+  "retained_inventory": {
+    "0x180025720": {
+      "baseline_definition_variants": 2,
+      "baseline_normal_body_stage_claim": false,
+      "new_definition_variant": 3,
+      "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa",
+      "record_prefix": "outputs/anadius-socket-move-source/180025720"
+    },
+    "0x180021a10": {
+      "baseline_source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_e06fa20bfb3984fd9d6818ba3758d4f3fd4e6b252450f8e675c7ccdb881c70e8",
+      "assembly_evidence": "ev_3c4d2a421e5c3d8bae808dc3fd289a0a76a9ae2ed355d78a344fa56da80061e9",
+      "record_prefix": "work/b37-180021a10"
+    },
+    "0x1800270e0": {
+      "baseline_source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_21eb9ae0b32f1f5ae22d1de13650c6541b60242f69f8b4ba3920aab1c162b1b4",
+      "assembly_evidence": "ev_7c297e7649382584bfeea23d03522ec0b534b3dd9e8bed7a47b591d22d6fe64c",
+      "record_prefix": "work/b37-1800270e0"
+    }
+  },
+  "findings": [
+    {
+      "id": "native-three",
+      "result": "PASS",
+      "details": "021a10 logically copies Error to local, forwarding ORIGINAL handler; 025720 captures code on entry but uses live category after log start and live original server after callbacks. 0270e0 uses local server token, live service/listener/pending projections, null endpoint and native routing allocator identity server+68."
+    },
+    {
+      "id": "native-success",
+      "result": "PASS",
+      "details": "Actual selected constructor then reset temporary and copy198 defined cipher fields preserving destination own schedule reference. Returned greeting data/length captured once; free targets LOCAL output with live capacity/pointer. Per-send socket/state live, cap65536, one WSABUF, flagslow32zero, unsigned offset addition and zero-progress behavior. Both loop-top and postloop error paths raise write before tail cleanup. Greeting free BEFORE actual default0280d0; local control loaded AFTER read and cached through last-strong dispose/implicit-weak/delete; live handler server reloaded last. No after-delete object/control access."
+    },
+    {
+      "id": "native-errors",
+      "result": "PASS",
+      "details": "Begin Exception log, live category/message with captured entry code, append-returned stream, signed live virtual-base adjustment, widen10, low8 put, flush, LOCAL message live free, then live server rearm. cap+1 wrapping, >=4096 raw header/data-8/base/+39 and unsigned gap>31 terminal match retained ASM. No invented native EH cleanup."
+    },
+    {
+      "id": "coherent-routing",
+      "result": "PASS",
+      "details": "All shared cache allocations/frees and typed transitions route through accept-aware memory; nonposted transitions retire own accept metadata then use checked Base projection. Borrowed Base receive/send packet/generation survives rejected reproject when no own accept exists. Concrete dispatcher routes accept first, then observed Base receive/send/posted cleanup using supplied coherent memory rather than old hardcoded Base free route. Callback may free/reuse old row; old wrappers maintain their no-postcallback-use rule."
+    },
+    {
+      "id": "combined-phase-guard",
+      "result": "PASS",
+      "details": "Opaque actual023dd0 has BOTH pre/post Parent+Accept admission and Base phase Open checks. Base snapshot occurs outside Accept gate. Swallowed nested Base poison therefore cannot continue to direct-status publication paths that bypass SDK arm."
+    },
+    {
+      "id": "proof",
+      "result": "PASS",
+      "details": "All11 frozen current source hashes, two normalized quick references and actual agent execution-record/EXE/archive hashes verified. All870 prior ZIP source hashes checked; exactly865 unchanged and five declared modifications. No reviewer executable execution."
+    }
+  ],
+  "resolved_review_blockers": [
+    "Constructor pre/post guard originally checked only Parent+Accept, not sticky Base poison; combined guard fixed."
+  ],
+  "negative_control": {
+    "path": "work/b37-poison-negative-results.json",
+    "sha256": "73aa31f5ad7da158f478aa5499ab5739030eedc6f130ae18e8dcb9e6574d2bd3",
+    "result": "EXPECTED_FAIL, not positive PASS",
+    "compile_exit": 0,
+    "run_exit": 1,
+    "failed_child_exit": 238,
+    "positive_child_exit": 237,
+    "copied_source_only": true,
+    "exact_final_postguard_single_line_removed_verified": true,
+    "executable_hash_verified": true,
+    "normal_cases_cleanup_before_negative": true,
+    "production_and_test_sources_unchanged": true,
+    "reviewer_reran": false
+  },
+  "new_native_bodies": 3,
+  "normal_body_certification": {
+    "addresses": [
+      "0x180021a10",
+      "0x180025720",
+      "0x1800270e0"
+    ],
+    "new_mapped_addresses": 2,
+    "new_eligible_addresses": 2,
+    "existing_025720_definitions_preserved": 2,
+    "025720_total_definition_variants_expected": 3,
+    "scope": "Complete supported typed normal algorithms with explicit selected helper/providers. Not original ABI/layout/EH or dependency closure."
+  },
+  "native_mapped_addresses_before": 496,
+  "native_mapped_addresses_expected_after": 498,
+  "native_eligible_compiled_tags_before": 500,
+  "native_eligible_compiled_tags_expected_after": 502,
+  "explicit_normal_body_claims_before": 133,
+  "explicit_normal_body_claims_expected_after": 136,
+  "new_native_ABI_provider_closures": 0,
+  "historical_native_closures_unchanged": 52,
+  "production_dll_readiness": "BLOCKED; B31 require_loader_* hooks remain undefined.",
+  "limitations": [
+    "Native cipher copy is200 bytes in ASM, but only198 defined fields are projected; two tail padding bytes, Error padding, native class/vptr/foreign calling ABI are not proved. C++ vptrs and schedule reference binding are preserved.",
+    "Integration executes actual new flow/factory/frame/owned-response/send/disposal source using its own heap/FLS/IOCP. Message processing uses N5 CompatibleMessageCoreApi normal-return writeback plus real MessageHandler/Router; it is not N9 native033d70 callback-intermediate/EH proof.",
+    "Raw frame job execution is selected serialized/synchronous under a live native receive-handler strong; not detached worker lifetime or general concurrency proof. Owner0 shutdown is selected ONLY for the known second accept202 final observed packet, through actual native worker accounting. It is not native stopping/cancellation/quiescence recovery.",
+    "Borrowed same-domain provider/context references, FlowServer binding/identity coherence, existing whole Parent Operation, single admitted worker and controller PTD setup are mandatory. All shared caches/projections/completion routing must use the coherent adapter.",
+    "Greeting/error construction, log/category/exception providers and selected executor/context/kernel helpers remain production composition requirements. Original0241b0,0228c0, retry29660 and loader-safe DLL composition are not closed or recounted.",
+    "Unknown throws retain/poison with no invented Native EH rollback or automatic recovery. Original/rebuilt DLL, game, network/kernel AcceptEx execution and original input bytes were not used.",
+    "Full common build, final inventory registration and delivery package were pending at review."
+  ],
+  "original_inputs_read": false,
+  "original_bytes_or_target_queries": false,
+  "original_or_rebuilt_DLL_game_execution": false,
+  "actual_user_cfg_token_contents_read": false,
+  "production_or_test_sources_modified_by_reviewer": false,
+  "reviewer_writes": [
+    "outputs/anadius-session-flow-source/architecture-review.json",
+    "outputs/anadius-session-flow-source/architecture-review.md"
+  ]
+}

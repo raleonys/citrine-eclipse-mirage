@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_argv_bridge",
+    "result": "PASS",
+    "output": "PASS 2181 argv/CRT/heap/PTD/classification composition checks",
+    "executable_sha256": "518c683458be2ffe9bd1ea3059c146f2c415dcfb73d550e131901497c7c9d3fc"
+  },
+  "execution_scope": "Actual argv/parser/classification/heap/error/invalid/Entry/PTD/cexit sources with owned synthetic providers and exact argv cleanup ordering",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-argv-bridge-source/argv_bridge_tests.cpp",
+      "sha256": "918e6b342992f2ca4370ea51d4e4e3e0ba6b85e79f308660f2148d6e01bda34e"
+    },
+    {
+      "path": "anadius-crt-argv-bridge-source/argv_bridge.cpp",
+      "sha256": "d178b2649b48fcb971bb2d99c6138b461d23be4f5f47c5178248e5dbf31687d2"
+    },
+    {
+      "path": "anadius-crt-argv-bridge-source/argv_bridge.hpp",
+      "sha256": "83c3eb4264abb2b49db92dd88727600a616231edfa7fcb733e9c0fc56be2b076"
+    },
+    {
+      "path": "anadius-crt-argv-bridge-source/test_fixtures.hpp",
+      "sha256": "bbbddad6bfa524030794bce1280bdf1484f91cb93ff25a7df9625c72083f27c1"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "reviewed_at": "2026-10-18T03:56:49.2313482Z",
+  "reviewer": "Independent REA skill worker audit_native_glue",
+  "result": "Reported lifecycle issue fixed; no remaining actionable findings",
+  "fixed_issue": "Callback now captures the Errors pointer with Context admission and retains it after lease release, so a replacement binding cannot receive an older exception",
+  "scope": [
+    "SDK prototypes/argument slots",
+    "ScalarCell real DWORD/HKEY immediate memory semantics",
+    "Opaque wchar/char16 comparison and copy boundary",
+    "Signed status bits and original pointer identity",
+    "LastError preservation and processglobal/inflight lifecycle",
+    "Required terminal exception policies"
+  ],
+  "remaining": [
+    "Original CRT/SEH/XFG/runtime equivalence",
+    "Real hook/target/generated code execution not performed",
+    "Last host-install simulation added after review; unchanged production glue"
+  ],
+  "sources": [
+    {
+      "folder": "anadius-native-source",
+      "file": "native_callbacks.cpp",
+      "sha256": "06521178fbe3a611e8af29706bf4c1d07974e299c0f044a382656330ef6c7d52"
+    },
+    {
+      "folder": "anadius-native-source",
+      "file": "native_callbacks.hpp",
+      "sha256": "43f76b04c2dda924a2b10b8a7e956d08fe724f7b7d0c7ae398b8515886ecbf95"
+    },
+    {
+      "folder": "anadius-native-source",
+      "file": "native_tests.cpp",
+      "sha256": "2cd1e2e3c1a546dbab772d955004334b251902ad868ae5957f22ebf601d797f0"
+    },
+    {
+      "folder": "anadius-native-source",
+      "file": "original_effects.cpp",
+      "sha256": "44e5dadee6249de342ff7c31c8beeb38a5109b0992c823156ed202aae23b0cf1"
+    },
+    {
+      "folder": "preloader-native-source",
+      "file": "mock_tests.cpp",
+      "sha256": "a78267037df94607e207bb2c7af23d190d173791841c3585a303f3bc695bb0bd"
+    },
+    {
+      "folder": "preloader-native-source",
+      "file": "native_shims.cpp",
+      "sha256": "d18a7a813f907b8b8cd5e6d9481096e919e411b13ed6300ea7913c94a9815b2c"
+    },
+    {
+      "folder": "preloader-native-source",
+      "file": "native_shims.hpp",
+      "sha256": "c8fca5044079e9b08638d79feab405f1d25ab4f9378675e0f9d563976f227848"
+    },
+    {
+      "folder": "anadius-registry-source",
+      "file": "abi_cells.hpp",
+      "sha256": "4fd3d0a6169f8feb22d60f982b94194c3d4b47f2eee1478444e3767070a92351"
+    },
+    {
+      "folder": "anadius-registry-source",
+      "file": "registry_tests.cpp",
+      "sha256": "14f9f7148e517d4241904add1c8aaa1c55b57aa97d20aa54830a67b896683da8"
+    },
+    {
+      "folder": "anadius-registry-source",
+      "file": "registry.cpp",
+      "sha256": "757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5"
+    },
+    {
+      "folder": "anadius-registry-source",
+      "file": "registry.hpp",
+      "sha256": "f3393a359bbafe7feef5725aae73967f18e65814cafd0726792b51fbe5716d34"
+    }
+  ],
+  "target_execution": "none"
+}

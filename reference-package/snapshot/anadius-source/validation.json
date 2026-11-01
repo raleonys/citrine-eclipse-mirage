@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-16",
+  "target_source_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "compiler": "LLVM-MinGW clang 23.1.3",
+  "target": "x86_64-w64-windows-gnu",
+  "flags": [
+    "-std=c++20",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-O2"
+  ],
+  "object_compilation": "passed",
+  "contract_test_compilation": "passed",
+  "contract_test_execution": "passed",
+  "assertions": 191,
+  "test_stdout": "PASS: 191 mock contract assertions; original DLL was not loaded or executed.",
+  "original_loaded": false,
+  "original_executed": false,
+  "original_mutated": false,
+  "standalone_replacement_dll": false,
+  "runtime_equivalence_verified": false,
+  "files": [
+    {
+      "file": "bootstrap.hpp",
+      "sha256": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210"
+    },
+    {
+      "file": "bootstrap.cpp",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6"
+    },
+    {
+      "file": "bootstrap_tests.cpp",
+      "sha256": "21216bcea6d3b7f351c933a5fd02522fee9869505d85a651a031a263b6f1bbbe"
+    },
+    {
+      "file": "build.ps1",
+      "sha256": "f3c7a879d9f2fcb491449585794a921c0725809aa69cb37fc50f990357c4a56f"
+    },
+    {
+      "file": "CMakeLists.txt",
+      "sha256": "32ee5c5a5298b710201d18c46671878abe3cbc9f0c415165154aad031d927ed5"
+    },
+    {
+      "file": "README.md",
+      "sha256": "51eefce8b31838ff0ba6d37ce34eacf6ce2881ef801869972dcdc49e2a432738"
+    },
+    {
+      "file": "build/bootstrap.o",
+      "sha256": "9289543a7bfb71dabfb938fc29af3b2e2ef4dc6d0bad3175b3f843ffdc838aec"
+    },
+    {
+      "file": "build/bootstrap_contract_tests.exe",
+      "sha256": "986dd42d4f5c87dd4fa40647f42769699eec225d18cee1f1dde810b704b5de01"
+    }
+  ]
+}

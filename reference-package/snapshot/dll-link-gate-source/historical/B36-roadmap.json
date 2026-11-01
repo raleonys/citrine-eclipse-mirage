@@ -1,0 +1,91 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B36",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B36",
+  "latest_dll_link_attempt": "B36",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B36 recovers normal021b00 accept producer and0271a0 completion from retained C+ASM, including snapshot/live-load ordering, error/category/port edge cases, retry reset, endpoint/context transfer and nested borrowed/owned publication. OwnedAcceptMemory uses actual same-domain473-byte allocation with fixed raw+68/288 region, distinct actual typedOVERLAPPED, authoritative own-row validation, pending whole-raw pin through observed completion and mandatory retry29660, cancel-intent-only accounting and scoped parent provider lease. A checked inert Posted base projection reserves bookkeeping/generation only; composite accept-first routing uses the separate accept operation, underB35 whole-worker ROOT admission. Task/lower callbacks retain active metadata; retirement clears packet before ending typed projection, close checks base state outside own lock before sealing, and native cleanup may free/reproject before handler without old-row access. 862 prior sources preserved+2declared nonvirtual parent lease edits+6new=870;254objects(250CPP+4C)/301normalgroups+19frameworkterminal;2045+177=2222checks. 496mapped/500eligible/133normal;2newnormal bodies,0newnativeABI/providerclosures,52historicalpreserved. Integration uses real own IOCP/heap/FLS/TLS and injected AcceptEx/address/option calls, actual accepted factory and posted disposal/reentrant cache reuse plus observed995 completion; no network or original execution. Required029660retry,029590socket-holder reset,029df0socket factory,0237f0pending-owner reset,021a10handler invocation/025720 start and selected environment/executor policies remain explicit dependency boundaries. Shared worker-cache evictions and cross-kind projections involving accept rows require coherent adapter retirement; direct mixed base-only receive/send reuse is outside this integration profile. Native0241b0/0228c0 layout, full Transport/Scheduling/Resources factory, truthful kernel/raw-job quiescence, foreignABI/nativeEH/concurrency/loader remain open; genericCRT paused.",
+  "source_algorithms_native_inventory_unchanged": false,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "025720 ilk oturum mesajı ve yanıt akışının sahipli accept grafiğine bağlanması",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B37",
+    "priority": 1,
+    "title": "025720 ilk oturum mesajı ve yanıt akışının sahipli accept grafiğine bağlanması",
+    "requirements": [
+      "Compose existing025720 initial session start and request/response sources after actual023000 factory in the B35/B36 owned graph",
+      "Keep pending socket, session/job/IO buffer and callback/context lifetimes explicit through final observed packets and drain; coordinate all shared cache evictions and cross-kind typed projections with accept retirement",
+      "Resolve helper boundaries from retained evidence where necessary without inventing0228c0 or returning to genericCRT",
+      "Keep loader attach/detach hooks undefined until complete Resources factory and truthful loader/unload quiescence are supplied"
+    ],
+    "exit_criteria": "An accepted session traverses actual initial message/response and terminal disposal under admitted IO ownership; source composition and native ABI closure remain separately measured."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ]
+}

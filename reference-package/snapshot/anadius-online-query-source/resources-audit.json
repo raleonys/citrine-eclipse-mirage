@@ -1,0 +1,81 @@
+{
+  "schema": "online-status-getters.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Native queries require native_objects and SAMEversionBinding/code owners, exactfactory-adopted object only",
+    "Bytewise selectedslotresolution occurs after reservation; no fabricated foreignC++class alias or arbitrary-object adoption",
+    "Owned getter reserves through realNULscan/allocation/copy, including exceptionunwind; rawgetter return remainsborrowed",
+    "Query/null/copyexception retains knownobject for explicitnormalcleanup; invalidlayout poisonsunknown andretains object/module/code withoutsecondread"
+  ],
+  "forwarding": [
+    "SourceBackend::OnlineExecution -> lower ownedcopy",
+    "RecoveredEffects -> remaining ownedcopy",
+    "OnlinePlatform -> sharedBinding::copy_getter or guarded lower ownedcopy"
+  ],
+  "boundaries": [
+    "Nonnullgetter bytes must be readable/NUL-terminated throughoutcopy; no validation or external mutation prevention claimed",
+    "Non-owning synchronous SDKquery exception contract; no external unload/ABA/arbitraryproviderreentry/asynchronousborrow proof",
+    "LastError fromgetter survives allocation/copy metadata; earlierfieldprefix andB26cookiereleaseorder retained",
+    "Effects virtual interface+Resources changed; fullrebuild ofall consumers required"
+  ],
+  "open": [
+    "actualmodulepin/addressprovenance",
+    "fullforeignformalprototype/classABI",
+    "readability/nativeconcurrency/externalunload/ABA",
+    "configuration/license/legacydocument",
+    "B10historicalreviewdebt",
+    "actualhooks/nativeCRT/EH/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-online-source/online.hpp",
+      "before_sha256": "51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b",
+      "after_sha256": "47adf8b6426476a64b76a6b7d0f82875778f5795f9662a3bdd923219f3bdd6a2",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-source/online.cpp",
+      "before_sha256": "af99d95b0e88ea2cacd93a4f01237a8d2362cb44bdc3d7b2961c91c5fc9b1ca5",
+      "after_sha256": "00020732bf6e36d53b9bfafe80d6cb85f303b8b329624562d45991f916e50cb8",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-source/recovered_effects.hpp",
+      "before_sha256": "7259015541eb690bd45e9a7dab99afe4637fd2a1774051454ad230ee7e890bdd",
+      "after_sha256": "f0a8da1dd760c10ae263adb3a91998642d84bb62f270d2c6565147fe28f5993a",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-platform-source/platform.hpp",
+      "before_sha256": "82ae373e513da2be64cf3522421f699d757099e1b7f325b33fa485e828176f91",
+      "after_sha256": "4b5b157491c3fa63a4390c1fbe41f5219c88810aae3e970e28bc5d95cb09bf54",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-source/recovered_effects.cpp",
+      "before_sha256": "07ca212e276421f44ec0d3c109ff0a23b35c01266d9a97349b61396944729ef3",
+      "after_sha256": "0bbd7c694762d968b6e509f1df851a46288bbd692fc7a1783c27eb45f11bfbd2",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "e145a8a1b99ed7b3e5ca2ba2a1f5cced2263207a6d8cbcaa5ec7fee13468c98d",
+      "after_sha256": "b8339ee3bf5a6a1256f2b1301494278345fc0bc24bccb20c7ab5980228c52153",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "40e54887e2102763bb147c28c3ef42506bccdda89ead94636bb1e861a9e41499",
+      "after_sha256": "f7098acfa6d90d052f19fc54da71ace54bc6369bef4b256e8af6858ac9ccde0e",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    },
+    {
+      "path": "anadius-online-version-source/version.hpp",
+      "before_sha256": "85005c17066d7746f9f13a043f9ec098ea4f379b9461e385cdeb5d092ad72da0",
+      "after_sha256": "9493df88f46bf2050eccec5930b68c10910da5de4686757e17001925fda805b8",
+      "reason": "B27 owned query copies preserve the shared object/module reservation through actual C-string scan/copy and all forwarding layers."
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

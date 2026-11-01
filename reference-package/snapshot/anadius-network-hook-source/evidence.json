@@ -1,0 +1,88 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "analysis": "Retained static REA/Ghidra views; no target execution",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "functions": [
+    {
+      "va": "0x18000fd00",
+      "assembly_evidence": "ev_fc78699f1bf625a6a948750e048136e362866045ba59de7d4b783d2361c3bee8",
+      "pseudocode_evidence": "ev_56829116b2c9c143c2c0fe7d3fa88a54fc6499474948b76b08e8cd2740d33c68"
+    },
+    {
+      "va": "0x1800102b0",
+      "assembly_evidence": "ev_2177b6a02a33ef123da2f83b0e6a1ee4e1e23cce8de54c8170baf93877a2102f",
+      "pseudocode_evidence": "ev_00e35447d2de5559a4451e4788fcc72993ba5950a8158522aaa1efb615b7037c"
+    },
+    {
+      "va": "0x180036880",
+      "assembly_evidence": "ev_e6afa7f145235b765bf1eb49d88b97995634d7aa66bfe0e77febe5f38a52659b",
+      "pseudocode_evidence": "ev_7ab0034e86b1a06965fd9c2b27de15a2af17130282b99b90a4af8fc26cbe2d6c"
+    },
+    {
+      "va": "0x180038950",
+      "assembly_evidence": "ev_9e5bed8eb620590b20a44651d47fd66e0d4d00f7cc3caf952f79bc4a73f22049",
+      "pseudocode_evidence": "ev_cfa69b2b4a15d114d9202339fcf5fbbd77988ffeb6ed350e33b89f550b3d9c65"
+    }
+  ],
+  "initial_lengths": {
+    "va": "0x1800a10d0",
+    "section": ".data",
+    "file_offset": "0x9f6d0",
+    "bytes": "10 00 00 00 1c 00 00 00",
+    "values": [
+      16,
+      28
+    ],
+    "source": "Read-only hash-checked PE source mapping"
+  },
+  "anchors": [
+    "00fd1d..00fd3c exact globals length/family short-circuit",
+    "00fd42..00fd73 ntohs/443/80/wait(-1)/3216/current-port",
+    "00fd7c..00fdbb log original/current port then flush",
+    "00fdc0..00fdd1 low32 INC/store/equal15",
+    "00fdd3..00fde0 current port reread/htons/port write",
+    "00fde4..00fe02 original socket/pointer/length tail JMP",
+    "00fe09..00fe52 dialog then exit(-1)",
+    "0102ba..0102fe snapshot begin/end, forward iteration, log failed disable",
+    "010300..010344 prefix before uninitialize then status/flush"
+  ],
+  "literals": [
+    {
+      "va": "0x180080478",
+      "file_offset": "0x7ec78",
+      "text": "game connected on port "
+    },
+    {
+      "va": "0x180080460",
+      "file_offset": "0x7ec60",
+      "text": "; redirecting to "
+    },
+    {
+      "va": "0x180080490",
+      "file_offset": "0x7ec90",
+      "kind": "UI target warning; exact literal in connect.cpp"
+    },
+    {
+      "va": "0x18008051c",
+      "file_offset": "0x7ed1c",
+      "text": "error"
+    },
+    {
+      "va": "0x1800807b8",
+      "file_offset": "0x7efb8",
+      "text": "disabling hook failed"
+    },
+    {
+      "va": "0x1800807d0",
+      "file_offset": "0x7efd0",
+      "text": "MinHook uninitialization "
+    }
+  ],
+  "limits": [
+    "Required Effects for original API/UI/exit/log/engine",
+    "No real socket/hook/native callback executed",
+    "Readable/writable span scope; invalid inspected prefix explicit out-of-evidence",
+    "No runtime/ABI/concurrency equivalence claim"
+  ]
+}

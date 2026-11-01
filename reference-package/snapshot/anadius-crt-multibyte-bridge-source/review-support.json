@@ -1,0 +1,48 @@
+{
+  "result": "PASS",
+  "reviewer": "crt_mb_support",
+  "method": "Read bridge APIs, all forwarding bodies, synthetic fixture composition and relevant previously recovered dependencies; crosschecked validation source hashes; no target execution; follow-up read final README/evidence and updated metadata hashes without source changes",
+  "source_hashes": {
+    "bridge.hpp": "83696a8c10727955f7185a8221d460d433a782650c37540ac845bb7e7fd2a522",
+    "bridge.cpp": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+    "bridge_tests.cpp": "a71ecce34c9ae0cd736af49eb4d0d032aa068eb8ed25fc9006db5dc92753ad0c",
+    "build.ps1": "2ba49b24fd0bc0b2fc6fe8f95ee5d84cc2e8e995628f2f584b3ecd018349549a",
+    "validation.json": "d11754522e596b8c7a76181d2af0da6111f7241922728fe72269d6c20b7e1766",
+    "README.md": "413af0eae0aab7ff222ee5e091cd3b2aae3a9e0f901232f1cb9b150f846647fa",
+    "evidence.json": "5dc3130a10043a6af20641eb65882d444bd3d940e94a78b9f570ad514b148aae"
+  },
+  "validation_reported": "PASS 10377 multibyte/init/publish/locale/PTD/argv/heap composition checks",
+  "validation_source_hashes": "3 of 3 match current source",
+  "findings": [
+    {
+      "kind": "confirmed",
+      "detail": "LocaleUpdate forwards actual 058b04 with local LocaleContext, update thread forwards actual 06f540 with same thread domain, requiredraw forwards064c64, and malloc/free/error/invalid wrappers call recovered core bodies."
+    },
+    {
+      "kind": "confirmed",
+      "detail": "Current global multibyte slot and changed DWORD are real addresses of borrowed Globals members; initial pair sets index1 and mask uses same locale Globals. All pointer identities and memory providers must belong to this one synchronized address domain as header explicitly requires."
+    },
+    {
+      "kind": "confirmed",
+      "detail": "Policy derives existing find/module-path ExpansionPolicy chain and overrides initialize_multibyte06f5f8 to recovered control initializer. Module path and expansion remain inherited recovered implementations."
+    },
+    {
+      "kind": "confirmed",
+      "detail": "Integration Native builder is explicitly deterministic synthetic06f674, writes fixture record fields/type/case tables and returns configured status. Production NativeEffects requires a builder implementation; it supplies no fake fallback."
+    },
+    {
+      "kind": "confirmed",
+      "detail": "Fixture owns/borrows every live source/global/PTD region used for address translation. Repeated initialization, sameCP fast path, dynamic heap record replacement/publication/refcounts, table copies, error12/error22, returninginvalid handler, globalpair timing and source cleanup are checked."
+    },
+    {
+      "kind": "scope",
+      "detail": "Native ACP/OEMCP, exchange32/atomic/locks/FLS/heap effects and06f674 builder remain dependencies. Tests do not establish concurrent atomic behavior, original global initialization, original ABI, native file enumeration or binary equivalence. Bridge header and fixture comments correctly disclose these boundaries."
+    },
+    {
+      "kind": "metadata_followup",
+      "detail": "Reviewed final README/evidence and clarified validation/build scope. README correctly states5normalflow bodies,newcomposition,552recordbytes,locale_info+0xc,AL-only result,stable identity/address-domain contract and mandatory unrecovered06f674. Builder/CP/exchange/native fixture exclusions are explicit. Selected evidence links and corpus digests match retained inputs. Initial README absent limitation below is superseded by this followup."
+    }
+  ],
+  "actionable_defects": [],
+  "limitations": "Source/test review remains unchanged. Follow-up reviewed README/evidence and build/validation scope metadata; no CPP/HPP/test changed and no new test execution needed. Master98objects/83suites/15terminal is parent-reported; reviewer did not independently rerun master or execute target. README final paragraph describing first review is historical; this metadata followup also covers documentation."
+}

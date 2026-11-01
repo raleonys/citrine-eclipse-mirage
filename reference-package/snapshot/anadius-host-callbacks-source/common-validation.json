@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "host_callbacks",
+    "result": "PASS",
+    "output": "host callbacks: 192 checks passed (synthetic mocks only)",
+    "executable_sha256": "5d4a28a3d436ff264c125c78944dbc4d30b41d96e12c014617a2e79befda66ed"
+  },
+  "execution_scope": "Recovered host initialization, paths, registry helpers and four callbacks; synthetic OS/CRT/engine effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-host-callbacks-source/callbacks_tests.cpp",
+      "sha256": "06cf215fa0f101f05151d9913b4db41eb5e5740365a882c16ed024cad8d21ce6"
+    },
+    {
+      "path": "anadius-host-callbacks-source/callbacks.cpp",
+      "sha256": "a21e66575abe057fcaf05b2f4782593c4a537fb01d707ec77b07c4ec634330a1"
+    },
+    {
+      "path": "anadius-host-callbacks-source/callbacks.hpp",
+      "sha256": "1fc379d622ae3480bd9d441f181454703735bacb7832f80206bf79d0d863f0bf"
+    }
+  ]
+}

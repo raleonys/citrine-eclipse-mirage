@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_environment_cleanup",
+    "result": "PASS",
+    "output": "PASS 447 environment cleanup checks;25 narrow/wide alias pairs;owned pointer vectors and mutation ordering",
+    "executable_sha256": "ed4b1c307a5a6b08a3def017e31d7e295603d6c64b84037c4056af35c2c4bd64"
+  },
+  "execution_scope": "4normalflow bodies063f60/063f7c/064010/0644a0;447checks,actual shared bounded063d80,25narrow/wide alias combinations,fresh laterglobal/slot reads,noreset;ownedcleanup-onlychar* pointervectors forwidepayload notnativewideABI,nohostenvironment/targetexecution",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-environment-cleanup-source/environment_cleanup.cpp",
+      "sha256": "5541b20bd7f67869bc2bb5a625db9dd36224396b12c803c92a553328432b816e"
+    },
+    {
+      "path": "anadius-crt-environment-cleanup-source/environment_cleanup.hpp",
+      "sha256": "6fa4d9263b44cd07a0d1431b16f6e4519f6ff1309ce9277ea83a57b21d9a8cbe"
+    },
+    {
+      "path": "anadius-crt-environment-cleanup-source/native_tests.cpp",
+      "sha256": "715be254572184850faf7aec38d623b9bb480512d012a1b79e96250e9fb802c5"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "schema": "native-profile.source-composition.v1",
+  "source_package": "B41",
+  "evidence_type": "composition of existing recovered typed source with explicit selected host provider/lifetime policies",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-socket-source/native_message.cpp",
+      "sha256": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+      "address": "0x180033d70",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-socket-source/request_mutation.cpp",
+      "sha256": "9226b59ea65c735564c0fa22dc460509e23d44b2ce958b66f40222f07960980e",
+      "address": "0x18003ce30",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-socket-source/request_mutation.cpp",
+      "sha256": "9226b59ea65c735564c0fa22dc460509e23d44b2ce958b66f40222f07960980e",
+      "address": "0x180034730",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-socket-source/request_growth.cpp",
+      "sha256": "40667442f868a21494379830b95c6ce790babba2900c44842e11e84af04a9311",
+      "address": "0x18002b940",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-socket-source/append_growth.cpp",
+      "sha256": "db4311e05b8d893e7833d004dd9078ffcc3aa566f2100f1fad7be48b5b4f7eca",
+      "address": "0x180012350",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-socket-source/append_growth.cpp",
+      "sha256": "db4311e05b8d893e7833d004dd9078ffcc3aa566f2100f1fad7be48b5b4f7eca",
+      "address": "0x180007e30",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-socket-source/response_hex.cpp",
+      "sha256": "a3afa7e8621353d8667b5c773bdffe3aab35089a0e8dd6d90314cd723f4f4a4f",
+      "address": "0x18003d190",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-socket-source/prefix_cipher.cpp",
+      "sha256": "62b58f613895dbb9fcdc7d184496aa22c5dea328448140a02c5017e2cc2ce48d",
+      "address": "0x180042480",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-socket-source/prefix_cipher.cpp",
+      "sha256": "62b58f613895dbb9fcdc7d184496aa22c5dea328448140a02c5017e2cc2ce48d",
+      "address": "0x180042610",
+      "scope": "Previously recovered typed normal source reused; no new recovery, original execution, ABI or EH claim."
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/evidence.json",
+      "sha256": "1802cbbd26fe14e0e45e01c4152ef860f0f9cedd698ddca876eb87efa2b59143"
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/architecture-review.json",
+      "sha256": "0851dcb50a0a6ecd1e5f6efbfdf015b513330aa5afa1e5ed3e3137faa094313e"
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/evidence.json",
+      "sha256": "00cd3a9c8071725379e9db5c4022e9209479ee3c475f602c26ee1fc334cb47ad"
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/architecture-review.json",
+      "sha256": "0f9ed9beefd1b0c2fddedfe3d6507394d5231129115cf15241d2da408a832bbb"
+    },
+    {
+      "path": "outputs/anadius-socket-source/evidence.json",
+      "sha256": "f6dedbaaa00bd106de4d9a11a9b28630799d273afe0cee5936e5735dc31f712d"
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b41-core-quick-results.json",
+      "sha256": "355ca0dc65a30b78bd51b6ea7706609e7f3f1e13e016de8538662e1d12fd11e9",
+      "checks": 333,
+      "executable_sha256": "ba181870b996fd8c8d5c414fb43cde9cc001de9ebf4b4b5662efec7ea50f23e6",
+      "archive_sha256_as_used": "75db97cc59ce79eb1e0d75a0f6f7953cc390da47ecc4aac3a8674eb7de444568",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh native.cpp, prior router.cpp and native_tests.cpp with native.hpp and selected actual project headers. Immutable canonical B40 archive supplies all prior production objects, including existing Strings implementation. Modified Profile.cpp and integration test are not compiled by this direct core invocation. Parent count excludes nine independent retained-prefix child bodies; parent verifies exact controlled exits231..239. Override of global new is isolated to this synthetic EXE; fail-next metadata allocation is enabled only inside child235 after the opaque provider has returned its printer."
+    },
+    {
+      "path": "work/b41-integration-quick-results.json",
+      "sha256": "e5c0452868f740e8f206028a0080065aa24b02d85316d1b16b83c1d0369f0f8b",
+      "checks": 99,
+      "executable_sha256": "a49ff216289a696c34b8c61f8cf788e924929043cb6a94227a123ca72ee9350f",
+      "archive_sha256_as_used": "75db97cc59ce79eb1e0d75a0f6f7953cc390da47ecc4aac3a8674eb7de444568",
+      "execution_author": "/root/b22_integration",
+      "note": "Actual NativeLogic typed033d70 invocation through modified concrete Profile, with real Parent/frame prefixes: plaintext parse7→034730 emptyversion delete→reparse→actualRouterQueryEntitlements guardedNodeattributes/text and encrypted parse8→flagflip/nativehex/prefixAESdecrypt→reparse. Received-log checks plaintext alreadyexists in live Parent-owned memory before dispatch. Semantic XMLReader/032d00 Router are explicit lower providers; actual typed eventlock/prefixAES/hex/007e30append/pop usesoneSSOevent and independent clientdecryptstwoNULframes. Full twooverlap/sameworkerdeferredjobEOF/nativeIOCP/disposal uses realheap/FLS/ownIOCP and synthetic networkonly. Exactwronggeneration NativeLogic child retains poisonedgraph before greeting/parse, no rollback. No native DOM/printer/registry/logstream ABI or native EH/concurrency claim."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition; no new shipped-artifact claim or query.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false
+}

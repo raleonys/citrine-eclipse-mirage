@@ -1,0 +1,47 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "origin": "Bounded extraction of retained REA/Ghidra 12.1.4 evidence for exact original target SHA. Parent verified current REA 6.5.0 aligned catalog and Ghidra candidate availability; no active binary binding and no target execution.",
+  "functions": [
+    {
+      "va": "0x1800706c0",
+      "assembly_evidence": "ev_b900b3842ed91b97d2155b79a612527034131c53e02592bf02e338b4266cc6cb",
+      "pseudocode_evidence": "ev_dfb45e5c4c5e242c804d70a9dd43ed27cd4aba8a1f6518c86bb9428749bf90c1"
+    },
+    {
+      "va": "0x180070a40",
+      "assembly_evidence": "ev_0e724ec79256b6de892dd1e723bb73bdc2f2e8b521abe4989ec69c03bcb885cf",
+      "pseudocode_evidence": "ev_668ecd85f87cd9f3c4f0756fd946d4c21aa937a6318609791d886b29b4a1f14f"
+    },
+    {
+      "va": "0x180071068",
+      "assembly_evidence": "ev_e50e77874a452134ed6970138a4ffc6b6546a72fe5d606168374792e262afe83",
+      "pseudocode_evidence": "ev_72ebac3df15852c23bd9c9b2b2fe06b6585d8a0b1dbab04999111e35298ff0a5"
+    },
+    {
+      "va": "0x180070860",
+      "assembly_evidence": "ev_c979cfa9054f0fbe5894a6227014c2f5609daaec89157c22ef013d431b2d4547",
+      "pseudocode_evidence": "ev_a093efa34b4b095fb071a2dc5f786e694ffd291dd53fe42f0eca522834c662d3"
+    },
+    {
+      "va": "0x180071730",
+      "assembly_evidence": "ev_8ae879d4089ba71f7ff7a6308282c75b8951658711b3fb94bb1f7ef0cb3197b9",
+      "pseudocode_evidence": "ev_84c78024a6b69ee549cee89a3c5592e0313838a821f514cb0fbd5c2a705f42b7"
+    },
+    {
+      "va": "0x1800713bc",
+      "assembly_evidence": "ev_0cf15411078b07984a4aa15da62c988511ee97407a1e52b164e84923241d1bb1",
+      "pseudocode_evidence": "ev_5efc80503c52cf75419b8050eb9dcfc5425cdf145bbe40e476853af6f9286e27"
+    }
+  ],
+  "selected_assembly_sha256": "8e727988405fc50e3abf0338b04dac2aa49e1f9d993d5998248f12d34a541f2c",
+  "selected_pseudocode_sha256": "2513ff4e383a1b9100a82cded7f08b06298d16a58b1bed3627687dd10e617820",
+  "limits": [
+    "Normal flow only; no native memory fault or SEH/unwind behavior reconstructed.",
+    "Opaque storage addresses are supplied to explicit required effects and never dereferenced or executed as original target addresses.",
+    "Original source, vendor/compiler identity and ABI equivalence remain unproven.",
+    "Pointer-array count is full 64-bit RDX; unsigned modular endpoint semantics retained. Very long valid loops require suitable provider storage and are not silently truncated.",
+    "Free calls are effect boundaries, including NULL calls; callers may bind the recovered free source. No native free provider is supplied by this module."
+  ]
+}

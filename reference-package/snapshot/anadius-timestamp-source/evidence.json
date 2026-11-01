@@ -1,0 +1,104 @@
+{
+  "schema": "timestamp041e10.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x18001eb00",
+      "pseudo_evidence": "ev_f7cbf2f5b9d3d17681ffb7f9a17c6ed5cf2952ce07087685262cb3dccfe53b3e",
+      "assembly_evidence": "ev_bd10a5a82a8307f47db504ea903686ef7b68be9597de0c3a48f59707493363e8"
+    },
+    {
+      "address": "0x180041e10",
+      "pseudo_evidence": "ev_80df4678956b9b7658e3d0b5553defdaa1244bbcda5a6974597668481318d415",
+      "assembly_evidence": "ev_c6b31cf960ca4a4bf60c21d21f3719c757a8a088e5e42c6c5b0a0784d2fc858d"
+    },
+    {
+      "address": "0x18003d310",
+      "pseudo_evidence": "ev_f4f2a1eb680a7fef54367c61f2f66e8b895c9fcacdc2fd88f07732159de7dea9",
+      "assembly_evidence": "ev_d2ad25aca328a392a3f40b007bcbcf3cbcb171b3c30c9afe4b9a467243f1e168"
+    },
+    {
+      "address": "0x18003ab40",
+      "pseudo_evidence": "ev_08fd4b0566af9e3f0ea136dd39e7b88a9172df6fd8206e34250626949e30f50a",
+      "assembly_evidence": "ev_0eb0d57f5d845cd1d367900a210d4bd60edc0baec605287a5790041b90ca3af2"
+    },
+    {
+      "address": "0x18003e870",
+      "pseudo_evidence": "ev_631fc88d3cc57123aa3a67ab95f8f9d818ae598689c4b56a5e8e6b9fd15d50e0",
+      "assembly_evidence": "ev_55d051de4f701e69007d155bc83896e5c5b6f87703bcb257f9aa02164f972b28"
+    },
+    {
+      "address": "0x180041760",
+      "pseudo_evidence": "ev_d534decdbd37d824b4edeba1aa8b87354fb56ff73514b0f0a0b5a017fcfdf952",
+      "assembly_evidence": "ev_cf53fb49d87e0caa3f86fc29422164b8ff9d1fb128440ef18bf010ad2f706e7a"
+    },
+    {
+      "address": "0x18003f190",
+      "pseudo_evidence": "ev_a47bfad1bd8e9cd6e0bac59d9333647dcc99a349b817cd04a45e6332d2dbb91d",
+      "assembly_evidence": "ev_95e782f1e992ff457d1190b9775a8edbaf1601e24bbccf9aec879b02dd6f130b"
+    },
+    {
+      "address": "0x18003d8f0",
+      "pseudo_evidence": "ev_5cc1de95c661c1e2eb1d38d7c96f2d8aa607569c484e2e5f97434d7d1283b971",
+      "assembly_evidence": "ev_500dd6b8cd708b173225eaf0f903be4852ce032ec06870223699a3ef56f2bca1"
+    },
+    {
+      "address": "0x18003ef80",
+      "pseudo_evidence": "ev_5fbe31765cdd7795f98eddfcfbec7eb0678d480053ad7aa5506d40c6dca2323d",
+      "assembly_evidence": "ev_5130be537a0e7cadab1672c2c190d3d6fed839a67d5ad04785155ac63f20f60d"
+    },
+    {
+      "address": "0x18000dfa0",
+      "pseudo_evidence": "ev_9b4b1a32f0a862824ec4da2540b2d55e696972bcec1b6847ddcfedb2b5d4fc98",
+      "assembly_evidence": "ev_4f14e5e46652a84c54d1c42d5cfe450be672d10149994567ab0fa182ecc87c4e"
+    },
+    {
+      "address": "0x18004864c",
+      "pseudo_evidence": "ev_f04d99b928a795f51510ab4db03476ce2913b487b026df04b614f15e1c240aec",
+      "assembly_evidence": "ev_86903cf40e31e37ceba84a2b506e198a8be683bea7815fe72cf72a824261991e"
+    },
+    {
+      "address": "0x18000d1c0",
+      "pseudo_evidence": "ev_2e35e32c5b8b27f492e61aaa51033078878993339ad9896ff295c8ccb7e89070",
+      "assembly_evidence": "ev_a55962376e70b282fdf504954658ff559b8f68bd7694d7e1a9fd3439acb8178c"
+    },
+    {
+      "address": "0x180041ff0",
+      "pseudo_evidence": "ev_89a838df3190068a41d3c5907aec78720d14c6645ae91440bd77f92778e164dc",
+      "assembly_evidence": "ev_9d8c05e7881ace56f5053a11d8c9b6148320e73c05a8db0fd152a3ad78b0619c"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "timestamp.hpp": "bdf47aadc38b11393e9317ed9c2e4b43067f8c81c02256a4001289da31ba017e",
+    "timestamp.cpp": "443dc4a0dea62b717d4513f6d8432f84f8d51ff6edf3bc26bd12f6578c02e52c",
+    "timestamp_tests.cpp": "5b0eb2b9a72fa135a49adf87ac06a8467ac6492905317b8328adbcb2f04af6e5",
+    "build.ps1": "c5bcbb361b1c2bbd6225c167024c439a7ec555afbb98c98fc2031da7b9dd677c",
+    "CMakeLists.txt": "ba4d0d0b123c885ec24fff8a8a1006b012e9ada6a55309e381f182919023e492",
+    "README.md": "88028baba72ebaf1111b1249a3aa5f2f938bac6421beb5be00e2c742150495a5"
+  },
+  "support_hashes": {
+    "evidence.pseudo.c.txt": "3ac9da90685e630285d5cd2652697cbf0f0fca97b6209fcf12e7835ee571a519",
+    "evidence.asm.txt": "70de3172c5e027ea2d4844da394a28d61fc984ba920cecfb5ddd9adcca36d998",
+    "parse-audit.md": "e1fdfdfb39f7c27b3bef9601a50228fd21d3f3a444273bdd128c623b8c25aec6",
+    "parse-audit.json": "5b87c0d12e853b5f168a2d3d46ea318df553acc7f6637c635b371b3609b544b5",
+    "rea-session.json": "38b78f49875dc6e65f179895fb37ccb39c6c45fcaf41acfc23dfa75e3d67a997",
+    "review.md": "bda198b4d3d9c70471074c238f9626719b4fb03a4de7557ff213d4763c9a6355"
+  },
+  "normal_wrapper": "0x180041e10",
+  "pure_calendar": "0x180041ff0",
+  "parser_domain": "Fixed ISO format, explicit ASCII/base classic facet assumptions only; not a whole native procedure ABI reconstruction",
+  "classic_locale_invariant_for_all_calls_proven": false,
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "tests": "192 timestamp checks; separate calendar31760; common-validation.json binds final common build",
+  "unproven": [
+    "Arbitrary native locale/facet and stream allocation/exception ABI",
+    "Native STL/iterator/layout/SEH and full DLL equality",
+    "Other achievement runtime update/XML save paths"
+  ]
+}

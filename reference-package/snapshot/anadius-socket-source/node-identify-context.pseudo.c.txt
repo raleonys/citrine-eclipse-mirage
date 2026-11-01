@@ -1,0 +1,225 @@
+/* 0x180001590 FUN_180001590; Evidence ev_59fe8f6f63b5d539fa34d2e7ab472bb07f2eac9ddbe19463ceda5cd58807aa7d */
+
+undefined8 * FUN_180001590(longlong param_1,longlong *param_2)
+
+{
+  undefined8 *puVar1;
+  
+  puVar1 = (undefined8 *)(**(code **)(*param_2 + 0x10))(param_2);
+  puVar1[1] = param_1;
+  puVar1[2] = 0;
+  *(undefined4 *)(puVar1 + 3) = 0;
+  puVar1[4] = 0;
+  puVar1[5] = 0;
+  *(undefined4 *)(puVar1 + 6) = 0;
+  puVar1[7] = 0;
+  puVar1[8] = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  puVar1[0xb] = 0;
+  *puVar1 = tinyxml2::XMLComment::vftable;
+  puVar1[0xc] = param_2;
+  FUN_180005440((longlong *)(param_1 + 0xa8),puVar1);
+  return puVar1;
+}
+
+
+
+
+/* 0x180001610 FUN_180001610; Evidence ev_f70ca376682c01eea491392250432e20b7b1f8b38988e7cff27d1035ae136543 */
+
+undefined8 * FUN_180001610(longlong param_1,longlong *param_2)
+
+{
+  undefined8 *puVar1;
+  
+  puVar1 = (undefined8 *)(**(code **)(*param_2 + 0x10))(param_2);
+  puVar1[1] = param_1;
+  puVar1[2] = 0;
+  *(undefined4 *)(puVar1 + 3) = 0;
+  puVar1[4] = 0;
+  puVar1[5] = 0;
+  *(undefined4 *)(puVar1 + 6) = 0;
+  puVar1[7] = 0;
+  puVar1[8] = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  puVar1[0xb] = 0;
+  *puVar1 = tinyxml2::XMLDeclaration::vftable;
+  puVar1[0xc] = param_2;
+  FUN_180005440((longlong *)(param_1 + 0xa8),puVar1);
+  return puVar1;
+}
+
+
+
+
+/* 0x180001690 FUN_180001690; Evidence ev_aa306639682fe19727d4575e228f9b77edd69edc194f91bf0b4d0573b268c3f0 */
+
+undefined8 * FUN_180001690(longlong param_1,longlong *param_2)
+
+{
+  undefined8 *puVar1;
+  
+  puVar1 = (undefined8 *)(**(code **)(*param_2 + 0x10))();
+  puVar1[2] = 0;
+  *(undefined4 *)(puVar1 + 3) = 0;
+  puVar1[4] = 0;
+  puVar1[5] = 0;
+  *(undefined4 *)(puVar1 + 6) = 0;
+  puVar1[7] = 0;
+  puVar1[8] = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  puVar1[0xb] = 0;
+  puVar1[1] = param_1;
+  *(undefined4 *)(puVar1 + 0xd) = 0;
+  puVar1[0xe] = 0;
+  *puVar1 = tinyxml2::XMLElement::vftable;
+  puVar1[0xc] = param_2;
+  FUN_180005440((longlong *)(param_1 + 0xa8),puVar1);
+  return puVar1;
+}
+
+
+
+
+/* 0x180001720 FUN_180001720; Evidence ev_ec0b7b64a4ba841a7ab271ca18723be88c8dddb85944eec7ad7b33fa07a8487f */
+
+undefined8 * FUN_180001720(longlong param_1,longlong *param_2)
+
+{
+  undefined8 *puVar1;
+  
+  puVar1 = (undefined8 *)(**(code **)(*param_2 + 0x10))(param_2);
+  puVar1[1] = param_1;
+  puVar1[2] = 0;
+  *(undefined4 *)(puVar1 + 3) = 0;
+  puVar1[4] = 0;
+  puVar1[5] = 0;
+  *(undefined4 *)(puVar1 + 6) = 0;
+  puVar1[7] = 0;
+  puVar1[8] = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  puVar1[0xb] = 0;
+  *puVar1 = tinyxml2::XMLText::vftable;
+  *(undefined1 *)(puVar1 + 0xd) = 0;
+  puVar1[0xc] = param_2;
+  FUN_180005440((longlong *)(param_1 + 0xa8),puVar1);
+  return puVar1;
+}
+
+
+
+
+/* 0x1800017b0 FUN_1800017b0; Evidence ev_411d958c38112d47a20416edd1170e0a920b6607d6b2f500d92c7d5014be885a */
+
+undefined8 * FUN_1800017b0(longlong param_1,longlong *param_2)
+
+{
+  undefined8 *puVar1;
+  
+  puVar1 = (undefined8 *)(**(code **)(*param_2 + 0x10))(param_2);
+  puVar1[1] = param_1;
+  puVar1[2] = 0;
+  *(undefined4 *)(puVar1 + 3) = 0;
+  puVar1[4] = 0;
+  puVar1[5] = 0;
+  *(undefined4 *)(puVar1 + 6) = 0;
+  puVar1[7] = 0;
+  puVar1[8] = 0;
+  puVar1[9] = 0;
+  puVar1[10] = 0;
+  puVar1[0xb] = 0;
+  *puVar1 = tinyxml2::XMLUnknown::vftable;
+  puVar1[0xc] = param_2;
+  FUN_180005440((longlong *)(param_1 + 0xa8),puVar1);
+  return puVar1;
+}
+
+
+
+
+/* 0x18005c550 strncmp; Evidence ev_b80eb899e11d6b702a7ffb321f39385c8243e938100ca0bab91fa50873f2e599 */
+
+/* Library Function - Single Match
+    strncmp
+   
+   Library: Visual Studio 2019 Release */
+
+int __cdecl strncmp(char *_Str1,char *_Str2,size_t _MaxCount)
+
+{
+  byte bVar1;
+  ulonglong uVar2;
+  longlong lVar3;
+  bool bVar4;
+  
+  lVar3 = (longlong)_Str2 - (longlong)_Str1;
+  if (_MaxCount != 0) {
+    do {
+      if (((ulonglong)_Str1 & 7) == 0) {
+        while ((((int)lVar3 + (int)_Str1 & 0xfffU) < 0xff9 &&
+               (uVar2 = *(ulonglong *)_Str1, uVar2 == *(ulonglong *)(lVar3 + (longlong)_Str1)))) {
+          _Str1 = (char *)((longlong)_Str1 + 8);
+          bVar4 = _MaxCount < 8;
+          _MaxCount = _MaxCount - 8;
+          if (bVar4 || _MaxCount == 0) {
+            return 0;
+          }
+          if ((~uVar2 & uVar2 + 0xfefefefefefefeff & 0x8080808080808080) != 0) {
+            return 0;
+          }
+        }
+      }
+      bVar1 = (byte)*(ulonglong *)_Str1;
+      if (bVar1 != *(byte *)(lVar3 + (longlong)_Str1)) {
+        return -(uint)(bVar1 < *(byte *)(lVar3 + (longlong)_Str1)) | 1;
+      }
+      _Str1 = (char *)((longlong)_Str1 + 1);
+      _MaxCount = _MaxCount - 1;
+    } while ((_MaxCount != 0) && (bVar1 != 0));
+  }
+  return 0;
+}
+
+
+
+
+/* 0x180051fc0 isspace; Evidence ev_f1fe8a7617f5ab347923cbb3f997cb0885f5c41e120a381e3292bfbdfef17272 */
+
+/* Library Function - Single Match
+    isspace
+   
+   Library: Visual Studio 2019 Release */
+
+int __cdecl isspace(int _C)
+
+{
+  int iVar1;
+  __acrt_ptd *p_Var2;
+  longlong *local_res10 [3];
+  
+  if (DAT_1800a52d8 == 0) {
+    if (_C + 1U < 0x101) {
+      return *(ushort *)(PTR_DAT_1800a17e0 + (longlong)_C * 2) & 8;
+    }
+  }
+  else {
+    p_Var2 = FUN_180064b90();
+    local_res10[0] = *(longlong **)(p_Var2 + 0x90);
+    __acrt_update_locale_info((longlong)p_Var2,(longlong *)local_res10);
+    if (_C + 1U < 0x101) {
+      return *(ushort *)(*local_res10[0] + (longlong)_C * 2) & 8;
+    }
+    if (1 < (int)local_res10[0][1]) {
+      iVar1 = _isctype_l(_C,8,(_locale_t)0x0);
+      return iVar1;
+    }
+  }
+  return 0;
+}
+
+
+

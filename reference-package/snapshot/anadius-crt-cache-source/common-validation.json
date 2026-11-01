@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_cache",
+    "result": "PASS",
+    "output": "PASS 5555 checks",
+    "executable_sha256": "a8a43af86f74691e43b77c8acf096d7329f54da2a4da29078f0f43ae22d4bf6f"
+  },
+  "execution_scope": "Cookie/thunk init/shutdown and encoded globals; 21 module/31 procedure cells; synthetic entropy/module effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-cache-source/cache_tests.cpp",
+      "sha256": "572bf1157fcfd49da9a27c0e454885089fa625345e7d823c87215f02bdc819a3"
+    },
+    {
+      "path": "anadius-crt-cache-source/cache.cpp",
+      "sha256": "613f2667b0bf0c068f7f4a04e0144e15272b13cec03cb53b26f3eb41ad75a9de"
+    },
+    {
+      "path": "anadius-crt-cache-source/cache.hpp",
+      "sha256": "333e6ba19bb623cf798e67c402ef65a5c58ae43717aa562a6c2c824aa803c756"
+    }
+  ]
+}

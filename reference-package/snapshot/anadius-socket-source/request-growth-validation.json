@@ -1,0 +1,47 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "3750cb25b51f5123036ce03d91cda959f2e3654aadd9ba78eb2d00fc1187bcdc",
+  "test_results": [
+    {
+      "module": "socket_request_growth",
+      "result": "PASS",
+      "output": "PASS: 5304 socket request growth checks; actual02b940 and034730 provider closure, binary/alias oracle, metadata-before-COPY, sized-free-before-pointer, alignment and failure prefixes",
+      "executable_sha256": "60ce8c3dca9c1105aaa330b30ac863b6771792db1f7a974a23791052608f0adc"
+    },
+    {
+      "module": "socket_request_growth_integration",
+      "result": "PASS",
+      "output": "PASS: 1144 socket request growth integration checks; actual034730/02b940 provider closure, external/self source and aligned growth before controlled caller and N1-N6/send/finish; native033d70 orchestration remains open",
+      "executable_sha256": "efde4cae317061255a81d7b15bf7132fc1fbb36f6e9110c91dc05607842c07f2"
+    }
+  ],
+  "core_checks": 5304,
+  "integration_checks": 1144,
+  "source_hashes": {
+    "request_growth.hpp": "b4870a3caf86e5abcb6e6703eba65ef41a46a802f69035850e063cd9314f1922",
+    "request_growth.cpp": "40667442f868a21494379830b95c6ce790babba2900c44842e11e84af04a9311",
+    "request_growth_test_fixture.hpp": "9d587b0332194718d5ba3c864eb973d6195e39fc20c156a08181e8b15797e6b3",
+    "request_growth_tests.cpp": "02424ffdc0a8684002750d23cc254309eca3c7f89d33ba1ab8dd514c15b90dbb",
+    "request_growth_integration_tests.cpp": "63a17cd536978336566deb19b2d9e388bdc49d9467c07e4f92dc6faa5002315b",
+    "build.ps1": "c9e1368412a1a024326376e3581cf7af33dd31c92707fd9d1a06308960779acc",
+    "CMakeLists.txt": "17a7f737ef3fe31ddd2e54dcb4bd366af5bac4b5631078c776e23216163e908b"
+  },
+  "original_procedures_added": 1,
+  "new_source_bridges": 1,
+  "execution_scope": "02b940 normal body and final RequestMutationApi growth source bridge; actual034730 before controlled caller and N1-N6/send/finish; external/self source, aligned large input, request lifetime and metadata/copy/free/pointer prefixes; native033d70 remains open",
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Typed normal projection only, no native MSVC/allocator/global/ABI/EH/SEH/concurrency/fault equivalence",
+    "Allocator/free/terminal/078d30 native bodies remain providers; bounded byte COPY compatibility only",
+    "Symbolic maximum arithmetic/failure prefix, not real huge allocation;00cd30 valid-state reachability not asserted",
+    "Controlled caller preparation and N5 semantic adapter, not full native033d70/042480 orchestration; N5 gap unchanged",
+    "Controlled response constructor/handler/cipher/023dd0/completion/injected send; no new027a20/IOCP/027c10 worker or real SDK/network/original execution"
+  ],
+  "previous_local_records": "30 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

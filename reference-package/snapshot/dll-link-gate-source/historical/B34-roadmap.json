@@ -1,0 +1,83 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B34",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B34",
+  "latest_dll_link_attempt": "B34",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B34 concrete OwnedIoMemory owns real parent-domain IO storage and separate host typed projections, two fixed binding tables, generation handles and original extents across cross-kind cache reuse. Pinned SDK buffer loans and EXTRA source strong are explicit compatibility policy outside exact native counter traces. Cancel intent is not completion. Observed completion copies incoming error before binding/loan retirement and routes native cleanup without old-record accesses after cache/callback reentry. Every exception after attempting parent allocation/free is fail-stop, including known parent bad_alloc/HeapFreeFALSE; unknown SDK/callback outcomes likewise poison and retain without automatic recovery. Contexts remain borrowed; stop/drain/cache ordering is external. 854 prior sources unchanged,2 reviewed parent edits+4new=860;251objects(247CPP+4C)/297groups+19terminal;77+57=134checks. 0 new native bodies/ABI closures;494mapped/498eligible/131normal/52historical unchanged. Production server/accept/executor/loader/foreign ABI/kernel/raw-job quiescence remain open; generic CRT paused.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Somut üretim ServerBackend/Transport/Scheduling ve acceptor kaynak grafiği",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B35",
+    "priority": 1,
+    "title": "Somut üretim ServerBackend/Transport/Scheduling ve acceptor kaynak grafiği",
+    "requirements": [
+      "Compose concrete production ServerBackend/Transport/Scheduling with typed operation routing and existing SourceBackend/session memory graph",
+      "Own acceptor/pending socket/context/completion resources; advance actual accept021b00/0271a0 edges without inventing selected0228c0 body",
+      "Keep external stop, observed IO completion, terminal worker cache drain and detached raw-job quiescence separate until each is evidenced",
+      "Keep B31 attach/detach production hooks undefined until loader context/rollback/unload quiescence are supplied; foreign ABI/licensing remain open; generic CRT paused"
+    ],
+    "exit_criteria": "A concrete production server/resource edge executes existing owned session/typed IO source with explicit admission, stop, completion and lifetime obligations."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": []
+}

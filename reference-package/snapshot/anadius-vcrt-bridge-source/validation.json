@@ -1,0 +1,54 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T14:23:39.5868695Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\bridge_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-cpu-source\\cpu.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-vcrt-ptd-source\\vcrt_ptd.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-vcrt-api-source\\api.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-lock-source\\locks.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-entry-source\\entry.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-initializers-source\\initializers.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-ptd-source\\ptd.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-ptd-data-source\\ptd_data.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-heap-source\\heap.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-glue-source\\crt_glue.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-error-source\\errors.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-invalid-source\\invalid.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-crt-runtime-source\\runtime.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-thread-native-source\\win32_effects.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-thread-source\\threads.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\..\\anadius-source\\bootstrap.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\build\\bridge.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-vcrt-bridge-source\\build\\bridge_tests.exe"
+  ],
+  "tests": "PASS 443 VCRT/ACRT/CPU/locks/entry composition checks",
+  "scope": "Actual recovered VCRT/ACRT/heap/PTD/lock/resolver/CPU/entry algorithms; owned raw heap and opaque critical-section/FLS/TLS register fixtures; simulated thread switch; synthetic remaining app/CRT subsystems",
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "cc8c0e50e5cccf6180869599e3fc7efd4c40c15ea3b557e4f0376ab3f513b577"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "85f1591f4b8e265cea036badadaf0c3de43fdd6bd16c2a1be910aaf4137526bf"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "eac77edf09d6d38d5d33651f9a7c58ebec6dd46abb3db28b283a95140af598e3"
+    },
+    {
+      "name": "test_fixtures.hpp",
+      "sha256": "63460b3eeea69beb6cad8df55ff9f64f3fc87a26032934d71f4c2d85fe8c669d"
+    }
+  ],
+  "executable_sha256": "756aef0d5640f262c7d4c3823ca3ec71c2dd8fcf08979565f6f6391fe24fb306"
+}

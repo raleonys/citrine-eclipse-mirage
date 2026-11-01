@@ -1,0 +1,73 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T13:43:37.021956+00:00",
+  "prior_package_sha256": "343776c8a5c2cfae0291be05a143c50c5c899918cc9930a48849d163ce4bc504",
+  "prior_source_count": 566,
+  "unchanged_prior_sources": 566,
+  "added_sources": [
+    "anadius-socket-source/message_core_bridge.cpp",
+    "anadius-socket-source/message_core_bridge.hpp",
+    "anadius-socket-source/message_core_bridge_integration_tests.cpp",
+    "anadius-socket-source/message_core_bridge_test_fixture.hpp",
+    "anadius-socket-source/message_core_bridge_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 571,
+  "current_documents": 219,
+  "native_objects": 186,
+  "cpp_objects": 182,
+  "c_objects": 4,
+  "normal_test_groups": 185,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 58,
+  "new_checks": 785,
+  "new_tests": [
+    {
+      "module": "socket_message_core_bridge",
+      "result": "PASS",
+      "output": "PASS: 87 socket message core bridge checks; actual existing033d70/router/XML and010040/008350, normal-return request commit, identity/state binding and explicit exception/callback visibility limits;0 new native bodies",
+      "executable_sha256": "8888721b5c288857484da60776b13e8aee09fd8cf561895b1cd3cd0ea51174a4"
+    },
+    {
+      "module": "socket_message_core_bridge_integration",
+      "result": "PASS",
+      "output": "PASS: 698 socket message core bridge integration checks; existing033d70/032d00/XML to actual N1/N2/N3/N4/queued-send/finish; normal-return adapter, controlled handler/cipher/constructor/completion and injected send;0 new native bodies",
+      "executable_sha256": "c21b34ce4f7b2a36f361009a16f1b14d8d9efbe129837f496dc15b4d50e2974a"
+    }
+  ],
+  "validation_mirror_pairs": 29,
+  "historical_module_records_preserved": 28,
+  "historical_config_references_preserved": 56,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "07180799acb8acedfcf1654a9efd6f18db3c3992e300acddf96f76ddd50eb7ec",
+  "inventory_data_checks": 7210,
+  "normal_source_procedures_added": [],
+  "new_original_procedures": 0,
+  "new_selected_compatibility_bridges": 1,
+  "native_provider_fully_closed": false,
+  "prior_native_source_closures_preserved": 13,
+  "binding_scope": "normal_return_only",
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "limitations": [
+    "Native callback request-intermediate visibility not preserved: request prefix committed after semantic return",
+    "Semantic exceptions do not commit mutated std::string back to native request; referenced state may already change",
+    "Native response move/string allocation/ownership constructor remains required",
+    "Actual078d30/0793d0/allocator/free/terminal bodies, native XML lifecycle/ABI/EH/SEH/concurrency/global/fullDLL remain open",
+    "Controlled handler/cipher/response constructor/023dd0/completion and injected AsyncSendApi; no SDK network/thread or original execution",
+    "No new027a20/IOCP/027c10 worker; actual026a00/021a80 source used"
+  ],
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N6 native03ce30 hex-decode and034730 erase/replace request-prefix mutations; reduce callback/exception visibility gap; CRT stays paused"
+}

@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "checks": 116,
+  "output": "PASS: 116 achievement storage checks; own fixtures only, no original execution",
+  "source_hashes": {
+    "storage.hpp": "54e040d5b54eb6846a849ac5e128681de5adc2e17258b2ed39fc40ff51c9403a",
+    "storage.cpp": "2a2f23e278f35e8920047c2a9444e1fd150220d01bb2d727d1f3378a43684d13",
+    "storage_tests.cpp": "fb2d609018393bac9a51924d3aa7c7f5ca688fcd1ea8d98ed556c0b47d5094be",
+    "build.ps1": "60b323568d6c2e7387690ea6385703505056ebeab89b723cff22de2112fac364",
+    "CMakeLists.txt": "72df82cdf0316c327f3f3044879afd0e2cd06aa4e7d649c972a29de0aad96985"
+  },
+  "original_execution": "none",
+  "user_cfg_read": false,
+  "native_scope": "Only generated XML/INI fixtures; timestamp/status/directory/config OS providers controlled",
+  "runtime_equivalence": "not established"
+}

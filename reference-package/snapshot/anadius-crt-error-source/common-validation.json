@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_errors",
+    "result": "PASS",
+    "output": "PASS 4151 CRT error mapping checks",
+    "executable_sha256": "be9763cd7b02e67601284c20804761624854c449e66b50e9f47847fcb56a9dff"
+  },
+  "execution_scope": "Four recovered error mapping/accessor functions, exact 45-entry table, two PTD selections; synthetic owned cells",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-error-source/error_tests.cpp",
+      "sha256": "6006f51d419bbcff751a4c99317e23c4ee19928217e1365db300866bb7dfb8df"
+    },
+    {
+      "path": "anadius-crt-error-source/errors.cpp",
+      "sha256": "927a0bcd444d11370ae99b1a7025dc58c5f6e510332e436c4175c78890741fa1"
+    },
+    {
+      "path": "anadius-crt-error-source/errors.hpp",
+      "sha256": "a35a12520e233f1a545cb46c32284570535899a9ab8630302ca7c597706ad38b"
+    }
+  ]
+}

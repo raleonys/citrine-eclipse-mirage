@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_string_type",
+    "result": "PASS",
+    "output": "PASS string type: 70165 checks; sparse address and API fixtures, no native API or target execution",
+    "executable_sha256": "9184e3c24e8c57361078a7fd4b32c1ea91263b282e96e90fb5b45385ad14eb56"
+  },
+  "execution_scope": "Recovered 06e210 normal flow: signed query arithmetic, marker/stack/heap/temp zero and locale ownership; bounded synthetic effects and native GetStringTypeW",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-string-type-source/string_type_tests.cpp",
+      "sha256": "74ac42912c7a20a98c55f136fa9fc88316f684bc00c2249b238c6e81163a1649"
+    },
+    {
+      "path": "anadius-crt-string-type-source/string_type.cpp",
+      "sha256": "f24b170510a875c9197468f51ac6ff322cb4af456f42e3fe8990caa2909c69bb"
+    },
+    {
+      "path": "anadius-crt-string-type-source/string_type.hpp",
+      "sha256": "18b9dbf34241ec4fea5a56c1cf8c83cd2dc9dcd24b0481a4aadeb2d3a9675ce7"
+    }
+  ]
+}

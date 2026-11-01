@@ -1,0 +1,87 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "kind": "new C++ source composition; four retained static function bodies",
+  "complete_selected_evidence": [
+    "../anadius-crt-string-type-source/evidence.json",
+    "../anadius-crt-lcmap-source/selected-evidence.json"
+  ],
+  "functions": [
+    {
+      "va": "0x18006e210",
+      "pseudo": "ev_55d88e9cae0384ad87f9dd04be6ed1385a4141630d9ea934b9d1296fdde5d839",
+      "assembly": "ev_ff659bc38c0cecbd6049ae735ce486d23e30ad115dccbbb5d59e32f94f015a52"
+    },
+    {
+      "va": "0x18006c8fc",
+      "pseudo": "ev_8e0c58ca3955f870b44f7ef34aded505c413ee89f5cb3781a72fe4dff28e80fa",
+      "assembly": "ev_2af9f1b5ae0f93b2c5f1b0a0d8abb1750fb3ce28747bbf13d00f7b0212dece79"
+    },
+    {
+      "va": "0x18006cc30",
+      "pseudo": "ev_920d81facf6a37ac4af981a8a04594a644f767bc96cc989419c99de2a6a17dd2",
+      "assembly": "ev_17fa362263e8cac8a1448c26f10e7736cb2c092237908691309f35540321e261"
+    },
+    {
+      "va": "0x180063168",
+      "pseudo": "ev_40ed69a3af76a025410ebd38c7be38f04385ff9db69b08aabb73a02e8676a1f3",
+      "assembly": "ev_80614acb72b2b57e3a24d880b3068a0f912d4a5e50992651b9e6ffbb6f8f9b04"
+    }
+  ],
+  "connections": [
+    {
+      "from": "06f0e8 case builder",
+      "to": "actual 06e210 and 06cc30 through new NLS bridge"
+    },
+    {
+      "from": "06cc30",
+      "to": "actual LocaleUpdate058b04 and 06c8fc inner mapping"
+    },
+    {
+      "from": "06c8fc",
+      "to": "actual strncnt063168, conversion-policy06ccc8/06cd58 and malloc06a308/free0668c0"
+    },
+    {
+      "from": "06e210",
+      "to": "actual LocaleUpdate058b04, conversion-policy06ccc8 and malloc06a308/free0668c0"
+    }
+  ],
+  "proof_points": [
+    {
+      "va": "0x18006cc9c..06ccc5",
+      "claim": "Inner return EAX preserved after call; pseudocode void is not the return contract."
+    },
+    {
+      "va": "0x18006316a..06317c",
+      "claim": "Initial byte read even at count0; nonterminated input reads source[count] before stopping."
+    },
+    {
+      "va": "0x18006e296..06e2f6",
+      "claim": "Signed query-count arithmetic with 16-byte header, stack total<=1024 otherwise heap; markerCCCC/DDDD."
+    },
+    {
+      "va": "0x18006e30d / 06e329 / 06e342",
+      "claim": "GetStringType wrapper zeroes queried wide payload, fills conversion, passes actual fill EAX to native type API."
+    },
+    {
+      "va": "0x18006c8fc",
+      "claim": "LCMap retains query lengths for native map and reverse conversion, supports sort-key direct byte path, releases second then first by reread markers."
+    }
+  ],
+  "new_adapter_domains": [
+    "Output addresses are logical tokens translated to tracked Word/ByteOutput spans, not original native pointer layouts.",
+    "Required read_input_tail provider supplies/rejects known adjacent byte outside logical input span; original stack byte/fault footprint not recovered.",
+    "Invocation manages new borrowed-input/output bindings and scratch lifetime only; does not reconstruct original heap/PTD SEH cleanup.",
+    "Sequential invocations tested; direct nested native callback reentry and native concurrency not verified."
+  ],
+  "validation": "27665 actual source integration checks; includes504/505 temporary allocation paths, real source heap cleanup, NUL count reduction, sort key, native failures, guard0/255 and prior record/locale/PTD/argv tests.",
+  "remaining": [
+    "0671d4 LCMapStringEx/W resolver/dispatch body",
+    "Native GetStringTypeW/conversion/CP/Heap/FLS/lock/atomic providers and image globals",
+    "Original ABI/stack probing/cookie/SEH/concurrency and complete standalone DLL equivalence"
+  ],
+  "original_target_execution": "none",
+  "original_files_modified": false
+}

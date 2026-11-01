@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "reviewer": "crt_termination worker",
+  "reviewed_at": "2026-10-18T14:30:59.9413791Z",
+  "source_hashes": [
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\startup_bridge.hpp",
+      "sha256": "071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\startup_bridge.cpp",
+      "sha256": "b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\startup_bridge_tests.cpp",
+      "sha256": "30fd145607c3f952580c0ac7d6e82fc8f133a4358cdcb43016eac354c61aad62"
+    }
+  ],
+  "findings": [],
+  "resolved_findings": [
+    {
+      "issue": "TLS validation and invocation callbacks originally asserted arguments only if reached, so their complete absence was not detected",
+      "resolution": "Final tests count validation_calls and tls_calls and assert each equals1 immediately after attach across all8 scenarios; callback arguments and slot-mutation reload remain checked"
+    }
+  ],
+  "reviewed_contracts": [
+    "StartupBridge preserves borrowed support/list/environment/termination state and forwards actual recovered cores",
+    "Entry application table aliases termination.onexit.application_0a47a8 in fixture; encoded callback aliases cache.a4f10 by reference",
+    "cexit normal returning route uses same cookie and CRT onexit state; getter reads begun DWORD and repeated invalid detach skips all work",
+    "initialize_narrow_environment explicitly discards source return value, matching Entry after_initialize_c behavior; conversion failure fixture still reaches successful attach",
+    "TLS callback slot returns stable source cell address, validation receives same cell, Entry rereads its mutated contents after AL-only validation",
+    "TerminationTablesBridge accepts exact4-slot and1-slot rebuilt spans, rejects unsupported selectors and delegates to actual initterm walker",
+    "Mutable later preterminator entry is reread; null entries skipped; exact expected callback301,304,303 sequence asserted",
+    "Normal process attach/detach fixture keeps recursive bank2 initialized through cexit and list release, then destroys14ACRT+1VCRT locks and PTD/FLS slots"
+  ],
+  "validation_observed": {
+    "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-startup-bridge-source\\validation.json",
+    "sha256": "13ca0571b1cfa2787ddbd0610a5f0e31f6ec7a579ba2dc19cfa0df7b62980ecc",
+    "reported_checks": 1732,
+    "execution": "Existing standalone validation inspected; reviewer did not rerun suite or execute target"
+  },
+  "limitations": [
+    "Review concerns normal source composition, not original binary equivalence or SEH/CFG/unwind behavior",
+    "Fixture preselects a fixed initialized cookie; full entropy initialization and concurrent cookie change are not tested; all encoded state must remain coordinated externally",
+    "C/C++ startup tables and one-slot terminal span are empty/null fixtures; recovered initializer walker and selector code were inspected, broader table bindings remain caller-owned",
+    "Providers and all borrowed spans/storage must remain live through late callbacks; compatible recursive lock2 mapping and external serialization remain mandatory",
+    "No actual module loading, process termination, original DLL/game execution or OS TLS threading reviewed or performed",
+    "Full runtime native provider binding and complete replacement DLL remain unproven"
+  ]
+}

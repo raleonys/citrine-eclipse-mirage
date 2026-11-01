@@ -1,0 +1,710 @@
+{
+  "schema": "dll-integration.provider-audit.v1",
+  "date": "2026-10-27",
+  "result": "PASS_BOUNDED_AUDIT",
+  "stage": "B1 critical-path planning; zero new native bodies",
+  "scope": "Read-only source/provider composition audit; startup and one first message/response path, not full native equivalence",
+  "source_scan": {
+    "cpp_hpp_files_outside_build": 680,
+    "test_identification": "path contains test or fixture",
+    "searches": [
+      {
+        "id": "bootstrap_configuration_derived",
+        "regex": ":[^\\n{;]*\\bBootstrapConfiguration\\b",
+        "matches": [
+          {
+            "file": "outputs/anadius-config-startup-source/startup.cpp",
+            "line": 11,
+            "text": "BootstrapConfiguration::BootstrapConfiguration(configuration::State& state,configuration::Dependencies& deps,",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-config-startup-source/startup.cpp",
+            "line": 15,
+            "text": "startup_recovered::StateReferences BootstrapConfiguration::references() const {",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-config-startup-source/startup_tests.cpp",
+            "line": 99,
+            "text": "struct BootstrapEffects final:config_startup::BootstrapConfiguration {",
+            "test_or_fixture": true
+          },
+          {
+            "file": "outputs/anadius-config-startup-source/startup_tests.cpp",
+            "line": 104,
+            "text": ":BootstrapConfiguration(s,deps,files,flags,input,console),state(s),events(e){current=this;}",
+            "test_or_fixture": true
+          }
+        ],
+        "interpretation": "Bounded named-direct-derived lexical search; aliases/macros/multiple inheritance can evade it. Listed mandatory methods and explicit abstract assertions provide separate evidence."
+      },
+      {
+        "id": "bootstrap_thread_bridge_derived",
+        "regex": ":[^\\n{;]*\\b(?:ThreadBridge|BootstrapThreadBridge|BootstrapDependencies)\\b",
+        "matches": [
+          {
+            "file": "outputs/anadius-bootstrap-native-source/native_entries.cpp",
+            "line": 124,
+            "text": "std::uintptr_t ThreadBridge::bind_application_entry(recovered::ThreadEntry entry) {",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-bootstrap-native-source/native_entries.cpp",
+            "line": 133,
+            "text": "static_assert(std::is_abstract_v<ThreadBridge>);",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-bootstrap-native-source/native_entries.hpp",
+            "line": 62,
+            "text": "class ThreadBridge : public threads_recovered::BootstrapThreadBridge {",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-bootstrap-native-source/native_entries.hpp",
+            "line": 65,
+            "text": ": BootstrapThreadBridge(e) {}",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-bootstrap-native-source/native_entry_tests.cpp",
+            "line": 62,
+            "text": "struct Dependencies : n::ThreadBridge {",
+            "test_or_fixture": true
+          },
+          {
+            "file": "outputs/anadius-bootstrap-native-source/native_entry_tests.cpp",
+            "line": 63,
+            "text": "explicit Dependencies(Threads& threads) : ThreadBridge(threads) {}",
+            "test_or_fixture": true
+          },
+          {
+            "file": "outputs/anadius-config-startup-source/startup.hpp",
+            "line": 18,
+            "text": "// Bootstrap::initialize. Other BootstrapDependencies methods remain mandatory.",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-config-startup-source/startup.hpp",
+            "line": 20,
+            "text": "class BootstrapConfiguration : public recovered::BootstrapDependencies {",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-source/bootstrap_tests.cpp",
+            "line": 26,
+            "text": "struct Fake final : BootstrapDependencies {",
+            "test_or_fixture": true
+          },
+          {
+            "file": "outputs/anadius-thread-source/threads.cpp",
+            "line": 67,
+            "text": "recovered::Handle BootstrapThreadBridge::begin_thread_05e8e0(",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-thread-source/threads.hpp",
+            "line": 61,
+            "text": "class BootstrapThreadBridge : public recovered::BootstrapDependencies {",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-thread-source/thread_tests.cpp",
+            "line": 146,
+            "text": "struct Bridge final : BootstrapThreadBridge {",
+            "test_or_fixture": true
+          },
+          {
+            "file": "outputs/anadius-thread-source/thread_tests.cpp",
+            "line": 150,
+            "text": "explicit Bridge(Effects& e):BootstrapThreadBridge(e) {active=this;}",
+            "test_or_fixture": true
+          }
+        ],
+        "interpretation": "Bounded named-direct-derived lexical search; aliases/macros/multiple inheritance can evade it. Listed mandatory methods and explicit abstract assertions provide separate evidence."
+      },
+      {
+        "id": "native_dispatch_effects_derived",
+        "regex": ":[^\\n{;]*\\bNativeDispatchEffects\\b",
+        "matches": [
+          {
+            "file": "outputs/anadius-socket-source/native_dispatch_test_fixture.hpp",
+            "line": 30,
+            "text": "struct Effects:s::NativeDispatchEffects {",
+            "test_or_fixture": true
+          }
+        ],
+        "interpretation": "Bounded named-direct-derived lexical search; aliases/macros/multiple inheritance can evade it. Listed mandatory methods and explicit abstract assertions provide separate evidence."
+      },
+      {
+        "id": "node_string_effects_derived",
+        "regex": ":[^\\n{;]*\\bRecoveredNodeStringEffects\\b",
+        "matches": [
+          {
+            "file": "outputs/anadius-socket-source/node_string.cpp",
+            "line": 100,
+            "text": "std::uintptr_t RecoveredNodeStringEffects::materialize_0035e0(std::uintptr_t pair){",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-socket-source/node_string_integration_tests.cpp",
+            "line": 19,
+            "text": "struct Effects:s::RecoveredNodeStringEffects {",
+            "test_or_fixture": true
+          },
+          {
+            "file": "outputs/anadius-socket-source/node_string_integration_tests.cpp",
+            "line": 25,
+            "text": "Effects(Memory& m,node_parse_test::Nodes& n,const s::NativeErrorArgumentTail& a,s::PoolAllocationDispatch& p):RecoveredNodeStringEffects(m.memory,n,a,p),raw(m),strings(m.memory),primitives(m){primitives.compare_hook=[](const auto&){return 1;};}",
+            "test_or_fixture": true
+          }
+        ],
+        "interpretation": "Bounded named-direct-derived lexical search; aliases/macros/multiple inheritance can evade it. Listed mandatory methods and explicit abstract assertions provide separate evidence."
+      },
+      {
+        "id": "native_original_effects_derived",
+        "regex": ":[^\\n{;]*\\bOriginalEffects\\b",
+        "matches": [
+          {
+            "file": "outputs/anadius-native-source/native_tests.cpp",
+            "line": 61,
+            "text": "struct Effects final:OriginalEffects {",
+            "test_or_fixture": true
+          },
+          {
+            "file": "outputs/anadius-native-source/native_tests.cpp",
+            "line": 63,
+            "text": "Effects(const std::array<std::uintptr_t,10>& s,Wide& w):OriginalEffects(s,w){}",
+            "test_or_fixture": true
+          },
+          {
+            "file": "outputs/anadius-native-source/original_effects.cpp",
+            "line": 10,
+            "text": "std::int32_t OriginalEffects::original_create_process_a(const host_callbacks_recovered::ProcessCall<char>& a){return original<decltype(&::CreateProcessA)>(Callback::create_process_a_00f3f0)(a.application,a.command_line,reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.process_attributes),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.thread_attributes),a.inherit_handles,a.creation_flags,reinterpret_cast<LPVOID>(a.environment),a.current_directory,reinterpret_cast<LPSTARTUPINFOA>(a.startup_info),reinterpret_cast<LPPROCESS_INFORMATION>(a.process_information));}",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-native-source/original_effects.cpp",
+            "line": 11,
+            "text": "std::int32_t OriginalEffects::original_create_process_w(const host_callbacks_recovered::ProcessCall<char16_t>& a){return original<decltype(&::CreateProcessW)>(Callback::create_process_w_00f4d0)(reinterpret_cast<LPCWSTR>(a.application),reinterpret_cast<LPWSTR>(a.command_line),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.process_attributes),reinterpret_cast<LPSECURITY_ATTRIBUTES>(a.thread_attributes),a.inherit_handles,a.creation_flags,reinterpret_cast<LPVOID>(a.environment),reinterpret_cast<LPCWSTR>(a.current_directory),reinterpret_cast<LPSTARTUPINFOW>(a.startup_info),reinterpret_cast<LPPROCESS_INFORMATION>(a.process_information));}",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-native-source/original_effects.cpp",
+            "line": 12,
+            "text": "std::uint32_t OriginalEffects::original_folder_a(const host_callbacks_recovered::FolderCall<char>& a){return std::bit_cast<std::uint32_t>(original<decltype(&::SHGetFolderPathA)>(Callback::folder_a_00fc00)(reinterpret_cast<HWND>(a.window),a.folder_id,reinterpret_cast<HANDLE>(a.token),a.flags,a.path));}",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-native-source/original_effects.cpp",
+            "line": 13,
+            "text": "std::uint32_t OriginalEffects::original_folder_w(const host_callbacks_recovered::FolderCall<char16_t>& a){return std::bit_cast<std::uint32_t>(original<decltype(&::SHGetFolderPathW)>(Callback::folder_w_00fc80)(reinterpret_cast<HWND>(a.window),a.folder_id,reinterpret_cast<HANDLE>(a.token),a.flags,reinterpret_cast<LPWSTR>(a.path)));}",
+            "test_or_fixture": false
+          },
+          {
+            "file": "outputs/anadius-native-source/original_effects.cpp",
+            "line": 14,
+            "text": "std::int32_t OriginalEffects::original_connect_0a3838(network_hook_recovered::Socket s,std::span<std::byte> b,std::int32_t n){return original<decltype(&::connect)>(Callback::connect_00fd00)(s,reinterpret_cast<const sockaddr*>(b.data()),n);}",
+            "test_or_fixture": false
+          }
+        ],
+        "interpretation": "Bounded named-direct-derived lexical search; aliases/macros/multiple inheritance can evade it. Listed mandatory methods and explicit abstract assertions provide separate evidence."
+      }
+    ]
+  },
+  "groups": [
+    {
+      "id": "B1-runtime-owner",
+      "rank": 1,
+      "title": "One DLL-owned composition root and admission lifetime",
+      "blocker_kind": "semantic_composition_and_lifetime",
+      "addresses": [
+        "0x180038870",
+        "0x180038970"
+      ],
+      "existing_source_to_reuse": [
+        "Bootstrap normal application/process-attach orchestration",
+        "bootstrap_native Binding/Resolver and native callback Binding/Resolver have compiled implementations"
+      ],
+      "remaining_integration": [
+        "No production owning object is identified that constructs one BootstrapDependencies implementation, Bootstrap, native bindings, configuration/state and late thread/FLS owners together",
+        "Bootstrap entry invokes an already-published binding; application_entry is not a self-initializing DLL entry",
+        "Closing active_calls==0 alone does not cover suspended/not-yet-admitted workers"
+      ],
+      "next_action": "Define one explicit per-image owner and construction/rollback/shutdown sequence, before adding more leaf bodies. Choose host CRT entry or recovered CRT entry deliberately; do not initialize both accidentally.",
+      "exit_criterion": "Rooted application path can construct a complete concrete owner without test fixtures; shutdown covers pending workers and callback admission.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-bootstrap-native-source/native_entries.hpp",
+          "line": 21,
+          "anchor": "// The binding does not register callbacks",
+          "sha256": "3236b76f45c43f277ac17f03dde98cbbd88462ff6f93f384737fa8cb85582d5d"
+        },
+        {
+          "file": "outputs/anadius-bootstrap-native-source/native_entries.cpp",
+          "line": 105,
+          "anchor": "BOOL WINAPI application_entry",
+          "sha256": "624447b6c93172343368d8162fbc8964b9339ac03f1f4b12d4253bdf4499c3ed"
+        },
+        {
+          "file": "outputs/anadius-native-source/native_callbacks.hpp",
+          "line": 29,
+          "anchor": "struct Context {",
+          "sha256": "43f76b04c2dda924a2b10b8a7e956d08fe724f7b7d0c7ae398b8515886ecbf95"
+        }
+      ]
+    },
+    {
+      "id": "B2-bootstrap-facade",
+      "rank": 2,
+      "title": "Concrete BootstrapDependencies facade",
+      "blocker_kind": "abstract_production_provider",
+      "addresses": [
+        "0x180038970",
+        "0x180019910",
+        "0x180038760",
+        "0x18001c870",
+        "0x18005e8e0"
+      ],
+      "existing_source_to_reuse": [
+        "BootstrapConfiguration binds setup_environment/setup_console/load_configuration",
+        "native ThreadBridge binds enum-to-rebuilt-code for existing begin-thread core",
+        "crt_glue::ThreadEffects has recovered thread/PTD/heap source implementations"
+      ],
+      "remaining_integration": [
+        "BootstrapConfiguration and native ThreadBridge remain separate abstract subclasses of BootstrapDependencies",
+        "Their BootstrapDependencies bases are non-virtual; naive multiple inheritance creates two base subobjects",
+        "register_exit/install_terminate, log, allocation, worker factories, cleanup, guards and error policies require one coherent production facade"
+      ],
+      "next_action": "Implement one concrete facade with explicit delegation to existing configuration/thread cores and typed native callback resolver; reuse 05e8e0 rather than rewriting it.",
+      "exit_criterion": "Concrete facade type is instantiable and process-attach order reaches configured workers in a controlled owned-source test.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-source/bootstrap.hpp",
+          "line": 25,
+          "anchor": "class BootstrapDependencies",
+          "sha256": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210"
+        },
+        {
+          "file": "outputs/anadius-config-startup-source/startup.hpp",
+          "line": 20,
+          "anchor": "class BootstrapConfiguration",
+          "sha256": "324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e"
+        },
+        {
+          "file": "outputs/anadius-bootstrap-native-source/native_entries.hpp",
+          "line": 62,
+          "anchor": "class ThreadBridge",
+          "sha256": "3236b76f45c43f277ac17f03dde98cbbd88462ff6f93f384737fa8cb85582d5d"
+        },
+        {
+          "file": "outputs/anadius-bootstrap-native-source/native_entries.cpp",
+          "line": 133,
+          "anchor": "static_assert(std::is_abstract_v<ThreadBridge>)",
+          "sha256": "624447b6c93172343368d8162fbc8964b9339ac03f1f4b12d4253bdf4499c3ed"
+        },
+        {
+          "file": "outputs/anadius-crt-glue-source/crt_glue.hpp",
+          "line": 92,
+          "anchor": "class ThreadEffects final",
+          "sha256": "d9dd2b7385850820a614600f51ff103f1929c85178b8bd065c38db661257710e"
+        }
+      ]
+    },
+    {
+      "id": "B3-application-workers",
+      "rank": 3,
+      "title": "Bind application worker bodies and their shared state",
+      "blocker_kind": "application_backend_and_shared_state",
+      "addresses": [
+        "0x180029ea0",
+        "0x180035b60",
+        "0x180035850",
+        "0x18000e310"
+      ],
+      "existing_source_to_reuse": [
+        "server_start_029ea0 and socket partial backends exist",
+        "host_init initialize_host_00e310 plus callback-to-source resolver and hook engine adapters exist"
+      ],
+      "remaining_integration": [
+        "Bootstrap worker()/boolean_worker_035850() still return externally supplied rebuilt function pointers",
+        "ServerBackend still owns initialize_context, pending socket, async accept, run and destruction boundaries",
+        "Host init callback Context, registry/network StateRefs and ten original trampoline slots must be one shared owner"
+      ],
+      "next_action": "Provide rebuilt worker adapters with explicit owned contexts; connect actual normal algorithms to one context/registry and define thread admission/termination.",
+      "exit_criterion": "Each Bootstrap worker pointer resolves to rebuilt code with a live owned backend; no test-only static active fixture is used.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-source/bootstrap.hpp",
+          "line": 37,
+          "anchor": "virtual NoArgumentFunction worker",
+          "sha256": "26ccf965c09cb88f02d25bef01decab5dd601e5f6b22073779260201f608f210"
+        },
+        {
+          "file": "outputs/anadius-source/bootstrap.cpp",
+          "line": 43,
+          "anchor": "deps_.boolean_worker_035850()(true)",
+          "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6"
+        },
+        {
+          "file": "outputs/anadius-server-source/server.hpp",
+          "line": 31,
+          "anchor": "struct ServerBackend",
+          "sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e"
+        },
+        {
+          "file": "outputs/anadius-host-init-source/host_init.hpp",
+          "line": 21,
+          "anchor": "struct StateRefs",
+          "sha256": "0ef5afbf19ad7452ddfc4ed54ed1dd0789f6c42eb9a47bc9dbccc1aa4cc35ba7"
+        }
+      ]
+    },
+    {
+      "id": "B4-native-host",
+      "rank": 4,
+      "title": "Complete host/callback policies around already concrete SDK bindings",
+      "blocker_kind": "native_adapter_policy_and_lifetime",
+      "addresses": [
+        "0x18000e310",
+        "0x18000fd00",
+        "0x180046970"
+      ],
+      "existing_source_to_reuse": [
+        "native OriginalEffects implements ten original SDK trampoline calls",
+        "native Resolver returns compiled rebuilt callback addresses",
+        "HostInitEffects/CleanupEffects/PreloaderEngine hook adapters are concrete"
+      ],
+      "remaining_integration": [
+        "OriginalEffects intentionally remains abstract for allocation/log/wait/narrow/copy/UI policies and WideOperations",
+        "Hook HostInitEffects wraps a remaining Effects reference rather than creating a complete Win32/log/encoding backend",
+        "Errors policies and callback/state lifetime owners are mandatory"
+      ],
+      "next_action": "Supply the remaining concrete host policy and UTF-16 byte-safe operations, sharing the original-slot array with hook creation and callback forwarding.",
+      "exit_criterion": "The same owned state survives hook installation, admitted callbacks, disable and quiescent close; test branches cannot supply mock originals in production.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-native-source/native_callbacks.hpp",
+          "line": 70,
+          "anchor": "class OriginalEffects",
+          "sha256": "43f76b04c2dda924a2b10b8a7e956d08fe724f7b7d0c7ae398b8515886ecbf95"
+        },
+        {
+          "file": "outputs/anadius-native-source/native_callbacks.hpp",
+          "line": 61,
+          "anchor": "class WideOperations",
+          "sha256": "43f76b04c2dda924a2b10b8a7e956d08fe724f7b7d0c7ae398b8515886ecbf95"
+        },
+        {
+          "file": "outputs/hook-engine-source/adapters.hpp",
+          "line": 15,
+          "anchor": "class HostInitEffects final",
+          "sha256": "757f5f0ee47e19fe2611072dab96b72c21b57d8d64e49c23a16d7f67ab9d8862"
+        }
+      ]
+    },
+    {
+      "id": "B5-io-storage",
+      "rank": 5,
+      "title": "Own IO operation storage and executor/handler factories",
+      "blocker_kind": "typed_storage_ownership_and_dispatch",
+      "addresses": [
+        "0x180025c40",
+        "0x180025480",
+        "0x1800280d0",
+        "0x180027c10",
+        "0x1800261d0"
+      ],
+      "existing_source_to_reuse": [
+        "Receive R1/R2/R3/R4 normal bodies are source-bound",
+        "Send/composed-write/queued-write/dispatcher bodies and selected SDK adapters exist"
+      ],
+      "remaining_integration": [
+        "PostedMemoryEffects and HandlerDispatchMemory require real typed allocation/projection/free ownership",
+        "Operation registry, IoHandlerVtable destroy/move/query, environment factory/type query and scheduling callback tables need one coherent backend",
+        "AddressBackend/AcceptorBackend/SynchronousTransport are partial bridges, not a full ServerBackend/Transport/Scheduling implementation"
+      ],
+      "next_action": "Create one bounded typed operation owner/registry, then provide executor/handler factory bindings; connect source receive and send in that same owner.",
+      "exit_criterion": "One owned session can receive a frame, run completion/message scheduling and write a response without fixture-only project_* methods or escaped operation lifetimes.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-socket-source/posted_operation.hpp",
+          "line": 35,
+          "anchor": "class PostedMemoryEffects",
+          "sha256": "a64463108f00dd71fe71c9ac577c73d857e4a8fd67e56d7bb65313536e3c8aff"
+        },
+        {
+          "file": "outputs/anadius-socket-source/handler_dispatch.hpp",
+          "line": 38,
+          "anchor": "class HandlerDispatchMemory",
+          "sha256": "0fec1cbf13941617daf61b0bf4a144c3e660bd976f4c65f8ebad184e198b3f64"
+        },
+        {
+          "file": "outputs/anadius-socket-source/io_completion.hpp",
+          "line": 6,
+          "anchor": "class IoHandlerVtable",
+          "sha256": "85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32"
+        },
+        {
+          "file": "outputs/anadius-socket-source/operations.hpp",
+          "line": 54,
+          "anchor": "class SynchronousTransport",
+          "sha256": "a3b2c6b21d6a2d7b19f9f3245d08d5a450caa2bc8b95285fc19c9c94bdb833e2"
+        },
+        {
+          "file": "outputs/anadius-socket-source/acceptor.hpp",
+          "line": 48,
+          "anchor": "class AcceptorBackend",
+          "sha256": "5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b"
+        }
+      ]
+    },
+    {
+      "id": "B6-message-composition",
+      "rank": 6,
+      "title": "Compose existing message, document, cipher and dispatcher providers",
+      "blocker_kind": "separate_interface_graphs_not_one_final_backend",
+      "addresses": [
+        "0x180028d30",
+        "0x180033d70",
+        "0x180032d00",
+        "0x180021420"
+      ],
+      "existing_source_to_reuse": [
+        "RecoveredNativeMessageApi closes process_message_033d70 in the frame/response hierarchy",
+        "RecoveredMessageDocumentApi extends cipher/append/native dispatch hierarchy with three document calls",
+        "SessionCipher and factory provide selected owned cipher state"
+      ],
+      "remaining_integration": [
+        "NativeMessageContext still takes a NativeMessageApi&; RecoveredNativeMessageApi itself belongs to MessageDispatchApi hierarchy and is not the complete NativeMessageApi implementation",
+        "NativeDispatchEffects registry/DOM/printer/string/handler/exception hooks currently have controlled direct implementations in native_dispatch_test_fixture.hpp",
+        "Event queue/mutex/logging/error providers need one production adapter sharing live handler/cipher/document state"
+      ],
+      "next_action": "Build one concrete NativeMessageApi facade using the existing source bridges, plus a concrete NativeDispatchEffects backend; connect it to the same frame owner and event queue.",
+      "exit_criterion": "A representative source-only request reaches a registered handler and serialized response in one production composition; fixture-only adapters are absent from that build.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-socket-source/native_message.hpp",
+          "line": 17,
+          "anchor": "class NativeMessageApi",
+          "sha256": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c"
+        },
+        {
+          "file": "outputs/anadius-socket-source/native_message.hpp",
+          "line": 40,
+          "anchor": "struct NativeMessageContext",
+          "sha256": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c"
+        },
+        {
+          "file": "outputs/anadius-socket-source/native_message.hpp",
+          "line": 49,
+          "anchor": "class RecoveredNativeMessageApi",
+          "sha256": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c"
+        },
+        {
+          "file": "outputs/anadius-socket-source/native_document.hpp",
+          "line": 43,
+          "anchor": "class RecoveredMessageDocumentApi",
+          "sha256": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33"
+        },
+        {
+          "file": "outputs/anadius-socket-source/native_dispatch.hpp",
+          "line": 9,
+          "anchor": "class NativeDispatchEffects",
+          "sha256": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440"
+        },
+        {
+          "file": "outputs/anadius-socket-source/native_dispatch_test_fixture.hpp",
+          "line": 28,
+          "anchor": "// Controlled lower providers.",
+          "sha256": "a7ca9a188a081f3cbd0cc3b2a4de57cc67d5cbcf14a122397e284a30b10a54ef"
+        }
+      ]
+    },
+    {
+      "id": "B7-xml-bridge",
+      "rank": 7,
+      "title": "Bind mapped document storage to actual DOM view and child parser targets",
+      "blocker_kind": "selected_parser_source_with_mandatory_lower_targets",
+      "addresses": [
+        "0x180004970",
+        "0x1800038b0",
+        "0x180003aa0",
+        "0x1800035e0",
+        "0x1800033c0"
+      ],
+      "existing_source_to_reuse": [
+        "N29 RecoveredNodeStringEffects includes prior constructor/Identify/insertion/GetStr source chain",
+        "Known 004970 target dispatch is selected and source-bound",
+        "Existing pool allocation/free/clear/destructor normal bodies are ready"
+      ],
+      "remaining_integration": [
+        "NativeDispatchEffects::document requires a messages_recovered::XmlDocument view over the parsed document; no automatic raw mapped-byte to DOM conversion is supplied by NativeMessageDocument",
+        "NativeMessageDocument only projects error_6c; invocation storage and binding must exist",
+        "Other child parse virtuals, node probes/destructors, numeric decode, copy/compare/classifier and error argument/scratch transport remain mandatory"
+      ],
+      "next_action": "First choose the XML representation/provider used by one real message composition; implement only child/parser/DOM adapters on its critical path, with numeric0033c0 as one dependency rather than the global next task.",
+      "exit_criterion": "Representative valid/error XML flows expose the same live document and error cell to parse, dispatch and cleanup; parser effects are not test-only.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-socket-source/native_message.hpp",
+          "line": 10,
+          "anchor": "struct NativeMessageDocument",
+          "sha256": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c"
+        },
+        {
+          "file": "outputs/anadius-socket-source/native_dispatch.hpp",
+          "line": 16,
+          "anchor": "virtual const messages_recovered::XmlDocument& document",
+          "sha256": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440"
+        },
+        {
+          "file": "outputs/anadius-socket-source/native_document.hpp",
+          "line": 40,
+          "anchor": "struct NativeDocumentBinding",
+          "sha256": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33"
+        },
+        {
+          "file": "outputs/anadius-socket-source/node_parse.hpp",
+          "line": 55,
+          "anchor": "virtual std::uintptr_t parse_other_virtual",
+          "sha256": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a"
+        },
+        {
+          "file": "outputs/anadius-socket-source/node_string.hpp",
+          "line": 8,
+          "anchor": "class NativeNodeStringEffects",
+          "sha256": "2f571d0db438b452e0ecb0df5950db66c9579fee476275da9bf2d3c62c45dfe3"
+        }
+      ]
+    },
+    {
+      "id": "B8-selected-crt",
+      "rank": 8,
+      "title": "Select runtime integration without restarting the whole CRT leaf backlog",
+      "blocker_kind": "runtime_policy_and_canonical_state",
+      "addresses": [
+        "0x18004bcfc",
+        "0x18004bbc8",
+        "0x180038870"
+      ],
+      "existing_source_to_reuse": [
+        "crt_entry::Entry normal entry/dispatch and AcrtTablesBridge/LifecycleBridge/StartupBridge exist",
+        "Pair bindings dispatch16 rebuilt ACRT initialization pairs",
+        "Native FLS/PTD/heap/lock components have separate concrete source adapters"
+      ],
+      "remaining_integration": [
+        "StartupBridge still requires concrete security cookie, argv, application callback, TLS image validation/invocation and fastfail policies",
+        "crt_pair_bindings::Effects leaves invoke_void_initializer/invoke_int_initializer/common_flush_all pure",
+        "Canonical shared state/cookie/cache/heap/PTD/locale/MB/onexit aliases and loader/runtime entry policy are not created by linking a static archive"
+      ],
+      "next_action": "Record exact startup-link runtime dependencies now, defer generic CRT body reconstruction to selected phase5; choose a single justified runtime entry policy.",
+      "exit_criterion": "Runtime root and application root are wired once with explicit owned tables and exact remaining phase5 blockers; no original preferred-image addresses are called.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-crt-entry-source/entry.hpp",
+          "line": 20,
+          "anchor": "struct Effects {",
+          "sha256": "3f38209152eb1a83471e1f1a08b183cad4a54381113ec0fd870413ecc5b27358"
+        },
+        {
+          "file": "outputs/anadius-crt-startup-bridge-source/startup_bridge.hpp",
+          "line": 34,
+          "anchor": "class StartupBridge",
+          "sha256": "071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19"
+        },
+        {
+          "file": "outputs/anadius-crt-pair-bindings-source/bindings.hpp",
+          "line": 70,
+          "anchor": "// invoke_void_initializer, invoke_int_initializer and common_flush_all",
+          "sha256": "726405a5c3f56fecee42c6c7aa6ff8b1d97a6a114710c0dedf789c73ab9c1d51"
+        },
+        {
+          "file": "outputs/anadius-crt-entry-source/entry.hpp",
+          "line": 54,
+          "anchor": "virtual std::uint32_t application_dll_main_038870",
+          "sha256": "3f38209152eb1a83471e1f1a08b183cad4a54381113ec0fd870413ecc5b27358"
+        }
+      ]
+    },
+    {
+      "id": "B9-shutdown-errors",
+      "rank": 9,
+      "title": "End-to-end teardown and exception/ABI contract",
+      "blocker_kind": "lifetime_and_foreign_abi",
+      "addresses": [
+        "0x180038950",
+        "0x18004a47c",
+        "0x180035ab0",
+        "0x1800366f0",
+        "0x1800102b0"
+      ],
+      "existing_source_to_reuse": [
+        "Bootstrap on_exit and callback lease/error admission machinery exist",
+        "Source close/cancel/cleanup bodies are implemented"
+      ],
+      "remaining_integration": [
+        "Detached/raw captured session pointers and pending/suspended callbacks must quiesce before owner teardown",
+        "Native bootstrap/native callback Errors policies are abstract and require real no-return implementations",
+        "Current LLVM-MinGW host STL/types are source projections, not original MSVC STL/EH/SEH/native image layout proof"
+      ],
+      "next_action": "Add owner-level stop/admission/join/cleanup ordering and an explicit ABI boundary policy, tested as one lifecycle rather than isolated leaf cleanup.",
+      "exit_criterion": "Normal detach/rollback and late callback/FLS cleanup operate on live state; failure cannot be translated into fabricated API success.",
+      "evidence": [
+        {
+          "file": "outputs/anadius-bootstrap-native-source/native_entries.hpp",
+          "line": 26,
+          "anchor": "// active_calls()==0 does not cover suspended",
+          "sha256": "3236b76f45c43f277ac17f03dde98cbbd88462ff6f93f384737fa8cb85582d5d"
+        },
+        {
+          "file": "outputs/anadius-source/bootstrap.cpp",
+          "line": 69,
+          "anchor": "void Bootstrap::on_exit()",
+          "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6"
+        },
+        {
+          "file": "outputs/anadius-native-source/native_callbacks.hpp",
+          "line": 27,
+          "anchor": "[[noreturn]] virtual void callback_exception",
+          "sha256": "43f76b04c2dda924a2b10b8a7e956d08fe724f7b7d0c7ae398b8515886ecbf95"
+        }
+      ]
+    }
+  ],
+  "closed_source_providers_count": 52,
+  "closed_source_providers_interpretation": "Historical source closures; not native ABI completion",
+  "current_source_stage": "N29",
+  "reuse_source_roots": [
+    "entry_04bcfc/dispatch_04bbc8/application038870",
+    "05e8e0 recovered thread core and native resolver",
+    "R1/R2/R3/R4 receive, composed send and completion/response sources",
+    "033d70/native032d00/document/Identify/constructors/insertion/GetStr chain"
+  ],
+  "genuine_link_probe_rules": [
+    "Root actual entry/application path and account for all selected object/provider owners",
+    "Do not infer completion from an unreferenced static archive being accepted by a DLL linker",
+    "Abstract contracts can compile and archive without an unresolved linker symbol; a concrete typed owner witness is required",
+    "Do not turn missing policies into empty/success-returning production stubs",
+    "No original address is callable host code"
+  ],
+  "counts": {
+    "new_native_bodies": 0,
+    "new_source_bridges": 0,
+    "new_provider_closures": 0,
+    "original_files_read": 0,
+    "original_execution": false,
+    "production_cpp_hpp_modified": false,
+    "common_build_executed": false,
+    "packaging_executed": false
+  },
+  "limits": [
+    "Source lexical/composition observations, not an exhaustive C++ semantic hierarchy analysis",
+    "No new binary analysis, original input reads or runtime observations",
+    "No CFG/token/achievement contents read",
+    "Blocked original/generated version.dll not read or retried",
+    "Entry/export/TLS raw identity audit is a parallel work item; this report does not replace it",
+    "Generic CRT leaves remain paused; selected runtime integration is a design gate"
+  ]
+}

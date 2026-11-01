@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "scope": "B1 plan activation and metadata consistency;N29 source/compiler/archive observations remain separate",
+  "requested_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "active_package": "B1",
+  "next_package": "B2",
+  "numeric0033c0_priority": 3,
+  "prior_sources_preserved": 691,
+  "prior_closures_preserved": 52,
+  "prior_adapters_preserved": true,
+  "source_evidence_dependency_count": 182,
+  "changed_dependency_paths": [
+    "outputs/source-workspace/README.md"
+  ],
+  "changed_dependency_reason": "User-authorized execution plan notice added to common workspace README;production source dependencies unchanged.",
+  "new_native_bodies": 0,
+  "new_source_bridges": 0,
+  "new_typed_closures": 0,
+  "source_master_build_repeated": false,
+  "dll_link_performed": false,
+  "dll_created": false,
+  "package_archive_refreshed": false,
+  "last_source_package": "N29",
+  "execution_plan_sha256": "ba2899eae28bf7b52b02e22d360a499a328e78f29de1390894db24938f3e6d93",
+  "readiness_sha256": "091620e54d9cf0c5f2499abef0ec70aa0d668c3745aa5c371f005f20bd7a803b",
+  "dependency_file_sha256": "2a8469e5142ba33c683e3ca2b59ccca11d6d366ec1d4d74545a29a6bff2d6d1b",
+  "roadmap_sha256": "162b4e6c0067efc0036557e0cfbacb1448879a8adceeeef723e7d3d4862ca785",
+  "limits": "B1 source and compiler diagnostics identifymissing production ownership/providergraph;not native/runtime equivalence or completedDLL."
+}

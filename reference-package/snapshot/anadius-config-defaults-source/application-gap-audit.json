@@ -1,0 +1,501 @@
+{
+  "schema": "b28.application-scope-audit.v1",
+  "reviewer": "/root/b22_provider_audit",
+  "generated_at_utc": "2026-10-30T16:31:32.264354+00:00",
+  "scope": "anadius64 retained canonical functions0x180030000..0x180038fff",
+  "inventory_counts": {
+    "source_definition_mapped": 32,
+    "module_record_only": 7,
+    "no_definition_mapping": 22
+  },
+  "unmapped_functions": [
+    {
+      "address": "0x1800349a0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "byte-vector growth/insert",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180034c30"
+      ],
+      "direct_targets": [
+        "0x18000cd30",
+        "0x18000cea0",
+        "0x180034ba0",
+        "0x18004b0bc",
+        "0x18005c974",
+        "0x180078d30"
+      ],
+      "pseudo_evidence": "ev_e6d957b61c80f59949680c1d5a1143d1d5230dd78fef566737610c1f8471ea3f",
+      "assembly_evidence": "ev_2bf650d6fd646fddd68d06b5fed3a0bcddbba0fbd4f98b9d491abd2e766cba7e",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180034af0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "byte-vector reserve/reallocate",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180034c30"
+      ],
+      "direct_targets": [
+        "0x18000cd30",
+        "0x180034ba0",
+        "0x18004b0bc",
+        "0x18005c974",
+        "0x180078d30"
+      ],
+      "pseudo_evidence": "ev_c9097d390582e074c889496c9f5b981a585cb438aad0d2a806a7472cf2eba9cf",
+      "assembly_evidence": "ev_ea4771fa55a0825f24714575ff44ab13bae4fc1bea415ea9f65463606adf0ab0",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180034ba0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "byte-vector old-allocation release and storage commit",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x1800349a0",
+        "0x180034af0"
+      ],
+      "direct_targets": [
+        "0x18004b0f8",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_80ec66f01e20687bb5b2cd2d3570dbaf2025e33d6228d446064cd6aa51df71f5",
+      "assembly_evidence": "ev_6740b0374dc52bbc37a35915b7e39b4f13bb2f1176de4f057e392494ed77a674",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180034de0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "qword-vector allocator with large-allocation alignment",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180035120"
+      ],
+      "direct_targets": [
+        "0x18000cd30",
+        "0x18004b0bc",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_a14a7a1366dcdb14085667fb7039aebaf11936d9c86d0139888bb5b948b1b1d4",
+      "assembly_evidence": "ev_aa1853ea5ce7755aa580f258c58a25edf28c187bfbe3015bdd89fe3bcc04095d",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180034e60",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "qword-vector insertion",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180035850"
+      ],
+      "direct_targets": [
+        "0x18000cd30",
+        "0x18000cea0",
+        "0x1800351d0",
+        "0x18004b0bc",
+        "0x18005c974",
+        "0x180078d30"
+      ],
+      "pseudo_evidence": "ev_9a86750a40c5525bc56bc0cb0fe30a6a55d8dbc04c12df3149cb6bd736cab45b",
+      "assembly_evidence": "ev_a5dccc30bfdfa6fbcee12889775a9f5c892cf5a8787c4c69fb63ace68e73c2fc",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x1800350f0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "byte memmove/copy wrapper",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x18007c010"
+      ],
+      "direct_targets": [
+        "0x180078d30"
+      ],
+      "pseudo_evidence": "ev_ad2fcb4b4ec1c54b00af6601ebbc2d7cdf3c243d88afd11fc6836800310dec43",
+      "assembly_evidence": "ev_56286e340eca817eb6b341f330bac30ac6891845a1d35aff7fe2ce3a008423f4",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180035120",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "qword-vector reserve",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180035850"
+      ],
+      "direct_targets": [
+        "0x180034de0",
+        "0x1800351d0",
+        "0x180078d30"
+      ],
+      "pseudo_evidence": "ev_d637a413ba839e365d8ccaa17e69ee20551d9620661d21e14fef287d5c35d6b1",
+      "assembly_evidence": "ev_47452e065ba6e3b62b0d587f2c4515acb8844a56d7051abe4174993cb19ea7c6",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180035190",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "qword memmove/copy wrapper",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x18007c010",
+        "0x18007c080"
+      ],
+      "direct_targets": [
+        "0x180078d30"
+      ],
+      "pseudo_evidence": "ev_6c3a3c4db19466d7c29a5cd1b4c1940b41a8caab87f133bb2f8a818950865e0a",
+      "assembly_evidence": "ev_4f1271387aec40071f00291c5ca47b6e5817d7652a6bafece01cc026ababf971",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x1800351d0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "qword-vector storage release/commit",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180034e60",
+        "0x180035120"
+      ],
+      "direct_targets": [
+        "0x18004b0f8",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_a79926eb784eec7fc832efbf88193ff75bae2e116c3ad1cca04b9090ef201382",
+      "assembly_evidence": "ev_911bb3a460caee7b68597c6a6b372721f37772d8c41164ff5836a2dd1190683b",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180036ac0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "recursive Achievement tree erase/clear",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180036ac0",
+        "0x180037f70"
+      ],
+      "direct_targets": [
+        "0x180036ac0",
+        "0x180037b90",
+        "0x18004b0f8"
+      ],
+      "pseudo_evidence": "ev_235856aecd30798d50812c9436127ef065e68c9b9637e5e866dca435e2dc7619",
+      "assembly_evidence": "ev_3dceedeaaa16a01b9a082c09469bf4032272e831122d74d8fb0253162dad7b63",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180036b40",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "recursive string-pair tree erase/clear",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180036b40",
+        "0x180037b60",
+        "0x180037f70"
+      ],
+      "direct_targets": [
+        "0x180036b40",
+        "0x180037ce0",
+        "0x18004b0f8"
+      ],
+      "pseudo_evidence": "ev_25d3c1d88be97fe8f1b5792a7e3d7bea1145ecd436726f6247a7146714d87b3e",
+      "assembly_evidence": "ev_03e3bdeebc700697f614512b2ca5cbc08ece502c80e99f1e2bd408d46183a372",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180036bc0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "map<string,string> initializer-list helper, not default policy",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180036d20"
+      ],
+      "direct_targets": [
+        "0x180009eb0",
+        "0x18000c220",
+        "0x18000cdf0",
+        "0x18002b600",
+        "0x18004b0bc"
+      ],
+      "pseudo_evidence": "ev_f3dd1c3eaf1015967fc5f8cd06448d0cbe3a29441ef1348f9a38d30e64098d82",
+      "assembly_evidence": "ev_b6f8e9b9a53d92fa7a911e777c31b1880295ca5e4b78b1e50175dbfba065cd9b",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180036d20",
+      "source_presence": "no_definition_mapping",
+      "classification": "application_policy_and_aggregate_construction",
+      "description": "Global configuration and runtime aggregate constructor; all41 current State fields plus20attribute defaults can be modeled as an opt-in semantic projection. Native aggregate fields and static lifetime remain open.",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180001390"
+      ],
+      "direct_targets": [
+        "0x180006b30",
+        "0x180036bc0",
+        "0x180037b20",
+        "0x18004a698",
+        "0x18004b0bc",
+        "0x18004b220",
+        "0x18004b910"
+      ],
+      "pseudo_evidence": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+      "assembly_evidence": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9",
+      "priority": "first semantic State-default projection; no native closure"
+    },
+    {
+      "address": "0x180037b20",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "native mutex construction helper",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180036d20"
+      ],
+      "direct_targets": [
+        "0x18004a698"
+      ],
+      "pseudo_evidence": "ev_63684b526e2b6b5810fd8bc4fac0b4430530bd981916046b87884e4c9ebae5a7",
+      "assembly_evidence": "ev_aabe99ac080648a09cbb0840ab2fea707f7292ac06daf516ee30aea4d4d01d62",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180037b60",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "string-pair map destructor",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [],
+      "direct_targets": [
+        "0x180036b40",
+        "0x18004b0f8"
+      ],
+      "pseudo_evidence": "ev_bb87fee4676c1117f959d637597e02701433f0492534ea7aa1f57fc1c35ed6fa",
+      "assembly_evidence": "ev_50d31d58f10bd547f3fae6f3be382c07ed7cc32e58d1a4078a97011bfb2618af",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180037b90",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "Achievement payload string destructor",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180036ac0"
+      ],
+      "direct_targets": [
+        "0x18004b0f8",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_d379b680b4831e12e4583863c95a4705fb4c4285702307a1a3b4b86106e9d4cf",
+      "assembly_evidence": "ev_2213ba3360dd6b2593c849701c74f6bbcc5b93f57bdae72d1dd8e5a5038ff96f",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180037ce0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "pair<string,string> payload destructor",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180036b40"
+      ],
+      "direct_targets": [
+        "0x18004b0f8",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_5c9018660c024184b09dfba92896638cc9bb8b015512bd976046ff07ddf4f9ec",
+      "assembly_evidence": "ev_fdb60c3b4b3b4a4377db8f3db929e4e0784b95fe8cfa258ae4264c4df7c535f7",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180037d90",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "vector<Content> payload destructor",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180037f70"
+      ],
+      "direct_targets": [
+        "0x180015e90",
+        "0x18004b0f8",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_78bed49b7813b85241d8bd2e933138f18493abe8336889edb3edc7ec93171f1d",
+      "assembly_evidence": "ev_6ac9c43d9132a4ff5a0b9fa1cfdaa637d80e5206379b4208001b02b01ce53263",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180037e20",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "vector<Entitlement> payload destructor",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180037f70"
+      ],
+      "direct_targets": [
+        "0x180015ff0",
+        "0x18004b0f8",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_e4b31623a4b9c89493458ecf4fc29f7a3a13ec301c95dce5f1781cf391ada869",
+      "assembly_evidence": "ev_60f6d762ace704266616e5d615766c78a08aca4893a064c99f5455f3d0d3ed16",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180037ee0",
+      "source_presence": "no_definition_mapping",
+      "classification": "library_container_or_CRT_helper",
+      "description": "vector<Path> payload destructor",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180037f70"
+      ],
+      "direct_targets": [
+        "0x18000ce10",
+        "0x18004b0f8",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_32b5b7d8ce74105dd5392f27eef09c5e0c1e42c3e6c609ba2af934e38a866c9f",
+      "assembly_evidence": "ev_d93a137c1c5bf3bc9345bc0daa923e84bb998ddbf16ef26044d9c5e4ef48e57f",
+      "priority": "defer while generic CRT/container work is paused"
+    },
+    {
+      "address": "0x180037f70",
+      "source_presence": "no_definition_mapping",
+      "classification": "application_aggregate_lifetime_mostly_library_cleanup",
+      "description": "Whole aggregate destructor appears structurally paired with036d20; exact07e0c0 registration thunk path is not independently resolved by standalone retained function records. Prioritize after application behavior.",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [],
+      "direct_targets": [
+        "0x18000ce10",
+        "0x180017a30",
+        "0x180036ac0",
+        "0x180036b40",
+        "0x180037d90",
+        "0x180037e20",
+        "0x180037ee0",
+        "0x18004b0f8",
+        "0x18005c974"
+      ],
+      "pseudo_evidence": "ev_c03fec66056719abadb29e535fb59a20827bd1c74e0bbe959590c8170e39714b",
+      "assembly_evidence": "ev_2ec7531b888601db062b01ddc9b261926b0bb2a9c39cf12579c0999519e4bb42",
+      "priority": "secondary/needs explicit scope"
+    },
+    {
+      "address": "0x180038920",
+      "source_presence": "no_definition_mapping",
+      "classification": "application_fatal_log_then_abort",
+      "description": "Log Unhandled exception using006880/016630, then terminal05f03c; smaller genuine app body but existing termination source route delegates lower Services.",
+      "confidence": "high except native aggregate destructor registration linkage remains unproved",
+      "direct_callers": [
+        "0x180038890"
+      ],
+      "direct_targets": [
+        "0x180006880",
+        "0x180016630",
+        "0x18005f03c"
+      ],
+      "pseudo_evidence": "ev_b35c015816e9d434a8d5dbb8a0296baf874922ffb138fb566a634535a3c178d3",
+      "assembly_evidence": "ev_6f7b799308e795247506b92b6c854fc760d60ea9a9c434204086612f07151e6b",
+      "priority": "secondary/needs explicit scope"
+    }
+  ],
+  "module_record_only_reclassification": [
+    {
+      "address": "0x1800348d0",
+      "classification": "library integer-to-decimal formatting helper",
+      "source_presence": "module_record_only",
+      "actual_source": "C++ formatting equivalents in application callers; no canonical native body claim",
+      "pseudo_evidence": "ev_c8956389f06090304d78bbbaeb7ba946fd58733924c38886a9cab4869d2c9cd2",
+      "assembly_evidence": "ev_0b552e6b725eb643de2b45a201718084c5616a691b8944c85d0436dc1921b9b8"
+    },
+    {
+      "address": "0x180038870",
+      "classification": "existing bootstrap source behavior, not a new application gap",
+      "source_presence": "module_record_only",
+      "actual_source": "outputs/anadius-source/bootstrap.cpp",
+      "pseudo_evidence": "ev_0a232e746d99beddba99fe362a4f132625939b77bd747e39ad749975c6f32a06",
+      "assembly_evidence": "ev_e22c193077e36533a0c4bdeab829161a9788ca97925356612bcaeadbc0285619"
+    },
+    {
+      "address": "0x180038890",
+      "classification": "existing bootstrap source behavior, not a new application gap",
+      "source_presence": "module_record_only",
+      "actual_source": "outputs/anadius-source/bootstrap.cpp",
+      "pseudo_evidence": "ev_fa9e792ca1dc6003fa08b9f989066ed017af372bde3045f31207ef552c7e855b",
+      "assembly_evidence": "ev_a73f817561c1dc663846bb56938e55cea83e98470e9af8c91186939f6bbbe144"
+    },
+    {
+      "address": "0x1800388a0",
+      "classification": "existing bootstrap source behavior, not a new application gap",
+      "source_presence": "module_record_only",
+      "actual_source": "outputs/anadius-source/bootstrap.cpp",
+      "pseudo_evidence": "ev_1310d67634f8e3e38f5e30772a836a81c302979788d481e1ece1b062970dc667",
+      "assembly_evidence": "ev_3022378b3b333555b2f1f63fa59a85ea675e756369871f825e3fd805143160eb"
+    },
+    {
+      "address": "0x1800388d0",
+      "classification": "existing bootstrap source behavior, not a new application gap",
+      "source_presence": "module_record_only",
+      "actual_source": "outputs/anadius-source/bootstrap.cpp",
+      "pseudo_evidence": "ev_91d6e13816769169a851a89952ec830305781673cce42cf3b54f25186b9ee27e",
+      "assembly_evidence": "ev_220d092f92df6b8c1c7cbb91ffd4ee02e5b5af3f3f6fd15d599e710c8adf353e"
+    },
+    {
+      "address": "0x180038950",
+      "classification": "existing bootstrap source behavior, not a new application gap",
+      "source_presence": "module_record_only",
+      "actual_source": "outputs/anadius-source/bootstrap.cpp",
+      "pseudo_evidence": "ev_cfa69b2b4a15d114d9202339fcf5fbbd77988ffeb6ed350e33b89f550b3d9c65",
+      "assembly_evidence": "ev_9e5bed8eb620590b20a44651d47fd66e0d4d00f7cc3caf952f79bc4a73f22049"
+    },
+    {
+      "address": "0x180038970",
+      "classification": "existing bootstrap source behavior, not a new application gap",
+      "source_presence": "module_record_only",
+      "actual_source": "outputs/anadius-source/bootstrap.cpp",
+      "pseudo_evidence": "ev_e66705fdaa9bdd88fb50be13d22e354939026d931f472329e0f14e17c9fb4fbd",
+      "assembly_evidence": "ev_77887ea2e7b744e62e52eaf81cb8a07abf2a4f50498001ba81b2fcf2496e8789"
+    }
+  ],
+  "primary_candidate": "0x180036d20",
+  "field_map": "work/b28-configuration-defaults-field-map.json",
+  "native_initializer": "0x180001390 calls036d20(global0x1800a39e0), then registers07e0c0 via04b770; standalone cleanup thunk body not retained as canonical function.",
+  "existing_online_gap_warning": "B27 binds all7 observed online SOURCE calls; no new online provider gap is counted here. Source definition mapping does not itself prove native ABI or original closure.",
+  "recommendation": "Model the normal completed State defaults as a new opt-in explicit State factory, with exact41fields and20pairs, instead of another forwarding adapter. Keep native original036d20/static-init/destructor closure open.",
+  "new_native_body_closures": 0,
+  "new_target_queries": false,
+  "original_execution": false,
+  "production_or_tests_modified": false,
+  "retained_sources": [
+    {
+      "path": "outputs/reconstruction-inventory/functions.json",
+      "sha256": "741470cf7bab73ed49afdfea57fb82b6df87bfec8617da0b88f31cb6eb898bf3"
+    },
+    {
+      "path": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    },
+    {
+      "path": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    }
+  ]
+}

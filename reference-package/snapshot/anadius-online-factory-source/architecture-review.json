@@ -1,0 +1,315 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "stage": "B54",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-11-01T09:11:12.403610+00:00",
+  "review_mode": "Independent static source/lifetime/test review and read-only source/proof/log/EXE/compiler/archive/baseline verification. Reviewer executed no EXE/build/probe/helper mutator.",
+  "reviewed_source_hashes": {
+    "factory.hpp": "938c8409d9d345d6571a4d1c9768af5bed24a7a42f4d6037c6221cc8079161e4",
+    "factory.cpp": "8ba38abf0cd4a7aad9c483d1c2af057ff4e891badc63c5468ddc73e8faa376a2",
+    "factory_tests.cpp": "655abab170ce2c2350071bae7db45ca33e18c467e630b761e81aecc2796e96a6",
+    "factory_integration_tests.cpp": "4347d4b946a22adc868c6d3268b26f1c79e371a91cfd926edec866e12f1a7651",
+    "../anadius-bootstrap-backend-source/backend.hpp": "72c0dcdf15bbdae395e17a6089277b5635bd2ef8334e1025dacab35f2646b838",
+    "../anadius-bootstrap-backend-source/backend.cpp": "72713547523dcf06f2e9824778d89965e7b86d67b0a6c14222eaf0b71448f7da",
+    "../anadius-bootstrap-runtime-source/factory.cpp": "3828d09fbccad14dc04882726eb5bc7d60c76e452814c2e09f5b492c6c90f289"
+  },
+  "code_freeze": {
+    "path": "work/b54-code-freeze.json",
+    "sha256": "75074c794d3b5d0720e6a0c3c106ad264d403ca7814dd1fca5142d1398d0c6c8",
+    "all_seven_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "path": "work/b54-core-quick-results.json",
+      "sha256": "80de6fe6d9dee07e148265726f6cf083f6bfd0cdc9027a961997e71aad942363",
+      "checks": 69,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b54-core-agent-results.json",
+        "sha256": "f660f415771943241291115d80248358ec5747df9aa31ce49af22513b469d622"
+      },
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log": {
+        "path": "work/b54-core-agent-final-v1.log",
+        "sha256": "a7ae1a1684312d70e96fbb80146adef41d21fd6e0bcef8dc4afc9373745456c6"
+      },
+      "reviewer_executed": false,
+      "actual_used_source_hashes": {
+        "factory.hpp": "938c8409d9d345d6571a4d1c9768af5bed24a7a42f4d6037c6221cc8079161e4",
+        "factory.cpp": "8ba38abf0cd4a7aad9c483d1c2af057ff4e891badc63c5468ddc73e8faa376a2",
+        "factory_tests.cpp": "655abab170ce2c2350071bae7db45ca33e18c467e630b761e81aecc2796e96a6",
+        "../anadius-bootstrap-backend-source/backend.hpp": "72c0dcdf15bbdae395e17a6089277b5635bd2ef8334e1025dacab35f2646b838",
+        "../anadius-bootstrap-backend-source/backend.cpp": "72713547523dcf06f2e9824778d89965e7b86d67b0a6c14222eaf0b71448f7da",
+        "../anadius-online-source/online.hpp": "47adf8b6426476a64b76a6b7d0f82875778f5795f9662a3bdd923219f3bdd6a2",
+        "../anadius-online-source/recovered_effects.hpp": "f0a8da1dd760c10ae263adb3a91998642d84bb62f270d2c6565147fe28f5993a",
+        "../anadius-online-version-source/version.hpp": "9493df88f46bf2050eccec5930b68c10910da5de4686757e17001925fda805b8",
+        "../anadius-online-object-source/object.hpp": "c52d2f495135e30ec1e19a651517080c96c26c7920b141308292e8e800145d25",
+        "../anadius-online-query-source/query.hpp": "1b2de83de5af1232a5da74cdb1afc63987a4cb57284ecabaa06d48006047cdb6",
+        "../anadius-execution-source/execution.hpp": "0c426c4b10ddc2a6cebf27a7da966d797d7de8ada73fd60650a2c234c9fb1b62",
+        "../anadius-online-platform-source/platform_test_fixture.hpp": "1f25a488459cc2d12137305794b3d0582d6c09b73b438033d2d817a0e28a7da7",
+        "../anadius-bootstrap-runtime-source/runtime_test_fixture.hpp": "9fc4620b63f271804202d58fd4d42c34bfa1ea0733ff404d9f8931255a634093",
+        "../anadius-library-effects-source/dialog.hpp": "21b17edb02cc215bcd569c0caf520b134b8f17760d0a4d0a8515a041df58b11d",
+        "../anadius-online-platform-source/platform.hpp": "4b5b157491c3fa63a4390c1fbe41f5219c88810aae3e970e28bc5d95cb09bf54"
+      },
+      "actual_used_source_hash_count": 15,
+      "watched_source_hash_count": 0,
+      "isolated_children": [
+        {
+          "mode": "proof-reentry",
+          "expected_exit": 1301,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "load",
+          "expected_exit": 1302,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "swallowed",
+          "expected_exit": 1303,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "factory",
+          "expected_exit": 1304,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "destroy",
+          "expected_exit": 1305,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "query",
+          "expected_exit": 1306,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "free",
+          "expected_exit": 1307,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "version",
+          "expected_exit": 1308,
+          "observed_exit_verified_by_parent": true
+        }
+      ],
+      "executable_path": "work/b54-core-agent-final-v1.exe",
+      "executable_sha256": "3cc1c0342c3ee17e4fcdd3b8e07ecd7819adce9d1fbc9aa12a0c66ea286ce7c7",
+      "archive_path": "work/b54-baseline-core.a",
+      "archive_sha256": "c4c314b988cb65009261db1ae5375dc33dcaa24c72877e92483002ca575228ec",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_hash_verified": true
+    },
+    {
+      "path": "work/b54-integration-quick-results.json",
+      "sha256": "8908a9c108a761cee3d0cd294d60bdecf28d08df864910ce2e5fe775cbf247a9",
+      "checks": 686,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b54-integration-agent-results.json",
+        "sha256": "a43060f0dfb1a18c9992b5a8603cad6310fe08d41b5a2a69695b0f13963c32fb"
+      },
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log": {
+        "path": "work/b54-integration-agent-results.log",
+        "sha256": "0816b84ea9ffccf246f98a7006e83d3e989011ec2b4e66e6eec0982391a35fc5"
+      },
+      "reviewer_executed": false,
+      "actual_used_source_hashes": {
+        "factory_integration_tests.cpp": "4347d4b946a22adc868c6d3268b26f1c79e371a91cfd926edec866e12f1a7651",
+        "factory.hpp": "938c8409d9d345d6571a4d1c9768af5bed24a7a42f4d6037c6221cc8079161e4",
+        "factory.cpp": "8ba38abf0cd4a7aad9c483d1c2af057ff4e891badc63c5468ddc73e8faa376a2",
+        "../anadius-bootstrap-backend-source/backend.hpp": "72c0dcdf15bbdae395e17a6089277b5635bd2ef8334e1025dacab35f2646b838",
+        "../anadius-bootstrap-backend-source/backend.cpp": "72713547523dcf06f2e9824778d89965e7b86d67b0a6c14222eaf0b71448f7da",
+        "../anadius-bootstrap-runtime-source/factory.hpp": "d55494573dc515eacdcf2197c5213d67893aecfb46466e835d07de4e3add99eb",
+        "../anadius-bootstrap-runtime-source/factory.cpp": "3828d09fbccad14dc04882726eb5bc7d60c76e452814c2e09f5b492c6c90f289",
+        "../anadius-application-worker-source/worker.cpp": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4"
+      },
+      "actual_used_source_hash_count": 8,
+      "watched_source_hash_count": 9,
+      "isolated_children": [],
+      "executable_path": "work/b54-integration-v3.exe",
+      "executable_sha256": "6cfa4addcb919ee7e4a73e90a1fcd5f04e71f72d087391a11c193b6b55184e24",
+      "archive_path": "work/b54-baseline-core.a",
+      "archive_sha256": "c4c314b988cb65009261db1ae5375dc33dcaa24c72877e92483002ca575228ec",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_hash_verified": true
+    }
+  ],
+  "main_checks_total": 755,
+  "isolated_children_total": 8,
+  "check_count_scope": "Core69 includes eight parent exact-child exit assertions; integration686 has no children. Eight isolated child policies1301..1308 are not added again to main755 or framework19.",
+  "baseline": {
+    "path": "outputs/dll-reverse-engineering.zip",
+    "sha256": "f459efc829b030d0b14f9cb600da33402e0c2c79cf09b47a75c6eb08506028f2",
+    "stage": "B53",
+    "prior_sources": 942,
+    "unchanged_sources": 939,
+    "modified_sources": [
+      "anadius-bootstrap-backend-source/backend.cpp",
+      "anadius-bootstrap-backend-source/backend.hpp",
+      "anadius-bootstrap-runtime-source/factory.cpp"
+    ],
+    "new_sources": [
+      "anadius-online-factory-source/factory.cpp",
+      "anadius-online-factory-source/factory.hpp",
+      "anadius-online-factory-source/factory_integration_tests.cpp",
+      "anadius-online-factory-source/factory_tests.cpp"
+    ],
+    "current_sources": 946,
+    "archive_member_sha256_verified": "c4c314b988cb65009261db1ae5375dc33dcaa24c72877e92483002ca575228ec"
+  },
+  "registration": {
+    "path": "work/b54-registration-result.json",
+    "sha256": "1067473dd5ce53977e480daa437adb4d9f74af0bbdd7a9eec3b208d424eaa6ce",
+    "mode": "APPLIED",
+    "applied_by": "/root",
+    "reviewer_did_not_apply": true
+  },
+  "reviewed_gate_auxiliary_hashes": {
+    "dll-link-gate-source/build-link-gate.ps1": "c7357aed27aa3bbfdff4d626cfc67926b26a9180c77459c0e2b0ce15f5c10d19",
+    "dll-link-gate-source/target.cmake": "43446d53ea57de5ea7c3b3ecc224cdc71c0906d6a48172cf4f0640d4f5de6a1d",
+    "dll-link-gate-source/verify-link-gate.py": "f32792d701baf58ed61c3abc92fcaf6fdca57df0d312c151df0f0ad17ce739d1"
+  },
+  "gate_auxiliary": {
+    "independent_root_review": {
+      "path": "outputs/anadius-online-factory-source/gate-auxiliary-review.json",
+      "sha256": "195c833df1c343bc6d4930b20c82526121982e2c9a401faa3d1505abed1a9e67"
+    },
+    "preimages_and_applied_hashes_verified": true,
+    "changes": [
+      {
+        "path": "dll-link-gate-source/build-link-gate.ps1",
+        "before_sha256": "eb185b71f701b928a53fc621a7d49239b699188a9d55d4d58c18f1908f6fa0cb",
+        "after_sha256": "c7357aed27aa3bbfdff4d626cfc67926b26a9180c77459c0e2b0ce15f5c10d19",
+        "reason": "B54 explicit online factory object diagnostic selection; preserves B52 configuration and B53 services proofs; not loader reachability or DLL success.",
+        "stage_author": "/root/b22_provider_audit",
+        "independent_root_review_required": true
+      },
+      {
+        "path": "dll-link-gate-source/target.cmake",
+        "before_sha256": "f7559e056af74a050f74762908f0ffa408ad73e0ffb2184d2b9d579651dcfa54",
+        "after_sha256": "43446d53ea57de5ea7c3b3ecc224cdc71c0906d6a48172cf4f0640d4f5de6a1d",
+        "reason": "B54 explicit online factory object diagnostic selection; preserves B52 configuration and B53 services proofs; not loader reachability or DLL success.",
+        "stage_author": "/root/b22_provider_audit",
+        "independent_root_review_required": true
+      },
+      {
+        "path": "dll-link-gate-source/verify-link-gate.py",
+        "before_sha256": "9364c5b4efd1993e6886306065ae8894d76e799f19f2e3dd37fd63c2e821c580",
+        "after_sha256": "f32792d701baf58ed61c3abc92fcaf6fdca57df0d312c151df0f0ad17ce739d1",
+        "reason": "B54 explicit online factory object diagnostic selection; preserves B52 configuration and B53 services proofs; not loader reachability or DLL success.",
+        "stage_author": "/root/b22_provider_audit",
+        "independent_root_review_required": true
+      }
+    ],
+    "stage_author": "/root/b22_provider_audit",
+    "gate_reviewer": "/root",
+    "diagnostic_selection_only": true,
+    "actual_execution": "PENDING_AS_OF_REVIEW",
+    "cmake_target_executed": false,
+    "loader_factory_reachability_proven": false,
+    "B52_configuration_and_B53_services_proofs_preserved": true
+  },
+  "findings": [
+    "Owned Online implements24 required Effects methods plus3 owned getter copies using real10 recovered core helpers,5 platform boundaries,7 existing typed foreign operations and2 actual bound Execution phases. No Effects lower or fake phase/unused-method stub.",
+    "OnlineFactory is exclusive with legacy online. Component is created only after actual Backend state/Execution/config reach stable addresses, adopted before opaque capture retirement, and exact three-reference matches is checked AFTER capture clear with sticky Backend admission checks. Worker and source cleanup select the same bound component; legacy wrapper remains available.",
+    "take_resources consumes all22 fields including online_factory. Options named sinks consume both CodeLease/proof callable donors; make_online uses direct new and Options&&. Existing make_runtime direct-new/Prepared&&/Selection&& transfer discipline is preserved.",
+    "Binding is retired explicitly while attached Online facade/gate/backing remain live. Retiring snapshots use cached empty Binding metadata after pointer reset. Leaf/predicate/code captures stay through Closed and all Resources destruction; physical retirement occurs on constructor controller/thread and fiber before remaining policies retire.",
+    "Managed lower callback construction/destruction and Call metadata preserve actual SDK LastError. Core verifies lookup CodeLease mutation, version result/error and FreeFALSE error over code-owner deleters. Owned copies keep Binding reservation through actual NUL scan/allocation; borrowed getter pointers still require caller serialization.",
+    "Normal delegated operation throws conservatively poison the new owner, retaining Binding/owners even when old Binding alone knows a retryable outcome. Version child preserves exact exception and5151 while Online isPoisoned/Binding remainsnonpoisoned. This is selected new policy, not original EH equivalence; explicit filesystem_error throw is separately admitted.",
+    "Close requires exact runtime module/object zero and every Binding address/code/object/active/poison/unknown field empty, then mandatory foreign predicate outside gate, then empty/admission rechecks. False proof retains Open for retry; success seals without dropping leaf owners.",
+    "Late foreign attestation gates final provider retirement only: foreign object users must already be independently excluded/drained before actual source destroy/free. Normal FreeFALSE clears source/Binding logical state but is not unload-success proof.",
+    "Integration686 exercises6 scenarios through actual Runtime/SourceBackend/ApplicationWorker with4 Domain NativeThreads each, exact Host/Online milestones, private ownEXE version/factory/vtable calls and real source profile persistence/fallback. Missing version/mismatch/missing factory/offline prefixes are checked without original DLL loading or a giant Online/Services lower.",
+    "Own named-pipe ReadFile/IOCP/CancelIoEx995 and success/NOT_FOUND source cleanup provide SDK-compatibility evidence only. Imported module tokens/private ownEXE functions and synthetic files do not prove arbitrary foreign code pinning, native class ABI or real network/AcceptEx interop."
+  ],
+  "proof_scope": {
+    "core_actual_used_sources": 15,
+    "integration_actual_used_sources": 8,
+    "integration_watched_sources": 9,
+    "authority_freeze_sources": 7,
+    "integration_fresh_unchanged_ABI_dependency": "../anadius-application-worker-source/worker.cpp",
+    "integration_additional_unchanged_dependency": "../anadius-bootstrap-runtime-source/factory.hpp",
+    "watched_core_test_not_compiled_by_integration": true,
+    "authoritative_core": "work/b54-core-agent-final-v1-results.json",
+    "authoritative_integration": "work/b54-integration-v3-results.json",
+    "supported_constructor_entry": "bootstrap_runtime::make_runtime(...,Resources&,...); direct new internally"
+  },
+  "revision_history": {
+    "failed_fixture": {
+      "path": "work/b54-integration-v1-results.json",
+      "sha256": "083c11bc158c2e7f46e44da50046607f97b300b1c9a265a3cfd076d001c98eee",
+      "compile_exit": 0,
+      "run_exit": 115,
+      "status": "HISTORICAL_FAILED_FIXTURE_NOT_CURRENT_PASS"
+    },
+    "correction": "Fixture originally required object_unknown=false during typed destroy. Existing Binding intentionally sets true BEFORE destructor call; fixed phase-specific expectation remains false for queries/true for destroy. No production route changed for that correction. V2 candidate retained, V3 authoritative."
+  },
+  "authorship_disclosure": {
+    "production_authors": [
+      "/root/acceptor_tests",
+      "/root"
+    ],
+    "reviewer_authored_production_or_tests": false,
+    "reviewer_authored_pipeline_and_gate_staging": true,
+    "pipeline_independence_claimed": false,
+    "gate_independent_reviewer": "/root"
+  },
+  "common_build": {
+    "status": "PENDING_AS_OF_REVIEW",
+    "log": "work/b54-common-final-build.log",
+    "planned_production_objects": 274,
+    "planned_cpp_objects": 270,
+    "planned_c_objects": 4,
+    "planned_normal_groups": 337,
+    "planned_terminal_groups": 19,
+    "reviewer_executed": false
+  },
+  "counts": {
+    "source_files": 946,
+    "composition_files": 117,
+    "composition_objects": 58,
+    "compiler_observations": 101,
+    "mapped_canonical": 501,
+    "eligible_tags": 505,
+    "normal_native_claims": 139,
+    "historical_closed_providers": 52,
+    "new_native_bodies": 0,
+    "new_ABI_closures": 0,
+    "last_native_body_stage": "B38"
+  },
+  "remaining_limits": [
+    "CodeLease must actually retain foreign executable/module backing; nonnull token or empty Snapshot is not provenance, unload or foreign-thread proof. Readable own/adopted object/table/NUL and observed Win64 shape remain caller ABI contracts.",
+    "Pre-cleanup foreign-user safety and independent external source/hook/rawjob admissions/joins remain required; lateproof does not cancel jobs or retroactively protect destroyed objects.",
+    "Conservative owned-call poison intentionally does not retain all retry behavior available through Binding alone. Native EH/CRT/concurrency equivalence is unproven; controller/fiber retirement and provider/streambuf lifetime remain explicit.",
+    "Use supported named construction/consuming sinks. Preserved public by-value Runtime with arbitrary make_unique forwarders can retain SBO donors beyond constructor failure.",
+    "Full Resources, host setup-thread handoff/controller activation and observed hook-engine cleanup remain B55 gaps. Permanent Errors/thunk epilogues, image unload/ABA and loader-lock attach/detach are not established by source counts.",
+    "Three explicit diagnostic factory objects do not invoke the loader factory or create a ready DLL; CMake is configured only."
+  ],
+  "original_or_rebuilt_DLL_executed": false,
+  "fresh_target_queries": 0,
+  "user_configuration_or_license_contents_read": false,
+  "production_readiness": "BLOCKED",
+  "DLL_ready": false
+}

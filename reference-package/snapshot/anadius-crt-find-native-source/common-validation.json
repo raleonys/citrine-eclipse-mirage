@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_find_native",
+    "result": "PASS",
+    "output": "find native: 106229 checks PASS",
+    "executable_sha256": "e1e9a459e8667597b17dc7407c52acfc6043af38cf4490afc022a8d2696b21e6"
+  },
+  "execution_scope": "Typed SDK find import boundary using injected WINAPI fixtures; stable live WIN32_FIND_DATAW names, no actual find API execution",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-find-native-source/find_native_tests.cpp",
+      "sha256": "7aa6dadac44c9813c3e2d738f0ee6e93ecbfdacef053b3f5d788202eff9b43c9"
+    },
+    {
+      "path": "anadius-crt-find-native-source/find_native.cpp",
+      "sha256": "1944ad4f9ff93f6fb5fafd01840b49c3b9adad36ca6fd838d29964161601e416"
+    },
+    {
+      "path": "anadius-crt-find-native-source/find_native.hpp",
+      "sha256": "f91639a154df18331bc0d1c1763e47a2fb559ff87ee691e6c68dd2e925d3af2c"
+    }
+  ]
+}

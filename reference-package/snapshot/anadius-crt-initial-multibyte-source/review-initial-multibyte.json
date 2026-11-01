@@ -1,0 +1,68 @@
+{
+  "result": "PASS",
+  "reviewer": "initial_locale_data independent worker",
+  "reviewed_at": "2026-10-20T13:41:50.622Z",
+  "scope": "Frozen initial multibyte C++ data module, explicit PE regions and global image defaults; no source changes",
+  "source_hashes": {
+    "initial_mb.cpp": "bc2ad14d71f56922b8425b8815a641d830df4627ff91405a634ead504074339a",
+    "initial_mb.hpp": "d69491ef05381d0dcf1ce75199dbb07d586fe3edec680cab57c57bce0ea0d1a6",
+    "native_tests.cpp": "4fc5b32aa092ff2523e9db8dd4c75cfa7242dfeb395b5b2c8c66c19d9fa2f8f6"
+  },
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "compiled_fixture_sha256": "588415de718295fd8dc327b293a8c248b350bdf5ec867d4eb0b6ab91afcf2d1d",
+  "compiled_fixture_test": "PASS 2908 image initial multibyte/reset checks",
+  "compiled_byte_comparisons": 1065,
+  "region_checks": [
+    {
+      "name": "record",
+      "va": "0x1800a1c70",
+      "file_offset": "0xa0270",
+      "size": 552,
+      "raw_backed_bytes": 552,
+      "zero_fill_bytes": 0,
+      "sha256": "2bdf8c788761b060610d20270bb00c2d1d1a9370d6708ba16aa3aa7ad64be4a2",
+      "relocations": 0,
+      "compiled_equal": true
+    },
+    {
+      "name": "initial_type_table",
+      "va": "0x1800a1ea0",
+      "file_offset": "0xa04a0",
+      "size": 257,
+      "raw_backed_bytes": 257,
+      "zero_fill_bytes": 0,
+      "sha256": "376dd640fc827de54eb9e58dcbfeb5a5dbbd62a1812ee3fc63350e1de614e213",
+      "relocations": 0,
+      "compiled_equal": true
+    },
+    {
+      "name": "initial_case_table",
+      "va": "0x1800a1fb0",
+      "file_offset": "0xa05b0",
+      "size": 256,
+      "raw_backed_bytes": 256,
+      "zero_fill_bytes": 0,
+      "sha256": "5fa1127487a1d28b5602fc5447f03b2ab0bee8c9e9cdb08564b130d0a0bef2af",
+      "relocations": 0,
+      "compiled_equal": true
+    }
+  ],
+  "checks": [
+    "Independent PE raw/virtual mapping and all named slot values match extraction metadata",
+    "552-byte record, 257-byte type and 256-byte case arrays match literal source, compiled accessors and original raw bytes",
+    "No base relocations in record or either table",
+    "Two preferred initial-pair pointers have actual DIR64 entries; current-pointer/flag zeros are virtual zero-fill",
+    "Header 0x18 bytes, post-table padding and final pointer are zero; table subranges exact",
+    "All 256 classification/case domains and EOF/sentinel byte verified",
+    "Existing reset integration fixture rerun: 2908 checks PASS",
+    "Three C++/header/test source hashes match frozen provenance; executable hash matches recorded build"
+  ],
+  "findings": [],
+  "representation_notes": [
+    "GlobalScalars contains independent immutable uint32 snapshots, not original ABI objects. Original initialized is consumed as a BYTE by retained initializer; zero snapshot remains correct and is not live mutable storage.",
+    "No original DLL execution, host-pointer reuse, runtime process observation, original ABI equivalence or whole-DLL reconstruction claim was found."
+  ],
+  "target_executed": false,
+  "target_modified": false,
+  "new_original_function_bodies": 0
+}

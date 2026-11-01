@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_nls_native",
+    "result": "PASS",
+    "output": "PASS 143 checks; typed WINAPI fixtures and bounded synthetic native NLS calls",
+    "executable_sha256": "63b974b224eea591e1c2eea01d18e908fa5b2f23bdb9c4352ee91a4ba2d1d6e5"
+  },
+  "execution_scope": "New SDK typed CP/conversion/type adapters, raw pointers and tracked output staging, failure invalidation and LastError preservation; injected WINAPI edge fixtures plus real APIs on synthetic strings; zero newly recovered original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-nls-native-source/native_api.cpp",
+      "sha256": "9b066a5bd518ae8df9dbeaa7153bcf28b6b77c97b0a759ebd5a499d85a8de260"
+    },
+    {
+      "path": "anadius-crt-nls-native-source/native_api.hpp",
+      "sha256": "ed5c68f8f968122d7daf1fe70cc7ac9735e53bad212afe191d855a3043fb25f2"
+    },
+    {
+      "path": "anadius-crt-nls-native-source/native_tests.cpp",
+      "sha256": "f0063faa8e94b84b164c24bb014cbab36f65ce3c41e57abe39f6bbca992da513"
+    }
+  ]
+}

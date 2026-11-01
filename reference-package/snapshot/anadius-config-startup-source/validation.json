@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "output": "PASS: 335 Config2 startup checks; own generated files, all other OS/worker effects controlled",
+  "checks": 335,
+  "source_hashes": {
+    "startup.hpp": "324fef5b758789fc0fb1399ed6d094bd9e19ac15115eb23c2fdb364f9f0c990e",
+    "startup.cpp": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+    "startup_tests.cpp": "a8dd34f207ff2912a4cd1e883542766f13ccb2109662d57656f0999ea473d188",
+    "build.ps1": "5df64ad97e5feaf8ad31df266235e5d2a93d147d9c9d60c43fe6af7810abf0dd",
+    "CMakeLists.txt": "f5ded0e394f3307d2f4bebdc4983346dac25d9f2341fe91e028d70f86eedbcb1"
+  },
+  "original_target_execution": "none",
+  "real_user_cfg_read": false,
+  "native_OS_worker_effects": "only own generated base/override files; all other effects controlled",
+  "runtime_equivalence": "not established"
+}

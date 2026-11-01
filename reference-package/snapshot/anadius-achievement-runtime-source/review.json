@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "reviewer": "achievement_runtime_audit",
+  "scope": "Independent static final production source review against retained041b60/030010 evidence and declared bridgecontracts",
+  "sources": {
+    "outputs/anadius-achievement-runtime-source/utc.hpp": "75f907fe609da71eeb4c7737da137ed0a53574fac251c820a4007b19c5214373",
+    "outputs/anadius-achievement-runtime-source/utc.cpp": "7684a1ffe3dfbb52585c893eb23c53c1ec7f272862cb258cb99b52f84d9f7cbe",
+    "outputs/anadius-achievement-runtime-source/runtime.hpp": "d28eb0121de0efa000ea2179f3d8934d4aaf212a36407146b5078116844ea400",
+    "outputs/anadius-achievement-runtime-source/runtime.cpp": "5ec1e7c2fc2dced97d781450ad15058bc9cc2c9f5486d7ff3c35fe81bfd9e2b7"
+  },
+  "report_sha256": "3595ace50837fbc346535559c7e9538db5ebf84ba9a2d38f2d811211aa66b6ff",
+  "audit_report_sha256": "3d3960ee478e4390bebe69db60299a925832f051d231227ceb65444f537ee122",
+  "material_findings": [],
+  "tests_executed_by_reviewer": false,
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "production_edited": false,
+  "limitations": [
+    "Host time/gmtime/put_time chosen compatibility only",
+    "No arbitrary locale/time_put/native CRT parity",
+    "No final build or runtime differential evidence from this review",
+    "Caller-owned referenced State/Paths/online/mutex/event lifetime obligations",
+    "Native allocation/SEH/ABI/global startup/concurrency equality not established"
+  ]
+}

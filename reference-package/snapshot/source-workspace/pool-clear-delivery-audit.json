@@ -1,0 +1,124 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-25T15:11:45.673155+00:00",
+  "prior_package_sha256": "df192505fff50b1eb330555137cea0dea120f484277ad609a965ded67529513e",
+  "prior_source_count": 641,
+  "unchanged_prior_sources": 641,
+  "added_sources": [
+    "anadius-socket-source/pool_clear.cpp",
+    "anadius-socket-source/pool_clear.hpp",
+    "anadius-socket-source/pool_clear_integration_tests.cpp",
+    "anadius-socket-source/pool_clear_test_fixture.hpp",
+    "anadius-socket-source/pool_clear_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 646,
+  "current_documents": 234,
+  "native_objects": 201,
+  "cpp_objects": 197,
+  "c_objects": 4,
+  "normal_test_groups": 215,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 88,
+  "new_checks": 13141,
+  "new_tests": [
+    {
+      "module": "socket_pool_clear",
+      "result": "PASS",
+      "output": "PASS: 117 pool clear core checks; three bodies, LIFO/raw negative counts, live free mutations, decrement aliases, QWORD reset order and bounded failure prefixes; lower free/ABI/EH remain supplied",
+      "executable_sha256": "07223eeb693ee652a4b3fa0c0d63e89d6cc54a2d8befddcb6938fd643cf25190"
+    },
+    {
+      "module": "socket_pool_clear_integration",
+      "result": "PASS",
+      "output": "PASS: 13024 pool clear integration checks; four allocators scalar/SIMD through append/track/release/clear, retained-array reuse/regrowth and004280 four-pool parse-error cleanup; parser/heap/free supplied, nativeDOM/ABI/EH open",
+      "executable_sha256": "465df62e933b5f4b7dabe955989c58715d2331802a1a5cc348498f84ef2436af"
+    }
+  ],
+  "validation_mirror_pairs": 44,
+  "historical_module_records_preserved": 43,
+  "historical_config_references_preserved": 86,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "5b73557656d54cb07ac7b60fdfb434249b20e1a40e7a4299e3ac56a565a95f9d",
+  "inventory_data_checks": 7456,
+  "normal_source_procedures_added": [
+    "0x180002d70",
+    "0x180002dc0",
+    "0x180002e10"
+  ],
+  "new_original_procedures": 3,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/pool_clear.cpp",
+      "base": "NativeDocumentEffects::clear_pool_002d70",
+      "body": "clear_pool_blocks_002d70",
+      "closure": "RecoveredPoolClearEffects::clear_pool_002d70",
+      "address": "0x180002d70",
+      "native_abi_complete": false,
+      "scope": "Three002d70/002dc0/002e10 normal pool block-clear projections plus three final NativeDocumentEffects clear_pool source bridges; nonzero raw count loop commits decrement before live slot/free and ends with ordered QWORD resets+68/+70/+78; pointer-only04b0f8 free and full pool destructor/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_clear.cpp",
+      "base": "NativeDocumentEffects::clear_pool_002dc0",
+      "body": "clear_pool_blocks_002dc0",
+      "closure": "RecoveredPoolClearEffects::clear_pool_002dc0",
+      "address": "0x180002dc0",
+      "native_abi_complete": false,
+      "scope": "Three002d70/002dc0/002e10 normal pool block-clear projections plus three final NativeDocumentEffects clear_pool source bridges; nonzero raw count loop commits decrement before live slot/free and ends with ordered QWORD resets+68/+70/+78; pointer-only04b0f8 free and full pool destructor/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_clear.cpp",
+      "base": "NativeDocumentEffects::clear_pool_002e10",
+      "body": "clear_pool_blocks_002e10",
+      "closure": "RecoveredPoolClearEffects::clear_pool_002e10",
+      "address": "0x180002e10",
+      "native_abi_complete": false,
+      "scope": "Three002d70/002dc0/002e10 normal pool block-clear projections plus three final NativeDocumentEffects clear_pool source bridges; nonzero raw count loop commits decrement before live slot/free and ends with ordered QWORD resets+68/+70/+78; pointer-only04b0f8 free and full pool destructor/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory"
+    }
+  ],
+  "new_source_bridges": 3,
+  "new_source_allocation_adapters": 0,
+  "native_typed_providers_newly_closed": 3,
+  "new_unique_source_mapped_addresses": 3,
+  "prior_native_source_closures_preserved": 34,
+  "current_native_source_closures": 37,
+  "semantic_session_source_adapters_preserved": 2,
+  "separate_pool_allocation_source_adapters_preserved": 1,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Three002d70/002dc0/002e10 normal pool block-clear projections plus three final NativeDocumentEffects clear_pool source bridges; nonzero raw count loop commits decrement before live slot/free and ends with ordered QWORD resets+68/+70/+78; pointer-only04b0f8 free and full pool destructor/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_contents_read": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "N21 four pool destructors001bb0/001c30/001cb0/001d30 inventory/contracts from retained evidence; no new source bodies claimed by that preparation; generic CRT remains paused",
+  "bridge_variant_is_additional_native_body": false,
+  "tagged_definition_variants_per_new_target": 2,
+  "dependency_evidence_files": 121,
+  "new_native_analysis": false,
+  "pointer_only_free_interface_preserved": true,
+  "caller_edx_block_size_hints": {
+    "0x180002d70": 4080,
+    "0x180002dc0": 4056,
+    "0x180002e10": 4032
+  }
+}

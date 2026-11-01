@@ -1,0 +1,64 @@
+{
+  "scope": "Independent full retained027c10 normal-flow audit",
+  "reviewer": "dispatcher_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "focused_blocks_exact_match": true,
+  "functions": [
+    {
+      "address": "0x180027c10",
+      "pseudo_evidence": "ev_f152e2905264f9dc18af84544b646d77dac85539841a6cd365e7e2309d3f7065",
+      "assembly_evidence": "ev_d48cd3bea9d0dcba074c541aa1bcfa2e381f3b7fc10b43089ec0486b70fb14bf"
+    }
+  ],
+  "rules": {
+    "gate": "Exact low32 CAS expected1 desired0; failure skips collection; successful gate uses recursive critical section",
+    "queue": "Detach only nonnullhead; service slot20 traverses live next after callback; pop live localnext/detach/queued1 then liveport post(0,0,op); failure recursiveenter/requeuefailed+remaining/live scheduler tail/gateexchange1/recursiveleave; outerleave aftertimer/directcleanup",
+    "timer": "Live +48/head/+8; slot18 chain accumulator signed300000000; signedcomparison; NEG32wrap THEN signextend THEN times10; livehandle/period300000/nullcallbackarg/resumefalse; ignorereturn",
+    "wait": "Zero3outputs; SetLastError0 then unsignedmin(originaltimeout,livescheduler40); liveport; GetLastErrorALWAYS cache",
+    "tls_guard": "Cache native GSvector slotADDRESS once; reread pointee/epoch+4 for eachnonnullop; signedglobalA38E8>epoch required04b838; guardreload==-1only opaque07dff0 registration then04b7cc; continue metadata without rewait/recheck",
+    "metadata": "key2reads category0/value10/bytes14 withoutwrite; otherkeywrites categoryA1110/cachedLastError/GQCSbytes; no028620 onoperation",
+    "queued": "CAS0to1 but INVOKEonlyprior1; prior0publishes1/retry; allotherprior unchanged/retry",
+    "callback": "scheduler,op,selectederror,selectedbytes; nooperationaccessaftercallback",
+    "pending": "SIGNEDpending50>0:clear0, copy024100twicedistinctdst (eachzero2qwordbeforeprovider), terminal029880; otherwise logicalsuccessbeforelow32workdecrement, prior1onlyactual02a190, return1",
+    "terminal": "029880 completeasm CALL04a2d4;INT3; noRET/epilogue; guardblock adjacency doesnotestablishnormalfallthrough",
+    "null_operation": "failedtimeout102/INFINITE retry; finiteoriginaltimeout genericreturn0; othererror categoryALWAYSeven0 cached; successfulkey1 retrygate",
+    "stop_relay": "successnonnullkey1 bypass; otherkeys wakeexchange0/stopfetchadd0; stop0retry; otherstop wakeexchange1 cachespriorR15D thenprior0onlyliveportpost(0,0,null), return0 allpaths; failurecachedLastError/categoryALWAYS",
+    "padding": "Native32bitstatuspaddingunknown; logicalErrorfields only",
+    "unwind": "No invented RAII/unwind behavior from normalbody"
+  },
+  "normal_source_procedures_added": [
+    "0x180027c10"
+  ],
+  "new_original_procedures": 1,
+  "helper_bodies_read": [
+    "0x180024100",
+    "0x180029880",
+    "0x18004a1ec",
+    "0x18004a2d4",
+    "0x18004b838",
+    "0x18004b7cc",
+    "0x180028620"
+  ],
+  "providers_not_recovered": [
+    "CRT guard and exception pointer helpers",
+    "Native atomic storage/GS TLS access",
+    "Native exception/refcount/lifetime/SEH/unwind",
+    "Native ABI and executable vtable binding",
+    "Actual concurrency and original DLL equivalence"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Only one original normal procedure counted",
+    "Opaque addresses data only",
+    "Existing CRT production unchanged",
+    "Native padding unspecified",
+    "No complete DLL equivalence or execution claim"
+  ],
+  "report_sha256": "db9748737e9c535a88e22b88573f9757f39afcd7c07c99619ae866514aa76f8f"
+}

@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locale_resource_bridge",
+    "result": "PASS",
+    "output": "PASS 9280 locale/resources/deep-free/PTD/argv/find/heap composition checks",
+    "executable_sha256": "0cb1811675102642316770850fecdf173a856f296c67ce9d03827329a3d94054"
+  },
+  "execution_scope": "Actual locale refs/deep free/thread/PTD/heap/argv source composition including entire owned resource tree; native lock/atomic/FLS/SDK/conversion fixtures remain controlled",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-locale-resource-bridge-source/bridge_tests.cpp",
+      "sha256": "a3020cefe0612774b615bef065d4d6ba0ea7b7d8053461659d89c87ac9f580d4"
+    },
+    {
+      "path": "anadius-crt-locale-resource-bridge-source/bridge.cpp",
+      "sha256": "6980577c496eab1dc32bad66f07d57e840ef113fb920bd0dd786e089be3008fa"
+    },
+    {
+      "path": "anadius-crt-locale-resource-bridge-source/bridge.hpp",
+      "sha256": "614e7104746d22778cbe7d393266ff6c840e44a2989ab23a2aad9d965fbcc53c"
+    }
+  ]
+}

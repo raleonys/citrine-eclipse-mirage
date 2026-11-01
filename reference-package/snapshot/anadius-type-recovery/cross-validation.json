@@ -1,0 +1,8 @@
+{
+  "Source": "Independent parser compared with retained REA defined-string and function inventories",
+  "NamesMatchingREA": 88,
+  "TotalTypeDescriptors": 88,
+  "NamesNotDefinedByREA": [],
+  "CodeSlotsNotAtREAFunctionEntry": [],
+  "Scope": "These checks validate observed name/function anchors, not class sizes or authoritative vftable lengths"
+}

@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/native_doc_audit",
+  "independent_from_production_author": true,
+  "scope": "Read-only retained assembly versus three normal document source projections and final bindings; no test execution by reviewer",
+  "reviewed_source_hashes": {
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33"
+  },
+  "addresses": [
+    "0x180001830",
+    "0x180004280",
+    "0x180001e00"
+  ],
+  "findings": [
+    "49 constructor stores match offsets/widths/values/order;354 touched and422 untouched bytes within minimum0x308 extent; final self+8 publication",
+    "Clear precedes parse validation; allocation04b100 and raw unsigned count+1; publish+98 before copy and reload after copy for NUL",
+    "Live error branch and node/pool clear ordering; final signed error reload",
+    "Reverse pool destructor order; live flags/pointer after vector free; only free pointer argument defined; reset fields before base tail effect",
+    "Final API requires physical shared error_6c storage and rejects missing/ambiguous/mismatched bindings before effects"
+  ],
+  "limitations": [
+    "Native lower clear/parser/nodes/pool/heap bodies remain mandatory providers",
+    "Vtable tokens are supplied identities, not native object/layout/vtable ABI recovery",
+    "No native fault/unwind/EH/SEH/concurrency/runtime equivalence or full DLL completion claim"
+  ],
+  "full_native_equivalence_review_complete": false,
+  "original_execution": "none",
+  "original_modification": false
+}

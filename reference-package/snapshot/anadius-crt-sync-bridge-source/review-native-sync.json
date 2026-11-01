@@ -1,0 +1,42 @@
+{
+  "reviewer": "crt_atomic_native independent peer",
+  "result": "PASS",
+  "checked_at": "2026-10-20T02:28:13.1374891Z",
+  "scope": "Final native synchronization bridge production source and final120-check fixture, independent code review and own existing EXE rerun; source hashes independently matched parent standalone validation",
+  "findings": [],
+  "reviewed_contracts": [
+    "PtdSyncEffects routes lock/unlock through actual recovered ACRT functions; fetch_add resolves explicit owned liveCell32 then invokes typed native atomic; caller remains responsible for AtomicCells validation/lifetime",
+    "VcrtLockCalls routes only validated owned SDK CS storage through typed Banks endpoints; loader/FLS/TLS and resource/global policies remain abstract",
+    "Fixture exact owned cell identities only; immutable initial locale and multibyte identities are controlled, no arbitrary record-byte reinterpretation asLONG",
+    "Runtime and VCRT resolver calls are externally serialized during setup; forced export absence goes through real recovered fallback; loader handles stay live until native bank cleanup completes",
+    "Each worker owns its FLS PTD and errno; shared observation map is mutex protected; checks are atomic; bank initialized flags and source states remain unchanged while worker calls/callbacks run",
+    "Two barriers retain all four worker PTDs through peak measurement; per-index result writes are distinct; release precedes join; all thread-exit FLS callbacks complete before main close and lock deletion",
+    "Main FLSFree releases final PTD while data/heap/atomic/locks remain alive; fixture declaration order keeps borrowed dependencies alive; callback active binding is quiescent before destruction",
+    "Partial failure fixture serially creates real first4 critical sections then injects fifthFALSE, invokes recovered rollback and verifies all14 native flags/count zero; separate VCRT first failure verifies zero count/native flag",
+    "SDK bank Cell includes metadata and has different internal stride; original40-byte image bank layout, global addresses, ABI/SEH and original runtime equivalence remain unproven"
+  ],
+  "execution": {
+    "mode": "Existing final standalone EXE rerun after parent final build",
+    "exit_code": 0,
+    "output": "PASS 120 native lock/Interlocked/FLS parallel source integration checks",
+    "executable_sha256": "a980b40662dacf7a2ed25e9e6ac253547465cf7d4c3d560251228e0b952c4e7d",
+    "parent_validation_source_hashes_match": true
+  },
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "185fe6280697abc84360895be0d62a43ff6036c0482a3e46c2b686ee24b01a63"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "3c7f7d1a236e9699485c5756ac0c7c86581a479053088bba5b877537fe21551d"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "e6e751c498fbfd5d47b76d29eb843ac2aab007e6ef339cf1d8fcc7dfcc6b11ed"
+    }
+  ],
+  "build_script_sha256": "c7c7eecc4703adc4dc7d9c3c7b48f10d19c53519f479130c7a2aeef5019f8b56",
+  "target_execution": "none",
+  "code_changed": false
+}

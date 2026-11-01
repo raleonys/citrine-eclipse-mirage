@@ -1,0 +1,128 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "source_package": "B7",
+  "independent_from_production_author": true,
+  "reviewer": "/root (B7 production by b7_services and b7_configuration; tests by b7_tests)",
+  "cross_review": "b7_configuration independently reviewed Services/domain and reported two corrected issues; root independently reviewed all six production files and test scope",
+  "reviewed_source_hashes": {
+    "services.hpp": "75c7e609ed81eb1717341d3e49f95298d9bf8394ec4993d761aca36180ad87de",
+    "services.cpp": "0ab6e39bc0b71372734698453702f0053c0be7274564bb9d32b5930065aa70e1",
+    "config_platform.hpp": "44640be6f888b9b1a13aca82a36cc4991a15fcf4ee185b543ea57c427e566ef4",
+    "config_platform.cpp": "d88fae4c51975e88196008413f167027326fcc4de3f270211c7a3b9a50922b7c",
+    "../anadius-thread-domain-source/domain.hpp": "d4eb8f8f57f3ba6ee9a0673d4b547e4f6e04549a4d86e7a0d8f1ebfddb7903ec",
+    "../anadius-thread-domain-source/domain.cpp": "950687d7bfb66deecd6fb96bf6425ca8c33713afc00afaeb63bf824a9e5e7bcd",
+    "policies_tests.cpp": "c6a6a55b205fc865d5029e9d514a5fb53e1360f51bd1fa3bad80d130a3789ce0",
+    "policies_integration_tests.cpp": "df3e25b5634ddaa07100e5840116453d374e106d7e9948eb9227c5dce82547e8",
+    "policies_test_fixture.hpp": "677994f228b88a38d7fe4965cfb8cfd4f74f04109eb66e2fa8b8d75c710778e9"
+  },
+  "prior_sources_preserved": 724,
+  "modified_prior_source_paths": [
+    "anadius-thread-domain-source/domain.cpp",
+    "anadius-thread-domain-source/domain.hpp"
+  ],
+  "prior_package_sha256": "64a870331be2c0555f7a7c21b66a657df8f36abfd8312730ff04cffcc906c9e5",
+  "quick_result_provenance": [
+    {
+      "path": "work/b7-core-quick-results.json",
+      "sha256": "0820f60b28e51faee122cd898d28eace5d12be16ede4cd9420833e67881cc2fc",
+      "checks": 92,
+      "execution_by": "independent test author; root read captured record and frozen hashes"
+    },
+    {
+      "path": "work/b7-integration-quick-results.json",
+      "sha256": "8713688f070394c2df3398eb1aff1ed881e0112694d5be290f52bada83726f99",
+      "checks": 96,
+      "execution_by": "independent test author; root read captured record and frozen hashes"
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "topic": "same_domain",
+      "conclusion": "ApplicationMemory uses the actual DomainStorage heap state/effects, FLS/error and encoded handler/lock0. The per-provider root lease prevents real domain resource release while the memory adapter exists."
+    },
+    {
+      "id": 2,
+      "topic": "lifecycle",
+      "conclusion": "Factory admission is Ready/controller-only; worker operations do not read mutable domain phase. External B3/B4 stop/join and provider destruction are mandatory before domain close; no automatic cancellation or unload proof."
+    },
+    {
+      "id": 3,
+      "topic": "allocation",
+      "conclusion": "Existing malloc06a308 normalizes zero and uses flags0. Existing0634b0 supplies explicit retry. Selected compiler bad_alloc/bad_array_new_length and PTRDIFF_MAX support boundary are documented, not native EH proof."
+    },
+    {
+      "id": 4,
+      "topic": "post_success_commit_fix",
+      "conclusion": "Independent reviewer identified a live allocation ticket erased if post-success commit locking throws. Final code keeps observed_pointer outside the try; unknown or known-success post-call exceptions preserve ownership and poison. A second recovery-lock failure leaves the reserved busy ticket terminal. This is static review; std::mutex failure was not dynamically forced."
+    },
+    {
+      "id": 5,
+      "topic": "free_retry",
+      "conclusion": "Existing0668c0 maps real failure into same-domain errno. The stack observer distinguishes failed/successful/unknown HeapFree outcome; known failure retains ownership for explicit retry; successful free removes the ticket; unknown outcome remains poisoned."
+    },
+    {
+      "id": 6,
+      "topic": "last_error_fix",
+      "conclusion": "The final captured flag preserves the recorded post-source SDK LastError through local exception construction and bookkeeping. Known free-failure test asserts ACCESS_DENIED and errno13 before retry. Unknown source exceptions retain their observed catch-time boundary."
+    },
+    {
+      "id": 7,
+      "topic": "ticket_concurrency",
+      "conclusion": "Stable list tickets are reserved under a mutex before native allocation. The gate is released around native APIs/new handlers. Per-ticket busy state rejects simultaneous double release; foreign and cross-provider pointers are outside the supported ownership domain."
+    },
+    {
+      "id": 8,
+      "topic": "services_routes",
+      "conclusion": "SourceServices binds exactly allocation/deallocation and finalguard. Retained017a30 assembly is RET0; this supplies the observed no-op without claiming PE CFG implementation. Remaining6 policies still go to lower ownership."
+    },
+    {
+      "id": 9,
+      "topic": "configuration_sdk",
+      "conclusion": "Actual SDK types and wchar_t write buffers avoid char16_t/wchar_t write aliasing. ModuleNULL and literal ProgramData/LocalAppData names match retained helpers; +260 growth and zero-to-empty behavior are explicit."
+    },
+    {
+      "id": 10,
+      "topic": "configuration_encoding",
+      "conclusion": "UTF8widen uses existing strict two-pass conversion with explicit lengths and first-pass size. Narrowpath selects actual filesystem codepage before empty input. Relative resolution reuses existing absolute/parent/join algorithms. No known-folder or guessed fallback substitution."
+    },
+    {
+      "id": 11,
+      "topic": "provider_order",
+      "conclusion": "ConfigurationPlatform is below B5 Configuration, preserving all old7 routes and adding6; thirteen21 routes bound. SourceServices retains memory until after owned lower provider destruction. No new virtual provider interface."
+    },
+    {
+      "id": 12,
+      "topic": "core_scope",
+      "conclusion": "Captured92 core checks cover fixed-step/zero/error SDK paths, encoding and path failures, actual heap/new-handler/error/free retry, invalid ownership and three own terminal children. No original code execution."
+    },
+    {
+      "id": 13,
+      "topic": "integration_scope",
+      "conclusion": "Captured96 checks exercise two simultaneous real own CRT workers with distinct PTDs/errors and a shared allocator, plus full B4 Runtime with three queued workers, actual8/8/16 payloads and real NativeCalls UTF8. SDK paths, CFG storage and foreign services are controlled; join timeout/retry and cleanup prefixes verified."
+    },
+    {
+      "id": 14,
+      "topic": "remaining_gates",
+      "conclusion": "Eight configuration and six Services policies remain; persistence/foreign/native EH/mutable CRT/fallback-OOM/general concurrency/unload/loader-lock/PE boundaries remain open. Mapped487/eligible491/normalclaims124/nativeclosures52 do not increase."
+    }
+  ],
+  "corrected_actionable_findings": [
+    "post-allocation ticket commit exception ownership",
+    "post-source SDK LastError not overwritten by local exception bookkeeping"
+  ],
+  "limits": [
+    "Memory operations require controller or workers of the same initialized recovered PTD domain; foreign-thread fallback/OOM concurrency remains unproven.",
+    "Direct users must stop admission and join every worker/FLS destructor before provider destruction. Root lease is not a worker join.",
+    "Unknown SDK C++ exceptions are test-only injected hostile boundaries; real callbacks must obey nonthrowing Win32 outcome contracts.",
+    "Bookkeeping, ownership rejection and portable exceptions are explicitly selected rebuilt policies, not original ABI/fault equivalence.",
+    "Containing image remains mapped for own tests; successful DLL unload or loader-lock-safe entry/shutdown was not tested."
+  ],
+  "production_dll_readiness": "BLOCKED",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_cfg_token_achievement_contents_read": false
+}

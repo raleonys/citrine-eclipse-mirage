@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_initial_state",
+    "result": "PASS",
+    "output": "PASS: 2866 owned initial state checks;116 relocations;actual locale refs;4 own workers",
+    "executable_sha256": "0cfbd75c1a5e96130cdccaf54aa617cb172247896d9958faa1901b04618ff469"
+  },
+  "execution_scope": "Owned imageinitialdatagraph,116relocatededges and3alignedliveLONGs;2866checks,actual recovered locale refs/4ownworkers and independentowners;currentglobals remainzero;noCRTinitializer/fullruntime/ABIequivalence;zero new original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-initial-state-source/initial_state.cpp",
+      "sha256": "0331798d8f552c3dbea10b92697cb1b43dde5ff90290ffa63bc190d72cea8279"
+    },
+    {
+      "path": "anadius-crt-initial-state-source/initial_state.hpp",
+      "sha256": "052618a576469a8d3a17d4d5610230fc03761fcc32cdaacab00ea39e77e3016c"
+    },
+    {
+      "path": "anadius-crt-initial-state-source/native_tests.cpp",
+      "sha256": "ffcb3a89dcf0571812a5d7265f52c899d752e502d6aaf6ccae542e1e4f545c9e"
+    }
+  ]
+}

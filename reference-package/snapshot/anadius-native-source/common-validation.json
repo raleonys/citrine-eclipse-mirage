@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "native_callbacks",
+    "result": "PASS",
+    "output": "PASS: 91 native callback/trampoline checks; synthetic originals, real LastError metadata only",
+    "executable_sha256": "e606adaef14b5c6df927054a933e36ab4ed63b63d0b3ff1f0aa430ee1736f2b9"
+  },
+  "execution_scope": "Ten SDK native entries and typed synthetic originals, bytewise cells/UTF16, LastError own thread metadata; host install and worker lifecycle",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [
+    {
+      "suite": "native_callbacks",
+      "mode": "--closed",
+      "expected_exit": 86,
+      "actual_exit": 86,
+      "result": "PASS"
+    },
+    {
+      "suite": "native_callbacks",
+      "mode": "--missing",
+      "expected_exit": 86,
+      "actual_exit": 86,
+      "result": "PASS"
+    },
+    {
+      "suite": "native_callbacks",
+      "mode": "--throw-original",
+      "expected_exit": 86,
+      "actual_exit": 86,
+      "result": "PASS"
+    }
+  ],
+  "sources": [
+    {
+      "path": "anadius-native-source/native_callbacks.cpp",
+      "sha256": "e3da2e8c5aca2d0d768adb48238db45dc4f71c232fb281a8ebdb9b96c22de1e8"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "sha256": "6b8ca61ae92cafd0a218f042f97c9b10110125e42924546bde7d5c6823ea0e5f"
+    },
+    {
+      "path": "anadius-native-source/native_tests.cpp",
+      "sha256": "2cd1e2e3c1a546dbab772d955004334b251902ad868ae5957f22ebf601d797f0"
+    },
+    {
+      "path": "anadius-native-source/original_effects.cpp",
+      "sha256": "2f8ec2eae9ce6463eed8871a8f5f01660c806744a94a22fbcd392b329496a898"
+    }
+  ]
+}

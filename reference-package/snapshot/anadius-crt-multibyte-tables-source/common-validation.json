@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_multibyte_tables",
+    "result": "PASS",
+    "output": "PASS 54392 checks",
+    "executable_sha256": "f72fe3f35690b46a640a003afd0298a8d6c8ffa60c1ee54cbad95e68e59ed27b"
+  },
+  "execution_scope": "Two recovered SBCS/case table bodies; live initial table copies, CPInfo and tracked output cells; lower 06e210/06cc30 wrappers remain synthetic mandatory providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-multibyte-tables-source/multibyte_tables_tests.cpp",
+      "sha256": "43080bf2b38c64434f2c304a1a875a12ae4f835ffeb545fe4a3fb6235842cc20"
+    },
+    {
+      "path": "anadius-crt-multibyte-tables-source/multibyte_tables.cpp",
+      "sha256": "6dd5376b4ec71a68a5dbf594e32e6be955bfd2d354794a4c109a237fe33c2c73"
+    },
+    {
+      "path": "anadius-crt-multibyte-tables-source/multibyte_tables.hpp",
+      "sha256": "b89913e38fdb4e41a59fdc19f0b032171bc0b7d3c9c7af7939fdadf7a087954c"
+    }
+  ]
+}

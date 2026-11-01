@@ -1,0 +1,96 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T13:44:58.7419435Z",
+  "prior_package_sha256": "879065d2d97800595d433c31358de70db67c77e87adaee06edcff19fc33128b8",
+  "prior_source_count": 344,
+  "unchanged_prior_sources": 344,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-crt-initial-locale-source/initial_locale_data_tests.cpp",
+    "anadius-crt-initial-locale-source/initial_locale_data.cpp",
+    "anadius-crt-initial-locale-source/initial_locale_data.hpp",
+    "anadius-crt-initial-multibyte-source/initial_mb.cpp",
+    "anadius-crt-initial-multibyte-source/initial_mb.hpp",
+    "anadius-crt-initial-multibyte-source/native_tests.cpp",
+    "anadius-crt-initial-state-source/initial_state.cpp",
+    "anadius-crt-initial-state-source/initial_state.hpp",
+    "anadius-crt-initial-state-source/native_tests.cpp"
+  ],
+  "current_sources": 353,
+  "current_documents": 123,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "reviews": [
+    {
+      "path": "anadius-crt-initial-locale-source/review-initial-locale.json",
+      "result": "PASS",
+      "source_hashes_verified": 4
+    },
+    {
+      "path": "anadius-crt-initial-multibyte-source/review-initial-multibyte.json",
+      "result": "PASS",
+      "source_hashes_verified": 3
+    },
+    {
+      "path": "anadius-crt-initial-state-source/review-initial-state.json",
+      "result": "PASS",
+      "source_hashes_verified": 12
+    }
+  ],
+  "master_build_sha256": "e4671c6f0c028f2911f9f434198f981e6e0d853360a02200c9acb1f5f4304b53",
+  "native_objects": 121,
+  "cpp_objects": 117,
+  "c_objects": 4,
+  "normal_test_groups": 106,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "crt_initial_locale",
+      "result": "PASS",
+      "output": "PASS: 96 regions, 116 bounded unique relocation slots, 3546 bytes; synthetic rebase, self/category identities, scalar/refcount/May alias/table checks",
+      "executable_sha256": "306e3ed7172cabd2e9e74aa5097c74fdd556f00d89983e4d3bff52afd974c4e0"
+    },
+    {
+      "module": "crt_initial_multibyte",
+      "result": "PASS",
+      "output": "PASS 2908 image initial multibyte/reset checks",
+      "executable_sha256": "4318d27cee235d1fe8a38d8a42bcc0a0f01e737f0da302273c27c629b86a4a1d"
+    },
+    {
+      "module": "crt_initial_state",
+      "result": "PASS",
+      "output": "PASS: 2866 owned initial state checks;116 relocations;actual locale refs;4 own workers",
+      "executable_sha256": "63c74f4071aa541158e27336c0f9e24e895e7ad8577ecdc56a79be3a5ac7ce4a"
+    }
+  ],
+  "rea_reads": [
+    {
+      "address": "0x1800a17e0",
+      "length": 352,
+      "file_offset": 654816,
+      "evidence_id": "ev_52ee69fa3a17ae784148d962f28166130ab1ba7424c5a495411bb61e32a8cad3",
+      "sha256": "9a504a9c346733f84cd38c262c399ad3b9f71c1ecfc2513d791339060db27e44",
+      "matches_raw_file": true
+    },
+    {
+      "address": "0x1800a1c70",
+      "length": 552,
+      "file_offset": 655984,
+      "evidence_id": "ev_8d5f1477ac673d31d958ad405d496c467c752b8f1f9983be85a528c3afc1a78e",
+      "sha256": "2bdf8c788761b060610d20270bb00c2d1d1a9370d6708ba16aa3aa7ad64be4a2",
+      "matches_raw_file": true
+    },
+    {
+      "address": "0x18008ad20",
+      "length": 704,
+      "file_offset": 562464,
+      "evidence_id": "ev_208bceade1f4bc4672ed5d82b435112f21cb7b8082b5d4a8adf28a5bf05b35c0",
+      "sha256": "838945677c00ce1a537f203fff21d263f3f2a72ad158ecd4206c7772ad174aa6",
+      "matches_raw_file": true
+    }
+  ],
+  "recovered_original_bodies_added": 0,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

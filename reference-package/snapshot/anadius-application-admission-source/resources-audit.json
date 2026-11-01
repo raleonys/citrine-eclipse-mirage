@@ -1,0 +1,29 @@
+{
+  "source_package": "B51",
+  "result": "APPLICATION_ONLY_ADMISSION_SEALED_BEFORE_BACKEND_STOP_JOIN",
+  "owned": [
+    "Sticky Application-only seal under the exact native lease gate",
+    "Separate admitted Application count, balanced on normal and exceptional exit",
+    "Sealed still-bound Application refusal FALSE with no Bootstrap/provider/Errors callback",
+    "RuntimeOwner retains and retries before backend stop/join while startup remains admitted",
+    "Existing worker/exit/terminate native source routes remain admitted"
+  ],
+  "required_contracts": [
+    "One control thread owns Binding and RuntimeOwner lifecycle",
+    "Errors outlives every future native entry attempt, including unbound attempts; opaque permanent Error callbacks run after source lease release and are outside the Application counter",
+    "Backend still supplies real independent admission stop, rawjob/foreign/hook finality and worker join",
+    "No opaque provider/Error callback runs while native admission gate is held",
+    "All future external entry sources excluded before destruction or rebinding"
+  ],
+  "not_proven": [
+    "Whole-server rawjob/deferred/foreign/hook admission and finality",
+    "Rebind/ABA safety of cached function pointers across distinct owner lifetimes",
+    "Early startup/interrupted/pre-firstReady recovery or arbitrary unknown ownership rollback",
+    "Full Resources factory, original concurrency/native ABI/EH equivalence",
+    "PE loader-lock attach/detach, dynamic unload or successful complete DLL link"
+  ],
+  "native_body_delta": 0,
+  "native_ABI_closure_delta": 0,
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null
+}

@@ -1,0 +1,127 @@
+{
+  "schema": "cancel-queue.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180026aa0",
+      "pseudo_evidence": "ev_d4f71cf8b783578dcbaae1a45c68bba3e631d5381f8102b4c3d6ec82db60b419",
+      "assembly_evidence": "ev_5263c2b7208ef28e3ec671a729ee180d773d5dcd6ba45d16972e7ebef04cba21"
+    },
+    {
+      "address": "0x180028850",
+      "pseudo_evidence": "ev_9a1fe4c4ceb75c56791c10e35bd439a1423da6615f0d3dc8d9e7476e88ec498b",
+      "assembly_evidence": "ev_095d9853e46b5d31f95097518a09129ccf9b9050adc51fa79c2110be97dd4856"
+    },
+    {
+      "address": "0x1800283c0",
+      "pseudo_evidence": "ev_9f53a74fdc3280f360d1ce5770b00ecf0d27721d1f88cc316eeb303a6ea950b8",
+      "assembly_evidence": "ev_1c51eada2fac2491b445eaad1ca3641ce117107dbab6a3a71dd6a7392dc453bc"
+    },
+    {
+      "address": "0x180026fb0",
+      "pseudo_evidence": "ev_4ffe8b68e27a849ee81d94fa3520491aa59f139532cc5e31294d1bee89c8c4b4",
+      "assembly_evidence": "ev_949e26c04afda34fe45f482346b1b127456e1debcf6ba15190922608977a89d9"
+    },
+    {
+      "address": "0x180024db0",
+      "pseudo_evidence": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3",
+      "assembly_evidence": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "cancellation.hpp": "590aba7ccc16c44dd332481bd79cc2f6760b7fa81be773f5dbceaa7efebef1ff",
+    "cancellation.cpp": "8b9590f3ae91bad807107a79e9f04391b9470f885b599725a21fb80a8dec098c",
+    "cancellation_native.hpp": "91ac34a057aec4e6aec647c5a046f3e98138ccdeb23a1f268083defae5493f39",
+    "cancellation_native.cpp": "d1a8ad5506c6683f1a080950d253766bd902dce4086a843f599f4c6b414b293e",
+    "cancellation_tests.cpp": "cc76688587f6066f67a32c64614ac344990d75820327508a8297e6e0bf1e02ce",
+    "cancellation_native_tests.cpp": "13f32b3bbd06c9c0f1568f76bc5393264735b0c89228147e18c431c1b48d808f",
+    "build.ps1": "38e82037bd9cf5f09234b4815e392a5fb90d04cccbe54a32f6eedf6cf0277bcc",
+    "CMakeLists.txt": "adaac6f0dc065647169aa0f912480277770b18839ca15b575ea8329408148077",
+    "README.md": "5a07959fe03804f15ca202c537642edfc142357e672702999fdfba67a644f187"
+  },
+  "support_hashes": {
+    "cancellation-evidence.pseudo.c.txt": "43a5b418c56295c4bcb733329015215111f229b6acd56fefb057d51b00e07fcd",
+    "cancellation-evidence.asm.txt": "220ca04a2637194c3ca9bfdae4bcd3c3f0c48ea546ae673a4d1990ca567ea4e6",
+    "cancellation-flow-audit.md": "ea45b0992a1a00833468bea4a9235c1b431cf03be279333eefa0eeac9573aac4",
+    "cancellation-flow-audit.json": "e13c61b11cf20679c201e7360bfe4664ad6e8f550d7a2c62903bc046db5891ee",
+    "cancellation-review.md": "d9bd9fec5bb7cf5d20aece4fa301e8cd7c600464522d761e5650d765abfeee05",
+    "cancellation-review.json": "e5bd92820b644a88a8c7ecd5ef5fc0542c1fbad76d3c9e93894c527f238e29df",
+    "cancellation-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x180026aa0",
+    "0x180028850"
+  ],
+  "new_original_procedures": 2,
+  "required_providers": [
+    "0283c0 bucket/list/free-pool recycler",
+    "Native ASIO container/operation layout and completion dispatcher",
+    "Service/executor/global/allocator/category/exception effects"
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x180026ad1",
+        "0x180026ad5",
+        "0x180026afe",
+        "0x180026b17",
+        "0x180026b50",
+        "0x180026ba4"
+      ],
+      "finding": "Four modulo maps, exclusive last-next end, matching operation FIFO copied/drained then recycler even empty match"
+    },
+    {
+      "addresses": [
+        "0x180026bbd",
+        "0x180026bf5",
+        "0x180026bfc",
+        "0x180026c08",
+        "0x180026c0c"
+      ],
+      "finding": "Scheduler identity after scans; detach attempted op, setqueued1, live port for each typed SDK post"
+    },
+    {
+      "addresses": [
+        "0x180026c23",
+        "0x180026c2d",
+        "0x180026c4e",
+        "0x180026c5a",
+        "0x180026c6e",
+        "0x180026c90"
+      ],
+      "finding": "First BOOL0 fallback transfers failed+remaining under live scheduler gate, atomicexchange1, then matched wake"
+    },
+    {
+      "addresses": [
+        "0x180028891",
+        "0x180028897",
+        "0x18002889c",
+        "0x1800288ae"
+      ],
+      "finding": "Wake sends one NUL withflags0, ignores status; category/get always and extra category for64/1234"
+    },
+    {
+      "addresses": [
+        "0x180026c81",
+        "0x180026c98",
+        "0x180026c9d"
+      ],
+      "finding": "Callback cleanup block unreachable from retained normal flow; not invented as ordinary cancellation callback"
+    }
+  ],
+  "independent_production_review": "PASS; cancellation-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Controlled recycler/gates and injected SDK PostQueuedCompletionStatus/WSASend; no real network/IOCP",
+  "unproven": [
+    "0283c0 recycler internals",
+    "Native ASIO layout/dispatcher/service/container/allocator/lifetime/concurrency",
+    "Native error padding/vtable/global/SEH/unwind/ABI",
+    "Full DLL integration and original runtime differential"
+  ]
+}

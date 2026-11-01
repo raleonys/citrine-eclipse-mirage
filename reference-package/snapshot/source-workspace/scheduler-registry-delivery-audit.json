@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T14:30:24.6996812Z",
+  "prior_package_sha256": "62bf4fa28db66f8a9d5251cbc9909c80496c790dc2938e88b425765e44eca1b2",
+  "prior_source_count": 462,
+  "unchanged_prior_sources": 462,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/scheduler_registry_integration_tests.cpp",
+    "anadius-socket-source/scheduler_registry_tests.cpp",
+    "anadius-socket-source/scheduler_registry.cpp",
+    "anadius-socket-source/scheduler_registry.hpp"
+  ],
+  "current_sources": 466,
+  "current_documents": 184,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 22,
+  "native_objects": 158,
+  "cpp_objects": 154,
+  "c_objects": 4,
+  "normal_test_groups": 145,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_scheduler_registry",
+      "result": "PASS",
+      "output": "PASS: 244 socket scheduler registry checks; retained022fd0/023b30 normal flow with controlled allocation/024990/RTTI only",
+      "executable_sha256": "0334f8a8440550f2b892fce44c31eb32b8c986e1305f9028f80defa249c9af63"
+    },
+    {
+      "module": "socket_scheduler_registry_integration",
+      "result": "PASS",
+      "output": "PASS: 838 socket scheduler registry integration checks; shared nested socket/scheduler registry and actual constructor-to-acceptor-to-recycler chain with controlled effects only",
+      "executable_sha256": "55fb1085581984679a3b2164e38a7ce6d7e5f870e7a83a31e2937639cd0d2bc6"
+    }
+  ],
+  "new_checks": 1082,
+  "master_build_sha256": "5ad6e51207c61e01bae463f23322587102c189f977b914b127e85a114004211c",
+  "common_build_script_sha256": "4b01bcf9adb854d973a778e78bd0789ca290a16a487474d34014730e96048fbc",
+  "cmake_sha256": "56ed1a84287aea92bbdf0d58eb4196cec524574ef7ff9dc74d48f05931d99272",
+  "normal_source_procedures_added": [
+    "0x180022fd0",
+    "0x180023b30"
+  ],
+  "new_original_procedures": 2,
+  "new_composition": "Actual022fd0/023b30 scheduler key and two-pass resolution with nested shared service registry composition",
+  "independent_production_source_review": "PASS,2frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

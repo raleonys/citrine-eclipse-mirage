@@ -1,0 +1,118 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "analysis": "static only; no target execution",
+  "image_base": "0x180000000",
+  "retained_assembly": "anadius-all-functions.asm.txt",
+  "functions": [
+    {
+      "va": "0x1800019b0",
+      "rva": "0x0019b0",
+      "assembly_evidence": "ev_4aed1f624e8b723ecdd4f51c92e236b86525f519467b11fcc605affa43fecf6a"
+    },
+    {
+      "va": "0x180004080",
+      "rva": "0x004080",
+      "assembly_evidence": "ev_de54bb50c3ff742a13b271507166aefe66e522db30d50a023eb6f64722e068d3"
+    },
+    {
+      "va": "0x180002f20",
+      "rva": "0x002f20",
+      "assembly_evidence": "ev_3fd2f6515bbcffbae0fadea6115bc70bb7737317e4fea2c13a6b6fe745ce2e71"
+    },
+    {
+      "va": "0x1800052c0",
+      "rva": "0x0052c0",
+      "assembly_evidence": "ev_bf15950286b3b8ad056a5e7885b537d947fab8b8fa75150ccad4bc07a02e3627"
+    },
+    {
+      "va": "0x180005560",
+      "rva": "0x005560",
+      "assembly_evidence": "ev_ce8a68d6974b136583eeaf997f5aee1b2531f47e7ecca3012c760365aafd5dd6"
+    },
+    {
+      "va": "0x1800056b0",
+      "rva": "0x0056b0",
+      "assembly_evidence": "ev_5a7cd602d448321e7f7167b16801110c91aa45bddf47c57cdeae0ffadb6cfef9"
+    },
+    {
+      "va": "0x180005270",
+      "rva": "0x005270",
+      "assembly_evidence": "ev_97aac5c98f27025821ce11dd5f19873c36c78ec9d97cda6bf6f4505be65d7290"
+    },
+    {
+      "va": "0x180006770",
+      "rva": "0x006770",
+      "assembly_evidence": "ev_103214e8a84145727acf9925adf5a3d6cf9f3a4fbf6ebc76913672e4e0700f9c"
+    },
+    {
+      "va": "0x180005770",
+      "rva": "0x005770",
+      "assembly_evidence": "ev_cbbdb426d3ac2e94763181e1f0adb252e35056813bdb737cdad75b8fccd4d4e3"
+    }
+  ],
+  "raw_section": {
+    "va": "0x18007f000",
+    "file_offset": "0x7d800",
+    "raw_size": "0x21e00"
+  },
+  "entity_table": [
+    {
+      "entry_va": "0x18007f760",
+      "file_offset": "0x7df60",
+      "character": 34,
+      "name_va": "0x18007f7b0",
+      "length": 4,
+      "name": "quot"
+    },
+    {
+      "entry_va": "0x18007f770",
+      "file_offset": "0x7df70",
+      "character": 38,
+      "name_va": "0x18007f7b8",
+      "length": 3,
+      "name": "amp"
+    },
+    {
+      "entry_va": "0x18007f780",
+      "file_offset": "0x7df80",
+      "character": 39,
+      "name_va": "0x18007f7bc",
+      "length": 4,
+      "name": "apos"
+    },
+    {
+      "entry_va": "0x18007f790",
+      "file_offset": "0x7df90",
+      "character": 60,
+      "name_va": "0x18007f7c4",
+      "length": 2,
+      "name": "lt"
+    },
+    {
+      "entry_va": "0x18007f7a0",
+      "file_offset": "0x7dfa0",
+      "character": 62,
+      "name_va": "0x18007f7c8",
+      "length": 2,
+      "name": "gt"
+    }
+  ],
+  "confirmed_state": {
+    "just_opened": "+0x08 = 0",
+    "first_element": "+0x70 = 1",
+    "depth": "+0x80 = caller 0",
+    "text_depth": "+0x84 = -1",
+    "process_entities": "+0x88 = 1",
+    "compact": "+0x89 = caller 0",
+    "buffer_count": "+0x130 = 1 including NUL"
+  },
+  "coverage": "Default FILE=null, compact=false, depth=0 memory printer; observable byte output for valid calls",
+  "exclusions": [
+    "XML parser/reader",
+    "FILE writer",
+    "nondefault constructor modes",
+    "full XMLVisitor",
+    "original MSVC object/allocation/exception ABI",
+    "runtime equivalence"
+  ]
+}

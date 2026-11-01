@@ -1,0 +1,49 @@
+{
+  "reviewed_at": "2026-10-18T03:43:23.6825174Z",
+  "reviewer": "Independent REA skill worker compare_anadius_minhook",
+  "result": "No actionable findings",
+  "scope": "C++ API/adapters, fixture API seam, forced include isolation, original-output normal return semantics, rebuilt callback resolver, production/native and fixture object separation",
+  "not_executed": [
+    "NativeApi hook methods",
+    "Original/rebuilt DLLs or game",
+    "Generated instruction buffers"
+  ],
+  "limits": [
+    "Original MinHook version unproven",
+    "Normal C API returns only; native SEH/C++ exception ABI unproven",
+    "Fake address reservation/concurrency not OS proof"
+  ],
+  "sources": [
+    {
+      "path": "adapter_tests.cpp",
+      "sha256": "9579b7043389b151f86206142263f35834b63a460a73555075e47bf32d74024c"
+    },
+    {
+      "path": "adapters.cpp",
+      "sha256": "c43e3fc13ceb60833324c880725d7e6ed6b0f668ed82e077b9b28d4f47a7ac5d"
+    },
+    {
+      "path": "adapters.hpp",
+      "sha256": "757f5f0ee47e19fe2611072dab96b72c21b57d8d64e49c23a16d7f67ab9d8862"
+    },
+    {
+      "path": "api.cpp",
+      "sha256": "f0342452f7a1e379903472f48937281ceddad0920ddc152b7615dc3e9c98eadc"
+    },
+    {
+      "path": "api.hpp",
+      "sha256": "ff489c6112295848f0632537c2012d3c756242f43f95d25464474f1336a07a45"
+    },
+    {
+      "path": "fixture_tests.cpp",
+      "sha256": "49d644dddefb5fef82535d63c5e73e165c0728ab8b72d1717eaf7f83f76b9842"
+    },
+    {
+      "path": "preloader_engine.cpp",
+      "sha256": "7f73897a95261bebc448c8b54fb0700ccb89ef03acb7115457ac05516c9f51db"
+    }
+  ],
+  "fixture_header_sha256": "b1f387766f6dacd32f03c6e8f317042ff7e173f49740f780accd6fd20a96dee1",
+  "fixture_backend_sha256": "fb4af05fde27ad258eabf834dfb397ed3cbed872ac97784e6a5247466b3b0c8f",
+  "followup": "Native RTTI test volatile read split into local before typeid to satisfy compiler warning; no production behavior change"
+}

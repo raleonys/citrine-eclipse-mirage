@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "reviewer": "initial_multibyte_data independent sibling review",
+  "reviewed_at": "2026-10-20T13:41:12.114Z",
+  "actionable_findings": [],
+  "source_hashes": {
+    "initial_state.cpp": "0331798d8f552c3dbea10b92697cb1b43dde5ff90290ffa63bc190d72cea8279",
+    "initial_state.hpp": "052618a576469a8d3a17d4d5610230fc03761fcc32cdaacab00ea39e77e3016c",
+    "native_tests.cpp": "ffcb3a89dcf0571812a5d7265f52c899d752e502d6aaf6ccae542e1e4f545c9e",
+    "build.ps1": "0d3db58d2440b44813075fc7d4d0ebd45711f5aaebb8eeb565d8ca07a3cb818b",
+    "../anadius-crt-initial-locale-source/initial_locale_data.cpp": "ac9db7a7e7e3bbe1292ebb0f408e86efa19d6bac0c5abc3bf2e5472e91be25f3",
+    "../anadius-crt-initial-locale-source/initial_locale_data.hpp": "7fba827e4f129c53d4d79b5f1b9aac9ac29e6dfead3b3534e6f58471045aedb4",
+    "../anadius-crt-initial-multibyte-source/initial_mb.cpp": "bc2ad14d71f56922b8425b8815a641d830df4627ff91405a634ead504074339a",
+    "../anadius-crt-initial-multibyte-source/initial_mb.hpp": "d69491ef05381d0dcf1ce75199dbb07d586fe3edec680cab57c57bce0ea0d1a6",
+    "../anadius-crt-counter-native-source/counters.cpp": "044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25",
+    "../anadius-crt-counter-native-source/counters.hpp": "f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011",
+    "../anadius-crt-locale-ref-source/locale_ref.cpp": "762f527d38d310e84ec5b07bc0257563a50da500210367002ac50f5c04837d2e",
+    "../anadius-crt-locale-ref-source/locale_ref.hpp": "b5a6815488ff5565a33a82e65bbc6ce195eca59f0d410581ed780ac38b43637d"
+  },
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "independent_original_PE_checks": {
+    "raw_backed_regions": 94,
+    "zero_fill_regions": 2,
+    "DIR64_slots": 116,
+    "method": "All metadata raw regions compared byte-for-byte to original file; all 116 DIR64 entry words and pointer slots verified at original file offsets. Zero-fill leaves checked as zero; PE backing geometry already extracted by locale module."
+  },
+  "checks": [
+    "All 116 relocation targets stay within copied bounded graph; all raw nonpointer bytes are preserved by fixture.",
+    "96 independent aligned allocations; two ImageState owners remain separate and nonmoving.",
+    "Three actual LONG lifetimes begun with construct_at at checked 4-byte-aligned locale+0x10/time+0x15c/MB+0; native Interlocked functions use actual typed storage.",
+    "Registry is populated before published use, immutable during four workers, unbound only during quiescent destruction.",
+    "Actual recovered add/release_locale_ref source runs on relocated category/time graph and returns locale count to 1; static time sentinel is preserved at 0.",
+    "Image startup current pointers and flags stay zero; raw locale mask is 0xfffffffe.",
+    "read_address bounds rejects a trailing partial QWORD and original preferred-image identity.",
+    "Production and build commands do not execute or LoadLibrary the original DLL."
+  ],
+  "SDK": {
+    "winnt": "include/winnt.h:312 typedef __LONG32 LONG; 32-bit size and alignment checked by compiled static_assert",
+    "intrinsics": "include/psdk_inc/intrin-impl.h:1696,1711 LONG volatile pointer signatures"
+  },
+  "run": {
+    "command": "./outputs/anadius-crt-initial-state-source/build.ps1",
+    "result": "PASS: 2866 owned initial state checks;116 relocations;actual locale refs;4 own workers"
+  },
+  "limitations": [
+    "Review covers owned image-data materialization, not dynamic CRT initialization or complete DLL/ABI equality.",
+    "API destruction and byte access require documented quiescence; raw views must not race counter changes."
+  ],
+  "new_original_function_bodies": 0,
+  "original_execution": false,
+  "original_modification": false
+}

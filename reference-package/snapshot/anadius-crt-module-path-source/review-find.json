@@ -1,0 +1,90 @@
+{
+  "result": "PASS",
+  "reviewer": "/root/crt_module_path",
+  "independent_from_implementation": true,
+  "checked_at": "2026-10-18T19:44:25.0627965Z",
+  "scope": "Independent source/assembly/SDK review of find-native boundary plus root find bridge delegations; no peer edits",
+  "sources": [
+    {
+      "path": "outputs/anadius-crt-find-native-source/find_native.hpp",
+      "sha256": "f91639a154df18331bc0d1c1763e47a2fb559ff87ee691e6c68dd2e925d3af2c"
+    },
+    {
+      "path": "outputs/anadius-crt-find-native-source/find_native.cpp",
+      "sha256": "1944ad4f9ff93f6fb5fafd01840b49c3b9adad36ca6fd838d29964161601e416"
+    },
+    {
+      "path": "outputs/anadius-crt-find-native-source/find_native_tests.cpp",
+      "sha256": "7aa6dadac44c9813c3e2d738f0ee6e93ecbfdacef053b3f5d788202eff9b43c9"
+    },
+    {
+      "path": "outputs/anadius-crt-find-native-source/validation.json",
+      "sha256": "5dd0fa45c35d590d8a460302759f9e8e433c6f014dfb88bc070a3c10d94ae9e7"
+    },
+    {
+      "path": "outputs/anadius-crt-find-bridge-source/bridge.hpp",
+      "sha256": "07179a6efed22721345529a9dc3edbd1a0d032747b1090aa46b3ac3c4ae0da87"
+    },
+    {
+      "path": "outputs/anadius-crt-find-bridge-source/bridge.cpp",
+      "sha256": "0e1a2eb3e5a08e4a4881231ccf24efe0456d7eae95e5fd989e01bccba45ebde4"
+    },
+    {
+      "path": "outputs/anadius-crt-find-bridge-source/bridge_tests.cpp",
+      "sha256": "774d8b1ca6ef34ca4d976e8aee2633f877a4c215548c908a7d247e64221ac781"
+    },
+    {
+      "path": "outputs/anadius-crt-wildcard-search-source/search.cpp",
+      "sha256": "ae987abfc21a6d941794ac3ffef8fa2aa6c70fa4599e525b110b993a2cc8819b"
+    },
+    {
+      "path": "work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/include/fileapi.h",
+      "sha256": "2484faf2d31472d77d80f8f0c189cbf399cc1e739021888b20aefbb32d8bc11b"
+    },
+    {
+      "path": "work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/include/minwinbase.h",
+      "sha256": "fc14c6402971196b5a99b41f692e5df57c51be3d1b2cdd5929fe4fc45e1e96d2"
+    },
+    {
+      "path": "work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/include/minwindef.h",
+      "sha256": "6b9bd01788cd02c2c8fe326fd2c27f8276041c2cf8d20ae5f0c78d0432f8aa52"
+    }
+  ],
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "assembly_evidence": "ev_6cea0a61974294918c3ea08f45c00073e8eac70ff3dc2c8d4bacd2c87cb5cc92",
+  "function": "0x18006e984",
+  "observations": [
+    "06ead6..06eaf4: source pattern orNULL, RDX=0 FindExInfoStandard, R8 typed output, R9=0 FindExSearchNameMatch, filterNULL and flags0. Session::first matches exactly.",
+    "06eafa..06eb01: full64bit HANDLE compared only with-1. Session preserves handle bits, accepts0, rejects onlyUINT64_MAX; no BOOL handle truncation.",
+    "06ec23..06ec35: FindNextFileW receives same typed record and fullEAX zero test. Session::next returns int32BOOL unchanged including0x100/negative values and only republishes filename on success.",
+    "SDK headers and compiled static_asserts establish WIN32_FIND_DATAW size592/cFileName offset44/520bytes on this selected Windows x64 toolchain. Record address remains stable because unique_ptr storage and map node prepared before first API call.",
+    "Host bookkeeping allocation occurs before first API acquires a handle. Same-allocator node insertion avoids a later allocation. Duplicate live handle is an explicit unsupported provider domain, with no invented close.",
+    "Filename storage/read access permits only live cFileName520byte range. Overflow and adjacent record field access rejected. Actual source search reads attributes nowhere.",
+    "Session destructor releases host bookkeeping only, never calls FindClose; next failure retains explicit close responsibility. False closeBOOL is ignored and storage invalidated, matching caller policy.",
+    "06ec0f..06ec19 then06ec93..06eca8: append failure frees narrow before close before wide. Successful loop frees narrow before next; sorting precedesclose. Existing search source keeps this order; Session adds no RAII APIcleanup.",
+    "Root WildcardEffects::find_first/find_next/find_close directly delegate to Session without changing args/results. Root lower fixture routes filename reads through live Session storage while conversion iterates it."
+  ],
+  "tests": {
+    "action": "Ran already-built own-source synthetic test executable; no original or native find provider called",
+    "result": "find native: 106229 checks PASS",
+    "test_exe_sha256": "502346e88193dbab06a8cd2258cbc060b88c9f9865a3ca17d89bc95a95fe3790",
+    "matches_retained_validation": true,
+    "covered": [
+      "Exact SDK args",
+      "stable pointers across96simultaneoushandles",
+      "fullsignedBOOL and64bithandle",
+      "INVALID_HANDLE_VALUE/zero handle",
+      "falseclose",
+      "boundary/overflowreads",
+      "explicit exceptional and duplicate domains",
+      "destructor noFindClose"
+    ]
+  },
+  "findings": [],
+  "limitations": [
+    "No live Windows enumeration or original DLL execution; this does not prove runtime behavioral equivalence.",
+    "New Session ownership/bookkeeping/address domains are source adapter design, not original stack layout or allocator ABI.",
+    "Successful native filenames must satisfy the supported SDK readable/NUL-terminated string contract; absentNUL beyond520bytes fails bounds rather than emulating original out-of-bounds behavior.",
+    "No original SEH/unwind/cookie ABI claim. Root master integration tests must still complete."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "reviewer": "session_bridge_audit",
+  "scope": "Independent final production source review against retained normal-flow contracts; composition only",
+  "new_original_procedures": 0,
+  "sources": {
+    "outputs/anadius-session-source/handler.hpp": "270aa21281852e2698983e312b3ebf347cafdc1da2deda94b80ced295addb8c0",
+    "outputs/anadius-session-source/handler.cpp": "2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42",
+    "outputs/anadius-session-source/routing.hpp": "6e263e02419da2148feeecc7a3ce95d34faaa439ffe5a9e67b672a9c1b409f8c",
+    "outputs/anadius-session-source/routing.cpp": "c8063ea3fd9789e1d0d15b5daa08cddf1b8e72070af1c073911dd65c6dc9bc3c"
+  },
+  "report_sha256": "bd9d93c9a14a68d3617c01832c6f384c88aca9cf897bf7ae83c315f28d8abacd",
+  "audit_report_sha256": "e14630a73b4501d9070e9570dc6ac015a6284d39217d0c240a6129da0082653d",
+  "audit_json_sha256": "229c2fab87dc20787028092ad9350c5dce9d23e60ad2afdf65d27b5dd6c2440d",
+  "material_findings": [],
+  "tests_executed_by_reviewer": false,
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "production_edited": false,
+  "limitations": [
+    "Caller-owned references and raw Session callback lifetime",
+    "Actual ASIO/socket/IOCP/cancellation/concurrency/shutdown unproven",
+    "Native reset-local-copy vs logical inplace allocation/exception equivalence unproven",
+    "MSVC shared_ptr/string/deque/allocator/layout/CRT/SEH ABI and full DLL equality unproven"
+  ]
+}

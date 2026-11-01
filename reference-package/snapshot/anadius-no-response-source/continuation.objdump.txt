@@ -1,0 +1,22 @@
+
+C:\Users\Skysect\Downloads\anadius64.dll:	file format coff-x86-64
+
+Disassembly of section .text:
+
+0000000180017a30 <anadius>:
+1800345da: 45 33 f6                    	xorl	%r14d, %r14d
+1800345dd: 44 88 b4 24 80 03 00 00     	movb	%r14b, 0x380(%rsp)
+1800345e5: 48 c7 84 24 98 03 00 00 0f 00 00 00 	movq	$0xf, 0x398(%rsp)
+1800345f1: 4c 89 b4 24 90 03 00 00     	movq	%r14, 0x390(%rsp)
+1800345f9: 48 8d 4c 24 70              	leaq	0x70(%rsp), %rcx
+1800345fe: e8 fd d7 fc ff              	callq	0x180001e00 <.text+0xe00>
+180034603: 48 8b 44 24 30              	movq	0x30(%rsp), %rax
+180034608: 48 8b 8c 24 c0 03 00 00     	movq	0x3c0(%rsp), %rcx
+180034610: 48 33 cc                    	xorq	%rsp, %rcx
+180034613: e8 08 6c 01 00              	callq	0x18004b220 <anadius+0x337f0>
+180034618: 48 81 c4 d0 03 00 00        	addq	$0x3d0, %rsp            # imm = 0x3D0
+18003461f: 41 5f                       	popq	%r15
+180034621: 41 5e                       	popq	%r14
+180034623: 41 5d                       	popq	%r13
+180034625: 41 5c                       	popq	%r12
+180034627: 5f                          	popq	%rdi

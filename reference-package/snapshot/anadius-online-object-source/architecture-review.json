@@ -1,0 +1,253 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T15:31:35.769767+00:00",
+  "review_scope": "Corrected B26 factory/object/destroy shared module bridge plus retained-ASM caller cookie scope correction, meaningful negative/positive heap deallocation-order evidence and preserved failure prefixes",
+  "reviewed_source_hashes": {
+    "object.hpp": "c52d2f495135e30ec1e19a651517080c96c26c7920b141308292e8e800145d25",
+    "object.cpp": "917a7503768e47250f94df059b2ad98fec03a022c264aa2a0566e9ae36dfce78",
+    "object_tests.cpp": "3614ebf3bc8bc1af186afc9c5b659d6c966aedbc0331a08a32c129cf37151f5f",
+    "object_integration_tests.cpp": "25c52a421f801b75bf08d99d3f3799956b07b749bab168f5634f4950db682906",
+    "../anadius-online-platform-source/platform.cpp": "40e54887e2102763bb147c28c3ef42506bccdda89ead94636bb1e861a9e41499",
+    "../anadius-online-platform-source/platform.hpp": "82ae373e513da2be64cf3522421f699d757099e1b7f325b33fa485e828176f91",
+    "../anadius-online-source/online.cpp": "af99d95b0e88ea2cacd93a4f01237a8d2362cb44bdc3d7b2961c91c5fc9b1ca5",
+    "../anadius-online-version-source/version.cpp": "328443d0ac8d3bae0b5f12878c955087cf99a402beecf7e6879b345e16e9c7d0",
+    "../anadius-online-version-source/version.hpp": "85005c17066d7746f9f13a043f9ec098ea4f379b9461e385cdeb5d092ad72da0"
+  },
+  "quick_results": [
+    {
+      "path": "work/b26-core-quick-results.json",
+      "sha256": "bc3f8ac047a3646437c158111d7b045b3bf185d988bdd8495d8de9c620518905",
+      "checks": 39,
+      "executable_path": "work/b26-core-test.exe",
+      "executable_sha256": "79f2933d6d12e77684fd99f265264b65586eb0044a4e484c8a598b7864f85c14",
+      "execution_by": "/root; reviewer verified retained record/source/EXE hashes without rerunning",
+      "fresh_online_source_compiled": true
+    },
+    {
+      "path": "work/b26-integration-quick-results.json",
+      "sha256": "70e6819272a41e073ce0863918abfa3269b60701a08294c7263f0964ac46b9dd",
+      "checks": 52,
+      "executable_path": "work/b26-integration-test.exe",
+      "executable_sha256": "11d15f94771d37920d898dbe6800e223b868e453b797c789b1a7d6a7c9a6846a",
+      "execution_by": "/root and /root/b22_integration reran after scope correction (parent-reported execution attribution); integration author /root/b22_integration; reviewer verified retained record/source/EXE hashes without rerunning",
+      "fresh_online_source_compiled": true
+    }
+  ],
+  "root_checks": 91,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "baseline_package_sha256": "bf50b335a927d5b38979e648e601b9e8612883e796f28bd2628434edf258776e",
+  "prior_source_files": 826,
+  "prior_sources_preserved": 821,
+  "current_source_files": 830,
+  "source_inventory_counts_basis": "Reviewer independently verified unchanged B25 ZIP identity and all826 prior manifest sources:821 unchanged, five declared before/after changes including online.cpp, four new reviewed sources. Both quick records compile corrected online.cpp fresh. Common counts remain planned/unreviewed.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "9dce0a0bb9ae5cf55a486e93c1d165a811183e9e457387485f025545bf76842a",
+      "after_sha256": "40e54887e2102763bb147c28c3ef42506bccdda89ead94636bb1e861a9e41499",
+      "reason": "Route selected factory/destroy to typed shared binding, guard four remaining lower queries without altering core algorithms"
+    },
+    {
+      "path": "anadius-online-platform-source/platform.hpp",
+      "before_sha256": "a60c1cb2d1746b1b2e86726e0695e3df309874ab4b8b1dd721570d9fd78c6f01",
+      "after_sha256": "82ae373e513da2be64cf3522421f699d757099e1b7f325b33fa485e828176f91",
+      "reason": "Optional native_objects requires existing same module binding; source ABI extension, default paths preserved"
+    },
+    {
+      "path": "anadius-online-source/online.cpp",
+      "before_sha256": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c",
+      "after_sha256": "af99d95b0e88ea2cacd93a4f01237a8d2362cb44bdc3d7b2961c91c5fc9b1ca5",
+      "reason": "Match retained factory -> object commit -> cookie-copy release -> status order by narrowing temporary cookie scope"
+    },
+    {
+      "path": "anadius-online-version-source/version.cpp",
+      "before_sha256": "d41f7517c6d400527ecab8fcf70cda675823fc175019166369ee5fc686baec42",
+      "after_sha256": "328443d0ac8d3bae0b5f12878c955087cf99a402beecf7e6879b345e16e9c7d0",
+      "reason": "Retain both code owners; reject live/unknown rebind/free; release metadata lock then fail-stop before owner release"
+    },
+    {
+      "path": "anadius-online-version-source/version.hpp",
+      "before_sha256": "03f6be33f071e13a20dcaea5b5208b40197d16428d3c028c73b793e5882ee0cf",
+      "after_sha256": "85005c17066d7746f9f13a043f9ec098ea4f379b9461e385cdeb5d092ad72da0",
+      "reason": "Extend same module reservation with factory/adopted object/unknown state and guarded mandatory lower queries"
+    }
+  ],
+  "prior_changes_record_sha256": "e857cad2672c627528a926bbce861b1d330c2f31109a6073f46b54ae2f85ad72",
+  "retained_evidence": {
+    "source_hashes": [
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      },
+      {
+        "path": "outputs/anadius-all-functions.pseudo.c",
+        "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+      }
+    ],
+    "factory_call": "0x180035fac",
+    "factory_store": "0x180035fb1",
+    "destroy_call": "0x180036703",
+    "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "findings": [
+    {
+      "topic": "Observed factory and slot0 destroy shapes",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-all-functions.asm.txt:54805-54816,55248-55259",
+        "object.hpp:5-12",
+        "object.cpp:11-19",
+        "object_tests.cpp:21-49"
+      ],
+      "observation": "Retained factory caller selects the exact copied-cookie character address into RCX at0x180035f9e..35fa7, calls RBX at35fac and stores RAX object at35fb1. Cleanup loads RCX object, reads its first vptr and calls slot0 at0x180036703 without preparing EDX/deleting flags. Selected source aliases model Object(*)(const char16_t*) and void(*)(void*); no complete foreign prototype/C++ class ABI is claimed. destroy_slot copies object/vptr words bytewise with memcpy, supports readable unaligned own storage and rejects null vptr/slot. Wrong/nonadopted objects reject in Binding before any object read."
+    },
+    {
+      "topic": "One shared module reservation for selected lifetime",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-online-version-source/version.hpp:15-58",
+        "../anadius-online-version-source/version.cpp:31-78",
+        "object.cpp:23-77",
+        "../anadius-online-platform-source/platform.cpp:21-27,54-68,84-91"
+      ],
+      "observation": "Version Binding centralizes exact module, version/factory procedures, separate retained code leases, adopted object, unknown state and active/poison flags under the same gate. native_objects is a boolean option requiring the existing version owner, so no separate mismatched module/object owner can be selected. Factory lookup/create/destroy and four synchronous lower queries share version/free reservation. Live or unknown object blocks version/factory rebind and free before callable invalidation or lower effects. No metadata mutex spans lower lookup, CodeLease, factory, destroy or query execution."
+    },
+    {
+      "topic": "Exact cookie pointer and normal null/nonzero commits",
+      "result": "PASS",
+      "evidence": [
+        "object.cpp:23-54",
+        "object_tests.cpp:79-112",
+        "object_integration_tests.cpp"
+      ],
+      "observation": "Factory lookup requires exact tracked module, retires old factory binding and obtains a separate explicit nonnull code lease for a nonzero result, preserving lookup LastError across lease bookkeeping. create requires exact resolved factory, rejects known null cookie before SDK and claims object_unknown before invoking the exact borrowed UTF16 pointer. Normal nonzero/null result commits adopted object/known-zero and clears unknown before dropping reservation. Core still stores/throws on null itself with module live; no query, invented destroy or automatic cleanup is added. Integration covers2048-code-unit and embedded-NUL cookies without changing counted source state."
+    },
+    {
+      "topic": "Caller cookie scope correction with falsifiable heap lifetime evidence",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-online-source/online.cpp:61-68",
+        "../anadius-all-functions.asm.txt:54815-54834",
+        "object_integration_tests.cpp:12-47,82-89,144-147,180-209",
+        "work/b26-cookie-negative-results.json",
+        "work/b26-cookie-negative.log"
+      ],
+      "observation": "Retained ASM commits object at0x180035fb1, frees heap-backed cookie at0x180035ff3, reloads committed object at0x180035ff8, then calls status at0x180036002. Earlier C++ left Path cookie_copy alive through the full function. Corrected lexical scope encloses only Path construction and assignment from factory, ending before existing null check/status. Constructor throw still leaves object unchanged with no factory call; factory throw unwinds the copy before escape without committing assignment; normal null frees copy before existing core domain error. The own-EXE global new/delete observer is armed only for the exact2048-unit cookie pointer passed to factory, CAS-disarms before reuse, samples only a live source object slot at deletion and never reads released bytes. Hook bookkeeping is allocation-free and LastError-preserving. Same new observer against old online.cpp81d99724... compiles and exits1 after explicit normal destroy/free on the exact before-status predicate; corrected online.cppaf99d95... passes52 integration checks. Three added checks prove one exact deletion after core object commit, release visible at status and factory error0x5353 preserved at status. The negative result is expected failure, not PASS."
+    },
+    {
+      "topic": "Destroy result, unknown outcomes and no unsafe reread",
+      "result": "PASS",
+      "evidence": [
+        "object.cpp:55-77",
+        "object_tests.cpp:91-112,141-176",
+        "object_integration_tests.cpp"
+      ],
+      "observation": "Destroy first validates exact adopted object and retained factory code, then marks unknown before reading the first vptr/slot. It invokes only void(this), preserves lower outgoing LastError, and on normal completion clears adopted object without reading it again; core subsequently zeroes its global. Factory throw leaves raw object0 plus unknown/poison and module/code retention. Destroy throw or invalid vptr/slot retains exact object and unknown/poison, preventing every later managed object read, rebind, create and free. Native-shaped unknown children preserve exact exception/error and core prefix. Integration protects the synthetic object page PAGE_NOACCESS after the first fault and proves all retries reject without rereading it or invoking SDK/lower calls."
+    },
+    {
+      "topic": "Retirement and last-owner fail-stop",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-online-version-source/version.cpp:12-20,62-78",
+        "object_tests.cpp:50-72,109-112,132-176"
+      ],
+      "observation": "Version/factory code owners remain through entire adopted-object lifetime and the lower free call. Normal TRUE/FALSE free invalidates both exports, clears tracked module only after normal lower return and retires both leases outside gate while active remains true. All eight managed effects reject from retiring code deleters; metadata snapshot stays available. Binding destruction with active/live/unknown state tests the condition under gate, releases gate, then aborts before dropping either owner or factory capture. A specific core abort witness successfully snapshots retained live object/pins with zero retired owners and exits181; unrelated abort cannot pass. Known normal teardown preserves B25 code/factory-capture retirement ordering."
+    },
+    {
+      "topic": "Four lower queries and bounded core scope correction",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-online-version-source/version.hpp:35-43",
+        "object.cpp:69-77",
+        "../anadius-online-platform-source/platform.cpp:86-89",
+        "object_integration_tests.cpp"
+      ],
+      "observation": "Status and three profile getters remain mandatory lower providers, wrapped only by exact adopted-object synchronous reservation. Lower result/exception identity and LastError are preserved; a query throw ends active state but keeps known live object so explicit cleanup remains possible. Borrowed returned strings require caller serialization until core copies them. Except for the separately reviewed cookie temporary scope correction, actual core load/worker/cleanup still sets online flag before getters, copies fields in order and preserves prior username on later getter failure, phase wait/finish, logs, avatar and memory-profile behavior. Default all-seven and B25-only six-lower modes remain selected by existing options; native_objects selects version+factory+destroy with four lower queries."
+    },
+    {
+      "topic": "Independent hashes, meaningful failures and bounded execution",
+      "result": "PASS",
+      "evidence": [
+        "work/b26-core-quick-results.json",
+        "work/b26-integration-quick-results.json",
+        "object_tests.cpp:132-182",
+        "object_integration_tests.cpp"
+      ],
+      "observation": "Reviewer authored neither production nor tests and did not rerun successful tests. Core39 was executed by root; integration52 was rerun after correction by root and /root/b22_integration as parent reported, with integration authored by /root/b22_integration. Latest quick source/EXE hashes, fresh online.cpp compilation and B25 preservation were independently checked. Core children181..185 and integration221..224 retain their specific state/prefix/no-retry predicates; generic abort239 and unexpected return230 cannot pass. The old-scope negative control exits1 on the precise status-order predicate after normal destroy/free and is not counted PASS. Only own synthetic fixtures, normal Win32 conversion and own allocator/page operations were used; no target DLL/game or user contents."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Selected typed source bindings now total3of7: version, factory and destroy. Status and three getters remain four lower providers with synchronous object lifetime guards; they are not typed native virtual bindings. Default mode retains7legacy forwards and B25-only mode6.",
+    "Caller must provide genuinely readable factory-adopted object/vptr words and callable destroy code. memcpy avoids typed aliasing but performs no validity probe or general memory safety check. Null-readable wire values reject; invalid unreadable memory is outside the supported contract.",
+    "Observed Windows x64 argument/return shapes are not complete foreign formal prototypes, deleting-destructor flags, a recovered C++ class layout or native ABI proof. No original online DLL was executed.",
+    "Explicit module/code leases must actually keep selected export/vtable code and dependencies alive. Nonnull shared owners are not module pin/provenance proof and do not prevent explicit external unload or raw module operations that bypass the binding.",
+    "Borrowed getter strings require caller serialization through core copying. Four lower query providers must not independently destroy/adopt the object; arbitrary asynchronous use, external mutation, raw pointer/module ABA and unsupported reentry remain excluded.",
+    "Unknown factory/destroy state has no automatic recovery or cleanup. Last-owner destruction with live/unknown state fails-stop rather than release code prematurely. External proof/abandonment or reusable unknown state is not implemented. Known-zero object after unknown free retains B25 poison behavior, without auto raw-module cleanup.",
+    "B18-B25 callback/PTD, original ownership/checkpoint, same-Execution, stream and compiler-provider contracts remain required. This object bridge adds no PTD pre/post or hook-disabled/external-quiescence guarantee.",
+    "Four remaining online native virtual bindings, configuration/license/legacy document, B10 historical debt, generic CRT, native ABI, hooks/unload and final PE/DLL proof remain open. New original native bodies/closures remain0.",
+    "Full common build244objects/240CPP/283groups plus19 framework terminal scenarios was still running at review time and is not reviewed or counted PASS here. Existing Binding/Resources source layouts changed and all consumers require rebuilding; no new production class/trait closure is claimed.",
+    "Core online.cpp was changed only to correct temporary cookie lifetime to retained assembly order. No blanket unchanged-core claim is made for that scope; other online branches, null/status flow and cleanup order remain unchanged."
+  ],
+  "claim": {
+    "same_module_reservation_for_version_factory_object_free": true,
+    "exact_factory_and_adopted_object_identity_checked": true,
+    "exact_cookie_pointer_forwarded": true,
+    "slot0_destroy_read_bytewise": true,
+    "factory_destroy_unknown_outcome_retains_poisoned_owners": true,
+    "last_live_unknown_owner_destruction_fail_stop_outside_gate": true,
+    "normal_null_and_cleanup_prefixes_preserved": true,
+    "four_lower_queries_guarded_synchronously": true,
+    "selected_typed_source_bindings_total": 3,
+    "remaining_selected_online_foreign_native_bindings": 4,
+    "complete_foreign_prototypes_or_class_ABI_recovered": false,
+    "readability_or_actual_module_pin_proven": false,
+    "original_DLL_or_game_execution": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED",
+    "object_PTD_or_external_quiescence_proven": false,
+    "caller_cookie_copy_released_after_object_commit_before_status": true,
+    "old_scope_negative_control_verified_not_counted_PASS": true
+  },
+  "notes": [
+    "Only architecture-review.json and architecture-review.md were written by this reviewer.",
+    "Independent design review required one shared module reservation, no guessed destroy flags and no silent final owner release with live/unknown object. Frozen code and meaningful own fixtures satisfy these bounded requirements.",
+    "Earlier reviewer missed caller-side cookie scope and marked review REOPENED. This PASS supersedes it only after source correction, a genuine old-source negative result, positive52 integration record and nine-source hash review.",
+    "Core39/root and integration52/root plus /root/b22_integration are current executions. Reviewer did not rerun. Interrupted earlier common build is not PASS; restarted common244objects/240CPP/283groups+19terminal is still pending/unreviewed here."
+  ],
+  "reopened_at_utc": "2026-10-30T15:23:52.319274+00:00",
+  "supersedes": {
+    "prior_result": "REOPENED",
+    "issue": "Earlier PASS omitted caller cookie-copy scope verification and is superseded by this nine-source review.",
+    "resolved_by": "online.cpp lexical scope commits object then destroys cookie copy before null check/status; exact long-cookie deallocation negative/positive evidence verified."
+  },
+  "negative_cookie_scope_control": {
+    "path": "work/b26-cookie-negative-results.json",
+    "sha256": "959a6638f30a2bad4ec1d23f8a0c86ec7ed82ea72a95861c3ae2e5b19a2c2a12",
+    "result": "EXPECTED_FAILURE_ON_OLD_COOKIE_SCOPE",
+    "compile_exit": 0,
+    "run_exit": 1,
+    "expected_failed_predicate": "Actual long cookie buffer must be freed after object commit and before first lower status call",
+    "old_online_source_sha256": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c",
+    "test_source_sha256": "25c52a421f801b75bf08d99d3f3799956b07b749bab168f5634f4950db682906",
+    "executable_path": "work/b26-cookie-negative-test.exe",
+    "executable_sha256": "29060f2e315a31b1d0113080aabc40d36a5dfbe23e697e0f30228957b3818c7f",
+    "log_path": "work/b26-cookie-negative.log",
+    "log_sha256": "9361e599dc6fdd7768d1b1b687f3f669808c7cbc389e1339252d3ed4a1484819",
+    "fresh_online_source_compiled": true,
+    "clean_exit_after_explicit_normal_object_and_module_cleanup": true,
+    "counted_as_PASS": false,
+    "execution_by": "/root; reviewer verified script, records, log and executable hashes without rerunning"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "result": "PASS",
+  "reviewer": "initial_locale_data independent worker",
+  "reviewed_at": "2026-10-20T13:52:23.107Z",
+  "source_hashes": {
+    "locale_startup.cpp": "443b338b5ea1229cbd7da381ecd1be80cadc5c3a3d6bf147258faa8dc4452dba",
+    "locale_startup.hpp": "e247e38439cbf09bcb1ca165e4df21b8ba91671d5ccdc985abab4db03eacadcb",
+    "native_tests.cpp": "0c64ec030eec3c860dcfc8d49abb6f05e62c354d873ec0d36f76a63bb433cfbc",
+    "build.ps1": "9dbdb30c47be1adae8819124b7a0c531e753efb2918635603a0a86f9534b5fe0"
+  },
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "recovered_bodies_reviewed": [
+    "0x180064468",
+    "0x180065104",
+    "0x180065338"
+  ],
+  "checks": [
+    {
+      "area": "064468 exact direct initialization",
+      "result": "PASS",
+      "detail": "17 PE bytes at file0x63868 match LEA initial;MOV current-slot;MOV AL1;RET. Source performs one write, no read/ref increment/lock. Initial counter1 remains1."
+    },
+    {
+      "area": "065104 normal assembly flow",
+      "result": "PASS",
+      "assembly_evidence": "ev_c0bb591d054c51baae2bf8cbae8bbf908c43e85d699a0b730f9dc7f0aa91fd4a",
+      "detail": "Lock token read before lock; slot/initial resolution and compare after lock; exactly one current-locale cell; call0709d8 only on inequality; independent final write of returned pointer retained; unlock token borrowed reference read after body effects."
+    },
+    {
+      "area": "065338 wrapper",
+      "result": "PASS",
+      "assembly_evidence": "ev_7ca19f79fe9886ba8cca9aa6403bb40ca05a148198b37710e12323f635d24689",
+      "detail": "Two distinct live DWORD lvalues both4 passed into reset; wrapper is void, not boolean initializer."
+    },
+    {
+      "area": "SourceEffects exact reused updater",
+      "result": "PASS",
+      "detail": "Delegates actual update_locale_nolock_0709d8 from existing recovered source; preserves second slot read and add/release/free ordering; model tests include compare/read race-like mutation and required final write."
+    },
+    {
+      "area": "Typing and borrowed lifetime",
+      "result": "PASS",
+      "detail": "Global cell is actual uint64 object; image counter operations use existing registered Interlocked LONG lifetime domain; no cast makes byte-array immutable fixtures mutable counters. SourceEffects owns only immutable address identities and borrows provider; tests keep all owners alive until workers/FLS callbacks quiesce."
+    },
+    {
+      "area": "Concurrency and cleanup fixture",
+      "result": "PASS",
+      "detail": "Four own std::threads borrow initialized native FLS binding. Distinct std::array<bool> elements are written before barrier; main joins before reads/cleanup. Shared checks/allocations and counters use atomics; current locale has no concurrent writer. Locks4/5 use owned native CRITICAL_SECTION provider. Initial locale ref transitions1->2->6->2->1, multibyte and five allocations return to zero."
+    },
+    {
+      "area": "Independent rebuild and fixture execution",
+      "result": "PASS",
+      "detail": "PASS 117 locale startup/reset/owned native FLS checks;4 own workers",
+      "partial_archive_sha256": "e4bf37d2b93e5fca628bc9558179f70eef7325e0034d640b474786aab5aeb6d0",
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe"
+    }
+  ],
+  "findings": [],
+  "notes": [
+    "Normal flow only. MSVC SEH funclets/exceptional unlocking and complete ABI register-return equivalence remain expressly excluded.",
+    "Native fixture is own recovered source and owned memory; original DLL was read only and never loaded/executed.",
+    "Full CRT initializer chain, multibyte code-page initialization, exception table reconstruction and whole-DLL equivalence are not claimed by these117 checks.",
+    "Root supplied fresh REA17-byte read EvidenceID ev_5e35d3129089836990868a249972c775d324e7f7cfd11a9b99b60e24b9b481ff; this reviewer independently used retained assembly and previously audited local17 bytes, and opened no REA session.",
+    "Only review JSON plus build artifacts/validation from authorized rebuild were written; production/test sources were not edited."
+  ],
+  "target_executed": false,
+  "target_modified": false
+}

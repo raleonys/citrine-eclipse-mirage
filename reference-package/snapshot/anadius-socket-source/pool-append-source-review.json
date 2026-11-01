@@ -1,0 +1,55 @@
+{
+  "schema": "pool-append.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/allocation_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent retained full assembly/pseudocode audit of005440 and two new production files; no original-file reads, execution or reviewer tests. Bound to exact production hashes.",
+  "reviewed_source_hashes": {
+    "pool_append.hpp": "ce74e47337ce1627e1d8183b6e227d47bdf68eeb2aa44818de3ebdfae24fef66",
+    "pool_append.cpp": "26b55defe78e1de75967a39487ddd41def17c74bf536089ae4cf5c08ba161235"
+  },
+  "addresses": [
+    "0x180005440"
+  ],
+  "assembly_evidence": "ev_805b1e389566c011341fa6b160b23ec49ecacccb6f0a1d123af5d4d5169b5cef",
+  "pseudo_evidence": "ev_3a74ec35882305703da94fdd0e4de6801b34e1449914f6d7d963f4cdd4ea201c",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 1,
+  "closed_provider": {
+    "base": "PoolAllocationEffects::append_block_005440",
+    "closure": "RecoveredPoolAppendEffects::append_block_005440",
+    "body": "append_pool_block_005440",
+    "historical_provider_closure": true,
+    "native_abi_complete": false
+  },
+  "findings": [
+    "Array fields match data QWORD+0, inline base+8, capacity DWORD+58 and count DWORD+5c.",
+    "Initial count+1 wraps32 before signed comparison with capacity; growth caches raw32 doubled next.",
+    "Doubled capacity sign extends32 to64; unsigned multiply by8 saturates to UINT64_MAX on overflow. Zero and negative/wrapped values are not sanitized.",
+    "Allocation result remains cached; count is reread and sign extended, then data reread, before copy; copy byte length uses unsigned64 left shift3.",
+    "Data is reread after copy; free is skipped only for exact inline pointer array+8. Null or mutated noninline values are forwarded to mandatory free provider.",
+    "Cached new data pointer is stored before cached doubled capacity, only after free returns; no early publication, invented null guard or rollback.",
+    "Append tail reads live count then data, writes cached block to indexed slot, then rereads live count for wrapping increment. Slot/count/data alias effects are preserved.",
+    "RecoveredPoolAppendEffects final bridge uses the actual source body with shared bounded memory and mandatory array allocation/copy/free effects.",
+    "The bridge closes one existing N18 PoolAllocationEffects append provider; the previous separate allocation dispatcher remains distinct. One normal body plus one numeric-tagged bridge yields two tagged definitions, not two recovered native functions."
+  ],
+  "limitations": [
+    "Bounded byte-state normal source projection only; native fault/unwind/concurrency and ABI equivalence remain unproven.",
+    "Mandatory04b100 array allocation,078d30 copy and04b0f8 free bodies are not recovered by this source; N18 block04b0bc allocation and0793d0 fill remain separate mandatory providers.",
+    "Native pool lifecycle, DOM type/materialization, node virtual/parser behavior and full DLL equivalence remain open.",
+    "Bounded mapping exceptions are source-interface boundaries; test fixture effects are not native provider implementations."
+  ],
+  "full_native_equivalence_review_complete": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false
+}

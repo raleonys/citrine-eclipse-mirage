@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "reviewer": "independent argv_byteclass_review agent",
+  "checked_at": "2026-10-18T14:42:59.5036044Z",
+  "findings": [],
+  "scope": "Static source/retained assembly review only; no original or rebuilt DLL, game, native locale API, or provider invoked. Existing standalone validation inspected; no additional test execution performed.",
+  "binary_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "evidence": [
+    {
+      "address": "0x18006f934",
+      "assembly": "ev_897df764d5e1c5680d926c7bca5dafd6e5d9ff44b5a2653ca581b271f015906e",
+      "pseudocode": "ev_14211fdce7a436fae722ca508f4d624934972e4e6666a1df1d1c86372c7c95b9"
+    },
+    {
+      "address": "0x18006f9a8",
+      "assembly": "ev_f2846867977ea9f41f1872ef4ce3b526805d199ddcc3b585fcc0d74fe5c8a503",
+      "pseudocode": "ev_bd47811fa73f8afa69cc8cf9ba2ce5f506cb1850390c1b48351c41b63e4333d9"
+    }
+  ],
+  "checks": [
+    "0x18006f95d uses BL for the table index; character is truncated to 8 bits, including sign-extended parser bytes.",
+    "0x18006f960 tests DIL, so multibyte_mask is truncated to 8 bits; ctype_mask remains 32 bits against a zero-extended 16-bit table word.",
+    "Multibyte table access precedes the optional locale-info pointer and ctype word; matching multibyte flags or zero ctype_mask skip both ctype reads.",
+    "Locale update occurs once before table reads. The wrapper supplies locale=0, ctype_mask=0 and multibyte_mask=4.",
+    "PTD+0x3a8 is read and masked with 0xfffffffd after classification only when the returned flag is nonzero; no flag write for zero flag.",
+    "Result is normalized through EAX to 0 or 1. ParserEffects forwards signed input through uint32_t and then low-byte classification.",
+    "No inferred RAII/exception cleanup was added; provider failures escape before late flag clearing, outside recovered normal-flow claims.",
+    "All Address values are provider-owned tokens; live bounded locale/multibyte/PTD storage, synchronization, ownership and SEH remain required provider dependencies.",
+    "Synthetic tests cover all 256 byte values, high character and multibyte mask bits, ctype high-bit masks, short-circuit access order, noncanonical nonzero clear flag and failure before late cleanup."
+  ],
+  "validation_inspected": "validation.json: PASS 7173 byte classification checks",
+  "sources": [
+    {
+      "name": "byteclass.hpp",
+      "sha256": "f11493f494325cde53e772aaf5cee2eee61f2b6b8ac9be6fd450a1aa99765586"
+    },
+    {
+      "name": "byteclass.cpp",
+      "sha256": "e599636c790f7e9600e4263b731486ac92df7a10ba6f10b61dabb4e48fd1da77"
+    },
+    {
+      "name": "byteclass_tests.cpp",
+      "sha256": "f0277b3293d7c2c7737448cb48fc9a1225df054e4d063c045aa9ea1e3ace08e8"
+    }
+  ],
+  "limitations": [
+    "Source reconstruction and fixture agreement do not establish original source identity, complete native locale reconstruction, native ABI compatibility, SEH equivalence, or full DLL equivalence."
+  ]
+}

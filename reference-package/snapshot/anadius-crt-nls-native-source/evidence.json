@@ -1,0 +1,47 @@
+{
+  "kind": "new typed Windows SDK native adapter; not a recovered binary body",
+  "recovered_function_bodies_added": 0,
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "existing_callsite_evidence": [
+    "../anadius-crt-nls-bridge-source/evidence.json",
+    "../anadius-crt-conversion-api-source/evidence.json",
+    "../anadius-crt-multibyte-builder-source/evidence.json"
+  ],
+  "existing_addresses": [
+    "0x18006e210",
+    "0x18006ccc8",
+    "0x18006cd58",
+    "0x18006f674",
+    "0x18006f0e8"
+  ],
+  "primary_contracts": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/stringapiset/nf-stringapiset-getstringtypew",
+      "use": "BOOL nonzero success; WORD per UTF16 unit; count negative includes NUL; tracked shim intentionally bounds positive count only"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/stringapiset/nf-stringapiset-widechartomultibyte",
+      "use": "int byte count, capacity0 query, default/used-default pointers and native buffer contract"
+    }
+  ],
+  "implementation_contracts": [
+    "Api fields use decltype(&::SDKFunction), including WINAPI calling convention.",
+    "Tracked destination tokens never become native pointers.",
+    "Tracked positive output stages real CHAR/WORD arrays; commits only defined successful output.",
+    "Failure invalidates potentially written tracked range, avoiding stale success or invented zero evidence.",
+    "Empty tracked span forwards native addresses/counts without normalization.",
+    "Full32 BOOL preserved; CPINFO consumed fields copied only on success.",
+    "LastError incoming reset immediately before API; postcall captured immediately and restored after temporary vector destruction.",
+    "NULL destination is passed through as NULL; impossible injected success invalidates tracked cells and raises domain_error."
+  ],
+  "validation": "143 checks; typed WINAPI fixtures and bounded real Windows NLS calls on synthetic strings and CP info only",
+  "limitations": [
+    "Not an independent DLL or full native runtime backend.",
+    "Real input/scratch/default-char/used-default pointers must be live native storage; no synthetic address translation.",
+    "Tracked destination tokens cannot represent source/output aliasing.",
+    "Tracked GetStringTypeW supports positive bounded count only; raw native path retains arbitrary signed count.",
+    "Allocation failures, native SEH, concurrent/reentrant invocation and original stack fault footprint are not proven equivalent.",
+    "No original DLL or game execution or mutation."
+  ]
+}

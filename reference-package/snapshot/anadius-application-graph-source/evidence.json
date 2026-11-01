@@ -1,0 +1,96 @@
+{
+  "schema": "application-graph.source-composition.v1",
+  "source_package": "B46",
+  "evidence_type": "concrete same-thread application factory and Parent-backed native-prefix event ownership",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "reused_addresses": [
+    "0x180033d70",
+    "0x180032d00",
+    "0x18002c400",
+    "0x18002c620",
+    "0x180034660",
+    "0x180025720",
+    "0x1800298b0"
+  ],
+  "source_references": [
+    {
+      "path": "outputs/anadius-session-policy-source/policy.cpp",
+      "sha256": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/native.cpp",
+      "sha256": "7f80c20e2caa9474cce396d4237bf3d132354ba46817878ef63e9320a5bf299b",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-socket-source/native_message.cpp",
+      "sha256": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-event-queue-source/queue.cpp",
+      "sha256": "88da967fa48cdf5d2a5c99b50aa50e479fdd0011712ede86b6c53c344c9e69d8",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-event-queue-source/queue.hpp",
+      "sha256": "b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-dispatch-source/router.cpp",
+      "sha256": "79ee7f693ca49e584c04b36984f33782cef867f4fa2c023cf41d06cfeaa32b9d",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/resources.cpp",
+      "sha256": "52b6c48eecaf6c01e371b1f9356fcaedc307ae9304cb2b822678058a9738e2e0",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/domain.hpp",
+      "sha256": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    },
+    {
+      "path": "outputs/anadius-owned-server-source/server.cpp",
+      "sha256": "037e9514f62a932c2e861afd461175afbb17daa356a2db921af8b134c0cf7496",
+      "scope": "Existing recovered/selected source reused, including explicit controller/worker ownership constraints; no new original byte query."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b46-core-quick-results.json",
+      "sha256": "37eebb6b11f5ff9580a1474986c97536c32517d6e1133a1c58efde2f992a6299",
+      "checks": 503,
+      "executable_sha256": "4f5dc6d7e005bd6dde068648e9f153f5b6ecbdcc8aed5c55ffe519398642a60f",
+      "archive_sha256_as_used": "dec343d5e93a4fba14200565b4ab2a0aed04b0268524c56a809c02eb515bc4ab",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh graph.cpp and graph_tests.cpp with selected actual interface headers/prior domain fixture. Immutable canonical B45 archive supplies prior production objects. Integration test is not compiled or claimed. Main checks exclude twelve independent exact-exit children. Actual default Graph/Profile/Policy/NativeLogic/XMLReader/Router/SessionCipher/Random source runs on one original controller/worker with real own heap/FLS/TLS/IOCP and injected network SDK signatures only. Encrypted test explicitly prepares fixed cipher key and encrypted flag1; native autodetection is not claimed. Graph creates/maps/consumes Parent-backed FIFO events and retires known pending events only after explicit selected external proof. A real unrelated Parent allocation makes the first genuine true proof leave Graph Drained/Profile Closing; actual free followed by a second genuine proof closes all providers without cached attestation or double event/header free. No actual socket/network, original target, user configuration, native detached scheduling, MSVC ABI, complete bootstrap factory or kernel quiescence inference is claimed."
+    },
+    {
+      "path": "work/b46-integration-quick-results.json",
+      "sha256": "6b9c74d840813dde7d4e99471c5b403c7408377762cb3255ff66b2270b2f6229",
+      "checks": 325,
+      "executable_sha256": "9c87e5e02ae64d857d89a40cd7836d6c5ab1523e9588c965c0bc2ba91d1ec37c",
+      "archive_sha256_as_used": "dec343d5e93a4fba14200565b4ab2a0aed04b0268524c56a809c02eb515bc4ab",
+      "execution_author": "/root/b22_integration",
+      "note": "Concrete application_graph::Graph owns real XMLReader/Router/NativeLogic/SessionCipherFactory/Random/Parent-backed lazy DOWNevent queue plus actualPolicy/Profile/defaultjobs/transport/environment. NO caller AppData/XML/LogicFactory/Logic/MessageEffects/NativeEvents/Router/Random. Synthetic StateView pointsinto pinned caller configuration cells; exacttyped injectedSDK imports use socketTOKENS,realownheap/FLS/IOCP.17plain+oneAES requests withliveNativeprefixobservations,queuewrap8to16/FIFO17,actualsourcecompletionchain/disposal. prepare_session explicitlyselectsencryptedpeer202+fixedkey (NOXMLerror8/autodetectionclaim). Externalpacket/backpressure/owner0/stoprelay/drain algorithmsremainexplicitHooks, NOTconcreteproduction; noOriginalDLL/game/config/networksocket/nativeABI/kernelquiescence/globalbootstrapproof."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition; no fresh shipped-artifact claim.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false
+}

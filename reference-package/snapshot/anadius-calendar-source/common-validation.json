@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "calendar",
+    "result": "PASS",
+    "output": "PASS: 31760 calendar arithmetic checks; no original execution or OS time calls",
+    "executable_sha256": "f9911080d203d1c9d54b5d415c9b59ebb2e53d462c608c5227a5c076b07cf4af"
+  },
+  "execution_scope": "041ff0 pure integer calendar arithmetic with explicit wrap32 and signed truncation, independent instruction oracle and positive-year chrono anchors; no OS time calls or original execution",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-calendar-source/calendar_tests.cpp",
+      "sha256": "dd058d7ff7d156149bd4cd3a178173d121c4f1f8d366d2daded290fde6419e8b"
+    },
+    {
+      "path": "anadius-calendar-source/calendar.cpp",
+      "sha256": "ef95920c0c8c4a3056cb8878931ec6733a4c3262b7fb1d96ff5352c9ffbcda0f"
+    },
+    {
+      "path": "anadius-calendar-source/calendar.hpp",
+      "sha256": "e46c9ed16d357d6c225aae29afb799ad2d41ce26160749e3ea25eeb762b685b4"
+    }
+  ]
+}

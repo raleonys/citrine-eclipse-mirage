@@ -1,0 +1,136 @@
+{
+  "schema": "message-core-bridge.compatibility-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "newly_recovered": false,
+      "existing_semantic_source_reused": true
+    }
+  ],
+  "normal_source_procedures_added": [],
+  "new_original_procedures": 0,
+  "reused_native_addresses": [
+    "0x180033d70"
+  ],
+  "new_source_bridges": 1,
+  "context_functions": [
+    {
+      "address": "0x180028d30",
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021420",
+      "pseudo_evidence": "ev_03285e4590c59bdfef637bd131232ec356cb691047dceda259799e10be2eb802",
+      "assembly_evidence": "ev_485e1499aa6085002207d4e979d89f21170510588cb32527b4e03d79fecdcc79",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180009eb0",
+      "pseudo_evidence": "ev_f67735e2b612684e0244695b1a0f40290b2f78851c8f9840ca9495121e3e2d83",
+      "assembly_evidence": "ev_259f1a5cdb8c805a3e600239e02920086e76456c0ff5fea954f866d0b28e9777",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180026670",
+      "pseudo_evidence": "ev_3d6aa3960069fd2dc5266edc94873bd68670d91db15a6be056e5ebe2cd802224",
+      "assembly_evidence": "ev_c82cd695a879356cda7f2d9c3a22053f0bdb56fe12a828093c27c41a31cd7e32",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180020cb0",
+      "pseudo_evidence": "ev_76db67340063d873c32b8f7ebbafcbe561ba061b505c101b0fc8905e0a4f7ef3",
+      "assembly_evidence": "ev_b36fa7594efe34d3efeb4b4e23cb47a790e8fbe5de250e2d6ae31b1664bb7f6e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180022280",
+      "pseudo_evidence": "ev_aee2bbff62610fd4201cd8b319dcbe44a5029af250478152c37f614dc4ef29a2",
+      "assembly_evidence": "ev_0d15462c57e626a6aa35528fa9a1522cd22044e4aa0b557ec5517d7fcd32d39b",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800219d0",
+      "pseudo_evidence": "ev_f72b0d9903304419eabf839390acfb215fdb080382fc2d35f8b8e69c28dd8f78",
+      "assembly_evidence": "ev_82f12a9eb772984162058266620ccb222c907cb6422d046e0c5ccb3d499d1eb6",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180010040",
+      "pseudo_evidence": "ev_8b172ce1ae7a2a8f6e7d19d9433d0f9681d58a8e0fba88dbe42da06deb17bac4",
+      "assembly_evidence": "ev_4eed657fe242e320b79de3469b4ff268d87d2033487b16f14133e304afc75ba1",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180008350",
+      "pseudo_evidence": "ev_8f414a470d18574ce283ec7f9d33a326dcabef0214a8d5a54fdfd5f5b9bba010",
+      "assembly_evidence": "ev_36491f90ef8a29d2fb8edd6b1735250524629ef5f6e005c31809a72ed253a8f3",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180032d00",
+      "pseudo_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "assembly_evidence": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "message_core_bridge.hpp": "952d090d21149bbda432065d168c058fd254f10cf867f1add78de0168b629368",
+    "message_core_bridge.cpp": "a70a08445f81d56ae6a3a25137f090dd120244f7ce0e72e71822a8a09f7324cc",
+    "message_core_bridge_test_fixture.hpp": "0f3258a77c42be5db377b0627212caaa412fa1daeaf4b575c996b222cb982c7c",
+    "message_core_bridge_tests.cpp": "d5216fbc1dd924b808d5a46089fbc81c7bfeb9235f74cdad39c9b6b19e3af17e",
+    "message_core_bridge_integration_tests.cpp": "0ccd6aa7388c11995b4aef05cc72833dfa1d062c0c47fe7df3e03aa9914447b7",
+    "build.ps1": "2a10e66de1526477314b6ff5148198196ba1d4213feef9b811b8dfec4856b05e",
+    "CMakeLists.txt": "79b3986952a377745dfaf5779aafabd753a25ed741d6557c50a1524671198812",
+    "README.md": "970de84508f2ef467bd82d79ccf35a01b8cc7915324b532d1627a5d2762268ba"
+  },
+  "support_hashes": {
+    "message-core-bridge-evidence.pseudo.c.txt": "1e6d2e15fd7c8d347d767050457357f971fba5430a0b6db7f2e7ddf5080746d3",
+    "message-core-bridge-evidence.asm.txt": "786b66318efd9c0d4e96ad6bdd94201478fc885a81dcbfe4adb0a367ddfa538f",
+    "message-core-bridge-context.pseudo.c.txt": "3449c0819157998db57ba10760a571022fb868e676db95ac69aa724ef42f53ae",
+    "message-core-bridge-context.asm.txt": "5c9936d5f23f37c6f0e0af44b1a69ec9d89191c4c0f32b7e81837fb22551320e",
+    "message-core-bridge-flow-audit.md": "2216fe87b73b85d708167cd216262cb8b950921dc806a423f3b2789f3d02112b",
+    "message-core-bridge-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788"
+  },
+  "closed_providers": [],
+  "selected_compatibility_provider": {
+    "base": "MessageDispatchApi::process_message_033d70",
+    "adapter": "CompatibleMessageCoreApi::process_message_033d70",
+    "file": "outputs/anadius-socket-source/message_core_bridge.cpp",
+    "reused_address": "0x180033d70",
+    "status": "normal_return_only",
+    "native_provider_fully_closed": false,
+    "native_abi_complete": false,
+    "exception_request_state": "not_bridged",
+    "callback_native_request_visibility": "deferred_until_semantic_return"
+  },
+  "core_checks": 87,
+  "integration_checks": 698,
+  "new_checks": 785,
+  "execution_scope": "Selected NORMAL-RETURN compatibility bridge to existing033d70/032d00/XML and actual N1/N2/N3/N4/queued-send/finish;13-response FIFO plain/encrypted x borrowed/owned; controlled response constructor/handler/cipher/023dd0/completion, injected send;0 new native bodies",
+  "review": {
+    "scope": "Same-agent addressed native/source comparison and synthetic tests including explicit compatibility limits",
+    "independent_review_complete": false
+  },
+  "limitations": [
+    "Native callback request-intermediate visibility not preserved: request prefix committed after semantic return",
+    "Semantic exceptions do not commit mutated std::string back to native request; referenced state may already change",
+    "Native response move/string allocation/ownership constructor remains required",
+    "Actual078d30/0793d0/allocator/free/terminal bodies, native XML lifecycle/ABI/EH/SEH/concurrency/global/fullDLL remain open",
+    "Controlled handler/cipher/response constructor/023dd0/completion and injected AsyncSendApi; no SDK network/thread or original execution",
+    "No new027a20/IOCP/027c10 worker; actual026a00/021a80 source used"
+  ],
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N6 native03ce30 hex-decode and034730 erase/replace request-prefix mutations; reduce callback/exception visibility gap; CRT stays paused"
+}

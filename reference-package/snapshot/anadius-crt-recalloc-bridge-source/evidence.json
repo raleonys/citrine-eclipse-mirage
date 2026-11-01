@@ -1,0 +1,26 @@
+{
+  "kind": "new source composition, not an additional recovered binary function",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "actual_source_chain": [
+    "Wildcard configure/expand/search/append -> WildcardHeapEffects -> Allocator -> calloc066848 / recalloc070434 / free0668c0",
+    "Onexit064420 / 0643b4 -> OnexitHeapEffects -> same Allocator / State / Effects",
+    "recalloc070434 -> msize0773bc -> HeapSize provider; realloc06e3a0 -> HeapReAlloc provider or malloc06a308/free0668c0",
+    "malloc/realloc -> existing new-mode07301c / call-new-handler0634b0 / errno05d724 source"
+  ],
+  "body_evidence": [
+    "../anadius-crt-realloc-source/evidence.json",
+    "../anadius-crt-recalloc-source/evidence.json",
+    "../anadius-crt-wildcard-storage-source/evidence.json",
+    "../anadius-crt-wildcard-source/evidence.json",
+    "../anadius-crt-onexit-source/evidence.json"
+  ],
+  "source_review": "../anadius-crt-realloc-source/review-bridge.json",
+  "local_checks": 5483,
+  "limits": [
+    "Heap API and find/conversion/locale/lock/callback providers use owned synthetic fixtures",
+    "No native HeapSize/HeapReAlloc, target address, original or rebuilt DLL execution",
+    "Provider-owned live address domain, typed argv storage and borrowed lifetimes remain required",
+    "No SEH/unwind, original C++ ABI or complete DLL runtime equivalence claim",
+    "Original function inventory count is unchanged; bridge is newly written source"
+  ]
+}

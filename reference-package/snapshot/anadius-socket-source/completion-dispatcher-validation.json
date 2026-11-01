@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 1970,
+  "native_checks": 845,
+  "output": "PASS: 1970 socket completion dispatcher checks; full027c10 queue/timer/TLS/metadata/CAS/exception/status/stop flow and actual cancellation/worker source integration\nPASS: 845 socket completion dispatcher native checks; five injected SDK imports and actual024990/02a000/05e8e0/02a4a0/029890/0298b0/027c10/02a190/026320 source composition",
+  "source_hashes": {
+    "completion_dispatcher.hpp": "fc956c1b9be86b46934afe11bfdc380e9c5c5264d773756cb09f5db331431955",
+    "completion_dispatcher.cpp": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952",
+    "completion_dispatcher_native.hpp": "7dd0296e59451095d528515d50d97f6052ad956c000858b7e4af68e0922a387b",
+    "completion_dispatcher_native.cpp": "1d031ba931aac7a2daac70c54bc81d7c2eac0599a821d220a5330db1c7a405ef",
+    "completion_dispatcher_tests.cpp": "867c851b2b69a7954c7e0d47eac65296700267b2d34250776ba819fdf801ddcf",
+    "completion_dispatcher_native_tests.cpp": "67f81e8f7beb4f9759397963b9209697a133eb096fec47899edfc85257a73be1",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 1,
+  "execution_scope": "027c10 complete retained normal body: recursive dispatch publication/retry, live service/timer queues, NEG32 due arithmetic, mandatory wait/error ordering, TLS signed guard, packet metadata/queued CAS, exception terminal, work decrement/stop relay; five injected SDK imports; actual026aa0 fallback plus full024990/02a000/unchanged05e8e0/02a4a0/029890/0298b0/027c10/02a190/026320 source composition and heap lifetime end",
+  "required_providers": "Native GS TLS slot/epoch storage,04b838/04b770/04b7cc guard CRT,024100 exception copy/029880 terminal rethrow,04b0f8 allocation lifetime,04b788 cache free,04a240/04a2cc CRT and028240 exception remain required effects; CRT production unchanged",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; typed serialized low32 effects do not prove native atomic concurrency; borrowed OVERLAPPED identity cached only while live; no original/game/real SDK TLS/IOCP/timer/event/thread/wait/sleep/network or user cfg/token/achievement execution/read"
+}

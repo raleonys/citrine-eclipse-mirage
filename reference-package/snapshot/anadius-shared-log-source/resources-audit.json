@@ -1,0 +1,74 @@
+{
+  "schema": "managed-shared-stream.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "All six known writers must receive the SAME factory-owned Stream, not separate wrappers sharing one raw buffer",
+    "Lease strongly owns Stream; first VIRTUAL BufferOwner survives ostream virtual basic_ios/ios_base erase callbacks",
+    "Source providers and actual Runtime still require stop/drain/join; stream ownership is not provider lifetime or external quiescence"
+  ],
+  "boundaries": [
+    "Short guards cover formatted C string, counted data, int32, uint16 and endl with persistent shared flags/width/fail state",
+    "No whole record atomicity; source calls may interleave between scopes",
+    "Streambuf/facet code necessarily runs under gate; no reentry, blocking writer wait/join, or raw/bypass frontend writes",
+    "Raw tie/rdbuf changes even inside Lease, external locale/invalid-handler/FLS mutation and second frontend are excluded",
+    "Plain legacy streams standalone retain prior behavior; adapter entry from inside managed operation rejects before old private gate",
+    "Each acquire/release preserves its own incoming WinLastError; body effects are not overwritten by scope-long saved error"
+  ],
+  "failure_prefixes": [
+    "Partial insertion/flush failure leaves committed bytes and shared error state; no automatic clear/retry/rollback",
+    "Configuration query/fill exception leaves Parsing prefix and releases gate before conversion",
+    "Nested streambuf adapter rejection may be swallowed by compiler ostream into badbit unless exception mask requests propagation",
+    "Tied/rebuffered/stack-unowned selected streams reject before source output"
+  ],
+  "fallback_inventory": "provider-inventory.json",
+  "open": [
+    "unmanaged/bypass stream users",
+    "compiler CRT locale/invalid handler and ANSI/OEM mode",
+    "actual FLS identity/external PTD writers",
+    "general callback overlap/reentry",
+    "7online foreign calls",
+    "configuration/license/legacy document",
+    "B10 historical independent review debt",
+    "actual hooks/native CRT/EH/ABI/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "3dc9831dd9289bcce05a4f2e50b0e7cb38dc4a312752e3dc92d262c4326b5427",
+      "after_sha256": "1cec6448ec1e9b2e4e2f0a3f4014a115f7a037372e68d136e6b128943f4b889e",
+      "reason": "Guard registry/count/network/uint16/endl output after existing admitted-thread permission; no whole-callback lock"
+    },
+    {
+      "path": "anadius-config-logging-source/logging.cpp",
+      "before_sha256": "70dce0d83d181771a4d6a2b7b8d403b487d3a7b2dd7b99506a93ee9bff5ad3bb",
+      "after_sha256": "114dd5a158d479ec7bed5e3e382c46ba19878a5174df0345c72b549df0aa6da2",
+      "reason": "Guard prefix and suffix/endl separately, leaving filename extraction/conversion outside shared gate and preserving failure prefix"
+    },
+    {
+      "path": "anadius-host-platform-source/platform.cpp",
+      "before_sha256": "ab2108b42aba68effcc6e37ab2887a662eed7f06d4110d95483cfd7634ea2b8e",
+      "after_sha256": "6f56ff3d99b288f1280602a00951328ea2f4b0dd6fc0739d21039ce8492f59b0",
+      "reason": "Guard Host and HookCleanup text/int32/endl with shared managed ostream; no gate around engine or SDK calls"
+    },
+    {
+      "path": "anadius-library-effects-source/effects.cpp",
+      "before_sha256": "ec076488dac818a6ef3bc056ba9350100554b3ce2255a18c95eb39a109cf8092",
+      "after_sha256": "4817011c56a72114d178e7b535a2b6c61ec3026c65ecbc226faed597ca3adb54",
+      "reason": "Guard selected library prefix/counted path/endl operations with the same managed ostream owner"
+    },
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "0a462c34636fcc22f348f48795ca60dba2114d1845b84ff30183cef99f5db10b",
+      "after_sha256": "efeca0c6e704eee8818d7e261e5315db9801a3d8a0c84202e278d50fcdb31eb4",
+      "reason": "Guard whitelisted online literal and endl operations without covering OS/foreign calls"
+    },
+    {
+      "path": "anadius-services-completion-source/completion.cpp",
+      "before_sha256": "c7de4b6fa5f5490f78367f1b06ce153bdfe9dec38d437e8020df83f4119204b5",
+      "after_sha256": "26a7a0a659088938eaed6b2981056c17041f4bf8d38b696fc8ca12042f447b64",
+      "reason": "Acquire shared managed ostream before private BootstrapLogger gate for each insertion/endl; legacy standalone streams preserve prior path"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

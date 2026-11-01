@@ -1,0 +1,102 @@
+{
+  "schema": "worker-handoff.source-composition.v1",
+  "source_package": "B47",
+  "evidence_type": "Controller-owned dedicated memory and checked worker borrow with actual thread/FLS barrier",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-application-graph-source/graph.cpp",
+      "sha256": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-application-graph-source/graph.hpp",
+      "sha256": "bc983d04c601b5abb9b2dacd11abecb64df6b62fbca06213bb89470933f61e53",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-providers-source/native_threads.cpp",
+      "sha256": "dab4d5f9d641817eec45245cf4859a6f288af475aad4fec2b1bba4b91ac5feb9",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-owned-server-source/server.cpp",
+      "sha256": "110fc90931f0f7cb7b4d0ae003a7488529533c31c254e0e0992e243a1f9d449d",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-owned-server-source/server.hpp",
+      "sha256": "8122afc2c001e9c97d945200419b1fc5067908a7d83278130c738e6ae0969134",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/resources.cpp",
+      "sha256": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/resources.hpp",
+      "sha256": "3270b8d3576541dffffe7ab193a9d5ad6c8b0ab1d81c0ea0020ab771eb8d3244",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/runtime.cpp",
+      "sha256": "ea5239d5222bfc89c507261d075ffa011677c632c0c9aa566f34861e624095b0",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/memory.cpp",
+      "sha256": "905a59dd2e705056c072e5e72ebbd22566667f904a746ae0c9a45196239e37c4",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-session-memory-source/memory.hpp",
+      "sha256": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-session-policy-source/policy.cpp",
+      "sha256": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/domain.cpp",
+      "sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/domain.hpp",
+      "sha256": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+      "scope": "Existing saved source and additive explicit capability composition; no new original bytes."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b47-core-quick-results.json",
+      "sha256": "01410560bf50771a0bbfc35429545bc7f0b82a034a9c71dba5403c80d99cd833",
+      "checks": 112,
+      "executable_sha256": "b9dd060df4bae04e56feaa0fed4b923ca077e0660d739edec811ad0def41a2d1",
+      "archive_sha256_as_used": "47539aab1825b0764f30db2a4b3abdaf652e75837ffb3813e11cc12b3360b0a7",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh handoff.cpp, modified SessionMemoryDomain memory.cpp, and handoff_tests.cpp with selected actual interface headers. Immutable canonical B46 archive supplies prior DomainStorage/NativeThreads/heap/FLS/Parent algorithms. No integration test, Graph/Policy/server/runtime source recompilation or complete application/bootstrap execution is claimed. Real own native threads use actual recovered NativeThreads source wrapper and actual native PTD/FLS/heap. One worker borrows sole controller-owned ApplicationMemory without shared_ptr aliasing; Parent Borrow&& overload enforces controller/sibling rejection for enter/idle close/provider-lease mutations. Known live allocation prevents retire until actual free. Returned source capability while worker is held on an event does not substitute for OS/FLS exit: zero-timeout close retains it, then duplicated actual self-handle join verifies exit. Parent and raw ApplicationMemory cases balance all tracked heap and locale baselines. Main count excludes one isolated child whose abandoned actual37-byte borrow remains poisoned/retained. No original artifact, real socket/network, foreign ABI, arbitrary controller/worker migration, unknown cleanup rollback or two-worker shared-memory admission is claimed."
+    },
+    {
+      "path": "work/b47-integration-quick-results.json",
+      "sha256": "f51325fa4bcb0828a10b1bd7310b55fd01a91e57415d31193a5134a8c18537a4",
+      "checks": 343,
+      "executable_sha256": "ce741350ea5d5811902433142ef5ce01dba61b7fd37b82d739025c867b8eb7c2",
+      "archive_sha256_as_used": "47539aab1825b0764f30db2a4b3abdaf652e75837ffb3813e11cc12b3360b0a7",
+      "execution_author": "/root/b22_integration",
+      "note": "Controller alone createsPreparedMemory(soleApplicationMemoryowner)+actualDomain NativeThreads. Distinctreal05e8e0/05e7a8 worker borrows sameDomain memory and creates/installs/runs/destroys entireGraph/Policy/Profile/Resources onworker BEFOREprocedure returns/ExitThread. RealGraphXML/Router/Logic/Random/DOWN/17plain+AES/59packets/wrapped8to16/FIFO17 underactualprocessheap/FLS/ownIOCP; onlysocketSDKtokens and explicitpacket/externaldrainhooks simulated. Controllerclose0 AFTERborrowreturn deliberately timesout whileworkerkeptalive; actualOSjoin includes FLS/PTD/Context cleanup, thencontrollerclosespreparedmemory/provider/domain. Threadsafeheapledger,nativeFLS/criticalsections,threadpolicy1 rejectsunselectedruntime DLLimports; ownEXEworkerentrymodulepin boundarycontrolled(nooriginal). SharedStateView configuration cells createdcontroller/frozenuntiljoin. NoOriginalDLL/game/config/networksocket/nativeABI/fullbootstrapResources/loaderclaim."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition only.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false
+}

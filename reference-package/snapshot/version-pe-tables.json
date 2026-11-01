@@ -1,0 +1,1839 @@
+{
+  "imageBase": "0x180000000",
+  "entry": "0x180005469",
+  "exportRVA": "0xc310",
+  "exportSize": "0x1470",
+  "exportName": "version.dll",
+  "imports": [
+    {
+      "dll": "KERNEL32.dll",
+      "name": "LoadLibraryW",
+      "ordinal": null,
+      "iat": "0x180006000"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetModuleHandleW",
+      "ordinal": null,
+      "iat": "0x180006008"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "VirtualAlloc",
+      "ordinal": null,
+      "iat": "0x180006010"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "LoadLibraryA",
+      "ordinal": null,
+      "iat": "0x180006018"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetModuleHandleA",
+      "ordinal": null,
+      "iat": "0x180006020"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "VirtualProtect",
+      "ordinal": null,
+      "iat": "0x180006028"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetProcAddress",
+      "ordinal": null,
+      "iat": "0x180006030"
+    }
+  ],
+  "exports": [
+    {
+      "ordinal": 1,
+      "name": "CloseDriver",
+      "rva": "0x120a",
+      "address": "0x18000120a",
+      "forwarder": null
+    },
+    {
+      "ordinal": 2,
+      "name": "DefDriverProc",
+      "rva": "0x1261",
+      "address": "0x180001261",
+      "forwarder": null
+    },
+    {
+      "ordinal": 3,
+      "name": "DllMain",
+      "rva": "0x5469",
+      "address": "0x180005469",
+      "forwarder": null
+    },
+    {
+      "ordinal": 4,
+      "name": "DriverCallback",
+      "rva": "0x12b8",
+      "address": "0x1800012b8",
+      "forwarder": null
+    },
+    {
+      "ordinal": 5,
+      "name": "DrvGetModuleHandle",
+      "rva": "0x130f",
+      "address": "0x18000130f",
+      "forwarder": null
+    },
+    {
+      "ordinal": 6,
+      "name": "GetDriverModuleHandle",
+      "rva": "0x1366",
+      "address": "0x180001366",
+      "forwarder": null
+    },
+    {
+      "ordinal": 7,
+      "name": "GetFileVersionInfoA",
+      "rva": "0x4dda",
+      "address": "0x180004dda",
+      "forwarder": null
+    },
+    {
+      "ordinal": 8,
+      "name": "GetFileVersionInfoByHandle",
+      "rva": "0x4e4f",
+      "address": "0x180004e4f",
+      "forwarder": null
+    },
+    {
+      "ordinal": 9,
+      "name": "GetFileVersionInfoExA",
+      "rva": "0x4eb8",
+      "address": "0x180004eb8",
+      "forwarder": null
+    },
+    {
+      "ordinal": 10,
+      "name": "GetFileVersionInfoExW",
+      "rva": "0x4f2a",
+      "address": "0x180004f2a",
+      "forwarder": null
+    },
+    {
+      "ordinal": 11,
+      "name": "GetFileVersionInfoSizeA",
+      "rva": "0x4f9c",
+      "address": "0x180004f9c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 12,
+      "name": "GetFileVersionInfoSizeExA",
+      "rva": "0x4ffe",
+      "address": "0x180004ffe",
+      "forwarder": null
+    },
+    {
+      "ordinal": 13,
+      "name": "GetFileVersionInfoSizeExW",
+      "rva": "0x5067",
+      "address": "0x180005067",
+      "forwarder": null
+    },
+    {
+      "ordinal": 14,
+      "name": "GetFileVersionInfoSizeW",
+      "rva": "0x50d0",
+      "address": "0x1800050d0",
+      "forwarder": null
+    },
+    {
+      "ordinal": 15,
+      "name": "GetFileVersionInfoW",
+      "rva": "0x5132",
+      "address": "0x180005132",
+      "forwarder": null
+    },
+    {
+      "ordinal": 16,
+      "name": "OpenDriver",
+      "rva": "0x3ad2",
+      "address": "0x180003ad2",
+      "forwarder": null
+    },
+    {
+      "ordinal": 17,
+      "name": "PlaySound",
+      "rva": "0x3b29",
+      "address": "0x180003b29",
+      "forwarder": null
+    },
+    {
+      "ordinal": 18,
+      "name": "PlaySoundA",
+      "rva": "0x3b80",
+      "address": "0x180003b80",
+      "forwarder": null
+    },
+    {
+      "ordinal": 19,
+      "name": "PlaySoundW",
+      "rva": "0x3bd7",
+      "address": "0x180003bd7",
+      "forwarder": null
+    },
+    {
+      "ordinal": 20,
+      "name": "SendDriverMessage",
+      "rva": "0x3c2e",
+      "address": "0x180003c2e",
+      "forwarder": null
+    },
+    {
+      "ordinal": 21,
+      "name": "VerFindFileA",
+      "rva": "0x51a7",
+      "address": "0x1800051a7",
+      "forwarder": null
+    },
+    {
+      "ordinal": 22,
+      "name": "VerFindFileW",
+      "rva": "0x521c",
+      "address": "0x18000521c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 23,
+      "name": "VerInstallFileA",
+      "rva": "0x5291",
+      "address": "0x180005291",
+      "forwarder": null
+    },
+    {
+      "ordinal": 24,
+      "name": "VerInstallFileW",
+      "rva": "0x5306",
+      "address": "0x180005306",
+      "forwarder": null
+    },
+    {
+      "ordinal": 25,
+      "name": "VerLanguageNameA",
+      "rva": "0x4d2c",
+      "address": "0x180004d2c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 26,
+      "name": "VerLanguageNameW",
+      "rva": "0x4d83",
+      "address": "0x180004d83",
+      "forwarder": null
+    },
+    {
+      "ordinal": 27,
+      "name": "VerQueryValueA",
+      "rva": "0x537b",
+      "address": "0x18000537b",
+      "forwarder": null
+    },
+    {
+      "ordinal": 28,
+      "name": "VerQueryValueW",
+      "rva": "0x53f2",
+      "address": "0x1800053f2",
+      "forwarder": null
+    },
+    {
+      "ordinal": 29,
+      "name": "WOWAppExit",
+      "rva": "0x4cd5",
+      "address": "0x180004cd5",
+      "forwarder": null
+    },
+    {
+      "ordinal": 30,
+      "name": "auxGetDevCapsA",
+      "rva": "0x1000",
+      "address": "0x180001000",
+      "forwarder": null
+    },
+    {
+      "ordinal": 31,
+      "name": "auxGetDevCapsW",
+      "rva": "0x1057",
+      "address": "0x180001057",
+      "forwarder": null
+    },
+    {
+      "ordinal": 32,
+      "name": "auxGetNumDevs",
+      "rva": "0x10ae",
+      "address": "0x1800010ae",
+      "forwarder": null
+    },
+    {
+      "ordinal": 33,
+      "name": "auxGetVolume",
+      "rva": "0x1105",
+      "address": "0x180001105",
+      "forwarder": null
+    },
+    {
+      "ordinal": 34,
+      "name": "auxOutMessage",
+      "rva": "0x115c",
+      "address": "0x18000115c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 35,
+      "name": "auxSetVolume",
+      "rva": "0x11b3",
+      "address": "0x1800011b3",
+      "forwarder": null
+    },
+    {
+      "ordinal": 36,
+      "name": "joyConfigChanged",
+      "rva": "0x13bd",
+      "address": "0x1800013bd",
+      "forwarder": null
+    },
+    {
+      "ordinal": 37,
+      "name": "joyGetDevCapsA",
+      "rva": "0x1414",
+      "address": "0x180001414",
+      "forwarder": null
+    },
+    {
+      "ordinal": 38,
+      "name": "joyGetDevCapsW",
+      "rva": "0x146b",
+      "address": "0x18000146b",
+      "forwarder": null
+    },
+    {
+      "ordinal": 39,
+      "name": "joyGetNumDevs",
+      "rva": "0x14c2",
+      "address": "0x1800014c2",
+      "forwarder": null
+    },
+    {
+      "ordinal": 40,
+      "name": "joyGetPos",
+      "rva": "0x1519",
+      "address": "0x180001519",
+      "forwarder": null
+    },
+    {
+      "ordinal": 41,
+      "name": "joyGetPosEx",
+      "rva": "0x1570",
+      "address": "0x180001570",
+      "forwarder": null
+    },
+    {
+      "ordinal": 42,
+      "name": "joyGetThreshold",
+      "rva": "0x15c7",
+      "address": "0x1800015c7",
+      "forwarder": null
+    },
+    {
+      "ordinal": 43,
+      "name": "joyReleaseCapture",
+      "rva": "0x161e",
+      "address": "0x18000161e",
+      "forwarder": null
+    },
+    {
+      "ordinal": 44,
+      "name": "joySetCapture",
+      "rva": "0x1675",
+      "address": "0x180001675",
+      "forwarder": null
+    },
+    {
+      "ordinal": 45,
+      "name": "joySetThreshold",
+      "rva": "0x16cc",
+      "address": "0x1800016cc",
+      "forwarder": null
+    },
+    {
+      "ordinal": 46,
+      "name": "mciDriverNotify",
+      "rva": "0x1723",
+      "address": "0x180001723",
+      "forwarder": null
+    },
+    {
+      "ordinal": 47,
+      "name": "mciDriverYield",
+      "rva": "0x177a",
+      "address": "0x18000177a",
+      "forwarder": null
+    },
+    {
+      "ordinal": 48,
+      "name": "mciExecute",
+      "rva": "0x17d1",
+      "address": "0x1800017d1",
+      "forwarder": null
+    },
+    {
+      "ordinal": 49,
+      "name": "mciFreeCommandResource",
+      "rva": "0x1828",
+      "address": "0x180001828",
+      "forwarder": null
+    },
+    {
+      "ordinal": 50,
+      "name": "mciGetCreatorTask",
+      "rva": "0x187f",
+      "address": "0x18000187f",
+      "forwarder": null
+    },
+    {
+      "ordinal": 51,
+      "name": "mciGetDeviceIDA",
+      "rva": "0x18d6",
+      "address": "0x1800018d6",
+      "forwarder": null
+    },
+    {
+      "ordinal": 52,
+      "name": "mciGetDeviceIDFromElementIDA",
+      "rva": "0x192d",
+      "address": "0x18000192d",
+      "forwarder": null
+    },
+    {
+      "ordinal": 53,
+      "name": "mciGetDeviceIDFromElementIDW",
+      "rva": "0x1984",
+      "address": "0x180001984",
+      "forwarder": null
+    },
+    {
+      "ordinal": 54,
+      "name": "mciGetDeviceIDW",
+      "rva": "0x19db",
+      "address": "0x1800019db",
+      "forwarder": null
+    },
+    {
+      "ordinal": 55,
+      "name": "mciGetDriverData",
+      "rva": "0x1a32",
+      "address": "0x180001a32",
+      "forwarder": null
+    },
+    {
+      "ordinal": 56,
+      "name": "mciGetErrorStringA",
+      "rva": "0x1a89",
+      "address": "0x180001a89",
+      "forwarder": null
+    },
+    {
+      "ordinal": 57,
+      "name": "mciGetErrorStringW",
+      "rva": "0x1ae0",
+      "address": "0x180001ae0",
+      "forwarder": null
+    },
+    {
+      "ordinal": 58,
+      "name": "mciGetYieldProc",
+      "rva": "0x1b37",
+      "address": "0x180001b37",
+      "forwarder": null
+    },
+    {
+      "ordinal": 59,
+      "name": "mciLoadCommandResource",
+      "rva": "0x1b8e",
+      "address": "0x180001b8e",
+      "forwarder": null
+    },
+    {
+      "ordinal": 60,
+      "name": "mciSendCommandA",
+      "rva": "0x1be5",
+      "address": "0x180001be5",
+      "forwarder": null
+    },
+    {
+      "ordinal": 61,
+      "name": "mciSendCommandW",
+      "rva": "0x1c3c",
+      "address": "0x180001c3c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 62,
+      "name": "mciSendStringA",
+      "rva": "0x1c93",
+      "address": "0x180001c93",
+      "forwarder": null
+    },
+    {
+      "ordinal": 63,
+      "name": "mciSendStringW",
+      "rva": "0x1cea",
+      "address": "0x180001cea",
+      "forwarder": null
+    },
+    {
+      "ordinal": 64,
+      "name": "mciSetDriverData",
+      "rva": "0x1d41",
+      "address": "0x180001d41",
+      "forwarder": null
+    },
+    {
+      "ordinal": 65,
+      "name": "mciSetYieldProc",
+      "rva": "0x1d98",
+      "address": "0x180001d98",
+      "forwarder": null
+    },
+    {
+      "ordinal": 66,
+      "name": "midiConnect",
+      "rva": "0x1def",
+      "address": "0x180001def",
+      "forwarder": null
+    },
+    {
+      "ordinal": 67,
+      "name": "midiDisconnect",
+      "rva": "0x1e46",
+      "address": "0x180001e46",
+      "forwarder": null
+    },
+    {
+      "ordinal": 68,
+      "name": "midiInAddBuffer",
+      "rva": "0x1e9d",
+      "address": "0x180001e9d",
+      "forwarder": null
+    },
+    {
+      "ordinal": 69,
+      "name": "midiInClose",
+      "rva": "0x1ef4",
+      "address": "0x180001ef4",
+      "forwarder": null
+    },
+    {
+      "ordinal": 70,
+      "name": "midiInGetDevCapsA",
+      "rva": "0x1f4b",
+      "address": "0x180001f4b",
+      "forwarder": null
+    },
+    {
+      "ordinal": 71,
+      "name": "midiInGetDevCapsW",
+      "rva": "0x1fa2",
+      "address": "0x180001fa2",
+      "forwarder": null
+    },
+    {
+      "ordinal": 72,
+      "name": "midiInGetErrorTextA",
+      "rva": "0x1ff9",
+      "address": "0x180001ff9",
+      "forwarder": null
+    },
+    {
+      "ordinal": 73,
+      "name": "midiInGetErrorTextW",
+      "rva": "0x2050",
+      "address": "0x180002050",
+      "forwarder": null
+    },
+    {
+      "ordinal": 74,
+      "name": "midiInGetID",
+      "rva": "0x20a7",
+      "address": "0x1800020a7",
+      "forwarder": null
+    },
+    {
+      "ordinal": 75,
+      "name": "midiInGetNumDevs",
+      "rva": "0x20fe",
+      "address": "0x1800020fe",
+      "forwarder": null
+    },
+    {
+      "ordinal": 76,
+      "name": "midiInMessage",
+      "rva": "0x2155",
+      "address": "0x180002155",
+      "forwarder": null
+    },
+    {
+      "ordinal": 77,
+      "name": "midiInOpen",
+      "rva": "0x21ac",
+      "address": "0x1800021ac",
+      "forwarder": null
+    },
+    {
+      "ordinal": 78,
+      "name": "midiInPrepareHeader",
+      "rva": "0x2203",
+      "address": "0x180002203",
+      "forwarder": null
+    },
+    {
+      "ordinal": 79,
+      "name": "midiInReset",
+      "rva": "0x225a",
+      "address": "0x18000225a",
+      "forwarder": null
+    },
+    {
+      "ordinal": 80,
+      "name": "midiInStart",
+      "rva": "0x22b1",
+      "address": "0x1800022b1",
+      "forwarder": null
+    },
+    {
+      "ordinal": 81,
+      "name": "midiInStop",
+      "rva": "0x2308",
+      "address": "0x180002308",
+      "forwarder": null
+    },
+    {
+      "ordinal": 82,
+      "name": "midiInUnprepareHeader",
+      "rva": "0x235f",
+      "address": "0x18000235f",
+      "forwarder": null
+    },
+    {
+      "ordinal": 83,
+      "name": "midiOutCacheDrumPatches",
+      "rva": "0x23b6",
+      "address": "0x1800023b6",
+      "forwarder": null
+    },
+    {
+      "ordinal": 84,
+      "name": "midiOutCachePatches",
+      "rva": "0x240d",
+      "address": "0x18000240d",
+      "forwarder": null
+    },
+    {
+      "ordinal": 85,
+      "name": "midiOutClose",
+      "rva": "0x2464",
+      "address": "0x180002464",
+      "forwarder": null
+    },
+    {
+      "ordinal": 86,
+      "name": "midiOutGetDevCapsA",
+      "rva": "0x24bb",
+      "address": "0x1800024bb",
+      "forwarder": null
+    },
+    {
+      "ordinal": 87,
+      "name": "midiOutGetDevCapsW",
+      "rva": "0x2512",
+      "address": "0x180002512",
+      "forwarder": null
+    },
+    {
+      "ordinal": 88,
+      "name": "midiOutGetErrorTextA",
+      "rva": "0x2569",
+      "address": "0x180002569",
+      "forwarder": null
+    },
+    {
+      "ordinal": 89,
+      "name": "midiOutGetErrorTextW",
+      "rva": "0x25c0",
+      "address": "0x1800025c0",
+      "forwarder": null
+    },
+    {
+      "ordinal": 90,
+      "name": "midiOutGetID",
+      "rva": "0x2617",
+      "address": "0x180002617",
+      "forwarder": null
+    },
+    {
+      "ordinal": 91,
+      "name": "midiOutGetNumDevs",
+      "rva": "0x266e",
+      "address": "0x18000266e",
+      "forwarder": null
+    },
+    {
+      "ordinal": 92,
+      "name": "midiOutGetVolume",
+      "rva": "0x26c5",
+      "address": "0x1800026c5",
+      "forwarder": null
+    },
+    {
+      "ordinal": 93,
+      "name": "midiOutLongMsg",
+      "rva": "0x271c",
+      "address": "0x18000271c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 94,
+      "name": "midiOutMessage",
+      "rva": "0x2773",
+      "address": "0x180002773",
+      "forwarder": null
+    },
+    {
+      "ordinal": 95,
+      "name": "midiOutOpen",
+      "rva": "0x27ca",
+      "address": "0x1800027ca",
+      "forwarder": null
+    },
+    {
+      "ordinal": 96,
+      "name": "midiOutPrepareHeader",
+      "rva": "0x2821",
+      "address": "0x180002821",
+      "forwarder": null
+    },
+    {
+      "ordinal": 97,
+      "name": "midiOutReset",
+      "rva": "0x2878",
+      "address": "0x180002878",
+      "forwarder": null
+    },
+    {
+      "ordinal": 98,
+      "name": "midiOutSetVolume",
+      "rva": "0x28cf",
+      "address": "0x1800028cf",
+      "forwarder": null
+    },
+    {
+      "ordinal": 99,
+      "name": "midiOutShortMsg",
+      "rva": "0x2926",
+      "address": "0x180002926",
+      "forwarder": null
+    },
+    {
+      "ordinal": 100,
+      "name": "midiOutUnprepareHeader",
+      "rva": "0x297d",
+      "address": "0x18000297d",
+      "forwarder": null
+    },
+    {
+      "ordinal": 101,
+      "name": "midiStreamClose",
+      "rva": "0x29d4",
+      "address": "0x1800029d4",
+      "forwarder": null
+    },
+    {
+      "ordinal": 102,
+      "name": "midiStreamOpen",
+      "rva": "0x2a2b",
+      "address": "0x180002a2b",
+      "forwarder": null
+    },
+    {
+      "ordinal": 103,
+      "name": "midiStreamOut",
+      "rva": "0x2a82",
+      "address": "0x180002a82",
+      "forwarder": null
+    },
+    {
+      "ordinal": 104,
+      "name": "midiStreamPause",
+      "rva": "0x2ad9",
+      "address": "0x180002ad9",
+      "forwarder": null
+    },
+    {
+      "ordinal": 105,
+      "name": "midiStreamPosition",
+      "rva": "0x2b30",
+      "address": "0x180002b30",
+      "forwarder": null
+    },
+    {
+      "ordinal": 106,
+      "name": "midiStreamProperty",
+      "rva": "0x2b87",
+      "address": "0x180002b87",
+      "forwarder": null
+    },
+    {
+      "ordinal": 107,
+      "name": "midiStreamRestart",
+      "rva": "0x2bde",
+      "address": "0x180002bde",
+      "forwarder": null
+    },
+    {
+      "ordinal": 108,
+      "name": "midiStreamStop",
+      "rva": "0x2c35",
+      "address": "0x180002c35",
+      "forwarder": null
+    },
+    {
+      "ordinal": 109,
+      "name": "mixerClose",
+      "rva": "0x2c8c",
+      "address": "0x180002c8c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 110,
+      "name": "mixerGetControlDetailsA",
+      "rva": "0x2ce3",
+      "address": "0x180002ce3",
+      "forwarder": null
+    },
+    {
+      "ordinal": 111,
+      "name": "mixerGetControlDetailsW",
+      "rva": "0x2d3a",
+      "address": "0x180002d3a",
+      "forwarder": null
+    },
+    {
+      "ordinal": 112,
+      "name": "mixerGetDevCapsA",
+      "rva": "0x2d91",
+      "address": "0x180002d91",
+      "forwarder": null
+    },
+    {
+      "ordinal": 113,
+      "name": "mixerGetDevCapsW",
+      "rva": "0x2de8",
+      "address": "0x180002de8",
+      "forwarder": null
+    },
+    {
+      "ordinal": 114,
+      "name": "mixerGetID",
+      "rva": "0x2e3f",
+      "address": "0x180002e3f",
+      "forwarder": null
+    },
+    {
+      "ordinal": 115,
+      "name": "mixerGetLineControlsA",
+      "rva": "0x2e96",
+      "address": "0x180002e96",
+      "forwarder": null
+    },
+    {
+      "ordinal": 116,
+      "name": "mixerGetLineControlsW",
+      "rva": "0x2eed",
+      "address": "0x180002eed",
+      "forwarder": null
+    },
+    {
+      "ordinal": 117,
+      "name": "mixerGetLineInfoA",
+      "rva": "0x2f44",
+      "address": "0x180002f44",
+      "forwarder": null
+    },
+    {
+      "ordinal": 118,
+      "name": "mixerGetLineInfoW",
+      "rva": "0x2f9b",
+      "address": "0x180002f9b",
+      "forwarder": null
+    },
+    {
+      "ordinal": 119,
+      "name": "mixerGetNumDevs",
+      "rva": "0x2ff2",
+      "address": "0x180002ff2",
+      "forwarder": null
+    },
+    {
+      "ordinal": 120,
+      "name": "mixerMessage",
+      "rva": "0x3049",
+      "address": "0x180003049",
+      "forwarder": null
+    },
+    {
+      "ordinal": 121,
+      "name": "mixerOpen",
+      "rva": "0x30a0",
+      "address": "0x1800030a0",
+      "forwarder": null
+    },
+    {
+      "ordinal": 122,
+      "name": "mixerSetControlDetails",
+      "rva": "0x30f7",
+      "address": "0x1800030f7",
+      "forwarder": null
+    },
+    {
+      "ordinal": 123,
+      "name": "mmDrvInstall",
+      "rva": "0x314e",
+      "address": "0x18000314e",
+      "forwarder": null
+    },
+    {
+      "ordinal": 124,
+      "name": "mmGetCurrentTask",
+      "rva": "0x31a5",
+      "address": "0x1800031a5",
+      "forwarder": null
+    },
+    {
+      "ordinal": 125,
+      "name": "mmTaskBlock",
+      "rva": "0x3976",
+      "address": "0x180003976",
+      "forwarder": null
+    },
+    {
+      "ordinal": 126,
+      "name": "mmTaskCreate",
+      "rva": "0x39cd",
+      "address": "0x1800039cd",
+      "forwarder": null
+    },
+    {
+      "ordinal": 127,
+      "name": "mmTaskSignal",
+      "rva": "0x3a24",
+      "address": "0x180003a24",
+      "forwarder": null
+    },
+    {
+      "ordinal": 128,
+      "name": "mmTaskYield",
+      "rva": "0x3a7b",
+      "address": "0x180003a7b",
+      "forwarder": null
+    },
+    {
+      "ordinal": 129,
+      "name": "mmioAdvance",
+      "rva": "0x31fc",
+      "address": "0x1800031fc",
+      "forwarder": null
+    },
+    {
+      "ordinal": 130,
+      "name": "mmioAscend",
+      "rva": "0x3253",
+      "address": "0x180003253",
+      "forwarder": null
+    },
+    {
+      "ordinal": 131,
+      "name": "mmioClose",
+      "rva": "0x32aa",
+      "address": "0x1800032aa",
+      "forwarder": null
+    },
+    {
+      "ordinal": 132,
+      "name": "mmioCreateChunk",
+      "rva": "0x3301",
+      "address": "0x180003301",
+      "forwarder": null
+    },
+    {
+      "ordinal": 133,
+      "name": "mmioDescend",
+      "rva": "0x3358",
+      "address": "0x180003358",
+      "forwarder": null
+    },
+    {
+      "ordinal": 134,
+      "name": "mmioFlush",
+      "rva": "0x33af",
+      "address": "0x1800033af",
+      "forwarder": null
+    },
+    {
+      "ordinal": 135,
+      "name": "mmioGetInfo",
+      "rva": "0x3406",
+      "address": "0x180003406",
+      "forwarder": null
+    },
+    {
+      "ordinal": 136,
+      "name": "mmioInstallIOProcA",
+      "rva": "0x345d",
+      "address": "0x18000345d",
+      "forwarder": null
+    },
+    {
+      "ordinal": 137,
+      "name": "mmioInstallIOProcW",
+      "rva": "0x34b4",
+      "address": "0x1800034b4",
+      "forwarder": null
+    },
+    {
+      "ordinal": 138,
+      "name": "mmioOpenA",
+      "rva": "0x350b",
+      "address": "0x18000350b",
+      "forwarder": null
+    },
+    {
+      "ordinal": 139,
+      "name": "mmioOpenW",
+      "rva": "0x3562",
+      "address": "0x180003562",
+      "forwarder": null
+    },
+    {
+      "ordinal": 140,
+      "name": "mmioRead",
+      "rva": "0x35b9",
+      "address": "0x1800035b9",
+      "forwarder": null
+    },
+    {
+      "ordinal": 141,
+      "name": "mmioRenameA",
+      "rva": "0x3610",
+      "address": "0x180003610",
+      "forwarder": null
+    },
+    {
+      "ordinal": 142,
+      "name": "mmioRenameW",
+      "rva": "0x3667",
+      "address": "0x180003667",
+      "forwarder": null
+    },
+    {
+      "ordinal": 143,
+      "name": "mmioSeek",
+      "rva": "0x36be",
+      "address": "0x1800036be",
+      "forwarder": null
+    },
+    {
+      "ordinal": 144,
+      "name": "mmioSendMessage",
+      "rva": "0x3715",
+      "address": "0x180003715",
+      "forwarder": null
+    },
+    {
+      "ordinal": 145,
+      "name": "mmioSetBuffer",
+      "rva": "0x376c",
+      "address": "0x18000376c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 146,
+      "name": "mmioSetInfo",
+      "rva": "0x37c3",
+      "address": "0x1800037c3",
+      "forwarder": null
+    },
+    {
+      "ordinal": 147,
+      "name": "mmioStringToFOURCCA",
+      "rva": "0x381a",
+      "address": "0x18000381a",
+      "forwarder": null
+    },
+    {
+      "ordinal": 148,
+      "name": "mmioStringToFOURCCW",
+      "rva": "0x3871",
+      "address": "0x180003871",
+      "forwarder": null
+    },
+    {
+      "ordinal": 149,
+      "name": "mmioWrite",
+      "rva": "0x38c8",
+      "address": "0x1800038c8",
+      "forwarder": null
+    },
+    {
+      "ordinal": 150,
+      "name": "mmsystemGetVersion",
+      "rva": "0x391f",
+      "address": "0x18000391f",
+      "forwarder": null
+    },
+    {
+      "ordinal": 151,
+      "name": "sndPlaySoundA",
+      "rva": "0x3c85",
+      "address": "0x180003c85",
+      "forwarder": null
+    },
+    {
+      "ordinal": 152,
+      "name": "sndPlaySoundW",
+      "rva": "0x3cdc",
+      "address": "0x180003cdc",
+      "forwarder": null
+    },
+    {
+      "ordinal": 153,
+      "name": "timeBeginPeriod",
+      "rva": "0x3d33",
+      "address": "0x180003d33",
+      "forwarder": null
+    },
+    {
+      "ordinal": 154,
+      "name": "timeEndPeriod",
+      "rva": "0x3d8a",
+      "address": "0x180003d8a",
+      "forwarder": null
+    },
+    {
+      "ordinal": 155,
+      "name": "timeGetDevCaps",
+      "rva": "0x3de1",
+      "address": "0x180003de1",
+      "forwarder": null
+    },
+    {
+      "ordinal": 156,
+      "name": "timeGetSystemTime",
+      "rva": "0x3e38",
+      "address": "0x180003e38",
+      "forwarder": null
+    },
+    {
+      "ordinal": 157,
+      "name": "timeGetTime",
+      "rva": "0x3e8f",
+      "address": "0x180003e8f",
+      "forwarder": null
+    },
+    {
+      "ordinal": 158,
+      "name": "timeKillEvent",
+      "rva": "0x3ee6",
+      "address": "0x180003ee6",
+      "forwarder": null
+    },
+    {
+      "ordinal": 159,
+      "name": "timeSetEvent",
+      "rva": "0x3f3d",
+      "address": "0x180003f3d",
+      "forwarder": null
+    },
+    {
+      "ordinal": 160,
+      "name": "waveInAddBuffer",
+      "rva": "0x3f94",
+      "address": "0x180003f94",
+      "forwarder": null
+    },
+    {
+      "ordinal": 161,
+      "name": "waveInClose",
+      "rva": "0x3feb",
+      "address": "0x180003feb",
+      "forwarder": null
+    },
+    {
+      "ordinal": 162,
+      "name": "waveInGetDevCapsA",
+      "rva": "0x4042",
+      "address": "0x180004042",
+      "forwarder": null
+    },
+    {
+      "ordinal": 163,
+      "name": "waveInGetDevCapsW",
+      "rva": "0x4099",
+      "address": "0x180004099",
+      "forwarder": null
+    },
+    {
+      "ordinal": 164,
+      "name": "waveInGetErrorTextA",
+      "rva": "0x40f0",
+      "address": "0x1800040f0",
+      "forwarder": null
+    },
+    {
+      "ordinal": 165,
+      "name": "waveInGetErrorTextW",
+      "rva": "0x4147",
+      "address": "0x180004147",
+      "forwarder": null
+    },
+    {
+      "ordinal": 166,
+      "name": "waveInGetID",
+      "rva": "0x419e",
+      "address": "0x18000419e",
+      "forwarder": null
+    },
+    {
+      "ordinal": 167,
+      "name": "waveInGetNumDevs",
+      "rva": "0x41f5",
+      "address": "0x1800041f5",
+      "forwarder": null
+    },
+    {
+      "ordinal": 168,
+      "name": "waveInGetPosition",
+      "rva": "0x424c",
+      "address": "0x18000424c",
+      "forwarder": null
+    },
+    {
+      "ordinal": 169,
+      "name": "waveInMessage",
+      "rva": "0x42a3",
+      "address": "0x1800042a3",
+      "forwarder": null
+    },
+    {
+      "ordinal": 170,
+      "name": "waveInOpen",
+      "rva": "0x42fa",
+      "address": "0x1800042fa",
+      "forwarder": null
+    },
+    {
+      "ordinal": 171,
+      "name": "waveInPrepareHeader",
+      "rva": "0x4351",
+      "address": "0x180004351",
+      "forwarder": null
+    },
+    {
+      "ordinal": 172,
+      "name": "waveInReset",
+      "rva": "0x43a8",
+      "address": "0x1800043a8",
+      "forwarder": null
+    },
+    {
+      "ordinal": 173,
+      "name": "waveInStart",
+      "rva": "0x43ff",
+      "address": "0x1800043ff",
+      "forwarder": null
+    },
+    {
+      "ordinal": 174,
+      "name": "waveInStop",
+      "rva": "0x4456",
+      "address": "0x180004456",
+      "forwarder": null
+    },
+    {
+      "ordinal": 175,
+      "name": "waveInUnprepareHeader",
+      "rva": "0x44ad",
+      "address": "0x1800044ad",
+      "forwarder": null
+    },
+    {
+      "ordinal": 176,
+      "name": "waveOutBreakLoop",
+      "rva": "0x4504",
+      "address": "0x180004504",
+      "forwarder": null
+    },
+    {
+      "ordinal": 177,
+      "name": "waveOutClose",
+      "rva": "0x455b",
+      "address": "0x18000455b",
+      "forwarder": null
+    },
+    {
+      "ordinal": 178,
+      "name": "waveOutGetDevCapsA",
+      "rva": "0x45b2",
+      "address": "0x1800045b2",
+      "forwarder": null
+    },
+    {
+      "ordinal": 179,
+      "name": "waveOutGetDevCapsW",
+      "rva": "0x4609",
+      "address": "0x180004609",
+      "forwarder": null
+    },
+    {
+      "ordinal": 180,
+      "name": "waveOutGetErrorTextA",
+      "rva": "0x4660",
+      "address": "0x180004660",
+      "forwarder": null
+    },
+    {
+      "ordinal": 181,
+      "name": "waveOutGetErrorTextW",
+      "rva": "0x46b7",
+      "address": "0x1800046b7",
+      "forwarder": null
+    },
+    {
+      "ordinal": 182,
+      "name": "waveOutGetID",
+      "rva": "0x470e",
+      "address": "0x18000470e",
+      "forwarder": null
+    },
+    {
+      "ordinal": 183,
+      "name": "waveOutGetNumDevs",
+      "rva": "0x4765",
+      "address": "0x180004765",
+      "forwarder": null
+    },
+    {
+      "ordinal": 184,
+      "name": "waveOutGetPitch",
+      "rva": "0x47bc",
+      "address": "0x1800047bc",
+      "forwarder": null
+    },
+    {
+      "ordinal": 185,
+      "name": "waveOutGetPlaybackRate",
+      "rva": "0x4813",
+      "address": "0x180004813",
+      "forwarder": null
+    },
+    {
+      "ordinal": 186,
+      "name": "waveOutGetPosition",
+      "rva": "0x486a",
+      "address": "0x18000486a",
+      "forwarder": null
+    },
+    {
+      "ordinal": 187,
+      "name": "waveOutGetVolume",
+      "rva": "0x48c1",
+      "address": "0x1800048c1",
+      "forwarder": null
+    },
+    {
+      "ordinal": 188,
+      "name": "waveOutMessage",
+      "rva": "0x4918",
+      "address": "0x180004918",
+      "forwarder": null
+    },
+    {
+      "ordinal": 189,
+      "name": "waveOutOpen",
+      "rva": "0x496f",
+      "address": "0x18000496f",
+      "forwarder": null
+    },
+    {
+      "ordinal": 190,
+      "name": "waveOutPause",
+      "rva": "0x49c6",
+      "address": "0x1800049c6",
+      "forwarder": null
+    },
+    {
+      "ordinal": 191,
+      "name": "waveOutPrepareHeader",
+      "rva": "0x4a1d",
+      "address": "0x180004a1d",
+      "forwarder": null
+    },
+    {
+      "ordinal": 192,
+      "name": "waveOutReset",
+      "rva": "0x4a74",
+      "address": "0x180004a74",
+      "forwarder": null
+    },
+    {
+      "ordinal": 193,
+      "name": "waveOutRestart",
+      "rva": "0x4acb",
+      "address": "0x180004acb",
+      "forwarder": null
+    },
+    {
+      "ordinal": 194,
+      "name": "waveOutSetPitch",
+      "rva": "0x4b22",
+      "address": "0x180004b22",
+      "forwarder": null
+    },
+    {
+      "ordinal": 195,
+      "name": "waveOutSetPlaybackRate",
+      "rva": "0x4b79",
+      "address": "0x180004b79",
+      "forwarder": null
+    },
+    {
+      "ordinal": 196,
+      "name": "waveOutSetVolume",
+      "rva": "0x4bd0",
+      "address": "0x180004bd0",
+      "forwarder": null
+    },
+    {
+      "ordinal": 197,
+      "name": "waveOutUnprepareHeader",
+      "rva": "0x4c27",
+      "address": "0x180004c27",
+      "forwarder": null
+    },
+    {
+      "ordinal": 198,
+      "name": "waveOutWrite",
+      "rva": "0x4c7e",
+      "address": "0x180004c7e",
+      "forwarder": null
+    }
+  ],
+  "headerEvidence": "ev_13b4368c7e6bd415810e14d335b39a540c563ec7d53fe5591ce2fbb27672d41e",
+  "rdataEvidence": "ev_157c446e2c1bce1a022bed8f576a7cc535fa15c41a6478fc2ef751d2902f97a5",
+  "embedded": {
+    "parentEvidence": "ev_157c446e2c1bce1a022bed8f576a7cc535fa15c41a6478fc2ef751d2902f97a5",
+    "outerVA": "0x180006d80",
+    "outerRVA": 28032,
+    "offsetInRdata": 3456,
+    "peOffset": 264,
+    "size": 21504,
+    "imageBase": "0x180000000",
+    "entryRVA": "0x3338",
+    "sections": [
+      {
+        "name": ".text",
+        "virtual_size": 12523,
+        "rva": 4096,
+        "raw_size": 12800,
+        "raw_offset": 1024,
+        "flags": "0x60000020"
+      },
+      {
+        "name": ".rdata",
+        "virtual_size": 5000,
+        "rva": 20480,
+        "raw_size": 5120,
+        "raw_offset": 13824,
+        "flags": "0x40000040"
+      },
+      {
+        "name": ".data",
+        "virtual_size": 2304,
+        "rva": 28672,
+        "raw_size": 1024,
+        "raw_offset": 18944,
+        "flags": "0xc0000040"
+      },
+      {
+        "name": ".pdata",
+        "virtual_size": 912,
+        "rva": 32768,
+        "raw_size": 1024,
+        "raw_offset": 19968,
+        "flags": "0x40000040"
+      },
+      {
+        "name": ".reloc",
+        "virtual_size": 68,
+        "rva": 36864,
+        "raw_size": 512,
+        "raw_offset": 20992,
+        "flags": "0x42000040"
+      }
+    ],
+    "importRVA": "0x5c1c",
+    "imports": [
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetModuleHandleA",
+        "ordinal": null,
+        "iat_rva": "0x5010"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetCurrentProcessId",
+        "ordinal": null,
+        "iat_rva": "0x5018"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetLastError",
+        "ordinal": null,
+        "iat_rva": "0x5020"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "Process32NextW",
+        "ordinal": null,
+        "iat_rva": "0x5028"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "HeapFree",
+        "ordinal": null,
+        "iat_rva": "0x5030"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "HeapReAlloc",
+        "ordinal": null,
+        "iat_rva": "0x5038"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "HeapAlloc",
+        "ordinal": null,
+        "iat_rva": "0x5040"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "IsProcessorFeaturePresent",
+        "ordinal": null,
+        "iat_rva": "0x5048"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetProcessHeap",
+        "ordinal": null,
+        "iat_rva": "0x5050"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "DisableThreadLibraryCalls",
+        "ordinal": null,
+        "iat_rva": "0x5058"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "SetUnhandledExceptionFilter",
+        "ordinal": null,
+        "iat_rva": "0x5060"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "UnhandledExceptionFilter",
+        "ordinal": null,
+        "iat_rva": "0x5068"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "IsDebuggerPresent",
+        "ordinal": null,
+        "iat_rva": "0x5070"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "RtlVirtualUnwind",
+        "ordinal": null,
+        "iat_rva": "0x5078"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "RtlLookupFunctionEntry",
+        "ordinal": null,
+        "iat_rva": "0x5080"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "RtlCaptureContext",
+        "ordinal": null,
+        "iat_rva": "0x5088"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "InitializeSListHead",
+        "ordinal": null,
+        "iat_rva": "0x5090"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetSystemTimeAsFileTime",
+        "ordinal": null,
+        "iat_rva": "0x5098"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "QueryPerformanceCounter",
+        "ordinal": null,
+        "iat_rva": "0x50a0"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "VirtualQuery",
+        "ordinal": null,
+        "iat_rva": "0x50a8"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "VirtualFree",
+        "ordinal": null,
+        "iat_rva": "0x50b0"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "VirtualAlloc",
+        "ordinal": null,
+        "iat_rva": "0x50b8"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetSystemInfo",
+        "ordinal": null,
+        "iat_rva": "0x50c0"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "Thread32Next",
+        "ordinal": null,
+        "iat_rva": "0x50c8"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "Thread32First",
+        "ordinal": null,
+        "iat_rva": "0x50d0"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "CreateToolhelp32Snapshot",
+        "ordinal": null,
+        "iat_rva": "0x50d8"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "VirtualProtect",
+        "ordinal": null,
+        "iat_rva": "0x50e0"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "FlushInstructionCache",
+        "ordinal": null,
+        "iat_rva": "0x50e8"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "SetThreadContext",
+        "ordinal": null,
+        "iat_rva": "0x50f0"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetThreadContext",
+        "ordinal": null,
+        "iat_rva": "0x50f8"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "ResumeThread",
+        "ordinal": null,
+        "iat_rva": "0x5100"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "TerminateProcess",
+        "ordinal": null,
+        "iat_rva": "0x5108"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "SuspendThread",
+        "ordinal": null,
+        "iat_rva": "0x5110"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "OpenThread",
+        "ordinal": null,
+        "iat_rva": "0x5118"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "CloseHandle",
+        "ordinal": null,
+        "iat_rva": "0x5120"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "HeapCreate",
+        "ordinal": null,
+        "iat_rva": "0x5128"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "Sleep",
+        "ordinal": null,
+        "iat_rva": "0x5130"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetCurrentProcess",
+        "ordinal": null,
+        "iat_rva": "0x5138"
+      },
+      {
+        "dll": "KERNEL32.dll",
+        "name": "GetCurrentThreadId",
+        "ordinal": null,
+        "iat_rva": "0x5140"
+      },
+      {
+        "dll": "CRYPT32.dll",
+        "name": "CryptQueryObject",
+        "ordinal": null,
+        "iat_rva": "0x5000"
+      },
+      {
+        "dll": "api-ms-win-core-synch-l1-2-0.dll",
+        "name": "WakeByAddressAll",
+        "ordinal": null,
+        "iat_rva": "0x5180"
+      },
+      {
+        "dll": "api-ms-win-core-synch-l1-2-0.dll",
+        "name": "WaitOnAddress",
+        "ordinal": null,
+        "iat_rva": "0x5188"
+      },
+      {
+        "dll": "msvcp140.dll",
+        "name": "_Mtx_lock",
+        "ordinal": null,
+        "iat_rva": "0x51e0"
+      },
+      {
+        "dll": "msvcp140.dll",
+        "name": "_Mtx_trylock",
+        "ordinal": null,
+        "iat_rva": "0x51e8"
+      },
+      {
+        "dll": "VCRUNTIME140.dll",
+        "name": "memcpy",
+        "ordinal": null,
+        "iat_rva": "0x5150"
+      },
+      {
+        "dll": "VCRUNTIME140.dll",
+        "name": "memcmp",
+        "ordinal": null,
+        "iat_rva": "0x5158"
+      },
+      {
+        "dll": "VCRUNTIME140.dll",
+        "name": "memset",
+        "ordinal": null,
+        "iat_rva": "0x5160"
+      },
+      {
+        "dll": "VCRUNTIME140.dll",
+        "name": "__C_specific_handler",
+        "ordinal": null,
+        "iat_rva": "0x5168"
+      },
+      {
+        "dll": "VCRUNTIME140.dll",
+        "name": "__std_type_info_destroy_list",
+        "ordinal": null,
+        "iat_rva": "0x5170"
+      },
+      {
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "name": "_configure_narrow_argv",
+        "ordinal": null,
+        "iat_rva": "0x5198"
+      },
+      {
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "name": "_initialize_narrow_environment",
+        "ordinal": null,
+        "iat_rva": "0x51a0"
+      },
+      {
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "name": "_cexit",
+        "ordinal": null,
+        "iat_rva": "0x51a8"
+      },
+      {
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "name": "_initialize_onexit_table",
+        "ordinal": null,
+        "iat_rva": "0x51b0"
+      },
+      {
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "name": "_initterm",
+        "ordinal": null,
+        "iat_rva": "0x51b8"
+      },
+      {
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "name": "_execute_onexit_table",
+        "ordinal": null,
+        "iat_rva": "0x51c0"
+      },
+      {
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "name": "_initterm_e",
+        "ordinal": null,
+        "iat_rva": "0x51c8"
+      },
+      {
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "name": "_seh_filter_dll",
+        "ordinal": null,
+        "iat_rva": "0x51d0"
+      }
+    ],
+    "exportRVA": "0x5bd0"
+  }
+}

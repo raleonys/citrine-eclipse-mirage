@@ -1,0 +1,24 @@
+{
+  "source_package": "B39",
+  "result": "OWNED_SERVER_COMPONENT_WITH_REQUIRED_APPLICATION_AND_SHUTDOWN_PROVIDERS",
+  "owned": [
+    "stable ServerView projection",
+    "OwnedAcceptMemory and prearmed retry",
+    "CoherentIoMemory",
+    "DomainFlowApi/FlowContext",
+    "actual worker/dispatcher/cache routing",
+    "owned Application contexts"
+  ],
+  "required": [
+    "Profile environment/type/schedule registries",
+    "Application frame/read/write/message/response/observer ownership",
+    "worker guard/CRT/atomic policies",
+    "external kernel/raw-job finality"
+  ],
+  "factory_slot": "bootstrap_backend::Resources.server only, must initially be empty",
+  "complete_bootstrap_resources": false,
+  "native_033d70_callback_EH_binding_complete": false,
+  "loader_hooks_bound": false,
+  "real_network": false,
+  "original_dll_loaded": false
+}

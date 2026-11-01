@@ -1,0 +1,95 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T23:27:55.234510+00:00",
+  "prior_package_sha256": "f1e9fc46d5dd155094bf13ccd804bdacb08114776a8264c8bdfbbe33b53bf84c",
+  "prior_source_count": 601,
+  "unchanged_prior_sources": 601,
+  "added_sources": [
+    "anadius-socket-source/cipher_session.cpp",
+    "anadius-socket-source/cipher_session.hpp",
+    "anadius-socket-source/cipher_session_integration_tests.cpp",
+    "anadius-socket-source/cipher_session_test_fixture.hpp",
+    "anadius-socket-source/cipher_session_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 606,
+  "current_documents": 226,
+  "native_objects": 193,
+  "cpp_objects": 189,
+  "c_objects": 4,
+  "normal_test_groups": 199,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 72,
+  "new_checks": 7338,
+  "new_tests": [
+    {
+      "module": "socket_cipher_session",
+      "result": "PASS",
+      "output": "PASS: 716 socket cipher session checks; actual0423d0/042760/042780/02bc70 control projections, owned schedule/mode/IV/flags, semantic local and native prefix state coherence, reset and factory isolation",
+      "executable_sha256": "e106f753248e70414bbed7eae00974e66fcdb2d8c463285c7f47e728dc7a0e21"
+    },
+    {
+      "module": "socket_cipher_session_integration",
+      "result": "PASS",
+      "output": "PASS: 6622 socket cipher session integration checks; owned init/key/IV/reset and permanent semantic cipher/factory adapters, ChallengeResponse to real native cipher/append and N1-N11 queue/send/finish; XML/native object/allocator/ABI/EH remain open",
+      "executable_sha256": "b552fe99041a46b12f2ab196f2cd04c2cfe006eaf2e75be9754c9b12f67f0ded"
+    }
+  ],
+  "validation_mirror_pairs": 36,
+  "historical_module_records_preserved": 35,
+  "historical_config_references_preserved": 70,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "06fb59e278c0a0431793f1c31d40500a1259e14296bfcfb1134cbe6e6c908373",
+  "inventory_data_checks": 7336,
+  "normal_source_procedures_added": [
+    "0x1800423d0",
+    "0x180042760",
+    "0x180042780",
+    "0x18002bc70"
+  ],
+  "new_original_procedures": 4,
+  "closed_providers": [],
+  "source_adapters": [
+    {
+      "file": "outputs/anadius-socket-source/cipher_session.cpp",
+      "interface": "messages_recovered::Cipher",
+      "adapter": "SessionCipher",
+      "scope": "init/fixed-key/key/local encrypt/decrypt share owned schedule/mode/IV with native prefix binding",
+      "native_abi_complete": false
+    },
+    {
+      "file": "outputs/anadius-socket-source/cipher_session.cpp",
+      "interface": "messages_recovered::CryptoFactory",
+      "adapter": "SessionCipherFactory",
+      "scope": "fresh independent unkeyed SessionCipher for existing ChallengeResponse temporary",
+      "native_abi_complete": false
+    }
+  ],
+  "new_source_bridges": 2,
+  "new_semantic_source_adapters": 2,
+  "native_typed_providers_newly_closed": 0,
+  "new_bounded_projection_boundary_only_entries": 3,
+  "raw_compiled_boundary_tags_added": 3,
+  "new_unique_source_mapped_addresses": 0,
+  "prior_native_source_closures_preserved": 23,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Owned init/key/IV/reset, semantic Cipher/Factory and existing ChallengeResponse to same actual native prefix state, N1-N11 queue/send/finish; native XML/document/dispatch/object/heap/ABI/EH remain open",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N13 native032d00 dispatch normal flow and document/handler source binding; CRT stays paused"
+}

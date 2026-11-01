@@ -1,0 +1,90 @@
+{
+  "schema": "reconstruction-inventory.presence.v1",
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "scope": "Retained canonical entries; source presence and recorded dependencies, not native equivalence",
+  "build": {
+    "result": "PASS",
+    "native_objects": 274,
+    "cpp_objects": 270,
+    "c_objects": 4,
+    "mock_test_suites": 337
+  },
+  "source_snapshot_entries": 946,
+  "canonical_total_separate_artifacts": 2381,
+  "artifacts": {
+    "anadius64": {
+      "canonical_functions": 2076,
+      "source_presence": {
+        "no_definition_mapping": 1452,
+        "source_definition_mapped": 501,
+        "module_record_only": 114,
+        "selected_upstream_adapter_only": 6,
+        "bounded_projection_boundary_only": 3
+      },
+      "compiled_symbol_correlated_entries": 505,
+      "multiple_definition_entries": 199,
+      "explicit_normal_body_claim_entries": 139
+    },
+    "version_outer": {
+      "canonical_functions": 198,
+      "source_presence": {
+        "assembly_wrapper_mapped": 197,
+        "source_definition_mapped": 1
+      },
+      "compiled_symbol_correlated_entries": 0,
+      "multiple_definition_entries": 0,
+      "explicit_normal_body_claim_entries": 0
+    },
+    "embedded_preloader": {
+      "canonical_functions": 107,
+      "source_presence": {
+        "source_definition_mapped": 5,
+        "no_definition_mapping": 102
+      },
+      "compiled_symbol_correlated_entries": 5,
+      "multiple_definition_entries": 0,
+      "explicit_normal_body_claim_entries": 0
+    }
+  },
+  "anadius_local_thunks": 45,
+  "external_imports_excluded": 170,
+  "pure_virtual_declarations": 1161,
+  "outside_canonical_tagged_addresses": 24,
+  "composition_only_source_files": 117,
+  "composition_only_address_definition_variants": 431,
+  "explicit_raw_gap_records": [
+    {
+      "artifact": "anadius64",
+      "address": "0x1800704e8",
+      "evidence": "anadius-crt-pair-leaves-source/evidence.json",
+      "size": 11,
+      "bytes_sha256": "a8a791a7544670cb92dd9a0391591c72bf7efb25949f6dc6f3c0b6eb60467494",
+      "status": "explicit_gap_body_claim_outside_canonical_if_not_listed"
+    },
+    {
+      "artifact": "anadius64",
+      "address": "0x1800644f0",
+      "evidence": "anadius-crt-pair-leaves-source/evidence.json",
+      "size": 7,
+      "bytes_sha256": "7655465ba32b287de56825a84e3f6b6561c5b5b0f5ac3a2883f2a8825d224e8c",
+      "status": "explicit_gap_body_claim_outside_canonical_if_not_listed"
+    }
+  ],
+  "limitations": [
+    "No completion percentage is derived. Legacy ~80% is a planning guess, not this inventory metric.",
+    "Missing exact address mapping does not prove absent source or unanalysed behavior.",
+    "Address-tagged definitions include coarse models, adapters and duplicate implementations; not equivalent native bodies.",
+    "Explicit B2 composition-only address-suffixed forwarders are retained separately and do not add canonical source mappings or native body claims.",
+    "An interface declaration may be satisfied by a derived override. It is not automatically globally unresolved.",
+    "Source-call tags and compiler symbols are bounded observations; no indirect/ABI/runtime equivalence proof.",
+    "Embedded preloader and outer version have independent VA namespaces; original embedded bytes remain in version build.",
+    "Gap/data/helper tags outside canonical entries are separate and are not all extra native functions.",
+    "Original target code was not executed or modified; static Ghidra imports/data reads are recorded separately. No real user CFG/token/achievement contents read."
+  ]
+}

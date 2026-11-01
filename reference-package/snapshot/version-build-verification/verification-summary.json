@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "compiled_exports_and_ordinals": 198,
+  "compiled_imports": 7,
+  "compared_wrappers": 197,
+  "compared_wrapper_instructions": 6556,
+  "compared_branch_targets": 424,
+  "compared_resolved_rip_memory_references": 636,
+  "compiled_embedded_bytes": 21504,
+  "version_resource_exact_payload_match": true,
+  "version_resource_bytes": 560,
+  "version_resource_sha256": "d61413c8dfa84eb63f499c0f3b5bc63e198538db28e9a793d86ac64403799f26",
+  "dll_sha256": "c982e3ea13f0f8123899d4ab6175fe93925885f10a5c79417a39cecdcfbb5f7e",
+  "entry_equals_exported_dllmain": true,
+  "normalization": "Address remapping through retained original-VA labels/linker map; RIP addresses resolved from llvm-objdump comments and matched to IAT/state/name symbols; JE=JZ and JNE=JNZ; whitespace/case ignored; original registers/widths/immediates/branch destinations retained.",
+  "limitations": [
+    "Static wrapper equivalence only; compiler-generated C++ DllMain was not proven instruction-equivalent.",
+    "PE layout, section RVAs, function addresses, exception/unwind metadata, and binary bytes can differ.",
+    "Embedded component remains original machine code, not recovered C++ source.",
+    "Original and rebuilt DLLs were never loaded or executed; full runtime equivalence remains untested."
+  ]
+}

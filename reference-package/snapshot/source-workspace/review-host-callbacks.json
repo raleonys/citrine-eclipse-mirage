@@ -1,0 +1,103 @@
+{
+  "reviewed_at": "2026-10-17T20:08:02.6248087Z",
+  "reviewer": "Independent read-only REA skill worker review_host_callbacks",
+  "evidence": "Retained REA/Ghidra assembly/pseudocode bound SHA2569e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "target_execution": "none",
+  "binding_map": {
+    "result": "PASS",
+    "records": 10,
+    "scope": "Enum order, originalpointer0a3838..0a3880, assembly installer pairs and existing source functions; cleanup0102b0",
+    "sha256": "3e6a09d7c4f4b266aae8d34b8e308396a1d30057b3b3c65e07a7b42e791b6bbb"
+  },
+  "reviews": [
+    {
+      "folder": "anadius-network-hook-source",
+      "functions": [
+        "18000fd00",
+        "1800102b0"
+      ],
+      "result": "No actionable findings",
+      "scope": "Length/family short-circuit, postwait/current-port reads, low32 counter/15exit, tail original call, stable forward cleanup/no clear; invalid buffer and native ABI excluded",
+      "sources": [
+        {
+          "path": "anadius-network-hook-source/connect.cpp",
+          "sha256": "28ed74cee63c7a2432336629595ad771ea573efbe33b9f9721f9d1b524378b6f"
+        },
+        {
+          "path": "anadius-network-hook-source/connect.hpp",
+          "sha256": "f6afcdaf8d2437c1dbb1b71d0d6496a3b653c445619baa60646268be828bafc4"
+        },
+        {
+          "path": "anadius-network-hook-source/hook_cleanup.cpp",
+          "sha256": "a0dc1b5726b78abad8066537f1b4abc45e0a9245da9bdac425a0aafa30da050b"
+        },
+        {
+          "path": "anadius-network-hook-source/hook_cleanup.hpp",
+          "sha256": "d940ec9b265188b0cd10230a2e79bd1ded28a88f28646de52ca3170cc80bc997"
+        },
+        {
+          "path": "anadius-network-hook-source/hook_tests.cpp",
+          "sha256": "6a88808475d66d6df4d42e4cd9003f00408c42cfd99ac27f7c5c2d54555c3dc0"
+        }
+      ]
+    },
+    {
+      "folder": "anadius-registry-source",
+      "functions": [
+        "18000f5b0",
+        "18000f800",
+        "18000f960",
+        "18000fac0",
+        "18000fb60",
+        "180009520",
+        "180009850",
+        "1800091a0",
+        "1800093a0",
+        "180010170"
+      ],
+      "result": "No actionable findings within documented domain",
+      "scope": "Original output retention, capacity snapshot/restore/reread, override precedence/type/secure-copy policy, fabricated handles; MSVC allocator/native ABI excluded",
+      "sources": [
+        {
+          "path": "anadius-registry-source/registry_tests.cpp",
+          "sha256": "4e074961c22a368ecbd8a54762ba3044c177433cc5e64e825987df23c313f2dd"
+        },
+        {
+          "path": "anadius-registry-source/registry.cpp",
+          "sha256": "44d141def6cd7fb6575cedce2c7cc383272f0ccd785ebb00f95a3cb1c1aabf7d"
+        },
+        {
+          "path": "anadius-registry-source/registry.hpp",
+          "sha256": "bac31bb65a57f83d6ae72b29021440358ad573ef2d1f41ca63175c350449a95c"
+        }
+      ]
+    },
+    {
+      "folder": "anadius-host-callbacks-source",
+      "functions": [
+        "18000f3f0",
+        "18000f4d0",
+        "18000fc00",
+        "18000fc80",
+        "180008db0",
+        "180008fa0"
+      ],
+      "result": "No actionable findings",
+      "scope": "Process blocked EAX0 and ten args, folder full id5/capacity260 and boolean copyerror, shared lookup/compare; native execution/ABI excluded",
+      "sources": [
+        {
+          "path": "anadius-host-callbacks-source/callbacks_tests.cpp",
+          "sha256": "06cf215fa0f101f05151d9913b4db41eb5e5740365a882c16ed024cad8d21ce6"
+        },
+        {
+          "path": "anadius-host-callbacks-source/callbacks.cpp",
+          "sha256": "a21e66575abe057fcaf05b2f4782593c4a537fb01d707ec77b07c4ec634330a1"
+        },
+        {
+          "path": "anadius-host-callbacks-source/callbacks.hpp",
+          "sha256": "1fc379d622ae3480bd9d441f181454703735bacb7832f80206bf79d0d863f0bf"
+        }
+      ]
+    }
+  ]
+}

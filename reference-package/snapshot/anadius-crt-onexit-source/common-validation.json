@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_onexit",
+    "result": "PASS",
+    "output": "PASS 15570 checks: onexit table normal flow, opaque storage and rebuilt synthetic callbacks",
+    "executable_sha256": "2ab90d43db9fd80a3d8733af78aa0850bf9a48d2c733c1b5c6d23d21e31bdabb"
+  },
+  "execution_scope": "Encoded onexit tables, growth/fallback, reverse execution and reentrant registration; owned opaque storage and callback fixtures",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-onexit-source/onexit_tests.cpp",
+      "sha256": "bb38205746ddd50b26f107dcf6e6133c9f942133bbacb7ab2fe238c2e4f4374d"
+    },
+    {
+      "path": "anadius-crt-onexit-source/onexit.cpp",
+      "sha256": "96e60bcef164e4080021377ecb9d743125939664e349e82ddf7debfd0aecb547"
+    },
+    {
+      "path": "anadius-crt-onexit-source/onexit.hpp",
+      "sha256": "a219b3b518a1080824933947daa031c8047e85e32699bfc9f4bc908be6398e9e"
+    }
+  ]
+}

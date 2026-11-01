@@ -1,0 +1,278 @@
+{
+  "input": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "target_execution": "none",
+  "input_modified": false,
+  "evidence_type": "Retained read-only Ghidra static assembly and pseudocode; original identity rechecked",
+  "source_evidence": [
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    },
+    {
+      "file": "anadius-rea-evidence.json",
+      "sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495"
+    }
+  ],
+  "functions": [
+    {
+      "va": "0x180042d20",
+      "rva": "0x042d20",
+      "role": "File hash matcher: initial state, peek/read8192/gcount, close, digest/case normalization, exact length comparison",
+      "assembly_evidence": "ev_5affdbb15dd51e3abe55d5492c9818a764b456d08959db245a1d7706ea07b21f",
+      "pseudocode_evidence": "ev_623c45d57f05388b470a69f932625a137bf84ac3deeff45fdbe6a041da0d62be",
+      "assembly_body_utf8_sha256": "642d70b820a8f006e20b16167169fc7d7319bbcdf0f25d57e3ee85391f458e71",
+      "pseudo_body_utf8_sha256": "398cd9cfd82605de189a04cd5deb1a1a81eb1f68f0fe4b7033f8fc00174a00c9"
+    },
+    {
+      "va": "0x180042aa0",
+      "rva": "0x042aa0",
+      "role": "64 bytes to sixteen big-endian words, included in Sha1 transform",
+      "assembly_evidence": "ev_11855b18de65d9e0f371f1e0090e2686371a325a97771ddf221123f924061077",
+      "pseudocode_evidence": "ev_a18c41f35057e49cb730dad41ff0b84b7b33616241aa18c0446fc2e6de3a4558",
+      "assembly_body_utf8_sha256": "210587f8da523cbed5eaa3fe21d8ce8bd96fd6b3d94d247292403e8c1fdff264",
+      "pseudo_body_utf8_sha256": "e546d30296557ca34a1e244ca677aee340e8bf7376b262f3b997a92a4a00c05e"
+    },
+    {
+      "va": "0x180043900",
+      "rva": "0x043900",
+      "role": "80 SHA-1 rounds, state addition, 64-bit block counter increment",
+      "assembly_evidence": "ev_ab95d37704689eb9f2b904a739621976f81e3569d1891e5f33c0acfb4cb3ec71",
+      "pseudocode_evidence": "ev_9367d35c5404c5faaa1fe95d625ca73459bdb660eb80cd4b1ecca246ec24a1ae",
+      "assembly_body_utf8_sha256": "00ce96ad58a17b78d0f248ac433356a2e7c6aac72b791746a1504d3b2428a42b",
+      "pseudo_body_utf8_sha256": "7296a45aa1a92257ffa0530dc37a119c16a6501c3fc2f764c0b8395344a2aa2f"
+    },
+    {
+      "va": "0x180043270",
+      "rva": "0x043270",
+      "role": "SHA-1 final padding and bit length, five hexadecimal formatted words, state reset",
+      "assembly_evidence": "ev_69b392dd313ee176667fe72b4192fdae5a91e00cede088902694bfe26c84e217",
+      "pseudocode_evidence": "ev_ead91b8011742f961e29e4b52e49018487884a61abe09f251369a8fbd46878c0",
+      "assembly_body_utf8_sha256": "fe2eb91ad3741416c89adce2ffa134912cb7f7691a40fc62d253e2bd8138ea2f",
+      "pseudo_body_utf8_sha256": "517dae79d62fc366c0e68e7ff0eefa5e9f803ad420d350bb3bd2d5437b20278d"
+    },
+    {
+      "va": "0x18003d2c0",
+      "rva": "0x03d2c0",
+      "role": "Full string length case normalization with MOVSX signed-byte CRT tolower arguments",
+      "assembly_evidence": "ev_e788d7b1761f0e343fe0ccb71a8388603b70e89d4412c9fb6766efd7b1fc618d",
+      "pseudocode_evidence": "ev_a5624360d5ae8204e1849ae393d79a9f7f850507d298421c2542d92a695e4dd3",
+      "assembly_body_utf8_sha256": "56d7bbb0fc7e795f97d1665aa5e933a8acd34f2d16d30cb7e2778bbcf2e9e19b",
+      "pseudo_body_utf8_sha256": "119fad8e4f312a051c9f92f393c2614711bfd34eff6eefd4c06626ec5091ada3"
+    },
+    {
+      "va": "0x180043790",
+      "rva": "0x043790",
+      "role": "Required stream peek/gcount reset and sentry/state contract",
+      "assembly_evidence": "ev_0ea223bf0cd2d119ff0474479648e3a2e07c0077714c1d00da8f41d6678ad3d8",
+      "pseudocode_evidence": "ev_b289ac492b088c758cc1eed4d040a6f6510f141348b0e4af1a0eabe90dfe5539",
+      "assembly_body_utf8_sha256": "f3dbedb963ad75da47390382ad5afc2cfc764d519091fbddbab5fbf8a97aefd2",
+      "pseudo_body_utf8_sha256": "ec4b7e73943cc527437cb5e5be99a17ff77e14feb8898074dec534f3f855460d"
+    },
+    {
+      "va": "0x18003b2a0",
+      "rva": "0x03b2a0",
+      "role": "Required stream read/gcount and short read state contract",
+      "assembly_evidence": "ev_cc0aa90f9de7e7906701a4e9023cf7b35b557c01032d56d1f1f791f37bc0aaeb",
+      "pseudocode_evidence": "ev_06d0995ac266899ad894ad111cccab1df71f2f547de35561889331c7ed4d887a",
+      "assembly_body_utf8_sha256": "1a7c202d3b0624a7a5567980d5908194213d1b32e6f486e041a8b738815937ee",
+      "pseudo_body_utf8_sha256": "12a8fa39ef622d45fceb4b81a1f4587b65f3ceb055f17b516b375841f5e4ffee"
+    },
+    {
+      "va": "0x180039f70",
+      "rva": "0x039f70",
+      "role": "Required ifstream constructor/file opener; input flag OR1",
+      "assembly_evidence": "ev_fb6406575d3357186579c5a4154994c91b032eb2a440e573b2e98a01c204549e",
+      "pseudocode_evidence": "ev_b90cb14f0062e08cae5a43a01e97cfa6382034ed5e418b612aaea1127677c968",
+      "assembly_body_utf8_sha256": "4d1103c8e42958ef6e969d608fdb615c7195af42d39ec1a5c81ed0924d953311",
+      "pseudo_body_utf8_sha256": "8e6c99d537b5f064d1de7c5cf8274835ee3588ada6978c29a835deb8496a0e09"
+    },
+    {
+      "va": "0x18003ae70",
+      "rva": "0x03ae70",
+      "role": "Required filebuf close contract",
+      "assembly_evidence": "ev_f07708d5bc881573a96dcf1f90ec6e0045e3c2f98e34246add685a10f0e6d81b",
+      "pseudocode_evidence": "ev_8e344ef8843f7b26d77b38c56abd94cf2455f0cf60b14bcaa6c34e9752cbc381",
+      "assembly_body_utf8_sha256": "ea90af1fd18eb593b49c5149f406a21b63c54fc589e062619ffb3b931e221b47",
+      "pseudo_body_utf8_sha256": "3ae1486b820d55505bdd49ce770788eb734bd7453868f870c54828da3c0bae56"
+    },
+    {
+      "va": "0x1800427a0",
+      "rva": "0x0427a0",
+      "role": "Required locale num_put formatting contract",
+      "assembly_evidence": "ev_705758b90f569f778f994cf1b960507db90954eb4bf8b4def461c821e8430a79",
+      "pseudocode_evidence": "ev_8988d7a7b4d9b78e564638a9d1f22522cf90dc1111a4f4e3cf387c8b7c5e0763",
+      "assembly_body_utf8_sha256": "5925e4366a6696ba235146c182879b5c93e7d65c67451770cf646ec2e3ebd23e",
+      "pseudo_body_utf8_sha256": "1b071955ab42a1a4868992fa2773ec04d76ea3bc1348b44d96db7159cc6f868f"
+    }
+  ],
+  "assembly_sites": [
+    {
+      "va": "0x180042d71",
+      "instruction": "0x180042d71: MOV dword ptr [RBP + 0x60], 0x67452301"
+    },
+    {
+      "va": "0x180042db6",
+      "instruction": "0x180042db6: MOV dword ptr [RSP + 0x20], 0x1"
+    },
+    {
+      "va": "0x180042dbe",
+      "instruction": "0x180042dbe: MOV R9D, 0x40"
+    },
+    {
+      "va": "0x180042dc4",
+      "instruction": "0x180042dc4: LEA R8D, [R9 + -0x20]"
+    },
+    {
+      "va": "0x180042dd0",
+      "instruction": "0x180042dd0: CALL 0x180039f70"
+    },
+    {
+      "va": "0x180042e06",
+      "instruction": "0x180042e06: CMP dword ptr [RSP + RCX*0x1 + 0x40], 0x0"
+    },
+    {
+      "va": "0x180042eb3",
+      "instruction": "0x180042eb3: CALL 0x180043790"
+    },
+    {
+      "va": "0x180042ec1",
+      "instruction": "0x180042ec1: MOV R8D, 0x2000"
+    },
+    {
+      "va": "0x180042ed3",
+      "instruction": "0x180042ed3: CALL 0x18003b2a0"
+    },
+    {
+      "va": "0x180042ed8",
+      "instruction": "0x180042ed8: MOV R12, qword ptr [RSP + 0x38]"
+    },
+    {
+      "va": "0x180042f68",
+      "instruction": "0x180042f68: CALL 0x180042aa0"
+    },
+    {
+      "va": "0x180042f7f",
+      "instruction": "0x180042f7f: CALL 0x180043900"
+    },
+    {
+      "va": "0x180042fb7",
+      "instruction": "0x180042fb7: CALL 0x180043790"
+    },
+    {
+      "va": "0x180042fd9",
+      "instruction": "0x180042fd9: CALL 0x18003ae70"
+    },
+    {
+      "va": "0x180043010",
+      "instruction": "0x180043010: JNZ 0x18004320b"
+    },
+    {
+      "va": "0x180043021",
+      "instruction": "0x180043021: CALL 0x180043270"
+    },
+    {
+      "va": "0x18004302e",
+      "instruction": "0x18004302e: CALL 0x18003d2c0"
+    },
+    {
+      "va": "0x180043036",
+      "instruction": "0x180043036: CALL 0x18003d2c0"
+    },
+    {
+      "va": "0x18004307a",
+      "instruction": "0x18004307a: CALL 0x180079770"
+    },
+    {
+      "va": "0x180043083",
+      "instruction": "0x180043083: CMP RSI, RDI"
+    },
+    {
+      "va": "0x1800432b4",
+      "instruction": "0x1800432b4: MOV RSI, qword ptr [RCX + 0x38]"
+    },
+    {
+      "va": "0x1800432b8",
+      "instruction": "0x1800432b8: SHL RSI, 0x6"
+    },
+    {
+      "va": "0x1800432bc",
+      "instruction": "0x1800432bc: ADD RSI, qword ptr [RCX + 0x28]"
+    },
+    {
+      "va": "0x1800432c0",
+      "instruction": "0x1800432c0: SHL RSI, 0x3"
+    },
+    {
+      "va": "0x1800432e7",
+      "instruction": "0x1800432e7: MOV word ptr [RAX + RCX*0x1], 0x80"
+    },
+    {
+      "va": "0x180043361",
+      "instruction": "0x180043361: CMP R15, 0x38"
+    },
+    {
+      "va": "0x180043365",
+      "instruction": "0x180043365: JBE 0x18004338c"
+    },
+    {
+      "va": "0x18004338c",
+      "instruction": "0x18004338c: MOV dword ptr [RBP + 0x7c], ESI"
+    },
+    {
+      "va": "0x180043393",
+      "instruction": "0x180043393: MOV dword ptr [RBP + 0x78], ESI"
+    },
+    {
+      "va": "0x1800433a1",
+      "instruction": "0x1800433a1: CALL 0x180043900"
+    },
+    {
+      "va": "0x180043473",
+      "instruction": "0x180043473: MOV byte ptr [RBP + RCX*0x1 + -0x68], 0x30"
+    },
+    {
+      "va": "0x1800434a4",
+      "instruction": "0x1800434a4: LEA RCX, [RSP + 0x40]"
+    },
+    {
+      "va": "0x18004362a",
+      "instruction": "0x18004362a: MOV dword ptr [RDI], 0x67452301"
+    },
+    {
+      "va": "0x18004365f",
+      "instruction": "0x18004365f: MOV qword ptr [RDI + 0x38], R12"
+    },
+    {
+      "va": "0x180044ff9",
+      "instruction": "0x180044ff9: INC qword ptr [RAX]"
+    },
+    {
+      "va": "0x18003d2f1",
+      "instruction": "0x18003d2f1: MOVSX ECX, byte ptr [RBX]"
+    },
+    {
+      "va": "0x18003d2f4",
+      "instruction": "0x18003d2f4: CALL 0x18005fca0"
+    }
+  ],
+  "reconstructed": "Logical SHA1 streaming core and 042d20 application orchestration. Stream, locale, allocator and ABI are not claimed to be original layouts.",
+  "test_vectors": {
+    "standard": "Empty, abc, 56-byte abcdbc...nopq, one million a",
+    "independent_binary": "Hardcoded .NET System.Security.Cryptography.SHA1 digests of byte[i]=(37*i+11)%256 at 17 lengths; no original target executed",
+    "chunking": "Every stride 1 through 129 at all 17 binary lengths",
+    "locale": "Mock contract verifies signed byte forwarding, full NUL-inclusive string length and case-call order; not ambient locale equivalence"
+  },
+  "limits": [
+    "No original DLL execution or runtime equivalence test",
+    "Native MSVC stream and locale facets remain required interfaces",
+    "Allocation/exception ABI not reproduced",
+    "Adapter violations null stream or oversized gcount raise explicit integration errors rather than emulate undefined behavior",
+    "Very large counter-wrap cases are established by unsigned arithmetic and static listing, not practical test data"
+  ]
+}

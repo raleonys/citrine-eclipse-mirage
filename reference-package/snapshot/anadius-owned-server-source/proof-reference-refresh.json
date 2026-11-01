@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "scope": "Execution evidence references only; no source/build/archive/link artifacts changed",
+  "source_files_unchanged": 864,
+  "prior_sources_unchanged": 860,
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "source_snapshot_sha256_unchanged": "4ea6289b08cf5f0a719121910ea09e0c5b5538dadb85721a2c42e6760842a2c8",
+  "build_record_sha256_unchanged": "e09fcbf89070f8e365ff1fd02c3e2acc5522226a0d35b58da536afc01ec3d77d",
+  "old_review_sha256": "3e328f7c35638131c953c9f75803cdc65cd9a8ed888e0f1e65d44da3d7ca6678",
+  "new_review_sha256": "159b0b1cf074f4e1a0dabac7807647111d04f1259454d4f3c4c1cae2cade494b",
+  "module_validation_before": {
+    "validation.json": "4c6f015cd3fc091c247178e4ef56e27721774a86408bd238a2412e7c6fd96ecf",
+    "common-validation.json": "4c6f015cd3fc091c247178e4ef56e27721774a86408bd238a2412e7c6fd96ecf"
+  },
+  "module_validation_after": {
+    "validation.json": "8aa4f1c977dd20b3511783cffd5a1613bbedf2cee4608de7a7c2aba1ca336ed3",
+    "common-validation.json": "8aa4f1c977dd20b3511783cffd5a1613bbedf2cee4608de7a7c2aba1ca336ed3"
+  },
+  "current_quick_record_sha256": {
+    "work/b35-core-quick-results.json": "83152897661a7871e8cec0c65f4682a5ad68507dd0b08f613e79c9abb539a93c",
+    "work/b35-integration-quick-results.json": "c0faa56b9bde4f24cf1ffb4523007ba953c3507d0f51228c441a9adb6bb44deb"
+  },
+  "finalizer_rerun": false,
+  "current_common_log": "work/b35-common-final-build.log",
+  "checked_at": "2026-10-30T21:51:21.369107+00:00"
+}

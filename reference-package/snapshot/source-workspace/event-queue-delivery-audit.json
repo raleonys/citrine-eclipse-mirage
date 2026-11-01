@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T19:02:14.7573956Z",
+  "prior_package_sha256": "a4388c2fc22d96249f772698a16efad087a48a61098624fbe0c09a6b113f737c",
+  "prior_source_count": 404,
+  "unchanged_prior_sources": 404,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-event-queue-source/adapters.cpp",
+    "anadius-event-queue-source/adapters.hpp",
+    "anadius-event-queue-source/integration_tests.cpp",
+    "anadius-event-queue-source/queue_tests.cpp",
+    "anadius-event-queue-source/queue.cpp",
+    "anadius-event-queue-source/queue.hpp"
+  ],
+  "current_sources": 410,
+  "current_documents": 162,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 140,
+  "cpp_objects": 136,
+  "c_objects": 4,
+  "normal_test_groups": 125,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "event_queue",
+      "result": "PASS",
+      "output": "PASS: 2054 event queue checks; synthetic guards and chosen FIFO only",
+      "executable_sha256": "a9bd19a137a46ecd0a6cfa1af8042113e660efbb6675fc87e2e858c36d7330ee"
+    },
+    {
+      "module": "event_queue_integration",
+      "result": "PASS",
+      "output": "PASS: 133 event queue integration checks; shared synthetic guards and controlled cipher only",
+      "executable_sha256": "e23ceb0ee12ef620a3ce345957ff4ace3877c148c93732b8f8418ce34adeffb4"
+    }
+  ],
+  "new_checks": 2187,
+  "master_build_sha256": "ed94c56831f41362e906d56b3195c905a2f0490d3886838707a8d6d18f4ef9cf",
+  "common_build_script_sha256": "7f5c151018a1cd8a9538f5919d93042f4c0570242705a205abe66f49f62492a7",
+  "cmake_sha256": "e5854fc5b74c6baf56677f3e8a7fe6282bc7fd5721d1230af2911ae567821bb8",
+  "normal_source_procedures_added": [
+    "0x18002c620",
+    "0x18002c400"
+  ],
+  "new_composition": "ContentQueue/IgoQueue/MessageQueue share one Context/Storage with recovered callers, not separate original procedures",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "selected_FIFO_backend": "OwnedStorage std::deque/string/atomic count, not native deque/allocator/CRT/concurrency recovery",
+  "native_ABI_SEH_global_runtime": "not established"
+}

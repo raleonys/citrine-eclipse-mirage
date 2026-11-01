@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_pair_leaves",
+    "result": "PASS",
+    "output": "PASS 140 ACRT pair leaf checks;shared heap/VCRT/argv state;owned command buffers",
+    "executable_sha256": "013db1b7a203959fc67eca8bc7bc413d0d762fcd6199b2c35b4524ebc20940ac"
+  },
+  "execution_scope": "4normalflow bodies0704e8/0644f0/006500/06f9bc;140checks,sharedheap resetonly,actualVCRTforced0,sharedargvcommandpublicationAthenW/borrowedspans/actualparser;2missingretainedleavesfreshREA18bytes/rawPE/localLLVM;noOScommandlineacquisition/fullCRT/ABI/SEHexcluded",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-pair-leaves-source/native_tests.cpp",
+      "sha256": "1ae3a7571080b0ad67d3dfc97052f38f8f103411a81e62f94abd69639025e7bb"
+    },
+    {
+      "path": "anadius-crt-pair-leaves-source/pair_leaves.cpp",
+      "sha256": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87"
+    },
+    {
+      "path": "anadius-crt-pair-leaves-source/pair_leaves.hpp",
+      "sha256": "4c05549af135b8bb56515e56a5e9180c7fc90e9bd08f798d852aab145233019e"
+    }
+  ]
+}

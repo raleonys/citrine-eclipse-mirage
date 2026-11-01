@@ -1,0 +1,108 @@
+{
+  "schema": "online-factory.source-composition.v1",
+  "source_package": "B54",
+  "evidence_type": "Owning online assembly on actual backend state and retained foreign binding",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "sha256": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "72713547523dcf06f2e9824778d89965e7b86d67b0a6c14222eaf0b71448f7da",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "sha256": "72c0dcdf15bbdae395e17a6089277b5635bd2ef8334e1025dacab35f2646b838",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "3828d09fbccad14dc04882726eb5bc7d60c76e452814c2e09f5b492c6c90f289",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    },
+    {
+      "path": "outputs/anadius-online-object-source/object.cpp",
+      "sha256": "917a7503768e47250f94df059b2ad98fec03a022c264aa2a0566e9ae36dfce78",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    },
+    {
+      "path": "outputs/anadius-online-query-source/query.cpp",
+      "sha256": "efadfeef5fb5739ffeb538bc1c3f0bfbfb4b33ff17dc83686b6652707603a10d",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    },
+    {
+      "path": "outputs/anadius-online-source/online.cpp",
+      "sha256": "00020732bf6e36d53b9bfafe80d6cb85f303b8b329624562d45991f916e50cb8",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    },
+    {
+      "path": "outputs/anadius-online-source/recovered_effects.cpp",
+      "sha256": "0bbd7c694762d968b6e509f1df851a46288bbd692fc7a1783c27eb45f11bfbd2",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    },
+    {
+      "path": "outputs/anadius-online-version-source/version.cpp",
+      "sha256": "328443d0ac8d3bae0b5f12878c955087cf99a402beecf7e6879b345e16e9c7d0",
+      "scope": "Existing real source or reviewed composition seam; not a fresh original binary observation."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b54-core-quick-results.json",
+      "sha256": "80de6fe6d9dee07e148265726f6cf083f6bfd0cdc9027a961997e71aad942363",
+      "checks": 69,
+      "executable_sha256": "3cc1c0342c3ee17e4fcdd3b8e07ecd7819adce9d1fbc9aa12a0c66ea286ce7c7",
+      "archive_sha256_as_used": "c4c314b988cb65009261db1ae5375dc33dcaa24c72877e92483002ca575228ec",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh online_factory factory.cpp and modified backend.cpp plus independent factory_tests.cpp, with selected15 actual-use source/interface/fixture hashes. Immutable canonical B53 archive supplies prior core/Binding/Execution/OS/file algorithms. Fresh backend.cpp is required by actual SourceBackend construction/bind and the appended Resources HOST layout; Runtime factory.cpp and application worker.cpp are not used by this core and are separately freshly compiled by integration. No giant Online Effects lower is instantiated; source RecoveredEffects uses the fully implemented new facade only for its ten nonforwarding core methods. Main count excludes inherited fixture setup assertions and separately verifies eight exact isolated child exits. Normal tests cover all27 real routes and initial-zero/runtime-view validation, Options consumption, passive mandatory-input rejection, actual Backend factory adoption and foreign-view rejection, single-use empty-slot installation, real Execution wait/finish using the exact Runtime ready byte, typed private own-EXE version/factory/five-slot readable unaligned object, raw and owned getter boundaries, actual binary/status/dialog/log paths, source cleanup destroy-before-free and logical FALSE-free semantics. Lookup/code-lease mutation, version output and free/code-deleter LastError are checked. A real own std-thread blocks a getter while the component and Binding leases prevent close; this is not a Domain/kernel worker proof. Actual source online worker stores long/first-NUL/empty profile fields and emits counted persistence. Late false/true foreign finality predicate gates final provider retirement only: foreign object users must already be excluded by the pre-cleanup stop_sources/foreign contract, and this callback does not retroactively prove destroy/free safety. CodeLease/predicate/backing capture destructors probe the still-attached Retiring facade and cached empty Binding metadata after unique_ptr reset. Child tests retain close-reentry, load, swallowed lookup poison, factory, destroy, query, free and known version-exception prefixes without guessed cleanup/retry. The new Online blanket-poison policy deliberately retains a known synchronous version exception even when Binding alone is still known/nonpoisoned. Code leases here cover synthetic process-lifetime own-EXE functions; no actual DLL pin/provenance or complete foreign ABI is claimed. No original/rebuilt DLL, game, network, user cfg/token/license/key contents, global/kernel/foreign quiescence, loader/unload equality or production DLL completion is claimed."
+    },
+    {
+      "path": "work/b54-integration-quick-results.json",
+      "sha256": "8908a9c108a761cee3d0cd294d60bdecf28d08df864910ce2e5fe775cbf247a9",
+      "checks": 686,
+      "executable_sha256": "6cfa4addcb919ee7e4a73e90a1fcd5f04e71f72d087391a11c193b6b55184e24",
+      "archive_sha256_as_used": "c4c314b988cb65009261db1ae5375dc33dcaa24c72877e92483002ca575228ec",
+      "execution_author": "/root/b22_integration",
+      "note": "ActualRuntime/SourceBackend4realDomainthreads (outerApp+3bootstrapworkers), actualGraph/pipeIOCP/defaultCancel995+successNF cleanup. NewOnlineComponent hasNOgiantEffects lower; OptionsownsrealBindingModule/Version/Factory/Object/Query and15existingpath/file/log/Dialogleaves plusactualBackendExecutionphases. TypedPRIVATEOWNEXEexports viaSDKModuleSystemCalls/getprocspies, neverLoadDLL; staticEXEcode ispermanentforownprocess andexplicitPrivateCodeleases retainexportstate. RealRuntimeconfig/profilecopies andMemoryprofilepersistence +versionmissing/mismatch/factorymissing/offlinefallback tested. ExistingStopSources/actualjoins excludealladmittedworkers BEFOREobjectDestroy; NOasynchronousforeignobjectusersareeveradmittedbyconstruction. Lateforeignpredicatefalse gatesONLYprovider/codeOWNERretirement, notretroactiveobjectfinality; explicittrue retry afteractualSourceEXIT/module0/object0 doesnotrepeatstop/cleanup. Namedmake_runtime(Resources&) andmake_online(Options&) consumeSBOdonors. RemainingservicesusesactualB53factory, config/host/hookSDKpoliciesremainexplicitfixtures. NoOriginalDLL/game/usercfg/token/licensecontents/network/AcceptExinterop/foreignasync/nativeABI/loader/fullResourcesclaim."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition only.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "production_sources_added": 1,
+  "prior_sources_modified": 3,
+  "new_test_sources": 2,
+  "modified_gate_auxiliary": [
+    {
+      "path": "dll-link-gate-source/build-link-gate.ps1",
+      "before_sha256": "eb185b71f701b928a53fc621a7d49239b699188a9d55d4d58c18f1908f6fa0cb",
+      "after_sha256": "c7357aed27aa3bbfdff4d626cfc67926b26a9180c77459c0e2b0ce15f5c10d19",
+      "reason": "Preserve explicit configuration/services objects and additionally select/verify frozen online_factory.o in the actual failed-link diagnostic; no Runtime loader reachability claim."
+    },
+    {
+      "path": "dll-link-gate-source/target.cmake",
+      "before_sha256": "f7559e056af74a050f74762908f0ffa408ad73e0ffb2184d2b9d579651dcfa54",
+      "after_sha256": "43446d53ea57de5ea7c3b3ecc224cdc71c0906d6a48172cf4f0640d4f5de6a1d",
+      "reason": "Preserve explicit configuration/services objects and additionally select/verify frozen online_factory.o in the actual failed-link diagnostic; no Runtime loader reachability claim."
+    },
+    {
+      "path": "dll-link-gate-source/verify-link-gate.py",
+      "before_sha256": "9364c5b4efd1993e6886306065ae8894d76e799f19f2e3dd37fd63c2e821c580",
+      "after_sha256": "f32792d701baf58ed61c3abc92fcaf6fdca57df0d312c151df0f0ad17ce739d1",
+      "reason": "Preserve explicit configuration/services objects and additionally select/verify frozen online_factory.o in the actual failed-link diagnostic; no Runtime loader reachability claim."
+    }
+  ],
+  "gate_auxiliary_review_sha256": "195c833df1c343bc6d4930b20c82526121982e2c9a401faa3d1505abed1a9e67",
+  "full_production_Resources_complete": false,
+  "loader_reachability": false
+}

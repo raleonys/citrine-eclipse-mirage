@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "vcrt_api",
+    "result": "PASS",
+    "output": "185 VCRT API fallback checks passed",
+    "executable_sha256": "ff0de9a17d83cb8705c36c2b6d78077d9d64f2eda29a37835a01f33620e1b4fe"
+  },
+  "execution_scope": "Plain3-module5-procedure resolver and five FLS/CS wrappers; synthetic dynamic/TLS fallback effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-vcrt-api-source/api_tests.cpp",
+      "sha256": "fbe1dfff44b20dc6ac75160c6404e24ffacb915b4c1464098cf4c50aabd5c826"
+    },
+    {
+      "path": "anadius-vcrt-api-source/api.cpp",
+      "sha256": "ce23cd356e8346f5c849757bf45a8b43fd8a7e40fa3fce5be99cfec9ff9b3f85"
+    },
+    {
+      "path": "anadius-vcrt-api-source/api.hpp",
+      "sha256": "dcd287690abf9e3dc2c3b40818294d783e79207c4a0fa03ae1a91fa7c3ab33c1"
+    }
+  ]
+}

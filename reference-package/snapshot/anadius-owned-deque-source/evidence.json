@@ -1,0 +1,72 @@
+{
+  "schema": "owned-deque.source-composition.v1",
+  "source_package": "B42",
+  "evidence_type": "existing typed026670/028270/026880 source composition with explicit Parent allocation/lifetime policy",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "reused_addresses": [
+    "0x180026670",
+    "0x180028270",
+    "0x180026880"
+  ],
+  "source_references": [
+    {
+      "path": "outputs/anadius-socket-source/response_containers.cpp",
+      "sha256": "c1108f7835ac8e21ca3e05735e93ca55f4859127b556f6a5ff13644381ab0eb8",
+      "scope": "Existing source/evidence reused; no new original-byte query."
+    },
+    {
+      "path": "outputs/anadius-socket-source/response_dispatch.cpp",
+      "sha256": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0",
+      "scope": "Existing source/evidence reused; no new original-byte query."
+    },
+    {
+      "path": "outputs/anadius-session-dispose-source/dispose.cpp",
+      "sha256": "4e8f1484343975650b289cdcc87316105928611e995e70bd8acaff87d318620d",
+      "scope": "Existing source/evidence reused; no new original-byte query."
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/evidence.json",
+      "sha256": "1802cbbd26fe14e0e45e01c4152ef860f0f9cedd698ddca876eb87efa2b59143",
+      "scope": "Existing source/evidence reused; no new original-byte query."
+    },
+    {
+      "path": "outputs/anadius-native-profile-source/evidence.json",
+      "sha256": "6ff2e07c632f301a16e7eae5241368ecf8981a2a901bf84ff9c674c9d1e9ac98",
+      "scope": "Existing source/evidence reused; no new original-byte query."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/architecture-review.json",
+      "sha256": "0f9ed9beefd1b0c2fddedfe3d6507394d5231129115cf15241d2da408a832bbb",
+      "scope": "Existing source/evidence reused; no new original-byte query."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b42-core-quick-results.json",
+      "sha256": "69b6f046cbfbf96475862d3f194b6af3fc07178b5cfb0de2ab5fadb1a1cec5a1",
+      "checks": 159,
+      "executable_sha256": "086cffdcca856f2901e2c67fba7990a7dd0e92342cac441eb9049d082bb2e3aa",
+      "archive_sha256_as_used": "380ffcbf8b0ad851fdeda23518127d423097b82cc96d5601c756c7877d9d0b2c",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh deque.cpp, modified memory.cpp, response_containers.cpp and deque_tests.cpp, selected actual headers and prior domain fixture; immutable canonical B41 archive supplies other prior production objects. Modified Profile integration is not compiled by this invocation. Main count excludes eight independent retained-prefix child bodies, whose exact exits251..258 are checked by the parent test. The deterministic address-reuse fixture owns and caches one physical process-heap block between acknowledged injected frees, and physically releases it by fixture teardown; old borrowed metadata spans are never dereferenced across allocation/free."
+    },
+    {
+      "path": "work/b42-integration-quick-results.json",
+      "sha256": "463ed6d2af7d779aca842b3483cd16bdd69543d1be7bdd1e2ecab86f0b3804fa",
+      "checks": 244,
+      "executable_sha256": "9a2955391b9fcb04d7f1735755afe76a5dab0c3d41fe556622f5376192440014",
+      "archive_sha256_as_used": "380ffcbf8b0ad851fdeda23518127d423097b82cc96d5601c756c7877d9d0b2c",
+      "execution_author": "/root/b22_integration",
+      "note": "Actual concrete Profile-owned Deques026670 with authoritative Parent typedmapledger;17nativeplaintextrequests plus overlappingAESrequest/event via actualNativeLogic/Router/frame/ownedresponse/send/disposal. FakeSDK holds firstsend untilqueue7, observes5actualcompletions→head5/count2, thenfeeds10morerequests→wrapoldmap8/grow16/backlog12; validatesoldmapledgerretired/newmaplive,logicalandphysicalFIFO IDs. Nofixturegrowoverride/context/observer/manualworkcounter. Realprocessheap/FLS/ownIOCP, selectedsameworkerjob/SDK/terminalowner0/externaldrainpolicies; nooriginal/network/nativeABI/globalquiescence claim."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition; no fresh shipped-artifact claim.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false
+}

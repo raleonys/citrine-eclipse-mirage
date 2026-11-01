@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "b3cff7ee88c1c74cd65de167e069aea1b12eff7a81c6829714b1e90a9e659f0e",
+  "test_results": [
+    {
+      "module": "socket_composed_read",
+      "result": "PASS",
+      "output": "PASS: 3672 composed read core checks; actual025c40 with010040/008350, independent delimiter oracle and explicit request anchors, sentinel/flags/commit/error/category reloads/terminal ordering/lifetime; isolated021d10 capture only",
+      "executable_sha256": "9f7a0eb503d69151ba6961f4b6dff46cd41b00ad906bbd805f2563ba8f0f8e9d"
+    },
+    {
+      "module": "socket_composed_read_integration",
+      "result": "PASS",
+      "output": "PASS: 1714 composed read integration checks; recovered025c40 closes actual completion/borrowed/owned scheduling through010040/008350/021d10/023dd0/injected SDK/IO route/027710/021a40; split/embedded-NUL/trailing/EOF/limit/error, early key2/fallback and real IO/task lifetimes;025480 remains required",
+      "executable_sha256": "0db589eb142ae149be9cbb67adf20b525973dadd5597c8299a42781b52a50b6e"
+    }
+  ],
+  "core_checks": 3672,
+  "integration_checks": 1714,
+  "source_hashes": {
+    "composed_read.hpp": "11dad087e4f8f08fcbc16ef5ad42a02e313f2ae0a2734b4c7feab8f07baa94a5",
+    "composed_read.cpp": "9e6ab5c28329fe1b867f4c4c683194ca852f1c5d813f22274210d65a7f9f0037",
+    "composed_read_test_fixture.hpp": "bbe4f98f2ad9abc15821ff402d96cf5553907a0f8eb81da9d9098194e9ac7732",
+    "composed_read_tests.cpp": "a07b769d77fb309265f7854c2d05d19839cde32dd8b7c8ab0a73b56ff3185bc0",
+    "composed_read_integration_tests.cpp": "e0040dc259689234eb38f2cb72a024d738b8e599fcc817410f0e755730dc5098",
+    "build.ps1": "9a424550336ede080d66764f158c35ec9ddffaaccccc2eae06887476ec7b8c0c",
+    "CMakeLists.txt": "f44417368949f4d4ed581367f025dddc0c93c48494377b024a68be00c88002ef"
+  },
+  "original_procedures_added": 1,
+  "execution_scope": "025c40 normal body; actual R1/R2/constructor/IO routing/completion/borrowed and owned scheduling; deterministic injected SDK and early/fallback protocol fixtures; R4 required",
+  "core_callee_injection": "Explicit isolated test parameter only; recovered bridge uses actual021d10",
+  "iterator_boundary": "Empty range nonzero cursor unsupported; no native corrupted-state/fault/termination proof",
+  "previous_local_records": "22 earlier local records retain historical configuration hashes; current common build is authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

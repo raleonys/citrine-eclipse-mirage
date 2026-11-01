@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_cpu",
+    "result": "PASS",
+    "output": "PASS 10373 synthetic CPU-dispatch checks",
+    "executable_sha256": "dbef5d4793879cf71b49240c901b55b15c40f59d1475ca4f960b3420b6e45530"
+  },
+  "execution_scope": "Recovered CPUID/XGETBV decisions using synthetic register providers; no target or hardware feature probe by source model",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-cpu-source/cpu_tests.cpp",
+      "sha256": "114730d13e294967669c078e59ef1eca009bfaffea9da62be45ffe412cea8829"
+    },
+    {
+      "path": "anadius-crt-cpu-source/cpu.cpp",
+      "sha256": "0363b28d66323aa27b73f5a6bab114ccadaed1aa5ab0db886e897afc816215c1"
+    },
+    {
+      "path": "anadius-crt-cpu-source/cpu.hpp",
+      "sha256": "fd9168d96bbf8f5f30af22de6c0635986b126d92b4a6de2381e4f73238d69641"
+    }
+  ]
+}

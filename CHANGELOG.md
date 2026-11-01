@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Preserve all expanded reconstruction delivery files on a retained project branch, add per-file review and finding ledgers, and keep package updates and focused correction PRs linked to a master project review. Add a staged, rollback-safe ZIP updater and a hash-verified research/product boundary with tamper and update regressions; preserve review history and reopen changed/new files without storing split archives.
+
 - Establish a hash-pinned review tracker for the owner's eight-part reconstruction archive 11, with all 4,266 file identities, module triage and a prioritized test-transfer ledger. Independently verify package/source/build-artifact consistency; keep supplied test claims and the blocked donor production DLL link distinct from current product acceptance. No donor implementation or binary is installed.
 
 - Make the native CreateProcessA argument-forwarding fixture use explicit caller buffers for pointer identity, removing its dependence on string-literal pooling in MSVC Debug while retaining all ten argument assertions. Production callbacks and connect behavior are unchanged; fresh native Debug/Release validation remains pending.

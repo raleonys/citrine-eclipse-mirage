@@ -1,0 +1,32 @@
+{
+  "source_package": "B52",
+  "result": "OWNING_CONCRETE_CONFIGURATION_COMPONENT_WITH_TWO_NARROW_EFFECTS",
+  "covered_required_methods": 19,
+  "total_required_methods": 21,
+  "streaming_visit_concrete": true,
+  "mandatory_narrow_effects": ["LicenseEffects", "LegacyDocumentReader"],
+  "giant_lower_Dependencies_required": false,
+  "owned": [
+    "Core13, Filesystem, caller-seeded Paths and actual Persistence state, managed stream and conversion resources",
+    "Passive construction and empty Resources.configuration installation commit",
+    "Direct streaming processing/deletion before FindNext and exact source conversion/log/PNG prefixes",
+    "Attached-Impl Retiring seal through every opaque destructor; normal visitor nested filename/remove remains admitted",
+    "Explicit frozen common factory object selection in failed DLL diagnostic"
+  ],
+  "required_contracts": [
+    "Serialized configuration calls and post-join/callback retirement, not creator-thread affinity",
+    "Narrow captures own backing state or use Inputs lifetime; no references to unconstructed/private engine state",
+    "Native SDK outcome contracts and selected compiler/encoding policies",
+    "Caller supplies initial configuration State and achievement Paths"
+  ],
+  "not_proven": [
+    "Original license processor or complete legacy collection-copy traversal equivalence",
+    "Whole Resources/Services factory and foreign/rawjob/hook finality",
+    "Original MSVC layout/ABI/EH/concurrency or arbitrary destructor/callback behavior",
+    "Loader factory invocation, image runtime reachability, loader-lock attach/detach or usable complete DLL"
+  ],
+  "native_body_delta": 0,
+  "native_ABI_closure_delta": 0,
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null
+}

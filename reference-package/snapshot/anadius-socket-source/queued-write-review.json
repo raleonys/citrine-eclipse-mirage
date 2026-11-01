@@ -1,0 +1,31 @@
+{
+  "reviewer": "queued_write_audit",
+  "date": "2026-10-23",
+  "scope": "Independent two-file review against complete retained02a500 and025a70/021fd0/0261d0/027a20 context",
+  "result": "PASS",
+  "material_findings": [],
+  "material_findings_count": 0,
+  "source_hashes": {
+    "outputs/anadius-socket-source/queued_write.hpp": "7a205cbc34118c9181f829feeb474478dedd10eb21d37780af966018e3f6cc7a",
+    "outputs/anadius-socket-source/queued_write.cpp": "8aec35f671804e86544701065a8c510b0b3c5632b0baf13cf31f6679fbd88211"
+  },
+  "flow_audit_md_sha256": "3546600d85795f557565ae97db61dd8b2dff520430bbdc9c3ec0a65a55db9324",
+  "flow_audit_json_sha256": "b533b611d4699dfe6d9376cf20d63d91c19d970141eaaaf8c3fdc12e697c894b",
+  "normal_source_procedures_added": [
+    "0x18002a500"
+  ],
+  "new_original_procedures": 1,
+  "production_edited_by_reviewer": false,
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "limitations": [
+    "Bounded coherent owner/string/stream/control projections; no native overlays",
+    "Exactly one normal body;026860 remains required terminal",
+    "Explicit direct-caller test injection is not native-runtime evidence; recovered API uses actual021fd0",
+    "Only completed normal prefixes; native races, exceptions, unwind and SEH not claimed",
+    "No full DLL or ABI equivalence claim"
+  ],
+  "report_sha256": "1e3628ff1194e32db868903b7c77eadd8cf45d2f41a0c4ac782b6be3af59a45b"
+}

@@ -1,0 +1,43 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "origin": "Bounded extraction of previously retained REA/Ghidra evidence. Parent confirmed REA6.5.0 aligned catalog and available Ghidra12.1.4; current session closed. Additional candidate/name bytes read statically from hash-verified PE without loading it.",
+  "functions": [
+    {
+      "va": "0x18006ccc8",
+      "assembly_evidence": "ev_74c55dda34e8177843d28dcac68f6f371d4d1144cac5f39f36583090d5c863fb",
+      "pseudocode_evidence": "ev_b20fc9636a2c56a1d955fa71efd50f6472b9937c3a169ae04125c9b14510bf03"
+    },
+    {
+      "va": "0x18006cd58",
+      "assembly_evidence": "ev_b2253ee9d2d4aa4fbe2192eaaa8c2be4efd3b31f0176d7e02e5836cc99292b7f",
+      "pseudocode_evidence": "ev_199d5128e65e855a843901c44a214968af6d9232730c107b76dc582ac07ccad1"
+    },
+    {
+      "va": "0x180066c1c",
+      "assembly_evidence": "ev_1d636bbaee00f8ee747e6d99e5a2a2d3d277679f3fed4291ec81b38cb35db71e",
+      "pseudocode_evidence": "ev_9eec0ac9cfd859ebdf7fadf5438403822349fa6b1ece7b56f77e74ccf70a9ca3"
+    }
+  ],
+  "selected_assembly_sha256": "42c85b0a6d9f0888d15143d27ec1bf2a187381c6338fbfdbbd45a01b507aed25",
+  "selected_pseudocode_sha256": "c9eea192623c8c0575daac7bdc6992dbb704bd159412cbb7a8900cf2ab7b04a2",
+  "candidate_table": {
+    "begin_va": "0x18008b8f8",
+    "end_va_exclusive": "0x18008b8fc",
+    "name_va": "0x18008b900",
+    "raw_offset": 565496,
+    "length": 24,
+    "hex": "100000000000000041726546696c6541706973414e534900",
+    "sha256": "3d90eb544e952afe853f4d972cba4d6392709e94afdb0997acbfc1f3ccb2d16d",
+    "candidate": 16,
+    "module": "kernel32",
+    "procedure_slot": 0
+  },
+  "limits": [
+    "Native conversion and function invocation remain required pure provider effects.",
+    "Preserves observed flag filtering, pointer transformations and full EAX result; does not implement Windows code page conversion.",
+    "BOOL storage is four bytes and is cleared before the conversion call for code pages65000 and65001, even if conversion fails.",
+    "No target or native/provider DLL execution; no original compiler/ABI or SEH equivalence claim."
+  ]
+}

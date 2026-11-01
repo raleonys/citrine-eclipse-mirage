@@ -1,0 +1,56 @@
+{
+  "schema": "original-SDK-PTD-boundaries.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Shared Boundary retains same selected callback_scope/domain; no back-reference from domain to Policy/Context",
+    "OriginalEffects retains Boundary and optional B23OriginalProvider through entire typed SDK call and exception checks",
+    "In-flight native Binding lease keeps Context/effects alive; B23 code lifetime and external quiescence stay separate"
+  ],
+  "boundaries": [
+    "Successful route has3 permission probes; resolver andSDK each execute at most once",
+    "First failure touches neither resolver norSDK; second failure blocksSDK afterresolver returned normally",
+    "Resolver throw is postchecked; SDK return/throw is postchecked; valid exception identity preserved, invalid postcondition wins",
+    "All10 SDK pointer/scalar arguments and32-bit bitcasts unchanged; no staging/rollback/provider retry",
+    "Only metadata probes preserve LastError; real SDK outgoing error and output/in-out prefix remain visible",
+    "No mutex spans SDK; raw slot writes during permission checks/concurrent writes/transient changes remain unsupported",
+    "Poisoned actual PTD scopes remain retained; manual terminal tests do not claim unknown native wrapper cleanup succeeded"
+  ],
+  "open": [
+    "arbitrary provider/original reentry",
+    "raw PTD free/ABA/transient restore",
+    "actual executable provenance/module pin",
+    "explicit engine uninitialize/unload",
+    "7online foreign calls",
+    "configuration/license/legacy document",
+    "B10 historical review debt",
+    "actual hooks/native CRT/EH/ABI/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "cbbca7a385d0f4093ab0404cc9e7b1a58073e6078f777290fd584e97344a9f9f",
+      "after_sha256": "fafe5f4fc734029058a3a039887db58dd3a0f9d8b2ad42b075512187945f10ad",
+      "reason": "Auto-create original Boundary from callback_scope for both owned and raw original providers"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "52ae7404d7d5bacb2aff324752214f5d44529a2bdf5070b3da54badae6c06199",
+      "after_sha256": "44d32c453c03618eff2f4abe83addffc1662efbde0ef5db44850109a4a761f02",
+      "reason": "Retain selected original PTD Boundary alongside B23 original code owner"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "before_sha256": "be650df275f531ffdec490a3c1a038c9a9b65fde624ab5f28ac00111fc100f63",
+      "after_sha256": "6b8ca61ae92cafd0a218f042f97c9b10110125e42924546bde7d5c6823ea0e5f",
+      "reason": "Optional owned PTD Boundary and typed original_call helper checks before resolver, before SDK and after SDK"
+    },
+    {
+      "path": "anadius-native-source/original_effects.cpp",
+      "before_sha256": "420fedbd6aa1d5b30a4c97a3af0b71339cfdf86c49fb3f39a770fbf37b32b520",
+      "after_sha256": "2f8ec2eae9ce6463eed8871a8f5f01660c806744a94a22fbcd392b329496a898",
+      "reason": "Route all10 SDK-typed original methods through checked scalar-call helper, preserving bit casts and arguments"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

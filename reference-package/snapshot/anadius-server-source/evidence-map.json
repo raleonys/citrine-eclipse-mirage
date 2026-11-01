@@ -1,0 +1,186 @@
+{
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "evidence_kind": "retained static Windows Ghidra/REA evidence; no original execution",
+  "functions": [
+    {
+      "windows_address": "0x180029ea0",
+      "concept": "server_start",
+      "scope": "normal application orchestration; ASIO context and cleanup mandatory backend",
+      "assembly_evidence_id": "ev_67f556e08a5391b12c3e18dee0a1fbf33f14cd0960c392c6c54e9dc2714631e2",
+      "pseudocode_evidence_id": "ev_6cf0254d6c71c9d2e74fabc14f751e84a071e29cca026bf32d866351d4cf2705"
+    },
+    {
+      "windows_address": "0x180024480",
+      "concept": "construct_server",
+      "scope": "loopback parse fallback, endpoint port publication, flag, accept order",
+      "assembly_evidence_id": "ev_4f9d3f62cce3b75d905b999b5f99a20ceb6c0fc1fb8597ea7bcba97cde3c61f6",
+      "pseudocode_evidence_id": "ev_20e549a27321ba1d7651fc94fdf90ec98fec21fff58fbc1d4561e3b5a5828d5c"
+    },
+    {
+      "windows_address": "0x1800241b0",
+      "concept": "context_init",
+      "scope": "mandatory ASIO backend only",
+      "assembly_evidence_id": "ev_b51f77f5cbe1a0feaa8acbe165b2e0067b35c825c8257c0bc5844a4f571e7aaf",
+      "pseudocode_evidence_id": "ev_f7dd21179750676ba53ca15a1df66f0629ecafbaddbf245e0871d9c4aca2c37c"
+    },
+    {
+      "windows_address": "0x180024db0",
+      "concept": "socket_destructor",
+      "scope": "mandatory ASIO backend only; not a generic server stop",
+      "assembly_evidence_id": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357",
+      "pseudocode_evidence_id": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3"
+    },
+    {
+      "windows_address": "0x1800298b0",
+      "concept": "context_run",
+      "scope": "mandatory ASIO backend only",
+      "assembly_evidence_id": "ev_4b20e2442cb7d601c8177ba4b68acc8c09a8cce81580892199e78a5d0f00c319",
+      "pseudocode_evidence_id": "ev_e6bbbaa1780b6df4e1edc25150c1c8a939c0d5fb937afed734d4f8c641d88539"
+    },
+    {
+      "windows_address": "0x180020e20",
+      "concept": "acceptor_constructor",
+      "scope": "mandatory ASIO backend; observed reuse and backlog supplied by source",
+      "assembly_evidence_id": "ev_ff338f1411812fb5f0cbb9ad6393b0698c2c0a40146ad6aab6f4aaeffaf2bfea",
+      "pseudocode_evidence_id": "ev_3c0f133878db1fec30ab6ef19ef7b2595fed8a0ba99ea8e0ec75a708ab5925af"
+    },
+    {
+      "windows_address": "0x1800270e0",
+      "concept": "do_accept",
+      "scope": "async accept scheduling boundary",
+      "assembly_evidence_id": "ev_7c297e7649382584bfeea23d03522ec0b534b3dd9e8bed7a47b591d22d6fe64c",
+      "pseudocode_evidence_id": "ev_21eb9ae0b32f1f5ae22d1de13650c6541b60242f69f8b4ba3920aab1c162b1b4"
+    },
+    {
+      "windows_address": "0x180025720",
+      "concept": "accept_completion_and_start",
+      "scope": "success/error retry and initial synchronous greeting; object allocation/move/shared ownership external",
+      "assembly_evidence_id": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa",
+      "pseudocode_evidence_id": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39"
+    },
+    {
+      "windows_address": "0x180023000",
+      "concept": "session_construction",
+      "scope": "Handler reset represented; original MSVC allocation/layout not reconstructed",
+      "assembly_evidence_id": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+      "pseudocode_evidence_id": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f"
+    },
+    {
+      "windows_address": "0x1800280d0",
+      "concept": "do_read",
+      "scope": "NUL framing application behavior; original shared ownership and ASIO state machinery external",
+      "assembly_evidence_id": "ev_36d45e7ea060ccb9497a038a4fa3e7d55641d30c79a68da3da5ae7ff42e69c99",
+      "pseudocode_evidence_id": "ev_dcc519a12be00908ae90c988173ae9147418f1eb4771d95b34d3148914b0d9a2"
+    },
+    {
+      "windows_address": "0x180025c40",
+      "concept": "read_until",
+      "scope": "behavioral framing/dynamic-buffer chunk policy only; generic composed operation not reconstructed",
+      "assembly_evidence_id": "ev_92dfa0f4b810ad3afcfb9df2b941fd14b2290a6abc953cfaa54c553b58d910e9",
+      "pseudocode_evidence_id": "ev_987f9b5735e7f43bac4690a5614f3bbd07f7463da6bc2081c7fff428c7a9fce8"
+    },
+    {
+      "windows_address": "0x180025480",
+      "concept": "frame_completion",
+      "scope": "copy without delimiter, detached worker, consume after launch and rearm",
+      "assembly_evidence_id": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31",
+      "pseudocode_evidence_id": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b"
+    },
+    {
+      "windows_address": "0x180028d30",
+      "concept": "process_message",
+      "scope": "empty input rule and Handler/executor composition; Handler processing external",
+      "assembly_evidence_id": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "pseudocode_evidence_id": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a"
+    },
+    {
+      "windows_address": "0x180028270",
+      "concept": "do_write",
+      "scope": "queue append and start-on-first-item; original deque allocation ABI not preserved",
+      "assembly_evidence_id": "ev_8a9098273f1cf3fed4bf7cd29a29a081bfa18c0706bf118f25c7907784a35bd5",
+      "pseudocode_evidence_id": "ev_f01c15c5ec6846574a424ff84a94d532bd1a1c4a9f781ad08433a5f12e0f868f"
+    },
+    {
+      "windows_address": "0x18002a500",
+      "concept": "write_loop",
+      "scope": "FIFO front, cap64KiB, per-message async progression",
+      "assembly_evidence_id": "ev_7b4a354660d536700feb53ad52ca0a2f961ca2042dbeb3a635143135bd1fe188",
+      "pseudocode_evidence_id": "ev_74e713f6d63b5db2c8594c89965baf991c280377ff6f5607819938f99daa863f"
+    },
+    {
+      "windows_address": "0x1800261d0",
+      "concept": "async_write_composition",
+      "scope": "partial progression/zero-success/error stop rules; original ASIO generic templates external",
+      "assembly_evidence_id": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75",
+      "pseudocode_evidence_id": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61"
+    },
+    {
+      "windows_address": "0x180025a70",
+      "concept": "write_completion",
+      "scope": "pop-and-continue success, category-based log and preserve queue on error",
+      "assembly_evidence_id": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7",
+      "pseudocode_evidence_id": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8"
+    },
+    {
+      "windows_address": "0x18002bc70",
+      "concept": "handler_reset",
+      "scope": "mandatory Handler boundary",
+      "assembly_evidence_id": "ev_4fa4de12d674eff8476f9cf6f72bdef77e52de8ef76d04cd9a0e596bd21a0db1",
+      "pseudocode_evidence_id": "ev_d6716c5d525f5e8e2eb566ef802896e45423abc1be5b6a78f2da5f052740c118"
+    },
+    {
+      "windows_address": "0x18002d540",
+      "concept": "initial_message",
+      "scope": "mandatory Handler boundary",
+      "assembly_evidence_id": "ev_9c9910a30623d16a8bddbbae7955111290e62a76144a36de16d5e4249e105c0d",
+      "pseudocode_evidence_id": "ev_53566f426581ee5026cc02fda62aabed3b9849f460e2d315566e5aada6038d6a"
+    },
+    {
+      "windows_address": "0x180033d70",
+      "concept": "process_protocol",
+      "scope": "mandatory Handler boundary",
+      "assembly_evidence_id": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "pseudocode_evidence_id": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df"
+    }
+  ],
+  "mac_symbol_role": "semantic naming corroboration only; no asserted exact Mac-Windows binary mapping",
+  "mac_x64_candidates": [
+    {
+      "name": "server::do_accept",
+      "mac_address": "0x3fd80",
+      "windows_semantic_candidate": "0x1800270e0"
+    },
+    {
+      "name": "session::start",
+      "mac_address": "0x4bc80",
+      "windows_semantic_candidate": "application portions of0x180025720 and0x1800280d0"
+    },
+    {
+      "name": "session::do_read",
+      "mac_address": "0x4dfe0",
+      "windows_semantic_candidate": "0x1800280d0"
+    },
+    {
+      "name": "session::process_message",
+      "mac_address": "0x53000",
+      "windows_semantic_candidate": "0x180028d30"
+    },
+    {
+      "name": "session::do_write",
+      "mac_address": "0x53340",
+      "windows_semantic_candidate": "0x180028270"
+    },
+    {
+      "name": "session::write_loop",
+      "mac_address": "0x54930",
+      "windows_semantic_candidate": "0x18002a500"
+    }
+  ],
+  "limitations": [
+    "Not a standalone replacement DLL",
+    "ASIO/IOCP/socket backend and Handler implementations mandatory",
+    "MSVC string/deque/shared-pointer ABI and allocator behavior not preserved",
+    "General runtime equivalence and concurrent lifetime safety not established",
+    "Only synthetic mock tests executed"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "fed49f4ca9c707a60034ad634cc5cd5679013ee4255ec4ff4c6cbf1606dd7466",
+  "test_results": [
+    {
+      "module": "socket_receive_buffer",
+      "result": "PASS",
+      "output": "PASS: 3977 receive buffer core checks; actual010040/008350, independent byte payload oracle, explicit growth anchors, alignment/header/free, symbolic max arithmetic and exact failure prefixes; no original CRT body claim",
+      "executable_sha256": "b1e1a37fe60a35d5588d2545d35c79c828d9ef876b31107db7d1e1e9f3b2d7aa"
+    },
+    {
+      "module": "socket_receive_buffer_integration",
+      "result": "PASS",
+      "output": "PASS: 684 receive buffer integration checks; actual010040/008350 byte storage with021d10/023dd0/injected SDK/027710/021a40; controlled prepare/commit caller, embedded NUL/EOF/error/owned cleanup;025c40 remains open",
+      "executable_sha256": "4690901b7154e053811c27de68f05ff19458dfc7d504bc2b374afc26dbabcc69"
+    }
+  ],
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "core_checks": 3977,
+  "integration_checks": 684,
+  "source_hashes": {
+    "receive_buffer.hpp": "709ca59766fc42bf2fbc7d1f4f033987b590e42874ff566b39f975ac43ed1e56",
+    "receive_buffer.cpp": "022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0",
+    "receive_buffer_test_fixture.hpp": "b05cb2045732658f58294eff33b3181e49d1a8d2501bdf151f6a88c53eb8e82e",
+    "receive_buffer_tests.cpp": "b7d2316ff24b370d25bb2556d48c97a201720fb8f50f153b2b8ad169a4309844",
+    "receive_buffer_integration_tests.cpp": "6c2d50f94cd113120ad1fc7877d20afaf076bb3a7973cb5f198f08830ca0c0a8",
+    "build.ps1": "fd09058fa1bdc33cd32bc83d882e64e3629a711ded8d0f5b4243f7e893343ed5",
+    "CMakeLists.txt": "65f6a52bcc1b0d9ef122bd53d9b6f6ee56a442bea7bc56a70a0ce54ea5c436f2"
+  },
+  "original_procedures_added": 2,
+  "execution_scope": "010040/008350 normal flows and selected bounded byte adapter; actual021d10/023dd0/injected SDK/027710/021a40; controlled prepare/commit caller, not recovered025c40",
+  "symbolic_scope": "MAX_INT64/saturated integer control flow only; no huge allocation/copy execution",
+  "previous_local_records": "21 earlier module validation records retain historical configuration hashes; current common build is authoritative",
+  "CRT_production": "unchanged and paused",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "native_equivalence": "not established"
+}

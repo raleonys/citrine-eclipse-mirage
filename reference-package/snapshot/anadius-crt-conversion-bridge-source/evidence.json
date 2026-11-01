@@ -1,0 +1,26 @@
+{
+  "kind": "new source composition; not an additional original function or original class ABI",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "body_evidence": [
+    "../anadius-crt-conversion-source/evidence.json",
+    "../anadius-crt-conversion-api-source/evidence.json",
+    "../anadius-crt-recalloc-bridge-source/evidence.json"
+  ],
+  "source_chain": [
+    "configure0638e8 -> expand06e5bc/thunk06ecd4 -> search06e984 -> to_wide06004c / to_narrow06e430",
+    "buffer source -> BufferEffects -> actual malloc06a308/free0668c0 and errors05d698/05d724 sources",
+    "buffer source -> actual06ccc8/06cd58 flag/default-pointer policy -> required native conversion provider",
+    "choose_code_page -> actual066c1c -> resolve0669b0 procedure0,candidate16,kernel32,AreFileApisANSI; same runtime State cache",
+    "shared recalloc and onexit composition retained from previous bridge"
+  ],
+  "source_review": "../anadius-crt-conversion-api-source/review-buffers-bridge.json",
+  "checks": 7440,
+  "limits": [
+    "Underlying conversion provider intentionally implements only bounded synthetic ASCII fixtures",
+    "Native find/locale/heap/module/function providers are required; none executed in this new module suite",
+    "Fallback and PTD error cells are actual recovered source selected on provider-owned live bytes",
+    "Owned/borrowed metadata and address lifetimes are source contracts, not proof of original C++ layout",
+    "No added cleanup on faults, SEH/unwind or original DLL-wide runtime/ABI equivalence claim",
+    "No original or rebuilt DLL/game execution or input mutation"
+  ]
+}

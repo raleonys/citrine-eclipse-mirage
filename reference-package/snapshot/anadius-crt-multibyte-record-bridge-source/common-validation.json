@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_multibyte_record_bridge",
+    "result": "PASS",
+    "output": "PASS 12032 recovered-record/SBCS/case/multibyte/locale/PTD/argv/heap composition checks",
+    "executable_sha256": "c85445ac278ce6867e21da6142a688dc3ecaf1e75e6936c484a606853052bfff"
+  },
+  "execution_scope": "Actual 06f674/06f050/06f0e8/support/control/locale/PTD/heap/argv composition; actual systemCP and shared flag; synthetic native CP/Heap/FLS/lock/atomic and mandatory 06e210/06cc30 lower wrappers; undefined native output is explicit boundary",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-multibyte-record-bridge-source/bridge_tests.cpp",
+      "sha256": "c90f2bef34c8b565426cef4150cb5b931a1c810a276c009949764ef2c8179827"
+    },
+    {
+      "path": "anadius-crt-multibyte-record-bridge-source/bridge.cpp",
+      "sha256": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1"
+    },
+    {
+      "path": "anadius-crt-multibyte-record-bridge-source/bridge.hpp",
+      "sha256": "0b4c1afe8bb5de097bf331b043ee6eaa97f3e2b5df51e1846bb57ec5a6a57f77"
+    }
+  ]
+}

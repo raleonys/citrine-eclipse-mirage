@@ -1,0 +1,79 @@
+{
+  "result": "PASS",
+  "reviewer": "initial_multibyte_data independent sibling",
+  "reviewed_at": "2026-10-20T19:35:21.904Z",
+  "source_hashes": {
+    "pair_leaves.cpp": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87",
+    "pair_leaves.hpp": "4c05549af135b8bb56515e56a5e9180c7fc90e9bd08f798d852aab145233019e",
+    "native_tests.cpp": "1ae3a7571080b0ad67d3dfc97052f38f8f103411a81e62f94abd69639025e7bb",
+    "build.ps1": "229858154a0f649ea2522272a5a4f3cdeeef4dc345f07d7b963a30b7bb1a6af0",
+    "../anadius-vcrt-ptd-source/vcrt_ptd.cpp": "2acfb1ff8678493678288dc0a806b8c27946e100ebc223409c867264b9b5e307",
+    "../anadius-crt-argv-source/argv.cpp": "f36423b9120efc8feef27da66b9f473a002366b3fe98ccf5c57cd5dada4ffa6e"
+  },
+  "checks": [
+    "0704e8 matches read-only PE bytes and independent earlier LLVM decode: clear shared heap handle only, return AL true; other heap mode/cookie/handler fields stay unchanged, no HeapDestroy/free.",
+    "0644f0 matches7-byte XOR ECX,ECX;tail-JMP04d5a8. Direct actual shared VCRT core called with forced zero; caller termination argument cannot leak through.",
+    "Actual VCRT callee ignores FLS-free status, invalidates index after provider mutation then uninitializes locks; repeat call with invalid index still reaches locks. Tests cover false/true free result and mutated index.",
+    "006500 retained MOV AL1;RET maps to bool true without high-register promise.",
+    "06f9bc retained A acquire->publish narrow command_line->W acquire->publish wide view; no premature W snapshot or final narrow rewrite. Callback mutation in W is preserved for narrow and overwritten only by wide result store.",
+    "CommandLines.narrow is reference to actual argv State consumed by recovered configure0638e8; borrowed wide span is a separate referenced publication cell. Owned immutable terminated buffers survive parser consumption.",
+    "Nine NULL/empty-string/nonempty A/W combinations pass, as does shared argv consumer yielding three expected arguments. No acquisition status/null rejection added to always-true wrapper.",
+    "Bounds metadata intentionally models borrowed bounded spans; no raw native char16_t** reinterpretation, OS commandline access, raw-pointer scan or ownership transfer.",
+    "Fresh root REA two byte reads are complete11+7 bytes on exact target digest; procedure-boundary/ABI claim not fabricated from byte reads. Earlier local PE+LLVM corroboration retained in work/acrt-pair-bindings-audit.",
+    "Build rerun passes140 own fixture checks; production unchanged and original DLL not executed."
+  ],
+  "findings": [],
+  "run": {
+    "command": "./outputs/anadius-crt-pair-leaves-source/build.ps1",
+    "result": "PASS 140 ACRT pair leaf checks;shared heap/VCRT/argv state;owned command buffers"
+  },
+  "retained_REA": {
+    "0x180006500": {
+      "assembly_evidence": "ev_7aa1369cf378dd2a27dfe2889ccd4ee811bc8a4bcd493839a800aafcdb1a3ca8",
+      "pseudocode_evidence": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39"
+    },
+    "0x18006f9bc": {
+      "assembly_evidence": "ev_f982a4dda060da7a853b1f36a75fc3c662105e9e36030e6e8b3e780a2431f629",
+      "pseudocode_evidence": "ev_cb04deda8279ea5da978b8d3f7665657943754d816dbbd7841edab6a7c7f9d93"
+    }
+  },
+  "fresh_REA_bytes": [
+    {
+      "evidence_id": "ev_26b0e54af8729b48978b321830da453af248a6390a76dabde0a737eb5e348d5e",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x1800704e8",
+        "length": 11
+      },
+      "bytes": {
+        "address": "0x1800704e8",
+        "requested_bytes": 11,
+        "returned_bytes": 11,
+        "bytes_hex": "4883252055030000b001c3",
+        "complete": true
+      }
+    },
+    {
+      "evidence_id": "ev_396089764fe78d606badcf63a55ffd8db3f53083ffba29d057c662c397dcb735",
+      "operation": "read_bytes",
+      "parameters": {
+        "address": "0x1800644f0",
+        "length": 7
+      },
+      "bytes": {
+        "address": "0x1800644f0",
+        "requested_bytes": 7,
+        "returned_bytes": 7,
+        "bytes_hex": "33c9e9b190feff",
+        "complete": true
+      }
+    }
+  ],
+  "limitations": [
+    "Normal flow/low AL only; complete native ABI, compiler, SEH and DLL runtime equality unproven.",
+    "Borrowed span lifetime and complete terminator bounds are provider obligations; empty span models NULL."
+  ],
+  "new_recovered_bodies": 4,
+  "original_execution": false,
+  "production_edits": false
+}

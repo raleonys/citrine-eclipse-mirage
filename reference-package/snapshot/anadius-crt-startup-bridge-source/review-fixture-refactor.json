@@ -1,0 +1,29 @@
+{
+  "reviewer": "primary agent follow-up",
+  "result": "PASS",
+  "checked_at": "2026-10-18T14:49:59.0441082Z",
+  "change": "Existing synthetic startup fixtures extracted into named-namespace test_fixtures.hpp for shared argv integration; startup_bridge.hpp/cpp unchanged",
+  "existing_suite": "1732 checks PASS in final common build",
+  "new_shared_suite": "2181 argv/PTD/heap/error/invalid/classification checks PASS",
+  "historical_reviews": "Independent old test-layout hashes preserved; current common validation/source snapshot identify new layout",
+  "sources": [
+    {
+      "name": "startup_bridge_tests.cpp",
+      "sha256": "16ae1812b2dec40dc3d6482e4f502d162674b793e525fdaa2cf06b08d6adf3c5"
+    },
+    {
+      "name": "startup_bridge.cpp",
+      "sha256": "b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c"
+    },
+    {
+      "name": "startup_bridge.hpp",
+      "sha256": "071b5a394de8f1f9994ed3eea481e50f4e32f24e179960a1e4e8141c2b47ef19"
+    },
+    {
+      "name": "test_fixtures.hpp",
+      "sha256": "451c4824666e7a2349f0e042ede8219c7d856c1329398a7577b30768889d1a9f"
+    }
+  ],
+  "target_execution": "none",
+  "runtime_equivalence": "not established"
+}

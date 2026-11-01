@@ -1,0 +1,37 @@
+{
+  "kind": "new SDK adapter provenance",
+  "checked_at": "2026-10-19T13:48:55.8856546Z",
+  "toolchain": "llvm-mingw-20261006-ucrt-x86_64",
+  "sdk_files": [
+    {
+      "path": "work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\winnls.h",
+      "sha256": "a7f158bd63d927a94981bc81fac59faaf2b7f91fb508f6cde1489e8cd2dad43b"
+    },
+    {
+      "path": "work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\stringapiset.h",
+      "sha256": "79ecba44c1da1c1655fff4a2b0492be8358570b312075cb214e3a1031bd192c5"
+    },
+    {
+      "path": "work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\errhandlingapi.h",
+      "sha256": "fbbc422008445e0f0977984361d9fce142330474a833bce97d051c9b7825f466"
+    }
+  ],
+  "declarations": {
+    "winnls": "IsValidCodePage938, GetACP942, GetOEMCP958, GetCPInfo1028",
+    "stringapiset": "GetStringTypeW40, MultiByteToWideChar41, WideCharToMultiByte42"
+  },
+  "source_files": [
+    {
+      "name": "native_api.cpp",
+      "sha256": "9b066a5bd518ae8df9dbeaa7153bcf28b6b77c97b0a759ebd5a499d85a8de260"
+    },
+    {
+      "name": "native_api.hpp",
+      "sha256": "ed5c68f8f968122d7daf1fe70cc7ac9735e53bad212afe191d855a3043fb25f2"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "f0063faa8e94b84b164c24bb014cbab36f65ce3c41e57abe39f6bbca992da513"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "Read-only frozen production/test sources, retained three ASM/pseudo functions, baseline and immutable proof records. No reviewer executable execution.",
+  "reviewed_at_utc": "2026-10-31T13:21:38.774679+00:00",
+  "reviewed_source_hashes": {
+    "helpers.hpp": "2e5c24c07d42c961bcd3740afaa04e71338e1ebadb93295e50762d4085b538ab",
+    "helpers.cpp": "683ac8124b602c25ddb5d29f9429a476c9d92e71d4b1bae882b090f3347642c0",
+    "bindings.hpp": "70c13e1772170a77515dd268a8ec3fec16791c447a146419a7e9506e6e118e1b",
+    "bindings.cpp": "3539b32933b51054a0265e7ec13fcbfde05a04ba73d3d309991376148825bae8",
+    "helpers_tests.cpp": "89f4e485cb9b41f0c72c0ee54502fd9222521a8fec5e22a43f835a5d6a73c76f",
+    "helpers_integration_tests.cpp": "5f07b3d9d1cf2320d1f6ceca2177168edb1f1dfe634759745a51182456c9a42f",
+    "../anadius-accept-source/owned.cpp": "1b26a5282a3b939e19059a638748be62718d06014bfd0fe6be3a465ccae7283c",
+    "../anadius-accept-source/owned.hpp": "cf2a0ec016fd6c92897f047ee0ba22f7b47638c2d41efb2337849b1658832993"
+  },
+  "code_freeze": {
+    "path": "work/b38-code-freeze.json",
+    "sha256": "041880908c5300301d88359a03ed960b2da538650d4cd0853fee3aa155a19715",
+    "all_eight_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 749,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b38-core-agent-tests.exe",
+      "executable_sha256": "260384cc1a831a351dad032e834bc8600bed337b07e864946b96e8632c783791",
+      "archive_path": "work/b38-baseline-core.a",
+      "archive_sha256": "586bd348c3070eaa6446656053501a32d65ce990ccf6181ddd1a574ce2a7465b",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b38-core-agent-results.json",
+        "sha256": "767fb5d2e3e4d77e6a60d27331bc9209b57b6eb816141f1e099574e72dec714f"
+      },
+      "path": "work/b38-core-quick-results.json",
+      "sha256": "f1f23af7658a6603969c528eb59e677c3e78715eaefdf182f7d67b67375826dc",
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b38-core-agent-results.log",
+      "log_sha256": "16d5a063b096513374ea6ae72dc6c6c66ad17687fc91fe28f4fa7f1a39ec7061",
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "actual_used_source_hash_count": 4,
+      "source_scope": "Fresh helpers.cpp and helpers_tests.cpp with declared actual helpers.hpp and prior accept.hpp; immutable canonical B37 archive. Bindings/owning integration are not compiled by this core invocation.",
+      "prior_unchanged_accept_header_verified": true
+    },
+    {
+      "checks": 197,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b38-integration-agent-test.exe",
+      "executable_sha256": "bfa880fe0de7120ce34e04688725b8aab101096c3a8481fca2421e1545b7cb84",
+      "archive_path": "work/b38-baseline-core.a",
+      "archive_sha256": "586bd348c3070eaa6446656053501a32d65ce990ccf6181ddd1a574ce2a7465b",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b38-integration-agent-results.json",
+        "sha256": "79c00f2884c93f2d613478a3782dee44054de76965bda80cf0fae8bd408911bd"
+      },
+      "path": "work/b38-integration-quick-results.json",
+      "sha256": "a2b5294409d9edf151a1003bd453b1dbaa93996a7ba4d2756db340985ee3199e",
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b38-integration-agent-results.log",
+      "log_sha256": "a73dbaf77d4e043db098fa9fd1cd93bd1827ac619dfa3c1411efef5f66762ba3",
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "actual_used_source_hash_count": 7,
+      "source_scope": "7 actual-used selected source/header hashes; watched8 adds metadata-only helpers_tests.cpp. Fresh helpers.cpp,bindings.cpp,owned.cpp plus integration test before immutable B37 archive.",
+      "watched_source_hash_count": 8
+    }
+  ],
+  "quick_checks_total": 946,
+  "core_agent_checks": 749,
+  "integration_agent_checks": 197,
+  "root_checks": 0,
+  "root_execution_note": "Root only normalized immutable agent proofs; no root/reviewer EXE replacement or rerun. Core4 and integration7 actual-use observations are not all8 compilations.",
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING at review; quick PASS is not full common PASS.",
+  "common_build_targets": {
+    "production_objects": 258,
+    "cpp_units": 254,
+    "c_units": 4,
+    "ordinary_groups": 305,
+    "framework_terminal_groups": 19,
+    "status": "planned, not reviewed as executed"
+  },
+  "baseline_package_sha256": "965812e857d50b012706425e7ff9fdfa01ae64d85cf4d2510f38c60bac162d91",
+  "baseline_source_files": 876,
+  "prior_sources_preserved": 874,
+  "modified_prior_sources": 2,
+  "new_source_files": 6,
+  "current_source_files": 882,
+  "prior_source_record": {
+    "path": "work/b38-prior-sources.json",
+    "sha256": "fa5e4ec150a33d7ab93c28ac1d4063a87b883340f20aa50a8d98369d76508777",
+    "all_876_ZIP_source_hashes_verified": true,
+    "exact_changed_paths": [
+      "anadius-accept-source/owned.cpp",
+      "anadius-accept-source/owned.hpp"
+    ],
+    "changes": "Add checked prearmed SDK view and full retry-prefix activity/submitting guard; ordinary first-submit API remains. Private Impl changes require fresh compilation, not native/public object layout equivalence."
+  },
+  "archive_proof": {
+    "path": "work/b38-baseline-core.a",
+    "sha256": "586bd348c3070eaa6446656053501a32d65ce990ccf6181ddd1a574ce2a7465b",
+    "matches_B37_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "verified": true
+  },
+  "composition_count_basis": {
+    "baseline_files": 83,
+    "baseline_objects": 41,
+    "new_composition_files": [
+      "anadius-accept-helpers-source/bindings.hpp",
+      "anadius-accept-helpers-source/bindings.cpp"
+    ],
+    "expected_files": 85,
+    "expected_objects": 42,
+    "helpers_hpp_cpp_remain_native_eligible": true
+  },
+  "retained_native_evidence": [
+    {
+      "address": "0x180029df0",
+      "baseline_source_presence": "no_definition_mapping",
+      "pseudo_path": "work/b38-0x180029df0.c",
+      "pseudo_sha256": "7ea84b91bdc8488cc7511313cf8ea9ccaacca2688f94fb9a7cf26e8c969aaf0c",
+      "pseudo_evidence": "ev_124d6968b78c1e94e3f42b6749d985f4fa733e8a9e0be5737deaee9a379948cb",
+      "assembly_path": "work/b38-0x180029df0.asm",
+      "assembly_sha256": "3adefe90f33a8f4b618fb152102e237305716f8ec2c866d2c399f5d421467cfc",
+      "assembly_evidence": "ev_626a3927b71869120ff594a140baa1d83b70aa17bf866952cc77c0e699bd6007"
+    },
+    {
+      "address": "0x180029590",
+      "baseline_source_presence": "no_definition_mapping",
+      "pseudo_path": "work/b38-0x180029590.c",
+      "pseudo_sha256": "301fa9964808d1eff47d99d1ed8391ae5fbe52b8745cd832e7f0df1f8d2a9549",
+      "pseudo_evidence": "ev_3e481675fefac3c6b802b7a894bc7e2f54ee6ad45bf207904335219da4f12056",
+      "assembly_path": "work/b38-0x180029590.asm",
+      "assembly_sha256": "b9ea2278350b62cd6cd88fb1774b94b05b6fd9e76eea99f0ba35de1503340389",
+      "assembly_evidence": "ev_80a786fbbfe0c0731b8ff82855393f1d90e895d258e0c0105ca3cc66eb3ec37f"
+    },
+    {
+      "address": "0x180029660",
+      "baseline_source_presence": "no_definition_mapping",
+      "pseudo_path": "work/b38-0x180029660.c",
+      "pseudo_sha256": "b547ee600be8fb0291f2c2ae4e6a5ba9b8ae1e1a1f76c436b397a7046cf93767",
+      "pseudo_evidence": "ev_0c797b4674444bc8c1d32d37d5c3efe7c56b020e323ddda1a5cdbda23e1f8221",
+      "assembly_path": "work/b38-0x180029660.asm",
+      "assembly_sha256": "196e6d21410c7db9e450e3ed97ff096c2a0ba4e90c508dc080aff9bbdb8db921",
+      "assembly_evidence": "ev_81e3223c44d8ce3f6255511204a7ad810ca9a54a0ab56504fad579e9810984a1"
+    }
+  ],
+  "findings": [
+    {
+      "id": "029df0",
+      "result": "PASS",
+      "details": "WSASocketW signed32 family/type/protocol, infoNULL/group0/flags1. Valid socket (including0) clears only error.value before optional family23 option41/27/value0; category preserved and option ignored. INVALID captures system category BEFORE WSA error; no64/1234 remap."
+    },
+    {
+      "id": "029590",
+      "result": "PASS",
+      "details": "Cached holder socket; INVALID is no-op. Close failure category->WSAerror->name comparisons with exact short-circuit10035/1237; ioctl0x8004667e/zero and second close use cached socket. Final failed second close still category->WSAerror reads. Every normal valid-holder path stores INVALID last, overriding callback mutations; throw has no guessed tail store."
+    },
+    {
+      "id": "029660",
+      "result": "PASS",
+      "details": "Initial reset then ONE live-scheduler work increment. Exact cancellation==1 XADD0 publishes995 but FALLS THROUGH. Factory failure captures category/error before second live-holder reset and final INVALID, then copied queued/error/zero-byte post2 with cached scheduler fallback, no extra category. Success optional IPv6 option, second holder reset/install cached fresh, captured listener+explicit address lengths/actual selected OVERLAPPED, immediate unconditional WSA error. False/non997 status remains raw; true/997 optionally CancelIoEx on same cached cancellation pointer and selectedOV then live-scheduler started028c00. Cancel return ignored. Generic duplicate publication and fallback self-link preserved, not deduplicated."
+    },
+    {
+      "id": "concrete-profile",
+      "result": "PASS",
+      "details": "RecoveredAcceptLower calls actual helpers, with immutable identity-bound RetryEngine/live scheduler and selected0x90 adapter. Owning profile rejects nonzero opaque retry_context or nonprimary selected packet BEFORE native reset/work/socket effects. No arbitrary token casts or general cancellation/alternate packet closure claim. Prearm retains full473 region across factory failure and unknown prefix; prearmed API revalidates OWN live span/binding/pin/consumed state immediately before SDK without double arm."
+    },
+    {
+      "id": "inline-prefix-guard",
+      "result": "PASS",
+      "details": "Full Owned.retry prefix now has Call+submitting guard, nested retry rejection, reset on normal/catch and catch poison. Inline complete/free/reuse/start cannot end projection or release retry pin while holder/OV are still in use. Mutation after captured argument snapshot is caught by live authoritative region check before SDK. Unknown throw retains pending loan/socket/allocation instead of guessed cleanup."
+    },
+    {
+      "id": "proof",
+      "result": "PASS",
+      "details": "All8 frozen source hashes, actual author records/logs, normalized quick hashes, EXEs and canonical B37 archive matched. Integration shows observed native worker retry/factory/disposal and own retained mutation child237; no reviewer rerun. Common still pending."
+    }
+  ],
+  "resolved_review_blockers": [
+    "Owned.retry originally lacked initial-submission-style inline completion/retirement protection. Full prefix activity/submitting guard is now present and current integration rejects inline completion while preserving pin, then processes later observed success."
+  ],
+  "normal_body_certification": {
+    "addresses": [
+      "0x180029df0",
+      "0x180029590",
+      "0x180029660"
+    ],
+    "new_normal_bodies": 3,
+    "new_mapped_addresses": 3,
+    "new_eligible_addresses": 3,
+    "scope": "Complete supported typed normal algorithms against retained ASM; callbacks/categories/bounded storage and selected provider contracts remain. Not native ABI/EH or full kernel/cancellation lifecycle proof."
+  },
+  "new_native_bodies": 3,
+  "native_mapped_addresses_expected_after": 501,
+  "native_eligible_compiled_tags_expected_after": 505,
+  "explicit_normal_body_claims_expected_after": 139,
+  "new_native_ABI_provider_closures": 0,
+  "historical_native_closures_unchanged": 52,
+  "compiler_observations_expected": 76,
+  "registration_role": {
+    "script": "work/b38-register.py",
+    "sha256": "927e2b024a7aadd31403f81514684177bf648c94e4177344687a3a5b899ac414",
+    "preview_author": "/root/b22_provider_audit",
+    "applied_by": "/root after its own review, as reported by root",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "preview_scope": "AST parse, exact old876 source preimages/874 unchanged, staged markers/counts and compiler trait structure; no build/generator/probe/test executed by reviewer."
+  },
+  "production_dll_readiness": "BLOCKED; B31 require_loader_* hooks remain undefined.",
+  "limitations": [
+    "Categories are immutable logical name-identity tokens; original mutable native category/vtable object behavior, padding, object layout and full foreign ABI are not proven.",
+    "Generic cancellation pointer/selected alternate semantics include early995 fallthrough and possible multiple posts/self-linked fallback. Their real kernel packet finality/drain is unresolved; owning binding supports only retry_context0 and primary operation. Generation is not kernel ABA proof.",
+    "All source/provider/context/engine/SDK references and same-domain bindings must remain alive and coherent under whole Parent Operation, one admitted worker and prepared controller PTD. Correct prearmed (not pinned) retry binding and coherent cache/completion route are mandatory caller contracts.",
+    "Known synthetic/observed completion policy and selected factory-failure owner0 terminal cleanup are controlled host policies, not original native stopping/quiescence proof. Raw-job lifetime, general concurrency/unload and complete Runtime/Resources/Transport/Scheduling production factory remain open.",
+    "Unknown lower effects retain/poison; native exception cleanup/rollback and automatic recovery are not invented. Full common rebuild is pending and required after private Impl/source changes.",
+    "Injected socket/AcceptEx/CancelIoEx calls only; own heap/FLS/IOCP integration does not execute real network/kernel AcceptEx, original/rebuilt DLL or game. No original inputs, fresh target bytes, CFG/token contents or AV retry.",
+    "Full common/registration-generated inventories and final packaging are not certified complete by this review."
+  ],
+  "original_inputs_read": false,
+  "original_bytes_or_target_queries": false,
+  "original_or_rebuilt_DLL_game_execution": false,
+  "actual_user_cfg_token_contents_read": false,
+  "production_or_test_sources_modified_by_reviewer": false,
+  "reviewer_writes": [
+    "work/b38-register.py",
+    "outputs/anadius-accept-helpers-source/architecture-review.json",
+    "outputs/anadius-accept-helpers-source/architecture-review.md"
+  ]
+}

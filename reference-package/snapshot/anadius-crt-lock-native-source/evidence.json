@@ -1,0 +1,24 @@
+{
+  "artifact": "anadius64.dll",
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_recovered_bodies": 0,
+  "classification": "New typed Windows SDK binding for existing recovered algorithms; not original source recovery",
+  "retained_evidence": "../anadius-crt-lock-source/evidence.json",
+  "recovered_callers": [
+    {"address":"0x1800625b0","role":"ACRT initialize fourteen LockRef cells, spin 4000, low DWORD success"},
+    {"address":"0x180062614","role":"ACRT reverse-order cleanup"},
+    {"address":"0x1800625f8","role":"ACRT enter with signed index"},
+    {"address":"0x18006264c","role":"ACRT leave with signed index"},
+    {"address":"0x18005093c","role":"VCRT initialize one LockRef cell"},
+    {"address":"0x180050984","role":"VCRT cleanup"},
+    {"address":"0x18006707c","role":"ACRT dynamic Ex procedure or spin fallback"},
+    {"address":"0x180050c38","role":"VCRT API wrapper uses same owned CS object via root composition"}
+  ],
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "native_storage": {"acrt_cells":14,"vcrt_cells":1,"sdk_type":"CRITICAL_SECTION","win64_sdk_size_assert":40,"original_image_layout_equivalence_claimed":false},
+  "source_contract": ["SDK exact function-pointer types", "full 32-bit BOOL preserved", "exact owned pointer membership", "externally serialized init/delete", "read-only initialized cells during concurrent enter/leave", "explicit recovered cleanup; terminate on abandoned initialized cells"],
+  "validation": "validation.json",
+  "target_execution": "none",
+  "limitations": ["Caller supplies valid native Ex procedure identity; only null is checked", "No hidden init/cleanup", "Caller ensures lock ownership, balanced enter/leave and quiescent deletion", "No original-vs-rebuilt runtime equivalence or complete global/ABI/SEH proof"]
+}

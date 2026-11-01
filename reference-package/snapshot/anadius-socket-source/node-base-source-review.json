@@ -1,0 +1,70 @@
+{
+  "schema": "node-base.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/allocation_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent retained complete001ea0 assembly/pseudocode and exact new production-source review for one normal node-base destructor byte-state projection and one existing-provider source binding. No original-file reads, execution or reviewer tests.",
+  "reviewed_source_hashes": {
+    "node_base.hpp": "7f3272fc864edc0b070b05145f5f18a5af5d2ea68cc5b9a9bfd915de570ccd01",
+    "node_base.cpp": "f3e5ee01a2311060f53adef39b5323c11a1dc55662f3500b69dbb1020ab94418"
+  },
+  "addresses": [
+    "0x180001ea0"
+  ],
+  "assembly_evidence": "ev_21355add25b8123d7a7643cd6b01256197966701b4c2309f7557a5cdd95d7192",
+  "pseudo_evidence": "ev_e7c4be9c1717eb0483ad0b59aaf3cbeb61047a721af9832aa8b1d49694e9dd87",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "stored_vtable_identity": "0x18007fa98",
+  "vtable_evidence_kind": "Retained LEA immediate identity only; no table-byte acquisition or virtual-slot target proof",
+  "new_normal_source_bodies": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 1,
+  "closed_providers": [
+    {
+      "address": "0x180001ea0",
+      "base": "NativeDocumentEffects::destroy_node_base_001ea0",
+      "closure": "RecoveredNodeBaseEffects::destroy_node_base_001ea0",
+      "body": "destroy_native_node_base_001ea0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "reused_context_functions": [
+    {
+      "address": "0x180003110",
+      "newly_recovered": false,
+      "assembly_evidence": "ev_635328ecb5bc687965c6bb53ce282983fd334bc548208011ed74d62e645db5bf",
+      "pseudo_evidence": "ev_1309c5f52e5b3d9c95ec97c721c6a49f19fcded8db1c04d21e5faf6c6874beb4"
+    }
+  ],
+  "findings": [
+    "Immediate base-node table07fa98 QWORD publication precedes the existing delete_nodes003110 provider call; parent and storage fields are not prefetched across that lower effect.",
+    "Parent+10 is loaded live after child deletion and cached for unlinking; a null parent skips own sibling/parent-link resets while still performing storage cleanup.",
+    "For nonnull parent, head+38 is tested/updated before live tail+40 lookup; each matched endpoint uses its cached head/tail node for the appropriate live next/previous field read.",
+    "Previous+48 is loaded for previous-neighbor update using live next+50; next+50 is then reloaded after that store and previous+48 reloaded for next-neighbor update, preserving alias-visible order.",
+    "Nonnull-parent branch resets own QWORD next+50,previous+48,parent+10 in exact order. Direct parent-field publication is equivalent to retained RDX/RCX address temporaries, which designate node+10 on every such path.",
+    "Live DWORD flags+18 is tested for bit200 after deletion/unlinking; live pointer+20 is forwarded to mandatory pointer-only free without a null guard or size argument.",
+    "Final DWORD flags+18,QWORD pointer+20,QWORD field+28 resets preserve order and leave padding+1c..1f untouched; lower free failure skips these resets without rollback.",
+    "The source does not call003030 remove-parent, perform document registry updates, invoke an own virtual destructor, release the pool item, free the node object or manipulate inline array/capacity fields.",
+    "RecoveredNodeBaseEffects retains inherited document/node/pool source bridges and closes exactly the existing NativeDocumentEffects node-base provider; already recovered003110 is reused rather than counted as a new body.",
+    "One tagged normal body plus one tagged final bridge yields two source variants for one native address. Stored image identity is never called or dereferenced as a host vtable."
+  ],
+  "limitations": [
+    "Bounded byte-state normal source projection only; native register/fault/object ABI, unwind/EH and concurrency equivalence remain unproven.",
+    "Pointer-only free04b0f8 remains mandatory and its compiled boundary is not a recovered native heap/CRT body; no sized-free interface expansion is made.",
+    "Higher node virtual probe/destruction, parser/DOM materialization, allocator provenance and full native document/pool/node lifetime or whole-DLL equivalence remain open.",
+    "Bounded mapping failures and reconstructed test fixtures do not establish original native execution or fault semantics."
+  ],
+  "full_native_equivalence_review_complete": false,
+  "native_node_base_fully_closed": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false
+}

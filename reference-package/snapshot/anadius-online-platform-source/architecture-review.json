@@ -1,0 +1,86 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b13_foreign_audit",
+  "review_mode": "independent",
+  "reviewed_source_hashes": {
+    "platform.hpp": "e3fc3c73340ba1bca1b2ffb8746fe311d91c9c53d58e14b0b80c7c4df47d57b1",
+    "platform.cpp": "0a462c34636fcc22f348f48795ca60dba2114d1845b84ff30183cef99f5db10b",
+    "platform_tests.cpp": "395276ab3c76d5f93c34253be26985c4954d2c65c70e797a4cb6d3f3d6d73bbd",
+    "platform_integration_tests.cpp": "1fd0532df3bf7c74859d0ad1496b13cd4aeee9deab2b33b1fc18e30da8e853df",
+    "platform_test_fixture.hpp": "1f25a488459cc2d12137305794b3d0582d6c09b73b438033d2d817a0e28a7da7"
+  },
+  "quick_results": [
+    {
+      "path": "work/b13-core-quick-results.json",
+      "sha256": "700de7e0dd4d1589ecee2ce3ac872c5cbe609fa61adada6573f0f391b5a6d681",
+      "checks": 61,
+      "execution_by": "root; independent reviewer verified all source/executable hashes, did not rerun tests"
+    },
+    {
+      "path": "work/b13-integration-quick-results.json",
+      "sha256": "31f270e2aeab72a8e2ef80862b4eed852cbf37ebce81bdac21ce0aa1e6303586",
+      "checks": 54,
+      "execution_by": "root; independent reviewer verified all source/executable hashes, did not rerun tests"
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "topic": "reuse",
+      "conclusion": "All10delegated RecoveredEffects core methods were inspected: none forward through remaining_=this. Recursive boundary methods are overridden directly. Owner copy/move deleted for stable borrowed references."
+    },
+    {
+      "id": 2,
+      "topic": "os",
+      "conclusion": "Existing0450a0 preserves GetErrorMode result and OR1;0450d0 copies a wide string before loading, not disk-copy or normalization. Normal restoration retained without invented exceptional rollback."
+    },
+    {
+      "id": 3,
+      "topic": "domains",
+      "conclusion": "Two exact observed export names and seven retained log literals map borrowed views to static terminated storage; unsupported names/literals reject before SDK or output."
+    },
+    {
+      "id": 4,
+      "topic": "foreign",
+      "conclusion": "Seven invocation methods stay mandatory owned lower. Procedure/object tokens are opaque in this adapter. Slot0 release/deleting-destructor distinction and provider internals remain unknown."
+    },
+    {
+      "id": 5,
+      "topic": "conversion",
+      "conclusion": "Filesystem-codepage flags8 path is reused; dialog reuses B12 flags0. Selected compiler filesystem/stream/EH behavior does not prove native ABI equality."
+    },
+    {
+      "id": 6,
+      "topic": "state",
+      "conclusion": "Actual online/worker/cleanup sources preserve online flag before getters, partial assignments, offline profile3field guard, cleanup zeroing after successful calls and B3 shared phase binding."
+    },
+    {
+      "id": 7,
+      "topic": "tests",
+      "conclusion": "61core/54integration captured by root; independent reviewer verified5source and2EXE hashes and all765prior source hashes. Tests use controlled OS/join/callback/profile-memory/UI; reviewer did not rerun."
+    },
+    {
+      "id": 8,
+      "topic": "ownership",
+      "conclusion": "Reverse destruction borrowed adapter then lower then dialog/stream then resources is correct. No module release is invented by owner destruction; source cleanup remains explicit."
+    },
+    {
+      "id": 9,
+      "topic": "limits",
+      "conclusion": "Full Resources factory, foreign provider bodies/ABI, native concurrency/CRT/unload/PE and historical B10 independent review remain open."
+    }
+  ],
+  "limits": [
+    "Static independent review; root test execution with reviewer-verified hashes.",
+    "Controlled foreign/OS/profile-memory/UI/join/callbacks, not native provider behavior.",
+    "Selected compiler filesystem/stream/EH representation.",
+    "Full Resources factory and B10 review debt remain outstanding."
+  ],
+  "production_dll_readiness": "BLOCKED",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

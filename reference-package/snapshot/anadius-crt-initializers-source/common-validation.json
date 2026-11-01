@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_initializers",
+    "result": "PASS",
+    "output": "PASS 904 initializer/outer-CRT/onexit composition checks",
+    "executable_sha256": "54b2c8f584186aa0335a3f0f8c65fe32871bcd6140ce9d8eae8d423bba55fea2"
+  },
+  "execution_scope": "Nine table/ACRT/PTD bodies and seven-method source bridge; recovered outer entry/cache/onexit/PTD integration with controlled app/VCRT/OS effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-initializers-source/initializer_tests.cpp",
+      "sha256": "52078425e865f289ddf397643ef24cf90fc2ffbc83c5224ee7fda4ecc22e4771"
+    },
+    {
+      "path": "anadius-crt-initializers-source/initializers.cpp",
+      "sha256": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79"
+    },
+    {
+      "path": "anadius-crt-initializers-source/initializers.hpp",
+      "sha256": "a9e1effcf75bf8baa9c4909a90ce187dc7a39259d73a32cfc3c25ef34ed0fa0b"
+    }
+  ]
+}

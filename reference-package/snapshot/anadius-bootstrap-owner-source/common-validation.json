@@ -1,0 +1,49 @@
+{
+  "schema": "bootstrap-owner.common-validation.v1",
+  "result": "PASS",
+  "source_package": "B2",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "5ae636af11ccdb107ab2d87e0006b40591748515f6af2c86d72c51281a5f77b8",
+  "test_results": [
+    {
+      "module": "bootstrap_owner",
+      "result": "PASS",
+      "output": "PASS: 58 bootstrap-owner core checks; single-base source facade,publication/quiescence/reentrant failure prefixes and permanent-error lifetime; native backend/CRT entry remain open",
+      "executable_sha256": "7dc49788002b5dd5aed8ab3b0d8fd00db3c3e74e6c3317a5fc37b473950c7e47"
+    },
+    {
+      "module": "bootstrap_owner_integration",
+      "result": "PASS",
+      "output": "PASS: 146 bootstrap-owner integration checks; actual config/parser/bootstrap/native callbacks and source begin-thread share owned state; pending drain/Busy retry/error prefixes; OS workers/backend/CRT entry remain controlled/open",
+      "executable_sha256": "113697f7a21cc6b1f7acb4ffa1e8bf65deaed1ec07596de74af6e20b9f113f44"
+    }
+  ],
+  "core_checks": 58,
+  "integration_checks": 146,
+  "new_checks": 204,
+  "production_objects": 1,
+  "new_source_files": 5,
+  "source_hashes": {
+    "owner.hpp": "f12f284f5f23e27ebc320e9c5ac24fa016b5116dcbd615a566790568ca78e003",
+    "owner.cpp": "6cb82edd31ac5617f6679f97a0d1eb04fce10644b802ed314950fca6cc16d9c3",
+    "owner_test_fixture.hpp": "cf40e5f6bbc5b3d728e1b62ced318ee64678912637b5f3c5de4b76ef34ccbf11",
+    "owner_tests.cpp": "b541059b511fea4e065f58ba02c4d1e4356aac75ef95422b38b1bf22dbc0511e",
+    "owner_integration_tests.cpp": "6eb7b8956f98fda99a1f6097774fe92ceb4c157bc63d241b30014cbb1f6a9072",
+    "README.md": "a1b309288fadae138484e94a6fe15c3337d5e885c927997bdd06efbe88b22ada"
+  },
+  "architecture_review_sha256": "cf3ddb7bbceea394c55d2063b95f6b62e3b988cf0d0915dbc0791fc1124cdcbf",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_concrete_facades": 1,
+  "new_application_owners": 1,
+  "mandatory_service_policies": 17,
+  "backend_complete": false,
+  "production_pe_entry_installed": false,
+  "native_abi_equivalence_established": false,
+  "module_standalone_build_executed": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_cfg_token_achievement_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "test_scope": "Production facade/owner with controlled lower providers; actual config/parser/bootstrap/native callbacks/source thread begin; pending drain,close failure/Busy/reentry,lifetime and three own-EXE terminal checks."
+}

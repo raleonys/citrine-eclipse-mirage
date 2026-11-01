@@ -1,0 +1,98 @@
+{
+  "schema": "b18.ptd-independent-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b18_ptd_audit",
+  "reviewed_at_utc": "2026-10-29T14:09:29.715596+00:00",
+  "review_scope": "Source-only CallbackThreads PTD lifecycle and foreign admission integration, permission/lifetime/known failure retry/unknown outcome and own synthetic tests; overall architecture review separate",
+  "reviewed_source_hashes": {
+    "../anadius-bootstrap-backend-source/backend.cpp": "2a9eb5586a115adb803f0fcb498ec88339065a95ad8eaf20ff1b1e6547290df5",
+    "../anadius-bootstrap-backend-source/backend.hpp": "b861b529c9551d6302107ebf57e2e6f0eec4881d7e6087b6921d0f641bcaf892",
+    "../anadius-callback-policy-source/policy.cpp": "3dc9831dd9289bcce05a4f2e50b0e7cb38dc4a312752e3dc92d262c4326b5427",
+    "../anadius-callback-policy-source/policy.hpp": "276262274aee1a3ce4ce130e10637ce26675f4fcd7268c1c4d294c38314b5542",
+    "../anadius-native-context-source/context.cpp": "991fc1b7f1df9eed1c84ff23aa517210a8092dc8d75e51f2743d04f689f8fb81",
+    "../anadius-native-context-source/context.hpp": "2db86f5b03ca300179a8042e5a287a3b80299b416af4a72b33adcf719b3ce9e3",
+    "../anadius-native-source/native_callbacks.hpp": "af1ff2398168e0c3d6c92ebcd99dcabf11b996b27852a5461e9ddad64378c090",
+    "../anadius-thread-domain-source/domain.cpp": "7e56567bd85815ed10d54515fbb5b9df01913dbe418871e074c4da99ce5360a4",
+    "../anadius-thread-domain-source/domain.hpp": "46258112cabee4a0e831f0a8f978cfde9a95f91bad48f2696e67baa97ee262e5",
+    "foreign.cpp": "78d03ca7164949e04364689293c45c5e5a190ed134dcb2e39b45f9801e31fc84",
+    "foreign.hpp": "24508bb44cab0b5b553593d3a294ad99eaab5b959a16ba7215fa9347d1160d9d",
+    "foreign_integration_tests.cpp": "5f2aecf7c756c5c237d257ee016fde21ec4ab73a9614fc9f841623a655609953",
+    "foreign_test_fixture.hpp": "8a5d457cf5f5cedebca7e28281713a247fc72dd2aef2cff46fec533890a8fd45",
+    "foreign_tests.cpp": "459be79d037c4ab86f15752eeaea59514f610bd53a4473bb8d5116ef0b2d8282"
+  },
+  "quick_results": [
+    {
+      "path": "work/b18-core-quick-results.json",
+      "sha256": "bf08daad9836890b86016cf2dc8c24382bb7d038f216b63b33b512b5381114fb",
+      "checks": 42,
+      "executable_sha256": "fbcb4a101d958f62f3e18f39313b644843d5c79bee991ce9d3410cab521f2693",
+      "execution_by": "root; PTD reviewer verified source/EXE hashes and inspected tests, did not rerun"
+    },
+    {
+      "path": "work/b18-integration-quick-results.json",
+      "sha256": "70efddc9b9c3c64085f29997792f4c55ed78abbeca055f9ef421f5af2f13ab08",
+      "checks": 35,
+      "executable_sha256": "fd9c337cfe3317cea669eb9de1a005a6dd8297a745d787955b4361abae1ea040",
+      "execution_by": "root; PTD reviewer verified source/EXE hashes and inspected tests, did not rerun"
+    }
+  ],
+  "root_checks": 77,
+  "reviewer_test_rerun": false,
+  "findings": [
+    {
+      "topic": "known-clean entry failure",
+      "result": "PASS",
+      "observation": "Local known_clean/error state; active and operating are committed once under the outer catch gate. A later entry cannot be poisoned by a previous catch."
+    },
+    {
+      "topic": "metadata concurrency",
+      "result": "PASS",
+      "observation": "Public owned/failure access avoids operation-owned mutable fields while operating is true. Thread/fiber and active/poison gates stay mutex-protected."
+    },
+    {
+      "topic": "borrowed/fresh ownership",
+      "result": "PASS",
+      "observation": "Existing PTD is borrowed and left installed. Fresh initial-locale PTD is owned through checked detach, one destructor, observed raw final free and checked slot clear; errno/doserrno8bytes only may differ from snapshot."
+    },
+    {
+      "topic": "cleanup retry",
+      "result": "PASS",
+      "observation": "Known detach failure leaves published root; known root free failure retains destroyed root and sentinel; clear-only retry does not repeat destructor/free. owned is false after known root release."
+    },
+    {
+      "topic": "unknown outcomes",
+      "result": "PASS",
+      "observation": "Allocation/publication/constructor/free or unsupported PTD mutation retains active poisoned state and provider lease. Native leave cannot return API success on failed cleanup."
+    },
+    {
+      "topic": "fault test attribution",
+      "result": "PASS",
+      "observation": "Final core children terminate only after active-and-poisoned predicates via own-process TerminateProcess151..155; generic SIGABRT239 cannot satisfy them. Native cleanup abort observer requires raw-denied marker for163; callback return230 fails. Earlier ambiguous exit attribution is corrected."
+    },
+    {
+      "topic": "lifetime and LastError",
+      "result": "PASS",
+      "observation": "ProviderLease retains stable binding index/heap/locale/locks; foreign paths do not read DomainStorage controller phase/busy. Thread plus fiber identity is checked and bookkeeping preserves incoming/outgoing LastError."
+    },
+    {
+      "topic": "bounded foreign model",
+      "result": "PASS",
+      "observation": "Single active body across sequential host threads. Gate is released during PTD/native/provider/wait calls. Warming/control/overlap/reentry/stopped entries reject before body; active permission survives pause until PTD leave."
+    }
+  ],
+  "limits": [
+    "PTD raw allocation deliberately bypasses recovered calloc/new-handler/errno fallback; this is a selected source ownership bridge, not original CRT/EH equality",
+    "Only initial locale and errno/doserrno mutation are supported for new scope-owned PTD; dynamic locale/other PTD changes poison",
+    "Worker and callback shared fallback/OOM/state/stream concurrency remains an explicit ready-proof contract; synthetic integration finishes own fake workers before foreign publication",
+    "General overlapping callback success, callback reentry, actual foreign game thread behavior and runtime hooks are not established",
+    "Thread/fiber identity checks are source-reviewed; tests use own std::threads and do not switch actual fibers",
+    "External admission stop and cleanup must exclude newly generated native callbacks; provider stop is not disabled-hooks or image-unload proof",
+    "Existing native raw/unknown failures are retained conservatively; no invented rollback or safe-unload claim"
+  ],
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false,
+  "new_native_bodies": 0,
+  "new_native_closures": 0
+}

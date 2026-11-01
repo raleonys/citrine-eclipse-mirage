@@ -1,0 +1,256 @@
+{
+  "schema": "owned-online-version-binding.evidence.v1",
+  "source_package": "B25",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_function_records": [
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180035b60",
+      "evidence_id": "ev_f2254ea855134db4962d20dde46b3686ce230f94b3578001b0c25fc3400e4387",
+      "line": 43123,
+      "normalized_record_sha256": "0eb1d90211a44efe9391717039e8226d29f2336773a9cea308a9ba33beffe99a"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x180035bd0",
+      "evidence_id": "ev_01da19447a43bf9f2a4a248ddc7f93acc033773f2f55e70da7f7fc84fd393c99",
+      "line": 43146,
+      "normalized_record_sha256": "7e2a6e9652d3b88fe48594e419b56b1bfb96eb21ac8d493314cb5951fcd2f875"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800366f0",
+      "evidence_id": "ev_a10737dd11c06584a1d8bfb25cfe4eb94945bdc1d2b23aca89b5fddc0066d5f4",
+      "line": 43611,
+      "normalized_record_sha256": "eefeec991a6d9fa09792995be79654ca0fb3edb04a5c971917ab347411786ad6"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800450a0",
+      "evidence_id": "ev_95e8b1d3b9dc5cf9d10bb5a22fe226f8f0559f0a01cc335ba051ffff8d5620df",
+      "line": 55035,
+      "normalized_record_sha256": "b86c0c15c15acde229b9ee0c3effb527a6a18e1df67f1b26f77e09a0e7123ff1"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "address": "0x1800450d0",
+      "evidence_id": "ev_c3841d77e553245d8f5dd6e61b0a3e573f5c3c13be4ac1bf1bf0121deaefc275",
+      "line": 55049,
+      "normalized_record_sha256": "d05c67b309b5538d4a8d786ea5e4613c84cdf6135608a101583adae38f4e7f60"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180035b60",
+      "evidence_id": "ev_d120db083716acb73a3aab91edb94f7ae2910ca33f5cd2a7baa1d1e72b62a030",
+      "line": 54561,
+      "normalized_record_sha256": "e73e8ba8e4cb82aae5264b43c15c4a9648cbbd5e4a99b17e21145198dbce6e08"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x180035bd0",
+      "evidence_id": "ev_42d4b70085bbc786efef3d59635d848e062d1ecab79b8bd4e827ea88833cf586",
+      "line": 54584,
+      "normalized_record_sha256": "62b96ecacfa40f72e0189b631d8c4e504b969358047d75169196817b428ff0fb"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800366f0",
+      "evidence_id": "ev_1fcea4b34ce7b7c2ba51c2e17ba2693f4d7fdb691fc078637e4d3b78e8cf139f",
+      "line": 55247,
+      "normalized_record_sha256": "eadd68f1b621dfb33b4577a9b4b8410ff4310f99a935b960ac21d44ce13e7693"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800450a0",
+      "evidence_id": "ev_9a546f3826f323b9e15c5954c944e3051bbfe1114897967b4c21eb6b0b188df0",
+      "line": 71206,
+      "normalized_record_sha256": "5561c6e4b8647e3bedd0a1a516fa5b7c047e802617043a30c11205b20a512db4"
+    },
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "address": "0x1800450d0",
+      "evidence_id": "ev_65e0e4834d2c1c0ea7b6859e2e77c457e679e94556ac682b9c9c05ab9c74540e",
+      "line": 71219,
+      "normalized_record_sha256": "374e801546fd9135d1fe9e5609437c134665c9a11c8e6a2b66ceb7731fd25ab1"
+    }
+  ],
+  "foreign_call_inventory": [
+    {
+      "name": "version_check",
+      "observed_shape": "No explicit input preparation; CALL RAX then CMP EAX,2",
+      "status": "SELECTED_TYPED_SOURCE_BINDING",
+      "anchors": [
+        {
+          "address": "0x180035e8c",
+          "line": 54756,
+          "instruction": "0x180035e8c: CALL RAX"
+        },
+        {
+          "address": "0x180035e8e",
+          "line": 54757,
+          "instruction": "0x180035e8e: CMP EAX, 0x2"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "create_online",
+      "observed_shape": "RCX local UTF16 cookie pointer; RAX object",
+      "status": "MANDATORY_LOWER_OPEN",
+      "anchors": [
+        {
+          "address": "0x180035fac",
+          "line": 54814,
+          "instruction": "0x180035fac: CALL RBX"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "status_virtual_08",
+      "observed_shape": "RCX object; vptr+08; low32 status",
+      "status": "MANDATORY_LOWER_OPEN",
+      "anchors": [
+        {
+          "address": "0x180036002",
+          "line": 54834,
+          "instruction": "0x180036002: CALL qword ptr [RAX + 0x8]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "username_virtual_10",
+      "observed_shape": "RCX object; vptr+10; RAX NUL byte string",
+      "status": "MANDATORY_LOWER_OPEN",
+      "anchors": [
+        {
+          "address": "0x180036039",
+          "line": 54845,
+          "instruction": "0x180036039: CALL qword ptr [RAX + 0x10]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "persona_virtual_18",
+      "observed_shape": "RCX object; vptr+18; RAX NUL byte string",
+      "status": "MANDATORY_LOWER_OPEN",
+      "anchors": [
+        {
+          "address": "0x18003606c",
+          "line": 54857,
+          "instruction": "0x18003606c: CALL qword ptr [RAX + 0x18]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "user_id_virtual_20",
+      "observed_shape": "RCX object; vptr+20; RAX NUL byte string",
+      "status": "MANDATORY_LOWER_OPEN",
+      "anchors": [
+        {
+          "address": "0x180036098",
+          "line": 54868,
+          "instruction": "0x180036098: CALL qword ptr [RAX + 0x20]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    },
+    {
+      "name": "destroy_virtual_00",
+      "observed_shape": "RCX object; vptr+00; no added EDX flags; result unused",
+      "status": "MANDATORY_LOWER_OPEN",
+      "anchors": [
+        {
+          "address": "0x180035b8c",
+          "line": 54573,
+          "instruction": "0x180035b8c: CALL qword ptr [RAX]"
+        },
+        {
+          "address": "0x180036703",
+          "line": 55253,
+          "instruction": "0x180036703: CALL qword ptr [RAX]"
+        }
+      ],
+      "full_formal_prototype_proven": false
+    }
+  ],
+  "asm_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "prior_evidence_path": "outputs/anadius-online-platform-source/source-evidence.json",
+  "prior_evidence_sha256": "ef7f1b72776144455ab3d33c29b0ff18db8d0908ec4a75cc77dc013645aa8941",
+  "unchanged_core_source_hashes": {
+    "anadius-online-source/online.cpp": "81d99724afb6de4a51c3363b43e053a2e13f689c49d63923132290caa4a1ef0c",
+    "anadius-online-source/online.hpp": "51b374f7fa0c478005c5289bcf529ba16fb104abf7c81153c2c55ee2d9f8e68b",
+    "anadius-online-source/recovered_effects.cpp": "07ca212e276421f44ec0d3c109ff0a23b35c01266d9a97349b61396944729ef3"
+  },
+  "new_original_data_bytes_read": 0,
+  "new_native_decompilation": false,
+  "retained_session": {
+    "path": "outputs/anadius-callback-provider-source/rea-session.json",
+    "sha256": "20a203aaa2cef97f49fabe365e38c2d3b4c6ae4fcaaf0614f3da95f40205b83f",
+    "scope": "B22 binary_session REA6.5.0/Ghidra12.1.4 available; B25 source-only retained evidence, no target open/new original query"
+  },
+  "source_extensions": [
+    "Opt-in OnlinePlatform version policy tracks exact own load result and nonzero version_check lookup; selected int32_t(*)() Win64 observed call shape",
+    "CodeLease explicitly owns callable lifetime; arbitrary token does not prove native module pin/address provenance",
+    "Managed load/resolve/call/free reserve active metadata then release mutex across lower/lease/export; active reentry/overlap rejected before lower effects",
+    "Resolve invalidates old callable before lookup; code/factory retirement outside mutex retains active reservation including destructor and exceptional paths",
+    "Synchronous version exception retains binding, identical exception/error and side-effect prefix without automatic retry",
+    "Free invalidates before lower; normalTRUE/FALSE clears logical module and own lease, matching unchanged0366f0; false is not unload success",
+    "Unknown load/free exception poisons future managed operations and retains observed state/code; no blind retry/implicit raw module cleanup",
+    "Other6foreigncalls remain lower; default no-option path retains7legacy forwards; B18-B24 callbacks unchanged"
+  ],
+  "quick_results": [
+    {
+      "path": "work/b25-core-quick-results.json",
+      "sha256": "7e6bd3f233994f65007b6be11f2e9207b588e0d3ada4f47daee3dd7b351ead0e",
+      "checks": 50,
+      "execution_by": "root core; /root/b22_integration integration; independent reviewer verifies hashes, no reviewer rerun claimed"
+    },
+    {
+      "path": "work/b25-integration-quick-results.json",
+      "sha256": "bfdb4e68e61fb11aa3f4ec89ad5c9307f00f178739ef89b640611faf77b0242b",
+      "checks": 44,
+      "execution_by": "root core; /root/b22_integration integration; independent reviewer verifies hashes, no reviewer rerun claimed"
+    }
+  ],
+  "source_hashes": {
+    "version.hpp": "03f6be33f071e13a20dcaea5b5208b40197d16428d3c028c73b793e5882ee0cf",
+    "version.cpp": "d41f7517c6d400527ecab8fcf70cda675823fc175019166369ee5fc686baec42",
+    "version_tests.cpp": "3c9c3b1c4e358fa86d47b413d8bbd3ebc1102128154a462b104e9630479a1ed7",
+    "version_integration_tests.cpp": "a8a35ba86d2b51b569318e1f236491ba38567d58fa7d97d5c3ac99b8caa475d1",
+    "../anadius-online-platform-source/platform.cpp": "9dce0a0bb9ae5cf55a486e93c1d165a811183e9e457387485f025545bf76842a",
+    "../anadius-online-platform-source/platform.hpp": "a60c1cb2d1746b1b2e86726e0695e3df309874ab4b8b1dd721570d9fd78c6f01"
+  },
+  "prior_source_changes": [
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "efeca0c6e704eee8818d7e261e5315db9801a3d8a0c84202e278d50fcdb31eb4",
+      "after_sha256": "9dce0a0bb9ae5cf55a486e93c1d165a811183e9e457387485f025545bf76842a",
+      "reason": "Bind selected load/version resolution/call/free to exact module/code owner with LastError-safe lower callback construction"
+    },
+    {
+      "path": "anadius-online-platform-source/platform.hpp",
+      "before_sha256": "e3fc3c73340ba1bca1b2ffb8746fe311d91c9c53d58e14b0b80c7c4df47d57b1",
+      "after_sha256": "a60c1cb2d1746b1b2e86726e0695e3df309874ab4b8b1dd721570d9fd78c6f01",
+      "reason": "Optional owned typed version binding; default7lower forwards preserved, selected6remain lower; source ABI extension"
+    }
+  ],
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "actual_foreign_DLL_executed": false,
+  "original_execution": false,
+  "original_modification": false
+}

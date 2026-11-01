@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T13:22:51.3581710Z",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-counter-native-source\\counters.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-counter-native-source\\build\\counters.o"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-counter-native-source\\native_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-counter-native-source\\build\\counters.o",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-counter-native-source\\build\\native_tests.exe"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-counter-native-source\\build\\native_tests.exe",
+      "arguments": [],
+      "scope": "own borrowed native LONG fixture only"
+    }
+  ],
+  "output": "PASS 94 borrowed native LONG counter checks",
+  "target_execution": "none",
+  "scope": "Borrowed registered live typed LONG fields with real Windows Interlocked operations; immutable registry during own joined workers; bind/unbind externally serialized; unknown identities rejected before API; no arbitrary record-byte casts, original target execution or original ABI/SEH equivalence",
+  "sources": [
+    {
+      "name": "counters.cpp",
+      "sha256": "044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25"
+    },
+    {
+      "name": "counters.hpp",
+      "sha256": "f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "61fe364a99aff62e2797dcd80135a5f0dc21c7a546c333499566aa02d973c6c0"
+    }
+  ],
+  "object_sha256": "f5fb759880fa28ec6ef306ef307cc407cb45299f22898a9b28cfd94048ce62a9",
+  "disassembly_sha256": "a17ed7b870469c6385ac069d0331428a93b6e0a0dcaf2b41b27f76f796f683f3",
+  "executable_sha256": "1258464ba6f74b8c8aa1beab8d104f42c1e09f945fd813a1e7ac5ffdc16f1d09"
+}

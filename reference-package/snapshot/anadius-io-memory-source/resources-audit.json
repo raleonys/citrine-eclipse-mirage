@@ -1,0 +1,42 @@
+{
+  "schema": "owned-io-memory.resources.v1",
+  "result": "OWNED_SOURCE_PROVIDER_WITH_EXPLICIT_RUNTIME_BOUNDARIES",
+  "owns": [
+    "shared parent root and provider lease",
+    "actual parent-heap IO raw allocations with original extents",
+    "host typed operation/task/response projections",
+    "two fixed storage/dispatcher binding tables",
+    "generation bookkeeping",
+    "per-SDK buffer loans and explicit extra source strong",
+    "unknown outcome poison-retention state"
+  ],
+  "does_not_own_or_prove": [
+    "actual kernel IO/cancel quiescence",
+    "borrowed dispatcher/handler/environment contexts",
+    "arbitrary detached raw-job drain",
+    "external worker/cache terminal ordering",
+    "production ServerBackend/Transport/Scheduling and acceptor graph",
+    "selected0228c0 original body",
+    "B31 loader factory",
+    "native ASIO/MSVC class/foreign ABI/EH equivalence"
+  ],
+  "failure_rules": [
+    "Arm actual SDK buffer-range lease and extra strong before lower submission",
+    "Cancel request never releases borrowers",
+    "Copy completion error before binding clear/loan release",
+    "Concrete loan router precedes actual native cleanup; old dispatcher route cannot bypass",
+    "Cleanup cache/callback reentry forbids later old-record reads",
+    "Cross-kind cache retains original raw allocation extent",
+    "Every exception after attempting parent allocation/free, including known parent failure, poisons/retains; unknown SDK/callback likewise; automatic recovery absent",
+    "Close requires observed completions and terminal caches drained; retire provider lease outside lock; Closed mandatory"
+  ],
+  "worker_scope_limit": "Do not hold one global parent Operation around blocking GQCS/run_worker dispatch loop; packet admission/completion/cache cleanup scope boundaries and detached jobs remain unresolved production composition",
+  "generation_scope": "Explicit controller stale-handle defense only; not kernel OVERLAPPED ABA/finality proof",
+  "compatibility_pin_scope": "EXTRA strong/range loan is host lifetime policy, not exact native counter/concurrency equivalence",
+  "binding_tables": [
+    "OperationStorageBinding fixed capacity",
+    "DispatcherOperationBinding fixed capacity"
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0
+}

@@ -1,0 +1,31 @@
+{
+  "source_package": "B48",
+  "result": "CONCRETE_SOURCE_BACKEND_WORKER_NORMAL_SELECTED_HOST_POLICY",
+  "owned": [
+    "Controller PreparedMemory, worker Graph/Policy/Profile/epoch/category/TLS",
+    "Exact RuntimeOwner configuration/runtime/Execution bindings",
+    "Persistent configure outputs before opaque callbacks",
+    "Synchronized actual-return online/host startup milestones",
+    "SourceBackend join/finalization split and explicit sealed provider retirement"
+  ],
+  "required_contracts": [
+    "configure builds static settings and narrow lowers without reading/mutating captured mutable startup cells",
+    "All Graph/provider aliases retire on their original worker before procedure return",
+    "External callback/SDK admission and real kernel/raw-job drain remain caller responsibilities",
+    "Unknown started prefixes retain live owners and cannot be replaced by close_unstarted",
+    "Keep SourceBackend/RuntimeOwner and every exact referent alive through failed close retries",
+    "Freshly rebuild Resources by-value consumers; immutable quick baseline requires unchanged factory.cpp override"
+  ],
+  "not_proven": [
+    "Full production Resources or SDK/content/license/lifecycle lower implementation",
+    "Complete graceful shutdown after pre-firstReady startup failure",
+    "Real network/kernel production stop/drain from synthetic SDK terminal packets",
+    "Arbitrary shared-global mutation safety beyond selected normal startup ordering",
+    "Original startup concurrency, exception handling, native ABI or full handshake equivalence",
+    "Loader attach/detach and image unload"
+  ],
+  "native_body_delta": 0,
+  "native_ABI_closure_delta": 0,
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null
+}

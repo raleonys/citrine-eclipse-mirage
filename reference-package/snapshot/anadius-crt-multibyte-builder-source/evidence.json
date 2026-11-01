@@ -1,0 +1,324 @@
+{
+  "scope": "Retained REA Ghidra normal flow plus read-only PE constant extraction; no binary execution, target modification or fresh Ghidra database",
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "functions": [
+    {
+      "address": "0x18006f674",
+      "pseudocode_evidence": "ev_82ac27f350ea82c6784171d9bc987418729f2f2712ec6c95b83fdb20a2058881",
+      "assembly_evidence": "ev_d4c04fc86da4968083b43e855ee7c4f116d7b038613a196501c9c0b65b7e59c5",
+      "pseudocode": "/* 0x18006f674 FUN_18006f674; Evidence ev_82ac27f350ea82c6784171d9bc987418729f2f2712ec6c95b83fdb20a2058881 */\n\n/* WARNING: Function: __security_check_cookie replaced with injection: security_check_cookie */\n\nundefined8 FUN_18006f674(int param_1,longlong param_2)\n\n{\n  byte *pbVar1;\n  byte bVar2;\n  undefined2 uVar3;\n  int iVar4;\n  uint uVar5;\n  BOOL BVar6;\n  uint *puVar7;\n  byte *pbVar8;\n  wchar_t *pwVar9;\n  longlong lVar10;\n  BYTE *pBVar11;\n  ulonglong uVar12;\n  byte *pbVar13;\n  undefined2 *puVar14;\n  undefined4 uVar15;\n  undefined2 *puVar16;\n  uint uVar17;\n  byte *pbVar18;\n  uint uVar19;\n  undefined1 auStack_68 [32];\n  _cpinfo local_48;\n  ulonglong local_30;\n  wchar_t *pwVar20;\n  \n  local_30 = DAT_1800a1580 ^ (ulonglong)auStack_68;\n  uVar5 = getSystemCP(param_1);\n  pwVar9 = (wchar_t *)0x0;\n  if (uVar5 == 0) {\nLAB_18006f901:\n    FUN_18006f050(param_2);\n    return 0;\n  }\n  puVar7 = &DAT_1800a20c0;\n  uVar15 = 1;\n  pwVar20 = pwVar9;\n  do {\n    if (*puVar7 == uVar5) {\n      FUN_1800793d0((undefined1 (*) [32])(param_2 + 0x18),0,0x101);\n      pbVar18 = &DAT_1800a20b0;\n      lVar10 = 4;\n      pbVar8 = &DAT_1800a20d0 + (longlong)pwVar20 * 0x30;\n      do {\n        bVar2 = *pbVar8;\n        pbVar13 = pbVar8;\n        while ((bVar2 != 0 && (pbVar13[1] != 0))) {\n          bVar2 = *pbVar13;\n          uVar19 = (uint)bVar2;\n          if (bVar2 <= pbVar13[1]) {\n            uVar17 = (uint)bVar2;\n            do {\n              uVar17 = uVar17 + 1;\n              if (0x100 < uVar17) break;\n              uVar19 = uVar19 + 1;\n              pbVar1 = (byte *)((ulonglong)uVar17 + 0x18 + param_2);\n              *pbVar1 = *pbVar1 | *pbVar18;\n            } while (uVar19 <= pbVar13[1]);\n          }\n          pbVar13 = pbVar13 + 2;\n          bVar2 = *pbVar13;\n        }\n        pbVar8 = pbVar8 + 8;\n        pbVar18 = pbVar18 + 1;\n        lVar10 = lVar10 + -1;\n      } while (lVar10 != 0);\n      *(uint *)(param_2 + 4) = uVar5;\n      *(undefined4 *)(param_2 + 8) = 1;\n      if (uVar5 == 0x3a4) {\n        pwVar9 = L\"ja-JP\";\n      }\n      else if (uVar5 == 0x3a8) {\n        pwVar9 = L\"zh-CN\";\n      }\n      else if (uVar5 == 0x3b5) {\n        pwVar9 = L\"ko-KR\";\n      }\n      else if (uVar5 == 0x3b6) {\n        pwVar9 = L\"zh-TW\";\n      }\n      *(wchar_t **)(param_2 + 0x220) = pwVar9;\n      puVar16 = (undefined2 *)(&DAT_1800a20c4 + (longlong)pwVar20 * 0x30);\n      puVar14 = (undefined2 *)(param_2 + 0xc);\n      lVar10 = 6;\n      do {\n        uVar3 = *puVar16;\n        puVar16 = puVar16 + 1;\n        *puVar14 = uVar3;\n        puVar14 = puVar14 + 1;\n        lVar10 = lVar10 + -1;\n      } while (lVar10 != 0);\n      goto LAB_18006f8f7;\n    }\n    uVar19 = (int)pwVar20 + 1;\n    pwVar20 = (wchar_t *)(ulonglong)uVar19;\n    puVar7 = puVar7 + 0xc;\n  } while (uVar19 < 5);\n  if ((uVar5 == 65000) || (BVar6 = IsValidCodePage(uVar5 & 0xffff), BVar6 == 0)) {\n    return 0xffffffff;\n  }\n  if (uVar5 == 0xfde9) {\n    *(undefined8 *)(param_2 + 4) = 0xfde9;\n    *(undefined8 *)(param_2 + 0x220) = 0;\n    *(undefined4 *)(param_2 + 0x18) = 0;\n    *(undefined2 *)(param_2 + 0x1c) = 0;\n  }\n  else {\n    BVar6 = GetCPInfo(uVar5,&local_48);\n    if (BVar6 == 0) {\n      if (DAT_1800a59d8 == 0) {\n        return 0xffffffff;\n      }\n      goto LAB_18006f901;\n    }\n    FUN_1800793d0((undefined1 (*) [32])(param_2 + 0x18),0,0x101);\n    *(uint *)(param_2 + 4) = uVar5;\n    *(undefined8 *)(param_2 + 0x220) = 0;\n    if (local_48.MaxCharSize == 2) {\n      pBVar11 = local_48.LeadByte;\n      while ((local_48.LeadByte[0] != 0 && (pBVar11[1] != 0))) {\n        bVar2 = *pBVar11;\n        if ((uint)bVar2 <= (uint)pBVar11[1]) {\n          uVar5 = (uint)bVar2;\n          uVar12 = (ulonglong)(((uint)pBVar11[1] - (uint)bVar2) + 1);\n          do {\n            uVar5 = uVar5 + 1;\n            pbVar8 = (byte *)((ulonglong)uVar5 + 0x18 + param_2);\n            *pbVar8 = *pbVar8 | 4;\n            uVar12 = uVar12 - 1;\n          } while (uVar12 != 0);\n        }\n        pBVar11 = pBVar11 + 2;\n        local_48.LeadByte[0] = *pBVar11;\n      }\n      pbVar8 = (byte *)(param_2 + 0x1a);\n      lVar10 = 0xfe;\n      do {\n        *pbVar8 = *pbVar8 | 8;\n        pbVar8 = pbVar8 + 1;\n        lVar10 = lVar10 + -1;\n      } while (lVar10 != 0);\n      iVar4 = *(int *)(param_2 + 4);\n      if (iVar4 == 0x3a4) {\n        pwVar9 = L\"ja-JP\";\n      }\n      else if (iVar4 == 0x3a8) {\n        pwVar9 = L\"zh-CN\";\n      }\n      else if (iVar4 == 0x3b5) {\n        pwVar9 = L\"ko-KR\";\n      }\n      else if (iVar4 == 0x3b6) {\n        pwVar9 = L\"zh-TW\";\n      }\n      *(wchar_t **)(param_2 + 0x220) = pwVar9;\n    }\n    else {\n      uVar15 = 0;\n    }\n    *(undefined4 *)(param_2 + 8) = uVar15;\n  }\n  puVar14 = (undefined2 *)(param_2 + 0xc);\n  for (lVar10 = 6; lVar10 != 0; lVar10 = lVar10 + -1) {\n    *puVar14 = 0;\n    puVar14 = puVar14 + 1;\n  }\nLAB_18006f8f7:\n  FUN_18006f0e8(param_2);\n  return 0;\n}\n\n\n\n",
+      "assembly": "; 0x18006f674 FUN_18006f674; Evidence ev_d4c04fc86da4968083b43e855ee7c4f116d7b038613a196501c9c0b65b7e59c5\n0x18006f674: MOV qword ptr [RSP + 0x18], RBX\n0x18006f679: MOV qword ptr [RSP + 0x20], RBP\n0x18006f67e: PUSH RSI\n0x18006f67f: PUSH RDI\n0x18006f680: PUSH R12\n0x18006f682: PUSH R14\n0x18006f684: PUSH R15\n0x18006f686: SUB RSP, 0x40\n0x18006f68a: MOV RAX, qword ptr [0x1800a1580]\n0x18006f691: XOR RAX, RSP\n0x18006f694: MOV qword ptr [RSP + 0x38], RAX\n0x18006f699: MOV RSI, RDX\n0x18006f69c: CALL 0x18006efd0\n0x18006f6a1: XOR EBX, EBX\n0x18006f6a3: MOV EDI, EAX\n0x18006f6a5: TEST EAX, EAX\n0x18006f6a7: JZ 0x18006f901\n0x18006f6ad: LEA R12, [0x1800a20c0]\n0x18006f6b4: MOV R14D, EBX\n0x18006f6b7: MOV RAX, R12\n0x18006f6ba: LEA EBP, [RBX + 0x1]\n0x18006f6bd: CMP dword ptr [RAX], EDI\n0x18006f6bf: JZ 0x18006f80b\n0x18006f6c5: ADD R14D, EBP\n0x18006f6c8: ADD RAX, 0x30\n0x18006f6cc: CMP R14D, 0x5\n0x18006f6d0: JC 0x18006f6bd\n0x18006f6d2: CMP EDI, 0xfde8\n0x18006f6d8: JZ 0x18006f803\n0x18006f6de: MOVZX ECX, DI\n0x18006f6e1: CALL qword ptr [0x18007f060]\n0x18006f6e7: TEST EAX, EAX\n0x18006f6e9: JZ 0x18006f803\n0x18006f6ef: MOV EAX, 0xfde9\n0x18006f6f4: CMP EDI, EAX\n0x18006f6f6: JNZ 0x18006f71e\n0x18006f6f8: MOV qword ptr [RSI + 0x4], RAX\n0x18006f6fc: MOV qword ptr [RSI + 0x220], RBX\n0x18006f703: MOV dword ptr [RSI + 0x18], EBX\n0x18006f706: MOV word ptr [RSI + 0x1c], BX\n0x18006f70a: LEA RDI, [RSI + 0xc]\n0x18006f70e: MOVZX EAX, BX\n0x18006f711: MOV ECX, 0x6\n0x18006f716: STOSW.REP RDI\n0x18006f719: JMP 0x18006f8f7\n0x18006f71e: LEA RDX, [RSP + 0x20]\n0x18006f723: MOV ECX, EDI\n0x18006f725: CALL qword ptr [0x18007f3e8]\n0x18006f72b: TEST EAX, EAX\n0x18006f72d: JZ 0x18006f7f7\n0x18006f733: LEA RCX, [RSI + 0x18]\n0x18006f737: XOR EDX, EDX\n0x18006f739: MOV R8D, 0x101\n0x18006f73f: CALL 0x1800793d0\n0x18006f744: CMP dword ptr [RSP + 0x20], 0x2\n0x18006f749: MOV dword ptr [RSI + 0x4], EDI\n0x18006f74c: MOV qword ptr [RSI + 0x220], RBX\n0x18006f753: JNZ 0x18006f7ed\n0x18006f759: LEA RCX, [RSP + 0x26]\n0x18006f75e: CMP byte ptr [RSP + 0x26], BL\n0x18006f762: JZ 0x18006f790\n0x18006f764: CMP byte ptr [RCX + 0x1], BL\n0x18006f767: JZ 0x18006f790\n0x18006f769: MOVZX EAX, byte ptr [RCX + 0x1]\n0x18006f76d: MOVZX EDX, byte ptr [RCX]\n0x18006f770: CMP EDX, EAX\n0x18006f772: JA 0x18006f788\n0x18006f774: SUB EAX, EDX\n0x18006f776: LEA EDI, [RDX + 0x1]\n0x18006f779: LEA EDX, [RAX + RBP*0x1]\n0x18006f77c: OR byte ptr [RDI + RSI*0x1 + 0x18], 0x4\n0x18006f781: ADD EDI, EBP\n0x18006f783: SUB RDX, RBP\n0x18006f786: JNZ 0x18006f77c\n0x18006f788: ADD RCX, 0x2\n0x18006f78c: CMP byte ptr [RCX], BL\n0x18006f78e: JNZ 0x18006f764\n0x18006f790: LEA RAX, [RSI + 0x1a]\n0x18006f794: MOV ECX, 0xfe\n0x18006f799: OR byte ptr [RAX], 0x8\n0x18006f79c: ADD RAX, RBP\n0x18006f79f: SUB RCX, RBP\n0x18006f7a2: JNZ 0x18006f799\n0x18006f7a4: MOV ECX, dword ptr [RSI + 0x4]\n0x18006f7a7: SUB ECX, 0x3a4\n0x18006f7ad: JZ 0x18006f7dd\n0x18006f7af: SUB ECX, 0x4\n0x18006f7b2: JZ 0x18006f7d4\n0x18006f7b4: SUB ECX, 0xd\n0x18006f7b7: JZ 0x18006f7cb\n0x18006f7b9: CMP ECX, EBP\n0x18006f7bb: JZ 0x18006f7c2\n0x18006f7bd: MOV RAX, RBX\n0x18006f7c0: JMP 0x18006f7e4\n0x18006f7c2: MOV RAX, qword ptr [0x18008bf88]\n0x18006f7c9: JMP 0x18006f7e4\n0x18006f7cb: MOV RAX, qword ptr [0x18008bf80]\n0x18006f7d2: JMP 0x18006f7e4\n0x18006f7d4: MOV RAX, qword ptr [0x18008bf78]\n0x18006f7db: JMP 0x18006f7e4\n0x18006f7dd: MOV RAX, qword ptr [0x18008bf70]\n0x18006f7e4: MOV qword ptr [RSI + 0x220], RAX\n0x18006f7eb: JMP 0x18006f7ef\n0x18006f7ed: MOV EBP, EBX\n0x18006f7ef: MOV dword ptr [RSI + 0x8], EBP\n0x18006f7f2: JMP 0x18006f70a\n0x18006f7f7: CMP dword ptr [0x1800a59d8], EBX\n0x18006f7fd: JNZ 0x18006f901\n0x18006f803: OR EAX, 0xffffffff\n0x18006f806: JMP 0x18006f90b\n0x18006f80b: LEA RCX, [RSI + 0x18]\n0x18006f80f: XOR EDX, EDX\n0x18006f811: MOV R8D, 0x101\n0x18006f817: CALL 0x1800793d0\n0x18006f81c: MOV EAX, R14D\n0x18006f81f: LEA R9, [R12 + 0x10]\n0x18006f824: LEA R11, [0x1800a20b0]\n0x18006f82b: MOV R14D, 0x4\n0x18006f831: LEA R15, [RAX + RAX*0x2]\n0x18006f835: SHL R15, 0x4\n0x18006f839: ADD R9, R15\n0x18006f83c: MOV RDX, R9\n0x18006f83f: CMP byte ptr [R9], BL\n0x18006f842: JZ 0x18006f882\n0x18006f844: CMP byte ptr [RDX + 0x1], BL\n0x18006f847: JZ 0x18006f882\n0x18006f849: MOVZX R8D, byte ptr [RDX]\n0x18006f84d: MOVZX EAX, byte ptr [RDX + 0x1]\n0x18006f851: CMP R8D, EAX\n0x18006f854: JA 0x18006f87a\n0x18006f856: LEA R10D, [R8 + 0x1]\n0x18006f85a: CMP R10D, 0x101\n0x18006f861: JNC 0x18006f87a\n0x18006f863: MOV AL, byte ptr [R11]\n0x18006f866: ADD R8D, EBP\n0x18006f869: OR byte ptr [R10 + RSI*0x1 + 0x18], AL\n0x18006f86e: ADD R10D, EBP\n0x18006f871: MOVZX EAX, byte ptr [RDX + 0x1]\n0x18006f875: CMP R8D, EAX\n0x18006f878: JBE 0x18006f85a\n0x18006f87a: ADD RDX, 0x2\n0x18006f87e: CMP byte ptr [RDX], BL\n0x18006f880: JNZ 0x18006f844\n0x18006f882: ADD R9, 0x8\n0x18006f886: ADD R11, RBP\n0x18006f889: SUB R14, RBP\n0x18006f88c: JNZ 0x18006f83c\n0x18006f88e: MOV dword ptr [RSI + 0x4], EDI\n0x18006f891: MOV dword ptr [RSI + 0x8], EBP\n0x18006f894: SUB EDI, 0x3a4\n0x18006f89a: JZ 0x18006f8c5\n0x18006f89c: SUB EDI, 0x4\n0x18006f89f: JZ 0x18006f8bc\n0x18006f8a1: SUB EDI, 0xd\n0x18006f8a4: JZ 0x18006f8b3\n0x18006f8a6: CMP EDI, EBP\n0x18006f8a8: JNZ 0x18006f8cc\n0x18006f8aa: MOV RBX, qword ptr [0x18008bf88]\n0x18006f8b1: JMP 0x18006f8cc\n0x18006f8b3: MOV RBX, qword ptr [0x18008bf80]\n0x18006f8ba: JMP 0x18006f8cc\n0x18006f8bc: MOV RBX, qword ptr [0x18008bf78]\n0x18006f8c3: JMP 0x18006f8cc\n0x18006f8c5: MOV RBX, qword ptr [0x18008bf70]\n0x18006f8cc: LEA RDI, [R12 + 0x4]\n0x18006f8d1: MOV qword ptr [RSI + 0x220], RBX\n0x18006f8d8: ADD RDI, R15\n0x18006f8db: LEA RDX, [RSI + 0xc]\n0x18006f8df: MOV ECX, 0x6\n0x18006f8e4: MOVZX EAX, word ptr [RDI]\n0x18006f8e7: LEA RDI, [RDI + 0x2]\n0x18006f8eb: MOV word ptr [RDX], AX\n0x18006f8ee: LEA RDX, [RDX + 0x2]\n0x18006f8f2: SUB RCX, RBP\n0x18006f8f5: JNZ 0x18006f8e4\n0x18006f8f7: MOV RCX, RSI\n0x18006f8fa: CALL 0x18006f0e8\n0x18006f8ff: JMP 0x18006f909\n0x18006f901: MOV RCX, RSI\n0x18006f904: CALL 0x18006f050\n0x18006f909: XOR EAX, EAX\n0x18006f90b: MOV RCX, qword ptr [RSP + 0x38]\n0x18006f910: XOR RCX, RSP\n0x18006f913: CALL 0x18004b220\n0x18006f918: LEA R11, [RSP + 0x40]\n0x18006f91d: MOV RBX, qword ptr [R11 + 0x40]\n0x18006f921: MOV RBP, qword ptr [R11 + 0x48]\n0x18006f925: MOV RSP, R11\n0x18006f928: POP R15\n0x18006f92a: POP R14\n0x18006f92c: POP R12\n0x18006f92e: POP RDI\n0x18006f92f: POP RSI\n0x18006f930: RET\n\n"
+    }
+  ],
+  "constant_extraction": {
+    "section": ".data",
+    "section_rva": "0xa1000",
+    "section_raw_offset": "0x9f600",
+    "section_raw_size": 10240,
+    "flags_va": "0x1800a20b0",
+    "flags_file_offset": "0xa06b0",
+    "flags": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "table_va": "0x1800a20c0",
+    "table_file_offset": "0xa06c0",
+    "table_byte_count": 240,
+    "table_sha256": "bdb03f7a145976f2c290206ebd8efd878e013c5bb058b02cfc9c01b1a1fa3970",
+    "table_hex": "A4030000608279822100000000000000A6DF000000000000A1A5000000000000819FE0FC00000000407E80FC00000000A8030000C1A3DAA320000000000000000000000000000000000000000000000081FE00000000000040FE000000000000B5030000C1A3DAA320000000000000000000000000000000000000000000000081FE00000000000041FE000000000000B6030000CFA2E4A21A00E5A2E8A25B000000000000000000000000000000000081FE000000000000407EA1FE000000005105000051DA5EDA20005FDA6ADA32000000000000000000000000000000000081D3D8DEE0F90000317E81FE00000000",
+    "rows": [
+      {
+        "index": 0,
+        "file_offset": "0xa06c0",
+        "virtual_address": "0x1800a20c0",
+        "codepage": 932,
+        "words": [
+          33376,
+          33401,
+          33,
+          0,
+          0,
+          0
+        ],
+        "ranges": [
+          [
+            166,
+            223,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            161,
+            165,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            129,
+            159,
+            224,
+            252,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            64,
+            126,
+            128,
+            252,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "file_offset": "0xa06f0",
+        "virtual_address": "0x1800a20f0",
+        "codepage": 936,
+        "words": [
+          41921,
+          41946,
+          32,
+          0,
+          0,
+          0
+        ],
+        "ranges": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            129,
+            254,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            64,
+            254,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "file_offset": "0xa0720",
+        "virtual_address": "0x1800a2120",
+        "codepage": 949,
+        "words": [
+          41921,
+          41946,
+          32,
+          0,
+          0,
+          0
+        ],
+        "ranges": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            129,
+            254,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            65,
+            254,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "index": 3,
+        "file_offset": "0xa0750",
+        "virtual_address": "0x1800a2150",
+        "codepage": 950,
+        "words": [
+          41679,
+          41700,
+          26,
+          41701,
+          41704,
+          91
+        ],
+        "ranges": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            129,
+            254,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            64,
+            126,
+            161,
+            254,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "index": 4,
+        "file_offset": "0xa0780",
+        "virtual_address": "0x1800a2180",
+        "codepage": 1361,
+        "words": [
+          55889,
+          55902,
+          32,
+          55903,
+          55914,
+          50
+        ],
+        "ranges": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            129,
+            211,
+            216,
+            222,
+            224,
+            249,
+            0,
+            0
+          ],
+          [
+            49,
+            126,
+            129,
+            254,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    ]
+  },
+  "boundaries": [
+    "Five builtin writable .data rows are reconstructed at their shipped immutable values; runtime mutation of original table globals is outside this module contract.",
+    "Locale identity globals 18008bf70/78/80/88 remain live getters and point to caller-owned UTF-16.",
+    "Successful CPInfo provider must terminate lead-byte pairs within its 12-byte array. Missing terminator throws an explicit reconstruction-boundary exception; no claim about original stack overread.",
+    "IsValidCodePage, GetCPInfo, getSystemCP and downstream table builders are required effects; isolated fixtures are synthetic and do not prove OS API behavior.",
+    "Security cookie epilogue and structured exception behavior are not reproduced by this normal-flow C++ source."
+  ]
+}

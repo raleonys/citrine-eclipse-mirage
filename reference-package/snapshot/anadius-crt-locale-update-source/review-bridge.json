@@ -1,0 +1,63 @@
+{
+  "result": "PASS_STATIC_INTEGRATION_REVIEW",
+  "reviewed_at": "2026-10-18T19:57:16.8839915Z",
+  "scope": "Independent static review of production composition, fixture implementation and recorded standalone PASS; reviewer did not execute tests, targets or native providers",
+  "recorded_test": "PASS 8553 locale/PTD/argv/find/path/conversion/heap composition checks",
+  "validation_source_hash_mismatches": 0,
+  "material_defects": [],
+  "checks": [
+    "ThreadEffects delegates required_preserve_error_064b90 to actual existing PTD source; cached live Ptd fixture mutates LastError during FLS access and restoration is observed",
+    "UpdateEffects delegates both refresh methods to actual locale-thread cores; WildcardEffects delegates actual constructor",
+    "Live Ptd, locale/multibyte storage and Globals are borrowed into one bounded Lower memory provider; globals current multibyte cell address resolves to that same live Globals object",
+    "Parser byte classification, previous-byte helpers and code-page cleanup use returned context PTD and shared flag word; clear byte gates cleanup",
+    "Nested constructor/classification retain bit 2 until outer explicit cleanup; global and explicit-pair paths acquire no PTD and return clear flag zero",
+    "Transition fixture exercises both real refresh cores, lock 4/5, old static-object exemptions, updated PTD pair and reference counts",
+    "Allocated non-static old multibyte pointer refcount 1 flows through actual recovered free_0668c0 and heap effect, removing both heap-memory and reported-size records",
+    "Whole argv mode 1/mode 2 uses actual parser, expansion, generic sort, conversion, path and SDK-shaped find wrappers with controlled function-pointer fixtures",
+    "Integrated UTF8 and ANSI/OEM-selection variants verify argv publication, find closure, cleanup, realloc/final allocation failures and flag ownership balance",
+    "Same heap bridge is used by onexit with recursive registration, moved/in-place recalloc, failed growth preservation and capacity-based zero ranges"
+  ],
+  "limitations": [
+    "Deep locale add/release/free, locks, atomics, FLS access and lower Windows conversion/find/module functions are controlled fixtures; concurrency and production native backend behavior remain unproven",
+    "Required PTD is tested through cached live-Ptd and construction-sentinel abort cases; allocation, construction and FLS initialization/destruction are not exercised by this integration suite",
+    "ctype-mask classification path is not integrated here; tests use multibyte lead-byte bit 4 and ASCII conversion fixtures, so comprehensive native Unicode/codepage behavior is not established",
+    "Optional error-slot PTD provider is independently controlled and usually falls back; this does not prove global unification of every error/invalid/PTD provider with the shared locale Ptd",
+    "Caller is responsible for live address binding and serialized access to Globals; synthetic tests do not establish races, native atomic semantics, original initialization or ABI equivalence",
+    "Fast-path PTD zero in bridge context is explicit new metadata safe only because clear flag is zero; original constructor leaves that qword untouched",
+    "No exceptional/SEH cleanup, full DLL link/runtime equivalence or original binary execution is claimed"
+  ],
+  "reviewed_files": [
+    {
+      "path": "outputs/anadius-crt-locale-bridge-source/bridge.hpp",
+      "sha256": "e49856d6172275d730081348414f4104c89f3e3f88684ed592343cadfbcbc118"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-bridge-source/bridge.cpp",
+      "sha256": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-bridge-source/bridge_tests.cpp",
+      "sha256": "9fb0e64236cb3524ef9d1cdf078e0ffa88a14b68dd317282435fdb283f956d53"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-update-source/locale_update.cpp",
+      "sha256": "05bf4170ced404a2137cba5f33528ead4338684695330ddcec409fb3d1221fa0"
+    },
+    {
+      "path": "outputs/anadius-crt-locale-thread-source/locale_thread.cpp",
+      "sha256": "94056806d91af6a462f4ffc63086ca10960c4e189d7bc9342aa5c7cfd19bfd4c"
+    },
+    {
+      "path": "outputs/anadius-crt-byteclass-source/byteclass.cpp",
+      "sha256": "e599636c790f7e9600e4263b731486ac92df7a10ba6f10b61dabb4e48fd1da77"
+    },
+    {
+      "path": "outputs/anadius-crt-wildcard-source/wildcard.cpp",
+      "sha256": "a286fe75ea38d3a579f540a37fa748cf8268bd77c0aa60f97aa946818bb01340"
+    },
+    {
+      "path": "outputs/anadius-crt-ptd-source/ptd.cpp",
+      "sha256": "10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe"
+    }
+  ]
+}

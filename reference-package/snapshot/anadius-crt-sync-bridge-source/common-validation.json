@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_sync_bridge",
+    "result": "PASS",
+    "output": "PASS 120 native lock/Interlocked/FLS parallel source integration checks",
+    "executable_sha256": "6a3a2f134df1b772560abeba950edf5a4c0a5b4cb6fa0a21c939a0bd39cf15b4"
+  },
+  "execution_scope": "Actual ACRT/VCRT lock/resolver fallback, typed native CS/Interlocked plus recovered PTD/data/FLS/nativeheap/error chain with4simultaneous own workers; barrier peak/refcount/errno/callback cleanup, partial native-bank rollback; system-only loader fixture and owned controlled global/locale identities; no general CRT concurrency/ABI/SEH/full DLL equivalence; zero new original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-sync-bridge-source/bridge_tests.cpp",
+      "sha256": "185fe6280697abc84360895be0d62a43ff6036c0482a3e46c2b686ee24b01a63"
+    },
+    {
+      "path": "anadius-crt-sync-bridge-source/bridge.cpp",
+      "sha256": "3c7f7d1a236e9699485c5756ac0c7c86581a479053088bba5b877537fe21551d"
+    },
+    {
+      "path": "anadius-crt-sync-bridge-source/bridge.hpp",
+      "sha256": "e6e751c498fbfd5d47b76d29eb843ac2aab007e6ef339cf1d8fcc7dfcc6b11ed"
+    }
+  ]
+}

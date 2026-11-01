@@ -1,0 +1,41 @@
+{
+  "result": "PASS",
+  "reviewer": "iocp_constructor_audit",
+  "scope": "Independent frozen four-source review against retained024990 normal-flow contract and selected typed registry bridge plus injectable SDK adapter",
+  "sources": {
+    "outputs/anadius-socket-source/iocp_constructor.hpp": "c82705d8734e98d5df368faeb20d202a08c04d70092f6dd4e858d617e9112725",
+    "outputs/anadius-socket-source/iocp_constructor.cpp": "4b9e91d2cab45972f188319246adc4d6e784ddb8be19946d408c5ac12fc20254",
+    "outputs/anadius-socket-source/iocp_constructor_native.hpp": "53bf32bd986d221473ded1fb814f83676b6591dc584dc02fbbadfdfb75c48142",
+    "outputs/anadius-socket-source/iocp_constructor_native.cpp": "ef64c81fee9b3460c62bb7a3e3a6676ef32b82e49e5701461656af9ce2969455"
+  },
+  "report_sha256": "c0f7bd652d672f1d20806ae46f5f032aabfc396bcabea95da093c139152e4ba2",
+  "audit_report_sha256": "b166dbe959db6090589dd84e0cb76d74399d48e39749623a2f64bec6157c5b8b",
+  "audit_json_sha256": "f00c7dd66002929e8b724727b4fc1eb323d14c861a4e83be065697be77003350",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180024990"
+  ],
+  "new_original_procedures": 1,
+  "core_contract": "Cachedargs; basefields/key/context/next/table084510/port/workqwordzero; all156versionbyteszero,size9c,major6; mask(0,2,3),Verify(version,2,mask); nonzeroBOOLtimeoutFFFFFFFFelse500; queuezero then027be0; categoryALWAYS andcachedstatus084428raise; latefields/hintraw/workernull; portinvalid/null/key0/signhint; storeport beforeGetLastError/category; zeroerrorcontinues; ownthread atomiclow32increment beforealloc24; nonnullworker08/10zero alloc32 functiontable084710/context18 only; start02a000(nullablefunction,0); LIVEoldworkerreload thenCloseignored/free24 cachedold; cachedfreshlast",
+  "composition": "Selected IocpSchedulerRegistryEffects host dynamic-type guard calls actual024990; native allocator and CRT comparator remain abstract; SDK adapter is injectable and performs no calls in its constructor",
+  "providers_not_recovered": [
+    "04b0bc native allocator and04b0f8 native deallocator",
+    "02a000 event and worker thread startup",
+    "028240 native exception implementation and SEH/unwind",
+    "Native scalar deleting destructor and registry teardown",
+    "Native dispatcher/executor and DLL entry/export ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Typed live projections and opaque identities are not native memory or ABI overlays",
+    "Native fullqword30 reset represented by low32atomic/high32 pair; constructor assumes exclusive initialization, not concurrent native reset proof",
+    "Nullablefunction is an observed start argument, not proven valid native successful worker startup",
+    "Callbacks throwing establish no native unwind, rollback or cleanup guarantee",
+    "Only one original normal procedure counted; source helpers/adapters/composition add no originals",
+    "No complete original DLL equivalence claim"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "scope": "first selected Config2 copy and scalar-only application bridge; bounded static review",
+  "reviewer": "config_pipeline_review independent worker",
+  "reviewed_at": "2026-10-21T02:09:09.8890551Z",
+  "source_hashes": {
+    "pipeline.hpp": "c8b1b863abbabe7480c5d6f0ed4051964194333c65d9a08fe93ecb5aef379b8e",
+    "pipeline.cpp": "018c61c3354ae541b7e4e7506b7fcfb12600689772b9e54e2d99122065c54378",
+    "pipeline_tests.cpp": "78949acfd8b16e372f01108cea80a55c7253524bbeb1d9a424eb49773c3dcc30",
+    "README.md": "74cfb9b447a5ced645e04b06f102be88eb39c62b0356e0c64c618b3f98855590",
+    "build.ps1": "d22e970277f6482a5ff2e22e44bc4645b3c6519d94997ec2c892aa054009161b"
+  },
+  "support_hashes": {
+    "../anadius-parser-source/parser.hpp": "9e09d6bd1c3f900462c94d7e3bc5acdb141ef1045b6a1ac4e37e25fc1973bdd1",
+    "../anadius-parser-source/parser.cpp": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2",
+    "../anadius-config-source/configuration.hpp": "4e32c3c4de5f00f8af5e94368fb8d5bd7d5767fb563651bab80e9edf82235883",
+    "../anadius-config-source/configuration.cpp": "04d93a3a71f57a9d34bb4e0f3806c7ac532a2c0a1cdaef1e36ad6654c02620f9",
+    "../anadius-file-source/binary_io.hpp": "5a1ef9c90437e70677458e559488d8c340de0dfcff4b74157254bf391889f7b4",
+    "../anadius-file-source/binary_io.cpp": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222",
+    "../anadius-config-order-source/order.hpp": "1e9f2b46e6a1cece859dc193ecb5573df3dc4bbee94ec00490d5264cedf7345f",
+    "../anadius-config-order-source/order.cpp": "70af2d1c3e948d6b1d2eca3e4339d19869ee731216dae2b85258e77cf33dd719",
+    "../anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "../anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+  },
+  "recorded_pipeline_checks": 189,
+  "validation_observed_sha256": "912942091e2da8776f9ad4ffd6a5ab517f1fe286540e8cb6dd7cf3073e98b104",
+  "independent_test_rerun": false,
+  "findings": [],
+  "integration_bound_exceptions": [
+    "UnsupportedOrder above 8 unique children",
+    "UnsupportedCollectionOrder for populated ordered consumers, including override"
+  ],
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_evidence": [
+    "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+    "ev_cb304cf806c8f77471c7aad5e5d42745fb5c6a321687823f1a11e5a06a733148",
+    "ev_91cab609774a710edd0530e7fe7aca3653228cdbc3856fd13532f170728718e1",
+    "ev_7de7d396b3d48bd1ff72af08e3352ab2f4c81bc3f3c936a732c87194229f50c3",
+    "ev_eb165761bebee321d429869fbc04c4978b3a68c8f4111e91216a899887c12c29",
+    "ev_f41f4a819fee5b4d28b14e9e46a687e7b970ea5c8b7b132c7a8307689f02875c"
+  ],
+  "original_target_execution": "none",
+  "real_user_cfg_read": false,
+  "production_edits": false,
+  "runtime_equivalence": "not established"
+}

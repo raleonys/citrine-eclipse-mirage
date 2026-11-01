@@ -1,0 +1,152 @@
+{
+  "schema": "acceptor-normal-flow.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180020e20",
+      "pseudo_evidence": "ev_3c0f133878db1fec30ab6ef19ef7b2595fed8a0ba99ea8e0ec75a708ab5925af",
+      "assembly_evidence": "ev_ff338f1411812fb5f0cbb9ad6393b0698c2c0a40146ad6aab6f4aaeffaf2bfea"
+    },
+    {
+      "address": "0x180025310",
+      "pseudo_evidence": "ev_26632449c219b976e8c944c3f39220e450cf9f69c0bb73f371721826920c0fb4",
+      "assembly_evidence": "ev_2645e8dfee6bdef124f50586c9504ff413676b420d87ddf68f69b549a20cc93c"
+    },
+    {
+      "address": "0x1800211b0",
+      "pseudo_evidence": "ev_0a99c668ad187f12ba22bcb5a084965bb3619bfa398a64dd105f65647c8a7c33",
+      "assembly_evidence": "ev_632ecefa1757518f06b13606a94918118593165c553357228e6939dd09997b9d"
+    },
+    {
+      "address": "0x1800237f0",
+      "pseudo_evidence": "ev_9d032f90b7525b7ede209b0cd270417daa9266d8e3a7a8c00e1c70cc49a616d6",
+      "assembly_evidence": "ev_de485f776e49d7ff2d789f8827fe4b134f48db3815f521d6d4cde097753b314c"
+    },
+    {
+      "address": "0x180028620",
+      "pseudo_evidence": "ev_fd2098bcb37a61e83ff7f76f095ba6d0fe598933164420bda64f6c6ef3920095",
+      "assembly_evidence": "ev_73535f6dec0ad639cf35346f8021a5b39597a421eb724714a6aec9986996b9f6"
+    },
+    {
+      "address": "0x1800285b0",
+      "pseudo_evidence": "ev_0d416758bef1cb136be764bc42d61b6806ad330bc40b244b4ca7798197b53f2e",
+      "assembly_evidence": "ev_7504fc233bdbccda061b68f98284e32855d51c5f9468d39aa085eb40520e1f77"
+    },
+    {
+      "address": "0x180024480",
+      "pseudo_evidence": "ev_20e549a27321ba1d7651fc94fdf90ec98fec21fff58fbc1d4561e3b5a5828d5c",
+      "assembly_evidence": "ev_4f9d3f62cce3b75d905b999b5f99a20ceb6c0fc1fb8597ea7bcba97cde3c61f6"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "acceptor.hpp": "5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b",
+    "acceptor.cpp": "c9a5c8a034daf5381d718f1985e8e3f58a530856982fff194fceed77299aea3a",
+    "acceptor_native.hpp": "fc82c54de4d79713bc0207a6ab3429dbc8d77cd1d16e4142100e66a696aa026c",
+    "acceptor_native.cpp": "ba1f75d01e93011e9bb712754d3625a8f9852957a1acfa1df973e79d9e71bedb",
+    "acceptor_tests.cpp": "1351d7c838b7289b849dbbac2743818b704cf32c7837322e07d25707d3fc8f2f",
+    "acceptor_native_tests.cpp": "dac8b385f9f7dd0ea2377f547eefd6952014862430d3b58dba293d2648b9c286",
+    "build.ps1": "ead2c58c2b814111760df972e0f94f9b4e11cdedaa36d83067bb8ff2a85b3e9c",
+    "CMakeLists.txt": "8ad2255e3f7651ea029d80df2725dd8ae0216a991cdad46840e8614275331ac8",
+    "README.md": "dfde49588a08e8a77e610a53ffe851528a9dc1c5db7997808bffe46cab8cce23"
+  },
+  "support_hashes": {
+    "acceptor-evidence.pseudo.c.txt": "2a5a99ca92e2b2e64a133fdff0f0f5e3e2b698becad14d29bdd09630d9ac634f",
+    "acceptor-evidence.asm.txt": "86b720b8dc0848cf7261b6eaa4403921fc23bd8f00d60156055bc8d5ac4a8d31",
+    "acceptor-flow-audit.md": "7dbccc3cdef3539b1e8d373dd587b465ed2729e64eaebe0da98e7cc6dcb1d7bc",
+    "acceptor-flow-audit.json": "d3cfe7d49a37a9ca362e64f34cbfcbfc44ff3b0c8dbd874a5b423ecdcbd952ba",
+    "acceptor-review.md": "ae9599a16a04a3e344ae33e2aac4a1c1761f935599c365534da9e40f5352a12a",
+    "acceptor-review.json": "79d5f87b6cb09285112e0ab92423f19b0a2266d87a0146c47ff3f645f42957c4",
+    "acceptor-rea-session.json": "55bb30403ac54374d1776e7b58974feaa7956565ae0c4419b2fb53dc4a415fda",
+    "context-strings.json": "24038d03d8ad7eb090084acb01e04efe5c5d3d4480c8c58a3e6dedfb77d1f704"
+  },
+  "normal_source_procedures_added": [
+    "0x180020e20",
+    "0x180025310"
+  ],
+  "new_original_procedures": 2,
+  "required_providers": [
+    "0211b0 service/list constructor",
+    "0237f0 allocator/shared owner replacement",
+    "028620/0285b0 lazy categories",
+    "028240 exception effects"
+  ],
+  "claims": [
+    {
+      "finding": "Initializer first, cached initial family/service identity, live later completion-port value",
+      "addresses": [
+        "0x180020e53",
+        "0x180020e59",
+        "0x180020e70",
+        "0x180020f4c",
+        "0x180020f56"
+      ]
+    },
+    {
+      "finding": "WSA errors:category then LastError; IOCPNULL:Win32 GetLastError before category",
+      "addresses": [
+        "0x180020efe",
+        "0x180020f06",
+        "0x180020f68",
+        "0x180020f70"
+      ]
+    },
+    {
+      "finding": "WSAinvalid/error0 resets fields but skips transfer; IOCPNULL/error0 transfers socket/state then shared-owner provider then protocol reset",
+      "addresses": [
+        "0x180020f33",
+        "0x180020f3f",
+        "0x180020f87",
+        "0x180020f9f",
+        "0x180020fb2",
+        "0x180020fd3"
+      ]
+    },
+    {
+      "finding": "Reuse/bind/listen nonzero status + captured error0 continue; bind re-reads endpoint family; no explicit late-error close added",
+      "addresses": [
+        "0x18002103c",
+        "0x180021066",
+        "0x180021085",
+        "0x1800210bb",
+        "0x1800210fe"
+      ]
+    },
+    {
+      "finding": "Cached socket slot unchanged; category/name identity+10035 or1237; ignored ioctl and retry close; second failure category/LastError calls retained",
+      "addresses": [
+        "0x180025316",
+        "0x18002533e",
+        "0x180025346",
+        "0x18002534e",
+        "0x180025365",
+        "0x180025391",
+        "0x18002539a",
+        "0x1800253a4"
+      ]
+    }
+  ],
+  "context_static_bytes": {
+    "proof": "context-strings.json",
+    "source": "Direct read-only PE mapping distinct from retained REA defined strings",
+    "rea_strings_evidence": "ev_c97664560efc0e5cf3207e174b0defd0b96f84c49fdf20bd0644ce960d07d716",
+    "rea_defined_matches": [
+      "0x180084730",
+      "0x18008473c"
+    ]
+  },
+  "independent_production_review": "PASS; acceptor-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "SDK_execution": "All imports injected in tests; no real socket/network/IOCP invocation",
+  "unproven": [
+    "Native service/list/sharedref/category/exception providers",
+    "Native constructor unwind/allocator/stack/SEH/ABI",
+    "ASIO/IOCP/socket ownership/lifecycle/concurrency",
+    "Full DLL integration and original runtime differential"
+  ]
+}

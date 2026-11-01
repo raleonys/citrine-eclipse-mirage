@@ -1,0 +1,62 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T02:32:15.6957650Z",
+  "prior_package_sha256": "711c46fc528067e71e3292a9f91c871dd5d548c9995a090c4f58b9b7431b4e30",
+  "prior_source_count": 508,
+  "unchanged_prior_sources": 508,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/composed_write_integration_tests.cpp",
+    "anadius-socket-source/composed_write_native.cpp",
+    "anadius-socket-source/composed_write_native.hpp",
+    "anadius-socket-source/composed_write_tests.cpp",
+    "anadius-socket-source/composed_write.cpp",
+    "anadius-socket-source/composed_write.hpp"
+  ],
+  "current_sources": 514,
+  "current_documents": 200,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 30,
+  "native_objects": 174,
+  "cpp_objects": 170,
+  "c_objects": 4,
+  "normal_test_groups": 161,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_composed_write",
+      "result": "PASS",
+      "output": "PASS: 3528 socket composed write core checks; five retained normal bodies, independent slice model, current TLS cache, weak ownership, live buffer reload, wrap arithmetic, early publication, fallback, exceptions and real synthetic heap lifetime ends",
+      "executable_sha256": "5ecef0d03d58dfa2de39577896aa0c38e21102db04a660efa49384ce8c64d4fa"
+    },
+    {
+      "module": "socket_composed_write_integration",
+      "result": "PASS",
+      "output": "PASS: 593 socket composed write integration checks; actual021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends",
+      "executable_sha256": "feff6724434169e259a32e3604e8219978745bd81a381caef4502c3e3f0a20f7"
+    }
+  ],
+  "new_checks": 4121,
+  "master_build_sha256": "6d643c2b3a5271c01edca928eb1681b64ecfec992b97272f6f70b0e985d63aaf",
+  "common_build_script_sha256": "71f08c95b0fd0dce55abe0c8e67890e9f555647f8c9d4a01a6068fd7a3aa5524",
+  "cmake_sha256": "b58649653aa875c2dc6661cec9b7c862f1ec02428c3479c9e01035ee14905a70",
+  "normal_source_procedures_added": [
+    "0x180021fd0",
+    "0x1800261d0",
+    "0x1800269b0",
+    "0x180028b50",
+    "0x180028c00"
+  ],
+  "new_original_procedures": 5,
+  "new_composition": "Actual0261d0composedwrite ->021fd0asyncsend ->0269b0currentTLSallocator;028b50knowncompletion and028c00earlycompletionhandshake; realSDKtypedWSASend/WSAGetLastErrorimports, remaining023dd0/025a70providers",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "storage_contract": "Stable raw allocation identity/binding/typedprojection; bounded byte storage separate SDK OVERLAPPED; native fault guards modeled UnsupportedInput; no post-freeoperation access",
+  "allocation_and_functor_providers": "04b0bc/04b788,023dd0environmentconstruction,025a70applicationcompletion,025c40receive,polymorphicfactory/query/move/destroy/schedule slots and native provenance remain required",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

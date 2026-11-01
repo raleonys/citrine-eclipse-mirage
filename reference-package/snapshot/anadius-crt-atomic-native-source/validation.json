@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T02:25:12.2511583Z",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-atomic-native-source\\atomic.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-atomic-native-source\\build\\atomic.o"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-atomic-native-source\\native_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-atomic-native-source\\build\\atomic.o",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-atomic-native-source\\build\\native_tests.exe"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-atomic-native-source\\build\\native_tests.exe",
+      "arguments": [],
+      "scope": "own native atomic fixture only"
+    }
+  ],
+  "output": "PASS: 88 native atomic checks",
+  "target_execution": "none",
+  "scope": "Owned aligned LONG storage with real Windows Interlocked operations; synthetic values and joined own std::threads; no arbitrary record-byte casts, original target execution or original ABI/SEH equivalence",
+  "sources": [
+    {
+      "name": "atomic.cpp",
+      "sha256": "d13c18cc364775c8e5ce50f23984af8b72d4d7e6a2f420e34cd0b2caf4d32e3d"
+    },
+    {
+      "name": "atomic.hpp",
+      "sha256": "2af4cf8f37588aff808b4fed25e0c000a66aacb6a497f7a811b99340e053998d"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "4ac21f290c120fbdb130ef107158f298d5f0fa1d9e36c3d00e6e06a706431891"
+    }
+  ],
+  "object_sha256": "178fd3b0f12b79e694acb00bcb6f6a8530973d9b54fede7b833885e40a381d04",
+  "disassembly_sha256": "c85546499d2475687e4ad04651bd22c855c36de8b0554fc7570fe207105c8031",
+  "executable_sha256": "daeb4f58eb27a46d20409f7b6d68c7e92383122dfaf46ad1ae3351fbb4f7dfad"
+}

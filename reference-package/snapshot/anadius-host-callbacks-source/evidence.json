@@ -1,0 +1,74 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "preferred_image_base": "0x180000000",
+  "evidence_type": "retained REA static decompilation corroborated with retained instruction listings",
+  "functions": [
+    {
+      "va": "0x18000f3f0",
+      "source": "create_process_a_00f3f0",
+      "decompile_evidence": "ev_6882329804a6a0f5abb56ae3a32fe4e594ec7e5a987d84eb4af828013f12b95f",
+      "assembly_evidence": "ev_835ca84fd8d5ece34462ad08b26d5b8b05836d2bad0b6cb6bab9266d4dded8ae",
+      "anchors": [
+        {"va":"0x18000f407..0x18000f448","observation":"ClientPath narrow key constructed with explicit length10"},
+        {"va":"0x18000f44d..0x18000f454","observation":"compare0086b0(application,key); zero branches directly to epilogue"},
+        {"va":"0x18000f456..0x18000f4ac","observation":"original global0a3868 gets unchanged10parameters"},
+        {"va":"0x18000f4b2..0x18000f4ca","observation":"epilogue does not modify EAX: blockedzero, otherwise originalBOOL"}
+      ]
+    },
+    {
+      "va":"0x18000f4d0",
+      "source":"create_process_w_00f4d0",
+      "decompile_evidence":"ev_c37154c55afe8d9e4b3aa57bba1543a7bfbd8a2ad8fca5a522bcd037decb537a",
+      "assembly_evidence":"ev_76d6bcf1809efdf6f8a90deee3f9cfce933ee883dc2d47975027c2c53cdfa38c",
+      "anchors":[
+        {"va":"0x18000f52d..0x18000f534","observation":"compare0087f0, zero bypasses original"},
+        {"va":"0x18000f536..0x18000f58c","observation":"unchanged10parameters to original0a3870"},
+        {"va":"0x18000f592..0x18000f5aa","observation":"EAX unchanged in epilogue"}
+      ]
+    },
+    {
+      "va":"0x180008db0",
+      "source":"folder_value_a_008db0",
+      "decompile_evidence":"ev_78641e04270f9db9328f6eccbe75e5f924674e0b7cfea8129439b3e494574f94",
+      "assembly_evidence":"ev_8b9bd26298a7e2c762d307894a43cc14da7e43535f84ae166e9d8448a819a772",
+      "anchors":[
+        {"va":"0x180008dfb..0x180008e3b","observation":"fullint==5 then Documents key resolve008980"},
+        {"va":"0x180008eb9..0x180008ec6","observation":"explicitresultlengthzero=>unhandled"},
+        {"va":"0x180008f1b..0x180008f31","observation":"strcpy_s(destination,0x104,value.c_str); *result=(error!=0);handledtrue"}
+      ]
+    },
+    {
+      "va":"0x180008fa0",
+      "source":"folder_value_w_008fa0",
+      "decompile_evidence":"ev_f80b7e39327798e793b329da0f1e4d2a68eeb250aa25825be7e4cc52b2176ebe",
+      "assembly_evidence":"ev_97d758b7c7b83f28cd634fb9b2bfb721c0ebc848572afee05d80a5fdd988651f",
+      "anchors":[
+        {"va":"0x180008feb..0x18000902b","observation":"fullint==5 then wideDocuments resolution008b80"},
+        {"va":"0x1800090ae..0x1800090bb","observation":"nonemptyexplicitlengthrequired"},
+        {"va":"0x180009115..0x18000912b","observation":"wcscpy_s capacity260UTF16units;anyerror=>result1;handledtrue"}
+      ]
+    },
+    {
+      "va":"0x18000fc00",
+      "source":"folder_a_00fc00",
+      "decompile_evidence":"ev_1be83f0e2e6326ed3aaa979aebb8a627e3ac45c9fcf38a2bc9ae747c28d831a5",
+      "assembly_evidence":"ev_cefeadeb04ff875f14ebe8ffb73e6b4101cdfa082866db164d1a986ad55a2388",
+      "anchors":[{"va":"0x18000fc34..0x18000fc53","observation":"handledhelper result32returned,else original0a3878with5unchangedargs"}]
+    },
+    {
+      "va":"0x18000fc80",
+      "source":"folder_w_00fc80",
+      "decompile_evidence":"ev_357129030c62116872c42bf3d15665ba6648b832c667ffce00205c052f156342",
+      "assembly_evidence":"ev_02187a70ea6ca6005510c6a9147010deb2e04461943be197cdb6d5b25c18e9f6",
+      "anchors":[{"va":"0x18000fcb4..0x18000fcd3","observation":"handledhelper result32returned,else original0a3880with5unchangedargs"}]
+    }
+  ],
+  "shared_helpers": {
+    "module":"../anadius-registry-source",
+    "functions":["0x1800086b0","0x1800087f0","0x180008980","0x180008b80"],
+    "semantics":"case-sensitive length-aware Values lookup, filesystem CP narrow conversion, C-string CRT locale comparison; nullcompareinput=>1"
+  },
+  "search_boundary":"Only these6 callback/helper bodies and their4 shared lookup/matcher dependencies. No native process, folder API, registry or target/provider runtime execution.",
+  "remaining":["Win32 callback ABI and actual hookengine binding","secure CRT invalid-parameter and allocator/EH effects","runtime equivalence with original MSVC CRT"]
+}

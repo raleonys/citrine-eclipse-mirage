@@ -1,0 +1,102 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-25T09:02:28.017183+00:00",
+  "prior_package_sha256": "837d149f8c4db3d4e5db1f4ec358db120ce227674bf50d1a231b26c933033c05",
+  "prior_source_count": 626,
+  "unchanged_prior_sources": 626,
+  "added_sources": [
+    "anadius-socket-source/pool_release.cpp",
+    "anadius-socket-source/pool_release.hpp",
+    "anadius-socket-source/pool_release_integration_tests.cpp",
+    "anadius-socket-source/pool_release_test_fixture.hpp",
+    "anadius-socket-source/pool_release_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 631,
+  "current_documents": 231,
+  "native_objects": 198,
+  "cpp_objects": 194,
+  "c_objects": 4,
+  "normal_test_groups": 209,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 82,
+  "new_checks": 149002,
+  "new_tests": [
+    {
+      "module": "socket_pool_release",
+      "result": "PASS",
+      "output": "PASS: 613 pool release/track checks; retained vtable defaults, four pools, exact LIFO/full-prefix preservation, raw32 wrapping, root-cache/shared-backing/item aliases, bounded prefixes and selected identities; native allocator/free, ABI and EH remain open",
+      "executable_sha256": "2bb02a481656168bdcd6efa65369e7eea8591d768c0f2521b45dfbc1f3d2e814"
+    },
+    {
+      "module": "socket_pool_release_integration",
+      "result": "PASS",
+      "output": "PASS: 148389 socket pool release integration checks; source release/track on4mapped pool prefixes and3controlled roots through document/cipher/dispatch/queue/send; allocator/nodevirtual/fullDOM/ABI/EH remain open",
+      "executable_sha256": "1007343ead407f69002eda8ffb0497c55c9e98cfaa3f1fc65382bebd32f7d4dc"
+    }
+  ],
+  "validation_mirror_pairs": 41,
+  "historical_module_records_preserved": 40,
+  "historical_config_references_preserved": 80,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "9ea4325eed63b105e6ed78646a2e1e138b6ee34e2fcd0bdd4846f74ca78672fa",
+  "inventory_data_checks": 7407,
+  "normal_source_procedures_added": [
+    "0x1800033a0",
+    "0x180005a20"
+  ],
+  "new_original_procedures": 2,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/pool_release.cpp",
+      "base": "NativeNodeClearEffects::pool_release",
+      "body": "release_pool_item_0033a0",
+      "closure": "RecoveredPoolReleaseEffects::pool_release",
+      "address": "0x1800033a0",
+      "native_abi_complete": false,
+      "scope": "0033a0 memory-only pool free-list release and005a20 untracked DWORD decrement normal projections;2 generic final RecoveredPoolReleaseEffects pool_release/pool_track source bridges dispatch only exact shipped target values; native allocation/node probe/destructor/parser/DOM/vtable/ABI/EH remain open"
+    },
+    {
+      "file": "outputs/anadius-socket-source/pool_release.cpp",
+      "base": "NativeNodeClearEffects::pool_track",
+      "body": "track_pool_005a20",
+      "closure": "RecoveredPoolReleaseEffects::pool_track",
+      "address": "0x180005a20",
+      "native_abi_complete": false,
+      "scope": "0033a0 memory-only pool free-list release and005a20 untracked DWORD decrement normal projections;2 generic final RecoveredPoolReleaseEffects pool_release/pool_track source bridges dispatch only exact shipped target values; native allocation/node probe/destructor/parser/DOM/vtable/ABI/EH remain open"
+    }
+  ],
+  "new_source_bridges": 2,
+  "native_typed_providers_newly_closed": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "prior_native_source_closures_preserved": 31,
+  "current_native_source_closures": 33,
+  "semantic_session_source_adapters_preserved": 2,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "0033a0 memory-only pool free-list release and005a20 untracked DWORD decrement normal projections;2 generic final RecoveredPoolReleaseEffects pool_release/pool_track source bridges dispatch only exact shipped target values; native allocation/node probe/destructor/parser/DOM/vtable/ABI/EH remain open",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_contents_read": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N18 pool allocation002b10/002600/002960/0027b0 inventory/contracts selected from shipped pool vtables; no new bodies claimed yet; remaining node virtual/parser/DOM/allocator/ABI/EH open; CRT stays paused",
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "target_dispatch_guards_are_native_bodies": false,
+  "tagged_definition_variants_per_new_target": 1,
+  "dependency_evidence_files": 102
+}

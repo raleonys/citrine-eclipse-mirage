@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 3268,
+  "integration_checks": 242,
+  "output": "PASS: 3268 socket handler dispatch core checks; slots4/5 allocator and cleanup, borrowed priority, live factory/vtable/owner semantics, mutable publication, early actual closure deletion and exception boundaries\nPASS: 242 socket handler dispatch integration checks; actual027c10/0298b0/IO routing/handler scheduler composition, borrowed and owned branches, injected SDK adapters, fallback queue, independent pool0/1 plus4/5 reuse and actual heap lifetime ends",
+  "source_hashes": {
+    "handler_dispatch.hpp": "0fec1cbf13941617daf61b0bf4a144c3e660bd976f4c65f8ebad184e198b3f64",
+    "handler_dispatch.cpp": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac",
+    "handler_dispatch_bridge.hpp": "a0c012878ee191fe53b22d7bace89ade87308c9e3702c81ca9cdd905f9887646",
+    "handler_dispatch_bridge.cpp": "522fd1b8e79025a8cd6e80791ba292216d0b69826f9dfbb660261ac1e6716602",
+    "handler_dispatch_tests.cpp": "0e4912363139ad94bd0cf8cc8efb56590e0d4d6f2c690eea989ae7441372c692",
+    "handler_dispatch_integration_tests.cpp": "c07d965ea88a165c463ab4848c4d0305a6e7febe6a9adb8f6801350924fa04c7",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "original_procedures_added": 9,
+  "execution_scope": "021900/022640/022670/022780/0227b0/0229d0/022c60/0291c0/0292a0 retained normal bodies: handler-only pool4/5 allocation and marker cleanup, borrowed synchronous slot18 priority, owned mutable publication slot10 cached before TLS, actual nested send factory/move/live destroy, transfer-before-error-copy, early free-before-invoke and live final control release; actual028ca0/0298b0/027c10/IO routing/recovered handler scheduler/owned task callbacks plus reentrant022e40/027120 and separate pool0/1 and4/5 reuse, post-failure fallback; injected existing native SDK adapters and actual object/storage/control heap lifetime ends",
+  "required_providers": "04b0bc allocation/04b788 free, native polymorphic query/factory/move/destroy/scheduler slot18 and10,025c40/0261d0 bodies, reference dispose/delete,GS TLS/guard CRT/exception storage and ABI ownership remain required effects; CRT production unchanged and paused",
+  "native_ASIO_IOCP_worker_allocator_ABI_SEH": "not established; bounded byte storage and typed handlers are separate projections, not native0x70/78 ABI overlays; uninitialized allocator tag/scratch omitted, normal-flow ownership and deterministic synthetic lifetimes do not prove native concurrent heap/SEH or binary equivalence; no original/game/real SDK TLS/IOCP/socket/network/event/thread/wait or user cfg/token/achievement execution/read"
+}

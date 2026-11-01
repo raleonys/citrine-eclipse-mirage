@@ -1,0 +1,39 @@
+{
+  "reviewer": "crt_nls_native_api",
+  "checked_at": "2026-10-19T13:51:30.8585875Z",
+  "result": "PASS",
+  "sources": [
+    {
+      "name": "native_tests.cpp",
+      "sha256": "625eafeda25bbe56c5da29dff264c1d711a26268eba933ac2444377d267391a3"
+    },
+    {
+      "name": "native.cpp",
+      "sha256": "6ce7261947cbc4e332984756286cf31e8dcacf9828fb14fb2d3a82706cdbfa35"
+    },
+    {
+      "name": "native.hpp",
+      "sha256": "7fb0d1e02a858154f7d49530d7b199272de0871463da1b99c01177b1e72fa800"
+    }
+  ],
+  "fresh_build": "PASS nls native dispatch: 92 checks; typed fixtures and Windows synthetic literals only",
+  "reviewed_contracts": [
+    "SDK decltype LCMapStringW/Ex/LocaleNameToLCID and WINAPI signatures match SDK; Ex version/reserved/LPARAM forwarded without narrowing on x64.",
+    "Tracked sort-key output uses aligned WCHAR native backing sized for byte capacity, commits exact positive byte count.",
+    "Negative tracked capacity rejects before opaque token cast; tracked query sends NULL, raw empty span forwards unchanged signed count/capacity/pointers.",
+    "Failure and impossible positive success invalidate potentially written tracked range; seeded prior success regression tests cover overflow/null-positive and preserve tail.",
+    "Incoming LastError captured before staging; restored immediately before API; captured immediately after; ErrorScope outlives vector and restores after destruction.",
+    "Native tests operate on bounded synthetic literals and existing Windows module exports, never original target DLL or game."
+  ],
+  "findings": [],
+  "resolved_findings": [
+    {
+      "issue": "Impossible positive API success retained stale defined tracked cells",
+      "resolution": "Owner invalidates prefix before exception; both overflow and NULL-positive regressions seed defined cells and assert prefix unknown/tail retained."
+    }
+  ],
+  "limitations": [
+    "This review covers new native SDK adapter, not new recovered machine code bodies.",
+    "Alias/invalid native pointers, allocation failure and original SEH/native concurrency remain caller/boundary limitations."
+  ]
+}

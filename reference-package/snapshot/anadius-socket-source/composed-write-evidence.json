@@ -1,0 +1,226 @@
+{
+  "schema": "composed-write.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180021fd0",
+      "pseudo_evidence": "ev_cb8feee93f61ab1f79de415f7b58cf399d0febb87fbce65a9c6f749925ed1724",
+      "assembly_evidence": "ev_6326ebb30e495078e0ed47d7346de01edd7f346608c3d5c91890ce2c1637533e"
+    },
+    {
+      "address": "0x1800261d0",
+      "pseudo_evidence": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61",
+      "assembly_evidence": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75"
+    },
+    {
+      "address": "0x1800269b0",
+      "pseudo_evidence": "ev_0c7504dc089c22b188406a74817295196cc8a5422d0c58100e40ce078253ba9c",
+      "assembly_evidence": "ev_586096def6fb76b35ed73eb2537b5179396be2688df8b2b1f3eae25366596e73"
+    },
+    {
+      "address": "0x180028b50",
+      "pseudo_evidence": "ev_4cd499c90aa2c873056ab0577de3c976776a6225dba31287ff7bb0c5e26fd9c3",
+      "assembly_evidence": "ev_74dbc4b50b84117c1dbbb54892dc26facd77da66434072f8d19653fe28600196"
+    },
+    {
+      "address": "0x180028c00",
+      "pseudo_evidence": "ev_68da7f3569738e82ce651786d7b8273c01ff51932b8530ff9e502a18021c2bf6",
+      "assembly_evidence": "ev_4b5ff1e2f1d04186333f6a462ab01c20a6a558a918c5f97ad7456fba5c427db1"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "composed_write.hpp": "12adee25325e0a9b56dc229ced9cf56768de2ec0f35312ee173c8a6293e9ef08",
+    "composed_write.cpp": "ae72cf24ff9e0ff0f4c0ecd93061f6e0538cbefda526cc945b7aed47c10b6e48",
+    "composed_write_native.hpp": "23f85015f11ef464ffd2b6501c5a70ee21b8d5f9cbc016e3e7cfd7c2bdc060cb",
+    "composed_write_native.cpp": "0aa0b7fa775156f28f18c16a7c5314979ef112c765de13d695996e3d3c5f454e",
+    "composed_write_tests.cpp": "fa3ed9c6ce59fdc02e5daad5b7a240252bac48231d58c6eacbf1de181ae5264c",
+    "composed_write_integration_tests.cpp": "3ba52f504faa2203ad29d24b63773507baadc1e800f3b8622943f241065f2abe",
+    "build.ps1": "5a14b6e80cc0ce0a4deef6375e251e302ae1491f4fae8a4258450fc842c42f93",
+    "CMakeLists.txt": "db539de33662f098fb488c472d4af6f43c8224b8a14774a5ccc98cb1e1f57013",
+    "README.md": "0b29612069ace9739a0cb9a300fd47fc6acf462591a483e1a4d2a08ea385a4c6"
+  },
+  "support_hashes": {
+    "composed-write-evidence.pseudo.c.txt": "382cc961e6e5c8b4afed596bace40891aa332bd3b1719f9723cb188c7b4af838",
+    "composed-write-evidence.asm.txt": "caaea8adcb29914ca5084c85fc315f5e164d11a91aa55fa582e6339c67c3c7aa",
+    "composed-write-flow-audit.md": "57aaa31c2154dc093cbd1697a144d223e170c8af648f968c6d91a14ee732b38d",
+    "composed-write-flow-audit.json": "97b21ea83a29c220de8041c3d600a5e90731e7b770859c96cc828178a15d1ecd",
+    "composed-write-review.md": "be6eb21e18bec9bfa33ba0906af363650a76d763dc5e0fa9114c1c8acc753445",
+    "composed-write-review.json": "8499972d094a4cdcd952a7479c47c08a545834e78eeb15ba09497c6bebf52dc1",
+    "composed-write-rea-session.json": "a354469812aa9c9b231f9bcfd9863902f7ec58eea060a15c8d886ee497f18c19"
+  },
+  "normal_source_procedures_added": [
+    "0x180021fd0",
+    "0x1800261d0",
+    "0x1800269b0",
+    "0x180028b50",
+    "0x180028c00"
+  ],
+  "new_original_procedures": 5,
+  "context_evidence": {
+    "address": "0x180027c10",
+    "newly_recovered": false,
+    "pseudo_evidence": "ev_f152e2905264f9dc18af84544b646d77dac85539841a6cd365e7e2309d3f7065",
+    "assembly_evidence": "ev_d48cd3bea9d0dcba074c541aa1bcfa2e381f3b7fc10b43089ec0486b70fb14bf",
+    "references": {
+      "completion-dispatcher-evidence.json": "d11df92166732971c7d37be6351a763a0ebc85fe5a7a0b81a6ab2d36be0990a9",
+      "completion-dispatcher-evidence.asm.txt": "dd41ec2b940aa41b101cc5f4de137d05f3bf4abaae60cbf3996d875a591c1060"
+    },
+    "interpretation": "Existing dispatcher fallback retries withkey0/SDKbytes0;non2dequeue overwritespacketmetadata withSDKerror/bytes; syntheticearly-plus-failedkey2fixture finishesprogress0afteronehandledoperation versusdirectkey2threechunks; controlledSDKoutputs only, nooriginalexecution"
+  },
+  "required_providers": [
+    "023dd0 environment-constructor algorithm and native polymorphic slots/lifetime",
+    "025a70 completion-application algorithm and025c40 receive algorithm",
+    "04b0bc/04b788 allocation/deallocator unchanged",
+    "Stable raw identity/binding/typedprojection with accessible bounded allocation span and live dispatcher packet binding",
+    "Existing WorkerRunApi TLS/DispatcherApi posting and API category; native weak-reference deletion slot and lifetime",
+    "Native SDK import behavior, exception/SEH/unwind/concurrency/ABI and full DLL integration"
+  ],
+  "claims": [
+    {
+      "pseudo_evidence": "ev_f152e2905264f9dc18af84544b646d77dac85539841a6cd365e7e2309d3f7065",
+      "references": [
+        "completion-dispatcher-evidence.json",
+        "completion-dispatcher-evidence.asm.txt"
+      ],
+      "context_only": true,
+      "addresses": [
+        "0x180027d17",
+        "0x180027d1b",
+        "0x180027d22",
+        "0x180027d25",
+        "0x180027d27",
+        "0x180027d2b",
+        "0x180027f0a",
+        "0x180027f11",
+        "0x180027f2d",
+        "0x180027f32",
+        "0x180027f38",
+        "0x180027f3e"
+      ],
+      "finding": "Existing027c10fallbackclearnext/queued1 thenpostbytes0key0;key2onlyusescachedmetadata;non2overwritespacketfromSDKoutputs. Syntheticearly+failedkey2fixtureSDKsuccesszero giveshandled1/progress0/finish1/send1;directkey2fixturethreechunks. Contextnotnewprocedure;nooriginalexecution/generalraceclaim",
+      "assembly_evidence": "ev_d48cd3bea9d0dcba074c541aa1bcfa2e381f3b7fc10b43089ec0486b70fb14bf"
+    },
+    {
+      "finding": "0261d0 flagsstoredfirst;flags1alwayssend includingerror/completedzero;non1progress64wrapstoreBEFOREfinish;error16privatecopy025a70;minprogresstotal;cap65536;pointeradditionwrap;actual021fd0flags0",
+      "addresses": [
+        "0x1800261d4",
+        "0x1800261e0",
+        "0x1800261e6",
+        "0x1800261ed",
+        "0x1800261f1",
+        "0x180026210",
+        "0x18002622b",
+        "0x180026239",
+        "0x180026245",
+        "0x180026258",
+        "0x18002626c",
+        "0x180026285"
+      ]
+    },
+    {
+      "finding": "0269b0oneTLSlookup usingliveindex;currentframe.stateonly;requestedbytes/alignment1;unspecifiedallocatorstacktagunusedby021820",
+      "addresses": [
+        "0x1800269c7",
+        "0x1800269cd",
+        "0x1800269d8",
+        "0x1800269e0",
+        "0x1800269e5",
+        "0x1800269eb",
+        "0x1800269f3"
+      ]
+    },
+    {
+      "finding": "021fd0allocate0xd0;weaktemporaryplusoperationincrements;callback027a20;zeroSDKandpacket/next/queued/weak;copyinitialbuffer;copydefinedhandlerfieldsandclearownedpairBEFORE023dd0;temporaryweakold1delete",
+      "addresses": [
+        "0x180022013",
+        "0x18002201b",
+        "0x180022031",
+        "0x180022035",
+        "0x180022039",
+        "0x18002206b",
+        "0x18002206f",
+        "0x180022074",
+        "0x1800220cd",
+        "0x1800220d1",
+        "0x1800220e7",
+        "0x1800220f6",
+        "0x180022106"
+      ]
+    },
+    {
+      "finding": "LatebufferreloadAFTERenvironmentctorandweakcallback;low32WSABUFlengthversusfull64zerotest;work32incrementBEFOREsocketchecks;flag10zero shortcutknownsuccess;invalidsocket10009",
+      "addresses": [
+        "0x180022109",
+        "0x18002211f",
+        "0x180022129",
+        "0x18002212e",
+        "0x180022135",
+        "0x18002213e",
+        "0x18002215f",
+        "0x18002216a",
+        "0x18002217c"
+      ]
+    },
+    {
+      "finding": "OneWSASendwithbytesoutputzero andNULLroutine;immediateunconditionalWSAGetLastError;1234to10061;rc0ORerror997actual028c00;otherwise028b50withbytes;finalnull0294c0;noopreadsafterpublication",
+      "addresses": [
+        "0x180022185",
+        "0x1800221b4",
+        "0x1800221bc",
+        "0x1800221c7",
+        "0x1800221cc",
+        "0x1800221cf",
+        "0x1800221d3",
+        "0x1800221ec",
+        "0x1800221fa",
+        "0x1800221ff",
+        "0x180022214"
+      ]
+    },
+    {
+      "finding": "028b50queued1BEFOREcategory;packetcategory/status/bytesdistinctcancellation;postliveportbytes0key2;failureenterssamegate-clearnext-livequeuetail-append-exchangedispatch1-leave;noGetLastError",
+      "addresses": [
+        "0x180028b72",
+        "0x180028b7e",
+        "0x180028b83",
+        "0x180028b8a",
+        "0x180028b91",
+        "0x180028b9b",
+        "0x180028baf",
+        "0x180028bb7",
+        "0x180028bdb",
+        "0x180028bde"
+      ]
+    },
+    {
+      "finding": "028c00lockedCAS0to1;onlyold1postskey2;otheroldvaluesunchanged/noextraeffects;no categoryorpacketrewrite;samefallbackgate/queue;nooperationaccessafterpostsuccess",
+      "addresses": [
+        "0x180028c1c",
+        "0x180028c21",
+        "0x180028c23",
+        "0x180028c32",
+        "0x180028c45",
+        "0x180028c4b",
+        "0x180028c53",
+        "0x180028c77",
+        "0x180028c7a"
+      ]
+    }
+  ],
+  "independent_production_review": "PASS; composed-write-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Five actual normal caller procedures compose composedwrite/asyncsend/currentTLSallocation andknown/earlycompletionpublication; existing completion/handler bridges retained, injected SDK effects only; no original/network execution",
+  "storage_contract": "Bounded raw allocation distinct from typed SDK/handler/weak/packet projections; bindings coherent while live; post may end operation lifetime; initial buffer copied thenlivebufferreloaded afterconstructor/weakcallback; statuspacket separatecancellation.error; unspecifiedallocatorstacktag andpadding absent",
+  "unproven": [
+    "Native023dd0environmentconstructor and025a70completion/025c40receive application algorithms, table-slot implementations",
+    "04b0bc/04b788/native allocator provenance/control-block lifetime",
+    "Native ABI/GS-cookie/exception/SEH/unwind/concurrency",
+    "Complete DLL integration and original runtime differential"
+  ]
+}

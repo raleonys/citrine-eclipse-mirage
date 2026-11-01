@@ -1,0 +1,96 @@
+{
+  "scope": "Independent complete retained five normal composed-write and async-send procedures",
+  "reviewer": "composed_write_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "full_listing_hashes_match": true,
+  "functions": [
+    {
+      "address": "0x180021fd0",
+      "pseudo_evidence": "ev_cb8feee93f61ab1f79de415f7b58cf399d0febb87fbce65a9c6f749925ed1724",
+      "assembly_evidence": "ev_6326ebb30e495078e0ed47d7346de01edd7f346608c3d5c91890ce2c1637533e"
+    },
+    {
+      "address": "0x1800261d0",
+      "pseudo_evidence": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61",
+      "assembly_evidence": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75"
+    },
+    {
+      "address": "0x1800269b0",
+      "pseudo_evidence": "ev_0c7504dc089c22b188406a74817295196cc8a5422d0c58100e40ce078253ba9c",
+      "assembly_evidence": "ev_586096def6fb76b35ed73eb2537b5179396be2688df8b2b1f3eae25366596e73"
+    },
+    {
+      "address": "0x180028b50",
+      "pseudo_evidence": "ev_4cd499c90aa2c873056ab0577de3c976776a6225dba31287ff7bb0c5e26fd9c3",
+      "assembly_evidence": "ev_74dbc4b50b84117c1dbbb54892dc26facd77da66434072f8d19653fe28600196"
+    },
+    {
+      "address": "0x180028c00",
+      "pseudo_evidence": "ev_68da7f3569738e82ce651786d7b8273c01ff51932b8530ff9e502a18021c2bf6",
+      "assembly_evidence": "ev_4b5ff1e2f1d04186333f6a462ab01c20a6a558a918c5f97ad7456fba5c427db1"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180021fd0",
+    "0x1800261d0",
+    "0x1800269b0",
+    "0x180028b50",
+    "0x180028c00"
+  ],
+  "new_original_procedures": 5,
+  "rules": {
+    "composed": "flags stored first; flags1 always initiates including error/complete zero-length; non1 progress wrap/store before finish; finish error16 snapshot to025a70; clamp progress and65536 cap",
+    "tls_allocator": "live TLS index; one current-frame-only read; request bytes/alignment1; unspecified native tag unused by021820",
+    "initialization": "allocate0xd0; weak low32 temporary thenoperation increment; callback027a20; zero linkage/SDK/queued/weak; copy initialbuffer pair; move defined handler fields; clear owned pair BEFORE023dd0",
+    "late_buffer": "after023dd0 andtemporaryweakrelease callback reread live buffer; low32 WSABUF length vsfull64 zero-test",
+    "socket": "work32 increment before socket checks; flag10full64zero shortcutsuccess; invalidsocket10009; WSASend immediateunconditionalWSAGetLastError;1234to10061; rc0 OR997 handshake; else known status withbytes",
+    "known_completion": "queued1 BEFOREcategory; packet category/status/bytes distinctcancellation; liveport postbytes0key2; failedpostsamegate/livequeue/exchange1; noextraGetLastError",
+    "handshake": "CAS0to1; onlyold1posts; allotheroldvaluesunchanged/no post; no packetrewrite/category; no opreadsafter publication",
+    "cleanup": "normal final0294c0 withobject/allocationzero; no invented exception cleanup"
+  },
+  "providers_not_recovered": [
+    "023dd0 native environment-constructor algorithm",
+    "025a70 completion application algorithm",
+    "04b0bc/04b788 CRT allocation/free",
+    "Native raw allocation/closure ABI/bindings/control lifecycle and weak-delete slot",
+    "Native SDK import behavior/SEH/unwind/concurrency/full DLL equivalence"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Five normal caller procedures only",
+    "Existing CRT production unchanged",
+    "Bounded raw storage separate from typed SDK/handler/closure projection",
+    "Uninitialized native bytes remain unspecified",
+    "No full DLL equivalence claimed"
+  ],
+  "report_sha256": "57aaa31c2154dc093cbd1697a144d223e170c8af648f968c6d91a14ee732b38d",
+  "context_evidence": {
+    "address": "0x180027c10",
+    "newly_recovered": false,
+    "pseudo_evidence": "ev_f152e2905264f9dc18af84544b646d77dac85539841a6cd365e7e2309d3f7065",
+    "assembly_evidence": "ev_d48cd3bea9d0dcba074c541aa1bcfa2e381f3b7fc10b43089ec0486b70fb14bf",
+    "references": {
+      "outputs/anadius-socket-source/completion-dispatcher-evidence.json": "d11df92166732971c7d37be6351a763a0ebc85fe5a7a0b81a6ab2d36be0990a9",
+      "outputs/anadius-socket-source/completion-dispatcher-evidence.asm.txt": "dd41ec2b940aa41b101cc5f4de137d05f3bf4abaae60cbf3996d875a591c1060"
+    },
+    "instruction_addresses": [
+      "0x180027d17",
+      "0x180027d1b",
+      "0x180027d22",
+      "0x180027d25",
+      "0x180027d27",
+      "0x180027d2b",
+      "0x180027f0a",
+      "0x180027f32",
+      "0x180027f38",
+      "0x180027f3e"
+    ],
+    "inference": "Controlled earlycompletion+failedkey2postfixture: fallbackretrykey0bytes0thenSDKsuccesszero overwritescachedmetadata,handled1/progress0/finish1/send1;directkey2fixturethreechunks. StaticflowplusconfiguredsyntheticSDKoutputs only; nooriginalruntimeexecution/generalraceguarantee"
+  }
+}

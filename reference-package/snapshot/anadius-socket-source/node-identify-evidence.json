@@ -1,0 +1,205 @@
+{
+  "schema": "node-identify.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x1800038b0",
+      "pseudo_evidence": "ev_16c4bf124a34657d7d2d217f79a017802a074ddf7e1c559929f47750b79fdee5",
+      "assembly_evidence": "ev_e46dfd93352ef14c6e16936e419152588cc3aae4c071f99fdc01fe8f8145aae9",
+      "newly_recovered": true,
+      "recovery_scope": "0038b0 normal Identify byte-state body and final existing Identify provider source bridge;cached initial line,mandatory classification/live LF reads,ordered live token pointers and prefix limits,constructor dispatch,CDATA line-before-flag and fallback original-cursor/line rewind;constructors/classifier/compare/native token data/heap/ABI/EH remain mandatory"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x1800038b0"
+  ],
+  "new_original_procedures": 1,
+  "new_node_parse_source_adapters": 0,
+  "existing_node_parse_source_adapters_preserved": 1,
+  "new_source_bridges": 1,
+  "new_source_allocation_adapters": 0,
+  "new_unique_source_mapped_addresses": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/node_identify.cpp",
+      "base": "NativeNodeParseEffects::identify_0038b0",
+      "body": "identify_node_0038b0",
+      "closure": "RecoveredNodeIdentifyEffects::identify_0038b0",
+      "address": "0x1800038b0",
+      "native_abi_complete": false,
+      "scope": "0038b0 normal Identify byte-state body and final existing Identify provider source bridge;cached initial line,mandatory classification/live LF reads,ordered live token pointers and prefix limits,constructor dispatch,CDATA line-before-flag and fallback original-cursor/line rewind;constructors/classifier/compare/native token data/heap/ABI/EH remain mandatory"
+    }
+  ],
+  "native_typed_providers_newly_closed": 1,
+  "source_allocation_adapters_added": [],
+  "existing_source_allocation_adapters_preserved": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "pointer_only_free_interface_preserved": true,
+  "native_identify_0038b0_recovered": true,
+  "native_identify_0038b0_normal_body_ready": true,
+  "native_node_parse_004970_normal_body_ready": true,
+  "known_004970_source_dispatch_ready": true,
+  "native_indirect_parse_body_recovered": false,
+  "native_classifier_051fc0_recovered": false,
+  "native_compare_05c550_recovered": false,
+  "native_node_constructors_recovered": false,
+  "native_token_pointer_slot_bytes_acquired": false,
+  "new_vtable_data_acquisition": false,
+  "new_native_analysis": false,
+  "native_variadic_abi_established": false,
+  "native_stack_scratch_established": false,
+  "prior_source_presence_transition": "module_record_only -> source_definition_mapped",
+  "context_functions": [
+    {
+      "address": "0x180001590",
+      "pseudo_evidence": "ev_59fe8f6f63b5d539fa34d2e7ab472bb07f2eac9ddbe19463ceda5cd58807aa7d",
+      "assembly_evidence": "ev_d14f1ca8857a6516e3114a07ab617f85b94c2e35e86a666c733f01c1b1c3acb1",
+      "newly_recovered": false,
+      "context_scope": "Mandatory node constructors/classifier/compare; no new normal body"
+    },
+    {
+      "address": "0x180001610",
+      "pseudo_evidence": "ev_f70ca376682c01eea491392250432e20b7b1f8b38988e7cff27d1035ae136543",
+      "assembly_evidence": "ev_2eab9384f16c5b13a4b652633ba683cfa41611b72b6d6b1860260ccc8991f468",
+      "newly_recovered": false,
+      "context_scope": "Mandatory node constructors/classifier/compare; no new normal body"
+    },
+    {
+      "address": "0x180001690",
+      "pseudo_evidence": "ev_aa306639682fe19727d4575e228f9b77edd69edc194f91bf0b4d0573b268c3f0",
+      "assembly_evidence": "ev_b910340ad99765cccbf54b933ec9bcfcc95ff70467547ec0530ed6c23fcc5369",
+      "newly_recovered": false,
+      "context_scope": "Mandatory node constructors/classifier/compare; no new normal body"
+    },
+    {
+      "address": "0x180001720",
+      "pseudo_evidence": "ev_ec0b7b64a4ba841a7ab271ca18723be88c8dddb85944eec7ad7b33fa07a8487f",
+      "assembly_evidence": "ev_3db5ca48ca8ff595eaf2d0c7b0f657215eaa65e76dab9d67699fff373d3eba91",
+      "newly_recovered": false,
+      "context_scope": "Mandatory node constructors/classifier/compare; no new normal body"
+    },
+    {
+      "address": "0x1800017b0",
+      "pseudo_evidence": "ev_411d958c38112d47a20416edd1170e0a920b6607d6b2f500d92c7d5014be885a",
+      "assembly_evidence": "ev_1b5aaa6c52bcca8a9ba686d59a6b2574a2b1b4ae8210b95a11b91e44324d0645",
+      "newly_recovered": false,
+      "context_scope": "Mandatory node constructors/classifier/compare; no new normal body"
+    },
+    {
+      "address": "0x18005c550",
+      "pseudo_evidence": "ev_b80eb899e11d6b702a7ffb321f39385c8243e938100ca0bab91fa50873f2e599",
+      "assembly_evidence": "ev_1265a8105c59cc4cfd5c4df11c8e6dc54d8468c98caac40331272ec9c001ec38",
+      "newly_recovered": false,
+      "context_scope": "Mandatory node constructors/classifier/compare; no new normal body"
+    },
+    {
+      "address": "0x180051fc0",
+      "pseudo_evidence": "ev_f1fe8a7617f5ab347923cbb3f997cb0885f5c41e120a381e3292bfbdfef17272",
+      "assembly_evidence": "ev_e5ed36275838a6af9c4c09ac715258c29f01c9887a0a32c637d695ad4f7bfedf",
+      "newly_recovered": false,
+      "context_scope": "Mandatory node constructors/classifier/compare; no new normal body"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "node_identify.hpp": "f28ce49a02dc391e64cfb6e112dff4885579c2c694c60689533ab1089dcb4bf3",
+    "node_identify.cpp": "15d5b6eac661b0047f46e4b6f72cdbc15e243dc73598231b571b646eaa9b3053",
+    "node_identify_test_fixture.hpp": "afad4d7e1e13cf7a62eefce515e2771c557f7ffea3979f868e3ca9d88b26c8bf",
+    "node_identify_tests.cpp": "986d8f6a64cc0b3a9b9b5bd232684d5678f17232e9395bf4123f5036c3024729",
+    "node_identify_integration_tests.cpp": "a0dfce8ad7567bf0141e3044b0d32d79f17e39cc7be3de8cd3961bdf017ba6e5",
+    "build.ps1": "7a263b090a6253bc718c347db0383cb154eb896cf0b5ba23eb6ec977b609b711",
+    "CMakeLists.txt": "6adda9b464f7f62164d3d0b0c82974e0676f4fe5859fc27652ccb7ca4bd1affc",
+    "README.md": "498cf443797147daff27613f9ec618128273f5096684472bf7414739ab6e3e61"
+  },
+  "reused_source_hashes": {
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "node_parse.hpp": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a",
+    "node_parse.cpp": "c3f99be72328132e6917da81939cfb97fe8cff41bf246cdb33746af0defd5461",
+    "parse_entry.hpp": "b6d7e9ad9613b738068ae51ec3aeac7ee094937356712dfd80b6ee94a1830734",
+    "parse_entry.cpp": "2c905d087fb298433bac02721822c5eafa183def3b61a0b96405994159c23c31",
+    "document_error.hpp": "504d941b18a12857808ef04f06339146757c1c3de382ae99f78a38643c39b732",
+    "document_error.cpp": "b3968b14cf10b3a1d82f6db2073bd592783c70a14da6c36d31514e588fad8c14"
+  },
+  "support_hashes": {
+    "node-identify-evidence.pseudo.c.txt": "c3c79a5aba40d76ba928d532513d07cb13ecebf365822ea2898f83eccecaa519",
+    "node-identify-evidence.asm.txt": "0ab1531db7cb363a73c2cc102a80c3b22bd4b266de97cd18870874c9b98ba3c8",
+    "node-identify-context.pseudo.c.txt": "0c31a1d0f977768cbc799ddef90afafde95687b9fa1941ed78ef330eb1951301",
+    "node-identify-context.asm.txt": "275465c797234d95d3608678bb2bd6b1a5e7c5d464f933b07ef9e472e8f96d62",
+    "node-identify-flow-audit.md": "eba8cf608c57e050e3b9893a93f344e46644d451409c80a3588facd4f0e760b7",
+    "node-identify-rea-session.json": "97c54524c88746f6f8bbf2176b96935a7a3af286e0ba81f527be5693ae32c4dc",
+    "node-identify-source-review.json": "73e85159cd50e057a95193e03a0cd7f3b4cb7fc1bade684a55f56398ef244863",
+    "node-identify-retained-data.json": "2fe1b0f913d40be4c0295b0ba85bae248bf7b6908f5072c86c767dac1d32c778",
+    "parse-entry-retained-slot.json": "31a5f8d21eafaead10938997bc79ca50b7a3c2af9dbb242213dd77d717ec95a6"
+  },
+  "reused_retained_data_evidence": {
+    "file": "node-identify-retained-data.json",
+    "sha256": "2fe1b0f913d40be4c0295b0ba85bae248bf7b6908f5072c86c767dac1d32c778",
+    "parent_file": "outputs/anadius-rea-evidence.json",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "new_read_performed": false,
+    "new_source_bodies_claimed_by_data_read": 0,
+    "token_pointer_slot_bytes_covered": false
+  },
+  "prior_target_presence": {
+    "0x1800038b0": {
+      "source_presence": "module_record_only",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 122,
+  "integration_checks": 47,
+  "new_checks": 169,
+  "execution_scope": "0038b0 normal Identify byte-state body and final existing Identify provider source bridge;cached initial line,mandatory classification/live LF reads,ordered live token pointers and prefix limits,constructor dispatch,CDATA line-before-flag and fallback original-cursor/line rewind;constructors/classifier/compare/native token data/heap/ABI/EH remain mandatory",
+  "limitations": [
+    "0038b0 normal Identify byte-state body and final existing Identify provider source bridge;cached initial line,mandatory classification/live LF reads,ordered live token pointers and prefix limits,constructor dispatch,CDATA line-before-flag and fallback original-cursor/line rewind;constructors/classifier/compare/native token data/heap/ABI/EH remain mandatory",
+    "Initial line is read before first input byte;out-node is not cleared at entry,only on post-skip NUL",
+    "High bit skips classification;ASCII-range bytes including NUL call mandatory051fc0;fresh postcallback byte/LF and live DWORD line wrap retained",
+    "Five token pointers are loaded live in order;pointer identity skips compare;limits2/4/9/2/1 are observed operands,not guessed full strings",
+    "Matched constructors remain mandatory;CDATA reads live line before BYTE flag,then line/out publication",
+    "Fallback text publishes live node line,rewinds document line to cached initial value,and returns original input cursor",
+    "No added input/constructor-null guards,whitespace table,BOM pass,RAII free/rollback or native fault equivalence",
+    "Raw pointer slots0a10a8..0a10cf are outside old complete broad read07f000..0a0dff;fixtures are not shipped slot bytes",
+    "One native0038b0 address,two numeric source definitions;44→45 typed source closures;N25 selected adapter preserved separately",
+    "Five constructor functions remain context-only;generic parser/DOM/heap/virtual ABI/EH remain open",
+    "Previous671 source files including CRT remain byte-identical;CRT paused;total DLL completion percentage unmeasured",
+    "Original DLL/game never executed/modified;actual CFG/token/achievement contents never read;blocked version input/generated DLL never retried"
+  ],
+  "native_node_identify_fully_closed": false,
+  "native_node_parse_fully_closed": false,
+  "generic_virtual_parse_fully_closed": false,
+  "native_document_error_fully_closed": false,
+  "native_parse_entry_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "native_node_base_fully_closed": false,
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "node-identify-source-review.json",
+      "reviewer": "/root/identify_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N27 five node constructors1590/1610/1690/1720/17b0 inventory/contracts;no new constructor source claimed by preparation;generic CRT remains paused"
+}

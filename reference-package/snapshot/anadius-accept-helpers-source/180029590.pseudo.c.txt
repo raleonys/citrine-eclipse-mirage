@@ -1,0 +1,36 @@
+/* 0x180029590 FUN_180029590; Evidence ev_3e481675fefac3c6b802b7a894bc7e2f54ee6ad45bf207904335219da4f12056 */
+
+void FUN_180029590(SOCKET *param_1)
+
+{
+  SOCKET s;
+  int iVar1;
+  undefined **ppuVar2;
+  undefined **ppuVar3;
+  u_long local_res8 [2];
+  
+  s = *param_1;
+  if (s != 0xffffffffffffffff) {
+    iVar1 = closesocket(s);
+    if (iVar1 != 0) {
+      ppuVar2 = FUN_180028620();
+      iVar1 = WSAGetLastError();
+      ppuVar3 = FUN_180028620();
+      if (((ppuVar2[1] == ppuVar3[1]) && (iVar1 == 0x2733)) ||
+         ((ppuVar3 = FUN_180028620(), ppuVar2[1] == ppuVar3[1] && (iVar1 == 0x4d5)))) {
+        local_res8[0] = 0;
+        ioctlsocket(s,-0x7ffb9982,local_res8);
+        iVar1 = closesocket(s);
+        if (iVar1 != 0) {
+          FUN_180028620();
+          WSAGetLastError();
+        }
+      }
+    }
+    *param_1 = 0xffffffffffffffff;
+  }
+  return;
+}
+
+
+

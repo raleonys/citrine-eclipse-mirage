@@ -1,0 +1,87 @@
+{
+  "schema": "session-stop.source-composition.v1",
+  "source_package": "B50",
+  "evidence_type": "Selected receive/send/Posted native source retirement on actual physical packet receipts",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-accept-stop-source/stop.cpp",
+      "sha256": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-accept-stop-source/stop.hpp",
+      "sha256": "6d4854d3640568c5ec08eaa23b4abbb4b40d5c529be3bc6825f017f62702a94b",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-application-worker-source/worker.cpp",
+      "sha256": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-io-memory-source/io_memory.cpp",
+      "sha256": "669a2b098f2496266ff330e1efccd4a6a29b8d55a10f01b752bec51b39a509fd",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-io-memory-source/io_memory.hpp",
+      "sha256": "6106cfff8df2cafac2f2570b54f78ef921204ffb9f45c6943bf1894c776d2847",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-server-runtime-source/runtime.cpp",
+      "sha256": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-session-profile-source/profile.cpp",
+      "sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-socket-source/io_completion.cpp",
+      "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-socket-source/owned_response.cpp",
+      "sha256": "a9125c30bf6d551a3eb32435ab088c8266a60f421e545e5e211c4fd34a7c821c",
+      "scope": "Saved source dependency or reviewed existing provider extension; no fresh original bytes."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b50-core-quick-results.json",
+      "sha256": "097a572a65240e9199a05af701bad78a0ee07e997c4e2d10f5b7592c433f1f2d",
+      "checks": 213,
+      "executable_sha256": "4c81b8f59af1a49348759326ef3b0a2f0483e70bb6fb187d07a0aa97ad5be3f2",
+      "archive_sha256_as_used": "6c30063d4acee0013c92483ba9d471ce5b6c90011aa26b9d3e77f548406bcf69",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh modified Stop.cpp and IoMemory.cpp plus new session_stop_tests.cpp with selected actual-use headers/fixture components. Immutable canonical B49 archive supplies prior source algorithms. No integration test, actual server_runtime::Runtime dispatcher loop, Graph/message/bootstrap execution or concurrent controller-proof epoch claim is compiled/claimed here. Direct typed metadata fixtures and a selected single-thread owned_server::Runtime protocol adapter run under real OwnedServerBackend Running/Returned/Quiescing phases, actual Parent/023000 native control, fixed OwnedIoMemory/OwnedAcceptMemory and actual own IOCP/local PIPE_REJECT_REMOTE_CLIENTS named-pipe overlapped read/write. Manual adapter scheduling/publication is explicit: no native scheduler work count is fabricated or decremented. Typed SDK wrappers record Issuing before lower, exact socket/control/byte range, Kernel result0 despite non997 error, Software failures and Unclassified legacy; cached storage reuse changes generation and monotonic submission sequence, and stale handles reject. Actual ReadFile pending read cancels to real995; actual WriteFile success remains kernel-pinned until its physical packet despite Cancel ERROR_NOT_FOUND. Existing tracked session owners are permitted by independent new-admission/rawjob proof. Native owner0 027710/027a20 cleanup retires byte/EXTRA strong pins; last-owner case actually deletes source control before Stop.after. Owned response Posted027120 flag0 reaches022280 to free exact64byte payload/strong with no receive/send runner/SDK. Normal read/send/Posted routes all exclude stop request while source receipt active. Main count excludes five exact-exit retained children for SDK throw after actual ReadFile (unknown), unclassified legacy actual read (no guessed Cancel), forged key2 physical packet for typed Kernel IO, post-submission public op/OV binding forgery, and SDK-mutated source-handler owner. Authoritative private projection checks reject forged/mutated rows before any Cancel/ACK/unpin. All retain actual bytes/control pins and forbid close. No original target/DLL/game/user content, actual network socket, AcceptEx interop, foreign ABI, arbitrary thread admission or unknown rollback/unload claim is used."
+    },
+    {
+      "path": "work/b50-integration-quick-results.json",
+      "sha256": "9e00fc27eb5c54a5ee42cfe6d1f28043cfa2d5ae6f7e1e5a237c8895000b90b3",
+      "checks": 139,
+      "executable_sha256": "71303270af212d6e7990971198c7a148a5139d913166f7b03dbbccde53036923",
+      "archive_sha256_as_used": "6c30063d4acee0013c92483ba9d471ce5b6c90011aa26b9d3e77f548406bcf69",
+      "execution_author": "/root/b22_integration",
+      "note": "ActualRuntimeOwner/SourceBackend THREErealDomainNativeThreads/concreteApplicationWorker-ownedGraph normalkernelaccept→actual023000SessionControl/twoMoves/reset/greeting(selectedsyncnonkernelSDK)→actualpipeReadFile XML→nativeframe/ownedInlineJob/NativeLogic/RouterGetProfile/ownedResponsePost→actualWriteFile. OWNDUPLEXpipe outboundquota prefilledwithCOMPLETEDownedfiller BEFOREIOCPattachment, guaranteeing responseWriteFilepending whileindependent rearmedReadFile+nextlisteneracceptReadFile pending SIMULTANEOUSLY. SessionIo usesDEFAULTrealCancelIoEx eachEXACTsocket+OV, ONLYcontrollerNULLwake, actualGQCS9953→native027710/027a20/0271a0owner0 cleanup. FirstterminalandONEremainingRWwitness checkotheractualParent ranges/pins/nativehandler+SDKextraStrong/socketlive; lastRW actual026570/026880/024db0/Logicregistryreap freesinput/deque/strings/control. Otherworkproof REQUIREDindependentnewadmissionstop/rawInlineJobs0/foreignnone; trackedIOowners intentionallylive. Actualkernelpackets5+oneownedpost=6nativepackets, no syntheticterminal/Getresult/manualcounter/cleanup. Realjoin/FLS/controllerfinish/provider/domainheapbalance. TypedcompatpipeSDKNOTactualWSARecv/WSASend/AcceptExinterop, noOriginalDLL/game/usercontents/realnetwork/nativeABI/fullforeignrawjobquiescenceclaim."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition only.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "selected_HOST_drop_on_observed_stop_completion": true,
+  "actual_pipe_kernel_compatibility_is_WSA_or_AcceptEx_interoperability": false,
+  "production_sources_added": 0,
+  "prior_sources_modified": 4,
+  "new_test_sources": 2
+}

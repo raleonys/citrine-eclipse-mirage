@@ -1,0 +1,26 @@
+{
+  "source_package": "B47",
+  "result": "TESTED_CONTROLLER_WORKER_SERVER_COMPONENT_BOUNDARY",
+  "owned": [
+    "Dedicated ApplicationMemory sole owner retained by controller ticket",
+    "One move-only worker borrow and duplicated actual worker thread handle",
+    "Additive Parent/backend/runtime/Graph prepared construction route"
+  ],
+  "required_contracts": [
+    "Keep controller ticket and Domain alive; freeze shared application cells until join or supply explicit synchronization",
+    "No raw allocator/byte-view escape outside admitted same worker/fiber/PTD scope",
+    "Explicit source drain and destruction of all Graph/Policy/server references on worker before thread procedure return",
+    "Unknown effects retain poisoned owner; never retry guessed cleanup",
+    "Only controller releases provider after source return AND actual native thread/FLS finality"
+  ],
+  "missing_for_full_DLL": [
+    "Concrete SourceBackend/RuntimeOwner application-worker Resources bridge and exact bind_state lifetime",
+    "Actual online/config cross-worker synchronization policy",
+    "Observed stop/cancel/final kernel packets/raw-job drain providers",
+    "Loader attach/detach implementations and native ABI/EH/concurrency equivalence"
+  ],
+  "native_body_delta": 0,
+  "native_ABI_closure_delta": 0,
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null
+}

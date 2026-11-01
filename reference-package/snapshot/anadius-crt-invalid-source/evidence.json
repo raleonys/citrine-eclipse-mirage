@@ -1,0 +1,64 @@
+{
+  "source_binary": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "mode": "Retained exact-hash REA Ghidra evidence, static only",
+  "functions": [
+    {
+      "address": "0x180052500",
+      "assembly_evidence": "ev_fb9fef99085047f0c07b152cdea5022f2ac0eac80e278f6db1c8d15532556ea5",
+      "pseudocode_evidence": "ev_cee5896c1791adf4b12a7244276338fe25c691fea459e6a27648314f4b504a55"
+    },
+    {
+      "address": "0x18005c5d0",
+      "assembly_evidence": "ev_105395d7cee9ec9b678fa73a4e63e5885469da801c666c0a8e7f0e75aa6b4fdf",
+      "pseudocode_evidence": "ev_c2db3855b0f359b0fc293f57dca7d6ded1e1c3cdfba1834f4df4b99d256d6066"
+    },
+    {
+      "address": "0x18005c63c",
+      "assembly_evidence": "ev_3c9870ef950d2cc993fa105db1befd8bad10ce22777681c582d08dc45be80cde",
+      "pseudocode_evidence": "ev_4e893e4f998bcc9e502d727a4d3f432bcb3eb14fdc87160f194794a41b6e98b3"
+    },
+    {
+      "address": "0x18005c7ec",
+      "assembly_evidence": "ev_a4a7c1f6a727d1837a9c2d48dd3b1f20a7ab89f8cd3312b253f3c2d00c829723",
+      "pseudocode_evidence": "ev_348c4df197e9a775c42dbf44d7a03eea3e550cd3bebe490c0e20c476004c5286"
+    },
+    {
+      "address": "0x18005c888",
+      "assembly_evidence": "ev_7098215bacb6b5c1dbc9944dfa0453c1582f798ecab43ad285e74044826c6ebf",
+      "pseudocode_evidence": "ev_95c3211beef33d832e535a15a41adf2d775ccab6b3209d87bfad706348c70fa1"
+    },
+    {
+      "address": "0x18005c954",
+      "assembly_evidence": "ev_ec6342e3be716eb2c6c87b9979484454fca19d7f1f79ea442a820fecef0fa9e4",
+      "pseudocode_evidence": "ev_4337e59f9c68dfbab3f4b66beb25a560089afda7f6b29adfca5bdb8a291b1b77"
+    },
+    {
+      "address": "0x18005c974",
+      "assembly_evidence": "ev_2f6b40ea804fc67f9240bcfa789647f002fa4d611c9629a3b56c9863aa392402",
+      "pseudocode_evidence": "ev_beb7d474b3449dcc8d1a7bea37addb851d6068cc527e7c67deceff1bd7582f01"
+    }
+  ],
+  "anchors": {
+    "callback_args": "expression pointer, function pointer, file pointer, uint32 line, uintptr reserved",
+    "ptd_return_snapshot": "05c5d0 returns RSI after SetLastError;052500 null-tests saved RBX then rereads [context]",
+    "global_decode": "0x18005c90f..0x18005c924",
+    "guard_call": "0x18005c8e3",
+    "security_cookie": "0x1800a1580",
+    "global_encoded_handlers": "0x1800a4f00",
+    "locale_changed": "0x1800a52d8",
+    "locale_pair": "0x1800a1938",
+    "handler_ptd_offset": "0x3b8",
+    "noreturn_watson_call": "0x18005c99d",
+    "cleanup_snapshots": "saved errno loaded before052500 at05c855; saved doserrno loaded before052500 at05c86a"
+  },
+  "scope": "Seven functions plus scoped-context constructor/normal-return cleanup extracted from05c7ec",
+  "unrecovered": [
+    "064dd0 TLS/FLS allocation and lifetime backend",
+    "052500 missing-PTD terminal05f03c",
+    "Watson/fastfail/reportfault/process termination internals",
+    "Native ABI/CFG/XFG/SEH and handler/provider registration",
+    "Original global handler table initialization and concurrent mutation contracts"
+  ],
+  "evidence_file_sha256": "784d4f0167d13a8db8851167e53ee6d644e27439b8a5fa8d8ca27fa750d1d1c9"
+}

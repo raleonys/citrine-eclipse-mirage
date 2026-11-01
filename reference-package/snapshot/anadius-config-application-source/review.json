@@ -1,0 +1,60 @@
+{
+  "schema": "config.application.independent-review.v1",
+  "result": "PASS",
+  "reviewer": "config_consumer_audit independent static/source worker",
+  "reviewed_at": "2026-10-21T02:31:00.5503828Z",
+  "source_hashes": {
+    "application.hpp": "9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2",
+    "application.cpp": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb",
+    "application_tests.cpp": "e9cbfd16d396dca7fe68174772ac7c385aa3855bbb4ec6c7bd0042c10ea917b9",
+    "build.ps1": "c580295d1b3d6d5cd6335766ae8455a61fd4a4ad793e4e6a9d6e99adc34849f5",
+    "README.md": "af48536b8dc7167eae2ecad7f9d27d73432f7822ed049e767da8ad42ea8c6852",
+    "CMakeLists.txt": "8c4ad409a8e481559c469a3a0860d5917770bcdf38bfd7f220dceb0f90bd064c"
+  },
+  "support_hashes": {
+    "../anadius-config-hash-source/hash_table.hpp": "d05e54e5232dda1b8cb9e3aabe46677135cf60483939bee7b2801f489025e2bf",
+    "../anadius-config-hash-source/hash_table.cpp": "15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f",
+    "../anadius-config-hash-source/hash_table_tests.cpp": "5cafe744cc5d8b6dfa356a4c378d289ef2c3717b04be3b4dd4e16e7f3db00360",
+    "../anadius-config-hash-source/README.md": "992f59224511be89995324201c543daf418f8e59cc03fdd898506847a8fb0804",
+    "../anadius-config-hash-source/evidence.json": "a9be1466a3f195c7e99fdceaa4455f5943dfe870e9e6f411a23bd890c8ed7c54",
+    "../anadius-parser-source/parser.hpp": "9e09d6bd1c3f900462c94d7e3bc5acdb141ef1045b6a1ac4e37e25fc1973bdd1",
+    "../anadius-parser-source/parser.cpp": "700479cfca81eae57f85d1fb8786426ffcc25d49edf9fa25359d00396252d2e2",
+    "../anadius-config-source/configuration.hpp": "4e32c3c4de5f00f8af5e94368fb8d5bd7d5767fb563651bab80e9edf82235883",
+    "../anadius-config-source/configuration.cpp": "04d93a3a71f57a9d34bb4e0f3806c7ac532a2c0a1cdaef1e36ad6654c02620f9",
+    "../anadius-file-source/binary_io.cpp": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222",
+    "../anadius-file-source/native_io.cpp": "e786fbd46741d172eca7d9a2f511e9757703d738f9998a857306665b316792ca",
+    "../anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "../anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+  },
+  "recorded_application_checks": 95,
+  "recorded_hash_checks": 4929,
+  "validation_observed_sha256": "ec2c4e3de41ea15d6bfe974f053508e5aac4b53b67fc4f529d1f236d4c6f19de",
+  "independent_test_rerun": false,
+  "findings": [],
+  "resolved_review_points": [
+    "Bind mutable text lookup before global map operator[] insertion in5sites",
+    "rounded_buckets guard scopes observedminimum8 domain, notraw017570allarguments"
+  ],
+  "retained_evidence": [
+    "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd",
+    "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+    "ev_8975dcb6850d9f73375de19ac628dbf270d8f0722bae94ba4b3ff22c3a9af0f9",
+    "ev_9610f1adb392b14497e277699d3612412deb9c5d518bb165cc368beb516e0452",
+    "ev_ec3231ec9c4b07657e7692ea897d1cc2c48f2e46ef88e34a54727e8ad2d91e65",
+    "ev_158911e2f57194b923ca14a14bd9e3666f9a5421f4803b6f8756abb15fe66e4e",
+    "ev_7de7d396b3d48bd1ff72af08e3352ab2f4c81bc3f3c936a732c87194229f50c3",
+    "ev_f41f4a819fee5b4d28b14e9e46a687e7b970ea5c8b7b132c7a8307689f02875c"
+  ],
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "scope": "Normal unique-key factor1 file/parser/hash/section/record/collection application; existing helper contracts; explicit newentry",
+  "startup_wiring": "Old initialize_configuration notautomaticallyredirected",
+  "remaining": [
+    "NativeMSVC ABI/layout/allocator/SEH/fault timing",
+    "Overlapping descendant assignment and concurrency",
+    "Complete nativeprovider/license/path/locale effects",
+    "Globalstartup and wholeDLL runtime equivalence"
+  ],
+  "original_execution": "none",
+  "user_cfg_read": false,
+  "production_modified": false
+}

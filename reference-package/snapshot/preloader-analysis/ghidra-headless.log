@@ -1,0 +1,173 @@
+2026-10-16 21:41:43 INFO  (LoggingInitialization) Using log config file: jar:file:/C:/tools/ghidra_12.1.4_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2026-10-16 21:41:43 INFO  (LoggingInitialization) Using log file: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\preloader-analysis\ghidra-headless.log  
+2026-10-16 21:41:44 DEBUG (GhidraObjectInputFilter) Including serial input filter: FileSystem/data/client.rmi.serial.filter  
+2026-10-16 21:41:44 INFO  (Preferences) Loading user preferences: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\settings\ghidra\ghidra_12.1.4_PUBLIC\preferences  
+2026-10-16 21:41:44 INFO  (ClassSearcher) Searching for classes...  
+2026-10-16 21:41:45 INFO  (ClassSearcher) Class search complete (992 ms)  
+2026-10-16 21:41:45 INFO  (DefaultSSLContextInitializer) Initializing SSL Context  
+2026-10-16 21:41:45 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2026-10-16 21:41:45 INFO  (SecureRandomFactory) Random Number Generator initialization complete: SHA1PRNG  
+2026-10-16 21:41:45 INFO  (DefaultTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2026-10-16 21:41:50 INFO  (FileCacheMaintenanceDaemon) Starting cache cleanup: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\cache\ghidra\fscache2  
+2026-10-16 21:41:50 INFO  (FileCacheMaintenanceDaemon) Finished cache cleanup, estimated storage used: 0  
+2026-10-16 21:41:50 INFO  (AnalyzeHeadless) Headless startup complete (7673 ms)  
+2026-10-16 21:41:50 INFO  (ClassSearcher) Class searcher loaded 59 extension points (20 false positives)  
+2026-10-16 21:41:51 INFO  (HeadlessAnalyzer) HEADLESS Script Paths:
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\PyGhidra\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\MicrosoftCodeAnalyzer\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\VersionTracking\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\FileFormats\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger-rmi-trace\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\GnuDemangler\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\DecompilerDependent\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\FunctionID\ghidra_scripts
+    C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\SystemEmulation\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Processors\JVM\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\BSim\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Processors\8051\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Processors\Atmel\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Debug\Debugger\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\Decompiler\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Processors\DATA\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\PDB\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\WildcardAssembler\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\BytePatterns\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Processors\PIC\ghidra_scripts
+    C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\SwiftDemangler\ghidra_scripts  
+2026-10-16 21:41:51 INFO  (HeadlessAnalyzer) HEADLESS: execution starts  
+2026-10-16 21:41:51 INFO  (HeadlessAnalyzer) Creating project: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\preloader  
+2026-10-16 21:41:51 DEBUG (DefaultProjectManager) No tools found; Installing default tools  
+2026-10-16 21:41:51 DEBUG (DefaultProjectManager) 	no recent project directories found  
+2026-10-16 21:41:51 INFO  (DefaultProject) Creating project: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\preloader  
+2026-10-16 21:41:51 INFO  (HeadlessAnalyzer) REPORT: Processing input files:   
+2026-10-16 21:41:51 INFO  (HeadlessAnalyzer)      project: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\preloader  
+2026-10-16 21:41:51 INFO  (HeadlessAnalyzer) IMPORTING: file:///C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/preloader-analysis/embedded-preloader.dll  
+2026-10-16 21:41:52 INFO  (ProgramLoader) Using Loader: Portable Executable (PE)  
+2026-10-16 21:41:52 INFO  (ProgramLoader) Using Language/Compiler: x86:LE:64:default:windows  
+2026-10-16 21:41:52 INFO  (ProgramLoader) Using Library Search Path: [., C:\WINDOWS\SysWOW64, C:\Program Files\Eclipse Adoptium\jdk-21.0.12.101-hotspot\bin, C:\WINDOWS\Sun\Java\bin, C:\WINDOWS\system32, C:\WINDOWS, C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell, C:\Users\Skysect\.codex\tmp\arg0-windows\codex-arg0o8LWc0, C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\libheif\libheif\bin, C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\jxrlib\jxrlib\bin, C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\poppler\Library\bin, C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\override, C:\Program Files (x86)\VMware\VMware Workstation\bin\, C:\WINDOWS\System32\Wbem, C:\WINDOWS\System32\WindowsPowerShell\v1.0\, C:\WINDOWS\System32\OpenSSH\, C:\Program Files\dotnet\, C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common, C:\Program Files\Topaz Labs LLC\Topaz Gigapixel AI\bin\, C:\Program Files\nodejs\, C:\Users\Skysect\AppData\Local\Microsoft\WindowsApps, C:\Users\Skysect\AppData\Roaming\npm, C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback, C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin, C:\Users\Skysect\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\git\cmd, C:\Users\Skysect\AppData\Local\OpenAI\Codex\bin\d6efb6feb729707e, C:\Users\Skysect\AppData\Local\OpenAI\Codex\bin\e78bad9887fa50cf]  
+2026-10-16 21:41:59 INFO  (TLSDirectory) TLS callbacks at 1801479f0  
+2026-10-16 21:41:59 WARN  (ExportDataDirectory) Invalid or missing function at 18015e250  
+2026-10-16 21:42:04 INFO  (ProgramLoader) Additional info:
+Loading file:///C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/preloader-analysis/embedded-preloader.dll?MD5=8c43aa0f4bd3355e97d956814e05c143...
+------------------------------------------------
+
+Searching 26 paths for library API-MS-WIN-CORE-SYNCH-L1-2-0.DLL...
+Loading file:///C:/Program Files/Eclipse Adoptium/jdk-21.0.12.101-hotspot/bin/api-ms-win-core-synch-l1-2-0.dll?MD5=8f107a7bc018227b181a0e7e76e9ca39...
+Created exports file: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\settings\ghidra\ghidra_12.1.4_PUBLIC\symbols\win64\api-ms-win-core-synch-l1-2-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 26 paths for library API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL...
+Loading file:///C:/Program Files/Eclipse Adoptium/jdk-21.0.12.101-hotspot/bin/api-ms-win-crt-runtime-l1-1-0.dll?MD5=bbaa58e9e1abdf7d8c4c69652d29d789...
+Created exports file: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\settings\ghidra\ghidra_12.1.4_PUBLIC\symbols\win64\api-ms-win-crt-runtime-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 26 paths for library CRYPT32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/crypt32.dll
+Loading file:///C:/Windows/System32/crypt32.dll?MD5=98f9dd5355c6c6897e49a1e2284e753e...
+Created exports file: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\settings\ghidra\ghidra_12.1.4_PUBLIC\symbols\win64\crypt32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 26 paths for library KERNEL32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/kernel32.dll
+Loading file:///C:/Windows/System32/kernel32.dll?MD5=191cf42b2e24eec284b10aca60d0a961...
+Created exports file: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\settings\ghidra\ghidra_12.1.4_PUBLIC\symbols\win64\kernel32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 26 paths for library MSVCP140.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/msvcp140.dll
+Loading file:///C:/Program Files/Eclipse Adoptium/jdk-21.0.12.101-hotspot/bin/msvcp140.dll?MD5=72f3d84384e888bf0d38852eb863026b...
+Created exports file: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\settings\ghidra\ghidra_12.1.4_PUBLIC\symbols\win64\msvcp140.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 26 paths for library VCRUNTIME140.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/vcruntime140.dll
+Loading file:///C:/Program Files/Eclipse Adoptium/jdk-21.0.12.101-hotspot/bin/vcruntime140.dll?MD5=caf9edded91c1f6c0022b278c16679aa...
+Created exports file: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\settings\ghidra\ghidra_12.1.4_PUBLIC\symbols\win64\vcruntime140.exports
+Library not saved to project.
+------------------------------------------------
+
+Applying cached symbols from KERNEL32.DLL
+Applying cached symbols from CRYPT32.DLL
+Applying cached symbols from API-MS-WIN-CORE-SYNCH-L1-2-0.DLL
+Applying cached symbols from MSVCP140.DLL
+Applying cached symbols from VCRUNTIME140.DLL
+Applying cached symbols from API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL
+Linking the External Programs of 'embedded-preloader.dll' to imported libraries...
+  [KERNEL32.DLL] -> not found in project
+  [CRYPT32.DLL] -> not found in project
+  [API-MS-WIN-CORE-SYNCH-L1-2-0.DLL] -> not found in project
+  [MSVCP140.DLL] -> not found in project
+  [VCRUNTIME140.DLL] -> not found in project
+  [API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL] -> not found in project
+------------------------------------------------
+
+  
+2026-10-16 21:42:04 INFO  (HeadlessAnalyzer) IMPORTING: Loaded 0 additional files  
+2026-10-16 21:42:05 INFO  (HeadlessAnalyzer) ANALYZING all memory and code: file:///C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/preloader-analysis/embedded-preloader.dll  
+2026-10-16 21:42:05 WARN  (NoReturnFunctionAnalyzer) Ignoring leading '_' chars on no-return name '___raise_securityfailure' specified in file: C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\data\PEFunctionsThatDoNotReturn  
+2026-10-16 21:42:05 WARN  (NoReturnFunctionAnalyzer) Ignoring leading '_' chars on no-return name '___report_rangecheckfailure' specified in file: C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\data\PEFunctionsThatDoNotReturn  
+2026-10-16 21:42:05 DEBUG (SymbolServerService) SymbolServerService: querying Program's Import Location - C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis for preloader_l.pdb, a5c178ef-6221-4ce7-ae16-8e8580b1b6d3, 1, 0, ???  
+2026-10-16 21:42:05 DEBUG (SymbolServerService) SymbolServerService: got 0 results from Program's Import Location - C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis  
+2026-10-16 21:42:05 DEBUG (SymbolServerService) SymbolServerService: found 0 matches  
+2026-10-16 21:42:05 INFO  (PdbUniversalAnalyzer) Skipping PDB processing: failed to locate PDB file in configured locations  
+2026-10-16 21:42:05 INFO  (PdbUniversalAnalyzer) Use a script to set the PDB file location. I.e.,
+    PdbAnalyzer.setPdbFileOption(currentProgram, new File("/path/to/pdb/file.pdb")); or
+    PdbUniversalAnalyzer.setPdbFileOption(currentProgram, new File("/path/to/pdb/file.pdb"));
+Or set the symbol server search configuration using:    PdbPlugin.saveSymbolServerServiceConfig(...);
+ This must be done using a pre-script (prior to analysis).  
+2026-10-16 21:42:08 INFO  (PackedDatabaseCache) Packed database cache: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\cache\ghidra\packed-db-cache  
+2026-10-16 21:42:08 DEBUG (PackedDatabaseCache) Caching packed database: C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\data\typeinfo\win32\windows_vs12_64.gdt  
+2026-10-16 21:42:08 DEBUG (PackedDatabase) Unpacking database C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\data\typeinfo\win32\windows_vs12_64.gdt -> C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\cache\ghidra\packed-db-cache\pdbAE212B5B\db.1.gbf  
+2026-10-16 21:42:08 DEBUG (PackedDatabaseCache) Cache update completed: C:\tools\ghidra_12.1.4_PUBLIC\Ghidra\Features\Base\data\typeinfo\win32\windows_vs12_64.gdt  
+2026-10-16 21:42:09 INFO  (ApplyDataArchiveAnalyzer) Applied data type archive: windows_vs12_64  
+2026-10-16 21:42:15 INFO  (AutoAnalysisManager) -----------------------------------------------------
+    ASCII Strings                              0.308 secs
+    Apply Data Archives                        0.714 secs
+    Call Convention ID                         0.003 secs
+    Call-Fixup Installer                       0.003 secs
+    Create Address Tables                      0.008 secs
+    Create Address Tables - One Time           0.004 secs
+    Create Function                            0.030 secs
+    Data Reference                             0.015 secs
+    Decompiler Parameter ID                    2.720 secs
+    Decompiler Switch Analysis                 2.616 secs
+    Demangler Microsoft                        0.004 secs
+    Disassemble Entry Points                   0.167 secs
+    Embedded Media                             0.002 secs
+    External Entry References                  0.000 secs
+    Function ID                                0.178 secs
+    Function Start Search                      0.009 secs
+    Non-Returning Functions - Discovered       0.023 secs
+    Non-Returning Functions - Known            0.004 secs
+    PDB Universal                              0.017 secs
+    Reference                                  0.014 secs
+    Scalar Operand References                  0.031 secs
+    Shared Return Calls                        0.015 secs
+    Stack                                      0.165 secs
+    Subroutine References                      0.009 secs
+    Subroutine References - One Time           0.002 secs
+    Windows x86 PE Exception Handling          0.008 secs
+    Windows x86 PE RTTI Analyzer               0.004 secs
+    Windows x86 Thread Environment Block (TEB) Analyzer     0.014 secs
+    WindowsResourceReference                   3.564 secs
+    x86 Constant Reference Analyzer            0.263 secs
+-----------------------------------------------------
+     Total Time   10 secs
+-----------------------------------------------------
+  
+2026-10-16 21:42:15 INFO  (HeadlessAnalyzer) REPORT: Analysis succeeded for file: file:///C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/preloader-analysis/embedded-preloader.dll  
+2026-10-16 21:42:15 INFO  (HeadlessAnalyzer) REPORT: Execute script: DumpPreloader.java 'C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\outputs\preloader-analysis'   
+2026-10-16 21:42:16 INFO  (HeadlessAnalyzer) SCRIPT: C:\Users\Skysect\Documents\Codex\2026-10-16\mcp\work\preloader-analysis\DumpPreloader.java  
+2026-10-16 21:42:17 INFO  (GhidraScript) DumpPreloader.java> EXPORTED 107 functions; 77 strings  
+2026-10-16 21:42:17 INFO  (HeadlessAnalyzer) ANALYZING changes made by post scripts: file:///C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/preloader-analysis/embedded-preloader.dll  
+2026-10-16 21:42:17 INFO  (HeadlessAnalyzer) REPORT: Post-analysis succeeded for file: file:///C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/preloader-analysis/embedded-preloader.dll  
+2026-10-16 21:42:17 INFO  (LocalFileSystem) /embedded-preloader.dll: file created (Skysect)  
+2026-10-16 21:42:17 INFO  (HeadlessAnalyzer) REPORT: Save succeeded for: /embedded-preloader.dll (preloader:/embedded-preloader.dll)  
+2026-10-16 21:42:17 INFO  (HeadlessAnalyzer) REPORT: Import succeeded  

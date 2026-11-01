@@ -1,0 +1,70 @@
+{
+  "result": "PASS",
+  "terminal_boundary_cases": [
+    {
+      "mode": "--live-bank",
+      "exit_code": 88,
+      "result": "PASS"
+    }
+  ],
+  "checked_at": "2026-10-20T02:24:45.6548195Z",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lock-native-source\\native.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lock-native-source\\build\\native.o"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lock-native-source\\native_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lock-native-source\\build\\native.o",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lock-native-source\\build\\native_tests.exe"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lock-native-source\\build\\native_tests.exe",
+      "arguments": [
+        "--live-bank"
+      ],
+      "expected_exit": 88,
+      "scope": "own injected lifetime boundary"
+    }
+  ],
+  "output": "PASS: 145 native lock checks",
+  "target_execution": "none",
+  "new_recovered_bodies": 0,
+  "scope": "Typed native ACRT14/VCRT1 critical-section banks; injected SDK edge guards and full BOOL; actual Windows recursive critical section and two joined own workers; no original target, hidden lifecycle, loader equivalence, ABI/SEH proof",
+  "sources": [
+    {
+      "name": "native_tests.cpp",
+      "sha256": "1785f29e9c4a2efdd1ef13b8c8a081a5bbc0478b1283022b7a1b01545e758ec4"
+    },
+    {
+      "name": "native.cpp",
+      "sha256": "5a1f87915482b0e6ec5f4f7d8fd38c3e282e503870c85905ffd8ce7f2614d5d8"
+    },
+    {
+      "name": "native.hpp",
+      "sha256": "92bcfcb150d71b3740e5751ba105a99a8e79ecd87f1360e1360ec52ccff1d772"
+    }
+  ],
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "executable_sha256": "849edbf611fd66eb7b09859c7ef6d3376331d731f6c704ab8be554c750729271"
+}

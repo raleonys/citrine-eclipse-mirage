@@ -1,0 +1,140 @@
+{
+  "schema": "environment-constructor.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180023dd0",
+      "pseudo_evidence": "ev_d162fd99180d0294652d44b39fe2cceaf384a9996b3bae0f40e08fd0e2ac7f82",
+      "assembly_evidence": "ev_747feac84362fbb739d9c68cee8e8fbc51d55c081309ddaa794f2c19a13f7fac"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "environment_constructor.hpp": "cec032a7f42a07bb852319cd0bf5639fe7243cd7fd6b8bb9b25bbd6cfe2bd050",
+    "environment_constructor.cpp": "bc47e1f2fbc9bc30e0142d0d97c872b66c1aa17247889af38355eb2966f55d88",
+    "environment_constructor_tests.cpp": "b58724f0cbf01c6e0179a324cd0dcfbe1fe2de5f551649438f3089f79f6afd43",
+    "environment_constructor_integration_tests.cpp": "1b805ae057592bb9fd0552e11b1b666d2300551c9a618a2cb6a24cf25f5f53a8",
+    "build.ps1": "6dc9dd19ea4dc99c30d8d8419ee40de3899a23c1dfeeed57e0447afd5e0fe0fa",
+    "CMakeLists.txt": "f536a58c09abefce7323ca6f4b0fe8c72dfed9c3270af98fe3e63e4e1c4eb0a2",
+    "README.md": "887d4c67dd2e8249005e5c830769bdf87df6eb0d000d7435336d550fd0559a76"
+  },
+  "support_hashes": {
+    "environment-constructor-evidence.pseudo.c.txt": "475bc8634308e50fc1e09bad6b7daaa9fd46764f76b642d68f5fdc0b2860709b",
+    "environment-constructor-evidence.asm.txt": "14cf9202c4a298a3eaf664c10e62feafb4527b04aa06fbf6abba00c52fdbc9a8",
+    "environment-constructor-flow-audit.md": "82252fba410e6f40c2e2ad2351fd1a4e3956819c0c7ef07b0e6ce4e0903ecad2",
+    "environment-constructor-flow-audit.json": "246240c60890203c56c9c86abf43ebfe2ddf38303a2e7d1dc7f48d7f0725dfae",
+    "environment-constructor-review.md": "746c55d78ff454e98053a15b436d58efc2e6d7eebd6bd94be5568d504a682b3e",
+    "environment-constructor-review.json": "0271687e6c7ce8ca052071491735ffd2605151ca44a8c7c93c25968cca57a3c8",
+    "environment-constructor-rea-session.json": "dd969de1a18a0bd6b8e3d80b54ed5401db07a76d605485a0fa05e3bd5b02e735"
+  },
+  "normal_source_procedures_added": [
+    "0x180023dd0"
+  ],
+  "new_original_procedures": 1,
+  "context_evidence": {
+    "addresses": [
+      "0x180023cb0",
+      "0x180021fd0",
+      "0x180027a20"
+    ],
+    "newly_recovered": false,
+    "references": {
+      "io-completion-evidence.json": "22ecfc4fc48c5bf32f4f14347cc1c7951f4172c18d3b47626f5759c1309d051f",
+      "io-completion-evidence.asm.txt": "69836d80ebb17154d9b05dc3cdc8ff7f1656dd3d79460025a7cbdc6910aa458a",
+      "composed-write-evidence.json": "7de5a3b27fcc4dc75438b8dffb886f3031ee821b78bdb81339477cbada8b257d",
+      "composed-write-evidence.asm.txt": "caaea8adcb29914ca5084c85fc315f5e164d11a91aa55fa582e6339c67c3c7aa"
+    },
+    "interpretation": "Existing023cb0 matches first inline move defined-field order; existing021fd0 calls023dd0 after clearing source owned pair and before weak temporary release/late buffer reload; existing027a20 consumes constructed environment. None adds new original count."
+  },
+  "claims": [
+    {
+      "addresses": [
+        "0x180023df8",
+        "0x180023dfc",
+        "0x180023dfe",
+        "0x180023e02",
+        "0x180023e09",
+        "0x180023e10"
+      ],
+      "finding": "Live schedule slot0 no-this typequery; returnedtype+8 unsigned address wrap; required04d2d0 compare against1800a25c8; only zero selects empty"
+    },
+    {
+      "addresses": [
+        "0x180023e12",
+        "0x180023e19",
+        "0x180023e1d",
+        "0x180023e25",
+        "0x180023e2c",
+        "0x180023e30",
+        "0x180023e37",
+        "0x180023e42",
+        "0x180023e48",
+        "0x180023e59",
+        "0x180023e5f"
+      ],
+      "finding": "Default temporary sentinel operations/state0/schedule/executor; actual023cb0 move; live guarded destroy; payload native unspecified"
+    },
+    {
+      "addresses": [
+        "0x180023e67",
+        "0x180023e6b",
+        "0x180023e6f",
+        "0x180023e73",
+        "0x180023e77",
+        "0x180023e7a",
+        "0x180023e7c",
+        "0x180023e83",
+        "0x180023e87"
+      ],
+      "finding": "Cache actual slot58 FUNCTION before source query18 may mutate or delete executor; cached factory receives destination/query/opaque scratch; no executor-this"
+    },
+    {
+      "addresses": [
+        "0x180023e8a",
+        "0x180023e96",
+        "0x180023e9a",
+        "0x180023eac",
+        "0x180023ebc",
+        "0x180023ebe",
+        "0x180023ec6",
+        "0x180023eca",
+        "0x180023ed5"
+      ],
+      "finding": "First inline move matches existing023cb0: copy operations/schedule; reset source tables before move; source state0 after callback; live executor copy then sentinel"
+    },
+    {
+      "addresses": [
+        "0x180023ed9",
+        "0x180023ee0",
+        "0x180023ee7",
+        "0x180023ef0",
+        "0x180023efa",
+        "0x180023f00",
+        "0x180023f04",
+        "0x180023f0b",
+        "0x180023f0e"
+      ],
+      "finding": "First temporary liveguardeddestroy; second actual023cb0 move; intermediate livedestroy UNCONDITIONAL including guardidentity; return destination"
+    }
+  ],
+  "required_providers": [
+    "Native type query slot0 and RTTI bytes/04d2d0 comparator",
+    "Native factory58,move10,query18,destroy0 and sentinel implementations",
+    "Fresh exclusively writable stable destination; coherent live registries and callable code lifetimes",
+    "025a70 completion and025c40 receive application helpers",
+    "Allocator/reference/global/provenance; native ABI/GS-cookie/exception/SEH/unwind/concurrency/full DLL"
+  ],
+  "independent_production_review": "PASS; two frozen production sources",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "unproven": [
+    "Native polymorphic/RTTI provider bodies",
+    "Native allocation layout/provenance/control-block lifetime",
+    "Native ABI/exception/SEH/unwind/concurrency",
+    "Complete DLL and original runtime differential"
+  ]
+}

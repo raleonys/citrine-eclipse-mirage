@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "reviewer": "handler_dispatch_audit",
+  "scope": "Independent frozen four-source review against all nine complete retained assembly/pseudocode normal procedures",
+  "sources": {
+    "outputs/anadius-socket-source/handler_dispatch.hpp": "0fec1cbf13941617daf61b0bf4a144c3e660bd976f4c65f8ebad184e198b3f64",
+    "outputs/anadius-socket-source/handler_dispatch.cpp": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac",
+    "outputs/anadius-socket-source/handler_dispatch_bridge.hpp": "a0c012878ee191fe53b22d7bace89ade87308c9e3702c81ca9cdd905f9887646",
+    "outputs/anadius-socket-source/handler_dispatch_bridge.cpp": "522fd1b8e79025a8cd6e80791ba292216d0b69826f9dfbb660261ac1e6716602"
+  },
+  "report_sha256": "0c71ca358b00004b09aa681502fb3eab4d16f379b8c4c906d201e1711a45240c",
+  "audit_report_sha256": "7e508f122b2dbc8459b0330a28187d3608d8575e5f979fcfafdac7b67f79b1e0",
+  "audit_json_sha256": "1f9135c05a4b8f0c00bc6df6438a1a40652cb47381961705b9ee8d805999a510",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180021900",
+    "0x180022640",
+    "0x180022670",
+    "0x180022780",
+    "0x1800227b0",
+    "0x1800229d0",
+    "0x180022c60",
+    "0x1800291c0",
+    "0x1800292a0"
+  ],
+  "new_original_procedures": 9,
+  "core_contract": "Slot4/5allocator;unusedtagomitted;sourceclearbeforeerror/bytes;earlystoragefree-beforeinvoke;livecontrol/postcallbackallocationreload;strong/weakold1;cachedslot18/10;mutableownedtaskslot;fullsendprepare/query/move/tempdestroy/schedule/finaldestroy",
+  "native_contract": "Separate bounded raw/SDK/closure projection;nativeindeterminatepadding,dummy,tag,scratchabsent;actualprovider slots andcontrol lifetime",
+  "composition": "RecoveredHandlerDispatchEffects replaces existing0229d0/022c60 provider boundary with recoveredcaller source; native025c40/0261d0 andfactory/query/move/destroy/schedule remain mandatory",
+  "providers_not_recovered": [
+    "04b0bc/04b788 CRT allocation/free",
+    "Native factory/query/move/destroy/schedule algorithms and lifetimes",
+    "025c40 receive and0261d0 send application bodies",
+    "Native raw allocation/closure ABI/bindings/control lifecycle",
+    "GS-cookie/SEH/unwind/concurrency/full DLL equivalence"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Nine normal caller procedures only",
+    "Existing CRT production unchanged",
+    "Bounded raw storage separate from typed SDK/handler/closure projection",
+    "Uninitialized native bytes remain unspecified",
+    "No full DLL equivalence claimed"
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "analysis": "Retained static REA/Ghidra evidence; no new target/provider execution",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "functions": [
+    {
+      "va": "0x18004d55c",
+      "pseudocode_evidence": "ev_234525c0541d1d54edb5f5ed98dcdba4cc22b1fdcca9fdbfae96eaf9947b5cfb",
+      "assembly_evidence": "ev_c8e7ca2f03d9d7523bda334f43c97ff48572ef873018cf21c8a61556f22c5c9f",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d584",
+      "pseudocode_evidence": "ev_384fb932e1c611d6f3ba428f056b70cea59b25e186ca1ed15c224f4f0fac57e9",
+      "assembly_evidence": "ev_4d9f4a113b994966113bc04ac47b90f06e7a50a87b0c73a0a39fdf93052432ea",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d598",
+      "pseudocode_evidence": "ev_3cdaa0406e8595ec0316c38bbcdfe5ec6fbe733886b548d50f5b6694abbc202b",
+      "assembly_evidence": "ev_b2956916ef14e73d2fe9855a33aec5524936feca7f608a80de496308f7aa5d5c",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d5a8",
+      "pseudocode_evidence": "ev_f8fed0bd891049cefd3aeae0efa37e5a905e99d53e397d5c7a6d539e3fe04251",
+      "assembly_evidence": "ev_5f02379d31997a4e7173838fb0420c588dd9f16fcfc6725e74863b7f4a2133e1",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d5c4",
+      "pseudocode_evidence": "ev_748365a73246e12992efd26a6224cda85c8df9afa2acd4269c2c579602987f3d",
+      "assembly_evidence": "ev_411411b1f19651a18d9dced54994317bd36d6889ac4bbbdc146109348c4bf5e1",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d5d4",
+      "pseudocode_evidence": "ev_35bbf07cb97a1166d0cf7a97e661884731ba7f4ac947f34af43655a52e6adaaf",
+      "assembly_evidence": "ev_389ea2d99586e453bb274374b051ab81dc8ac7309bc222ef1781484dfe131682",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d5f4",
+      "pseudocode_evidence": "ev_7760b2f587acaf54a24123ccf90ad1bb8ef8e97a982fcc0f192cc67a30823549",
+      "assembly_evidence": "ev_1ffaeb0f58092923d6a09197c64afa59612c74bdb9a2daec4212d09bf0c3f8b3",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d63c",
+      "pseudocode_evidence": "ev_32f7b5f564b3943e3b483341c575645d36491f67738eb160f9d49922862b65f3",
+      "assembly_evidence": "ev_5f99dd76b7b99e73645d6356c1bdbdef47d4960e2d6dba239dd0fdd4dd2044c1",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d658",
+      "pseudocode_evidence": "ev_b283effa2c732f44c9ed554fcfac90a0e7f35825c39e2a9fac05d76f3162d3f4",
+      "assembly_evidence": "ev_2374452ad1c3792ed2b4c58c1de06c55bf6df81fbeef5940214b14c08f0f3b7a",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d718",
+      "pseudocode_evidence": "ev_fa774e8b2a98532765059b9f61d656eac2c2779563be43ac46c97f4bc830cb5f",
+      "assembly_evidence": "ev_b6bbad66e4e1e98a0c7a1c455c77c749f8f7e0df25e3879b5a1e6135d891853b",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d768",
+      "pseudocode_evidence": "ev_e3b6e58c8262fcecb92b6a689455d6fda3d3aad51d7db66e789adce597b9920c",
+      "assembly_evidence": "ev_8f18a8f3fe19209f99ca4904178a3b4a569e633b120407841057290165b18dfc",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18004d7b0",
+      "pseudocode_evidence": "ev_fc614ff528b9e513e3c72e1abd8e874520c74e4d95bdfa4a0b7d03e7e5d1db35",
+      "assembly_evidence": "ev_3c29db83fc1e09ddb45181a65a2e921d7862575b5011c00be364434ec1b08751",
+      "scope": "normal recovered control flow; mandatory Effects dependencies"
+    },
+    {
+      "va": "0x18005cae4",
+      "pseudocode_evidence": "ev_246783b24bffb1980da1a4c39e90d85e643f9674fa7f972b0de3e5ddabd77999",
+      "assembly_evidence": "ev_98d1b726ec5980ee64227dc30d04f430cb5488559a06660bde21ae12f1ad1991",
+      "scope": "forwarding helper dependency; retained evidence"
+    },
+    {
+      "va": "0x18005caec",
+      "pseudocode_evidence": "ev_9b87d347938094dc19098153e14b2f75ac5e0cfc65fe8b4b4d8495432ccb6219",
+      "assembly_evidence": "ev_dc2e8860cfa1a06b464563b31c9a5f586dc49fb16cd3579156e95db913e59895",
+      "scope": "forwarding helper dependency; retained evidence"
+    }
+  ],
+  "anchors": [
+    "04d5dd..04d5e9: static PTD identity excluded from free",
+    "04d605..04d62e: get; clear ignored; nonstatic nonnull free",
+    "04d667..04d672,04d722..04d72d: invalid index skips LastError",
+    "04d677..04d6fe: valid index saves/restores LastError",
+    "04d68a..04d6a5: sentinel comparison and publication",
+    "04d6ae..04d6b6: calloc(1,0x80)",
+    "04d6c9..04d6df: publish before frame_state +0x78 = -2",
+    "04d6ed..04d6f7: reset ignored; free including null",
+    "04d76c..04d778: callback 04d5d4 then index publication",
+    "04d783..04d79f: static PTD publish before +0x78 = -2",
+    "04d7bf..04d7c4: ignore FlsFree result then invalidate",
+    "04d55c..04d57d: lock initialization rollback on PTD failure",
+    "04d5ac..04d5ba: terminating skips both PTD and lock teardown",
+    "05cae4,05caec: wrappers to 066848/0668c0"
+  ],
+  "limitations": [
+    "VCRT 128-byte PTD distinct from ACRT 968-byte PTD",
+    "Opaque 120-byte prefix and 4-byte suffix",
+    "Normal AL return contracts only; upper RAX unmodeled",
+    "FLS/heap/locks/abort/error backends mandatory",
+    "No native FLS, heap or runtime cleanup executed",
+    "No inferred exception cleanup or SEH",
+    "Original source and runtime equivalence unproven"
+  ]
+}

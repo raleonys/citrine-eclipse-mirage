@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_nls_bridge",
+    "result": "PASS",
+    "output": "PASS 27665 actual-NLS/map/type/conversion/record/locale/PTD/argv/heap composition checks",
+    "executable_sha256": "d3ab41521591b67787f31c17a3f0f68886260ffd9252f2d682e90cf92ccef2f6"
+  },
+  "execution_scope": "Actual NLS wrappers/strncnt/conversion API/locale/heap/multibyte/argv source composition; tracked output cells and explicit input tail provider; synthetic native0671d4/GetStringTypeW/conversion/CP/FLS/lock/atomic/scratch",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-nls-bridge-source/bridge_tests.cpp",
+      "sha256": "4037a01c4a7c968e6d8cae53f7ed0bf16d8487e76d424aa428c3f453924fd25b"
+    },
+    {
+      "path": "anadius-crt-nls-bridge-source/bridge.cpp",
+      "sha256": "54bffb176961a0949c3699f331642fa3f3110e4bd0e958db5d5d287563a83216"
+    },
+    {
+      "path": "anadius-crt-nls-bridge-source/bridge.hpp",
+      "sha256": "18fe2cb45e1a2893fee5fbdaa2f572a5ee21fb0f367703bfdfd582a68ae40e60"
+    }
+  ]
+}

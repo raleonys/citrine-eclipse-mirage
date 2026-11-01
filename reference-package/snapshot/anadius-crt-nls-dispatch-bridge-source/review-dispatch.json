@@ -1,0 +1,38 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T13:38:02.7131363Z",
+  "reviewer": "crt_nls_dispatch peer worker",
+  "scope": "Static review of the new NLS dispatch bridge composition plus hash-bound existing synthetic fixture replay",
+  "sources": [
+    {
+      "name": "bridge.cpp",
+      "sha256": "c497d3349bdb737af6793bde4dc26c59c0ee68c9bf7f793ec069e0a19403dabd"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "8635582ac4e25ffd3365291d1df414354064222cbe462b7af2c8802754b3c281"
+    },
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "67ee9eb64a75de090a362fc4c9f42c4348080df756e7234b683afc496df13950"
+    }
+  ],
+  "fixture_execution": "PASS 27943 actual-dispatch/locale-table/resolver/NLS/record/PTD/argv composition checks",
+  "executable_sha256": "f23f1dfd81a5fc4d090dff3b47f5c45c5569d3a2c86dd4f45837ffbd42aa4f64",
+  "findings": [
+    "No corrective source findings.",
+    "Effects calls recovered 0671d4/0672c0 bodies. Its resolve_0669b0 forwards the same borrowed runtime State and Effects to the existing recovered resolver, preserving procedure slots 0x11/0x13 and module candidate sequence 3,16.",
+    "Locale fallback calls actual recovered 07310c and its 0736d4 helper through shared memory.read_u16. It does not replace unknown locale or original kok/kok-in misses with invented success.",
+    "All Ex arguments and full signed EAX result are forwarded; W LCID and six arguments are forwarded; native locale resolver arguments/results retain all32bits.",
+    "ByteOutput span is forwarded by value to native endpoint. A local RAII scope saves and restores prior metadata span for serialized nested calls and exceptions; this is adapter metadata management, not original SEH.",
+    "Remaining CP, conversion, type, scratch, input-tail and exchange APIs forward to the earlier backend. The fixture old 0671d4 slot throws, so successful fixture replay corroborates that the new dispatch bypasses the unresolved old slot.",
+    "Fixture three-route checks verify actual shared resolver successful/missing cache, full native LCID, shipped locale fallback, LCID0 W invocation and no W retry after Ex0.",
+    "Nested native callback fixture reenters type and map operations; outer/inner outputs, owned PTD bit2, two scratch frames, input borrows and empty heap registries are checked. This is a serialized synthetic scenario, not arbitrary native reentry or concurrency proof."
+  ],
+  "boundaries": [
+    "Native LCMapStringEx/LCMapStringW/LocaleNameToLCID and remaining native endpoints are synthetic fixtures.",
+    "No native locale API, original DLL, rebuilt DLL or game executed.",
+    "Caller-owned shared State/memory/backends/output spans must outlive calls and be serialized.",
+    "Original native ABI, CFG, security cookie, SEH, Windows locale semantics and general concurrency equivalence remain unproven."
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "Entire four-production-file architecture/lifetime audit completed before authoritative freeze, then final6 source/test hash and immutable actual-author proof/log/EXE/archive review. No reviewer executable execution.",
+  "reviewed_at_utc": "2026-10-31T15:26:42.315599+00:00",
+  "reviewed_source_hashes": {
+    "profile.hpp": "e28f1499639819c036937e06602a5cbcd31630573dca86f733ea0c9f549b0085",
+    "profile.cpp": "9a4db9f649439a8a0f4f4a94ba31454453c01a8f0bafc1aad6f26f1e08a2a582",
+    "strings.hpp": "ee48e22c5a65c2e772314d494019e534f79b5dea82cfdb6b21343c53e94ffdd3",
+    "strings.cpp": "19df7511fa66bb9383eb9dee64b6bc86b7c33881e5dbd9652dac7069d7ca1e64",
+    "profile_tests.cpp": "e017d5dfa6742441fc43735a3b7d9fbbf7cf7bfbe2360ba7f0c23f573caebfad",
+    "profile_integration_tests.cpp": "a1593f56cf97ee25f383f9e0d9d7eea4f21a4edcb1ef784a49ca66c280bfb46a"
+  },
+  "code_freeze": {
+    "path": "work/b40-code-freeze.json",
+    "sha256": "952eb5636ad1705aa35e2084ab41d8c215080e543ba65465b471419ca8176476",
+    "all_six_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 403,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b40-core-agent.exe",
+      "executable_sha256": "c507c249bec6ccc37f8683380c9a376deb80d871b5b9004bec8376d4cc16e33c",
+      "archive_path": "work/b40-baseline-core.a",
+      "archive_sha256": "0d543fbcfef442fbc9d90329df70013efa902c4643ec97769d4f5b36a69d9402",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b40-core-agent-results.json",
+        "sha256": "6686dfa8f71aaf572507caee53725b3ba88f7221bab07ba06915c200c72bd834"
+      },
+      "path": "work/b40-core-quick-results.json",
+      "sha256": "06b180bddd8599178ca9a96f24abd61648b8bc8df395346c3f73a62a1e1a9bbc",
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b40-core-agent.log",
+      "log_sha256": "bc475a8a542a629db6ecccf582b9f506edfa17f706cf0997b9e671c5d7448e14",
+      "actual_used_source_hash_count": 6,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh profile.cpp, strings.cpp and profile_tests.cpp with their declared headers plus directly included prior domain fixture. Immutable canonical B39 core archive supplies prior production objects; integration test is not compiled by this invocation. Parent assertion count excludes twelve independent child assertion bodies; parent verifies each child reaches its exact retained-state exit 211..222.",
+      "isolated_children": [
+        {
+          "mode": "capacity",
+          "expected_exit": 211,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "duplicate",
+          "expected_exit": 212,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "rerun",
+          "expected_exit": 213,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "unknown",
+          "expected_exit": 214,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "outside",
+          "expected_exit": 215,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "detach",
+          "expected_exit": 216,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "worker",
+          "expected_exit": 217,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "reap",
+          "expected_exit": 218,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "jobsfull",
+          "expected_exit": 219,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "forged",
+          "expected_exit": 220,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "detachreentry",
+          "expected_exit": 221,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "heldroot",
+          "expected_exit": 222,
+          "observed_exit_verified_by_parent": true
+        }
+      ]
+    },
+    {
+      "checks": 85,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b40-integration-agent-test.exe",
+      "executable_sha256": "d4b86483374a043482a4a30eec341129186d6dd5a57f5acdbe2dbc713247f6bb",
+      "archive_path": "work/b40-baseline-core.a",
+      "archive_sha256": "0d543fbcfef442fbc9d90329df70013efa902c4643ec97769d4f5b36a69d9402",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "execution_record": {
+        "path": "work/b40-integration-agent-results.json",
+        "sha256": "0636274073978401f0b836eb8e2f79379be613cbf772a057bbf62f58719232d6"
+      },
+      "path": "work/b40-integration-quick-results.json",
+      "sha256": "9dcdac4be81057bd5b7b73f9f6e3051b4d496d3e31b971d5a8a0cacd2cf55f1e",
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b40-integration-agent-results.log",
+      "log_sha256": "6f61bacf8adc1192ddceb5a06f98219c4561bf464094e9ac6a51697fcc14cec3",
+      "actual_used_source_hash_count": 5,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "watched_source_hash_count": 6,
+      "source_scope": "Fresh profile.cpp/strings.cpp +integration test and2 module headers:5 selected actual-use records; watched6 adds metadata-only core test."
+    }
+  ],
+  "quick_checks_total": 488,
+  "core_agent_checks": 403,
+  "integration_agent_checks": 85,
+  "root_checks": 0,
+  "root_execution_note": "Root only normalized immutable authoritative author proofs; no EXE replacement/rerun by root or reviewer. Core403 parent count excludes child assertion bodies; twelve exact child exits211-222 are separately verified by that parent.",
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "PENDING at review; authoritative quick PASS is not full common PASS.",
+  "common_build_targets": {
+    "production_objects": 262,
+    "cpp_units": 258,
+    "c_units": 4,
+    "ordinary_groups": 309,
+    "framework_terminal_groups": 19,
+    "status": "registered/planned, not reviewed as executed"
+  },
+  "baseline_package_sha256": "e8b67a046c805bd7f55a083eca69c52c8f000263a1998ff97db7bae898c65665",
+  "baseline_source_files": 888,
+  "prior_sources_preserved": 888,
+  "modified_prior_sources": 0,
+  "new_source_files": 6,
+  "current_source_files": 894,
+  "baseline_scope": "All888 archived source members matched snapshot SHA and current files.",
+  "archive_proof": {
+    "path": "work/b40-baseline-core.a",
+    "sha256": "0d543fbcfef442fbc9d90329df70013efa902c4643ec97769d4f5b36a69d9402",
+    "matches_B39_ZIP_member": "source-workspace/build/anadius_core_partial.a",
+    "verified": true
+  },
+  "composition_count_basis": {
+    "baseline_files": 89,
+    "baseline_objects": 44,
+    "new_composition_files": [
+      "anadius-session-profile-source/profile.hpp",
+      "anadius-session-profile-source/profile.cpp",
+      "anadius-session-profile-source/strings.hpp",
+      "anadius-session-profile-source/strings.cpp"
+    ],
+    "expected_files": 93,
+    "expected_objects": 46
+  },
+  "findings": [
+    {
+      "id": "owned-context-graph",
+      "result": "PASS",
+      "details": "Concrete Profile/Application assemble existing frame/read/write/response/message contexts and fixed-capacity stable registry arrays themselves. SessionLogic is a narrow greeting/normal-return semantic request lower, not a whole context factory. Per-slot receive/send/environment/queue/message/logic data replace fixture active/global-current-session assumptions; bindings do not reallocate after publication."
+    },
+    {
+      "id": "owner-and-binding-admission",
+      "result": "PASS",
+      "details": "Profile validates full8 view tuple and bound thread/fiber, exact storage/sentinel projections, one-create/in-progress seal and retained pending Application on post-construction failure. Session greeting checks domain-owned live control and exact real HOST SessionControl.object address == owner before acquiring observer; no native overlay cast. Binding phase/observer record is established before opaque logic/environment calls. Overflow/duplicate preserve prior slots and poison rather than silently overwrite."
+    },
+    {
+      "id": "slot-retirement",
+      "result": "PASS",
+      "details": "Observer weak preserves embedded owner storage. Reap waits strong0/jobs0/not-processing, clears ALL binding arrays and embedded references, destroys SessionLogic, checks poison, then drops cached observer weak with no later owner/control use. Pre/post-policy after_completion reap prevents deferred job completion leaving a stale occupied capacity1 slot before next factory greeting. Slot generations increase on reuse."
+    },
+    {
+      "id": "frame-job-lifetime",
+      "result": "PASS",
+      "details": "Extra host strong acquired via live CAS BEFORE opaque Jobs.start; actual021770 normal return releases it, unknown entry outcomes retain/poison. Record reuse requires Done+Detached+startReturned, no closure/strong and not detaching. Handle/id uniqueness and recursive detach seal prevent wrong/double lower detach. Shared tombstone captures ticket only, never App/Parent ownership; copied runner after close rejects before App dereference, with active invocation tracking and no gate across callback."
+    },
+    {
+      "id": "strings-and-message-scope",
+      "result": "PASS",
+      "details": "Bounded selected string adapter handles SSO directly, heap via exact parent views, binary sizes/NUL, fresh-before-old replacement and actual009eb0 copy. Fixed large-header registry tracks category/frame/response allocations, prunes unmapped/base-changed entries and rejects ambiguity; free metadata cleared before parent free. Semantic request writeback/response assignment occurs after SessionLogic returns, not native033d70 intermediate/EH behavior."
+    },
+    {
+      "id": "admission-and-quiescence",
+      "result": "PASS",
+      "details": "Opaque App/Guard/Worker calls checkpoint phase/thread/Parent/Base/Backend; registry mutation reentry poisons, noreturn terminal adapters poison before lower. External proof rejects active/mutation/reentry, matches complete view, requires Returned/Quiescing+Open domains and a SUCCESSFUL short fresh Parent.enter probe ending BEFORE opaque blocking policy. Only true external attestation permits fresh-scope reap and closed tombstone; pending jobs must finish before worker return."
+    },
+    {
+      "id": "provider-retirement",
+      "result": "PASS",
+      "details": "Profile must outlive Application. Closed Application seals tombstone and clears State owner; Profile Retiring seal destroys moved providers outside live metadata gate. Explicit donor deps.logic={} prevents moved-from std::function SBO capture retirement after metadata lifetime. Environment/provider backing remains an explicit stable owned-lower contract."
+    },
+    {
+      "id": "proof",
+      "result": "PASS",
+      "details": "All6 final hashes, current q2/actual records/logs/EXEs/archive and unchanged888 baseline verified. Integration85 uses actual production contexts for overlapping201 plain/202 AES sessions,11 native packets and a deferred job retaining sole host strong after EOF; no fixture context graph/manual observer cleanup. Reviewer did not execute programs."
+    }
+  ],
+  "resolved_review_blockers": [
+    "A forged SessionOwner could borrow a real domain control without exact host object pairing.",
+    "Partial view/thread matching and nonreserved create allowed weaker binding identity/publication guarantees.",
+    "Inferring outside Parent scope from buffer_context failure confused inactive with mutating/invalid states; successful fresh-enter probe now required.",
+    "After-completion deferred job release could leave a capacity1 slot occupied before the next accepted session; post-policy reap added."
+  ],
+  "additional_design_seals": [
+    "Outstanding Job detach marked detaching before opaque lower, recursive detach rejected.",
+    "Noreturn terminal adapters poison before throwing lower.",
+    "Shared runner tombstone, explicit donor std::function cleanup and observer-before-drop discipline implemented from design review."
+  ],
+  "new_native_bodies": 0,
+  "new_native_ABI_provider_closures": 0,
+  "native_mapped_addresses_unchanged": 501,
+  "native_eligible_compiled_tags_unchanged": 505,
+  "explicit_normal_body_claims_unchanged": 139,
+  "historical_native_closures_unchanged": 52,
+  "last_native_body_stage": "B38",
+  "compiler_observations_expected": 80,
+  "new_compiler_trait_values_expected": [
+    0,
+    0
+  ],
+  "registration_role": {
+    "script": "work/b40-register.py",
+    "sha256": "ca14025e50e39c1183fbcd11c71e1c1006fe325d4ad2040ce7abebdf02d3eb29",
+    "preview_author": "/root/b22_provider_audit",
+    "applied_by": "/root after review of staged plan, as reported by root",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "scope": "Read-only AST, full baseline/source preservation and staged count/trait preview; no build/generator/probe/test by reviewer."
+  },
+  "production_dll_readiness": "BLOCKED; concrete profile contexts are not complete message/environment/SDK/stop-job/Resources/loader closure.",
+  "limitations": [
+    "Inline/deferred jobs execute exactly once on SAME bound worker/fiber under whole Parent Operation and finish before native worker exits. No detached native threading/concurrency or native reference-count equivalence; extra strong is selected HOST lifetime policy.",
+    "Unknown job/logic/lower outcomes retain/poison; native prefix/EH rollback, safe recovery/resume and module/unload/kernel packet finality remain unproven. Controller generations/tombstones do not prove kernel/raw-address ABA safety.",
+    "Fixed-capacity overflow occurs after actual native factory prefix and retains/poisons; it is not graceful original admission or rollback. Session/job/header capacities are explicit supported bounds.",
+    "Stable lower-owned environment code/payload backing, raw (not already doubly pinned) SDKs, category/log/terminal/deque growth, SessionLogic and actual scheduling/drain providers remain mandatory. The profile constructs contexts, not complete original application provider behavior.",
+    "Normal-return semantic message bridge is not native033d70 callback-intermediate/EH equivalence. B39 matching-admitted caller contract, pure completion-owner policy, disabled timer/service context, B38 primary/context0 retry and full Resources/loader prerequisites remain.",
+    "External stop/rawjob/kernel attestation is trusted and blocking outside Root; zero counts, owner0 packet and cancel intent are not that proof. Shared lifetime tokens do not pin original modules or establish native ABI.",
+    "No original target bytes/queries, original/rebuilt DLL/game or real network/kernel AcceptEx execution. Own heap/FLS/IOCP tests use injected networking providers. Full common/inventory/link gate/package checks remain pending at review."
+  ],
+  "original_inputs_read": false,
+  "original_bytes_or_target_queries": false,
+  "original_or_rebuilt_DLL_game_execution": false,
+  "actual_user_cfg_token_contents_read": false,
+  "production_or_test_sources_modified_by_reviewer": false,
+  "reviewer_writes": [
+    "work/b40-register.py",
+    "outputs/anadius-session-profile-source/architecture-review.json",
+    "outputs/anadius-session-profile-source/architecture-review.md"
+  ]
+}

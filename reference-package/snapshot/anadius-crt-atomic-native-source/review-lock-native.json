@@ -1,0 +1,37 @@
+{
+  "result": "PASS",
+  "reviewer": "crt_lock_native peer",
+  "checked_at": "2026-10-20T02:25:12.2848153Z",
+  "sources": [
+    {
+      "name": "atomic.hpp",
+      "sha256": "2af4cf8f37588aff808b4fed25e0c000a66aacb6a497f7a811b99340e053998d"
+    },
+    {
+      "name": "atomic.cpp",
+      "sha256": "d13c18cc364775c8e5ce50f23984af8b72d4d7e6a2f420e34cd0b2caf4d32e3d"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "4ac21f290c120fbdb130ef107158f298d5f0fa1d9e36c3d00e6e06a706431891"
+    }
+  ],
+  "review_scope": [
+    "Owned live LONG object and alignment; no arbitrary byte-array reinterpretation",
+    "std::bit_cast retains all signed/unsigned bit patterns",
+    "Windows Interlocked return-value and modulo arithmetic contracts",
+    "Logical const load uses mutable writable LONG and documented RMW",
+    "No unsynchronized reads/writes while own joined workers operate",
+    "Joined worker lifetime and LastError checks",
+    "New object disassembly matches claimed instructions; not original target addresses"
+  ],
+  "validation": "Narrow build.ps1 rerun: PASS 88 native atomic checks; C++20 O2 Wall Wextra Werror",
+  "findings": [],
+  "limitations": [
+    "Runtime equivalence to original target not established",
+    "Address is owned-cell identity; external routing must reject unknown identities",
+    "Caller must complete all operations before destruction",
+    "Aggregate previous-value sum is not uniqueness proof"
+  ],
+  "original_target_execution": "none"
+}

@@ -1,0 +1,151 @@
+{
+  "schema": "write-finish.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180025a70",
+      "pseudo_evidence": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8",
+      "assembly_evidence": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7",
+      "newly_recovered": true
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x1800261d0",
+      "pseudo_evidence": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61",
+      "assembly_evidence": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002a500",
+      "pseudo_evidence": "ev_74e713f6d63b5db2c8594c89965baf991c280377ff6f5607819938f99daa863f",
+      "assembly_evidence": "ev_7b4a354660d536700feb53ad52ca0a2f961ca2042dbeb3a635143135bd1fe188",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "write_finish.hpp": "c9e341de1a667ba2f17c1861aed4800243d2ebff022f3b9df47cdf6e48c2f6ba",
+    "write_finish.cpp": "b13efb4696b7a8fd89e94e5d14d22d0b7da93d7da820fcaf212241807918667e",
+    "write_finish_tests.cpp": "74bc4a4b373a3e99fe3048e107d91e90dde669961d20e6df5504ac069484cd88",
+    "write_finish_integration_tests.cpp": "57872f220d0b977a22993c887f2e99a0fefb89a80cccb44ef687e211108ce945",
+    "build.ps1": "73c6cbd45917037adf6006f6369b5d1c542684379cad8469d8458d203d0f969a",
+    "CMakeLists.txt": "cbbf9aab51fc06f0df7ed4901a39431d7ffe862a0077a46c47310efb43fb614c",
+    "README.md": "19f7dff524fb1aec38fe1242e562cee4d563ea07c9158c20f4d1fc114eb7997d"
+  },
+  "support_hashes": {
+    "write-finish-evidence.pseudo.c.txt": "f844daba3229bb9f8ba5f9bdc2702e36684e6d49928c3915fbb78a574bd43cbe",
+    "write-finish-evidence.asm.txt": "26d7fe6b3634f2ee963c3ba433feab2076e075aee863fc4d903a8e1bab92d599",
+    "write-finish-context.pseudo.c.txt": "b33e734b4e3fb46ef5bf0799b5b623fb9c11644782bb0845d042ac364ac32259",
+    "write-finish-context.asm.txt": "db4249bdc433cfa7c2345676052cd5da720901eef10a8f2f8f3776f389dc25f4",
+    "write-finish-flow-audit.md": "28c952e4bd8d7f766e0f8f97cc1c2e6fdcc16463fdbfe41749c9bfa452bc39da",
+    "write-finish-flow-audit.json": "bf4b61f78fe4052191d7f86b109b29a979b9326f0e43a885bef1dee609ea8dbf",
+    "write-finish-review.md": "2cdeffd4b271c20dc2baa2625e2234a2d085c16ba57d648193f2b1a1be053a4a",
+    "write-finish-review.json": "3908dbcf28e20cd575bba057fcb4af605ad95e8f444da79bf97374b79e222ea2",
+    "write-finish-rea-session.json": "dd969de1a18a0bd6b8e3d80b54ed5401db07a76d605485a0fa05e3bd5b02e735"
+  },
+  "normal_source_procedures_added": [
+    "0x180025a70"
+  ],
+  "new_original_procedures": 1,
+  "claims": [
+    {
+      "addresses": [
+        "0x180025a94",
+        "0x180025a9e",
+        "0x180025aa1",
+        "0x180025aa8",
+        "0x180025aab",
+        "0x180025ab9"
+      ],
+      "finding": "Cached code first; saved owner from tail native30/typedword88; saved deque string at map[(mapsize-1)&offset]"
+    },
+    {
+      "addresses": [
+        "0x180025abd",
+        "0x180025ac5",
+        "0x180025ac7",
+        "0x180025acd",
+        "0x180025ad6",
+        "0x180025ada",
+        "0x180025ae5",
+        "0x180025ae9",
+        "0x180025af2",
+        "0x180025c34"
+      ],
+      "finding": "Capacity<=15 no heapfree; unsignedcap+1 wrap; size>=4096 add39/readheaderdata-8/unsignedgap<=31; otherwise terminal05c974;04b0f8call site carries pointer andcomputedsize"
+    },
+    {
+      "addresses": [
+        "0x180025af7",
+        "0x180025aff",
+        "0x180025b07",
+        "0x180025b0a",
+        "0x180025b12",
+        "0x180025b14",
+        "0x180025b1f",
+        "0x180025b22",
+        "0x180025b2c",
+        "0x180025b33",
+        "0x180025b36"
+      ],
+      "finding": "Saved string size0/cap15/byte0only; savedowner count-- unsignedwrap; offset0ifnewcount0 elseincrementwrap; reloadlive handlerowner forrequired02a500; no readsaftercallback"
+    },
+    {
+      "addresses": [
+        "0x180025b40",
+        "0x180025b45",
+        "0x180025b49",
+        "0x180025b4d",
+        "0x180025b53",
+        "0x180025b66",
+        "0x180025b6d",
+        "0x180025b74",
+        "0x180025b7c",
+        "0x180025b7f",
+        "0x180025b83",
+        "0x180025b8e"
+      ],
+      "finding": "Misc lookupbeforelivecategory read; suppressonlyidentity08equal ANDcachedcode2; beginconstants1800a4130/1800845d8; savedcategoryobject thenlivemessageslot10 afterbegin withcachedcode"
+    },
+    {
+      "addresses": [
+        "0x180025b97",
+        "0x180025b9d",
+        "0x180025ba3",
+        "0x180025bab",
+        "0x180025bb0",
+        "0x180025bb6",
+        "0x180025bba",
+        "0x180025bbf",
+        "0x180025bc4",
+        "0x180025bca",
+        "0x180025bd2",
+        "0x180025bd8",
+        "0x180025c0c",
+        "0x180025c2e"
+      ],
+      "finding": "Inlineorheapmessage address/length; appendreturnedstream; signed32virtualbaseoffsetadjust; widen10low8→put→flush; reloadmessagecapacity/header forfinalheapfree; noinventedunwindcleanup"
+    }
+  ],
+  "required_providers": [
+    "02a500 next-write algorithm and025c40 receive",
+    "Native free04b0f8/04b788 and terminal05c974 unchanged",
+    "Native category message/log006880/append007990/widen01e510/put00fe90/flush00e1e0 helpers",
+    "Bounded coherent unique owner/category/header projections with native-last-use lifetimes",
+    "Native polymorphic/RTTI/allocator/global/reference/ABI/GS-cookie/exception/SEH/unwind/concurrency/fullDLL"
+  ],
+  "independent_production_review": "PASS two frozen production sources",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "unproven": [
+    "02a500 and native message/log/allocator/category helpers",
+    "Native string/deque/object/vtable/stream ABI/provenance/lifetimes",
+    "Native exception/SEH/unwind/concurrency",
+    "Complete DLL or original runtime differential"
+  ]
+}

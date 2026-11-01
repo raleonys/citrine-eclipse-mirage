@@ -1,0 +1,95 @@
+{
+  "schema": "achievement.watcher-ini-writer.static.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "evidence_type": "Retained REA static assembly/pseudocode plus own source fixtures, no original execution",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "pseudo_evidence": "ev_62b9a1da24b690b13ccc9ef87ff538b194425801a3a0857c3220da35a50c024f",
+      "address": "0x18001f9a0",
+      "assembly_evidence": "ev_488d569fd12cfa9fe60d4d35d04b56c9d44b52396427f3060d14d2a7e0125a5a"
+    },
+    {
+      "pseudo_evidence": "ev_5f9dd3d638fee0d4b1c7771f372032e163d043c45aa2d25fcec57b9f0012e373",
+      "address": "0x18001e6e0",
+      "assembly_evidence": "ev_8c2e704e6d3039e0d58496d6da0df9e5956985066d807b0d646cb892a01a274c"
+    },
+    {
+      "pseudo_evidence": "ev_1d37fbe8224d4824bc17f0a068c41b0df995284c639c8139818627fa455fe2e6",
+      "address": "0x18001e820",
+      "assembly_evidence": "ev_79e819fa8c3c988e24b20088de7b71296f3dae415477f4f55f294453fd58d7e2"
+    },
+    {
+      "pseudo_evidence": "ev_99245712414cad2dc0f40f8e24c135ff69b46245d499ebddd8a2fcc0dfd29995",
+      "address": "0x180019820",
+      "assembly_evidence": "ev_2c6c74d0802815891eaf3ede8e5f2639d1c48d079d566969fb1629ae54500fe7"
+    },
+    {
+      "pseudo_evidence": "ev_69190e83bcae202b03f4fa8834b567484e7a048bd0cad2004da94e2895f74606",
+      "address": "0x18003c1d0",
+      "assembly_evidence": "ev_97eaf0d1a5c0d1e7ad14855daa321d9f92e4aabb4a1d614bc467ef53f3010812"
+    }
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x18001f9d5",
+        "0x18001fa6d",
+        "0x18001faae",
+        "0x18001fab3"
+      ],
+      "finding": "Empty INI path skips all effects; parent path extracted inline using same00bb30 algorithm as019820; create_directories before serialization"
+    },
+    {
+      "addresses": [
+        "0x18001fae0",
+        "0x18001fb00",
+        "0x18001fb09",
+        "0x18001fb8f",
+        "0x18001fd3a"
+      ],
+      "finding": "Map key traversal; section labelsteam_id atmapnode+90; signedfield04 at+44 emitsAchieved"
+    },
+    {
+      "addresses": [
+        "0x18001ff9c",
+        "0x18001ffa0",
+        "0x18001ffa4",
+        "0x18001fff0",
+        "0x18001fffb"
+      ],
+      "finding": "Progress lines only signedfield00>1; signedfield08 forCurProgress"
+    },
+    {
+      "addresses": [
+        "0x1800204c5",
+        "0x180020855"
+      ],
+      "finding": "UnlockTime mapnode+B0 unsigned64; CRLF blankline; actual03c1d0 boolean ignored"
+    }
+  ],
+  "source_hashes": {
+    "writer.hpp": "3c2b5bf57369279c5d484c4435b33157a0af6b363e798f3852a70a40b6691f9b",
+    "writer.cpp": "20bd58a3fb48d3db046725fa6c154da475072c9dbd29f21e7c6a34c617319b87",
+    "writer_tests.cpp": "434fdb579aacb86ca876fae4d5a3b9a5338a23cd4ac744134cd8fa8d75445b6a",
+    "build.ps1": "9508a32223d9708370d8b75750ae5e7badad6747a3d0f8835e4e147cce3e3c0e",
+    "CMakeLists.txt": "907a376543cfce1e312d213928d20a9a0438873876b539862c84330c07b58e12",
+    "README.md": "1038afa07bc3e36c0ec116b0352b7a6579f57f3385d8bff1170c2996d424997c",
+    "evidence.asm.txt": "7f34d21af145353b37c22add28d20a04570033b5dbb8c07c1ec5db3d0a12d663",
+    "evidence.pseudo.c.txt": "8bbc63904b38338d384271e5157deb0fcffd5ef5b586ebaac70d710d7aaa4720"
+  },
+  "normal_source_procedure": "0x18001f9a0",
+  "native_whole_procedure_ABI_equivalence": false,
+  "original_executed": false,
+  "user_cfg_read": false,
+  "native_scope": "Only own generated INI read/write; mkdir and other effects controlled",
+  "unproven": [
+    "Native allocator/string/layout/exception/SEH behavior",
+    "Native filesystem provider implementation",
+    "Whole DLL runtime equality"
+  ]
+}

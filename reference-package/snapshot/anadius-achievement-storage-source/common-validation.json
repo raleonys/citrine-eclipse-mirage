@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "achievement_storage",
+    "result": "PASS",
+    "output": "PASS: 116 achievement storage checks; own fixtures only, no original execution",
+    "executable_sha256": "b986dff0a064ceeaa0ee87c537bbc432f0c049fa77dd27d0bfa9bd1f8b542ad2"
+  },
+  "execution_scope": "01eb00 XMLimport/retainedpaths/status/INIinitialization,003b70/006190%d/%xselector,actualXMLcompat/file/path/writer/startup persistencebridge;controlledepoch/OS,ownfixtures;notfullCRT/nativeABI/runtimeXMLsaveproof",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-achievement-storage-source/storage_tests.cpp",
+      "sha256": "fb2d609018393bac9a51924d3aa7c7f5ca688fcd1ea8d98ed556c0b47d5094be"
+    },
+    {
+      "path": "anadius-achievement-storage-source/storage.cpp",
+      "sha256": "2a2f23e278f35e8920047c2a9444e1fd150220d01bb2d727d1f3378a43684d13"
+    },
+    {
+      "path": "anadius-achievement-storage-source/storage.hpp",
+      "sha256": "54e040d5b54eb6846a849ac5e128681de5adc2e17258b2ed39fc40ff51c9403a"
+    }
+  ]
+}

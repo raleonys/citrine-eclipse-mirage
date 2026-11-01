@@ -1,0 +1,298 @@
+{
+  "schema": "node-constructors.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180001590",
+      "pseudo_evidence": "ev_59fe8f6f63b5d539fa34d2e7ab472bb07f2eac9ddbe19463ceda5cd58807aa7d",
+      "assembly_evidence": "ev_d14f1ca8857a6516e3114a07ab617f85b94c2e35e86a666c733f01c1b1c3acb1",
+      "newly_recovered": true,
+      "recovery_scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    },
+    {
+      "address": "0x180001610",
+      "pseudo_evidence": "ev_f70ca376682c01eea491392250432e20b7b1f8b38988e7cff27d1035ae136543",
+      "assembly_evidence": "ev_2eab9384f16c5b13a4b652633ba683cfa41611b72b6d6b1860260ccc8991f468",
+      "newly_recovered": true,
+      "recovery_scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    },
+    {
+      "address": "0x180001690",
+      "pseudo_evidence": "ev_aa306639682fe19727d4575e228f9b77edd69edc194f91bf0b4d0573b268c3f0",
+      "assembly_evidence": "ev_b910340ad99765cccbf54b933ec9bcfcc95ff70467547ec0530ed6c23fcc5369",
+      "newly_recovered": true,
+      "recovery_scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    },
+    {
+      "address": "0x180001720",
+      "pseudo_evidence": "ev_ec0b7b64a4ba841a7ab271ca18723be88c8dddb85944eec7ad7b33fa07a8487f",
+      "assembly_evidence": "ev_3db5ca48ca8ff595eaf2d0c7b0f657215eaa65e76dab9d67699fff373d3eba91",
+      "newly_recovered": true,
+      "recovery_scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    },
+    {
+      "address": "0x1800017b0",
+      "pseudo_evidence": "ev_411d958c38112d47a20416edd1170e0a920b6607d6b2f500d92c7d5014be885a",
+      "assembly_evidence": "ev_1b5aaa6c52bcca8a9ba686d59a6b2574a2b1b4ae8210b95a11b91e44324d0645",
+      "newly_recovered": true,
+      "recovery_scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180001590",
+    "0x180001610",
+    "0x180001690",
+    "0x180001720",
+    "0x1800017b0"
+  ],
+  "new_original_procedures": 5,
+  "new_source_bridges": 5,
+  "native_typed_providers_newly_closed": 5,
+  "new_unique_source_mapped_addresses": 5,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "new_source_allocation_adapters": 0,
+  "new_node_parse_source_adapters": 0,
+  "existing_node_parse_source_adapters_preserved": 1,
+  "existing_source_allocation_adapters_preserved": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/node_constructors.cpp",
+      "base": "NativeNodeIdentifyEffects::construct_001590",
+      "body": "construct_node_001590",
+      "closure": "RecoveredNodeConstructorEffects::construct_001590",
+      "address": "0x180001590",
+      "native_abi_complete": false,
+      "scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    },
+    {
+      "file": "outputs/anadius-socket-source/node_constructors.cpp",
+      "base": "NativeNodeIdentifyEffects::construct_001610",
+      "body": "construct_node_001610",
+      "closure": "RecoveredNodeConstructorEffects::construct_001610",
+      "address": "0x180001610",
+      "native_abi_complete": false,
+      "scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    },
+    {
+      "file": "outputs/anadius-socket-source/node_constructors.cpp",
+      "base": "NativeNodeIdentifyEffects::construct_001690",
+      "body": "construct_node_001690",
+      "closure": "RecoveredNodeConstructorEffects::construct_001690",
+      "address": "0x180001690",
+      "native_abi_complete": false,
+      "scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    },
+    {
+      "file": "outputs/anadius-socket-source/node_constructors.cpp",
+      "base": "NativeNodeIdentifyEffects::construct_001720",
+      "body": "construct_node_001720",
+      "closure": "RecoveredNodeConstructorEffects::construct_001720",
+      "address": "0x180001720",
+      "native_abi_complete": false,
+      "scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    },
+    {
+      "file": "outputs/anadius-socket-source/node_constructors.cpp",
+      "base": "NativeNodeIdentifyEffects::construct_0017b0",
+      "body": "construct_node_0017b0",
+      "closure": "RecoveredNodeConstructorEffects::construct_0017b0",
+      "address": "0x1800017b0",
+      "native_abi_complete": false,
+      "scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open"
+    }
+  ],
+  "source_allocation_adapters_added": [],
+  "pointer_only_free_interface_preserved": true,
+  "native_node_constructors_recovered": true,
+  "native_node_constructor_normal_bodies_ready": true,
+  "native_node_constructor_count": 5,
+  "native_identify_0038b0_recovered": true,
+  "native_identify_0038b0_normal_body_ready": true,
+  "native_node_parse_004970_normal_body_ready": true,
+  "known_004970_source_dispatch_ready": true,
+  "native_indirect_parse_body_recovered": false,
+  "pool_allocation_source_reused": true,
+  "append_005440_source_reused": true,
+  "native_pool_virtual_abi_established": false,
+  "native_classifier_051fc0_recovered": false,
+  "native_compare_05c550_recovered": false,
+  "native_token_pointer_slot_bytes_acquired": false,
+  "new_vtable_data_acquisition": false,
+  "new_native_analysis": false,
+  "native_variadic_abi_established": false,
+  "native_stack_scratch_established": false,
+  "prior_source_presence_transition": "no_definition_mapping -> source_definition_mapped",
+  "context_functions": [
+    {
+      "address": "0x180005440",
+      "pseudo_evidence": "ev_3a74ec35882305703da94fdd0e4de6801b34e1449914f6d7d963f4cdd4ea201c",
+      "assembly_evidence": "ev_805b1e389566c011341fa6b160b23ec49ecacccb6f0a1d123af5d4d5169b5cef",
+      "newly_recovered": false,
+      "context_scope": "Existing pool allocation/append/Identify source;no new normal body"
+    },
+    {
+      "address": "0x180002b10",
+      "pseudo_evidence": "ev_72c7774e42e84de667e4a26375d6ca97e95a9b796b6aebe4122567c82f87ddd6",
+      "assembly_evidence": "ev_69676d992a02bd265c47a247cd170c8815221b7d90825447e0de7a237b156f39",
+      "newly_recovered": false,
+      "context_scope": "Existing pool allocation/append/Identify source;no new normal body"
+    },
+    {
+      "address": "0x180002600",
+      "pseudo_evidence": "ev_8e78b707d1a781815a1f68f2ca8f27a0af79b54f73e05ef12ae813734373a7c6",
+      "assembly_evidence": "ev_3bcc9c0bf4dcd2c6ec224b64614dac1a2459a19f35b72d0494668d93da66f038",
+      "newly_recovered": false,
+      "context_scope": "Existing pool allocation/append/Identify source;no new normal body"
+    },
+    {
+      "address": "0x180002960",
+      "pseudo_evidence": "ev_65d179a78369608cf6880a9dfc5d98aa344c97bda474d98972cf18e37663a7c3",
+      "assembly_evidence": "ev_dddd03633007c4bff924f221d212965ad8a9919050036732afd0b85c90e65b0d",
+      "newly_recovered": false,
+      "context_scope": "Existing pool allocation/append/Identify source;no new normal body"
+    },
+    {
+      "address": "0x1800027b0",
+      "pseudo_evidence": "ev_5dab40953bd8da1662aaa4fb65baf20814ff6e665b9630d23f74417506849903",
+      "assembly_evidence": "ev_1ccec149cea5b273c4134f38d196487eb2915f2905923f86a19a7fd613ca8cc7",
+      "newly_recovered": false,
+      "context_scope": "Existing pool allocation/append/Identify source;no new normal body"
+    },
+    {
+      "address": "0x1800038b0",
+      "pseudo_evidence": "ev_16c4bf124a34657d7d2d217f79a017802a074ddf7e1c559929f47750b79fdee5",
+      "assembly_evidence": "ev_e46dfd93352ef14c6e16936e419152588cc3aae4c071f99fdc01fe8f8145aae9",
+      "newly_recovered": false,
+      "context_scope": "Existing pool allocation/append/Identify source;no new normal body"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "node_constructors.hpp": "afc6e9e9e4fd1b12ca3ea785a844c4b42072a9c74f78a603927fb252112a53a4",
+    "node_constructors.cpp": "0241d535309cad4803283cb802dada02b24dfbebe30ea495f761f4909ebbf331",
+    "node_constructors_test_fixture.hpp": "73cd60bfe7e24e829aba737c4b20f7ca3d1b21b28794f130d62be88e8c901dc5",
+    "node_constructors_tests.cpp": "1fc6619b7e59c89f013fae183712bc8cb24692b06afa77cf24176765b0759288",
+    "node_constructors_integration_tests.cpp": "bff491189a733f782629f5c8a3373bb3833e699ceebf958b49ff7575a95e53ca",
+    "build.ps1": "7d2161ea28ffd6aad4c5079978ede2f0794d20be9a4716f4f1ab581dc1cd507c",
+    "CMakeLists.txt": "d6d90c67e15c59399c73038a1f9eab613ab0022bfcdd6356f05fd090ffaa45df",
+    "README.md": "71d09b6e31f7c60f0a11226459acfb06aa2afffa6b7566a0cfbe8715c2730b56"
+  },
+  "reused_source_hashes": {
+    "node_identify.hpp": "f28ce49a02dc391e64cfb6e112dff4885579c2c694c60689533ab1089dcb4bf3",
+    "node_identify.cpp": "15d5b6eac661b0047f46e4b6f72cdbc15e243dc73598231b571b646eaa9b3053",
+    "node_parse.hpp": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a",
+    "node_parse.cpp": "c3f99be72328132e6917da81939cfb97fe8cff41bf246cdb33746af0defd5461",
+    "pool_allocate.hpp": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757",
+    "pool_allocate.cpp": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf",
+    "pool_append.hpp": "ce74e47337ce1627e1d8183b6e227d47bdf68eeb2aa44818de3ebdfae24fef66",
+    "pool_append.cpp": "26b55defe78e1de75967a39487ddd41def17c74bf536089ae4cf5c08ba161235"
+  },
+  "support_hashes": {
+    "node-constructors-evidence.pseudo.c.txt": "8b5ac0bb8cce26527a4e2b82685c29ae07c2a06f041c7123f736dcd4c5a4dcec",
+    "node-constructors-evidence.asm.txt": "c7deabc998a7fb5f4cd2c2bd90bbf56a291e3d7953b6dc0172bde035109687a7",
+    "node-constructors-context.pseudo.c.txt": "f0f2c430ec3bf33bb92d25a4c603268d915be8636a9e5b4807f62b336805ebc1",
+    "node-constructors-context.asm.txt": "7f026f64a68714c1f9a8658f1f24672539bab2b6d690b153795eb7e3d67e69ce",
+    "node-constructors-flow-audit.md": "504db6a2119d2d4887e5d9b27077fb7a5daa89741f76ebbbccef65c57eee89ff",
+    "node-constructors-rea-session.json": "254076308828f01c76d7df9fe221413ba2e59f32b5498dd83fa4043aefac1666",
+    "node-constructors-source-review.json": "5dfa0bb2bff5422383b860ea29078c1439e53ba5562844878721a56dbc8f0bcf",
+    "node-constructors-retained-data.json": "21c7276b268e2895278349159d2ef91088713fb8aa4d84899354b604388d3820",
+    "pool-allocation-simd-data.json": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1"
+  },
+  "reused_retained_data_evidence": {
+    "file": "node-constructors-retained-data.json",
+    "sha256": "21c7276b268e2895278349159d2ef91088713fb8aa4d84899354b604388d3820",
+    "parent_file": "outputs/anadius-rea-evidence.json",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "new_read_performed": false,
+    "new_source_bodies_claimed_by_data_read": 0,
+    "pool_allocator_slot_count": 4,
+    "new_pool_adapter_claimed": false
+  },
+  "prior_target_presence": {
+    "0x180001590": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180001610": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180001690": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180001720": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x1800017b0": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 102,
+  "integration_checks": 77,
+  "new_checks": 179,
+  "execution_scope": "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open",
+  "limitations": [
+    "Five001590/001610/001690/001720/0017b0 normal constructor byte-state bodies and five final existing constructor source bridges;live pool allocation target,cached document/pool/node,exact ordered widths/padding/type identities and source005440 append reuse;native heap/fill/copy/free/pool ABI/heterogeneous parser/EH remain open",
+    "Five constructors cache document/pool across live pool-vtable+10 allocation and cache returned node across append005440",
+    "1590/1610/1720/17b0 write document before base fields;1690 writes base fields before document",
+    "Element1690 writes DWORD+68 and QWORD+70;Text1720 writes BYTE+68 between type-vtable and pool stores;untouched padding retained",
+    "Normal constructor results are not guarded for null;bounded mapping/lower failures preserve committed prefixes without RAII free/rollback",
+    "Type vtable identities are stored values only;original image target values are never cast or invoked as host function pointers",
+    "Existing PoolAllocationDispatch/selected allocation adapter and append_pool_block005440 sources are reused;no new allocation adapter or duplicate005440 recovery/closure claim",
+    "Old complete broad read proves four selected pool+10 identities;generic/unknown allocation targets and native pool object ABI remain lower boundaries",
+    "Each of five native addresses has normal+final two numeric variants;unique native count5,not10",
+    "Five previous no_definition_mapping entries become source_definition_mapped;module_record_only bucket is unchanged",
+    "45→50 historical typed source closures;N25 selected node-parse adapter1,semantic session adapters2 and separate allocation adapter1 preserved",
+    "Previous676 source files including CRT remain byte-identical;CRT paused;total DLL completion percentage unmeasured",
+    "Original DLL/game never executed/modified;actual CFG/token/achievement contents never read;blocked version input/generated DLL never retried"
+  ],
+  "native_node_constructors_fully_closed": false,
+  "native_node_identify_fully_closed": false,
+  "native_node_parse_fully_closed": false,
+  "generic_virtual_parse_fully_closed": false,
+  "native_document_error_fully_closed": false,
+  "native_parse_entry_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "native_node_base_fully_closed": false,
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "node-constructors-source-review.json",
+      "reviewer": "/root/constructors_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N28 retained003aa0 insertion inventory/contracts;no new insertion source claimed by preparation;GetStr0035e0 remains mandatory;generic CRT remains paused"
+}

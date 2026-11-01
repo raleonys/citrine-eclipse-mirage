@@ -1,0 +1,52 @@
+{
+  "schema": "source-composition.common-validation.v1",
+  "result": "PASS",
+  "source_package": "B3",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "1b757060c59abdcf34d4584d2e685704e8bf36bb6d64e799b250806eb9b024ff",
+  "test_results": [
+    {
+      "module": "bootstrap_backend",
+      "result": "PASS",
+      "output": "PASS: 59 bootstrap-backend tracking checks; source begin/detach,pre-create tickets,LastError,pending joins/retry/poison,alllower forwarding and one own real Win32 worker; no original target executed",
+      "executable_sha256": "363e1b74c32188cbfc5627a76fc1ab7596ecb5a88c0bff2ae7a7f55dca7307c0"
+    },
+    {
+      "module": "bootstrap_backend_integration",
+      "result": "PASS",
+      "output": "PASS: 170 bootstrap-backend integration checks; concrete ProviderOwner with actual config/bootstrap/server/online/library/host/cleanup sources,shared flags,post-wait path reload,duplicate joins and shutdown retry; OS/foreign-provider/registrar/PE-entry remain controlled/open",
+      "executable_sha256": "740ddabe649459b69c5a604bcc7365efc0e6e6059aae85fa97a8c6cd61761572"
+    }
+  ],
+  "core_checks": 59,
+  "integration_checks": 170,
+  "new_checks": 229,
+  "production_objects": 2,
+  "new_source_files": 7,
+  "source_hashes": {
+    "backend.hpp": "7073712738416083f0a41da7fa88ae050762791cdec5f51201b8dcebda7677db",
+    "backend.cpp": "c144112d064589d28a4b6e761f43861ab05e3f4cc48b6f9b8310789bb7720a2e",
+    "tracked_threads.hpp": "414a94314cecedd2908a073a6206a0adfdb7847e80df75911d0ba29e792277a7",
+    "tracked_threads.cpp": "31fc08d0311ed281465d9ffe7e255581c6848a5f83c67f2b435e17084efc8573",
+    "backend_test_fixture.hpp": "a1c283b8dd8b728528275ee86a77d2bdf55e668c4a474bc0d65e8c6d91d05893",
+    "backend_tests.cpp": "65005e8082e9fadfc06fb89a00539deda014ea710f00c3fadd0e718077410414",
+    "backend_integration_tests.cpp": "7519ec0a3bb13b65c1d506fca8df937d84ca790a11e4adea440830644220b5a7",
+    "README.md": "b3e0fefc3e86392b96a66bc97610ccc0b2eac589be9ad151194a8bb381c990b2"
+  },
+  "architecture_review_sha256": "633a9ab39a6668260662e33c194372aa5bc718753e900c25a74d9fb6e4d5043b",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_concrete_backends": 1,
+  "new_thread_trackers": 1,
+  "services_routes_bound": 6,
+  "existing_source_algorithms_routed": 7,
+  "remaining_service_policies": 11,
+  "new_virtual_provider_interfaces": 0,
+  "actual_provider_backend_complete": false,
+  "production_pe_entry_installed": false,
+  "module_standalone_build_executed": false,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false,
+  "scope": "Concrete SourceBackend routes six Services methods through seven existing application algorithms; same Execution flags, leased worker routes and duplicate-handle thread joins. Eleven policies, actual lower provider factory and cancellable registrar/cleanup contracts remain open."
+}

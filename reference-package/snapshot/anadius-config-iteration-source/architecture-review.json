@@ -1,0 +1,134 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "source_package": "B9",
+  "independent_from_production_author": true,
+  "reviewer": "/root; production by b9_iteration and b9_thread_error; independent tests by b9_tests",
+  "cross_review": "Both production workers independently reviewed the other production scope with bounded PASS; root reviewed all modified production and captured test scope.",
+  "reviewed_source_hashes": {
+    "thread_error.hpp": "625dc0bd861e388c899467854fb614ed5656364bceeba6033465c6fe4454ae38",
+    "thread_error.cpp": "d924c479eb925aa18c10ce81157bb3d78ab8fdad46dac5768016bfb59899551e",
+    "iteration_tests.cpp": "fbc2a0ebde844ce71ccf1bb09cc10f34e83097816565315068034786939d80c8",
+    "iteration_integration_tests.cpp": "11b3caa586aa01316213ebeeefe5d6eb3adc8f9da7f0ac19e9d1827dbc90d9e7",
+    "iteration_test_fixture.hpp": "07f95f8115d32d46c3bf0f24d3ef3269d92edadcf48a4771161e3a69540950d0",
+    "../anadius-bootstrap-policies-source/config_platform.cpp": "f64ab5960b32262c1926cb7f9a0284e2c6043be3c69c134650ed567dba2284b7",
+    "../anadius-bootstrap-policies-source/config_platform.hpp": "ef1c9c417d3bda6e844084c0892b34531c31581dc14876e965ce25a5deb0d6cf",
+    "../anadius-bootstrap-policies-source/policies_tests.cpp": "703954ac3c116e9b76089767d6f61c8650d35322d1ada8f95e249761a3bee144",
+    "../anadius-bootstrap-policies-source/services.cpp": "e4262048223e68e64734a7687501e24e2e3741f300a71b9ac2c59b76f335de76",
+    "../anadius-bootstrap-policies-source/services.hpp": "bca6b591d3038dcffd5d05e3ad2d4e952d7c44a598f0551d77bc4e8ab12ff4c3",
+    "../anadius-bootstrap-providers-source/providers.cpp": "dc8e3547bf876d216cc78f8b94e65fb6921fd1110a082707092d2fd39d163190",
+    "../anadius-bootstrap-providers-source/providers.hpp": "326d3c4766ddeff3c785cff12a8dfefcf58b0dc6b077f678d64a4862f41b8a90",
+    "../anadius-config-source/configuration.cpp": "a2a2fa7980ddeeaece163b705213bdc5adfff48ae149ec39a122850032e25f6c",
+    "../anadius-config-source/configuration.hpp": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6",
+    "../anadius-config-storage-source/filesystem.cpp": "06db2ed2205c84837b2f409c2b019557f2eebda24e933dad447302415a799c3f",
+    "../anadius-config-storage-source/filesystem.hpp": "c2658e29bffeec397d93762f496d32122de521c7eee01fe26b607a5986ee5d77",
+    "../anadius-config-storage-source/persistence.cpp": "7087f484841f84f8f2856e39e310ede577e589fd13090003482eeaccb040468f",
+    "../anadius-config-storage-source/persistence.hpp": "c6e0900a36e74f3f2a162ec387e935c2b39986f6918aa3d2eede7580f253aaac"
+  },
+  "prior_sources_preserved": 728,
+  "modified_prior_source_paths": [
+    "anadius-bootstrap-policies-source/config_platform.cpp",
+    "anadius-bootstrap-policies-source/config_platform.hpp",
+    "anadius-bootstrap-policies-source/policies_tests.cpp",
+    "anadius-bootstrap-policies-source/services.cpp",
+    "anadius-bootstrap-policies-source/services.hpp",
+    "anadius-bootstrap-providers-source/providers.cpp",
+    "anadius-bootstrap-providers-source/providers.hpp",
+    "anadius-config-source/configuration.cpp",
+    "anadius-config-source/configuration.hpp",
+    "anadius-config-storage-source/filesystem.cpp",
+    "anadius-config-storage-source/filesystem.hpp",
+    "anadius-config-storage-source/persistence.cpp",
+    "anadius-config-storage-source/persistence.hpp"
+  ],
+  "prior_package_sha256": "badbe6cc0285949d54df5d321cc548f444d6be88d5708b7911b48cc460cd73ab",
+  "quick_result_provenance": [
+    {
+      "path": "work/b9-core-quick-results.json",
+      "sha256": "189c86dc2a4ddd70b7c3f8dc3576f65a9a53587b220a5f914b1b8a5a79f693fa",
+      "checks": 110,
+      "execution_by": "independent test worker; root verified captured commands/output and frozen source hashes"
+    },
+    {
+      "path": "work/b9-integration-quick-results.json",
+      "sha256": "7829d6148775ce1e8da5cccf9e2a183b3715840a00826f486de1107a9cd621bc",
+      "checks": 64,
+      "execution_by": "independent test worker; root verified captured commands/output and frozen source hashes"
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "topic": "visitor_contract",
+      "conclusion": "DirectoryVisitor contains context and plain function pointer, synchronous and non-owning. Optional virtual appended after legacy21 methods; no new pure virtual requirement. Source/native ABI equivalence is not claimed."
+    },
+    {
+      "id": 2,
+      "topic": "configuration_body",
+      "conclusion": "Existing initialize_configuration invokes filename/narrow/filter/remove inside visitor before requesting another logical entry; post-loop normalization/storage/environment remain after successful visitation. No duplicated alternate bootstrap body."
+    },
+    {
+      "id": 3,
+      "topic": "forwarding",
+      "conclusion": "B5 Configuration, B7 ConfigurationPlatform and B8 Persistence forward to their owned lower provider; B8 Filesystem override enters actual streaming helper. Tests put all four wrappers before that helper."
+    },
+    {
+      "id": 4,
+      "topic": "iterator_ownership",
+      "conclusion": "Each visit call owns its find handle through callbacks and advancement. Callback exceptions prevent further increment and close the owner. Distinct local Boundary/cursor state supports tested same-thread reentry; not a general concurrency proof."
+    },
+    {
+      "id": 5,
+      "topic": "last_error",
+      "conclusion": "Boundary restores status before callback, captures callback status on normal/exception exit and supplies it to next SDK step. Cleanup close continues the explicitly selected last-SDK-call policy."
+    },
+    {
+      "id": 6,
+      "topic": "fallback",
+      "conclusion": "Direct vector API collects via stream; legacy vector-only providers use default visitor fallback. Their eager semantics remain explicit. Closed gap is the concrete configuration stream normal/failure prefix, not full native iterator storage/EH/ABI."
+    },
+    {
+      "id": 7,
+      "topic": "data_proof",
+      "conclusion": "Root independently compared all7 code/pointer/Cstring table entries to retained bytes and validated the new8byte singleton read, vtable name slot and retained generic string. Target hash and static Evidence ID retained."
+    },
+    {
+      "id": 8,
+      "topic": "error_route",
+      "conclusion": "SourceServices calls the retained7pair throw helper directly. Code/context/name family observed; rebuilt std::generic_category/system_error what()/message/locale/native identity/EH representation remain selected compatibility boundaries. Invalid indices explicitly reject outside observed domain."
+    },
+    {
+      "id": 9,
+      "topic": "core",
+      "conclusion": "Captured110 checks cover ordering/dots/empty/fallback, callback errors, LastError/reentry, all7 errors plus invalid indices, SourceServices and NativeExecution on an owned domain. Test author separate from both production authors."
+    },
+    {
+      "id": 10,
+      "topic": "integration",
+      "conclusion": "Captured64 checks use real own files/handles and FilePass through all four wrappers. Failure tests deliberately expose an existing early avatar first and inject later SDK/conversion/remove failure; success uses normal OS enumeration. Bootstrap actual source chooses6/1/1 with synthetic handle outcomes; test explicitly frees retained failure payload."
+    },
+    {
+      "id": 11,
+      "topic": "preservation",
+      "conclusion": "13 approved prior sources changed with before/after hashes; remaining728 unchanged. Five added files give746 sources. Full rebuild required for appended virtuals; quick tests linked all changed CPP before the historical archive."
+    },
+    {
+      "id": 12,
+      "topic": "limits",
+      "conclusion": "Three configuration/five Services policies and full native EH/CRT/foreign/general concurrency/loader-lock/image unload/PE gates remain. No new native body/closure or completion percentage inferred."
+    }
+  ],
+  "limits": [
+    "Input path and context must remain stable during synchronous visit; callback must not retain entry reference.",
+    "Legacy vector fallback remains eager; full native iterator/EH/SEH/concurrency equivalence is not established.",
+    "SDK callbacks obey their nonthrowing outcome contracts; close failure retains previously declared stronger terminal policy.",
+    "Compiler generic_category and system_error do not prove native object identity/message/what()/locale/MSVC EH ABI equality."
+  ],
+  "production_dll_readiness": "BLOCKED",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "static_original_data_read_bytes": 8,
+  "actual_user_cfg_token_achievement_contents_read": false
+}

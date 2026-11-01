@@ -1,0 +1,124 @@
+{
+  "schema": "iocp-constructor.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180024990",
+      "pseudo_evidence": "ev_3a626f8100eb1bf7ba0b9677a33b1b1418e250dde536cb3a9f122c32790a3442",
+      "assembly_evidence": "ev_87052282e1951ed15719d13023b5cd5cfdf7a65dcbff15d2354f8ee4cff08aad"
+    },
+    {
+      "address": "0x180023b30",
+      "pseudo_evidence": "ev_e19c4187c6fd93eed1f7799ea815833381b3dbe02527496c06be2e73f9fd1811",
+      "assembly_evidence": "ev_5bd06ce10f718331325ac29108e8afe82981dcdd81da85e580033f641b8dae7c"
+    },
+    {
+      "address": "0x180027be0",
+      "pseudo_evidence": "ev_948db36a6b6838994310cbdd3ff325ea9d6c875b61a63f92c9c0d1ce03fdbe85",
+      "assembly_evidence": "ev_ebd0f0654f2c3bac442e8d0023199cc155873bebe20cb19ded69b206149bb469"
+    },
+    {
+      "address": "0x18002a000",
+      "pseudo_evidence": "ev_5e78eef88f702baed2927d9748d4a109ac08003daafc401dcb7edab1bb2b2aab",
+      "assembly_evidence": "ev_9bb61c1aa2239aa4ceaa3b76b45ca58ddf61af660271bf12e342b874b7583917"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "iocp_constructor.hpp": "c82705d8734e98d5df368faeb20d202a08c04d70092f6dd4e858d617e9112725",
+    "iocp_constructor.cpp": "4b9e91d2cab45972f188319246adc4d6e784ddb8be19946d408c5ac12fc20254",
+    "iocp_constructor_native.hpp": "53bf32bd986d221473ded1fb814f83676b6591dc584dc02fbbadfdfb75c48142",
+    "iocp_constructor_native.cpp": "ef64c81fee9b3460c62bb7a3e3a6676ef32b82e49e5701461656af9ce2969455",
+    "iocp_constructor_tests.cpp": "e7a5afd91bf55a457112833fac17bd1e1d688ef5c403e1616f19e1016b55c4c7",
+    "iocp_constructor_native_tests.cpp": "383ea7f06acecb8464e2b4f27c9de53bb1b3244e16980ca8ad73ce9dc6f077c0",
+    "build.ps1": "49f7d0514ab8c24052fcc410c53e7efb2fa9987481ae1d221ce412b447041153",
+    "CMakeLists.txt": "239bcaa3b0053ced59fa8c873f2ef29dba45afa19657a7876356d0b69c9f8c2f",
+    "README.md": "796ec54f35c3ee40ec1941887b2414b18d1abae5bd41ca777a2de535e4908f63"
+  },
+  "support_hashes": {
+    "iocp-constructor-evidence.pseudo.c.txt": "8026ebc59b932b03b8ee37d4eb6d2c7c2666e334b7c4163030f19ba6f0cc6a14",
+    "iocp-constructor-evidence.asm.txt": "1cb3c63d972e7e927b2f27cd8ec29927ee40d7ec774959b53cb1c50f2565855c",
+    "iocp-constructor-flow-audit.md": "b166dbe959db6090589dd84e0cb76d74399d48e39749623a2f64bec6157c5b8b",
+    "iocp-constructor-flow-audit.json": "f00c7dd66002929e8b724727b4fc1eb323d14c861a4e83be065697be77003350",
+    "iocp-constructor-review.md": "c0f7bd652d672f1d20806ae46f5f032aabfc396bcabea95da093c139152e4ba2",
+    "iocp-constructor-review.json": "d8058956a05f2d3b0b578db3ccdf2d8b068655d8e9f46c296c40eec8a99b0f21",
+    "iocp-constructor-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x180024990"
+  ],
+  "new_original_procedures": 1,
+  "required_providers": [
+    "04b0bc native allocator and04b0f8 deallocator",
+    "02a000 worker/event/thread setup",
+    "04d2d0 native CRT RTTI comparator",
+    "Executor/global/category/raise/dispatcher effects"
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x1800249c9",
+        "0x1800249e0",
+        "0x1800249ef",
+        "0x180024a2b",
+        "0x180024a43",
+        "0x180024a55",
+        "0x180024a6c"
+      ],
+      "finding": "Ordered base/port/count fields; zero SDKversion size9c major6; VerSet(0,2,3) mask to Verify(type2); any nonzeroBOOL timeoutFFFFFFFF else500"
+    },
+    {
+      "addresses": [
+        "0x180024a6f",
+        "0x180024a7f",
+        "0x180024a84",
+        "0x180024a86",
+        "0x180024a9c",
+        "0x180024acf",
+        "0x180024ad5",
+        "0x180024ade",
+        "0x180024ae6"
+      ],
+      "finding": "Queue resets then gate/category always; cached gate failure before late fields; raw hint stored and sign-normalized port argument; NULLport last-error then category evenerror0"
+    },
+    {
+      "addresses": [
+        "0x180024b05",
+        "0x180024b0e",
+        "0x180024b20",
+        "0x180024b2d",
+        "0x180024b43",
+        "0x180024b53",
+        "0x180024b66",
+        "0x180024b70",
+        "0x180024b80",
+        "0x180024b8e",
+        "0x180024b93"
+      ],
+      "finding": "Low32atomic increment before24allocation; nullable32function to required02a000; reload oldworker live, cached close/free24 then cachedfresh slotstore last, evennull; no invented rollback"
+    },
+    {
+      "addresses": [
+        "0x180024bc4",
+        "0x180024bd0",
+        "0x180024bd6",
+        "0x180024be2"
+      ],
+      "finding": "Nonreturning error boundary preserves cached32status and distinct opaque port084528/mutex084428 context identities"
+    }
+  ],
+  "independent_production_review": "PASS; iocp-constructor-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Actual024990 construction/registry/cancellation source composition with injected SDK version/port/handle APIs and controlled worker/allocator/category effects; no real network/IOCP/worker",
+  "unproven": [
+    "04b0bc/04b0f8 allocation,02a000 worker setup,04d2d0 CRT comparator and native layout/ownership/teardown",
+    "Native ASIO layout/dispatcher/service/container/allocator/lifetime/concurrency",
+    "Native error padding/vtable/global/SEH/unwind/ABI",
+    "Full DLL integration and original runtime differential"
+  ]
+}

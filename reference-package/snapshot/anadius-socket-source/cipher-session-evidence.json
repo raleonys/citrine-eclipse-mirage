@@ -1,0 +1,194 @@
+{
+  "schema": "cipher-session.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x1800423d0",
+      "pseudo_evidence": "ev_5faa15cdd4a0e251b11f4a4b841a7d36cb933d79a06a0a53b3bd926fb86c2613",
+      "assembly_evidence": "ev_1a5eecedd9b2929ae9f1e885705987927e1309cc6991de8c01925d839d99ad34",
+      "newly_recovered": true,
+      "recovery_scope": "new owned normal control projection; prior semantic source already mapped this canonical address"
+    },
+    {
+      "address": "0x180042760",
+      "pseudo_evidence": "ev_b7191ccefe4f94753ba7877dd859eb4a7530a22a4d086b700584ccf2da34de7e",
+      "assembly_evidence": "ev_997fe5368937536a0756fb50ee6f4d70854abb04ae62c70396ae16dedd5bbafd",
+      "newly_recovered": true,
+      "recovery_scope": "new owned normal control projection; prior semantic source already mapped this canonical address"
+    },
+    {
+      "address": "0x180042780",
+      "pseudo_evidence": "ev_2d855481c04f0ce9821269ccf7945fb9c438f9de1000b64bfab4cca8c180c6ce",
+      "assembly_evidence": "ev_0c01cb3386957026020066a6feefbf7a41b6111237a7001393542ccc8e6732b7",
+      "newly_recovered": true,
+      "recovery_scope": "new owned normal control projection; prior semantic source already mapped this canonical address"
+    },
+    {
+      "address": "0x18002bc70",
+      "pseudo_evidence": "ev_d6716c5d525f5e8e2eb566ef802896e45423abc1be5b6a78f2da5f052740c118",
+      "assembly_evidence": "ev_4fa4de12d674eff8476f9cf6f72bdef77e52de8ef76d04cd9a0e596bd21a0db1",
+      "newly_recovered": true,
+      "recovery_scope": "new owned normal control projection; prior semantic source already mapped this canonical address"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x1800423d0",
+    "0x180042760",
+    "0x180042780",
+    "0x18002bc70"
+  ],
+  "new_original_procedures": 4,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 0,
+  "closed_providers": [],
+  "source_adapters": [
+    {
+      "file": "outputs/anadius-socket-source/cipher_session.cpp",
+      "interface": "messages_recovered::Cipher",
+      "adapter": "SessionCipher",
+      "scope": "init/fixed-key/key/local encrypt/decrypt share owned schedule/mode/IV with native prefix binding",
+      "native_abi_complete": false
+    },
+    {
+      "file": "outputs/anadius-socket-source/cipher_session.cpp",
+      "interface": "messages_recovered::CryptoFactory",
+      "adapter": "SessionCipherFactory",
+      "scope": "fresh independent unkeyed SessionCipher for existing ChallengeResponse temporary",
+      "native_abi_complete": false
+    }
+  ],
+  "native_typed_providers_newly_closed": 0,
+  "context_functions": [
+    {
+      "address": "0x180042480",
+      "pseudo_evidence": "ev_e27b923a47363280bcc0e8f0d5f1d84d309c13cbcf938d944e3bf4f18460fe56",
+      "assembly_evidence": "ev_d0fccb2775fdb815d1a580c813946b1cdefdb26fb8590bbb2b2a03d7b562e8e4",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180042610",
+      "pseudo_evidence": "ev_84196222f2218d2b0a060bb317b12da12a77b2f964a5902100ed78e154eb8375",
+      "assembly_evidence": "ev_46790ff61e14371172a73e53871ee23da992983094393729fe2474de81caee15",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180045ce0",
+      "pseudo_evidence": "ev_a0aeaf2ef7c58b85418e98c39743c159d20a3452f4d355d56f300bf94ab67e79",
+      "assembly_evidence": "ev_41196d3d2b28e1b52fc7af7717131396a66c12bb5e6ce939e944314a9f799a91",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180045640",
+      "pseudo_evidence": "ev_ed4a2a0a979c825362a5375eefb3e3066c80a4bf9197fb0c0d035e6b8c99607c",
+      "assembly_evidence": "ev_329e053c52fde05733ae5f2ae56ce2939e58f62b6560c0a887d7740c510c54f1",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180045650",
+      "pseudo_evidence": "ev_6fbfb0dd705ab95934d41aeb756756269cc4b473308e4cc3abcd013142f54823",
+      "assembly_evidence": "ev_9eaf8764d60c1c824f6852786f8e8e97fd558adfab10b6066e5e1859b886bae2",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002d7e0",
+      "pseudo_evidence": "ev_d8a07a5110f0293046c9293210f8e8a5c2b36d5827c2faf62f45f6c5289c48af",
+      "assembly_evidence": "ev_ebef8c484911f6c9c8fbb48fa77128cde1bb83a78e970446241d39b351d4ad30",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180032d00",
+      "pseudo_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "assembly_evidence": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18003d190",
+      "pseudo_evidence": "ev_52ce061acb986f9fe9ccdcaeedc30b80c6a1bf7335b59d2f3c6e82743e888599",
+      "assembly_evidence": "ev_7cc933e3f97d44f4cb2932484a7fc51fedeb38e403d3a0c8eedad13c1eaea6b2",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800793d0",
+      "pseudo_evidence": "ev_89ebd0a550c9d731c8ab3523a3e481e6c6c2c9f8580a17dd7c6b9cf1158779a6",
+      "assembly_evidence": "ev_1248927392fa1608aaf45af45ee263a28787deadc5baa3075ef6ec2e1fa41ecb",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "cipher_session.hpp": "3fa624b7443d7fa1ab3eb86f9567e5b98323014166b98be43328360c272af412",
+    "cipher_session.cpp": "62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2",
+    "cipher_session_test_fixture.hpp": "ff86d59b03c10dd038cf47dfec8b56582d1577f164ae5e0a8144d5d796ba768b",
+    "cipher_session_tests.cpp": "62035f4c36267c5c74533d97bce7ff16a436711b9949e880b543f17f066902b4",
+    "cipher_session_integration_tests.cpp": "ec8ecde49fe469e834be33b4a917d004539c0099b131b2bbf6f025ca485bea6b",
+    "build.ps1": "c7a967d14b30f0bd051c24351694f25a41ad67a33ff30ff58c222df12e5dea00",
+    "CMakeLists.txt": "647cf330be437173481bd3f6ef5564d924ccf0040837a09c21560dc3b68d616d",
+    "README.md": "a317fe4c1162f0cf33c2560064387b7dde2ac5d96725aae807c253ff7193bc47"
+  },
+  "reused_source_hashes": {
+    "../anadius-crypto-source/crypto.hpp": "33ae57c39012534dc5b8321199e0ef2c82ac77455c17632df28a74a27ac2fa77",
+    "../anadius-crypto-source/crypto.cpp": "cd493597464ba22c7c11557c36f033387770e0cc62d4fbbaefc1676bbfabd436",
+    "../anadius-crypto-source/constants.hpp": "05b802de2ac78f93c1fdf8abed0ea50ef2f9b284a6a5cefef2f4188b0f4b56b2"
+  },
+  "support_hashes": {
+    "cipher-session-evidence.pseudo.c.txt": "8e93b29c09fba9f74e9a34adf602e58786479634e2942ab3a07b6a8b24d5f9d6",
+    "cipher-session-evidence.asm.txt": "3abb0bbd7c8a02e3b19c756383917196053ec7f4ffa6454309c6f9462fc4013c",
+    "cipher-session-context.pseudo.c.txt": "d23fba5ac9179a22b29a35ebf850bc36d2321c9b68410f864f6a64364fc61750",
+    "cipher-session-context.asm.txt": "8b594e5d39851a59396eb70155f5de996bf01f7a2dc61ce35652bf2e5946e352",
+    "cipher-session-flow-audit.md": "f01b91780ae0928e340c6c3f0e33d9c534fdbfd02ad7b1749563a01720058f75",
+    "cipher-session-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788"
+  },
+  "core_checks": 716,
+  "integration_checks": 6622,
+  "new_checks": 7338,
+  "execution_scope": "0423d0/042760/042780/02bc70 owned normal control projections and SessionCipher/Factory semantic source adapters; one active schedule/mode/IV/c4/c5 state shared by existing ChallengeResponse and native prefix cipher; real handshake/reset/rekey and N1-N11 queue/send/finish; native XML/dispatch/object/heap/ABI/EH remain open",
+  "limitations": [
+    "Owned C++ logical state projection, not native object/global/layout/lifetime/heap/ABI/EH/SEH/concurrency equivalence",
+    "Existing AES schedule expansion/reset source reused; no new045640/045650/045ce0/0793d0 bodies claimed; native internal key-expansion or stack-zero fault prefix not reconstructed",
+    "ECB setter preserves typed IV; constructor preserves c4/c5; session reset clears flags after context; arbitrary key alias with expanded schedule outside declared domain",
+    "Semantic local strings use borrowed pre-sized host reserve and actual prefix cipher; host capacity/SSO/native allocator ABI not established",
+    "Adapter catch synchronizes only logical host length and never rolls back payload/IV/key; not native EH recovery",
+    "Same selected context shares owned SessionCipher state; actual host handler+f0/+c4/global materialization and lifecycle remain open",
+    "XML/032d00/02d7e0 semantic lower composition is reused, not native document/vtable/dispatch ABI recovery",
+    "No original DLL/game/network/thread/IOCP execution, real CFG/token/achievement read or modification"
+  ],
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Same-agent addressed assembly/source and synthetic independent payload/lifetime/failure-prefix oracles",
+    "independent_review_complete": false
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N13 native032d00 dispatch normal flow and document/handler source binding; CRT stays paused",
+  "new_bounded_projection_boundary_only_entries": 3,
+  "raw_compiled_boundary_tags_added": 3,
+  "projection_boundary_definitions": {
+    "file": "cipher_session.cpp",
+    "class": "BorrowedApi",
+    "methods": [
+      "allocate_04b0bc",
+      "free_sized_04b0f8",
+      "length_error_00ce80",
+      "allocation_overflow_00cd30",
+      "invalid_parameter_05c974"
+    ],
+    "new_boundary_only_addresses": [
+      "0x18004b0f8",
+      "0x18000ce80",
+      "0x18000cd30"
+    ],
+    "native_bodies_recovered": false,
+    "native_heap_provider_closed": false
+  }
+}

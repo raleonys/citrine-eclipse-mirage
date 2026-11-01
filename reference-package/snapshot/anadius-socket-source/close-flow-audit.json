@@ -1,0 +1,37 @@
+{
+  "scope": "Independent retained static026e50/026fb0 normal-flow audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {"address":"0x180026e50","pseudo_evidence":"ev_e5ca5d521290c32a902e6ea9d557bdbb884ee65f15251bad3fcda5c36edc21e6","assembly_evidence":"ev_5ba7cb4cd92f8a6b1a046387bb51dc6220269ea452ead106f538b767ff1fe6a7"},
+    {"address":"0x180026fb0","pseudo_evidence":"ev_4ffe8b68e27a849ee81d94fa3520491aa59f139532cc5e31294d1bee89c8c4b4","assembly_evidence":"ev_949e26c04afda34fe45f482346b1b127456e1debcf6ba15190922608977a89d9"}
+  ],
+  "close_rules": {
+    "invalid_socket":"Return0; state/error unchanged; no API/category calls",
+    "socket_identity":"Cached input used for all APIs; caller slot not invalidated",
+    "linger_option":"destroying && state&8; state|8 then setsockopt(65535,128,int0,size4); nonzero result samples category then WSA error and discards both",
+    "failure_capture":"category028620 before WSAGetLastError; preserve raw close status, no error remap",
+    "retry":"category name-function+8 identity and10035, otherwise second category and1237",
+    "retry_transition":"ioctl0x8004667e/DWORD0 ignored; then live state&FC; close cached socket again",
+    "success":"Only error.value cleared; category preserved",
+    "second_failure":"Recapture category then WSAerror; no third close; return raw second status",
+    "error_padding":"Undefined native bytes excluded from typed logical error model"
+  },
+  "reset_rules": {
+    "engine_atomic":"CMPXCHG.LOCK expected0/desire0, not load or exchange; nonnull slot unchanged",
+    "cancel_socket":"Read before engine gate; cached for026aa0",
+    "cancel_error":"995 with028620 category; getter inside engine gate",
+    "close_socket":"Reload after engine gate leave; call026e50 destroying=true; discard status/error",
+    "invalid_initial_socket":"Skip engine/cancel/close but still reset/release",
+    "reset_order":"socketINVALID,state0,resource0; read late control, clear slot; strong release",
+    "release_order":"strong old1->resource callback->live weak decrement->delete if weak old1; callback assignments not overwritten after release"
+  },
+  "required_boundaries":["026aa0 cancellation map/completion queue/IOCP","Category lazy CRT guard","Native error padding/memory ABI","Native EH/unwind and general concurrency"],
+  "original_execution":"none",
+  "real_network_execution":"none",
+  "real_user_files_read":false,
+  "production_edited":false
+}

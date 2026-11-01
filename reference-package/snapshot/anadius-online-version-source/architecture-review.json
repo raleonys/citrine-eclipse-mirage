@@ -1,0 +1,188 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T14:31:01.419372+00:00",
+  "review_scope": "B25 one selected observed online version_check typed source binding, exact module/procedure/code ownership, reservation through retirement, error/failure prefixes and unchanged core worker/cleanup integration",
+  "reviewed_source_hashes": {
+    "version.hpp": "03f6be33f071e13a20dcaea5b5208b40197d16428d3c028c73b793e5882ee0cf",
+    "version.cpp": "d41f7517c6d400527ecab8fcf70cda675823fc175019166369ee5fc686baec42",
+    "version_tests.cpp": "3c9c3b1c4e358fa86d47b413d8bbd3ebc1102128154a462b104e9630479a1ed7",
+    "version_integration_tests.cpp": "a8a35ba86d2b51b569318e1f236491ba38567d58fa7d97d5c3ac99b8caa475d1",
+    "../anadius-online-platform-source/platform.cpp": "9dce0a0bb9ae5cf55a486e93c1d165a811183e9e457387485f025545bf76842a",
+    "../anadius-online-platform-source/platform.hpp": "a60c1cb2d1746b1b2e86726e0695e3df309874ab4b8b1dd721570d9fd78c6f01"
+  },
+  "quick_results": [
+    {
+      "path": "work/b25-core-quick-results.json",
+      "sha256": "7e6bd3f233994f65007b6be11f2e9207b588e0d3ada4f47daee3dd7b351ead0e",
+      "checks": 50,
+      "executable_path": "work/b25-core-test.exe",
+      "executable_sha256": "a8f16ace3fc9156bd1e665bd4a45761c1f94b38f4597257e4b6096fd2cec2faa",
+      "execution_by": "/root; independent reviewer read six frozen sources and verified recorded source/EXE hashes; did not rerun"
+    },
+    {
+      "path": "work/b25-integration-quick-results.json",
+      "sha256": "bfdb4e68e61fb11aa3f4ec89ad5c9307f00f178739ef89b640611faf77b0242b",
+      "checks": 44,
+      "executable_path": "work/b25-integration-test.exe",
+      "executable_sha256": "f8e81515fb088dc111b540afa2eb3581d87f7b2fa57f25c02f9c68c1f1362378",
+      "execution_by": "/root/b22_integration (root delegated); independent reviewer read six frozen sources and verified recorded source/EXE hashes; did not rerun"
+    }
+  ],
+  "root_checks": 94,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "baseline_package_sha256": "86069b986348a96160d11d99313024533d98512b83ada0190f973c9f9f0b6b74",
+  "prior_source_files": 822,
+  "prior_sources_preserved": 820,
+  "current_source_files": 826,
+  "source_inventory_counts_basis": "Reviewer independently verified B24 ZIP identity and all822 prior manifest entries:820 unchanged, two declared before/after modifications, four new reviewed sources. Common build counts are planned/unreviewed.",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-online-platform-source/platform.cpp",
+      "before_sha256": "efeca0c6e704eee8818d7e261e5315db9801a3d8a0c84202e278d50fcdb31eb4",
+      "after_sha256": "9dce0a0bb9ae5cf55a486e93c1d165a811183e9e457387485f025545bf76842a",
+      "reason": "Bind selected load/version resolution/call/free to exact module/code owner with LastError-safe lower callback construction"
+    },
+    {
+      "path": "anadius-online-platform-source/platform.hpp",
+      "before_sha256": "e3fc3c73340ba1bca1b2ffb8746fe311d91c9c53d58e14b0b80c7c4df47d57b1",
+      "after_sha256": "a60c1cb2d1746b1b2e86726e0695e3df309874ab4b8b1dd721570d9fd78c6f01",
+      "reason": "Optional owned typed version binding; default7lower forwards preserved, selected6remain lower; source ABI extension"
+    }
+  ],
+  "prior_changes_record_sha256": "3214047699d8092194406e85fc196d6c47a1fec3c6dc9aea29104bae39c2c872",
+  "retained_evidence": {
+    "source_hashes": [
+      {
+        "path": "outputs/anadius-all-functions.asm.txt",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+      },
+      {
+        "path": "outputs/anadius-all-functions.pseudo.c",
+        "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+      }
+    ],
+    "call_address": "0x180035e8c",
+    "compare_address": "0x180035e8e",
+    "assembly_evidence": "ev_42d4b70085bbc786efef3d59635d848e062d1ecab79b8bd4e827ea88833cf586",
+    "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+  },
+  "findings": [
+    {
+      "topic": "Retained observed call shape, not complete foreign header",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-all-functions.asm.txt:54743-54757",
+        "../anadius-all-functions.pseudo.c:43284-43306",
+        "version.hpp:10-11"
+      ],
+      "observation": "Retained assembly calls the resolved version address at0x180035e8c with no explicit argument preparation, then compares EAX with2 at0x180035e8e. This supports the selected zero-input, low32-bit result shape used by VersionFunction int32_t(*)(). It does not recover every formal foreign parameter, compiler language ABI or executable identity. Retained ASM and pseudocode SHA-256 values were checked against existing online evidence, without reopening original bytes or executing a DLL."
+    },
+    {
+      "topic": "Exact loaded-module and procedure binding",
+      "result": "PASS",
+      "evidence": [
+        "version.cpp:20-58",
+        "../anadius-online-platform-source/platform.hpp:16-31",
+        "../anadius-online-platform-source/platform.cpp:49-67,83",
+        "version_tests.cpp:47-71"
+      ],
+      "observation": "Optional Resources.version tracks one exact loaded module and nonzero version procedure. resolve rejects foreign/unloaded modules before lower lookup and retires the old callable record before any new lookup. Only a successful nonzero lookup plus explicit nonnull CodeLease publishes callable procedure/code ownership; missing0 or lease failure leaves loaded module without callable binding. call rejects zero, foreign/stale address, poison or active reservation before invoking the selected typed code. The concrete OnlinePlatform path now executes one own typed version stub instead of forwarding that route to the opaque lower token provider."
+    },
+    {
+      "topic": "Lease retirement and destructor reentry reservation",
+      "result": "PASS",
+      "evidence": [
+        "version.cpp:12-18,30-46,60-75",
+        "version_tests.cpp:24-43,47-71,119-127"
+      ],
+      "observation": "Retired code ownership is released outside the metadata mutex while active remains true, on normal and exceptional resolve and normal free. Binding destruction marks active, retires code, swaps the lease factory empty and destroys its captures before metadata gate destruction; destruction during an active call aborts rather than freeing live state. Both code and factory-capture test deleters query snapshot then attempt load/resolve/call/free: all managed effects reject before lower invocation while metadata remains usable. This fixes the early-audit gap where active had been cleared before retired lease destruction. Error guard restores lower/lookup LastError after destructor bookkeeping."
+    },
+    {
+      "topic": "Overlap, synchronous exceptions and error state",
+      "result": "PASS",
+      "evidence": [
+        "version.cpp:10-75",
+        "../anadius-online-platform-source/platform.cpp:13-20",
+        "version_tests.cpp:73-117"
+      ],
+      "observation": "Operations reserve active under gate but release gate across lower load/lookup/free, CodeLease construction and typed SDK execution. Snapshot is available while active. Blocked own version call rejects load/rebind/free/secondcall without lower effects and returns its original result/error after release. Synchronous version throw rethrows the exact exception and preserves its prefix, outgoing LastError and callable binding without automatic retry. Lookup/lease exceptions leave no callable binding; lookup LastError survives even a lease callback that changes it. The platform managed helper constructs and destroys type-erased lower callbacks inside a separate error guard so their allocation metadata does not overwrite actual API error state."
+    },
+    {
+      "topic": "Normal free versus unknown load/free prefixes",
+      "result": "PASS",
+      "evidence": [
+        "version.cpp:20-29,60-75",
+        "version_tests.cpp:62-100",
+        "version_integration_tests.cpp:88-108,146-185",
+        "../anadius-online-source/online.cpp:111-120"
+      ],
+      "observation": "Free invalidates procedure before lower call and retains code through it. Normal TRUE and FALSE both clear the logical tracked module and release the code lease, matching core cleanup module-zeroing after every normal free return; FALSE is not represented as unload success. Free throw keeps module/code, procedure0 and sticky poison, blocking automatic retry. Load throw poisons its unknown empty outcome without inventing a returned module or cleanup. Actual source cleanup preserves object-zero before a throwing free, and retains object+module when lower destroy throws. No implicit raw-module FreeLibrary or object destructor is added."
+    },
+    {
+      "topic": "One selected binding, six foreign object routes unchanged",
+      "result": "PASS",
+      "evidence": [
+        "../anadius-online-platform-source/platform.hpp:23-31",
+        "../anadius-online-platform-source/platform.cpp:83-91",
+        "version_integration_tests.cpp:88-185"
+      ],
+      "observation": "Only version_check is concretely selected. create_online, status, three string getters and destroy remain six mandatory lower-provider calls; phase methods remain lower/Execution-owned. Empty version option preserves all seven legacy foreign forwards. Integration drives unchanged load_online/worker/cleanup with own module/export/version/UI endpoints and in-memory files. It checks successful profile order, missing version/factory, version mismatch dialog/log ordering, lease throw/null, typed version exception, destroy failure and unknown load/free prefixes. It does not cast object tokens or claim their foreign lifetime/vtable ABI is solved."
+    },
+    {
+      "topic": "Independent review and execution attribution",
+      "result": "PASS",
+      "evidence": [
+        "work/b25-core-quick-results.json",
+        "work/b25-integration-quick-results.json",
+        "version_tests.cpp",
+        "version_integration_tests.cpp"
+      ],
+      "observation": "Reviewer authored neither production nor tests and did not rerun successful quick tests. Root executed50 core checks and /root/b22_integration executed44 integration checks. Recorded source/EXE hashes and B24 archive/source preservation were independently verified. Tests use only own typed function, controlled module/export/error/UI endpoints, normal Win32 conversion and memory files. No original/rebuilt target DLL, game, actual target LoadLibrary/FreeLibrary, user cookie/profile/token contents or network were used."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "This closes one optional source binding among seven online foreign boundaries. Six object/factory/virtual calls remain lower-provider obligations; default legacy mode still forwards all seven. It is not a new original native function-body/closure proof.",
+    "The zero-input int32_t function pointer is the selected observed Win64 call shape. Retained call-site registers do not recover a complete foreign header, binary executable provenance or native C++ ABI; no actual online DLL was executed.",
+    "CodeLease must genuinely keep the resolved code/module callable. A nonnull shared token is not module pin/provenance proof, and this implementation does not perform GetModuleHandleEx pinning or prevent explicit external unload. Owning the callback/provider object alone is insufficient unless its contract retains the code.",
+    "Binding serializes only managed load/version-resolve/version-call/free operations. create_online lookup and six remaining foreign calls are outside this guard and must retain the existing caller serialization, module/object lifetime and worker/cleanup sequencing. External direct module operations bypass this policy.",
+    "Bindings are retained through synchronous failures only while their owning assembly remains alive. Destruction retires code/factory captures and performs no raw module cleanup; unknown raw load/free outcomes may require external resolution and are not repaired or automatically retried.",
+    "Arbitrary external lifetime teardown, native asynchronous continuation, pointer/module-handle ABA, unsupported foreign reentry and malicious code-lifetime callbacks are not made safe by one active reservation. Metadata snapshots and managed operation rejection during tested callbacks/deleters are the supported boundary.",
+    "B18-B24 callback/PTD, exact original slot ownership, same-Execution publication, managed stream and selected compiler-provider constraints remain. Version binding supplies no new PTD checkpoint, hook quiescence or DLL unload proof.",
+    "Configuration/license/legacy document, B10 historical debt, remaining six online foreign calls, generic CRT, native ABI, hooks/unload and final PE/DLL proof remain open. New native bodies/closures remain0.",
+    "Common build243objects/239CPP/281groups plus19 framework terminal scenarios was still running at review time and is not reviewed or counted PASS here. Resources source ABI extension requires rebuilding all consumers."
+  ],
+  "claim": {
+    "selected_version_check_typed_source_binding": true,
+    "exact_loaded_module_and_nonzero_procedure_checked": true,
+    "explicit_code_lease_retained_during_typed_call": true,
+    "metadata_mutex_not_held_across_lower_or_code_retirement": true,
+    "managed_reentry_denied_through_retirement": true,
+    "normal_false_free_logical_zero_prefix_preserved": true,
+    "unknown_load_free_poison_no_blind_retry": true,
+    "remaining_selected_online_foreign_calls": 6,
+    "default_legacy_online_foreign_forwards": 7,
+    "complete_foreign_prototype_or_native_ABI_recovered": false,
+    "actual_module_pin_or_executable_provenance_proven": false,
+    "object_vtable_or_factory_ownership_completed": false,
+    "original_DLL_or_game_execution": false,
+    "original_or_AV_artifact_read_or_modified_by_reviewer": false,
+    "actual_user_content_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Only architecture-review.json and architecture-review.md were written by this reviewer.",
+    "Core50 was executed by /root; integration44 by /root/b22_integration. Independent source/EXE hash verification did not rerun tests.",
+    "Early review identified retired code deleter reentry after active cleared. Frozen implementation retains reservation through code/factory capture destruction outside the gate, with meaningful reentry tests."
+  ]
+}

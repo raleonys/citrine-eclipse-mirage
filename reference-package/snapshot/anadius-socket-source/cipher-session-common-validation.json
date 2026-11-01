@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "06fb59e278c0a0431793f1c31d40500a1259e14296bfcfb1134cbe6e6c908373",
+  "test_results": [
+    {
+      "module": "socket_cipher_session",
+      "result": "PASS",
+      "output": "PASS: 716 socket cipher session checks; actual0423d0/042760/042780/02bc70 control projections, owned schedule/mode/IV/flags, semantic local and native prefix state coherence, reset and factory isolation",
+      "executable_sha256": "e106f753248e70414bbed7eae00974e66fcdb2d8c463285c7f47e728dc7a0e21"
+    },
+    {
+      "module": "socket_cipher_session_integration",
+      "result": "PASS",
+      "output": "PASS: 6622 socket cipher session integration checks; owned init/key/IV/reset and permanent semantic cipher/factory adapters, ChallengeResponse to real native cipher/append and N1-N11 queue/send/finish; XML/native object/allocator/ABI/EH remain open",
+      "executable_sha256": "b552fe99041a46b12f2ab196f2cd04c2cfe006eaf2e75be9754c9b12f67f0ded"
+    }
+  ],
+  "core_checks": 716,
+  "integration_checks": 6622,
+  "original_procedures_added": 4,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 0,
+  "execution_scope": "0423d0/042760/042780/02bc70 owned normal control projections and SessionCipher/Factory semantic source adapters; one active schedule/mode/IV/c4/c5 state shared by existing ChallengeResponse and native prefix cipher; real handshake/reset/rekey and N1-N11 queue/send/finish; native XML/dispatch/object/heap/ABI/EH remain open",
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Owned C++ logical state projection, not native object/global/layout/lifetime/heap/ABI/EH/SEH/concurrency equivalence",
+    "Existing AES schedule expansion/reset source reused; no new045640/045650/045ce0/0793d0 bodies claimed; native internal key-expansion or stack-zero fault prefix not reconstructed",
+    "ECB setter preserves typed IV; constructor preserves c4/c5; session reset clears flags after context; arbitrary key alias with expanded schedule outside declared domain",
+    "Semantic local strings use borrowed pre-sized host reserve and actual prefix cipher; host capacity/SSO/native allocator ABI not established",
+    "Adapter catch synchronizes only logical host length and never rolls back payload/IV/key; not native EH recovery",
+    "Same selected context shares owned SessionCipher state; actual host handler+f0/+c4/global materialization and lifecycle remain open",
+    "XML/032d00/02d7e0 semantic lower composition is reused, not native document/vtable/dispatch ABI recovery",
+    "No original DLL/game/network/thread/IOCP execution, real CFG/token/achievement read or modification"
+  ],
+  "previous_local_records": "35 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x1800423d0",
+    "0x180042760",
+    "0x180042780",
+    "0x18002bc70"
+  ],
+  "independent_review_complete": false
+}

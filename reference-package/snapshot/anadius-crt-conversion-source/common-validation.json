@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_conversion",
+    "result": "PASS",
+    "output": "conversion tests: 5370 checks PASS",
+    "executable_sha256": "ea3c779331c881d4ddde3ce59011a80251df21cc193134de59c0c39cdbb8ca1d"
+  },
+  "execution_scope": "Two recovered conversion-buffer bodies; bounded synthetic byte access/API/heap/error providers, exact count/capacity/ownership/error semantics",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-conversion-source/conversion_tests.cpp",
+      "sha256": "60edf90a260a9323f7a72a4348dd604969f8679376c29985e2aa67a57110387b"
+    },
+    {
+      "path": "anadius-crt-conversion-source/conversion.cpp",
+      "sha256": "1e8c56c0fe21c1b020a20e87da3840b4949bc63f79e8e8250e10b02d7323ac65"
+    },
+    {
+      "path": "anadius-crt-conversion-source/conversion.hpp",
+      "sha256": "72f85448cdf6957f98ba6ab92f589a6d08d0c76853e33a164cf14f3badb4dabf"
+    }
+  ]
+}

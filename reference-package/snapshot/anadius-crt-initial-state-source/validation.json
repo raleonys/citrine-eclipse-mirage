@@ -1,0 +1,39 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T13:40:30.0546583Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initial-state-source\\initial_state.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initial-state-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initial-state-source\\..\\anadius-crt-initial-locale-source\\initial_locale_data.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initial-state-source\\..\\anadius-crt-initial-multibyte-source\\initial_mb.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initial-state-source\\..\\anadius-crt-counter-native-source\\counters.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initial-state-source\\..\\anadius-crt-locale-ref-source\\locale_ref.cpp",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-initial-state-source\\build\\initial_state_tests.exe"
+  ],
+  "tests": "PASS: 2866 owned initial state checks;116 relocations;actual locale refs;4 own workers",
+  "original_execution": "none",
+  "new_original_bodies": 0,
+  "scope": "Owned relocated image initial data;3actual LONGs;actual recovered locale ref source;4own threads;CRT initializers and full runtime not executed",
+  "sources": [
+    {
+      "name": "initial_state.cpp",
+      "sha256": "0331798d8f552c3dbea10b92697cb1b43dde5ff90290ffa63bc190d72cea8279"
+    },
+    {
+      "name": "initial_state.hpp",
+      "sha256": "052618a576469a8d3a17d4d5610230fc03761fcc32cdaacab00ea39e77e3016c"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "ffcb3a89dcf0571812a5d7265f52c899d752e502d6aaf6ccae542e1e4f545c9e"
+    }
+  ]
+}

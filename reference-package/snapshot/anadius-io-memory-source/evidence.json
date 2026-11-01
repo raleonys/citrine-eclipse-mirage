@@ -1,0 +1,87 @@
+{
+  "schema": "owned-io-memory.composition-evidence.v1",
+  "source_package": "B34",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "functions": [],
+  "reused_normal_source_evidence": [
+    {
+      "path": "anadius-session-owner-source/evidence.json",
+      "sha256": "2ed47df47d12dfb1c4d554a39f0cf1a47cbc833090497738c3319d6f8a6e8471"
+    },
+    {
+      "path": "anadius-session-dispose-source/evidence.json",
+      "sha256": "c3aeb6fc97f0fb44becdb9676ddd75bd097e21a9c8d6c102acdf84d9ebb8b4eb"
+    },
+    {
+      "path": "anadius-session-memory-source/evidence.json",
+      "sha256": "3adaa94c58a6c556f69316ecca18b3df051c7c05bbb1abde2853255c0a35b56f"
+    },
+    {
+      "path": "anadius-socket-source/io_completion.cpp",
+      "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90"
+    }
+  ],
+  "reused_source_algorithms": [
+    "023000",
+    "026880",
+    "026570",
+    "017420",
+    "026290",
+    "021820",
+    "0269b0",
+    "026a00",
+    "0293f0",
+    "0294c0",
+    "021d10",
+    "021fd0",
+    "027710",
+    "027a20",
+    "025480",
+    "021770",
+    "028d30"
+  ],
+  "modified_prior_sources": [
+    {
+      "path": "anadius-session-memory-source/memory.hpp",
+      "before_sha256": "0108496f12c34eb4bd54f65f6c7c79650a3aae9958629d24745c25d7fd1cdcd8",
+      "after_sha256": "97b3434ee2fd1950e8f5e382574c0f880ec5477e2b8da4ffcac3f1981989c452",
+      "reason": "Add shared-root provider lease, owned byte-range pin and control-ownership observation for concrete IO storage; close retains dependents and pinned buffer free is denied. Existing native bodies unchanged; source ABI requires full fresh build."
+    },
+    {
+      "path": "anadius-session-memory-source/memory.cpp",
+      "before_sha256": "c3b6e1f82d2c1040a68a35df3766f51773d4831914c182c31754a70b0ce5a229",
+      "after_sha256": "7dc425c7b8329e5fe3c4c2f4e1d9a61b71766a03387aaf3f16b2f9e4d053fc54",
+      "reason": "Add shared-root provider lease, owned byte-range pin and control-ownership observation for concrete IO storage; close retains dependents and pinned buffer free is denied. Existing native bodies unchanged; source ABI requires full fresh build."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b34-core-quick-results.json",
+      "sha256": "48f2adbf4f14c804fe9738bb6e8310e4deaf1670864a6b2130542b4f8db9babe",
+      "checks": 77,
+      "executable_sha256": "cfec0576647bb04103886a7ac66b6172b05abab9b8496859acfa99cad0c25adc",
+      "archive_sha256_as_used": "f0f1b83e13746c6c25fc053c4af1ca3b731238c076e87a822e0b8fa660d058ff",
+      "note": "Fresh io_memory.cpp and modified parent memory.cpp compiled before actual recorded archive; archive hash is execution provenance, not assumed canonical B33/native equivalence"
+    },
+    {
+      "path": "work/b34-integration-quick-results.json",
+      "sha256": "c23ad3a87322ca42ac5064207379c09ac51c832a5e3ea23b34143ee367cdeecc",
+      "checks": 57,
+      "executable_sha256": "fc2bc0fb4777ce07c84f92998911b9a3ef07e2c807926253c05cad2f766ea73a",
+      "archive_sha256_as_used": "f0f1b83e13746c6c25fc053c4af1ca3b731238c076e87a822e0b8fa660d058ff",
+      "note": "Fresh io_memory.cpp and modified parent memory.cpp compiled before actual recorded archive; archive hash is execution provenance, not assumed canonical B33/native equivalence"
+    }
+  ],
+  "source_claim": "Owned storage/projection/completion composition only; SDK compatibility pins do not add native body/ABI closure coverage",
+  "retained_REA_session": {
+    "path": "outputs/dll-link-gate-source/rea-session-summary.json",
+    "sha256": "0b5b3ea208e796872f6abb0c4452a1083dc208558b6e12651534121176bff49c",
+    "fresh_target_queries": 0
+  },
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "new_original_bytes_queried": 0
+}

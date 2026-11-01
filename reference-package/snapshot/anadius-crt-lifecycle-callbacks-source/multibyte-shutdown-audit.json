@@ -1,0 +1,150 @@
+{
+  "kind": "Exact normal-flow static audit; no production edits",
+  "checked_at": "2026-10-20T19:21:00.123Z",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "original_execution": false,
+  "original_modification": false,
+  "new_original_bodies": 0,
+  "REA_session": "Root managed; no new REA session",
+  "function": {
+    "va": "0x1800644f8",
+    "end_inclusive": "0x180064537",
+    "size": 64,
+    "file_offset": "0x638f8",
+    "code_sha256": "9090cd2c644c6958a7820c5b152b1a43172407a8307bee5e7d89d03d6136f0c3",
+    "retained": [
+      {
+        "file": "outputs/anadius-all-functions.asm.txt",
+        "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+        "evidence_id": "ev_0d023431ffc05119eee470b5ea148ad58ce9683f6c60cd3468df0b71bac082d7",
+        "text": "; 0x1800644f8 FUN_1800644f8; Evidence ev_0d023431ffc05119eee470b5ea148ad58ce9683f6c60cd3468df0b71bac082d7\n0x1800644f8: PUSH RBX\n0x1800644fa: SUB RSP, 0x20\n0x1800644fe: MOV RCX, qword ptr [0x1800a59d0]\n0x180064505: OR EAX, 0xffffffff\n0x180064508: XADD.LOCK dword ptr [RCX], EAX\n0x18006450c: CMP EAX, 0x1\n0x18006450f: JNZ 0x180064530\n0x180064511: MOV RCX, qword ptr [0x1800a59d0]\n0x180064518: LEA RBX, [0x1800a1c70]\n0x18006451f: CMP RCX, RBX\n0x180064522: JZ 0x180064530\n0x180064524: CALL 0x1800668c0\n0x180064529: MOV qword ptr [0x1800a59d0], RBX\n0x180064530: MOV AL, 0x1\n0x180064532: ADD RSP, 0x20\n0x180064536: POP RBX\n0x180064537: RET\n"
+      },
+      {
+        "file": "outputs/anadius-all-functions.pseudo.c",
+        "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+        "evidence_id": "ev_82ed5c1b2273a1b6458c896c47a7f737a42930c9a261f3be55551ef4e056625a",
+        "text": "/* 0x1800644f8 FUN_1800644f8; Evidence ev_82ed5c1b2273a1b6458c896c47a7f737a42930c9a261f3be55551ef4e056625a */\n\nundefined8 FUN_1800644f8(void)\n\n{\n  uint uVar1;\n  ulonglong uVar2;\n  \n  LOCK();\n  uVar1 = *DAT_1800a59d0;\n  uVar2 = (ulonglong)uVar1;\n  *DAT_1800a59d0 = *DAT_1800a59d0 - 1;\n  UNLOCK();\n  if ((uVar1 == 1) && (DAT_1800a59d0 != (uint *)&DAT_1800a1c70)) {\n    uVar2 = FUN_1800668c0(DAT_1800a59d0);\n    DAT_1800a59d0 = (uint *)&DAT_1800a1c70;\n  }\n  return CONCAT71((int7)(uVar2 >> 8),1);\n}\n\n\n"
+      }
+    ]
+  },
+  "pair": {
+    "index": 13,
+    "table_start": "0x18008aa60",
+    "table_end_exclusive": "0x18008ab60",
+    "slot": "0x18008ab30",
+    "file_offset": "0x89330",
+    "initialize": "0x0",
+    "uninitialize": "0x1800644f8",
+    "normal_reverse": "Invoked because uninitializer nonnull; initializer null does not filter",
+    "initialize_rollback": "Skipped because initializer null",
+    "terminating_0645cc": "Callback walker bypassed"
+  },
+  "loads": [
+    {
+      "va": "0x1800644fe",
+      "role": "current pointer target for XADD"
+    },
+    {
+      "va": "0x180064511",
+      "condition": "previous ref ==1",
+      "role": "Reloaded candidate compared and passed to free; no third global load"
+    }
+  ],
+  "effects": [
+    {
+      "va": "0x180064508",
+      "operation": "fetch_add_32(first current load, FFFFFFFF); return previous"
+    },
+    {
+      "va": "0x180064524",
+      "condition": "previous==1 and reloaded candidate != initial",
+      "operation": "free reloaded candidate"
+    },
+    {
+      "va": "0x180064529",
+      "condition": "free branch returned normally",
+      "operation": "store current=initial; overwrites any current mutation during free"
+    },
+    {
+      "va": "0x180064530",
+      "operation": "AL=1; upper bits unspecified"
+    }
+  ],
+  "branches": [
+    {
+      "previous": 0,
+      "result": "FFFFFFFF",
+      "free": false,
+      "current_store": false
+    },
+    {
+      "previous": 1,
+      "second_load": "noninitial",
+      "result": "0 at initial atomic target",
+      "free": "second loaded pointer",
+      "current_store": "initial after free normal return"
+    },
+    {
+      "previous": 1,
+      "second_load": "initial",
+      "result": "0 at initial atomic target",
+      "free": false,
+      "current_store": false
+    },
+    {
+      "previous": 2,
+      "result": "1",
+      "free": false,
+      "current_store": false
+    }
+  ],
+  "unchanged_globals": [
+    "initialized A59DC",
+    "type pointer A59C0",
+    "case pointer A59C8",
+    "systemCP A59D8",
+    "initial pair MB A1940",
+    "locale changed A52D8",
+    "locale mask A1C6C"
+  ],
+  "not_present": [
+    "Null current guard",
+    "Lock4/5 acquire/release",
+    "Retain on replacement initial",
+    "Unconditional current reset",
+    "Initialized-byte reset",
+    "Third current reload for free argument"
+  ],
+  "bounds": {
+    "atomic_size": 4,
+    "global_pointer_size": 8,
+    "initial_mb_record_size": 552,
+    "initial_refcount": 0
+  },
+  "integration_requirements": [
+    "Mutable live current slot in shared bridge memory domain",
+    "Actual aligned LONG lifetime and registry mapping for static and fresh records",
+    "Preserve atomic/free mutation boundaries and modulo32 arithmetic",
+    "Quiescent registry/lifetime changes and correct heap domain"
+  ],
+  "unknown": [
+    "Executed shutdown ordering",
+    "Heap fault/SEH/abort paths",
+    "Upper RAX result bits",
+    "Complete DLL/ABI equality"
+  ],
+  "source_hashes": {
+    "outputs/anadius-crt-initializers-source/initializers.cpp": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79",
+    "outputs/anadius-crt-initializers-source/initializers.hpp": "a9e1effcf75bf8baa9c4909a90ce187dc7a39259d73a32cfc3c25ef34ed0fa0b",
+    "outputs/anadius-crt-initializers-source/initializer-tables.json": "c5af6f3fa9b7d798359499309555146029ff94ad03b82ac217141dbe9e6c6682",
+    "outputs/anadius-crt-multibyte-control-source/multibyte_control.cpp": "9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb",
+    "outputs/anadius-crt-multibyte-support-source/multibyte_support.cpp": "59c1645aa5e8fe79ed0b81d4c99e9bb261138bab562b7c01856f7e857030a8fd",
+    "outputs/anadius-crt-ptd-data-source/ptd_data.cpp": "a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea",
+    "outputs/anadius-crt-initial-state-source/initial_state.cpp": "0331798d8f552c3dbea10b92697cb1b43dde5ff90290ffa63bc190d72cea8279",
+    "outputs/anadius-crt-initial-state-source/initial_state.hpp": "052618a576469a8d3a17d4d5610230fc03761fcc32cdaacab00ea39e77e3016c",
+    "outputs/anadius-crt-counter-native-source/counters.cpp": "044e227f3fc1a15c84e4a49b996b8d92e8c24686756ec4fb037bc1db739c5d25",
+    "outputs/anadius-crt-counter-native-source/counters.hpp": "f4a7df7d1b27f0f06c3d8a6505cfa9b291c3f34fa2a9fa7c4ea30f5f29842011",
+    "outputs/anadius-crt-heap-source/heap.cpp": "01f2df7ddf1c41d0390982d4b484541c2de1a47c2f7458366ebfbe3c8a08b6ca",
+    "work/multibyte-shutdown-audit.md": "fcb2116aa888f38435f85cb5a851e3e96a4c233df3208ee3419ad09a025d78bd"
+  }
+}

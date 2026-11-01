@@ -1,0 +1,123 @@
+/* 0x180001830 FUN_180001830; Evidence ev_abf6ead481323ed34418e13f343856b36f0183b4a90796a24f1a890f0dad1914 */
+
+undefined8 * FUN_180001830(undefined8 *param_1,undefined1 param_2,undefined4 param_3)
+
+{
+  param_1[2] = 0;
+  *(undefined4 *)(param_1 + 3) = 0;
+  param_1[4] = 0;
+  param_1[5] = 0;
+  *param_1 = tinyxml2::XMLDocument::vftable;
+  *(undefined4 *)(param_1 + 6) = 0;
+  param_1[7] = 0;
+  param_1[8] = 0;
+  param_1[9] = 0;
+  param_1[10] = 0;
+  param_1[0xb] = 0;
+  param_1[0xc] = 0;
+  *(undefined1 *)(param_1 + 0xd) = 0;
+  *(undefined1 *)((longlong)param_1 + 0x69) = param_2;
+  *(undefined4 *)((longlong)param_1 + 0x6c) = 0;
+  *(undefined4 *)(param_1 + 0xe) = param_3;
+  *(undefined4 *)(param_1 + 0xf) = 0;
+  param_1[0x10] = 0;
+  param_1[0x11] = 0;
+  *(undefined4 *)(param_1 + 0x12) = 0;
+  param_1[0x13] = 0;
+  param_1[0x14] = 0;
+  param_1[0x15] = param_1 + 0x16;
+  param_1[0x20] = 10;
+  param_1[0x21] = tinyxml2::MemPoolT<120>::vftable;
+  param_1[0x22] = param_1 + 0x23;
+  param_1[0x2d] = 10;
+  param_1[0x2e] = 0;
+  param_1[0x2f] = 0;
+  param_1[0x30] = 0;
+  param_1[0x31] = tinyxml2::MemPoolT<80>::vftable;
+  param_1[0x32] = param_1 + 0x33;
+  param_1[0x3d] = 10;
+  param_1[0x3e] = 0;
+  param_1[0x3f] = 0;
+  param_1[0x40] = 0;
+  param_1[0x41] = tinyxml2::MemPoolT<112>::vftable;
+  param_1[0x42] = param_1 + 0x43;
+  param_1[0x4d] = 10;
+  param_1[0x4e] = 0;
+  param_1[0x4f] = 0;
+  param_1[0x50] = 0;
+  param_1[0x51] = tinyxml2::MemPoolT<104>::vftable;
+  param_1[0x52] = param_1 + 0x53;
+  param_1[0x5d] = 10;
+  param_1[0x5e] = 0;
+  param_1[0x5f] = 0;
+  param_1[0x60] = 0;
+  param_1[1] = param_1;
+  return param_1;
+}
+
+
+
+
+/* 0x180004280 FUN_180004280; Evidence ev_783e89582f054f61046e9c06b28ad2145076dbd6721a32cd6bfe2c615e85ff20 */
+
+undefined4 FUN_180004280(longlong *param_1,char *param_2,ulonglong param_3)
+
+{
+  undefined8 *puVar1;
+  
+  FUN_180002e60((longlong)param_1);
+  if (((param_3 == 0) || (param_2 == (char *)0x0)) || (*param_2 == '\0')) {
+    FUN_180005820((longlong)param_1,0xd,0,0);
+  }
+  else {
+    if (param_3 == 0xffffffffffffffff) {
+      do {
+        param_3 = param_3 + 1;
+      } while (param_2[param_3] != '\0');
+    }
+    puVar1 = (undefined8 *)thunk_FUN_18004b0bc(param_3 + 1);
+    param_1[0x13] = (longlong)puVar1;
+    FUN_180078d30(puVar1,(undefined8 *)param_2,param_3);
+    *(undefined1 *)(param_3 + param_1[0x13]) = 0;
+    FUN_1800041b0(param_1);
+    if (*(int *)((longlong)param_1 + 0x6c) != 0) {
+      FUN_180003110((longlong)param_1);
+      FUN_180002d70((longlong)(param_1 + 0x21));
+      FUN_180002d70((longlong)(param_1 + 0x31));
+      FUN_180002e10((longlong)(param_1 + 0x41));
+      FUN_180002dc0((longlong)(param_1 + 0x51));
+      return *(undefined4 *)((longlong)param_1 + 0x6c);
+    }
+  }
+  return *(undefined4 *)((longlong)param_1 + 0x6c);
+}
+
+
+
+
+/* 0x180001e00 FUN_180001e00; Evidence ev_310b19c5bb059cd1c7953ed5ff55dac04b85c180edb01c590a4176041e650755 */
+
+void FUN_180001e00(undefined8 *param_1)
+
+{
+  *param_1 = tinyxml2::XMLDocument::vftable;
+  FUN_180002e60((longlong)param_1);
+  FUN_180001c30(param_1 + 0x51);
+  FUN_180001cb0(param_1 + 0x41);
+  FUN_180001bb0(param_1 + 0x31);
+  FUN_180001d30(param_1 + 0x21);
+  if ((undefined8 *)param_1[0x15] != param_1 + 0x16) {
+    thunk_FUN_18005caec((undefined8 *)param_1[0x15]);
+  }
+  if ((*(uint *)(param_1 + 0xf) & 0x200) != 0) {
+    thunk_FUN_18005caec((LPVOID)param_1[0x10]);
+  }
+  *(undefined4 *)(param_1 + 0xf) = 0;
+  param_1[0x10] = 0;
+  param_1[0x11] = 0;
+  FUN_180001ea0(param_1);
+  return;
+}
+
+
+

@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "07180799acb8acedfcf1654a9efd6f18db3c3992e300acddf96f76ddd50eb7ec",
+  "test_results": [
+    {
+      "module": "socket_message_core_bridge",
+      "result": "PASS",
+      "output": "PASS: 87 socket message core bridge checks; actual existing033d70/router/XML and010040/008350, normal-return request commit, identity/state binding and explicit exception/callback visibility limits;0 new native bodies",
+      "executable_sha256": "8888721b5c288857484da60776b13e8aee09fd8cf561895b1cd3cd0ea51174a4"
+    },
+    {
+      "module": "socket_message_core_bridge_integration",
+      "result": "PASS",
+      "output": "PASS: 698 socket message core bridge integration checks; existing033d70/032d00/XML to actual N1/N2/N3/N4/queued-send/finish; normal-return adapter, controlled handler/cipher/constructor/completion and injected send;0 new native bodies",
+      "executable_sha256": "c21b34ce4f7b2a36f361009a16f1b14d8d9efbe129837f496dc15b4d50e2974a"
+    }
+  ],
+  "core_checks": 87,
+  "integration_checks": 698,
+  "source_hashes": {
+    "message_core_bridge.hpp": "952d090d21149bbda432065d168c058fd254f10cf867f1add78de0168b629368",
+    "message_core_bridge.cpp": "a70a08445f81d56ae6a3a25137f090dd120244f7ce0e72e71822a8a09f7324cc",
+    "message_core_bridge_test_fixture.hpp": "0f3258a77c42be5db377b0627212caaa412fa1daeaf4b575c996b222cb982c7c",
+    "message_core_bridge_tests.cpp": "d5216fbc1dd924b808d5a46089fbc81c7bfeb9235f74cdad39c9b6b19e3af17e",
+    "message_core_bridge_integration_tests.cpp": "0ccd6aa7388c11995b4aef05cc72833dfa1d062c0c47fe7df3e03aa9914447b7",
+    "build.ps1": "2a10e66de1526477314b6ff5148198196ba1d4213feef9b811b8dfec4856b05e",
+    "CMakeLists.txt": "79b3986952a377745dfaf5779aafabd753a25ed741d6557c50a1524671198812"
+  },
+  "original_procedures_added": 0,
+  "execution_scope": "Selected NORMAL-RETURN compatibility bridge to existing033d70/032d00/XML and actual N1/N2/N3/N4/queued-send/finish;13-response FIFO plain/encrypted x borrowed/owned; controlled response constructor/handler/cipher/023dd0/completion, injected send;0 new native bodies",
+  "binding_scope": "selected_normal_return_compatibility_only",
+  "new_source_bridges": 1,
+  "native_provider_fully_closed": false,
+  "limitations": [
+    "Native callback request-intermediate visibility not preserved: request prefix committed after semantic return",
+    "Semantic exceptions do not commit mutated std::string back to native request; referenced state may already change",
+    "Native response move/string allocation/ownership constructor remains required",
+    "Actual078d30/0793d0/allocator/free/terminal bodies, native XML lifecycle/ABI/EH/SEH/concurrency/global/fullDLL remain open",
+    "Controlled handler/cipher/response constructor/023dd0/completion and injected AsyncSendApi; no SDK network/thread or original execution",
+    "No new027a20/IOCP/027c10 worker; actual026a00/021a80 source used"
+  ],
+  "previous_local_records": "28 earlier records retain historical config hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

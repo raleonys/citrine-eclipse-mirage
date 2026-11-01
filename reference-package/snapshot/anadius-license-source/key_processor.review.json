@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "review_author": "/root/b22_provider_audit",
+  "independent_from_production_and_test_authors": true,
+  "scope": "Four production files and focused42-check evidence; no Runtime production binding claim, no reviewer test/build execution.",
+  "reviewed_sources": {
+    "anadius-license-source/key_processor.hpp": "996e0c2f6b37d841df0299622675d4f3755c17c7fff833ce6f3fbfd4edcbd965",
+    "anadius-license-source/key_processor.cpp": "47593a5b42db7bb069254fda51b97fd2557a9392cafa3263baf0f6b469e6690b",
+    "anadius-config-storage-source/filesystem.hpp": "ac1dd81aa6e95471e2e3391e174fa6bb5f971cf0d28d16584fd30bed6bce87e0",
+    "anadius-config-storage-source/filesystem.cpp": "bdc5ad0adc778c4f41143595392c6fbf5ea89c6a43d61c3ce5cd06252a549291",
+    "anadius-license-source/key_processor_tests.cpp": "f80d61f1531799c1198d457e3e4a0e8127ea5041258265e0e9cc59ef1a3b836d"
+  },
+  "focused_record_sha256": "a94ea3f5749304202120307e607eb7384980a29b98ea889b27474a5d90e22030"
+}

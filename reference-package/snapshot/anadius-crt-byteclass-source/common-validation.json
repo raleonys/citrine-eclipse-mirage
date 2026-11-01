@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_byteclass",
+    "result": "PASS",
+    "output": "PASS 7173 byte classification checks",
+    "executable_sha256": "602bf1c357f3ba51a5a03e4a50f9d416212a1d8e1dc2ad15ca652b23f8171a29"
+  },
+  "execution_scope": "Two locale classification bodies and parser adapter; synthetic bounded table/PTD tokens and normal cleanup",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-byteclass-source/byteclass_tests.cpp",
+      "sha256": "f0277b3293d7c2c7737448cb48fc9a1225df054e4d063c045aa9ea1e3ace08e8"
+    },
+    {
+      "path": "anadius-crt-byteclass-source/byteclass.cpp",
+      "sha256": "e599636c790f7e9600e4263b731486ac92df7a10ba6f10b61dabb4e48fd1da77"
+    },
+    {
+      "path": "anadius-crt-byteclass-source/byteclass.hpp",
+      "sha256": "f11493f494325cde53e772aaf5cee2eee61f2b6b8ac9be6fd450a1aa99765586"
+    }
+  ]
+}

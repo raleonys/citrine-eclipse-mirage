@@ -1,0 +1,36 @@
+{
+  "result": "PASS",
+  "reviewer": "service_registry_audit",
+  "scope": "Independent frozen two-source review against retained022fa0+0239c0 normal-flow contract and selected RegistryLifecycleEffects borrowed composition",
+  "sources": {
+    "outputs/anadius-socket-source/service_registry.hpp": "5584fc37f54fa847efee7aa350fb51d2f82033d8826cca762f8e6e9f27752525",
+    "outputs/anadius-socket-source/service_registry.cpp": "663e6f4799e9173722e0af62b05d7a4e96d069f4f0dc55b6777cc46e037cbc02"
+  },
+  "report_sha256": "8e59a701d9c0912f8ba41a26974ea01cbc37c54e16eb05483585dbbdeb0b807b",
+  "audit_report_sha256": "60dae6001a1ad4dc954047b2a9ef50a9e236b1fd2697860bd83d1ed614aa6d6d",
+  "audit_json_sha256": "6847e8b47bf27e61356fd722c1be458869a1cdce9355cb28ec710de2834a7a8d",
+  "material_findings": [],
+  "normal_source_procedures_added": ["0x180022fa0", "0x1800239c0"],
+  "new_original_procedures": 2,
+  "core_contract": "Fixed022fa0 type1800a2620,id0; ID shortcut unreachable; required04d2d0(entry.type+8,key.type+8) low32zero; live next after comparison; first miss leave; mandatory0228e0 outside gate; key copied before second enter; fresh second head; live head reread at insertion; slot0delete flag1 under gate; cached winner/candidate returned after leave",
+  "composition": "Selected RegistryLifecycleEffects validates context and maps recovered entry through stable borrowed entry/service/CloseContext bindings, delegates actual026fb0 and required executor cleanup; no native object overlays or invented native service ownership",
+  "providers_not_recovered": [
+    "0228e0 native service constructor and native allocation failure/cleanup",
+    "04d2d0 CRT RTTI comparison internals",
+    "Native deleting destructor body and registry teardown",
+    "Native allocator, scheduler, dispatcher, executor, SEH/unwind and DLL entry/export ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Initialized borrowed finite linked list and valid stable gate/entry/service/context lifetimes",
+    "Factory returns a fresh unlinked live entry; null explicitly UnsupportedInput rather than native success",
+    "One unambiguous binding per entry/service; bindings and pointed objects remain stable",
+    "Caller serializes mutations outside the explicit recovered gate effect model",
+    "No claim for native exceptions, SEH/unwind, ABI or full DLL equivalence",
+    "Matching/traversal helpers and host composition are not additional original procedures"
+  ]
+}

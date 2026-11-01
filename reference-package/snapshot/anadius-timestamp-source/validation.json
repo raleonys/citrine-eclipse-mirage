@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "checks": 192,
+  "output": "PASS: 192 timestamp checks; classic ASCII native branch plus explicit host compatibility; own fixtures only",
+  "source_hashes": {
+    "timestamp.hpp": "bdf47aadc38b11393e9317ed9c2e4b43067f8c81c02256a4001289da31ba017e",
+    "timestamp.cpp": "443dc4a0dea62b717d4513f6d8432f84f8d51ff6edf3bc26bd12f6578c02e52c",
+    "timestamp_tests.cpp": "5b0eb2b9a72fa135a49adf87ac06a8467ac6492905317b8328adbcb2f04af6e5",
+    "build.ps1": "c5bcbb361b1c2bbd6225c167024c439a7ec555afbb98c98fc2031da7b9dd677c",
+    "CMakeLists.txt": "ba4d0d0b123c885ec24fff8a8a1006b012e9ada6a55309e381f182919023e492"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "native_scope": "Own generated XML and INI files only; status/mkdir effects controlled",
+  "parser": "Recovered classic ASCII fixed ISO branch; HostGetTime separately explicit compatibility; arbitrary locale and native STL ABI unproven",
+  "runtime_equivalence": "not established"
+}

@@ -1,0 +1,307 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "stage": "B45",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T19:20:53.228408+00:00",
+  "review_mode": "Independent source/lifetime/test audit; authoritative records, logs, compiler, EXEs, archive and baseline source bytes verified read-only. Reviewer executed no tests.",
+  "reviewed_source_hashes": {
+    "policy.hpp": "06e2d9033ae8307ea2d87be0267d48e33bb353b87c4f23d34ec56abcfb5f41e2",
+    "policy.cpp": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24",
+    "policy_tests.cpp": "da28e677ca025af2860acc0ac03e1e5ac0300baca85e0afbc4812c7706d4ccc9",
+    "policy_integration_tests.cpp": "7a466a528b68bea4056136c80e98bf0c4fa23ad3dda76107ecafa3484d4460c6",
+    "../anadius-session-profile-source/profile.cpp": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913"
+  },
+  "code_freeze": {
+    "path": "work/b45-code-freeze.json",
+    "sha256": "3170c6e60a7d7cd3f1ff600c3b0493f76b8b5c2e6bbec4769d89770f2cb87cd1",
+    "all_five_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "checks": 366,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b45-core-agent.exe",
+      "executable_sha256": "0b961f1e4d3d117bcf2b53a6490db48a32bf107f9a14bd3ad6b3e50c8967e30e",
+      "archive_path": "work/b45-baseline-core.a",
+      "archive_sha256": "3027c3d2d472439adb979379211807ef04d4a1510b4459038b91817920980ab8",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "path": "work/b45-core-quick-results.json",
+      "sha256": "c2d6f9f94bad1be81e37c2d1aa560a02ae567f10d2b2d455c0bb0d36601ffd5f",
+      "execution_record": {
+        "path": "work/b45-core-agent-results.json",
+        "sha256": "ee43bd5c445ffd4f80d05134289a7d33231e43fe81b1a8d7fbdaa4ad5f15c826"
+      },
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b45-core-agent.log",
+      "log_sha256": "003c7474a89ece9023bc52721adc32f54a50fb4616abeb287e3ccb53eedababc",
+      "actual_used_source_hash_count": 7,
+      "actual_used_source_hashes": {
+        "policy.hpp": "06e2d9033ae8307ea2d87be0267d48e33bb353b87c4f23d34ec56abcfb5f41e2",
+        "policy.cpp": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24",
+        "policy_tests.cpp": "da28e677ca025af2860acc0ac03e1e5ac0300baca85e0afbc4812c7706d4ccc9",
+        "../anadius-session-profile-source/profile.hpp": "b6a4412bc258ef7d47f63cfe8f889ec8ddd18170b1c334e6f127dd93ab1a2bef",
+        "../anadius-session-profile-source/profile.cpp": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913",
+        "../anadius-thread-domain-source/domain_test_fixture.hpp": "9f6063f2d7de5cc797f950e0d3c8d07860eab54ad90c8d7506efb139106d9a9f",
+        "../anadius-config-iteration-source/thread_error.hpp": "625dc0bd861e388c899467854fb614ed5656364bceeba6033465c6fe4454ae38"
+      },
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Fresh policy.cpp, modified Profile.cpp and policy_tests.cpp with selected actual interface headers/prior domain fixture; immutable canonical B44 archive supplies other prior production objects. Integration test is not compiled or claimed. Main count excludes twenty-three independent retained-prefix/terminal children, whose exact listed exits are verified. Policy construction owns an actual dedicated exit-wait CS/registry while making zero configured NativeApi import calls; six requested adapter invocations use injected SDK signatures only. Core worker lifecycle is exercised through actual Profile callback interfaces before an independent controlled source worker drains the shared graph; no native MSVC EH/GS TLS/atexit/ostream ABI, foreign pending exception_ptr, kernel drain or original-target execution is claimed.",
+      "watched_metadata_hash_count": 0,
+      "watched_hashes_differing_from_current": [],
+      "isolated_children": [
+        {
+          "mode": "streambuf",
+          "expected_exit": 501,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "formatter",
+          "expected_exit": 502,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "formatthrow",
+          "expected_exit": 503,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "admission",
+          "expected_exit": 504,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "lifecycle",
+          "expected_exit": 505,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "external",
+          "expected_exit": 506,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "externalheld",
+          "expected_exit": 507,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "foreignview",
+          "expected_exit": 508,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "pending",
+          "expected_exit": 509,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "foreignfinish",
+          "expected_exit": 510,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "guard",
+          "expected_exit": 511,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "badweak",
+          "expected_exit": 512,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "length",
+          "expected_exit": 513,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "raise",
+          "expected_exit": 514,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "write",
+          "expected_exit": 515,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "locale",
+          "expected_exit": 517,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "thread0",
+          "expected_exit": 520,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "thread1",
+          "expected_exit": 521,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "thread2",
+          "expected_exit": 522,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "thread3",
+          "expected_exit": 523,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "thread4",
+          "expected_exit": 524,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "thread5",
+          "expected_exit": 525,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "thread6",
+          "expected_exit": 526,
+          "observed_exit_verified_by_parent": true
+        }
+      ]
+    },
+    {
+      "checks": 306,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "executable_path": "work/b45-integration-v3.exe",
+      "executable_sha256": "2ae6b3be57ece6db72054c8c06f0abad71f73c2e07670e95bd13e73b7bc49719",
+      "archive_path": "work/b45-baseline-core.a",
+      "archive_sha256": "3027c3d2d472439adb979379211807ef04d4a1510b4459038b91817920980ab8",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "path": "work/b45-integration-quick-results.json",
+      "sha256": "b920f1443df574ca7a46d098259ee15a07161ee17f301d42b4c9b8526fdca892",
+      "execution_record": {
+        "path": "work/b45-integration-agent-results.json",
+        "sha256": "87c32ecfafee67f09d80e532ef67e77f3a8ce3412c20e1d8a560128054655fcf"
+      },
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b45-integration-v3-results.log",
+      "log_sha256": "170e79a5225f025a04a33dbf74ff71969ac619808651c4e47fedfc7b8d7d79af",
+      "actual_used_source_hash_count": 4,
+      "actual_used_source_hashes": {
+        "policy.hpp": "06e2d9033ae8307ea2d87be0267d48e33bb353b87c4f23d34ec56abcfb5f41e2",
+        "policy.cpp": "da35f76e1c414f24bdc6efda4d7ecc0ec814a3d63e64a01f9ef5ead63cdd4c24",
+        "policy_integration_tests.cpp": "7a466a528b68bea4056136c80e98bf0c4fa23ad3dda76107ecafa3484d4460c6",
+        "../anadius-session-profile-source/profile.cpp": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913"
+      },
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "source_scope": "Four selected as-used hashes: fresh policy.cpp/profile.cpp/integration test and policy.hpp. Five watched hashes include metadata-only core test; all watched currently match but core was not compiled by this EXE. Transitive includes are not exhaustively hashed.",
+      "watched_metadata_hash_count": 5,
+      "watched_hashes_differing_from_current": [],
+      "isolated_children": [],
+      "immutable_execution_record": {
+        "path": "work/b45-integration-v3-results.json",
+        "sha256": "87c32ecfafee67f09d80e532ef67e77f3a8ce3412c20e1d8a560128054655fcf"
+      }
+    }
+  ],
+  "checks": 672,
+  "core_checks": 366,
+  "integration_checks": 306,
+  "core_isolated_children": 23,
+  "integration_isolated_children": 0,
+  "child_assertions_added_to_main_count": false,
+  "root_checks": 0,
+  "root_normalization_only": true,
+  "reviewer_executed_tests": false,
+  "baseline": {
+    "path": "outputs/dll-reverse-engineering.zip",
+    "sha256": "2fe627ff0e17fd9d6ae3ef056d8ba901f0ec8704a58ecf094fa34d73e00c7712",
+    "stage": "B44",
+    "source_count": 910,
+    "unchanged": 909,
+    "modified": 1,
+    "new": 4,
+    "total": 914,
+    "all_prior_zip_source_hashes_verified": true,
+    "modified_prior_sources": [
+      {
+        "path": "anadius-session-profile-source/profile.cpp",
+        "before_sha256": "46bc37efaa83a728e2fecd9b5b97446237e4e85f174834174a5df6f31e870335",
+        "after_sha256": "8554bd2ddca2043fe7c199b9d058885879053bbbab7a58edfc539107c004b913"
+      }
+    ],
+    "used_archive_matches_zip_member": "source-workspace/build/anadius_core_partial.a",
+    "used_archive_sha256": "3027c3d2d472439adb979379211807ef04d4a1510b4459038b91817920980ab8"
+  },
+  "findings": [
+    "Concrete Policy owns inline category catalog/NativeApi, stable aliases pin the complete owner without an ownership cycle; SDK imports remain passive and usable Fresh/post-Closed.",
+    "Normal source callbacks are same original worker/fiber, nonreentrant and guarded pre/post; terminal paths intentionally bypass the Profile checkpoint after Profile has poisoned itself, while retaining Policy/source checks.",
+    "Managed logger emits prefix before formatter, holds only short ostream leases, appends exact bounded binary text, and uses Parent-owned native string growth/header cleanup.",
+    "Guard header/registration/footer and zero-only exception context are explicit selected policies; dedicated ExitWaitRegistry executes existing source cleanup without touching unrelated same-thread registrations. Low32 wake updates preserve high32 under selected host serialization.",
+    "Observed completion/after/returned/external-drain decisions remain mandatory callbacks. Full graph/application identity is validated; actual zero-work result admits no invented worker context. False proof/drain retains ownership.",
+    "Close checks actual allocation/loan/queue/work/registry state, destroys checkpoint outside gate while active/closing then rechecks before lease/Ports release. Destruction seals Retiring before opaque Options retirement.",
+    "Profile modification is limited to concrete-policy bind after retained Application and close after Jobs/Environment/Deque retirement; explicit legacy policies remain supported."
+  ],
+  "native_accounting": {
+    "new_native_bodies": 0,
+    "new_ABI_closures": 0,
+    "mapped_canonical": 501,
+    "eligible_tags": 505,
+    "normal_native_claims": 139,
+    "historical_closed_providers": 52,
+    "last_native_body_stage": "B38"
+  },
+  "planned_common_build": {
+    "status": "PENDING_RUNNING_AT_REVIEW",
+    "reviewer_claims_common_PASS": false,
+    "production_objects": 267,
+    "cpp_objects": 263,
+    "c_objects": 4,
+    "normal_groups": 319,
+    "terminal_groups": 19,
+    "composition_files": 103,
+    "composition_objects": 51,
+    "compiler_observations": 90,
+    "new_trait_values": [
+      0,
+      1
+    ]
+  },
+  "registration_role": {
+    "path": "work/b45-register.py",
+    "sha256": "71795b34ca2dee98c509a4699ceaa93825a7423265f54de6062bb4efe2d4ceeb",
+    "preview_author": "/root/b22_provider_audit",
+    "strict_read_only_preview": "PASS",
+    "applied_by": "/root after separate review",
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "No reviewer EXE/test execution; no original/rebuilt DLL/game load, network socket traffic, user configuration/token read, fresh REA/target bytes or AV retry.",
+    "Compiler std::error_category text, managed ostream, selected guard/epoch/cleanup, empty exception pairs and mutex-serialized low32 wake are HOST policies, not native MSVC EH/GS TLS/atexit/ostream or pending-exception ABI equivalence.",
+    "Create/bind/close/final destruction require original worker/fiber and stable guard cell, SDK code/backing and borrowed source graph. Aliasing ownership does not pin arbitrary imported modules.",
+    "Opaque callback/formatter/stream/guard failures poison and retain known state; retained descriptors do not pin caller stack/error/context lifetimes. No blind rollback/retry or foreign pending-exception interpretation.",
+    "Completion-owner, after-completion, worker-return and observed external drain remain explicit lifecycle obligations; source counters/Returned flags do not prove kernel/raw-job quiescence, concurrency or unload safety.",
+    "Policy.external_quiescent relies on the Profile wrapper for full post-callback graph validation; close independently revalidates admission and actual drain before retiring anything.",
+    "Full clean common build is still pending at this review timestamp. Full Resources/config/event/domain assembly, observed shutdown/drain and loader attach/detach prerequisites remain; production DLL readiness remains BLOCKED."
+  ]
+}

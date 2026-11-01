@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "reviewer": "independent wildcard-storage worker",
+  "checked_at": "2026-10-18T15:19:51.9187424Z",
+  "scope": "Normal-flow static review of search_06e984 against retained Ghidra assembly; not a full native ABI, SEH, locale, conversion, sort, or whole-DLL equivalence review",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "evidence_id": "ev_6cea0a61974294918c3ea08f45c00073e8eac70ff3dc2c8d4bacd2c87cb5cc92",
+  "sources": [
+    {
+      "name": "search.hpp",
+      "sha256": "bb6929c82044abd608371fb1cecb532c2630dfd9e7c4880e18b8483885295644"
+    },
+    {
+      "name": "search.cpp",
+      "sha256": "ae987abfc21a6d941794ac3ffef8fa2aa6c70fa4599e525b110b993a2cc8819b"
+    }
+  ],
+  "findings": [],
+  "confirmed": [
+    "06e9bf-06ea52 previous-character walk, slash/colon/backslash bitset membership, special colon placement and prefix count match",
+    "06ea61-06eafa code-page/convert/find-first provider call order and failed conversion maps find-first argument to NULL",
+    "06eb03-06eb28 failed find-first fallback appends literal then frees owned wide data",
+    "06eb2d-06eb36 and06ec3b-06ec62 signed SAR3 count and wrapping segment address/count arithmetic match",
+    "06eb58-06ec35 each filename selects code page, conversion error/null is explicit unsupported original-fault domain, exact dot and dot-dot exclusion, owned narrow release before find-next",
+    "06ec85-06ecad append error frees owned narrow, closes search, frees owned wide, returns 32-bit append error",
+    "06ec50-06ec81 sort new segment only if counts differ, then close handle and free owned wide"
+  ],
+  "limitations": [
+    "previous-character progress/domain guard and NULL dereference domain_error are declared reconstruction boundaries, not claimed original branches",
+    "choose_code_page and conversions remain mandatory opaque providers",
+    "sort_new_segment does not establish comparator semantics or native sort reconstruction",
+    "Review did not execute original or rebuilt DLL/game and made no production code edits"
+  ]
+}

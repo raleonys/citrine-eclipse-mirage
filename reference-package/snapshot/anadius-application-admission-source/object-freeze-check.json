@@ -1,0 +1,80 @@
+{
+  "result": "PASS",
+  "source_package": "B51",
+  "build_record_sha256": "3b36e3f621a1c8d8088aa5690a6cffa5c07993bc33e4df5bd91eaa12db229c98",
+  "frozen_source_hashes": {
+    "admission_tests.cpp": "75c3fd2ff53f65966b18da309ce8d1be8727dc3e1aee490fe986b235c530ac78",
+    "admission_integration_tests.cpp": "a51340c165d8d0449a98741fea9f07bf8becacb3d68bb16dc06e5f226cb8ecd1",
+    "../anadius-bootstrap-native-source/native_entries.hpp": "fc50135b8fa2678743544c8728e25d6ef94837dfd5956f77cb736ea7bf899674",
+    "../anadius-bootstrap-native-source/native_entries.cpp": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85",
+    "../anadius-bootstrap-owner-source/owner.cpp": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+    "../anadius-bootstrap-owner-source/owner_integration_tests.cpp": "49b1854edfe087c551429aaed06124ff190d88becf70a1e665eea23050823def"
+  },
+  "objects": [
+    {
+      "object": "outputs/source-workspace/build/bootstrap_native.o",
+      "source": "anadius-bootstrap-native-source/native_entries.cpp",
+      "source_sha256": "bae4aac40a61c5ea8fe91cf72af4908657f7349664e0139e3f37d15e6d5beb85",
+      "production_sha256": "f0d3676f2a96674e721ab6cf401af0812c42fdc6c2be82a59ab865ff3ee11271",
+      "fresh_path": "work/b51-freeze-bootstrap_native.o",
+      "fresh_sha256": "dde5b512b29f76c7ebddf1f3117484c6998af1cfa4795b8976024b5ad0af6bdf",
+      "normalized_sha256": "34b238beb16156418295b7133cc683bf0131ac18400c80c975a4c04b1d22235a",
+      "fresh_normalized_sha256": "34b238beb16156418295b7133cc683bf0131ac18400c80c975a4c04b1d22235a",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-bootstrap-native-source\\native_entries.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b51-freeze-bootstrap_native.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    },
+    {
+      "object": "outputs/source-workspace/build/bootstrap_owner.o",
+      "source": "anadius-bootstrap-owner-source/owner.cpp",
+      "source_sha256": "3e09b48ef634b7fd02ff7002659870f67eef3e5de09c25ff8a5e02a88ffcf887",
+      "production_sha256": "42df499c16364c5d39693049d786ee05ca27af295088c97286bc9c0098571f0c",
+      "fresh_path": "work/b51-freeze-bootstrap_owner.o",
+      "fresh_sha256": "e397a5cd07160bf6de718ac40f6e58d2d5fae5a39ac3f5ce72adba1a138482e3",
+      "normalized_sha256": "00a44c72701e104c45101d0dc06abeb79ef0d384c83b10a16ef535c1fbc4baaa",
+      "fresh_normalized_sha256": "00a44c72701e104c45101d0dc06abeb79ef0d384c83b10a16ef535c1fbc4baaa",
+      "ignored_offsets": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "ignored_scope": "Only AMD64 COFF TimeDateStamp",
+      "all_other_bytes_equal": true,
+      "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-bootstrap-owner-source\\owner.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\b51-freeze-bootstrap_owner.o"
+      ],
+      "compile_exit": 0,
+      "stderr": ""
+    }
+  ],
+  "scope": "Fresh identical-command final-source production compile; all bytes except COFF header timestamp equal."
+}

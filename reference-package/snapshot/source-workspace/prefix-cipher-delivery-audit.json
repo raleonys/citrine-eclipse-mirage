@@ -1,0 +1,86 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T22:56:24.875985+00:00",
+  "prior_package_sha256": "8e6faae8002f7a1a1aba9c120f03b582194b6b7386e957f9ac72e4ab3a29a645",
+  "prior_source_count": 596,
+  "unchanged_prior_sources": 596,
+  "added_sources": [
+    "anadius-socket-source/prefix_cipher.cpp",
+    "anadius-socket-source/prefix_cipher.hpp",
+    "anadius-socket-source/prefix_cipher_integration_tests.cpp",
+    "anadius-socket-source/prefix_cipher_test_fixture.hpp",
+    "anadius-socket-source/prefix_cipher_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 601,
+  "current_documents": 225,
+  "native_objects": 192,
+  "cpp_objects": 188,
+  "c_objects": 4,
+  "normal_test_groups": 197,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 70,
+  "new_checks": 9263,
+  "new_tests": [
+    {
+      "module": "socket_prefix_cipher",
+      "result": "PASS",
+      "output": "PASS: 5039 socket prefix cipher checks; actual042480/042610 and045620/045630/0454e0/045580 sources, known-answer AES, binary offset/padding/IV oracle, live callbacks and bounded failure prefixes",
+      "executable_sha256": "327996fbdd78b92d05e5d79e7576065fcf318ec28c56afdc45259c917210efac"
+    },
+    {
+      "module": "socket_prefix_cipher_integration",
+      "result": "PASS",
+      "output": "PASS: 4224 socket prefix cipher integration checks; real ECB/CBC/IV/padding sources and final cipher/append bridges in033d70, request/response/event chain to N1-N10 queue/send/finish; key binding/XML/log/native ABI/EH remain open",
+      "executable_sha256": "5276398f4e1b60e7054d71345f654f3e932d9b489688aa8376dabfd3d9da6fc1"
+    }
+  ],
+  "validation_mirror_pairs": 35,
+  "historical_module_records_preserved": 34,
+  "historical_config_references_preserved": 68,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "77bc8afbf714139e6152f9e74ed246537d1272386f37aba56043477880877f3a",
+  "inventory_data_checks": 7291,
+  "normal_source_procedures_added": [
+    "0x180042480",
+    "0x180042610",
+    "0x180045620",
+    "0x180045630",
+    "0x1800454e0",
+    "0x180045580"
+  ],
+  "new_original_procedures": 6,
+  "closed_providers": [
+    "RecoveredMessageCipherApi::decrypt_042480",
+    "RecoveredMessageCipherApi::encrypt_042610",
+    "RecoveredPrefixCipherBlocks::decrypt_ecb_045620",
+    "RecoveredPrefixCipherBlocks::encrypt_ecb_045630",
+    "RecoveredPrefixCipherBlocks::decrypt_cbc_0454e0",
+    "RecoveredPrefixCipherBlocks::encrypt_cbc_045580"
+  ],
+  "new_source_bridges": 6,
+  "closed_preexisting_native_message_providers": 2,
+  "new_block_interface_source_bindings": 4,
+  "new_unique_source_mapped_addresses": 4,
+  "prior_native_source_closures_preserved": 17,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual042480/042610 and ECB/CBC/AES sources with request/response/event IV chain to033d70/N1-N10 queue/send/finish; key/session/XML/log/native allocator/ABI/EH/IOCP/worker open",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N12 cipher0423d0/042760/042780 init/key/IV and coherent session state binding; CRT stays paused"
+}

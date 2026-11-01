@@ -1,0 +1,19 @@
+# B49 — Accept iptali ve gözlenen son-paket drain
+
+Runtime'ın seçili `accept_stop` sağlayıcısı, controller isteğini yalnız kendisine ait NULL-OVERLAPPED IOCP wake'i olarak yollar. Gerçek `CancelIoEx`, kaynak işlemlerinin yürüdüğü worker üzerinde, Parent Operation altında, SDK submit döndükten sonra tam listener ve owned OVERLAPPED ile çağrılır. Controller ham operasyon/socket tutmaz. Cancel import'ları native, nonthrowing, nonblocking ve inline kaynak callback'i çağırmayan sınırlar olmalıdır.
+
+OwnedAcceptMemory storage generation'dan ayrı submit sırası ve NotSubmitted/Issuing/Kernel/Software/Unknown durumlarını kaydeder. TRUE/997 kernel yoludur; diğer bilinen SDK hataları software paketidir. TRUE, FALSE veya ERROR_NOT_FOUND buffer'ın bırakılmasına izin vermez. Stopped kernel işlemi için gerçek physical get'in tam key0/status/bytes/OV eşleşmesi, ardından kaynak0271a0 ve after/reap callback'lerinin başarılı dönüşü gerekir. Kaynak tamamlanınca eski operasyona yeniden dokunulmaz. İptal yarışı gerçek başarı paketiyle sonuçlanırsa seçili host politikası owner0 ile kabul edilen socket'i bırakır; yeni oturum/retry üretmez. Software paketi cancel edilmez ve kernel kanıtı sayılmaz. Sağlayıcı terminal paket üretmez veya scheduler work sayacını değiştirmez.
+
+Normal accept rotası da before→source→after/reap boyunca bir rota kaydı taşır. Controller'ın thread-safe bağımsız diğer-işler kanıtıyla rota çakışırsa istek false döner; post/cancel yapılmaz ve kanıt yeniden alınır. Başarılı istek böylece yeni normal oturum açılmasıyla yarışmaz. Kapanış port post admission'ını mühürler ve aktif post çağrılarını Parent dışında bekler. Kuyrukta kalan kendi NULL wake'i kernel borrower değildir; kuyruk boşluğu veya kernel finality kanıtı da değildir. Geç gelen, henüz worker tarafından pump edilmemiş bir istek ancak gerçek loan/rota/receipt kalmadığında kapanabilir.
+
+**Kapsam accept-only'dir.** `other_work_drained` receive/send, mevcut oturumlar, raw jobs ve foreign admission için gerçek, thread-safe ve bağımsız bir kanıt sağlamalıdır; worker-only Parent/raw view'ları ödünç alamaz. Profile'ın dış quiescence kanıtı ve Runtime'ın tam kaynak kontrolleri korunur. Bu sınıf diğer işler için drain kanıtı üretmez. Belirsiz SDK sonucu, yanlış/stale/duplicate paket veya tamamlanmamış ack sahipliği korur; Retiring geri çağrıları kapanmış nesneyi yeniden açamaz.
+
+Testler gerçek overlapped yerel named-pipe `ReadFile` işlemini authoritative accept buffer/OV üzerinde kullanır. Varsayılan gerçek CancelIoEx ve GQCS995 zinciri ile gerçek tamamlanmış başarı/ERROR_NOT_FOUND yarışı doğrulanır. Bu kernel-loan uyumluluk kanıtıdır; gerçek AcceptEx/socket/ağ interoperability veya özgün native ABI/EH eşdeğerliği değildir. Özgün DLL/oyun çalıştırılmaz. Runtime::Dependencies host layout'u değiştiği için kaynakları aynı header ile yeniden derlemek gerekir; hızlı kanıtlarda değişmemiş resources.cpp/graph.cpp/worker.cpp de taze derlenir.
+
+Tam DLL henüz üretilmedi. Sonraki iş receive/send ve oturum drain sağlayıcıları, erken startup hata yolları ve kalan Resources/loader bağlantılarıdır. Yeni native fonksiyon/ABI kapanışı yoktur; güvenilir toplam DLL yüzdesi verilmez.
+
+[Kanıt](evidence.json) · [Bağımsız inceleme](architecture-review.md) · [Sınırlar](resources-audit.json)
+
+## B49 ortak doğrulama
+
+**317 çekirdek + 162 entegrasyon = 479 kontrol PASS.** Ortak build 271 nesne (267 C++ / 4 C), 327 normal test grubu ve 19 framework terminal senaryosu içerir. Önceki 922 kaynak aynı; 4 önceki dosya açık hash kaydıyla güncellendi; toplam 930 kaynak. Yeni typed normal gövde 0, yeni native ABI/provider kapanışı0; 501 adres, 505 karşılaştırılabilir derlenmiş etiket ve52tarihsel kapanış. Bileşim ile raw-all defterleri ayrıdır. Gerçek alt sağlayıcılar, foreign ABI, image unload ve PE girişi açık kalır.

@@ -1,0 +1,61 @@
+{
+  "schema": "source-composition.common-validation.v1",
+  "result": "PASS",
+  "source_package": "B5",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "88f2246decb08962159d225674734b2ced388cac7e2d25dbaf87858b35b7d524",
+  "test_results": [
+    {
+      "module": "bootstrap_providers",
+      "result": "PASS",
+      "output": "PASS: 53 startup-provider core checks; recovered config/path/encoding, compiler-console stream tokens and per-launch CRT thread start; only own worker and child executed",
+      "executable_sha256": "8145d583b203f97c31a0f450154487384eeb655bfbb5cf2e18081a4aa74229cc"
+    },
+    {
+      "module": "bootstrap_providers_integration",
+      "result": "PASS",
+      "output": "PASS: 110 startup-provider integration checks; actual file/config/bootstrap/B3/B4 graph plus three own recovered-CRT wrapper workers, controlled console/encoding effects and post-join cleanup; native domain/foreign ABI/PE entry remain explicit",
+      "executable_sha256": "bafc74fc97c51fe9336c3a5d2f899d8efb9d88475da5937f85069b478bb1a81e"
+    }
+  ],
+  "core_checks": 53,
+  "integration_checks": 110,
+  "new_checks": 163,
+  "production_objects": 2,
+  "new_source_files": 7,
+  "source_hashes": {
+    "providers.hpp": "9b403c5c89ae5a1d34717e8e7e9d82230b36199d5f359398348e2dd66712f3e1",
+    "providers.cpp": "7ff5991f38d1b88e120300d9109fd6862f88a47a93de91966fa8aaee3c0a7f04",
+    "native_threads.hpp": "243bf515118b795e9bf8004d79f5b923bf40f0ad98ff7d68946ebe4fd264cac7",
+    "native_threads.cpp": "dab4d5f9d641817eec45245cf4859a6f288af475aad4fec2b1bba4b91ac5feb9",
+    "providers_tests.cpp": "25cd821282c8f7a145f46fbc4aacb0d7aa1dc22981d79388ebf4e279b662020c",
+    "providers_integration_tests.cpp": "a8776c09ba5075fb9e23d0ef1393ab4bcdb979bedd85683368a044bb60fb803f",
+    "providers_test_fixture.hpp": "8fe9167c74b8f6ae7abc8ed9469cc852038147be98432848303bc3a1b30a204b",
+    "README.md": "3b4114d8557363a1e6355eb0865c622798b1daedbca9bc906d7929fdf16894cc"
+  },
+  "architecture_review_sha256": "95e2db173ee9416863e80dd0e5bee5360e7a6df02cef6cf3c9b9e8f60246129c",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_concrete_backends": 0,
+  "new_thread_trackers": 0,
+  "new_callback_registries": 0,
+  "new_runtime_assemblies": 0,
+  "new_configuration_adapters": 1,
+  "new_compiler_console_adapters": 1,
+  "new_per_launch_thread_adapters": 1,
+  "configuration_routes_bound": 7,
+  "configuration_policies_remaining": 14,
+  "services_routes_bound": 8,
+  "existing_source_algorithms_routed": 7,
+  "remaining_service_policies": 9,
+  "new_virtual_provider_interfaces": 0,
+  "controlled_callback_shutdown_implemented": true,
+  "actual_shared_thread_domain_complete": false,
+  "actual_provider_backend_complete": false,
+  "production_pe_entry_installed": false,
+  "module_standalone_build_executed": false,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false,
+  "scope": "Seven concrete configuration routes, compiler-CRT console stream policy, per-launch recovered thread entry without provider global, and explicit recovered ThreadEffects factory. Fourteen config policies, actual shared CRT ThreadDomain, nine Services policies and foreign/concurrency/image-unload/PE gates remain open."
+}

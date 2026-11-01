@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_recalloc_bridge",
+    "result": "PASS",
+    "output": "PASS 5483 wildcard/argv/onexit/actual recalloc shared-heap composition checks",
+    "executable_sha256": "0840abfe8d77e3a0baab7390ed81a6cb9ce4f529919c03efb522af16e5d82047"
+  },
+  "execution_scope": "Actual wildcard/argv/onexit/recalloc/realloc/heap source composition sharing one state/backend; synthetic owned in-place/moved/failure heap and find/conversion/locale providers",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-recalloc-bridge-source/bridge_tests.cpp",
+      "sha256": "691c45b78c54ab36d2cfeaa4287793f01a9162a7d32520ad17e90249e159b809"
+    },
+    {
+      "path": "anadius-crt-recalloc-bridge-source/bridge.cpp",
+      "sha256": "1b0dc0977573659ea1d5de8cf1401c9ccec72d68f51ef93df2073e4a9b446c87"
+    },
+    {
+      "path": "anadius-crt-recalloc-bridge-source/bridge.hpp",
+      "sha256": "44cfd079f18629d0b25f435ea3d863952e045adb82425ec1730973757cdd53d7"
+    }
+  ]
+}

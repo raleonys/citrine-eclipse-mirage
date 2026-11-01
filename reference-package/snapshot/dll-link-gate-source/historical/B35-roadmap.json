@@ -1,0 +1,85 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B35",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B35",
+  "latest_dll_link_attempt": "B35",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B35 OwnedServerBackend supplies the existing ServerBackend contract and owns selected host context gates/IOCP, actual024990 scheduler/0228e0 service/0211b0 and024db0 acceptor+pending lifecycle, actual026fb0/026e50 close and shared SessionMemoryDomain/OwnedIoMemory. 0241b0 remains a selected host policy, not recovered native source. Runtime submit_accept/run/quiescent are mandatory lower policies; native021b00/0271a0 accept operation/endpoint/kernel borrowers remain absent. AdmittedDispatcherApi holds parent ROOT Operation across whole canonical worker/dispatcher source, releases only physicalget, immediately captures SDK error and reenters before packet lookup/queued/complete/cache accesses. Scope is one active worker plus the explicitly supplied foreign callback PTD/API/context lifetime policy, not arbitrary lower/native concurrency/global ABI proof. Trusted quiescence attestation AND source counters/list checks gate teardown; false stops admission and may permit later known cleanup retry, swallowed poison never unseals, unknown kernel/source prefixes are fail-stop retained. 860 prior sources unchanged+4new=864;252objects(248CPP+4C)/299normalgroups+19frameworkterminal;24+122=146checks with2core unknownGet/Post retained children and1integration sticky-quiescence child. 494mapped/498eligible/131normal/52historical unchanged;0 new native bodies/ABI closures. Concrete Transport/Scheduling/full Resources factory, loader/accept/native quiescence remain open; generic CRT paused.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Gerçek accept021b00/0271a0 kaynakları ve typed accept operation/kernel buffer ömrü",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B36",
+    "priority": 1,
+    "title": "Gerçek accept021b00/0271a0 kaynakları ve typed accept operation/kernel buffer ömrü",
+    "requirements": [
+      "Recover actual native021b00/0271a0 accept source from retained or separately authorized evidence; keep accept storage and endpoint/kernel buffers distinct from receive operations",
+      "Bind typed accept operation, pending socket transfer and observed final completion/drain into existing concrete owned server/session/IO graph",
+      "Integrate existing actual023000 accepted factory,025720 start and response source with explicit job/context/worker/kernel lifetimes",
+      "Keep selected0228c0 unknown without invented recovery/repeated audit, keep generic CRT paused and B31 loader attach/detach factory hooks undefined until real Resources/loader/quiescence supplied"
+    ],
+    "exit_criteria": "Actual accept source and its typed operation/kernel endpoint borrower edge run in the owned server graph with explicit completion/pending-socket drain and no receive-alias shortcut."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": []
+}

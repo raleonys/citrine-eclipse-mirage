@@ -1,0 +1,121 @@
+{
+  "schema": "dll-critical-path.roadmap.v1",
+  "package": "B46",
+  "requested_priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "latest_common_source_build": "B46",
+  "latest_dll_link_attempt": "B46",
+  "production_dll_readiness": "BLOCKED",
+  "overall_completion_percentage": null,
+  "current_deliverable": "B46 supplies a concrete SAME-THREAD application/server-component Graph factory. It assembles B45 Policy, default Profile jobs/transport/environment, actual NativeLogic, XMLReader, per-dispatch Router, SessionCipherFactory/Random and a Parent-backed fixed event ring. Exact StateView pointers retain the original supplied configuration/online/avatar backing; controlled same-worker updates rebuild Router spans instead of copying global state. Lazy event getter inserts existing native DOWN seed; Content/IGO and encrypted native033d70 use the same authoritative queue. Native pop validates exact reset/offset/count, and real Parent heap/header cleanup is used. Each opaque information/content/license/writer/XML/clock and stream primitive has sticky pre/post checks. Returned opaque writers are adopted before postchecks; known-normal dispatch retires them, unknown prefixes retain them. Completed unpublished backend is retained before final admission checks. Unknown pending retention may intentionally retain an owner cycle; normal successful teardown is cycle-free. Genuine external proof outside Parent followed by actual reap permits known owned event retirement/lease drop. Drained retries rerun external proof when unrelated real source allocation previously blocked Profile/provider close. Creation/install/server calls/final retirement use one original controller-worker/fiber; wrapper rejects another thread/fiber before SDK calls. Domain factories remain controller-only and Policy worker-affine, so this does NOT provide controller-spawned two-phase bootstrap/full Resources. 914prior sources unchanged+4new=918;268objects264CPP/4C;321normalgroups+19terminal;503core+325integration=828newchecks. Prepared encrypted peer tests explicitly set a fixed key/encrypted flag; no full default handshake/autodetection claim. Native bodies0/ABIclosures0;501mapped/505eligible/139normal and52historicalclosures unchanged. Narrow domain effects, observed kernel/rawjob shutdown and loader remain required; genericCRT paused.",
+  "source_algorithms_native_inventory_unchanged": true,
+  "two_missing_symbols_are_new_integration_hooks_not_two_remaining_native_functions": true,
+  "gates": [
+    {
+      "id": "entry-export-source",
+      "state": "SOURCE_COMPILED",
+      "exit": "Actual x64 entry object, three ordinal aliases and one RET leaf; final PE EAT/TLS/import/unwind still unverified"
+    },
+    {
+      "id": "owned-production-composition",
+      "state": "BLOCKED",
+      "exit": "Construct one concrete Resources graph and permanent owners without fixtures, null providers, original-DLL fallback or success stubs; satisfy loader-context and attach-rollback contract"
+    },
+    {
+      "id": "server-session-message",
+      "state": "PARTIAL",
+      "dependency_chain": "production Resources.server -> concrete ServerBackend -> accept/operation/executor ownership -> accepted SessionControl dispose/delete -> frame/message/response",
+      "next_source_targets": [],
+      "other_required_boundaries": [
+        "0x1800228c0",
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "exit": "One production server/session/transport/scheduler graph owns pending operations, accepted sessions and raw detached jobs through close; test adapters do not count",
+      "normal_source_bodies_completed_in_B32": [
+        "0x180026880",
+        "0x180026570",
+        "0x180017420",
+        "0x180026290"
+      ],
+      "next_production_resource": "Controller ve worker için iki aşamalı kurulum sınırı",
+      "owned_session_memory_domain_available": "B33",
+      "owned_io_memory_domain_available": "B34",
+      "owned_server_backend_available": "B35",
+      "owned_accept_memory_available": "B36",
+      "native_accept_normal_source_available": "B36",
+      "native_full_accept_session_flow_available": "B37",
+      "coherent_accept_IO_cache_available": "B37",
+      "native_accept_helpers_available": "B38",
+      "concrete_owned_runtime_available": "B39",
+      "server_resources_component_factory_available": "B39",
+      "concrete_session_profile_available": "B40",
+      "typed_native_message_profile_available": "B41",
+      "owned_response_deque_provider_available": "B42",
+      "owned_environment_provider_available": "B43",
+      "owned_inline_jobs_provider_available": "B44",
+      "concrete_session_policy_available": "B45",
+      "application_graph_available": "B46"
+    },
+    {
+      "id": "configuration-online-callbacks",
+      "state": "PARTIAL",
+      "exit": "Finish remaining configuration/license lower tail and actual online/callback providers; reuse already concrete adapter stacks and existing Services coverage"
+    },
+    {
+      "id": "detach-rollback-and-final-pe",
+      "state": "BLOCKED",
+      "exit": "Normal/failed attach and FreeLibrary/process-termination policy, external quiescence and ABI review; then real link success and static PE/import/export/TLS/unwind checks"
+    }
+  ],
+  "next_package": {
+    "id": "B47",
+    "priority": 1,
+    "title": "Controller ve worker için iki aşamalı kurulum sınırı",
+    "requirements": [
+      "Separate controller-only Domain/provider/memory construction from worker-affine Policy/Profile/event construction and retirement with stable configuration/category/epoch/TLS ownership.",
+      "Bind exact RuntimeOwner configuration after SourceBackend.bind_state; preserve actual state references and supply an explicit shared-state synchronization policy for real online workers.",
+      "Assemble remaining bootstrap Resources/domain effects and actual stop/join/observed packet/raw-job/kernel drain before loader hooks; do not migrate B46 affinity implicitly.",
+      "Keep prepared-AES handshake limits, native pending exception/DOM/executor ABI/EH/concurrency/early-cancel gaps explicit; genericCRT remains paused."
+    ],
+    "exit_criteria": "A tested explicit controller/worker handoff boundary; no placeholder success hooks, invented unload proof or total DLL percentage."
+  },
+  "version_preloader_priority": 4,
+  "generic_crt_backlog_paused": true,
+  "source_normal_bodies_added_in_B32": [
+    "0x180026880",
+    "0x180026570",
+    "0x180017420",
+    "0x180026290"
+  ],
+  "source_normal_bodies_added_in_B33": [],
+  "source_normal_bodies_added_in_B34": [],
+  "source_normal_bodies_added_in_B35": [],
+  "source_normal_bodies_added_in_B36": [
+    "0x180021b00",
+    "0x1800271a0"
+  ],
+  "source_normal_bodies_added_in_B37": [
+    "0x180021a10",
+    "0x180025720",
+    "0x1800270e0"
+  ],
+  "source_normal_bodies_added_in_B38": [
+    "0x180029df0",
+    "0x180029590",
+    "0x180029660"
+  ],
+  "source_normal_bodies_added_in_B39": [],
+  "source_normal_bodies_added_in_B40": [],
+  "source_normal_bodies_added_in_B41": [],
+  "source_normal_bodies_added_in_B42": [],
+  "source_normal_bodies_added_in_B43": [],
+  "source_normal_bodies_added_in_B44": [],
+  "source_normal_bodies_added_in_B45": [],
+  "source_normal_bodies_added_in_B46": []
+}

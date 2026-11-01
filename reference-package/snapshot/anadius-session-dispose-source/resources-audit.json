@@ -1,0 +1,32 @@
+{
+  "schema": "session-control-disposal.resources.v1",
+  "result": "SOURCE_POLICY_IMPLEMENTED_WITH_EXPLICIT_PROVIDERS",
+  "implemented": [
+    "Normaldeque/string/block/map disposal026880",
+    "NormalCONTROLbase resource disposal026570",
+    "Genericnullablevirtualdelete017420",
+    "Conditionaltable/sizedfree026290",
+    "ConcreteRecoveredSessionControl slot binding on actual023000 factory path"
+  ],
+  "host_provenance": "SessionFreeEffects recognizes native address/size routing tokens and frees matching typedC++ allocations. Native1c8/16/32/8*mapsize are requests, notsizeofhost polymorphiccontrol. Integration performs actualtypednew/delete; purecore tests retain projections forprefix observations.",
+  "required": [
+    "SessionAllocator/SessionFreeEffects production domain",
+    "Context/service/provider lifetime throughfinalweak",
+    "Partialconstruction scratch retention/EH cleanup",
+    "selected0228c0executor andactualaccept/server/session/response graph",
+    "Externalraw-jobquiescence beforelaststrong/unload",
+    "nativeMSVC/STL/vtable/SEH/loaderABI"
+  ],
+  "not_proven": [
+    "Arbitrarycallbackreentryconcurrency",
+    "NativeEHrollback",
+    "Actualnetwork/IOCPoperations",
+    "WholeforeignABI",
+    "Loader-safeattach/detach",
+    "Standalone replacementDLL"
+  ],
+  "new_normal_bodies": 4,
+  "new_native_ABI_provider_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

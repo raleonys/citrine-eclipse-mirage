@@ -1,0 +1,73 @@
+{
+  "reviewer": "crt_locale_native_audit",
+  "checked_at": "2026-10-20T13:44:39.6109707Z",
+  "result": "PASS",
+  "source_hashes": {
+    "initial_locale_data.cpp": "ac9db7a7e7e3bbe1292ebb0f408e86efa19d6bac0c5abc3bf2e5472e91be25f3",
+    "initial_locale_data.hpp": "7fba827e4f129c53d4d79b5f1b9aac9ac29e6dfead3b3534e6f58471045aedb4",
+    "initial_locale_data_tests.cpp": "65c06f3a08df0592f009796c60f9b7059610304ad9ebb28015a68a20a9d1ad2a",
+    "extract.cjs": "561fb35b5a42c7d60b1eaacfc88bef4ce4461ea0d183d2cd73662f902a5ab68f"
+  },
+  "additional_hashes": {
+    "verify_script": "0681211a203cda218115910cb5fa31e80b38ce9e9a0e87a44f6a1fd6b97557ed",
+    "selected_constructor": "c9fa78b6e05022cbae93b38e3e183d95ee512fe42b9b8b45074993b13e49b929",
+    "extraction_json": "2df7f8e519e809619c7cbdda3c605447848b5f1e5cefca860a643dddcb0608a2"
+  },
+  "build_result": "PASS: 96 regions, 116 bounded unique relocation slots, 3546 bytes; synthetic rebase, self/category identities, scalar/refcount/May alias/table checks",
+  "test_sha256": "d9fe351d33ee4fc111dc89a3a2f25ca056bc0ef86e06d60b3cfcc9883982173e",
+  "object_sha256": "70eee683b69492d51ab8fdf594bbb4ebc4c5276b163bf959279b7564b4dd3f63",
+  "original_target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "original_target_execution": "none",
+  "original_input_modification": "none",
+  "recovered_original_bodies_added": 0,
+  "regions": 96,
+  "file_backed_regions": 94,
+  "pe_zero_fill_regions": 2,
+  "relocation_edges": 116,
+  "bytes": 3546,
+  "generated_cpp_unchanged": true,
+  "findings": [],
+  "resolved_findings": [
+    {
+      "issue": "extract.cjs --summary used Number for arbitrary root qwords; lconv scalar7f7f7f7f7f7f7f7f rounded beyond Number exactness.",
+      "resolution": "Per root authorization, summary now reads BigInt qwords directly; schema pointer helper rejects unsafe Number conversion. --summary regression asserts full scalar. Main generated C++/HPP/JSON/selected evidence outputs proven byte-identical before/after via write-capturing VM execution."
+    }
+  ],
+  "reviewed_contracts": [
+    "Extractor pins exact target and retained pseudocode SHA before bounded PE/table/constructor reads; originals are only read.",
+    "PE section mapping independently reread for all96regions;94 rawregions match actualfilebytes and2leaves are within virtualzero tail, not claimed filebacked.",
+    "Each116DIR64 edge proof independently reread from actual relocation entry/block and raw pointer slot; every pointer target fits one bounded graphregion.",
+    "Every normalized C++ byte array/Region metadata/Relocation record independently parsed and compared to extractionJSON, in addition to narrow compiled synthetic-rebase tests.",
+    "Selected062a80 constructor corroborates threeC-localeviewaddresses and dynamic180WORD/180byte extents; signed-index table boundaries expressly schema-based rather than linker-symbol sizes.",
+    "Locale selfpointer/category1to5 sharedC identity/category0NULL, lconvscalar50, timeMay aliases and zero-filled emptystrings remain represented accurately.",
+    "Generated preferredVAs are metadata only; ownEXE uses synthetic numeric addresses without originalDLL loading/execution.",
+    "No original function body added, fullsource type/global initialization graph or originalruntime/ABI/SEH equivalence claimed."
+  ],
+  "independent_validation": {
+    "result": "PASS",
+    "checks": [
+      "Original exact target SHA",
+      "Every raw/zero region independently matches PE mapping",
+      "Every relocation proof reread from actual PE entry/block/source pointer",
+      "Every compiled C++ byte array and metadata entry matches extraction JSON",
+      "Every compiled C++ relocation matches extraction JSON",
+      "Old/new extractor full outputs byte-identical with writes captured in memory",
+      "Current generated C++/HPP/JSON/selected pseudocode byte-identical to both generators"
+    ],
+    "regions": 96,
+    "edges": 116,
+    "bytes": 3546,
+    "generated_before_after_hashes": {
+      "initial_locale.extraction.json": "2df7f8e519e809619c7cbdda3c605447848b5f1e5cefca860a643dddcb0608a2",
+      "constructor.selected.pseudo.c": "c9fa78b6e05022cbae93b38e3e183d95ee512fe42b9b8b45074993b13e49b929",
+      "initial_locale_data.hpp": "7fba827e4f129c53d4d79b5f1b9aac9ac29e6dfead3b3534e6f58471045aedb4",
+      "initial_locale_data.cpp": "ac9db7a7e7e3bbe1292ebb0f408e86efa19d6bac0c5abc3bf2e5472e91be25f3"
+    },
+    "original_execution": false
+  },
+  "limits": [
+    "96regions are a bounded consumer-selected graph, not all locale/process globals.",
+    "C++ consumer allocation, real relocation application and native lifetime/counter integration remain outside this immutable data module.",
+    "Constructor/table extent inference reuses retained pseudocode; no new REA EvidenceID or target runtime observation was produced."
+  ]
+}

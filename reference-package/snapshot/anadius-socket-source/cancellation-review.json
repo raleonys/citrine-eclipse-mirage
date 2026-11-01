@@ -1,0 +1,42 @@
+{
+  "result": "PASS",
+  "reviewer": "cancel_queue_audit",
+  "scope": "Independent frozen source review against retained 026aa0/028850 normal-flow contracts and declared initialized typed provider domain",
+  "sources": {
+    "outputs/anadius-socket-source/cancellation.hpp": "590aba7ccc16c44dd332481bd79cc2f6760b7fa81be773f5dbceaa7efebef1ff",
+    "outputs/anadius-socket-source/cancellation.cpp": "8b9590f3ae91bad807107a79e9f04391b9470f885b599725a21fb80a8dec098c",
+    "outputs/anadius-socket-source/cancellation_native.hpp": "91ac34a057aec4e6aec647c5a046f3e98138ccdeb23a1f268083defae5493f39",
+    "outputs/anadius-socket-source/cancellation_native.cpp": "d1a8ad5506c6683f1a080950d253766bd902dce4086a843f599f4c6b414b293e"
+  },
+  "report_sha256": "d9bd9fec5bb7cf5d20aece4fa301e8cd7c600464522d761e5650d765abfeee05",
+  "audit_report_sha256": "ea45b0992a1a00833468bea4a9235c1b431cf03be279333eefa0eeac9573aac4",
+  "audit_json_sha256": "e13c61b11cf20679c201e7360bfe4664ad6e8f550d7a2c62903bc046db5891ee",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180026aa0",
+    "0x180028850"
+  ],
+  "new_original_procedures": 2,
+  "map_contract": "Four unsigned modulo maps; first..last->next exclusive; first equal key; copy reason/pop FIFO; recycler even empty match; aggregate FIFO",
+  "delivery_contract": "Scheduler read after scans; port per post; detached attempted queued=1; any nonzero success; first zero append failed plus remaining under live gate; atomic exchange1; wake if any match",
+  "wake_contract": "One NUL len=1 flags=0; send status ignored; category then get always; extra category for 64/1234",
+  "composition": "QueueCancellationEffects binds one typed engine/state into existing 026fb0 boundary without extra engine lock",
+  "providers_not_recovered": [
+    "0283c0 bucket/freepool recycler body",
+    "Native category singleton/CRT guard",
+    "Native ASIO allocator/layout/IOCP worker and lifetime",
+    "Native global/exception/unwind ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Typed initialized borrowed graph domain; unsupported invalid/null link domain guarded",
+    "SDK OVERLAPPED member is real SDK storage and not original ASIO overlay",
+    "Raw native Error16/padding/ABI not reproduced",
+    "General concurrency/reentrant destruction/exception unwind/full DLL equivalence unproven"
+  ]
+}
+

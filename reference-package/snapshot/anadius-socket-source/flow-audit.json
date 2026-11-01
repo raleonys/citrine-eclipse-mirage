@@ -1,0 +1,104 @@
+{
+  "scope": "Independent retained static normal-flow socket audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "pseudo_evidence": "ev_68e5e01ef5c49226f1e664a3680d60bb8a9a73b30b25570c3b2f281991fabfed",
+      "address": "0x180028690",
+      "assembly_evidence": "ev_f5e208e60a00b9e67c6ec94288e3198044cf274f0ddb46a5dd76b7989feb14f3"
+    },
+    {
+      "pseudo_evidence": "ev_f742a98635e622694b3ed7e3d308cf9cebd4433c8b26ca837d086ae0e52413eb",
+      "address": "0x18002a200",
+      "assembly_evidence": "ev_f13b91d447e6018ba93152c0b2fed70292acebd91afbd2c5c5496c6cd93ffe7b"
+    },
+    {
+      "pseudo_evidence": "ev_fd2098bcb37a61e83ff7f76f095ba6d0fe598933164420bda64f6c6ef3920095",
+      "address": "0x180028620",
+      "assembly_evidence": "ev_73535f6dec0ad639cf35346f8021a5b39597a421eb724714a6aec9986996b9f6"
+    }
+  ],
+  "address_rules": {
+    "source_count": -1,
+    "sockaddr_capacity": 128,
+    "failure_error_zero_fallback": 10022,
+    "non_minus_one_api_result_success": true,
+    "conversion_count_ignored": true,
+    "wide_capacity": "strlen(CStr)+1",
+    "initial_last_error_zero_even_unsupported_family": true,
+    "cp": 0,
+    "category_before_last_error": true,
+    "scope_optional": true,
+    "broadcast_failure_writes_FF_but_error": 10022,
+    "families": [
+      2,
+      23
+    ],
+    "ipv6_write_bytes": 16,
+    "ipv4_write_bytes": 4,
+    "return_model": "int32 only; native64 upper extension differs",
+    "flags": 0
+  },
+  "send_rules": {
+    "select_nfds": "socket low32+1 wrap",
+    "remap": {
+      "64": 10054,
+      "1234": 10061
+    },
+    "select_zero_retries": true,
+    "empty_bit16_clears_value_only": true,
+    "retry_errors": [
+      10035,
+      1237
+    ],
+    "state_bit1_no_retry": true,
+    "last_error_captured_on_success": true,
+    "retry_category_getter_calls": "one if first composite10035 match; otherwise two",
+    "retry_identity": "category vtable slot+8 function pointer equality",
+    "transferred_signed32": true,
+    "sets_last_error_before_send": false,
+    "new_retry_or_timeout_limit": false,
+    "invalid_socket_error": 10009,
+    "select_negative_raw_error_no_remap": true
+  },
+  "category_getter": {
+    "pure": false,
+    "global_object": "0x1800a1110",
+    "last_error_preservation_proven": false,
+    "cleanup": "0x18007dff0",
+    "sequence": "signed TLS epoch comparison/header/recheck/atexit/footer/return",
+    "guard": "0x1800a38e8",
+    "address": "0x180028620"
+  },
+  "original_execution": "none",
+  "network_socket_WSAStartup_execution": "none",
+  "real_user_files_read": false,
+  "production_edited": false,
+  "report_sha256": "0450cbc023152e66e5a80c83919b0d61d6e0384160e0fec2a2d0d68f8ddca742",
+  "limitations": [
+    "Native conversion failure may expose uninitialized wide scratch; explicit UnsupportedInput domain is not native error",
+    "Native error padding/full64 address return register and partial sockaddr output unproven",
+    "Native category CRT singleton/guard internals remain boundary",
+    "ASIO/IOCP/socket/global/allocator/SEH/lifetime/full DLL equality unproven"
+  ],
+  "adapter_LastError_limit": "Adapter-owned temporary cleanup between API and category/GetLastError requires explicit preservation or selected compatibility scope; cached error must not erase category effects",
+  "caller_025720": {
+    "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa",
+    "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+    "flags_zero_definition": "0x18002574b XOR EBP,EBP",
+    "flags_argument": "0x1800258a4 MOV dword ptr [RSP+0x20],EBP",
+    "ebp_redefined_before_call": false,
+    "count_one": "0x1800258a8",
+    "wsabuf": "0x1800258ae",
+    "live_state": "0x1800258b3 [RSI+0x20]",
+    "live_socket": "0x1800258b7 [RSI+0x18]",
+    "send_call": "0x1800258bb",
+    "all_empty": "0x180025890 TEST R8,R8 / 025893 SETZ AL / 0258a0 stack byte",
+    "max_chunk": 65536,
+    "entire_caller_lifecycle_recovered": false
+  }
+}

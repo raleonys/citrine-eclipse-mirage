@@ -1,0 +1,93 @@
+{
+  "scope": "Independent complete retained eight normal IO completion procedures",
+  "reviewer": "io_completion_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "full_listing_hashes_match": true,
+  "functions": [
+    {
+      "address": "0x180027710",
+      "pseudo_evidence": "ev_7da3b743355f442a593ae330a5db5226466c68b92f7b80398a37115ffdb0ad0e",
+      "assembly_evidence": "ev_875f068c4cc67a67b326e00dd8beda8a6e4921fdd8deb40f82ad55921e27dfea"
+    },
+    {
+      "address": "0x180027a20",
+      "pseudo_evidence": "ev_ac8acca2b33bd760e4ba5f3d9ec5784ef473a66bd1f78d4aeb47033d2bcbc4d9",
+      "assembly_evidence": "ev_c7fd45e2d65c3e1f508706bdf6dc9e7561b9d896d56095bbebac7e82853f4463"
+    },
+    {
+      "address": "0x1800293f0",
+      "pseudo_evidence": "ev_3ae73ab0a728103ea5b1dac7b8823e06a3f850d5f744b5739526298c54b3491c",
+      "assembly_evidence": "ev_2952336be67b99eb58841e45901763cbb9ef1cf6777392aa3dc5e2afedf21b2d"
+    },
+    {
+      "address": "0x1800294c0",
+      "pseudo_evidence": "ev_65f668a0be45b449bda8c6a2bc7797385aa0abce15e0adb2a8dadafd5662c982",
+      "assembly_evidence": "ev_a2a0dd4fb182338fda3cd1fb10e418daad741f70f824c2ba41a04cc7e29b9207"
+    },
+    {
+      "address": "0x180023cb0",
+      "pseudo_evidence": "ev_104fb6d87cffb0a02e61c0173403243f305305ffcf18a5fdb95e886f36fb27d1",
+      "assembly_evidence": "ev_5393cd5463f3a87b8f294c63f701e30396bb840e2ae1f35dd015b1a5c38fa588"
+    },
+    {
+      "address": "0x180021a40",
+      "pseudo_evidence": "ev_2813b701e157524c76c3c175e1e4795ed10e26d16e0955b5f685f67a27510182",
+      "assembly_evidence": "ev_b996de0c468259782b9b186759ef39599a24b4235b486e5a9b14b6b440666c64"
+    },
+    {
+      "address": "0x180021a80",
+      "pseudo_evidence": "ev_d1d2adb6238cbcaf27e3ab93bece0d5f0e77e0232fd449c89af2dca7e1d5c9c4",
+      "assembly_evidence": "ev_1885151718031ab7575010f99ce914706c41cfcc12bb3cac3783572526122b07"
+    },
+    {
+      "address": "0x180026a00",
+      "pseudo_evidence": "ev_a8b18ff702d64aed8451a717a422d725d685b92d5849bd81eb6aa8526be6d678",
+      "assembly_evidence": "ev_d3743b3c9d3a490dde77749b691735b3cc7d664db9f3f79d931983343ce15a5d"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180027710",
+    "0x180027a20",
+    "0x1800293f0",
+    "0x1800294c0",
+    "0x180023cb0",
+    "0x180021a40",
+    "0x180021a80",
+    "0x180026a00"
+  ],
+  "new_original_procedures": 8,
+  "rules": {
+    "environment_move": "Copy tables10/20; reset source sentinels; live destination slot10 move; source18zero AFTER callback; live source28 copy; reset28",
+    "error": "Input full16 snapshot before envmove; mapping after;64->995or10054 using live weakstrong;1234->10061; receive10040/234 clearcode only, noEOF; receive original0 plus bytes0/flag10/payload58nonzero->EOF2",
+    "send_padding": "Mapped send scratch opaque dword+4 indeterminate, never initialized; receive preserves padding",
+    "handler": "Receive original60 local0/error50/bytes60/control48; send original60 local8/error48/bytes58/control40, local0dummyindeterminate",
+    "cleanup": "Cache original object; destroy environment; read live ownedcontrol; release strong old1->destroy then weak old1->delete; live weakcontrol read; clearframeobject; live allocation read;026a00;clearframeallocation",
+    "pool": "TLS before unsignedrequested<=1020; currentframeonly;first2slots;markerrequestedto0;cacheidentity;else free",
+    "receive_polymorphic": "Cache factorytarget28.slot40 before getter10.slot18; factory constructs temp; copy10/20 reset source; cached move10; source18zero; live28copy/reset; temp live slot0 skip iff function017a30;022c60; nested live slot0 unconditional",
+    "tail": "Reload moved local ownedcontrol aftercallback; strongrelease; liveenvironmentdestroy; secondcleanup; normalbodyonly"
+  },
+  "providers_not_recovered": [
+    "Native polymorphic table slot bodies and lifetime",
+    "0229d0 send dispatch",
+    "022c60 receive dispatch",
+    "025c40 receive handler",
+    "0261d0 send handler",
+    "04b788 deallocator",
+    "GS-cookie/native ABI/exception SEH unwind/concurrency"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Eight normal caller procedures only",
+    "Existing CRT production unchanged",
+    "Bounded raw projection separated from typed SDK operation",
+    "Native uninitialized padding remains explicitly unspecified",
+    "No full DLL equivalence claimed"
+  ],
+  "report_sha256": "77cf229537e6f5281e5d8b6d6d61748bd99bfc5af2289380d3cec7af34aa8f8e"
+}

@@ -1,0 +1,269 @@
+{
+  "kind": "read-only PE-file-derived extraction; not a new REA Evidence record",
+  "target": "C:/Users/Skysect/Downloads/anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "sections": [
+    {
+      "name": ".text",
+      "rva": 4096,
+      "virtual_size": 512564,
+      "raw_offset": 1024,
+      "raw_size": 513024
+    },
+    {
+      "name": ".rdata",
+      "rva": 520192,
+      "virtual_size": 138308,
+      "raw_offset": 514048,
+      "raw_size": 138752
+    },
+    {
+      "name": ".data",
+      "rva": 659456,
+      "virtual_size": 19068,
+      "raw_offset": 652800,
+      "raw_size": 10240
+    },
+    {
+      "name": ".pdata",
+      "rva": 679936,
+      "virtual_size": 25560,
+      "raw_offset": 663040,
+      "raw_size": 25600
+    },
+    {
+      "name": "_RDATA",
+      "rva": 708608,
+      "virtual_size": 500,
+      "raw_offset": 688640,
+      "raw_size": 512
+    },
+    {
+      "name": ".rsrc",
+      "rva": 712704,
+      "virtual_size": 976,
+      "raw_offset": 689152,
+      "raw_size": 1024
+    },
+    {
+      "name": ".reloc",
+      "rva": 716800,
+      "virtual_size": 3704,
+      "raw_offset": 690176,
+      "raw_size": 4096
+    }
+  ],
+  "regions": [
+    {
+      "name": "record",
+      "va": "0x1800a1c70",
+      "size": 552,
+      "section": ".data",
+      "file_offset": "0xa0270",
+      "raw_backed_bytes": 552,
+      "loader_zero_fill_bytes": 0,
+      "sha256": "2bdf8c788761b060610d20270bb00c2d1d1a9370d6708ba16aa3aa7ad64be4a2",
+      "bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000101010101010101010101010101010101010101010101010101000000000000020202020202020202020202020202020202020202020202020200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006162636465666768696a6b6c6d6e6f707172737475767778797a0000000000004142434445464748494a4b4c4d4e4f505152535455565758595a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "relocations": []
+    },
+    {
+      "name": "initial_type_table",
+      "va": "0x1800a1ea0",
+      "size": 257,
+      "section": ".data",
+      "file_offset": "0xa04a0",
+      "raw_backed_bytes": 257,
+      "loader_zero_fill_bytes": 0,
+      "sha256": "376dd640fc827de54eb9e58dcbfeb5a5dbbd62a1812ee3fc63350e1de614e213",
+      "bytes_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001010101010101010101010101010101010101010101010101010000000000000202020202020202020202020202020202020202020202020202000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "relocations": []
+    },
+    {
+      "name": "initial_case_table",
+      "va": "0x1800a1fb0",
+      "size": 256,
+      "section": ".data",
+      "file_offset": "0xa05b0",
+      "raw_backed_bytes": 256,
+      "loader_zero_fill_bytes": 0,
+      "sha256": "5fa1127487a1d28b5602fc5447f03b2ab0bee8c9e9cdb08564b130d0a0bef2af",
+      "bytes_hex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006162636465666768696a6b6c6d6e6f707172737475767778797a0000000000004142434445464748494a4b4c4d4e4f505152535455565758595a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "relocations": []
+    }
+  ],
+  "globals": [
+    {
+      "name": "locale_mask",
+      "va": "0x1800a1c6c",
+      "size": 4,
+      "section": ".data",
+      "file_offset": "0xa026c",
+      "raw_backed_bytes": 4,
+      "loader_zero_fill_bytes": 0,
+      "sha256": "b4248c210a2905b94345e1a8414d0e12efcfb2f4f0f2397159a71283397a0ccd",
+      "bytes_hex": "feffffff",
+      "value": "0xfffffffe",
+      "relocations": []
+    },
+    {
+      "name": "initial_pair_locale",
+      "va": "0x1800a1938",
+      "size": 8,
+      "section": ".data",
+      "file_offset": "0x9ff38",
+      "raw_backed_bytes": 8,
+      "loader_zero_fill_bytes": 0,
+      "sha256": "0dc6be93113b97e8aee9d92012a9a69afd13c869048b8027b82cb36106f59476",
+      "bytes_hex": "e0170a8001000000",
+      "value": "0x1800a17e0",
+      "relocations": [
+        {
+          "va": "0x1800a1938",
+          "type": 10
+        }
+      ]
+    },
+    {
+      "name": "initial_pair_multibyte",
+      "va": "0x1800a1940",
+      "size": 8,
+      "section": ".data",
+      "file_offset": "0x9ff40",
+      "raw_backed_bytes": 8,
+      "loader_zero_fill_bytes": 0,
+      "sha256": "f149dd9a354bfa9a9c9b68503d368596cf5df5ca41c6c971b6013956a08381a7",
+      "bytes_hex": "701c0a8001000000",
+      "value": "0x1800a1c70",
+      "relocations": [
+        {
+          "va": "0x1800a1940",
+          "type": 10
+        }
+      ]
+    },
+    {
+      "name": "current_locale",
+      "va": "0x1800a52e0",
+      "size": 8,
+      "section": ".data",
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "bytes_hex": "0000000000000000",
+      "value": "0x0",
+      "relocations": []
+    },
+    {
+      "name": "locale_changed",
+      "va": "0x1800a52d8",
+      "size": 4,
+      "section": ".data",
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "bytes_hex": "00000000",
+      "value": "0x0",
+      "relocations": []
+    },
+    {
+      "name": "current_multibyte",
+      "va": "0x1800a59d0",
+      "size": 8,
+      "section": ".data",
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "bytes_hex": "0000000000000000",
+      "value": "0x0",
+      "relocations": []
+    },
+    {
+      "name": "system_cp_flag",
+      "va": "0x1800a59d8",
+      "size": 4,
+      "section": ".data",
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "bytes_hex": "00000000",
+      "value": "0x0",
+      "relocations": []
+    },
+    {
+      "name": "initialized",
+      "va": "0x1800a59dc",
+      "size": 4,
+      "section": ".data",
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 4,
+      "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+      "bytes_hex": "00000000",
+      "value": "0x0",
+      "relocations": []
+    },
+    {
+      "name": "type_table_pointer",
+      "va": "0x1800a59c0",
+      "size": 8,
+      "section": ".data",
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "bytes_hex": "0000000000000000",
+      "value": "0x0",
+      "relocations": []
+    },
+    {
+      "name": "case_table_pointer",
+      "va": "0x1800a59c8",
+      "size": 8,
+      "section": ".data",
+      "file_offset": null,
+      "raw_backed_bytes": 0,
+      "loader_zero_fill_bytes": 8,
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+      "bytes_hex": "0000000000000000",
+      "value": "0x0",
+      "relocations": []
+    }
+  ],
+  "record_fields": {
+    "reference_count": 0,
+    "codepage": 0,
+    "multibyte_mode": 0,
+    "short_fields": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "locale_name_pointer": "0x0",
+    "padding_219_21f": "00000000000000"
+  },
+  "reset_domains": {
+    "type": {
+      "offset": 24,
+      "size": 257
+    },
+    "case": {
+      "offset": 281,
+      "size": 256
+    },
+    "preserved_counter_offset": 0,
+    "reset_pointer_offset": 544
+  },
+  "limitations": [
+    "Mapped bytes distinguish raw backing from loader zero fill; this does not observe runtime initialization.",
+    "Global pointer scalars are preferred-image values, not executable callbacks or valid host pointers.",
+    "Only explicit consumed multibyte regions and named slots extracted; no arbitrary graph scan."
+  ]
+}

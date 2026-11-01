@@ -1,0 +1,27 @@
+{
+  "kind": "New source composition, not additional original functions",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "entry_overrides": [
+    "0x18004c1e0",
+    "0x18004c1f0",
+    "0x18004c1fc",
+    "0x18004c218",
+    "0x180064054",
+    "0x18005cdb8",
+    "0x18005cd9c"
+  ],
+  "range_core": "0x180064614",
+  "source_evidence": [
+    "../anadius-crt-support-source/evidence.json",
+    "../anadius-crt-environment-source/evidence.json",
+    "../anadius-crt-termination-source/evidence.json",
+    "../anadius-crt-initializers-source/evidence.json",
+    "../anadius-vcrt-bridge-source/evidence.json",
+    "../anadius-crt-entry-source/evidence.json",
+    "../anadius-crt-onexit-source/evidence.json",
+    "../anadius-crt-cache-source/evidence.json"
+  ],
+  "table_metadata": "termination-tables.json",
+  "limits": "Full initializer callback bindings/native providers, final shared-state and cookie setup, loader/SEH/unwind, runtime equivalence remain open",
+  "target_execution": "none"
+}

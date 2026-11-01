@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "reviewer": "event_queue_audit",
+  "scope": "Independent static production source review against retained02c400/02c620 and caller evidence; declared normal/provider domain",
+  "sources": {
+    "outputs/anadius-event-queue-source/queue.hpp": "b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d",
+    "outputs/anadius-event-queue-source/queue.cpp": "88da967fa48cdf5d2a5c99b50aa50e479fdd0011712ede86b6c53c344c9e69d8",
+    "outputs/anadius-event-queue-source/adapters.hpp": "2da19cd733b237ab75a136289b9b93816d58b3b7d0573313c6091af50a327f52",
+    "outputs/anadius-event-queue-source/adapters.cpp": "36a4911d3c17f73dd6435305c20b879052e31c1bb05c05aa39b448fdf609dcc5"
+  },
+  "report_sha256": "b5b5f96b94a3891e263209d4aab2eedd6fa909a15aa065c6ad8e7fd528a519fd",
+  "audit_report_sha256": "b4c6d1bf9586d203ed0e07dcdd9fafd62c610067309484d4d3096b1e4678b69f",
+  "audit_json_sha256": "4e04d7e0a216408c24d82787a2c6587860eeb1b2c5470ea779fca882fe742a8f",
+  "material_findings": [],
+  "tests_executed_by_reviewer": false,
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "production_edited": false,
+  "limitations": [
+    "Native CRT guard/header/footer/atexit internals remain providers",
+    "Native deque/growth/allocator/SSO/failure footprint not recovered by OwnedStorage",
+    "Host atomics and caller synchronization are compatibility choices, not native concurrency proof",
+    "Native EH/abort/retry/unwind/ABI/global teardown and whole DLL equality unproven",
+    "Initial access path determines cleanup registration order; no fixed lifecycle order claimed"
+  ]
+}

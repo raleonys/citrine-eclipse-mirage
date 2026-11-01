@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T19:34:47.0038465Z",
+  "prior_package_sha256": "5c25602625019c9ec060dced00a07d0e3cb1512a459e32f69b538020ee349263",
+  "prior_source_count": 416,
+  "unchanged_prior_sources": 416,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/native_tests.cpp",
+    "anadius-socket-source/native.cpp",
+    "anadius-socket-source/native.hpp",
+    "anadius-socket-source/operations_tests.cpp",
+    "anadius-socket-source/operations.cpp",
+    "anadius-socket-source/operations.hpp"
+  ],
+  "current_sources": 422,
+  "current_documents": 168,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 144,
+  "cpp_objects": 140,
+  "c_objects": 4,
+  "normal_test_groups": 129,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_operations",
+      "result": "PASS",
+      "output": "PASS: 376 socket operation checks; injected APIs and actual Session greeting only",
+      "executable_sha256": "4d09509a5f763f1c4c0d25c6a932013c342f52c25800ad075961d19b86ed189a"
+    },
+    {
+      "module": "socket_native",
+      "result": "PASS",
+      "output": "PASS: 308 socket native checks; injected SDK imports only",
+      "executable_sha256": "75ff93d95b531c6e96f20de052b68dfdf24f75853f34e10645a2f48ec3f814a4"
+    }
+  ],
+  "new_checks": 684,
+  "master_build_sha256": "2afc52073878b038516b1f33b1cdeaabdd35791b406b9eb70d69291e24e5f0ab",
+  "common_build_script_sha256": "82b4a24b4aac58ebea12e52c42fb2f0a09b38a311e2a46e40099161a9caef8a7",
+  "cmake_sha256": "74571c569f83633499480dee66e9be7a376efaba8a938c0211169d59f84c0586",
+  "normal_source_procedures_added": [
+    "0x180028690",
+    "0x18002a200"
+  ],
+  "new_original_procedures": 2,
+  "new_composition": "Typed SDK import adapter plus partial AddressBackend/SynchronousTransport bridges",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

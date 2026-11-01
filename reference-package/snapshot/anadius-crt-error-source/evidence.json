@@ -1,0 +1,299 @@
+{
+  "schema": "recovered-crt-error-evidence-v1",
+  "target": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Retained REA Ghidra pseudocode/assembly plus direct bounded read-only PE data",
+  "new_REA_call": false,
+  "functions": [
+    {
+      "va": "0x18005d650",
+      "pseudo": "ev_950e5e5bddf138fbf5165368c2e6f426728b3cd5b96df0962f0ae4e1dc08ee28",
+      "assembly": "ev_217f67af2b59f77c73815ce25400e2a9e91eac327f95f97cd4384e746b265b42",
+      "anchors": [
+        "05d652 table base 180089f70",
+        "05d669 45 pairs",
+        "05d66e unsigned code-19 <=17 gives13",
+        "05d67c unsigned code-188 <=14 gives8",
+        "otherwise22"
+      ]
+    },
+    {
+      "va": "0x18005d698",
+      "pseudo": "ev_bd61f9831cea26925122efaa5551259d333f8def9717baaabac098a6bbef34c2",
+      "assembly": "ev_077d9ef2677e548812091b4e28c1f8b52d98eb6517275a2e7a45fc8d31b182df",
+      "anchors": [
+        "05d6a0 first optional PTD lookup",
+        "05d6b9 writes DOS code to PTD+24 or1800a17ac",
+        "05d6bb call mapper05d650",
+        "05d6c2 separate second optional PTD lookup",
+        "05d6d7 writes mapped errno toPTD+20 or1800a17a8"
+      ]
+    },
+    {
+      "va": "0x18005d704",
+      "pseudo": "ev_edd8759fb690236f6248537aeb40f13ffe2ddd576035707afd0d971e5089d7da",
+      "assembly": "ev_a0d1ffda5c48f1d5ded0d1eedd44ba6b67b6ac847e73321077b4c8299ab12057",
+      "observed": "DOS cell PTD+0x24 or global1800a17ac"
+    },
+    {
+      "va": "0x18005d724",
+      "pseudo": "ev_36d45aaa708512542a5ccd22b34065cce5860aeb9d01348c8ff0423039bea225",
+      "assembly": "ev_791468a44befd8407f73024c9a6fb936102bd285151cbb6e7629fb185dfddd72",
+      "observed": "errno cell PTD+0x20 or global1800a17a8",
+      "naming_warning": "Ghidra labels both accessors __doserrno; reconstruction names use observed offsets/uses"
+    }
+  ],
+  "table": {
+    "va": "0x180089f70",
+    "raw_offset": "0x88770",
+    "length": 360,
+    "section": ".rdata",
+    "section_va": "0x18007f000",
+    "section_raw_offset": "0x7d800",
+    "sha256": "11ed605c378b270d3886b5648fb8e8abd6d7e45a4c37e88e3bb333c6317cdb36",
+    "pairs": [
+      {
+        "index": 0,
+        "os": 1,
+        "crt": 22
+      },
+      {
+        "index": 1,
+        "os": 2,
+        "crt": 2
+      },
+      {
+        "index": 2,
+        "os": 3,
+        "crt": 2
+      },
+      {
+        "index": 3,
+        "os": 4,
+        "crt": 24
+      },
+      {
+        "index": 4,
+        "os": 5,
+        "crt": 13
+      },
+      {
+        "index": 5,
+        "os": 6,
+        "crt": 9
+      },
+      {
+        "index": 6,
+        "os": 7,
+        "crt": 12
+      },
+      {
+        "index": 7,
+        "os": 8,
+        "crt": 12
+      },
+      {
+        "index": 8,
+        "os": 9,
+        "crt": 12
+      },
+      {
+        "index": 9,
+        "os": 10,
+        "crt": 7
+      },
+      {
+        "index": 10,
+        "os": 11,
+        "crt": 8
+      },
+      {
+        "index": 11,
+        "os": 12,
+        "crt": 22
+      },
+      {
+        "index": 12,
+        "os": 13,
+        "crt": 22
+      },
+      {
+        "index": 13,
+        "os": 15,
+        "crt": 2
+      },
+      {
+        "index": 14,
+        "os": 16,
+        "crt": 13
+      },
+      {
+        "index": 15,
+        "os": 17,
+        "crt": 18
+      },
+      {
+        "index": 16,
+        "os": 18,
+        "crt": 2
+      },
+      {
+        "index": 17,
+        "os": 33,
+        "crt": 13
+      },
+      {
+        "index": 18,
+        "os": 53,
+        "crt": 2
+      },
+      {
+        "index": 19,
+        "os": 65,
+        "crt": 13
+      },
+      {
+        "index": 20,
+        "os": 67,
+        "crt": 2
+      },
+      {
+        "index": 21,
+        "os": 80,
+        "crt": 17
+      },
+      {
+        "index": 22,
+        "os": 82,
+        "crt": 13
+      },
+      {
+        "index": 23,
+        "os": 83,
+        "crt": 13
+      },
+      {
+        "index": 24,
+        "os": 87,
+        "crt": 22
+      },
+      {
+        "index": 25,
+        "os": 89,
+        "crt": 11
+      },
+      {
+        "index": 26,
+        "os": 108,
+        "crt": 13
+      },
+      {
+        "index": 27,
+        "os": 109,
+        "crt": 32
+      },
+      {
+        "index": 28,
+        "os": 112,
+        "crt": 28
+      },
+      {
+        "index": 29,
+        "os": 114,
+        "crt": 9
+      },
+      {
+        "index": 30,
+        "os": 128,
+        "crt": 10
+      },
+      {
+        "index": 31,
+        "os": 129,
+        "crt": 10
+      },
+      {
+        "index": 32,
+        "os": 130,
+        "crt": 9
+      },
+      {
+        "index": 33,
+        "os": 131,
+        "crt": 22
+      },
+      {
+        "index": 34,
+        "os": 132,
+        "crt": 13
+      },
+      {
+        "index": 35,
+        "os": 145,
+        "crt": 41
+      },
+      {
+        "index": 36,
+        "os": 158,
+        "crt": 13
+      },
+      {
+        "index": 37,
+        "os": 161,
+        "crt": 2
+      },
+      {
+        "index": 38,
+        "os": 164,
+        "crt": 11
+      },
+      {
+        "index": 39,
+        "os": 167,
+        "crt": 13
+      },
+      {
+        "index": 40,
+        "os": 183,
+        "crt": 17
+      },
+      {
+        "index": 41,
+        "os": 206,
+        "crt": 2
+      },
+      {
+        "index": 42,
+        "os": 215,
+        "crt": 11
+      },
+      {
+        "index": 43,
+        "os": 1113,
+        "crt": 42
+      },
+      {
+        "index": 44,
+        "os": 1816,
+        "crt": 12
+      }
+    ]
+  },
+  "fallback_initializers": {
+    "va": "0x1800a17a8",
+    "raw_offset": "0x9fda8",
+    "length": 8,
+    "section": ".data",
+    "section_va": "0x1800a1000",
+    "section_raw_offset": "0x9f600",
+    "bytes_hex": "0c00000008000000",
+    "sha256": "fce8ab81ade4262eff029b329fa69a4ddec0a42c8c3077d52a9f5b332bdde90c",
+    "errno": 12,
+    "dos": 8
+  },
+  "limits": [
+    "optional PTD/FLS allocation, destruction and synchronization remain mandatory external Effects",
+    "No original DLL, rebuilt DLL or external OS API was executed",
+    "Portable C++ data behavior and synthetic caller integration; no CRT ABI/EH/SEH equivalence claim"
+  ]
+}

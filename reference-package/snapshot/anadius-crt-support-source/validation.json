@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T14:22:23.8370274Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-support-source\\support_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-support-source\\build\\support.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-support-source\\build\\support_tests.exe"
+  ],
+  "tests": "PASS 4438 CRT support checks",
+  "scope": "Synthetic opaque SList storage and owned option/callback cells; no native list or target execution",
+  "sources": [
+    {
+      "name": "support_tests.cpp",
+      "sha256": "0f1fb7167991fda7a6accf359abfbac27a1eec707b8c3466a7d9c3c317410316"
+    },
+    {
+      "name": "support.cpp",
+      "sha256": "9e3725e170ef1e0ebc989bfffaa7f816a925fb8fd4acf19b02fe21785fea5716"
+    },
+    {
+      "name": "support.hpp",
+      "sha256": "c3fb51e8edf0de8f9d5cbb4d1daee93c77999b384f1077bb9ef1b0119f846210"
+    }
+  ],
+  "executable_sha256": "4dd3d3ee22d9103fe040698ed4ac1891da95e2d6fd95d63e52932e486bcfe2ab"
+}

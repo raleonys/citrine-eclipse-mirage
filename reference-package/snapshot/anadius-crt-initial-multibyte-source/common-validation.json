@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_initial_multibyte",
+    "result": "PASS",
+    "output": "PASS 2908 image initial multibyte/reset checks",
+    "executable_sha256": "327292544da4e558142fee907dd4aea9b2cdff5c0759552c416103c704a19e3f"
+  },
+  "execution_scope": "Hash-bound pointerfree552byte initialMBrecord,257/256byte tables,maskFE and explicitraw/zero-fillglobals;2908ownedfixture/resetchecks,independentcompiledPEbytecomparison1066;nooriginalexecution;zero new original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-initial-multibyte-source/initial_mb.cpp",
+      "sha256": "bc2ad14d71f56922b8425b8815a641d830df4627ff91405a634ead504074339a"
+    },
+    {
+      "path": "anadius-crt-initial-multibyte-source/initial_mb.hpp",
+      "sha256": "d69491ef05381d0dcf1ce75199dbb07d586fe3edec680cab57c57bce0ea0d1a6"
+    },
+    {
+      "path": "anadius-crt-initial-multibyte-source/native_tests.cpp",
+      "sha256": "4fc5b32aa092ff2523e9db8dd4c75cfa7242dfeb395b5b2c8c66c19d9fa2f8f6"
+    }
+  ]
+}

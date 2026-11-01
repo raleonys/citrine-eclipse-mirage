@@ -1,0 +1,68 @@
+{
+  "result": "PASS",
+  "reviewer": "composed_write_audit",
+  "scope": "Independent frozen four-source review against all five complete retained assembly/pseudocode normal procedures",
+  "sources": {
+    "outputs/anadius-socket-source/composed_write.hpp": "12adee25325e0a9b56dc229ced9cf56768de2ec0f35312ee173c8a6293e9ef08",
+    "outputs/anadius-socket-source/composed_write.cpp": "ae72cf24ff9e0ff0f4c0ecd93061f6e0538cbefda526cc945b7aed47c10b6e48",
+    "outputs/anadius-socket-source/composed_write_native.hpp": "23f85015f11ef464ffd2b6501c5a70ee21b8d5f9cbc016e3e7cfd7c2bdc060cb",
+    "outputs/anadius-socket-source/composed_write_native.cpp": "0aa0b7fa775156f28f18c16a7c5314979ef112c765de13d695996e3d3c5f454e"
+  },
+  "report_sha256": "be6eb21e18bec9bfa33ba0906af363650a76d763dc5e0fa9114c1c8acc753445",
+  "audit_report_sha256": "57aaa31c2154dc093cbd1697a144d223e170c8af648f968c6d91a14ee732b38d",
+  "audit_json_sha256": "97b21ea83a29c220de8041c3d600a5e90731e7b770859c96cc828178a15d1ecd",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180021fd0",
+    "0x1800261d0",
+    "0x1800269b0",
+    "0x180028b50",
+    "0x180028c00"
+  ],
+  "new_original_procedures": 5,
+  "core_contract": "Flags1alwayssend;non1progresswrapbeforefinish;currentTLSallocator;weaktemporaryplusoperationownership;moveownedbefore023dd0;latebufferreload;low32length/full64zerotest;workfirst;1234to10061;old1CASpublication;packetmetadataseparatecancellation",
+  "native_contract": "SDKtypedWSASendcount1,bytesout0,flags,overlapped,nullroutine thenimmediateunconditionalWSAGetLastError; nativeallocator/projection/lifetime required",
+  "composition": "RecoveredComposedWriteEffects replaces existing0261d0 provider with recovered source and actual021fd0/0269b0/028b50/028c00;023dd0/025a70 remain mandatory",
+  "providers_not_recovered": [
+    "023dd0 native environment-constructor algorithm",
+    "025a70 completion application algorithm",
+    "04b0bc/04b788 CRT allocation/free",
+    "Native raw allocation/closure ABI/bindings/control lifecycle and weak-delete slot",
+    "Native SDK import behavior/SEH/unwind/concurrency/full DLL equivalence"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Five normal caller procedures only",
+    "Existing CRT production unchanged",
+    "Bounded raw storage separate from typed SDK/handler/closure projection",
+    "Uninitialized native bytes remain unspecified",
+    "No full DLL equivalence claimed"
+  ],
+  "context_evidence": {
+    "address": "0x180027c10",
+    "newly_recovered": false,
+    "pseudo_evidence": "ev_f152e2905264f9dc18af84544b646d77dac85539841a6cd365e7e2309d3f7065",
+    "assembly_evidence": "ev_d48cd3bea9d0dcba074c541aa1bcfa2e381f3b7fc10b43089ec0486b70fb14bf",
+    "references": {
+      "outputs/anadius-socket-source/completion-dispatcher-evidence.json": "d11df92166732971c7d37be6351a763a0ebc85fe5a7a0b81a6ab2d36be0990a9",
+      "outputs/anadius-socket-source/completion-dispatcher-evidence.asm.txt": "dd41ec2b940aa41b101cc5f4de137d05f3bf4abaae60cbf3996d875a591c1060"
+    },
+    "instruction_addresses": [
+      "0x180027d17",
+      "0x180027d1b",
+      "0x180027d22",
+      "0x180027d25",
+      "0x180027d27",
+      "0x180027d2b",
+      "0x180027f0a",
+      "0x180027f32",
+      "0x180027f38",
+      "0x180027f3e"
+    ],
+    "inference": "Controlled earlycompletion+failedkey2postfixture: fallbackretrykey0bytes0thenSDKsuccesszero overwritescachedmetadata,handled1/progress0/finish1/send1;directkey2fixturethreechunks. StaticflowplusconfiguredsyntheticSDKoutputs only; nooriginalruntimeexecution/generalraceguarantee"
+  }
+}

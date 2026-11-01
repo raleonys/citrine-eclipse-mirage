@@ -1,0 +1,31 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "retained REA/Ghidra; no new target opening or execution",
+  "functions": [
+    {"address":"0x1800625b0","pseudocode_evidence_id":"ev_0f77a2faa4ce96a4772e24821af0610aa87b98b6d14ee2e1a366f1742c38a007","assembly_evidence_id":"ev_d39bc3572866a8838c46bfad0d5b0e95926f42da409913c263ffcccd96f91bc5"},
+    {"address":"0x1800625f8","pseudocode_evidence_id":"ev_3eaaf083289c79d1ec1dc7617a91f499ae18e8308bc16043f25674c85d39075f","assembly_evidence_id":"ev_ab7686ba7abc562c511aaf49317ee14d818bd8f6a6c3d09d60e59918709862a7"},
+    {"address":"0x180062614","pseudocode_evidence_id":"ev_9d4a13971ff88e40e8d9954f61a4ab3412e680ab50b5359b68d9f09299abc802","assembly_evidence_id":"ev_b35fd0231eeada9b8ce6b27a9fdb3210c190e7302f4c27bb1b0b01fb5780158e"},
+    {"address":"0x18006264c","pseudocode_evidence_id":"ev_349afdb94e6ccde985f29f2ac149c3bda3e4af2b7e23bec1270a2b9f2ab7b710","assembly_evidence_id":"ev_2b686f90815f0a360d36f8aedccdeac29b8c75950763252760d90cdf33df9816"},
+    {"address":"0x18005093c","pseudocode_evidence_id":"ev_7c55b214bd7fee9fd6802bf7cd2d5fee60dcadd23e1ab44be933c957753d510d","assembly_evidence_id":"ev_e7beb48a250a325782abca2c7d260b79303758e847b728490746455dd40bb37d"},
+    {"address":"0x180050984","pseudocode_evidence_id":"ev_de2049f8c289514442080ceda97ecd487ac270cf27486430e2622e889fb079f1","assembly_evidence_id":"ev_9850f39676109af903f2f6200669d8bd80d37396e25f2de65c58acedbbca07a0"},
+    {"address":"0x18006707c","pseudocode_evidence_id":"ev_9058b7c0706124cb51eae876f3e94d1150c1fd4177e60e4fa9149da0989459f5","assembly_evidence_id":"ev_f0c1421f9b5476388f4731846e5c97061cb1c3a11a261ab8cfdbaf975b3cfa50"}
+  ],
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "bounded_rdata_read": {
+    "provenance": "Local bounded 8-byte read after original SHA-256 match, not a new REA Evidence ID",
+    "target_hash_verified": true,
+    "section_va": "0x18007f000", "section_raw_offset": "0x7d800",
+    "candidate_table_va": "0x18008b9b8", "exclusive_end_va": "0x18008b9c0",
+    "raw_offset": "0x8a1b8", "byte_count": 8, "hex": "0700000010000000",
+    "module_candidates": [7,16], "procedure_slot": 15
+  },
+  "scope": "Seven recovered bodies; required opaque providers and real recovered encoded resolver; no native bank or native lock calls",
+  "limitations": [
+    "Initialization supported for initially empty bank only; cleanup count must be within the physical bank",
+    "Caller supplies externally serialized state and correctly typed live native lock objects when connecting a provider",
+    "Native provider effects, full loader composition, invalid-memory behavior, XFG/CFG and SEH ABI equality remain unproven",
+    "Only defined AL Boolean results are represented, not incidental upper RAX registers"
+  ]
+}

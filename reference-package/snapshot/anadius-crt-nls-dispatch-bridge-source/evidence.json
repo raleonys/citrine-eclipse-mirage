@@ -1,0 +1,103 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "new source composition of four retained Ghidra bodies, actual shared resolver, shipped locale tables",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "full_selected_evidence": [
+    "../anadius-crt-nls-dispatch-source/selected-evidence.json",
+    "../anadius-crt-locale-names-source/selected-evidence.json"
+  ],
+  "raw_table_evidence": "../anadius-crt-locale-names-source/extracted-tables.json",
+  "functions": [
+    {
+      "va": "0x1800671d4",
+      "pseudo": "ev_dcf90fa1f6907a9a331286116a10095040da54b69bb7750ea955133a6ca61c5e",
+      "assembly": "ev_e7801c8d9ac101f2c7950531bc35d290fcd5f7f97efa9316bf63c17270c6629d"
+    },
+    {
+      "va": "0x1800672c0",
+      "pseudo": "ev_dc923eb5a24bc3f292a38c72f4418fa043f9be816c80341b5cb36260c5bfa3b2",
+      "assembly": "ev_0307916adc6800facce0c0454e3b85c9029f027c6ea1b0e19a95d74edd98c1a7"
+    },
+    {
+      "va": "0x18007310c",
+      "pseudo": "ev_38903404049953dae5f478e768c17c886f504afa7cfa464ec0311c9895b5acec",
+      "assembly": "ev_e4f8c851164f85a6117aa2727aaaba0305c422ec0a508466c0245c07f957c985"
+    },
+    {
+      "va": "0x1800736d4",
+      "pseudo": "ev_7211a2b4d5d7bb16be2304a2abc00591044e134d17bfd0dd7c196e1277bc1e5f",
+      "assembly": "ev_b22886e4d0a536b26d33de57cf801990a38311d78f898b4b371b721bf8a0d1d3"
+    }
+  ],
+  "candidates": {
+    "lcmap": {
+      "va": "0x18008b9e0",
+      "file_offset": "0x8a1e0",
+      "modules": [
+        3,
+        16
+      ],
+      "procedure_slot": 17
+    },
+    "locale_name": {
+      "va": "0x18008ba18",
+      "file_offset": "0x8a218",
+      "modules": [
+        3,
+        16
+      ],
+      "procedure_slot": 19
+    }
+  },
+  "tables": {
+    "name_index": {
+      "va": "0x18008ea10",
+      "file_offset": "0x8d210",
+      "rows": 228,
+      "bytes": 3648,
+      "sha256": "477758760a6b04a3b7f198874408f4fc9156795260b28f26da940c5686a4b9f6"
+    },
+    "lcid": {
+      "va": "0x18008cfc0",
+      "file_offset": "0x8b7c0",
+      "rows": 228,
+      "bytes": 3648,
+      "sha256": "12c490beaf37c4da406d63ec5c041966e63975a7221100893416a85475497245"
+    },
+    "observed_static_order": "one inversion at rows129 kok-in ->130 ko-kr; original binary search cannot reach kok or kok-in;226 other names match record LCID; order preserved, not repaired"
+  },
+  "connections": [
+    "Prior actual NLS wrapper -> actual0671d4 -> actual resolver0669b0 with same State/cookie/module/procedure cells.",
+    "Ex missing -> actual0672c0(name,0) -> native LocaleNameToLCID when available else actual07310c/0736d4 -> native W evenLCID0.",
+    "Existing CP/conversion/GetStringTypeW/scratch/native backend forwarded; its former0671d4 callback is never used."
+  ],
+  "proof_points": [
+    {
+      "va": "0x18006720d/0672e9",
+      "claim": "Procedure slots17/19 and exact candidate arrays passed to source resolver."
+    },
+    {
+      "va": "0x180067271..0672ab",
+      "claim": "All nine Ex arguments/fullEAX forwarded; absent Ex invokes name-to-LCID flags0 then W6args."
+    },
+    {
+      "va": "0x180073135..0731ad",
+      "claim": "Binary search bounds0..227, comparatorcount85, signedindexchecks, indexed DWORD LCID."
+    }
+  ],
+  "validation": "27943 actual source integration checks: all three routing branches, cache hit/missing, nativeEx0 no fallback, LCID0 W call, raw signed/full32returns and nineargs, original unreachable names; nested nativecallback executes innerType/map and verifies outer/inner output, PTDbit2 and scratch/input restoration.",
+  "domain_limits": [
+    "Native API endpoints use controlled fixtures; no Windows locale semantics, native ABI or original CFG/SEH claimed.",
+    "Compiled shipped locale tables immutable; runtime data mutation excluded.",
+    "Serialized synthetic reentry tested; native concurrency and process/global lifecycle unproven.",
+    "Output destination addresses remain logical tokens with tracked spans, not native layout."
+  ],
+  "remaining": [
+    "Native Ex/W/LocaleNameToLCID/GetStringTypeW/conversion/CP/Heap/FLS/lock/atomic API bindings",
+    "Image globals, loader/cookie/CFG/SEH and complete independent DLL equivalence"
+  ],
+  "original_target_execution": "none",
+  "original_files_modified": false
+}

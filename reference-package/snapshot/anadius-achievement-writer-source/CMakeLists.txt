@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.20)
+project(achievement_writer LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+add_library(achievement_writer STATIC writer.cpp ../anadius-path-source/paths.cpp
+    ../anadius-file-source/binary_io.cpp ../anadius-file-source/native_io.cpp)
+add_executable(achievement_writer_tests writer_tests.cpp)
+target_link_libraries(achievement_writer_tests PRIVATE achievement_writer)
+enable_testing()
+add_test(NAME achievement_writer_checks COMMAND achievement_writer_tests "${CMAKE_CURRENT_BINARY_DIR}/generated-fixtures")

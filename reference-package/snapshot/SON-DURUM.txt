@@ -1,0 +1,23 @@
+GUNCEL TEMIZ TAM ORTAK DERLEME — 2026-11-01T18:35:16.689528+00:00
+
+PASS: 296 nesne (292 C++ / 4 C), 356 ortak test grubu,
+19 framework terminal senaryosu. 1017 kaynak dosyasi hash ile dogrulandi.
+Eski derleme klasoru onceden yedege tasindi; bu build bos klasorde yapildi.
+
+PRODUCTION DLL LINK: BLOCKED. Tam anadius+hook arşivleri linke secildi.
+Eksik uretim tanimlari: require_loader_attach_runtime,
+require_loader_detach_quiescence. Calisan production DLL uretilmedi.
+ZIP'teki owned_reference_fixture.dll yalnizca kendi sentetik test DLL'imizdir.
+
+Guncel build: source-workspace/build/
+Tam kayit: source-workspace/build-record.json
+Tam dogrulama: source-workspace/full-build-verification.json
+Kaynak snapshot: source-workspace/source-snapshot.json
+Link sonucu: dll-link-gate-source/current-full-link.json
+Paket ayrintisi: delivery/latest-source-status.json
+
+Eski per-module derleme dosyalari ve onceki focused binary agaci yeni ZIP'e
+alinmadi. B54 build/source/document snapshot kayitlari yalniz history/B54
+altinda tarihseldir; eski raporlardaki sayilar o asamalara aittir.
+Orijinaller okunmadi/calistirilmadi/degistirilmedi; engelli version girdisi
+veya ciktisi yeniden denenmedi. Derleyici/toolchain pakete dahil degildir.

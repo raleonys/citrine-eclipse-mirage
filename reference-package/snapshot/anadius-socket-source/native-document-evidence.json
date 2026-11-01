@@ -1,0 +1,223 @@
+{
+  "schema": "native-document.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180001830",
+      "pseudo_evidence": "ev_abf6ead481323ed34418e13f343856b36f0183b4a90796a24f1a890f0dad1914",
+      "assembly_evidence": "ev_de11d55b943716ed390775f77e60b3f24b2c5f17431bc50f1f7fc7eca335c9c9",
+      "newly_recovered": true,
+      "recovery_scope": "new bounded raw-memory normal document wrapper projection and final source bridge; mandatory lower providers and native ABI open"
+    },
+    {
+      "address": "0x180004280",
+      "pseudo_evidence": "ev_783e89582f054f61046e9c06b28ad2145076dbd6721a32cd6bfe2c615e85ff20",
+      "assembly_evidence": "ev_795f6b99b0b687dd3ceffca4901b4e92f2721869b41c336f72e0ba4c670d4a4f",
+      "newly_recovered": true,
+      "recovery_scope": "new bounded raw-memory normal document wrapper projection and final source bridge; mandatory lower providers and native ABI open"
+    },
+    {
+      "address": "0x180001e00",
+      "pseudo_evidence": "ev_310b19c5bb059cd1c7953ed5ff55dac04b85c180edb01c590a4176041e650755",
+      "assembly_evidence": "ev_b1ea754068b65d01028de2c76b93bcfaf0dca2608322419cc6418811342f3097",
+      "newly_recovered": true,
+      "recovery_scope": "new bounded raw-memory normal document wrapper projection and final source bridge; mandatory lower providers and native ABI open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180001830",
+    "0x180004280",
+    "0x180001e00"
+  ],
+  "new_original_procedures": 3,
+  "new_source_bridges": 3,
+  "new_unique_source_mapped_addresses": 3,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/native_document.cpp",
+      "base": "NativeMessageApi::construct_document_001830",
+      "body": "construct_native_document_001830",
+      "closure": "RecoveredMessageDocumentApi::construct_document_001830",
+      "address": "0x180001830",
+      "native_abi_complete": false,
+      "scope": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/native_document.cpp",
+      "base": "NativeMessageApi::parse_document_004280",
+      "body": "parse_native_document_004280",
+      "closure": "RecoveredMessageDocumentApi::parse_document_004280",
+      "address": "0x180004280",
+      "native_abi_complete": false,
+      "scope": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/native_document.cpp",
+      "base": "NativeMessageApi::destroy_document_001e00",
+      "body": "destroy_native_document_001e00",
+      "closure": "RecoveredMessageDocumentApi::destroy_document_001e00",
+      "address": "0x180001e00",
+      "native_abi_complete": false,
+      "scope": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory"
+    }
+  ],
+  "native_typed_providers_newly_closed": 3,
+  "context_functions": [
+    {
+      "address": "0x180002e60",
+      "pseudo_evidence": "ev_d444b1fc601d178931a7e8d2639ae1302147db0aa91a4ac0ba78524478cc9132",
+      "assembly_evidence": "ev_85978582117bd9f341daf92a73488d66e6901ef09a94b8f6c42e4e4a594b75a6",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800041b0",
+      "pseudo_evidence": "ev_d4270b9a2ca885be4b12cfa24f257c4c48568ce7a4cbd3234c71d483394ca0de",
+      "assembly_evidence": "ev_0161e7e54c7c2f628bb6bbf99adff0b97b85e09b7c8528365aa858c02fdd4a08",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180003110",
+      "pseudo_evidence": "ev_1309c5f52e5b3d9c95ec97c721c6a49f19fcded8db1c04d21e5faf6c6874beb4",
+      "assembly_evidence": "ev_635328ecb5bc687965c6bb53ce282983fd334bc548208011ed74d62e645db5bf",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002d70",
+      "pseudo_evidence": "ev_4e130f68563bb04de14fda1c456fd436f3dacd767dd331b62bdd0b7ec1bc4588",
+      "assembly_evidence": "ev_06bc5dbb4ccc0a7c9ef5555e3b2c6beb617304d7002256a26cc3451fe1233c49",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002e10",
+      "pseudo_evidence": "ev_d3753f429cb0573b35a6d038b49b7e94ccd954fe6542385b4948667e48fd523a",
+      "assembly_evidence": "ev_ffc8268becf2220ca2eeb649c6420381de74df66a6cf841c3f750d90fa5692ac",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002dc0",
+      "pseudo_evidence": "ev_360a8ebddaae1ee10f83511de53328b963e4dbf5369444c578f3841fda48606d",
+      "assembly_evidence": "ev_942cee8f39a202985f358368870006d179df8d801e7c5ee6524b718b6cf62afb",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001c30",
+      "pseudo_evidence": "ev_b0d1ec372d4b8ad00df52da43c93679046facd73ad4d9f5863369ece94248459",
+      "assembly_evidence": "ev_f88b02234b39e4be1d70ef9f1d8f69cb3447507b0a25e2a40a9d178765b573e3",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001cb0",
+      "pseudo_evidence": "ev_443260d7e20484b82b22a88a38d81ed81dc3b6284636a4b11009555f363f64cd",
+      "assembly_evidence": "ev_1fec953cfb59eb28d532eb735335cff7cbee4916e7cbf4c23a119a7c379197f5",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001bb0",
+      "pseudo_evidence": "ev_092ecbcf8771634efb8602a3d6cd0c898285159da964af33c3c60fc8ea0d6f6e",
+      "assembly_evidence": "ev_7f94b4e17d4fc968551742e8037bd685c0d16490f0e4a589eb7b722000771cb7",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001d30",
+      "pseudo_evidence": "ev_586172bc5ef241fce0e41a4d51bfd926c1ba166521c02a285dba1e7337c7c816",
+      "assembly_evidence": "ev_9e9eabb75164aad26441c55c6926835ef60fd2bf0461f0bf1fd1f4c442db8975",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180001ea0",
+      "pseudo_evidence": "ev_e7c4be9c1717eb0483ad0b59aaf3cbeb61047a721af9832aa8b1d49694e9dd87",
+      "assembly_evidence": "ev_21355add25b8123d7a7643cd6b01256197966701b4c2309f7557a5cdd95d7192",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18004b100",
+      "pseudo_evidence": "ev_cea6578996a43c1f018dcfc49899d6e9d27ac0338212d26591e1147bb72fcfd6",
+      "assembly_evidence": "ev_2ff791306b89a75c3d14310754d5a42ad49824a5ee3c64a17640ffe9c0d178a7",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "native_document_test_fixture.hpp": "a3fbffccc988bc26659d4f3e65e2f46bb33c08ec97d504e7a501688035eca935",
+    "native_document_tests.cpp": "bef069d15f6927d106375d53f429552a12cb1c4ac7f3c4d6181c54044a0ca1f8",
+    "native_document_integration_tests.cpp": "10e6b1033b214eab780992cd6eb6623a9ad76c29a43e7b2b1a09bfa8e403fe44",
+    "build.ps1": "096da48da95ac5abe2771cba967744d86279f06293a15c8945dc85493947b301",
+    "CMakeLists.txt": "c77d9ce90d9d351652ff99e8cf9b96ba0c6ad33cfaa680fe78a1e44db5944891",
+    "README.md": "820a6dc70fed88ac65329a2898dddfd122ebe5096bc8c02c4eb659a6868ec58f"
+  },
+  "reused_source_hashes": {
+    "native_message.hpp": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c",
+    "native_message.cpp": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+    "native_dispatch.hpp": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440",
+    "native_dispatch.cpp": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b",
+    "cipher_session.hpp": "3fa624b7443d7fa1ab3eb86f9567e5b98323014166b98be43328360c272af412",
+    "cipher_session.cpp": "62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2"
+  },
+  "support_hashes": {
+    "native-document-evidence.pseudo.c.txt": "5f773dedca430415c1e83d4934073c9d8f65a76e0977d7e5d00f2b15d4ecec01",
+    "native-document-evidence.asm.txt": "394a17fbd1637d6867a78ec5a68ff54ad20037054c2902dfc31c15b6393ae6a1",
+    "native-document-context.pseudo.c.txt": "da9712d877a7bfee137e158c885f882006d69f9568b97bd65662f1ff65a2aef9",
+    "native-document-context.asm.txt": "246eacda52faa230bf02437e857f5a22caf76128480d89590bddb6592d3b5cfc",
+    "native-document-flow-audit.md": "32878e4d443286f4784f89b368351364aa4c7f452342cfdf9d300beae6b55aa4",
+    "native-document-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788",
+    "native-document-source-review.json": "efba9fd0d4dc15f95c4e06356ef1c8293f189a3c4d3bbcbac190df9a0d18273c"
+  },
+  "prior_target_presence": {
+    "0x180001830": {
+      "source_presence": "module_record_only",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180004280": {
+      "source_presence": "module_record_only",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180001e00": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 567,
+  "integration_checks": 15264,
+  "new_checks": 15831,
+  "execution_scope": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory",
+  "limitations": [
+    "Bounded raw memory projection and supplied vtable identity values; no actual native vtable/function/global/object-layout/lifecycle/ABI equivalence established",
+    "Constructor preserves unaddressed bytes;0x308 is the minimum touched extent, not independent proof of complete object size",
+    "NativeMessageDocument.error_6c aliases the bound memory error cell directly; no copied error-state synchronization",
+    "004280 is the parse wrapper normal flow;0041b0 parser engine and002e60 document clear remain mandatory lower providers",
+    "003110 node removal, all pool clear/destructor helpers,001ea0 base destructor,04b100 allocation and04b0f8 free remain mandatory; no generic CRT bodies added",
+    "04b0f8 call defines only RCX in this destructor; no invented sized-free argument or native allocator recovery",
+    "Normal failure prefixes retain committed effects without invented catch/rollback/unwind cleanup; fixture teardown is not native EH evidence",
+    "Upstream XML compatibility backend used on synthetic inputs is not proof of original tinyxml version, layout or native memory-pool behavior",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity checks are separate; CRT unchanged and paused"
+  ],
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Addressed assembly/source and synthetic independent byte/lifetime/failure-prefix oracles; independent final native equivalence review remains pending",
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "native-document-source-review.json",
+      "reviewer": "/root/native_doc_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N15 document clear002e60 and node cleanup003110 source contracts;0041b0 parse engine and mempool/native allocator/vtable backends remain open; CRT stays paused"
+}

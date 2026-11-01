@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "reviewer": "io_completion_audit",
+  "scope": "Independent frozen four-source review against all eight complete retained assembly/pseudocode normal procedures",
+  "sources": {
+    "outputs/anadius-socket-source/io_completion.hpp": "85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32",
+    "outputs/anadius-socket-source/io_completion.cpp": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90",
+    "outputs/anadius-socket-source/io_completion_dispatch.hpp": "43e4ab5404a7805e689232622ebc2a7471bd851532cdb952338dc0bce08074c2",
+    "outputs/anadius-socket-source/io_completion_dispatch.cpp": "bb85580acd56f40b4e9c32e06a615aba3af36c37f6adc51ccc1184ec3c96a9a1"
+  },
+  "report_sha256": "2aae92dd0c4c24a27c23d62f31d936881627208e54c3c3cea26cc1d17c6c5d94",
+  "audit_report_sha256": "77cf229537e6f5281e5d8b6d6d61748bd99bfc5af2289380d3cec7af34aa8f8e",
+  "audit_json_sha256": "575a717c1298b4a6607ba56a9a5a3aef9deb0e7781a7833312c39b8776400e69",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x180027710",
+    "0x180027a20",
+    "0x1800293f0",
+    "0x1800294c0",
+    "0x180023cb0",
+    "0x180021a40",
+    "0x180021a80",
+    "0x180026a00"
+  ],
+  "new_original_procedures": 8,
+  "core_contract": "Error snapshot beforemove;live mapping;moveownedclearoriginal;actualcleanup BEFORE handler;cachedobject/livecontrols;old1 low32strong/weak transitions;postcallbackallocationload/TLScache/free;explicitnestedfactory-getter/move/destroyguard/dispatch/destroy",
+  "native_contract": "Typed defined fields exclude padding,senddummy,uninitialized factoryscratch;SDK/raw allocation separate;requirednativeproviders and lifetime",
+  "composition": "IoDispatcherEffects routes known receive/send identities through inherited posted dispatcher complete_other;unknown operation completion remains mandatory",
+  "providers_not_recovered": [
+    "Native polymorphic table slot bodies and lifetime",
+    "0229d0 send dispatch",
+    "022c60 receive dispatch",
+    "025c40 receive handler",
+    "0261d0 send handler",
+    "04b788 deallocator",
+    "GS-cookie/native ABI/exception SEH unwind/concurrency"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Eight normal caller procedures only",
+    "Existing CRT production unchanged",
+    "Bounded raw projection separated from typed SDK operation",
+    "Native uninitialized padding remains explicitly unspecified",
+    "No full DLL equivalence claimed"
+  ]
+}

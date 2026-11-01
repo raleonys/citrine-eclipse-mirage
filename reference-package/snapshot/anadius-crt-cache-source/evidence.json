@@ -1,0 +1,79 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "retained REA/Ghidra; no new target opening or execution",
+  "functions": [
+    {
+      "address": "0x18004c134",
+      "pseudocode_evidence_id": "ev_7edb247521a8e191fbf4b488a540012d62b9b0d0b6959f03df9c98fbae2ea69f",
+      "assembly_evidence_id": "ev_6cae632d4ba06b9d253c5e61a153cfcfef42bd911d4471fa0041fa32215ce0c0"
+    },
+    {
+      "address": "0x180067538",
+      "pseudocode_evidence_id": "ev_1c3496dc2577c44b542ebac667f9c414d90126bb3eb84c679dbbc63c37dc5c47",
+      "assembly_evidence_id": "ev_648f912700799447c440a116da406f9345d05d57ea0565f397abd676c40c32e5"
+    },
+    {
+      "address": "0x18006755c",
+      "pseudocode_evidence_id": "ev_47f12c44264c123d7465248f97156f81410be7b748f19dfd7a0c19745d767b1e",
+      "assembly_evidence_id": "ev_869609ae7ad1202c298aa125c562ef90ccd6ea7051eec30390d9066b35363045"
+    },
+    {
+      "address": "0x1800644b0",
+      "pseudocode_evidence_id": "ev_02573d630d19ea19f008efd3e962fa497717b5005f7cb0255aabbebd1c5abd93",
+      "assembly_evidence_id": "ev_eb79dd9ecb1eff8d033c4008f66196467d70b4edea43d3bc0e9ca8de190054bf"
+    },
+    {
+      "address": "0x18005c7e4",
+      "pseudocode_evidence_id": "ev_8b6e7939b375b7e05cda7eb81e3c74d8ebd4a9d062efb23faa7b3e47b099ce07",
+      "assembly_evidence_id": "ev_8490ed78423f555d800a2f95f152c1cf4f82467794bf04f3b5a1377a55d6885d"
+    },
+    {
+      "address": "0x1800634a8",
+      "pseudocode_evidence_id": "ev_15bab033c93d384bd0963a090f3232530c5e5549772777ac38c2252d68066ea8",
+      "assembly_evidence_id": "ev_a028668a4a012434efbcb9c0ee3a514ec69cedb5b2a0ba502f3f48fca938044b"
+    },
+    {
+      "address": "0x18005ea40",
+      "pseudocode_evidence_id": "ev_53b67a61656dc37219b2002c25a96ba807fb6d7305ac2ffbdaef27750636696d",
+      "assembly_evidence_id": "ev_8b22f8e48b37a2893dc326fd4f7e562f3661b2ea49a7e3d20255fd893ccaee2b"
+    },
+    {
+      "address": "0x1800705f0",
+      "pseudocode_evidence_id": "ev_02f278a978fc017e087ab227340e0473f02ff03921b1ceca6d888c62a4f568f2",
+      "assembly_evidence_id": "ev_9d99c39c927f1963cf3c7ee61f26f847582511e57319151744526de11f3486b7"
+    },
+    {
+      "address": "0x18005cd94",
+      "pseudocode_evidence_id": "ev_5b0dc78f79d228cb45e8e52ffb85f8f6219328e36dd3d70799094737e4b529f7",
+      "assembly_evidence_id": "ev_39ccb69aadb6a7d52aa917db5cd92d0694f6f2f8a7df5580827ff3e7b7fee2ef"
+    }
+  ],
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "bounded_rdata_read": {
+    "target_hash_verified": true,
+    "section_va": "0x18007f000",
+    "section_raw_offset": "0x7d800",
+    "section_size": "0x21e00",
+    "module_table_va": "0x18008b3a0",
+    "count": 21,
+    "data": "module-names.json",
+    "data_sha256": "7f52db952606403e8e70414ca565efb1269d882b5a61a54a025210c1512f279a",
+    "provenance": "Local bounded file reads after target SHA-256 match; not newly generated REA Evidence"
+  },
+  "observations": [
+    "Cookie A1580 default 0x2b992ddfa232; complement A15C0; entropy return BOOL ignored and value masked to 48 bits",
+    "067538 REP STOSQ writes 31 qwords at A53A0; RAX=(cookie&~0xff)|1",
+    "06755c walks 21 qwords A52F0..A5398 exclusive; nonzero CL skips walk; zero and -1 are not freed; each nonzero entry cleared after call",
+    "0644b0 reads cookie once and writes 8 raw qwords through five setters in assembly call order; encoded NULL equals raw cookie"
+  ],
+  "limitations": [
+    "QPC no-output leaves original uninitialized stack value: explicit unsupported domain, no fabricated value",
+    "Entropy and FreeLibrary remain required effects; native APIs and original DLL never invoked",
+    "Atomic cache object is a C++ representation; original memory layout and instruction equivalence unproven",
+    "Caller must serialize cache initialization/uninitialization against resolver use",
+    "Low AL only specified for shutdown and encoded-global initializer; undefined high return bits are not invented",
+    "CRT startup/shutdown table ordering and global state alias composition remain separate integration work"
+  ]
+}

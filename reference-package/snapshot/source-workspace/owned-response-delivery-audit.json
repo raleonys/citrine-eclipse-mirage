@@ -1,0 +1,67 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T02:32:09.577822+00:00",
+  "prior_package_sha256": "20f1ec7448718a3cc856f07378f90f27a94fc3db8becd141206b3a9735edb8fc",
+  "prior_source_count": 556,
+  "unchanged_prior_sources": 556,
+  "added_sources": [
+    "anadius-socket-source/owned_response.cpp",
+    "anadius-socket-source/owned_response.hpp",
+    "anadius-socket-source/owned_response_integration_tests.cpp",
+    "anadius-socket-source/owned_response_test_fixture.hpp",
+    "anadius-socket-source/owned_response_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 561,
+  "current_documents": 217,
+  "native_objects": 184,
+  "cpp_objects": 180,
+  "c_objects": 4,
+  "normal_test_groups": 181,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 54,
+  "new_checks": 437,
+  "new_tests": [
+    {
+      "module": "socket_owned_response",
+      "result": "PASS",
+      "output": "PASS: 317 socket owned response checks; actual020cb0/021900/022280/0219d0, early destruction, cache reuse, byte flags, independent copy and residual cleanup",
+      "executable_sha256": "c4357d1b6273c987e8d161b8578295a3fd19b1cae4e522ad32a3c6396567a182"
+    },
+    {
+      "module": "socket_owned_response_integration",
+      "result": "PASS",
+      "output": "PASS: 120 socket owned response integration checks; actual028d30/021420/020cb0/021900/022280/0219d0/028270/02a500/021fd0/021a80/0261d0/025a70 source; controlled string copy/constructor/completion and injected send",
+      "executable_sha256": "4b0f5215e44f87d12e854dcf67ecb28514dd034fe79d497f942697f65e564064"
+    }
+  ],
+  "validation_mirror_pairs": 27,
+  "historical_module_records_preserved": 26,
+  "historical_config_references_preserved": 52,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "49622f69ba331734fdd90102766c57c65d568387c28a1bcfa0c01e15c6482ddf",
+  "inventory_data_checks": 7188,
+  "normal_source_procedures_added": [
+    "0x180020cb0",
+    "0x180022280",
+    "0x1800219d0"
+  ],
+  "new_original_procedures": 3,
+  "closed_provider": "RecoveredOwnedResponseApi::make_owned_response_020cb0",
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual N1/N2/020cb0/021900/022280/0219d0/028270/queued-send/composed/finish; controlled string COPY/constructor/completion and injected AsyncSendApi; no native027a20/IOCP/worker",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N4 009eb0 independent string COPY and026670 deque growth lower bodies"
+}

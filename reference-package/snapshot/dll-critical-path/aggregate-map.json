@@ -1,0 +1,172 @@
+{
+  "schema": "native-aggregate-field-correspondence.v1",
+  "scope": "036d20/037f70 retained native analysis; not a complete native constructor/destructor implementation",
+  "base": "0x1800a39e0",
+  "observed_write_end_exclusive_offset": "0x538",
+  "existing_configuration_fields": 41,
+  "additional_field_groups": [
+    {
+      "offset": "0xa0/0xa8",
+      "VA": "0x1800a3a80/0x1800a3a88",
+      "meaning": "online module/object",
+      "native_initialization": "both zero",
+      "current_model": "RuntimeSeed",
+      "assembly_anchors": "036dcb/036dd2"
+    },
+    {
+      "offset": "0x138",
+      "VA": "0x1800a3b18",
+      "meaning": "owned narrow string",
+      "native_initialization": "40 retained static bytes; length0x28/capacity0x2f",
+      "current_model": "Runtime-owned immutable AuthenticationCode; selected SourceBackend->Worker->native Handlers binding focused PASS; full native teardown order open",
+      "assembly_anchors": "036e66..036ec2",
+      "implementation_evidence": "outputs/anadius-license-source/auth_state.evidence.json"
+    },
+    {
+      "offset": "0x25b..0x25e",
+      "VA": "0x1800a3c3b..0x1800a3c3e",
+      "meaning": "online and three ready bytes",
+      "native_initialization": "zero",
+      "current_model": "RuntimeSeed",
+      "assembly_anchors": "037047/037051/037058"
+    },
+    {
+      "offset": "0x260",
+      "VA": "0x1800a3c40",
+      "meaning": "execution mutex storage",
+      "native_initialization": "clear then04a698(type2)",
+      "current_model": "RuntimeSeed.execution_mutex",
+      "assembly_anchors": "03705f..037086"
+    },
+    {
+      "offset": "0x408",
+      "VA": "0x1800a3de8",
+      "meaning": "achievement XML path",
+      "native_initialization": "empty UTF16 object",
+      "current_model": "Runtime-owned shared Paths.xml_path: Persistence and Worker selected-source binding focused PASS",
+      "assembly_anchors": "0379e5..0379fe"
+    },
+    {
+      "offset": "0x428",
+      "VA": "0x1800a3e08",
+      "meaning": "achievement mutex storage",
+      "native_initialization": "037b20->04a698(type2); helper writes distinguished from padding",
+      "current_model": "Runtime-owned MutexState/Platform binding through Worker to Graph; selected recovered lock/unlock and actual root count4c focused PASS; full native teardown open",
+      "assembly_anchors": "037a05/037a0c",
+      "implementation_evidence": "outputs/anadius-achievement-runtime-source/mutex_binding.evidence.json"
+    },
+    {
+      "offset": "0x4a8",
+      "VA": "0x1800a3e88",
+      "meaning": "achievement INI path",
+      "native_initialization": "empty UTF16 object",
+      "current_model": "Runtime-owned shared Paths.ini_path: Persistence selected-source binding focused PASS",
+      "assembly_anchors": "037a66..037a7f"
+    },
+    {
+      "offset": "0x4f8..0x508",
+      "VA": "0x1800a3ed8..0x1800a3ee8",
+      "meaning": "loaded-module vector",
+      "native_initialization": "three zero pointers",
+      "current_model": "RuntimeSeed.libraries.loaded",
+      "assembly_anchors": "037ab0..037abe"
+    },
+    {
+      "offset": "0x510..0x512",
+      "VA": "0x1800a3ef0..0x1800a3ef2",
+      "meaning": "console flags",
+      "native_initialization": "zero word and byte",
+      "current_model": "ConsoleState",
+      "assembly_anchors": "037ac5/037acc"
+    }
+  ],
+  "destruction_offset_order": [
+    "0x518",
+    "0x4f8",
+    "0x4e0",
+    "0x4c8",
+    "0x4a8",
+    "0x488",
+    "0x478",
+    "0x428:CALL017a30_RET",
+    "0x408",
+    "0x3e8",
+    "0x3d0",
+    "0x3b8",
+    "0x3a8",
+    "0x398",
+    "0x378",
+    "0x358",
+    "0x338",
+    "0x318",
+    "0x2f8",
+    "0x2d8",
+    "0x2b8",
+    "0x260:CALL017a30_RET",
+    "0x238",
+    "0x218",
+    "0x1f8",
+    "0x1d8",
+    "0x1b8",
+    "0x198",
+    "0x178",
+    "0x158",
+    "0x138",
+    "0x118",
+    "0xf8",
+    "0xd0",
+    "0xb0",
+    "0x80",
+    "0x60",
+    "0x40",
+    "0x20",
+    "0x0:TAIL_JMP00ce10"
+  ],
+  "corrections": [
+    "B28 omitted+408 from its unmodeled groups; native XML path has its own ctor/dtor",
+    "Calls at03809d and0383fb are actual017a30 RET, not OS mutex-destroy operations",
+    "Loaded-module vector storage release is distinct from Bootstrap035ab0 FreeLibrary",
+    "Final038745 instruction is a tail JMP00ce10, not a new CALL"
+  ],
+  "not_initialized_by_this_ctor": [
+    "QPC cache0x1800a45e0",
+    "callback sets/map/original slots0x1800a37e0..0x1800a3888",
+    "saved-avatar-size0x1800a1130"
+  ],
+  "source_evidence": {
+    "parent": "outputs/anadius-rea-evidence.json",
+    "parent_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "constructor_pseudo_id": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+    "constructor_asm_id": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9",
+    "destructor_pseudo_id": "ev_c03fec66056719abadb29e535fb59a20827bd1c74e0bbe959590c8170e39714b",
+    "destructor_asm_id": "ev_2ec7531b888601db062b01ddc9b261926b0bb2a9c39cf12579c0999519e4bb42",
+    "exit_label_proof": "outputs/dll-critical-path/native-lifecycle-slice.json",
+    "constructor_assembly_file": "outputs/anadius-config-defaults-source/constructor.asm.txt",
+    "constructor_assembly_file_sha256": "2e483c2c3dca57726d5be58388c4943bb12699b00b0c83e37ae6dc3bc74c5027",
+    "constructor_retained_normalized_text_utf8_sha256": "0736f798ba987bd3d63ffd265ed1b4eefaab55a034ed02943d188da51c860d39",
+    "hash_scope": "Saved assembly file bytes and retained normalized text are different serializations; hashes are named separately."
+  },
+  "new_native_bodies": 0,
+  "full_ctor_closed": false,
+  "full_destructor_closed": false,
+  "original_execution": false,
+  "selected_path_binding_evidence": "outputs/anadius-achievement-storage-source/path_binding.evidence.json",
+  "selected_normal_storage_teardown": {
+    "status": "SELECTED_NORMAL_037F70_HOST_STORAGE_TEARDOWN_PASS",
+    "evidence": "outputs/anadius-config-defaults-source/teardown.evidence.json",
+    "group_order_implemented": 40,
+    "native_full_equivalence": false
+  },
+  "selected_observed_constructor_binding": {
+    "status": "SELECTED_OBSERVED_CONSTRUCTOR_RUNTIME_BINDING_PASS",
+    "evidence": "outputs/anadius-bootstrap-runtime-source/observed_runtime.evidence.json",
+    "configuration_fields": 41,
+    "outside_RuntimeSeed_cells": [
+      "frequency_cache",
+      "registry_values",
+      "enabled_targets",
+      "originals"
+    ],
+    "full_native_ctor_equivalence": false
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T19:54:04.3886583Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-update-source\\locale_update_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-update-source\\build\\locale_update.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-locale-update-source\\build\\locale_update_tests.exe"
+  ],
+  "tests": "PASS locale update: 399644 checks",
+  "scope": "Synthetic live locale/context/PTD tokens only; no target/native locale calls",
+  "sources": [
+    {
+      "name": "locale_update_tests.cpp",
+      "sha256": "7524fd3cddfdf5d05c4fe27c8658556fd5ab565db703abf3562703e786e8ace6"
+    },
+    {
+      "name": "locale_update.cpp",
+      "sha256": "05bf4170ced404a2137cba5f33528ead4338684695330ddcec409fb3d1221fa0"
+    },
+    {
+      "name": "locale_update.hpp",
+      "sha256": "ad4e873fbb0e2809967fa4beed216640c52f9dafd37a34d14d78bc959c3ffa55"
+    }
+  ],
+  "executable_sha256": "3f13566384775bec4efcda67abb555b54cdb90fc698e31300b6605c504efa2a5"
+}

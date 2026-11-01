@@ -1,0 +1,69 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T13:58:10.587364+00:00",
+  "prior_package_sha256": "0ecb990ad441ac08d6d481fdf063a61de5eb1d51da63847bcee837e11440e64c",
+  "prior_source_count": 571,
+  "unchanged_prior_sources": 571,
+  "added_sources": [
+    "anadius-socket-source/request_mutation.cpp",
+    "anadius-socket-source/request_mutation.hpp",
+    "anadius-socket-source/request_mutation_integration_tests.cpp",
+    "anadius-socket-source/request_mutation_test_fixture.hpp",
+    "anadius-socket-source/request_mutation_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 576,
+  "current_documents": 220,
+  "native_objects": 187,
+  "cpp_objects": 183,
+  "c_objects": 4,
+  "normal_test_groups": 187,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 60,
+  "new_checks": 73244,
+  "new_tests": [
+    {
+      "module": "socket_request_mutation",
+      "result": "PASS",
+      "output": "PASS: 72025 socket request mutation checks; actual03ce30/010040/034730, exhaustive byte pairs, external and safe alias oracles, raw alias-bound failures, exact lower-growth and cached/live prefixes",
+      "executable_sha256": "45bafb27f8d81e7c183f0a2aa5a18fe35f4ec372e05cab5e7c6c5e3bf191b12f"
+    },
+    {
+      "module": "socket_request_mutation_integration",
+      "result": "PASS",
+      "output": "PASS: 1219 socket request mutation integration checks; actual03ce30/034730/010040 prefix before controlled caller callbacks and N1-N5/send/finish source; native033d70 orchestration and02b940 remain open",
+      "executable_sha256": "2761eafc4c11e25cccf3bffb6b99968806dd7de2bddc831271e2429bb31fa06a"
+    }
+  ],
+  "validation_mirror_pairs": 30,
+  "historical_module_records_preserved": 29,
+  "historical_config_references_preserved": 58,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "d8711789003ccb6876c9c6415d922a20dd7aad8f9c72c138be729c793b0d43ea",
+  "inventory_data_checks": 7221,
+  "normal_source_procedures_added": [
+    "0x18003ce30",
+    "0x180034730"
+  ],
+  "new_original_procedures": 2,
+  "closed_provider": null,
+  "prior_native_source_closures_preserved": 13,
+  "N5_selected_compatibility_providers_preserved": 1,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual03ce30/034730/010040 before controlled caller callback plus N1-N5/send/finish;13-message FIFO,two map growths;02b940/full native033d70 and N5 gap open; no native027a20/IOCP/worker",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N7 02b940 replace growth/reallocation body and mandatory request-mutation lower provider closure; CRT stays paused"
+}

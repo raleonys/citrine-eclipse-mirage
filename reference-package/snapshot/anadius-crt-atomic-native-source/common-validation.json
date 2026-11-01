@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_atomic_native",
+    "result": "PASS",
+    "output": "PASS: 88 native atomic checks",
+    "executable_sha256": "b1b7f1241e6e299840c20258de17c85c421fc25de4301bf3f4b67248b75e9a41"
+  },
+  "execution_scope": "Owned aligned LONG cells with SDK Interlocked add/exchange/load, full uint32 bits/wrap and own8worker counter tests; no raw byte/global pointer adoption or original record ABI; zero new original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-atomic-native-source/atomic.cpp",
+      "sha256": "d13c18cc364775c8e5ce50f23984af8b72d4d7e6a2f420e34cd0b2caf4d32e3d"
+    },
+    {
+      "path": "anadius-crt-atomic-native-source/atomic.hpp",
+      "sha256": "2af4cf8f37588aff808b4fed25e0c000a66aacb6a497f7a811b99340e053998d"
+    },
+    {
+      "path": "anadius-crt-atomic-native-source/native_tests.cpp",
+      "sha256": "4ac21f290c120fbdb130ef107158f298d5f0fa1d9e36c3d00e6e06a706431891"
+    }
+  ]
+}

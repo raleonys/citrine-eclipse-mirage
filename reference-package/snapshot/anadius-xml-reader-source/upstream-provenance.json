@@ -1,0 +1,35 @@
+{
+  "library": "tinyxml2",
+  "selected_version": "11.0.0",
+  "commit": "9148bdf719e997d1f474be6bcc7943881046dba1",
+  "tag_api": "https://api.github.com/repos/leethomason/tinyxml2/git/ref/tags/11.0.0",
+  "origin": "official upstream compatibility source; tinyxml2.h altered locally, other upstream files unchanged",
+  "binary_version_match": "not established",
+  "files": [
+    {
+      "file": "tinyxml2.h",
+      "url": "https://raw.githubusercontent.com/leethomason/tinyxml2/9148bdf719e997d1f474be6bcc7943881046dba1/tinyxml2.h",
+      "bytes": 74466,
+      "sha256": "0f3c6e5a91b6d65caca3cc7239926455f21e488cff80ac3d27c74f5262fd2602"
+    },
+    {
+      "file": "tinyxml2.cpp",
+      "url": "https://raw.githubusercontent.com/leethomason/tinyxml2/9148bdf719e997d1f474be6bcc7943881046dba1/tinyxml2.cpp",
+      "bytes": 78553,
+      "sha256": "95f64e4cb06c9e147d5b12e8860c88898944858dfbc38fed92ebf918f1436554"
+    },
+    {
+      "file": "LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/leethomason/tinyxml2/9148bdf719e997d1f474be6bcc7943881046dba1/LICENSE.txt",
+      "bytes": 808,
+      "sha256": "9332252e9b9e46db8285d4a3f0bf25f139bf1dca6781b956d57f2302efca6432"
+    }
+  ],
+  "local_modification": {
+    "file": "tinyxml2.h",
+    "change": "TINYXML2_MAX_ELEMENT_DEPTH: 500 -> 100; altered source marked in header",
+    "binary_instruction": "0x1800049a4: CMP dword ptr [RBX + 0xa4], 0x64",
+    "upstream_sha256": "0f3c6e5a91b6d65caca3cc7239926455f21e488cff80ac3d27c74f5262fd2602",
+    "local_sha256": "aed790f764e4663f6cb99839648dd642c7e7a730d12c67d3ab7ca075f0ac67c0"
+  }
+}

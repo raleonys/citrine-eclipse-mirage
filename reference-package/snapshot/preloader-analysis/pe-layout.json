@@ -1,0 +1,603 @@
+{
+  "evidence_id": "LOCAL-PE-PRELOADER-1",
+  "derivation": {
+    "parent_evidence": "ev_157c446e2c1bce1a022bed8f576a7cc535fa15c41a6478fc2ef751d2902f97a5",
+    "outer_va": "0x180006d80",
+    "length": 21504,
+    "sha256": "36e775ed97b7a41c4f0cb98b94ee8edb74fab5cfe17d5fa8cfed265228301846"
+  },
+  "image_base": "0x180000000",
+  "entry_rva": "0x3338",
+  "entry_va": "0x180003338",
+  "machine": "0x8664",
+  "timestamp": 1783104112,
+  "sections": [
+    {
+      "name": ".text",
+      "virtual_size": 12523,
+      "rva": 4096,
+      "raw_size": 12800,
+      "raw_offset": 1024,
+      "flags": "0x60000020"
+    },
+    {
+      "name": ".rdata",
+      "virtual_size": 5000,
+      "rva": 20480,
+      "raw_size": 5120,
+      "raw_offset": 13824,
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".data",
+      "virtual_size": 2304,
+      "rva": 28672,
+      "raw_size": 1024,
+      "raw_offset": 18944,
+      "flags": "0xc0000040"
+    },
+    {
+      "name": ".pdata",
+      "virtual_size": 912,
+      "rva": 32768,
+      "raw_size": 1024,
+      "raw_offset": 19968,
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".reloc",
+      "virtual_size": 68,
+      "rva": 36864,
+      "raw_size": 512,
+      "raw_offset": 20992,
+      "flags": "0x42000040"
+    }
+  ],
+  "directories": [
+    {
+      "index": 0,
+      "rva": 23504,
+      "size": 76
+    },
+    {
+      "index": 1,
+      "rva": 23580,
+      "size": 140
+    },
+    {
+      "index": 2,
+      "rva": 0,
+      "size": 0
+    },
+    {
+      "index": 3,
+      "rva": 32768,
+      "size": 912
+    },
+    {
+      "index": 4,
+      "rva": 0,
+      "size": 0
+    },
+    {
+      "index": 5,
+      "rva": 36864,
+      "size": 68
+    },
+    {
+      "index": 6,
+      "rva": 21696,
+      "size": 84
+    },
+    {
+      "index": 7,
+      "rva": 0,
+      "size": 0
+    },
+    {
+      "index": 8,
+      "rva": 0,
+      "size": 0
+    },
+    {
+      "index": 9,
+      "rva": 0,
+      "size": 0
+    },
+    {
+      "index": 10,
+      "rva": 21376,
+      "size": 320
+    },
+    {
+      "index": 11,
+      "rva": 0,
+      "size": 0
+    },
+    {
+      "index": 12,
+      "rva": 20480,
+      "size": 504
+    },
+    {
+      "index": 13,
+      "rva": 0,
+      "size": 0
+    },
+    {
+      "index": 14,
+      "rva": 0,
+      "size": 0
+    },
+    {
+      "index": 15,
+      "rva": 0,
+      "size": 0
+    }
+  ],
+  "export_name": "preloader_l.dll",
+  "exports": [
+    {
+      "name": "DllMain",
+      "ordinal": 1,
+      "rva": "0x1000",
+      "va": "0x180001000"
+    }
+  ],
+  "imports": [
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetModuleHandleA",
+      "ordinal": null,
+      "iat_rva": "0x5010",
+      "iat_va": "0x180005010"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetCurrentProcessId",
+      "ordinal": null,
+      "iat_rva": "0x5018",
+      "iat_va": "0x180005018"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetLastError",
+      "ordinal": null,
+      "iat_rva": "0x5020",
+      "iat_va": "0x180005020"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "Process32NextW",
+      "ordinal": null,
+      "iat_rva": "0x5028",
+      "iat_va": "0x180005028"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "HeapFree",
+      "ordinal": null,
+      "iat_rva": "0x5030",
+      "iat_va": "0x180005030"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "HeapReAlloc",
+      "ordinal": null,
+      "iat_rva": "0x5038",
+      "iat_va": "0x180005038"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "HeapAlloc",
+      "ordinal": null,
+      "iat_rva": "0x5040",
+      "iat_va": "0x180005040"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "IsProcessorFeaturePresent",
+      "ordinal": null,
+      "iat_rva": "0x5048",
+      "iat_va": "0x180005048"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetProcessHeap",
+      "ordinal": null,
+      "iat_rva": "0x5050",
+      "iat_va": "0x180005050"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "DisableThreadLibraryCalls",
+      "ordinal": null,
+      "iat_rva": "0x5058",
+      "iat_va": "0x180005058"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "SetUnhandledExceptionFilter",
+      "ordinal": null,
+      "iat_rva": "0x5060",
+      "iat_va": "0x180005060"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "UnhandledExceptionFilter",
+      "ordinal": null,
+      "iat_rva": "0x5068",
+      "iat_va": "0x180005068"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "IsDebuggerPresent",
+      "ordinal": null,
+      "iat_rva": "0x5070",
+      "iat_va": "0x180005070"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "RtlVirtualUnwind",
+      "ordinal": null,
+      "iat_rva": "0x5078",
+      "iat_va": "0x180005078"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "RtlLookupFunctionEntry",
+      "ordinal": null,
+      "iat_rva": "0x5080",
+      "iat_va": "0x180005080"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "RtlCaptureContext",
+      "ordinal": null,
+      "iat_rva": "0x5088",
+      "iat_va": "0x180005088"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "InitializeSListHead",
+      "ordinal": null,
+      "iat_rva": "0x5090",
+      "iat_va": "0x180005090"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetSystemTimeAsFileTime",
+      "ordinal": null,
+      "iat_rva": "0x5098",
+      "iat_va": "0x180005098"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "QueryPerformanceCounter",
+      "ordinal": null,
+      "iat_rva": "0x50a0",
+      "iat_va": "0x1800050a0"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "VirtualQuery",
+      "ordinal": null,
+      "iat_rva": "0x50a8",
+      "iat_va": "0x1800050a8"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "VirtualFree",
+      "ordinal": null,
+      "iat_rva": "0x50b0",
+      "iat_va": "0x1800050b0"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "VirtualAlloc",
+      "ordinal": null,
+      "iat_rva": "0x50b8",
+      "iat_va": "0x1800050b8"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetSystemInfo",
+      "ordinal": null,
+      "iat_rva": "0x50c0",
+      "iat_va": "0x1800050c0"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "Thread32Next",
+      "ordinal": null,
+      "iat_rva": "0x50c8",
+      "iat_va": "0x1800050c8"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "Thread32First",
+      "ordinal": null,
+      "iat_rva": "0x50d0",
+      "iat_va": "0x1800050d0"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "CreateToolhelp32Snapshot",
+      "ordinal": null,
+      "iat_rva": "0x50d8",
+      "iat_va": "0x1800050d8"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "VirtualProtect",
+      "ordinal": null,
+      "iat_rva": "0x50e0",
+      "iat_va": "0x1800050e0"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "FlushInstructionCache",
+      "ordinal": null,
+      "iat_rva": "0x50e8",
+      "iat_va": "0x1800050e8"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "SetThreadContext",
+      "ordinal": null,
+      "iat_rva": "0x50f0",
+      "iat_va": "0x1800050f0"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetThreadContext",
+      "ordinal": null,
+      "iat_rva": "0x50f8",
+      "iat_va": "0x1800050f8"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "ResumeThread",
+      "ordinal": null,
+      "iat_rva": "0x5100",
+      "iat_va": "0x180005100"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "TerminateProcess",
+      "ordinal": null,
+      "iat_rva": "0x5108",
+      "iat_va": "0x180005108"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "SuspendThread",
+      "ordinal": null,
+      "iat_rva": "0x5110",
+      "iat_va": "0x180005110"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "OpenThread",
+      "ordinal": null,
+      "iat_rva": "0x5118",
+      "iat_va": "0x180005118"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "CloseHandle",
+      "ordinal": null,
+      "iat_rva": "0x5120",
+      "iat_va": "0x180005120"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "HeapCreate",
+      "ordinal": null,
+      "iat_rva": "0x5128",
+      "iat_va": "0x180005128"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "Sleep",
+      "ordinal": null,
+      "iat_rva": "0x5130",
+      "iat_va": "0x180005130"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetCurrentProcess",
+      "ordinal": null,
+      "iat_rva": "0x5138",
+      "iat_va": "0x180005138"
+    },
+    {
+      "dll": "KERNEL32.dll",
+      "name": "GetCurrentThreadId",
+      "ordinal": null,
+      "iat_rva": "0x5140",
+      "iat_va": "0x180005140"
+    },
+    {
+      "dll": "CRYPT32.dll",
+      "name": "CryptQueryObject",
+      "ordinal": null,
+      "iat_rva": "0x5000",
+      "iat_va": "0x180005000"
+    },
+    {
+      "dll": "api-ms-win-core-synch-l1-2-0.dll",
+      "name": "WakeByAddressAll",
+      "ordinal": null,
+      "iat_rva": "0x5180",
+      "iat_va": "0x180005180"
+    },
+    {
+      "dll": "api-ms-win-core-synch-l1-2-0.dll",
+      "name": "WaitOnAddress",
+      "ordinal": null,
+      "iat_rva": "0x5188",
+      "iat_va": "0x180005188"
+    },
+    {
+      "dll": "msvcp140.dll",
+      "name": "_Mtx_lock",
+      "ordinal": null,
+      "iat_rva": "0x51e0",
+      "iat_va": "0x1800051e0"
+    },
+    {
+      "dll": "msvcp140.dll",
+      "name": "_Mtx_trylock",
+      "ordinal": null,
+      "iat_rva": "0x51e8",
+      "iat_va": "0x1800051e8"
+    },
+    {
+      "dll": "VCRUNTIME140.dll",
+      "name": "memcpy",
+      "ordinal": null,
+      "iat_rva": "0x5150",
+      "iat_va": "0x180005150"
+    },
+    {
+      "dll": "VCRUNTIME140.dll",
+      "name": "memcmp",
+      "ordinal": null,
+      "iat_rva": "0x5158",
+      "iat_va": "0x180005158"
+    },
+    {
+      "dll": "VCRUNTIME140.dll",
+      "name": "memset",
+      "ordinal": null,
+      "iat_rva": "0x5160",
+      "iat_va": "0x180005160"
+    },
+    {
+      "dll": "VCRUNTIME140.dll",
+      "name": "__C_specific_handler",
+      "ordinal": null,
+      "iat_rva": "0x5168",
+      "iat_va": "0x180005168"
+    },
+    {
+      "dll": "VCRUNTIME140.dll",
+      "name": "__std_type_info_destroy_list",
+      "ordinal": null,
+      "iat_rva": "0x5170",
+      "iat_va": "0x180005170"
+    },
+    {
+      "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "name": "_configure_narrow_argv",
+      "ordinal": null,
+      "iat_rva": "0x5198",
+      "iat_va": "0x180005198"
+    },
+    {
+      "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "name": "_initialize_narrow_environment",
+      "ordinal": null,
+      "iat_rva": "0x51a0",
+      "iat_va": "0x1800051a0"
+    },
+    {
+      "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "name": "_cexit",
+      "ordinal": null,
+      "iat_rva": "0x51a8",
+      "iat_va": "0x1800051a8"
+    },
+    {
+      "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "name": "_initialize_onexit_table",
+      "ordinal": null,
+      "iat_rva": "0x51b0",
+      "iat_va": "0x1800051b0"
+    },
+    {
+      "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "name": "_initterm",
+      "ordinal": null,
+      "iat_rva": "0x51b8",
+      "iat_va": "0x1800051b8"
+    },
+    {
+      "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "name": "_execute_onexit_table",
+      "ordinal": null,
+      "iat_rva": "0x51c0",
+      "iat_va": "0x1800051c0"
+    },
+    {
+      "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "name": "_initterm_e",
+      "ordinal": null,
+      "iat_rva": "0x51c8",
+      "iat_va": "0x1800051c8"
+    },
+    {
+      "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+      "name": "_seh_filter_dll",
+      "ordinal": null,
+      "iat_rva": "0x51d0",
+      "iat_va": "0x1800051d0"
+    }
+  ],
+  "debug": [
+    {
+      "type": 2,
+      "file_offset": "0x3bfc",
+      "size": 40,
+      "hex": "52534453ef78c1a52162e74cae168e8580b1b6d3010000007072656c6f616465725f6c2e70646200",
+      "ascii": "RSDSoxA%!bgL.....16S....preloader_l.pdb."
+    },
+    {
+      "type": 12,
+      "file_offset": "0x3c24",
+      "size": 20,
+      "hex": "0100000017000000170000000000000013000000",
+      "ascii": "...................."
+    },
+    {
+      "type": 13,
+      "file_offset": "0x3c38",
+      "size": 600,
+      "hex": "0000000000100000300900002e7465787400000030190000902500002e74657874246d6e00000000c03e0000360000002e74657874246d6e24303000f63e0000630100002e7465787424756e6c696b656c79000059400000920000002e7465787424780000500000f80100002e6964617461243500000000f8510000380000002e3030636667000030520000080000002e435254245843410000000038520000080000002e4352542458435a0000000040520000080000002e435254245849410000000048520000080000002e4352542458495a0000000050520000080000002e435254245850410000000058520000080000002e4352542458505a0000000060520000080000002e435254245854410000000068520000080000002e4352542458545a0000000070520000100300002e72646174610000805500007c0000002e726461746124766f6c746d64000000fc550000940200002e7264617461247a7a7a64626700000090580000080000002e727463244941410000000098580000080000002e72746324495a5a00000000a0580000080000002e7274632454414100000000a8580000080000002e72746324545a5a00000000b0580000200300002e78646174610000d05b00004c0000002e656461746100001c5c0000780000002e6964617461243200000000945c00003c0000002e6964617461243300000000d05c0000f80100002e6964617461243400000000c85e0000c00400002e696461746124360000000000700000c00200002e64617461000000c0720000400600002e6273730000000000800000900300002e70646174610000",
+      "ascii": "........0....text...0....%...text$mn....@>..6....text$mn$00.v>..c....text$unlikely..Y@.......text$x..P..x....idata$5....xQ..8....00cfg..0R.......CRT$XCA....8R.......CRT$XCZ....@R.......CRT$XIA....HR.......CRT$XIZ....PR.......CRT$XPA....XR.......CRT$XPZ....`R.......CRT$XTA....hR.......CRT$XTZ....pR.......rdata...U..|....rdata$voltmd...|U.......rdata$zzzdbg....X.......rtc$IAA.....X.......rtc$IZZ.... X.......rtc$TAA....(X.......rtc$TZZ....0X.. ....xdata..P[..L....edata...\\..x....idata$2.....\\..<....idata$3....P\\..x....idata$4....H^..@....idata$6.....p..@....data...@r..@....bss.............pdata.."
+    }
+  ],
+  "callback_tables": [
+    {
+      "va": "0x180005270",
+      "qwords": [
+        "0x0",
+        "0x8",
+        "0x8",
+        "0x180001105",
+        "0x1800010b8"
+      ]
+    },
+    {
+      "va": "0x180005298",
+      "qwords": [
+        "0x0",
+        "0x8",
+        "0x8",
+        "0x18000111f",
+        "0x1800010d3"
+      ]
+    },
+    {
+      "va": "0x180005318",
+      "qwords": [
+        "0x0",
+        "0x8",
+        "0x8",
+        "0x18000170d",
+        "0x180001727"
+      ]
+    }
+  ]
+}

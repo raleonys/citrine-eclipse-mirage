@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "reviewed_at": "2026-10-18T19:35:37.2945662Z",
+  "kind": "Independent static source/evidence review; no peer source changes and no extra target/native execution",
+  "files": {
+    "api.hpp": "13025005784cb3ffd2f893c0e1c23d8a3de71c15b2f1fdbd875d91cb6b5e9f83",
+    "api.cpp": "ab3f870e83416c100db185af6d22c29b5e72016b8788d80ba772bd42323e759e",
+    "api_tests.cpp": "5aed7e2d3476e1685e64156bbcd42b0c0456cfe2876ac6955fd489f7dcf5b055",
+    "selected.asm.txt": "42c85b0a6d9f0888d15143d27ec1bf2a187381c6338fbfdbbd45a01b507aed25"
+  },
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "checks": [
+    {
+      "question": "CP zero list and holes",
+      "result": "PASS",
+      "evidence": "ev_74c55dda34e8177843d28dcac68f6f371d4d1144cac5f39f36583090d5c863fb",
+      "finding": "Unsigned branch domains and subtraction chain select42,50220,50221,50222,50225,50227,50229,57002..57011,65000. Holes50223,50224,50226,50228 remain ordinary. High uint32 values pass through ordinary branch without narrowing."
+    },
+    {
+      "question": "MultiByte flags",
+      "result": "PASS",
+      "evidence": "060ccc8..060cd56 (canonical VA18006ccc8..18006cd56)",
+      "finding": "54936/65001 mask flags to8, zero-list sets0, other flags unchanged; all six remaining arguments forwarded and full signed32 result returned."
+    },
+    {
+      "question": "WideChar flags/default pointers/prewrite",
+      "result": "PASS",
+      "evidence": "ev_b2253ee9d2d4aa4fbe2192eaaa8c2be4efd3b31f0176d7e02e5836cc99292b7f",
+      "finding": "Zero-list plus54936/65001 sets flags0; remaining pages clear only bit7. Unsigned cp-65000<=1 selects only65000/65001, clears four-byte used-default BOOL before invocation when nonnull, and passes null default/used pointers. Other pages preserve both opaque addresses. No BOOL normalization of full EAX."
+    },
+    {
+      "question": "File API candidate/cache slot/default",
+      "result": "PASS",
+      "evidence": "ev_1d636bbaee00f8ee747e6d99e5a2a2d3d277679f3fed4291ec81b38cb35db71e",
+      "finding": "Original resolver ECX0, candidate [18008b8f8,18008b8fc), name18008b900; independently reread exact-hash PE at raw565496 gives uint32 candidate16 and raw565504 string AreFileApisANSI. Existing runtime module_names[16]=kernel32. Missing address returns1; present provider returns entire uint32."
+    },
+    {
+      "question": "Tests",
+      "result": "PASS with bounded coverage",
+      "finding": "Inspected existing exhaustive 0..65535 CP matrix, explicit high uint32 representatives, holes, high flag bits, null/non-null default pointers and event prewrite order; cache success/miss/fallback/cookies/full DWORD0x100,0x80000000,0xffffffff. Existing test receipt reports PASS; review did not rerun suites."
+    }
+  ],
+  "material_findings": [],
+  "limits": [
+    "No semantic mismatch found in reviewed normal-flow source.",
+    "Native conversions and indirect function calls remain required effects, as documented.",
+    "No original target execution, ABI, SEH, full DLL equivalence, or exhaustive uint32 runtime-test claim."
+  ]
+}

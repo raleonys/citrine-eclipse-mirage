@@ -1,0 +1,212 @@
+{
+  "schema": "pool-allocation.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180002b10",
+      "pseudo_evidence": "ev_72c7774e42e84de667e4a26375d6ca97e95a9b796b6aebe4122567c82f87ddd6",
+      "assembly_evidence": "ev_69676d992a02bd265c47a247cd170c8815221b7d90825447e0de7a237b156f39",
+      "newly_recovered": true,
+      "recovery_scope": "new normal pool allocation projection; mandatory lower allocation/fill/append and native lifecycle/ABI/EH remain open"
+    },
+    {
+      "address": "0x180002600",
+      "pseudo_evidence": "ev_8e78b707d1a781815a1f68f2ca8f27a0af79b54f73e05ef12ae813734373a7c6",
+      "assembly_evidence": "ev_3bcc9c0bf4dcd2c6ec224b64614dac1a2459a19f35b72d0494668d93da66f038",
+      "newly_recovered": true,
+      "recovery_scope": "new normal pool allocation projection; mandatory lower allocation/fill/append and native lifecycle/ABI/EH remain open"
+    },
+    {
+      "address": "0x180002960",
+      "pseudo_evidence": "ev_65d179a78369608cf6880a9dfc5d98aa344c97bda474d98972cf18e37663a7c3",
+      "assembly_evidence": "ev_dddd03633007c4bff924f221d212965ad8a9919050036732afd0b85c90e65b0d",
+      "newly_recovered": true,
+      "recovery_scope": "new normal pool allocation projection; mandatory lower allocation/fill/append and native lifecycle/ABI/EH remain open"
+    },
+    {
+      "address": "0x1800027b0",
+      "pseudo_evidence": "ev_5dab40953bd8da1662aaa4fb65baf20814ff6e665b9630d23f74417506849903",
+      "assembly_evidence": "ev_1ccec149cea5b273c4134f38d196487eb2915f2905923f86a19a7fd613ca8cc7",
+      "newly_recovered": true,
+      "recovery_scope": "new normal pool allocation projection; mandatory lower allocation/fill/append and native lifecycle/ABI/EH remain open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180002b10",
+    "0x180002600",
+    "0x180002960",
+    "0x1800027b0"
+  ],
+  "new_original_procedures": 4,
+  "new_source_bridges": 1,
+  "new_source_allocation_adapters": 1,
+  "new_unique_source_mapped_addresses": 4,
+  "closed_providers": [],
+  "native_typed_providers_newly_closed": 0,
+  "source_allocation_adapters": [
+    {
+      "file": "outputs/anadius-socket-source/pool_allocate.cpp",
+      "kind": "new bounded allocation dispatcher",
+      "base": "PoolAllocationDispatch::pool_allocate",
+      "adapter": "RecoveredPoolAllocationEffects::pool_allocate",
+      "bodies": [
+        "allocate_pool_item_002b10",
+        "allocate_pool_item_002600",
+        "allocate_pool_item_002960",
+        "allocate_pool_item_0027b0"
+      ],
+      "addresses": [
+        "0x180002b10",
+        "0x180002600",
+        "0x180002960",
+        "0x1800027b0"
+      ],
+      "historical_provider_closure": false,
+      "target_dispatch_guards_are_native_bodies": false,
+      "native_abi_complete": false,
+      "scope": "Four normal pool allocation projections preserve free-list pop, fresh-block allocation/fill/append/link ordering and live DWORD counters; one new bounded exact-target source allocation dispatcher, not four historical NativeNodeClearEffects provider closures; allocator/fill/block-array append/node virtual/parser/DOM/pool lifecycle/ABI/EH/concurrency remain open"
+    }
+  ],
+  "tagged_definition_variants_per_new_target": 1,
+  "target_dispatch_guards_are_native_bodies": false,
+  "simd_data_read": {
+    "file": "pool-allocation-simd-data.json",
+    "sha256": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+    "evidence_id": "ev_6174d38308fd71da7aa56dfcf6ae30de443aee787ea60c50ea732bc04bff3b6f",
+    "address": "0x1800800d0",
+    "bytes": 96,
+    "new_read_performed": true,
+    "new_source_bodies_claimed_by_data_read": 0,
+    "scope": "Initialized Ghidra analysis memory only; no live runtime CPU/global observation"
+  },
+  "reused_complete_vtable_evidence": {
+    "file": "node-delete-next-vtables.json",
+    "sha256": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a",
+    "new_read_performed": false,
+    "pool_read_evidence": "ev_7349a6f3b8db519dad314c7de8d04be1e89ad0c44e1b592d75731e5c20e44706",
+    "allocation_targets": [
+      "0x180002b10",
+      "0x180002600",
+      "0x180002960",
+      "0x1800027b0"
+    ]
+  },
+  "context_functions": [
+    {
+      "address": "0x180005440",
+      "pseudo_evidence": "ev_3a74ec35882305703da94fdd0e4de6801b34e1449914f6d7d963f4cdd4ea201c",
+      "assembly_evidence": "ev_805b1e389566c011341fa6b160b23ec49ecacccb6f0a1d123af5d4d5169b5cef",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800033a0",
+      "pseudo_evidence": "ev_503f4ea3c84034bdcba37c5bab8c21622f3c49f5ed6db330dd2f530060498520",
+      "assembly_evidence": "ev_b7d15db3601446cde12580c10ac5ad7d9eb1c2aa6ce5bfb3646f09c3c2800809",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180005a20",
+      "pseudo_evidence": "ev_df5bc8292ee95a900d1b02c812064d25be2cc214ec36d768fec18c3da8b9e8c8",
+      "assembly_evidence": "ev_fc5e2131422789819e9bf0acf480c663ab946afa810969adb78f817d69d2ffb2",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "pool_allocate.hpp": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757",
+    "pool_allocate.cpp": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf",
+    "pool_allocate_test_fixture.hpp": "c7b6e0de3174348fe93d61d99d31afb093a029c2fb5b0c65860f47073e197424",
+    "pool_allocate_tests.cpp": "12a26f15e09c86a5f12bb2eba883ab3ba0c4b30f6adafe17b57908d36cd69ba7",
+    "pool_allocate_integration_tests.cpp": "a1108afe6f7281900deeb598b8b8e9ccb1f86b96d07bd778fd67012bd22c03f7",
+    "build.ps1": "500fa683411cd92244ceda9449c842f334f824828b3d47781d3ccc737d0037cc",
+    "CMakeLists.txt": "ba9772a3f4a91fc6b039378a7387828920486abe409dd298a45cae4bc4d9e2db",
+    "README.md": "654c0809602577a98e7ac130d7247737bd9b947bf631237712d87c410333eb1f"
+  },
+  "reused_source_hashes": {
+    "pool_release.hpp": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5",
+    "pool_release.cpp": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5",
+    "receive_buffer.hpp": "709ca59766fc42bf2fbc7d1f4f033987b590e42874ff566b39f975ac43ed1e56",
+    "receive_buffer.cpp": "022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0",
+    "node_delete.hpp": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a",
+    "node_delete.cpp": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3"
+  },
+  "support_hashes": {
+    "pool-allocation-evidence.pseudo.c.txt": "90314d734f12cb7321db67c1cec3a1f6f4921ee9c09224be609f2ce59910d77b",
+    "pool-allocation-evidence.asm.txt": "bb1ccf5d3e269df8def269a035ffaa22e5cd90054882f8894115aa4efaf10992",
+    "pool-allocation-context.pseudo.c.txt": "31482e8356f12703769b45fb9f08197f8dce32e4077fdea77636eea5ff12063c",
+    "pool-allocation-context.asm.txt": "c107f57565ae7ccbdb25a1d2c17be73dd7dadbb0ba3e04da482d5b5029844519",
+    "pool-allocation-flow-audit.md": "44bc5cb905115bef0f8ee0639e79777094ea7b0e08958ca882be6cb62957b6c2",
+    "pool-allocation-rea-session.json": "2249470d555cbe35f5de16488b3e4b631c4b5770af5255bfff881943776ff333",
+    "pool-allocation-source-review.json": "99582c78f30aa8b4748f32cb39e268965fa858a635c06360feae7d0193f62f7c",
+    "pool-allocation-simd-data.json": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+    "pool-allocation-open.json": "5b7ea33ba76688b393f2b34c4db25d8280fa94041da1053093eb3bc18527e599",
+    "pool-allocation-close.json": "ca82b91e779bad3a72ee58e39fbaaf09b81affadf49ff1db9f30e1ab8e56bc4d",
+    "node-delete-next-vtables.json": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a"
+  },
+  "prior_target_presence": {
+    "0x180002b10": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180002600": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x180002960": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    },
+    "0x1800027b0": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 515,
+  "integration_checks": 8720,
+  "new_checks": 9235,
+  "execution_scope": "Four normal pool allocation projections preserve free-list pop, fresh-block allocation/fill/append/link ordering and live DWORD counters; one new bounded exact-target source allocation dispatcher, not four historical NativeNodeClearEffects provider closures; allocator/fill/block-array append/node virtual/parser/DOM/pool lifecycle/ABI/EH/concurrency remain open",
+  "limitations": [
+    "Four normal pool allocation projections preserve free-list pop, fresh-block allocation/fill/append/link ordering and live DWORD counters; one new bounded exact-target source allocation dispatcher, not four historical NativeNodeClearEffects provider closures; allocator/fill/block-array append/node virtual/parser/DOM/pool lifecycle/ABI/EH/concurrency remain open",
+    "Raw64-bit pointer arithmetic and DWORD wrapping counter projections on explicitly mapped memory; no native MSVC object/fault/unwind/concurrency equivalence",
+    "Recycled free-list root skips allocation/fill/append/CPU mode and link initialization; returned item retains first-word link/payload",
+    "Fresh allocation null skips fill but still calls005440 append and proceeds; no invented safe-null return, rollback or recovery",
+    "Signed DWORD CPU mode selects scalar below6 or SIMD store projection at/above6; exact96-byte shipped constants are bound separately; CPU detection itself is not executed",
+    "Current+70 increments modulo32 then signed compares with live max+78; total+74 and untracked+7c are live reads/writes in instruction order",
+    "Block allocation04b0bc, fill0793d0 and pointer-array append005440 remain mandatory lower effects; no generic CRT production bodies added",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; hash-only integrity separate; blocked version.dll and generated version DLL never retried",
+    "Integration uses explicitly owned mapped pool blocks; controlled document projections do not prove native parser/DOM materialization or node virtual lifecycle",
+    "Existing33 historical source closures and2 semantic session adapters are preserved; one new allocation dispatcher is recorded separately; guards are not new native bodies",
+    "CRT unchanged and paused; full DLL incomplete; completion percentage unmeasured"
+  ],
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "pool-allocation-source-review.json",
+      "reviewer": "/root/allocation_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N19 pool block-array append005440 normal source recovery and allocation-provider composition; native allocation/fill/free/pool lifecycle/parser/DOM/ABI/EH remain open; generic CRT stays paused"
+}

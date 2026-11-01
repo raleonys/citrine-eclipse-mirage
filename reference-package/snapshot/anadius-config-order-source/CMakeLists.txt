@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.20)
+project(anadius_config_order LANGUAGES CXX)
+add_library(anadius_config_order STATIC order.cpp ../anadius-parser-source/parser.cpp ../anadius-config-source/configuration.cpp)
+target_compile_features(anadius_config_order PUBLIC cxx_std_20)
+add_executable(config_order_tests order_tests.cpp)
+target_link_libraries(config_order_tests PRIVATE anadius_config_order)
+enable_testing()
+add_test(NAME config_order_bounded_contracts COMMAND config_order_tests)

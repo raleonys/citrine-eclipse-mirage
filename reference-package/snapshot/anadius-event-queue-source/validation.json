@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "queue_checks": 2054,
+  "integration_checks": 133,
+  "output": "PASS: 2054 event queue checks; synthetic guards and chosen FIFO only\nPASS: 133 event queue integration checks; shared synthetic guards and controlled cipher only",
+  "source_hashes": {
+    "queue.hpp": "b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d",
+    "queue.cpp": "88da967fa48cdf5d2a5c99b50aa50e479fdd0011712ede86b6c53c344c9e69d8",
+    "adapters.hpp": "2da19cd733b237ab75a136289b9b93816d58b3b7d0573313c6091af50a327f52",
+    "adapters.cpp": "36a4911d3c17f73dd6435305c20b879052e31c1bb05c05aa39b448fdf609dcc5",
+    "queue_tests.cpp": "163a33b99e8a67d0b266634387855346ab8ceca813a2b0d6179fc3197b1ff84c",
+    "integration_tests.cpp": "255d7a94c53c9913293db03c34437bbae5e9aaef0fee5997a04f4f10264553f9",
+    "build.ps1": "84a06f882142dc44f6e777ac8901a393832916914b895fe60aaf0cb049ecc5bb",
+    "CMakeLists.txt": "8b437cef127aaa9bcb1a6118e8a0b067b1d24819af8e9e6304de0a0f647cb85b"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "execution_scope": "Synthetic guards/mutex/cipher and actual recovered IGO/grant/messages/XML source composition; no file IO",
+  "native_deque_CRT_ABI_concurrency": "not established"
+}

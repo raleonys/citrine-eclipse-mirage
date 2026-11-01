@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "source": "outputs/anadius-owned-server-source/server.cpp",
+  "source_sha256": "037e9514f62a932c2e861afd461175afbb17daa356a2db921af8b134c0cf7496",
+  "production_object": "outputs/source-workspace/build/owned_server.o",
+  "production_sha256": "c09d32c0dbc7d3a5e1460f3b004793219c2e4bd647880f8fa7279c2b187d44b1",
+  "fresh_probe": "work/b35-frozen-source-object.o",
+  "fresh_sha256": "18d436bf531708300fa7abe637635af1964628269993eb028322c3a72572c5af",
+  "normalization": "AMD64 standard COFF header TimeDateStamp bytes4..7 zeroed; every other byte compared exactly",
+  "different_raw_offsets": [
+    4
+  ],
+  "production_timestamp": 1793395936,
+  "fresh_timestamp": 1793395797,
+  "normalized_sha256": "0a1055a0befb2e63e9a0c8d912d5a73bdeb82b7016cd829d3e7bf75381e49704",
+  "fresh_normalized_sha256": "0a1055a0befb2e63e9a0c8d912d5a73bdeb82b7016cd829d3e7bf75381e49704",
+  "superseded_run": {
+    "object_sha256": "47032187851c002a23b0679050a3c1caf127221e0b5eb7ac48d2eb2b5e9a552f",
+    "normalized_sha256": "578321c543ed1bfde9aba5d17fd30ed13c23faa2c22b3602b7b37f6aee9065bc",
+    "matches_final_source": false,
+    "log": "work/b35-common-before-sdk-error-freeze.log",
+    "counted_as_current": false
+  },
+  "current_common_log": "work/b35-common-final-build.log"
+}

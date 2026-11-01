@@ -1,0 +1,195 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-30T18:06:36.184309+00:00",
+  "review_scope": "B30 actual023000 typed normal constructor, field/publication/weak-release ordering and stable scratch, actual native-shaped read/frame/message entries with selected host disposal and controlled response handoff",
+  "reviewed_source_hashes": {
+    "owner.hpp": "f923c9548bf30fbc024ad691680d52c183a4e9ddbcd09481aeb0a13aa3123f90",
+    "owner.cpp": "31b749d9bbe830e42dd13b7d04be651fb5ce1237f27d2e2ba9a4fe39ab232f3c",
+    "owner_tests.cpp": "435305f7551481c6c354ab3227a6abcbb3c25df0e50152f42c1e8b782204aed1",
+    "owner_integration_tests.cpp": "86bea5a7bcfc3512ed10c77840b08bc90d09ebdd896a137d81a949f70d0112aa"
+  },
+  "quick_results": [
+    {
+      "path": "work/b30-core-quick-results.json",
+      "sha256": "8029448b231d2b8dc2fc75b0032bb652ea3fb998ddf3da8499717616438fa459",
+      "checks": 34,
+      "executable_path": "work/b30-core-test.exe",
+      "executable_sha256": "129119d28481deeb81f72fd5e994f3653f1486414f4d86c891cce24bca5adb82",
+      "execution_by": "/root standard quick run; production/core authored by /root, integration authored by /root/b22_integration. Independent reviewer read all frozen sources and verified record/source/EXE hashes without rerunning."
+    },
+    {
+      "path": "work/b30-integration-quick-results.json",
+      "sha256": "1c7ee661b71af35343e57ff76b243bede8a1b3473d4b29388a218227e043c9a1",
+      "checks": 32,
+      "executable_path": "work/b30-integration-test.exe",
+      "executable_sha256": "312a5f9bc3086c38b8153774b32d05be4e4c5fe53ee67314edebe12137935fb4",
+      "execution_by": "/root standard quick run; production/core authored by /root, integration authored by /root/b22_integration. Independent reviewer read all frozen sources and verified record/source/EXE hashes without rerunning."
+    }
+  ],
+  "root_checks": 66,
+  "tests_rerun_by_reviewer": false,
+  "full_common_build_reviewed": false,
+  "common_build_status": "RUNNING/PENDING; unreviewed, no common PASS claim",
+  "pipeline_native_delta_support_reviewed": false,
+  "baseline_package_sha256": "23cda5351cb3e5481152bb35db699363bf8d66aee98f549a79c0dd2110d2af15",
+  "prior_source_files": 842,
+  "prior_sources_preserved": 842,
+  "current_source_files": 846,
+  "modified_prior_sources": [],
+  "source_inventory_counts_basis": "All842 B29 snapshot entries independently verified against archive bytes and package-manifest hashes then identical current source bytes. Four new reviewed source files; no prior production edits.",
+  "retained_research": {
+    "path": "work/b30-constructor-audit.json",
+    "sha256": "09ad8c3537c6707889103a09a8c6ded873a986273c7f3f067ed5bd6a63b4febc",
+    "stage": "Retained evidence plus historical early-source snapshot; final four frozen hashes are authoritative in reviewed_source_hashes"
+  },
+  "classification": {
+    "new_normal_typed_body_addresses": [
+      "0x180023000"
+    ],
+    "prior_source_presence": "module_record_only",
+    "expected_mapped_functions": [
+      489,
+      490
+    ],
+    "expected_eligible_functions": [
+      493,
+      494
+    ],
+    "expected_normal_body_claims": [
+      126,
+      127
+    ],
+    "expected_existing_closed_native_functions_unchanged": 52,
+    "new_native_ABI_or_provider_closures": 0,
+    "counts_are_final_pipeline_verified": false,
+    "reason": "One observed constructor algorithm implemented. Allocation, selected executor and control disposal/delete are explicit lower dependencies; do not count vtable/allocator/destructor targets as new bodies."
+  },
+  "findings": [
+    {
+      "topic": "One substantive023000 typed normal body",
+      "result": "PASS",
+      "evidence": [
+        "owner.cpp:14-72",
+        "retained023000 pseudo ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+        "retained023000 ASM ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+        "work/b30-constructor-audit.json"
+      ],
+      "observation": "The new constructor implements observed block counter/table initialization, two actual B29 moves, weak-pair store timing, input/deque/proxy initialization, actual02bc70 reset, actual temporary024db0 destruction, output publication and weak-self/refcount algorithm. This is one actual normal source algorithm at023000, previously only a module record, not a host shared_ptr facade or forwarding wrapper. Exactly one source body mapping is supported; native allocation/deleter/ABI closure remains absent."
+    },
+    {
+      "topic": "Exact first/second move and field phases",
+      "result": "PASS",
+      "evidence": [
+        "owner.hpp:7-26",
+        "owner.cpp:20-43",
+        "owner_tests.cpp normal()",
+        "owner_integration_tests.cpp Factory and factory_read_eof()"
+      ],
+      "observation": "Control strong/weak1 and084750 token precede first move2306b. Weak object/control clear only after it at23078/7b and before second move23086; host input linkage is preserved. Input inline16 zero, size0/cap15 and five deque fields precede16-byte proxy allocation. Proxy+8 zero, header proxy and backpointer follow observed order. Cipher reset occurs at230e2 before temporary destruction230eb. Tests seed visible state and observe first/second executor, proxy allocation and temporary-close boundaries to prove ordering without extra production callbacks."
+    },
+    {
+      "topic": "Publication before callback-sensitive weak replacement",
+      "result": "PASS",
+      "evidence": [
+        "owner.cpp:44-71",
+        "owner_tests.cpp expired_weak_callback(bool), live_weak_is_not_replaced()"
+      ],
+      "observation": "Caller output is published only after temporary destruction, before weak-self callbacks. Existing live weak is retained; expired weak is replaced after raw strong increment and live output-control weak increment. New self pair is stored before displaced weak delete. The output control cached before that callback is released even when the callback mutates caller output. Synthetic throw preserves published output, completed field writes and strong2/weak2 local prefix, without guessed rollback/retry. Ordinary exit is strong1/weak2. Final last-strong dispose/weak/delete helper was source-reviewed against ASM; tests do not claim an actual C++ delete reentered inside constructor."
+    },
+    {
+      "topic": "Stable partial state, allocation and output contracts",
+      "result": "PASS",
+      "evidence": [
+        "owner.hpp:27-59",
+        "owner.cpp:15-22,35-37",
+        "owner_tests.cpp allocation_failures()"
+      ],
+      "observation": "Noncopyable owner/scratch suppress implicit moves and keep SocketObject backing references stable. Caller-persistent scratch retains temporary and partial allocation across lower/proxy exceptions, instead of leaving a registered stack-local socket. Single-use guard prevents blind retry; flags report only completed phases, not ownership/quiescence safety. Allocator must retain fresh typed storage and provide nonnull-or-throw requests1c8/16; null becomes diagnostic bad_alloc, not native empty success. Plain output storage intentionally does not release a previous control. Proxy failure tests preserve old output and live temporary/owned list prefix, then perform explicit known selected cleanup. General lower-failure/native EH cleanup remains unproved."
+    },
+    {
+      "topic": "Factory state drives actual native-shaped receive and EOF",
+      "result": "PASS",
+      "evidence": [
+        "owner_integration_tests.cpp Loop, factory_read_eof()",
+        "../anadius-socket-source/frame_read.cpp",
+        "../anadius-socket-source/composed_read.cpp",
+        "../anadius-socket-source/async_receive.cpp",
+        "../anadius-socket-source/io_completion.cpp"
+      ],
+      "observation": "Integration builds real factory owner/control/input/cipher and binds identity+10/+a8 tokens to actual typed socket/input sidecars. Actual0280d0/025c40/021d10 create an operation with factory strong/weak references and grow the same input heap; actual027710 EOF releases those references. Dropped external strong leaves pending I/O as sole object owner. Selected host disposal closes socket, releases distinct cancellation owner, frees input/proxy and selfweak; observer weak then causes actual heap C++ delete. This is selected host resource policy, not recovered026570/017420/026290 or actual network/IOCP execution."
+    },
+    {
+      "topic": "Actual frame/message entries and controlled response handoff",
+      "result": "PASS",
+      "evidence": [
+        "owner_integration_tests.cpp MessageApi, factory_frame_message_response(bool)",
+        "../anadius-socket-source/frame_read.cpp",
+        "../anadius-socket-source/message_dispatch.cpp"
+      ],
+      "observation": "Actual025480 produces raw factory-owner frame closure and rearms receive; actual021770/028d30 execute against factory FrameReadOwner, acquiring factory strong and transferring it into response job. Lower033d70 adapter invokes existing semantic message core with actual XML/GetConfig and same SessionCipher, using explicit prefix-to-string writeback; no semantic server Session is used. Plain and encrypted traces produce framed responses; a separate client cipher instance decrypts encrypted response. Response scheduling is explicitly controlled, not recovered021420/dispatch/backend/native output-deque/write proof. Pending-read strong deliberately remains until raw job acquires response strong; EOF occurs afterward, then job drain. This proves that controlled trace, not arbitrary EOF/raw-worker concurrency safety."
+    },
+    {
+      "topic": "Selected host disposal and original vtable separation",
+      "result": "PASS",
+      "evidence": [
+        "owner.hpp:20-26",
+        "owner_integration_tests.cpp Block::dispose_slot_00/delete_slot_08",
+        "work/b30-constructor-audit.json control_table"
+      ],
+      "observation": "Session IoReference is distinct from socket cancellation Control. Original084750 slots00/08/10 map to026570/017420/026290; delete08 routes flags1 via slot10 and sized-free1c8. Native disposer coordinates use control base, while source uses typed host fields. Abstract provider must release owned selfweak before outer implicit weak and retain control allocation through that access. Integration implements real host deletion and resource cleanup only; it does not claim original destructor ordering/body or complete native allocator/vtable recovery."
+    },
+    {
+      "topic": "Frozen provenance and unchanged prior sources",
+      "result": "PASS",
+      "evidence": [
+        "work/b30-core-quick-results.json",
+        "work/b30-integration-quick-results.json",
+        "B29 package-manifest.json/source-workspace/source-snapshot.json"
+      ],
+      "observation": "Reviewer independently checked B29 ZIP identity and all842 archived snapshot source hashes against manifest and current bytes; none changed. Four new sources give846total. Final header includes plain-output-slot comment before captured quick runs; all four frozen source hashes and both EXE hashes match34+32 PASS records. Reviewer authored neither production nor tests and performed no execution. Common full build and final inventory gates remain pending/unreviewed."
+    }
+  ],
+  "blockers": [],
+  "remaining_proof_obligations": [
+    "Host SessionOwner/Control/OutputDeque and identity+offset labels are typed projections, not native MSVC/ASIO/string/deque/control layout. Constructor body mapping is not an export replacement or full ABI proof.",
+    "SessionAllocator must provide fresh exclusive typed control/proxy storage with stable addresses and retain all partial allocations/scratch/service/code through exceptions until separate safe cleanup. Null diagnostics and source single-use guard do not reconstruct original allocator/EH rollback or prove arbitrary lower-failure cleanup.",
+    "Original026570/017420/026290, deque destruction026880 and allocator04b0bc remain required/unclosed. Host disposal in tests is selected policy, not evidence of full original destructor body/order. Control must survive dispose until implicit weak access, and dispose must release its owned selfweak.",
+    "Scratch flags mark completed source phases, not current live-object ownership. Scratch allocation/output/registries may hold stale nonowning pointers after final deletion; no post-release owner/control access or automatic retry is supported.",
+    "Actual025480 detached closure still carries raw owner. Tests schedule it while a pending-read strong keeps object alive, then response job owns strong before EOF. Arbitrary concurrent EOF/worker scheduling, external quiescence, provider teardown, address ABA and unload remain open.",
+    "Response scheduler is controlled; no recovered021420 dispatch/backend, native output-deque/write graph or full accepted-server assembly is established.033d70 lower uses existing semantic core with explicit string conversion/writeback; full native mutable-prefix path is not the subject of this integration.",
+    "Source normal exception prefixes do not recover original native EH funclets, callback exception types or ABI unwind. Final constructor last-strong helper is static-reviewed; actual C++ deletion is tested downstream rather than during constructor reentry.",
+    "No original DLL/game execution, user CFG/token/profile/license, real network operation or new target query occurred. B18-B29 PTD/code-owner/readability/publication/unload, generic CRT/licensing and final PE/DLL obligations remain.",
+    "Common full build, compiled refreshed inventory and final package gates are pending/unreviewed. Expected490mapped/494eligible/127normal and52unchanged closed-native require root final verification."
+  ],
+  "claim": {
+    "new_normal_typed_source_bodies": 1,
+    "new_native_bodies": 1,
+    "native_body_claim_scope": "Observed normal023000 typed source algorithm only; no native ABI/provider closure",
+    "new_native_closures": 0,
+    "new_native_ABI_or_provider_closures": 0,
+    "two_moves_weakclear_field_reset_proxy_and_temp_destroy_order": true,
+    "output_publish_before_cached_weak_callbacks": true,
+    "persistent_scratch_retains_partial_source_state": true,
+    "factory_derived_actual_receive_frame_message_entry_chain_tested": true,
+    "selected_host_resources_dispose_and_actual_Cpp_delete_tested": true,
+    "real_xml_GetConfig_same_cipher_plain_and_encrypted_tested": true,
+    "response_scheduler_is_controlled_lower": true,
+    "original_destructors_allocator_or_native_layout_recovered": false,
+    "raw_detached_worker_quiescence_or_general_concurrency_proven": false,
+    "original_DLL_or_game_execution": false,
+    "actual_user_content_read": false,
+    "full_dll_status": "BLOCKED"
+  },
+  "notes": [
+    "Reviewer wrote only independent work research and architecture-review reports; no production/tests/pipeline edits or EXE reruns.",
+    "Root standard quick executions produced core34 and integration32. Root authored production/core; /root/b22_integration authored integration. Both source/EXE records independently verified.",
+    "Historical early header hashes in retained research precede final output-slot comment; final frozen review hashes above and both current quick records include that comment."
+  ]
+}

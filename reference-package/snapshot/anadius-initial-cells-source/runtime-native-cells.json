@@ -1,0 +1,105 @@
+{
+  "schema": "native-runtime-outside-cell-observations.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "independent_PE_mapping": [
+    {
+      "address": "0x1800a3810",
+      "length": 120,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "file_offset": null,
+      "mapping": "PE zero-filled virtual tail, not physical file bytes",
+      "bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x1800a45e0",
+      "length": 8,
+      "section": {
+        "name": ".data",
+        "rva": 659456,
+        "virtual_size": 19068,
+        "raw_size": 10240,
+        "raw_offset": 652800
+      },
+      "file_offset": null,
+      "mapping": "PE zero-filled virtual tail, not physical file bytes",
+      "bytes_hex": "0000000000000000"
+    }
+  ],
+  "frequency_import": {
+    "IAT_address": "0x18007f3a0",
+    "DLL": "KERNEL32.dll",
+    "name": "QueryPerformanceFrequency"
+  },
+  "fresh_REA": {
+    "path": "outputs/anadius-initial-cells-source/runtime-rea-evidence.json",
+    "sha256": "899a1ed6fa5dde1bc7db28ee6b0fb2b163cec688139dad87c841bd62af81a4f7",
+    "records": [
+      {
+        "evidence_id": "ev_3f491ae4a036b434111828af892148b2f512f18b451d8968258a7e68961fbe34",
+        "operation": "read_bytes",
+        "parameters": {
+          "address": "0x1800a45e0",
+          "length": 8
+        },
+        "result": {
+          "address": "0x1800a45e0",
+          "bytes_hex": "0000000000000000",
+          "complete": true,
+          "requested_bytes": 8,
+          "returned_bytes": 8
+        }
+      },
+      {
+        "evidence_id": "ev_4f66534f138e8eb5629202e2f0b141e09d1c221725cd755896dcf4b399224200",
+        "operation": "read_bytes",
+        "parameters": {
+          "address": "0x1800a3810",
+          "length": 120
+        },
+        "result": {
+          "address": "0x1800a3810",
+          "bytes_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "complete": true,
+          "requested_bytes": 120,
+          "returned_bytes": 120
+        }
+      },
+      {
+        "evidence_id": "ev_9292e8dd2bd82f503c23ea1039a52287459ce17422df1c3765a074f285583b7a",
+        "operation": "xrefs",
+        "parameters": {
+          "address": "0x1800a45e0"
+        },
+        "result": [
+          "0x18004a828",
+          "0x18004a844"
+        ]
+      }
+    ]
+  },
+  "retained_code": {
+    "path": "outputs/anadius-initial-cells-source/runtime-retained-evidence.json",
+    "sha256": "745eea5908fef74e852cf55a6e1f7201843c8c82d93d7a91f3eed1ea822ad96e"
+  },
+  "observations": [
+    "a45e0 initial zero QPF cache is read at04a828, zero test selects imported QueryPerformanceFrequency07f3a0,04a844 stores returned local.",
+    "Native04a824 does not check QPF BOOL; selected existing adapter error semantics/concurrent publication are not established by this data factory.",
+    "a3810/a3818/a3820 initial vector pointers are zero; a3838..a3888 includes ten initial zero original slots. These are new-image values, not hook success or reset-after-use behavior.",
+    "a3828/a3830 initial map root/count are zero.001010 allocates0x60 sentinel, selflinks0/8/10,tag0101,publishes root and tail-registers07dd60; together with zero count this supports empty HOST map projection."
+  ],
+  "limits": [
+    "All selected memory ranges are PE virtual-zero tail; no physical byte offsets are claimed.",
+    "Fresh image/static state is not runtime execution or arbitrary post-init/reset state.",
+    "HOST container/lifetime selection does not reproduce native sentinel/allocation/atexit registration or CRT/EH ABI.",
+    "Recorded direct cache references are bounded evidence, not universal absence of computed/indirect mutation."
+  ],
+  "session_closed": true,
+  "original_execution": false,
+  "original_modification": false
+}

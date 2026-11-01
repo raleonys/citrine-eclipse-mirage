@@ -1,0 +1,137 @@
+{
+  "schema": "native-message.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "newly_recovered": true,
+      "recovery_scope": "new typed normal orchestration and caller source bridge; prior semantic body/adapter already mapped this address"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180033d70"
+  ],
+  "new_original_procedures": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 0,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/native_message.cpp",
+      "base": "MessageDispatchApi::process_message_033d70",
+      "body": "process_native_message_033d70",
+      "closure": "RecoveredNativeMessageApi::process_message_033d70",
+      "address": "0x180033d70",
+      "native_abi_complete": false,
+      "scope": "typed normal orchestration; mandatory lower providers and native ABI/EH remain open"
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x18003ce30",
+      "pseudo_evidence": "ev_133ad329397d833d572bf37cfc559a97e5cc1d655e776ff3b426ed2f69869b99",
+      "assembly_evidence": "ev_80f220817eb9f3aaedd370919dd41b31eff96692957601bd8e30baf3951ce863",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180034730",
+      "pseudo_evidence": "ev_79c5bb775604e465f8a4a96c8523886a2042e896365181bcb9796c1b687361de",
+      "assembly_evidence": "ev_a8b95492c2d53d260f7dfda3766b34547d4ae2a025fc29e358a10599135608d9",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002b940",
+      "pseudo_evidence": "ev_f221fb3cc36fe09dd9caa0f3215baa048e64812b380d8145aa83469378390c26",
+      "assembly_evidence": "ev_30e5199683fa1f5ae0a663c2aaf7a0d7e9b025a364160464f517665e10ac75f2",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18003d190",
+      "pseudo_evidence": "ev_52ce061acb986f9fe9ccdcaeedc30b80c6a1bf7335b59d2f3c6e82743e888599",
+      "assembly_evidence": "ev_7cc933e3f97d44f4cb2932484a7fc51fedeb38e403d3a0c8eedad13c1eaea6b2",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180009eb0",
+      "pseudo_evidence": "ev_f67735e2b612684e0244695b1a0f40290b2f78851c8f9840ca9495121e3e2d83",
+      "assembly_evidence": "ev_259f1a5cdb8c805a3e600239e02920086e76456c0ff5fea954f866d0b28e9777",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180008350",
+      "pseudo_evidence": "ev_8f414a470d18574ce283ec7f9d33a326dcabef0214a8d5a54fdfd5f5b9bba010",
+      "assembly_evidence": "ev_36491f90ef8a29d2fb8edd6b1735250524629ef5f6e005c31809a72ed253a8f3",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180012350",
+      "pseudo_evidence": "ev_3fbac447ca491496cb5cd50e118f7d13550dafe9739d4478cec4459874537f70",
+      "assembly_evidence": "ev_00bf42becc4f92a8d4b78d914a9566385470f50393b6531e88756e3dd467972a",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180007e30",
+      "pseudo_evidence": "ev_2bb832e12c4c27a1cb7ea8eeacaddf030c000eb99f2042529c2826614681d5f3",
+      "assembly_evidence": "ev_2f324be7d0140daa9db7786faa691d87237a55cdc7aa18602f7d2fa5a7c84549",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180028d30",
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180032d00",
+      "pseudo_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "assembly_evidence": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "native_message.hpp": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c",
+    "native_message.cpp": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+    "native_message_test_fixture.hpp": "b6b0befc7c8fd82bdf19b7f57956410a36d62b448d3b5be229ac2c5e00b39a04",
+    "native_message_tests.cpp": "5837f59174bd2e2bd202bde3b351fb198042cbb65e20dba90c49ded8f570a997",
+    "native_message_integration_tests.cpp": "dbed7d23e9f5461eff669b76a2c583ff5644babf99eb915be440e639107d7fb1",
+    "build.ps1": "d11b717100136f7dd773ad507b9d7fe845bc73061e75a90daf09e333375cb38d",
+    "CMakeLists.txt": "1550f47e5df0547848d85a51c9dbe0cb129261f7514a237d8c3df3383106c13c",
+    "README.md": "2e77ab92178b337910a0737c3f6b822bdb317d9a377b96483b3f6c5c1f91abb5"
+  },
+  "support_hashes": {
+    "native-message-evidence.pseudo.c.txt": "1e6d2e15fd7c8d347d767050457357f971fba5430a0b6db7f2e7ddf5080746d3",
+    "native-message-evidence.asm.txt": "786b66318efd9c0d4e96ad6bdd94201478fc885a81dcbfe4adb0a367ddfa538f",
+    "native-message-context.pseudo.c.txt": "6c3f509309097d1f1f0f4b572e86bfd339f17bf5390aec5f86c898a6d0059d8e",
+    "native-message-context.asm.txt": "7dd750f0e19c904e7d48df515079a4d542ab67aa32d9cd0d488d0ae5eb33ad11",
+    "native-message-flow-audit.md": "d80bf5e3cee7b1828872804c2f2498ed8b31e98384ae804bd5053ee8be6cd74c",
+    "native-message-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788"
+  },
+  "core_checks": 1713,
+  "integration_checks": 2013,
+  "new_checks": 3726,
+  "execution_scope": "033d70 typed normal orchestration and final MessageDispatchApi source bridge; actual request decode/erase before parser/cipher/handler callbacks and failures, response/event codec and one-event pop; actual028d30 and N1-N8 queue/send/finish; XML/032d00/cipher/log/append/native ABI/EH providers remain open",
+  "limitations": [
+    "Typed normal projection only; no native MSVC object/global/vtable/allocator/ABI/EH/SEH/concurrency/fault equivalence",
+    "Explicit per-call locals and coherent string/mutation memory required; bounded mapping failures are not native fault equivalence",
+    "Document XML/032d00/cipher/getters/lock/log providers stay mandatory; log-group internal callback-intermediate ABI not established",
+    "012350/007e30 lower growth providers remain mandatory; controlled fixture composition with008350/02b940 is not recovery of those helpers",
+    "Normal-only failure prefixes; no invented catch/rollback/unwind cleanup/unlock",
+    "New bridge resolves N5 deferred request-writeback gap for selected source; historical N5 adapter remains unchanged as alternate",
+    "Controlled023dd0/completion/injected send; no new027a20/IOCP/027c10 worker, real network or original execution"
+  ],
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Same-agent addressed assembly/source and synthetic independent payload/lifetime/failure-prefix oracles",
+    "independent_review_complete": false
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N10 native012350/007e30 append growth and033d70 lower source-provider closure; CRT stays paused"
+}

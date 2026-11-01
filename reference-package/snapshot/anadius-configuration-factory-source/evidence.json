@@ -1,0 +1,128 @@
+{
+  "schema": "configuration-factory.source-composition.v1",
+  "source_package": "B52",
+  "evidence_type": "Concrete owning configuration component built from real selected leaves and two mandatory narrow effects",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-bootstrap-policies-source/config_platform.cpp",
+      "sha256": "312238a5246e1d1ef126cd146eeb40fb12bd26ed2627d28f6356c11ff46ad28c",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-policies-source/config_platform.hpp",
+      "sha256": "2d6e9b1628ab4afc6c5f60d065cfeaa4c9f0221ee58b1bc8367aa622a6910e9e",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-providers-source/providers.cpp",
+      "sha256": "a4e52f6553c0acf8c45e6d095e4ab6c861344ebc438b0e9a628688364d30f87e",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-providers-source/providers.hpp",
+      "sha256": "46208924795ae2edf09474b54153739b031913e2135b0706557c28e1d741870c",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-application-source/application.cpp",
+      "sha256": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-logging-source/logging.cpp",
+      "sha256": "c2c850b2caac4c6a12d2f64b5f305d656f2fb49e16ce078fdd4eddae2406f527",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-logging-source/logging.hpp",
+      "sha256": "23b8fab945496c69a70377a52046df5937765999cbff9869a1ab00ba80fd5b24",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-pipeline-source/pipeline.cpp",
+      "sha256": "018c61c3354ae541b7e4e7506b7fcfb12600689772b9e54e2d99122065c54378",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-source/configuration.hpp",
+      "sha256": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-startup-source/startup.cpp",
+      "sha256": "de1bf59f726deade3bbcc6ec1ed6c26000638e0aaefd8c56ce02618c7e6f7e88",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-storage-source/filesystem.cpp",
+      "sha256": "06db2ed2205c84837b2f409c2b019557f2eebda24e933dad447302415a799c3f",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-storage-source/persistence.cpp",
+      "sha256": "45a3d81e2c3f3e632f72d13cd7c1b9aa0c6f1da4171d0d963d88b14a3da98cf3",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    },
+    {
+      "path": "outputs/anadius-config-storage-source/persistence.hpp",
+      "sha256": "cb7a2809522d1dc054f811a0b9be77a8278dc8af7e10f80e2f6607d4ffb78212",
+      "scope": "Saved real source dependency or reviewed lower-free extraction; no fresh original analysis bytes."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b52-core-quick-results.json",
+      "sha256": "6ea86b8e00f9df55d40873f3f361d03a0b404d98f75fe0d406d76cb33319e1fe",
+      "checks": 170,
+      "executable_sha256": "df9234d2bf8a3e236d61baf44aad117954827fe2fb11d11958837c144bcc1238",
+      "archive_sha256_as_used": "9d187f5c20389aa1916bb9204a6847d9c6e6431a3f0ab82521d1b6196d24e974",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh providers.cpp/config_platform.cpp/persistence.cpp/logging.cpp plus new factory.cpp and independent factory_tests.cpp, with selected directly used interface headers. Immutable canonical B51 archive supplies prior algorithms. This core constructs no remaining configuration::Dependencies lower and exercises all21 required concrete factory routes plus streaming visitation. Complete mandatory providers/imports are individually rejected before I/O; construction is passive. Deterministic SDK spies verify retained0x104 growth, previous/final LastError, signed-to-lower admission, exact environment names and C-string truncation. Typed conversion spies verify UTF8 versus filesystem codepages, explicit NUL, first-pass sizing, default-character/invalid-flags errors and prefix-before-conversion. A genuine managed shared_log::Stream is reacquired by both conversion callbacks, proving no Lease spans them. Filesystem SDK spies preserve enumeration order and visitor removal before FindNext; no actual filesystem access occurs. Selected in-memory file effects feed the actual XMLBackend/achievementStorage/INI and exact embedded PNG writer, including its deliberately ignored false result and known exception prefixes. Narrow license/document effects are explicit synthetic providers, not recovered license processing or legacy parser claims. Installation publishes only after success and rejects occupied slots; raw effect captures remain backed through normal destructor ordering. Nine actual opaque destructor phases (both narrow effects, persistence/core providers, stream and backing) probe the exact still-attached retiring facade. All21 methods plus streaming/paths are rejected before use; normal earlier visitor/managed-conversion reentry remains allowed. No callback uses a facade after its destructor returns. Serialized calls on an own std-thread after controller construction prove there is no creator-thread affinity. No original/rebuilt DLL, game, network, user cfg/token/key/license file, nativeABI/loader/CRT-completeness, arbitrary concurrent configuration calls or unknown-prefix rollback is claimed."
+    },
+    {
+      "path": "work/b52-integration-quick-results.json",
+      "sha256": "3a89fa1d488c24d32133043fd7f9fd5baca975baf67d3f21bf469c577fb296bd",
+      "checks": 96,
+      "executable_sha256": "b12b9a9a3d87fd45f3aa660285d566cb3549776fad5c16c2d9202e8151754e05",
+      "archive_sha256_as_used": "9d187f5c20389aa1916bb9204a6847d9c6e6431a3f0ab82521d1b6196d24e974",
+      "execution_author": "/root/b22_integration",
+      "note": "ROOTconfiguration_factory ownsALL19selectedDependencies routes+onlytwoNARROWeffects License.apply/LegacyDocument.read, NOgiantconfigurationDependencies lower/subclass/stubs. ActualBootstrapConfiguration/Bootstrap/FilePass/parser/hash/baseoverride/collections/CLIprecedence→ownedFilesystem/streamingvisitor→PNG/StorageXML/CRTnumber/timestamp/INI→environment; fileFactoryONLYsyntheticmemory andtypedSDKspies doNOTtouchusercfg/license/tokenfiles orprocessenvironment. ActualmanagedBootstrapLogger andlowerfreeConfiglog sharestream; encodingprovideracquiresrealLease DURINGconversion provingParsingprefix first/lease released. Failureprefixes parser/log/license/storage andvoidPNGfalseignore checked. UnrelatedBootstraptrampoline explicitlySYNCHRONOUStestpolicy consumesactualsource8/16payloads, NOTOSworkers/SourceBackendjoin/NativeABI/loaderproof. Existingunmodifiedstorage174(+4existingterminalchildren)/logging103compatchecks recordedSEPARATELYwork/b52-*-compat-v2*, notnewintegrationcount. Nooriginal/rebuiltDLL/game/network/usercontents."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition only.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "production_sources_added": 1,
+  "prior_sources_modified": 8,
+  "new_test_sources": 2,
+  "modified_gate_auxiliary": [
+    {
+      "path": "dll-link-gate-source/build-link-gate.ps1",
+      "before_sha256": "7fc2bddff1d7488f90a1a7931f7b766eae3ffcb663aa1610edf590fa4f5a4175",
+      "after_sha256": "e3c97d2e9c927ef436da58e9251d5930af28668036181c295e569c5b919afa06",
+      "reason": "Select frozen configuration_factory.o in the actual failed-link diagnostic, configure same source in opt-in CMake and verify source/object/common-command/link-argument/verbose-consumption provenance. This is not loader invocation/reachability."
+    },
+    {
+      "path": "dll-link-gate-source/target.cmake",
+      "before_sha256": "698500e948e3b192f609343fc26f6639b245d9c519a61c4be249c6f40cf10634",
+      "after_sha256": "b1c4b88534643ff90a166802617b7ee861e91a3585b5a49797e9cdabd8394b60",
+      "reason": "Select frozen configuration_factory.o in the actual failed-link diagnostic, configure same source in opt-in CMake and verify source/object/common-command/link-argument/verbose-consumption provenance. This is not loader invocation/reachability."
+    },
+    {
+      "path": "dll-link-gate-source/verify-link-gate.py",
+      "before_sha256": "bc8828d09f1032566c2eb1b21e580ca05300d83fa9f1237e20f1b14bc32507c0",
+      "after_sha256": "378ac8b220426d2c567f01a5b346af2a47d4bfe92da23d3bf4d14b83864259fa",
+      "reason": "Select frozen configuration_factory.o in the actual failed-link diagnostic, configure same source in opt-in CMake and verify source/object/common-command/link-argument/verbose-consumption provenance. This is not loader invocation/reachability."
+    }
+  ],
+  "gate_auxiliary_review_sha256": "96e8de8f39088ea741703dbc2f65e0cc859d8a55ecb07481677c4c429efa78b0",
+  "full_production_Resources_complete": false,
+  "loader_reachability": false
+}

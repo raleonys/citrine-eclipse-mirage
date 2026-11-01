@@ -1,0 +1,247 @@
+{
+  "schema": "socket-move.normal-source.evidence.v1",
+  "source_package": "B29",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_original_procedures": 2,
+  "normal_source_procedures_added": [
+    "0x180023d20",
+    "0x180028950"
+  ],
+  "functions": [
+    {
+      "address": "0x180023d20",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_6cc121a29050e5e059f62f9f48170fa0366704c46376ab9043b965b45f7da214",
+      "assembly_evidence": "ev_6635266dde9dfb6632465ffcfddef88dc684468dc2261cecc5081598c9f31c93",
+      "existing_definitions": [],
+      "newly_recovered": true
+    },
+    {
+      "address": "0x180028950",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_28dd5dfe2f74baa668fd9399a25f84bdb97a80401a2dbe436d00ec02ff667eb5",
+      "assembly_evidence": "ev_9c247d8443f8d438e254883e524aeb8acfa47b08146d979682aab7097bd60ae5",
+      "existing_definitions": [],
+      "newly_recovered": true
+    },
+    {
+      "address": "0x180023000",
+      "source_presence": "module_record_only",
+      "pseudo_evidence": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "assembly_evidence": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+      "existing_definitions": [],
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180025720",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa",
+      "existing_definitions": [
+        {
+          "path": "anadius-server-source/server.cpp",
+          "symbol": "Session::start_025720"
+        },
+        {
+          "path": "anadius-server-source/server.cpp",
+          "symbol": "accept_completion_025720"
+        }
+      ],
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180024db0",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3",
+      "assembly_evidence": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357",
+      "existing_definitions": [
+        {
+          "path": "anadius-socket-source/lifecycle.cpp",
+          "symbol": "destroy_024db0"
+        },
+        {
+          "path": "anadius-socket-source/lifecycle.cpp",
+          "symbol": "LifecycleRuntime::destroy_socket_024db0"
+        }
+      ],
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002bc70",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_d6716c5d525f5e8e2eb566ef802896e45423abc1be5b6a78f2da5f052740c118",
+      "assembly_evidence": "ev_4fa4de12d674eff8476f9cf6f72bdef77e52de8ef76d04cd9a0e596bd21a0db1",
+      "existing_definitions": [
+        {
+          "path": "anadius-messages-source/messages.cpp",
+          "symbol": "reset_02bc70"
+        },
+        {
+          "path": "anadius-session-source/handler.cpp",
+          "symbol": "MessageHandler::reset_02bc70"
+        },
+        {
+          "path": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "reset_session_cipher_02bc70"
+        }
+      ],
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800280d0",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_dcc519a12be00908ae90c988173ae9147418f1eb4771d95b34d3148914b0d9a2",
+      "assembly_evidence": "ev_36d45e7ea060ccb9497a038a4fa3e7d55641d30c79a68da3da5ae7ff42e69c99",
+      "existing_definitions": [
+        {
+          "path": "anadius-server-source/server.cpp",
+          "symbol": "Session::do_read_0280d0"
+        },
+        {
+          "path": "anadius-socket-source/frame_read.cpp",
+          "symbol": "start_frame_read_0280d0"
+        }
+      ],
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180025480",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "assembly_evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31",
+      "existing_definitions": [
+        {
+          "path": "anadius-server-source/server.cpp",
+          "symbol": "Session::frame_completed_025480"
+        },
+        {
+          "path": "anadius-socket-source/frame_read.cpp",
+          "symbol": "finish_frame_read_025480"
+        },
+        {
+          "path": "anadius-socket-source/frame_read.cpp",
+          "symbol": "RecoveredFrameReadApi::finish_frame_025480"
+        }
+      ],
+      "newly_recovered": false
+    }
+  ],
+  "retained_function_records": [
+    {
+      "address": "0x180023d20",
+      "evidence_id": "ev_6cc121a29050e5e059f62f9f48170fa0366704c46376ab9043b965b45f7da214",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 29358,
+      "retained_record": "180023d20.pseudo.c.txt",
+      "record_sha256": "68c0de6a9cc01f21dab402d11779fbef529807dbdd453de8c376eebca11921e0"
+    },
+    {
+      "address": "0x180028950",
+      "evidence_id": "ev_28dd5dfe2f74baa668fd9399a25f84bdb97a80401a2dbe436d00ec02ff667eb5",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 33942,
+      "retained_record": "180028950.pseudo.c.txt",
+      "record_sha256": "f46c83d8c73116867e8c879101b618853b8d859734acaf61c8186dacc1574210"
+    },
+    {
+      "address": "0x180023000",
+      "evidence_id": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 28542,
+      "retained_record": "180023000.pseudo.c.txt",
+      "record_sha256": "d6a96abcf6d51175f506b5aab767c99f31d04fca1c9389d62206a79606179d75"
+    },
+    {
+      "address": "0x180025720",
+      "evidence_id": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "source_file": "outputs/anadius-all-functions.pseudo.c",
+      "source_file_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "line": 31078,
+      "retained_record": "180025720.pseudo.c.txt",
+      "record_sha256": "19cdf416c8d425c7e7640227e93eead3159bb1c1edc771aa0b46010f90e11900"
+    },
+    {
+      "address": "0x180023d20",
+      "evidence_id": "ev_6635266dde9dfb6632465ffcfddef88dc684468dc2261cecc5081598c9f31c93",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 36709,
+      "retained_record": "180023d20.asm.txt",
+      "record_sha256": "2e1ab7941232ffdeaa71fc450c1164336687475426e5bfe41386bd65d4ddcc8b"
+    },
+    {
+      "address": "0x180028950",
+      "evidence_id": "ev_9c247d8443f8d438e254883e524aeb8acfa47b08146d979682aab7097bd60ae5",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 41771,
+      "retained_record": "180028950.asm.txt",
+      "record_sha256": "8c6a901880276f8e47fbf6218b4f98104646eff8de83495cf7cec5dd2a49d30b"
+    },
+    {
+      "address": "0x180023000",
+      "evidence_id": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 35816,
+      "retained_record": "180023000.asm.txt",
+      "record_sha256": "9c7159182ebb41608241349d8b9a621b8eee7633c701c143387cf46c6389e70b"
+    },
+    {
+      "address": "0x180025720",
+      "evidence_id": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa",
+      "source_file": "outputs/anadius-all-functions.asm.txt",
+      "source_file_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "line": 38441,
+      "retained_record": "180025720.asm.txt",
+      "record_sha256": "30672726aa06fd752f2ec98e042cf9c27e77cebca19b0634f17c3f41a17cad2b"
+    }
+  ],
+  "source_audit": {
+    "path": "source-audit.json",
+    "sha256": "51f9362086c8354abb8a37f7ea02abb1101566bdc5c1bbc26058fc0540d1b66f"
+  },
+  "selected_executor_slot": "Initializedtable180084928 slot8=>1800228c0 fromretainedrdata;0228c0bodyunknown andmandatorylower,neverinvokeVA",
+  "modified_prior_sources": [
+    {
+      "path": "anadius-server-source/server.cpp",
+      "before_sha256": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0",
+      "after_sha256": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda",
+      "reason": "Narrow greeting temporary scope to match native heap release25911 before initial read25919; preserve reset/send/error/zero-progress order."
+    }
+  ],
+  "greeting_negative_control": {
+    "path": "greeting-negative-control.json",
+    "sha256": "8705c788cd8da4ccc94743c53cc22c99f80454df3ac964a0e0eedb0cb14fcfae",
+    "result": "EXPECTED_FAILURE_WITH_CANONICAL_B28_GREETING_SCOPE",
+    "not_a_PASS": true
+  },
+  "session": {
+    "path": "outputs/anadius-config-defaults-source/rea-session.json",
+    "sha256": "4c169c238e8e3f7ff3ece518191fcf21e7e5ac9a9e0d49b6a9f97dd7f602ce33",
+    "reuse_retained_session": true,
+    "new_target_queries": 0
+  },
+  "quick": [
+    {
+      "path": "work/b29-core-quick-results.json",
+      "sha256": "276b091919a212f858133482dbe5d52bdc66336371a7879508d784d2cb38c91f",
+      "checks": 29,
+      "execution_by": "root standard quick; independent integration author /root/b22_integration; reviewer source/record/EXE hashes without rerun"
+    },
+    {
+      "path": "work/b29-integration-quick-results.json",
+      "sha256": "6861753a133d97956b1323dca434c8ce5c91b4a0f7c25e691c3568b8a537be12",
+      "checks": 21,
+      "execution_by": "root standard quick; independent integration author /root/b22_integration; reviewer source/record/EXE hashes without rerun"
+    }
+  ],
+  "new_original_bytes_queried_via_REA": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "scope": "Two complete typed NORMAL algorithms for live/disjoint existingSocketObject projections. Not originalC++classlayout/vtable/callback/concurrency/SEHABI proof. 023000shared owner construction remainsopen; existing025720greetingscopefix addsno newbody."
+}

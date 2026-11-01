@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_conversion_api",
+    "result": "PASS",
+    "output": "conversion API: 3935369 checks PASS",
+    "executable_sha256": "f27476f145e1c408014bc588e0fa4d2abd29b7996780194808998d2bb23b7b6c"
+  },
+  "execution_scope": "Two code-page API wrappers and actual AreFileApisANSI resolver composition; synthetic conversion/module providers and BOOL cells",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-conversion-api-source/api_tests.cpp",
+      "sha256": "5aed7e2d3476e1685e64156bbcd42b0c0456cfe2876ac6955fd489f7dcf5b055"
+    },
+    {
+      "path": "anadius-crt-conversion-api-source/api.cpp",
+      "sha256": "ab3f870e83416c100db185af6d22c29b5e72016b8788d80ba772bd42323e759e"
+    },
+    {
+      "path": "anadius-crt-conversion-api-source/api.hpp",
+      "sha256": "13025005784cb3ffd2f893c0e1c23d8a3de71c15b2f1fdbd875d91cb6b5e9f83"
+    }
+  ]
+}

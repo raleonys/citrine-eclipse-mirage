@@ -1,0 +1,66 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "scope": "Initial multibyte data only; new local read-only PE-derived data distinguished from previously retained REA static callsite evidence; no new REA session",
+  "new_original_function_bodies": 0,
+  "local_file_derived": {
+    "metadata": "extracted-data.json",
+    "extractor": "extract.cjs",
+    "target": "C:/Users/Skysect/Downloads/anadius64.dll",
+    "regions": [
+      {
+        "name": "record",
+        "va": "0x1800a1c70",
+        "size": 552,
+        "file_offset": "0xa0270",
+        "sha256": "2bdf8c788761b060610d20270bb00c2d1d1a9370d6708ba16aa3aa7ad64be4a2",
+        "relocations": []
+      },
+      {
+        "name": "initial_type_table",
+        "va": "0x1800a1ea0",
+        "size": 257,
+        "file_offset": "0xa04a0",
+        "sha256": "376dd640fc827de54eb9e58dcbfeb5a5dbbd62a1812ee3fc63350e1de614e213",
+        "relocations": []
+      },
+      {
+        "name": "initial_case_table",
+        "va": "0x1800a1fb0",
+        "size": 256,
+        "file_offset": "0xa05b0",
+        "sha256": "5fa1127487a1d28b5602fc5447f03b2ab0bee8c9e9cdb08564b130d0a0bef2af",
+        "relocations": []
+      }
+    ],
+    "assertions": [
+      "Initial record fields/padding and last pointer are zero except 104 ASCII table bytes.",
+      "Record slices at +0x18/+0x119 equal separate initial tables.",
+      "Named current pointer slots and three flags are loader zero fill; locale mask is raw-backed 0xfffffffe.",
+      "Initial pair preferred pointer values have DIR64 relocations; no pointer relocations inside extracted record/tables."
+    ]
+  },
+  "retained_REA": [
+    {
+      "address": "0x18006f050",
+      "source": "../anadius-crt-multibyte-tables-source/selected-evidence.json",
+      "pseudocode_evidence": "ev_98c874613f33ebfe1fbaa1dc64f8c1138db71b88cc4495aaa1908ae212078128",
+      "assembly_evidence": "ev_4b4e4b9441d418cfe45f12e0661d6c7c4a3ea803a561a2ae2cfc73737e436abd",
+      "relevance": "Reset copies 257 + 256 bytes from initial record, clears scalar fields and pointer, preserves refcount/padding."
+    },
+    {
+      "address": "0x18006f5f8",
+      "pseudocode_evidence": "ev_41d653fbbc06a7e42a13a95dfee0e48e5f946725be02ecd36eca6dcc7bec3017",
+      "assembly_evidence": "ev_e90764f05824434e1aeb88a2b5fee00f692636a92849517a7c91ea719da84931",
+      "pseudocode": "/* 0x18006f5f8 __acrt_initialize_multibyte; Evidence ev_41d653fbbc06a7e42a13a95dfee0e48e5f946725be02ecd36eca6dcc7bec3017 */\n\n/* Library Function - Single Match\n    __acrt_initialize_multibyte\n   \n   Library: Visual Studio 2019 Release */\n\nundefined8 __acrt_initialize_multibyte(void)\n\n{\n  ulonglong in_RAX;\n  __acrt_ptd *p_Var1;\n  \n  if (DAT_1800a59dc == '\\0') {\n    DAT_1800a59c8 = &DAT_1800a1fb0;\n    DAT_1800a59d0 = &DAT_1800a1c70;\n    DAT_1800a59c0 = &DAT_1800a1ea0;\n    p_Var1 = FUN_180064c64();\n    in_RAX = FUN_18006f2d0(-3,'\\x01',p_Var1,(__crt_multibyte_data **)&DAT_1800a59d0);\n    DAT_1800a59dc = '\\x01';\n  }\n  return CONCAT71((int7)(in_RAX >> 8),1);\n}\n\n\n\n",
+      "assembly": "; 0x18006f5f8 __acrt_initialize_multibyte; Evidence ev_e90764f05824434e1aeb88a2b5fee00f692636a92849517a7c91ea719da84931\n0x18006f5f8: SUB RSP, 0x28\n0x18006f5fc: CMP byte ptr [0x1800a59dc], 0x0\n0x18006f603: JNZ 0x18006f651\n0x18006f605: LEA RCX, [0x1800a1fb0]\n0x18006f60c: MOV qword ptr [0x1800a59c8], RCX\n0x18006f613: LEA RAX, [0x1800a1c70]\n0x18006f61a: LEA RCX, [0x1800a1ea0]\n0x18006f621: MOV qword ptr [0x1800a59d0], RAX\n0x18006f628: MOV qword ptr [0x1800a59c0], RCX\n0x18006f62f: CALL 0x180064c64\n0x18006f634: LEA R9, [0x1800a59d0]\n0x18006f63b: MOV R8, RAX\n0x18006f63e: MOV DL, 0x1\n0x18006f640: MOV ECX, 0xfffffffd\n0x18006f645: CALL 0x18006f2d0\n0x18006f64a: MOV byte ptr [0x1800a59dc], 0x1\n0x18006f651: MOV AL, 0x1\n0x18006f653: ADD RSP, 0x28\n0x18006f657: RET\n\n",
+      "source": "../anadius-crt-multibyte-control-source/evidence.json",
+      "relevance": "Initialization binds type/case/current-record pointers then calls setter and marks initialized."
+    }
+  ],
+  "retained_pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "limitations": [
+    "File-backed values and loader zero-fill are image defaults, not runtime observations.",
+    "No entire locale graph, heap ownership, complete DLL/ABI equivalence, or executable target code is provided."
+  ]
+}

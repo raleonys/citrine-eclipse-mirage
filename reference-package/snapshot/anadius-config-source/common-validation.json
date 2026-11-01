@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "configuration",
+    "result": "PASS",
+    "output": "PASS: 150 synthetic/mock configuration assertions. No original DLL/EXE/CFG execution, environment writes or filesystem effects.",
+    "executable_sha256": "e55565d20f1a10a708117c1748f6ad42210e8be70673ba1dd7e6475f770b6f7e"
+  },
+  "execution_scope": "Legacy2arginitializer150checks regression andshared3argConfigurationPass postbody;oldstandalonevalidationhistorical,currentcommonrecordauthoritative;nativeallocation/OS/ABIunproven",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-config-source/configuration_tests.cpp",
+      "sha256": "d275d51b127d958ee2b52a484deaa7c188eb4165586e70e26776726c98f7d95a"
+    },
+    {
+      "path": "anadius-config-source/configuration.cpp",
+      "sha256": "a2a2fa7980ddeeaece163b705213bdc5adfff48ae149ec39a122850032e25f6c"
+    },
+    {
+      "path": "anadius-config-source/configuration.hpp",
+      "sha256": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6"
+    }
+  ]
+}

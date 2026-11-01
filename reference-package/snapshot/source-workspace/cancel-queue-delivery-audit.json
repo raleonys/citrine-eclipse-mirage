@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T13:22:04.1091998Z",
+  "prior_package_sha256": "d083e1b97a00aa4cc7fff8fce4ef82e1752a1568a1bbc2e7ee53d9cc55fe8a9c",
+  "prior_source_count": 440,
+  "unchanged_prior_sources": 440,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/cancellation_native_tests.cpp",
+    "anadius-socket-source/cancellation_native.cpp",
+    "anadius-socket-source/cancellation_native.hpp",
+    "anadius-socket-source/cancellation_tests.cpp",
+    "anadius-socket-source/cancellation.cpp",
+    "anadius-socket-source/cancellation.hpp"
+  ],
+  "current_sources": 446,
+  "current_documents": 176,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 152,
+  "cpp_objects": 148,
+  "c_objects": 4,
+  "normal_test_groups": 137,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_cancellation",
+      "result": "PASS",
+      "output": "PASS: 1937 socket cancellation checks; finite offline graph and injected effects only",
+      "executable_sha256": "958e02c3ba74d2e3284f77824a702b9a3ab282e1e6ceb9e726b7dae89108189c"
+    },
+    {
+      "module": "socket_cancellation_native",
+      "result": "PASS",
+      "output": "PASS: 107 socket native cancellation checks; injected SDK and actual source integration only",
+      "executable_sha256": "709aacdf37e065f10ce9c7e1e4026864905ba0cc1339569b9064fd5be3ab189d"
+    }
+  ],
+  "new_checks": 2044,
+  "master_build_sha256": "f1330140a8eaea05d13e14a93671c7f207f768ebd7d663df90f710858242ce87",
+  "common_build_script_sha256": "52e5f55787c97f2a1d0f6ddb643adf1604cf07fb28c1742149063759cbcc8c4e",
+  "cmake_sha256": "1c62042c14ce67f168c712754d6ec65ce6d631680ca1cc1aa0bbbf49e9daa3b6",
+  "normal_source_procedures_added": [
+    "0x180026aa0",
+    "0x180028850"
+  ],
+  "new_original_procedures": 2,
+  "new_composition": "Typed four-map cancellation FIFO/fallback plus QueueCancellationEffects and SDK completion bridge",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

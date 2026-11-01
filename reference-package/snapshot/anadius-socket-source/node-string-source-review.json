@@ -1,0 +1,88 @@
+{
+  "schema": "node-string.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-27",
+  "reviewer": "/root/string_retained_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent complete retained0035e0 assembly/pseudocode,exact five entity records/name bytes,and exact frozen CPP/HPP review. One bounded byte-state GetStr body and one existing typed materialize provider bridge;no reviewer tests/original reads/native analysis/full DOM or ABI claim.",
+  "reviewed_source_hashes": {
+    "node_string.hpp": "2f571d0db438b452e0ecb0df5950db66c9579fee476275da9bf2d3c62c45dfe3",
+    "node_string.cpp": "8223d33eaac0d77296479981108a205458e1f440d212bd163590fb5783a60080"
+  },
+  "addresses": [
+    "0x1800035e0"
+  ],
+  "assembly_evidence": "ev_704e716e4fcf7eead3762f34f5b8e311ff9f14a674ad542b9c79429b3efad5e0",
+  "pseudo_evidence": "ev_5e71fdafa86c9cb6c66ad0d57972845920ad9cc67d23951b21164d5b586a0c01",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 1,
+  "prior_source_presence": "module_record_only",
+  "prior_evidence_record": "anadius-xml-source/reader-evidence.json",
+  "closed_providers": [
+    {
+      "address": "0x1800035e0",
+      "base": "NativeNodeParseEffects::materialize_0035e0",
+      "closure": "RecoveredNodeStringEffects::materialize_0035e0",
+      "body": "materialize_node_string_0035e0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "new_selected_source_adapters": 0,
+  "existing_selected_node_parse_adapter_preserved": true,
+  "new_decoder_or_copy_body_claimed": false,
+  "findings": [
+    "Entry flag100-clear reads only flags and current pair.start,returns without reading pair.end,writing any terminator,calling lower effects or clearing flags. This bypass is not replaced with an unconditional normalization pass.",
+    "Flag100-set caches pair.end and stores BYTE0 there before the live DWORD XOR100. Physical overlap can alter the flags before XOR. The XOR result decides whether the first pass runs;zero skips even its start/end reads and output-terminator store.",
+    "For nonzero post-XOR flags,input and output both cache current pair.start. Unsigned pointer comparison uses current pair.end before each iteration,and the end pointer is not replaced by a cached span length. Even empty/reversed input bounds still write the first-pass output terminator.",
+    "The entity table identity is cached once for the first pass,matching native fixed LEA R12. Each iteration caches one DWORD flags value;both newline bit2 and entity bit1 checks use it. Callbacks affecting flags or end become observable in subsequent native reads.",
+    "Newline normalization reads following byte only for CR or LF,advances by2 for CRLF/LFCR or1 for lone newline,and stores LF after input advancement. Ordinary bytes including embeddedNUL use the bounded first-pass copy path.",
+    "Named entities traverse five records in exact retained order:quot,amp,apos,lt,gt. No pointer-identity shortcut or unobserved replacement name is added. Each comparison forwards input+1,name pointer and sign-extended live DWORD length to mandatory05c550.",
+    "Successful comparison rereads table length for semicolon lookup. A successful semicolon match loads replacement byte+0c,stores it,advances output,and only then rereads DWORD length. Its ADD2 wraps32 bits and is sign-extended before input advancement. Table/output physical alias ordering is preserved.",
+    "Unknown named entity or missingsemicolon after a successful comparison jumps to native003745,bypassing byte store003743. The source increments input and output without storing. After earlier compaction this deliberately preserves stale destination data rather than copying ampersand.",
+    "Numeric entities initialize exactly ten local output bytes to zero and signed DWORD count0 before mandatory0033c0. A zero decoded cursor takes the fresh ordinary-byte copy path. Nonzero decoded cursor uses signed32-to64 count,sets input to returned cursor,then invokes mandatory078d30 copy and advances output by the cached length.",
+    "Ten-byte host spans and a signed count reference explicitly project native local scratch/output operands. The source does not clamp the count,substitute an invented decoder,read a fabricated mapped stack or claim that arbitrary oversized counts are safe native memory copies;the copier contract remains mandatory.",
+    "First-pass completion stores BYTE0 at cached output without changing pair.end. The following whitespace gate rereads flags BYTE bit4,so aliased stores/callbacks affecting the gate remain observable.",
+    "Leading whitespace uses fresh byte loads,skips classifier calls for high-bit bytes,and otherwise forwards zero-extended byte including0 to051fc0. There is no invented NUL guard before classification. The resulting cached cursor is stored to pair.start before the next fresh source-byte load.",
+    "Whitespace outer loop retains its current byte across the classifier call. If it is classified as space,the inner scan reloads and may classify the same byte again,matching native duplicate calls. High-bit bytes bypass classifier checks in both locations.",
+    "After inner scan,the source checks current source byte forNUL before publishing ASCII20. The subsequent copied byte is freshly reloaded after all classifier callbacks and the possible space store,rather than using cached outer current. Trailing whitespace writes no extra space.",
+    "Final flags are a live DWORD AND200 followed by a fresh pair.start return. The start can have moved during leading trim or through aliased output/callback writes. No cached original start or stale flags value replaces these final accesses.",
+    "RecoveredNodeStringEffects preserves the N28 insertion/constructor/Identify/selected parser inheritance and final materialize override closes exactly the existing NativeNodeParseEffects::materialize_0035e0 provider. Decoder,copier,classifier,compare and generic child parsers remain explicit dependencies.",
+    "One normal tagged0035e0 body plus one final tagged bridge represents one native address,not two recovered functions. The old reader-evidence-only module_record_only entry becomes source-mapped;no_definition_mapping does not change for this target.",
+    "No null-owner guards,heap allocation/free,node destruction,rollback or automatic native exception cleanup are added. Missing mapped memory or mandatory lower failures retain already committed byte-state prefixes. Security cookie/register/stack/native fault/EH/concurrency and complete DLL equivalence are outside this bounded source review."
+  ],
+  "limitations": [
+    "Bounded byte-state source projection only;native original object/register/stack/security-cookie/fault/EH/concurrency and complete DLL equality remain unproven.",
+    "The ten-byte local scratch projection does not prove native stack layout or support arbitrary oversized copy reads;mandatory decoder/copy providers retain that boundary.",
+    "051fc0 classifier,05c550 compare,0033c0 numeric decoder and078d30 copy instruction bodies are not added by N29. Host fixtures/previous bodies are dependencies,not new recoveries.",
+    "Five static table/name records establish selected initialized image data,not a live execution observation or arbitrary modified native globals.",
+    "No full DOM/original input execution/standalone replacement-DLL claim or total DLL completion percentage is derived."
+  ],
+  "retained_data": {
+    "file": "node-string-retained-data.json",
+    "sha256": "94bc543d67191090705c0371fcaba32c4931a3f81234263ee7a8fd631a26ff34",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "entity_table_record_count": 5,
+    "instruction_anchor_count": 37,
+    "new_original_read_performed": false
+  },
+  "full_native_equivalence_review_complete": false,
+  "native_materialize_0035e0_normal_body_ready": true,
+  "native_node_string_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "generic_virtual_parse_closed": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false,
+  "new_native_analysis": false,
+  "CRT_production": "unchanged and paused"
+}

@@ -1,0 +1,1104 @@
+{
+  "result": "COMPLETE",
+  "provenance": "Retained REA evidence plus local static PE/LLVM disassembly; no new REA session",
+  "input": {
+    "target": "C:/Users/Skysect/Downloads/anadius64.dll",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "retained_pseudocode": {
+      "path": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    },
+    "retained_assembly": {
+      "path": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    }
+  },
+  "current_locale_image": {
+    "va": "0x1800a52e0",
+    "file_offset": null,
+    "size": 8,
+    "raw_backed": 0,
+    "zero_fill": 8,
+    "section": ".data",
+    "bytes_hex": "0000000000000000"
+  },
+  "unlisted_leaf_064468": {
+    "va": "0x180064468",
+    "file_offset": "0x63868",
+    "size": 17,
+    "raw_backed": 17,
+    "zero_fill": 0,
+    "section": ".text",
+    "bytes_hex": "488d0571d303004889056a0e0400b001c3",
+    "evidence_id": null,
+    "decoder": "local LLVM llvm-objdump static disassembly; command -d --start-address=0x180064468 --stop-address=0x18006447c",
+    "instructions": [
+      "0x180064468: LEA RAX,[0x1800a17e0]",
+      "0x18006446f: MOV [0x1800a52e0],RAX",
+      "0x180064476: MOV AL,1",
+      "0x180064478: RET"
+    ]
+  },
+  "initializer_pair_table": {
+    "begin": "0x18008aa60",
+    "end": "0x18008ab60",
+    "file_offset": "0x89260",
+    "count": 16,
+    "sha256": "d22926452d26f622350a0455a67df28c9d050fa64329f25c73ab3256f9e4a2e0",
+    "pairs": [
+      {
+        "index": 0,
+        "va": "0x18008aa60",
+        "file_offset": "0x89260",
+        "initialize": {
+          "slot_va": "0x18008aa60",
+          "slot_file_offset": "0x89260",
+          "value": "0x180064468",
+          "dir64": {
+            "type": 10,
+            "word": "0xaa60",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ed8"
+          },
+          "retained_function": null
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aa68",
+          "slot_file_offset": "0x89268",
+          "value": "0x0",
+          "dir64": null
+        }
+      },
+      {
+        "index": 1,
+        "va": "0x18008aa70",
+        "file_offset": "0x89270",
+        "initialize": {
+          "slot_va": "0x18008aa70",
+          "slot_file_offset": "0x89270",
+          "value": "0x1800644b0",
+          "dir64": {
+            "type": 10,
+            "word": "0xaa70",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8eda"
+          },
+          "retained_function": "ev_02573d630d19ea19f008efd3e962fa497717b5005f7cb0255aabbebd1c5abd93"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aa78",
+          "slot_file_offset": "0x89278",
+          "value": "0x0",
+          "dir64": null
+        }
+      },
+      {
+        "index": 2,
+        "va": "0x18008aa80",
+        "file_offset": "0x89280",
+        "initialize": {
+          "slot_va": "0x18008aa80",
+          "slot_file_offset": "0x89280",
+          "value": "0x180067538",
+          "dir64": {
+            "type": 10,
+            "word": "0xaa80",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8edc"
+          },
+          "retained_function": "ev_1c3496dc2577c44b542ebac667f9c414d90126bb3eb84c679dbbc63c37dc5c47"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aa88",
+          "slot_file_offset": "0x89288",
+          "value": "0x18006755c",
+          "dir64": {
+            "type": 10,
+            "word": "0xaa88",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ede"
+          },
+          "retained_function": "ev_47f12c44264c123d7465248f97156f81410be7b748f19dfd7a0c19745d767b1e"
+        }
+      },
+      {
+        "index": 3,
+        "va": "0x18008aa90",
+        "file_offset": "0x89290",
+        "initialize": {
+          "slot_va": "0x18008aa90",
+          "slot_file_offset": "0x89290",
+          "value": "0x180006500",
+          "dir64": {
+            "type": 10,
+            "word": "0xaa90",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ee0"
+          },
+          "retained_function": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aa98",
+          "slot_file_offset": "0x89298",
+          "value": "0x180006500",
+          "dir64": {
+            "type": 10,
+            "word": "0xaa98",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ee2"
+          },
+          "retained_function": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39"
+        }
+      },
+      {
+        "index": 4,
+        "va": "0x18008aaa0",
+        "file_offset": "0x892a0",
+        "initialize": {
+          "slot_va": "0x18008aaa0",
+          "slot_file_offset": "0x892a0",
+          "value": "0x1800625b0",
+          "dir64": {
+            "type": 10,
+            "word": "0xaaa0",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ee4"
+          },
+          "retained_function": "ev_0f77a2faa4ce96a4772e24821af0610aa87b98b6d14ee2e1a366f1742c38a007"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aaa8",
+          "slot_file_offset": "0x892a8",
+          "value": "0x180062614",
+          "dir64": {
+            "type": 10,
+            "word": "0xaaa8",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ee6"
+          },
+          "retained_function": "ev_9d4a13971ff88e40e8d9954f61a4ab3412e680ab50b5359b68d9f09299abc802"
+        }
+      },
+      {
+        "index": 5,
+        "va": "0x18008aab0",
+        "file_offset": "0x892b0",
+        "initialize": {
+          "slot_va": "0x18008aab0",
+          "slot_file_offset": "0x892b0",
+          "value": "0x1800704cc",
+          "dir64": {
+            "type": 10,
+            "word": "0xaab0",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ee8"
+          },
+          "retained_function": "ev_b6c4736f154dc16ac5e368c7b8d569dca1c7238dd8704175a00636d5f9c23649"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aab8",
+          "slot_file_offset": "0x892b8",
+          "value": "0x1800704e8",
+          "dir64": {
+            "type": 10,
+            "word": "0xaab8",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8eea"
+          },
+          "retained_function": null
+        }
+      },
+      {
+        "index": 6,
+        "va": "0x18008aac0",
+        "file_offset": "0x892c0",
+        "initialize": {
+          "slot_va": "0x18008aac0",
+          "slot_file_offset": "0x892c0",
+          "value": "0x0",
+          "dir64": null
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aac8",
+          "slot_file_offset": "0x892c8",
+          "value": "0x1800644f0",
+          "dir64": {
+            "type": 10,
+            "word": "0xaac8",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8eec"
+          },
+          "retained_function": null
+        }
+      },
+      {
+        "index": 7,
+        "va": "0x18008aad0",
+        "file_offset": "0x892d0",
+        "initialize": {
+          "slot_va": "0x18008aad0",
+          "slot_file_offset": "0x892d0",
+          "value": "0x180064e90",
+          "dir64": {
+            "type": 10,
+            "word": "0xaad0",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8eee"
+          },
+          "retained_function": "ev_9e333e33a4960b2fa42317907dca8150dff6c829e4d2a8ac893f096a103d7ce7"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aad8",
+          "slot_file_offset": "0x892d8",
+          "value": "0x180064ecc",
+          "dir64": {
+            "type": 10,
+            "word": "0xaad8",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ef0"
+          },
+          "retained_function": "ev_548f2fca0b7a721cc982f98265afacc70e59e6f00fb0dfe28f5871f282ad6b5a"
+        }
+      },
+      {
+        "index": 8,
+        "va": "0x18008aae0",
+        "file_offset": "0x892e0",
+        "initialize": {
+          "slot_va": "0x18008aae0",
+          "slot_file_offset": "0x892e0",
+          "value": "0x180067890",
+          "dir64": {
+            "type": 10,
+            "word": "0xaae0",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ef2"
+          },
+          "retained_function": "ev_53596e1106f3183bdc899f798d5c824609c85d32af2b256dbfff07a0f6d395dd"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aae8",
+          "slot_file_offset": "0x892e8",
+          "value": "0x1800678cc",
+          "dir64": {
+            "type": 10,
+            "word": "0xaae8",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ef4"
+          },
+          "retained_function": "ev_ee05528565d8f723446d2a4a90a5fdd8a2d6afeef615c9f1adf559539e7a1576"
+        }
+      },
+      {
+        "index": 9,
+        "va": "0x18008aaf0",
+        "file_offset": "0x892f0",
+        "initialize": {
+          "slot_va": "0x18008aaf0",
+          "slot_file_offset": "0x892f0",
+          "value": "0x18006f9bc",
+          "dir64": {
+            "type": 10,
+            "word": "0xaaf0",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ef6"
+          },
+          "retained_function": "ev_cb04deda8279ea5da978b8d3f7665657943754d816dbbd7841edab6a7c7f9d93"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008aaf8",
+          "slot_file_offset": "0x892f8",
+          "value": "0x180006500",
+          "dir64": {
+            "type": 10,
+            "word": "0xaaf8",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8ef8"
+          },
+          "retained_function": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39"
+        }
+      },
+      {
+        "index": 10,
+        "va": "0x18008ab00",
+        "file_offset": "0x89300",
+        "initialize": {
+          "slot_va": "0x18008ab00",
+          "slot_file_offset": "0x89300",
+          "value": "0x18006f5f8",
+          "dir64": {
+            "type": 10,
+            "word": "0xab00",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8efa"
+          },
+          "retained_function": "ev_41d653fbbc06a7e42a13a95dfee0e48e5f946725be02ecd36eca6dcc7bec3017"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008ab08",
+          "slot_file_offset": "0x89308",
+          "value": "0x0",
+          "dir64": null
+        }
+      },
+      {
+        "index": 11,
+        "va": "0x18008ab10",
+        "file_offset": "0x89310",
+        "initialize": {
+          "slot_va": "0x18008ab10",
+          "slot_file_offset": "0x89310",
+          "value": "0x0",
+          "dir64": null
+        },
+        "uninitialize": {
+          "slot_va": "0x18008ab18",
+          "slot_file_offset": "0x89318",
+          "value": "0x180006500",
+          "dir64": {
+            "type": 10,
+            "word": "0xab18",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8efc"
+          },
+          "retained_function": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39"
+        }
+      },
+      {
+        "index": 12,
+        "va": "0x18008ab20",
+        "file_offset": "0x89320",
+        "initialize": {
+          "slot_va": "0x18008ab20",
+          "slot_file_offset": "0x89320",
+          "value": "0x0",
+          "dir64": null
+        },
+        "uninitialize": {
+          "slot_va": "0x18008ab28",
+          "slot_file_offset": "0x89328",
+          "value": "0x180064538",
+          "dir64": {
+            "type": 10,
+            "word": "0xab28",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8efe"
+          },
+          "retained_function": "ev_5ad98d1bcf49e563ce7548264b64029ec2d316d10377d62413db069105093978"
+        }
+      },
+      {
+        "index": 13,
+        "va": "0x18008ab30",
+        "file_offset": "0x89330",
+        "initialize": {
+          "slot_va": "0x18008ab30",
+          "slot_file_offset": "0x89330",
+          "value": "0x0",
+          "dir64": null
+        },
+        "uninitialize": {
+          "slot_va": "0x18008ab38",
+          "slot_file_offset": "0x89338",
+          "value": "0x1800644f8",
+          "dir64": {
+            "type": 10,
+            "word": "0xab38",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8f00"
+          },
+          "retained_function": "ev_82ed5c1b2273a1b6458c896c47a7f737a42930c9a261f3be55551ef4e056625a"
+        }
+      },
+      {
+        "index": 14,
+        "va": "0x18008ab40",
+        "file_offset": "0x89340",
+        "initialize": {
+          "slot_va": "0x18008ab40",
+          "slot_file_offset": "0x89340",
+          "value": "0x180006500",
+          "dir64": {
+            "type": 10,
+            "word": "0xab40",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8f02"
+          },
+          "retained_function": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008ab48",
+          "slot_file_offset": "0x89348",
+          "value": "0x1800644a0",
+          "dir64": {
+            "type": 10,
+            "word": "0xab48",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8f04"
+          },
+          "retained_function": "ev_895d3b00175388a1f4e86f9d3cbe5e41334c5ceb94b2d65a7184fc3bda4b565c"
+        }
+      },
+      {
+        "index": 15,
+        "va": "0x18008ab50",
+        "file_offset": "0x89350",
+        "initialize": {
+          "slot_va": "0x18008ab50",
+          "slot_file_offset": "0x89350",
+          "value": "0x18006447c",
+          "dir64": {
+            "type": 10,
+            "word": "0xab50",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8f06"
+          },
+          "retained_function": "ev_128dcdbd118a6380a4750ff1e54271f936ddb311b7b3557f4bfaca02a8a8e7d5"
+        },
+        "uninitialize": {
+          "slot_va": "0x18008ab58",
+          "slot_file_offset": "0x89358",
+          "value": "0x180006500",
+          "dir64": {
+            "type": 10,
+            "word": "0xab58",
+            "page_rva": "0x8a000",
+            "entry_file_offset": "0xa8f08"
+          },
+          "retained_function": "ev_17693b050a3c1b4a324406ca41784d2f5a74f1fb3846ddc2cbe1744c90f05f39"
+        }
+      }
+    ]
+  },
+  "preterminators": {
+    "begin": "0x18007f728",
+    "end": "0x18007f748",
+    "entries": [
+      {
+        "va": "0x18007f728",
+        "file_offset": "0x7df28",
+        "value": "0x0",
+        "dir64": null
+      },
+      {
+        "va": "0x18007f730",
+        "file_offset": "0x7df30",
+        "value": "0x180065338",
+        "dir64": {
+          "type": 10,
+          "word": "0xa730",
+          "page_rva": "0x7f000",
+          "entry_file_offset": "0xa885e"
+        }
+      },
+      {
+        "va": "0x18007f738",
+        "file_offset": "0x7df38",
+        "value": "0x180077b18",
+        "dir64": {
+          "type": 10,
+          "word": "0xa738",
+          "page_rva": "0x7f000",
+          "entry_file_offset": "0xa8860"
+        }
+      },
+      {
+        "va": "0x18007f740",
+        "file_offset": "0x7df40",
+        "value": "0x18005224c",
+        "dir64": {
+          "type": 10,
+          "word": "0xa740",
+          "page_rva": "0x7f000",
+          "entry_file_offset": "0xa8862"
+        }
+      }
+    ]
+  },
+  "functions": [
+    {
+      "va": "0x180064468",
+      "pseudocode_evidence": null,
+      "assembly_evidence": null,
+      "assembly_normal_flow": [],
+      "retained_direct_callers": []
+    },
+    {
+      "va": "0x18006447c",
+      "pseudocode_evidence": "ev_128dcdbd118a6380a4750ff1e54271f936ddb311b7b3557f4bfaca02a8a8e7d5",
+      "assembly_evidence": "ev_0d879587dbd892a79fb6497849d2aae2767615e668da0a192514697e97897869",
+      "assembly_normal_flow": [
+        "0x18006447c: SUB RSP, 0x28",
+        "0x180064480: LEA RCX, [0x1800a52a8]",
+        "0x180064487: CALL 0x1800643f8",
+        "0x18006448c: LEA RCX, [0x1800a52c0]",
+        "0x180064493: CALL 0x1800643f8",
+        "0x180064498: MOV AL, 0x1",
+        "0x18006449a: ADD RSP, 0x28",
+        "0x18006449e: RET"
+      ],
+      "retained_direct_callers": []
+    },
+    {
+      "va": "0x1800644b0",
+      "pseudocode_evidence": "ev_02573d630d19ea19f008efd3e962fa497717b5005f7cb0255aabbebd1c5abd93",
+      "assembly_evidence": "ev_eb79dd9ecb1eff8d033c4008f66196467d70b4edea43d3bc0e9ca8de190054bf",
+      "assembly_normal_flow": [
+        "0x1800644b0: PUSH RBX",
+        "0x1800644b2: SUB RSP, 0x20",
+        "0x1800644b6: MOV RBX, qword ptr [0x1800a1580]",
+        "0x1800644bd: MOV RCX, RBX",
+        "0x1800644c0: CALL 0x18005c7e4",
+        "0x1800644c5: MOV RCX, RBX",
+        "0x1800644c8: CALL 0x1800634a8",
+        "0x1800644cd: MOV RCX, RBX",
+        "0x1800644d0: CALL 0x18005ea40",
+        "0x1800644d5: MOV RCX, RBX",
+        "0x1800644d8: CALL 0x1800705f0",
+        "0x1800644dd: MOV RCX, RBX",
+        "0x1800644e0: CALL 0x18005cd94",
+        "0x1800644e5: MOV AL, 0x1",
+        "0x1800644e7: ADD RSP, 0x20",
+        "0x1800644eb: POP RBX",
+        "0x1800644ec: RET"
+      ],
+      "retained_direct_callers": []
+    },
+    {
+      "va": "0x180065104",
+      "pseudocode_evidence": "ev_b183b7650c91500655f4a95389def832d0a79d893a8f688009716a8b7698b7f2",
+      "assembly_evidence": "ev_c0bb591d054c51baae2bf8cbae8bbf908c43e85d699a0b730f9dc7f0aa91fd4a",
+      "assembly_normal_flow": [
+        "0x180065104: MOV qword ptr [RSP + 0x8], RBX",
+        "0x180065109: MOV qword ptr [RSP + 0x10], RSI",
+        "0x18006510e: MOV qword ptr [RSP + 0x20], R9",
+        "0x180065113: PUSH RDI",
+        "0x180065114: SUB RSP, 0x30",
+        "0x180065118: MOV RDI, R9",
+        "0x18006511b: MOV ECX, dword ptr [RDX]",
+        "0x18006511d: CALL 0x1800625f8",
+        "0x180065122: NOP",
+        "0x180065123: LEA RBX, [0x1800a52e0]",
+        "0x18006512a: LEA RSI, [0x1800a17e0]",
+        "0x180065131: MOV qword ptr [RSP + 0x20], RBX",
+        "0x180065136: LEA RAX, [0x1800a52e8]",
+        "0x18006513d: CMP RBX, RAX",
+        "0x180065140: JZ 0x18006515b",
+        "0x180065142: CMP qword ptr [RBX], RSI",
+        "0x180065145: JZ 0x180065155",
+        "0x180065147: MOV RDX, RSI",
+        "0x18006514a: MOV RCX, RBX",
+        "0x18006514d: CALL 0x1800709d8",
+        "0x180065152: MOV qword ptr [RBX], RAX",
+        "0x180065155: ADD RBX, 0x8",
+        "0x180065159: JMP 0x180065131",
+        "0x18006515b: MOV ECX, dword ptr [RDI]",
+        "0x18006515d: CALL 0x18006264c",
+        "0x180065162: MOV RBX, qword ptr [RSP + 0x40]",
+        "0x180065167: MOV RSI, qword ptr [RSP + 0x48]",
+        "0x18006516c: ADD RSP, 0x30",
+        "0x180065170: POP RDI",
+        "0x180065171: RET"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x180065338 __acrt_uninitialize_locale; Evidence ev_7ca19f79fe9886ba8cca9aa6403bb40ca05a148198b37710e12323f635d24689",
+          "instruction": "0x18006535c: CALL 0x180065104"
+        }
+      ]
+    },
+    {
+      "va": "0x180065338",
+      "pseudocode_evidence": "ev_2d33ae0db58262e8ed051e3ea09c28573b21fad376f11efef03f2bdcfda90cbf",
+      "assembly_evidence": "ev_7ca19f79fe9886ba8cca9aa6403bb40ca05a148198b37710e12323f635d24689",
+      "assembly_normal_flow": [
+        "0x180065338: MOV R11, RSP",
+        "0x18006533b: SUB RSP, 0x28",
+        "0x18006533f: MOV EAX, 0x4",
+        "0x180065344: LEA R9, [R11 + 0x10]",
+        "0x180065348: LEA R8, [R11 + 0x8]",
+        "0x18006534c: MOV dword ptr [RSP + 0x38], EAX",
+        "0x180065350: LEA RDX, [R11 + 0x18]",
+        "0x180065354: MOV dword ptr [RSP + 0x40], EAX",
+        "0x180065358: LEA RCX, [R11 + 0x8]",
+        "0x18006535c: CALL 0x180065104",
+        "0x180065361: ADD RSP, 0x28",
+        "0x180065365: RET"
+      ],
+      "retained_direct_callers": []
+    },
+    {
+      "va": "0x180064594",
+      "pseudocode_evidence": "ev_4c4000380c4a53edea511642b32e097f25502bb72da15a9bafd80659fe65471a",
+      "assembly_evidence": "ev_c261f9d193ecba0feea0d82b3e509f0325e808be7ee44747df5ff43ca54b3854",
+      "assembly_normal_flow": [
+        "0x180064594: LEA RDX, [0x18008ab60]",
+        "0x18006459b: LEA RCX, [0x18008aa60]",
+        "0x1800645a2: JMP 0x1800704f4"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x18004b584 FUN_18004b584; Evidence ev_993e9e4cf64b249535b6490620f01b83b10b91bebef16e5325dc270d4c754476",
+          "instruction": "0x18004b5a5: CALL 0x180064594"
+        }
+      ]
+    },
+    {
+      "va": "0x1800704f4",
+      "pseudocode_evidence": "ev_1bb82bc295d907c6e8f931a7531deb4b8331a10bc4394046075c6de17a4847ec",
+      "assembly_evidence": "ev_570cf4dfaee26fdaf2212b8111ffe28b5e707fb31fb6df7c7ce2b49510798dc3",
+      "assembly_normal_flow": [
+        "0x1800704f4: MOV qword ptr [RSP + 0x8], RBX",
+        "0x1800704f9: MOV qword ptr [RSP + 0x10], RSI",
+        "0x1800704fe: PUSH RDI",
+        "0x1800704ff: SUB RSP, 0x20",
+        "0x180070503: MOV RSI, RDX",
+        "0x180070506: MOV RDI, RCX",
+        "0x180070509: CMP RCX, RDX",
+        "0x18007050c: JZ 0x180070576",
+        "0x18007050e: MOV RBX, RCX",
+        "0x180070511: MOV RAX, qword ptr [RBX]",
+        "0x180070514: TEST RAX, RAX",
+        "0x180070517: JZ 0x18007052d",
+        "0x180070519: MOV R10, -0x206b613ba3a35d90",
+        "0x180070523: CALL qword ptr [0x18007f5b0]",
+        "0x180070529: TEST AL, AL",
+        "0x18007052b: JZ 0x180070536",
+        "0x18007052d: ADD RBX, 0x10",
+        "0x180070531: CMP RBX, RSI",
+        "0x180070534: JNZ 0x180070511",
+        "0x180070536: CMP RBX, RSI",
+        "0x180070539: JZ 0x180070576",
+        "0x18007053b: CMP RBX, RDI",
+        "0x18007053e: JZ 0x180070572",
+        "0x180070540: ADD RBX, -0x8",
+        "0x180070544: CMP qword ptr [RBX + -0x8], 0x0",
+        "0x180070549: JZ 0x180070565",
+        "0x18007054b: MOV RAX, qword ptr [RBX]",
+        "0x18007054e: TEST RAX, RAX",
+        "0x180070551: JZ 0x180070565",
+        "0x180070553: MOV R10, -0x6866598ac1a6c490",
+        "0x18007055d: XOR ECX, ECX",
+        "0x18007055f: CALL qword ptr [0x18007f5b0]",
+        "0x180070565: SUB RBX, 0x10",
+        "0x180070569: LEA RAX, [RBX + 0x8]",
+        "0x18007056d: CMP RAX, RDI",
+        "0x180070570: JNZ 0x180070544",
+        "0x180070572: XOR AL, AL",
+        "0x180070574: JMP 0x180070578",
+        "0x180070576: MOV AL, 0x1",
+        "0x180070578: MOV RBX, qword ptr [RSP + 0x30]",
+        "0x18007057d: MOV RSI, qword ptr [RSP + 0x38]",
+        "0x180070582: ADD RSP, 0x20",
+        "0x180070586: POP RDI",
+        "0x180070587: RET"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x180064594 FUN_180064594; Evidence ev_c261f9d193ecba0feea0d82b3e509f0325e808be7ee44747df5ff43ca54b3854",
+          "instruction": "0x1800645a2: JMP 0x1800704f4"
+        }
+      ]
+    },
+    {
+      "va": "0x180070588",
+      "pseudocode_evidence": "ev_29c893fe7b78238876a2c41a9fc8d95b4ae700e7ba3688ad8af740850972f567",
+      "assembly_evidence": "ev_843f430b66c5d28888ef0ed88d02257634affdf201a96016cbe3c71a1ab1b016",
+      "assembly_normal_flow": [
+        "0x180070588: MOV qword ptr [RSP + 0x8], RBX",
+        "0x18007058d: PUSH RDI",
+        "0x18007058e: SUB RSP, 0x20",
+        "0x180070592: MOV RBX, RDX",
+        "0x180070595: MOV RDI, RCX",
+        "0x180070598: CMP RCX, RDX",
+        "0x18007059b: JZ 0x1800705c1",
+        "0x18007059d: MOV RAX, qword ptr [RBX + -0x8]",
+        "0x1800705a1: TEST RAX, RAX",
+        "0x1800705a4: JZ 0x1800705b8",
+        "0x1800705a6: MOV R10, -0x6866598ac1a6c490",
+        "0x1800705b0: XOR ECX, ECX",
+        "0x1800705b2: CALL qword ptr [0x18007f5b0]",
+        "0x1800705b8: SUB RBX, 0x10",
+        "0x1800705bc: CMP RBX, RDI",
+        "0x1800705bf: JNZ 0x18007059d",
+        "0x1800705c1: MOV RBX, qword ptr [RSP + 0x30]",
+        "0x1800705c6: MOV AL, 0x1",
+        "0x1800705c8: ADD RSP, 0x20",
+        "0x1800705cc: POP RDI",
+        "0x1800705cd: RET"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x1800645cc __acrt_uninitialize; Evidence ev_48c0d2c6c4fb5bb2db5fbb7118062241e0238031b58b87518f9fcb602127b75f",
+          "instruction": "0x1800645fc: JMP 0x180070588"
+        }
+      ]
+    },
+    {
+      "va": "0x1800709d8",
+      "pseudocode_evidence": "ev_d86652abc783dc5caf26d0a653e339951376df7a4e7b70e79a4a94f66e77cdbc",
+      "assembly_evidence": "ev_289f44c550d338f639178fc8d8c2b59c8712a4078351c5f269749c1adc78b7b6",
+      "assembly_normal_flow": [
+        "0x1800709d8: MOV qword ptr [RSP + 0x8], RBX",
+        "0x1800709dd: PUSH RDI",
+        "0x1800709de: SUB RSP, 0x20",
+        "0x1800709e2: MOV RDI, RDX",
+        "0x1800709e5: TEST RDX, RDX",
+        "0x1800709e8: JZ 0x180070a30",
+        "0x1800709ea: TEST RCX, RCX",
+        "0x1800709ed: JZ 0x180070a30",
+        "0x1800709ef: MOV RBX, qword ptr [RCX]",
+        "0x1800709f2: CMP RBX, RDX",
+        "0x1800709f5: JNZ 0x1800709fc",
+        "0x1800709f7: MOV RAX, RDI",
+        "0x1800709fa: JMP 0x180070a32",
+        "0x1800709fc: MOV qword ptr [RCX], RDI",
+        "0x1800709ff: MOV RCX, RDI",
+        "0x180070a02: CALL 0x180070634",
+        "0x180070a07: TEST RBX, RBX",
+        "0x180070a0a: JZ 0x1800709f7",
+        "0x180070a0c: MOV RCX, RBX",
+        "0x180070a0f: CALL 0x1800708c0",
+        "0x180070a14: CMP dword ptr [RBX + 0x10], 0x0",
+        "0x180070a18: JNZ 0x1800709f7",
+        "0x180070a1a: LEA RAX, [0x1800a17e0]",
+        "0x180070a21: CMP RBX, RAX",
+        "0x180070a24: JZ 0x1800709f7",
+        "0x180070a26: MOV RCX, RBX",
+        "0x180070a29: CALL 0x1800706c0",
+        "0x180070a2e: JMP 0x1800709f7",
+        "0x180070a30: XOR EAX, EAX",
+        "0x180070a32: MOV RBX, qword ptr [RSP + 0x30]",
+        "0x180070a37: ADD RSP, 0x20",
+        "0x180070a3b: POP RDI",
+        "0x180070a3c: RET"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x180064fc8 __crt_seh_guarded_call<void>::operator()<<lambda_1d892b297fdedeee07ed8124eeb2f2fa>,<lambda_ffc046909424fd52df0ac47e64813305>&___ptr64,<lambda_01a7098693036236037e7cdb9bca3d73>_>; Evidence ev_914774a5572da18dbadbee31aa92907706a88177dbd4832459576004cb019135",
+          "instruction": "0x180065073: CALL 0x1800709d8"
+        },
+        {
+          "containing_function": "; 0x180064fc8 __crt_seh_guarded_call<void>::operator()<<lambda_1d892b297fdedeee07ed8124eeb2f2fa>,<lambda_ffc046909424fd52df0ac47e64813305>&___ptr64,<lambda_01a7098693036236037e7cdb9bca3d73>_>; Evidence ev_914774a5572da18dbadbee31aa92907706a88177dbd4832459576004cb019135",
+          "instruction": "0x1800650aa: CALL 0x1800709d8"
+        },
+        {
+          "containing_function": "; 0x180065104 __crt_seh_guarded_call<void>::operator()<<lambda_410d79af7f07d98d83a3f525b3859a53>,<lambda_3e16ef9562a7dcce91392c22ab16ea36>&___ptr64,<lambda_38119f0e861e05405d8a144b9b982f0a>_>; Evidence ev_c0bb591d054c51baae2bf8cbae8bbf908c43e85d699a0b730f9dc7f0aa91fd4a",
+          "instruction": "0x18006514d: CALL 0x1800709d8"
+        },
+        {
+          "containing_function": "; 0x180070968 __acrt_update_thread_locale_data; Evidence ev_6b72fe2c82e157036e8e8bc074656951773c9bb6f8ad0239a0750312bd32403e",
+          "instruction": "0x1800709ab: CALL 0x1800709d8"
+        }
+      ]
+    },
+    {
+      "va": "0x18004b584",
+      "pseudocode_evidence": "ev_3a044c45c3aebe2f1a67b5b56fb3fb3ee16acb1ec427d645459ce2e1bbd68874",
+      "assembly_evidence": "ev_993e9e4cf64b249535b6490620f01b83b10b91bebef16e5325dc270d4c754476",
+      "assembly_normal_flow": [
+        "0x18004b584: SUB RSP, 0x28",
+        "0x18004b588: TEST ECX, ECX",
+        "0x18004b58a: JNZ 0x18004b593",
+        "0x18004b58c: MOV byte ptr [0x1800a47a0], 0x1",
+        "0x18004b593: CALL 0x18004b26c",
+        "0x18004b598: CALL 0x18004d55c",
+        "0x18004b59d: TEST AL, AL",
+        "0x18004b59f: JNZ 0x18004b5a5",
+        "0x18004b5a1: XOR AL, AL",
+        "0x18004b5a3: JMP 0x18004b5b9",
+        "0x18004b5a5: CALL 0x180064594",
+        "0x18004b5aa: TEST AL, AL",
+        "0x18004b5ac: JNZ 0x18004b5b7",
+        "0x18004b5ae: XOR ECX, ECX",
+        "0x18004b5b0: CALL 0x18004d5a8",
+        "0x18004b5b5: JMP 0x18004b5a1",
+        "0x18004b5b7: MOV AL, 0x1",
+        "0x18004b5b9: ADD RSP, 0x28",
+        "0x18004b5bd: RET"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x18004ba30 FUN_18004ba30; Evidence ev_e313cdf981deab3b2e56b180e7becbd1b6a3095a19b2b7eeb786758fe475a6b1",
+          "instruction": "0x18004ba4d: CALL 0x18004b584"
+        }
+      ]
+    },
+    {
+      "va": "0x18004ba30",
+      "pseudocode_evidence": "ev_969fa08f3000af55fdfbefaf21047d6514908cf7dfb8ad03cc181894922a872d",
+      "assembly_evidence": "ev_e313cdf981deab3b2e56b180e7becbd1b6a3095a19b2b7eeb786758fe475a6b1",
+      "assembly_normal_flow": [
+        "0x18004ba30: MOV qword ptr [RSP + 0x8], RBX",
+        "0x18004ba35: MOV qword ptr [RSP + 0x10], RSI",
+        "0x18004ba3a: MOV qword ptr [RSP + 0x20], RDI",
+        "0x18004ba3f: PUSH R14",
+        "0x18004ba41: SUB RSP, 0x20",
+        "0x18004ba45: MOV RSI, RDX",
+        "0x18004ba48: MOV R14, RCX",
+        "0x18004ba4b: XOR ECX, ECX",
+        "0x18004ba4d: CALL 0x18004b584",
+        "0x18004ba52: TEST AL, AL",
+        "0x18004ba54: JZ 0x18004bb22",
+        "0x18004ba5a: CALL 0x18004b418",
+        "0x18004ba5f: MOV BL, AL",
+        "0x18004ba61: MOV byte ptr [RSP + 0x40], AL",
+        "0x18004ba65: MOV DIL, 0x1",
+        "0x18004ba68: CMP dword ptr [0x1800a4790], 0x0",
+        "0x18004ba6f: JNZ 0x18004bb3a",
+        "0x18004ba75: MOV dword ptr [0x1800a4790], 0x1",
+        "0x18004ba7f: CALL 0x18004b488",
+        "0x18004ba84: TEST AL, AL",
+        "0x18004ba86: JZ 0x18004bad7",
+        "0x18004ba88: CALL 0x18004c220",
+        "0x18004ba8d: CALL 0x18004c1e0",
+        "0x18004ba92: CALL 0x18004c1fc",
+        "0x18004ba97: LEA RDX, [0x18007f710]",
+        "0x18004ba9e: LEA RCX, [0x18007f6d8]",
+        "0x18004baa5: CALL 0x180064658",
+        "0x18004baaa: TEST EAX, EAX",
+        "0x18004baac: JNZ 0x18004bad7",
+        "0x18004baae: CALL 0x18004b454",
+        "0x18004bab3: TEST AL, AL",
+        "0x18004bab5: JZ 0x18004bad7",
+        "0x18004bab7: LEA RDX, [0x18007f6d0]",
+        "0x18004babe: LEA RCX, [0x18007f5d0]",
+        "0x18004bac5: CALL 0x180064614",
+        "0x18004baca: MOV dword ptr [0x1800a4790], 0x2",
+        "0x18004bad4: XOR DIL, DIL",
+        "0x18004bad7: MOV CL, BL",
+        "0x18004bad9: CALL 0x18004b6e4",
+        "0x18004bade: TEST DIL, DIL",
+        "0x18004bae1: JNZ 0x18004bb22",
+        "0x18004bae3: CALL 0x18004c218",
+        "0x18004bae8: MOV RBX, RAX",
+        "0x18004baeb: CMP qword ptr [RAX], 0x0",
+        "0x18004baef: JZ 0x18004bb15",
+        "0x18004baf1: MOV RCX, RAX",
+        "0x18004baf4: CALL 0x18004b64c",
+        "0x18004baf9: TEST AL, AL",
+        "0x18004bafb: JZ 0x18004bb15",
+        "0x18004bafd: MOV R8, RSI",
+        "0x18004bb00: MOV EDX, 0x2",
+        "0x18004bb05: MOV RCX, R14",
+        "0x18004bb08: MOV RAX, qword ptr [RBX]",
+        "0x18004bb0b: MOV R9, qword ptr [0x18007f5a8]",
+        "0x18004bb12: CALL R9",
+        "0x18004bb15: INC dword ptr [0x1800a47ec]",
+        "0x18004bb1b: MOV EAX, 0x1",
+        "0x18004bb20: JMP 0x18004bb24",
+        "0x18004bb22: XOR EAX, EAX",
+        "0x18004bb24: MOV RBX, qword ptr [RSP + 0x30]",
+        "0x18004bb29: MOV RSI, qword ptr [RSP + 0x38]",
+        "0x18004bb2e: MOV RDI, qword ptr [RSP + 0x48]",
+        "0x18004bb33: ADD RSP, 0x20",
+        "0x18004bb37: POP R14",
+        "0x18004bb39: RET",
+        "0x18004bb3a: MOV ECX, 0x7",
+        "0x18004bb3f: CALL 0x18004bfec"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x18004b9e0 FUN_18004b9e0; Evidence ev_14275c8735da0d792f1a57803773b974be6d9f92b190fabb9089a5b31f489c71",
+          "instruction": "0x18004ba1c: JMP 0x18004ba30"
+        }
+      ]
+    },
+    {
+      "va": "0x1800643f8",
+      "pseudocode_evidence": "ev_60291817f49c8420701bf60bbf17186f20bc3ee0d92236d501a52d1862e29bd4",
+      "assembly_evidence": "ev_e3a80bac5a174f60722b597a1f4b7b7c0e527e70572e89bbec15aa6b8dfe5aa6",
+      "assembly_normal_flow": [
+        "0x1800643f8: TEST RCX, RCX",
+        "0x1800643fb: JNZ 0x180064401",
+        "0x1800643fd: OR EAX, 0xffffffff",
+        "0x180064400: RET",
+        "0x180064401: MOV RAX, qword ptr [RCX + 0x10]",
+        "0x180064405: CMP qword ptr [RCX], RAX",
+        "0x180064408: JNZ 0x18006441c",
+        "0x18006440a: MOV RAX, qword ptr [0x1800a1580]",
+        "0x180064411: MOV qword ptr [RCX], RAX",
+        "0x180064414: MOV qword ptr [RCX + 0x8], RAX",
+        "0x180064418: MOV qword ptr [RCX + 0x10], RAX",
+        "0x18006441c: XOR EAX, EAX",
+        "0x18006441e: RET"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x18004b5c0 FUN_18004b5c0; Evidence ev_d3e93e9f9862eef45ff2d80038acff3ac4ca115472f4ec8d8a907dec33671db1",
+          "instruction": "0x18004b5ea: CALL 0x1800643f8"
+        },
+        {
+          "containing_function": "; 0x18004b5c0 FUN_18004b5c0; Evidence ev_d3e93e9f9862eef45ff2d80038acff3ac4ca115472f4ec8d8a907dec33671db1",
+          "instruction": "0x18004b5fa: CALL 0x1800643f8"
+        },
+        {
+          "containing_function": "; 0x18006447c FUN_18006447c; Evidence ev_0d879587dbd892a79fb6497849d2aae2767615e668da0a192514697e97897869",
+          "instruction": "0x180064487: CALL 0x1800643f8"
+        },
+        {
+          "containing_function": "; 0x18006447c FUN_18006447c; Evidence ev_0d879587dbd892a79fb6497849d2aae2767615e668da0a192514697e97897869",
+          "instruction": "0x180064493: CALL 0x1800643f8"
+        }
+      ]
+    },
+    {
+      "va": "0x1800648fc",
+      "pseudocode_evidence": "ev_5b39f111b222558bd8e52132523a2e361a941261e916883af37f3e602c09927b",
+      "assembly_evidence": "ev_88186886d4677768f1851ce8c092179c1504315e64f8e6ad9343fe9070c85996",
+      "assembly_normal_flow": [
+        "0x1800648fc: PUSH RBP",
+        "0x1800648fe: MOV RBP, RSP",
+        "0x180064901: SUB RSP, 0x50",
+        "0x180064905: MOV qword ptr [RBP + -0x28], RCX",
+        "0x180064909: LEA RAX, [RBP + -0x28]",
+        "0x18006490d: MOV qword ptr [RBP + -0x18], RAX",
+        "0x180064911: LEA R9, [RBP + 0x20]",
+        "0x180064915: MOV EDX, 0x1",
+        "0x18006491a: LEA R8, [RBP + -0x18]",
+        "0x18006491e: MOV EAX, 0x5",
+        "0x180064923: MOV dword ptr [RBP + 0x20], EAX",
+        "0x180064926: MOV dword ptr [RBP + 0x28], EAX",
+        "0x180064929: LEA RAX, [RBP + -0x28]",
+        "0x18006492d: MOV qword ptr [RBP + -0x10], RAX",
+        "0x180064931: LEA RAX, [RBP + -0x20]",
+        "0x180064935: MOV qword ptr [RBP + -0x8], RAX",
+        "0x180064939: MOV EAX, 0x4",
+        "0x18006493e: MOV dword ptr [RBP + -0x30], EAX",
+        "0x180064941: MOV dword ptr [RBP + -0x2c], EAX",
+        "0x180064944: LEA RAX, [0x1800a52e0]",
+        "0x18006494b: MOV qword ptr [RBP + -0x20], RAX",
+        "0x18006494f: MOV dword ptr [RCX + 0x28], EDX",
+        "0x180064952: LEA RCX, [0x18008a930]",
+        "0x180064959: MOV RAX, qword ptr [RBP + -0x28]",
+        "0x18006495d: MOV qword ptr [RAX], RCX",
+        "0x180064960: LEA RCX, [0x1800a1c70]",
+        "0x180064967: MOV RAX, qword ptr [RBP + -0x28]",
+        "0x18006496b: MOV dword ptr [RAX + 0x3a8], EDX",
+        "0x180064971: MOV RAX, qword ptr [RBP + -0x28]",
+        "0x180064975: MOV qword ptr [RAX + 0x88], RCX",
+        "0x18006497c: LEA ECX, [RDX + 0x42]",
+        "0x18006497f: MOV RAX, qword ptr [RBP + -0x28]",
+        "0x180064983: LEA RDX, [RBP + 0x28]",
+        "0x180064987: MOV word ptr [RAX + 0xbc], CX",
+        "0x18006498e: MOV RAX, qword ptr [RBP + -0x28]",
+        "0x180064992: MOV word ptr [RAX + 0x1c2], CX",
+        "0x180064999: LEA RCX, [RBP + 0x18]",
+        "0x18006499d: MOV RAX, qword ptr [RBP + -0x28]",
+        "0x1800649a1: AND qword ptr [RAX + 0x3a0], 0x0",
+        "0x1800649a9: CALL 0x1800647d4",
+        "0x1800649ae: LEA R9, [RBP + -0x30]",
+        "0x1800649b2: LEA R8, [RBP + -0x10]",
+        "0x1800649b6: LEA RDX, [RBP + -0x2c]",
+        "0x1800649ba: LEA RCX, [RBP + 0x18]",
+        "0x1800649be: CALL 0x180064854",
+        "0x1800649c3: ADD RSP, 0x50",
+        "0x1800649c7: POP RBP",
+        "0x1800649c8: RET"
+      ],
+      "retained_direct_callers": [
+        {
+          "containing_function": "; 0x180064b90 FUN_180064b90; Evidence ev_7fd4dc26997bdff556f5d1f415f92dcc17b9a1d680bf1ee52fd5e3d5da0c8d0b",
+          "instruction": "0x180064c31: CALL 0x1800648fc"
+        },
+        {
+          "containing_function": "; 0x180064c64 FUN_180064c64; Evidence ev_298198c276b007333c8cbff65a3cb67d9965ba716936ec649c82c4c370a9cf2b",
+          "instruction": "0x180064ceb: CALL 0x1800648fc"
+        },
+        {
+          "containing_function": "; 0x180064d08 FUN_180064d08; Evidence ev_a0be4a11487767600e7fb447b80cb439aa5721a79f67c30653bdbc6784555f1d",
+          "instruction": "0x180064da9: CALL 0x1800648fc"
+        },
+        {
+          "containing_function": "; 0x180064dd0 FUN_180064dd0; Evidence ev_ba682c595a53274f7d0fe7fb7e42b5ea8f913872fbc1ce427ffd2f71fd5c36fe",
+          "instruction": "0x180064e65: CALL 0x1800648fc"
+        }
+      ]
+    }
+  ],
+  "source_coverage": [
+    {
+      "va": "0x180064468",
+      "status": "not found in pre-existing production sources; new direct initializer candidate",
+      "file": null,
+      "sha256": null
+    },
+    {
+      "va": "0x18006447c",
+      "status": "two-call wrapper not found; core 0643f8 already recovered",
+      "file": "outputs/anadius-crt-onexit-source/onexit.cpp",
+      "sha256": "96e60bcef164e4080021377ecb9d743125939664e349e82ddf7debfd0aecb547"
+    },
+    {
+      "va": "0x1800644b0",
+      "status": "already recovered as initialize_encoded_globals_0644b0",
+      "file": "outputs/anadius-crt-cache-source/cache.cpp",
+      "sha256": "613f2667b0bf0c068f7f4a04e0144e15272b13cec03cb53b26f3eb41ad75a9de"
+    },
+    {
+      "va": "0x180065104",
+      "status": "normal-flow wrapper not found; called updater already recovered",
+      "file": "outputs/anadius-crt-locale-thread-source/locale_thread.cpp",
+      "sha256": "94056806d91af6a462f4ffc63086ca10960c4e189d7bc9342aa5c7cfd19bfd4c"
+    },
+    {
+      "va": "0x180065338",
+      "status": "wrapper not found; current startup bridge leaves callback binding external",
+      "file": "outputs/anadius-crt-startup-bridge-source/startup_bridge.cpp",
+      "sha256": "b0ce82bde48946749527b0a392e366033a766273b1853bacf91a8185bd8d3e3c"
+    },
+    {
+      "va": "0x180064594 / 0x1800704f4 / 0x180070588",
+      "status": "generic walkers and outer wrapper already recovered",
+      "file": "outputs/anadius-crt-initializers-source/initializers.cpp",
+      "sha256": "dd6f6a43c48d5a6bf69f196207cd6327b486ba5c99ee794afd95d805cf5b8d79"
+    },
+    {
+      "va": "0x1800709d8",
+      "status": "already recovered as update_locale_nolock_0709d8",
+      "file": "outputs/anadius-crt-locale-thread-source/locale_thread.cpp",
+      "sha256": "94056806d91af6a462f4ffc63086ca10960c4e189d7bc9342aa5c7cfd19bfd4c"
+    },
+    {
+      "va": "0x18004b584 / 0x18004ba30",
+      "status": "already recovered outer startup",
+      "file": "outputs/anadius-crt-entry-source/entry.cpp",
+      "sha256": "035cfc66891e08454003c4f3b28e19eab7f3548eb2958e100bd4f54af2760f47"
+    },
+    {
+      "va": "0x1800648fc",
+      "status": "already recovered PTD construction",
+      "file": "outputs/anadius-crt-ptd-data-source/ptd_data.cpp",
+      "sha256": "a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea"
+    }
+  ],
+  "normal_flow": [
+    "04ba30 CALL04b584; 04b584 calls CPU/VCRT then 064594 after VCRT AL success.",
+    "064594 selects half-open pair table08aa60..08ab60 then tailcalls0704f4. Walker visits16 pairs in ascending order; only callback low AL byte determines success.",
+    "First callback064468 directly stores initial locale VA into global current-locale and returns AL1. No reference increment, lock or allocation in this body.",
+    "Second callback0644b0 initializes five cookie-derived encoded-cache setter groups; locale binding already occurred.",
+    "Lock initialization i4 and PTD initialization i7 follow; multibyte initialization is i10; onexit wrapper06447c is i15.",
+    "065338 is pretermination callback07f730, not an initialize-pair entry. It creates separate lock and unlock DWORD tokens4 then calls065104.",
+    "065104 reads lock index throughRDX at6511b, locks at6511d, then compares one global slotA52E0 to initialA17E0.",
+    "If different, CALL0709d8 at6514d uses existing updater; MOV[RBX],RAX at65152 writes returned pointer again after all updater effects.",
+    "Single cell loop ends atA52E8; unlock token through savedR9 is read only at6515b, followed by unlock6515d. No current lconv/ctype/mb_cur_max alias refresh in this wrapper."
+  ],
+  "critical_semantics": [
+    "Initial direct assign does not add a reference.",
+    "Global-reset helper rereads current inside0709d8 after its initial compare; preserve read/effect ordering.",
+    "The redundant final global write after0709d8 must remain; effects may modify the slot before helper return.",
+    "Lock and unlock token reads occur before and after body effects respectively; wrapper tokens both equal4 but are distinct stack slots.",
+    "Reset visits onlyA52E0, because endA52E8 is exclusive."
+  ],
+  "unknowns": [
+    "064468 is absent from retained Ghidra function inventories. Its17 exact bytes and static LLVM disassembly prove this normal leaf flow, but no new REA EvidenceID or original function-count attribution is fabricated. Root may obtain fresh function-boundary evidence.",
+    "Only normal flow is covered; SEH finalization, exceptional unlock and register-high return bits are not reconstructed as a new policy. Boolean walkers consume AL only.",
+    "Current-locale is PE virtual zero-fill before callbacks. The observed pair table provides intended static callback ordering, not a trace of an executed process.",
+    "Raw preferred-image callback pointer values are metadata only. Rebuilt code must bind its own callbacks and live storage.",
+    "Source-coverage statements use the pre-existing source snapshot before root new-module implementation; no claim about all unrelated startup callback implementations.",
+    "06447c and064468 have different roles. Calling updater0709d8 to implement initial064468 would incorrectly add a reference to the image counter(initial1)."
+  ],
+  "target_executed": false,
+  "target_modified": false,
+  "production_sources_modified": false
+}

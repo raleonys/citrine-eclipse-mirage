@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "reviewer": "crt_mb_support independent cross-review",
+  "method": "Compared complete selected retained pseudo/assembly for 0x18006f2d0 and 0x18006f5f8 against CPP/HPP and fixture cases; no target execution",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source_hashes": {
+    "multibyte_control.hpp": "064bc605e53cbd603cd0802998fd4ee950e8671f583967e28fa8bd6719704b45",
+    "multibyte_control.cpp": "9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb",
+    "multibyte_control_tests.cpp": "8810b2e7f254f60040cc73b4eb760be6670014bf01992973afb2ba95ab323b97",
+    "evidence.json": "23d7ca242d88bc5d9d41cbe2af4e9567648776ad2d8a78dd4bd70a6e4416a763"
+  },
+  "evidence_ids": [
+    "ev_9284660353ac30ffe42b945eda84d37c9a283efb02b1dd79d46c13a8f57638bf",
+    "ev_85ea52b71c9b1d78e4844e8c6a0d02a4b390325ac23bac449f0e8c968b21073c",
+    "ev_41d653fbbc06a7e42a13a95dfee0e48e5f946725be02ecd36eca6dcc7bec3017",
+    "ev_e90764f05824434e1aeb88a2b5fee00f692636a92849517a7c91ea719da84931"
+  ],
+  "findings": [
+    {
+      "kind": "confirmed",
+      "location": "06f34a-06f42d",
+      "detail": "All 0x228 old bytes are captured in a private snapshot before any fresh-record writes. Sequential qword source order agrees with original vector source read order; no interleaved direct old-to-new copy introduced."
+    },
+    {
+      "kind": "confirmed",
+      "location": "06f438-06f45b and 06f525",
+      "detail": "Full EAX equality with 0xffffffff is the sole builder failure test; other high-bit statuses survive final cleanup via captured uint32 status. Failure stores errno22 before freeing replacement."
+    },
+    {
+      "kind": "confirmed",
+      "location": "06f46a-06f4c8",
+      "detail": "PTD record reloaded for decrement, then freshly reloaded once for initial-record comparison/free argument. Unlike publish helper, this caller uses the already captured candidate as free argument. Old count1 including wrap arithmetic is preserved."
+    },
+    {
+      "kind": "confirmed",
+      "location": "06f503-06f520",
+      "detail": "Support helper receives localPTD and current-slot references, so postpublish current-slot load uses potentially mutated local. Initial pair assigned only in initialization mode. Mandatory freeNULL retained."
+    },
+    {
+      "kind": "confirmed",
+      "location": "06f605-06f651",
+      "detail": "Case global, current record global, type global initialization order matches assembly. Setter failure is ignored; initialized byte still set. Repeat call short-circuits. Bool API accurately limits guaranteed result to AL1."
+    },
+    {
+      "kind": "scope",
+      "detail": "Image identities and Identities constants must remain stable; split qword storage effects do not reproduce vector atomicity or exception footprint. Normal flow only; builder/native providers and ABI equality remain open."
+    }
+  ],
+  "actionable_defects": [],
+  "test_review": "Examined equalpage/mallocfailure/buildfailure, 144-case status/init/mask/ref/staticguard matrix, 0x228bytes/snapshot read-before-write, mutablePTD record/provider error cells and initializer idempotence coverage. Existing validation belongs to module owner; reviewer did not load or execute target."
+}
+

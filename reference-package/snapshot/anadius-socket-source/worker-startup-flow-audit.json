@@ -1,0 +1,38 @@
+{
+  "scope": "Independent retained static 02a000 worker event/thread startup and 02a4a0 entry normal-flow audit",
+  "reviewer": "worker_startup_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {"address":"0x18002a000","pseudo_evidence":"ev_5e78eef88f702baed2927d9748d4a109ac08003daafc401dcb7edab1bb2b2aab","assembly_evidence":"ev_9bb61c1aa2239aa4ceaa3b76b45ca58ddf61af660271bf12e342b874b7583917"},
+    {"address":"0x18002a4a0","pseudo_evidence":"ev_326989fa8214581db6a42e9ea6032da072a9887b4b3666295c91af39e968d292","assembly_evidence":"ev_a156da50becb7358bbfc13525d003f388046ac1b32fde8dc694fec79d90d8a53"}
+  ],
+  "context_functions": [
+    {"address":"0x18005e8e0","source":"outputs/anadius-thread-source/threads.cpp","already_recovered":true,"new_original_procedure":false},
+    {"address":"0x180024990","source":"outputs/anadius-socket-source/iocp_constructor.cpp","already_recovered":true,"new_original_procedure":false}
+  ],
+  "rules": {
+    "entry_create":"CreateEventW(0,1,0,0) before function access; storefunction08 then cache returned entry locally; nullfunction host guard after API without cleanup",
+    "event_errors":"cached GetLastError before delete(function,1), category ALWAYS after delete, nonzero only raise; contexts0844c8/0844e0; zero error continues if host storage remains live",
+    "exit_create":"sameeventargs; worker10 store before function10; failure tests LIVE worker10",
+    "thread":"localidzero;05e8e0(0,cacheduint32stack,opaque02a4a0,function,0,&id);storeworker08 then testRETURNhandle",
+    "thread_error":"cached error; delete1; closecachedentryifnonzero; reloadLIVEworker10 AFTERfirstclose andcloseifnonzero; categoryALWAYS thennonzero0844f4raise",
+    "tail":"cachedentrynonzero=>WaitForSingleObject(INFINITE) ignored,CloseHandle ignored; zeroerror threadfailure may doubleclosecachedentry; noextraGetLastError",
+    "entry":"SetEvent(liveentry08) ignored; runslot08; cacheexit10 AFTERrun; delete1; SetEvent(cachedexit) ignored; SleepEx(INFINITE,TRUE) ignored; return0; nofunctionaccessafterdelete"
+  },
+  "normal_source_procedures_added":["0x18002a000","0x18002a4a0"],
+  "new_original_procedures":2,
+  "original_execution":"none",
+  "real_network_execution":"none",
+  "real_user_files_read":false,
+  "limitations":[
+    "Typed live projections and opaque identities are not native memory or ABI overlays",
+    "Function run body, scalar deleting destructor, allocation/deallocation and actual object lifetime remain required providers",
+    "Zero-error fallthrough after delete requires live host projection and does not prove native lifetime safety",
+    "Native exception/SEH/unwind, actual thread concurrency, executable vtable binding and original DLL equivalence remain unproven",
+    "Existing05e8e0 reused unchanged; no new CRT procedure or adapter helper counted"
+  ]
+}

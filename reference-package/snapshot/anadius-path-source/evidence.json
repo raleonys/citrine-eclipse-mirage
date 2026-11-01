@@ -1,0 +1,26 @@
+{
+  "artifact": {
+    "file": "anadius64.dll",
+    "size": 694272,
+    "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "image_base": "0x180000000"
+  },
+  "evidence_type": "retained REA Ghidra static assembly and pseudocode; no target execution",
+  "retained_sources": [
+    {"file": "../anadius-all-functions.asm.txt", "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"},
+    {"file": "../anadius-all-functions.pseudo.c", "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"}
+  ],
+  "functions": [
+    {"va": "0x18000bb30", "source": "root_name_length_00bb30", "assembly_evidence": "ev_74ee94829a16f969899bcfa5b5522167844aeb1ca5083847cb3ed02f0cd8ac56", "pseudocode_evidence": "ev_928f8cb4148a3c67124c66a2202e942c585399fbb4f05ee66d64b7c2d8774113", "claims": ["00bb43..00bb56 ASCII drive-and-colon mask", "00bb6d..00bbcc three-unit device root", "00bbdc..00bc1d UNC server scan, slash and backslash accepted"]},
+    {"va": "0x1800195b0", "source": "is_absolute_0195b0", "assembly_evidence": "ev_d1efa56048862b65f6638cfca31b803003f5cd8cf5efa3fbc99136ed7438bada", "pseudocode_evidence": "ev_3fde3d1ef875f69530463f941a17e49c73e2afdc9f9b3bbe78c246c789fd16f9", "claims": ["0195d7..019604 drive requires separator at code-unit index two", "01960c..01961a all other root-name-presence test"]},
+    {"va": "0x18000e120", "source": "filename_00e120", "assembly_evidence": "ev_daa6edcdc64d142c82b289395237ecf6df6ddc403b22c7dc3c988f869be59611", "pseudocode_evidence": "ev_10862633c6e4104753810f9acde38e7bb612799eadefb180ec6aca524a9a7ab3", "claims": ["00e13f..00e150 explicit size and root parse", "00e160..00e19a skip root separators then backward component scan"]},
+    {"va": "0x180019820", "source": "parent_path_019820", "assembly_evidence": "ev_2c6c74d0802815891eaf3ede8e5f2639d1c48d079d566969fb1629ae54500fe7", "pseudocode_evidence": "ev_99245712414cad2dc0f40f8e24c135ff69b46245d499ebddd8a2fcc0dfd29995", "claims": ["019857..01986d preserve entire root separator run", "019880..0198ca remove final component then preceding separators above root boundary"]},
+    {"va": "0x180016b50", "source": "append_016b50", "assembly_evidence": "ev_33cfc3fbd2607007be08a9df24d06ab095f1d38d014e7ce73c5d3d0c36a1c85f", "pseudocode_evidence": "ev_8023786cbc62baf0b51b776c99ddefaa3c7a58d8525aa337842e17c0ba8d961c", "claims": ["016b75..016b9f absolute RHS replaces unless identical object", "016bf4..016c31 compare root names and replace mismatches", "016c36..016c72 rooted RHS truncates left to its root name", "016c74..016cd4 relative branch inserts backslash unless bare drive/empty/left ends in separator", "016bcb..016bf1 captures source pointer and end before mutation", "016c5b..016c6e writes NUL through the saved source in rooted self-alias case", "016cd9..016ce8 appends saved source range"]},
+    {"va": "0x180016b00", "source": "join_016b00", "assembly_evidence": "ev_d700d96a5ed12b8bcdef8901c7afb999852d17e3ea353695486c17a84e225e6e", "pseudocode_evidence": "ev_b91a74cb8fab9bce0f5c77c83454c94d7877d70d76cb86a6cb00b109b717ec8b", "claims": ["copy constructor 00a140 then append 016b50"]},
+    {"va": "0x180017e20", "source": "root comparison support", "assembly_evidence": "ev_c252e4f48a205796694194312759de025b2235859ba87fd38c800cccf59c7091", "pseudocode_evidence": "ev_ed95d12613c5a2e7c34c6737e3fe5a749e58486efced436cd6410c7f81f86ae7", "claims": ["017e44..017e57 compares each UTF-16 code unit exactly; no case folding"]},
+    {"va": "0x180018ab0", "source": "string append support", "assembly_evidence": "ev_6a454aad3f211b3e35c913573f9e39c154e70d6f2aa5cd3173638b726c3a4b86", "pseudocode_evidence": "ev_a5af7054dabc352a335ac115f1a90322a8a4bfb7a1b588ad1ea4106faf9ddd6b", "claims": ["explicit code-unit count times two copied by 078d30, then NUL terminator; allocation path 011fd0"]}
+  ],
+  "implementation_choices": ["std::u16string value interface replaces original MSVC path/string layout", "supported self-alias values snapshot source and reproduce rooted NUL overwrite", "self-alias requiring separator insertion throws new OutOfEvidenceAliasing because original storage/capacity is absent"],
+  "unresolved": ["original allocator/capacity/exception ABI", "self-alias separator-insertion path", "extreme length allocation failures", "runtime equivalence", "native filesystem path resolution"],
+  "validation": "328 deterministic synthetic checks; original input read only for identity hash"
+}

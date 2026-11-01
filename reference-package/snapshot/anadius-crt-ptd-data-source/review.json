@@ -1,0 +1,37 @@
+{
+  "reviewer": "independent PTD lifecycle subagent",
+  "reviewed_at": "2026-10-18T09:18:14.2761882Z",
+  "result": "PASS within declared normal-flow contracts",
+  "findings": [],
+  "files": [
+    {
+      "file": "ptd_data.hpp",
+      "sha256": "25d5f6fb41a9991cc200fd2ceb5131df693d70883afbe3f5c15c316bdb65c21e"
+    },
+    {
+      "file": "ptd_data.cpp",
+      "sha256": "a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea"
+    },
+    {
+      "file": "ptd_data_tests.cpp",
+      "sha256": "31690f132236a30e8773cc76efc532da775fc1f8b865db1c5b8f6c33e888b6bb"
+    }
+  ],
+  "retained_assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "checks": [
+    "0647d4 retain INC.LOCK normal memory effect maps to mandatory atomic provider; lock before field read and unlock afterward",
+    "064814 and064854 flattened helper arguments match immutable constructor/destructor lock locals, current locale read occurs after lock",
+    "06489c XADD -1 returns previous; free only previous==1 and pointer differs from static multibyte identity",
+    "0648fc field widths, store order, static identities, lock5 retain then lock4 locale update match assembly",
+    "0649ec table identity comparison and all nine unconditional frees match offsets/order including typed context+0x3c0; fields reloaded before each dependency",
+    "0649cc ignores null; full destruction precedes PTD storage free",
+    "064ae4 rereads PTD locale after release, checks current locale then static initial locale then refcount, publishes replacement before addref",
+    "1510-check lifecycle module integrated with data model in synthetic allocator fixture; real typed thread Context freed before Ptd lifetime ends"
+  ],
+  "limitations": [
+    "Reviewed normal control flow only; MSVC SEH guarded-call funclets and unwinding excluded explicitly",
+    "Specialized helper signatures flatten pointer-chain captures and immutable lock IDs; not original callable ABI",
+    "Atomic/locks/locale refs/heap remain mandatory Effects providers",
+    "No original DLL/game/FLS/provider execution; runtime equivalence remains unproven"
+  ]
+}

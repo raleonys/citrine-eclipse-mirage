@@ -1,0 +1,39 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "origin": "Bounded extraction of previously retained REA/Ghidra static function evidence; parent confirmed current aligned REA server and available Ghidra, session closed.",
+  "functions": [
+    {
+      "va": "0x180070434",
+      "name": "_recalloc_base",
+      "assembly_evidence": "ev_7e1624e0b30bf83e9630135e9326fc52509545478e914f4f92ab1946bd09bc8d",
+      "pseudocode_evidence": "ev_9575693c4de551ec68c18128cf0492408533bb470914e6324e3ee9dad0e01b73",
+      "anchors": [
+        "070451..070471: quotient guard and error 12",
+        "070473..070484: optional old HeapSize before product/realloc",
+        "07048e: call actual realloc 06e3a0",
+        "070496..0704ac: non-null result, unsigned capacity comparison, zero range to 0793d0"
+      ]
+    },
+    {
+      "va": "0x1800773bc",
+      "name": "_msize_base",
+      "assembly_evidence": "ev_75d7961f2f61cf3a76a487e943f4092ac52dd3ebe56702780a872685729102dc",
+      "pseudocode_evidence": "ev_bd297f0ce14c7ad28c668344e4c9d97f16fe4369dd089690d59d2e8f7167fefb",
+      "anchors": [
+        "0773c0..0773d5: NULL test, error22, invalid05c954, -1 return",
+        "0773de..0773ee: HeapSize tail jump through IAT18007f018, flags0, heap1800a5a10"
+      ]
+    }
+  ],
+  "selected_assembly_sha256": "3be66729db78af77ab07c314a9e923792a45b7129dcd02eb25bd64ad17db29dd",
+  "selected_pseudocode_sha256": "baaa9a2c6ce2b6e6373c9dea471128fa2a0cab2c28a65268a8b06dba9b3d40ea",
+  "limits": [
+    "Original runtime/ABI/compiler equivalence unproven",
+    "Provider retains valid live byte-array storage and preservation semantics",
+    "PTRDIFF_MAX growth guard is a new explicit source support boundary, not original behavior",
+    "HeapSize/invalid-parameter/zero providers required; no native API or target execution",
+    "No SEH or exception unwind cleanup recovery claim"
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "fresh-full-archive-dll-link.v1",
+  "checked_at": "2026-11-01T18:33:32.121469+00:00",
+  "diagnostic_validation": "PASS_EXPECTED_BLOCKER",
+  "production_dll_readiness": "BLOCKED",
+  "dll_link_attempted": true,
+  "dll_link_succeeded": false,
+  "link_exit_code": 1,
+  "dll_created": false,
+  "dll_loaded_or_executed": false,
+  "originals_accessed": false,
+  "whole_archive": true,
+  "selected_archives": [
+    {
+      "path": "source-workspace/build/anadius_core_partial.a",
+      "sha256": "62ee9567b5572a282226f7186b88c79c25bf268cd05e0c2eb8fef4f723be46ff"
+    },
+    {
+      "path": "source-workspace/build/hook_engine_compat.a",
+      "sha256": "0c1c3a3233640cf9bcddb8cfb7d14152320afba3d40f98684f8bee477206dc50"
+    }
+  ],
+  "selection_scope": "All288 anadius core objects and all5 selected hook compatibility objects; separate3preloader objects are outside anadius target",
+  "frozen_source_files_verified": 1017,
+  "common_build_record_sha256": "e6112b9ade9c32c6dba2b4bec33ae09c2e8a8d3593b99c0db97fb29b836a66d6",
+  "source_snapshot_sha256": "34b84a9f1a12a48e58f886d76524976858def5b5782ebdcd3bfb4eca380e2047",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "undefined_symbols": [
+    "anadius::dll_link_gate::require_loader_attach_runtime(HINSTANCE__*, void*)",
+    "anadius::dll_link_gate::require_loader_detach_quiescence(HINSTANCE__*, void*)"
+  ],
+  "expected_missing_production_hooks": [
+    "require_loader_attach_runtime",
+    "require_loader_detach_quiescence"
+  ],
+  "entry_source_sha256": "98ad93b7314b5715ed5e19dc775259981947784f19f04167da233dfb659e974d",
+  "header_sha256": "f6888f57af8533e6f9ef26f8d9f65dd9338ee30f11486cd13e1e082f89255866",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\entry.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\entry.o"
+      ],
+      "exit_code": 0,
+      "log": "dll-link-gate-source/build-current-full/entry-compile.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\export_leaf.S",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\export_leaf.o"
+      ],
+      "exit_code": 0,
+      "log": "dll-link-gate-source/build-current-full/leaf-compile.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-shared",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\entry.o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\export_leaf.o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\anadius64.def",
+        "-Wl,--whole-archive",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\hook_engine_compat.a",
+        "-Wl,--no-whole-archive",
+        "-lkernel32",
+        "-luser32",
+        "-lshell32",
+        "-lws2_32",
+        "-lmswsock",
+        "-Wl,--exclude-all-symbols,--no-insert-timestamp,--verbose",
+        "-Wl,-Map,C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\anadius64.reconstruction.map",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\dll-link-gate-source\\build-current-full\\anadius64.reconstruction.dll"
+      ],
+      "exit_code": 1,
+      "log": "dll-link-gate-source/build-current-full/link.log",
+      "log_sha256": "321da96cbf6d33d809be700cac824830930f3f8b87eea92b2502d8f587937fb7"
+    }
+  ],
+  "run_directory": "dll-link-gate-source/build-current-full",
+  "runtime_or_loader_equivalence_established": false
+}

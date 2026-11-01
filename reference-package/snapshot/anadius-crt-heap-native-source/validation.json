@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T14:08:41.5645145Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-heap-native-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-heap-native-source\\build\\native_api.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-heap-native-source\\build\\native_tests.exe"
+  ],
+  "tests": "PASS: 169 native heap API checks (typed fixtures + own real allocations)",
+  "scope": "New SDK typed heap API adapter, no newly recovered original bodies. Typed WINAPI fixtures exercise opaque/non-dereferenced arguments, full-width flags/handles/SIZE_T/BOOL/errors and failure sentinels. Real Windows APIs exercise only GetProcessHeap and modest own allocations/reallocations/size/free. No target DLL/game execution, heap destruction, registry, network, hooks or threads.",
+  "sources": [
+    {
+      "name": "native_api.cpp",
+      "sha256": "e14c7e4c338d4a703d65c9e2cba9dab88b289348eff8fa61f19b661b28627289"
+    },
+    {
+      "name": "native_api.hpp",
+      "sha256": "2487bd65de259016d6232c6ed39dd1ad096f6ef927e10fbe19f7fb6b055d1b42"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "1cbc079f4700a4020b9efbf4ec04dc9d7af7127830a335864243144cc25e5d78"
+    }
+  ],
+  "executable_sha256": "05dc74617b505a25ba79e587766d9c5e58853cd61c5446ac38786ce1480693d0"
+}

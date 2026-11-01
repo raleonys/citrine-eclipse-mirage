@@ -1,0 +1,70 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T13:58:54.8408682Z",
+  "prior_package_sha256": "83984945f0fda0c372bfcb3122cfa69106810627d0f73c7c7fac3a48778c37a6",
+  "prior_source_count": 311,
+  "unchanged_prior_sources": 311,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-crt-nls-dispatch-native-source/native_tests.cpp",
+    "anadius-crt-nls-dispatch-native-source/native.cpp",
+    "anadius-crt-nls-dispatch-native-source/native.hpp",
+    "anadius-crt-nls-native-bridge-source/bridge_tests.cpp",
+    "anadius-crt-nls-native-bridge-source/bridge.cpp",
+    "anadius-crt-nls-native-bridge-source/bridge.hpp",
+    "anadius-crt-nls-native-source/native_api.cpp",
+    "anadius-crt-nls-native-source/native_api.hpp",
+    "anadius-crt-nls-native-source/native_tests.cpp"
+  ],
+  "current_sources": 320,
+  "current_documents": 112,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "reviews": [
+    {
+      "path": "anadius-crt-nls-native-source/review-dispatch-native.json",
+      "result": "PASS",
+      "verified_hashes": 3
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-native-source/review-native-api.json",
+      "result": "PASS",
+      "verified_hashes": 3
+    },
+    {
+      "path": "anadius-crt-nls-native-bridge-source/review-native-bridge.json",
+      "result": "PASS",
+      "verified_hashes": 4
+    }
+  ],
+  "master_build_sha256": "44a00ea715b0cb57a63b8784c450df8779f7bfb8c78aea09614176e62497ab2f",
+  "native_objects": 110,
+  "cpp_objects": 106,
+  "c_objects": 4,
+  "normal_test_groups": 95,
+  "terminal_cases": 15,
+  "new_tests": [
+    {
+      "module": "crt_nls_native",
+      "result": "PASS",
+      "output": "PASS 143 checks; typed WINAPI fixtures and bounded synthetic native NLS calls",
+      "executable_sha256": "51243a78d03177e97d041d56307d26ddeacb969e7bc2abfe9ea94b76dbdbeeb8"
+    },
+    {
+      "module": "crt_nls_dispatch_native",
+      "result": "PASS",
+      "output": "PASS nls native dispatch: 92 checks; typed fixtures and Windows synthetic literals only",
+      "executable_sha256": "edb2d61ddb1e19eb89b2cf62ff44a881fd2e715c683b6d9050b4f832ffb45ad2"
+    },
+    {
+      "module": "crt_nls_native_bridge",
+      "result": "PASS",
+      "output": "PASS 2114 actual native-NLS/UTF8/record/source integration checks",
+      "executable_sha256": "94e0f6de60d134fd801c34821f458f0b86b6d1491a1f7f6a76150f3d3de150ec"
+    }
+  ],
+  "recovered_original_bodies_added": 0,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

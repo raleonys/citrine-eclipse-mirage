@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_multibyte_control",
+    "result": "PASS",
+    "output": "multibyte control: 128916 checks PASS",
+    "executable_sha256": "c738e676fd5d1fb1712bbe9abaf309a66755b9597a03e5bccca4754217897a9c"
+  },
+  "execution_scope": "Two codepage-control/initialization bodies with actual support source; synthetic record builder/thread/heap providers; 06f674 remains unrecovered",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-multibyte-control-source/multibyte_control_tests.cpp",
+      "sha256": "8810b2e7f254f60040cc73b4eb760be6670014bf01992973afb2ba95ab323b97"
+    },
+    {
+      "path": "anadius-crt-multibyte-control-source/multibyte_control.cpp",
+      "sha256": "9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb"
+    },
+    {
+      "path": "anadius-crt-multibyte-control-source/multibyte_control.hpp",
+      "sha256": "064bc605e53cbd603cd0802998fd4ee950e8671f583967e28fa8bd6719704b45"
+    }
+  ]
+}

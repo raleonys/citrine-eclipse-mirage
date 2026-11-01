@@ -1,0 +1,76 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "analysis": "Retained static REA/Ghidra views; no target execution",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "functions": [
+    {
+      "va": "0x18005e87c",
+      "assembly_evidence": "ev_d58e9b8ceba2f41ce934918009703a27f060c3bcab2c428a60d634d445eddef3",
+      "pseudocode_evidence": "ev_c1eb3343a093b39391fd980d2be1146e254698b1df6fd4aa297ed21bb701aabc"
+    },
+    {
+      "va": "0x18005e8e0",
+      "assembly_evidence": "ev_b2508bf2d6430c3f029f1f6090cadaa12d2315a853312d93ad48f42602adfb0e",
+      "pseudocode_evidence": "ev_06d02d032bc19f80b5602d3d24b5ce1d432c5a742d8014e2c0f45f08f084deea"
+    },
+    {
+      "va": "0x18005e7a8",
+      "assembly_evidence": "ev_0de6693f5df6645aa78071aa314460e2d91874a3dee820d61225b7a47d038c06",
+      "pseudocode_evidence": "ev_5e71c9771b4ee41eabb165b637fe2731b56aa25a4607e88aa0466f7c42c11285"
+    },
+    {
+      "va": "0x18005e818",
+      "assembly_evidence": "ev_8fea6c4330f1fd1eaa0fe4621d251c23bb22742823144eb595f7e195b1d67880",
+      "pseudocode_evidence": "ev_180fbdd57149b809d1d34dc83c4dc87abf6a09077854d9410109cf21cb98e12a"
+    },
+    {
+      "va": "0x18005e9bc",
+      "assembly_evidence": "ev_d3c62aa69b3094e9d8d0a5581c2a4a6ed7d997d061a30e18a5087749c21ec732",
+      "pseudocode_evidence": "ev_2ef05f7646b232199f11fad5a98f2da25d5ba40f6c47bb4bfd37678f3df04050"
+    },
+    {
+      "va": "0x180038970",
+      "assembly_evidence": "ev_77887ea2e7b744e62e52eaf81cb8a07abf2a4f50498001ba81b2fcf2496e8789",
+      "pseudocode_evidence": "ev_e66705fdaa9bdd88fb50be13d22e354939026d931f472329e0f14e17c9fb4fbd"
+    },
+    {
+      "va": "0x1800388a0",
+      "assembly_evidence": "ev_3022378b3b333555b2f1f63fa59a85ea675e756369871f825e3fd805143160eb",
+      "pseudocode_evidence": "ev_1310d67634f8e3e38f5e30772a836a81c302979788d481e1ece1b062970dc667"
+    },
+    {
+      "va": "0x1800388d0",
+      "assembly_evidence": "ev_220d092f92df6b8c1c7cbb91ffd4ee02e5b5af3f3f6fd15d599e710c8adf353e",
+      "pseudocode_evidence": "ev_91d6e13816769169a851a89952ec830305781673cce42cf3b54f25186b9ee27e"
+    },
+    {
+      "va": "0x18005c954",
+      "assembly_evidence": "ev_ec6342e3be716eb2c6c87b9979484454fca19d7f1f79ea442a820fecef0fa9e4",
+      "pseudocode_evidence": "ev_4337e59f9c68dfbab3f4b66beb25a560089afda7f6b29adfca5bdb8a291b1b77"
+    },
+    {
+      "va": "0x1800668c0",
+      "assembly_evidence": "ev_c99f204c542cccdad396d7bc71515f1b5731e73657cfccf84d0a121761e73e4a",
+      "pseudocode_evidence": "ev_7e8b870bd7ea201db70f354b0219883b98336ad5bae46d7d22dfbd1bae7df875"
+    }
+  ],
+  "anchors": [
+    "05e891..05e8c4 calloc40/free-null/module4",
+    "05e900..05e910 error-slot22 before invalid-handler",
+    "05e92a..05e94c unsigned stack/CreateThread CRT entry",
+    "05e95a..05e988 capture/map error then handle/module/context cleanup",
+    "05e98f..05e99d ID write only on success",
+    "05e7ca PTD+3c0 before runtime and callback",
+    "05e7db..05e7e8 init1; byte+20=(result==0)",
+    "05e849..05e865 unsigned handle/module sentinel comparisons",
+    "05e867..05e872 free-and-exit or exit",
+    "05e9c5 unreachable INT3 after noreturn exit"
+  ],
+  "limits": [
+    "Required Effects implement allocator/PTD/Win32/runtime/error contracts",
+    "No native thread backend implemented or executed",
+    "No inferred worker-exception cleanup",
+    "Original CRT/EH/SEH/XFG ABI and FLS lifetime unproven"
+  ]
+}

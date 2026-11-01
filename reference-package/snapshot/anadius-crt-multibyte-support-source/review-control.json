@@ -1,0 +1,48 @@
+{
+  "reviewer": "crt_mb_control",
+  "checked_at": "2026-10-19T02:22:11.6295869Z",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "result": "PASS after owner correction",
+  "sources": [
+    {
+      "path": "multibyte_support.hpp",
+      "sha256": "29f3790e2d2c196e639ae47132795fba07794e05c0ee2be2d8cf2749622faa7f"
+    },
+    {
+      "path": "multibyte_support.cpp",
+      "sha256": "59c1645aa5e8fe79ed0b81d4c99e9bb261138bab562b7c01856f7e857030a8fd"
+    },
+    {
+      "path": "multibyte_support_tests.cpp",
+      "sha256": "20924b4669af2cc3b6ee037a11b4f4f743423de9ae4a09f713e1c5c053433f24"
+    },
+    {
+      "path": "validation.json",
+      "sha256": "1ba75c477f0c5eb5fd2c10af2722d5871528f80a4a8e9df997e747b918b374a7"
+    }
+  ],
+  "scope": "Independent static comparison of support CPP/HPP/tests against retained Ghidra pseudo and assembly; no original target execution",
+  "findings": [
+    {
+      "status": "fixed by owner",
+      "address": "0x18006f020..0x18006f02f",
+      "issue": "Request -4 must read LocaleContext.locale_info+0xc, not multibyte_info+0xc",
+      "proof": "getSystemCP constructor destination RSP+0x20; MOV RAX,[RSP+0x28] selects context+8. LocaleUpdate constructor058b46..058b5a writes PTD+0x90 into context+8 and PTD+0x88 into context+0x10. MOV EBX,[RAX+0xc] consumes locale-info code page.",
+      "evidence": [
+        "ev_1db7ffb5b49c8937daca136ba4b2cbfc4919d4e39a4fe1e72ca319a0f93f14cb",
+        "ev_3dddc827b53aec64fea684a552b8365c6961552ab4bf972fa6fc4de5a99f1558"
+      ],
+      "regression": "Owner separates locale-info code page 932 and multibyte-info sentinel936."
+    }
+  ],
+  "verified": [
+    "All request sentinel branches and system flag resets/sets; full32bit result conversion; conditional PTD bit2 clearing only normal flow",
+    "Table publication lengths257/256; forward16byte chunk read-before-write ordering; trailing type byte",
+    "Invalid destinations and wrapped NULL source handling; errno22 and returning invalid handler",
+    "Lock/unlock IDs; predecrement count1 test; uint32 wrap; initial static record exclusion",
+    "Reread current-slot before comparison and again before free argument; captured replacement destination; PTD reread before increment",
+    "XCHG locale changed returns previous DWORD; source API explicitly excludes vector atomicity/fault/SEH equality"
+  ],
+  "owner_validation": "3544 multibyte support checks passed",
+  "open_defects": []
+}

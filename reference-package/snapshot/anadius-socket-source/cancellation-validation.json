@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "cancellation_checks": 1937,
+  "native_checks": 107,
+  "output": "PASS: 1937 socket cancellation checks; finite offline graph and injected effects only\nPASS: 107 socket native cancellation checks; injected SDK and actual source integration only",
+  "source_hashes": {
+    "cancellation.hpp": "590aba7ccc16c44dd332481bd79cc2f6760b7fa81be773f5dbceaa7efebef1ff",
+    "cancellation.cpp": "8b9590f3ae91bad807107a79e9f04391b9470f885b599725a21fb80a8dec098c",
+    "cancellation_native.hpp": "91ac34a057aec4e6aec647c5a046f3e98138ccdeb23a1f268083defae5493f39",
+    "cancellation_native.cpp": "d1a8ad5506c6683f1a080950d253766bd902dce4086a843f599f4c6b414b293e",
+    "cancellation_tests.cpp": "cc76688587f6066f67a32c64614ac344990d75820327508a8297e6e0bf1e02ce",
+    "cancellation_native_tests.cpp": "13f32b3bbd06c9c0f1568f76bc5393264735b0c89228147e18c431c1b48d808f",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "execution_scope": "026aa0 four-map normal drain/post/fallback and028850 wake, typed injected SDK imports and actual acceptor/lifecycle/closing/destructor source integration",
+  "required_providers": "0283c0 recycler, map initialization/lifetime/concurrency, completion consumer and context mapping remain explicit caller-owned boundaries",
+  "native_ASIO_IOCP_ABI_SEH": "not established; no actual WSA/socket/network/IOCP/critical-section API or original target execution"
+}

@@ -1,0 +1,171 @@
+{
+  "schema": "queued-write.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x18002a500",
+      "pseudo_evidence": "ev_74e713f6d63b5db2c8594c89965baf991c280377ff6f5607819938f99daa863f",
+      "assembly_evidence": "ev_7b4a354660d536700feb53ad52ca0a2f961ca2042dbeb3a635143135bd1fe188",
+      "newly_recovered": true
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x180025a70",
+      "pseudo_evidence": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8",
+      "assembly_evidence": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021fd0",
+      "pseudo_evidence": "ev_cb8feee93f61ab1f79de415f7b58cf399d0febb87fbce65a9c6f749925ed1724",
+      "assembly_evidence": "ev_6326ebb30e495078e0ed47d7346de01edd7f346608c3d5c91890ce2c1637533e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800261d0",
+      "pseudo_evidence": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61",
+      "assembly_evidence": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180027a20",
+      "pseudo_evidence": "ev_ac8acca2b33bd760e4ba5f3d9ec5784ef473a66bd1f78d4aeb47033d2bcbc4d9",
+      "assembly_evidence": "ev_c7fd45e2d65c3e1f508706bdf6dc9e7561b9d896d56095bbebac7e82853f4463",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "queued_write.hpp": "7a205cbc34118c9181f829feeb474478dedd10eb21d37780af966018e3f6cc7a",
+    "queued_write.cpp": "8aec35f671804e86544701065a8c510b0b3c5632b0baf13cf31f6679fbd88211",
+    "queued_write_tests.cpp": "df41028cd6f2b0626ffc7138ed4bbbab32a8fe8616b2c4d5d9d561d6175fa257",
+    "queued_write_integration_tests.cpp": "8e2a542808da4e9ca8cd76fbf943a85dcd1b9173e562d5ad29ed4549eccae119",
+    "build.ps1": "5775ada30753c4ea2904e797ff6de2ff12da114188f214a50f507a31844e10c1",
+    "CMakeLists.txt": "d7cf5fbe367b8ca88ccba97558e565552ec3ef3b8960bbbeaaecbc79c5ef24c5",
+    "README.md": "6fa335cf2b7cedd5a66824cb90a2e2fbe3375330d48a9e1a3cac12e65e6df8a6"
+  },
+  "support_hashes": {
+    "queued-write-evidence.pseudo.c.txt": "5be902687f53a6f17fec37df2606ce96c6c6d4a7d054c6a760189fe8df07cf85",
+    "queued-write-evidence.asm.txt": "e74809008c33a956420c49cf0f8967369e7c4b21f466a2c40458393f09c30f1c",
+    "queued-write-context.pseudo.c.txt": "29f4d3b3c83fb82ba8c1618254f0cc01fa32d426dbac849ddc47d7b2ba326a7b",
+    "queued-write-context.asm.txt": "a43eb207b4e102705a814f18e54fd35dde8ed41ba45560c9ee44491ed44e4439",
+    "queued-write-flow-audit.md": "3546600d85795f557565ae97db61dd8b2dff520430bbdc9c3ec0a65a55db9324",
+    "queued-write-flow-audit.json": "b533b611d4699dfe6d9376cf20d63d91c19d970141eaaaf8c3fdc12e697c894b",
+    "queued-write-review.md": "1e3628ff1194e32db868903b7c77eadd8cf45d2f41a0c4ac782b6be3af59a45b",
+    "queued-write-review.json": "191b174e25e166811561bd80be7eef74c84ff4c2d481eecc1ddd1a8f377a0aca",
+    "queued-write-rea-session.json": "dd969de1a18a0bd6b8e3d80b54ed5401db07a76d605485a0fa05e3bd5b02e735"
+  },
+  "normal_source_procedures_added": [
+    "0x18002a500"
+  ],
+  "new_original_procedures": 1,
+  "claims": [
+    {
+      "addresses": [
+        "0x18002a513",
+        "0x18002a51a",
+        "0x18002a52c",
+        "0x18002a530",
+        "0x18002a539",
+        "0x18002a53c",
+        "0x18002a544",
+        "0x18002a547",
+        "0x18002a54c",
+        "0x18002a54e",
+        "0x18002a550",
+        "0x18002a556",
+        "0x18002a67d",
+        "0x18002a682"
+      ],
+      "finding": "Emptycount returns; cachedcontrolNULL/strong0required026860terminal; low32lockedCASnonzero+1wrap withfailedexpectedreuse; successUINTMAXto0 notterminal"
+    },
+    {
+      "addresses": [
+        "0x18002a558",
+        "0x18002a55b",
+        "0x18002a573",
+        "0x18002a57a",
+        "0x18002a57d",
+        "0x18002a584",
+        "0x18002a58b",
+        "0x18002a58f",
+        "0x18002a593",
+        "0x18002a598",
+        "0x18002a59f",
+        "0x18002a5a4"
+      ],
+      "finding": "AFTERCAS reloadownerobject/control; maskmap[(mapsize-1)&offset]; fullsize; size0dataNULL withoutheap/capacitybranch; nonzeroinline/heap"
+    },
+    {
+      "addresses": [
+        "0x18002a5a7",
+        "0x18002a5ab",
+        "0x18002a5b0",
+        "0x18002a5b5",
+        "0x18002a5ba",
+        "0x18002a5bf",
+        "0x18002a5c4",
+        "0x18002a5c9",
+        "0x18002a5da",
+        "0x18002a5f0",
+        "0x18002a5f5",
+        "0x18002a5f8",
+        "0x18002a60d",
+        "0x18002a62c"
+      ],
+      "finding": "Definedhandlerstreamowner+10/data/fullsize/progress0/flag1/owner/object/control; firstslice min(size,65536); allocatorliteralowner+78; directactual021fd0 ratherthan0261d0"
+    },
+    {
+      "addresses": [
+        "0x18002a632",
+        "0x18002a63a",
+        "0x18002a646",
+        "0x18002a64b",
+        "0x18002a650",
+        "0x18002a656",
+        "0x18002a658",
+        "0x18002a65d",
+        "0x18002a662",
+        "0x18002a668",
+        "0x18002a66c"
+      ],
+      "finding": "PostsendreadsONLYlocalcontrol; strongfetchsub1old1dispose; SAMEsavedcontrolweakfetchsub1old1deleteslot8; noowner/contextread aftercallee; actual021fd0normaltransferclearslocalpair"
+    },
+    {
+      "context_only": true,
+      "addresses": [
+        "0x180025b1f",
+        "0x180025b22",
+        "0x180025b33",
+        "0x180025b36",
+        "0x180026221",
+        "0x180026285",
+        "0x1800220cd",
+        "0x1800220d1"
+      ],
+      "finding": "Existing025a70liveowner next callback nowRecoveredQueuedWriteApiactualsource; existing0261d0/021fd0/027a20 formqueue send/completion cycle; directcallerboundaryinjectiononlysynthetictest,APIbridgeusesactual021fd0"
+    }
+  ],
+  "required_providers": [
+    "026860 bad-weak terminal (native call+INT3) and025c40 receive algorithm",
+    "Native allocator/reference dispose/delete/GS/RTTI/polymorphic slots",
+    "Category message/logger/stream/free/invalid-parameter helpers unchanged",
+    "Coherent queue alias and literal owner+10/owner+78 stream/source bindings; dependency context bound before nonempty use",
+    "Native global/ownership/lifetime/ABI/exception/SEH/unwind/concurrency/fullDLL"
+  ],
+  "independent_production_review": "PASS two frozen production sources",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution_boundary": "Optional callee parameter used only isolated caller tests, not native evidence; recovered API final bridge always actual021fd0; full integration uses actual source chain with injected SDK effects",
+  "unproven": [
+    "Native026860terminal/025c40 receive and native slots/log/global construction",
+    "Native allocation/string/deque/vtable/reference ABI/provenance",
+    "Native races/exception/SEH/unwind",
+    "Complete DLL or original runtime differential"
+  ]
+}

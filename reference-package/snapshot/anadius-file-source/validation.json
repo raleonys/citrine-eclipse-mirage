@@ -1,0 +1,62 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "tests": [
+    {
+      "module": "file_io",
+      "result": "PASS",
+      "output": "PASS: 78 IO checks; actual IO only on generated fixture files; original targets not executed or modified",
+      "executable_sha256": "b3809ecd6e0188a9aba3543de8f78d21b57ed3713e0667cb75c65ade1a5458e4"
+    },
+    {
+      "module": "license_files",
+      "result": "PASS",
+      "output": "PASS: 33 file/license integration checks; actual IO/SHA1/CBC/XML on generated fixtures, remaining effects controlled; original targets untouched",
+      "executable_sha256": "32d2a1bfd056367142f0236afd2bce63a502355e6550f169e6d4d9e109887eb0"
+    }
+  ],
+  "actual_io_scope": "../source-workspace/build/file-io-fixtures",
+  "actual_modules": [
+    "file IO compatibility backend",
+    "SHA1",
+    "AES-CBC",
+    "token byte extraction",
+    "license handlers",
+    "XML reader/writer"
+  ],
+  "remaining_effects": "controlled status/path/provider effects; full native implementation and original CRT/ABI equality unproven",
+  "sources": [
+    {
+      "path": "anadius-file-source/binary_io_tests.cpp",
+      "sha256": "8fafa196448c75f08fec3656bf83be051f7affe1bc1490b8d2e3ac49ae3a425a"
+    },
+    {
+      "path": "anadius-file-source/binary_io.cpp",
+      "sha256": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222"
+    },
+    {
+      "path": "anadius-file-source/binary_io.hpp",
+      "sha256": "5a1ef9c90437e70677458e559488d8c340de0dfcff4b74157254bf391889f7b4"
+    },
+    {
+      "path": "anadius-file-source/license_files_tests.cpp",
+      "sha256": "eec1e8fff558fa40940ee9720493d7cf571a030b6a485537372e05b16374f075"
+    },
+    {
+      "path": "anadius-file-source/license_files.cpp",
+      "sha256": "bc4d9250aeba6abf3feb55408f812a2f6efe58e79e9524bcf84d8972682db371"
+    },
+    {
+      "path": "anadius-file-source/license_files.hpp",
+      "sha256": "5984806f93a8a3d2980ece6e9da8504f79241109168a447408624077c4474340"
+    },
+    {
+      "path": "anadius-file-source/native_io.cpp",
+      "sha256": "e786fbd46741d172eca7d9a2f511e9757703d738f9998a857306665b316792ca"
+    }
+  ],
+  "original_targets": "not loaded, executed or modified",
+  "runtime_equivalence": "not established"
+}

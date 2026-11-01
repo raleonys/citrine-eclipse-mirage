@@ -1,0 +1,264 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "stage": "B50",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T23:21:16.488662+00:00",
+  "review_mode": "Independent static production/lifetime/test review plus read-only source/proof/log/EXE/compiler/archive/baseline verification. No reviewer execution.",
+  "reviewed_source_hashes": {
+    "session_stop_tests.cpp": "6e5464f90473bd77762b9ec05c777a815901e7641baf3085c211c22c5ab39a34",
+    "session_stop_integration_tests.cpp": "f7c980579ab0b3617af50f6c872f369d4c850b22a49dacf3f462091a2a6fbd9a",
+    "../anadius-accept-stop-source/stop.hpp": "6d4854d3640568c5ec08eaa23b4abbb4b40d5c529be3bc6825f017f62702a94b",
+    "../anadius-accept-stop-source/stop.cpp": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+    "../anadius-io-memory-source/io_memory.hpp": "6106cfff8df2cafac2f2570b54f78ef921204ffb9f45c6943bf1894c776d2847",
+    "../anadius-io-memory-source/io_memory.cpp": "669a2b098f2496266ff330e1efccd4a6a29b8d55a10f01b752bec51b39a509fd"
+  },
+  "code_freeze": {
+    "path": "work/b50-code-freeze.json",
+    "sha256": "8e14dcf52ec9c3e2fa00a3afa3b61e392706d04ac4db55112c9f2bfe96a36c8c",
+    "all_six_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "path": "work/b50-core-quick-results.json",
+      "sha256": "097a572a65240e9199a05af701bad78a0ee07e997c4e2d10f5b7592c433f1f2d",
+      "checks": 213,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b50-core-agent-results.json",
+        "sha256": "94482504482ea0803a4c7a1e55008b57d4d1be8fee94f5347bebc5af748691d4"
+      },
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b50-core-agent.log",
+      "log_sha256": "777e92d3acae971e56ea866d5057456b02a8adb5a0995d7500370b707519f294",
+      "executable_path": "work/b50-core-agent.exe",
+      "executable_sha256": "4c81b8f59af1a49348759326ef3b0a2f0483e70bb6fb187d07a0aa97ad5be3f2",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "archive_path": "work/b50-baseline-core.a",
+      "archive_sha256": "6c30063d4acee0013c92483ba9d471ce5b6c90011aa26b9d3e77f548406bcf69",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "actual_used_source_hash_count": 11,
+      "actual_used_source_hashes": {
+        "session_stop_tests.cpp": "6e5464f90473bd77762b9ec05c777a815901e7641baf3085c211c22c5ab39a34",
+        "../anadius-accept-stop-source/stop.hpp": "6d4854d3640568c5ec08eaa23b4abbb4b40d5c529be3bc6825f017f62702a94b",
+        "../anadius-accept-stop-source/stop.cpp": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+        "../anadius-io-memory-source/io_memory.hpp": "6106cfff8df2cafac2f2570b54f78ef921204ffb9f45c6943bf1894c776d2847",
+        "../anadius-io-memory-source/io_memory.cpp": "669a2b098f2496266ff330e1efccd4a6a29b8d55a10f01b752bec51b39a509fd",
+        "../anadius-socket-source/async_receive_test_fixture.hpp": "2aa196d2d494c9912494682f3e097a5cfa9fac4e8b877b0ad9855868bc784992",
+        "../anadius-thread-domain-source/domain_test_fixture.hpp": "9f6063f2d7de5cc797f950e0d3c8d07860eab54ad90c8d7506efb139106d9a9f",
+        "../anadius-owned-server-source/server.hpp": "8122afc2c001e9c97d945200419b1fc5067908a7d83278130c738e6ae0969134",
+        "../anadius-socket-source/owned_response.hpp": "0c1a23789740ac7948bfda66bcac00040c99eae0589db6bf8cacf1471b6f1b56",
+        "../anadius-socket-source/handler_dispatch.hpp": "0fec1cbf13941617daf61b0bf4a144c3e660bd976f4c65f8ebad184e198b3f64",
+        "../anadius-session-memory-source/memory.hpp": "76b2a60370a20084228ab75fc0ce1450323f081e26aa2359b7a6a3080a1cfe3d"
+      },
+      "source_scope": "Fresh modified Stop.cpp and IoMemory.cpp plus new session_stop_tests.cpp with selected actual-use headers/fixture components. Immutable canonical B49 archive supplies prior source algorithms. No integration test, actual server_runtime::Runtime dispatcher loop, Graph/message/bootstrap execution or concurrent controller-proof epoch claim is compiled/claimed here. Direct typed metadata fixtures and a selected single-thread owned_server::Runtime protocol adapter run under real OwnedServerBackend Running/Returned/Quiescing phases, actual Parent/023000 native control, fixed OwnedIoMemory/OwnedAcceptMemory and actual own IOCP/local PIPE_REJECT_REMOTE_CLIENTS named-pipe overlapped read/write. Manual adapter scheduling/publication is explicit: no native scheduler work count is fabricated or decremented. Typed SDK wrappers record Issuing before lower, exact socket/control/byte range, Kernel result0 despite non997 error, Software failures and Unclassified legacy; cached storage reuse changes generation and monotonic submission sequence, and stale handles reject. Actual ReadFile pending read cancels to real995; actual WriteFile success remains kernel-pinned until its physical packet despite Cancel ERROR_NOT_FOUND. Existing tracked session owners are permitted by independent new-admission/rawjob proof. Native owner0 027710/027a20 cleanup retires byte/EXTRA strong pins; last-owner case actually deletes source control before Stop.after. Owned response Posted027120 flag0 reaches022280 to free exact64byte payload/strong with no receive/send runner/SDK. Normal read/send/Posted routes all exclude stop request while source receipt active. Main count excludes five exact-exit retained children for SDK throw after actual ReadFile (unknown), unclassified legacy actual read (no guessed Cancel), forged key2 physical packet for typed Kernel IO, post-submission public op/OV binding forgery, and SDK-mutated source-handler owner. Authoritative private projection checks reject forged/mutated rows before any Cancel/ACK/unpin. All retain actual bytes/control pins and forbid close. No original target/DLL/game/user content, actual network socket, AcceptEx interop, foreign ABI, arbitrary thread admission or unknown rollback/unload claim is used.",
+      "isolated_children": [
+        {
+          "mode": "unknown",
+          "expected_exit": 1001,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "legacy",
+          "expected_exit": 1002,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "wrong-key",
+          "expected_exit": 1003,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "binding",
+          "expected_exit": 1004,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "owner-mutation",
+          "expected_exit": 1005,
+          "observed_exit_verified_by_parent": true
+        }
+      ],
+      "root_normalization_only": true,
+      "reviewer_executed": false
+    },
+    {
+      "path": "work/b50-integration-quick-results.json",
+      "sha256": "9e00fc27eb5c54a5ee42cfe6d1f28043cfa2d5ae6f7e1e5a237c8895000b90b3",
+      "checks": 139,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b50-integration-agent-results.json",
+        "sha256": "14ecf9b3c171f83c6c5c1813b667e8ac449e0f5a3e90ba760e73a2126ca48f28"
+      },
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b50-integration-agent-results.log",
+      "log_sha256": "1a8e04aaaf6bc7c38ad85e7e0617e0371fba5a1014a8995c91911560cc156dcb",
+      "executable_path": "work/b50-integration-v5.exe",
+      "executable_sha256": "71303270af212d6e7990971198c7a148a5139d913166f7b03dbbccde53036923",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "archive_path": "work/b50-baseline-core.a",
+      "archive_sha256": "6c30063d4acee0013c92483ba9d471ce5b6c90011aa26b9d3e77f548406bcf69",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "actual_used_source_hash_count": 5,
+      "actual_used_source_hashes": {
+        "session_stop_integration_tests.cpp": "f7c980579ab0b3617af50f6c872f369d4c850b22a49dacf3f462091a2a6fbd9a",
+        "../anadius-accept-stop-source/stop.hpp": "6d4854d3640568c5ec08eaa23b4abbb4b40d5c529be3bc6825f017f62702a94b",
+        "../anadius-accept-stop-source/stop.cpp": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+        "../anadius-io-memory-source/io_memory.hpp": "6106cfff8df2cafac2f2570b54f78ef921204ffb9f45c6943bf1894c776d2847",
+        "../anadius-io-memory-source/io_memory.cpp": "669a2b098f2496266ff330e1efccd4a6a29b8d55a10f01b752bec51b39a509fd"
+      },
+      "source_scope": "ActualRuntimeOwner/SourceBackend THREErealDomainNativeThreads/concreteApplicationWorker-ownedGraph normalkernelaccept→actual023000SessionControl/twoMoves/reset/greeting(selectedsyncnonkernelSDK)→actualpipeReadFile XML→nativeframe/ownedInlineJob/NativeLogic/RouterGetProfile/ownedResponsePost→actualWriteFile. OWNDUPLEXpipe outboundquota prefilledwithCOMPLETEDownedfiller BEFOREIOCPattachment, guaranteeing responseWriteFilepending whileindependent rearmedReadFile+nextlisteneracceptReadFile pending SIMULTANEOUSLY. SessionIo usesDEFAULTrealCancelIoEx eachEXACTsocket+OV, ONLYcontrollerNULLwake, actualGQCS9953→native027710/027a20/0271a0owner0 cleanup. FirstterminalandONEremainingRWwitness checkotheractualParent ranges/pins/nativehandler+SDKextraStrong/socketlive; lastRW actual026570/026880/024db0/Logicregistryreap freesinput/deque/strings/control. Otherworkproof REQUIREDindependentnewadmissionstop/rawInlineJobs0/foreignnone; trackedIOowners intentionallylive. Actualkernelpackets5+oneownedpost=6nativepackets, no syntheticterminal/Getresult/manualcounter/cleanup. Realjoin/FLS/controllerfinish/provider/domainheapbalance. TypedcompatpipeSDKNOTactualWSARecv/WSASend/AcceptExinterop, noOriginalDLL/game/usercontents/realnetwork/nativeABI/fullforeignrawjobquiescenceclaim.",
+      "isolated_children": [],
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "immutable_authoritative_execution_record": {
+        "path": "work/b50-integration-v5-results.json",
+        "sha256": "14ecf9b3c171f83c6c5c1813b667e8ac449e0f5a3e90ba760e73a2126ca48f28"
+      },
+      "immutable_log": {
+        "path": "work/b50-integration-v5-results.log",
+        "sha256": "1a8e04aaaf6bc7c38ad85e7e0617e0371fba5a1014a8995c91911560cc156dcb"
+      },
+      "main_is_exact_immutable_copy": true,
+      "watched_source_hash_count": 6,
+      "watched_source_hashes": {
+        "session_stop_tests.cpp": "6e5464f90473bd77762b9ec05c777a815901e7641baf3085c211c22c5ab39a34",
+        "session_stop_integration_tests.cpp": "f7c980579ab0b3617af50f6c872f369d4c850b22a49dacf3f462091a2a6fbd9a",
+        "../anadius-accept-stop-source/stop.hpp": "6d4854d3640568c5ec08eaa23b4abbb4b40d5c529be3bc6825f017f62702a94b",
+        "../anadius-accept-stop-source/stop.cpp": "0359be032d026c8fd0dbdd56807eada0500c93f86f0511ba913d4cce00a7353f",
+        "../anadius-io-memory-source/io_memory.hpp": "6106cfff8df2cafac2f2570b54f78ef921204ffb9f45c6943bf1894c776d2847",
+        "../anadius-io-memory-source/io_memory.cpp": "669a2b098f2496266ff330e1efccd4a6a29b8d55a10f01b752bec51b39a509fd"
+      },
+      "watched_core_test_is_metadata_only": true
+    }
+  ],
+  "main_checks_total": 352,
+  "additional_isolated_children": 5,
+  "integration_isolated_children": 0,
+  "baseline": {
+    "zip_path": "outputs/dll-reverse-engineering.zip",
+    "zip_sha256": "57c159ec0c2bd32f383adbe29f56549870d98464d7543bf59e7259cf2c8b31ee",
+    "bytes": 281946571,
+    "entries": 6183,
+    "all_930_prior_snapshot_preimages_verified": true,
+    "prior_unchanged": 926,
+    "prior_modified": 4,
+    "prior_modified_paths": [
+      "anadius-accept-stop-source/stop.cpp",
+      "anadius-accept-stop-source/stop.hpp",
+      "anadius-io-memory-source/io_memory.cpp",
+      "anadius-io-memory-source/io_memory.hpp"
+    ],
+    "prior_source_hashes": {
+      "anadius-accept-stop-source/stop.cpp": "a503d69c6966b798a22e7ce00370be93905a48ee600839c05186f2cac719ea21",
+      "anadius-accept-stop-source/stop.hpp": "5719ce2e77c5af5406477d3a62c681a3233ec54323484c805db625dbd259bba2",
+      "anadius-io-memory-source/io_memory.cpp": "95294bcd3424ba717eed4fdb369f55a79c07d7b6453c5a7d8e2141b674bc11eb",
+      "anadius-io-memory-source/io_memory.hpp": "29424a26545c256ecac9be6ebc27903d25f60d2c47cedbb15d246a6b1d72b95c"
+    },
+    "new_sources": 2,
+    "new_sources_are_tests_only": true,
+    "production_sources_added": 0,
+    "total_sources": 932,
+    "baseline_archive_member_sha256": "6c30063d4acee0013c92483ba9d471ce5b6c90011aa26b9d3e77f548406bcf69",
+    "archive_member_equals_actual_used_archive": true
+  },
+  "findings_resolved": [
+    "Private projection supplies actual op/OV; strict pending/loan lookup poisons mutable public binding corruption before cancel. Private active/completed state prevents hiding Posted work by clearing a binding.",
+    "Only Posted mismatch metadata is allowed, and Stop authorizes solely actual OwnedAccept same-slot/op/OV inert reservation; no arbitrary raw alias dereference.",
+    "Pinned wrappers capture exact SDK socket/buffer/control and validate buffer/control/binding after return. result0/997 Kernel, other known error Software; unknown/unclassified stop states retain.",
+    "All SessionIo completion routes hold shared epoch lease through source cleanup and after/reap. Owner0/Posted flag0 suppress callbacks/new IO while source releases real handler/SDK references. After reads fresh metadata only.",
+    "Partial terminal preserves remaining pin/control/socket; final source release runs actual session disposal and Profile registry/logic/observer reap. Cancel results alone never ACK or decrement work."
+  ],
+  "selected_scope": "Optional SessionIo extension in existing Stop/OwnedIoMemory; default AcceptOnly preserved. Original-worker exact-operand cancel plus actual physical packet/native owner0 or Posted flag0 source cleanup before ACK. No new production unit or synthetic terminal/count.",
+  "native_accounting": {
+    "new_native_bodies": 0,
+    "new_ABI_closures": 0,
+    "mapped_canonical": 501,
+    "eligible_tags": 505,
+    "normal_native_claims": 139,
+    "historical_closed_providers": 52,
+    "last_native_body_stage": "B38"
+  },
+  "common_validation": {
+    "status": "PENDING_AS_OF_REVIEW",
+    "log_path": "work/b50-common-final-build.log",
+    "reviewer_claims_common_PASS": false,
+    "production_objects": 271,
+    "cpp_objects": 267,
+    "c_objects": 4,
+    "normal_groups": 329,
+    "terminal_groups": 19,
+    "composition_files": 111,
+    "composition_objects": 55,
+    "compiler_observations": 98,
+    "new_trait_values": []
+  },
+  "registration_role": {
+    "path": "work/b50-register.py",
+    "sha256": "7dfa6830d6e3dc30907557d7533f255c6b42da8ef2fc706deab98e9c86463a20",
+    "preview_author": "/root/b22_provider_audit",
+    "strict_read_only_preview": "PASS before root applied",
+    "applied_record": {
+      "path": "work/b50-registration-result.json",
+      "sha256": "af2838f7efe60e892691fd55fb136edb9ea526a820a7fd8322bc0634057a7bb7"
+    },
+    "applied_record_mode": "ALREADY_APPLIED_BY_ROOT_CURRENT_STATE_VERIFIED",
+    "applied_by_root": true,
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "helpers_prepared_only": [
+      {
+        "path": "work/b50-freeze-quick.py",
+        "sha256": "b276a759787e2aeeab5a1917e2ff4557c1f7f8998b85270df9550b52c8fc8df9"
+      },
+      {
+        "path": "work/b50-object-freeze.py",
+        "sha256": "19dcf5f3ca9d2fca183c7d161bead0708564e42e59bc863c7f520d7f98c73fb2"
+      },
+      {
+        "path": "work/b50-link-context.py",
+        "sha256": "b36b04b5c799ff514581d303f2822fb6714867b29de566af328f5ef34e732aad"
+      },
+      {
+        "path": "work/b50-deliver.ps1",
+        "sha256": "dbf93807c11477ea7da79cbba72f865f48b224088a506aba46efcab76561da70"
+      },
+      {
+        "path": "work/b50-final-audit.py",
+        "sha256": "e3aaa30b5c9b475ee62771c6c2456c765e31b70238828577882dbf3fb65e5d1e"
+      }
+    ],
+    "metadata_author": "/root",
+    "metadata_docs_read_only_reviewed": true,
+    "helper_mutators_executed_by_reviewer": false
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "Explicit SessionIo is HOST policy. Independent thread-safe proof stops NEW application/foreign/rawjob admission and drains raw/deferred jobs. Existing tracked IO/session owners may remain live; counts do not prove arbitrary foreign/kernel/unload finality.",
+    "Native cancel/post/error imports are nonthrowing/nonblocking/noncallback; selected SDK lowers submit captured operands. Post-mutation retention is not arbitrary hostile foreign-buffer safety.",
+    "Actual own pipe ReadFile/WriteFile/CancelIoEx/IOCP proves selected kernel-loan/source lifetime, not WSARecv/WSASend/AcceptEx interoperability/networking. Synchronous greeting is a declared compatible lower.",
+    "Core manually drives an explicit protocol adapter around actual owned source memory/control/IOCP. Integration uses actual RuntimeOwner/SourceBackend three Domain threads/Graph/native-created session/GetProfile response.",
+    "Unforgeable kernel provenance, fabricated key0 packets in general, kernel ABA, protocol bypass and native class/allocator/ABI/EH/concurrency/scheduling equivalence remain unproven.",
+    "Unknown SDK/routing/callback/metadata corruption poisons and retains without blind retry, guessed status or invented rollback. Five children prove specific retained prefixes only.",
+    "No new production unit/Runtime/Graph/Worker layout change. Fresh Stop.cpp/IoMemory.cpp override immutable B49 archive; full common including legacy AcceptOnly suites remains required.",
+    "No reviewer EXE/build/probe/helper mutator. No original/rebuilt DLL/game, real network, CFG/token content, fresh REA/target bytes or security-block retry. IntegrationV1-V4 historical, immutableV5 authoritative.",
+    "Common/object-freeze PENDING at review. Full Resources/admission/rawjob/foreign closure, graceful pre-firstReady recovery and PE loader attach/detach remain open. DLL BLOCKED; no total percentage."
+  ]
+}

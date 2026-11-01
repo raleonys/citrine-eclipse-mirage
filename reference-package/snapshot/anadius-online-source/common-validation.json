@@ -1,0 +1,39 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "online",
+    "result": "PASS",
+    "output": "online: 12869 checks passed (synthetic mocks only)",
+    "executable_sha256": "cf993b4354b8be5de944488f1461eb1e294b4d03c97c5f02c8f45b2847a759cc"
+  },
+  "execution_scope": "Recovered load/path/encoding/status/file cores with synthetic backends; no provider DLL or user profile IO",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-online-source/online_tests.cpp",
+      "sha256": "63b11d362aaefae64143e3a8642193285456420dcd9ef1f4c8d1cef7877b7428"
+    },
+    {
+      "path": "anadius-online-source/online.cpp",
+      "sha256": "00020732bf6e36d53b9bfafe80d6cb85f303b8b329624562d45991f916e50cb8"
+    },
+    {
+      "path": "anadius-online-source/online.hpp",
+      "sha256": "47adf8b6426476a64b76a6b7d0f82875778f5795f9662a3bdd923219f3bdd6a2"
+    },
+    {
+      "path": "anadius-online-source/recovered_effects.cpp",
+      "sha256": "0bbd7c694762d968b6e509f1df851a46288bbd692fc7a1783c27eb45f11bfbd2"
+    },
+    {
+      "path": "anadius-online-source/recovered_effects.hpp",
+      "sha256": "f0a8da1dd760c10ae263adb3a91998642d84bb62f270d2c6565147fe28f5993a"
+    }
+  ]
+}

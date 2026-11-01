@@ -1,0 +1,114 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "source_package": "B8",
+  "independent_from_production_author": true,
+  "reviewer": "/root; production by b8_filesystem and b8_persistence; test source originally by b8_tests with root terminal/path-guard completion",
+  "scope": "Independent bounded production/source/evidence review and fresh quick execution. Filesystem had partial cross-review by persistence author; final code/stronger close policy checked by root. No claim of completed independent worker persistence cross-review.",
+  "reviewed_source_hashes": {
+    "filesystem.hpp": "7943c562258b108d6005ea77314c93803697a4095e9454c57eb080f15e7ba1dd",
+    "filesystem.cpp": "b7c0e64fc90af2ceae3c4c49048815e2534056af5cbe4cbdce511dbdcdaa8692",
+    "persistence.hpp": "b2b81212eae0c5bf4a97dbbdf609734f77dbc10084c7c08d8a678686a5b7245d",
+    "persistence.cpp": "216d13210878bc2a755a871c4e4f9394a6c6c190e424066cba48b358dfb2736c",
+    "embedded_png_data.hpp": "51684e590f953318154330e7dd91197274a285c708a2bed2c6acd56d797ad40b",
+    "storage_tests.cpp": "5ce09d3300c16d9835bb62ac0a312e81300c5638edcbbaa9f35a07a4db0cea11",
+    "storage_integration_tests.cpp": "1183de37073b81c937a41f7236ec775fed0b437c39e7bf9dec13ce70e84c3250",
+    "storage_test_fixture.hpp": "4289ff017d52187be817f37f922a081317372966d2fc835503793f2b4762d698"
+  },
+  "prior_sources_preserved": 733,
+  "prior_package_sha256": "cfaef4fe49441459bc36d856b0b0751e673989494efd955ec6bd5d54a1e94f40",
+  "quick_result_provenance": [
+    {
+      "path": "work/b8-core-quick-results.json",
+      "sha256": "07d38bdb31021946195a7b97995e36ca654e2c2e37e25720ba4889452a74b791",
+      "checks": 174,
+      "execution_by": "root with independently authored production and initial test sources; root added four terminal cases and strengthened own-fixture path guards"
+    },
+    {
+      "path": "work/b8-integration-quick-results.json",
+      "sha256": "7be71ebf3c945167ceb133495dd6dba059c4da1dbb10f9f2eb49a8529d592cd2",
+      "checks": 34,
+      "execution_by": "root with independently authored production and initial test sources; root added four terminal cases and strengthened own-fixture path guards"
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "topic": "mkdir",
+      "conclusion": "Prefix construction and error selection reuse retained018e00 normal flow and existing path/status helpers; already-existing non-directory fails. Current SDK success is tested as full BOOL, not low-byte."
+    },
+    {
+      "id": 2,
+      "topic": "enumeration",
+      "conclusion": "Enumeration preserves API order and exact dot omission, rejects empty/embedded-NUL per retained helper, owns the find handle through collection and errors. Interface is eager; native live-iterator partial removal ordering remains explicitly OPEN."
+    },
+    {
+      "id": 3,
+      "topic": "remove",
+      "conclusion": "Delete/read/write-attribute access, reduced-rights retry, EX flags0x13/3, one-byte legacy fallback and readonly restoration prefixes match retained normal paths. This is nonrecursive handle deletion."
+    },
+    {
+      "id": 4,
+      "topic": "handle_policy",
+      "conclusion": "Owned handle close failure and unknown acquisition terminate. Status fallback FindClose(FALSE) is deliberately stronger than native049104 ignored result. Four own SIGABRT child cases verify these boundaries; no general injected SDK exception/SEH equivalence claim."
+    },
+    {
+      "id": 5,
+      "topic": "error_boundary",
+      "conclusion": "LastError is retained across local allocations and exception construction to the last SDK call, including cleanup close. Operation exception code is separately saved. Compiler system_error/abort objects are selected rebuilt policies."
+    },
+    {
+      "id": 6,
+      "topic": "graph",
+      "conclusion": "Filesystem is shared; ConfigurationPersistence owns Paths, resources, effects and Storage in safe dependency order. Lower owner is destroyed before these resources. Constructors start no I/O or callbacks."
+    },
+    {
+      "id": 7,
+      "topic": "storage",
+      "conclusion": "Existing Storage/Writer/XML/status/encoding/timestamp bodies are called directly. Defaults are explicit NativeFactory/pinned XML/HostCrtNumbers/ClassicIso/NativeStats policies, not original CRT/ABI or arbitrary locale/overflow equivalence."
+    },
+    {
+      "id": 8,
+      "topic": "assets",
+      "conclusion": "Root independently compared both generated arrays byte-for-byte to retained REA rdata, checked all PNG CRCs/IEND/SHA256, and matched extents to new static Ghidra length-global proof7488/3882."
+    },
+    {
+      "id": 9,
+      "topic": "png_io",
+      "conclusion": "03c020 raw-span output and existing03c1d0 use the same open/write/close normal sequence. Caller ignores boolean; open failure stays ignored and write/close exceptions propagate. No extra mkdir, write-success check or fabricated replacement image."
+    },
+    {
+      "id": 10,
+      "topic": "core_tests",
+      "conclusion": "174 core checks include source XML/INI/epoch/state-prefix and invalid-resource/file/status/parser branches, typed filesystem operands and failure cleanup, exact assets and four terminal child boundaries. Root amended only tests and fixture guards; production has separate authors."
+    },
+    {
+      "id": 11,
+      "topic": "integration",
+      "conclusion": "34 checks exercise actual own Unicode/readonly directories and files, config FilePass/base+override, exact PNG bytes and independently expected INI CRLF bytes, existing-INI/malformed-XML behavior and real blocked-path failures. Fixtures are fresh, resolved within the workspace, without recursive cleanup."
+    },
+    {
+      "id": 12,
+      "topic": "preservation",
+      "conclusion": "733 previous CPP/HPP/hook source hashes match B7. New composition sources do not add native bodies/closures; mapped487/eligible491/normalclaims124/historicalclosures52 remain."
+    },
+    {
+      "id": 13,
+      "topic": "remaining",
+      "conclusion": "Three configuration and six Services policies plus iterator projection, mutable CRT/native EH/foreign/general concurrency/unload/loader-lock/PE entry remain open. Full DLL readiness is BLOCKED."
+    }
+  ],
+  "limits": [
+    "Eager collection differs from original live iterator side-effect/error prefix.",
+    "Selected status fallback close-failure terminal policy is stronger than original.",
+    "SDK APIs obey declared nonthrowing contracts; arbitrary SEH, foreign ABI, generic concurrency and image unload remain unproven.",
+    "ClassicIso/HostCrtNumbers/pinned XML/compiler streams are bounded explicit policies, not universal original runtime equivalence."
+  ],
+  "production_dll_readiness": "BLOCKED",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "static_original_data_read_bytes": 8,
+  "actual_user_cfg_token_achievement_contents_read": false
+}

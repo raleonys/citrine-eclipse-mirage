@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_nls_dispatch_native",
+    "result": "PASS",
+    "output": "PASS nls native dispatch: 92 checks; typed fixtures and Windows synthetic literals only",
+    "executable_sha256": "e8f5281b20a9936bf0c25f24d84063ea5c7ca10e8ed7e99f5c528510821710ac"
+  },
+  "execution_scope": "New SDK typed Ex/W/LCID adapters, tracked sortkey staging, query/negative/failure boundaries and LastError; injected fixtures plus real APIs on synthetic strings; zero newly recovered original bodies",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-nls-dispatch-native-source/native_tests.cpp",
+      "sha256": "625eafeda25bbe56c5da29dff264c1d711a26268eba933ac2444377d267391a3"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-native-source/native.cpp",
+      "sha256": "6ce7261947cbc4e332984756286cf31e8dcacf9828fb14fb2d3a82706cdbfa35"
+    },
+    {
+      "path": "anadius-crt-nls-dispatch-native-source/native.hpp",
+      "sha256": "7fb0d1e02a858154f7d49530d7b199272de0871463da1b99c01177b1e72fa800"
+    }
+  ]
+}

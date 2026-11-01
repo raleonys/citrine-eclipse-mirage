@@ -1,0 +1,742 @@
+param([string]$ToolchainRoot=(Join-Path $PSScriptRoot '..\..\work\toolchain\extracted\llvm-mingw-20261006-ucrt-x86_64'))
+$ErrorActionPreference='Stop'
+$compiler=(Resolve-Path -LiteralPath (Join-Path $ToolchainRoot 'bin\clang++.exe')).Path
+$cCompiler=(Resolve-Path -LiteralPath (Join-Path $ToolchainRoot 'bin\clang.exe')).Path
+$archiver=(Resolve-Path -LiteralPath (Join-Path $ToolchainRoot 'bin\llvm-ar.exe')).Path
+$outputs=Split-Path -Parent $PSScriptRoot
+$build=Join-Path $PSScriptRoot 'build'
+$null=New-Item -ItemType Directory -Path $build -Force
+$flags=@('-std=c++20','-O2','-Wall','-Wextra','-Werror')
+$commands=[System.Collections.Generic.List[object]]::new()
+function Invoke-Recorded([string]$program,[string[]]$arguments) {
+    $commands.Add([ordered]@{program=$program;arguments=$arguments})
+    $result=& $program @arguments 2>&1
+    if($LASTEXITCODE -ne 0){throw (($result -join "`n")+"`nFailed: $program")}
+    return $result
+}
+$units=[ordered]@{
+    bootstrap='anadius-source/bootstrap.cpp'
+    crt_threads='anadius-thread-source/threads.cpp'
+    crt_runtime='anadius-crt-runtime-source/runtime.cpp'
+    crt_errors='anadius-crt-error-source/errors.cpp'
+    crt_ptd='anadius-crt-ptd-source/ptd.cpp'
+    crt_ptd_data='anadius-crt-ptd-data-source/ptd_data.cpp'
+    crt_heap='anadius-crt-heap-source/heap.cpp'
+    crt_realloc='anadius-crt-realloc-source/realloc.cpp'
+    crt_recalloc='anadius-crt-recalloc-source/recalloc.cpp'
+    crt_recalloc_bridge='anadius-crt-recalloc-bridge-source/bridge.cpp'
+    crt_conversion='anadius-crt-conversion-source/conversion.cpp'
+    crt_conversion_api='anadius-crt-conversion-api-source/api.cpp'
+    crt_conversion_bridge='anadius-crt-conversion-bridge-source/bridge.cpp'
+    crt_module_path='anadius-crt-module-path-source/module_path.cpp'
+    crt_find_native='anadius-crt-find-native-source/find_native.cpp'
+    crt_find_bridge='anadius-crt-find-bridge-source/bridge.cpp'
+    crt_locale_update='anadius-crt-locale-update-source/locale_update.cpp'
+    crt_locale_thread='anadius-crt-locale-thread-source/locale_thread.cpp'
+    crt_locale_bridge='anadius-crt-locale-bridge-source/bridge.cpp'
+    crt_locale_ref='anadius-crt-locale-ref-source/locale_ref.cpp'
+    crt_locale_free='anadius-crt-locale-free-source/locale_free.cpp'
+    crt_locale_resource_bridge='anadius-crt-locale-resource-bridge-source/bridge.cpp'
+    crt_multibyte_support='anadius-crt-multibyte-support-source/multibyte_support.cpp'
+    crt_multibyte_control='anadius-crt-multibyte-control-source/multibyte_control.cpp'
+    crt_multibyte_bridge='anadius-crt-multibyte-bridge-source/bridge.cpp'
+    crt_multibyte_tables='anadius-crt-multibyte-tables-source/multibyte_tables.cpp'
+    crt_multibyte_builder='anadius-crt-multibyte-builder-source/multibyte_builder.cpp'
+    crt_multibyte_record_bridge='anadius-crt-multibyte-record-bridge-source/bridge.cpp'
+    crt_string_type='anadius-crt-string-type-source/string_type.cpp'
+    crt_lcmap='anadius-crt-lcmap-source/lcmap.cpp'
+    crt_nls_bridge='anadius-crt-nls-bridge-source/bridge.cpp'
+    crt_locale_names='anadius-crt-locale-names-source/locale_names.cpp'
+    crt_nls_dispatch='anadius-crt-nls-dispatch-source/nls_dispatch.cpp'
+    crt_nls_dispatch_bridge='anadius-crt-nls-dispatch-bridge-source/bridge.cpp'
+    crt_nls_native='anadius-crt-nls-native-source/native_api.cpp'
+    crt_nls_dispatch_native='anadius-crt-nls-dispatch-native-source/native.cpp'
+    crt_nls_native_bridge='anadius-crt-nls-native-bridge-source/bridge.cpp'
+    crt_heap_native='anadius-crt-heap-native-source/native_api.cpp'
+    crt_heap_native_bridge='anadius-crt-heap-native-bridge-source/bridge.cpp'
+    crt_fls_native='anadius-crt-fls-native-source/fls.cpp'
+    crt_lock_native='anadius-crt-lock-native-source/native.cpp'
+    crt_atomic_native='anadius-crt-atomic-native-source/atomic.cpp'
+    crt_sync_bridge='anadius-crt-sync-bridge-source/bridge.cpp'
+    crt_counter_native='anadius-crt-counter-native-source/counters.cpp'
+    crt_locale_native='anadius-crt-locale-native-source/native.cpp'
+    crt_initial_locale='anadius-crt-initial-locale-source/initial_locale_data.cpp'
+    crt_initial_multibyte='anadius-crt-initial-multibyte-source/initial_mb.cpp'
+    crt_initial_state='anadius-crt-initial-state-source/initial_state.cpp'
+    crt_locale_startup='anadius-crt-locale-startup-source/locale_startup.cpp'
+    crt_environment_cleanup='anadius-crt-environment-cleanup-source/environment_cleanup.cpp'
+    crt_lifecycle_callbacks='anadius-crt-lifecycle-callbacks-source/callbacks.cpp'
+    crt_pair_leaves='anadius-crt-pair-leaves-source/pair_leaves.cpp'
+    crt_lowio_lifecycle='anadius-crt-lowio-lifecycle-source/lowio_lifecycle.cpp'
+    crt_pair_bindings='anadius-crt-pair-bindings-source/bindings.cpp'
+    crt_invalid='anadius-crt-invalid-source/invalid.cpp'
+    crt_glue='anadius-crt-glue-source/crt_glue.cpp'
+    crt_cache='anadius-crt-cache-source/cache.cpp'
+    crt_onexit='anadius-crt-onexit-source/onexit.cpp'
+    crt_entry='anadius-crt-entry-source/entry.cpp'
+    crt_initializers='anadius-crt-initializers-source/initializers.cpp'
+    vcrt_ptd='anadius-vcrt-ptd-source/vcrt_ptd.cpp'
+    vcrt_api='anadius-vcrt-api-source/api.cpp'
+    crt_locks='anadius-crt-lock-source/locks.cpp'
+    crt_cpu='anadius-crt-cpu-source/cpu.cpp'
+    vcrt_bridge='anadius-vcrt-bridge-source/bridge.cpp'
+    crt_support='anadius-crt-support-source/support.cpp'
+    crt_environment='anadius-crt-environment-source/environment.cpp'
+    crt_termination='anadius-crt-termination-source/termination.cpp'
+    crt_startup_bridge='anadius-crt-startup-bridge-source/startup_bridge.cpp'
+    crt_argv_parser='anadius-crt-argv-parser-source/parse.cpp'
+    crt_argv='anadius-crt-argv-source/argv.cpp'
+    crt_byteclass='anadius-crt-byteclass-source/byteclass.cpp'
+    crt_argv_bridge='anadius-crt-argv-bridge-source/argv_bridge.cpp'
+    crt_wildcard_storage='anadius-crt-wildcard-storage-source/storage.cpp'
+    crt_wildcard_search='anadius-crt-wildcard-search-source/search.cpp'
+    crt_sort='anadius-crt-sort-source/sort.cpp'
+    crt_wildcard='anadius-crt-wildcard-source/wildcard.cpp'
+    thread_native='anadius-thread-native-source/win32_effects.cpp'
+    bootstrap_native='anadius-bootstrap-native-source/native_entries.cpp'
+    bootstrap_owner='anadius-bootstrap-owner-source/owner.cpp'
+    bootstrap_backend='anadius-bootstrap-backend-source/backend.cpp'
+    bootstrap_tracking='anadius-bootstrap-backend-source/tracked_threads.cpp'
+    bootstrap_callbacks='anadius-bootstrap-runtime-source/callbacks.cpp'
+    bootstrap_factory='anadius-bootstrap-runtime-source/factory.cpp'
+    observed_runtime='anadius-bootstrap-runtime-source/observed_runtime.cpp'
+    bootstrap_providers='anadius-bootstrap-providers-source/providers.cpp'
+    bootstrap_thread_start='anadius-bootstrap-providers-source/native_threads.cpp'
+    thread_domain='anadius-thread-domain-source/domain.cpp'
+    thread_domain_locale='anadius-thread-domain-source/initial_locale.cpp'
+    thread_domain_runtime='anadius-thread-domain-source/runtime.cpp'
+    bootstrap_services='anadius-bootstrap-policies-source/services.cpp'
+    configuration_platform='anadius-bootstrap-policies-source/config_platform.cpp'
+    configuration_filesystem='anadius-config-storage-source/filesystem.cpp'
+    configuration_persistence='anadius-config-storage-source/persistence.cpp'
+    thread_error_policy='anadius-config-iteration-source/thread_error.cpp'
+    exit_wait_completion='anadius-services-completion-source/exit_wait.cpp'
+    services_completion='anadius-services-completion-source/completion.cpp'
+    config_logging='anadius-config-logging-source/logging.cpp'
+    library_dialog='anadius-library-effects-source/dialog.cpp'
+    library_effects='anadius-library-effects-source/effects.cpp'
+    online_platform='anadius-online-platform-source/platform.cpp'
+    host_platform='anadius-host-platform-source/platform.cpp'
+    host_assembly='anadius-host-platform-source/assembly.cpp'
+    source_stop='anadius-host-platform-source/source_stop.cpp'
+    initial_cells='anadius-initial-cells-source/defaults.cpp'
+    initial_runtime='anadius-initial-cells-source/runtime.cpp'
+    initial_worker='anadius-initial-cells-source/worker.cpp'
+    native_context='anadius-native-context-source/context.cpp'
+    callback_policy='anadius-callback-policy-source/policy.cpp'
+    callback_admission='anadius-callback-admission-source/admission.cpp'
+    foreign_callback='anadius-foreign-callback-source/foreign.cpp'
+    startup_publication='anadius-startup-publication-source/publication.cpp'
+    shared_log='anadius-shared-log-source/stream.cpp'
+    callback_identity='anadius-callback-identity-source/identity.cpp'
+    callback_provider='anadius-callback-provider-source/provider.cpp'
+    original_provider='anadius-original-provider-source/originals.cpp'
+    original_checkpoint='anadius-original-checkpoint-source/checkpoint.cpp'
+    online_version='anadius-online-version-source/version.cpp'
+    online_object='anadius-online-object-source/object.cpp'
+    online_query='anadius-online-query-source/query.cpp'
+    config_defaults='anadius-config-defaults-source/defaults.cpp'
+    aggregate_teardown='anadius-config-defaults-source/teardown.cpp'
+    socket_move='anadius-socket-move-source/move.cpp'
+    session_owner='anadius-session-owner-source/owner.cpp'
+    session_dispose='anadius-session-dispose-source/dispose.cpp'
+    session_memory='anadius-session-memory-source/memory.cpp'
+    io_memory='anadius-io-memory-source/io_memory.cpp'
+    owned_server='anadius-owned-server-source/server.cpp'
+    native_async_accept='anadius-accept-source/accept.cpp'
+    owned_accept='anadius-accept-source/owned.cpp'
+    session_flow='anadius-session-flow-source/flow.cpp'
+    coherent_io='anadius-session-flow-source/coherent_io.cpp'
+    accept_helpers='anadius-accept-helpers-source/helpers.cpp'
+    accept_bindings='anadius-accept-helpers-source/bindings.cpp'
+    server_runtime='anadius-server-runtime-source/runtime.cpp'
+    server_runtime_resources='anadius-server-runtime-source/resources.cpp'
+    session_profile='anadius-session-profile-source/profile.cpp'
+    session_profile_strings='anadius-session-profile-source/strings.cpp'
+    native_profile='anadius-native-profile-source/native.cpp'
+    owned_deque='anadius-owned-deque-source/deque.cpp'
+    owned_environment='anadius-owned-environment-source/environment.cpp'
+    owned_jobs='anadius-owned-jobs-source/jobs.cpp'
+    owned_session_policy='anadius-session-policy-source/policy.cpp'
+    application_graph='anadius-application-graph-source/graph.cpp'
+    worker_handoff='anadius-worker-handoff-source/handoff.cpp'
+    application_worker='anadius-application-worker-source/worker.cpp'
+    accept_stop='anadius-accept-stop-source/stop.cpp'
+    configuration_factory='anadius-configuration-factory-source/factory.cpp'
+    configuration_key_processor='anadius-license-source/key_processor.cpp'
+    services_factory='anadius-services-factory-source/factory.cpp'
+    online_factory='anadius-online-factory-source/factory.cpp'
+    host_init='anadius-host-init-source/host_init.cpp'
+    host_hook_adapter='hook-engine-source/adapters.cpp'
+    preloader_hook_adapter='hook-engine-source/preloader_engine.cpp'
+    hook_api='hook-engine-source/api.cpp'
+    minhook_hooks='hook-engine-source/vendor/minhook/src/hook.c'
+    minhook_buffer='hook-engine-source/vendor/minhook/src/buffer.c'
+    minhook_trampoline='hook-engine-source/vendor/minhook/src/trampoline.c'
+    minhook_hde='hook-engine-source/vendor/minhook/src/hde/hde64.c'
+    registry='anadius-registry-source/registry.cpp'
+    native_callbacks='anadius-native-source/native_callbacks.cpp'
+    native_originals='anadius-native-source/original_effects.cpp'
+    preloader_native='preloader-native-source/native_shims.cpp'
+    host_callbacks='anadius-host-callbacks-source/callbacks.cpp'
+    connect_hook='anadius-network-hook-source/connect.cpp'
+    hook_cleanup='anadius-network-hook-source/hook_cleanup.cpp'
+    online='anadius-online-source/online.cpp'
+    online_effects='anadius-online-source/recovered_effects.cpp'
+    configuration='anadius-config-source/configuration.cpp'
+    execution='anadius-execution-source/execution.cpp'
+    execution_windows='anadius-execution-source/windows_platform.cpp'
+    libraries='anadius-libraries-source/libraries.cpp'
+    libraries_windows='anadius-libraries-source/native_system.cpp'
+    startup='anadius-startup-source/startup.cpp'
+    startup_windows='anadius-startup-source/windows_platform.cpp'
+    parser='anadius-parser-source/parser.cpp'
+    config_order='anadius-config-order-source/order.cpp'
+    config_pipeline='anadius-config-pipeline-source/pipeline.cpp'
+    config_hash='anadius-config-hash-source/hash_table.cpp'
+    config_application='anadius-config-application-source/application.cpp'
+    config_startup='anadius-config-startup-source/startup.cpp'
+    achievement_writer='anadius-achievement-writer-source/writer.cpp'
+    achievement_storage='anadius-achievement-storage-source/storage.cpp'
+    calendar='anadius-calendar-source/calendar.cpp'
+    timestamp='anadius-timestamp-source/timestamp.cpp'
+    achievement_utc='anadius-achievement-runtime-source/utc.cpp'
+    achievement_runtime='anadius-achievement-runtime-source/runtime.cpp'
+    event_queue='anadius-event-queue-source/queue.cpp'
+    event_queue_adapters='anadius-event-queue-source/adapters.cpp'
+    session_handler='anadius-session-source/handler.cpp'
+    session_routing='anadius-session-source/routing.cpp'
+    socket_operations='anadius-socket-source/operations.cpp'
+    socket_native='anadius-socket-source/native.cpp'
+    socket_acceptor='anadius-socket-source/acceptor.cpp'
+    socket_acceptor_native='anadius-socket-source/acceptor_native.cpp'
+    socket_lifecycle='anadius-socket-source/lifecycle.cpp'
+    socket_lifecycle_native='anadius-socket-source/lifecycle_native.cpp'
+    socket_close='anadius-socket-source/close.cpp'
+    socket_closing='anadius-socket-source/closing.cpp'
+    socket_cancellation='anadius-socket-source/cancellation.cpp'
+    socket_cancellation_native='anadius-socket-source/cancellation_native.cpp'
+    socket_recycle='anadius-socket-source/recycle.cpp'
+    socket_recycle_storage='anadius-socket-source/recycle_storage.cpp'
+    socket_service_registry='anadius-socket-source/service_registry.cpp'
+    socket_service_constructor='anadius-socket-source/service_constructor.cpp'
+    socket_service_constructor_native='anadius-socket-source/service_constructor_native.cpp'
+    socket_scheduler_registry='anadius-socket-source/scheduler_registry.cpp'
+    socket_iocp_constructor='anadius-socket-source/iocp_constructor.cpp'
+    socket_iocp_constructor_native='anadius-socket-source/iocp_constructor_native.cpp'
+    socket_worker_startup='anadius-socket-source/worker_startup.cpp'
+    socket_worker_startup_native='anadius-socket-source/worker_startup_native.cpp'
+    socket_worker_run='anadius-socket-source/worker_run.cpp'
+    socket_worker_run_native='anadius-socket-source/worker_run_native.cpp'
+    socket_completion_dispatcher='anadius-socket-source/completion_dispatcher.cpp'
+    socket_completion_dispatcher_native='anadius-socket-source/completion_dispatcher_native.cpp'
+    socket_posted_operation='anadius-socket-source/posted_operation.cpp'
+    socket_posted_operation_dispatch='anadius-socket-source/posted_operation_dispatch.cpp'
+    socket_io_completion='anadius-socket-source/io_completion.cpp'
+    socket_io_completion_dispatch='anadius-socket-source/io_completion_dispatch.cpp'
+    socket_handler_dispatch='anadius-socket-source/handler_dispatch.cpp'
+    socket_handler_dispatch_bridge='anadius-socket-source/handler_dispatch_bridge.cpp'
+    socket_composed_write='anadius-socket-source/composed_write.cpp'
+    socket_composed_write_native='anadius-socket-source/composed_write_native.cpp'
+    socket_environment_constructor='anadius-socket-source/environment_constructor.cpp'
+    socket_write_finish='anadius-socket-source/write_finish.cpp'
+    socket_queued_write='anadius-socket-source/queued_write.cpp'
+    socket_async_receive='anadius-socket-source/async_receive.cpp'
+    socket_receive_buffer='anadius-socket-source/receive_buffer.cpp'
+    socket_composed_read='anadius-socket-source/composed_read.cpp'
+    socket_frame_read='anadius-socket-source/frame_read.cpp'
+    socket_message_dispatch='anadius-socket-source/message_dispatch.cpp'
+    socket_response_dispatch='anadius-socket-source/response_dispatch.cpp'
+    socket_owned_response='anadius-socket-source/owned_response.cpp'
+    socket_response_containers='anadius-socket-source/response_containers.cpp'
+    socket_message_core_bridge='anadius-socket-source/message_core_bridge.cpp'
+    socket_request_mutation='anadius-socket-source/request_mutation.cpp'
+    socket_request_growth='anadius-socket-source/request_growth.cpp'
+    socket_response_hex='anadius-socket-source/response_hex.cpp'
+    socket_native_message='anadius-socket-source/native_message.cpp'
+    socket_append_growth='anadius-socket-source/append_growth.cpp'
+    socket_prefix_cipher='anadius-socket-source/prefix_cipher.cpp'
+    socket_cipher_session='anadius-socket-source/cipher_session.cpp'
+    socket_native_dispatch='anadius-socket-source/native_dispatch.cpp'
+    socket_native_document='anadius-socket-source/native_document.cpp'
+    socket_document_clear='anadius-socket-source/document_clear.cpp'
+    socket_node_delete='anadius-socket-source/node_delete.cpp'
+    socket_pool_release='anadius-socket-source/pool_release.cpp'
+    socket_pool_allocate='anadius-socket-source/pool_allocate.cpp'
+    socket_pool_append='anadius-socket-source/pool_append.cpp'
+    socket_pool_clear='anadius-socket-source/pool_clear.cpp'
+    socket_pool_destruct='anadius-socket-source/pool_destruct.cpp'
+    socket_node_base='anadius-socket-source/node_base.cpp'
+    socket_parse_entry='anadius-socket-source/parse_entry.cpp'
+    socket_document_error='anadius-socket-source/document_error.cpp'
+    socket_node_parse='anadius-socket-source/node_parse.cpp'
+    socket_node_identify='anadius-socket-source/node_identify.cpp'
+    socket_node_constructors='anadius-socket-source/node_constructors.cpp'
+    socket_node_insertion='anadius-socket-source/node_insertion.cpp'
+    socket_node_string='anadius-socket-source/node_string.cpp'
+    server='anadius-server-source/server.cpp'
+    messages='anadius-messages-source/messages.cpp'
+    handlers='anadius-handlers-source/handlers.cpp'
+    crypto='anadius-crypto-source/crypto.cpp'
+    xml_printer='anadius-xml-source/memory_printer.cpp'
+    xml_reader='anadius-xml-reader-source/reader.cpp'
+    tinyxml2_compat='anadius-xml-reader-source/vendor/tinyxml2/tinyxml2.cpp'
+    licensing='anadius-license-source/license.cpp'
+    hash='anadius-hash-source/hash.cpp'
+    token='anadius-token-source/token.cpp'
+    file_io='anadius-file-source/binary_io.cpp'
+    file_io_native='anadius-file-source/native_io.cpp'
+    license_files='anadius-file-source/license_files.cpp'
+    status='anadius-status-source/status.cpp'
+    status_native='anadius-status-source/native_status.cpp'
+    paths='anadius-path-source/paths.cpp'
+    encoding='anadius-encoding-source/encoding.cpp'
+    encoding_native='anadius-encoding-source/native_encoding.cpp'
+    windows_effects='anadius-windows-source/windows_effects.cpp'
+    content_handlers='anadius-content-handlers-source/content_handlers.cpp'
+    content_effects='anadius-content-effects-source/effects.cpp'
+    information_effects='anadius-information-effects-source/effects.cpp'
+    application_io='anadius-application-io-source/files.cpp'
+    licensing_effects='anadius-licensing-effects-source/effects.cpp'
+    application_effects='anadius-application-effects-source/factory.cpp'
+    bound_library='anadius-library-effects-source/bound.cpp'
+    resources_factory='anadius-resources-factory-source/factory.cpp'
+    resources_configuration='anadius-resources-factory-source/configuration.cpp'
+    module_reference='anadius-module-reference-source/reference.cpp'
+    permanent_errors='anadius-permanent-errors-source/errors.cpp'
+    initial_domain_factory='anadius-thread-domain-source/factory.cpp'
+    owned_engine='hook-engine-source/owned.cpp'
+    host_engine='anadius-host-platform-source/engine.cpp'
+    pre_unload='anadius-pre-unload-source/shutdown.cpp'
+    misc_handlers='anadius-misc-handlers-source/misc_handlers.cpp'
+    dispatch='anadius-dispatch-source/router.cpp'
+    preloader='preloader-source/preloader_core.cpp'
+}
+foreach($unit in $units.GetEnumerator()) {
+    $unitCompiler=$compiler
+    $unitFlags=@($flags)
+    if($unit.Value.EndsWith('.c')){$unitCompiler=$cCompiler;$unitFlags=@('-std=c17','-O2','-Wall','-Wextra','-Werror')}
+    $arguments=$unitFlags+@('-c',(Join-Path $outputs $unit.Value),'-o',(Join-Path $build ($unit.Key+'.o')))
+    $null=Invoke-Recorded $unitCompiler $arguments
+}
+$compatKeys=@('hook_api','minhook_hooks','minhook_buffer','minhook_trampoline','minhook_hde')
+$preloaderKeys=@('preloader','preloader_hook_adapter','preloader_native')
+$anadiusObjects=@($units.Keys | Where-Object {$_ -notin $compatKeys -and $_ -notin $preloaderKeys} | ForEach-Object {Join-Path $build ($_.ToString()+'.o')})
+$partialArchive=Join-Path $build 'anadius_core_partial.a'
+$null=Invoke-Recorded $archiver (@('rcs',$partialArchive)+$anadiusObjects)
+$null=Invoke-Recorded $archiver (@('rcs',(Join-Path $build 'preloader_core_partial.a'))+@($preloaderKeys | ForEach-Object {Join-Path $build ($_+'.o')}))
+$null=Invoke-Recorded $archiver (@('rcs',(Join-Path $build 'hook_engine_compat.a'))+@($compatKeys | ForEach-Object {Join-Path $build ($_+'.o')}))
+$tests=@(
+    @{name='bootstrap';file='anadius-source/bootstrap_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_threads';file='anadius-thread-source/thread_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_runtime';file='anadius-crt-runtime-source/runtime_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_errors';file='anadius-crt-error-source/error_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_ptd';file='anadius-crt-ptd-source/ptd_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_ptd_data';file='anadius-crt-ptd-data-source/ptd_data_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_heap';file='anadius-crt-heap-source/heap_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_realloc';file='anadius-crt-realloc-source/realloc_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_recalloc';file='anadius-crt-recalloc-source/recalloc_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_recalloc_bridge';file='anadius-crt-recalloc-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_conversion';file='anadius-crt-conversion-source/conversion_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_conversion_api';file='anadius-crt-conversion-api-source/api_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_conversion_bridge';file='anadius-crt-conversion-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_module_path';file='anadius-crt-module-path-source/module_path_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_find_native';file='anadius-crt-find-native-source/find_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_find_bridge';file='anadius-crt-find-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_update';file='anadius-crt-locale-update-source/locale_update_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_thread';file='anadius-crt-locale-thread-source/locale_thread_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_bridge';file='anadius-crt-locale-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_ref';file='anadius-crt-locale-ref-source/locale_ref_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_free';file='anadius-crt-locale-free-source/locale_free_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_resource_bridge';file='anadius-crt-locale-resource-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_multibyte_support';file='anadius-crt-multibyte-support-source/multibyte_support_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_multibyte_control';file='anadius-crt-multibyte-control-source/multibyte_control_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_multibyte_bridge';file='anadius-crt-multibyte-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_multibyte_tables';file='anadius-crt-multibyte-tables-source/multibyte_tables_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_multibyte_builder';file='anadius-crt-multibyte-builder-source/multibyte_builder_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_multibyte_record_bridge';file='anadius-crt-multibyte-record-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_string_type';file='anadius-crt-string-type-source/string_type_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_lcmap';file='anadius-crt-lcmap-source/lcmap_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_nls_bridge';file='anadius-crt-nls-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_names';file='anadius-crt-locale-names-source/locale_names_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_nls_dispatch';file='anadius-crt-nls-dispatch-source/nls_dispatch_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_nls_dispatch_bridge';file='anadius-crt-nls-dispatch-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_nls_native';file='anadius-crt-nls-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_nls_dispatch_native';file='anadius-crt-nls-dispatch-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_nls_native_bridge';file='anadius-crt-nls-native-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_heap_native';file='anadius-crt-heap-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_heap_native_bridge';file='anadius-crt-heap-native-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_fls_native';file='anadius-crt-fls-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_lock_native';file='anadius-crt-lock-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_atomic_native';file='anadius-crt-atomic-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_sync_bridge';file='anadius-crt-sync-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_counter_native';file='anadius-crt-counter-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_native';file='anadius-crt-locale-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_initial_locale';file='anadius-crt-initial-locale-source/initial_locale_data_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_initial_multibyte';file='anadius-crt-initial-multibyte-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_initial_state';file='anadius-crt-initial-state-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locale_startup';file='anadius-crt-locale-startup-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_environment_cleanup';file='anadius-crt-environment-cleanup-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_lifecycle_callbacks';file='anadius-crt-lifecycle-callbacks-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_pair_leaves';file='anadius-crt-pair-leaves-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_lowio_lifecycle';file='anadius-crt-lowio-lifecycle-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_pair_bindings';file='anadius-crt-pair-bindings-source/bindings_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_invalid';file='anadius-crt-invalid-source/invalid_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_glue';file='anadius-crt-glue-source/glue_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_cache';file='anadius-crt-cache-source/cache_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_onexit';file='anadius-crt-onexit-source/onexit_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_entry';file='anadius-crt-entry-source/entry_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_initializers';file='anadius-crt-initializers-source/initializer_tests.cpp';library='anadius_core_partial.a'},
+    @{name='vcrt_ptd';file='anadius-vcrt-ptd-source/vcrt_ptd_tests.cpp';library='anadius_core_partial.a'},
+    @{name='vcrt_api';file='anadius-vcrt-api-source/api_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_locks';file='anadius-crt-lock-source/lock_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_cpu';file='anadius-crt-cpu-source/cpu_tests.cpp';library='anadius_core_partial.a'},
+    @{name='vcrt_bridge';file='anadius-vcrt-bridge-source/bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_support';file='anadius-crt-support-source/support_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_environment';file='anadius-crt-environment-source/environment_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_termination';file='anadius-crt-termination-source/termination_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_startup_bridge';file='anadius-crt-startup-bridge-source/startup_bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_argv_parser';file='anadius-crt-argv-parser-source/parser_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_argv';file='anadius-crt-argv-source/argv_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_byteclass';file='anadius-crt-byteclass-source/byteclass_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_argv_bridge';file='anadius-crt-argv-bridge-source/argv_bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_wildcard_storage';file='anadius-crt-wildcard-storage-source/storage_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_wildcard_search';file='anadius-crt-wildcard-search-source/search_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_sort';file='anadius-crt-sort-source/sort_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crt_wildcard';file='anadius-crt-wildcard-source/wildcard_tests.cpp';library='anadius_core_partial.a'},
+    @{name='thread_native';file='anadius-thread-native-source/win32_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_native';file='anadius-bootstrap-native-source/native_entry_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_owner';file='anadius-bootstrap-owner-source/owner_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_owner_integration';file='anadius-bootstrap-owner-source/owner_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_backend';file='anadius-bootstrap-backend-source/backend_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_backend_integration';file='anadius-bootstrap-backend-source/backend_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_callbacks';file='anadius-bootstrap-runtime-source/callbacks_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_factory';file='anadius-bootstrap-runtime-source/factory_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_providers';file='anadius-bootstrap-providers-source/providers_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_providers_integration';file='anadius-bootstrap-providers-source/providers_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='thread_domain';file='anadius-thread-domain-source/domain_tests.cpp';library='anadius_core_partial.a'},
+    @{name='thread_domain_integration';file='anadius-thread-domain-source/domain_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_policies';file='anadius-bootstrap-policies-source/policies_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bootstrap_policies_integration';file='anadius-bootstrap-policies-source/policies_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='config_storage';file='anadius-config-storage-source/storage_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'b8-fixtures'))},
+    @{name='config_storage_integration';file='anadius-config-storage-source/storage_integration_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'b8-fixtures'))},
+    @{name='config_iteration';file='anadius-config-iteration-source/iteration_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'b9-fixtures'))},
+    @{name='config_iteration_integration';file='anadius-config-iteration-source/iteration_integration_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'b9-fixtures'))},
+    @{name='services_completion';file='anadius-services-completion-source/completion_tests.cpp';library='anadius_core_partial.a'},
+    @{name='services_completion_integration';file='anadius-services-completion-source/completion_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='config_logging';file='anadius-config-logging-source/logging_tests.cpp';library='anadius_core_partial.a'},
+    @{name='config_logging_integration';file='anadius-config-logging-source/logging_integration_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'b11-fixtures'))},
+    @{name='library_effects';file='anadius-library-effects-source/effects_tests.cpp';library='anadius_core_partial.a'},
+    @{name='library_effects_integration';file='anadius-library-effects-source/effects_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_platform';file='anadius-online-platform-source/platform_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_platform_integration';file='anadius-online-platform-source/platform_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='host_platform';file='anadius-host-platform-source/platform_tests.cpp';library='anadius_core_partial.a'},
+    @{name='host_platform_integration';file='anadius-host-platform-source/platform_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='source_stop';file='anadius-host-platform-source/source_stop_tests.cpp';library='anadius_core_partial.a'},
+    @{name='initial_cells';file='anadius-initial-cells-source/defaults_tests.cpp';library='anadius_core_partial.a'},
+    @{name='native_context';file='anadius-native-context-source/context_tests.cpp';library='anadius_core_partial.a'},
+    @{name='native_context_integration';file='anadius-native-context-source/context_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='callback_policy';file='anadius-callback-policy-source/policy_tests.cpp';library='anadius_core_partial.a'},
+    @{name='callback_policy_integration';file='anadius-callback-policy-source/policy_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='callback_admission';file='anadius-callback-admission-source/admission_tests.cpp';library='anadius_core_partial.a'},
+    @{name='callback_admission_integration';file='anadius-callback-admission-source/admission_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='foreign_callback';file='anadius-foreign-callback-source/foreign_tests.cpp';library='anadius_core_partial.a'},
+    @{name='foreign_callback_integration';file='anadius-foreign-callback-source/foreign_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='startup_publication';file='anadius-startup-publication-source/publication_tests.cpp';library='anadius_core_partial.a'},
+    @{name='startup_publication_integration';file='anadius-startup-publication-source/publication_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='shared_log';file='anadius-shared-log-source/stream_tests.cpp';library='anadius_core_partial.a'},
+    @{name='shared_log_integration';file='anadius-shared-log-source/stream_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='callback_identity';file='anadius-callback-identity-source/identity_tests.cpp';library='anadius_core_partial.a'},
+    @{name='callback_identity_integration';file='anadius-callback-identity-source/identity_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='callback_provider';file='anadius-callback-provider-source/provider_tests.cpp';library='anadius_core_partial.a'},
+    @{name='callback_provider_integration';file='anadius-callback-provider-source/provider_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='original_provider';file='anadius-original-provider-source/originals_tests.cpp';library='anadius_core_partial.a'},
+    @{name='original_provider_integration';file='anadius-original-provider-source/originals_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='original_checkpoint';file='anadius-original-checkpoint-source/checkpoint_tests.cpp';library='anadius_core_partial.a'},
+    @{name='original_checkpoint_integration';file='anadius-original-checkpoint-source/checkpoint_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_version';file='anadius-online-version-source/version_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_version_integration';file='anadius-online-version-source/version_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_object';file='anadius-online-object-source/object_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_object_integration';file='anadius-online-object-source/object_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_query';file='anadius-online-query-source/query_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_application_queries';file='anadius-online-query-source/application_queries_tests.cpp';library='anadius_core_partial.a'},
+    @{name='content_effects';file='anadius-content-effects-source/effects_tests.cpp';library='anadius_core_partial.a'},
+    @{name='information_effects';file='anadius-information-effects-source/effects_tests.cpp';library='anadius_core_partial.a'},
+    @{name='licensing_effects';file='anadius-licensing-effects-source/effects_tests.cpp';library='anadius_core_partial.a'},
+    @{name='application_effects';file='anadius-application-effects-source/factory_tests.cpp';library='anadius_core_partial.a'},
+    @{name='bound_library';file='anadius-library-effects-source/bound_tests.cpp';library='anadius_core_partial.a'},
+    @{name='resources_factory';file='anadius-resources-factory-source/factory_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_query_integration';file='anadius-online-query-source/query_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='config_defaults';file='anadius-config-defaults-source/defaults_tests.cpp';library='anadius_core_partial.a'},
+    @{name='aggregate_teardown';file='anadius-config-defaults-source/teardown_tests.cpp';library='anadius_core_partial.a'},
+    @{name='observed_runtime';file='anadius-bootstrap-runtime-source/observed_runtime_tests.cpp';library='anadius_core_partial.a'},
+    @{name='config_defaults_integration';file='anadius-config-defaults-source/defaults_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_move';file='anadius-socket-move-source/move_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_move_integration';file='anadius-socket-move-source/move_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_owner';file='anadius-session-owner-source/owner_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_owner_integration';file='anadius-session-owner-source/owner_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_dispose';file='anadius-session-dispose-source/dispose_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_dispose_integration';file='anadius-session-dispose-source/dispose_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_memory';file='anadius-session-memory-source/memory_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_memory_integration';file='anadius-session-memory-source/memory_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='io_memory';file='anadius-io-memory-source/io_memory_tests.cpp';library='anadius_core_partial.a'},
+    @{name='io_memory_integration';file='anadius-io-memory-source/io_memory_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='owned_server';file='anadius-owned-server-source/server_tests.cpp';library='anadius_core_partial.a'},
+    @{name='owned_server_integration';file='anadius-owned-server-source/server_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='async_accept';file='anadius-accept-source/accept_tests.cpp';library='anadius_core_partial.a'},
+    @{name='async_accept_integration';file='anadius-accept-source/accept_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_flow';file='anadius-session-flow-source/flow_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_flow_integration';file='anadius-session-flow-source/flow_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='async_accept_helpers';file='anadius-accept-helpers-source/helpers_tests.cpp';library='anadius_core_partial.a'},
+    @{name='async_accept_helpers_integration';file='anadius-accept-helpers-source/helpers_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='server_runtime';file='anadius-server-runtime-source/runtime_tests.cpp';library='anadius_core_partial.a'},
+    @{name='server_runtime_integration';file='anadius-server-runtime-source/runtime_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_profile';file='anadius-session-profile-source/profile_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_profile_integration';file='anadius-session-profile-source/profile_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='native_profile';file='anadius-native-profile-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='native_profile_integration';file='anadius-native-profile-source/native_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='owned_deque';file='anadius-owned-deque-source/deque_tests.cpp';library='anadius_core_partial.a'},
+    @{name='owned_deque_integration';file='anadius-owned-deque-source/deque_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='owned_environment';file='anadius-owned-environment-source/environment_tests.cpp';library='anadius_core_partial.a'},
+    @{name='owned_environment_integration';file='anadius-owned-environment-source/environment_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='owned_jobs';file='anadius-owned-jobs-source/jobs_tests.cpp';library='anadius_core_partial.a'},
+    @{name='owned_jobs_integration';file='anadius-owned-jobs-source/jobs_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_policy';file='anadius-session-policy-source/policy_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_policy_integration';file='anadius-session-policy-source/policy_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='application_graph';file='anadius-application-graph-source/graph_tests.cpp';library='anadius_core_partial.a'},
+    @{name='application_graph_integration';file='anadius-application-graph-source/graph_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='worker_handoff';file='anadius-worker-handoff-source/handoff_tests.cpp';library='anadius_core_partial.a'},
+    @{name='worker_handoff_integration';file='anadius-worker-handoff-source/handoff_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='application_worker';file='anadius-application-worker-source/worker_tests.cpp';library='anadius_core_partial.a'},
+    @{name='application_worker_integration';file='anadius-application-worker-source/worker_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='accept_stop';file='anadius-accept-stop-source/stop_tests.cpp';library='anadius_core_partial.a'},
+    @{name='accept_stop_integration';file='anadius-accept-stop-source/stop_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_stop';file='anadius-session-stop-source/session_stop_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_stop_integration';file='anadius-session-stop-source/session_stop_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='application_admission';file='anadius-application-admission-source/admission_tests.cpp';library='anadius_core_partial.a'},
+    @{name='application_admission_integration';file='anadius-application-admission-source/admission_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='configuration_factory';file='anadius-configuration-factory-source/factory_tests.cpp';library='anadius_core_partial.a'},
+    @{name='configuration_factory_integration';file='anadius-configuration-factory-source/factory_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='configuration_key_processor';file='anadius-license-source/key_processor_tests.cpp';library='anadius_core_partial.a'},
+    @{name='configuration_key_binding';file='anadius-license-source/key_binding_tests.cpp';library='anadius_core_partial.a'},
+    @{name='achievement_path_binding';file='anadius-achievement-storage-source/path_binding_tests.cpp';library='anadius_core_partial.a'},
+    @{name='services_factory';file='anadius-services-factory-source/factory_tests.cpp';library='anadius_core_partial.a'},
+    @{name='services_factory_integration';file='anadius-services-factory-source/factory_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_factory';file='anadius-online-factory-source/factory_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online_factory_integration';file='anadius-online-factory-source/factory_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='host_init';file='anadius-host-init-source/host_init_tests.cpp';library='anadius_core_partial.a'},
+    @{name='hook_adapters';file='hook-engine-source/adapter_tests.cpp';libraries=@('anadius_core_partial.a','preloader_core_partial.a','hook_engine_compat.a')},
+    @{name='registry';file='anadius-registry-source/registry_tests.cpp';library='anadius_core_partial.a'},
+    @{name='native_callbacks';file='anadius-native-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='preloader_native';file='preloader-native-source/mock_tests.cpp';library='preloader_core_partial.a'},
+    @{name='host_callbacks';file='anadius-host-callbacks-source/callbacks_tests.cpp';library='anadius_core_partial.a'},
+    @{name='network_hooks';file='anadius-network-hook-source/hook_tests.cpp';library='anadius_core_partial.a'},
+    @{name='online';file='anadius-online-source/online_tests.cpp';library='anadius_core_partial.a'},
+    @{name='configuration';file='anadius-config-source/configuration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='execution';file='anadius-execution-source/execution_tests.cpp';library='anadius_core_partial.a'},
+    @{name='libraries';file='anadius-libraries-source/libraries_tests.cpp';library='anadius_core_partial.a'},
+    @{name='startup';file='anadius-startup-source/startup_tests.cpp';library='anadius_core_partial.a'},
+    @{name='parser';file='anadius-parser-source/parser_tests.cpp';library='anadius_core_partial.a'},
+    @{name='config_order';file='anadius-config-order-source/order_tests.cpp';library='anadius_core_partial.a'},
+    @{name='config_pipeline';file='anadius-config-pipeline-source/pipeline_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'config-pipeline-fixtures'))},
+    @{name='config_hash';file='anadius-config-hash-source/hash_table_tests.cpp';library='anadius_core_partial.a'},
+    @{name='config_application';file='anadius-config-application-source/application_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'config-application-fixtures'))},
+    @{name='config_startup';file='anadius-config-startup-source/startup_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'config-startup-fixtures'))},
+    @{name='achievement_writer';file='anadius-achievement-writer-source/writer_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'achievement-writer-fixtures'))},
+    @{name='achievement_storage';file='anadius-achievement-storage-source/storage_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'achievement-storage-fixtures'))},
+    @{name='calendar';file='anadius-calendar-source/calendar_tests.cpp';library='anadius_core_partial.a'},
+    @{name='timestamp';file='anadius-timestamp-source/timestamp_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'timestamp-fixtures'))},
+    @{name='utc';file='anadius-achievement-runtime-source/utc_tests.cpp';library='anadius_core_partial.a'},
+    @{name='achievement_runtime';file='anadius-achievement-runtime-source/runtime_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'achievement-runtime-fixtures'))},
+    @{name='event_queue';file='anadius-event-queue-source/queue_tests.cpp';library='anadius_core_partial.a'},
+    @{name='event_queue_integration';file='anadius-event-queue-source/integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_handler';file='anadius-session-source/handler_tests.cpp';library='anadius_core_partial.a'},
+    @{name='session_integration';file='anadius-session-source/session_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_operations';file='anadius-socket-source/operations_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_native';file='anadius-socket-source/native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_acceptor';file='anadius-socket-source/acceptor_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_acceptor_native';file='anadius-socket-source/acceptor_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_lifecycle';file='anadius-socket-source/lifecycle_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_lifecycle_native';file='anadius-socket-source/lifecycle_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_close';file='anadius-socket-source/close_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_closing';file='anadius-socket-source/closing_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_cancellation';file='anadius-socket-source/cancellation_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_cancellation_native';file='anadius-socket-source/cancellation_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_recycle';file='anadius-socket-source/recycle_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_recycle_storage';file='anadius-socket-source/recycle_storage_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_service_registry';file='anadius-socket-source/service_registry_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_service_registry_integration';file='anadius-socket-source/service_registry_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_service_constructor';file='anadius-socket-source/service_constructor_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_service_constructor_native';file='anadius-socket-source/service_constructor_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_scheduler_registry';file='anadius-socket-source/scheduler_registry_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_scheduler_registry_integration';file='anadius-socket-source/scheduler_registry_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_iocp_constructor';file='anadius-socket-source/iocp_constructor_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_iocp_constructor_native';file='anadius-socket-source/iocp_constructor_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_worker_startup';file='anadius-socket-source/worker_startup_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_worker_startup_native';file='anadius-socket-source/worker_startup_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_worker_run';file='anadius-socket-source/worker_run_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_worker_run_native';file='anadius-socket-source/worker_run_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_completion_dispatcher';file='anadius-socket-source/completion_dispatcher_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_completion_dispatcher_native';file='anadius-socket-source/completion_dispatcher_native_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_posted_operation';file='anadius-socket-source/posted_operation_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_posted_operation_integration';file='anadius-socket-source/posted_operation_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_io_completion';file='anadius-socket-source/io_completion_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_io_completion_integration';file='anadius-socket-source/io_completion_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_handler_dispatch';file='anadius-socket-source/handler_dispatch_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_handler_dispatch_integration';file='anadius-socket-source/handler_dispatch_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_composed_write';file='anadius-socket-source/composed_write_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_composed_write_integration';file='anadius-socket-source/composed_write_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_environment_constructor';file='anadius-socket-source/environment_constructor_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_environment_constructor_integration';file='anadius-socket-source/environment_constructor_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_write_finish';file='anadius-socket-source/write_finish_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_write_finish_integration';file='anadius-socket-source/write_finish_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_queued_write';file='anadius-socket-source/queued_write_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_queued_write_integration';file='anadius-socket-source/queued_write_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_async_receive';file='anadius-socket-source/async_receive_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_async_receive_integration';file='anadius-socket-source/async_receive_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_receive_buffer';file='anadius-socket-source/receive_buffer_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_receive_buffer_integration';file='anadius-socket-source/receive_buffer_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_composed_read';file='anadius-socket-source/composed_read_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_composed_read_integration';file='anadius-socket-source/composed_read_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_frame_read';file='anadius-socket-source/frame_read_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_frame_read_integration';file='anadius-socket-source/frame_read_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_message_dispatch';file='anadius-socket-source/message_dispatch_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_message_dispatch_integration';file='anadius-socket-source/message_dispatch_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_response_dispatch';file='anadius-socket-source/response_dispatch_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_response_dispatch_integration';file='anadius-socket-source/response_dispatch_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_owned_response';file='anadius-socket-source/owned_response_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_owned_response_integration';file='anadius-socket-source/owned_response_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_response_containers';file='anadius-socket-source/response_containers_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_response_containers_integration';file='anadius-socket-source/response_containers_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_message_core_bridge';file='anadius-socket-source/message_core_bridge_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_message_core_bridge_integration';file='anadius-socket-source/message_core_bridge_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_request_mutation';file='anadius-socket-source/request_mutation_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_request_mutation_integration';file='anadius-socket-source/request_mutation_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_request_growth';file='anadius-socket-source/request_growth_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_request_growth_integration';file='anadius-socket-source/request_growth_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_response_hex';file='anadius-socket-source/response_hex_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_response_hex_integration';file='anadius-socket-source/response_hex_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_native_message';file='anadius-socket-source/native_message_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_native_message_integration';file='anadius-socket-source/native_message_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_append_growth';file='anadius-socket-source/append_growth_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_append_growth_integration';file='anadius-socket-source/append_growth_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_prefix_cipher';file='anadius-socket-source/prefix_cipher_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_prefix_cipher_integration';file='anadius-socket-source/prefix_cipher_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_cipher_session';file='anadius-socket-source/cipher_session_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_cipher_session_integration';file='anadius-socket-source/cipher_session_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_native_dispatch';file='anadius-socket-source/native_dispatch_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_native_dispatch_integration';file='anadius-socket-source/native_dispatch_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_native_document';file='anadius-socket-source/native_document_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_native_document_integration';file='anadius-socket-source/native_document_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_document_clear';file='anadius-socket-source/document_clear_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_document_clear_integration';file='anadius-socket-source/document_clear_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_delete';file='anadius-socket-source/node_delete_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_delete_integration';file='anadius-socket-source/node_delete_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_release';file='anadius-socket-source/pool_release_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_release_integration';file='anadius-socket-source/pool_release_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_allocate';file='anadius-socket-source/pool_allocate_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_allocate_integration';file='anadius-socket-source/pool_allocate_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_append';file='anadius-socket-source/pool_append_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_append_integration';file='anadius-socket-source/pool_append_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_clear';file='anadius-socket-source/pool_clear_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_clear_integration';file='anadius-socket-source/pool_clear_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_destruct';file='anadius-socket-source/pool_destruct_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_pool_destruct_integration';file='anadius-socket-source/pool_destruct_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_base';file='anadius-socket-source/node_base_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_base_integration';file='anadius-socket-source/node_base_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_parse_entry';file='anadius-socket-source/parse_entry_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_parse_entry_integration';file='anadius-socket-source/parse_entry_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_document_error';file='anadius-socket-source/document_error_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_document_error_integration';file='anadius-socket-source/document_error_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_parse';file='anadius-socket-source/node_parse_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_parse_integration';file='anadius-socket-source/node_parse_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_identify';file='anadius-socket-source/node_identify_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_identify_integration';file='anadius-socket-source/node_identify_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_constructors';file='anadius-socket-source/node_constructors_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_constructors_integration';file='anadius-socket-source/node_constructors_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_insertion';file='anadius-socket-source/node_insertion_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_insertion_integration';file='anadius-socket-source/node_insertion_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_string';file='anadius-socket-source/node_string_tests.cpp';library='anadius_core_partial.a'},
+    @{name='socket_node_string_integration';file='anadius-socket-source/node_string_integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='server';file='anadius-server-source/server_tests.cpp';library='anadius_core_partial.a'},
+    @{name='messages';file='anadius-messages-source/messages_tests.cpp';library='anadius_core_partial.a'},
+    @{name='handlers';file='anadius-handlers-source/handlers_tests.cpp';library='anadius_core_partial.a'},
+    @{name='crypto';file='anadius-crypto-source/crypto_tests.cpp';library='anadius_core_partial.a'},
+    @{name='xml_printer';file='anadius-xml-source/printer_tests.cpp';library='anadius_core_partial.a'},
+    @{name='xml_reader';file='anadius-xml-reader-source/reader_tests.cpp';library='anadius_core_partial.a'},
+    @{name='licensing';file='anadius-license-source/license_tests.cpp';library='anadius_core_partial.a'},
+    @{name='hash';file='anadius-hash-source/hash_tests.cpp';library='anadius_core_partial.a'},
+    @{name='token';file='anadius-token-source/token_tests.cpp';library='anadius_core_partial.a'},
+    @{name='file_io';file='anadius-file-source/binary_io_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'file-io-fixtures'))},
+    @{name='license_files';file='anadius-file-source/license_files_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'file-io-fixtures'))},
+    @{name='status';file='anadius-status-source/status_tests.cpp';library='anadius_core_partial.a'},
+    @{name='paths';file='anadius-path-source/path_tests.cpp';library='anadius_core_partial.a'},
+    @{name='encoding';file='anadius-encoding-source/encoding_tests.cpp';library='anadius_core_partial.a'},
+    @{name='windows_effects';file='anadius-windows-source/windows_tests.cpp';library='anadius_core_partial.a';arguments=@((Join-Path $build 'windows-fixtures'))},
+    @{name='content_handlers';file='anadius-content-handlers-source/content_handlers_tests.cpp';library='anadius_core_partial.a'},
+    @{name='misc_handlers';file='anadius-misc-handlers-source/misc_handlers_tests.cpp';library='anadius_core_partial.a'},
+    @{name='dispatch';file='anadius-dispatch-source/integration_tests.cpp';library='anadius_core_partial.a'},
+    @{name='preloader';file='preloader-source/mock_tests.cpp';library='preloader_core_partial.a'}
+)
+$ownedReferenceFixture=Join-Path $build 'owned_reference_fixture.dll'
+$null=Invoke-Recorded $compiler (@($flags)+@('-shared','-static',(Join-Path $outputs 'anadius-module-reference-source/fixture.cpp'),'-o',$ownedReferenceFixture))
+$tests+=@(@{name='module_reference';file='anadius-module-reference-source/reference_tests.cpp';library='anadius_core_partial.a';arguments=@($ownedReferenceFixture)})
+$tests+=@(@{name='permanent_errors';file='anadius-permanent-errors-source/errors_tests.cpp';library='anadius_core_partial.a'})
+$tests+=@(@{name='initial_domain_factory';file='anadius-thread-domain-source/factory_tests.cpp';library='anadius_core_partial.a'})
+$tests+=@(@{name='owned_engine';file='hook-engine-source/owned_tests.cpp';library='anadius_core_partial.a'})
+$tests+=@(@{name='pre_unload';file='anadius-pre-unload-source/shutdown_tests.cpp';library='anadius_core_partial.a'})
+$results=foreach($test in $tests) {
+    $executable=Join-Path $build ($test.name+'_mock_tests.exe')
+    $testLibraries=@($test.library)
+    if($test.ContainsKey('libraries')){$testLibraries=@($test.libraries)}
+    $arguments=@($flags)+@('-static',(Join-Path $outputs $test.file))+@($testLibraries | ForEach-Object {Join-Path $build $_})+@('-lws2_32','-lmswsock','-o',$executable)
+    $null=Invoke-Recorded $compiler $arguments
+    $runArguments=@()
+    if($test.ContainsKey('arguments')){$runArguments=@($test.arguments)}
+    $testOutput=Invoke-Recorded $executable $runArguments
+    [ordered]@{module=$test.name;result='PASS';output=$testOutput -join "`n";executable_sha256=(Get-FileHash -LiteralPath $executable).Hash.ToLowerInvariant()}
+}
+$terminalResults=@(foreach($suite in @(
+    @{name='native_callbacks';modes=[ordered]@{'--closed'=86;'--missing'=86;'--throw-original'=86}},
+    @{name='preloader_native';modes=[ordered]@{'--unconfigured'=94;'--unbound-next'=70;'--unbound-mutex'=70;'--unbound-query'=70;'--unbound-entry'=70;'--escaped'=93;'--rebind'=71;'--closed'=70}},
+    @{name='bootstrap_native';modes=[ordered]@{'--unconfigured'=84;'--closed'=83;'--throw-worker'=83;'--terminate'=83}},
+    @{name='crt_fls_native';modes=[ordered]@{'--open-binding'=88;'--callback-sentinel'=88;'--callback-throw'=88}},
+    @{name='crt_lock_native';modes=[ordered]@{'--live-bank'=88}}
+)) {
+    $executable=Join-Path $build ($suite.name+'_mock_tests.exe')
+    foreach($case in $suite.modes.GetEnumerator()) {
+        $commands.Add([ordered]@{program=$executable;arguments=@($case.Key);expected_exit=$case.Value;scope='synthetic test-only terminal boundary'})
+        $caseOutput=& $executable $case.Key 2>&1
+        $code=$LASTEXITCODE
+        if($code -ne $case.Value){throw ('Unexpected terminal policy exit '+$suite.name+' '+$case.Key+': '+$code+' '+($caseOutput -join "`n"))}
+        [ordered]@{suite=$suite.name;mode=$case.Key;expected_exit=$case.Value;actual_exit=$code;result='PASS'}
+    }
+})
+$fixtureScript=Join-Path $outputs 'hook-engine-source/build-fixture-tests.ps1'
+$fixtureOutput=Invoke-Recorded $fixtureScript @((Split-Path -Parent $compiler))
+$fixtureRecord=Get-Content -LiteralPath (Join-Path $outputs 'hook-engine-source/fixture-validation.json') -Raw | ConvertFrom-Json
+if($fixtureRecord.result -ne 'PASS'){throw 'Hook engine fixture checks failed'}
+foreach($command in $fixtureRecord.commands){$commands.Add([ordered]@{program=$command.executable;arguments=@($command.arguments);scope='test-only compile-time API redirection'})}
+$results=@($results)+@([ordered]@{module='hook_engine_fixtures';result='PASS';output=$fixtureOutput -join "`n";executable_sha256=$fixtureRecord.executable.sha256;validation='../hook-engine-source/fixture-validation.json'})
+$record=[ordered]@{
+    checked_at=(Get-Date).ToUniversalTime().ToString('o')
+    compiler=(& $compiler --version | Select-Object -First 1)
+    compiler_sha256=(Get-FileHash -LiteralPath $compiler).Hash.ToLowerInvariant()
+    c_compiler_sha256=(Get-FileHash -LiteralPath $cCompiler).Hash.ToLowerInvariant()
+    archiver_sha256=(Get-FileHash -LiteralPath $archiver).Hash.ToLowerInvariant()
+    result='PASS';native_objects=$units.Count
+    cpp_objects=@($units.Values | Where-Object { $_.EndsWith('.cpp') }).Count
+    c_objects=@($units.Values | Where-Object { $_.EndsWith('.c') }).Count
+    mock_test_suites=$tests.Count+1
+    terminal_boundary_cases=@($terminalResults)
+    deliverable_kind='two partial static archives and one pinned upstream hook compatibility archive; not standalone replacement DLLs'
+    original_target_execution='none';native_adapters_executed=$true
+    native_execution_scope='File IO/status/encoding on generated fixtures and strings; NLS/CP/conversion/type/Ex/W/LCID APIs on synthetic strings with system-only module resolution; real heap APIs on small owned blocks and through recovered malloc/realloc/recalloc/error/NLS paths, observed SDK wrappers inject failure cases; one FLS binding executes real current-thread and own joined-thread PTD destruction through native heap, with injected failures and controlled locale refs/locks/atomic/globals; native CS/Interlocked integration tests4simultaneous own FLS/PTD workers through recovered ACRT/VCRT resolvers, with owned controlled locale/global identities and partial bank rollback; native locale-resource tests use actual ref/free/global-thread replacement sources on133owned blocks and18typedLONG tree counters, with4workers and quiescent deepfree; original initial/global/default image construction remains unproven; other FLS/locks/new-handler/atomic/scratch/global contexts remain controlled; native shims use synthetic SDK originals plus own LastError TLS metadata/test worker; find/module-path adapters use typed synthetic Win32 functions and owned records/scratch; selected engine fixture uses fake Win32; original targets never executed'
+    runtime_equivalence='not established';results=@($results);commands=@($commands)
+    archives=@('anadius_core_partial.a','preloader_core_partial.a','hook_engine_compat.a') | ForEach-Object {
+        $path=Join-Path $build $_
+        [ordered]@{file=$_;bytes=(Get-Item -LiteralPath $path).Length;sha256=(Get-FileHash -LiteralPath $path).Hash.ToLowerInvariant()}
+    }
+}
+$record | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $PSScriptRoot 'build-record.json') -Encoding UTF8
+[pscustomobject]$record | Select-Object result,native_objects,mock_test_suites,results | ConvertTo-Json -Depth 5

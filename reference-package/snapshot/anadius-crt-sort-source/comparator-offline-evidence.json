@@ -1,0 +1,23 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Direct bounded offline byte read/disassembly after exact SHA check; not a REA Evidence record",
+  "function_inventory_scope": "06e41c is absent as an entry in the retained Ghidra-defined function inventory; no new Ghidra function count claimed",
+  "va": "0x18006e41c",
+  "end_exclusive": "0x18006e42e",
+  "bytes": 18,
+  "section": ".text",
+  "file_offset": 448540,
+  "hex": "483bca730483c8ffc333c0483bca0f97c0c3",
+  "range_sha256": "65edb74eba91137966a46fd4f1f4dc3b85f8fab4fc9d2638a917bac72894f115",
+  "tool": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\llvm-objdump.exe",
+  "tool_sha256": "c21f18afa9d9679941df90e957f584c50762e03505dcfbe1be1736d5a494277d",
+  "arguments": [
+    "-d",
+    "--start-address=0x18006e41c",
+    "--stop-address=0x18006e42e",
+    "C:\\Users\\Skysect\\Downloads\\anadius64.dll"
+  ],
+  "observation": "CMP RCX,RDX; unsigned JAE/SETA; returns EAX -1/0/1; neither argument is dereferenced",
+  "target_execution": "none",
+  "limitations": "Normal valid inputs; no instruction-level execution, CFG/ABI/runtime equivalence claim"
+}

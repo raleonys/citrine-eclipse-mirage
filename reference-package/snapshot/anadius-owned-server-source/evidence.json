@@ -1,0 +1,82 @@
+{
+  "schema": "owned-server.composition-evidence.v1",
+  "source_package": "B35",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "functions": [],
+  "reused_normal_source_evidence": [
+    {
+      "path": "anadius-session-owner-source/evidence.json",
+      "sha256": "2ed47df47d12dfb1c4d554a39f0cf1a47cbc833090497738c3319d6f8a6e8471"
+    },
+    {
+      "path": "anadius-session-dispose-source/evidence.json",
+      "sha256": "c3aeb6fc97f0fb44becdb9676ddd75bd097e21a9c8d6c102acdf84d9ebb8b4eb"
+    },
+    {
+      "path": "anadius-session-memory-source/evidence.json",
+      "sha256": "3adaa94c58a6c556f69316ecca18b3df051c7c05bbb1abde2853255c0a35b56f"
+    },
+    {
+      "path": "anadius-io-memory-source/evidence.json",
+      "sha256": "2d4426dc4ff96927c784fb4153cbe4abd68933efe83c7dc319295c90183a6eb1"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.cpp",
+      "sha256": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952"
+    }
+  ],
+  "reused_source_algorithms": [
+    "029ea0",
+    "024480",
+    "024990",
+    "0228e0",
+    "0211b0",
+    "024db0",
+    "026fb0",
+    "026e50",
+    "023000",
+    "022e40",
+    "0298b0",
+    "027c10",
+    "027120",
+    "026570",
+    "017420",
+    "026290"
+  ],
+  "modified_prior_sources": [],
+  "quick": [
+    {
+      "path": "work/b35-core-quick-results.json",
+      "sha256": "83152897661a7871e8cec0c65f4682a5ad68507dd0b08f613e79c9abb539a93c",
+      "checks": 24,
+      "executable_sha256": "176e06b7f65554539d897154b20ed3576434f4c35ff156ee7d3d440f14759ef5",
+      "archive_sha256_as_used": "dcbae963e22cff6e9069ae243910426f3557d6a8d95f6636a5b211d9c5104bf5",
+      "note": "Fresh B35 server.cpp compiled explicitly before actual recorded B34/core archive; retain exact archive hash as used, never infer current canonical source or native equivalence from it"
+    },
+    {
+      "path": "work/b35-integration-quick-results.json",
+      "sha256": "c0faa56b9bde4f24cf1ffb4523007ba953c3507d0f51228c441a9adb6bb44deb",
+      "checks": 122,
+      "executable_sha256": "27b5812937009c8c3a3de11e412f1e79b9b3717472171711f38e1d040978eb8a",
+      "archive_sha256_as_used": "dcbae963e22cff6e9069ae243910426f3557d6a8d95f6636a5b211d9c5104bf5",
+      "note": "Fresh B35 server.cpp compiled explicitly before actual recorded B34/core archive; retain exact archive hash as used, never infer current canonical source or native equivalence from it"
+    }
+  ],
+  "source_claim": "Selected host context/server/admission source composition only;0241b0/021b00/0271a0 native bodies are not recovered by this package",
+  "retained_REA_session": {
+    "path": "outputs/anadius-owned-server-source/rea-session-summary.json",
+    "sha256": "2cf0a18e5c12a83fdc80639b5379155ba7a2a3ae4757d7cc4a2d76d593d9dac5",
+    "fresh_target_queries": 0
+  },
+  "object_freeze_check": {
+    "path": "outputs/anadius-owned-server-source/object-freeze-check.json",
+    "sha256": "dab3b55d1ca362724a635f14a75a8d506ca7cadf3be25e7d92b6b0480582ac0a",
+    "scope": "Every byte equals a fresh final-source AMD64 COFF compile except header TimeDateStamp bytes4..7; interrupted predecessor not current"
+  },
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "new_original_bytes_queried": 0
+}

@@ -1,0 +1,246 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "dispatcher_va": "0x180032d00",
+  "source_design": "new integration layer; not a recovered original function",
+  "registered_names": 39,
+  "unique_rvas": 33,
+  "source_bodies": 33,
+  "unrecovered_handler_bodies": 0,
+  "licensing_subsystems": "file/hash/token/online/UI/exit adapters remain mandatory",
+  "routes": [
+    {
+      "command": "GetConfig",
+      "rva": "0x02e5f0",
+      "va": "0x18002e5f0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetProfile",
+      "rva": "0x02f530",
+      "va": "0x18002f530",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetInternetConnectedState",
+      "rva": "0x02f2d0",
+      "va": "0x18002f2d0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetSetting",
+      "rva": "0x02f7c0",
+      "va": "0x18002f7c0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetSettings",
+      "rva": "0x02fa60",
+      "va": "0x18002fa60",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "QueryContent",
+      "rva": "0x030ee0",
+      "va": "0x180030ee0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "QueryEntitlements",
+      "rva": "0x031030",
+      "va": "0x180031030",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "QueryOffers",
+      "rva": "0x031ec0",
+      "va": "0x180031ec0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetGameInfo",
+      "rva": "0x02efd0",
+      "va": "0x18002efd0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetAllGameInfo",
+      "rva": "0x02da90",
+      "va": "0x18002da90",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "QueryImage",
+      "rva": "0x0314f0",
+      "va": "0x1800314f0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GoOnline",
+      "rva": "0x02ffb0",
+      "va": "0x18002ffb0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetAuthCode",
+      "rva": "0x02e3b0",
+      "va": "0x18002e3b0",
+      "binding": "reconstructed licensing body with mandatory subsystem effects"
+    },
+    {
+      "command": "ShowIGO",
+      "rva": "0x032b10",
+      "va": "0x180032b10",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "ShowIGOWindow",
+      "rva": "0x032b10",
+      "va": "0x180032b10",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetUTCTime",
+      "rva": "0x02fea0",
+      "va": "0x18002fea0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "StartDownload",
+      "rva": "0x032ca0",
+      "va": "0x180032ca0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "SetPresenceVisibility",
+      "rva": "0x02ffb0",
+      "va": "0x18002ffb0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "SetPresence",
+      "rva": "0x02ffb0",
+      "va": "0x18002ffb0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetPresenceVisibility",
+      "rva": "0x02f4e0",
+      "va": "0x18002f4e0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetPresence",
+      "rva": "0x02f330",
+      "va": "0x18002f330",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "QueryPresence",
+      "rva": "0x031ef0",
+      "va": "0x180031ef0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetGroupInfo",
+      "rva": "0x02f270",
+      "va": "0x18002f270",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "IsProgressiveInstallationAvailable",
+      "rva": "0x030cd0",
+      "va": "0x180030cd0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "QueryChunkStatus",
+      "rva": "0x030eb0",
+      "va": "0x180030eb0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "AreChunksInstalled",
+      "rva": "0x02d720",
+      "va": "0x18002d720",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "SetDownloaderUtilization",
+      "rva": "0x02ffb0",
+      "va": "0x18002ffb0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "QueryAchievements",
+      "rva": "0x030d30",
+      "va": "0x180030d30",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GrantAchievement",
+      "rva": "0x030010",
+      "va": "0x180030010",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "QueryFriends",
+      "rva": "0x0314a0",
+      "va": "0x1800314a0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetBlockList",
+      "rva": "0x02e5a0",
+      "va": "0x18002e5a0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetVoipStatus",
+      "rva": "0x02da30",
+      "va": "0x18002da30",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "EnableVoip",
+      "rva": "0x02da30",
+      "va": "0x18002da30",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "SelectStore",
+      "rva": "0x02ffb0",
+      "va": "0x18002ffb0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "GetWalletBalance",
+      "rva": "0x02ff60",
+      "va": "0x18002ff60",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "RestartGame",
+      "rva": "0x032ab0",
+      "va": "0x180032ab0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "CheckPermission",
+      "rva": "0x02d9e0",
+      "va": "0x18002d9e0",
+      "binding": "reconstructed source body"
+    },
+    {
+      "command": "RequestLicense",
+      "rva": "0x0320c0",
+      "va": "0x1800320c0",
+      "binding": "reconstructed licensing body with mandatory subsystem effects"
+    },
+    {
+      "command": "InvalidateLicense",
+      "rva": "0x030c50",
+      "va": "0x180030c50",
+      "binding": "reconstructed licensing body with mandatory subsystem effects"
+    }
+  ]
+}

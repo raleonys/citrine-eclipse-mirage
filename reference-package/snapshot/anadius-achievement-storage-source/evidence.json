@@ -1,0 +1,107 @@
+{
+  "schema": "achievement.xml-import-watcher-bootstrap.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_functions": [
+    {
+      "address": "0x18001eb00",
+      "pseudo": "ev_f7cbf2f5b9d3d17681ffb7f9a17c6ed5cf2952ce07087685262cb3dccfe53b3e",
+      "assembly": "ev_bd10a5a82a8307f47db504ea903686ef7b68be9597de0c3a48f59707493363e8"
+    },
+    {
+      "address": "0x180003b70",
+      "pseudo": "ev_56cb76adb60b08dd04b08ed6fce95b42976a383eca0e2b7761c7afcb1ca37415",
+      "assembly": "ev_153cf06313c36f9169a114330dd971a4060d7bdad38bd9feb6ce7a51c21c35fd"
+    },
+    {
+      "address": "0x180006190",
+      "pseudo": "ev_df86694acc6f6bf1570d4ca7b7f4eb7502b5899619e5c3f7a9e0dbfb8411ba5c",
+      "assembly": "ev_552cb0956e43cd64cc074aec655e5b62d6d6e16d40ead43e9b99b12f5369d9ec"
+    },
+    {
+      "address": "0x180041e10",
+      "pseudo": "ev_80df4678956b9b7658e3d0b5553defdaa1244bbcda5a6974597668481318d415",
+      "assembly": "ev_c6b31cf960ca4a4bf60c21d21f3719c757a8a088e5e42c6c5b0a0784d2fc858d"
+    },
+    {
+      "address": "0x180041ff0",
+      "pseudo": "ev_89a838df3190068a41d3c5907aec78720d14c6645ae91440bd77f92778e164dc",
+      "assembly": "ev_9d8c05e7881ace56f5053a11d8c9b6148320e73c05a8db0fd152a3ad78b0619c"
+    },
+    {
+      "address": "0x18001ea20",
+      "pseudo": "ev_08b3a5fcbdaae83bab62fdfbc023bf1fcede2ebac6761d234774ae93461a8086",
+      "assembly": "ev_b2ed2f94d1e70182e9c643a28823161406f5467cb3c96081b5325e82fd10f8e8"
+    },
+    {
+      "address": "0x18001f9a0",
+      "pseudo": "ev_62b9a1da24b690b13ccc9ef87ff538b194425801a3a0857c3220da35a50c024f",
+      "assembly": "ev_488d569fd12cfa9fe60d4d35d04b56c9d44b52396427f3060d14d2a7e0125a5a"
+    }
+  ],
+  "evidence_type": "Retained REA static assembly/pseudocode and raw PE constants explicitly marked in storage-audit; own source fixture verification",
+  "source_hashes": {
+    "storage.hpp": "54e040d5b54eb6846a849ac5e128681de5adc2e17258b2ed39fc40ff51c9403a",
+    "storage.cpp": "2a2f23e278f35e8920047c2a9444e1fd150220d01bb2d727d1f3378a43684d13",
+    "storage_tests.cpp": "fb2d609018393bac9a51924d3aa7c7f5ca688fcd1ea8d98ed556c0b47d5094be",
+    "build.ps1": "60b323568d6c2e7387690ea6385703505056ebeab89b723cff22de2112fac364",
+    "CMakeLists.txt": "72df82cdf0316c327f3f3044879afd0e2cd06aa4e7d649c972a29de0aad96985",
+    "README.md": "3954991c683824c6345afe3d1dd2d78ff8b711f9117a673e6004fcfe50e147fc"
+  },
+  "writer_evidence": "../anadius-achievement-writer-source/evidence.json",
+  "static_audit": "storage-audit.md/json",
+  "checklist": [
+    {
+      "question": "XML path and record merge",
+      "status": "answered normal logical source",
+      "evidence": "01eb00,root/child/Id handling,Count/Progress/Grant/Name;116storagechecks"
+    },
+    {
+      "question": "Signed decimal / hexadecimal attribute selector",
+      "status": "answered dispatch with mandatory conversion backend",
+      "evidence": "003b70/006190 rawPE%d/%x;explicitHostCrtNumberscompatibility;overflow/locale native parity unproven"
+    },
+    {
+      "question": "Watcher path, epoch calls, status and write gate",
+      "status": "answered source flow",
+      "evidence": "01eb00 actualappend/file/writer sources;epoch041e10 remains mandatory"
+    },
+    {
+      "question": "INI output exact bytes",
+      "status": "answered normal logical source",
+      "evidence": "01f9a0 standalone36checks;mapkeyorder/SteamId/CRLF/signed/uint64"
+    },
+    {
+      "question": "Startup persistence callback",
+      "status": "answered source composition",
+      "evidence": "ConfigurationDependencies finalmethod throughconfig_startup initializer;realXMLimport beforeenvironment"
+    },
+    {
+      "question": "Other runtime achievement update/XML save",
+      "status": "unresolved",
+      "evidence": "01eb00 importsXML;01f9a0 writesINI only"
+    },
+    {
+      "question": "Native epoch/locale/overflow/allocator/ABI/SEH/global/DLL equality",
+      "status": "unresolved",
+      "evidence": "Compatibility XML/CRT and injected epoch/OS do not establish native parity"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x18001eb00",
+    "0x18001f9a0"
+  ],
+  "numeric_selector_helpers": [
+    "0x180003b70",
+    "0x180006190"
+  ],
+  "native_whole_procedure_ABI_equivalence": false,
+  "CRT_production": "unchanged",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "checks": {
+    "storage": 116,
+    "writer": 36
+  },
+  "runtime_equivalence": "not established",
+  "native_scope": "Own generated XML/INI fixtures only; remaining epoch/status/path/provider effects controlled"
+}

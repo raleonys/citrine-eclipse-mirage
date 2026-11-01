@@ -1,0 +1,152 @@
+{
+  "schema": "append-growth.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180012350",
+      "pseudo_evidence": "ev_3fbac447ca491496cb5cd50e118f7d13550dafe9739d4478cec4459874537f70",
+      "assembly_evidence": "ev_00bf42becc4f92a8d4b78d914a9566385470f50393b6531e88756e3dd467972a",
+      "newly_recovered": true,
+      "recovery_scope": "new canonical normal growth body and final lower-source bridge; no prior source mapping"
+    },
+    {
+      "address": "0x180007e30",
+      "pseudo_evidence": "ev_2bb832e12c4c27a1cb7ea8eeacaddf030c000eb99f2042529c2826614681d5f3",
+      "assembly_evidence": "ev_2f324be7d0140daa9db7786faa691d87237a55cdc7aa18602f7d2fa5a7c84549",
+      "newly_recovered": true,
+      "recovery_scope": "new canonical normal growth body and final lower-source bridge; no prior source mapping"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180012350",
+    "0x180007e30"
+  ],
+  "new_original_procedures": 2,
+  "new_source_bridges": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/append_growth.cpp",
+      "base": "NativeMessageApi::grow_nul_012350",
+      "body": "grow_append_character_012350",
+      "closure": "RecoveredMessageAppendApi::grow_nul_012350",
+      "address": "0x180012350",
+      "native_abi_complete": false
+    },
+    {
+      "file": "outputs/anadius-socket-source/append_growth.cpp",
+      "base": "NativeMessageApi::grow_append_007e30",
+      "body": "grow_append_bytes_007e30",
+      "closure": "RecoveredMessageAppendApi::grow_append_007e30",
+      "address": "0x180007e30",
+      "native_abi_complete": false
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18003d190",
+      "pseudo_evidence": "ev_52ce061acb986f9fe9ccdcaeedc30b80c6a1bf7335b59d2f3c6e82743e888599",
+      "assembly_evidence": "ev_7cc933e3f97d44f4cb2932484a7fc51fedeb38e403d3a0c8eedad13c1eaea6b2",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18003ce30",
+      "pseudo_evidence": "ev_133ad329397d833d572bf37cfc559a97e5cc1d655e776ff3b426ed2f69869b99",
+      "assembly_evidence": "ev_80f220817eb9f3aaedd370919dd41b31eff96692957601bd8e30baf3951ce863",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180034730",
+      "pseudo_evidence": "ev_79c5bb775604e465f8a4a96c8523886a2042e896365181bcb9796c1b687361de",
+      "assembly_evidence": "ev_a8b95492c2d53d260f7dfda3766b34547d4ae2a025fc29e358a10599135608d9",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002b940",
+      "pseudo_evidence": "ev_f221fb3cc36fe09dd9caa0f3215baa048e64812b380d8145aa83469378390c26",
+      "assembly_evidence": "ev_30e5199683fa1f5ae0a663c2aaf7a0d7e9b025a364160464f517665e10ac75f2",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180008350",
+      "pseudo_evidence": "ev_8f414a470d18574ce283ec7f9d33a326dcabef0214a8d5a54fdfd5f5b9bba010",
+      "assembly_evidence": "ev_36491f90ef8a29d2fb8edd6b1735250524629ef5f6e005c31809a72ed253a8f3",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180009eb0",
+      "pseudo_evidence": "ev_f67735e2b612684e0244695b1a0f40290b2f78851c8f9840ca9495121e3e2d83",
+      "assembly_evidence": "ev_259f1a5cdb8c805a3e600239e02920086e76456c0ff5fea954f866d0b28e9777",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180078d30",
+      "pseudo_evidence": "ev_981e059a6aefb99a5138b705432dfd5dd39c0ad1e7f77e341629c3e6b125f351",
+      "assembly_evidence": "ev_dd2b435485c7c775d5d8b7b0079176d82fb625f3930d10af7b505aa142d0936c",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18004b0bc",
+      "pseudo_evidence": "ev_9c975496fb48d4e6fca6f8c0535c16fa44feb14e8dafa92ef6b45a98915fa0ec",
+      "assembly_evidence": "ev_4b9d54867bdd71cc2cd07945df16f49f84fdecaa3c3535386e97bd20f64624ec",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18004b0f8",
+      "pseudo_evidence": "ev_4b68e7012c821e22c8f38d541b6e4e613a7e14ea81822e58a96efac29dd593ef",
+      "assembly_evidence": "ev_c742d3bdc5602e2293140e3408473befa826c5e7f02f988ef02afb1709aa3adf",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "append_growth.hpp": "3e0d8e657f77895ff3a6927d162dfc6a42836c781ed63747673381f767c6a6eb",
+    "append_growth.cpp": "db4311e05b8d893e7833d004dd9078ffcc3aa566f2100f1fad7be48b5b4f7eca",
+    "append_growth_test_fixture.hpp": "58909e369e046e23a82d3a54048792ea798f135cd084303d7fa01acb37a003bf",
+    "append_growth_tests.cpp": "415f4351495738a3ae072b0614317deeee75ce178d8cc608b3d2000467dc1d31",
+    "append_growth_integration_tests.cpp": "8210ea9a856233a2316c5242cdf8d49ebca05bffeb08f327c5d7a073f146f9b0",
+    "build.ps1": "b5929e30385d92150ce1334f63727db1ef8ad91b286eac56772bdbdcfdd3b7c0",
+    "CMakeLists.txt": "79dd3746afe230f69b30f8e6d5909d188e81ba0f71373e129744586e7dccbdb4",
+    "README.md": "5b1265f52d783ac6f10f3c6f917d1c2f5906e238d487e9c07dd0e4960f68a824"
+  },
+  "support_hashes": {
+    "append-growth-evidence.pseudo.c.txt": "e37105b3ee0639da8d7d1d77563a6f90cd876b88afa707fcdc5657ef3a964e65",
+    "append-growth-evidence.asm.txt": "9ad7d1990f79344abc6f2f27b8530d294777b3f55cc2dcaa659bdb4a8c427245",
+    "append-growth-context.pseudo.c.txt": "55586954ab5d97c841928db41eaaaaf505aa74715880d69db0c4bf13e61080fc",
+    "append-growth-context.asm.txt": "2189412bd90cc5c158419b19066d9667fb35c83c3259c2ea14ffb1cc463c8195",
+    "append-growth-flow-audit.md": "9622b9c4941a54ad6c43faed195ce2db27a9067377174ce1c5bb40037f0c806f",
+    "append-growth-rea-session.json": "05f703717920f7c3147d2677ee5030db249c8cae7cc87831e366b6c8a7fef788"
+  },
+  "core_checks": 3461,
+  "integration_checks": 2039,
+  "new_checks": 5500,
+  "execution_scope": "012350/007e30 normal growth bodies and2 final NativeMessageApi lower-source bridges; independent extra/character/count semantics, old cached size/cap with live pointer after allocation, metadata/COPY/tail/free/pointer order; actual033d70/N1-N9 queue/send/finish; allocator/XML/cipher/log/ABI/EH remain open",
+  "limitations": [
+    "Typed normal projection only; no native MSVC object/global/vtable/allocator/ABI/EH/SEH/concurrency/fault equivalence",
+    "Always allocate;012350 writes only1 character/NUL independent of extra;007e30 appends count/NUL independent of extra; no implicit gap fill",
+    "Allocator/free/terminal/078d30 native bodies remain providers; bounded COPY compatibility only",
+    "Symbolic maximum/failure prefixes, not real huge allocation;00cd30 valid-state reachability not asserted",
+    "033d70 now uses final recovered lower grow sources; document/032d00/cipher/log/mutex native providers stay open",
+    "Normal-only failure prefixes; no invented catch/rollback/unwind cleanup/unlock",
+    "Controlled completion/injected send; no new027a20/IOCP/027c10 worker, real network or original execution"
+  ],
+  "native033d70_fully_closed": false,
+  "review": {
+    "scope": "Same-agent addressed assembly/source and synthetic independent payload/lifetime/failure-prefix oracles",
+    "independent_review_complete": false
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N11 native042480/042610 live-prefix cipher normal flow and source bindings; CRT stays paused"
+}

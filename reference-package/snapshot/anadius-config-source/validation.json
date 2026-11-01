@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "scope": "Configuration application logic + synthetic/mock contracts; not standalone DLL",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)\nTarget: x86_64-w64-windows-gnu\nThread model: posix\nInstalledDir: C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/bin\nConfiguration file: C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/bin/x86_64-w64-windows-gnu.cfg",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "language": "C++20",
+  "flags": [
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-O2"
+  ],
+  "compilation_units": [
+    "configuration.cpp",
+    "configuration_tests.cpp"
+  ],
+  "mock_assertions": 150,
+  "target_execution": false,
+  "target_dll_loading": false,
+  "original_cfg_read_by_tests": false,
+  "real_filesystem_adapter_used": false,
+  "real_environment_writes": false,
+  "runtime_equivalence": "not established",
+  "recovered_function_semantics": 11,
+  "primary_routines": 2,
+  "helper_routines": 9,
+  "section_qualified_setting_keys": 46,
+  "raw_grammar_recovered": false,
+  "original_msvc_abi_recovered": false,
+  "commands": [
+    "clang++ -std=c++20 -Wall -Wextra -Werror -O2 -c configuration.cpp -o build/configuration.o",
+    "clang++ -std=c++20 -Wall -Wextra -Werror -O2 -static configuration.cpp configuration_tests.cpp -o build/configuration_contract_tests.exe",
+    "build/configuration_contract_tests.exe"
+  ],
+  "files": [
+    {
+      "path": "configuration.hpp",
+      "sha256": "4e32c3c4de5f00f8af5e94368fb8d5bd7d5767fb563651bab80e9edf82235883",
+      "bytes": 6193
+    },
+    {
+      "path": "configuration.cpp",
+      "sha256": "04d93a3a71f57a9d34bb4e0f3806c7ac532a2c0a1cdaef1e36ad6654c02620f9",
+      "bytes": 14908
+    },
+    {
+      "path": "configuration_tests.cpp",
+      "sha256": "d275d51b127d958ee2b52a484deaa7c188eb4165586e70e26776726c98f7d95a",
+      "bytes": 24182
+    },
+    {
+      "path": "build.ps1",
+      "sha256": "7aa81edfde1d2e068e84a40f40cfefe71bdddeacf2cfa8c871fdab6c84a698ae",
+      "bytes": 2987
+    },
+    {
+      "path": "CMakeLists.txt",
+      "sha256": "089212fef6f9913cb8684776b963ec178688de5c77acce9804df874ff7666f7c",
+      "bytes": 548
+    },
+    {
+      "path": "evidence.json",
+      "sha256": "b8397cc8ce6fd2b2c85650c0435de0bde3a0ea5e468cdf457d1068064cf99ea9",
+      "bytes": 26494
+    },
+    {
+      "path": "README.md",
+      "sha256": "5fe860ed6815d0347ff981b0e05c000cdf63050c7b119ee677e2ce95a0cd549a",
+      "bytes": 9622
+    },
+    {
+      "path": "build/configuration.o",
+      "sha256": "7fe392eb3c8c2d641215d0dfd7188e9101c371f9201775cd094a8214bd5b0c0d",
+      "bytes": 78508
+    },
+    {
+      "path": "build/configuration_contract_tests.exe",
+      "sha256": "d54866d227ad47547a7ad55c92416236447f45b5dd81cabfbc40bd0129b171b6",
+      "bytes": 1599488
+    }
+  ]
+}

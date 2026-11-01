@@ -1,0 +1,70 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T02:30:59.4259785Z",
+  "prior_package_sha256": "021599fd0131d200513fb7d6af898e62797f9bf3e95e441d07e05f311063caaf",
+  "prior_source_count": 329,
+  "unchanged_prior_sources": 329,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-crt-atomic-native-source/atomic.cpp",
+    "anadius-crt-atomic-native-source/atomic.hpp",
+    "anadius-crt-atomic-native-source/native_tests.cpp",
+    "anadius-crt-lock-native-source/native_tests.cpp",
+    "anadius-crt-lock-native-source/native.cpp",
+    "anadius-crt-lock-native-source/native.hpp",
+    "anadius-crt-sync-bridge-source/bridge_tests.cpp",
+    "anadius-crt-sync-bridge-source/bridge.cpp",
+    "anadius-crt-sync-bridge-source/bridge.hpp"
+  ],
+  "current_sources": 338,
+  "current_documents": 118,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "reviews": [
+    {
+      "path": "anadius-crt-lock-native-source/review-atomic-native.json",
+      "result": "PASS",
+      "verified_hashes": 3
+    },
+    {
+      "path": "anadius-crt-atomic-native-source/review-lock-native.json",
+      "result": "PASS",
+      "verified_hashes": 3
+    },
+    {
+      "path": "anadius-crt-sync-bridge-source/review-native-sync.json",
+      "result": "PASS",
+      "verified_hashes": 3
+    }
+  ],
+  "master_build_sha256": "a09b185b2e6200555dbbaed71ec90e28f7e3e592086a8e44849698378a56abe8",
+  "native_objects": 116,
+  "cpp_objects": 112,
+  "c_objects": 4,
+  "normal_test_groups": 101,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "crt_lock_native",
+      "result": "PASS",
+      "output": "PASS: 145 native lock checks",
+      "executable_sha256": "72b02774c224b1ae79ac6fe82c62d1f98d1fbb9a62ff6d0f127b50cb0b34a681"
+    },
+    {
+      "module": "crt_atomic_native",
+      "result": "PASS",
+      "output": "PASS: 88 native atomic checks",
+      "executable_sha256": "70469b5b8bc472662679c96c6275ee0abb37d835c5022f6540574c2819e99696"
+    },
+    {
+      "module": "crt_sync_bridge",
+      "result": "PASS",
+      "output": "PASS 120 native lock/Interlocked/FLS parallel source integration checks",
+      "executable_sha256": "60ecfbd9a9063245f8610ba7403936173be8b2dbcaab1a1ca68658ca01b7ee46"
+    }
+  ],
+  "recovered_original_bodies_added": 0,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

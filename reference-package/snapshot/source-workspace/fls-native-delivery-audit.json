@@ -1,0 +1,42 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T02:13:12.4208088Z",
+  "prior_package_sha256": "ab563356a221745b7e47a94d37835f8c8d0330e26bb00f652384da2bd374d4e6",
+  "prior_source_count": 326,
+  "unchanged_prior_sources": 326,
+  "removed_sources": [],
+  "changed_prior_sources": [],
+  "added_sources": [
+    "anadius-crt-fls-native-source/fls.cpp",
+    "anadius-crt-fls-native-source/fls.hpp",
+    "anadius-crt-fls-native-source/native_tests.cpp"
+  ],
+  "current_sources": 329,
+  "current_documents": 115,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "reviews": [
+    {
+      "path": "anadius-crt-fls-native-source/review-native-fls.json",
+      "result": "PASS",
+      "verified_hashes": 3
+    }
+  ],
+  "master_build_sha256": "10cfdc369cc29e52fcfb3cf3930e39f33d4aec9ddd1a1f4caa8ebc002378fd80",
+  "native_objects": 113,
+  "cpp_objects": 109,
+  "c_objects": 4,
+  "normal_test_groups": 98,
+  "terminal_cases": 18,
+  "new_tests": [
+    {
+      "module": "crt_fls_native",
+      "result": "PASS",
+      "output": "PASS 127 native FLS/PTD/heap lifecycle checks",
+      "executable_sha256": "983e996cb33f45b21797e5dcc8474732777be15a85d4f3301e4e90d8743c13e9"
+    }
+  ],
+  "recovered_original_bodies_added": 0,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established"
+}

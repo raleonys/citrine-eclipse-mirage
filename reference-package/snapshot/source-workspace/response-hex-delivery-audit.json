@@ -1,0 +1,70 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-24T14:45:44.910321+00:00",
+  "prior_package_sha256": "fed7b2f1fb74c460d60efbbbb519271bdfeb05a3463cf2c26ceae32605da613d",
+  "prior_source_count": 581,
+  "unchanged_prior_sources": 581,
+  "added_sources": [
+    "anadius-socket-source/response_hex.cpp",
+    "anadius-socket-source/response_hex.hpp",
+    "anadius-socket-source/response_hex_integration_tests.cpp",
+    "anadius-socket-source/response_hex_test_fixture.hpp",
+    "anadius-socket-source/response_hex_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 586,
+  "current_documents": 222,
+  "native_objects": 189,
+  "cpp_objects": 185,
+  "c_objects": 4,
+  "normal_test_groups": 191,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 64,
+  "new_checks": 2710,
+  "new_tests": [
+    {
+      "module": "socket_response_hex",
+      "result": "PASS",
+      "output": "PASS: 1876 socket response hex checks; actual03d190 and reused resize/grow, all byte values, binary/backward overlap oracle, exact empty no-op, live prefix and failure/wrap states",
+      "executable_sha256": "a9e02ee9e18bee786245593aad40de3481fe6974b8388bfa7e1f502b6497c59d"
+    },
+    {
+      "module": "socket_response_hex_integration",
+      "result": "PASS",
+      "output": "PASS: 834 socket response hex integration checks; actual03d190 with controlled plain-response preparation, original response allocation pool, N1-N7 queue/send/finish and deferred lifetime; native033d70 orchestration remains open",
+      "executable_sha256": "f4d1856b176941e8803e93f27466db1c24e2148af40fb06b63c2662015344e00"
+    }
+  ],
+  "validation_mirror_pairs": 32,
+  "historical_module_records_preserved": 31,
+  "historical_config_references_preserved": 62,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "e64eb9e290341ec39183c0c9ff70c9fe1a2163891b04457d6abc90000a623442",
+  "inventory_data_checks": 7237,
+  "normal_source_procedures_added": [
+    "0x18003d190"
+  ],
+  "new_original_procedures": 1,
+  "closed_provider": null,
+  "new_source_bridges": 0,
+  "new_unique_source_mapped_addresses": 0,
+  "prior_native_source_closures_preserved": 14,
+  "N5_selected_compatibility_providers_preserved": 1,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "Actual03d190 after controlled plain response preparation plus N1-N7 queue/send/finish;13-message FIFO,two map growths,deferred moved source lifetime; full native033d70/N5 gap open; no native027a20/IOCP/worker",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_reads": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N9 native033d70 typed-prefix normal orchestration and codec/mutation composition; CRT stays paused"
+}

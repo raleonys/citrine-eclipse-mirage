@@ -1,0 +1,101 @@
+{
+  "schema": "source-binding.focused-validation.v1",
+  "status": "SELECTED_NATIVE_KEY_RUNTIME_BINDING_PASS",
+  "native_body_address": "0x18002a830",
+  "new_native_bodies_in_this_change": 0,
+  "selected_source_binding_closed": 1,
+  "native_ABI_provider_closures": 0,
+  "source_hashes": {
+    "anadius-config-source/state_binding.hpp": "c08841ec3c5010d947c4edc164ff6d6dede2a76899a322fe0c683e189fb052c1",
+    "anadius-configuration-factory-source/factory.hpp": "db8b362c1008d964d515979de90bc883f06446b3c5d59bdabcb5f41f6cc0f343",
+    "anadius-configuration-factory-source/factory.cpp": "c17f9ba9d3861a64d682aace4b2bc54e5342992fa2fac48b0f500b2fad19b155",
+    "anadius-bootstrap-backend-source/backend.cpp": "008dbe6a038828bc9cef411ffd01343a98c9e3e47e4171956f3750750e78426a",
+    "anadius-license-source/key_binding_tests.cpp": "51c1627423dd0a15f2df8f7a46e8ba46a485d0a90810647e332b19f710f904c8"
+  },
+  "build_registration_hashes": {
+    "source-workspace/build.ps1": "2ba0682038c86c471a5895d8b44999dc4e14842fc5e3eb934670eadf6df15e90",
+    "source-workspace/CMakeLists.txt": "013685401f818c74c583b7a8789cf5c18905d86ad45024d635f612fd9125fc81"
+  },
+  "focused_record": {
+    "path": "work/key-binding-results.json",
+    "sha256": "72254b6f23a8043c42636097d9e60b32ddb44f87b204f1e536ca5e2bd42f3f3f",
+    "seconds": 16.891,
+    "tests": [
+      {
+        "name": "key_binding",
+        "stdout": "PASS: 50 key-binding checks; actual Runtime state binding/native configuration and encrypted key output, controlled external worker boundaries\n",
+        "executable": "work/key-binding-check-v1/key_binding_tests.exe",
+        "executable_sha256": "1d13b1ebec1afc1d653056abe44c7111d5c35c7b58704d60ebf5d92088ef98d9"
+      },
+      {
+        "name": "key_processor",
+        "stdout": "PASS: 42 key-processor checks; synthetic status/SDK/memory files, actual AES header/XML and existing Config2 call order\n",
+        "executable": "work/key-binding-check-v1/key_processor_tests.exe",
+        "executable_sha256": "83c670522c7cca805b13af24616ad084c1782ed179aa1d3fefdb38d43d466c73"
+      },
+      {
+        "name": "configuration_factory",
+        "stdout": "PASS: 170 configuration-factory core checks; all21 required routes and streaming, owned synthetic effects, passive validation, prefix/errors and serialized cross-thread lifetime; original targets never loaded\n",
+        "executable": "work/key-binding-check-v1/configuration_factory_tests.exe",
+        "executable_sha256": "18262eb2ea5c232c42ae1f9f84d8600e14ddf207d355b8cb186af18d59828f6b"
+      },
+      {
+        "name": "configuration_factory_integration",
+        "stdout": "PASS: 96 configuration-factory integration checks; lowerfreeROOTfactory all19selectedroutes+2narroweffects+streamingvisitor, actualBootstrapConfiguration/FilePass/parser/hash/XML/timestamp/INI/PNG/managedloggingprefixes; onlysyntheticMemoryFiles/typedSDKspies, unrelatedbootstrapworkers explicitlysynchronousTESTpolicy; no originals/userfiles/network/OSworkerjoin/nativeABI/loaderclaim\n",
+        "executable": "work/key-binding-check-v1/configuration_factory_integration_tests.exe",
+        "executable_sha256": "e1c99f60eda15bcce3bd80417f92df258e85c43293c2818f6c3dded43aaf5d9a"
+      }
+    ]
+  },
+  "proof": [
+    "Actual bootstrap_runtime::make_runtime and SourceBackend bind actual moved RuntimeOwner configuration before startup",
+    "Native three-argument Configuration constructor uses recovered key body; no test LicenseEffects bridge",
+    "Stats/files pointees stay owned by Persistence and encoding/filesystem stay owned by Configuration",
+    "Encrypted output uses NEW Game.ContentId with OLD UserId at the original call point; subsequent User assignment updates the same live Runtime state",
+    "Regular-file skip, unbound/rebind guards and legacy four-argument forwarding pass",
+    "Existing Configuration core and integration checks pass after fresh compilation"
+  ],
+  "ABI_scope": {
+    "Dependencies_layout_changed": false,
+    "Resources_layout_changed": false,
+    "concrete_Configuration_layout_changed": true,
+    "fresh_production_consumers": [
+      "outputs\\anadius-bootstrap-backend-source\\backend.cpp",
+      "outputs\\anadius-config-storage-source\\filesystem.cpp",
+      "outputs\\anadius-config-storage-source\\persistence.cpp",
+      "outputs\\anadius-configuration-factory-source\\factory.cpp"
+    ],
+    "all_four_test_translation_units_fresh": true
+  },
+  "limits": [
+    "Controlled external B3/B4 service/thread/server/online/host boundaries; no native OS-thread or global foreign-finality claim",
+    "This closes only the selected configuration-key route; complete production Resources graph and loader hooks remain open",
+    "Legacy document reader is still externally supplied; active FilePass bypasses it",
+    "Common inventory/readiness/delivery tooling remains the B54 historical baseline and must be synchronized at the next coherent delivery milestone",
+    "New source and test registrations are present, but full common build/CMake target/DLL link/package were not executed"
+  ],
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "independent_review": {
+    "result": "PASS",
+    "review_author": "/root/b22_provider_audit",
+    "reviewer_ran_tests_or_build": false,
+    "scope": "Production binding, fresh consumer/executable/compiler/archive hashes, four test results and the exact PS/CMake registration delta.",
+    "reviewed_source_hashes": {
+      "anadius-config-source/state_binding.hpp": "c08841ec3c5010d947c4edc164ff6d6dede2a76899a322fe0c683e189fb052c1",
+      "anadius-configuration-factory-source/factory.hpp": "db8b362c1008d964d515979de90bc883f06446b3c5d59bdabcb5f41f6cc0f343",
+      "anadius-configuration-factory-source/factory.cpp": "c17f9ba9d3861a64d682aace4b2bc54e5342992fa2fac48b0f500b2fad19b155",
+      "anadius-bootstrap-backend-source/backend.cpp": "008dbe6a038828bc9cef411ffd01343a98c9e3e47e4171956f3750750e78426a",
+      "anadius-license-source/key_binding_tests.cpp": "51c1627423dd0a15f2df8f7a46e8ba46a485d0a90810647e332b19f710f904c8"
+    },
+    "reviewed_registration_hashes": {
+      "source-workspace/build.ps1": "2ba0682038c86c471a5895d8b44999dc4e14842fc5e3eb934670eadf6df15e90",
+      "source-workspace/CMakeLists.txt": "013685401f818c74c583b7a8789cf5c18905d86ad45024d635f612fd9125fc81"
+    },
+    "reviewed_focused_record_sha256": "72254b6f23a8043c42636097d9e60b32ddb44f87b204f1e536ca5e2bd42f3f3f"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "artifact": "C:\\Users\\Skysect\\Downloads\\anadius64.dll",
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Read-only PE section VA-to-file mapping with complete NUL-terminated file bytes; no load/execute",
+  "literals": [
+    {
+      "va": "0x180080528",
+      "file_offset": 519464,
+      "bytes_hex": "66616b65206b6579206372656174656400",
+      "text": "fake key created",
+      "sha256": "bbac4e41323c2ceda01b2276e4959ab1181f08eb028616393ee103edd8ffdece",
+      "nul_terminated": true
+    },
+    {
+      "va": "0x180080540",
+      "file_offset": 519488,
+      "bytes_hex": "66616b65206b65792064656c6574656400",
+      "text": "fake key deleted",
+      "sha256": "b7f7b705823a8f2f05d2b6a4cd9663d84ed641ee27970fe6a11ea3d70f8703fe",
+      "nul_terminated": true
+    },
+    {
+      "va": "0x1800808c8",
+      "file_offset": 520392,
+      "bytes_hex": "7265706c6163696e6720436c69656e74205061746800",
+      "text": "replacing Client Path",
+      "sha256": "8c14337f9d5473868bdc154546078a5d2e95465e27b0943f5d6cc79967bfc8e2",
+      "nul_terminated": true
+    },
+    {
+      "va": "0x1800808e0",
+      "file_offset": 520416,
+      "bytes_hex": "7265706c6163696e6720746865206c616e677561676520776974682000",
+      "text": "replacing the language with ",
+      "sha256": "2305ed97619869a484f50660ce8fb51a641ade30aaa90942bea34ca787531711",
+      "nul_terminated": true
+    },
+    {
+      "va": "0x180080900",
+      "file_offset": 520448,
+      "bytes_hex": "66616b65206b6579207175657269656420736f6d657468696e6720656c7365207468616e20776861742049207265706c61636500",
+      "text": "fake key queried something else than what I replace",
+      "sha256": "e6aee99a7f21379219ac9dea48d05a157ab3ffc21aa185496f7f70359e5d0923",
+      "nul_terminated": true
+    }
+  ],
+  "exact_literal_bytes": 137
+}

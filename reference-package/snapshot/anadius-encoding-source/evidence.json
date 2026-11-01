@@ -1,0 +1,63 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "analysis": "Retained static REA assembly/pseudocode; no target execution",
+  "functions": [
+    {
+      "va": "0x180006d70",
+      "assembly_evidence": "ev_a90dd26ad44c137577375ab38fd9ea5ba5da887f91d92b8a40029d704ee4f3db",
+      "pseudocode_evidence": "ev_ddea68d70083a15fe46d222afc8aab9746f91c7339b12ef8b6ebddb7afb88461"
+    },
+    {
+      "va": "0x180006e60",
+      "assembly_evidence": "ev_b89eafb79c34eb12205fa70d4a14ffd476ddc4142f32c7d7eddb8e4c36d34297",
+      "pseudocode_evidence": "ev_28b7703e322b706cbfe3029aaed27c764c42157a56e1f9692d25ccebd462b652"
+    },
+    {
+      "va": "0x18001e3f0",
+      "assembly_evidence": "ev_e03b42b7c273986d5f0ec19b39f0b3ae4ea17a0dcaa96b147ad62f68b91fdd86",
+      "pseudocode_evidence": "ev_6f9b270934c4dd6867889982d63e74d4217b99a89ee8cf551a95445bb05785d6"
+    },
+    {
+      "va": "0x180048ac0",
+      "assembly_evidence": "ev_046b69ab0ad56e98d17f76263401000e7ec281ad5fd617847876462c0cbbeff9",
+      "pseudocode_evidence": "ev_8b2dc9f074fbdd6a4d17949cc0f5e7f7b1b6698739e0379880745e73aee71e7d"
+    },
+    {
+      "va": "0x180048ae8",
+      "assembly_evidence": "ev_d05ce9d9bc98c8ce907fde03d2e6f23c5230892177d6d2e0f79c71ea520b70ed",
+      "pseudocode_evidence": "ev_fc043c53beec91e8bafcd04f8656e920b395171f24020b5bc37254db4b7ef491"
+    },
+    {
+      "va": "0x180048b30",
+      "assembly_evidence": "ev_9261beaef45db73e50b6eca26833fe4fbc6e4a09863942eba65958c4fd04f7bc",
+      "pseudocode_evidence": "ev_cc136fc17c5651bb6cd83407898550fadae17e266eeea174bb81d623185640d0"
+    },
+    {
+      "va": "0x18000cd70",
+      "assembly_evidence": "ev_c7c884f5d0bba513de0436eefc30cf02d11128eb520bc6328f2bb97bbb1fef0d",
+      "pseudocode_evidence": "ev_04d58c687e6a532c87742f7a901c35e011758e1771480e4ab7996b1dae96f111"
+    },
+    {
+      "va": "0x18000cdb0",
+      "assembly_evidence": "ev_d23f0598ee5c82b3a2818605ac08bc32cd498cb7eed3a5003b5a5d31dea840cc",
+      "pseudocode_evidence": "ev_e0ed1df4221ab640c11755ff85f7e2dc585b437256e9434b06a6b178638720b6"
+    }
+  ],
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "confirmed": [
+    "048ac0: locale65001 priority else AreFileApisANSI ? 0 : 1",
+    "048ae8: MB_ERR_INVALID_CHARS=8; last error only on0",
+    "048b30: UTF8/54936 flags80 else400+used-default; used-default error459; fallback only3ec",
+    "006d70: select cp even if empty; INT_MAX; query/resize/fill; first count retained",
+    "006e60: explicit length and supplied cp; same two-pass behavior",
+    "01e3f0: hardcoded65001"
+  ],
+  "implementation": "Recovered core with required Calls/Errors; genuine Win32 conversion adapter; PortableErrors is a selected exception representation",
+  "limits": [
+    "Original CRT/thread locale object identity",
+    "Original allocation/MSVC string/EH ABI",
+    "Native direct-call negative lengths unsupported; upper recovered calls use nonnegative lengths",
+    "Low-level wchar/char16 buffers copied bytewise; Win32 LastError restored around temporary buffers"
+  ]
+}

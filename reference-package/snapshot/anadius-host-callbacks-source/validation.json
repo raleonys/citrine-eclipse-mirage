@@ -1,0 +1,37 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-17T20:05:36.2289801Z",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)",
+  "tests": "host callbacks: 192 checks passed (synthetic mocks only)",
+  "executable_sha256": "62bee6e2e554af4d957233c98608fec4f6231447f21af3b33c409b0ae0b6303f",
+  "sources": [
+    {
+      "path": "callbacks_tests.cpp",
+      "sha256": "06cf215fa0f101f05151d9913b4db41eb5e5740365a882c16ed024cad8d21ce6"
+    },
+    {
+      "path": "callbacks.cpp",
+      "sha256": "a21e66575abe057fcaf05b2f4782593c4a537fb01d707ec77b07c4ec634330a1"
+    },
+    {
+      "path": "callbacks.hpp",
+      "sha256": "1fc379d622ae3480bd9d441f181454703735bacb7832f80206bf79d0d863f0bf"
+    }
+  ],
+  "dependency_sources": [
+    {
+      "path": "..\\anadius-registry-source\\registry.cpp",
+      "sha256": "44d141def6cd7fb6575cedce2c7cc383272f0ccd785ebb00f95a3cb1c1aabf7d"
+    },
+    {
+      "path": "..\\anadius-host-init-source\\host_init.cpp",
+      "sha256": "ee60b84bfe1fc6cf1f480561ee9f3fad232c98a901362cc1b77f6bb86bc1f52b"
+    },
+    {
+      "path": "..\\anadius-path-source\\paths.cpp",
+      "sha256": "303335a49823dcc91aeea53d3b593d7be3c64c21136c0478d90f043ed127f67e"
+    }
+  ],
+  "execution_scope": "Synthetic in-memory mocks only; no native process launch, folder API, registry, original target or rebuilt target DLL executed",
+  "runtime_equivalence": "not established"
+}

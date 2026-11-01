@@ -1,0 +1,335 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "stage": "B49",
+  "result": "PASS",
+  "independent": true,
+  "independent_from_production_author": true,
+  "independent_from_core_test_author": true,
+  "independent_from_integration_author": true,
+  "reviewer": "/root/b22_provider_audit",
+  "reviewed_at_utc": "2026-10-31T22:30:37.735502+00:00",
+  "review_mode": "Independent static production/lifetime/test review plus read-only verification of source/proofs/logs/EXEs/compiler/archive/baseline. Reviewer ran no executable, build, probe or helper mutator.",
+  "reviewed_source_hashes": {
+    "stop.hpp": "5719ce2e77c5af5406477d3a62c681a3233ec54323484c805db625dbd259bba2",
+    "stop.cpp": "a503d69c6966b798a22e7ce00370be93905a48ee600839c05186f2cac719ea21",
+    "stop_tests.cpp": "5a48bbf709b6981b26ae0d126939a9ec53c8b1ec3a97ac4b024da4f704084b62",
+    "stop_integration_tests.cpp": "817bc0dc8bcd2590ddf8f54a8a9dc1ee8b04454f48243b76e16266a99b4a6bf2",
+    "../anadius-accept-source/owned.hpp": "011cf682eb0f9ffb30575ded5a184ca366ea88bf605421ee24eda5cfb72c74f9",
+    "../anadius-accept-source/owned.cpp": "aaa6e0c1cb126a1ac6b6515a5062a75a4c1f4cfa38bf2e7debccc8941732324c",
+    "../anadius-server-runtime-source/runtime.hpp": "c4a7ab815196c513b46d8312888a6210b78818f8aa77284eb013e655a3365ac0",
+    "../anadius-server-runtime-source/runtime.cpp": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b"
+  },
+  "code_freeze": {
+    "path": "work/b49-code-freeze.json",
+    "sha256": "e2d255b0198986a00efbe57929116facec3d21126c9beb79f7929d9a17fd38e2",
+    "all_eight_hashes_verified": true
+  },
+  "quick_results": [
+    {
+      "path": "work/b49-core-quick-results.json",
+      "sha256": "8413c75fe35b1fbc1b365ba03f3d7ae9d0ee6d63b79064bffc2ebcbc925f22b7",
+      "checks": 317,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b49-core-agent-results.json",
+        "sha256": "3918d9ebb0aa098e5ca974d1b31bf79541ec809a83166727c8afc36e0bdabc80"
+      },
+      "execution_by": "/root/acceptor_tests",
+      "test_author": "/root/acceptor_tests",
+      "log_path": "work/b49-core-agent-final2.log",
+      "log_sha256": "e5dfe2d60963cd0ded7911a53d77fd9fb88aaec1610fc36fbd67c5fc9c799638",
+      "executable_path": "work/b49-core-agent-final2.exe",
+      "executable_sha256": "b24d0b025673093f498b7f6113a35b715793e2fe90b17df3d2a90242273bad4d",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "archive_path": "work/b49-baseline-core.a",
+      "archive_sha256": "176dc269907d3396c456b8f23c16c1cbbb7e8b5d088f77bb9dd1cca55d6dbeaa",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "actual_used_source_hash_count": 20,
+      "actual_used_source_hashes": {
+        "stop.hpp": "5719ce2e77c5af5406477d3a62c681a3233ec54323484c805db625dbd259bba2",
+        "stop.cpp": "a503d69c6966b798a22e7ce00370be93905a48ee600839c05186f2cac719ea21",
+        "stop_tests.cpp": "5a48bbf709b6981b26ae0d126939a9ec53c8b1ec3a97ac4b024da4f704084b62",
+        "../anadius-server-runtime-source/runtime.hpp": "c4a7ab815196c513b46d8312888a6210b78818f8aa77284eb013e655a3365ac0",
+        "../anadius-server-runtime-source/runtime.cpp": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b",
+        "../anadius-accept-source/owned.hpp": "011cf682eb0f9ffb30575ded5a184ca366ea88bf605421ee24eda5cfb72c74f9",
+        "../anadius-accept-source/owned.cpp": "aaa6e0c1cb126a1ac6b6515a5062a75a4c1f4cfa38bf2e7debccc8941732324c",
+        "../anadius-server-runtime-source/resources.hpp": "3270b8d3576541dffffe7ab193a9d5ad6c8b0ab1d81c0ea0020ab771eb8d3244",
+        "../anadius-server-runtime-source/resources.cpp": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2",
+        "../anadius-application-graph-source/graph.hpp": "bc983d04c601b5abb9b2dacd11abecb64df6b62fbca06213bb89470933f61e53",
+        "../anadius-application-graph-source/graph.cpp": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c",
+        "../anadius-application-worker-source/worker.hpp": "2427178f3d630c2cc4ba132d52e82777eca6c2006a5f318825dca4259ef2dfdc",
+        "../anadius-application-worker-source/worker.cpp": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4",
+        "../anadius-worker-handoff-source/handoff.hpp": "76c23df3621ce30be07f678decbf713ba655c783b5b4f658c3b0292f397c4049",
+        "../anadius-thread-domain-source/domain.hpp": "6d5ca4b69c908862c742b0247b3547c5c8ae8f5eb47ec2940e24ad52de220932",
+        "../anadius-bootstrap-backend-source/backend.hpp": "145a94c58ed9880211d7315465c0c226eed982b33aef6cd5635f24c822069a23",
+        "../anadius-xml-reader-source/reader.hpp": "f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e",
+        "../anadius-event-queue-source/queue.hpp": "b7b032838a3f6e4cfff8a1f7512a290f62ca0d35cfcf738f1ef72271109c265d",
+        "../anadius-config-iteration-source/thread_error.hpp": "625dc0bd861e388c899467854fb614ed5656364bceeba6033465c6fe4454ae38",
+        "../anadius-socket-source/worker_run_native.hpp": "0abeed67dba180b8506005ecaade1093b1e966e847953a094cb8855e13c76d93"
+      },
+      "source_scope": "Fresh stop.cpp, modified Runtime.cpp and OwnedAcceptMemory owned.cpp, unchanged Runtime resources.cpp, application Graph.cpp and Worker.cpp host-layout dependents, plus stop_tests.cpp with selected actual-use headers. The unchanged dependents must be rebuilt because appended Runtime Dependencies fields cross by-value host interfaces; no source modification to them is claimed. Immutable canonical B48 archive supplies remaining prior objects. No integration test or full Bootstrap execution is compiled/claimed here. Real own Domain NativeThreads/PTD/FLS/heap and actual local PIPE_REJECT_REMOTE_CLIENTS named-pipe overlapped ReadFile into authoritative288byte/realOV accept storage, attached to actual own IOCP, form an explicitly selected ACCEPT-SDK-compatibility READ loan. This is NOT AcceptEx interoperability or a network socket. Real CancelIoEx produces actual observed GQCS995; separately injected TRUE-without-cancel and ERROR_NOT_FOUND do not end the real read loan before an independent local peer produces actual SUCCESS. Software FALSE1234 dispatch never invokes CancelIoEx or supplies kernel proof. Genuine other-work callback remains mandatory; early/prerequisite-false/coalesced controller wakes, exact worker/listener/OV and private nullwake, forced owner0, actual source acknowledgement, closed post seal and capture-retiring no-resurrection are checked. A separate genuine normal-success/lower-owner0 route then holds worker_returned after its route lease ends: a late controller request closes normally from Requested under genuine Runtime proof with no cancel, fabricated journal or further physical get, and the own nullwake is observed still queued until actual IOCP close. Main count excludes nine exact-exit retained-prefix children: foreign access, unknown Cancel SDK outcome, kernel-key2 and arbitrary foreign key, unknown receipt, stale raw packet, normal active-route exclusion, whole-route/proof epoch race using a genuine normal pipe SUCCESS, and duplicate receipt attempt on the same authoritative live normal operation without guessing a nonce. Isolated faults do not claim cleanup/unload safety; no original artifact, user config, game, actual network, recovered loader/DLL ABI, arbitrary thread admission or fabricated kernel terminal/finality is used.",
+      "fresh_unchanged_ABI_dependencies_verified": [
+        "outputs/anadius-server-runtime-source/resources.cpp",
+        "outputs/anadius-application-graph-source/graph.cpp",
+        "outputs/anadius-application-worker-source/worker.cpp"
+      ],
+      "isolated_children": [
+        {
+          "mode": "foreign",
+          "expected_exit": 901,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "unknown",
+          "expected_exit": 902,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "wrong-key",
+          "expected_exit": 903,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "ack",
+          "expected_exit": 904,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "stale",
+          "expected_exit": 905,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "active-route",
+          "expected_exit": 906,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "proof-race",
+          "expected_exit": 907,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "foreign-key",
+          "expected_exit": 908,
+          "observed_exit_verified_by_parent": true
+        },
+        {
+          "mode": "duplicate",
+          "expected_exit": 909,
+          "observed_exit_verified_by_parent": true
+        }
+      ],
+      "root_normalization_only": true,
+      "reviewer_executed": false
+    },
+    {
+      "path": "work/b49-integration-quick-results.json",
+      "sha256": "889cb67324fe41264bd237b884f5c0999675584208a1ff15c1e4e673c262f5d6",
+      "checks": 162,
+      "compile_exit": 0,
+      "run_exit": 0,
+      "execution_record": {
+        "path": "work/b49-integration-agent-results.json",
+        "sha256": "05266843c03445d8e926137cbfef8fd10895b0fef4d914d9892ebc4d63a957c1"
+      },
+      "execution_by": "/root/b22_integration",
+      "test_author": "/root/b22_integration",
+      "log_path": "work/b49-integration-agent-results.log",
+      "log_sha256": "111240564379a00d475159c94108e0fb9e7860cd3e0623fab778bc5d9562f44f",
+      "executable_path": "work/b49-integration-v3.exe",
+      "executable_sha256": "afab57707543a0cfe1613211fb4a7b06ae46aa2e0f02c1590dbd98bb22f7119e",
+      "compiler_path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+      "archive_path": "work/b49-baseline-core.a",
+      "archive_sha256": "176dc269907d3396c456b8f23c16c1cbbb7e8b5d088f77bb9dd1cca55d6dbeaa",
+      "archive_unchanged_through_run": true,
+      "sources_unchanged_through_run": true,
+      "source_hashes_verified": true,
+      "executable_hash_verified": true,
+      "actual_used_source_hash_count": 10,
+      "actual_used_source_hashes": {
+        "stop.hpp": "5719ce2e77c5af5406477d3a62c681a3233ec54323484c805db625dbd259bba2",
+        "stop.cpp": "a503d69c6966b798a22e7ce00370be93905a48ee600839c05186f2cac719ea21",
+        "stop_integration_tests.cpp": "817bc0dc8bcd2590ddf8f54a8a9dc1ee8b04454f48243b76e16266a99b4a6bf2",
+        "../anadius-server-runtime-source/runtime.hpp": "c4a7ab815196c513b46d8312888a6210b78818f8aa77284eb013e655a3365ac0",
+        "../anadius-server-runtime-source/runtime.cpp": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b",
+        "../anadius-accept-source/owned.hpp": "011cf682eb0f9ffb30575ded5a184ca366ea88bf605421ee24eda5cfb72c74f9",
+        "../anadius-accept-source/owned.cpp": "aaa6e0c1cb126a1ac6b6515a5062a75a4c1f4cfa38bf2e7debccc8941732324c",
+        "../anadius-server-runtime-source/resources.cpp": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2",
+        "../anadius-application-graph-source/graph.cpp": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c",
+        "../anadius-application-worker-source/worker.cpp": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4"
+      },
+      "source_scope": "Two actualRuntimeOwner/SourceBackend THREErealDomainNativeThreads scenarios with concreteApplicationWorker-ownedGraph: accept-onlynoSession/noRecvSend/rawjob/foreignAdmission independentlyclosed byconstruction, other_work_drained REQUIREDexternalprerequisite. InjectedAcceptSDK issues actualReadFile into authoritative288byte acceptregion/EXACTownedOV onOWNconnectedOVERLAPPEDNAMEDPIPEhandle attachedactualIOCP; selectedpipe/ownEvent socketTOKENS are NOTAcceptEx/WSASOCKET interoperability. Stop DEFAULTimports CancelIoEx/PostQueuedCompletionStatus, controllerpostsONLYNULLwake, originalworker cancels exactkernelborrow, actualGQCS995 andactualSUCCESS/ERROR_NOT_FOUND race(sourcewake→ownWriteFile→readDone LOWBIT0event→resumephysicalget). Heapledger independentlyprovesbufferretaineduntilobservedpacket/sourceack. RuntimeStop forcesowner0/skipslowerselect ontrackedstop, actual0271a0/cachefree/nativeworkcountnaturally0/Graphclosed, real3join/FLS/controllerfinish. No syntheticterminalpost/manualcounterdecrement/fakeGetresult. RealHost+Online milestones despitepreseededflags andexactRuntimeOwner refs preserved. ScopeACCEPTONLY, notfullreceive/send/foreign/kernel/rawjob/unloadproof. NoOriginalDLL/game/usercontents/realnetwork/nativeABI/fullResourcesLoaderclaim. ABI-dependent unchangedresources/graph/worker CPPs explicitlycompiledfresh, NOTproductionedits.",
+      "fresh_unchanged_ABI_dependencies_verified": [
+        "outputs/anadius-server-runtime-source/resources.cpp",
+        "outputs/anadius-application-graph-source/graph.cpp",
+        "outputs/anadius-application-worker-source/worker.cpp"
+      ],
+      "isolated_children": [],
+      "root_normalization_only": true,
+      "reviewer_executed": false,
+      "immutable_authoritative_execution_record": {
+        "path": "work/b49-integration-v3-results.json",
+        "sha256": "05266843c03445d8e926137cbfef8fd10895b0fef4d914d9892ebc4d63a957c1"
+      },
+      "immutable_log": {
+        "path": "work/b49-integration-v3-results.log",
+        "sha256": "111240564379a00d475159c94108e0fb9e7860cd3e0623fab778bc5d9562f44f"
+      },
+      "main_is_exact_immutable_copy": true,
+      "watched_source_hash_count": 11,
+      "watched_source_hashes": {
+        "stop.hpp": "5719ce2e77c5af5406477d3a62c681a3233ec54323484c805db625dbd259bba2",
+        "stop.cpp": "a503d69c6966b798a22e7ce00370be93905a48ee600839c05186f2cac719ea21",
+        "stop_tests.cpp": "5a48bbf709b6981b26ae0d126939a9ec53c8b1ec3a97ac4b024da4f704084b62",
+        "stop_integration_tests.cpp": "817bc0dc8bcd2590ddf8f54a8a9dc1ee8b04454f48243b76e16266a99b4a6bf2",
+        "../anadius-server-runtime-source/runtime.hpp": "c4a7ab815196c513b46d8312888a6210b78818f8aa77284eb013e655a3365ac0",
+        "../anadius-server-runtime-source/runtime.cpp": "c1378812ed7b4446270c67be5ec64a68678aa189e26c9798ccacea649969048b",
+        "../anadius-accept-source/owned.hpp": "011cf682eb0f9ffb30575ded5a184ca366ea88bf605421ee24eda5cfb72c74f9",
+        "../anadius-accept-source/owned.cpp": "aaa6e0c1cb126a1ac6b6515a5062a75a4c1f4cfa38bf2e7debccc8941732324c",
+        "../anadius-server-runtime-source/resources.cpp": "5ed2227dd817960a03d50ca29a6c107f017fa8d371fd2ede249a16cc9d5bddf2",
+        "../anadius-application-graph-source/graph.cpp": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c",
+        "../anadius-application-worker-source/worker.cpp": "18a6f339dd5e7aa1ff0c2a8ab73d94fcf17be6fdef0afaedfc2bc2f10872abc4"
+      },
+      "watched_core_test_is_metadata_only": true
+    }
+  ],
+  "main_checks_total": 479,
+  "additional_isolated_children": 9,
+  "integration_isolated_children": 0,
+  "baseline": {
+    "zip_path": "outputs/dll-reverse-engineering.zip",
+    "zip_sha256": "9e5f1b50f06635a7cb5f405bc2b694506ee152c9ca2545ea7a13304e60a9cc22",
+    "bytes": 279358572,
+    "entries": 6077,
+    "all_926_prior_snapshot_preimages_verified": true,
+    "prior_unchanged": 922,
+    "prior_modified": 4,
+    "prior_modified_paths": [
+      "anadius-accept-source/owned.cpp",
+      "anadius-accept-source/owned.hpp",
+      "anadius-server-runtime-source/runtime.cpp",
+      "anadius-server-runtime-source/runtime.hpp"
+    ],
+    "prior_source_hashes": {
+      "anadius-accept-source/owned.cpp": "1b26a5282a3b939e19059a638748be62718d06014bfd0fe6be3a465ccae7283c",
+      "anadius-accept-source/owned.hpp": "cf2a0ec016fd6c92897f047ee0ba22f7b47638c2d41efb2337849b1658832993",
+      "anadius-server-runtime-source/runtime.cpp": "ea5239d5222bfc89c507261d075ffa011677c632c0c9aa566f34861e624095b0",
+      "anadius-server-runtime-source/runtime.hpp": "dbc693a43c2fb83db0ca4a9b3e9299077b582dcb890cc63e0fc1036f02e1ba69"
+    },
+    "new_sources": 4,
+    "total_sources": 930,
+    "baseline_archive_member_sha256": "176dc269907d3396c456b8f23c16c1cbbb7e8b5d088f77bb9dd1cca55d6dbeaa",
+    "archive_member_equals_actual_used_archive": true
+  },
+  "findings_resolved": [
+    "Normal and stopped ACCEPT routes hold epoch leases through owner selection, source completion and Application.after_completion/reap. Controller proof requires no active route and unchanged epoch before publication; overlapping active or completed routes require retry. Normal routes do not grow history.",
+    "Request self-pin outlives Busy reservation cleanup. Closed/Retiring callbacks return before shared_from_this; opaque Options retire outside gate while facade/Impl stay attached.",
+    "Kernel key0/OV/status/bytes and generation+submission identity are checked before stopped routing; successful source routing ends exact loan before acknowledgement. TRUE/FALSE/ERROR_NOT_FOUND cancel results are never terminal proof.",
+    "Late Requested close checks empty loans/no active route/all journal acknowledgements after independent external proof and actual Runtime drain. Known queued private null wake can remain until real IOCP close; no queue-empty claim."
+  ],
+  "selected_scope": "Concrete optional ACCEPT-only HOST stop provider on existing Runtime. Creator posts private NULL-OVERLAPPED wake; original worker issues CancelIoEx on exact listener/OV after SDK return. Stopped observed success/error routes owner0 through existing0271a0 cleanup and native scheduler decrement; no fabricated terminal packet or work-count adjustment.",
+  "native_accounting": {
+    "new_native_bodies": 0,
+    "new_ABI_closures": 0,
+    "mapped_canonical": 501,
+    "eligible_tags": 505,
+    "normal_native_claims": 139,
+    "historical_closed_providers": 52,
+    "last_native_body_stage": "B38"
+  },
+  "common_validation": {
+    "status": "PENDING_AS_OF_REVIEW",
+    "reviewer_claims_common_PASS": false,
+    "production_objects": 271,
+    "cpp_objects": 267,
+    "c_objects": 4,
+    "normal_groups": 327,
+    "terminal_groups": 19,
+    "composition_files": 111,
+    "composition_objects": 55,
+    "compiler_observations": 98,
+    "new_trait_values": [
+      0,
+      0
+    ],
+    "log_path": "work/b49-common-v2-build.log",
+    "initial_failed_run_is_not_current_PASS": true
+  },
+  "registration_role": {
+    "path": "work/b49-register.py",
+    "sha256": "56aa673ea8b2ac9b15737a26b7e4e08060df86e2c1873632fa807e0558e7f5f8",
+    "preview_author": "/root/b22_provider_audit",
+    "strict_read_only_preview": "PASS before root applied",
+    "applied_record": {
+      "path": "work/b49-registration-result.json",
+      "sha256": "dc63617a9a809760fe20a0948148661611ea994f68b6ef99b32e4e825af02ffc"
+    },
+    "reviewer_ran_apply": false,
+    "independent_pipeline_authorship_claimed": false,
+    "helpers_prepared_only": [
+      {
+        "path": "work/b49-freeze-quick.py",
+        "sha256": "06fe9e605ff22f167d0a5edabf4b7ad824397006d1012607703c58a36527fabb"
+      },
+      {
+        "path": "work/b49-object-freeze.py",
+        "sha256": "f5ab0765265d29f086f4cc216c68c4245204dea3f04cb660a636563e30e3f6dd"
+      },
+      {
+        "path": "work/b49-link-context.py",
+        "sha256": "4a7ab29fb46d4d46fe80de9277294bec2ad5e372171b27a65e54f1cab890133f"
+      },
+      {
+        "path": "work/b49-deliver.ps1",
+        "sha256": "3903cdcaca21fa0ef1b5c1078b719c9c49f9debbd1017baaf58764e611c536b5"
+      },
+      {
+        "path": "work/b49-final-audit.py",
+        "sha256": "2e23cd747614595192a68c43668378dcbfeac664b72476c56bcb6d82c2f17678"
+      }
+    ],
+    "metadata_author": "/root",
+    "helper_mutators_executed_by_reviewer": false,
+    "root_updated_helper_log_references_after_failed_common": true
+  },
+  "production_dll_readiness": "BLOCKED",
+  "limitations": [
+    "ACCEPT-only scope: independent thread-safe controller proof must stop/drain receive/send/session/rawjob/foreign admission. Profile external proof and actual source ledger/drain checks remain mandatory. Accept counters and thread joins do not prove arbitrary kernel finality.",
+    "Integration uses actual own overlapped named-pipe ReadFile into authoritative288-byte accept storage, real IOCP and default CancelIoEx995 plus real success/ERROR_NOT_FOUND race. This is selected kernel-loan/source-retirement evidence, not real AcceptEx/WSASOCKET interoperability or network behavior.",
+    "No unforgeable packet provenance/kernel ABA or arbitrary code/pointer validation is established. A fabricated key0 packet cannot be distinguished cryptographically. Caller must not bypass Runtime protocol; native cancel/post/error imports are nonthrowing, nonblocking and noncallback.",
+    "Normal SDK TRUE/997 is classified Kernel; FALSEother is Software and never canceled/counts as a kernel receipt. Unknown SDK/routing/opaque callback outcomes poison and retain; no Native EH rollback or blind retry.",
+    "Controller posts only NULL-OV control wake and never borrows worker raw views. Cancellation and source acknowledgement stay on original worker/fiber/PTD under Parent. Known late-request control wake may remain queued through close after actual drain; no general queue-empty/unload proof.",
+    "By-value Runtime Dependencies layout changed. Current proofs compile unchanged resources.cpp/graph.cpp/worker.cpp fresh as ABI dependents; full common rebuild and object checks remain independently required.",
+    "No original/rebuilt DLL/game execution, real network, configuration/token contents, fresh REA/target bytes or security-block retry. Reviewer performs static/hash review only. Earlier V1/V2 and pre-aggregate proof are historical; authoritative integration is immutable V3/main exact copy.",
+    "Full common/object-freeze remain pending at review timestamp. Graceful pre-firstReady failures, complete Resources/providers, Native ABI/CRT EH/concurrency/scheduling and PE loader attach/detach remain open. No whole-DLL completion percentage is supplied."
+  ],
+  "compatibility_revision": {
+    "initial_common_failure": {
+      "path": "work/b49-aggregate-failure.json",
+      "sha256": "cd6b3ab20b7fed670fd830ae67974df194551651327c2b4a785165c3b30ea63b"
+    },
+    "initial_common_log": "work/b49-common-final-build.log",
+    "initial_result": "FAILED_COMPILE_NOT_PASS",
+    "cause": "Legacy runtime_tests.cpp125 omitted new optional accept_stop member under -Wmissing-field-initializers/-Werror.",
+    "fix": "Only runtime.hpp accept_stop; -> accept_stop{}; explicit empty default member initializer; same layout and intended null runtime value.",
+    "only_one_of_eight_source_hashes_changed": true,
+    "superseded_eight_source_freeze": {
+      "path": "work/b49-pre-aggregate-fix/b49-code-freeze.json",
+      "sha256": "c2a38cef79da882e06f8a320bedd733d3ad69472dbbdf595573aeec477acdc7f"
+    },
+    "superseded_review": {
+      "path": "work/b49-pre-aggregate-fix/architecture-review.json",
+      "sha256": "49fa4d81fae27038999f817ab70ec9cdee8607c076d19cf617201209468005f8"
+    },
+    "current_authoritative_core": "final2 317+9 children",
+    "current_authoritative_integration": "immutableV3 162 normal/0children",
+    "test_sources_unchanged": true
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "native-worker-avatar-initial-state.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "independent_PE_mapping": {
+    "address": "0x1800a1130",
+    "length": 4,
+    "section": {
+      "name": ".data",
+      "rva": 659456,
+      "virtual_size": 19068,
+      "raw_size": 10240,
+      "raw_offset": 652800
+    },
+    "mapping": "file-backed initialized signed dword",
+    "file_offset": 653104,
+    "bytes_hex": "ffffffff",
+    "signed_value": -1
+  },
+  "fresh_REA": {
+    "path": "outputs/anadius-initial-cells-source/worker-rea-evidence.json",
+    "sha256": "d75dcf6433c06873e972d6760352ca756df6a1d5b102315203b498fa4cea50fa",
+    "records": [
+      {
+        "evidence_id": "ev_2730c6ed0f422d18c0c3746fc26b996ec9725bcd21da0ba4fdc4d59b70223585",
+        "operation": "read_bytes",
+        "parameters": {
+          "address": "0x1800a1130",
+          "length": 4
+        },
+        "result": {
+          "address": "0x1800a1130",
+          "bytes_hex": "ffffffff",
+          "complete": true,
+          "requested_bytes": 4,
+          "returned_bytes": 4
+        }
+      },
+      {
+        "evidence_id": "ev_2e10e81d1bdb16bab4837fa81ef3f5e01d86e335213be81a8ae3615c841dd76c",
+        "operation": "xrefs",
+        "parameters": {
+          "address": "0x1800a1130"
+        },
+        "result": [
+          "0x180031b1e",
+          "0x180031b5b"
+        ]
+      }
+    ]
+  },
+  "retained_code": {
+    "path": "outputs/anadius-initial-cells-source/worker-retained-evidence.json",
+    "sha256": "3126e2624df4be68674e4ab3903ecaa795711aee73c8acc4281778f43f1775b6"
+  },
+  "observations": [
+    "Saved-avatar-size is file-backed signed dword a1130 initially−1, not the separate thread-static initialization guard a39b8.",
+    "Native0314f0 own-avatar success path compares requested scaled size against saved counter at031b1e; signedJLE031b25 skips copying when newsize<=saved.",
+    "Copy048d20 mode2 is followed byTESTAL; only success writes counter031b5b and emits saved-size log. Thus first scaledsize0 can copy from initial−1, failure retains−1, successful0 prevents equal-size repeat, later2canupgrade."
+  ],
+  "limits": [
+    "Direct xrefs only recorded031b1e/031b5b; no universal absence of computed mutation or arbitrary post-init runtime state claimed.",
+    "Fresh source Worker value is opt-in, not a live reset or original process-global/singleton/CRT/container/EH ABI reconstruction.",
+    "Empty StateSeed achievement_file is legacy HOST bookkeeping; actual selected XML path belongs to Runtime shared Paths/PathBinding, not a newly recovered Worker field."
+  ],
+  "session_closed": true,
+  "original_execution": false,
+  "original_modification": false
+}

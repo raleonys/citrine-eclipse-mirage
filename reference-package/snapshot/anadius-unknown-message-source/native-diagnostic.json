@@ -1,0 +1,107 @@
+{
+  "schema": "native-unknown-message-diagnostic.v1",
+  "authority": "static observations from retained Ghidra evidence; source reconstruction is a separate inference",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source_bundle": {
+    "path": "outputs/anadius-rea-evidence.json",
+    "sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495"
+  },
+  "selected_full_records": {
+    "path": "outputs/anadius-unknown-message-source/retained-rea-evidence.json",
+    "sha256": "bcf97f096cbb61a8b41ee0adf65d0ff3c97e0dde66d35623151c66939eeb21dc",
+    "evidence_ids": [
+      "ev_36f5127bed2d3004c5965aeb2f5266deb3c0ea2f87a490564340600f0fdd0854",
+      "ev_59f964bdaa2f9917befd775df1142bf7244d1c3f764a1029002706ae0ad8022a",
+      "ev_3643eee76cc3bbf46b8d17982839a7766ee48f07c7ea1025d76021cd1edfcc66",
+      "ev_9dfbeaac07cbccb2c27a5c8a9a15bcb513aeeaa63b505a3c7a15576a19d155ef",
+      "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224"
+    ]
+  },
+  "catch_and_continuation": {
+    "path": "outputs/anadius-no-response-source/native-catch.json",
+    "sha256": "dc86c0e65776c9713955f3aa5ba4b88497d14d0b149f117f35ec847a78397427",
+    "protected_dispatch_range": "[0x1800340bf,0x1800341b1)",
+    "handler_type": "0x1800a2728 .?AVUnknownMessageError@?A0x911f7926@@",
+    "handler_array_entry": "0x18009a680",
+    "funclet": "0x18007bd70",
+    "return_selector": 0,
+    "continuation": "0x1800345da",
+    "qualification": "Exact FH4 derivation reused. Ghidra did not decode continuation; retained REA bytes independently decoded with LLVM as qualified in native-catch.json."
+  },
+  "literals": [
+    {
+      "address": "0x180086340",
+      "count": 18,
+      "bytes_hex": "5b554e4b4e4f574e204d4553534147455d00",
+      "ascii": "[UNKNOWN MESSAGE]\u0000",
+      "source_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+      "qualification": "Selected bytes extracted from full retained REA rdata read; not a new REA record."
+    },
+    {
+      "address": "0x180085208",
+      "count": 15,
+      "bytes_hex": "554e4b4e4f574e204d455353414745",
+      "ascii": "UNKNOWN MESSAGE",
+      "source_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+      "qualification": "Selected bytes extracted from full retained REA rdata read; not a new REA record."
+    }
+  ],
+  "ordered_native_observations": [
+    {
+      "at": "0x180033d4a",
+      "observation": "032d00 invalid path constructs UnknownMessageError with02bd30, then33d4f loads ThrowInfo09f7c8 and33d5b calls04d228. Constructor02bd30 initializes vptr084c00 and two zero fields; constructor itself does not throw.",
+      "evidence_ids": [
+        "ev_3643eee76cc3bbf46b8d17982839a7766ee48f07c7ea1025d76021cd1edfcc66",
+        "ev_9dfbeaac07cbccb2c27a5c8a9a15bcb513aeeaa63b505a3c7a15576a19d155ef",
+        "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+        "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224"
+      ]
+    },
+    {
+      "at": "0x18007bd8c",
+      "observation": "006880 writes prefix086340 to console0a4130.07bd94 calls0088e0 newline/flush. No show_lsx branch in funclet.",
+      "evidence_ids": [
+        "ev_36f5127bed2d3004c5965aeb2f5266deb3c0ea2f87a490564340600f0fdd0854",
+        "ev_59f964bdaa2f9917befd775df1142bf7244d1c3f764a1029002706ae0ad8022a"
+      ]
+    },
+    {
+      "at": "0x18007bd99",
+      "observation": "After first flush cache original request object from parent+38; select inline/heap from capacity+18;07bdaf load counted length+10;07bdb6 call007990 with full data/length;07bdbe second newline/flush.",
+      "evidence_ids": [
+        "ev_36f5127bed2d3004c5965aeb2f5266deb3c0ea2f87a490564340600f0fdd0854",
+        "ev_59f964bdaa2f9917befd775df1142bf7244d1c3f764a1029002706ae0ad8022a"
+      ]
+    },
+    {
+      "at": "0x18007bdd2",
+      "observation": "After second flush009eb0 copies the cached ORIGINAL request object, observing its current bytes. Title is constructed as15inline bytes from85208/85210/85214/85216, followed by NUL.",
+      "evidence_ids": [
+        "ev_36f5127bed2d3004c5965aeb2f5266deb3c0ea2f87a490564340600f0fdd0854",
+        "ev_59f964bdaa2f9917befd775df1142bf7244d1c3f764a1029002706ae0ad8022a"
+      ]
+    },
+    {
+      "at": "0x18007be45",
+      "observation": "038bc0 receives owned title UNKNOWN MESSAGE, owned request body and flags0x10. Only after normal dialog return does07be4a..07be6f copy CURRENT response parent+380/+390 to output pointer+30; selector0 returns.",
+      "evidence_ids": [
+        "ev_36f5127bed2d3004c5965aeb2f5266deb3c0ea2f87a490564340600f0fdd0854",
+        "ev_59f964bdaa2f9917befd775df1142bf7244d1c3f764a1029002706ae0ad8022a"
+      ]
+    },
+    {
+      "at": "0x1800345da",
+      "observation": "Shared continuation resets moved response,0345fe destroys DOM and034603 loads output. Does not visit normal response log, append-NUL, encryption or event dequeue.",
+      "catch_evidence": "outputs/anadius-no-response-source/native-catch.json"
+    }
+  ],
+  "limits": [
+    "Static evidence does not observe execution. No target DLL/game or original exception was run.",
+    "HOST marker/interfaces reproduce selected C++ behavior; original MSVC RTTI, object/EH ABI and general unwind are not implemented.",
+    "Owned stream/dialog and C++ std::string semantics are explicit reconstruction boundaries. Existing Dialog helper retains UTF-8/full-count conversion followed by SDK wide C-string display.",
+    "No fresh analysis session was required: complete retained evidence and byte proof already covered this question."
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

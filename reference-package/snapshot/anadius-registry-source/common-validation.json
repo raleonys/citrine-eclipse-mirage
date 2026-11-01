@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "registry",
+    "result": "PASS",
+    "output": "registry-source: 991 checks passed",
+    "executable_sha256": "2a3f3acd041b2b759c18ff78e499781de9776e1d267b78662d68567c7ab5c766"
+  },
+  "execution_scope": "Five recovered registry callbacks and value/handle helpers; synthetic registry/CRT/wait effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-registry-source/abi_cells.hpp",
+      "sha256": "4fd3d0a6169f8feb22d60f982b94194c3d4b47f2eee1478444e3767070a92351"
+    },
+    {
+      "path": "anadius-registry-source/registry_tests.cpp",
+      "sha256": "14f9f7148e517d4241904add1c8aaa1c55b57aa97d20aa54830a67b896683da8"
+    },
+    {
+      "path": "anadius-registry-source/registry.cpp",
+      "sha256": "757e2ffb52077852d9ca509635a10bc5191f2176f6d05a1dd8c88131965680f5"
+    },
+    {
+      "path": "anadius-registry-source/registry.hpp",
+      "sha256": "f3393a359bbafe7feef5725aae73967f18e65814cafd0726792b51fbe5716d34"
+    }
+  ]
+}

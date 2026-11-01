@@ -1,0 +1,32 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "kind": "New typed Win32 composition adapter for recovered core, not original source",
+  "evidence_source": "../anadius-thread-source/evidence.json",
+  "functions": [
+    {
+      "va": "0x18005e87c",
+      "assembly_evidence": "ev_d58e9b8ceba2f41ce934918009703a27f060c3bcab2c428a60d634d445eddef3",
+      "pseudocode_evidence": "ev_c1eb3343a093b39391fd980d2be1146e254698b1df6fd4aa297ed21bb701aabc"
+    },
+    {
+      "va": "0x18005e8e0",
+      "assembly_evidence": "ev_b2508bf2d6430c3f029f1f6090cadaa12d2315a853312d93ad48f42602adfb0e",
+      "pseudocode_evidence": "ev_06d02d032bc19f80b5602d3d24b5ce1d432c5a742d8014e2c0f45f08f084deea"
+    },
+    {
+      "va": "0x18005e7a8",
+      "assembly_evidence": "ev_0de6693f5df6645aa78071aa314460e2d91874a3dee820d61225b7a47d038c06",
+      "pseudocode_evidence": "ev_5e71c9771b4ee41eabb165b637fe2731b56aa25a4607e88aa0466f7c42c11285"
+    },
+    {
+      "va": "0x18005e818",
+      "assembly_evidence": "ev_8fea6c4330f1fd1eaa0fe4621d251c23bb22742823144eb595f7e195b1d67880",
+      "pseudocode_evidence": "ev_180fbdd57149b809d1d34dc83c4dc87abf6a09077854d9410109cf21cb98e12a"
+    }
+  ],
+  "coverage": "Only seven SDK API call sites; caller must supply rebuilt wrapper binding and complete CRT services; no native API invocation in tests",
+  "recovered_composition": [
+    "../anadius-crt-runtime-source/evidence.json",
+    "../anadius-crt-error-source/evidence.json"
+  ]
+}

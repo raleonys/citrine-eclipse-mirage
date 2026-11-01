@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T03:52:58.7899378Z",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_callbacks.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\original_effects.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\..\\anadius-registry-source\\registry.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\..\\anadius-host-callbacks-source\\callbacks.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\..\\anadius-network-hook-source\\connect.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\..\\anadius-execution-source\\execution.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\..\\anadius-host-init-source\\host_init.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\..\\anadius-path-source\\paths.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\..\\hook-engine-source\\adapters.cpp",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-native-source\\build\\native_tests.exe"
+  ],
+  "tests": "PASS: 91 native callback/trampoline checks; synthetic originals, real LastError metadata only",
+  "terminal_cases": [
+    {
+      "mode": "--closed",
+      "expected": 86,
+      "actual": 86,
+      "result": "PASS"
+    },
+    {
+      "mode": "--missing",
+      "expected": 86,
+      "actual": 86,
+      "result": "PASS"
+    },
+    {
+      "mode": "--throw-original",
+      "expected": 86,
+      "actual": 86,
+      "result": "PASS"
+    }
+  ],
+  "scope": "SDK function-pointer calls to own C++ synthetic originals; actual GetLastError/SetLastError TLS metadata; one test worker; no hooks/target DLL/process/socket/registry APIs",
+  "executable_sha256": "52d39f81509563668fa164ac4d0c348834ba70f4e55f5e706545b2908dda5a2b",
+  "original_ABI_runtime_equality": "unproven"
+}

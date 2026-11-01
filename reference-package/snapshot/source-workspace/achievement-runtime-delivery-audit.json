@@ -1,0 +1,55 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-21T18:50:02.3348608Z",
+  "prior_package_sha256": "37c50c03bd301189219c1e55ad3b9d917a8ecd4de5e04d0e0ac7b59a42cf6bb0",
+  "prior_source_count": 398,
+  "unchanged_prior_sources": 398,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-achievement-runtime-source/runtime_tests.cpp",
+    "anadius-achievement-runtime-source/runtime.cpp",
+    "anadius-achievement-runtime-source/runtime.hpp",
+    "anadius-achievement-runtime-source/utc_tests.cpp",
+    "anadius-achievement-runtime-source/utc.cpp",
+    "anadius-achievement-runtime-source/utc.hpp"
+  ],
+  "current_sources": 404,
+  "current_documents": 159,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 138,
+  "cpp_objects": 134,
+  "c_objects": 4,
+  "normal_test_groups": 123,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "utc",
+      "result": "PASS",
+      "output": "PASS: 76 UTC wrapper checks; fixed providers and explicit host compatibility",
+      "executable_sha256": "93f2c6af88e0016f96b646018c9fd792bad88a7209f4cae584bf26de26a52a1d"
+    },
+    {
+      "module": "achievement_runtime",
+      "result": "PASS",
+      "output": "PASS: 163 achievement runtime integration checks; own fixtures and controlled clock/locks/events only",
+      "executable_sha256": "7a4a0df90a4e3a6ba4212b01224c48a05a32ed36d5f8e2bd3366f58a04658fbb"
+    }
+  ],
+  "new_checks": 239,
+  "master_build_sha256": "9a2abbd97d85f56d911da548eb942aa0c959b44662f1bad68a2e091bd562c552",
+  "common_build_script_sha256": "993b3bff3dc9664515535d1c28758e9289fe852ccda9870c2a3734ff58094a5f",
+  "cmake_sha256": "b3161b6f04fb729c547003463ed09530780776b836bb628c7a59124cf6e3b423",
+  "normal_source_procedures_added": [
+    "0x180041b60"
+  ],
+  "new_composition": "PersistenceEffects/bind_state to actual grant/calendar/XML/file/INI sources, not separate original procedures",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "host_clock_formatter": "selected compatibility, not original CRT recovery",
+  "native_ABI_SEH_global_runtime": "not established"
+}

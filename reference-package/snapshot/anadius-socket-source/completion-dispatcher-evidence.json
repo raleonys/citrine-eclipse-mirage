@@ -1,0 +1,231 @@
+{
+  "schema": "completion-dispatcher.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180027c10",
+      "pseudo_evidence": "ev_f152e2905264f9dc18af84544b646d77dac85539841a6cd365e7e2309d3f7065",
+      "assembly_evidence": "ev_d48cd3bea9d0dcba074c541aa1bcfa2e381f3b7fc10b43089ec0486b70fb14bf"
+    },
+    {
+      "address": "0x1800298b0",
+      "pseudo_evidence": "ev_e6bbbaa1780b6df4e1edc25150c1c8a939c0d5fb937afed734d4f8c641d88539",
+      "assembly_evidence": "ev_4b20e2442cb7d601c8177ba4b68acc8c09a8cce81580892199e78a5d0f00c319"
+    },
+    {
+      "address": "0x18002a190",
+      "pseudo_evidence": "ev_e826697a7d9543338d9741906c5ce25c29a36806fd701f2178a335f314f7fee2",
+      "assembly_evidence": "ev_28baeec203ffe1abf8bab8af7907605b09a6dfb72018fcd7ea4ffbca8955f680"
+    },
+    {
+      "address": "0x180026aa0",
+      "pseudo_evidence": "ev_d4f71cf8b783578dcbaae1a45c68bba3e631d5381f8102b4c3d6ec82db60b419",
+      "assembly_evidence": "ev_5263c2b7208ef28e3ec671a729ee180d773d5dcd6ba45d16972e7ebef04cba21"
+    },
+    {
+      "address": "0x180029880",
+      "pseudo_evidence": "ev_099a4d8830da2bba20807f78aa93894b35e81cddac49bb687bb0e478aed18372",
+      "assembly_evidence": "ev_dc420a487cd524faf28f8224851124216569a1c6ae0c6a45fc1046b42686267c"
+    },
+    {
+      "address": "0x180024100",
+      "pseudo_evidence": "ev_c01499752ba96c2522de9eaf6b1d28f5c3f1a5e3b3a7ea6c61904ed9d3a748f7",
+      "assembly_evidence": "ev_fe4ae2e0ab2242dd42e9652cd4d761e053d409fc5426950bde27eb107990c0ac"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "completion_dispatcher.hpp": "fc956c1b9be86b46934afe11bfdc380e9c5c5264d773756cb09f5db331431955",
+    "completion_dispatcher.cpp": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952",
+    "completion_dispatcher_native.hpp": "7dd0296e59451095d528515d50d97f6052ad956c000858b7e4af68e0922a387b",
+    "completion_dispatcher_native.cpp": "1d031ba931aac7a2daac70c54bc81d7c2eac0599a821d220a5330db1c7a405ef",
+    "completion_dispatcher_tests.cpp": "867c851b2b69a7954c7e0d47eac65296700267b2d34250776ba819fdf801ddcf",
+    "completion_dispatcher_native_tests.cpp": "67f81e8f7beb4f9759397963b9209697a133eb096fec47899edfc85257a73be1",
+    "build.ps1": "4f97a38086f936ef8bbc5b9e76e782854a38014b02086d70f8720e58eefa2d78",
+    "CMakeLists.txt": "2ca43b7f9e74bb7a625df5091d35c55d774c8efecaa2d471a19caf861d544ad4",
+    "README.md": "00cb2694d0d8ba4089e5e52e277c5cbe580a8dcb1bb3199d554157795b75f4ac"
+  },
+  "support_hashes": {
+    "completion-dispatcher-evidence.pseudo.c.txt": "5705415b605aa6f9247a58d4d6b5e7fadf61b6e27c0ec5eae3f67e2525523fd1",
+    "completion-dispatcher-evidence.asm.txt": "dd41ec2b940aa41b101cc5f4de137d05f3bf4abaae60cbf3996d875a591c1060",
+    "completion-dispatcher-flow-audit.md": "db9748737e9c535a88e22b88573f9757f39afcd7c07c99619ae866514aa76f8f",
+    "completion-dispatcher-flow-audit.json": "3f49e0a78b3c7d2424a0680855534496c17f4024145b36817faff2fa8c73c0e0",
+    "completion-dispatcher-review.md": "4b61ebcd0e5620ce0a024906014a53555a990bbe716cab35e5932de443eb0d53",
+    "completion-dispatcher-review.json": "42a7acb1a79e26454834fc6253d9cca45e08a5e412454d0488329e1d7ded9f61",
+    "completion-dispatcher-rea-session.json": "d8ba5e2268cd0c6a2cc71a36833376918b62d9878a445d9af602857472f3a408"
+  },
+  "normal_source_procedures_added": [
+    "0x180027c10"
+  ],
+  "new_original_procedures": 1,
+  "required_providers": [
+    "Native GS TLS vector slot capture and live epoch read",
+    "CRT guard04b838/04b770/04b7cc unchanged",
+    "024100 exception-copy zero-pair/copy/return-destination and terminal029880 rethrow/INT3",
+    "Exact low32 stop34 read/wake38 exchanges and native storage",
+    "Operation function callbacks and native lifetime/exception/SEH/concurrency",
+    "GenericA10F8/systemA1110 logical category mappings and borrowed packet metadata distinct from cancellation reason+38"
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x180027c39",
+        "0x180027c40",
+        "0x180027c49",
+        "0x180027c4d",
+        "0x180027ee6",
+        "0x180027eed",
+        "0x180027ef0",
+        "0x180028092",
+        "0x180028099",
+        "0x18002809e",
+        "0x1800280ab",
+        "0x1800280b2",
+        "0x1800280be"
+      ],
+      "finding": "Capture native GS TLS vector slot ADDRESS once; read live pointee epoch+4 for each nonnull operation; signed guard comparison then required header, live guard reload and only -1 opaque07dff0 atexit registration/footer; helpers remain required CRT providers"
+    },
+    {
+      "addresses": [
+        "0x180027c70",
+        "0x180027c73",
+        "0x180027c89",
+        "0x180027c9e",
+        "0x180027cb9",
+        "0x180027cc0",
+        "0x180027cc7",
+        "0x180027cdd",
+        "0x180027ce0"
+      ],
+      "finding": "Gate low32 CAS expected1 to0; enter recursive critical section; detach only if headnonnull; service collect slot20 receives local queue and live next read follows callback; shared actual CompletionScheduler queue fields used"
+    },
+    {
+      "addresses": [
+        "0x180027d00",
+        "0x180027d17",
+        "0x180027d1b",
+        "0x180027d27",
+        "0x180027d2b",
+        "0x180027d38",
+        "0x180027d42",
+        "0x180027d65",
+        "0x180027d88",
+        "0x180027d8e"
+      ],
+      "finding": "Pop/detach live local operation and queued1 before liveport post(0,0,operation); failure recursively enters same gate, appends failed and remainder to live scheduler queue, sets gateflag1 and leaves recursive acquisition only; no failure LastError read"
+    },
+    {
+      "addresses": [
+        "0x180027db3",
+        "0x180027dbf",
+        "0x180027dd8",
+        "0x180027ddd",
+        "0x180027de6",
+        "0x180027ded",
+        "0x180027def",
+        "0x180027df2",
+        "0x180027df6",
+        "0x180027e17"
+      ],
+      "finding": "Timer enabled/head reloaded live; slot18 forwards signed accumulator and live next; final signed<300000000; NEG32wrap before signextend then multiply10; live timer handle,period300000,nullcallback/argument,false resume; ignore return"
+    },
+    {
+      "addresses": [
+        "0x180027e40",
+        "0x180027e57",
+        "0x180027e5b",
+        "0x180027e62",
+        "0x180027e6f",
+        "0x180027e8c"
+      ],
+      "finding": "Residual local queue popped/detached live; completion(nullowner,operation,generic0,0); no queued-state or workcount change; outer gate leaves last; no invented unwind"
+    },
+    {
+      "addresses": [
+        "0x180027e92",
+        "0x180027e95",
+        "0x180027e99",
+        "0x180027e9f",
+        "0x180027ea5",
+        "0x180027eab",
+        "0x180027ebf",
+        "0x180027ec3",
+        "0x180027ecc"
+      ],
+      "finding": "Zero bytes/key/operation; SetLastError0 BEFORE live timeout40 unsignedmin with original requestedtimeout; liveport GQCS then unconditional cachedGetLastError, even success; five-SDK adapter has no hidden mapping/provider call before LastError"
+    },
+    {
+      "addresses": [
+        "0x180027efc",
+        "0x180027eff",
+        "0x180027f0a",
+        "0x180027f11",
+        "0x180027f14",
+        "0x180027f2a",
+        "0x180027f32",
+        "0x180027f38",
+        "0x180027f3e",
+        "0x180027f43",
+        "0x180027f49",
+        "0x180027f68"
+      ],
+      "finding": "Key2 reads packet category0/status10/bytes14; otherkey writes staticA1110/cachedstatus/GQCSbytes; packet binding separated cancellationreason+38 and no OVERLAPPED overlay; CAS0to1 but callback only old1; metadata precedes CAS; no operation access after callback"
+    },
+    {
+      "addresses": [
+        "0x180027f71",
+        "0x180027f75",
+        "0x18002806a",
+        "0x180028076",
+        "0x180028084",
+        "0x18002808c",
+        "0x180029889",
+        "0x18002988e"
+      ],
+      "finding": "Pending count signed>0 clears before024100 twice with distinct destinations then required terminal029880; helper CALL04a2d4/INT3/noRET means no invented normal fallthrough; helper/CRT source remains required and adds zero recovery count"
+    },
+    {
+      "addresses": [
+        "0x180027f7b",
+        "0x180027f87",
+        "0x180027f95",
+        "0x180027f9d",
+        "0x180027fa2",
+        "0x180027faa",
+        "0x180027fb0"
+      ],
+      "finding": "Pending<=0 writes logicalsuccess genericA10F8 before low32workdecrement; prior1 calls actual02a190; return1; native padding excluded and callback may already have destroyed operation"
+    },
+    {
+      "addresses": [
+        "0x180027fb8",
+        "0x180027fbd",
+        "0x180027fc5",
+        "0x180027fd9",
+        "0x180027feb",
+        "0x180027ff0",
+        "0x180027ffd",
+        "0x180028012",
+        "0x18002801c",
+        "0x180028026",
+        "0x180028031",
+        "0x180028054"
+      ],
+      "finding": "Failure/nullop timeout102 with originalINFINITE retries; finite returnsgeneric0; othercachedstatus categoryALWAYSeven0; successkey1retrywithoutflags; otherkeywake0/stopread then stop0retry or wake1prior0onlyliveportrelay; relayfailure freshcachedstatus/categoryALWAYS, allrelayexits return0/no rollback"
+    }
+  ],
+  "independent_production_review": "PASS; completion-dispatcher-review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "execution": "Actual027c10 dispatcher bridge joins existing0298b0 worker run/02a190 stop and shared completion cancellation queues; controlled operation/CRT/GS TLS/low32atomic/lifetime effects and five injected SDK imports; no original execution, real worker thread or network",
+  "unproven": [
+    "Native GS TLS and low32 atomic storage/concurrency",
+    "024100/029880 exception-copy/rethrow/refcount/lifetime and CRT guard providers",
+    "Operation function callbacks, native ownership, vtables, exception/SEH/unwind and ABI",
+    "Complete DLL integration and original runtime differential"
+  ]
+}

@@ -1,0 +1,438 @@
+{
+  "schema": "b30.constructor-evidence-api-audit.v1",
+  "reviewer": "/root/b22_provider_audit",
+  "generated_at_utc": "2026-10-30T17:27:22.018986+00:00",
+  "scope": "Independent retained-evidence and existing-source API research for one actual023000 normal typed constructor; no production/tests authored",
+  "baseline_zip_sha256": "23cda5351cb3e5481152bb35db699363bf8d66aee98f549a79c0dd2110d2af15",
+  "evidence": [
+    {
+      "address": "0x180023000",
+      "source_presence": "module_record_only",
+      "pseudo_evidence": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "assembly_evidence": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+      "definitions": []
+    },
+    {
+      "address": "0x180023d20",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_6cc121a29050e5e059f62f9f48170fa0366704c46376ab9043b965b45f7da214",
+      "assembly_evidence": "ev_6635266dde9dfb6632465ffcfddef88dc684468dc2261cecc5081598c9f31c93",
+      "definitions": [
+        {
+          "path": "anadius-socket-move-source/move.cpp",
+          "symbol": "move_socket_023d20"
+        }
+      ]
+    },
+    {
+      "address": "0x180028950",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_28dd5dfe2f74baa668fd9399a25f84bdb97a80401a2dbe436d00ec02ff667eb5",
+      "assembly_evidence": "ev_9c247d8443f8d438e254883e524aeb8acfa47b08146d979682aab7097bd60ae5",
+      "definitions": [
+        {
+          "path": "anadius-socket-move-source/move.cpp",
+          "symbol": "transfer_socket_028950"
+        }
+      ]
+    },
+    {
+      "address": "0x180024db0",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3",
+      "assembly_evidence": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357",
+      "definitions": [
+        {
+          "path": "anadius-socket-source/lifecycle.cpp",
+          "symbol": "destroy_024db0"
+        },
+        {
+          "path": "anadius-socket-source/lifecycle.cpp",
+          "symbol": "LifecycleRuntime::destroy_socket_024db0"
+        }
+      ]
+    },
+    {
+      "address": "0x18002bc70",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_d6716c5d525f5e8e2eb566ef802896e45423abc1be5b6a78f2da5f052740c118",
+      "assembly_evidence": "ev_4fa4de12d674eff8476f9cf6f72bdef77e52de8ef76d04cd9a0e596bd21a0db1",
+      "definitions": [
+        {
+          "path": "anadius-messages-source/messages.cpp",
+          "symbol": "reset_02bc70"
+        },
+        {
+          "path": "anadius-session-source/handler.cpp",
+          "symbol": "MessageHandler::reset_02bc70"
+        },
+        {
+          "path": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "reset_session_cipher_02bc70"
+        }
+      ]
+    },
+    {
+      "address": "0x180026570",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_569927c89e98051d661b466fccfa8c6436572a263f3441c01721f2793942f5d5",
+      "assembly_evidence": "ev_4721f071259f0f08eb60d96ed3bd1f1b2603864a224a766c2493f1fa35280260",
+      "definitions": []
+    },
+    {
+      "address": "0x180017420",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_47a23a1547e1e17db86b3c8bae1e5ebefeb62279c087c44967b4df46a6292967",
+      "assembly_evidence": "ev_bf03878c45fa709dc9c54b26bb21d0f065a1b3b3a7d7dcb2141c0c268f8ca8f7",
+      "definitions": []
+    },
+    {
+      "address": "0x180026290",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_d5253fe30c46ce5fd234147de8a63cebe2795f47f7d74f84a7b036d7d67a0d9d",
+      "assembly_evidence": "ev_7d65dd1db58e08d08433ac751b1a2544c4010a23f857d377e111e588fa8a55a4",
+      "definitions": []
+    },
+    {
+      "address": "0x180026880",
+      "source_presence": "no_definition_mapping",
+      "pseudo_evidence": "ev_585721b4cf162199c0fd03386d1d3b23345fe6bf552668015f3b6e9bac5b07af",
+      "assembly_evidence": "ev_6d1aac9f1a3f0e278cf156dd8ecd40d5afb1881cbc1014c22f366b33ab4a8071",
+      "definitions": []
+    },
+    {
+      "address": "0x18004b0bc",
+      "source_presence": "source_definition_mapped",
+      "pseudo_evidence": "ev_9c975496fb48d4e6fca6f8c0535c16fa44feb14e8dafa92ef6b45a98915fa0ec",
+      "assembly_evidence": "ev_4b9d54867bdd71cc2cd07945df16f49f84fdecaa3c3535386e97bd20f64624ec",
+      "definitions": [
+        {
+          "path": "anadius-socket-source/cipher_session.cpp",
+          "symbol": "allocate_04b0bc"
+        },
+        {
+          "path": "anadius-socket-source/lifecycle.cpp",
+          "symbol": "OwnedNoopControlFactory::allocate_04b0bc"
+        }
+      ]
+    }
+  ],
+  "coordinates": {
+    "allocation_request": "0x1c8 (456)",
+    "native_owner_relative_to_control": "0x10",
+    "observed_owner_extent": "0x1b8 (440), inferred last handler range; not a host sizeof/ABI claim",
+    "field_map": [
+      {
+        "field": "control.vtable_identity",
+        "control_relative": "0x0",
+        "owner_relative": null,
+        "initial_observed_value": "0x180084750",
+        "anchors": "2303c/23054"
+      },
+      {
+        "field": "control.strong",
+        "control_relative": "0x8",
+        "owner_relative": null,
+        "initial_observed_value": 1,
+        "anchors": "2303f"
+      },
+      {
+        "field": "control.weak",
+        "control_relative": "0xc",
+        "owner_relative": null,
+        "initial_observed_value": 1,
+        "anchors": "23046"
+      },
+      {
+        "field": "owner.weak_self.object",
+        "control_relative": "0x10",
+        "owner_relative": "0x0",
+        "initial_observed_value": 0,
+        "anchors": "23078 after FIRSTmove2306b"
+      },
+      {
+        "field": "owner.weak_self.control",
+        "control_relative": "0x18",
+        "owner_relative": "0x8",
+        "initial_observed_value": null,
+        "anchors": "2307b after FIRSTmove2306b"
+      },
+      {
+        "field": "owner.socket",
+        "control_relative": "0x20",
+        "owner_relative": "0x10",
+        "initial_observed_value": "Second023d20 move target",
+        "anchors": "2307f..23086"
+      },
+      {
+        "field": "owner.input.inline16",
+        "control_relative": "0xb8",
+        "owner_relative": "0xa8",
+        "initial_observed_value": "16zero bytes",
+        "anchors": "2308f"
+      },
+      {
+        "field": "owner.input.size",
+        "control_relative": "0xc8",
+        "owner_relative": "0xb8",
+        "initial_observed_value": 0,
+        "anchors": "23096"
+      },
+      {
+        "field": "owner.input.capacity",
+        "control_relative": "0xd0",
+        "owner_relative": "0xc0",
+        "initial_observed_value": 15,
+        "anchors": "2309d"
+      },
+      {
+        "field": "owner.deque.proxy",
+        "control_relative": "0xd8",
+        "owner_relative": "0xc8",
+        "initial_observed_value": "zero then fresh16-byte proxy",
+        "anchors": "230b6/230d5"
+      },
+      {
+        "field": "owner.deque.map",
+        "control_relative": "0xe0",
+        "owner_relative": "0xd0",
+        "initial_observed_value": null,
+        "anchors": "230b9"
+      },
+      {
+        "field": "owner.deque.map_size",
+        "control_relative": "0xe8",
+        "owner_relative": "0xd8",
+        "initial_observed_value": 0,
+        "anchors": "230bd"
+      },
+      {
+        "field": "owner.deque.offset",
+        "control_relative": "0xf0",
+        "owner_relative": "0xe0",
+        "initial_observed_value": 0,
+        "anchors": "230c1"
+      },
+      {
+        "field": "owner.deque.count",
+        "control_relative": "0xf8",
+        "owner_relative": "0xe8",
+        "initial_observed_value": 0,
+        "anchors": "230c5"
+      },
+      {
+        "field": "owner.handler",
+        "control_relative": "0x100",
+        "owner_relative": "0xf0",
+        "initial_observed_value": "actual02bc70 reset",
+        "anchors": "230db..230e2"
+      }
+    ]
+  },
+  "exact_normal_steps": [
+    {
+      "addresses": "2301b..23054",
+      "effect": "allocate0x1c8 nonnull-or-throw; initialize strong1 weak1 and084750 table DATA identity"
+    },
+    {
+      "addresses": "23063..2306b",
+      "effect": "first actual023d20: pending source to temporary"
+    },
+    {
+      "addresses": "23078..2307b",
+      "effect": "only now zero owner weak-self object/control, with no reference-release call"
+    },
+    {
+      "addresses": "2307f..23086",
+      "effect": "second actual023d20: temporary to owner socket+10"
+    },
+    {
+      "addresses": "2308f..230a8",
+      "effect": "zero all16 inline input bytes, size0, cap15 and leadingNUL"
+    },
+    {
+      "addresses": "230af..230c5",
+      "effect": "zero five qwords of output deque header"
+    },
+    {
+      "addresses": "230c9..230d8",
+      "effect": "allocate16; proxy+8=0 FIRST, then header.proxy=proxy, then proxy[0]=header identity"
+    },
+    {
+      "addresses": "230db..230e2",
+      "effect": "actual reset of SAME owner handler/cipher at+f0"
+    },
+    {
+      "addresses": "230e8..230eb",
+      "effect": "actual024db0 on moved temporary, not on transferred live owner socket"
+    },
+    {
+      "addresses": "230f5..230fc",
+      "effect": "compute owner=control+10; publish caller output.object then output.control"
+    },
+    {
+      "addresses": "23109..23116",
+      "effect": "load owner weak control; skip setup if existing control has strong!=0"
+    },
+    {
+      "addresses": "23118..2311d",
+      "effect": "increment ORIGINAL allocated control strong ifnonnull"
+    },
+    {
+      "addresses": "23122..23134",
+      "effect": "cache LIVE caller output.control; ifnonnull increment its weak and choose new weak object=owner, else new pair empty"
+    },
+    {
+      "addresses": "23138..2313f",
+      "effect": "write owner weak object, THEN load displaced owner weak control, THEN write new weak control"
+    },
+    {
+      "addresses": "23148..2315c",
+      "effect": "decrement displaced weak; on last weak invoke its slot08 delete"
+    },
+    {
+      "addresses": "2315f..23188",
+      "effect": "release CACHED published control strong; on last invoke slot00 dispose, then read/decrement SAME cached control weak and slot08 delete onlast"
+    },
+    {
+      "addresses": "2318b",
+      "effect": "return caller output reference; do not touch potentially disposed owner/control after final release"
+    }
+  ],
+  "control_table": {
+    "va": "0x180084750",
+    "slots00_08_10": [
+      "0x180026570",
+      "0x180017420",
+      "0x180026290"
+    ],
+    "retained_bytes_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "dispose00": {
+      "entry": "0x180026570",
+      "argument_coordinate": "CONTROL base",
+      "observed_effects": [
+        "26880 clears deque at control+d8=owner+c8",
+        "load and zero deque proxy pointer then sized-free16",
+        "free/reset input at control+b8=owner+a8; size control+c8; capacity control+d0",
+        "024db0 at control+20=owner+10 destroys owned socket",
+        "reload weak-self control at control+18=owner+8; decrement weak and delete_slot08 onlast"
+      ],
+      "source_body_recovered": false
+    },
+    "delete08": {
+      "entry": "0x180017420",
+      "anchors": [
+        "17420 testsnull",
+        "17428 EDX=1",
+        "1742d JMP virtual slot+10"
+      ],
+      "source_body_recovered": false
+    },
+    "scalar_deleting10": {
+      "entry": "0x180026290",
+      "anchors": [
+        "26296/262a0 restores084750 table identity",
+        "262a3 tests low flags bit1",
+        "262a8 EDX=0x1c8",
+        "262ad CALL04b0f8"
+      ],
+      "observed_effect": "Deletes control allocation only whenflags&1; not substitute for owned-session disposal",
+      "source_body_recovered": false
+    }
+  },
+  "source_API_recommendation": [
+    "Use explicit caller output pair reference: constructor fills output before weak-self callbacks, and returns that same caller reference. A returned-value-only transaction hides required published state when later callbacks throw.",
+    "Allocator supplies a live exclusive typed block containing native table identity metadata, existing IoReference and an owner projection. Require nonnull-or-throw for0x1c8 and16 requests. Native owner identity is control identity+10; no host vtable cast or original VA call.",
+    "Owner should reuse SAME FrameReadOwner weak-self, ReceiveBufferString input, SocketObject plus distinct backing AcceptorState and SAME SessionCipher. Existing WriteFinishOwner maps d0/d8/e0/e8, but proxy_c8 and16-byte proxy backpointer/iterator require explicit additional projection.",
+    "Construct actual temporary SocketObject with distinct AcceptorState and invoke B29 move twice. Clear weak pair AFTER first move, before second; do not replace constructor stores with weak-release assignment.",
+    "Use actual reset_session_cipher_02bc70 and destroy_024db0; no mock-reset wrapper, independently split cipher or generic replacement socket move.",
+    "Use cached published control across old weak-delete and final strong/dispose/weak/delete callbacks. Do not reload from output/control/owner after callbacks; callbacks may change fields or end owner lifetime.",
+    "No automatic shared_ptr substitution, native vtable dispatch implementation, extra destructor recovery or final async lifecycle policy is implied. Required IoReference dispose/delete callbacks retain real code/control/object lifetimes."
+  ],
+  "reference_obligations": [
+    "Ordinary no-reentry return is allocated strong1/weak2: temporary strong increment isbalanced; installed selfweak adds one to implicit weak1.",
+    "Selected dispose must release the owned weak-self before outer implicit-weak release, as026570 does; a counter-only synthetic dispose is not proof of real owner destruction.",
+    "Control remains allocated through dispose callback and subsequent weak decrement; slot08 may finallydelete. Do not access owner/control after final release, including postvalidation, automatic local cleanup or return via a freed member.",
+    "An old expired weak may be deleted after output publication and after new weak installation. Its callback may mutate output or new control counts; final strong release must still target the cached control and read weak AFTER disposal."
+  ],
+  "allocation_and_failure_limits": [
+    "Retained04b0bc retries malloc/new-handler then terminal throws; no valid normal null allocation is supported. Native firstnull branch leads object0x10/control0 and low-memory dereference, not empty success;16-byte allocation is dereferenced without null check.",
+    "Before temporary destruction succeeds output remains untouched; earlier source socket movement, registry insertion, input/deque initialization and handler reset are already visible.",
+    "After output stores, oldweak-delete or final dispose/delete failures leave publication and prior field/refcount effects visible. Do not roll back output or blindly retry.",
+    "Normal ASM is not complete native EH/funclet cleanup proof. Implicit RAII counter release on a synthetic callback throw must not be presented as observed native unwind. Provider allocation and partial construction cleanup remain explicit obligations."
+  ],
+  "native_lifetime_limit": "023000 selfweak does not protect detached raw-owner jobs. Existing025480 captures only owner token in closure, and user must keep all owner/context/code alive until async operations and raw jobs are externally drained. Constructor success is not quiescence/unload proof.",
+  "normal_body_classification": {
+    "new_address_only": "0x180023000",
+    "expected_mapped": [
+      489,
+      490
+    ],
+    "expected_eligible": [
+      493,
+      494
+    ],
+    "expected_normal": [
+      126,
+      127
+    ],
+    "new_native_ABI_or_provider_closures": 0,
+    "condition": "Actual observed constructor algorithm must be implemented; allocator/control/vtable lower dependencies stay explicit. No claim for026570/017420/026290/26880."
+  },
+  "existing_source_hashes": {
+    "anadius-socket-move-source/move.hpp": "5322308f915fdae733183bcdea2adfe860cee02002686a1744dbd07feb0cfb59",
+    "anadius-socket-move-source/move.cpp": "af73b49ea83cfc61bead66a631dcc65580657281d648b7535329de2598a85a92",
+    "anadius-socket-source/frame_read.hpp": "ea9adf5bd04a872d8e78173c5bdf9bf053deecdd6cc90665e4674efbf72d4111",
+    "anadius-socket-source/frame_read.cpp": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+    "anadius-socket-source/io_completion.hpp": "85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32",
+    "anadius-socket-source/write_finish.hpp": "c9e341de1a667ba2f17c1861aed4800243d2ebff022f3b9df47cdf6e48c2f6ba",
+    "anadius-socket-source/cipher_session.hpp": "3fa624b7443d7fa1ab3eb86f9567e5b98323014166b98be43328360c272af412",
+    "anadius-socket-source/cipher_session.cpp": "62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2",
+    "anadius-socket-source/lifecycle.hpp": "081bf08e4214bdaaa2252c6e1abcb6ce6acad75c2805656cec5dee6e9eeee898",
+    "anadius-socket-source/lifecycle.cpp": "6f5f684e1fb3224a5a9fd92ebf51f4b495effecf0f5ee7aad7fa7bc92fbb52c8"
+  },
+  "retained_file_hashes": {
+    "anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "limits": {
+    "new_target_queries": false,
+    "original_input_reads": false,
+    "original_DLL_or_game_execution": false,
+    "production_or_tests_modified": false,
+    "generic_CRT_reopened": false
+  },
+  "root_API_proposal_review": {
+    "at_utc": "2026-10-30T17:30:24.660757+00:00",
+    "agreement": "Proposed SessionControl:IoReference embedding SessionOwner with FrameReadOwner, real SocketObject/state/input/deque/cipher plus persistent single-use Scratch fits the observed normal body. No production code has been audited at this proposal stage.",
+    "cautions": [
+      "Delete copy/move of persistent Scratch, which embeds SocketObject referencing its own AcceptorState. Keep owner/control addresses stable and avoid generated moves that retain links to old backing.",
+      "Owner address cast is an opaque identity only. Native-relative owner+10/a8/c8/f0 tokens need explicit typed bindings, not reinterpretation of host field offsets.",
+      "Clear only weak_self.object_00/control_08 after first move; preserve host-only input_a8 pointer to the same owner.input. Do not assign an empty entire FrameReadOwner and lose linkage.",
+      "Persistent Scratch retains the temporary registered socket across lower/proxy failures; caller and allocator must retain all partial block/scratch/service/code state until separate safe cleanup. This prevents stack dangling but does not prove native EH rollback.",
+      "Retained Scratch allocation may point to freed control after final cached strong/dispose/delete. No owner/control postvalidation or implicit cleanup may dereference it after final release. Scratch itself must remain caller-alive through call.",
+      "Allocator nullptr->bad_alloc is an out-of-contract diagnostic, not native null behavior; allocate throw may have unknown lower outcome and must be retained by lower if it created state.",
+      "Control dispose must destroy/release its owned selfweak and proxy/input/socket resources; deleteSlot08 must not dispose them a second time. Full selected control provider implementation/native deleter recovery remains explicit."
+    ]
+  },
+  "early_production_review": {
+    "result": "No blocker found; final frozen tests and common build not yet reviewed",
+    "at_utc": "2026-10-30T17:32:34.663498+00:00",
+    "source_hashes": {
+      "outputs/anadius-session-owner-source/owner.hpp": "ec8b8370965d5097f53dd6a2a1f4221b27e32c94ba14acf9601d92a58f702f17",
+      "outputs/anadius-session-owner-source/owner.cpp": "31b749d9bbe830e42dd13b7d04be651fb5ce1237f27d2e2ba9a4fe39ab232f3c"
+    },
+    "verified": [
+      "Persistent stable noncopyable Scratch prevents registered temporary from disappearing as a constructor stack local on lower failure. Completed-phase flags do not claim cleanup safety.",
+      "Real first move precedes weak pair-only clear, second real move precedes input/deque/proxy/reset; bound input_a8 is host-only sidecar and remains linked to owner.input.",
+      "Actual02bc70 reset precedes actual temporary024db0; output pointer/control publish only after temporary destruction succeeds.",
+      "Weak-self branch uses live strong test, original raw control strong increment, cached output control, live old-self reload and ordered weak/strong/dispose/delete operations.",
+      "After final cached-control release no owner/control field is read; only caller-independent scratch.complete is set and caller output reference returned.",
+      "Abstract dispose/delete, lower allocation retention, identity routing and no native EH/ABI/async-lifetime guarantee remain explicit."
+    ],
+    "contract_note": "Output is a plain constructor destination slot, not an existing RAII owner. Native overwrite does not release its prior control; caller must not silently abandon a previously owned reference.",
+    "tests_reviewed": false,
+    "tests_executed": false,
+    "native_EH_ABI_or_disposal_proven": false
+  }
+}

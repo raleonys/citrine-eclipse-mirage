@@ -1,0 +1,77 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T03:42:39.8610393Z",
+  "scope": "Read-only llvm-nm production objects and pinned source hash verification",
+  "expected_native_imports": [
+    "__imp_VirtualProtect",
+    "__imp_VirtualAlloc",
+    "__imp_GetThreadContext"
+  ],
+  "production_ReaTest_references": 0,
+  "unmodified_upstream_files": 11,
+  "objects": [
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\minhook_hooks.o",
+      "sha256": "700d76ae50c00fb48d06f0f7a0c8aaf542dc00ee6f909a2859a1accc936aea6a"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\minhook_buffer.o",
+      "sha256": "0706b7dfed2f0b60b492b84817fceef718766e584b0d7bd21f5766b5b9bfc481"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\minhook_trampoline.o",
+      "sha256": "91aeb0a9f512820286220c4a953669359a2d75dcbc622ae68af176e4d7854ecb"
+    },
+    {
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\minhook_hde.o",
+      "sha256": "83b89eaba96fe898d7c3eb3c1f9418299d87b98e001cba0e003ce01bf6b03f90"
+    }
+  ],
+  "undefined_symbols": [
+    "",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\minhook_hooks.o:",
+    "         U AllocateBuffer",
+    "         U CreateToolhelp32Snapshot",
+    "         U CreateTrampolineFunction",
+    "         U FreeBuffer",
+    "         U InitializeBuffer",
+    "         U IsExecutableAddress",
+    "         U Thread32First",
+    "         U Thread32Next",
+    "         U UninitializeBuffer",
+    "         U __imp_CloseHandle",
+    "         U __imp_FlushInstructionCache",
+    "         U __imp_GetCurrentProcess",
+    "         U __imp_GetCurrentProcessId",
+    "         U __imp_GetCurrentThreadId",
+    "         U __imp_GetLastError",
+    "         U __imp_GetModuleHandleW",
+    "         U __imp_GetProcAddress",
+    "         U __imp_GetThreadContext",
+    "         U __imp_HeapAlloc",
+    "         U __imp_HeapCreate",
+    "         U __imp_HeapDestroy",
+    "         U __imp_HeapFree",
+    "         U __imp_HeapReAlloc",
+    "         U __imp_OpenThread",
+    "         U __imp_ResumeThread",
+    "         U __imp_SetThreadContext",
+    "         U __imp_Sleep",
+    "         U __imp_SuspendThread",
+    "         U __imp_VirtualProtect",
+    "",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\minhook_buffer.o:",
+    "         U __imp_GetSystemInfo",
+    "         U __imp_VirtualAlloc",
+    "         U __imp_VirtualFree",
+    "         U __imp_VirtualQuery",
+    "",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\minhook_trampoline.o:",
+    "         U IsExecutableAddress",
+    "         U hde64_disasm",
+    "         U memcpy",
+    "",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\minhook_hde.o:"
+  ],
+  "native_methods_executed": false
+}

@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_multibyte_builder",
+    "result": "PASS",
+    "output": "PASS multibyte builder: 885150 checks; builtin constants + synthetic CP providers, no native API/target execution",
+    "executable_sha256": "2ca96a8a46aad7338e1395b0360c92af039de395a8473d35b3e792ef025a4616"
+  },
+  "execution_scope": "Recovered 06f674 record builder with five exact shipped builtin CP rows; bounded synthetic memory/native/systemCP/helper providers; mutable original builtin data outside declared domain",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-multibyte-builder-source/multibyte_builder_tests.cpp",
+      "sha256": "b56b8d1e4b178ea5457a0963a337f78e0210582e38eb6a278821604f8c7a0673"
+    },
+    {
+      "path": "anadius-crt-multibyte-builder-source/multibyte_builder.cpp",
+      "sha256": "8bfa8035b80634d324059b6919cd320c520ad326fa4da5fd657629c4a4f82e93"
+    },
+    {
+      "path": "anadius-crt-multibyte-builder-source/multibyte_builder.hpp",
+      "sha256": "77e1586526f1cfee56a5cc145a4cb10f72bf65815889c2ca2ca58f4b4739074b"
+    }
+  ]
+}

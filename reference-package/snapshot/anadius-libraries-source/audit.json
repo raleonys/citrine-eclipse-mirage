@@ -1,0 +1,17 @@
+{
+  "audit_kind": "manual static source-to-retained-assembly comparison",
+  "original_target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_source": "../anadius-all-functions.asm.txt",
+  "pseudocode_source": "../anadius-all-functions.pseudo.c",
+  "functions": [
+    {"va":"0x180035260","evidence":"ev_6f84080b037476cc604a9f5729174d06bcfd848f98adc03a20c0047535be64bf","assembly_line":53973,"result":"Normal-path error-mode restoration, pre-load log conversion and post-failure reconversion, success-only append and iteration order match the observed body."},
+    {"va":"0x180035850","evidence":"ev_470b3dc481c525d0c42f0bd10877f4d8c1660c8c0851d2c8f073e021f1add0bf","assembly_line":54371,"result":"Main/worker lists, worker wait(2), append and normal-path worker finish before temporary-vector release match."},
+    {"va":"0x180035ab0","evidence":"ev_aae177604e1f3b5eae66baf7aea4442d18256389dda8675d68800483ea44a394","assembly_line":54514,"result":"Corrected source to snapshot both initial storage pointer and count. Forward iteration, null skip, ignored return and no-clear match."},
+    {"va":"0x1800450a0","evidence":"ev_9a546f3826f323b9e15c5954c944e3051bbfe1114897967b4c21eb6b0b188df0","assembly_line":71206,"result":"GetErrorMode value preserved, SetErrorMode(previous|1), SetErrorMode return ignored."},
+    {"va":"0x1800450d0","evidence":"ev_65e0e4834d2c1c0ea7b6859e2e77c457e679e94556ac682b9c9c05ab9c74540e","assembly_line":71219,"result":"Wide-string copy before LoadLibraryW and result preserved through temporary destruction. No canonicalization."},
+    {"va":"0x180048b30","evidence":"ev_9261beaef45db73e50b6eca26833fe4fbc6e4a09863942eba65958c4fd04f7bc","assembly_line":75279,"result":"65001/54936 flags0x80 versus flags0x400/default-character branch, 0x459 substitution failure, GetLastError only on zero, 0x3ec flags0 fallback with null default pointers match."}
+  ],
+  "native_adapter": "Compiled only; correct Win32 argument mapping inspected. Not linked into mock executable or called.",
+  "target_execution": false,
+  "limitations": ["Manual static comparison, not machine-code equivalence.","MSVC STL/SSO/allocator and exception ABI not reconstructed.","Normal body checked; complete EH/SEH cleanup tables not independently validated.","Mock tests execute analyst reconstruction only.","UI/logging/CRT and execution-state bindings remain abstract."]
+}

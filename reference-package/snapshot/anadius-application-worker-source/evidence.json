@@ -1,0 +1,84 @@
+{
+  "schema": "application-worker.source-composition.v1",
+  "source_package": "B48",
+  "evidence_type": "Concrete SourceBackend factory and actual RuntimeOwner/NativeThreads normal graph startup ordering",
+  "new_original_procedures": 0,
+  "normal_source_procedures_added": [],
+  "new_canonical_mapped_entries": 0,
+  "new_native_ABI_provider_closures": 0,
+  "source_references": [
+    {
+      "path": "outputs/anadius-application-graph-source/graph.cpp",
+      "sha256": "467f063e25e4119c1e057155e836545602036cdff5eaa07242f321528dc1804c",
+      "scope": "Existing source or reviewed additive worker composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "sha256": "4bcef4b7421c0c751499d883364625d1ea4a8ff822009a57930a4ee102e76f30",
+      "scope": "Existing source or reviewed additive worker composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "sha256": "145a94c58ed9880211d7315465c0c226eed982b33aef6cd5635f24c822069a23",
+      "scope": "Existing source or reviewed additive worker composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.cpp",
+      "sha256": "aefcaeaedf61d3646bc17e4a52763606f2e9de4634ab63fb14ec876262547aec",
+      "scope": "Existing source or reviewed additive worker composition; factory.cpp freshly recompiled in quick proofs due Resources by-value HOST ABI, unchanged source."
+    },
+    {
+      "path": "outputs/anadius-bootstrap-runtime-source/factory.hpp",
+      "sha256": "a447a80b1f9caa32d682804207e551431b8d4308cc530c0a176df5256a31b443",
+      "scope": "Existing source or reviewed additive worker composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-execution-source/execution.cpp",
+      "sha256": "30588a008c6c45a9d3f0424ef6c2e7c6a850d008ea41b18453acbc6c2a44da43",
+      "scope": "Existing source or reviewed additive worker composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-server-source/server.cpp",
+      "sha256": "bb01c186792e12adfd121772a8201cd727421beb546ac35e5f65533201763fda",
+      "scope": "Existing source or reviewed additive worker composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-thread-domain-source/domain.cpp",
+      "sha256": "acf27fb0f0ec93e207e98c9de9614421476c745947df198a882c5d436ff71e0a",
+      "scope": "Existing source or reviewed additive worker composition; no fresh original bytes."
+    },
+    {
+      "path": "outputs/anadius-worker-handoff-source/handoff.cpp",
+      "sha256": "8e2bb730bdf8d8ec1471ea6c8d0ea22a85450101c67d61d194a351bae2b696d7",
+      "scope": "Existing source or reviewed additive worker composition; no fresh original bytes."
+    }
+  ],
+  "quick": [
+    {
+      "path": "work/b48-core-quick-results.json",
+      "sha256": "d198e1226bedaf2e6356db6eca7720965d084466c3ff764521fd2332e5717104",
+      "checks": 162,
+      "executable_sha256": "9f49e44d3b5d3310ae16e37122bf9f58f217a7db1055e45880d1db2578ad599a",
+      "archive_sha256_as_used": "83513749b5603fec3333967b4fea5af24dc74d417a719e34b84d512103c27f4a",
+      "execution_author": "/root/acceptor_tests",
+      "note": "Fresh Worker worker.cpp, modified SourceBackend backend.cpp, unchanged dependent factory.cpp, and worker_tests.cpp with selected actual-use interfaces/fixture headers. Fresh factory.cpp is required because appended Resources host fields changed by-value dependent layout; no factory source change is claimed. Immutable canonical B47 archive supplies prior Graph/Policy/Profile/NativeThreads/Domain/handoff algorithms. No integration test is compiled or claimed. Concrete Worker tests use actual own NativeThreads/PTD/FLS/heap, independent thread-safe allocation ledger, and explicitly injected WinSock/IOCP SDK boundaries. Both milestone orders prove server ready/armed accept precedes startup wait and one milestone cannot dispatch; one selected observed owner0 accept995 plus separately consumed stop relays permits real normal source teardown and controller finish only after native thread/FLS exit. No accepted session/message is fabricated. Separate controller-only SourceBackend route tests reuse b4 fixture with one controlled fake tracked job to check exclusive factory binding, exact live identities, genuine Host/Online source-return notifications, stop-before-wait and finish-retry bookkeeping. Backend factory-capture destructor cannot republish through retired facade; Worker Settings capture sees Retiring and late calls stay noops. Main count excludes nine exact-exit children for wrong worker, opaque configure retention, protected prebinding refusal, stop/failure/timeout/wrong Execution after armed accept, and last-provider destructor reentry poison retaining actual allocated TLS without final Returned. These failure notifications do not claim complete legacy Bootstrap exception recovery, original concurrency, real sockets/network, actual kernel IOCP drain, foreign ABI, original-target execution or unknown cleanup rollback."
+    },
+    {
+      "path": "work/b48-integration-quick-results.json",
+      "sha256": "e07b24384dee940ee77e62382d25cbfc99679b27483224b919cb0a9bf40a8ce9",
+      "checks": 353,
+      "executable_sha256": "4b3604a9a5816ee7af49f10919629811ce79579dc533106e8e838b7d746905d5",
+      "archive_sha256_as_used": "83513749b5603fec3333967b4fea5af24dc74d417a719e34b84d512103c27f4a",
+      "execution_author": "/root/b22_integration",
+      "note": "Actualbootstrap_runtime::Runtime/RuntimeOwner/SourceBackend(application_entry) creates3realDomain NativeThreads. Controller bind_state factorycreatesconcrete applicationWorker; configure ONLYnarrowGraphOptions/lowerproviders,protectedStateView/TLS/epoch/errors/Profile empty. Worker itselfGraphcreate/installprepared/server_start029ea0/fullNativeLogic/Router/17plain+AESGetProfile/DOWN59packets/wrap8to16/FIFO17, no callerGraph. Host andOnline source callbacks each proveactualqueuedAcceptIO cannotdispatchbeforeBOTH returnedmilestones despiteALLreadybytespreseeded1. RealOnline source writes boundRuntimeOwnerusername/persona/userid/online andHostlowerwritesgameattribute; actualsession/independentlydecryptedGetProfile seeexactsharedcells. Controllerstoplower postsownactualIOCPterminalpacket; injectedDispatcher returnsFALSE/LastError995 forit (selectedSDKcompletionNOTnetworkkernelproof), waitsactualGraphreturn/knownexternaldrain beforeSourceBackendrequest_stopÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢Trackerjoin3/FLSÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢routeleases0ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢controllerPreparedfinish/cleanup/providerdestruction. Threadsafeheap/payload/lowerfixtures; b2config/files/input/console arecontroller-only syntheticmemory, no usercontents. NoOriginalDLL/game/network/nativeABI/fullResourcesLoaderclaim. Freshunchangedfactory.cppbuilddependency ismandatorybecauseResources appendedfield ABI; notaproductionedit."
+    }
+  ],
+  "new_original_bytes_queried": 0,
+  "REA_session_requested": false,
+  "REA_scope_reason": "Existing source composition only.",
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_content_analysis": false,
+  "selected_HOST_startup_order_differs_from_original_concurrent_IO": true,
+  "fresh_unchanged_factory_CPP_required_for_quick_Resources_by_value_ABI": true
+}

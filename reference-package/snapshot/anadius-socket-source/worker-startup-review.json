@@ -1,0 +1,42 @@
+{
+  "result": "PASS",
+  "reviewer": "worker_startup_audit",
+  "scope": "Independent frozen four-source review against complete retained02a000/02a4a0 assembly and pseudocode plus old024990/05e8e0 source composition",
+  "sources": {
+    "outputs/anadius-socket-source/worker_startup.hpp": "699eb51446551906d51c069c00d95f6fbd2d9a2cb706d28021695990d01fa87e",
+    "outputs/anadius-socket-source/worker_startup.cpp": "c195e934d656aa572de2656f7d80cf2257fbbc9d4c8aa80accd233bc08ecb565",
+    "outputs/anadius-socket-source/worker_startup_native.hpp": "3a9dd32ae720496c9e9239f8840542487b9c88f431defb1569545a6c8796ee2e",
+    "outputs/anadius-socket-source/worker_startup_native.cpp": "7b67d379aa49a2133dd58c6ffd0d553419b2bf8105162fc1ad32c97c0fead8c9"
+  },
+  "report_sha256": "5ff21ef18168297d6c7dce90f0964480d16a33862aa211acda44fd84ef076358",
+  "audit_report_sha256": "65d132d26b0bc50b77d0d5809a937f6b303a97c6ac724586e835eb104c50009c",
+  "audit_json_sha256": "410acea0185962a33a3330ca6466cd0676c5e1f5bfb6c14c7fff05240a602b50",
+  "material_findings": [],
+  "normal_source_procedures_added": [
+    "0x18002a000",
+    "0x18002a4a0"
+  ],
+  "new_original_procedures": 2,
+  "core_contract": "FirstCreateEvent(0,1,0,0) before nullfunctionguard; storefunction08/cachedentry; cachedlastError beforedelete1; categoryALWAYS afterdelete; nonzeroonly0844c8/0844e0raise; secondstoreworker10 thenfunction10 thenLIVEworker10test; idzero then05e8e0(0,cachedstack,opaque02a4a0,function,0,&id); storeworker08/testRETURN; threadfailurecachederror/delete1/closecachedentry/reloadLIVEexitafterclose/closeexit/categoryALWAYS/nonzero0844f4raise; cachedentryWaitINFINITEthenclose; error0doubleclosepreserved",
+  "entry_contract": "SetEvent(live08);run08;cacheexit10AFTERrun;delete1;SetEvent(cachedexit);SleepEx(INFINITE,TRUE);return0; nofunctionaccessafterdelete",
+  "composition": "WorkerStartupEffects bridges actual02a000 into IocpConstructionEffects; RecoveredWorkerStartupEffects reuses unchanged threads_recovered::begin_thread_05e8e0 with opaque entry and argument; SDK six-import adapter injectable/no construction calls",
+  "providers_not_recovered": [
+    "Native allocator/deallocator and function scalar deleting destructor",
+    "Worker function virtual run body and executable vtable binding",
+    "Native exception implementation/ABI and SEH/unwind",
+    "Actual thread concurrency and native resource/object lifetime",
+    "Native dispatcher/executor and DLL entry/export ABI"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "tests_executed_by_reviewer": false,
+  "production_edited": false,
+  "limitations": [
+    "Typed live projections are not native memory or ABI overlays",
+    "Zero-error continuation after delete requires live host projection; no native lifetime safety proven",
+    "Original image addresses remain opaque non-executable tokens",
+    "Existing05e8e0 reused unchanged; helpers/adapters add no original procedures",
+    "No complete original DLL equivalence claim"
+  ]
+}

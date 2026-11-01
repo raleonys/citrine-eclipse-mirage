@@ -1,0 +1,100 @@
+{
+  "schema": "pool-allocation.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/allocation_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent retained full assembly/pseudocode plus complete96-byte shipped initialized-analysis-memory read; four bounded normal allocation bodies and one new explicit source adapter. No reviewer test execution or original-file reads.",
+  "reviewed_source_hashes": {
+    "pool_allocate.hpp": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757",
+    "pool_allocate.cpp": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf"
+  },
+  "addresses": [
+    "0x180002b10",
+    "0x180002600",
+    "0x180002960",
+    "0x1800027b0"
+  ],
+  "assembly_and_pseudocode_evidence": {
+    "0x180002600": {
+      "pseudo.txt": "ev_8e78b707d1a781815a1f68f2ca8f27a0af79b54f73e05ef12ae813734373a7c6",
+      "asm.txt": "ev_3bcc9c0bf4dcd2c6ec224b64614dac1a2459a19f35b72d0494668d93da66f038"
+    },
+    "0x1800027b0": {
+      "pseudo.txt": "ev_5dab40953bd8da1662aaa4fb65baf20814ff6e665b9630d23f74417506849903",
+      "asm.txt": "ev_1ccec149cea5b273c4134f38d196487eb2915f2905923f86a19a7fd613ca8cc7"
+    },
+    "0x180002960": {
+      "pseudo.txt": "ev_65d179a78369608cf6880a9dfc5d98aa344c97bda474d98972cf18e37663a7c3",
+      "asm.txt": "ev_dddd03633007c4bff924f221d212965ad8a9919050036732afd0b85c90e65b0d"
+    },
+    "0x180002b10": {
+      "pseudo.txt": "ev_72c7774e42e84de667e4a26375d6ca97e95a9b796b6aebe4122567c82f87ddd6",
+      "asm.txt": "ev_69676d992a02bd265c47a247cd170c8815221b7d90825447e0de7a237b156f39"
+    }
+  },
+  "shipped_constants": {
+    "file": "pool-allocation-simd-data.json",
+    "sha256": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+    "evidence_id": "ev_6174d38308fd71da7aa56dfcf6ae30de443aee787ea60c50ea732bc04bff3b6f",
+    "address": "0x1800800d0",
+    "bytes": 96,
+    "complete": true,
+    "stride_qword_lanes": [
+      [
+        80,
+        80
+      ],
+      [
+        104,
+        104
+      ],
+      [
+        112,
+        112
+      ],
+      [
+        120,
+        120
+      ]
+    ],
+    "increment_dwords": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "index_dwords": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "scope": "Ghidra12.1.4 initialized analysis memory including loader fixups; not runtime CPU observation"
+  },
+  "new_normal_source_bodies": 4,
+  "new_explicit_source_adapters": 1,
+  "historical_typed_providers_newly_closed": 0,
+  "findings": [
+    "All four exact layouts match native block bytes,item stride,count and vector-prefix limits; scalar tails and final null locations match retained instructions",
+    "Cached nonzero free-root bypasses every lower effect,CPU-mode access,constant load and block initialization; pop preserves item firstword and payload",
+    "Fresh path caches allocation result,conditionallyfills nonnull block,andunconditionallyappends array atpool+8 beforemode lookup andlinkstores; no invented safe null return",
+    "Signed CPU-mode threshold6 is bit-preserved; selected stride16,shared increment16,shared index16 are loaded once in native order before linkstores",
+    "Four sequential QWORD linkstores per vector iteration preserve lane selection,MOVQ low64 extraction,PADDD32 wrapping,PMOVSXDQ sign extension,and64-bit product/add wrapping,including mutable projected constants",
+    "Final null then pool-root publication precede common pop;currentDWORD wrap/store precedes signed compare with LIVE maximum;total anduntrackedread/incrementtheirLIVEvalues",
+    "Pool/block alias effects remain live after lower effects and linkstores;no counter prefetch,rollback,membershipcheck,constructor,vptrsetup or free added",
+    "Generic final dispatcher selects only explicitly supplied target identities and uses direct source functions; image addresses are never cast to callable host pointers",
+    "One new PoolAllocationDispatch source adapter is separate from historical node-clear provider closures; allocation,fill andappend/growthremainmandatorylowerproviders"
+  ],
+  "limitations": [
+    "Bounded byte-state normal projections; no execution of original binary",
+    "Native SIMD instruction fault/alignment,CPU feature availability,allocator or pointer-array005440 implementation,DOMtype identity,lifecycle,ABI/EH/concurrencyremainunproven",
+    "Unknown-target guard and bounded missing/ambiguous mapping exceptions are source-interface boundaries,not new native function bodies",
+    "Review compares supplied production source with static evidence; reconstructed tests do not establish original native execution equivalence"
+  ],
+  "full_native_equivalence_review_complete": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false
+}

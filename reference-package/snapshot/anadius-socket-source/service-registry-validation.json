@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "core_checks": 454,
+  "integration_checks": 203,
+  "output": "PASS: 454 socket service registry checks; retained normal-flow predicates and controlled callback mutations only\nPASS: 203 socket service registry integration checks; borrowed projection and actual acceptor-to-registry-to-recycler chain with controlled effects only",
+  "source_hashes": {
+    "service_registry.hpp": "5584fc37f54fa847efee7aa350fb51d2f82033d8826cca762f8e6e9f27752525",
+    "service_registry.cpp": "663e6f4799e9173722e0af62b05d7a4e96d069f4f0dc55b6777cc46e037cbc02",
+    "service_registry_tests.cpp": "8be7e7a3d750660380827cb95938583e19254eeea16a2d125b07ca87c0adcaf0",
+    "service_registry_integration_tests.cpp": "30f055f4eaa10fbda6b34e3457ffcb0536e3cbde85d0647dc0428dd386706936",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "execution_scope": "0239c0/022fa0 retained normal-flow key/match/two-pass publication/race deletion and live callback mutations; borrowed RegistryLifecycleEffects with actual acceptor/lifecycle/closing/cancellation/0283c0 source chain",
+  "original_procedures_added": 2,
+  "native_constructor_type_compare_ASIO_ABI_unwind": "not established; 0228e0 and04d2d0 remain required controlled effects; host projection is not native layout or ownership, no original/network/socket/IOCP execution"
+}

@@ -1,0 +1,140 @@
+{
+  "schema": "response-dispatch.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180021420",
+      "pseudo_evidence": "ev_03285e4590c59bdfef637bd131232ec356cb691047dceda259799e10be2eb802",
+      "assembly_evidence": "ev_485e1499aa6085002207d4e979d89f21170510588cb32527b4e03d79fecdcc79",
+      "newly_recovered": true
+    },
+    {
+      "address": "0x180028270",
+      "pseudo_evidence": "ev_f01c15c5ec6846574a424ff84a94d532bd1a1c4a9f781ad08433a5f12e0f868f",
+      "assembly_evidence": "ev_8a9098273f1cf3fed4bf7cd29a29a081bfa18c0706bf118f25c7907784a35bd5",
+      "newly_recovered": true
+    },
+    {
+      "address": "0x180022240",
+      "pseudo_evidence": "ev_e35a89febdbea23a270dccb10d8cfe5a5c5368948c104fb1cf8cf977b23263e8",
+      "assembly_evidence": "ev_54bb972843defb1bce958dbe220882fc0bc6dcb6ffa7ef18b3a3e1ed1ec7b462",
+      "newly_recovered": true
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180021420",
+    "0x180028270",
+    "0x180022240"
+  ],
+  "new_original_procedures": 3,
+  "context_functions": [
+    {
+      "address": "0x180020cb0",
+      "pseudo_evidence": "ev_76db67340063d873c32b8f7ebbafcbe561ba061b505c101b0fc8905e0a4f7ef3",
+      "assembly_evidence": "ev_b36fa7594efe34d3efeb4b4e23cb47a790e8fbe5de250e2d6ae31b1664bb7f6e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180022280",
+      "pseudo_evidence": "ev_aee2bbff62610fd4201cd8b319dcbe44a5029af250478152c37f614dc4ef29a2",
+      "assembly_evidence": "ev_0d15462c57e626a6aa35528fa9a1522cd22044e4aa0b557ec5517d7fcd32d39b",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180009eb0",
+      "pseudo_evidence": "ev_f67735e2b612684e0244695b1a0f40290b2f78851c8f9840ca9495121e3e2d83",
+      "assembly_evidence": "ev_259f1a5cdb8c805a3e600239e02920086e76456c0ff5fea954f866d0b28e9777",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180026670",
+      "pseudo_evidence": "ev_3d6aa3960069fd2dc5266edc94873bd68670d91db15a6be056e5ebe2cd802224",
+      "assembly_evidence": "ev_c82cd695a879356cda7f2d9c3a22053f0bdb56fe12a828093c27c41a31cd7e32",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180023cb0",
+      "pseudo_evidence": "ev_104fb6d87cffb0a02e61c0173403243f305305ffcf18a5fdb95e886f36fb27d1",
+      "assembly_evidence": "ev_5393cd5463f3a87b8f294c63f701e30396bb840e2ae1f35dd015b1a5c38fa588",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180028d30",
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18002a500",
+      "pseudo_evidence": "ev_74e713f6d63b5db2c8594c89965baf991c280377ff6f5607819938f99daa863f",
+      "assembly_evidence": "ev_7b4a354660d536700feb53ad52ca0a2f961ca2042dbeb3a635143135bd1fe188",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021fd0",
+      "pseudo_evidence": "ev_cb8feee93f61ab1f79de415f7b58cf399d0febb87fbce65a9c6f749925ed1724",
+      "assembly_evidence": "ev_6326ebb30e495078e0ed47d7346de01edd7f346608c3d5c91890ce2c1637533e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800261d0",
+      "pseudo_evidence": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61",
+      "assembly_evidence": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180025a70",
+      "pseudo_evidence": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8",
+      "assembly_evidence": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "response_dispatch.hpp": "95068d4638a48bf8b215da58455c684d25da2042dab987ad9b45265de37bf648",
+    "response_dispatch.cpp": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0",
+    "response_dispatch_test_fixture.hpp": "2866b25edc10a643cfd55009227a8d5a9591fce255f6120780e12e1cf1649e86",
+    "response_dispatch_tests.cpp": "c7c7ca0d8158e91185c34b10882a540d4c25e0f0efe4a555b6decdd89f34ea3a",
+    "response_dispatch_integration_tests.cpp": "ba0d9023b8af676e83733b46121d5e217c3fb8917d1ff3445bd4896745047ad1",
+    "build.ps1": "625f0f3fb6f9d40d7791bffb96e67e188e2d60fa8be1ac0fbfab3fa2df935e49",
+    "CMakeLists.txt": "a69021fcb8d86ca04d5f4617eed4727ed4d58c45f01f129604e00b3ca6ae6766",
+    "README.md": "596c410c04cb59c9e836984f6199fa7b5cd2400d84c1701255f3bc266daf39fe"
+  },
+  "support_hashes": {
+    "response-dispatch-evidence.pseudo.c.txt": "37e51d28e7e8e242d528f45f2112ffd577136d017751058a3b1efa5ee84d4373",
+    "response-dispatch-evidence.asm.txt": "2e3ef89346a02a732d7bcfde629107fefc7f7153040bdca136f83d20bf34384d",
+    "response-dispatch-context.pseudo.c.txt": "15fed2e9efd6d92beabf355ec5d4ea3c91320b643869c38546a3951e1c9c8d3b",
+    "response-dispatch-context.asm.txt": "8619e4f39d3e576c6c02f0fc5465fa93dba66accc3f1a6187c64741d9de37045",
+    "response-dispatch-flow-audit.md": "53f7e5f59c0c8b24988a066549ffcd9b49de38fc8a15f63eb01a25fdc2904905",
+    "response-dispatch-rea-session.json": "dd969de1a18a0bd6b8e3d80b54ed5401db07a76d605485a0fa05e3bd5b02e735"
+  },
+  "closed_provider": {
+    "base": "MessageDispatchApi::dispatch_response_021420",
+    "closure": "RecoveredResponseDispatchApi::dispatch_response_021420",
+    "native_abi_complete": false
+  },
+  "core_checks": 662,
+  "integration_checks": 115,
+  "new_checks": 777,
+  "execution_scope": "021420/028270/022240 normal bodies; actual028d30/023cb0 and02a500/021fd0/021a80/0261d0/025a70; controlled020cb0/022280 functor,009eb0 string copy,026670 deque grow,033d70/023dd0 and completion adapter; injected AsyncSendApi",
+  "review": {
+    "scope": "Same-agent addressed assembly/source comparison and synthetic tests",
+    "independent_review_complete": false
+  },
+  "limitations": [
+    "Normal typed projection only",
+    "020cb0/022280 owned functor and009eb0/026670 lower bodies remain providers",
+    "New integration uses controlled033d70/023dd0/completion and injected AsyncSendApi, no real SDK/network",
+    "Actual026a00 storage release and021a80 invoke; no new027a20/IOCP/handler scheduling/outerworker execution",
+    "021420/028270 security cookie epilogues not reconstructed",
+    "Native category/exception/allocator/global/polymorphic/STL/EH/SEH/concurrency/ABI/fullDLL unproven"
+  ],
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N3 020cb0 owned-response factory and022280 call/discard bodies"
+}

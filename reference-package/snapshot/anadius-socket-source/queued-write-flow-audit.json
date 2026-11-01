@@ -1,0 +1,76 @@
+{
+  "scope": "Independent complete retained 02a500 queued write normal body audit",
+  "reviewer": "queued_write_audit",
+  "date": "2026-10-23",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "full_listing_hashes_match": true,
+  "functions": [
+    {
+      "address": "0x18002a500",
+      "pseudo_evidence": "ev_74e713f6d63b5db2c8594c89965baf991c280377ff6f5607819938f99daa863f",
+      "assembly_evidence": "ev_7b4a354660d536700feb53ad52ca0a2f961ca2042dbeb3a635143135bd1fe188",
+      "newly_recovered": true
+    },
+    {
+      "address": "0x180025a70",
+      "pseudo_evidence": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8",
+      "assembly_evidence": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021fd0",
+      "pseudo_evidence": "ev_cb8feee93f61ab1f79de415f7b58cf399d0febb87fbce65a9c6f749925ed1724",
+      "assembly_evidence": "ev_6326ebb30e495078e0ed47d7346de01edd7f346608c3d5c91890ce2c1637533e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800261d0",
+      "pseudo_evidence": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61",
+      "assembly_evidence": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180027a20",
+      "pseudo_evidence": "ev_ac8acca2b33bd760e4ba5f3d9ec5784ef473a66bd1f78d4aeb47033d2bcbc4d9",
+      "assembly_evidence": "ev_c7fd45e2d65c3e1f508706bdf6dc9e7561b9d896d56095bbebac7e82853f4463",
+      "newly_recovered": false
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x18002a500"
+  ],
+  "new_original_procedures": 1,
+  "rules": {
+    "empty": "Count zero returns without providers or control/map/stream access",
+    "acquire": "Cached control08; null/zero terminal026860; locked low32 CAS expected+1 modulo32; failed actual reused",
+    "post_acquire": "Owner object00 and control08 reloaded only after successful CAS",
+    "string": "Unsigned64 masked map selection; size0 dataNULL before capacity; else cap>15 heap or inline first-byte token",
+    "handler": "Stream owner+10, selected data, full64 length, progress0, flag1, word88 owner, owned pair from post-CAS loads",
+    "initiation": "Direct actual021fd0 with flags0 and first min65536; not0261d0",
+    "release": "Read residual local control after021fd0 only; strong fetchsub1 old1 disposal slot0 then same saved control weak fetchsub1 old1 live delete slot8",
+    "lifetime": "No owner accesses after021fd0; normal transfer clears source pair before023dd0"
+  },
+  "providers_not_recovered": [
+    "026860 nonreturning bad weak ownership terminal",
+    "Receive025c40",
+    "Existing category/message/global stream helpers and native storage providers",
+    "Native factories/tables/ABI, concurrency, allocation storage, exception/unwind/SEH and full DLL equivalence"
+  ],
+  "original_execution": "none",
+  "real_network_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "limitations": [
+    "Exactly one new normal original body",
+    "Existing context functions not newly counted",
+    "Typed logical projections and address tokens are not native memory overlays",
+    "No native race scheduling or exception cleanup equivalence claim",
+    "Normal-prefix effects only",
+    "No full DLL equivalence claim"
+  ],
+  "report_sha256": "3546600d85795f557565ae97db61dd8b2dff520430bbdc9c3ec0a65a55db9324"
+}

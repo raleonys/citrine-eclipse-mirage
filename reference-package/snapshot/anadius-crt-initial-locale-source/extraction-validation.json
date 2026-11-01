@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "regions": 96,
+  "relocations": 116,
+  "bytes": 3546,
+  "file_backed_regions": 94,
+  "pe_zero_fill_regions": 2,
+  "checks": [
+    "Region hashes",
+    "Every DIR64 proof reconstructs source slot",
+    "Every raw pointer resolves inside owned bounded graph",
+    "All normalized pointers zero",
+    "Applying evidence metadata recreates every original byte",
+    "11 locale/18 lconv/87 time edges",
+    "Zero-fill leaves expressly distinguished from file bytes"
+  ],
+  "original_execution": false
+}

@@ -1,0 +1,54 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T09:16:57.2607567Z",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-ptd-data-source\\ptd_data.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-ptd-data-source\\build\\ptd_data.o"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-ptd-data-source\\ptd_data_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-ptd-data-source\\build\\ptd_data.o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-ptd-data-source\\..\\anadius-crt-ptd-source\\ptd.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-ptd-data-source\\build\\ptd_data_tests.exe"
+      ]
+    }
+  ],
+  "output": "PASS 206 PTD data/lifetime checks",
+  "target_execution": "none",
+  "scope": "Owned byte/PTD/context fixtures with synthetic FLS, heap, locale, locks and atomic effects; no OS/provider calls",
+  "sources": [
+    {
+      "name": "ptd_data_tests.cpp",
+      "sha256": "31690f132236a30e8773cc76efc532da775fc1f8b865db1c5b8f6c33e888b6bb"
+    },
+    {
+      "name": "ptd_data.cpp",
+      "sha256": "a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea"
+    },
+    {
+      "name": "ptd_data.hpp",
+      "sha256": "25d5f6fb41a9991cc200fd2ceb5131df693d70883afbe3f5c15c316bdb65c21e"
+    }
+  ],
+  "executable_sha256": "9a5f4ce485505e2195050d34240dd2ddfac67ac177f1b9a2d15c8566a538869a"
+}

@@ -1,0 +1,45 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-18T14:45:02.5449370Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-argv-source\\argv_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-argv-source\\build\\argv.o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-argv-source\\build\\parse.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-argv-source\\build\\argv_tests.exe"
+  ],
+  "tests": "PASS argv configure/allocation: 6777 checks",
+  "scope": "Synthetic owned raw allocations, module filename/DBCS/wildcard providers only; no target/native process execution",
+  "sources": [
+    {
+      "name": "argv_tests.cpp",
+      "sha256": "5027a28f902a3555df1dd7a7fd9c6b52df995fa3537d349e0d2303a39e66a60a"
+    },
+    {
+      "name": "argv.cpp",
+      "sha256": "f36423b9120efc8feef27da66b9f473a002366b3fe98ccf5c57cd5dada4ffa6e"
+    },
+    {
+      "name": "argv.hpp",
+      "sha256": "94c038a8aebdb66fdc0c4e79a96d1556e25ab98fcfdd21424bd4057a683e22ab"
+    }
+  ],
+  "parser_sources": [
+    {
+      "name": "parse.hpp",
+      "sha256": "31c0ddfdf238dba9204d1fb6af1dc12692d4d7a16ea9d69bef82ee25c632bcc6"
+    },
+    {
+      "name": "parse.cpp",
+      "sha256": "51079d3bd82066b2c9508453f54a60947d0f6eb94ff536a20c31dd6e53d231e1"
+    }
+  ],
+  "executable_sha256": "05f56d08ed1285e9d67d4e6381c0bd7465ae94ebce1b853bc8612734bd17141d"
+}

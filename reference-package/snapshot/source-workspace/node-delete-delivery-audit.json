@@ -1,0 +1,98 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-25T08:32:46.112861+00:00",
+  "prior_package_sha256": "1ca716536b635a0d3a2e18415fda861140b5e97e7a741dadc21ddd19840e760a",
+  "prior_source_count": 621,
+  "unchanged_prior_sources": 621,
+  "added_sources": [
+    "anadius-socket-source/node_delete.cpp",
+    "anadius-socket-source/node_delete.hpp",
+    "anadius-socket-source/node_delete_integration_tests.cpp",
+    "anadius-socket-source/node_delete_test_fixture.hpp",
+    "anadius-socket-source/node_delete_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 626,
+  "current_documents": 230,
+  "native_objects": 197,
+  "cpp_objects": 193,
+  "c_objects": 4,
+  "normal_test_groups": 207,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 80,
+  "new_checks": 40493,
+  "new_tests": [
+    {
+      "module": "socket_node_delete",
+      "result": "PASS",
+      "output": "PASS: 386 node delete checks; parent positions/mismatch, standalone null/link preservation, full64 probe, signed tracking/swap/dead slots, alias reloads, live targets and bounded/throw prefixes; native vtable/DOM/pool/ABI/EH remain open",
+      "executable_sha256": "6d7bed55b0d838066bf3623b67cc604876df743d21eedcb1182c418b990a5a97"
+    },
+    {
+      "module": "socket_node_delete_integration",
+      "result": "PASS",
+      "output": "PASS: 40107 socket node delete integration checks; actual003030/003240 plus coherent clear/document/cipher/dispatch/queue/send chain on3controlled root projections; nativevirtual/parser/fullDOM/pool/heap/ABI/EH remain open",
+      "executable_sha256": "64fc5d79501682018ba8774f7391ce329dd276d3f8266a1e9dfbd65b4f3dfc4c"
+    }
+  ],
+  "validation_mirror_pairs": 40,
+  "historical_module_records_preserved": 39,
+  "historical_config_references_preserved": 78,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "2e380ba55990feb89a587bd7693a352b3537834ae5da2a12f5987b05173d2482",
+  "inventory_data_checks": 7396,
+  "normal_source_procedures_added": [
+    "0x180003030",
+    "0x180003240"
+  ],
+  "new_original_procedures": 2,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/node_delete.cpp",
+      "base": "NativeNodeClearEffects::remove_parent_003030",
+      "body": "unlink_native_node_003030",
+      "closure": "RecoveredNodeDeleteEffects::remove_parent_003030",
+      "address": "0x180003030",
+      "native_abi_complete": false,
+      "scope": "003030 parent/node unlink and003240 standalone node deletion bounded raw-memory normal projections and2 final NativeNodeClearEffects source bridges; native node probe/destructor,pool release/track,parser/DOM/vtable/allocator/ABI/EH providers remain mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/node_delete.cpp",
+      "base": "NativeNodeClearEffects::delete_node_003240",
+      "body": "delete_native_node_003240",
+      "closure": "RecoveredNodeDeleteEffects::delete_node_003240",
+      "address": "0x180003240",
+      "native_abi_complete": false,
+      "scope": "003030 parent/node unlink and003240 standalone node deletion bounded raw-memory normal projections and2 final NativeNodeClearEffects source bridges; native node probe/destructor,pool release/track,parser/DOM/vtable/allocator/ABI/EH providers remain mandatory"
+    }
+  ],
+  "new_source_bridges": 2,
+  "native_typed_providers_newly_closed": 2,
+  "new_unique_source_mapped_addresses": 2,
+  "prior_native_source_closures_preserved": 29,
+  "current_native_source_closures": 31,
+  "semantic_session_source_adapters_preserved": 2,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "003030 parent/node unlink and003240 standalone node deletion bounded raw-memory normal projections and2 final NativeNodeClearEffects source bridges; native node probe/destructor,pool release/track,parser/DOM/vtable/allocator/ABI/EH providers remain mandatory",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_contents_read": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N17 pool release0033a0 and track005a20 normal source contracts, selected from four shipped pool vtables; remaining node virtual/parser/DOM/allocator/ABI/EH open; CRT stays paused",
+  "native_node_delete_fully_closed": false
+}

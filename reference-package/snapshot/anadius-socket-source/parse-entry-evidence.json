@@ -1,0 +1,205 @@
+{
+  "schema": "parse-entry.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x1800041b0",
+      "pseudo_evidence": "ev_d4270b9a2ca885be4b12cfa24f257c4c48568ce7a4cbd3234c71d483394ca0de",
+      "assembly_evidence": "ev_0161e7e54c7c2f628bb6bbf99adff0b97b85e09b7c8528365aa858c02fdd4a08",
+      "newly_recovered": true,
+      "recovery_scope": "Normal0041b0 parse-entry prelude+final NativeDocumentEffects bridge;classifier/error/indirect parser+DOM remain mandatory"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x1800041b0"
+  ],
+  "new_original_procedures": 1,
+  "new_source_bridges": 1,
+  "new_source_allocation_adapters": 0,
+  "new_unique_source_mapped_addresses": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/parse_entry.cpp",
+      "base": "NativeDocumentEffects::parse_0041b0",
+      "body": "parse_document_entry_0041b0",
+      "closure": "RecoveredParseEntryEffects::parse_0041b0",
+      "address": "0x1800041b0",
+      "native_abi_complete": false,
+      "scope": "0041b0 normal parse-entry prelude projection+one final NativeDocumentEffects::parse_0041b0 source bridge;cached cursor,line/field initialization,mandatory locale classification with live byte reread,BOM/error13/live virtual-slot80 dispatch ordering;retained shipped document target004970 is known but its body is mandatory;classifier051fc0,error005820,indirect parse/DOM body/native node/heap/vtable ABI/EH remain open"
+    }
+  ],
+  "native_typed_providers_newly_closed": 1,
+  "source_allocation_adapters_added": [],
+  "existing_source_allocation_adapters_preserved": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "pointer_only_free_interface_preserved": true,
+  "native_classifier_051fc0_recovered": false,
+  "native_set_error_005820_recovered": false,
+  "native_indirect_parse_body_recovered": false,
+  "shipped_virtual_parse_target_identity_known": true,
+  "shipped_document_virtual_parse_target": "0x180004970",
+  "shipped_document_virtual_parse_slot_address": "0x18007ff48",
+  "retained_n16_document_vtable_read_bytes": 128,
+  "parse_virtual_slot_offset": 128,
+  "parse_virtual_slot_outside_n16_document_vtable_bytes": true,
+  "fixture_virtual_target_is_shipped_evidence": false,
+  "new_vtable_data_acquisition": false,
+  "original_address_called_as_host_function": false,
+  "cursor_cached_before_init_stores": true,
+  "no_whitespace_pass_after_bom": true,
+  "prior_source_presence_transition": "module_record_only -> source_definition_mapped",
+  "new_native_analysis": false,
+  "reused_complete_data_evidence": [
+    {
+      "file": "pool-allocation-simd-data.json",
+      "sha256": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+      "new_read_performed": false,
+      "new_source_bodies_claimed_by_data_read": 0
+    },
+    {
+      "file": "node-delete-next-vtables.json",
+      "sha256": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a",
+      "new_read_performed": false,
+      "new_source_bodies_claimed_by_data_read": 0
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x180005820",
+      "pseudo_evidence": "ev_188aa01332032bd7a9db079cf67ce66428557de9e6be37670dd091066a5e2ce8",
+      "assembly_evidence": "ev_37353162f9f968089bd3417314183c72cd998b61cac28d808f7e0959bf88f494",
+      "newly_recovered": false,
+      "context_scope": "mandatory error/classifier/004970 parser boundary only,no new normal source"
+    },
+    {
+      "address": "0x180004280",
+      "pseudo_evidence": "ev_783e89582f054f61046e9c06b28ad2145076dbd6721a32cd6bfe2c615e85ff20",
+      "assembly_evidence": "ev_795f6b99b0b687dd3ceffca4901b4e92f2721869b41c336f72e0ba4c670d4a4f",
+      "newly_recovered": false,
+      "context_scope": "existing wrapper normal source context"
+    },
+    {
+      "address": "0x180051fc0",
+      "pseudo_evidence": "ev_f1fe8a7617f5ab347923cbb3f997cb0885f5c41e120a381e3292bfbdfef17272",
+      "assembly_evidence": "ev_e5ed36275838a6af9c4c09ac715258c29f01c9887a0a32c637d695ad4f7bfedf",
+      "newly_recovered": false,
+      "context_scope": "mandatory error/classifier/004970 parser boundary only,no new normal source"
+    },
+    {
+      "address": "0x180004970",
+      "pseudo_evidence": "ev_01d06f0d09c426e84edfc80412a5b90481296b9b16734298cadd2cf8fceab53d",
+      "assembly_evidence": "ev_bab15aa72d1d1d2cb34f0a417872877e60c9e43b5b9530ac83290c1bbc58da0a",
+      "newly_recovered": false,
+      "context_scope": "mandatory error/classifier/004970 parser boundary only,no new normal source"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "parse_entry.hpp": "b6d7e9ad9613b738068ae51ec3aeac7ee094937356712dfd80b6ee94a1830734",
+    "parse_entry.cpp": "2c905d087fb298433bac02721822c5eafa183def3b61a0b96405994159c23c31",
+    "parse_entry_test_fixture.hpp": "a5dc90e35626b0090463276078e8bf8d973e21f528e8e7d5912b06b5bcff7a0f",
+    "parse_entry_tests.cpp": "3b752018bd089c623b4c8843935f50a687fd519e0b8dfeafea0ea8dc22a38239",
+    "parse_entry_integration_tests.cpp": "7d8cefdef77c99532a153e2bf63bc5eb32a0d64f3970abdfe4f21c75ac891a30",
+    "build.ps1": "5be8dfc7edfc7b3b0e3a78d55ca1520c71e662c926097a58fa83c8f02347fff9",
+    "CMakeLists.txt": "c36fe8a7b15a977cfb710b533f24dba86d31e7b90a71ce7565a2c92ec5776370",
+    "README.md": "628109a972796042fc4653986162b093ee241d69ce987d7e500800b7a12b3135"
+  },
+  "reused_source_hashes": {
+    "native_document.hpp": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33",
+    "native_document.cpp": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304",
+    "document_clear.hpp": "f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb",
+    "document_clear.cpp": "88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4",
+    "pool_destruct.hpp": "0f2951e2d60116d9986a0e615e49fcce70439cccf3ecbcb8484bc4d703cdf89c",
+    "pool_destruct.cpp": "3bebee2c224523e72a12ce338521dad7a0c2786d36aacc810227fb32f207ef35",
+    "node_base.hpp": "7f3272fc864edc0b070b05145f5f18a5af5d2ea68cc5b9a9bfd915de570ccd01",
+    "node_base.cpp": "f3e5ee01a2311060f53adef39b5323c11a1dc55662f3500b69dbb1020ab94418"
+  },
+  "support_hashes": {
+    "parse-entry-evidence.pseudo.c.txt": "45e92482ab88df7f8c03139fb7c237263e714f08c73b21669d50a79a7d483041",
+    "parse-entry-evidence.asm.txt": "9300946c19d900bbb40e32e33c55f71cac684b089cbecd1d0e70d1ebf31254dd",
+    "parse-entry-context.pseudo.c.txt": "1ff40e5515240d70c78f5506d2f15c1c380f9c4db03ddf5d66419e91b5e029e8",
+    "parse-entry-context.asm.txt": "1f24e721c119866e5593333cf4e48b206a4cb1ec7b54260ec0e801e808522e03",
+    "parse-entry-flow-audit.md": "7910f993920ccb4bb482125eb6eb1a5f867b89d3f7d423f51186d9573ac6ef62",
+    "parse-entry-rea-session.json": "2249470d555cbe35f5de16488b3e4b631c4b5770af5255bfff881943776ff333",
+    "parse-entry-source-review.json": "21e7de2cc45b9fcca875c492c89216772130c85dcdcc9d3e96eb10a3f407f755",
+    "parse-entry-retained-slot.json": "31a5f8d21eafaead10938997bc79ca50b7a3c2af9dbb242213dd77d717ec95a6",
+    "pool-allocation-simd-data.json": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+    "node-delete-next-vtables.json": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a"
+  },
+  "prior_target_presence": {
+    "0x1800041b0": {
+      "source_presence": "module_record_only",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 78,
+  "integration_checks": 142,
+  "new_checks": 220,
+  "execution_scope": "0041b0 normal parse-entry prelude projection+one final NativeDocumentEffects::parse_0041b0 source bridge;cached cursor,line/field initialization,mandatory locale classification with live byte reread,BOM/error13/live virtual-slot80 dispatch ordering;retained shipped document target004970 is known but its body is mandatory;classifier051fc0,error005820,indirect parse/DOM body/native node/heap/vtable ABI/EH remain open",
+  "limitations": [
+    "0041b0 normal parse-entry prelude projection+one final NativeDocumentEffects::parse_0041b0 source bridge;cached cursor,line/field initialization,mandatory locale classification with live byte reread,BOM/error13/live virtual-slot80 dispatch ordering;retained shipped document target004970 is known but its body is mandatory;classifier051fc0,error005820,indirect parse/DOM body/native node/heap/vtable ABI/EH remain open",
+    "Entry caches document+98 cursor before DWORD document+a0=1 then DWORD+30=1;lower classification may change doc buffer but cached cursor is retained",
+    "High-bit byte skips classifier;ASCII-range bytes call mandatory051fc0 with unsigned0..127;no invented ASCII whitespace table or early NUL stop;classified byte is reread after callback forLF and live32 line wrap",
+    "Store BYTE BOMflag+68=0 before input reread;EF/BB/BF bytes inspected in order;partial BOM mismatch dispatches virtual directly;complete BOM advances3,stores flag1 then rereads advanced byte;no second whitespace pass",
+    "Ordinary/complete-BOM empty input tail-calls mandatory005820(document,13,0,0);error helper implementation is not recovered in this stage",
+    "Indirect parse uses live document vtable and slot+80 after lower effects/stores;mandatory parse_virtual receives target identity/doc/cached cursor/zero/line address;target is never called as a host function pointer",
+    "N16 narrow128-byte document vtable read excludes slot+80;older complete broad retained read ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082 proves07ff48→004970;that body stays mandatory;fixture-selected target is not shipped evidence;no new original read/vtable acquisition",
+    "One existing parse_0041b0 source dependency is closed (42→43),not full parser/DOM completion;normal+bridge two definitions map one native function",
+    "Prior0041b0 presence is module_record_only,not no_definition_mapping;only that exclusive bucket transitions to source_definition_mapped",
+    "Native classifier051fc0,error005820,indirect parser/DOM,node virtual/native allocator/copy/fill/free/vtable lifecycle/ABI/EH/concurrency remain mandatory or unproven",
+    "No synthetic rollback/native unwind behavior added;bounded map/lower failures preserve committed prelude stores",
+    "Originals never executed/modified;actual CFG/token/achievement contents never read;hash-only integrity separate;blocked version.dll/generated artifact never retried",
+    "No new native import/data read;retained listings/previous complete data reused;REA identity checkpoint only;CRT unchanged and paused;full DLL incomplete,total percentage unmeasured"
+  ],
+  "native_parse_entry_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "native_node_base_fully_closed": false,
+  "native_pool_destruct_fully_closed": false,
+  "native_pool_clear_fully_closed": false,
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "parse-entry-source-review.json",
+      "reviewer": "/root/allocation_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N24 error005820 inventory/contracts from retained evidence;no new source body claimed by that preparation;generic CRT remains paused",
+  "reused_retained_slot_evidence": {
+    "file": "parse-entry-retained-slot.json",
+    "sha256": "31a5f8d21eafaead10938997bc79ca50b7a3c2af9dbb242213dd77d717ec95a6",
+    "parent_file": "outputs/anadius-rea-evidence.json",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "extract": {
+      "address": "0x18007ff48",
+      "parent_offset": 3912,
+      "bytes": 8,
+      "bytes_hex": "7049008001000000",
+      "little_endian_qword": "0x180004970",
+      "document_vtable": "0x18007fec8",
+      "slot_offset": "0x80"
+    },
+    "new_original_read_performed": false,
+    "new_source_bodies_claimed": 0,
+    "target_004970_implementation_recovered": false
+  }
+}

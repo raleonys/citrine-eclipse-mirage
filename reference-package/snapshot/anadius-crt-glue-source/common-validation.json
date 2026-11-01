@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_glue",
+    "result": "PASS",
+    "output": "PASS 202 integrated CRT/PTD/FLS/heap/thread checks",
+    "executable_sha256": "85e9030086bcd4e1914841ebec6180970ebba2ea935eff0b5afbefd32d230cdd"
+  },
+  "execution_scope": "Typed FLS API composition and live trivial Context/PTD lifetimes; actual recovered heap/PTD/error/invalid/runtime/thread algorithms with SDK fixtures",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-glue-source/crt_glue.cpp",
+      "sha256": "b880c863eb26775ee3de243ef68e8e9a2dc78a3ada7bfa7b1a2de8d2223942ca"
+    },
+    {
+      "path": "anadius-crt-glue-source/crt_glue.hpp",
+      "sha256": "d9dd2b7385850820a614600f51ff103f1929c85178b8bd065c38db661257710e"
+    },
+    {
+      "path": "anadius-crt-glue-source/glue_tests.cpp",
+      "sha256": "166a8589317966bd223519691b8ff301b05fa7fdfc8f39c947e1f4632f07c151"
+    }
+  ]
+}

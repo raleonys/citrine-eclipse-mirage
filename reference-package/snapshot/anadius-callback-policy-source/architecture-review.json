@@ -1,0 +1,93 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b16_policy_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-29T00:43:26.469377+00:00",
+  "reviewed_source_hashes": {
+    "policy.hpp": "4853874e12ac8104726c48b21943fd4f886d4d5456637f3e00d433f0e917af2e",
+    "policy.cpp": "c3e25afae59c2ef07e3017644c011b870aba4823307d20693b2f66cff9754110",
+    "policy_tests.cpp": "05baee8f0829c36459338096bc6f488ad164be9baa886e3c48cb712f56a8524f",
+    "policy_integration_tests.cpp": "a83c650ef6820bdaf2af4c4f1eb05d806317b79c29e9e7c607be350c791eda88",
+    "policy_test_fixture.hpp": "b882b4f8474e228ff56babe4f179f149bc8ee19e5201373df4ba41e01264e929"
+  },
+  "quick_results": [
+    {
+      "path": "work/b16-core-quick-results.json",
+      "sha256": "dd717561692bbdd5e10c8f6e5e8c761b2335cc1e26b17490bbd6bdfb84179bb8",
+      "checks": 52,
+      "executable_sha256": "5c2a84767c103af44251e183d7479ce5204707ea1e8e150e9fff65cda2e2694e",
+      "execution_by": "root; independent reviewer verified source/executable hashes and reviewed tests, did not rerun tests"
+    },
+    {
+      "path": "work/b16-integration-quick-results.json",
+      "sha256": "7ac2da5f1662124fec44d2d2c268e62150863f8a1ee1e1026d6d4a6d58d23d86",
+      "checks": 34,
+      "executable_sha256": "cc9d8d5164fdd3359203c8641c4994c420ded72b7216cc17b640965280ac673e",
+      "execution_by": "root; independent reviewer verified source/executable hashes and reviewed tests, did not rerun tests"
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "topic": "concrete scope",
+      "conclusion": "Policy supplies all15 remaining OriginalEffects overrides using selected compiler CRT/conversion/Execution/log/dialog/terminal boundaries; ByteWide supplies the2 wide operations. This is a bounded source composition, not original CRT or general production callback-thread equivalence."
+    },
+    {
+      "id": 2,
+      "topic": "wide aliasing and error prefix",
+      "conclusion": "Caller storage is accessed only by memcpy; staged CRT inputs/outputs are real wchar_t objects. The full destination-capacity overlap guard, INT_MAX bound, actual output preclear before selected invalid handler and successful-prefix copyback are explicit. Temporary allocation/EH/debug-fill/handler-address equivalence remains outside scope."
+    },
+    {
+      "id": 3,
+      "topic": "resource lifetime",
+      "conclusion": "Storage initializes resources/wide before OriginalEffects receives its references and outlives the OriginalEffects base. Policy is immovable and actual original-array identity is preserved. Caller must retain streambuf and close Context before destruction."
+    },
+    {
+      "id": 4,
+      "topic": "allocator ownership",
+      "conclusion": "Four-byte fabricated handles use actual same-domain ApplicationMemory, with a separate Policy ticket. Incoming fabricated seeds are rejected; foreign/double free rejected; known free failure retains ownership. Core erase-before-free prefix remains visible and explicit owner retry does not invent source tracking rollback. Outstanding Policy handles abort on destruction."
+    },
+    {
+      "id": 5,
+      "topic": "synchronization boundary",
+      "conclusion": "One external controller serializes all callbacks and shared state without callback reentry. Only Policy overrides reject other-thread calls; inherited final original/wide methods do not. Native gate protects binding/in-flight accounting, not state access. Foreign host-thread PTD and automatic callback admission/quiescence remain unresolved."
+    },
+    {
+      "id": 6,
+      "topic": "literals and logging",
+      "conclusion": "The5 whitelist strings match retained file-evidence text/hex/NUL/hash records totaling137 bytes. This reviewer read no original file. Root reports partial REA144-byte overlapping evidence separately; complete file bytes and provider preview coverage must remain distinct. Arbitrary VAs are never dereferenced. Counted text logs preserve embedded NUL."
+    },
+    {
+      "id": 7,
+      "topic": "independent verification",
+      "conclusion": "Root quick results52core/34integration PASS with all5 reviewed source hashes and both EXE hashes verified independently. Tests reviewed, not rerun. Core includes2 own terminal children; libc++abi terminating stderr belongs to the returning-exit invariant case. All797 source-extension entries in prior B15 archive match current files, covering prior780 tracked source files."
+    },
+    {
+      "id": 8,
+      "topic": "execution boundary",
+      "conclusion": "Tests use own process heap/FLS/CRT/SDK metadata, own SDK shims and fake original trampolines, fake dialog conversion/message, and selected exit policy. No original/rebuilt DLL, real hook/registry/socket/process/UI/foreign module is run."
+    }
+  ],
+  "prior_archive_source_entries_verified": 797,
+  "prior_tracked_sources_preserved": 780,
+  "tests_rerun_by_reviewer": false,
+  "source_and_executable_hashes_verified": true,
+  "limits": [
+    "External controller serialization and no callback reentry are mandatory preconditions, not a whole-callback admission guard.",
+    "Inherited final original/wide methods do not enforce the controller thread check.",
+    "Same-domain ApplicationMemory only; foreign host-thread PTD/concurrent callback state remains open.",
+    "Selected compiler CRT staging is not original static CRT/locale/invalid-handler/EH/SEH ABI equivalence.",
+    "Caller-owned streambuf must outlive all stream use.",
+    "External no-new-callback quiescence and native Context close remain caller obligations.",
+    "No original or rebuilt DLL execution; own heap/FLS/CRT metadata and synthetic callbacks only.",
+    "Retained literal records validated without rereading originals; partial REA coverage remains separately limited.",
+    "B10 historical review debt, full native providers/foreign/ABI/unload/PE completeness remain open."
+  ],
+  "production_dll_readiness": "BLOCKED",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

@@ -1,0 +1,31 @@
+{
+  "source_package": "B43",
+  "result": "CONCRETE_PROFILE_DEFAULT_ENVIRONMENT_WITH_SELECTED_SCHEDULING_POLICY",
+  "owned": [
+    "stable tables/type/factory/schedule/copy bindings",
+    "weak capability registry with strong call pins",
+    "bounded exact-address environment reference rows",
+    "source admission/probe/lifecycle state",
+    "Parent provider lease"
+  ],
+  "selected_policy": [
+    "session state1/accept state0",
+    "owned handler inline on admitted same worker",
+    "response existing022e40 force-post1",
+    "two known opaque type-info identities, not native RTTI string comparison"
+  ],
+  "required": [
+    "whole Parent Operation and complete nonmutating source checkpoint",
+    "external rawjob/kernel drain attestation",
+    "actual Parent/IO/accept/work/queue drain",
+    "remaining domain/config/event/error/SDK/job providers"
+  ],
+  "lifetime_limits": "Raw exported vtable/executor/schedule pointers must not outlive Environment. Token-level stale rejection does not make a raw virtual call after owner destruction safe. Raw struct copy is not retain. Unknown stack descriptors are not lifetime pins.",
+  "close_limits": "Environment refs0 does not prove a deferred response functor has finished; actual source graph plus external drain must be empty.",
+  "native_0228c0_or_RTTI_ABI_proven": false,
+  "native_EH_concurrency_proven": false,
+  "full_bootstrap_resources": false,
+  "loader_hooks_bound": false,
+  "real_network": false,
+  "original_loaded": false
+}

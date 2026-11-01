@@ -1,0 +1,4 @@
+EXPORTS
+    CDX=recovered_export_leaf @1
+    RUNE=recovered_export_leaf @2
+    anadius=recovered_export_leaf @3

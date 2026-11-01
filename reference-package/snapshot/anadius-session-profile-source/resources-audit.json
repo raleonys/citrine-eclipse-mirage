@@ -1,0 +1,26 @@
+{
+  "source_package": "B40",
+  "result": "FIXED_CAPACITY_CONCRETE_APPLICATION_WITH_EXPLICIT_NATIVE_MESSAGE_AND_KERNEL_LIMITS",
+  "owned": [
+    "all frame/read/write/queue/response/message contexts",
+    "N independent session registries and logic objects",
+    "observer weak metadata lifetime",
+    "fixed job/closure and large-string-header registries",
+    "extra job strong and closed runner tombstones"
+  ],
+  "required": [
+    "semantic SessionLogic factory",
+    "environment/type/scheduler/copy/response thunks and backing objects",
+    "error/format/category/guard/worker policies",
+    "queue growth",
+    "raw recv/send SDK and job backend",
+    "external kernel/raw-job drain proof"
+  ],
+  "supported_job_scope": "same worker thread/fiber under whole Parent Operation, inline or deferred until before worker return",
+  "message_scope": "normal-return request writeback and response construction; not native033d70 intermediate-prefix/EH equivalence",
+  "capacity_overflow": "unsupported retained factory prefix, no rollback or graceful native admission claim",
+  "complete_bootstrap_resources": false,
+  "loader_hooks_bound": false,
+  "real_network": false,
+  "original_dll_loaded": false
+}

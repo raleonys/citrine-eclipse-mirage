@@ -1,0 +1,135 @@
+{
+  "schema": "message-dispatch.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180021770",
+      "pseudo_evidence": "ev_f4884fc6f81199da63c2b34f733cd982fc0fada865bc01fed690b3c71bce8d8a",
+      "assembly_evidence": "ev_267ad2fba0da2ea44cbb89f4ef891512c4b721af9c7a6c38b4be9571c4a1bc19",
+      "newly_recovered": true
+    },
+    {
+      "address": "0x180028d30",
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "newly_recovered": true
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180021770",
+    "0x180028d30"
+  ],
+  "new_original_procedures": 2,
+  "context_functions": [
+    {
+      "address": "0x180025480",
+      "pseudo_evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "assembly_evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18005e8e0",
+      "pseudo_evidence": "ev_06d02d032bc19f80b5602d3d24b5ce1d432c5a742d8014e2c0f45f08f084deea",
+      "assembly_evidence": "ev_b2508bf2d6430c3f029f1f6090cadaa12d2315a853312d93ad48f42602adfb0e",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18005e7a8",
+      "pseudo_evidence": "ev_5e71c9771b4ee41eabb165b637fe2731b56aa25a4607e88aa0466f7c42c11285",
+      "assembly_evidence": "ev_0de6693f5df6645aa78071aa314460e2d91874a3dee820d61225b7a47d038c06",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18004a47c",
+      "pseudo_evidence": "ev_5a17e4fe0d86262c272303eb4ae17f7077292904802d33cfdf245decc30119df",
+      "assembly_evidence": "ev_b17cc6887bbf8d03f11ab86e0b2d89608cc3671d3da2122e64441f45bb292dc9",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x18000aa50",
+      "pseudo_evidence": "ev_f060a9fa1cdb588422c64e93cb3567d6424814414ab83bc876f94dd9225f83d2",
+      "assembly_evidence": "ev_3a1f9065574e56d67cd594b83c71c5e3103c2f8e286c8a6ef49db9dc10d03425",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180033d70",
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180021420",
+      "pseudo_evidence": "ev_03285e4590c59bdfef637bd131232ec356cb691047dceda259799e10be2eb802",
+      "assembly_evidence": "ev_485e1499aa6085002207d4e979d89f21170510588cb32527b4e03d79fecdcc79",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180028270",
+      "pseudo_evidence": "ev_f01c15c5ec6846574a424ff84a94d532bd1a1c4a9f781ad08433a5f12e0f868f",
+      "assembly_evidence": "ev_8a9098273f1cf3fed4bf7cd29a29a081bfa18c0706bf118f25c7907784a35bd5",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180026860",
+      "pseudo_evidence": "ev_772eb911cd97eca73ea169c26cb870bf3d6053a81e1784f919f5749a8844cf8f",
+      "assembly_evidence": "ev_950eee1fe00640b3798abaac65e3679112bda2f987b12255d382501c5dd6dba5",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180023dd0",
+      "pseudo_evidence": "ev_d162fd99180d0294652d44b39fe2cceaf384a9996b3bae0f40e08fd0e2ac7f82",
+      "assembly_evidence": "ev_747feac84362fbb739d9c68cee8e8fbc51d55c081309ddaa794f2c19a13f7fac",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "message_dispatch.hpp": "e29de315e311d2d5bf8129db745102415609fb140de1f74ea121150efa142e01",
+    "message_dispatch.cpp": "a8ca45a775c0fcd6bd485075ad3d459f8fd208a4922ade32e521c37bc2870014",
+    "message_dispatch_test_fixture.hpp": "5303f262fc735dd066d6ce857fe60c051cbafcaaec62210f318dd94e5723e2af",
+    "message_dispatch_tests.cpp": "9708f14c02f4a1171811fb2c715319bf95925aa1cc76d7658a5017475d83107c",
+    "message_dispatch_integration_tests.cpp": "0f7a35999e69a4472158eac7a4bf8f2b27266b72a604e96d4babde04a00c8d6f",
+    "build.ps1": "c18db1e4233ab18e6bd9d4b32b0fe850bd345b63e3ca7e281b0d36d3de299aa6",
+    "CMakeLists.txt": "c84f1f842acf4b898db5263f738b7dec8bec3b6b8f82fca4c9aebf2c04c7b655",
+    "README.md": "0275df3cff2316f9fc4bfaaf4bf52700c4448db1642c16b0a6919df6b3357fc1"
+  },
+  "support_hashes": {
+    "message-dispatch-evidence.pseudo.c.txt": "29f2670c39d14cd0070d41739675db66f633d0cf7c900d46331f97a7a1bbc713",
+    "message-dispatch-evidence.asm.txt": "72935bed18838fd955bbed98ff5a5aa59a3ef342bacd01c4f8f0de78bc2ca419",
+    "message-dispatch-context.pseudo.c.txt": "94166dddbf3edcd253e256c913a0872ae27a0def5be47753f633cfdc7cd00d21",
+    "message-dispatch-context.asm.txt": "d247b3f485b81d274b227a818c59fa5fdad9af1667c630c1ce0079d297d69768",
+    "message-dispatch-flow-audit.md": "1656d7f0a92c6d50d895740207574b3731c8d702b25f23434111b7f4d9da6abb",
+    "message-dispatch-rea-session.json": "dd969de1a18a0bd6b8e3d80b54ed5401db07a76d605485a0fa05e3bd5b02e735"
+  },
+  "closed_provider": {
+    "base": "FrameReadApi::begin_frame_thread_05e8e0",
+    "closure": "RecoveredMessageThreadApi::begin_frame_thread_05e8e0",
+    "native_abi_complete": false,
+    "reused_body": "threads_recovered::begin_thread_05e8e0"
+  },
+  "core_checks": 621,
+  "integration_checks": 199,
+  "new_checks": 820,
+  "execution_scope": "021770/028d30 normal bodies; actual025480 and unchanged05e8e0/05e7a8 plus existing033d70; synthetic immediate/deferred thread, selected normal-return string/XML compatibility, controlled021420 owned response consumer",
+  "review": {
+    "scope": "Same-agent addressed assembly/source comparison and synthetic tests",
+    "independent_review_complete": false
+  },
+  "limitations": [
+    "Normal typed projection only",
+    "Native021420/028270,00aa50,04a47c and033d70 string projection providers remain open",
+    "New integration uses synthetic CreateThread/PTD/exit and controlled021420 consumer; no real OS thread or DLL execution",
+    "Normal-return string adapter does not establish native allocation/string or exception mutation ABI",
+    "R4 rearm captured; no new receive/027710/scheduling/outerworker run",
+    "028d30 security cookie epilogue not reconstructed",
+    "Native category/exception/allocator/global/polymorphic/STL/EH/SEH/concurrency/ABI/fullDLL unproven"
+  ],
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "Phase3/N2 021420 response dispatch/owned closure and028270 write queue connection"
+}

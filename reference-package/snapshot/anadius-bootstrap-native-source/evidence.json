@@ -1,0 +1,15 @@
+{
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "producer": "New native C++ entry integration based on retained static REA/Ghidra evidence; no new original function/source claim",
+  "functions": [
+    {"original_va":"0x180038870","entry":"application_entry","evidence":"ev_0a232e746d99beddba99fe362a4f132625939b77bd747e39ad749975c6f32a06","kind":"pseudocode"},
+    {"original_va":"0x180038970","entry":"ThreadBridge composition with existing initialize","evidence":"ev_77887ea2e7b744e62e52eaf81cb8a07abf2a4f50498001ba81b2fcf2496e8789","kind":"assembly"},
+    {"original_va":"0x1800388a0","entry":"no_argument_entry","evidence":"ev_3022378b3b333555b2f1f63fa59a85ea675e756369871f825e3fd805143160eb","kind":"assembly"},
+    {"original_va":"0x1800388d0","entry":"boolean_entry","evidence":"ev_220d092f92df6b8c1c7cbb91ffd4ee02e5b5af3f3f6fd15d599e710c8adf353e","kind":"assembly"},
+    {"original_va":"0x180038950","entry":"exit_entry","evidence":"ev_9e5bed8eb620590b20a44651d47fd66e0d4d00f7cc3caf952f79bc4a73f22049","kind":"assembly"},
+    {"original_va":"0x180038890","entry":"terminate_entry","evidence":"ev_a73f817561c1dc663846bb56938e55cea83e98470e9af8c91186939f6bbbe144","kind":"assembly"}
+  ],
+  "implementation_choices": ["Explicit process-global binding and nonblocking admission counter are new integration policy", "noexcept callback boundaries route escaping C++ exceptions to required terminal policy", "ThreadBridge resolves existing CRT core application-entry token only; CreateThread outer wrapper remains separate"],
+  "unproven": ["Original MSVC CRT/SEH exception equivalence", "loader lock and DLL entry/export integration", "native CRT atexit/set_terminate lifetime", "PTD/FLS ownership and exit cleanup", "runtime equivalence against original DLL"],
+  "execution": "Only independently compiled own test EXE, mock application/CRT dependencies, own synthetic std::thread, and GetLastError/SetLastError metadata; no target execution"
+}

@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "77bc8afbf714139e6152f9e74ed246537d1272386f37aba56043477880877f3a",
+  "test_results": [
+    {
+      "module": "socket_prefix_cipher",
+      "result": "PASS",
+      "output": "PASS: 5039 socket prefix cipher checks; actual042480/042610 and045620/045630/0454e0/045580 sources, known-answer AES, binary offset/padding/IV oracle, live callbacks and bounded failure prefixes",
+      "executable_sha256": "327996fbdd78b92d05e5d79e7576065fcf318ec28c56afdc45259c917210efac"
+    },
+    {
+      "module": "socket_prefix_cipher_integration",
+      "result": "PASS",
+      "output": "PASS: 4224 socket prefix cipher integration checks; real ECB/CBC/IV/padding sources and final cipher/append bridges in033d70, request/response/event chain to N1-N10 queue/send/finish; key binding/XML/log/native ABI/EH remain open",
+      "executable_sha256": "5276398f4e1b60e7054d71345f654f3e932d9b489688aa8376dabfd3d9da6fc1"
+    }
+  ],
+  "core_checks": 5039,
+  "integration_checks": 4224,
+  "original_procedures_added": 6,
+  "new_source_bridges": 6,
+  "new_unique_source_mapped_addresses": 4,
+  "execution_scope": "042480/042610 live-prefix normal cipher plus045620/045630/0454e0/045580 ECB/CBC normal bodies;2 existing NativeMessageApi closures and4 new block-interface source selections using existing AES block sources; real request/response/event IV chain to033d70/N1-N10 queue/send/finish; init/key/session/XML/log/ABI/EH remain open",
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Typed mode/IV/schedule projection, not native object layout or global/ABI/EH/SEH/concurrency/fault equivalence",
+    "Existing AES block schedule source reused, not newly recovered rounds; coherent schedule/IV/handler and input-memory lifetime required",
+    "Cipher0423d0/042760/042780 initialization/key/IV and shared session/ChallengeResponse/reset state not bound yet",
+    "Historical NativeMessageApi third uint32 is offset0 in033d70; full uint64 offsets preserved only by direct new bodies, no widening ABI claim",
+    "Raw unsigned offset/size wrap and pre-base padding reads preserved within bounded memory; no std::string prevalidation or rollback added",
+    "CBC encryption final-batch IV store differs from per-block decrypt IV updates; failures retain prior native mutations",
+    "No native CALL010040; existing resize/grow normal source composes native inlined contracts",
+    "XML/032d00/log/getter/mutex/allocator/free/terminal providers/native ABI/EH remain open; no original/network/thread/IOCP execution"
+  ],
+  "previous_local_records": "34 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x180042480",
+    "0x180042610",
+    "0x180045620",
+    "0x180045630",
+    "0x1800454e0",
+    "0x180045580"
+  ],
+  "independent_review_complete": false
+}

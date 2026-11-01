@@ -1,0 +1,1129 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_results": [
+    {
+      "module": "socket_worker_startup",
+      "result": "PASS",
+      "output": "PASS: 616 socket worker startup checks; retained02a000/02a4a0 callbacks, cached errors/handles, controlled lifetime and unchanged recovered05e8e0 bridge",
+      "executable_sha256": "0dab1db9b71bcddc373aaf8253a0e87c84bcdd98be48870cb8be2da68b8c38a4"
+    },
+    {
+      "module": "socket_worker_startup_native",
+      "result": "PASS",
+      "output": "PASS: 821 socket worker startup native checks; six injected SDK imports and actual02a000/02a4a0/024990/shared registry/acceptor/cancellation/recycler source integration only",
+      "executable_sha256": "044991b41f12c7d76991ed1ebb93a08e910f24b793a882e675cdf0afb44d2e13"
+    }
+  ],
+  "sources": [
+    {
+      "path": "anadius-socket-source/acceptor_native_tests.cpp",
+      "sha256": "dac8b385f9f7dd0ea2377f547eefd6952014862430d3b58dba293d2648b9c286"
+    },
+    {
+      "path": "anadius-socket-source/acceptor_native.cpp",
+      "sha256": "ba1f75d01e93011e9bb712754d3625a8f9852957a1acfa1df973e79d9e71bedb"
+    },
+    {
+      "path": "anadius-socket-source/acceptor_native.hpp",
+      "sha256": "fc82c54de4d79713bc0207a6ab3429dbc8d77cd1d16e4142100e66a696aa026c"
+    },
+    {
+      "path": "anadius-socket-source/acceptor_tests.cpp",
+      "sha256": "1351d7c838b7289b849dbbac2743818b704cf32c7837322e07d25707d3fc8f2f"
+    },
+    {
+      "path": "anadius-socket-source/acceptor.cpp",
+      "sha256": "c9a5c8a034daf5381d718f1985e8e3f58a530856982fff194fceed77299aea3a"
+    },
+    {
+      "path": "anadius-socket-source/acceptor.hpp",
+      "sha256": "5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b"
+    },
+    {
+      "path": "anadius-socket-source/append_growth_integration_tests.cpp",
+      "sha256": "8210ea9a856233a2316c5242cdf8d49ebca05bffeb08f327c5d7a073f146f9b0"
+    },
+    {
+      "path": "anadius-socket-source/append_growth_test_fixture.hpp",
+      "sha256": "58909e369e046e23a82d3a54048792ea798f135cd084303d7fa01acb37a003bf"
+    },
+    {
+      "path": "anadius-socket-source/append_growth_tests.cpp",
+      "sha256": "415f4351495738a3ae072b0614317deeee75ce178d8cc608b3d2000467dc1d31"
+    },
+    {
+      "path": "anadius-socket-source/append_growth.cpp",
+      "sha256": "db4311e05b8d893e7833d004dd9078ffcc3aa566f2100f1fad7be48b5b4f7eca"
+    },
+    {
+      "path": "anadius-socket-source/append_growth.hpp",
+      "sha256": "3e0d8e657f77895ff3a6927d162dfc6a42836c781ed63747673381f767c6a6eb"
+    },
+    {
+      "path": "anadius-socket-source/async_receive_integration_tests.cpp",
+      "sha256": "69b9ce5be9d4893298e22e864d696058bc7fd27e58d8ccb24f8c4357b0e2509b"
+    },
+    {
+      "path": "anadius-socket-source/async_receive_test_fixture.hpp",
+      "sha256": "2aa196d2d494c9912494682f3e097a5cfa9fac4e8b877b0ad9855868bc784992"
+    },
+    {
+      "path": "anadius-socket-source/async_receive_tests.cpp",
+      "sha256": "d45bf5a1e3c8a0f7b90d855cbe0dabf2b253ffb60691fed35bfa91a85566e9bd"
+    },
+    {
+      "path": "anadius-socket-source/async_receive.cpp",
+      "sha256": "6d215e4abc6d25a72240b7938b1c91ba1326dfffd8de367be75e9778602f454f"
+    },
+    {
+      "path": "anadius-socket-source/async_receive.hpp",
+      "sha256": "4ec52308070b4d7dc017dcc2b2cabb61af4cd34c743b8499b9114ae7da344d35"
+    },
+    {
+      "path": "anadius-socket-source/cancellation_native_tests.cpp",
+      "sha256": "13f32b3bbd06c9c0f1568f76bc5393264735b0c89228147e18c431c1b48d808f"
+    },
+    {
+      "path": "anadius-socket-source/cancellation_native.cpp",
+      "sha256": "d1a8ad5506c6683f1a080950d253766bd902dce4086a843f599f4c6b414b293e"
+    },
+    {
+      "path": "anadius-socket-source/cancellation_native.hpp",
+      "sha256": "91ac34a057aec4e6aec647c5a046f3e98138ccdeb23a1f268083defae5493f39"
+    },
+    {
+      "path": "anadius-socket-source/cancellation_tests.cpp",
+      "sha256": "cc76688587f6066f67a32c64614ac344990d75820327508a8297e6e0bf1e02ce"
+    },
+    {
+      "path": "anadius-socket-source/cancellation.cpp",
+      "sha256": "8b9590f3ae91bad807107a79e9f04391b9470f885b599725a21fb80a8dec098c"
+    },
+    {
+      "path": "anadius-socket-source/cancellation.hpp",
+      "sha256": "590aba7ccc16c44dd332481bd79cc2f6760b7fa81be773f5dbceaa7efebef1ff"
+    },
+    {
+      "path": "anadius-socket-source/cipher_session_integration_tests.cpp",
+      "sha256": "ec8ecde49fe469e834be33b4a917d004539c0099b131b2bbf6f025ca485bea6b"
+    },
+    {
+      "path": "anadius-socket-source/cipher_session_test_fixture.hpp",
+      "sha256": "ff86d59b03c10dd038cf47dfec8b56582d1577f164ae5e0a8144d5d796ba768b"
+    },
+    {
+      "path": "anadius-socket-source/cipher_session_tests.cpp",
+      "sha256": "62035f4c36267c5c74533d97bce7ff16a436711b9949e880b543f17f066902b4"
+    },
+    {
+      "path": "anadius-socket-source/cipher_session.cpp",
+      "sha256": "62bed5ec4cd571ce47eea1e546c09b461474439a8a342a4fa52c3ce99bacfbb2"
+    },
+    {
+      "path": "anadius-socket-source/cipher_session.hpp",
+      "sha256": "c8b54d806823845482009cbd211f3b9923497d471b29d98729ce12ea364a1fc2"
+    },
+    {
+      "path": "anadius-socket-source/close_tests.cpp",
+      "sha256": "0c4e959653ba655a2ce6695b9a17d4c01f3c07b464b372061de1a131077fc146"
+    },
+    {
+      "path": "anadius-socket-source/close.cpp",
+      "sha256": "44b17eec8a2cb5cc62ae7c2b17e027b5ebd5b10ba18785bf886bad90d56082b2"
+    },
+    {
+      "path": "anadius-socket-source/close.hpp",
+      "sha256": "28fb856c232dcec8d1cca60016a7e0f8beed7ead11631fae25548c8eb66a55ef"
+    },
+    {
+      "path": "anadius-socket-source/closing_tests.cpp",
+      "sha256": "0ef67ff44a57ea0a0fdee04d786f74a32455a9a87e8bd74c9daa2a3872b4674c"
+    },
+    {
+      "path": "anadius-socket-source/closing.cpp",
+      "sha256": "9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669"
+    },
+    {
+      "path": "anadius-socket-source/closing.hpp",
+      "sha256": "10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher_native_tests.cpp",
+      "sha256": "67f81e8f7beb4f9759397963b9209697a133eb096fec47899edfc85257a73be1"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher_native.cpp",
+      "sha256": "1d031ba931aac7a2daac70c54bc81d7c2eac0599a821d220a5330db1c7a405ef"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher_native.hpp",
+      "sha256": "7dd0296e59451095d528515d50d97f6052ad956c000858b7e4af68e0922a387b"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher_tests.cpp",
+      "sha256": "867c851b2b69a7954c7e0d47eac65296700267b2d34250776ba819fdf801ddcf"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.cpp",
+      "sha256": "16be30efd052e5392d95b69669d0caacba0bfb08b18dbe4094c409012e702952"
+    },
+    {
+      "path": "anadius-socket-source/completion_dispatcher.hpp",
+      "sha256": "fc956c1b9be86b46934afe11bfdc380e9c5c5264d773756cb09f5db331431955"
+    },
+    {
+      "path": "anadius-socket-source/composed_read_integration_tests.cpp",
+      "sha256": "e0040dc259689234eb38f2cb72a024d738b8e599fcc817410f0e755730dc5098"
+    },
+    {
+      "path": "anadius-socket-source/composed_read_test_fixture.hpp",
+      "sha256": "bbe4f98f2ad9abc15821ff402d96cf5553907a0f8eb81da9d9098194e9ac7732"
+    },
+    {
+      "path": "anadius-socket-source/composed_read_tests.cpp",
+      "sha256": "a07b769d77fb309265f7854c2d05d19839cde32dd8b7c8ab0a73b56ff3185bc0"
+    },
+    {
+      "path": "anadius-socket-source/composed_read.cpp",
+      "sha256": "9e6ab5c28329fe1b867f4c4c683194ca852f1c5d813f22274210d65a7f9f0037"
+    },
+    {
+      "path": "anadius-socket-source/composed_read.hpp",
+      "sha256": "11dad087e4f8f08fcbc16ef5ad42a02e313f2ae0a2734b4c7feab8f07baa94a5"
+    },
+    {
+      "path": "anadius-socket-source/composed_write_integration_tests.cpp",
+      "sha256": "3ba52f504faa2203ad29d24b63773507baadc1e800f3b8622943f241065f2abe"
+    },
+    {
+      "path": "anadius-socket-source/composed_write_native.cpp",
+      "sha256": "0aa0b7fa775156f28f18c16a7c5314979ef112c765de13d695996e3d3c5f454e"
+    },
+    {
+      "path": "anadius-socket-source/composed_write_native.hpp",
+      "sha256": "23f85015f11ef464ffd2b6501c5a70ee21b8d5f9cbc016e3e7cfd7c2bdc060cb"
+    },
+    {
+      "path": "anadius-socket-source/composed_write_tests.cpp",
+      "sha256": "fa3ed9c6ce59fdc02e5daad5b7a240252bac48231d58c6eacbf1de181ae5264c"
+    },
+    {
+      "path": "anadius-socket-source/composed_write.cpp",
+      "sha256": "ae72cf24ff9e0ff0f4c0ecd93061f6e0538cbefda526cc945b7aed47c10b6e48"
+    },
+    {
+      "path": "anadius-socket-source/composed_write.hpp",
+      "sha256": "12adee25325e0a9b56dc229ced9cf56768de2ec0f35312ee173c8a6293e9ef08"
+    },
+    {
+      "path": "anadius-socket-source/document_clear_integration_tests.cpp",
+      "sha256": "0201d5348e59e316a5f0c823fc19615dd0f5f4c435bd425802d3522abc822ce1"
+    },
+    {
+      "path": "anadius-socket-source/document_clear_test_fixture.hpp",
+      "sha256": "3ea2d649379aa6d213fd2cdac68b06dedb75867eed37fc71cc7e64919b8b4fa5"
+    },
+    {
+      "path": "anadius-socket-source/document_clear_tests.cpp",
+      "sha256": "550c99e8894c491d2e2bd05c074cb19f6e5d8664243955b125ddf4ed763dfd41"
+    },
+    {
+      "path": "anadius-socket-source/document_clear.cpp",
+      "sha256": "88aa1f63a79055473da47c70b87e70de951caebbcdf5290270e39e208e7904a4"
+    },
+    {
+      "path": "anadius-socket-source/document_clear.hpp",
+      "sha256": "f7fec83e7192beba28042bdf069961cc51e2b793c911261ec6747a80213ae8eb"
+    },
+    {
+      "path": "anadius-socket-source/document_error_integration_tests.cpp",
+      "sha256": "60b68da5f2cde9039c5a5ce641cac47d56ed76b3dc4fd6fe91f92daee66f4f6f"
+    },
+    {
+      "path": "anadius-socket-source/document_error_test_fixture.hpp",
+      "sha256": "5f488ec1f3383d6cb7bd7a37680fcf37cbbb2c5f629f6801ddcacd41f71ed3fd"
+    },
+    {
+      "path": "anadius-socket-source/document_error_tests.cpp",
+      "sha256": "583fcfbd98d7a16c69be5aebcd63059b2866a987cb35082ad4807c769d184778"
+    },
+    {
+      "path": "anadius-socket-source/document_error.cpp",
+      "sha256": "b3968b14cf10b3a1d82f6db2073bd592783c70a14da6c36d31514e588fad8c14"
+    },
+    {
+      "path": "anadius-socket-source/document_error.hpp",
+      "sha256": "504d941b18a12857808ef04f06339146757c1c3de382ae99f78a38643c39b732"
+    },
+    {
+      "path": "anadius-socket-source/environment_constructor_integration_tests.cpp",
+      "sha256": "1b805ae057592bb9fd0552e11b1b666d2300551c9a618a2cb6a24cf25f5f53a8"
+    },
+    {
+      "path": "anadius-socket-source/environment_constructor_tests.cpp",
+      "sha256": "b58724f0cbf01c6e0179a324cd0dcfbe1fe2de5f551649438f3089f79f6afd43"
+    },
+    {
+      "path": "anadius-socket-source/environment_constructor.cpp",
+      "sha256": "bc47e1f2fbc9bc30e0142d0d97c872b66c1aa17247889af38355eb2966f55d88"
+    },
+    {
+      "path": "anadius-socket-source/environment_constructor.hpp",
+      "sha256": "cec032a7f42a07bb852319cd0bf5639fe7243cd7fd6b8bb9b25bbd6cfe2bd050"
+    },
+    {
+      "path": "anadius-socket-source/frame_read_integration_tests.cpp",
+      "sha256": "91780b9f4c05ef1c67a96af3a98ec24595c58cfb49b3006767873c9685ada6b0"
+    },
+    {
+      "path": "anadius-socket-source/frame_read_test_fixture.hpp",
+      "sha256": "d123fad53cee8cc873797f63b0c6f3c5e76e7da5034ce71d82685be19263304d"
+    },
+    {
+      "path": "anadius-socket-source/frame_read_tests.cpp",
+      "sha256": "55317b8f89d5565383f0252c722b9499dfd88129910c1b4d8eb372e946ac15a9"
+    },
+    {
+      "path": "anadius-socket-source/frame_read.cpp",
+      "sha256": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba"
+    },
+    {
+      "path": "anadius-socket-source/frame_read.hpp",
+      "sha256": "ea9adf5bd04a872d8e78173c5bdf9bf053deecdd6cc90665e4674efbf72d4111"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch_bridge.cpp",
+      "sha256": "522fd1b8e79025a8cd6e80791ba292216d0b69826f9dfbb660261ac1e6716602"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch_bridge.hpp",
+      "sha256": "a0c012878ee191fe53b22d7bace89ade87308c9e3702c81ca9cdd905f9887646"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch_integration_tests.cpp",
+      "sha256": "c07d965ea88a165c463ab4848c4d0305a6e7febe6a9adb8f6801350924fa04c7"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch_tests.cpp",
+      "sha256": "0e4912363139ad94bd0cf8cc8efb56590e0d4d6f2c690eea989ae7441372c692"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch.cpp",
+      "sha256": "bd711c186df8625445b3b08e75daf827d14f31aa7f6c07a1f1f1b43675b7fdac"
+    },
+    {
+      "path": "anadius-socket-source/handler_dispatch.hpp",
+      "sha256": "0fec1cbf13941617daf61b0bf4a144c3e660bd976f4c65f8ebad184e198b3f64"
+    },
+    {
+      "path": "anadius-socket-source/io_completion_dispatch.cpp",
+      "sha256": "bb85580acd56f40b4e9c32e06a615aba3af36c37f6adc51ccc1184ec3c96a9a1"
+    },
+    {
+      "path": "anadius-socket-source/io_completion_dispatch.hpp",
+      "sha256": "43e4ab5404a7805e689232622ebc2a7471bd851532cdb952338dc0bce08074c2"
+    },
+    {
+      "path": "anadius-socket-source/io_completion_integration_tests.cpp",
+      "sha256": "941a84316b7955a5145088bed56ad5bfb755984fbe6111fb6b95a2ba469ae111"
+    },
+    {
+      "path": "anadius-socket-source/io_completion_tests.cpp",
+      "sha256": "7e49da73697f313385ef6651aeddcc30028b0ab8c06dbacaf42a3409149b87ee"
+    },
+    {
+      "path": "anadius-socket-source/io_completion.cpp",
+      "sha256": "48b235434106191f3821501eeb23bfa1516d29c8b98e7694bd6707cb98142b90"
+    },
+    {
+      "path": "anadius-socket-source/io_completion.hpp",
+      "sha256": "85ae99a93cec6b906cb62746e575d7a313267558d096bb99ea5be48996d48c32"
+    },
+    {
+      "path": "anadius-socket-source/iocp_constructor_native_tests.cpp",
+      "sha256": "383ea7f06acecb8464e2b4f27c9de53bb1b3244e16980ca8ad73ce9dc6f077c0"
+    },
+    {
+      "path": "anadius-socket-source/iocp_constructor_native.cpp",
+      "sha256": "ef64c81fee9b3460c62bb7a3e3a6676ef32b82e49e5701461656af9ce2969455"
+    },
+    {
+      "path": "anadius-socket-source/iocp_constructor_native.hpp",
+      "sha256": "53bf32bd986d221473ded1fb814f83676b6591dc584dc02fbbadfdfb75c48142"
+    },
+    {
+      "path": "anadius-socket-source/iocp_constructor_tests.cpp",
+      "sha256": "e7a5afd91bf55a457112833fac17bd1e1d688ef5c403e1616f19e1016b55c4c7"
+    },
+    {
+      "path": "anadius-socket-source/iocp_constructor.cpp",
+      "sha256": "4b9e91d2cab45972f188319246adc4d6e784ddb8be19946d408c5ac12fc20254"
+    },
+    {
+      "path": "anadius-socket-source/iocp_constructor.hpp",
+      "sha256": "c82705d8734e98d5df368faeb20d202a08c04d70092f6dd4e858d617e9112725"
+    },
+    {
+      "path": "anadius-socket-source/lifecycle_native_tests.cpp",
+      "sha256": "2759211a1dd016ac79fbcbed36e686e4a6f8b8b91cc3bf3ffba0991517061d31"
+    },
+    {
+      "path": "anadius-socket-source/lifecycle_native.cpp",
+      "sha256": "3d93ea529a65f84e009a80caebd6032606c65f60d2de281a6885a84c94d99996"
+    },
+    {
+      "path": "anadius-socket-source/lifecycle_native.hpp",
+      "sha256": "ef0f5c9621106f565d4b65b39666e2ee258f13e0638644051c543d1e63bf8f52"
+    },
+    {
+      "path": "anadius-socket-source/lifecycle_tests.cpp",
+      "sha256": "5222c62232015e59f3aa8c9477b28701411d3654294cc7bca18644b7caef6408"
+    },
+    {
+      "path": "anadius-socket-source/lifecycle.cpp",
+      "sha256": "6f5f684e1fb3224a5a9fd92ebf51f4b495effecf0f5ee7aad7fa7bc92fbb52c8"
+    },
+    {
+      "path": "anadius-socket-source/lifecycle.hpp",
+      "sha256": "081bf08e4214bdaaa2252c6e1abcb6ce6acad75c2805656cec5dee6e9eeee898"
+    },
+    {
+      "path": "anadius-socket-source/message_core_bridge_integration_tests.cpp",
+      "sha256": "0ccd6aa7388c11995b4aef05cc72833dfa1d062c0c47fe7df3e03aa9914447b7"
+    },
+    {
+      "path": "anadius-socket-source/message_core_bridge_test_fixture.hpp",
+      "sha256": "0f3258a77c42be5db377b0627212caaa412fa1daeaf4b575c996b222cb982c7c"
+    },
+    {
+      "path": "anadius-socket-source/message_core_bridge_tests.cpp",
+      "sha256": "d5216fbc1dd924b808d5a46089fbc81c7bfeb9235f74cdad39c9b6b19e3af17e"
+    },
+    {
+      "path": "anadius-socket-source/message_core_bridge.cpp",
+      "sha256": "a70a08445f81d56ae6a3a25137f090dd120244f7ce0e72e71822a8a09f7324cc"
+    },
+    {
+      "path": "anadius-socket-source/message_core_bridge.hpp",
+      "sha256": "952d090d21149bbda432065d168c058fd254f10cf867f1add78de0168b629368"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_integration_tests.cpp",
+      "sha256": "0f7a35999e69a4472158eac7a4bf8f2b27266b72a604e96d4babde04a00c8d6f"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_test_fixture.hpp",
+      "sha256": "5303f262fc735dd066d6ce857fe60c051cbafcaaec62210f318dd94e5723e2af"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch_tests.cpp",
+      "sha256": "9708f14c02f4a1171811fb2c715319bf95925aa1cc76d7658a5017475d83107c"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.cpp",
+      "sha256": "a8ca45a775c0fcd6bd485075ad3d459f8fd208a4922ade32e521c37bc2870014"
+    },
+    {
+      "path": "anadius-socket-source/message_dispatch.hpp",
+      "sha256": "e29de315e311d2d5bf8129db745102415609fb140de1f74ea121150efa142e01"
+    },
+    {
+      "path": "anadius-socket-source/native_dispatch_integration_tests.cpp",
+      "sha256": "52f9994466103112c006fd0771051eeddbde81f0f031de3233ca21578f961143"
+    },
+    {
+      "path": "anadius-socket-source/native_dispatch_test_fixture.hpp",
+      "sha256": "a7ca9a188a081f3cbd0cc3b2a4de57cc67d5cbcf14a122397e284a30b10a54ef"
+    },
+    {
+      "path": "anadius-socket-source/native_dispatch_tests.cpp",
+      "sha256": "5fb519c191709a2527772dcadc277634d6af1a57013b8fdc01991ee8028cde1a"
+    },
+    {
+      "path": "anadius-socket-source/native_dispatch.cpp",
+      "sha256": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b"
+    },
+    {
+      "path": "anadius-socket-source/native_dispatch.hpp",
+      "sha256": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440"
+    },
+    {
+      "path": "anadius-socket-source/native_document_integration_tests.cpp",
+      "sha256": "10e6b1033b214eab780992cd6eb6623a9ad76c29a43e7b2b1a09bfa8e403fe44"
+    },
+    {
+      "path": "anadius-socket-source/native_document_test_fixture.hpp",
+      "sha256": "a3fbffccc988bc26659d4f3e65e2f46bb33c08ec97d504e7a501688035eca935"
+    },
+    {
+      "path": "anadius-socket-source/native_document_tests.cpp",
+      "sha256": "bef069d15f6927d106375d53f429552a12cb1c4ac7f3c4d6181c54044a0ca1f8"
+    },
+    {
+      "path": "anadius-socket-source/native_document.cpp",
+      "sha256": "922667b1c02f098196b75f97d13e4fc531d304977474575e83f04a7e594da304"
+    },
+    {
+      "path": "anadius-socket-source/native_document.hpp",
+      "sha256": "d3b3800e1724faf925f3e7941b97cb4e6e1a6f768927db1a4879389ab3410f33"
+    },
+    {
+      "path": "anadius-socket-source/native_message_integration_tests.cpp",
+      "sha256": "dbed7d23e9f5461eff669b76a2c583ff5644babf99eb915be440e639107d7fb1"
+    },
+    {
+      "path": "anadius-socket-source/native_message_test_fixture.hpp",
+      "sha256": "b6b0befc7c8fd82bdf19b7f57956410a36d62b448d3b5be229ac2c5e00b39a04"
+    },
+    {
+      "path": "anadius-socket-source/native_message_tests.cpp",
+      "sha256": "5837f59174bd2e2bd202bde3b351fb198042cbb65e20dba90c49ded8f570a997"
+    },
+    {
+      "path": "anadius-socket-source/native_message.cpp",
+      "sha256": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77"
+    },
+    {
+      "path": "anadius-socket-source/native_message.hpp",
+      "sha256": "6b2b3c85d66c2be9246442a9ba2e5a7292c51b456f3fcbc7a45ffc299ec6eb0c"
+    },
+    {
+      "path": "anadius-socket-source/native_tests.cpp",
+      "sha256": "bf9588da4834d6015619440bb7f8fa3f398a0f28ccd21e7bc20f66dc8b52ce96"
+    },
+    {
+      "path": "anadius-socket-source/native.cpp",
+      "sha256": "2a608ec00e43aa90eb7b4e964214818a4d7b6e89f2b5f171048c36375e0a9048"
+    },
+    {
+      "path": "anadius-socket-source/native.hpp",
+      "sha256": "5a091dca8902e1116073bdc1fd44952191f53bbe0ff3a2a592b37d6ba3d57066"
+    },
+    {
+      "path": "anadius-socket-source/node_base_integration_tests.cpp",
+      "sha256": "6492bc02ef9d2e9f075f9b451632d45057624c1bce16eb6883ec3bdd73bd4de0"
+    },
+    {
+      "path": "anadius-socket-source/node_base_test_fixture.hpp",
+      "sha256": "20dcb916325344801f7879b8872dfd3c20582c5d59fd5212554931eb72305aca"
+    },
+    {
+      "path": "anadius-socket-source/node_base_tests.cpp",
+      "sha256": "7a1172f89f7175bcbca3136d20ddf1169ed651369dc1359b30058b631246d188"
+    },
+    {
+      "path": "anadius-socket-source/node_base.cpp",
+      "sha256": "f3e5ee01a2311060f53adef39b5323c11a1dc55662f3500b69dbb1020ab94418"
+    },
+    {
+      "path": "anadius-socket-source/node_base.hpp",
+      "sha256": "7f3272fc864edc0b070b05145f5f18a5af5d2ea68cc5b9a9bfd915de570ccd01"
+    },
+    {
+      "path": "anadius-socket-source/node_constructors_integration_tests.cpp",
+      "sha256": "bff491189a733f782629f5c8a3373bb3833e699ceebf958b49ff7575a95e53ca"
+    },
+    {
+      "path": "anadius-socket-source/node_constructors_test_fixture.hpp",
+      "sha256": "73cd60bfe7e24e829aba737c4b20f7ca3d1b21b28794f130d62be88e8c901dc5"
+    },
+    {
+      "path": "anadius-socket-source/node_constructors_tests.cpp",
+      "sha256": "1fc6619b7e59c89f013fae183712bc8cb24692b06afa77cf24176765b0759288"
+    },
+    {
+      "path": "anadius-socket-source/node_constructors.cpp",
+      "sha256": "0241d535309cad4803283cb802dada02b24dfbebe30ea495f761f4909ebbf331"
+    },
+    {
+      "path": "anadius-socket-source/node_constructors.hpp",
+      "sha256": "afc6e9e9e4fd1b12ca3ea785a844c4b42072a9c74f78a603927fb252112a53a4"
+    },
+    {
+      "path": "anadius-socket-source/node_delete_integration_tests.cpp",
+      "sha256": "a84a3dac0a685797ad7edc3b4af1ce459bd47b74ff75a2810e9ec338a89d3cb9"
+    },
+    {
+      "path": "anadius-socket-source/node_delete_test_fixture.hpp",
+      "sha256": "ebe06e5f33d827ed3f58c472176d5a8970ab3c67c9a667144138442eae51ff51"
+    },
+    {
+      "path": "anadius-socket-source/node_delete_tests.cpp",
+      "sha256": "8e6a8ef571907441a643a385eb3a3a7af9651d38f7e56295323128f481086a89"
+    },
+    {
+      "path": "anadius-socket-source/node_delete.cpp",
+      "sha256": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3"
+    },
+    {
+      "path": "anadius-socket-source/node_delete.hpp",
+      "sha256": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a"
+    },
+    {
+      "path": "anadius-socket-source/node_identify_integration_tests.cpp",
+      "sha256": "a0dfce8ad7567bf0141e3044b0d32d79f17e39cc7be3de8cd3961bdf017ba6e5"
+    },
+    {
+      "path": "anadius-socket-source/node_identify_test_fixture.hpp",
+      "sha256": "afad4d7e1e13cf7a62eefce515e2771c557f7ffea3979f868e3ca9d88b26c8bf"
+    },
+    {
+      "path": "anadius-socket-source/node_identify_tests.cpp",
+      "sha256": "986d8f6a64cc0b3a9b9b5bd232684d5678f17232e9395bf4123f5036c3024729"
+    },
+    {
+      "path": "anadius-socket-source/node_identify.cpp",
+      "sha256": "15d5b6eac661b0047f46e4b6f72cdbc15e243dc73598231b571b646eaa9b3053"
+    },
+    {
+      "path": "anadius-socket-source/node_identify.hpp",
+      "sha256": "f28ce49a02dc391e64cfb6e112dff4885579c2c694c60689533ab1089dcb4bf3"
+    },
+    {
+      "path": "anadius-socket-source/node_insertion_integration_tests.cpp",
+      "sha256": "2bd330ad5bece0e52d46096e0ce6647d7711d579caec5c1d9789ae9e17f57f86"
+    },
+    {
+      "path": "anadius-socket-source/node_insertion_test_fixture.hpp",
+      "sha256": "0b07305fbc991123019575db0a3edbf6424fa42f65c38472875b97c51173ad4a"
+    },
+    {
+      "path": "anadius-socket-source/node_insertion_tests.cpp",
+      "sha256": "477ca41adcc00bbb154f31e5287430800d50e4267b5f25a39cc6a5d1ace37641"
+    },
+    {
+      "path": "anadius-socket-source/node_insertion.cpp",
+      "sha256": "26a363ed547f52d84f293acd1ab0bd61365acaac62b38ac19503529081fefe9f"
+    },
+    {
+      "path": "anadius-socket-source/node_insertion.hpp",
+      "sha256": "7bc92143f7ae1869f371cc7a7c102bc5cb7572523455c00a14826c2903aebb87"
+    },
+    {
+      "path": "anadius-socket-source/node_parse_integration_tests.cpp",
+      "sha256": "0ab60a41315624357395274438f64e9808e26701e3f6b78b987a5f8ff364c3e1"
+    },
+    {
+      "path": "anadius-socket-source/node_parse_test_fixture.hpp",
+      "sha256": "e9e6da7046043687a9f1175dd4b9711d1bcc1e23ae95ee7a4a48a4e23a0bb0b7"
+    },
+    {
+      "path": "anadius-socket-source/node_parse_tests.cpp",
+      "sha256": "0f8167890ca33fce80f573733154bcdf2ffe7661b49969d9e6f137790e6a6174"
+    },
+    {
+      "path": "anadius-socket-source/node_parse.cpp",
+      "sha256": "c3f99be72328132e6917da81939cfb97fe8cff41bf246cdb33746af0defd5461"
+    },
+    {
+      "path": "anadius-socket-source/node_parse.hpp",
+      "sha256": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a"
+    },
+    {
+      "path": "anadius-socket-source/node_string_integration_tests.cpp",
+      "sha256": "cfcb77505fb88ffcac60561cb224b390d368d1e2629acea11c2273e9131f73f2"
+    },
+    {
+      "path": "anadius-socket-source/node_string_test_fixture.hpp",
+      "sha256": "972126bfef1a3f5cbf0c44742d37a77055a2d3810ea7cd69ce6cb466f6bfc554"
+    },
+    {
+      "path": "anadius-socket-source/node_string_tests.cpp",
+      "sha256": "64abe3143011d7c38a8a7110ee2e307f97081de15fc001da5078fde6c7253ae1"
+    },
+    {
+      "path": "anadius-socket-source/node_string.cpp",
+      "sha256": "8223d33eaac0d77296479981108a205458e1f440d212bd163590fb5783a60080"
+    },
+    {
+      "path": "anadius-socket-source/node_string.hpp",
+      "sha256": "2f571d0db438b452e0ecb0df5950db66c9579fee476275da9bf2d3c62c45dfe3"
+    },
+    {
+      "path": "anadius-socket-source/operations_tests.cpp",
+      "sha256": "dfc890998e82096eccd0220b008825309922839cee2d28b037f0faa36a32f5e7"
+    },
+    {
+      "path": "anadius-socket-source/operations.cpp",
+      "sha256": "63bc7fd32801a6f310492f1ff3f9a4bcc8f95a1f73b837d2bff81774ccea8ae7"
+    },
+    {
+      "path": "anadius-socket-source/operations.hpp",
+      "sha256": "a3b2c6b21d6a2d7b19f9f3245d08d5a450caa2bc8b95285fc19c9c94bdb833e2"
+    },
+    {
+      "path": "anadius-socket-source/owned_response_integration_tests.cpp",
+      "sha256": "4567e708abc1e5fa2ded80a3b632952df72ccd236f808ab1444cd2896349d9a6"
+    },
+    {
+      "path": "anadius-socket-source/owned_response_test_fixture.hpp",
+      "sha256": "ea548f4dcb1ba2890d2a7fcb87359a7816817d75034e23fb13a564946ea57c01"
+    },
+    {
+      "path": "anadius-socket-source/owned_response_tests.cpp",
+      "sha256": "77fb307cf79f5b503bc136c45e30ee2091e89d72e114382b07871bfa80a2ee2e"
+    },
+    {
+      "path": "anadius-socket-source/owned_response.cpp",
+      "sha256": "a9125c30bf6d551a3eb32435ab088c8266a60f421e545e5e211c4fd34a7c821c"
+    },
+    {
+      "path": "anadius-socket-source/owned_response.hpp",
+      "sha256": "0c1a23789740ac7948bfda66bcac00040c99eae0589db6bf8cacf1471b6f1b56"
+    },
+    {
+      "path": "anadius-socket-source/parse_entry_integration_tests.cpp",
+      "sha256": "7d8cefdef77c99532a153e2bf63bc5eb32a0d64f3970abdfe4f21c75ac891a30"
+    },
+    {
+      "path": "anadius-socket-source/parse_entry_test_fixture.hpp",
+      "sha256": "a5dc90e35626b0090463276078e8bf8d973e21f528e8e7d5912b06b5bcff7a0f"
+    },
+    {
+      "path": "anadius-socket-source/parse_entry_tests.cpp",
+      "sha256": "3b752018bd089c623b4c8843935f50a687fd519e0b8dfeafea0ea8dc22a38239"
+    },
+    {
+      "path": "anadius-socket-source/parse_entry.cpp",
+      "sha256": "2c905d087fb298433bac02721822c5eafa183def3b61a0b96405994159c23c31"
+    },
+    {
+      "path": "anadius-socket-source/parse_entry.hpp",
+      "sha256": "b6d7e9ad9613b738068ae51ec3aeac7ee094937356712dfd80b6ee94a1830734"
+    },
+    {
+      "path": "anadius-socket-source/pool_allocate_integration_tests.cpp",
+      "sha256": "a1108afe6f7281900deeb598b8b8e9ccb1f86b96d07bd778fd67012bd22c03f7"
+    },
+    {
+      "path": "anadius-socket-source/pool_allocate_test_fixture.hpp",
+      "sha256": "c7b6e0de3174348fe93d61d99d31afb093a029c2fb5b0c65860f47073e197424"
+    },
+    {
+      "path": "anadius-socket-source/pool_allocate_tests.cpp",
+      "sha256": "12a26f15e09c86a5f12bb2eba883ab3ba0c4b30f6adafe17b57908d36cd69ba7"
+    },
+    {
+      "path": "anadius-socket-source/pool_allocate.cpp",
+      "sha256": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf"
+    },
+    {
+      "path": "anadius-socket-source/pool_allocate.hpp",
+      "sha256": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757"
+    },
+    {
+      "path": "anadius-socket-source/pool_append_integration_tests.cpp",
+      "sha256": "52b11faf83e9e6ecf9e6e52ccad4ed0f223f0cbae79a37c0c40787d3333b84d0"
+    },
+    {
+      "path": "anadius-socket-source/pool_append_test_fixture.hpp",
+      "sha256": "313794b29edd32851567995bce86379d4e09986370c01f6a59da4b0b62e4ca63"
+    },
+    {
+      "path": "anadius-socket-source/pool_append_tests.cpp",
+      "sha256": "770a97cbcdbdfb20eb2d36f8d64912fc59ea1cb25d88a3e2176740848c230144"
+    },
+    {
+      "path": "anadius-socket-source/pool_append.cpp",
+      "sha256": "26b55defe78e1de75967a39487ddd41def17c74bf536089ae4cf5c08ba161235"
+    },
+    {
+      "path": "anadius-socket-source/pool_append.hpp",
+      "sha256": "ce74e47337ce1627e1d8183b6e227d47bdf68eeb2aa44818de3ebdfae24fef66"
+    },
+    {
+      "path": "anadius-socket-source/pool_clear_integration_tests.cpp",
+      "sha256": "f2194a276f9f990401a066ebd582e6448b0831298600eb8ddd1ed29bc883ebc3"
+    },
+    {
+      "path": "anadius-socket-source/pool_clear_test_fixture.hpp",
+      "sha256": "f663b2ff03b9de9003985d1f95fb93ad1ade21c533e5e7d9786bafbe37255c00"
+    },
+    {
+      "path": "anadius-socket-source/pool_clear_tests.cpp",
+      "sha256": "10dd1dead694d6c4bdb5f657845a64e5824f4be3428c9027902ecbd85ecf9e10"
+    },
+    {
+      "path": "anadius-socket-source/pool_clear.cpp",
+      "sha256": "126eb5ed1e17ea2c51ada009be36cb3db3800d4a75a043888f89dba919dd7208"
+    },
+    {
+      "path": "anadius-socket-source/pool_clear.hpp",
+      "sha256": "4fe3d1f5b73f8bbde7d02b049382dedec07548aebae9adaced5794c965d094b1"
+    },
+    {
+      "path": "anadius-socket-source/pool_destruct_integration_tests.cpp",
+      "sha256": "858c7a8019e31cccb7d72fbf22a1cbbe8b021a73c94d910f6f661065284f6fb5"
+    },
+    {
+      "path": "anadius-socket-source/pool_destruct_test_fixture.hpp",
+      "sha256": "186d654dc62b7d0ca07717a66e43f88855c373b9eab2be23e615049165d051af"
+    },
+    {
+      "path": "anadius-socket-source/pool_destruct_tests.cpp",
+      "sha256": "30ba14145d2f2b9de8c4594d1f6360bca5a2f820811903456fb4f817f10fdb70"
+    },
+    {
+      "path": "anadius-socket-source/pool_destruct.cpp",
+      "sha256": "3bebee2c224523e72a12ce338521dad7a0c2786d36aacc810227fb32f207ef35"
+    },
+    {
+      "path": "anadius-socket-source/pool_destruct.hpp",
+      "sha256": "0f2951e2d60116d9986a0e615e49fcce70439cccf3ecbcb8484bc4d703cdf89c"
+    },
+    {
+      "path": "anadius-socket-source/pool_release_integration_tests.cpp",
+      "sha256": "81d60820c51386c320b8a5672b21223b887a1123561bfaa6bdfc7a242e0f7b3b"
+    },
+    {
+      "path": "anadius-socket-source/pool_release_test_fixture.hpp",
+      "sha256": "96a1da1dd78e2bce60401ff26c1e9a2754c8b5c50dc42728208a38a076495ce7"
+    },
+    {
+      "path": "anadius-socket-source/pool_release_tests.cpp",
+      "sha256": "2156650413907076ca0a4df2e0fc98d8704e1077a1b7e04b2c94dcfa4cb31de2"
+    },
+    {
+      "path": "anadius-socket-source/pool_release.cpp",
+      "sha256": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5"
+    },
+    {
+      "path": "anadius-socket-source/pool_release.hpp",
+      "sha256": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation_dispatch.cpp",
+      "sha256": "3d4685cafeeacc2b2a404c2277a1049d1dc9c3aa347430ae77e8fe51679734b1"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation_dispatch.hpp",
+      "sha256": "045fc8fbcc9f6f3aa010c26a5e2365a83b147b91af0a98ff5ca864d882557bab"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation_integration_tests.cpp",
+      "sha256": "0195b957f13af6356a65b2c24a27183f9dd5c8f2491d6d69f601951d346d9070"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation_tests.cpp",
+      "sha256": "66bcf6f0c2df218a12da7ef257caa7f328a0952a39609858bb9f787670a23920"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation.cpp",
+      "sha256": "4c19b693a1f92b2a9a2f38069b09b8c1ccd1417df9469b4cd77c6af23d01595d"
+    },
+    {
+      "path": "anadius-socket-source/posted_operation.hpp",
+      "sha256": "a64463108f00dd71fe71c9ac577c73d857e4a8fd67e56d7bb65313536e3c8aff"
+    },
+    {
+      "path": "anadius-socket-source/prefix_cipher_integration_tests.cpp",
+      "sha256": "874a44916c7deb07e5f2fc821f858ee660c729fd7b6f8fee6f9b2e8a4d6a5c9b"
+    },
+    {
+      "path": "anadius-socket-source/prefix_cipher_test_fixture.hpp",
+      "sha256": "f58ccb25c22805aebfaca97628f70c24ce0727a549b31847f023688b7490387b"
+    },
+    {
+      "path": "anadius-socket-source/prefix_cipher_tests.cpp",
+      "sha256": "4dcf44596fede11981ce149319359fca74ab00b39fa8bf404a7e47449319022f"
+    },
+    {
+      "path": "anadius-socket-source/prefix_cipher.cpp",
+      "sha256": "62b58f613895dbb9fcdc7d184496aa22c5dea328448140a02c5017e2cc2ce48d"
+    },
+    {
+      "path": "anadius-socket-source/prefix_cipher.hpp",
+      "sha256": "51a2f555d3b9b589922d14bdc96fe464fe4f512b49bebe73003897dd8047fb5f"
+    },
+    {
+      "path": "anadius-socket-source/queued_write_integration_tests.cpp",
+      "sha256": "8e2a542808da4e9ca8cd76fbf943a85dcd1b9173e562d5ad29ed4549eccae119"
+    },
+    {
+      "path": "anadius-socket-source/queued_write_tests.cpp",
+      "sha256": "df41028cd6f2b0626ffc7138ed4bbbab32a8fe8616b2c4d5d9d561d6175fa257"
+    },
+    {
+      "path": "anadius-socket-source/queued_write.cpp",
+      "sha256": "8aec35f671804e86544701065a8c510b0b3c5632b0baf13cf31f6679fbd88211"
+    },
+    {
+      "path": "anadius-socket-source/queued_write.hpp",
+      "sha256": "7a205cbc34118c9181f829feeb474478dedd10eb21d37780af966018e3f6cc7a"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer_integration_tests.cpp",
+      "sha256": "6c2d50f94cd113120ad1fc7877d20afaf076bb3a7973cb5f198f08830ca0c0a8"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer_test_fixture.hpp",
+      "sha256": "b05cb2045732658f58294eff33b3181e49d1a8d2501bdf151f6a88c53eb8e82e"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer_tests.cpp",
+      "sha256": "b7d2316ff24b370d25bb2556d48c97a201720fb8f50f153b2b8ad169a4309844"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer.cpp",
+      "sha256": "022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0"
+    },
+    {
+      "path": "anadius-socket-source/receive_buffer.hpp",
+      "sha256": "709ca59766fc42bf2fbc7d1f4f033987b590e42874ff566b39f975ac43ed1e56"
+    },
+    {
+      "path": "anadius-socket-source/recycle_storage_tests.cpp",
+      "sha256": "d4e12d318e147d7411e1423bf496326ee92fc392341db20daa52357f96428d6a"
+    },
+    {
+      "path": "anadius-socket-source/recycle_storage.cpp",
+      "sha256": "cc08df14c064dd41f2fdd4a0f3752869b57f01d9955ff25efc83fc0e0fd9ea5e"
+    },
+    {
+      "path": "anadius-socket-source/recycle_storage.hpp",
+      "sha256": "e39f05d8b3bcf95985e64149561b8d3158f3865aee4cabea0e2d151d80351560"
+    },
+    {
+      "path": "anadius-socket-source/recycle_tests.cpp",
+      "sha256": "850ff073df71fdd5dd8c430e2d2ee0b3a335e0954af285be947e26a4c817d461"
+    },
+    {
+      "path": "anadius-socket-source/recycle.cpp",
+      "sha256": "aeb139759f836963ee7216d1a95e4eb2149f41c9f29463f4d2712be416d2836d"
+    },
+    {
+      "path": "anadius-socket-source/recycle.hpp",
+      "sha256": "027923db8624434cf98274a27d667ff2fb2aec082a65e0998f1200c81efeb60f"
+    },
+    {
+      "path": "anadius-socket-source/request_growth_integration_tests.cpp",
+      "sha256": "63a17cd536978336566deb19b2d9e388bdc49d9467c07e4f92dc6faa5002315b"
+    },
+    {
+      "path": "anadius-socket-source/request_growth_test_fixture.hpp",
+      "sha256": "9d587b0332194718d5ba3c864eb973d6195e39fc20c156a08181e8b15797e6b3"
+    },
+    {
+      "path": "anadius-socket-source/request_growth_tests.cpp",
+      "sha256": "02424ffdc0a8684002750d23cc254309eca3c7f89d33ba1ab8dd514c15b90dbb"
+    },
+    {
+      "path": "anadius-socket-source/request_growth.cpp",
+      "sha256": "40667442f868a21494379830b95c6ce790babba2900c44842e11e84af04a9311"
+    },
+    {
+      "path": "anadius-socket-source/request_growth.hpp",
+      "sha256": "b4870a3caf86e5abcb6e6703eba65ef41a46a802f69035850e063cd9314f1922"
+    },
+    {
+      "path": "anadius-socket-source/request_mutation_integration_tests.cpp",
+      "sha256": "3205944e3e2fea7d901f587a195a25ae474d0e80ce22b74f9a07a8243d33349a"
+    },
+    {
+      "path": "anadius-socket-source/request_mutation_test_fixture.hpp",
+      "sha256": "af2c385056162fc15a363fba0677ce35feb1d4ed2850d9b2736d73f7887d4708"
+    },
+    {
+      "path": "anadius-socket-source/request_mutation_tests.cpp",
+      "sha256": "411f0a091efece0eedb973006a2238dc439b5338a018e1fb38cfb64d70982c47"
+    },
+    {
+      "path": "anadius-socket-source/request_mutation.cpp",
+      "sha256": "9226b59ea65c735564c0fa22dc460509e23d44b2ce958b66f40222f07960980e"
+    },
+    {
+      "path": "anadius-socket-source/request_mutation.hpp",
+      "sha256": "fa25d13bec2e915557cabff3bf03b9707f55005441b27e736e7fa314c857ee8d"
+    },
+    {
+      "path": "anadius-socket-source/response_containers_integration_tests.cpp",
+      "sha256": "76c6e946dee1f2eaaee650cb71cfbdb88d2de2ec2226f0ed585726b2a9817547"
+    },
+    {
+      "path": "anadius-socket-source/response_containers_test_fixture.hpp",
+      "sha256": "e2a50bceabd574f154d56cee3086430ec64a5cac754391b95a42633ebb753b7f"
+    },
+    {
+      "path": "anadius-socket-source/response_containers_tests.cpp",
+      "sha256": "7c9eeb0a56be5127807b7be66cf3edb7638dbbc787c8eab1b30e17992625c135"
+    },
+    {
+      "path": "anadius-socket-source/response_containers.cpp",
+      "sha256": "c1108f7835ac8e21ca3e05735e93ca55f4859127b556f6a5ff13644381ab0eb8"
+    },
+    {
+      "path": "anadius-socket-source/response_containers.hpp",
+      "sha256": "11c480e63a8bd5bb40624ecd320381df4f3ccb8253fd3772cb799da57637dd87"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch_integration_tests.cpp",
+      "sha256": "ba0d9023b8af676e83733b46121d5e217c3fb8917d1ff3445bd4896745047ad1"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch_test_fixture.hpp",
+      "sha256": "2866b25edc10a643cfd55009227a8d5a9591fce255f6120780e12e1cf1649e86"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch_tests.cpp",
+      "sha256": "c7c7ca0d8158e91185c34b10882a540d4c25e0f0efe4a555b6decdd89f34ea3a"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch.cpp",
+      "sha256": "9b8659bdbaa95afc66e3759152168ad1add30bf5e856210e159f5e9f553401d0"
+    },
+    {
+      "path": "anadius-socket-source/response_dispatch.hpp",
+      "sha256": "95068d4638a48bf8b215da58455c684d25da2042dab987ad9b45265de37bf648"
+    },
+    {
+      "path": "anadius-socket-source/response_hex_integration_tests.cpp",
+      "sha256": "7d1d8899e0556a04ff14926a70d24608a4cf8c72b7af9b3c074f79791121e311"
+    },
+    {
+      "path": "anadius-socket-source/response_hex_test_fixture.hpp",
+      "sha256": "9c3eedec2224cd0e11664ce041e848e2e18b219f9c1a708a0e987eaae7fb6234"
+    },
+    {
+      "path": "anadius-socket-source/response_hex_tests.cpp",
+      "sha256": "fced1897567d7b6247e7be78ea32ea0f3e892a413ee8d13311383ce5e549d38c"
+    },
+    {
+      "path": "anadius-socket-source/response_hex.cpp",
+      "sha256": "a3afa7e8621353d8667b5c773bdffe3aab35089a0e8dd6d90314cd723f4f4a4f"
+    },
+    {
+      "path": "anadius-socket-source/response_hex.hpp",
+      "sha256": "c82c322e3ed3f9a257e84472c50d8614a0102d5734a32faab80c475140f10361"
+    },
+    {
+      "path": "anadius-socket-source/scheduler_registry_integration_tests.cpp",
+      "sha256": "3416f9fb342e744de978060d09d7dcce8d07019f1ae3bb4eb1e3a9a95d701ba7"
+    },
+    {
+      "path": "anadius-socket-source/scheduler_registry_tests.cpp",
+      "sha256": "4c478a57097c720b2cd2a938b8026602eed882584d30fac819b7e5090c656e54"
+    },
+    {
+      "path": "anadius-socket-source/scheduler_registry.cpp",
+      "sha256": "dd435dd06297b628a8a101effc1c1d4263a281299d04f8517ee16368de4c64ac"
+    },
+    {
+      "path": "anadius-socket-source/scheduler_registry.hpp",
+      "sha256": "15682596994c9dad200822f868694ac5ecd5c1b892989ec9f661493f44ea68d9"
+    },
+    {
+      "path": "anadius-socket-source/service_constructor_native_tests.cpp",
+      "sha256": "97c6ac67550c3a3e8c60604420bb2f798a23834f87820f2547d379ef1beaf0b2"
+    },
+    {
+      "path": "anadius-socket-source/service_constructor_native.cpp",
+      "sha256": "9bc4cac66954bcb9583fea697cfa1e9ebae2daac3284a5ac8cd33781495a19aa"
+    },
+    {
+      "path": "anadius-socket-source/service_constructor_native.hpp",
+      "sha256": "4dfe0aebd535f22fd9cf264c13508055b79bcbaab62aaf9c8bcec2b6bdb24702"
+    },
+    {
+      "path": "anadius-socket-source/service_constructor_tests.cpp",
+      "sha256": "474658871c1b4ffc9bc005a09c3e8ead13fe2c8cd57af8592c7beebfb20e10d9"
+    },
+    {
+      "path": "anadius-socket-source/service_constructor.cpp",
+      "sha256": "e4125fb99d7cbf61c29fd82ac5b7027f5face09a92e77890c66da96a8ec74413"
+    },
+    {
+      "path": "anadius-socket-source/service_constructor.hpp",
+      "sha256": "3e03015e00752ec4f3020bdaa6559eb89e3c311b25877198a296361ef4a19365"
+    },
+    {
+      "path": "anadius-socket-source/service_registry_integration_tests.cpp",
+      "sha256": "30f055f4eaa10fbda6b34e3457ffcb0536e3cbde85d0647dc0428dd386706936"
+    },
+    {
+      "path": "anadius-socket-source/service_registry_tests.cpp",
+      "sha256": "8be7e7a3d750660380827cb95938583e19254eeea16a2d125b07ca87c0adcaf0"
+    },
+    {
+      "path": "anadius-socket-source/service_registry.cpp",
+      "sha256": "663e6f4799e9173722e0af62b05d7a4e96d069f4f0dc55b6777cc46e037cbc02"
+    },
+    {
+      "path": "anadius-socket-source/service_registry.hpp",
+      "sha256": "5584fc37f54fa847efee7aa350fb51d2f82033d8826cca762f8e6e9f27752525"
+    },
+    {
+      "path": "anadius-socket-source/worker_run_native_tests.cpp",
+      "sha256": "bd6c2e393143a5616fb6f09e42bbf6d5521e973023052cfcedc47738e387d197"
+    },
+    {
+      "path": "anadius-socket-source/worker_run_native.cpp",
+      "sha256": "df0d743263b53d4845456d78766e86daa47c9bf4358f51b91ff25f8dcda3ec38"
+    },
+    {
+      "path": "anadius-socket-source/worker_run_native.hpp",
+      "sha256": "0abeed67dba180b8506005ecaade1093b1e966e847953a094cb8855e13c76d93"
+    },
+    {
+      "path": "anadius-socket-source/worker_run_tests.cpp",
+      "sha256": "efb829595c45a096e3852ab5f284299649d896469d9c33f95834abc62ccc8367"
+    },
+    {
+      "path": "anadius-socket-source/worker_run.cpp",
+      "sha256": "1d5610735a7959e422675181268d30f16e6ea4e772a9fde65986f3744f4d30a4"
+    },
+    {
+      "path": "anadius-socket-source/worker_run.hpp",
+      "sha256": "191ac2548f32bd8828d5d3d12b9ce41f99716e1f9028ae554e2d483fab06df0f"
+    },
+    {
+      "path": "anadius-socket-source/worker_startup_native_tests.cpp",
+      "sha256": "a5181f58faf1bf7563daba966db93fd07fdfefda849494dfa83abd7f2da9d521"
+    },
+    {
+      "path": "anadius-socket-source/worker_startup_native.cpp",
+      "sha256": "7b67d379aa49a2133dd58c6ffd0d553419b2bf8105162fc1ad32c97c0fead8c9"
+    },
+    {
+      "path": "anadius-socket-source/worker_startup_native.hpp",
+      "sha256": "3a9dd32ae720496c9e9239f8840542487b9c88f431defb1569545a6c8796ee2e"
+    },
+    {
+      "path": "anadius-socket-source/worker_startup_tests.cpp",
+      "sha256": "5f4b2481e437b8825736a8475a5d20d8f99e38711031b927ec0dbf567ab2df74"
+    },
+    {
+      "path": "anadius-socket-source/worker_startup.cpp",
+      "sha256": "c195e934d656aa572de2656f7d80cf2257fbbc9d4c8aa80accd233bc08ecb565"
+    },
+    {
+      "path": "anadius-socket-source/worker_startup.hpp",
+      "sha256": "699eb51446551906d51c069c00d95f6fbd2d9a2cb706d28021695990d01fa87e"
+    },
+    {
+      "path": "anadius-socket-source/write_finish_integration_tests.cpp",
+      "sha256": "57872f220d0b977a22993c887f2e99a0fefb89a80cccb44ef687e211108ce945"
+    },
+    {
+      "path": "anadius-socket-source/write_finish_tests.cpp",
+      "sha256": "74bc4a4b373a3e99fe3048e107d91e90dde669961d20e6df5504ac069484cd88"
+    },
+    {
+      "path": "anadius-socket-source/write_finish.cpp",
+      "sha256": "b13efb4696b7a8fd89e94e5d14d22d0b7da93d7da820fcaf212241807918667e"
+    },
+    {
+      "path": "anadius-socket-source/write_finish.hpp",
+      "sha256": "c9e341de1a667ba2f17c1861aed4800243d2ebff022f3b9df47cdf6e48c2f6ba"
+    }
+  ],
+  "execution_scope": "02a000 worker startup and02a4a0 entry normal source; injected six SDK APIs, actual unchanged05e8e0 bridge, typed scheduler/registry/cancellation composition",
+  "selected_host_compatibility": "Live typed worker/function projections and controlled entry dispatch; original image entry identity is data only; error0 after delete requires live host storage",
+  "required_providers": "Native allocator/deallocator, function virtual run/delete bodies, scheduler dispatcher, lifetime/concurrency/SEH/ABI remain open",
+  "original_procedures_added": 2,
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "CRT_production": "unchanged"
+}

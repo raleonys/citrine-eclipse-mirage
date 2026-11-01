@@ -1,0 +1,416 @@
+{
+  "schema": "document-error.retained-data.v1",
+  "authority": "historical-reference",
+  "confidence": "derived",
+  "parent_file": "outputs/anadius-rea-evidence.json",
+  "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+  "parent_file_bytes": 34457189,
+  "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+  "parent_authority": "shipped-artifact",
+  "parent_operation": "read_bytes",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": {
+    "id": "ghidra",
+    "version": "12.1.4"
+  },
+  "analysis_profile_digest": "dcc676845881c04a2d22833fb35d26569462e033daee5e99a95edac5aa61ac05",
+  "parent_read": {
+    "address": "0x18007f000",
+    "requested_bytes": 138752,
+    "returned_bytes": 138752,
+    "complete": true,
+    "last_address": "0x1800a0dff",
+    "decoded_bytes_sha256": "655444c3892927b2730fc34482c65d246ac9314bba13aef6267b0c87d58cc982"
+  },
+  "format_constants": [
+    {
+      "address": "0x180080068",
+      "parent_offset": 4200,
+      "bytes": 42,
+      "bytes_hex": "4572726f723d2573204572726f7249443d256420283078257829204c696e65206e756d6265723d256400",
+      "text": "Error=%s ErrorID=%d (0x%x) Line number=%d",
+      "sha256": "b09528105053fe36df91fe1af4fee6bb8d16da9b47c6b933a79bdb6186494b0d"
+    },
+    {
+      "address": "0x180080094",
+      "parent_offset": 4244,
+      "bytes": 3,
+      "bytes_hex": "3a2000",
+      "text": ": ",
+      "sha256": "009837f45c558b8c59e1d415d41e65141be5d51ca7bf56ef3eed489187825a88"
+    }
+  ],
+  "name_string_extracts": [
+    {
+      "metadata_id": 0,
+      "address": "0x18007f7e0",
+      "parent_offset": 2016,
+      "bytes": 12,
+      "bytes_hex": "584d4c5f5355434345535300",
+      "text": "XML_SUCCESS",
+      "sha256": "cdfa80a748cc128a0655717f071ca73e1180e7fc987a3e00d33c534709ef4e43"
+    },
+    {
+      "metadata_id": 1,
+      "address": "0x18007f7f0",
+      "parent_offset": 2032,
+      "bytes": 17,
+      "bytes_hex": "584d4c5f4e4f5f41545452494255544500",
+      "text": "XML_NO_ATTRIBUTE",
+      "sha256": "39047e6b1aef0cd7746a8558fdd0ea1ce692bca4cdbf335ca7c87f0c0c5f01f1"
+    },
+    {
+      "metadata_id": 2,
+      "address": "0x18007f808",
+      "parent_offset": 2056,
+      "bytes": 25,
+      "bytes_hex": "584d4c5f57524f4e475f4154545249425554455f5459504500",
+      "text": "XML_WRONG_ATTRIBUTE_TYPE",
+      "sha256": "0e933bdfccd079cc5fe79c375efb8089c3b0e935b03cba908f97e70cbbe88789"
+    },
+    {
+      "metadata_id": 3,
+      "address": "0x18007f828",
+      "parent_offset": 2088,
+      "bytes": 25,
+      "bytes_hex": "584d4c5f4552524f525f46494c455f4e4f545f464f554e4400",
+      "text": "XML_ERROR_FILE_NOT_FOUND",
+      "sha256": "7591736cb94d610d7c5ecdca86111fca9a50a27be14fb6bf1c826c9726d0cca7"
+    },
+    {
+      "metadata_id": 4,
+      "address": "0x18007f848",
+      "parent_offset": 2120,
+      "bytes": 35,
+      "bytes_hex": "584d4c5f4552524f525f46494c455f434f554c445f4e4f545f42455f4f50454e454400",
+      "text": "XML_ERROR_FILE_COULD_NOT_BE_OPENED",
+      "sha256": "a2cb9e422a8fd5dc860c59d86d6d82aa036a43cde3dcaaced6eda9ccd6fdb1a3"
+    },
+    {
+      "metadata_id": 5,
+      "address": "0x18007f870",
+      "parent_offset": 2160,
+      "bytes": 26,
+      "bytes_hex": "584d4c5f4552524f525f46494c455f524541445f4552524f5200",
+      "text": "XML_ERROR_FILE_READ_ERROR",
+      "sha256": "76cc632df4d2ccb0818edae5ae29d3a2d2ea0b1dca50223f8ff01a08b5258989"
+    },
+    {
+      "metadata_id": 6,
+      "address": "0x18007f890",
+      "parent_offset": 2192,
+      "bytes": 26,
+      "bytes_hex": "584d4c5f4552524f525f50415253494e475f454c454d454e5400",
+      "text": "XML_ERROR_PARSING_ELEMENT",
+      "sha256": "c6a26d71fdb2c01b58fef0d6af44c0e715a5d47f4cd495663cfadc187386ba58"
+    },
+    {
+      "metadata_id": 7,
+      "address": "0x18007f8b0",
+      "parent_offset": 2224,
+      "bytes": 28,
+      "bytes_hex": "584d4c5f4552524f525f50415253494e475f41545452494255544500",
+      "text": "XML_ERROR_PARSING_ATTRIBUTE",
+      "sha256": "90b15a61d682c7061a5f6fa13bd69f415777a6c1da337863e45d6ba91736acb0"
+    },
+    {
+      "metadata_id": 8,
+      "address": "0x18007f8d0",
+      "parent_offset": 2256,
+      "bytes": 23,
+      "bytes_hex": "584d4c5f4552524f525f50415253494e475f5445585400",
+      "text": "XML_ERROR_PARSING_TEXT",
+      "sha256": "b3028983b2db724bf5a19e029133876f44d22ee479d4c1b500705e3e9e45a3f2"
+    },
+    {
+      "metadata_id": 9,
+      "address": "0x18007f8e8",
+      "parent_offset": 2280,
+      "bytes": 24,
+      "bytes_hex": "584d4c5f4552524f525f50415253494e475f434441544100",
+      "text": "XML_ERROR_PARSING_CDATA",
+      "sha256": "dad62a0a69a76e9741a898c8d55c97a010a3a13b005fc1bbf5c3fd3c91da1354"
+    },
+    {
+      "metadata_id": 10,
+      "address": "0x18007f900",
+      "parent_offset": 2304,
+      "bytes": 26,
+      "bytes_hex": "584d4c5f4552524f525f50415253494e475f434f4d4d454e5400",
+      "text": "XML_ERROR_PARSING_COMMENT",
+      "sha256": "0a69eb48a6deff512a9f632a30f6d0b472d59ec1967521fdd771b0cf0d1e1cdc"
+    },
+    {
+      "metadata_id": 11,
+      "address": "0x18007f920",
+      "parent_offset": 2336,
+      "bytes": 30,
+      "bytes_hex": "584d4c5f4552524f525f50415253494e475f4445434c41524154494f4e00",
+      "text": "XML_ERROR_PARSING_DECLARATION",
+      "sha256": "486ada56352ac3f071553ebfa8440130a3634a77413f41315c8b5097aad8a837"
+    },
+    {
+      "metadata_id": 12,
+      "address": "0x18007f940",
+      "parent_offset": 2368,
+      "bytes": 26,
+      "bytes_hex": "584d4c5f4552524f525f50415253494e475f554e4b4e4f574e00",
+      "text": "XML_ERROR_PARSING_UNKNOWN",
+      "sha256": "2b26eed816d40b1a09ec2fcc968801868050fc82c1a631e033882011f03db551"
+    },
+    {
+      "metadata_id": 13,
+      "address": "0x18007f960",
+      "parent_offset": 2400,
+      "bytes": 25,
+      "bytes_hex": "584d4c5f4552524f525f454d5054595f444f43554d454e5400",
+      "text": "XML_ERROR_EMPTY_DOCUMENT",
+      "sha256": "77df64734590b6c5dab805028a25cb7c5a3424fac56660de16614ca863c19962"
+    },
+    {
+      "metadata_id": 14,
+      "address": "0x18007f980",
+      "parent_offset": 2432,
+      "bytes": 29,
+      "bytes_hex": "584d4c5f4552524f525f4d49534d4154434845445f454c454d454e5400",
+      "text": "XML_ERROR_MISMATCHED_ELEMENT",
+      "sha256": "d4b508f490a1d10558d615f7a0efff01162fe018944cec452f69d5e81c6bd369"
+    },
+    {
+      "metadata_id": 15,
+      "address": "0x18007f9a0",
+      "parent_offset": 2464,
+      "bytes": 18,
+      "bytes_hex": "584d4c5f4552524f525f50415253494e4700",
+      "text": "XML_ERROR_PARSING",
+      "sha256": "2258547ca3710ed6f0491c29644628794955c0b3fbd2fa4ad11324ce972776fb"
+    },
+    {
+      "metadata_id": 16,
+      "address": "0x18007f9b8",
+      "parent_offset": 2488,
+      "bytes": 25,
+      "bytes_hex": "584d4c5f43414e5f4e4f545f434f4e564552545f5445585400",
+      "text": "XML_CAN_NOT_CONVERT_TEXT",
+      "sha256": "3923e9e4d6fd31449f7fe6968a802e6454136ce20841d24738b7e43086067e3a"
+    },
+    {
+      "metadata_id": 17,
+      "address": "0x18007f9d8",
+      "parent_offset": 2520,
+      "bytes": 17,
+      "bytes_hex": "584d4c5f4e4f5f544558545f4e4f444500",
+      "text": "XML_NO_TEXT_NODE",
+      "sha256": "d772aa9f75956cc34342ac061efc20e3835b06ae7d1db92cbbd0725f0b68faaa"
+    },
+    {
+      "metadata_id": 18,
+      "address": "0x18007f9f0",
+      "parent_offset": 2544,
+      "bytes": 27,
+      "bytes_hex": "584d4c5f454c454d454e545f44455054485f455843454544454400",
+      "text": "XML_ELEMENT_DEPTH_EXCEEDED",
+      "sha256": "5b913fac6503bca682b4b357c5e789d7600cb024c1a8c2aa6f49020244d0ada1"
+    }
+  ],
+  "error_name_pointer_metadata": {
+    "file": "outputs/anadius-xml-source/reader-evidence.json",
+    "sha256": "bf57eecb81da3dda53f944393e3b701446486d477b87fafc43344528d92f7c58",
+    "method": "Independent focused audit of retained REA/Ghidra static assembly/pseudocode and read-only PE constant bytes; no target session mutation",
+    "table": {
+      "va": "0x1800a1010",
+      "file_offset": "0x9f610",
+      "entry_width": 8,
+      "count": 19,
+      "entries": [
+        {
+          "id": 0,
+          "pointer_va": "0x1800a1010",
+          "pointer_file_offset": "0x9f610",
+          "string_va": "0x18007f7e0",
+          "string_file_offset": "0x7dfe0",
+          "name": "XML_SUCCESS"
+        },
+        {
+          "id": 1,
+          "pointer_va": "0x1800a1018",
+          "pointer_file_offset": "0x9f618",
+          "string_va": "0x18007f7f0",
+          "string_file_offset": "0x7dff0",
+          "name": "XML_NO_ATTRIBUTE"
+        },
+        {
+          "id": 2,
+          "pointer_va": "0x1800a1020",
+          "pointer_file_offset": "0x9f620",
+          "string_va": "0x18007f808",
+          "string_file_offset": "0x7e008",
+          "name": "XML_WRONG_ATTRIBUTE_TYPE"
+        },
+        {
+          "id": 3,
+          "pointer_va": "0x1800a1028",
+          "pointer_file_offset": "0x9f628",
+          "string_va": "0x18007f828",
+          "string_file_offset": "0x7e028",
+          "name": "XML_ERROR_FILE_NOT_FOUND"
+        },
+        {
+          "id": 4,
+          "pointer_va": "0x1800a1030",
+          "pointer_file_offset": "0x9f630",
+          "string_va": "0x18007f848",
+          "string_file_offset": "0x7e048",
+          "name": "XML_ERROR_FILE_COULD_NOT_BE_OPENED"
+        },
+        {
+          "id": 5,
+          "pointer_va": "0x1800a1038",
+          "pointer_file_offset": "0x9f638",
+          "string_va": "0x18007f870",
+          "string_file_offset": "0x7e070",
+          "name": "XML_ERROR_FILE_READ_ERROR"
+        },
+        {
+          "id": 6,
+          "pointer_va": "0x1800a1040",
+          "pointer_file_offset": "0x9f640",
+          "string_va": "0x18007f890",
+          "string_file_offset": "0x7e090",
+          "name": "XML_ERROR_PARSING_ELEMENT"
+        },
+        {
+          "id": 7,
+          "pointer_va": "0x1800a1048",
+          "pointer_file_offset": "0x9f648",
+          "string_va": "0x18007f8b0",
+          "string_file_offset": "0x7e0b0",
+          "name": "XML_ERROR_PARSING_ATTRIBUTE"
+        },
+        {
+          "id": 8,
+          "pointer_va": "0x1800a1050",
+          "pointer_file_offset": "0x9f650",
+          "string_va": "0x18007f8d0",
+          "string_file_offset": "0x7e0d0",
+          "name": "XML_ERROR_PARSING_TEXT"
+        },
+        {
+          "id": 9,
+          "pointer_va": "0x1800a1058",
+          "pointer_file_offset": "0x9f658",
+          "string_va": "0x18007f8e8",
+          "string_file_offset": "0x7e0e8",
+          "name": "XML_ERROR_PARSING_CDATA"
+        },
+        {
+          "id": 10,
+          "pointer_va": "0x1800a1060",
+          "pointer_file_offset": "0x9f660",
+          "string_va": "0x18007f900",
+          "string_file_offset": "0x7e100",
+          "name": "XML_ERROR_PARSING_COMMENT"
+        },
+        {
+          "id": 11,
+          "pointer_va": "0x1800a1068",
+          "pointer_file_offset": "0x9f668",
+          "string_va": "0x18007f920",
+          "string_file_offset": "0x7e120",
+          "name": "XML_ERROR_PARSING_DECLARATION"
+        },
+        {
+          "id": 12,
+          "pointer_va": "0x1800a1070",
+          "pointer_file_offset": "0x9f670",
+          "string_va": "0x18007f940",
+          "string_file_offset": "0x7e140",
+          "name": "XML_ERROR_PARSING_UNKNOWN"
+        },
+        {
+          "id": 13,
+          "pointer_va": "0x1800a1078",
+          "pointer_file_offset": "0x9f678",
+          "string_va": "0x18007f960",
+          "string_file_offset": "0x7e160",
+          "name": "XML_ERROR_EMPTY_DOCUMENT"
+        },
+        {
+          "id": 14,
+          "pointer_va": "0x1800a1080",
+          "pointer_file_offset": "0x9f680",
+          "string_va": "0x18007f980",
+          "string_file_offset": "0x7e180",
+          "name": "XML_ERROR_MISMATCHED_ELEMENT"
+        },
+        {
+          "id": 15,
+          "pointer_va": "0x1800a1088",
+          "pointer_file_offset": "0x9f688",
+          "string_va": "0x18007f9a0",
+          "string_file_offset": "0x7e1a0",
+          "name": "XML_ERROR_PARSING"
+        },
+        {
+          "id": 16,
+          "pointer_va": "0x1800a1090",
+          "pointer_file_offset": "0x9f690",
+          "string_va": "0x18007f9b8",
+          "string_file_offset": "0x7e1b8",
+          "name": "XML_CAN_NOT_CONVERT_TEXT"
+        },
+        {
+          "id": 17,
+          "pointer_va": "0x1800a1098",
+          "pointer_file_offset": "0x9f698",
+          "string_va": "0x18007f9d8",
+          "string_file_offset": "0x7e1d8",
+          "name": "XML_NO_TEXT_NODE"
+        },
+        {
+          "id": 18,
+          "pointer_va": "0x1800a10a0",
+          "pointer_file_offset": "0x9f6a0",
+          "string_va": "0x18007f9f0",
+          "string_file_offset": "0x7e1f0",
+          "name": "XML_ELEMENT_DEPTH_EXCEEDED"
+        }
+      ]
+    },
+    "pointer_slots_covered_by_parent_raw_read": false,
+    "pointer_slots_are_retained_raw_read_evidence": false,
+    "all_name_bytes_verified_in_parent": true
+  },
+  "bounded_raw_read_search": {
+    "file": "outputs/anadius-rea-evidence.json",
+    "only_read_bytes_records_in_this_file": [
+      {
+        "evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+        "address": "0x18007f000",
+        "returned_bytes": 138752,
+        "complete": true,
+        "covers_full_error_pointer_table": false
+      },
+      {
+        "evidence_id": "ev_2cea32399a52e1a29ae7452d90c668df761c6b65247345e0e6a095b1d77ac812",
+        "address": "0x180000000",
+        "returned_bytes": 1024,
+        "complete": true,
+        "covers_full_error_pointer_table": false
+      }
+    ],
+    "full_table_covered": false,
+    "other_evidence_files_searched": false
+  },
+  "new_original_read_performed": false,
+  "new_native_analysis": false,
+  "new_source_bodies_claimed": 0,
+  "original_execution": "none",
+  "original_modification": false,
+  "limitations": [
+    "Only exact formatting constants and19name strings have raw-byte support in this parent. Pointer-table slots remain separately labelled historical focused PE-audit metadata.",
+    "The bounded main-bundle search covers its two read_bytes records; it does not establish absence from every other retained file.",
+    "Initialized Ghidra analysis memory is static retained evidence, not runtime pointer execution/observation.",
+    "No native formatter/variadic ABI/parser/DOM/heap/EH equivalence follows from these constants."
+  ]
+}

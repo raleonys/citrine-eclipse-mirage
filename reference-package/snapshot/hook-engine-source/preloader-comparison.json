@@ -1,0 +1,416 @@
+{
+  "schema": "preloader-minhook-static-comparison-v1",
+  "producer": "Codex local retained-evidence comparison, not REA Evidence",
+  "artifact": {
+    "sha256": "36e775ed97b7a41c4f0cb98b94ee8edb74fab5cfe17d5fa8cfed265228301846",
+    "bytes": 21504,
+    "preferred_base": "0x180000000",
+    "address_space": "embedded preloader PE, independent of outer DLLs",
+    "root_rea_evidence": "ev_157c446e2c1bce1a022bed8f576a7cc535fa15c41a6478fc2ef751d2902f97a5"
+  },
+  "local_evidence": {
+    "id": "LOCAL-GHIDRA-PRELOADER-1",
+    "producer": "Ghidra headless 12.1.4 direct script (not REA MCP)",
+    "path": "../preloader-analysis/ghidra-analysis.json",
+    "sha256": "02c6bc6d9371053bddce8a922e755ef4dfd99f84122bb26efd165cc1ac3d6c73",
+    "pseudocode_path": "../preloader-analysis/all-functions.c",
+    "pseudocode_sha256": "8b85c256251bd00c89051464d06231b31ef9a3d440342bdf8b4700d75bc9ffa4"
+  },
+  "selected_dependency": {
+    "name": "MinHook",
+    "version": "1.3.4",
+    "commit": "c3fcafdc10146beb5919319d0683e44e3c30d537",
+    "origin": "https://github.com/TsudaKageyu/minhook",
+    "provenance_file": "upstream-provenance.json",
+    "provenance_sha256": "6ed67324e46518855e779497bbe97a543653f7ad63dd23477137ec391476aa8f",
+    "role": "compatibility dependency; not recovered original source",
+    "original_version_proven": false
+  },
+  "mappings": [
+    {
+      "va": "0x180001930",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180001930",
+      "assembly_last": "1800019d2",
+      "instruction_count": 40,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "AddHookEntry",
+          "line": 118
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x1800019d4",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "1800019d4",
+      "assembly_last": "180001a97",
+      "instruction_count": 61,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "EnableAllHooksLL",
+          "line": 442
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180001a98",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180001a98",
+      "assembly_last": "180001b77",
+      "instruction_count": 67,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "EnableHook",
+          "line": 722
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180001b78",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180001b78",
+      "assembly_last": "180001c9b",
+      "instruction_count": 80,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "EnableHookLL",
+          "line": 393
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180001c9c",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180001c9c",
+      "assembly_last": "180001cd8",
+      "instruction_count": 20,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "EnterSpinLock",
+          "line": 480
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180001cdc",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180001cdc",
+      "assembly_last": "180001ec0",
+      "instruction_count": 142,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "EnumerateThreads",
+          "line": 263
+        },
+        {
+          "symbol": "Freeze",
+          "line": 328
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180001ec4",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180001ec4",
+      "assembly_last": "18000207a",
+      "instruction_count": 125,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "MH_CreateHook",
+          "line": 579
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x18000207c",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "18000207c",
+      "assembly_last": "180002081",
+      "instruction_count": 2,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "MH_EnableHook",
+          "line": 772
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180002088",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180002088",
+      "assembly_last": "1800020e2",
+      "instruction_count": 26,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "MH_Initialize",
+          "line": 510
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x1800020e4",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "1800020e4",
+      "assembly_last": "180002278",
+      "instruction_count": 112,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "ProcessThreadIPs",
+          "line": 199
+        },
+        {
+          "symbol": "FindOldIP",
+          "line": 163
+        },
+        {
+          "symbol": "FindNewIP",
+          "line": 186
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180002280",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180002280",
+      "assembly_last": "1800022f8",
+      "instruction_count": 36,
+      "upstream_file": "src/hook.c",
+      "upstream": [
+        {
+          "symbol": "Unfreeze",
+          "line": 369
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x1800022fc",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "1800022fc",
+      "assembly_last": "18000231f",
+      "instruction_count": 11,
+      "upstream_file": "src/buffer.c",
+      "upstream": [
+        {
+          "symbol": "AllocateBuffer",
+          "line": 247
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180002320",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180002320",
+      "assembly_last": "180002387",
+      "instruction_count": 31,
+      "upstream_file": "src/buffer.c",
+      "upstream": [
+        {
+          "symbol": "FreeBuffer",
+          "line": 266
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180002388",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180002388",
+      "assembly_last": "180002595",
+      "instruction_count": 144,
+      "upstream_file": "src/buffer.c",
+      "upstream": [
+        {
+          "symbol": "GetMemoryBlock",
+          "line": 151
+        },
+        {
+          "symbol": "FindPrevFreeRegion",
+          "line": 89
+        },
+        {
+          "symbol": "FindNextFreeRegion",
+          "line": 120
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180002598",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180002598",
+      "assembly_last": "180002598",
+      "instruction_count": 1,
+      "upstream_file": "src/buffer.c",
+      "upstream": [
+        {
+          "symbol": "InitializeBuffer",
+          "line": 68
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x18000259c",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "18000259c",
+      "assembly_last": "1800025cf",
+      "instruction_count": 13,
+      "upstream_file": "src/buffer.c",
+      "upstream": [
+        {
+          "symbol": "IsExecutableAddress",
+          "line": 306
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x1800025d0",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "1800025d0",
+      "assembly_last": "180002934",
+      "instruction_count": 258,
+      "upstream_file": "src/trampoline.c",
+      "upstream": [
+        {
+          "symbol": "CreateTrampolineFunction",
+          "line": 77
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180002938",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180002938",
+      "assembly_last": "180002972",
+      "instruction_count": 22,
+      "upstream_file": "src/trampoline.c",
+      "upstream": [
+        {
+          "symbol": "IsCodePadding",
+          "line": 61
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    },
+    {
+      "va": "0x180002974",
+      "local_evidence": "LOCAL-GHIDRA-PRELOADER-1",
+      "assembly_first": "180002974",
+      "assembly_last": "180003022",
+      "instruction_count": 499,
+      "upstream_file": "src/hde/hde64.c",
+      "upstream": [
+        {
+          "symbol": "hde64_disasm",
+          "line": 14
+        }
+      ],
+      "classification": "static semantic correspondence; not byte-equivalence"
+    }
+  ],
+  "hook_entry": {
+    "size": 56,
+    "target_offset": 0,
+    "relay_offset": 8,
+    "trampoline_offset": 16,
+    "backup_offset": 24,
+    "backup_capacity": 8,
+    "flag_offset": 32,
+    "flags": [
+      "bit0 patchAbove",
+      "bit1 isEnabled",
+      "bit2 queueEnable"
+    ],
+    "nIP_offset": 36,
+    "nIP_bits": 4,
+    "oldIPs_offset": 40,
+    "newIPs_offset": 48,
+    "boundary_capacity": 8
+  },
+  "static_anchors": [
+    {
+      "va": "0x180001b2b",
+      "instruction": "CALL 0x180001cdc",
+      "meaning": "single-target Freeze action remains constant1 even for disable, matching selected source",
+      "argument_anchor": "0x180001aeb MOV R8D,0x1"
+    },
+    {
+      "va": "0x180001e88",
+      "instruction": "MOV dword ptr [RAX + R15*0x4],EBX",
+      "meaning": "clear thread ID when OpenThread/SuspendThread unsuccessful"
+    },
+    {
+      "va": "0x18000230d",
+      "instruction": "MOV RAX,qword ptr [RAX + 0x8]",
+      "meaning": "AllocateBuffer returns free slot in RAX; decompiler void return is incomplete"
+    }
+  ],
+  "hde_table": {
+    "upstream_file": "src/hde/table64.h",
+    "symbol": "hde64_table",
+    "va": "0x180007020",
+    "pe_file_offset": "0x4a20",
+    "length": 529,
+    "upstream_initializer_sha256": "a35a7be4500f9100d6e014c666513cbb7ba52e4f7010eb230baefb638eac5033",
+    "embedded_range_sha256": "a35a7be4500f9100d6e014c666513cbb7ba52e4f7010eb230baefb638eac5033",
+    "equal": true,
+    "method": "Parse 0xNN initializer tokens; decode embedded.bytes_hex in memory; verify full PE digest; compare bounded range"
+  },
+  "status_values": {
+    "0": "success",
+    "1": "already initialized",
+    "2": "not initialized",
+    "3": "already created",
+    "4": "not created",
+    "5": "enabled",
+    "6": "disabled",
+    "7": "not executable",
+    "8": "unsupported function",
+    "9": "allocation or thread enumeration",
+    "10": "memory protection"
+  },
+  "preloader_wrapper_sentinel": {
+    "value": -2,
+    "meaning": "wrapper sentinel accepted at 0x180001727; not an upstream MH_OK code"
+  },
+  "observed_divergences_in_reviewed_paths": [],
+  "unresolved": [
+    "Exact original MinHook version/compiler/build options",
+    "Complete decoder instruction equivalence beyond identical table",
+    "Original CRT ABI and real target prologs",
+    "Runtime thread-context and memory-protection behavior",
+    "Extra upstream remove/uninitialize/queue/API-by-name bodies not recovered in retained preloader inventory"
+  ],
+  "execution": {
+    "original_loaded": false,
+    "rebuilt_loaded": false,
+    "hooks_applied": false,
+    "target_modified": false,
+    "runtime_equivalence_proven": false
+  }
+}

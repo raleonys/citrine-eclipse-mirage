@@ -1,0 +1,106 @@
+{
+  "result": "PASS",
+  "terminal_boundary_cases": [
+    {
+      "mode": "--open-binding",
+      "exit_code": 88,
+      "result": "PASS"
+    },
+    {
+      "mode": "--callback-sentinel",
+      "exit_code": 88,
+      "result": "PASS"
+    },
+    {
+      "mode": "--callback-throw",
+      "exit_code": 88,
+      "result": "PASS"
+    }
+  ],
+  "checked_at": "2026-10-20T02:09:31.2509587Z",
+  "commands": [
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-c",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\fls.cpp",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\build\\fls.o"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+      "arguments": [
+        "-std=c++20",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-static",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\native_tests.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-glue-source\\crt_glue.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-heap-native-source\\native_api.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-heap-native-bridge-source\\bridge.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-ptd-source\\ptd.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-ptd-data-source\\ptd_data.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-heap-source\\heap.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-error-source\\errors.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-invalid-source\\invalid.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-crt-runtime-source\\runtime.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-thread-native-source\\win32_effects.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-thread-source\\threads.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\..\\anadius-source\\bootstrap.cpp",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\build\\fls.o",
+        "-o",
+        "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\build\\native_tests.exe"
+      ]
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\build\\native_tests.exe",
+      "arguments": [
+        "--open-binding"
+      ],
+      "expected_exit": 88,
+      "scope": "own test fatal boundary"
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\build\\native_tests.exe",
+      "arguments": [
+        "--callback-sentinel"
+      ],
+      "expected_exit": 88,
+      "scope": "own test fatal boundary"
+    },
+    {
+      "program": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-fls-native-source\\build\\native_tests.exe",
+      "arguments": [
+        "--callback-throw"
+      ],
+      "expected_exit": 88,
+      "scope": "own test fatal boundary"
+    }
+  ],
+  "output": "PASS 127 native FLS/PTD/heap lifecycle checks",
+  "target_execution": "none",
+  "scope": "Real Win32 FLS/heap and own joined std::thread; recovered PTD/data/glue/heap/error source chain; injected allocation/slot/publish/release failures, deterministic reentry; controlled locale refs/locks/atomic/globals/abort; no original target execution or complete DLL/ABI/SEH equivalence",
+  "sources": [
+    {
+      "name": "fls.cpp",
+      "sha256": "a243b8c1c12009769b85482dd38b270348ecc601d2fb0f3a5b9b0a4fdfa65d99"
+    },
+    {
+      "name": "fls.hpp",
+      "sha256": "f06b04d897f24177a76c281fb4bbcd47b295ad862f7e91e24d37ad6a535a9cd8"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "4a4ae8dc6cb1c67e0c61517ae9cc2e2903769b37c477ddf96e1713f5ea18be34"
+    }
+  ],
+  "executable_sha256": "83381c51edabef646f19382bfa3e0bed63952901d8dd5469d63b9d3f9b6d214a"
+}

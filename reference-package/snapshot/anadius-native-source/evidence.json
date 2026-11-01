@@ -1,0 +1,104 @@
+{
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "producer": "New C++ ABI integration based on retained static REA/Ghidra and installed SDK headers",
+  "functions": [
+    {
+      "callback": "connect_00fd00",
+      "original_va": "0x18000fd00",
+      "original_pointer_global": "0x1800a3838",
+      "assembly_evidence": "ev_fc78699f1bf625a6a948750e048136e362866045ba59de7d4b783d2361c3bee8",
+      "pseudocode_evidence": "ev_56829116b2c9c143c2c0fe7d3fa88a54fc6499474948b76b08e8cd2740d33c68",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "reg_open_a_00f800",
+      "original_va": "0x18000f800",
+      "original_pointer_global": "0x1800a3840",
+      "assembly_evidence": "ev_27cec8e8e0471003e3103224b9e66c72e335493f48f21cdb1f928b5f4fa1f65b",
+      "pseudocode_evidence": "ev_e5741a3a50bb245206711a7ed39cff88fc883bb6a5dcc3ffa681719e34abf8aa",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "reg_open_w_00f960",
+      "original_va": "0x18000f960",
+      "original_pointer_global": "0x1800a3848",
+      "assembly_evidence": "ev_0b71cbc0c0230a05f138d043fcf6abefdc0eef94cd9f55a584cb17421f1d1f1d",
+      "pseudocode_evidence": "ev_5cc710fc823ef4b907ba499fd6b4989a5581c02f69389c4863a2bf92cec05030",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "reg_close_00f5b0",
+      "original_va": "0x18000f5b0",
+      "original_pointer_global": "0x1800a3850",
+      "assembly_evidence": "ev_8fa994584b07065f191017b1f34d729381ddc085b7e29cba1eb8a2d105e2aa23",
+      "pseudocode_evidence": "ev_385cc03034934006ca0e36401489e4b1d18c500a814fd3a6dfbb062150413eef",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "reg_query_a_00fac0",
+      "original_va": "0x18000fac0",
+      "original_pointer_global": "0x1800a3858",
+      "assembly_evidence": "ev_53d11b8198b200f713684c36c617cb030636ca403c61c933980e59286dad34d8",
+      "pseudocode_evidence": "ev_711c0da52803bf972d99544226fdb38b0d1a84762ff3db0eb2c38022d4106673",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "reg_query_w_00fb60",
+      "original_va": "0x18000fb60",
+      "original_pointer_global": "0x1800a3860",
+      "assembly_evidence": "ev_ebbb7ad9250d167def51ef4468bbed5f25c93352faaa29c2455505ace59ccf9d",
+      "pseudocode_evidence": "ev_0d82c7516cbb3e01806271f005f8a611512f6a42dbac0acde3ec3d61f62709e0",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "create_process_a_00f3f0",
+      "original_va": "0x18000f3f0",
+      "original_pointer_global": "0x1800a3868",
+      "assembly_evidence": "ev_835ca84fd8d5ece34462ad08b26d5b8b05836d2bad0b6cb6bab9266d4dded8ae",
+      "pseudocode_evidence": "ev_6882329804a6a0f5abb56ae3a32fe4e594ec7e5a987d84eb4af828013f12b95f",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "create_process_w_00f4d0",
+      "original_va": "0x18000f4d0",
+      "original_pointer_global": "0x1800a3870",
+      "assembly_evidence": "ev_76d6bcf1809efdf6f8a90deee3f9cfce933ee883dc2d47975027c2c53cdfa38c",
+      "pseudocode_evidence": "ev_c37154c55afe8d9e4b3aa57bba1543a7bfbd8a2ad8fca5a522bcd037decb537a",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "folder_a_00fc00",
+      "original_va": "0x18000fc00",
+      "original_pointer_global": "0x1800a3878",
+      "assembly_evidence": "ev_cefeadeb04ff875f14ebe8ffb73e6b4101cdfa082866db164d1a986ad55a2388",
+      "pseudocode_evidence": "ev_1be83f0e2e6326ed3aaa979aebb8a627e3ac45c9fcf38a2bc9ae747c28d831a5",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    },
+    {
+      "callback": "folder_w_00fc80",
+      "original_va": "0x18000fc80",
+      "original_pointer_global": "0x1800a3880",
+      "assembly_evidence": "ev_02187a70ea6ca6005510c6a9147010deb2e04461943be197cdb6d5b25c18e9f6",
+      "pseudocode_evidence": "ev_357129030c62116872c42bf3d15665ba6648b832c667ffce00205c052f156342",
+      "mapping": "New SDK entry and typed OriginalEffects integrate existing recovered source; no new original function claim"
+    }
+  ],
+  "proof": [
+    "SDK function pointer convertibility static_asserts for10entries",
+    "DWORD/HKEY/wchar/SOCKET sizes static_asserts",
+    "Real native HKEY/DWORD backing uses immediate memcpyScalarCell load/store",
+    "Wchar storage remains opaque and compare/copy uses required bytewise policy",
+    "Original native pointer identities tested with typed SDK synthetic functions",
+    "Binding before host-init create/enable; syntheticcallback mayrun beforeenable returns",
+    "Processglobal gate/inflight close; Errors snapshot belongs to admittedbinding",
+    "LastError preserved around callback bookkeeping"
+  ],
+  "limits": [
+    "No real registry/process/socket/hook/module/provider call",
+    "No original/rebuilt DLL execution",
+    "No generated trampoline code execution",
+    "SDK ABI glue not original CRT/EH/SEH/XFG equivalence",
+    "Context/Errors lifetime and external shutdown quiescence required",
+    "Bytewise WideOperations/remainingCRT/app effects mandatory"
+  ]
+}

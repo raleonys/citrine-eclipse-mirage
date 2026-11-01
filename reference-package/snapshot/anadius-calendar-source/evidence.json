@@ -1,0 +1,65 @@
+{
+  "schema": "calendar041ff0.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "functions": [
+    {
+      "address": "0x180041ff0",
+      "pseudo_evidence": "ev_89a838df3190068a41d3c5907aec78720d14c6645ae91440bd77f92778e164dc",
+      "assembly_evidence": "ev_9d8c05e7881ace56f5053a11d8c9b6148320e73c05a8db0fd152a3ad78b0619c"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "calendar.hpp": "e46c9ed16d357d6c225aae29afb799ad2d41ce26160749e3ea25eeb762b685b4",
+    "calendar.cpp": "ef95920c0c8c4a3056cb8878931ec6733a4c3262b7fb1d96ff5352c9ffbcda0f",
+    "calendar_tests.cpp": "dd058d7ff7d156149bd4cd3a178173d121c4f1f8d366d2daded290fde6419e8b",
+    "build.ps1": "468a6e3a5bc222c8667f5c39fae42edc09ec46c733edd2f542c17d91d7152bcc",
+    "CMakeLists.txt": "adea2df96a6aa02388879c08acb5b4eeb5221614d982de38b24d38712d019864",
+    "README.md": "9be789d2313ac65568a5af3304f8c179d1cae915875b96d94ab8f2e89a409f34",
+    "evidence.asm.txt": "c80a3d827212ed1c93f53f2c0e006329b53737de0b33549fd5b4447796dea1b3",
+    "evidence.pseudo.c.txt": "9b2b39fdc1e4e630190bed8db7ffcc5fb9e0548d0ab9b3a639cfbabdbb99ea76"
+  },
+  "claims": [
+    {
+      "addresses": [
+        "0x180041ffb",
+        "0x180042033",
+        "0x1800420e9",
+        "0x1800420ee"
+      ],
+      "finding": "All year/month/day terms wrap32, including11-minus-negative-month"
+    },
+    {
+      "addresses": [
+        "0x18004205a",
+        "0x18004209c",
+        "0x1800420a6",
+        "0x1800420d9"
+      ],
+      "finding": "Signed multiply-high constant divisions truncate towardzero; negative years are not floor-era civil arithmetic"
+    },
+    {
+      "addresses": [
+        "0x1800420f1",
+        "0x1800420f7",
+        "0x1800420ff",
+        "0x180042107"
+      ],
+      "finding": "Final day and clock terms sign-extend into signed64 arithmetic"
+    }
+  ],
+  "normal_source_procedure": "0x180041ff0",
+  "native_whole_procedure_ABI_equivalence": false,
+  "original_execution": "none",
+  "user_cfg_read": false,
+  "OS_calls": "none",
+  "tests": "validation.json:31760checks",
+  "unproven": [
+    "041e10 parsing/locale/stream behavior",
+    "Native layout/ABI/SEH and whole DLL equality"
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b17_admission_audit",
+  "review_mode": "independent",
+  "reviewed_at_utc": "2026-10-29T13:19:46.110221+00:00",
+  "reviewed_source_hashes": {
+    "admission.hpp": "3d58639d92afe76d020831c4beadb0769211f0c8417fd9f27c3c48f2bd86442d",
+    "admission.cpp": "a077ac5a7d81ea5f3a096a797a627a00ea30a4f475ce1c0017a1f51d266afa8b",
+    "../anadius-native-source/native_callbacks.hpp": "1fa193f9161cc5621aea4520be809ff8983d260ea8190a352500eb4bf4cb43a2",
+    "../anadius-native-source/native_callbacks.cpp": "e3da2e8c5aca2d0d768adb48238db45dc4f71c232fb281a8ebdb9b96c22de1e8",
+    "../anadius-native-context-source/context.hpp": "fe2745d872c4c9758c6a86258a9b5fff4dd192df12db0cf4f50d3cc2c534fdc9",
+    "../anadius-native-context-source/context.cpp": "b1e57dd7c7f34b51939be467514e3b2c7242353b9c716356c6f345f8875e8fa0",
+    "admission_tests.cpp": "a141189c3636212ca2b0fdd348628d1c494a505e522258171a91cd22e129fc1d",
+    "admission_test_fixture.hpp": "0e0d5ee5a44d9b9a3502ab65e40cdc3a0fe8e73f25d3084d2425351f8c5b2b9f",
+    "admission_integration_tests.cpp": "0d21139d5bdcf60d207d33415421c72b6afb46d890337fbd77ba0548c1014e44"
+  },
+  "quick_results": [
+    {
+      "path": "work/b17-core-quick-results.json",
+      "sha256": "e965cfe57111d09f0033c8ab9eaa5ecd91b0d7b57a835d9f1b75f4e5556e80e3",
+      "checks": 40,
+      "executable_sha256": "f8cad63ad0c7d370145fcd6348698eafcb9b61ca0fa583bdcaeb997282493454",
+      "execution_by": "root; independent reviewer read tests and verified source/EXE hashes, did not rerun"
+    },
+    {
+      "path": "work/b17-integration-quick-results.json",
+      "sha256": "05f80bf1d2d238fb3d92fbfef70cbfcfac4bb42286e388ad787545226531db58",
+      "checks": 33,
+      "executable_sha256": "06205eca90ce518fc5c4b3499a18f4e513e59790729e0447e1531a6fe6ce90d8",
+      "execution_by": "root; independent reviewer read tests and verified source/EXE hashes, did not rerun"
+    }
+  ],
+  "prior_tracked_sources": 785,
+  "prior_sources_preserved": 781,
+  "modified_prior_sources": [
+    {
+      "path": "anadius-native-context-source/context.cpp",
+      "before_sha256": "63aa2ced7084c6ade0e6c27d830b42b812f835682ed224c019c316424591724e",
+      "after_sha256": "b1e57dd7c7f34b51939be467514e3b2c7242353b9c716356c6f345f8875e8fa0",
+      "reason": "Carry unique Admission through shared one-shot factory State into Owner and Context; no publication or stop side effects at construction"
+    },
+    {
+      "path": "anadius-native-context-source/context.hpp",
+      "before_sha256": "bc1f880669c46aca71e368385c33ff60b8afcb9630237b6576344345f4983b28",
+      "after_sha256": "fe2745d872c4c9758c6a86258a9b5fff4dd192df12db0cf4f50d3cc2c534fdc9",
+      "reason": "Own optional stable Admission before Context and expose defaulted constructor/factory source extension"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.cpp",
+      "before_sha256": "06521178fbe3a611e8af29706bf4c1d07974e299c0f044a382656330ef6c7d52",
+      "after_sha256": "e3da2e8c5aca2d0d768adb48238db45dc4f71c232fb281a8ebdb9b96c22de1e8",
+      "reason": "Enter admission after binding lease and before all callback body accesses; release admission before binding lease on success and unwind; preserve LastError"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "before_sha256": "ee943bb8e5aef8eeedd7ccd1747457575766f24cf0dc85e792668b166b0f455a",
+      "after_sha256": "1fa193f9161cc5621aea4520be809ff8983d260ea8190a352500eb4bf4cb43a2",
+      "reason": "Append optional source Admission interface/pointer to Context; SDK entry types unchanged; full Context consumer rebuild required"
+    }
+  ],
+  "new_source_files": 5,
+  "new_checks": 73,
+  "own_terminal_children_included_in_core_count": 14,
+  "reviewer_tests_rerun": false,
+  "findings": [
+    {
+      "topic": "entry order",
+      "result": "PASS",
+      "detail": "All ten SDK entries share invoke. Optional AdmissionLease is constructed after binding Lease and before lambda body/state/buffer access. Failed enter owns no admission; permanent Errors fails fast rather than returning API success."
+    },
+    {
+      "topic": "release lifetime and API error",
+      "result": "PASS",
+      "detail": "Explicit admission.release precedes lease.release on success; reverse unwind order has the same lifetime property. leave is nonthrowing and exactly-once; binding active count remains nonzero throughout leave. Incoming/outgoing LastError and null-admission legacy path are tested."
+    },
+    {
+      "topic": "controller scope",
+      "result": "PASS_WITH_EXPLICIT_LIMITS",
+      "detail": "Controller rejects foreign thread, same-controller callback reentry and stopped entry. Mutex is held only across gate bookkeeping; no body/original/provider/wait executes under it. Unsupported paths are rejected; arbitrary host-thread PTD or general concurrency is not implemented."
+    },
+    {
+      "topic": "owner and factory",
+      "result": "PASS",
+      "detail": "Immovable Controller is uniquely owned before Context construction and survives Binding/Context/effect teardown. Shared one-shot factory consumption owns admission once. Nullable legacy/defaulted source extensions preserve source behavior but change source ABI/layout and require full rebuild."
+    },
+    {
+      "topic": "close proof",
+      "result": "PASS_WITH_EXPLICIT_LIMITS",
+      "detail": "Failed or throwing external proof does not change gate state. A previously stopped gate stays stopped and is never reopened. On selected normal path proof failure precedes stop and leaves admission usable. Successful proof is followed by Controller.stop then B15 native close; active callback stop returns false. Stop itself does not prove hooks disabled, callback quiescence or worker joins."
+    },
+    {
+      "topic": "tests",
+      "result": "PASS",
+      "detail": "40 core checks include14 own terminal children:10 stopped native entries with inaccessible body buffers, foreign connect, reentry folderW, exception unwind and wrong leave.33 integration checks assemble actual B4 Runtime+B16 Policy+B14 fake engine and own same-domain memory: exact moved state, typed callbacks, handle lifecycle, timeout, proof throw, failed registration and retry."
+    }
+  ],
+  "open_limits": [
+    "Foreign host-thread PTD support absent; foreign native entry is a failfast unsupported path",
+    "Direct recovered core/Effects and external worker/map/config/stream access are outside admission guard; external serialization still required",
+    "External hooks-disabled/no-new-cached-entry proof remains separate and mandatory",
+    "Context layout and Owner/factory source ABI changed; fresh full common build required",
+    "Original native synchronization, CRT/locale/EH/foreign-provider ABI, loader-lock/unload and PE entry not established",
+    "B10 historical independent-review debt remains open"
+  ],
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_user_cfg_token_profile_achievement_contents_read": false,
+  "production_sources_changed_by_reviewer": false
+}

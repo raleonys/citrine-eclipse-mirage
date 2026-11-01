@@ -1,0 +1,169 @@
+{
+  "schema": "pool-append.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180005440",
+      "pseudo_evidence": "ev_3a74ec35882305703da94fdd0e4de6801b34e1449914f6d7d963f4cdd4ea201c",
+      "assembly_evidence": "ev_805b1e389566c011341fa6b160b23ec49ecacccb6f0a1d123af5d4d5169b5cef",
+      "newly_recovered": true,
+      "recovery_scope": "005440 block-pointer-array normal append/growth projection and final source bridge; heap/copy/free/native lifecycle/ABI/EH providers open"
+    }
+  ],
+  "normal_source_procedures_added": [
+    "0x180005440"
+  ],
+  "new_original_procedures": 1,
+  "new_source_bridges": 1,
+  "new_source_allocation_adapters": 0,
+  "new_unique_source_mapped_addresses": 1,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/pool_append.cpp",
+      "base": "PoolAllocationEffects::append_block_005440",
+      "body": "append_pool_block_005440",
+      "closure": "RecoveredPoolAppendEffects::append_block_005440",
+      "address": "0x180005440",
+      "native_abi_complete": false,
+      "scope": "005440 normal block-pointer-array append/growth projection plus one final PoolAllocationEffects::append_block_005440 source bridge; existing four allocator and release/track sources compose on bounded shared storage; block allocation04b0bc/fill0793d0,array allocation04b100/copy078d30/free04b0f8 and native pool/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory"
+    }
+  ],
+  "native_typed_providers_newly_closed": 1,
+  "source_allocation_adapters_added": [],
+  "existing_source_allocation_adapters_preserved": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "bridge_variant_is_additional_native_body": false,
+  "new_native_analysis": false,
+  "reused_complete_data_evidence": [
+    {
+      "file": "pool-allocation-simd-data.json",
+      "sha256": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+      "new_read_performed": false,
+      "new_source_bodies_claimed_by_data_read": 0
+    },
+    {
+      "file": "node-delete-next-vtables.json",
+      "sha256": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a",
+      "new_read_performed": false,
+      "new_source_bodies_claimed_by_data_read": 0
+    }
+  ],
+  "context_functions": [
+    {
+      "address": "0x180002b10",
+      "pseudo_evidence": "ev_72c7774e42e84de667e4a26375d6ca97e95a9b796b6aebe4122567c82f87ddd6",
+      "assembly_evidence": "ev_69676d992a02bd265c47a247cd170c8815221b7d90825447e0de7a237b156f39",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002600",
+      "pseudo_evidence": "ev_8e78b707d1a781815a1f68f2ca8f27a0af79b54f73e05ef12ae813734373a7c6",
+      "assembly_evidence": "ev_3bcc9c0bf4dcd2c6ec224b64614dac1a2459a19f35b72d0494668d93da66f038",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180002960",
+      "pseudo_evidence": "ev_65d179a78369608cf6880a9dfc5d98aa344c97bda474d98972cf18e37663a7c3",
+      "assembly_evidence": "ev_dddd03633007c4bff924f221d212965ad8a9919050036732afd0b85c90e65b0d",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800027b0",
+      "pseudo_evidence": "ev_5dab40953bd8da1662aaa4fb65baf20814ff6e665b9630d23f74417506849903",
+      "assembly_evidence": "ev_1ccec149cea5b273c4134f38d196487eb2915f2905923f86a19a7fd613ca8cc7",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x1800033a0",
+      "pseudo_evidence": "ev_503f4ea3c84034bdcba37c5bab8c21622f3c49f5ed6db330dd2f530060498520",
+      "assembly_evidence": "ev_b7d15db3601446cde12580c10ac5ad7d9eb1c2aa6ce5bfb3646f09c3c2800809",
+      "newly_recovered": false
+    },
+    {
+      "address": "0x180005a20",
+      "pseudo_evidence": "ev_df5bc8292ee95a900d1b02c812064d25be2cc214ec36d768fec18c3da8b9e8c8",
+      "assembly_evidence": "ev_fc5e2131422789819e9bf0acf480c663ab946afa810969adb78f817d69d2ffb2",
+      "newly_recovered": false
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "pool_append.hpp": "ce74e47337ce1627e1d8183b6e227d47bdf68eeb2aa44818de3ebdfae24fef66",
+    "pool_append.cpp": "26b55defe78e1de75967a39487ddd41def17c74bf536089ae4cf5c08ba161235",
+    "pool_append_test_fixture.hpp": "313794b29edd32851567995bce86379d4e09986370c01f6a59da4b0b62e4ca63",
+    "pool_append_tests.cpp": "770a97cbcdbdfb20eb2d36f8d64912fc59ea1cb25d88a3e2176740848c230144",
+    "pool_append_integration_tests.cpp": "52b11faf83e9e6ecf9e6e52ccad4ed0f223f0cbae79a37c0c40787d3333b84d0",
+    "build.ps1": "a8e74adf5ccfc768433f040c57433adfc27ca7c8c891d0f6ee6a6f74dd5503bf",
+    "CMakeLists.txt": "eeb85b6a78f950912e1da878689ad8ff06d03cf73d3dbe6c708168f229b8db48",
+    "README.md": "714d9e1c42e20f6fcb045b1b5b5c833ca3971979e67140712f85b02f3732a93d"
+  },
+  "reused_source_hashes": {
+    "pool_allocate.hpp": "f6e38d5b2b37a5caf24c786dfafc7c8a176de832c459ef6f26e1d9fc89bf6757",
+    "pool_allocate.cpp": "4caa73de6fa01e835969b7033012ca7e9da008190ab3a298df097a8925b2dcaf",
+    "pool_release.hpp": "1f8e1e213fef1e65e3bb044171646ddf5b699acb9280c84e9c91e9f3917961d5",
+    "pool_release.cpp": "bfa03b8f081748e8fc374e40c8a5c170c214bd6e9bc1997646ac06d69f3368f5",
+    "receive_buffer.hpp": "709ca59766fc42bf2fbc7d1f4f033987b590e42874ff566b39f975ac43ed1e56",
+    "receive_buffer.cpp": "022de7686fc3aad28d915fbc90d7a0c018f6d8ed01fc1021ac42d1b519000ca0"
+  },
+  "support_hashes": {
+    "pool-append-evidence.pseudo.c.txt": "2d31aa4d284b78ad98e7481c9197570698bf036c33ce5b3815cd96b5c22d9ae6",
+    "pool-append-evidence.asm.txt": "f57d768d323357dec911b467967c6bf61b75511745c4a5ca021ba1ecbc1297cb",
+    "pool-append-context.pseudo.c.txt": "2747c1a6b7d1f7c5b514a446d1bd2085a9166e782f21cd65bdcd46e892b734ff",
+    "pool-append-context.asm.txt": "ea221613d456604c3c06f8108526444738673b46eba8091b7ae47f65bfdf001f",
+    "pool-append-flow-audit.md": "c70dfec73108c9b24c7026f9f2c66703788ff5c44a70d4715b91b45caf84f69c",
+    "pool-append-rea-session.json": "2249470d555cbe35f5de16488b3e4b631c4b5770af5255bfff881943776ff333",
+    "pool-append-source-review.json": "e0b4680e0a1660c90e76f2574593ea371f14bb70cf255d1f3489d780d438f853",
+    "pool-allocation-simd-data.json": "e62f78ddca0dac28dee709bfbcf0662bf9aca5c780300a992d9086e82a54cce1",
+    "node-delete-next-vtables.json": "b1b598a7e9b460f1c344ec4260b4604536dce5017faddb9444408b73751f9f2a"
+  },
+  "prior_target_presence": {
+    "0x180005440": {
+      "source_presence": "no_definition_mapping",
+      "definition_variants": 0,
+      "normal_body_stage_claim": false,
+      "compiled_symbol_correlated": false
+    }
+  },
+  "core_checks": 87,
+  "integration_checks": 22736,
+  "new_checks": 22823,
+  "execution_scope": "005440 normal block-pointer-array append/growth projection plus one final PoolAllocationEffects::append_block_005440 source bridge; existing four allocator and release/track sources compose on bounded shared storage; block allocation04b0bc/fill0793d0,array allocation04b100/copy078d30/free04b0f8 and native pool/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory",
+  "limitations": [
+    "005440 normal block-pointer-array append/growth projection plus one final PoolAllocationEffects::append_block_005440 source bridge; existing four allocator and release/track sources compose on bounded shared storage; block allocation04b0bc/fill0793d0,array allocation04b100/copy078d30/free04b0f8 and native pool/node/parser/DOM/lifecycle/ABI/EH/concurrency remain mandatory",
+    "Array pointer at+0,count DWORD+5c,capacity DWORD+58,inline storage array+8; caller supplies array=pool+8",
+    "Signed comparison of wrapping32 count+1 against capacity selects growth; doubled32 required count sign-extends before unsigned multiply8 with overflow saturation to UINT64_MAX",
+    "Growth allocates04b100; then reads live count/source pointer and calls078d30 copy; then reads live old pointer and frees04b0f8 unless inline; cached new pointer and doubled capacity publish only afterward",
+    "Final append reloads live count and data,stores cached input pointer at signed index*8,then increments live DWORD count; alias and lower-effect mutation order remain observable",
+    "All five lower effects remain mandatory: block04b0bc allocation and0793d0 fill plus array04b100 allocation/078d30 copy/04b0f8 pointer-only free",
+    "No null allocation guard,retry,synthetic rollback,terminal provider or native fault/unwind behavior added",
+    "One normal tagged body plus one tagged final source bridge map to the same native entry; they are two source variants,not two native functions",
+    "One historical source provider closure added (33→34); existing two semantic session adapters and one separate allocation dispatcher remain unchanged; no four-closure inflation",
+    "Originals are never executed or modified; actual CFG/token/achievement contents never read; hash-only input integrity separate; blocked version.dll/generated artifact never retried",
+    "No new native target import/data read: retained full function listings and previous complete SIMD data are reused unchanged; session verifies identity/availability only",
+    "CRT unchanged and paused; native heap/copy/free/lifecycle/parser/DOM/ABI/EH/concurrency open; full DLL incomplete and total completion percentage unmeasured"
+  ],
+  "native_pool_append_fully_closed": false,
+  "native_pool_allocation_fully_closed": false,
+  "native_pool_release_fully_closed": false,
+  "native_node_delete_fully_closed": false,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "review": {
+    "independent_review_complete": false,
+    "independent_bounded_static_source_review": {
+      "result": "PASS",
+      "file": "pool-append-source-review.json",
+      "reviewer": "/root/allocation_audit",
+      "full_native_equivalence_review_complete": false
+    }
+  },
+  "original_target_execution": "none",
+  "original_modification": false,
+  "real_user_file_contents_read": false,
+  "CRT_production": "unchanged and paused",
+  "next_package": "N20 pool lifecycle inventory/contracts selected from retained evidence; no new source body claimed by that inventory; generic CRT remains paused"
+}

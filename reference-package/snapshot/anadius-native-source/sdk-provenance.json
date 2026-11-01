@@ -1,0 +1,37 @@
+{
+  "kind": "Installed LLVM-MinGW SDK declarations used for compile-time pointer checks",
+  "headers": [
+    {
+      "header": "winsock2.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\winsock2.h",
+      "sha256": "fc717ca4b018dd7c3f762051a49038be3a25ebb70dff18b7b76f9aa02051edca"
+    },
+    {
+      "header": "winreg.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\winreg.h",
+      "sha256": "b65b912c21f6a7783be7569e17a8ff3cd439cdbd4a7135623a4230122cd45f86"
+    },
+    {
+      "header": "processthreadsapi.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\processthreadsapi.h",
+      "sha256": "fa2a3887fbae6c61ee3c20027101dbe71492c1c2d63ab178746b16777cff052b"
+    },
+    {
+      "header": "shlobj.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\shlobj.h",
+      "sha256": "8e9a5c8f6ae6047333bd8c41c5660631985f701d568de6311084a05c7715c3d1"
+    },
+    {
+      "header": "wincrypt.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\wincrypt.h",
+      "sha256": "bddf1b4f0134cbb90f75a21e9f8ef3436659e0ec9db9bdad45d5b0e650df870f"
+    },
+    {
+      "header": "tlhelp32.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\tlhelp32.h",
+      "sha256": "560fa6d73164159ef7b08148c3f07b2c63ab5ea0b3dcaaa4a152207ab9496c05"
+    }
+  ],
+  "original_MSVC_CRT_SEH_match": "unproven",
+  "source_copied": false
+}

@@ -1,0 +1,37 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T19:33:47.1806120Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lowio-lifecycle-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lowio-lifecycle-source\\build\\lowio_lifecycle.o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-lowio-lifecycle-source\\build\\lowio_lifecycle_tests.exe"
+  ],
+  "tests": "PASS 639 lowio lifecycle checks;192 typed native CS deletions;3 owned arrays",
+  "partial_archive_sha256": "bfb63cd7872af01d5ace853f05f264ac16d5cf12dd1615885bcd9d3a1f7e5c13",
+  "sources": [
+    {
+      "name": "lowio_lifecycle.cpp",
+      "sha256": "20dc724fe4e0c7efddaef7e0fa7087e5fed9f07adb31554827661ff2104b5d5b"
+    },
+    {
+      "name": "lowio_lifecycle.hpp",
+      "sha256": "a1b92b3286d2774ff45db0aa0b04ad7a12dc14b98df19db2e2ad0aedb3228670"
+    },
+    {
+      "name": "native_tests.cpp",
+      "sha256": "e55d4a3c4cdc2c6b1e73ca8f5885202b2a8b2884dcea015f511143e1c6814bcc"
+    }
+  ],
+  "recovered_bodies": 3,
+  "scope": "3recovered lowio lifecycle bodies;mandatory lower ensure/inherited/standard providers;128lazy slots,64CSstride48,3ownedheap arrays192actualCSdeletes,capacitypreserved,recursivefixturelock7;nofilehandle APIs or complete lowio/CRT/ABI/SEH equivalence",
+  "original_target_execution": "none"
+}

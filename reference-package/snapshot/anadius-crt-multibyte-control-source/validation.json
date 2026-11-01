@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T02:22:20.8514533Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-multibyte-control-source\\multibyte_control_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-multibyte-control-source\\build\\multibyte_control.o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-multibyte-control-source\\..\\anadius-crt-multibyte-support-source\\multibyte_support.cpp",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-multibyte-control-source\\build\\multibyte_control_tests.exe"
+  ],
+  "tests": "multibyte control: 128916 checks PASS",
+  "scope": "Synthetic address space, allocation, record builder and thread updater; actual source support helpers; no original DLL/native API execution",
+  "sources": [
+    {
+      "name": "multibyte_control_tests.cpp",
+      "sha256": "8810b2e7f254f60040cc73b4eb760be6670014bf01992973afb2ba95ab323b97"
+    },
+    {
+      "name": "multibyte_control.cpp",
+      "sha256": "9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb"
+    },
+    {
+      "name": "multibyte_control.hpp",
+      "sha256": "064bc605e53cbd603cd0802998fd4ee950e8671f583967e28fa8bd6719704b45"
+    }
+  ],
+  "executable_sha256": "d751ff5fb343980cbf299392f357fee4aaf9676e2ab88256620fe607fd7c2bc8"
+}

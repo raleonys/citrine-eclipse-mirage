@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_locale_names",
+    "result": "PASS",
+    "output": "locale names PASS 1181823 checks",
+    "executable_sha256": "72d995f174d7d3a4ba9ec6d09d63740bf21b9150d24bee7741362b0ed9f7a2b1"
+  },
+  "execution_scope": "Recovered 07310c/0736d4 and228 exact shipped name/index plus LCID rows; immutable data domain, known original kok/kok-in search failures, synthetic input memory",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-locale-names-source/locale_names_tests.cpp",
+      "sha256": "2e0ccf70c0fe71ec11509b973b1afdfd8cb4db4f2a3b978927e97d5732bd3bb0"
+    },
+    {
+      "path": "anadius-crt-locale-names-source/locale_names.cpp",
+      "sha256": "246da46cd2fff8e5298bb386a5fe87deae6d7d2cfd0a72ec49dfa4924fd500f1"
+    },
+    {
+      "path": "anadius-crt-locale-names-source/locale_names.hpp",
+      "sha256": "92550032c01f1c179724248399cf0ca28ce31c1d3e7cab83bbf57f131cb01810"
+    }
+  ]
+}

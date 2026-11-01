@@ -1,0 +1,855 @@
+{
+  "schema": "b28.configuration-defaults-field-map.v1",
+  "reviewer": "/root/b22_provider_audit",
+  "generated_at_utc": "2026-10-30T16:30:09.694200+00:00",
+  "artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "constructor": {
+    "address": "0x180036d20",
+    "pseudo_evidence": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+    "assembly_evidence": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9",
+    "source_presence": "no_definition_mapping"
+  },
+  "global_initializer": {
+    "address": "0x180001390",
+    "pseudo_evidence": "ev_efabeb808ec83eafa7cf73d31a8eea8067c2a2ba4230bcadb12e84dfb1c8f66e",
+    "assembly_evidence": "ev_0be5e645d47133bd7d6749009f622c7d1df581fcd58a83efcf8747149599fbbb",
+    "source_presence": "no_definition_mapping"
+  },
+  "initializer_anchors": [
+    "0x180001394: LEA RCX,[0x1800a39e0]",
+    "0x18000139b: CALL0x180036d20",
+    "0x1800013a0: LEA RCX,[0x18007e0c0]",
+    "0x1800013ab: JMP0x18004b770 (atexit registration)"
+  ],
+  "base_va": "0x1800a39e0",
+  "last_observed_write_end_offset_exclusive": "0x538",
+  "configuration_state_fields": 41,
+  "outside_constructor_configuration_state_fields": [],
+  "fields": [
+    {
+      "field": "executable_path",
+      "state_type": "u16string",
+      "global_va": "0x1800a39e0",
+      "constructor_relative_offset": "0x0",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036d5b: MOVUPS xmmword ptr [RCX], XMM0",
+        "0x180036d60: MOV qword ptr [RCX + 0x10], RSI",
+        "0x180036d64: MOV qword ptr [RCX + 0x18], 0x7",
+        "0x180036d6c: MOV word ptr [RCX], SI"
+      ]
+    },
+    {
+      "field": "user_directory",
+      "state_type": "u16string",
+      "global_va": "0x1800a3a00",
+      "constructor_relative_offset": "0x20",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036d6f: MOVUPS xmmword ptr [RCX + 0x20], XMM0",
+        "0x180036d73: MOV qword ptr [RCX + 0x30], RSI",
+        "0x180036d77: MOV qword ptr [RCX + 0x38], 0x7",
+        "0x180036d7f: MOV word ptr [RCX + 0x20], SI"
+      ]
+    },
+    {
+      "field": "cookie_path",
+      "state_type": "u16string",
+      "global_va": "0x1800a3a20",
+      "constructor_relative_offset": "0x40",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036d83: MOVUPS xmmword ptr [RCX + 0x40], XMM0",
+        "0x180036d87: MOV qword ptr [RCX + 0x50], RSI",
+        "0x180036d8b: MOV qword ptr [RCX + 0x58], 0x7",
+        "0x180036d93: MOV word ptr [RCX + 0x40], SI"
+      ]
+    },
+    {
+      "field": "last_profile_path",
+      "state_type": "u16string",
+      "global_va": "0x1800a3a40",
+      "constructor_relative_offset": "0x60",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036d97: MOVUPS xmmword ptr [RCX + 0x60], XMM0",
+        "0x180036d9b: MOV qword ptr [RCX + 0x70], RSI",
+        "0x180036d9f: MOV qword ptr [RCX + 0x78], 0x7",
+        "0x180036da7: MOV word ptr [RCX + 0x60], SI"
+      ]
+    },
+    {
+      "field": "last_avatar_path",
+      "state_type": "u16string",
+      "global_va": "0x1800a3a60",
+      "constructor_relative_offset": "0x80",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036dab: MOVUPS xmmword ptr [RCX + 0x80], XMM0",
+        "0x180036db2: MOV qword ptr [RCX + 0x90], RSI",
+        "0x180036db9: MOV qword ptr [RCX + 0x98], 0x7",
+        "0x180036dc4: MOV word ptr [RCX + 0x80], SI"
+      ]
+    },
+    {
+      "field": "avatar",
+      "state_type": "u16string",
+      "global_va": "0x1800a3a90",
+      "constructor_relative_offset": "0xb0",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036dd9: MOVUPS xmmword ptr [RCX + 0xb0], XMM0",
+        "0x180036de0: MOV qword ptr [RCX + 0xc0], RSI",
+        "0x180036de7: MOV qword ptr [RCX + 0xc8], 0x7",
+        "0x180036df2: MOV word ptr [RCX + 0xb0], SI"
+      ]
+    },
+    {
+      "field": "default_avatar",
+      "state_type": "u16string",
+      "global_va": "0x1800a3ab0",
+      "constructor_relative_offset": "0xd0",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036df9: MOVUPS xmmword ptr [RCX + 0xd0], XMM0",
+        "0x180036e00: MOV qword ptr [RCX + 0xe0], RSI",
+        "0x180036e07: MOV qword ptr [RCX + 0xe8], 0x7",
+        "0x180036e12: MOV word ptr [RCX + 0xd0], SI"
+      ]
+    },
+    {
+      "field": "language_from_arguments",
+      "state_type": "uint8",
+      "global_va": "0x1800a3ad0",
+      "constructor_relative_offset": "0xf0",
+      "inside_constructor": true,
+      "default_value": 0,
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036e19: MOV word ptr [RCX + 0xf0], SI"
+      ]
+    },
+    {
+      "field": "registry_spoof",
+      "state_type": "uint8",
+      "global_va": "0x1800a3ad1",
+      "constructor_relative_offset": "0xf1",
+      "inside_constructor": true,
+      "default_value": 0,
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036e19: MOV word ptr [RCX + 0xf0], SI"
+      ]
+    },
+    {
+      "field": "language_registry_key",
+      "state_type": "u16string",
+      "global_va": "0x1800a3ad8",
+      "constructor_relative_offset": "0xf8",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036e20: MOVUPS xmmword ptr [RCX + 0xf8], XMM0",
+        "0x180036e27: MOV qword ptr [RCX + 0x108], RSI",
+        "0x180036e2e: MOV qword ptr [RCX + 0x110], 0x7",
+        "0x180036e39: MOV word ptr [RCX + 0xf8], SI"
+      ]
+    },
+    {
+      "field": "content_id",
+      "state_type": "string",
+      "global_va": "0x1800a3af8",
+      "constructor_relative_offset": "0x118",
+      "inside_constructor": true,
+      "default_value": "0",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036e40: MOVUPS xmmword ptr [RCX + 0x118], XMM0",
+        "0x180036e47: MOV qword ptr [RCX + 0x128], 0x1",
+        "0x180036e52: MOV qword ptr [RCX + 0x130], 0xf",
+        "0x180036e5d: MOV word ptr [RCX + 0x118], 0x30"
+      ]
+    },
+    {
+      "field": "license_directory",
+      "state_type": "u16string",
+      "global_va": "0x1800a3b38",
+      "constructor_relative_offset": "0x158",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036ec9: MOVUPS xmmword ptr [RDI + 0x158], XMM0",
+        "0x180036ed0: MOV qword ptr [RDI + 0x168], RSI",
+        "0x180036ed7: MOV qword ptr [RDI + 0x170], 0x7",
+        "0x180036ee2: MOV word ptr [RDI + 0x158], SI"
+      ]
+    },
+    {
+      "field": "denuvo_token",
+      "state_type": "string",
+      "global_va": "0x1800a3b58",
+      "constructor_relative_offset": "0x178",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036ee9: MOVUPS xmmword ptr [RDI + 0x178], XMM0",
+        "0x180036ef0: MOV qword ptr [RDI + 0x188], RSI",
+        "0x180036ef7: MOV qword ptr [RDI + 0x190], 0xf",
+        "0x180036f02: MOV byte ptr [RDI + 0x178], SIL"
+      ]
+    },
+    {
+      "field": "exe_hash",
+      "state_type": "string",
+      "global_va": "0x1800a3b78",
+      "constructor_relative_offset": "0x198",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036f09: MOVUPS xmmword ptr [RDI + 0x198], XMM0",
+        "0x180036f10: MOV qword ptr [RDI + 0x1a8], RSI",
+        "0x180036f17: MOV qword ptr [RDI + 0x1b0], 0xf",
+        "0x180036f22: MOV byte ptr [RDI + 0x198], SIL"
+      ]
+    },
+    {
+      "field": "dll_hash",
+      "state_type": "string",
+      "global_va": "0x1800a3b98",
+      "constructor_relative_offset": "0x1b8",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036f29: MOVUPS xmmword ptr [RDI + 0x1b8], XMM0",
+        "0x180036f30: MOV qword ptr [RDI + 0x1c8], RSI",
+        "0x180036f37: MOV qword ptr [RDI + 0x1d0], 0xf",
+        "0x180036f42: MOV byte ptr [RDI + 0x1b8], SIL"
+      ]
+    },
+    {
+      "field": "denuvo_dll",
+      "state_type": "u16string",
+      "global_va": "0x1800a3bb8",
+      "constructor_relative_offset": "0x1d8",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036f49: MOVUPS xmmword ptr [RDI + 0x1d8], XMM0",
+        "0x180036f50: MOV qword ptr [RDI + 0x1e8], RSI",
+        "0x180036f57: MOV qword ptr [RDI + 0x1f0], 0x7",
+        "0x180036f62: MOV word ptr [RDI + 0x1d8], SI"
+      ]
+    },
+    {
+      "field": "username",
+      "state_type": "string",
+      "global_va": "0x1800a3bd8",
+      "constructor_relative_offset": "0x1f8",
+      "inside_constructor": true,
+      "default_value": "anadius",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036f69: MOVUPS xmmword ptr [RDI + 0x1f8], XMM0",
+        "0x180036f70: MOV qword ptr [RDI + 0x208], 0x7",
+        "0x180036f7b: MOV qword ptr [RDI + 0x210], 0xf",
+        "0x180036f8d: MOV dword ptr [RDI + 0x1f8], EAX",
+        "0x180036f9a: MOV word ptr [RDI + 0x1fc], AX",
+        "0x180036fa8: MOV byte ptr [RDI + 0x1fe], AL",
+        "0x180036fae: MOV byte ptr [RDI + 0x1ff], SIL"
+      ]
+    },
+    {
+      "field": "persona_id",
+      "state_type": "string",
+      "global_va": "0x1800a3bf8",
+      "constructor_relative_offset": "0x218",
+      "inside_constructor": true,
+      "default_value": "1144668899",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036fb5: MOVUPS xmmword ptr [RDI + 0x218], XMM0",
+        "0x180036fbc: MOV qword ptr [RDI + 0x228], 0xa",
+        "0x180036fc7: MOV qword ptr [RDI + 0x230], 0xf",
+        "0x180036fda: MOVSD qword ptr [RDI + 0x218], XMM0",
+        "0x180036fe9: MOV word ptr [RDI + 0x220], AX",
+        "0x180036ff0: MOV byte ptr [RDI + 0x222], SIL"
+      ]
+    },
+    {
+      "field": "user_id",
+      "state_type": "string",
+      "global_va": "0x1800a3c18",
+      "constructor_relative_offset": "0x238",
+      "inside_constructor": true,
+      "default_value": "1000200030000",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180036ffa: MOVUPS xmmword ptr [RDI + 0x238], XMM0",
+        "0x180037001: MOV qword ptr [RDI + 0x248], 0xd",
+        "0x18003700c: MOV qword ptr [RDI + 0x250], 0xf",
+        "0x18003701f: MOVSD qword ptr [RDI + 0x238], XMM0",
+        "0x18003702d: MOV dword ptr [RDI + 0x240], EAX",
+        "0x18003703a: MOV byte ptr [RDI + 0x244], AL",
+        "0x180037040: MOV byte ptr [RDI + 0x245], SIL"
+      ]
+    },
+    {
+      "field": "use_last_online_profile",
+      "state_type": "uint8",
+      "global_va": "0x1800a3c38",
+      "constructor_relative_offset": "0x258",
+      "inside_constructor": true,
+      "default_value": 0,
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037047: MOV dword ptr [RDI + 0x258], 0x10100"
+      ]
+    },
+    {
+      "field": "fake_auth",
+      "state_type": "uint8",
+      "global_va": "0x1800a3c39",
+      "constructor_relative_offset": "0x259",
+      "inside_constructor": true,
+      "default_value": 1,
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037047: MOV dword ptr [RDI + 0x258], 0x10100"
+      ]
+    },
+    {
+      "field": "pretend_connected",
+      "state_type": "uint8",
+      "global_va": "0x1800a3c3a",
+      "constructor_relative_offset": "0x25a",
+      "inside_constructor": true,
+      "default_value": 1,
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037047: MOV dword ptr [RDI + 0x258], 0x10100"
+      ]
+    },
+    {
+      "field": "server_port",
+      "state_type": "uint16",
+      "global_va": "0x1800a3c90",
+      "constructor_relative_offset": "0x2b0",
+      "inside_constructor": true,
+      "default_value": 0,
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x18003708c: MOV word ptr [RDI + 0x2b0], SI"
+      ]
+    },
+    {
+      "field": "block_reruns",
+      "state_type": "uint8",
+      "global_va": "0x1800a3c92",
+      "constructor_relative_offset": "0x2b2",
+      "inside_constructor": true,
+      "default_value": 0,
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037093: MOV byte ptr [RDI + 0x2b2], SIL"
+      ]
+    },
+    {
+      "field": "sdk",
+      "state_type": "string",
+      "global_va": "0x1800a3c98",
+      "constructor_relative_offset": "0x2b8",
+      "inside_constructor": true,
+      "default_value": "10,5,96,47512",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x18003709d: MOVUPS xmmword ptr [RDI + 0x2b8], XMM0",
+        "0x1800370a4: MOV qword ptr [RDI + 0x2c8], 0xd",
+        "0x1800370af: MOV qword ptr [RDI + 0x2d0], 0xf",
+        "0x1800370c2: MOVSD qword ptr [RDI + 0x2b8], XMM0",
+        "0x1800370d0: MOV dword ptr [RDI + 0x2c0], EAX",
+        "0x1800370dd: MOV byte ptr [RDI + 0x2c4], AL",
+        "0x1800370e3: MOV byte ptr [RDI + 0x2c5], SIL"
+      ]
+    },
+    {
+      "field": "country",
+      "state_type": "string",
+      "global_va": "0x1800a3cb8",
+      "constructor_relative_offset": "0x2d8",
+      "inside_constructor": true,
+      "default_value": "US",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x1800370ed: MOVUPS xmmword ptr [RDI + 0x2d8], XMM0",
+        "0x1800370f4: MOV qword ptr [RDI + 0x2e8], 0x2",
+        "0x1800370ff: MOV qword ptr [RDI + 0x2f0], 0xf",
+        "0x18003710a: MOV word ptr [RDI + 0x2d8], 0x5355",
+        "0x180037113: MOV byte ptr [RDI + 0x2da], SIL"
+      ]
+    },
+    {
+      "field": "currency",
+      "state_type": "string",
+      "global_va": "0x1800a3cd8",
+      "constructor_relative_offset": "0x2f8",
+      "inside_constructor": true,
+      "default_value": "USD",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x18003711a: MOVUPS xmmword ptr [RDI + 0x2f8], XMM0",
+        "0x180037121: MOV qword ptr [RDI + 0x308], 0x3",
+        "0x18003712c: MOV qword ptr [RDI + 0x310], 0xf",
+        "0x18003713d: MOV word ptr [RDI + 0x2f8], AX",
+        "0x18003714b: MOV byte ptr [RDI + 0x2fa], AL",
+        "0x180037151: MOV byte ptr [RDI + 0x2fb], SIL"
+      ]
+    },
+    {
+      "field": "is_subscriber",
+      "state_type": "string",
+      "global_va": "0x1800a3cf8",
+      "constructor_relative_offset": "0x318",
+      "inside_constructor": true,
+      "default_value": "true",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037158: MOVUPS xmmword ptr [RDI + 0x318], XMM0",
+        "0x18003715f: MOV qword ptr [RDI + 0x328], 0x4",
+        "0x18003716a: MOV qword ptr [RDI + 0x330], 0xf",
+        "0x180037175: MOV dword ptr [RDI + 0x318], 0x65757274",
+        "0x18003717f: MOV byte ptr [RDI + 0x31c], SIL"
+      ]
+    },
+    {
+      "field": "is_steam_subscriber",
+      "state_type": "string",
+      "global_va": "0x1800a3d18",
+      "constructor_relative_offset": "0x338",
+      "inside_constructor": true,
+      "default_value": "false",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037186: MOVUPS xmmword ptr [RDI + 0x338], XMM0",
+        "0x18003718d: MOV qword ptr [RDI + 0x348], 0x5",
+        "0x180037198: MOV qword ptr [RDI + 0x350], 0xf",
+        "0x1800371a9: MOV dword ptr [RDI + 0x338], EAX",
+        "0x1800371b6: MOV byte ptr [RDI + 0x33c], AL",
+        "0x1800371bc: MOV byte ptr [RDI + 0x33d], SIL"
+      ]
+    },
+    {
+      "field": "subscriber_level",
+      "state_type": "string",
+      "global_va": "0x1800a3d38",
+      "constructor_relative_offset": "0x358",
+      "inside_constructor": true,
+      "default_value": "2",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x1800371c3: MOVUPS xmmword ptr [RDI + 0x358], XMM0",
+        "0x1800371ca: MOV qword ptr [RDI + 0x368], 0x1",
+        "0x1800371d5: MOV qword ptr [RDI + 0x370], 0xf",
+        "0x1800371e0: MOV word ptr [RDI + 0x358], 0x32"
+      ]
+    },
+    {
+      "field": "is_under_age",
+      "state_type": "string",
+      "global_va": "0x1800a3d58",
+      "constructor_relative_offset": "0x378",
+      "inside_constructor": true,
+      "default_value": "false",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x1800371e9: MOVUPS xmmword ptr [RDI + 0x378], XMM0",
+        "0x1800371f0: MOV qword ptr [RDI + 0x388], 0x5",
+        "0x1800371fb: MOV qword ptr [RDI + 0x390], 0xf",
+        "0x18003720c: MOV dword ptr [RDI + 0x378], EAX",
+        "0x180037219: MOV byte ptr [RDI + 0x37c], AL",
+        "0x18003721f: MOV byte ptr [RDI + 0x37d], SIL"
+      ]
+    },
+    {
+      "field": "emulator_attributes",
+      "state_type": "map<string,string>",
+      "global_va": "0x1800a3d78",
+      "constructor_relative_offset": "0x398",
+      "inside_constructor": true,
+      "default_value": {
+        "ENVIRONMENT": "production",
+        "IS_IGO_AVAILABLE": "false",
+        "IS_TELEMETRY_ENABLED": "false",
+        "IS_MANUAL_OFFLINE": "false",
+        "LANGUAGE": "en_US",
+        "IS_IGO_ENABLED": "false"
+      },
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x18003743c: LEA RCX, [RDI + 0x398]",
+        "CALL0x180036bc0 constructs six string pairs; source pseudo local_518[0..0x2f]"
+      ]
+    },
+    {
+      "field": "game_attributes",
+      "state_type": "map<string,string>",
+      "global_va": "0x1800a3d88",
+      "constructor_relative_offset": "0x3a8",
+      "inside_constructor": true,
+      "default_value": {
+        "DISPLAY_NAME": "Game",
+        "INSTALLED_VERSION": "1.0.0.0",
+        "AVAILABLE_VERSION": "1.0.0.0",
+        "UPTODATE": "true",
+        "FULLGAME_IS_RELEASED": "true",
+        "FULLGAME_RELEASE_DATE": "2010-01-01T00:00:00",
+        "FULLGAME_PURCHASED": "true",
+        "FREETRIAL": "false",
+        "EXPIRATION": "0000-00-00T00:00:00",
+        "ENTITLEMENT_SOURCE": "ORIGIN",
+        "MAX_GROUP_SIZE": "16",
+        "EXPIRATION_DURATION": "36000000",
+        "LANGUAGES": "ar_SA,cs_CZ,da_DK,de_DE,el_GR,en_AU,en_CA,en_GB,en_US,es_ES,es_MX,fi_FI,fr_CA,fr_FR,hu_HU,it_IT,ja_JP,ko_KR,nl_NL,no_NO,pl_PL,pt_BR,pt_PT,ru_RU,sv_SE,th_TH,tr_TR,zh_CN,zh_HK,zh_TW",
+        "INSTALLED_LANGUAGE": "en_US"
+      },
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x18003796c: LEA RCX, [RDI + 0x3a8]",
+        "CALL0x180036bc0 constructs fourteen string pairs; source pseudo local_518[0x30..0x9f]"
+      ]
+    },
+    {
+      "field": "content",
+      "state_type": "vector",
+      "global_va": "0x1800a3d98",
+      "constructor_relative_offset": "0x3b8",
+      "inside_constructor": true,
+      "default_value": [],
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037993: MOV qword ptr [RDI + 0x3b8], RSI",
+        "0x18003799a: MOV qword ptr [RDI + 0x3c0], RSI",
+        "0x1800379a1: MOV qword ptr [RDI + 0x3c8], RSI"
+      ]
+    },
+    {
+      "field": "entitlements",
+      "state_type": "vector",
+      "global_va": "0x1800a3db0",
+      "constructor_relative_offset": "0x3d0",
+      "inside_constructor": true,
+      "default_value": [],
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x1800379a8: MOV qword ptr [RDI + 0x3d0], RSI",
+        "0x1800379af: MOV qword ptr [RDI + 0x3d8], RSI",
+        "0x1800379b6: MOV qword ptr [RDI + 0x3e0], RSI"
+      ]
+    },
+    {
+      "field": "achievements_set",
+      "state_type": "string",
+      "global_va": "0x1800a3dc8",
+      "constructor_relative_offset": "0x3e8",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x1800379bd: LEA RCX, [RDI + 0x3e8]"
+      ]
+    },
+    {
+      "field": "achievements",
+      "state_type": "map<string,Achievement>",
+      "global_va": "0x1800a3e58",
+      "constructor_relative_offset": "0x478",
+      "inside_constructor": true,
+      "default_value": {},
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037a12: LEA RBX, [RDI + 0x478]",
+        "Constructor allocates0xb8-byte self-referencing empty tree sentinel and sets size0"
+      ]
+    },
+    {
+      "field": "steam_app_id",
+      "state_type": "string",
+      "global_va": "0x1800a3e68",
+      "constructor_relative_offset": "0x488",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037a46: MOVUPS xmmword ptr [RDI + 0x488], XMM0",
+        "0x180037a4d: MOV qword ptr [RDI + 0x498], RSI",
+        "0x180037a54: MOV qword ptr [RDI + 0x4a0], 0xf",
+        "0x180037a5f: MOV byte ptr [RDI + 0x488], SIL"
+      ]
+    },
+    {
+      "field": "extra_dlls_from_main",
+      "state_type": "vector",
+      "global_va": "0x1800a3ea8",
+      "constructor_relative_offset": "0x4c8",
+      "inside_constructor": true,
+      "default_value": [],
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037a86: MOV qword ptr [RDI + 0x4c8], RSI",
+        "0x180037a8d: MOV qword ptr [RDI + 0x4d0], RSI",
+        "0x180037a94: MOV qword ptr [RDI + 0x4d8], RSI"
+      ]
+    },
+    {
+      "field": "extra_dlls",
+      "state_type": "vector",
+      "global_va": "0x1800a3ec0",
+      "constructor_relative_offset": "0x4e0",
+      "inside_constructor": true,
+      "default_value": [],
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037a9b: MOV qword ptr [RDI + 0x4e0], RSI",
+        "0x180037aa2: MOV qword ptr [RDI + 0x4e8], RSI",
+        "0x180037aa9: MOV qword ptr [RDI + 0x4f0], RSI"
+      ]
+    },
+    {
+      "field": "documents",
+      "state_type": "u16string",
+      "global_va": "0x1800a3ef8",
+      "constructor_relative_offset": "0x518",
+      "inside_constructor": true,
+      "default_value": "",
+      "confidence": "high semantic projection; original native object ABI not claimed",
+      "assembly_anchors": [
+        "0x180037ad3: MOVUPS xmmword ptr [RDI + 0x518], XMM0",
+        "0x180037ada: MOV qword ptr [RDI + 0x528], RSI",
+        "0x180037ae1: MOV qword ptr [RDI + 0x530], 0x7",
+        "0x180037aec: MOV word ptr [RDI + 0x518], SI"
+      ]
+    }
+  ],
+  "emulator_pairs_in_initializer_order": [
+    {
+      "key": "ENVIRONMENT",
+      "value": "production"
+    },
+    {
+      "key": "IS_IGO_AVAILABLE",
+      "value": "false"
+    },
+    {
+      "key": "IS_TELEMETRY_ENABLED",
+      "value": "false"
+    },
+    {
+      "key": "IS_MANUAL_OFFLINE",
+      "value": "false"
+    },
+    {
+      "key": "LANGUAGE",
+      "value": "en_US"
+    },
+    {
+      "key": "IS_IGO_ENABLED",
+      "value": "false"
+    }
+  ],
+  "game_pairs_in_initializer_order": [
+    {
+      "key": "DISPLAY_NAME",
+      "value": "Game"
+    },
+    {
+      "key": "INSTALLED_VERSION",
+      "value": "1.0.0.0"
+    },
+    {
+      "key": "AVAILABLE_VERSION",
+      "value": "1.0.0.0"
+    },
+    {
+      "key": "UPTODATE",
+      "value": "true"
+    },
+    {
+      "key": "FULLGAME_IS_RELEASED",
+      "value": "true"
+    },
+    {
+      "key": "FULLGAME_RELEASE_DATE",
+      "value": "2010-01-01T00:00:00"
+    },
+    {
+      "key": "FULLGAME_PURCHASED",
+      "value": "true"
+    },
+    {
+      "key": "FREETRIAL",
+      "value": "false"
+    },
+    {
+      "key": "EXPIRATION",
+      "value": "0000-00-00T00:00:00"
+    },
+    {
+      "key": "ENTITLEMENT_SOURCE",
+      "value": "ORIGIN"
+    },
+    {
+      "key": "MAX_GROUP_SIZE",
+      "value": "16"
+    },
+    {
+      "key": "EXPIRATION_DURATION",
+      "value": "36000000"
+    },
+    {
+      "key": "LANGUAGES",
+      "value": "ar_SA,cs_CZ,da_DK,de_DE,el_GR,en_AU,en_CA,en_GB,en_US,es_ES,es_MX,fi_FI,fr_CA,fr_FR,hu_HU,it_IT,ja_JP,ko_KR,nl_NL,no_NO,pl_PL,pt_BR,pt_PT,ru_RU,sv_SE,th_TH,tr_TR,zh_CN,zh_HK,zh_TW"
+    },
+    {
+      "key": "INSTALLED_LANGUAGE",
+      "value": "en_US"
+    }
+  ],
+  "literal_proofs": [
+    {
+      "va": "0x18008394c",
+      "length": 4,
+      "bytes_hex": "47616d65",
+      "ascii": "Game",
+      "used_by": [
+        "DISPLAY_NAME"
+      ],
+      "retained_read_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082"
+    },
+    {
+      "va": "0x18007f7cc",
+      "length": 4,
+      "bytes_hex": "74727565",
+      "ascii": "true",
+      "used_by": [
+        "UPTODATE",
+        "FULLGAME_IS_RELEASED",
+        "FULLGAME_PURCHASED"
+      ],
+      "retained_read_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082"
+    },
+    {
+      "va": "0x180083888",
+      "length": 19,
+      "bytes_hex": "303030302d30302d30305430303a30303a3030",
+      "ascii": "0000-00-00T00:00:00",
+      "used_by": [
+        "EXPIRATION"
+      ],
+      "retained_read_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082"
+    },
+    {
+      "va": "0x1800865ec",
+      "length": 2,
+      "bytes_hex": "3136",
+      "ascii": "16",
+      "used_by": [
+        "MAX_GROUP_SIZE"
+      ],
+      "retained_read_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082"
+    },
+    {
+      "va": "0x1800865ac",
+      "length": 5,
+      "bytes_hex": "656e5f5553",
+      "ascii": "en_US",
+      "used_by": [
+        "INSTALLED_LANGUAGE"
+      ],
+      "retained_read_evidence": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082"
+    }
+  ],
+  "additional_literal_proof": "Remaining pair keys/values are explicit string literals or immediate little-endian character constants in retained036d20 pseudocode/ASM; no external input was used.",
+  "unmodeled_native_aggregate_fields": [
+    {
+      "offset": "0xa0/0xa8",
+      "meaning": "online module/object slots",
+      "values": [
+        0,
+        0
+      ]
+    },
+    {
+      "offset": "0x138",
+      "meaning": "40-byte static byte-string not represented in configuration::State; do not infer its role"
+    },
+    {
+      "offset": "0x25b..0x25e",
+      "meaning": "online and startup-ready flags outside configuration::State",
+      "values": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "offset": "0x260",
+      "meaning": "native runtime mutex initialized via04a698(flags2); not a portable State field"
+    },
+    {
+      "offset": "0x428",
+      "meaning": "second native mutex via037b20->04a698(flags2); not a portable State field"
+    },
+    {
+      "offset": "0x4a8/0x4f8/0x510",
+      "meaning": "further native aggregate path/vector/flag storage outside current State; separate mapping required"
+    }
+  ],
+  "recommendation": "Implement an explicit opt-in make_configuration_defaults_036d20()->configuration::State semantic projection for all41 existing State fields plus20pairs. No OutsideConstructorState fields are required for current State. Do not zero/construct native aggregate, mutexes, global/static initialization or atexit integration.",
+  "limits": [
+    "Normal post-construction modeled State values only; no original MSVC object layout or allocation/EH timing equivalence.",
+    "Preserve native constructor/static initializer as open for whole-aggregate/CRT lifetime proof; no new original native body/closure claim.",
+    "No automatic new default selection in current Runtime; caller explicitly passes returned State.",
+    "All41 globals names rely on existing hash-bound config evidence and observed constructor offsets; no original input bytes or user CFG/token/profile were read."
+  ],
+  "retained_sources": [
+    {
+      "path": "outputs/anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    },
+    {
+      "path": "outputs/anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "path": "outputs/anadius-config-source/evidence.json",
+      "sha256": "b8397cc8ce6fd2b2c85650c0435de0bde3a0ea5e468cdf457d1068064cf99ea9"
+    },
+    {
+      "path": "outputs/anadius-config-source/configuration.hpp",
+      "sha256": "8cb1f9d28b9f5b48177d4233b6f3304980b6912002d67db67583f252bf557ce6"
+    }
+  ],
+  "production_or_tests_modified": false,
+  "new_target_queries": false,
+  "original_execution": false
+}

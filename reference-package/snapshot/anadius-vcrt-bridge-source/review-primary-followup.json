@@ -1,0 +1,28 @@
+{
+  "reviewer": "primary agent follow-up, not an independent review",
+  "result": "PASS",
+  "checked_at": "2026-10-18T14:19:11.2123136Z",
+  "independent_reviews": [
+    "review-ptd.json",
+    "review-locks.json"
+  ],
+  "changes_after_independent_hash_snapshot": "bridge.hpp gained same-bank storage and provider/callback lifetime comments only; no signature or behavior change",
+  "fixture_followup": "Present-cache assertion explicitly compares expected index+1 addresses; both reviewers confirmed corrected assertion",
+  "final_common_build": "68 production objects,53 normal groups,15 terminal cases PASS",
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "022ac1bbc309a9c9472d99c7ba9ee8ea081ce3a5a29048b3522a328ead5ce0e4"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "85f1591f4b8e265cea036badadaf0c3de43fdd6bd16c2a1be910aaf4137526bf"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "eac77edf09d6d38d5d33651f9a7c58ebec6dd46abb3db28b283a95140af598e3"
+    }
+  ],
+  "original_execution": "none",
+  "runtime_equivalence": "not established"
+}

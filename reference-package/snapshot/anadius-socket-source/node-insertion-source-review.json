@@ -1,0 +1,83 @@
+{
+  "schema": "node-insertion.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-27",
+  "reviewer": "/root/insertion_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent complete retained003aa0 assembly/pseudocode and exact new production CPP/HPP review. One bounded byte-state insertion-preparation body and one existing typed provider source bridge. No reviewer tests,original reads,native analysis or full DOM/ABI claim.",
+  "reviewed_source_hashes": {
+    "node_insertion.hpp": "7bc92143f7ae1869f371cc7a7c102bc5cb7572523455c00a14826c2903aebb87",
+    "node_insertion.cpp": "26a363ed547f52d84f293acd1ab0bd61365acaac62b38ac19503529081fefe9f"
+  },
+  "addresses": [
+    "0x180003aa0"
+  ],
+  "assembly_evidence": "ev_0b08898f12f5db24f44abc354495178632463f25a053f9ce71e2a4157571b4ef",
+  "pseudo_evidence": "ev_ce74b4f983309d2cc1be9c243fc3798203afe86b437ad9ffead5aaaad8d7c3cb",
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 1,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 1,
+  "prior_source_presence": "no_definition_mapping",
+  "closed_providers": [
+    {
+      "address": "0x180003aa0",
+      "base": "NativeNodeParseEffects::prepare_003aa0",
+      "closure": "RecoveredNodeInsertionEffects::prepare_003aa0",
+      "body": "prepare_native_insertion_003aa0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "new_selected_source_adapters": 0,
+  "existing_selected_node_parse_adapter_preserved": true,
+  "existing_pool_track_source_reused": true,
+  "findings": [
+    "The incoming requested-owner argument is intentionally unused. The first mapped access is child+10 parent; the parent and parent-field address are cached,including when the requested owner is unmapped or differs from the actual parent.",
+    "Linked first-child handling loads cached parent+38 and,only when equal to child,loads that first pointer+50 before publishing parent+38. The first pointer is not replaced by a later reread.",
+    "Parent+40 last-child is read only after the possible first-child store. A matching last pointer supplies its+48 predecessor. Aliasing first/last fields therefore retains native ordered effects.",
+    "Child+48 predecessor is cached for its conditional next-field store. Child+50 successor is freshly read for that store,then read again after it; a nonzero fresh successor receives a fresh child+48 predecessor. The source does not snapshot both links before mutations.",
+    "The linked branch clears child.next+50,child.previous+48,and cached child.parent+10 in that exact order,then returns. It performs no document/vector/pool/probe/destructor/release/free operation.",
+    "Unlinked child+8 document and its signed DWORD+104 initial count are cached. Count<=0 bypasses allocation-array mapping;positive count loads entries+ a8 and uses initial positive count as the loop bound. The misleading decompiler live-bound form is not copied.",
+    "Search uses a64-bit cursor and separate wrapping32-bit index,with signed32-to64 matched-index extension. Pure arithmetic increment ordering has no intervening mapped effect and preserves the native loop semantics.",
+    "The matching replacement tail uses a fresh DWORD count zero-extended to64,as003b4b MOV EAX requires. It is not signed-extended and is not replaced with the cached initial count.",
+    "The swap slot store precedes a fresh live DWORD count load and wrapping decrement. Physical overlap between the slot and count cell is preserved rather than committing cachedCount-1.",
+    "Every normal unlinked exit,count<=0,not-found or match,loads child+60 pool live,then its current vtable and slot+20 target. Target identity and sole pool argument are forwarded to mandatory NativeNodeClearEffects::pool_track.",
+    "The unlinked branch does not zero child links or free the node. Four selected retained pool targets identify existing005a20 source,whose untracked-counter behavior can be supplied by the existing pool provider without another body/closure/adapter claim.",
+    "The source uses void for the observed unused return contract. The native linked branch has no unified semantic RAX value,and unlinked tail dispatch forwards another callee return; no invented boolean/integer success result is introduced.",
+    "RecoveredNodeInsertionEffects preserves constructor/Identify/selected parser source composition and forwards all inherited context identities. Its single finalprepare003aa0 method closes exactly the existing NativeNodeParseEffects provider.",
+    "Existing003030 source would destroy/release after unlink and is deliberately not called. Existing004970 caller performs insertion after preparation and reads owner.last again afterward; the new helper only prepares the child.",
+    "One normal tagged003aa0 function and one finalnumeric override map one unique native address. PreviousNoDefinition becomes source-mapped;the two variants are not two recovered native bodies.",
+    "Missing mappings or mandatory lower failures retain committed byte-state prefixes. No synthetic null guard,automatic node free,rollback,RAII cleanup or native fault/unwind/concurrency equivalence is added."
+  ],
+  "limitations": [
+    "Bounded byte-state source projection only; native object/register/stack/tail-return/pool/fault/EH/concurrency equivalence remains unproven.",
+    "Generic pool tracking targets still require a supplied provider. Four static table identities do not establish arbitrary pool vtables or a native C++ object ABI.",
+    "Existing005a20 source reuse and preserved N25 dispatch/allocator adapters are dependencies,not new source recoveries or provider closures in this stage.",
+    "Normal source review and reconstructed fixture tests do not establish original-binary execution,complete DOM or replacement-DLL behavior. No total DLL completion percentage is derived."
+  ],
+  "retained_data": {
+    "file": "node-insertion-retained-data.json",
+    "sha256": "28dd4d8f13cc5e2b14ac431e4cfc2d432f9a51fcb90fde17bcacfa3ab71bd222",
+    "parent_file_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "parent_evidence_id": "ev_1585c277e2b5dffb5a54c26a1db122db985c13d72fea8b0b6272dbea69b9b082",
+    "pool_track_slot_count": 4,
+    "new_original_read_performed": false
+  },
+  "full_native_equivalence_review_complete": false,
+  "native_node_insertion_normal_body_ready": true,
+  "native_node_insertion_fully_closed": false,
+  "native_parser_fully_closed": false,
+  "generic_virtual_parse_closed": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false,
+  "new_native_analysis": false,
+  "CRT_production": "unchanged and paused"
+}

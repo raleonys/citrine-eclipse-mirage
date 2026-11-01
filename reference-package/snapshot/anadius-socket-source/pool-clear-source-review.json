@@ -1,0 +1,87 @@
+{
+  "schema": "pool-clear.bounded-static-source-review.v1",
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/allocation_audit",
+  "independent_from_production_author": true,
+  "scope": "Independent retained complete assembly/pseudocode and exact new production-source review for three normal pool-clear byte-state projections and three existing-provider source bindings. No original-file reads, original execution or reviewer tests.",
+  "reviewed_source_hashes": {
+    "pool_clear.hpp": "4fe3d1f5b73f8bbde7d02b049382dedec07548aebae9adaced5794c965d094b1",
+    "pool_clear.cpp": "126eb5ed1e17ea2c51ada009be36cb3db3800d4a75a043888f89dba919dd7208"
+  },
+  "addresses": [
+    "0x180002d70",
+    "0x180002dc0",
+    "0x180002e10"
+  ],
+  "assembly_and_pseudocode_evidence": {
+    "0x180002d70": {
+      "pseudo": "ev_4e130f68563bb04de14fda1c456fd436f3dacd767dd331b62bdd0b7ec1bc4588",
+      "assembly": "ev_06bc5dbb4ccc0a7c9ef5555e3b2c6beb617304d7002256a26cc3451fe1233c49"
+    },
+    "0x180002dc0": {
+      "pseudo": "ev_360a8ebddaae1ee10f83511de53328b963e4dbf5369444c578f3841fda48606d",
+      "assembly": "ev_942cee8f39a202985f358368870006d179df8d801e7c5ee6524b718b6cf62afb"
+    },
+    "0x180002e10": {
+      "pseudo": "ev_d3753f429cb0573b35a6d038b49b7e94ccd954fe6542385b4948667e48fd523a",
+      "assembly": "ev_ffc8268becf2220ca2eeb649c6420381de74df66a6cf841c3f750d90fa5692ac"
+    }
+  },
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "new_normal_source_bodies": 3,
+  "new_source_bridges": 3,
+  "new_unique_source_mapped_addresses": 3,
+  "tagged_definition_variants_per_new_target": 2,
+  "historical_typed_providers_newly_closed": 3,
+  "closed_providers": [
+    {
+      "address": "0x180002d70",
+      "base": "NativeDocumentEffects::clear_pool_002d70",
+      "closure": "RecoveredPoolClearEffects::clear_pool_002d70",
+      "body": "clear_pool_blocks_002d70",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x180002dc0",
+      "base": "NativeDocumentEffects::clear_pool_002dc0",
+      "closure": "RecoveredPoolClearEffects::clear_pool_002dc0",
+      "body": "clear_pool_blocks_002dc0",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    },
+    {
+      "address": "0x180002e10",
+      "base": "NativeDocumentEffects::clear_pool_002e10",
+      "closure": "RecoveredPoolClearEffects::clear_pool_002e10",
+      "body": "clear_pool_blocks_002e10",
+      "historical_provider_closure": true,
+      "native_abi_complete": false
+    }
+  ],
+  "findings": [
+    "Raw DWORD count at pool+64 controls nonzero loop entry, including negative signed representations; zero skips array access but still performs final resets.",
+    "Each entered iteration rereads old count, retains its signed64 index, stores wrapping DWORD old-1 before loading live array data at pool+8, then reads block at data+old_index*8-8 with modulo64 arithmetic.",
+    "The lower pointer-only free receives the loaded block. The subsequent condition reads live count again; mutations to count, array data or entries remain observable on later iterations.",
+    "Three final QWORD zero stores occur at pool+68,+70,+78 in exact order and access width; no extra count write, separate DWORD resets or rollback is added.",
+    "Vptr, array data/capacity, inline/stale entries and unrelated bytes are not cleared by the source helper itself; no pointer-array free, constructor or pool-destructor effect is invented.",
+    "Caller EDX4080/4056/4032 values are retained as static facts in target order002d70/002dc0/002e10; the existing pointer-only free boundary does not claim sized-free or register ABI equivalence.",
+    "RecoveredPoolClearEffects preserves inherited document/node-clear source bindings and closes exactly three existing NativeDocumentEffects pool-clear providers on shared bounded memory.",
+    "Each target has one normal wrapper plus one numeric-tagged final source bridge; two tagged definitions do not imply two native functions. The N19 append binding and separate N18 allocation adapter are not changed."
+  ],
+  "limitations": [
+    "Bounded byte-state normal projection only; native fault, register ABI, unwind/EH and concurrency equivalence remain unproven.",
+    "Free04b0f8 remains a mandatory lower provider; no heap/CRT body or native allocator ownership implementation is recovered.",
+    "Pool destructors001bb0/001c30/001cb0/001d30 and full lifecycle, node virtual/parser/DOM materialization remain open.",
+    "Missing or ambiguous memory mappings produce source-interface exceptions rather than native fault equivalence; fixture effects and constructed tests are not original execution proof."
+  ],
+  "full_native_equivalence_review_complete": false,
+  "original_execution": "none",
+  "original_modification": false,
+  "reviewer_original_reads": false,
+  "reviewer_tests_executed": false
+}

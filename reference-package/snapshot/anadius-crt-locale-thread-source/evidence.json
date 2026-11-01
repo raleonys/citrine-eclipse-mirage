@@ -1,0 +1,37 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "origin": "Bounded extraction of retained REA/Ghidra static evidence. Parent verified aligned REA 6.5.0 and Ghidra12.1.4 candidate availability; target session closed; no original execution.",
+  "functions": [
+    {
+      "va": "0x18006f540",
+      "assembly_evidence": "ev_d589fedbeb516727ecf25d4765c3c807019361721e6aa77059f7aae92f689e46",
+      "pseudocode_evidence": "ev_69fe5aea734a2e26fe1d52638135834a77b0ba44f88ef281429f53e7cf2859ba"
+    },
+    {
+      "va": "0x18006f658",
+      "assembly_evidence": "ev_33df403939b5a2d5416620bfb29c25b664753ef741a6f07e480456f3a850eae6",
+      "pseudocode_evidence": "ev_7393be540ffca7aea32df835e7cec4c4f8f1d1943a51b5a4165adb64fdc0ce05"
+    },
+    {
+      "va": "0x180070968",
+      "assembly_evidence": "ev_6b72fe2c82e157036e8e8bc074656951773c9bb6f8ad0239a0750312bd32403e",
+      "pseudocode_evidence": "ev_33d017ad31e523f224e8e06b736b381655e6cd63114938da370d3a678a19ae5e"
+    },
+    {
+      "va": "0x1800709d8",
+      "assembly_evidence": "ev_289f44c550d338f639178fc8d8c2b59c8712a4078351c5f269749c1adc78b7b6",
+      "pseudocode_evidence": "ev_d86652abc783dc5caf26d0a653e339951376df7a4e7b70e79a4a94f66e77cdbc"
+    }
+  ],
+  "selected_assembly_sha256": "8d45926a6e65bf91ad93e207716f2427397dec03fb63eb2ab6cf1496c86e69e4",
+  "selected_pseudocode_sha256": "58c73d3660762307346ecfa0d4dbe875a833e8914ba9f97019beac3a26c9ab92",
+  "limits": [
+    "Normal flow only; no original SEH/exception unwind recovery.",
+    "Opaque addresses are provider-owned live storage identities, never target addresses dereferenced by this source.",
+    "Deep locale ref/free providers 070634/0708c0/0706c0 remain mandatory abstract effects.",
+    "No original ABI, compiler or runtime equivalence claim.",
+    "Null current multibyte during replacement reaches the required atomic provider before any abort; a native memory fault domain is unsupported."
+  ]
+}

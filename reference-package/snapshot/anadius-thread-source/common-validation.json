@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_threads",
+    "result": "PASS",
+    "output": "PASS: 655 thread/context/bootstrap checks (synthetic; no OS threads)",
+    "executable_sha256": "14d461af0f2170607775ef380a9332d19e46d125371f5b39b021fb83cf1aefd6"
+  },
+  "execution_scope": "Recovered bootstrap/CRT context layers; synthetic callbacks and exit APIs; no OS threads",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-thread-source/thread_tests.cpp",
+      "sha256": "4116607e2554cae3a4e8de3da495900dfcfac2517feee011d129fb890de471b8"
+    },
+    {
+      "path": "anadius-thread-source/threads.cpp",
+      "sha256": "3a3387ec1d94226b9a5eae4aec0b1458a55f3ab7a54aefdf52ee1f8f48310da9"
+    },
+    {
+      "path": "anadius-thread-source/threads.hpp",
+      "sha256": "ab28bd3937e109ff088fe40344af2491c8f8f5c6d69891d62fdfd331356824c8"
+    }
+  ]
+}

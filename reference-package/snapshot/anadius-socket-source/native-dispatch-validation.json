@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "40ec5e3750b1072c6f2228df6f662fcf45874a8ead72355495f1ac7627b3b415",
+  "test_results": [
+    {
+      "module": "socket_native_dispatch",
+      "result": "PASS",
+      "output": "PASS: 850 native dispatch checks;39 commands, validation, live callbacks, signed count/reloads, output/free order and failure prefixes; native lower providers remain open",
+      "executable_sha256": "727ad28839451451a8f256ed56397e501702900ff2806286ff8562267b9b8c00"
+    },
+    {
+      "module": "socket_native_dispatch_integration",
+      "result": "PASS",
+      "output": "PASS: 8978 socket native dispatch integration checks; final032d00 source, owned session ChallengeResponse and native cipher/append to queue/send/finish; registry/DOM/printer/handler/string lower providers and native ABI/EH remain open",
+      "executable_sha256": "0a9ea16a23c9ca4af8aedfda512207c881363d02f380202414273aeb5eadcb6e"
+    }
+  ],
+  "core_checks": 850,
+  "integration_checks": 8978,
+  "source_hashes": {
+    "native_dispatch.hpp": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440",
+    "native_dispatch.cpp": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b",
+    "native_dispatch_test_fixture.hpp": "a7ca9a188a081f3cbd0cc3b2a4de57cc67d5cbcf14a122397e284a30b10a54ef",
+    "native_dispatch_tests.cpp": "5fb519c191709a2527772dcadc277634d6af1a57013b8fdc01991ee8028cde1a",
+    "native_dispatch_integration_tests.cpp": "52f9994466103112c006fd0771051eeddbde81f0f031de3233ca21578f961143",
+    "build.ps1": "ee6ebe78f6e97904c3ac4911bc49d5f6ff12a1b1437cb7d8d825394990fc4395",
+    "CMakeLists.txt": "1732724fad32ee6913da423dd934116b7fbb8c4b0a9e8569a92fd1d6588f0402"
+  },
+  "original_procedures_added": 1,
+  "new_source_bridges": 1,
+  "new_unique_source_mapped_addresses": 0,
+  "execution_scope": "032d00 per-call normal projection and final NativeMessageApi dispatch source bridge; live lookup/handler, validation and normal scratch/output/printer order; original registry/DOM/document/printer/string/handler/exception lower providers mandatory",
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "limitations": [
+    "Normal typed projection, not native object/global/TLS/tree/DOM/vtable/ABI/EH/concurrency equivalence",
+    "Registry lazy-init and exact lookup remain mandatory providers; old39 registration table reused",
+    "Native001830/004280/001e00 document ctor/parser/destructor still controlled upstream compatibility providers",
+    "006b30/02b300/018b30/009fd0/00b520 helpers and printer helpers remain mandatory lower providers; test models are not recovered native bodies",
+    "Registered handler effects controlled; existing semantic02d7e0/SessionCipher/Factory reused for ChallengeResponse",
+    "Normal invalid/throw prefixes have no invented native cleanup; C++ fixture teardown is not unwind evidence",
+    "Automatic scratch projection must be distinct from output and explicitly mapped in ReceiveBufferMemory",
+    "No original DLL/game/network/IOCP execution or real CFG/token/achievement contents read; CRT unchanged and paused"
+  ],
+  "previous_local_records": "36 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established"
+}

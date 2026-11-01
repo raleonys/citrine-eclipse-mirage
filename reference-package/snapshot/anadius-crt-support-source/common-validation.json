@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_support",
+    "result": "PASS",
+    "output": "PASS 4438 CRT support checks",
+    "executable_sha256": "d5c696ade5431d0e1f4e2a418d08d122835fe7405b25cb9dc58d1a047539ec05"
+  },
+  "execution_scope": "Seven qword-option/TLS-slot/SList support bodies; opaque live list fixtures and snapshot-before-free order",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-support-source/support_tests.cpp",
+      "sha256": "0f1fb7167991fda7a6accf359abfbac27a1eec707b8c3466a7d9c3c317410316"
+    },
+    {
+      "path": "anadius-crt-support-source/support.cpp",
+      "sha256": "9e3725e170ef1e0ebc989bfffaa7f816a925fb8fd4acf19b02fe21785fea5716"
+    },
+    {
+      "path": "anadius-crt-support-source/support.hpp",
+      "sha256": "c3fb51e8edf0de8f9d5cbb4d1daee93c77999b384f1077bb9ef1b0119f846210"
+    }
+  ]
+}

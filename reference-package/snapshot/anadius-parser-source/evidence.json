@@ -1,0 +1,1057 @@
+﻿{
+    "schema":  "anadius.raw-config-parser.reconstruction.v1",
+    "target":  {
+                   "sha256":  "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+                   "name":  "anadius64.dll",
+                   "bytes":  694272,
+                   "image_base":  "0x180000000"
+               },
+    "evidence_type":  "Retained REA static pseudocode/assembly; independent typed source audit; read-only constant check",
+    "functions":  [
+                      {
+                          "records":  [
+                                          {
+                                              "line":  21800,
+                                              "id":  "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  26875,
+                                              "id":  "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180019ad0",
+                          "role":  "Caller: byte input/BOM handling, parser guard, Config2 selection"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16884,
+                                              "id":  "ev_99422feca877e9a1163ea80688e0a0aba6aa617bc8e7bf32c62a480005fdd3b8",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20983,
+                                              "id":  "ev_54aed552de213f2f9d79c3681124bcd87de63cf8d64ef23c4a0915effd04c303",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180014310",
+                          "role":  "Root Grammar: EOF/EOL/Sep/Object; true at EOF, throw mismatch"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16142,
+                                              "id":  "ev_d2b143768adf30ab7b33943a8264dd27195180d1988e2166263b72845d281c6e",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20166,
+                                              "id":  "ev_438d656be67713be2841b661ffda131ab69d36f2886097e4ae05c3fbf47194df",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180013810",
+                          "role":  "Quoted token; accepts empty; throws on unmatched Character"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16004,
+                                              "id":  "ev_3f60561fa8bb94e022556127045c7f9d7e9e7253dcd5415ce3b2b253860bf8fc",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20043,
+                                              "id":  "ev_a4f90bee107583fc6e8f5e00a59d7ebafe7ae3030da8b04faed31efd5496300d",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180013640",
+                          "role":  "Escaped: quote and backslash only; rewind on failure"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16785,
+                                              "id":  "ev_cdcd4963cda9e1c5b368f5ff49b12a1ee37224490f162fa258f9761648eb1d52",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20883,
+                                              "id":  "ev_3de01f94e068a8121086d1a80bc9ebdc03b892541a1350d3416bdd7e14e805a2",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x1800141a0",
+                          "role":  "Character: Escaped then Regular excluding CR/LF; unknown backslash retained"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  15962,
+                                              "id":  "ev_cf672da92f1051620841d06002c7c85794df53a64e1a661fef7b17b6e83a77d8",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20000,
+                                              "id":  "ev_d4d1f5a36b4959c4b67379679456258e2904c3b60b429f2f29f0a5a51b6a5203",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x1800135b0",
+                          "role":  "ASCII space mask, bytes9..13 and32"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  15862,
+                                              "id":  "ev_c0bad6df2e7b13cc48e92787fb6d061036458bbf936a4d79465f3114b372ff00",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  19901,
+                                              "id":  "ev_4c4e4ca3bb6b8d3f6c269e2430637f2cada413eae4e6fdfffe1043dc2ab6d41f",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180013460",
+                          "role":  "Double-slash comment, LF/CRLF or EOF"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  15925,
+                                              "id":  "ev_4c8ba996b30122ac03a5e22ed309eb818c49592cc66bba2fd36b180929df8269",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  19957,
+                                              "id":  "ev_fee65c3a7b81130b0bb7cce0402c68eca9a3570b789a8c06d80af8b0e388854f",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180013520",
+                          "role":  "Sep alternatives; failed block attempt marker rewinds"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16330,
+                                              "id":  "ev_1a04bdba2669c6b1c12c5d6c78381582924920c544cfc4c3d28a70580746cdb7",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20362,
+                                              "id":  "ev_a25c059473a2eb0c70432985de68fd57b207c1ee90d4174868907e6056d1cd12",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180013ab0",
+                          "role":  "One-or-more Seps, repeat-tail marker and initial-failure distinction"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16573,
+                                              "id":  "ev_676055f36f693f0cb9ef567b1e7e20ccf84b3f785b5f632f173ac33d25ffc423",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20673,
+                                              "id":  "ev_e06fa5239ebb277cac8b9d911ac2d3db362cc42e2871e72de2145096f6a9b9e1",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180013ed0",
+                          "role":  "Direct block comment attempt; false can consume slash or unfinished comment"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16671,
+                                              "id":  "ev_e6f49b9ac0e0c418ded0f16d50fd02da25f72ad3cfa536d76e782c59724d06b1",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20772,
+                                              "id":  "ev_c33701bda2825947de1a7d54065e11345c9eea7072d81ed5bbce84598e6c462d",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180014030",
+                          "role":  "Block comment opener component slash-star"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16714,
+                                              "id":  "ev_925fc748f5e7b2faa45e21b1d4a3dd8862667bee69f45cffe1e100f4c5f6155f",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20814,
+                                              "id":  "ev_4e1d25eadc02d26852b6163d63a82861a013dc34482d9cf0c0de71a7a317ed2b",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x1800140b0",
+                          "role":  "Until first star-slash; nonnested block comment"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16199,
+                                              "id":  "ev_d31cffaf12fc3bdd6e5c6c6f431045172672e38a7e291ad321e1e2de6528ccbb",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20233,
+                                              "id":  "ev_d80a794fc45b1ab4876e98a0ad37b0fa147bcc69263f6bb6af768dfdf850392c",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x1800138e0",
+                          "role":  "KeyValue before Object ordered alternative; input rewind leaves action state"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16379,
+                                              "id":  "ev_c0b5101fa993f60e3233778fa89bc96393de06fe68f9ebd7ebf4d2eb57aa3f22",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20425,
+                                              "id":  "ev_c19eb608f21b9c9d16006c5bcc5cc0beb984c2c39c07c9d469c2bf856c4e357a",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180013b70",
+                          "role":  "ObjectName action before opening brace; invokes ObjectMembers"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16459,
+                                              "id":  "ev_4f6f590da597e85c191e5c9fec9c8d68a145f9762a11c3cf4207508bcc738845",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  20525,
+                                              "id":  "ev_c4c1c6c5fde5fad7a03d1033f5e96fbabe1cf11e12cfb4d4daba0a99c9fcf1d1",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180013cc0",
+                          "role":  "Until closing brace, list(KeyValue/Object,Seps) or Seps; adjacent members accepted"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  15630,
+                                              "id":  "ev_9598af0d830e1575339dc491e75d963d480896eb9f4b90ce7e55e99f188f2543",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  19607,
+                                              "id":  "ev_7913003b145be03ea145f8df2dfa3cc07e15e0ef85b4d73387c653a7d6e43f91",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180012ff0",
+                          "role":  "ObjectName action pushes fresh node frame"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  15486,
+                                              "id":  "ev_7565af06346566f029b375f7822fdce9eebb6912e47dce7b601837256ab704c5",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  19414,
+                                              "id":  "ev_de13ca595c41e442ff144c9b6d1c9c481875234c4b68e967496c3d45b12c9297",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180012cf0",
+                          "role":  "Completed scalar assignment to current frame"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  15442,
+                                              "id":  "ev_63a5fd242824ae860c6e0651bf9cd763f49d90d2860196b0ceb04f55c5311f51",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  19352,
+                                              "id":  "ev_ffb588586cfbe4e81e630ff4852f4548f8d864593d4ca85de62726f3776d2e9c",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180012bf0",
+                          "role":  "Completed object frame pop and assignment to parent/root"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  18754,
+                                              "id":  "ev_83733d3a3f90d9482d7feecdfc8b95a7565163c8c675704f7ab8a34672bb7eb4",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  23196,
+                                              "id":  "ev_c161a64fba74a89b0192583134853058ec33b17e4f038a5eb715121a548ac6b9",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x1800164f0",
+                          "role":  "Move node assignment clears/replaces destination child container; duplicates not merged"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16972,
+                                              "id":  "ev_a24164a79c91a6a05abcd6fdd376444e82c2c567180ba25066f1be058175aa7b",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  21072,
+                                              "id":  "ev_23a9faaa5d30db42354c1aee8028481ff4e72c4bfb09ef359349434461c9899c",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180014450",
+                          "role":  "ObjectMembers throw helper"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  16995,
+                                              "id":  "ev_09f56e82675d7415006169e2e80874ee3be1b8fbaa0826fee855e8d3cfd0ce90",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  21100,
+                                              "id":  "ev_54c6091d5f4ebabe902dfc1d8d66af854aba2dc10365a1878df005c5b5c7d851",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x1800144d0",
+                          "role":  "Grammar throw helper"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  17018,
+                                              "id":  "ev_b0630964b2921f83c4b079fb46a6e7df26d43c239abbb968de28122d0d974793",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  21128,
+                                              "id":  "ev_6965c8a5ccc0ae88f6918c853e4c9c103747908eb15b93aef1758c667207c0d3",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180014550",
+                          "role":  "Quoted Character throw helper"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  24396,
+                                              "id":  "ev_6b98bc82afa780f2cbc82f62b5f7f01cb3e1c01ed6b187472b5d681ff60e12df",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  30787,
+                                              "id":  "ev_ebcf07c8f87fd0d72e7c4d1861631263a7251b5cae424c7f5a2b26909dbf5e4e",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x18001e200",
+                          "role":  "Substring used for first3-byte BOM comparison"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  21312,
+                                              "id":  "ev_853e24f3a3d35a57facca75f8f9b99731d1984948ab7ddf2585ca2d8343a756a",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  26289,
+                                              "id":  "ev_b39fa02a7f1888a0f409d24f784ee68e729dab9643a6664dd9e9fe9b20ed3c7f",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x180019260",
+                          "role":  "Erase used for first3-byte BOM removal"
+                      },
+                      {
+                          "records":  [
+                                          {
+                                              "line":  47150,
+                                              "id":  "ev_ad6cc2139952e6a5b4801ee44818938562b836f6b702e7924bc854bcd3096820",
+                                              "file":  "anadius-all-functions.pseudo.c",
+                                              "kind":  "pseudocode"
+                                          },
+                                          {
+                                              "line":  59943,
+                                              "id":  "ev_cb304cf806c8f77471c7aad5e5d42745fb5c6a321687823f1a11e5a06a733148",
+                                              "file":  "anadius-all-functions.asm.txt",
+                                              "kind":  "assembly"
+                                          }
+                                      ],
+                          "address":  "0x18003b3f0",
+                          "role":  "Unimplemented file-reader boundary: empty init, stream-state guard, seek/tell/read, stream exceptions"
+                      }
+                  ],
+    "grammar":  {
+                    "unknown_escape":  "literal backslash then following bytes",
+                    "unquoted_tokens":  false,
+                    "line_comment":  "// to LF/CRLF inclusive or EOF",
+                    "object":  "Quoted Sep* { ObjectMembers }",
+                    "adjacent_members":  true,
+                    "quoted":  "Double quotes; only quote/backslash escapes decode",
+                    "key_value":  "Quoted Seps Quoted; mandatory \u003e=1 separator",
+                    "block_comment":  "/* through first */; nonnested",
+                    "regular":  "Any byte excluding CR/LF, caller handles closing quote",
+                    "embedded_nul_in_quoted":  true,
+                    "duplicates":  "last completed node replaces entire prior node/subtree",
+                    "root":  "zero or more EOL/Sep/Object until EOF, mismatch throws",
+                    "space_bytes":  [
+                                        9,
+                                        10,
+                                        11,
+                                        12,
+                                        13,
+                                        32
+                                    ],
+                    "utf8_validation":  false,
+                    "rewind":  "input markers rewind, action state not rolled back"
+                },
+    "bom":  {
+                "target_sha256_verified":  true,
+                "bytes":  "efbbbf00",
+                "maximum_removals":  1,
+                "removed_prefix":  "efbbbf",
+                "file_offset":  "0x82100",
+                "kind":  "Independent read-only PE constant verification",
+                "va":  "0x180083900"
+            },
+    "parse_result":  {
+                         "reconstruction_exception":  "Own ParseError carrying rule category and post-BOM byte/line/column, not MSVC ABI/message exact",
+                         "error_helpers":  [
+                                               "014450",
+                                               "0144d0",
+                                               "014550"
+                                           ],
+                         "plain_false":  "not found in inspected normal control flow; caller019ad0 retains guard",
+                         "normal":  "true atEOF in retained014310"
+                     },
+    "boundary":  {
+                     "original_cfg_read":  false,
+                     "target_execution":  false,
+                     "synthetic_tests_only":  true,
+                     "configuration_bridge":  "Requires mandatory external BinaryIterationOrder for original Windows config-copy stage",
+                     "logical_order":  "First-created key slots and completed assignment chronology; not MSVC hash-list order",
+                     "binary_hash_iteration_implemented":  false,
+                     "file_reader_implemented":  false
+                 },
+    "mac_support":  {
+                        "symbol_examples":  [
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Grammar",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1284,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser7GrammarEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1c150",
+                                                                   "recordFileOffset":  "0xa1d28",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Grammar\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Object",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1333,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser6ObjectEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE2ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1cc40",
+                                                                   "recordFileOffset":  "0xa2038",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Object\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)2, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "ObjectMembers",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  2029,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser13ObjectMembersEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x27670",
+                                                                   "recordFileOffset":  "0xa4bb8",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::ObjectMembers\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "KeyValue",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  2075,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser8KeyValueEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x28150",
+                                                                   "recordFileOffset":  "0xa4e98",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::KeyValue\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "ObjectName",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1479,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser10ObjectNameEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1ef10",
+                                                                   "recordFileOffset":  "0xa2958",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::ObjectName\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Key",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  2085,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser3KeyEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x28400",
+                                                                   "recordFileOffset":  "0xa4f38",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Key\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Value",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  2087,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser5ValueEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x28460",
+                                                                   "recordFileOffset":  "0xa4f58",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Value\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Character",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1515,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser9CharacterEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE2ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1f7f0",
+                                                                   "recordFileOffset":  "0xa2b98",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Character\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)2, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Escaped",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1540,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser7EscapedEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_15unescape_actionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRSL_EEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1fdf0",
+                                                                   "recordFileOffset":  "0xa2d28",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Escaped\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::unescape_action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Escaped_c",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1568,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser9Escaped_cEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_15unescape_actionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRSL_EEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x20450",
+                                                                   "recordFileOffset":  "0xa2ee8",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Escaped_c\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::unescape_action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Regular",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1541,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser7RegularEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE2ENS3_15unescape_actionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRSL_EEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1fe20",
+                                                                   "recordFileOffset":  "0xa2d38",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Regular\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)2, vdf::parser::unescape_action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Comment",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1359,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser7CommentEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1d240",
+                                                                   "recordFileOffset":  "0xa21d8",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Comment\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "MultiComment",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1360,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser12MultiCommentEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1d270",
+                                                                   "recordFileOffset":  "0xa21e8",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::MultiComment\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Sep",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  1332,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser3SepEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1cc10",
+                                                                   "recordFileOffset":  "0xa2028",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Sep\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "bbb11bef28053d0190e05bd10d80a6f6",
+                                                    "rule":  "Seps",
+                                                    "cpu":  "0x1000007",
+                                                    "symbol":  {
+                                                                   "index":  2057,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser4SepsEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE2ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x27d20",
+                                                                   "recordFileOffset":  "0xa4d78",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Seps\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)2, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Grammar",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1280,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser7GrammarEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1d378",
+                                                                   "recordFileOffset":  "0x22dc90",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Grammar\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Object",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1329,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser6ObjectEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE2ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1df14",
+                                                                   "recordFileOffset":  "0x22dfa0",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Object\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)2, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "ObjectMembers",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  2025,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser13ObjectMembersEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x29908",
+                                                                   "recordFileOffset":  "0x230b20",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::ObjectMembers\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "KeyValue",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  2071,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser8KeyValueEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x2a48c",
+                                                                   "recordFileOffset":  "0x230e00",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::KeyValue\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "ObjectName",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1475,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser10ObjectNameEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x20448",
+                                                                   "recordFileOffset":  "0x22e8c0",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::ObjectName\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Key",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  2081,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser3KeyEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x2a754",
+                                                                   "recordFileOffset":  "0x230ea0",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Key\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Value",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  2083,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser5ValueEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x2a7b4",
+                                                                   "recordFileOffset":  "0x230ec0",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Value\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Character",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1511,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser9CharacterEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE2ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x20da4",
+                                                                   "recordFileOffset":  "0x22eb00",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Character\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)2, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Escaped",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1536,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser7EscapedEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_15unescape_actionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRSL_EEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x2143c",
+                                                                   "recordFileOffset":  "0x22ec90",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Escaped\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::unescape_action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Escaped_c",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1564,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser9Escaped_cEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE0ENS3_15unescape_actionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRSL_EEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x21af4",
+                                                                   "recordFileOffset":  "0x22ee50",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Escaped_c\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)0, vdf::parser::unescape_action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Regular",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1537,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser7RegularEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE2ENS3_15unescape_actionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRSL_EEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x2146c",
+                                                                   "recordFileOffset":  "0x22eca0",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Regular\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)2, vdf::parser::unescape_action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Comment",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1355,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser7CommentEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1e5b8",
+                                                                   "recordFileOffset":  "0x22e140",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Comment\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "MultiComment",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1356,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser12MultiCommentEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1e5e8",
+                                                                   "recordFileOffset":  "0x22e150",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::MultiComment\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Sep",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  1328,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser3SepEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE1ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x1dee4",
+                                                                   "recordFileOffset":  "0x22df90",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Sep\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)1, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                },
+                                                {
+                                                    "uuid":  "dec31a53dc85375a81f67c49be886423",
+                                                    "rule":  "Seps",
+                                                    "cpu":  "0x100000c",
+                                                    "symbol":  {
+                                                                   "index":  2053,
+                                                                   "name":  "__ZN3tao5pegtl6normalIN3vdf6parser4SepsEE5matchILNS0_10apply_modeE1ELNS0_11rewind_modeE2ENS3_6ActionES1_NS0_12string_inputILNS0_13tracking_modeE0ENS0_5ascii3eol7lf_crlfENSt3__112basic_stringIcNSF_11char_traitsIcEENSF_9allocatorIcEEEEEEJRNS3_5StateEEEEbRT3_DpOT4_",
+                                                                   "type":  "0xe",
+                                                                   "external":  false,
+                                                                   "debug":  false,
+                                                                   "undefined":  false,
+                                                                   "section":  "__TEXT,__text",
+                                                                   "address":  "0x2a028",
+                                                                   "recordFileOffset":  "0x230ce0",
+                                                                   "demangled":  "bool tao::pegtl::normal\u003cvdf::parser::Seps\u003e::match\u003c(tao::pegtl::apply_mode)1, (tao::pegtl::rewind_mode)2, vdf::parser::Action, tao::pegtl::normal, tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e, vdf::parser::State\u0026\u003e(tao::pegtl::string_input\u003c(tao::pegtl::tracking_mode)0, tao::pegtl::ascii::eol::lf_crlf, std::__1::basic_string\u003cchar, std::__1::char_traits\u003cchar\u003e, std::__1::allocator\u003cchar\u003e\u003e\u003e\u0026, vdf::parser::State\u0026)"
+                                                               }
+                                                }
+                                            ],
+                        "archive_sha256":  "25b7f60529bfb43e9881181de5a520bb8835b7b2128b652c7cc2988ae4649bc6",
+                        "member_sha256":  "4a94c27fdaf8db55e256b0f66a813332f5ff7f3b066cc04185eda8850816cc50",
+                        "limits":  "Static retained names corroborate vdf/PEGTL rule structure only; no Windows address/function equivalence or same-version proof",
+                        "member":  "anadius.dylib",
+                        "rea_parent_inventory":  "ev_f7783c9f847048cac7fbd8a909b8717e47ac5d1d112b9ee481433df678041237"
+                    },
+    "limitations":  [
+                        "File I/O, stream masks/partial reads/allocation behavior unimplemented",
+                        "Original MSVC unordered-container hashing/insertion/rehash/copy iteration layout is mandatory external contract",
+                        "Original PEGTL exception ABI, full diagnostic text and destructor/unwind cursor effects not reproduced",
+                        "Logical action-state view is an analysis model; original caller creates/destroys its own transient state",
+                        "Only synthetic tests, no original parser runtime comparison"
+                    ],
+    "sources":  [
+                    {
+                        "sha256":  "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+                        "file":  "anadius-all-functions.pseudo.c",
+                        "bytes":  3320290
+                    },
+                    {
+                        "sha256":  "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+                        "file":  "anadius-all-functions.asm.txt",
+                        "bytes":  4467796
+                    },
+                    {
+                        "sha256":  "629ca5acdfb38b214ff1ed19ce13ef661ec3fd5a81a6ed7ccd762c594f8e08ff",
+                        "file":  "symbol-inventory.json",
+                        "bytes":  11410666
+                    }
+                ]
+}

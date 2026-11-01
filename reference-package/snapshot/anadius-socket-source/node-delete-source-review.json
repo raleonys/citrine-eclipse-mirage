@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "date": "2026-10-25",
+  "reviewer": "/root/node_delete_audit",
+  "independent_from_production_author": true,
+  "scope": "Read-only retained assembly/pseudo versus two bounded node helper source projections and final bindings; no reviewer test execution",
+  "reviewed_source_hashes": {
+    "node_delete.cpp": "29bfa55b1ffbbb8423fbb76490e411717b6724aa0fd06cd481c7734059f235d3",
+    "node_delete.hpp": "416b3d33b56e14f08ded0d22357ce3f8cdb3d06e8e53b8a078542c67cd43632a"
+  },
+  "addresses": [
+    "0x180003030",
+    "0x180003240"
+  ],
+  "findings": [
+    "Passed-parent first/last conditional updates and sibling rereads match native order without added membership or node-null guards",
+    "003030 cached node vtable before link resets and delayed probe target load; full64 probe return",
+    "003030 cached positive search bound/table with live zero-extended DWORD at match;003240 cached positive replacement count; fresh DEC after swap in both",
+    "003240 null no-access/no-callback return and no unlink/link reset for nonnull node",
+    "Live node table and cached pool before destructor; cached-pool live table after destructor and explicit pool/node release arguments",
+    "Self-bound final helper effect context disables copy/move"
+  ],
+  "limitations": [
+    "Native virtual probe/destructor/pool operations and actual DOM/parser/pool/heap remain mandatory providers",
+    "003030 native tail-JMP return and stack behavior not equivalent to void host normal projection",
+    "No native ABI/fault/EH/SEH/concurrency/full-DLL equivalence claim"
+  ],
+  "full_native_equivalence_review_complete": false,
+  "original_execution": "none",
+  "original_modification": false
+}

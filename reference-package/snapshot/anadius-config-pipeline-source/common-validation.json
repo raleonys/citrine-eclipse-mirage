@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "config_pipeline",
+    "result": "PASS",
+    "output": "PASS: 189 Config2 pipeline checks; generated fixture only; original targets never executed",
+    "executable_sha256": "0fca2b22794276ea5c092055fefc32c1ae2adbb7a1e0e67b3514a25853fd6688"
+  },
+  "execution_scope": "Actual recovered file/parser/firstcopy/order sources and scalar-only load_and_apply bridge;189checks;memory streams plus own generatedfixture;otherpath/locale/OS controlled;orderedcollections explicitlyrejected",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-config-pipeline-source/pipeline_tests.cpp",
+      "sha256": "78949acfd8b16e372f01108cea80a55c7253524bbeb1d9a424eb49773c3dcc30"
+    },
+    {
+      "path": "anadius-config-pipeline-source/pipeline.cpp",
+      "sha256": "018c61c3354ae541b7e4e7506b7fcfb12600689772b9e54e2d99122065c54378"
+    },
+    {
+      "path": "anadius-config-pipeline-source/pipeline.hpp",
+      "sha256": "c8b1b863abbabe7480c5d6f0ed4051964194333c65d9a08fe93ecb5aef379b8e"
+    }
+  ]
+}

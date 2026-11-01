@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T13:44:02.2019490Z",
+  "prior_package_sha256": "70c8525ccdba1ebdbb98e94ae55753b752a170cd13dbe9636bf352b2a9d946d1",
+  "prior_source_count": 446,
+  "unchanged_prior_sources": 446,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/recycle_storage_tests.cpp",
+    "anadius-socket-source/recycle_storage.cpp",
+    "anadius-socket-source/recycle_storage.hpp",
+    "anadius-socket-source/recycle_tests.cpp",
+    "anadius-socket-source/recycle.cpp",
+    "anadius-socket-source/recycle.hpp"
+  ],
+  "current_sources": 452,
+  "current_documents": 178,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 154,
+  "cpp_objects": 150,
+  "c_objects": 4,
+  "normal_test_groups": 139,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_recycle",
+      "result": "PASS",
+      "output": "PASS: 5564 socket recycler checks; retained0283c0 contracts and offline initialized graphs only",
+      "executable_sha256": "5d300a1d134af048fd0c0f3c3e1055c6bf43c62d9e9a36b05f292c6c8bfc9d7b"
+    },
+    {
+      "module": "socket_recycle_storage",
+      "result": "PASS",
+      "output": "PASS: 10400 socket recycler storage checks; selected host storage and actual source chain with injected effects only",
+      "executable_sha256": "7766764bf9e0677b80125d610ad957f38eb253bbd31981828d51dcc83f9732ee"
+    }
+  ],
+  "new_checks": 15964,
+  "master_build_sha256": "fb10724e255d2efe6f1789a3564d2a196936e895c4cf046614b1202363760483",
+  "common_build_script_sha256": "74138875c06d036dc8b35cf51e2c5d66da9997367f95e02863c5032f299770d3",
+  "cmake_sha256": "ea8200489c62e96590737934f333b00e9964696942611f4f74f837c57f2a0aad",
+  "normal_source_procedures_added": [
+    "0x1800283c0"
+  ],
+  "new_original_procedures": 1,
+  "new_composition": "Real0283c0 recycler with selected host OwnedRecycleMap storage and cancellation chain",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

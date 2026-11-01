@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "reviewer": "independent wildcard-storage worker",
+  "checked_at": "2026-10-18T15:23:28.1353639Z",
+  "scope": "Static review of generic qsort normal flow and separate 18-byte slot-address comparator; no source edits or target execution",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "evidence_id": "ev_f8ca5d27bc8124fbc68d7326b0ab5ec2b1519dd624c428419824a40cc3e691d5",
+  "reviewed": [
+    {
+      "name": "sort.hpp",
+      "sha256": "8dab826024780cd02f7f11004a123b8dba02dd0ea71c34c362cc45cdca840fb0"
+    },
+    {
+      "name": "sort.cpp",
+      "sha256": "18eb6b55d287677caf35b7a9e6ba07709bd5e332db71752ce0d10d3bb58d4f7a"
+    },
+    {
+      "name": "selected-assembly.txt",
+      "sha256": "40a543926ac7234fbbb4c6172abaf0d1a88e4a4a555e5943d6f6de68a568c66f"
+    },
+    {
+      "name": "comparator-offline-evidence.json",
+      "sha256": "a857f2bc22760e9ff80b17f7e3d28e872d740d806db761a53e687533056b2cf2"
+    }
+  ],
+  "findings": [],
+  "confirmed": [
+    "076918-076945 validation order: NULL base only invalid for nonzero count; width/comparator validated before count<2; errno22 before invalid-parameter effect",
+    "076990-076a3f unsigned DIV range size, <=8 selection shortsort, signed 32-bit compare>0, maximum-to-high swap, decrement and stack pop match",
+    "076a44-076b38 median-of-three comparator argument ordering and conditional swaps match",
+    "076b40-076bf5 left scan skips moving pivot, right scan snapshots previous high on every step, signed comparator branching and pivot relocation match",
+    "076bfa-076c4a equal-value scan has same two regions and decrements across pivot before lower-region comparisons",
+    "076c4c-076cb3 uses signed bit interpretation for partition-size CMP/JL and unsigned address comparisons for range pushes/selection",
+    "076a00/076a80/076ad0/076b20/076bd0 swaps read right then left and write left then right, preserving byte order and partial-write behavior",
+    "Stack offsets0x30 and0x220 imply two62-entry qword arrays; production62-entry overflow guard is explicitly declared as added unsupported-input boundary",
+    "18-byte comparator hex decodes CMP RCX,RDX / unsigned JAE then OR EAX,-1 or XOR EAX,EAX / CMP RCX,RDX / SETA AL; return-1/0/1 compares addresses without dereference"
+  ],
+  "validation_considered": "Existing hash-bound standalone validation reports4,831,748 synthetic checks; reviewer inspected fixture coverage but did not rerun it",
+  "limitations": [
+    "Review does not prove original source, ABI, CFG-dispatch, cookie-check, SEH or whole-DLL equivalence",
+    "Valid living nonwrapping ranges and coherent comparator remain provider preconditions; explicit provider access failures add no recovery",
+    "Comparator evidence is bounded offline byte evidence, not a new REA/Ghidra function-inventory entry",
+    "No original or rebuilt DLL/game execution and no production/test source edits"
+  ]
+}

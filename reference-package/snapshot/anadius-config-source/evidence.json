@@ -1,0 +1,394 @@
+﻿{
+    "schema":  "anadius.configuration.reconstruction.evidence.v1",
+    "target":  {
+                   "sha256":  "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+                   "name":  "anadius64.dll",
+                   "bytes":  694272,
+                   "preferred_image_base":  "0x180000000"
+               },
+    "evidence_type":  "Retained REA static pseudocode + assembly, independently audited typed C++ reconstruction",
+    "counts":  {
+                   "helper_routines":  9,
+                   "section_qualified_keys":  46,
+                   "helper_specialization_limit":  "03cf00 only single-character separator with limit=0",
+                   "primary_routines":  2
+               },
+    "settings":  {
+                     "Game":  [
+                                  "Name",
+                                  "Version",
+                                  "ContentId",
+                                  "DenuvoToken",
+                                  "DenuvoExeHash",
+                                  "DenuvoDllHash",
+                                  "DenuvoDllName",
+                                  "KeyForLicense",
+                                  "Languages",
+                                  "LanguageRegistryKey",
+                                  "Language",
+                                  "LanguageRegistrySpoof"
+                              ],
+                     "Emulator":  [
+                                      "Documents",
+                                      "ServerPort",
+                                      "PretendConnected",
+                                      "FakeAuth",
+                                      "SDK",
+                                      "Language",
+                                      "BlockReruns",
+                                      "LoadExtraDLLsFromMain",
+                                      "LoadExtraDLLs"
+                                  ],
+                     "User":  [
+                                  "Username",
+                                  "PersonaId",
+                                  "UserId",
+                                  "Avatar",
+                                  "UseLastOnlineProfile",
+                                  "Country",
+                                  "Currency",
+                                  "IsSubscriber",
+                                  "IsSteamSubscriber",
+                                  "SubscriberLevel",
+                                  "IsUnderAge"
+                              ],
+                     "Content":  [
+                                     "Name",
+                                     "Version",
+                                     "State"
+                                 ],
+                     "Entitlements":  [
+                                          "Group",
+                                          "Version",
+                                          "Type",
+                                          "EntitlementTag"
+                                      ],
+                     "Achievements":  [
+                                          "AchievementsSet",
+                                          "AchievementIDs",
+                                          "AchievementNames",
+                                          "AchievementTotals",
+                                          "SteamAppId",
+                                          "SteamIdPrefix",
+                                          "SteamIdOverrides"
+                                      ]
+                 },
+    "globals":  {
+                    "executable_path":  "0x1800a39e0",
+                    "user_directory":  "0x1800a3a00",
+                    "cookie_path":  "0x1800a3a20",
+                    "last_profile_path":  "0x1800a3a40",
+                    "last_avatar_path":  "0x1800a3a60",
+                    "avatar":  "0x1800a3a90",
+                    "default_avatar":  "0x1800a3ab0",
+                    "language_from_arguments":  "0x1800a3ad0",
+                    "registry_spoof":  "0x1800a3ad1",
+                    "language_registry_key":  "0x1800a3ad8",
+                    "content_id":  "0x1800a3af8",
+                    "license_directory":  "0x1800a3b38",
+                    "denuvo_token":  "0x1800a3b58",
+                    "exe_hash":  "0x1800a3b78",
+                    "dll_hash":  "0x1800a3b98",
+                    "denuvo_dll":  "0x1800a3bb8",
+                    "username":  "0x1800a3bd8",
+                    "persona_id":  "0x1800a3bf8",
+                    "user_id":  "0x1800a3c18",
+                    "use_last_online_profile":  "0x1800a3c38",
+                    "fake_auth":  "0x1800a3c39",
+                    "pretend_connected":  "0x1800a3c3a",
+                    "server_port":  "0x1800a3c90",
+                    "block_reruns":  "0x1800a3c92",
+                    "sdk":  "0x1800a3c98",
+                    "country":  "0x1800a3cb8",
+                    "currency":  "0x1800a3cd8",
+                    "is_subscriber":  "0x1800a3cf8",
+                    "is_steam_subscriber":  "0x1800a3d18",
+                    "subscriber_level":  "0x1800a3d38",
+                    "is_under_age":  "0x1800a3d58",
+                    "emulator_attributes":  "0x1800a3d78",
+                    "game_attributes":  "0x1800a3d88",
+                    "content":  "0x1800a3d98",
+                    "entitlements":  "0x1800a3db0",
+                    "achievements_set":  "0x1800a3dc8",
+                    "achievements":  "0x1800a3e58",
+                    "steam_app_id":  "0x1800a3e68",
+                    "extra_dlls_from_main":  "0x1800a3ea8",
+                    "extra_dlls":  "0x1800a3ec0",
+                    "documents":  "0x1800a3ef8"
+                },
+    "functions":  [
+                      {
+                          "recovered_semantics":  "Base/override config loading orchestration and complete observed Config2 settings application; reader/parser remains required contract",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd",
+                                                       "header_line":  21800,
+                                                       "next_function_line":  23230,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+                                                       "header_line":  26875,
+                                                       "next_function_line":  29286,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x180019ad0"
+                      },
+                      {
+                          "recovered_semantics":  "Executable discovery, two config passes, user paths/avatar cleanup, SDK normalization, persistence and environment call ordering; OS adapters required",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_78a1faedf06f56d422e6ecc197bbe90ce7f34af0e9b01420eef8b6b8827bf25e",
+                                                       "header_line":  23230,
+                                                       "next_function_line":  23752,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_42beaf13c42bb51716fcf407bd74587506fbb6acf17bfba9e16c31bdd31f8fba",
+                                                       "header_line":  29286,
+                                                       "next_function_line":  30019,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18001c870"
+                      },
+                      {
+                          "recovered_semantics":  "Nonempty string assignment",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_eb9c130f11089cde3d30a926444fb7803630c41cdc2e0b439b966239d747d371",
+                                                       "header_line":  24376,
+                                                       "next_function_line":  24396,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_4ae115ade4cd4b84f12f5154b88cf40783e3459723dc0ffe8cd6752c5161391e",
+                                                       "header_line":  30775,
+                                                       "next_function_line":  30787,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18001e1e0"
+                      },
+                      {
+                          "recovered_semantics":  "Exact case-sensitive boolean literals with caller fallback; empty input retains byte",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_841789359663bcf3e1c72535a4b8e1f7e0ba973419df5a9100eeaa5edf0f8c91",
+                                                       "header_line":  24163,
+                                                       "next_function_line":  24231,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_678897aced1c65efbc6f8f013f07b732f661c397126aa015e2fbacc64a4d243a",
+                                                       "header_line":  30534,
+                                                       "next_function_line":  30618,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18001de40"
+                      },
+                      {
+                          "recovered_semantics":  "Signed 32-bit decimal conversion outcome, suffix acceptance, invalid/range exceptions; CRT locale adapter required",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_24f65e3a70566aa074382cef0ca1484a16e596e0788bb0d7ee737f4315808c0d",
+                                                       "header_line":  23752,
+                                                       "next_function_line":  23783,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_d14859f41891fe7f517cc335cb12641e1f993b9def2794023232305189d131f7",
+                                                       "header_line":  30019,
+                                                       "next_function_line":  30050,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18001d6c0"
+                      },
+                      {
+                          "recovered_semantics":  "Only observed single-character delimiter and limit=0 specialization; empty segments retained",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_b7652e6e8f97bddabc3e475f5b45e63136a33d6e9b6a7f0d53a4a7d97e007ddf",
+                                                       "header_line":  48531,
+                                                       "next_function_line":  48681,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_19bcf15ba615e9b59425d363b0e25771f6d86dec8bea66181a3c28381748b4bb",
+                                                       "header_line":  61793,
+                                                       "next_function_line":  61963,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18003cf00"
+                      },
+                      {
+                          "recovered_semantics":  "Nonempty CSV clears path vector, skips empty segments, preserves partial state before conversion failure",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_0f777f53f1cbc552d32785f34f043481962889f43845ae957c842fe7023469fa",
+                                                       "header_line":  24231,
+                                                       "next_function_line":  24309,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_bd2ed8119dff9c80cfd09af903a68e4170db7532f9facbfa3a33a88754b5e6fa",
+                                                       "header_line":  30618,
+                                                       "next_function_line":  30709,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18001df60"
+                      },
+                      {
+                          "recovered_semantics":  "Registry flag before UTF-8 conversion and assignment",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_8df3eb3fce38faf8b755e983d17deab9a740db27a7ab0a358b9b06f97ebccb50",
+                                                       "header_line":  24309,
+                                                       "next_function_line":  24353,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_1345f1556f586327f3f52f8d59dd2841d69903847356e192ecd25c3be1f517bf",
+                                                       "header_line":  30709,
+                                                       "next_function_line":  30752,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18001e0c0"
+                      },
+                      {
+                          "recovered_semantics":  "Nonempty achievement set activates semicolon ID insertion/reset",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_aa6ac8b4f94f3ff8a5525250c681d8d7a20eeafc192a94494e59431d8b2e21c4",
+                                                       "header_line":  23988,
+                                                       "next_function_line":  24163,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_f0beec9cdcb2c9d2ce36ea829c335df1fd72b98a4e4092f91d9653a9fc679800",
+                                                       "header_line":  30314,
+                                                       "next_function_line":  30534,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18001da80"
+                      },
+                      {
+                          "recovered_semantics":  "Nonempty path setting delegates original path resolution",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_69a4b7a7366c776cd579826ffad44d4e038f2b4e31a52eb9e7eea96140828a9e",
+                                                       "header_line":  24353,
+                                                       "next_function_line":  24376,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_a9c7d0f87eabb1a0039c00cbaf9d56ad7fa250e14057bf1901ff810fa77b5e75",
+                                                       "header_line":  30752,
+                                                       "next_function_line":  30775,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18001e180"
+                      },
+                      {
+                          "recovered_semantics":  "Signed-char CRT tolower loop; original locale adapter required",
+                          "retained_records":  [
+                                                   {
+                                                       "evidence_id":  "ev_a5624360d5ae8204e1849ae393d79a9f7f850507d298421c2542d92a695e4dd3",
+                                                       "header_line":  48755,
+                                                       "next_function_line":  48778,
+                                                       "file":  "anadius-all-functions.pseudo.c",
+                                                       "kind":  "pseudocode"
+                                                   },
+                                                   {
+                                                       "evidence_id":  "ev_e788d7b1761f0e343fe0ccb71a8388603b70e89d4412c9fb6766efd7b1fc618d",
+                                                       "header_line":  62049,
+                                                       "next_function_line":  62077,
+                                                       "file":  "anadius-all-functions.asm.txt",
+                                                       "kind":  "assembly"
+                                                   }
+                                               ],
+                          "address":  "0x18003d2c0"
+                      }
+                  ],
+    "additional_evidence":  [
+                                {
+                                    "observation":  "FNV-1a seed cbf29ce484222325 / prime 100000001b3; hash lookup/insertion",
+                                    "id":  "ev_7feb6d6b079edf2bdfc1ba8d211a0ce70e980a6fb018b88bab839d2a626d87ad",
+                                    "address":  "0x180012820"
+                                },
+                                {
+                                    "observation":  "Hash/list container initialization, load factor 1.0, bucket mask 7 and 8 buckets; lexical traversal cannot be assumed",
+                                    "id":  "ev_296bb1bc52d3cecee8f33d8f811b33463558d6251e00da43832e29d9c1f0fa24",
+                                    "address":  "0x180014a90"
+                                },
+                                {
+                                    "observation":  "Narrow path conversion calls __std_fs_code_page then017330; distinct from UTF-8 conversion0145d0",
+                                    "id":  "ev_8b78d171b85825bb74faebe627caae65fac866d42c95429f23a1458c402920ab",
+                                    "address":  "0x180010540"
+                                },
+                                {
+                                    "observation":  "Registry path conversion calls __std_fs_convert_narrow_to_wide with codepage0xfde9 =65001",
+                                    "id":  "ev_b7669ec63c588e3e0c3c3ea478118b765778ea8ceeaac18635081dec14844c4d",
+                                    "address":  "0x1800145d0"
+                                }
+                            ],
+    "audited_corrections":  [
+                                "Collection traversal requires explicit original hash-list order; map is lookup-only",
+                                "Filesystem code-page conversion separated from UTF-8 registry conversion; wide constants remain wide"
+                            ],
+    "execution":  {
+                      "real_cfg_consumed_by_tests":  false,
+                      "original_dll":  false,
+                      "rebuilt_dll":  false,
+                      "synthetic_tests":  true,
+                      "host_exe":  false
+                  },
+    "limitations":  [
+                        "No raw CFG grammar, BOM/file-I/O implementation, duplicate-key or parser exception equivalence",
+                        "No MSVC container/string/exception ABI or original global default initializer recovery",
+                        "Path expansion/resolution, filesystem enumeration/error propagation and locale APIs are required adapters",
+                        "License02a830 and achievement persistence01eb00 are required adapters, not replaced by no-ops",
+                        "Only synthetic mock tests; no DLL integration or behavior equivalence claim",
+                        "Memory allocation-failure timing, CRT errno side effects, logging implementation and destructor paths not reproduced"
+                    ],
+    "retained_sources":  [
+                             {
+                                 "sha256":  "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+                                 "file":  "anadius-all-functions.pseudo.c",
+                                 "bytes":  3320290
+                             },
+                             {
+                                 "sha256":  "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+                                 "file":  "anadius-all-functions.asm.txt",
+                                 "bytes":  4467796
+                             }
+                         ]
+}

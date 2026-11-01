@@ -1,0 +1,41 @@
+{
+  "scope": "Independent retained static 024990 IOCP scheduler constructor normal-flow audit",
+  "reviewer": "iocp_constructor_audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {"address":"0x180024990","pseudo_evidence":"ev_3a626f8100eb1bf7ba0b9677a33b1b1418e250dde536cb3a9f122c32790a3442","assembly_evidence":"ev_87052282e1951ed15719d13023b5cd5cfdf7a65dcbff15d2354f8ee4cff08aad"}
+  ],
+  "context_functions": [
+    {"address":"0x180023b30","assembly_evidence":"ev_5bd06ce10f718331325ac29108e8afe82981dcdd81da85e580033f641b8dae7c"},
+    {"address":"0x180027be0","assembly_evidence":"ev_ebd0f0654f2c3bac442e8d0023199cc155873bebe20cb19ded69b206149bb469"},
+    {"address":"0x18002a000","assembly_evidence":"ev_9bb61c1aa2239aa4ceaa3b76b45ca58ddf61af660271bf12e342b874b7583917","source_recovered_here":false}
+  ],
+  "rules": {
+    "cached_arguments":"destination,raw uint32 hint,low-byte own-thread flag cached before callbacks",
+    "base_fields":"key08/10=0,context18,next20=0,table084510,port28=0,fullqword30=0,qword38=0",
+    "version":"all156bytes zero,size9c,major6; VerSetConditionMask(0,2,3),VerifyVersionInfoA(version,2,mask); anynonzero BOOL=>FFFFFFFF else500",
+    "mutex":"head48/tail50/dispatch58zero then027be0(section60); cachedstatus andcategoryALWAYS; nonzero raises084428 beforelatefields",
+    "port":"late88/90/98zero,hintA0raw,workerA8null; CreateIoCompletionPort(invalid,null,0,signbit?FFFFFFFF:hint); storeport before test; null=>GetLastError thencategoryALWAYS; nonzero raises084528,zero continues",
+    "work":"own-thread nonzero only; atomiclowuint32 increment modulo32 beforeallocate24",
+    "worker":"null24 skipsfunction/start; nonnull clearworker08/10 thenallocate32; nonnullfunctiontable084710/context18 only; start02a000(worker,functionnullable,0)",
+    "replace":"reloadLIVEoldworkerA8 afterstart/allocation; CloseHandle(old.handle08)ignored thenfreecachedold24; storecachedfreshlast evennull",
+    "errors":"preservepartialwrites andcounterincrements; no fabricated rollback or cleanup"
+  },
+  "normal_source_procedures_added":["0x180024990"],
+  "new_original_procedures":1,
+  "original_execution":"none",
+  "real_network_execution":"none",
+  "real_user_files_read":false,
+  "limitations":[
+    "Typed projections and opaque vtable/context identities are not native memory or ABI overlays",
+    "02a000 event/thread startup,04b0bc allocator,04b0f8 deallocator,028240 exceptions and scalar deleting destructor remain required providers",
+    "Null function is an observed02a000 call argument; downstream native null dereference is not normal successful worker startup",
+    "Native exception/SEH/unwind, allocation-failure cleanup, registry teardown and resource ownership remain unproven",
+    "Native dispatcher/executor,DLL entry/export ABI and full original DLL equivalence remain unproven",
+    "Only one original normal procedure counted; adapters and typed compositions add zero originals"
+  ]
+}

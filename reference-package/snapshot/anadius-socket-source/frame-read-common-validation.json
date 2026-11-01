@@ -1,0 +1,41 @@
+{
+  "result": "PASS",
+  "tested_by": "../source-workspace/build.ps1",
+  "module_standalone_script_executed": false,
+  "build_record_sha256": "4d53d046abcdb71a32d8d72dc3852d71d3d144a7ea01dd99aed813564e9ed91b",
+  "test_results": [
+    {
+      "module": "socket_frame_read",
+      "result": "PASS",
+      "output": "PASS: 1216 socket frame read core checks; addressed025480/0280d0 normal flow, independent payload/error/ownership oracles and controlled provider/lifetime mutations",
+      "executable_sha256": "8a59d5f274d63bcf4890c6d91dad71a0ed2f6a3ce9818c8a4d3cb99feb14c21f"
+    },
+    {
+      "module": "socket_frame_read_integration",
+      "result": "PASS",
+      "output": "PASS: 315 socket frame read integration checks; actual025480/0280d0/025c40/010040/008350/021d10/021a40 source loop, synthetic thread and controlled completion/environment adapters",
+      "executable_sha256": "744a5146c73d29710706c85dfabc910c30ea66bc2e2032fa093b4ab04ff85b81"
+    }
+  ],
+  "core_checks": 1216,
+  "integration_checks": 315,
+  "original_procedures_added": 2,
+  "execution_scope": "025480/0280d0 normal bodies; actual R3/R1/R2/021a40 frame loop; synthetic thread and controlled environment/completion consumption adapters",
+  "not_executed_by_new_tests": [
+    "027710",
+    "023dd0",
+    "borrowed/owned scheduling",
+    "027c10/outer worker"
+  ],
+  "core_callee_injection": "Explicit isolated test parameter only; recovered frame bridge calls actual defaults",
+  "previous_local_records": "23 earlier records retain historical configuration hashes and exact bytes; current common build authoritative",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged and paused",
+  "native_equivalence": "not established",
+  "normal_source_procedures_added": [
+    "0x180025480",
+    "0x1800280d0"
+  ],
+  "independent_review_complete": false
+}

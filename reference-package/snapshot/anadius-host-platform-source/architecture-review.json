@@ -1,0 +1,81 @@
+{
+  "schema": "source-composition.architecture-review.v1",
+  "result": "PASS",
+  "independent_from_production_author": true,
+  "reviewer": "/root/b14_host_audit",
+  "review_mode": "independent",
+  "reviewed_source_hashes": {
+    "platform.hpp": "cb7e7bc72b71cc5a62e47bd49aa218ab4b6b57936b1c6d18ba09817204a002b8",
+    "platform.cpp": "ab2108b42aba68effcc6e37ab2887a662eed7f06d4110d95483cfd7634ea2b8e",
+    "platform_tests.cpp": "f1fccaf0144d5facc870a1f4b9d58a4d323264d65c8ae736d6507c64b3b5d4ad",
+    "platform_integration_tests.cpp": "2a536b293587c3acd1a490395f8d3ef22f7f739ac4cc7b07ae760e41a53e03af",
+    "platform_test_fixture.hpp": "c0022af0fc1041252b523260f62fd31115ebb06018997542354cb82ad71fe3a8"
+  },
+  "quick_results": [
+    {
+      "path": "work/b14-core-quick-results.json",
+      "sha256": "049237200683686829360c06cc06158e51b48616f1adae84c1554dfb82b554a7",
+      "checks": 64,
+      "execution_by": "root; independent reviewer verified all source/executable hashes, did not rerun tests"
+    },
+    {
+      "path": "work/b14-integration-quick-results.json",
+      "sha256": "1f0d8df522b13f9c572cb47eb2e8160eb1b404dae2388cae25948cba7f0251ce",
+      "checks": 184,
+      "execution_by": "root; independent reviewer verified all source/executable hashes, did not rerun tests"
+    }
+  ],
+  "findings": [
+    {
+      "id": 1,
+      "topic": "version",
+      "conclusion": "OSVERSIONINFOEXW284bytes, all field offsets, codeunit copying, full64bit mask and BOOL!=FALSE correct. Tests capture nondefault fields and BOOL0x100."
+    },
+    {
+      "id": 2,
+      "topic": "reuse",
+      "conclusion": "HostPlatform uses existing HostInitEffects only for3engine routes; HookCleanup uses existing CleanupEffects for2routes. No recursion through remaining=this; wrappers copy/move deleted."
+    },
+    {
+      "id": 3,
+      "topic": "domain",
+      "conclusion": "Observed5module/10export/19log strings map views to static terminated storage; unknown/empty domains reject before SDK/output."
+    },
+    {
+      "id": 4,
+      "topic": "originals",
+      "conclusion": "Every normal create return copies original output including failures; throwing injected outcome skips copyback as existing adapter. Source create/enable/append/cleanup failure prefixes preserved."
+    },
+    {
+      "id": 5,
+      "topic": "integer",
+      "conclusion": "00af90 observes32bit locale facet insertion. Compiler ostream<<int32 is selected; native facet/locale/EH equality not claimed."
+    },
+    {
+      "id": 6,
+      "topic": "lifetime",
+      "conclusion": "Shared Domain retains explicit engine/resolver/stream/callback lifetime. Native Context publication, moved internal originals identity and callback quiescence remain unproven."
+    },
+    {
+      "id": 7,
+      "topic": "tests",
+      "conclusion": "64core/184integration captured by root; reviewer verified5source+2EXE and770prior-source hashes, did not rerun tests. SDK/engine/resolver/join/callbacks controlled; no real hooks/native Context."
+    },
+    {
+      "id": 8,
+      "topic": "limits",
+      "conclusion": "Full Resources factory, native callbacks/concurrency/ABI/CRT/unload/PE and historical B10 independent review remain open."
+    }
+  ],
+  "limits": [
+    "Static independent review; root test execution with reviewer-verified hashes.",
+    "Controlled SDK/engine/resolver/join/callbacks; no real hook/nativeContext/moved-original identity proof.",
+    "Lifetime token is retention only.",
+    "Native ABI/concurrency/CRT/unload/PE and B10 review debt remain outstanding."
+  ],
+  "production_dll_readiness": "BLOCKED",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "original_execution": false,
+  "original_modification": false
+}

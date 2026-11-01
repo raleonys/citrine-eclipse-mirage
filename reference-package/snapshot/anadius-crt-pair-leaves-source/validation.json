@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-20T19:34:46.1412106Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-pair-leaves-source\\native_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-pair-leaves-source\\build\\pair_leaves.o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\source-workspace\\build\\anadius_core_partial.a",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-pair-leaves-source\\build\\pair_leaf_tests.exe"
+  ],
+  "tests": "PASS 140 ACRT pair leaf checks;shared heap/VCRT/argv state;owned command buffers",
+  "partial_archive_sha256": "bfb63cd7872af01d5ace853f05f264ac16d5cf12dd1615885bcd9d3a1f7e5c13",
+  "source_hashes": {
+    "pair_leaves.cpp": "db1e5d678e9756b86005ad231988cd75bda83b4bfbcd9e4bc224bab31247fe87",
+    "pair_leaves.hpp": "4c05549af135b8bb56515e56a5e9180c7fc90e9bd08f798d852aab145233019e",
+    "native_tests.cpp": "1ae3a7571080b0ad67d3dfc97052f38f8f103411a81e62f94abd69639025e7bb"
+  },
+  "recovered_bodies": 4,
+  "scope": "Four ACRT leaf callbacks normal flow/AL;shared heap/VCRT/argv states;actual existing VCRT and argv algorithms;injected bounded owned command buffers;no user commandline or target execution"
+}

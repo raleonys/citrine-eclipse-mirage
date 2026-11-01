@@ -1,0 +1,1016 @@
+{
+  "schema": "b28.message-chain-gap-audit.v1",
+  "result": "READ_ONLY_GAP_IDENTIFIED",
+  "reviewer": "/root/b22_integration",
+  "baseline": {
+    "stage": "B27",
+    "source_files": 834,
+    "production_objects": 245,
+    "normal_groups": 285,
+    "framework_terminal_scenarios": 19,
+    "native_closures": 52,
+    "archive_sha256_as_supplied_by_root": "0b51d92974dbf97f88953b5d9f4b045bb3f3920e3b16d4ab22f40e54ec4cbe3d",
+    "archive_rehashed_by_this_audit": false,
+    "common_build_result": "PASS",
+    "build_record_sha256": "340dc95ae86b1c7d729d5202ebefe111c6508ca5c88a5261080b294d1f7756b5",
+    "all834_source_hashes_match_frozen_snapshot": true
+  },
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "generic_crt": "paused",
+  "numeric0033c0": "deferred priority3 XML",
+  "bottom_line": "Message application algorithms largely exist; current production entry has no complete owned server/session assembly. The best substantive new application body is native session/shared-owner constructor023000, absent behind semantic accepted-session APIs.",
+  "not_missing_again": {
+    "message_path": [
+      "025c40",
+      "025480",
+      "0280d0",
+      "028d30",
+      "033d70",
+      "032d00",
+      "028270",
+      "02a500",
+      "0261d0",
+      "025a70"
+    ],
+    "meaning": "Actual normal source and derived final adapters already exist. Old chronological README mandatory notes do not reopen later-closed bodies.",
+    "handler_registry_entries": 39,
+    "unique_registered_handler_addresses": 33,
+    "registered_targets_without_source_mapping": [],
+    "outside_canonical_handlers": [
+      {
+        "address": "0x18002d720",
+        "definitions": [
+          {
+            "address": "0x18002d720",
+            "symbol": "chunks_installed_02d720",
+            "line": 70,
+            "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+            "artifact": "anadius64",
+            "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+            "compiled_unit": true,
+            "compiled_symbol_candidates": [
+              {
+                "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+                "symbol": "anadius::misc_handlers_recovered::chunks_installed_02d720(unsigned long long, anadius::handlers_recovered::Xml&, anadius::misc_handlers_recovered::Elements&)",
+                "kind": "T"
+              }
+            ],
+            "mapping_basis": "address_suffix_on_function_definition",
+            "tagged_calls": [
+              "0x180003300",
+              "0x180003860",
+              "0x180003fe0",
+              "0x180004080",
+              "0x180005560",
+              "0x1800056b0"
+            ]
+          }
+        ],
+        "interpretation": "Existing independently disassembled source outside canonical2076 denominator; no new REA function Evidence or count addition"
+      },
+      {
+        "address": "0x1800314a0",
+        "definitions": [
+          {
+            "address": "0x1800314a0",
+            "symbol": "query_friends_0314a0",
+            "line": 83,
+            "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+            "artifact": "anadius64",
+            "sha256": "8108412419e682499c01c6c07e39f4c7124a2594ff2c2dd14369f8429e45f151",
+            "compiled_unit": true,
+            "compiled_symbol_candidates": [
+              {
+                "file": "anadius-misc-handlers-source/misc_handlers.cpp",
+                "symbol": "anadius::misc_handlers_recovered::query_friends_0314a0(anadius::handlers_recovered::Xml&)",
+                "kind": "T"
+              }
+            ],
+            "mapping_basis": "address_suffix_on_function_definition",
+            "tagged_calls": []
+          }
+        ],
+        "interpretation": "Existing independently disassembled source outside canonical2076 denominator; no new REA function Evidence or count addition"
+      }
+    ],
+    "compatibility_components": [
+      "session_bridge::MessageHandler",
+      "dispatch_recovered::Router",
+      "xml_reader_bridge::Backend",
+      "socket_recovered::SessionCipher/Factory"
+    ],
+    "not_equivalent_to_native_abi": "Semantic Session and pinned tinyxml reader are real production source alternatives, but do not close native allocation/sharedptr/parser/static-registry ABI."
+  },
+  "gaps": [
+    {
+      "kind": "missing_application_body",
+      "address": "0x180023000",
+      "scope": "Allocation + accepted socket move + input/deque/cipher + weak-self ownership. Existing semantic Session constructor only resets handler."
+    },
+    {
+      "kind": "partial_application_body",
+      "address": "0x180025720",
+      "scope": "Existing semantic success greeting/read/error/rearm body; native023000 creation, temporary cipher copy, exact greeting-string/free and shared-control cleanup not represented by receiving a caller-prepared Session pointer."
+    },
+    {
+      "kind": "missing_accept_source",
+      "addresses": [
+        "0x180021b00",
+        "0x1800271a0"
+      ],
+      "scope": "Async accept initiation and completion have no normal source definitions; existing WSARecv/WSASend chains do not supply an accepted connection."
+    },
+    {
+      "kind": "missing_production_assembly",
+      "scope": "Resources.server remains mandatory abstract ServerBackend; AddressBackend/AcceptorBackend and SynchronousTransport are partial. No production complete Scheduling/Transport/ServerBackend joins kernel acceptance, shared session owner, worker, router, and response pipeline. Server implementations in B3/B4/B15 fixtures are test-only."
+    },
+    {
+      "kind": "native_dispatch_parser_provider_gap",
+      "scope": "prepare_registry/find_exact/native DOM/printer interfaces and generic parse_other_virtual remain mandatory. Semantic Router + actual compatibility reader already work; rebuilding them as another small wrapper is not a new app algorithm. Numeric0033c0 remains deferred."
+    }
+  ],
+  "selected_next_concrete_candidate": {
+    "address": "0x180023000",
+    "title": "Native accepted-session/shared-owner constructor normal body",
+    "classification": "Genuinely absent application ownership/state-construction algorithm; not another wrapper around an existing normal body",
+    "why_selected": "No source definition or compiled-symbol correlation; constructor creates the exact owner fields used by existing receive/message/response source. Priority1, independent of generic CRT recovery.",
+    "evidence": {
+      "pseudo": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "assembly": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575"
+    },
+    "retained_instruction_facts": [
+      {
+        "range": "0x18002301b..0x180023054",
+        "fact": "allocate0x1c8; initialize strong+8/weak+c to1 and store retained control-vtable identity0x180084750"
+      },
+      {
+        "range": "0x180023057..0x180023086",
+        "fact": "owned session object=block+0x10; two023d20 socket moves via temporary; zero embedded weak object/control"
+      },
+      {
+        "range": "0x18002308f..0x1800230d8",
+        "fact": "initialize input string at owner+a8 with capacity15; deque/proxy at owner+c8 with independent0x10 allocation"
+      },
+      {
+        "range": "0x1800230db..0x1800230eb",
+        "fact": "reset actual handler at owner+f0 using existing02bc70; destroy moved temporary socket via existing024db0"
+      },
+      {
+        "range": "0x1800230f5..0x180023188",
+        "fact": "publish result(object,control), establish weak self-owner only when existing weak control absent/expired; exact32bit atomic strong/weak increments/decrements and live virtual disposal/delete"
+      }
+    ],
+    "dependencies": [
+      {
+        "address": "0x180023d20",
+        "status": "No normal source definition. Recover socket-move algorithm alongside selected body or keep precise mandatory effect; do not fake it."
+      },
+      {
+        "address": "0x180024db0",
+        "status": "Existing lifecycle.cpp normal socket destruction body; reuse source."
+      },
+      {
+        "address": "0x18002bc70",
+        "status": "Existing reset/cipher source; reuse SAME session cipher state."
+      },
+      {
+        "address": "0x18004b0bc",
+        "status": "Allocation is explicit lower contract; no claim original allocator/CRT ABI recovered."
+      }
+    ],
+    "expected_exit": "Addressed023000 normal source plus independent retained assembly review; synthetic allocated block/owner identity, socket move/destruction, fresh input/deque, actual cipher reset, weak-self refcount ordering and failure-prefix checks. Preserve existing native receive/message/response code; no full DLL/native ABI claim."
+  },
+  "following_work": [
+    "Native025720 ownership/greeting/release integration with023000",
+    "Native021b00+0271a0 acceptance source",
+    "Owned production ServerBackend/Transport/Scheduling assembly reusing existing read/message/router/response source"
+  ],
+  "rejected_next_small_step": {
+    "address": "0x1800270e0",
+    "reason": "Unmapped thin do_accept wrapper calls021b00. Recovering it alone does not make sessions or close acceptance; do not prefer it over023000."
+  },
+  "functions": [
+    {
+      "address": "0x180023000",
+      "source_presence": "module_record_only",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_1cbac20a9d856e56adbd7a8a140ddc1dc8071cc859ea7bc052cd5ba9b24a722f",
+      "assembly_evidence": "ev_2c0f5d78836aff0cdce58b5618135e67ae13fbb3dff7606435c88f2a6b37d575",
+      "definitions": [],
+      "direct_native_targets": [
+        "0x180023d20",
+        "0x180024db0",
+        "0x18002bc70",
+        "0x18004b0bc"
+      ]
+    },
+    {
+      "address": "0x180023d20",
+      "source_presence": "no_definition_mapping",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_6cc121a29050e5e059f62f9f48170fa0366704c46376ab9043b965b45f7da214",
+      "assembly_evidence": "ev_6635266dde9dfb6632465ffcfddef88dc684468dc2261cecc5081598c9f31c93",
+      "definitions": [],
+      "direct_native_targets": [
+        "0x180028950"
+      ]
+    },
+    {
+      "address": "0x180025720",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_3e78124546b5e0a51f195c1b0be03ae62d45ef4336e5cbc3f29792ddf071ce39",
+      "assembly_evidence": "ev_dd2e4ac31861fc8ef574bca994412618157ab792cafb2381c051fec67b48caaa",
+      "definitions": [
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 60,
+          "symbol": "Session::start_025720"
+        },
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 134,
+          "symbol": "accept_completion_025720"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180006880",
+        "0x180007990",
+        "0x18000e1e0",
+        "0x18000fe90",
+        "0x18001e510",
+        "0x180023000",
+        "0x1800270e0",
+        "0x1800280d0",
+        "0x180028240",
+        "0x18002a200",
+        "0x18002bc70",
+        "0x18002d540",
+        "0x18004b0f8",
+        "0x18004b220",
+        "0x18005c974"
+      ]
+    },
+    {
+      "address": "0x1800270e0",
+      "source_presence": "no_definition_mapping",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_21eb9ae0b32f1f5ae22d1de13650c6541b60242f69f8b4ba3920aab1c162b1b4",
+      "assembly_evidence": "ev_7c297e7649382584bfeea23d03522ec0b534b3dd9e8bed7a47b591d22d6fe64c",
+      "definitions": [],
+      "direct_native_targets": [
+        "0x180021b00"
+      ]
+    },
+    {
+      "address": "0x180021b00",
+      "source_presence": "no_definition_mapping",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_a149b71384626f27cb42ef4a0d78bd5f24f458b6ae8a30390ee1056ed43a8672",
+      "assembly_evidence": "ev_3e1adf0b22ddd69df648bc167a468ae3dc0439774ffee7a880c1b01662fb16f7",
+      "definitions": [],
+      "direct_native_targets": [
+        "0x180023dd0",
+        "0x1800269b0",
+        "0x180028ab0",
+        "0x180028b50",
+        "0x180028c00",
+        "0x180029590",
+        "0x180029df0",
+        "0x18004c2a0"
+      ]
+    },
+    {
+      "address": "0x1800271a0",
+      "source_presence": "no_definition_mapping",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_e0843c9e600cc82f01f59ed34fef7543a3e0905c4dab527560f57ec519bad916",
+      "assembly_evidence": "ev_e1f30bf5f3acc0ca59cfd163294f54e6ec1708b6eed7dae23fff37f0ee710b44",
+      "definitions": [],
+      "direct_native_targets": [
+        "0x180021900",
+        "0x180021a10",
+        "0x1800237f0",
+        "0x180023cb0",
+        "0x180025310",
+        "0x180026a00",
+        "0x1800285b0",
+        "0x180028620",
+        "0x180029660",
+        "0x18004b220",
+        "0x18004c2a6",
+        "0x180078d30"
+      ]
+    },
+    {
+      "address": "0x1800241b0",
+      "source_presence": "no_definition_mapping",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_f7dd21179750676ba53ca15a1df66f0629ecafbaddbf245e0871d9c4aca2c37c",
+      "assembly_evidence": "ev_b51f77f5cbe1a0feaa8acbe165b2e0067b35c825c8257c0bc5844a4f571e7aaf",
+      "definitions": [],
+      "direct_native_targets": [
+        "0x180022fd0",
+        "0x180023900",
+        "0x180023960",
+        "0x180023f30",
+        "0x180024160",
+        "0x180024860",
+        "0x180024990",
+        "0x180027be0",
+        "0x180028240",
+        "0x180028620",
+        "0x18004b0bc",
+        "0x18004d2d0"
+      ]
+    },
+    {
+      "address": "0x180024db0",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3",
+      "assembly_evidence": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357",
+      "definitions": [
+        {
+          "file": "anadius-socket-source/lifecycle.cpp",
+          "line": 59,
+          "symbol": "destroy_024db0"
+        },
+        {
+          "file": "anadius-socket-source/lifecycle.cpp",
+          "line": 80,
+          "symbol": "LifecycleRuntime::destroy_socket_024db0"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180026fb0"
+      ]
+    },
+    {
+      "address": "0x1800298b0",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_e6bbbaa1780b6df4e1edc25150c1c8a939c0d5fb937afed734d4f8c641d88539",
+      "assembly_evidence": "ev_4b20e2442cb7d601c8177ba4b68acc8c09a8cce81580892199e78a5d0f00c319",
+      "definitions": [
+        {
+          "file": "anadius-socket-source/worker_run.cpp",
+          "line": 13,
+          "symbol": "run_worker_0298b0"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180027c10",
+        "0x18002a190",
+        "0x18004a240",
+        "0x18004a2cc",
+        "0x18004b788"
+      ]
+    },
+    {
+      "address": "0x180025c40",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_987f9b5735e7f43bac4690a5614f3bbd07f7463da6bc2081c7fff428c7a9fce8",
+      "assembly_evidence": "ev_92dfa0f4b810ad3afcfb9df2b941fd14b2290a6abc953cfaa54c553b58d910e9",
+      "definitions": [
+        {
+          "file": "anadius-socket-source/composed_read.cpp",
+          "line": 52,
+          "symbol": "composed_receive_025c40"
+        },
+        {
+          "file": "anadius-socket-source/composed_read.cpp",
+          "line": 107,
+          "symbol": "RecoveredComposedReadEffects::receive_body_025c40"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180010040",
+        "0x180021d10",
+        "0x180023930",
+        "0x180024390",
+        "0x180025480",
+        "0x1800285b0"
+      ]
+    },
+    {
+      "address": "0x180025480",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_d3aaf411d3595e43ae2c3c1c8309ed42f85a4434602216330b5e2c58aa788a3b",
+      "assembly_evidence": "ev_17a121443001ec46ed018ca1fad07bc2cfd74c2e067c1f3ccf0bb7bd84b95c31",
+      "definitions": [
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 92,
+          "symbol": "Session::frame_completed_025480"
+        },
+        {
+          "file": "anadius-socket-source/frame_read.cpp",
+          "line": 75,
+          "symbol": "finish_frame_read_025480"
+        },
+        {
+          "file": "anadius-socket-source/frame_read.cpp",
+          "line": 118,
+          "symbol": "RecoveredFrameReadApi::finish_frame_025480"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180006880",
+        "0x180006b30",
+        "0x180007990",
+        "0x18000e1e0",
+        "0x18000fe90",
+        "0x18001e510",
+        "0x1800280d0",
+        "0x1800285b0",
+        "0x18004a458",
+        "0x18004a648",
+        "0x18004b0bc",
+        "0x18004b0f8",
+        "0x18004b220",
+        "0x18005c974",
+        "0x18005e8e0",
+        "0x180078d30"
+      ]
+    },
+    {
+      "address": "0x1800280d0",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_dcc519a12be00908ae90c988173ae9147418f1eb4771d95b34d3148914b0d9a2",
+      "assembly_evidence": "ev_36d45e7ea060ccb9497a038a4fa3e7d55641d30c79a68da3da5ae7ff42e69c99",
+      "definitions": [
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 73,
+          "symbol": "Session::do_read_0280d0"
+        },
+        {
+          "file": "anadius-socket-source/frame_read.cpp",
+          "line": 50,
+          "symbol": "start_frame_read_0280d0"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180025c40",
+        "0x180026860"
+      ]
+    },
+    {
+      "address": "0x180028d30",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_0d8a8e35ac896b7bc4add247df507ee04b3056848c23b97a02d0e5360511e67a",
+      "assembly_evidence": "ev_65681baf7e383e89ff3fa9f7f1032ce0865024b0d48e0ad7b76997e04088bc66",
+      "definitions": [
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 103,
+          "symbol": "Session::process_message_028d30"
+        },
+        {
+          "file": "anadius-socket-source/message_dispatch.cpp",
+          "line": 47,
+          "symbol": "dispatch_message_028d30"
+        }
+      ],
+      "direct_native_targets": [
+        "0x18000aa50",
+        "0x180021420",
+        "0x180026860",
+        "0x180033d70",
+        "0x18004b0f8",
+        "0x18004b220",
+        "0x18005c974"
+      ]
+    },
+    {
+      "address": "0x180033d70",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_7a38e9dc5496630753954e74801f942d9111225ca95c1c603a4ae22b88f504df",
+      "assembly_evidence": "ev_971ebfa9e879b1b543e464bfc367047eed787a968cfaef065ce973d0b4f34bd6",
+      "definitions": [
+        {
+          "file": "anadius-messages-source/messages.cpp",
+          "line": 111,
+          "symbol": "process_message_033d70"
+        },
+        {
+          "file": "anadius-session-source/handler.cpp",
+          "line": 10,
+          "symbol": "MessageHandler::process_message_033d70"
+        },
+        {
+          "file": "anadius-socket-source/message_core_bridge.cpp",
+          "line": 39,
+          "symbol": "CompatibleMessageCoreApi::process_message_033d70"
+        },
+        {
+          "file": "anadius-socket-source/native_message.cpp",
+          "line": 42,
+          "symbol": "process_native_message_033d70"
+        },
+        {
+          "file": "anadius-socket-source/native_message.cpp",
+          "line": 115,
+          "symbol": "RecoveredNativeMessageApi::process_message_033d70"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180001830",
+        "0x180001e00",
+        "0x1800032d0",
+        "0x180004280",
+        "0x180006880",
+        "0x180007990",
+        "0x180007e30",
+        "0x1800088e0",
+        "0x180009eb0",
+        "0x180012350",
+        "0x18002c400",
+        "0x18002c620",
+        "0x180032d00",
+        "0x180034730",
+        "0x18003ce30",
+        "0x18003d190",
+        "0x180042480",
+        "0x180042610",
+        "0x18004a648",
+        "0x18004a6ac",
+        "0x18004a6b4",
+        "0x18004b0f8",
+        "0x18004b220",
+        "0x18005c974",
+        "0x180078d30",
+        "0x180079850"
+      ]
+    },
+    {
+      "address": "0x180032d00",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_4657037962313465cce62f6579fa74838943f7f547b0d739a8b152611c24c36b",
+      "assembly_evidence": "ev_94c6661b424caa94ba28f70ebfbf7ee51eb890c653d2f2f1f6384efa2d1b7224",
+      "definitions": [
+        {
+          "file": "anadius-messages-source/messages.cpp",
+          "line": 10,
+          "symbol": "registrations_032d00"
+        },
+        {
+          "file": "anadius-messages-source/messages.cpp",
+          "line": 84,
+          "symbol": "dispatch_032d00"
+        },
+        {
+          "file": "anadius-socket-source/native_dispatch.cpp",
+          "line": 13,
+          "symbol": "dispatch_native_032d00"
+        },
+        {
+          "file": "anadius-socket-source/native_dispatch.cpp",
+          "line": 59,
+          "symbol": "RecoveredMessageDispatchApi::dispatch_032d00"
+        }
+      ],
+      "direct_native_targets": [
+        "0x1800019b0",
+        "0x180001f60",
+        "0x180002cc0",
+        "0x180002f20",
+        "0x180003300",
+        "0x180003fe0",
+        "0x180004080",
+        "0x180005560",
+        "0x180006260",
+        "0x180006b30",
+        "0x1800071d0",
+        "0x180009eb0",
+        "0x180009fd0",
+        "0x18000b2b0",
+        "0x18000b520",
+        "0x18000c220",
+        "0x18000cdf0",
+        "0x180018b30",
+        "0x18002b300",
+        "0x18002b600",
+        "0x18002bd30",
+        "0x18002c2d0",
+        "0x18002d7e0",
+        "0x18004b0bc",
+        "0x18004b0f8",
+        "0x18004b220",
+        "0x18004b770",
+        "0x18004b7cc",
+        "0x18004b838",
+        "0x18004b910",
+        "0x18004d228",
+        "0x18005c974",
+        "0x18005ecf0"
+      ]
+    },
+    {
+      "address": "0x180028270",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_f01c15c5ec6846574a424ff84a94d532bd1a1c4a9f781ad08433a5f12e0f868f",
+      "assembly_evidence": "ev_8a9098273f1cf3fed4bf7cd29a29a081bfa18c0706bf118f25c7907784a35bd5",
+      "definitions": [
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 108,
+          "symbol": "Session::do_write_028270"
+        },
+        {
+          "file": "anadius-socket-source/response_dispatch.cpp",
+          "line": 104,
+          "symbol": "enqueue_response_028270"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180026670",
+        "0x18002a500",
+        "0x18004b0bc",
+        "0x18004b0f8",
+        "0x18004b220",
+        "0x18005c974"
+      ]
+    },
+    {
+      "address": "0x18002a500",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_74e713f6d63b5db2c8594c89965baf991c280377ff6f5607819938f99daa863f",
+      "assembly_evidence": "ev_7b4a354660d536700feb53ad52ca0a2f961ca2042dbeb3a635143135bd1fe188",
+      "definitions": [
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 112,
+          "symbol": "Session::write_loop_02a500"
+        },
+        {
+          "file": "anadius-socket-source/queued_write.cpp",
+          "line": 32,
+          "symbol": "start_queued_write_02a500"
+        },
+        {
+          "file": "anadius-socket-source/queued_write.cpp",
+          "line": 72,
+          "symbol": "RecoveredQueuedWriteApi::next_write_02a500"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180021fd0",
+        "0x180026860"
+      ]
+    },
+    {
+      "address": "0x1800261d0",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_45b2f55e8f0ef15562ee5d5978c239a8bd7dbe150a53979f20633e3f28880e61",
+      "assembly_evidence": "ev_5500451b02e60551ba95436e9c19673671b10b219573052f2e88f4d15d4a4e75",
+      "definitions": [
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 123,
+          "symbol": "Session::send_completed_0261d0"
+        },
+        {
+          "file": "anadius-socket-source/composed_write.cpp",
+          "line": 103,
+          "symbol": "composed_write_0261d0"
+        },
+        {
+          "file": "anadius-socket-source/composed_write.cpp",
+          "line": 123,
+          "symbol": "RecoveredComposedWriteEffects::send_body_0261d0"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180021fd0",
+        "0x180025a70"
+      ]
+    },
+    {
+      "address": "0x180025a70",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_f7448c3646f8693c49a161e2449f559db548111bdf4c3a9cacfa5295f5e963b8",
+      "assembly_evidence": "ev_55d30b85e7b6ed50c63ac8a363324c343cf0045dfef90f8fc377ed5e9e01b4d7",
+      "definitions": [
+        {
+          "file": "anadius-server-source/server.cpp",
+          "line": 129,
+          "symbol": "Session::write_completed_025a70"
+        },
+        {
+          "file": "anadius-socket-source/write_finish.cpp",
+          "line": 57,
+          "symbol": "finish_write_025a70"
+        },
+        {
+          "file": "anadius-socket-source/write_finish.cpp",
+          "line": 91,
+          "symbol": "RecoveredFinishedWriteEffects::finish_write_025a70"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180006880",
+        "0x180007990",
+        "0x18000e1e0",
+        "0x18000fe90",
+        "0x18001e510",
+        "0x1800285b0",
+        "0x18002a500",
+        "0x18004b0f8",
+        "0x18004b220",
+        "0x18005c974"
+      ]
+    },
+    {
+      "address": "0x1800033c0",
+      "source_presence": "module_record_only",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_7211c09f4e3acada2bf0a092a4d0b4db261a922633cd960791de3ac1b75d3e93",
+      "assembly_evidence": "ev_6e7800e9effc9462e86aa57c8979765dab860606e1cbea5663041f63cbc1a54e",
+      "definitions": [],
+      "direct_native_targets": [
+        "0x18004c434"
+      ]
+    },
+    {
+      "address": "0x180004970",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_01d06f0d09c426e84edfc80412a5b90481296b9b16734298cadd2cf8fceab53d",
+      "assembly_evidence": "ev_bab15aa72d1d1d2cb34f0a417872877e60c9e43b5b9530ac83290c1bbc58da0a",
+      "definitions": [
+        {
+          "file": "anadius-socket-source/node_parse.cpp",
+          "line": 62,
+          "symbol": "parse_node_004970"
+        }
+      ],
+      "direct_native_targets": [
+        "0x1800035e0",
+        "0x1800038b0",
+        "0x180003aa0",
+        "0x180005820",
+        "0x18004b0f8",
+        "0x18005c550"
+      ]
+    },
+    {
+      "address": "0x1800038b0",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_16c4bf124a34657d7d2d217f79a017802a074ddf7e1c559929f47750b79fdee5",
+      "assembly_evidence": "ev_e46dfd93352ef14c6e16936e419152588cc3aae4c071f99fdc01fe8f8145aae9",
+      "definitions": [
+        {
+          "file": "anadius-socket-source/node_identify.cpp",
+          "line": 15,
+          "symbol": "identify_node_0038b0"
+        },
+        {
+          "file": "anadius-socket-source/node_identify.cpp",
+          "line": 55,
+          "symbol": "RecoveredNodeIdentifyEffects::identify_0038b0"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180001590",
+        "0x180001610",
+        "0x180001690",
+        "0x180001720",
+        "0x1800017b0",
+        "0x180051fc0",
+        "0x18005c550"
+      ]
+    },
+    {
+      "address": "0x1800035e0",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": true,
+      "pseudo_evidence": "ev_5e71fdafa86c9cb6c66ad0d57972845920ad9cc67d23951b21164d5b586a0c01",
+      "assembly_evidence": "ev_704e716e4fcf7eead3762f34f5b8e311ff9f14a674ad542b9c79429b3efad5e0",
+      "definitions": [
+        {
+          "file": "anadius-socket-source/node_string.cpp",
+          "line": 18,
+          "symbol": "materialize_node_string_0035e0"
+        },
+        {
+          "file": "anadius-socket-source/node_string.cpp",
+          "line": 100,
+          "symbol": "RecoveredNodeStringEffects::materialize_0035e0"
+        }
+      ],
+      "direct_native_targets": [
+        "0x1800033c0",
+        "0x18004b220",
+        "0x180051fc0",
+        "0x18005c550",
+        "0x180078d30"
+      ]
+    },
+    {
+      "address": "0x180034cf0",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_4fab18fcac92110149151ce89486bab8893108a4acf7a067b91e53c13866d114",
+      "assembly_evidence": "ev_947f1c2ad1513d2c702331b9501becbbeebeda26329fb754161419aae3efb063",
+      "definitions": [
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "line": 98,
+          "symbol": "Random::challenge_bytes_034cf0"
+        },
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "line": 102,
+          "symbol": "Random::challenge_hex_034cf0"
+        }
+      ],
+      "direct_native_targets": [
+        "0x180012350",
+        "0x18002b300",
+        "0x18003d190",
+        "0x180045050",
+        "0x180045070",
+        "0x18004b0bc",
+        "0x18005eeb8"
+      ]
+    },
+    {
+      "address": "0x180034c30",
+      "source_presence": "source_definition_mapped",
+      "normal_body_stage_claim": false,
+      "pseudo_evidence": "ev_5f20ce94b6a641740f78ab38c80064dc65fea9e0d9c897af06b24bef8f8b2d0b",
+      "assembly_evidence": "ev_a2d44de76b1f36d43c69a61a37f8be0041e16d5cc858db07d098194391164ab0",
+      "definitions": [
+        {
+          "file": "anadius-crypto-source/crypto.cpp",
+          "line": 107,
+          "symbol": "Random::key_from_response_034c30"
+        }
+      ],
+      "direct_native_targets": [
+        "0x1800349a0",
+        "0x180034af0",
+        "0x180045050",
+        "0x180045060",
+        "0x180045070"
+      ]
+    }
+  ],
+  "source_references": {
+    "required_server_resource": {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.hpp",
+      "line": 56,
+      "sha256": "d60af87a481bc8bc4f40a770808dab6f0c31cb2f7ae9a7e6bd10fb43ad8530d4",
+      "text": "std::unique_ptr<server_recovered::ServerBackend> server;"
+    },
+    "source_server_worker": {
+      "path": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+      "line": 103,
+      "sha256": "b8339ee3bf5a6a1256f2b1301494278345fc0bc24bccb20c7ab5980228c52153",
+      "text": "server_recovered::server_start_029ea0(*v.resources.server,v.config->server_port,v.state.server_ready,v.execution);}"
+    },
+    "server_backend_abstract": {
+      "path": "outputs/anadius-server-source/server.hpp",
+      "line": 31,
+      "sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+      "text": "struct ServerBackend {"
+    },
+    "transport_abstract": {
+      "path": "outputs/anadius-server-source/server.hpp",
+      "line": 61,
+      "sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+      "text": "struct Transport {"
+    },
+    "scheduling_abstract": {
+      "path": "outputs/anadius-server-source/server.hpp",
+      "line": 69,
+      "sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+      "text": "struct Scheduling {"
+    },
+    "session_only_first_reset": {
+      "path": "outputs/anadius-server-source/server.hpp",
+      "line": 86,
+      "sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+      "text": ": transport_(transport), scheduling_(scheduling), handler_(handler) {handler_.reset_02bc70();}"
+    },
+    "session_constructor_gap": {
+      "path": "outputs/anadius-server-source/server.hpp",
+      "line": 114,
+      "sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e",
+      "text": "// Allocation/socket-move/shared ownership portion of023000 remains a boundary:"
+    },
+    "accept_requires_prepared_session": {
+      "path": "outputs/anadius-server-source/server.cpp",
+      "line": 134,
+      "sha256": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0",
+      "text": "void accept_completion_025720(Error error, Session* session, ServerBackend& server, Scheduling& scheduling) {"
+    },
+    "partial_acceptor": {
+      "path": "outputs/anadius-socket-source/acceptor.hpp",
+      "line": 48,
+      "sha256": "5af3de320da0a50671145c13f95046b787af53a29745d8a4ab84a0d941782c1b",
+      "text": "class AcceptorBackend:public AddressBackend {"
+    },
+    "partial_transport": {
+      "path": "outputs/anadius-socket-source/operations.hpp",
+      "line": 54,
+      "sha256": "a3b2c6b21d6a2d7b19f9f3245d08d5a450caa2bc8b95285fc19c9c94bdb833e2",
+      "text": "class SynchronousTransport:public server_recovered::Transport {"
+    },
+    "semantic_message_handler": {
+      "path": "outputs/anadius-session-source/handler.cpp",
+      "line": 10,
+      "sha256": "2584e87dc37426924a2f3e07ff7388744b0d2bf5b875aaaa7e6369e51584cd42",
+      "text": "std::string MessageHandler::process_message_033d70(std::string_view input) {"
+    },
+    "semantic_router": {
+      "path": "outputs/anadius-dispatch-source/router.cpp",
+      "line": 46,
+      "sha256": "64fbd0a5403f624f1d204617fb3eb80e188d27b86de74418d02b56d916f73801",
+      "text": "bool Router::registered_handler(std::uint32_t rva,const Node& request,messages_recovered::XmlPrinter& abstract_printer) {"
+    },
+    "real_compatibility_reader": {
+      "path": "outputs/anadius-xml-reader-source/reader.hpp",
+      "line": 8,
+      "sha256": "f73003ab563784f7dbc51db9bf853b28f08c80f2cc398a67c49145a3a7bd118e",
+      "text": "class Backend final:public messages_recovered::XmlBackend,"
+    },
+    "actual_composed_receive": {
+      "path": "outputs/anadius-socket-source/composed_read.cpp",
+      "line": 52,
+      "sha256": "9e6ab5c28329fe1b867f4c4c683194ca852f1c5d813f22274210d65a7f9f0037",
+      "text": "void composed_receive_025c40(ReceiveHandler& h,const Error& incoming,std::uint64_t bytes,std::uint32_t flag,"
+    },
+    "actual_frame_complete": {
+      "path": "outputs/anadius-socket-source/frame_read.cpp",
+      "line": 75,
+      "sha256": "18eba441ded72416a66a10215cc69d7514dca3a272b02ae629d094fc1f934fba",
+      "text": "void finish_frame_read_025480(ReceiveHandler& handler,Error& error,std::uint64_t matched,"
+    },
+    "actual_native_message": {
+      "path": "outputs/anadius-socket-source/native_message.cpp",
+      "line": 42,
+      "sha256": "9eee841d20d7a2179ee01d57612e02f31df1ac0d890869eaccdfc71988d9cf77",
+      "text": "ReceiveBufferString& process_native_message_033d70(std::uintptr_t identity,ReceiveBufferString& output,"
+    },
+    "actual_native_dispatch": {
+      "path": "outputs/anadius-socket-source/native_dispatch.cpp",
+      "line": 13,
+      "sha256": "ce30dffc3a112b6f96215ee1523c601641a648dbf524699cdb922c461602b63b",
+      "text": "ReceiveBufferString& dispatch_native_032d00(ReceiveBufferString& output,std::uintptr_t handler,"
+    },
+    "native_registry_gap": {
+      "path": "outputs/anadius-socket-source/native_dispatch.hpp",
+      "line": 13,
+      "sha256": "0735d8cfc1262b5cf15bb7f3d78098fc18c996bd2a22591bf6dd03392cf3c440",
+      "text": "virtual void prepare_registry(std::span<const messages_recovered::Registration>)=0;"
+    },
+    "native_other_parser_gap": {
+      "path": "outputs/anadius-socket-source/node_parse.hpp",
+      "line": 55,
+      "sha256": "a688d681d9e74e7b715195b46de6b5e70b9724a8625336c1fc913334e22f5a8a",
+      "text": "virtual std::uintptr_t parse_other_virtual(std::uintptr_t target,std::uintptr_t node,"
+    },
+    "test_only_registry": {
+      "path": "outputs/anadius-socket-source/native_dispatch_test_fixture.hpp",
+      "line": 41,
+      "sha256": "a7ca9a188a081f3cbd0cc3b2a4de57cc67d5cbcf14a122397e284a30b10a54ef",
+      "text": "void prepare_registry(std::span<const m::Registration> registrations)override{++prepared;event(\"registry\");check(registrations.size()==entries.size(),\"exact39 registration table\");for(std::size_t i=0;i<entries.size();++i)entries[i].handler_rva=registrations[i].rva;}"
+    },
+    "test_only_source_server": {
+      "path": "outputs/anadius-bootstrap-runtime-source/runtime_test_fixture.hpp",
+      "line": 23,
+      "sha256": "9fc4620b63f271804202d58fd4d42c34bfa1ea0733ff404d9f8931255a634093",
+      "text": "struct Server final:server_recovered::ServerBackend {"
+    }
+  },
+  "limits": {
+    "new_native_analysis": false,
+    "new_original_bytes_read": 0,
+    "target_execution": false,
+    "original_modification": false,
+    "production_or_test_edits": false,
+    "actual_user_data_read": false,
+    "new_native_bodies": 0,
+    "new_native_closures": 0
+  }
+}

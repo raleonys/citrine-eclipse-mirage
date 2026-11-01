@@ -1,0 +1,56 @@
+{
+  "schema": "source-composition.common-validation.v1",
+  "result": "PASS",
+  "source_package": "B4",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "44e8b2e30151c04715fbd9945342e8f6918065492147f2d812da32bda1fea5c3",
+  "test_results": [
+    {
+      "module": "bootstrap_callbacks",
+      "result": "PASS",
+      "output": "PASS: 96 bootstrap-runtime callback checks; permanent CRT thunks,LIFO foreign interleave,cancellable leases,manual drain retry,terminate ownership and all Services forwarding; originals never executed",
+      "executable_sha256": "9a3e31b004e7fbe7656222264f740e6262830c662ae1fc5c48ab4b698a0e43dd"
+    },
+    {
+      "module": "bootstrap_factory",
+      "result": "PASS",
+      "output": "PASS: 265 bootstrap-runtime factory integration checks; actual B2/B3 source graph, post-join callback cleanup, stop/timeout retry, concrete adapter selection and SDK execution boundaries; lower foreign providers and PE entry remain explicit/open",
+      "executable_sha256": "bbe17788ad61ca8a3162dc26b2bd3ff0ea5f2a59d3170cc817325b465f378d00"
+    }
+  ],
+  "core_checks": 96,
+  "integration_checks": 265,
+  "new_checks": 361,
+  "production_objects": 2,
+  "new_source_files": 7,
+  "source_hashes": {
+    "callbacks.hpp": "0f15b4031dc4e71f32e52c0ef6b7061fb1ec8c9e0b2c7df424f0ee4fd72d13e4",
+    "callbacks.cpp": "9d78696ae360140c0fcb30a185671a5755532e22c2aa15e128f5b09fa5ee426c",
+    "factory.hpp": "a447a80b1f9caa32d682804207e551431b8d4308cc530c0a176df5256a31b443",
+    "factory.cpp": "e193a43bb78ecc81bcf21764a18cb30a17a424138f79a86eb0a51de97154d749",
+    "callbacks_tests.cpp": "ad6f8848d7f1879babb0ce563106ecdbed56908a060009c341fbd76bc229ca9d",
+    "factory_tests.cpp": "79150a3da073efa01bc6916b142c78531704c87b1a34452644c2d06e13abd9ad",
+    "runtime_test_fixture.hpp": "9fc4620b63f271804202d58fd4d42c34bfa1ea0733ff404d9f8931255a634093",
+    "README.md": "483882fde83c46180eadd2c6a25e9433e919f6dad131d95b164ce25e55cf0932"
+  },
+  "architecture_review_sha256": "ece2e7a6f51c5341d8bc0ab7d9c25e01c7365857445e38b27565b45d1111ba44",
+  "new_native_bodies": 0,
+  "new_native_closures": 0,
+  "new_concrete_backends": 0,
+  "new_thread_trackers": 0,
+  "new_callback_registries": 1,
+  "new_runtime_assemblies": 1,
+  "native_default_categories": 5,
+  "services_routes_bound": 8,
+  "existing_source_algorithms_routed": 7,
+  "remaining_service_policies": 9,
+  "new_virtual_provider_interfaces": 0,
+  "controlled_callback_shutdown_implemented": true,
+  "actual_provider_backend_complete": false,
+  "production_pe_entry_installed": false,
+  "module_standalone_build_executed": false,
+  "original_execution": false,
+  "original_modification": false,
+  "actual_cfg_token_achievement_contents_read": false,
+  "scope": "Concrete callback registry and source-owned Runtime assembly with five native adapter defaults; controlled stop/pause/join/exit-drain/detach sequence. Nine Services policies, mandatory actual lower providers, native concurrency/foreign ABI, image unload and PE entry remain open."
+}

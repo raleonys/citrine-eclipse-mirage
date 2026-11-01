@@ -1,0 +1,553 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "method": "Direct bounded read-only PE mapping after exact SHA check; this is not new REA Evidence",
+  "tables": [
+    {
+      "name": "acrt_initializer_pairs",
+      "va": "0x18008aa60",
+      "file_offset": 561760,
+      "bytes": 256,
+      "sha256": "d22926452d26f622350a0455a67df28c9d050fa64329f25c73ab3256f9e4a2e0",
+      "entries": [
+        {
+          "index": 0,
+          "initialize": {
+            "va": "0x180064468",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 1,
+          "initialize": {
+            "va": "0x1800644b0",
+            "symbol": "FUN_1800644b0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 2,
+          "initialize": {
+            "va": "0x180067538",
+            "symbol": "FUN_180067538",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x18006755c",
+            "symbol": "__acrt_uninitialize_winapi_thunks",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 3,
+          "initialize": {
+            "va": "0x180006500",
+            "symbol": "FUN_180006500",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x180006500",
+            "symbol": "FUN_180006500",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 4,
+          "initialize": {
+            "va": "0x1800625b0",
+            "symbol": "__acrt_initialize_locks",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x180062614",
+            "symbol": "__acrt_uninitialize_locks",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 5,
+          "initialize": {
+            "va": "0x1800704cc",
+            "symbol": "FUN_1800704cc",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x1800704e8",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 6,
+          "initialize": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x1800644f0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 7,
+          "initialize": {
+            "va": "0x180064e90",
+            "symbol": "__acrt_initialize_ptd",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x180064ecc",
+            "symbol": "__acrt_uninitialize_ptd",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 8,
+          "initialize": {
+            "va": "0x180067890",
+            "symbol": "__acrt_initialize_lowio",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x1800678cc",
+            "symbol": "__acrt_uninitialize_lowio",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 9,
+          "initialize": {
+            "va": "0x18006f9bc",
+            "symbol": "FUN_18006f9bc",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x180006500",
+            "symbol": "FUN_180006500",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 10,
+          "initialize": {
+            "va": "0x18006f5f8",
+            "symbol": "__acrt_initialize_multibyte",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 11,
+          "initialize": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x180006500",
+            "symbol": "FUN_180006500",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 12,
+          "initialize": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x180064538",
+            "symbol": "FUN_180064538",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 13,
+          "initialize": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x1800644f8",
+            "symbol": "FUN_1800644f8",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 14,
+          "initialize": {
+            "va": "0x180006500",
+            "symbol": "FUN_180006500",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x1800644a0",
+            "symbol": "FUN_1800644a0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 15,
+          "initialize": {
+            "va": "0x18006447c",
+            "symbol": "FUN_18006447c",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          },
+          "uninitialize": {
+            "va": "0x180006500",
+            "symbol": "FUN_180006500",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        }
+      ]
+    },
+    {
+      "name": "c_initializers",
+      "va": "0x18007f6d8",
+      "file_offset": 515800,
+      "bytes": 56,
+      "sha256": "fa8fcf755011b7f3ff6d08d7bce2e2dff1cb619cae6af458e26a1664aad0e576",
+      "entries": [
+        {
+          "index": 0,
+          "callback": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 1,
+          "callback": {
+            "va": "0x18004ae40",
+            "symbol": "FUN_18004ae40",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 2,
+          "callback": {
+            "va": "0x180052118",
+            "symbol": "__acrt_initialize_stdio",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 3,
+          "callback": {
+            "va": "0x18006ce38",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 4,
+          "callback": {
+            "va": "0x180077204",
+            "symbol": "FUN_180077204",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 5,
+          "callback": {
+            "va": "0x18007845c",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 6,
+          "callback": {
+            "va": "0x180078790",
+            "symbol": "__acrt_initialize_fma3",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        }
+      ]
+    },
+    {
+      "name": "cpp_initializers",
+      "va": "0x18007f5d0",
+      "file_offset": 515536,
+      "bytes": 256,
+      "sha256": "1420f7e3594b8ab4966480b8a2c11cc25678113da5d28c80969d0d8cec604721",
+      "entries": [
+        {
+          "index": 0,
+          "callback": {
+            "va": "0x0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 1,
+          "callback": {
+            "va": "0x1800013b0",
+            "symbol": "FUN_1800013b0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 2,
+          "callback": {
+            "va": "0x1800014a0",
+            "symbol": "FUN_1800014a0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 3,
+          "callback": {
+            "va": "0x180001418",
+            "symbol": "FUN_180001418",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 4,
+          "callback": {
+            "va": "0x1800013e8",
+            "symbol": "FUN_1800013e8",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 5,
+          "callback": {
+            "va": "0x180001468",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 6,
+          "callback": {
+            "va": "0x180001560",
+            "symbol": "FUN_180001560",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 7,
+          "callback": {
+            "va": "0x180001580",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 8,
+          "callback": {
+            "va": "0x1800013dc",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 9,
+          "callback": {
+            "va": "0x1800013d0",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 10,
+          "callback": {
+            "va": "0x180001000",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 11,
+          "callback": {
+            "va": "0x180001010",
+            "symbol": "FUN_180001010",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 12,
+          "callback": {
+            "va": "0x180001090",
+            "symbol": "FUN_180001090",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 13,
+          "callback": {
+            "va": "0x180001050",
+            "symbol": "FUN_180001050",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 14,
+          "callback": {
+            "va": "0x1800010d0",
+            "symbol": "FUN_1800010d0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 15,
+          "callback": {
+            "va": "0x1800012f0",
+            "symbol": "FUN_1800012f0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 16,
+          "callback": {
+            "va": "0x1800012d0",
+            "symbol": "FUN_1800012d0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 17,
+          "callback": {
+            "va": "0x180001290",
+            "symbol": "FUN_180001290",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 18,
+          "callback": {
+            "va": "0x1800012b0",
+            "symbol": "FUN_1800012b0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 19,
+          "callback": {
+            "va": "0x180001310",
+            "symbol": "FUN_180001310",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 20,
+          "callback": {
+            "va": "0x180001230",
+            "symbol": "FUN_180001230",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 21,
+          "callback": {
+            "va": "0x1800011d0",
+            "symbol": "FUN_1800011d0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 22,
+          "callback": {
+            "va": "0x180001170",
+            "symbol": "FUN_180001170",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 23,
+          "callback": {
+            "va": "0x180001160",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 24,
+          "callback": {
+            "va": "0x180001130",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 25,
+          "callback": {
+            "va": "0x180001120",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 26,
+          "callback": {
+            "va": "0x180001150",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 27,
+          "callback": {
+            "va": "0x180001140",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 28,
+          "callback": {
+            "va": "0x180001110",
+            "symbol": null,
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 29,
+          "callback": {
+            "va": "0x180001390",
+            "symbol": "FUN_180001390",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 30,
+          "callback": {
+            "va": "0x180001510",
+            "symbol": "FUN_180001510",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        },
+        {
+          "index": 31,
+          "callback": {
+            "va": "0x1800014c0",
+            "symbol": "FUN_1800014c0",
+            "binding": "Metadata identity only; must be resolved to rebuilt code before invocation"
+          }
+        }
+      ]
+    }
+  ]
+}

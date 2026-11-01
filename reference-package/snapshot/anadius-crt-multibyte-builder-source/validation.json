@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-19T02:31:38.3881355Z",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "arguments": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-multibyte-builder-source\\multibyte_builder_tests.cpp",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-multibyte-builder-source\\build\\multibyte_builder.o",
+    "-o",
+    "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\outputs\\anadius-crt-multibyte-builder-source\\build\\multibyte_builder_tests.exe"
+  ],
+  "tests": "PASS multibyte builder: 885150 checks; builtin constants + synthetic CP providers, no native API/target execution",
+  "scope": "Exact shipped builtin constants and synthetic bounded address space/system CP/native API/helper providers; no original DLL/native API execution",
+  "sources": [
+    {
+      "name": "multibyte_builder_tests.cpp",
+      "sha256": "b56b8d1e4b178ea5457a0963a337f78e0210582e38eb6a278821604f8c7a0673"
+    },
+    {
+      "name": "multibyte_builder.cpp",
+      "sha256": "8bfa8035b80634d324059b6919cd320c520ad326fa4da5fd657629c4a4f82e93"
+    },
+    {
+      "name": "multibyte_builder.hpp",
+      "sha256": "77e1586526f1cfee56a5cc145a4cb10f72bf65815889c2ca2ca58f4b4739074b"
+    }
+  ],
+  "executable_sha256": "7c082082ec6fa73b0fba4c4606843d90c77c0f3e6e775e92bc8d68ae784667d0"
+}

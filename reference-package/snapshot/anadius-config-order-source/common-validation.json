@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "config_order",
+    "result": "PASS",
+    "output": "PASS: 2185 Config2 hash/list first-copy checks",
+    "executable_sha256": "af64c2108fa4de085d27df7196598b13896260e30b41f3cff6aaa702d3b1bb98"
+  },
+  "execution_scope": "Bounded first selected Config2 copy, <=8 unique children percontainer;2185syntheticchecks;retained15procedurepairs;zero fulloriginalbodies;growth/finalsectionorderunresolved",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-config-order-source/order_tests.cpp",
+      "sha256": "b57a2d69163754478de59841496a25a14a98a9bf1586e84d8e901d4a04394f33"
+    },
+    {
+      "path": "anadius-config-order-source/order.cpp",
+      "sha256": "70af2d1c3e948d6b1d2eca3e4339d19869ee731216dae2b85258e77cf33dd719"
+    },
+    {
+      "path": "anadius-config-order-source/order.hpp",
+      "sha256": "1e9f2b46e6a1cece859dc193ecb5573df3dc4bbee94ec00490d5264cedf7345f"
+    }
+  ]
+}

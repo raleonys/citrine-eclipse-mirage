@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-10-17T13:21:30.8754338Z",
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "tests": "PASS: 135410 deterministic crypto checks (NIST vectors, padding, mutation, state, PRNG/time); target DLL/EXE not executed",
+  "target_execution": "none",
+  "runtime_equivalence": "unverified",
+  "sources": [
+    {
+      "file": "build.ps1",
+      "sha256": "888df8ffceba140a3d0a7d376134b10fcf5d930445e34a50c33f071a4bcbaaaa"
+    },
+    {
+      "file": "constant-evidence.json",
+      "sha256": "727f033307fa243254d8dad966ac437141a68353f2f608fbd8919d8689e912f6"
+    },
+    {
+      "file": "constants.hpp",
+      "sha256": "05b802de2ac78f93c1fdf8abed0ea50ef2f9b284a6a5cefef2f4188b0f4b56b2"
+    },
+    {
+      "file": "crypto_tests.cpp",
+      "sha256": "185679607d2f7fa9b1c37d0495ee4bd00b4722f435ec90513e7ff05281161fb2"
+    },
+    {
+      "file": "crypto.cpp",
+      "sha256": "cd493597464ba22c7c11557c36f033387770e0cc62d4fbbaefc1676bbfabd436"
+    },
+    {
+      "file": "crypto.hpp",
+      "sha256": "33ae57c39012534dc5b8321199e0ef2c82ac77455c17632df28a74a27ac2fa77"
+    },
+    {
+      "file": "evidence.json",
+      "sha256": "f028a45f03f32c3ca9ba9e6b9a1a47db9f5901f9ada0f9b5859e8765ed269aee"
+    },
+    {
+      "file": "README.md",
+      "sha256": "0e085c3c4b3518fead9dd091dfbafdec85d61d8623218987d85c18cd7618af50"
+    }
+  ]
+}

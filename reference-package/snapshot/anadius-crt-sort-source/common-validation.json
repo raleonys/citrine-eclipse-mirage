@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_sort",
+    "result": "PASS",
+    "output": "PASS 4831748 checks: recovered generic qsort and unsigned slot-address comparator",
+    "executable_sha256": "d81021f8d33c9a2f4a7ee75d4a14a20da6259acd50630edb2c70c726d215556b"
+  },
+  "execution_scope": "Generic normal qsort body and separately byte-proven slot-address comparator; synthetic bounded byte storage",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-sort-source/sort_tests.cpp",
+      "sha256": "c88960da38eda14d86916b968dadf0f4cfba7f5dbf08e1cf6ec503ee9abc2989"
+    },
+    {
+      "path": "anadius-crt-sort-source/sort.cpp",
+      "sha256": "18eb6b55d287677caf35b7a9e6ba07709bd5e332db71752ce0d10d3bb58d4f7a"
+    },
+    {
+      "path": "anadius-crt-sort-source/sort.hpp",
+      "sha256": "8dab826024780cd02f7f11004a123b8dba02dd0ea71c34c362cc45cdca840fb0"
+    }
+  ]
+}

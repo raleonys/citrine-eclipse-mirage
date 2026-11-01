@@ -1,0 +1,111 @@
+{
+  "scope": "Independent retained static socket lifecycle normal-flow audit",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "listing_hashes": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "address": "0x1800211b0",
+      "pseudo_evidence": "ev_0a99c668ad187f12ba22bcb5a084965bb3619bfa398a64dd105f65647c8a7c33",
+      "assembly_evidence": "ev_632ecefa1757518f06b13606a94918118593165c553357228e6939dd09997b9d"
+    },
+    {
+      "address": "0x1800237f0",
+      "pseudo_evidence": "ev_9d032f90b7525b7ede209b0cd270417daa9266d8e3a7a8c00e1c70cc49a616d6",
+      "assembly_evidence": "ev_de485f776e49d7ff2d789f8827fe4b134f48db3815f521d6d4cde097753b314c"
+    },
+    {
+      "address": "0x180024db0",
+      "pseudo_evidence": "ev_26181ed4d015f17fcc8c6e68ec415c48aa1ddc0fca6cc7e7870406406e38f9d3",
+      "assembly_evidence": "ev_8f785f4afe16ef05caf020d8ab2bbdb264eebef7c56405097cc4dfec666d8357"
+    },
+    {
+      "address": "0x180026fb0",
+      "pseudo_evidence": "ev_4ffe8b68e27a849ee81d94fa3520491aa59f139532cc5e31294d1bee89c8c4b4",
+      "assembly_evidence": "ev_949e26c04afda34fe45f482346b1b127456e1debcf6ba15190922608977a89d9"
+    },
+    {
+      "address": "0x1800239c0",
+      "pseudo_evidence": "ev_c935d546ffcfd9a015759eba276b6b86808a598ce42947d5ddbe6ef939153abb",
+      "assembly_evidence": "ev_245079b916f12d89c98287073bb82e89b00650e14f7fa967621e26699d2344a4"
+    },
+    {
+      "address": "0x18004b0bc",
+      "pseudo_evidence": "ev_9c975496fb48d4e6fca6f8c0535c16fa44feb14e8dafa92ef6b45a98915fa0ec",
+      "assembly_evidence": "ev_4b9d54867bdd71cc2cd07945df16f49f84fdecaa3c3535386e97bd20f64624ec"
+    }
+  ],
+  "constructor": {
+    "resolver_first": true,
+    "pair_cleared_before_owner_load": true,
+    "release_arm_normally_dead": true,
+    "service_reread_after_metadata": true,
+    "socket": "INVALID_SOCKET",
+    "socket_state": 0,
+    "protocol_40": 2,
+    "marker_44": 0,
+    "slot_48": 2,
+    "slot_50": 0,
+    "slot_58": 0,
+    "slot_60": 0,
+    "executor_tags": [
+      "0x180084908",
+      "0x180084928",
+      "0x180084860"
+    ],
+    "executor_context_offset": "0x68",
+    "executor_self_offset": "0x80->0x68",
+    "insert": "cachedservice gate; next=head;prev=null;reloadhead.prev=node;head=node"
+  },
+  "replacement": {
+    "allocation_request": 24,
+    "nullable_caller_branch": true,
+    "nonnull_initial_strong": 1,
+    "nonnull_initial_weak": 1,
+    "vtable_identity": "0x180084820",
+    "publication_order": [
+      "allocate/init",
+      "pair.resource=input",
+      "old=pair.owner",
+      "pair.owner=new",
+      "release(old)"
+    ],
+    "allocator_reentry_before_old_owner_load": true,
+    "old_resource_callback_sees_new_pair": true,
+    "old_counter_rule": "fetch_sub strong; only prior1 calls resource then fetch_sub weak; only priorweak1 deletes",
+    "weak_loaded_after_resource_callback": true,
+    "owner_not_reread_during_release": true,
+    "new_nothrow_allocator_is_compatibility": true,
+    "native_allocator_exhaustion": "retry/new-handler then throw, not established to return NULL"
+  },
+  "destructor": {
+    "service_cached_before_close_helper": true,
+    "close_cancel_provider": "0x180026fb0",
+    "unlink_order": [
+      "enter cachedservice gate",
+      "ifheadself head=next",
+      "ifprev prev.next=next",
+      "ifnext next.prev=prev",
+      "self.next=null",
+      "self.prev=null",
+      "leave"
+    ],
+    "executor_callback_before_owner_load": true,
+    "final_owner_slot_not_cleared": true,
+    "no_gate_held_during_executor_or_refcount_callbacks": true
+  },
+  "normal_source_procedures_added": [
+    "0x1800211b0",
+    "0x1800237f0",
+    "0x180024db0"
+  ],
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "limitations": [
+    "Native ASIO/service list layout, allocator/control-block ABI and padding not recovered",
+    "Service lookup0239c0 and close/cancel026fb0 remain provider boundaries",
+    "new-handler/CRT throw/SEH/unwind/general concurrency/full DLL equivalence unproven"
+  ]
+}

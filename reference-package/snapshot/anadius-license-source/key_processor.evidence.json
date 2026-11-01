@@ -1,0 +1,107 @@
+{
+  "schema": "native-body.focused-validation.v1",
+  "address": "0x18002a830",
+  "symbol": "anadius::license_recovered::apply_license_key_02a830",
+  "status": "IMPLEMENTED_AND_SELECTED_RUNTIME_BINDING_PASS",
+  "new_normal_body": 1,
+  "new_native_ABI_provider_closures": 0,
+  "source_files": {
+    "key_processor.hpp": "996e0c2f6b37d841df0299622675d4f3755c17c7fff833ce6f3fbfd4edcbd965",
+    "key_processor.cpp": "47593a5b42db7bb069254fda51b97fd2557a9392cafa3263baf0f6b469e6690b",
+    "key_processor_tests.cpp": "f80d61f1531799c1198d457e3e4a0e8127ea5041258265e0e9cc59ef1a3b836d"
+  },
+  "modified_existing_sources": [
+    {
+      "path": "anadius-config-storage-source/filesystem.cpp",
+      "baseline_sha256": "06db2ed2205c84837b2f409c2b019557f2eebda24e933dad447302415a799c3f",
+      "current_sha256": "bdc5ad0adc778c4f41143595392c6fbf5ea89c6a43d61c3ce5cd06252a549291"
+    },
+    {
+      "path": "anadius-config-storage-source/filesystem.hpp",
+      "baseline_sha256": "c2658e29bffeec397d93762f496d32122de521c7eee01fe26b607a5986ee5d77",
+      "current_sha256": "ac1dd81aa6e95471e2e3391e174fa6bb5f971cf0d28d16584fd30bed6bce87e0"
+    }
+  ],
+  "native_evidence": {
+    "parent": "outputs/anadius-rea-evidence.json",
+    "parent_sha256": "c6d1daab6e5cce17f48285d07f7b7a1f6c9be4b37f043f19694009393b401495",
+    "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+    "pseudocode": "ev_f896d1d300fedafcee6570b765c7cecc78a5c0ae23182cea35a454ec6d0199a7",
+    "assembly": "ev_15aca81fc2f57a75ce4a92b8ce30822f78fa1d0cee3366522019ef53c167e64e"
+  },
+  "source_references": [
+    {
+      "path": "outputs/anadius-source/bootstrap.cpp",
+      "sha256": "630e6ae211d9e54a2a4009a4ccf5dcca5cd1d4df7b2b82a7c6b2bcbbac681da6"
+    },
+    {
+      "path": "outputs/anadius-config-source/configuration.cpp",
+      "sha256": "a2a2fa7980ddeeaece163b705213bdc5adfff48ae149ec39a122850032e25f6c"
+    },
+    {
+      "path": "outputs/anadius-license-source/license.cpp",
+      "sha256": "3c701f5f155e8dc8751354b8d6fc3a9d352d3a066975c2f73a6ca11f8afeb152"
+    },
+    {
+      "path": "outputs/anadius-token-source/constants.hpp",
+      "sha256": "5ca7807f6b219ffa2f5d8b1af084495cbe5ac602bc8a93f14ef9a39274dbce3e"
+    },
+    {
+      "path": "outputs/anadius-crypto-source/crypto.cpp",
+      "sha256": "cd493597464ba22c7c11557c36f033387770e0cc62d4fbbaefc1676bbfabd436"
+    },
+    {
+      "path": "outputs/anadius-path-source/paths.cpp",
+      "sha256": "303335a49823dcc91aeea53d3b593d7be3c64c21136c0478d90f043ed127f67e"
+    },
+    {
+      "path": "outputs/anadius-status-source/status.cpp",
+      "sha256": "c2c842ecea2ce9704658f834da34d823881747429cf8f9b897b05efa9123f670"
+    },
+    {
+      "path": "outputs/anadius-file-source/binary_io.cpp",
+      "sha256": "f95365aa9dc8f2f3ab9136e9d5122f754c0d11270cda529d577b61f1dee34222"
+    }
+  ],
+  "focused_check": {
+    "record": "work/key-processor-results.json",
+    "sha256": "a94ea3f5749304202120307e607eb7384980a29b98ea889b27474a5d90e22030",
+    "log": "work/key-processor-check.log",
+    "log_sha256": "6cb552e89e8fed1748dfbcc738ca077d77f7fe2160a476d51fdb1b21444df1d9",
+    "checks": 42,
+    "seconds": 6.922,
+    "executable": "work/key-processor-check/key_processor_tests.exe",
+    "executable_sha256": "7a1cbf6d48cf75b66940aa9a53bcdaa55287d4d3c073c9c5e727fffed883333d"
+  },
+  "preserved": [
+    "Copy license base before filesystem suffix conversion",
+    "Status flags3/error mask and regular-file-only skip",
+    "Owned key copy consumed; borrowed caller/config state not cleared",
+    "Eight fixed bytes plus57zeros; counted XML bytes and no escaping",
+    "Live ContentId/UserId read at native call point",
+    "Existing AES key/IV and offset65, ignored boolean result",
+    "Parent destroyed before output; known mkdir error includes parent path",
+    "Ignored write FALSE; unknown provider exceptions not caught/reinterpreted"
+  ],
+  "limitations": [
+    "Config2 test uses an explicitly test-only narrow bridge, not production assembly",
+    "Original MSVC string layout, allocator/SSO and EH/unwind equivalence not established",
+    "Inherited status reparse-tag memory-domain and filesystem boundary contracts remain",
+    "Published B54 source snapshot, inventory counters, archive and ZIP are historical; pending source delta is not packaged yet",
+    "Current selected native Runtime binding is proven separately in key_binding.evidence.json; the earlier key-processor test-only bridge remains historical."
+  ],
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "independent_review": {
+    "path": "outputs/anadius-license-source/key_processor.review.json",
+    "sha256": "4ded93c95825bda23dd629bff3d57711801c6d97e0ea3c10f3be700e445b4969"
+  },
+  "binding_evidence": {
+    "path": "outputs/anadius-license-source/key_binding.evidence.json",
+    "sha256": "4f0c51caf13664ae78cc25c57c8b71f0620a3b71ecb3f8d28f6afbdb2a3c35c5"
+  }
+}

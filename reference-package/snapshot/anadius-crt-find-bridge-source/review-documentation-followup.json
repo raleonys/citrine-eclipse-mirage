@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "scope": "Current reviewed code hashes unchanged; documentation finalized after independent review",
+  "historical_review": "../anadius-crt-find-native-source/review-path-bridge.json",
+  "historical_review_sha256": "ceb0fd3f2bdc2392a2c74d0705d01a39e0ea0896201192ad6212a618dd388c93",
+  "documentation_changes": [
+    {
+      "path": "anadius-crt-module-path-source/README.md",
+      "reviewed_sha256": "c2b86da3e63225e4c9a49898a2f7f423093916552f1f108029ab63278814b424",
+      "current_sha256": "6dc2aba374bb386bd7bee79788a2045110ba23c8959b64dc72c66a4c365c265f",
+      "change": "Documentation-only follow-up pointing to completed new SDK composition; historical review retained"
+    }
+  ]
+}

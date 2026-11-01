@@ -1,0 +1,69 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "target_size": 694272,
+  "analysis_kind": "retained static Ghidra pseudocode + assembly and read-only PE bytes",
+  "rea_session": "Parent verified aligned REA 6.5.0 / Ghidra 12.1.4 available this phase; closed session and retained matching evidence reused",
+  "pseudo_listing_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "asm_listing_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "functions": [
+    {
+      "address": "0x1800671d4",
+      "pseudo_evidence_id": "ev_dcf90fa1f6907a9a331286116a10095040da54b69bb7750ea955133a6ca61c5e",
+      "assembly_evidence_id": "ev_e7801c8d9ac101f2c7950531bc35d290fcd5f7f97efa9316bf63c17270c6629d",
+      "pseudocode": "/* 0x1800671d4 FUN_1800671d4; Evidence ev_dcf90fa1f6907a9a331286116a10095040da54b69bb7750ea955133a6ca61c5e */\n\n/* WARNING: Function: _guard_dispatch_icall replaced with injection: guard_dispatch_icall */\n/* WARNING: Exceeded maximum restarts with more pending */\n\nvoid FUN_1800671d4(ushort *param_1,DWORD param_2,LPCWSTR param_3,int param_4,LPWSTR param_5,\n                  int param_6,undefined8 param_7,undefined8 param_8,undefined8 param_9)\n\n{\n  LCID Locale;\n  FARPROC pFVar1;\n  \n  pFVar1 = FUN_1800669b0(0x11,\"LCMapStringEx\",(uint *)&DAT_18008b9e0,(uint *)\"LCMapStringEx\");\n  if (pFVar1 == (FARPROC)0x0) {\n    Locale = FUN_1800672c0(param_1,0);\n    LCMapStringW(Locale,param_2,param_3,param_4,param_5,param_6);\n  }\n  else {\n    (*pFVar1)(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8,param_9);\n  }\n  return;\n}\n\n\n\n",
+      "assembly": "; 0x1800671d4 FUN_1800671d4; Evidence ev_e7801c8d9ac101f2c7950531bc35d290fcd5f7f97efa9316bf63c17270c6629d\n0x1800671d4: MOV qword ptr [RSP + 0x8], RBX\n0x1800671d9: MOV qword ptr [RSP + 0x10], RBP\n0x1800671de: MOV qword ptr [RSP + 0x18], RSI\n0x1800671e3: PUSH RDI\n0x1800671e4: SUB RSP, 0x50\n0x1800671e8: MOV EBX, R9D\n0x1800671eb: MOV RDI, R8\n0x1800671ee: MOV ESI, EDX\n0x1800671f0: LEA R9, [0x18008b9e8]\n0x1800671f7: MOV RBP, RCX\n0x1800671fa: LEA R8, [0x18008b9e0]\n0x180067201: LEA RDX, [0x18008b9e8]\n0x180067208: MOV ECX, 0x11\n0x18006720d: CALL 0x1800669b0\n0x180067212: MOV R11, RAX\n0x180067215: TEST RAX, RAX\n0x180067218: JZ 0x180067279\n0x18006721a: MOV R10, -0x1c5ee09dafa81d90\n0x180067224: MOV RDX, qword ptr [RSP + 0xa0]\n0x18006722c: MOV R9D, EBX\n0x18006722f: MOV RCX, qword ptr [RSP + 0x98]\n0x180067237: MOV R8, RDI\n0x18006723a: MOV RAX, qword ptr [RSP + 0x80]\n0x180067242: MOV qword ptr [RSP + 0x40], RDX\n0x180067247: MOV EDX, ESI\n0x180067249: MOV qword ptr [RSP + 0x38], RCX\n0x18006724e: MOV RCX, qword ptr [RSP + 0x90]\n0x180067256: MOV qword ptr [RSP + 0x30], RCX\n0x18006725b: MOV ECX, dword ptr [RSP + 0x88]\n0x180067262: MOV dword ptr [RSP + 0x28], ECX\n0x180067266: MOV RCX, RBP\n0x180067269: MOV qword ptr [RSP + 0x20], RAX\n0x18006726e: MOV RAX, R11\n0x180067271: CALL qword ptr [0x18007f5b0]\n0x180067277: JMP 0x1800672ab\n0x180067279: XOR EDX, EDX\n0x18006727b: MOV RCX, RBP\n0x18006727e: CALL 0x1800672c0\n0x180067283: MOV ECX, EAX\n0x180067285: MOV R9D, EBX\n0x180067288: MOV EAX, dword ptr [RSP + 0x88]\n0x18006728f: MOV R8, RDI\n0x180067292: MOV dword ptr [RSP + 0x28], EAX\n0x180067296: MOV EDX, ESI\n0x180067298: MOV RAX, qword ptr [RSP + 0x80]\n0x1800672a0: MOV qword ptr [RSP + 0x20], RAX\n0x1800672a5: CALL qword ptr [0x18007f2f8]\n0x1800672ab: MOV RBX, qword ptr [RSP + 0x60]\n0x1800672b0: MOV RBP, qword ptr [RSP + 0x68]\n0x1800672b5: MOV RSI, qword ptr [RSP + 0x70]\n0x1800672ba: ADD RSP, 0x50\n0x1800672be: POP RDI\n0x1800672bf: RET\n\n"
+    },
+    {
+      "address": "0x1800672c0",
+      "pseudo_evidence_id": "ev_dc923eb5a24bc3f292a38c72f4418fa043f9be816c80341b5cb36260c5bfa3b2",
+      "assembly_evidence_id": "ev_0307916adc6800facce0c0454e3b85c9029f027c6ea1b0e19a95d74edd98c1a7",
+      "pseudocode": "/* 0x1800672c0 FUN_1800672c0; Evidence ev_dc923eb5a24bc3f292a38c72f4418fa043f9be816c80341b5cb36260c5bfa3b2 */\n\n/* WARNING: Function: _guard_dispatch_icall replaced with injection: guard_dispatch_icall */\n/* WARNING: Exceeded maximum restarts with more pending */\n\nvoid FUN_1800672c0(ushort *param_1,undefined4 param_2)\n\n{\n  FARPROC pFVar1;\n  \n  pFVar1 = FUN_1800669b0(0x13,\"LocaleNameToLCID\",(uint *)&DAT_18008ba18,(uint *)\"LocaleNameToLCID\");\n  if (pFVar1 == (FARPROC)0x0) {\n    FUN_18007310c(param_1);\n  }\n  else {\n    (*pFVar1)(param_1,param_2);\n  }\n  return;\n}\n\n\n\n",
+      "assembly": "; 0x1800672c0 FUN_1800672c0; Evidence ev_0307916adc6800facce0c0454e3b85c9029f027c6ea1b0e19a95d74edd98c1a7\n0x1800672c0: MOV qword ptr [RSP + 0x8], RBX\n0x1800672c5: PUSH RDI\n0x1800672c6: SUB RSP, 0x20\n0x1800672ca: MOV EDI, EDX\n0x1800672cc: LEA R9, [0x18008ba20]\n0x1800672d3: MOV RBX, RCX\n0x1800672d6: LEA RDX, [0x18008ba20]\n0x1800672dd: MOV ECX, 0x13\n0x1800672e2: LEA R8, [0x18008ba18]\n0x1800672e9: CALL 0x1800669b0\n0x1800672ee: TEST RAX, RAX\n0x1800672f1: JZ 0x18006730a\n0x1800672f3: MOV R10, -0x1522f9dcab27cd90\n0x1800672fd: MOV EDX, EDI\n0x1800672ff: MOV RCX, RBX\n0x180067302: CALL qword ptr [0x18007f5b0]\n0x180067308: JMP 0x180067312\n0x18006730a: MOV RCX, RBX\n0x18006730d: CALL 0x18007310c\n0x180067312: MOV RBX, qword ptr [RSP + 0x30]\n0x180067317: ADD RSP, 0x20\n0x18006731b: POP RDI\n0x18006731c: RET\n\n"
+    }
+  ],
+  "candidate_regions": [
+    {
+      "va": "0x18008b9e0",
+      "file_offset": "0x8a1e0",
+      "size": 8,
+      "bytes_hex": "0300000010000000",
+      "u32_little_endian": [
+        3,
+        16
+      ],
+      "name_at_end_ascii": "LCMapStringEx",
+      "name_terminating_zero_file_offset": "0x8a1f5"
+    },
+    {
+      "va": "0x18008ba18",
+      "file_offset": "0x8a218",
+      "size": 8,
+      "bytes_hex": "0300000010000000",
+      "u32_little_endian": [
+        3,
+        16
+      ],
+      "name_at_end_ascii": "LocaleNameToLCID",
+      "name_terminating_zero_file_offset": "0x8a230"
+    }
+  ],
+  "pe_mapping": {
+    "section": ".rdata",
+    "section_rva": "0x7f000",
+    "section_raw_offset": "0x7d800",
+    "section_raw_size": "0x21e00",
+    "image_base": "0x180000000",
+    "formula": "file_offset = section_raw_offset + (VA - image_base - section_rva)"
+  },
+  "conclusions": [
+    "Both wrappers return complete EAX values even though retained pseudocode labels them void.",
+    "0671d4 dispatches procedure 0x11 with module sequence3,16; Ex forwards all9arguments; absent Ex invokes recovered0672c0(name,0) and LCMapStringW unconditionally, including LCID0.",
+    "0672c0 dispatches procedure0x13 with sequence3,16; native forwards flags; fallback07310c receives only locale_name."
+  ],
+  "boundaries": [
+    "CFG dispatch injection/guard hash prelude is represented by typed native callback, not original guard ABI.",
+    "Native locale semantics, resolver internals/cache and fallback07310c are mandatory dependencies at this module boundary.",
+    "No original DLL, reconstructed DLL, game or native locale routine executed."
+  ]
+}

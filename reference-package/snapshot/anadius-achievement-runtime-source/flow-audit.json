@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "scope": "Independent pre-implementation retained-static normal-flow audit; not final bridge source review",
+  "reviewer": "achievement_runtime_audit",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "production_edited": false,
+  "sources": {
+    "outputs/anadius-all-functions.pseudo.c": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "outputs/anadius-all-functions.asm.txt": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+    "outputs/anadius-content-handlers-source/content_handlers.cpp": "3cd0a086a6fb9451d87cf63470877e8be72264ca29894dcb009785dedbc0eab3",
+    "outputs/anadius-content-handlers-source/content_handlers.hpp": "3d7e56eac5fe80d0a76cec2baa7a160dc7a2e32d06b1d2fb18ff006cdc514ba7",
+    "work/0x180041b60-runtime.pseudo.txt": "a475aca84838ded70caf11f93066694f80573c15f07d80e27eddaf3a2967afc6",
+    "work/0x180041b60-runtime.asm.txt": "9d0d4d7f779274c59cf92084480d8775fd09c973d65dbadb3de37cae9e5f2751",
+    "work/0x180030010-runtime.pseudo.txt": "f6683e64abda4c6e31219b793ce6a466ebed99352d53aec9f29ffd321acf10e6",
+    "work/0x180030010-runtime.asm.txt": "5aac8025bf24a27b35eb49011de9c53c5834ad6ef3f9af7735cab32826830b9c"
+  },
+  "report_sha256": "3d3960ee478e4390bebe69db60299a925832f051d231227ceb65444f537ee122",
+  "functions": [
+    {
+      "address": "0x180041b60",
+      "pseudo": "ev_68595116803098f1d28c51d6c2cf79c7ec9e646a902f5a82d68490a03b628239",
+      "assembly": "ev_7a1e946a32600dde2f69f281612ad78d0f37819a97d59a29a134a8f95817603d"
+    },
+    {
+      "address": "0x180030010",
+      "pseudo": "ev_8e0c6e33949acd640bbdc56b56ceea86f8bb373eca849ee8c6a34d8a0ac1b175",
+      "assembly": "ev_62f5fc49da4ec38f00325c7e0b857c87556da27030afd17618aec1e4238cb16c"
+    }
+  ],
+  "findings": {
+    "time_then_gmtime_unconditionally": true,
+    "copies_all_nine_tm_fields": true,
+    "optional_epoch_recomputed_from_snapshot": true,
+    "epoch_write_precedes_formatter": true,
+    "null_gmtime_optional_epoch_zero_and_empty_string": true,
+    "mode": "Low byte0 ISO, all nonzero low-byte values filename format",
+    "formatter_stream_failure_gate": false,
+    "output_string_uses_explicit_length": true,
+    "grant_utc_mode": 0,
+    "grant_XML_before_INI": true,
+    "grant_lock_held_through_response": true,
+    "existing_grant_normal_semantics_material_mismatch_found": false
+  },
+  "unproven": [
+    "General native time_put/locale/stream ABI",
+    "Native allocation/SEH/global initialization",
+    "Runtime differential equality",
+    "Detailed event queue lazy initialization not re-audited"
+  ]
+}

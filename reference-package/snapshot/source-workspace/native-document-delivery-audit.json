@@ -1,0 +1,107 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-25T00:10:42.681797+00:00",
+  "prior_package_sha256": "7896b89ede15c8983492290f6b54bb46ca5937b60a0a882a87a18c2b7c3297a5",
+  "prior_source_count": 611,
+  "unchanged_prior_sources": 611,
+  "added_sources": [
+    "anadius-socket-source/native_document.cpp",
+    "anadius-socket-source/native_document.hpp",
+    "anadius-socket-source/native_document_integration_tests.cpp",
+    "anadius-socket-source/native_document_test_fixture.hpp",
+    "anadius-socket-source/native_document_tests.cpp"
+  ],
+  "changed_prior_sources": [],
+  "current_sources": 616,
+  "current_documents": 228,
+  "native_objects": 195,
+  "cpp_objects": 191,
+  "c_objects": 4,
+  "normal_test_groups": 203,
+  "terminal_cases": 19,
+  "socket_groups_in_common_build": 76,
+  "new_checks": 15831,
+  "new_tests": [
+    {
+      "module": "socket_native_document",
+      "result": "PASS",
+      "output": "PASS: 567 native document checks;49 assembly anchored stores/holes/failure prefixes, live buffer/status, cleanup order and coherent final bindings; native lower providers/ABI/EH remain open",
+      "executable_sha256": "678d6227b1a2545ebe928400728b2f1d1582ed3d3aee9d0d7c0fe458266e9278"
+    },
+    {
+      "module": "socket_native_document_integration",
+      "result": "PASS",
+      "output": "PASS: 15264 socket native document integration checks; final ctor/parse/destructor and dispatch/cipher/append sources to queue/send/finish; lower clear/parser/nodes/pools/allocator/vtable and native ABI/EH remain open",
+      "executable_sha256": "1469ff0b00d94deccd390ac24f35c3184bc58cc31859973d14b9c2765fa03aa0"
+    }
+  ],
+  "validation_mirror_pairs": 38,
+  "historical_module_records_preserved": 37,
+  "historical_config_references_preserved": 74,
+  "module_standalone_script_executed": false,
+  "master_build_sha256": "0f73a96e8371b96ac6914cc21fb747196cb26877a74afa43b3e4d4280d45e023",
+  "inventory_data_checks": 7366,
+  "normal_source_procedures_added": [
+    "0x180001830",
+    "0x180004280",
+    "0x180001e00"
+  ],
+  "new_original_procedures": 3,
+  "closed_providers": [
+    {
+      "file": "outputs/anadius-socket-source/native_document.cpp",
+      "base": "NativeMessageApi::construct_document_001830",
+      "body": "construct_native_document_001830",
+      "closure": "RecoveredMessageDocumentApi::construct_document_001830",
+      "address": "0x180001830",
+      "native_abi_complete": false,
+      "scope": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/native_document.cpp",
+      "base": "NativeMessageApi::parse_document_004280",
+      "body": "parse_native_document_004280",
+      "closure": "RecoveredMessageDocumentApi::parse_document_004280",
+      "address": "0x180004280",
+      "native_abi_complete": false,
+      "scope": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory"
+    },
+    {
+      "file": "outputs/anadius-socket-source/native_document.cpp",
+      "base": "NativeMessageApi::destroy_document_001e00",
+      "body": "destroy_native_document_001e00",
+      "closure": "RecoveredMessageDocumentApi::destroy_document_001e00",
+      "address": "0x180001e00",
+      "native_abi_complete": false,
+      "scope": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory"
+    }
+  ],
+  "new_source_bridges": 3,
+  "native_typed_providers_newly_closed": 3,
+  "new_unique_source_mapped_addresses": 3,
+  "prior_native_source_closures_preserved": 24,
+  "current_native_source_closures": 27,
+  "semantic_session_source_adapters_preserved": 2,
+  "N5_selected_compatibility_providers_preserved": 0,
+  "N5_historical_alternatives_preserved": 1,
+  "N5_deferred_request_gap_closed_for_selected_source": true,
+  "native_document_fully_closed": false,
+  "native032d00_fully_closed": false,
+  "native033d70_fully_closed": false,
+  "independent_review_complete": false,
+  "CRT_production": "unchanged and paused",
+  "new_integration_limit": "001830/004280/001e00 normal document construction/parse/destruction projections and3 final NativeMessageApi source bridges; explicit bounded raw memory preserves untouched holes and aliases error+6c directly; native clear/parser/node/mempool/allocator/free/vtable/ABI/EH lower providers mandatory",
+  "original_execution": "none",
+  "original_modification": false,
+  "real_CFG_token_achievement_contents_read": false,
+  "native_equivalence": "not established",
+  "completion_percentage": null,
+  "priority_order": [
+    1,
+    2,
+    3,
+    5,
+    4
+  ],
+  "next_package": "Phase3/N15 document clear002e60 and node cleanup003110 source contracts;0041b0 parse engine and mempool/native allocator/vtable backends remain open; CRT stays paused"
+}

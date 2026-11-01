@@ -1,0 +1,90 @@
+{
+  "schema": "session-control-disposal.source-audit.v1",
+  "result": "PASS_WITH_NATIVE_BOUNDARIES",
+  "evidence": [
+    {
+      "address": "0x180026880",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered": true,
+      "pseudo_evidence": "ev_585721b4cf162199c0fd03386d1d3b23345fe6bf552668015f3b6e9bac5b07af",
+      "assembly_evidence": "ev_6d1aac9f1a3f0e278cf156dd8ecd40d5afb1881cbc1014c22f366b33ab4a8071"
+    },
+    {
+      "address": "0x180026570",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered": true,
+      "pseudo_evidence": "ev_569927c89e98051d661b466fccfa8c6436572a263f3441c01721f2793942f5d5",
+      "assembly_evidence": "ev_4721f071259f0f08eb60d96ed3bd1f1b2603864a224a766c2493f1fa35280260"
+    },
+    {
+      "address": "0x180017420",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered": true,
+      "pseudo_evidence": "ev_47a23a1547e1e17db86b3c8bae1e5ebefeb62279c087c44967b4df46a6292967",
+      "assembly_evidence": "ev_bf03878c45fa709dc9c54b26bb21d0f065a1b3b3a7d7dcb2141c0c268f8ca8f7"
+    },
+    {
+      "address": "0x180026290",
+      "source_presence_before": "no_definition_mapping",
+      "newly_recovered": true,
+      "pseudo_evidence": "ev_d5253fe30c46ce5fd234147de8a63cebe2795f47f7d74f84a7b036d7d67a0d9d",
+      "assembly_evidence": "ev_7d65dd1db58e08d08433ac751b1a2544c4010a23f857d377e111e588fa8a55a4"
+    }
+  ],
+  "assembly_anchors": {
+    "0x180026880": [
+      "26899 count snapshot",
+      "268a2..268ba liveoffset/mapsize/map and cachedstring",
+      "268c8..268f3 capacity+1/alignment/header/sizedfree",
+      "268f8..2690f partialreset/livecountreload",
+      "26915 offsetresetonlynonempty",
+      "26923 cachedRBX and signedJLE/JG",
+      "26930 live map per block",
+      "2693f blocksize32",
+      "26952 live finalsize/map",
+      "26959 shift3 modulo64",
+      "26988/26990 mapclearafterfree"
+    ],
+    "0x180026570": [
+      "26584 actual026880 atCONTROL+d8",
+      "26589..265a0 load/null/free16proxy",
+      "265a5 liveinputcapacity",
+      "265b2..265dd alignedinputfree",
+      "265e6..265fc inputprefixreset",
+      "26603 actual024db0 CONTROL+20",
+      "26608 liveCONTROL+18selfweak",
+      "26616 weakXADD",
+      "26623 lastweakslot08call no slotclear"
+    ],
+    "0x180017420": [
+      "17420 nullguard",
+      "17425 livevtable",
+      "17428 flags1",
+      "1742d slot10taildispatch"
+    ],
+    "0x180026290": [
+      "26296/262a0 restore084750",
+      "262a3 flagslowbit",
+      "262a8 sized1c8",
+      "262ad free",
+      "262b2 cachedidentityreturn"
+    ]
+  },
+  "control_vs_owner_offsets": {
+    "control+d8": "owner+c8outputdeque",
+    "control+b8": "owner+a8input",
+    "control+20": "owner+10socket",
+    "control+18": "owner+8selfweak"
+  },
+  "callback_rules": [
+    "Cached selectedstring survivesfreecallback; reloadcount aftercallback",
+    "Blockloop caches signedbound; reloadmap eachiteration; finalmap/size live",
+    "ProxyNULLbeforefree; input liveafterproxy; selfweak liveaftersocket",
+    "Neverclearweakself pair; releaseownedweak beforeouterimplicitweak",
+    "Generic017420 must callslot10flags1;026290 mayfreethis andreturnsnumericidentity"
+  ],
+  "new_normal_bodies": 4,
+  "new_native_ABI_provider_closures": 0,
+  "prior_sources_preserved": 846,
+  "original_bytes_read": 0
+}

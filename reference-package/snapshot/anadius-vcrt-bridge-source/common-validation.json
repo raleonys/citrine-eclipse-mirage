@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "vcrt_bridge",
+    "result": "PASS",
+    "output": "PASS 443 VCRT/ACRT/CPU/locks/entry composition checks",
+    "executable_sha256": "e3c1dd9978ed21503223fe4dad868f0427505e2b81889d0db9f0327ea027351b"
+  },
+  "execution_scope": "Actual recovered VCRT/ACRT/heap/PTD/resolver/locks/CPU/Entry source composition; owned fixtures and simulated thread switch; no native OS/provider calls",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-vcrt-bridge-source/bridge_tests.cpp",
+      "sha256": "cc8c0e50e5cccf6180869599e3fc7efd4c40c15ea3b557e4f0376ab3f513b577"
+    },
+    {
+      "path": "anadius-vcrt-bridge-source/bridge.cpp",
+      "sha256": "85f1591f4b8e265cea036badadaf0c3de43fdd6bd16c2a1be910aaf4137526bf"
+    },
+    {
+      "path": "anadius-vcrt-bridge-source/bridge.hpp",
+      "sha256": "eac77edf09d6d38d5d33651f9a7c58ebec6dd46abb3db28b283a95140af598e3"
+    },
+    {
+      "path": "anadius-vcrt-bridge-source/test_fixtures.hpp",
+      "sha256": "882faee73336d78f500675eea11b9aa95b35e81d958f7b0a132959da5744026b"
+    }
+  ]
+}

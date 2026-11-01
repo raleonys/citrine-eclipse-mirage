@@ -1,0 +1,22 @@
+{
+  "kind": "Installed LLVM-MinGW SDK declarations used for compile-time entry checks",
+  "headers": [
+    {
+      "sha256": "ed58e781fbc5f7e3a3500ac0c70d383e074debe2dcbde0b56aa4a4c25915530b",
+      "header": "process.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\process.h"
+    },
+    {
+      "sha256": "e931bc163a9980e71982a522879073f41f934c3d94b423d489ee9f387093899f",
+      "header": "windows.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\windows.h"
+    },
+    {
+      "sha256": "fc14c6402971196b5a99b41f692e5df57c51be3d1b2cdd5929fe4fc45e1e96d2",
+      "header": "minwinbase.h",
+      "path": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\include\\minwinbase.h"
+    }
+  ],
+  "source_copied": false,
+  "original_MSVC_CRT_SEH_match": "unproven"
+}

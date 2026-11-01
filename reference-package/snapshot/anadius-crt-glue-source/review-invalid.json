@@ -1,0 +1,77 @@
+{
+  "result": "PASS",
+  "reviewed_at": "2026-10-18T09:22:03.569044Z",
+  "reviewer": "crt_invalid_parameter",
+  "scope": "Independent source review of InvalidPtd, ErrorPtd, HeapErrors and ThreadEffects method bindings and integrated fixtures",
+  "findings": [],
+  "checks": [
+    "InvalidPtd state-index0 calls raw064dd0 and leaves ignored saved_error pointer untouched; unsupported indices explicitly reject before lookup",
+    "InvalidPtd LastError methods delegate matching PTD effects; 05c5d0 caller performs save/restore",
+    "ErrorPtd delegates error-preserving064d08 rather than rawlookup",
+    "HeapErrors maps OS errors via recovered05d650 and writes actualerrno05d724 cell, including fallback/PTD cases",
+    "ThreadEffects null-entry invalidparameter forwards05c954 zero-five-argument returning-handler path",
+    "ThreadEffects required slot is live typed Ptd::thread_context at0x3c0; optional slot null-handled; no forgedpointerreference",
+    "Thread/Ptd heap allocation starts trivial C++ object lifetime with construct_at over recovered zeroed calloc allocation",
+    "Thread application entry signature retains unsigned32 return andvoid* argument; caller must supply valid rebuilt function",
+    "Synthetic successful worker/FLSdestructor frees40bytecontext and0x3c8PTD with refcountcleanup; create failure and recursiveerrnoallocation paths covered",
+    "Native FLS import construction only observed asaddresses in test; no native API executed"
+  ],
+  "test_execution": "Existing generated glue_tests.exe: PASS202 integrated CRT/PTD/FLS/heap/thread checks",
+  "limitations": [
+    "Review does not establish native ABI/CFG/XFG/SEH or complete DLL equivalence",
+    "All borrowed lifetime/state-domain identity and native FLS/worker callback binding remain caller contracts",
+    "Native worker/FLS/module/heap functions not invoked"
+  ],
+  "source_hashes": [
+    {
+      "path": "outputs/anadius-crt-glue-source/crt_glue.hpp",
+      "sha256": "d9dd2b7385850820a614600f51ff103f1929c85178b8bd065c38db661257710e"
+    },
+    {
+      "path": "outputs/anadius-crt-glue-source/crt_glue.cpp",
+      "sha256": "b880c863eb26775ee3de243ef68e8e9a2dc78a3ada7bfa7b1a2de8d2223942ca"
+    },
+    {
+      "path": "outputs/anadius-crt-glue-source/glue_tests.cpp",
+      "sha256": "750f23db0ab7755cb6c70a58fe3276ff92d1b0aa73dcb7180bde4e9ae61dac74"
+    },
+    {
+      "path": "outputs/anadius-crt-invalid-source/invalid.hpp",
+      "sha256": "f2d09c991ff3aba1906e62870099d5156e67521946a2e7bd368e967faecebf95"
+    },
+    {
+      "path": "outputs/anadius-crt-invalid-source/invalid.cpp",
+      "sha256": "76fe81b5eff2556fd25b14d77179787957101826b692beb58317137343922965"
+    },
+    {
+      "path": "outputs/anadius-crt-ptd-source/ptd.hpp",
+      "sha256": "ed059fd795ee661fdd539d2a706a9cf74deb419320da976ed628c431cb32ab73"
+    },
+    {
+      "path": "outputs/anadius-crt-ptd-source/ptd.cpp",
+      "sha256": "10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe"
+    },
+    {
+      "path": "outputs/anadius-crt-error-source/errors.hpp",
+      "sha256": "a35a12520e233f1a545cb46c32284570535899a9ab8630302ca7c597706ad38b"
+    },
+    {
+      "path": "outputs/anadius-crt-error-source/errors.cpp",
+      "sha256": "927a0bcd444d11370ae99b1a7025dc58c5f6e510332e436c4175c78890741fa1"
+    },
+    {
+      "path": "outputs/anadius-crt-ptd-data-source/ptd_data.cpp",
+      "sha256": "a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea"
+    },
+    {
+      "path": "outputs/anadius-thread-native-source/win32_effects.hpp",
+      "sha256": "1d0baba064b509a8cbb8cc58751f064148321a8639e8a85dcbab7620dac0fc48"
+    }
+  ],
+  "primary_followup": {
+    "change": "Added explicit <algorithm> include to glue_tests.cpp as suggested; no production semantic change",
+    "historical_review_hashes": "Preserved for reviewed revision",
+    "current_test_source_sha256": "166a8589317966bd223519691b8ff301b05fa7fdfc8f39c947e1f4632f07c151",
+    "final_validation": "../source-workspace/build-record.json"
+  }
+}

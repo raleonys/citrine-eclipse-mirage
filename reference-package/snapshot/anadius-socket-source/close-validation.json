@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "compiler": "C:\\Users\\Skysect\\Documents\\Codex\\2026-10-16\\mcp\\work\\toolchain\\extracted\\llvm-mingw-20261006-ucrt-x86_64\\bin\\clang++.exe",
+  "compiler_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static"
+  ],
+  "close_checks": 221,
+  "closing_checks": 143,
+  "output": "PASS: 221 socket close checks; injected socket/error APIs only\nPASS: 143 socket closing checks; controlled cancellation and injected APIs only",
+  "source_hashes": {
+    "close.hpp": "28fb856c232dcec8d1cca60016a7e0f8beed7ead11631fae25548c8eb66a55ef",
+    "close.cpp": "44b17eec8a2cb5cc62ae7c2b17e027b5ebd5b10ba18785bf886bad90d56082b2",
+    "closing.hpp": "10a3da0a64117e1d197d5a1eac9818a802d83e1f7ed46b9e25d8f5a0860458d5",
+    "closing.cpp": "9906439500ae4e19f64d73248083acbfc2cc22ad02e9099ec14ab741085a7669",
+    "close_tests.cpp": "0c4e959653ba655a2ce6695b9a17d4c01f3c07b464b372061de1a131077fc146",
+    "closing_tests.cpp": "0ef67ff44a57ea0a0fdee04d786f74a32455a9a87e8bd74c9daa2a3872b4674c",
+    "build.ps1": "c0e6ebfb3ea1c8ac228090a505f3d313a0d7d0e0a422f1a363fc337dbca2dc35",
+    "CMakeLists.txt": "e1559047243d6296ada50a3fb5c1059223c24246dbd0e2123ee4304e575acaba"
+  },
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "execution_scope": "026e50/026fb0 normal paths, controlled cancellation engine/service/owner callbacks and typed injected socket APIs; actual acceptor/lifecycle/destructor source integration",
+  "native_ASIO_IOCP_ABI_SEH": "not established;026aa0 remains required, no actual WSA/socket/network/critical-section or original target execution"
+}

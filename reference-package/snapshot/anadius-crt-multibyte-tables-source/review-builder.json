@@ -1,0 +1,38 @@
+{
+  "reviewer": "crt_mb_builder",
+  "result": "PASS",
+  "checked_at": "2026-10-19T02:33:13.3726570Z",
+  "scope": "Independent static source/test comparison against full retained assembly for 0x18006f050 and 0x18006f0e8; no source modification and no target execution",
+  "sources": [
+    {
+      "name": "multibyte_tables.hpp",
+      "sha256": "b89913e38fdb4e41a59fdc19f0b032171bc0b7d3c9c7af7939fdadf7a087954c"
+    },
+    {
+      "name": "multibyte_tables.cpp",
+      "sha256": "6dd5376b4ec71a68a5dbf594e32e6be955bfd2d354794a4c109a237fe33c2c73"
+    },
+    {
+      "name": "multibyte_tables_tests.cpp",
+      "sha256": "43080bf2b38c64434f2c304a1a875a12ae4f835ffeb545fe4a3fb6235842cc20"
+    }
+  ],
+  "evidence": [
+    "ev_4b4e4b9441d418cfe45f12e0661d6c7c4a3ea803a561a2ae2cfc73737e436abd",
+    "ev_0faf58abb94133d2fae75ea705dde26a55177a33ca3a17eee20fb12de583a54d"
+  ],
+  "checks": [
+    "06f050:257-byte clear precedes initial identity materialization, two QWORD zeroes and six WORD zeroes; 257 type bytes then 256 mapping bytes copied as individual read/write pairs. Fixtures cover self and one-byte-overlap copies.",
+    "06f0e8:CP65001 short-circuits GetCPInfo; GetCPInfo failure selects ASCII upper/lower fallback preserving unrelated type bits and EOF.",
+    "06f0e8:input 0 is space; each nonzero-start lead pair masks its inclusive bounded range; end-zero and reversed pair do not terminate later pairs; MaxCharSize is intentionally unused in this body.",
+    "06f0e8:CP reloaded before each of three downstream calls; locale reloaded before each map call; flags1/0x100/0x200, size256 and zero context/error flags match assembly.",
+    "Return statuses of classification/maps are ignored. WordOutput/ByteOutput retain undefined-output boundary; only selected mapping cell is consumed. Tests include failed-return with supplied data and unclassified bytes with omitted maps.",
+    "Uppercase bit1 wins over lowercase bit2. OR0x10/0x20 precedes selected map cell load; every mapping result is written.",
+    "Native callback spans and cells are explicit reconstruction contracts, not an ABI claim. Unterminated CPInfo and consumed undefined output throw explicit boundary exceptions rather than invent original stack contents."
+  ],
+  "findings": [],
+  "limitations": [
+    "Static review and synthetic fixtures do not establish original native API output, SEH/security-cookie/concurrency behavior.",
+    "No complete native DLL or locale/global initializer completeness claim."
+  ]
+}

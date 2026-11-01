@@ -1,0 +1,227 @@
+{
+  "schema": "config2.growth-and-application.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "retained_REA": {
+    "consumer_pseudo": "ev_5ec5f52f67388ea3296af7964bac7ecdff2ed88218b0b532744a87ae797c72dd",
+    "consumer_asm": "ev_b75b58538a829894dee04456d214f29001ee3a09dd2d8c04d5b393fa8534df88",
+    "table_assign_asm": "ev_8975dcb6850d9f73375de19ac628dbf270d8f0722bae94ba4b3ff22c3a9af0f9",
+    "node_assign_asm": "ev_9610f1adb392b14497e277699d3612412deb9c5d518bb165cc368beb516e0452",
+    "lookup_asm": "ev_ec3231ec9c4b07657e7692ea897d1cc2c48f2e46ef88e34a54727e8ad2d91e65"
+  },
+  "section_timeline": [
+    {
+      "section": "Game",
+      "lookup": "0x180019e04",
+      "copy": "0x180019e14",
+      "keys": [
+        "Name",
+        "Version",
+        "ContentId",
+        "DenuvoToken",
+        "DenuvoExeHash",
+        "DenuvoDllHash",
+        "DenuvoDllName",
+        "KeyForLicense",
+        "Languages",
+        "LanguageRegistryKey",
+        "Language",
+        "LanguageRegistrySpoof"
+      ],
+      "key_lookup_addresses": [
+        "019e4c",
+        "019eb8",
+        "019f24",
+        "01a0a5",
+        "01a100",
+        "01a14b",
+        "01a196",
+        "01a219",
+        "01a27b",
+        "01a2e7",
+        "01a32c",
+        "01a398"
+      ],
+      "guards": "first3 base only;last2 language_from_arguments==0;other7 unconditional normal continuation"
+    },
+    {
+      "section": "Emulator",
+      "lookup": "0x18001a3da",
+      "copy": "0x18001a3ea",
+      "keys": [
+        "Documents",
+        "ServerPort",
+        "PretendConnected",
+        "FakeAuth",
+        "SDK",
+        "Language",
+        "BlockReruns",
+        "LoadExtraDLLsFromMain",
+        "LoadExtraDLLs"
+      ],
+      "key_lookup_addresses": [
+        "01a438",
+        "01a4ac",
+        "01a589",
+        "01a5f5",
+        "01a637",
+        "01a676",
+        "01a6e2",
+        "01a724",
+        "01a763"
+      ],
+      "guards": "all unconditional normal continuation"
+    },
+    {
+      "section": "User",
+      "lookup": "0x18001a7a2",
+      "copy": "0x18001a7b2",
+      "keys": [
+        "Username",
+        "PersonaId",
+        "UserId",
+        "Avatar",
+        "UseLastOnlineProfile",
+        "Country",
+        "Currency",
+        "IsSubscriber",
+        "IsSteamSubscriber",
+        "SubscriberLevel",
+        "IsUnderAge"
+      ],
+      "key_lookup_addresses": [
+        "01a7e1",
+        "01a820",
+        "01a85f",
+        "01a89e",
+        "01a8e0",
+        "01a922",
+        "01a961",
+        "01a9a0",
+        "01a9df",
+        "01aa1e",
+        "01aa5d"
+      ],
+      "guards": "all unconditional normal continuation"
+    },
+    {
+      "section": "Content",
+      "lookup": "0x18001aaa5",
+      "copy": "0x18001aab5",
+      "record_copy": "0x18001ac26",
+      "record_keys": [
+        "Name",
+        "Version",
+        "State"
+      ],
+      "record_key_lookup_addresses": [
+        "01ad06",
+        "01adbe",
+        "01ae51"
+      ],
+      "guards": "base only"
+    },
+    {
+      "section": "Entitlements",
+      "lookup": "0x18001b295",
+      "copy": "0x18001b2a9",
+      "record_copy": "0x18001b406",
+      "record_keys": [
+        "Group",
+        "Version",
+        "Type",
+        "EntitlementTag"
+      ],
+      "record_key_lookup_addresses": [
+        "01b553",
+        "01b627",
+        "01b6e1",
+        "01b7b7"
+      ],
+      "guards": "base only"
+    },
+    {
+      "section": "Achievements",
+      "lookup": "0x18001bcdf",
+      "copy": "0x18001bcf3",
+      "keys": [
+        "AchievementIDs",
+        "AchievementsSet",
+        "AchievementNames",
+        "AchievementTotals",
+        "SteamAppId",
+        "SteamIdPrefix",
+        "SteamIdOverrides"
+      ],
+      "key_lookup_addresses": [
+        "01bd67",
+        "01bdce",
+        "01be69",
+        "01c042",
+        "01c158",
+        "01c23c",
+        "01c5b3"
+      ],
+      "guards": "base only;SteamIdPrefix if retained/assignedglobalSteamAppId nonempty"
+    }
+  ],
+  "hash_evidence": "../anadius-config-hash-source/evidence.json",
+  "source_hashes": {
+    "application.hpp": "9c75ae37fbedc303d2f5d3636326252208edaab84508b2394747cd68de4f2fb2",
+    "application.cpp": "27e32ac1010aa4c169148f189016deb02a78c32d881f99134aed0b3a8ec0d2bb",
+    "application_tests.cpp": "e9cbfd16d396dca7fe68174772ac7c385aa3855bbb4ec6c7bd0042c10ea917b9",
+    "build.ps1": "c580295d1b3d6d5cd6335766ae8455a61fd4a4ad793e4e6a9d6e99adc34849f5",
+    "CMakeLists.txt": "8c4ad409a8e481559c469a3a0860d5917770bcdf38bfd7f220dceb0f90bd064c",
+    "README.md": "af48536b8dc7167eae2ecad7f9d27d73432f7822ed049e767da8ad42ea8c6852"
+  },
+  "evidence_type": "Retained static REA with local logical source fixtures; no original native execution",
+  "checklist": [
+    {
+      "question": "Growth past8 unique children",
+      "status": "answered in admitted factor1 normal model",
+      "evidence": "017440/017570;4929 hash checks"
+    },
+    {
+      "question": "Fresh copy versus inherited descendant capacity",
+      "status": "answered in admitted model",
+      "evidence": "0162f0 vs0132a0/014970/011ba0;65rows512/128/512 fixture"
+    },
+    {
+      "question": "Reused destination positional child capacity",
+      "status": "answered in admitted model",
+      "evidence": "0162f0/0165c0;replacementkey512capacity;application partialtotal fixture"
+    },
+    {
+      "question": "Final Content/Entitlements/Achievement traversal",
+      "status": "answered normal logical newentry",
+      "evidence": "019ad0 calltimeline,actualmutablelookupsequence;95application checks"
+    },
+    {
+      "question": "File/parser/base-override/partialerrors",
+      "status": "answered within source dependency contracts",
+      "evidence": "03b3f0/014310/019ad0;own generatedfile and controlled effects"
+    },
+    {
+      "question": "General startup caller redirection",
+      "status": "unresolved",
+      "evidence": "configuration::initialize_configuration remains historical entry"
+    },
+    {
+      "question": "Native allocator/layout/fault/SEH/full DLL equality",
+      "status": "unresolved",
+      "evidence": "not established by static/source fixtures"
+    }
+  ],
+  "full_unique_original_bodies_added": 0,
+  "existing_procedure_improved": "0x180019ad0",
+  "checks": {
+    "hash": 4929,
+    "application": 95
+  },
+  "original_execution": "none",
+  "real_user_cfg_read": false,
+  "CRT_production": "unchanged",
+  "normal_model_scope": "Unique-key parsed Config2 trees, observed fixed load factor1, disjoint owned copy or selfassignment, normal execution; numeric max native size/bucket targets enforced",
+  "runtime_equivalence": "not established",
+  "native_scope": "own generated CFG file through existing compatibility file stream only"
+}

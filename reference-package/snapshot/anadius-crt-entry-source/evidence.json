@@ -1,0 +1,170 @@
+{
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "analysis": "Retained REA/Ghidra pseudocode and assembly plus bounded initial-image fields. No target execution.",
+  "pseudocode_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+  "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+  "functions": [
+    {
+      "va": "0x18004b418",
+      "name": "__scrt_acquire_startup_lock",
+      "pseudocode_evidence": "ev_51c95f1da0e8b7baffb95a38e4a00b570ddc31f1c0b119e5eca0b7f3d1c7c019",
+      "assembly_evidence": "ev_320f45e6088ac9ffd2d8bc1129df4f549ab0b1fd5d8fadb1f939178baf91623d"
+    },
+    {
+      "va": "0x18004b454",
+      "name": "__scrt_dllmain_after_initialize_c",
+      "pseudocode_evidence": "ev_5fed530255e5bef87d56f7ded0396869351115e2594812a761fdf601fbb21e91",
+      "assembly_evidence": "ev_4387429329dabcfd468243bea031187a906247d713270db09f95909aa95d9ebd"
+    },
+    {
+      "va": "0x18004b488",
+      "name": "FUN_18004b488",
+      "pseudocode_evidence": "ev_3df9d1803b6e092c11bc6502222b6dec6ab4f5d9e92f1d6c397d6be0927c9ec7",
+      "assembly_evidence": "ev_9b1c162feeff9e2f10791a96afa37f234d20622bb450d9aa8240d230d83e5b56"
+    },
+    {
+      "va": "0x18004b4a0",
+      "name": "__scrt_dllmain_crt_thread_attach",
+      "pseudocode_evidence": "ev_a4949db7eb531cb1b52788bf706ae4f01829014b57c637ab380c9a7b134eacb9",
+      "assembly_evidence": "ev_d4d5947cfdb7ee955b01c502a7cad401ee80ae043d3467cd57e2452cd3fcd9b8"
+    },
+    {
+      "va": "0x18004b4c8",
+      "name": "FUN_18004b4c8",
+      "pseudocode_evidence": "ev_fa231d348956ef29bde58044446216c82f130e38cf2da309e25bd14fd1cf1261",
+      "assembly_evidence": "ev_56e27b5daef9d8835cad88ce82d6840cc4eceabea97c2087e3f5d84a1a0e8657"
+    },
+    {
+      "va": "0x18004b540",
+      "name": "__scrt_dllmain_uninitialize_c",
+      "pseudocode_evidence": "ev_458d476ae2f64e71e983a180407d8e3409a25cfdc44a9863ad01f2ca2b2cb4de",
+      "assembly_evidence": "ev_f0a8d4ce5ed6de2f3075dd26eebc99000299b7e66dcbbb1be5142b5d8001e682"
+    },
+    {
+      "va": "0x18004b570",
+      "name": "FUN_18004b570",
+      "pseudocode_evidence": "ev_0d5695f7f09d39ad5e01247014eb3bc1ee762a17870032d0f5060c8372416308",
+      "assembly_evidence": "ev_e5a1cc0fb0440d80b6e433a632fcf4f6436dc4473ad5df86d5ff85ea4dbb9caa"
+    },
+    {
+      "va": "0x18004b584",
+      "name": "FUN_18004b584",
+      "pseudocode_evidence": "ev_3a044c45c3aebe2f1a67b5b56fb3fb3ee16acb1ec427d645459ce2e1bbd68874",
+      "assembly_evidence": "ev_993e9e4cf64b249535b6490620f01b83b10b91bebef16e5325dc270d4c754476"
+    },
+    {
+      "va": "0x18004b5c0",
+      "name": "FUN_18004b5c0",
+      "pseudocode_evidence": "ev_8dcf2e57d489dde71c031f8308bcf81c3815ebd4be5ac3a32a0584238708380c",
+      "assembly_evidence": "ev_d3e93e9f9862eef45ff2d80038acff3ac4ca115472f4ec8d8a907dec33671db1"
+    },
+    {
+      "va": "0x18004b6e4",
+      "name": "__scrt_release_startup_lock",
+      "pseudocode_evidence": "ev_d089550cee51df3f71bfb580f5be20c6d2bb6de835be176abfc7306f1fe023fe",
+      "assembly_evidence": "ev_baf43f7ad2852acd4050969126505e3aadfbdfa1a437710d16c8e474fddc4c9c"
+    },
+    {
+      "va": "0x18004b708",
+      "name": "__scrt_uninitialize_crt",
+      "pseudocode_evidence": "ev_41c58c9ab300b32a63b16a584cef2c80e462e98e6cdbaedcdec4dbca83005a53",
+      "assembly_evidence": "ev_2800d822592b04e2238b1a2351f24d6c366047ebcfd432a87e6c37fc00f94a63"
+    },
+    {
+      "va": "0x18004b9e0",
+      "name": "FUN_18004b9e0",
+      "pseudocode_evidence": "ev_8d1fa77bcddd0eb58c0f3d1e7f8490c49640d9be72cd8a44223093f1aff2aaf2",
+      "assembly_evidence": "ev_14275c8735da0d792f1a57803773b974be6d9f92b190fabb9089a5b31f489c71"
+    },
+    {
+      "va": "0x18004ba30",
+      "name": "FUN_18004ba30",
+      "pseudocode_evidence": "ev_969fa08f3000af55fdfbefaf21047d6514908cf7dfb8ad03cc181894922a872d",
+      "assembly_evidence": "ev_e313cdf981deab3b2e56b180e7becbd1b6a3095a19b2b7eeb786758fe475a6b1"
+    },
+    {
+      "va": "0x18004bb48",
+      "name": "FUN_18004bb48",
+      "pseudocode_evidence": "ev_570fa083cc4b867872bc5e2edcf988025a144438a1aec185b4343de1ec8a03a2",
+      "assembly_evidence": "ev_44aefb126b7eb48b61191a5f85e8417c74bd6710195c3f94d6904cfe2a893cb3"
+    },
+    {
+      "va": "0x18004bbc8",
+      "name": "dllmain_dispatch",
+      "pseudocode_evidence": "ev_91e8bcee0b250a2874d0a05b4c68a1b1f88ae3412e43503f48e378bfefef7bc9",
+      "assembly_evidence": "ev_8a4fcef44115565710b6684a71424833dbc39067b1acfa4284be158f1b0a4630"
+    },
+    {
+      "va": "0x18004bcfc",
+      "name": "entry",
+      "pseudocode_evidence": "ev_8c9eaca13417fb0a0392fd376e2a142a535909f3b4b52ff1071a2675a6e59a34",
+      "assembly_evidence": "ev_8c1f796882e9adedddeabccc013a2b180fe88ebe4f34a0ac71c91ebe7468bc93"
+    },
+    {
+      "va": "0x18004bfd8",
+      "name": "__scrt_is_ucrt_dll_in_use",
+      "pseudocode_evidence": "ev_631cdccc6db2239f5af4a42e6403535caa05afcdbdaed6af087f8efb989f24fe",
+      "assembly_evidence": "ev_39e98e1e470a5f8431d5255d9e3e806e1e83bd89920c63ccdfe9585306354cb1"
+    },
+    {
+      "va": "0x18003af80",
+      "name": "FUN_18003af80",
+      "pseudocode_evidence": "ev_7393a1bdda6c90be6c5461ec215f365d9811657fa2097f57e2886faa53415edf",
+      "assembly_evidence": "ev_b17934f0dae04d20385137bfce212bf38a3c33f53e2ec08053c34f164acf5bac"
+    },
+    {
+      "va": "0x18004c1e0",
+      "name": "FUN_18004c1e0",
+      "pseudocode_evidence": "ev_243d33cdb4bcd0d414bd15611ad7cd5e7163a5144d3a18fa1a5a13364aa1f77e",
+      "assembly_evidence": "ev_d954ab7c7c8df868317f38b7de8d6f99bb29ff20a901f7881cbdf3364c54c5fd"
+    },
+    {
+      "va": "0x18004c1f0",
+      "name": "FUN_18004c1f0",
+      "pseudocode_evidence": "ev_7a213f4e96bf262505a29db01baed0c8d486f4a7e55e2f7487ffe9b0c93baa84",
+      "assembly_evidence": "ev_f34f4e8fc5aa094bd49b2f84a6e7d45b007f3724c288b5903b7355d26b760848"
+    },
+    {
+      "va": "0x18004c1fc",
+      "name": "FUN_18004c1fc",
+      "pseudocode_evidence": "ev_0d2fdfd05accf5adad2551f8caa2c92b42781264ce3a2be51750e40b3fa110be",
+      "assembly_evidence": "ev_5d7826f0f1558163dd902bd43d73b3165b4e7901fd66472355802cc82dee8bd6"
+    },
+    {
+      "va": "0x18004c218",
+      "name": "FUN_18004c218",
+      "pseudocode_evidence": "ev_f78fb82d7b506b79ffb2dfb120bd9a7cca20d5d45151b6f7322c16e719bd88e1",
+      "assembly_evidence": "ev_6f25e4cd41a2099038d48511d95fa3c0a2782ce1bc0009e91803b4eb28d12ad4"
+    },
+    {
+      "va": "0x18004c220",
+      "name": "FUN_18004c220",
+      "pseudocode_evidence": "ev_76faac70136697e04b6e2ea73b36f0eec2900dda04a5b5be73a763d0fee36918",
+      "assembly_evidence": "ev_af1b78b4f0378d10128982029050d4ba5a3be82a243a4bbd6460f04577528a92"
+    },
+    {
+      "va": "0x18004c25c",
+      "name": "FUN_18004c25c",
+      "pseudocode_evidence": "ev_ffe9447918636c59811f4ba0b9b9fb3defa02be857e31ee954acd366fd122e12",
+      "assembly_evidence": "ev_71219020f9c249be3cc671d6316593a19f1b7c9394f828f36802c3366f5eb4f1"
+    }
+  ],
+  "anchors": [
+    "04ba52/04ba84/04bab3: AL success checks; 04baaa and argv 04b474: EAX checks",
+    "04bb55..04bb6e: signed-positive count, decrement before startup validation",
+    "04bb15: wrapping 32-bit count increment after TLS callback",
+    "04baf1..04bb12: validate SLOT address then reload callback; invoke reason2",
+    "04bc62..04bc79: application FALSE attach -> application detach -> CRT detach with reserved bool",
+    "04bcb4..04bcc4: detach result replaces application return and becomes 1",
+    "04b5c6..04b638: already-initialized bypasses module-kind validation; static mode six all-ones words",
+    "04b570 ECX=0, then late ACRT and VCRT cleanup; return ignored",
+    "04c220/04c25c: actual start==end callback ranges empty"
+  ],
+  "limits": [
+    "Static-UCRT mode only; no invented general-UCRT startup locking or onexit-table initialization",
+    "Normal flow only. Native SEH filters, unwind/finally handlers, CRT EH metadata and XFG ABI not implemented",
+    "Remaining CRT lifecycle, table walkers, SList, stdio, environment, cookie, TLS validation/invocation and application callback are mandatory Effects",
+    "Application onexit Table borrowed from the actual onexit owner; lifetime and caller synchronization required",
+    "No DLL loaded, actual DllMain exported, native loader registration or native CRT backend invoked"
+  ]
+}

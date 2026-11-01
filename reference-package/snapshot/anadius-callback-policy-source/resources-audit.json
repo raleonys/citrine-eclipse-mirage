@@ -1,0 +1,37 @@
+{
+  "schema": "source-resources.static-audit.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "source_package": "B16",
+  "ownership": {
+    "Storage_before_OriginalEffects": true,
+    "policy_immovable": true,
+    "memory": "ApplicationMemory shared owner retains real DomainStorage provider lease",
+    "stream": "shared owner must also retain streambuf; caller serializes other stream users",
+    "encoding": "owned Calls and Errors",
+    "wide": "owned typed CRT adapter",
+    "execution": "borrowed exact final Runtime Execution",
+    "handles": "reserve list ticket before allocator; keep on known free failure; abort if live at destruction",
+    "factory": "copied std::function shares one-shot consumption; no publish in constructor"
+  },
+  "failure_prefixes": [
+    "source erases fabricated membership before free; allocator failure keeps policy/memory ticket, no rollback",
+    "explicit policy free retry does not finish source tracking cleanup or emit deleted log",
+    "invalid wide copy clears real output first, before compiler handler may throw/terminate",
+    "unknown ApplicationMemory outcome retains its own ticket/poisoned state; policy does not invent success"
+  ],
+  "open": [
+    "whole-callback state/admission synchronization",
+    "foreign host-thread PTD",
+    "native CRT/locale/EH/invalid-handler ABI",
+    "real hooks and external quiescence",
+    "7online foreign calls",
+    "configuration2remaining/license",
+    "B10 independent review debt",
+    "PE entry/unload/loader lock"
+  ],
+  "source_hashes": {
+    "policy.hpp": "4853874e12ac8104726c48b21943fd4f886d4d5456637f3e00d433f0e917af2e",
+    "policy.cpp": "c3e25afae59c2ef07e3017644c011b870aba4823307d20693b2f66cff9754110"
+  },
+  "actual_original_execution": false
+}

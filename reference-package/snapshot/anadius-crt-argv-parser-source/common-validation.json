@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "crt_argv_parser",
+    "result": "PASS",
+    "output": "PASS 57718 checks: argv parser vectors, inverse quoting, DBCS, count/output modes, order and guards",
+    "executable_sha256": "ec07a40edef8356f6292c0bae31d9e15d0c5f2a95677c54512122833a99781f3"
+  },
+  "execution_scope": "Native argument parsing normal flow; exact quote/backslash/DBCS ordering with bounded stable input and live output arrays",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-crt-argv-parser-source/parse.cpp",
+      "sha256": "51079d3bd82066b2c9508453f54a60947d0f6eb94ff536a20c31dd6e53d231e1"
+    },
+    {
+      "path": "anadius-crt-argv-parser-source/parse.hpp",
+      "sha256": "31c0ddfdf238dba9204d1fb6af1dc12692d4d7a16ea9d69bef82ee25c632bcc6"
+    },
+    {
+      "path": "anadius-crt-argv-parser-source/parser_tests.cpp",
+      "sha256": "27237c9ae6e1f65f262f9a54e1b8249b9a4916e004104b547bf2f1b3a961f2b1"
+    }
+  ]
+}

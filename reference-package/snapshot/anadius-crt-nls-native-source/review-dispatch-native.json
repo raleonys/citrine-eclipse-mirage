@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "reviewer": "crt_nls_native_dispatch",
+  "reviewed_at": "2026-10-19T13:51:06.7073770Z",
+  "sources": {
+    "native_api.hpp": "ed5c68f8f968122d7daf1fe70cc7ac9735e53bad212afe191d855a3043fb25f2",
+    "native_api.cpp": "9b066a5bd518ae8df9dbeaa7153bcf28b6b77c97b0a759ebd5a499d85a8de260",
+    "native_tests.cpp": "f0063faa8e94b84b164c24bb014cbab36f65ce3c41e57abe39f6bbca992da513"
+  },
+  "validation": "Standalone C++20 O2 Wall Wextra Werror build and 143 fixture/native synthetic assertions pass",
+  "review": [
+    "SDK decltype WINAPI signatures preserve full BOOL/DWORD/int and signed counts; raw paths forward live pointers unchanged",
+    "CPINFO success copies MaxCharSize and all 12 LeadByte entries; failure leaves caller CPInfo untouched",
+    "RestoreError declared before native temporary/staging; incoming LastError restored immediately pre-call, API result captured immediately post-call, guard restores captured value after cleanup",
+    "Tracked WideCharToMultiByte queries pass NULL and do not define cells; positive fills commit exactly successful returned byte count",
+    "Tracked GetStringTypeW requires positive bounded count and commits count WORDs on nonzero full BOOL success",
+    "Tracked null destination is passed as NULL rather than replaced by staging; impossible success invalidates possible cells and throws",
+    "Failures invalidate only potentially written prefix; tail cells retain prior evidence; invalid span/count boundaries rejected before SDK call",
+    "Native tests call only own literal strings, without original DLL/game execution or file modifications"
+  ],
+  "remaining": [
+    "Original SEH cleanup/ABI equality unclaimed",
+    "Source/default/used-default/raw destination pointers must be live host memory",
+    "Native concurrency and arbitrary scratch aliasing not established"
+  ]
+}

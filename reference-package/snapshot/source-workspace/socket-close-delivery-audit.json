@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T02:47:04.2217384Z",
+  "prior_package_sha256": "cd3594179672f2f170e039b3c4c8ac23bc243cee91de30fbadb5a82de3a39386",
+  "prior_source_count": 434,
+  "unchanged_prior_sources": 434,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/close_tests.cpp",
+    "anadius-socket-source/close.cpp",
+    "anadius-socket-source/close.hpp",
+    "anadius-socket-source/closing_tests.cpp",
+    "anadius-socket-source/closing.cpp",
+    "anadius-socket-source/closing.hpp"
+  ],
+  "current_sources": 440,
+  "current_documents": 174,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 150,
+  "cpp_objects": 146,
+  "c_objects": 4,
+  "normal_test_groups": 135,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_close",
+      "result": "PASS",
+      "output": "PASS: 221 socket close checks; injected socket/error APIs only",
+      "executable_sha256": "822e072d1aed4757e8cf56aaa0fcaa029816bb66189f07e20dc52d1d5610de26"
+    },
+    {
+      "module": "socket_closing",
+      "result": "PASS",
+      "output": "PASS: 143 socket closing checks; controlled cancellation and injected APIs only",
+      "executable_sha256": "b73505d66390acf53375e153d04562285a751ee01c559e8208eeeec3723aea10"
+    }
+  ],
+  "new_checks": 364,
+  "master_build_sha256": "48a09ac80d7074a3efd429848f944102e95efc36f2180eef28c59b5d40ab0d57",
+  "common_build_script_sha256": "283e94581f0eefdc1524d6b4351e6d48858339a010d47608baf58cc07c14a1a7",
+  "cmake_sha256": "ad9a4b3b8507b77230518d02fdf7e7fa7f6062fdabda05129764c42ca0e605c5",
+  "normal_source_procedures_added": [
+    "0x180026e50",
+    "0x180026fb0"
+  ],
+  "new_original_procedures": 2,
+  "new_composition": "Typed engine CAS and status-aware close/reset plus ClosingLifecycleEffects bridge",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

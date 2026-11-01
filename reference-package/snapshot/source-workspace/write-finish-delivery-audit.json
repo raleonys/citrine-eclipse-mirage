@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-23T13:40:41.0187886Z",
+  "prior_package_sha256": "e2ee00f257b15189df7860ef9653386c9e470f5e08c2ed7bdf9dc8c18614446e",
+  "prior_source_count": 518,
+  "unchanged_prior_sources": 518,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/write_finish_integration_tests.cpp",
+    "anadius-socket-source/write_finish_tests.cpp",
+    "anadius-socket-source/write_finish.cpp",
+    "anadius-socket-source/write_finish.hpp"
+  ],
+  "current_sources": 522,
+  "current_documents": 204,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 18,
+  "validation_mirror_pairs": 19,
+  "native_objects": 176,
+  "cpp_objects": 172,
+  "c_objects": 4,
+  "normal_test_groups": 165,
+  "terminal_cases": 19,
+  "socket_groups": 38,
+  "new_checks": 3132,
+  "new_tests": [
+    {
+      "module": "socket_write_finish",
+      "result": "PASS",
+      "output": "PASS: 2493 socket write finish core checks; actual025a70 mask/pop, saved strings/owner and live callback mutations, size/alignment boundaries and terminal, exact category/code suppression and log stream order, wrapped signed virtual offset, heap lifetime ends, bounded projections and callback exception prefixes",
+      "executable_sha256": "36b6b407e2dfc0e6c5c16467f4670473f34a4920f8bb65e9176c3b079dcd4351"
+    },
+    {
+      "module": "socket_write_finish_integration",
+      "result": "PASS",
+      "output": "PASS: 639 socket write finish integration checks; actual025a70/023dd0/021fd0/0261d0/027c10/0298b0/027a20/recovered scheduler composition, three chunks, early queued handshake, key2 metadata, fallback queue, IO and handler cache reuse, injected exact SDK imports and actual heap lifetime ends",
+      "executable_sha256": "ef14eccfabd769633efd9d8fe8b8ca542b8d92d2d69cd5fa7b46a5c0e90d58a6"
+    }
+  ],
+  "master_build_sha256": "df08f0b8a4405315c3fa7d87c5bb332b2c237ab484a2fc6faec68db03d5f33db",
+  "common_build_script_sha256": "eedf5eca2a564ade6730897a61730c90890de88279f5f61558b5eab4a89251e9",
+  "cmake_sha256": "adea6d82d12bdf82c84e7a858bdea83ec7258199a9ab5247899517b266b59d4a",
+  "normal_source_procedures_added": [
+    "0x180025a70"
+  ],
+  "new_original_procedures": 1,
+  "new_composition": "RecoveredFinishedWriteEffects closes previous025a70 finish algorithm provider through existing composed-write/async-send/constructor/worker/completion/handler source chain; success deque/pop/next02a500provider anderrorcategory/message/log/cleanup",
+  "independent_review": "PASS two frozen sources; separate test author",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "required_providers": "02a500/025c40;native allocator/categorymessage/log/stream;polymorphic/RTTI/reference/global/lifetime/concurrency/SEH/ABI/fullDLL",
+  "native_equivalence": "not established; typed unique identities and bounded string/header/map projections; normal callback sequence only; injected SDKs and synthetic owned fixtures; no original target execution"
+}

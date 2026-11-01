@@ -1,0 +1,127 @@
+{
+  "schema": "achievement-runtime.static-source.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "functions": [
+    {
+      "address": "0x180041b60",
+      "pseudo_evidence": "ev_68595116803098f1d28c51d6c2cf79c7ec9e646a902f5a82d68490a03b628239",
+      "assembly_evidence": "ev_7a1e946a32600dde2f69f281612ad78d0f37819a97d59a29a134a8f95817603d"
+    },
+    {
+      "address": "0x180030010",
+      "pseudo_evidence": "ev_8e0c6e33949acd640bbdc56b56ceea86f8bb373eca849ee8c6a34d8a0ac1b175",
+      "assembly_evidence": "ev_62f5fc49da4ec38f00325c7e0b857c87556da27030afd17618aec1e4238cb16c"
+    },
+    {
+      "address": "0x180041ff0",
+      "pseudo_evidence": "ev_89a838df3190068a41d3c5907aec78720d14c6645ae91440bd77f92778e164dc",
+      "assembly_evidence": "ev_9d8c05e7881ace56f5053a11d8c9b6148320e73c05a8db0fd152a3ad78b0619c"
+    },
+    {
+      "address": "0x18001f9a0",
+      "pseudo_evidence": "ev_62b9a1da24b690b13ccc9ef87ff538b194425801a3a0857c3220da35a50c024f",
+      "assembly_evidence": "ev_488d569fd12cfa9fe60d4d35d04b56c9d44b52396427f3060d14d2a7e0125a5a"
+    },
+    {
+      "address": "0x18003c1d0",
+      "pseudo_evidence": "ev_69190e83bcae202b03f4fa8834b567484e7a048bd0cad2004da94e2895f74606",
+      "assembly_evidence": "ev_97eaf0d1a5c0d1e7ad14855daa321d9f92e4aabb4a1d614bc467ef53f3010812"
+    },
+    {
+      "address": "0x1800019b0",
+      "pseudo_evidence": "ev_b3d51657cdeb2a047d2304497b30ab53df7c23fe0e2e2a6fddd1c83d759acbd7",
+      "assembly_evidence": "ev_4aed1f624e8b723ecdd4f51c92e236b86525f519467b11fcc605affa43fecf6a"
+    },
+    {
+      "address": "0x18002bf60",
+      "pseudo_evidence": "ev_36f776a4ed15aef209cfd93a967b20d22e5b5534beeef599d92d7e81782bafc4",
+      "assembly_evidence": "ev_a0dbb37ea2292684250d7ad20a69cf65c5d80318d16ae15df07e57cda57956c5"
+    },
+    {
+      "address": "0x18002c080",
+      "pseudo_evidence": "ev_4fc842428bfe64a98f3598f7855afadd8256f6bf34367ad6a37f01d773b61336",
+      "assembly_evidence": "ev_7daf4ceb18ab81a816f462dc85a5a28b56ae285c85198f91bf2299e53ae9443b"
+    }
+  ],
+  "listing_hashes": {
+    "pseudo": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "source_hashes": {
+    "utc.hpp": "75f907fe609da71eeb4c7737da137ed0a53574fac251c820a4007b19c5214373",
+    "utc.cpp": "7684a1ffe3dfbb52585c893eb23c53c1ec7f272862cb258cb99b52f84d9f7cbe",
+    "runtime.hpp": "d28eb0121de0efa000ea2179f3d8934d4aaf212a36407146b5078116844ea400",
+    "runtime.cpp": "5ec1e7c2fc2dced97d781450ad15058bc9cc2c9f5486d7ff3c35fe81bfd9e2b7",
+    "utc_tests.cpp": "8bbe7fbc16ca3555643772f6d89a3e3425435c69e50eb87eb2026d792837fd31",
+    "runtime_tests.cpp": "c0aed1b2c906e692de730cbf24e92ea761eda865fc950cc92b37ece96d956c27",
+    "build.ps1": "98b700b49a4000c2183d59b381a3c4a151d53374fdf29c37353c0ecbd87f1582",
+    "CMakeLists.txt": "de8e1ec32d9d75e978c675a1eede4c159529886e435c8a8b03fddc83ad61954b",
+    "README.md": "ca7cdcdded6014eb24c4240432a818e6d3d69999ff733fa9bbdb9afb6979779f"
+  },
+  "support_hashes": {
+    "evidence.pseudo.c.txt": "93063e04de43c6e07d0d06d540dd45504c74db25f9f0c226f86703ab23bd5460",
+    "evidence.asm.txt": "5071ff1887a36f35bd6110dbcd19d10f06b057294c8099adfae45b7bb6ad2f16",
+    "flow-audit.md": "3d3960ee478e4390bebe69db60299a925832f051d231227ceb65444f537ee122",
+    "flow-audit.json": "68e2a4c2c13bdf769193f782d92b3d24cbe345070b5d4c48c8a27e8798f1418a",
+    "review.md": "3595ace50837fbc346535559c7e9538db5ebf84ba9a2d38f2d811211aa66b6ff",
+    "review.json": "cf08a86352455ebdfcf9d042e745dfda1ab377e2a377942f9cec5bf507a7789f",
+    "rea-session.json": "35514332f51d1c77a2d729115957b2495880110b4903095585f1c738efca5461"
+  },
+  "normal_source_procedure_added": "0x180041b60",
+  "new_composition": "PersistenceEffects and bind_state, not separate original procedures",
+  "claims": [
+    {
+      "addresses": [
+        "0x180041b9e",
+        "0x180041bad"
+      ],
+      "finding": "time followed by unconditional gmtime even rawtime=-1"
+    },
+    {
+      "addresses": [
+        "0x180041bbb",
+        "0x180041bcd",
+        "0x180041bd9",
+        "0x180041bde"
+      ],
+      "finding": "Copies9tm; optional epoch recomputed by041ff0 and written before formatter"
+    },
+    {
+      "addresses": [
+        "0x180041ca2",
+        "0x180041ca5",
+        "0x180041ccf",
+        "0x180041d5e"
+      ],
+      "finding": "Any nonzero low byte filename format; no output stream state gate; available explicit-length bytes preserved"
+    },
+    {
+      "addresses": [
+        "0x180041dc6",
+        "0x180041dcb",
+        "0x180041de0"
+      ],
+      "finding": "Gmtime failure gives empty string and optional epoch0"
+    },
+    {
+      "addresses": [
+        "0x18003064a",
+        "0x1800307cd",
+        "0x180030ac1",
+        "0x180030b4c",
+        "0x180030bd1"
+      ],
+      "finding": "Grant clock then completion event then XML then INI then response/unlock; XML BOOL ignored"
+    }
+  ],
+  "independent_production_review": "PASS; review.json frozen4file hashes",
+  "original_execution": "none",
+  "real_user_files_read": false,
+  "CRT_production": "unchanged",
+  "selected_compatibility": "Host time/gmtime/put_time; existing file backend and pinned XML reader; not recovered original CRT/native ABI",
+  "unproven": [
+    "Arbitrary native locale/time_put/clock CRT equality",
+    "Native STL allocation/exception/SEH/ABI/global startup",
+    "Full DLL and other achievement/event/provider runtime paths"
+  ]
+}

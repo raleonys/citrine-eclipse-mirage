@@ -1,0 +1,192 @@
+{
+  "schema": "anadius.config-hash.growth-positional-copy.v1",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "evidence_type": "Retained REA static assembly/pseudocode plus own synthetic C++ oracle tests; no original execution",
+  "source_listings": [
+    {
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "path": "../anadius-all-functions.pseudo.c"
+    },
+    {
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "path": "../anadius-all-functions.asm.txt"
+    }
+  ],
+  "functions": [
+    {
+      "address": "0x180010bc0",
+      "pseudo_evidence_id": "ev_cc27af00753a37a8af4cd2aabd1b1067e70554338105f183dee3360c389f8348",
+      "asm_evidence_id": "ev_f805ec8d0abbcd800fd1d3c1c43f010de75c882d07fc42219512cfe945a6336e",
+      "pseudo_line": 13864,
+      "asm_line": 17174
+    },
+    {
+      "address": "0x180011970",
+      "pseudo_evidence_id": "ev_91cab609774a710edd0530e7fe7aca3653228cdbc3856fd13532f170728718e1",
+      "asm_evidence_id": "ev_f12ed8fb93783693e14dbc1637e53261c71997f0fbc1ce40df7358fe5e56ca40",
+      "pseudo_line": 14471,
+      "asm_line": 18100
+    },
+    {
+      "address": "0x180011ba0",
+      "pseudo_evidence_id": "ev_f41f4a819fee5b4d28b14e9e46a687e7b970ea5c8b7b132c7a8307689f02875c",
+      "asm_evidence_id": "ev_95955b6e5038db31b6643051aac05673de47f7aeec8006a387085f2dfd6c9f5d",
+      "pseudo_line": 14601,
+      "asm_line": 18252
+    },
+    {
+      "address": "0x180012820",
+      "pseudo_evidence_id": "ev_7feb6d6b079edf2bdfc1ba8d211a0ce70e980a6fb018b88bab839d2a626d87ad",
+      "asm_evidence_id": "ev_f5beba6364101c2b8d050ec3bd5896e380a12229361e19846018c4de05a94878",
+      "pseudo_line": 15227,
+      "asm_line": 19098
+    },
+    {
+      "address": "0x180012bf0",
+      "pseudo_evidence_id": "ev_63a5fd242824ae860c6e0651bf9cd763f49d90d2860196b0ceb04f55c5311f51",
+      "asm_evidence_id": "ev_ffb588586cfbe4e81e630ff4852f4548f8d864593d4ca85de62726f3776d2e9c",
+      "pseudo_line": 15442,
+      "asm_line": 19352
+    },
+    {
+      "address": "0x180012cf0",
+      "pseudo_evidence_id": "ev_7565af06346566f029b375f7822fdce9eebb6912e47dce7b601837256ab704c5",
+      "asm_evidence_id": "ev_de13ca595c41e442ff144c9b6d1c9c481875234c4b68e967496c3d45b12c9297",
+      "pseudo_line": 15486,
+      "asm_line": 19414
+    },
+    {
+      "address": "0x1800132a0",
+      "pseudo_evidence_id": "ev_e061bedb98cd8d1f30b27a04d549efa9256cbf375a979635f3f531254db06482",
+      "asm_evidence_id": "ev_ba88b35d6ea881da1437be810ce268e0cfffc2a05e5e4302575199d01082089d",
+      "pseudo_line": 15758,
+      "asm_line": 19781
+    },
+    {
+      "address": "0x180014970",
+      "pseudo_evidence_id": "ev_836da1231e85c7051ca9579ff37c2705ad2e2d2c90353e0a53a6e3fa8662f8cb",
+      "asm_evidence_id": "ev_9000411c0b7f712474630a1ab9c2a74075021249fae022a9fcda65973b52686a",
+      "pseudo_line": 17236,
+      "asm_line": 21393
+    },
+    {
+      "address": "0x180014a90",
+      "pseudo_evidence_id": "ev_296bb1bc52d3cecee8f33d8f811b33463558d6251e00da43832e29d9c1f0fa24",
+      "asm_evidence_id": "ev_b83b2f2d8e07502ddb104c45146bb4248370c970cef2add21f25afad9bb60f45",
+      "pseudo_line": 17286,
+      "asm_line": 21474
+    },
+    {
+      "address": "0x180014b10",
+      "pseudo_evidence_id": "ev_b1b726c13f04ccc8ff4ba15fc3cd08ea56c87e45f950d9e9f6d9ac7a46d81675",
+      "asm_evidence_id": "ev_0ba3a082668913b2a9f2b01564b359f89a534193f1832500b59f436f7fba9626",
+      "pseudo_line": 17312,
+      "asm_line": 21506
+    },
+    {
+      "address": "0x1800162f0",
+      "pseudo_evidence_id": "ev_eb165761bebee321d429869fbc04c4978b3a68c8f4111e91216a899887c12c29",
+      "asm_evidence_id": "ev_8975dcb6850d9f73375de19ac628dbf270d8f0722bae94ba4b3ff22c3a9af0f9",
+      "pseudo_line": 18640,
+      "asm_line": 23051
+    },
+    {
+      "address": "0x1800164f0",
+      "pseudo_evidence_id": "ev_83733d3a3f90d9482d7feecdfc8b95a7565163c8c675704f7ab8a34672bb7eb4",
+      "asm_evidence_id": "ev_c161a64fba74a89b0192583134853058ec33b17e4f038a5eb715121a548ac6b9",
+      "pseudo_line": 18754,
+      "asm_line": 23196
+    },
+    {
+      "address": "0x1800165c0",
+      "pseudo_evidence_id": "ev_227e0d7893d052061da350d003ffc9bce5422bd90460e0f26e214ef7fc1ec995",
+      "asm_evidence_id": "ev_9610f1adb392b14497e277699d3612412deb9c5d518bb165cc368beb516e0452",
+      "pseudo_line": 18795,
+      "asm_line": 23250
+    },
+    {
+      "address": "0x180017440",
+      "pseudo_evidence_id": "ev_158911e2f57194b923ca14a14bd9e3666f9a5421f4803b6f8756abb15fe66e4e",
+      "asm_evidence_id": "ev_fce537127a3eab78265095bffbe5e0b079653d9a7442fe00cd74323fd89a943a",
+      "pseudo_line": 19638,
+      "asm_line": 24240
+    },
+    {
+      "address": "0x180017570",
+      "pseudo_evidence_id": "ev_7de7d396b3d48bd1ff72af08e3352ab2f4c81bc3f3c936a732c87194229f50c3",
+      "asm_evidence_id": "ev_654570b2a2bb545e6563072f65c84f40e7a9c5538fb0dd951ada09227ae0c865",
+      "pseudo_line": 19709,
+      "asm_line": 24327
+    }
+  ],
+  "claims": [
+    {
+      "addresses": [
+        "0x180014a90",
+        "0x180012820",
+        "0x180011970"
+      ],
+      "finding": "Fresh8/load1, length-based unsigned FNV1a64, existing key no movement, unique insert before bucketfirst or sentinel",
+      "confidence": "direct static + typed logical reconstruction"
+    },
+    {
+      "addresses": [
+        "0x180017440",
+        "0x180017570"
+      ],
+      "finding": "Binary32 size/load ceil, min8/current retention, below512 eightfold, rehash power2ceil; unique bucketgroup reversal",
+      "confidence": "direct assembly and pseudocode + independent list-splice oracle"
+    },
+    {
+      "addresses": [
+        "0x1800162f0",
+        "0x1800165c0"
+      ],
+      "finding": "Destination old list positions reused against source list positions; recursive child assign keeps destination child capacity; extra source rows clone; excess destination tail deleted; rehash always unless self",
+      "confidence": "direct static, including016340..01637f and0163da..0163ec"
+    },
+    {
+      "addresses": [
+        "0x180010bc0",
+        "0x1800132a0",
+        "0x180014970",
+        "0x180011ba0"
+      ],
+      "finding": "New descendants inherit source bucket/mask/storage span and reinsert source list; fresh root assign and descendant clone have distinct capacity histories",
+      "confidence": "direct static, including01331f..013357"
+    },
+    {
+      "addresses": [
+        "0x180012bf0",
+        "0x180012cf0",
+        "0x180014b10",
+        "0x1800164f0"
+      ],
+      "finding": "Parser action duplicate assignment replaces entire inner node by move; no key row movement; replacement child table retains source move capacity",
+      "confidence": "direct static"
+    }
+  ],
+  "source_hashes": {
+    "hash_table.hpp": "d05e54e5232dda1b8cb9e3aabe46677135cf60483939bee7b2801f489025e2bf",
+    "hash_table.cpp": "15df336c45bd842333e5e56588d4c79a4e581c6ec239c488370926f13251934f",
+    "hash_table_tests.cpp": "5cafe744cc5d8b6dfa356a4c378d289ef2c3717b04be3b4dd4e16e7f3db00360",
+    "build.ps1": "bdcb01e348d757d8961976ac60827bd0cac57111696d04fa559c2277b389eb1b",
+    "CMakeLists.txt": "2f8ff2d89ef9d191f345543dea994f993842d49a4c46be1b8f192562d5a790da",
+    "README.md": "992f59224511be89995324201c543daf418f8e59cc03fdd898506847a8fb0804",
+    "evidence.asm.txt": "6a7b77ef8af4d3250ed1a9f3a1b9683ec8d75d8289840c238e1c5a0d830623ca",
+    "evidence.pseudo.c.txt": "2c63748124b58d4c94268281726d730093974f52be7804a08f499b648793e622"
+  },
+  "validation": "validation.json:4929checks",
+  "full_original_bodies_added": 0,
+  "admitted_scope": "Unique-key parsed Config2 trees, observed fixed load factor1, disjoint owned copy or selfassignment, normal execution; numeric max native size/bucket targets enforced",
+  "unproven": [
+    "Native allocator/layout/string object ABI",
+    "Native allocation/fault/exception/SEH timing or partial mutation",
+    "Final consumer timeline outside this module",
+    "Overlapping ancestor/descendant assignment",
+    "Original execution/whole DLL parity"
+  ],
+  "original_executed": false,
+  "user_cfg_read": false
+}

@@ -1,0 +1,66 @@
+{
+  "target": "anadius64.dll",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "provider": "Ghidra 12.1.4",
+  "analysis": "retained static evidence; no target opened or executed in this subtask",
+  "function_count": 1,
+  "functions": [
+    {
+      "address": "0x1800636c0",
+      "recovered": "parse_0636c0",
+      "direct_dependency": "0x18006f9a8 signed-byte multibyte-lead predicate; mandatory external Effects provider",
+      "assembly_first": "0x1800636c0",
+      "assembly_last": "0x180063884"
+    }
+  ],
+  "retained_sources": [
+    {
+      "file": "anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42",
+      "function": "0x1800636c0",
+      "evidence_id": "ev_ed00e9744f46469e25bb27fb3ebac38f987cac9513a6ef9442c3389e0e6d9aa1",
+      "selected": "selected.asm.txt",
+      "selected_sha256": "2d821da422a0d528f77e2dd3ad33fecdf46d63911c3ee650ddcbeddc959713ed"
+    },
+    {
+      "file": "anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+      "function": "0x1800636c0",
+      "evidence_id": "ev_339b48485a753b4766933230d35ec6871872e9333f98e60f454f384efd1b25bc",
+      "selected": "selected.pseudo.c",
+      "selected_sha256": "fb8f6c92e3d579a6a819a1f8bc1f8428d33357afa7ec0a4093f740ec5918d6a9"
+    }
+  ],
+  "claims": [
+    {
+      "addresses": "0x1800636ed-0x180063701",
+      "claim": "character count reset before pointer count=1 and optional initial argv store"
+    },
+    {
+      "addresses": "0x180063708-0x180063775",
+      "claim": "program argument special quote stripping, pre-count/copy/predicate order, delimiter overwrite or copied NUL"
+    },
+    {
+      "addresses": "0x18006372f-0x180063737;0x18006381c-0x18006381f",
+      "claim": "both predicate arguments sign-extend an 8-bit byte to int32"
+    },
+    {
+      "addresses": "0x1800637ac-0x1800637f9",
+      "claim": "uint32 slash runs; odd/even slash quote rules; paired quote inside quote"
+    },
+    {
+      "addresses": "0x180063812-0x180063842",
+      "claim": "later byte write precedes predicate and count; trail count precedes trail write"
+    },
+    {
+      "addresses": "0x180063847-0x180063864",
+      "claim": "each NUL and final argv NULL counted; optional outputs independent"
+    }
+  ],
+  "limitations": [
+    "New std::span storage contracts and out_of_range guards are reconstruction choices for unsupported inputs.",
+    "Only normal flow is reconstructed; no SEH/unwind equivalence claim.",
+    "No original source, exact compiler/library version, target execution, native locale provider or complete DLL equivalence claim."
+  ],
+  "original_files_modified": false
+}

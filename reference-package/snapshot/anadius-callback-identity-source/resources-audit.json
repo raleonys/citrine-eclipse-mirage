@@ -1,0 +1,62 @@
+{
+  "schema": "actual-callback-identity.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "Existing Domain/ProviderLease retains exact FLS/heap/initial locale; pointer mismatch never adopted or dereferenced",
+    "Fresh PTD snapshot permits errno/DOS offsets0x20..27 only; borrowed PTD contents not inspected or freed",
+    "CheckedEncoding unique-owns lower Calls; selected permission closure retains same ForeignDomain without ownership cycle",
+    "Poisoned active scope retains root/lease; no blind slot repair/free/retry of unknown outcome"
+  ],
+  "boundaries": [
+    "Both metadata mutexes released across FLS/provider calls; operation reservation prevents lifecycle transition during probe",
+    "Wrong thread/fiber returns false; same-owner caught permission reentry is sticky poison",
+    "Cleanup start excludes body permanently through detach/free/clear failures, including false with error0; known leave retry remains",
+    "Native admission prebody checkpoint also covers initial inherited original/wide routes; no per-call wide/CRT wrapper added",
+    "Encoding lower arguments/counts/output prefixes are forwarded exactly; check bookkeeping preserves incoming/outgoing LastError",
+    "Lower exception identity retained only when postcheck valid; invalid postcondition takes precedence with no rollback"
+  ],
+  "compiler_provider_inventory": [
+    "NativeCalls.locale_codepage reads linked compiler CRT; AreFileApisANSI reads process mode, not recovered PTD",
+    "Policy CrtApi raw function pointers have no explicit locale/context owner; recovered Seed.invalid_handler is separate",
+    "No setlocale, SetFileApisToANSI/OEM, _setmbcp or global invalid-handler mutation introduced"
+  ],
+  "open": [
+    "raw PTD free/ABA/transient restore",
+    "arbitrary provider/facet/native original reentry",
+    "external compiler locale/handler/codepage changes",
+    "inherited wide each-call checks",
+    "general concurrent callbacks/provider state",
+    "7online foreign calls",
+    "configuration/license/legacy document",
+    "B10 historical review debt",
+    "actual hooks/native CRT/EH/ABI/unload/PE"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-foreign-callback-source/foreign.cpp",
+      "before_sha256": "78d03ca7164949e04364689293c45c5e5a190ed134dcb2e39b45f9801e31fc84",
+      "after_sha256": "c4f85a5a76e2443f2474a3160cffefb4849d8b5267b293a9984c215ae2b8ed03",
+      "reason": "Release Domain mutex before actual PTD probe; check admission before body; wrap owned encoding pre/post lower calls with same permission"
+    },
+    {
+      "path": "anadius-foreign-callback-source/foreign.hpp",
+      "before_sha256": "24508bb44cab0b5b553593d3a294ad99eaab5b959a16ba7215fa9347d1160d9d",
+      "after_sha256": "353327a7367fe9579e5207c97394f64c64426a70f3365136719305e3722cc992",
+      "reason": "Declare const permission poison/publication bookkeeping without changing field order"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before_sha256": "7e56567bd85815ed10d54515fbb5b9df01913dbe418871e074c4da99ce5360a4",
+      "after_sha256": "0fd55b040243e7f88b6401ffaa73cebe8b8dc5d38441662f0b7aa811d2dcaf9c",
+      "reason": "Probe actual FLS identity without metadata mutex; retain sticky caught-reentry poison and cleanup-start exclusion, preserving known cleanup retry"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.hpp",
+      "before_sha256": "46258112cabee4a0e831f0a8f978cfde9a95f91bad48f2696e67baa97ee262e5",
+      "after_sha256": "37bf2a7947afee97bf3a7fa12dabf6e64124eaeb84ae6c40f2d6731c84926276",
+      "reason": "Document actual-FLS/fresh-snapshot body permission, retained unknown outcomes and sticky cleanup exclusion"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

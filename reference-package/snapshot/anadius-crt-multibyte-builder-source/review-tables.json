@@ -1,0 +1,45 @@
+{
+  "result": "PASS_WITH_DECLARED_BOUNDARIES",
+  "checked_at": "2026-10-19T02:33:12.9456532Z",
+  "reviewer": "/root/crt_mb_tables",
+  "reviewed_function": "0x18006f674",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "source_hashes": [
+    {
+      "file": "multibyte_builder.cpp",
+      "sha256": "8bfa8035b80634d324059b6919cd320c520ad326fa4da5fd657629c4a4f82e93"
+    },
+    {
+      "file": "multibyte_builder.hpp",
+      "sha256": "77e1586526f1cfee56a5cc145a4cb10f72bf65815889c2ca2ca58f4b4739074b"
+    },
+    {
+      "file": "multibyte_builder_tests.cpp",
+      "sha256": "b56b8d1e4b178ea5457a0963a337f78e0210582e38eb6a278821604f8c7a0673"
+    },
+    {
+      "file": "README.md",
+      "sha256": "43f28549226f6b119e64582f68ff8b97a8b45457ff6573035d4044432e70856f"
+    },
+    {
+      "file": "evidence.json",
+      "sha256": "deda8441aca12f89236bd7d07ee7f02e87cb6ea0d5caad5142be2545f18820a4"
+    },
+    {
+      "file": "retain-evidence.ps1",
+      "sha256": "080e339677297dc77ff16f1b6a9b07ba4ca4b2f4fc3e26dcc9c6a78ad58949cb"
+    }
+  ],
+  "checks": [
+    "Full retained disassembly compared with normal-flow C++: SystemCP low32, cp0 SBCS, five builtin rows, UTF7 rejection, IsValidCodePage low16 vs GetCPInfo full32, full32 BOOL, system-CP fallback, UTF8 partial writes, dynamic MaxCharSize==2, lead/trail indexes, locale CP reread, six WORD stores and case helper order.",
+    "Independently read exact-hash target PE bytes at retained raw file offset 0xa06c0; full 240-byte table matches evidence and all 195 C++ initializer values. Flags at raw0xa06b0 verified 01/02/04/08.",
+    "Tests inspected for exhaustive five builtin classifications, 768 endpoint combinations, reversed/multi lead pairs, UTF8 untouched bytes and write order, stored-CP mutation reload, malformed CPInfo explicit boundary. Existing strict standalone validation PASS885150 inspected; no repeated execution needed."
+  ],
+  "boundaries": [
+    "Original writable builtin .data mutation excluded explicitly by module contract; production constexpr rows represent shipped bytes only.",
+    "GetCPInfo successful-provider output is a mandatory complete logical CPInfo contract; native API behavior not established by synthetic tests.",
+    "Native calls, real loader/global initialization, ABI, concurrent mutation, SEH/security-cookie machinery and original malformed CPInfo stack overread remain unproven.",
+    "Scope-boundary exception on unterminated CPInfo is deliberate model boundary, not original error behavior."
+  ],
+  "source_changes": "none"
+}

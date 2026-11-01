@@ -1,0 +1,47 @@
+{
+  "artifact": "anadius64.dll",
+  "sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "image_base": "0x180000000",
+  "method": "Retained hash-bound REA/Ghidra assembly and pseudocode for generic qsort; separate bounded offline machine-code evidence for the comparator outside Ghidra's function inventory",
+  "retained": {
+    "pseudo_sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb",
+    "assembly_sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+  },
+  "functions": [
+    {
+      "address": "0x1800768f0",
+      "role": "generic qsort normal flow",
+      "pseudo_evidence": "ev_ddd047a534971f5bc45280c21436c6d3be13b02fb9c0f924fa04a2fbf3e1aeba",
+      "assembly_evidence": "ev_f8ca5d27bc8124fbc68d7326b0ab5ec2b1519dd624c428419824a40cc3e691d5"
+    },
+    {
+      "address": "0x18006e41c",
+      "role": "unsigned argument-address comparator; separate offline bytes, not a REA-defined function",
+      "bytes": "48 3b ca 73 04 83 c8 ff c3 33 c0 48 3b ca 0f 97 c0 c3",
+      "length": 18,
+      "semantics": "CMP RCX,RDX; JAE equal_or_greater; OR EAX,-1; RET; XOR EAX,EAX; CMP RCX,RDX; SETA AL; RET",
+      "bounded_provenance": "comparator-offline-evidence.json",
+      "bounded_disassembly": "comparator-offline-disassembly.txt",
+      "reproduction": "collect-comparator-evidence.ps1",
+      "range_sha256": "65edb74eba91137966a46fd4f1f4dc3b85f8fab4fc9d2638a917bac72894f115",
+      "inventory_limitation": "No Ghidra function evidence ID assigned"
+    }
+  ],
+  "decisive_instructions": [
+    "076918..07693f: null base with nonzero count, zero width or null comparator -> errno accessor 05d724, store DWORD22, invalid handler05c954",
+    "076941..076945: valid unsigned count below2 returns without comparisons",
+    "07699f..0769a3: ranges of8 or fewer use maximum-selection shortsort",
+    "076a4f..076b03: compare(lo,mid),compare(lo,hi),compare(mid,hi); pseudocode drops some second arguments",
+    "076a00..076a14 and other swap loops: read right/read left/write left/write right per byte",
+    "076b40..076c4a: two-sided scans skip pivot address and partition equal elements",
+    "076c58..076c60: signed range-size comparison JL; address bounds elsewhere unsigned",
+    "076a32/076a37,076c67/076c6c: two 62-entry address arrays at RSP+30 and RSP+220"
+  ],
+  "limitations": [
+    "New opaque-address provider boundary, not original binary ABI",
+    "Explicit domain_error on62-entry stack overflow is a supported-domain guard absent from original code",
+    "Provider bounds rejection is not claimed as original memory fault or invalid-parameter behavior",
+    "Normal flow only; security-cookie machinery, CFG dispatch thunk and SEH are not reconstructed here",
+    "Synthetic tests do not execute or compare against the original DLL"
+  ]
+}

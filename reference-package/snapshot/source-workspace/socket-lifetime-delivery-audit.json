@@ -1,0 +1,58 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-10-22T02:32:28.0300967Z",
+  "prior_package_sha256": "1582f1decdb06e05a9cac95a968a51d3dad71c6286825e2bff73fe26dcc712fe",
+  "prior_source_count": 428,
+  "unchanged_prior_sources": 428,
+  "changed_prior_sources": [],
+  "removed_sources": [],
+  "added_sources": [
+    "anadius-socket-source/lifecycle_native_tests.cpp",
+    "anadius-socket-source/lifecycle_native.cpp",
+    "anadius-socket-source/lifecycle_native.hpp",
+    "anadius-socket-source/lifecycle_tests.cpp",
+    "anadius-socket-source/lifecycle.cpp",
+    "anadius-socket-source/lifecycle.hpp"
+  ],
+  "current_sources": 434,
+  "current_documents": 172,
+  "source_snapshot_mismatches": 0,
+  "documentation_snapshot_mismatches": 0,
+  "review_and_evidence_hashes_verified": 28,
+  "native_objects": 148,
+  "cpp_objects": 144,
+  "c_objects": 4,
+  "normal_test_groups": 133,
+  "terminal_cases": 19,
+  "new_tests": [
+    {
+      "module": "socket_lifecycle",
+      "result": "PASS",
+      "output": "PASS: 244 socket lifecycle checks; controlled service/list/owner providers only",
+      "executable_sha256": "3b76fd4f7d63a42f568317ad6b3dccfa837d42209596b1c4cae56c7aac1add07"
+    },
+    {
+      "module": "socket_lifecycle_native",
+      "result": "PASS",
+      "output": "PASS: 165 socket lifecycle native checks; injected SDK gate imports only",
+      "executable_sha256": "9776670357a1f095fa957370fe27223f3234ae1561cf0de759fcc670d6c0cfab"
+    }
+  ],
+  "new_checks": 409,
+  "master_build_sha256": "8a34b0f22ac49f361bce443d386a2cb79e95d5328aa2dc2ca6a03d3c3e7f1632",
+  "common_build_script_sha256": "499efe5894b101312e5bf0243ffa33c76351753c4e65eb6a5c90876f1be19f81",
+  "cmake_sha256": "7d8a604a34a1b1943131cfc8b13ec7d06092bbdca61afb4c544a06e7c58c0e49",
+  "normal_source_procedures_added": [
+    "0x1800211b0",
+    "0x1800237f0",
+    "0x180024db0"
+  ],
+  "new_original_procedures": 3,
+  "new_composition": "Typed service/list/atomic owner lifecycle plus partial LifecycleRuntime bridge and injected SDK gate",
+  "independent_production_source_review": "PASS,4frozenfiles; independent tests authored by separate worker",
+  "original_execution": "none",
+  "real_user_cfg_or_achievement_files_read": false,
+  "CRT_production": "unchanged",
+  "native_socket_ASIO_ownership_concurrency": "not established; injected SDK imports, partial bridges, caller-owned socket/state/category provider",
+  "native_ABI_SEH_global_runtime": "not established"
+}

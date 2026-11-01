@@ -1,0 +1,191 @@
+{
+  "kind": "read-only static startup requirements audit; no production edits",
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "report": "work/multibyte-startup-audit.md",
+  "checked_at": "2026-10-20T13:49:01.226Z",
+  "new_original_bodies": 0,
+  "original_execution": false,
+  "original_modification": false,
+  "REA_session": "Root managed; no session opened by reviewer",
+  "source_hashes": {
+    "outputs/anadius-crt-multibyte-control-source/multibyte_control.cpp": "9b10c705cb14dbc306c5bdc16213a849ecd2d10ee124714fb2e0ecc6fd393adb",
+    "outputs/anadius-crt-multibyte-control-source/multibyte_control.hpp": "064bc605e53cbd603cd0802998fd4ee950e8671f583967e28fa8bd6719704b45",
+    "outputs/anadius-crt-multibyte-control-source/evidence.json": "23d7ca242d88bc5d9d41cbe2af4e9567648776ad2d8a78dd4bd70a6e4416a763",
+    "outputs/anadius-crt-multibyte-support-source/multibyte_support.cpp": "59c1645aa5e8fe79ed0b81d4c99e9bb261138bab562b7c01856f7e857030a8fd",
+    "outputs/anadius-crt-multibyte-support-source/selected-evidence.json": "1b34feb3562926290bd3494f364075ea73bd069f9863057fd68e7dad73720b77",
+    "outputs/anadius-crt-multibyte-builder-source/multibyte_builder.cpp": "8bfa8035b80634d324059b6919cd320c520ad326fa4da5fd657629c4a4f82e93",
+    "outputs/anadius-crt-multibyte-record-bridge-source/bridge.cpp": "0626560be877e1c55112f42a7ef43e03ecc3829a817ffdc4ada1938bbb0bb9a1",
+    "outputs/anadius-crt-multibyte-record-bridge-source/bridge.hpp": "0b4c1afe8bb5de097bf331b043ee6eaa97f3e2b5df51e1846bb57ec5a6a57f77",
+    "outputs/anadius-crt-multibyte-bridge-source/bridge.cpp": "ea05b812204cb2386fd7685f66d8a0387405eac695dd357885996e802a7c75e5",
+    "outputs/anadius-crt-multibyte-bridge-source/bridge.hpp": "83696a8c10727955f7185a8221d460d433a782650c37540ac845bb7e7fd2a522",
+    "outputs/anadius-crt-locale-bridge-source/bridge.cpp": "1982408e677536e318615f84bd30aa455a64449d4b4a8695d5fda5822f2aaa59",
+    "outputs/anadius-crt-locale-bridge-source/bridge.hpp": "e49856d6172275d730081348414f4104c89f3e3f88684ed592343cadfbcbc118",
+    "outputs/anadius-crt-locale-resource-bridge-source/bridge.cpp": "6980577c496eab1dc32bad66f07d57e840ef113fb920bd0dd786e089be3008fa",
+    "outputs/anadius-crt-locale-resource-bridge-source/bridge.hpp": "614e7104746d22778cbe7d393266ff6c840e44a2989ab23a2aad9d965fbcc53c",
+    "outputs/anadius-crt-initial-state-source/initial_state.cpp": "0331798d8f552c3dbea10b92697cb1b43dde5ff90290ffa63bc190d72cea8279",
+    "outputs/anadius-crt-initial-state-source/initial_state.hpp": "052618a576469a8d3a17d4d5610230fc03761fcc32cdaacab00ea39e77e3016c",
+    "outputs/anadius-crt-initial-multibyte-source/extracted-data.json": "ff78f8e235e8e940eb77465303c7ecba79c45a1eed2c1b6c1ba317f37ca1059d",
+    "outputs/anadius-crt-initial-multibyte-source/initial_mb.hpp": "d69491ef05381d0dcf1ce75199dbb07d586fe3edec680cab57c57bce0ea0d1a6",
+    "outputs/anadius-crt-ptd-source/ptd.cpp": "10acd8af32ce3bb02b4c482c91183980b0db6ea883a5f8a344100a4c70cfe8fe",
+    "outputs/anadius-crt-ptd-source/ptd.hpp": "ed059fd795ee661fdd539d2a706a9cf74deb419320da976ed628c431cb32ab73",
+    "outputs/anadius-crt-ptd-data-source/ptd_data.cpp": "a652295af2cae58c1afd249771135e35a86c4bf1304a328b62ba3ce42d7554ea",
+    "outputs/anadius-crt-ptd-data-source/ptd_data.hpp": "25d5f6fb41a9991cc200fd2ceb5131df693d70883afbe3f5c15c316bdb65c21e",
+    "outputs/anadius-crt-locale-thread-source/locale_thread.cpp": "94056806d91af6a462f4ffc63086ca10960c4e189d7bc9342aa5c7cfd19bfd4c",
+    "outputs/anadius-crt-locale-update-source/locale_update.cpp": "05bf4170ced404a2137cba5f33528ead4338684695330ddcec409fb3d1221fa0"
+  },
+  "retained_REA": {
+    "control": [
+      {
+        "address": "0x18006f2d0",
+        "pseudocode_evidence": "ev_9284660353ac30ffe42b945eda84d37c9a283efb02b1dd79d46c13a8f57638bf",
+        "assembly_evidence": "ev_85ea52b71c9b1d78e4844e8c6a0d02a4b390325ac23bac449f0e8c968b21073c"
+      },
+      {
+        "address": "0x18006f5f8",
+        "pseudocode_evidence": "ev_41d653fbbc06a7e42a13a95dfee0e48e5f946725be02ecd36eca6dcc7bec3017",
+        "assembly_evidence": "ev_e90764f05824434e1aeb88a2b5fee00f692636a92849517a7c91ea719da84931"
+      }
+    ],
+    "ptd": [
+      {
+        "va": "0x180064c64",
+        "pseudocode_evidence": "ev_61b5b31cde4b9171aa1c70ed02891a666a04bf9c49a6ed679f13a98ff40af11c",
+        "assembly_evidence": "ev_298198c276b007333c8cbff65a3cb67d9965ba716936ec649c82c4c370a9cf2b",
+        "scope": "full recovered normal control flow; mandatory Effects dependencies"
+      },
+      {
+        "va": "0x180064e90",
+        "pseudocode_evidence": "ev_9e333e33a4960b2fa42317907dca8150dff6c829e4d2a8ac893f096a103d7ce7",
+        "assembly_evidence": "ev_5ed7b96fbbda943b1bd2245697639ed8fc1b17d8c96f0de32d484e7b0c450bd9",
+        "scope": "full recovered normal control flow; mandatory Effects dependencies"
+      }
+    ],
+    "ptd_data": [
+      {
+        "va": "0x1800647d4",
+        "assembly_evidence": "ev_fa8f38d07bfd2492030ba19a46c94a80574b1dba417df94697621779061facf7",
+        "pseudocode_evidence": "ev_2d71977052fa0a6ea8f8e28a2042644c075b7734379d8562288ce0902ed7e170"
+      },
+      {
+        "va": "0x18006489c",
+        "assembly_evidence": "ev_d4925fdd83a756dd03f058472a57d4a1e72599699c45e333abde975cd747cc1e",
+        "pseudocode_evidence": "ev_555832449e782628299643c9ec795a697f0f983393ff919f3c4d7bcfef5d5e3b"
+      },
+      {
+        "va": "0x1800648fc",
+        "assembly_evidence": "ev_88186886d4677768f1851ce8c092179c1504315e64f8e6ad9343fe9070c85996",
+        "pseudocode_evidence": "ev_5b39f111b222558bd8e52132523a2e361a941261e916883af37f3e602c09927b"
+      },
+      {
+        "va": "0x180064ae4",
+        "assembly_evidence": "ev_b2f93290bbaca2c9422c76726982593cce243cb3b2016b991ca7770d3f9de7ed",
+        "pseudocode_evidence": "ev_92b8daddd81c92b4fe46e87487caa8a205216f5ff975ebf45f5f72ff68938768"
+      }
+    ],
+    "thread": [
+      {
+        "va": "0x18006f540",
+        "assembly_evidence": "ev_d589fedbeb516727ecf25d4765c3c807019361721e6aa77059f7aae92f689e46",
+        "pseudocode_evidence": "ev_69fe5aea734a2e26fe1d52638135834a77b0ba44f88ef281429f53e7cf2859ba"
+      }
+    ],
+    "support": [
+      {
+        "address": "0x18006efd0",
+        "pseudo_evidence_id": "ev_f60152d6069b47204c27316fc0420b7e6f8785fed10c21d4eb98ac78b9023579",
+        "assembly_evidence_id": "ev_1db7ffb5b49c8937daca136ba4b2cbfc4919d4e39a4fe1e72ca319a0f93f14cb"
+      },
+      {
+        "address": "0x18006ee00",
+        "pseudo_evidence_id": "ev_93ca1cbfddbf889a42902a2741a8c3c0a3a2464e64ac53e63aec96e8e9a5d8b4",
+        "assembly_evidence_id": "ev_9627ee165fa2e79a7de634b78b55478e8889828276fa8c5280969a0543ac65ea"
+      },
+      {
+        "address": "0x18006532c",
+        "pseudo_evidence_id": "ev_76ae104d3a0f1fbc8822b8fd5261a466bb61aff933c581fc50805c8a4bdb58de",
+        "assembly_evidence_id": "ev_bbe23d692b146c8850567f97050ecdb0317dca1ce8c5182925309ca3cd4914cd"
+      }
+    ]
+  },
+  "bounds": {
+    "multibyte_size": 552,
+    "multibyte_fields": {
+      "refcount": [
+        0,
+        4
+      ],
+      "codepage": [
+        4,
+        4
+      ],
+      "mode": [
+        8,
+        4
+      ],
+      "six_words": [
+        12,
+        12
+      ],
+      "type": [
+        24,
+        257
+      ],
+      "case": [
+        281,
+        256
+      ],
+      "padding": [
+        537,
+        7
+      ],
+      "locale_pointer": [
+        544,
+        8
+      ]
+    },
+    "ptd_minimum": 968,
+    "ptd_fields": {
+      "multibyte": [
+        136,
+        8
+      ],
+      "locale": [
+        144,
+        8
+      ],
+      "flags": [
+        936,
+        4
+      ]
+    },
+    "initial_type_size": 257,
+    "initial_case_size": 256,
+    "initialized_access_width": 1,
+    "initial_MB_ref": 0,
+    "mask": "0xfffffffe"
+  },
+  "critical_facts": [
+    "Initialize writes case/currentMB/type before required PTD; currentMB assignment does not retain.",
+    "Initialized byte becomes1 after any normal setter return, including FFFFFFFF failure; AL always1.",
+    "Setter first updates thread MB, then resolves ACP. Actual builder resolves the resulting CP again; system flag can reset0.",
+    "maskFE with PTD flags1 permits publish; changed is not marked while initializing.",
+    "Publication has a second old-record decrement and increments replacement for global ownership; initial pair pointer write adds no reference.",
+    "Conditional one-PTD simple trace yields initial static refFFFFFFFF and fresh2; it is not an observed full initializer order."
+  ],
+  "integration_gaps": [
+    "Const image snapshot vs separate mutable bridge globals/pair/slot identities require composition.",
+    "Bounded full byte/address memory adapter covering tables/PTD/globals/heap missing from ImageState-only API.",
+    "Dynamic heap LONG lifetime/bind/unbind and dispatch beyond three ImageState counters required.",
+    "Native lock4/5/FLS/heap/exception identity/error/abort providers required.",
+    "RecordNative must bind live systemCP Effects before initialize; native CP/map/type wrappers remain providers.",
+    "External initializer serialization needed; 06f5f8 has no CAS/once lock."
+  ],
+  "unknown": [
+    "Complete DLL initializer order and preexisting PTD reference count",
+    "Actual ACP/OEMCP and success/failure path",
+    "Native deployed FLS/heap/exception identities",
+    "SEH/fault footprint and complete ABI/DLL equality"
+  ],
+  "recommended_validation": "Static plus own owned fixture; do not execute original DLL",
+  "report_sha256": "623d7782c455aae0caa3c60c46ceb7cc7e00b1a653aab6374320d88f6f17d618"
+}

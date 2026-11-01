@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "reviewer": "independent wildcard_sort agent",
+  "reviewed_at": "2026-10-18T15:20:38.2589644Z",
+  "scope": "Production wildcard root normal flow, multibyte previous-character helper, inline code-page region, generic qsort/address-comparator binding and argv source adapter",
+  "findings": [],
+  "reviewed_sources": [
+    {
+      "name": "wildcard.hpp",
+      "sha256": "9436b61288792aa1d185f50492d773e43a6ff1592f00fc66b9de7a479bc59403"
+    },
+    {
+      "name": "wildcard.cpp",
+      "sha256": "a286fe75ea38d3a579f540a37fa748cf8268bd77c0aa60f97aa946818bb01340"
+    }
+  ],
+  "evidence": [
+    {
+      "address": "0x18006e5bc",
+      "assembly": "ev_b207a32e305b7f0357dc3aafe93146fdfcd51323afefa6a2797a4aa8a055a17e",
+      "pseudocode": "ev_242154d524758909ae1bf27f832fa29004efcdc84cc70fbf55f3ba429e4cd025"
+    },
+    {
+      "address": "0x180077170",
+      "assembly": "ev_f0d86780972e5e90c47c062a912115fa540d28e11e54c9c0be6ba90508b18661",
+      "pseudocode": "ev_e48edbb0f797d101801263cb90ccce146475d6ab2f83eed2972fd6c5f4674fab"
+    },
+    {
+      "address": "0x18006e984",
+      "assembly": "ev_6cea0a61974294918c3ea08f45c00073e8eac70ff3dc2c8d4bacd2c87cb5cc92",
+      "region": "0x18006ea5a..0x18006eac4"
+    },
+    {
+      "address": "0x18006e41c",
+      "direct_offline": "anadius-crt-sort-source/comparator-offline-evidence.json"
+    }
+  ],
+  "checked": [
+    "Null-output invalid path stores errno22 before handler and returns22 if handler returns",
+    "Output reset before argv traversal; append/search lowDWORD status forwarded",
+    "Final temporary vector ranges snapshotted before allocation/copy/free; output published before final cleanup",
+    "Allocation failure returns0xffffffff after explicit free(NULL) and temporary cleanup",
+    "Destination capacity and NUL-inclusive string sizes follow06e76d..06e779; memcpy_s failure invokes required Watson",
+    "Previous-character helper scans backwards over lead-byte table bit4 and parity; cleanup only on normal locale path",
+    "Code-page selection returns65001 directly, otherwise lowDWORD fileAPI result selects0or1; locale thread bit cleanup preserved",
+    "SupportEffects routes width8 generic qsort with opaque comparator identity1; comparator compares unsigned slot addresses with no string dereference",
+    "Argv adapter documents live typed pointer storage requirement; new bound metadata is distinct from original ABI"
+  ],
+  "limitations": [
+    "Static review only; no original DLL loading/execution",
+    "first_wildcard is explicitly semantic bounded search, not original076da0 SIMD/prefetch access footprint",
+    "Providers must uphold valid live bounded memory, coherent locale state and required native helper contracts",
+    "No claims for original SEH, asynchronous memory mutation or complete ABI equivalence"
+  ],
+  "target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c"
+}

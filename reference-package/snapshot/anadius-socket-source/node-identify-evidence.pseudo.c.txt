@@ -1,0 +1,73 @@
+/* 0x1800038b0 FUN_1800038b0; Evidence ev_16c4bf124a34657d7d2d217f79a017802a074ddf7e1c559929f47750b79fdee5 */
+
+byte * FUN_1800038b0(longlong param_1,byte *param_2,undefined8 *param_3)
+
+{
+  int *piVar1;
+  int iVar2;
+  int iVar3;
+  undefined4 uVar4;
+  undefined8 *puVar5;
+  byte *_Str1;
+  
+  piVar1 = (int *)(param_1 + 0xa0);
+  iVar2 = *piVar1;
+  _Str1 = param_2;
+  while ((((uint)(int)(char)*_Str1 >> 7 & 1) == 0 && (iVar3 = isspace((uint)*_Str1), iVar3 != 0))) {
+    if ((piVar1 != (int *)0x0) && (*_Str1 == 10)) {
+      *piVar1 = *piVar1 + 1;
+    }
+    _Str1 = _Str1 + 1;
+  }
+  if (*_Str1 == 0) {
+    *param_3 = 0;
+    return _Str1;
+  }
+  if ((_Str1 == PTR_DAT_1800a10a8) ||
+     (iVar3 = strncmp((char *)_Str1,PTR_DAT_1800a10a8,2), iVar3 == 0)) {
+    puVar5 = FUN_180001610(param_1,(longlong *)(param_1 + 0x288));
+LAB_180003a68:
+    param_2 = _Str1 + 2;
+LAB_180003a6c:
+    uVar4 = *(undefined4 *)(param_1 + 0xa0);
+  }
+  else {
+    if ((_Str1 == PTR_DAT_1800a10b0) ||
+       (iVar3 = strncmp((char *)_Str1,PTR_DAT_1800a10b0,4), iVar3 == 0)) {
+      puVar5 = FUN_180001590(param_1,(longlong *)(param_1 + 0x288));
+      param_2 = _Str1 + 4;
+      goto LAB_180003a6c;
+    }
+    if ((_Str1 != PTR_s_<_[CDATA[_1800a10b8) &&
+       (iVar3 = strncmp((char *)_Str1,PTR_s_<_[CDATA[_1800a10b8,9), iVar3 != 0)) {
+      if ((_Str1 != PTR_DAT_1800a10c0) &&
+         (iVar3 = strncmp((char *)_Str1,PTR_DAT_1800a10c0,2), iVar3 != 0)) {
+        if ((_Str1 == PTR_DAT_1800a10c8) ||
+           (iVar3 = strncmp((char *)_Str1,PTR_DAT_1800a10c8,1), iVar3 == 0)) {
+          puVar5 = FUN_180001690(param_1,(longlong *)(param_1 + 0x108));
+          param_2 = _Str1 + 1;
+          *(undefined4 *)(puVar5 + 6) = *(undefined4 *)(param_1 + 0xa0);
+        }
+        else {
+          puVar5 = FUN_180001720(param_1,(longlong *)(param_1 + 0x208));
+          *(undefined4 *)(puVar5 + 6) = *(undefined4 *)(param_1 + 0xa0);
+          *(int *)(param_1 + 0xa0) = iVar2;
+        }
+        goto LAB_180003a78;
+      }
+      puVar5 = FUN_1800017b0(param_1,(longlong *)(param_1 + 0x288));
+      goto LAB_180003a68;
+    }
+    puVar5 = FUN_180001720(param_1,(longlong *)(param_1 + 0x208));
+    param_2 = _Str1 + 9;
+    uVar4 = *(undefined4 *)(param_1 + 0xa0);
+    *(undefined1 *)(puVar5 + 0xd) = 1;
+  }
+  *(undefined4 *)(puVar5 + 6) = uVar4;
+LAB_180003a78:
+  *param_3 = puVar5;
+  return param_2;
+}
+
+
+

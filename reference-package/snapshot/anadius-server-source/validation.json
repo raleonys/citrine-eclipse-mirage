@@ -1,0 +1,80 @@
+{
+  "compiler": "clang version 23.1.3 (https://github.com/llvm/llvm-project.git 0d261d1ca552c95a8f007e061c787ac7132fbcbc)\nTarget: x86_64-w64-windows-gnu\nThread model: posix\nInstalledDir: C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/bin\nConfiguration file: C:/Users/Skysect/Documents/Codex/2026-10-16/mcp/work/toolchain/extracted/llvm-mingw-20261006-ucrt-x86_64/bin/x86_64-w64-windows-gnu.cfg",
+  "compiler_driver_sha256": "ee85bef2c733e24a26c22be3df94bd631cf9528a048fce91241c182a936737fe",
+  "verified_toolchain_archive_sha256": "317492c456aa27ee607a5919f1d2d38dcdc1112516a24d0bf4b00d078f52d17a",
+  "compile_flags": [
+    "-std=c++20",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror"
+  ],
+  "synthetic_test_output": "PASS 247 synthetic checks; no socket/network/original target execution",
+  "synthetic_test_exit": 0,
+  "original_artifact_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "target_execution": "none",
+  "real_socket_or_network_operations": "none",
+  "original_runtime_equivalence": "not established",
+  "source_files": [
+    {
+      "name": "server.hpp",
+      "sha256": "97b2e78f7839e7e1649e2e690f8cb4c34224f995cc4a19028c533cc50141288e"
+    },
+    {
+      "name": "server.cpp",
+      "sha256": "bd4f342d897344b45ddf9e685bdd625f636807c30b488a0688c5620eef6985a0"
+    },
+    {
+      "name": "server_tests.cpp",
+      "sha256": "1bdf3882b8889e71a3417e8022a93bbc11593a3f77199c63b32b4460b31365fd"
+    },
+    {
+      "name": "build.ps1",
+      "sha256": "b206701ff77d27427d7daa4851ce75a305bc43dfaa63db21c452e52d9fc7d114"
+    },
+    {
+      "name": "CMakeLists.txt",
+      "sha256": "5ca7786db26ed237ac08ecc37df3ff5aa5b4f1eb51a402829db41cefd2df69f9"
+    },
+    {
+      "name": "README.md",
+      "sha256": "a41dff22ac2687db649aea6764c9304c58945c20702500c465eae371c55d28c7"
+    },
+    {
+      "name": "evidence-map.json",
+      "sha256": "58f4cd2b2977a04ad8b243685c5cd58aa8d395e530ddf7a8e1693ef74bb998a6"
+    },
+    {
+      "name": "..\\anadius-execution-source\\execution.hpp",
+      "sha256": "af96b642cb8d454a293c7ed9e249be65432e7078f738ef2a937429704431a3ca"
+    },
+    {
+      "name": "..\\anadius-execution-source\\execution.cpp",
+      "sha256": "85b026aca0ea79f297c9b7a8b1c58ab008644cad04fab1b3503ca58b61bf393d"
+    }
+  ],
+  "retained_evidence_files": [
+    {
+      "name": "anadius-all-functions.asm.txt",
+      "sha256": "9b8c894f85b1ca0fd090a95993ecd5048e59a41ae2459e2bbdc80215e8027a42"
+    },
+    {
+      "name": "anadius-all-functions.pseudo.c",
+      "sha256": "26fe3e2e2c6fe6459d39d8f3a95738b2f83bb7d6b333b61249bdc00abd1d5acb"
+    },
+    {
+      "name": "mac-symbol-comparison\\application-symbols.json",
+      "sha256": "c3e0388992578e7c297314656cfd3dd11ac1c1866289b6137c463a60cca47c16"
+    }
+  ],
+  "built_files": [
+    {
+      "name": "server.o",
+      "sha256": "8ea783ba8db8e4ef531d1ecf735201baf1da0e1f268e9d0553ed75d6b5fd25d4"
+    },
+    {
+      "name": "server_mock_tests.exe",
+      "sha256": "2530b45ee24b81d00d18c33a07227ccce7fb2a5937ac1e0ee62259cab4a93f24"
+    }
+  ]
+}

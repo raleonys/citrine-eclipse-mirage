@@ -1,0 +1,40 @@
+{
+  "reviewer": "crt_string_type",
+  "result": "PASS",
+  "checked_at": "2026-10-19T13:26:49.7131434Z",
+  "scope": "Read-only source-composition review; no original target/native API execution and no source edits",
+  "sources": [
+    {
+      "name": "bridge_tests.cpp",
+      "sha256": "4037a01c4a7c968e6d8cae53f7ed0bf16d8487e76d424aa428c3f453924fd25b"
+    },
+    {
+      "name": "bridge.cpp",
+      "sha256": "54bffb176961a0949c3699f331642fa3f3110e4bd0e958db5d5d287563a83216"
+    },
+    {
+      "name": "bridge.hpp",
+      "sha256": "18fe2cb45e1a2893fee5fbdaa2f572a5ee21fb0f367703bfdfd582a68ae40e60"
+    }
+  ],
+  "findings": [],
+  "confirmed": [
+    "RecordNative boundary replaced by actual get_string_type_06e210 and lc_map_string_06cc30 source calls, not fixture shortcuts",
+    "Both conversion wrappers pass through actual crt_conversion_api multi_byte_to_wide_06ccc8/wide_char_to_multi_byte_06cd58 before required native conversion; UTF8 flags are therefore filtered by recovered code",
+    "Locale constructor calls actual locale_update_058b04 with fresh zero context; malloc/free use shared recovered malloc_base_06a308/free_0668c0 and same heap state/backends",
+    "Raw WordOutput/ByteOutput addresses are invocation tokens, not claimed packed WORD/BYTE native arrays; required native provider receives corresponding tracked span; UTF16 scratch remains raw memory",
+    "Invocation saves and restores input/tracked output metadata, owns readable borrow ticket and scratch-frame lifetime; nested scopes structurally restore enclosing metadata and do not free outer scratch",
+    "__strncnt extra endbyte comes from explicit read_input_tail provider; no dereference of unproven span end or invented implicit zero; tests exercise zero and nonzero known-tail providers",
+    "Scratch zeroing is only recovered string-type source path; lcmap actual source retains nonzero scratch and independent first/second allocation ownership",
+    "Native GetStringTypeW/0671d4, memory domain, scratch lifetime, CP/native encoding and synchronization stay explicit providers"
+  ],
+  "validation_reviewed": "Existing strict PASS27,665 report reviewed, not rerun by reviewer",
+  "nonblocking_validation_notes": [
+    "Existing nls_sources_and_scratch covers sequential release; nested_and_fast_locale exercises locale ownership rather than nested Invocation reentry. Direct nested native callback test recommended if delivery claims tested nested Invocation behavior."
+  ],
+  "limitations": [
+    "Invocation RAII tears down adapter metadata/readable borrow/caller-owned scratch on C++ exceptions; this is adapter lifetime management and does not establish original SEH cleanup",
+    "Original stack probe/cookie/ABI equivalence and native locale dispatch behavior unproven",
+    "No source defects found; report hashes are review snapshot and must be refreshed if CPP/HPP/tests change"
+  ]
+}

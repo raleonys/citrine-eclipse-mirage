@@ -1,0 +1,96 @@
+{
+  "schema": "foreign-callback.resources.v1",
+  "result": "PARTIAL_IMPLEMENTATION_WITH_EXPLICIT_GAPS",
+  "ownership": [
+    "CallbackThreads ProviderLease retains exact DomainStorage FLS/heap/locale/locks",
+    "Allocator domain_identity must match callback PTD domain",
+    "Policy permission retains Domain; Admission retains Domain; no ownership cycle",
+    "fresh root detached/freed before native return; borrowed root not freed",
+    "known-clean entry reservation released only in one outer-catch critical section",
+    "fresh root owned metadata excludes already-freed clear-pending phase"
+  ],
+  "boundaries": [
+    "single active callback; overlap/reentry reject rather than wait",
+    "controller-only host setup, ready proof, activation and pause",
+    "ready proof must establish no unsafe config/map/original/server-port mutation and safe Execution/fallback/stream/provider use",
+    "tests complete own fake source worker bodies once on controller before readiness; later joins only release metadata",
+    "active callback retains PTD/policy permission during pause; new callbacks stop",
+    "native active-call check before joins/exit drain retains trampoline providers",
+    "null legacy permission/controller default preserved; new Resources and vtable consumers require full rebuild"
+  ],
+  "failure_prefixes": [
+    "known detach failure keeps published live PTD",
+    "destroy-once then failed raw free keeps destroyed root and sentinel",
+    "raw free success plus final clear failure retries clear only",
+    "unknown outcome or other PTD mutation poisons and requires retention/terminal destruction",
+    "native leave aborts on failed cleanup; final ownchild marker prevents false successful termination",
+    "external quiescence proof remains independent; closing gate never reopens on false proof"
+  ],
+  "open": [
+    "general concurrent callbacks",
+    "real worker/Execution/shared fallback/stream synchronization",
+    "dynamic PTD/fiber migration/foreign CRT ABI",
+    "actual hooks/native unload/PE",
+    "7online foreign calls",
+    "configuration/license/legacy document",
+    "B10 review debt"
+  ],
+  "prior_source_changes": [
+    {
+      "path": "anadius-bootstrap-backend-source/backend.cpp",
+      "before_sha256": "b37355b48739483d30ed4536f5a31796bc1b5f4d7e548b901985460259d7db24",
+      "after_sha256": "2a9eb5586a115adb803f0fcb498ec88339065a95ad8eaf20ff1b1e6547290df5",
+      "reason": "Bracket host initialization and check callback pause/native drain before joins and exit cleanup, including stopped retries"
+    },
+    {
+      "path": "anadius-bootstrap-backend-source/backend.hpp",
+      "before_sha256": "0486fc7c6d0a97ccd631b23a1462cc1b374ae1a33a4b0c0bbf81677ffc66aceb",
+      "after_sha256": "b861b529c9551d6302107ebf57e2e6f0eec4881d7e6087b6921d0f641bcaf892",
+      "reason": "Add default lifecycle checkpoints for host mutation publication and pre-cleanup drain"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.cpp",
+      "before_sha256": "c3e25afae59c2ef07e3017644c011b870aba4823307d20693b2f66cff9754110",
+      "after_sha256": "3dc9831dd9289bcce05a4f2e50b0e7cb38dc4a312752e3dc92d262c4326b5427",
+      "reason": "Require explicit admitted PTD permission when selected, preserving empty controller-only legacy path"
+    },
+    {
+      "path": "anadius-callback-policy-source/policy.hpp",
+      "before_sha256": "4853874e12ac8104726c48b21943fd4f886d4d5456637f3e00d433f0e917af2e",
+      "after_sha256": "276262274aee1a3ce4ce130e10637ce26675f4fcd7268c1c4d294c38314b5542",
+      "reason": "Append optional explicit active callback scope permission to Resources; Policy/Storage ABI requires full rebuild"
+    },
+    {
+      "path": "anadius-native-context-source/context.cpp",
+      "before_sha256": "b1e57dd7c7f34b51939be467514e3b2c7242353b9c716356c6f345f8875e8fa0",
+      "after_sha256": "991fc1b7f1df9eed1c84ff23aa517210a8092dc8d75e51f2743d04f689f8fb81",
+      "reason": "Delegate host setup and pre-cleanup pause; require native active_calls zero before backend cleanup admission"
+    },
+    {
+      "path": "anadius-native-context-source/context.hpp",
+      "before_sha256": "fe2745d872c4c9758c6a86258a9b5fff4dd192df12db0cf4f50d3cc2c534fdc9",
+      "after_sha256": "2db86f5b03ca300179a8042e5a287a3b80299b416af4a72b33adcf719b3ce9e3",
+      "reason": "Expose owned Admission lifecycle checkpoint overrides"
+    },
+    {
+      "path": "anadius-native-source/native_callbacks.hpp",
+      "before_sha256": "1fa193f9161cc5621aea4520be809ff8983d260ea8190a352500eb4bf4cb43a2",
+      "after_sha256": "af1ff2398168e0c3d6c92ebcd99dcabf11b996b27852a5461e9ddad64378c090",
+      "reason": "Append three default source Admission lifecycle methods; SDK entries unchanged; vtable consumers rebuild"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.cpp",
+      "before_sha256": "950687d7bfb66deecd6fb96bf6425ca8c33713afc00afaeb63bf824a9e5e7bcd",
+      "after_sha256": "7e56567bd85815ed10d54515fbb5b9df01913dbe418871e074c4da99ce5360a4",
+      "reason": "Implement borrowed/fresh same-thread/fiber scopes with checked sentinel, destroy-once, observed raw free and retained known/poisoned outcomes; no shared errno fallback allocation"
+    },
+    {
+      "path": "anadius-thread-domain-source/domain.hpp",
+      "before_sha256": "d4eb8f8f57f3ba6ee9a0673d4b547e4f6e04549a4d86e7a0d8f1ebfddb7903ec",
+      "after_sha256": "46258112cabee4a0e831f0a8f978cfde9a95f91bad48f2696e67baa97ee262e5",
+      "reason": "Declare explicit leased callback PTD provider and allocator domain identity; no generic foreign-thread API contract"
+    }
+  ],
+  "original_execution": false,
+  "original_modification": false
+}

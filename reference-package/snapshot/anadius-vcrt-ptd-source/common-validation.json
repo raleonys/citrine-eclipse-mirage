@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "checked_at": "2026-11-01T09:22:36.7744399Z",
+  "tested_by": "../source-workspace/build.ps1",
+  "build_record_sha256": "4bbf2efaba803d37ef3540975d68933eb040dbd25a587a642f346bdfdc8157e6",
+  "test_result": {
+    "module": "vcrt_ptd",
+    "result": "PASS",
+    "output": "PASS: 565 checks; VCRT 128-byte PTD and lifecycle synthetic effects only",
+    "executable_sha256": "2c61f88088f3e9bd4dc97be432901aa43ec7719661c620f3d54a58216d49d07e"
+  },
+  "execution_scope": "Twelve separate VCRT128-byte PTD/lifecycle bodies; synthetic FLS/heap/lock/error effects",
+  "original_target_execution": "none",
+  "runtime_equivalence": "not established",
+  "original_CRT_EH_ABI_equality": "unproven",
+  "terminal_cases": [],
+  "sources": [
+    {
+      "path": "anadius-vcrt-ptd-source/vcrt_ptd_tests.cpp",
+      "sha256": "4c54044192c4572be22f2c5e4ea82c6e0b1ea1af6c1eb99f302b6936563133aa"
+    },
+    {
+      "path": "anadius-vcrt-ptd-source/vcrt_ptd.cpp",
+      "sha256": "2acfb1ff8678493678288dc0a806b8c27946e100ebc223409c867264b9b5e307"
+    },
+    {
+      "path": "anadius-vcrt-ptd-source/vcrt_ptd.hpp",
+      "sha256": "e4f1a934221d94f592e37afaa8a9d6ced5dcab08d38e98cdfb080fc9245a14bf"
+    }
+  ]
+}

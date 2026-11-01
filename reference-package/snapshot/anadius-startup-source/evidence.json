@@ -1,0 +1,26 @@
+{
+  "kind": "manual static audit of analyst C++ reconstruction against retained REA assembly and pseudocode",
+  "original_target_sha256": "9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c",
+  "retained_assembly": "../anadius-all-functions.asm.txt",
+  "retained_pseudocode": "../anadius-all-functions.pseudo.c",
+  "functions": [
+    {"va":"0x180018480","assembly_line":25348,"assembly_evidence":"ev_10f34c57de95a8ee129e5c91b2dde9842b1f85959f5e9e17d8ba4d9dac40ff3f","pseudocode_evidence":"ev_691d99dfac41c8e1f0484feff33584d6291e41fff99d694fff05e78775aefb04","observed":"Only exact recognized tokens forwarded; language pair consumed; word0x101 sets both flags; map entry created but empty language does not replace existing value.","audit_result":"matched at documented value/control-flow scope"},
+    {"va":"0x180019910","assembly_line":26760,"assembly_evidence":"ev_78e7337670570fa2c7c212620f726bd602b090f213f6248c453917219f5023fc","pseudocode_evidence":"ev_90684472bf3c11d29dce5129d1c8a0e460e645004eaaef332b7623a91a4f03f3","observed":"Nonempty CRT environment split by literal space with limit0; otherwise argv; then filter and SetEnvironmentVariableA with ignored return.","audit_result":"matched at documented value/control-flow scope"},
+    {"va":"0x180038760","assembly_line":56976,"assembly_evidence":"ev_25fbfd8671a513b4750ab57ccab47ce6ee66118511fe48e1c7c1744914a56238","pseudocode_evidence":"ev_443e0c3c2732489164806801392df22b75420bef29996038536b50f1d9fab851","observed":"noConsole gate; attached success only stderr; attach failure/showConsole branch ignores AllocConsole result; MoveWindow constants; duplicate stream queries with second result in RCX and first in R9.","audit_result":"matched; original CRT pointer alias kept opaque"},
+    {"va":"0x180039720","assembly_line":57955,"assembly_evidence":"ev_7f3fc4c31f140e4ea4cc9ad4db72f439e2f277a8e7d49ee7ebcd887bfdd1f1ff","pseudocode_evidence":"ev_f9a1a6b23551bf569b88201096ddd6ac92b66349b690d50f18cc54bc139f243d","observed":"Null argv produces empty result; executable index0 skipped; remaining arguments narrow-converted; successful allocation LocalFree on normal path.","audit_result":"matched at value/control-flow scope; original reusable wide-string allocation/copy details not replicated"},
+    {"va":"0x180039950","assembly_line":58093,"assembly_evidence":"ev_2954ce89ad852aabe1e433a517649e62c05928c9f0957d58d0bcfd438421d8f4","pseudocode_evidence":"ev_811dd1646f81fdf1279d2a75e575a22573a665ad6b54f97bc72868c41978a9dc","observed":"Statically linked CRT getenv; null-to-empty otherwise NUL-terminated string copy.","audit_result":"core matched; replacement CRT cache identity remains unverified"},
+    {"va":"0x1800453d0","assembly_line":71417,"assembly_evidence":"ev_9b6236a4b7dbeeeee0d2343c35bd11ea9af74d543571b48f475962f9ea6467b8","pseudocode_evidence":"ev_7acbac2a4ca56878c8eec307f1881dff588c780c296a596a39beb497e69ee761","observed":"Empty short circuit; input length low32; codepage65001/flags0/null default pointers; sizing then zero-filled buffer; second conversion result ignored, no LastError check.","audit_result":"matched at documented value/control-flow scope"}
+  ],
+  "supporting_functions": [
+    {"va":"0x180018b30","assembly_evidence":"ev_be1df69c675342becd3b9973974d00ba9f8df66db50a36754773d6b63a48d47d","finding":"String replacement helper copies length bytes and sets new length."},
+    {"va":"0x18003cf00","assembly_evidence":"ev_19bcf15ba615e9b59425d363b0e25771f6d86dec8bea66181a3c28381748b4bb","finding":"Split pushes prefix for every match including empty and always pushes remaining suffix; limit0 means unbounded."},
+    {"va":"0x180052238","assembly_evidence":"ev_6d2b770b49be176aa739ae306c62f54649e45a47708879254418897d218afcf1","finding":"Returns static CRT base0x1800a15f0 + uint32 index*0x58."},
+    {"va":"0x18005f024","assembly_evidence":"ev_2b056330af714d2d6701d31179902d62c6a74346f72b307f201aabd3ad3b666b","finding":"Calls0x18005ef2c with fifth argument0x80; original pointer alias retained as abstract ABI contract."},
+    {"va":"0x180039d40","assembly_evidence":"ev_fde55b79383ef19d1c21bb1c3dfd8f073dc9efcb79955fcd08a578753f8ffcd0","finding":"SetEnvironmentVariableA import thunk."}
+  ],
+  "material_source_changes_required": false,
+  "native_adapter_executed": false,
+  "target_execution": false,
+  "coverage": "manual audit of six bodies and named supporting boundaries; no instruction-equivalence or full-runtime claim",
+  "open_boundaries": ["Original CRT FILE and reopen ABI","Original CRT getenv cache identity","Shared globals and map ABI","STL/SSO/allocator and exact temporary-copy effects","Full EH/SEH tables","Complete DLL integration and runtime equivalence"]
+}

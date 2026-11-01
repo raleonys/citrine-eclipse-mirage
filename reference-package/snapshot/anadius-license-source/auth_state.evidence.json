@@ -1,0 +1,125 @@
+{
+  "schema": "source-binding.focused-validation.v1",
+  "status": "SELECTED_OWNED_AUTHENTICATION_CELL_BINDING_PASS",
+  "native_cell": {
+    "VA": "0x1800a3b18",
+    "offset": "+138",
+    "constructor": "0x180036d20",
+    "initial_bytes_ascii": "SGV5LCB5b3UsIHN0b3AgcmlnaHQgdGhlcmUhIDsp",
+    "length": 40,
+    "native_capacity": 47,
+    "native_allocation": 48,
+    "native_anchors": [
+      "036e7e allocation",
+      "036e8a length",
+      "036e95 capacity",
+      "036ec2 terminator"
+    ]
+  },
+  "native_evidence": {
+    "map": "outputs/dll-critical-path/aggregate-map.json",
+    "constructor_pseudo_id": "ev_0afb3b90dc9b59c4a3af0186fd6c29a0737d49e946a887f4b80f3f9dab0ad3d8",
+    "constructor_asm_id": "ev_9499218ae591f1b20f05c73a1d096cc0653227eb0b1b87bff8348d5859aadaa9"
+  },
+  "implementation": [
+    "Immutable independent AuthenticationCode owns the observed forty static bytes; host std::string capacity/layout is not forced to native MSVC values.",
+    "SourceBackend owns the cell before Resources and binds adopted Worker before publication. All Worker/Graph/provider borrowers retire first.",
+    "Worker binds once on original controller/fiber in Prepared. After configure returns it binds selected licensing provider outside metadata gate before Graph creation.",
+    "Native Handlers selects bound cell and copies it before online callback; online nonempty replacement changes only local copy. All three dispatch entries prevent later binding.",
+    "Legacy unbound Handlers and custom LicenseHandlers without optional interface preserve their existing route."
+  ],
+  "focused_record": {
+    "path": "work/authentication-v1-results.json",
+    "sha256": "33f66f36ecd4c53271e3ddf9e722952b0145f64f3bbc6e831696d22e7703d9b3",
+    "seconds": 19.453,
+    "tests": [
+      {
+        "name": "licensing",
+        "exit_code": 0,
+        "stdout": "PASS 1010 deterministic licensing checks (synthetic dependencies; original targets not executed)\n",
+        "stderr": "",
+        "executable": "work/authentication-check-v1/licensing_tests.exe",
+        "executable_sha256": "a8d513a14303816c36e5711e700e1e6779c4aa9df977ef1477bbd94244661dee"
+      },
+      {
+        "name": "dispatch_integration",
+        "exit_code": 0,
+        "stdout": "PASS: 58 integration checks; actual XML compatibility reader/AES/dispatcher/handlers/serializer and synthetic boundaries; original targets not executed\n",
+        "stderr": "",
+        "executable": "work/authentication-check-v1/dispatch_integration_tests.exe",
+        "executable_sha256": "6f6a491de6469f512a2043d7943b819b7cc1d6f391bbced366c8ea5e98faf3a7"
+      },
+      {
+        "name": "application_worker",
+        "exit_code": 0,
+        "stdout": "PASS: 175 application-worker core checks; actual startup barrier and SourceBackend routes with nine isolated retained prefixes\n",
+        "stderr": "",
+        "executable": "work/authentication-check-v1/application_worker_tests.exe",
+        "executable_sha256": "c1f106de035baefa2724b37b9b1c4053c9314d6e2d9a16357d7ba7ade82fcb16"
+      },
+      {
+        "name": "shared_path_and_auth_binding",
+        "exit_code": 0,
+        "stdout": "PASS: 44 shared achievement-path checks; actual Runtime/Storage aliasing and Prepared Worker guards, controlled external worker boundaries\n",
+        "stderr": "",
+        "executable": "work/authentication-check-v1/shared_path_and_auth_binding_tests.exe",
+        "executable_sha256": "0a7eb7517db8170e17ee9d1e03b7196f6b76f6fa1ce82de16bb9654b6c0a404e"
+      }
+    ]
+  },
+  "production_units_fresh": {
+    "bootstrap_backend": "outputs/anadius-bootstrap-backend-source/backend.cpp",
+    "application_worker": "outputs/anadius-application-worker-source/worker.cpp",
+    "licensing": "outputs/anadius-license-source/license.cpp",
+    "license_files": "outputs/anadius-file-source/license_files.cpp",
+    "windows_effects": "outputs/anadius-windows-source/windows_effects.cpp",
+    "configuration_filesystem": "outputs/anadius-config-storage-source/filesystem.cpp",
+    "configuration_persistence": "outputs/anadius-config-storage-source/persistence.cpp",
+    "configuration_factory": "outputs/anadius-configuration-factory-source/factory.cpp",
+    "key_processor": "outputs/anadius-license-source/key_processor.cpp"
+  },
+  "source_hashes": {
+    "outputs/anadius-application-worker-source/worker_tests.cpp": "e077a338f5475be78cc1d5be6cf894f5c7acbc4097954905c88fd047f3507b49",
+    "outputs/anadius-application-worker-source/worker.cpp": "9212efe98394e8bf86c85c0c56d01be697d09f8ab602224bac5d05440cabe60c",
+    "outputs/anadius-bootstrap-backend-source/backend.cpp": "505f54fa69445f3501be36b289b994087bcdafd90a519f957bc311ad183c1f2a",
+    "outputs/anadius-license-source/auth_state.hpp": "713f25d7dc4af5e59d05364bec8a9573a90cdb3e7976df39906e773d373f56b5",
+    "outputs/anadius-achievement-storage-source/path_binding_tests.cpp": "b3bf23c1c27e1dd809b998e81bd60bc5123d86da4288195c5a988ad23c0aeabf",
+    "outputs/anadius-license-source/license.hpp": "2e71375d16b69d53bd9dadd9da87a0615a759f3c181f28aaf539785eca48cf20",
+    "outputs/anadius-application-worker-source/worker.hpp": "5761e3601d52abc755e2ef187dcfbc6f983edfce9df6105dedebb0aedbed571a",
+    "outputs/anadius-license-source/license.cpp": "4d74c62c603fe2c9183086a8c070b399a5c95030c68aa4f6a80075f9d98ccff4",
+    "outputs/anadius-license-source/license_tests.cpp": "a949e04d860579d4946d2e4b60dfc2c6ecf3fcc54bdf6285b8837c876c5ae58d"
+  },
+  "ABI_scope": {
+    "Resources_layout_changed": false,
+    "CallbackStateView_layout_changed": false,
+    "LicenseHandlers_vtable_changed": false,
+    "concrete_Handlers_and_Worker_layout_changed": true
+  },
+  "test_scope": [
+    "Actual Runtime/SourceBackend binds a recording Worker; its destructor reads still-live root authentication cell.",
+    "Actual Worker/Graph prefix and worker retirement exercise recording licensing binding and exact cell identity; legacy unbound branch also executes.",
+    "Actual native Handlers direct tests verify exact fallback, online replacement, independent cell, repeat and all three post-use binding guards.",
+    "These compositional tests do not execute one complete Runtime->Worker->native Handlers production graph or prove loader equivalence."
+  ],
+  "independent_review": {
+    "author": "/root/b22_provider_audit",
+    "production_result": "PASS",
+    "reviewer_execution": false,
+    "native_lifetime_limit": "Native037f70 +158->+138->+118 destruction order remains separate from safe host borrowing order.",
+    "focused_proof_result": "PASS",
+    "verified_source_header_hashes": 171,
+    "verified_executables": 4,
+    "fresh_translation_units": 13,
+    "scope": "Source/header/compiler/archive and four EXE hashes, modified B54 preimages, all command results, compositional test assertions; read-only review."
+  },
+  "new_native_bodies_this_change": 0,
+  "full_constructor_closed": false,
+  "full_destructor_closed": false,
+  "full_common_build": false,
+  "DLL_link": false,
+  "package_rebuilt": false,
+  "original_execution": false,
+  "original_modification": false,
+  "real_user_content_IO": false,
+  "network": false
+}

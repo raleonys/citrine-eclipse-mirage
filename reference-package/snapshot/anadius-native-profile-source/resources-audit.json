@@ -1,0 +1,29 @@
+{
+  "source_package": "B41",
+  "result": "CONCRETE_TYPED_MESSAGE_PROFILE_WITH_SELECTED_SEMANTIC_DOMAIN_LIMITS",
+  "owned": [
+    "per-invocation native locals and greeting scratch",
+    "merged bounded parent/local/event inline memory projection",
+    "returned opaque object inventories and proxy lifetimes",
+    "same session cipher binding and encrypted flag",
+    "sticky unknown/reentry state"
+  ],
+  "required": [
+    "owning XML/CryptoFactory/Random/Effects and typed Events providers",
+    "existing whole Parent Operation and Profile admission",
+    "environment/type/scheduler/copy/response backing",
+    "queue growth and error/format/category/guard/worker policies",
+    "raw receive/send SDK and job backend",
+    "external raw-job/kernel finality",
+    "full bootstrap Resources and loader hooks"
+  ],
+  "opaque_retirement_policy": "Returned raw XML document/printer/cipher objects stay owned by Invocation; normal completion retires them under checks. This extends selected C++ lower lifetimes, not native destructor or EH equivalence.",
+  "unknown_policy": "Retain and fail closed; no guessed unlock/pop/free/rollback/retry; caller-prefix descriptors may be invalid after unwind and are not lifetime pins.",
+  "supported_job_scope": "same bound admitted worker thread/fiber, existing B40 job lifetime policy",
+  "native_DOM_printer_registry_ABI_complete": false,
+  "native_EH_equivalence": false,
+  "complete_bootstrap_resources": false,
+  "loader_hooks_bound": false,
+  "real_network": false,
+  "original_dll_loaded": false
+}
