@@ -21,7 +21,7 @@ struct State {
     int depth=0,foreign_depth=0;
     bool peer=true,resume_fail=false,thread_close_fail=false,snapshot_close_fail=false;
     bool suspend_fail=false,context_fail=false,terminated=false,enumeration_fail=false;
-    bool reenter=false,reentry_rejected=false,in_module=false;
+    bool reenter=false,reentry_rejected=false,in_module=false,r11_in_module=false,r11_outside=false;
 } state;
 HANDLE handle(){return reinterpret_cast<HANDLE>(static_cast<std::uintptr_t>(++state.next));}
 BOOL WINAPI module(DWORD,LPCWSTR,HMODULE* out){*out=reinterpret_cast<HMODULE>(state.image.data());return TRUE;}
@@ -97,6 +97,8 @@ BOOL WINAPI fake::context(HANDLE,LPCONTEXT out){
     if(state.reenter)state.reentry_rejected=!preloader_l::external_threads_outside_module();
     *out={};out->Rsp=reinterpret_cast<std::uint64_t>(state.stack.data());
     if(state.in_module)out->Rip=reinterpret_cast<std::uint64_t>(state.image.data())+32;
+    if(state.r11_in_module)out->R11=reinterpret_cast<std::uint64_t>(state.image.data())+128;
+    if(state.r11_outside)out->R11=reinterpret_cast<std::uint64_t>(state.image.data())+0x2000;
     return TRUE;
 }
 namespace {
@@ -147,6 +149,31 @@ void other_failures(){
     s.terminated=true;s.depth=0;s.peer=false;
     require(scan()&&s.threads.empty()&&s.snapshots.empty()&&s.exit_queries>=2,"proven terminated peer can be released when resume remains unavailable");
 }
+void volatile_register_guard(){
+    reset();
+    auto& s=fake::state;
+    // A real Windows Debug shutdown trace rejected a peer R11 at image RVA
+    // 0x49021a. A volatile register alone cannot prove a live call, but the
+    // scanner must remain fail-closed until a separate finality proof exists.
+    s.r11_in_module=true;
+    require(!scan()&&s.depth==0&&s.suspends==1&&s.resumes==1,
+        "foreign R11 image address defers unload despite safe RIP and stack");
+    require(s.threads.empty()&&s.snapshots.empty()&&s.closed_owned==0,
+        "R11-only rejection releases exact scan suspension and handles");
+    s.r11_in_module=false;s.r11_outside=true;
+    require(scan()&&s.depth==0&&s.suspends==2&&s.resumes==2,
+        "R11 outside image alone does not strand a finished scan");
+    require(s.threads.empty()&&s.snapshots.empty(),
+        "successful R11 scan has no leaked native owners");
+    s.r11_outside=false;s.r11_in_module=true;
+    preloader_l::set_shutdown_caller(11);
+    const auto prior=s.suspends;
+    require(scan()&&s.suspends==prior&&s.depth==0,
+        "explicit DLL shutdown caller is excluded without suspending its stack");
+    preloader_l::set_shutdown_caller(0);
+    require(!scan()&&s.suspends==prior+1&&s.resumes==s.suspends,
+        "clearing caller exclusion restores conservative R11 protection");
+}
 void scan_behavior(){
     reset();auto& s=fake::state;s.in_module=true;
     require(!scan()&&s.depth==0,"live module instruction pointer defers unload with balanced resume");
@@ -156,5 +183,5 @@ void scan_behavior(){
     require(scan()&&s.reentry_rejected&&s.threads.empty()&&s.snapshots.empty(),"reentrant scan fails closed without acquiring owners");
 }
 }
-int main()try{resume_retry();close_retry();other_failures();scan_behavior();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
+int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
 catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
