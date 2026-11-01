@@ -2,7 +2,7 @@
 """Bounded C++ identity guard for renamed socket interface/adapter classes.
 
 This check catches duplicate definitions, direct self-inheritance, and loss of
-the eleven independently named interface/adapter pairs. It is not a C++ parser;
+the twelve independently named interface/adapter pairs. It is not a C++ parser;
 the Windows compiler's full reference-object build remains authoritative.
 """
 from collections import defaultdict
@@ -15,7 +15,7 @@ BASE = re.compile(r"\b(?:public|private|protected)\s+([A-Za-z_]\w*(?:::[A-Za-z_]
 INTERFACES = (
     "WorkerStartupEffects", "ComposedWriteEffects", "AsyncReceiveEffects",
     "FrameReadApi", "ResponseDispatchApi", "ResponseQueueApi",
-    "NativeMessageApi", "PrefixCipherBlocks", "PoolAllocationEffects",
+    "NativeMessageApi", "MessageDispatchApi", "PrefixCipherBlocks", "PoolAllocationEffects",
     "PoolAppendEffects", "CancellationRecycler",
 )
 
@@ -42,6 +42,7 @@ def inspect_text(text, filename="<fixture>"):
 def inspect(root=ROOT):
     headers = sorted((Path(root) / "include" / "preloader_l").rglob("*.hpp"))
     counts = defaultdict(list)
+    all_definitions = defaultdict(list)
     errors = []
     for path in headers:
         if path.is_symlink():
@@ -53,8 +54,12 @@ def inspect(root=ROOT):
         definitions, problems = inspect_text(data, path.relative_to(root).as_posix())
         errors.extend(problems)
         for name, line in definitions:
+            all_definitions[name].append(f"{path.relative_to(root).as_posix()}:{line}")
             if name in INTERFACES or (name.endswith("Adapter") and name[:-7] in INTERFACES):
                 counts[name].append(f"{path.relative_to(root).as_posix()}:{line}")
+    for name, locations in sorted(all_definitions.items()):
+        if len({site.rsplit(":", 1)[0] for site in locations}) > 1:
+            errors.append(f"Duplicate definitions across socket headers for {name}: {locations}")
     for interface in INTERFACES:
         for name in (interface, interface + "Adapter"):
             if len(counts[name]) != 1:
