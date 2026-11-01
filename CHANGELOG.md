@@ -8,7 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
-- Add a deterministic Windows shutdown request-coalescing regression: keep the real DLL worker before its event wait, issue two zero-timeout DllShutdown requests, inject one hook quiescence failure, and require the second queued request to trigger a distinct cleanup attempt without a third call. Register focused MSVC Debug/Release CI. The first commit intentionally demonstrates the existing issue; production entry policy is unchanged until the failure is verified.
+- Fix lost DllShutdown retries when two manual-reset event requests coalesce before the worker reset: consume one atomic request ticket per public call, preserving a separate retry after an incomplete first cleanup. A deterministic real DLL worker fixture reproduced the original failure on Windows Debug and Release before this correction; focused MSVC regression and existing native fault modes must pass on the patched head.
 
 - Fix the owner-scoped native callback error policy lifetime: borrow it only under a live callback lease, keep the lease during terminal exception reporting, and clear the cached policy after successful unbinding. Add isolated Windows post-close and live-throw regressions, including a competing close during error reporting and guarded storage after policy destruction. The external reconstruction packet informed this audit; native/Golden/game acceptance remains pending.
 
