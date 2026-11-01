@@ -23,8 +23,7 @@ void debug_stage(const char*) {}
 #endif
 }
 
-int main() {
-    debug_stage("main-entered");
+static int run_source_smoke() {
     struct Stop {~Stop(){
         debug_stage("shutdown-enter");
         const auto status=DllShutdown(20000);
@@ -103,8 +102,17 @@ int main() {
     }
     debug_stage("invalid-parser-ok");
     debug_stage("checks-complete");
+    debug_stage("checks-return-enter");
+    return 0;
+}
+
+int main() {
+    debug_stage("main-entered");
+    // Local C++ objects and the shutdown guard must finish before reporting PASS.
+    const auto status=run_source_smoke();
+    if(status!=0)return status;
     debug_stage("success-output-enter");
-    std::cout<<"PASS: actual DLL auto-started; real socket LSX profile, calendar, SHA-1 and PEGTL Config2/VDF executed; shutdown drains application\n";
+    std::cout<<"PASS: actual DLL auto-started; real socket LSX profile, calendar, SHA-1 and PEGTL Config2/VDF executed; application shutdown completed\n";
     debug_stage("success-output-returned");
     debug_stage("main-return-enter");
 }
