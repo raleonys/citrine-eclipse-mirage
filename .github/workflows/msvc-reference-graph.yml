@@ -40,6 +40,8 @@ jobs:
           $build = 'build/msvc-reference-${{ matrix.configuration }}'
           cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=ON
           if ($LASTEXITCODE -ne 0) { throw 'MSVC reference configure failed' }
+          python -B scripts/check_build_partition.py --graph-only --build-dir $build --config '${{ matrix.configuration }}' --report "$build/source-api-graph.json"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC source API target partition failed' }
       - name: Compile full source-linked reference object graph
         shell: pwsh
         run: |
@@ -52,7 +54,8 @@ jobs:
           $build = 'build/msvc-reference-${{ matrix.configuration }}'
           cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_source_host --parallel 2 2>&1 | Tee-Object -FilePath "$build/source-host-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC source API host build failed' }
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^dll_source_smoke$' --output-on-failure --timeout 120 --output-junit "$build/source-host-junit.xml" 2>&1 | Tee-Object -FilePath "$build/source-host-ctest.log"
+          $junit = Join-Path (Resolve-Path $build) 'source-host-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^dll_source_smoke$' --output-on-failure --timeout 120 --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/source-host-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC source API host native smoke failed' }
       - name: Preserve Windows compiler and test evidence
         if: always()
@@ -64,6 +67,14 @@ jobs:
             build/msvc-reference-${{ matrix.configuration }}/source-host-build.log
             build/msvc-reference-${{ matrix.configuration }}/source-host-ctest.log
             build/msvc-reference-${{ matrix.configuration }}/source-host-junit.xml
+            build/msvc-reference-${{ matrix.configuration }}/source-api-graph.json
+            build/msvc-reference-${{ matrix.configuration }}/preloader_l_source_api.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/preloader_l_source_host.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/preloader_l_source_minhook.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/preloader_l_source_tinyxml2.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/preloader_l_objects.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/preloader_l_vdf_objects.vcxproj
+            build/msvc-reference-${{ matrix.configuration }}/preloader_l_reference_objects.vcxproj
             build/msvc-reference-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/msvc-reference-${{ matrix.configuration }}/CMakeCache.txt
             build/msvc-reference-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
