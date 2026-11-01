@@ -1250,8 +1250,8 @@
       "sha256": "5da1ec5126a435c0fe237c39d1f58f7239ece53e851ffa21ccb5fc55fa0434ba"
     },
     "tests/native/session_flow_tests.cpp": {
-      "bytes": 7015,
-      "sha256": "e5196eca582fe7cc8d8f1fda757a544509fb8234b923bab9b7d078a9a0729977"
+      "bytes": 7840,
+      "sha256": "7c3bdd3821d6f31ebd70b4ee97669113252bb3afcf33c499fb2af979186d9c00"
     },
     "tests/native/socket_close_semantics_tests.cpp": {
       "bytes": 2598,

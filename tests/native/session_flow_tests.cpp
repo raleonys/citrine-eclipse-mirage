@@ -73,6 +73,15 @@ void failure_and_buffer_lifetime() {
      require(f.handler.stats.destroyed==1&&f.handler.stats.retried==1,"cancel completion releases buffer without duplicate retry");}
     {Fixture f;f.request();f.transport.complete(0);
      require(f.scheduling.failed&&f.handler.stats.committed==0&&f.handler.stats.retried==1,"zero progress is failure, never successful dequeue");}
+    {Fixture f;f.request();f.transport.complete(13);
+     require(f.scheduling.failed&&f.handler.stats.committed==0&&f.handler.stats.retried==1&&f.transport.writes.empty(),
+             "over-reported send completion must not commit an event or retry an invalid buffer");}
+    {Fixture f;f.request();f.transport.complete(6);f.transport.complete(7);
+     require(f.scheduling.failed&&f.handler.stats.committed==0&&f.handler.stats.retried==1&&f.transport.writes.empty(),
+             "over-reported final chunk must not commit after valid partial progress");}
+    {Fixture f;f.request();f.transport.complete(12,{10054,srv::ErrorCategory::system});
+     require(f.scheduling.failed&&f.handler.stats.committed==0&&f.handler.stats.retried==1,
+             "full-length completion with a socket error must not commit a receipt");}
     {Fixture f;f.handler.response.assign(17,'x');bool failed=false;
      try{f.request();}catch(const std::length_error&){failed=true;}
      require(failed&&f.handler.stats.retried==1&&f.transport.writes.empty(),"oversize output rejects before socket send and cancels receipt");}
