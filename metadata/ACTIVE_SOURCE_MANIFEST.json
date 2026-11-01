@@ -15,7 +15,7 @@
     ".github/workflows/weekly-release.yml": "efcf35209c3798257089eb9048d726218bbd4427457fda8369628a645d579d2d",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "978593d1e4a8599798082508b1b77e1731fe06a065e8b6f82d14e446d5a4047c",
-    "CHANGELOG.md": "84ad329bafe74971ea7cc5c03970898945ded901cb092ff8fd5ed3c2d2d7dc06",
+    "CHANGELOG.md": "a795bb7d830ad0555e3b9f7edbeef1ef9da4c53257c48a98bfd2cfc55e5b0e5b",
     "cmake/BuildPartition.cmake": "bb3a9c833c694256250d04be258c5f6a9315ea10189198185ae4fba58b281882",
     "cmake/InfrastructureChecks.cmake": "1e4ec0c5319403be3dfe5db904fb188a3edde069236d794a69e6e4bfb564634b",
     "cmake/PatchHookFreeze.cmake": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
@@ -386,7 +386,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "2403d829c98174d3cf7caa0d382d6478457d22f4d74e162194372d66c8894b66",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "6a0799c62dd9fcba984035ab48a06c078e0b7958ed778e2641e44124726b0ce9",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "a27d0cd84fc6ab05cf5b321bafce23cde6b887dc374c715ee9fa8553c97d45c6",
-    "metadata/SOURCE_FILES.json": "306a590b5bd3e432f55b724ed17c8bfd196ca540d440a83b51fac9267006ae26",
+    "metadata/SOURCE_FILES.json": "0bb670505455183af143fbc348c154beafc35cef6d5ecfa4f824420c8fd5739a",
     "metadata/SOURCE_INPUTS.json": "fb5b29dad4e05eed197e57a98c30803f48ed0e9c30c92d4b05afb9c3751c5513",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "c413071a0a78fb8fbfc4eeabf1e970dfde51b31a870852f50bc175b4a2f4f765",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -619,7 +619,7 @@
     "tests/native/hook_engine_fixture_tests.cpp": "b44b7a448065fb462cdd2e822e6f4b0cd802a84d7f0fca62e1d6fa1d6b983d45",
     "tests/native/hook_freeze_tests.c": "26b042274cd483af987dc01b1c97473b574387f212aaa51afae0ac33bed44500",
     "tests/native/listener_port_tests.cpp": "b0550335f1670b935100e22bfabfafef07f03711b9d6f5f0e430a5a6c1fdfb29",
-    "tests/native/net_failure_tests.cpp": "454e4895e245cdd676c0b6a9e12ee766b53a30fd77fa4fdb05304c93d2785a28",
+    "tests/native/net_failure_tests.cpp": "721a2c7a36b4b0d32a927a0dbdd2e32b4b713f4387028c92d648c26bcbf1eff8",
     "tests/native/network_policy_tests.cpp": "7abc34949bde1e107130e2d5328fe353476f02188fb574c6899fb10aed9bafc8",
     "tests/native/public_c_consumer.c": "5da1ec5126a435c0fe237c39d1f58f7239ece53e851ffa21ccb5fc55fa0434ba",
     "tests/native/session_flow_tests.cpp": "e5196eca582fe7cc8d8f1fda757a544509fb8234b923bab9b7d078a9a0729977",
@@ -3687,7 +3687,7 @@
     "tests/infrastructure/test_hook_disable_action.py": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771",
     ".github/workflows/msvc-environment-diagnostics.yml": "46026f582e9f8b2df80cc0e40a8dd2720cd1e44b7348869ba33330ca83cf59f3",
     ".github/workflows/msvc-connect-pointer.yml": "0510b5bfa688c17d3e7330c22b36e63f72fc6bb9f0bfb90946d6c9b91c7718cd",
-    ".github/workflows/msvc-shutdown-lifecycle.yml": "d4ff88d016a89fff05b8cf95bfd7cc315f1e2cbd0487ef93b7a1eacc91416fbb",
+    ".github/workflows/msvc-shutdown-lifecycle.yml": "3c109b2efac099a1171229d2db3ec469c0f544cb27463db2c2c2b923389368f7",
     "docs/PR23_POSTMERGE_SHUTDOWN_ACCEPTANCE.md": "f9c2e04b7413a371c86088770049f71e93f93c9d5611061285d371dc61ae5283"
   }
 }

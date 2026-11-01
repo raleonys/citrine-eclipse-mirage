@@ -9,6 +9,7 @@ on:
       - "src/net/**"
       - "src/runtime/**"
       - "src/platform/dll_entry.cpp"
+      - "tests/native/net_failure_tests.cpp"
   workflow_dispatch:
 
 permissions:
@@ -40,10 +41,10 @@ jobs:
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown configure failed' }
-      - name: Build actual DLL and lifecycle host
+      - name: Build actual DLL, lifecycle host and native fault fixtures
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host net_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
       - name: Repeat five independent DLL lifecycle tests
         run: |
@@ -63,6 +64,12 @@ jobs:
           }
           "failed_attempts=$failed" | Add-Content $receipt
           if ($failed -ne 0) { throw "$failed of five lifecycle attempts failed" }
+      - name: Verify dual-family accept cancellation and closed admission
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'dual-accept-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^net_failure_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/dual-accept-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Windows Asio cancellation regressions failed' }
       - name: Preserve build, lifecycle and source identity evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -70,6 +77,8 @@ jobs:
           name: msvc-shutdown-${{ matrix.configuration }}-evidence
           path: |
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-build.log
+            build/ci-shutdown-${{ matrix.configuration }}/dual-accept-ctest.log
+            build/ci-shutdown-${{ matrix.configuration }}/dual-accept-junit.xml
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-ctest.log
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-receipt.txt
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-junit-*.xml
