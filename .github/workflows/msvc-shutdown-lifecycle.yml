@@ -65,6 +65,9 @@ jobs:
           "failed_attempts=$failed" | Add-Content $receipt
           if ($failed -ne 0) { throw "$failed of five lifecycle attempts failed" }
       - name: Verify dual-family accept cancellation and closed admission
+        # Collect the focused test even if an independent lifecycle attempt
+        # fails. Both failures remain visible and fail the workflow.
+        if: always()
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'dual-accept-junit.xml'

@@ -3687,7 +3687,7 @@
     "tests/infrastructure/test_hook_disable_action.py": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771",
     ".github/workflows/msvc-environment-diagnostics.yml": "46026f582e9f8b2df80cc0e40a8dd2720cd1e44b7348869ba33330ca83cf59f3",
     ".github/workflows/msvc-connect-pointer.yml": "0510b5bfa688c17d3e7330c22b36e63f72fc6bb9f0bfb90946d6c9b91c7718cd",
-    ".github/workflows/msvc-shutdown-lifecycle.yml": "3c109b2efac099a1171229d2db3ec469c0f544cb27463db2c2c2b923389368f7",
+    ".github/workflows/msvc-shutdown-lifecycle.yml": "bb248767103bf6a6bc6c992b30dba1f8296af1750d9be980f30301d0c5857100",
     "docs/PR23_POSTMERGE_SHUTDOWN_ACCEPTANCE.md": "f9c2e04b7413a371c86088770049f71e93f93c9d5611061285d371dc61ae5283"
   }
 }
