@@ -8,6 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Investigate the separate Windows MSVC Debug source-host timeout with test-only startup, LSX and shutdown stage markers; do not alter production runtime behavior.
 - Repair 12 PR #71 C++ interface/adapter identity collisions in the source-linked reference graph, add bounded type-identity regression checks and Windows Debug/Release reference-object compilation gates; shipping DLL exports and vendor bytes remain unchanged.
 
 - Correct the Windows MSVC Debug configuration-defaults test harness by injecting allocation failures at throwing map insertion boundaries while preserving non-MSVC-Debug constructor coverage; retain diagnostic probes and add full Windows x64 Debug/Release portable CTest acceptance (28/28 each). No production, DLL ABI, native release or game acceptance is implied.
