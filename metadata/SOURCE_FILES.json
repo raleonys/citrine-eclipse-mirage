@@ -630,8 +630,8 @@
       "sha256": "78314b17933b96446d50b0d7cf22540059c2b8e2d56c57cbcde763094e022cfa"
     },
     "src/net/asio_service.cpp": {
-      "bytes": 24542,
-      "sha256": "71f4b5543d630ca721d486df1b02f545386e5172c6aa7a5297ca38920fc886a3"
+      "bytes": 24813,
+      "sha256": "4af87d3cdd9de7408e998dbd1d2d375a26b87c465effa915cd0979011ac85541"
     },
     "src/net/server.cpp": {
       "bytes": 8512,
