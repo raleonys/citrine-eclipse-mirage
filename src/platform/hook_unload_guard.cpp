@@ -26,7 +26,7 @@ void trace_shutdown_value(const char* name,std::uint64_t value) noexcept {
 #endif
 namespace {
 const char* scan_rejection="thread context or scan API rejected";
-std::uint64_t scan_peer=0,scan_caller=0,scan_register=~std::uint64_t{},scan_offset=0;
+std::uint64_t scan_peer=0,scan_caller=0,scan_register=~std::uint64_t{},scan_offset=0,scan_instruction=0;
 bool reject_scan(const char* reason) noexcept{scan_rejection=reason;return false;}
 std::atomic<DWORD> shutdown_caller{0};
 std::atomic_flag scan_active=ATOMIC_FLAG_INIT;
@@ -65,12 +65,22 @@ bool finish_scan(bool safe) noexcept{
   trace_shutdown_value("caller now",shutdown_caller.load());
   trace_shutdown_value("register index (RIP,RAX,RBX,RCX,RDX,RSI,RDI,RBP,R8..R15)",scan_register);
   trace_shutdown_value("image offset",scan_offset);
+#ifdef PRELOADER_L_SHUTDOWN_TRACE
+  HMODULE peer_image=nullptr;
+  if(GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS|GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+      reinterpret_cast<LPCWSTR>(scan_instruction),&peer_image)){
+   char path[MAX_PATH]{};
+   if(GetModuleFileNameA(peer_image,path,MAX_PATH))trace_shutdown_failure(path);
+   trace_shutdown_value("peer instruction offset",scan_instruction-reinterpret_cast<std::uint64_t>(peer_image));
+  }
+#endif
  }
  if(!released)trace_shutdown_failure("scan handle or suspension release rejected");
  return released&&safe;
 }
 bool in_module(std::uint64_t value,std::uint64_t base,std::uint64_t end) noexcept{return value>=base&&value<end;}
 bool scan_stack(CONTEXT& context,std::uint64_t base,std::uint64_t end) noexcept{
+ scan_instruction=context.Rip;
  const std::uint64_t registers[]={context.Rip,context.Rax,context.Rbx,context.Rcx,context.Rdx,context.Rsi,context.Rdi,context.Rbp,context.R8,context.R9,context.R10,context.R11,context.R12,context.R13,context.R14,context.R15};
  for(unsigned i=0;i<sizeof(registers)/sizeof(registers[0]);++i)if(in_module(registers[i],base,end)){
   scan_register=i;scan_offset=registers[i]-base;

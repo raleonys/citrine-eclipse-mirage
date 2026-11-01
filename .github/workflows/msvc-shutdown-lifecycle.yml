@@ -45,6 +45,13 @@ jobs:
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
+      - name: Preserve linker map before lifecycle execution
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-shutdown-${{ matrix.configuration }}-linkmap
+          path: build/ci-shutdown-${{ matrix.configuration }}/preloader.production.*.map
+          if-no-files-found: error
+          retention-days: 14
       - name: Repeat five independent DLL lifecycle tests
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
@@ -75,7 +82,7 @@ jobs:
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-junit-*.xml
             build/ci-shutdown-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/ci-shutdown-${{ matrix.configuration }}/CMakeCache.txt
-            build/ci-shutdown-${{ matrix.configuration }}/shutdown-trace.map
+            build/ci-shutdown-${{ matrix.configuration }}/preloader.production.*.map
             build/ci-shutdown-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
           retention-days: 14

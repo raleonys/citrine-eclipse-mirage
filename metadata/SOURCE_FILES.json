@@ -926,8 +926,8 @@
       "sha256": "227e3e14323ca7aa71a495aa349900f15234148def80253aea17a489b5c5243b"
     },
     "src/platform/hook_unload_guard.cpp": {
-      "bytes": 7513,
-      "sha256": "6edf5cf0960ea2a063fb3b720199553c99d177ba615934972e953b2b96f11f46"
+      "bytes": 8032,
+      "sha256": "2f899e5409701490d0ae5ab2a5a5070bf87d57ce1442c73b62e0242d17d6261e"
     },
     "src/platform/library_system.cpp": {
       "bytes": 1272,
