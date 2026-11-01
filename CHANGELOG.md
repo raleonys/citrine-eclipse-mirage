@@ -8,6 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Audit C36-F002: reject unsafe Config2 ContentId license filename components and empty-ID license writes before path construction/provider effects; retain common ASCII IDs with regression coverage. Native Windows, reparse safety and compatibility review remain pending.
 - Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
 
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.
