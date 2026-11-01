@@ -866,8 +866,8 @@
       "sha256": "c106f2b1180f2176b4bb74fe69d6e8d52707979c03129b32d9db0ac60450891e"
     },
     "src/platform/dll_entry.cpp": {
-      "bytes": 4544,
-      "sha256": "b01fb34e7afb7a203df7a6e6e1fa5fcdaa457d6998adcd54b79f2f6c43ea65ee"
+      "bytes": 4953,
+      "sha256": "1b1474464ca87f5c2869e2e9dbb569d6d636361ac2f57ca836d695fba3896e71"
     },
     "src/platform/encoding_windows.cpp": {
       "bytes": 2245,

@@ -13,7 +13,8 @@ namespace {
 HANDLE stop_event=nullptr,worker_thread=nullptr;
 HMODULE image_lease=nullptr;
 std::atomic<DWORD> shutdown_result{ERROR_IO_PENDING};
-// The manual-reset event is only a wake-up hint; it cannot count requests.
+// The manual-reset event is a wake notification, not a request counter.
+// Distinct public shutdown calls must not collapse before worker ResetEvent.
 std::atomic<std::uint64_t> shutdown_requests{0};
 std::atomic_flag shutdown_call=ATOMIC_FLAG_INIT;
 DWORD WINAPI application_worker(void*) {
@@ -29,24 +30,32 @@ DWORD WINAPI application_worker(void*) {
     try {
         owner=std::make_unique<preloader_l::application::Application>();
         owner->start();
-    }catch(...) {++shutdown_requests;SetEvent(stop_event);}
-    std::uint64_t consumed_requests=0;
-    for(;;){
-        if(consumed_requests==shutdown_requests.load()) {
-            if(!ResetEvent(stop_event)){shutdown_result=ERROR_BUSY;Sleep(10);continue;}
-            // A caller may publish between the first check and ResetEvent.
-            // Recheck before waiting, so clearing its notification loses no work.
-            if(consumed_requests==shutdown_requests.load()) {
-                if(WaitForSingleObject(stop_event,INFINITE)!=WAIT_OBJECT_0){shutdown_result=ERROR_BUSY;Sleep(10);}
-                continue;
-            }
+    }catch(...) {
+        // Startup failure also requires exactly one cleanup attempt.
+        shutdown_requests.fetch_add(1,std::memory_order_release);
+        SetEvent(stop_event);
+    }
+    std::uint64_t completed_requests=0;
+    bool stopped=false;
+    while(!stopped){
+        if(WaitForSingleObject(stop_event,INFINITE)!=WAIT_OBJECT_0){
+            shutdown_result=ERROR_BUSY;Sleep(10);continue;
         }
-        // Consume exactly one request even on failure. Keep the same owner and
-        // image; retry only for another queued request, never just a stale event.
-        ++consumed_requests;
-        shutdown_result=ERROR_IO_PENDING;
-        try {if(owner)owner->stop();owner.reset();shutdown_result=ERROR_SUCCESS;break;}
-        catch(...) {shutdown_result=ERROR_BUSY;}
+        // Clear the notification, then consume each published request exactly
+        // once. A SetEvent arriving before this ResetEvent remains visible via
+        // shutdown_requests, including after an unsuccessful cleanup attempt.
+        if(!ResetEvent(stop_event)){shutdown_result=ERROR_BUSY;Sleep(10);continue;}
+        while(completed_requests!=shutdown_requests.load(std::memory_order_acquire)){
+            ++completed_requests;
+            shutdown_result=ERROR_IO_PENDING;
+            try {
+                if(owner)owner->stop();
+                owner.reset();
+                shutdown_result=ERROR_SUCCESS;
+                stopped=true;
+                break;
+            }catch(...) {shutdown_result=ERROR_BUSY;}
+        }
     }
     auto lease=image_lease;image_lease=nullptr;
     FreeLibraryAndExitThread(lease,0);
@@ -62,7 +71,9 @@ extern "C" DWORD WINAPI DllShutdown(DWORD timeout) {
         shutdown_call.clear();
     }} release;
     if(!worker_thread||!stop_event)return DLL_SHUTDOWN_WAIT_FAILED;
-    ++shutdown_requests;
+    // Publish the request before the wake. Even an already-signalled event
+    // carries a distinct retry; on signal failure retain the fail-closed intent.
+    shutdown_requests.fetch_add(1,std::memory_order_release);
     if(!SetEvent(stop_event))return DLL_SHUTDOWN_WAIT_FAILED;
     const auto result=WaitForSingleObject(worker_thread,timeout);
     if(result==WAIT_TIMEOUT)return shutdown_result.load()==ERROR_BUSY?DLL_SHUTDOWN_CLEANUP_FAILED:DLL_SHUTDOWN_TIMEOUT;

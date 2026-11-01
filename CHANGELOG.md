@@ -8,7 +8,9 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
-- Preserve queued DllShutdown retries with counted requests and an event reset/recheck before waiting. Each failed cleanup consumes one request while retaining the same owner and image lease; no further attempt runs without another request. The initial MSVC Debug regression reproduced the dropped second request after all four existing fault cases passed. Cover both one-shot and persistent queued failures in the native fixture and retain focused Debug/Release CI; fresh acceptance of the corrected source remains pending.
+- Extend queued shutdown acceptance with two persistent cleanup failures: both requests are consumed, the sole owner remains retained, and cleanup resumes only after a third explicit request.
+
+- Fix lost DllShutdown retries when two manual-reset event requests coalesce before the worker reset: consume one atomic request ticket per public call, preserving a separate retry after an incomplete first cleanup. A deterministic real DLL worker fixture reproduced the original failure on Windows Debug and Release before this correction; focused MSVC regression and existing native fault modes must pass on the patched head.
 
 - Fix the owner-scoped native callback error policy lifetime: borrow it only under a live callback lease, keep the lease during terminal exception reporting, and clear the cached policy after successful unbinding. Add isolated Windows post-close and live-throw regressions, including a competing close during error reporting and guarded storage after policy destruction. The external reconstruction packet informed this audit; native/Golden/game acceptance remains pending.
 
