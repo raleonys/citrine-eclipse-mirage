@@ -4,10 +4,14 @@
 #include <cstddef>
 #include <cstdio>
 #include <cstdlib>
+#include <exception>
 #include <iostream>
 #include <limits>
 #include <new>
 #include <stdexcept>
+#if defined(_MSC_VER) && defined(_DEBUG)
+#include <crtdbg.h>
+#endif
 
 namespace allocation {
 struct alignas(std::max_align_t) Header {bool tracked;};
@@ -102,6 +106,27 @@ void allocation_unwind() {
 }
 }
 int main() try {
+#if defined(_MSC_VER) && defined(_DEBUG)
+    // Test-only: avoid interactive MSVC CRT dialogs that stall hosted CI.
+    // Preserve errors as stderr output and an actual nonzero test exit.
+    for (int kind : {_CRT_ERROR, _CRT_ASSERT}) {
+        _CrtSetReportMode(kind, _CRTDBG_MODE_FILE);
+        _CrtSetReportFile(kind, _CRTDBG_FILE_STDERR);
+    }
+    _set_abort_behavior(0, _WRITE_ABORT_MSG | _CALL_REPORTFAULT);
+    std::set_terminate([]() noexcept {
+        std::fputs("CONFIG_DEFAULTS_DEBUG stage=terminate", stderr);
+        if (const auto eptr = std::current_exception()) {
+            try { std::rethrow_exception(eptr); }
+            catch (const std::bad_alloc&) { std::fputs(" exception=bad_alloc", stderr); }
+            catch (const std::exception&) { std::fputs(" exception=std_exception", stderr); }
+            catch (...) { std::fputs(" exception=unknown", stderr); }
+        }
+        std::fputc('\n', stderr);
+        std::fflush(stderr);
+        std::_Exit(86);
+    });
+#endif
     debug_stage("constructor-contract-start");
     constructor_contract();
     debug_stage("independent-values-start");
