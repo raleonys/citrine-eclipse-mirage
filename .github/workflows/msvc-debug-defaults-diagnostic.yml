@@ -38,7 +38,7 @@ jobs:
         run: |
           $target = 'build/msvc-defaults-diagnostic/Debug/portable_configuration_defaults.exe'
           $log = 'build/msvc-defaults-diagnostic/constructor_probe.log'
-          foreach ($mode in @('raw-new', 'map-default', 'state-default')) {
+          foreach ($mode in @('raw-new', 'map-default', 'state-default', 'state-direct-init')) {
             & $target "--probe=$mode" 2>&1 | Tee-Object -FilePath $log -Append
             $probeExit = $LASTEXITCODE
             "PROBE_EXIT mode=$mode code=$probeExit" | Tee-Object -FilePath $log -Append
@@ -46,6 +46,8 @@ jobs:
               throw "Direct allocation exception control failed: $probeExit"
             }
           }
+          # Deliberately preserve failing probe exits as evidence, then run the real CTest.
+          exit 0
       - name: Run isolated test and collect stage breadcrumbs
         shell: pwsh
         run: |

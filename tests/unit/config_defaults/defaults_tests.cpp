@@ -134,7 +134,12 @@ int main(int argc,char** argv) try {
         const bool raw = std::strcmp(mode, "raw-new") == 0;
         const bool map = std::strcmp(mode, "map-default") == 0;
         const bool state = std::strcmp(mode, "state-default") == 0;
-        if (!raw && !map && !state) return 2;
+        const bool stateDirect = std::strcmp(mode, "state-direct-init") == 0;
+        if (!raw && !map && !state && !stateDirect) return 2;
+        std::fprintf(stderr, "PROBE_NOEXCEPT state=%d map=%d\n",
+                     int(noexcept(preloader_l::configuration::State{})),
+                     int(noexcept(std::map<std::string, std::string, std::less<>>{})));
+        std::fflush(stderr);
         debug_stage(mode);
         allocation::remaining = 1;
         allocation::armed = true;
@@ -145,8 +150,11 @@ int main(int argc,char** argv) try {
             } else if (map) {
                 std::map<std::string, std::string, std::less<>> value;
                 (void)value;
-            } else {
+            } else if (state) {
                 preloader_l::configuration::State value{};
+                (void)value;
+            } else {
+                preloader_l::configuration::State value;
                 (void)value;
             }
             allocation::armed = false;
