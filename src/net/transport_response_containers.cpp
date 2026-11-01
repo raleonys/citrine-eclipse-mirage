@@ -126,7 +126,7 @@ void grow_response_deque_026670(WriteFinishOwner& queue,std::uint64_t extra,Dequ
 ReceiveBufferString& ResponseContainersApi::copy_response_009eb0(ReceiveBufferString& to,ReceiveBufferString& from){
     return copy_response_string_009eb0(to,from,strings_);
 }
-void ResponseQueueApi::grow_deque_026670(WriteFinishOwner& owner,std::uint64_t extra){
+void ResponseQueueApiAdapter::grow_deque_026670(WriteFinishOwner& owner,std::uint64_t extra){
     grow_response_deque_026670(owner,extra,growth_);
 }
 } // namespace preloader_l::socket

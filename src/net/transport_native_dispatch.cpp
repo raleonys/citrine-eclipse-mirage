@@ -58,7 +58,7 @@ ReceiveBufferString& dispatch_native_032d00(ReceiveBufferString& output,std::uin
     if(capacity>15)effects.free_scratch_00b520(scratch,receive_buffer_address(scratch),capacity);
     effects.destroy_printer_001f60(printer);return output;
 }
-ReceiveBufferString& MessageDispatchApi::dispatch_032d00(ReceiveBufferString& output,std::uintptr_t handler,NativeMessageDocument& document){
+ReceiveBufferString& MessageDispatchApiAdapter::dispatch_032d00(ReceiveBufferString& output,std::uintptr_t handler,NativeMessageDocument& document){
     return dispatch_native_032d00(output,handler,document,dispatch_);
 }
 } // namespace preloader_l::socket

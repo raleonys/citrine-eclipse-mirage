@@ -83,7 +83,7 @@ std::uintptr_t allocate_pool_item_002b10(std::uintptr_t pool,PoolAllocationConte
 std::uintptr_t allocate_pool_item_002600(std::uintptr_t pool,PoolAllocationContext& context){return allocate_item(pool,context,{80,51,48,1});}
 std::uintptr_t allocate_pool_item_002960(std::uintptr_t pool,PoolAllocationContext& context){return allocate_item(pool,context,{112,36,32,2});}
 std::uintptr_t allocate_pool_item_0027b0(std::uintptr_t pool,PoolAllocationContext& context){return allocate_item(pool,context,{104,39,36,3});}
-std::uintptr_t PoolAllocationEffects::pool_allocate(std::uintptr_t target,std::uintptr_t pool){
+std::uintptr_t PoolAllocationEffectsAdapter::pool_allocate(std::uintptr_t target,std::uintptr_t pool){
     if(target==targets_.allocate[0])return allocate_pool_item_002b10(pool,context_);
     if(target==targets_.allocate[1])return allocate_pool_item_002600(pool,context_);
     if(target==targets_.allocate[2])return allocate_pool_item_002960(pool,context_);

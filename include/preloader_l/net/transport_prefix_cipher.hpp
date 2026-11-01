@@ -18,9 +18,9 @@ public:
     virtual void decrypt_cbc_0454e0(PrefixCipherState&,std::uintptr_t,std::uint64_t)=0;
     virtual void encrypt_cbc_045580(PrefixCipherState&,std::uintptr_t,std::uint64_t)=0;
 };
-class PrefixCipherBlocks:public PrefixCipherBlocks {
+class PrefixCipherBlocksAdapter:public PrefixCipherBlocks {
 public:
-    explicit PrefixCipherBlocks(ReceiveBufferMemory& memory):memory_(memory){}
+    explicit PrefixCipherBlocksAdapter(ReceiveBufferMemory& memory):memory_(memory){}
     void decrypt_ecb_045620(PrefixCipherState&,std::uintptr_t) final;
     void encrypt_ecb_045630(PrefixCipherState&,std::uintptr_t) final;
     void decrypt_cbc_0454e0(PrefixCipherState&,std::uintptr_t,std::uint64_t) final;

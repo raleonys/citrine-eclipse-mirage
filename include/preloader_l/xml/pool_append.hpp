@@ -19,9 +19,9 @@ void append_pool_block_005440(std::uintptr_t array,std::uintptr_t block,PoolAppe
 // Implements the N18 append provider. The four N18 pool
 // bodies can now use this bridge; block allocation and fill remain mandatory,
 // together with this stage's array allocation/copy/free providers.
-class PoolAppendEffects:public PoolAllocationEffects,public PoolAppendEffects {
+class PoolAppendEffectsAdapter:public PoolAllocationEffects,public PoolAppendEffects {
 public:
-    explicit PoolAppendEffects(ReceiveBufferMemory& memory):memory_(memory){}
+    explicit PoolAppendEffectsAdapter(ReceiveBufferMemory& memory):memory_(memory){}
     void append_block_005440(std::uintptr_t array,std::uintptr_t block) final;
 private:ReceiveBufferMemory& memory_;
 };

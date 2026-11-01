@@ -50,7 +50,7 @@ std::uint32_t worker_entry_02a4a0(IocpWorkerFunction& function,WorkerStartupApi&
 void WorkerStartupEffects::start_worker_02a000(IocpWorker& worker,IocpWorkerFunction* function,std::uint32_t stack){
     socket::start_worker_02a000(worker,function,stack,api_,errors_,*this);
 }
-std::uintptr_t WorkerStartupEffects::begin_thread_05e8e0(std::uintptr_t security,std::uint32_t stack,
+std::uintptr_t WorkerStartupEffectsAdapter::begin_thread_05e8e0(std::uintptr_t security,std::uint32_t stack,
     std::uintptr_t entry,IocpWorkerFunction* argument,std::uint32_t flags,std::uint32_t& id){
     return threads::begin_thread_05e8e0(reinterpret_cast<void*>(security),stack,
         entry,reinterpret_cast<std::uintptr_t>(argument),flags,&id,threads_);
