@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/asio_service.hpp"
 #include "preloader_l/net/listener_policy.hpp"
 #include "preloader_l/platform/execution_windows.hpp"
@@ -20,24 +22,24 @@ struct Environment {
 };
 struct Factory final:net::HandlerFactory {
     int failures=0;
-    struct Handler final:server_recovered::Handler {
+    struct Handler final:server::Handler {
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return "hello";}
         std::string process_message_033d70(std::string_view)override{return "reply";}
     };
-    std::unique_ptr<server_recovered::Handler> create()override{return std::make_unique<Handler>();}
+    std::unique_ptr<server::Handler> create()override{return std::make_unique<Handler>();}
     void error(std::string_view,std::exception_ptr)noexcept override{++failures;}
 };
 struct Running {
     Factory factory;
-    execution_recovered::MutexState mutex{};
+    execution::MutexState mutex{};
     std::uint8_t ready=0,second=0,third=0;
     std::uint16_t port;
-    execution_recovered::WindowsPlatform platform{+[](int){throw std::runtime_error("test mutex error");}};
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("test mutex error");}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{ready,second,third},frequency,platform};
+    execution::Execution execution{mutex,{ready,second,third},frequency,platform};
     net::AsioService service{factory,execution,port,ready};
-    explicit Running(std::uint16_t stale_port):port(stale_port){execution_recovered::initialize_mutex_04a698(mutex,2);}
+    explicit Running(std::uint16_t stale_port):port(stale_port){execution::initialize_mutex_04a698(mutex,2);}
     void start(){service.start();}
     void stop(){service.stop();}
 };
@@ -98,9 +100,9 @@ int main()try{
     if(ipv6){greeting(first.port,true);greeting(last.port,true);}
     else std::cout<<"SKIP: IPv6-only assertions; host loopback family unavailable\n";
     first.stop();first.stop();
-    Running recovered(80);recovered.start();
-    require(recovered.port==3226,"released lowest port reusable after failed candidates and complete shutdown");
-    recovered.stop();last.stop();
+    Running system_services(80);system_services.start();
+    require(system_services.port==3226,"released lowest port reusable after failed candidates and complete shutdown");
+    system_services.stop();last.stop();
     if(ipv6){
         Tcp::acceptor blocker(io,Tcp::v6());blocker.set_option(asio::ip::v6_only(true));
         const BOOL exclusive=TRUE;

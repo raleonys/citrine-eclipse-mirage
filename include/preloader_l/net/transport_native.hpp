@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_operations.hpp"
 #include <ws2tcpip.h>
 #include <windows.h>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 class CategoryProvider {
 public:
     virtual ~CategoryProvider()=default;
@@ -32,4 +34,4 @@ public:
     std::int32_t select_write(Socket,std::int32_t nfds) override;
 private:CategoryProvider& categories_;Imports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

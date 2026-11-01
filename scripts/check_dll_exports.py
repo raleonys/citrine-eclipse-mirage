@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Read-only validation of the application DLL's explicit C export contract."""
 import argparse
 import hashlib

@@ -149,7 +149,7 @@
     "src/xml/pool_release.cpp",
     "src/runtime/bootstrap.cpp",
     "src/runtime/thread_launch.cpp",
-    "src/runtime/recovered_effects.cpp",
+    "src/runtime/delegating_effects.cpp",
     "src/platform/hook_cleanup.cpp",
     "src/platform/hook_engine_adapters.cpp",
     "src/config/pipeline.cpp",

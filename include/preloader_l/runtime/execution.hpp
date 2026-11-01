@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <cstddef>
 #include <cstdint>
 
-namespace preloader_l::execution_recovered {
+namespace preloader_l::execution {
 // Recovered MSVC mutex layout; this is not std::mutex ABI from this compiler.
 struct alignas(8) MutexState {
     std::uint32_t type;

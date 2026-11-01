@@ -1,12 +1,14 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/node_delete_test_fixture.hpp"
 #include <type_traits>
 using namespace delete_test;
 namespace {
 using G=Graph;
-static_assert(!std::is_copy_constructible_v<s::RecoveredNodeDeleteEffects>);
-static_assert(!std::is_copy_assignable_v<s::RecoveredNodeDeleteEffects>);
-static_assert(!std::is_move_constructible_v<s::RecoveredNodeDeleteEffects>);
-static_assert(!std::is_move_assignable_v<s::RecoveredNodeDeleteEffects>);
+static_assert(!std::is_copy_constructible_v<s::NodeDeleteEffects>);
+static_assert(!std::is_copy_assignable_v<s::NodeDeleteEffects>);
+static_assert(!std::is_move_constructible_v<s::NodeDeleteEffects>);
+static_assert(!std::is_move_assignable_v<s::NodeDeleteEffects>);
 
 void links(Fixture& f,std::initializer_list<unsigned> ids,std::uintptr_t owner=State::base){
     const std::vector<unsigned> list(ids);

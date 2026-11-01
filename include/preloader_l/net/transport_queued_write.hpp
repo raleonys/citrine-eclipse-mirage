@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_write_finish.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Additional defined fields of the same owner used by WriteFinishOwner. This
 // is a logical sidecar, never a cast onto the original native object layout.
 struct QueuedWriteOwner {
@@ -32,10 +34,10 @@ void start_queued_write_02a500(std::uintptr_t owner_identity,QueuedWriteContext&
     QueuedWriteSend call_021fd0=&start_async_send_021fd0);
 // Completes the previous WriteFinishApi.next_write hook with actual02a500.
 // Logger/free/category providers and the026860 terminal remain required.
-class RecoveredQueuedWriteApi:public WriteFinishApi {
+class QueuedWriteApi:public WriteFinishApi {
 public:
-    explicit RecoveredQueuedWriteApi(QueuedWriteContext& context):context_(context){}
+    explicit QueuedWriteApi(QueuedWriteContext& context):context_(context){}
     void next_write_02a500(std::uintptr_t owner_identity) final;
 private:QueuedWriteContext& context_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

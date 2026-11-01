@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/execution.hpp"
 #include <cstddef>
@@ -6,7 +8,7 @@
 #include <stdexcept>
 #include <string_view>
 
-namespace preloader_l::network_hook_recovered {
+namespace preloader_l::network_hook {
 using Socket = std::uintptr_t;
 struct OutOfEvidenceInput : std::invalid_argument { using std::invalid_argument::invalid_argument; };
 struct StateRefs {
@@ -40,7 +42,7 @@ std::int32_t connect_00fd00(StateRefs, Effects&, Socket, std::span<const std::by
 // All other Effects still come from the caller, never original DLL addresses.
 class ExecutionEffects final : public Effects {
 public:
-    ExecutionEffects(Effects& remaining, execution_recovered::Execution& execution)
+    ExecutionEffects(Effects& remaining, execution::Execution& execution)
         : remaining_(remaining), execution_(execution) {}
     void wait_steps_036880(std::int32_t) override;
     void log_literal_006880(std::string_view) override;
@@ -52,6 +54,6 @@ public:
     std::int32_t original_connect_0a3838(Socket, std::span<const std::byte>, std::int32_t) override;
 private:
     Effects& remaining_;
-    execution_recovered::Execution& execution_;
+    execution::Execution& execution_;
 };
 }

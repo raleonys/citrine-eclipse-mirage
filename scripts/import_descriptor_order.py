@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Bounded PE32+ import-descriptor permutation; all thunk/name/IAT bytes stay intact."""
 import struct
 

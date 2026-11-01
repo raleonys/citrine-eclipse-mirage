@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_message_dispatch.hpp"
 #include "preloader_l/net/transport_queued_write.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct ResponseExecutorScratch {}; // native uninitialized tag, not recovered bytes
 using ResponseFactory20=void(*)(IoHandlerEnvironment&,std::uintptr_t query,std::uintptr_t literal_84425);
 using ResponseFactory88=void(*)(IoHandlerEnvironment&,std::uintptr_t query,ResponseExecutorScratch&);
@@ -50,10 +52,10 @@ void invoke_borrowed_response_022240(MessageWriteTask&,ResponseDispatchContext&,
     ResponseWriteCall call=&invoke_response_write);
 void dispatch_response_021420(IoHandlerEnvironment&,MessageWriteTask&,ResponseDispatchContext&);
 // Closes the N1 MessageDispatchApi hook with the actual normal021420 source.
-class RecoveredResponseDispatchApi:public MessageDispatchApi {
+class ResponseDispatchApi:public MessageDispatchApi {
 public:
-    explicit RecoveredResponseDispatchApi(ResponseDispatchContext& context):context_(context){}
+    explicit ResponseDispatchApi(ResponseDispatchContext& context):context_(context){}
     void dispatch_response_021420(IoHandlerEnvironment&,MessageWriteTask&,std::uint64_t,std::uint64_t) final;
 private:ResponseDispatchContext& context_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

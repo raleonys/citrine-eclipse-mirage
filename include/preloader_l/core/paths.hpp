@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include <cstddef>
 #include <stdexcept>
 #include <string_view>
 
-namespace preloader_l::path_recovered {
+namespace preloader_l::path {
 using Path = configuration::Path;
 using View = std::u16string_view;
 

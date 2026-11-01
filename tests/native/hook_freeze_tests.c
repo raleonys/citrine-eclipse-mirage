@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 /* Exercise the actual patched engine, injecting only peer-thread OS failures. */
 #include <windows.h>
 #include <tlhelp32.h>

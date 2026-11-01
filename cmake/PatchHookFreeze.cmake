@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 if(NOT DEFINED MINHOOK_HOOK_C OR NOT EXISTS "${MINHOOK_HOOK_C}")
     message(FATAL_ERROR "MINHOOK_HOOK_C missing")
 endif()

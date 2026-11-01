@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 add_library(portable_config STATIC src/config/configuration.cpp)
 target_include_directories(portable_config PUBLIC include)
 function(portable_check name)

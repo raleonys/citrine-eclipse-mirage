@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include "preloader_l/core/binary_io.hpp"
@@ -15,5 +17,5 @@ std::string serialize_ini(const configuration::State&);
 // Empty ini_path skips all work. Byte format and parent policy are preserved;
 // checked atomic replacement supersedes the recovered ignored write result.
 void write_ini_01f9a0(const configuration::Path& ini_path,
-    const configuration::State&,Effects&,file_recovered::Factory&);
+    const configuration::State&,Effects&,file::Factory&);
 } // namespace preloader_l::achievement_writer

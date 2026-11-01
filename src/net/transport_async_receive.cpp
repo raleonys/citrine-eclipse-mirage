@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_async_receive.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 IocpSchedulerEntry& receive_scheduler(AsyncReceiveService& service){
     if(!service.scheduler_08)throw UnsupportedInput("Native receive scheduler has no live projection");
@@ -71,7 +73,7 @@ void start_async_receive_021d10(AsyncReceiveService& service,ReceiveSocketImplem
     IoCleanupFrame<ReceiveIoOperation> frame{};
     cleanup_receive_0293f0(frame,context.environment,context.worker,context.memory);
 }
-void RecoveredAsyncReceiveEffects::construct_environment_023dd0(IoHandlerEnvironment& destination,std::uintptr_t allocator_identity){
+void AsyncReceiveEffects::construct_environment_023dd0(IoHandlerEnvironment& destination,std::uintptr_t allocator_identity){
     IoHandlerEnvironment* source=nullptr;bool matched=false;
     for(const auto& binding:sources_){
         if(binding.allocator_identity!=allocator_identity)continue;
@@ -81,4 +83,4 @@ void RecoveredAsyncReceiveEffects::construct_environment_023dd0(IoHandlerEnviron
     if(!source)throw UnsupportedInput("Receive environment source identity has no live projection");
     construct_io_environment_023dd0(destination,*source,sentinels_,constructor_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/async_receive_test_fixture.hpp"
 #include "preloader_l/net/transport_io_completion_dispatch.hpp"
 // Compile-time regression: reproduce MSVC eh.h global lookup on other compilers.
@@ -28,10 +30,10 @@ void factory(s::IoHandlerEnvironment& e,std::uintptr_t query,s::IoEnvironmentCon
     check(query==0x5678,"cached actual factory receives query-slot result");++factory_calls;
     e.payload_00={21,22};e.operations_10=factory_table;e.state_18=0;e.schedule_20=0x456;e.executor_28=nullptr;
 }
-struct Recovered:s::RecoveredAsyncReceiveEffects {
+struct Recovered:s::AsyncReceiveEffects {
     Fixture& f;
     Recovered(Fixture& f,s::IoHandlerSentinels sentinels,s::IoEnvironmentConstructorContext& constructor,std::span<s::IoEnvironmentSourceBinding> sources)
-        :RecoveredAsyncReceiveEffects(sentinels,constructor,sources),f(f){}
+        :AsyncReceiveEffects(sentinels,constructor,sources),f(f){}
     s::AsyncReceiveOperation& project_async_receive(s::OperationStorage& storage)override{return f.effects.project_async_receive(storage);}
 };
 struct CompletionEffects:s::IoCompletionEffects {
@@ -67,8 +69,8 @@ void chain(){
         std::array<s::IoEnvironmentFactoryBinding,1> factories{{{&executor,&factory}}};
         s::IoEnvironmentConstructorContext ctor{types,queries,factories};
         std::array<s::IoEnvironmentSourceBinding,1> sources{{{0x987,&allocator}}};
-        Recovered recovered{f,env.sentinels,ctor,sources};factory_table=&normal;factory_calls=0;
-        s::AsyncReceiveContext context{env,f.worker,f.memory,f.receive,f.completion,f.errors,recovered};
+        Recovered system_services{f,env.sentinels,ctor,sources};factory_table=&normal;factory_calls=0;
+        s::AsyncReceiveContext context{env,f.worker,f.memory,f.receive,f.completion,f.errors,system_services};
         Ref owner,weak;f.source.control_a8=&owner;f.implementation.weak_control_18=&weak;f.implementation.state_08=0x10;
         const auto source=f.source;f.receive.answer={c.sdk_result,c.sdk_error,c.bytes};
         f.receive.hook=[&]{if(early)f.effects.operation->io.operation.queued=1;};
@@ -98,8 +100,8 @@ void chain(){
 void missing_constructor_binding(){
     Fixture f;Table sentinel{true};Types types;std::array<s::IoEnvironmentTypeBinding,0> queries{};std::array<s::IoEnvironmentFactoryBinding,0> factories{};
     s::IoEnvironmentConstructorContext ctor{types,queries,factories};std::array<s::IoEnvironmentSourceBinding,0> sources{};
-    Recovered recovered{f,{&sentinel,0,nullptr,0x777},ctor,sources};s::IoHandlerEnvironment destination;
-    rejects([&]{recovered.construct_environment_023dd0(destination,0x987);});
+    Recovered system_services{f,{&sentinel,0,nullptr,0x777},ctor,sources};s::IoHandlerEnvironment destination;
+    rejects([&]{system_services.construct_environment_023dd0(destination,0x987);});
     check(types.comparisons==0,"missing source rejected before constructor type effects");
 }
 }

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "../../src/runtime/application_internal.hpp"
 #include <iostream>
 #include <string>
@@ -84,7 +86,7 @@ void actual_environment_logging(preloader_l::application::detail::Environment& e
 int main()try{
     using namespace preloader_l;
     configuration::State state{};application::Options options;
-    file_recovered::NativeFactory files;xml_reader_bridge::Backend xml;achievement_storage::Paths paths;
+    file::NativeFactory files;xml_reader_bridge::Backend xml;achievement_storage::Paths paths;
     achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;
     application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
     env.unknown_entitlement_field("QueryEntitlements unknown attr: \xc3\xa9|value");

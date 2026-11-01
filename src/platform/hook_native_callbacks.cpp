@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/hook_native_callbacks.hpp"
 #include "preloader_l/platform/callback_lock.hpp"
 #include <bit>
@@ -6,7 +8,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace preloader_l::native_recovered {
+namespace preloader_l::native {
 namespace {
 std::mutex gate;
 Context* current{};
@@ -66,45 +68,45 @@ int WSAAPI connect_entry(SOCKET socket,const sockaddr* pointer,int length) noexc
     return invoke(Callback::connect_00fd00,[&](Context& c){
         std::size_t extent=0;
         if(length==c.network.ipv4_length_0a10d0||length==c.network.ipv6_length_0a10d4){
-            if(!pointer)throw network_hook_recovered::OutOfEvidenceInput("recognized sockaddr length with null pointer");
+            if(!pointer)throw network_hook::OutOfEvidenceInput("recognized sockaddr length with null pointer");
             extent=static_cast<std::size_t>(length); // Winsock requires a readable complete address
         }
         auto* bytes=reinterpret_cast<const std::byte*>(pointer);
-        return network_hook_recovered::connect_00fd00(c.network,c.network_effects,socket,{bytes,extent},length);
+        return network_hook::connect_00fd00(c.network,c.network_effects,socket,{bytes,extent},length);
     });
 }
 LSTATUS WINAPI reg_open_a_entry(HKEY root,LPCSTR key,DWORD options,REGSAM access,PHKEY result) noexcept {
-    return invoke(Callback::reg_open_a_00f800,[&](Context& c){return status(registry_recovered::open_a_00f800(c.registry,c.registry_effects,
-        {address(root),key,options,access,registry_recovered::HandleCell::from_raw(result)}));});
+    return invoke(Callback::reg_open_a_00f800,[&](Context& c){return status(registry::open_a_00f800(c.registry,c.registry_effects,
+        {address(root),key,options,access,registry::HandleCell::from_raw(result)}));});
 }
 LSTATUS WINAPI reg_open_w_entry(HKEY root,LPCWSTR key,DWORD options,REGSAM access,PHKEY result) noexcept {
-    return invoke(Callback::reg_open_w_00f960,[&](Context& c){return status(registry_recovered::open_w_00f960(c.registry,c.registry_effects,
-        {address(root),reinterpret_cast<const char16_t*>(key),options,access,registry_recovered::HandleCell::from_raw(result)}));});
+    return invoke(Callback::reg_open_w_00f960,[&](Context& c){return status(registry::open_w_00f960(c.registry,c.registry_effects,
+        {address(root),reinterpret_cast<const char16_t*>(key),options,access,registry::HandleCell::from_raw(result)}));});
 }
 LSTATUS WINAPI reg_close_entry(HKEY key) noexcept {
-    return invoke(Callback::reg_close_00f5b0,[&](Context& c){return status(registry_recovered::close_00f5b0(c.registry,c.registry_effects,address(key)));});
+    return invoke(Callback::reg_close_00f5b0,[&](Context& c){return status(registry::close_00f5b0(c.registry,c.registry_effects,address(key)));});
 }
 LSTATUS WINAPI reg_query_a_entry(HKEY key,LPCSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size) noexcept {
-    return invoke(Callback::reg_query_a_00fac0,[&](Context& c){return status(registry_recovered::query_a_00fac0(c.registry,c.registry_effects,
-        {address(key),name,reserved,registry_recovered::DwordCell::from_raw(type),data,registry_recovered::DwordCell::from_raw(size)}));});
+    return invoke(Callback::reg_query_a_00fac0,[&](Context& c){return status(registry::query_a_00fac0(c.registry,c.registry_effects,
+        {address(key),name,reserved,registry::DwordCell::from_raw(type),data,registry::DwordCell::from_raw(size)}));});
 }
 LSTATUS WINAPI reg_query_w_entry(HKEY key,LPCWSTR name,LPDWORD reserved,LPDWORD type,LPBYTE data,LPDWORD size) noexcept {
-    return invoke(Callback::reg_query_w_00fb60,[&](Context& c){return status(registry_recovered::query_w_00fb60(c.registry,c.registry_effects,
-        {address(key),reinterpret_cast<const char16_t*>(name),reserved,registry_recovered::DwordCell::from_raw(type),data,registry_recovered::DwordCell::from_raw(size)}));});
+    return invoke(Callback::reg_query_w_00fb60,[&](Context& c){return status(registry::query_w_00fb60(c.registry,c.registry_effects,
+        {address(key),reinterpret_cast<const char16_t*>(name),reserved,registry::DwordCell::from_raw(type),data,registry::DwordCell::from_raw(size)}));});
 }
 BOOL WINAPI process_a_entry(LPCSTR app,LPSTR cmd,LPSECURITY_ATTRIBUTES p,LPSECURITY_ATTRIBUTES t,BOOL inherit,DWORD flags,LPVOID env,LPCSTR cwd,LPSTARTUPINFOA start,LPPROCESS_INFORMATION info) noexcept {
-    return invoke(Callback::create_process_a_00f3f0,[&](Context& c){return host_callbacks_recovered::create_process_a_00f3f0(c.registry.values,c.host_effects,
+    return invoke(Callback::create_process_a_00f3f0,[&](Context& c){return host_callbacks::create_process_a_00f3f0(c.registry.values,c.host_effects,
         {app,cmd,address(p),address(t),inherit,flags,address(env),cwd,address(start),address(info)});});
 }
 BOOL WINAPI process_w_entry(LPCWSTR app,LPWSTR cmd,LPSECURITY_ATTRIBUTES p,LPSECURITY_ATTRIBUTES t,BOOL inherit,DWORD flags,LPVOID env,LPCWSTR cwd,LPSTARTUPINFOW start,LPPROCESS_INFORMATION info) noexcept {
-    return invoke(Callback::create_process_w_00f4d0,[&](Context& c){return host_callbacks_recovered::create_process_w_00f4d0(c.registry.values,c.host_effects,
+    return invoke(Callback::create_process_w_00f4d0,[&](Context& c){return host_callbacks::create_process_w_00f4d0(c.registry.values,c.host_effects,
         {reinterpret_cast<const char16_t*>(app),reinterpret_cast<char16_t*>(cmd),address(p),address(t),inherit,flags,address(env),reinterpret_cast<const char16_t*>(cwd),address(start),address(info)});});
 }
 HRESULT WINAPI folder_a_entry(HWND window,int id,HANDLE token,DWORD flags,LPSTR path) noexcept {
-    return invoke(Callback::folder_a_00fc00,[&](Context& c){return std::bit_cast<HRESULT>(host_callbacks_recovered::folder_a_00fc00(c.registry.values,c.host_effects,{address(window),id,address(token),flags,path}));});
+    return invoke(Callback::folder_a_00fc00,[&](Context& c){return std::bit_cast<HRESULT>(host_callbacks::folder_a_00fc00(c.registry.values,c.host_effects,{address(window),id,address(token),flags,path}));});
 }
 HRESULT WINAPI folder_w_entry(HWND window,int id,HANDLE token,DWORD flags,LPWSTR path) noexcept {
-    return invoke(Callback::folder_w_00fc80,[&](Context& c){return std::bit_cast<HRESULT>(host_callbacks_recovered::folder_w_00fc80(c.registry.values,c.host_effects,{address(window),id,address(token),flags,reinterpret_cast<char16_t*>(path)}));});
+    return invoke(Callback::folder_w_00fc80,[&](Context& c){return std::bit_cast<HRESULT>(host_callbacks::folder_w_00fc80(c.registry.values,c.host_effects,{address(window),id,address(token),flags,reinterpret_cast<char16_t*>(path)}));});
 }
 BOOL WINAPI crypt_query_entry(DWORD type,const void* object,DWORD content,DWORD format,
     DWORD flags,DWORD* encoding,DWORD* content_type,DWORD* format_type,

@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_operations.hpp"
 #include <algorithm>
 #include <bit>
 #include <limits>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 std::int32_t address_028690(std::int32_t family,std::string_view raw,
     std::array<std::uint8_t,16>& output,std::uint32_t* scope,Error& error,Api& api) {
     api.set_last_error(0);
@@ -64,12 +66,12 @@ std::int64_t send_02a200(Socket socket,std::uint8_t state,std::span<Buffer> buff
         error.value=0;
     }
 }
-server_recovered::ParsedAddress AddressBackend::parse_address_028690(std::uint16_t family,std::string_view raw) {
-    server_recovered::ParsedAddress result;Error error;
+server::ParsedAddress AddressBackend::parse_address_028690(std::uint16_t family,std::string_view raw) {
+    server::ParsedAddress result;Error error;
     result.conversion_result=address_028690(family,raw,result.bytes,&result.scope_id,error,api_);
     result.error={error.value,error.category.logical};return result;
 }
-server_recovered::WriteResult SynchronousTransport::synchronous_send(std::span<const char> bytes) {
+server::WriteResult SynchronousTransport::synchronous_send(std::span<const char> bytes) {
     if(bytes.size()>std::numeric_limits<ULONG>::max())
         throw UnsupportedInput("Synchronous buffer exceeds DWORD byte length");
     Buffer buffer{static_cast<ULONG>(bytes.size()),const_cast<char*>(bytes.data())};
@@ -77,4 +79,4 @@ server_recovered::WriteResult SynchronousTransport::synchronous_send(std::span<c
     const auto count=send_02a200(socket_,state_,std::span<Buffer>(&buffer,1),0,bytes.empty(),error,api_);
     return {{error.value,error.category.logical},static_cast<std::size_t>(count)};
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

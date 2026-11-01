@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Tamper, failure-propagation and source/package identity regressions."""
 from pathlib import Path
 import json

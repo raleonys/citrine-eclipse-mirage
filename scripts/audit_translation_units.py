@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Produce a per-TU symbol/test/source-API usage matrix from built COFF objects.
 
 Uses LLVM inspection tools and the generated CMake target graph. Object lookup

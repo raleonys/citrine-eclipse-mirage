@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Release-candidate regressions: source binding, revision ownership and draft-only retry."""
 from copy import deepcopy
 import json

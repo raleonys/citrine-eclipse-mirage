@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/node_parse.hpp"
 #include "tests/support/socket/document_error_test_fixture.hpp"
 #include <map>
 
 namespace node_parse_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 using document_error_test::check;using document_error_test::checks;
 using document_error_test::put;using document_error_test::word;
 using document_error_test::Failure;using document_error_test::fails;using document_error_test::unmapped;

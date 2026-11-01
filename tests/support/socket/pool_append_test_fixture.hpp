@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/pool_append.hpp"
 #include "preloader_l/xml/pool_release.hpp"
@@ -13,7 +15,7 @@
 #include <vector>
 
 namespace pool_append_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 inline unsigned checks=0;
 inline void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 inline std::uint64_t word(std::span<const std::uint8_t> b,std::size_t at,unsigned n=8){std::uint64_t v=0;for(unsigned i=0;i<n;++i)v|=std::uint64_t(b[at+i])<<(i*8);return v;}
@@ -22,7 +24,7 @@ struct Type {std::uintptr_t target;unsigned stride,bytes,count;};
 inline constexpr std::array<Type,4> types{{{0x180002b10ULL,120,4080,34},{0x180002600ULL,80,4080,51},{0x180002960ULL,112,4032,36},{0x1800027b0ULL,104,4056,39}}};
 struct Failure {unsigned code;};
 struct Fixture;
-struct Effects:s::RecoveredPoolAppendEffects {
+struct Effects:s::PoolAppendEffects {
     struct Call {std::string name;std::uintptr_t destination=0,source=0;std::uint64_t bytes=0;};
     Fixture& f;std::vector<Call> calls;std::vector<std::uintptr_t> freed;
     std::function<void(const std::string&)> before,after;bool symbolic_copy=false;
@@ -64,9 +66,9 @@ struct Fixture {
     void set(std::uintptr_t p,std::uint64_t v,unsigned n=8){put(memory.view(p,n),0,v,n);}
     void count(std::uint32_t n,std::uint32_t capacity){put(pool,0x64,n,4);put(pool,0x60,capacity,4);}
     void append(std::uintptr_t p){s::append_pool_block_005440(array_address,p,append_context);}
-    std::uintptr_t allocate(){s::RecoveredPoolAllocationEffects dispatch{allocation_context};return dispatch.pool_allocate(types[type].target,pool_address);}
+    std::uintptr_t allocate(){s::PoolAllocationEffects dispatch{allocation_context};return dispatch.pool_allocate(types[type].target,pool_address);}
 };
-inline Effects::Effects(Fixture& owner,s::ReceiveBufferMemory& memory):RecoveredPoolAppendEffects(memory),f(owner){}
+inline Effects::Effects(Fixture& owner,s::ReceiveBufferMemory& memory):PoolAppendEffects(memory),f(owner){}
 inline std::uintptr_t Effects::allocate_04b0bc(std::uint64_t n){calls.push_back({"block_allocate",0,0,n});enter("block_allocate");check(f.next_block<f.blocks.size()&&n==types[f.type].bytes,"supplied block allocator admits exact bounded layout size");const auto p=Fixture::block_address(f.next_block++);leave("block_allocate");return p;}
 inline void Effects::fill_0793d0(std::uintptr_t p,std::uint8_t value,std::uint64_t n){calls.push_back({"fill",p,value,n});enter("fill");auto b=f.memory.view(p,n);std::fill(b.begin(),b.end(),value);leave("fill");}
 inline std::uintptr_t Effects::allocate_04b100(std::uint64_t n){calls.push_back({"array_allocate",0,0,n});enter("array_allocate");const auto p=f.forced_heap?*f.forced_heap:Fixture::heap_address(f.next_heap++);leave("array_allocate");return p;}

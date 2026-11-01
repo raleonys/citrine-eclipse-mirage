@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/execution.hpp"
 #include <algorithm>
 #include <bit>
@@ -9,7 +11,7 @@
 #include <string>
 #include <vector>
 
-using namespace preloader_l::execution_recovered;
+using namespace preloader_l::execution;
 namespace {
 int checks = 0;
 void require(bool value, const char* message) {

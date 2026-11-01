@@ -1,31 +1,33 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/node_delete.hpp"
 #include "tests/support/socket/document_clear_test_fixture.hpp"
 
 namespace delete_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 using clear_test::Graph;using document_test::State;using document_test::Failure;
 using response_test::check;using response_test::checks;
-struct Nodes:s::RecoveredNodeDeleteEffects {
+struct Nodes:s::NodeDeleteEffects {
     clear_test::Nodes lower;Graph& graph;
     std::function<void(std::string)>& hook=lower.hook;std::function<void()>& after_destroy=lower.after_destroy;
     std::uint64_t& probe_result=lower.probe_result;
     unsigned& probes=lower.probes;unsigned& destroys=lower.destroys;unsigned& releases=lower.releases;
     unsigned& tracks=lower.tracks;unsigned& parents=lower.parents;unsigned& deletes=lower.deletes;
     std::vector<clear_test::Nodes::Call>& calls=lower.calls;std::vector<std::string>& trace=lower.trace;
-    explicit Nodes(Graph& g):RecoveredNodeDeleteEffects(g.state.memory),lower(g),graph(g){}
+    explicit Nodes(Graph& g):NodeDeleteEffects(g.state.memory),lower(g),graph(g){}
     std::uint64_t node_probe(std::uintptr_t target,std::uintptr_t node)override{return lower.node_probe(target,node);}
     void node_destroy(std::uintptr_t target,std::uintptr_t node,std::uint32_t flags)override{lower.node_destroy(target,node,flags);}
     void pool_release(std::uintptr_t target,std::uintptr_t pool,std::uintptr_t node)override{lower.pool_release(target,pool,node);}
     void pool_track(std::uintptr_t target,std::uintptr_t pool)override{lower.pool_track(target,pool);}
 };
-struct Docs:s::RecoveredDocumentClearEffects {
+struct Docs:s::DocumentClearEffects {
     State& state;Nodes& nodes;document_test::Effects lower;
     // Controlled compatibility-parser projections:0 linked root,1 tracked
     // unattached root,2 tracked root attached to a separate mapped parent.
     // This is not recovered native DOM allocation/tracking materialization.
     unsigned projection_mode=1;
-    Docs(State& s,Nodes& n,native_message_test::Fixture* native=nullptr):RecoveredDocumentClearEffects(s.memory,n),state(s),nodes(n),lower(s,native){nodes.after_destroy=[this](){lower.reset_parsed();};}
+    Docs(State& s,Nodes& n,native_message_test::Fixture* native=nullptr):DocumentClearEffects(s.memory,n),state(s),nodes(n),lower(s,native){nodes.after_destroy=[this](){lower.reset_parsed();};}
     void set_error_005820(std::uintptr_t p,std::int32_t a,std::uint32_t b,std::uintptr_t c)override{lower.set_error_005820(p,a,b,c);}
     std::uintptr_t allocate_04b100(std::uint64_t n)override{const auto p=lower.allocate_04b100(n);nodes.graph.refresh();return p;}
     void copy_078d30(std::uintptr_t to,std::uintptr_t from,std::uint64_t n)override{lower.copy_078d30(to,from,n);nodes.graph.refresh();}

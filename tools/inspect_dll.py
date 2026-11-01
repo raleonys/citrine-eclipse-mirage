@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Read-only DLL imports/exports, VERSIONINFO and exact read-only avatar data."""
 import argparse
 import hashlib

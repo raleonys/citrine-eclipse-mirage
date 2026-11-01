@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/config/application.hpp"
 #include "preloader_l/core/product_identity.hpp"
 
@@ -21,8 +23,8 @@ void copy_section(HashNode& section,HashNode& config,const char* key,Trace* trac
 }
 }
 
-config_hash::Node read_config2(const configuration::Path& path,file_recovered::Factory& files) {
-    const auto bytes=file_recovered::read_binary_03b3f0(path,files);
+config_hash::Node read_config2(const configuration::Path& path,file::Factory& files) {
+    const auto bytes=file::read_binary_03b3f0(path,files);
     parser::State parsed;
     (void)parser::parse(bytes,parsed); // Raw bytes; parser removes only one BOM.
     if(const auto* selected=parsed.root.find("Config2"))return config_hash::selected_copy(*selected);
@@ -135,7 +137,7 @@ void apply_config2(configuration::State& state,config_hash::Node& config,
 }
 
 void load_and_apply(configuration::State& state,bool override_pass,
-                    configuration::Dependencies& deps,file_recovered::Factory& files,Trace* trace) {
+                    configuration::Dependencies& deps,file::Factory& files,Trace* trace) {
     const auto name=override_pass?product_identity::override_filename:product_identity::config_filename;
     const auto filename=deps.filesystem_widen_010540(name);
     const auto parent=deps.parent_path_019820(state.executable_path);

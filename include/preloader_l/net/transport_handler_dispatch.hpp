@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_io_completion.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct HandlerTaskContext;
 class OwnedHandlerTask {
 public:
@@ -62,4 +64,4 @@ void call_receive_task_022670(ReceiveHandlerTask&,std::uint8_t,HandlerTaskContex
 void call_send_task_0227b0(SendHandlerTask&,std::uint8_t,HandlerTaskContext&);
 void schedule_receive_handler_022c60(IoHandlerEnvironment&,ReceiveHandler&,HandlerTaskContext&);
 void schedule_send_handler_0229d0(IoHandlerEnvironment&,SendHandler&,HandlerTaskContext&);
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/pool_clear.hpp"
 #include "tests/support/socket/pool_append_test_fixture.hpp"
 
 namespace pool_clear_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 using pool_append_test::check;using pool_append_test::checks;using pool_append_test::word;using pool_append_test::put;using pool_append_test::Failure;
 using pool_append_test::unsupported;using pool_append_test::failure;using pool_append_test::types;
 using Backing=pool_append_test::Fixture;
@@ -17,14 +19,14 @@ struct Nodes:s::NativeNodeClearEffects {
     void remove_parent_003030(std::uintptr_t,std::uintptr_t)override{unexpected();}
     void delete_node_003240(std::uintptr_t)override{unexpected();}
 };
-struct Docs:s::RecoveredPoolClearEffects {
+struct Docs:s::PoolClearEffects {
     std::vector<std::uintptr_t> entered_frees,completed_frees;unsigned other_calls=0;
     std::function<void(std::uintptr_t)> before_free,after_free;
     std::function<std::uintptr_t(std::uint64_t)> allocator;
     std::function<void(std::uintptr_t,std::uintptr_t,std::uint64_t)> copier;
     std::function<void(std::uintptr_t)> parser;
     std::function<void(std::uintptr_t,std::int32_t,std::uint32_t,std::uintptr_t)> error_setter;
-    Docs(s::ReceiveBufferMemory& memory,Nodes& nodes):RecoveredPoolClearEffects(memory,nodes){}
+    Docs(s::ReceiveBufferMemory& memory,Nodes& nodes):PoolClearEffects(memory,nodes){}
     [[noreturn]]void unexpected(){++other_calls;throw std::runtime_error("unexpected document provider in pool clear test");}
     void set_error_005820(std::uintptr_t p,std::int32_t c,std::uint32_t n,std::uintptr_t d)override{if(error_setter)error_setter(p,c,n,d);else unexpected();}
     std::uintptr_t allocate_04b100(std::uint64_t n)override{if(allocator)return allocator(n);unexpected();}

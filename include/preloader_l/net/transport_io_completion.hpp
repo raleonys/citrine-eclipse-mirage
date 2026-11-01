@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_posted_operation.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct IoHandlerEnvironment;
 class IoHandlerVtable {
 public:
@@ -103,4 +105,4 @@ void invoke_receive_021a40(ReceiveHandler&,IoCompletionEffects&);
 void invoke_send_021a80(SendHandler&,IoCompletionEffects&);
 void complete_receive_027710(std::uintptr_t owner,ReceiveIoOperation&,const Error&,std::uint64_t bytes,IoCompletionEnvironment,WorkerRunApi&,PostedMemoryEffects&,Api&,IoCompletionEffects&);
 void complete_send_027a20(std::uintptr_t owner,SendIoOperation&,const Error&,std::uint64_t bytes,IoCompletionEnvironment,WorkerRunApi&,PostedMemoryEffects&,Api&,IoCompletionEffects&);
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

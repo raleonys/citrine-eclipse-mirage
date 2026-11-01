@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_cancellation.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Opaque image identities only; neither field is an executable pointer.
 struct ServiceKey {std::uintptr_t type=0,id=0;};
 struct ServiceEntry {
@@ -57,4 +59,4 @@ private:
     std::span<RegistryServiceBinding> bindings_;Api& errors_;AcceptorApi& api_;
     CancellationEffects& cancellation_;RegistryExecutorEffects& executor_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

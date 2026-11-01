@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <cstdint>
 #include <map>
@@ -5,7 +7,7 @@
 #include <string_view>
 #include <vector>
 
-namespace preloader_l::startup_recovered {
+namespace preloader_l::startup {
 // Bind these references to the same state used by the configuration and server.
 // No constructor guesses or resets the original globals' initial values.
 struct StateReferences {
@@ -71,4 +73,4 @@ public:
     ConsoleHandle console_window() override;
     bool move_window(ConsoleHandle, int, int, int, int, bool) override;
 };
-} // namespace preloader_l::startup_recovered
+} // namespace preloader_l::startup

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Verify retained reference sources cannot enter the production link/dependency graph."""
 import argparse
 import hashlib

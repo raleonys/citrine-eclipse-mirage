@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/node_base.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Required lower effects. No locale/classifier implementation or native parse
 // virtual target is supplied by this stage. The target is an identity only;
 // it must never be cast to an original-image host function pointer.
@@ -19,11 +21,11 @@ struct NativeParseEntryContext {
 };
 void parse_document_entry_0041b0(std::uintptr_t document,NativeParseEntryContext&);
 
-class RecoveredParseEntryEffects:public RecoveredNodeBaseEffects,public NativeParseEntryEffects {
+class ParseEntryEffects:public NodeBaseEffects,public NativeParseEntryEffects {
 public:
-    RecoveredParseEntryEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes)
-        :RecoveredNodeBaseEffects(memory,nodes),parse_entry_{memory,*this,*this}{}
+    ParseEntryEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes)
+        :NodeBaseEffects(memory,nodes),parse_entry_{memory,*this,*this}{}
     void parse_0041b0(std::uintptr_t) final;
 private:NativeParseEntryContext parse_entry_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket
