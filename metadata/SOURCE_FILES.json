@@ -594,8 +594,8 @@
       "sha256": "2c077e82e12bdfa96a593ee1cae6478b72add8c5d4bd36f3ba08ecfa2e50349a"
     },
     "src/core/binary_io.cpp": {
-      "bytes": 2034,
-      "sha256": "1ae2b229b5f28514c197ec90e663d9db40a2045c0b3e8cac099ca566aa7944a8"
+      "bytes": 2077,
+      "sha256": "8b34f83e3f1c953127c0dd261c49d704c63c584250f8353fe336cbbc37373572"
     },
     "src/core/license.cpp": {
       "bytes": 6709,

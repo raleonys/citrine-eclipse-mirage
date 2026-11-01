@@ -38,6 +38,7 @@ bool write_binary_checked(const Path& path,std::string_view value,Factory& facto
     const bool write_failed=stream->initial_state()!=0;
     // Buffered output can signal failure only during close.
     stream->close_03ae70();
-    return !write_failed && stream->initial_state()==0;
+    const bool close_failed=stream->initial_state()!=0;
+    return !write_failed && !close_failed;
 }
 } // namespace preloader_l::file
