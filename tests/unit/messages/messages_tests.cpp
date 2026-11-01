@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/protocol/messages.hpp"
 #include <algorithm>
 #include <cstdio>
@@ -8,7 +10,7 @@
 #include <map>
 #include <stdexcept>
 #include <vector>
-using namespace preloader_l::messages_recovered;
+using namespace preloader_l::messages;
 static unsigned checks;
 static void check(bool v){++checks;if(!v)throw std::runtime_error("check "+std::to_string(checks));}
 struct Invalid {};

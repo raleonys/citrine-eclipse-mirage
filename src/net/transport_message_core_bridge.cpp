@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_message_core_bridge.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 std::string BoundedMessageCoreStrings::read_request(const ReceiveBufferString& value){
     const auto count=value.size_10;
     if(value.capacity_18<=15){
@@ -31,7 +33,7 @@ void process_message_core(std::uintptr_t identity,ReceiveBufferString& response,
     if(!identity || !found)throw UnsupportedInput("Message handler identity/state is unbound");
     const auto session=*found; // reference fields copied before string provider
     const auto original=context.strings.read_request(request);auto working=original;
-    const auto result=messages_recovered::process_message_033d70(session.state,working,
+    const auto result=messages::process_message_033d70(session.state,working,
         session.xml,session.factory,session.random,session.effects);
     if(working!=original)context.strings.replace_request(request,working);
     context.strings.construct_response(response,result);
@@ -39,4 +41,4 @@ void process_message_core(std::uintptr_t identity,ReceiveBufferString& response,
 void CompatibleMessageCoreApi::process_message_033d70(std::uintptr_t identity,ReceiveBufferString& response,ReceiveBufferString& request){
     process_message_core(identity,response,request,core_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

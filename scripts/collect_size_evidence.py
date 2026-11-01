@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Collect read-only DLL/MAP/COFF evidence from an existing local build.
 
 Object section sizes are pre-link contributions, never final function sizes.

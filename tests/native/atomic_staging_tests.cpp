@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include <windows.h>
 #include <filesystem>
 #include <fstream>
@@ -45,8 +47,8 @@ int main()try{
     fs::create_directory(root);
     struct Directory {fs::path p;~Directory(){std::error_code e;fs::remove_all(p,e);}} dir{root};
     const auto target=root/"original.bin";{std::ofstream out(target);out<<"old";}
-    const file_recovered::FileWrite value{target.u16string(),"new"};
-    file_recovered::NativeFactory files;
+    const file::FileWrite value{target.u16string(),"new"};
+    file::NativeFactory files;
     struct Restore {~Restore(){fault::write=fault::close=fault::remove=fault::copy=false;}} restore;
     auto members=[&]{return std::distance(fs::directory_iterator(root),fs::directory_iterator{});};
     auto old=[&]{std::ifstream f(target);std::string s;f>>s;return s=="old";};

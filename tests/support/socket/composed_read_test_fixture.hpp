@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_composed_read.hpp"
 #include "tests/support/socket/receive_buffer_test_fixture.hpp"
@@ -5,7 +7,7 @@
 #include <algorithm>
 
 namespace read_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 namespace b=buffer_test;
 namespace r=receive_test;
 inline unsigned checks=0;

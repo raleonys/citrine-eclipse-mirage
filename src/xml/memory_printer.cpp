@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/memory_printer.hpp"
 
-namespace preloader_l::xml_recovered {
+namespace preloader_l::xml {
 std::string_view MemoryPrinter::c_string(std::string_view value) {
     const auto end=value.find('\0');
     return end==std::string_view::npos?value:value.substr(0,end);
@@ -63,4 +65,4 @@ void MemoryPrinter::close_element(bool compact) {
 std::string MemoryPrinter::buffer_including_terminator() const {
     auto output=buffer_;output.push_back('\0');return output;
 }
-} // namespace preloader_l::xml_recovered
+} // namespace preloader_l::xml

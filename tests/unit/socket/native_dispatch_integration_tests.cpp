@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/native_dispatch_test_fixture.hpp"
 using namespace core_test;
 using container_test::active_container;
@@ -31,8 +33,8 @@ struct Finish:s::WriteFinishApi {
     s::WriteFinishStream& append_007990(s::WriteFinishStream&,std::uintptr_t,std::uint64_t)override{r::unexpected();}
     std::uint64_t widen_01e510(std::uintptr_t,std::uint8_t)override{r::unexpected();}void put_00fe90(s::WriteFinishStream&,std::uint8_t)override{r::unexpected();}void flush_00e1e0(s::WriteFinishStream&)override{r::unexpected();}
 };
-struct App:s::RecoveredNativeMessageApi {
-    message_test::Fixture& m;App(s::ResponseDispatchContext& c,s::NativeMessageContext& core,message_test::Fixture& m):RecoveredNativeMessageApi(c,core),m(m){}
+struct App:s::NativeMessageApiAdapter {
+    message_test::Fixture& m;App(s::ResponseDispatchContext& c,s::NativeMessageContext& core,message_test::Fixture& m):NativeMessageApiAdapter(c,core),m(m){}
     void destroy_empty_message_00aa50(s::ReceiveBufferString& value)override{m.api.destroy_empty_message_00aa50(value);}
     void cleanup_exit_waits_04a47c()override{r::unexpected();}
 };
@@ -44,9 +46,9 @@ struct Loop {
     s::QueuedWriteOwner owner{0x12000,&f.m.base.owner,&f.queue,&streams[0]};
     std::array<s::QueuedWriteOwnerBinding,1> owners{{{0x12000,&owner}}};
     s::WriteFinishContext finished{effects,finish,f.owners,{},containers.bytes.headers};
-    preloader_l::crypto_recovered::Cipher oracle;s::SessionCipher session;s::PrefixCipherState& cipher=session.native();
+    preloader_l::crypto::Cipher oracle;s::SessionCipher session;s::PrefixCipherState& cipher=session.native();
     s::NativeDispatchLocals dispatch_locals;dispatch_test::Bytes bytes{native,dispatch_locals};s::ReceiveBufferContext strings{containers.bytes.memory,bytes};
-    s::RecoveredPrefixCipherBlocks blocks{containers.bytes.memory};s::PrefixCipherContext cipher_context{strings,blocks};
+    s::PrefixCipherBlocksAdapter blocks{containers.bytes.memory};s::PrefixCipherContext cipher_context{strings,blocks};
     dispatch_test::Effects lower{native,strings,dispatch_locals,session};s::NativeDispatchContext dispatch_context{strings,dispatch_locals,lower};
     growth_test::Api growth{strings};s::RequestMutationContext mutation{strings,growth};
     std::array<s::PrefixCipherBinding,1> cipher_bindings{{{0x120f0,&cipher}}};dispatch_test::Api cipher_api{cipher_context,cipher_bindings,dispatch_context,native.api,lower.effects};
@@ -75,7 +77,7 @@ struct Loop {
         cipher_api.effects.handling=[&,expected_input](){check(core.input()==expected_input,"handler sees actual decoded/decrypted/erased request prefix");};
         bytes.refresh();s::dispatch_message_028d30(0x12000,f.m.request.value,message);
         check(f.m.request.value.size_10==0&&f.m.request.live_blocks()==0,"native033d70 feeds actual028d30 cleanup with original live request");
-        check(cipher.iv_b4==(cipher.mode_00==1?oracle.iv():preloader_l::crypto_recovered::Key{}),"server typed IV matches independent peer request/response/event chronology");
+        check(cipher.iv_b4==(cipher.mode_00==1?oracle.iv():preloader_l::crypto::Key{}),"server typed IV matches independent peer request/response/event chronology");
         return expected;
     }
     std::string handshake(std::string key,std::string version,bool owned){
@@ -132,7 +134,7 @@ void regression(){
 void transcripts(){
     for(bool owned:{false,true})for(const auto& version:{std::string{},std::string("1"),std::string("2"),std::string("3")}){
         Loop l(1);l.session.encrypted_c4=7;l.session.unknown_c5=9;auto advance=std::string("advance CBC before reset");check(l.session.encrypt_042610(advance),"advance original IV before transcript reset");s::reset_session_cipher_02bc70(l.session);
-        check(!l.session.native().mode_00&&!l.session.encrypted_c4&&!l.session.unknown_c5&&l.session.native().iv_b4==preloader_l::crypto_recovered::Key{},"reset removes previous CBC/key/flags before new handshake");
+        check(!l.session.native().mode_00&&!l.session.encrypted_c4&&!l.session.unknown_c5&&l.session.native().iv_b4==preloader_l::crypto::Key{},"reset removes previous CBC/key/flags before new handshake");
         std::vector<std::string> expected{l.handshake("challenge-fixture",version,owned)};std::vector<std::string> payloads={"first","",std::string(150000,'K')};for(unsigned i=0;i<10;++i)payloads.push_back("after-handshake-"+std::to_string(i));
         unsigned i=0;for(const auto& payload:payloads){expected.push_back(l.dispatch(payload,owned,i?1:3,i==2));++i;}
         l.drain();check(l.received==expected&&l.finishes==14&&l.cipher_api.effects.commands.size()==13&&l.f.queue.map_size_d8==16,"version-dependent ChallengeResponse key used by13 real native encrypted query/response/event messages through queue/send/finish");

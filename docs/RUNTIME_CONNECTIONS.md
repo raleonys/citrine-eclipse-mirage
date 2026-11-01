@@ -1,21 +1,26 @@
-# Somut uygulama bağlantıları
+# Concrete application integration
 
-Güncel arayüz görevi: `YF-PUBLIC-ABI-20261028`. Runtime/config/resource/layout değişiklikleri korunur. Tarihsel karşılaştırma ile bugünkü uygulama ayrıdır.
+Current interface work item: `YF-PUBLIC-ABI-20261028`. Runtime,
+configuration, resource, and layout changes are retained. Historical
+comparisons are distinct from the current implementation.
 
-| Alan | Önceki durum | Güncel bağlantı | Doğrulama ve sınır |
+| Area | Previous state | Current integration | Validation and limitation |
 |---|---|---|---|
-| Config koleksiyonları | Tam yol yok diye genellendi; bu tespit yanlıştı. | Mevcut config_hash/config_application tam yolu Application tarafından kullanılır. | 25 content, entitlement, achievement totals, gerçek main→override |
-| Asio | Vendor ve IO fixture mevcut; gerçek app owner yok. | Gerçek RE ServerBackend/Session adaptörü, socket/completion/job ömürleri ve drain. | Gerçek loopback greeting/profile/content/encrypted/event/stop |
-| Windows filesystem | NativeFactory önce std, sonra ghc kullanmıştı. | Son kullanıcı talimatıyla standard filesystem/fstream geri geldi; kullanılmayan Gulrak kaldırıldı. | Unicode binary IO, config/achievement/avatar yolları ve Debug/Release log kontrolü |
-| Başlangıç State | Yalnız caller-seeded State vardı. | 036d20 pseudo/asm application alan projeksiyonu; SURGE görünen adı. | Config olmadan gerçek Application başlar |
-| DLL bootstrap | Yalnız kaynak API geliştirme DLLi. | DllMain hazırlığı + loader lock dışında Application worker ve yönetim API. | Gerçek DLL otomatik başlar; soketten LSX profile cevaplar; stop tamamlanır |
-| Native hook owner | 11 slot/source body vardı; somut ortak owner yoktu. | Tek config/original/context/MinHook owner, kaynak koşulları ve failure rollback. | 11 hook etkinliği + gerçek folder/process/registry SDK çağrıları; Wine kanıtı |
-| Provider | Kaynak Effects portları, yeni isim bağlanmamıştı. | RE version2/factory/virtual ABI adaptörü, yeni ad, owner cleanup. | Kontrollü DLL: profile/auth/avatar/başarısız auth/destructor; gerçek harici provider ABI kabulü değil |
-| Avatar/log/yollar | Resource ve politika metadata; runtime bağı yok. | LocalAppData/SURGE, byte-exact resource→handler, Debug-only olay logu. | Gerçek resource byte karşılaştırması; Release log yokluğu / Debug log varlığı |
-| Kaynak/araç karşılaştırma hatası | ScalarDependencies sınırı tüm uygulamaya yansıtıldı. | Tarihsel tabloya açık düzeltme; yeni current-status kaydı. | Eski ZIPler ve ham doğrulamalar korunur |
-| Native ürün kabulü | Eksik. | Hâlâ ayrı kabul işi; kaynak bağlantısı bu kanıtı üretmez. | Windows/MSVC/game NOT_RUN. 548-byte ABI iddiası geri çekildi; özgün Consumer import isimleri bu branded DLL ile aynı değil. |
-| Brownfield resource metadata | Yalnız PNG; VERSIONINFO atlanmıştı. | Exact preloader_version.rc; fields/string/translation korunur. Son düzeltme: PNG yalnız read-only C++ avatar verisi; RCDATA yok. | Release/Debug gerçek PE resource kontrolü ve metadata tamper reddi PASS; diğer Golden/ABI değerleri ayrıca açık. |
-| Brownfield iç modül düzeni | Gereksiz iç içe modül alt klasörleri | Tek modül katmanı;177 dosya taşındı | 261 gövde include dışında aynı; yeni build/runtime/QA kanıtları |
-| Uygulama C export arayüzü | Binlerce C++ kaynak exportu uygulama DLLiyle karışıktı. | Üç Brownfield C isim/ordinal; DllMain@1 SURGE@2 DllShutdown@3; yönetim exportları kaldırıldı; SURGE RE RET-only markerı; DllShutdown gerçek cleanup; kaynak APIleri ayrı DLL. | Gerçek PE export denetimi, 7 negatif mutasyon, C17 import tüketicisi, üç load/socket/shutdown/unload döngüsü; Wine kanıtı. |
+| Configuration collections | Incorrectly generalized as lacking a complete path. | Application uses the existing full `config_hash` / `config_application` path. | 25 content, entitlement and achievement totals; actual main -> override |
+| Asio | Vendor and I/O fixture existed; no actual application owner. | Actual RE ServerBackend/Session adapter, socket/completion/job lifetimes and drain. | Real loopback greeting/profile/content/encrypted/event/stop |
+| Windows filesystem | NativeFactory previously used std, then ghc. | Standard filesystem/fstream restored on owner instruction; unused Gulrak removed. | Unicode binary I/O, configuration/achievement/avatar paths, Debug/Release log checks |
+| Startup State | Only caller-seeded State existed. | `036d20` pseudocode/assembly application-field projection; SURGE display name. | Actual Application starts without configuration |
+| DLL bootstrap | Only a source-API development DLL existed. | DllMain preparation and Application worker outside loader lock, with management API. | Actual DLL starts automatically, answers LSX profile over socket, and stops |
+| Native hook owner | Eleven source bodies/slots existed without one concrete shared owner. | Single configuration/original/context/MinHook owner with source conditions and failure rollback. | Eleven-hook activation and actual folder/process/registry SDK calls; Wine evidence |
+| Provider | Source Effects ports; new name not connected. | RE version2/factory/virtual ABI adapter, new name, owner cleanup. | Controlled DLL for profile/auth/avatar/failed auth/destructor; not acceptance of actual external provider ABI |
+| Avatar/log/paths | Resource and policy metadata without runtime integration. | LocalAppData/SURGE, byte-exact resource -> handler, Debug-only event log. | Actual resource byte comparison; Release log absence and Debug log presence |
+| Source/tool comparison error | ScalarDependencies boundary was incorrectly generalized to the whole application. | Explicit correction to historical table; new current-status record. | Earlier ZIPs and raw validation retained |
+| Native product acceptance | Missing. | Separate acceptance required; source integration alone does not provide it. | Windows/MSVC/game NOT_RUN; withdrawn 548-byte ABI claim; original Consumer import names differ from this branded DLL |
+| Brownfield resource metadata | PNG only; VERSIONINFO omitted. | Exact `preloader_version.rc` with retained fields/string/translation. Later fix: PNG exists only as read-only C++ avatar data, with no RCDATA. | Release/Debug actual PE resource verification and metadata tamper rejection PASS; other Golden/ABI values still pending |
+| Brownfield internal module layout | Unnecessary nested module directories. | One module level; 177 files moved. | 261 bodies identical except for includes; new build/runtime/QA evidence |
+| Application C export interface | Thousands of C++ source exports mixed into application DLL. | Three Brownfield C names/ordinals: DllMain@1, SURGE@2, DllShutdown@3; management exports removed; SURGE RE RET-only marker; DllShutdown performs real cleanup; source APIs in separate DLL. | Actual PE export check, seven negative mutations, C17 import consumer, three load/socket/shutdown/unload cycles; Wine evidence |
 
-Güncel arayüz: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md). Ham sonuçlar: [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json). Önceki runtime kanıtı: [RUNTIME_BINDING_STATUS.json](../metadata/evidence/RUNTIME_BINDING_STATUS.json).
+Current interface: [PUBLIC_DLL_ABI.md](PUBLIC_DLL_ABI.md).
+Raw results: [PUBLIC_ABI_STATUS.json](../metadata/evidence/PUBLIC_ABI_STATUS.json).
+Earlier runtime evidence:
+[RUNTIME_BINDING_STATUS.json](../metadata/evidence/RUNTIME_BINDING_STATUS.json).

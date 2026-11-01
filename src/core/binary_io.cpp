@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/binary_io.hpp"
 #include <stdexcept>
 
-namespace preloader_l::file_recovered {
+namespace preloader_l::file {
 void Factory::replace_atomic(std::span<const FileWrite>) {
     throw std::logic_error("File factory does not implement atomic achievement persistence");
 }
@@ -28,4 +30,4 @@ bool write_binary_03c1d0(const Path& path,std::string_view value,Factory& factor
     // validation. A stream with exceptions enabled can still throw above.
     return true;
 }
-} // namespace preloader_l::file_recovered
+} // namespace preloader_l::file

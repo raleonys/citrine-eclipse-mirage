@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <cstdint>
 #include <span>
 #include <string_view>
-namespace preloader_l::network_hook_recovered {
+namespace preloader_l::network_hook {
 class CleanupEffects {
 public:
     virtual ~CleanupEffects() = default;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/startup.hpp"
 #include <algorithm>
 #include <cstdio>
@@ -6,7 +8,7 @@
 #include <stdexcept>
 #include <tuple>
 
-using namespace preloader_l::startup_recovered;
+using namespace preloader_l::startup;
 static unsigned checks;
 static void require(bool value) { if (++checks && !value) throw std::runtime_error("check "+std::to_string(checks)); }
 struct Fixture {

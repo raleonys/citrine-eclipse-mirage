@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/execution_windows.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <exception>
 
-namespace preloader_l::execution_recovered {
+namespace preloader_l::execution {
 std::uint32_t WindowsPlatform::current_thread_id() { return GetCurrentThreadId(); }
 void WindowsPlatform::acquire_srw_exclusive(std::uintptr_t& lock) {
     static_assert(sizeof(SRWLOCK) == sizeof(lock));

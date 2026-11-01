@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <tao/pegtl.hpp>
 
 // Rules reconstructed from the documented owner-supplied Config2/VDF evidence.
-// This is the recovered Config2/VDF byte grammar, not a generic Valve VDF spec.
+// This is the project-specific Config2/VDF byte grammar, not a generic Valve VDF spec.
 // Actions and the owned ParseError mapping live in src/config/parser.cpp.
 namespace preloader_l::parser::vdf {
 namespace peg = tao::pegtl;

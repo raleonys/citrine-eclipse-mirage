@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include "preloader_l/core/atomic_files.hpp"
@@ -6,10 +8,10 @@
 #include <span>
 #include <string>
 
-namespace preloader_l::file_recovered {
+namespace preloader_l::file {
 using Path=configuration::Path;
 enum class Seek:std::uint32_t {begin=0,end=2};
-// Stream state/exception behavior belongs to the implementation. The recovered
+// Stream state/exception behavior belongs to the implementation. The
 // application bodies only inspect the initial state and explicitly close.
 class Input {
 public:
@@ -56,4 +58,4 @@ private:
     struct AtomicOwner;
     std::unique_ptr<AtomicOwner> atomic_;
 };
-} // namespace preloader_l::file_recovered
+} // namespace preloader_l::file

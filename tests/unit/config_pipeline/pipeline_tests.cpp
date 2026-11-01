@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/config/pipeline.hpp"
 #include "preloader_l/config/order.hpp"
 #include <algorithm>
@@ -27,7 +29,7 @@ struct Spec {
     std::size_t read_limit=std::numeric_limits<std::size_t>::max();
     std::string fail;
 };
-struct MemoryInput final:file_recovered::Input {
+struct MemoryInput final:file::Input {
     Spec spec;
     std::vector<std::string>& events;
     MemoryInput(Spec s,std::vector<std::string>& e):spec(std::move(s)),events(e) {}
@@ -37,9 +39,9 @@ struct MemoryInput final:file_recovered::Input {
         if(spec.fail==name)throw std::runtime_error("synthetic stream failure");
     }
     std::uint32_t initial_state()const override {events.emplace_back("state");return spec.initial;}
-    void seek_03b610(std::int64_t offset,file_recovered::Seek way) override {
+    void seek_03b610(std::int64_t offset,file::Seek way) override {
         require(offset==0,"seek offset");
-        event(way==file_recovered::Seek::end?"seek-end":"seek-begin");
+        event(way==file::Seek::end?"seek-end":"seek-begin");
     }
     std::uint64_t position_sum_03ba50() override {event("tell");return spec.measured.value_or(spec.bytes.size());}
     std::int32_t peek_043790() override {throw std::logic_error("unexpected peek");}
@@ -51,19 +53,19 @@ struct MemoryInput final:file_recovered::Input {
     }
     void close_03ae70() override {event("close");}
 };
-struct MemoryFactory final:file_recovered::Factory {
+struct MemoryFactory final:file::Factory {
     std::map<configuration::Path,Spec> files;
     std::vector<configuration::Path> opened;
     std::vector<std::string> events;
     bool null_result=false;
-    std::unique_ptr<file_recovered::Input> open_input_039f70(
+    std::unique_ptr<file::Input> open_input_039f70(
         const configuration::Path& path,std::uint32_t mode,std::uint32_t share) override {
         require(mode==0x20 && share==0x40,"original stream open flags");
         opened.push_back(path);events.emplace_back("open");
         if(null_result)return {};
         return std::make_unique<MemoryInput>(files.at(path),events);
     }
-    std::unique_ptr<file_recovered::Output> open_output_03a1a0(
+    std::unique_ptr<file::Output> open_output_03a1a0(
         const configuration::Path&,std::uint32_t,std::uint32_t) override {
         throw std::logic_error("document pipeline must not write");
     }
@@ -153,7 +155,7 @@ void stream_and_parser() {
         f.files[path]=Spec{};f.files[path].fail=fail;f.events.clear();
         rejects<std::runtime_error>([&]{(void)pipeline.read(path);},"stream exception propagated");
         require(f.events.back()=="destroy","stream destroyed on exception");
-        require(std::count(f.events.begin(),f.events.end(),"close")==std::string_view(fail).ends_with("close"),"no extra close on earlier failure");
+        require(std::count(f.events.begin(),f.events.end(),"close")== (std::string_view(fail).ends_with("close")?1:0),"no extra close on earlier failure");
     }
     f.null_result=true;
     rejects<std::invalid_argument>([&]{(void)pipeline.read(path);},"null stream provider contract rejected");
@@ -223,7 +225,7 @@ void native_fixture(const std::filesystem::path& directory) {
         file<<"\xef\xbb\xbf\"Config2\" {\"User\" {\"Username\" \"own-generated-fixture\"}}";
         require(static_cast<bool>(file),"own fixture written");
     }
-    file_recovered::NativeFactory files;config_order::SelectedCopyOrder order;
+    file::NativeFactory files;config_order::SelectedCopyOrder order;
     config_pipeline::DocumentPipeline pipeline(files,order);
     const auto document=pipeline.read(path.u16string());
     require(document.child("Config2").child("User").text("Username")=="own-generated-fixture","native compatibility stream -> actual parser/order -> owned result");

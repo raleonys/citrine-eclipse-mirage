@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/pool_release.hpp"
 #include "tests/support/socket/node_delete_test_fixture.hpp"
 
 namespace pool_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 using clear_test::Graph;using document_test::State;using document_test::Failure;
 using response_test::check;using response_test::checks;
 struct Pools {
@@ -16,23 +18,23 @@ struct Pools {
     void set(unsigned i,std::size_t at,std::uint64_t value,unsigned width=8){graph.set(Graph::pool(i)+at,value,width);}
     void seed(unsigned i,bool untracked){reset();set(i,0x70,1,4);set(i,0x7c,unsigned(untracked),4);graph.set(Graph::node()+0x60,Graph::pool(i));}
 };
-struct Nodes:s::RecoveredPoolReleaseEffects {
+struct Nodes:s::PoolReleaseEffects {
     clear_test::Nodes lower;Graph& graph;Pools& pools;
     std::function<void(std::string)>& hook=lower.hook;std::function<void()>& after_destroy=lower.after_destroy;
     std::uint64_t& probe_result=lower.probe_result;
     unsigned& probes=lower.probes;unsigned& destroys=lower.destroys;unsigned& releases=lower.releases;
     unsigned& tracks=lower.tracks;unsigned& parents=lower.parents;unsigned& deletes=lower.deletes;
     std::vector<clear_test::Nodes::Call>& calls=lower.calls;std::vector<std::string>& trace=lower.trace;
-    Nodes(Graph& g,Pools& p,s::PoolTargetIdentities targets={}):RecoveredPoolReleaseEffects(g.state.memory,targets),lower(g),graph(g),pools(p){}
+    Nodes(Graph& g,Pools& p,s::PoolTargetIdentities targets={}):PoolReleaseEffects(g.state.memory,targets),lower(g),graph(g),pools(p){}
     std::uint64_t node_probe(std::uintptr_t target,std::uintptr_t node)override{return lower.node_probe(target,node);}
     void node_destroy(std::uintptr_t target,std::uintptr_t node,std::uint32_t flags)override{lower.node_destroy(target,node,flags);}
 };
-struct Docs:s::RecoveredDocumentClearEffects {
+struct Docs:s::DocumentClearEffects {
     State& state;Nodes& nodes;Pools& pools;document_test::Effects lower;
     // Supplied compatibility-parser allocation projection, not native pool
     // allocation or full DOM materialization. Only release/track are source-bound.
     unsigned projection_mode=1,pool_index=0;
-    Docs(State& s,Nodes& n,Pools& p,native_message_test::Fixture* native=nullptr):RecoveredDocumentClearEffects(s.memory,n),state(s),nodes(n),pools(p),lower(s,native){nodes.after_destroy=[this](){lower.reset_parsed();};}
+    Docs(State& s,Nodes& n,Pools& p,native_message_test::Fixture* native=nullptr):DocumentClearEffects(s.memory,n),state(s),nodes(n),pools(p),lower(s,native){nodes.after_destroy=[this](){lower.reset_parsed();};}
     void set_error_005820(std::uintptr_t p,std::int32_t a,std::uint32_t b,std::uintptr_t c)override{lower.set_error_005820(p,a,b,c);}
     std::uintptr_t allocate_04b100(std::uint64_t n)override{const auto p=lower.allocate_04b100(n);pools.refresh();return p;}
     void copy_078d30(std::uintptr_t to,std::uintptr_t from,std::uint64_t n)override{lower.copy_078d30(to,from,n);pools.refresh();}

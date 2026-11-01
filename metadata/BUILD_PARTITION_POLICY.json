@@ -149,7 +149,7 @@
     "src/xml/pool_release.cpp",
     "src/runtime/bootstrap.cpp",
     "src/runtime/thread_launch.cpp",
-    "src/runtime/recovered_effects.cpp",
+    "src/runtime/delegating_effects.cpp",
     "src/platform/hook_cleanup.cpp",
     "src/platform/hook_engine_adapters.cpp",
     "src/config/pipeline.cpp",
@@ -274,6 +274,7 @@
     "socket_write_finish_contracts",
     "socket_write_finish_integration_contracts",
     "config_order_contracts",
+    "configuration_defaults_integration_contracts",
     "session_integration_contracts",
     "windows_effects_integration",
     "config_hash_model_differential_contracts",
@@ -292,6 +293,7 @@
     "config_application_contracts",
     "config_hash_contracts",
     "configuration_contracts",
+    "configuration_defaults_contracts",
     "configuration_platform_contracts",
     "content_handlers_contracts",
     "crypt_path_probe_contracts",
@@ -356,7 +358,9 @@
   ],
   "source_api_targets": [
     "preloader_l_source_api",
-    "preloader_l_source_host"
+    "preloader_l_source_host",
+    "preloader_l_source_minhook",
+    "preloader_l_source_tinyxml2"
   ],
   "vendor_comparison_targets": [
     "hook_engine_fixture_tests"

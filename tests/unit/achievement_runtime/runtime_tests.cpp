@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/achievement_runtime.hpp"
 #include "preloader_l/runtime/timestamp.hpp"
 #include "preloader_l/xml/reader.hpp"
@@ -9,9 +11,9 @@
 #include <stdexcept>
 
 namespace ar=preloader_l::achievement_runtime;
-namespace content=preloader_l::content_handlers_recovered;
+namespace content=preloader_l::content_handlers;
 namespace cfg=preloader_l::configuration;
-namespace io=preloader_l::file_recovered;
+namespace io=preloader_l::file;
 namespace {
 unsigned checks=0;
 void require(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
@@ -166,10 +168,10 @@ void failures_and_empty_paths(const std::filesystem::path& root){
     }
     {Fixture f(root/"empty-paths");f.paths.xml_path.clear();f.paths.ini_path.clear();(void)f.grant("a");require(f.trace.empty() && f.clock.calls==1,"empty persistence paths skip both files without skipping grant");}
 }
-struct StorageEffects final:preloader_l::timestamp_recovered::StorageEffects {
-    explicit StorageEffects(preloader_l::timestamp_recovered::Parser& parser):preloader_l::timestamp_recovered::StorageEffects(parser){}
+struct StorageEffects final:preloader_l::timestamp::StorageEffects {
+    explicit StorageEffects(preloader_l::timestamp::Parser& parser):preloader_l::timestamp::StorageEffects(parser){}
     cfg::Path filesystem_widen_006d70(std::string_view value)override{return {value.begin(),value.end()};}
-    preloader_l::status_recovered::Status status_01ea20(const cfg::Path&,std::uint32_t flags)override{require(flags==3,"roundtrip storage uses flags3");return {2,0,0};}
+    preloader_l::status::Status status_01ea20(const cfg::Path&,std::uint32_t flags)override{require(flags==3,"roundtrip storage uses flags3");return {2,0,0};}
     [[noreturn]]void filesystem_error_018130(std::string_view,std::uint32_t,const cfg::Path&)override{unused();}
     void create_directories_018e00(const cfg::Path&)override{unused();}
 };
@@ -178,7 +180,7 @@ void roundtrip(const std::filesystem::path& root){
     cfg::State restored{};restored.user_directory=f.state.user_directory;restored.steam_app_id="42";
     restored.achievements.emplace("a",cfg::Achievement{2,0,0,"old","","100",999});
     preloader_l::achievement_storage::Paths paths{f.paths.xml_path,{}};preloader_l::xml_reader_bridge::Backend xml;preloader_l::achievement_storage::HostCrtNumbers numbers;
-    preloader_l::timestamp_recovered::ClassicIso parser;StorageEffects effects(parser);io::NativeFactory files;
+    preloader_l::timestamp::ClassicIso parser;StorageEffects effects(parser);io::NativeFactory files;
     preloader_l::achievement_storage::Storage storage(paths,xml,numbers,effects,files);storage.update_01eb00(restored);
     const auto& a=restored.achievements.at("a");require(a.field04==0 && a.field08==1 && a.field70==946684800 && a.timestamp=="2000-01-01T00:00:00" && a.display_name=="A&\"<","runtime write to actual XML reader/storage/parser/calendar roundtrip");
     require(a.field00==2 && a.steam_id=="100","roundtrip import preserves configured total and Steam ID");

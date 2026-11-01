@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Archive-pin, tamper and symlink-preserving vendoring/package regressions."""
 from pathlib import Path
 import json

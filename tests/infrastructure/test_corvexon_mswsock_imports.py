@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-only
 """Fail-closed HF13 CORVEXON MSWSOCK module/name regression; optional real PE replay."""
 from pathlib import Path
 import argparse, json, sys

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/router/router.hpp"
 #include "preloader_l/codec/crypto.hpp"
 #include "preloader_l/xml/reader.hpp"
@@ -6,16 +8,16 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace msg=preloader_l::messages_recovered;
-namespace xml=preloader_l::xml_recovered;
-namespace info=preloader_l::handlers_recovered;
-namespace misc=preloader_l::misc_handlers_recovered;
-namespace content=preloader_l::content_handlers_recovered;
-namespace dispatch=preloader_l::dispatch_recovered;
-namespace crypto=preloader_l::crypto_recovered;
+namespace msg=preloader_l::messages;
+namespace xml=preloader_l::xml;
+namespace info=preloader_l::handlers;
+namespace misc=preloader_l::misc_handlers;
+namespace content=preloader_l::content_handlers;
+namespace dispatch=preloader_l::dispatch;
+namespace crypto=preloader_l::crypto;
 namespace config=preloader_l::configuration;
 namespace reader=preloader_l::xml_reader_bridge;
-namespace license=preloader_l::license_recovered;
+namespace license=preloader_l::license;
 namespace {
 int checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

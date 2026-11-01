@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_frame_read.hpp"
 #include "tests/support/socket/composed_read_test_fixture.hpp"
 #include <cstring>
 
 namespace frame_test {
-namespace s=preloader_l::socket_recovered;namespace b=buffer_test;namespace r=receive_test;
+namespace s=preloader_l::socket;namespace b=buffer_test;namespace r=receive_test;
 inline unsigned checks=0;
 inline void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 struct Failure {int code;};

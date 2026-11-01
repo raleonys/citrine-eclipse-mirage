@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/node_identify.hpp"
 #include "preloader_l/xml/pool_append.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct NativeNodeConstructorIdentities {
     // Ordered by constructor1590,1610,1690,1720,17b0. Values identify image
     // tables only; no original-image function pointer is invoked.
@@ -22,14 +24,14 @@ std::uintptr_t construct_node_0017b0(std::uintptr_t document,std::uintptr_t pool
 // Reuse the existing pool allocation dispatch and005440 source body. The
 // allocator and append heap/copy/free effects remain caller-supplied; this
 // binds five constructor providers, not a native heap or generic DOM ABI.
-class RecoveredNodeConstructorEffects:public RecoveredNodeIdentifyEffects,
+class NodeConstructorEffects:public NodeIdentifyEffects,
     public PoolAppendEffects {
 public:
-    RecoveredNodeConstructorEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
+    NodeConstructorEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
         const NativeErrorArgumentTail& arguments,PoolAllocationDispatch& allocator,
         NativeNodeParseIdentities parse_ids={},NativeNodeIdentifyIdentities identify_ids={},
         NativeNodeConstructorIdentities constructor_ids={})
-        :RecoveredNodeIdentifyEffects(memory,nodes,arguments,parse_ids,identify_ids),
+        :NodeIdentifyEffects(memory,nodes,arguments,parse_ids,identify_ids),
          constructors_{memory,allocator,*this,constructor_ids}{}
     std::uintptr_t construct_001590(std::uintptr_t,std::uintptr_t) final;
     std::uintptr_t construct_001610(std::uintptr_t,std::uintptr_t) final;
@@ -38,4 +40,4 @@ public:
     std::uintptr_t construct_0017b0(std::uintptr_t,std::uintptr_t) final;
 private:NativeNodeConstructorContext constructors_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

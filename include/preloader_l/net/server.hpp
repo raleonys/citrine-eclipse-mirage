@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <array>
 #include <cstddef>
@@ -12,7 +14,7 @@
 #include <string_view>
 #include "preloader_l/runtime/execution.hpp"
 
-namespace preloader_l::server_recovered {
+namespace preloader_l::server {
 enum class ErrorCategory { system, asio_misc, other };
 struct Error { int value = 0; ErrorCategory category = ErrorCategory::system; };
 struct ParsedAddress {
@@ -47,11 +49,11 @@ struct ServerBackend {
     [[noreturn]] virtual void raise_error(Error, std::string_view observed_context) = 0;
 };
 void construct_server_024480(ServerBackend&, std::uint16_t& port_0a3c90,
-                            std::uint8_t& ready_0a3c3d, execution_recovered::Execution&);
+                            std::uint8_t& ready_0a3c3d, execution::Execution&);
 // Normal construction/run/destruction order. Backend owns ASIO context internals
 // and their exception cleanup, not the application port-ready decision.
 void server_start_029ea0(ServerBackend&, std::uint16_t& port_0a3c90,
-                        std::uint8_t& ready_0a3c3d, execution_recovered::Execution&);
+                        std::uint8_t& ready_0a3c3d, execution::Execution&);
 
 struct DeliveryReceipt {
     virtual ~DeliveryReceipt()=default;

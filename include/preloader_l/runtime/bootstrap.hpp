@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <cstddef>
 #include <cstdint>
 
 // Reconstructed from SHA-256 9e420c3aae5ea26410f0bf578f86c47e51e36ff770b9e2a28b5eaee46aed786c.
 // These dependency contracts are mandatory; this is not a standalone replacement DLL.
-namespace preloader_l::recovered {
+namespace preloader_l::system_services {
 using Handle = std::uintptr_t;
 using NoArgumentFunction = void (*)();
 using BooleanFunction = void (*)(bool);
@@ -70,7 +72,7 @@ private:
     BootstrapDependencies& deps_;
 };
 
-// 04a47c's global list (head VA 1800a42b0). Only accessed fields are recovered.
+// 04a47c's global list (head VA 1800a42b0). Only accessed fields are modeled.
 struct ExitWaitEntry {
     std::uint64_t unobserved_00;
     std::uint32_t thread_id;
@@ -100,4 +102,4 @@ public:
     virtual void notify_all_04ae28(void*) = 0;
 };
 void cleanup_exit_waits(ExitWaitBlock& head, ExitWaitDependencies&);
-} // namespace preloader_l::recovered
+} // namespace preloader_l::system_services

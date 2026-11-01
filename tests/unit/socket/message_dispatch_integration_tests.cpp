@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/message_dispatch_test_fixture.hpp"
 #include "preloader_l/xml/reader.hpp"
 #include <deque>
 using namespace message_test;
-namespace t=preloader_l::threads_recovered;namespace m=preloader_l::messages_recovered;
+namespace t=preloader_l::threads;namespace m=preloader_l::messages;
 namespace {
 struct Exit {std::uint32_t code;};
 struct Threads:t::Effects {
@@ -21,8 +23,8 @@ struct Threads:t::Effects {
     [[noreturn]]void free_library_and_exit_thread(t::Handle,std::uint32_t)override{r::unexpected();}
     [[noreturn]]void exit_thread(std::uint32_t code)override{++exits;slot=nullptr;live.reset();throw Exit{code};}
 };
-struct ThreadApi:s::RecoveredMessageThreadApi {
-    Fixture& f;explicit ThreadApi(Fixture& f,Threads& t):RecoveredMessageThreadApi(t),f(f){}
+struct ThreadApi:s::MessageThreadApi {
+    Fixture& f;explicit ThreadApi(Fixture& f,Threads& t):MessageThreadApi(t),f(f){}
     void construct_message_006b30(s::ReceiveBufferString& out,std::uintptr_t p,std::uint64_t n)override{f.memory.construct_message_006b30(out,p,n);if(out.capacity_18+1>=4096){const auto a=s::receive_buffer_address(out);f.headers[f.header_count++]={a-8,b::word(f.base.copied.memory.view(a-8,8))};}}
     s::FrameMessageClosure* allocate_frame_04b0bc(std::uint64_t n)override{auto* p=f.memory.allocate_frame_04b0bc(n);f.closures[0]={reinterpret_cast<std::uintptr_t>(p),p};return p;}
     std::int32_t detach_04a458(const s::FrameThreadHandle& h)override{return f.memory.detach_04a458(h);}

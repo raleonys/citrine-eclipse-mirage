@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "src/runtime/application_internal.hpp"
 #include <windows.h>
 #include <cstdlib>
@@ -26,16 +28,16 @@ using namespace preloader_l;
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 struct Fixture {
     configuration::State state=application::initial_state();application::Options options;
-    file_recovered::NativeFactory files;xml_reader_bridge::Backend xml;
+    file::NativeFactory files;xml_reader_bridge::Backend xml;
     achievement_storage::Paths paths;achievement_runtime::HostClock clock;achievement_runtime::HostFormatter formatter;
     application::detail::Environment env{state,options,files,xml,paths,clock,formatter};
-    execution_recovered::MutexState mutex{};std::uint8_t a=0,b=0,c=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw std::runtime_error("mutex error");}};
+    execution::MutexState mutex{};std::uint8_t a=0,b=0,c=0;
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("mutex error");}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{a,b,c},frequency,platform};
+    execution::Execution execution{mutex,{a,b,c},frequency,platform};
     application::ExtraLibraries extras{env,execution,c};
     application::Provider provider{state,env,files,execution,b};
-    Fixture(){execution_recovered::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=0;}
+    Fixture(){execution::initialize_mutex_04a698(mutex,2);fault::loads=fault::frees=fault::fail_frees=0;}
 };
 void acquisition_failure(const wchar_t* path) {
     Fixture f;bool threw=false;fault::next=true;fault::fail_frees=1;

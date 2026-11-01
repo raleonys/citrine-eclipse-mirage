@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 param(
     [Parameter(Mandatory=$true)][ValidateSet('Compile','Debug','Native','Crt','Golden')][string]$Mode,
     [string]$BuildDir = '',
@@ -21,11 +23,20 @@ try {
     $vs = Find-VcVars64
     Import-VcVarsEnvironment $CmdExe $vs[1]
     Clear-BuildSelectorEnvironment
+    # First-party source language checks do not control localized MSVC output.
+    # Request English tool diagnostics for every build mode after vcvars setup.
+    # The caller's original VSLANG value is restored by the existing finally.
+    $env:VSLANG = '1033'
     $env:PYTHONDONTWRITEBYTECODE = '1'
     $PythonExe = Resolve-BoundExecutable 'python.exe'
     $ClExe = Resolve-BoundExecutable 'cl.exe'
     $LinkExe = Resolve-BoundExecutable 'link.exe'
     $NMakeExe = Resolve-BoundExecutable 'nmake.exe'
+    # English diagnostics only; reject missing message resources without fallback.
+    $EnglishCompilerMessages = Join-Path (Split-Path -Parent $ClExe) '1033\clui.dll'
+    if (-not (Test-Path -LiteralPath $EnglishCompilerMessages -PathType Leaf)) {
+        Fail-Build "English MSVC diagnostic resources are required: $EnglishCompilerMessages" 119
+    }
     Invoke-ExternalChecked $PythonExe @('-B',(Join-Path $Root 'scripts/clear_tool_python_cache.py'),'--root',$Root,'--quiet','--report',(Join-Path $Out 'PYTHON_CACHE_CLEANUP.json')) 'Previous first-party Python bytecode cleanup' 115
     New-Item -ItemType Directory -Path $Out -Force | Out-Null
     Write-ToolchainProvenance (Join-Path $Out 'BUILD_TOOLCHAIN_PROVENANCE.log') $vs[0] $vs[1] $CMakeExe $PythonExe $ClExe $LinkExe $NMakeExe
@@ -39,6 +50,7 @@ try {
         Golden = 'PRODUCTION BUILD'
     }[$Mode]
     Write-Host "SURGE: $ProfileLabel / $Config"
+    Write-Host "MSVC diagnostic locale requested: English (VSLANG=1033)"
     Write-Host '[1/3] Configure'
     Invoke-ExternalChecked $CMakeExe @('-S',$Root,'-B',$Out,'-G','NMake Makefiles',"-DCMAKE_BUILD_TYPE=$Config","-DBUILD_TESTING=$Testing","-DPRELOADER_L_BUILD_SOURCE_API_DLL=$Testing","-DPRELOADER_L_GOLDEN_LINK_PROFILE=$GoldenLink") 'CMake configure' 105
     Write-Host '[2/3] Compile and link'
@@ -49,6 +61,8 @@ try {
     Invoke-ExternalChecked $CMakeExe $BuildArgs 'MSVC build' 106
     $Dll = Join-Path $Out 'preloader.unsigned.dll'
     if (-not (Test-Path -LiteralPath $Dll -PathType Leaf)) { Fail-Build 'DLL missing after link.' 108 }
+    # Verify even on incremental builds that bypass the link POST_BUILD hook.
+    Invoke-ExternalChecked $PythonExe @('-B',(Join-Path $Root 'scripts/import_descriptor_order.py'),'--root',$Root,'--dll',$Dll,'--verify') 'Unsigned DLL import descriptor order' 118
     $BeforeHash = (Get-FileHash -LiteralPath $Dll -Algorithm SHA256).Hash.ToLowerInvariant()
     $Receipt = @{classification='NOT_RELEASE'; build_succeeded=$true; mode=$Mode; configuration=$Config; dll_sha256=$BeforeHash; compiler=$ClExe; compiler_sha256=(Get-FileHash -LiteralPath $ClExe -Algorithm SHA256).Hash.ToLowerInvariant(); cmake_cache_sha256=(Get-FileHash -LiteralPath (Join-Path $Out 'CMakeCache.txt') -Algorithm SHA256).Hash.ToLowerInvariant(); source_manifest_sha256=(Get-FileHash -LiteralPath (Join-Path $Root 'metadata/ACTIVE_SOURCE_MANIFEST.json') -Algorithm SHA256).Hash.ToLowerInvariant(); real_game_acceptance='NOT_RUN'}
     $Receipt['validation_result'] = 'NOT_COMPLETED'
@@ -71,7 +85,7 @@ try {
         if ($GoldenCode -eq 3) { $GoldenBlocked = $true }
         elseif ($GoldenCode -ne 0) {
             if ($GoldenCode -lt 1 -or $GoldenCode -gt 255) { $GoldenCode = 110 }
-            Fail-Build "Local Golden chain basarisiz (exit $GoldenCode)." $GoldenCode
+            Fail-Build "Local Golden chain failed (exit $GoldenCode)." $GoldenCode
         }
         else {
             $GoldenReport = Get-Content -LiteralPath (Join-Path $Out 'golden-local/GOLDEN_REPORT.json') -Raw | ConvertFrom-Json

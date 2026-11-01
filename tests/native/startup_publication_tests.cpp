@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 // Compile the real application with an Execution observer. Only flag-publication
 // timing is controlled; the Windows mutex, workers, service and factory are real.
 #include "../../src/runtime/application_internal.hpp"
@@ -24,9 +26,9 @@ using namespace std::chrono_literals;
 std::promise<void> entered,release;
 std::shared_future<void> released=release.get_future().share();
 std::atomic<bool> held{false};
-preloader_l::execution_recovered::Execution* execution=nullptr;
+preloader_l::execution::Execution* execution=nullptr;
 }
-namespace preloader_l::execution_recovered {
+namespace preloader_l::execution {
 class AuditedExecution:public Execution {
     FlagReferences flags_;
 public:

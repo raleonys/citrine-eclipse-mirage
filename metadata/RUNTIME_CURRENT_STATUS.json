@@ -1,7 +1,6 @@
 {
   "schema": "surge.runtime-current.v1",
   "role": "CURRENT_RUNTIME_STATE",
-  "classification": "NOT_RELEASE",
   "task": "SURGE-ASIO-OWNER-SNAPSHOT",
   "owner": "application::Application",
   "dll_entry": "src/platform/dll_entry.cpp",
@@ -110,7 +109,7 @@
   "native_fixture_review": "metadata/NATIVE_FIXTURE_REVIEW.json",
   "owner_latest_windows_log_review": "metadata/evidence/native-allocation/OWNER_LOG_REVIEW.json",
   "owner_parent_production_dll_sha256": "5d75523d82a575277e1c5e91395637d301f0f981913c8358deee02c3c3cc24fc",
-  "avatar_profile_sha256": "df06a4efdf98a12f430753ac8d2629e10445e926725bc0620026c7e299636e0e",
+  "avatar_profile_sha256": "5cc62afa98d4e97ac2f780cc7e2d7edd4ae538ece62d81d0da3b61858a0a08a6",
   "provider_module_cleanup": {
     "source": "src/runtime/application.cpp",
     "failed_release": "REPORT_CLEANUP_FAILURE_AND_RETAIN_EXACT_MODULE_FOR_RETRY",

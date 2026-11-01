@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/config/configuration.hpp"
 #include "preloader_l/core/product_identity.hpp"
 #include <algorithm>

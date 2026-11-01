@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_native_dispatch.hpp"
 #include "tests/support/socket/cipher_session_test_fixture.hpp"
 
 namespace dispatch_test {
-namespace s=preloader_l::socket_recovered;namespace m=preloader_l::messages_recovered;
+namespace s=preloader_l::socket;namespace m=preloader_l::messages;
 using response_test::check;using response_test::checks;
 struct Bytes:s::ReceiveBufferApi {
     native_message_test::Fixture& native;s::NativeDispatchLocals& locals;std::function<void()> freeing;
@@ -29,7 +31,7 @@ struct Printer:m::XmlPrinter {
 // TLS/RB-tree, string constructor/reserve/append/destructor or exception ABI.
 struct Effects:s::NativeDispatchEffects {
     native_message_test::Fixture& native;s::ReceiveBufferContext& strings;s::NativeDispatchLocals& locals;s::SessionCipher& session;
-    session_cipher_test::Effects effects;s::SessionCipherFactory factory;session_cipher_test::Time time;preloader_l::crypto_recovered::Random random{time};
+    session_cipher_test::Effects effects;s::SessionCipherFactory factory;session_cipher_test::Time time;preloader_l::crypto::Random random{time};
     std::array<s::NativeDispatchEntry,39> entries{};s::NativeDispatchEntry sentinel{},other_end{};s::NativeDispatchEntry* end=&sentinel;
     std::unique_ptr<Printer> printer;std::vector<std::string> trace;std::function<void(std::string)> hook;
     std::string data,override_data;std::optional<std::int32_t> override_size;std::uint64_t reserved=0,appended=0;
@@ -55,9 +57,9 @@ struct Effects:s::NativeDispatchEffects {
     void destroy_printer_001f60(m::XmlPrinter& p)override{check(&p==printer.get(),"same printer destructor receiver");event("destroy-printer");++destroyed;printer.reset();}
     [[noreturn]]void invalid_message_02bd30_04d228()override{event("invalid");throw core_test::Failure{66};}
 };
-struct Api:s::RecoveredMessageDispatchApi {
+struct Api:s::MessageDispatchApiAdapter {
     s::NativeMessageApi& next;session_cipher_test::Effects& effects;
-    Api(s::PrefixCipherContext& c,std::span<s::PrefixCipherBinding> b,s::NativeDispatchContext& d,s::NativeMessageApi& n,session_cipher_test::Effects& e):RecoveredMessageDispatchApi(c,b,d),next(n),effects(e){}
+    Api(s::PrefixCipherContext& c,std::span<s::PrefixCipherBinding> b,s::NativeDispatchContext& d,s::NativeMessageApi& n,session_cipher_test::Effects& e):MessageDispatchApiAdapter(c,b,d),next(n),effects(e){}
     void construct_document_001830(s::NativeMessageDocument& d,bool a,std::uint32_t b)override{next.construct_document_001830(d,a,b);}
     int parse_document_004280(s::NativeMessageDocument& d,std::uintptr_t p,std::uint64_t n)override{return next.parse_document_004280(d,p,n);}
     void destroy_document_001e00(s::NativeMessageDocument& d)override{next.destroy_document_001e00(d);}

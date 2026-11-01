@@ -1,35 +1,43 @@
-# Güncel DLL C arayüzü
+# Current DLL C interface
 
-Son kullanıcı talimatıyla Production Brownfield’in üç export/ordinal düzenine
-döndü: **DllMain@1, SURGE@2, DllShutdown@3**. DllWaitReady@4 ve DllServerPort@5,
-kodları ve public bildirimleri kaldırıldı. C++ kaynak API’leri ayrı
-preloader.source.dll geliştirme hedefinde kalır.
+Under the owner's latest instruction, Production returned to Brownfield's
+three-export/ordinal layout: **DllMain@1, SURGE@2, DllShutdown@3**.
+`DllWaitReady@4` and `DllServerPort@5`, their implementations, and public
+declarations were removed. C++ source APIs remain in the separate
+`preloader.source.dll` development target.
 
-DllMain loader tarafından CRT entrypoint’i üzerinden çağrılır; araçlar onu
-manuel çağırmaz. SURGE RET-only branded import işaretidir. DllShutdown mevcut
-0..4 durum kodlarıyla gerçek worker/IO/hook/provider cleanup sonucunu verir.
-Yükleyen taraf successful shutdown öncesi LoadLibrary referansını bırakmamalıdır.
+The Windows loader invokes `DllMain` through the CRT entrypoint; tools do
+not call it manually. `SURGE` is a RET-only branded import marker.
+`DllShutdown` reports the actual worker/I/O/hook/provider cleanup result
+through the existing status codes 0..4. The caller must not release its
+`LoadLibrary` reference before a successful shutdown.
 
-Runtime test host’u iki yönetim export’una ihtiyaç duymaz. DLL’in zaten ürettiği
-EALsxPort ortam değişkenini ve gerçek LSX Challenge/GetProfile akışını gözleyip
-üç load/start/socket/profile/shutdown/unload çevrimi yürütür. Yanlış/eksik
-başlangıç ağ yanıtı olmadan PASS sayılmaz. C17 consumer da üç-export import
-kitaplığına bağlanır ve gerçek worker shutdown/idempotence denetimi yapar.
+The runtime test host does not need the two removed management exports.
+Instead, it observes the DLL-provided `EALsxPort` environment variable
+and the actual LSX Challenge/GetProfile flow, exercising three
+load/start/socket/profile/shutdown/unload cycles. Incorrect or missing
+initial network responses cannot count as PASS. The C17 consumer links
+against the three-export import library and checks real worker shutdown
+and idempotence.
 
-İsimle lookup için export adı, ordinal ile lookup için sayısal kimlik esas olur.
-Araçlar isim tablosunu alfabetik gösterebilir: DllMain, DllShutdown, SURGE yanında
-1,3,2 görünmesi Brownfield düzeniyle uyumludur. .def satırları ordinal sırasıyla
-yazılır. Bu sıra DLL başlangıcı veya hook aktivasyonu sırası değildir.
+Name-based lookup uses the export name; ordinal-based lookup uses the numeric
+identifier. Tools can display the name table alphabetically, so displaying
+DllMain, DllShutdown, SURGE alongside 1, 3, 2 is compatible with the
+Brownfield layout. The `.def` entries are written in ordinal order.
+Neither display order nor `.def` line order specifies DLL startup or hook
+activation order.
 
-Orijinal Anadius CDX@1/RUNE@2/anadius@3 işaretleri aynı RET gövdesine gider;
-istenmeyen bu adlar geri eklenmez. Özgün consumer’ın anadius64!anadius importuyla
-otomatik uyumluluk iddia edilmez. Önceki 548-byte ABI iddiası kaynak kanıtı
-bulunmadığından geri çekilmiştir. Gerçek oyun açılışını kullanıcı parent pakette
-doğrulamıştır; güncel IO/ABI paketiyle Windows tekrarı ayrıca gerekir.
+The original Anadius `CDX@1` / `RUNE@2` / `anadius@3` markers target the
+same RET body; these unwanted names are not restored. Automatic compatibility
+with the original consumer import `anadius64!anadius` is not claimed.
+The earlier 548-byte ABI assertion was withdrawn because supporting source
+evidence was absent. The owner verified actual game startup for the parent
+package; Windows retesting is still required for the current I/O/ABI package.
 
-Tam sözleşme metadata/PUBLIC_DLL_ABI.json içindedir.
+The complete contract is in `metadata/PUBLIC_DLL_ABI.json`.
 
-Kaynak seviyesindeki durum türü `DllShutdownStatus`, sabitleri
-`DLL_SHUTDOWN_OK`, `DLL_SHUTDOWN_CONCURRENT`, `DLL_SHUTDOWN_TIMEOUT`,
-`DLL_SHUTDOWN_WAIT_FAILED`, `DLL_SHUTDOWN_CLEANUP_FAILED` olarak adlandırılır.
-Değerleri sırasıyla0..4 kalır; bunlar ek DLL export'u değildir.
+The source-level status type is `DllShutdownStatus`. Its constants are
+`DLL_SHUTDOWN_OK`, `DLL_SHUTDOWN_CONCURRENT`,
+`DLL_SHUTDOWN_TIMEOUT`, `DLL_SHUTDOWN_WAIT_FAILED`, and
+`DLL_SHUTDOWN_CLEANUP_FAILED`. Their values remain 0..4, respectively;
+these are not additional DLL exports.

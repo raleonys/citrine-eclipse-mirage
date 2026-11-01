@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_closing.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 void cancel_and_close_026fb0(CloseContext& context,SocketObject& object,Api& errors,
     AcceptorApi& api,CancellationEffects& cancellation){
     if(object.state.socket!=invalid_socket){
@@ -33,4 +35,4 @@ void ClosingLifecycleEffects::close_and_cancel_026fb0(SocketService& service,Soc
     if(&service!=&service_)throw UnsupportedInput("Close context is bound to one socket service");
     cancel_and_close_026fb0(context_,object,errors_,api_,cancellation_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

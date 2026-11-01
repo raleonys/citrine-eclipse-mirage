@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Prepare and verify the hash-pinned hook engine build copy; vendor bytes stay immutable."""
 import argparse
 import hashlib

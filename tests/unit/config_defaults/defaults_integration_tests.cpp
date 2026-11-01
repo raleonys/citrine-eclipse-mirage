@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
+#include "../../support/fixture_ascii.hpp"
 #include "preloader_l/runtime/application.hpp"
 #include "preloader_l/config/startup.hpp"
 #include "preloader_l/xml/memory_printer.hpp"
@@ -12,11 +15,11 @@
 namespace {
 using namespace preloader_l;
 namespace config=configuration;
-namespace handlers=handlers_recovered;
+namespace handlers=handlers;
 unsigned checks=0;
 void require(bool value,const char* message){++checks;if(!value)throw std::runtime_error(message);}
 config::Path widen(std::string_view value){return {value.begin(),value.end()};}
-struct Reader final:xml_recovered::AttributeReader {
+struct Reader final:xml::AttributeReader {
     std::map<std::string,std::string,std::less<>> values;
     const char* attribute(handlers::Request,const char* key)override{
         const auto found=values.find(key);return found==values.end()?nullptr:found->second.c_str();
@@ -30,9 +33,9 @@ struct Information final:handlers::Effects {
 enum class Response {profile,settings,all_game,connected,one_game,one_setting};
 struct Rendered {bool accepted;std::string bytes;};
 Rendered render(config::State& state,Response response,Information& effects,std::string key={}){
-    xml_recovered::MemoryPrinter printer;Reader reader;
+    xml::MemoryPrinter printer;Reader reader;
     reader.values={{"index","0"},{"GameInfoId",key},{"SettingId",key}};
-    xml_recovered::HandlerWriter writer(printer,reader);
+    xml::HandlerWriter writer(printer,reader);
     const handlers::Profile profile{state.username,state.persona_id,state.user_id,state.country,state.currency,
         state.subscriber_level,state.is_subscriber,state.is_under_age,state.is_steam_subscriber};
     const std::uint8_t online=0;
@@ -49,11 +52,11 @@ Rendered render(config::State& state,Response response,Information& effects,std:
     return {accepted,printer.buffer_including_terminator()};
 }
 bool contains(const Rendered& response,std::string_view value){return response.accepted&&response.bytes.find(value)!=std::string::npos;}
-struct Input final:file_recovered::Input {
+struct Input final:file::Input {
     std::string bytes;bool missing;
     Input(std::string value,bool absent):bytes(std::move(value)),missing(absent){}
     std::uint32_t initial_state()const override{return missing?1:0;}
-    void seek_03b610(std::int64_t offset,file_recovered::Seek)override{require(offset==0,"binary FilePass seeks from zero");}
+    void seek_03b610(std::int64_t offset,file::Seek)override{require(offset==0,"binary FilePass seeks from zero");}
     std::uint64_t position_sum_03ba50()override{return bytes.size();}
     std::int32_t peek_043790()override{throw std::logic_error("unexpected peek");}
     std::size_t read_03b2a0(std::span<std::uint8_t> out)override{
@@ -62,14 +65,14 @@ struct Input final:file_recovered::Input {
     }
     void close_03ae70()override{}
 };
-struct Files final:file_recovered::Factory {
+struct Files final:file::Factory {
     std::string base=R"("Config2" {})",over=base;bool missing=false;
     std::vector<config::Path> reads;
-    std::unique_ptr<file_recovered::Input> open_input_039f70(const config::Path& path,std::uint32_t mode,std::uint32_t share)override{
+    std::unique_ptr<file::Input> open_input_039f70(const config::Path& path,std::uint32_t mode,std::uint32_t share)override{
         require(mode==0x20&&share==0x40,"FilePass preserves binary read mode/share");reads.push_back(path);
         return std::make_unique<Input>(path.ends_with(u"surge_override.cfg")?over:base,missing);
     }
-    std::unique_ptr<file_recovered::Output> open_output_03a1a0(const config::Path&,std::uint32_t,std::uint32_t)override{
+    std::unique_ptr<file::Output> open_output_03a1a0(const config::Path&,std::uint32_t,std::uint32_t)override{
         throw std::logic_error("configuration must not write through the input factory");
     }
 };
@@ -84,7 +87,7 @@ struct Dependencies final:config::Dependencies {
     config::Path join_016b00(const config::Path& a,const config::Path& b)override{return a+u"/"+b;}
     config::Path widen_0145d0(std::string_view value)override{return widen(value);}
     config::Path filesystem_widen_010540(std::string_view value)override{return widen(value);}
-    std::string narrow_path(const config::Path& value)override{return {value.begin(),value.end()};}
+    std::string narrow_path(const config::Path& value)override{return preloader_l::test_support::fixture_ascii(value);}
     config::Path resolve_path_0192d0(std::string_view value,const config::Path&,bool relative)override{
         require(relative,"configuration keeps relative-path mode");return u"C:/fixture/"+widen(value);
     }

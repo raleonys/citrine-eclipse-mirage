@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_io_completion_dispatch.hpp"
 #include "preloader_l/net/transport_completion_dispatcher_native.hpp"
 #include "preloader_l/net/transport_worker_run_native.hpp"
@@ -6,7 +8,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 namespace {
 unsigned checks=0;void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 [[noreturn]]void unexpected(){throw std::logic_error("Unexpected IO integration dependency");}
@@ -45,7 +47,7 @@ struct Routing:s::IoDispatcherEffects{
  std::array<std::uintptr_t,2>& copy_exception_024100(std::array<std::uintptr_t,2>&,const std::array<std::uintptr_t,2>&)override{unexpected();}
  [[noreturn]]void rethrow_029880(std::array<std::uintptr_t,2>&)override{unexpected();}
 };
-struct Worker:s::RecoveredDispatcherWorkerEffects{
+struct Worker:s::DispatcherWorkerEffects{
  Fixture& f;explicit Worker(Fixture&);
  std::uint32_t exchange_stop_34(s::IocpSchedulerEntry&,std::uint32_t)override;
  std::uint32_t exchange_wake_38(s::IocpSchedulerEntry&,std::uint32_t)override;
@@ -71,7 +73,7 @@ struct Fixture{
  std::uint64_t run(){s::WorkerRunResult result;const auto count=s::run_worker_0298b0(entry,result,{index,{0x1111}},worker_api,errors,worker);check(result.error&&result.error->value==0&&result.error->category.name_identity==0x1111,"actual worker source returns logical generic success");return count;}
 };
 Routing::Routing(Fixture& fixture):IoDispatcherEffects(fixture.posted_bindings,fixture.io_bindings,fixture.environment(),fixture.worker_api,fixture.memory,fixture.errors,fixture.effects),f(fixture){}
-Worker::Worker(Fixture& fixture):RecoveredDispatcherWorkerEffects(fixture.state,{fixture.guard,{0x1111},{0x2222}},fixture.api,fixture.routing,fixture.worker_api,fixture.errors),f(fixture){}
+Worker::Worker(Fixture& fixture):DispatcherWorkerEffects(fixture.state,{fixture.guard,{0x1111},{0x2222}},fixture.api,fixture.routing,fixture.worker_api,fixture.errors),f(fixture){}
 void Routing::complete_unknown(s::IocpSchedulerEntry* owner,s::CancelOperation& op,const s::Error& error,std::uint32_t bytes){++unknown;if(other)other(owner,op,error,bytes);else unexpected();}
 std::uint32_t Worker::exchange_stop_34(s::IocpSchedulerEntry& entry,std::uint32_t value){const auto old=entry.high_34;entry.high_34=value;f.events.push_back("stop");return old;}
 std::uint32_t Worker::exchange_wake_38(s::IocpSchedulerEntry& entry,std::uint32_t value){const auto old=static_cast<std::uint32_t>(entry.word_38);entry.word_38=(entry.word_38&0xffffffff00000000ULL)|value;return old;}

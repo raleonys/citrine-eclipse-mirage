@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_io_completion.hpp"
 #include "preloader_l/net/transport_posted_operation_dispatch.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct IoCompletionBinding {
     CancelOperation* identity=nullptr; // captured while live; no lookup dereference
     ReceiveIoOperation* receive=nullptr;
@@ -22,4 +24,4 @@ private:
     std::span<IoCompletionBinding> bindings_;IoCompletionEnvironment environment_;
     WorkerRunApi& api_;PostedMemoryEffects& memory_;Api& errors_;IoCompletionEffects& effects_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

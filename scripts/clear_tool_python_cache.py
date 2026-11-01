@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Remove only bytecode caches belonging to manifest-owned first-party Python tools."""
 import argparse
 import json

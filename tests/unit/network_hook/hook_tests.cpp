@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/hook_connect.hpp"
 #include "preloader_l/platform/hook_cleanup.hpp"
 #include <algorithm>
@@ -7,7 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-using namespace preloader_l::network_hook_recovered;
+using namespace preloader_l::network_hook;
 namespace {
 int checks;
 void require(bool ok,const char* message){++checks;if(!ok)throw std::runtime_error(message);}
@@ -75,6 +77,42 @@ void test_decisions(){
     {Fixture f;Fake e(f);auto b=make_address(2,3216);b[7]=std::byte{2};connect_00fd00(f.refs(),e,1,b,16);require(!e.has("wait"),"127.0.0.2 is not selected");}
     {Fixture f;Fake e(f);auto b=make_address(23,3216);b[18]=b[19]=std::byte{255};connect_00fd00(f.refs(),e,1,b,28);require(!e.has("wait"),"mapped/other IPv6 address not selected");}
 }
+void test_protected_observation_and_original_pointer(){
+    // The inspected snapshot is not the original pointer. Only redirected
+    // calls may forward a stack copy instead of the original opaque address.
+    for(auto family:{std::uint16_t{2},std::uint16_t{23}}){
+        Fixture f;Fake e(f);
+        const int len=family==2?16:28;
+        auto caller=make_address(family,443);
+        auto observed=make_address(family,3216);
+        const auto original=caller;
+        const std::span<const std::byte> opaque{caller.data(),std::size_t{0}};
+        const auto result=connect_00fd00_inspected(f.refs(),e,77,opaque,std::span{observed}.first(len),len);
+        require(result==e.result&&e.connects==1&&e.seen_address!=caller.data()&&
+                get_port(e.seen_bytes)==f.port&&f.attempts==1,
+                "native decision uses observed snapshot and redirects through a full stack copy");
+        require(caller==original,"snapshot classification never mutates caller storage");
+    }
+    for(auto family:{std::uint16_t{2},std::uint16_t{23}}){
+        Fixture f;Fake e(f);const int len=family==2?16:28;
+        auto caller=make_address(family,3216),observed=make_address(family,443);
+        const std::span<const std::byte> opaque{caller.data(),std::size_t{0}};
+        connect_00fd00_inspected(f.refs(),e,8,opaque,std::span{observed}.first(len),len);
+        require(e.connects==1&&e.seen_address==caller.data()&&e.seen_bytes.empty()&&
+                f.attempts==0&&!e.has("wait"),
+                "non-target observation forwards exact original pointer/length without reading it");
+    }
+    for(auto family:{std::uint16_t{2},std::uint16_t{23}}){
+        Fixture f;f.port=0;Fake e(f);const int len=family==2?16:28;
+        auto caller=make_address(family,443),observed=make_address(family,3216);
+        const auto original=caller;
+        const std::span<const std::byte> opaque{caller.data(),std::size_t{0}};
+        connect_00fd00_inspected(f.refs(),e,8,opaque,std::span{observed}.first(len),len);
+        require(e.connects==1&&e.seen_address==caller.data()&&e.seen_bytes.empty()&&
+                f.attempts==0&&e.events==std::vector<std::string>{"wait","original"}&&caller==original,
+                "absent listener preserves opaque caller after wait without redirect effects");
+    }
+}
 void test_dynamic_state(){
     {Fixture f;Fake e(f);e.change_wait=true;e.after_wait=4000;const auto b=make_address(2,3216);
      connect_00fd00(f.refs(),e,8,b,16);require(get_port(e.seen_bytes)==4000&&get_port(b)==3216,"wait publishes port into copy only");}
@@ -133,7 +171,7 @@ void test_cleanup(){
     }
 }
 #endif
-struct ExecutionPlatform final : preloader_l::execution_recovered::Platform {
+struct ExecutionPlatform final : preloader_l::execution::Platform {
     std::uint8_t& a;std::uint8_t& b;std::uint8_t& c;std::uint16_t& port;
     int acquires{},releases{},sleeps{};std::int64_t counter{};
     ExecutionPlatform(std::uint8_t& x,std::uint8_t& y,std::uint8_t& z,std::uint16_t& p):a(x),b(y),c(z),port(p){}
@@ -146,7 +184,7 @@ struct ExecutionPlatform final : preloader_l::execution_recovered::Platform {
     [[noreturn]]void raise_thread_error_04a648(int)override{throw Injected{};}
 };
 void test_execution_composition(){
-    using namespace preloader_l::execution_recovered;
+    using namespace preloader_l::execution;
     Fixture f;Fake remaining(f);MutexState mutex{};initialize_mutex_04a698(mutex,1);
     std::uint8_t a=0,b=0,c=0;std::int64_t frequency=0;ExecutionPlatform platform(a,b,c,f.port);
     Execution execution(mutex,{a,b,c},frequency,platform);ExecutionEffects effects(remaining,execution);
@@ -156,7 +194,7 @@ void test_execution_composition(){
     require(!remaining.has("wait")&&get_port(remaining.seen_bytes)==4000&&get_port(address)==3216&&f.attempts==1,"wait core replaces external wait and published port reaches callback");
 }
 }
-int main(){try{test_decisions();test_dynamic_state();test_bounds_and_failures();
+int main(){try{test_decisions();test_protected_observation_and_original_pointer();test_dynamic_state();test_bounds_and_failures();
 #if !defined(PRELOADER_L_PRODUCTION_NETWORK_TESTS)
     test_cleanup();
 #endif

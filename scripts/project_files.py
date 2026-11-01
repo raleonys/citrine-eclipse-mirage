@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Canonical source inventory shared by source QA and flat-package verification."""
 import hashlib
 import json
@@ -112,7 +114,7 @@ def source_files(root):
 def write_manifest(root):
     root = Path(root)
     files = source_files(root)
-    manifest = {'schema': 'surge.active-source.v1', 'classification': 'NOT_RELEASE',
+    manifest = {'schema': 'surge.active-source.v1',
                 'vendor_alias_storage': ALIAS_STORAGE,
                 'symlinks': vendor_symlinks(root),
                 'files': {name: digest(data) for name, data in files.items()}}
