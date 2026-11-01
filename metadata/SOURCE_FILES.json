@@ -926,8 +926,8 @@
       "sha256": "227e3e14323ca7aa71a495aa349900f15234148def80253aea17a489b5c5243b"
     },
     "src/platform/hook_unload_guard.cpp": {
-      "bytes": 8032,
-      "sha256": "2f899e5409701490d0ae5ab2a5a5070bf87d57ce1442c73b62e0242d17d6261e"
+      "bytes": 10087,
+      "sha256": "f249def47a7340fab7abd23aac09247510525d601adc03ee3f8e153d8b85e0f3"
     },
     "src/platform/library_system.cpp": {
       "bytes": 1272,
@@ -1274,8 +1274,8 @@
       "sha256": "84e46780f9029bb54ce8c5c2b38ca6a666f4d361f546d722f46e1eeb2a89b19d"
     },
     "tests/native/unload_guard_tests.cpp": {
-      "bytes": 8865,
-      "sha256": "824847da3ba107ba98132b87967ae6d39c1b88870a29560a7e1247f9652022e9"
+      "bytes": 11671,
+      "sha256": "7c907addb1806ff792a1ba49633e48169b3e063175c7edc9b8fc8a1a74fb9e5f"
     },
     "tests/performance/xml_reader_probe.cpp": {
       "bytes": 6016,
