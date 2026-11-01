@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/reader.hpp"
 #include <tinyxml2.h>
 #include <stdexcept>
@@ -5,7 +7,7 @@
 
 namespace preloader_l::xml_reader_bridge {
 namespace {
-namespace msg=messages_recovered;
+namespace msg=messages;
 class Document;
 class Element final:public msg::XmlNode {
 public:
@@ -57,7 +59,7 @@ const Element& checked(const msg::XmlNode& node) {
     return *element;
 }
 }
-messages_recovered::ParseResult Backend::parse_c_string(std::string_view value) {
+messages::ParseResult Backend::parse_c_string(std::string_view value) {
     // Preserve the staging string's former length rejection before inspecting
     // caller bytes, and keep the vendor's nBytes+1 allocation from overflowing.
     if(value.size()>std::string{}.max_size())throw std::length_error("XML input exceeds string size limit");
@@ -66,17 +68,17 @@ messages_recovered::ParseResult Backend::parse_c_string(std::string_view value) 
     const bool error=document->has_error();
     return {std::move(document),code,error};
 }
-std::unique_ptr<messages_recovered::XmlPrinter> Backend::printer() {
-    return std::make_unique<xml_recovered::MemoryPrinter>();
+std::unique_ptr<messages::XmlPrinter> Backend::printer() {
+    return std::make_unique<xml::MemoryPrinter>();
 }
 std::vector<std::pair<std::string,std::string>> Backend::attributes_in_order(
-        const messages_recovered::XmlNode& node) {
+        const messages::XmlNode& node) {
     std::vector<std::pair<std::string,std::string>> result;
     for(auto* attribute=checked(node).native().FirstAttribute();attribute;attribute=attribute->Next())
         result.emplace_back(attribute->Name(),attribute->Value());
     return result;
 }
-const char* Backend::text_003860(const messages_recovered::XmlNode& node) {
+const char* Backend::text_003860(const messages::XmlNode& node) {
     return checked(node).native().GetText();
 }
 } // namespace preloader_l::xml_reader_bridge

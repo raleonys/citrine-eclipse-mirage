@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_service_constructor.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // A typed projection of the same registry used for socket services. The owner
 // context corresponds to native registry+0x28; it is not the registry identity.
 struct SchedulerRegistry {
@@ -50,4 +52,4 @@ private:
     std::span<SchedulerRegistryBinding> registries_;SchedulerRegistryEffects& effects_;
     std::span<SchedulerServiceBinding> services_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

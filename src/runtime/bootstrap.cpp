@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/bootstrap.hpp"
 #include <new>
 
-namespace preloader_l::recovered {
+namespace preloader_l::system_services {
 // Evidence: ev_0a232e746d99beddba99fe362a4f132625939b77bd747e39ad749975c6f32a06
 bool Bootstrap::application_dll_main(std::uint32_t reason) {
     if (reason == 1) initialize(); // DLL_PROCESS_ATTACH; others have no app action
@@ -98,4 +100,4 @@ void cleanup_exit_waits(ExitWaitBlock& head, ExitWaitDependencies& deps) {
     } while (block);
     deps.unlock_047e04();
 }
-} // namespace preloader_l::recovered
+} // namespace preloader_l::system_services

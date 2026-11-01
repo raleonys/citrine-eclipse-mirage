@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/calendar.hpp"
 #include "preloader_l/hash/hash.hpp"
 #include "preloader_l/config/parser.hpp"
@@ -17,11 +19,11 @@ int main() {
         if(preloader_l::tools::frame(socket,buffered).find("GetProfileResponse")==std::string::npos)return 23;
     }
     if(!GetModuleHandleW(L"preloader.source.dll")) return 10;
-    preloader_l::calendar_recovered::BrokenDown epoch{0,0,0,1,0,70,0,0,0};
-    if(preloader_l::calendar_recovered::epoch_041ff0(epoch)!=0) return 11;
-    preloader_l::hash_recovered::Sha1 hash;
+    preloader_l::calendar::BrokenDown epoch{0,0,0,1,0,70,0,0,0};
+    if(preloader_l::calendar::epoch_041ff0(epoch)!=0) return 11;
+    preloader_l::hash::Sha1 hash;
     hash.update("abc");
-    if(preloader_l::hash_recovered::classic_hex_digest(hash.finalize_words_043270())
+    if(preloader_l::hash::classic_hex_digest(hash.finalize_words_043270())
        !="a9993e364706816aba3e25717850c26c9cd0d89d") return 12;
     preloader_l::parser::State state;
     if(!preloader_l::parser::parse("",state)) return 13;

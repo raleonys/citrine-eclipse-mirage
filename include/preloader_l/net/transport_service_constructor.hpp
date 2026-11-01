@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_service_registry.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct SocketConstructionContext {
     ContextIdentity identity;
     // Typed projection of the context's first native qword; read live at022929.
@@ -50,4 +52,4 @@ private:
     SocketConstructionContext& context_;ServiceConstructionEffects& effects_;
     ServiceGateApi& gate_api_;Api& errors_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -18,8 +20,8 @@
 #include "preloader_l/platform/hook_engine_adapters.hpp"
 #include "preloader_l/platform/crypt_query.hpp"
 
-namespace preloader_l::native_recovered {
-using Callback=host_init_recovered::Callback;
+namespace preloader_l::native {
+using Callback=host_init::Callback;
 enum class LifecycleFault { AlreadyBound, Busy, WrongOwner };
 class Errors {
 public:
@@ -36,11 +38,11 @@ public:
                              DWORD*,HCERTSTORE*,HCRYPTMSG*,const void**)=0;
 };
 struct Context {
-    registry_recovered::StateRefs registry;
-    network_hook_recovered::StateRefs network;
-    registry_recovered::Effects& registry_effects;
-    host_callbacks_recovered::Effects& host_effects;
-    network_hook_recovered::Effects& network_effects;
+    registry::StateRefs registry;
+    network_hook::StateRefs network;
+    registry::Effects& registry_effects;
+    host_callbacks::Effects& host_effects;
+    network_hook::Effects& network_effects;
     CryptQueryEffects& crypt_effects;
     // Hook reference callback synchronization excludes connect and crypt. Recursive
     // permits native reentry. Tracked callback acquisitions
@@ -83,32 +85,32 @@ public:
 // Loads original SDK-typed trampoline pointers from the same eleven slots populated
 // by HostInitEffects. All allocation/log/wait/narrow/copy/UI effects stay pure.
 // This class is intentionally abstract; no default success backend exists.
-class OriginalEffects : public registry_recovered::Effects,
-                        public host_callbacks_recovered::Effects,
-                        public network_hook_recovered::Effects,
+class OriginalEffects : public registry::Effects,
+                        public host_callbacks::Effects,
+                        public network_hook::Effects,
                         public CryptQueryEffects {
 public:
-    OriginalEffects(const std::array<std::uintptr_t,host_init_recovered::callback_count>& originals,
+    OriginalEffects(const std::array<std::uintptr_t,host_init::callback_count>& originals,
                     WideOperations& wide,preloader_l::platform::CryptQueryHost& crypt_host)
         : originals_(originals),wide_(wide),crypt_host_(crypt_host) {}
     BOOL crypt_query(DWORD,const void*,DWORD,DWORD,DWORD,DWORD*,DWORD*,DWORD*,
                      HCERTSTORE*,HCRYPTMSG*,const void**) final;
     virtual void crypt_observed(hooks::Selection) noexcept=0;
-    registry_recovered::Status original_open_a(const registry_recovered::OpenA&) final;
-    registry_recovered::Status original_open_w(const registry_recovered::OpenW&) final;
-    registry_recovered::Status original_query_a(const registry_recovered::QueryA&) final;
-    registry_recovered::Status original_query_w(const registry_recovered::QueryW&) final;
-    registry_recovered::Status original_close(registry_recovered::Handle) final;
-    std::int32_t original_create_process_a(const host_callbacks_recovered::ProcessCall<char>&) final;
-    std::int32_t original_create_process_w(const host_callbacks_recovered::ProcessCall<char16_t>&) final;
-    std::uint32_t original_folder_a(const host_callbacks_recovered::FolderCall<char>&) final;
-    std::uint32_t original_folder_w(const host_callbacks_recovered::FolderCall<char16_t>&) final;
-    std::int32_t original_connect_0a3838(network_hook_recovered::Socket,std::span<const std::byte>,std::int32_t) final;
+    registry::Status original_open_a(const registry::OpenA&) final;
+    registry::Status original_open_w(const registry::OpenW&) final;
+    registry::Status original_query_a(const registry::QueryA&) final;
+    registry::Status original_query_w(const registry::QueryW&) final;
+    registry::Status original_close(registry::Handle) final;
+    std::int32_t original_create_process_a(const host_callbacks::ProcessCall<char>&) final;
+    std::int32_t original_create_process_w(const host_callbacks::ProcessCall<char16_t>&) final;
+    std::uint32_t original_folder_a(const host_callbacks::FolderCall<char>&) final;
+    std::uint32_t original_folder_w(const host_callbacks::FolderCall<char16_t>&) final;
+    std::int32_t original_connect_0a3838(network_hook::Socket,std::span<const std::byte>,std::int32_t) final;
     std::uint32_t increment_attempts(std::uint32_t&) final;
     int crt_wcsicmp(const char16_t*,const char16_t*) final;
     int crt_wcscpy_s(char16_t*,std::size_t,const char16_t*) final;
 private:
-    const std::array<std::uintptr_t,host_init_recovered::callback_count>& originals_;
+    const std::array<std::uintptr_t,host_init::callback_count>& originals_;
     WideOperations& wide_;
     preloader_l::platform::CryptQueryHost& crypt_host_;
     std::mutex attempts_gate_;

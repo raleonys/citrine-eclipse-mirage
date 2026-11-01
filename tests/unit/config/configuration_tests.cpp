@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "../../support/fixture_ascii.hpp"
 #include "preloader_l/config/configuration.hpp"
 #include <algorithm>

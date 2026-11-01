@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Negative regressions for production/reference object and target isolation."""
 from pathlib import Path
 import copy

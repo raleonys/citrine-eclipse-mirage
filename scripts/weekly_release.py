@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Prepare source-bound release candidates; only draft GitHub releases may be written."""
 import argparse
 import hashlib

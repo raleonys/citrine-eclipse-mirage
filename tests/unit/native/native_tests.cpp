@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "../../support/fixture_ascii.hpp"
 #include <ws2tcpip.h>
 #include "preloader_l/platform/hook_native_callbacks.hpp"
@@ -13,8 +15,8 @@
 #include <condition_variable>
 #include <chrono>
 #include <functional>
-using namespace preloader_l::native_recovered;
-using preloader_l::host_init_recovered::callback_count;
+using namespace preloader_l::native;
+using preloader_l::host_init::callback_count;
 namespace {
 int checks;
 void require(bool b,const char* s){++checks;if(!b)throw std::runtime_error(s);}
@@ -103,8 +105,8 @@ struct Effects final:OriginalEffects {
     std::string filesystem_narrow(std::u16string_view s)override{return preloader_l::test_support::fixture_ascii(s);}
     int crt_stricmp(const char* a,const char* b)override{std::string x(a),y(b);for(auto& c:x)if(c>='A'&&c<='Z')c+=32;for(auto& c:y)if(c>='A'&&c<='Z')c+=32;return x.compare(y);}
     int crt_strcpy_s(char* d,std::size_t n,const char* s)override{const auto len=std::strlen(s)+1;if(!d||len>n)return 34;std::memcpy(d,s,len);return 0;}
-    preloader_l::registry_recovered::Handle allocate_4_04b0bc()override{++allocs;return 0x9876;}
-    void free_04b0f8(preloader_l::registry_recovered::Handle p)override{require(p==0x9876,"fabricated handle identity freed");++frees;}
+    preloader_l::registry::Handle allocate_4_04b0bc()override{++allocs;return 0x9876;}
+    void free_04b0f8(preloader_l::registry::Handle p)override{require(p==0x9876,"fabricated handle identity freed");++frees;}
     void wait_036880(std::int32_t n)override{
         require(n==-1,"registry startup count");++waits;
         const auto incoming=GetLastError();
@@ -122,8 +124,8 @@ struct Effects final:OriginalEffects {
     [[noreturn]]void exit_05cdc0(std::uint32_t)override{throw std::runtime_error("unexpected exit");}
 };
 struct Fixture {
-    preloader_l::host_init_recovered::Values values{{"ClientKey",u"Client\\Key"},{"ClientKey2",u"Client\\Key2"},{"ClientValue",u"ClientPath"},{"ClientPath",u"C:\\game.exe"},{"Documents",u"D:\\docs"}};
-    preloader_l::registry_recovered::Handles clients,languages,fabricated;std::uint8_t language=0;
+    preloader_l::host_init::Values values{{"ClientKey",u"Client\\Key"},{"ClientKey2",u"Client\\Key2"},{"ClientValue",u"ClientPath"},{"ClientPath",u"C:\\game.exe"},{"Documents",u"D:\\docs"}};
+    preloader_l::registry::Handles clients,languages,fabricated;std::uint8_t language=0;
     std::int32_t v4=16,v6=28;std::uint16_t port=6099;std::uint32_t attempts=0;
     std::array<std::uintptr_t,callback_count> originals{};Wide wide;CryptHost crypt_host;Effects effects;Context context;Binding binding;
     Fixture():originals{reinterpret_cast<std::uintptr_t>(&original_connect),reinterpret_cast<std::uintptr_t>(&original_open_a),reinterpret_cast<std::uintptr_t>(&original_open_w),reinterpret_cast<std::uintptr_t>(&original_close),reinterpret_cast<std::uintptr_t>(&original_query_a),reinterpret_cast<std::uintptr_t>(&original_query_w),reinterpret_cast<std::uintptr_t>(&original_process_a),reinterpret_cast<std::uintptr_t>(&original_process_w),reinterpret_cast<std::uintptr_t>(&original_folder_a),reinterpret_cast<std::uintptr_t>(&original_folder_w),reinterpret_cast<std::uintptr_t>(&original_crypt)},
@@ -388,12 +390,12 @@ void test_crypt_lifetime(){
     f.binding.close();require(!is_bound(),"crypt context closes after callback quiescence");
 }
 #if !defined(PRELOADER_L_PRODUCTION_CALLBACK_TESTS)
-struct InitRemaining final:preloader_l::host_init_recovered::Effects {
+struct InitRemaining final:preloader_l::host_init::Effects {
     std::array<std::uintptr_t,callback_count>& targets;std::size_t index{};
     explicit InitRemaining(std::array<std::uintptr_t,callback_count>& t):targets(t){}
     std::u16string filesystem_widen_006d70(std::string_view s)override{return {s.begin(),s.end()};}
     std::uint64_t version_condition_mask(std::uint64_t m,std::uint32_t t,std::uint8_t)override{return m+t;}
-    bool verify_version(const preloader_l::host_init_recovered::VersionRequest&,std::uint32_t,std::uint64_t)override{return true;}
+    bool verify_version(const preloader_l::host_init::VersionRequest&,std::uint32_t,std::uint64_t)override{return true;}
     std::int32_t initialize_engine_046a20()override{throw std::logic_error("unrouted engine init");}
     std::uintptr_t get_module_handle(std::u16string_view)override{return 1;}
     std::uintptr_t get_proc_address(std::uintptr_t,std::string_view)override{return targets.at(index++);}
@@ -440,7 +442,7 @@ void test_actual_host_install_binding(){
     preloader_l::platform::hook_engine::HostInitEffects effects(remaining,api,resolver);preloader_l::configuration::State config{};
     config.executable_path=u"C:\\synthetic\\game.exe";config.block_reruns=1;config.documents=u"D:\\synthetic-docs";
     std::vector<std::uintptr_t> enabled;
-    preloader_l::host_init_recovered::initialize_host_00e310({config,f.values,enabled,f.originals},effects);
+    preloader_l::host_init::initialize_host_00e310({config,f.values,enabled,f.originals},effects);
     require(api.enabled==callback_count&&enabled==std::vector<std::uintptr_t>(targets.begin(),targets.end()),"actual host-init/native resolver/callback/original-effect graph installs eleven synthetic callbacks");
     require(f.originals==targets,"all original slots populated before callback can run");
 }

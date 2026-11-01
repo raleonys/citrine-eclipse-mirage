@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/timestamp.hpp"
 #include <ctime>
 #include <iomanip>
 #include <sstream>
 #include <stdexcept>
 
-namespace preloader_l::timestamp_recovered {
+namespace preloader_l::timestamp {
 namespace {
 bool classic_space(char c) noexcept {
     return c==' ' || (c>='\t' && c<='\r');
@@ -37,22 +39,22 @@ Number number_03d8f0(std::string_view raw,std::size_t& pos,
 }
 }
 std::uint32_t ClassicIso::extract_03d310(std::string_view raw,std::string_view pattern,
-                                       calendar_recovered::BrokenDown& value) {
+                                       calendar::BrokenDown& value) {
     if(pattern!=format)throw std::invalid_argument("ClassicIso requires recovered ISO format");
     for(const unsigned char byte:raw)
         if(byte>=0x80)throw std::invalid_argument("ClassicIso requires ASCII input");
     std::size_t pos=0;
     while(pos<raw.size() && classic_space(raw[pos]))++pos; // 03ab40 sentry
     if(pos==raw.size())return eof_bit|fail_bit;
-    struct Field {std::int32_t calendar_recovered::BrokenDown::*destination;
+    struct Field {std::int32_t calendar::BrokenDown::*destination;
                   std::int32_t minimum,maximum,offset;unsigned width;char separator;};
     constexpr Field fields[]={
-        {&calendar_recovered::BrokenDown::year,0,9999,-1900,4,'-'},
-        {&calendar_recovered::BrokenDown::month,1,12,-1,2,'-'},
-        {&calendar_recovered::BrokenDown::day,1,31,0,2,'T'},
-        {&calendar_recovered::BrokenDown::hour,0,23,0,2,':'},
-        {&calendar_recovered::BrokenDown::minute,0,59,0,2,':'},
-        {&calendar_recovered::BrokenDown::second,0,60,0,2,'\0'}
+        {&calendar::BrokenDown::year,0,9999,-1900,4,'-'},
+        {&calendar::BrokenDown::month,1,12,-1,2,'-'},
+        {&calendar::BrokenDown::day,1,31,0,2,'T'},
+        {&calendar::BrokenDown::hour,0,23,0,2,':'},
+        {&calendar::BrokenDown::minute,0,59,0,2,':'},
+        {&calendar::BrokenDown::second,0,60,0,2,'\0'}
     };
     for(const auto& field:fields){
         if(pos==raw.size())return eof_bit|fail_bit;
@@ -67,7 +69,7 @@ std::uint32_t ClassicIso::extract_03d310(std::string_view raw,std::string_view p
     return 0;
 }
 std::uint32_t HostGetTime::extract_03d310(std::string_view raw,std::string_view pattern,
-                                        calendar_recovered::BrokenDown& value) {
+                                        calendar::BrokenDown& value) {
     // Preserve embedded NUL bytes and explicit input length (03efd0).
     std::istringstream stream{std::string(raw)};
     std::tm fields{};
@@ -86,14 +88,14 @@ std::uint32_t HostGetTime::extract_03d310(std::string_view raw,std::string_view 
     return bits;
 }
 std::int64_t timestamp_to_epoch_041e10(std::string_view raw,Parser& parser) {
-    calendar_recovered::BrokenDown fields{};
+    calendar::BrokenDown fields{};
     const auto state=parser.extract_03d310(raw,format,fields);
     // 041f57 TEST native state,6: EOF alone is allowed; no full-consumption
     // check, timezone conversion, trimming or trailing-character check is added.
     if((state&(fail_bit|bad_bit))!=0)return 0;
-    return calendar_recovered::epoch_041ff0(fields);
+    return calendar::epoch_041ff0(fields);
 }
 std::int64_t StorageEffects::timestamp_to_epoch_041e10(std::string_view value) {
-    return timestamp_recovered::timestamp_to_epoch_041e10(value,parser_);
+    return timestamp::timestamp_to_epoch_041e10(value,parser_);
 }
-} // namespace preloader_l::timestamp_recovered
+} // namespace preloader_l::timestamp

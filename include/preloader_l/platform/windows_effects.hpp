@@ -1,21 +1,23 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/core/license.hpp"
 #include "preloader_l/runtime/status.hpp"
 #include "preloader_l/codec/encoding.hpp"
 #include "preloader_l/core/paths.hpp"
 
-namespace preloader_l::windows_recovered {
+namespace preloader_l::windows {
 // New source composition layer. Supplies recovered status/path/encoding and
 // delegates every other application effect. Compose as LicenseFiles(inner,...)
 // so token status lookups also reach this inner WindowsEffects object.
-class WindowsEffects final:public license_recovered::Effects {
+class WindowsEffects final:public license::Effects {
 public:
     using Path=configuration::Path;
-    WindowsEffects(license_recovered::Effects& remaining,status_recovered::Stats& stats,
-                   encoding_recovered::Calls& encoding,encoding_recovered::Errors& errors)
+    WindowsEffects(license::Effects& remaining,status::Stats& stats,
+                   encoding::Calls& encoding,encoding::Errors& errors)
         :remaining_(remaining),stats_(stats),encoding_(encoding),errors_(errors){}
     const char* online_auth_virtual_30(const char*)override;
-    license_recovered::FileStatus status_01ea20(const Path&,std::uint32_t)override;
+    license::FileStatus status_01ea20(const Path&,std::uint32_t)override;
     [[noreturn]] void filesystem_error_018130(std::string_view,std::int32_t,const Path&)override;
     bool file_hash_matches_042d20(const Path&,std::string)override;
     std::string load_token_02afa0(const Path&)override;
@@ -33,9 +35,9 @@ public:
     [[noreturn]] void exit_05cdc0(std::int32_t)override;
     [[noreturn]] void no_response_02bcd0_04d228()override;
 private:
-    license_recovered::Effects& remaining_;
-    status_recovered::Stats& stats_;
-    encoding_recovered::Calls& encoding_;
-    encoding_recovered::Errors& errors_;
+    license::Effects& remaining_;
+    status::Stats& stats_;
+    encoding::Calls& encoding_;
+    encoding::Errors& errors_;
 };
-} // namespace preloader_l::windows_recovered
+} // namespace preloader_l::windows

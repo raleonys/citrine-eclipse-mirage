@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_environment_constructor.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct ReceiveBufferSlice {std::uintptr_t data=0;std::uint64_t size=0;};
 struct AsyncReceiveResult {std::int32_t result=0;std::uint32_t last_error=0,transferred=0;};
 class AsyncReceiveApi {
@@ -46,13 +48,13 @@ void start_async_receive_021d10(AsyncReceiveService&,ReceiveSocketImplementation
     std::uint32_t flags,ReceiveHandler&,std::uintptr_t allocator_identity,AsyncReceiveContext&);
 // Uses the actual recovered023dd0 constructor with explicit live source identities.
 // Projection, native factory/query/move/destroy and lifetime providers stay required.
-class RecoveredAsyncReceiveEffects:public AsyncReceiveEffects {
+class AsyncReceiveEffects:public AsyncReceiveEffects {
 public:
-    RecoveredAsyncReceiveEffects(IoHandlerSentinels sentinels,IoEnvironmentConstructorContext& constructor,
+    AsyncReceiveEffects(IoHandlerSentinels sentinels,IoEnvironmentConstructorContext& constructor,
         std::span<IoEnvironmentSourceBinding> sources):sentinels_(sentinels),constructor_(constructor),sources_(sources){}
     void construct_environment_023dd0(IoHandlerEnvironment&,std::uintptr_t allocator_identity) final;
 private:
     IoHandlerSentinels sentinels_;IoEnvironmentConstructorContext& constructor_;
     std::span<IoEnvironmentSourceBinding> sources_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

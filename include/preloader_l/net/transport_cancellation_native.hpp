@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_cancellation.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct CompletionImports {
     decltype(&::PostQueuedCompletionStatus) post=&::PostQueuedCompletionStatus;
 };
@@ -13,4 +15,4 @@ public:
     std::int32_t post(std::uintptr_t port,CancelOperation&) override;
 private:CompletionImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

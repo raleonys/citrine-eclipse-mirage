@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_iocp_constructor.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct IocpConstructorImports {
     decltype(&::VerSetConditionMask) set_version_mask=&::VerSetConditionMask;
     decltype(&::VerifyVersionInfoA) verify_version=&::VerifyVersionInfoA;
@@ -21,4 +23,4 @@ public:
     std::int32_t close_handle(std::uintptr_t) override;
 private:IocpConstructorImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

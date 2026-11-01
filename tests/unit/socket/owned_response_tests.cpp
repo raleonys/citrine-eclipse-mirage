@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/owned_response_test_fixture.hpp"
 using namespace owned_test;
 namespace {

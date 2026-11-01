@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/pool_allocate_test_fixture.hpp"
 #include <set>
 using namespace pool_allocate_test;

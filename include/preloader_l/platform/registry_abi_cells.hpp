@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <cstddef>
 #include <cstring>
 #include <stdexcept>
 #include <type_traits>
 
-namespace preloader_l::registry_recovered {
+namespace preloader_l::registry {
 // A nullable, non-owning scalar location. A raw ABI argument need not point to
 // a C++ object whose type is T (Win32 DWORD can differ from uint32_t, and HKEY
 // is a pointer). Access its object representation rather than aliasing it as T.

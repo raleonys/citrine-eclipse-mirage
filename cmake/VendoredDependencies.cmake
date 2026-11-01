@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 # Exact owner-provided archive trees only. Upstream CMake and network fetching
 # are not executed. Full member hashes and link types are verified offline.
 find_package(Python3 COMPONENTS Interpreter REQUIRED)

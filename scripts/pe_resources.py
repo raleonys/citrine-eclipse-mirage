@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Bounded PE resource traversal adapted from Infrastructure MUSTAVEX's walker."""
 import struct
 from verify_corvexon_golden_trail import PEError, u16, u32

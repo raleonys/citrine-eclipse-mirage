@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_receive_buffer.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 class RequestMutationApi {
 public:
     virtual ~RequestMutationApi()=default;
@@ -16,4 +18,4 @@ struct RequestMutationContext {ReceiveBufferContext& buffer;RequestMutationApi& 
 void decode_request_hex_03ce30(ReceiveBufferString&,ReceiveBufferContext&);
 ReceiveBufferString& replace_request_034730(ReceiveBufferString&,std::uint64_t offset,
     std::uint64_t erase_count,std::uintptr_t source,std::uint64_t insert_count,RequestMutationContext&);
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

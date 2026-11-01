@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/response_containers_test_fixture.hpp"
 using namespace container_test;
 using owned_test::active_owned;
@@ -29,8 +31,8 @@ struct Finish:s::WriteFinishApi {
     s::WriteFinishStream& append_007990(s::WriteFinishStream&,std::uintptr_t,std::uint64_t)override{r::unexpected();}
     std::uint64_t widen_01e510(std::uintptr_t,std::uint8_t)override{r::unexpected();}void put_00fe90(s::WriteFinishStream&,std::uint8_t)override{r::unexpected();}void flush_00e1e0(s::WriteFinishStream&)override{r::unexpected();}
 };
-struct App:s::RecoveredResponseDispatchApi {
-    message_test::Fixture& m;App(s::ResponseDispatchContext& c,message_test::Fixture& m):RecoveredResponseDispatchApi(c),m(m){}
+struct App:s::ResponseDispatchApi {
+    message_test::Fixture& m;App(s::ResponseDispatchContext& c,message_test::Fixture& m):ResponseDispatchApi(c),m(m){}
     void process_message_033d70(std::uintptr_t id,s::ReceiveBufferString& out,s::ReceiveBufferString& in)override{m.api.process_message_033d70(id,out,in);}
     void destroy_empty_message_00aa50(s::ReceiveBufferString& value)override{m.api.destroy_empty_message_00aa50(value);}
     void cleanup_exit_waits_04a47c()override{r::unexpected();}

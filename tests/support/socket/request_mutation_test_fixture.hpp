@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_request_mutation.hpp"
 #include "tests/support/socket/message_core_bridge_test_fixture.hpp"
 
 namespace mutation_test {
-namespace s=preloader_l::socket_recovered;namespace b=buffer_test;namespace r=receive_test;
+namespace s=preloader_l::socket;namespace b=buffer_test;namespace r=receive_test;
 using response_test::checks;using response_test::check;using response_test::rejects;
 struct Failure {int code;};
 struct Api:s::RequestMutationApi {

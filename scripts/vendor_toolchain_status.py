@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Explicit CTest unavailability receipt; never reports an unsupported vendor as PASS."""
 from pathlib import Path
 import sys

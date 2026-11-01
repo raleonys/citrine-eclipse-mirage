@@ -38,7 +38,7 @@ tracking. The helper now uses the existing second emergency slot as well. A new
 test failed on the exact donor output and passes on the corrected copy. No success
 path, enumeration policy or public API is changed by this supplement.
 Adapted patch script SHA-256:
-`5c3ec4f5bdaa3a5a864b9936c72fc148b094a5dade8c4665375be77c7ab53c6d`.
+`cd22a276907f4cd7dcaca6d091ebe4147e79d19c6577e5ac56164a735c614d4f`.
 Patched `hook.c` SHA-256:
 `4d0fc88c91deed5eb97344e4daa9bd69d2fdca15d2fabefd911e08e27ef9fea3`.
 

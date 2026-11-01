@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_owned_response.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 void reset(ReceiveBufferString& value){value.size_10=0;value.capacity_18=15;value.storage_00[0]=0;}
 void destroy(ReceiveBufferString& value,FrameReadContext& context){
@@ -77,7 +79,7 @@ void call_owned_response_022280(OwnedResponseTask& task,std::uint8_t flag,OwnedR
 void OwnedResponseTask::call_slot_00(std::uint8_t flag){
     auto& borrowed_context=context;call_owned_response_022280(*this,flag,borrowed_context);
 }
-void RecoveredOwnedResponseApi::make_owned_response_020cb0(PostedFunctor*& out,MessageWriteTask& task){
-    socket_recovered::make_owned_response_020cb0(out,task,context_);
+void OwnedResponseApi::make_owned_response_020cb0(PostedFunctor*& out,MessageWriteTask& task){
+    socket::make_owned_response_020cb0(out,task,context_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

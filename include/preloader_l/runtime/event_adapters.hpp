@@ -1,12 +1,14 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/event_queue.hpp"
 #include "preloader_l/protocol/messages.hpp"
 #include "preloader_l/handlers/misc_handlers.hpp"
 
-namespace preloader_l::event_queue_recovered {
+namespace preloader_l::event_queue {
 // New composition adapters over one Context, not separate original functions.
 // They add no locking; recovered caller bodies determine lock ordering.
-class ContentQueue final:public content_handlers_recovered::EventQueue {
+class ContentQueue final:public content_handlers::EventQueue {
 public:
     explicit ContentQueue(Context& context):context_(context){}
     Mutex& mutex_02c620() override;
@@ -17,7 +19,7 @@ public:
     void push_persisted_locked(std::string,const std::function<void()>&) override;
 private:Context& context_;
 };
-class IgoQueue final:public misc_handlers_recovered::IgoEffects {
+class IgoQueue final:public misc_handlers::IgoEffects {
 public:
     explicit IgoQueue(Context& context):context_(context){}
     int lock_02c620_04a6ac() override;
@@ -28,7 +30,7 @@ public:
     [[noreturn]] void thread_error_04a648(int) override;
 private:Context& context_;
 };
-class MessageQueue final:public messages_recovered::EventQueue {
+class MessageQueue final:public messages::EventQueue {
 public:
     explicit MessageQueue(Context& context):context_(context){}
     bool nonempty_relaxed() const override;
@@ -42,4 +44,4 @@ public:
     bool finish_reserved(std::uint64_t,bool) noexcept override;
 private:Context& context_;
 };
-} // namespace preloader_l::event_queue_recovered
+} // namespace preloader_l::event_queue

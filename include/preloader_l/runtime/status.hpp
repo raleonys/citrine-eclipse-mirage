@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include <cstdint>
 #include <optional>
 #include <stdexcept>
 
-namespace preloader_l::status_recovered {
+namespace preloader_l::status {
 using Path = configuration::Path;
 struct OutOfEvidenceStatus : std::runtime_error { using std::runtime_error::runtime_error; };
 struct Status { std::int32_t kind; std::uint32_t permissions; std::uint32_t error; };

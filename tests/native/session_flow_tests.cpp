@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/server.hpp"
 #include "preloader_l/net/session_policy.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
-namespace srv=preloader_l::server_recovered;
+namespace srv=preloader_l::server;
 namespace net=preloader_l::net;
 using namespace std::chrono_literals;
 namespace {

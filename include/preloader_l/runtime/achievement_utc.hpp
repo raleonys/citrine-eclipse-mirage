@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/calendar.hpp"
 #include <optional>
@@ -5,7 +7,7 @@
 #include <string_view>
 
 namespace preloader_l::achievement_runtime {
-using BrokenDown=calendar_recovered::BrokenDown;
+using BrokenDown=calendar::BrokenDown;
 class Clock {
 public:
     virtual ~Clock()=default;

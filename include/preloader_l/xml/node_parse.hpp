@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/document_error.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Caller-owned mapped invocation workspace. It represents native local slots,
 // not a recovered host stack frame or a native allocation/lifetime protocol.
 struct NativeNodeParseScratch {std::uintptr_t out_node,local_pair;};
@@ -41,12 +43,12 @@ std::uintptr_t parse_node_004970(std::uintptr_t owner,std::uintptr_t cursor,
 
 // Selected source dispatch only. Other targets, invocation workspace and
 // parser primitives remain mandatory; the generic virtual engine is open.
-class RecoveredNodeParseEffects:public RecoveredDocumentErrorEffects,
+class NodeParseEffects:public DocumentErrorEffects,
     public NativeNodeParseEffects {
 public:
-    RecoveredNodeParseEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
+    NodeParseEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
         const NativeErrorArgumentTail& arguments,NativeNodeParseIdentities identities={})
-        :RecoveredDocumentErrorEffects(memory,nodes,arguments),parse_{memory,nodes,*this,identities}{}
+        :DocumentErrorEffects(memory,nodes,arguments),parse_{memory,nodes,*this,identities}{}
     void parse_virtual(std::uintptr_t,std::uintptr_t,std::uintptr_t,std::uintptr_t,std::uintptr_t) final;
     std::uintptr_t parse_child_virtual(std::uintptr_t,std::uintptr_t,std::uintptr_t,
         std::uintptr_t,std::uintptr_t) final;
@@ -56,4 +58,4 @@ public:
         std::uintptr_t cursor,std::uintptr_t closing_pair,std::uintptr_t line_counter)=0;
 private:NativeNodeParseContext parse_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

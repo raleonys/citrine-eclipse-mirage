@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_native_dispatch.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Selected image identities are stored as values only. No image vtable is
 // called or materialized. The constructor touches through+0x307; this is not
 // a claim about the complete object size or MSVC class ABI.
@@ -40,11 +42,11 @@ void destroy_native_document_001e00(std::uintptr_t,NativeDocumentContext&);
 struct NativeDocumentBinding {NativeMessageDocument* projection=nullptr;std::uintptr_t address=0;};
 // NativeMessageDocument::error_6c is the actual mapped four-byte cell at+6c.
 // No copied status/writeback adapter. Other document bytes are caller-owned.
-class RecoveredMessageDocumentApi:public RecoveredMessageDispatchApi {
+class MessageDocumentApi:public MessageDispatchApi {
 public:
-    RecoveredMessageDocumentApi(PrefixCipherContext& cipher,std::span<PrefixCipherBinding> ciphers,
+    MessageDocumentApi(PrefixCipherContext& cipher,std::span<PrefixCipherBinding> ciphers,
         NativeDispatchContext& dispatch,NativeDocumentContext& documents,std::span<NativeDocumentBinding> bindings)
-        :RecoveredMessageDispatchApi(cipher,ciphers,dispatch),documents_(documents),bindings_(bindings){}
+        :MessageDispatchApi(cipher,ciphers,dispatch),documents_(documents),bindings_(bindings){}
     void construct_document_001830(NativeMessageDocument&,bool,std::uint32_t) final;
     int parse_document_004280(NativeMessageDocument&,std::uintptr_t,std::uint64_t) final;
     void destroy_document_001e00(NativeMessageDocument&) final;
@@ -52,4 +54,4 @@ private:
     std::uintptr_t resolve(NativeMessageDocument&);
     NativeDocumentContext& documents_;std::span<NativeDocumentBinding> bindings_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

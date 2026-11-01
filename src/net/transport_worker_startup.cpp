@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_worker_startup.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 void start_worker_02a000(IocpWorker& worker,IocpWorkerFunction* function,std::uint32_t stack,
     WorkerStartupApi& api,Api& errors,WorkerStartupEffects& effects){
     const auto entry_event=api.create_event(0,1,0,0);
@@ -46,11 +48,11 @@ std::uint32_t worker_entry_02a4a0(IocpWorkerFunction& function,WorkerStartupApi&
     return 0;
 }
 void WorkerStartupEffects::start_worker_02a000(IocpWorker& worker,IocpWorkerFunction* function,std::uint32_t stack){
-    socket_recovered::start_worker_02a000(worker,function,stack,api_,errors_,*this);
+    socket::start_worker_02a000(worker,function,stack,api_,errors_,*this);
 }
-std::uintptr_t RecoveredWorkerStartupEffects::begin_thread_05e8e0(std::uintptr_t security,std::uint32_t stack,
+std::uintptr_t WorkerStartupEffects::begin_thread_05e8e0(std::uintptr_t security,std::uint32_t stack,
     std::uintptr_t entry,IocpWorkerFunction* argument,std::uint32_t flags,std::uint32_t& id){
-    return threads_recovered::begin_thread_05e8e0(reinterpret_cast<void*>(security),stack,
+    return threads::begin_thread_05e8e0(reinterpret_cast<void*>(security),stack,
         entry,reinterpret_cast<std::uintptr_t>(argument),flags,&id,threads_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/control.h"
 #include "preloader_l/runtime/application.hpp"
 #include "preloader_l/platform/hook_unload_guard.hpp"

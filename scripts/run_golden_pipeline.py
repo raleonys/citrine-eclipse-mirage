@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Local Golden orchestration. Never publishes, and never substitutes fixture targets."""
 import argparse
 import hashlib

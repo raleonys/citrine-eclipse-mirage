@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/protocol/messages.hpp"
 #include "preloader_l/handlers/handlers.hpp"
@@ -5,11 +7,11 @@
 #include <string_view>
 #include <vector>
 
-namespace preloader_l::xml_recovered {
+namespace preloader_l::xml {
 // Memory-only default constructor path of original XMLPrinter019b0. The FILE*
 // writer, arbitrary constructor depth and other XMLVisitor entry points are not
 // claimed here. Names/values follow original NUL-terminated string semantics.
-class MemoryPrinter final : public messages_recovered::XmlPrinter {
+class MemoryPrinter final : public messages::XmlPrinter {
 public:
     void open(std::string_view name) override {open_element(name,false);}
     void attribute(std::string_view name,std::string_view value) override;
@@ -35,14 +37,14 @@ private:
 class AttributeReader {
 public:
     virtual ~AttributeReader()=default;
-    virtual const char* attribute(handlers_recovered::Request,const char*)=0;
+    virtual const char* attribute(handlers::Request,const char*)=0;
 };
 // Concrete serialization bridge for the seven business handlers. Request XML
 // parsing/ownership remains a mandatory reader, not a guessed parser.
-class HandlerWriter final : public handlers_recovered::Xml {
+class HandlerWriter final : public handlers::Xml {
 public:
     HandlerWriter(MemoryPrinter& printer,AttributeReader& reader):printer_(printer),reader_(reader){}
-    const char* attribute_002cc0(handlers_recovered::Request request,const char* key) override {
+    const char* attribute_002cc0(handlers::Request request,const char* key) override {
         return reader_.attribute(request,key);
     }
     void open_004080(const char* name,bool compact) override {printer_.open_element(name,compact);}
@@ -52,4 +54,4 @@ private:
     MemoryPrinter& printer_;
     AttributeReader& reader_;
 };
-} // namespace preloader_l::xml_recovered
+} // namespace preloader_l::xml

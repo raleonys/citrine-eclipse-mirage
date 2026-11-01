@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/asio_service.hpp"
 #include "preloader_l/platform/execution_windows.hpp"
 #include <asio.hpp>
@@ -17,7 +19,7 @@ template<class F>bool until(F fn,std::chrono::milliseconds timeout=3000ms){auto 
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> created{0},timeouts{0},requests{0},next_requests{0},limits{0};
     std::atomic<bool> large_first_greeting{false};
-    struct Handler final:server_recovered::Handler {
+    struct Handler final:server::Handler {
         Factory& f;unsigned id;
         Handler(Factory& factory,unsigned number):f(factory),id(number){}
         void reset_02bc70()override{}
@@ -31,20 +33,20 @@ struct Factory final:net::HandlerFactory {
             std::string result(request);result.push_back('\0');return result;
         }
     };
-    std::unique_ptr<server_recovered::Handler> create()override{return std::make_unique<Handler>(*this,++created);}
+    std::unique_ptr<server::Handler> create()override{return std::make_unique<Handler>(*this,++created);}
     void error(std::string_view operation,std::exception_ptr error)noexcept override {
         if(operation=="session timeout")++timeouts;
         try{if(error)std::rethrow_exception(error);}catch(const std::length_error&){++limits;}catch(...){}
     }
 };
 struct Harness {
-    Factory factory;execution_recovered::MutexState mutex{};
+    Factory factory;execution::MutexState mutex{};
     std::uint8_t a=0,b=0,c=0;std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
+    execution::WindowsPlatform platform{+[](int){throw std::runtime_error("thread error");}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{a,b,c},frequency,platform};
+    execution::Execution execution{mutex,{a,b,c},frequency,platform};
     net::AsioService service;
-    explicit Harness(net::SessionPolicy policy={}):service(factory,execution,port,a,policy){execution_recovered::initialize_mutex_04a698(mutex,2);service.start();}
+    explicit Harness(net::SessionPolicy policy={}):service(factory,execution,port,a,policy){execution::initialize_mutex_04a698(mutex,2);service.start();}
 };
 struct Peer {
     asio::io_context io;asio::ip::tcp::socket socket{io};std::string input;

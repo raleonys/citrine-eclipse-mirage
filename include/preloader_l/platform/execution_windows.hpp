@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/execution.hpp"
 
-namespace preloader_l::execution_recovered {
+namespace preloader_l::execution {
 // Error raiser is a required ABI dependency, not an invented errno mapping.
 using ThreadErrorRaiser = void(*)(int observed_error_index);
 class WindowsPlatform final : public Platform {

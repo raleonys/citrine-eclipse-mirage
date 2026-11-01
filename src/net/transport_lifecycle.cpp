@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_lifecycle.hpp"
 #include <new>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 void release(Control* control){
     if(control && control->strong.fetch_sub(1,std::memory_order_seq_cst)==1){
@@ -71,11 +73,11 @@ void destroy_024db0(SocketObject& object,LifecycleEffects& effects){
 }
 void LifecycleRuntime::initialize_0211b0(AcceptorState& state){
     if(&state!=&object_.state)throw UnsupportedInput("LifecycleRuntime is bound to one socket state");
-    (void)socket_recovered::initialize_0211b0(object_,context_,effects_);
+    (void)socket::initialize_0211b0(object_,context_,effects_);
 }
 void LifecycleRuntime::reset_cancellation_0237f0(AcceptorState& state){
     if(&state!=&object_.state)throw UnsupportedInput("LifecycleRuntime is bound to one socket state");
     replace_owner_0237f0(object_.cancellation,0,factory_);
 }
 void LifecycleRuntime::destroy_socket_024db0(){destroy_024db0(object_,effects_);}
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/asio_service.hpp"
 #include "preloader_l/net/handler_policy.hpp"
 #include "preloader_l/platform/execution_windows.hpp"
@@ -20,7 +22,7 @@ struct Factory final:net::HandlerFactory {
     std::mutex mutex;std::condition_variable cv;bool released=false;
     std::set<std::thread::id> threads;std::atomic<unsigned> active{0},peak{0},calls{0},overloads{0};
     void release(){std::lock_guard lock(mutex);released=true;cv.notify_all();}
-    struct Handler final:server_recovered::Handler {
+    struct Handler final:server::Handler {
         Factory& owner;unsigned expected=0;
         explicit Handler(Factory& f):owner(f){}
         void reset_02bc70()override{}
@@ -36,7 +38,7 @@ struct Factory final:net::HandlerFactory {
             std::string response(request);response.push_back('\0');return response;
         }
     };
-    std::unique_ptr<server_recovered::Handler> create()override{return std::make_unique<Handler>(*this);}
+    std::unique_ptr<server::Handler> create()override{return std::make_unique<Handler>(*this);}
     void error(std::string_view,std::exception_ptr failure)noexcept override {
         try{if(failure)std::rethrow_exception(failure);}catch(const std::exception& e){if(std::string_view(e.what()).find("Handler queue is full")!=std::string_view::npos)++overloads;}catch(...){}
     }
@@ -55,10 +57,10 @@ struct Peer {
 };
 void run() {
     Factory factory;
-    execution_recovered::MutexState mutex{};execution_recovered::initialize_mutex_04a698(mutex,2);
+    execution::MutexState mutex{};execution::initialize_mutex_04a698(mutex,2);
     std::uint8_t a=0,b=0,c=0;std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform(+[](int){throw std::runtime_error("thread error");});
-    auto frequency=platform.query_performance_frequency();execution_recovered::Execution execution(mutex,{a,b,c},frequency,platform);
+    execution::WindowsPlatform platform(+[](int){throw std::runtime_error("thread error");});
+    auto frequency=platform.query_performance_frequency();execution::Execution execution(mutex,{a,b,c},frequency,platform);
     net::SessionPolicy policy;policy.max_sessions=256;
     net::AsioService service(factory,execution,port,a,policy);
     struct Unblock{Factory& f;~Unblock(){f.release();}} unblock{factory};

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 # Host-Python infrastructure tests run on Linux as well as native Windows.
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 add_test(NAME infrastructure_golden_pe COMMAND "${Python3_EXECUTABLE}" -B

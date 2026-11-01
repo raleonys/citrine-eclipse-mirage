@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_receive_buffer.hpp"
 #include <functional>
@@ -7,7 +9,7 @@
 #include <vector>
 
 namespace buffer_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 inline unsigned checks=0;
 inline void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}
 struct Terminal:std::runtime_error {unsigned kind;explicit Terminal(unsigned n):std::runtime_error("synthetic buffer terminal"),kind(n){}};

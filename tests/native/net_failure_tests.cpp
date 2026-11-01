@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include <atomic>
 #include <cstddef>
 #include <cstdlib>
@@ -88,7 +90,7 @@ struct HandlerFailure{};
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> creates{0},errors{0},dispatch_errors{0};
     std::atomic<bool> null_handler{false};
-    struct Handler final:server_recovered::Handler {
+    struct Handler final:server::Handler {
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
         std::string process_message_033d70(std::string_view input)override {
@@ -97,7 +99,7 @@ struct Factory final:net::HandlerFactory {
             std::string response(input);response.push_back('\0');return response;
         }
     };
-    std::unique_ptr<server_recovered::Handler> create()override {
+    std::unique_ptr<server::Handler> create()override {
         ++creates;return null_handler.load()?nullptr:std::make_unique<Handler>();
     }
     void error(std::string_view op,std::exception_ptr)noexcept override {
@@ -106,13 +108,13 @@ struct Factory final:net::HandlerFactory {
 };
 struct Context {
     Factory factory;
-    execution_recovered::MutexState mutex{};
+    execution::MutexState mutex{};
     std::uint8_t ready=0,second=0,third=0;
     std::uint16_t port=0;
-    execution_recovered::WindowsPlatform platform{+[](int){throw HandlerFailure{};}};
+    execution::WindowsPlatform platform{+[](int){throw HandlerFailure{};}};
     std::int64_t frequency=platform.query_performance_frequency();
-    execution_recovered::Execution execution{mutex,{ready,second,third},frequency,platform};
-    Context(){execution_recovered::initialize_mutex_04a698(mutex,2);}
+    execution::Execution execution{mutex,{ready,second,third},frequency,platform};
+    Context(){execution::initialize_mutex_04a698(mutex,2);}
 };
 struct Peer {
     asio::io_context io;Tcp::socket socket{io};std::string pending;

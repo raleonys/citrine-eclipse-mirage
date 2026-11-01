@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_native.hpp"
 #include <cstring>
 #include <limits>
 #include <memory>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 static_assert(sizeof(Socket)==8 && sizeof(SOCKET)==8);
 static_assert(sizeof(wchar_t)==2 && sizeof(DWORD)==4);
 static_assert(AF_INET==2 && AF_INET6==23 && sizeof(sockaddr_storage)==128);
@@ -54,4 +56,4 @@ std::int32_t NativeApi::select_write(Socket socket,std::int32_t nfds) {
     fd_set write{};write.fd_count=1;write.fd_array[0]=static_cast<SOCKET>(socket);
     return imports_.select_write(nfds,nullptr,&write,nullptr,nullptr);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket
