@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "entries": {
+    "scripts/check_repository_contract.py": [
+      "repository structure and script ownership enforcement",
+      "documentation/governance preservation and release-contract enforcement",
+      "source-health/architecture and subsystem policy diagnostics"
+    ]
+  }
+}

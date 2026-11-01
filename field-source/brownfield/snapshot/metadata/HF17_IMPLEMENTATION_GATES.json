@@ -1,0 +1,33 @@
+{
+  "B_ownership": "EXCLUDED_RESEARCH_ONLY",
+  "all_8_legacy_hf16_release_qa_shards_migrated": false,
+  "candidate_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 17",
+  "canonical_library_pointer_updated": false,
+  "canonical_release_unchanged": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+  "donor_conditional_hook_registration": "OPEN_NOT_EXACT_PARITY",
+  "game_collegefb27": "NOT_RUN",
+  "game_madden27": "NOT_RUN",
+  "golden_pipeline": "NOT_RUN",
+  "governance_first": {
+    "G0": "PENDING_MASTER_2026_10_17_2_REVALIDATION",
+    "G1": "PENDING_REVALIDATION",
+    "G2": "PENDING_FULL_AUTHORITATIVE_8_OF_8_WORKING_AND_FRESH",
+    "G3": "NOT_APPLICABLE_HOTFIX_RELEASE",
+    "G4": "AUTHORIZED_PENDING_G2_AND_VERIFIED_COMMIT"
+  },
+  "governance_revision": "2026-10-17.2",
+  "hf17_g1_contract": "scripts/check_hf17_release_contract.py",
+  "native_11_hook_transaction": "NOT_RUN",
+  "production_shipping_dll_built": false,
+  "promotion": "BLOCKED_BY_NATIVE_GAME_AND_RELEASE_ACCEPTANCE",
+  "protected_hf16_release_contract": "scripts/check_release_contract.py",
+  "release_cpp_syntax_msvc": "NOT_RUN",
+  "release_msbuild": "NOT_RUN",
+  "release_type": "HOTFIX_RELEASE",
+  "rollback_teardown_11_hooks": "NOT_RUN",
+  "runtime_implementation_scope": "11 real MinHook target install candidates (7 inherited + 4 new); new optional behavior gated by Config2",
+  "source_parent_sha256": "9b380e4d953dffd03ace8b762e1199f11ca8ca4f373d86a0c9b3c074d647082c",
+  "target_official_filename": "preloader_l_3.2.5_SQUALERIS_HOTFIX_17.zip",
+  "utf8_ansi_crt_error_behavior": "PENDING_WINDOWS_ACCEPTANCE",
+  "win32_createprocess_folderpath_behavior": "NOT_RUN"
+}

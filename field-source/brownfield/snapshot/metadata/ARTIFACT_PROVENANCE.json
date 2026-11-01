@@ -1,0 +1,52 @@
+{
+  "acceptance": "HF18_G0_G1_INTEGRATION_IN_PROGRESS_NOT_G2_G4_ACCEPTED",
+  "correction_scope": [
+    "HF17_OPTIONAL_FOUR_HOOK_SOURCE_INTEGRATION",
+    "G0_G4_GOVERNANCE_FIRST_RELEASE_IDENTITY_CONVERGENCE"
+  ],
+  "current_artifact_sha256": null,
+  "hf08_functional_source_sha256": "6358cd413b5c6c8c7956f7559c2921677b39b864b80ed94312ee961aa18038f9",
+  "hf09_source_parent_sha256": "197ab6bf0f95302835547c69d265c312df396da463b90ca0a128ef59bc6e9d55",
+  "hf10_source_parent_sha256": "f23eb4dd9da31ce2e6973a75fff42cce20f498c2c77e98acc150d2f816790bf9",
+  "historical_final_baseline": {
+    "preserved": true,
+    "sha256": "6d4d6e951155f81ed4b2affa37a6f10bf75aa015724e640147443305cb316981"
+  },
+  "historical_hf16_published_provenance": {
+    "acceptance": "IDS08_QA_8_OF_8_BOTH_WINDOWS_IDS07_NATIVE_GOLDEN_AND_IDS08_WIN_PATH4_SMOKE_USER_REPORTED",
+    "correction_scope": [
+      "IDS05_08_ASIO_PRODUCTION_LIFECYCLE_TIMEOUT_AND_LEGACY_RETIREMENT",
+      "IDS08_FULL_8_SHARD_QA_AND_FRESH_EXTRACT_CONVERGENCE",
+      "HF16_DOCS_QA_AND_GOVERNANCE_SYNCHRONIZATION"
+    ],
+    "immediate_parent": {
+      "class": "PUBLISHED_HOTFIX_RELEASE",
+      "identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 15",
+      "sha256": "d396109c90b7054fa592f4143a9aa511c687eaff879fc1c418051236e26f6235"
+    },
+    "official_filename": "preloader_l_3.2.5_SQUALERIS_HOTFIX_16.zip",
+    "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+    "release_parent_technical_sha256": "d396109c90b7054fa592f4143a9aa511c687eaff879fc1c418051236e26f6235",
+    "technical_source_parent": "preloader_l_3.2.5_SQUALERIS_HOTFIX_15.zip"
+  },
+  "identity_immutable": true,
+  "immediate_parent": {
+    "class": "HOTFIX_RELEASE",
+    "identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 18",
+    "sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0"
+  },
+  "official_filename": "preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "release": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "release_name_modifier": "NONE",
+  "release_parent_technical_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+  "release_type": "HOTFIX_RELEASE",
+  "schema": "dll-rd-football.artifact-provenance.v1",
+  "source_lineage": {
+    "hf19_delta": "TWO_INHERITED_OWNERSHIP_RETRY_FIXES_AND_ACTIVE_RELEASE_METADATA_DOCS",
+    "historical_hf18": "IMMUTABLE_LIBRARY_CANONICAL_PARENT",
+    "official_published_parent_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0"
+  },
+  "supersedes_artifacts": [],
+  "technical_source_parent": "preloader_l_3.2.5_SQUALERIS_HOTFIX_18.zip"
+}

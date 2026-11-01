@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "checkpoint": "W10 project-wide filename/path migration",
+  "baseline_artifact": "preloader_l_3.2.3_MELOTRIX_PREAUDIT_WAVE7_ACHIEVEMENT_COHERENCE_SOURCE_CANDIDATE.zip",
+  "baseline_zip_sha256": "2436b2dd97f3bb65d6be7b53f680746e71dac915a2f771c60aa4175f549101e9",
+  "baseline_external_acceptance": "USER_CONFIRMED_PASS_NATIVE_CRT_COLLEGEFB27_MADDEN27",
+  "rename_count": 288,
+  "artifact_hashes": {
+    "review": "4279bcbaf91ee463a6fdaca5bc0de0632acd0cb8df06340cb76c4eaa81aa745f",
+    "map_json": "5573627b9402daac818ec5909f3a32b8db12a93d325e30aa4ebf8b8e598c4000",
+    "map_csv": "052e3f37150c935d3cb414e1887ce4c6b2c978cc6f3c25866f615b9c2559e488",
+    "hash_ledger": "cec2d5e0f2b4c71e76f0eaea4cd2112d625467f55896a4a13b8a7fca82da7c20"
+  },
+  "content_relation_counts": {
+    "BYTE_IDENTICAL": 59,
+    "REFERENCE_REBIND_ONLY": 224,
+    "W10_GOVERNANCE_DELTA": 5
+  },
+  "runtime_semantic_delta": "NONE_INTENDED",
+  "source_qa": "PASS_8_OF_8_WORKING_AND_FRESH_EXTRACT",
+  "w10_external_acceptance": "PENDING_EXACT_W10_RERUN",
+  "historical_records_rewritten": false,
+  "authoritative_files": [
+    "metadata/FILENAME_MIGRATION_REVIEW.xlsx",
+    "metadata/FILENAME_MIGRATION_MAP.json",
+    "metadata/FILENAME_MIGRATION_MAP.csv",
+    "metadata/FILENAME_MIGRATION_HASH_LEDGER.csv",
+    "scripts/check_filename_migration.py"
+  ],
+  "historical_narrative_evidence": "IMMUTABLE_LIBRARY_EVIDENCE_NOT_REQUIRED_IN_CURRENT_SOURCE_TREE",
+  "origin_release": "3.2.3 MELOTRIX"
+}

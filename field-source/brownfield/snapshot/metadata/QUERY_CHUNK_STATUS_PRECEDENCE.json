@@ -1,0 +1,16 @@
+{
+  "contract_scope": "CURRENT_RELEASE_INDEPENDENT",
+  "introduced_in_release": "3.2.1 CERVRAX",
+  "route": "QueryChunkStatus",
+  "active_runtime_outcome": "NO_RESPONSE_REQUIRED",
+  "normal_xml_response": false,
+  "session_continues": true,
+  "superseded_claim": "OriginSDK Phase03 donor route attribution to QueryContentResponse",
+  "superseded_disposition": "SUPERSEDED_ERRONEOUS_FUNCTION_BOUNDARY_ATTRIBUTION",
+  "boundary_evidence": {
+    "terminal_handler": "0x180030EB0",
+    "separate_query_content_function": "0x180030EE0"
+  },
+  "historical_archives_rewritten": false,
+  "consumer_typed_contract_evidence_superseded": false
+}

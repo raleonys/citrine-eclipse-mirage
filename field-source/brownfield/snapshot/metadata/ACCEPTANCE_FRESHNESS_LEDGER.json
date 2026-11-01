@@ -1,0 +1,239 @@
+{
+  "entries": [
+    {
+      "acceptance_class": "WINDOWS_PRODUCTION_GOLDEN",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "PENDING_HF18_FINAL_SOURCE_REVIEW",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    },
+    {
+      "acceptance_class": "WINDOWS_NATIVE",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "PENDING_HF18_FINAL_SOURCE_REVIEW",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    },
+    {
+      "acceptance_class": "CRT_TRANSITION",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "HF17_CHANGED_RUNTIME_HOOK_GRAPH",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    },
+    {
+      "acceptance_class": "DEBUG_BUILD",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "HF17_CHANGED_RUNTIME_HOOK_GRAPH",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    },
+    {
+      "acceptance_class": "COLLEGEFB27_GAME_NETWORK",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "HF17_CHANGED_RUNTIME_HOOK_GRAPH",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    },
+    {
+      "acceptance_class": "MADDEN27_GAME_NETWORK",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "HF17_CHANGED_RUNTIME_HOOK_GRAPH",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    },
+    {
+      "acceptance_class": "SOURCE_QA_8_OF_8",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "HF17_CHANGED_RUNTIME_HOOK_GRAPH",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    },
+    {
+      "acceptance_class": "FRESH_EXTRACT_SOURCE_QA_8_OF_8",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "HF17_CHANGED_RUNTIME_HOOK_GRAPH",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    },
+    {
+      "acceptance_class": "WIN32_OPTIONAL_HOOK_LIFECYCLE",
+      "binary_sha256": null,
+      "carry_forward": null,
+      "evidence_reference": null,
+      "freshness": "HF17_CHANGED_RUNTIME_HOOK_GRAPH",
+      "invalidation_triggers": [
+        "HF17 source or build graph change",
+        "new candidate ZIP SHA",
+        "native/runtime test rerun required"
+      ],
+      "source_sha256": "PENDING_EXACT_SEALED_HF17_SOURCE_SHA",
+      "status": "PENDING"
+    }
+  ],
+  "exact_immediate_technical_parent_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+  "hf18_fix01_bound_receipts": {
+    "crt_golden": "PASS_18_OF_18_BOUNDED_TEST_ONLY",
+    "exact_technical_source_sha256": "34430997d336903582aabace70f6a760282ff088a05c66d9068393b85dbdf907",
+    "game": "NOT_RUN",
+    "retention_m0_m3": "PASS_176_OF_176_BOUNDED_TEST_ONLY",
+    "source_or_binary_hash_carry_forward_to_new_final": "NOT_AUTOMATIC"
+  },
+  "historical_evidence_not_accepted_as_fresh": true,
+  "historical_hf16_acceptance_entries": [
+    {
+      "acceptance_class": "WINDOWS_PRODUCTION_GOLDEN",
+      "carry_forward_source_and_rationale": "HF16 source differs from IDS07 only in docs, metadata, QA scripts; shipping CMake/inputs/exports/vendors/resources/tools byte-identical; recheck exact package",
+      "evidence_reference": "2026-10-15 IDS07 native Windows MSVC build logs; shipping sha256 5f442bc1fd740e3bac907d67142be50a50ce5dfce9120796c0e4a0760179d939",
+      "freshness": "HF16_BINARY_BUILD_INPUTS_BYTE_IDENTICAL_IDS07",
+      "historical_only_not_hf17_pass": true,
+      "invalidation_triggers": [
+        "production code, ABI, linker, build orchestration, vendor, Golden policy, resources changes"
+      ],
+      "status": "PASS_CARRIED_FORWARD",
+      "validation_owner": "USER_WINDOWS_MSVC"
+    },
+    {
+      "acceptance_class": "DEBUG_BUILD",
+      "carry_forward_source_and_rationale": "HF16 source differs from IDS07 only in docs, metadata, QA scripts; shipping CMake/inputs/exports/vendors/resources/tools byte-identical; recheck exact package",
+      "evidence_reference": "2026-10-15 IDS07 native Windows MSVC build logs; shipping sha256 5f442bc1fd740e3bac907d67142be50a50ce5dfce9120796c0e4a0760179d939",
+      "freshness": "HF16_BINARY_BUILD_INPUTS_BYTE_IDENTICAL_IDS07",
+      "historical_only_not_hf17_pass": true,
+      "invalidation_triggers": [
+        "production code, ABI, linker, build orchestration, vendor, Golden policy, resources changes"
+      ],
+      "status": "PASS_CARRIED_FORWARD",
+      "validation_owner": "USER_WINDOWS_MSVC"
+    },
+    {
+      "acceptance_class": "WINDOWS_NATIVE",
+      "carry_forward_source_and_rationale": "HF16 source differs from IDS07 only in docs, metadata, QA scripts; shipping CMake/inputs/exports/vendors/resources/tools byte-identical; recheck exact package",
+      "evidence_reference": "2026-10-15 IDS07 native Windows MSVC build logs; shipping sha256 5f442bc1fd740e3bac907d67142be50a50ce5dfce9120796c0e4a0760179d939",
+      "freshness": "HF16_BINARY_BUILD_INPUTS_BYTE_IDENTICAL_IDS07",
+      "historical_only_not_hf17_pass": true,
+      "invalidation_triggers": [
+        "production code, ABI, linker, build orchestration, vendor, Golden policy, resources changes"
+      ],
+      "status": "PASS_CARRIED_FORWARD",
+      "validation_owner": "USER_WINDOWS_MSVC"
+    },
+    {
+      "acceptance_class": "CRT_TRANSITION",
+      "carry_forward_source_and_rationale": "HF16 source differs from IDS07 only in docs, metadata, QA scripts; shipping CMake/inputs/exports/vendors/resources/tools byte-identical; recheck exact package",
+      "evidence_reference": "2026-10-15 IDS07 native Windows MSVC build logs; shipping sha256 5f442bc1fd740e3bac907d67142be50a50ce5dfce9120796c0e4a0760179d939",
+      "freshness": "HF16_BINARY_BUILD_INPUTS_BYTE_IDENTICAL_IDS07",
+      "historical_only_not_hf17_pass": true,
+      "invalidation_triggers": [
+        "production code, ABI, linker, build orchestration, vendor, Golden policy, resources changes"
+      ],
+      "status": "PASS_CARRIED_FORWARD",
+      "validation_owner": "USER_WINDOWS_MSVC"
+    },
+    {
+      "acceptance_class": "WINDOWS_PATH_LOCALE",
+      "evidence_reference": "2026-10-15 user IDS08_WINDOWS_PATH_FIX01_RESULTS.zip; exact IDS08 matching source hashes",
+      "freshness": "SOURCE_LINKED_IDS08_WIN_FIX01_4_OF_4",
+      "historical_only_not_hf17_pass": true,
+      "invalidation_triggers": [
+        "path/locale policy source or test harness changes"
+      ],
+      "status": "PASS_CARRIED_FORWARD",
+      "validation_owner": "USER_WINDOWS_MSVC"
+    },
+    {
+      "acceptance_class": "COLLEGEFB27_GAME_NETWORK",
+      "carry_forward": null,
+      "evidence_reference": "User reports normal game behavior; no instrumented route or ACK trace",
+      "freshness": "USER_REPORTED_SMOKE_ONLY_NO_INSTRUMENTED_EXACT_GAME_MATRIX",
+      "historical_only_not_hf17_pass": true,
+      "invalidation_triggers": [
+        "consumer/runtime changes"
+      ],
+      "status": "PENDING",
+      "validation_owner": "USER_GAME_ACCEPTANCE"
+    },
+    {
+      "acceptance_class": "MADDEN27_GAME_NETWORK",
+      "carry_forward": null,
+      "evidence_reference": "User reports normal game behavior; no instrumented route or ACK trace",
+      "freshness": "USER_REPORTED_SMOKE_ONLY_NO_INSTRUMENTED_EXACT_GAME_MATRIX",
+      "historical_only_not_hf17_pass": true,
+      "invalidation_triggers": [
+        "consumer/runtime changes"
+      ],
+      "status": "PENDING",
+      "validation_owner": "USER_GAME_ACCEPTANCE"
+    }
+  ],
+  "historical_hf17_ledger_reference": "PUBLISHED_LIBRARY_HF17_IMMUTABLE",
+  "release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "schema": "dll-rd-football.acceptance-freshness-ledger.v1",
+  "source_qa": {
+    "fresh_extract": "PENDING_G4_EXACT_SEALED_ZIP_8_OF_8",
+    "status": "PENDING_G4_8_OF_8"
+  },
+  "status_vocabulary": [
+    "PENDING",
+    "PASS_FRESH",
+    "PASS_CARRIED_FORWARD",
+    "FAIL",
+    "NOT_APPLICABLE",
+    "BLOCKED"
+  ]
+}

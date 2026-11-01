@@ -1,0 +1,335 @@
+{
+  "authority": "EXTERNAL_SIGNOFF_REQUIRED_FOR_RELEASE",
+  "behavioral_step": "test_regressions.py",
+  "hf18_migration_note": "ACTIVE_RELEASE_CONTRACT_VERSION_INDEPENDENT; HF16_HF17_HISTORY_PRESERVED; HF19_G0_G2_G4_PENDING",
+  "inherited_lineage_role": "SOURCE_ONLY_UNREVIEWED_HISTORICAL_AUTHORITATIVE_SET",
+  "inherited_step_count": 64,
+  "inherited_step_order_sha256": "56525ec8f21afa79ef40ceab8c5f67deeec65710cb2d0243ca2804afd2fa9971",
+  "release_identity": null,
+  "review_blockers": [],
+  "schema": "universal-release-qa-catalog.v1",
+  "scope": "IDS_QA_ONLY_NOT_AUTHORIZED",
+  "shard_count": 8,
+  "steps": [
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_release_version_policy.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_active_release_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_hf17_source_cleanup.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_falcion_golden_cleaning.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_golden_protocol_policy.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_data_footprint.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_active_filename_policy.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_hf17_lutravex_golden_naming.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_pe_metadata_tools.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_hf17_release_publication.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_shipping_build_policy.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_minhook_architecture.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_connect_redirect.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_resource_lifecycle.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_semantic_edges.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_hf17_release_assurance.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_achievement_coherence.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_achievement_delivery.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_remediation.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_minhook_shipping_policy.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_vendored_minhook.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_minhook_early_timing_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_minhook_lifetime_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_inherited_mustorin_remediations.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_repository_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_metadata_ownership.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "verify_tinyxml2_exact_import.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_human_launcher_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_human_launcher_ui.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_current_identity_hygiene.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_hf17_documentation_migration.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_filename_migration.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_crt_transition.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_crt_compatibility_dependencies.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_production_source_graph.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_crt_runtime_policy.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_macro_hygiene.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_hook_terminal_policy.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_registry_teardown.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_environment_restore.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_xml_grammar.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_xml_depth.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_fixset.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_avatar_path.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_auth_code.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_unit_syntax.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_production_syntax.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_portable_source_syntax.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_tinyxml2_target_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_tinyxml2_target_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_xml_single_engine_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_xml_semantic_dom_portable.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_tinyxml2_migration_contract.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_presence_content_entitlements.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_regressions.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_hard_cap.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_model_settings_semantic_abi.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_model_settings_semantic_runtime.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_model_worker_semantic_abi.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_native_worker_acceptance_surface.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_hf17_native_config_acceptance_surface.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_model_config_semantic_abi.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "test_model_config_semantic_runtime.py"
+    },
+    {
+      "migration": "GENERAL_CHECK",
+      "retain_in_authoritative_universe": true,
+      "script": "check_manifest.py"
+    }
+  ]
+}

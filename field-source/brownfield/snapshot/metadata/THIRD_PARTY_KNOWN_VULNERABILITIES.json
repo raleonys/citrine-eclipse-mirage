@@ -1,0 +1,172 @@
+{
+  "schema": "dll-rd-football.third-party-known-vulnerabilities.v1",
+  "name": "THIRD_PARTY_KNOWN_VULNERABILITIES",
+  "date_checked": "2026-10-13",
+  "scope": "ALL_REGISTERED_THIRD_PARTY_DEPENDENCIES; NOT LIMITED_TO_TINYXML2",
+  "owner": "DEPENDENCY_GOVERNANCE",
+  "release_authority": "CURRENT_TRACKING_ONLY_NOT_A_WAIVER_NOT_PUBLICATION_AUTHORIZATION",
+  "record_status": "ACTIVE",
+  "dependency_records": [
+    {
+      "name": "TinyXML2",
+      "repository": "https://github.com/leethomason/tinyxml2",
+      "pinned_commit": "8224e427b655b83dae5e2298f1e6919523a78737",
+      "usage": "SHIPPING_LINKED",
+      "vendor_policy": "UPSTREAM_AS_IS_NO_LOCAL_PATCH",
+      "issues": [
+        {
+          "finding_id": "TINYXML2-A02-A",
+          "status": "OPEN",
+          "classification": "KNOWN_UPSTREAM_DATA_INTEGRITY_DEFECT",
+          "upstream_issue": "https://github.com/leethomason/tinyxml2/issues/1082",
+          "upstream_pr": "https://github.com/leethomason/tinyxml2/pull/1086",
+          "observed": "XML_SUCCESS; decoded text A&Bmxyz;C (GCC and Clang on current source snapshot)",
+          "release_impact": "REVIEW_REQUIRED_NO_WAIVER",
+          "current_disposition": "TRACK_UPSTREAM_UNPATCHED",
+          "fix_ready": false,
+          "risk_boundary": "Documented data-integrity defect; exact LSX-route exploitability not established",
+          "validation_required": [
+            "exact-source reproducer",
+            "working-tree source 8/8",
+            "fresh-extract source 8/8",
+            "Windows native CRT Golden Debug and actual Consumers"
+          ]
+        },
+        {
+          "finding_id": "TINYXML2-A02-B",
+          "status": "OPEN",
+          "classification": "KNOWN_INPUT_VALIDATION_LIMITATION",
+          "upstream_issue": "NO_EXACT_ISSUE_IDENTIFIED_FOR_FULL_SCOPE",
+          "upstream_pr": null,
+          "observed": "Some undefined named entities or invalid numeric refs are accepted or retained as literals, including unused attributes; strict XML 1.0 acceptance is not guaranteed",
+          "release_impact": "REVIEW_REQUIRED_NO_WAIVER",
+          "current_disposition": "TRACK_UPSTREAM_UNPATCHED",
+          "fix_ready": false,
+          "risk_boundary": "Input validation discrepancy; exploitability in relevant handler is not demonstrated",
+          "validation_required": [
+            "exact-source reproducer",
+            "working-tree source 8/8",
+            "fresh-extract source 8/8",
+            "Windows native CRT Golden Debug and actual Consumers"
+          ]
+        }
+      ],
+      "upstream_followups": [
+        "https://github.com/leethomason/tinyxml2/issues/1082",
+        "https://github.com/leethomason/tinyxml2/pull/1086"
+      ]
+    },
+    {
+      "name": "MinHook",
+      "repository": "https://github.com/TsudaKageyu/minhook",
+      "pinned_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+      "usage": "SHIPPING_LINKED",
+      "vendor_policy": "PINNED_UPSTREAM_BUILD_TREE_SAFE_FREEZE_PROJECT_PATCH",
+      "issues": [],
+      "review_status": "NO_SPECIFIC_VERIFIED_OPEN_UPSTREAM_VULNERABILITY_IN_CURRENT_EVIDENCE; NOT_A_CLEAN_BILL_OF_HEALTH",
+      "upstream_followups": [
+        "https://github.com/TsudaKageyu/minhook/issues",
+        "https://github.com/TsudaKageyu/minhook/pulls"
+      ]
+    },
+    {
+      "name": "TAO PEGTL",
+      "repository": "https://github.com/taocpp/PEGTL",
+      "pinned_commit": "3b075432e94f6f906425350b43d03cd9cebfa4f1",
+      "version_label": "4.0.0 upstream main (C++20)",
+      "license_spdx": "BSL-1.0",
+      "usage": "SHIPPING_LINKED",
+      "vendor_policy": "UPSTREAM_AS_IS_NO_LOCAL_PATCH",
+      "contract": "metadata/DEPENDENCY_SOURCE_CONTRACT.json",
+      "issues": [],
+      "review_status": "NO_VERIFIED_OPEN_FINDING_RECORDED; UPSTREAM_ISSUE_CVE_AUDIT_NOT_PERFORMED; NO_CLEAN_BILL_OF_HEALTH",
+      "security_review_status": "PENDING_INDEPENDENT_UPSTREAM_ADVISORY_CVE_AND_AFFECTEDNESS_REVIEW",
+      "production_acceptance": "PENDING_WINDOWS_MSVC_NATIVE_GAME",
+      "nonsecurity_risks": [
+        "CXX20_AND_NATIVE_TYPED_PROJECTION_EQUIVALENCE_ACCEPTANCE_PENDING"
+      ],
+      "upstream_followups": [
+        "https://github.com/taocpp/PEGTL/issues",
+        "https://github.com/taocpp/PEGTL/releases"
+      ]
+    },
+    {
+      "name": "gulrak/filesystem",
+      "repository": "https://github.com/gulrak/filesystem",
+      "pinned_commit": "3812f8a6f31ed67d32272ac33fe2b85c6b2c947e",
+      "version_label": "1.5.17 WIP",
+      "license_spdx": "MIT",
+      "usage": "SHIPPING_PATH_ONLY",
+      "vendor_policy": "UPSTREAM_AS_IS_NO_LOCAL_PATCH",
+      "contract": "metadata/DEPENDENCY_SOURCE_CONTRACT.json",
+      "issues": [],
+      "review_status": "NO_VERIFIED_OPEN_FINDING_RECORDED; UPSTREAM_ISSUE_CVE_AUDIT_NOT_PERFORMED; NO_CLEAN_BILL_OF_HEALTH",
+      "security_review_status": "PENDING_INDEPENDENT_UPSTREAM_ADVISORY_CVE_AND_AFFECTEDNESS_REVIEW",
+      "production_acceptance": "PENDING_WINDOWS_MSVC_NATIVE_GAME",
+      "nonsecurity_risks": [
+        "UPSTREAM_WIP_REVISION; WINDOWS_UTF16_UNC_LONG_PATH_ACCEPTANCE_PENDING"
+      ],
+      "upstream_followups": [
+        "https://github.com/gulrak/filesystem/issues",
+        "https://github.com/gulrak/filesystem/releases"
+      ]
+    },
+    {
+      "name": "Standalone Asio",
+      "repository": "https://github.com/chriskohlhoff/asio",
+      "pinned_commit": "8806a6803cde7054c3049d3666d3ec36786568c5",
+      "version_label": "1.38.2",
+      "license_spdx": "BSL-1.0",
+      "usage": "VENDORED_TEST_ONLY",
+      "vendor_policy": "UPSTREAM_AS_IS_NO_LOCAL_PATCH",
+      "contract": "metadata/DEPENDENCY_SOURCE_CONTRACT.json",
+      "issues": [],
+      "review_status": "NO_VERIFIED_OPEN_FINDING_RECORDED; UPSTREAM_ISSUE_CVE_AUDIT_NOT_PERFORMED; NO_CLEAN_BILL_OF_HEALTH",
+      "security_review_status": "PENDING_INDEPENDENT_UPSTREAM_ADVISORY_CVE_AND_AFFECTEDNESS_REVIEW",
+      "production_acceptance": "NOT_SHIPPING_ASIO_BACKEND",
+      "nonsecurity_risks": [
+        "ASYNC_CANCEL_FAILED_CLOSE_AND_HANDLER_QUIESCENCE_ACCEPTANCE_PENDING"
+      ],
+      "upstream_followups": [
+        "https://github.com/chriskohlhoff/asio/issues",
+        "https://github.com/chriskohlhoff/asio/releases"
+      ]
+    }
+  ],
+  "on_new_issue": "Create one finding with exact upstream link, component/commit affectedness, separate severity confidence release impact, reproduction, remedy status, merge commit and acceptance tests; never silently waive.",
+  "update_policy": "USER_APPROVAL_REQUIRED_FOR_VENDOR_SOURCE_BYTES; UPSTREAM_MERGE_IS_A_TRIGGER_FOR_REVIEW_NOT_AUTOMATIC_UPDATE",
+  "release_gate": "OPEN_RECORDS_REQUIRE_EXPLICIT_IMPACT_DISPOSITION_AND_ACTIVE_QA; REGISTER_DOES_NOT_OVERRIDE_FAIL_CLOSED_GATES",
+  "prior_tinyxml2_detail": "Library:/DLL R&D Football/governance/KNOWN_VULNERABILITIES/KNOWN_VULNERABILITIES_TINYXML2.json",
+  "governance_identity": "KNOWN_VULNERABILITIES_THIRD_PARTY",
+  "governance_revision": 2,
+  "library_path": "/DLL R&D Football/governance/KNOWN_VULNERABILITIES/",
+  "source_mirror": "metadata/THIRD_PARTY_KNOWN_VULNERABILITIES.json",
+  "known_issue_policy": {
+    "scope": "ALL_VENDOR_DEPENDENCIES_ACTIVE_AND_FUTURE; INCLUDES_UNRESOLVED_UPSTREAM_SECURITY_AND_CORRECTNESS_ISSUES",
+    "facts_required": [
+      "upstream URL",
+      "affected pinned commit and inclusion in shipped graph",
+      "reproducer/evidence",
+      "severity vs confidence vs release impact separated",
+      "owner and disposition",
+      "fix commit when merged",
+      "qualifying test results",
+      "next review trigger"
+    ],
+    "finding_lifecycle": [
+      "OPEN",
+      "EVIDENCE_BLOCKED",
+      "REMEDIATION_READY",
+      "DEFERRED",
+      "CLOSED_FIXED",
+      "CLOSED_NO_CHANGE",
+      "SUPERSEDED",
+      "DUPLICATE"
+    ],
+    "no_issue_policy": "An empty issue list means no verified open issue currently recorded, not certification of no vulnerabilities",
+    "user_approval": "Third-party upgrades are never automatic. Track upstream merges and obtain explicit authorization for each source-byte change.",
+    "release_policy": "Risk review plus test acceptance required; unpatched open issues cannot be silently presented as solved, and registry does not authorize release."
+  },
+  "dependency_contract": "metadata/DEPENDENCY_SOURCE_CONTRACT.json",
+  "registry_coverage": "TINYXML2_MINHOOK_PLUS_HF12_PEGTL_FILESYSTEM_ASIO; LINKED_VS_TEST_ONLY_EXPLICIT"
+}

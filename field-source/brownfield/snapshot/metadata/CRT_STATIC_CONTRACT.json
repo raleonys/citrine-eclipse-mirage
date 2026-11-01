@@ -1,0 +1,42 @@
+{
+  "schema": "dllrnd.hf12.static-crt.v1",
+  "kind": "CURRENT_CONTRACT_WITH_LINEAGE",
+  "status": "USER_APPROVED_SOURCE_MIGRATION_WINDOWS_ACCEPTANCE_PENDING",
+  "authority_date": "2026-10-13",
+  "direct_parent_sha256": "756d40686569bc512c9e3d4d855b8f54d6d98948d16cc9a0c5855867959b0bd7",
+  "target_modes": {
+    "shipping": "/MT (MultiThreaded)",
+    "debug": "/MTd (MultiThreadedDebug)",
+    "native_and_release_hosts": "/MT",
+    "debug_hosts": "/MTd"
+  },
+  "rules": {
+    "forbid_legacy_comparison_entry": true,
+    "allow_manual_CRT_closure": false,
+    "require_default_linker_DLL_CRT_entry": true,
+    "forbid_dynamic_runtime_import_prefixes": [
+      "MSVCP",
+      "MSVCR",
+      "VCRUNTIME",
+      "UCRTBASE",
+      "API-MS-WIN-CRT-"
+    ],
+    "forbid_allocation_or_exception_across_public_ABI": true,
+    "require_byte_identical_upstream_vendor_files": true,
+    "require_exact_windows_PE_and_native_acceptance": true,
+    "require_8_of_8_twice_before_release": true,
+    "require_two_game_acceptance": true,
+    "no_Asio_shipping_or_ownership_mutation": true
+  },
+  "acceptance": {
+    "source_qa": "PENDING",
+    "Windows_MSVC_static_compile_link": "NOT_RUN",
+    "Windows_PE_no_runtime_imports": "NOT_RUN",
+    "Windows_Debug_MT_d": "NOT_RUN",
+    "Windows_native_CRT_and_lifecycle": "NOT_RUN",
+    "Windows_Golden_full_chain": "NOT_RUN",
+    "Windows_game_network": "NOT_RUN",
+    "final_promotion": "BLOCKED"
+  },
+  "classification": "NOT_RELEASE"
+}

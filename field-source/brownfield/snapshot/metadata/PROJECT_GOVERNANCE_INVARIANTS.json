@@ -1,0 +1,1742 @@
+{
+  "active_tree_identity_policy": "historical identity allowed only in classified context; current authority must be release-neutral/current; context-aware sweep required",
+  "canonical_artifact_pointer_commit": false,
+  "current_approved_codenames": {
+    "3.2.0": "SCIURONYX",
+    "3.2.1": "CERVRAX",
+    "3.2.2": "MUSTORIN",
+    "3.2.3": "MELOTRIX",
+    "3.2.4": "RANQUEL",
+    "3.2.5": "SQUALERIS",
+    "3.2.6": "TALVOR",
+    "3.2.7": "ERINTHAR",
+    "3.2.8": "FORMADRIL",
+    "3.2.9": "CETRION"
+  },
+  "current_release_line": {
+    "artifact_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+    "authority": "/DLL R&D Football/releases/3.2.5 SQUALERIS/CURRENT_ARTIFACT.json",
+    "codename": "SQUALERIS",
+    "display": "preloader_l 3.2.5 SQUALERIS HOTFIX 18",
+    "historical_predecessor": "preloader_l 3.2.5 SQUALERIS HOTFIX 17",
+    "hotfix_ordinal": 18,
+    "release_type": "HOTFIX_RELEASE",
+    "semantic_version": "3.2.5"
+  },
+  "evidence_provenance_policy": "machine-readable source -> acquisition -> transformation -> retained evidence -> report/finding derivation chain",
+  "game_acceptance_policy": {
+    "authority": "newest_explicit_user_decision",
+    "changed_hook_transport_does_not_change_applicability": true,
+    "effective_date": "2026-10-18",
+    "final_release_native_game_acceptance_retained": true,
+    "game_evidence_required_by_class": {
+      "EXPERIMENTAL_RELEASE": false,
+      "FINAL_RELEASE": true,
+      "HOTFIX_RELEASE": false,
+      "RELEASE_CANDIDATE": false
+    },
+    "gates_that_must_not_require_game_evidence_for_nonfinal": [
+      "G0",
+      "G1",
+      "G2",
+      "G3",
+      "G4"
+    ],
+    "id": "FINAL_RELEASE_ONLY_GAME_ACCEPTANCE",
+    "metadata_mirror_policy": "prospective normative only; do not mutate sealed prior official source or acceptance receipts",
+    "no_independent_nonfinal_game_gate_even_if_targeted": true,
+    "nonfinal_g3": "NOT_APPLICABLE",
+    "nonfinal_missing_game_evidence_never_blocks_publication": true,
+    "not_required_nonrelease_work": true,
+    "not_required_release_classes": [
+      "RELEASE_CANDIDATE",
+      "HOTFIX_RELEASE",
+      "EXPERIMENTAL_RELEASE"
+    ],
+    "preserve_historical_game_records": true,
+    "required_release_classes": [
+      "FINAL_RELEASE"
+    ],
+    "revision": "2026-10-18.2",
+    "supersedes": [
+      "prior HF11 TinyXML2 HOTFIX game gate",
+      "prior MinHook changed-surface game gate",
+      "all generic non-Final native/game acceptance blockers"
+    ],
+    "voluntary_game_tests": "may be recorded truthfully as observational evidence, never mandatory for non-Final publication"
+  },
+  "governance_authority": {
+    "authoritative_master": "/DLL R&D Football/governance/PROJECT_RULES_MASTER.md",
+    "conflict_policy": "FAIL_CLOSED_LIBRARY_MASTER_WINS_AFTER_NEWEST_EXPLICIT_USER_DECISION",
+    "debt_mirror_exclusion": true,
+    "g3_release_class_precedence": "G3 and game acceptance mandatory only for FINAL_RELEASE. All older changed-surface/HOTFIX game-evidence requirements are superseded with no non-Final override or targeted-gate exception. Source/security/integrity obligations remain.",
+    "historical_names_preserved": true,
+    "machine_registry": "/DLL R&D Football/governance/PROJECT_RULES_MASTER.json",
+    "obsolete_active_artifact_terms": [
+      "FULL SOURCE",
+      "FULL HISTORY",
+      "SOURCE CANDIDATE as release class"
+    ],
+    "post_release_debt_reconciliation": "required against exact published artifact/hash; evidence-backed closure updates Library master only",
+    "publication_authorization_channel": "DLL R&D Football project conversation/page; explicit user command required for Final/RC/Hotfix production/publication/finalization and canonical artifact pointer changes; Experimental is autonomous only within current semantic version and non-production/non-canonical",
+    "qa_class_stage_precedence": "The newer governance_first_protocol.qa_execution_schedule supersedes blanket G2 8-shard execution wording prospectively. HF17 preexisting G2 8+8 PASS is immutable and not retroactively reclassified.",
+    "readiness_does_not_authorize_publication": true,
+    "release_binding": "record master revision and SHA-256 in release provenance/metadata",
+    "release_mirror_rule": "every published official release synchronizes packaged governance from current Library master normative rules only; Library-only governance debt/backlog is excluded"
+  },
+  "governance_first_protocol": {
+    "anti_bypass": [
+      "do not weaken inherited checks to make a candidate pass",
+      "do not use PASS fixtures for native production acceptance",
+      "do not advance CURRENT_ARTIFACT on preparation/readiness",
+      "do not relabel/reseal source ZIP and call it a published release",
+      "do not attach official HOTFIX_RELEASE identity to unaccepted published artifact",
+      "do not label G3 NOT_APPLICABLE as PASS for non-Final classes or skip G3 for Final"
+    ],
+    "approved_by_user": "2026-10-17: user specified FINAL_RELEASE 8-shard QA at every G0-G4; RC/HOTFIX/EXPERIMENTAL only at G4; IDS and non-release source-state never run the 8-shard universe.; 2026-10-18: user explicitly removed G0 as a prerequisite for local compilation/build/test; official publication verification retained; 2026-10-18: user explicitly forbids mandatory game evidence/acceptance for every non-Final release class, including hook/transport changes.",
+    "authoritative_markdown_section": "0.1",
+    "canonical_identity_rule": "HF17 HOTFIX_RELEASE 3.2.5 SQUALERIS HOTFIX 17 was published on 2026-10-17 after identity-specific user authorization, G0/G1, exact-source G2 source 8/8 and fresh-extract 8/8, G3 NOT_APPLICABLE, and verified G4 CURRENT_ARTIFACT commit. Immutable exact official source SHA-256 1e629c07eeb21edaefd6f7f6fd9481ddb550116f8e77078cd02b1d11baa090b8. Current next-release parent is published HF17; prior HF16 SHA-256 9b380e4d953dffd03ace8b762e1199f11ca8ca4f373d86a0c9b3c074d647082c is preserved as history. The HF17 source snapshot binds normative master 2026-10-17.2 and is immutable historical provenance; this post-release master 2026-10-17.3 records the verified publication, not a retroactive mutation.",
+    "entrypoint_contract": {
+      "build_outputs_must_not_mutate_current_artifact": true,
+      "canonical_promotion_requires_g0_to_g4": true,
+      "check_using_independent_authority_not_untrusted_package_pass": true,
+      "external_handoff_must_reverify_on_fresh_extract": true,
+      "failed_release_gates_block_publication_not_local_compile": true,
+      "gate_version_pin_and_sha_required": true,
+      "gates_unskippable_unless_new_explicit_user_rule_change": true,
+      "local_compile_build_test_without_g0": true,
+      "no_soft_fallback": true,
+      "preflight_before_all_actions": false,
+      "promotion_tool_must_enforce_g0_to_g4": true,
+      "release_integrity_not_waived": true,
+      "source_build_test_packaging_dispatchers_must_call_g0": false
+    },
+    "evidence_required": [
+      "source and master independent SHA",
+      "gate script SHA",
+      "G0->G4 receipt with status per gate",
+      "failing blocker reason",
+      "scope and changed-class invalidation record",
+      "clean extract rerun for same exact sealed ZIP",
+      "exact release-class G3 applicability and NOT_APPLICABLE-vs-PASS receipt",
+      "class-stage 8-shard invocation schedule receipt: mandatory / deferred / never, with exact SHA, no duplicate fanout"
+    ],
+    "gate_applicability": {
+      "G0": {
+        "mandatory_for": [
+          "FINAL_RELEASE",
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE",
+          "EXPERIMENTAL_RELEASE"
+        ]
+      },
+      "G1": {
+        "mandatory_for": [
+          "FINAL_RELEASE",
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE",
+          "EXPERIMENTAL_RELEASE"
+        ]
+      },
+      "G2": {
+        "mandatory_for": [
+          "FINAL_RELEASE",
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE",
+          "EXPERIMENTAL_RELEASE"
+        ]
+      },
+      "G3": {
+        "game_evidence_forbidden_as_nonfinal_prerequisite": true,
+        "game_evidence_required_for": [
+          "FINAL_RELEASE"
+        ],
+        "mandatory_for": [
+          "FINAL_RELEASE"
+        ],
+        "may_not_masquerade_as": "PASS",
+        "not_applicable_for": [
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE",
+          "EXPERIMENTAL_RELEASE"
+        ],
+        "not_applicable_status": "NOT_APPLICABLE"
+      },
+      "G4": {
+        "final_only_prerequisite_pass": [
+          "G3"
+        ],
+        "identity_specific_user_publication_approval": true,
+        "nonfinal_g3_required_receipt": "NOT_APPLICABLE",
+        "prerequisite_pass": [
+          "G0",
+          "G1",
+          "G2"
+        ]
+      }
+    },
+    "id": "GOVERNANCE_FIRST_G0_TO_G4_RELEASE_GATE_CONTRACT",
+    "nonrelease_work_rule": "Local compilation, debug/production binary builds, developer/native/CRT tests and bounded non-release packages do not require independent G0 identity approval or complete release metadata. Retain actual compiler/test/integrity failures and truthful NOT_RELEASE classification. The G0/G1/G2/G4 chain is mandatory before canonical release promotion, not before local build.",
+    "qa_execution_schedule": {
+      "effective": "2026-10-17.4_PROSPECTIVE_ONLY",
+      "enforcement": "Every dispatcher must use SHA-pinned independent class/stage policy before scheduling; package-local PASS claims are untrusted.",
+      "g2_nonfinal_requires": [
+        "G0 PASS",
+        "G1 PASS",
+        "source manifest, structural/ABI/ownership and exact package SHA/CRC/integrity",
+        "focused changed-surface source/behavior QA",
+        "negative/security checks required by scope",
+        "honest PENDING ledger for full-shard QA until G4"
+      ],
+      "g4_final_requires": [
+        "G0/G1/G2/G3 PASS",
+        "G3 required native/CRT/Golden/Consumer acceptance",
+        "8/8 source QA at G4",
+        "clean-extract 8/8 on exact sealed ZIP",
+        "identity-specific publication approval and verified transaction"
+      ],
+      "g4_nonfinal_requires": [
+        "G0 PASS",
+        "G1 PASS",
+        "G2 focused PASS",
+        "G3 NOT_APPLICABLE",
+        "exact identity-specific publication authorization",
+        "8/8 worktree source QA",
+        "one clean extraction of exactly same sealed ZIP + 8/8 replay",
+        "package integrity / negative tests",
+        "Library readback, transaction + postcommit",
+        "NO game/network acceptance evidence prerequisite, including any changed hook/transport surface"
+      ],
+      "gate_preflight_rule": "G0 authority/identity/master SHA must PASS before invoking scheduled shards; a shard PASS never substitutes for G0 or G1 identity/integrity checks.",
+      "historical_immutability": "Previously published HF17 2026-10-17.2 acceptance 8+8 at G2 remains exactly recorded and unchanged. Effective only on new release work.",
+      "id": "RELEASE_CLASS_STAGE_AWARE_8_SHARD_SCHEDULE",
+      "no_waiver": "Skipping authoritative shards before G4 for non-Final is a scheduling decision, not a G4 QA waiver; at G4 each required shard must PASS. Targeted QA always fail-closed.",
+      "non_release_classes": [
+        "NON_RELEASE_WORK",
+        "IDS",
+        "SOURCE_STATE",
+        "CHECKPOINT",
+        "RESEARCH",
+        "AUDIT",
+        "REMEDIATION_READY",
+        "QA_EVIDENCE"
+      ],
+      "non_release_rule": "Never schedule any of the 8 authoritative release QA shards at any gate. G0 truth/integrity preflight plus bounded focused source QA, provenance, integrity and negative tests still required; G1-G4 publication gates not available to these classes.",
+      "official_release_classes": {
+        "EXPERIMENTAL_RELEASE": {
+          "qa_obligation": "Only at G4: exact sealed candidate worktree 8/8 and one clean-extract 8/8; no full shards during G0/G1/G2; G3 NOT_APPLICABLE",
+          "run_clean_extract_shards_at": [
+            "G4"
+          ],
+          "run_source_shards_at": [
+            "G4"
+          ]
+        },
+        "FINAL_RELEASE": {
+          "qa_obligation": "8/8 at each applicable gate after independent G0 preflight; exact fresh-extract 8/8 at G2 and G4",
+          "run_clean_extract_shards_at": [
+            "G2",
+            "G4"
+          ],
+          "run_source_shards_at": [
+            "G0",
+            "G1",
+            "G2",
+            "G3",
+            "G4"
+          ]
+        },
+        "HOTFIX_RELEASE": {
+          "qa_obligation": "Only at G4: exact sealed candidate worktree 8/8 and one clean-extract 8/8; no full shards during G0/G1/G2; G3 NOT_APPLICABLE",
+          "run_clean_extract_shards_at": [
+            "G4"
+          ],
+          "run_source_shards_at": [
+            "G4"
+          ]
+        },
+        "RELEASE_CANDIDATE": {
+          "qa_obligation": "Only at G4: exact sealed candidate worktree 8/8 and one clean-extract 8/8; no full shards during G0/G1/G2; G3 NOT_APPLICABLE",
+          "run_clean_extract_shards_at": [
+            "G4"
+          ],
+          "run_source_shards_at": [
+            "G4"
+          ]
+        }
+      },
+      "run_once_per_gate": "Do not repeat full 8-shard universe on every tool call or subtest in the same G gate. A changed source SHA invalidates prior shard receipts. Never copy a different SHA PASS.",
+      "stage_order": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "universe_shards": 8
+    },
+    "regression_gate": [
+      "wrong release enum",
+      "wrong official parent",
+      "mismatched master version or digest",
+      "stale governance mirrors",
+      "missing release authorization",
+      "false current pointer",
+      "tampered source",
+      "self asserted PASS bypass",
+      "mixed fresh and carried acceptance",
+      "nonfinal G3 falsely required PASS",
+      "final G3 falsely marked NOT_APPLICABLE",
+      "nonfinal G3 NOT_APPLICABLE forged as PASS",
+      "nonfinal full-shard run at G0/G1/G2",
+      "nonfinal publication with no G4 8+8",
+      "final omitted one-gate 8 shards",
+      "IDS/non-release full shard invocation"
+    ],
+    "scope": [
+      "every release preparation/build/QA/seal/publish entrypoint",
+      "all new work packages as applicable",
+      "clean-extract independent verification"
+    ],
+    "scope_correction_2026_10_18": "The older rule that G0 precedes EVERY builder, non-release packaging and QA dispatcher is SUPERSEDED for local development; no G0 before compilation. Official release promotion remains fail-closed.",
+    "stages": [
+      {
+        "before": [
+          "source mutation",
+          "source packaging",
+          "build",
+          "QA",
+          "artifact handoff"
+        ],
+        "fail": "STOP_BEFORE_MUTATION_OR_PACKAGING",
+        "gate": "G0",
+        "name": "GOVERNANCE_FIRST",
+        "requires": [
+          "fresh read of Library master MD/JSON and exact revision+SHA",
+          "newest explicit user instruction and approved exact scope",
+          "one of exactly four release classes or explicit NON_RELEASE supporting artifact",
+          "canonical identity+official immediate parent SHA and line",
+          "release authorization scope separated from publication",
+          "no stale release-governance mirror",
+          "valid source/manifest/ZIP integrity of claimed inputs"
+        ]
+      },
+      {
+        "fail": "STOP_BEFORE_SOURCE_QA_OR_RELEASE_SEAL",
+        "gate": "G1",
+        "name": "REPOSITORY_AND_METADATA",
+        "requires": [
+          "release state and authorization and governance binding mutually agree",
+          "normative-only packaged master mirror bound by revision and independent MD/JSON SHA",
+          "release class and artifact filename grammatical match",
+          "acceptance freshness and metadata/source ownership",
+          "CHANGELOG and documentation reconciliation",
+          "protected historical checks unchanged"
+        ]
+      },
+      {
+        "fail": "NO_NATIVE_OR_SHIPPING_CLAIM",
+        "gate": "G2",
+        "name": "CLASS_AWARE_SOURCE_AND_PACKAGE_QA",
+        "requires": [
+          "G0 and G1 PASS with current SHA-bound master and release identity",
+          "focused source/behavior/ABI and scoped negative QA for every official release type",
+          "exact package path safety/manifest/CRC/SHA and change-class provenance",
+          "FINAL_RELEASE: run source 8/8 and clean extraction 8/8 here; other official classes: defer the full shard universe to G4, not waived",
+          "record per-class scheduling and PENDING full-shard debt without claiming false PASS"
+        ]
+      },
+      {
+        "applies_to": [
+          "FINAL_RELEASE"
+        ],
+        "fail": "NO_FINAL_RELEASE_CANONICAL_PUBLICATION",
+        "gate": "G3",
+        "name": "FINAL_NATIVE_AND_CONSUMER_ACCEPTANCE",
+        "nonapplicable_receipt": "NOT_APPLICABLE",
+        "not_applicable_for": [
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE",
+          "EXPERIMENTAL_RELEASE"
+        ],
+        "requires": [
+          "Windows/MSVC compile+link and same exact produced DLL digest",
+          "native/CRT/Golden checks for affected surface",
+          "CollegeFB27 and Madden27 game/network acceptance mandatory for FINAL_RELEASE only; never for other classes or changed surface",
+          "freshness ledger binds run, exact source and binary hashes",
+          "runtime evidence never substituted by mock/portable/static checks",
+          "mandatory native/game receipts only for FINAL_RELEASE; other release classes never require G3 PASS"
+        ]
+      },
+      {
+        "applies_to": [
+          "FINAL_RELEASE",
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE",
+          "EXPERIMENTAL_RELEASE"
+        ],
+        "fail": "PRESERVE_PRIOR_CANONICAL_POINTER",
+        "gate": "G4",
+        "gate_class_rule": "FINAL: full 8-shard source QA at every G0/G1/G2/G3/G4 plus clean-extract at G2/G4; RC/HOTFIX/EXPERIMENTAL: full 8+8 only at G4; non-release state: never 8 shards or G4.",
+        "name": "ATOMIC_CANONICAL_PUBLICATION",
+        "requires": [
+          "explicit identity-specific user publication authorization and G0/G1/G2 PASS; G3 PASS for FINAL or truthful NOT_APPLICABLE for RC/HOTFIX/EXPERIMENTAL",
+          "FINAL: rerun exact-source 8/8 and clean-extract 8/8 at G4 (in addition to scheduled previous gates)",
+          "RC/HOTFIX/EXPERIMENTAL: first and only authoritative 8/8 source + 8/8 fresh-extract execution at G4 before publication",
+          "no 8-shard scheduling for IDS/source-state/non-release work and no G4 publication of it",
+          "exact artifact, sidecar, evidence and supporting metadata uploaded",
+          "independent byte-identical Library readback",
+          "failure-atomic current pointer commit with postcommit verification",
+          "do not supersede previous canonical before verified commit"
+        ]
+      }
+    ],
+    "status": "ACTIVE_FAIL_CLOSED"
+  },
+  "internal_development_state_policy": {
+    "acceptance_freshness": {
+      "classes": [
+        "source QA 8/8",
+        "clean extract QA 8/8",
+        "MSVC compile/link",
+        "native IOCP",
+        "Golden/CRT",
+        "game/network",
+        "affected specialized gates"
+      ],
+      "deferred_not_waived": true,
+      "ledger_required": true,
+      "package_integrity_not_native": true,
+      "per_class_exact_sha_evidence_owner_invalidation_required": true,
+      "status_enum": [
+        "PENDING",
+        "PASS_FRESH",
+        "PASS_CARRIED_FORWARD",
+        "FAIL",
+        "BLOCKED",
+        "NOT_APPLICABLE"
+      ],
+      "syntax_not_runtime": true,
+      "timeout_not_pass": true
+    },
+    "advancement_policy": {
+      "failing_mandatory_focused_gate_blocks": true,
+      "growing_native_debt_requires_integration_gate_or_user_risk_acceptance": true,
+      "native_only_ownership_abi_consumer_security_risk_gate_or_user_risk_acceptance": true,
+      "progress_small_accepted_slices": true
+    },
+    "allowed_scope": [
+      "user-authorized incremental implementation",
+      "technical-debt retirement",
+      "remediation",
+      "source-linked testing/research"
+    ],
+    "approved_by_user": "2026-10-15",
+    "authoritative_markdown_section": "1.5.2",
+    "authoritative_shard_schedule": "Never run the official 8-shard universe on IDS or non-release source states; run focused changed-surface QA + package integrity, negative checks, provenance. On promotion to an official release, obey the new class-specific release gates.",
+    "classification": "NON_RELEASE_INTERNAL_WORKFLOW",
+    "exact_parent": {
+      "bulk_merge_forbidden": true,
+      "child_archive_sha256_required": true,
+      "fork_requires_explicit_lineage_decision": true,
+      "full_cumulative_source_snapshot": true,
+      "mandatory": true,
+      "one_direct_immediate_parent": true,
+      "parent_archive_sha256_required": true,
+      "skip_parent_forbidden": true
+    },
+    "four_release_classes_unchanged": true,
+    "historical_relabeling": false,
+    "id": "INTERNAL_DEVELOPMENT_STATE_IDS",
+    "identity": {
+      "current_pointer_immutable": true,
+      "historical_artifacts_immutable": true,
+      "no_semantic_version_bump": true,
+      "prohibit_new_release_ordinal": true,
+      "release_neutral_state_id": true,
+      "source_module_test_tool_filenames_not_state_derived": true
+    },
+    "label": "IDS",
+    "local_build_is_nonrelease": true,
+    "minimum_gates": [
+      "exact-parent and child hashes + member/active-source manifest",
+      "file-level deterministic delta, protected inputs and owner",
+      "ZIP CRC, path safety, duplicate-name and manifest digest verification",
+      "focused QA from single fresh extraction",
+      "changed-behavior executable regression when runnable",
+      "applicable source graph/build policy/CRT/ABI/export and failure-negative checks",
+      "self-contained evidence and rerunnable verification where feasible",
+      "Eight authoritative release shards are not required or scheduled for any internal state (including checkpoint, research-only or cumulative IDS); package integrity and focused QA cannot be skipped."
+    ],
+    "official_release_type": false,
+    "promotion": {
+      "automatically_release": false,
+      "full_changed_surface_qa_and_native_game_acceptance_required": true,
+      "g3_release_class_precedence": "2026-10-17.2 class-specific G3 rule applies: mandatory ONLY for FINAL_RELEASE, NOT_APPLICABLE for other official types. Historical IDS obligations are provenance, not generic future G3 gate.",
+      "governance_sync_required": true,
+      "last_accepted_state_may_be_release_source_parent": true,
+      "official_release_requires_explicit_user_instruction": true,
+      "renaming_zip_never_promotes": true,
+      "transactional_publication_required": true
+    },
+    "publication_status": "NOT_RELEASE",
+    "status": "ACTIVE_FAIL_CLOSED"
+  },
+  "library_ownership": {
+    "audits": [
+      "/DLL R&D Football/Audits/",
+      "/DLL R&D Football/audit/"
+    ],
+    "experiments": "/DLL R&D Football/Experiments/",
+    "governance": "/DLL R&D Football/governance/",
+    "releases": "/DLL R&D Football/releases/ (four official release classes and release-bound provenance)",
+    "remediations": "/DLL R&D Football/Remediations/",
+    "research": "/DLL R&D Football/research/"
+  },
+  "metadata_liveness_policy": "every metadata file has owner/consumer/purpose/liveness classification; orphan/self-justifying historical layers fail closed",
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "precedence": [
+    "newest_explicit_user_decision",
+    "library_project_rules_master",
+    "current_official_release_packaged_governance",
+    "release_specific_state_and_provenance",
+    "historical_governance_and_evidence"
+  ],
+  "publication_transaction_policy": "prepare+verify complete publication set before canonical pointer commit; failure-atomic/idempotent; supersede previous only after commit",
+  "recovery_order": [
+    "/DLL R&D Football/governance/PROJECT_RULES_MASTER.md",
+    "/DLL R&D Football/governance/PROJECT_RULES_MASTER.json",
+    "newest applicable official release artifact under /DLL R&D Football/releases/",
+    "docs/PROJECT_GOVERNANCE_CONTRACT.md",
+    "metadata/PROJECT_GOVERNANCE_INVARIANTS.json",
+    "RELEASE_STATE.json",
+    "SOURCE_REVISION.md",
+    "CHANGELOG.md",
+    "applicable Remediations/research evidence"
+  ],
+  "release_authorization_policy": {
+    "experimental": "assistant may initiate/package/publish only within current authorized semantic version and only as non-production/non-canonical",
+    "final_rc_hotfix_production": "separate explicit exact-identity user authorization required",
+    "generic_continuation_is_not_production_authorization": true,
+    "planning_vs_production": "planning authorization never implies production authorization",
+    "qa_or_readiness_is_not_production_authorization": true,
+    "semantic_version_frontier": "explicit user instruction only; assistant never advances it autonomously"
+  },
+  "release_identity_policy": {
+    "artifact_maintenance_is_not_release_identity": true,
+    "canonical_display": {
+      "FINAL_RELEASE": "preloader_l X.Y.Z CODENAME FINAL RELEASE",
+      "HOTFIX_RELEASE": "preloader_l X.Y.Z CODENAME HOTFIX NN",
+      "RELEASE_CANDIDATE": "preloader_l X.Y.Z CODENAME RELEASE CANDIDATE NN"
+    },
+    "canonical_full_identity_contract": "CANONICAL_OFFICIAL_RELEASE_IDENTITY_GRAMMAR",
+    "correction_tracking": [
+      "artifact_sha256",
+      "provenance",
+      "supersedes_artifact",
+      "superseded_by_artifact"
+    ],
+    "forbid_repack_style_release_names": true,
+    "immutable_fields": [
+      "semantic_version",
+      "codename",
+      "release_type"
+    ],
+    "rc_hotfix_ordinal": "NN = zero-padded 01..99",
+    "release_type_enum": [
+      "FINAL_RELEASE",
+      "RELEASE_CANDIDATE",
+      "HOTFIX_RELEASE",
+      "EXPERIMENTAL_RELEASE"
+    ],
+    "semantic_version_component_limits": {
+      "Y": "0..9 single digit",
+      "Z": "0..9 single digit"
+    }
+  },
+  "release_parent_technical_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+  "release_type": "HOTFIX_RELEASE",
+  "release_types": {
+    "EXPERIMENTAL_RELEASE": {
+      "authoritative_shard_schedule": "Only at G4, worktree 8/8 and exact sealed ZIP clean-extract 8/8; G2 targeted QA and integrity remain mandatory; historical accepted artifacts unchanged.",
+      "g3_gate": "NOT_APPLICABLE; bounded experiment QA still required by G2",
+      "game_acceptance_required_for_publication": false,
+      "must_be_marked_non_production": true,
+      "production_stable": false,
+      "promotion": "experimental behavior cannot flow to RC/Hotfix/Final without explicit disposition and revalidation",
+      "purpose": "explicitly non-stable research/diagnostic/instrumentation/architecture/proof-of-concept publication"
+    },
+    "FINAL_RELEASE": {
+      "authoritative_shard_schedule": "Full source QA 8/8 at each gate G0/G1/G2/G3/G4; clean-extract 8/8 at G2 and G4. G3 native/Consumer still mandatory.",
+      "g3_gate": "REQUIRED_PASS; may not use NOT_APPLICABLE",
+      "game_acceptance_required_for_publication": true,
+      "production_stable": true,
+      "promotion_requires_explicit_user_approval": true,
+      "purpose": "authoritative stable semantic production baseline",
+      "validation": "complete applicable Final Release stack: 8 deterministic source-QA shards; package integrity/manifest/hash verification once per exact package; one clean extraction of that exact package followed by the same 8 QA shards on the single extracted tree; final SHA/provenance; required Windows/MSVC/native/game/network acceptance"
+    },
+    "HOTFIX_RELEASE": {
+      "authoritative_shard_schedule": "Only at G4, worktree 8/8 and exact sealed ZIP clean-extract 8/8; G2 targeted QA and integrity remain mandatory; historical accepted artifacts unchanged.",
+      "fix_standard": "CLEAN_MINIMAL_FIX_STANDARD",
+      "game_acceptance_required_for_publication": false,
+      "official_release": true,
+      "parent_rule": "first hotfix from exact accepted production parent; later hotfix from exact immediately preceding accepted hotfix; no separate merge",
+      "production_stable": true,
+      "purpose": "bounded corrective production release on accepted Final/Hotfix lineage",
+      "subordinate_candidate_layer_forbidden": true,
+      "validation": "G0/G1/G2 focused source/package/behavior QA and G4 source 8/8+fresh 8/8 remain mandatory; G3 NOT_APPLICABLE; no CollegeFB27/Madden27 game acceptance for Hotfix publication even with changed hook/transport surface; optional game results are observational only."
+    },
+    "RELEASE_CANDIDATE": {
+      "authoritative_shard_schedule": "Only at G4, worktree 8/8 and exact sealed ZIP clean-extract 8/8; G2 targeted QA and integrity remain mandatory; historical accepted artifacts unchanged.",
+      "evidence_reuse": "allowed only for exact byte/release-input identity; affected evidence invalidated by any relevant change",
+      "g3_gate": "NOT_APPLICABLE; eventual Final promotion independently requires G3 PASS",
+      "game_acceptance_required_for_publication": false,
+      "official_release": true,
+      "pending_final_acceptance_allowed_if_explicitly_ledgered": true,
+      "production_stable": false,
+      "promotion_requires_explicit_user_approval": true,
+      "purpose": "official pre-final release; intended scope substantially complete while final polish and/or one or more Final-level acceptance classes may remain pending",
+      "scope_rule": "after RC designation only release-blocking corrections unless scope explicitly reopened",
+      "subordinate_candidate_layer_forbidden": true
+    }
+  },
+  "repository_layout": {
+    "build_orchestration_directory": "scripts/build_orchestration/",
+    "generated_build_workspace": "build/",
+    "generated_build_workspace_role": "compiler/CMake generated output; remains named build",
+    "historical_policy": "historical published artifacts/provenance are immutable and are not rewritten",
+    "human_invocable_launcher_contract": "positive/default-deny registry; same-stem direct .cmd only for explicit operator entrypoints; vendor/helper/generic launchers forbidden; 3.2.3-established UI compatibility; human launcher must remain open for result/report; automation calls underlying target directly",
+    "migration_policy": "CLEAN_MINIMAL_FIX_STANDARD + fail closed on stale active path references",
+    "root_build_launchers": "FORBIDDEN",
+    "superseded_active_directory": "scripts/build/"
+  },
+  "revision": "2026-10-19.1",
+  "rule_sets": [
+    {
+      "allowed_release_types": [
+        "FINAL_RELEASE",
+        "RELEASE_CANDIDATE",
+        "HOTFIX_RELEASE",
+        "EXPERIMENTAL_RELEASE"
+      ],
+      "forbidden_as_release_types": [
+        "AUDIT",
+        "CHECKPOINT",
+        "DIAGNOSTIC",
+        "EVIDENCE_BUNDLE",
+        "FULL_HISTORY_RELEASE",
+        "FULL_SOURCE_RELEASE",
+        "PATCH",
+        "QA_LOG",
+        "REMEDIATION_READY",
+        "RESEARCH_PACKAGE",
+        "SOURCE_CANDIDATE",
+        "WAVE"
+      ],
+      "id": "OFFICIAL_RELEASE_TAXONOMY",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "summary": "exactly four official release classes; RC and Hotfix are already official releases; no subordinate SOURCE_CANDIDATE/CANDIDATE/PRE/STAGING release identity; supporting artifacts remain non-release Library artifacts; obsolete historical names remain provenance only"
+    },
+    {
+      "forbidden_subordinate_identities": [
+        "SOURCE_CANDIDATE",
+        "CANDIDATE_SOURCE",
+        "RC_CANDIDATE",
+        "HOTFIX_CANDIDATE",
+        "PRE_RC",
+        "PRE_HOTFIX",
+        "PRE_RELEASE",
+        "STAGING_RELEASE"
+      ],
+      "historical_names": "immutable provenance only",
+      "hotfix_semantics": "official corrective production release; no hotfix-candidate layer",
+      "id": "NO_CANDIDATE_OF_A_RELEASE_CONTRACT",
+      "official_release_classes": [
+        "FINAL_RELEASE",
+        "RELEASE_CANDIDATE",
+        "HOTFIX_RELEASE",
+        "EXPERIMENTAL_RELEASE"
+      ],
+      "preproduction_state": "release-neutral internal/remediation/readiness/evidence state only",
+      "rc_semantics": "official pre-final release; final polish and/or Final-level acceptance may remain explicitly pending",
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "classification": "non-release internal workflow, not a fifth official release type",
+      "deferred_acceptance": "machine-readable exact SHA-256 bound ledger, pending is not waived",
+      "historical_provenance": "preserve original files, identities, checksums without retrospective relabeling",
+      "id": "INTERNAL_DEVELOPMENT_STATE_IDS",
+      "minimum_qa": "focused fail-closed gates, package/manifest integrity and fresh-extract focused QA",
+      "official_release_types_unchanged": [
+        "FINAL_RELEASE",
+        "RELEASE_CANDIDATE",
+        "HOTFIX_RELEASE",
+        "EXPERIMENTAL_RELEASE"
+      ],
+      "release_boundary": "no official release or current pointer change without explicit authorization and full applicable release acceptance",
+      "risk_boundary": "must block on failed focused gates and gate accumulating native/ownership/ABI/security risks",
+      "source_snapshot": "cumulative, complete, exact immediate parent SHA-256",
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "artifact_filename_serialization": {
+        "FINAL_RELEASE": "preloader_l_X.Y.Z_CODENAME_FINAL_RELEASE.zip",
+        "HOTFIX_RELEASE": "preloader_l_X.Y.Z_CODENAME_HOTFIX_NN.zip",
+        "RELEASE_CANDIDATE": "preloader_l_X.Y.Z_CODENAME_RELEASE_CANDIDATE_NN.zip",
+        "method": "replace canonical display spaces with underscores while preserving token order"
+      },
+      "canonical_display": {
+        "FINAL_RELEASE": "preloader_l X.Y.Z CODENAME FINAL RELEASE",
+        "HOTFIX_RELEASE": "preloader_l X.Y.Z CODENAME HOTFIX NN",
+        "RELEASE_CANDIDATE": "preloader_l X.Y.Z CODENAME RELEASE CANDIDATE NN"
+      },
+      "canonical_words": {
+        "final": "FINAL RELEASE",
+        "hotfix": "HOTFIX NN",
+        "release_candidate": "RELEASE CANDIDATE NN"
+      },
+      "codename": "exact approved uppercase LUTRAVEX codename for semantic version",
+      "experimental": "not redefined by this contract",
+      "historical_policy": "published historical artifacts remain immutable and are not retroactively renamed",
+      "id": "CANONICAL_OFFICIAL_RELEASE_IDENTITY_GRAMMAR",
+      "ordinal": {
+        "00_forbidden": true,
+        "applies_to": [
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE"
+        ],
+        "final_has_no_ordinal": true,
+        "format": "NN",
+        "range": "01..99",
+        "zero_padded_two_digits": true
+      },
+      "pe_binary_identity_boundary": "does not authorize changing Golden/donor-compatible VERSIONINFO/ABI/external binary identity fields",
+      "qa_fail_closed_on": [
+        "missing release class or required ordinal",
+        "Y or Z not single digit 0..9",
+        "RC/Hotfix ordinal missing/non-zero-padded/00/outside 01..99",
+        "codename/version registry mismatch",
+        "cross-surface identity disagreement",
+        "official package filename not matching canonical identity serialization"
+      ],
+      "release_facing_surfaces": [
+        "human build/release name",
+        "BUILD_ID heading/display",
+        "SOURCE_REVISION release heading/display",
+        "RELEASE_STATE/current-artifact canonical display",
+        "official release report/title",
+        "publication metadata",
+        "official package/archive filename"
+      ],
+      "scope": [
+        "FINAL_RELEASE",
+        "RELEASE_CANDIDATE",
+        "HOTFIX_RELEASE"
+      ],
+      "semantic_version": {
+        "major_X": "non-negative decimal integer",
+        "minor_Y": "exactly one decimal digit 0..9",
+        "multi_digit_minor_or_patch_forbidden": true,
+        "patch_Z": "exactly one decimal digit 0..9",
+        "pattern": "X.Y.Z"
+      },
+      "shorthand_not_canonical_display": [
+        "RC01",
+        "HOTFIX06",
+        "FINAL",
+        "semantic-version + codename only"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED",
+      "storage_path_shorthand": "allowed only as organizational alias when unambiguously bound to canonical identity; not canonical display"
+    },
+    {
+      "applies_to": [
+        "FINAL_RELEASE",
+        "RELEASE_CANDIDATE",
+        "HOTFIX_RELEASE",
+        "canonical artifact supersession/current-pointer changes"
+      ],
+      "authoritative_channel": "DLL R&D Football project conversation/page",
+      "continuation_scope": "generic continuation may continue scoped work but does not create a new Final/RC/Hotfix identity, ordinal, semantic-version bump or broaden release scope",
+      "experimental_exception": {
+        "cannot_advance_semantic_version": true,
+        "cannot_promote_to_final_rc_hotfix_without_explicit_user_authorization": true,
+        "must_be_non_production_and_non_canonical": true,
+        "only_within_current_user_authorized_semantic_version": true,
+        "production_authorization_required": false
+      },
+      "explicit_user_command_required": true,
+      "id": "RELEASE_PUBLICATION_AUTHORIZATION_CHANNEL",
+      "provenance_requirement": "Final/RC/Hotfix production/publication records explicit user decision and exact artifact identity/hash; Experimental records non-production status and exact parent/provenance",
+      "readiness_is_not_authorization": true,
+      "status": "ACTIVE_FAIL_CLOSED",
+      "summary": "Final/RC/Hotfix production/publication/finalization and canonical pointer changes require explicit user command; Experimental is the sole autonomous production exception within the current semantic-version frontier and remains non-production/non-canonical"
+    },
+    {
+      "allowed_release_types": [
+        "FINAL_RELEASE",
+        "RELEASE_CANDIDATE",
+        "HOTFIX_RELEASE",
+        "EXPERIMENTAL_RELEASE"
+      ],
+      "artifact_correction_policy": "retain the same official release identity; bind changed bytes only through exact hashes and explicit artifact supersession/provenance metadata",
+      "forbidden_identity_modifiers": [
+        "REPACK",
+        "REPACKED",
+        "REBUILD",
+        "RESPIN",
+        "RERELEASE",
+        "FIXED",
+        "CORRECTED",
+        "REFRESH",
+        "REV",
+        "REVISION",
+        "V2",
+        "FINAL2",
+        "COMPLETE",
+        "SOURCE_CANDIDATE",
+        "FULL_SOURCE",
+        "CHECKPOINT",
+        "AUDIT"
+      ],
+      "id": "RELEASE_IDENTITY_IMMUTABILITY",
+      "qa": "non-standard release type/name modifier blocks publication",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "summary": "release identity is immutable; repack/rebuild/respin/correction is artifact lifecycle only and cannot create a fifth release class or release-name suffix"
+    },
+    {
+      "experimental_release": {
+        "assistant_may_initiate_package_and_publish": true,
+        "does_not_authorize_final_rc_hotfix": true,
+        "does_not_reserve_activate_consume_or_approve_next_version": true,
+        "may_advance_semantic_version": false,
+        "must_be_non_production_and_non_canonical": true,
+        "only_within_current_user_authorized_semantic_version": true
+      },
+      "id": "USER_CONTROLLED_VERSION_AND_RELEASE_AUTHORIZATION",
+      "release_planning_authorization": {
+        "applies_to": [
+          "FINAL_RELEASE",
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE"
+        ],
+        "does_not_permit": [
+          "artifact_creation_as_planned_release",
+          "packaging_as_planned_release",
+          "release_identity_materialization",
+          "publication"
+        ],
+        "permits": [
+          "scope_definition",
+          "exact_parent_selection",
+          "proposed_ordinal_or_identity",
+          "fix_set",
+          "validation_plan",
+          "acceptance_criteria",
+          "dependency_and_blocker_analysis",
+          "release_readiness_preparation"
+        ]
+      },
+      "release_production_authorization": {
+        "applies_to": [
+          "FINAL_RELEASE",
+          "RELEASE_CANDIDATE",
+          "HOTFIX_RELEASE"
+        ],
+        "cannot_be_inferred_from": [
+          "planning_authorization",
+          "qa_pass",
+          "release_readiness",
+          "previous_discussion",
+          "generic_continuation"
+        ],
+        "new_hotfix_ordinal_requires_authorization": true,
+        "new_rc_ordinal_requires_authorization": true,
+        "requires": "separate explicit user instruction naming or unambiguously authorizing the exact release identity to produce"
+      },
+      "semantic_version_frontier": {
+        "applies_to_all_release_classes_including_experimental": true,
+        "assistant_may_advance_autonomously": false,
+        "authority": "EXPLICIT_USER_INSTRUCTION_ONLY",
+        "qa_remediation_packaging_architecture_or_readiness_does_not_authorize_bump": true
+      },
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "anti_false_closure": "intent/plans/assertions/partial implementation do not close debt",
+      "debt_ownership": "LIBRARY_MASTER_ONLY",
+      "id": "GOVERNANCE_DEBT_MIRROR_EXCLUSION_AND_POST_RELEASE_RECONCILIATION",
+      "normative_rules_still_mirrored": true,
+      "post_release_check": {
+        "bind_to_exact_published_artifact_and_sha256": true,
+        "closed_item_action": "update Library master, remove/close debt entry, bump revision and re-hash",
+        "closure_requires_evidence": true,
+        "published_release_mirror": "IMMUTABLE",
+        "required_after_every_official_release": true,
+        "unproven_item_action": "retain debt unchanged"
+      },
+      "release_machine_invariants_inclusion": "FORBIDDEN",
+      "release_mirror_inclusion": "FORBIDDEN",
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "authority": "/DLL R&D Football/governance/PROJECT_RULES_MASTER.md + PROJECT_RULES_MASTER.json",
+      "historical_policy": "historical release snapshots and obsolete artifact names remain immutable and are not retroactively renamed",
+      "id": "LIBRARY_GOVERNANCE_AUTHORITY_AND_RELEASE_SYNC",
+      "mirror_excludes": [
+        "library_governance_debt",
+        "debt/backlog bookkeeping"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED",
+      "summary": "Library master is authoritative release-independent governance; before every Final/RC/Hotfix/Experimental publication, the packaged governance mirror is synchronized from current normative rules only; Library-only governance debt/backlog is excluded from release mirrors; release provenance records master revision/hash; stale/conflicting normative mirror blocks publication"
+    },
+    {
+      "id": "EXACT_PARENT_INTERNAL_REMEDIATION",
+      "status": "ACTIVE",
+      "summary": "authorized fixes apply directly to the exact current accepted source state; later fixes stack on accepted prior fixes; no named waves and no final bulk merge"
+    },
+    {
+      "id": "RELEASE_VALIDATION_TIERING",
+      "status": "ACTIVE",
+      "summary": "unpublished internal iterations use focused/risk-based validation; published releases separate eight-shard source QA from once-per-package integrity and one-extraction clean replay; infrastructure changes escalate immediately"
+    },
+    {
+      "id": "LUTRAVEX_GOLDEN_NAMING",
+      "status": "ACTIVE",
+      "summary": "globally reserved roots; Latin animal root + synthetic suffix; diversity; collision checks; 10-version proposal batches"
+    },
+    {
+      "id": "BEHAVIORAL_AUTHORITY",
+      "status": "ACTIVE",
+      "summary": "Consumer + Donor1 main authority; Rust SDK/Maxima support; former Primary supplementary; Donor2 secondary; Blaster non-independent; PRIMARY_EXACT deprecated"
+    },
+    {
+      "id": "EXPLICIT_ROUTE_ERROR_CONTRACT",
+      "status": "ACTIVE",
+      "summary": "missing/silent/timeout behavior is not equivalent to evidence-backed explicit route/error semantics"
+    },
+    {
+      "id": "FINDING_LIFECYCLE",
+      "status": "ACTIVE",
+      "values": [
+        "OPEN",
+        "EVIDENCE_BLOCKED",
+        "REMEDIATION_READY",
+        "DEFERRED",
+        "CLOSED_FIXED",
+        "CLOSED_NO_CHANGE",
+        "SUPERSEDED",
+        "DUPLICATE"
+      ]
+    },
+    {
+      "id": "CHANGE_AUTHORIZATION_MATRIX",
+      "status": "ACTIVE",
+      "values": [
+        "RESEARCH_ONLY",
+        "DOC_ONLY",
+        "QA_ONLY",
+        "ARCHITECTURE_ONLY",
+        "BEHAVIOR_FIX"
+      ]
+    },
+    {
+      "id": "AUTOMATIC_REMEDIATION_READY_RETENTION",
+      "status": "ACTIVE",
+      "summary": "validated defect + concrete fix path => self-contained REMEDIATION_READY package immediately; packaging does not authorize mutation"
+    },
+    {
+      "id": "CLEAN_MINIMAL_FIX_STANDARD",
+      "status": "ACTIVE",
+      "summary": "smallest complete clean fix; no unrelated refactor/churn/features; explicit non-goals; required QA/provenance included"
+    },
+    {
+      "id": "PROACTIVE_HARDENING_STANDARD",
+      "status": "ACTIVE",
+      "summary": "proactively audit transactional/failure atomicity, publish ordering, ownership, idempotent teardown, quiescence, state-delivery coupling, snapshots, no-partial-output, cross-resource restoration, state isolation, artifact publication"
+    },
+    {
+      "build_orchestration_directory": "scripts/build_orchestration/",
+      "generated_build_workspace": "build/ (root; generated compiler/CMake output only)",
+      "id": "REPOSITORY_STRUCTURE_CONTRACT",
+      "license_root_entry": "LICENSE required canonical root entry",
+      "migration_contract": "all active launchers, QA/repository gates, ownership metadata, docs, CMake/script references and path-sensitive tests must migrate consistently; stale active scripts/build/ references fail closed; historical artifacts remain immutable",
+      "non_goal": "no unrelated build-system refactor or symbol/type/function rename is authorized by this path migration",
+      "required_root_entries": [
+        "LICENSE"
+      ],
+      "status": "ACTIVE",
+      "summary": "root canonical entry/state only; generated root build/ is build output only; source-controlled build orchestration belongs under scripts/build_orchestration/; scripts/build/ and root BUILD_*.cmd are superseded/prohibited; QA/tools/metadata/docs use owned locations",
+      "superseded_build_script_directory": "scripts/build/"
+    },
+    {
+      "automation_separation": {
+        "automation_calls_underlying_authoritative_target_directly": true,
+        "human_cmd_is_automation_entrypoint": false,
+        "underlying_tool_unconditional_pause_forbidden": true
+      },
+      "classification": {
+        "default": "NON_ENTRYPOINT",
+        "mode": "POSITIVE_ALLOWLIST_DEFAULT_DENY",
+        "sources": [
+          "machine-readable human-entrypoint registry/allowlist",
+          "direct maintained successor of established canonical operator entrypoint"
+        ]
+      },
+      "id": "HUMAN_INVOCABLE_SCRIPT_LAUNCHER_CONTRACT",
+      "interactive_completion": {
+        "automatic_close_forbidden": true,
+        "capture_exit_before_hold": true,
+        "explicit_operator_dismissal_required": true,
+        "show": [
+          "PASS/FAIL",
+          "exact child exit status",
+          "relevant report/log/evidence/output location when applicable"
+        ]
+      },
+      "launcher": {
+        "arbitrary_caller_cwd": true,
+        "direct_authoritative_target": true,
+        "extension": ".cmd",
+        "forward_all_args_unchanged": true,
+        "generic_dispatchers_forbidden": [
+          "launcher.cmd",
+          "run.cmd",
+          "start.cmd",
+          "execute.cmd"
+        ],
+        "launcher_of_launcher_forbidden": true,
+        "parallel_bat_forbidden": true,
+        "preserve_exact_child_exit": true,
+        "resolve_relative_to_launcher": true,
+        "safe_path_quoting": true,
+        "same_directory": true,
+        "same_semantic_stem": true,
+        "thin_wrapper_only": true
+      },
+      "launcher_forbidden_by_default": [
+        "internal helpers",
+        "subordinate orchestration",
+        "library/module scripts",
+        "generated tooling",
+        "test implementation helpers",
+        "dependency bootstrap helpers",
+        "scripts invoked only by another script",
+        "vendored/third-party ownership boundaries"
+      ],
+      "qa": {
+        "authoritative_inventory": "human-entrypoint registry/allowlist",
+        "fail_closed_on_missing_required": true,
+        "fail_closed_on_unauthorized_extra": true,
+        "unauthorized_examples": [
+          "helper/vendor launcher",
+          "generic dispatcher",
+          "orphan/stale launcher",
+          "launcher-of-launcher",
+          "misnamed/path-broken launcher",
+          "broken argument forwarding",
+          "exit-code collapse",
+          "auto-closing human launcher",
+          "unapproved UI redesign"
+        ]
+      },
+      "status": "ACTIVE_FAIL_CLOSED",
+      "ui_compatibility": {
+        "baseline": "3.2.3 MELOTRIX Production/Native Acceptance/CRT Acceptance/Debug presentation family",
+        "byte_identity_required": false,
+        "preserve": [
+          "title/banner structure",
+          "separators/layout",
+          "spacing",
+          "operation-description style",
+          "PASS/FAIL presentation",
+          "exit-code/result presentation",
+          "operator interaction flow"
+        ],
+        "protected_surface": true,
+        "redesign_requires_explicit_user_authorization": true
+      }
+    },
+    {
+      "allowed_historical_contexts": [
+        "CHANGELOG",
+        "approved naming registry",
+        "immutable provenance",
+        "migration ledger",
+        "classified historical comparison/evidence"
+      ],
+      "blind_global_replacement_forbidden": true,
+      "current_authority_must_not_be_owned_by_stale_release_identity": true,
+      "dispositions": [
+        "CURRENT_REQUIRED",
+        "CROSS_RELEASE_REQUIRED",
+        "HISTORICAL_ALLOWED",
+        "STALE_REMOVE_OR_NORMALIZE"
+      ],
+      "id": "ACTIVE_TREE_RELEASE_IDENTITY_HYGIENE_CONTRACT",
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "automatic_latest_update_forbidden": true,
+      "dispositions": [
+        "KEEP_PINNED_COMPATIBILITY_PROVEN",
+        "UPDATE_READY",
+        "UPDATE_BLOCKED_COMPATIBILITY",
+        "UPDATE_REQUIRES_RESEARCH",
+        "REMOVE_UNUSED"
+      ],
+      "id": "VENDORED_DEPENDENCY_CURRENCY_AND_PINNING_CONTRACT",
+      "indefinite_unreviewed_stale_pin_forbidden": true,
+      "required_record_fields": [
+        "upstream project/repository",
+        "exact pinned release/version/commit",
+        "source hash/provenance",
+        "usage classification",
+        "local modifications/backports",
+        "known upstream stable version",
+        "relevant security/correctness changes",
+        "pin rationale",
+        "last review state",
+        "current disposition"
+      ],
+      "review_triggers": [
+        "new semantic-release preparation",
+        "material upstream security/correctness change"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED",
+      "usage_classification": [
+        "SHIPPING_LINKED",
+        "BUILD_ONLY",
+        "TEST_ONLY",
+        "REFERENCE_ONLY"
+      ]
+    },
+    {
+      "decision_states": [
+        "UPDATE_APPROVED",
+        "UPDATE_DECLINED",
+        "KEEP_PINNED_APPROVED",
+        "RESEARCH_PENDING",
+        "UPDATE_BLOCKED_COMPATIBILITY",
+        "NOT_APPLICABLE"
+      ],
+      "dependency_source_change_requires_explicit_user_approval": true,
+      "id": "THIRD_PARTY_UPDATE_NOTIFICATION_AND_APPROVAL_CONTRACT",
+      "new_upstream_stable_release": "notify user and present technical review/proposal",
+      "notice_fields": [
+        "dependency",
+        "current pin",
+        "new upstream version/date",
+        "security/correctness relevance",
+        "usage classification",
+        "local patches/backports",
+        "compatibility surface",
+        "proposed disposition"
+      ],
+      "notification_or_research_is_not_update_authorization": true,
+      "proposal_dispositions": [
+        "RECOMMEND_UPDATE",
+        "RECOMMEND_RESEARCH_BEFORE_UPDATE",
+        "RECOMMEND_KEEP_PINNED",
+        "SECURITY_REVIEW_REQUIRED",
+        "NOT_APPLICABLE_TO_CURRENT_USAGE"
+      ],
+      "repeat_same_release_only_on_material_new_evidence_or_disposition_change": true,
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "current_project_authored_vendor_provenance_must_be_release_neutral": true,
+      "historical_origin_allowed_as_provenance_field": true,
+      "id": "VENDORED_DEPENDENCY_IDENTITY_NEUTRALITY_CONTRACT",
+      "normalize_current_release-specific_project-authored_vendor_names_comments": true,
+      "status": "ACTIVE_FAIL_CLOSED",
+      "upstream_owned_text_not_rewritten_for_project_identity_cleanup": true
+    },
+    {
+      "active_current_stale_owner_forbidden": true,
+      "classifications": [
+        "ACTIVE_CURRENT",
+        "ACTIVE_CROSS_RELEASE_CONTRACT",
+        "BUILD_DERIVED",
+        "MIGRATION_BASELINE",
+        "HISTORICAL_PROVENANCE"
+      ],
+      "cross_release_contract_release_neutral_identity_required": true,
+      "id": "ACTIVE_METADATA_LIVENESS_AND_OWNERSHIP_CONTRACT",
+      "orphan_unconsumed_self_referential_unowned_metadata_fails_closed": true,
+      "pure_historical_baseline_prefer_library_provenance": true,
+      "required_fields": [
+        "owner",
+        "consumers",
+        "purpose",
+        "authority state",
+        "retention reason",
+        "current-release relevance"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "circular_retention_forbidden": "legacy exists -> QA checks legacy -> legacy must remain",
+      "id": "NO_SELF_JUSTIFYING_LEGACY_LAYER_CONTRACT",
+      "independent_current_function_required": [
+        "product correctness",
+        "build correctness",
+        "release validation",
+        "protocol/ABI contract",
+        "active migration safety"
+      ],
+      "legacy_checker_and_metadata_reviewed_together_when_no_independent_requirement": true,
+      "qa_must_not_manufacture_current_authority_for_dead_history": true,
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "id": "ACTIVE_FILENAME_CONTRACT",
+      "status": "ACTIVE",
+      "summary": "source/header same stem; semantic route/test/QA/build naming; no HF/F/W/version/campaign/RVA bookkeeping in active names"
+    },
+    {
+      "id": "TERMINOLOGY_MIGRATION_SAFETY",
+      "status": "ACTIVE",
+      "summary": "positive allowlist/token-aware migrations; no blind substring replacement; external/technical vocabulary protected"
+    },
+    {
+      "history_migration_gate": {
+        "allowed_dispositions": [
+          "MIGRATED_TO_CHANGELOG",
+          "DUPLICATE_ALREADY_PRESENT",
+          "PROVENANCE_ONLY_WITH_IMMUTABLE_LIBRARY_BINDING"
+        ],
+        "coverage_required": "100_PERCENT_ACCOUNTED_FOR",
+        "delete_before_gate": "FORBIDDEN",
+        "status": "ACTIVE_FAIL_CLOSED",
+        "substantive_meaning_preservation": "REQUIRED"
+      },
+      "id": "DOCUMENTATION_PRESERVATION",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "summary": "identity consolidated, history preserved; docs/history removal is gated by 100% accounted-for lossless migration into semantic CHANGELOG plus explicit migration ledger; no silent deletion/destructive consolidation"
+    },
+    {
+      "id": "GOLDEN_PIPELINE",
+      "order": [
+        "MSVC Build",
+        "URSYNEX Golden Finalizer",
+        "ARYRA Golden Layout",
+        "MUSTAVEX Golden Metadata",
+        "CORVEXON Golden Trail",
+        "FALCION Golden Cleaning"
+      ],
+      "status": "ACTIVE"
+    },
+    {
+      "applies_to": "3.2.5 SQUALERIS HOTFIX11 production architecture and all descendants inheriting it",
+      "current_published_baseline_immutable": "3.2.5 SQUALERIS HOTFIX10",
+      "donor_compatibility_policy": "test CDATA, first-text, mixed nodes, PI, entities, UTF-8, invalid/nested XML, duplicate attrs, bounds; donor/Consumer evidence rules conflicts; ambiguity fails closed; no blanket TinyXML2 parity claim",
+      "forbidden_production_dependencies": [
+        "custom XML tag/attribute/child scanners",
+        "legacy XML parser or source-range parser as second engine",
+        "TinyXML2 validation followed by custom reparse",
+        "processing-instruction masking/normalization compatibility bridge",
+        "test-only requirement forbidding production TinyXML2",
+        "dormant production references that keep legacy XML parser active"
+      ],
+      "id": "TINYXML2_SINGLE_ENGINE_SEMANTIC_XML_CONTRACT",
+      "lifetime_policy": "XMLDocument and any DOM-backed views live through all consumers; ownership/leases or copied immutable decoded values; no dangling spans or pointer reuse",
+      "mandatory_gates": [
+        "TinyXML2 production link/use source graph",
+        "no active legacy parser/scanner/PI bridge",
+        "semantic-once and typed/raw-decoded tests",
+        "owned DOM lifecycle and adversarial negative tests",
+        "XML Store atomicity and full handler regressions",
+        "eight deterministic QA shards with clean-extract replay",
+        "Windows/MSVC native acceptance for exact final artifact",
+        "governance mirror synchronization and provenance hash binding before publication",
+        "official release publication transaction only after acceptance"
+      ],
+      "mirror_ownership": "normative rule; required in future release governance mirrors; no retroactive HF10 rewrite",
+      "not_a_publication_or_completion_claim": true,
+      "not_in_scope": [
+        "VDF parser replacement",
+        "RapidJSON/JSON subsystem replacement",
+        "rewriting immutable prior release source/evidence"
+      ],
+      "preserved_boundaries": [
+        "LSX framing",
+        "transport/session/encryption",
+        "public lifecycle ABI",
+        "route dispatch and handler contracts",
+        "XML wire response serialization",
+        "output size/error semantics",
+        "Store transactional/failure-atomic semantics",
+        "security/capacity limits",
+        "Consumer + Donor1 authority"
+      ],
+      "publication_on_missing_acceptance": "BLOCKED; keep 3.2.5 SQUALERIS HOTFIX10 current",
+      "semantic_value_policy": {
+        "api_separation": [
+          "RawXmlSource",
+          "DecodedSemanticValue"
+        ],
+        "example": "&amp;lt; as XML source must produce &lt; as semantic value, never <",
+        "forbidden": [
+          "double entity decode",
+          "decode of already decoded TinyXML2 values",
+          "encode-then-decode bridge",
+          "XML source reconstruction for old handlers"
+        ],
+        "input": "TinyXML2-decoded values directly to handlers via explicitly decoded semantic API",
+        "output": "XML escape semantic data exactly once at output serialization boundary"
+      },
+      "single_parse_policy": "one parse/entity-decode per complete logical XML document; reuse owned XMLDocument DOM for all direct child/attribute/text traversal; do not reparse child fragments",
+      "sole_production_xml_parser": "pinned and licensed TinyXML2 for LSX request XML and XML Store XML",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "superseded_historical_gate": "Previous HOTFIX11 game acceptance prerequisites are non-normative as publication gates under 2026-10-18.2: FINAL_RELEASE only. Historical receipts untouched.",
+      "user_approval_date": "2026-10-12"
+    },
+    {
+      "absolute_process_wide_htons_detour_prohibition": {
+        "allowed_destination_aware_hook": "ws2_32!connect",
+        "api": "ws2_32!htons",
+        "classification": "COMPLETELY_AND_UNCONDITIONALLY_FORBIDDEN",
+        "forbidden_behavior": "Install, reintroduce, restore, replace or indirectly recreate process-wide ws2_32!htons interception/detouring",
+        "forbidden_contexts": [
+          "shipping",
+          "production",
+          "experimental",
+          "compatibility",
+          "recovery",
+          "fallback",
+          "live-diagnostic",
+          "alternative-hook-engine"
+        ],
+        "no_approval_exception": true,
+        "no_exceptions": true,
+        "scope_clarification": "Ordinary calls/references to the standard htons API and inert negative-test literals are not process-wide detours",
+        "violation_disposition": "IMMEDIATE_FAIL_CLOSED_RELEASE_BLOCKER"
+      },
+      "approved_current_hook_count": 9,
+      "approved_current_hook_topology": {
+        "crypt_observer": [
+          "CryptQueryObject"
+        ],
+        "destination_redirect": [
+          "ws2_32!connect"
+        ],
+        "registry": [
+          "RegOpenKeyExA",
+          "RegOpenKeyExW",
+          "RegQueryValueExA",
+          "RegQueryValueExW",
+          "RegCloseKey"
+        ],
+        "surge": [
+          "Process32NextW",
+          "_Mtx_trylock"
+        ]
+      },
+      "game_gate_by_release_class": {
+        "EXPERIMENTAL_RELEASE": "NOT_REQUIRED",
+        "FINAL_RELEASE": "MANDATORY_AS_APPLICABLE_G3",
+        "HOTFIX_RELEASE": "NOT_REQUIRED",
+        "RELEASE_CANDIDATE": "NOT_REQUIRED"
+      },
+      "id": "MINHOOK_SINGLE_ENGINE_PRODUCTION_ARCHITECTURE_CONTRACT",
+      "legacy_hook_engines_forbidden": [
+        "custom inline patch engine",
+        "custom x64 trampoline/relocator",
+        "IAT replacement backend",
+        "VEH/page-trap replacement backend",
+        "legacy MASM tail hook wrapper",
+        "any non-Minhook hook engine as a fallback"
+      ],
+      "loader_lock_policy": "DllMain may schedule safe work but never patch/create/enable hooks, freeze threads or block; worker initializes and commits only after DllMain returns",
+      "mandatory_gates": [
+        "exact nine-hook positive inventory",
+        "process-wide htons detour absence including alternative/fallback paths",
+        "no secondary hook patching engine",
+        "loader-lock/worker lifecycle and SAFE-FREEZE",
+        "batch install commit and rollback-incomplete tests",
+        "trampoline and late-call quiescence tests",
+        "partial removal retry and repeated lifecycle",
+        "vendored source/hash and shipping CMake/link verification",
+        "eight-shard source QA / exact ZIP manifest / single fresh-extract replay",
+        "fresh Windows/MSVC native/CRT acceptance if changed surface",
+        "governance normative mirror synchronization and final hash binding"
+      ],
+      "normative_mirror_required": true,
+      "not_a_publication_or_runtime_acceptance_claim": true,
+      "project_owned_call_gates_allowed_for": [
+        "ownership and forwarding",
+        "transaction state",
+        "in-flight quiescence",
+        "retryable teardown"
+      ],
+      "release_publication_gate": "FAIL_CLOSED on prohibited hooks, missing evidence or incomplete acceptance; no retroactive HF10 change",
+      "rollback_policy": "unknown/partial patch or restore must retain ticket/gate/trampoline ownership for safe retry; no silent success or unsafe freeing",
+      "safe_freeze_policy": "approved NtGetNextThread SAFE-FREEZE implementation; no silent alternative freezer, unsafe no-freeze patch or independent patch backend",
+      "scope": "Current approved MinHook 9/9 production hook architecture and descendants; historical release bytes remain immutable",
+      "shutdown_policy": "globally disable first, drain protected calls, remove owned tickets, then uninitialize MinHook; partial failure retains ownership and retry state",
+      "sole_production_hook_engine": "Hash-pinned and licensed vendored MinHook with project-approved NtGetNextThread SAFE-FREEZE integration",
+      "startup_sequence": [
+        "DLL_PROCESS_ATTACH",
+        "schedule worker",
+        "DllMain return",
+        "MinHook initialization",
+        "create/queue exact 9 hooks",
+        "one NtGetNextThread SAFE-FREEZE MH_ApplyQueued",
+        "transaction commit",
+        "PTD/config/service/network"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED",
+      "topology_change_policy": "Hook membership/target/owner change needs explicit project authorization, focused source/security/behavior QA and applicable non-game safety checks; game acceptance must not be demanded for Hotfix/RC/Experimental, even on changed hook/transport surface. Absolute htons ban unchanged.",
+      "trampoline_ownership": "explicit original forwarding, active-call gate, drain-before-remove, preserve forwarding until late/inflight callers safely exit",
+      "transaction_outcomes": [
+        "COMMITTED",
+        "ROLLED_BACK",
+        "ROLLBACK_INCOMPLETE"
+      ],
+      "user_approval_date": "2026-10-12",
+      "vendor_update_policy": "hash-pinned vendored MinHook, source/CMake and SAFE-FREEZE patch provenance; explicit user approval before dependency bytes change"
+    },
+    {
+      "allowed_items": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        10,
+        11,
+        13,
+        14,
+        18,
+        36
+      ],
+      "excluded": [
+        "Authenticode/certificate data",
+        "exact PE addresses/sizes/layout"
+      ],
+      "id": "MUSTAVEX_METADATA_ALLOWLIST",
+      "status": "ACTIVE"
+    },
+    {
+      "behavioral_partition": "expensive behavioral cases deterministically partitioned; cheap shared preflight may run once when coverage/fail-closed semantics are preserved",
+      "class_stage_schedule_ref": "governance_first_protocol.qa_execution_schedule",
+      "clean_extract_replay": {
+        "extractions": 1,
+        "meaning_of_fresh_extract_8_of_8": "one extraction + eight QA partitions; never eight extractions",
+        "qa_after_extract": "Only at class-scheduled gates: FINAL G2/G4, other official G4, non-release never; one extraction and 8 distinct shards per required gate.",
+        "target": "new empty temporary directory"
+      },
+      "id": "AUTHORITATIVE_QA_SHARDING",
+      "package_integrity": {
+        "frequency": "ONCE_PER_EXACT_PACKAGE",
+        "scope": [
+          "package structure/member set",
+          "path safety",
+          "manifest/hash consistency",
+          "package integrity",
+          "final package SHA-256"
+        ]
+      },
+      "purpose": "Eight shards partition one QA universe, but full invocation is stage/release-class scheduled; package integrity and focused source QA stay independent.",
+      "shards": 8,
+      "source_qa": "PASS requires all shards 0..7 WHEN SCHEDULED: FINAL at every G stage; HOTFIX/RC/EXPERIMENTAL only at G4; non-release states never. No monolithic fallback.",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "timeout_policy": "timeout/interruption is neither PASS nor FAIL; rerun exact unresolved shard/gate"
+    },
+    {
+      "clean_extractions": 1,
+      "fresh_extract_qa_shards": 8,
+      "id": "PACKAGE_AND_CLEAN_EXTRACT_VALIDATION",
+      "package_integrity_runs": 1,
+      "status": "ACTIVE_FAIL_CLOSED",
+      "summary": "validate exact package once, extract exact package once into a clean empty tree, then execute shards 0..7 against that single extracted tree; shard count never multiplies extraction/package-integrity operations"
+    },
+    {
+      "id": "SOURCE_HEALTH_HEURISTIC",
+      "status": "ACTIVE",
+      "summary": "500+ lines plus >=3 independent responsibilities => architecture review; line count alone not defect"
+    },
+    {
+      "consumer_archive_cap_bytes": 300000000,
+      "contract": "RESEARCH_AUDIT_CONTENT_DEDUP_AND_CAMPAIGN_COMPACTION_CONTRACT",
+      "id": "RESEARCH_EVIDENCE_PACKAGING",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "summary": "Research/audit stays separate from release; no recursive predecessor bundles; content-level SHA-256 deduplication; independent standard ZIPs targeting 200-300 MB, <=300000000 bytes; smaller genuine final tail permitted; verified campaign/workstream consolidation then automatic superseded-intermediate cleanup",
+      "target_part_bytes": [
+        200000000,
+        300000000
+      ]
+    },
+    {
+      "archive_removal_precondition": "DOCUMENTATION_PRESERVATION.history_migration_gate must pass first",
+      "changelog": "canonical in-source human-readable semantic release history",
+      "forbidden_release_subtrees": [
+        "docs/governance",
+        "docs/research",
+        "docs/history",
+        "docs/historical"
+      ],
+      "governance_mirror": "docs/PROJECT_GOVERNANCE_CONTRACT.md",
+      "id": "CURRENT_RELEASE_DOCUMENTATION_SURFACE",
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "id": "PROJECT_LICENSE_CONTRACT",
+      "qa": "missing/truncated/summary-only/wrong root LICENSE or damaged third-party licensing blocks publication",
+      "root_entry": "LICENSE",
+      "root_license_requirement": "complete verbatim GNU General Public License version 3 text (Version 3, 29 June 2007)",
+      "spdx": "GPL-3.0-only",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "third_party_licenses": "preserve independently; project GPL must not overwrite vendored licenses"
+    },
+    {
+      "false_positive_policy": "must be explicitly reviewed/proven safe",
+      "forbidden_unless_explicitly_safe": [
+        "credentials",
+        "authentication tokens",
+        "private keys",
+        "signing secrets",
+        "environment secrets",
+        "user-specific absolute paths/profile names",
+        "local machine identifiers",
+        "unintentionally captured sensitive material"
+      ],
+      "historical_policy": "do not silently rewrite historical artifacts; use explicit remediation/provenance/access handling",
+      "id": "SENSITIVE_MATERIAL_AND_SECRET_EXCLUSION_CONTRACT",
+      "prepublication_scan": "REQUIRED_FAIL_CLOSED",
+      "safe_fixture_rule": "synthetic non-functional values only",
+      "scope": [
+        "release artifacts",
+        "evidence",
+        "diagnostics",
+        "logs",
+        "support packages",
+        "research artifacts"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "anti_false_claim": "carried-forward PASS must not be represented as fresh exact-build/native/game PASS",
+      "id": "ACCEPTANCE_FRESHNESS_AND_OWNERSHIP_LEDGER",
+      "machine_readable_ledger_required": true,
+      "minimum_status_semantics": [
+        "PENDING",
+        "PASS_FRESH",
+        "PASS_CARRIED_FORWARD",
+        "FAIL",
+        "NOT_APPLICABLE",
+        "BLOCKED"
+      ],
+      "missing_or_ambiguous_binding": "BLOCKS_DEPENDENT_CLAIM",
+      "required_fields": [
+        "acceptance_class",
+        "status",
+        "exact_source_or_artifact_sha256",
+        "evidence_reference",
+        "validation_owner",
+        "freshness_state",
+        "invalidation_triggers",
+        "carry_forward_source_and_rationale_if_any"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "commit_point": "CURRENT_ARTIFACT or equivalent canonical/current pointer update",
+      "failure_atomicity": "partial/failed publication cannot advance current pointer or supersede previous artifact",
+      "id": "CANONICAL_ARTIFACT_PUBLICATION_TRANSACTION_CONTRACT",
+      "post_commit_verification": "canonical pointer and provenance/sidecar/evidence consistency required",
+      "precommit_verification": "re-read/independently verify uploaded exact bytes and hashes",
+      "prepare_before_commit": [
+        "artifact",
+        "sidecar/hash record",
+        "required evidence/provenance",
+        "supporting metadata"
+      ],
+      "retry": "idempotent; no duplicate release identities or contradictory current pointers",
+      "status": "ACTIVE_FAIL_CLOSED",
+      "supersession_order": "only after new exact artifact verifies and pointer commit succeeds"
+    },
+    {
+      "chain": [
+        "source/input",
+        "extraction/acquisition",
+        "transformation/analysis",
+        "retained evidence",
+        "report/finding"
+      ],
+      "id": "EVIDENCE_DERIVATION_AND_PROVENANCE_CONTRACT",
+      "incomplete_chain_policy": "cannot claim stronger evidentiary status than remaining verifiable chain supports",
+      "proprietary_raw_material_policy": "when raw material is not redistributable/retained, record omission and retain strongest lawful bounded evidence to rebind analysis to exact source",
+      "required_fields": [
+        "source identity/hash",
+        "authority classification",
+        "acquisition/extraction method",
+        "material tool names/versions",
+        "filters/transformations/normalization/bounded-selection rules",
+        "retained evidence files/hashes",
+        "consuming report/finding IDs",
+        "explicit exclusions/limitations/non-retained material"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "approved_on": "2026-10-16",
+      "audit_workflow": {
+        "campaign_close_action": "collect every completed stage unique evidence file, report, finding, acceptance record, DEBT record and provenance; deduplicate into campaign-owned independent ZIP parts",
+        "checkpoints": "one indexed manifest/progress/DEBT state referencing canonical evidence; no repeated full cumulative evidence packages",
+        "completed_campaign_stage_zip_retention": "remove superseded small stage/checkpoint packages and their obsolete sidecars after full persisted coverage verification",
+        "dedicated_audit_root_preserved": true,
+        "interim_stage_outputs_allowed": true,
+        "later_campaigns_embed_earlier_campaign_archives": false,
+        "logical_stage_and_campaign_ownership_must_survive": true
+      },
+      "cleanup_transaction": [
+        "resolve source stable identity/version/bytes/modified time and exact content coverage",
+        "preserve 100 percent of unique leaf bytes, source hashes, original paths, source/stage/campaign ownership, findings, logs, licensing, acceptance scope and DEBT",
+        "validate ZIP member paths, CRC, SHA-256 payload manifest, no duplicate payload SHA-256 across retained parts, <=300000000 bytes each and no joining dependency",
+        "persist all replacement parts and source-to-destination index; verify retained bytes/readback hashes before deletion",
+        "update authoritative content location, stage/campaign and dependency references before retiring source containers",
+        "delete fully covered superseded small packages and obsolete duplicate sidecars; preserve a single cleanup receipt and supersession/source mapping",
+        "inspect every result; keep failed actions out of reclaimed-byte totals"
+      ],
+      "deduplication": {
+        "all_unique_content_preserved": true,
+        "container_sha_only_is_insufficient": true,
+        "distinct_files_with_same_name_retained": true,
+        "key": "SHA-256 of actual file bytes",
+        "original_paths_and_aliases_preserved_in_index": true,
+        "original_wrapper_container_bytes_may_be_retired": true,
+        "recursively_inspect_archives": true,
+        "source_archive_sha256_and_lineage_remain_in_provenance": true,
+        "zero_duplicate_payload_hashes_across_the_canonical_collection": true
+      },
+      "delivery": {
+        "artificial_minimum_size_padding_forbidden": true,
+        "authoritative_index_required": true,
+        "file_splitting_forbidden": true,
+        "format": "standard independent ZIP",
+        "hard_max_bytes": 300000000,
+        "joining_or_custom_reconstruction_program_required": false,
+        "naming": "project + research/workstream or campaign + sequential part number",
+        "small_final_tail_or_whole_small_workstream_allowed": true,
+        "target_min_bytes": 200000000,
+        "unit": "decimal bytes"
+      },
+      "effective": "Immediately for current/future research and audits; consolidate eligible superseded intermediates after verification",
+      "failure_handling": {
+        "active_failed_delete_target": "move to /bogus once if permitted and record result",
+        "duplicate_counting_or_false_success_forbidden": true,
+        "inactive_or_unavailable_failed_target": "record in /bogus checklist; do not restore just to move",
+        "net_active_byte_reduction": "subtract new canonical packages and metadata from confirmed removals",
+        "physical_quota_claim_requires_separate_measurement": true
+      },
+      "forbidden": [
+        "recursive embedding of predecessor research/audit evidence ZIPs",
+        "cumulative full-history/master ZIP chains",
+        "repeated baseline/donor/binary/common-evidence copies in each stage or handoff",
+        "retaining obsolete small packages and duplicate sidecars after verified canonical coverage",
+        "padding or duplicate files solely to reach a target package size"
+      ],
+      "id": "RESEARCH_AUDIT_CONTENT_DEDUP_AND_CAMPAIGN_COMPACTION_CONTRACT",
+      "input_reuse": {
+        "canonical_input_copies": 1,
+        "missing_dependency_or_provenance_blocks_cleanup": true,
+        "nested_archival_test_or_source_inputs": "retain genuinely needed unique input once in its canonical location; reference it rather than multiplying it in evidence packages",
+        "reference_fields": [
+          "source identity",
+          "SHA-256",
+          "canonical Library location",
+          "retained evidence location"
+        ]
+      },
+      "preserved_constraints": [
+        "immutable historical official release ZIPs and exact release-bound receipts/provenance remain protected",
+        "retain any independently required exact authoritative source/donor baseline and current runnable state once; do not embed it repeatedly",
+        "IDS exact-parent/full-current-source-state and evidence derivation/acceptance truthfulness are not weakened",
+        "no production source change, new release, semantic-version change or current-pointer promotion is authorized by compaction",
+        "do not activate or advance an audit by changing its storage policy"
+      ],
+      "research_workflow": [
+        "record bounded new evidence/deltas during work without prior-package nesting",
+        "consolidate accumulated completed slices into clean 200-300 MB target independent ZIPs",
+        "close the workstream with all unique files and any smaller final part",
+        "verify persisted canonical coverage and provenance before removing superseded small packages"
+      ],
+      "scope": [
+        "research",
+        "audit",
+        "stage",
+        "campaign",
+        "checkpoint",
+        "research/evidence handoff and retained supporting outputs"
+      ],
+      "standing_cleanup_authorization": {
+        "assistant_responsible_for_final_packaging_and_cleanup": true,
+        "repeat_user_confirmation_required_after_all_guards_pass": false,
+        "scope": "only fully verified superseded research/audit intermediate containers and duplicate derived outputs",
+        "uncovered_or_ambiguous_unique_content": "retain; cleanup fails closed"
+      },
+      "status": "ACTIVE_FAIL_CLOSED",
+      "supersedes": [
+        "RESEARCH_EVIDENCE_PACKAGING former 150000000-byte cap",
+        "unconditional permanent retention of superseded small research/audit ZIP containers",
+        "audit storage requirement that every stage keeps a permanent separate ZIP after verified campaign consolidation"
+      ],
+      "user_decision": "bundan sonra governance a kaydedelim. researchlerda veya auditlerde paketlerin sürekli tekrarli ic ice gitmesi yasak. kucuk kucuk gidiyorsa bile sonradan birleserek 200 300 mblik paketler teslim edilecek temiz sekilde ve diğerleruli silinecek auditlerde de stageler tamamlandiktan sonra campaign tum ozgun dosyaları alacak ve kucukler yine silinecek son halini sen toparlarsin artik bu veri sismesini engellememiz lazim"
+    },
+    {
+      "approved_on": "2026-10-17",
+      "bypass_policy": "NO_BYPASS_WITHOUT_NEW_EXPLICIT_USER_DECISION",
+      "canonical_pointer_untouched_until_G4": true,
+      "evidence_policy": "INDEPENDENT_MASTER_SHA_AND_FAIL_CLOSED_ENTRYPOINTS",
+      "id": "GOVERNANCE_FIRST_G0_TO_G4_RELEASE_GATE_CONTRACT",
+      "mandatory_before_source_or_release_work": true,
+      "source_class_policy": "ONLY_FOUR_OFFICIAL_RELEASE_TYPES;NON_RELEASE_WORK_SUPPORTING_ONLY",
+      "stages": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4"
+      ],
+      "status": "ACTIVE_FAIL_CLOSED"
+    },
+    {
+      "approved_by_user": "2026-10-18",
+      "authoritative_markdown_section": "0.0.1",
+      "full_release_qa_schedule_unchanged": true,
+      "id": "DEVELOPMENT_BUILD_RELEASE_PUBLICATION_SEPARATION",
+      "local_build_can_modify_current_artifact": false,
+      "local_build_requires_governance_g0": false,
+      "official_publication_requires_independent_g0_to_g4": true,
+      "status": "ACTIVE",
+      "summary": "Decouple compilation/debug/native/Golden local builds from independently verified canonical Library release promotion; never block compiler on missing release credentials."
+    }
+  ],
+  "schema": "dll-rd-football.project-rules-master.v1",
+  "scope": "release-independent project governance",
+  "sensitive_material_policy": "fail-closed prepublication scan across release/evidence/diagnostic/support artifacts; secrets and user-specific sensitive material excluded/redacted",
+  "status": "ACTIVE_FAIL_CLOSED",
+  "third_party_dependency_policy": "tracked vendored dependencies are periodically/release-prep reviewed; newer upstream stable releases are surfaced to user with technical recommendation; any dependency source/version update requires explicit user approval",
+  "validation_model": {
+    "acceptance_freshness_ledger": "machine-readable per acceptance class; exact SHA/evidence/owner/invalidation/carry-forward binding required",
+    "anti_conflation_rule": "8 QA shards do not imply 8 package validations or 8 extractions",
+    "clean_extract_replay": {
+      "extractions_per_exact_package": 1,
+      "invocation": "FINAL_RELEASE G2 and G4; HOTFIX/RC/EXPERIMENTAL only G4; IDS/source-state never as full shard replay. At each required invocation use one clean extraction and shards 0..7.",
+      "qa_shards_on_single_extracted_tree": 8
+    },
+    "package_integrity": {
+      "runs_per_exact_package": 1
+    },
+    "release_class_8_shard_applicability_ref": "governance_first_protocol.qa_execution_schedule",
+    "source_qa": {
+      "deterministic_shards": 8,
+      "invocation": "ONLY per release class and G gate in governance_first_protocol.qa_execution_schedule; passing required 8/8 at an unauthorized stage is not a substitute for prescribed later stage.",
+      "logical_universe": 1,
+      "pass": "8_OF_8"
+    }
+  }
+}

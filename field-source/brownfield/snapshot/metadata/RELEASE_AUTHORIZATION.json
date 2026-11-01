@@ -1,0 +1,68 @@
+{
+  "decision_date": "2026-10-19",
+  "game_acceptance": {
+    "collegefb27": "NOT_RUN_HF18",
+    "madden27": "NOT_RUN_HF18"
+  },
+  "hf19_authorization": {
+    "decision_date": "2026-10-19",
+    "exact_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+    "immediate_official_parent_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+    "production_source_change_authorized": true,
+    "publication_authorized": true,
+    "user_text": "başka sıkıntı var mı bunlardan başka ? yoksa eğer içinde epey dokümantasyon kusura da var şu anki hf18 in ve not release vs bir şeyler yazıyor pek çok modülde vs. hepsini düzelten komple bir hf19 yetkisi veriyorum."
+  },
+  "historical_hf16_authorization_snapshot": {
+    "decision_date": "2026-10-16",
+    "game_acceptance": {
+      "collegefb27": "USER_REPORTED_SMOKE_UNINSTRUMENTED",
+      "madden27": "USER_REPORTED_SMOKE_UNINSTRUMENTED"
+    },
+    "last_verified_library_current_release": "preloader_l 3.2.5 SQUALERIS HOTFIX 15",
+    "lineage_exception_disclosure": "Immediate published parent HF15 d396109c90b7054fa592f4143a9aa511c687eaff879fc1c418051236e26f6235; IDS stages internal, not published releases.",
+    "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+    "parent_technical_source_sha256": "d396109c90b7054fa592f4143a9aa511c687eaff879fc1c418051236e26f6235",
+    "parent_technical_source_zip": "preloader_l_3.2.5_SQUALERIS_HOTFIX_15.zip",
+    "release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+    "release_type": "HOTFIX_RELEASE",
+    "requested_ordinal": 16,
+    "user_text": "artık sıradaki hotfix olarak çıkarabiliriz bu sürümü sonraki çalışmalara base olması için tüm qa ve dokümanları da güncelleyelim",
+    "windows_operator_result": {
+      "debug": "IDS07_LOG_PASS",
+      "native_acceptance": "IDS07_LOG_PASS",
+      "production_golden": "IDS07_LOG_PASS_CARRIED_FORWARD_BINARY_PARITY",
+      "static_crt": "IDS07_LOG_PASS"
+    }
+  },
+  "historical_hf17_authorization_snapshot": {
+    "identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 17",
+    "parent_source_sha256": "9b380e4d953dffd03ace8b762e1199f11ca8ca4f373d86a0c9b3c074d647082c",
+    "user_text": "hf16 uzerine duzgun sekilde implement edip hf17 yapalım; resmi governance a isleyip sonra da resmi hf17 calismasina baslalim; evet baslayalim"
+  },
+  "last_verified_library_current_release": "preloader_l 3.2.5 SQUALERIS HOTFIX 18",
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "parent_technical_source_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+  "parent_technical_source_zip": "preloader_l_3.2.5_SQUALERIS_HOTFIX_18.zip",
+  "production_source_change_authorized": true,
+  "publication_authorization_status": "AUTHORIZED_HF19_GATES_PENDING_NOT_COMMITTED",
+  "publication_authorization_user_text": "başka sıkıntı var mı bunlardan başka ? yoksa eğer içinde epey dokümantasyon kusura da var şu anki hf18 in ve not release vs bir şeyler yazıyor pek çok modülde vs. hepsini düzelten komple bir hf19 yetkisi veriyorum.",
+  "publication_authorized": true,
+  "release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "release_type": "HOTFIX_RELEASE",
+  "requested_ordinal": 19,
+  "schema": "dll-rd-football.release-authorization.v1",
+  "source_development_authorized": true,
+  "upstream_governance": {
+    "library_master_json_sha256": "952af5e29f332f129287b44a7d7ed73cdc9ec35289d8e711e5870243d716085d",
+    "library_master_md_sha256": "1be0e614f98dde1657aca9482be03a121c4f801ea724159592ec8f8853c1147a",
+    "mirrored_from": "INDEPENDENT_LIBRARY_MASTER_NORMATIVE_ONLY",
+    "revision": "2026-10-19.1"
+  },
+  "user_text": "başka sıkıntı var mı bunlardan başka ? yoksa eğer içinde epey dokümantasyon kusura da var şu anki hf18 in ve not release vs bir şeyler yazıyor pek çok modülde vs. hepsini düzelten komple bir hf19 yetkisi veriyorum.",
+  "windows_operator_result": {
+    "crt_golden": "18_OF_18_HISTORICAL_FIXED_SOURCE_ACCEPTANCE",
+    "current_final_artifact": "NOT_RUN",
+    "retention": "176_OF_176_HISTORICAL_FIXED_SOURCE_ACCEPTANCE",
+    "status": "FIX01_WINDOWS_BOUNDED_PASS_SAME_PRODUCTION_BYTES_SOURCE_METADATA_CHANGED"
+  }
+}

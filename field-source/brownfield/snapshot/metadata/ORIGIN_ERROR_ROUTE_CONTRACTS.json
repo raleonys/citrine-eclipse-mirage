@@ -1,0 +1,104 @@
+{
+  "contract_scope": "CURRENT_RELEASE_INDEPENDENT",
+  "introduced_in_release": "3.2.1 CERVRAX",
+  "schema": 1,
+  "purpose": "Typed OriginError taxonomy plus route-specific ErrorSuccess/no-response contracts",
+  "authority_policy": {
+    "primary_role": "supporting_reference_not_veto_when_tier1_converges",
+    "donor2_role": "secondary_confirmation_reference",
+    "numeric_error_authority": "Rust OriginError taxonomy",
+    "wire_description_authority": "route-specific Consumer/Donor1/current-contract evidence only",
+    "universal_description_from_code": false,
+    "global_description_inference": false,
+    "same_eventual_outcome_is_semantic_equivalence": false,
+    "main_behavioral_authority": [
+      "Consumer",
+      "Donor1"
+    ],
+    "supporting_protocol_oracles": [
+      "Rust SDK",
+      "Rust Maxima"
+    ],
+    "historical_primary_role": "supplementary_reference_only_not_decisive",
+    "query_chunk_status_active_precedence": "metadata/QUERY_CHUNK_STATUS_PRECEDENCE.json"
+  },
+  "typed_codes": {
+    "Success": 0,
+    "Pending": 1,
+    "NotImplemented": -1593835518,
+    "NoService": -1577058293,
+    "ProxyBadRequest": -1576468080,
+    "LsxNoResponse": -1593311231
+  },
+  "routes": {
+    "GetAuthCode.offline": {
+      "outcome": "ERROR_SUCCESS",
+      "code": "NoService",
+      "value": -1577058293,
+      "description": "You need to be online to get an AuthCode.",
+      "policy": "preserved_current_plus_donor1_text"
+    },
+    "CheckPermission.offline": {
+      "outcome": "ERROR_SUCCESS",
+      "code": "ProxyBadRequest",
+      "value": -1576468080,
+      "description": "",
+      "policy": "preserved_current_contract"
+    },
+    "StartDownload": {
+      "outcome": "ERROR_SUCCESS",
+      "code": "Success",
+      "value": 0,
+      "description": "Requested a download of a DLC offer.",
+      "policy": "donor1_exact_route_text"
+    },
+    "RestartGame": {
+      "outcome": "ERROR_SUCCESS",
+      "code": "Pending",
+      "value": 1,
+      "description": "Origin is waiting for the game to shutdown.",
+      "policy": "donor1_x86_x64_exact_handler_plus_rust_pending_classification"
+    },
+    "GetVoipStatus": {
+      "outcome": "ERROR_SUCCESS",
+      "code": "NotImplemented",
+      "value": -1593835518,
+      "description": "The function you are calling is not implemented.",
+      "policy": "donor1_x86_x64_exact_handler_plus_rust_code_identity"
+    },
+    "QueryChunkStatus": {
+      "outcome": "NO_RESPONSE_REQUIRED",
+      "serialized_error_code": null,
+      "serialized_description": null,
+      "policy": "donor1_terminal_no_response_observable_contract; Rust LsxNoResponse is taxonomy corroboration only",
+      "rust_corollary_code": "LsxNoResponse",
+      "rust_corollary_value": -1593311231,
+      "serialize_rust_corollary": false
+    },
+    "ShowIGO/ShowIGOWindow": {
+      "outcome": "ERROR_SUCCESS_PLUS_IGO_EVENT",
+      "code": "Success",
+      "value": 0,
+      "description": "",
+      "event": "IGOEvent State=DOWN",
+      "connectivity_policy": "INDEPENDENT_OF_PROJECT_ONLINE_SETTING",
+      "policy": "consumer_plus_donor1_effective_authority; Rust SDK corroborates response/event schema; historical version+winmm is supplementary contradiction evidence only"
+    },
+    "SetPresence": {
+      "outcome": "ERROR_SUCCESS",
+      "code": "Success",
+      "value": 0,
+      "description": "",
+      "connectivity_policy": "INDEPENDENT_OF_PROJECT_ONLINE_SETTING",
+      "policy": "consumer_plus_donor1_exact_route_success_no_event_side_effect"
+    },
+    "QueryFriends": {
+      "outcome": "NORMAL_RESPONSE",
+      "response": "QueryFriendsResponse",
+      "return": "Success",
+      "friend_children": 0,
+      "connectivity_policy": "INDEPENDENT_OF_PROJECT_ONLINE_SETTING",
+      "policy": "consumer_plus_donor1_success_only_zero_friend_children"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "checkpoint": "W12",
+  "parent_w11_sha256": "6c9ed6a3f740c0d3c7d242d19edf4c622663a5e430b963b816f4f2cb7a4a18bc",
+  "scope": "repository-wide naming/reference correction; Pre-Audit 03 runtime backlog excluded",
+  "file_moves": [
+    {
+      "old_path": "metadata/AUDIT01_REMEDIATION_RECORD.json",
+      "new_path": "metadata/REMEDIATION_RECORD.json"
+    },
+    {
+      "old_path": "scripts/test_audit01_remediation.py",
+      "new_path": "scripts/test_remediation.py"
+    },
+    {
+      "old_path": "metadata/MELOTRIX_3_2_3_RELEASE_ACCEPTANCE.json",
+      "new_path": "metadata/RELEASE_ACCEPTANCE.json"
+    },
+    {
+      "old_path": "metadata/MELOTRIX_3_2_3_CONNECT_REDIRECT_EXPERIMENT.json",
+      "new_path": "metadata/CONNECT_REDIRECT_EXPERIMENT.json"
+    },
+    {
+      "old_path": "docs/RELEASE_ACCEPTANCE_3_2_3_MELOTRIX.md",
+      "new_path": "docs/RELEASE_ACCEPTANCE.md"
+    },
+    {
+      "old_path": "docs/RELEASE_3_2_3_MELOTRIX.md",
+      "new_path": "docs/RELEASE_NOTES.md"
+    },
+    {
+      "old_path": "docs/CRT_TRANSITION_3_1_8.md",
+      "new_path": "docs/CRT_TRANSITION.md"
+    },
+    {
+      "old_path": "docs/RELEASE_3_1_9_CASTORADRON.md",
+      "new_path": "docs/history/3.1.9_CASTORADRON/RELEASE_RECORD.md"
+    },
+    {
+      "old_path": "docs/RELEASE_3_2_0_SCIURONYX.md",
+      "new_path": "docs/history/3.2.0_SCIURONYX/RELEASE_RECORD.md"
+    },
+    {
+      "old_path": "docs/RELEASE_3_2_1_CERVRAX.md",
+      "new_path": "docs/history/3.2.1_CERVRAX/RELEASE_RECORD.md"
+    },
+    {
+      "old_path": "docs/RELEASE_3_2_2_MUSTORIN.md",
+      "new_path": "docs/history/3.2.2_MUSTORIN/RELEASE_RECORD.md"
+    },
+    {
+      "old_path": "tests/support/architecture_hook_allocator_model.cpp",
+      "new_path": "docs/historical/retired_custom_hook_tests/architecture_hook_allocator_model.cpp"
+    }
+  ],
+  "operational_rebindings": [
+    "four scripts/build BUILD_*.cmd targets",
+    "four optional CMake debug/runtime/session/socket host source expansions",
+    "current documentation references to migrated paths",
+    "build-selector sentinel neutralization",
+    "active filename contract enforcement"
+  ],
+  "bounded_preaudit03_pull_forward": {
+    "root_id": "F323-PA02-003-001",
+    "scope": "orphan custom-hook allocator test-support ownership/reference only",
+    "action": "moved tests/support/architecture_hook_allocator_model.cpp to docs/historical/retired_custom_hook_tests/architecture_hook_allocator_model.cpp; removed false active-source requirement",
+    "runtime_semantic_delta": "NONE",
+    "other_preaudit03_findings_imported": false
+  },
+  "ranquel_3_2_4_promotion": {
+    "source_parent_sha256": "521e4aba746370e6c9e4c28a21cde08f8c0941d2f094a69bc796bab6d01b0619",
+    "active_renames": [
+      [
+        "docs/MELOTRIX_MINHOOK_ARCHITECTURE.md",
+        "docs/MINHOOK_ARCHITECTURE.md"
+      ],
+      [
+        "metadata/MELOTRIX_RELEASE_ARCHITECTURE.json",
+        "metadata/RELEASE_ARCHITECTURE.json"
+      ],
+      [
+        "scripts/check_melotrix_release_contract.py",
+        "scripts/check_release_contract.py"
+      ]
+    ],
+    "runtime_semantic_delta": "NONE"
+  }
+}

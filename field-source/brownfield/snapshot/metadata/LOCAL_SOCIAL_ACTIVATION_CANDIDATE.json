@@ -1,0 +1,26 @@
+{
+  "behavior": "BlockUser/UnblockUser; RequestFriend pending only; RemoveFriend mutual only; SendInvite atomic local inbox multi-recipient",
+  "commit_contract": "prepare before send, rollback on failure, partial-send and post-send crash not exactly-once",
+  "current_governance_status": "LOCAL_ONLY_SOURCE_ACTIVE_WINDOWS_NATIVE_PASS_CANONICAL_PREPUBLICATION",
+  "current_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 09",
+  "current_route_registration": "REGISTERED_38_THROUGH_42_LOCAL_ONLY",
+  "exact_functional_source_sha256": "6358cd413b5c6c8c7956f7559c2921677b39b864b80ed94312ee961aa18038f9",
+  "game_evidence_classification": "USER_REPORTED_PASS_UNBOUND_MACHINE_EVIDENCE",
+  "hf09_scope_notice": "No Local Social runtime or acceptance changes; all HF08 native/QA states below are historical HF08 results, not current HF09 acceptance.",
+  "host_config": "Config2/User/LocalSocialRecipients optional strict decimal comma list",
+  "immediate_parent_sha256": "6350e380555116d139b5883fd81ec7303326d1df8ed4ba8b5c38d1e588d30448",
+  "native_game_acceptance": "WINDOWS_NATIVE_PASS; GAMES_USER_REPORTED_PASS_UNBOUND",
+  "registered_ids": [
+    38,
+    39,
+    40,
+    41,
+    42
+  ],
+  "release_state": "PRODUCTION_IMPLEMENTED_WINDOWS_NATIVE_ACCEPTED_GAME_USER_ATTESTED",
+  "remote_social_equivalence": "OUT_OF_SCOPE",
+  "schema": "dll-rd-football.hf08.local-social-source-activation-candidate.v1",
+  "scope": "LOCAL_ONLY_NO_REMOTE_AUTH_OR_DELIVERY",
+  "source_ancestor_hf07_sha256": "a21490ffe382508d75746ad27bca219d74bc3a42436d1dbc30a23e2e4bdb689f",
+  "xml_source": "Provisional LOCAL_ONLY populated OriginFriendT using bounded donor QueryPresence Friend attributes; Windows Native PASS; independent exact Consumer-game callback logs unavailable"
+}

@@ -1,0 +1,131 @@
+{
+  "current_acceptance_authority": "metadata/ACCEPTANCE_FRESHNESS_LEDGER.json + IDS08 closure evidence + external exact HF16 QA",
+  "current_official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+  "current_source_state": "HF16_OFFICIAL_ASIO_IDS08_QA_CONVERGED_RUNTIME_IDENTICAL_IDS07",
+  "documentation_migration": "PASS_REQUIRED_100_PERCENT_ACCOUNTED",
+  "filename_migration": {
+    "checker": "scripts/check_filename_migration.py",
+    "map_csv": "metadata/FILENAME_MIGRATION_MAP.csv",
+    "map_json": "metadata/FILENAME_MIGRATION_MAP.json",
+    "rename_count": 288,
+    "review": "metadata/FILENAME_MIGRATION_REVIEW.xlsx",
+    "runtime_semantic_delta": "NONE_INTENDED"
+  },
+  "final_release_acceptance": {
+    "authority": "metadata/RELEASE_ACCEPTANCE.json",
+    "not_fresh_for_hf02": true,
+    "not_fresh_for_hf03": true,
+    "status": "HISTORICAL_3_2_5_FINAL_ONLY"
+  },
+  "gates": [
+    {
+      "command": "python scripts/test_release_assurance.py",
+      "execution_level": "portable_compile_or_runtime",
+      "id": "wave6_focused",
+      "status": "PASS_26_OF_26_WORKING_TREE"
+    },
+    {
+      "command": "python scripts/test_achievement_coherence.py",
+      "execution_level": "portable_compile_or_runtime",
+      "id": "wave7_achievement_coherence",
+      "status": "PASS_18_OF_18_WORKING_TREE_FOCUSED_HF03"
+    },
+    {
+      "command": "python scripts/test_remediation.py",
+      "execution_level": "portable_compile_or_runtime+static_negative_fixtures",
+      "id": "remediation_regressions",
+      "status": "PASS_WORKING_AND_FRESH_EXTRACT"
+    },
+    {
+      "command": "python scripts/test_release_qa.py --shard-count 8 --shard-index 0..7",
+      "execution_level": "source_static+portable_compile_or_runtime",
+      "id": "release_source_qa",
+      "status": "PENDING_EXACT_HF15_8_SHARDS"
+    },
+    {
+      "carry_forward_basis": "HF14 user Windows native/CRT PASS screenshot, zero changes to runtime/build/ABI/vendor code",
+      "command": "scripts/build_orchestration/build_native_acceptance.ps1",
+      "execution_level": "windows_native_acceptance",
+      "id": "windows_native_acceptance",
+      "invalidation": "XML/MINHOOK/METADATA_CHANGE",
+      "required_binding": [
+        "source_zip_sha256",
+        "native_dll_sha256",
+        "host_sha256",
+        "scenario_results"
+      ],
+      "required_source_binding": "HF14_EXACT_PARENT_RUNTIME_INPUTS_AND_HF15_FILE_DIFF",
+      "status": "PASS_CARRIED_FORWARD_HF14_RUNTIME_IDENTICAL"
+    },
+    {
+      "carry_forward_basis": "HF14 user Windows native/CRT PASS screenshot, zero changes to runtime/build/ABI/vendor code",
+      "execution_level": "crt_transition",
+      "id": "crt_transition",
+      "invalidation": "XML/MINHOOK/METADATA_CHANGE",
+      "required_source_binding": "HF14_EXACT_PARENT_RUNTIME_INPUTS_AND_HF15_FILE_DIFF",
+      "status": "PASS_CARRIED_FORWARD_HF14_RUNTIME_IDENTICAL"
+    },
+    {
+      "carry_forward_basis": "NO_GAME_EVIDENCE_SUBMITTED",
+      "execution_level": "game_network_acceptance",
+      "id": "collegefb27_game_network",
+      "invalidation": "XML/MINHOOK/METADATA_CHANGE",
+      "required_source_binding": "EXACT_HF15_GAME_NETWORK_CONSUMER_RECEIPT",
+      "status": "PENDING_EXACT_HF15"
+    },
+    {
+      "carry_forward_basis": "NO_GAME_EVIDENCE_SUBMITTED",
+      "execution_level": "game_network_acceptance",
+      "id": "madden27_game_network",
+      "invalidation": "XML/MINHOOK/METADATA_CHANGE",
+      "required_source_binding": "EXACT_HF15_GAME_NETWORK_CONSUMER_RECEIPT",
+      "status": "PENDING_EXACT_HF15"
+    }
+  ],
+  "hotfix_changed_surface": "CURRENT_DOCS_METADATA_QA_PATHS_ONLY; PRODUCTION_BINARY_INPUTS_IDENTICAL_TO_HOTFIX14",
+  "immediate_hotfix_parent": {
+    "release": "preloader_l 3.2.5 SQUALERIS HOTFIX 14",
+    "sha256": "d9a48bed9f0ffedd897ce9839fbfac0924b8d515da81354aadb9fcb2560112ce"
+  },
+  "lineage": "3.2.4 RANQUEL accepted lineage -> HF02-HF13 remediation working states -> HF13 Correction1 -> 3.2.5 SQUALERIS FINAL RELEASE",
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+  "parent_acceptance": {
+    "release": "3.2.3 MELOTRIX",
+    "source_zip_sha256": "25451efd40010e6047f9a5aea4e1256a9f29815ab4bc530af9648503cd22c2f5",
+    "status": "HISTORICAL_ONLY_NOT_CURRENT_EXECUTION_EVIDENCE"
+  },
+  "parent_final_sha256": "b7f041048d77ccf35e515cf5f7a9ffa3c5735d461a38524bea2fc7ea5ded08b7",
+  "release": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+  "release_parent_technical_sha256": "d9a48bed9f0ffedd897ce9839fbfac0924b8d515da81354aadb9fcb2560112ce",
+  "release_source_qa": {
+    "status": "PENDING_HF10_SOURCE_AND_FRESH_EXTRACT_8_OF_8"
+  },
+  "release_type": "HOTFIX_RELEASE",
+  "remediation": {
+    "design": "REUSE_EXISTING_GRANT_ACHIEVEMENT_DELIVERY_GATE",
+    "findings": [
+      "INFLIGHT_GRANT_TO_QUERY_ACHIEVEMENTS_COHERENCE",
+      "INFLIGHT_GRANT_TO_COMPETING_GRANT_COHERENCE"
+    ],
+    "new_synchronization_primitive": false,
+    "protocol_semantic_delta": "NONE_INTENDED",
+    "research_phase02_sha256": "99d715567bc65ce00b8cbbb1874100985c8fb5c8cd003399a3a78bb15fb69ab7",
+    "research_phase03_sha256": "e7fe4a7b8ffbedacb73ffff2093a27d722bf313c16ad4f1947b3c6932395b9ba",
+    "scope": "W7 achievement measure/render coherence only"
+  },
+  "remediation_record": {
+    "archive": "HF15_PRESERVED_LEGACY_METADATA_RECORDS.zip",
+    "library_folder": "/DLL R&D Football/research/HF15 Source Cleanup/",
+    "role": "HISTORICAL_RESEARCH_PROVENANCE_NOT_CURRENT_GATING"
+  },
+  "rule": "No gate may be promoted above its declared execution level. Windows/native/CRT/game results require exact externally hashed artifacts and executed evidence.",
+  "schema_version": 1,
+  "semantic_parent": {
+    "artifact": "preloader_l_3.2.3_MELOTRIX_FULL_SOURCE_RELEASE.zip",
+    "sha256": "25451efd40010e6047f9a5aea4e1256a9f29815ab4bc530af9648503cd22c2f5"
+  },
+  "source_parent": {
+    "artifact": "preloader_l_3.2.3_MELOTRIX_PREAUDIT_WAVE12_NAMING_REFERENCE_CORRECTION_SOURCE_CANDIDATE.zip",
+    "sha256": "521e4aba746370e6c9e4c28a21cde08f8c0941d2f094a69bc796bab6d01b0619"
+  }
+}

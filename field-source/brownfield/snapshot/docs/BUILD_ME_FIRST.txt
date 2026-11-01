@@ -1,0 +1,18 @@
+# HF19 — Build and QA entrypoints
+
+Normal Windows development/shipping build: `scripts\build_orchestration\build_production.cmd`.
+Debug, native and CRT launchers remain `build_debug.cmd`, `build_native_acceptance.cmd`, and `build_crt_acceptance.cmd`. Optional compile-only `build_unstable.cmd` does not publish the DLL. All development builds remain independent of G0.
+
+HOTFIX G3: NOT_APPLICABLE. Windows native, CRT, Golden and CollegeFB27/Madden27 game acceptance are not required for publication. G0/G1/G2 focused checks and G4 same-source 8/8 plus one clean-extract 8/8 are required. Exact sealed source and acceptance receipts bind to the independent Library source SHA.
+
+Eight deterministic QA partitions (each run once against frozen source, then once against a single fresh extraction of the exact same source ZIP):
+  python -B scripts/test_release_qa.py --shard-count 8 --shard-index 0
+  python -B scripts/test_release_qa.py --shard-count 8 --shard-index 1
+  python -B scripts/test_release_qa.py --shard-count 8 --shard-index 2
+  python -B scripts/test_release_qa.py --shard-count 8 --shard-index 3
+  python -B scripts/test_release_qa.py --shard-count 8 --shard-index 4
+  python -B scripts/test_release_qa.py --shard-count 8 --shard-index 5
+  python -B scripts/test_release_qa.py --shard-count 8 --shard-index 6
+  python -B scripts/test_release_qa.py --shard-count 8 --shard-index 7
+
+Results and publication state are external release receipts; a built-in source snapshot must not claim live pointer status. Prior HF18 and HF17 instructions are retained in their immutable release archives, not as active HF19 instructions.

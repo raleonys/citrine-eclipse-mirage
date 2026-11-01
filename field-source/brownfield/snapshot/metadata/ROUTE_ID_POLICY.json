@@ -1,0 +1,273 @@
+{
+  "challenge_response": "SEPARATE_HANDSHAKE_NOT_ROUTE_ID",
+  "current_state": "HF09_INHERITS_HF08_ANADIUS_ALIGNED_42_ROUTES_BYTE_IDENTICAL",
+  "deferred_no_id": [
+    "ConsumeEntitlement",
+    "ExtendTrial",
+    "RequestLicense",
+    "InvalidateLicense"
+  ],
+  "hf09_policy": "No RouteId value, command table or handler dispatch changed from HF08 exact source parent",
+  "removed_from_active_route_surface": [
+    "GetAuthToken"
+  ],
+  "route_ids": [
+    {
+      "id": 1,
+      "name": "GetConfig",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_config"
+    },
+    {
+      "id": 2,
+      "name": "GetProfile",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_profile"
+    },
+    {
+      "id": 3,
+      "name": "GetInternetConnectedState",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_internet_connected_state"
+    },
+    {
+      "id": 4,
+      "name": "GetSetting",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_setting"
+    },
+    {
+      "id": 5,
+      "name": "GetSettings",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_settings"
+    },
+    {
+      "id": 6,
+      "name": "QueryContent",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "query_content"
+    },
+    {
+      "id": 7,
+      "name": "QueryEntitlements",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "query_entitlements"
+    },
+    {
+      "id": 8,
+      "name": "QueryOffers",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "query_offers"
+    },
+    {
+      "id": 9,
+      "name": "GetGameInfo",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_game_info"
+    },
+    {
+      "id": 10,
+      "name": "GetAllGameInfo",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_all_game_info"
+    },
+    {
+      "id": 11,
+      "name": "QueryImage",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "query_image"
+    },
+    {
+      "id": 12,
+      "name": "GoOnline",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "go_online"
+    },
+    {
+      "id": 13,
+      "name": "GetAuthCode",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_auth_code"
+    },
+    {
+      "id": 14,
+      "name": "ShowIGO",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "show_igo"
+    },
+    {
+      "id": 15,
+      "name": "ShowIGOWindow",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "show_igo_window"
+    },
+    {
+      "id": 16,
+      "name": "GetUTCTime",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "get_utc_time"
+    },
+    {
+      "id": 17,
+      "name": "StartDownload",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "start_download"
+    },
+    {
+      "id": 18,
+      "name": "SetPresenceVisibility",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "set_presence_visibility"
+    },
+    {
+      "id": 19,
+      "name": "SetPresence",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "set_presence"
+    },
+    {
+      "id": 20,
+      "name": "GetPresenceVisibility",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_presence_visibility"
+    },
+    {
+      "id": 21,
+      "name": "GetPresence",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_presence"
+    },
+    {
+      "id": 22,
+      "name": "QueryPresence",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "query_presence"
+    },
+    {
+      "id": 23,
+      "name": "GetGroupInfo",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "get_group_info"
+    },
+    {
+      "id": 24,
+      "name": "IsProgressiveInstallationAvailable",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "is_progressive_installation_available"
+    },
+    {
+      "id": 25,
+      "name": "QueryChunkStatus",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "query_chunk_status"
+    },
+    {
+      "id": 26,
+      "name": "AreChunksInstalled",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "are_chunks_installed"
+    },
+    {
+      "id": 27,
+      "name": "SetDownloaderUtilization",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "set_downloader_utilization"
+    },
+    {
+      "id": 28,
+      "name": "QueryAchievements",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "query_achievements"
+    },
+    {
+      "id": 29,
+      "name": "GrantAchievement",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "grant_achievement"
+    },
+    {
+      "id": 30,
+      "name": "QueryFriends",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "query_friends"
+    },
+    {
+      "id": 31,
+      "name": "GetBlockList",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_block_list"
+    },
+    {
+      "id": 32,
+      "name": "GetVoipStatus",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "get_voip_status"
+    },
+    {
+      "id": 33,
+      "name": "EnableVoip",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "enable_voip"
+    },
+    {
+      "id": 34,
+      "name": "SelectStore",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "select_store"
+    },
+    {
+      "id": 35,
+      "name": "GetWalletBalance",
+      "registration_state": "ANADIUS_EXTENSION_ACTIVE_HF08",
+      "symbol": "get_wallet_balance"
+    },
+    {
+      "id": 36,
+      "name": "RestartGame",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "restart_game"
+    },
+    {
+      "id": 37,
+      "name": "CheckPermission",
+      "registration_state": "RETAINED_HF07_NAME_ACTIVE_HF08",
+      "symbol": "check_permission"
+    },
+    {
+      "id": 38,
+      "name": "BlockUser",
+      "registration_state": "LOCAL_SOCIAL_ACTIVE_HF08_NATIVE_ACCEPTED",
+      "symbol": "block_user"
+    },
+    {
+      "id": 39,
+      "name": "UnblockUser",
+      "registration_state": "LOCAL_SOCIAL_ACTIVE_HF08_NATIVE_ACCEPTED",
+      "symbol": "unblock_user"
+    },
+    {
+      "id": 40,
+      "name": "RequestFriend",
+      "registration_state": "LOCAL_SOCIAL_ACTIVE_HF08_NATIVE_ACCEPTED",
+      "symbol": "request_friend"
+    },
+    {
+      "id": 41,
+      "name": "RemoveFriend",
+      "registration_state": "LOCAL_SOCIAL_ACTIVE_HF08_NATIVE_ACCEPTED",
+      "symbol": "remove_friend"
+    },
+    {
+      "id": 42,
+      "name": "SendInvite",
+      "registration_state": "LOCAL_SOCIAL_ACTIVE_HF08_NATIVE_ACCEPTED",
+      "symbol": "send_invite"
+    }
+  ],
+  "schema": "dll-rd-football.route-id-policy.v2",
+  "source_parent": {
+    "identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 07",
+    "sha256": "a21490ffe382508d75746ad27bca219d74bc3a42436d1dbc30a23e2e4bdb689f"
+  }
+}

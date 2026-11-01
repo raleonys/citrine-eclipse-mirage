@@ -1,0 +1,5 @@
+LIBRARY "preloader.unsigned.dll"
+EXPORTS
+    DllMain @1
+    DllShutdown                    @3
+    SURGE    @2

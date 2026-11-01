@@ -1,0 +1,58 @@
+{
+  "dependency": "TinyXML2",
+  "scope": "production_parser_migration_candidate",
+  "shipping_linked": true,
+  "vendored_base": {
+    "version": "11.0.0",
+    "upstream_commit": "8224e427b655b83dae5e2298f1e6919523a78737",
+    "reference": "master_snapshot_untagged",
+    "upstream_project": "leethomason/tinyxml2",
+    "local_patches": []
+  },
+  "qualified_upstream_fix": {
+    "target_version": "11.0.0",
+    "tag_commit": "9148bdf719e997d1f474be6bcc7943881046dba1",
+    "equivalent_release": "10.1.0",
+    "equivalent_commit_short": "57eea48",
+    "issue": "CVE-2024-50615 / GHSA-884x-p7qm-gq3f",
+    "class": "numeric character-reference bounds / assertion reachability",
+    "historical_tag_context": "11.0.0 tagged release qualification; not a claim that A02 was remediated in the current snapshot"
+  },
+  "local_disposition": "EXACT_UPSTREAM_MASTER_PRODUCTION_TARGET_LINKED_CANDIDATE_UNPUBLISHED",
+  "rationale": "Exact upstream commit 8224e427 snapshot is vendored unmodified as sole XML production parser in experimental HF11; A02-A/B remain open, Windows/game/full release QA not inherited.",
+  "files": {
+    "third_party/tinyxml2/tinyxml2.cpp": "07b4e7a1d021256255b91a0844640f26508201b40cfc576b9499b068d981c39b",
+    "third_party/tinyxml2/tinyxml2.h": "dc6903d27f5f8ff18f7de98179d979ee3986d12273c495b54f48ac385fcdd7c5",
+    "third_party/tinyxml2/LICENSE.txt": "9332252e9b9e46db8285d4a3f0bf25f139bf1dca6781b956d57f2302efca6432",
+    "third_party/tinyxml2/REFERENCE_PROVENANCE.md": "67f38e2991317edbf8e9142e2180b9378041d057a13726b7be48946cd70ad594"
+  },
+  "decision_review": {
+    "current_latest_stable_release": "11.0.0",
+    "latest_stable_tag_commit": "9148bdf719e997d1f474be6bcc7943881046dba1",
+    "source_level_upgrade_safety": "EXPERIMENTAL_ONLY_REQUIRES_EXACT_FINAL_QA_WINDOWS_GAME_ACCEPTANCE",
+    "upgrade_status": "EXACT_UPSTREAM_MASTER_COMMIT_FILES_IMPORTED_VERIFIED",
+    "reason_not_auto_replaced": "exact upstream v11.0.0 file pair must be retained and hash-bound before replacing the locally modified 10.0.0 reference copy",
+    "source_acquisition": "GITHUB_MASTER_ARCHIVE_COMMIT_COMMENT_AND_FILE_HASHES",
+    "source_file_hashes_locked": true,
+    "source_git_blob_sha1": {
+      "tinyxml2.cpp": "69d93ef0a27821fa9cd1ccb6afdd11b35ab77c13",
+      "tinyxml2.h": "048f854392341ed5c00e66701f2fbc5e6c0af52d",
+      "LICENSE.txt": "85a6a36f0ddf7cda552b7a031a9682f2c062d722"
+    },
+    "source_archive_sha256": "8b7508a943e0a06d4c44d40fcc8c6e71f51dd43b342c4c29f768c53a370399cd",
+    "source_archive_member_count": 283,
+    "archive_comment_commit": "8224e427b655b83dae5e2298f1e6919523a78737",
+    "source_git_commit_object_checked": false,
+    "upstream_file_independent_check": "USER_MASTER_SNAPSHOT_SHA_PIN_AND_PUBLIC_COMMIT_LOOKUP",
+    "external_references": [
+      "https://github.com/leethomason/tinyxml2/commit/8224e427b655b83dae5e2298f1e6919523a78737",
+      "https://github.com/leethomason/tinyxml2/issues/1082",
+      "https://github.com/leethomason/tinyxml2/pull/1086"
+    ],
+    "source_revision_identity": "GIT_COMMIT_SHA_NOT_ZIP_SHA",
+    "known_open_issues": {
+      "A02_A": "Issue #1082 text corruption, PR #1086 not merged",
+      "A02_B": "invalid named/numeric entities may be accepted; upstream parsing behavior retained"
+    }
+  }
+}

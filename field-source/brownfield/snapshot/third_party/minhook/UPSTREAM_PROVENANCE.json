@@ -1,0 +1,8 @@
+{
+  "build_policy": "no configure-time network; upstream CMake not executed; SAFE_FREEZE patch applied only to build-tree copy",
+  "commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+  "repository": "https://github.com/TsudaKageyu/minhook.git",
+  "source_materialization": "git archive from user-supplied exact local checkout object database",
+  "user_supplied_cache_zip_sha256": "f07415412d8e12db23dbcf51a2ff99f84267d2e0cf3735e1faa3ab128d8dd24c",
+  "vendored_file_count": 61
+}

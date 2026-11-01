@@ -1,0 +1,78 @@
+{
+  "active_transport": "ASIO_IOCP_WINDOWS_SHIPPING; SOCKETAPI_INJECTABLE_COMPATIBILITY_RETAINED",
+  "architecture_id": "SQUALERIS-RELEASE-MINHOOK-SAFE-FREEZE-TRANSACTION",
+  "candidate_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "current_official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 18",
+  "documentation_migration": "PASS_REQUIRED_100_PERCENT_ACCOUNTED",
+  "donors": {
+    "safe_freeze": "preloader_l_3.2.2_MUSTORIN_MH_FORK02_SAFE_FREEZE_FULL_SOURCE_CANDIDATE.zip",
+    "safe_freeze_sha256": "7fb7bec33ca441764e232290d66875e0d09c9904df88b0bc270789a86d5f6e97",
+    "superseded_nofreeze_prototype_sha256": "446d81dedd5c62820da403aecb2896697ccc10cf37f97a3f95f82c8f74fb19fd"
+  },
+  "fresh_extract": "PENDING_HF19_G4_8_OF_8",
+  "hf08_source_ancestor_sha256": "a21490ffe382508d75746ad27bca219d74bc3a42436d1dbc30a23e2e4bdb689f",
+  "historical_architecture_validation_pre_hf17": {
+    "source": {
+      "accepted_shipping_dll_sha256": null,
+      "focused_safe_freeze_transaction": "PASS",
+      "fresh_extract": "NOT_RUN_NEW_HF10",
+      "windows_native_game": "WINDOWS_NATIVE_PASS_USER_SCREENSHOT_HF13_RUNTIME_GAME_PENDING",
+      "working_tree_release_qa": "NOT_RUN_NEW_HF10"
+    },
+    "status": "HISTORICAL_NONTRANSFERABLE"
+  },
+  "historical_hf17_source_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 17",
+  "lineage": {
+    "current_release_binding": "SQUALERIS_3_2_5",
+    "origin_architecture_id": "MELOTRIX-RELEASE-MINHOOK-SAFE-FREEZE-TRANSACTION",
+    "working_labels": "PROVENANCE_ONLY"
+  },
+  "minhook": {
+    "apply_transaction": "ONE_GLOBAL_11_HOOK_APPLY_SOURCE_IMPLEMENTED_NOT_RUNTIME_ACCEPTED",
+    "authority": "SOLE_PRODUCTION_INLINE_DETOUR_AUTHORITY",
+    "commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+    "detours": 11,
+    "freeze_timing": "POST_LOADER_ONLY",
+    "ip_relocation": "RETAINED_UPSTREAM_MINHOOK_SEMANTICS",
+    "optional_compat": {
+      "api": [
+        "CreateProcessA",
+        "CreateProcessW",
+        "SHGetFolderPathA",
+        "SHGetFolderPathW"
+      ],
+      "donor_conditional_installer_parity": "OPEN",
+      "policy_activation": "RUNTIME_CONFIG_GATED_ALL_FOUR_PHYSICALLY_STAGED"
+    },
+    "packaging": "PHYSICALLY_VENDORED_EXACT_COMMIT_NO_NETWORK_UPSTREAM_CMAKE_BYPASSED",
+    "provenance_manifest": "third_party/minhook/UPSTREAM_MANIFEST.sha256",
+    "thread_enumerator": "NtGetNextThread_DYNAMIC_NTDLL",
+    "toolhelp_snapshot": "RETIRED",
+    "vendored_path": "third_party/minhook/upstream"
+  },
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "ownership": {
+    "apply_failure": "whole_surface_disable_retry; rollback_incomplete retains all trampoline ownership",
+    "call_gate": "MinHookCallGate drain-before-remove retained",
+    "normal_shutdown": "one global disable transaction then subsystem remove and MinHook uninitialize",
+    "ptd_init_failure": "whole_surface rollback before remove; incomplete rollback returns shutdown_failed"
+  },
+  "release": "3.2.5 SQUALERIS",
+  "release_parent_technical_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+  "release_type": "HOTFIX_RELEASE",
+  "runtime_semantic_delta": "HF19_INHERITED_FREE_LIBRARY_AND_STAGED_MODEL_POLICY_RETRYABLE_OWNERSHIP_FIXES",
+  "semantic_delta": "INHERITED_VALIDATED_RANQUEL_REMEDIATION_LINEAGE; SQUALERIS_FINAL_IDENTITY_MIRROR_ADDS_NO_NEW_RUNTIME_SEMANTICS",
+  "semantic_parent": {
+    "name": "3.2.3 MELOTRIX",
+    "sha256": "25451efd40010e6047f9a5aea4e1256a9f29815ab4bc530af9648503cd22c2f5"
+  },
+  "source_qa": "PENDING_HF19_G4_8_OF_8",
+  "status": "HF19_OWNERSHIP_FIX_SOURCE_G0_G1_G2_G4_PENDING",
+  "validation": {
+    "accepted_shipping_dll_sha256": null,
+    "focused_safe_freeze_transaction": "PREVIOUS_HF16_SOURCE_RESEARCH_ONLY_NOT_HF17_NATIVE",
+    "fresh_extract": "NOT_RUN_HF17",
+    "windows_native_game": "NOT_RUN_HF17_CHANGED_HOOK_GRAPH",
+    "working_tree_release_qa": "PENDING_HF17_G2_FULL_8_OF_8"
+  }
+}

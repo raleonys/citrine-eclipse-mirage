@@ -1,0 +1,60 @@
+{
+  "active_registered_normal_route_count": 42,
+  "challenge_response": "SEPARATE_HANDSHAKE",
+  "class": "CURRENT_LOCAL_ONLY_BOUND_SOCIAL_RUNTIME",
+  "current": {
+    "active_release": false,
+    "games": "USER_REPORTED_PASS_UNBOUND_MACHINE_LOGS",
+    "normal_registered": 42,
+    "remote_social_equivalence": false,
+    "windows_native_crt_debug": "PASS_CARRIED_FORWARD",
+    "windows_production_golden": "PASS_CARRIED_FORWARD"
+  },
+  "current_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 09",
+  "current_route_registration": "REGISTERED_38_THROUGH_42_LOCAL_ONLY",
+  "exact_functional_source_sha256": "6358cd413b5c6c8c7956f7559c2921677b39b864b80ed94312ee961aa18038f9",
+  "exact_immediate_working_parent_sha256": "f7d86345a682c7c700cf6ed6f835996112da5c70478d8c3ede3bb5e466e09973",
+  "exact_original_release_parent_sha256": "a21490ffe382508d75746ad27bca219d74bc3a42436d1dbc30a23e2e4bdb689f",
+  "future_dense_route_id_count": 42,
+  "game_evidence_classification": "USER_REPORTED_PASS_UNBOUND_MACHINE_EVIDENCE",
+  "get_auth_token": "ABSENT",
+  "hf09_scope_notice": "No Local Social runtime or acceptance changes; all HF08 native/QA states below are historical HF08 results, not current HF09 acceptance.",
+  "historical_w06_snapshot": {
+    "fields": {
+      "known_release_blockers": [
+        "No live QueryFriends and GetBlockList state projection + consumer XML golden",
+        "SendInvite multi-recipient exact grammar and local inbox acceptance/delivery semantics remain unproven",
+        "Five social descriptors not registered and handler registry intentionally excludes them",
+        "No native Windows MSVC CRT CollegeFB27 Madden27 runtime acceptance",
+        "Need code review for thread coordination/stop and config reload during already-sent response"
+      ],
+      "remaining_release_gates": [
+        "real Windows/MSVC production CRT and Golden",
+        "CollegeFB27 and Madden27 populated Friend callback",
+        "native multi SendInvite callback",
+        "partial-wire response local commit durability"
+      ],
+      "shipping_claim": "NO_HF08_RELEASE",
+      "social_ID38_42": "SOURCE_REGISTERED_PENDING_NATIVE_CONSUMER_AND_WINDOWS_GOLDEN",
+      "source_change_scope": [
+        "production Config2 profile-bound local-only session identity",
+        "per-process synchronized LocalSocialStore owner",
+        "local numeric contacts created only at commit, rollback prevents phantom actors",
+        "session identity transferred from persistent handshake into transaction environment",
+        "bounded one-recipient SendInvite and five route request-staging grammar",
+        "socket RAII prepare/send/commit/rollback stage"
+      ],
+      "source_qa": "PENDING"
+    },
+    "stage": "HF08_W06_DEVELOPMENT_CHECKPOINT_NOT_CURRENT"
+  },
+  "remaining_evidence_limits": [
+    "No independent machine log for CollegeFB27 and Madden27 callbacks",
+    "No remote social ACK or exactly-once crash semantics",
+    "Canonical Library publication transaction not committed"
+  ],
+  "schema": "dll-rd-football.hf08.current-social-integration-with-w06-lineage.v2",
+  "shipping_claim": "SOURCE_IMPLEMENTED_WINDOWS_ACCEPTED_CANONICAL_PUBLICATION_PENDING",
+  "social_ID38_42": "REGISTERED_5_OF_5_HANDLER_BOUND_WINDOWS_NATIVE_PASS_LOCAL_ONLY",
+  "source_qa": "PASS_8_OF_8_SOURCE_AND_8_OF_8_FRESH_EXTRACT_PRIOR_SEAL_2e3d8598fc1149f5ae5863a2b7a173bf79b27ebb327ed9664e339bdf2a8aaab8"
+}

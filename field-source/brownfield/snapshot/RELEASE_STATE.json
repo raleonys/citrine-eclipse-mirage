@@ -1,0 +1,193 @@
+{
+  "acceptance_ledger": "metadata/ACCEPTANCE_FRESHNESS_LEDGER.json",
+  "canonical_artifact_pointer_commit": false,
+  "deprecated_release_names": [
+    "SOURCE_CANDIDATE",
+    "FULL_SOURCE",
+    "FULL_HISTORY",
+    "Wave",
+    "checkpoint-as-release"
+  ],
+  "documentation_cleanup": {
+    "archive_file": "HF15_PRESERVED_SOURCE_RECORDS_COMPLETE.zip",
+    "archive_sha256": "215ad1f18eb07cf619fb70ed9881029a0859ad1cd53eb69c8c59a4a671a7c9de",
+    "archived_source_records": 21,
+    "historical_metadata_additional_archive": "HF15_PRESERVED_LEGACY_METADATA_RECORDS.zip",
+    "historical_metadata_additional_archive_sha256": "14dc906f92cb31e73d8f875885ba7061a68d84b5e8a43c7028dde200b118398f",
+    "original_release_sha256": "d9a48bed9f0ffedd897ce9839fbfac0924b8d515da81354aadb9fcb2560112ce",
+    "provenance_library_folder": "/DLL R&D Football/research/HF15 Source Cleanup/",
+    "runtime_implementation_delta": false
+  },
+  "exact_functional_source_checkpoint_sha256": "9d6e2cc4271d9feacc6e06a41ce72cbbc6d83a5505ebaa4455bcaa5fe6bb40c3",
+  "falcion": {
+    "active_checker": "scripts/check_falcion_golden_cleaning.py",
+    "active_document": "docs/FALCION_GOLDEN_CLEANING.md",
+    "flat_package_root": true,
+    "historical_bundle_release_class": "NOT_A_CURRENT_RELEASE_CLASS",
+    "policy": "FALCION Golden Cleaning",
+    "provenance_history_in_source": false
+  },
+  "get_auth_code_policy": {
+    "backend_credential_validity": "NOT_CLAIMED",
+    "behavioral_active_equivalence": "NOT_CLAIMED",
+    "client_id_empty_allowed": true,
+    "client_id_entropy_policy": false,
+    "client_id_representation": "XML_ATTRIBUTE",
+    "client_id_required": true,
+    "client_id_semantic_policy": "PRESENCE_ONLY_EMPTY_ACCEPTED",
+    "commit_boundary": "SUCCESSFUL_SERIALIZATION_ONLY",
+    "config2_authcode_policy": false,
+    "lifetime": "RELEASE_SERVICE_SESSION_UNTIL_TEARDOWN_RESET",
+    "offline_error_code": "-1577058293",
+    "offline_error_description": "You need to be online to get an AuthCode.",
+    "online_behavior": "SESSION_STABLE_8_CHARACTER_ALPHANUMERIC_AUTHCODE",
+    "producer": "LOCAL_RUNTIME_SESSION_AUTH8_SERVICE",
+    "status": "PROJECT_ADOPTED_LOCAL_SESSION_AUTH8",
+    "token_access": "LEASE_ONLY_NO_GLOBAL_STORAGE_VIEW"
+  },
+  "governance_binding": "metadata/GOVERNANCE_BINDING.json",
+  "governance_master_json_sha256": "952af5e29f332f129287b44a7d7ed73cdc9ec35289d8e711e5870243d716085d",
+  "governance_master_md_sha256": "1be0e614f98dde1657aca9482be03a121c4f801ea724159592ec8f8853c1147a",
+  "governance_master_revision": "2026-10-19.1",
+  "hf17_governance_first": {
+    "G3_status": "NOT_APPLICABLE",
+    "G4_status": "AUTHORIZED_NOT_COMMITTED",
+    "current_official_publication": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+    "master_revision": "2026-10-17.2",
+    "native_game_acceptance_complete": false,
+    "publication_authorized": true,
+    "source_change_authorized": true,
+    "source_qa_complete": false,
+    "target_release_class": "HOTFIX_RELEASE"
+  },
+  "hf17_implementation": {
+    "b_ownership_prototype": "EXCLUDED",
+    "baseline_hooks": 7,
+    "behavior": "CONFIG2_GATED_PROCESS_BLOCK_RERUNS_AND_DOCUMENTS_PATH",
+    "donor_activation_exact_parity": "NOT_CLAIMED",
+    "game_acceptance": "NOT_RUN",
+    "new_hooks": [
+      "CreateProcessA",
+      "CreateProcessW",
+      "SHGetFolderPathA",
+      "SHGetFolderPathW"
+    ],
+    "physical_install": "ALL_11_POST_LOADER_SINGLE_TRANSACTION",
+    "release_publication": "NOT_AUTHORIZED_YET",
+    "target_hooks": 11,
+    "windows_msvc": "NOT_RUN"
+  },
+  "hf19_governance_first": {
+    "G0_status": "PENDING_EXTERNAL_PINNED_AUTHORITY",
+    "G1_status": "PENDING",
+    "G2_status": "PENDING_TARGETED_QA",
+    "G3_status": "NOT_APPLICABLE",
+    "G4_status": "PENDING_8_PLUS_8",
+    "game_acceptance_required": false,
+    "immediate_official_parent_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+    "release_type": "HOTFIX_RELEASE",
+    "user_publication_authorized": true
+  },
+  "historical_authority": "Exact HF09 source ZIP SHA-256 f23eb4dd9da31ce2e6973a75fff42cce20f498c2c77e98acc150d2f816790bf9; static and source-linked MSVC W02/W03 test evidence is not an exact HF10 shipping DLL acceptance",
+  "historical_hf17_source_state": {
+    "identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 17",
+    "role": "IMMUTABLE_LIBRARY_PARENT_RECORD",
+    "source_parent_sha256": "9b380e4d953dffd03ace8b762e1199f11ca8ca4f373d86a0c9b3c074d647082c"
+  },
+  "historical_hf18_authoritative_release_qa_prepublication_snapshot": {
+    "behavioral_8_shards": "PENDING_92_CASE_INVENTORY_VIA_8_OF_8_SHARDS",
+    "note": "Pending authoritative same-exact-source acceptance, prior QA-only behavioral is not release QA",
+    "single_clean_extract_8_shards": "PENDING_8_OF_8_DETERMINISTIC_SHARDS_FINAL_RELEASE_PACKAGE",
+    "source_8_shards": "PENDING_8_OF_8_DETERMINISTIC_SHARDS"
+  },
+  "historical_hf18_governance_first_prepublication_snapshot": {
+    "G0_status": "PENDING_EXTERNAL_PINNED_AUTHORITY",
+    "G1_status": "MIRROR_REBASED_REPOSITORY_PASS_7_OF_8_HISTORY_MIGRATED_FINAL_RELEASE_CONTRACT_PENDING_G0",
+    "G2_status": "NOT_RUN",
+    "G3_status": "NOT_APPLICABLE",
+    "G4_status": "NOT_RUN",
+    "canonical_artifact_pointer_commit": false,
+    "immediate_official_parent_sha256": "1e629c07eeb21edaefd6f7f6fd9481ddb550116f8e77078cd02b1d11baa090b8",
+    "release_type": "HOTFIX_RELEASE",
+    "technical_baseline_fix01_sha256": "34430997d336903582aabace70f6a760282ff088a05c66d9068393b85dbdf907",
+    "user_publication_authorized": true
+  },
+  "historical_lineage": {
+    "in_source_archive_required": false,
+    "ownership": "IMMUTABLE_LIBRARY_RELEASE_EVIDENCE"
+  },
+  "hotfix_ordinal": 19,
+  "human_confirmation": {
+    "collegefb27": "USER_REPORTED_NORMAL_GAMEPLAY_SMOKE_NOT_INSTRUMENTED_EXACT_DLL",
+    "madden27": "USER_REPORTED_NORMAL_GAMEPLAY_SMOKE_NOT_INSTRUMENTED_EXACT_DLL"
+  },
+  "immediate_hotfix_parent": {
+    "release": "preloader_l 3.2.5 SQUALERIS HOTFIX 18",
+    "sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0"
+  },
+  "last_verified_library_current_release_at_prepare": "preloader_l 3.2.5 SQUALERIS HOTFIX 17",
+  "lineage_gap_disclosure": "HF16 exact official published parent HF15 sha256 d396109c90b7054fa592f4143a9aa511c687eaff879fc1c418051236e26f6235; IDS05-IDS08 are internal source-state provenance, never intervening official releases.",
+  "manual_release_instruction": "HF18 user-approved G0/G1 release preparation and conditional publication; publication not committed; HOTFIX G3 NOT_APPLICABLE",
+  "official_package_filename": "preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "publication_date": null,
+  "publication_transaction": "metadata/PUBLICATION_TRANSACTION.json",
+  "qa_evidence_binding": {
+    "hf08_exact_source_parent_sha256": "197ab6bf0f95302835547c69d265c312df396da463b90ca0a128ef59bc6e9d55",
+    "hf09_exact_seal": "EXTERNAL_RECEIPT_AFTER_ZIP_SEAL",
+    "hf09_exact_source_parent_sha256": "f23eb4dd9da31ce2e6973a75fff42cce20f498c2c77e98acc150d2f816790bf9",
+    "hf10_exact_seal": "EXTERNAL_RECEIPT_AFTER_ZIP_SEAL",
+    "research": "SELECTED_B_ADR;DIRECT_ORIGINAL_CONSUMER_STATIC;HF09_W02_W03_MSVC_SOURCE_LINKED"
+  },
+  "qa_status": {
+    "behavioral": "TARGETED_QA_PENDING",
+    "fresh_extract": "PENDING_G4_FRESH_8_OF_8",
+    "source": "PENDING_G4_EXACT_SOURCE_8_OF_8"
+  },
+  "release": "3.2.5 SQUALERIS",
+  "release_acceptance": "metadata/RELEASE_ACCEPTANCE.json",
+  "release_hygiene": {
+    "build_ownership": "scripts/build_orchestration",
+    "governance_docs": "docs/PROJECT_GOVERNANCE_CONTRACT.md"
+  },
+  "release_identity_policy": "CANONICAL_OFFICIAL_RELEASE_IDENTITY_GRAMMAR_2026_10_09_1",
+  "release_status": "HF19_G0_G1_G2_G4_PENDING_NO_POINTER_COMMIT",
+  "release_type": "HOTFIX_RELEASE",
+  "runtime_changes_from_hf07": [
+    "Anadius nine extension handlers",
+    "five local-only social routes",
+    "42-route inventory and handler binding",
+    "LSX social snapshot/transaction integration",
+    "unbound-session legacy response and strict bound-session validation",
+    "CRT legacy comparator boundary"
+  ],
+  "runtime_changes_from_hf08": [
+    "QueryPresence first-valid-text-or-CDATA node donor rule",
+    "Entitlements direct-child depth==2 field rule"
+  ],
+  "runtime_changes_from_hf09": [
+    "Achievement B: separately encoded Response and Event AES/hex+NUL frames, both prepared before send",
+    "Successful Response delivery commits GrantAchievement mutation; incomplete Response rolls back",
+    "Event delivery failure after Response retains retryable FIFO event; successful Event delivery consumes the event"
+  ],
+  "runtime_changes_from_hf15": [
+    "Asio 30s receive idle, 10s frame completion, 5s send idle policy",
+    "Legacy worker/listener/endpoint/transport source removal from Production graph; native-test and Debug compatibility retained",
+    "Lifecycle-only SocketRuntime/WSA startup cleanup in Production; seven MinHook hooks, 548-byte ABI and LSX wire protocol preserved",
+    "Test-only native send-stall injection and source QA fixed in IDS07–IDS08"
+  ],
+  "schema": "dll-rd-football.release-state.v2",
+  "source_golden_boundary": "HF16 adopts cumulative IDS05–IDS08 Asio source changes on HF15; all src/include/CMake/vendors/resources/exports/tools byte-identical to IDS07 Windows-qualified source; QA-only IDS08 delta; shipping DLL hash 5f442bc1fd740e3bac907d67142be50a50ce5dfce9120796c0e4a0760179d939",
+  "status": "HF19_PREPUBLICATION_SOURCE_AUTHORIZED_GATES_PENDING",
+  "user_release_authorization": {
+    "date": "2026-10-18",
+    "decision": "onayliyorum yayin yetkisini de onayladim",
+    "publication_requires_g0_g1_g2_g4": true,
+    "type": "HF18_IDENTITY_SPECIFIC_EXPLICIT_SOURCE_AND_PUBLICATION_AUTHORIZATION"
+  },
+  "windows_tested_checkpoint": {
+    "hf16": "CARRY_FORWARD_ONLY_IF_BINARY_INPUT_PARITY_RECHECKED",
+    "ids07": "PASS_USER_WINDOWS_LOGS_SHIPPING_DLL_SHA256_5f442bc1fd740e3bac907d67142be50a50ce5dfce9120796c0e4a0760179d939",
+    "ids08": "PASS_QA_ONLY_NO_RUNTIME_DELTA"
+  }
+}

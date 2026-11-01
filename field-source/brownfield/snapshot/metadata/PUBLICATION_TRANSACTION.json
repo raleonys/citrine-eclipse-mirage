@@ -1,0 +1,21 @@
+{
+  "candidate_package_filename": "preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+  "candidate_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "canonical_before": {
+    "identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 18",
+    "sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0"
+  },
+  "canonical_pointer_committed": false,
+  "dependency": "Require Library uploaded bytes readback and provenance before pointer update; never claim current before commit.",
+  "external_artifact_hash_binding": "EXTERNAL_SIDECAR_SHA256_AFTER_SEAL",
+  "official_package_filename": "preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "post_commit_verified": false,
+  "production_authorized": true,
+  "publication_authorization": {
+    "required": "EXPLICIT_USER_PUBLICATION_APPROVAL",
+    "status": "GRANTED_HF19_2026_10_19_SUBJECT_TO_G0_G1_G2_G4"
+  },
+  "publication_authorized": true,
+  "publication_stage": "HF19_PREPUBLICATION_G0_G1_G2_G4_PENDING_NO_POINTER_COMMIT"
+}

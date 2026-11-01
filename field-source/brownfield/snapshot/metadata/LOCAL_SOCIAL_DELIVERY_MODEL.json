@@ -1,0 +1,76 @@
+{
+  "current_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 09",
+  "current_route_registration": "REGISTERED_38_THROUGH_42_LOCAL_ONLY",
+  "current_shipping": {
+    "activation": "FIVE_ROUTES_38_TO_42_REGISTERED_LOCAL_ONLY",
+    "game_callback": "USER_REPORTED_PASS_UNBOUND_MACHINE_LOGS",
+    "handler_bindings": "42_OF_42_PASS",
+    "local_only_no_remote_ack_or_delivery": true,
+    "normal_route_count": 42,
+    "partial_wire_and_crash_exactly_once": "NOT_PROVEN",
+    "post_send_ack": "NOT_PROVEN",
+    "remote_backend_equivalence": "OUT_OF_SCOPE",
+    "source_scope": "PRODUCTION_SOCKET_TRANSACTION_PREPARE_ENCODE_SEND_COMMIT_ROLLBACK",
+    "transaction_wiring": "SOURCE_LINKED_WINDOWS_NATIVE_PASS",
+    "trusted_principal": "CONFIG2_PROFILE_AND_HOST_REGISTERED_LOCAL_RECIPIENTS",
+    "windows_native": "PASS_CARRIED_FORWARD_FROM_EXACT_FUNCTIONAL_HF08_SOURCE_6358cd413b5c6c8c7956f7559c2921677b39b864b80ed94312ee961aa18038f9"
+  },
+  "exact_functional_source_sha256": "6358cd413b5c6c8c7956f7559c2921677b39b864b80ed94312ee961aa18038f9",
+  "game_evidence_classification": "USER_REPORTED_PASS_UNBOUND_MACHINE_EVIDENCE",
+  "hf09_scope_notice": "No Local Social runtime or acceptance changes; all HF08 native/QA states below are historical HF08 results, not current HF09 acceptance.",
+  "historical_w05_model": {
+    "QA_worktree": {
+      "behavior_shards": "PASS_8_OF_8",
+      "compiled_source_linked_GCC_Clang": "PASS",
+      "native_windows": "NOT_RUN",
+      "source_qa_shards": "PASS_8_OF_8"
+    },
+    "change_class": "RESEARCH_TEST_MODEL_ONLY_NO_PRODUCTION_RUNTIME_CHANGE",
+    "coverage": [
+      "invalid input and untrusted actor before send",
+      "none/partial/complete reported send",
+      "misreported byte counts",
+      "rollback-before-commit generation invariants",
+      "local-only state commit after complete write",
+      "session reset between write and commit",
+      "five social route IDs remain unregistered",
+      "recipient ACK still absent"
+    ],
+    "immediate_parent": {
+      "identity": "HF08 W04 FULL SOURCE CANDIDATE",
+      "sha256": "21f11fe7c04935c0449a507f04350988da6164da990781347b421e560029b85d"
+    },
+    "lifecycle": "TEST_MODEL_ONLY_NO_CANONICAL_RELEASE_MUTATION",
+    "new_test_only_files": [
+      "tests/support/local_social_delivery_model.hpp",
+      "tests/support/local_social_delivery_model.cpp",
+      "tests/unit/test_local_social_delivery_model.cpp"
+    ],
+    "observable_shipping_behavior_change": false,
+    "production_CMake_source_graph_change": false,
+    "route_policy": {
+      "get_auth_token": "REMOVED_FROM_ACTIVE_SOURCE",
+      "ids": "1..42",
+      "registered": 37,
+      "unregistered_social": 5
+    },
+    "stage": "HF08_W05_RESEARCH_AND_TEST_MODEL_NOT_CURRENT_RELEASE_STATE",
+    "undischarged_blockers": {
+      "MSVC_native_CRT_CollegeFB27_Madden27": "NOT_RUN",
+      "crash_exactly_once_delivery": "NOT_CLAIMED",
+      "exact_social_XML_golden": "MISSING",
+      "live_reader_writer_external_synchronization": "MISSING",
+      "local_inbox_ACK": "MISSING",
+      "partial_write_peer_consistency": "UNSOLVED",
+      "social_route_registration": "UNREGISTERED_5_OF_5",
+      "socket_transaction_wiring": "MISSING",
+      "trusted_principal_issuer": "MISSING"
+    }
+  },
+  "immutable_release_ancestor": {
+    "identity": "3.2.5 SQUALERIS HOTFIX07 FULL SOURCE",
+    "sha256": "a21490ffe382508d75746ad27bca219d74bc3a42436d1dbc30a23e2e4bdb689f"
+  },
+  "schema": "dll-rd-football.hf08.local-social-delivery-current-with-w05-lineage.v2",
+  "security": "request UserId/peer IP/diagnostic identity forbidden as authorization; test-only lease is not real cryptographic authority"
+}

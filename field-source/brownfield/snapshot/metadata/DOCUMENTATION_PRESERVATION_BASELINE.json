@@ -1,0 +1,13 @@
+{
+  "schema": "dll-rd-football.documentation-current-surface.v1",
+  "release": "3.2.5 SQUALERIS",
+  "policy": "LIVE_DOCS_ONLY_CHANGELOG_CANONICAL_HISTORY_LIBRARY_IMMUTABLE_PROVENANCE",
+  "forbidden_dirs": [
+    "docs/history",
+    "docs/historical",
+    "docs/research",
+    "docs/governance"
+  ],
+  "governance": "docs/PROJECT_GOVERNANCE_CONTRACT.md",
+  "migration_ledger": "metadata/DOCUMENTATION_HISTORY_MIGRATION.json"
+}

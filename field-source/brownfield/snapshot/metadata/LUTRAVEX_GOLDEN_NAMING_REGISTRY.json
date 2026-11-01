@@ -1,0 +1,443 @@
+{
+  "schema": "preloader_l.lutravex_golden_naming.v1",
+  "scheme": "LUTRAVEX Golden Naming Scheme",
+  "current_release": {
+    "version": "3.2.5",
+    "codename": "SQUALERIS",
+    "status": "ASSIGNED_CURRENT_RELEASE"
+  },
+  "registry_model": "ONE_GLOBAL_RESERVED_ROOT_NAMESPACE_WITH_EXPLICIT_DERIVED_LINEAGE",
+  "historical_reserved_roots": [
+    "ACCESSORS",
+    "ACCIPHEXON",
+    "ACCIPTRIX",
+    "AEGIS",
+    "AQUILIX",
+    "AQUILORYX",
+    "AQUORIN",
+    "AQUYRA",
+    "ARANEZOLTH",
+    "ARYRA",
+    "ATTRS",
+    "AUTHORYX",
+    "AXIS",
+    "BOREAL",
+    "BOVYRA",
+    "BUILDER",
+    "CALLBACK",
+    "CANVYRA",
+    "CAPRORYX",
+    "CAPRYRA",
+    "CASTORADRON",
+    "CERVRAX",
+    "CERVYRA",
+    "CHAIN",
+    "CINDER",
+    "CIVETAVEX",
+    "CONTEXT",
+    "CORVATRIX",
+    "CORVEXIS",
+    "CORVEXON",
+    "CORVIONYX",
+    "CORVODRAX",
+    "CORVYRA",
+    "CUNYRA",
+    "D7",
+    "DELPHYRA",
+    "DRACO",
+    "ECHO",
+    "EQUYRA",
+    "FAILSAFE",
+    "FAILURES",
+    "FALCION",
+    "FALCORYNTH",
+    "FALCORYX",
+    "FALCYNEX",
+    "FALCYRA",
+    "FALVEX",
+    "FELIVEXON",
+    "FELNIX",
+    "FELORYNTH",
+    "FELYRA",
+    "FIELDS",
+    "FORGE",
+    "FORMATTER",
+    "GENETAVEX",
+    "GLAIVE",
+    "HANDLERMAP",
+    "HEAP",
+    "HELIX",
+    "HELPERS",
+    "ION",
+    "JAVELIN",
+    "KESTREL",
+    "LANCER",
+    "LEONYRA",
+    "LEPORVEX",
+    "LUPHEON",
+    "LUPHORYX",
+    "LUPRAX",
+    "LUPYRA",
+    "LUTRAVEX",
+    "LUTRAVYX",
+    "LUTRAXION",
+    "LYCION",
+    "LYNCYRA",
+    "LYNX",
+    "LYNXADRON",
+    "LYNXAVEX",
+    "LYNXOR",
+    "LYNXORYX",
+    "MANTIS",
+    "MARTAVEX",
+    "MATERIALIZERS",
+    "MATRIX",
+    "MELAVEX",
+    "MELOTRIX",
+    "MERLORYX",
+    "MUSTAVEX",
+    "MUSTEL",
+    "MUSTELDRAX",
+    "MUSTORIN",
+    "NAUTILKHEON",
+    "NEXORYX",
+    "NEXUS",
+    "NEXYRA",
+    "NOVA",
+    "ORACLE",
+    "ORBIT",
+    "ORNORYX",
+    "OVYRA",
+    "PANTHORIX",
+    "PANTHYRA",
+    "PARDAVEX",
+    "PARDYX",
+    "PARSER",
+    "PATH",
+    "PHOENIX",
+    "POLICY",
+    "PORCYRA",
+    "PRIMITIVES",
+    "PRISM",
+    "PROFILE",
+    "PTDINIT",
+    "PTDTEARDOWN",
+    "PULSE",
+    "QUARTZ",
+    "RANQUEL",
+    "RAPTYRA",
+    "RAVEN",
+    "RELAY",
+    "RENDERERS",
+    "REPLAY",
+    "RETURN",
+    "ROUTES",
+    "SABLE",
+    "SCIURONYX",
+    "SELECTORS",
+    "SENTINEL",
+    "SINKS",
+    "SKYSECT",
+    "SPINE",
+    "STATECHAIN",
+    "STREAM",
+    "STRIXON",
+    "SUBMIT",
+    "TALON",
+    "TAURYRA",
+    "TIGRYRA",
+    "TRACER",
+    "UMBRA",
+    "UNWIND",
+    "URSORYX",
+    "URSVEX",
+    "URSYNEX",
+    "URSYRA",
+    "VARYRA",
+    "VECTOR",
+    "VEIL",
+    "VELORYX",
+    "VESPERA",
+    "VIGIL",
+    "VIVERRAVEX",
+    "VSTREAM",
+    "VULPATRIX",
+    "VULPAX",
+    "VULPHEXIS",
+    "VULPHEXON",
+    "VULPORYX",
+    "VULPYRA",
+    "WARDEN",
+    "WRAITH",
+    "ZENITH"
+  ],
+  "current_assigned_roots": [
+    "SQUALERIS"
+  ],
+  "rules": [
+    "Every new root token is globally unique across project history.",
+    "A historical root may never be reassigned to an unrelated identity.",
+    "A historical root may be intentionally inherited by a Golden/protocol/verifier/policy identity when lineage is explicit and provenance-preserving.",
+    "Derived lineage is not reuse: ARYRA Golden Layout, URSYNEX Golden Finalizer, MUSTAVEX Golden Metadata, CORVEXON Golden Trail, FALCION Golden Cleaning and LUTRAVEX Golden Naming Scheme are intentional inherited authorities.",
+    "One semantic version has one normalized release codename prospectively; historical anomalies are preserved rather than rewritten.",
+    "One release codename identifies one normalized semantic version prospectively; superseded naming artifacts remain recorded with status.",
+    "Correction/build labels do not create a second release identity.",
+    "Every assigned root enters the permanent reserved registry immediately.",
+    "Before assignment, candidates are checked against CHANGELOG registry, package/documentation tokens and Library/file-name history.",
+    "Release codenames use an original Latin animal root plus an approved Bakugan-like synthetic suffix family.",
+    "Prospective semantic releases rotate suffix families; the current family must differ from each of the three immediately prior semantic-release families."
+  ],
+  "lineage": {
+    "ARYRA": {
+      "origin": [
+        "2.6.0 historical release identity"
+      ],
+      "derived": [
+        "ARYRA Golden Layout"
+      ],
+      "intent": "INTENTIONAL_SUPERSEDING_POLICY_LINEAGE",
+      "unrelated_reassignment": "PROHIBITED"
+    },
+    "MUSTAVEX": {
+      "origin": [
+        "2.9.5 historical release identity"
+      ],
+      "derived": [
+        "MUSTAVEX Golden Metadata"
+      ],
+      "intent": "INTENTIONAL_SUPERSEDING_POLICY_LINEAGE",
+      "unrelated_reassignment": "PROHIBITED"
+    },
+    "LUTRAVEX": {
+      "origin": [
+        "3.0.9 historical release identity"
+      ],
+      "derived": [
+        "LUTRAVEX Golden Naming Scheme"
+      ],
+      "intent": "INTENTIONAL_GOVERNANCE_POLICY_LINEAGE",
+      "unrelated_reassignment": "PROHIBITED"
+    },
+    "CORVEXON": {
+      "origin": [
+        "3.1.1 normalized release identity",
+        "3.1.2 superseded naming-only artifact"
+      ],
+      "derived": [
+        "CORVEXON Golden Trail"
+      ],
+      "intent": "INTENTIONAL_FINAL_BINARY_ACCEPTANCE_POLICY_LINEAGE",
+      "unrelated_reassignment": "PROHIBITED"
+    },
+    "URSYNEX": {
+      "origin": [
+        "2.9.3 historical release identity"
+      ],
+      "derived": [
+        "URSYNEX Golden Finalizer"
+      ],
+      "intent": "INTENTIONAL_POST_LINK_FINALIZER_POLICY_LINEAGE",
+      "unrelated_reassignment": "PROHIBITED"
+    },
+    "FALCION": {
+      "origin": [
+        "historical reserved project identity"
+      ],
+      "derived": [
+        "FALCION Golden Cleaning"
+      ],
+      "intent": "INTENTIONAL_RELEASE_CLEANING_POLICY_LINEAGE",
+      "unrelated_reassignment": "PROHIBITED"
+    }
+  },
+  "historical_anomalies": [
+    {
+      "type": "CODENAME_REUSED_ACROSS_VERSIONS",
+      "root": "ORBIT",
+      "versions": [
+        "1.8.13",
+        "2.1.1"
+      ]
+    },
+    {
+      "type": "CODENAME_REUSED_ACROSS_VERSIONS",
+      "root": "VIGIL",
+      "versions": [
+        "1.10.0",
+        "2.0.0"
+      ]
+    },
+    {
+      "type": "CODENAME_REUSED_ACROSS_VERSIONS",
+      "root": "ACCIPTRIX",
+      "versions": [
+        "2.7.9",
+        "2.8.0",
+        "2.8.1"
+      ]
+    },
+    {
+      "type": "MULTIPLE_NAMES_ONE_VERSION",
+      "version": "1.8.10",
+      "roots": [
+        "LANCER",
+        "LYNX"
+      ]
+    },
+    {
+      "type": "MULTIPLE_NAMES_ONE_VERSION",
+      "version": "2.2.4",
+      "roots": [
+        "PROFILE",
+        "SINKS"
+      ]
+    },
+    {
+      "type": "MULTIPLE_NAMES_ONE_VERSION",
+      "version": "2.6.0",
+      "roots": [
+        "ARYRA",
+        "BOVYRA"
+      ]
+    },
+    {
+      "type": "MULTIPLE_NAMES_ONE_VERSION",
+      "version": "2.6.1",
+      "roots": [
+        "CUNYRA",
+        "OVYRA"
+      ]
+    },
+    {
+      "type": "MULTIPLE_NAMES_ONE_VERSION",
+      "version": "2.8.5",
+      "roots": [
+        "LYNXORYX",
+        "MERLORYX"
+      ]
+    },
+    {
+      "type": "SUPERSEDED_NAMING_ONLY_ARTIFACT",
+      "version": "3.1.2",
+      "roots": [
+        "CORVEXON",
+        "VULPHEXON"
+      ],
+      "normalized": "VULPHEXON"
+    }
+  ],
+  "verified_corrections_to_prior_135_identifier_report": {
+    "missing_release_roots": [
+      "CUNYRA",
+      "FALCORYNTH",
+      "LYNXAVEX",
+      "MUSTELDRAX"
+    ],
+    "missing_internal_codename_like_roots": [
+      "AQUORIN",
+      "AUTHORYX",
+      "FALVEX",
+      "FELNIX",
+      "LUPRAX",
+      "LYNXOR",
+      "MUSTEL",
+      "PARDYX",
+      "URSORYX",
+      "URSVEX",
+      "VULPAX"
+    ],
+    "prior_count": 135,
+    "corrected_historical_reserved_count": 150
+  },
+  "excluded_descriptors_not_roots": [
+    "FULL",
+    "FINAL",
+    "SOURCE",
+    "RELEASE",
+    "REPORT",
+    "CORRECTION1",
+    "CORRECTION2",
+    "CORRECTIONx",
+    "WORKING",
+    "FEATURE_COMPLETION",
+    "CANDIDATE",
+    "MINIMAL",
+    "DELTA",
+    "SHA256",
+    "R1",
+    "R2",
+    "C1",
+    "C4"
+  ],
+  "current_codename_provenance": {
+    "codename": "SQUALERIS",
+    "approval_source": "PROJECT_RULES_MASTER 2026-10-07.3 approved 3.2.x batch",
+    "status": "USER_APPROVED_CURRENT_RELEASE"
+  },
+  "notes": [
+    "CHANGELOG.md contains one machine-readable reserved namespace block at document end and is the human-facing historical policy.",
+    "This JSON is the synchronized machine-readable naming policy used by QA.",
+    "Historical anomalies are evidence and are never normalized away.",
+    "CASTORADRON moved to the historical reserved set when 3.2.0 SCIURONYX was assigned.",
+    "SCIURONYX is the user-approved 3.2.0 historical root; the prior VULPAVEX proposal is rejected and non-authoritative.",
+    "The suffix-family pool remains rotation-balanced rather than dominated by AVEX/VEX-like endings.",
+    "SCIURONYX moved to the historical reserved set when 3.2.1 CERVRAX was assigned.",
+    "CERVRAX moved to the historical reserved set when 3.2.2 MUSTORIN was assigned.",
+    "MUSTORIN moved to the historical reserved set when 3.2.3 MELOTRIX was assigned.",
+    "MELOTRIX is the user-approved 3.2.3 current root; root provenance is Meles/badger with synthetic -TRIX suffix.",
+    "MELOTRIX moved to the historical reserved set when 3.2.4 RANQUEL was assigned.",
+    "RANQUEL is the user-approved 3.2.4 current root; root provenance is Rana/frog with synthetic -QUEL suffix.",
+    "RANQUEL moved to the historical reserved set when 3.2.5 SQUALERIS was assigned from the user-approved Library master batch."
+  ],
+  "historical_reserved_root_count_pre_3_1_4": 151,
+  "historical_reserved_root_count_pre_3_1_5": 152,
+  "historical_reserved_root_count_pre_3_1_6": 153,
+  "historical_reserved_root_count_pre_3_1_7": 154,
+  "historical_reserved_root_count_pre_3_1_8": 155,
+  "suffix_family_pool": [
+    "ADRON",
+    "AXION",
+    "DRAX",
+    "ORYNTH",
+    "ORYX",
+    "ONYX",
+    "HEON",
+    "YRA",
+    "ATRIX",
+    "EXIS",
+    "NEX",
+    "AVYX",
+    "VEXON",
+    "HEXON",
+    "AVEX",
+    "VEX",
+    "RAX",
+    "ORIN",
+    "TRIX",
+    "QUEL",
+    "ERIS"
+  ],
+  "suffix_rotation_policy": {
+    "recent_release_window": 3,
+    "current_family": "ERIS",
+    "recent_release_families": [
+      "QUEL",
+      "TRIX",
+      "ORIN"
+    ],
+    "current_must_differ_from_recent_window": true,
+    "high_repetition_families": [
+      "AVEX",
+      "VEX",
+      "VEXON",
+      "HEXON"
+    ],
+    "intent": "DIVERSIFY_PROSPECTIVE_RELEASE_NAMES"
+  },
+  "historical_reserved_root_count_pre_3_1_9": 156,
+  "historical_reserved_root_count_pre_3_2_0": 157,
+  "historical_reserved_root_count_pre_3_2_1": 157,
+  "historical_reserved_root_count_pre_3_2_2": 159,
+  "historical_reserved_root_count_pre_3_2_4": 161,
+  "historical_reserved_root_count_pre_3_2_5": 162
+}

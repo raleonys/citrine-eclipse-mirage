@@ -1,0 +1,90 @@
+{
+  "canonical_hf07_immutability": "REQUIRED_AND_RECHECKED",
+  "claim": "42_OF_42_NORMAL_ROUTES_SOURCE_REGISTERED_WINDOWS_NATIVE_ACCEPTED_LOCAL_ONLY_GAME_USER_REPORTED",
+  "current_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 09",
+  "current_route_registration": "REGISTERED_38_THROUGH_42_LOCAL_ONLY",
+  "exact_functional_source_sha256": "6358cd413b5c6c8c7956f7559c2921677b39b864b80ed94312ee961aa18038f9",
+  "exact_release_parent_hf07_sha256": "a21490ffe382508d75746ad27bca219d74bc3a42436d1dbc30a23e2e4bdb689f",
+  "game_evidence_classification": "USER_REPORTED_PASS_UNBOUND_MACHINE_EVIDENCE",
+  "gates": {
+    "atomic_readers_queryfriends_getblocklist": "LOCAL_POPULATED_XML_SOURCE_LINKED_WINDOWS_NATIVE_PASS_GAME_USER_REPORTED",
+    "bounded_local_read_snapshot_model": "SOURCE_BOUND_SERIALIZED",
+    "exact_social_XML_writer_grammar": "PROVISIONAL_LOCAL_ONLY_FRIEND_FIELDS_EXACT_CONSUMER_GOLDEN_NOT_INDEPENDENTLY_MACHINE_VERIFIED",
+    "fixture_only_mutual_friendship_seed": "NONSHIPPING_TEST_FIXTURE_ONLY",
+    "local_inbox_ack_adapter": "LOCAL_COMMITTED_STORE_ONLY_NOT_GAME_OR_REMOTE_ACK",
+    "native_social_callback_acceptance": "WINDOWS_NATIVE_SCENARIOS_PASS_GAME_CALLBACK_USER_REPORTED_NOT_MACHINE_LOG_BOUND",
+    "production_shipping_social_registration": "5_OF_5_SOURCE_REGISTERED_AND_BOUND_WINDOWS_NATIVE_PASS_LOCAL_ONLY",
+    "remote_request_UserId_not_auth": "ENFORCED",
+    "remote_social_backend_equivalence": "OUT_OF_SCOPE",
+    "social_delivery_partial_wire_crash": "OPEN_PARTIAL_WRITE_AND_POST_SEND_COMMIT_GAP",
+    "transaction_send_commit_wiring": "PRODUCTION_SOURCE_BOUND_FAILURE_GAP_DOCUMENTED",
+    "trusted_runtime_session_principal_lease": "CONFIG2_PROFILE_BOUND_WITH_HOST_RECEIVER_LIST_SOURCE_TEST_PASS",
+    "w05_model_only_delivery_test": "HISTORICAL_W05_TEST_MODEL_PASS_SUPERSEDED_BY_HF08_CURRENT_SOURCE_QA_PASS"
+  },
+  "hf09_scope_notice": "No Local Social runtime or acceptance changes; all HF08 native/QA states below are historical HF08 results, not current HF09 acceptance.",
+  "historical_w01_w05_parents": {
+    "immediate_source_parent_w02_sha256": "4fdf4e2bc633d6905b6f4df3a006e3e60347843bf5433c59ccde26f4165c9cc1",
+    "immediate_source_parent_w03_sha256": "b019115839dd77685f090927197e97e7677990e5add394501907c284222e0511",
+    "immediate_source_parent_w04_sha256": "21f11fe7c04935c0449a507f04350988da6164da990781347b421e560029b85d",
+    "previous_w01_sha256": "690c19aa3ef7c698419c4748575b24020a45bd50ede6762f0f840b695a537040"
+  },
+  "historical_w05_production_cpp_graph_sha256": "d11540f71c27f5b085fdb1e0e6ac65485639a54586bfe3f2a3da8e48bed97688",
+  "historical_w05_qa_observed": {
+    "behavior_min_hook_shards": "PASS_8_OF_8",
+    "inherited_release_docs_headings": "RESTORED_HEADINGS_W02_W04_DETAIL_PRESERVED",
+    "local_model_GCC_Clang": "PASS",
+    "portable_syntax": "PASS_128_OF_128",
+    "preexisting_achievement_coherence_link_gap": "CLOSED_QA_ONLY_BY_ADDING_W02_HANDLER_TUS",
+    "production_windows_syntax_graph": "PASS_129_OF_129_SOURCE_ONLY",
+    "release_source_QA_worktree_shards": "PASS_8_OF_8_EXACT_PREVIOUS_SEALED_HF08_2e3d8598fc1149f5ae5863a2b7a173bf79b27ebb327ed9664e339bdf2a8aaab8",
+    "repository_contract": "PASS",
+    "route_id": "PASS_1_TO_42_ALL_42_REGISTERED_HANDLER_BOUND",
+    "source_package_qa": "PASS_8_OF_8_WORKTREE_AND_8_OF_8_FRESH_EXTRACT_PREVIOUS_PACKAGE_2e3d8598fc1149f5ae5863a2b7a173bf79b27ebb327ed9664e339bdf2a8aaab8",
+    "unit_syntax": "PASS_211_OF_211",
+    "windows_msvc_native_crt_games": "WINDOWS_MSVC_PRODUCTION_NATIVE_CRT_DEBUG_PASS;_GAMES_USER_REPORTED_PASS_NO_MACHINE_LOGS"
+  },
+  "identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 08 / current local-only shipping contract",
+  "native_release_tests": "PASS_WINDOWS_NATIVE_EXACT_FUNCTIONAL_SOURCE_6358cd413b5c6c8c7956f7559c2921677b39b864b80ed94312ee961aa18038f9",
+  "qa_observed": {
+    "clean_extract_qa": "PASS_8_OF_8_PRIOR_SEALED_PACKAGE; CURRENT_REPLAY_REQUIRES_EXTERNAL_QA_RECEIPT",
+    "games": "COLLEGEFB27_MADDEN27_USER_REPORTED_PASS_NO_INDEPENDENT_LOGS",
+    "route_id_inventory": "PASS_42_OF_42_HANDLER_BOUND",
+    "source_qa": "PASS_8_OF_8_PRIOR_SEALED_PACKAGE; CURRENT_REPLAY_REQUIRES_EXTERNAL_QA_RECEIPT",
+    "windows_acceptance": "PASS_PRODUCTION_GOLDEN_NATIVE_CRT_DEBUG",
+    "windows_source_sha256": "6358cd413b5c6c8c7956f7559c2921677b39b864b80ed94312ee961aa18038f9"
+  },
+  "schema": "dll-rd-football.hf08.current-social-security-gates.v2",
+  "social_route_ids": [
+    {
+      "handler": "LOCAL_ONLY_TRANSACTION_BOUND_GAME_CALLBACK_USER_REPORTED_NOT_INDEPENDENTLY_VERIFIED",
+      "id": 38,
+      "name": "BlockUser",
+      "shipping_lookup": "SOURCE_REGISTERED_WINDOWS_NATIVE_ACCEPTED_LOCAL_ONLY"
+    },
+    {
+      "handler": "LOCAL_ONLY_TRANSACTION_BOUND_GAME_CALLBACK_USER_REPORTED_NOT_INDEPENDENTLY_VERIFIED",
+      "id": 39,
+      "name": "UnblockUser",
+      "shipping_lookup": "SOURCE_REGISTERED_WINDOWS_NATIVE_ACCEPTED_LOCAL_ONLY"
+    },
+    {
+      "handler": "LOCAL_ONLY_TRANSACTION_BOUND_GAME_CALLBACK_USER_REPORTED_NOT_INDEPENDENTLY_VERIFIED",
+      "id": 40,
+      "name": "RequestFriend",
+      "shipping_lookup": "SOURCE_REGISTERED_WINDOWS_NATIVE_ACCEPTED_LOCAL_ONLY"
+    },
+    {
+      "handler": "LOCAL_ONLY_TRANSACTION_BOUND_GAME_CALLBACK_USER_REPORTED_NOT_INDEPENDENTLY_VERIFIED",
+      "id": 41,
+      "name": "RemoveFriend",
+      "shipping_lookup": "SOURCE_REGISTERED_WINDOWS_NATIVE_ACCEPTED_LOCAL_ONLY"
+    },
+    {
+      "handler": "LOCAL_ONLY_TRANSACTION_BOUND_GAME_CALLBACK_USER_REPORTED_NOT_INDEPENDENTLY_VERIFIED",
+      "id": 42,
+      "name": "SendInvite",
+      "shipping_lookup": "SOURCE_REGISTERED_WINDOWS_NATIVE_ACCEPTED_LOCAL_ONLY"
+    }
+  ],
+  "working_model": "allocation-free bounded LocalSocialStore actor snapshots, one reservation, generation and epoch checks, serial anti-replay, pending friend/inbox states; test-only trust injection"
+}

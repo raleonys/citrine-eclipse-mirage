@@ -1,0 +1,106 @@
+{
+  "artifact_provenance": "metadata/ARTIFACT_PROVENANCE.json",
+  "canonical_parent_unchanged": "HF18_PUBLISHED_IMMUTABLE",
+  "change_authorization": "2026-10-19 HF19 complete production remediation, docs and conditional publication authorized; G0/G1/G2/G4 pending; previous HF18 current pointer immutable until verified commit",
+  "hf04_authorization": {
+    "parent_source_sha256": "7a41fc853a6659ad0acfd7edb5653071229af492ceccccc4179cb188db8c3392",
+    "production_authorized": true,
+    "production_published": "EXTERNAL_POINTER_COMMIT",
+    "target": "3.2.5 SQUALERIS HOTFIX05"
+  },
+  "hf05_authorization": {
+    "parent_official_artifact_sha256": "f2ebac88e7c4cebaafdd52adb72fb9a6a61cffbaf202595d5966afd6135aefda",
+    "production_authorized": true,
+    "target": "3.2.5 SQUALERIS HOTFIX05"
+  },
+  "hf06_authorization": {
+    "parent_official_artifact_sha256": "5e6a0f980bab3b7be26e9c287f0b859a9630bb131c06e84ebd329aaf386722e9",
+    "production_authorized": true,
+    "scope": "APPROVED_CMD_UI_PREVIEW_TO_OFFICIAL_HOTFIX06",
+    "target": "3.2.5 SQUALERIS HOTFIX06"
+  },
+  "hf07_authorization": {
+    "decision": "2026-10-11 user instruction: sonra da tüm dokümanları governance a göre güncelleyip artık hf07 yi düzgün şekilde yayınlayalım",
+    "parent_official_artifact_sha256": "daa58dff566762acd9255666c0077fdbcacb777798a93cd6b31c089c867af442",
+    "production_authorized": true,
+    "publication_authorized": true,
+    "publication_committed": false,
+    "target": "preloader_l 3.2.5 SQUALERIS HOTFIX 07"
+  },
+  "hf08_authorization": {
+    "current_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 08",
+    "date": "2026-10-11",
+    "exact_immediate_parent_sha256": "a21490ffe382508d75746ad27bca219d74bc3a42436d1dbc30a23e2e4bdb689f",
+    "production_authorized": true,
+    "scope": "GO_VERNANCE_ALIGNMENT_AND_OFFICIAL_HF08_PUBLICATION_FAIL_CLOSED"
+  },
+  "hf09_authorization": {
+    "current_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 09",
+    "exact_immediate_parent_sha256": "197ab6bf0f95302835547c69d265c312df396da463b90ca0a128ef59bc6e9d55",
+    "production_source_change_authorized": true,
+    "publication_pending_new_windows_and_game_acceptance": true,
+    "scope": "QP01_QCE03_QCE04_JR01_TWO_FILE_CLEAN_MINIMAL"
+  },
+  "hf10_authorization": {
+    "current_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 10",
+    "exact_immediate_parent_sha256": "f23eb4dd9da31ce2e6973a75fff42cce20f498c2c77e98acc150d2f816790bf9",
+    "production_source_change_authorized": true,
+    "publication_pending_new_windows_and_game_acceptance": true,
+    "scope": "ACHIEVEMENT_B_TWO_FRAME_RESPONSE_COMMIT_EVENT_FIFO_RETRY_THREE_FILE_CLEAN_MINIMAL"
+  },
+  "hf17_authorization": {
+    "exact_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 17",
+    "immediate_parent_sha256": "9b380e4d953dffd03ace8b762e1199f11ca8ca4f373d86a0c9b3c074d647082c",
+    "publication_authorized": true,
+    "publication_user_instruction": "2026-10-17 canonical publication authorization for HF17; no current pointer change before G2 and G4",
+    "source_implementation_authorized": true,
+    "user_instruction_date": "2026-10-17"
+  },
+  "hf18_authorization": {
+    "exact_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 18",
+    "immediate_official_parent_sha256": "1e629c07eeb21edaefd6f7f6fd9481ddb550116f8e77078cd02b1d11baa090b8",
+    "publication_authorized": true,
+    "publication_committed": false,
+    "publication_user_instruction": "onayliyorum yayin yetkisini de onayladim",
+    "source_implementation_authorized": true,
+    "technical_fix01_source_sha256": "34430997d336903582aabace70f6a760282ff088a05c66d9068393b85dbdf907",
+    "user_instruction_date": "2026-10-18"
+  },
+  "hf19_authorization": {
+    "exact_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+    "immediate_official_parent_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+    "publication_authorized": true,
+    "user_text": "başka sıkıntı var mı bunlardan başka ? yoksa eğer içinde epey dokümantasyon kusura da var şu anki hf18 in ve not release vs bir şeyler yazıyor pek çok modülde vs. hepsini düzelten komple bir hf19 yetkisi veriyorum."
+  },
+  "historical_hf17_binding_sha256": "d004e0c827817196c762aad96f33ef6bf967557fd85fc72c5ef6643022c4b091",
+  "library_master": {
+    "json_path": "/DLL R&D Football/governance/PROJECT_RULES_MASTER.json",
+    "json_sha256": "952af5e29f332f129287b44a7d7ed73cdc9ec35289d8e711e5870243d716085d",
+    "md_path": "/DLL R&D Football/governance/PROJECT_RULES_MASTER.md",
+    "md_sha256": "1be0e614f98dde1657aca9482be03a121c4f801ea724159592ec8f8853c1147a",
+    "revision": "2026-10-19.1"
+  },
+  "library_master_json_sha256": "952af5e29f332f129287b44a7d7ed73cdc9ec35289d8e711e5870243d716085d",
+  "library_master_md_sha256": "1be0e614f98dde1657aca9482be03a121c4f801ea724159592ec8f8853c1147a",
+  "master_revision": "2026-10-19.1",
+  "normative_governance_mirror_sha256": "d7c56a57cc496b72f040b9c55fb76126c964d473260b6a76e77c47305b5bb0f2",
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "packaged_mirror": {
+    "json": "metadata/PROJECT_GOVERNANCE_INVARIANTS.json",
+    "json_sha256": "e42afb2dc2bd181c3788ea74e70c2e1442152f0b952c5ac2c5d65e172e09df4c",
+    "md": "docs/PROJECT_GOVERNANCE_CONTRACT.md",
+    "md_sha256": "d7c56a57cc496b72f040b9c55fb76126c964d473260b6a76e77c47305b5bb0f2",
+    "policy": "NORMATIVE_RULES_ONLY_LIBRARY_DEBT_EXCLUDED_FAIL_CLOSED"
+  },
+  "packaged_mirror_status": "NORMATIVE_MIRROR_REBASED_FROM_LIBRARY_MASTER_2026_10_19_1_G1_PENDING",
+  "parent": {
+    "official_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 18",
+    "sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0"
+  },
+  "publication_authorized": true,
+  "release": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "release_parent_technical_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+  "release_type": "HOTFIX_RELEASE",
+  "runtime_semantic_delta": "HF17_4_OPTIONAL_PROCESS_AND_FOLDER_DETOURS_WHILE_INHERITING_HF16_SEVEN",
+  "schema": "dll-rd-football.release-governance-binding.v2"
+}

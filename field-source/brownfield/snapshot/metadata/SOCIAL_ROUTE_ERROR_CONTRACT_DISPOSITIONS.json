@@ -1,0 +1,15 @@
+{
+  "status": "CLOSED_RESEARCH_EVIDENCE_BLOCKED_FOR_SHIPPING_IMPLEMENTATION",
+  "routes": {
+    "RequestFriend": "EVIDENCE_BLOCKED_RESULT_CODE_DESCRIPTION_AND_MUTATION",
+    "RemoveFriend": "EVIDENCE_BLOCKED_RESULT_CODE_DESCRIPTION_AND_MUTATION",
+    "BlockUser": "EVIDENCE_BLOCKED_RESULT_CODE_DESCRIPTION_AND_MUTATION",
+    "UnblockUser": "EVIDENCE_BLOCKED_RESULT_CODE_DESCRIPTION_AND_MUTATION",
+    "SendInvite": "EVIDENCE_BLOCKED_RESULT_CODE_DESCRIPTION_AND_MUTATION"
+  },
+  "donor1_cross_arch_route_count": 39,
+  "donor1_scoped_route_hits": 0,
+  "consumer_response_family": "ErrorSuccess",
+  "rust_response_family": "ErrorSuccess",
+  "source_mutation_authorized_by_research": false
+}

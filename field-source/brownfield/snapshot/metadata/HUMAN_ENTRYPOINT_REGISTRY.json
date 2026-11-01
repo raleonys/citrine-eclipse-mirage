@@ -1,0 +1,39 @@
+{
+  "schema": "dll-rd-football.human-entrypoint-allowlist.v1",
+  "mode": "POSITIVE_DEFAULT_DENY",
+  "authoritative_source": "metadata/SCRIPT_OWNERSHIP.json",
+  "registered_entrypoints": [
+    {
+      "target": "scripts/build_orchestration/build_unstable.ps1",
+      "launcher": "scripts/build_orchestration/build_unstable.cmd",
+      "operation": "build_unstable"
+    },
+    {
+      "target": "scripts/build_orchestration/build_crt_acceptance.ps1",
+      "launcher": "scripts/build_orchestration/build_crt_acceptance.cmd",
+      "operation": "build_crt_acceptance"
+    },
+    {
+      "target": "scripts/build_orchestration/build_debug.ps1",
+      "launcher": "scripts/build_orchestration/build_debug.cmd",
+      "operation": "build_debug"
+    },
+    {
+      "target": "scripts/build_orchestration/build_native_acceptance.ps1",
+      "launcher": "scripts/build_orchestration/build_native_acceptance.cmd",
+      "operation": "build_native_acceptance"
+    },
+    {
+      "target": "scripts/build_orchestration/build_production.ps1",
+      "launcher": "scripts/build_orchestration/build_production.cmd",
+      "operation": "build_production"
+    }
+  ],
+  "unauthorized_entrypoint_dispositions": {
+    "scripts/build_orchestration/build_minhook_vendor.ps1": "INTERNAL_HELPER_NOT_OPERATOR",
+    "scripts/build_orchestration/launcher_common.cmd": "RETIRED_GENERIC_DISPATCHER",
+    "scripts/build_orchestration/build_minhook_vendor.cmd": "RETIRED_UNAUTHORIZED_HELPER_LAUNCHER"
+  },
+  "operator_interaction": "ALWAYS_VISIBLE_UNTIL_EXPLICIT_USER_DISMISSAL",
+  "automation_invocation": "DIRECT_AUTHORITATIVE_PS1_OR_PY_NOT_CMD"
+}

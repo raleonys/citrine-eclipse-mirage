@@ -1,0 +1,42 @@
+{
+  "collegefb27_game_network": {
+    "status": "NOT_RUN_HF18"
+  },
+  "governance_binding": "metadata/GOVERNANCE_BINDING.json",
+  "limitations": [
+    "HF19 inherits official HF18 as exact immutable immediate parent",
+    "Two inherited HF17/HF18 cleanup defects corrected in source; focused regression acceptance pending",
+    "HOTFIX G3 NOT_APPLICABLE; native, CRT, Golden and game acceptance not required for publication",
+    "G0/G1/G2/G4 are not yet claimed; publication not yet committed"
+  ],
+  "madden27_game_network": {
+    "status": "NOT_RUN_HF18"
+  },
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 19",
+  "publication_authorized": true,
+  "release_class_g3": {
+    "reason": "Only FINAL_RELEASE requires G3 per governance master revision 2026-10-18.2",
+    "status": "NOT_APPLICABLE"
+  },
+  "release_type": "HOTFIX_RELEASE",
+  "schema": "dll-rd-football.release-acceptance.v1",
+  "source_parent_sha256": "395084a6f6a19cbeed54b5faf249431357aa8fa5a2402a95dc66c47c921a30c0",
+  "source_qa": {
+    "status": "PENDING_G4_AUTHORITATIVE_8_OF_8_AND_FRESH_8_OF_8"
+  },
+  "static_crt": {
+    "status": "NOT_RUN_HF19_OPTIONAL_NONBLOCKING"
+  },
+  "windows_debug": {
+    "status": "NOT_RUN_HF18"
+  },
+  "windows_native": {
+    "status": "NOT_RUN_HF19_OPTIONAL_NONBLOCKING"
+  },
+  "windows_path_locale": {
+    "status": "NOT_RUN_HF18"
+  },
+  "windows_production_golden": {
+    "status": "NOT_RUN_HF19_OPTIONAL_NONBLOCKING"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "candidate_usage": "SHIPPING_NATIVE_RELEASERVER_ASIO_ACTIVE",
+  "complete_production_acceptance": false,
+  "governance_date": "2026-10-14",
+  "historical_contract": "metadata/DEPENDENCY_SOURCE_CONTRACT.json",
+  "historical_usage_is_not_current_ownership": true,
+  "note": "Production Asio 1.38.2 Windows IOCP; IDS06 receive 30s/frame 10s, IDS07 send 5s and reconnect/shutdown-drain native windows tests PASS; IDS08 QA 8/8 both trees plus Windows native path 4/4 PASS; user reported normal gameplay smoke, not instrumented full Consumer proof. Legacy socket test instrumentation retained outside production graph.",
+  "official_release_identity": "preloader_l 3.2.5 SQUALERIS HOTFIX 16",
+  "pinned_commit": "8806a6803cde7054c3049d3666d3ec36786568c5",
+  "production_service_owner_bridge_activated": true,
+  "production_service_owner_bridge_compiled": true,
+  "production_shipping_listener_integrated": true,
+  "production_shipping_session_integrated": true,
+  "requirements": {
+    "cmake_asio_include_for_production_and_debug": true,
+    "cmake_listener_source_for_production_and_debug": true,
+    "cmake_service_source_for_production_and_debug": true,
+    "cmake_session_source_for_production_and_debug": true,
+    "native_game_acceptance_pending": true,
+    "no_ASIO_DISABLE_IOCP": true,
+    "no_automatic_promotion": true,
+    "upstream_byte_identical": true
+  },
+  "schema": "dll-rd-football.asio-production-adoption.v1",
+  "scope": "CURRENT_SHIPPING_ASIO_IOCP_PRODUCTION",
+  "upstream_publication_record": "metadata/UPSTREAM_PUBLICATION_DATES.json",
+  "windows_msvc_real_iocp_verified": true,
+  "windows_native_acceptance": "PASS_IDS07_NATIVE_SEND_STALL_AND_IDS08_PATH_WITH_BOUNDARIES"
+}

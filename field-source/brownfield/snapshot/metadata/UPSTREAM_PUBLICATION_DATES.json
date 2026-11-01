@@ -1,0 +1,64 @@
+{
+  "schema": "dll-rd-football.upstream-publication-dates.v1",
+  "governance_date": "2026-10-14",
+  "purpose": "Record independently verified upstream published release dates, distinct from pinned commits and local import dates. This file changes no upstream bytes.",
+  "date_policy": "YYYY-MM-DD ISO8601. published_release_date means upstream tagged publication only, NEVER untagged pinned-commit or local integration date. Unknown is null, never inferred.",
+  "dependencies": {
+    "asio": {
+      "upstream": "chriskohlhoff/asio",
+      "pinned_commit": "8806a6803cde7054c3049d3666d3ec36786568c5",
+      "upstream_tag": "asio-1.38.2",
+      "published_release_date": "2026-07-19",
+      "pin_matches_exact_tag_revision": true,
+      "pinned_commit_date": null,
+      "local_integration_date": "2026-10-13",
+      "release_evidence_url": "https://github.com/chriskohlhoff/asio/commit/8806a6803cde7054c3049d3666d3ec36786568c5",
+      "qualification": "upstream README says released Sunday, 19 July 2026"
+    },
+    "pegtl": {
+      "upstream": "taocpp/PEGTL",
+      "pinned_commit": "3b075432e94f6f906425350b43d03cd9cebfa4f1",
+      "upstream_tag": "4.0.0",
+      "published_release_date": "2026-06-07",
+      "pin_matches_exact_tag_revision": false,
+      "pinned_commit_date": null,
+      "local_integration_date": "2026-10-13",
+      "release_evidence_url": "https://github.com/taocpp/PEGTL/blob/main/doc/Changelog.md",
+      "qualification": "Changelog release date for 4.0.0; currently pinned main commit identity retained separately"
+    },
+    "filesystem": {
+      "upstream": "gulrak/filesystem",
+      "pinned_commit": "3812f8a6f31ed67d32272ac33fe2b85c6b2c947e",
+      "upstream_tag": "v1.5.16",
+      "published_release_date": "2026-07-19",
+      "pin_matches_exact_tag_revision": false,
+      "pinned_commit_date": null,
+      "local_integration_date": "2026-10-13",
+      "release_evidence_url": "https://gulrak.net/",
+      "qualification": "Pinned 1.5.17 WIP is untagged; 2026-07-19 belongs to most recent verified 1.5.16 release, not to the pinned snapshot"
+    },
+    "minhook": {
+      "upstream": "TsudaKageyu/minhook",
+      "pinned_commit": "8af6b4acae5a9388fd742b56fa79ece89d96f823",
+      "upstream_tag": "v1.3.4",
+      "published_release_date": "2025-03-28",
+      "pin_matches_exact_tag_revision": false,
+      "pinned_commit_date": "2026-09-07",
+      "local_integration_date": null,
+      "release_evidence_url": "https://github.com/TsudaKageyu/minhook/releases",
+      "pinned_commit_evidence_url": "https://github.com/TsudaKageyu/minhook/commits",
+      "qualification": "Pinned Sep 2026 upstream commit is newer than Mar 2025 tagged release; never equate the two dates"
+    },
+    "tinyxml2": {
+      "upstream": "leethomason/tinyxml2",
+      "pinned_commit": "8224e427b655b83dae5e2298f1e6919523a78737",
+      "upstream_tag": "11.0.0",
+      "published_release_date": "2025-03-15",
+      "pin_matches_exact_tag_revision": false,
+      "pinned_commit_date": null,
+      "local_integration_date": null,
+      "release_evidence_url": "https://github.com/leethomason/tinyxml2/releases/tag/11.0.0",
+      "qualification": "Exact untagged master snapshot differs from 11.0.0 release tag; 2025-03-15 is tag release date only"
+    }
+  }
+}

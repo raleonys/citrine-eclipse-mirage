@@ -1,0 +1,17 @@
+{
+  "archive_basename": "preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+  "archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "field": "brownfield",
+  "file_count": 1898,
+  "import_parent_commit": "6372de4422c05f8bd76ced119ceea46cdd7ebf03",
+  "main_application_unchanged": true,
+  "native_or_game_acceptance_inherited": false,
+  "not_release": true,
+  "schema": "cem.field-source-import.v1",
+  "snapshot_import_only": true,
+  "source_branch": "research/field-retirement/brownfield",
+  "source_class": "OFFICIAL_SOURCE_REFERENCE",
+  "source_file_manifest_sha256": "e5ebaebcb5b6ef0c734fd46fa2c65aace60ee3eb7b4bbad7a61d87eae230567c",
+  "source_import_kit_sha256": "62383643ff46d1cb65a5d1d6c2bb2d2a6607e7b5da5f267deb57dddd6f7a8886",
+  "uncompressed_bytes": 15065110
+}

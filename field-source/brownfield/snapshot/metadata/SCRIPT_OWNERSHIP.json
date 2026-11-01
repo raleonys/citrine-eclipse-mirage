@@ -1,0 +1,1117 @@
+{
+  "human_invocation_contract": {
+    "arbitrary_caller_cwd_required": true,
+    "automation_entrypoint": "scripts/test_release_qa.py",
+    "classification_rule": "Only records explicitly marked HUMAN_OPERATOR_ENTRYPOINT require a launcher; all others are internal automation/helpers unless later reclassified.",
+    "direct_same_stem_invocation_required": true,
+    "exact_exit_code_required": true,
+    "forward_all_arguments_required": true,
+    "generic_dispatcher_forbidden": true,
+    "interactive_completion": "ALL_HUMAN_OPERATORS_EXPLICIT_DISMISSAL_REQUIRED",
+    "launcher_extension": ".cmd",
+    "parallel_bat_forbidden": true,
+    "positive_registry_default_deny": true,
+    "same_directory_same_semantic_stem": true,
+    "schema": "dll-rd-football.human-invocation-registry.v1",
+    "thin_wrapper_only": true
+  },
+  "schema_version": 1,
+  "scripts": [
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "minhook-build",
+      "path": "scripts/build_orchestration/PatchMinHookSafeFreeze.cmake",
+      "purpose": "Configure-time SAFE-FREEZE patch application for the pinned MinHook build-tree copy."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "build-orchestration",
+      "path": "scripts/build_orchestration/build_common.ps1",
+      "purpose": "Shared Windows build environment, toolchain binding, confinement and provenance helpers."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "LAUNCHER_SURFACE",
+      "launcher": null,
+      "owner": "build-entrypoints",
+      "path": "scripts/build_orchestration/build_crt_acceptance.cmd",
+      "purpose": "Same-stem direct PowerShell operator launcher; exact exit status and visible completion retention; no shared dispatcher."
+    },
+    {
+      "human_invocable": true,
+      "invocation_class": "HUMAN_OPERATOR_ENTRYPOINT",
+      "launcher": "scripts/build_orchestration/build_crt_acceptance.cmd",
+      "owner": "build-orchestration",
+      "path": "scripts/build_orchestration/build_crt_acceptance.ps1",
+      "purpose": "Windows build or acceptance orchestration for the named target."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "LAUNCHER_SURFACE",
+      "launcher": null,
+      "owner": "build-entrypoints",
+      "path": "scripts/build_orchestration/build_debug.cmd",
+      "purpose": "Same-stem direct PowerShell operator launcher; exact exit status and visible completion retention; no shared dispatcher."
+    },
+    {
+      "human_invocable": true,
+      "invocation_class": "HUMAN_OPERATOR_ENTRYPOINT",
+      "launcher": "scripts/build_orchestration/build_debug.cmd",
+      "owner": "build-orchestration",
+      "path": "scripts/build_orchestration/build_debug.ps1",
+      "purpose": "Windows build or acceptance orchestration for the named target."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "dependency-provenance",
+      "path": "scripts/build_orchestration/build_minhook_vendor.ps1",
+      "purpose": "Pinned MinHook source materialization invoked internally by project build tools; not a human operator entrypoint."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "LAUNCHER_SURFACE",
+      "launcher": null,
+      "owner": "build-entrypoints",
+      "path": "scripts/build_orchestration/build_native_acceptance.cmd",
+      "purpose": "Same-stem direct PowerShell operator launcher; exact exit status and visible completion retention; no shared dispatcher."
+    },
+    {
+      "human_invocable": true,
+      "invocation_class": "HUMAN_OPERATOR_ENTRYPOINT",
+      "launcher": "scripts/build_orchestration/build_native_acceptance.cmd",
+      "owner": "build-orchestration",
+      "path": "scripts/build_orchestration/build_native_acceptance.ps1",
+      "purpose": "Windows build or acceptance orchestration for the named target."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "LAUNCHER_SURFACE",
+      "launcher": null,
+      "owner": "build-entrypoints",
+      "path": "scripts/build_orchestration/build_production.cmd",
+      "purpose": "Same-stem direct PowerShell operator launcher; exact exit status and visible completion retention; no shared dispatcher."
+    },
+    {
+      "human_invocable": true,
+      "invocation_class": "HUMAN_OPERATOR_ENTRYPOINT",
+      "launcher": "scripts/build_orchestration/build_production.cmd",
+      "owner": "build-orchestration",
+      "path": "scripts/build_orchestration/build_production.ps1",
+      "purpose": "Windows build or acceptance orchestration for the named target."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "build-orchestration",
+      "path": "scripts/build_orchestration/build_unstable.cmd",
+      "purpose": "Same-stem interactive operator launcher for local MSVC compile-only build."
+    },
+    {
+      "human_invocable": true,
+      "invocation_class": "HUMAN_OPERATOR_ENTRYPOINT",
+      "launcher": "scripts/build_orchestration/build_unstable.cmd",
+      "owner": "build-orchestration",
+      "path": "scripts/build_orchestration/build_unstable.ps1",
+      "purpose": "Local MSVC configure+compile/link only, never canonical publication or Golden acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-qa",
+      "path": "scripts/check_active_filename_policy.py",
+      "purpose": "Fail-closed project-owned active path and operational filename governance; excludes immutable historical contents."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-source-contract",
+      "path": "scripts/check_active_release_contract.py",
+      "purpose": "Version-independent active source metadata contract; no G0, G2, G4, or publication authorization."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_avatar_path.py",
+      "purpose": "Fail-closed static/source policy gate for avatar path."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_crt_runtime_policy.py",
+      "purpose": "Fail-closed static/source policy gate for crt runtime policy."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_crt_transition.py",
+      "purpose": "Fail-closed static/source policy gate for crt transition."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-governance",
+      "path": "scripts/check_current_identity_hygiene.py",
+      "purpose": "Fail closed when current runtime/native source or canonical behavioral entrypoint carries obsolete semantic-release/codename identity tokens instead of release-independent contract terminology."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_data_footprint.py",
+      "purpose": "Fail-closed static/source policy gate for data footprint."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_documentation_migration.py",
+      "purpose": "Fail-closed documentation/history migration, live-doc surface and governance mirror gate."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_environment_restore.py",
+      "purpose": "Fail-closed static/source policy gate for environment restore."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-g0",
+      "path": "scripts/check_external_g0.py",
+      "purpose": "Version-independent six-input outside-source SHA-pinned G0 authority validator; prepublication only"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_falcion_golden_cleaning.py",
+      "purpose": "Fail-closed static/source policy gate for falcion golden cleaning."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_filename_migration.py",
+      "purpose": "Fail-closed static/source policy gate for filename migration."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_fixset.py",
+      "purpose": "Fail-closed static/source policy gate for fixset."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_golden_protocol_policy.py",
+      "purpose": "Fail-closed static/source policy gate for golden protocol policy."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "universal-governance-first",
+      "path": "scripts/check_governance_first.py",
+      "purpose": "Version-independent external G0 entry point; local development builds unaffected"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-prepublication-governance",
+      "path": "scripts/check_hf17_candidate_identity.py",
+      "purpose": "Fail-closed HF17 prepublication candidate identity and publication boundary; not an official-release checker."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-g2-release-qa",
+      "path": "scripts/check_hf17_documentation_migration.py",
+      "purpose": "HF17-specific G2 release-identity variant retaining all applicable historical source tests and fail-closed status assertions; original HF16 validator retained byte-identical"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-prepublication-governance",
+      "path": "scripts/check_hf17_integration.py",
+      "purpose": "Bounded HF17 11-hook source graph and gated optional hook topology; not Windows acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-g2-release-qa",
+      "path": "scripts/check_hf17_lutravex_golden_naming.py",
+      "purpose": "HF17-specific G2 release-identity variant retaining all applicable historical source tests and fail-closed status assertions; original HF16 validator retained byte-identical"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-governance-first-release-contract",
+      "path": "scripts/check_hf17_release_contract.py",
+      "purpose": "Fail-closed G1 HOTFIX_RELEASE HF17 acceptance freshness and invariants; preserves historical HF16 contract byte-exact, G2/G3/G4 not claimed."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-g2-release-qa",
+      "path": "scripts/check_hf17_source_cleanup.py",
+      "purpose": "HF17-specific G2 release-identity variant retaining all applicable historical source tests and fail-closed status assertions; original HF16 validator retained byte-identical"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_hook_terminal_policy.py",
+      "purpose": "Fail-closed static/source policy gate for hook terminal policy."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-governance",
+      "path": "scripts/check_human_launcher_contract.py",
+      "purpose": "Fail-closed current human-entrypoint inventory and same-stem launcher static enforcement"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_integration_collisions.py",
+      "purpose": "Fail-closed static/source policy gate for integration collisions."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-qa",
+      "path": "scripts/check_legacy_hook_removal.py",
+      "purpose": "Fail-closed physical removal of obsolete Process32NextW and _Mtx_trylock hook implementations, wiring and dedicated tests."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_loaded_data_memory.py",
+      "purpose": "Fail-closed static/source policy gate for loaded data memory."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_lutravex_golden_naming.py",
+      "purpose": "Fail-closed static/source policy gate for lutravex golden naming."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_macro_hygiene.py",
+      "purpose": "Fail-closed static/source policy gate for macro hygiene."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_manifest.py",
+      "purpose": "Fail-closed static/source policy gate for manifest."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_metadata_ownership.py",
+      "purpose": "Fail-closed current metadata role/ownership and retired historical-snapshot exclusion gate."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_minhook_architecture.py",
+      "purpose": "Fail-closed static/source policy gate for minhook architecture."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_minhook_shipping_policy.py",
+      "purpose": "Fail-closed static/source policy gate for minhook shipping policy."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_msvc_shipping_link_command.py",
+      "purpose": "Fail-closed static/source policy gate for msvc shipping link command."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_native_exports.py",
+      "purpose": "Fail-closed static/source policy gate for native exports."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_production_source_graph.py",
+      "purpose": "Fail-closed static/source policy gate for production source graph."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_production_syntax.py",
+      "purpose": "Fail-closed static/source policy gate for production syntax."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_registry_teardown.py",
+      "purpose": "Fail-closed static/source policy gate for registry teardown."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_release_contract.py",
+      "purpose": "Fail-closed static/source policy gate for current semantic release contract."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-g0",
+      "path": "scripts/check_release_qa_authority.py",
+      "purpose": "Per-shard independent G0-receipt/catalog/source identity verifier; no G0 rerun"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "universal-qa-orchestration",
+      "path": "scripts/check_release_qa_catalog.py",
+      "purpose": "Version-neutral deterministic step catalog validator (source QA only)"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_release_version_policy.py",
+      "purpose": "Fail-closed static/source policy gate for release version policy."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_repository_contract.py",
+      "purpose": "Fail-closed static/source policy gate for repository contract."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_route_id_policy.py",
+      "purpose": "Verify dense HF08 route policy binding to exact HF07 source parent and no retired production auth route."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-governance",
+      "path": "scripts/check_source_cleanup.py",
+      "purpose": "Fail-closed active-source cleanup and historical migration boundary"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "xml-architecture-qa",
+      "path": "scripts/check_tinyxml2_target_contract.py",
+      "purpose": "Fail-closed Windows target and native-host source dependency graph rules without platform-dependent execution."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "universal-governance-first",
+      "path": "scripts/check_universal_g0_authority.py",
+      "purpose": "External-master/intent/pointer independent authority-boundary checks (always blocks in Stage02)"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "shipping-qa-policy",
+      "path": "scripts/check_universal_shipping_policy.py",
+      "purpose": "Release-independent source policy evaluator; externally trusted SHA required, does not grant release."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "dependency-governance",
+      "path": "scripts/check_upstream_publication_dates.py",
+      "purpose": "validate exact vendored source pins against independently verified upstream publication-date contract without conflating pin date"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_vendored_minhook.py",
+      "purpose": "Fail-closed static/source policy gate for vendored minhook."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/check_xml_depth.py",
+      "purpose": "Fail-closed static/source policy gate for xml depth."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_achievement_coherence.py",
+      "purpose": "Executable/regression or acceptance-surface validation for achievement coherence."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/test_achievement_delivery.py",
+      "purpose": "Source-linked HF10 B two-frame, Response-boundary Grant commit, Event FIFO retry fault-injection regression (GCC and Clang)."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-source-contract",
+      "path": "scripts/test_active_release_contract.py",
+      "purpose": "Executable source-contract mutation regressions across synthetic hotfix ordinals; no publication authority."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-iocp-qa",
+      "path": "scripts/test_asio_delivery_completion.py",
+      "purpose": "Source-linked compiled Response/Event completion and shipping transaction syntax regression; never a native IOCP or game acceptance claim."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_asio_f02_timer_api.py",
+      "purpose": "Pinned Asio 1.38.2 F02 timer API native-branch GCC/Clang compile regression with negative cancel(error_code) replay; not Windows IOCP acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-native-acceptance-research",
+      "path": "scripts/test_asio_full_dispatch.py",
+      "purpose": "Portable GCC/Clang source-linked full GrantAchievement XML dispatcher, persistent store, AES/hex and Event FIFO transaction completion evidence; no native runtime claim."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-iocp-qa",
+      "path": "scripts/test_asio_grant_store.py",
+      "purpose": "GCC and Clang portable source-linked real GrantAchievement persistent-store + Event FIFO callback continuation regression; Windows IOCP and full dispatcher are separate acceptance gates."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-iocp-qa",
+      "path": "scripts/test_asio_iocp_continuation.py",
+      "purpose": "Source-linked portable handshake/decode continuation test, fail-closed IOCP source contracts; research only."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-ioqp-qa",
+      "path": "scripts/test_asio_iocp_ingress.py",
+      "purpose": "Source-linked portable wire scanner regression for Asio-owned IOCP ingress; not Windows native acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-iocp-qa",
+      "path": "scripts/test_asio_iocp_native.py",
+      "purpose": "Optional command-line native Windows MSVC /MT and /MTd IOCP loopback acceptance; no release/production publication."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-iocp-qa",
+      "path": "scripts/test_asio_listener_owner.py",
+      "purpose": "HF13 portable linked real TCP listener lifecycle regression; not Windows native shipping acceptance"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-iocp-native-acceptance",
+      "path": "scripts/test_asio_send_stall_native.py",
+      "purpose": "Windows x64 native-only 5-second prepared-write hold/rollback and separate genuine kernel-pending Asio IOCP async_write backpressure acceptance; results are not game/release acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-service-lifecycle",
+      "path": "scripts/test_asio_service_retirement.py",
+      "purpose": "Fail-closed HF13 permanent-service retirement gate verification and negative mutation tests for retained Asio listener/session IOCP ownership."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-iocp-qa",
+      "path": "scripts/test_asio_session_owner.py",
+      "purpose": "GCC+Clang real TCP session lifecycle test, protocol and dispatcher stubbed; not actual Production or Windows IOCP acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-io-deadline-regressions",
+      "path": "scripts/test_asio_session_timeout.py",
+      "purpose": "Deterministic source-linked receive/frame/send Asio timeout policy and shipping session compiler verification."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-runtime-acceptance",
+      "path": "scripts/test_asio_shipping_lifecycle.py",
+      "purpose": "Windows x64 real shipping DLL IOCP receive/frame deadlines, reconnect and quiescent shutdown acceptance; preserves pending send-stall disposition."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-io-ownership-qa",
+      "path": "scripts/test_asio_socket_retirement.py",
+      "purpose": "Verify shipping-only Asio socket dispatch and fail-closed separation of legacy listener/endpoint from native fault-injection and Debug diagnostic targets, including GCC/Clang object reference inventory."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-iocp-qa",
+      "path": "scripts/test_asio_transaction_ownership.py",
+      "purpose": "Stage04A true shipping transaction owner code with bounded side-effect recorders; GCC/Clang callback, grant and FIFO fail-closed regression; not real native dispatcher acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "asio-winsock-lifecycle-qa",
+      "path": "scripts/test_asio_winsock_lifecycle_isolation.py",
+      "purpose": "Source-linked lifecycle version/cleanup/retry and raw-socket fail-closed regression, shipping-vs-native and Debug graph; not Windows IOCP acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_auth_code.py",
+      "purpose": "Executable/regression or acceptance-surface validation for auth code."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_build_environment.ps1",
+      "purpose": "Executable/regression or acceptance-surface validation for build environment."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "config-runtime-acceptance",
+      "path": "scripts/test_config_overlay_pair.py",
+      "purpose": "Portable source-linked Config2 base+override merge, precedence and failure-atomicity verification."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_connect_redirect.py",
+      "purpose": "Executable/regression or acceptance-surface validation for connect redirect."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_corvexon_mswsock_imports.py",
+      "purpose": "Fail-closed CORVEXON named MSWSOCK import allowlist regression on policy fixtures and optional linked PE."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "crt-compatibility-qa",
+      "path": "scripts/test_crt_compatibility_dependencies.py",
+      "purpose": "Fail-closed compatibility-only UCRT and /NODEFAULTLIB dependency regression, positive and negative."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-qa",
+      "path": "scripts/test_data_footprint.py",
+      "purpose": "Executable positive and adversarial synthetic x64 PE regression for strict static /MT .data footprint policy and separately requested historical /MD comparison."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_hard_cap.py",
+      "purpose": "Executable/regression or acceptance-surface validation for hard cap."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-g2-release-qa",
+      "path": "scripts/test_hf17_native_config_acceptance_surface.py",
+      "purpose": "HF17-specific G2 release-identity variant retaining all applicable historical source tests and fail-closed status assertions; original HF16 validator retained byte-identical"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-g2-release-qa",
+      "path": "scripts/test_hf17_release_assurance.py",
+      "purpose": "Same F11/F14/D01-D03 regression suite as protected HF16 assurance; HF17-specific strict acceptance semantic validator with parent and false-PASS negatives"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "hf17-g2-release-qa",
+      "path": "scripts/test_hf17_release_publication.py",
+      "purpose": "HF17-specific G2 release-identity variant retaining all applicable historical source tests and fail-closed status assertions; original HF16 validator retained byte-identical"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "build-entrypoints",
+      "path": "scripts/test_human_launcher_ui.py",
+      "purpose": "Negative mutation regression for four preserved human operator CMD UI surfaces (banner, explanation, exit code, color, pause, output path)."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_inherited_mustorin_remediations.py",
+      "purpose": "Executable/regression or acceptance-surface validation for inherited mustorin remediations."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_minhook_early_timing_contract.py",
+      "purpose": "Executable/regression or acceptance-surface validation for minhook early timing contract."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_minhook_lifetime_contract.py",
+      "purpose": "Executable/regression or acceptance-surface validation for minhook lifetime contract."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_minhook_regressions.py",
+      "purpose": "Executable/regression or acceptance-surface validation for minhook regressions."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_minhook_suite.py",
+      "purpose": "Executable/regression or acceptance-surface validation for minhook suite."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_minhook_syntax.py",
+      "purpose": "Executable/regression or acceptance-surface validation for minhook syntax."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_model_config_semantic_abi.py",
+      "purpose": "Executable/regression or acceptance-surface validation for model config semantic abi."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_model_config_semantic_runtime.py",
+      "purpose": "Executable/regression or acceptance-surface validation for model config semantic runtime."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_model_settings_semantic_abi.py",
+      "purpose": "Executable/regression or acceptance-surface validation for model settings semantic abi."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_model_settings_semantic_runtime.py",
+      "purpose": "Executable/regression or acceptance-surface validation for model settings semantic runtime."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_model_worker_semantic_abi.py",
+      "purpose": "Executable/regression or acceptance-surface validation for model worker semantic abi."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_native_config_acceptance_surface.py",
+      "purpose": "Executable/regression or acceptance-surface validation for native config acceptance surface."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_native_worker_acceptance_surface.py",
+      "purpose": "Executable/regression or acceptance-surface validation for native worker acceptance surface."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_pe_metadata_tools.py",
+      "purpose": "Executable/regression or acceptance-surface validation for pe metadata tools."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_portable_source_syntax.py",
+      "purpose": "Executable/regression or acceptance-surface validation for portable source syntax."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-qa",
+      "path": "scripts/test_presence_content_entitlements.py",
+      "purpose": "HF09 real handler joint QP01/QCE03 regression, 21 named cases under GCC and Clang; never Windows native/game acceptance"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_production_cpp_syntax.ps1",
+      "purpose": "Executable/regression or acceptance-surface validation for production cpp syntax."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_regressions.py",
+      "purpose": "Executable/regression or acceptance-surface validation for regressions."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_release_assurance.py",
+      "purpose": "Executable/regression or acceptance-surface validation for release assurance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-g0",
+      "path": "scripts/test_release_authority_protocol.py",
+      "purpose": "Self-contained synthetic G0 to release QA receipt positive/negative protocol; never publication authority"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "release-qa",
+      "path": "scripts/test_release_publication.py",
+      "purpose": "Executable remediation regression for atomic Golden publication, candidate identity continuity, and controlled release-tool I/O failures."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "universal-qa-orchestration",
+      "path": "scripts/test_release_qa.py",
+      "purpose": "Eight-shard QA using one independent pinned G0 receipt and fixed 64-step source-only catalog; no G0 recomputation per shard"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_remediation.py",
+      "purpose": "Executable/regression or acceptance-surface validation for audit01 remediation."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_resource_lifecycle.py",
+      "purpose": "Executable/regression or acceptance-surface validation for resource lifecycle."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_semantic_edges.py",
+      "purpose": "Executable/regression or acceptance-surface validation for semantic edges."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_shipping_build_policy.py",
+      "purpose": "Executable/regression or acceptance-surface validation for shipping build policy."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_shutdown_timeout.py",
+      "purpose": "Executable/regression or acceptance-surface validation for shutdown timeout."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "xml-architecture-qa",
+      "path": "scripts/test_tinyxml2_migration_contract.py",
+      "purpose": "Portable GCC/Clang execution of production TinyXML2 request, attribute and Store boundaries."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "xml-architecture-qa",
+      "path": "scripts/test_tinyxml2_target_contract.py",
+      "purpose": "Adversarial mutation cases for TinyXML2 target graph and debug/native link ownership."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_unit_syntax.py",
+      "purpose": "Executable/regression or acceptance-surface validation for unit syntax."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "universal-governance-first",
+      "path": "scripts/test_universal_governance_contract.py",
+      "purpose": "Stage02 universal G0/QA catalog negative tests; never release authorization"
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "shipping-qa-policy",
+      "path": "scripts/test_universal_shipping_policy.py",
+      "purpose": "Isolated source/CMake/loader/transaction/rollback tamper negatives with fail-closed assertions."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "shipping-qa-policy",
+      "path": "scripts/test_universal_shipping_qa.py",
+      "purpose": "Non-authoritative offline QA-only runner for pinned policy, legacy regressions, manifest and repository ownership."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "source-qa",
+      "path": "scripts/test_vendor_sources.py",
+      "purpose": "HF12 three pinned pristine vendors: standalone GCC/Clang C++20 filesystem lexical and Asio localhost cancellation readiness; not Windows release acceptance."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "regression-qa",
+      "path": "scripts/test_xml_grammar.py",
+      "purpose": "Executable/regression or acceptance-surface validation for xml grammar."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "xml-architecture-qa",
+      "path": "scripts/test_xml_semantic_dom_portable.py",
+      "purpose": "Executable semantic-once DOM and XML Store acceptance corpus using exact production sources."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "xml-architecture-qa",
+      "path": "scripts/test_xml_single_engine_contract.py",
+      "purpose": "Executable owned TinyXML2 DOM index, lifetime, direct-child and malformed-content coverage."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "golden-finalization",
+      "path": "scripts/ursynex_golden_finalizer.py",
+      "purpose": "URSYNEX shipping binary finalization and normalization step."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "golden-verification",
+      "path": "scripts/verify_aryra_golden_layout.py",
+      "purpose": "Golden-chain verification step for aryra golden layout."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "golden-verification",
+      "path": "scripts/verify_corvexon_golden_trail.py",
+      "purpose": "Golden-chain verification step for corvexon golden trail."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "golden-verification",
+      "path": "scripts/verify_mustavex_golden_metadata.py",
+      "purpose": "Golden-chain verification step for mustavex golden metadata."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "dependency-provenance",
+      "path": "scripts/verify_tinyxml2_exact_import.py",
+      "purpose": "Read-only exact upstream TinyXML2 v11 pinned-file verification, with opt-in import from the exact Git commit object; fails closed if missing."
+    },
+    {
+      "human_invocable": false,
+      "invocation_class": "INTERNAL_AUTOMATION_OR_HELPER",
+      "launcher": null,
+      "owner": "acceptance-provenance",
+      "path": "scripts/write_acceptance_record.py",
+      "purpose": "Writes hash-bound acceptance provenance records."
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "files": {
+    "ACCEPTANCE_FRESHNESS_LEDGER.json": {
+      "purpose": "current acceptance freshness/status owner",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "ACCEPTANCE_MATRIX.json": {
+      "purpose": "current acceptance matrix with historical lineage evidence",
+      "role": "CURRENT_LEDGER"
+    },
+    "ACTIVE_SOURCE_MANIFEST.json": {
+      "purpose": "exact current source/package file hash authority",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "ARCHITECTURE_REVIEW_REGISTRY.json": {
+      "purpose": "current architecture review ownership/carry-forward registry",
+      "role": "CURRENT_LEDGER"
+    },
+    "ARTIFACT_PROVENANCE.json": {
+      "purpose": "current artifact/release provenance contract",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "ARYRA_GOLDEN_LAYOUT.json": {
+      "purpose": "current ARYRA Golden layout policy",
+      "role": "CURRENT_CONTRACT"
+    },
+    "ASIO_ADOPTION_CONTRACT.json": {
+      "purpose": "current shipping Asio IOCP production routing and verifiable acceptance limits",
+      "role": "CURRENT_CONTRACT"
+    },
+    "CORVEXON_GOLDEN_TRAIL.json": {
+      "purpose": "current CORVEXON Golden trail policy",
+      "role": "CURRENT_CONTRACT"
+    },
+    "CRT_STATIC_CONTRACT.json": {
+      "purpose": "HF12 explicitly approved permanent static CRT runtime policy, no import and native verification before promotion",
+      "role": "CURRENT_CONTRACT_WITH_LINEAGE"
+    },
+    "DEPENDENCY_SOURCE_CONTRACT.json": {
+      "purpose": "HF12 cumulative pinned pristine source-byte, licenses, C++20 and linked-vs-test-only third-party policy; independent upstream file map and release gates",
+      "role": "CURRENT_CONTRACT_WITH_LINEAGE"
+    },
+    "DOCUMENTATION_HISTORY_MIGRATION.json": {
+      "purpose": "lossless documentation-history migration evidence",
+      "role": "HISTORICAL_LEDGER_CURRENTLY_REQUIRED"
+    },
+    "DOCUMENTATION_MIGRATION_LEDGER.json": {
+      "purpose": "machine-readable history-to-CHANGELOG migration ledger",
+      "role": "HISTORICAL_LEDGER_CURRENTLY_REQUIRED"
+    },
+    "DOCUMENTATION_PRESERVATION_BASELINE.json": {
+      "purpose": "current documentation preservation baseline",
+      "role": "CURRENT_CONTRACT"
+    },
+    "FILENAME_MIGRATION_MAP.json": {
+      "purpose": "immutable path migration map used by active stale-reference QA",
+      "role": "HISTORICAL_LEDGER_CURRENTLY_REQUIRED"
+    },
+    "FILENAME_MIGRATION_PROVENANCE.json": {
+      "purpose": "origin/provenance for immutable filename migration artifacts",
+      "role": "HISTORICAL_LEDGER_CURRENTLY_REQUIRED"
+    },
+    "GOVERNANCE_BINDING.json": {
+      "purpose": "current Library-governance mirror binding",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "HF17_IMPLEMENTATION_GATES.json": {
+      "purpose": "HF17 prepublication 11-hook source-integration scope and unfresh native/security release-gate status; not an authorized publication record",
+      "role": "CURRENT_CONTRACT_WITH_RESEARCH_PROVENANCE"
+    },
+    "HUMAN_ENTRYPOINT_REGISTRY.json": {
+      "purpose": "Positive/default-deny human operator entrypoint allowlist and launcher inventory.",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "LOCAL_SOCIAL_ACTIVATION_CANDIDATE.json": {
+      "purpose": "explicit HF08 local-only activation source gate, native pending",
+      "role": "CURRENT_CONTRACT"
+    },
+    "LOCAL_SOCIAL_DELIVERY_MODEL.json": {
+      "purpose": "Current source-integrated local social delivery boundaries, with intact historical W05 research/test-only model nested as provenance",
+      "role": "CURRENT_CONTRACT_WITH_LINEAGE"
+    },
+    "LOCAL_SOCIAL_INTEGRATION_BOUNDARY.json": {
+      "purpose": "Current 42-route shipping local-only integration and acceptance status, with historical W06 development blockers nested as provenance",
+      "role": "CURRENT_CONTRACT_WITH_LINEAGE"
+    },
+    "LOCAL_SOCIAL_SECURITY_GATES.json": {
+      "purpose": "Current local-only shipping social security, 42/42 binding, Windows/native acceptance and external game evidence boundary; W01-W05 lineage separately labeled",
+      "role": "CURRENT_CONTRACT"
+    },
+    "LUTRAVEX_GOLDEN_NAMING_REGISTRY.json": {
+      "purpose": "codename reservation/history registry required by naming authority",
+      "role": "HISTORICAL_LEDGER_CURRENTLY_REQUIRED"
+    },
+    "METADATA_OWNERSHIP.json": {
+      "purpose": "current metadata role/ownership registry",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "MUSTAVEX_GOLDEN_METADATA.json": {
+      "purpose": "current PE metadata allowlist and identity exclusion policy",
+      "role": "CURRENT_CONTRACT"
+    },
+    "NAMING_REFERENCE_CORRECTIONS.json": {
+      "purpose": "historical/current naming-reference correction ledger",
+      "role": "HISTORICAL_LEDGER_CURRENTLY_REQUIRED"
+    },
+    "ORIGIN_ERROR_ROUTE_CONTRACTS.json": {
+      "purpose": "current route/error contract; introduction lineage retained separately",
+      "role": "CURRENT_CONTRACT_WITH_INTRODUCTION_HISTORY"
+    },
+    "PROJECT_GOVERNANCE_INVARIANTS.json": {
+      "purpose": "current packaged governance machine mirror",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "PUBLICATION_TRANSACTION.json": {
+      "purpose": "current canonical publication transaction contract",
+      "role": "CURRENT_CONTRACT"
+    },
+    "QA_EXECUTION_LEVELS.json": {
+      "purpose": "current validation-class semantics",
+      "role": "CURRENT_CONTRACT"
+    },
+    "QUERY_CHUNK_STATUS_PRECEDENCE.json": {
+      "purpose": "current QueryChunkStatus precedence; introduction lineage retained separately",
+      "role": "CURRENT_CONTRACT_WITH_INTRODUCTION_HISTORY"
+    },
+    "RELEASE_ACCEPTANCE.json": {
+      "purpose": "accepted 3.2.5 Final release evidence snapshot; internal remediation freshness is owned separately",
+      "role": "CURRENT_RELEASE_SNAPSHOT"
+    },
+    "RELEASE_ARCHITECTURE.json": {
+      "purpose": "current architecture contract with historical origin/donor lineage",
+      "role": "CURRENT_CONTRACT_WITH_LINEAGE"
+    },
+    "RELEASE_AUTHORIZATION.json": {
+      "purpose": "explicit user HOTFIX15 release-production authorization and acceptance boundaries",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "RELEASE_QA_CATALOG.json": {
+      "purpose": "Eight-shard release regression catalogue; historical migrations explicitly blocked until authorized",
+      "role": "CURRENT_CONTRACT_WITH_RESEARCH_PROVENANCE"
+    },
+    "ROUTE_CONTRACT_LINEAGE.json": {
+      "purpose": "Cumulative HF08 donor-extension source graph and exact source ancestry, historical identity only as lineage",
+      "role": "CURRENT_CONTRACT_WITH_LINEAGE"
+    },
+    "ROUTE_ID_POLICY.json": {
+      "purpose": "HF08 numeric route ID policy with parent hash, registration stage and deferred scope",
+      "role": "CURRENT_CONTRACT"
+    },
+    "SCRIPT_OWNERSHIP.json": {
+      "purpose": "current script owner/purpose/human-entrypoint catalog",
+      "role": "CURRENT_AUTHORITY"
+    },
+    "SHIPPING_POLICY_CONTRACT.json": {
+      "purpose": "UNAPPROVED QA-only source-graph and hook-lifecycle proposal; no independent governance or publication authority; external trusted SHA is mandatory",
+      "role": "CURRENT_CONTRACT_WITH_RESEARCH_PROVENANCE"
+    },
+    "SOCIAL_ROUTE_ERROR_CONTRACT_DISPOSITIONS.json": {
+      "purpose": "current social-route disposition contract",
+      "role": "CURRENT_CONTRACT_WITH_RESEARCH_PROVENANCE"
+    },
+    "THIRD_PARTY_KNOWN_VULNERABILITIES.json": {
+      "purpose": "current cross-dependency open third-party vulnerability tracking; precise source pin and upstream update triggers",
+      "role": "CURRENT_LEDGER"
+    },
+    "TINYXML2_REFERENCE_PROVENANCE.json": {
+      "purpose": "current TinyXML2 test/reference dependency provenance and upgrade disposition",
+      "role": "DEPENDENCY_PROVENANCE"
+    },
+    "UPSTREAM_PUBLICATION_DATES.json": {
+      "purpose": "verified upstream tag publication dates distinguished from exact untagged pin commits and local integration",
+      "role": "CURRENT_CONTRACT"
+    },
+    "URSYNEX_GOLDEN_FINALIZER.json": {
+      "purpose": "current URSYNEX Golden finalizer policy",
+      "role": "CURRENT_CONTRACT"
+    }
+  },
+  "policy": "Every current metadata JSON must have an explicit role. Historical release snapshots, experiments and retired research records belong in immutable Library ownership rather than current source metadata.",
+  "retired_from_current_source": {
+    "metadata/ASIO_IOCP_INGRESS_CONTRACT.json": "ARCHIVED_IN_LIBRARY_RESEARCH_HF15_PRESERVED_SOURCE_RECORDS_COMPLETE",
+    "metadata/ASIO_LISTENER_OWNERSHIP.json": "ARCHIVED_IN_LIBRARY_RESEARCH_HF15_PRESERVED_SOURCE_RECORDS_COMPLETE",
+    "metadata/ASIO_SERVICE_OWNERSHIP.json": "ARCHIVED_IN_LIBRARY_RESEARCH_HF15_PRESERVED_SOURCE_RECORDS_COMPLETE",
+    "metadata/BASE_CERVRAX_ACTIVE_SOURCE_MANIFEST.json": "historical 3.2.1 release snapshot; no current consumer",
+    "metadata/BASE_CERVRAX_RELEASE_STATE.json": "historical 3.2.1 release snapshot; no current consumer",
+    "metadata/CONNECT_REDIRECT_EXPERIMENT.json": "historical unreleased experiment; no current consumer; experiment evidence belongs in Library",
+    "metadata/HF12_P1_INTERMEDIATE_STAGE.json": "ARCHIVED_IN_LIBRARY_RESEARCH_HF15_PRESERVED_SOURCE_RECORDS_COMPLETE",
+    "metadata/HF12_P2_STAGE.json": "ARCHIVED_IN_LIBRARY_RESEARCH_HF15_PRESERVED_SOURCE_RECORDS_COMPLETE",
+    "metadata/INTERNAL_REMEDIATION_STATE.json": "HISTORICAL_PROVENANCE_LIBRARY_HF15_PRESERVED_LEGACY_METADATA_RECORDS",
+    "metadata/REMEDIATION_RECORD.json": "HISTORICAL_PROVENANCE_LIBRARY_HF15_PRESERVED_LEGACY_METADATA_RECORDS"
+  },
+  "schema": "preloader_l.metadata-ownership.v1",
+  "scope": "CURRENT_SOURCE_TREE_METADATA_ONLY"
+}

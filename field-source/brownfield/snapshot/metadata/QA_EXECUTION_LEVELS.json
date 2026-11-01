@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "rule": "A gate may only support claims at its declared execution level. Higher levels require their own executed evidence.",
+  "levels": [
+    {
+      "id": "source_static",
+      "examples": [
+        "repository contract",
+        "source graph",
+        "manifest",
+        "policy token checks"
+      ],
+      "proves": "source/package contract only"
+    },
+    {
+      "id": "portable_compile_or_runtime",
+      "examples": [
+        "unit syntax",
+        "portable executable regression",
+        "sanitizer probe"
+      ],
+      "proves": "the named portable compiler/runtime probe only"
+    },
+    {
+      "id": "windows_compile_link",
+      "examples": [
+        "BUILD_PRODUCTION",
+        "BUILD_DEBUG",
+        "Windows /Zs"
+      ],
+      "proves": "exact Windows compiler/linker invocation only"
+    },
+    {
+      "id": "windows_native_acceptance",
+      "examples": [
+        "BUILD_NATIVE_ACCEPTANCE"
+      ],
+      "proves": "exact native test DLL/host/scenario run only"
+    },
+    {
+      "id": "crt_transition",
+      "examples": [
+        "CRT Transition Acceptance"
+      ],
+      "proves": "exact CRT transition scenario only"
+    },
+    {
+      "id": "game_network_acceptance",
+      "examples": [
+        "CollegeFB27 runtime",
+        "Madden27 runtime"
+      ],
+      "proves": "explicitly named consumer/game run only"
+    }
+  ],
+  "source_qa_label": "V325_SQUALERIS_RELEASE_SOURCE_QA_SHARD",
+  "forbidden_conflation": [
+    "source_static=>windows_compile_link",
+    "portable_compile_or_runtime=>windows_native_acceptance",
+    "windows_native_acceptance=>game_network_acceptance"
+  ]
+}
