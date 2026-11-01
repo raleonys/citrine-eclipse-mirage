@@ -37,6 +37,12 @@ public:
 // complete stack copy. Other destinations retain the original pointer/length.
 std::int32_t connect_00fd00(StateRefs, Effects&, Socket, std::span<const std::byte> address,
                            std::int32_t supplied_length);
+// Native entrypoints inspect a protected bounded snapshot. A zero-length
+// caller_address retains the exact opaque pointer for original Winsock calls;
+// only inspected_address is dereferenced by the redirect decision.
+std::int32_t connect_00fd00_inspected(StateRefs, Effects&, Socket,
+    std::span<const std::byte> caller_address, std::span<const std::byte> inspected_address,
+    std::int32_t supplied_length);
 
 // Composition adapter to the existing synchronization core.
 // All other Effects still come from the caller, never original DLL addresses.

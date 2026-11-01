@@ -358,8 +358,8 @@
       "sha256": "824dda43d66c2ace52945c998a7e911836ecd8eff3ece17ca4a59bdb276cf82a"
     },
     "include/preloader_l/platform/hook_connect.hpp": {
-      "bytes": 2653,
-      "sha256": "9e4e063add7b9b11dbd073db4e21b060ece78e5bbff5489f10993d1128c4a8b7"
+      "bytes": 3069,
+      "sha256": "617b57b5512daed20237fa6b3972e8bc02cd57204583c3ac0c6b5bd203b008c8"
     },
     "include/preloader_l/platform/hook_engine_adapters.hpp": {
       "bytes": 2281,
@@ -894,8 +894,8 @@
       "sha256": "cf905a77142fe2ef0c666175647b22098bbfc43d7fc293771698c4c2f867e1bf"
     },
     "src/platform/hook_connect.cpp": {
-      "bytes": 4089,
-      "sha256": "72d0015fa2f4b13686d723330ed607b9c7c80aae42eb8e7979763ebecfb7d6ca"
+      "bytes": 4550,
+      "sha256": "f69dcd1554b120d1f5f49ea5fd52357ed0f6813da572c6b9b13aa29325024fd8"
     },
     "src/platform/hook_engine_adapters.cpp": {
       "bytes": 2281,
@@ -910,8 +910,8 @@
       "sha256": "f74e46b5cf752d51428d439b0762e0e0e37c60f8c22bd51eb534f323828b98c2"
     },
     "src/platform/hook_native_callbacks.cpp": {
-      "bytes": 9653,
-      "sha256": "139f9287a48f800746aeb916e7bc313b0f571bd09bd3984a5387d70319a36ac2"
+      "bytes": 10646,
+      "sha256": "771e4794de614af1ec8962d5b5ce6a908e61c8b3cbd0f387804449c795ffa4b6"
     },
     "src/platform/hook_original_effects.cpp": {
       "bytes": 4949,
@@ -1618,12 +1618,12 @@
       "sha256": "63d9c47a8c562e1c7c883026458ac863e5fbfc467bebdf3fcbf2100196ada055"
     },
     "tests/unit/native/native_tests.cpp": {
-      "bytes": 40714,
-      "sha256": "725990337d75b7089d9fad05b7fe867d26ae1d2abb62ee024daf847102ba0934"
+      "bytes": 46070,
+      "sha256": "cdca5efdc6ab5063ddf313156f878e2814fa2c5d7de627b8daa5c870e761e8ac"
     },
     "tests/unit/network_hook/hook_tests.cpp": {
-      "bytes": 12073,
-      "sha256": "4a99fd82520be9da180f92aff0a1d55073e4528c0e9dba352d1370ddfd10a0e2"
+      "bytes": 14430,
+      "sha256": "19edde46a81aed0610f478e64a35d63dd3c3a42e3dec71e67b6da5b326181f96"
     },
     "tests/unit/online/online_tests.cpp": {
       "bytes": 23306,

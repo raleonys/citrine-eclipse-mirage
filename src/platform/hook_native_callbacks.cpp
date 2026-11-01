@@ -2,6 +2,7 @@
 
 #include "preloader_l/platform/hook_native_callbacks.hpp"
 #include "preloader_l/platform/callback_lock.hpp"
+#include <array>
 #include <bit>
 #include <mutex>
 #include <atomic>
@@ -66,13 +67,26 @@ std::size_t active_calls(){std::lock_guard lock(gate);return calls;}
 
 int WSAAPI connect_entry(SOCKET socket,const sockaddr* pointer,int length) noexcept {
     return invoke(Callback::connect_00fd00,[&](Context& c){
-        std::size_t extent=0;
-        if(length==c.network.ipv4_length_0a10d0||length==c.network.ipv6_length_0a10d4){
-            if(!pointer)throw network_hook::OutOfEvidenceInput("recognized sockaddr length with null pointer");
-            extent=static_cast<std::size_t>(length); // Winsock requires a readable complete address
-        }
-        auto* bytes=reinterpret_cast<const std::byte*>(pointer);
-        return network_hook::connect_00fd00(c.network,c.network_effects,socket,{bytes,extent},length);
+        const auto* bytes=reinterpret_cast<const std::byte*>(pointer);
+        // The original sees the caller's *opaque* pointer, even when unreadable.
+        // A zero-length span never grants the hook permission to dereference it.
+        const std::span<const std::byte> original_address{bytes,std::size_t{0}};
+        const bool recognized=length==c.network.ipv4_length_0a10d0||
+                              length==c.network.ipv6_length_0a10d4;
+        if(!recognized || !pointer || length<=0 || length>28)
+            return c.network_effects.original_connect_0a3838(socket,original_address,length);
+        std::array<std::byte,28> observed{};
+        SIZE_T copied=0;
+        const auto incoming=GetLastError();
+        const BOOL complete=ReadProcessMemory(GetCurrentProcess(),pointer,observed.data(),
+            static_cast<SIZE_T>(length),&copied);
+        SetLastError(incoming); // probing is not the SDK call and must not alter its error state
+        if(!complete || copied!=static_cast<SIZE_T>(length))
+            return c.network_effects.original_connect_0a3838(socket,original_address,length);
+        // Only the bounded local observation is inspected. Non-redirecting calls
+        // still forward pointer/length unchanged; redirection uses a full copy.
+        return network_hook::connect_00fd00_inspected(c.network,c.network_effects,
+            socket,original_address,std::span<const std::byte>{observed}.first(static_cast<std::size_t>(length)),length);
     });
 }
 LSTATUS WINAPI reg_open_a_entry(HKEY root,LPCSTR key,DWORD options,REGSAM access,PHKEY result) noexcept {
