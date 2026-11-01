@@ -1,0 +1,20 @@
+{
+  "DllShutdown_zero_owner": true,
+  "LSX": "NOT_RUN",
+  "SURGE_noop": true,
+  "Windows_x64_MSVC": "NOT_RUN",
+  "canonical_hf19_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "canonical_mutation": "NONE",
+  "class": "NON_RELEASE_WORK",
+  "cumulative_direct_hf19_files": 197,
+  "gf07_direct_hf19_file_count": 21,
+  "gf_preloader_full_dispatch_linked": false,
+  "native_IOCP": "NOT_RUN",
+  "parent_gf06_sha256": "5b098264b0df613cdc2f2b5c2950ef277ed29eb55aeeec9bb4060df815e291a1",
+  "portable_real_source_integration_tests": 7,
+  "portable_test_total": 26,
+  "release": "NOT_RELEASE",
+  "stage": "GF07",
+  "windows_only_original_tests_staged": 3,
+  "windows_platform_blocker": "AVATAR_PATH_CPP_AND_WIDE_CONFIG_IO"
+}

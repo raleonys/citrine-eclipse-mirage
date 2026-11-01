@@ -1,0 +1,36 @@
+{
+  "canonical_hf19_mutated": false,
+  "classification": "NON_RELEASE_WORK",
+  "clean_clang_asan_ubsan": "PASS_5_OF_5_GF09_NEW_TESTS_CLEAN_PRELIM_ARCHIVE",
+  "clean_gcc_asan_ubsan": "PASS_34_OF_34_CLEAN_PRELIM_ARCHIVE",
+  "cumulative_exact_hf19_files": 216,
+  "current_artifact_pointer_mutated": false,
+  "date": "2026-10-19",
+  "dllshutdown_zero_owner": true,
+  "game_consumer": "NOT_RUN",
+  "gf09_new_exact_hf19_files": 10,
+  "gf_preloader_dll_main_surge_noop": true,
+  "gf_preloader_links_dispatch": false,
+  "lsx": "NOT_IMPLEMENTED",
+  "official_hf19_source_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "original_new_test_open": [
+    "test_handler_registry.cpp: native full handler dependency; NOT_RUN",
+    "test_get_config.cpp: isolated GCC source-linked EXIT_14 expected invalid_request branch, unresolved"
+  ],
+  "original_new_test_pass": [
+    "test_network_session.cpp",
+    "test_attribute.cpp",
+    "test_config_command_line.cpp",
+    "test_config_key_limit.cpp",
+    "test_asio_lifecycle.cpp"
+  ],
+  "parent_gf08_source_sha256": "e3481aab953a1c940ab18b25873808b51909b66d7eae3027a41097b1bc1d6bcd",
+  "portable_clang_asan_ubsan": "PASS_34_OF_34_INITIAL",
+  "portable_gcc_asan_ubsan": "PASS_34_OF_34_INITIAL",
+  "release": "NOT_RELEASE",
+  "schema": "greenfield.gf09.status.v1",
+  "windows_abi_export_host": "NOT_RUN",
+  "windows_iocp": "NOT_RUN",
+  "windows_msvc_x64_debug": "NOT_RUN",
+  "windows_msvc_x64_release": "NOT_RUN"
+}

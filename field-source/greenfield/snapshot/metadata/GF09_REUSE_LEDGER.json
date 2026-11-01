@@ -1,0 +1,20 @@
+{
+  "cumulative_exact_hf19_files": 216,
+  "gf09_new_files": {
+    "include/preloader_l/net/session_state.hpp": "1d647d57d9b9189c7bfc5542e4a4470e2004ab1e4dee6469ba0315a424bb784f",
+    "src/debug/net/session_state.cpp": "76ffcfa1f3c6104ba7e2ff735120c681dd7807191eb3b011fe6036f2cd3af779",
+    "src/net/socket_transport.cpp": "ef8c3c7fec0e7a33e0b644b5e56db5619c72702d2e1a11c8b46da2260d135fdb",
+    "tests/unit/test_asio_lifecycle.cpp": "db4683898aed5e5e41d2ffd41263d7b522feec3f3cbb50abf16ec37e5bc59ec6",
+    "tests/unit/test_attribute.cpp": "b0c991396fca35d577a2c710c994cecf998f457ec01e65cd7ec8f878b4b09cf9",
+    "tests/unit/test_config_command_line.cpp": "66c1b98b3a062eefdb10aaaa64b516ef4eabb966385a5459d4ae9a3f028736e3",
+    "tests/unit/test_config_key_limit.cpp": "12b79eb8ee40948d015573d56b78ffdc6ccfa9b4e5ae5deb764f4705bb5139d7",
+    "tests/unit/test_get_config.cpp": "eed91b20609e4c1fb0808b9696bbe43a9b25d57aafc613827de63df530a32be9",
+    "tests/unit/test_handler_registry.cpp": "f22a2903f4827ad92b22b74a60129b2398f3f02523b4519c920522b1e9c6eaa4",
+    "tests/unit/test_network_session.cpp": "6d4dc969fb3a2410aa9cf97dcb4f1cf86f8710f8722dbe63f9d94340d989c7b7"
+  },
+  "official_hf19_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "origin": "Official HF19 source, exact bytes; preserved copyright and GPL licence.",
+  "parent_gf08_sha256": "e3481aab953a1c940ab18b25873808b51909b66d7eae3027a41097b1bc1d6bcd",
+  "schema": "greenfield.gf09.original_reuse.v1",
+  "source_changes_to_hf19": 0
+}

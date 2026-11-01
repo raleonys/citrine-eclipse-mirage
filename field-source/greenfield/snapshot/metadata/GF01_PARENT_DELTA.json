@@ -1,0 +1,35 @@
+{
+  "delta_classification": "LOCAL_NOT_RELEASE_GF01_SOURCE_DEVELOPMENT",
+  "gf00_inherited_unchanged_count": 18,
+  "gf00_parent_sha256": "55ae2078aeaf05d635165cd1794a2e07c93c5dfaf0242ffbebe0b59cce679701",
+  "hf19_source_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "inherited_changed": [
+    {
+      "gf00_sha256": "d03206d4325691cb195b57e704cb72213d52c16009e7803975c98d37a43cf0ce",
+      "gf01_sha256": "e28bdcda7cdcbd3a098c5b3f4e4cb114117f80ee880c02f7ee8343b3af5d9abe",
+      "path": "CMakeLists.txt"
+    },
+    {
+      "gf00_sha256": "5cc31f9a07695055aff0f1ce34528ec2049083fca6fcea363387a153b11ecfe8",
+      "gf01_sha256": "4c5b27607251457dbea9ad1db512268c0db718075480111fb5c4db498e5305f0",
+      "path": "metadata/CODE_REUSE_LEDGER.json"
+    },
+    {
+      "gf00_sha256": "6545b750b9137d545d15a2517e9b9c1c98f11f0d57b9cbb3b0d11fc4501fc292",
+      "gf01_sha256": "37daeb10d0d70dc01dcc19f241f3131fa92104ee76f1d237f46a8c21665c5e45",
+      "path": "metadata/QA_STATUS.json"
+    },
+    {
+      "gf00_sha256": "9580c144877c97bf6d0aa986bc68e22cd3a75a8af4697f78f867c012bb92b7d6",
+      "gf01_sha256": "762f6d53490fa9f5246184654deb99d7d6fae9e66ad968b34d6cb80ccd6b2a6d",
+      "path": "metadata/STATUS.json"
+    },
+    {
+      "gf00_sha256": "4a1ff2af27e0eecc909694f48605d78127a7a0c75039e1ace7af508c403c2ae6",
+      "gf01_sha256": "12ea4cb2962a80c4f71b362a3bd2f941e0ac657c988d901e7b4fe8040021fbef",
+      "path": "scripts/run_portable_qa.sh"
+    }
+  ],
+  "same_file_source_adoptions": 11,
+  "schema": "greenfield.gf01.delta.v1"
+}

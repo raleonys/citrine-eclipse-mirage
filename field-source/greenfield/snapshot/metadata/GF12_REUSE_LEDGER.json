@@ -1,0 +1,16 @@
+{
+  "cumulative_exact_hf19_files": 232,
+  "new_exact_hf19_files": {
+    "src/protocol/challenge_handshake.cpp": "dff974d7cb7e96ab386e6cb293b3dd60474c7b3a5f9fd2c8cdab51009bb85746",
+    "src/protocol/socket_exchange_frame_step.cpp": "8ac75e7351b73963ef769a20070e05cd1939154b5cfafc54d5d051e25449a6c0",
+    "src/protocol/socket_exchange_transaction.cpp": "4599bf2fefc531b225d28743d4050b47fa2fcc5ea0ba6fdd4b35330ce78c0a85",
+    "src/protocol/socket_exchange_wire.cpp": "20907b43ef427143b8c96bd88340593e16bd5040528922f008460727d81f62d9",
+    "tests/unit/test_async_wire_scanner.cpp": "8fe3b4d94b6a33bfa140a615309c385662a72fe352ca7bd14b520282607c4453",
+    "tests/unit/test_handshake.cpp": "ed721b26d3efd776fb9dd44a33dd9c8434e0fb7a73ceee31742960b4c7ebbfaf"
+  },
+  "official_hf19_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "original_implementation_changed": false,
+  "parent_gf11_sha256": "962d4d636f8dd666e84486336d3b378346c05136f78e1879c07fa09f78b1659e",
+  "schema": "greenfield.gf12.direct-hf19-reuse.v1",
+  "shipping_surface_modified": false
+}

@@ -1,0 +1,25 @@
+{
+  "GF01_adopted_tests": "PASS_PORTABLE_GCC_CLANG_ASAN_UBSAN",
+  "GF01_ownership_tests": "PASS_PORTABLE_GCC_CLANG_ASAN_UBSAN",
+  "canonical_source": "UNCHANGED_BY_CONSTRUCTION",
+  "cmake_target_windows": "UNRUN_MSVC",
+  "code_reuse": "30_HF19_FILES_BYTE_IDENTICAL_13_NEW_CODE_HEADERS_6_TEST_FILES",
+  "date": "2026-10-19",
+  "exact_imports": "PASS_SOURCE_IDENTITY_30_FILES",
+  "formal_abi_parity": "NOT_PROVEN",
+  "gf02_integration_test": "1_OF_1_EACH_GCC_CLANG_ASAN_UBSAN",
+  "gf02_original_hf19_tests": "6_OF_6_EACH_GCC_CLANG_ASAN_UBSAN",
+  "ls_x_behavior": "NOT_IMPLEMENTED",
+  "portable_compilers": [
+    "GCC",
+    "Clang"
+  ],
+  "portable_test": "GCC_CLANG_10_OF_10_EACH_ASAN_UBSAN",
+  "sanitizers": [
+    "ASan",
+    "UBSan"
+  ],
+  "schema": "greenfield.gf02-qa-status.v1",
+  "windows_dll_binary": "NOT_BUILT",
+  "windows_export_host": "NOT_RUN"
+}

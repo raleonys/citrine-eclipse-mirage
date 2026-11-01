@@ -1,0 +1,91 @@
+{
+  "schema": "greenfield.library-evidence-register.v1",
+  "date": "2026-10-19",
+  "access_method": "Files library root/subfolder inventory + current master + current pointer + selected research results",
+  "limitations": "This is a top-level and relevant-workstream map, NOT an exhaustive recursive hash audit of every Library file. Unread Library archives are not byte-verified.",
+  "collections": [
+    {
+      "library_path": "/DLL R&D Football/governance",
+      "scope": "Master 2026-10-19.2 MD+JSON verified; master snapshots; known vulnerabilities",
+      "verification": "EXACT_MASTER_BYTES_AND_METADATA_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/releases/3.2.5 SQUALERIS",
+      "scope": "CURRENT_ARTIFACT and HOTFIX19 ZIP physical bytes verified; HOTFIX14..19 + historic FINAL lineage indexed",
+      "verification": "CURRENT_HF19_BYTES_PLUS_FOLDER_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/candidates/3.2.5 SQUALERIS",
+      "scope": "HF18 Candidate02 FIX01, release preparations",
+      "verification": "FOLDER_AND_PRIOR_REPORT_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/Remediations/3.2.5 SQUALERIS",
+      "scope": "READY checkpoints/root-cause packages",
+      "verification": "FOLDER_INDEX_ONLY"
+    },
+    {
+      "library_path": "/DLL R&D Football/Audits/",
+      "scope": "Audit01, 3.2.6 stage, HF19 warning/lifecycle/ownership audits",
+      "verification": "FOLDER_INDEX_ONLY"
+    },
+    {
+      "library_path": "/DLL R&D Football/research/Anadius C++ Recovery",
+      "scope": "QCE02..QCE05 W11..W14, RG01..RG05, native readiness",
+      "verification": "FOLDER_PRIOR_REPORT_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/research/Anadius Override",
+      "scope": "R11 PE recovery",
+      "verification": "FOLDER_PRIOR_REPORT_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/research/11_HOOK_CONSOLIDATION_2026-10-15",
+      "scope": "HF15/G24 11-hook evidence",
+      "verification": "FOLDER_PRIOR_REPORT_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/research/HF16 FIX07 P0 HKEY Ownership",
+      "scope": "Registry B R12/R13 and Boundary01..06",
+      "verification": "FOLDER_PRIOR_REPORT_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/research/VDF Parser SDK 1.3.0",
+      "scope": "VDF SDK candidate and native tests",
+      "verification": "FOLDER_PRIOR_REPORT_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/research/HF17 Conditional 7-9-9-11 Hook Installation",
+      "scope": "hook topology/ownership",
+      "verification": "FOLDER_PRIOR_REPORT_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/research/HF18 G0 G1 Readonly Boundary 2026-10-18",
+      "scope": "HF18 contract/release work",
+      "verification": "FOLDER_PRIOR_REPORT_INDEX"
+    },
+    {
+      "library_path": "/DLL R&D Football/Experiments/3.2.5 SQUALERIS",
+      "scope": "Isolated experimental artifacts",
+      "verification": "FOLDER_INDEX_ONLY"
+    },
+    {
+      "library_path": "/DLL R&D Football/diagnostics/",
+      "scope": "Diagnostic evidence",
+      "verification": "ROOT_FOLDER_INDEX_ONLY"
+    },
+    {
+      "library_path": "/DLL R&D Football/Fixes/",
+      "scope": "Historical remediation",
+      "verification": "ROOT_FOLDER_INDEX_ONLY"
+    }
+  ],
+  "source_authority_order": [
+    "newest explicit user decision",
+    "Library governance master",
+    "official CURRENT_ARTIFACT",
+    "pinned original source ZIP",
+    "research evidence with provenance",
+    "synthetic/reconstruction model"
+  ]
+}

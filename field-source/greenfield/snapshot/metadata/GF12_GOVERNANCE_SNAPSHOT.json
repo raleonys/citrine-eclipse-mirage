@@ -1,0 +1,13 @@
+{
+  "classification": "NON_RELEASE_WORK",
+  "current_artifact_modified": false,
+  "library_master_revision": "2026-10-19.3",
+  "master_sha256": {
+    "PROJECT_RULES_MASTER.json": "db3fc166340f363ffaba3a175e82d63df477b7ab94b5c6dbe734830b799977b3",
+    "PROJECT_RULES_MASTER.md": "0c044aae023a4281b00cb54ba6bfe6400746091db21acbe1392dbfafa1821f5c"
+  },
+  "official_current": "HF19",
+  "publication_authorization": false,
+  "schema": "greenfield.gf12.readonly-governance.v1",
+  "source": "current Library master, read-only"
+}

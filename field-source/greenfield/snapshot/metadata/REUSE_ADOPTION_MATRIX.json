@@ -1,0 +1,103 @@
+{
+  "schema": "greenfield.reuse-adoption.v1",
+  "rows": [
+    {
+      "source": "HF19 current shipping source",
+      "path": "src/runtime/bootstrap_thread.cpp + loader_bridge",
+      "use": "resource owner and DllShutdown budgets",
+      "disposition": "REFERENCE_CONTRACT_NOT_COPY",
+      "planned_stage": "GF01"
+    },
+    {
+      "source": "HF19 current shipping source",
+      "path": "src/runtime/service_state_parser.cpp + handlers/store_routes.cpp",
+      "use": "route grammar, serializer and separate behavioral store",
+      "disposition": "REFERENCE_CONTRACT_NOT_COPY",
+      "planned_stage": "GF04"
+    },
+    {
+      "source": "HF19 current shipping source",
+      "path": "third_party/asio/upstream",
+      "use": "IOCP transport backend",
+      "disposition": "DIRECT_REUSE_CANDIDATE_LATER",
+      "planned_stage": "GF02"
+    },
+    {
+      "source": "HF19 current shipping source",
+      "path": "third_party/pegtl/upstream",
+      "use": "syntax engine for Config2",
+      "disposition": "DIRECT_REUSE_CANDIDATE_LATER",
+      "planned_stage": "GF03"
+    },
+    {
+      "source": "HF19 current shipping source",
+      "path": "third_party/tinyxml2/",
+      "use": "XML library",
+      "disposition": "DIRECT_REUSE_CANDIDATE_LATER",
+      "planned_stage": "GF03"
+    },
+    {
+      "source": "HF19 current shipping source",
+      "path": "third_party/minhook/upstream",
+      "use": "optional Win32 instrumentation if indispensable",
+      "disposition": "DEFER_OPTIONAL_ONLY",
+      "planned_stage": "GF05"
+    },
+    {
+      "source": "OriginSDK 0.91.3",
+      "path": "C API export/header inventory",
+      "use": "official-looking SDK ABI and callback shape for review",
+      "disposition": "SPEC_AND_TEST_FIRST",
+      "planned_stage": "GF04"
+    },
+    {
+      "source": "EAappEmulater-main",
+      "path": "C# session/application modules",
+      "use": "admin/config workflow design",
+      "disposition": "REFERENCE_OR_PORT_CANDIDATE",
+      "planned_stage": "GF03"
+    },
+    {
+      "source": "Maxima-Draconis-master",
+      "path": "Rust backend modules",
+      "use": "failure handling, async service patterns",
+      "disposition": "REFERENCE_OR_PORT_CANDIDATE",
+      "planned_stage": "GF04"
+    },
+    {
+      "source": "dll-reverse-engineering(2)",
+      "path": "anadius-startup-source",
+      "use": "argument source priority and quoting hypotheses",
+      "disposition": "MODEL_ONLY_NOT_ORACLE",
+      "planned_stage": "GF03"
+    },
+    {
+      "source": "dll-reverse-engineering(2)",
+      "path": "anadius-content-handlers-source",
+      "use": "negative filter test cases: global OR divergence",
+      "disposition": "NEGATIVE_QA_ONLY",
+      "planned_stage": "GF04"
+    },
+    {
+      "source": "Library QCE05/RG01-RG05",
+      "path": "research evidence",
+      "use": "duplicate key and synthetic ID behavior/status",
+      "disposition": "SOURCE_LINKED_TEST_CASES",
+      "planned_stage": "GF04"
+    },
+    {
+      "source": "Library HF16 Registry B",
+      "path": "HKEY ownership tests",
+      "use": "fault injection and authentic ownership",
+      "disposition": "NEGATIVE_QA_ONLY",
+      "planned_stage": "GF05"
+    },
+    {
+      "source": "Library HF18/19 ownership",
+      "path": "FreeLibrary failed-release retry",
+      "use": "explicit teardown/retry state",
+      "disposition": "MUST_TEST_BEFORE_IMPLEMENTATION",
+      "planned_stage": "GF01"
+    }
+  ]
+}

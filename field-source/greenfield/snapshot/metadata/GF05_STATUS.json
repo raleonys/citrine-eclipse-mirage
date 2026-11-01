@@ -1,0 +1,18 @@
+{
+  "asio_windows_iocp_bridge_compiled": "NOT_RUN",
+  "asio_windows_iocp_bridge_original_source_staged": true,
+  "canonical_hf19_modified": false,
+  "classification": "GREENFIELD_SOURCE_ONLY_NOT_RELEASE",
+  "dll_shutdown_owns_asio_workers": false,
+  "exact_hf19_files_reused_cumulative": 100,
+  "gf_preloader_dispatch_linked": false,
+  "handler_registry_full_link_closed": false,
+  "native_export_shape": "NOT_RUN",
+  "production_handler_registry_compiled": true,
+  "production_release_server_compiled_portable": true,
+  "production_request_dispatch_compiled": true,
+  "real_lsx_traffic": "NOT_RUN",
+  "stage": "GF05",
+  "surge_starts_real_listener": false,
+  "windows_msvc": "NOT_RUN"
+}

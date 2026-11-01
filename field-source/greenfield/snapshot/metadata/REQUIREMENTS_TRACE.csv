@@ -1,0 +1,13 @@
+requirement_id,contract,evidence_source,gf00_implementation,acceptance
+ABI-001,"DIlMain@1,SURGE@2,DllShutdown@3",HOTFIX19 exports/preloader_l.def,implemented-name-ordinal,Windows export host NOT_RUN
+ABI-002,SURGE function remains no-op,HOTFIX19 src/dll_entry.cpp,implemented empty stub,Windows export host NOT_RUN
+LIF-001,Shutdown 0 only if no owners,HOTFIX19 bootstrap_thread.hpp,empty-owner only,portable GCC/Clang PASS
+LIF-002,Failed FreeLibrary retains owner,HF19 failure/retry evidence,spec-only,NOT_IMPLEMENTED
+LIF-003,No work under loader lock,HF19 source/research,shape-only,Windows NOT_RUN
+NET-001,loopback encrypted LSX transport,HF19 Asio + RG studies,spec-only,NOT_IMPLEMENTED
+VDF-001,transactional parse/publication,VDF SDK1.3 / HF19,spec-only,NOT_IMPLEMENTED
+QCE-001,filter OR-within AND-across,RG02 actual HF18,spec-only,NOT_IMPLEMENTED
+QCE-002,duplicate-key replacement donor native unresolved,QCE05/RG03-05,decision-blocked,ORACLE_NOT_RUN
+REG-001,registered HKEY ownership OOM,HF19 Registry B,spec-only,NOT_IMPLEMENTED
+HOK-001,optional hook isolated ownership,"HF15-G24, HF19",excluded GF00,NOT_IMPLEMENTED
+GOV-001,no release/pointer mutation,Library master 2026-10-19.2,GF00 boundary,DOCUMENTED

@@ -1,0 +1,1 @@
+Pristine upstream include/ tree and LICENSE_1_0.txt from exact PEGTL main archive. No vendor source modification. Commit 3b075432e94f6f906425350b43d03cd9cebfa4f1; prerelease main reports 4.0.0 and requires C++20.

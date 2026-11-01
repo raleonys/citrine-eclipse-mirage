@@ -1,0 +1,22 @@
+{
+  "classification": "SOURCE_LINKED_NOT_RELEASE",
+  "clean_source_extract": "GCC_15_OF_15_PASS_CLANG_15_OF_15_PASS",
+  "compile": {
+    "CLANG_ASAN_UBSAN": "PASS",
+    "GCC_ASAN_UBSAN": "PASS"
+  },
+  "ctest_original_and_new": {
+    "clang": "15/15",
+    "gcc": "15/15"
+  },
+  "gf03_exact_parent_sha256": "ac8ff00633fb24c65fb5288eb901a5ca41ac6ed3613ac88d2635a029ee0ff797",
+  "hf19_original_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "negative_manifest_tamper": "PASS",
+  "real_lsx": "NOT_RUN",
+  "source": "GF04",
+  "source_change_in_canonical": "NONE",
+  "source_deterministic_repack": "PASS",
+  "source_integrity": "HF19_NEW_5_OF_5_AND_GF03_INHERITED_PASS",
+  "test_only_integration": "ORIGINAL_HF19_ROUTE_AND_WRITE_COMPLETION_CONNECTED_WITHIN_PORTABLE_TEST_ONLY",
+  "windows_msvc": "NOT_RUN"
+}

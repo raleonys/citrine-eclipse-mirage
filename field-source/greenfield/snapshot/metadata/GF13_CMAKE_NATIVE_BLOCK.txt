@@ -1,0 +1,37 @@
+
+
+# GF13: opt-in *actual Windows/MSVC* final-link of the ORIGINAL HF19 dispatcher
+# unit test and ORIGINAL Win32 normalized_avatar_path owner. Test-only target;
+# never linked to gf_preloader/SURGE. A configure/build/link/test failure is FAIL.
+option(GF13_ENABLE_ORIGINAL_DISPATCH_NATIVE_LINK "GF13 real HF19 Windows dispatcher final-link gate (NOT_RELEASE)" OFF)
+if(GF13_ENABLE_ORIGINAL_DISPATCH_NATIVE_LINK)
+  if(NOT WIN32 OR NOT MSVC OR NOT CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(FATAL_ERROR "GF13_NATIVE_REQUIRES_REAL_WINDOWS_X64_MSVC")
+  endif()
+  if(GF07_ENABLE_WINDOWS_DEEP_LINK_PROBE)
+    message(FATAL_ERROR "GF13_NATIVE_DUPLICATE_AVATAR_OWNER_PROHIBITED")
+  endif()
+  add_executable(gf13_original_dispatch_native
+    adopted_hf19/tests/unit/test_dispatch.cpp
+    adopted_hf19/src/runtime/avatar_path.cpp)
+  target_include_directories(gf13_original_dispatch_native PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/adopted_hf19/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/adopted_hf19/src"
+    "${CMAKE_CURRENT_SOURCE_DIR}/adopted_hf19/src/runtime"
+    "${CMAKE_CURRENT_SOURCE_DIR}/adopted_hf19/src/config"
+    "${CMAKE_CURRENT_SOURCE_DIR}/third_party/filesystem/upstream/include"
+    "${CMAKE_CURRENT_SOURCE_DIR}/third_party/pegtl/upstream/include")
+  target_compile_options(gf13_original_dispatch_native PRIVATE /W4 /WX /permissive- /EHsc)
+  set_property(TARGET gf13_original_dispatch_native PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+  target_link_libraries(gf13_original_dispatch_native PRIVATE
+    gf11_exchange_units gf12_exchange_transitive_units
+    gf11_socket_runtime gf11_runtime_state
+    ${GF07_INTEGRATION_LIBS} gf_hf19_asio_owner
+    ws2_32 mswsock)
+  add_test(NAME gf13_original_dispatch_real_windows COMMAND gf13_original_dispatch_native)
+endif()
+
+# GF13 portable fail-closed QA, independent of Windows final-link execution.
+add_test(NAME gf13_source_guard_negative COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/qa/test_gf13_guard_negative.py")
+add_test(NAME gf13_native_receipt_negative COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/qa/test_gf13_native_receipt_negative.py")
+set_tests_properties(gf13_source_guard_negative gf13_native_receipt_negative PROPERTIES ENVIRONMENT "PYTHONDONTWRITEBYTECODE=1" RUN_SERIAL TRUE)

@@ -1,0 +1,21 @@
+{
+  "canonical_hf19_source_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "canonical_modified": false,
+  "classification": "NON_RELEASE_WORK",
+  "consumer_game": "NOT_RUN",
+  "current_artifact_modified": false,
+  "gf09_get_config": "OPEN_EXIT14",
+  "gf13_parent_sha256": "e67305952326ef7ecd4db77cf503f9f38cc0cd381d92362a0dadcfff8380e17d",
+  "live_lsx": "NOT_RUN",
+  "production_dispatch_shipping_link": "NOT_IMPLEMENTED",
+  "release": "NOT_RELEASE",
+  "schema": "greenfield.gf14.native-chain-of-custody.v1",
+  "scope": "TEST_ONLY_NATIVE_RUNNER_AND_EVIDENCE_CHECK_NO_PRODUCTION_SOURCE_CHANGE",
+  "shipping_dllshutdown": "ZERO_OWNER",
+  "shipping_surge": "NOOP",
+  "source_changed": false,
+  "windows_dispatch_final_link": "NOT_RUN",
+  "windows_export_load": "NOT_RUN",
+  "windows_io_socket": "NOT_RUN",
+  "windows_msvc_x64": "NOT_RUN"
+}

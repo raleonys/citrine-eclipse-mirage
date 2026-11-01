@@ -1,0 +1,318 @@
+{
+  "copied_implementation_sources": [
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 677,
+      "import_path": "adopted_hf19/include/preloader_l/core/checked_math.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/core/checked_math.hpp",
+      "sha256": "1ceb0ba01ca365c109f0683b272bd008c0f65ed76e366c2601f8f7e255b49ecb",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 774,
+      "import_path": "adopted_hf19/include/preloader_l/core/byte_semantics.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/core/byte_semantics.hpp",
+      "sha256": "4799c63b49299d95826eaef3d08671e2fdb1aae3e5e25e9ee773e0e556584699",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 902,
+      "import_path": "adopted_hf19/include/preloader_l/codec/hex_codec.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/codec/hex_codec.hpp",
+      "sha256": "e925647c40fd380bd59f25b4219d732122c8e41207d7112fbac76179f47ef6a5",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 2722,
+      "import_path": "adopted_hf19/src/codec/hex_codec.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/codec/hex_codec.cpp",
+      "sha256": "49cfc356a019b21dcbec4800c9ff0711458f3ea0cb83932234453faae94eb411",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 650,
+      "import_path": "adopted_hf19/include/preloader_l/hash/fnv_hash.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/hash/fnv_hash.hpp",
+      "sha256": "1f9ad12313ab79868ec74754d808369817af0a64d0b6d1eaed121ae70869d7b8",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 718,
+      "import_path": "adopted_hf19/src/hash/fnv_hash.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/hash/fnv_hash.cpp",
+      "sha256": "3f1f19e1110da0fa85508e5473192d400aec3be208905eb6c63e79d9e560de05",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 540,
+      "import_path": "adopted_hf19/include/preloader_l/net/port_mapping.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/net/port_mapping.hpp",
+      "sha256": "ac6c2256908c6c43f39715f1696eb4cf5bde65f4050458f654be2a26804d5800",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 582,
+      "import_path": "adopted_hf19/src/net/port_mapping.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/net/port_mapping.cpp",
+      "sha256": "a15476d4ff89d16c4808ad1ca64e933d33919234b1aea87e37c3f7862275df9c",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 622,
+      "import_path": "adopted_hf19/include/preloader_l/net/winsock_version_policy.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/net/winsock_version_policy.hpp",
+      "sha256": "7107423c13ca5a8966091f414bfe1232006bf6f4037f360f3ad2630063b5fcea",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 2639,
+      "import_path": "adopted_hf19/src/runtime/asio_session_timeout_policy.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/runtime/asio_session_timeout_policy.hpp",
+      "sha256": "832f13103cd59b3f4e2e79d3f69e3d1737353bed993bfdbdb59a843e021b8bda",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 1564,
+      "import_path": "adopted_hf19/src/config/runtime_configuration_command_line.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/config/runtime_configuration_command_line.hpp",
+      "sha256": "e4dc3cc85ce1ec3e19c8d373b9e047d93ccef03ce92f4094a989dc3252f569cf",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 789,
+      "import_path": "adopted_hf19/include/preloader_l/net/receive_buffer.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/net/receive_buffer.hpp",
+      "sha256": "52060aa56b2cad2add251db86c81ebef30bc51121d9bfc51afec3d361be07e28",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 1439,
+      "import_path": "adopted_hf19/src/debug/net/receive_buffer.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/debug/net/receive_buffer.cpp",
+      "sha256": "f9c29f4386589b9323144d602dcab527e3c45a3eff418011c5d46d49f0a25def",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 941,
+      "import_path": "adopted_hf19/include/preloader_l/net/frame_ingress.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/net/frame_ingress.hpp",
+      "sha256": "c6341437569ec3f4e8f2ca11fee1f40d7f2384aa8beed6ee99d85e6d4265366a",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 3400,
+      "import_path": "adopted_hf19/src/debug/net/frame_ingress.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/debug/net/frame_ingress.cpp",
+      "sha256": "f10f78967121e569c5a332b58614858c9f0133fb0e1bd05104853b50c1818ee9",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 630,
+      "import_path": "adopted_hf19/include/preloader_l/xml/lsx_framing.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/xml/lsx_framing.hpp",
+      "sha256": "2fcbd72378306fc53a4ea29448a37b9e86616b5be8fd97085e4fe740126deaec",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 2468,
+      "import_path": "adopted_hf19/src/xml/lsx_framing.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/xml/lsx_framing.cpp",
+      "sha256": "4d223cae591d2de248f3b2d40779859c652f5877049621c0c20f9250d1e1ad33",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 3665,
+      "import_path": "adopted_hf19/include/preloader_l/xml/request_parser.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/xml/request_parser.hpp",
+      "sha256": "54c50efe8441ad14cdd78f34802856630110536f47626954fffd5b4da475a737",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 1152,
+      "import_path": "adopted_hf19/include/preloader_l/codec/aes128_cipher.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/codec/aes128_cipher.hpp",
+      "sha256": "aeea1cdafec19fccf71962e3bd49b05267bf69a0069aaa94c2c7f1041a6e83a1",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 6891,
+      "import_path": "adopted_hf19/src/codec/aes128_cipher.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/codec/aes128_cipher.cpp",
+      "sha256": "cb65a7b02fdabba5bfb949bf3f630f20ea9fed9f8cc55629c9cbf014c04ddd27",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 1811,
+      "import_path": "adopted_hf19/include/preloader_l/codec/message_codec.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/codec/message_codec.hpp",
+      "sha256": "fdfd3c62ea5dfd7f576d544b41a896295aa8fdf247c8131acf8fe568c30282a3",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 6644,
+      "import_path": "adopted_hf19/src/codec/message_codec.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/codec/message_codec.cpp",
+      "sha256": "c9635c6bac25951051f05262b53de2943ded16c4124d44214f11f559fd2a35dc",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 1195,
+      "import_path": "adopted_hf19/include/preloader_l/codec/session_crypto.hpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "include/preloader_l/codec/session_crypto.hpp",
+      "sha256": "6c10693a9694b5ade09aef1f81b8b2af620f58e72b90367c45bb9978eba5b288",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 5931,
+      "import_path": "adopted_hf19/src/codec/session_crypto.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "src/codec/session_crypto.cpp",
+      "sha256": "ac1de3fa2856276da661bb7fc5b83e0a16cf8f01dd3b1f66b166fae446ff9715",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 2350,
+      "import_path": "adopted_hf19/tests/unit/test_aes128.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "tests/unit/test_aes128.cpp",
+      "sha256": "b9d9709bd18ab83a1ebae71437da2f860c589bd3bb9b13852f007d91c9dfdb47",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 5592,
+      "import_path": "adopted_hf19/tests/unit/test_codec_session.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "tests/unit/test_codec_session.cpp",
+      "sha256": "2d8f28b6d3b4ed39870a3ec9641d1d7dc7ab89ce27f155ea5bebfb1c5bf9668f",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 4333,
+      "import_path": "adopted_hf19/tests/unit/test_framing.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "tests/unit/test_framing.cpp",
+      "sha256": "7b94de2fca0c87b1737703042a8d72cd03c7f3ef59d859b466d13789f79ab814",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 1792,
+      "import_path": "adopted_hf19/tests/unit/test_ingress.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "tests/unit/test_ingress.cpp",
+      "sha256": "60d02652be2b93442ea300c7862c52bc237271a8e8777a6edf7c5ad2f8384ee7",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 3143,
+      "import_path": "adopted_hf19/tests/unit/test_message_codec.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "tests/unit/test_message_codec.cpp",
+      "sha256": "ba9915a130911e5efdef744251a7337dab0b3a01ebab5825cb70a7ae156293e4",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    },
+    {
+      "adaptation": "BYTE_IDENTICAL",
+      "bytes": 1179,
+      "import_path": "adopted_hf19/tests/unit/test_receive_buffer.cpp",
+      "license": "GPL-3.0-only; original notice retained",
+      "origin": "Official HF19",
+      "original_path": "tests/unit/test_receive_buffer.cpp",
+      "sha256": "960bd64fd369dadf5e14fe463f8b9629d8c13d881c3e4c94a02c33283938cb1a",
+      "source_archive_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab"
+    }
+  ],
+  "count": 30,
+  "date": "2026-10-19",
+  "explicit_user_authorization": true,
+  "gf02_added_file_count": 19,
+  "newly_written_impl": [
+    "src/core/lifecycle.cpp",
+    "src/win/dll_entry.cpp",
+    "include/greenfield/core/lifecycle.hpp"
+  ],
+  "notes": "No vendor/source implementation copied into GF00; `.def` preserves public export facts only.",
+  "original_notice_path": "licenses/HF19_LICENSE",
+  "original_notice_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+  "schema": "greenfield.code-reuse-ledger.v3",
+  "state": "GF02_SOURCE_ONLY_NOT_RELEASE"
+}

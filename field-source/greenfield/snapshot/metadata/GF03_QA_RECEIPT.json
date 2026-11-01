@@ -1,0 +1,12 @@
+{
+  "canonical_mutation": false,
+  "clang_ctest": "13/13 PASS",
+  "config": "C++20 GCC+Clang Debug ASan UBSan",
+  "ctest_source_linked_real_loopback": true,
+  "date": "2026-10-19",
+  "gcc_ctest": "13/13 PASS",
+  "lsx_protocol_classifier": "TEST_ONLY_STUB_NOT_PRODUCTION",
+  "real_consumer": "NOT_RUN",
+  "schema": "greenfield-gf03.qa.v1",
+  "windows_msvc": "NOT_RUN"
+}

@@ -1,0 +1,16 @@
+{
+  "asio_license": "Boost Software License 1.0; retained",
+  "asio_owner_source_compilation": "GCC_CLANG_SOURCE_LINKED_PASS",
+  "asio_real_tcp_test": "13_OF_13_GCC_AND_CLANG_PASS",
+  "asio_upstream_files": 635,
+  "classification": "NOT_RELEASE",
+  "original_donor_replay": "NOT_RUN",
+  "original_source_cumulative_count": 53,
+  "original_source_hf19_exact_count": 23,
+  "parent": "871a50c20bbaccee7e467b715dfe55b62e7118a70134ac7706e805520d425ef4",
+  "phase": "GF03",
+  "runtime_reachable_from_surge": false,
+  "shipping_surge_runtime": "NOT_IMPLEMENTED",
+  "stage_status": "CLOSED_GF03_SOURCE_LINKED_ONLY_NOT_RELEASE",
+  "windows_msvc": "NOT_RUN"
+}

@@ -1,0 +1,35 @@
+{
+  "active_ls_x": "NOT_IMPLEMENTED",
+  "canonical_source_changed": false,
+  "clang++": {
+    "ctest_pass": 10,
+    "ctest_total": 10,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ]
+  },
+  "date": "2026-10-19",
+  "directly_adopted_hf19_files": 30,
+  "g++": {
+    "ctest_pass": 10,
+    "ctest_total": 10,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ]
+  },
+  "gf02_new_adopted_sources_and_tests": 19,
+  "immediate_greenfield_parent": "7949fa4402b04d5b24f262258142c9e07956b2b4efe6174c868c3894c7de434e",
+  "native_abi": "NOT_RUN",
+  "notes": [
+    "ctest Debug enables assertions",
+    "Linux x86_64 GCC and Clang only",
+    "original HF19 test ingress is debug/native source, not shipping transport"
+  ],
+  "official_source_parent": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "schema": "greenfield.gf02.portable_replay.v1",
+  "source_donor_test_count": 6,
+  "status": "SOURCE_ONLY_NOT_RELEASE",
+  "windows_msvc": "NOT_RUN"
+}

@@ -1,0 +1,25 @@
+{
+  "GF00_parent_delta_contract": "PASS_ONLY_EXPECTED_CHANGES",
+  "classification": "TEST_ONLY_NON_RELEASE",
+  "compiled_direct_hf19_cpp": [
+    "src/codec/hex_codec.cpp",
+    "src/hash/fnv_hash.cpp",
+    "src/net/port_mapping.cpp"
+  ],
+  "compiler_profiles": [
+    "GCC C++20 ASan UBSan Debug CTest 3/3",
+    "Clang C++20 ASan UBSan Debug CTest 3/3"
+  ],
+  "direct_byte_identical_files": 11,
+  "functional_services": "NOT_IMPLEMENTED",
+  "game_native": "NOT_RUN",
+  "official_release": "NOT_AUTHORIZED",
+  "owner_registry_production_wiring": "NOT_IMPLEMENTED",
+  "ported_active_in_surge": false,
+  "schema": "greenfield.gf01.qa-receipt.v1",
+  "source_import_diff": "PASS_11_OF_11",
+  "source_parent_sha256": "55ae2078aeaf05d635165cd1794a2e07c93c5dfaf0242ffbebe0b59cce679701",
+  "source_reference_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "windows_loadlibrary": "NOT_RUN",
+  "windows_msvc_build": "NOT_RUN"
+}

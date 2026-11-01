@@ -1,0 +1,45 @@
+{
+  "gf10_provider_definitions": 53,
+  "gf11_new_owner_definitions": 5,
+  "new_socket_exchange_unowned_transitive_symbols": [
+    "preloader_l::protocol::build_challenge_greeting(unsigned int, char*, unsigned long, unsigned long*)",
+    "preloader_l::protocol::process_challenge_request(char const*, unsigned long, char*, unsigned long, preloader_l::protocol::HandshakeResult*)",
+    "preloader_l::protocol::detail::starts_lsx(char const*, unsigned long)",
+    "preloader_l::protocol::detail::first_ten_hex(char const*, unsigned long)",
+    "preloader_l::protocol::detail::lsx_frame_end(char const*, unsigned long)",
+    "preloader_l::protocol::detail::consume_wire_frame(preloader_l::protocol::ExchangeState*, unsigned long)",
+    "preloader_l::protocol::detail::commit_sent_handshake(preloader_l::protocol::ExchangeState*, preloader_l::protocol::detail::WireFrameView, preloader_l::protocol::HandshakeResult const&, unsigned int*)",
+    "preloader_l::protocol::detail::receive_protocol_frame(preloader_l::net::TransportEndpoint, preloader_l::protocol::ExchangeState*, preloader_l::protocol::detail::WireFrameView*)",
+    "preloader_l::protocol::detail::tolerate_malformed_frame(unsigned int*)",
+    "preloader_l::protocol::detail::classify_received_wire_frame(preloader_l::protocol::ExchangeState*, preloader_l::protocol::detail::WireFrameView, unsigned int*)",
+    "preloader_l::protocol::detail::execute_response_transaction(preloader_l::net::TransportEndpoint, preloader_l::protocol::ExchangeState*, char const*, unsigned long, preloader_l::core::DispatchEnvironment const*)",
+    "preloader_l::protocol::detail::send_all(preloader_l::net::TransportEndpoint, unsigned char const*, unsigned long, unsigned long*)"
+  ],
+  "original_dispatch_refs_without_provider_after_gf11": 0,
+  "original_dispatch_unresolved_refs": 58,
+  "owner_map": [
+    {
+      "owner": "libgf11_socket_runtime.a",
+      "symbol": "preloader_l::net::stop_socket_runtime(preloader_l::net::SocketRuntime*)"
+    },
+    {
+      "owner": "libgf11_socket_runtime.a",
+      "symbol": "preloader_l::net::reset_socket_runtime(preloader_l::net::SocketRuntime*)"
+    },
+    {
+      "owner": "libgf11_runtime_state.a",
+      "symbol": "preloader_l::runtime::try_shutdown()"
+    },
+    {
+      "owner": "libgf11_runtime_state.a",
+      "symbol": "preloader_l::runtime::try_initialize()"
+    },
+    {
+      "owner": "libgf11_exchange_units.a",
+      "symbol": "preloader_l::protocol::reset_exchange(preloader_l::protocol::ExchangeState*)"
+    }
+  ],
+  "schema": "greenfield.gf11.bounded.elf.owner.audit.v1",
+  "socket_exchange_transitive_owner_gaps": 12,
+  "status": "ELF_SYMBOL_DEFINITIONS_ONLY_NOT_FULL_LINK_NOT_WINDOWS"
+}

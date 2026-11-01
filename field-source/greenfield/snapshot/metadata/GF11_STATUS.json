@@ -1,0 +1,31 @@
+{
+  "cache_artifacts_shipping_policy": "FORBIDDEN_IN_GF11_SOURCE",
+  "canonical_hf19_modified": false,
+  "clang_fresh": "NOT_RUN",
+  "clang_owner_tests": "PASS_2_OF_2_INITIAL",
+  "clang_symbol_owner_audit": "PASS_58_ORIGINAL_5_ADDED_12_NEW_TRANSITIVE_UNOWNED",
+  "classification": "NON_RELEASE_WORK",
+  "complete_dispatch_link": "NOT_RUN",
+  "consumer_game": "NOT_RUN",
+  "cumulative_exact_hf19_files": 226,
+  "current_artifact_modified": false,
+  "gcc_fresh": "NOT_RUN",
+  "gcc_owner_tests": "PASS_2_OF_2_INITIAL",
+  "gcc_symbol_owner_audit": "PASS_58_ORIGINAL_5_ADDED_12_NEW_TRANSITIVE_UNOWNED",
+  "gf10_parent_sha256": "d7f608e7290ba7eb6bbf0ba68f528061dd687702dca11ed35a32f1e9c6d389e0",
+  "gf_preloader_dllshutdown": "ZERO_OWNER",
+  "gf_preloader_surge": "NOOP",
+  "iocp": "NOT_RUN",
+  "lsx": "NOT_RUN",
+  "msvc_debug": "NOT_RUN",
+  "msvc_release": "NOT_RUN",
+  "new_exact_hf19_files": 5,
+  "note": "Portable owner TUs and original two tests; original GF10 tests retained, GF11 focused QA separately evidenced.",
+  "official_hf19_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "original_get_config_probe": "OPEN_EXIT_14_NOT_COUNTED_PASS",
+  "release": "NOT_RELEASE",
+  "removed_inherited_debug_cache": [
+    "scripts/__pycache__/gf10_pe_export_gate.cpython-313.pyc"
+  ],
+  "schema": "greenfield.gf11.status.v1"
+}

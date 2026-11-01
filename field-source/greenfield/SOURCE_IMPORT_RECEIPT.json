@@ -1,0 +1,17 @@
+{
+  "archive_basename": "GREENFIELD_PRELOADER_SURGE_GF14_NATIVE_EVIDENCE_CUSTODY_FULL_SOURCE_NOT_RELEASE_2026-10-20.zip",
+  "archive_sha256": "03edc7930459a67518b4c4833779b00f41e8fb4f55ba9ee179b0d3f76dbc2b23",
+  "field": "greenfield",
+  "file_count": 1369,
+  "import_parent_commit": "552abae71cbaa56b6d2aa84c25efeebee3c44361",
+  "main_application_unchanged": true,
+  "native_or_game_acceptance_inherited": false,
+  "not_release": true,
+  "schema": "cem.field-source-import.v1",
+  "snapshot_import_only": true,
+  "source_branch": "research/field-retirement/greenfield",
+  "source_class": "NOT_RELEASE_REFERENCE",
+  "source_file_manifest_sha256": "ab8b24b9c6060e88b8cd7dc2d391d4d0fd1d76b24b126a0d28d001322ab5913e",
+  "source_import_kit_sha256": "62383643ff46d1cb65a5d1d6c2bb2d2a6607e7b5da5f267deb57dddd6f7a8886",
+  "uncompressed_bytes": 8008712
+}

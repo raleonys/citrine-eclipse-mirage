@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+from project_files import verify_reference_sources
 
 
 def load_active_name_policy(root):
@@ -22,11 +23,12 @@ def load_active_name_policy(root):
 
 def check_active_identifiers(root):
     root=Path(root)
+    verify_reference_sources(root)
     pattern=re.compile('|'.join(re.escape(value) for value in load_active_name_policy(root)),re.I)
     errors=[]
     for path in root.rglob('*'):
         rel=path.relative_to(root)
-        if (rel.parts[0] in {'build','dist','.git','third_party'} or
+        if (rel.parts[0] in {'build','dist','.git','third_party','field-source'} or
                 rel.parts[:2] == ('metadata', 'evidence') or not path.is_file()):
             continue
         name=rel.as_posix()

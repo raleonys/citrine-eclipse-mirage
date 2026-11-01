@@ -1,0 +1,24 @@
+{
+  "schema": "greenfield.gf00.evidence.v1",
+  "date": "2026-10-19",
+  "claims": {
+    "canonical_mutation": "NONE",
+    "portable_core_gcc_asan_ubsan": "PASS",
+    "portable_core_clang_asan_ubsan": "PASS",
+    "Windows_MSVC_compile": "NOT_RUN",
+    "Windows_native_LoadLibrary": "NOT_RUN",
+    "Windows_Export_Ordinal": "NOT_RUN",
+    "runtime_transport": "NOT_IMPLEMENTED",
+    "release": "NOT_RELEASE"
+  },
+  "compiler_info": {
+    "g++": "g++ (Debian 14.2.0-19) 14.2.0",
+    "clang++": "clang version 17.0.0 (https://github.com/swiftlang/llvm-project.git 10999b6d034fe318f3d56c83bddb6572593a8bb0)",
+    "cmake": "cmake version 3.31.6"
+  },
+  "checks": {
+    "manifest_and_abi": "PASS",
+    "inferred_windows_build": "NOT_CLAIMED"
+  },
+  "evidence_scope": "Only GCC/Clang portable lifecycle CMake/CTest physically run in container; Windows code has not been compiled."
+}

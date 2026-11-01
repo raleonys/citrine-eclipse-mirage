@@ -1,0 +1,45 @@
+{
+  "classification": "NON_RELEASE_WORK_NOT_RELEASE",
+  "cumulative_hf19_exact": 206,
+  "gf07_cumulative_hf19": 197,
+  "gf08_new_hf19": 9,
+  "gf08_new_original_member_sha256": {
+    "src/net/winsock_native.cpp": "dd2c5c554499481e0b0a8574c05591e1e1bf8e2b0e6d46387395c63994a6de06",
+    "src/runtime/release_server_acceptor.cpp": "f1d5e3b8b4be9d99bedc2040854e87628e00632f7e6fa180d34077ce770ebc9b",
+    "src/runtime/release_server_io_internal.hpp": "77708345b36b02fc40d63119667bf8b604962b440c7b825f49ca761d03827db4",
+    "src/runtime/release_server_lifecycle.cpp": "bfe6273770e116990d9bf8d8427a8538f58e16d6630db20350834e0e1d9031b3",
+    "src/runtime/release_server_worker.cpp": "d655c0f7676994cd22cb25bd0d1e48fe8a5c16efbf3a7a77e06a304dab3564d3",
+    "tests/unit/test_asio_delivery_completion.cpp": "aceabec93bb2c4f1f332221d2d0668c980a70c139bd6684dbc9e453ffac9d766",
+    "tests/unit/test_asio_session_timeout_policy.cpp": "c8cdcb9718a72298426a317fcec6d8dbef3567ac89beb5be07443aaad3231c71",
+    "tests/unit/test_dispatch_route_matrix.cpp": "8f0dfbb839a06152f88236ee97d7f25d5b7d422939e5874a75c64871dfd09edd",
+    "tests/unit/test_filesystem_path.cpp": "abef1f137e37edfbb806aafb40e9d650ed6cdce34e920f7b6be89240d846772d"
+  },
+  "ghc_filesystem_vendor_member_sha256": {
+    "third_party/filesystem/UPSTREAM_COMMIT.txt": "d9e708a246f5afd81a2059b80df9844e296d6f1b85e09759523c2feb66045fae",
+    "third_party/filesystem/upstream/LICENSE": "1b265537c97cfb422ffb52492c96979943f54fab8746a6dd38d8329953d487cc",
+    "third_party/filesystem/upstream/include/ghc/filesystem.hpp": "dcf4bad9677835db74185ec6c330c3e37a6671795baf0475903ff059df87d8fb",
+    "third_party/filesystem/upstream/include/ghc/fs_fwd.hpp": "0dd5b290e07b87996d7039346b807202306c516b40dd1370d466df5a98a9c03a",
+    "third_party/filesystem/upstream/include/ghc/fs_impl.hpp": "da3891560b53d46c485dddcbecd073d9dc43528a394befa45a5cd7b0e06978b0",
+    "third_party/filesystem/upstream/include/ghc/fs_std.hpp": "9bea94db04176ec37416d32055e77ec27d119671a94562ce7325262cbde15464",
+    "third_party/filesystem/upstream/include/ghc/fs_std_fwd.hpp": "48f90e3dcef690190a36b46ce62756a710da3f61223a44d44777fb634138217e",
+    "third_party/filesystem/upstream/include/ghc/fs_std_impl.hpp": "ba854afaa596d42970bdfa0ba87342be045111594400a9a61c1d4765d80867d4"
+  },
+  "official_hf19_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "parent_gf07_sha256": "08d0dfb0581eb6737551ae12d51d7ed80067f2b98a090c56979b94c0a8cd1fde",
+  "schema": "greenfield.gf08.original_reuse.v1",
+  "source_bytes_modified_from_hf19": 0,
+  "staged_original_native_test": [
+    "tests/unit/test_dispatch_route_matrix.cpp"
+  ],
+  "used_original_tests_portable": [
+    "tests/unit/test_filesystem_path.cpp",
+    "tests/unit/test_asio_session_timeout_policy.cpp",
+    "tests/unit/test_asio_delivery_completion.cpp"
+  ],
+  "windows_only_sources_staged": [
+    "src/runtime/release_server_acceptor.cpp",
+    "src/runtime/release_server_lifecycle.cpp",
+    "src/runtime/release_server_worker.cpp",
+    "src/net/winsock_native.cpp"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "classification": "SOURCE_ONLY_NOT_RELEASE",
+  "cumulative_exact_hf19_files": 221,
+  "gf09_parent_sha256": "0d5218505ed279bf73c4d4278621957f274769d683619041f6303d83d32d253d",
+  "new_hf19_files": {
+    "tests/unit/test_config_fixture.cpp": "643272273fb78027a2668d3ebe6b1265dd047cbf38e03add8b199029293ef874",
+    "tests/unit/test_origin_error.cpp": "7501fec801699cf341dd58f22ec1ca4872d8915b27ddf30e65a56956e9debcf4",
+    "tests/unit/test_response.cpp": "b32a78a9821cc3d1805a69bb8f964428e395aced20b24e389771352b0ad2fde3",
+    "tests/unit/test_response_sinks.cpp": "56418b4ab555241574b8d78c7bf3956bcc2a82226791bd8609fc6f3d6538c7e5",
+    "tests/unit/test_session_seed_policy.cpp": "a5b99ed085adc8c22845331831ea3cedb80d473997608b7dd5544bb92d3015b7"
+  },
+  "official_hf19_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "source_reuse_policy": "EXACT_BYTES_NO_PORTABLE_MODIFICATIONS"
+}

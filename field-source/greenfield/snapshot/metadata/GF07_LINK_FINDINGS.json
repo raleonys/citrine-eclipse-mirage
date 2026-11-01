@@ -1,0 +1,20 @@
+{
+  "dispatch_link_without_new_sources_initial_unresolved_23": true,
+  "gf07_deep_dispatch_link": "BLOCKED_WINDOWS_ONLY_AVATAR_AND_RUNTIME_OWNERSHIP",
+  "no_mock_win32": true,
+  "original_real_source_linked_and_executed": [
+    "test_content_empty_defaults.cpp",
+    "test_presence_content_entitlements.cpp",
+    "test_content_descendant_policy.cpp",
+    "test_entitlement_grammar.cpp",
+    "test_config_parser_hardening.cpp",
+    "test_config_section_policy.cpp",
+    "test_runtime_configuration_parser.cpp"
+  ],
+  "original_windows_avatar": "#error avatar_path.cpp is Windows-only",
+  "provider_and_domain_source_integrations": "GENUINE_HF19_ORIGINAL",
+  "schema": "greenfield.gf07.original_link_probe.v1",
+  "shipping_preloader_linked": false,
+  "surge_starts_server": false,
+  "windows_msvc_native": "NOT_RUN"
+}

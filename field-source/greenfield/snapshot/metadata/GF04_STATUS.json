@@ -1,0 +1,18 @@
+{
+  "canonical_hf19_source_mutation": false,
+  "classification": "NOT_RELEASE",
+  "compiled_original_inventory": true,
+  "compiled_original_route_lookup": true,
+  "compiled_original_write_completion": true,
+  "full_handler_registry_compiled": false,
+  "game_consumer": "NOT_RUN",
+  "integration_test": true,
+  "native_windows_msvc": "NOT_RUN",
+  "original_router_test": true,
+  "real_asio_source_linked_tests": true,
+  "real_lsx_traffic": "NOT_RUN",
+  "release_server_io_compiled": false,
+  "semantic_abi": "DllMain@1 SURGE@2 DllShutdown@3",
+  "stage": "GF04",
+  "surge_dispatch_wired": false
+}

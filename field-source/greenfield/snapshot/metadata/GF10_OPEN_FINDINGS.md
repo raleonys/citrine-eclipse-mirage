@@ -1,0 +1,6 @@
+# GF10 unresolved integration boundaries
+
+- `GF09-GETCONFIG-01`: direct unchanged HF19 `test_get_config.cpp` exits **14** for `id="bad&bogus;"` in isolated Linux GCC/Clang source-linked test. `parse_request_view` returns `ok`; original handler does not return `invalid_request` as test expects. No HF19 product patch, no suppression, no broad canonical defect claim. GF10 retains the opt-in GF09 probe unchanged.
+- `GF10-RESPONSE-SINKS-01`: original `test_response_sinks.cpp` cannot fully link on Linux: `image_route.cpp` needs the real `runtime::normalized_avatar_path` implementation in Windows-only `avatar_path.cpp`. This GF10 test is retained **unchanged** and staged only for Windows opt-in, not default Linux CTest; no fake implementation.
+- `GF10-WINDOWS-01`: real MSVC x64 `/MT`, `/MTd` compilation, LoadLibrary/export host, actual Win32 owner test and PE static verification are **NOT_RUN** in this Linux environment. Native operator is prepared but does not supply a receipt without execution.
+- `GF10-DISPATCH-01`: shipping `gf_preloader` still retains GF00 `SURGE()` no-op, zero-owner `DllShutdown` and public exports `DllMain@1`, `SURGE@2`, `DllShutdown@3`. Original imported handlers/IOCP services live in dormant test/static targets only. No full LSX server, Consumer/game runtime.

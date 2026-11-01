@@ -1,0 +1,42 @@
+{
+  "added": {
+    "src/protocol/socket_exchange_write_completion.cpp": {
+      "bytes": 1549,
+      "exact_byte_identity": true,
+      "import_path": "adopted_hf19/src/protocol/socket_exchange_write_completion.cpp",
+      "sha256": "b527d46668e48bcbc328c6ad0e3745b627095fde258f975e06f6139ccd598211"
+    },
+    "src/protocol/socket_exchange_write_completion.hpp": {
+      "bytes": 1418,
+      "exact_byte_identity": true,
+      "import_path": "adopted_hf19/src/protocol/socket_exchange_write_completion.hpp",
+      "sha256": "cb8bd6ece9030c72b031081e85b858d698209326e99cc40c3b8bfc02cde65c92"
+    },
+    "src/router/route_inventory.cpp": {
+      "bytes": 7643,
+      "exact_byte_identity": true,
+      "import_path": "adopted_hf19/src/router/route_inventory.cpp",
+      "sha256": "c9d57812ddde160deef7ca7fd922065fd648c420063fc2e4f92fc9f503e74e30"
+    },
+    "src/router/route_lookup.cpp": {
+      "bytes": 1067,
+      "exact_byte_identity": true,
+      "import_path": "adopted_hf19/src/router/route_lookup.cpp",
+      "sha256": "438c9f77db85de4c5a1e00050c9c1f2af15134cd601d58d56d5da9d273eb96f0"
+    },
+    "tests/unit/test_router.cpp": {
+      "bytes": 1659,
+      "exact_byte_identity": true,
+      "import_path": "adopted_hf19/tests/unit/test_router.cpp",
+      "sha256": "16685f472de7233f238d315e3b9bafd24541fe5fa3560a4511b2fc9c290bc159"
+    }
+  },
+  "added_files": 5,
+  "asio_upstream_retained_files": 635,
+  "classification": "SOURCE_LINKED_TEST_ONLY_NOT_RELEASE",
+  "cumulative_reuse_file_count": 58,
+  "official_hf19_source_zip_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "parent_gf03_zip_sha256": "ac8ff00633fb24c65fb5288eb901a5ca41ac6ed3613ac88d2635a029ee0ff797",
+  "schema": "greenfield.gf04.direct-reuse.v1",
+  "upstream_code_mutation": false
+}

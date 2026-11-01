@@ -1,0 +1,13 @@
+{
+  "gf10_parent_sha256": "d7f608e7290ba7eb6bbf0ba68f528061dd687702dca11ed35a32f1e9c6d389e0",
+  "new_exact_hf19_files": {
+    "src/net/socket_runtime.cpp": "961dd7df6470fdfb4012a70b35caa0d0d05db96e186320f9f9ee9d2e566f63b9",
+    "src/protocol/socket_exchange.cpp": "7f40b88b9140277bdf7a61774db16f8c0fb391a72f24117381658106e7b1450f",
+    "src/runtime/runtime_state.cpp": "9039ff5ef4d6a142191864b7cf472870de3a93e4f0e9d874a2af7bdd6135ff96",
+    "tests/unit/test_runtime_state.cpp": "3ff42089486e7e3b3a27fed4dc3b20d16776fab94190468d42d3f5cfbfabc6e7",
+    "tests/unit/test_socket_runtime.cpp": "155ac3dd96d292f3b52acef4eae0efb8ad34e73347fbacdfb4b79321028041e7"
+  },
+  "note": "Three original production source TUs plus 2 original tests. No product edits.",
+  "official_hf19_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "schema": "greenfield.gf11.source.reuse.v1"
+}

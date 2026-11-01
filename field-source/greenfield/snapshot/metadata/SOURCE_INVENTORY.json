@@ -1,0 +1,342 @@
+{
+  "schema": "greenfield.source-inventory.v1",
+  "date": "2026-10-19",
+  "authoritative_release": "3.2.5 SQUALERIS HOTFIX19",
+  "sources": [
+    {
+      "source": "Official HOTFIX19",
+      "archive_name": "preloader_l_3.2.5_SQUALERIS_HOTFIX_19.zip",
+      "bytes": 3971740,
+      "sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+      "members": 1898,
+      "uncompressed_bytes": 15065110,
+      "crc": "PASS",
+      "filetypes": [
+        [
+          ".hpp",
+          1086
+        ],
+        [
+          ".cpp",
+          428
+        ],
+        [
+          ".py",
+          122
+        ],
+        [
+          ".ipp",
+          78
+        ],
+        [
+          ".json",
+          46
+        ],
+        [
+          ".md",
+          38
+        ],
+        [
+          ".vcxproj",
+          16
+        ],
+        [
+          ".txt",
+          13
+        ],
+        [
+          ".h",
+          11
+        ],
+        [
+          ".ps1",
+          9
+        ],
+        [
+          ".sln",
+          8
+        ],
+        [
+          ".filters",
+          8
+        ]
+      ],
+      "license_paths": [
+        "LICENSE",
+        "third_party/filesystem/upstream/LICENSE",
+        "third_party/minhook/upstream/LICENSE.txt",
+        "third_party/tinyxml2/LICENSE.txt"
+      ],
+      "tier": "LOCAL_BYTES_VERIFIED",
+      "reuse_role": "canonical reference / ABI / QA",
+      "ingestion_status": "INDEXED_NO_CODE_COPIED"
+    },
+    {
+      "source": "OriginSDK_0.91.3",
+      "archive_name": "OriginSDK_0.91.3_Kaynak.zip",
+      "bytes": 1318003,
+      "sha256": "0a1079b925512122ad3fb156ec313405f97b1a22a67dfa2cb6eee9df39706704",
+      "members": 555,
+      "uncompressed_bytes": 5360772,
+      "crc": "PASS",
+      "filetypes": [
+        [
+          ".cpp",
+          209
+        ],
+        [
+          ".c",
+          139
+        ],
+        [
+          ".h",
+          102
+        ],
+        [
+          ".hpp",
+          53
+        ],
+        [
+          ".json",
+          16
+        ],
+        [
+          ".py",
+          15
+        ],
+        [
+          ".md",
+          10
+        ],
+        [
+          ".ps1",
+          3
+        ],
+        [
+          ".txt",
+          2
+        ],
+        [
+          ".inc",
+          2
+        ],
+        [
+          ".cmd",
+          2
+        ],
+        [
+          ".csv",
+          1
+        ]
+      ],
+      "license_paths": [],
+      "tier": "LOCAL_BYTES_VERIFIED",
+      "reuse_role": "API types/exports; reuse authorized",
+      "ingestion_status": "INDEXED_NO_CODE_COPIED"
+    },
+    {
+      "source": "EAappEmulater",
+      "archive_name": "EAappEmulater-main.zip",
+      "bytes": 3983069,
+      "sha256": "d5ac4b1735c578057cc6a77247ff20dec870218b9e0f39b46b1c774513e617c2",
+      "members": 292,
+      "uncompressed_bytes": 5883220,
+      "crc": "PASS",
+      "filetypes": [
+        [
+          ".cs",
+          91
+        ],
+        [
+          ".xaml",
+          53
+        ],
+        [
+          ".xml",
+          51
+        ],
+        [
+          ".jpg",
+          36
+        ],
+        [
+          ".png",
+          26
+        ],
+        [
+          ".json",
+          8
+        ],
+        [
+          ".yml",
+          5
+        ],
+        [
+          ".txt",
+          5
+        ],
+        [
+          ".csproj",
+          4
+        ],
+        [
+          "",
+          3
+        ],
+        [
+          ".ico",
+          3
+        ],
+        [
+          ".md",
+          3
+        ]
+      ],
+      "license_paths": [
+        "EAappEmulater-main/LICENSE.txt"
+      ],
+      "tier": "LOCAL_BYTES_VERIFIED",
+      "reuse_role": "C# UI / application architecture; reuse authorized",
+      "ingestion_status": "INDEXED_NO_CODE_COPIED"
+    },
+    {
+      "source": "Maxima-Draconis",
+      "archive_name": "Maxima-Draconis-master.zip",
+      "bytes": 1601901,
+      "sha256": "13de6c866ec1fdacf2de963e619a18e5ae2898010983f5785b6785dcc1af444a",
+      "members": 203,
+      "uncompressed_bytes": 4049713,
+      "crc": "PASS",
+      "filetypes": [
+        [
+          ".rs",
+          114
+        ],
+        [
+          ".gql",
+          39
+        ],
+        [
+          ".toml",
+          11
+        ],
+        [
+          ".png",
+          7
+        ],
+        [
+          ".md",
+          6
+        ],
+        [
+          ".proto",
+          4
+        ],
+        [
+          ".yml",
+          3
+        ],
+        [
+          "",
+          2
+        ],
+        [
+          ".sh",
+          2
+        ],
+        [
+          ".json",
+          2
+        ],
+        [
+          ".frag",
+          2
+        ],
+        [
+          ".vert",
+          2
+        ]
+      ],
+      "license_paths": [
+        "Maxima-Draconis-master/LICENSE"
+      ],
+      "tier": "LOCAL_BYTES_VERIFIED",
+      "reuse_role": "Rust backend designs; reuse authorized",
+      "ingestion_status": "INDEXED_NO_CODE_COPIED"
+    },
+    {
+      "source": "DLL Reverse Engineering (2)",
+      "archive_name": "dll-reverse-engineering(2).zip",
+      "bytes": 80347372,
+      "sha256": "07d2dcf8e1b765bc9c67fd7903b9420f33ce3e269ae79616da777217c2b06f0b",
+      "members": 1200,
+      "uncompressed_bytes": 301372757,
+      "crc": "PASS",
+      "filetypes": [
+        [
+          ".json",
+          310
+        ],
+        [
+          ".cpp",
+          167
+        ],
+        [
+          ".o",
+          164
+        ],
+        [
+          ".exe",
+          152
+        ],
+        [
+          ".ps1",
+          100
+        ],
+        [
+          ".md",
+          93
+        ],
+        [
+          ".hpp",
+          88
+        ],
+        [
+          ".txt",
+          67
+        ],
+        [
+          ".c",
+          15
+        ],
+        [
+          ".h",
+          8
+        ],
+        [
+          ".bin",
+          6
+        ],
+        [
+          ".dlf",
+          6
+        ]
+      ],
+      "license_paths": [
+        "anadius-xml-reader-source/vendor/tinyxml2/LICENSE.txt",
+        "hook-engine-source/vendor/minhook/LICENSE.txt"
+      ],
+      "tier": "LOCAL_BYTES_VERIFIED",
+      "reuse_role": "research models / negative QA; reuse authorized",
+      "ingestion_status": "INDEXED_NO_CODE_COPIED"
+    },
+    {
+      "source": "Original Anadius x86/x64",
+      "archive_name": "anadius.zip / nested W14 originals",
+      "sha256": "See independent W14/RG05 artifact",
+      "tier": "LIBRARY_REFERENCE_ONLY",
+      "reuse_role": "historical contract / provenance",
+      "ingestion_status": "NO_BINARY_COPIED"
+    }
+  ]
+}

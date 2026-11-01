@@ -1,0 +1,17 @@
+{
+  "schema": "greenfield.governance-preflight.v1",
+  "classification": "NON_RELEASE_WORK",
+  "greenfield_branch": "GF00",
+  "no_canonical_change": true,
+  "master_revision": "2026-10-19.2",
+  "observed_library_bytes_sha256": {
+    "PROJECT_RULES_MASTER.md": "718fcad172387dfa7f14275a8f460b7313556791add5aa299b0cbb8509e20ab3",
+    "PROJECT_RULES_MASTER.json": "bbfc2947966dff3c7cb9c52eebdf756e41e28aab18391c5129e6609550cbc660",
+    "CURRENT_ARTIFACT.json": "b049fd68c1cfc3f1e00aac7517b52f4accf096243a5aa74ca038de355b1ce940"
+  },
+  "canonical_official_HF19_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "publication_authorization": false,
+  "G0_G4_release_gates": "NOT_INVOKED_NON_RELEASE",
+  "final_game_gate": "NOT_APPLICABLE_NON_RELEASE",
+  "no_semver_or_codename_assigned": true
+}

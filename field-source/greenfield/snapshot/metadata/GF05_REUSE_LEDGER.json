@@ -1,0 +1,223 @@
+{
+  "asio_upstream_bytes_unchanged": true,
+  "cumulative_hf19_reused_files": 100,
+  "exact_hf19_source_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "new_exact_byte_sources": {
+    "adopted_hf19/include/preloader_l/config/runtime_configuration.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/config/runtime_configuration.hpp",
+      "sha256": "f1dda4536c05ecca187a831af0fb6d9929ecaabf1224d95e7b0ed390931693e7"
+    },
+    "adopted_hf19/include/preloader_l/config/settings_values.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/config/settings_values.hpp",
+      "sha256": "eef9c25ffe51acb22e12014f42e364d8aabbb3c9efe3564310734afa7bbcb033"
+    },
+    "adopted_hf19/include/preloader_l/core/local_social_reader_policy.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/core/local_social_reader_policy.hpp",
+      "sha256": "df39c4964dcc8f0c5f62553b325112ebdd0ae03a4ccdf0278c6490ad9295fbeb"
+    },
+    "adopted_hf19/include/preloader_l/handlers/achievement_routes.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/achievement_routes.hpp",
+      "sha256": "283a0c4a761f7be6b3b49a96d6efc3dcf57324d216995e262f1179f5a45b3cf7"
+    },
+    "adopted_hf19/include/preloader_l/handlers/auth_routes.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/auth_routes.hpp",
+      "sha256": "7d38fb19b0ce45bbdefdb93d76e2a61d3adac598dccd812b1393fd78d7c69469"
+    },
+    "adopted_hf19/include/preloader_l/handlers/config_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/config_route.hpp",
+      "sha256": "f21c9e336d88dddc7418c9698f7ce2aa843ff5c7c4e0e9fd360e7087f47bd1f3"
+    },
+    "adopted_hf19/include/preloader_l/handlers/connection_state_binding.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/connection_state_binding.hpp",
+      "sha256": "bb433f28f192e3ffc652216c38220f828391ac423364c2ff2f7cf8173e71595b"
+    },
+    "adopted_hf19/include/preloader_l/handlers/friends_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/friends_route.hpp",
+      "sha256": "7b2777470fdb5f212a1960929b8efd8a4e64517d9eff2a89b47fb663b5a77798"
+    },
+    "adopted_hf19/include/preloader_l/handlers/game_info_routes.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/game_info_routes.hpp",
+      "sha256": "0e12a9f57df7cd557e2e7822134ccdaad05c8d9a83a198b8d8019b61705fc983"
+    },
+    "adopted_hf19/include/preloader_l/handlers/group_info_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/group_info_route.hpp",
+      "sha256": "ea233f206b49ba34bbfe691874ab143de74dfe13632ac9a7075fcae611f88a8b"
+    },
+    "adopted_hf19/include/preloader_l/handlers/handler_registry.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/handler_registry.hpp",
+      "sha256": "ce2af5f89f26d69fef50187e21cad8fc56a44a7700fc010a05004ebca9b05fb9"
+    },
+    "adopted_hf19/include/preloader_l/handlers/image_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/image_route.hpp",
+      "sha256": "e1fee6740204906ef09e5990f37222c6df82e9c9230be5a1490b425ef102c16c"
+    },
+    "adopted_hf19/include/preloader_l/handlers/integration_routes.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/integration_routes.hpp",
+      "sha256": "7a276b569cc9f9b31c85f2adb28875bf2e87bb15e766f76020cab64a6810a14e"
+    },
+    "adopted_hf19/include/preloader_l/handlers/local_social_list_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/local_social_list_route.hpp",
+      "sha256": "ad77a4e9dc184da0d091b7902e32f67c11978eb342d1fe9e906acc63b479ee45"
+    },
+    "adopted_hf19/include/preloader_l/handlers/permission_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/permission_route.hpp",
+      "sha256": "44dda858f9fbed910c8f7007394c4b3688b1c3ce85d6e2cad746e70eafd7e082"
+    },
+    "adopted_hf19/include/preloader_l/handlers/profile_routes.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/profile_routes.hpp",
+      "sha256": "940340fd06815fe85b25343dbf70abb8e9a4fcf576eae5e4d0ef281dc6fb2613"
+    },
+    "adopted_hf19/include/preloader_l/handlers/progressive_installation_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/progressive_installation_route.hpp",
+      "sha256": "fb304113865207d1f9567fd508bb8e4e3e828fe037846e264fe627240615bf88"
+    },
+    "adopted_hf19/include/preloader_l/handlers/query_presence_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/query_presence_route.hpp",
+      "sha256": "1669be4414d7993251005146b654a7fbcf254fad10388b8f60b120ec1fdde21e"
+    },
+    "adopted_hf19/include/preloader_l/handlers/route_handlers.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/route_handlers.hpp",
+      "sha256": "720cfeaa6e4a9c27b8f8f97b32259831515556e6eae935eb728f4427e894f51c"
+    },
+    "adopted_hf19/include/preloader_l/handlers/runtime_settings_routes.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/runtime_settings_routes.hpp",
+      "sha256": "307a6431c666dfcd694e3660c5efcafd20e24911bb583c5f43a70871fa937700"
+    },
+    "adopted_hf19/include/preloader_l/handlers/social_mutation_routes.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/social_mutation_routes.hpp",
+      "sha256": "910711586f3fa29fe9f5953b23bb4b3694cdc7c231a586065e20bacbe7ecbdbc"
+    },
+    "adopted_hf19/include/preloader_l/handlers/store_routes.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/store_routes.hpp",
+      "sha256": "55ea1aafe20ebe6e8347840ec2aa36a207cdb80b65cfb3bd173dad7568987615"
+    },
+    "adopted_hf19/include/preloader_l/handlers/utc_time_route.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/handlers/utc_time_route.hpp",
+      "sha256": "a1337e8c0cd26b8c4c194ff3f7dd7168d099b8fb8708fb51a89cdec7f3a03ac8"
+    },
+    "adopted_hf19/include/preloader_l/net/socket_runtime.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/net/socket_runtime.hpp",
+      "sha256": "f8273e77880cbf6eed2d75839b93894c8809ef2c1950266da10fb4db3bc9f738"
+    },
+    "adopted_hf19/include/preloader_l/net/winsock_native.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/net/winsock_native.hpp",
+      "sha256": "a11fb3d46d9fb42800658445b783fda08be0469247e3650bfeb7f1a6a9519ca4"
+    },
+    "adopted_hf19/include/preloader_l/runtime/bootstrap_runner.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/bootstrap_runner.hpp",
+      "sha256": "202d7eee642b45590f069a1bb6c680bf059574145fe750328531b244709c8373"
+    },
+    "adopted_hf19/include/preloader_l/runtime/bootstrap_state.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/bootstrap_state.hpp",
+      "sha256": "2e7781e0ac50edaa12630ec2381ad7a36b86584d4d9e753013829a1b4e8b2d2b"
+    },
+    "adopted_hf19/include/preloader_l/runtime/debug_trace.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/debug_trace.hpp",
+      "sha256": "1252612c8f18594edc1184a6bcda7edea9eddd26f5e975d726f76cad2a93e90c"
+    },
+    "adopted_hf19/include/preloader_l/runtime/event_queue.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/event_queue.hpp",
+      "sha256": "8137e9b3c477492a366a65ead310de21bc0c966d2d9c2756263416e63720929a"
+    },
+    "adopted_hf19/include/preloader_l/runtime/event_trace.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/event_trace.hpp",
+      "sha256": "c727d2cbb1a2a9505a6ad455c96ec813c5d460a2c07f2a8eab999ceaf83319ac"
+    },
+    "adopted_hf19/include/preloader_l/runtime/release_server.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/release_server.hpp",
+      "sha256": "a9ea3d214d7e98d6133b15da44ef173861ade712d88d3c140f9a3cf5ce8245ab"
+    },
+    "adopted_hf19/include/preloader_l/runtime/release_server_io.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/release_server_io.hpp",
+      "sha256": "0686982861435ad1f19a958bd906890760e3dbbaf3a058c4492391db1a629c8f"
+    },
+    "adopted_hf19/include/preloader_l/runtime/runtime_state.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/runtime_state.hpp",
+      "sha256": "67d3b2a752c15682462374b7af2828324a36916bbdd0efe306ee49c12dc47ce7"
+    },
+    "adopted_hf19/include/preloader_l/runtime/service_abi.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/service_abi.hpp",
+      "sha256": "4a0bdea19c8b20c0d7d1f649ca768c09af2abfd81b198258ffb014c5042a9a28"
+    },
+    "adopted_hf19/include/preloader_l/runtime/service_policy.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/service_policy.hpp",
+      "sha256": "bd8827b66b0f18ed994e20e2a7565ab33744cd377ef72652f56f87df121e2967"
+    },
+    "adopted_hf19/include/preloader_l/runtime/trace_macros.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/runtime/trace_macros.hpp",
+      "sha256": "235ab625b98965d5aba968ba32988ccfd291af15335a9501c72bac4945954c66"
+    },
+    "adopted_hf19/include/preloader_l/xml/response_builder.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/include/preloader_l/xml/response_builder.hpp",
+      "sha256": "274b30ebfcba6f32aff91400b5203b4d6e134a155f0fecfcd5511c3a6cdabbb5"
+    },
+    "adopted_hf19/src/core/request_dispatch.cpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/src/core/request_dispatch.cpp",
+      "sha256": "857eba792676dc6288685c59c0af0b19f698071e52f1dc32a867d72395ba420a"
+    },
+    "adopted_hf19/src/handlers/handler_registry.cpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/src/handlers/handler_registry.cpp",
+      "sha256": "e478a9a98c77febcbcd94c167b19db91597b795d538ad7eafe0033ec29e13714"
+    },
+    "adopted_hf19/src/runtime/asio_release_bridge.cpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/src/runtime/asio_release_bridge.cpp",
+      "sha256": "ec5b9b842c91e802dd6840a9d2bf600eab92fd29b014359c0e253dc5633b7b95"
+    },
+    "adopted_hf19/src/runtime/asio_release_bridge.hpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/src/runtime/asio_release_bridge.hpp",
+      "sha256": "71050c0a7e8fa3acfa8cdf6b2a31e87aba5fd900f2d1c13f1b442fe26c041b6f"
+    },
+    "adopted_hf19/src/runtime/release_server.cpp": {
+      "exact_byte_identity": true,
+      "original": "HF19/src/runtime/release_server.cpp",
+      "sha256": "30fce21b9451fcc4e3eadd75acc6c4057af2da0995adb4dd822c569b1e1af872"
+    }
+  },
+  "new_files_count": 42,
+  "parent_gf04_source_sha256": "ffc903f43d6793820525cecb7b6c82df6b3afe9fae74d9a2d2d665ed34f720e0",
+  "prior_cumulative_hf19_file_count": 58,
+  "runtime_shipping_integration": false,
+  "schema": "greenfield.gf05.reuse.v1",
+  "status": "SOURCE_LINKED_NOT_RELEASE"
+}

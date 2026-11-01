@@ -1,0 +1,3 @@
+# GF07 Windows testi — NOT_RELEASE
+
+`x64 Native Tools Command Prompt for VS` açın. `scripts\RUN_WINDOWS_GF07.cmd Release` ve `scripts\RUN_WINDOWS_GF07.cmd Debug` kullanın. Bu komut kaynak manifestini denetler, CMake /MT veya /MTd derlemesini ve normal QA testlerini yürütür. **GF07_ENABLE_WINDOWS_DEEP_LINK_PROBE=OFF** varsayılanı kasıtlıdır; işlevsel `request_dispatch` link kabulü değildir. Full dispatcher/Win32 Config2 overlay ayrı bir test-only deneyde, `-DGF07_ENABLE_WINDOWS_DEEP_LINK_PROBE=ON` ile yalnız explicit operator incelemesinde denenebilir. Bu deneme compile/link hatası verebilir ve shipping DLL'yi değiştirmez. Yanıtlar ve MSVC logları bu paket içinde mevcut değildir. `gf_preloader` hâlâ gerçek LSX servis başlatmaz.

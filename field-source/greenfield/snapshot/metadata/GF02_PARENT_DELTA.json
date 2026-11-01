@@ -1,0 +1,156 @@
+{
+  "added_hf19_test_files": [
+    "test_aes128.cpp",
+    "test_codec_session.cpp",
+    "test_framing.cpp",
+    "test_ingress.cpp",
+    "test_message_codec.cpp",
+    "test_receive_buffer.cpp"
+  ],
+  "canonical_source_mutation": "NONE",
+  "classification": "SOURCE_ONLY_NOT_RELEASE",
+  "donor_hf19_source_zip_sha256": "c7e16beac0618c7f364810261f8377fdfcfb7499d184a603615690ec269e24ab",
+  "new_adaptor": [
+    "include/greenfield/protocol/owned_ingress.hpp",
+    "src/protocol/owned_ingress.cpp"
+  ],
+  "new_exact_hf19_files": [
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/include/preloader_l/net/receive_buffer.hpp",
+      "original_path": "include/preloader_l/net/receive_buffer.hpp",
+      "sha256": "52060aa56b2cad2add251db86c81ebef30bc51121d9bfc51afec3d361be07e28"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/src/debug/net/receive_buffer.cpp",
+      "original_path": "src/debug/net/receive_buffer.cpp",
+      "sha256": "f9c29f4386589b9323144d602dcab527e3c45a3eff418011c5d46d49f0a25def"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/include/preloader_l/net/frame_ingress.hpp",
+      "original_path": "include/preloader_l/net/frame_ingress.hpp",
+      "sha256": "c6341437569ec3f4e8f2ca11fee1f40d7f2384aa8beed6ee99d85e6d4265366a"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/src/debug/net/frame_ingress.cpp",
+      "original_path": "src/debug/net/frame_ingress.cpp",
+      "sha256": "f10f78967121e569c5a332b58614858c9f0133fb0e1bd05104853b50c1818ee9"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/include/preloader_l/xml/lsx_framing.hpp",
+      "original_path": "include/preloader_l/xml/lsx_framing.hpp",
+      "sha256": "2fcbd72378306fc53a4ea29448a37b9e86616b5be8fd97085e4fe740126deaec"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/src/xml/lsx_framing.cpp",
+      "original_path": "src/xml/lsx_framing.cpp",
+      "sha256": "4d223cae591d2de248f3b2d40779859c652f5877049621c0c20f9250d1e1ad33"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/include/preloader_l/xml/request_parser.hpp",
+      "original_path": "include/preloader_l/xml/request_parser.hpp",
+      "sha256": "54c50efe8441ad14cdd78f34802856630110536f47626954fffd5b4da475a737"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/include/preloader_l/codec/aes128_cipher.hpp",
+      "original_path": "include/preloader_l/codec/aes128_cipher.hpp",
+      "sha256": "aeea1cdafec19fccf71962e3bd49b05267bf69a0069aaa94c2c7f1041a6e83a1"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/src/codec/aes128_cipher.cpp",
+      "original_path": "src/codec/aes128_cipher.cpp",
+      "sha256": "cb65a7b02fdabba5bfb949bf3f630f20ea9fed9f8cc55629c9cbf014c04ddd27"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/include/preloader_l/codec/message_codec.hpp",
+      "original_path": "include/preloader_l/codec/message_codec.hpp",
+      "sha256": "fdfd3c62ea5dfd7f576d544b41a896295aa8fdf247c8131acf8fe568c30282a3"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/src/codec/message_codec.cpp",
+      "original_path": "src/codec/message_codec.cpp",
+      "sha256": "c9635c6bac25951051f05262b53de2943ded16c4124d44214f11f559fd2a35dc"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/include/preloader_l/codec/session_crypto.hpp",
+      "original_path": "include/preloader_l/codec/session_crypto.hpp",
+      "sha256": "6c10693a9694b5ade09aef1f81b8b2af620f58e72b90367c45bb9978eba5b288"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/src/codec/session_crypto.cpp",
+      "original_path": "src/codec/session_crypto.cpp",
+      "sha256": "ac1de3fa2856276da661bb7fc5b83e0a16cf8f01dd3b1f66b166fae446ff9715"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/tests/unit/test_aes128.cpp",
+      "original_path": "tests/unit/test_aes128.cpp",
+      "sha256": "b9d9709bd18ab83a1ebae71437da2f860c589bd3bb9b13852f007d91c9dfdb47"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/tests/unit/test_codec_session.cpp",
+      "original_path": "tests/unit/test_codec_session.cpp",
+      "sha256": "2d8f28b6d3b4ed39870a3ec9641d1d7dc7ab89ce27f155ea5bebfb1c5bf9668f"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/tests/unit/test_framing.cpp",
+      "original_path": "tests/unit/test_framing.cpp",
+      "sha256": "7b94de2fca0c87b1737703042a8d72cd03c7f3ef59d859b466d13789f79ab814"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/tests/unit/test_ingress.cpp",
+      "original_path": "tests/unit/test_ingress.cpp",
+      "sha256": "60d02652be2b93442ea300c7862c52bc237271a8e8777a6edf7c5ad2f8384ee7"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/tests/unit/test_message_codec.cpp",
+      "original_path": "tests/unit/test_message_codec.cpp",
+      "sha256": "ba9915a130911e5efdef744251a7337dab0b3a01ebab5825cb70a7ae156293e4"
+    },
+    {
+      "adapted": false,
+      "byte_identical": true,
+      "gf_path": "adopted_hf19/tests/unit/test_receive_buffer.cpp",
+      "original_path": "tests/unit/test_receive_buffer.cpp",
+      "sha256": "960bd64fd369dadf5e14fe463f8b9629d8c13d881c3e4c94a02c33283938cb1a"
+    }
+  ],
+  "parent_source_zip_sha256": "7949fa4402b04d5b24f262258142c9e07956b2b4efe6174c868c3894c7de434e",
+  "schema": "greenfield.gf02.parent_delta.v1",
+  "shipping_implementation": "NOT_IMPLEMENTED",
+  "windows_msvc": "NOT_RUN"
+}
