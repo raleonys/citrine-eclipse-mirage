@@ -142,8 +142,8 @@
       "sha256": "f8847ad1b0203a3fc47af0eddab3c7c22bf1c613b756434b8aa2d88170231169"
     },
     "include/preloader_l/net/transport_async_receive.hpp": {
-      "bytes": 3074,
-      "sha256": "9a431806c29789319efa3bed5ba64bc4b6d1b28e53615d20c6afac8f397fa7ff"
+      "bytes": 3088,
+      "sha256": "684575a6883c3acb3692cef01bfa4a06189e78a16e501340899eb597a931acf4"
     },
     "include/preloader_l/net/transport_cancellation.hpp": {
       "bytes": 2590,
@@ -178,20 +178,20 @@
       "sha256": "8e8811de6c2a0a95bcbe75839788fa82495c20fcb5227f756b5456ce19e29fa1"
     },
     "include/preloader_l/net/transport_composed_write.hpp": {
-      "bytes": 4187,
-      "sha256": "97b745516cb98770431e5046f4ede004b5b35bf1d4ebf8e2660547c3fb33c79c"
+      "bytes": 4201,
+      "sha256": "78dc55e3597495160ca52ee184678dc13eb08911190fc52f19c01488d52299c0"
     },
     "include/preloader_l/net/transport_composed_write_native.hpp": {
       "bytes": 725,
       "sha256": "9c022e6b8b0eb7e2b94effe4ea2c5a0f1ec97abaf649b09d0de230ba5e40fc4d"
     },
     "include/preloader_l/net/transport_environment_constructor.hpp": {
-      "bytes": 3029,
-      "sha256": "fb1bddd9c1a03d8bf4663015586241f2e385bc3290f25a85d2b19ed6ab583430"
+      "bytes": 3043,
+      "sha256": "600af84b40a31811182b3c4aa8f18819b086b8fcb6d66efc5914537f81519340"
     },
     "include/preloader_l/net/transport_frame_read.hpp": {
-      "bytes": 2816,
-      "sha256": "29040920e6eecd5acb6900d51002fc9a0e5bc2399e4663319b6d5eb847aedf5b"
+      "bytes": 2830,
+      "sha256": "0b9a867e33d33a405d6eba756bd420bfe88e47f0a7edb0bf68e3d5863ba0350c"
     },
     "include/preloader_l/net/transport_handler_dispatch.hpp": {
       "bytes": 3654,
@@ -226,8 +226,8 @@
       "sha256": "34267961a240b83d16e8021eefd4a6ff3519280671dcba8ed94791686ac000c8"
     },
     "include/preloader_l/net/transport_message_core_bridge.hpp": {
-      "bytes": 2335,
-      "sha256": "84cb856fd36fe5e9c8bcaaa38a25eb3b32185f4aa135fb350379041fb671e171"
+      "bytes": 2349,
+      "sha256": "22f47665fcb0570ab2da209b378c4677f35647f664b73cdd7ebd22213e46b056"
     },
     "include/preloader_l/net/transport_message_dispatch.hpp": {
       "bytes": 3054,
@@ -242,8 +242,8 @@
       "sha256": "98786ed3d7c259775ae2808ff83846d899ecac81e9c9217f02e5102a973aaeb0"
     },
     "include/preloader_l/net/transport_native_message.hpp": {
-      "bytes": 3512,
-      "sha256": "3d531897d52be4527832826811b06e688db2d07105c42114dfb4c9ec30e76cf4"
+      "bytes": 3540,
+      "sha256": "881afe533f538c32298ee049427a99eae0ca0d6a1c47a3e0d698df38c0935b31"
     },
     "include/preloader_l/net/transport_operations.hpp": {
       "bytes": 2942,
@@ -262,8 +262,8 @@
       "sha256": "12306129504359bd42b3606447809e6195d395de364bde70c9ece6036c5f17c2"
     },
     "include/preloader_l/net/transport_prefix_cipher.hpp": {
-      "bytes": 2580,
-      "sha256": "f1ba9e431712412a15c55093ed4c237f8815460173238e333ca8f68f289db0fc"
+      "bytes": 2594,
+      "sha256": "063521a8dcaa4561dbbc6003fd8daf2ce93e6e08616e560f2554f6da5f115ba7"
     },
     "include/preloader_l/net/transport_queued_write.hpp": {
       "bytes": 1958,
@@ -274,8 +274,8 @@
       "sha256": "eacd878d6fb1b3eae27a600bb4d1010fcdc20af71bdc2fa04a9f77ee6cd380e1"
     },
     "include/preloader_l/net/transport_recycle.hpp": {
-      "bytes": 1355,
-      "sha256": "a38cb6a57e9ce640e990e2410671159686c168248d4a8d97a2d9864f885f91fe"
+      "bytes": 1369,
+      "sha256": "04027788d10954b4bde94e4b97190cb7790544b5aad2d267bd7e020a4ec90663"
     },
     "include/preloader_l/net/transport_recycle_storage.hpp": {
       "bytes": 1239,
@@ -290,12 +290,12 @@
       "sha256": "c0299e6a011c927c857f5061e32f811f4c10db05001262e5165c69ad0807ea00"
     },
     "include/preloader_l/net/transport_response_containers.hpp": {
-      "bytes": 2337,
-      "sha256": "b9bc65ea47b45b8a3eee8c9e17d55eacf54c5736e93f3a747e5bdb745292d3c9"
+      "bytes": 2351,
+      "sha256": "e452fd4a779d25f47c65514bcf4cb53f3d5a42e253f3163aa81ec71d062fba46"
     },
     "include/preloader_l/net/transport_response_dispatch.hpp": {
-      "bytes": 3543,
-      "sha256": "554745f55f23ce71ec1deb1766cff9fe4521d080830df3eac275cc7850c1c1e1"
+      "bytes": 3557,
+      "sha256": "d0a6d2092b2d7ed06db0cb168e30bbb0f42e54fc12d53ccd2b533bf4becba1c4"
     },
     "include/preloader_l/net/transport_response_hex.hpp": {
       "bytes": 577,
@@ -318,16 +318,16 @@
       "sha256": "15f90768e72dff65819dca1da821ad5e96a0a6ab4c8d703ff56724751a128f3c"
     },
     "include/preloader_l/net/transport_worker_run.hpp": {
-      "bytes": 3795,
-      "sha256": "14c9ac2321ad9fa74192dd8d29e72bacbd60660f1f17bf44f9f952e42f3eda30"
+      "bytes": 3809,
+      "sha256": "dd041f71d23b04fd68890f1b631f188dc20d559b7409ca6f483b791044ea8afc"
     },
     "include/preloader_l/net/transport_worker_run_native.hpp": {
       "bytes": 875,
       "sha256": "c8bfcb1b5f70b6925ef208cd66aa458de7da3bb57e8ca8893ddefb5341ca6cc9"
     },
     "include/preloader_l/net/transport_worker_startup.hpp": {
-      "bytes": 2642,
-      "sha256": "08fca99e94382b83c4b07688975654086ca367b89d9f1e5fd9a96925d381f49d"
+      "bytes": 2656,
+      "sha256": "a04392725696a57f5197acd7edc261de59c05e8c639add8c432b3ee3a0cd19f3"
     },
     "include/preloader_l/net/transport_worker_startup_native.hpp": {
       "bytes": 1294,
@@ -530,12 +530,12 @@
       "sha256": "d7422e3c6e01b48619933f72cb0acbcbdb55bc743bbf586f86c72cccc4de655f"
     },
     "include/preloader_l/xml/pool_allocate.hpp": {
-      "bytes": 2398,
-      "sha256": "80ec6b22ff890bcac1271e82f0ebcbcbcbc35d56fffce2c491155ef249bbbe90"
+      "bytes": 2412,
+      "sha256": "dc53c05fb6ac2609338dd50ebe5a2b870810d66b2089481b4d53eba62e81ea05"
     },
     "include/preloader_l/xml/pool_append.hpp": {
-      "bytes": 1293,
-      "sha256": "a2cedd9fea1f005b328cb7ec9e0c06eb162929b3431147b95729cf1514d5959a"
+      "bytes": 1307,
+      "sha256": "bffccc2952ceb365752cc78d020d160bd1996e8c1718d58828d12516c04f4305"
     },
     "include/preloader_l/xml/pool_clear.hpp": {
       "bytes": 1220,
@@ -658,8 +658,8 @@
       "sha256": "67dd3355865a91108f9b2d32029cbe579ea68dd9cc7d7cafd438d7b536934220"
     },
     "src/net/transport_async_receive.cpp": {
-      "bytes": 5564,
-      "sha256": "069173d29e391e72f3267c6490bd26befdebeb3bc1ce8666fbecde39ffb628e8"
+      "bytes": 5571,
+      "sha256": "9a12a328aae34726395f959ac4b8d3b58fd05f0df7b4c7f907a714f3a282d5fe"
     },
     "src/net/transport_cancellation.cpp": {
       "bytes": 3096,
@@ -670,8 +670,8 @@
       "sha256": "2f2f7ad45b1d9cc04b033efa7042da9ebb99612996aee95dc508ef30cf812189"
     },
     "src/net/transport_cipher_session.cpp": {
-      "bytes": 4206,
-      "sha256": "d56ddda51363067df61f0dd14bfd80f9e23bc98de281d140168b0bd2990fbbd2"
+      "bytes": 4213,
+      "sha256": "22c389ce3638eaf304adfc059050f96f3b250fba7c5e3a88132bc7a1e0edf0b5"
     },
     "src/net/transport_close.cpp": {
       "bytes": 1402,
@@ -694,8 +694,8 @@
       "sha256": "22d2a084666a15eeda1f7329218ed50d028850c1f2f935807af291e3874e4211"
     },
     "src/net/transport_composed_write.cpp": {
-      "bytes": 7419,
-      "sha256": "8607edcf099e9448f230761e91892c9accb05b5302b3f539706a0fe20a7bd3bb"
+      "bytes": 7426,
+      "sha256": "7835f8f0bcbb822bc029b292370c96db77517125483768ad3429a31bec978232"
     },
     "src/net/transport_composed_write_native.cpp": {
       "bytes": 729,
@@ -706,8 +706,8 @@
       "sha256": "286b394da1c0fc2314055bbffafcab9583f43697b6c6124e8bfaa2c186400f75"
     },
     "src/net/transport_frame_read.cpp": {
-      "bytes": 6640,
-      "sha256": "75ff3fe61c796de0116826eb7aca88270b4593e1310dd3197c2efd7af92ee41c"
+      "bytes": 6647,
+      "sha256": "9c1196317f75b95f552fe73fd86ab8ea054af48145f07206a38f9738ad497c30"
     },
     "src/net/transport_handler_dispatch.cpp": {
       "bytes": 10963,
@@ -758,8 +758,8 @@
       "sha256": "417147e60f5d88d485d413d616fbb88f64b76b1f413d25b644851de0890336fe"
     },
     "src/net/transport_native_message.cpp": {
-      "bytes": 7100,
-      "sha256": "4c82ee01b73de3096407e6b54bc722adf078f3d37850ad6af8d2415e046964d7"
+      "bytes": 7107,
+      "sha256": "23c7c0a282841b845b7f0edde54fef7fbd87ba4c6f23bcd04893abae1d6b338a"
     },
     "src/net/transport_operations.cpp": {
       "bytes": 4121,
@@ -778,8 +778,8 @@
       "sha256": "d8a72315d965ea0445678c5ca813220326632ba773736b16563af9b5d620d8a1"
     },
     "src/net/transport_prefix_cipher.cpp": {
-      "bytes": 4370,
-      "sha256": "9c3baf3205309e0091efd6a0bece8014c7e2e1d7ff8d5a9319165addaaa0e91b"
+      "bytes": 4398,
+      "sha256": "da1e33319137adac504289e1c01a6b476cf3984dfb07cad4013fdd96d80d0cb4"
     },
     "src/net/transport_queued_write.cpp": {
       "bytes": 3889,
@@ -790,8 +790,8 @@
       "sha256": "ca1bae082add32f2d9d16fd6126b8ade994e6c3235eb9843bc9825d93590b290"
     },
     "src/net/transport_recycle.cpp": {
-      "bytes": 2468,
-      "sha256": "d1d23d70abdee90e74ecd0064d7e64d77f0c9ed41013ed472742623a5197a8b1"
+      "bytes": 2475,
+      "sha256": "cd58a53b7a86a39dc600d4f67eef18372b8e49320e15e55a08863898b15d1b64"
     },
     "src/net/transport_recycle_storage.cpp": {
       "bytes": 1784,
@@ -806,12 +806,12 @@
       "sha256": "72de82a846ada67b65d14fe5b4fb62fd22c0ebde23f6a628db73e2aae8dfef47"
     },
     "src/net/transport_response_containers.cpp": {
-      "bytes": 7417,
-      "sha256": "f9fe90cab9a804362e9954c6c5896d4ab47fbb97863be031e534e388082ef409"
+      "bytes": 7424,
+      "sha256": "568991d722a3b0cd9196fb148294b9bd399c5365e871f39ac07e1ce310713494"
     },
     "src/net/transport_response_dispatch.cpp": {
-      "bytes": 8377,
-      "sha256": "52e9df6d77197f041ab80e485e62efcc3ebdeb3fe2fb8c0bd2bd59834d667e7a"
+      "bytes": 8384,
+      "sha256": "7415de7c8e6f1d3a770bdcd8305d25a8dcade3f3d05c916ce1b1d3cd7733a0a1"
     },
     "src/net/transport_response_hex.cpp": {
       "bytes": 1078,
@@ -842,8 +842,8 @@
       "sha256": "fc0501795ff37f0f78d644f5223fd94e11439030efbc508f6b4a7f49a29c8fb3"
     },
     "src/net/transport_worker_startup.cpp": {
-      "bytes": 2998,
-      "sha256": "8245ca6122fad2ffba5d3974ba521dc2409bb7073ee4f0e46f63c6bbd40e9e2e"
+      "bytes": 3005,
+      "sha256": "7691c2571a855e86cd7c788ed6c4f088c9edeea15bbde5cfb9fd8d2e0d9def19"
     },
     "src/net/transport_worker_startup_native.cpp": {
       "bytes": 1144,
@@ -1086,12 +1086,12 @@
       "sha256": "01f2898bec9cb2a0687707a9faebcdffa3f15359b4b178b049f86431352c8810"
     },
     "src/xml/pool_allocate.cpp": {
-      "bytes": 5379,
-      "sha256": "efdfe5c55f48d3c5cda7ccba5278fad6cd84c2b31ae0efac2180ad0b573c5bb4"
+      "bytes": 5386,
+      "sha256": "c3a585a8a9c2ebf08ed111251b150f8a31ba5b372b36758f59629669a468c3a4"
     },
     "src/xml/pool_append.cpp": {
-      "bytes": 2799,
-      "sha256": "06ba1776db8979bed6a63c6d76afaa44912982caf7ea7730a7d82cd65512c22c"
+      "bytes": 2806,
+      "sha256": "751d870381f2cbcc4d1407084bc0d5d4d5eb8afd31c32ff41f97fbf761242281"
     },
     "src/xml/pool_clear.cpp": {
       "bytes": 2336,
@@ -1128,6 +1128,10 @@
     "tests/infrastructure/test_corvexon_mswsock_imports.py": {
       "bytes": 2490,
       "sha256": "e2b2cad669df9c09b9f730432f06874f9aa8dbf2408eedebb919c717a0f1f508"
+    },
+    "tests/infrastructure/test_cpp_type_identities.py": {
+      "bytes": 1652,
+      "sha256": "80002346bdd39afedbc4f070e57703e7ad69c72b11166b2eecf8b58e19673395"
     },
     "tests/infrastructure/test_english_only_audit.py": {
       "bytes": 9125,
@@ -1410,12 +1414,12 @@
       "sha256": "12c74acbcffe8a5a631d5d03c4d6cd55ac95b8bb3ca193551f3990a9fac0a4f3"
     },
     "tests/support/socket/pool_allocate_test_fixture.hpp": {
-      "bytes": 6490,
-      "sha256": "8f92f49cfb66c5b3f290bf59e65a98e5c66f2330b0307ffafc3b2ae00fccb017"
+      "bytes": 6497,
+      "sha256": "bd901ab0bfa0746c79b9667518d101d8da50237fa1fd247b5c86031408dc0a42"
     },
     "tests/support/socket/pool_append_test_fixture.hpp": {
-      "bytes": 6935,
-      "sha256": "ebb67c2b4fa79a853458b6120c51da772f71c7571eee9ea284ffd9e1eab1cdd1"
+      "bytes": 6956,
+      "sha256": "3ae03ad55cd51417efe771d254f9649678eea594afa15db65afb09d5b263a51d"
     },
     "tests/support/socket/pool_clear_test_fixture.hpp": {
       "bytes": 3820,
@@ -1430,8 +1434,8 @@
       "sha256": "836df1d9c398e92efe89c1bc1259068d94d9789df6c3029919290b2d478a4329"
     },
     "tests/support/socket/prefix_cipher_test_fixture.hpp": {
-      "bytes": 5024,
-      "sha256": "82f7efb5c493b759dc1fb3c607f702754b8bcaa326b2890d0fca1498f30c06e1"
+      "bytes": 5031,
+      "sha256": "3b6d50acf997845281bb22524b8237618d6b1839a8a6017ad0af481bbe376433"
     },
     "tests/support/socket/receive_buffer_test_fixture.hpp": {
       "bytes": 4109,
@@ -1446,8 +1450,8 @@
       "sha256": "6edb76e06cf83fd2ff566ed628eb678c1abdf94d2c82f3950db626a9fe5fe560"
     },
     "tests/support/socket/response_containers_test_fixture.hpp": {
-      "bytes": 7575,
-      "sha256": "458aa63dabd91f24b2b2d03323fd13b5a44f0c38488bba8d83563e710efd73ea"
+      "bytes": 7589,
+      "sha256": "8228789077d9255126cda27ba7d41b086015bc158bcc22b6e4e7c8f30332f640"
     },
     "tests/support/socket/response_dispatch_test_fixture.hpp": {
       "bytes": 8088,
@@ -1658,16 +1662,16 @@
       "sha256": "9b5881a1630caf420be9913a64d892581b360a3fdb4415f67596849ff4b5e9df"
     },
     "tests/unit/socket/append_growth_integration_tests.cpp": {
-      "bytes": 14858,
-      "sha256": "29d8394c8020d21f231185abe2fb5dff0bd225eef1a6cbc5db44c3a8ed849549"
+      "bytes": 14872,
+      "sha256": "3729bf9e4af6066e79d2d01dfd1ecfa7ab6ad6d13a468b9dd6c0a70063265419"
     },
     "tests/unit/socket/append_growth_tests.cpp": {
       "bytes": 9755,
       "sha256": "111128eb5cd1d06d2c9bf4b61697275c2ed4af7b2e3817f03d974d17948e53ba"
     },
     "tests/unit/socket/async_receive_integration_tests.cpp": {
-      "bytes": 9000,
-      "sha256": "92336106680382d05cb9e09194f7b4f4e41af222f28c0d66d87518d97b9b0d6e"
+      "bytes": 9014,
+      "sha256": "d2b3892b4a0870f41fb7df49ea7397d85a74efe961f34584a4095438c3ff992b"
     },
     "tests/unit/socket/async_receive_tests.cpp": {
       "bytes": 8826,
@@ -1682,12 +1686,12 @@
       "sha256": "d9345e36cd102c61b53927c8e545a93dca13e1b84f787be025970eab1a359847"
     },
     "tests/unit/socket/cipher_session_integration_tests.cpp": {
-      "bytes": 17731,
-      "sha256": "24a590517909248cf0fd57857d3423930cc08f91178a6e61396fbc577d1979f0"
+      "bytes": 17752,
+      "sha256": "fc187e2d2f14b3223f8ff7e413586f0db07dec6ae90b349d9a78a839294307f1"
     },
     "tests/unit/socket/cipher_session_tests.cpp": {
-      "bytes": 6335,
-      "sha256": "9dc97ecbf870ddf7335085aa082c17cf36690f515dd89179709b73b21b2b076f"
+      "bytes": 6342,
+      "sha256": "b7152b5a9d74f1ec4bee1842ab5011c9f3d7ca39ca1b0b3dc2717fdff0062437"
     },
     "tests/unit/socket/close_tests.cpp": {
       "bytes": 8826,
@@ -1706,24 +1710,24 @@
       "sha256": "4e644b9b53d34b61595a70f19ae005324434206c2ead650834231285c403f03a"
     },
     "tests/unit/socket/composed_read_integration_tests.cpp": {
-      "bytes": 15059,
-      "sha256": "0548ce69f3b0272849c6fee047c2e4d286c31d74d481f89b0eced83fc79b7263"
+      "bytes": 15073,
+      "sha256": "42525bdf07d4c649a50e753133164ad9ab40256703844fcb325927d3e1b8135b"
     },
     "tests/unit/socket/composed_read_tests.cpp": {
       "bytes": 7836,
       "sha256": "75fed8900d109096060db1b8d5e8bd3daf8db502c22fd50fd6588060d37caa61"
     },
     "tests/unit/socket/composed_write_integration_tests.cpp": {
-      "bytes": 22448,
-      "sha256": "2f7bc99f03c5cea1887cbaa68f565df73dfae07b2a7d880d078513eae5b673d5"
+      "bytes": 22469,
+      "sha256": "f7bf3ccb78fa5be94cd3e3994af16c334e859cd382f033a14c22bd541e095a95"
     },
     "tests/unit/socket/composed_write_tests.cpp": {
       "bytes": 15919,
       "sha256": "701aefa997d59ea0882908c8c45d60d196c08c35039d32e789f6ca78f2b2a7b9"
     },
     "tests/unit/socket/document_clear_integration_tests.cpp": {
-      "bytes": 21164,
-      "sha256": "1506b5f265d6e9fb31f3deceebc05e612a4397e3560d86afa65f06fb389d7002"
+      "bytes": 21185,
+      "sha256": "8e5ca5d80b8ae64382bc247425ded5766dbc903aa72390a6c5690d6e17b3b036"
     },
     "tests/unit/socket/document_clear_tests.cpp": {
       "bytes": 14830,
@@ -1746,8 +1750,8 @@
       "sha256": "8773e99b9f9cbf7be2d4d2931052bed79e47c4046988074b0a20cdfa25cf6b07"
     },
     "tests/unit/socket/frame_read_integration_tests.cpp": {
-      "bytes": 5214,
-      "sha256": "5b0bba26406619b97f30eeb29d3818c4e7a91f20a33ce9103f2afed2d1e3f65a"
+      "bytes": 5235,
+      "sha256": "2d54190ae3eb757bb9708f0bcc4e4e7180fba4101f58d5aa6b51948c46ab850b"
     },
     "tests/unit/socket/frame_read_tests.cpp": {
       "bytes": 9175,
@@ -1770,8 +1774,8 @@
       "sha256": "755098f421181a08fd78c9276ffbf649b4e1fda489f798e68468e7a685306128"
     },
     "tests/unit/socket/iocp_constructor_native_tests.cpp": {
-      "bytes": 22622,
-      "sha256": "02a491264cd239e105bd7c1a8c1e79a3c449bd496c13bd2b4d8deedc939b0d57"
+      "bytes": 22629,
+      "sha256": "7ee8820d47413bdbed19a5b88f264910e066c5af74ba68f480e41a4b02b9a6cd"
     },
     "tests/unit/socket/iocp_constructor_tests.cpp": {
       "bytes": 14855,
@@ -1802,24 +1806,24 @@
       "sha256": "ff4d3992626ea856549b01213c3cc6513aeeca5c828f5fee56e7279f7410aed3"
     },
     "tests/unit/socket/native_dispatch_integration_tests.cpp": {
-      "bytes": 18239,
-      "sha256": "f2d8cc20a79646877f26ebfc74684618ac59d810d3ebe2be41d1f6cd66fe6e0b"
+      "bytes": 18260,
+      "sha256": "425dd140dacc32f7791441ace7694c5428841590bd631c4d2ae59682bbeb53dd"
     },
     "tests/unit/socket/native_dispatch_tests.cpp": {
       "bytes": 5735,
       "sha256": "3f387f900ff3ae48994ddd040de40ba5d3cc80966cb3a24e37cbf902ba376b23"
     },
     "tests/unit/socket/native_document_integration_tests.cpp": {
-      "bytes": 19582,
-      "sha256": "52a5485126f8521f9ffae9c88605882e15ccc66e03e459277d144892244a7def"
+      "bytes": 19603,
+      "sha256": "3dba5e2f7e2ef5d612a67ff465305e2ab98defc637909cf2f9ab4d8e28e42dae"
     },
     "tests/unit/socket/native_document_tests.cpp": {
-      "bytes": 13947,
-      "sha256": "60797187f2eae26ad592ce7792738cad4a86c0488d70d8ea3368132d0ce05d11"
+      "bytes": 13954,
+      "sha256": "85d2001ae97b35474ed880175db5581674d288b100e85fffd96ffeec7677c499"
     },
     "tests/unit/socket/native_message_integration_tests.cpp": {
-      "bytes": 12313,
-      "sha256": "80ffe2c459b5681901cb276be1b2d7a8361ca93dba875faebf949600b04453c7"
+      "bytes": 12327,
+      "sha256": "034d37c8fa3ae80b357799b5cf5e649935efe211e56e32ef18a4ff9d8923b1cc"
     },
     "tests/unit/socket/native_message_tests.cpp": {
       "bytes": 11700,
@@ -1838,16 +1842,16 @@
       "sha256": "65881c956775ebe462bd059e7437c4e1d7913ad5cd7626b66dbdb4bc1ec2d216"
     },
     "tests/unit/socket/node_constructors_integration_tests.cpp": {
-      "bytes": 11005,
-      "sha256": "12bb72c1299d35a232cdd20a6af2ff8a9017075bfe5a55d1f70cc3f37673717a"
+      "bytes": 11012,
+      "sha256": "3b990a780f4e365ba669d680cbb4252f53fe991d08df3bb564ed7c21b4af9bd9"
     },
     "tests/unit/socket/node_constructors_tests.cpp": {
       "bytes": 5601,
       "sha256": "bca8799f121461311afe00c98986f0a70bf816ce8ffc771b11ee1089b5350e7d"
     },
     "tests/unit/socket/node_delete_integration_tests.cpp": {
-      "bytes": 21922,
-      "sha256": "e305f4c5f9341d8d76ecb6113d4b6afd185c85353a29c8c31bc18e9147c737c4"
+      "bytes": 21943,
+      "sha256": "e4d8c267a2b115a713093f16ac06c065f6ae956a8a89beee1da3beec4eb698d7"
     },
     "tests/unit/socket/node_delete_tests.cpp": {
       "bytes": 15129,
@@ -1862,8 +1866,8 @@
       "sha256": "ba43c3b5d7a639a89005e2ce45ffe4f40aea1a25c40b0cb704f2ecb57d35a41d"
     },
     "tests/unit/socket/node_insertion_integration_tests.cpp": {
-      "bytes": 13592,
-      "sha256": "22191ed39080b39ca658b5bf25f90f7856f4254599c659088dc29c8790b5e3e8"
+      "bytes": 13599,
+      "sha256": "5912f3ac88bf94b9509b70bd736436d81d019e50f8e4a2698316a8b4f06fee65"
     },
     "tests/unit/socket/node_insertion_tests.cpp": {
       "bytes": 7770,
@@ -1878,8 +1882,8 @@
       "sha256": "4c9ca6c34d56ad8398d1589dd20506347f70a34149d0fdb3341d191d9aafc24c"
     },
     "tests/unit/socket/node_string_integration_tests.cpp": {
-      "bytes": 13412,
-      "sha256": "d421774c363bb511be3911af6c9aede3e765194515c49b8c4fe9a97dd78aaadc"
+      "bytes": 13419,
+      "sha256": "b46e7a1eddd91e6f0614037bcd52ec075f8ec6c3278021fb0a6101b6dc0d714c"
     },
     "tests/unit/socket/node_string_tests.cpp": {
       "bytes": 8857,
@@ -1890,8 +1894,8 @@
       "sha256": "f33b69b21b7ee073f9726a0791e16dd890feb243bc54570fdef3633e4557a558"
     },
     "tests/unit/socket/owned_response_integration_tests.cpp": {
-      "bytes": 9745,
-      "sha256": "e09e5754db47d21e75fa8e4a90039778307836c9a87f4509df45f05f2e838df1"
+      "bytes": 9759,
+      "sha256": "9d60048f5218e2a842f78ad657e60d81370b716a4851e4687a228f5c58a46019"
     },
     "tests/unit/socket/owned_response_tests.cpp": {
       "bytes": 11094,
@@ -1910,8 +1914,8 @@
       "sha256": "651b1dd848b4a3a77db6e8db3fff9d0a68e8ec1067556cb4b2918ee4f890ff02"
     },
     "tests/unit/socket/pool_allocate_tests.cpp": {
-      "bytes": 11011,
-      "sha256": "3975ed30f1852353493bad41b26530925888d501af57ccf7be5305cb1008e8c2"
+      "bytes": 11025,
+      "sha256": "7b6c428ed3c3b9fa56d2e5e0eccfbf3977707b0c57e96eece7586093e9d064b2"
     },
     "tests/unit/socket/pool_append_integration_tests.cpp": {
       "bytes": 8896,
@@ -1938,8 +1942,8 @@
       "sha256": "4aad328664475bb51e5cb7e6358c2a27fe1ca8458fc9775e9ad6e74a09fce831"
     },
     "tests/unit/socket/pool_release_integration_tests.cpp": {
-      "bytes": 23066,
-      "sha256": "0b586f1bcc9e63ae4f4f63b455d7db69e607b68d7d9ae593116a597d8606359a"
+      "bytes": 23087,
+      "sha256": "b981705dc193bfc49804cc23f981eeff61a45a3127e3865a1be8ae5a4ffd7fb3"
     },
     "tests/unit/socket/pool_release_tests.cpp": {
       "bytes": 13477,
@@ -1954,8 +1958,8 @@
       "sha256": "34f3d8650745060caf495a3e44aa643b5250d5a299aadfbb72e3a451f557fb4d"
     },
     "tests/unit/socket/prefix_cipher_integration_tests.cpp": {
-      "bytes": 13770,
-      "sha256": "2937671852923ab25319ef297a15c134fbee0ce7b27b0774aa3037733a9e82e7"
+      "bytes": 13791,
+      "sha256": "22b899a5683f4521bd97859d6152c3b91ffc0d762cad9879ca1da728278ef9f2"
     },
     "tests/unit/socket/prefix_cipher_tests.cpp": {
       "bytes": 11127,
@@ -1970,20 +1974,20 @@
       "sha256": "23f41f58d0d4187f5cd63e0e76292a7b4694bd28f44775aac4bca7ebb9ef3c5e"
     },
     "tests/unit/socket/receive_buffer_integration_tests.cpp": {
-      "bytes": 6808,
-      "sha256": "061293b15ef8e588408168f9c62ff20ffbecef20f6bf2bd0ede648754f05e81f"
+      "bytes": 6822,
+      "sha256": "960471f80dd9d25c0d9024acb049fd2087cc8c34fdfc9f7188a92a0d0d4cef06"
     },
     "tests/unit/socket/receive_buffer_tests.cpp": {
       "bytes": 10158,
       "sha256": "f9c1d039e766a929e747164094b2a86704443cf30edd38fb85862269110515ae"
     },
     "tests/unit/socket/recycle_storage_tests.cpp": {
-      "bytes": 14297,
-      "sha256": "c37a54174172e8db476ed92ebff4e82ee852bed083f57d063c3e958f350a3dfa"
+      "bytes": 14311,
+      "sha256": "d5307bbf60856f9d2b714a2c4f5ba71df37843b7991dc412a0f245f6eef48f52"
     },
     "tests/unit/socket/recycle_tests.cpp": {
-      "bytes": 8413,
-      "sha256": "80b1b15acaa15276daa72683bce69c4ebf5e337674c6b50245b9cb7e95de7417"
+      "bytes": 8420,
+      "sha256": "f362b2474b1cb575e57f6a47e7ee74608323948670e6fdaf7d6145fd3c3adc0e"
     },
     "tests/unit/socket/request_growth_integration_tests.cpp": {
       "bytes": 12909,
@@ -2002,16 +2006,16 @@
       "sha256": "167fab63707c46d401baed37f27d5b1177cabe192f927a689b12635363ceb60a"
     },
     "tests/unit/socket/response_containers_integration_tests.cpp": {
-      "bytes": 10152,
-      "sha256": "39ee67e66ea03075546014445c03baa953b51d00b499bdad55ba5955479f1b32"
+      "bytes": 10166,
+      "sha256": "9f5816d56b9bddc73f62e25d8c0495982e6d30ee18a16cbf8104af1eab705d77"
     },
     "tests/unit/socket/response_containers_tests.cpp": {
       "bytes": 10517,
       "sha256": "164894f619a2cd3d770311ef83d48695f74de0d7d9bcf20986ef0ea2698c8a3e"
     },
     "tests/unit/socket/response_dispatch_integration_tests.cpp": {
-      "bytes": 9454,
-      "sha256": "bc928ab6ea18ec494c9586fc367ef6e153c276926229b1ecb2ec2c6163de28c7"
+      "bytes": 9468,
+      "sha256": "eb596ad25adef88a888aa8adee28cbfa3c2655200a3c2060b976bdb1511c5646"
     },
     "tests/unit/socket/response_dispatch_tests.cpp": {
       "bytes": 9020,
@@ -2026,24 +2030,24 @@
       "sha256": "c71a87a28365fcfe1559fc73f6756a18b4a7d8fcfdfa619067029bbf65a8cda2"
     },
     "tests/unit/socket/scheduler_registry_integration_tests.cpp": {
-      "bytes": 17082,
-      "sha256": "5829e0776bd51599b76a1195ad0de0caaaa3ee05ca1894bfe2352de565a4f627"
+      "bytes": 17089,
+      "sha256": "453e9b5bbf553ae4e720ad192d4691aaa432991f0dad07e4a0848381d6ca3ece"
     },
     "tests/unit/socket/scheduler_registry_tests.cpp": {
       "bytes": 11548,
       "sha256": "3cdccb18e5a32d64b9b200f214cf475920a714c80e46646e127afee9c85d53db"
     },
     "tests/unit/socket/service_constructor_native_tests.cpp": {
-      "bytes": 14147,
-      "sha256": "4938b71712d648fd24eb67deac9479a681593fa005c5cf64f9706d90829aedeb"
+      "bytes": 14154,
+      "sha256": "b96d6abb001d9fdce658043bee6e0e78ae8a20a365d01e9956a571eb96413046"
     },
     "tests/unit/socket/service_constructor_tests.cpp": {
       "bytes": 11167,
       "sha256": "d271b58f5f477939fbb492d143d6ab172e8cf403411cfbd0d30b1501544d2f2c"
     },
     "tests/unit/socket/service_registry_integration_tests.cpp": {
-      "bytes": 13191,
-      "sha256": "a135ee8938f5542e487c8b3b1c583775f19fd7ab168ed56c73209e8381943f1a"
+      "bytes": 13198,
+      "sha256": "33863f8d64948e6bedf38594a8678ba58821415a495e2fb5a9c3c8f2daafab37"
     },
     "tests/unit/socket/service_registry_tests.cpp": {
       "bytes": 11199,
@@ -2058,12 +2062,12 @@
       "sha256": "dda1a92d126961b36fa8c3d82e1da22f242a6826d7f52ceb253917e6c4fb1c8e"
     },
     "tests/unit/socket/worker_startup_native_tests.cpp": {
-      "bytes": 25960,
-      "sha256": "69bc9515bdb28ccce82ac867d743347f3a42185eafcfc95f5e168c2c3a565905"
+      "bytes": 25967,
+      "sha256": "c580646bebabfacebb99d6c800c42241dfa06ed6dcd154be1701421da519634f"
     },
     "tests/unit/socket/worker_startup_tests.cpp": {
-      "bytes": 15636,
-      "sha256": "0c36a28b1db070eff4a26bb964c61989031b8cc029be13fb9d525776db2b01ef"
+      "bytes": 15650,
+      "sha256": "78f51e5d65461a2ea9da5aa4fc9dfe40d9ab04d23e3f57edaf50b34a3f329f0a"
     },
     "tests/unit/socket/write_finish_integration_tests.cpp": {
       "bytes": 26801,

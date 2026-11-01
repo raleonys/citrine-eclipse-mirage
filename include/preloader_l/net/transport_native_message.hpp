@@ -48,10 +48,10 @@ ReceiveBufferString& process_native_message_033d70(std::uintptr_t handler_f0,
     ReceiveBufferString& response,ReceiveBufferString& request,NativeMessageContext&);
 // Selects the typed normal source in028d30 instead of the historical N5
 // deferred-writeback semantic adapter. Lower native providers/ABI/EH stay open.
-class NativeMessageApi:public ResponseDispatchApi {
+class NativeMessageApiAdapter:public ResponseDispatchApiAdapter {
 public:
-    NativeMessageApi(ResponseDispatchContext& responses,NativeMessageContext& context)
-        :ResponseDispatchApi(responses),context_(context){}
+    NativeMessageApiAdapter(ResponseDispatchContext& responses,NativeMessageContext& context)
+        :ResponseDispatchApiAdapter(responses),context_(context){}
     void process_message_033d70(std::uintptr_t,ReceiveBufferString&,ReceiveBufferString&) final;
 private:NativeMessageContext& context_;
 };

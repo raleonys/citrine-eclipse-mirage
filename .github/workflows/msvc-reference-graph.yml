@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: Windows MSVC reference graph acceptance
+
+on:
+  pull_request:
+    paths:
+      - "include/**"
+      - "src/**"
+      - "tests/**"
+      - "cmake/**"
+      - "CMakeLists.txt"
+      - "scripts/check_cpp_type_identities.py"
+      - ".github/workflows/msvc-reference-graph.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reference-graph:
+    name: Windows x64 reference objects ${{ matrix.configuration }}
+    runs-on: windows-2022
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - name: Preserve repository bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Configure genuine Windows reference build
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-reference-${{ matrix.configuration }}'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=ON
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC reference configure failed' }
+      - name: Compile full source-linked reference object graph
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-reference-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_reference_objects --parallel 2 2>&1 | Tee-Object -FilePath "$build/reference-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC reference object compilation failed' }
+      - name: Build source API host and test its native lifecycle
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-reference-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_source_host --parallel 2 2>&1 | Tee-Object -FilePath "$build/source-host-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC source API host build failed' }
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^dll_source_smoke$' --output-on-failure --timeout 120 --output-junit "$build/source-host-junit.xml" 2>&1 | Tee-Object -FilePath "$build/source-host-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC source API host native smoke failed' }
+      - name: Preserve Windows compiler and test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-reference-${{ matrix.configuration }}-evidence
+          path: |
+            build/msvc-reference-${{ matrix.configuration }}/reference-build.log
+            build/msvc-reference-${{ matrix.configuration }}/source-host-build.log
+            build/msvc-reference-${{ matrix.configuration }}/source-host-ctest.log
+            build/msvc-reference-${{ matrix.configuration }}/source-host-junit.xml
+            build/msvc-reference-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
+            build/msvc-reference-${{ matrix.configuration }}/CMakeCache.txt
+            build/msvc-reference-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14

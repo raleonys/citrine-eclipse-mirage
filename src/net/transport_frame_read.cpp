@@ -117,7 +117,7 @@ void finish_frame_read_025480(ReceiveHandler& handler,Error& error,std::uint64_t
     call_0280d0(static_cast<std::uintptr_t>(handler.words_88_98[2]),context,&composed_receive_025c40);
     // Restart may end handler/owner lifetime. No accesses after this point.
 }
-void FrameReadApi::finish_frame_025480(ReceiveHandler& h,Error& e,std::uint64_t n){
+void FrameReadApiAdapter::finish_frame_025480(ReceiveHandler& h,Error& e,std::uint64_t n){
     finish_frame_read_025480(h,e,n,context_);
 }
 } // namespace preloader_l::socket

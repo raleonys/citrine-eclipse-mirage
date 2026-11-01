@@ -52,9 +52,9 @@ void invoke_borrowed_response_022240(MessageWriteTask&,ResponseDispatchContext&,
     ResponseWriteCall call=&invoke_response_write);
 void dispatch_response_021420(IoHandlerEnvironment&,MessageWriteTask&,ResponseDispatchContext&);
 // Closes the N1 MessageDispatchApi hook with the actual normal021420 source.
-class ResponseDispatchApi:public MessageDispatchApi {
+class ResponseDispatchApiAdapter:public MessageDispatchApi {
 public:
-    explicit ResponseDispatchApi(ResponseDispatchContext& context):context_(context){}
+    explicit ResponseDispatchApiAdapter(ResponseDispatchContext& context):context_(context){}
     void dispatch_response_021420(IoHandlerEnvironment&,MessageWriteTask&,std::uint64_t,std::uint64_t) final;
 private:ResponseDispatchContext& context_;
 };

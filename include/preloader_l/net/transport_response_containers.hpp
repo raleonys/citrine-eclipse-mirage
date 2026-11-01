@@ -40,9 +40,9 @@ public:
     ReceiveBufferString& copy_response_009eb0(ReceiveBufferString&,ReceiveBufferString&) final;
 private:ReceiveBufferContext& strings_;
 };
-class ResponseQueueApi:public ResponseQueueApi {
+class ResponseQueueApiAdapter:public ResponseQueueApi {
 public:
-    explicit ResponseQueueApi(DequeGrowthContext& growth):growth_(growth){}
+    explicit ResponseQueueApiAdapter(DequeGrowthContext& growth):growth_(growth){}
     void grow_deque_026670(WriteFinishOwner&,std::uint64_t extra) final;
     // allocate_string_04b0bc remains a required32-byte object projection/effect.
 private:DequeGrowthContext& growth_;

@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Repair 11 PR #71 C++ interface/adapter identity collisions in the source-linked reference graph, add bounded type-identity regression checks and Windows Debug/Release reference-object compilation gates; shipping DLL exports and vendor bytes remain unchanged.
+
 - Correct the Windows MSVC Debug configuration-defaults test harness by injecting allocation failures at throwing map insertion boundaries while preserving non-MSVC-Debug constructor coverage; retain diagnostic probes and add full Windows x64 Debug/Release portable CTest acceptance (28/28 each). No production, DLL ABI, native release or game acceptance is implied.
 
 - Replace 58 research-era labels in first-party `src/` and `include/` comments and five diagnostic messages with technical wording; enforce a terminology regression check without modifying runtime control flow, file names or ABI identifiers.
