@@ -78,6 +78,20 @@ exception ABI parity.
 - Expected full-state FNV64: `ea70f5d56d33f404`
 
 The former implementation is not added back to the product tree.
+
+## C25-F001 depth exhaustion mitigation candidate
+
+Before invoking recursive PEGTL Object rules, a linear lexical preflight
+rejects the 129th structural opening brace. The selected limit is 128
+objects, including the root. Literal braces inside quoted byte strings,
+escaped quotes, line comments and nonnested block comments are ignored.
+On rejection, the existing grammar ParseError reports the offending
+post-BOM byte, LF-counted line and column. No action State is modified.
+PEGTL remains the only grammar/action parser for all accepted input.
+
+This is a new compatibility restriction requiring owner review against
+real product Config2 depths before merge. The portable regression test
+does not demonstrate Windows native stack or Consumer/game acceptance.
 The baseline check compiled the same test harness with the earlier
 parser and configuration source as a separate executable. Normal
 CTest compares the new PEGTL parser against the pinned observations.

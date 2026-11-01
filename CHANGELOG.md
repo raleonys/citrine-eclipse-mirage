@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Bound Config2/VDF object depth at 128 before recursive PEGTL parsing to prevent the C25-F001 stack-overflow case; retain comment/quote semantics, add deep-input regressions and require explicit native compatibility review.
+
 - Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
 
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.

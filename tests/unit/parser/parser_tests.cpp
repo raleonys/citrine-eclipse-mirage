@@ -80,6 +80,54 @@ void duplicates_and_partial_state(){
     try{parse("\"R\"{/}",slash);require(false,"lone slash must fail");}
     catch(const ParseError& e){require(e.position.byte==5,"direct failed block opener consumes slash before throw");}
 }
+void bounded_config_depth(){
+    const auto nested=[](std::size_t count) {
+        std::string text;
+        for(std::size_t i=0;i<count;++i)
+            text+=i==0?"\"Config2\"{":"\"node\"{";
+        text.append(count,'}');
+        return text;
+    };
+    State accepted;
+    require(parse(nested(128),accepted),"128 nested objects remain accepted");
+    require(accepted.root.children.size()==1,"bounded document produces a root object");
+    const auto too_deep=nested(129);
+    State rejected;
+    try {
+        (void)parse(too_deep,rejected);
+        require(false,"129 nested objects must be rejected");
+    } catch(const ParseError& error) {
+        require(error.rule==ErrorRule::grammar,"depth check uses existing grammar error");
+        std::size_t cursor=0;
+        for(std::size_t i=0;i<129;++i)cursor=too_deep.find('{',cursor)+1;
+        require(error.position.byte==cursor-1,"depth check points at the offending brace");
+        require(error.position.line==1&&error.position.column==cursor,"depth check column");
+    }
+    require(rejected.root.children.empty()&&rejected.open_objects.empty(),
+            "depth rejection occurs before any parser action");
+    State giant;
+    try {
+        (void)parse(nested(22000),giant);
+        require(false,"very deep document must not enter recursive PEGTL");
+    } catch(const ParseError& error) {
+        require(error.rule==ErrorRule::grammar,"deep input returns a bounded error");
+    }
+    const auto quoted=std::string("\"Config2\"{\"value\" \"")+
+        std::string(1000,'{')+"\\\""+std::string(1000,'}')+"\"}";
+    State quoted_state;
+    require(parse(quoted,quoted_state),"literal and escaped quoted braces are ignored");
+    const auto commented=std::string("/*")+std::string(1000,'{')+
+        "*/ \"Config2\"{ //"+std::string(1000,'{')+"\n\"key\" \"ok\"}";
+    State commented_state;
+    require(parse(commented,commented_state),"commented braces are ignored");
+    State bom;
+    try {
+        (void)parse(std::string("\xef\xbb\xbf",3)+"\n"+too_deep,bom);
+        require(false,"over-depth document with BOM must reject");
+    } catch(const ParseError& error) {
+        require(error.position.line==2,"BOM and LF position accounted for");
+    }
+}
 class SyntheticOrder final:public BinaryIterationOrder {
 public:
     bool invalid=false;
@@ -102,6 +150,6 @@ void conversion_contract(){
     catch(const std::logic_error&){require(true,"incomplete provider order rejected");}
 }
 }
-int main(){try{syntax();bytes_and_escapes();duplicates_and_partial_state();conversion_contract();
+int main(){try{syntax();bytes_and_escapes();duplicates_and_partial_state();bounded_config_depth();conversion_contract();
  std::cout<<"PASS: "<<checks<<" synthetic parser assertions. No real CFG, original DLL/EXE, file I/O or environment actions.\n";return 0;}
  catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

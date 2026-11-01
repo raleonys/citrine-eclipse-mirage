@@ -582,8 +582,8 @@
       "sha256": "c6ac786fac85640d98bbffb8b9455a00bc5fd613f1fce19c131a543f6f5aa164"
     },
     "src/config/parser.cpp": {
-      "bytes": 4768,
-      "sha256": "65dd06eaa71a77d544ee2816441a4fc5d3119e889915ce61f04ccd4bd1b33a3b"
+      "bytes": 6265,
+      "sha256": "838f3a38449b81a1c8eaf19faf107fa532567cbc3e4f33499a63270dd6953d07"
     },
     "src/config/pipeline.cpp": {
       "bytes": 2176,
@@ -1622,8 +1622,8 @@
       "sha256": "66f44f9fb16d88904c82b349112d9356440777c52c273bd459a4d0146d48fec3"
     },
     "tests/unit/parser/parser_tests.cpp": {
-      "bytes": 7385,
-      "sha256": "99b8405f5243aa217b15c93d3fd64abdf1c0459245a063f0a48f815870d033e1"
+      "bytes": 9629,
+      "sha256": "4f9012b916cc11a5fe06d7f302120028c3d730821e8c6e2159fbd4d3065de1a1"
     },
     "tests/unit/parser/vdf_regression_tests.cpp": {
       "bytes": 5355,
