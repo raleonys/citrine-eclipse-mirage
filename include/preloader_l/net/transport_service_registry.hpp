@@ -27,7 +27,7 @@ public:
 };
 void initialize_service_key_022fa0(ServiceKey&);
 // Borrowed finite initialized list; factory yields a fresh live unlinked entry.
-// Normal-flow gates only: native C++ exception/unwind cleanup is not recovered.
+// Normal-flow gates only: native C++ exception/unwind cleanup is not modeled.
 ServiceEntry& resolve_service_0239c0(ServiceRegistry&,ContextIdentity,ServiceRegistryEffects&);
 
 // Selected typed projection of a native service/context relationship. Entries,

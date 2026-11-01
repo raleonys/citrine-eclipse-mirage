@@ -7,7 +7,7 @@
 #include "preloader_l/core/binary_io.hpp"
 
 namespace preloader_l::online {
-// New composition, not another recovered original function. The caller selects
+// Source composition, not an independently verified original function. The caller selects
 // every backend. This class has no native DLL loading/provider implementation.
 class DelegatingEffects final : public Effects {
 public:

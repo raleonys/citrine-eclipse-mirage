@@ -88,7 +88,7 @@ public:
     virtual bool crt_is_space(unsigned char) = 0;
     virtual int crt_tolower(int original_signed_char) = 0;
     // Original 02a830 is a distinct licensing/file subsystem, not configuration
-    // assignment. Its internal processing and MSVC ABI remain unrecovered here.
+    // assignment. Its internal processing and MSVC ABI are not modeled here.
     virtual void apply_license_key_02a830(std::string_view) = 0;
     virtual void create_directories_018e00(const Path&) = 0;
     virtual void write_embedded_png_03c020(const Path&, EmbeddedPng) = 0;
@@ -96,7 +96,7 @@ public:
     virtual Path filename(const Path&) = 0;
     virtual void remove_04948c(const Path&) = 0;
     // Separate achievement persistence subsystem, 01eb00; state can be modified
-    // by loading its file. This contract must supply its recovered behavior.
+    // by loading its file. This contract must implement the required behavior.
     virtual void update_achievement_storage_01eb00(State&) = 0;
     virtual bool set_environment_variable(std::string_view name, std::string_view value) = 0;
     // Appended source capability: legacy vector providers remain supported.

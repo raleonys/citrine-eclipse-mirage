@@ -40,7 +40,7 @@ Number number_03d8f0(std::string_view raw,std::size_t& pos,
 }
 std::uint32_t ClassicIso::extract_03d310(std::string_view raw,std::string_view pattern,
                                        calendar::BrokenDown& value) {
-    if(pattern!=format)throw std::invalid_argument("ClassicIso requires recovered ISO format");
+    if(pattern!=format)throw std::invalid_argument("ClassicIso requires its fixed ISO format");
     for(const unsigned char byte:raw)
         if(byte>=0x80)throw std::invalid_argument("ClassicIso requires ASCII input");
     std::size_t pos=0;

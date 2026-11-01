@@ -82,7 +82,6 @@ void actual_environment_logging(preloader_l::application::detail::Environment& e
     std::cout<<"PASS: Release Environment direct/inline diagnostics never create surge.log\n";
 #endif
 }
-}
 
 void unknown_entitlement_is_nonmodal_and_redacted(preloader_l::application::detail::Environment& env,
                                                   preloader_l::configuration::State& state) {
@@ -109,7 +108,20 @@ void unknown_entitlement_is_nonmodal_and_redacted(preloader_l::application::deta
             "Debug diagnostic must not contain request secrets");
     std::cout<<"PASS: nonmodal bounded unknown entitlement diagnostics preserve Debug redaction\n";
 #else
-    require(!fs::exists(directory/"surge.log"),"Release unknown field must not create a log file");
+    const auto file=directory/"surge.log";
+    require(!fs::exists(file),"Release unknown field must not create a log file");
+    const std::string existing="pre-existing Debug log\n";
+    {
+        std::ofstream output(file,std::ios::binary);
+        output<<existing;output.close();
+        require(!output.fail(),"seed the existing log fixture");
+    }
+    env.unknown_entitlement_field("Unknown|must-not-append");
+    std::ifstream input(file,std::ios::binary);
+    require(static_cast<bool>(input),"read the existing log fixture");
+    const std::string output((std::istreambuf_iterator<char>(input)),std::istreambuf_iterator<char>());
+    require(output==existing,"Release unknown field must not append to an existing Debug log");
+    require(dialog::calls==before,"Release unknown field must remain nonmodal with an existing log");
     std::cout<<"PASS: nonmodal unknown entitlement diagnostics keep Release logging disabled\n";
 #endif
 }
@@ -130,5 +142,5 @@ int main()try{
     configuration::State unknown_state{};
     application::detail::Environment unknown_env{unknown_state,options,files,xml,paths,clock,formatter};
     logging_fixture::unknown_entitlement_is_nonmodal_and_redacted(unknown_env,unknown_state);
-    std::cout<<"PASS: actual Environment unknown field remains nonmodal under shared-handler invocation\n";
+    std::cout<<"PASS: actual Environment unknown field diagnostics are nonmodal and redacted\n";
 }catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}

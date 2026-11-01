@@ -41,9 +41,9 @@ public:
     virtual ~PoolAllocationDispatch()=default;
     virtual std::uintptr_t pool_allocate(std::uintptr_t target,std::uintptr_t pool)=0;
 };
-class PoolAllocationEffects final:public PoolAllocationDispatch {
+class PoolAllocationEffectsAdapter final:public PoolAllocationDispatch {
 public:
-    explicit PoolAllocationEffects(PoolAllocationContext& context,
+    explicit PoolAllocationEffectsAdapter(PoolAllocationContext& context,
         PoolAllocationTargetIdentities targets={}):context_(context),targets_(targets){}
     std::uintptr_t pool_allocate(std::uintptr_t target,std::uintptr_t pool) final;
 private:PoolAllocationContext& context_;PoolAllocationTargetIdentities targets_;

@@ -56,7 +56,7 @@ IoHandlerEnvironment& construct_io_environment_023dd0(IoHandlerEnvironment& dest
         construct(prepared,query,scratch);
         IoHandlerEnvironment intermediate;
         // The original first move is inlined, byte-for-byte equivalent to the
-        // already recovered023cb0 defined-field ordering used here.
+        // specified 023cb0 defined-field ordering used here.
         move_io_environment_023cb0(intermediate,prepared,sentinels);
         destroy_if_non_guard(prepared,sentinels);
         move_io_environment_023cb0(destination,intermediate,sentinels);

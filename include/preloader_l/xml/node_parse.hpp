@@ -5,7 +5,7 @@
 
 namespace preloader_l::socket {
 // Caller-owned mapped invocation workspace. It represents native local slots,
-// not a recovered host stack frame or a native allocation/lifetime protocol.
+// not a verified host stack frame or a native allocation/lifetime protocol.
 struct NativeNodeParseScratch {std::uintptr_t out_node,local_pair;};
 struct NativeNodeParseError {
     std::uintptr_t document;std::int32_t code;std::uint32_t line;
