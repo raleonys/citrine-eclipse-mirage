@@ -678,8 +678,8 @@
       "sha256": "86c5e16c0335e7c207343079522692899a96888cff5ee45950699319b8169ed1"
     },
     "src/net/transport_closing.cpp": {
-      "bytes": 2138,
-      "sha256": "4c9905473312c5690fb4b5f0b7ee3ecff825407d35af91c4f7b8aa37824c1f58"
+      "bytes": 2142,
+      "sha256": "f2189e073ba409bd13c237f2edbc13a2da69fe1fc2e5948df02e3d3c74753b87"
     },
     "src/net/transport_completion_dispatcher.cpp": {
       "bytes": 6857,
