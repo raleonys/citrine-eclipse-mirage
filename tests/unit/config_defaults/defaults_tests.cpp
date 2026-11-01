@@ -135,7 +135,9 @@ int main(int argc,char** argv) try {
         const bool map = std::strcmp(mode, "map-default") == 0;
         const bool state = std::strcmp(mode, "state-default") == 0;
         const bool stateDirect = std::strcmp(mode, "state-direct-init") == 0;
-        if (!raw && !map && !state && !stateDirect) return 2;
+        const bool narrow = std::strcmp(mode, "string-default") == 0;
+        const bool path = std::strcmp(mode, "path-default") == 0;
+        if (!raw && !map && !state && !stateDirect && !narrow && !path) return 2;
         std::fprintf(stderr, "PROBE_NOEXCEPT state=%d map=%d\n",
                      int(noexcept(preloader_l::configuration::State{})),
                      int(noexcept(std::map<std::string, std::string, std::less<>>{})));
@@ -149,6 +151,12 @@ int main(int argc,char** argv) try {
                 ::operator delete(p);
             } else if (map) {
                 std::map<std::string, std::string, std::less<>> value;
+                (void)value;
+            } else if (narrow) {
+                std::string value;
+                (void)value;
+            } else if (path) {
+                std::u16string value;
                 (void)value;
             } else if (state) {
                 preloader_l::configuration::State value{};
