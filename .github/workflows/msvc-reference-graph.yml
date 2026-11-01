@@ -48,6 +48,15 @@ jobs:
           $build = 'build/msvc-reference-${{ matrix.configuration }}'
           cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_reference_objects --parallel 2 2>&1 | Tee-Object -FilePath "$build/reference-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC reference object compilation failed' }
+      - name: Build and run socket closing exception contracts
+        shell: pwsh
+        run: |
+          $build = 'build/msvc-reference-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --target socket_closing_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/socket-closing-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC socket closing build failed' }
+          $junit = Join-Path (Resolve-Path $build) 'socket-closing-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^socket_closing_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/socket-closing-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC socket closing contracts failed' }
       - name: Build source API host and test its native lifecycle
         shell: pwsh
         run: |
@@ -64,6 +73,9 @@ jobs:
           name: msvc-reference-${{ matrix.configuration }}-evidence
           path: |
             build/msvc-reference-${{ matrix.configuration }}/reference-build.log
+            build/msvc-reference-${{ matrix.configuration }}/socket-closing-build.log
+            build/msvc-reference-${{ matrix.configuration }}/socket-closing-ctest.log
+            build/msvc-reference-${{ matrix.configuration }}/socket-closing-junit.xml
             build/msvc-reference-${{ matrix.configuration }}/source-host-build.log
             build/msvc-reference-${{ matrix.configuration }}/source-host-ctest.log
             build/msvc-reference-${{ matrix.configuration }}/source-host-junit.xml
