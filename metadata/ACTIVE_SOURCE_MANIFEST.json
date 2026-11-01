@@ -15,7 +15,7 @@
     ".github/workflows/weekly-release.yml": "efcf35209c3798257089eb9048d726218bbd4427457fda8369628a645d579d2d",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "978593d1e4a8599798082508b1b77e1731fe06a065e8b6f82d14e446d5a4047c",
-    "CHANGELOG.md": "6e0be12ab1f40b20be03255b8fd0bb43c2f338e18755840a959caefbcc293eef",
+    "CHANGELOG.md": "8946e057bb991d705dd5fe442837443e4f266f0139d259f778925d68cabefe93",
     "cmake/BuildPartition.cmake": "bb3a9c833c694256250d04be258c5f6a9315ea10189198185ae4fba58b281882",
     "cmake/InfrastructureChecks.cmake": "1e4ec0c5319403be3dfe5db904fb188a3edde069236d794a69e6e4bfb564634b",
     "cmake/PatchHookFreeze.cmake": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
@@ -3686,7 +3686,7 @@
     ".github/workflows/msvc-hook-disable.yml": "7dd818eacdb8344fb0ee608638d771c3803af796fc3c57692936a67da5a74b66",
     "tests/infrastructure/test_hook_disable_action.py": "3108408fd67b132ec5fb7b604fca748ffc3979b2411dbfcda75e2ed892699771",
     ".github/workflows/msvc-environment-diagnostics.yml": "46026f582e9f8b2df80cc0e40a8dd2720cd1e44b7348869ba33330ca83cf59f3",
-    "docs/FIELD_RETIREMENT_REVIEW.md": "bb5559bc7be465e03b115c5214a19b1eb1b6790fdff17456eac8438acd7dd9fd",
+    "docs/FIELD_RETIREMENT_REVIEW.md": "306d4da2f215ac4309811948e54d0df724e25f5bc863d4fc7338a7de1c9ed9e6",
     "docs/FIELD_SOURCE_IMPORT_POLICY.json": "31065aba3eb33d1723f4b920792a39d5fb6648754889c60cab493e8e12b3ae15"
   }
 }
