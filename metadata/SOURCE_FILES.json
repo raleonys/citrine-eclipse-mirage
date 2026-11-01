@@ -1134,8 +1134,8 @@
       "sha256": "d5b6c41e67b42e8fb3c298efc0434251efa3c93283c9bc19b8cb2ebd3a7d6d2b"
     },
     "tests/infrastructure/test_infrastructure.py": {
-      "bytes": 29047,
-      "sha256": "26f812931e3ebb407a338d96019c39d959164b02a6961de325586c4fbea54c2a"
+      "bytes": 33328,
+      "sha256": "2b1baf7b7b3cc726be12c894fe2012a55f1aab0734e5da4d9f595b4d7f994368"
     },
     "tests/infrastructure/test_pe_metadata_tools.py": {
       "bytes": 27883,
@@ -11687,7 +11687,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
+    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },

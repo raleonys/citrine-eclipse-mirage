@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Harden local Golden dist promotion with a verifiable crash-recovery journal and OS-held writer lock; preserve fixed DLL/checksum/receipt filenames, add forced-process-exit regression tests and document Windows-native acceptance limits (C35-F001 review candidate).
+
 - Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
 
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.

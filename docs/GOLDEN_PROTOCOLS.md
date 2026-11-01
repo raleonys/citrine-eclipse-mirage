@@ -104,7 +104,22 @@ hash-named build candidate is also retained.
 If Golden or final runtime validation fails,
 no new dist is published; any prior successful
 bundle is preserved with its hash/source
-receipt. Results of the current attempt are
+receipt. A persistent OS-held writer lock and a verified
+rollback journal under `dist/.local-golden-transaction`
+protect the three public filenames against process termination
+between replacements. On the next local pipeline invocation
+the previous receipt-bound bundle is restored **before** any
+Golden stage runs. Recovery can also be requested explicitly
+with `python -B scripts/run_golden_pipeline.py --recover-dist`.
+The `.local-golden.lock` pathname is intentionally retained;
+actual lock ownership is released by the OS when a writer exits.
+A missing or tampered backup fails closed without overwriting
+more files. A terminated writer can leave a temporarily mixed
+bundle until recovery; direct consumers must not treat an
+unverified dist directory as atomic publication. Real
+Windows/NTFS crash, junction/ACL, power-loss durability and
+consumer acceptance remain separate pending checks.
+Results of the current attempt are
 in `golden-local/GOLDEN_REPORT.json` under
 the build directory. Compile, Debug, Native,
 and CRT profiles cannot be promoted to dist,
