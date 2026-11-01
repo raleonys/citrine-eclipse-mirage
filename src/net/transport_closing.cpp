@@ -12,7 +12,7 @@ void cancel_and_close_026fb0(CloseContext& context,SocketObject& object,Api& err
         if(engine){
             const auto socket=object.state.socket; // cache before engine gate
             engine->gate.enter();
-            // Exception-safe release for recovered source effects that can
+            // Exception-safe release for reference source effects that can
             // reject an unsupported cancellation or error-category lookup.
             // The normal successful call/leave/close ordering is unchanged.
             struct GateRelease {
