@@ -42,6 +42,7 @@ jobs:
           cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown configure failed' }
       - name: Build actual DLL, lifecycle host and native fault fixtures
+        id: native_build
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host net_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
@@ -67,7 +68,7 @@ jobs:
       - name: Verify dual-family accept cancellation and closed admission
         # Collect the focused test even if an independent lifecycle attempt
         # fails. Both failures remain visible and fail the workflow.
-        if: always()
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'dual-accept-junit.xml'
