@@ -11,17 +11,21 @@ request when it changes an existing product decision.
 
 - [ ] This PR is ready for review; draft mode is not used to track remaining
       work or pending validation. Any merge blockers are recorded below.
-- [ ] This PR uses a fresh descriptive branch based on current `main`;
-      `main` is the only permanent branch and no shared `bugfix` branch is reused.
-- [ ] No direct changes or pushes to `main` or shared-history rewrites are part
-      of this PR. Only the owner will merge it.
+- [ ] Bugfix PR: this uses a fresh descriptive branch from current `main`;
+      the retired shared `bugfix` branch is not reused. If this is not a
+      bugfix, mark the item not applicable and identify its scoped branch.
+- [ ] Audit/research/other sustained work: its dedicated project branch and
+      scope are recorded. A related PR closing does not mandate branch deletion.
+- [ ] No direct changes or pushes to `main` or shared-history rewrites are
+      part of this PR. Only the owner will merge it.
 - [ ] Overlapping contributions were checked; unrelated active work is excluded.
-- [ ] The source branch will be deleted when this PR closes, merged or unmerged;
-      needed unmerged work and dependencies will be preserved first.
+- [ ] For a bugfix PR only: its source branch will be manually deleted after
+      this PR closes (merged or unmerged), once needed work is preserved.
 
-Enable **Automatically delete head branches** for merged PRs. Closing without
-merging requires manual deletion. Follow [branch cleanup](https://github.com/raleonys/citrine-eclipse-mirage/blob/main/docs/GITHUB_WORKFLOW.md#branch-completion-and-cleanup)
-and record any preservation or dependency work that must precede deletion.
+Do **not** rely on GitHub's repository-wide **Automatically delete head
+branches** toggle for bugfix cleanup: it may also delete retained audit/research
+heads. Follow [branch cleanup](https://github.com/raleonys/citrine-eclipse-mirage/blob/main/docs/GITHUB_WORKFLOW.md#branch-completion-and-cleanup)
+and record any bugfix preservation work or owner-approved research retirement.
 
 ## Changelog coverage
 
