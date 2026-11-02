@@ -109,7 +109,7 @@ jobs:
           foreach ($path in ($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)) {
             if ($path -match '[\r\n]') { throw 'Unsafe path for GitHub log masking.' }
             Write-Output "::add-mask::$path"
-            $slashPath = $path.Replace('\\', '/')
+            $slashPath = $path.Replace('\', '/')
             if ($slashPath -ne $path) { Write-Output "::add-mask::$slashPath" }
           }
       - name: Check build-path pinning before the full native build
