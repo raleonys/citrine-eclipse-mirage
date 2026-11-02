@@ -20,7 +20,8 @@ owner-designated long-running audits are the limited exceptions. The old shared
 | `main` | Accepted integration; updated only by owner-reviewed PR merges | Permanent integration branch |
 | Fresh `fix/<task>` branch | One bugfix PR | Temporary; delete after closure and preservation |
 | Fresh `audit/<finding>` branch | One bounded audit finding/review PR | Temporary by default; delete after closure and preservation |
-| Dedicated `research/<project>` branch | Continuing research, reverse-engineering or reconstruction project | May span PRs; owner decides final retirement |
+| Dedicated `research/<project>` branch | Continuing scoped research project | May span PRs; owner decides final retirement |
+| Dedicated Reverse Engineering workstream (for example, `research/reconstruction-package`) | Reverse engineering, source reconstruction and donor-parity investigation | May span PRs; owner decides final retirement; the branch name alone does not grant an exemption |
 | Explicitly designated long-running audit branch | Owner-approved multi-PR audit campaign with documented scope and closure conditions | May span PRs; **not** inferred from the `audit/` prefix |
 | Other single-PR task branch | Documentation, policy, test or feature contribution | Temporary unless separately designated a continuing project |
 
@@ -70,7 +71,7 @@ owner-designated long-running audit campaign solely because one PR closed.
    dependencies remain, or preservation is uncertain, resolve the discrepancy.
    Never force-delete a dirty worktree or delete `main`.
 
-Research/reconstruction branches may remain while their defined projects are
+Research, reverse-engineering and reconstruction branches may remain while their defined projects are
 active. A long-running audit branch needs **explicit owner designation** and a
 documented continuing audit scope and closure criteria; neither its `audit/`
 prefix nor an open finding suffices. Retire either class only after owner
@@ -96,7 +97,7 @@ Do not recreate the retired shared `bugfix` branch. Evaluate existing
 with source SHA, dependency and evidence preservation. Do not assume every
 existing `audit/*` branch must be retained, nor bulk-delete them: determine
 whether a specific audit is an owner-designated continuing campaign.
-Existing research/reconstruction project branches remain available while their
+Existing research, reverse-engineering and reconstruction project branches remain available while their
 workstreams are active. Retirement requires the owner's decision and verified
 source/evidence preservation; an individual research PR closing does not itself
 end that workstream.
