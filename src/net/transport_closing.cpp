@@ -12,10 +12,19 @@ void cancel_and_close_026fb0(CloseContext& context,SocketObject& object,Api& err
         if(engine){
             const auto socket=object.state.socket; // cache before engine gate
             engine->gate.enter();
-            const auto category=errors.system_category_028620();
-            const Error reason{995,category};
-            cancellation.cancel_026aa0(*engine,socket,reason);
-            engine->gate.leave();
+            // Exception-safe release for reference source effects that can
+            // reject an unsupported cancellation or error-category lookup.
+            // The normal successful call/leave/close ordering is unchanged.
+            struct GateRelease {
+                SocketGate& gate;
+                ~GateRelease() noexcept(false) {gate.leave();}
+            };
+            {
+                GateRelease release{engine->gate};
+                const auto category=errors.system_category_028620();
+                const Error reason{995,category};
+                cancellation.cancel_026aa0(*engine,socket,reason);
+            }
         }
         Error ignored;
         (void)close_026e50(object.state.socket,object.state.socket_state,true,ignored,errors,api);

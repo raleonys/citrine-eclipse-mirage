@@ -47,7 +47,14 @@ public:
         state.use_last_online_profile,online};}
     template<class Fn> static Fn method(std::uintptr_t o,std::size_t slot) {
         if(!o)throw std::logic_error("Provider object is unavailable");
-        return reinterpret_cast<Fn>((*reinterpret_cast<std::uintptr_t**>(o))[slot]);
+        // The foreign object/table are readable byte layouts, not C++ objects
+        // created with this module's pointer types or alignment.
+        std::uintptr_t table=0,address=0;
+        std::memcpy(&table,reinterpret_cast<const void*>(o),sizeof(table));
+        if(!table)throw std::logic_error("Provider vtable is unavailable");
+        std::memcpy(&address,reinterpret_cast<const std::byte*>(table)+slot*sizeof(address),sizeof(address));
+        if(!address)throw std::logic_error("Provider method is unavailable");
+        return reinterpret_cast<Fn>(address);
     }
     std::uint32_t suppress_errors_0450a0() override {auto m=GetErrorMode();SetErrorMode(m|1);return m;}
     void restore_error_mode(std::uint32_t m) override {SetErrorMode(m);}
@@ -66,7 +73,7 @@ public:
     const char* username_virtual_10(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,2)(reinterpret_cast<void*>(o));}
     const char* persona_virtual_18(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,3)(reinterpret_cast<void*>(o));}
     const char* user_id_virtual_20(std::uintptr_t o) override{return method<const char*(*)(void*)>(o,4)(reinterpret_cast<void*>(o));}
-    void destroy_virtual_00(std::uintptr_t o) override{method<void(*)(void*,unsigned)>(o,0)(reinterpret_cast<void*>(o),1);}
+    void destroy_virtual_00(std::uintptr_t o) override{method<void(*)(void*)>(o,0)(reinterpret_cast<void*>(o));}
     bool free_library(std::uintptr_t m) override {
         if(!FreeLibrary(reinterpret_cast<HMODULE>(m)))
             throw std::runtime_error("Online DLL cleanup incomplete");
@@ -371,7 +378,8 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             // seed is the same one the first source message getter would create.
             (void)event_queue::mutex_02c620(events.context);
             (void)event_queue::queue_02c400(events.context);
-            service=std::make_unique<net::AsioService>(*this,execution,state.server_port,server_ready);
+            service=std::make_unique<net::AsioService>(*this,execution,state.server_port,server_ready,
+                net::SessionPolicy{},true); // Bind first; leave accept callbacks inactive until ready.
             service->start();
             if(options.install_hooks){hooks=std::make_unique<Hooks>(state,environment,execution);hooks->start();}
             std::promise<std::exception_ptr> completed;
@@ -397,6 +405,7 @@ struct Application::Impl final:net::HandlerFactory,misc_handlers::NoResponse {
             // A connect callback waiting for all three source phases must not
             // escape while the handler factory still rejects new sessions.
             execution.finish_flag_036820(extra_ready);
+            service->resume_accepts(); // IO executor arms accepts only after profile publication.
             started=true;environment.debug_log("application ready");
         }catch(...){stop();throw;}
     }

@@ -12,6 +12,8 @@
 #include <thread>
 #include <string>
 #include <cstdlib>
+#include <exception>
+#include <new>
 #include <condition_variable>
 #include <chrono>
 #include <functional>
@@ -24,9 +26,24 @@ struct Life{LifecycleFault fault;};
 Callback expected_failure=Callback::connect_00fd00;
 bool boundary_mode{};
 struct Faults final:Errors {
+    Binding* lease_owner=nullptr;
     [[noreturn]]void lifecycle(LifecycleFault f)override{throw Life{f};}
     [[noreturn]]void callback_exception(Callback c,std::exception_ptr error)noexcept override{
-        std::_Exit(boundary_mode&&c==expected_failure&&error?86:99);
+        if(!boundary_mode||c!=expected_failure||!error)std::_Exit(99);
+        if(lease_owner){
+            if(active_calls()!=1)std::_Exit(90);
+            bool busy=false;
+            try{
+                std::thread closer([&]{
+                    try{lease_owner->close();}
+                    catch(const Life& failure){busy=failure.fault==LifecycleFault::Busy;}
+                    catch(...){busy=false;}
+                });
+                closer.join();
+            }catch(...){std::_Exit(91);}
+            if(!busy||!is_bound()||active_calls()!=1)std::_Exit(92);
+        }
+        std::_Exit(86);
     }
 } faults;
 std::u16string read_utf16(const void* p){
@@ -136,8 +153,8 @@ struct Fixture {
     preloader_l::registry::Handles clients,languages,fabricated;std::uint8_t language=0;
     std::int32_t v4=16,v6=28;std::uint16_t port=6099;std::uint32_t attempts=0;
     std::array<std::uintptr_t,callback_count> originals{};Wide wide;CryptHost crypt_host;Effects effects;Context context;Binding binding;
-    Fixture():originals{reinterpret_cast<std::uintptr_t>(&original_connect),reinterpret_cast<std::uintptr_t>(&original_open_a),reinterpret_cast<std::uintptr_t>(&original_open_w),reinterpret_cast<std::uintptr_t>(&original_close),reinterpret_cast<std::uintptr_t>(&original_query_a),reinterpret_cast<std::uintptr_t>(&original_query_w),reinterpret_cast<std::uintptr_t>(&original_process_a),reinterpret_cast<std::uintptr_t>(&original_process_w),reinterpret_cast<std::uintptr_t>(&original_folder_a),reinterpret_cast<std::uintptr_t>(&original_folder_w),reinterpret_cast<std::uintptr_t>(&original_crypt)},
-      effects(originals,wide,crypt_host),context{{values,clients,languages,fabricated,language},{v4,v6,port,attempts},effects,effects,effects,effects},binding(context,faults){}
+    explicit Fixture(Errors& policy=faults):originals{reinterpret_cast<std::uintptr_t>(&original_connect),reinterpret_cast<std::uintptr_t>(&original_open_a),reinterpret_cast<std::uintptr_t>(&original_open_w),reinterpret_cast<std::uintptr_t>(&original_close),reinterpret_cast<std::uintptr_t>(&original_query_a),reinterpret_cast<std::uintptr_t>(&original_query_w),reinterpret_cast<std::uintptr_t>(&original_process_a),reinterpret_cast<std::uintptr_t>(&original_process_w),reinterpret_cast<std::uintptr_t>(&original_folder_a),reinterpret_cast<std::uintptr_t>(&original_folder_w),reinterpret_cast<std::uintptr_t>(&original_crypt)},
+      effects(originals,wide,crypt_host),context{{values,clients,languages,fabricated,language},{v4,v6,port,attempts},effects,effects,effects,effects},binding(context,policy){}
 };
 void test_network_wait_allows_peer_callbacks(bool startup_wait){
     Fixture f;
@@ -475,6 +492,40 @@ void test_crypt_lifetime(){
     require(result==7&&error==0x1234abcd&&active_calls()==0,"crypt original finishes before lease releases");
     f.binding.close();require(!is_bound(),"crypt context closes after callback quiescence");
 }
+// Child processes isolate terminal paths. A closed binding has no owned
+// error policy; a live exception retains its lease even while another thread
+// attempts close. Guarded retired policy storage detects any stale dereference.
+void test_terminal_policy_lifetime() {
+    std::array<wchar_t,32768> executable{};
+    const DWORD n=GetModuleFileNameW(nullptr,executable.data(),static_cast<DWORD>(executable.size()));
+    require(n>0&&n<executable.size(),"native callback executable path");
+    struct Scenario {const wchar_t* mode;DWORD expected;};
+    for(const auto& scenario:std::array<Scenario,7>{{
+            {L"--closed",87},{L"--crypt-closed",87},{L"--throw-original",86},
+            {L"--missing",86},{L"--crypt-missing",86},
+            {L"--retired-owner",87},{L"--crypt-retired-owner",87}}}) {
+        auto command=L"\"" + std::wstring(executable.data(),n) + L"\" " + scenario.mode;
+        STARTUPINFOW startup{};startup.cb=static_cast<DWORD>(sizeof(startup));
+        PROCESS_INFORMATION process{};
+        require(CreateProcessW(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,
+                               nullptr,nullptr,&startup,&process)!=FALSE,
+                "spawn isolated terminal callback regression");
+        const DWORD waited=WaitForSingleObject(process.hProcess,15000);
+        DWORD code=0;
+        const BOOL got=GetExitCodeProcess(process.hProcess,&code);
+        if(waited!=WAIT_OBJECT_0){
+            (void)TerminateProcess(process.hProcess,88);
+            (void)WaitForSingleObject(process.hProcess,5000);
+        }
+        (void)CloseHandle(process.hThread);
+        (void)CloseHandle(process.hProcess);
+        if(waited!=WAIT_OBJECT_0||!got||code!=scenario.expected)
+            std::wcerr<<L"terminal scenario "<<scenario.mode<<L": wait="<<waited
+                      <<L" exit="<<code<<L" expected="<<scenario.expected<<L'\n';
+        require(waited==WAIT_OBJECT_0&&got&&code==scenario.expected,
+                "retired callback policy cannot run; live policy still handles exceptions");
+    }
+}
 #if !defined(PRELOADER_L_PRODUCTION_CALLBACK_TESTS)
 struct InitRemaining final:preloader_l::host_init::Effects {
     std::array<std::uintptr_t,callback_count>& targets;std::size_t index{};
@@ -536,12 +587,30 @@ void test_actual_host_install_binding(){
 
 }
 int main(int argc,char** argv){try{
-    if(argc>1){boundary_mode=true;Fixture f;
-        if(std::strcmp(argv[1],"--closed")==0){expected_failure=Callback::reg_close_00f5b0;f.binding.close();reg_close_entry(nullptr);}
+    if(argc>1){
+        boundary_mode=true;
+        SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOGPFAULTERRORBOX);
+        if(std::strcmp(argv[1],"--retired-owner")==0||std::strcmp(argv[1],"--crypt-retired-owner")==0){
+            std::set_terminate([]{std::_Exit(87);});
+            void* storage=VirtualAlloc(nullptr,sizeof(Faults),MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
+            require(storage!=nullptr,"allocate isolated error policy page");
+            auto* policy=::new(storage) Faults;
+            {Fixture f(*policy);f.binding.close();}
+            policy->~Faults();
+            DWORD previous=0;
+            require(VirtualProtect(storage,sizeof(Faults),PAGE_NOACCESS,&previous)!=FALSE,
+                    "retired error policy page is inaccessible");
+            // The terminal child owns this allocation until process exit.
+            if(std::strcmp(argv[1],"--retired-owner")==0)reg_close_entry(nullptr);
+            else crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);
+            return 98;
+        }
+        Fixture f;faults.lease_owner=&f.binding;
+        if(std::strcmp(argv[1],"--closed")==0){std::set_terminate([]{std::_Exit(87);});expected_failure=Callback::reg_close_00f5b0;f.binding.close();reg_close_entry(nullptr);}
         else if(std::strcmp(argv[1],"--missing")==0){expected_failure=Callback::reg_close_00f5b0;f.originals[3]=0;reg_close_entry(nullptr);}
         else if(std::strcmp(argv[1],"--throw-original")==0){expected_failure=Callback::create_process_a_00f3f0;seen.throw_process=true;process_a_entry("other",nullptr,nullptr,nullptr,0,0,nullptr,nullptr,nullptr,nullptr);}
         else if(std::strcmp(argv[1],"--crypt-missing")==0){expected_failure=Callback::crypt_query_001264;f.originals[10]=0;crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
-        else if(std::strcmp(argv[1],"--crypt-closed")==0){expected_failure=Callback::crypt_query_001264;f.binding.close();crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
+        else if(std::strcmp(argv[1],"--crypt-closed")==0){std::set_terminate([]{std::_Exit(87);});expected_failure=Callback::crypt_query_001264;f.binding.close();crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
         else if(std::strcmp(argv[1],"--crypt-invalid")==0){const wchar_t invalid[]={0xd800,0};require(crypt_query_entry(1,invalid,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr)==7,"invalid UTF16 forwards instead of trapping");return 0;}
         return 98;
     }
@@ -556,5 +625,6 @@ int main(int argc,char** argv){try{
     test_real_winsock_invalid_address_equivalence();
     test_network_wait_allows_peer_callbacks(true);test_network_wait_allows_peer_callbacks(false);test_concurrent_attempts();
     test_hook_reference_common_guard_scope();
+    test_terminal_policy_lifetime();
     std::cout<<"PASS: "<<checks<<" native callback/trampoline checks; synthetic originals plus real Winsock invalid-address equivalence\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected native test exception\n";return 1;}}
