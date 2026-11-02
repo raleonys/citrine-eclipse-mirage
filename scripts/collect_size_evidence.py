@@ -52,6 +52,10 @@ def coff_sections(data):
         raise ValueError('Unsupported object machine')
     if not count or count > (len(data) - offset) // 40:
         raise ValueError('Truncated or empty COFF section table')
+    if symbol_count and not symbols:
+        raise ValueError('COFF symbol count has no symbol table pointer')
+    if symbols and symbols < offset + count * 40:
+        raise ValueError('COFF symbol/string table overlaps headers')
     strings = symbols + symbol_count * symbol_size
     string_end = 0
     if symbols:
