@@ -13480,8 +13480,8 @@
       "sha256": "6068f347c704b21b97c326585a015dce845398ed32925c6e12dfdb710f6a59aa"
     },
     "tests/unit/registry/native_lifecycle_tests.cpp": {
-      "bytes": 18013,
-      "sha256": "b60cb1679f801f4676f6942df38790d0142a3ca56911dadaa30ba6f01b42d846"
+      "bytes": 21507,
+      "sha256": "90a425cf01ea57a6f62cf35c97768b052a1120d36dac137698dbfa232dfa6c07"
     }
   }
 }

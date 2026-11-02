@@ -325,6 +325,67 @@ void concurrent_close(bool wide, bool fabricated) {
     require(fixture.effects.frees == fixture.effects.allocations, "concurrent fabricated allocation freed exactly once");
     check_clean(fixture);
 }
+void alternate_sdk_routes(bool wide) {
+    // D03 bounded SDK-origin evidence. This executable calls entrypoints
+    // directly: it does not install MinHook or observe Consumer call paths.
+    Tree tree;
+    Fixture fixture;
+    {
+        Key legacy;
+        const auto result = wide
+            ? RegOpenKeyW(tree.root.value, L"Client", &legacy.value)
+            : RegOpenKeyA(tree.root.value, "Client", &legacy.value);
+        require(result == ERROR_SUCCESS && legacy.value,
+            "legacy RegOpenKey A/W returns a real native HKEY");
+        legacy.callback = true;
+        require(fixture.clients.empty() && fixture.languages.empty() && fixture.fabricated.empty(),
+            "direct legacy SDK open does not claim a callback-owned identity");
+        const auto reply = query(legacy.value, wide, false);
+        require(reply.original.status == ERROR_SUCCESS &&
+            text_is(reply, wide, "native-value", L"native-value"),
+            "SDK-origin legacy key query forwards native data, not an overlay");
+        require(reply.error == reply.original.error,
+            "legacy SDK query preserves the original LastError");
+        const auto before_close = observed.closes;
+        require(legacy.close() == ERROR_SUCCESS && observed.closes == before_close + 1,
+            "legacy SDK key close forwards to native RegCloseKey once");
+        check_clean(fixture);
+    }
+    {
+        Key created;
+        const wchar_t* name = wide ? L"D03CreatedW" : L"D03CreatedA";
+        DWORD disposition = 0;
+        const auto result = wide
+            ? RegCreateKeyExW(tree.root.value, name, 0, nullptr, REG_OPTION_VOLATILE,
+                KEY_ALL_ACCESS, nullptr, &created.value, &disposition)
+            : RegCreateKeyExA(tree.root.value, "D03CreatedA", 0, nullptr, REG_OPTION_VOLATILE,
+                KEY_ALL_ACCESS, nullptr, &created.value, &disposition);
+        require(result == ERROR_SUCCESS && created.value && disposition == REG_CREATED_NEW_KEY,
+            "alternate RegCreateKeyEx A/W returns a new native HKEY");
+        created.callback = true;
+        constexpr wchar_t value[] = L"alternate-native";
+        require(RegSetValueExW(created.value, L"NativeOnly", 0, REG_SZ,
+            reinterpret_cast<const BYTE*>(value), sizeof(value)) == ERROR_SUCCESS,
+            "seed a native value through a direct SDK write");
+        require(fixture.clients.empty() && fixture.languages.empty() && fixture.fabricated.empty(),
+            "alternate SDK creation never silently registers a fabricated key");
+        const auto reply = query(created.value, wide, false);
+        require(reply.original.status == ERROR_SUCCESS &&
+            text_is(reply, wide, "alternate-native", L"alternate-native"),
+            "SDK-created native value reaches original RegQueryValueEx A/W");
+        require(reply.error == reply.original.error,
+            "SDK-created query preserves original LastError");
+        const auto before_close = observed.closes;
+        require(created.close() == ERROR_SUCCESS && observed.closes == before_close + 1,
+            "SDK-created native HKEY close forwards exactly once");
+        require(RegDeleteKeyW(tree.root.value, name) == ERROR_SUCCESS,
+            "remove the SDK-created volatile child");
+        check_clean(fixture);
+    }
+    require(fixture.effects.allocations == 0 && fixture.effects.frees == 0,
+        "alternate native SDK routes never allocate or release fabricated handles");
+}
+
 void numeric_reuse(bool wide) {
     Tree tree;
     Fixture fixture;
@@ -355,6 +416,7 @@ int main() {
                 concurrent_close(wide, fabricated);
             }
             language_and_foreign(wide);
+            alternate_sdk_routes(wide);
             numeric_reuse(wide);
         }
         std::cout << checks << " native Registry lifecycle checks passed\n";
