@@ -52,6 +52,44 @@ Those receipts are evidence for the **named baseline**, not a fresh acceptance c
 
 For an actual bug correction, reproduce source-bound RED behavior before the minimal GREEN change. For additional coverage of already-correct behavior, meaningful new tests and a controlled negative check may be sufficient; do not fabricate a baseline production failure to justify a test-only contribution. Existing assertions, cleanup ownership, timeout budgets, vendor pins and public ABI remain unchanged. This ledger does **not** retire the original reference inputs or certify full native equivalence.
 
+### Public shutdown during real startup: native fixture
+
+The A11-04 scenario reference is the separately indexed reconstruction package
+at commit `e10561b256a5793f857ec4bed4b5a9fb9fcfbadd`, delivery ZIP SHA-256
+`db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da`.
+Its [admission integration scenario](https://github.com/raleonys/citrine-eclipse-mirage/blob/e10561b256a5793f857ec4bed4b5a9fb9fcfbadd/reference-package/snapshot/anadius-application-admission-source/admission_integration_tests.cpp)
+informs this test; its source graph and supplied PASS records are not imported.
+
+The `application_shutdown_failure_contracts` host now also issues public
+`DllShutdown` calls before the source-included Application has returned from
+startup. The test DLL observes two real readiness-publication boundaries:
+the provider worker's completion and the entry worker's final ready phase.
+Each is exercised with normal return and an injected startup exception.
+
+While the selected phase is held, zero-wait and bounded-wait calls must return
+`DLL_SHUTDOWN_TIMEOUT`, retain the single Application and callback binding, and
+leave engine cleanup untouched. Recorded thread identities distinguish the
+provider worker from the entry worker; abort-cleanup flag publication cannot
+impersonate the startup barrier. After release, the real entry worker must
+terminate from the already queued requests without a third public shutdown
+call. The host then verifies single-owner destruction, drained callback leases,
+exact engine retirement and idempotent completed shutdown. The exception cases
+also distinguish the entry worker's implicit cleanup request.
+
+This adapts the A11-04/D51-A test scenario to the accepted serialized worker
+instead of importing the donor's RuntimeOwner, custom CRT or foreign admission
+API. Instrumentation and extra exports exist only in the test DLL. Engine
+patching and unload scans retain this fixture's existing controlled boundaries;
+this is not a real-MinHook or foreign-callback quiescence proof. Production
+source, its three exports, timeout budgets and current behavior are unchanged.
+
+The existing focused queued-shutdown workflow runs all old and new scenarios on
+Windows MSVC Debug/Release and retains verbose per-case output. Merely adding
+these cases is not a native PASS; exact-head execution belongs in the PR's CI
+record. The earlier D51-A row describes the named historical baseline above;
+these cases address its paused-startup scheduling gap without closing the
+remaining foreign callback, service-construction or original-donor parity work.
+
 ## Original comparison — historical baseline
 
 The following text preserves the initial 2026-11-01 review against `d9c860d17769738fd6f03a58a7f3c4b9f875b067`. Its dispositions and future-work wording are superseded by the current reconciliation above; its donor-specific observations remain unverified in this follow-up.
