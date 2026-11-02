@@ -135,6 +135,7 @@ class RepositoryRootOwnership(unittest.TestCase):
             # Suffix-only checks previously accepted forged schema namespaces.
             for wrong_schema in ('surge.layout-migration.v1', 'forged.layout-migration.v1',
                                  '.layout-migration.v1', canonical_schema + '.extra',
+                                 chr(0xd800), chr(0xe9) + '.layout-migration.v1',
                                  None, 1, []):
                 with self.subTest(wrong_schema=wrong_schema):
                     target.write_text(json.dumps({'schema': wrong_schema}), encoding='utf-8')
