@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Repair the reference socket cancellation gate's exception path: release the selected engine gate when category resolution or cancellation rejects unsupported source input, while preserving normal close order and retaining the socket/control state on failure. Add focused injected-failure regression checks with unchanged strong/weak owner counts, and keep active-source terminology within the enforced policy; shipping Asio is unchanged. Add focused Windows Debug/Release execution of socket_closing_contracts to reference CI, and stack this change on the queued shutdown fix in PR #89.
+
 - Defer application-owned Asio accept callbacks until provider/profile startup admission is published, while retaining the early bound listener and OS TCP backlog. Add a source-linked native startup regression proving an early connecting peer stays connected until the subsequent greeting. Standalone Asio services and internal failure-injection fixtures retain immediate admission by default; full native MSVC and Consumer validation remain required.
 
 - Restore the process-wide Windows error mode if optional online-provider path conversion or DLL loading throws, preserving the originating exception even when restoration fails. Extend portable provider failure-injection contracts for the four pre-load stages and restoration fault. The reconstruction packet's factory-failure scenarios informed this review; native/Golden/Consumer acceptance is pending.
