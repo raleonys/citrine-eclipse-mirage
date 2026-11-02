@@ -1182,8 +1182,8 @@
       "sha256": "7c8372a4398d7c7af51de6dd20952b4ae463e4167baedd5e20bd71a01499955e"
     },
     "tests/native/application_runtime_tests.cpp": {
-      "bytes": 22423,
-      "sha256": "27e726242ff53aa461df7c71128cb23733285e97af9e7bcc7d74addc4528442b"
+      "bytes": 24337,
+      "sha256": "b4f6576332433413149d9a43885b6fe97b520400f894c23b90fc2d132e8da891"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
       "bytes": 5710,
@@ -1330,8 +1330,8 @@
       "sha256": "e40de0c37906f32cf5e5d45e5436d0413272e9c9f31b52386c8e606463e5d95b"
     },
     "tests/support/runtime/online_fixture.cpp": {
-      "bytes": 1405,
-      "sha256": "2b53eeee1ad4e68c9a5e96a9e248b2dde009e7dd8eecc53229beb5a618d14f31"
+      "bytes": 2285,
+      "sha256": "2b9a074056b19807910bd9808049d2afbfdff5e2e25c93ede7238c1ba2247774"
     },
     "tests/support/runtime/socket_retirement_fixture.cpp": {
       "bytes": 2795,
