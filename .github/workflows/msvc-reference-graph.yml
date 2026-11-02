@@ -3,14 +3,6 @@ name: Windows MSVC reference graph acceptance
 
 on:
   pull_request:
-    paths:
-      - "include/**"
-      - "src/**"
-      - "tests/**"
-      - "cmake/**"
-      - "CMakeLists.txt"
-      - "scripts/check_cpp_type_identities.py"
-      - ".github/workflows/msvc-reference-graph.yml"
   workflow_dispatch:
 
 permissions:
