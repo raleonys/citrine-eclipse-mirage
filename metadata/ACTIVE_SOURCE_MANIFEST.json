@@ -8,7 +8,7 @@
   "files": {
     ".gitattributes": "0ecb37bbacc8487e7f4b6b1326c77475b0bf6847049586467950934a97d613a9",
     ".github/hooks/pre-push": "075d556289c9930548d4551ba82fca20e50507696df02ab6828124cb2f15e75d",
-    ".github/pull_request_template.md": "90139461d9e9adf8490dcd434a6fbfd89e5114ccb4cdef5e13028b1e563eb665",
+    ".github/pull_request_template.md": "e6e7063b132aefde87b4482b1269a82fd839e66cd0ccceae2a6e8f7060e37c20",
     ".github/workflows/ci.yml": "f8014ebe2621fc9c04967c1500d7478349895581f980fe90f0bb24b6a93d5645",
     ".github/workflows/msvc-debug-defaults-diagnostic.yml": "b4735f0f74f9cfcbcfb7b0d814d1551c544ac14f527d1be17dfb0800fc547597",
     ".github/workflows/msvc-online-provider-lease.yml": "1b04972f29d9f801efb6942f3a1dac9337215a65428d337c7309cb84d61ebe18",
@@ -51,7 +51,7 @@
     "docs/ENGLISH_ONLY_AUDIT.md": "43c099bae60a61aa85f1c776f54a440edbf56615006d3173b44863407d4e26f2",
     "docs/ENGLISH_ONLY_CPP_TEST_REVIEW.md": "ec83516dbba9ae07c333afe14a09347edbb378b152f4617c53049b107af0ba3e",
     "docs/FILESYSTEM_BACKEND_COMPARISON.md": "2504f350e16729c8a2554f0619c7fdf8a4c1344ac35116bd34d033ec962160a8",
-    "docs/GITHUB_WORKFLOW.md": "c770c558820f5ea6195fd5736c2c4eda1b9be0559d3fbd99846d1d2063badff5",
+    "docs/GITHUB_WORKFLOW.md": "c43d3651583e87386592bdf90fad56a45bbf9b64f31cb6df6585bc537a7871b4",
     "docs/GOLDEN_AVATAR_FIX.md": "c175d22c9164c998a38b5806a8b64c5fa1500d9e951cc34a49301ae1c5062dfd",
     "docs/GOLDEN_PROTOCOLS.md": "16eddd6d79c8594fbcaadc14705aba017a785cfd58f43f9b14c4105262f423c5",
     "docs/HOOK_ALIGNMENT.md": "b5ea7b4aebf7adf9b70a68ef26f9118a4ff4a1e6340530599b80a5684718057c",
