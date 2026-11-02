@@ -100,8 +100,8 @@ try {
             if ($ReportedHash -ne $GoldenReport.sha256) { Fail-Build 'Local dist hash differs from the validated Golden DLL.' 117 }
             $Receipt['dist_artifact'] = [System.IO.Path]::GetFileName($ReportedDll)
             $Receipt['dist_sha256'] = $ReportedHash
-            $Receipt['dist_sha256_file'] = $GoldenReport.dist_sha256_file
-            $Receipt['dist_receipt'] = $GoldenReport.dist_receipt
+            $Receipt['dist_sha256_file'] = [System.IO.Path]::GetFileName($GoldenReport.dist_sha256_file)
+            $Receipt['dist_receipt'] = [System.IO.Path]::GetFileName($GoldenReport.dist_receipt)
         }
     } else {
         Invoke-ExternalChecked (Join-Path $Out 'preloader_l_runtime_host.exe') @($Dll) 'Application public API and real load/socket/shutdown/unload cycles' 111
