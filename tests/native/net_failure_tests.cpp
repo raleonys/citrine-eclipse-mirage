@@ -89,10 +89,16 @@ template<class F> bool until(F f) {
 struct HandlerFailure{};
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> creates{0},errors{0},dispatch_errors{0};
-    std::atomic<bool> null_handler{false};
+    std::atomic<bool> null_handler{false},fail_greeting_once{false};
+    std::atomic<unsigned> accepted_session_errors{0};
     struct Handler final:server::Handler {
+        Factory& factory;
+        explicit Handler(Factory& f):factory(f){}
         void reset_02bc70()override{}
-        std::string initial_message_02d540()override{return std::string("hello\0",6);}
+        std::string initial_message_02d540()override{
+            if(factory.fail_greeting_once.exchange(false))throw HandlerFailure{};
+            return std::string("hello\0",6);
+        }
         std::string process_message_033d70(std::string_view input)override {
             if(input=="fail")throw HandlerFailure{};
             if(input=="fail-post"){fault::next=true;throw HandlerFailure{};}
@@ -100,10 +106,13 @@ struct Factory final:net::HandlerFactory {
         }
     };
     std::unique_ptr<server::Handler> create()override {
-        ++creates;return null_handler.load()?nullptr:std::make_unique<Handler>();
+        ++creates;
+        return null_handler.load()?nullptr:std::make_unique<Handler>(*this);
     }
     void error(std::string_view op,std::exception_ptr)noexcept override {
-        ++errors;if(op=="cleanup dispatch")++dispatch_errors;
+        ++errors;
+        if(op=="cleanup dispatch")++dispatch_errors;
+        if(op=="accepted session")++accepted_session_errors;
     }
 };
 struct Context {
@@ -172,6 +181,39 @@ void factory_failure_rearms() {
     healthy.send("recovered");
     require(healthy.frame()=="recovered","new handler cannot process traffic after factory recovery");
     service.stop();service.stop();
+}
+void greeting_failure_retires_published_client() {
+    // B53: unlike a factory-constructor failure, a greeting exception occurs
+    // after Client has already entered clients and consumed a session slot.
+    // The real accept error path must retire that published owner once.
+    Context c;
+    net::AsioService service(c.factory,c.execution,c.port,c.ready);
+    service.start();
+    Peer existing(c.port);
+    require(existing.frame()=="hello","live control greeting before failure");
+    c.factory.fail_greeting_once.store(true);
+    Peer rejected(c.port);
+    require(rejected.closed(),
+        "throwing initial greeting retained a partially published TCP session");
+    require(until([&]{return c.factory.creates.load()>=2&&
+                              c.factory.accepted_session_errors.load()==1;}),
+        "greeting failure did not report exactly one accepted-session error");
+    Peer recovered(c.port);
+    require(recovered.frame()=="hello",
+        "listener did not rearm after a post-publication greeting exception");
+    existing.send("existing-alive");
+    require(existing.frame()=="existing-alive",
+        "failed greeting disrupted an unrelated committed session");
+    recovered.send("new-owner");
+    require(recovered.frame()=="new-owner",
+        "new session cannot handle messages after greeting rollback");
+    require(c.factory.creates.load()==3&&
+            c.factory.accepted_session_errors.load()==1,
+        "greeting exception duplicated creation or error reporting");
+    service.stop();service.stop();
+    require(service.impl_->active_sessions==0&&service.impl_->clients.empty()&&
+            !service.impl_->accept_pending[0]&&!service.impl_->accept_pending[1],
+        "shutdown left a counted Client or accept pending after greeting failure");
 }
 void accept_cancellation_finality() {
     Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
@@ -277,7 +319,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
+    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms},{"greeting-throw",greeting_failure_retires_published_client}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
