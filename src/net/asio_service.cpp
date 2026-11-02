@@ -111,7 +111,7 @@ struct AsioService::Impl final:ServerBackend {
     bool used=false;
     bool accept_enabled=true; // IO-thread only; control thread posts activation.
 
-    Impl(HandlerFactory& f,execution::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy limits,bool defer_accept)
+    Impl(HandlerFactory& f,execution::Execution& e,std::uint16_t& p,std::uint8_t& r,SessionPolicy limits,bool defer_accept=false)
         :factory(f),execution(e),port(p),ready(r),policy(validated(limits)),accept_enabled(!defer_accept){
             deferred_closes.reserve(policy.max_sessions+8);
         }
