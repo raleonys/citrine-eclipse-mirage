@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_cancellation_native.hpp"
 #include "preloader_l/net/transport_native.hpp"
 #include <cstring>
@@ -5,8 +7,8 @@
 #include <iostream>
 #include <vector>
 
-namespace s=preloader_l::socket_recovered;
-namespace srv=preloader_l::server_recovered;
+namespace s=preloader_l::socket;
+namespace srv=preloader_l::server;
 namespace {
 unsigned checks=0;
 void check(bool value,const char* why){++checks;if(!value)throw std::runtime_error(why);}

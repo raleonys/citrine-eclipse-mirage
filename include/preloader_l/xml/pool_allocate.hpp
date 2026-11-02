@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_receive_buffer.hpp"
 #include <array>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Mandatory lower effects: this stage does not recover the heap, memset body,
 // or pointer-array append/growth005440. All effects share the context memory.
 class PoolAllocationEffects {
@@ -39,11 +41,11 @@ public:
     virtual ~PoolAllocationDispatch()=default;
     virtual std::uintptr_t pool_allocate(std::uintptr_t target,std::uintptr_t pool)=0;
 };
-class RecoveredPoolAllocationEffects final:public PoolAllocationDispatch {
+class PoolAllocationEffectsAdapter final:public PoolAllocationDispatch {
 public:
-    explicit RecoveredPoolAllocationEffects(PoolAllocationContext& context,
+    explicit PoolAllocationEffectsAdapter(PoolAllocationContext& context,
         PoolAllocationTargetIdentities targets={}):context_(context),targets_(targets){}
     std::uintptr_t pool_allocate(std::uintptr_t target,std::uintptr_t pool) final;
 private:PoolAllocationContext& context_;PoolAllocationTargetIdentities targets_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

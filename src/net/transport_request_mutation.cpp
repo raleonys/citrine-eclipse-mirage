@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_request_mutation.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uintptr_t address(const ReceiveBufferString& value,std::uint64_t capacity){
     if(capacity<=15)return reinterpret_cast<std::uintptr_t>(value.storage_00.data());
@@ -58,4 +60,4 @@ ReceiveBufferString& replace_request_034730(ReceiveBufferString& value,std::uint
         source+static_cast<std::uintptr_t>(first+growth),insert-first);
     return value;
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

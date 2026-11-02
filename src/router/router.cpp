@@ -1,18 +1,20 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/router/router.hpp"
 #include <deque>
 #include <stdexcept>
 
-namespace preloader_l::dispatch_recovered {
+namespace preloader_l::dispatch {
 namespace {
-using Node=messages_recovered::XmlNode;
-using Request=handlers_recovered::Request;
+using Node=messages::XmlNode;
+using Request=handlers::Request;
 // Request IDs here refer exclusively to caller-owned Node objects in this source
 // model. They are never original binary VAs and never invoke original machine code.
 Request handle(const Node* node){return reinterpret_cast<Request>(node);}
 const Node* node(Request value){return reinterpret_cast<const Node*>(value);}
-class View final:public handlers_recovered::Xml,public misc_handlers_recovered::Elements {
+class View final:public handlers::Xml,public misc_handlers::Elements {
 public:
-    View(xml_recovered::MemoryPrinter& writer,NodeAccess& access):writer_(writer),access_(access){}
+    View(xml::MemoryPrinter& writer,NodeAccess& access):writer_(writer),access_(access){}
     const char* attribute_002cc0(Request value,const char* key) override {
         const auto result=node(value)->attribute(key);
         if(!result)return nullptr;
@@ -35,12 +37,12 @@ public:
         writer_.push_text(value,cdata);
     }
 private:
-    xml_recovered::MemoryPrinter& writer_;
+    xml::MemoryPrinter& writer_;
     NodeAccess& access_;
     std::deque<std::string> strings_;
 };
-content_handlers_recovered::RequestTree request_tree(const Node& request,NodeAccess& access) {
-    content_handlers_recovered::RequestTree result;
+content_handlers::RequestTree request_tree(const Node& request,NodeAccess& access) {
+    content_handlers::RequestTree result;
     result.attributes=access.attributes_in_order(request);
     for(auto child=request.first_element();child;child=child->next_element()) {
         const char* text=access.text_003860(*child);
@@ -49,16 +51,16 @@ content_handlers_recovered::RequestTree request_tree(const Node& request,NodeAcc
     return result;
 }
 }
-bool Router::registered_handler(std::uint32_t rva,const Node& request,messages_recovered::XmlPrinter& abstract_printer) {
-    // This integration route requires the concrete recovered serialization model;
+bool Router::registered_handler(std::uint32_t rva,const Node& request,messages::XmlPrinter& abstract_printer) {
+    // This integration route requires the concrete serialization model;
     // an unrelated XmlPrinter implementation is outside this adapter's contract.
-    auto* printer=dynamic_cast<xml_recovered::MemoryPrinter*>(&abstract_printer);
-    if(!printer)throw std::invalid_argument("Router requires recovered memory XML printer");
+    auto* printer=dynamic_cast<xml::MemoryPrinter*>(&abstract_printer);
+    if(!printer)throw std::invalid_argument("Router requires a memory XML printer");
     View xml(*printer,deps_.nodes);
     const auto input=handle(&request);
-    namespace info=handlers_recovered;
-    namespace misc=misc_handlers_recovered;
-    namespace content=content_handlers_recovered;
+    namespace info=handlers;
+    namespace misc=misc_handlers;
+    namespace content=content_handlers;
     switch(rva) {
     case 0x02e5f0:return info::get_config_02e5f0(xml);
     case 0x02f530:return info::get_profile_02f530(input,xml,information_,deps_.information);
@@ -96,4 +98,4 @@ bool Router::registered_handler(std::uint32_t rva,const Node& request,messages_r
     default:throw std::invalid_argument("Unregistered handler RVA passed to source integration adapter");
     }
 }
-} // namespace preloader_l::dispatch_recovered
+} // namespace preloader_l::dispatch

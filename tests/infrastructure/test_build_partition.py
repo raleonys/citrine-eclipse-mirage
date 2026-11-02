@@ -1,7 +1,11 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Negative regressions for production/reference object and target isolation."""
 from pathlib import Path
 import copy
 import json
+import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -266,6 +270,87 @@ class TargetBoundaryTests(unittest.TestCase):
                      'preloader_l_source_api', 'application_contract', 'reference_contract']:
             del g[name]
         self.assertEqual(boundary.codemodel_errors(g, POLICY), [])
+
+    def test_separate_source_api_keeps_complete_payload_without_static_crt_graph(self):
+        g = graph()
+        sources = sum([POLICY[k] for k in
+                       ['production_object_sources', 'vdf_sources', 'reference_sources', 'dll_entry_sources']], [])
+        g['preloader_l_source_api'] = target('preloader_l_source_api', sources)
+        self.assertEqual(boundary.codemodel_errors(g, POLICY), [])
+        for source in sources:
+            broken = copy.deepcopy(g)
+            broken['preloader_l_source_api']['sources'].remove({'path': source})
+            self.assertTrue(boundary.codemodel_errors(broken, POLICY), source)
+        for dependency in ['preloader_l_core', 'preloader_l_objects', 'preloader_l_vdf_objects',
+                           'preloader_l_reference_objects', 'preloader_l_reference_models',
+                           'preloader_l_minhook', 'preloader_l_tinyxml2']:
+            broken = copy.deepcopy(g)
+            broken.setdefault(dependency, target(dependency))
+            broken['preloader_l_source_api']['dependencies'].append({'id': dependency})
+            self.assertTrue(any('static-CRT' in e for e in boundary.codemodel_errors(broken, POLICY)), dependency)
+        broken = copy.deepcopy(g)
+        broken['preloader_l_source_api']['sources'].append({'path': 'tests/unapproved.cpp'})
+        self.assertTrue(boundary.codemodel_errors(broken, POLICY))
+
+    @unittest.skipUnless(shutil.which('cmake'), 'CMake required for generated CRT property regression')
+    def test_real_source_api_cmake_block_separates_crt_properties(self):
+        # Configure the actual development-target block with minimal inputs.
+        # This verifies CMake properties/graph construction on the host; it is
+        # deliberately not native MSVC compilation or DLL runtime acceptance.
+        root = Path(__file__).resolve().parents[2]
+        text = (root / 'CMakeLists.txt').read_text()
+        block = text.split('\nif(PRELOADER_L_BUILD_SOURCE_API_DLL)\n', 1)[1]
+        block = 'if(PRELOADER_L_BUILD_SOURCE_API_DLL)\n' + block.split('\nadd_executable(preloader_l_runtime_host', 1)[0]
+        dev = ['preloader_l_source_api', 'preloader_l_source_host',
+               'preloader_l_source_minhook', 'preloader_l_source_tinyxml2']
+        static = ['preloader_l_core', 'preloader_l_objects', 'preloader_l_vdf_objects',
+                  'preloader_l_reference_objects', 'preloader_l_minhook', 'preloader_l_tinyxml2']
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / 'src'; source.mkdir()
+            for name in ['application.cpp', 'parser.cpp', 'reference.cpp', 'hook.c',
+                         'src/platform/crypt_query_host.cpp', 'src/platform/dll_entry.cpp',
+                         'tools/preloader_l_source_host/main.cpp', 'resources/surge.rc',
+                         'third_party/tinyxml2/tinyxml2.cpp', 'avatar.hpp']:
+                path = source / name; path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('// configure fixture\n')
+            cmake = '''cmake_minimum_required(VERSION 3.20)
+project(source_crt_fixture LANGUAGES C CXX)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set(PRELOADER_L_BUILD_SOURCE_API_DLL ON)
+set(PRELOADER_L_APPLICATION_SOURCES application.cpp)
+set(PRELOADER_L_VDF_SOURCES parser.cpp)
+set(PRELOADER_L_REFERENCE_SOURCES reference.cpp)
+set(_avatar_header "${CMAKE_CURRENT_SOURCE_DIR}/avatar.hpp")
+add_custom_target(preloader_l_verify_vendors)
+add_custom_target(preloader_l_verify_hook_engine)
+add_library(preloader_l_asio INTERFACE)
+add_library(preloader_l_pegtl INTERFACE)
+'''
+            for name in static:
+                kind = 'OBJECT' if name.endswith('_objects') else 'STATIC'
+                cmake += f'add_library({name} {kind} application.cpp)\n'
+            cmake += 'target_include_directories(preloader_l_minhook PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")\n'
+            cmake += 'set(MSVC TRUE)\n' + block
+            content = ''.join(f'{name}=$<TARGET_GENEX_EVAL:{name},$<TARGET_PROPERTY:{name},MSVC_RUNTIME_LIBRARY>>\\n'
+                              for name in dev + static)
+            cmake += f'file(GENERATE OUTPUT "${{CMAKE_BINARY_DIR}}/crt.txt" CONTENT "{content}")\n'
+            cmake += 'file(GENERATE OUTPUT "${CMAKE_BINARY_DIR}/dev-links.txt" CONTENT "$<TARGET_PROPERTY:preloader_l_source_api,LINK_LIBRARIES>")\n'
+            (source / 'CMakeLists.txt').write_text(cmake)
+            for config, suffix in [('Debug', 'Debug'), ('Release', '')]:
+                build = Path(tmp) / config
+                cp = subprocess.run(['cmake', '-S', str(source), '-B', str(build),
+                                     '-DCMAKE_BUILD_TYPE=' + config,
+                                     '-DCMAKE_CONFIGURATION_TYPES=' + config], capture_output=True, text=True)
+                self.assertEqual(cp.returncode, 0, cp.stdout + cp.stderr)
+                modes = dict(line.split('=', 1) for line in (build / 'crt.txt').read_text().splitlines())
+                for name in dev:
+                    self.assertEqual(modes[name], 'MultiThreaded' + suffix + 'DLL', name)
+                for name in static:
+                    self.assertEqual(modes[name], 'MultiThreaded' + suffix, name)
+                links = (build / 'dev-links.txt').read_text().split(';')
+                self.assertIn('preloader_l_source_minhook', links)
+                self.assertIn('preloader_l_source_tinyxml2', links)
+                self.assertFalse(set(links) & set(static), links)
 
     def test_every_source_is_owned_and_overlap_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:

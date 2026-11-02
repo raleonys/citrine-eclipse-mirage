@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/atomic_files.hpp"
 #include <algorithm>
 #include <exception>
 #include <stdexcept>
 
-namespace preloader_l::file_recovered {
+namespace preloader_l::file {
 AtomicFiles::~AtomicFiles(){try{recover();}catch(...){/* Retain disk recovery files. */}}
 bool AtomicFiles::recovery_pending() const noexcept {
     return std::any_of(entries_.begin(),entries_.end(),[](const Entry& e){return e.replaced;});
@@ -59,4 +61,4 @@ void AtomicFiles::replace(std::span<const FileWrite> writes) {
     for(auto& e:entries_)e.replaced=false; // Group committed; only garbage remains.
     discard(); // Cleanup failure cannot turn a committed update into a failure.
 }
-} // namespace preloader_l::file_recovered
+} // namespace preloader_l::file

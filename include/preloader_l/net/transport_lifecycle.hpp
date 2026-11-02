@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_acceptor.hpp"
 #include <atomic>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct Control {
     std::atomic<std::int32_t> strong{0},weak{0};
     std::uintptr_t resource=0;
@@ -74,4 +76,4 @@ public:
 private:
     SocketObject& object_;ContextIdentity context_;LifecycleEffects& effects_;ControlFactory& factory_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_environment_constructor.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 IoHandlerVtable& operations(IoHandlerEnvironment& value){
     if(!value.operations_10)throw UnsupportedInput("Environment constructor has no live operations projection");
@@ -54,7 +56,7 @@ IoHandlerEnvironment& construct_io_environment_023dd0(IoHandlerEnvironment& dest
         construct(prepared,query,scratch);
         IoHandlerEnvironment intermediate;
         // The original first move is inlined, byte-for-byte equivalent to the
-        // already recovered023cb0 defined-field ordering used here.
+        // specified 023cb0 defined-field ordering used here.
         move_io_environment_023cb0(intermediate,prepared,sentinels);
         destroy_if_non_guard(prepared,sentinels);
         move_io_environment_023cb0(destination,intermediate,sentinels);
@@ -63,7 +65,7 @@ IoHandlerEnvironment& construct_io_environment_023dd0(IoHandlerEnvironment& dest
     }
     return destination;
 }
-void RecoveredConstructedWriteEffects::construct_environment_023dd0(
+void ConstructedWriteEffects::construct_environment_023dd0(
     IoHandlerEnvironment& destination,std::uintptr_t allocator_identity){
     IoHandlerEnvironment* found=nullptr;
     bool matched=false;
@@ -75,4 +77,4 @@ void RecoveredConstructedWriteEffects::construct_environment_023dd0(
     if(!found)throw UnsupportedInput("Environment source identity has no live projection");
     construct_io_environment_023dd0(destination,*found,write_context().environment.sentinels,constructor_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

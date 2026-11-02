@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_completion_dispatcher.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct DispatcherImports {
     decltype(&::SetLastError) set_last_error=&::SetLastError;
     decltype(&::GetLastError) get_last_error=&::GetLastError;
@@ -19,4 +21,4 @@ public:
     std::int32_t set_timer(std::uintptr_t,LARGE_INTEGER&,std::int32_t,PTIMERAPCROUTINE,void*,std::int32_t) override;
 private:DispatcherImports imports_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

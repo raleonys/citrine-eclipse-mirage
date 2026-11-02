@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/node_parse.hpp"
 #include <array>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct NativeNodeIdentifyIdentities {
     std::array<std::uintptr_t,5> token_slots{
         0x1800a10a8ULL,0x1800a10b0ULL,0x1800a10b8ULL,0x1800a10c0ULL,0x1800a10c8ULL};
@@ -26,14 +28,14 @@ struct NativeNodeIdentifyContext {
 std::uintptr_t identify_node_0038b0(std::uintptr_t document,std::uintptr_t input,
     std::uintptr_t out_node,NativeNodeIdentifyContext&);
 
-class RecoveredNodeIdentifyEffects:public RecoveredNodeParseEffects,
+class NodeIdentifyEffects:public NodeParseEffects,
     public NativeNodeIdentifyEffects {
 public:
-    RecoveredNodeIdentifyEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
+    NodeIdentifyEffects(ReceiveBufferMemory& memory,NativeNodeClearEffects& nodes,
         const NativeErrorArgumentTail& arguments,NativeNodeParseIdentities parse_ids={},
         NativeNodeIdentifyIdentities identify_ids={})
-        :RecoveredNodeParseEffects(memory,nodes,arguments,parse_ids),identify_{memory,*this,*this,*this,identify_ids}{}
+        :NodeParseEffects(memory,nodes,arguments,parse_ids),identify_{memory,*this,*this,*this,identify_ids}{}
     std::uintptr_t identify_0038b0(std::uintptr_t,std::uintptr_t,std::uintptr_t) final;
 private:NativeNodeIdentifyContext identify_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

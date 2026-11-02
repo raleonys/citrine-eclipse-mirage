@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/cipher_session_test_fixture.hpp"
 using namespace session_cipher_test;
 namespace {
@@ -23,7 +25,7 @@ void local_projection(){
     {s::SessionCipherFactory factory;auto one=factory.create_0423d0(),two=factory.create_0423d0();one->set_fixed_key_084c98();std::string a="factory",b=a;check(one->encrypt_042610(a)&&!two->encrypt_042610(b)&&b=="factory","permanent semantic factory yields independent unkeyed temporary cipher state");}
 }
 void shared_native(){
-    for(bool cbc:{false,true}){native_message_test::Fixture f;s::SessionCipher session;if(cbc)session.set_key_and_iv_042760(cipher_test::test_key,cipher_test::test_iv);else session.set_key_042780(cipher_test::test_key);s::RecoveredPrefixCipherBlocks blocks{f.strings.memory};s::PrefixCipherContext context{f.strings,blocks};
+    for(bool cbc:{false,true}){native_message_test::Fixture f;s::SessionCipher session;if(cbc)session.set_key_and_iv_042760(cipher_test::test_key,cipher_test::test_iv);else session.set_key_042780(cipher_test::test_key);s::PrefixCipherBlocksAdapter blocks{f.strings.memory};s::PrefixCipherContext context{f.strings,blocks};
         const auto input=std::string("native\0request",14);c::Cipher oracle;if(cbc)oracle.set_key_and_iv_042760(cipher_test::test_key,cipher_test::test_iv);else oracle.set_key_042780(cipher_test::test_key);auto expected=input;oracle.encrypt_042610(expected);
         f.seed(input);check(s::encrypt_prefix_042610(session.native(),f.core.request(),0,context)&&f.input()==expected,"native prefix consumes same session schedule as semantic control setter");
         std::string next="semantic next";auto next_expected=next;oracle.encrypt_042610(next_expected);check(session.encrypt_042610(next)&&next==next_expected&&session.native().iv_b4==(cbc?oracle.iv():c::Key{}),"native prefix then semantic local share one uninterrupted CBC/ECB state");

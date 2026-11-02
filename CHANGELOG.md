@@ -8,7 +8,75 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
-- Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe destinations before deleting caches.
+- Audit C34-F004: confine Python cache-cleanup report files to the owned build tree and publish them through exclusive temporary files; reject unsafe, directory and missing-parent destinations before deleting caches. Cover linked-directory escapes, hardlinked sources and failed report publication.
+
+- Pin Windows build-output path components before the exclusive lock and retain them through the build profile. Add controlled cross-process junction replacement, rename, ACL-denial, rollback and output-confinement regressions; release pins in reverse order and restore environment state even after cleanup faults. Use directory-list access so Windows enforces the no-delete sharing constraint, and run the same native fixture before long CI builds for early feedback. Document the selected-component trust boundary; runtime and vendor sources are unchanged.
+
+- Exercise the production Registry callbacks and SDK original-call adapters against isolated real Windows HKCU keys in A/W lifecycle tests. Cover native and fabricated opens, query/close overlap during startup waits, binding leases, untracked SDK opens and bounded numeric reuse observations. Preserve runtime behavior and distinguish these callback fixtures from MinHook and Consumer provenance acceptance.
+
+- Recheck the historical Hooks of Pioneering Registry ownership research against accepted main: raw HKEY provenance and retirement remain design/evidence gaps, while prior HeapFree failure receipts do not describe the current operator-new/delete backend. Record a source-linked applicability and proof matrix, synchronized with the allocation/insert rollback accepted in PR #98, without changing hooks, runtime code, tests, vendors or ABI.
+
+- Roll back fabricated Registry key allocation when either owning-set or route-set insertion throws, restoring the caller output and removing only the new ownership entry before releasing the allocation. Preserve successful A/W effect order and cover real container allocation failures, logging exceptions, allocation failure and ordinary close on Linux and Windows; native handle provenance remains separate research.
+
+- Add a reviewed Config2/VDF depth-limit candidate: reject structural nesting beyond 128 before recursive PEGTL actions. Extend boundary, conversion, byte/comment, error-position and retained-State regressions; preserve the frozen VDF corpus. The new input policy requires owner compatibility approval before merge.
+
+- Reconcile all ten B49-B54 source-audit findings with accepted main, distinguishing covered startup/accept/module-lease scenarios from open late-completion and foreign-callback lifetime proof. Preserve the historical donor comparison and identify unavailable donor-byte evidence explicitly; no runtime or test policy changes.
+
+- Add bounded, best-effort IPv4/IPv6 listener owning-PID diagnostics to the public DLL lifecycle test host. Keep diagnostic allocation, API and output failures separate from authoritative shutdown assertions; cover fault paths and table validation in Windows tests. Production code, shutdown budgets and pass/fail criteria are unchanged.
+
+- Extend source-included unload scanner coverage for non-TLS R11 image references, balanced suspension/handle cleanup, cleared references and shutdown-caller exclusion. Preserve the exact validated TLS data-marker exemption and run the added cases in the existing Windows Debug/Release native and shutdown gates without a duplicate workflow; production code is unchanged.
+
+- Cover ordered LSX send completion anomalies with three receipt-safety regressions: over-reported first/final chunk lengths and full-length completions carrying socket errors. Run the session-flow CTest on genuine Windows MSVC Debug/Release in the existing reference acceptance workflow; no production runtime behavior changed.
+
+- Add actual Asio IPv4/IPv6 pending-accept shutdown regression scenarios, with both unconnected and already-connected peers, to distinguish cancellation intent from callback finality and prevent post-stop rearm. Include the native net-failure test in focused Windows MSVC Debug/Release lifecycle CI; no production behavior changed. Continue focused cancellation checks after a lifecycle failure only when the native build succeeded.
+
+- Add a native Windows online-provider physical image-lease regression: after an injected FreeLibrary failure, verify the DLL remains mapped and callable until exact retry succeeds, then verify actual unload and no double release. Separate MSVC Debug/Release acceptance from future foreign-callback concurrency validation; production provider code remains unchanged.
+
+- Repair the reference socket cancellation gate's exception path: release the selected engine gate when category resolution or cancellation rejects unsupported source input, while preserving normal close order and retaining the socket/control state on failure. Add focused injected-failure regression checks with unchanged strong/weak owner counts, and keep active-source terminology within the enforced policy; shipping Asio is unchanged. Add focused Windows Debug/Release execution of socket_closing_contracts to reference CI, and stack this change on the queued shutdown fix in PR #89.
+
+- Defer application-owned Asio accept callbacks until provider/profile startup admission is published, while retaining the early bound listener and OS TCP backlog. Add a source-linked native startup regression proving an early connecting peer stays connected until the subsequent greeting. Standalone Asio services and internal failure-injection fixtures retain immediate admission by default; full native MSVC and Consumer validation remain required.
+
+- Restore the process-wide Windows error mode if optional online-provider path conversion or DLL loading throws, preserving the originating exception even when restoration fails. Extend portable provider failure-injection contracts for the four pre-load stages and restoration fault. The reconstruction packet's factory-failure scenarios informed this review; native/Golden/Consumer acceptance is pending.
+
+- [PR #28](https://github.com/raleonys/citrine-eclipse-mirage/pull/28): Read online-provider object and method-table fields through byte copies, reject missing tables or methods before indirect calls, and match the observed single-object destruction call. Add malformed-slot, unaligned-storage and module-cleanup regressions.
+
+- Restore owner-approved 34-name LUTRAVEX weekly semantic version queue from project Library and Citrine_Eclipse_Mirage_x.y.z_CODENAME.zip naming; retire -RNN prospectively without changing ABI or release history.
+
+- Run actual Windows Native Release/Debug, Production/Golden Release, CRT Release, Debug, Compile Only, full Windows portable Debug/Release, and reference graph automatically for every PR. Keep existing required Windows native/production check names and preserve weekly draft-only publication; no runtime source or ABI change.
+
+- Give the unchanged 192-case socket pool release reference matrix a bounded 180-second native Debug test budget. Preserve its 60-second non-Debug budget, existing Wine Debug override, checked CRT, payloads and failure assertions.
+
+- Fix the MSVC Debug unload scan false positive caused by an idle Windows peer retaining the compiler `_tls_end` data marker in R11. Validate the exact PE TLS endpoint, its non-executable section and actual image page before exempting data registers/stack slots; keep every in-image RIP unsafe. Add native rejection-boundary tests and run unload_guard_contracts alongside repeated lifecycle acceptance.
+
+- Extend queued shutdown acceptance with two persistent cleanup failures: both requests are consumed, the sole owner remains retained, and cleanup resumes only after a third explicit request.
+
+- Fix lost DllShutdown retries when two manual-reset event requests coalesce before the worker reset: consume one atomic request ticket per public call, preserving a separate retry after an incomplete first cleanup. A deterministic real DLL worker fixture reproduced the original failure on Windows Debug and Release before this correction; focused MSVC regression and existing native fault modes must pass on the patched head.
+
+- Fix the owner-scoped native callback error policy lifetime: borrow it only under a live callback lease, keep the lease during terminal exception reporting, and clear the cached policy after successful unbinding. Add isolated Windows post-close and live-throw regressions, including a competing close during error reporting and guarded storage after policy destruction. The external reconstruction packet informed this audit; native/Golden/game acceptance remains pending.
+
+- Add a PR #23 post-merge Windows listener-shutdown follow-up with repeated Debug/Release CTest evidence and an explicit unpinned local Compile Only failure; production runtime remains unchanged.
+
+- Make the native CreateProcessA argument-forwarding fixture use explicit caller buffers for pointer identity, removing its dependence on string-literal pooling in MSVC Debug while retaining all ten argument assertions. Production callbacks and connect behavior are unchanged; fresh native Debug/Release validation remains pending.
+
+- Guard native connect address inspection with a bounded readable snapshot, forwarding malformed addresses to Winsock with their original pointer/length and error behavior. Preserve exact loopback redirection, add portable snapshot/no-listener checks, and register focused Windows Debug/Release callback and real Winsock equivalence coverage; native validation remains pending.
+
+- Audit C36-F003: keep unknown-entitlement diagnostics nonmodal and redacted, repair native test namespace scope, and cover Debug output plus Release preservation of existing logs. Add focused Windows MSVC Debug/Release acceptance; fresh native execution remains pending.
+
+- Correct single-hook disable IP relocation in the pinned MinHook build copy, preserve upstream vendor bytes, and add exact patch, source, and focused Windows MSVC Debug/Release regression checks. The focused fixture passed; genuine suspended-peer and full Native/Golden acceptance remain pending.
+
+- Isolate the MSVC C++ development DLL and host in a shared compiler-CRT graph, including separately compiled vendor dependencies, to avoid cross-module static Debug CRT ownership during parser-state destruction. Production retains its static CRT, sources and three-export ABI; native Debug/Release validation remains required.
+
+- Report source-host smoke success only after local C++ destruction and successful application shutdown; preserve failure codes and Debug timeout diagnostics.
+
+- Investigate the separate Windows MSVC Debug source-host timeout with test-only startup, LSX and shutdown stage markers; do not alter production runtime behavior.
+- Repair 12 PR #71 C++ interface/adapter identity collisions in the source-linked reference graph, add bounded type-identity regression checks and Windows Debug/Release reference-object compilation gates; shipping DLL exports and vendor bytes remain unchanged.
+
+- Correct the Windows MSVC Debug configuration-defaults test harness by injecting allocation failures at throwing map insertion boundaries while preserving non-MSVC-Debug constructor coverage; retain diagnostic probes and add full Windows x64 Debug/Release portable CTest acceptance (28/28 each). No production, DLL ABI, native release or game acceptance is implied.
+
+- Replace 58 research-era labels in first-party `src/` and `include/` comments and five diagnostic messages with technical wording; enforce a terminology regression check without modifying runtime control flow, file names or ABI identifiers.
+
+- Normalize first-party implementation identifiers, add SPDX ownership headers, place Python before CMake and keep the CI README badge last.
+
 - Add a CMake 3.20+ README build-system badge linked to the build configuration; avoid unverified release or test-status badges.
 - Add a Python 3.9+ README prerequisites badge linked to the development instructions.
 - Apply the previously approved `GPL-3.0-only` licensing policy with the complete GNU GPLv3 text in the root `LICENSE` and governance; preserve independent vendor licenses and add a README license badge.

@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_composed_read.hpp"
 #include <algorithm>
 #include <bit>
 #include <limits>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 constexpr auto npos=std::numeric_limits<std::uint64_t>::max();
 ReceiveBufferString& string_at(std::uintptr_t identity,ComposedReadContext& context){
@@ -104,8 +106,8 @@ void composed_receive_025c40(ReceiveHandler& h,const Error& incoming,std::uint64
     if(!call_021d10)throw UnsupportedInput("Composed receive callee is not bound");
     call_021d10(*stream.service,*stream.implementation,slice,0,h,stream_identity+std::uintptr_t{0x68},context.receive);
 }
-void RecoveredComposedReadEffects::receive_body_025c40(ReceiveHandler& h,Error& error,std::uint64_t bytes,std::uint32_t flag){
+void ComposedReadEffects::receive_body_025c40(ReceiveHandler& h,Error& error,std::uint64_t bytes,std::uint32_t flag){
     if(!read_ || &read_->completion!=this)throw UnsupportedInput("Composed receive context must be bound to these completion effects");
     composed_receive_025c40(h,error,bytes,flag,*read_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

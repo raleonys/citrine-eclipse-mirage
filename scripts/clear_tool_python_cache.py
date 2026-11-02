@@ -1,8 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Remove only bytecode caches belonging to manifest-owned first-party Python tools."""
 import argparse
 import json
+import os
 from pathlib import Path
 import re
+import tempfile
 
 
 def clear(root):
@@ -30,7 +34,6 @@ def clear(root):
     return sorted(removed)
 
 
-
 def report_destination(root, path):
     """Reject any output outside the owned build tree before cleanup starts."""
     root = Path(root).resolve()
@@ -41,13 +44,15 @@ def report_destination(root, path):
         raise ValueError('Cache report must be a regular output beneath source build/')
     if build.is_symlink():
         raise ValueError('Cache report cannot traverse a symlinked build directory')
+    if not candidate.parent.is_dir():
+        raise ValueError('Cache report parent must be an existing build directory')
+    if candidate.exists() and not candidate.is_file():
+        raise ValueError('Cache report target must be a regular file')
     return candidate
 
 
 def write_report(path, output):
     """Publish the complete report through an exclusively created temporary file."""
-    import os
-    import tempfile
     fd, temporary = tempfile.mkstemp(
         prefix='.' + path.name + '.', suffix='.partial', dir=path.parent)
     try:

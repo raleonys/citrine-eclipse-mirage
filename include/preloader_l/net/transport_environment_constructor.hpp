@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_composed_write.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Function identities are projected separately from the native vtable layout.
 // The slot00 type query has no executor-this argument. Both factories and type
 // queries must keep their callable code alive across callbacks deleting tables.
@@ -28,7 +30,7 @@ struct IoEnvironmentConstructorContext {
     std::span<IoEnvironmentTypeBinding> type_queries;
     std::span<IoEnvironmentFactoryBinding> factories;
 };
-// Temporary payload placeholders are not recovered native initialization.
+// Temporary payload placeholders do not implement native initialization.
 // Factory/move providers construct defined fields before any consumer reads
 // them; sentinel move/destroy providers must not inspect unspecified payload.
 IoHandlerEnvironment& construct_io_environment_023dd0(IoHandlerEnvironment& destination,
@@ -40,17 +42,17 @@ struct IoEnvironmentSourceBinding {
 // Closes the previous023dd0 provider in the actual composed-write chain. The
 // binding registry is a pure identity projection. All contexts/registries and
 // native factory/type-query/move/destroy implementations must remain valid.
-class RecoveredConstructedWriteEffects:public RecoveredComposedWriteEffects {
+class ConstructedWriteEffects:public ComposedWriteEffectsAdapter {
 public:
-    RecoveredConstructedWriteEffects(IoCompletionEnvironment environment,WorkerRunApi& worker,
+    ConstructedWriteEffects(IoCompletionEnvironment environment,WorkerRunApi& worker,
         HandlerDispatchMemory& memory,std::span<HandlerScheduleBinding> schedules,
         AsyncSendApi& send,DispatcherApi& completion,Api& errors,std::span<SendStreamBinding> streams,
         IoEnvironmentConstructorContext& constructor,std::span<IoEnvironmentSourceBinding> sources)
-        :RecoveredComposedWriteEffects(environment,worker,memory,schedules,send,completion,errors,streams),
+        :ComposedWriteEffectsAdapter(environment,worker,memory,schedules,send,completion,errors,streams),
          constructor_(constructor),sources_(sources){}
     void construct_environment_023dd0(IoHandlerEnvironment&,std::uintptr_t allocator_identity) final;
 private:
     IoEnvironmentConstructorContext& constructor_;
     std::span<IoEnvironmentSourceBinding> sources_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

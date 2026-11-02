@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Tamper, failure-propagation and source/package identity regressions."""
 from pathlib import Path
 import json
@@ -443,6 +445,116 @@ class LocalDistTests(unittest.TestCase):
 
 
 class ToolCacheTests(unittest.TestCase):
+    def cleanup_fixture(self, base):
+        root = base / 'source'
+        (root / 'scripts').mkdir(parents=True)
+        (root / 'metadata').mkdir()
+        (root / 'build').mkdir()
+        (root / 'scripts/helper.py').write_text('value=1\n')
+        victim = root / 'metadata/keep.json'
+        victim.write_bytes(b'owned source sentinel')
+        inventory.write_manifest(root)
+        payload = root / 'scripts/__pycache__/helper.cpython-313.pyc'
+        payload.parent.mkdir()
+        payload.write_bytes(b'owned cache')
+        command = [sys.executable, '-B', str(ROOT / 'scripts/clear_tool_python_cache.py'),
+                   '--root', str(root), '--quiet', '--report']
+        return root, victim, payload, command
+
+    def test_cleanup_report_invalid_targets_preserve_sources_and_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, victim, payload, command = self.cleanup_fixture(Path(tmp))
+            directory = root / 'build/directory'
+            directory.mkdir()
+            protected = {p: p.read_bytes() for p in
+                         [victim, root / inventory.MANIFEST, root / 'scripts/helper.py']}
+            for target in [victim, root / inventory.MANIFEST, root / 'scripts/helper.py',
+                           root / 'build', directory, root / 'build/missing/report.json',
+                           root.parent / 'outside.json', root / 'build/../metadata/keep.json',
+                           Path('metadata/keep.json')]:
+                with self.subTest(target=str(target)):
+                    result = subprocess.run(command + [str(target)], cwd=root,
+                                            capture_output=True, text=True)
+                    self.assertNotEqual(0, result.returncode)
+                    self.assertEqual('', result.stdout)
+                    self.assertIn('TOOL_CACHE_CLEANUP: FAIL:', result.stderr)
+                    self.assertTrue(payload.exists())
+                    for path, before in protected.items():
+                        self.assertEqual(before, path.read_bytes())
+                    self.assertFalse(list((root / 'build').rglob('*.partial')))
+            self.assertFalse((root.parent / 'outside.json').exists())
+
+    def test_cleanup_report_linked_directories_cannot_reach_outside(self):
+        import os
+        for link_root in (True, False):
+            with self.subTest(link_root=link_root), tempfile.TemporaryDirectory() as tmp:
+                base = Path(tmp)
+                root, victim, payload, command = self.cleanup_fixture(base)
+                outside = base / 'outside'
+                outside.mkdir()
+                sentinel = outside / 'report.json'
+                sentinel.write_bytes(b'outside sentinel')
+                link = root / 'build' if link_root else root / 'build/redirect'
+                if link_root:
+                    link.rmdir()
+                if os.name == 'nt':
+                    made = subprocess.run(['cmd.exe', '/d', '/c', 'mklink', '/J',
+                                           str(link), str(outside)], capture_output=True, text=True)
+                    self.assertEqual(0, made.returncode, made.stdout + made.stderr)
+                else:
+                    link.symlink_to(outside, target_is_directory=True)
+                try:
+                    result = subprocess.run(command + [str(link / 'report.json')],
+                                            capture_output=True, text=True)
+                    self.assertNotEqual(0, result.returncode)
+                    self.assertIn('TOOL_CACHE_CLEANUP: FAIL:', result.stderr)
+                    self.assertTrue(payload.exists())
+                    self.assertEqual(b'owned source sentinel', victim.read_bytes())
+                    self.assertEqual(b'outside sentinel', sentinel.read_bytes())
+                    self.assertEqual(['report.json'], sorted(p.name for p in outside.iterdir()))
+                finally:
+                    if os.name == 'nt':
+                        os.rmdir(link)  # Remove the owned junction entry, never its target.
+                    else:
+                        link.unlink()
+                self.assertEqual(b'outside sentinel', sentinel.read_bytes())
+
+    def test_cleanup_report_atomic_replace_preserves_hardlinked_source(self):
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            root, victim, payload, command = self.cleanup_fixture(Path(tmp))
+            report = root / 'build/report.json'
+            os.link(victim, report)
+            self.assertTrue(os.path.samefile(victim, report))
+            result = subprocess.run(command + [str(report)], capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual('', result.stdout)
+            self.assertEqual(b'owned source sentinel', victim.read_bytes())
+            self.assertFalse(os.path.samefile(victim, report))
+            self.assertFalse(payload.exists())
+            self.assertEqual(['scripts/__pycache__/helper.cpython-313.pyc'],
+                             json.loads(report.read_text())['removed'])
+            self.assertFalse(list(report.parent.glob('.*.partial')))
+
+    def test_cleanup_report_replace_failure_preserves_previous_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            report = Path(tmp) / 'report.json'
+            report.write_bytes(b'previous complete report')
+            output = '{"removed": []}\n'
+            def fail_replace(source, target):
+                self.assertEqual(report, target)
+                self.assertEqual(b'previous complete report', report.read_bytes())
+                self.assertEqual(output, Path(source).read_text(encoding='utf-8'))
+                raise OSError('injected report publication failure')
+            with patch.object(tool_cache.os, 'replace', side_effect=fail_replace):
+                with self.assertRaisesRegex(OSError, 'injected report publication failure'):
+                    tool_cache.write_report(report, output)
+            self.assertEqual(b'previous complete report', report.read_bytes())
+            self.assertEqual(['report.json'], sorted(p.name for p in report.parent.iterdir()))
+            tool_cache.write_report(report, output)
+            self.assertEqual(output, report.read_text())
+            self.assertEqual(['report.json'], sorted(p.name for p in report.parent.iterdir()))
+
     def test_quiet_cleanup_keeps_report_and_propagates_failure(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

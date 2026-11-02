@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <array>
 #include <cstdint>
-namespace preloader_l::crypto_recovered::constants {
+namespace preloader_l::crypto::constants {
 inline constexpr std::array<std::uint8_t,16> fixed_key{
     0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a,0x0b,0x0c,0x0d,0x0e,0x0f
 };

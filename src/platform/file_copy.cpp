@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/file_copy.hpp"
 
 namespace preloader_l::file_copy {

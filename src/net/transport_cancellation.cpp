@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_cancellation.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 void wake_028850(const WakeState& wake,Api& api){
     char zero=0;
     Buffer buffer{1,&zero};
@@ -65,4 +67,4 @@ void QueueCancellationEffects::cancel_026aa0(CancellationEngine& engine,Socket s
     if(&engine!=&engine_)throw UnsupportedInput("Cancellation model is bound to one engine");
     cancel_queue_026aa0(state_,socket,reason,recycler_,completion_,wake_api_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

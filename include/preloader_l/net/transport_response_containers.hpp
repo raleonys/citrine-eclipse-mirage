@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_owned_response.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 ReceiveBufferString& copy_response_string_009eb0(ReceiveBufferString& destination,
     const ReceiveBufferString& source,ReceiveBufferContext&);
 // A typed pointer-array projection with an explicit native address token.
@@ -31,18 +33,18 @@ struct DequeGrowthContext {
     ReceiveBufferContext& allocation;DequeMapMemory& maps;DequeGrowthApi& api;
 };
 void grow_response_deque_026670(WriteFinishOwner&,std::uint64_t extra,DequeGrowthContext&);
-class RecoveredResponseContainersApi:public RecoveredOwnedResponseApi {
+class ResponseContainersApi:public OwnedResponseApi {
 public:
-    RecoveredResponseContainersApi(OwnedResponseContext& owned,ReceiveBufferContext& strings)
-        :RecoveredOwnedResponseApi(owned),strings_(strings){}
+    ResponseContainersApi(OwnedResponseContext& owned,ReceiveBufferContext& strings)
+        :OwnedResponseApi(owned),strings_(strings){}
     ReceiveBufferString& copy_response_009eb0(ReceiveBufferString&,ReceiveBufferString&) final;
 private:ReceiveBufferContext& strings_;
 };
-class RecoveredResponseQueueApi:public ResponseQueueApi {
+class ResponseQueueApiAdapter:public ResponseQueueApi {
 public:
-    explicit RecoveredResponseQueueApi(DequeGrowthContext& growth):growth_(growth){}
+    explicit ResponseQueueApiAdapter(DequeGrowthContext& growth):growth_(growth){}
     void grow_deque_026670(WriteFinishOwner&,std::uint64_t extra) final;
     // allocate_string_04b0bc remains a required32-byte object projection/effect.
 private:DequeGrowthContext& growth_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

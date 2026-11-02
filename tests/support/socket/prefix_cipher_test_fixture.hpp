@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_prefix_cipher.hpp"
 #include "tests/support/socket/append_growth_test_fixture.hpp"
 
 namespace cipher_test {
-namespace s=preloader_l::socket_recovered;namespace c=preloader_l::crypto_recovered;namespace b=buffer_test;
+namespace s=preloader_l::socket;namespace c=preloader_l::crypto;namespace b=buffer_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure{int code;};
 inline std::string unhex(std::string_view in){std::string out;const auto n=[](char ch){return ch<='9'?ch-'0':ch-'a'+10;};for(std::size_t i=0;i<in.size();i+=2)out.push_back(static_cast<char>((n(in[i])<<4)|n(in[i+1])));return out;}
@@ -14,7 +16,7 @@ struct Effects:mutation_test::Copy {
     void fill_bytes(std::uintptr_t p,std::uint8_t byte,std::uint64_t n)override{++fills;if(before_fill)before_fill();Copy::fill_bytes(p,byte,n);if(after_fill)after_fill();}
 };
 struct Blocks:s::PrefixCipherBlocks {
-    s::RecoveredPrefixCipherBlocks real;bool noop=false;
+    s::PrefixCipherBlocksAdapter real;bool noop=false;
     struct Call{std::string kind;std::uintptr_t address;std::uint64_t count;};std::vector<Call> calls;
     std::function<void(const Call&)> before,after;
     explicit Blocks(s::ReceiveBufferMemory& memory):real(memory){}
@@ -35,8 +37,8 @@ struct Fixture {
 };
 // Full message API selects new cipher+append finals; all remaining providers
 // retain N9's controlled XML/log/queue/mutex contract.
-struct Api:s::RecoveredMessageCipherApi {
-    s::NativeMessageApi& next;Api(s::PrefixCipherContext& ctx,std::span<s::PrefixCipherBinding> bindings,s::NativeMessageApi& next):RecoveredMessageCipherApi(ctx,bindings),next(next){}
+struct Api:s::MessageCipherApi {
+    s::NativeMessageApi& next;Api(s::PrefixCipherContext& ctx,std::span<s::PrefixCipherBinding> bindings,s::NativeMessageApi& next):MessageCipherApi(ctx,bindings),next(next){}
     void construct_document_001830(s::NativeMessageDocument& d,bool a,std::uint32_t b)override{next.construct_document_001830(d,a,b);}
     int parse_document_004280(s::NativeMessageDocument& d,std::uintptr_t p,std::uint64_t n)override{return next.parse_document_004280(d,p,n);}
     void destroy_document_001e00(s::NativeMessageDocument& d)override{next.destroy_document_001e00(d);}

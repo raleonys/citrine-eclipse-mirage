@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <cstdint>
 #include <span>
@@ -5,7 +7,7 @@
 #include <string_view>
 #include <vector>
 
-namespace preloader_l::recovered::libraries {
+namespace preloader_l::system_services::libraries {
 using Module = std::uintptr_t;
 struct Conversion { int count; std::uint32_t error; };
 
@@ -34,8 +36,8 @@ public:
     std::uint32_t last_error() override;
 };
 
-// Unrecovered logging/UI, CRT exception and execution-global bindings. No default
-// success implementations; the core below contains the recovered load decisions.
+// Logging/UI, CRT exception and execution-global bindings are not modeled. No default
+// success implementations; the core below defines the implemented load decisions.
 class Effects {
 public:
     virtual ~Effects() = default;
@@ -63,4 +65,4 @@ struct State {
 };
 void load_phase_035850(SystemCalls&, Effects&, State&, bool from_main);
 void unload_035ab0(SystemCalls&, const State&);
-} // namespace preloader_l::recovered::libraries
+} // namespace preloader_l::system_services::libraries

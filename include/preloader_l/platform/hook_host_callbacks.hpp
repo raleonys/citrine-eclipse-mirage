@@ -1,11 +1,13 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/platform/registry.hpp"
 #include <cstddef>
 #include <cstdint>
 
-namespace preloader_l::host_callbacks_recovered {
+namespace preloader_l::host_callbacks {
 using Address = std::uintptr_t;
-using Values = registry_recovered::Values;
+using Values = registry::Values;
 template<class Char> struct ProcessCall {
     const Char* application;
     Char* command_line;
@@ -23,7 +25,7 @@ template<class Char> struct FolderCall {
     std::uint32_t flags;
     Char* path;
 };
-class Effects : public registry_recovered::ValueEffects {
+class Effects : public registry::ValueEffects {
 public:
     virtual std::int32_t original_create_process_a(const ProcessCall<char>&) = 0;
     virtual std::int32_t original_create_process_w(const ProcessCall<char16_t>&) = 0;
@@ -39,9 +41,9 @@ std::int32_t create_process_w_00f4d0(const Values&, Effects&, const ProcessCall<
 // On a handled copy, *result is 0 for CRT success and 1 for any CRT error.
 // Otherwise both path and *result remain untouched. Secure CRT invalid-argument
 // and undersized-buffer policies belong to the mandatory ValueEffects backend.
-bool folder_value_a_008db0(const Values&, registry_recovered::ValueEffects&,
+bool folder_value_a_008db0(const Values&, registry::ValueEffects&,
     std::int32_t folder_id, char* path, std::uint32_t* result);
-bool folder_value_w_008fa0(const Values&, registry_recovered::ValueEffects&,
+bool folder_value_w_008fa0(const Values&, registry::ValueEffects&,
     std::int32_t folder_id, char16_t* path, std::uint32_t* result);
 std::uint32_t folder_a_00fc00(const Values&, Effects&, const FolderCall<char>&);
 std::uint32_t folder_w_00fc80(const Values&, Effects&, const FolderCall<char16_t>&);

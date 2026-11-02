@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/node_string_test_fixture.hpp"
 #include "tests/support/socket/node_constructors_test_fixture.hpp"
 #include "preloader_l/xml/pool_release.hpp"
@@ -16,13 +18,13 @@ struct Recording:s::PoolAllocationDispatch {
     explicit Recording(s::PoolAllocationDispatch& p):source(p){}
     std::uintptr_t pool_allocate(std::uintptr_t t,std::uintptr_t p)override{calls.push_back({t,p});return source.pool_allocate(t,p);}
 };
-struct Effects:s::RecoveredNodeStringEffects {
+struct Effects:s::NodeStringEffects {
     Memory& raw;node_string_test::Lower strings;node_parse_test::Lower primitives;std::vector<node_parse_test::Lower::Parse> others;
     std::vector<std::uint64_t> allocations;std::vector<std::uintptr_t> frees;
     std::function<std::uintptr_t(std::uint64_t)> allocate_hook;std::function<void(std::uintptr_t,std::uintptr_t,std::uint64_t)> copy_hook;
     std::function<std::uintptr_t(const node_parse_test::Lower::Parse&)> other_hook;
     std::vector<s::NativeNodeParseError> errors;unsigned workspaces=0;
-    Effects(Memory& m,node_parse_test::Nodes& n,const s::NativeErrorArgumentTail& a,s::PoolAllocationDispatch& p):RecoveredNodeStringEffects(m.memory,n,a,p),raw(m),strings(m.memory),primitives(m){primitives.compare_hook=[](const auto&){return 1;};}
+    Effects(Memory& m,node_parse_test::Nodes& n,const s::NativeErrorArgumentTail& a,s::PoolAllocationDispatch& p):NodeStringEffects(m.memory,n,a,p),raw(m),strings(m.memory),primitives(m){primitives.compare_hook=[](const auto&){return 1;};}
     s::NativeNodeParseScratch acquire_parse_scratch(std::uintptr_t,std::uintptr_t,std::uintptr_t,std::uintptr_t)override{++workspaces;return {Memory::scratch_address,Memory::pair};}
     std::uintptr_t parse_other_virtual(std::uintptr_t t,std::uintptr_t n,std::uintptr_t c,std::uintptr_t p,std::uintptr_t l)override{others.push_back({t,n,c,p,l});return other_hook?other_hook(others.back()):0;}
     std::uintptr_t decode_0033c0(std::uintptr_t p,std::span<std::uint8_t,10> b,std::int32_t& n)override{return strings.decode_0033c0(p,b,n);}
@@ -43,7 +45,7 @@ struct Fixture {
     static constexpr std::array<std::uintptr_t,4> pool_targets{0x180002b10ULL,0x180002600ULL,0x180002960ULL,0x1800027b0ULL};
     static constexpr std::array<unsigned,5> offsets{0x288,0x288,0x108,0x208,0x288};
     Memory raw;node_parse_test::Nodes nodes;s::NativeErrorArgumentTail arguments{0xf100};PoolLower pool_lower;
-    s::PoolAllocationContext pool_context{raw.memory,pool_lower};s::RecoveredPoolAllocationEffects selected{pool_context};Recording allocations{selected};
+    s::PoolAllocationContext pool_context{raw.memory,pool_lower};s::PoolAllocationEffectsAdapter selected{pool_context};Recording allocations{selected};
     Effects effects{raw,nodes,arguments,allocations};s::NativeDocumentContext document{raw.memory,effects};s::NativeMessageDocument projection;
     std::array<std::uint8_t,64> copied{};std::array<std::uint8_t,0x88> document_vtable{};
     std::array<std::array<std::uint8_t,0x88>,5> node_vtables{};

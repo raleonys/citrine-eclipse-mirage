@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <cstdint>
 #include <map>
 #include <string>
 #include <string_view>
 
-namespace preloader_l::handlers_recovered {
+namespace preloader_l::handlers {
 using Request = std::uintptr_t;
 using Attributes = std::map<std::string,std::string,std::less<>>;
 class Xml {
@@ -40,4 +42,4 @@ bool get_setting_02f7c0(Request,Xml&,StateReferences);
 bool get_settings_02fa60(Xml&,StateReferences);
 bool get_game_info_02efd0(Request,Xml&,StateReferences);
 bool get_all_game_info_02da90(Xml&,StateReferences,Effects&);
-} // namespace preloader_l::handlers_recovered
+} // namespace preloader_l::handlers

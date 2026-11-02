@@ -1,8 +1,10 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/libraries.hpp"
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-namespace preloader_l::recovered::libraries {
+namespace preloader_l::system_services::libraries {
 static_assert(sizeof(wchar_t) == 2, "This adapter requires Windows UTF-16 wchar_t");
 std::uint32_t NativeSystemCalls::get_error_mode() { return GetErrorMode(); }
 std::uint32_t NativeSystemCalls::set_error_mode(std::uint32_t mode) {
@@ -23,4 +25,4 @@ int NativeSystemCalls::wide_to_narrow(std::uint32_t codepage, std::uint32_t flag
     return result;
 }
 std::uint32_t NativeSystemCalls::last_error() { return GetLastError(); }
-} // namespace preloader_l::recovered::libraries
+} // namespace preloader_l::system_services::libraries

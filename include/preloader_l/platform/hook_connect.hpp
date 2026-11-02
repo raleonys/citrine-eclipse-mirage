@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/runtime/execution.hpp"
 #include <cstddef>
@@ -6,7 +8,7 @@
 #include <stdexcept>
 #include <string_view>
 
-namespace preloader_l::network_hook_recovered {
+namespace preloader_l::network_hook {
 using Socket = std::uintptr_t;
 struct OutOfEvidenceInput : std::invalid_argument { using std::invalid_argument::invalid_argument; };
 struct StateRefs {
@@ -35,12 +37,18 @@ public:
 // complete stack copy. Other destinations retain the original pointer/length.
 std::int32_t connect_00fd00(StateRefs, Effects&, Socket, std::span<const std::byte> address,
                            std::int32_t supplied_length);
+// Native entrypoints inspect a protected bounded snapshot. A zero-length
+// caller_address retains the exact opaque pointer for original Winsock calls;
+// only inspected_address is dereferenced by the redirect decision.
+std::int32_t connect_00fd00_inspected(StateRefs, Effects&, Socket,
+    std::span<const std::byte> caller_address, std::span<const std::byte> inspected_address,
+    std::int32_t supplied_length);
 
-// New composition adapter to the already recovered synchronization core.
+// Composition adapter to the existing synchronization core.
 // All other Effects still come from the caller, never original DLL addresses.
 class ExecutionEffects final : public Effects {
 public:
-    ExecutionEffects(Effects& remaining, execution_recovered::Execution& execution)
+    ExecutionEffects(Effects& remaining, execution::Execution& execution)
         : remaining_(remaining), execution_(execution) {}
     void wait_steps_036880(std::int32_t) override;
     void log_literal_006880(std::string_view) override;
@@ -52,6 +60,6 @@ public:
     std::int32_t original_connect_0a3838(Socket, std::span<const std::byte>, std::int32_t) override;
 private:
     Effects& remaining_;
-    execution_recovered::Execution& execution_;
+    execution::Execution& execution_;
 };
 }

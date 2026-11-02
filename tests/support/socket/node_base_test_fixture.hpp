@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/node_base.hpp"
 #include "tests/support/socket/pool_destruct_test_fixture.hpp"
 
 namespace node_base_test {
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 using pool_destruct_test::check;using pool_destruct_test::checks;using pool_destruct_test::word;using pool_destruct_test::put;using pool_destruct_test::Failure;
 using pool_destruct_test::unsupported;using pool_destruct_test::failure;
 inline constexpr std::uintptr_t node_table=0x18007fa98ULL;
@@ -42,9 +44,9 @@ struct CoreFixture {
     Memory raw;CoreDocs docs;s::NativeNodeBaseContext context{raw.memory,docs};
     void destroy(){s::destroy_native_node_base_001ea0(Memory::node,context);}
 };
-struct SourceDocs:s::RecoveredNodeBaseEffects {
+struct SourceDocs:s::NodeBaseEffects {
     std::vector<std::uintptr_t> entered_frees,completed_frees;std::function<void(std::uintptr_t)> before_free,after_free;unsigned other_calls=0;
-    SourceDocs(s::ReceiveBufferMemory& memory,s::NativeNodeClearEffects& nodes):RecoveredNodeBaseEffects(memory,nodes){}
+    SourceDocs(s::ReceiveBufferMemory& memory,s::NativeNodeClearEffects& nodes):NodeBaseEffects(memory,nodes){}
     [[noreturn]]void unexpected(){++other_calls;throw std::runtime_error("unexpected lower document provider in node-base source integration");}
     void set_error_005820(std::uintptr_t,std::int32_t,std::uint32_t,std::uintptr_t)override{unexpected();}
     std::uintptr_t allocate_04b100(std::uint64_t)override{unexpected();}

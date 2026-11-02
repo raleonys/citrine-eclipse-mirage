@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/receive_buffer_test_fixture.hpp"
 #include "tests/support/socket/async_receive_test_fixture.hpp"
 #include <algorithm>
@@ -15,10 +17,10 @@ struct Types:s::IoEnvironmentTypeApi {
     std::int32_t compare_type_names_04d2d0(std::uintptr_t a,std::uintptr_t b)override{++comparisons;check(a==0x1008&&b==0x1800a25c8ULL,"actual receive constructor comparator");return 0;}
 };
 std::uintptr_t query(){return 0x1000;}
-struct Constructed:s::RecoveredAsyncReceiveEffects {
+struct Constructed:s::AsyncReceiveEffectsAdapter {
     r::Fixture& f;
     Constructed(r::Fixture& f,s::IoHandlerSentinels sentinels,s::IoEnvironmentConstructorContext& ctor,std::span<s::IoEnvironmentSourceBinding> sources)
-        :RecoveredAsyncReceiveEffects(sentinels,ctor,sources),f(f){}
+        :AsyncReceiveEffectsAdapter(sentinels,ctor,sources),f(f){}
     s::AsyncReceiveOperation& project_async_receive(s::OperationStorage& p)override{return f.effects.project_async_receive(p);}
 };
 struct Callback:s::IoCompletionEffects {
