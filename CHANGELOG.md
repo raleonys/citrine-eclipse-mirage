@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Restrict CI publication of Windows build evidence to path-minimized toolchain and local receipt records; stop uploading unredacted compiler, CMake, CTest, Golden and portable logs as public workflow artifacts. Minimize absolute-path fields in Windows build provenance and console success lines without altering build status, toolchain hashes or acceptance gates. Raw command output may still be visible in CI job logs and requires a separate controlled validation/remediation review.
+
 - Clarify branch lifecycle governance: ordinary audit findings, bugfixes and other single-PR tasks use temporary branches cleaned up after closure and preservation. Continuing research/reverse-engineering/reconstruction workstreams may retain project branches; only an explicitly owner-designated, scoped long-running audit campaign has the corresponding audit exception. Align governance, agent workflow, PR template and push-gate fixture; note repository-wide automatic head deletion could remove retained project branches. No runtime, vendor or ABI changes.
 
 - Replace the README campaign logo with the exact owner-supplied 1400 x 1100 PNG from the new ZIP, preserving its bytes and updating the artwork identity record. Make `main` the only permanent branch: use a fresh branch per PR and require source-branch deletion after merged or unmerged closure, with prior preservation of needed work. Update contributor guidance, the PR template and the local push gate; document GitHub's merged-branch deletion setting and manual cleanup for unmerged PRs.
