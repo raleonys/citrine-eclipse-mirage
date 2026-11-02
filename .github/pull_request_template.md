@@ -9,8 +9,9 @@ request when it changes an existing product decision.
 
 ## Branch policy
 
-- [ ] This PR is ready for review; draft mode is not used to track pending
-      validation. Merge blockers are recorded below.
+- [ ] This PR is ready for review, or a specific owner authorization for
+      research Draft status is linked below (existing PR #81 is authorized).
+      Draft does not waive validation, unresolved blockers or owner review.
 - [ ] For a bugfix, routine audit or other single-PR task, use a fresh
       descriptive branch based on current `main`; do not reuse the retired
       shared `bugfix` branch or a closed task branch.
