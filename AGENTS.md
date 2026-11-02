@@ -19,7 +19,7 @@ This document is the operational entrypoint for agents and contributors. [GOVERN
 - Before pushing or opening a PR, commit reviewed changes and both applicable inventories, require a clean tree and run complete local `python -B scripts/run_source_qa.py` plus appropriate focused tests. Use the tracked `.github/hooks/pre-push`; never bypass it. CI independently checks pushed commits.
 - Report only tests actually run. Source/static, portable, Wine, native Windows/MSVC, Golden, and real Consumer/game execution are distinct evidence classes. Neither a skipped check, old receipt nor synthetic fixture is a fresh native PASS.
 - Keep generated build/test outputs under ignored `build/`, `dist/` or hosted workflow artifacts. Do not add new files under `docs/evidence/` or `metadata/evidence/`. Do not delete or rewrite retained historical evidence without a separately approved preservation review.
-- GitHub-centered PR QA and a weekly owner-approved stable-release draft are the intended system. The current private CI still requires manual Windows Native/Golden dispatch; never claim the future public PR checks and required-merge protections are currently active.
+- GitHub-centered PR QA and a weekly owner-approved stable-release draft are the intended system. Public PR CI schedules full native/Golden and additional Windows profiles; inspect actual exact-head job results and required status contexts. Focused diagnostics remain path-triggered and release publication remains separate.
 
 ## Technical invariants
 
