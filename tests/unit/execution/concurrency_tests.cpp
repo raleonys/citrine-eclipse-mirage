@@ -32,7 +32,7 @@ struct OS final:Platform {
         return 10000000;
     }
     std::int64_t query_performance_counter()override{
-        return advancing_clock?advanced_counter.fetch_add(1'000'000)+1'000'000:1;
+        return advancing_clock?advanced_counter.fetch_add(100'000)+100'000:1;
     }
     void sleep_milliseconds(std::uint32_t)override{if(sleep_hook)sleep_hook();}
     [[noreturn]]void raise_thread_error_04a648(int)override{throw std::runtime_error("unexpected thread error");}
@@ -87,6 +87,10 @@ void startup_flag_payload_publication() {
         saw_sleep=changed.wait_for(lock,std::chrono::seconds(2),[&]{return entered_sleep;});
     }
     if(!saw_sleep) {
+        // A failed clock/sleep schedule must exit rather than leave a live
+        // waiter blocked forever on the missing two readiness flags.
+        execution.finish_flag_036820(second);
+        execution.finish_flag_036820(third);
         {std::lock_guard lock(gate);release_sleep=true;}
         changed.notify_all();waiter.join();
         throw std::runtime_error("waiter never entered the observed sleep boundary");
