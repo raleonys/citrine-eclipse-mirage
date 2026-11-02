@@ -5,7 +5,8 @@ on:
   pull_request:
     paths:
       - ".github/workflows/msvc-shutdown-lifecycle.yml"
-      - "tools/preloader_l_runtime_host/main.cpp"
+      - "tools/preloader_l_runtime_host/**"
+      - "tests/native/listener_owners_tests.cpp"
       - "src/net/**"
       - "src/runtime/**"
       - "src/platform/dll_entry.cpp"
@@ -48,14 +49,14 @@ jobs:
         id: native_build
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host unload_guard_contracts net_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host unload_guard_contracts listener_owners_contracts net_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
-      - name: Verify unload guard ownership and TLS marker rejection boundaries
+      - name: Verify unload ownership, TLS boundaries and listener diagnostic faults
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
           $junit = Join-Path (Resolve-Path $build) 'unload-guard-junit.xml'
-          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^unload_guard_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/unload-guard-ctest.log"
-          if ($LASTEXITCODE -ne 0) { throw 'Unload guard contracts failed' }
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(unload_guard_contracts|listener_owners_contracts)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/unload-guard-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Unload guard or listener diagnostic contracts failed' }
       - name: Repeat five independent DLL lifecycle tests
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'

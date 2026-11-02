@@ -1233,6 +1233,10 @@
       "bytes": 8502,
       "sha256": "26b042274cd483af987dc01b1c97473b574387f212aaa51afae0ac33bed44500"
     },
+    "tests/native/listener_owners_tests.cpp": {
+      "bytes": 8761,
+      "sha256": "d9c384d843804532142e200d0a379397cc250f4e3933851ec6d078985999ddaf"
+    },
     "tests/native/listener_port_tests.cpp": {
       "bytes": 6703,
       "sha256": "b0550335f1670b935100e22bfabfafef07f03711b9d6f5f0e430a5a6c1fdfb29"
