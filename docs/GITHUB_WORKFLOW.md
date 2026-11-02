@@ -10,13 +10,16 @@ Previous ZIP deliveries remain independent backups, not recreated Git history.
 ## Change and merge policy
 
 The mandatory rules at the start of [AGENTS.md](../AGENTS.md) apply to all agents
-and contributors. The owner replaced the former permanent `bugfix` model:
-`main` is now the only permanent branch.
+and contributors. The owner applies temporary per-PR branch cleanup **only to
+bugfixes**. The retired shared `bugfix` branch must not be revived. Dedicated
+audit, research, and other sustained project branches may remain long-lived.
 
 | Branch | Purpose | Lifetime |
 | --- | --- | --- |
-| `main` | Accepted integration; updated only by the owner's reviewed PR merges | Permanent |
-| Descriptive PR branch, such as `fix/registry-close` or `chore/logo-and-pr-branches` | One coherent fix, feature, documentation change or audit PR | Temporary; delete when the PR closes, merged or unmerged |
+| `main` | Accepted integration; updated only by the owner's reviewed PR merges | Permanent integration branch |
+| Fresh `fix/<task>` branch | One coherent bugfix PR based on current `main` | Temporary; remove after PR closure and preservation checks |
+| Dedicated `audit/<scope>`, `research/<scope>` or similar project branch | Continuous, scoped audit/research/reconstruction over one or more PRs | May persist after related PRs close; retire only with owner decision |
+| Other scoped work branch | Feature, documentation, policy or sustained work outside bugfixes | Scope-based; no automatic bugfix-style deletion mandate |
 
 Never edit, commit, push, reset, delete or force-update main directly, locally or
 remotely. File-content API writes targeting main are also prohibited. Reading,
@@ -25,17 +28,17 @@ reviewed PRs into main.
 
 Before writing, inspect the working tree, current refs and open PRs, and fetch
 current `main`. Read `AGENTS.md` and `GOVERNANCE.md` from both fetched main and
-the working checkout. Create a fresh descriptive branch from fetched main for
-each new PR. Do not recreate a shared `bugfix` branch, reuse a closed PR's branch
-or keep permanent audit/research branches. Preserve others' uncommitted work and
-keep unrelated active contributions separate.
+the working checkout. For a bugfix PR, create a fresh descriptive branch from
+fetched `main`, never reusing a closed bugfix branch or the shared `bugfix`
+branch. For dedicated audit/research work, inspect and continue its established
+project branch where appropriate; retain provenance and avoid mixing unrelated
+work. Preserve others' uncommitted work and active contributions.
 
-While a PR is open, update its own branch and synchronize accepted main by
+While a PR is open, update its source branch and synchronize accepted main by
 fast-forward or normal merge when needed. Never rebase published shared history
-or use force-push, including force-with-lease. An audit can continue across
-successive PRs, but each new PR gets a new temporary branch. Move any remaining
-work to a successor PR before closing the current one; no continuing project
-creates an exemption from source-branch cleanup.
+or use force-push, including force-with-lease. Audits and research may span
+successive PRs on their dedicated branches. Closing one of those PRs does not
+require branch deletion or moving unfinished research to a successor branch.
 
 Open a focused PR for each coherent reviewable batch, stating the problem, scope,
 validation results and remaining work. Never create a draft PR, convert a PR to
@@ -46,51 +49,49 @@ authorization. Owner-authorized weekly draft releases remain a separate flow.
 
 ## Branch completion and cleanup
 
-Source-branch deletion is mandatory when a PR closes, whether merged or closed
-without merging. Closure is not administratively complete until its temporary
-branch has been removed. This standing owner rule authorizes routine cleanup;
-no additional per-branch approval is needed after the checks below. It never
-authorizes deleting `main` or losing needed unmerged work.
+Only **bugfix PR** source branches have mandatory deletion on closure, whether
+merged or closed without merging. No separate per-branch approval is needed
+after the checks below. This standing cleanup rule does **not** apply to audit,
+research, reverse-engineering or other dedicated sustained-work branches.
 
-1. Before closure, check every open PR and dependency using the branch. Move
-   continuing work to a fresh successor PR first; do not delete an active PR's
-   head or a branch still needed by another open PR.
-2. Record the branch name and full final tip SHA in the PR's closure record.
-   For a merged PR, verify the tip is contained in current main. For squash or
-   cherry-pick integration, verify the actual changes and their preserved
-   destination rather than relying on ancestry alone.
-3. Before closing without merging, preserve needed unmerged commits in a verified
-   Git bundle, an archival tag or a successor PR. Record the preservation
-   location and exact SHA before removing the source branch. Deletion is cleanup,
-   not permission to discard work.
-4. Recheck the remote tip immediately before deletion. If it changed or
-   preservation is uncertain, resolve that discrepancy before completing
-   cleanup. Delete the remote branch and remove local branches/worktrees only
-   after checking for uncommitted work; never force-delete a dirty worktree.
+1. Before closing a bugfix PR, check every open PR and dependency using its
+   branch. Preserve any needed continuing work before the branch is removed.
+2. Record the full final tip SHA and branch name. For a merged PR, verify the
+   integrated changes reached main, including squash/cherry-pick equivalents.
+3. When closing without merging, preserve needed unmerged commits in a verified
+   bundle, tag, or successor PR and record their exact identity.
+4. Recheck the remote tip immediately before manual deletion. Do not remove a
+   branch if its tip has changed, a dependency is unresolved, or needed work
+   is not demonstrably preserved. Never force-delete a dirty worktree.
+
+Dedicated audit/research branches may remain even after their PRs merge or
+close. They may be retired only by an explicit owner decision after verifying
+the branch tip, evidence/source preservation, and live dependencies; never
+bulk-delete them as part of routine PR housekeeping.
 
 ### GitHub setting
 
-The repository owner should enable **Settings > General > Pull Requests >
-Automatically delete head branches**. This deletes eligible source branches
-after a PR is merged. Branch protections/rulesets can prevent deletion; retain
-protection for `main` and do not apply a permanent deletion prohibition to
-temporary PR branches. Do not weaken review, CI or main protections.
+**Automatically delete head branches** is a repository-wide GitHub setting:
+when enabled it can delete any eligible merged PR head, including research and
+audit branches. Do **not** enable it simply to clean up bugfix PR heads while
+persistent project branches share this repository. Unless an independently
+verified protection configuration excludes every retained head, leave the
+setting disabled and manually delete eligible closed bugfix branches.
 
-The setting does **not** delete the head of a PR closed without merging. After
-preserving unmerged work, manually use the closed PR's **Delete branch** button
-or `git push origin --delete <branch>`. Local branch cleanup is also manual.
-The setting is an owner-managed repository option, not a YAML configuration or
-an assertion that automation has already been enabled.
+For bugfix PRs closed without merging, preserve unmerged work, then use the
+closed PR's **Delete branch** button or
+`git push origin --delete <branch>`. The owner controls repository settings;
+these instructions do not assert or change the current toggle state.
 
 ### Existing branch migration
 
-The old `bugfix` branch and every existing audit/research branch are subject to
-this lifecycle. Check their exact tips and open PR associations before cleanup.
-Remove closed-PR branches after verified preservation; keep open-PR branches
-only until their own closure. Move branches serving solely as historical source
-archives into verified bundles or archival tags, record those destinations and
-remove the branches. Do not bulk-delete active branches or infer that an old
-branch is fully preserved from its name, age or PR title.
+The retired shared `bugfix` branch must not be resurrected. Evaluate existing
+`fix/*` PR branches for closure and cleanup using the bugfix steps above.
+Existing audit/research/reconstruction branches are **retained**, not targets
+for mandatory post-PR cleanup. Any voluntary retirement requires the owner's
+explicit decision, exact SHA/provenance retention, and review of dependents.
+Do not require moving long-running project source into tags merely because a
+related PR has closed.
 
 Written rules guide contributors but do not add technical server enforcement.
 Do not change repository visibility, access or protections to bypass the process.
@@ -171,7 +172,7 @@ hook executes local source QA on the committed checkout before transferring refs
 it performs no Windows build, automatic hash recording or hosted Actions run.
 It rejects direct main pushes, updates that recreate/reuse the retired shared
 `bugfix` branch, dirty checkouts and a pushed commit other than the checked-out
-HEAD. Deleting `bugfix` is allowed under the closure rules above. If HEAD/files
+HEAD. Bugfix branch deletion follows the closure rules above; the hook does not mandate deleting audit/research branches. If HEAD/files
 change during QA, the hook rejects the push. Pure branch deletion does not run
 source QA; the preservation and dependency checks above still apply. Do not
 bypass the gate with --no-verify or disable it.
