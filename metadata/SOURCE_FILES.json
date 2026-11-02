@@ -1594,8 +1594,8 @@
       "sha256": "78108a4a58632d98fdfcc7addb2d4976c17dc34d001c4a4c8f17d041aa933ea2"
     },
     "tests/unit/hooks/transaction_tests.cpp": {
-      "bytes": 4058,
-      "sha256": "8fe5112454794ba6a22650ac71796b313e57b4db391a7d7eb1bb64a2e1850cc0"
+      "bytes": 5853,
+      "sha256": "335c4ab516dd53a785b4902f4eef1e898cc10dd504853fe22676e121f96e9608"
     },
     "tests/unit/host_callbacks/callbacks_tests.cpp": {
       "bytes": 18346,
