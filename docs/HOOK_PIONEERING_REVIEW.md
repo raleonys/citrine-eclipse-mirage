@@ -24,8 +24,8 @@ including the merged [allocation rollback fix in PR #98](https://github.com/rale
   production-backend failure reproduction.
 - [Registry unit tests](../tests/unit/registry/registry_tests.cpp) cover
   matched/unmatched opens, fabricated values, queries and ordinary closes.
-  They do not establish real Win32 HKEY origin, reuse/alias freedom, or
-  end-to-end Consumer traversal of every Registry API.
+  Those portable tests do not establish real Win32 HKEY origin, reuse/alias
+  freedom, or end-to-end Consumer traversal of every Registry API.
 - Accepted PR #98 makes fabricated-key creation provisional through both
   owning-set and route-set insertion. On an insertion or logging exception,
   it restores the caller output/status, removes the new ownership record
@@ -38,6 +38,34 @@ including the merged [allocation rollback fix in PR #98](https://github.com/rale
   covers MinHook activation, callback lease drain and retryable engine
   teardown. Those improvements must not be overwritten by an older
   Registry-only prototype.
+
+## Native callback lifecycle coverage
+
+The [native Registry fixture](../tests/unit/registry/native_lifecycle_tests.cpp)
+links the production core, calls its SDK-shaped callback entries and forwards
+the original-call slots to actual Windows Registry APIs. It creates isolated
+volatile HKCU trees and uses the current operator-new/delete fabricated-key
+backend. The fixture covers A/W native and failed-open fabrication paths,
+overlay and unrelated-value queries, language routes, untracked SDK opens,
+same-key close while a query pauses for startup, and callback binding leases.
+
+The overlap scenario preserves existing behavior: a query selects its overlay
+before the startup wait, another callback closes the key, and the admitted query
+can finish afterward. The test checks forward progress, original `LastError`,
+tracking cleanup and native values on the subsequent unrelated key. Completion
+after close alone is not evidence of an ownership defect.
+
+A bounded real-SDK close/reopen probe prints whether Windows actually reused
+the numeric HKEY. `NOT_OBSERVED` is inconclusive; `OBSERVED` with clean routing
+establishes only the exercised sequential transition. Neither result proves
+universal stale-handle provenance, native/fabricated disjointness or alias freedom.
+
+The focused [Windows Debug/Release workflow](../.github/workflows/msvc-registry-lifecycle.yml)
+runs this fixture with the existing Registry and allocation-failure contracts;
+the full native suite also includes it. Configuring these jobs is not a native
+PASS: inspect the exact PR commit's execution. These tests call the production
+entries directly without MinHook installation and do not observe a real
+Consumer/game call graph. The design and evidence gaps below remain open.
 
 ## Research-to-source disposition
 
