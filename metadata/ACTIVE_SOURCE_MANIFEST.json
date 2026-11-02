@@ -9,7 +9,7 @@
     ".gitattributes": "0ecb37bbacc8487e7f4b6b1326c77475b0bf6847049586467950934a97d613a9",
     ".github/hooks/pre-push": "075d556289c9930548d4551ba82fca20e50507696df02ab6828124cb2f15e75d",
     ".github/pull_request_template.md": "41015ed27f0363186f1e6530e6a781a89868520728798e75643aca552d55cbef",
-    ".github/workflows/ci.yml": "4f3ae026f4055e32cf72f9910ab3b6bdbe83508217d812389c9acd26b0fa6b3f",
+    ".github/workflows/ci.yml": "e6146926a9d1d59cff932ff6a686bc1cf90ab1830cedc6fa5332e223e76ba0cb",
     ".github/workflows/msvc-debug-defaults-diagnostic.yml": "b4735f0f74f9cfcbcfb7b0d814d1551c544ac14f527d1be17dfb0800fc547597",
     ".github/workflows/msvc-online-provider-lease.yml": "1b04972f29d9f801efb6942f3a1dac9337215a65428d337c7309cb84d61ebe18",
     ".github/workflows/msvc-registry-lifecycle.yml": "ccf992cae82c692e8d95e0a36e16d96732cf6452d109a7ffa6cd4e0200b8c3d3",
