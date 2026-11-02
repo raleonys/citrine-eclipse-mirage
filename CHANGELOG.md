@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Cover B52 Config2 extra-DLL CSV conversion-failure ordering in source-linked tests: assert partial lists on both base and override passes, stop subsequent User/Content processing on failure, permit explicit retry and distinguish empty from delimiter-only values. No change to runtime behavior, public DLL ABI, hooks, vendor bytes or release policy. Original donor-facade and Consumer/game parity remain unverified.
+
 - Preserve the owner-authorized Draft status of existing four-field research PR #81 as a narrow exception to the normal ready-for-review PR rule; record its continuing source-provenance scope without treating the work as a routine audit, production release or automatic merge. Update governance, agent workflow and PR guidance only; no runtime, vendor or ABI change.
 
 - Clarify branch lifecycle governance: ordinary audit findings, bugfixes and other single-PR tasks use temporary branches cleaned up after closure and preservation. Continuing research/reverse-engineering/reconstruction workstreams may retain project branches; only an explicitly owner-designated, scoped long-running audit campaign has the corresponding audit exception. Align governance, agent workflow, PR template and push-gate fixture; note repository-wide automatic head deletion could remove retained project branches. No runtime, vendor or ABI changes.
