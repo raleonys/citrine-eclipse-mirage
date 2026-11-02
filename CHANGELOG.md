@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Add a reviewed Config2/VDF depth-limit candidate: reject structural nesting beyond 128 before recursive PEGTL actions. Extend boundary, conversion, byte/comment, error-position and retained-State regressions; preserve the frozen VDF corpus. The new input policy requires owner compatibility approval before merge.
+
 - Reconcile all ten B49-B54 source-audit findings with accepted main, distinguishing covered startup/accept/module-lease scenarios from open late-completion and foreign-callback lifetime proof. Preserve the historical donor comparison and identify unavailable donor-byte evidence explicitly; no runtime or test policy changes.
 
 - Add bounded, best-effort IPv4/IPv6 listener owning-PID diagnostics to the public DLL lifecycle test host. Keep diagnostic allocation, API and output failures separate from authoritative shutdown assertions; cover fault paths and table validation in Windows tests. Production code, shutdown budgets and pass/fail criteria are unchanged.
