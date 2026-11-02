@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Recheck the historical Hooks of Pioneering Registry ownership research against accepted main: raw HKEY provenance and retirement remain design/evidence gaps, while prior HeapFree failure receipts do not describe the current operator-new/delete backend. Record a source-linked applicability and proof matrix without changing hooks, runtime code, tests, vendors or ABI.
+
 - Add a reviewed Config2/VDF depth-limit candidate: reject structural nesting beyond 128 before recursive PEGTL actions. Extend boundary, conversion, byte/comment, error-position and retained-State regressions; preserve the frozen VDF corpus. The new input policy requires owner compatibility approval before merge.
 
 - Reconcile all ten B49-B54 source-audit findings with accepted main, distinguishing covered startup/accept/module-lease scenarios from open late-completion and foreign-callback lifetime proof. Preserve the historical donor comparison and identify unavailable donor-byte evidence explicitly; no runtime or test policy changes.
