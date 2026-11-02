@@ -264,7 +264,18 @@ static void exceptions() {
     for(auto fail:{"widen","parent","join","load"}) {
         State state;Mock m;m.fail=fail;
         throws<Injected>([&]{o::worker_035b60(state.refs(),m);});
-        CHECK(m.mode==0x21);CHECK(!m.called("restore"));CHECK(!m.called("finish"));CHECK(!m.called("free"));
+        CHECK(m.mode==0x20);CHECK(m.called("restore"));CHECK(!m.called("finish"));CHECK(!m.called("free"));
+        CHECK(std::count(m.calls.begin(),m.calls.end(),"restore")==1);
+        CHECK(state.module==0);
+    }
+    {
+        State state;Mock m;m.fail="join";
+        m.inspect=[](std::string_view event) {
+            if(event=="restore")throw std::logic_error("synthetic restoration failure");
+        };
+        // Restoration must not replace the initiating path failure.
+        throws<Injected>([&]{o::worker_035b60(state.refs(),m);});
+        CHECK(m.called("restore"));CHECK(!m.called("finish"));
     }
     for(auto fail:{"resolve:version_check","version","resolve:create_online","create","auth-status","log:authentication ok","name","persona","user","status-cookie"}) {
         State state;Mock m;m.fail=fail;

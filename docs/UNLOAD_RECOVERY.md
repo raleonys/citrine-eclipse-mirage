@@ -57,3 +57,17 @@ reproduction. Separate application/adapter/public lifecycle tests exercise real
 Windows API paths through Wine; native MSVC/game acceptance remains separate.
 
 Current evidence: [UNLOAD_RECOVERY.json](../metadata/evidence/UNLOAD_RECOVERY.json).
+
+## Compiler TLS endpoint data
+
+Windows MSVC Debug lifecycle tracing found an idle peer with RIP in ntdll and
+R11 equal to the image TLS template endpoint (`_tls_end`), rather than a code
+continuation. The linker map binds that address to `.tls$ZZZ`. The scanner now
+recognizes only the exact EndAddressOfRawData declared by a bounded PE TLS
+directory, inside a non-executable section and a committed non-executable image
+page. That marker in a data register or stack slot does not establish execution
+in the DLL. RIP inside the image still rejects unload, including at that marker.
+All other image pointers, unreadable stacks, scan failures, retained OS owners
+and retry rules remain conservative. Invalid or missing TLS metadata grants no
+exemption. The native effect tests cover the marker, adjacent data/code values,
+RIP, executable protections and malformed TLS ranges.
