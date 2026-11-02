@@ -10,13 +10,20 @@ Previous ZIP deliveries remain independent backups, not recreated Git history.
 ## Change and merge policy
 
 The mandatory rules at the start of [AGENTS.md](../AGENTS.md) apply to all agents
-and contributors. The owner replaced the former permanent `bugfix` model:
-`main` is now the only permanent branch.
+and contributors. Temporary single-PR branches are the **default**, including
+routine audit findings; dedicated research workstreams and specifically
+owner-designated long-running audits are the limited exceptions. The old shared
+`bugfix` branch must not be revived.
 
 | Branch | Purpose | Lifetime |
 | --- | --- | --- |
-| `main` | Accepted integration; updated only by the owner's reviewed PR merges | Permanent |
-| Descriptive PR branch, such as `fix/registry-close` or `chore/logo-and-pr-branches` | One coherent fix, feature, documentation change or audit PR | Temporary; delete when the PR closes, merged or unmerged |
+| `main` | Accepted integration; updated only by owner-reviewed PR merges | Permanent integration branch |
+| Fresh `fix/<task>` branch | One bugfix PR | Temporary; delete after closure and preservation |
+| Fresh `audit/<finding>` branch | One bounded audit finding/review PR | Temporary by default; delete after closure and preservation |
+| Dedicated `research/<project>` branch | Continuing scoped research project | May span PRs; owner decides final retirement |
+| Dedicated Reverse Engineering workstream (for example, `research/reconstruction-package`) | Reverse engineering, source reconstruction and donor-parity investigation | May span PRs; owner decides final retirement; the branch name alone does not grant an exemption |
+| Explicitly designated long-running audit branch | Owner-approved multi-PR audit campaign with documented scope and closure conditions | May span PRs; **not** inferred from the `audit/` prefix |
+| Other single-PR task branch | Documentation, policy, test or feature contribution | Temporary unless separately designated a continuing project |
 
 Never edit, commit, push, reset, delete or force-update main directly, locally or
 remotely. File-content API writes targeting main are also prohibited. Reading,
@@ -25,72 +32,81 @@ reviewed PRs into main.
 
 Before writing, inspect the working tree, current refs and open PRs, and fetch
 current `main`. Read `AGENTS.md` and `GOVERNANCE.md` from both fetched main and
-the working checkout. Create a fresh descriptive branch from fetched main for
-each new PR. Do not recreate a shared `bugfix` branch, reuse a closed PR's branch
-or keep permanent audit/research branches. Preserve others' uncommitted work and
-keep unrelated active contributions separate.
+the working checkout. For bugfixes, routine audits and other individual PRs,
+create a fresh descriptive branch from fetched `main`; never reuse the retired
+shared `bugfix` branch. For an established continuing research project or an
+owner-designated long-running audit, inspect and continue its dedicated project
+branch if the scope matches. Preserve provenance, uncommitted work and unrelated
+active contributions.
 
-While a PR is open, update its own branch and synchronize accepted main by
+While a PR is open, update its source branch and synchronize accepted main by
 fast-forward or normal merge when needed. Never rebase published shared history
-or use force-push, including force-with-lease. An audit can continue across
-successive PRs, but each new PR gets a new temporary branch. Move any remaining
-work to a successor PR before closing the current one; no continuing project
-creates an exemption from source-branch cleanup.
+or use force-push, including force-with-lease. Continuing research and explicitly
+owner-designated long-running audit campaigns may span successive PRs without
+retiring the workstream branch at every PR closure. Routine audit PRs do not have
+this exception; preserve any further work before normal closure and cleanup.
 
 Open a focused PR for each coherent reviewable batch, stating the problem, scope,
-validation results and remaining work. Never create a draft PR, convert a PR to
-draft or use draft mode for pending validation. Complete required local checks
-before opening a ready-for-review PR and record pending CI/native/Golden/game
-checks and merge blockers explicitly. Ready-for-review is not approval or merge
-authorization. Owner-authorized weekly draft releases remain a separate flow.
+validation results and remaining work. Ordinary PRs are ready-for-review, not
+drafts; do not create a new draft or convert a PR to draft without an explicit
+owner decision. **Existing Draft PR #81** is the specifically owner-authorized,
+long-running four-field research/source-provenance project; preserve its GitHub
+Draft state until the owner requests readiness. Its `research/field-retirement-review`
+branch and four evidence branches are continuing research, not routine audit heads.
+This narrow exception does not waive change validation, merge blockers or owner
+approval and does not grant draft status to ordinary audit/bugfix PRs.
+Complete required local checks before requesting normal review and record pending
+CI/native/Golden/game checks. Ready-for-review is not merge authorization.
+Owner-authorized weekly draft releases remain a separate flow.
 
 ## Branch completion and cleanup
 
-Source-branch deletion is mandatory when a PR closes, whether merged or closed
-without merging. Closure is not administratively complete until its temporary
-branch has been removed. This standing owner rule authorizes routine cleanup;
-no additional per-branch approval is needed after the checks below. It never
-authorizes deleting `main` or losing needed unmerged work.
+Temporary PR heads, **including ordinary audit PRs and bugfixes**, must be
+deleted after PR closure (merged or unmerged). The standing cleanup authority
+does not allow deletion of a continuing research project or a specifically
+owner-designated long-running audit campaign solely because one PR closed.
 
-1. Before closure, check every open PR and dependency using the branch. Move
-   continuing work to a fresh successor PR first; do not delete an active PR's
-   head or a branch still needed by another open PR.
-2. Record the branch name and full final tip SHA in the PR's closure record.
-   For a merged PR, verify the tip is contained in current main. For squash or
-   cherry-pick integration, verify the actual changes and their preserved
-   destination rather than relying on ancestry alone.
-3. Before closing without merging, preserve needed unmerged commits in a verified
-   Git bundle, an archival tag or a successor PR. Record the preservation
-   location and exact SHA before removing the source branch. Deletion is cleanup,
-   not permission to discard work.
-4. Recheck the remote tip immediately before deletion. If it changed or
-   preservation is uncertain, resolve that discrepancy before completing
-   cleanup. Delete the remote branch and remove local branches/worktrees only
-   after checking for uncommitted work; never force-delete a dirty worktree.
+1. Check every open PR, branch user and dependency. If a routine audit reveals
+   further work, preserve that work before closing and deleting its temporary
+   head; do not silently turn a finding branch into a permanent project.
+2. Record the exact final branch tip SHA and name. Verify a merged PR's changes
+   are represented in accepted main, including squash/cherry-pick integration.
+3. For unmerged closures, preserve needed commits/evidence in a verified bundle,
+   archival tag or successor workstream, with recorded exact source identity.
+4. Recheck the remote tip immediately before manual deletion. If it changed,
+   dependencies remain, or preservation is uncertain, resolve the discrepancy.
+   Never force-delete a dirty worktree or delete `main`.
+
+Research, reverse-engineering and reconstruction branches may remain while their defined projects are
+active. A long-running audit branch needs **explicit owner designation** and a
+documented continuing audit scope and closure criteria; neither its `audit/`
+prefix nor an open finding suffices. Retire either class only after owner
+decision, preservation and dependency review. Do not bulk-delete older audit
+branches before evaluating whether any are still active long-running projects.
 
 ### GitHub setting
 
-The repository owner should enable **Settings > General > Pull Requests >
-Automatically delete head branches**. This deletes eligible source branches
-after a PR is merged. Branch protections/rulesets can prevent deletion; retain
-protection for `main` and do not apply a permanent deletion prohibition to
-temporary PR branches. Do not weaken review, CI or main protections.
+**Automatically delete head branches** applies across the repository. When
+enabled it may remove a retained research branch or owner-designated long-running
+audit branch after a merged PR. Unless protections are independently verified to
+exclude all such retained heads, leave the setting disabled and manually delete
+closed temporary PR heads (including routine audits and bugfixes).
 
-The setting does **not** delete the head of a PR closed without merging. After
-preserving unmerged work, manually use the closed PR's **Delete branch** button
-or `git push origin --delete <branch>`. Local branch cleanup is also manual.
-The setting is an owner-managed repository option, not a YAML configuration or
-an assertion that automation has already been enabled.
+For a closed unmerged temporary PR, preserve any needed work first, then use
+**Delete branch** or `git push origin --delete <branch>`. The owner manages the
+repository setting; this policy does not assert or change its current state.
 
 ### Existing branch migration
 
-The old `bugfix` branch and every existing audit/research branch are subject to
-this lifecycle. Check their exact tips and open PR associations before cleanup.
-Remove closed-PR branches after verified preservation; keep open-PR branches
-only until their own closure. Move branches serving solely as historical source
-archives into verified bundles or archival tags, record those destinations and
-remove the branches. Do not bulk-delete active branches or infer that an old
-branch is fully preserved from its name, age or PR title.
+Do not recreate the retired shared `bugfix` branch. Evaluate existing
+`fix/*` and ordinary `audit/*` branches for cleanup after their PRs close,
+with source SHA, dependency and evidence preservation. Do not assume every
+existing `audit/*` branch must be retained, nor bulk-delete them: determine
+whether a specific audit is an owner-designated continuing campaign.
+Existing research, reverse-engineering and reconstruction project branches remain available while their
+workstreams are active. Retirement requires the owner's decision and verified
+source/evidence preservation; an individual research PR closing does not itself
+end that workstream.
 
 Written rules guide contributors but do not add technical server enforcement.
 Do not change repository visibility, access or protections to bypass the process.
@@ -171,8 +187,9 @@ hook executes local source QA on the committed checkout before transferring refs
 it performs no Windows build, automatic hash recording or hosted Actions run.
 It rejects direct main pushes, updates that recreate/reuse the retired shared
 `bugfix` branch, dirty checkouts and a pushed commit other than the checked-out
-HEAD. Deleting `bugfix` is allowed under the closure rules above. If HEAD/files
-change during QA, the hook rejects the push. Pure branch deletion does not run
+HEAD. Temporary branch deletion, including routine audit heads, follows the closure
+rules above; the hook enforces neither branch lifetime nor long-running project
+designation. If HEAD/files change during QA, the hook rejects the push. Pure branch deletion does not run
 source QA; the preservation and dependency checks above still apply. Do not
 bypass the gate with --no-verify or disable it.
 
