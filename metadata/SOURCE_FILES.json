@@ -1630,8 +1630,8 @@
       "sha256": "19edde46a81aed0610f478e64a35d63dd3c3a42e3dec71e67b6da5b326181f96"
     },
     "tests/unit/online/online_tests.cpp": {
-      "bytes": 23807,
-      "sha256": "a2d92656166e271fa11ae6a3c43711a2613ec5a77792fff75d340de4240a1c84"
+      "bytes": 27422,
+      "sha256": "4a8559e7d1ca75fe4b6274149d7ee9d5ec7e639d45d6f7b8e81472d3fd34160f"
     },
     "tests/unit/parser/parser_tests.cpp": {
       "bytes": 13979,
