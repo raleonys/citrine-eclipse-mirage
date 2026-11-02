@@ -37,11 +37,17 @@ static std::string copy_c_string(const char* value) {
 
 void load_online_035bd0(StateRefs state, Effects& effects) {
     const auto previous_mode = effects.suppress_errors_0450a0();
-    const auto library_name = effects.filesystem_widen_006d70(product_identity::online_library);
-    const auto parent = effects.parent_path_019820(state.executable_path_0a39e0);
-    const auto path = effects.join_016b00(parent, library_name);
-    state.module_0a3a80 = effects.load_copy_0450d0(path);
-    // Normal-path restoration: exceptions above skip it in the observed body.
+    try {
+        const auto library_name = effects.filesystem_widen_006d70(product_identity::online_library);
+        const auto parent = effects.parent_path_019820(state.executable_path_0a39e0);
+        const auto path = effects.join_016b00(parent, library_name);
+        state.module_0a3a80 = effects.load_copy_0450d0(path);
+    } catch (...) {
+        // This mode affects the entire process. Preserve the original failure
+        // even if an injected restoration effect also fails.
+        try { effects.restore_error_mode(previous_mode); } catch (...) {}
+        throw;
+    }
     effects.restore_error_mode(previous_mode);
     if (!state.module_0a3a80) return;
 

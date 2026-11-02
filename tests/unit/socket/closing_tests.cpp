@@ -71,6 +71,34 @@ void initial_and_reset(){
     {std::vector<std::string> trace;Errors errors(trace);Api api(trace);Cancel cancel(trace);sock::CloseContext context;sock::AcceptorState state;state.socket=9;sock::SocketObject object(state);api.closes={7};errors.codes={0};sock::cancel_and_close_026fb0(context,object,errors,api,cancel);require(!context.engine && cancel.calls==0 && trace==std::vector<std::string>{"close","category","get","category","category"},"null engine skips gate/category/cancel; raw close error0 does not prevent reset");require(state.socket==sock::invalid_socket && !object.cancellation.control,"raw nonzero close result ignored by outer reset");}
     {std::vector<std::string> trace;Errors errors(trace);Api api(trace);Cancel cancel(trace);sock::CloseContext context;sock::AcceptorState state;sock::SocketObject object(state);sock::cancel_and_close_026fb0(context,object,errors,api,cancel);require(trace.empty() && !context.engine,"invalid initial socket and null owner is complete API no-op");}
 }
+void cancellation_exception_gate_balance() {
+    for(bool fail_before_cancel:{false,true}) {
+        std::vector<std::string> trace;
+        Errors errors(trace);Api api(trace);Cancel cancel(trace);
+        Gate gate(trace,"engine_");
+        sock::CancellationEngine engine(gate);sock::CloseContext context;context.engine=&engine;
+        sock::AcceptorState state;state.socket=17;state.socket_state=3;
+        sock::SocketObject object(state);Owner owner;object.cancellation={77,&owner};
+        if(fail_before_cancel)errors.category_hook=[&]{throw std::runtime_error("synthetic category failure");};
+        else cancel.hook=[&](sock::CancellationEngine&,sock::Socket,const sock::Error&){
+            throw std::runtime_error("synthetic cancellation failure");
+        };
+        bool raised=false;
+        try{sock::cancel_and_close_026fb0(context,object,errors,api,cancel);}
+        catch(const std::runtime_error&){raised=true;}
+        require(raised&&gate.depth==0&&context.engine==&engine,
+            "failed lower operation must propagate and release the original engine gate");
+        require(state.socket==17&&state.socket_state==3&&
+                object.cancellation.resource==77&&object.cancellation.control==&owner&&
+                owner.strong==1&&owner.weak==1&&!owner.destroys&&!owner.deletes,
+            "failed cancellation must not close/reset the live source owner");
+        const std::vector<std::string> expected=fail_before_cancel
+            ?std::vector<std::string>{"engine_enter","category","engine_leave"}
+            :std::vector<std::string>{"engine_enter","category","cancel","engine_leave"};
+        require(trace==expected&&cancel.calls==static_cast<unsigned>(!fail_before_cancel),
+            "exception cleanup must release gate once, with no socket close or additional effects");
+    }
+}
 void live_effects(){
     {std::vector<std::string> trace;Errors errors(trace);Api api(trace);Cancel cancel(trace);Gate first_gate(trace,"first_"),other_gate(trace,"other_");sock::CancellationEngine first(first_gate),other(other_gate);sock::CloseContext context;context.engine=&first;sock::AcceptorState state;state.socket=13;sock::SocketObject object(state);api.closes={0};first_gate.hook=[&](std::string_view phase){if(phase=="enter"){state.socket=17;context.engine=&other;}else state.socket=23;};cancel.hook=[&](sock::CancellationEngine& engine,sock::Socket socket,const sock::Error&){require(&engine==&first && socket==13 && first_gate.depth==1 && other_gate.depth==0,"cancel uses cached engine/socket captured before gate");state.socket=19;};sock::cancel_and_close_026fb0(context,object,errors,api,cancel);require(api.sockets==std::vector<sock::Socket>{23} && context.engine==&other,"close rereads live socket after gate leave without replacing changed engine slot");require(trace==std::vector<std::string>{"first_enter","category","cancel","first_leave","close"},"same cached engine gate left after cancellation");}
     {std::vector<std::string> trace;Errors errors(trace);Api api(trace);Cancel cancel(trace);Gate gate(trace,"engine_");sock::CancellationEngine engine(gate);sock::CloseContext context;context.engine=&engine;sock::AcceptorState state;state.socket=7;sock::SocketObject object(state);cancel.hook=[&](sock::CancellationEngine&,sock::Socket,const sock::Error&){state.socket=sock::invalid_socket;};sock::cancel_and_close_026fb0(context,object,errors,api,cancel);require(api.sockets.empty() && cancel.calls==1,"cancel changing live socket invalid causes close helper no-op");}
@@ -107,4 +135,4 @@ void typed_sdk(){
     require(fixture.trace==std::vector<std::string>{"option","close","category","get","category","ioctl","close"},"typed SDK composition adds no error reads or allocator cleanup");native=nullptr;
 }
 }
-int main(){try{initial_and_reset();live_effects();composition();typed_sdk();std::cout<<"PASS: "<<checks<<" socket closing checks; controlled cancellation and injected APIs only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}
+int main(){try{initial_and_reset();cancellation_exception_gate_balance();live_effects();composition();typed_sdk();std::cout<<"PASS: "<<checks<<" socket closing checks; controlled cancellation and injected APIs only\n";}catch(const std::exception& e){std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}}

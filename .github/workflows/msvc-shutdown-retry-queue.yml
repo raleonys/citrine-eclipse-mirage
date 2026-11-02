@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: Windows queued shutdown retry acceptance
+
+on:
+  pull_request:
+    paths:
+      - "src/platform/dll_entry.cpp"
+      - "src/platform/hook_unload_guard.cpp"
+      - "tests/support/runtime/application_shutdown_fixture.cpp"
+      - "tests/native/application_shutdown_failure_tests.cpp"
+      - ".github/workflows/msvc-shutdown-retry-queue.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  queued-shutdown:
+    name: Windows x64 queued shutdown ${{ matrix.configuration }}
+    runs-on: windows-2022
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Configure native fixture
+        run: |
+          $build = 'build/ci-queued-shutdown-${{ matrix.configuration }}'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          if ($LASTEXITCODE -ne 0) { throw 'Shutdown queue configure failed' }
+      - name: Build actual entry and shutdown failure fixtures
+        run: |
+          $build = 'build/ci-queued-shutdown-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --target application_shutdown_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/queued-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Shutdown queue fixture build failed' }
+      - name: Verify two caller requests remain distinct through failed cleanup
+        run: |
+          $build = 'build/ci-queued-shutdown-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'queued-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^application_shutdown_failure_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/queued-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Queued shutdown retry regression failed' }
+      - name: Preserve native acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-queued-shutdown-${{ matrix.configuration }}-evidence
+          path: |
+            build/ci-queued-shutdown-${{ matrix.configuration }}/queued-build.log
+            build/ci-queued-shutdown-${{ matrix.configuration }}/queued-ctest.log
+            build/ci-queued-shutdown-${{ matrix.configuration }}/queued-junit.xml
+            build/ci-queued-shutdown-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
+            build/ci-queued-shutdown-${{ matrix.configuration }}/CMakeCache.txt
+          if-no-files-found: warn
+          retention-days: 14
