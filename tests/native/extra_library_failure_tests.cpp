@@ -70,6 +70,49 @@ void provider_retry(const wchar_t* path) {
     require(f.provider.module==0&&f.provider.online==0&&fault::frees==3,
         "provider cleanup retry did not release exactly the retained lease");
 }
+// A11-06: two different native module cleanup stages fail in sequence. This
+// uses the real source-included ExtraLibraries and Provider cleanup paths;
+// the full Application::stop orchestration is tested separately.
+void extra_provider_stage_retry(const wchar_t* path) {
+    Fixture f;
+    require(::GetModuleHandleW(path)==nullptr,"staged retry fixture DLL already loaded");
+    const auto extra=f.extras.load_library(path);
+    f.provider.module=reinterpret_cast<std::uintptr_t>(TestLoadLibraryW(path));
+    const auto provider_module=f.provider.module;
+    require(extra&&provider_module&&extra==provider_module&&fault::loads==2,
+        "staged retry must acquire two owned native module references");
+    f.provider.online=1;
+    auto cleanup=[&]{f.extras.close();f.provider.close();};
+
+    // Failure in the earlier extra-library stage must not invoke the provider
+    // stage. Both physical image leases remain outstanding.
+    fault::fail_frees=1;
+    bool first_failed=false;
+    try{cleanup();}catch(const std::runtime_error&){first_failed=true;}
+    require(first_failed&&fault::frees==1&&f.provider.module==provider_module&&
+            f.provider.online==1&&
+            ::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(provider_module),
+        "failed extra cleanup must stop before provider retirement and retain both leases");
+
+    // The extra stage now retires once. A distinct failure in the later
+    // provider stage must retain that lease without reviving the extra one.
+    fault::fail_frees=1;
+    bool second_failed=false;
+    try{cleanup();}catch(const std::runtime_error&){second_failed=true;}
+    require(second_failed&&fault::frees==3&&f.provider.module==provider_module&&
+            f.provider.online==1&&
+            ::GetModuleHandleW(path)==reinterpret_cast<HMODULE>(provider_module),
+        "second attempt must retire extra ownership and retain failed provider ownership");
+
+    // The completed extra stage must not double-free on the final retry.
+    cleanup();
+    require(fault::frees==4&&f.provider.module==0&&f.provider.online==0&&
+            ::GetModuleHandleW(path)==nullptr,
+        "final retry must unload only the remaining provider reference");
+    cleanup();
+    require(fault::frees==4,
+        "idempotent staged cleanup must not release either module again");
+}
 // B54 source comparison: distinguish a retained numeric module record from
 // a real executable image lease during failed FreeLibrary cleanup.
 void provider_physical_lease(const wchar_t* path) {
@@ -161,7 +204,8 @@ int wmain(int argc,wchar_t** argv)try {
     require(argc==2||argc==3,"expected fixture DLL path and optional case");
     const std::wstring_view selected=argc==3?argv[2]:L"all";bool ran=false;
     for(auto [name,fn]:{std::pair{L"acquire",acquisition_failure},{L"mixed",mixed_release},{L"retry",repeated_failure},
-                      {L"provider-retry",provider_retry},{L"provider-object",provider_object_once},
+                      {L"provider-retry",provider_retry},{L"extra-provider-stage",extra_provider_stage_retry},
+                      {L"provider-object",provider_object_once},
                       {L"provider-slot",provider_empty_slot},{L"provider-layout",provider_byte_layout},
                       {L"provider-physical-lease",provider_physical_lease}})
         if(selected==L"all"||selected==name){fn(argv[1]);ran=true;}
