@@ -9,10 +9,12 @@ struct Object {std::uintptr_t* table;};
 std::atomic<int> mode{0},destroyed{0};
 std::atomic<bool> hold_auth{false},auth_entered{false},auth_released{true};
 void destroy(Object*){destroyed.fetch_add(1);}
-int status(Object*){return mode.load();}
-const char* username(Object*){return "fixture-online";}
-const char* persona(Object*){return "fixture-persona";}
-const char* user(Object*){return "fixture-user-id";}
+// Fault-only modes: 1 = offline status, 3 = null factory, 4/5/6 = null
+// username/persona/user getter. Production provider ABI is unchanged.
+int status(Object*){return mode.load()==1?1:0;}
+const char* username(Object*){return mode.load()==4?nullptr:"fixture-online";}
+const char* persona(Object*){return mode.load()==5?nullptr:"fixture-persona";}
+const char* user(Object*){return mode.load()==6?nullptr:"fixture-user-id";}
 bool avatar(Object*,const wchar_t* path){auto* file=_wfopen(path,L"wb");if(!file)return false;std::fputs("fixture-provider-avatar",file);std::fclose(file);return true;}
 const char* auth(Object*,const char*) {
     if(hold_auth.load()) {
@@ -30,7 +32,8 @@ Object object{table};
 }
 extern "C" __declspec(dllexport) int version_check(){return 2;}
 extern "C" __declspec(dllexport) Object* create_online(const wchar_t* cookie) {
-    if(auto* file=_wfopen(cookie,L"wb")){std::fputs("fixture-cookie",file);std::fclose(file);}return &object;
+    if(auto* file=_wfopen(cookie,L"wb")){std::fputs("fixture-cookie",file);std::fclose(file);}
+    return mode.load()==3?nullptr:&object;
 }
 extern "C" __declspec(dllexport) void FixtureMode(int m){
     mode.store(m);destroyed.store(0);
