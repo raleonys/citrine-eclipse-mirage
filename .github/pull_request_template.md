@@ -14,8 +14,10 @@ request when it changes an existing product decision.
 - [ ] For a bugfix, routine audit or other single-PR task, use a fresh
       descriptive branch based on current `main`; do not reuse the retired
       shared `bugfix` branch or a closed task branch.
-- [ ] For a continuing research/reconstruction project, identify its existing
-      project branch and documented scope.
+- [ ] For a continuing research, Reverse Engineering or reconstruction
+      project, identify its dedicated project branch and documented scope.
+      Existing reverse-engineering work such as `research/reconstruction-package`
+      may span multiple PRs; ordinary audit findings still remain temporary.
 - [ ] **Only** for an explicitly owner-designated long-running audit campaign:
       record the designation, continuing scope and closure criteria. Ordinary
       `audit/*` branches remain temporary.
