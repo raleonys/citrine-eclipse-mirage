@@ -157,6 +157,31 @@ void other_failures(){
     s.terminated=true;s.depth=0;s.peer=false;
     require(scan()&&s.threads.empty()&&s.snapshots.empty()&&s.exit_queries>=2,"proven terminated peer can be released when resume remains unavailable");
 }
+void volatile_register_guard(){
+    reset();
+    auto& s=fake::state;
+    // Only the separately validated TLS endpoint qualifies for a data
+    // exemption. Other image references in R11 remain unsafe for unload.
+    const auto base=reinterpret_cast<std::uint64_t>(s.image.data());
+    s.register_value=base+128;
+    require(!scan()&&s.depth==0&&s.suspends==1&&s.resumes==1,
+        "foreign R11 image address defers unload despite safe RIP and stack");
+    require(s.threads.empty()&&s.snapshots.empty()&&s.closed_owned==0,
+        "R11-only rejection releases exact scan suspension and handles");
+    s.register_value=base+0x2000;
+    require(scan()&&s.depth==0&&s.suspends==2&&s.resumes==2,
+        "R11 outside image alone does not strand a finished scan");
+    require(s.threads.empty()&&s.snapshots.empty(),
+        "successful R11 scan has no leaked native owners");
+    s.register_value=base+128;
+    preloader_l::set_shutdown_caller(11);
+    const auto prior=s.suspends;
+    require(scan()&&s.suspends==prior&&s.depth==0,
+        "explicit DLL shutdown caller is excluded without suspending its stack");
+    preloader_l::set_shutdown_caller(0);
+    require(!scan()&&s.suspends==prior+1&&s.resumes==s.suspends,
+        "clearing caller exclusion restores conservative R11 protection");
+}
 void scan_behavior(){
     reset();auto& s=fake::state;s.in_module=true;
     require(!scan()&&s.depth==0,"live module instruction pointer defers unload with balanced resume");
@@ -201,5 +226,5 @@ void tls_data_marker(){
     require(!scan(),"reversed TLS data range fails closed");
 }
 }
-int main()try{resume_retry();close_retry();other_failures();scan_behavior();tls_data_marker();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
+int main()try{resume_retry();close_retry();other_failures();volatile_register_guard();scan_behavior();tls_data_marker();std::cout<<"PASS: "<<checks<<" actual unload guard failure/retry and stack checks\n";}
 catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
