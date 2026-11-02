@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Extend the B50 native IOCP completion schedule from pending WSARecv to a real WSASend: hold its exact kernel-dequeued successful send packet through two bounded shutdown attempts, verify callback-owned output and Client lifetime, then release the packet and require one final retirement without duplicate close/callbacks. This depends on the existing PR #107 receive-completion gate; no production, ABI, vendor or timeout change, and no game/Consumer equivalence claim.
+
 - Cover delayed delivery of real Windows socket completion packets across repeated Asio cleanup attempts. Hold the exact native WSARecv/IOCP result for cancelled and successful receives, verify buffer/client retention beyond the unchanged first 100 ms drain budget, then deliver it once and require complete idempotent cleanup without stale callbacks. Extend the existing Windows lifecycle workflow; production code, vendor bytes, ABI and test budgets are unchanged.
 
 - Clarify branch lifecycle governance: ordinary audit findings, bugfixes and other single-PR tasks use temporary branches cleaned up after closure and preservation. Continuing research/reverse-engineering/reconstruction workstreams may retain project branches; only an explicitly owner-designated, scoped long-running audit campaign has the corresponding audit exception. Align governance, agent workflow, PR template and push-gate fixture; note repository-wide automatic head deletion could remove retained project branches. No runtime, vendor or ABI changes.
