@@ -9,6 +9,9 @@ on:
       - "src/net/**"
       - "src/runtime/**"
       - "src/platform/dll_entry.cpp"
+      - "src/platform/hook_unload_guard.cpp"
+      - "include/preloader_l/platform/hook_unload_guard.hpp"
+      - "tests/native/unload_guard_tests.cpp"
   workflow_dispatch:
 
 permissions:
@@ -43,8 +46,14 @@ jobs:
       - name: Build actual DLL and lifecycle host
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
-          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
+          cmake --build $build --config '${{ matrix.configuration }}' --target preloader_l_runtime_host unload_guard_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/shutdown-build.log"
           if ($LASTEXITCODE -ne 0) { throw 'MSVC shutdown build failed' }
+      - name: Verify unload guard ownership and TLS marker rejection boundaries
+        run: |
+          $build = 'build/ci-shutdown-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'unload-guard-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^unload_guard_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/unload-guard-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Unload guard contracts failed' }
       - name: Repeat five independent DLL lifecycle tests
         run: |
           $build = 'build/ci-shutdown-${{ matrix.configuration }}'
@@ -70,11 +79,14 @@ jobs:
           name: msvc-shutdown-${{ matrix.configuration }}-evidence
           path: |
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-build.log
+            build/ci-shutdown-${{ matrix.configuration }}/unload-guard-ctest.log
+            build/ci-shutdown-${{ matrix.configuration }}/unload-guard-junit.xml
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-ctest.log
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-receipt.txt
             build/ci-shutdown-${{ matrix.configuration }}/shutdown-junit-*.xml
             build/ci-shutdown-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
             build/ci-shutdown-${{ matrix.configuration }}/CMakeCache.txt
+            build/ci-shutdown-${{ matrix.configuration }}/preloader.production.*.map
             build/ci-shutdown-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
           retention-days: 14

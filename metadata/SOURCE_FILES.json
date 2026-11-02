@@ -866,8 +866,8 @@
       "sha256": "c106f2b1180f2176b4bb74fe69d6e8d52707979c03129b32d9db0ac60450891e"
     },
     "src/platform/dll_entry.cpp": {
-      "bytes": 3951,
-      "sha256": "aafccaf5d2aadba4cf7549ad1f1df5b746bccb2aa23384f6efec053788e5114d"
+      "bytes": 4953,
+      "sha256": "1b1474464ca87f5c2869e2e9dbb569d6d636361ac2f57ca836d695fba3896e71"
     },
     "src/platform/encoding_windows.cpp": {
       "bytes": 2245,
@@ -926,8 +926,8 @@
       "sha256": "69a8030d5424aba789967e56ed8a6c5d4250b443b2f6d8216b38a29376dc7920"
     },
     "src/platform/hook_unload_guard.cpp": {
-      "bytes": 5458,
-      "sha256": "870df4a9bd27371470bd67b45ba27fadd6492ad3a097408f795bc4ede0b7a2f5"
+      "bytes": 7613,
+      "sha256": "d8f7a770c74f2cf444ba2a2786b7827a8371151f208a2bac0da960cc781aaeef"
     },
     "src/platform/library_system.cpp": {
       "bytes": 1272,
@@ -1174,8 +1174,8 @@
       "sha256": "2286ef8c2a00ade400c18e50e5e6b54ba906c9382380d6186732a93c3b0873f8"
     },
     "tests/infrastructure/test_weekly_release.py": {
-      "bytes": 17390,
-      "sha256": "f787b913f39f38e2ea3c304ef8fc4006229288261f26c06776d4ceca43cb7b12"
+      "bytes": 17821,
+      "sha256": "d730d1c492fe3215aca942ad5e60967244bb550e31fd8ae6bf57397f3e52a3f1"
     },
     "tests/infrastructure/test_wine_runner.py": {
       "bytes": 1640,
@@ -1186,8 +1186,8 @@
       "sha256": "27e726242ff53aa461df7c71128cb23733285e97af9e7bcc7d74addc4528442b"
     },
     "tests/native/application_shutdown_failure_tests.cpp": {
-      "bytes": 2716,
-      "sha256": "c734ed1e78b0f99c093203cdcf1b1aafe9653293eb6f2ebcb9409cb10cafe664"
+      "bytes": 5710,
+      "sha256": "d2ca4acf091c3e3cf4db00b4f2d015e60172ce3fbf52bbc7b1eae82b9e3f8e5d"
     },
     "tests/native/atomic_persistence_tests.cpp": {
       "bytes": 6840,
@@ -1274,8 +1274,8 @@
       "sha256": "84e46780f9029bb54ce8c5c2b38ca6a666f4d361f546d722f46e1eeb2a89b19d"
     },
     "tests/native/unload_guard_tests.cpp": {
-      "bytes": 8865,
-      "sha256": "824847da3ba107ba98132b87967ae6d39c1b88870a29560a7e1247f9652022e9"
+      "bytes": 11671,
+      "sha256": "7c907addb1806ff792a1ba49633e48169b3e063175c7edc9b8fc8a1a74fb9e5f"
     },
     "tests/performance/xml_reader_probe.cpp": {
       "bytes": 6016,
@@ -1318,8 +1318,8 @@
       "sha256": "aadd4065f25dcaf4751018f7a6df4f3081c328d07905614f4de7f52b21b4be61"
     },
     "tests/support/runtime/application_shutdown_fixture.cpp": {
-      "bytes": 3458,
-      "sha256": "ed3bd785a7bfa4be36b4690b0a1fec4794c120bc0fa9cf9c6fa69e2aa647d72b"
+      "bytes": 4160,
+      "sha256": "b527bf1cc8ff8c8fde10972b7cc9bc59121246360b31104727ddf964ce796378"
     },
     "tests/support/runtime/cleanup_retry_fixture.cpp": {
       "bytes": 1163,
@@ -11695,7 +11695,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
+    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },

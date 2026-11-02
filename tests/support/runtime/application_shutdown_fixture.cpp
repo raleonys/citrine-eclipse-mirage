@@ -9,6 +9,7 @@
 
 namespace fixture {
 std::atomic<unsigned> mode{},ready{},attempts{},created{},destroyed{},disables{},releases{};
+std::atomic<unsigned> held_before_loop{},release_before_loop{},fail_next_scan{};
 // No native patching or thread suspension is permitted in this fixture. Only
 // the engine and unload-scan boundaries are controlled; owners are real.
 int initialize(){return MH_OK;}
@@ -18,7 +19,10 @@ int apply(){return MH_OK;}
 int disable(void*){++disables;return mode==1?MH_ERROR_MEMORY_PROTECT:MH_OK;}
 int release(){++releases;return mode==3?MH_ERROR_MEMORY_PROTECT:MH_OK;}
 }
-namespace preloader_l {bool fixture_threads_outside_module(){return fixture::mode!=4;}}
+namespace preloader_l {bool fixture_threads_outside_module(){
+    if(fixture::fail_next_scan.exchange(0,std::memory_order_acq_rel))return false;
+    return fixture::mode!=4;
+}}
 #define MH_Initialize fixture::initialize
 #define MH_CreateHook fixture::create
 #define MH_EnableHook fixture::queue
@@ -53,7 +57,15 @@ class FixtureApplication {
 public:
     explicit FixtureApplication(Options={}){++fixture::created;}
     ~FixtureApplication(){++fixture::destroyed;}
-    void start(){app.start();fixture::ready=1;}
+    void start(){
+        const bool hold=GetEnvironmentVariableA("SURGE_TEST_HOLD_WORKER_BEFORE_STOP",nullptr,0)!=0;
+        app.start();fixture::ready=1;
+        if(hold){
+            fixture::held_before_loop=1;
+            while(!fixture::release_before_loop.load(std::memory_order_acquire))Sleep(1);
+            fixture::held_before_loop=0;
+        }
+    }
     void stop(){++fixture::attempts;app.stop();}
 };
 }
@@ -64,12 +76,16 @@ public:
 #undef Application
 extern "C" __declspec(dllexport) void FixtureMode(unsigned mode){
     fixture::mode=mode;
+    if(mode==5)fixture::fail_next_scan=1;
     if(mode==2)fixture::held_call=std::make_unique<preloader_l::native::Lease>();
     else fixture::held_call.reset();
 }
+extern "C" __declspec(dllexport) void FixtureReleaseWorker(){fixture::release_before_loop=1;}
 extern "C" __declspec(dllexport) unsigned FixtureValue(unsigned key){
     switch(key){case 0:return fixture::ready;case 1:return fixture::attempts;
     case 2:return fixture::created;case 3:return fixture::destroyed;case 4:return fixture::disables;
     case 5:return fixture::releases;case 6:return preloader_l::native::is_bound();
-    case 7:return static_cast<unsigned>(preloader_l::native::active_calls());default:return ~0u;}
+    case 7:return static_cast<unsigned>(preloader_l::native::active_calls());
+    case 8:return fixture::held_before_loop.load(std::memory_order_acquire);
+    default:return ~0u;}
 }
