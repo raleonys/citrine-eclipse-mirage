@@ -4,6 +4,7 @@
 import shutil
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -16,6 +17,13 @@ from check_repository_contract import (
     check_root_file_ownership, check_archived_evidence, check_active_identifiers,
     check_layout_migration_reference,
 )
+
+
+def fixture_git_environment():
+    # A pre-push hook can export an absolute GIT_DIR for a linked worktree.
+    # Foreign-repository fixtures must not select the caller's Git metadata.
+    return {name: value for name, value in os.environ.items()
+            if not name.startswith('GIT_')}
 
 
 class RepositoryRootOwnership(unittest.TestCase):
@@ -43,11 +51,14 @@ class RepositoryRootOwnership(unittest.TestCase):
             parent = Path(tmp) / 'parent'
             child = Path(tmp) / 'worktree'
             parent.mkdir()
+            environment = fixture_git_environment()
             def git(*args):
                 subprocess.run(['git', '-C', str(parent), *args],
-                               check=True, capture_output=True, text=True)
+                               check=True, capture_output=True, text=True,
+                               env=environment)
             git('init')
             git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                '-c', 'commit.gpgsign=false',
                 'commit', '--allow-empty', '-m', 'fixture')
             git('worktree', 'add', '--detach', str(child), 'HEAD')
             self.assertTrue((child / '.git').is_file())
@@ -100,11 +111,14 @@ class RepositoryRootOwnership(unittest.TestCase):
             impostor = Path(tmp) / 'impostor'
             parent.mkdir()
             impostor.mkdir()
+            environment = fixture_git_environment()
             def git(*args):
                 subprocess.run(['git', '-C', str(parent), *args],
-                               check=True, capture_output=True, text=True)
+                               check=True, capture_output=True, text=True,
+                               env=environment)
             git('init')
             git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                '-c', 'commit.gpgsign=false',
                 'commit', '--allow-empty', '-m', 'fixture')
             git('worktree', 'add', '--detach', str(child), 'HEAD')
             self.assertEqual([], check_root_file_ownership(child, ['README.md']))
