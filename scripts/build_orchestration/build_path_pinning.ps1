@@ -51,9 +51,11 @@ public static class SurgeDirectoryPinning
 
     public static SafeFileHandle Pin(string path)
     {
-        // FILE_READ_ATTRIBUTES; FILE_SHARE_READ|FILE_SHARE_WRITE, not FILE_SHARE_DELETE.
+        // FILE_LIST_DIRECTORY|FILE_READ_ATTRIBUTES participates in sharing checks;
+        // an attribute-only open does not pin rename/delete on Windows.
+        // FILE_SHARE_READ|FILE_SHARE_WRITE, not FILE_SHARE_DELETE.
         // OPEN_EXISTING; FILE_FLAG_BACKUP_SEMANTICS|FILE_FLAG_OPEN_REPARSE_POINT.
-        SafeFileHandle handle = OpenDirectory(path, 0x80, 0x3, IntPtr.Zero, 3, 0x02200000, IntPtr.Zero);
+        SafeFileHandle handle = OpenDirectory(path, 0x81, 0x3, IntPtr.Zero, 3, 0x02200000, IntPtr.Zero);
         if (handle == null || handle.IsInvalid)
         {
             int error = Marshal.GetLastWin32Error();

@@ -9,7 +9,7 @@
     ".gitattributes": "0ecb37bbacc8487e7f4b6b1326c77475b0bf6847049586467950934a97d613a9",
     ".github/hooks/pre-push": "9495c255f16bdafc9d838be55828f13a85f6587182a2320ce8899cb1602aa198",
     ".github/pull_request_template.md": "c46e16c3906cb310342fa5eb9560c930a5c743951683a598f6666d7c70a5feba",
-    ".github/workflows/ci.yml": "773b970fe3b46b620cffb8e0f484e24442deb5b970794425cadd7a7b49f7d8f5",
+    ".github/workflows/ci.yml": "f8014ebe2621fc9c04967c1500d7478349895581f980fe90f0bb24b6a93d5645",
     ".github/workflows/msvc-debug-defaults-diagnostic.yml": "b4735f0f74f9cfcbcfb7b0d814d1551c544ac14f527d1be17dfb0800fc547597",
     ".github/workflows/msvc-online-provider-lease.yml": "1b04972f29d9f801efb6942f3a1dac9337215a65428d337c7309cb84d61ebe18",
     ".github/workflows/msvc-registry-lifecycle.yml": "ccf992cae82c692e8d95e0a36e16d96732cf6452d109a7ffa6cd4e0200b8c3d3",
@@ -17,7 +17,7 @@
     ".github/workflows/weekly-release.yml": "45de490aed66d319c7a30e7af1b88b12912c81c69c57099c003c74a034e4605a",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "74cbf96b8cb083615727b7d754287c9e858eebb5514efe184dd0a8a69804643f",
-    "CHANGELOG.md": "0d24fa873ee6ab3243522bf4add89dfd9379221efdf0cdb2887fe1124cc25840",
+    "CHANGELOG.md": "0dfea090009049086c01af175f2f08d999c9bffc422390d848f6392b1d4e6a9a",
     "cmake/BuildPartition.cmake": "bb3a9c833c694256250d04be258c5f6a9315ea10189198185ae4fba58b281882",
     "cmake/InfrastructureChecks.cmake": "1e4ec0c5319403be3dfe5db904fb188a3edde069236d794a69e6e4bfb564634b",
     "cmake/PatchHookFreeze.cmake": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
@@ -389,7 +389,7 @@
     "metadata/SESSION_TRANSPORT_POLICY.json": "2403d829c98174d3cf7caa0d382d6478457d22f4d74e162194372d66c8894b66",
     "metadata/SHUTDOWN_RECOVERY_REVIEW.json": "6a0799c62dd9fcba984035ab48a06c078e0b7958ed778e2641e44124726b0ce9",
     "metadata/SOCKET_RETIREMENT_REVIEW.json": "a27d0cd84fc6ab05cf5b321bafce23cde6b887dc374c715ee9fa8553c97d45c6",
-    "metadata/SOURCE_FILES.json": "70207941eb0ac38da5d4e1f591569bd37e404df65e2f29be041a5d1219d04bf0",
+    "metadata/SOURCE_FILES.json": "844b93a26918efdb0da2df1bdf7f29c2154be6d88c37d4c39eadd9b153554fb8",
     "metadata/SOURCE_INPUTS.json": "fb5b29dad4e05eed197e57a98c30803f48ed0e9c30c92d4b05afb9c3751c5513",
     "metadata/UNLOAD_RECOVERY_CONTRACT.json": "bcc72f466706903cf4cd76e93bdc0dc62b83574524055026fe2ec184b860fd9b",
     "metadata/URSYNEX_GOLDEN_FINALIZER.json": "f8c08ca30b9ef2e77354adb043ad75c3dae09942e53ecbe8ff8ed637001b855d",
@@ -594,7 +594,7 @@
     "tests/fixtures/xml_reader/optimization-baseline.txt": "d598f453b1f495f8f6aec57d00596895d0cdd557c74c21fe42b22ac7b6fcec57",
     "tests/fixtures/xml_reader/optimization-corpus.txt": "0f860de117e3786c4b58c5f74b3d5a34a1ba4e39bee1253ae563f917bd14a5a1",
     "tests/infrastructure/test_build_partition.py": "f76561bc8afe2c7f85665c98e4171ed63f65a3044973eba665014ed6d48a8528",
-    "tests/infrastructure/test_build_path_reparse.ps1": "ca8471fd0e11f87dce5a6d16e52bfdab50c36fa5c0c2c84745be46769270c8f3",
+    "tests/infrastructure/test_build_path_reparse.ps1": "6cfb1557f34ef66b228851cc266a418e52b3d42905f61fe217e27a049a880477",
     "tests/infrastructure/test_corvexon_mswsock_imports.py": "e2b2cad669df9c09b9f730432f06874f9aa8dbf2408eedebb919c717a0f1f508",
     "tests/infrastructure/test_cpp_type_identities.py": "cc0202bc5acf2a5847d5ddd07c998da2c768a71c4ffa7ad594199885f48534e9",
     "tests/infrastructure/test_english_only_audit.py": "d5b6c41e67b42e8fb3c298efc0434251efa3c93283c9bc19b8cb2ebd3a7d6d2b",
@@ -3700,7 +3700,7 @@
     "metadata/WEEKLY_NAMING_POLICY.json": "eb6e27f1e9c9563244381cc678ba6fa9b6fd12cdb6a5600a4da5f16db2772d51",
     "scripts/weekly_naming.py": "2c1b4877a1cb9166104ca8dd241307a9ded040eb3c0af2d943029c2a42ee8b9e",
     "docs/SOURCE_DIFFERENTIAL_B49_B54.md": "0f0e74b193a69ce1417b0b172adb164a7d6a2acc5d906feb6507c849cf78c25c",
-    "docs/BUILD_PATH_TRUST.md": "93464b30f55d894658dccd771c263ceb593216e4ae973afb1b610375c4d45b56",
-    "scripts/build_orchestration/build_path_pinning.ps1": "0bcb5f93450cb34455e845d76ff2c0ea9618696ce29586300cd4cf133028acca"
+    "docs/BUILD_PATH_TRUST.md": "4ff4da3b801d1ca023bd88db26a20edeb8bc8edabadc86193c46f161c3e95e72",
+    "scripts/build_orchestration/build_path_pinning.ps1": "fd69e8ec890b65954f0365bc94faa38d988a66fc6b64e2d15de10698c8447dd9"
   }
 }

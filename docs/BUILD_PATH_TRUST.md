@@ -14,7 +14,9 @@ opens these entries with `FILE_FLAG_OPEN_REPARSE_POINT`, reads their attributes
 through the opened handle, and rejects reparse points and non-directories.
 Missing child directories are created while their parent is pinned.
 
-Read/write sharing permits ordinary build output. Omitted `FILE_SHARE_DELETE`
+The handle requests `FILE_LIST_DIRECTORY | FILE_READ_ATTRIBUTES`: a read-attributes
+only open does not participate in Windows share-access checks and cannot prevent
+renames. Read/write sharing permits ordinary build output. Omitted `FILE_SHARE_DELETE`
 prevents selected entries from being renamed or removed while the handles are
 held. The profile keeps those handles until after its exclusive build lock is
 released. Acquisition failure releases the partial chain; successful cleanup
@@ -27,6 +29,8 @@ environment variables across supported PowerShell/.NET versions.
 `build_path_reparse_contracts` executes the existing Windows PowerShell fixture
 under the full Native Debug/Release CTest inventory. It owns a temporary checkout
 and sibling outside directory, not the actual working checkout.
+The same fixture also runs before each full Native CI build for early feedback;
+the full CTest execution and its original 60-second budget remain required.
 
 - Retain existing junction, ordinary-file and lexical escape checks.
 - A separate process replaces a path after the parent validates it. The old

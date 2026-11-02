@@ -46,6 +46,7 @@ function Check-Renames([string[]]$Paths,[bool]$Denied) {
     $rows = @($answer.Results)
     Require ($rows.Count -eq $Paths.Count) 'Actor omitted a selected path component'
     for ($index=0; $index -lt $Paths.Count; $index++) {
+        Write-Host ('rename_component=' + $rows[$index].Path + ' expected_denied=' + $Denied + ' actual_denied=' + $rows[$index].Denied + ' native_code=' + $rows[$index].NativeCode)
         Require ($rows[$index].Path -eq $Paths[$index] -and $rows[$index].Denied -eq $Denied) 'Selected-component rename result differs from the expected sharing boundary'
     }
     Write-Host ('rename_actor_pid=' + $answer.ActorPid + ' denied=' + $Denied + ' components=' + $rows.Count)

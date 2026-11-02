@@ -8,7 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
-- Pin Windows build-output path components before the exclusive lock and retain them through the build profile. Add controlled cross-process junction replacement, rename, ACL-denial, rollback and output-confinement regressions; release pins in reverse order and restore environment state even after cleanup faults. Document the selected-component trust boundary; runtime and vendor sources are unchanged.
+- Pin Windows build-output path components before the exclusive lock and retain them through the build profile. Add controlled cross-process junction replacement, rename, ACL-denial, rollback and output-confinement regressions; release pins in reverse order and restore environment state even after cleanup faults. Use directory-list access so Windows enforces the no-delete sharing constraint, and run the same native fixture before long CI builds for early feedback. Document the selected-component trust boundary; runtime and vendor sources are unchanged.
 
 - Exercise the production Registry callbacks and SDK original-call adapters against isolated real Windows HKCU keys in A/W lifecycle tests. Cover native and fabricated opens, query/close overlap during startup waits, binding leases, untracked SDK opens and bounded numeric reuse observations. Preserve runtime behavior and distinguish these callback fixtures from MinHook and Consumer provenance acceptance.
 

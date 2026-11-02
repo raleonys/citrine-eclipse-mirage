@@ -1122,8 +1122,8 @@
       "sha256": "f76561bc8afe2c7f85665c98e4171ed63f65a3044973eba665014ed6d48a8528"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
-      "bytes": 15116,
-      "sha256": "ca8471fd0e11f87dce5a6d16e52bfdab50c36fa5c0c2c84745be46769270c8f3"
+      "bytes": 15298,
+      "sha256": "6cfb1557f34ef66b228851cc266a418e52b3d42905f61fe217e27a049a880477"
     },
     "tests/infrastructure/test_corvexon_mswsock_imports.py": {
       "bytes": 2490,
@@ -11699,7 +11699,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
+    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },
