@@ -2,7 +2,7 @@
 
 ## Authority and scope
 
-This document defines the intended GitHub-centered contribution and release model for Citrine Eclipse Mirage. The repository remains private until the owner separately approves a visibility change.
+This document defines the GitHub-centered contribution and release model for Citrine Eclipse Mirage. The repository became public by owner decision on 2026-11-02; release publication, ABI changes and other protected decisions remain separately governed.
 
 The owner's latest explicit instructions take precedence over repository guidance. Technical safety requirements and compatibility contracts remain effective unless an approved change explicitly replaces them. A successful check does not prove a different validation class.
 
@@ -22,7 +22,7 @@ The intended public-repository configuration runs source integrity, portable tes
 
 A skipped check is not a PASS. CI infrastructure failures may be rerun or repaired without being classified as product defects. Source changes are checked against exact source and dependency identities; no test evidence is automatically inherited from a different commit.
 
-The repository's current private workflow only runs source and portable checks automatically for ordinary pull requests. Windows native and Golden jobs remain manually dispatched until a separate CI migration enables and verifies their PR triggers and the applicable merge protections. Do not claim that this intended policy is already enforced.
+PR CI schedules Source QA, Linux portable, native Windows MSVC Release and Debug, Production/Golden Release, CRT Release, Debug, Compile Only, and full Windows portable Debug/Release. The reference object graph is also scheduled for every PR; specialized diagnostic workflows retain change-specific paths. Always verify actual check conclusions for the exact commit. The main ruleset requires the named Windows native and Windows production checks; additional check requirements are a separate ruleset decision.
 
 Local build, debug, and focused testing remain available developer tools; separate publication-governance credentials or repeated release gates are not prerequisites for ordinary development. During the migration, existing tracked hooks and QA scripts are updated only through reviewed changes, not silently bypassed.
 
@@ -60,7 +60,7 @@ Public documents should not disclose unnecessary implementation or integration d
 
 ## Migration record
 
-Remaining work includes metadata rationalization, removal of obsolete state files, PR-triggered Windows/Golden QA, and verified merge protection. Each migration must report its actual result and must not advertise pending controls as active.
+Remaining work includes metadata rationalization, verifying first PR-triggered Windows/Golden acceptance on the exact commit, and evaluating additional required check contexts. A configured CI job is not a PASS before actual execution.
 
 ## Retained technical boundaries
 
