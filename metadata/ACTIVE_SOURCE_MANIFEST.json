@@ -3239,7 +3239,7 @@
     "third_party/pegtl/src/test/extra_type_to_string.cpp": "ad7b78b47ca00ff88b23172d30d6f0b076347ec5fb435b927ddd9efa92af14c2",
     "third_party/pegtl/src/test/extra_unescape.cpp": "082eff38c952bdf4a56684bd41aacea76b2068f63b59f02f8985e7800cdc78a7",
     "third_party/pegtl/src/test/extra_unescape_to.cpp": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749",
-    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c",
+    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c",
     "third_party/pegtl/src/test/icu_utf16_base.cpp": "49da58e07465311642728619f2a57a990a17ad28438827bc92189ea3175ea063",
     "third_party/pegtl/src/test/icu_utf32_base.cpp": "5adaf877166d839ed70123dca614f2194f8a7058b0b2886ee06f87c4b3c0e9c5",
     "third_party/pegtl/src/test/icu_utf8_base.cpp": "be59703ff74dc818e0370e32a52124a31b95820d22fdd00950ff0fc9f1f6bed2",
