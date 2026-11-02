@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -20,13 +21,58 @@ from check_repository_contract import (
 
 
 def fixture_git_environment():
-    # A pre-push hook can export an absolute GIT_DIR for a linked worktree.
-    # Foreign-repository fixtures must not select the caller's Git metadata.
-    return {name: value for name, value in os.environ.items()
-            if not name.startswith('GIT_')}
+    # Hooks export repository selectors which override git -C. Only child Git
+    # processes for disposable fixtures receive this environment copy.
+    environment = os.environ.copy()
+    local_names = subprocess.run(['git', 'rev-parse', '--local-env-vars'],
+                                 capture_output=True, text=True, check=True,
+                                 timeout=30).stdout.splitlines()
+    for name in local_names:
+        environment.pop(name, None)
+    return environment
 
 
 class RepositoryRootOwnership(unittest.TestCase):
+    def test_nested_fixtures_preserve_inherited_worktree_repository(self):
+        if not shutil.which('git'):
+            self.skipTest('Git executable not available')
+        for all_selectors in (False, True):
+            with self.subTest(all_selectors=all_selectors), tempfile.TemporaryDirectory() as tmp:
+                parent, child = Path(tmp) / 'parent', Path(tmp) / 'linked'
+                parent.mkdir()
+                environment = fixture_git_environment()
+
+                def git(root, *args):
+                    return subprocess.run(['git', '-C', str(root), *args], env=environment,
+                                          check=True, capture_output=True, text=True,
+                                          timeout=30).stdout.strip()
+
+                git(parent, 'init')
+                (parent / 'README.md').write_text('owned outer fixture\n')
+                git(parent, 'add', 'README.md')
+                git(parent, '-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                    '-c', 'commit.gpgsign=false', 'commit', '-m', 'Outer fixture')
+                git(parent, 'worktree', 'add', '--detach', str(child), 'HEAD')
+                gitdir = Path(git(child, 'rev-parse', '--absolute-git-dir'))
+                head = git(child, 'rev-parse', 'HEAD')
+                registry = git(parent, 'worktree', 'list', '--porcelain')
+                index = (gitdir / 'index').read_bytes()
+                config = (parent / '.git/config').read_bytes()
+                selectors = {'GIT_DIR': str(gitdir)}
+                if all_selectors:
+                    selectors.update(GIT_WORK_TREE=str(child),
+                                     GIT_COMMON_DIR=str(parent / '.git'),
+                                     GIT_INDEX_FILE=str(gitdir / 'index'))
+                with mock.patch.dict(os.environ, selectors):
+                    self.test_real_git_worktree_gitfile_is_allowed()
+                    self.test_borrowed_valid_worktree_redirect_does_not_claim_another_root()
+                    self.assertEqual(selectors, {key: os.environ[key] for key in selectors})
+                self.assertEqual(head, git(child, 'rev-parse', 'HEAD'))
+                self.assertEqual(registry, git(parent, 'worktree', 'list', '--porcelain'))
+                self.assertEqual(index, (gitdir / 'index').read_bytes())
+                self.assertEqual(config, (parent / '.git/config').read_bytes())
+                self.assertEqual('owned outer fixture\n', (child / 'README.md').read_text())
+
     def test_expected_root_files_and_directories_are_allowed(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -55,10 +101,9 @@ class RepositoryRootOwnership(unittest.TestCase):
             def git(*args):
                 subprocess.run(['git', '-C', str(parent), *args],
                                check=True, capture_output=True, text=True,
-                               env=environment)
+                               timeout=30, env=environment)
             git('init')
             git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
-                '-c', 'commit.gpgsign=false',
                 'commit', '--allow-empty', '-m', 'fixture')
             git('worktree', 'add', '--detach', str(child), 'HEAD')
             self.assertTrue((child / '.git').is_file())
@@ -115,10 +160,9 @@ class RepositoryRootOwnership(unittest.TestCase):
             def git(*args):
                 subprocess.run(['git', '-C', str(parent), *args],
                                check=True, capture_output=True, text=True,
-                               env=environment)
+                               timeout=30, env=environment)
             git('init')
             git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
-                '-c', 'commit.gpgsign=false',
                 'commit', '--allow-empty', '-m', 'fixture')
             git('worktree', 'add', '--detach', str(child), 'HEAD')
             self.assertEqual([], check_root_file_ownership(child, ['README.md']))
