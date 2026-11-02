@@ -67,7 +67,7 @@ try {
     # Verify even on incremental builds that bypass the link POST_BUILD hook.
     Invoke-ExternalChecked $PythonExe @('-B',(Join-Path $Root 'scripts/import_descriptor_order.py'),'--root',$Root,'--dll',$Dll,'--verify') 'Unsigned DLL import descriptor order' 118
     $BeforeHash = (Get-FileHash -LiteralPath $Dll -Algorithm SHA256).Hash.ToLowerInvariant()
-    $Receipt = @{classification='NOT_RELEASE'; build_succeeded=$true; mode=$Mode; configuration=$Config; dll_sha256=$BeforeHash; compiler=$ClExe; compiler_sha256=(Get-FileHash -LiteralPath $ClExe -Algorithm SHA256).Hash.ToLowerInvariant(); cmake_cache_sha256=(Get-FileHash -LiteralPath (Join-Path $Out 'CMakeCache.txt') -Algorithm SHA256).Hash.ToLowerInvariant(); source_manifest_sha256=(Get-FileHash -LiteralPath (Join-Path $Root 'metadata/ACTIVE_SOURCE_MANIFEST.json') -Algorithm SHA256).Hash.ToLowerInvariant(); real_game_acceptance='NOT_RUN'}
+    $Receipt = @{classification='NOT_RELEASE'; build_succeeded=$true; mode=$Mode; configuration=$Config; dll_sha256=$BeforeHash; compiler=([System.IO.Path]::GetFileName($ClExe)); compiler_sha256=(Get-FileHash -LiteralPath $ClExe -Algorithm SHA256).Hash.ToLowerInvariant(); cmake_cache_sha256=(Get-FileHash -LiteralPath (Join-Path $Out 'CMakeCache.txt') -Algorithm SHA256).Hash.ToLowerInvariant(); source_manifest_sha256=(Get-FileHash -LiteralPath (Join-Path $Root 'metadata/ACTIVE_SOURCE_MANIFEST.json') -Algorithm SHA256).Hash.ToLowerInvariant(); real_game_acceptance='NOT_RUN'}
     $Receipt['validation_result'] = 'NOT_COMPLETED'
     $Receipt | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'LOCAL_BUILD_RECEIPT.json') -Encoding UTF8
     Write-Host '[3/3] Validate selected profile'
@@ -98,7 +98,7 @@ try {
             }
             $ReportedHash = (Get-FileHash -LiteralPath $ReportedDll -Algorithm SHA256).Hash.ToLowerInvariant()
             if ($ReportedHash -ne $GoldenReport.sha256) { Fail-Build 'Local dist hash differs from the validated Golden DLL.' 117 }
-            $Receipt['dist_artifact'] = $ReportedDll
+            $Receipt['dist_artifact'] = [System.IO.Path]::GetFileName($ReportedDll)
             $Receipt['dist_sha256'] = $ReportedHash
             $Receipt['dist_sha256_file'] = $GoldenReport.dist_sha256_file
             $Receipt['dist_receipt'] = $GoldenReport.dist_receipt
@@ -112,13 +112,13 @@ try {
     $Receipt | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $Out 'LOCAL_BUILD_RECEIPT.json') -Encoding UTF8
     if ($GoldenBlocked) {
         Write-Host 'LOCAL Golden: BLOCKED - product PE targets are incomplete; compilation and resource/export checks completed.' -ForegroundColor Yellow
-        Write-Host "DLL: $Dll"
+        Write-Host "DLL: $([System.IO.Path]::GetFileName($Dll))"
         Write-Host "SHA256: $BeforeHash"
         Write-Host 'Exit code 3. See golden-local/GOLDEN_REPORT.json. This is not Golden acceptance.'
         exit 3
     }
     Write-Host "$ProfileLabel`: PASS"
-    Write-Host "DLL: $ReportedDll"
+    Write-Host "DLL: $([System.IO.Path]::GetFileName($ReportedDll))"
     Write-Host "SHA256: $ReportedHash"
 } finally {
     try {
