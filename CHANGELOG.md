@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Cover ordered LSX send completion anomalies with three receipt-safety regressions: over-reported first/final chunk lengths and full-length completions carrying socket errors. Run the session-flow CTest on genuine Windows MSVC Debug/Release in the existing reference acceptance workflow; no production runtime behavior changed.
+
 - Add actual Asio IPv4/IPv6 pending-accept shutdown regression scenarios, with both unconnected and already-connected peers, to distinguish cancellation intent from callback finality and prevent post-stop rearm. Include the native net-failure test in focused Windows MSVC Debug/Release lifecycle CI; no production behavior changed. Continue focused cancellation checks after a lifecycle failure only when the native build succeeded.
 
 - Add a native Windows online-provider physical image-lease regression: after an injected FreeLibrary failure, verify the DLL remains mapped and callable until exact retry succeeds, then verify actual unload and no double release. Separate MSVC Debug/Release acceptance from future foreign-callback concurrency validation; production provider code remains unchanged.
