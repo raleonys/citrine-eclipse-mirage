@@ -89,7 +89,7 @@ template<class F> bool until(F f) {
 struct HandlerFailure{};
 struct Factory final:net::HandlerFactory {
     std::atomic<unsigned> creates{0},errors{0},dispatch_errors{0};
-    std::atomic<bool> null_handler{false};
+    std::atomic<bool> null_handler{false},throw_on_create{false};
     struct Handler final:server::Handler {
         void reset_02bc70()override{}
         std::string initial_message_02d540()override{return std::string("hello\0",6);}
@@ -100,7 +100,9 @@ struct Factory final:net::HandlerFactory {
         }
     };
     std::unique_ptr<server::Handler> create()override {
-        ++creates;return null_handler.load()?nullptr:std::make_unique<Handler>();
+        ++creates;
+        if(throw_on_create.load())throw HandlerFailure{};
+        return null_handler.load()?nullptr:std::make_unique<Handler>();
     }
     void error(std::string_view op,std::exception_ptr)noexcept override {
         ++errors;if(op=="cleanup dispatch")++dispatch_errors;
@@ -172,6 +174,33 @@ void factory_failure_rearms() {
     healthy.send("recovered");
     require(healthy.frame()=="recovered","new handler cannot process traffic after factory recovery");
     service.stop();service.stop();
+}
+void throwing_factory_preserves_live_sessions() {
+    // B53: unlike a null handler, a throwing constructor destroys the
+    // partially built Client and must still rearm the real listening socket.
+    Context c;
+    net::AsioService service(c.factory,c.execution,c.port,c.ready);
+    service.start();
+    Peer existing(c.port);
+    require(existing.frame()=="hello","live control session greeting");
+    c.factory.throw_on_create.store(true);
+    Peer rejected(c.port);
+    require(rejected.closed(),"throwing factory did not retire its accepted TCP socket");
+    require(until([&]{return c.factory.creates.load()>=2&&c.factory.errors.load()>=1;}),
+        "throwing factory exception was not attributed to accepted-session cleanup");
+    c.factory.throw_on_create.store(false);
+    Peer recovered(c.port);
+    require(recovered.frame()=="hello","listener was not rearmed after throwing factory");
+    existing.send("existing-alive");
+    require(existing.frame()=="existing-alive",
+        "throwing second factory disturbed a previously committed live session");
+    recovered.send("new-owner");
+    require(recovered.frame()=="new-owner","post-failure session cannot route a request");
+    require(c.factory.creates==3&&service.impl_->active_sessions==2,
+        "failed factory leaked an active-session slot or created extra handlers");
+    service.stop();service.stop();
+    require(service.impl_->active_sessions==0&&service.impl_->clients.empty(),
+        "shutdown after failed factory retained a partially constructed Client");
 }
 void accept_cancellation_finality() {
     Context c;net::AsioService::Impl owner(c.factory,c.execution,c.port,c.ready,{});
@@ -277,7 +306,7 @@ void drain_retry() {
 int main(int argc,char** argv)try {
     const std::string_view selected=argc==2?argv[1]:"all";
     bool ran=false;
-    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms}})
+    for(auto [name,fn]:{std::pair{"accept",accept_failure},{"accept-cancel",accept_cancellation_finality},{"dual-accept-stop",dual_stack_accept_cancellation_finality},{"post",post_failure},{"stop-oom",stop_without_allocation},{"io-exception",io_failure},{"drain-retry",drain_retry},{"factory-rearm",factory_failure_rearms},{"factory-throw",throwing_factory_preserves_live_sessions}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");return 0;
 }catch(const std::exception& e){fault::next=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
