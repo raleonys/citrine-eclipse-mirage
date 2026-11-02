@@ -11,6 +11,8 @@
 #include <cstdint>
 #include <mutex>
 #include <new>
+#include <memory>
+#include <span>
 namespace receive_buffer_probe {
 struct Allocation{void* base;std::size_t bytes;};
 std::atomic<bool> recording{false};
@@ -212,6 +214,64 @@ void receive_cancellation_lifetime(){
         "terminal completion drains the receive loan and releases the client exactly once");
     require(receive_buffer_probe::released==1,"terminal completion frees the exact observed receive allocation once");
 }
+void combined_read_write_close_retry(){
+    // A source-linked B50 regression: real WSARecv and WSASend borrow two
+    // distinct live allocations while the same native socket close is retained.
+    // The retry is caused by an injected WSAEWOULDBLOCK close, not a fabricated
+    // Windows completion or a claim that the kernel took over 100 ms.
+    Harness h(false);
+    struct Reset {
+        ~Reset(){receive_buffer_probe::recording=false;receive_buffer_probe::tracked=nullptr;fault::error=0;}
+    } reset;
+    receive_buffer_probe::count=0;
+    receive_buffer_probe::released=0;
+    const auto native=h.client->socket.native_handle();
+    receive_buffer_probe::socket=native;
+    receive_buffer_probe::recording=true;
+    unsigned receive_callbacks=0,send_callbacks=0;
+    h.client->async_receive(4096,[&](server::Error,std::string){++receive_callbacks;});
+    receive_buffer_probe::recording=false;
+    require(receive_buffer_probe::tracked!=nullptr&&receive_buffer_probe::released==0,
+        "real WSARecv must own the observed receive buffer until completion");
+    auto payload=std::make_shared<std::string>(128*1024,'X');
+    std::weak_ptr<std::string> borrowed_write=payload;
+    h.client->async_send(std::span<const char>(payload->data(),payload->size()),
+        [payload,&send_callbacks](server::Error,std::size_t){++send_callbacks;});
+    payload.reset();
+    require(h.client->pending_reads==1&&h.client->pending_writes==1&&
+            !borrowed_write.expired(),
+        "both kernel-submitted operations retain independent read/write storage");
+    fault::target=native;
+    fault::error=WSAEWOULDBLOCK;
+    h.client->close();
+    require(h.client->pending_reads==1&&h.client->pending_writes==1&&
+            receive_buffer_probe::released==0&&!borrowed_write.expired()&&
+            h.owner.active_sessions==1&&!h.client->retired(),
+        "failed native close must retain both pending operation loans");
+    std::weak_ptr<net::AsioService::Impl::Client> lifetime=h.client;
+    h.client.reset();
+    require(!lifetime.expired(),"failed close may not retire the client at caller release");
+    const bool pending=stop_failed(h.owner);
+    require(pending&&h.owner.active_sessions==1&&!h.owner.clients.empty()&&
+            !lifetime.expired(),
+        "first shutdown must fail closed while the native close lease is retained");
+    require(receive_callbacks==0&&send_callbacks==0,
+        "cancelled operations must never dispatch stale business callbacks");
+    // The first run_for may already consume the Windows completions; either
+    // timing is valid, but the failing native close still owns the session.
+    fault::error=0;
+    h.owner.stop();
+    require(h.owner.active_sessions==0&&h.owner.clients.empty()&&
+            lifetime.expired()&&borrowed_write.expired()&&
+            receive_buffer_probe::released==1,
+        "successful retry must release both real I/O loans and the client once");
+    require(receive_callbacks==0&&send_callbacks==0,
+        "retry must not resurrect cancelled read/write business callbacks");
+    const auto close_count=fault::closes.load();
+    h.owner.stop();
+    require(fault::closes==close_count&&receive_buffer_probe::released==1,
+        "later shutdown cannot repeat an already-completed native close or buffer free");
+}
 void timer_retirement(){
     Harness h;fault::hold_timer=true;const bool pending=stop_failed(h.owner);fault::hold_timer=false;
     h.client->timer.cancel();h.owner.stop();
@@ -253,7 +313,7 @@ int main(int argc,char** argv)try{
     for(auto [name,fn]:{std::pair{"retry",+[]{retained_retry(false);}},
         {"retry-option",+[]{retained_retry(true);}},{"uncertain-open",+[]{unknown_quarantine(false);}},
         {"uncertain-closed",+[]{unknown_quarantine(true);}},{"completion",completion_lifetime},
-        {"receive-completion",receive_cancellation_lifetime},{"timer",timer_retirement},{"constructor",constructor_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
+        {"receive-completion",receive_cancellation_lifetime},{"read-write-retry",combined_read_write_close_retry},{"timer",timer_retirement},{"constructor",constructor_rollback},{"bind",bind_rollback},{"listener",listener_retry}})
         if(selected=="all"||selected==name){fn();ran=true;std::cout<<"PASS: "<<name<<'\n';}
     require(ran,"unknown case");
 }catch(const std::exception& e){fault::error=0;fault::hold_timer=false;std::cerr<<"FAIL: "<<e.what()<<'\n';return 1;}
