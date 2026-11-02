@@ -10,67 +10,87 @@ Previous ZIP deliveries remain independent backups, not recreated Git history.
 ## Change and merge policy
 
 The mandatory rules at the start of [AGENTS.md](../AGENTS.md) apply to all agents
-and contributors. Branch choice follows the workstream, not the number of tasks.
+and contributors. The owner replaced the former permanent `bugfix` model:
+`main` is now the only permanent branch.
 
 | Branch | Purpose | Lifetime |
 | --- | --- | --- |
 | `main` | Accepted integration; updated only by the owner's reviewed PR merges | Permanent |
-| `bugfix` | Routine fixes, dependency updates, documentation, tests and small maintenance | Permanent; reused across PR batches |
-| Descriptive audit/project branch | Explicitly scoped, sustained investigation or substantial project | Retained throughout the workstream; retired only after completion review |
-| Exceptional temporary branch | Work explicitly requested by the owner to be isolated temporarily | Deleted after the completion and preservation checks below |
+| Descriptive PR branch, such as `fix/registry-close` or `chore/logo-and-pr-branches` | One coherent fix, feature, documentation change or audit PR | Temporary; delete when the PR closes, merged or unmerged |
 
 Never edit, commit, push, reset, delete or force-update main directly, locally or
 remotely. File-content API writes targeting main are also prohibited. Reading,
-fetching and testing it in a clean checkout is allowed. Agents prepare changes
-on the appropriate working branch and open PRs; only the owner merges into main.
+fetching and testing it in a clean checkout is allowed. Only the owner merges
+reviewed PRs into main.
 
-Before writing, inspect the working tree and current branch, fetch remote refs,
-and inspect open PRs for overlapping work. Read the current AGENTS.md and
-GOVERNANCE.md from fetched origin/main as well as the working branch;
-an older audit checkout does not exempt an agent from current owner rules.
-Synchronize bugfix with current main
-before the next batch: fast-forward when possible, otherwise merge main normally.
-Preserve others' uncommitted work. Never rebase published shared history or use
-force-push, including force-with-lease. Coordinate overlapping edits and do not
-combine unrelated active contributions merely because they share bugfix.
+Before writing, inspect the working tree, current refs and open PRs, and fetch
+current `main`. Read `AGENTS.md` and `GOVERNANCE.md` from both fetched main and
+the working checkout. Create a fresh descriptive branch from fetched main for
+each new PR. Do not recreate a shared `bugfix` branch, reuse a closed PR's branch
+or keep permanent audit/research branches. Preserve others' uncommitted work and
+keep unrelated active contributions separate.
+
+While a PR is open, update its own branch and synchronize accepted main by
+fast-forward or normal merge when needed. Never rebase published shared history
+or use force-push, including force-with-lease. An audit can continue across
+successive PRs, but each new PR gets a new temporary branch. Move any remaining
+work to a successor PR before closing the current one; no continuing project
+creates an exemption from source-branch cleanup.
 
 Open a focused PR for each coherent reviewable batch, stating the problem, scope,
-tests and remaining work. Retain bugfix after merge. Prefer merge commits for
-these PRs to make later synchronization simple. A dependency update, documentation
-change, new task or new PR does not by itself justify a new branch.
-
-Never create a draft PR, convert a PR to draft or leave a PR in draft. Complete
-the required local validation before opening a ready-for-review PR. Track
-remaining work, pending CI/native MSVC/Golden/game validation and merge blockers
-explicitly in its description. Keep that description current as evidence changes.
-Ready-for-review is a review state, not acceptance, approval or permission to
-merge; existing validation gates and the owner-only merge rule still apply.
-This rule concerns pull requests. Owner-authorized weekly draft releases
-continue under the separate release policy.
-
-Dedicated audit/project branches need a descriptive name and an explicit scope
-recorded in the PR. Reuse each branch through the sustained workstream rather than
-opening another branch for each finding. Do not create a dedicated branch merely
-to submit one or two small PRs. Existing active audit branches remain protected
-from cleanup. Exceptional temporary branches require an explicit owner instruction.
+validation results and remaining work. Never create a draft PR, convert a PR to
+draft or use draft mode for pending validation. Complete required local checks
+before opening a ready-for-review PR and record pending CI/native/Golden/game
+checks and merge blockers explicitly. Ready-for-review is not approval or merge
+authorization. Owner-authorized weekly draft releases remain a separate flow.
 
 ## Branch completion and cleanup
 
-Keep automatic head-branch deletion disabled. A merged PR alone does not retire
-a shared or ongoing workstream branch. Never delete main or bugfix.
+Source-branch deletion is mandatory when a PR closes, whether merged or closed
+without merging. Closure is not administratively complete until its temporary
+branch has been removed. This standing owner rule authorizes routine cleanup;
+no additional per-branch approval is needed after the checks below. It never
+authorizes deleting `main` or losing needed unmerged work.
 
-For a completed dedicated or exceptional temporary branch:
+1. Before closure, check every open PR and dependency using the branch. Move
+   continuing work to a fresh successor PR first; do not delete an active PR's
+   head or a branch still needed by another open PR.
+2. Record the branch name and full final tip SHA in the PR's closure record.
+   For a merged PR, verify the tip is contained in current main. For squash or
+   cherry-pick integration, verify the actual changes and their preserved
+   destination rather than relying on ancestry alone.
+3. Before closing without merging, preserve needed unmerged commits in a verified
+   Git bundle, an archival tag or a successor PR. Record the preservation
+   location and exact SHA before removing the source branch. Deletion is cleanup,
+   not permission to discard work.
+4. Recheck the remote tip immediately before deletion. If it changed or
+   preservation is uncertain, resolve that discrepancy before completing
+   cleanup. Delete the remote branch and remove local branches/worktrees only
+   after checking for uncommitted work; never force-delete a dirty worktree.
 
-1. Obtain the owner's confirmation that the workstream is complete. Check all its
-   open PRs and outstanding work; do not delete a branch still needed by either.
-2. Verify the tip is contained in current main. For squash/cherry-pick histories
-   where ancestry cannot prove preservation, review the actual changes and record
-   their preserved destination; do not infer safety from a closed PR or its title.
-   Unmerged work requires explicit owner instructions for preservation/disposal.
-3. Record the branch name and full tip SHA in the cleanup record before deleting
-   the remote branch. Do not remove local worktrees with uncommitted changes.
-4. Recheck the remote tip immediately before deletion. If it changed, or ownership
-   or preservation is uncertain, preserve the branch and report the issue.
+### GitHub setting
+
+The repository owner should enable **Settings > General > Pull Requests >
+Automatically delete head branches**. This deletes eligible source branches
+after a PR is merged. Branch protections/rulesets can prevent deletion; retain
+protection for `main` and do not apply a permanent deletion prohibition to
+temporary PR branches. Do not weaken review, CI or main protections.
+
+The setting does **not** delete the head of a PR closed without merging. After
+preserving unmerged work, manually use the closed PR's **Delete branch** button
+or `git push origin --delete <branch>`. Local branch cleanup is also manual.
+The setting is an owner-managed repository option, not a YAML configuration or
+an assertion that automation has already been enabled.
+
+### Existing branch migration
+
+The old `bugfix` branch and every existing audit/research branch are subject to
+this lifecycle. Check their exact tips and open PR associations before cleanup.
+Remove closed-PR branches after verified preservation; keep open-PR branches
+only until their own closure. Move branches serving solely as historical source
+archives into verified bundles or archival tags, record those destinations and
+remove the branches. Do not bulk-delete active branches or infer that an old
+branch is fully preserved from its name, age or PR title.
 
 Written rules guide contributors but do not add technical server enforcement.
 Do not change repository visibility, access or protections to bypass the process.
@@ -95,12 +115,10 @@ manually merge; requiring an independent formal approval needs a separate bot
 or reviewer account. No branch-protection rule or approval bypass is installed
 by these workflow files. Repository settings remain a separate owner decision.
 
-The owner explicitly chooses to keep the repository private on the current plan
-and continue with manual PR review/merge. Rulesets are not enforced on this
-private repository under the current plan. PR/CI checks remain visible, but
-GitHub does not technically block direct pushes or merging failed checks. The
-assistant must still follow the owner-only merge policy. No plan upgrade or
-organization transfer is part of this task.
+The repository is public by owner decision. Repository permissions, rulesets
+and the merged-branch deletion option are owner-managed settings; this PR
+workflow does not change them or bypass them. Only the owner merges reviewed
+PRs, and failed required checks must be resolved before merge.
 
 ## Exact source and vendor identity
 
@@ -151,10 +169,12 @@ The absolute path also keeps the hook available to older worktrees of that clone
 Python must be available as `python`, as for the existing source QA command. The
 hook executes local source QA on the committed checkout before transferring refs;
 it performs no Windows build, automatic hash recording or hosted Actions run.
-It rejects direct main pushes, bugfix deletion, dirty checkouts and a pushed commit
-other than the checked-out HEAD. If HEAD/files change during QA, it rejects the push.
-Pure branch deletion does not run source QA; the owner-confirmed cleanup rules
-above still apply. Do not bypass the gate with --no-verify or disable it.
+It rejects direct main pushes, updates that recreate/reuse the retired shared
+`bugfix` branch, dirty checkouts and a pushed commit other than the checked-out
+HEAD. Deleting `bugfix` is allowed under the closure rules above. If HEAD/files
+change during QA, the hook rejects the push. Pure branch deletion does not run
+source QA; the preservation and dependency checks above still apply. Do not
+bypass the gate with --no-verify or disable it.
 
 Hooks do not install themselves in other clones and cannot prevent API/browser
 writes or a deliberate bypass. Every agent must configure its clone. Keep CI as
@@ -163,40 +183,26 @@ protection or establish native Windows/game acceptance.
 
 ## CI and acceptance evidence
 
-The workflow runs on PRs, main pushes and manual dispatch. Official checkout,
-Python and artifact actions are pinned to verified commit SHAs. To reduce
-hosted-runner usage in the private repository, automatic runs perform only
-source QA and portable tests. Both Windows jobs in this CI workflow require
-manual dispatch. The separate owner-authorized weekly draft workflow is described
-in [weekly draft releases](WEEKLY_RELEASE.md).
+The current [CI workflow](../.github/workflows/ci.yml) runs on pull requests,
+main pushes and manual dispatch. Official checkout, Python and artifact actions
+are pinned to verified commit SHAs. Every PR schedules:
 
-- Linux executes source QA and portable CMake/CTest checks.
-- On manual dispatch, Windows executes the existing Native Acceptance Release profile, including
-  source API and native tests, without changing its assertions or budgets.
-- A separate manually dispatched Windows job executes the existing Production/Golden Release
-  profile, including its six gates and real final-name DLL lifecycle checks.
-- Evidence artifacts are retained for 14 days, including toolchain provenance,
-  receipts, CTest results and Golden reports. The local Golden DLL, checksum
-  and receipt are downloadable only after the production profile succeeds.
+- Source QA and full Linux portable CTest.
+- Windows MSVC Native Release and Debug, Production/Golden Release, CRT Release,
+  Debug and Compile Only profiles, using the existing operator scripts.
+- Full Windows portable CTest in Debug and Release.
+- The separate [reference graph workflow](../.github/workflows/msvc-reference-graph.yml).
+  Focused diagnostic workflows also run for their configured changed paths.
 
-To request Windows validation, open Actions, select **Source and Windows checks**,
-choose **Run workflow**, and select the branch to validate. The manual run first
-executes source QA/portable tests and then both Windows profiles. There is no
-schedule in this CI workflow, or automatic Windows build on PR updates or main pushes. The existing
-local Windows build and acceptance scripts remain available unchanged.
+Inspect actual conclusions for the exact proposed commit. A skipped Windows job
+is not a PASS, a configured job is not proof of execution, and earlier-head
+results do not establish acceptance after a relevant change. Evidence artifacts
+retain toolchain provenance, receipts, CTest results and Golden reports for
+14 days. The local Golden DLL, checksum and receipt are downloadable after
+the production profile succeeds.
 
-A skipped Windows job is not a passed Windows test. On an automatic run, a green
-workflow badge records source/portable success only. Review native MSVC/Golden
-evidence for the exact source commit separately before treating it as accepted;
-do not inherit acceptance from a parent commit or from Wine tests. Local Windows
-receipts or an explicitly requested manual CI run can provide that evidence.
-
-This CI workflow does not create releases, publish, upload to Library or merge code. A local
-Golden candidate remains NOT_RELEASE. A green CI run is not real game acceptance.
-Debug/Compile/CRT-specific operator profiles and game checks remain available
-separately; this initial workflow does not claim to run every profile.
-
-Hosted runner images/toolchain patches can change. Use captured toolchain and
-binary hashes to identify each result; do not equate a runner build with the
-owner's compiler or accepted game binary. Newly wired Windows jobs are unverified
-until their real GitHub Actions runs complete successfully.
+These CI jobs do not merge PRs, publish releases or establish actual
+Consumer/game acceptance. Weekly release drafts remain separately governed by
+[WEEKLY_RELEASE.md](WEEKLY_RELEASE.md). Hosted runner images and toolchain patches
+can change; use recorded source, toolchain and binary identities when assessing
+results rather than treating runner execution as the owner's game session.
