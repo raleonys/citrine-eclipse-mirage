@@ -1242,8 +1242,8 @@
       "sha256": "b0550335f1670b935100e22bfabfafef07f03711b9d6f5f0e430a5a6c1fdfb29"
     },
     "tests/native/net_failure_tests.cpp": {
-      "bytes": 16679,
-      "sha256": "0617461d592eae1515f3f2abcd7d58ea458d0ea4873afd5f8c84acc82db7f4ed"
+      "bytes": 17185,
+      "sha256": "8b1f6ccdbb5758d4f0be1e914aa055fe85079bb018cbb7f39b203e16da84ab06"
     },
     "tests/native/network_policy_tests.cpp": {
       "bytes": 10394,

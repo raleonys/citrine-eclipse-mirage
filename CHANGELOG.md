@@ -8,7 +8,7 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
-- Extend the B53 native service-construction fault matrix: an accepted TCP session whose real handler factory throws must close without consuming a session slot, rearm the listener, preserve an already-committed peer and allow new sessions; repeated stop drains all owners. This independently covers a throwing factory rather than the existing null-handler or native-close-failure cases. No production code, hook, ABI or vendor changes; Consumer/game parity remains unverified.
+- Extend B53 partial-publication retirement coverage: force the first native greeting to throw after a real Asio Client is counted and registered, then require exact session-slot rollback, one error report, listener rearm, uninterrupted existing-peer traffic and clean repeated stop. This is independent of handler factory creation failures; no production code, ABI, hook or vendor changes, and Consumer/game parity remains unverified.
 
 - Replace the README campaign logo with the exact owner-supplied 1400 x 1100 PNG from the new ZIP, preserving its bytes and updating the artwork identity record. Make `main` the only permanent branch: use a fresh branch per PR and require source-branch deletion after merged or unmerged closure, with prior preservation of needed work. Update contributor guidance, the PR template and the local push gate; document GitHub's merged-branch deletion setting and manual cleanup for unmerged PRs.
 
