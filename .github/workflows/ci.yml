@@ -103,6 +103,15 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.13"
+      - name: Mask machine-specific paths in CI console
+        run: |
+          $paths = @((Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          foreach ($path in ($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)) {
+            if ($path -match '[\r\n]') { throw 'Unsafe path for GitHub log masking.' }
+            Write-Output "::add-mask::$path"
+            $slashPath = $path.Replace('\\', '/')
+            if ($slashPath -ne $path) { Write-Output "::add-mask::$slashPath" }
+          }
       - name: Check build-path pinning before the full native build
         if: matrix.profile == 'native' || matrix.profile == 'native-debug'
         timeout-minutes: 1
@@ -163,6 +172,15 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.13"
+      - name: Mask machine-specific paths in CI console
+        run: |
+          $paths = @((Get-Location).Path, $env:USERPROFILE, $env:TEMP, $env:TMP, $env:RUNNER_TEMP)
+          foreach ($path in ($paths | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | Select-Object -Unique)) {
+            if ($path -match '[\r\n]') { throw 'Unsafe path for GitHub log masking.' }
+            Write-Output "::add-mask::$path"
+            $slashPath = $path.Replace('\\', '/')
+            if ($slashPath -ne $path) { Write-Output "::add-mask::$slashPath" }
+          }
       - name: Configure genuine MSVC portable checks
         run: |
           $build = 'build/ci-portable-${{ matrix.configuration }}'
