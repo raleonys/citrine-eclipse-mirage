@@ -246,17 +246,24 @@ try {
     $savedAcl = [System.IO.Directory]::GetAccessControl($blocked)
     $restrictedAcl = [System.IO.Directory]::GetAccessControl($blocked)
     $userSid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
+    $deniedRights = [System.Security.AccessControl.FileSystemRights]::ReadAttributes -bor [System.Security.AccessControl.FileSystemRights]::ListDirectory
     $deny = New-Object System.Security.AccessControl.FileSystemAccessRule(
-        $userSid,[System.Security.AccessControl.FileSystemRights]::ReadAttributes,
+        $userSid,$deniedRights,
         [System.Security.AccessControl.AccessControlType]::Deny)
     $restrictedAcl.AddAccessRule($deny)
     $denied = $false
     try {
         [System.IO.Directory]::SetAccessControl($blocked,$restrictedAcl)
+        $installedAcl = [System.IO.Directory]::GetAccessControl($blocked)
+        $installedDeny = @($installedAcl.GetAccessRules($true,$false,[System.Security.Principal.SecurityIdentifier]) | Where-Object {
+            $_.IdentityReference -eq $userSid -and $_.AccessControlType -eq [System.Security.AccessControl.AccessControlType]::Deny -and ($_.FileSystemRights -band $deniedRights) -eq $deniedRights
+        })
+        Require ($installedDeny.Count -gt 0) 'Requested directory-read denial was not installed on the owned fixture'
         try { $pinned = Enter-PinnedBuildPath $root $blocked }
         catch {
             $native = $_.Exception.GetBaseException()
             if ($native -isnot [System.ComponentModel.Win32Exception] -or $native.NativeErrorCode -ne 5) { throw }
+            Write-Host ('acl_native_error=' + $native.NativeErrorCode + ' denied_rights=' + [int]$deniedRights)
             $denied = $true
         }
     } finally {
