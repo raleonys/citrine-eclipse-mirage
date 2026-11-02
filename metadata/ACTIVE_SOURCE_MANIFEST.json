@@ -441,7 +441,7 @@
     "scripts/prepare_hook_engine.py": "21257a4e78e5fbb0baccea38f303937c671dbfd8d0e977cd4598e9ffca69414c",
     "scripts/project_files.py": "ab0d8d6762688d4bde9f3bd75f611930bf9eddeb88218abea4cd17d1d5ecd8fe",
     "scripts/restore_vendor_links.py": "60cd17c302d158b820f1d55bc45dae113a85dcd0506125601e035466761ea62a",
-    "scripts/run_golden_pipeline.py": "4a55abb44f41c72e80722f59b91d33833b946816ecd2caeabe5414bcce36d730",
+    "scripts/run_golden_pipeline.py": "d3823774b81b9fafd0074f9045bb8766b147467ca51ff1612df803cd04e4cb81",
     "scripts/run_source_qa.py": "1680e678ec5c509dfec39bfe98348a1b37b947e5d9d36f03dcfc3c2dbcfa98bf",
     "scripts/run_wine_test.py": "5fd43eab40f190c115f676d734ff5853bc7e9e265d27b08a5a1982d686b2bdfc",
     "scripts/ursynex_golden_finalizer.py": "ff90450828c1753a858a7a7413dbe782f3d0a38cc5e7baa7e3b7a0b5d242c438",
