@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Add actual Asio IPv4/IPv6 pending-accept shutdown regression scenarios, with both unconnected and already-connected peers, to distinguish cancellation intent from callback finality and prevent post-stop rearm. Include the native net-failure test in focused Windows MSVC Debug/Release lifecycle CI; no production behavior changed. Continue focused cancellation checks after a lifecycle failure only when the native build succeeded.
+
 - Add a native Windows online-provider physical image-lease regression: after an injected FreeLibrary failure, verify the DLL remains mapped and callable until exact retry succeeds, then verify actual unload and no double release. Separate MSVC Debug/Release acceptance from future foreign-callback concurrency validation; production provider code remains unchanged.
 
 - Repair the reference socket cancellation gate's exception path: release the selected engine gate when category resolution or cancellation rejects unsupported source input, while preserving normal close order and retaining the socket/control state on failure. Add focused injected-failure regression checks with unchanged strong/weak owner counts, and keep active-source terminology within the enforced policy; shipping Asio is unchanged. Add focused Windows Debug/Release execution of socket_closing_contracts to reference CI, and stack this change on the queued shutdown fix in PR #89.
