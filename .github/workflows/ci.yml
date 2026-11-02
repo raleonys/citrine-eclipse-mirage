@@ -121,14 +121,6 @@ jobs:
           path: |
             build/ci-${{ matrix.profile }}/BUILD_TOOLCHAIN_PROVENANCE.log
             build/ci-${{ matrix.profile }}/LOCAL_BUILD_RECEIPT.json
-            build/ci-${{ matrix.profile }}/PUBLIC_DLL_ABI_CHECK.json
-            build/ci-${{ matrix.profile }}/DLL_RESOURCE_CHECK.json
-            build/ci-${{ matrix.profile }}/CTEST_RESULTS.xml
-            build/ci-${{ matrix.profile }}/production-boundary.*.json
-            build/ci-${{ matrix.profile }}/golden-local/**/*.json
-            build/ci-${{ matrix.profile }}/Testing/Temporary/*.log
-            build/ci-${{ matrix.profile }}/CMakeCache.txt
-            build/ci-${{ matrix.profile }}/CMakeFiles/CMakeConfigureLog.yaml
           if-no-files-found: warn
           retention-days: 14
       - name: Retain validated local Golden candidate
@@ -178,17 +170,3 @@ jobs:
           $build = 'build/ci-portable-${{ matrix.configuration }}'
           ctest --test-dir $build -C '${{ matrix.configuration }}' --no-tests=error --output-on-failure --timeout 180 --output-junit "$build/CTEST_RESULTS.xml" 2>&1 | Tee-Object -FilePath "$build/portable-ctest.log"
           if ($LASTEXITCODE -ne 0) { throw 'Portable CTest failed' }
-      - name: Retain Windows portable evidence
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: windows-portable-${{ matrix.configuration }}-evidence
-          path: |
-            build/ci-portable-${{ matrix.configuration }}/portable-build.log
-            build/ci-portable-${{ matrix.configuration }}/portable-ctest.log
-            build/ci-portable-${{ matrix.configuration }}/CTEST_RESULTS.xml
-            build/ci-portable-${{ matrix.configuration }}/Testing/Temporary/*.log
-            build/ci-portable-${{ matrix.configuration }}/CMakeCache.txt
-            build/ci-portable-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
-          if-no-files-found: warn
-          retention-days: 14
