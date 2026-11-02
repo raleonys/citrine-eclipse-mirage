@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Add a B54 Windows provider failure-lifetime regression using the actual test DLL: null create_online and null username/persona/user getters must fail Application startup, preserve only previously copied profile fields, destroy constructed objects exactly once, survive repeated stop and release the real module lease. This stacks on the existing active-getter shutdown fixture; shipping runtime/exports, vendor pins and game behavior are unchanged.
+
 - Add a source-linked Windows B54 provider-lifetime regression: pause an actual native DLL auth getter during an accepted LSX session, request real Application shutdown concurrently, require no early provider destruction, then release the getter and verify exactly-once teardown and repeat-stop behavior. Only the native fixture and test harness change; foreign-originated jobs and Consumer/game parity remain unverified.
 
 - Replace the README campaign logo with the exact owner-supplied 1400 x 1100 PNG from the new ZIP, preserving its bytes and updating the artwork identity record. Make `main` the only permanent branch: use a fresh branch per PR and require source-branch deletion after merged or unmerged closure, with prior preservation of needed work. Update contributor guidance, the PR template and the local push gate; document GitHub's merged-branch deletion setting and manual cleanup for unmerged PRs.
