@@ -243,6 +243,14 @@ try {
     # Restore the owned fixture's ACL through .NET, without provider attribute reads.
     $blocked = Join-Path $root 'build\denied'
     [System.IO.Directory]::CreateDirectory($blocked) | Out-Null
+    # SetAccessControl asks Windows to resolve automatic inheritance (D:AI).
+    # Establish the owned fixture through that same persistence path before
+    # snapshotting it, so restoration must match its real on-disk baseline.
+    $accessSection = [System.Security.AccessControl.AccessControlSections]::Access
+    $initialAcl = [System.IO.Directory]::GetAccessControl($blocked)
+    $baselineAcl = New-Object System.Security.AccessControl.DirectorySecurity
+    $baselineAcl.SetSecurityDescriptorBinaryForm($initialAcl.GetSecurityDescriptorBinaryForm(),$accessSection)
+    [System.IO.Directory]::SetAccessControl($blocked,$baselineAcl)
     $savedAcl = [System.IO.Directory]::GetAccessControl($blocked)
     $restrictedAcl = [System.IO.Directory]::GetAccessControl($blocked)
     $userSid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User
@@ -272,7 +280,6 @@ try {
         # A freshly read DirectorySecurity has no dirty sections: passing it
         # straight back to SetAccessControl can leave the deny on disk.
         $restoreAcl = New-Object System.Security.AccessControl.DirectorySecurity
-        $accessSection = [System.Security.AccessControl.AccessControlSections]::Access
         $restoreAcl.SetSecurityDescriptorBinaryForm($savedAcl.GetSecurityDescriptorBinaryForm(),$accessSection)
         [System.IO.Directory]::SetAccessControl($blocked,$restoreAcl)
         $restoredAcl = [System.IO.Directory]::GetAccessControl($blocked)
