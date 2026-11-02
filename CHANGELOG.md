@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Add an A11-05/B49 Windows native accept-completion regression: hold the actual successful loopback accept IOCP packet after kernel dequeue through two bounded shutdown passes, verify pending-accept and listener/session ownership stay retained, then deliver exactly once without post-stop handler creation or rearm. Test-only interception is restricted to one source-included Asio fixture; this does not prove submit-generation/ABA identity, arbitrary duplicate packets, original donor parity or Consumer/game execution.
+
 - Preserve the owner-authorized Draft status of existing four-field research PR #81 as a narrow exception to the normal ready-for-review PR rule; record its continuing source-provenance scope without treating the work as a routine audit, production release or automatic merge. Update governance, agent workflow and PR guidance only; no runtime, vendor or ABI change.
 
 - Clarify branch lifecycle governance: ordinary audit findings, bugfixes and other single-PR tasks use temporary branches cleaned up after closure and preservation. Continuing research/reverse-engineering/reconstruction workstreams may retain project branches; only an explicitly owner-designated, scoped long-running audit campaign has the corresponding audit exception. Align governance, agent workflow, PR template and push-gate fixture; note repository-wide automatic head deletion could remove retained project branches. No runtime, vendor or ABI changes.
