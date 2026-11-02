@@ -333,6 +333,7 @@
     "production_callback_contracts",
     "production_network_hook_contracts",
     "registry_contracts",
+    "registry_native_lifecycle_contracts",
     "registry_allocation_failure_contracts",
     "server_contracts",
     "session_flow_contracts",
