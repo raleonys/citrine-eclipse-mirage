@@ -29,7 +29,7 @@ struct ComposedReadContext {
 using ComposedReadStart=decltype(&start_async_receive_021d10);
 // Defined-field map: words60_78={stream,string,effective_size_or_npos,maximum},
 // byte80=delimiter, dword84=flag, words88_98={scan/result,last_request,frame_owner}.
-// Optional callee injection is for isolated caller tests only. The recovered
+// Optional callee injection is for isolated caller tests only. The
 // effects bridge always uses the actual021d10 source through the default.
 void composed_receive_025c40(ReceiveHandler&,const Error&,std::uint64_t bytes,std::uint32_t flag,
     ComposedReadContext&,ComposedReadStart call_021d10=&start_async_receive_021d10);

@@ -3,6 +3,7 @@
 #include "preloader_l/runtime/control.h"
 #include "../runtime_probe.hpp"
 #include <chrono>
+#include "listener_owners.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <string>
@@ -16,6 +17,7 @@ void require_status(DWORD result,const char* message) {
 }
 using Wait=DWORD(WINAPI*)(DWORD);
 using Marker=void(*)();
+namespace listeners=preloader_l::tools::listener_diagnostics;
 struct Module {
     HMODULE image=nullptr;
     Wait shutdown=nullptr;
@@ -64,20 +66,31 @@ void cycle(const wchar_t* path,unsigned index) {
     asio::io_context io;asio::ip::tcp::socket socket(io);
     std::string buffered;
     const auto bound=preloader_l::tools::wait_for_application(socket,buffered);
+    const auto listener_before=listeners::capture(static_cast<unsigned short>(bound));
     socket.non_blocking(false);
     std::string request="<LSX><Request id='public-dll' recipient='EbisuSDK'><GetProfile index='0'/></Request></LSX>";
     request.push_back('\0');asio::write(socket,asio::buffer(request));socket.non_blocking(true);
     require(preloader_l::tools::frame(socket,buffered).find("GetProfileResponse")!=std::string::npos,"missing real profile response");
+    auto complete_shutdown=[&](const char* failure) {
+        const DWORD result=shutdown(20000);
+        if(result!=DLL_SHUTDOWN_OK)
+            listeners::report(std::cerr,"shutdown_failed",result,bound,GetCurrentProcessId(),
+                              listener_before,listeners::capture(bound));
+        require_status(result,failure);
+    };
     if(index==0) {
         const auto immediate=shutdown(0);
         std::cout<<"zero-timeout shutdown status: "<<immediate<<'\n';
         require(immediate==DLL_SHUTDOWN_OK||immediate==DLL_SHUTDOWN_TIMEOUT,
                 "unexpected immediate shutdown status");
         // Keep the caller lease and all function pointers on a timeout.
-        require_status(shutdown(20000),"shutdown retry failed");
-    }else require_status(shutdown(20000),"shutdown failed");
+        complete_shutdown("shutdown retry failed");
+    }else complete_shutdown("shutdown failed");
     asio::ip::tcp::socket stopped(io);asio::error_code stopped_error;
     stopped.connect({asio::ip::address_v4::loopback(),bound},stopped_error);
+    if(!stopped_error)
+        listeners::report(std::cerr,"unexpected_connect",DLL_SHUTDOWN_OK,bound,GetCurrentProcessId(),
+                          listener_before,listeners::capture(bound));
     require(bool(stopped_error),"stopped service still accepts connections");
     require(shutdown(0)==DLL_SHUTDOWN_OK,"completed shutdown is not idempotent");
     asio::error_code ignored;socket.close(ignored);

@@ -15,7 +15,7 @@ public:
     virtual std::uint32_t extract_03d310(std::string_view input,std::string_view format,
                                         calendar::BrokenDown&)=0;
 };
-// Recovered fixed-format branch under explicit classic ASCII/base-facet
+// Fixed-format branch under explicit classic ASCII/base-facet
 // assumptions. Other formats and any non-ASCII byte throw invalid_argument.
 // Does not reconstruct arbitrary native locale/stream/allocator/exception ABI.
 class ClassicIso final:public Parser {

@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: Windows connect pointer acceptance
+
+on:
+  pull_request:
+    paths:
+      - "include/preloader_l/platform/hook_connect.hpp"
+      - "src/platform/hook_connect.cpp"
+      - "src/platform/hook_native_callbacks.cpp"
+      - "src/platform/hook_original_effects.cpp"
+      - "tests/unit/native/native_tests.cpp"
+      - "tests/unit/network_hook/hook_tests.cpp"
+      - "cmake/Tests.cmake"
+      - "CMakeLists.txt"
+      - ".github/workflows/msvc-connect-pointer.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  connect-pointer:
+    name: Windows x64 connect pointer ${{ matrix.configuration }}
+    runs-on: windows-2022
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve repository bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Configure native connect acceptance
+        run: |
+          $build = 'build/ci-connect-${{ matrix.configuration }}'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC connect configure failed' }
+      - name: Build production and retained-reference connect regressions
+        run: |
+          $build = 'build/ci-connect-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --target production_callback_contracts production_network_hook_contracts native_callback_contracts network_hook_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/connect-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC connect build failed' }
+      - name: Run native connect regressions and real Winsock equivalence
+        run: |
+          $build = 'build/ci-connect-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'connect-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^(production_callback_contracts|production_network_hook_contracts|native_callback_contracts|network_hook_contracts)$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/connect-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'MSVC connect regression failed' }
+      - name: Preserve native connect evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-connect-${{ matrix.configuration }}-evidence
+          path: |
+            build/ci-connect-${{ matrix.configuration }}/connect-build.log
+            build/ci-connect-${{ matrix.configuration }}/connect-ctest.log
+            build/ci-connect-${{ matrix.configuration }}/connect-junit.xml
+            build/ci-connect-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
+            build/ci-connect-${{ matrix.configuration }}/CMakeCache.txt
+            build/ci-connect-${{ matrix.configuration }}/CMakeFiles/CMakeConfigureLog.yaml
+          if-no-files-found: warn
+          retention-days: 14

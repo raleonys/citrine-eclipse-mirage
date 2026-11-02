@@ -40,7 +40,7 @@ class WriteFinishApi {
 public:
     virtual ~WriteFinishApi()=default;
     // Call site passes both arguments even though the retained CRT thunk
-    // eventually jumps to free. Its implementation is not recovered here.
+    // eventually jumps to free. Its implementation is not modeled here.
     virtual void free_sized_04b0f8(std::uintptr_t,std::uint64_t bytes)=0;
     [[noreturn]]virtual void invalid_parameter_05c974()=0;
     virtual void next_write_02a500(std::uintptr_t owner_identity)=0;

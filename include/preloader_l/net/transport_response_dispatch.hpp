@@ -5,7 +5,7 @@
 #include "preloader_l/net/transport_queued_write.hpp"
 
 namespace preloader_l::socket {
-struct ResponseExecutorScratch {}; // native uninitialized tag, not recovered bytes
+struct ResponseExecutorScratch {}; // native uninitialized tag; bytes not specified
 using ResponseFactory20=void(*)(IoHandlerEnvironment&,std::uintptr_t query,std::uintptr_t literal_84425);
 using ResponseFactory88=void(*)(IoHandlerEnvironment&,std::uintptr_t query,ResponseExecutorScratch&);
 struct ResponseExecutorBinding {IoHandlerExecutor* identity=nullptr;ResponseFactory20 factory_20=nullptr;ResponseFactory88 factory_88=nullptr;};
@@ -52,9 +52,9 @@ void invoke_borrowed_response_022240(MessageWriteTask&,ResponseDispatchContext&,
     ResponseWriteCall call=&invoke_response_write);
 void dispatch_response_021420(IoHandlerEnvironment&,MessageWriteTask&,ResponseDispatchContext&);
 // Closes the N1 MessageDispatchApi hook with the actual normal021420 source.
-class ResponseDispatchApi:public MessageDispatchApi {
+class ResponseDispatchApiAdapter:public MessageDispatchApi {
 public:
-    explicit ResponseDispatchApi(ResponseDispatchContext& context):context_(context){}
+    explicit ResponseDispatchApiAdapter(ResponseDispatchContext& context):context_(context){}
     void dispatch_response_021420(IoHandlerEnvironment&,MessageWriteTask&,std::uint64_t,std::uint64_t) final;
 private:ResponseDispatchContext& context_;
 };

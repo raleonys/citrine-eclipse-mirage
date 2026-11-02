@@ -27,7 +27,7 @@ struct QueuedWriteContext {
 };
 using QueuedWriteSend=void(*)(AsyncSendService&,SendSocketImplementation&,SendBufferSlice&,
     std::uint32_t,SendHandler&,std::uintptr_t,ComposedWriteContext&);
-// Native02a500 calls021fd0 directly. Default and recovered API bridge use its
+// Native 02a500 calls 021fd0 directly. Default and API bridge use its
 // actual source. Explicit boundary injection exists for isolated caller tests
 // (including residual cleanup), and is not original-runtime evidence.
 void start_queued_write_02a500(std::uintptr_t owner_identity,QueuedWriteContext&,

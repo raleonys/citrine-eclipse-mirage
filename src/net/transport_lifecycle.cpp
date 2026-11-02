@@ -18,7 +18,7 @@ public:void destroy_resource() override{};void delete_control() override{delete 
 };
 }
 Control* OwnedNoopControlFactory::allocate_04b0bc(std::uint32_t request){
-    if(request!=24)throw UnsupportedInput("Recovered control request is24 native bytes");
+    if(request!=24)throw UnsupportedInput("Control request must contain exactly 24 bytes");
     // Selected host allocation only: not native04b0bc's malloc/new-handler loop.
     return new(std::nothrow) NoopControl;
 }

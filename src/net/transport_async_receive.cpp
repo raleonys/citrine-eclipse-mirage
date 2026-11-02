@@ -73,7 +73,7 @@ void start_async_receive_021d10(AsyncReceiveService& service,ReceiveSocketImplem
     IoCleanupFrame<ReceiveIoOperation> frame{};
     cleanup_receive_0293f0(frame,context.environment,context.worker,context.memory);
 }
-void AsyncReceiveEffects::construct_environment_023dd0(IoHandlerEnvironment& destination,std::uintptr_t allocator_identity){
+void AsyncReceiveEffectsAdapter::construct_environment_023dd0(IoHandlerEnvironment& destination,std::uintptr_t allocator_identity){
     IoHandlerEnvironment* source=nullptr;bool matched=false;
     for(const auto& binding:sources_){
         if(binding.allocator_identity!=allocator_identity)continue;

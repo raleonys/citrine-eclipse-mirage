@@ -41,7 +41,7 @@ std::uint32_t initialize_gate_027be0(CRITICAL_SECTION&,ServiceGateApi&);
 // native exception/unwind guarantee. Projected completion_port is caller-bound,
 // not a native0228e0 store; this body preserves that unrelated projection field.
 SocketServiceEntry* construct_service_0228e0(SocketConstructionContext&,ServiceConstructionEffects&,ServiceGateApi&,Api& errors);
-// Replaces the prior registry's required0228e0 provider with the recovered body.
+// Replaces the prior registry's required 0228e0 provider with its implemented body.
 // RTTI comparator stays abstract; no eager construction, ownership or teardown.
 class ConstructorRegistryEffects:public ServiceRegistryEffects {
 public:

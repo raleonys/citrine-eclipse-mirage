@@ -320,6 +320,7 @@
     "libraries_contracts",
     "license_file_integration",
     "licensing_contracts",
+    "listener_owners_contracts",
     "listener_port_contracts",
     "messages_contracts",
     "misc_handlers_contracts",
@@ -358,7 +359,9 @@
   ],
   "source_api_targets": [
     "preloader_l_source_api",
-    "preloader_l_source_host"
+    "preloader_l_source_host",
+    "preloader_l_source_minhook",
+    "preloader_l_source_tinyxml2"
   ],
   "vendor_comparison_targets": [
     "hook_engine_fixture_tests"

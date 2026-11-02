@@ -30,7 +30,7 @@ struct IoEnvironmentConstructorContext {
     std::span<IoEnvironmentTypeBinding> type_queries;
     std::span<IoEnvironmentFactoryBinding> factories;
 };
-// Temporary payload placeholders are not recovered native initialization.
+// Temporary payload placeholders do not implement native initialization.
 // Factory/move providers construct defined fields before any consumer reads
 // them; sentinel move/destroy providers must not inspect unspecified payload.
 IoHandlerEnvironment& construct_io_environment_023dd0(IoHandlerEnvironment& destination,
@@ -42,13 +42,13 @@ struct IoEnvironmentSourceBinding {
 // Closes the previous023dd0 provider in the actual composed-write chain. The
 // binding registry is a pure identity projection. All contexts/registries and
 // native factory/type-query/move/destroy implementations must remain valid.
-class ConstructedWriteEffects:public ComposedWriteEffects {
+class ConstructedWriteEffects:public ComposedWriteEffectsAdapter {
 public:
     ConstructedWriteEffects(IoCompletionEnvironment environment,WorkerRunApi& worker,
         HandlerDispatchMemory& memory,std::span<HandlerScheduleBinding> schedules,
         AsyncSendApi& send,DispatcherApi& completion,Api& errors,std::span<SendStreamBinding> streams,
         IoEnvironmentConstructorContext& constructor,std::span<IoEnvironmentSourceBinding> sources)
-        :ComposedWriteEffects(environment,worker,memory,schedules,send,completion,errors,streams),
+        :ComposedWriteEffectsAdapter(environment,worker,memory,schedules,send,completion,errors,streams),
          constructor_(constructor),sources_(sources){}
     void construct_environment_023dd0(IoHandlerEnvironment&,std::uintptr_t allocator_identity) final;
 private:

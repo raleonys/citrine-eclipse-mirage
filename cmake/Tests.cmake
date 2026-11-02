@@ -114,6 +114,10 @@ if(MINGW AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 endif()
 add_test(NAME unload_guard_contracts COMMAND unload_guard_contracts)
 set_tests_properties(unload_guard_contracts PROPERTIES TIMEOUT 30)
+add_executable(listener_owners_contracts tests/native/listener_owners_tests.cpp)
+target_include_directories(listener_owners_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
+add_test(NAME listener_owners_contracts COMMAND listener_owners_contracts)
+set_tests_properties(listener_owners_contracts PROPERTIES TIMEOUT 30)
 add_executable(listener_port_contracts tests/native/listener_port_tests.cpp)
 target_link_libraries(listener_port_contracts PRIVATE preloader_l_core)
 add_test(NAME listener_port_contracts COMMAND listener_port_contracts)
@@ -715,7 +719,10 @@ add_executable(socket_pool_release_integration_contracts tests/unit/socket/pool_
 target_link_libraries(socket_pool_release_integration_contracts PRIVATE preloader_l_reference_models)
 target_include_directories(socket_pool_release_integration_contracts PRIVATE "${PROJECT_SOURCE_DIR}")
 add_test(NAME socket_pool_release_integration_contracts COMMAND socket_pool_release_integration_contracts )
-set_tests_properties(socket_pool_release_integration_contracts PROPERTIES TIMEOUT 60)
+# This 192-case large-payload reference matrix also runs unoptimized in native Debug.
+# Preserve every check and the non-Debug budget; Wine Debug has a separate override.
+set_tests_properties(socket_pool_release_integration_contracts PROPERTIES
+  TIMEOUT "$<IF:$<CONFIG:Debug>,180,60>")
 add_executable(socket_pool_allocate_contracts tests/unit/socket/pool_allocate_tests.cpp)
 target_link_libraries(socket_pool_allocate_contracts PRIVATE preloader_l_reference_models)
 target_include_directories(socket_pool_allocate_contracts PRIVATE "${PROJECT_SOURCE_DIR}")

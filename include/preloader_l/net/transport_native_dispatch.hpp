@@ -34,9 +34,9 @@ struct NativeDispatchContext {ReceiveBufferContext& strings;NativeDispatchLocals
 // helpers and exception ABI stay explicit mandatory providers. No EH rollback.
 ReceiveBufferString& dispatch_native_032d00(ReceiveBufferString&,std::uintptr_t handler,
     NativeMessageDocument&,NativeDispatchContext&);
-class MessageDispatchApi:public MessageCipherApi {
+class MessageDispatchApiAdapter:public MessageCipherApi {
 public:
-    MessageDispatchApi(PrefixCipherContext& cipher,std::span<PrefixCipherBinding> bindings,NativeDispatchContext& dispatch)
+    MessageDispatchApiAdapter(PrefixCipherContext& cipher,std::span<PrefixCipherBinding> bindings,NativeDispatchContext& dispatch)
         :MessageCipherApi(cipher,bindings),dispatch_(dispatch){}
     ReceiveBufferString& dispatch_032d00(ReceiveBufferString&,std::uintptr_t,NativeMessageDocument&) final;
 private:NativeDispatchContext& dispatch_;

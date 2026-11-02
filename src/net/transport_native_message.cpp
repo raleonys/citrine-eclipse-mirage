@@ -114,7 +114,7 @@ ReceiveBufferString& process_native_message_033d70(std::uintptr_t identity,Recei
     }
     output=response;reset(response);context.api.destroy_document_001e00(document);return output;
 }
-void NativeMessageApi::process_message_033d70(std::uintptr_t identity,ReceiveBufferString& output,ReceiveBufferString& request){
+void NativeMessageApiAdapter::process_message_033d70(std::uintptr_t identity,ReceiveBufferString& output,ReceiveBufferString& request){
     process_native_message_033d70(identity,output,request,context_);
 }
 } // namespace preloader_l::socket

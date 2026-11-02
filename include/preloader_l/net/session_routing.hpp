@@ -4,7 +4,7 @@
 #include "preloader_l/router/router.hpp"
 
 namespace preloader_l::session_bridge {
-// Implements exactly one message effect using the actual recovered handler
+// Implements exactly one message effect through the actual handler
 // router. Logging, atoi, invalid-message and thread-error policy stay abstract.
 class RoutedEffects:public messages::Effects {
 public:
