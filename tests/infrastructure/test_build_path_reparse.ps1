@@ -276,7 +276,13 @@ try {
         $restoreAcl.SetSecurityDescriptorBinaryForm($savedAcl.GetSecurityDescriptorBinaryForm(),$accessSection)
         [System.IO.Directory]::SetAccessControl($blocked,$restoreAcl)
         $restoredAcl = [System.IO.Directory]::GetAccessControl($blocked)
-        Require ($restoredAcl.GetSecurityDescriptorSddlForm($accessSection) -ceq $savedAcl.GetSecurityDescriptorSddlForm($accessSection)) 'Owned fixture DACL was not restored'
+        $expectedDacl = $savedAcl.GetSecurityDescriptorSddlForm($accessSection)
+        $actualDacl = $restoredAcl.GetSecurityDescriptorSddlForm($accessSection)
+        if ($actualDacl -cne $expectedDacl) {
+            Write-Host ('fixture_expected_dacl=' + ($expectedDacl -replace 'S-1-5-21-[0-9-]+','LOCAL_SID'))
+            Write-Host ('fixture_restored_dacl=' + ($actualDacl -replace 'S-1-5-21-[0-9-]+','LOCAL_SID'))
+        }
+        Require ($actualDacl -ceq $expectedDacl) 'Owned fixture DACL was not restored'
     }
     Require $denied 'Owned ACL denial was not observed as ERROR_ACCESS_DENIED'
     Check-ParentRelease $root

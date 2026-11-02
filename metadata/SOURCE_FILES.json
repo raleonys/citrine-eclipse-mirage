@@ -1122,8 +1122,8 @@
       "sha256": "f76561bc8afe2c7f85665c98e4171ed63f65a3044973eba665014ed6d48a8528"
     },
     "tests/infrastructure/test_build_path_reparse.ps1": {
-      "bytes": 16810,
-      "sha256": "973df5c88939bac8ef694400d6a0b284eb742679f75a1cad0517cf5268253188"
+      "bytes": 17152,
+      "sha256": "fb6311074b9322de6647205d927a9c1f8db0d9311b18e91bd6dec1145674642b"
     },
     "tests/infrastructure/test_corvexon_mswsock_imports.py": {
       "bytes": 2490,
