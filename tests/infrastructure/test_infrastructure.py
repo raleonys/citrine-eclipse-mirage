@@ -3,6 +3,7 @@
 """Tamper, failure-propagation and source/package identity regressions."""
 from pathlib import Path
 import json
+import os
 import re
 import subprocess
 import sys
@@ -206,6 +207,97 @@ class PackageTests(unittest.TestCase):
                 warnings.simplefilter('ignore', UserWarning)
                 archive.writestr('src/value.cpp', 'duplicate')
         self.assertTrue(any('Duplicate' in e for e in falcion.check(self.root, self.zip)))
+
+
+class BranchPushGateTests(unittest.TestCase):
+    def test_real_pushes_retire_bugfix_without_weakening_main_or_source_gates(self):
+        # All refs, including main, belong to this disposable local fixture.
+        # The QA stub records invocation; it does not impersonate project QA.
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            checkout, remote = base / 'checkout', base / 'remote.git'
+            checkout.mkdir()
+            # A real pre-push hook exports repository-local Git variables.
+            # Do not let them redirect fixture commands into the source repo.
+            environment = os.environ.copy()
+            local_names = subprocess.run(['git', 'rev-parse', '--local-env-vars'],
+                                         cwd=ROOT, capture_output=True, text=True,
+                                         check=True, timeout=30).stdout.splitlines()
+            for name in local_names:
+                environment.pop(name, None)
+
+            def git(*args, accept=True, cwd=checkout):
+                result = subprocess.run(['git', '-C', str(cwd), *args],
+                                        capture_output=True, text=True, timeout=30,
+                                        env=environment)
+                if accept:
+                    self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                return result
+
+            git('init', '--initial-branch=fix/fixture')
+            git('config', 'user.name', 'Push gate fixture')
+            git('config', 'user.email', 'push-gate@example.invalid')
+            git('config', 'core.autocrlf', 'false')
+            git('config', 'commit.gpgsign', 'false')
+            self.assertEqual(checkout.resolve(), Path(git('rev-parse', '--show-toplevel').stdout.strip()).resolve())
+            hooks = checkout / '.github/hooks'
+            hooks.mkdir(parents=True)
+            hook = hooks / 'pre-push'
+            hook.write_bytes((ROOT / '.github/hooks/pre-push').read_bytes())
+            hook.chmod(hook.stat().st_mode | 0o111)
+            (checkout / '.gitignore').write_text('build/\n')
+            (checkout / 'scripts').mkdir()
+            (checkout / 'scripts/run_source_qa.py').write_text(
+                'from pathlib import Path\n'
+                'p = Path("build/qa-ran")\n'
+                'p.parent.mkdir(parents=True, exist_ok=True)\n'
+                'p.write_text("fixture QA invoked")\n')
+            git('add', '.')
+            git('update-index', '--chmod=+x', '.github/hooks/pre-push')
+            git('commit', '-m', 'Seed disposable gate fixture')
+            seed = git('rev-parse', 'HEAD').stdout.strip()
+            git('init', '--bare', str(remote))
+            git('remote', 'add', 'origin', str(remote))
+            git('push', 'origin', 'HEAD:refs/heads/seed')
+            for name in ['main', 'bugfix', 'scratch/done']:
+                git('update-ref', 'refs/heads/' + name, seed, cwd=remote)
+            git('config', 'core.hooksPath', hooks.as_posix())
+            (checkout / 'change.txt').write_text('reviewed fixture change\n')
+            git('add', 'change.txt')
+            git('commit', '-m', 'Prepare next fixture commit')
+            head = git('rev-parse', 'HEAD').stdout.strip()
+            marker = checkout / 'build/qa-ran'
+
+            for name in ['bugfix', 'scratch/done']:
+                with self.subTest(deletion=name):
+                    git('push', 'origin', '--delete', name)
+                    self.assertNotEqual(0, git('show-ref', '--verify', 'refs/heads/' + name,
+                                              cwd=remote, accept=False).returncode)
+                    self.assertFalse(marker.exists(), 'pure deletion must not run QA')
+
+            for refspec, message in [
+                    ('HEAD:refs/heads/bugfix', 'shared bugfix branch is retired'),
+                    ('HEAD:refs/heads/main', 'main is updated only by owner-reviewed PR merges'),
+                    (':refs/heads/main', 'main is updated only by owner-reviewed PR merges'),
+                    (seed + ':refs/heads/fix/old-tip', 'check out the commit being pushed')]:
+                with self.subTest(rejection=refspec):
+                    rejected = git('push', 'origin', refspec, accept=False)
+                    self.assertNotEqual(0, rejected.returncode)
+                    self.assertIn(message, rejected.stderr)
+                    self.assertFalse(marker.exists(), 'rejection must happen before QA')
+            self.assertEqual(seed, git('rev-parse', 'refs/heads/main', cwd=remote).stdout.strip())
+
+            git('push', 'origin', 'HEAD:refs/heads/fix/new-task')
+            self.assertTrue(marker.exists(), 'fresh PR branch must run the QA gate')
+            self.assertEqual(head, git('rev-parse', 'refs/heads/fix/new-task', cwd=remote).stdout.strip())
+            marker.unlink()
+            (checkout / 'change.txt').write_text('uncommitted fixture change\n')
+            rejected = git('push', 'origin', 'HEAD:refs/heads/fix/dirty', accept=False)
+            self.assertNotEqual(0, rejected.returncode)
+            self.assertIn('commit the reviewed changes', rejected.stderr)
+            self.assertFalse(marker.exists())
+            self.assertNotEqual(0, git('show-ref', '--verify', 'refs/heads/fix/dirty',
+                                      cwd=remote, accept=False).returncode)
 
 
 class GovernanceTests(unittest.TestCase):

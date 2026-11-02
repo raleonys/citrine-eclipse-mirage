@@ -8,6 +8,8 @@ The 52 entries below are the merged pull requests verified through PR #62, linke
 
 ### Additional unreleased changes
 
+- Replace the README campaign logo with the exact owner-supplied 1400 x 1100 PNG from the new ZIP, preserving its bytes and updating the artwork identity record. Make `main` the only permanent branch: use a fresh branch per PR and require source-branch deletion after merged or unmerged closure, with prior preservation of needed work. Update contributor guidance, the PR template and the local push gate; document GitHub's merged-branch deletion setting and manual cleanup for unmerged PRs.
+
 - Exercise the production Registry callbacks and SDK original-call adapters against isolated real Windows HKCU keys in A/W lifecycle tests. Cover native and fabricated opens, query/close overlap during startup waits, binding leases, untracked SDK opens and bounded numeric reuse observations. Preserve runtime behavior and distinguish these callback fixtures from MinHook and Consumer provenance acceptance.
 
 - Recheck the historical Hooks of Pioneering Registry ownership research against accepted main: raw HKEY provenance and retirement remain design/evidence gaps, while prior HeapFree failure receipts do not describe the current operator-new/delete backend. Record a source-linked applicability and proof matrix, synchronized with the allocation/insert rollback accepted in PR #98, without changing hooks, runtime code, tests, vendors or ABI.

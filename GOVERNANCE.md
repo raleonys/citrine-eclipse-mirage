@@ -11,7 +11,8 @@ This is the active governance authority. Historical task orders remain accessibl
 ## Source control and contributions
 
 - `main` is the accepted integration branch. Only the owner merges reviewed pull requests. Do not write, reset, force-push, or delete `main` directly.
-- Use the retained `bugfix` branch for routine changes; synchronize it with `main` without rewriting shared history. Preserve active dedicated audit branches.
+- `main` is the only permanent branch. Every PR uses a fresh descriptive branch based on current `main`; no shared permanent `bugfix`, audit or research branch is retained. Synchronize active work without rewriting shared history.
+- Delete the source branch when its PR closes, including closure without merging. GitHub's **Automatically delete head branches** setting handles eligible merged PRs; manually delete branches after unmerged closures. Record the tip and preserve needed unmerged work before deletion, and resolve open PR dependencies first. Existing branches follow this same lifecycle; a branch retained only as an archive must be migrated to a durable archive or tag and removed. Branch cleanup never authorizes discarding unmerged work or deleting `main`.
 - Pull requests are opened ready for review, never as draft PRs. They describe scope, validation results, limitations, and any pending checks.
 - A pull request is a proposed upstream change, not a separate release. A merged pull request updates the source tree; it does not create a release or tag.
 - Do not change repository visibility, licenses, public ABI, internal source/target identities, or upstream dependency pins without explicit authorization.
