@@ -125,8 +125,21 @@ class RepositoryRootOwnership(unittest.TestCase):
             target = root / 'metadata/evidence/LAYOUT_MIGRATION.json'
             target.parent.mkdir(parents=True)
             contract = {'layout_migration': 'metadata/evidence/LAYOUT_MIGRATION.json'}
-            target.write_text('{"schema":"surge.layout-migration.v1"}', encoding='utf-8')
+            # Read the immutable historical schema instead of introducing a
+            # reserved source-identity label in active test code.
+            canonical_schema = json.loads(
+                (ROOT / 'metadata/evidence/LAYOUT_MIGRATION.json').read_text(
+                    encoding='utf-8'))['schema']
+            target.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             self.assertEqual([], check_layout_migration_reference(root, contract))
+            # Suffix-only checks previously accepted forged schema namespaces.
+            for wrong_schema in ('surge.layout-migration.v1', 'forged.layout-migration.v1',
+                                 '.layout-migration.v1', canonical_schema + '.extra',
+                                 None, 1, []):
+                with self.subTest(wrong_schema=wrong_schema):
+                    target.write_text(json.dumps({'schema': wrong_schema}), encoding='utf-8')
+                    self.assertTrue(check_layout_migration_reference(root, contract))
+            target.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             self.assertTrue(check_layout_migration_reference(
                 root, {'layout_migration': 'docs/evidence/LAYOUT_MIGRATION.json'}))
             for unsafe in ('../escape.json', '/tmp/absolute.json',
@@ -143,7 +156,7 @@ class RepositoryRootOwnership(unittest.TestCase):
             self.assertTrue(check_layout_migration_reference(root, contract))
             target.unlink()
             outside = root / 'elsewhere.json'
-            outside.write_text('{"schema":"surge.layout-migration.v1"}')
+            outside.write_text(json.dumps({'schema': canonical_schema}), encoding='utf-8')
             try:
                 target.symlink_to(outside)
             except (OSError, NotImplementedError):
