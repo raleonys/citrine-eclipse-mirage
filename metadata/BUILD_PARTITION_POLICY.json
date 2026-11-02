@@ -149,7 +149,7 @@
     "src/xml/pool_release.cpp",
     "src/runtime/bootstrap.cpp",
     "src/runtime/thread_launch.cpp",
-    "src/runtime/recovered_effects.cpp",
+    "src/runtime/delegating_effects.cpp",
     "src/platform/hook_cleanup.cpp",
     "src/platform/hook_engine_adapters.cpp",
     "src/config/pipeline.cpp",
@@ -320,6 +320,7 @@
     "libraries_contracts",
     "license_file_integration",
     "licensing_contracts",
+    "listener_owners_contracts",
     "listener_port_contracts",
     "messages_contracts",
     "misc_handlers_contracts",
@@ -332,6 +333,7 @@
     "production_callback_contracts",
     "production_network_hook_contracts",
     "registry_contracts",
+    "registry_allocation_failure_contracts",
     "server_contracts",
     "session_flow_contracts",
     "session_handler_contracts",
@@ -358,7 +360,9 @@
   ],
   "source_api_targets": [
     "preloader_l_source_api",
-    "preloader_l_source_host"
+    "preloader_l_source_host",
+    "preloader_l_source_minhook",
+    "preloader_l_source_tinyxml2"
   ],
   "vendor_comparison_targets": [
     "hook_engine_fixture_tests"

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "tests/support/socket/native_document_test_fixture.hpp"
 using namespace document_test;
 namespace {
@@ -84,7 +86,7 @@ void destructors(){
 }
 struct Bridge {
     native_message_test::Fixture native;s::NativeDispatchLocals scratch;dispatch_test::Bytes bytes{native,scratch};s::ReceiveBufferContext strings{native.core.containers.bytes.memory,bytes};s::SessionCipher session;
-    s::RecoveredPrefixCipherBlocks blocks{native.core.containers.bytes.memory};s::PrefixCipherContext cipher{strings,blocks};std::array<s::PrefixCipherBinding,1> ciphers{{{0x120f0,&session.native()}}};
+    s::PrefixCipherBlocksAdapter blocks{native.core.containers.bytes.memory};s::PrefixCipherContext cipher{strings,blocks};std::array<s::PrefixCipherBinding,1> ciphers{{{0x120f0,&session.native()}}};
     dispatch_test::Effects dispatch{native,strings,scratch,session};s::NativeDispatchContext dispatch_context{strings,scratch,dispatch};
     State state{native.locals.document,&native.core.containers.bytes.memory};Effects effects{state,&native};s::NativeDocumentContext context{state.memory,effects};
     std::array<s::NativeDocumentBinding,2> bindings{{{&native.locals.document,State::base},{nullptr,0}}};

@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_write_finish.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Reuse the existing coherent32-byte defined-field string prefix. This is a
 // host projection; native MSVC string ABI and allocator provenance stay open.
 using ReceiveBufferString=WriteFinishString;
@@ -39,4 +41,4 @@ std::uintptr_t receive_buffer_address(const ReceiveBufferString&);
 ReceiveBufferString& grow_receive_buffer_008350(ReceiveBufferString&,std::uint64_t extra,
     std::uint64_t unused_hint,std::uint64_t fill_count,std::uint8_t,ReceiveBufferContext&);
 void resize_receive_buffer_010040(ReceiveBufferString&,std::uint64_t new_size,std::uint8_t,ReceiveBufferContext&);
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

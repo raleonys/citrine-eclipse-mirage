@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/reader.hpp"
 #include <fstream>
 #include <iostream>
@@ -7,7 +9,7 @@
 
 namespace {
 namespace reader=preloader_l::xml_reader_bridge;
-namespace messages=preloader_l::messages_recovered;
+namespace messages=preloader_l::messages;
 std::string hex(std::string_view value) {
     constexpr char digits[]="0123456789abcdef";
     std::string result;

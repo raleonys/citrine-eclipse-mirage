@@ -1,38 +1,67 @@
-# D326-F0005: pinned build directories
+# Windows build-path component pinning
 
-## Trust boundary
+## Supported boundary
 
-The repository checkout, its parent directories, the local build operator and
-their credentials are trusted. Untrusted accounts must not have write access
-to the checkout or its ancestor directories. The checkout must reside on a
-local Windows filesystem with normal directory-handle sharing behavior.
-Administrator-level interference, malicious build inputs and processes with
-the operator's own write credentials remain outside the supported isolation
-guarantee.
+The checkout, its ancestors, build inputs, local operator and credentials are
+trusted. Untrusted accounts must not be able to modify that tree. This is an
+operator precondition; the build does not rewrite or certify the checkout ACLs.
+Use a local Windows filesystem with normal directory-handle sharing behavior.
 
-A lexical prefix check and a one-time junction scan are insufficient when a
-directory can be replaced before build output is written. For Windows build
-profiles, `Enter-PinnedBuildPath` opens the repository directory and each
-component through the selected build output with read/write sharing but
-without delete sharing. Missing child directories are created while the parent
-handle remains open. Reparse points and non-directories are rejected by
-inspecting the opened handle. All handles remain open until the build profile
-releases its exclusive lock.
+The protected entries are the checkout directory, `build/`, and each directory
+component through the selected output leaf. A lexical confinement check still
+rejects an output outside `build/`. Before acquiring `.build.lock`, the profile
+opens these entries with `FILE_FLAG_OPEN_REPARSE_POINT`, reads their attributes
+through the opened handle, and rejects reparse points and non-directories.
+Missing child directories are created while their parent is pinned.
 
-## Limitations
+Read/write sharing permits ordinary build output. Omitted `FILE_SHARE_DELETE`
+prevents selected entries from being renamed or removed while the handles are
+held. The profile keeps those handles until after its exclusive build lock is
+released. Acquisition failure releases the partial chain; successful cleanup
+closes child handles before parents. A lock-disposal failure still runs pin
+cleanup and environment restoration. Explicit CLR null removes newly introduced
+environment variables across supported PowerShell/.NET versions.
 
-This pins selected directory components only, not every descendant generated
-by CMake or other build tools. It does not enforce filesystem ACLs, defend
-against hostile processes inside unpinned descendants, or provide a complete
-handle-relative Windows path traversal. It is not a general filesystem sandbox.
-Runtime DLL code, vendors, exports, and release promotion are unchanged.
+## Native regression and negative controls
 
-The Windows-only negative test exercises a pre-existing junction, replacement
-after the earlier lexical check, a live pinned-directory rename attempt,
-and a local lock that must not escape the build root. Those tests do not cover
-every concurrent interleaving or native build variant.
+`build_path_reparse_contracts` executes the existing Windows PowerShell fixture
+under the full Native Debug/Release CTest inventory. It owns a temporary checkout
+and sibling outside directory, not the actual working checkout.
 
-Issue #16 must remain open until the exact commit passes Windows-native tests
-and the owner reviews the remaining adversarial path-swap, denied-access,
-and output-confinement evidence. Portable source checks cannot certify
-Windows security behavior.
+- Retain existing junction, ordinary-file and lexical escape checks.
+- A separate process replaces a path after the parent validates it. The old
+  precheck/lock/write sequence must demonstrably follow that junction into the
+  **owned outside fixture**; this is an intentional RED control. Its two files
+  are removed before testing the guarded sequence.
+- The real pin/lock/write order must reject the substituted junction. The outside
+  sentinel, its write timestamp and the directory's entries remain unchanged.
+  Removing the junction itself must preserve the target sentinel.
+- A second-process rename control succeeds before pinning, is denied for every
+  selected component while pinned, and succeeds again after release. The lock
+  file is not open during the rename-denial phase, so it cannot mask absent pins.
+- An actual ACL denial on an owned temporary leaf must produce Windows error 5,
+  restore that fixture's ACL, and release the already-opened parent chain. An
+  ordinary-file failure also proves immediate partial-chain rollback.
+- Execute the actual profile's parsed `finally` body with an injected lock
+  disposal failure: child/parent pins still close, the original error propagates
+  and the temporary environment marker is removed.
+
+The test explicitly removes junction entries before recursive fixture cleanup.
+The native test's 60-second budget and existing assertions are preserved. Local
+PowerShell syntax/C# compilation or managed cleanup/actor controls on Linux do
+not establish Windows sharing, ACL or reparse behavior.
+
+## Limits and issue disposition
+
+This is selected-component protection against entry replacement, not a general
+filesystem sandbox or handle-relative implementation of all CMake/compiler I/O.
+Generated descendants are not individually pinned. Administrator interference,
+malicious build inputs, hostile same-credential code, and in-place reparse
+metadata modification are outside the supported isolation guarantee. Ordinary
+toolchain temporary-file behavior is separate from redirected build-output paths.
+Runtime DLL code, public ABI, vendors and publication/promotion policy are unchanged.
+
+Issue #16 acceptance must be evaluated against this stated boundary. Keep it
+open until the owner reviews the exact-commit Windows test/real build results,
+source-manifest and artifact checksums. A green portable run alone does not close
+D326-F0005. The PR description records actual CI results and remaining limits.

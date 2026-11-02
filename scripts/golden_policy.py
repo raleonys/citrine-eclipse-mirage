@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Golden target activation; fixtures never activate a product contract."""
 import json
 from pathlib import Path

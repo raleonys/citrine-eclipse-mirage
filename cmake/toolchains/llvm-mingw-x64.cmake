@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 set(CMAKE_SYSTEM_NAME Windows)
 set(CMAKE_SYSTEM_PROCESSOR AMD64)
 

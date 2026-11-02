@@ -26,7 +26,7 @@ on the appropriate working branch and open PRs; only the owner merges into main.
 
 Before writing, inspect the working tree and current branch, fetch remote refs,
 and inspect open PRs for overlapping work. Read the current AGENTS.md and
-governance/CURRENT_SCOPE.md from fetched origin/main as well as the working branch;
+GOVERNANCE.md from fetched origin/main as well as the working branch;
 an older audit checkout does not exempt an agent from current owner rules.
 Synchronize bugfix with current main
 before the next batch: fast-forward when possible, otherwise merge main normally.

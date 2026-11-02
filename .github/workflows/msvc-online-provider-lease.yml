@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: Windows online provider module lease acceptance
+
+on:
+  pull_request:
+    paths:
+      - "src/runtime/application.cpp"
+      - "src/runtime/online.cpp"
+      - "src/platform/library_system.cpp"
+      - "tests/native/extra_library_failure_tests.cpp"
+      - "tests/support/runtime/online_fixture.cpp"
+      - "cmake/Tests.cmake"
+      - "CMakeLists.txt"
+      - ".github/workflows/msvc-online-provider-lease.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  provider-lease:
+    name: Windows x64 provider lease ${{ matrix.configuration }}
+    runs-on: windows-2022
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Preserve exact checkout bytes
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.13"
+      - name: Configure native provider fixture
+        run: |
+          $build = 'build/ci-provider-${{ matrix.configuration }}'
+          cmake -S . -B $build -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=ON -DPRELOADER_L_BUILD_SOURCE_API_DLL=OFF
+          if ($LASTEXITCODE -ne 0) { throw 'Provider lease configure failed' }
+      - name: Build source-linked provider and failure fixtures
+        run: |
+          $build = 'build/ci-provider-${{ matrix.configuration }}'
+          cmake --build $build --config '${{ matrix.configuration }}' --target extra_library_failure_contracts --parallel 2 2>&1 | Tee-Object -FilePath "$build/provider-build.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Provider lease build failed' }
+      - name: Exercise real Windows image ownership and retry
+        run: |
+          $build = 'build/ci-provider-${{ matrix.configuration }}'
+          $junit = Join-Path (Resolve-Path $build) 'provider-junit.xml'
+          ctest --test-dir $build -C '${{ matrix.configuration }}' -R '^extra_library_failure_contracts$' --no-tests=error --output-on-failure --output-junit $junit 2>&1 | Tee-Object -FilePath "$build/provider-ctest.log"
+          if ($LASTEXITCODE -ne 0) { throw 'Native provider lease fixture failed' }
+      - name: Preserve native acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: msvc-provider-${{ matrix.configuration }}-evidence
+          path: |
+            build/ci-provider-${{ matrix.configuration }}/provider-build.log
+            build/ci-provider-${{ matrix.configuration }}/provider-ctest.log
+            build/ci-provider-${{ matrix.configuration }}/provider-junit.xml
+            build/ci-provider-${{ matrix.configuration }}/Testing/Temporary/LastTest.log
+            build/ci-provider-${{ matrix.configuration }}/CMakeCache.txt
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include <cstddef>
 #include <cstdint>
 #include "preloader_l/runtime/bootstrap.hpp"
 
-namespace preloader_l::threads_recovered {
+namespace preloader_l::threads {
 using Handle = std::uintptr_t;
 // Only fields accessed by 05e7a8/05e818/05e87c/05e8e0. Entry is opaque:
 // it is never interpreted as a data pointer or invoked by this module.
@@ -56,15 +58,15 @@ Handle begin_thread_05e8e0(void* security, std::uint32_t stack_size,
 [[noreturn]] void end_thread_05e9bc(std::uint32_t code, Effects&);
 
 // New composition adapter. Other BootstrapDependencies remain mandatory.
-// A caller must bind entry tokens to its own recovered Bootstrap trampolines;
+// A caller must bind entry tokens to its own Bootstrap trampolines;
 // original-image addresses are documentation, never executable callbacks.
-class BootstrapThreadBridge : public recovered::BootstrapDependencies {
+class BootstrapThreadBridge : public system_services::BootstrapDependencies {
 public:
     explicit BootstrapThreadBridge(Effects& effects) : effects_(effects) {}
-    recovered::Handle begin_thread_05e8e0(recovered::ThreadEntry, void*,
+    system_services::Handle begin_thread_05e8e0(system_services::ThreadEntry, void*,
                                           std::uint32_t*) final;
 protected:
-    virtual std::uintptr_t bind_application_entry(recovered::ThreadEntry) = 0;
+    virtual std::uintptr_t bind_application_entry(system_services::ThreadEntry) = 0;
 private:
     Effects& effects_;
 };

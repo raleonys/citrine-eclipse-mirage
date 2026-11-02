@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_queued_write.hpp"
 #include <algorithm>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 QueuedWriteOwner& owner_at(std::uintptr_t identity,QueuedWriteContext& context){
     QueuedWriteOwner* found=nullptr;bool matched=false;
@@ -69,7 +71,7 @@ void start_queued_write_02a500(std::uintptr_t owner_identity,QueuedWriteContext&
     // the local handler is inspected. Actual021fd0 normally cleared its pair.
     release_residual(handler.control_98);
 }
-void RecoveredQueuedWriteApi::next_write_02a500(std::uintptr_t owner_identity){
+void QueuedWriteApi::next_write_02a500(std::uintptr_t owner_identity){
     start_queued_write_02a500(owner_identity,context_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

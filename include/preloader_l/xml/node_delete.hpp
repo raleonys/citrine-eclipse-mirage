@@ -1,21 +1,23 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/xml/document_clear.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct NativeNodeDeleteContext {ReceiveBufferMemory& memory;NativeNodeClearEffects& effects;};
 // Bounded normal projections. Virtual probe/destructor/pool release remain
 // mandatory effects; the native tail-call return/stack ABI is not projected.
 void unlink_native_node_003030(std::uintptr_t parent,std::uintptr_t node,NativeNodeDeleteContext&);
 void delete_native_node_003240(std::uintptr_t node,NativeNodeDeleteContext&);
-class RecoveredNodeDeleteEffects:public NativeNodeClearEffects {
+class NodeDeleteEffects:public NativeNodeClearEffects {
 public:
-    explicit RecoveredNodeDeleteEffects(ReceiveBufferMemory& memory):nodes_{memory,*this}{}
-    RecoveredNodeDeleteEffects(const RecoveredNodeDeleteEffects&)=delete;
-    RecoveredNodeDeleteEffects& operator=(const RecoveredNodeDeleteEffects&)=delete;
-    RecoveredNodeDeleteEffects(RecoveredNodeDeleteEffects&&)=delete;
-    RecoveredNodeDeleteEffects& operator=(RecoveredNodeDeleteEffects&&)=delete;
+    explicit NodeDeleteEffects(ReceiveBufferMemory& memory):nodes_{memory,*this}{}
+    NodeDeleteEffects(const NodeDeleteEffects&)=delete;
+    NodeDeleteEffects& operator=(const NodeDeleteEffects&)=delete;
+    NodeDeleteEffects(NodeDeleteEffects&&)=delete;
+    NodeDeleteEffects& operator=(NodeDeleteEffects&&)=delete;
     void remove_parent_003030(std::uintptr_t parent,std::uintptr_t node) final;
     void delete_node_003240(std::uintptr_t node) final;
 private:NativeNodeDeleteContext nodes_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

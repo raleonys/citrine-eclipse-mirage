@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/libraries.hpp"
 #include <climits>
 
-namespace preloader_l::recovered::libraries {
+namespace preloader_l::system_services::libraries {
 Conversion convert_wide_048b30(SystemCalls& os, std::uint32_t codepage,
     const wchar_t* input, int count, char* output, int capacity) {
     int converted;
@@ -91,4 +93,4 @@ void unload_035ab0(SystemCalls& os, const State& state) {
         if (entries[i] != 0) os.free_library(entries[i]);
     }
 }
-} // namespace preloader_l::recovered::libraries
+} // namespace preloader_l::system_services::libraries

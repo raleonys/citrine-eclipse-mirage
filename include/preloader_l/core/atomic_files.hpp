@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/config/configuration.hpp"
 #include <span>
 #include <string_view>
 #include <vector>
 
-namespace preloader_l::file_recovered {
+namespace preloader_l::file {
 struct FileWrite { configuration::Path path; std::string_view bytes; };
 // All generated paths are exclusive, same-directory siblings. A replacement
 // failure must leave the destination unchanged; absence is not an IO error.
@@ -38,4 +40,4 @@ private:
     std::vector<Entry> entries_;
     void discard() noexcept;
 };
-} // namespace preloader_l::file_recovered
+} // namespace preloader_l::file

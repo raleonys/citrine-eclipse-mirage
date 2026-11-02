@@ -8,11 +8,11 @@
 | `scripts/` | Golden tools, source QA, manifest handling, and package validation |
 | `tools/` | Application C API loader, separate source host, compiler CRT host, and read-only PE/resource reporting |
 | `exports/` | The application's fixed C export table of three names/ordinals |
-| `tests/unit/`, `tests/native/` | Current Yellowfield source and adapter tests |
+| `tests/unit/`, `tests/native/` | Current Citrine Eclipse Mirage source and adapter tests |
 | `tests/infrastructure/`, `tests/support/golden/` | Adapted infrastructure tests and explicitly synthetic policies |
 | `resources/branding/` | Owner-supplied, byte-pinned SURGE PNG; RCDATA 101 |
 | `third_party/` | Exact source trees from the five original owner-supplied archives; Brownfield vendor trees are not copied |
-| `docs/`, `governance/`, `metadata/` | Current standalone documents, scope records, and machine-readable records |
+| `docs/`, `metadata/` | Current technical documents and machine-readable records; root `GOVERNANCE.md` and `AGENTS.md` own policy and agent workflow |
 | `build/`, `dist/` | Transient local outputs; excluded from source ZIP packages |
 
 The complete Brownfield application tree and research archives are not imported

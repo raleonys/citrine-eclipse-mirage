@@ -27,7 +27,7 @@ publish to a Library or official release pointer.
 
 Following the owner's instruction to complete missing
 targets, four profiles entered `READY_LOCAL_TARGET`
-status. These are Yellowfield product rules;
+status. These are Citrine Eclipse Mirage product rules;
 fixed fixture identities under
 `tests/support/golden/` are not activated.
 

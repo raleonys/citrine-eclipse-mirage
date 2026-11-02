@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "../../support/fixture_ascii.hpp"
 #include <ws2tcpip.h>
 #include "preloader_l/platform/hook_native_callbacks.hpp"
@@ -10,11 +12,13 @@
 #include <thread>
 #include <string>
 #include <cstdlib>
+#include <exception>
+#include <new>
 #include <condition_variable>
 #include <chrono>
 #include <functional>
-using namespace preloader_l::native_recovered;
-using preloader_l::host_init_recovered::callback_count;
+using namespace preloader_l::native;
+using preloader_l::host_init::callback_count;
 namespace {
 int checks;
 void require(bool b,const char* s){++checks;if(!b)throw std::runtime_error(s);}
@@ -22,9 +26,24 @@ struct Life{LifecycleFault fault;};
 Callback expected_failure=Callback::connect_00fd00;
 bool boundary_mode{};
 struct Faults final:Errors {
+    Binding* lease_owner=nullptr;
     [[noreturn]]void lifecycle(LifecycleFault f)override{throw Life{f};}
     [[noreturn]]void callback_exception(Callback c,std::exception_ptr error)noexcept override{
-        std::_Exit(boundary_mode&&c==expected_failure&&error?86:99);
+        if(!boundary_mode||c!=expected_failure||!error)std::_Exit(99);
+        if(lease_owner){
+            if(active_calls()!=1)std::_Exit(90);
+            bool busy=false;
+            try{
+                std::thread closer([&]{
+                    try{lease_owner->close();}
+                    catch(const Life& failure){busy=failure.fault==LifecycleFault::Busy;}
+                    catch(...){busy=false;}
+                });
+                closer.join();
+            }catch(...){std::_Exit(91);}
+            if(!busy||!is_bound()||active_calls()!=1)std::_Exit(92);
+        }
+        std::_Exit(86);
     }
 } faults;
 std::u16string read_utf16(const void* p){
@@ -42,7 +61,7 @@ struct Wide final:WideOperations {
 struct Seen {
     const void* name{};void* reserved{};void* type{};void* data{};void* size{};void* result{};HKEY key{};DWORD options{},access{};
     std::array<std::uintptr_t,10> process{};std::array<std::uintptr_t,5> folder{};
-    SOCKET socket{};const sockaddr* address{};int length{};unsigned short connect_port{};
+    SOCKET socket{};const sockaddr* address{};int length{};unsigned short connect_port{};DWORD connect_incoming{};
     std::atomic<int> open_a{},open_w{},query_a{},query_w{},close{},process_a{},process_w{},folder_a{},folder_w{},connect{};
     std::mutex mutex;std::condition_variable cv;bool block{},entered{},release{};bool throw_process{};
     std::function<void(SOCKET)> connect_wait;
@@ -90,8 +109,16 @@ template<class Char>HRESULT folder(HWND w,int id,HANDLE token,DWORD flags,Char* 
 HRESULT WINAPI original_folder_a(HWND w,int id,HANDLE t,DWORD f,LPSTR p){++seen.folder_a;return folder(w,id,t,f,p);}
 HRESULT WINAPI original_folder_w(HWND w,int id,HANDLE t,DWORD f,LPWSTR p){++seen.folder_w;return folder(w,id,t,f,p);}
 int WSAAPI original_connect(SOCKET s,const sockaddr* p,int n){
+    const auto incoming=GetLastError();
     if(seen.connect_wait)seen.connect_wait(s);
-    {std::lock_guard lock(seen.mutex);++seen.connect;seen.socket=s;seen.address=p;seen.length=n;if(p&&n>=4)seen.connect_port=ntohs(reinterpret_cast<const sockaddr_in*>(p)->sin_port);}
+    {std::lock_guard lock(seen.mutex);
+     ++seen.connect;seen.socket=s;seen.address=p;seen.length=n;seen.connect_incoming=incoming;
+     if(p&&n>=4){
+         std::array<std::byte,4> prefix{};SIZE_T copied=0;
+         const bool readable=ReadProcessMemory(GetCurrentProcess(),p,prefix.data(),prefix.size(),&copied)&&copied==prefix.size();
+         SetLastError(incoming);
+         if(readable)seen.connect_port=static_cast<unsigned short>((std::to_integer<unsigned>(prefix[2])<<8)|std::to_integer<unsigned>(prefix[3]));
+     }}
     SetLastError(327);return -10035;
 }
 struct Effects final:OriginalEffects {
@@ -103,8 +130,8 @@ struct Effects final:OriginalEffects {
     std::string filesystem_narrow(std::u16string_view s)override{return preloader_l::test_support::fixture_ascii(s);}
     int crt_stricmp(const char* a,const char* b)override{std::string x(a),y(b);for(auto& c:x)if(c>='A'&&c<='Z')c+=32;for(auto& c:y)if(c>='A'&&c<='Z')c+=32;return x.compare(y);}
     int crt_strcpy_s(char* d,std::size_t n,const char* s)override{const auto len=std::strlen(s)+1;if(!d||len>n)return 34;std::memcpy(d,s,len);return 0;}
-    preloader_l::registry_recovered::Handle allocate_4_04b0bc()override{++allocs;return 0x9876;}
-    void free_04b0f8(preloader_l::registry_recovered::Handle p)override{require(p==0x9876,"fabricated handle identity freed");++frees;}
+    preloader_l::registry::Handle allocate_4_04b0bc()override{++allocs;return 0x9876;}
+    void free_04b0f8(preloader_l::registry::Handle p)override{require(p==0x9876,"fabricated handle identity freed");++frees;}
     void wait_036880(std::int32_t n)override{
         require(n==-1,"registry startup count");++waits;
         const auto incoming=GetLastError();
@@ -122,12 +149,12 @@ struct Effects final:OriginalEffects {
     [[noreturn]]void exit_05cdc0(std::uint32_t)override{throw std::runtime_error("unexpected exit");}
 };
 struct Fixture {
-    preloader_l::host_init_recovered::Values values{{"ClientKey",u"Client\\Key"},{"ClientKey2",u"Client\\Key2"},{"ClientValue",u"ClientPath"},{"ClientPath",u"C:\\game.exe"},{"Documents",u"D:\\docs"}};
-    preloader_l::registry_recovered::Handles clients,languages,fabricated;std::uint8_t language=0;
+    preloader_l::host_init::Values values{{"ClientKey",u"Client\\Key"},{"ClientKey2",u"Client\\Key2"},{"ClientValue",u"ClientPath"},{"ClientPath",u"C:\\game.exe"},{"Documents",u"D:\\docs"}};
+    preloader_l::registry::Handles clients,languages,fabricated;std::uint8_t language=0;
     std::int32_t v4=16,v6=28;std::uint16_t port=6099;std::uint32_t attempts=0;
     std::array<std::uintptr_t,callback_count> originals{};Wide wide;CryptHost crypt_host;Effects effects;Context context;Binding binding;
-    Fixture():originals{reinterpret_cast<std::uintptr_t>(&original_connect),reinterpret_cast<std::uintptr_t>(&original_open_a),reinterpret_cast<std::uintptr_t>(&original_open_w),reinterpret_cast<std::uintptr_t>(&original_close),reinterpret_cast<std::uintptr_t>(&original_query_a),reinterpret_cast<std::uintptr_t>(&original_query_w),reinterpret_cast<std::uintptr_t>(&original_process_a),reinterpret_cast<std::uintptr_t>(&original_process_w),reinterpret_cast<std::uintptr_t>(&original_folder_a),reinterpret_cast<std::uintptr_t>(&original_folder_w),reinterpret_cast<std::uintptr_t>(&original_crypt)},
-      effects(originals,wide,crypt_host),context{{values,clients,languages,fabricated,language},{v4,v6,port,attempts},effects,effects,effects,effects},binding(context,faults){}
+    explicit Fixture(Errors& policy=faults):originals{reinterpret_cast<std::uintptr_t>(&original_connect),reinterpret_cast<std::uintptr_t>(&original_open_a),reinterpret_cast<std::uintptr_t>(&original_open_w),reinterpret_cast<std::uintptr_t>(&original_close),reinterpret_cast<std::uintptr_t>(&original_query_a),reinterpret_cast<std::uintptr_t>(&original_query_w),reinterpret_cast<std::uintptr_t>(&original_process_a),reinterpret_cast<std::uintptr_t>(&original_process_w),reinterpret_cast<std::uintptr_t>(&original_folder_a),reinterpret_cast<std::uintptr_t>(&original_folder_w),reinterpret_cast<std::uintptr_t>(&original_crypt)},
+      effects(originals,wide,crypt_host),context{{values,clients,languages,fabricated,language},{v4,v6,port,attempts},effects,effects,effects,effects},binding(context,policy){}
 };
 void test_network_wait_allows_peer_callbacks(bool startup_wait){
     Fixture f;
@@ -242,9 +269,11 @@ void test_resolver_and_registry(){
 }
 void test_process_folder_connect(){
     Fixture f;STARTUPINFOA sa{};STARTUPINFOW sw{};PROCESS_INFORMATION info{};SECURITY_ATTRIBUTES p{},t{};char cmd[]="arg";wchar_t wcmd[]=L"arg";
+    // Pointer identity must use the same caller objects, independent of /GF pooling.
+    const char app_a[]="different",cwd_a[]="cwd";
     decltype(&::CreateProcessA) pa=&process_a_entry;
-    require(pa("different",cmd,&p,&t,-7,0xdeadbeef,reinterpret_cast<void*>(0x123),"cwd",&sa,&info)==7,"native BOOL result preserves nonboolean value");
-    require(seen.process==std::array<std::uintptr_t,10>{reinterpret_cast<std::uintptr_t>("different"),reinterpret_cast<std::uintptr_t>(cmd),reinterpret_cast<std::uintptr_t>(&p),reinterpret_cast<std::uintptr_t>(&t),static_cast<unsigned>(-7),0xdeadbeef,0x123,reinterpret_cast<std::uintptr_t>("cwd"),reinterpret_cast<std::uintptr_t>(&sa),reinterpret_cast<std::uintptr_t>(&info)},"all ten SDK process arguments forwarded");
+    require(pa(app_a,cmd,&p,&t,-7,0xdeadbeef,reinterpret_cast<void*>(0x123),cwd_a,&sa,&info)==7,"native BOOL result preserves nonboolean value");
+    require(seen.process==std::array<std::uintptr_t,10>{reinterpret_cast<std::uintptr_t>(app_a),reinterpret_cast<std::uintptr_t>(cmd),reinterpret_cast<std::uintptr_t>(&p),reinterpret_cast<std::uintptr_t>(&t),static_cast<unsigned>(-7),0xdeadbeef,0x123,reinterpret_cast<std::uintptr_t>(cwd_a),reinterpret_cast<std::uintptr_t>(&sa),reinterpret_cast<std::uintptr_t>(&info)},"all ten SDK process arguments forwarded");
     require(info.dwProcessId==0xfedcba98&&GetLastError()==325,"native process output and error state retained");
     info.dwProcessId=42;SetLastError(567);const auto before=seen.process_a.load();
     require(pa("c:\\GAME.EXE",cmd,&p,&t,0,0,nullptr,nullptr,&sa,&info)==0&&seen.process_a==before&&info.dwProcessId==42&&GetLastError()==567,"blocked native process preserves untouched output and LastError");
@@ -260,7 +289,13 @@ void test_process_folder_connect(){
     require(connect(0x123,reinterpret_cast<const sockaddr*>(&socket_address),sizeof socket_address)==-10035,"native socket callback forwards original result");
     require(raw[2]==0x0c&&raw[3]==0x90&&f.attempts==1&&seen.address!=reinterpret_cast<const sockaddr*>(&socket_address)&&seen.connect_port==6099&&seen.length==16&&GetLastError()==327,"native connect redirects a complete copy, retains const caller bytes/error");
     require(std::memcmp(reinterpret_cast<const unsigned char*>(&old)+4,raw+4,sizeof(old)-4)==0,"connect preserves native IP and remaining structure bytes");
-    require(connect(9,nullptr,-1)==-10035&&seen.address==nullptr&&seen.length==-1,"length bypass forwards null native socket pointer without access");
+    SetLastError(777);
+    require(connect(9,nullptr,-1)==-10035&&seen.address==nullptr&&seen.length==-1&&
+            seen.connect_incoming==777&&GetLastError()==327,"length bypass forwards null native socket pointer and error state without access");
+    const auto connect_before=seen.connect.load();SetLastError(778);
+    require(connect(9,nullptr,16)==-10035&&seen.connect==connect_before+1&&seen.address==nullptr&&
+            seen.length==16&&seen.connect_incoming==778&&GetLastError()==327&&f.attempts==1,
+            "recognized-length null pointer reaches original Winsock path without fail-fast");
 }
 void test_read_only_connect_address(){
     Fixture f;
@@ -270,13 +305,83 @@ void test_read_only_connect_address(){
         const int length=ipv6?sizeof(sockaddr_in6):sizeof(sockaddr_in);
         if(ipv6){auto& a=*static_cast<sockaddr_in6*>(page);a.sin6_family=AF_INET6;a.sin6_port=htons(3216);a.sin6_addr.u.Byte[15]=1;}
         else{auto& a=*static_cast<sockaddr_in*>(page);a.sin_family=AF_INET;a.sin_port=htons(3216);a.sin_addr.s_addr=htonl(INADDR_LOOPBACK);}
+        std::array<std::byte,sizeof(sockaddr_in6)> before{};
+        std::memcpy(before.data(),page,static_cast<std::size_t>(length));
         DWORD previous=0;require(VirtualProtect(page,4096,PAGE_READONLY,&previous)!=0,"caller storage is read-only");
         const auto result=connect_entry(123,static_cast<const sockaddr*>(page),length);
         const auto error=GetLastError();
         const auto original_port=ntohs(static_cast<const sockaddr_in*>(page)->sin_port);
-        VirtualFree(page,0,MEM_RELEASE);
-        require(result==-10035&&error==327&&original_port==3216&&seen.connect_port==6099,"IPv4/IPv6 read-only storage redirects safely and preserves Winsock error");
+        const bool unchanged=std::memcmp(before.data(),page,static_cast<std::size_t>(length))==0;
+        const bool released=VirtualFree(page,0,MEM_RELEASE)!=0;
+        require(result==-10035&&error==327&&original_port==3216&&seen.connect_port==6099&&unchanged&&released,"IPv4/IPv6 read-only storage redirects safely, preserves all caller bytes and Winsock error");
     }
+}
+void test_unreadable_connect_address(){
+    Fixture f;
+    constexpr SIZE_T page_size=4096;
+    auto* area=static_cast<std::byte*>(VirtualAlloc(nullptr,page_size*2,
+        MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE));
+    require(area!=nullptr,"allocate guarded sockaddr pages");
+    DWORD previous=0;
+    require(VirtualProtect(area+page_size,page_size,PAGE_NOACCESS,&previous)!=0,
+            "guard upper page from callback inspection");
+    for(int length:{16,28})for(auto* invalid:{area+page_size,area+page_size-8}){
+        const auto before=seen.connect.load();const auto errors=active_calls();
+        SetLastError(761);
+        const auto result=connect_entry(123,reinterpret_cast<const sockaddr*>(invalid),length);
+        require(result==-10035&&seen.connect==before+1&&seen.address==reinterpret_cast<const sockaddr*>(invalid)&&
+                seen.length==length&&seen.connect_incoming==761&&GetLastError()==327&&active_calls()==errors&&
+                f.attempts==0,
+                "unreadable and boundary-spanning pointers forward intact without hook dereference");
+    }
+    require(VirtualFree(area,0,MEM_RELEASE)!=0,"release guarded sockaddr pages");
+}
+void test_readable_connect_passthrough_error_state(){
+    Fixture f;
+    for(bool ipv6:{false,true}){
+        sockaddr_in6 address{};
+        address.sin6_family=ipv6?AF_INET6:AF_INET;
+        address.sin6_port=htons(443);
+        const auto* pointer=reinterpret_cast<const sockaddr*>(&address);
+        const auto before=seen.connect.load();
+        SetLastError(782);
+        const auto result=connect_entry(456,pointer,ipv6?28:16);
+        require(result==-10035&&seen.connect==before+1&&seen.address==pointer&&
+                seen.length==(ipv6?28:16)&&seen.connect_incoming==782&&GetLastError()==327&&
+                f.attempts==0&&active_calls()==0,
+                "readable nontarget preserves pointer/length and both incoming and outgoing error state");
+    }
+}
+void test_real_winsock_invalid_address_equivalence(){
+    // Genuine Windows-only comparison: the hook must delegate malformed caller
+    // addresses to the SDK trampoline without inventing a WSA error or terminating.
+    WSADATA startup{};
+    require(WSAStartup(MAKEWORD(2,2),&startup)==0,"initialize real Winsock error oracle");
+    SOCKET socket=::socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+    require(socket!=INVALID_SOCKET,"create real socket for native fault comparison");
+    Fixture f;
+    f.originals[0]=reinterpret_cast<std::uintptr_t>(&::connect);
+    auto* area=static_cast<std::byte*>(VirtualAlloc(nullptr,8192,MEM_COMMIT|MEM_RESERVE,PAGE_READWRITE));
+    require(area!=nullptr,"allocate real Winsock pointer-fault pages");
+    DWORD old=0;
+    require(VirtualProtect(area+4096,4096,PAGE_NOACCESS,&old)!=0,"protect real Winsock fault page");
+    for(int length:{-1,0,16,28,29})for(auto* pointer:{static_cast<const sockaddr*>(nullptr),
+                       reinterpret_cast<const sockaddr*>(area+4096),
+                       reinterpret_cast<const sockaddr*>(area+4096-8)}){
+        WSASetLastError(2713);
+        const int expected=::connect(socket,pointer,length);
+        const int expected_error=WSAGetLastError();
+        WSASetLastError(2714);
+        const int observed=connect_entry(socket,pointer,length);
+        const int observed_error=WSAGetLastError();
+        require(expected==observed&&expected_error==observed_error&&
+                expected==SOCKET_ERROR&&f.attempts==0&&active_calls()==0,
+                "real SDK and hook must agree on invalid pointer/length errors");
+    }
+    require(VirtualFree(area,0,MEM_RELEASE)!=0,"free protected Winsock comparison pages");
+    require(closesocket(socket)==0,"release real Winsock comparison socket");
+    require(WSACleanup()==0,"leave real Winsock fixture balanced");
+    std::cout<<"PASS: real Winsock invalid-address return/error equivalence across pointer and length cases\n";
 }
 void test_binding_lifecycle(){
     Fixture f;try{Binding second(f.context,faults);require(false,"duplicate binding rejected");}catch(const Life& x){require(x.fault==LifecycleFault::AlreadyBound&&is_bound(),"duplicate bind leaves active context");}
@@ -387,13 +492,47 @@ void test_crypt_lifetime(){
     require(result==7&&error==0x1234abcd&&active_calls()==0,"crypt original finishes before lease releases");
     f.binding.close();require(!is_bound(),"crypt context closes after callback quiescence");
 }
+// Child processes isolate terminal paths. A closed binding has no owned
+// error policy; a live exception retains its lease even while another thread
+// attempts close. Guarded retired policy storage detects any stale dereference.
+void test_terminal_policy_lifetime() {
+    std::array<wchar_t,32768> executable{};
+    const DWORD n=GetModuleFileNameW(nullptr,executable.data(),static_cast<DWORD>(executable.size()));
+    require(n>0&&n<executable.size(),"native callback executable path");
+    struct Scenario {const wchar_t* mode;DWORD expected;};
+    for(const auto& scenario:std::array<Scenario,7>{{
+            {L"--closed",87},{L"--crypt-closed",87},{L"--throw-original",86},
+            {L"--missing",86},{L"--crypt-missing",86},
+            {L"--retired-owner",87},{L"--crypt-retired-owner",87}}}) {
+        auto command=L"\"" + std::wstring(executable.data(),n) + L"\" " + scenario.mode;
+        STARTUPINFOW startup{};startup.cb=static_cast<DWORD>(sizeof(startup));
+        PROCESS_INFORMATION process{};
+        require(CreateProcessW(nullptr,command.data(),nullptr,nullptr,FALSE,CREATE_NO_WINDOW,
+                               nullptr,nullptr,&startup,&process)!=FALSE,
+                "spawn isolated terminal callback regression");
+        const DWORD waited=WaitForSingleObject(process.hProcess,15000);
+        DWORD code=0;
+        const BOOL got=GetExitCodeProcess(process.hProcess,&code);
+        if(waited!=WAIT_OBJECT_0){
+            (void)TerminateProcess(process.hProcess,88);
+            (void)WaitForSingleObject(process.hProcess,5000);
+        }
+        (void)CloseHandle(process.hThread);
+        (void)CloseHandle(process.hProcess);
+        if(waited!=WAIT_OBJECT_0||!got||code!=scenario.expected)
+            std::wcerr<<L"terminal scenario "<<scenario.mode<<L": wait="<<waited
+                      <<L" exit="<<code<<L" expected="<<scenario.expected<<L'\n';
+        require(waited==WAIT_OBJECT_0&&got&&code==scenario.expected,
+                "retired callback policy cannot run; live policy still handles exceptions");
+    }
+}
 #if !defined(PRELOADER_L_PRODUCTION_CALLBACK_TESTS)
-struct InitRemaining final:preloader_l::host_init_recovered::Effects {
+struct InitRemaining final:preloader_l::host_init::Effects {
     std::array<std::uintptr_t,callback_count>& targets;std::size_t index{};
     explicit InitRemaining(std::array<std::uintptr_t,callback_count>& t):targets(t){}
     std::u16string filesystem_widen_006d70(std::string_view s)override{return {s.begin(),s.end()};}
     std::uint64_t version_condition_mask(std::uint64_t m,std::uint32_t t,std::uint8_t)override{return m+t;}
-    bool verify_version(const preloader_l::host_init_recovered::VersionRequest&,std::uint32_t,std::uint64_t)override{return true;}
+    bool verify_version(const preloader_l::host_init::VersionRequest&,std::uint32_t,std::uint64_t)override{return true;}
     std::int32_t initialize_engine_046a20()override{throw std::logic_error("unrouted engine init");}
     std::uintptr_t get_module_handle(std::u16string_view)override{return 1;}
     std::uintptr_t get_proc_address(std::uintptr_t,std::string_view)override{return targets.at(index++);}
@@ -440,7 +579,7 @@ void test_actual_host_install_binding(){
     preloader_l::platform::hook_engine::HostInitEffects effects(remaining,api,resolver);preloader_l::configuration::State config{};
     config.executable_path=u"C:\\synthetic\\game.exe";config.block_reruns=1;config.documents=u"D:\\synthetic-docs";
     std::vector<std::uintptr_t> enabled;
-    preloader_l::host_init_recovered::initialize_host_00e310({config,f.values,enabled,f.originals},effects);
+    preloader_l::host_init::initialize_host_00e310({config,f.values,enabled,f.originals},effects);
     require(api.enabled==callback_count&&enabled==std::vector<std::uintptr_t>(targets.begin(),targets.end()),"actual host-init/native resolver/callback/original-effect graph installs eleven synthetic callbacks");
     require(f.originals==targets,"all original slots populated before callback can run");
 }
@@ -448,12 +587,30 @@ void test_actual_host_install_binding(){
 
 }
 int main(int argc,char** argv){try{
-    if(argc>1){boundary_mode=true;Fixture f;
-        if(std::strcmp(argv[1],"--closed")==0){expected_failure=Callback::reg_close_00f5b0;f.binding.close();reg_close_entry(nullptr);}
+    if(argc>1){
+        boundary_mode=true;
+        SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOGPFAULTERRORBOX);
+        if(std::strcmp(argv[1],"--retired-owner")==0||std::strcmp(argv[1],"--crypt-retired-owner")==0){
+            std::set_terminate([]{std::_Exit(87);});
+            void* storage=VirtualAlloc(nullptr,sizeof(Faults),MEM_RESERVE|MEM_COMMIT,PAGE_READWRITE);
+            require(storage!=nullptr,"allocate isolated error policy page");
+            auto* policy=::new(storage) Faults;
+            {Fixture f(*policy);f.binding.close();}
+            policy->~Faults();
+            DWORD previous=0;
+            require(VirtualProtect(storage,sizeof(Faults),PAGE_NOACCESS,&previous)!=FALSE,
+                    "retired error policy page is inaccessible");
+            // The terminal child owns this allocation until process exit.
+            if(std::strcmp(argv[1],"--retired-owner")==0)reg_close_entry(nullptr);
+            else crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);
+            return 98;
+        }
+        Fixture f;faults.lease_owner=&f.binding;
+        if(std::strcmp(argv[1],"--closed")==0){std::set_terminate([]{std::_Exit(87);});expected_failure=Callback::reg_close_00f5b0;f.binding.close();reg_close_entry(nullptr);}
         else if(std::strcmp(argv[1],"--missing")==0){expected_failure=Callback::reg_close_00f5b0;f.originals[3]=0;reg_close_entry(nullptr);}
         else if(std::strcmp(argv[1],"--throw-original")==0){expected_failure=Callback::create_process_a_00f3f0;seen.throw_process=true;process_a_entry("other",nullptr,nullptr,nullptr,0,0,nullptr,nullptr,nullptr,nullptr);}
         else if(std::strcmp(argv[1],"--crypt-missing")==0){expected_failure=Callback::crypt_query_001264;f.originals[10]=0;crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
-        else if(std::strcmp(argv[1],"--crypt-closed")==0){expected_failure=Callback::crypt_query_001264;f.binding.close();crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
+        else if(std::strcmp(argv[1],"--crypt-closed")==0){std::set_terminate([]{std::_Exit(87);});expected_failure=Callback::crypt_query_001264;f.binding.close();crypt_query_entry(2,nullptr,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr);}
         else if(std::strcmp(argv[1],"--crypt-invalid")==0){const wchar_t invalid[]={0xd800,0};require(crypt_query_entry(1,invalid,0,0,0,nullptr,nullptr,nullptr,nullptr,nullptr,nullptr)==7,"invalid UTF16 forwards instead of trapping");return 0;}
         return 98;
     }
@@ -463,7 +620,11 @@ int main(int argc,char** argv){try{
 #endif
     test_registry_startup_wait_allows_peer_callbacks();
     test_read_only_connect_address();
+    test_unreadable_connect_address();
+    test_readable_connect_passthrough_error_state();
+    test_real_winsock_invalid_address_equivalence();
     test_network_wait_allows_peer_callbacks(true);test_network_wait_allows_peer_callbacks(false);test_concurrent_attempts();
     test_hook_reference_common_guard_scope();
-    std::cout<<"PASS: "<<checks<<" native callback/trampoline checks; synthetic originals, real LastError metadata only\n";
+    test_terminal_policy_lifetime();
+    std::cout<<"PASS: "<<checks<<" native callback/trampoline checks; synthetic originals plus real Winsock invalid-address equivalence\n";
 }catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}catch(...){std::cerr<<"Unexpected native test exception\n";return 1;}}

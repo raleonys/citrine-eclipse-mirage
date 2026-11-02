@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/platform/registry.hpp"
 #include <limits>
 
-namespace preloader_l::registry_recovered {
+namespace preloader_l::registry {
 std::string resolve_narrow_008980(const Values& v, ValueEffects& e, std::string_view k) {
     const auto it = v.find(k);
     return it == v.end() ? std::string{} : e.filesystem_narrow(it->second);
@@ -49,14 +51,36 @@ Status write_value_w_0093a0(const Values& v, ValueEffects& e, void* data,
     if (need > captured_capacity) return 234;
     return e.crt_wcscpy_s(static_cast<char16_t*>(data), chars, value.c_str()) ? 234 : 0;
 }
-void fabricate_010170(StateRefs s, Effects& e, HandleCell result, Status& status) {
+namespace {
+void fabricate(StateRefs s, Effects& e, HandleCell result, Status& status, Handles* track) {
     if (status == 0) return;
     if (!result) throw OutOfEvidenceInput("original fabricated-key path dereferences result");
-    result.store(e.allocate_4_04b0bc());
-    s.fabricated_0a3800.insert(result.load());
-    e.log_literal_006880(0x180080528);
-    e.finish_log_0088e0();
-    status = 0;
+    const auto previous_result = result.load();
+    const auto previous_status = status;
+    const auto key = e.allocate_4_04b0bc();
+    bool recorded = false;
+    try {
+        result.store(key);
+        recorded = s.fabricated_0a3800.insert(key).second;
+        e.log_literal_006880(0x180080528);
+        e.finish_log_0088e0();
+        status = 0;
+        if (track) track->insert(key);
+    } catch (...) {
+        // A set insertion has the strong exception guarantee. The route has
+        // not committed if it throws; remove only our new ownership record.
+        if (recorded) s.fabricated_0a3800.erase(key);
+        result.store(previous_result);
+        status = previous_status;
+        // The concrete operator-delete backend does not throw. This is not a
+        // retry protocol for an independently fallible release implementation.
+        e.free_04b0f8(key);
+        throw;
+    }
+}
+}
+void fabricate_010170(StateRefs s, Effects& e, HandleCell result, Status& status) {
+    fabricate(s, e, result, status, nullptr);
 }
 namespace {
 template<class Open, class Original, class Compare>
@@ -68,7 +92,10 @@ Status open_impl(StateRefs s, Effects& e, const Open& a, Original original, Comp
     else if (s.language_enabled_0a3ad1 && compare(a.subkey, "LanguageKey") == 0)
         track = &s.language_0a37f0;
     if (!track) return status;
-    fabricate_010170(s, e, a.result, status);
+    if (status != 0) {
+        fabricate(s, e, a.result, status, track);
+        return status;
+    }
     if (!a.result) throw OutOfEvidenceInput("matched open dereferences result");
     track->insert(a.result.load());
     return status;

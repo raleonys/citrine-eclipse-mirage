@@ -1,6 +1,10 @@
 {
   "schema": "surge.script-ownership.v1",
   "files": {
+    "scripts/audit_translation_units.py": {
+      "owner": "SURGE translation-unit audit",
+      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source"
+    },
     "scripts/build_orchestration/build_common.ps1": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "build common",
@@ -66,6 +70,20 @@
       "purpose": "build unstable",
       "role": "AUTOMATION"
     },
+    "scripts/check_build_partition.py": {
+      "owner": "SURGE target ownership",
+      "purpose": "Fail closed on reference code or source API contamination of production targets/maps"
+    },
+    "scripts/check_cpp_type_identities.py": {
+      "owner": "SURGE build/vendor/QA infrastructure",
+      "purpose": "Fail-closed C++ interface/adapter class identity regression check",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/check_dll_exports.py": {
+      "owner": "SURGE public ABI workstream",
+      "purpose": "Read-only application export and ordinal validation",
+      "role": "AUTOMATION"
+    },
     "scripts/check_english_only.py": {
       "owner": "First-party language audit",
       "purpose": "Read-only active-source language-signal audit and Markdown prose check",
@@ -111,15 +129,40 @@
       "purpose": "check repository contract",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
+    "scripts/check_source_identity_license.py": {
+      "owner": "First-party source identity and licensing QA",
+      "purpose": "Fail-closed SPDX and legacy C++ naming audit",
+      "role": "AUTOMATION"
+    },
+    "scripts/clear_tool_python_cache.py": {
+      "owner": "SURGE local build hygiene",
+      "purpose": "Remove only known generated Python caches for manifest-owned first-party tools; never refresh source manifests",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/collect_size_evidence.py": {
+      "owner": "SURGE size evidence",
+      "purpose": "Read-only existing DLL/MAP/current COFF object collection; no rebuild or promotion",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
     "scripts/extract_source.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "extract source",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/generate_avatar_data.py": {
+      "owner": "SURGE avatar data integration",
+      "purpose": "Verify pinned profile/fallback PNG inputs and generate private read-only C++ data",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/golden_policy.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "golden policy",
       "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/import_descriptor_order.py": {
+      "owner": "SURGE Golden import descriptor normalization",
+      "purpose": "Bounded import-descriptor permutation preserving all thunk/name/IAT bytes",
+      "role": "AUTOMATION"
     },
     "scripts/package_source.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
@@ -129,6 +172,11 @@
     "scripts/pe_resources.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "pe resources",
+      "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/prepare_hook_engine.py": {
+      "owner": "SURGE hook lifecycle",
+      "purpose": "Prepare and verify pinned hook engine build copy without modifying vendor input",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
     "scripts/project_files.py": {
@@ -150,6 +198,11 @@
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "run source qa",
       "role": "PYTHON_TOOL_OR_MODULE"
+    },
+    "scripts/run_wine_test.py": {
+      "owner": "SURGE local validation",
+      "purpose": "Preserve actual Wine program exit and output without inheriting unrelated service pipe lifetimes",
+      "origin": "New SURGE implementation; regression-tested with ordinary subprocesses"
     },
     "scripts/ursynex_golden_finalizer.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
@@ -186,58 +239,20 @@
       "purpose": "verify sources",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
+    "scripts/weekly_release.py": {
+      "owner": "SURGE draft release automation",
+      "purpose": "Exact-source candidate planning, native evidence binding, packaging and draft-only upload",
+      "role": "AUTOMATION"
+    },
     "tools/inspect_dll.py": {
       "owner": "SURGE build/vendor/QA infrastructure",
       "purpose": "inspect dll",
       "role": "PYTHON_TOOL_OR_MODULE"
     },
-    "scripts/run_wine_test.py": {
-      "owner": "SURGE local validation",
-      "purpose": "Preserve actual Wine program exit and output without inheriting unrelated service pipe lifetimes",
-      "origin": "New SURGE implementation; regression-tested with ordinary subprocesses"
-    },
-    "scripts/check_dll_exports.py": {
-      "owner": "SURGE public ABI workstream",
-      "purpose": "Read-only application export and ordinal validation",
-      "role": "AUTOMATION"
-    },
-    "scripts/generate_avatar_data.py": {
-      "owner": "SURGE avatar data integration",
-      "purpose": "Verify pinned profile/fallback PNG inputs and generate private read-only C++ data",
-      "role": "PYTHON_TOOL_OR_MODULE"
-    },
-    "scripts/clear_tool_python_cache.py": {
-      "owner": "SURGE local build hygiene",
-      "purpose": "Remove only known generated Python caches for manifest-owned first-party tools; never refresh source manifests",
-      "role": "PYTHON_TOOL_OR_MODULE"
-    },
-    "scripts/import_descriptor_order.py": {
-      "owner": "SURGE Golden import descriptor normalization",
-      "purpose": "Bounded import-descriptor permutation preserving all thunk/name/IAT bytes",
-      "role": "AUTOMATION"
-    },
-    "scripts/prepare_hook_engine.py": {
-      "owner": "SURGE hook lifecycle",
-      "purpose": "Prepare and verify pinned hook engine build copy without modifying vendor input",
-      "role": "PYTHON_TOOL_OR_MODULE"
-    },
-    "scripts/check_build_partition.py": {
-      "owner": "SURGE target ownership",
-      "purpose": "Fail closed on reference code or source API contamination of production targets/maps"
-    },
-    "scripts/audit_translation_units.py": {
-      "owner": "SURGE translation-unit audit",
-      "purpose": "Generate reproducible COFF symbol, test and development-API usage matrix without deleting source"
-    },
-    "scripts/collect_size_evidence.py": {
-      "owner": "SURGE size evidence",
-      "purpose": "Read-only existing DLL/MAP/current COFF object collection; no rebuild or promotion",
-      "role": "PYTHON_TOOL_OR_MODULE"
-    },
-    "scripts/weekly_release.py": {
-      "owner": "SURGE draft release automation",
-      "purpose": "Exact-source candidate planning, native evidence binding, packaging and draft-only upload",
-      "role": "AUTOMATION"
+    "scripts/weekly_naming.py": {
+      "owner": "Citrine Eclipse Mirage weekly release governance",
+      "role": "PYTHON_TOOL_OR_MODULE",
+      "purpose": "Fail-closed prospective semver/codename registry, global root collision, and external ZIP identity validation"
     }
   }
 }

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 param(
     [Parameter(Mandatory=$true)][ValidateSet('Compile','Debug','Native','Crt','Golden')][string]$Mode,
     [string]$BuildDir = '',
@@ -119,12 +121,16 @@ try {
     Write-Host "DLL: $ReportedDll"
     Write-Host "SHA256: $ReportedHash"
 } finally {
-    if ($null -ne $Lock) { $Lock.Dispose() }
-    if ($null -ne $PinnedDirectories) {
-        foreach ($handle in $PinnedDirectories) { $handle.Dispose() }
+    try {
+        if ($null -ne $Lock) { $Lock.Dispose() }
+    } finally {
+        try {
+            Exit-PinnedBuildPath $PinnedDirectories
+        } finally {
+            Get-ChildItem Env: | ForEach-Object {
+                if (-not $EnvironmentBefore.ContainsKey($_.Name)) { [Environment]::SetEnvironmentVariable($_.Name,[NullString]::Value,'Process') }
+            }
+            foreach ($Name in $EnvironmentBefore.Keys) { [Environment]::SetEnvironmentVariable($Name,$EnvironmentBefore[$Name],'Process') }
+        }
     }
-    Get-ChildItem Env: | ForEach-Object {
-        if (-not $EnvironmentBefore.ContainsKey($_.Name)) { [Environment]::SetEnvironmentVariable($_.Name,$null,'Process') }
-    }
-    foreach ($Name in $EnvironmentBefore.Keys) { [Environment]::SetEnvironmentVariable($Name,$EnvironmentBefore[$Name],'Process') }
 }

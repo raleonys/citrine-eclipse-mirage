@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_append_growth.hpp"
 #include "tests/support/socket/native_message_test_fixture.hpp"
 
 namespace append_test {
-namespace s=preloader_l::socket_recovered;namespace b=buffer_test;
+namespace s=preloader_l::socket;namespace b=buffer_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct Failure{int code;};
 struct Fixture {
@@ -17,8 +19,8 @@ struct Fixture {
 };
 // Every effect except the two newly source-bound grow methods delegates to
 // N9's controlled lower providers. N9 fixture source remains unchanged.
-struct Api:s::RecoveredMessageAppendApi {
-    s::NativeMessageApi& next;Api(s::ReceiveBufferContext& strings,s::NativeMessageApi& next):RecoveredMessageAppendApi(strings),next(next){}
+struct Api:s::MessageAppendApi {
+    s::NativeMessageApi& next;Api(s::ReceiveBufferContext& strings,s::NativeMessageApi& next):MessageAppendApi(strings),next(next){}
     void construct_document_001830(s::NativeMessageDocument& d,bool a,std::uint32_t b)override{next.construct_document_001830(d,a,b);}
     int parse_document_004280(s::NativeMessageDocument& d,std::uintptr_t a,std::uint64_t n)override{return next.parse_document_004280(d,a,n);}
     void destroy_document_001e00(s::NativeMessageDocument& d)override{next.destroy_document_001e00(d);}

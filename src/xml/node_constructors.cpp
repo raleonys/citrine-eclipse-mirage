@@ -1,6 +1,8 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/node_constructors.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address){
     const auto bytes=memory.view(address,8);std::uint64_t value=0;
@@ -40,9 +42,9 @@ std::uintptr_t construct_node_001610(std::uintptr_t document,std::uintptr_t pool
 std::uintptr_t construct_node_001690(std::uintptr_t document,std::uintptr_t pool,NativeNodeConstructorContext& c){return construct(document,pool,2,c);}
 std::uintptr_t construct_node_001720(std::uintptr_t document,std::uintptr_t pool,NativeNodeConstructorContext& c){return construct(document,pool,3,c);}
 std::uintptr_t construct_node_0017b0(std::uintptr_t document,std::uintptr_t pool,NativeNodeConstructorContext& c){return construct(document,pool,4,c);}
-std::uintptr_t RecoveredNodeConstructorEffects::construct_001590(std::uintptr_t document,std::uintptr_t pool){return construct_node_001590(document,pool,constructors_);}
-std::uintptr_t RecoveredNodeConstructorEffects::construct_001610(std::uintptr_t document,std::uintptr_t pool){return construct_node_001610(document,pool,constructors_);}
-std::uintptr_t RecoveredNodeConstructorEffects::construct_001690(std::uintptr_t document,std::uintptr_t pool){return construct_node_001690(document,pool,constructors_);}
-std::uintptr_t RecoveredNodeConstructorEffects::construct_001720(std::uintptr_t document,std::uintptr_t pool){return construct_node_001720(document,pool,constructors_);}
-std::uintptr_t RecoveredNodeConstructorEffects::construct_0017b0(std::uintptr_t document,std::uintptr_t pool){return construct_node_0017b0(document,pool,constructors_);}
-} // namespace preloader_l::socket_recovered
+std::uintptr_t NodeConstructorEffects::construct_001590(std::uintptr_t document,std::uintptr_t pool){return construct_node_001590(document,pool,constructors_);}
+std::uintptr_t NodeConstructorEffects::construct_001610(std::uintptr_t document,std::uintptr_t pool){return construct_node_001610(document,pool,constructors_);}
+std::uintptr_t NodeConstructorEffects::construct_001690(std::uintptr_t document,std::uintptr_t pool){return construct_node_001690(document,pool,constructors_);}
+std::uintptr_t NodeConstructorEffects::construct_001720(std::uintptr_t document,std::uintptr_t pool){return construct_node_001720(document,pool,constructors_);}
+std::uintptr_t NodeConstructorEffects::construct_0017b0(std::uintptr_t document,std::uintptr_t pool){return construct_node_0017b0(document,pool,constructors_);}
+} // namespace preloader_l::socket

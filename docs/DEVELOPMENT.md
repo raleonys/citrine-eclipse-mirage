@@ -1,8 +1,10 @@
 # Local development and operator commands
 
 Windows requires Visual Studio C++ x64 tools/SDK, CMake >= 3.20, and Python
-3.9 or later. Builds use the compiler's standard CRT: MSVC Release `/MT` and
-Debug `/MTd`. This Linux session does not claim PowerShell/CMD or MSVC
+3.9 or later. Production and static-test builds use the compiler's standard CRT:
+MSVC Release `/MT` and Debug `/MTd`. The separate C++ development DLL and its
+host use `/MD` and `/MDd`, with their own matching vendor builds, because STL
+objects cross that module boundary. This Linux session does not claim PowerShell/CMD or MSVC
 execution.
 
 Human-facing commands under `scripts/build_orchestration/`:
@@ -11,7 +13,7 @@ Human-facing commands under `scripts/build_orchestration/`:
 |---|---|
 | `build_unstable.cmd` | Release application DLL; checks exports/resources and actual load/socket/shutdown/unload |
 | `build_debug.cmd` | Debug application DLL with the same public API checks; debugger symbols are retained |
-| `build_native_acceptance.cmd` | Yellowfield CTest source/adapter/CRT tests on Windows |
+| `build_native_acceptance.cmd` | Citrine Eclipse Mirage CTest source/adapter/CRT tests on Windows |
 | `build_crt_acceptance.cmd` | Builds and runs only selected compiler CRT/public DLL/source smoke targets |
 | `build_production.cmd` | Native MSVC Golden link and six-stage verification; does not publish an official release |
 
@@ -41,8 +43,8 @@ identity, then verify it again:
 ```sh
 python -B scripts/check_manifest.py --refresh
 python -B scripts/run_source_qa.py
-python -B scripts/package_source.py --output ../yellowfield-startup-build-fix-source.zip
-python -B scripts/check_falcion_golden_cleaning.py --package ../yellowfield-startup-build-fix-source.zip
+python -B scripts/package_source.py --output ../citrine-eclipse-mirage-source.zip
+python -B scripts/check_falcion_golden_cleaning.py --package ../citrine-eclipse-mirage-source.zip
 ```
 
 Packaging does not refresh the manifest automatically. The Golden command

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Regression tests for the independent repository root ownership gate."""
 import shutil
 import hashlib

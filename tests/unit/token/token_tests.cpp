@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/core/token.hpp"
 #include "preloader_l/core/token_constants.hpp"
 #include <algorithm>
@@ -6,8 +8,8 @@
 #include <stdexcept>
 #include <vector>
 
-namespace token = preloader_l::token_recovered;
-namespace crypto = preloader_l::crypto_recovered;
+namespace token = preloader_l::token;
+namespace crypto = preloader_l::crypto;
 namespace {
 unsigned checks;
 void check(bool value) { ++checks; if (!value) throw std::runtime_error("token check failed at " + std::to_string(checks)); }

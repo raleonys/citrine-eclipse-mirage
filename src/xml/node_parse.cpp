@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/node_parse.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -141,15 +143,15 @@ std::uintptr_t parse_node_004970(std::uintptr_t owner,std::uintptr_t cursor,
     store(m,original_document+0xa4,static_cast<std::uint32_t>(load(m,original_document+0xa4,4))-std::uint32_t{1},4);
     return result;
 }
-void RecoveredNodeParseEffects::parse_virtual(std::uintptr_t target,std::uintptr_t node,
+void NodeParseEffects::parse_virtual(std::uintptr_t target,std::uintptr_t node,
     std::uintptr_t cursor,std::uintptr_t closing_pair,std::uintptr_t line_counter){
     (void)parse_child_virtual(target,node,cursor,closing_pair,line_counter);
 }
-std::uintptr_t RecoveredNodeParseEffects::parse_child_virtual(std::uintptr_t target,std::uintptr_t node,
+std::uintptr_t NodeParseEffects::parse_child_virtual(std::uintptr_t target,std::uintptr_t node,
     std::uintptr_t cursor,std::uintptr_t closing_pair,std::uintptr_t line_counter){
     if(target!=parse_.identities.node_parse_target)
         return parse_other_virtual(target,node,cursor,closing_pair,line_counter);
     const auto scratch=acquire_parse_scratch(node,cursor,closing_pair,line_counter);
     return parse_node_004970(node,cursor,closing_pair,line_counter,scratch,parse_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

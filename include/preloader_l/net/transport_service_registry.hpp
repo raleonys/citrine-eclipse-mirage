@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_cancellation.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 // Opaque image identities only; neither field is an executable pointer.
 struct ServiceKey {std::uintptr_t type=0,id=0;};
 struct ServiceEntry {
@@ -25,7 +27,7 @@ public:
 };
 void initialize_service_key_022fa0(ServiceKey&);
 // Borrowed finite initialized list; factory yields a fresh live unlinked entry.
-// Normal-flow gates only: native C++ exception/unwind cleanup is not recovered.
+// Normal-flow gates only: native C++ exception/unwind cleanup is not modeled.
 ServiceEntry& resolve_service_0239c0(ServiceRegistry&,ContextIdentity,ServiceRegistryEffects&);
 
 // Selected typed projection of a native service/context relationship. Entries,
@@ -57,4 +59,4 @@ private:
     std::span<RegistryServiceBinding> bindings_;Api& errors_;AcceptorApi& api_;
     CancellationEffects& cancellation_;RegistryExecutorEffects& executor_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

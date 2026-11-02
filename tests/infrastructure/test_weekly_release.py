@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Release-candidate regressions: source binding, revision ownership and draft-only retry."""
 from copy import deepcopy
 import json
@@ -18,7 +20,7 @@ SOURCE = 'a' * 40
 OTHER = 'b' * 40
 
 
-def candidate(tag='TEST-R01', source=SOURCE, status='complete', draft=True, identity=1):
+def candidate(tag='3.2.6-TALVOR', source=SOURCE, status='complete', draft=True, identity=1):
     return {'id': identity, 'tag_name': tag, 'draft': draft,
             'body': release.marker(source, status), 'target_commitish': source,
             'assets': [], 'html_url': 'https://example.invalid/draft'}
@@ -70,56 +72,67 @@ class FakeGitHub:
 
 
 class PlannerTests(unittest.TestCase):
-    def test_first_schedule_requires_external_bootstrap_not_an_invented_version(self):
-        self.assertFalse(release.plan([], SOURCE)['ready'])
-        self.assertIn('BOOTSTRAP_REQUIRED', release.plan([], SOURCE)['reason'])
-        self.assertEqual('TEST-R07', release.plan([], SOURCE, 'TEST-R07')['tag'])
+    def test_first_approved_release(self):
+        self.assertEqual('3.2.6-TALVOR', release.plan([], SOURCE)['tag'])
 
-    def test_unchanged_source_does_not_create_another_candidate(self):
+    def test_no_duplicate_unchanged_source(self):
         self.assertFalse(release.plan([candidate()], SOURCE)['ready'])
 
-    def test_new_source_increments_only_the_current_external_revision(self):
-        self.assertEqual('TEST-R02', release.plan([candidate()], OTHER)['tag'])
+    def test_new_commit_advances_to_327(self):
+        self.assertEqual('3.2.7-ERINTHAR', release.plan([candidate()], OTHER)['tag'])
 
-    def test_reserved_revisions_are_not_reused(self):
-        reserved = {'id': 0, 'tag_name': 'TEST-R03', 'draft': False, 'body': ''}
-        self.assertEqual('TEST-R04', release.plan([candidate(), reserved], OTHER)['tag'])
+    def test_329_rollover(self):
+        self.assertEqual('3.3.0-VESPERKAI', release.plan([candidate('3.2.9-CETRION')], OTHER)['tag'])
 
-    def test_published_complete_candidate_still_prevents_duplicate_source(self):
+    def test_399_rollover(self):
+        self.assertEqual('4.0.0', release.successor('3.9.9'))
+
+    def test_no_unapproved_next_version(self):
+        with self.assertRaisesRegex(ValueError, 'owner-approved'):
+            release.plan([candidate('3.5.9-COLOZHEM')], OTHER)
+
+    def test_no_unrelated_tag_collision(self):
+        other = {'tag_name': '3.2.7-ERINTHAR', 'body': '', 'draft': False}
+        with self.assertRaisesRegex(ValueError, 'reserved'):
+            release.plan([candidate(), other], OTHER)
+
+    def test_published_source_does_not_duplicate(self):
         self.assertFalse(release.plan([candidate(draft=False)], SOURCE)['ready'])
 
-    def test_partial_upload_is_retried_with_the_same_tag(self):
-        p = release.plan([candidate(status='preparing')], SOURCE)
-        self.assertTrue(p['ready'])
-        self.assertEqual(('TEST-R01', 1), (p['tag'], p['existing_id']))
+    def test_pending_draft_resumes(self):
+        x = release.plan([candidate(status='preparing')], SOURCE)
+        self.assertEqual(('3.2.6-TALVOR', 1), (x['tag'], x['existing_id']))
 
-    def test_manually_published_incomplete_candidate_is_not_rewritten(self):
+    def test_published_incomplete_draft_blocks(self):
         with self.assertRaisesRegex(ValueError, 'published'):
             release.plan([candidate(status='preparing', draft=False)], SOURCE)
 
-    def test_new_series_is_explicit_and_can_repackage_the_same_commit(self):
-        p = release.plan([candidate()], SOURCE, 'NEXT-R01')
-        self.assertTrue(p['ready'])
-        self.assertEqual('NEXT-R01', p['tag'])
+    def test_manual_override_must_be_exact_next(self):
+        self.assertEqual('3.2.6-TALVOR', release.plan([], SOURCE, '3.2.6-TALVOR')['tag'])
+        with self.assertRaisesRegex(ValueError, 'exact next'):
+            release.plan([], SOURCE, '3.2.7-ERINTHAR')
 
-    def test_next_schedule_follows_the_most_recent_selected_series(self):
-        items = [candidate(), candidate('NEXT-R01', identity=2)]
-        self.assertEqual('NEXT-R02', release.plan(items, OTHER)['tag'])
+    def test_registry_and_archive_contract(self):
+        names = release.validate_registry(release.load_registry())
+        self.assertEqual(34, len(names))
+        self.assertEqual(('TALVOR', 'VESPERKAI', 'COLOZHEM'),
+                         (names['3.2.6'], names['3.3.0'], names['3.5.9']))
+        self.assertEqual(('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip',
+                          'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'),
+                         release.asset_names('3.2.6-TALVOR'))
 
-    def test_revision_exhaustion_cannot_silently_change_the_release_line(self):
-        with self.assertRaisesRegex(ValueError, 'R99'):
-            release.plan([candidate('TEST-R99')], OTHER)
+    def test_historical_root_reuse_rejected(self):
+        p = deepcopy(release.load_registry())
+        p['approved_codenames']['3.2.6'] = 'SQUALERIS'
+        with self.assertRaisesRegex(ValueError, 'collision'):
+            release.validate_registry(p)
 
-    def test_tag_collision_cannot_overwrite_another_source(self):
-        with self.assertRaisesRegex(ValueError, 'reserved'):
-            release.plan([candidate()], OTHER, 'TEST-R01')
-
-    def test_invalid_tags_and_injected_output_lines_are_rejected(self):
-        for tag in ('../TEST-R01', 'TEST-R00', 'TEST-R100', 'TEST-R01\nready=true', 'TEST;cmd-R01'):
+    def test_old_revision_tags_and_bad_semver_rejected(self):
+        for tag in ('3.2.10-TALVOR', '3.10.0-TALVOR', '3.2.6-TALVOR-R25', '../3.2.6-TALVOR'):
             with self.subTest(tag=tag), self.assertRaises(ValueError):
                 release.plan([], SOURCE, tag)
 
-    def test_ambiguous_markers_are_not_silently_accepted(self):
+    def test_ambiguous_markers_fail_closed(self):
         r = candidate()
         r['body'] += '\n' + r['body']
         with self.assertRaisesRegex(ValueError, 'Ambiguous'):
@@ -159,7 +172,7 @@ class PayloadTests(unittest.TestCase):
         self.payload = self.base / 'payload'
         self.payload.mkdir()
         self.manifest = release.sha(ROOT / 'metadata/ACTIVE_SOURCE_MANIFEST.json')
-        self.p = {'ready': True, 'tag': 'TEST-R01', 'source_sha': SOURCE, 'existing_id': None}
+        self.p = {'ready': True, 'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'existing_id': None}
         release.write(self.payload / 'plan.json', self.p)
         release.write(self.payload / 'SOURCE_QA.json', {
             'result': 'PASS_SOURCE_QA',
@@ -257,7 +270,7 @@ class PayloadTests(unittest.TestCase):
                 self.validate('production')
 
     def test_bundle_contains_verified_runtime_evidence_and_all_checksums(self):
-        release.package(ROOT, self.payload / 'TEST-R01_source.zip')
+        release.package(ROOT, self.payload / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip')
         output = self.base / 'assets'
         with patch.object(release, 'head', return_value=SOURCE):
             receipt = release.bundle(ROOT, self.payload, output)
@@ -267,7 +280,7 @@ class PayloadTests(unittest.TestCase):
         for path in output.iterdir():
             if not path.name.endswith('.sha256'):
                 release.verify_sidecar(path)
-        with zipfile.ZipFile(output / 'TEST-R01_windows_x64.zip') as archive:
+        with zipfile.ZipFile(output / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip') as archive:
             self.assertIn('preloader_l.dll', archive.namelist())
             self.assertIn('evidence/native/CTEST_RESULTS.xml', archive.namelist())
             self.assertEqual((self.payload / 'production/dist/preloader_l.dll').read_bytes(),
@@ -285,13 +298,13 @@ class DraftTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.assets = Path(self.temporary.name).resolve()
-        self.p = {'ready': True, 'tag': 'TEST-R01', 'source_sha': SOURCE, 'existing_id': None}
+        self.p = {'ready': True, 'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'existing_id': None}
         release.write(self.assets / 'RELEASE_RECEIPT.json', {
-            'tag': 'TEST-R01', 'source_sha': SOURCE, 'classification': 'DRAFT_NOT_RELEASED',
+            'tag': '3.2.6-TALVOR', 'source_sha': SOURCE, 'classification': 'DRAFT_NOT_RELEASED',
             'publication': False, 'game_acceptance': 'NOT_RUN'})
-        for name in ('TEST-R01_source.zip', 'TEST-R01_windows_x64.zip'):
+        for name in ('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip', 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip'):
             (self.assets / name).write_bytes(b'fixture package')
-        for name in ('TEST-R01_source.zip', 'TEST-R01_windows_x64.zip', 'RELEASE_RECEIPT.json'):
+        for name in ('Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip', 'Citrine_Eclipse_Mirage_3.2.6_TALVOR.zip', 'RELEASE_RECEIPT.json'):
             release.sidecar(self.assets / name)
         self.github = FakeGitHub()
 
@@ -355,7 +368,7 @@ class DraftTests(unittest.TestCase):
             self.assertEqual('preparing', release.state(self.github.items[0])['status'])
 
     def test_local_checksum_failure_happens_before_any_external_write(self):
-        (self.assets / 'TEST-R01_source.zip').write_bytes(b'changed package')
+        (self.assets / 'Citrine_Eclipse_Mirage_3.2.6_TALVOR_source.zip').write_bytes(b'changed package')
         with self.assertRaisesRegex(ValueError, 'Checksum'):
             self.publish()
         self.assertEqual([], self.github.writes)

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Generate private read-only avatar arrays from exactly pinned source PNG bytes."""
 import argparse
 import hashlib

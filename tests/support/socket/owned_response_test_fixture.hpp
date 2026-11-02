@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_owned_response.hpp"
 #include "tests/support/socket/response_dispatch_test_fixture.hpp"
 
 namespace owned_test {
-namespace s=preloader_l::socket_recovered;namespace r=receive_test;
+namespace s=preloader_l::socket;namespace r=receive_test;
 using response_test::check;using response_test::checks;using response_test::rejects;
 struct OwnedFixture;inline OwnedFixture* active_owned=nullptr;
 void publish_owned(s::IoHandlerEnvironment&,s::PostedFunctor*&);
@@ -40,9 +42,9 @@ struct Memory:s::OwnedResponseMemory {
     }
     bool live(std::uintptr_t id)const{for(auto& p:blocks)if(p&&p->storage.identity==id)return true;return false;}
 };
-struct Api:s::RecoveredOwnedResponseApi {
+struct Api:s::OwnedResponseApi {
     OwnedFixture& f;std::function<void(s::ReceiveBufferString&)> copying;unsigned copies=0;
-    Api(s::OwnedResponseContext& c,OwnedFixture& f):RecoveredOwnedResponseApi(c),f(f){}
+    Api(s::OwnedResponseContext& c,OwnedFixture& f):OwnedResponseApi(c),f(f){}
     s::ReceiveBufferString& copy_response_009eb0(s::ReceiveBufferString&,s::ReceiveBufferString&)override;
 };
 struct Ref:s::IoReference {

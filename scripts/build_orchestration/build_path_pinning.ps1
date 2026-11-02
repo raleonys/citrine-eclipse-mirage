@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 # Guard only Windows build-root components. The trusted root's ancestors must
 # not be writable by untrusted principals. This is not a general filesystem sandbox.
 function Enter-PinnedBuildPath {
@@ -80,9 +82,12 @@ public static class SurgeDirectoryPinning
     }
 
     $handles = New-Object 'System.Collections.Generic.List[System.IDisposable]'
+    $pendingHandle = $null
     try {
         # The parent of the checkout root is part of the documented trust model.
-        $handles.Add([SurgeDirectoryPinning]::Pin($rootPath))
+        $pendingHandle = [SurgeDirectoryPinning]::Pin($rootPath)
+        $handles.Add($pendingHandle)
+        $pendingHandle = $null
         $current = $rootPath
         $relative = $candidatePath.Substring($rootPath.Length + 1)
         $parts = $relative.Split(
@@ -92,11 +97,23 @@ public static class SurgeDirectoryPinning
             $current = Join-Path $current $part
             # The parent has already been opened without FILE_SHARE_DELETE.
             [SurgeDirectoryPinning]::CreateIfMissing($current)
-            $handles.Add([SurgeDirectoryPinning]::Pin($current))
+            $pendingHandle = [SurgeDirectoryPinning]::Pin($current)
+            $handles.Add($pendingHandle)
+            $pendingHandle = $null
         }
         return ,$handles
     } catch {
-        foreach ($handle in $handles) { $handle.Dispose() }
+        if ($null -ne $pendingHandle) { $pendingHandle.Dispose() }
+        Exit-PinnedBuildPath $handles
         throw
     }
+}
+
+function Exit-PinnedBuildPath {
+    param($Handles)
+    if ($null -eq $Handles) { return }
+    for ($index = $Handles.Count - 1; $index -ge 0; $index--) {
+        $Handles[$index].Dispose()
+    }
+    $Handles.Clear()
 }

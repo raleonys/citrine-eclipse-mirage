@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 #include "preloader_l/net/transport_posted_operation.hpp"
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 struct PostedOperationBinding {
     CancelOperation* identity=nullptr;
     PostedOperation* posted=nullptr;
@@ -19,4 +21,4 @@ private:
     std::span<PostedOperationBinding> bindings_;PostedEnvironment environment_;
     WorkerRunApi& api_;PostedMemoryEffects& memory_;
 };
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket

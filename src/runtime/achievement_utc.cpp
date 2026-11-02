@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/runtime/achievement_utc.hpp"
 #include <ctime>
 #include <iomanip>
@@ -31,7 +33,7 @@ std::string utc_time_041b60(Clock& clock,Formatter& formatter,std::uint64_t* epo
         if(epoch)*epoch=0;
         return {};
     }
-    if(epoch)*epoch=static_cast<std::uint64_t>(calendar_recovered::epoch_041ff0(*fields));
+    if(epoch)*epoch=static_cast<std::uint64_t>(calendar::epoch_041ff0(*fields));
     return formatter.put_time_03d610(*fields,filename_mode?
         "%Y-%m-%d_%H-%M-%S":"%Y-%m-%dT%H:%M:%S");
 }

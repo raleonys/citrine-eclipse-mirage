@@ -1,9 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/net/transport_completion_dispatcher.hpp"
 #include <bit>
 #include <functional>
 #include <iostream>
 #include <vector>
-namespace s=preloader_l::socket_recovered;
+namespace s=preloader_l::socket;
 namespace {
 unsigned checks=0;void check(bool v,const char* why){++checks;if(!v)throw std::runtime_error(why);}
 [[noreturn]]void unused(){throw std::logic_error("Unexpected dispatcher dependency");}
@@ -15,14 +17,14 @@ struct Errors:s::Api{F& f;explicit Errors(F& v):f(v){}s::Category system_categor
 struct WorkerApi:s::WorkerRunApi{F& f;explicit WorkerApi(F& v):f(v){}void* tls_get(std::uint32_t)override;std::int32_t tls_set(std::uint32_t,void*)override;std::int32_t post_stop(std::uintptr_t,std::uint32_t,std::uintptr_t,OVERLAPPED*)override;std::uint32_t get_last_error()override;};
 struct Api:s::DispatcherApi{F& f;explicit Api(F& v):f(v){}void set_last_error(std::uint32_t)override;std::uint32_t get_last_error()override;std::int32_t get(std::uintptr_t,std::uint32_t&,std::uintptr_t&,OVERLAPPED*&,std::uint32_t)override;std::int32_t post(std::uintptr_t,std::uint32_t,std::uintptr_t,OVERLAPPED*)override;std::int32_t set_timer(std::uintptr_t,LARGE_INTEGER&,std::int32_t,PTIMERAPCROUTINE,void*,std::int32_t)override;};
 struct Effects:s::DispatcherEffects{F& f;explicit Effects(F& v):f(v){}std::uintptr_t capture_tls_slot()override;std::int32_t thread_epoch(std::uintptr_t)override;void guard_header_04b838(std::int32_t&)override;void register_atexit_04b770(std::uintptr_t)override;void guard_footer_04b7cc(std::int32_t&)override;std::uint32_t read_stop_34(s::IocpSchedulerEntry&)override;std::array<std::uintptr_t,2>& copy_exception_024100(std::array<std::uintptr_t,2>&,const std::array<std::uintptr_t,2>&)override;[[noreturn]]void rethrow_029880(std::array<std::uintptr_t,2>&)override;void complete(s::IocpSchedulerEntry*,s::CancelOperation&,const s::Error&,std::uint32_t)override;};
-struct Worker:s::RecoveredDispatcherWorkerEffects{F& f;explicit Worker(F&);std::uint32_t exchange_stop_34(s::IocpSchedulerEntry&,std::uint32_t)override;std::uint32_t exchange_wake_38(s::IocpSchedulerEntry&,std::uint32_t)override;void initialize_04a240(std::array<std::uintptr_t,2>&)override;void finish_04a2cc(std::array<std::uintptr_t,2>&)override;void free_cache_04b788(std::uintptr_t)override{unused();}void delete_function_04b0f8(s::IocpWorkerFunction&,std::uint32_t)override{unused();}[[noreturn]]void raise_028240(s::Error,std::uintptr_t)override;};
+struct Worker:s::DispatcherWorkerEffects{F& f;explicit Worker(F&);std::uint32_t exchange_stop_34(s::IocpSchedulerEntry&,std::uint32_t)override;std::uint32_t exchange_wake_38(s::IocpSchedulerEntry&,std::uint32_t)override;void initialize_04a240(std::array<std::uintptr_t,2>&)override;void finish_04a2cc(std::array<std::uintptr_t,2>&)override;void free_cache_04b788(std::uintptr_t)override{unused();}void delete_function_04b0f8(s::IocpWorkerFunction&,std::uint32_t)override{unused();}[[noreturn]]void raise_028240(s::Error,std::uintptr_t)override;};
 struct Packet{std::int32_t ok=0;std::uint32_t status=258,bytes=0;std::uintptr_t key=0;OVERLAPPED* raw=nullptr;};
 struct F{
  Gate gate;CRITICAL_SECTION cs{};Entry entry{gate,cs};std::array<s::DispatcherOperationBinding,8> bindings{};s::DispatcherState state{entry, nullptr,0,0,bindings};std::int32_t guard=0,epoch=0;Api api{*this};Effects effects{*this};WorkerApi worker_api{*this};Errors errors{*this};Worker worker{*this};s::WorkerThreadState thread{};s::WorkerRunResult result;std::vector<Packet> packets{{}};std::size_t gets=0;std::uint32_t status=0,requested=17;std::int32_t post_result=1,stop_post=1,header_value=0;unsigned categories=0,completed=0,atexit=0,copies=0,captures=0,epochs=0,timers=0,posts=0,stops=0;void* tls=reinterpret_cast<void*>(123);std::vector<std::string> trace;std::vector<s::CancelOperation*> published;std::vector<std::int64_t> dues;std::function<void(std::string_view)> hook;std::function<void(s::IocpSchedulerEntry*,s::CancelOperation&,const s::Error&,std::uint32_t)> completion;std::function<std::int32_t(OVERLAPPED*)> poster;std::function<void()> on_timer;
  F(){entry.completion.port=99;entry.timeout_40=0xffffffffU;entry.work_count_30=2;}
  s::DispatcherEnvironment env(){return {guard,{0x1111},{0x2222}};}void event(std::string_view v){trace.emplace_back(v);if(hook)hook(v);}std::uint64_t run(){return s::dispatch_completion_027c10(state,requested,thread,result,env(),api,effects,worker_api,errors,worker);}void bind(s::CancelOperation& op,std::size_t n=0){bindings[n]={&op,{0,{0}},0};}
 };
-Worker::Worker(F& v):RecoveredDispatcherWorkerEffects(v.state,v.env(),v.api,v.effects,v.worker_api,v.errors),f(v){}
+Worker::Worker(F& v):DispatcherWorkerEffects(v.state,v.env(),v.api,v.effects,v.worker_api,v.errors),f(v){}
 s::Category Errors::system_category_028620(){++f.categories;f.event("category");return {0x3333};}
 void* WorkerApi::tls_get(std::uint32_t){f.event("tlsget");return f.tls;}std::int32_t WorkerApi::tls_set(std::uint32_t,void* v){f.tls=v;f.event("tlsset");return 0;}
 std::int32_t WorkerApi::post_stop(std::uintptr_t p,std::uint32_t b,std::uintptr_t k,OVERLAPPED* o){check(p==f.entry.completion.port && !b && !k && !o,"actual stop posts live port");f.event("stoppost");return f.stop_post;}std::uint32_t WorkerApi::get_last_error(){f.event("stoperror");return f.status;}

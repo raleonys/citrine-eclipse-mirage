@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 """Visible local source QA, independent of publication and Windows availability."""
 import argparse
 import json
@@ -17,6 +19,7 @@ CHECKS = [
     ('owner integration requirements', ['scripts/check_integration_requirements.py']),
     ('metadata ownership', ['scripts/check_metadata_ownership.py']),
     ('production/reference build boundary regressions', ['tests/infrastructure/test_build_partition.py']),
+    ('MinHook single-disable IP action and build-copy integrity', ['tests/infrastructure/test_hook_disable_action.py']),
     ('native size evidence reader regressions', ['tests/infrastructure/test_size_evidence.py']),
     ('weekly draft release regressions', ['tests/infrastructure/test_weekly_release.py']),
     ('operator entrypoints', ['scripts/check_human_launcher_contract.py']),
@@ -25,6 +28,10 @@ CHECKS = [
     ('Golden PE negative regressions', ['tests/infrastructure/test_pe_metadata_tools.py']),
     ('restricted named imports', ['tests/infrastructure/test_corvexon_mswsock_imports.py']),
     ('MSVC link negative regressions', ['scripts/check_msvc_shipping_link_command.py', '--self-test']),
+    ('C++ interface/adapter identity regressions', ['tests/infrastructure/test_cpp_type_identities.py']),
+    ('C++ interface/adapter identity policy', ['scripts/check_cpp_type_identities.py']),
+    ('source SPDX and identifier regressions', ['tests/infrastructure/test_source_identity_license.py']),
+    ('source SPDX and identifier policy', ['scripts/check_source_identity_license.py']),
     ('first-party language audit regressions', ['tests/infrastructure/test_english_only_audit.py']),
     ('first-party English-only prose gate', ['scripts/check_english_only.py', '--check']),
     ('SURGE infrastructure regressions', ['tests/infrastructure/test_infrastructure.py']),
@@ -51,14 +58,14 @@ def main():
             print(result['output'], flush=True)
     passed = all(r['exit_code'] == 0 for r in results)
     report = {'schema': 'surge.source-qa.v1', 'result': 'PASS_SOURCE_QA' if passed else 'FAIL',
-              'classification': 'NOT_RELEASE', 'native_game_acceptance': 'NOT_RUN', 'checks': results}
+              'native_game_acceptance': 'NOT_RUN', 'checks': results}
     if args.report:
         path = args.report.resolve()
         if ROOT / 'build' not in path.parents:
             ap.error('--report must be inside project build/ to avoid changing the source manifest')
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
-    print('SOURCE_QA:', report['result'], '(NOT_RELEASE)')
+    print('SOURCE_QA:', report['result'])
     return 0 if passed else 1
 
 

@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "preloader_l/xml/node_insertion.hpp"
 #include <bit>
 
-namespace preloader_l::socket_recovered {
+namespace preloader_l::socket {
 namespace {
 std::uint64_t load(ReceiveBufferMemory& memory,std::uintptr_t address,unsigned width=8){
     const auto bytes=memory.view(address,width);std::uint64_t value=0;
@@ -47,7 +49,7 @@ void prepare_native_insertion_003aa0(std::uintptr_t,std::uintptr_t child,
     const auto pool=load(m,child+0x60),table=load(m,pool);
     context.nodes.pool_track(load(m,table+0x20),pool);
 }
-void RecoveredNodeInsertionEffects::prepare_003aa0(std::uintptr_t owner,std::uintptr_t child){
+void NodeInsertionEffects::prepare_003aa0(std::uintptr_t owner,std::uintptr_t child){
     prepare_native_insertion_003aa0(owner,child,insertion_);
 }
-} // namespace preloader_l::socket_recovered
+} // namespace preloader_l::socket
