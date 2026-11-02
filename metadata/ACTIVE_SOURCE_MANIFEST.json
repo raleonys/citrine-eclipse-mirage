@@ -16,7 +16,7 @@
     ".github/workflows/weekly-release.yml": "45de490aed66d319c7a30e7af1b88b12912c81c69c57099c003c74a034e4605a",
     ".gitignore": "bf9a372905163d561d6ee5df727eb86e2ac54417601a01981977bfd43aa823e7",
     "AGENTS.md": "74cbf96b8cb083615727b7d754287c9e858eebb5514efe184dd0a8a69804643f",
-    "CHANGELOG.md": "fc2bea0b1f2282b8f94609824e4f1f3515905b6b1a64f3cfe8c013b4c5243e5f",
+    "CHANGELOG.md": "4b253b3efbbbd14a4d2cb17390d4ffb61758c1318ea264be1d92f588136eed4f",
     "cmake/BuildPartition.cmake": "bb3a9c833c694256250d04be258c5f6a9315ea10189198185ae4fba58b281882",
     "cmake/InfrastructureChecks.cmake": "1e4ec0c5319403be3dfe5db904fb188a3edde069236d794a69e6e4bfb564634b",
     "cmake/PatchHookFreeze.cmake": "c55ddf218353acf8bf6994ef486771c1f807212c2f39772c298afd19a612cacb",
@@ -3694,6 +3694,7 @@
     "docs/PR23_POSTMERGE_SHUTDOWN_ACCEPTANCE.md": "f9c2e04b7413a371c86088770049f71e93f93c9d5611061285d371dc61ae5283",
     ".github/workflows/msvc-shutdown-retry-queue.yml": "1401de5feea6afd3c335c8a4560ddf4dfd31ebfabfe84a7f69919c0531f93c7d",
     "metadata/WEEKLY_NAMING_POLICY.json": "eb6e27f1e9c9563244381cc678ba6fa9b6fd12cdb6a5600a4da5f16db2772d51",
-    "scripts/weekly_naming.py": "2c1b4877a1cb9166104ca8dd241307a9ded040eb3c0af2d943029c2a42ee8b9e"
+    "scripts/weekly_naming.py": "2c1b4877a1cb9166104ca8dd241307a9ded040eb3c0af2d943029c2a42ee8b9e",
+    "docs/SOURCE_DIFFERENTIAL_B49_B54.md": "0f0e74b193a69ce1417b0b172adb164a7d6a2acc5d906feb6507c849cf78c25c"
   }
 }
