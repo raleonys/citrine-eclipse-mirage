@@ -131,7 +131,6 @@ jobs:
           path: |
             dist/preloader_l.dll
             dist/preloader_l.dll.sha256
-            dist/LOCAL_DIST_RECEIPT.json
           if-no-files-found: error
           retention-days: 14
 
