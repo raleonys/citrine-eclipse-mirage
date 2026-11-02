@@ -269,7 +269,14 @@ try {
     } finally {
         Exit-PinnedBuildPath $pinned
         $pinned=$null
-        [System.IO.Directory]::SetAccessControl($blocked,$savedAcl)
+        # A freshly read DirectorySecurity has no dirty sections: passing it
+        # straight back to SetAccessControl can leave the deny on disk.
+        $restoreAcl = New-Object System.Security.AccessControl.DirectorySecurity
+        $accessSection = [System.Security.AccessControl.AccessControlSections]::Access
+        $restoreAcl.SetSecurityDescriptorBinaryForm($savedAcl.GetSecurityDescriptorBinaryForm(),$accessSection)
+        [System.IO.Directory]::SetAccessControl($blocked,$restoreAcl)
+        $restoredAcl = [System.IO.Directory]::GetAccessControl($blocked)
+        Require ($restoredAcl.GetSecurityDescriptorSddlForm($accessSection) -ceq $savedAcl.GetSecurityDescriptorSddlForm($accessSection)) 'Owned fixture DACL was not restored'
     }
     Require $denied 'Owned ACL denial was not observed as ERROR_ACCESS_DENIED'
     Check-ParentRelease $root
@@ -287,8 +294,6 @@ try {
     Check-ParentRelease $root
     Check-Outside
     Check-ProfileCleanup (Join-Path $PSScriptRoot '..\..\scripts\build_orchestration\build_profile.ps1')
-    Write-Host ('BUILD_PATH_PINNING: PASS cross-process swap/rename, ACL denial, rollback, output confinement; checks=' + $script:checks)
-    Write-Host 'BUILD_PATH_REPARSE_NEGATIVES: PASS (Windows fixture only)'
 } finally {
     if ($null -ne $lock) { $lock.Dispose() }
     Exit-PinnedBuildPath $pinned
@@ -296,3 +301,6 @@ try {
     Remove-FixtureJunction $junction
     Remove-Item -LiteralPath $base -Force -Recurse -ErrorAction Stop
 }
+Require (-not [System.IO.Directory]::Exists($base)) 'Owned fixture survived final cleanup'
+Write-Host ('BUILD_PATH_PINNING: PASS cross-process swap/rename, ACL denial, rollback, output confinement; checks=' + $script:checks)
+Write-Host 'BUILD_PATH_REPARSE_NEGATIVES: PASS (Windows fixture only)'
