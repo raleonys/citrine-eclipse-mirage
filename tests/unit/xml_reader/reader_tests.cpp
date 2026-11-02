@@ -78,6 +78,39 @@ void errors_and_depth() {
         check(parsed.returned_code==(depth>=499?18:0),"supplied vendor default depth boundary");
     }
 }
+void numeric_character_reference_bounds() {
+    // C33 security applicability: exercise the actual TinyXML2-backed
+    // product XML reader, not an independent or synthetic numeric decoder.
+    reader::Backend backend;
+    const auto verify=[&](const std::string& reference,std::string_view expected) {
+        const std::string input="<R number='"+reference+"'>"+reference+"</R>";
+        auto parsed=backend.parse_c_string(input);
+        const auto& element=root(parsed);
+        const auto value=element.attribute("number");
+        check(value&&*value==expected,"numeric-reference attribute must not wrap");
+        const char* text=backend.text_003860(element);
+        check(text&&std::string_view(text)==expected,
+              "numeric-reference text must match attribute conversion");
+    };
+    constexpr std::string_view highest("\xF4\x8F\xBF\xBF",4);
+    constexpr std::string_view below_highest("\xF4\x8F\xBF\xBE",4);
+    verify("&#x10FFFF;",highest);
+    verify("&#1114111;",highest);
+    verify("&#x10FFFE;",below_highest);
+    verify("&#x00000010FFFF;",highest);
+    // The current pinned vendor leaves invalid numeric references literal.
+    // Do not silently change that policy or vendor implementation.
+    for(const char* raw:{"&#x110000;","&#1114112;","&#xFFFFFFFF;",
+                          "&#x100000000;","&#4294967295;","&#4294967296;",
+                          "&#x123456789ABCDEF;","&#xG123;","&#12E3;"}) {
+        const std::string reference=raw;
+        verify(reference,reference);
+    }
+    for(const auto length:{32U,64U,256U}) {
+        const std::string reference="&#x"+std::string(length,'F')+";";
+        verify(reference,reference);
+    }
+}
 void bounded_input_and_wrapper_rehash() {
     reader::Backend backend;
     check(backend.parse_c_string(std::string_view{}).returned_code==13,"null empty view is an empty document");
@@ -98,6 +131,6 @@ void bounded_input_and_wrapper_rehash() {
     check(std::string_view(backend.text_003860(*first))=="payload","text survives caller overwrite and wrapper-map rehash");
 }
 }
-int main(){try{reading_and_ownership();errors_and_depth();bounded_input_and_wrapper_rehash();
+int main(){try{reading_and_ownership();errors_and_depth();numeric_character_reference_bounds();bounded_input_and_wrapper_rehash();
     std::cout<<"PASS: "<<checks<<" actual XML reader checks; selected upstream compatibility source, original target not executed\n";
     return 0;}catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}

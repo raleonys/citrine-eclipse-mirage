@@ -2118,8 +2118,8 @@
       "sha256": "04973f7a6dc49d87be73158d5918305e4aa73e6607cbd47a989356b6c5a444b0"
     },
     "tests/unit/xml_reader/reader_tests.cpp": {
-      "bytes": 7002,
-      "sha256": "c907ae0fea88e0d9755a7a05ce625f70032af20d581535c6022fcd305f6e43d8"
+      "bytes": 8723,
+      "sha256": "d88236e630aaaa47170bfa3277a65b7b781c23210286ab344f1d788b8650d8cb"
     },
     "tests/vendors/vendor_api_smoke.cpp": {
       "bytes": 2032,
