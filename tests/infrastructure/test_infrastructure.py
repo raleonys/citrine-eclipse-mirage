@@ -210,7 +210,7 @@ class PackageTests(unittest.TestCase):
 
 
 class BranchPushGateTests(unittest.TestCase):
-    def test_real_pushes_retire_bugfix_without_weakening_main_or_source_gates(self):
+    def test_real_pushes_reject_shared_bugfix_and_allow_audit_research(self):
         # All refs, including main, belong to this disposable local fixture.
         # The QA stub records invocation; it does not impersonate project QA.
         with tempfile.TemporaryDirectory() as tmp:
@@ -259,7 +259,7 @@ class BranchPushGateTests(unittest.TestCase):
             git('init', '--bare', str(remote))
             git('remote', 'add', 'origin', str(remote))
             git('push', 'origin', 'HEAD:refs/heads/seed')
-            for name in ['main', 'bugfix', 'scratch/done']:
+            for name in ['main', 'bugfix', 'fix/done']:
                 git('update-ref', 'refs/heads/' + name, seed, cwd=remote)
             git('config', 'core.hooksPath', hooks.as_posix())
             (checkout / 'change.txt').write_text('reviewed fixture change\n')
@@ -268,7 +268,7 @@ class BranchPushGateTests(unittest.TestCase):
             head = git('rev-parse', 'HEAD').stdout.strip()
             marker = checkout / 'build/qa-ran'
 
-            for name in ['bugfix', 'scratch/done']:
+            for name in ['bugfix', 'fix/done']:
                 with self.subTest(deletion=name):
                     git('push', 'origin', '--delete', name)
                     self.assertNotEqual(0, git('show-ref', '--verify', 'refs/heads/' + name,
@@ -290,6 +290,13 @@ class BranchPushGateTests(unittest.TestCase):
             git('push', 'origin', 'HEAD:refs/heads/fix/new-task')
             self.assertTrue(marker.exists(), 'fresh PR branch must run the QA gate')
             self.assertEqual(head, git('rev-parse', 'refs/heads/fix/new-task', cwd=remote).stdout.strip())
+            for retained in ('audit/retained-study', 'research/reconstruction-package'):
+                with self.subTest(retained=retained):
+                    marker.unlink()
+                    git('push', 'origin', 'HEAD:refs/heads/' + retained)
+                    self.assertTrue(marker.exists(), 'retained project branches must pass the normal QA gate')
+                    self.assertEqual(head, git('rev-parse', 'refs/heads/' + retained,
+                                               cwd=remote).stdout.strip())
             marker.unlink()
             (checkout / 'change.txt').write_text('uncommitted fixture change\n')
             rejected = git('push', 'origin', 'HEAD:refs/heads/fix/dirty', accept=False)
