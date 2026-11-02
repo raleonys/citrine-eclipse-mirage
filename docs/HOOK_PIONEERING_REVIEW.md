@@ -3,7 +3,8 @@
 **Disposition (2026-11-02): PARTIALLY APPLICABLE / DESIGN AND EVIDENCE BLOCKED.**
 This is a source-only crosswalk, not an implemented remediation, donor-parity
 claim, native acceptance record, or permission to alter the production hook
-topology. Reviewed against accepted `main@7e94131e5a5692bf349a77993180d64a7ace2408`.
+topology. Reviewed against accepted `main@bb640ee0acb37a847a49bcb93a5ac0cd9b503a13`,
+including the merged [allocation rollback fix in PR #98](https://github.com/raleonys/citrine-eclipse-mirage/pull/98).
 
 ## Current authoritative implementation
 
@@ -25,6 +26,14 @@ topology. Reviewed against accepted `main@7e94131e5a5692bf349a77993180d64a7ace24
   matched/unmatched opens, fabricated values, queries and ordinary closes.
   They do not establish real Win32 HKEY origin, reuse/alias freedom, or
   end-to-end Consumer traversal of every Registry API.
+- Accepted PR #98 makes fabricated-key creation provisional through both
+  owning-set and route-set insertion. On an insertion or logging exception,
+  it restores the caller output/status, removes the new ownership record
+  and releases the allocation with the current non-throwing delete backend.
+  [Allocation failure tests](../tests/unit/registry/allocation_failure_tests.cpp)
+  exercise real container allocation failures, A/W client/language routes,
+  logging failures and successful creation/close. This closes the bounded
+  creation exception-safety gap without proving raw HKEY origin or retirement.
 - The approved [hook lifecycle contract](HOOK_ENGINE_HARDENING.md) already
   covers MinHook activation, callback lease drain and retryable engine
   teardown. Those improvements must not be overwritten by an older
@@ -37,11 +46,11 @@ topology. Reviewed against accepted `main@7e94131e5a5692bf349a77993180d64a7ace24
 | Opaque fabricated-handle provenance and generation identity (R12/R13 research) | Raw numeric membership remains the routing authority; an allocated pointer and a native HKEY are not provably disjoint by this code. | **Applicable design risk; no proven real OS alias or exploit.** |
 | Atomic claim/retire across query and close | The fabricated close path erases membership before calling the release effect. There is no explicit pending-retire ledger; the existing callback lock is not an origin ledger. | **Partially applicable; design and failure semantics require proof.** |
 | Historical fail-once `HeapFree` ownership recovery | The current concrete backend uses C++ allocation/deallocation, not the historical HeapFree shim. | **Do not transplant the old failure model or claim an observed current HeapFree defect.** |
-| Source-level allocation/insert exception boundary | `fabricate_010170` allocates before inserting the identity into the fabricated collection. A failed collection insertion can leave ownership unrecorded; native callback exceptions are terminal under the current policy. | **New bounded review candidate; not a native fault receipt.** |
+| Source-level allocation/insert exception boundary | Accepted PR #98 rolls back the allocation and new owning-set entry if either set insertion or intervening logging throws; caller output/status and original exceptions are preserved with the concrete delete backend. | **Bounded creation defect fixed and regression-tested; provenance and retirement remain open.** |
 | Coverage of alternate Win32 Registry routes | Only five Registry entrypoints are in the scoped eleven-hook topology. | **Coverage and Consumer provenance remain unverified; do not add hooks speculatively.** |
 | Reuse of R12/R13 reference tests | Earlier tests and simulated receipts do not execute this source tree with a real Win32 Consumer. | **Research inputs only; no automatic acceptance inheritance.** |
 
-## Required proof before a production remediation PR
+## Remaining proof for provenance and retirement changes
 
 1. Pin real Windows/MSVC source and host identities, observe the actual
    Consumer Registry call graph and identify which APIs can introduce,
@@ -50,11 +59,11 @@ topology. Reviewed against accepted `main@7e94131e5a5692bf349a77993180d64a7ace24
    disjointness, including numeric reuse/ABA, pre-defined keys, stale
    callbacks and concurrent lifecycle transitions. A bare set or a
    guessed high-bit namespace is not sufficient.
-3. Design one coherent ownership protocol for create, successful and
-   unsuccessful native open, fabricated allocation, query, close and
-   teardown. Specify allocation/insert rollback, exactly-once retirement,
-   cleanup retry and the semantics of the actual `operator delete`
-   backend; test models must not impersonate an OS failure.
+3. Preserve the accepted allocation/insert rollback from PR #98 while
+   specifying the remaining native open, query, close and teardown
+   ownership transitions. Establish exactly-once retirement and any needed
+   retry for genuinely fallible cleanup effects; the current `operator delete`
+   backend does not throw. Test models must not impersonate an OS failure.
 4. Exercise source-linked negative and success controls for A/W original
    calls, exact pointer and `LastError` behavior, nested registry waits,
    callback locks, partial failures and cleanup. Keep the selected eleven

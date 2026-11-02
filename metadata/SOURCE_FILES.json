@@ -934,8 +934,8 @@
       "sha256": "2f1e8b526c9682b9f92bea960abe7f1e9911ad0617481021b8bb1733178ed003"
     },
     "src/platform/registry.cpp": {
-      "bytes": 6472,
-      "sha256": "f7033b05dc32fa632579189b9cf6fe4583ba50516d527caf7ba1aa792bb96b10"
+      "bytes": 7410,
+      "sha256": "5b5fbdf646f1c8a2169078c97696e74f5e43fc9c80640201bc49581add4c1f48"
     },
     "src/platform/startup_windows.cpp": {
       "bytes": 1529,
@@ -11699,7 +11699,7 @@
       "bytes": 2217,
       "sha256": "c6dc297dd897d24abc1e729853ba294d59560d883301a2ed2e4c44c140492749"
     },
-    "third_party/pegtl/src/test/file_äöü𝄞_data.txt": {
+    "third_party/pegtl/src/test/file_\u00e4\u00f6\u00fc\ud834\udd1e_data.txt": {
       "bytes": 154,
       "sha256": "2226e58b67611e8acd1a82aa95c288bb8f44ff0932615533d6986bb48246884c"
     },
@@ -13474,6 +13474,10 @@
     "third_party/tinyxml2/xmltest.cpp": {
       "bytes": 101273,
       "sha256": "86aeb878beeb5d5c075314fa977d39b74c24167de833f24f00123551726e4d5d"
+    },
+    "tests/unit/registry/allocation_failure_tests.cpp": {
+      "bytes": 7294,
+      "sha256": "6068f347c704b21b97c326585a015dce845398ed32925c6e12dfdb710f6a59aa"
     }
   }
 }
