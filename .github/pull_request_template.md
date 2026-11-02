@@ -9,23 +9,26 @@ request when it changes an existing product decision.
 
 ## Branch policy
 
-- [ ] This PR is ready for review; draft mode is not used to track remaining
-      work or pending validation. Any merge blockers are recorded below.
-- [ ] Bugfix PR: this uses a fresh descriptive branch from current `main`;
-      the retired shared `bugfix` branch is not reused. If this is not a
-      bugfix, mark the item not applicable and identify its scoped branch.
-- [ ] Audit/research/other sustained work: its dedicated project branch and
-      scope are recorded. A related PR closing does not mandate branch deletion.
+- [ ] This PR is ready for review; draft mode is not used to track pending
+      validation. Merge blockers are recorded below.
+- [ ] For a bugfix, routine audit or other single-PR task, use a fresh
+      descriptive branch based on current `main`; do not reuse the retired
+      shared `bugfix` branch or a closed task branch.
+- [ ] For a continuing research/reconstruction project, identify its existing
+      project branch and documented scope.
+- [ ] **Only** for an explicitly owner-designated long-running audit campaign:
+      record the designation, continuing scope and closure criteria. Ordinary
+      `audit/*` branches remain temporary.
 - [ ] No direct changes or pushes to `main` or shared-history rewrites are
-      part of this PR. Only the owner will merge it.
-- [ ] Overlapping contributions were checked; unrelated active work is excluded.
-- [ ] For a bugfix PR only: its source branch will be manually deleted after
-      this PR closes (merged or unmerged), once needed work is preserved.
+      part of this PR. Only the owner merges after review.
+- [ ] Overlapping contributions and dependencies have been checked.
+- [ ] For a temporary PR head (including routine audits and bugfixes), record
+      its tip, preserve required work and delete it when this PR closes.
 
-Do **not** rely on GitHub's repository-wide **Automatically delete head
-branches** toggle for bugfix cleanup: it may also delete retained audit/research
-heads. Follow [branch cleanup](https://github.com/raleonys/citrine-eclipse-mirage/blob/main/docs/GITHUB_WORKFLOW.md#branch-completion-and-cleanup)
-and record any bugfix preservation work or owner-approved research retirement.
+GitHub's repository-wide **Automatically delete head branches** may also
+delete retained research or designated long-running audit heads. Prefer manual
+cleanup of temporary PR branches unless verified protections exclude all
+retained project heads. See [branch cleanup](https://github.com/raleonys/citrine-eclipse-mirage/blob/main/docs/GITHUB_WORKFLOW.md#branch-completion-and-cleanup).
 
 ## Changelog coverage
 
