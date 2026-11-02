@@ -47,11 +47,17 @@ retiring the workstream branch at every PR closure. Routine audit PRs do not hav
 this exception; preserve any further work before normal closure and cleanup.
 
 Open a focused PR for each coherent reviewable batch, stating the problem, scope,
-validation results and remaining work. Never create a draft PR, convert a PR to
-draft or use draft mode for pending validation. Complete required local checks
-before opening a ready-for-review PR and record pending CI/native/Golden/game
-checks and merge blockers explicitly. Ready-for-review is not approval or merge
-authorization. Owner-authorized weekly draft releases remain a separate flow.
+validation results and remaining work. Ordinary PRs are ready-for-review, not
+drafts; do not create a new draft or convert a PR to draft without an explicit
+owner decision. **Existing Draft PR #81** is the specifically owner-authorized,
+long-running four-field research/source-provenance project; preserve its GitHub
+Draft state until the owner requests readiness. Its `research/field-retirement-review`
+branch and four evidence branches are continuing research, not routine audit heads.
+This narrow exception does not waive change validation, merge blockers or owner
+approval and does not grant draft status to ordinary audit/bugfix PRs.
+Complete required local checks before requesting normal review and record pending
+CI/native/Golden/game checks. Ready-for-review is not merge authorization.
+Owner-authorized weekly draft releases remain a separate flow.
 
 ## Branch completion and cleanup
 
