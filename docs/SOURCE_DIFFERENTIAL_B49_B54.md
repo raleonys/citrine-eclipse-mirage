@@ -3,6 +3,36 @@
 **Classification:** source audit / current disposition and retained historical comparison / no production patch / no release.
 **Original comparison base (historical):** Citrine Eclipse Mirage `main` commit `d9c860d17769738fd6f03a58a7f3c4b9f875b067`.
 **Donor:** user-supplied `dll-reverse-engineering(11).zip`, ZIP SHA-256 `4b98177c7f7d827994e209fe75a918d9c54f25194c4adf19d9d419bdf061f0fe`.
+## Archive 11 donor identity mismatch — provenance review open
+
+The historical B49-B54 donor entry above labels `dll-reverse-engineering(11).zip`
+with SHA-256 `4b98177c7f7d827994e209fe75a918d9c54f25194c4adf19d9d419bdf061f0fe`.
+A separately indexed eight-part Archive 11, preserved on
+[`research/reconstruction-package`](https://github.com/raleonys/citrine-eclipse-mirage/tree/research/reconstruction-package),
+records a **different** combined ZIP SHA-256:
+`db394434e38c7edad33607a846ffdc36b04a1e5978d2fbe3d74da24bda5179da`.
+Its [provenance](https://github.com/raleonys/citrine-eclipse-mirage/blob/research/reconstruction-package/docs/RE_ARCHIVE11_PROVENANCE.json)
+and [import registry](https://github.com/raleonys/citrine-eclipse-mirage/blob/research/reconstruction-package/docs/RE_PACKAGE_IMPORT.json)
+record a 209,091,682-byte merged ZIP, 4,266 regular files and
+758,168,656 expanded bytes. Both SHA values are recorded for an identically
+named input, but they cannot designate identical byte streams.
+
+**Disposition: PROVENANCE_OPEN; no silent hash correction.** The earlier
+`4b98177c...` remains an attributable historical claim, **not** a freshly
+verified digest. Current evidence does not show whether that claim represents
+a distinct revision, another delivery or a transcription mistake. Do not infer
+donor-file equivalence from the filename, recorded test totals or module names.
+The `db394434...` source inventory is independently indexed research material,
+not proof that the original B49-B54 comparison used precisely those bytes.
+
+To close the discrepancy, recover the exact original B49-B54 comparison
+archive or its independently verified manifest, and compare the actual donor
+paths, byte lengths and SHA-256 values to the indexed eight-part payload.
+Record whether each cited B49-B54 assertion applies to the verified archive,
+a distinct input or an unverified historical claim. No donor implementation
+adoption, shipping defect, code patch, native acceptance or Consumer parity is
+established by this documentation-only cross-check.
+
 **Original review date:** 2026-11-01. **Original evidence quality:** static source comparison. The donor's 356 groups and 19 terminal scenarios are its own recorded results; they were **not rerun** in this GitHub worktree. Windows/MSVC, native game, and original donor runtime parity were **not run** for this differential.
 
 ## Current reconciliation — 2026-11-02
