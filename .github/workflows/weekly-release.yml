@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       start_tag:
-        description: 'First candidate or an explicitly selected new series: <series>-R<NN>. Leave empty to continue.'
+        description: 'Optional exact next x.y.z-CODENAME; blank follows the approved LUTRAVEX queue.'
         type: string
         required: false
 
